@@ -62,7 +62,6 @@ public abstract class EndpointRegistration<D extends DTO>
 			getT().destroy();
 		}
 		finally {
-			destroyContextAttributes();
 			Thread.currentThread().setContextClassLoader(original);
 			servletHolder.release();
 		}
@@ -86,19 +85,14 @@ public abstract class EndpointRegistration<D extends DTO>
 
 	//Delegate the init call to the actual servlet
 	public void init(ServletConfig servletConfig) throws ServletException {
-		boolean initialized = false;
 		ClassLoader original = Thread.currentThread().getContextClassLoader();
 		try {
 			Thread.currentThread().setContextClassLoader(classLoader);
 
-			createContextAttributes();
 			getT().init(servletConfig);
-			initialized = true;
+
 		}
 		finally {
-			if (!initialized) {
-				destroyContextAttributes();
-			}
 			Thread.currentThread().setContextClassLoader(original);
 		}
 	}
@@ -154,14 +148,6 @@ public abstract class EndpointRegistration<D extends DTO>
 		} finally {
 			Thread.currentThread().setContextClassLoader(original);
 		}
-	}
-
-	private void createContextAttributes() {
-		contextController.createContextAttributes();
-	}
-
-	private void destroyContextAttributes() {
-		contextController.destroyContextAttributes();
 	}
 
 	@Override

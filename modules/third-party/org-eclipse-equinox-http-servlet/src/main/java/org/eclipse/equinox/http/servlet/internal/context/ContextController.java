@@ -645,18 +645,6 @@ public class ContextController {
 		shutdown = true;
 	}
 
-	public void createContextAttributes() {
-		getServletContextHelperDataContext().createContextAttributes(this);
-	}
-
-	public void destroyContextAttributes() {
-		if (shutdown) {
-			return;
-		}
-
-		servletContextHelperDataContext.destroyContextAttributes(this);
-	}
-
 	public String getContextName() {
 		return contextName;
 	}

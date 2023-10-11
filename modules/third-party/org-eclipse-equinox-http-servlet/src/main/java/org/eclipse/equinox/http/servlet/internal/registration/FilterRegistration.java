@@ -98,7 +98,6 @@ public class FilterRegistration
 			getT().destroy();
 		}
 		finally {
-			destroyContextAttributes();
 			Thread.currentThread().setContextClassLoader(original);
 			filterHolder.release();
 		}
@@ -146,19 +145,13 @@ public class FilterRegistration
 		if (!initDestoyWithContextController) {
 			return;
 		}
-		boolean initialized = false;
 		ClassLoader original = Thread.currentThread().getContextClassLoader();
 		try {
 			Thread.currentThread().setContextClassLoader(classLoader);
 
-			createContextAttributes();
 			getT().init(filterConfig);
-			initialized = true;
 		}
 		finally {
-			if (!initialized) {
-				destroyContextAttributes();
-			}
 			Thread.currentThread().setContextClassLoader(original);
 		}
 	}
@@ -197,14 +190,6 @@ public class FilterRegistration
 		String name, String servletPath, String pathInfo, String extension, Match match) {
 		// TODO need to rework match for filters to remove this method
 		throw new UnsupportedOperationException("Should not be calling this method on FilterRegistration"); //$NON-NLS-1$
-	}
-
-	private void createContextAttributes() {
-		contextController.createContextAttributes();
-	}
-
-	private void destroyContextAttributes() {
-		contextController.destroyContextAttributes();
 	}
 
 	protected boolean isPathWildcardMatch(String pattern, String path) {

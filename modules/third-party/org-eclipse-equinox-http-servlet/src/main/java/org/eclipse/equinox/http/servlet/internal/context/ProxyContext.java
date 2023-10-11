@@ -31,8 +31,7 @@ import javax.servlet.ServletContext;
 public class ProxyContext implements ServletContextHelperDataContext {
 	private static final String JAVAX_SERVLET_CONTEXT_TEMPDIR = "javax.servlet.context.tempdir"; //$NON-NLS-1$
 
-	private final ConcurrentMap<ContextController, ContextAttributes> attributesMap =
-		new ConcurrentHashMap<ContextController, ContextAttributes>();
+	private final ContextAttributes contextAttributes = new ContextAttributes();
 	File proxyContextTempDir;
 	private ServletContext servletContext;
 
@@ -52,43 +51,8 @@ public class ProxyContext implements ServletContextHelperDataContext {
 			deleteDirectory(proxyContextTempDir);
 	}
 
-	public void createContextAttributes(
-		ContextController controller) {
-
-		synchronized (attributesMap) {
-			ContextAttributes contextAttributes = attributesMap.get(controller);
-
-			if (contextAttributes == null) {
-				contextAttributes = new ContextAttributes(controller);
-
-				attributesMap.put(controller, contextAttributes);
-			}
-
-			contextAttributes.addReference();
-		}
-	}
-
-	public void destroyContextAttributes(
-		ContextController controller) {
-
-		synchronized (attributesMap) {
-			ContextAttributes contextAttributes = attributesMap.get(controller);
-
-			if (contextAttributes == null) {
-				throw new IllegalStateException("too many calls");
-			}
-
-			if (contextAttributes.removeReference() == 0) {
-				attributesMap.remove(controller);
-				contextAttributes.destroy();
-			}
-		}
-	}
-
-	public Dictionary<String, Object> getContextAttributes(
-		ContextController controller) {
-
-		return attributesMap.get(controller);
+	public Dictionary<String, Object> getContextAttributes() {
+		return contextAttributes;
 	}
 
 	public ServletContext getServletContext() {
@@ -120,11 +84,11 @@ public class ProxyContext implements ServletContextHelperDataContext {
 		private static final long serialVersionUID = 1916670423277243587L;
 		private final AtomicInteger referenceCount = new AtomicInteger();
 
-		public ContextAttributes(ContextController controller) {
+		public ContextAttributes() {
 			if (proxyContextTempDir != null) {
 				File contextTempDir = new File(
 					proxyContextTempDir,
-					"hc_" + controller.hashCode()); //$NON-NLS-1$
+					"hc_" + ProxyContext.this.hashCode()); //$NON-NLS-1$
 
 				contextTempDir.mkdirs();
 

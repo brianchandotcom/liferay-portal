@@ -5,24 +5,18 @@
 
 package org.eclipse.equinox.http.servlet.internal.context;
 
-import javax.servlet.ServletContext;
 import java.util.Dictionary;
+
+import javax.servlet.ServletContext;
 
 /**
  * @author Dante Wang
  */
 public interface ServletContextHelperDataContext {
 
-	public void createContextAttributes(
-		ContextController contextController);
-
 	public void destroy();
 
-	public void destroyContextAttributes(
-		ContextController contextController);
-
-	public Dictionary<String, Object> getContextAttributes(
-		ContextController contextController);
+	public Dictionary<String, Object> getContextAttributes();
 
 	public ServletContext getServletContext();
 

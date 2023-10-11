@@ -418,7 +418,7 @@ public class ServletContextAdaptor {
 	}
 
 	private Dictionary<String, Object> getContextAttributes() {
-		return servletContextHelperDataContext.getContextAttributes(contextController);
+		return servletContextHelperDataContext.getContextAttributes();
 	}
 
 	private class AdaptorInvocationHandler implements InvocationHandler {

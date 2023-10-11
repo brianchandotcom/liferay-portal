@@ -46,8 +46,6 @@ public class ListenerRegistration extends Registration<EventListener, ListenerDT
 
 		classLoader = listenerHolder.getBundle().adapt(BundleWiring.class).getClassLoader();
 
-		createContextAttributes();
-
 		proxy = (EventListener)Proxy.newProxyInstance(
 			getClass().getClassLoader(), classes.toArray(new Class[0]),
 			new EventListenerInvocationHandler());
@@ -87,7 +85,6 @@ public class ListenerRegistration extends Registration<EventListener, ListenerDT
 			}
 		}
 		finally {
-			destroyContextAttributes();
 			Thread.currentThread().setContextClassLoader(original);
 			listenerHolder.release();
 		}
@@ -118,14 +115,6 @@ public class ListenerRegistration extends Registration<EventListener, ListenerDT
 		return proxy;
 	}
 
-	private void createContextAttributes() {
-		contextController.createContextAttributes();
-	}
-
-	private void destroyContextAttributes() {
-		contextController.destroyContextAttributes();
-	}
-
 	private class EventListenerInvocationHandler implements InvocationHandler {
 
 		public EventListenerInvocationHandler() {
@@ -152,3 +141,4 @@ public class ListenerRegistration extends Registration<EventListener, ListenerDT
 	}
 
 }
+/* @generated */

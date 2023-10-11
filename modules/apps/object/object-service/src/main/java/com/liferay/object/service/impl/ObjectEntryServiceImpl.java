@@ -441,20 +441,10 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
-		if (!objectDefinition.isAccountEntryRestricted() &&
-			!objectDefinition.isRootDescendantNode()) {
-
-			return;
-		}
-
 		if (objectDefinition.isRootDescendantNode()) {
 			ObjectDefinition rootObjectDefinition =
 				_objectDefinitionPersistence.findByPrimaryKey(
 					objectDefinition.getRootObjectDefinitionId());
-
-			if (!rootObjectDefinition.isAccountEntryRestricted()) {
-				return;
-			}
 
 			Tree tree = _treeFactory.create(
 				rootObjectDefinition.getObjectDefinitionId());

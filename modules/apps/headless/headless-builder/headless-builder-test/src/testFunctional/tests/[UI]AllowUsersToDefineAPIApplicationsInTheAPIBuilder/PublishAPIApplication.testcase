@@ -228,8 +228,10 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		task ("When I edit the API application") {
-			APIBuilderUI.goToEditAPIApplicationPage(key_title = "App-test");
+		task ("When I finish creating the API application") {
+			WaitForElementPresent(
+				key_title = "Edit API Application",
+				locator1 = "Header#H1_TITLE");
 		}
 
 		task ("Then I can see Cancel, Save and Publish buttons are visible") {

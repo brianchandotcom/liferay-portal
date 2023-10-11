@@ -87,7 +87,7 @@ public class ObjectDefinitionUtil {
 	private static final String[] _ALLOWED_INVOKER_BUNDLE_SYMBOLIC_NAMES = {
 		"com.liferay.frontend.data.set.views.web",
 		"com.liferay.headless.builder.impl", "com.liferay.list.type.service",
-		"com.liferay.object.service"
+		"com.liferay.notification.service", "com.liferay.object.service"
 	};
 
 	private static final Map<String, String>

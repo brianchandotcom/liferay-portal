@@ -85,8 +85,9 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 				<c:choose>
 					<c:when test='<%= Objects.equals(journalDisplayContext.getDisplayStyle(), "descriptive") %>'>
 						<liferay-ui:search-container-column-text>
-							<liferay-user:user-portrait
-								userId="<%= curArticle.getStatusByUserId() %>"
+							<clay:icon
+								cssClass="mt-0"
+								symbol="web-content"
 							/>
 						</liferay-ui:search-container-column-text>
 
@@ -176,6 +177,12 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 								value="<%= HtmlUtil.escape(curArticle.getArticleId()) %>"
 							/>
 						</c:if>
+
+						<liferay-ui:search-container-column-text>
+							<clay:icon
+								symbol="web-content"
+							/>
+						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-jsp
 							cssClass="table-cell-expand table-cell-minw-200 table-title"

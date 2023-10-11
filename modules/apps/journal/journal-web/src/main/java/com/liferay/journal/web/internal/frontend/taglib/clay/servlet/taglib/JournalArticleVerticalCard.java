@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.taglib.util.LexiconUtil;
 import com.liferay.trash.TrashHelper;
 
 import java.util.Date;
@@ -156,30 +155,12 @@ public class JournalArticleVerticalCard extends BaseVerticalCard {
 
 	@Override
 	public String getStickerCssClass() {
-		User user = UserLocalServiceUtil.fetchUser(
-			_article.getStatusByUserId());
-
-		if (user == null) {
-			return StringPool.BLANK;
-		}
-
-		return "sticker-user-icon " + LexiconUtil.getUserColorCssClass(user);
+		return "sticker-bottom-left ";
 	}
 
 	@Override
 	public String getStickerIcon() {
-		User user = UserLocalServiceUtil.fetchUser(
-			_article.getStatusByUserId());
-
-		if (user == null) {
-			return StringPool.BLANK;
-		}
-
-		if (user.getPortraitId() == 0) {
-			return "user";
-		}
-
-		return StringPool.BLANK;
+		return "web-content";
 	}
 
 	@Override

@@ -6,9 +6,9 @@
 package com.liferay.document.library.kernel.util;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.xml.Element;
 
 /**
@@ -17,11 +17,17 @@ import com.liferay.portal.kernel.xml.Element;
 public class DLProcessorRegistryUtil {
 
 	public static void cleanUp(FileEntry fileEntry) {
-		_dlProcessorRegistry.cleanUp(fileEntry);
+		DLProcessorRegistry dlProcessorRegistry =
+			_dlProcessorRegistrySnapshot.get();
+
+		dlProcessorRegistry.cleanUp(fileEntry);
 	}
 
 	public static void cleanUp(FileVersion fileVersion) {
-		_dlProcessorRegistry.cleanUp(fileVersion);
+		DLProcessorRegistry dlProcessorRegistry =
+			_dlProcessorRegistrySnapshot.get();
+
+		dlProcessorRegistry.cleanUp(fileVersion);
 	}
 
 	public static void exportGeneratedFiles(
@@ -29,16 +35,25 @@ public class DLProcessorRegistryUtil {
 			Element fileEntryElement)
 		throws Exception {
 
-		_dlProcessorRegistry.exportGeneratedFiles(
+		DLProcessorRegistry dlProcessorRegistry =
+			_dlProcessorRegistrySnapshot.get();
+
+		dlProcessorRegistry.exportGeneratedFiles(
 			portletDataContext, fileEntry, fileEntryElement);
 	}
 
 	public static DLProcessor getDLProcessor(String dlProcessorType) {
-		return _dlProcessorRegistry.getDLProcessor(dlProcessorType);
+		DLProcessorRegistry dlProcessorRegistry =
+			_dlProcessorRegistrySnapshot.get();
+
+		return dlProcessorRegistry.getDLProcessor(dlProcessorType);
 	}
 
 	public static long getPreviewableProcessorMaxSize(long groupId) {
-		return _dlProcessorRegistry.getPreviewableProcessorMaxSize(groupId);
+		DLProcessorRegistry dlProcessorRegistry =
+			_dlProcessorRegistrySnapshot.get();
+
+		return dlProcessorRegistry.getPreviewableProcessorMaxSize(groupId);
 	}
 
 	public static void importGeneratedFiles(
@@ -46,35 +61,52 @@ public class DLProcessorRegistryUtil {
 			FileEntry importedFileEntry, Element fileEntryElement)
 		throws Exception {
 
-		_dlProcessorRegistry.importGeneratedFiles(
+		DLProcessorRegistry dlProcessorRegistry =
+			_dlProcessorRegistrySnapshot.get();
+
+		dlProcessorRegistry.importGeneratedFiles(
 			portletDataContext, fileEntry, importedFileEntry, fileEntryElement);
 	}
 
 	public static boolean isPreviewableSize(FileVersion fileVersion) {
-		return _dlProcessorRegistry.isPreviewableSize(fileVersion);
+		DLProcessorRegistry dlProcessorRegistry =
+			_dlProcessorRegistrySnapshot.get();
+
+		return dlProcessorRegistry.isPreviewableSize(fileVersion);
 	}
 
 	public static void register(DLProcessor dlProcessor) {
-		_dlProcessorRegistry.register(dlProcessor);
+		DLProcessorRegistry dlProcessorRegistry =
+			_dlProcessorRegistrySnapshot.get();
+
+		dlProcessorRegistry.register(dlProcessor);
 	}
 
 	public static void trigger(FileEntry fileEntry, FileVersion fileVersion) {
-		_dlProcessorRegistry.trigger(fileEntry, fileVersion);
+		DLProcessorRegistry dlProcessorRegistry =
+			_dlProcessorRegistrySnapshot.get();
+
+		dlProcessorRegistry.trigger(fileEntry, fileVersion);
 	}
 
 	public static void trigger(
 		FileEntry fileEntry, FileVersion fileVersion, boolean trusted) {
 
-		_dlProcessorRegistry.trigger(fileEntry, fileVersion, trusted);
+		DLProcessorRegistry dlProcessorRegistry =
+			_dlProcessorRegistrySnapshot.get();
+
+		dlProcessorRegistry.trigger(fileEntry, fileVersion, trusted);
 	}
 
 	public static void unregister(DLProcessor dlProcessor) {
-		_dlProcessorRegistry.unregister(dlProcessor);
+		DLProcessorRegistry dlProcessorRegistry =
+			_dlProcessorRegistrySnapshot.get();
+
+		dlProcessorRegistry.unregister(dlProcessor);
 	}
 
-	private static volatile DLProcessorRegistry _dlProcessorRegistry =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			DLProcessorRegistry.class, DLProcessorRegistryUtil.class,
-			"_dlProcessorRegistry", false);
+	private static final Snapshot<DLProcessorRegistry>
+		_dlProcessorRegistrySnapshot = new Snapshot<>(
+			DLProcessorRegistryUtil.class, DLProcessorRegistry.class);
 
 }

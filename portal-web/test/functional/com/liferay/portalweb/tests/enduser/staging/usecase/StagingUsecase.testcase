@@ -1388,7 +1388,9 @@ definition {
 
 			PortletEntry.publish();
 
-			FormsAdmin.addForm(groupName = "Site Name Staging");
+			FormsAdminNavigator.openFormsAdmin(siteURLKey = "site-name-staging");
+
+			FormsAdminNavigator.gotoAddForm();
 
 			Form.editName(formName = "Form Name");
 
@@ -2386,7 +2388,9 @@ definition {
 
 			LAR.exportPortlet(larFileName = "Forms_blank_portlet.lar");
 
-			FormsAdmin.addForm(groupName = "Site Name Staging");
+			FormsAdminNavigator.openFormsAdmin(siteURLKey = "site-name-staging");
+
+			FormsAdminNavigator.gotoAddForm();
 
 			Form.editName(formName = "Test Form");
 
@@ -2462,7 +2466,9 @@ definition {
 
 			LAR.exportPortlet(larFileName = "Forms_blank_portlet.lar");
 
-			FormsAdmin.addForm(groupName = "Site Name Staging");
+			FormsAdminNavigator.openFormsAdmin(siteURLKey = "site-name-staging");
+
+			FormsAdminNavigator.gotoAddForm();
 
 			Form.editName(formName = "Test Form");
 

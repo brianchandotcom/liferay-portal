@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
@@ -50,6 +52,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.Callable;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -132,30 +136,33 @@ public class SiteInitializerClientExtension
 	}
 
 	private Site _addOrUpdateSite(
-		Company company, User user, MultipartBody multipartBody,
-		String externalReferenceCode) {
+			String externalReferenceCode, MultipartBody multipartBody,
+			User user)
+		throws Exception {
 
-		try (AutoCloseable autoCloseable =
-				_layoutServiceContextHelper.getServiceContextAutoCloseable(
-					company)) {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
+		HttpServletRequest httpServletRequest = serviceContext.getRequest();
 
-			SiteResource.Builder builder = _siteResourceFactory.create();
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-			SiteResource siteResource = builder.user(
-				user
-			).httpServletRequest(
-				serviceContext.getRequest()
-			).build();
+		httpServletRequest.setAttribute(
+			WebKeys.LAYOUT, themeDisplay.getLayout());
+		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
-			return siteResource.putSiteByExternalReferenceCode(
-				externalReferenceCode, multipartBody);
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
+		SiteResource.Builder builder = _siteResourceFactory.create();
+
+		SiteResource siteResource = builder.user(
+			user
+		).httpServletRequest(
+			httpServletRequest
+		).build();
+
+		return siteResource.putSiteByExternalReferenceCode(
+			externalReferenceCode, multipartBody);
 	}
 
 	private void _initialize(Bundle bundle, Dictionary<String, String> headers)
@@ -199,18 +206,18 @@ public class SiteInitializerClientExtension
 		Company company = _companyLocalService.getCompanyByWebId(
 			PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID));
 
-		Callable<Site> callable = new SiteCallabe(
-			company,
-			_userLocalService.getUserByScreenName(
-				company.getCompanyId(),
-				PropsUtil.get(PropsKeys.DEFAULT_ADMIN_SCREEN_NAME)),
-			MultipartBody.of(
-				binaryFileMap, __ -> _objectMapper,
-				Collections.singletonMap("site", site.toString())),
-			site);
-
 		try {
-			TransactionInvokerUtil.invoke(_transactionConfig, callable);
+			TransactionInvokerUtil.invoke(
+				_transactionConfig,
+				new SiteCallabe(
+					company,
+					_userLocalService.getUserByScreenName(
+						company.getCompanyId(),
+						PropsUtil.get(PropsKeys.DEFAULT_ADMIN_SCREEN_NAME)),
+					MultipartBody.of(
+						binaryFileMap, __ -> _objectMapper,
+						Collections.singletonMap("site", site.toString())),
+					site));
 		}
 		catch (Throwable throwable) {
 			_log.error(throwable);
@@ -275,10 +282,12 @@ public class SiteInitializerClientExtension
 
 		@Override
 		public Site call() throws Exception {
-			try {
+			try (AutoCloseable autoCloseable =
+					_layoutServiceContextHelper.getServiceContextAutoCloseable(
+						_company)) {
+
 				return _addOrUpdateSite(
-					_company, _user, _multipartBody,
-					_site.getExternalReferenceCode());
+					_site.getExternalReferenceCode(), _multipartBody, _user);
 			}
 			catch (Exception exception) {
 				PermissionCacheUtil.clearCache(_user.getUserId());

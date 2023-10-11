@@ -4402,6 +4402,8 @@ public class JenkinsResultsParserUtil {
 
 		int retryCount = 0;
 
+		boolean updatingGitHubApiCall = false;
+
 		while (true) {
 			try {
 				if (debug) {
@@ -4493,6 +4495,8 @@ public class JenkinsResultsParserUtil {
 					url =
 						buildProperties.getProperty("github.api.proxy") +
 							matcher.group(1);
+
+					updatingGitHubApiCall = true;
 				}
 
 				URL urlObject = new URL(url);
@@ -4514,7 +4518,8 @@ public class JenkinsResultsParserUtil {
 							httpRequestMethod.name());
 					}
 
-					if (url.startsWith("https://api.github.com") &&
+					if ((url.startsWith("https://api.github.com") ||
+						 updatingGitHubApiCall) &&
 						(httpURLConnection instanceof HttpsURLConnection)) {
 
 						SSLContext sslContext = null;
@@ -4586,7 +4591,9 @@ public class JenkinsResultsParserUtil {
 
 				urlConnection.connect();
 
-				if (url.startsWith("https://api.github.com")) {
+				if (url.startsWith("https://api.github.com") ||
+					updatingGitHubApiCall) {
+
 					try {
 						int limit = Integer.parseInt(
 							urlConnection.getHeaderField("X-RateLimit-Limit"));

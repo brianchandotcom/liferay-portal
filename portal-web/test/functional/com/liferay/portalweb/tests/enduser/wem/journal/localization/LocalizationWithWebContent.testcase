@@ -797,16 +797,16 @@ definition {
 				WebContentNavigator.gotoAddCP();
 			}
 
-			task ("Type title and content") {
-				WebContent.addCP(
-					webContentContent = "Web Content Content",
-					webContentTitle = "Web Content Title");
-			}
-
 			task ("Select the new template") {
 				WebContent.selectTemplateCP(
 					structureName = "Basic Web Content",
 					templateName = "WC Template Name");
+			}
+
+			task ("Type title and content") {
+				WebContent.addCP(
+					webContentContent = "Web Content Content",
+					webContentTitle = "Web Content Title");
 			}
 
 			task ("Select the display page template") {

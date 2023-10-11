@@ -7,7 +7,10 @@ import {ClientExtension, IHTMLElementBuilder} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 
-import type {FDSFilter} from '@liferay/js-api/data-set';
+import type {
+	FDSFilter,
+	FDSFilterHTMLElementBuilderArgs,
+} from '@liferay/js-api/data-set';
 
 import type {
 	FilterImplementation,
@@ -15,14 +18,11 @@ import type {
 	SetFilterArgs,
 } from '../Filter';
 
-interface ClientExtensionHTMLElementBuilderArgs {
-	filter: {
-		selectedData: unknown;
-	};
-	setFilter: (args: SetFilterArgs) => void;
-}
-
 const LOADING_LABEL = '...';
+
+type CXFilterHTMLElementBuilder = IHTMLElementBuilder<
+	FDSFilterHTMLElementBuilderArgs<unknown>
+>;
 
 export interface ClientExtensionFilterImplementationArgs
 	extends FilterImplementationArgs<unknown> {
@@ -113,7 +113,7 @@ function ClientExtensionFilter({
 	setFilter,
 }: ClientExtensionFilterImplementationArgs) {
 	const [htmlElementBuilder, setHTMLElementBuilder] = useState<
-		IHTMLElementBuilder<ClientExtensionHTMLElementBuilderArgs> | undefined
+		CXFilterHTMLElementBuilder | undefined
 	>(undefined);
 
 	useEffect(() => {
@@ -139,9 +139,7 @@ function ClientExtensionFilter({
 
 		setHTMLElementBuilder(
 			() =>
-				cxFilterImplementation.htmlElementBuilder as IHTMLElementBuilder<
-					ClientExtensionHTMLElementBuilderArgs
-				>
+				cxFilterImplementation.htmlElementBuilder as CXFilterHTMLElementBuilder
 		);
 	}, [cxFilterImplementation, cxFilterURL]);
 

@@ -137,8 +137,10 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 
 	public String[] getExtensions() {
 		if (_itemSelectorCriterion instanceof CustomFileItemSelectorCriterion) {
-			return ((CustomFileItemSelectorCriterion)_itemSelectorCriterion).
-				getExtensions();
+			CustomFileItemSelectorCriterion customFileItemSelectorCriterion =
+				(CustomFileItemSelectorCriterion)_itemSelectorCriterion;
+
+			return customFileItemSelectorCriterion.getExtensions();
 		}
 
 		return _dlItemSelectorView.getExtensions();
@@ -166,10 +168,12 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 
 	public long getMaxFileSize() {
 		if (_itemSelectorCriterion instanceof DLCustomFileItemSelectorView) {
+			CustomFileItemSelectorCriterion customFileItemSelectorCriterion =
+				(CustomFileItemSelectorCriterion)_itemSelectorCriterion;
+
 			return DLValidatorUtil.getMaxAllowableSize(
 				_themeDisplay.getScopeGroupId(), null,
-				((CustomFileItemSelectorCriterion)_itemSelectorCriterion).
-					getMaxFileSize());
+				customFileItemSelectorCriterion.getMaxFileSize());
 		}
 
 		return DLValidatorUtil.getMaxAllowableSize(
@@ -483,9 +487,11 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 		if (itemSelectorCriterion instanceof CustomFileItemSelectorCriterion) {
 			String[] customFileItemSelectorMimeTypes = new String[0];
 
+			CustomFileItemSelectorCriterion customFileItemSelectorCriterion =
+				(CustomFileItemSelectorCriterion)itemSelectorCriterion;
+
 			for (String extension :
-					((CustomFileItemSelectorCriterion)itemSelectorCriterion).
-						getExtensions()) {
+					customFileItemSelectorCriterion.getExtensions()) {
 
 				customFileItemSelectorMimeTypes = ArrayUtil.append(
 					customFileItemSelectorMimeTypes,

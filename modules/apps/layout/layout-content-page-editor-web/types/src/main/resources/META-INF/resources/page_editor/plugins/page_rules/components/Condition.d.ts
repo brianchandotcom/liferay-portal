@@ -5,6 +5,7 @@
 
 /// <reference types="react" />
 
+import {Fetcher} from '../../../app/utils/useCache';
 export interface Condition {
 	condition?: 'user' | 'role' | 'segment';
 	id: string;
@@ -13,11 +14,13 @@ export interface Condition {
 }
 interface ConditionProps {
 	condition: Condition;
+	fetcher: Fetcher;
 	onConditionChange: (condition: Condition) => void;
 	onDeleteCondition: () => void;
 }
 export default function Condition({
 	condition,
+	fetcher,
 	onConditionChange,
 	onDeleteCondition,
 }: ConditionProps): JSX.Element;

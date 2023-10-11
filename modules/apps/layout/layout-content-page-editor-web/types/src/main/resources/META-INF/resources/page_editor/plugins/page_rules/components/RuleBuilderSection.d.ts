@@ -5,5 +5,10 @@
 
 /// <reference types="react" />
 
+import {Fetcher} from '../../../app/utils/useCache';
 export declare function RuleBuilderActionSection(): JSX.Element;
-export declare function RuleBuilderConditionSection(): JSX.Element;
+export declare function RuleBuilderConditionSection({
+	fetcher,
+}: {
+	fetcher: Fetcher;
+}): JSX.Element;

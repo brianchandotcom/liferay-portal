@@ -56,6 +56,7 @@ const ViewBuilderScreen: React.FC<{}> = () => {
 					type: TYPES.ADD_OBJECT_VIEW_COLUMN,
 				}),
 			selected,
+			showModal: true,
 			title: Liferay.Language.get('select-the-columns'),
 		});
 	};

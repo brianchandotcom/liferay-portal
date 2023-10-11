@@ -1,6 +1,12 @@
 @import 'atlas-variables';
 
 .lfr-object__object-view-modal-select-object-fields {
+	&-empty-state {
+		.c-empty-state-sm.c-empty-state-animation {
+			max-width: fit-content;
+		}
+	}
+
 	&-list {
 		height: 300px;
 		margin: 0 20px 20px;

@@ -110,9 +110,19 @@ export function UniqueCompositeKey({
 		if (objectDefinition) {
 			parentWindow.Liferay.fire('openModalSelectObjectFields', {
 				alerts,
+				emptyState: {
+					message: Liferay.Language.get(
+						'there-are-no-valid-fields-in-this-definition-that-can-be-added-to-the-unique-composite-key'
+					),
+					title: Liferay.Language.get(
+						'there-are-no-valid-fields-created-yet'
+					),
+				},
 				getName: ({label, name}: ObjectField) =>
 					getLocalizableLabel(creationLanguageId, label, name),
-				header: Liferay.Language.get('add-fields-to-unique-composite-key'),
+				header: Liferay.Language.get(
+					'add-fields-to-unique-composite-key'
+				),
 				items: modalSelectObjectFieldsItems,
 				onAfterClose: setAlerts(([firstItem]) => {
 					return firstItem ? [firstItem] : [];
@@ -217,6 +227,7 @@ export function UniqueCompositeKey({
 					(modalSelectObjectFieldsItem) =>
 						modalSelectObjectFieldsItem.checked
 				),
+				showModal: true,
 				title: Liferay.Language.get('select-the-fields'),
 			});
 		}

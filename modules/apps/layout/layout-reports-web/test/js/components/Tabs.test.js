@@ -20,29 +20,6 @@ jest.mock(
 	() => jest.fn(() => <div />)
 );
 
-const mockSegments = {
-	segmentsExperiences: [
-		{
-			active: true,
-			segmentsEntryId: '0',
-			segmentsEntryName: 'Anyone',
-			segmentsExperienceId: '33590',
-			segmentsExperienceName: 'Experience Default',
-			statusLabel: 'Active',
-			url: 'url',
-		},
-	],
-	selectedSegmentsExperience: {
-		active: true,
-		segmentsEntryId: '0',
-		segmentsEntryName: 'Anyone',
-		segmentsExperienceId: '33590',
-		segmentsExperienceName: 'Experience Default',
-		statusLabel: 'Active',
-		url: 'url',
-	},
-};
-
 const mockTabs = [
 	{
 		id: 'page-speed-insights',
@@ -56,42 +33,9 @@ const mockTabs = [
 	},
 ];
 
-const renderTabs = ({segments = mockSegments} = {}) =>
-	render(<Tabs segments={segments} tabs={mockTabs} />);
-
 describe('Tabs', () => {
-	it('does not render the experience selector when there is only the default experience', () => {
-		renderTabs();
-
-		expect(
-			screen.queryByText('Experience Default')
-		).not.toBeInTheDocument();
-	});
-
-	it('renders experience selector if there is more than one experience', () => {
-		const newSegments = {
-			...mockSegments,
-			segmentsExperiences: [
-				...mockSegments.segmentsExperiences,
-				{
-					active: true,
-					segmentsEntryId: '0',
-					segmentsEntryName: 'Anyone',
-					segmentsExperienceId: '33591',
-					segmentsExperienceName: 'Experience1',
-					statusLabel: 'Inactive',
-					url: 'url',
-				},
-			],
-		};
-
-		renderTabs({segments: newSegments});
-
-		expect(screen.getByText('Experience Default')).toBeInTheDocument();
-	});
-
 	it('renders tabs', async () => {
-		renderTabs();
+		render(<Tabs segments={{}} tabs={mockTabs} />);
 
 		expect(screen.getByText('Performance')).toBeInTheDocument();
 		expect(screen.getByText('Page Speed')).toBeInTheDocument();

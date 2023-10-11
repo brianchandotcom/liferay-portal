@@ -848,10 +848,6 @@ public class ContextController {
 		return listenerRegistrations;
 	}
 
-	public ServletContextHelperDataContext getServletContextHelperDataContext() {
-		return servletContextHelperDataContext;
-	}
-
 	public long getServiceId() {
 		return contextServiceId;
 	}
@@ -1047,8 +1043,8 @@ public class ContextController {
 		Bundle curBundle, ServletContextHelper curServletContextHelper) {
 
 		ServletContextAdaptor adaptor = new ServletContextAdaptor(
-			this, curBundle, curServletContextHelper, eventListeners,
-			AccessController.getContext());
+			this, curBundle, curServletContextHelper, servletContextHelperDataContext,
+			eventListeners, AccessController.getContext());
 
 		return adaptor.createServletContext();
 	}

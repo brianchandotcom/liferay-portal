@@ -74,10 +74,11 @@ public class ServletContextAdaptor {
 	public ServletContextAdaptor(
 		ContextController contextController, Bundle bundle,
 		ServletContextHelper servletContextHelper,
+		ServletContextHelperDataContext servletContextHelperDataContext,
 		EventListeners eventListeners, AccessControlContext acc) {
 
 		this.contextController = contextController;
-		this.servletContextHelperDataContext = contextController.getServletContextHelperDataContext();
+		this.servletContextHelperDataContext = servletContextHelperDataContext;
 		this.servletContext = servletContextHelperDataContext.getServletContext();
 		this.servletContextHelper = servletContextHelper;
 		this.eventListeners = eventListeners;

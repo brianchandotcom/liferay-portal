@@ -1192,7 +1192,7 @@ definition {
 
 		task ("Given a page designer has a display page template for Category") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Commerce Product",
+				contentType = "Product",
 				displayPageTemplateEntryName = "Display Page Name",
 				groupName = ${randomSiteName});
 

@@ -46,6 +46,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_NAME_WITH_UOM</td>
+	<td>//div[@class='data-set-wrapper' or @class='searchcontainer-content']//div[contains(@class,'dnd-td') and contains(text(),'${key_uom}')]//..//a[text()='${key_entryName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OPTIONS_ENTRY_NAME</td>
 	<td>//div[@class='form-container']//td[contains(.,'${key_optionEntryName}')]</td>
 	<td></td>

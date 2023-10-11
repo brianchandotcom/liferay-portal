@@ -48,31 +48,20 @@ public class PaginationContextProvider implements ContextProvider<Pagination> {
 		int pageSizeLimit = _getPageSizeLimit(
 			_portal.getCompanyId(httpServletRequest));
 
-		int page;
-		int pageSize;
-
 		if (_isUnlimited(requestPage, requestPageSize)) {
 			if (_isUnlimited(pageSizeLimit)) {
-				page = QueryUtil.ALL_POS;
-				pageSize = QueryUtil.ALL_POS;
+				return Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 			}
-			else {
-				page = 1;
-				pageSize = pageSizeLimit;
-			}
-		}
-		else {
-			if (_isUnlimited(pageSizeLimit)) {
-				page = requestPage;
-				pageSize = requestPageSize;
-			}
-			else {
-				page = requestPage;
-				pageSize = Math.min(requestPageSize, pageSizeLimit);
-			}
+
+			return Pagination.of(1, pageSizeLimit);
 		}
 
-		return Pagination.of(page, pageSize);
+		if (_isUnlimited(pageSizeLimit)) {
+			return Pagination.of(requestPage, requestPageSize);
+		}
+
+		return Pagination.of(
+			requestPage, Math.min(requestPageSize, pageSizeLimit));
 	}
 
 	private int _getPageSizeLimit(long companyId) {

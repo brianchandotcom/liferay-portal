@@ -595,14 +595,14 @@ public class FDSViewFragmentRenderer implements FragmentRenderer {
 					ListUtil.fromString(
 						MapUtil.getString(
 							fdsViewObjectEntry.getProperties(),
-							"fdsActionsOrder"),
+							"fdsItemActionsOrder"),
 						StringPool.COMMA),
 					Long::parseLong)));
 
 		fdsActionObjectEntries.addAll(
 			_getRelatedObjectEntries(
 				fdsViewObjectDefinition, fdsViewObjectEntry,
-				"fdsViewFDSActionRelationship"));
+				"fdsViewFDSItemActionRelationship"));
 
 		return JSONUtil.toJSONArray(
 			fdsActionObjectEntries,

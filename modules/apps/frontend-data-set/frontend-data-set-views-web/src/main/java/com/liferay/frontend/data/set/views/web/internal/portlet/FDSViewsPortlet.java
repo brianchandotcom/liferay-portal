@@ -210,8 +210,8 @@ public class FDSViewsPortlet extends MVCPortlet {
 			fdsActionObjectDefinition.getObjectDefinitionId(), 0,
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			LocalizedMapUtil.getLocalizedMap(
-				"FDSView FDSActionCreation Relationship"),
-			"fdsViewFDSActionCreationRelationship", false,
+				"FDSView FDSCreationAction Relationship"),
+			"fdsViewFDSCreationActionRelationship", false,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_objectRelationshipLocalService.addObjectRelationship(
@@ -219,8 +219,8 @@ public class FDSViewsPortlet extends MVCPortlet {
 			fdsActionObjectDefinition.getObjectDefinitionId(), 0,
 			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 			LocalizedMapUtil.getLocalizedMap(
-				"FDSView FDSActionItem Relationship"),
-			"fdsViewFDSActionItemRelationship", false,
+				"FDSView FDSItemAction Relationship"),
+			"fdsViewFDSItemActionRelationship", false,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 	}
 
@@ -547,13 +547,8 @@ public class FDSViewsPortlet extends MVCPortlet {
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
 						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
-						_language.get(locale, "actions-creation-order"),
-						"fdsActionsCreationOrder", false),
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
-						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
-						_language.get(locale, "actions-item-order"),
-						"fdsActionsItemOrder", false),
+						_language.get(locale, "creation-actions-order"),
+						"fdsCreationActionsOrder", false),
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
 						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
@@ -564,6 +559,11 @@ public class FDSViewsPortlet extends MVCPortlet {
 						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
 						_language.get(locale, "filters-order"),
 						"fdsFiltersOrder", false),
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
+						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,
+						_language.get(locale, "item-actions-order"),
+						"fdsItemActionsOrder", false),
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_LONG_TEXT,
 						ObjectFieldConstants.DB_TYPE_CLOB, true, false, null,

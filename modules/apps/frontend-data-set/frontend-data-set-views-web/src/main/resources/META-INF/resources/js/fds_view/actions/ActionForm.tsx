@@ -154,8 +154,8 @@ const ActionForm = ({
 
 		const relationShip =
 			activeTab === 0
-				? OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ACTION_ITEM_ID
-				: OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ACTION_CREATION_ID;
+				? OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ITEM_ACTION_ID
+				: OBJECT_RELATIONSHIP.FDS_VIEW_FDS_CREATION_ACTION_ID;
 
 		const body = {
 			confirmationMessage_i18n: confirmationMessageTranslations,

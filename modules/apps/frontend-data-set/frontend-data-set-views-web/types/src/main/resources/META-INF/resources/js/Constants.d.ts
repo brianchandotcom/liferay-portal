@@ -20,18 +20,18 @@ declare const FUZZY_OPTIONS: {
 declare const OBJECT_RELATIONSHIP: {
 	readonly FDS_ENTRY_FDS_VIEW: 'fdsEntryFDSViewRelationship';
 	readonly FDS_ENTRY_FDS_VIEW_ID: 'r_fdsEntryFDSViewRelationship_c_fdsEntryId';
-	readonly FDS_VIEW_FDS_ACTION_CREATION: 'fdsViewFDSActionCreationRelationship';
-	readonly FDS_VIEW_FDS_ACTION_CREATION_ID: 'r_fdsViewFDSActionCreationRelationship_c_fdsViewId';
-	readonly FDS_VIEW_FDS_ACTION_ITEM: 'fdsViewFDSActionItemRelationship';
-	readonly FDS_VIEW_FDS_ACTION_ITEM_ID: 'r_fdsViewFDSActionItemRelationship_c_fdsViewId';
 	readonly FDS_VIEW_FDS_CLIENT_EXTENSION_FILTER: 'fdsViewFDSClientExtensionFilter';
 	readonly FDS_VIEW_FDS_CLIENT_EXTENSION_FILTER_ID: 'r_fdsViewFDSClientExtensionFilter_c_fdsViewId';
+	readonly FDS_VIEW_FDS_CREATION_ACTION: 'fdsViewFDSCreationActionRelationship';
+	readonly FDS_VIEW_FDS_CREATION_ACTION_ID: 'r_fdsViewFDSCreationActionRelationship_c_fdsViewId';
 	readonly FDS_VIEW_FDS_DATE_FILTER: 'fdsViewFDSDateFilterRelationship';
 	readonly FDS_VIEW_FDS_DATE_FILTER_ID: 'r_fdsViewFDSDateFilterRelationship_c_fdsViewId';
 	readonly FDS_VIEW_FDS_DYNAMIC_FILTER: 'fdsViewFDSDynamicFilterRelationship';
 	readonly FDS_VIEW_FDS_DYNAMIC_FILTER_ID: 'r_fdsViewFDSDynamicFilterRelationship_c_fdsViewId';
 	readonly FDS_VIEW_FDS_FIELD: 'fdsViewFDSFieldRelationship';
 	readonly FDS_VIEW_FDS_FIELD_ID: 'r_fdsViewFDSFieldRelationship_c_fdsViewId';
+	readonly FDS_VIEW_FDS_ITEM_ACTION: 'fdsViewFDSItemActionRelationship';
+	readonly FDS_VIEW_FDS_ITEM_ACTION_ID: 'r_fdsViewFDSItemActionRelationship_c_fdsViewId';
 	readonly FDS_VIEW_FDS_SORT: 'fdsViewFDSSortRelationship';
 	readonly FDS_VIEW_FDS_SORT_ID: 'r_fdsViewFDSSortRelationship_c_fdsViewId';
 };

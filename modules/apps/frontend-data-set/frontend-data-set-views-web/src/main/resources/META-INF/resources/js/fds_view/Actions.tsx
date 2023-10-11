@@ -118,14 +118,22 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
 	const loadFDSActions = async () => {
 		setLoading(true);
 
-		let url = '';
+		const relationShip =
+			activeTab === 0
+				? OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ITEM_ACTION
+				: OBJECT_RELATIONSHIP.FDS_VIEW_FDS_CREATION_ACTION;
+		const relationshipID =
+			activeTab === 0
+				? OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ITEM_ACTION_ID
+				: OBJECT_RELATIONSHIP.FDS_VIEW_FDS_CREATION_ACTION_ID;
+
+		const url = `${API_URL.FDS_ACTIONS}?filter=(${relationshipID} eq '${fdsView.id}')&nestedFields=${relationShip}&sort=dateCreated:desc`;
+
 		if (activeTab === 0) {
 			setActiveSection(SECTIONS.ITEM_ACTIONS);
-			url = `${API_URL.FDS_ACTIONS}?filter=(${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ITEM_ACTION_ID} eq '${fdsView.id}')&nestedFields=${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ITEM_ACTION}&sort=dateCreated:desc`;
 		}
 		else if (activeTab === 1) {
 			setActiveSection(SECTIONS.CREATION_ACTIONS);
-			url = `${API_URL.FDS_ACTIONS}?filter=(${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_CREATION_ACTION_ID} eq '${fdsView.id}')&nestedFields=${OBJECT_RELATIONSHIP.FDS_VIEW_FDS_CREATION_ACTION}&sort=dateCreated:desc`;
 		}
 
 		const response = await fetch(url);
@@ -144,11 +152,6 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
 
 		let ordered = storedFDSActions;
 		let notOrdered: IFDSAction[] = [];
-
-		const relationShip =
-			activeTab === 0
-				? OBJECT_RELATIONSHIP.FDS_VIEW_FDS_ITEM_ACTION
-				: OBJECT_RELATIONSHIP.FDS_VIEW_FDS_CREATION_ACTION;
 
 		const actionTypeOrder =
 			activeTab === 0 ? 'fdsItemActionsOrder' : 'fdsCreationActionsOrder';

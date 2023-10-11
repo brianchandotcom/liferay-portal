@@ -7,6 +7,7 @@ dependencies {
 	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")
 	compileOnly project(":apps:portal-security:portal-security-api")
 	compileOnly project(":apps:portal-security:portal-security-export-import-api")
+	compileOnly project(":apps:portal-security:portal-security-ldap-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":core:petra:petra-string")
 }

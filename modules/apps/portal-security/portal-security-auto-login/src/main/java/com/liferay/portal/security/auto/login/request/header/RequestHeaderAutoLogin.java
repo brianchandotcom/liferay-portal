@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auto.login.internal.request.header.configuration.RequestHeaderAutoLoginConfiguration;
 import com.liferay.portal.security.auto.login.internal.request.header.constants.RequestHeaderAutoLoginConstants;
-import com.liferay.portal.security.exportimport.UserImporter;
+import com.liferay.portal.security.ldap.exportimport.LDAPUserImporter;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -180,7 +180,7 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 	private Portal _portal;
 
 	@Reference
-	private UserImporter _userImporter;
+	private LDAPUserImporter _userImporter;
 
 	@Reference
 	private UserLocalService _userLocalService;

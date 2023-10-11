@@ -89,9 +89,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		throws PortalException {
 
 		if (!ObjectEntryThreadLocal.isSkipObjectEntryResourcePermission()) {
-			_checkPortletResourcePermission(
-				ObjectActionKeys.ADD_OBJECT_ENTRY, groupId, objectDefinitionId,
-				values);
+			_checkAddObjectEntryPortletResourcePermission(
+				groupId, objectDefinitionId, values);
 		}
 
 		_validateSubmissionLimit(objectDefinitionId, getUser());
@@ -111,9 +110,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			objectDefinitionId);
 
 		if (objectEntry == null) {
-			_checkPortletResourcePermission(
-				ObjectActionKeys.ADD_OBJECT_ENTRY, groupId, objectDefinitionId,
-				values);
+			_checkAddObjectEntryPortletResourcePermission(
+				groupId, objectDefinitionId, values);
 		}
 		else {
 			checkModelResourcePermission(
@@ -403,23 +401,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			ObjectConfiguration.class, properties);
 	}
 
-	private void _checkPermission(String actionId, ObjectEntry objectEntry)
-		throws PortalException {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.findByPrimaryKey(
-				objectEntry.getObjectDefinitionId());
-
-		ModelResourcePermission<ObjectEntry> modelResourcePermission =
-			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
-				objectDefinition.getClassName());
-
-		modelResourcePermission.check(
-			getPermissionChecker(), objectEntry, actionId);
-	}
-
-	private void _checkPortletResourcePermission(
-			String actionId, long groupId, long objectDefinitionId,
+	private void _checkAddObjectEntryPortletResourcePermission(
+			long groupId, long objectDefinitionId,
 			Map<String, Serializable> values)
 		throws PortalException {
 
@@ -428,11 +411,12 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		portletResourcePermission.check(permissionChecker, groupId, actionId);
+		portletResourcePermission.check(
+			permissionChecker, groupId, ObjectActionKeys.ADD_OBJECT_ENTRY);
 
 		if (permissionChecker.hasPermission(
 				groupId, portletResourcePermission.getResourceName(), 0,
-				actionId)) {
+				ObjectActionKeys.ADD_OBJECT_ENTRY)) {
 
 			return;
 		}
@@ -527,13 +511,31 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 				continue;
 			}
 
-			if (resourcePermission.hasActionId(actionId)) {
+			if (resourcePermission.hasActionId(
+					ObjectActionKeys.ADD_OBJECT_ENTRY)) {
+
 				return;
 			}
 		}
 
 		throw new PrincipalException.MustHavePermission(
-			permissionChecker, objectDefinition.getResourceName(), 0, actionId);
+			permissionChecker, objectDefinition.getResourceName(), 0,
+			ObjectActionKeys.ADD_OBJECT_ENTRY);
+	}
+
+	private void _checkPermission(String actionId, ObjectEntry objectEntry)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectEntry.getObjectDefinitionId());
+
+		ModelResourcePermission<ObjectEntry> modelResourcePermission =
+			ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+				objectDefinition.getClassName());
+
+		modelResourcePermission.check(
+			getPermissionChecker(), objectEntry, actionId);
 	}
 
 	private PortletResourcePermission _getPortletResourcePermission(

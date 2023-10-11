@@ -8,7 +8,6 @@ package com.liferay.portal.test.rule;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 import org.junit.Assert;
@@ -35,11 +34,6 @@ public class InitializeKernelUtilTestRuleTest {
 	@Test
 	public void testFileUtil() {
 		Assert.assertNotNull(FileUtil.getFile());
-	}
-
-	@Test
-	public void testHtmlUtil() {
-		Assert.assertNotNull(HtmlUtil.getHtml());
 	}
 
 	@Test

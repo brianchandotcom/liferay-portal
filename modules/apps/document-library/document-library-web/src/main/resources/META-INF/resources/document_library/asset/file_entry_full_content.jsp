@@ -30,7 +30,7 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = dlDisplayConte
 		<%
 		DLAdminDisplayContextProvider dlAdminDisplayContextProvider = DLWebComponentProvider.getDlAdminDisplayContextProvider();
 
-		renderRequest.setAttribute(DLViewFileEntryDisplayContext.class.getName(), new DLViewFileEntryDisplayContext(dlAdminDisplayContextProvider.getDLAdminDisplayContext(request, response), dlDisplayContextProvider, HtmlUtil.getHtml(), request, LanguageUtil.getLanguage(), PortalUtil.getPortal(), renderRequest, renderResponse));
+		renderRequest.setAttribute(DLViewFileEntryDisplayContext.class.getName(), new DLViewFileEntryDisplayContext(dlAdminDisplayContextProvider.getDLAdminDisplayContext(request, response), dlDisplayContextProvider, request, LanguageUtil.getLanguage(), PortalUtil.getPortal(), renderRequest, renderResponse));
 		%>
 
 		<liferay-util:include page="/document_library/view_file_entry.jsp" servletContext="<%= application %>">

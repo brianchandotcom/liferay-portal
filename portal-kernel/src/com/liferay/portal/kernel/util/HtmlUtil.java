@@ -728,10 +728,6 @@ public class HtmlUtil {
 		return sb.toString();
 	}
 
-	public void setHtml(Html html) {
-		_html = html;
-	}
-
 	private static void _appendHexChars(
 		StringBuilder sb, char[] buffer, char c) {
 
@@ -864,7 +860,6 @@ public class HtmlUtil {
 		'<', '>', '*', '$', '"', '"', ' ', 9, 10, 13, 133, 8232
 	};
 
-	private static Html _html;
 	private static final Pattern _pattern = Pattern.compile("([\\s<&]|$)");
 	private static final Map<String, String> _unescapeMap = HashMapBuilder.put(
 		"#34", "\""

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upgrade.MockPortletPreferences;
-import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.context.SearchContextFactory;
@@ -258,7 +257,7 @@ public class SearchDisplayContextTest {
 
 		return new SearchDisplayContext(
 			renderRequest, portletPreferences, _createPortal(renderRequest),
-			Mockito.mock(Html.class), Mockito.mock(Language.class), searcher,
+			Mockito.mock(Language.class), searcher,
 			Mockito.mock(IndexSearchPropsValues.class), portletURLFactory,
 			Mockito.mock(SummaryBuilderFactory.class), searchContextFactory,
 			searchRequestBuilderFactory, _createJSONFactory());

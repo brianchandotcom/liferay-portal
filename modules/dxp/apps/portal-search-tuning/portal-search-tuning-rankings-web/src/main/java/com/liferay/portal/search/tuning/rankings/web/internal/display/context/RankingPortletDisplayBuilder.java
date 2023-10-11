@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -208,11 +207,9 @@ public class RankingPortletDisplayBuilder {
 	protected SearchContainer<RankingEntryDisplayContext> getSearchContainer(
 		String keywords) {
 
-		Html html = HtmlUtil.getHtml();
-
 		String emptyResultMessage = _language.format(
 			_httpServletRequest, "no-custom-results-yet",
-			"<strong>" + html.escape(keywords) + "</strong>", false);
+			"<strong>" + HtmlUtil.escape(keywords) + "</strong>", false);
 
 		SearchContainer<RankingEntryDisplayContext> searchContainer =
 			new SearchContainer<>(

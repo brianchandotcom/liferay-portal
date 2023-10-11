@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -61,6 +61,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.InOrder;
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 /**
@@ -340,11 +341,11 @@ public class DDMFormInstanceRecordExporterImplTest {
 			"value1"
 		);
 
-		ReflectionTestUtil.setFieldValue(
-			ddmFormInstanceRecordExporterImpl, "_html", _html);
+		MockedStatic<HtmlUtil> htmlUtilMockedStatic = Mockito.mockStatic(
+			HtmlUtil.class);
 
-		Mockito.when(
-			_html.unescape("value1")
+		htmlUtilMockedStatic.when(
+			() -> HtmlUtil.unescape("value1")
 		).thenReturn(
 			"value1"
 		);
@@ -367,11 +368,10 @@ public class DDMFormInstanceRecordExporterImplTest {
 			ddmFormFieldValue, locale
 		);
 
-		Mockito.verify(
-			_html, Mockito.times(1)
-		).unescape(
-			"value1"
-		);
+		htmlUtilMockedStatic.verify(
+			() -> HtmlUtil.unescape("value1"), Mockito.times(1));
+
+		htmlUtilMockedStatic.close();
 	}
 
 	@Test
@@ -776,7 +776,6 @@ public class DDMFormInstanceRecordExporterImplTest {
 	private final DDMFormInstanceVersionLocalService
 		_ddmFormInstanceVersionLocalService = Mockito.mock(
 			DDMFormInstanceVersionLocalService.class);
-	private final Html _html = Mockito.mock(Html.class);
 	private final Language _language = Mockito.mock(Language.class);
 
 }

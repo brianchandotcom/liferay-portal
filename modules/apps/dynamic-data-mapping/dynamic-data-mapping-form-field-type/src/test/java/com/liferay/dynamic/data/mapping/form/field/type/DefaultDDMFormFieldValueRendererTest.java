@@ -7,17 +7,16 @@ package com.liferay.dynamic.data.mapping.form.field.type;
 
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
-import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 /**
@@ -30,13 +29,11 @@ public class DefaultDDMFormFieldValueRendererTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Before
-	public void setUp() {
-		setUpHtmlUtil();
-	}
-
 	@Test
 	public void testRender() {
+		MockedStatic<HtmlUtil> htmlUtilMockedStatic = Mockito.mockStatic(
+			HtmlUtil.class);
+
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
 		ddmFormFieldValue.setName("Text");
@@ -46,22 +43,13 @@ public class DefaultDDMFormFieldValueRendererTest {
 		_defaultDDMFormFieldValueRenderer.render(
 			ddmFormFieldValue, LocaleUtil.US);
 
-		Mockito.verify(
-			_html
-		).escape(
-			Mockito.anyString()
-		);
-	}
+		htmlUtilMockedStatic.verify(() -> HtmlUtil.escape(Mockito.anyString()));
 
-	protected void setUpHtmlUtil() {
-		HtmlUtil htmlUtil = new HtmlUtil();
-
-		htmlUtil.setHtml(_html);
+		htmlUtilMockedStatic.close();
 	}
 
 	private final DefaultDDMFormFieldValueRenderer
 		_defaultDDMFormFieldValueRenderer =
 			new DefaultDDMFormFieldValueRenderer();
-	private final Html _html = Mockito.mock(Html.class);
 
 }

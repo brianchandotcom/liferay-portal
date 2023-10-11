@@ -63,7 +63,7 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Html;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -211,7 +211,7 @@ public class FragmentEntryProcessorHelperTest {
 			_journalConverter);
 
 		Assert.assertEquals(
-			_html.escape(fieldValue),
+			HtmlUtil.escape(fieldValue),
 			_getFieldValue(
 				JSONUtil.put(
 					"className", JournalArticle.class.getName()
@@ -703,9 +703,6 @@ public class FragmentEntryProcessorHelperTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	@Inject
-	private Html _html;
 
 	@Inject
 	private JournalConverter _journalConverter;

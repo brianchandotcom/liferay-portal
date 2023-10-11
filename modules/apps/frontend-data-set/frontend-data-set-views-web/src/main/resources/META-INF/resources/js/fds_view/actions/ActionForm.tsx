@@ -374,7 +374,11 @@ const ActionForm = ({
 											type: event.target.value,
 										})
 									}
-									options={ACTION_TYPES}
+									options={
+										Liferay.FeatureFlags['LPS-194395']
+											? ACTION_TYPES
+											: ACTION_TYPES.slice(0, 1)
+									}
 									placeholder={Liferay.Language.get(
 										'please-select-an-option'
 									)}

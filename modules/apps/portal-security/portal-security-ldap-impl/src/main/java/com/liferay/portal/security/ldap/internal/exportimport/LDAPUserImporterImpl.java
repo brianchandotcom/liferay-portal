@@ -71,7 +71,6 @@ import com.liferay.portal.security.ldap.exportimport.LDAPUser;
 import com.liferay.portal.security.ldap.exportimport.LDAPUserImporter;
 import com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration;
 import com.liferay.portal.security.ldap.internal.UserImportTransactionThreadLocal;
-import com.liferay.portal.security.ldap.internal.validator.SafeLdapContextImpl;
 import com.liferay.portal.security.ldap.util.LDAPUtil;
 import com.liferay.portal.security.ldap.validator.LDAPFilterException;
 import com.liferay.portal.security.ldap.validator.LDAPFilterValidator;
@@ -101,7 +100,6 @@ import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
-import javax.naming.ldap.LdapContext;
 
 import org.apache.commons.lang.time.StopWatch;
 
@@ -124,22 +122,6 @@ public class LDAPUserImporterImpl implements LDAPUserImporter {
 	@Override
 	public long getLastImportTime() {
 		return _lastImportTime;
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x),  replaced by {@link #importUser(long,
-	 *             long, SafeLdapContext, Attributes, String)}
-	 */
-	@Deprecated
-	@Override
-	public User importUser(
-			long ldapServerId, long companyId, LdapContext ldapContext,
-			Attributes attributes, String password)
-		throws Exception {
-
-		return importUser(
-			ldapServerId, companyId, new SafeLdapContextImpl(ldapContext),
-			attributes, password);
 	}
 
 	@Override

@@ -51,13 +51,13 @@ public class StagingBarDisplayContext {
 
 		UnsafeConsumer<DropdownItem, Exception>
 			reviewHistoryDropdownItemUnsafeConsumer =
-				_reviewHistoryDropdownItemUnsafeConsumer(layoutRevision);
+				_getReviewHistoryDropdownItemUnsafeConsumer(layoutRevision);
 
 		return DropdownItemListBuilder.add(
-			_sitePagesVariationDropdownItemUnsafeConsumer()
+			_viewLayoutSetBranchesDropdownItemUnsafeConsumer()
 		).add(
 			() -> !layoutRevision.isIncomplete() && !layout.isTypeContent(),
-			_pagesVariationDropdownItemUnsafeConsumer(layoutSetBranch)
+			_viewLayoutBranchesDropdownItemUnsafeConsumer(layoutSetBranch)
 		).add(
 			() -> !layoutRevision.isIncomplete() && !layout.isTypeContent(),
 			_viewHistoryDropdownItemUnsafeConsumer(layoutRevision)
@@ -131,46 +131,14 @@ public class StagingBarDisplayContext {
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-		_pagesVariationDropdownItemUnsafeConsumer(
-			LayoutSetBranch layoutSetBranch) {
-
-		return dropdownItem -> {
-			dropdownItem.putData("action", "pagesVariation");
-			dropdownItem.putData(
-				"pagesVariationURL",
-				PortletURLBuilder.createRenderURL(
-					_liferayPortletResponse
-				).setMVCRenderCommandName(
-					"/staging_bar/view_layout_branches"
-				).setParameter(
-					"layoutSetBranchId", layoutSetBranch.getLayoutSetBranchId()
-				).setWindowState(
-					LiferayWindowState.POP_UP
-				).buildString());
-			dropdownItem.setLabel(
-				LanguageUtil.get(_themeDisplay.getLocale(), "page-variation"));
-		};
-	}
-
-	private UnsafeConsumer<DropdownItem, Exception>
-		_reviewHistoryDropdownItemUnsafeConsumer(
+		_getReviewHistoryDropdownItemUnsafeConsumer(
 			LayoutRevision layoutRevision) {
 
 		if (!layoutRevision.isMajor() &&
 			(layoutRevision.getParentLayoutRevisionId() !=
 				LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID)) {
 
-			return dropdownItem -> {
-				dropdownItem.putData("action", "undo");
-				dropdownItem.putData(
-					"layoutRevisionId",
-					String.valueOf(layoutRevision.getLayoutRevisionId()));
-				dropdownItem.putData(
-					"layoutSetBranchId",
-					String.valueOf(layoutRevision.getLayoutSetBranchId()));
-				dropdownItem.setLabel(
-					LanguageUtil.get(_themeDisplay.getLocale(), "undo"));
-			};
+			return _undoDropdownItemUnsafeConsumer(layoutRevision);
 		}
 
 		if (layoutRevision.hasChildren()) {
@@ -181,19 +149,8 @@ public class StagingBarDisplayContext {
 				0);
 
 			if (firstChildLayoutRevision.isInactive()) {
-				return dropdownItem -> {
-					dropdownItem.putData("action", "redo");
-					dropdownItem.putData(
-						"layoutRevisionId",
-						String.valueOf(
-							firstChildLayoutRevision.getLayoutRevisionId()));
-					dropdownItem.putData(
-						"layoutSetBranchId",
-						String.valueOf(
-							firstChildLayoutRevision.getLayoutSetBranchId()));
-					dropdownItem.setLabel(
-						LanguageUtil.get(_themeDisplay.getLocale(), "redo"));
-				};
+				return _redoDropdownItemUnsafeConsumer(
+					firstChildLayoutRevision);
 			}
 		}
 
@@ -201,22 +158,36 @@ public class StagingBarDisplayContext {
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-		_sitePagesVariationDropdownItemUnsafeConsumer() {
+		_redoDropdownItemUnsafeConsumer(
+			LayoutRevision firstChildLayoutRevision) {
 
 		return dropdownItem -> {
-			dropdownItem.putData("action", "sitePagesVariation");
+			dropdownItem.putData("action", "redo");
 			dropdownItem.putData(
-				"sitePagesVariationURL",
-				PortletURLBuilder.createRenderURL(
-					_liferayPortletResponse
-				).setMVCRenderCommandName(
-					"/staging_bar/view_layout_set_branches"
-				).setWindowState(
-					LiferayWindowState.POP_UP
-				).buildString());
+				"layoutRevisionId",
+				String.valueOf(firstChildLayoutRevision.getLayoutRevisionId()));
+			dropdownItem.putData(
+				"layoutSetBranchId",
+				String.valueOf(
+					firstChildLayoutRevision.getLayoutSetBranchId()));
 			dropdownItem.setLabel(
-				LanguageUtil.get(
-					_themeDisplay.getLocale(), "site-pages-variation"));
+				LanguageUtil.get(_themeDisplay.getLocale(), "redo"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_undoDropdownItemUnsafeConsumer(LayoutRevision layoutRevision) {
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "undo");
+			dropdownItem.putData(
+				"layoutRevisionId",
+				String.valueOf(layoutRevision.getLayoutRevisionId()));
+			dropdownItem.putData(
+				"layoutSetBranchId",
+				String.valueOf(layoutRevision.getLayoutSetBranchId()));
+			dropdownItem.setLabel(
+				LanguageUtil.get(_themeDisplay.getLocale(), "undo"));
 		};
 	}
 
@@ -238,6 +209,48 @@ public class StagingBarDisplayContext {
 				).buildString());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_themeDisplay.getLocale(), "history"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_viewLayoutBranchesDropdownItemUnsafeConsumer(
+			LayoutSetBranch layoutSetBranch) {
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "viewLayoutBranches");
+			dropdownItem.putData(
+				"viewLayoutBranchesURL",
+				PortletURLBuilder.createRenderURL(
+					_liferayPortletResponse
+				).setMVCRenderCommandName(
+					"/staging_bar/view_layout_branches"
+				).setParameter(
+					"layoutSetBranchId", layoutSetBranch.getLayoutSetBranchId()
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString());
+			dropdownItem.setLabel(
+				LanguageUtil.get(_themeDisplay.getLocale(), "page-variation"));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_viewLayoutSetBranchesDropdownItemUnsafeConsumer() {
+
+		return dropdownItem -> {
+			dropdownItem.putData("action", "viewLayoutSetBranches");
+			dropdownItem.putData(
+				"viewLayoutSetBranchesURL",
+				PortletURLBuilder.createRenderURL(
+					_liferayPortletResponse
+				).setMVCRenderCommandName(
+					"/staging_bar/view_layout_set_branches"
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString());
+			dropdownItem.setLabel(
+				LanguageUtil.get(
+					_themeDisplay.getLocale(), "site-pages-variation"));
 		};
 	}
 

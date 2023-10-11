@@ -57,17 +57,6 @@ const updateRevision = (cmd, layoutRevisionId, layoutSetBranchId) => {
 };
 
 const ACTIONS = {
-	pagesVariation: ({pagesVariationURL}) => {
-		openModal({
-			id: 'pagesVariationDialog',
-			onClose: () => {
-				window.location.reload();
-			},
-			title: Liferay.Language.get('page-variations'),
-			url: pagesVariationURL,
-		});
-	},
-
 	redo: ({layoutRevisionId, layoutSetBranchId}) => {
 		const cmd = MAP_CMD_REVISION['redo'];
 		const confirmText = MAP_TEXT_REVISION['redo'];
@@ -79,17 +68,6 @@ const ACTIONS = {
 					updateRevision(cmd, layoutRevisionId, layoutSetBranchId);
 				}
 			},
-		});
-	},
-
-	sitePagesVariation: ({sitePagesVariationURL}) => {
-		openModal({
-			id: 'sitePagesVariationDialog',
-			onClose: () => {
-				window.location.reload();
-			},
-			title: Liferay.Language.get('site-pages-variation'),
-			url: sitePagesVariationURL,
 		});
 	},
 
@@ -115,6 +93,28 @@ const ACTIONS = {
 			},
 			title: Liferay.Language.get('history'),
 			url: viewHistoryURL,
+		});
+	},
+
+	viewLayoutBranches: ({viewLayoutBranchesURL}) => {
+		openModal({
+			id: 'layoutBranchesDialog',
+			onClose: () => {
+				window.location.reload();
+			},
+			title: Liferay.Language.get('page-variations'),
+			url: viewLayoutBranchesURL,
+		});
+	},
+
+	viewLayoutSetBranches: ({viewLayoutSetBranchesURL}) => {
+		openModal({
+			id: 'layoutSetBranchesDialog',
+			onClose: () => {
+				window.location.reload();
+			},
+			title: Liferay.Language.get('site-pages-variation'),
+			url: viewLayoutSetBranchesURL,
 		});
 	},
 };

@@ -8,6 +8,7 @@ package com.liferay.multi.factor.authentication.timebased.otp.web.internal.confi
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 
 /**
  * @author Tomas Polesovsky
@@ -48,5 +49,30 @@ public interface MFATimeBasedOTPConfiguration {
 		name = "algorithm-key-size", required = false
 	)
 	public int algorithmKeySize();
+
+	@Meta.AD(
+		deflt = "${server-property://com.liferay.portal/admin.email.from.address}",
+		description = "set-the-sender-address-on-the-timebased-one-time-password-email",
+		name = "email-totp-from-field", required = false
+	)
+	public String emailFromAddress();
+
+	@Meta.AD(
+		deflt = "${server-property://com.liferay.portal/admin.email.from.name}",
+		name = "email-totp-from-name", required = false
+	)
+	public String emailFromName();
+
+	@Meta.AD(
+		deflt = "${resource:com/liferay/multi/factor/authentication/timebased/otp/configuration/dependencies/email_totp_sent_body.tmpl}",
+		name = "email-totp-sent-body", required = false
+	)
+	public LocalizedValuesMap emailTOTPReplayBody();
+
+	@Meta.AD(
+		deflt = "${resource:com/liferay/multi/factor/authentication/timebased/otp/configuration/dependencies/email_totp_sent_subject.tmpl}",
+		name = "email-totp-sent-subject", required = false
+	)
+	public LocalizedValuesMap emailTOTPReplaySubject();
 
 }

@@ -163,11 +163,13 @@ definition {
 
 	macro _getOrganizationStatusListTypeId {
 		var portalURL = JSONCompany.getPortalURL();
+		var companyId = JSONCompany.getCompanyId();
 		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
 			${portalURL}/api/jsonws/listtype/get-list-type \
 				-u ${userLoginInfo} \
+				-d companyId=${companyId} \
 				-d name=full-member \
 				-d type=com.liferay.portal.kernel.model.Organization.status
 		''';

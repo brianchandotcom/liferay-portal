@@ -214,7 +214,7 @@
 </tr>
 <tr>
 	<td>MANAGE_VARIATIONS</td>
-	<td>//button[contains(@data-action,'sitePagesVariation')]</td>
+	<td>//button[contains(@data-action,'viewLayoutSetBranches')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -367,7 +367,7 @@
 </tr>
 <tr>
 	<td>STAGING_MENU_MANAGE_PAGE_VARIATION</td>
-	<td>//button[contains(@data-action,'pagesVariation')]</td>
+	<td>//button[contains(@data-action,'viewLayoutBranches')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -134,6 +134,12 @@ definition {
 					roleType = "account");
 			}
 
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.account.model.AccountRole",
+				roleTitle = "Account Specific Role",
+				roleType = "account");
+
 			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoEntry(rowEntry = "Account Name");
@@ -208,11 +214,13 @@ definition {
 					roleType = "account");
 			}
 
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "ASSIGN_USERS",
-				resourceName = "com.liferay.account.model.AccountRole",
-				roleTitle = "Assign Account Roles",
-				roleType = "account");
+			for (var resourceActionIndex : list "ASSIGN_USERS,VIEW") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = ${resourceActionIndex},
+					resourceName = "com.liferay.account.model.AccountRole",
+					roleTitle = "Assign Account Roles",
+					roleType = "account");
+			}
 
 			Account.openAccountsAdmin();
 
@@ -300,11 +308,13 @@ definition {
 					roleType = "account");
 			}
 
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "DEFINE_PERMISSIONS",
-				resourceName = "com.liferay.account.model.AccountRole",
-				roleTitle = "Define Permissions Role",
-				roleType = "account");
+			for (var resourceActionIndex : list "DEFINE_PERMISSIONS,VIEW") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = ${resourceActionIndex},
+					resourceName = "com.liferay.account.model.AccountRole",
+					roleTitle = "Define Permissions Role",
+					roleType = "account");
+			}
 
 			Account.openAccountsAdmin();
 
@@ -383,6 +393,11 @@ definition {
 					resourceName = "com.liferay.account.model.AccountEntry",
 					roleTitle = "Access Account Permission");
 			}
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.account.model.AccountRole",
+				roleTitle = "Access Account Permission");
 		}
 
 		task ("And he is a member of a business account") {
@@ -609,6 +624,12 @@ definition {
 					roleTitle = "Account Specific Role",
 					roleType = "account");
 			}
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.account.model.AccountRole",
+				roleTitle = "Account Specific Role",
+				roleType = "account");
 		}
 
 		task ("When this user is granted permissions to Update account role for Account Name") {
@@ -700,6 +721,12 @@ definition {
 					roleTitle = "Account Specific Role1",
 					roleType = "account");
 			}
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.account.model.AccountRole",
+				roleTitle = "Account Specific Role1",
+				roleType = "account");
 
 			Account.openAccountsAdmin();
 

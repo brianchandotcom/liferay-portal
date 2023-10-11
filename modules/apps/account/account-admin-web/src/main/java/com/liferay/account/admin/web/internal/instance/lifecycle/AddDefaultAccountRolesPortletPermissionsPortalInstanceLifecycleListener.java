@@ -8,7 +8,6 @@ package com.liferay.account.admin.web.internal.instance.lifecycle;
 import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.constants.AccountRoleConstants;
-import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.model.Company;
@@ -31,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Drew Brokke
  */
 @Component(
-	property = "service.ranking:Integer=100",
+	property = "service.ranking:Integer=200",
 	service = PortalInstanceLifecycleListener.class
 )
 public class
@@ -40,8 +39,13 @@ public class
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		_accountRoleLocalService.checkCompanyAccountRoles(
-			company.getCompanyId());
+		Role role = _roleLocalService.fetchRole(
+			company.getCompanyId(),
+			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER);
+
+		if (role == null) {
+			return;
+		}
 
 		_checkResourcePermissions(
 			company.getCompanyId(),
@@ -93,9 +97,6 @@ public class
 		target = "(javax.portlet.name=" + AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN + ")"
 	)
 	private Portlet _accountEntriesAdminPortlet;
-
-	@Reference
-	private AccountRoleLocalService _accountRoleLocalService;
 
 	@Reference(
 		target = "(javax.portlet.name=" + AccountPortletKeys.ACCOUNT_USERS_ADMIN + ")"

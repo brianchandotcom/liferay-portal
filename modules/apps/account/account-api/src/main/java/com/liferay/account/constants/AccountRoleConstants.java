@@ -9,7 +9,12 @@ import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalServiceUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
+import java.util.Collections;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -42,6 +47,26 @@ public class AccountRoleConstants {
 	public static final String ROLE_NAME_ACCOUNT_SUPPLIER = "Account Supplier";
 
 	public static final String ROLE_NAME_SUPPLIER = "Supplier";
+
+	public static final Map<String, Map<Locale, String>> roleDescriptionsMap =
+		HashMapBuilder.<String, Map<Locale, String>>put(
+			REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR,
+			Collections.singletonMap(
+				LocaleUtil.US,
+				"Account Administrators are super users of their account.")
+		).put(
+			REQUIRED_ROLE_NAME_ACCOUNT_MANAGER,
+			Collections.singletonMap(
+				LocaleUtil.US,
+				"Account Managers who belong to an organization can " +
+					"administer all accounts associated to that organization.")
+		).put(
+			REQUIRED_ROLE_NAME_ACCOUNT_MEMBER,
+			Collections.singletonMap(
+				LocaleUtil.US,
+				"All users who belong to an account have this role within " +
+					"that account.")
+		).build();
 
 	public static boolean isImpliedRole(Role role) {
 		if (Objects.equals(REQUIRED_ROLE_NAME_ACCOUNT_MEMBER, role.getName())) {

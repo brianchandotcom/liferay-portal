@@ -61,7 +61,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Activate;
@@ -441,45 +440,15 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
-		if (objectDefinition.isRootDescendantNode()) {
-			ObjectDefinition rootObjectDefinition =
-				_objectDefinitionPersistence.findByPrimaryKey(
-					objectDefinition.getRootObjectDefinitionId());
-
-			Tree tree = _treeFactory.create(
-				rootObjectDefinition.getObjectDefinitionId());
-
-			Node node = tree.getNode(objectDefinition.getObjectDefinitionId());
-
-			objectDefinition = rootObjectDefinition;
-
-			Edge edge = node.getEdge();
-
-			ObjectRelationship objectRelationship =
-				_objectRelationshipLocalService.getObjectRelationship(
-					edge.getObjectRelationshipId());
-
-			ObjectField objectField = _objectFieldLocalService.getObjectField(
-				objectRelationship.getObjectFieldId2());
-
-			ObjectEntry objectEntry = objectEntryLocalService.getObjectEntry(
-				MapUtil.getLong(values, objectField.getName()));
-
-			if (!Objects.equals(
-					objectEntry.getObjectEntryId(),
-					objectEntry.getRootObjectEntryId())) {
-
-				objectEntry = objectEntryLocalService.getObjectEntry(
-					objectEntry.getRootObjectEntryId());
-			}
-
-			values = objectEntry.getValues();
-		}
-
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			objectDefinition.getAccountEntryRestrictedObjectFieldId());
 
 		long accountEntryId = MapUtil.getLong(values, objectField.getName());
+
+		if (objectDefinition.isRootDescendantNode()) {
+			accountEntryId = _getRootObjectEntryAccountEntryId(
+				objectDefinition, values);
+		}
 
 		long[] accountEntryIds = ListUtil.toLongArray(
 			_accountEntryLocalService.getUserAccountEntries(
@@ -581,6 +550,43 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 		return ObjectDefinitionPortletResourcePermissionRegistryUtil.getService(
 			objectDefinition.getResourceName());
+	}
+
+	private long _getRootObjectEntryAccountEntryId(
+			ObjectDefinition objectDefinition, Map<String, Serializable> values)
+		throws PortalException {
+
+		Tree tree = _treeFactory.create(
+			objectDefinition.getRootObjectDefinitionId());
+
+		Node node = tree.getNode(objectDefinition.getObjectDefinitionId());
+
+		Edge edge = node.getEdge();
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.getObjectRelationship(
+				edge.getObjectRelationshipId());
+
+		ObjectField objectField2 = _objectFieldLocalService.getObjectField(
+			objectRelationship.getObjectFieldId2());
+
+		ObjectEntry parentObjectEntry = objectEntryLocalService.getObjectEntry(
+			MapUtil.getLong(values, objectField2.getName()));
+
+		ObjectEntry rootObjectEntry = objectEntryLocalService.getObjectEntry(
+			parentObjectEntry.getRootObjectEntryId());
+
+		ObjectDefinition rootObjectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				objectDefinition.getRootObjectDefinitionId());
+
+		ObjectField accountEntryRestrictedObjectField =
+			_objectFieldLocalService.getObjectField(
+				rootObjectDefinition.getAccountEntryRestrictedObjectFieldId());
+
+		return MapUtil.getLong(
+			rootObjectEntry.getValues(),
+			accountEntryRestrictedObjectField.getName());
 	}
 
 	private void _validateSubmissionLimit(long objectDefinitionId, User user)

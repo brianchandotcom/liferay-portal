@@ -83,8 +83,6 @@ public interface AccountRoleLocalService
 			long accountEntryId, long[] accountRoleIds, long userId)
 		throws PortalException;
 
-	public void checkCompanyAccountRoles(long companyId) throws PortalException;
-
 	/**
 	 * Creates a new account role with the primary key. Does not add the account role to the database.
 	 *

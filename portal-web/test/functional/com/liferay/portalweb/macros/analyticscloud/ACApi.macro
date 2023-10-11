@@ -137,7 +137,10 @@ definition {
 
 	macro getSearchHeaderValues {
 		var script = '''
-			    com.liferay.analytics.settings.configuration.AnalyticsConfiguration analyticsConfiguration = (com.liferay.analytics.settings.configuration.AnalyticsConfiguration)com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil.getCompanyConfiguration(com.liferay.analytics.settings.configuration.AnalyticsConfiguration.class, com.liferay.portal.kernel.service.CompanyServiceUtil.getCompanies()[0].getCompanyId());
+			    import com.liferay.analytics.settings.configuration.AnalyticsConfiguration; 
+				import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil; 
+				import com.liferay.portal.kernel.service.CompanyServiceUtil; 
+				AnalyticsConfiguration analyticsConfiguration = (AnalyticsConfiguration)ConfigurationProviderUtil.getCompanyConfiguration(AnalyticsConfiguration.class, CompanyServiceUtil.getCompanies()[0].getCompanyId());
 				out.println(analyticsConfiguration."${header}"());
 		    ''';
 

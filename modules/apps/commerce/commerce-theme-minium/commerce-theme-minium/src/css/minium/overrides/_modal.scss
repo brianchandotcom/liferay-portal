@@ -6,7 +6,7 @@
 		top: $liferay-topbar-size;
 	}
 
-	body.open & {
+	body.product-menu-open & {
 		left: 320px + $frame-size;
 	}
 }

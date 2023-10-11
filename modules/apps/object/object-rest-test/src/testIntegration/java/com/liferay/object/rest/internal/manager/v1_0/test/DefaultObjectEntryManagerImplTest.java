@@ -2029,7 +2029,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		AccountEntry accountEntry = _addAccountEntry();
 
-		ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
+		ObjectEntry objectEntry1 = _defaultObjectEntryManager.addObjectEntry(
 			_simpleDTOConverterContext, _objectDefinition3,
 			new ObjectEntry() {
 				{
@@ -2051,7 +2051,7 @@ public class DefaultObjectEntryManagerImplTest
 			new ObjectEntry() {
 				{
 					properties = HashMapBuilder.<String, Object>put(
-						objectField1.getName(), objectEntry.getId()
+						objectField1.getName(), objectEntry1.getId()
 					).put(
 						objectField2.getName(), accountEntry.getAccountEntryId()
 					).build();
@@ -2064,7 +2064,7 @@ public class DefaultObjectEntryManagerImplTest
 			new ObjectEntry() {
 				{
 					properties = HashMapBuilder.<String, Object>put(
-						objectField1.getName(), objectEntry.getId()
+						objectField1.getName(), objectEntry1.getId()
 					).put(
 						objectField2.getName(),
 						_addAccountEntry().getAccountEntryId()
@@ -2081,7 +2081,7 @@ public class DefaultObjectEntryManagerImplTest
 		Page<ObjectEntry> page =
 			_defaultObjectEntryManager.getObjectEntryRelatedObjectEntries(
 				_simpleDTOConverterContext, _objectDefinition3,
-				objectEntry.getId(), objectRelationship1.getName(), null);
+				objectEntry1.getId(), objectRelationship1.getName(), null);
 
 		Collection<ObjectEntry> objectEntries = page.getItems();
 
@@ -2093,7 +2093,65 @@ public class DefaultObjectEntryManagerImplTest
 		PrincipalThreadLocal.setName(adminUser.getUserId());
 
 		_defaultObjectEntryManager.deleteObjectEntry(
-			_objectDefinition3, objectEntry.getId());
+			_objectDefinition3, objectEntry1.getId());
+
+		// Organization scope
+
+		ObjectEntry objectEntry2 = _defaultObjectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, _objectDefinition3,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"r_oneToManyRelationshipName_accountEntryId",
+						accountEntry.getAccountEntryId()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_defaultObjectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, childObjectDefinition,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						objectField1.getName(), objectEntry2.getId()
+					).put(
+						objectField2.getName(), accountEntry.getAccountEntryId()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_defaultObjectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, childObjectDefinition,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						objectField1.getName(), objectEntry2.getId()
+					).put(
+						objectField2.getName(),
+						_addAccountEntry().getAccountEntryId()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		_addAccountEntryOrganizationRel(accountEntry, organization);
+
+		_user = _addUser();
+
+		_organizationLocalService.addUserOrganization(
+			_user.getUserId(), organization.getOrganizationId());
+
+		page = _defaultObjectEntryManager.getObjectEntryRelatedObjectEntries(
+			_simpleDTOConverterContext, _objectDefinition3,
+			objectEntry2.getId(), objectRelationship1.getName(), null);
+
+		objectEntries = page.getItems();
+
+		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
 
 		objectDefinitionLocalService.deleteObjectDefinition(
 			childObjectDefinition);

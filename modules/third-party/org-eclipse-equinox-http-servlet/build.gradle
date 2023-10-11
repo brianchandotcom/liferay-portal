@@ -49,6 +49,7 @@ patch {
 
 	fileNames "org/eclipse/equinox/http/servlet/internal/HttpServiceRuntimeImpl.java"
 	fileNames "org/eclipse/equinox/http/servlet/internal/context/ContextController.java"
+	fileNames "org/eclipse/equinox/http/servlet/internal/context/ProxyContext.java"
 	fileNames "org/eclipse/equinox/http/servlet/internal/customizer/ContextFilterTrackerCustomizer.java"
 	fileNames "org/eclipse/equinox/http/servlet/internal/customizer/ContextListenerTrackerCustomizer.java"
 	fileNames "org/eclipse/equinox/http/servlet/internal/customizer/ContextResourceTrackerCustomizer.java"
@@ -56,6 +57,8 @@ patch {
 	fileNames "org/eclipse/equinox/http/servlet/internal/customizer/RegistrationServiceTrackerCustomizer.java"
 	fileNames "org/eclipse/equinox/http/servlet/internal/registration/EndpointRegistration.java"
 	fileNames "org/eclipse/equinox/http/servlet/internal/registration/FilterRegistration.java"
+	fileNames "org/eclipse/equinox/http/servlet/internal/registration/ListenerRegistration.java"
+	fileNames "org/eclipse/equinox/http/servlet/internal/servlet/ServletContextAdaptor.java"
 
 	originalLibModuleName = "org.eclipse.equinox.http.servlet"
 	originalLibSrcBaseUrl = "https://repository-cdn.liferay.com/nexus/content/groups/public/com/liferay/"

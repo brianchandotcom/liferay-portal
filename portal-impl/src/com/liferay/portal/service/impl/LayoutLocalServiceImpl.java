@@ -728,6 +728,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			_resourceLocalService.deleteResource(
 				targetLayout.getCompanyId(), Layout.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL, targetLayout.getPlid());
+
 			_resourceLocalService.copyModelResources(
 				sourceLayout.getCompanyId(), Layout.class.getName(),
 				sourceLayout.getPlid(), targetLayout.getPlid());

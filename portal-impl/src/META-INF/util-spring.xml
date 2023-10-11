@@ -82,20 +82,6 @@
 	<bean class="com.liferay.portal.kernel.util.PortalUtil" id="com.liferay.portal.kernel.util.PortalUtil">
 		<property name="portal" ref="com.liferay.portal.util.Portal" />
 	</bean>
-	<bean class="com.liferay.portal.kernel.util.ThreadLocalDistributor" id="com.liferay.portal.kernel.util.ThreadLocalDistributor">
-		<property name="threadLocalSources">
-			<list>
-				<bean class="com.liferay.portal.kernel.util.KeyValuePair">
-					<constructor-arg name="key" value="com.liferay.portal.kernel.service.ServiceContextThreadLocal" />
-					<constructor-arg name="value" value="_serviceContextThreadLocal" />
-				</bean>
-				<bean class="com.liferay.portal.kernel.util.KeyValuePair">
-					<constructor-arg name="key" value="com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal" />
-					<constructor-arg name="value" value="_inProgress" />
-				</bean>
-			</list>
-		</property>
-	</bean>
 	<bean class="com.liferay.portal.webserver.WebServerServletTokenImpl" id="com.liferay.portal.kernel.webserver.WebServerServletToken" />
 	<bean class="com.liferay.portal.kernel.webserver.WebServerServletTokenUtil" id="com.liferay.portal.kernel.webserver.WebServerServletTokenUtil">
 		<property name="webServerServletToken" ref="com.liferay.portal.kernel.webserver.WebServerServletToken" />

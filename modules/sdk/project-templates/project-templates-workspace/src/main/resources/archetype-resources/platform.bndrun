@@ -16,7 +16,6 @@ $h1 Check GETTING_STARTED.markdown#platform.bndrun for more information.
 	osgi.service;objectClass:List<String>='com.liferay.portal.kernel.portlet.PortletURLFactory',\
 	osgi.service;objectClass:List<String>='com.liferay.portal.kernel.service.persistence.LayoutSetPersistence',\
 	osgi.service;objectClass:List<String>='com.liferay.portal.kernel.util.File',\
-	osgi.service;objectClass:List<String>='com.liferay.portal.kernel.util.Html',\
 	osgi.service;objectClass:List<String>='com.liferay.portal.kernel.util.Http',\
 	osgi.service;objectClass:List<String>='com.liferay.portal.kernel.util.MimeTypes',\
 	osgi.service;objectClass:List<String>='com.liferay.portal.kernel.util.Portal',\

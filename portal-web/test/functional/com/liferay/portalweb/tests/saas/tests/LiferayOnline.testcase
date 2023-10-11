@@ -108,7 +108,7 @@ definition {
 
 		task ("Assert the default Welcome Page is present") {
 			ContentPages.viewFragmentText(
-				fragmentName = "heading",
+				fragmentName = "paragraph",
 				id = "element-text",
 				text = "Welcome to Liferay");
 		}

@@ -339,7 +339,7 @@ definition {
 			Click(locator1 = "Icon#BACK");
 
 			ContentPages.viewFragmentText(
-				fragmentName = "heading",
+				fragmentName = "paragraph",
 				id = "element-text",
 				text = "Welcome to Liferay");
 		}

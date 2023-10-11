@@ -766,7 +766,7 @@ definition {
 				pageName = "Home Page Copy");
 
 			ContentPages.viewFragmentText(
-				fragmentName = "heading",
+				fragmentName = "paragraph",
 				id = "element-text",
 				text = "Welcome to Liferay");
 

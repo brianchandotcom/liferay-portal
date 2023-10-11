@@ -186,7 +186,7 @@ public class WorkflowDefinitionResourceTest
 	public void testPostWorkflowDefinition() throws Exception {
 		super.testPostWorkflowDefinition();
 
-		// content is in json format
+		// The value of "content" is JSON
 
 		JSONObject jsonObject = _getWorkflowDefinitionJSONObject(
 			"workflow-definition.json");
@@ -202,7 +202,7 @@ public class WorkflowDefinitionResourceTest
 				workflowDefinitionJSONObject.getString("content")),
 			true);
 
-		// content is json string format
+		// The value of "content" is a JSON string
 
 		jsonObject = _getWorkflowDefinitionJSONObject(
 			"workflow-definition-json-string.json");
@@ -476,7 +476,7 @@ public class WorkflowDefinitionResourceTest
 			workflowDefinitionName, workflowDefinitionVersion);
 	}
 
-	private JSONObject _getWorkflowDefinitionJSONObject(String templateName)
+	private JSONObject _getWorkflowDefinitionJSONObject(String fileName)
 		throws Exception {
 
 		return JSONFactoryUtil.createJSONObject(
@@ -484,7 +484,7 @@ public class WorkflowDefinitionResourceTest
 				getClass().getResourceAsStream(
 					StringBundler.concat(
 						"/com/liferay/headless/admin/workflow/resource/v1_0",
-						"/test/util/dependencies/", templateName))));
+						"/test/util/dependencies/", fileName))));
 	}
 
 	private JSONObject _postWorkflowDefinition(

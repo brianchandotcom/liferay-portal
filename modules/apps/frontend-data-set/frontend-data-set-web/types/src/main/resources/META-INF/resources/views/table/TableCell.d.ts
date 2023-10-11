@@ -14,5 +14,5 @@ declare function TableCell({
 	rootPropertyName,
 	value,
 	valuePath,
-}: any): JSX.Element | undefined;
+}: any): JSX.Element | null;
 export default TableCell;

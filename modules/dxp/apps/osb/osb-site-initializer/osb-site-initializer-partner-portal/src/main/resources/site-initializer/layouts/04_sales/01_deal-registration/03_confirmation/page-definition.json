@@ -13,16 +13,8 @@
 					},
 					"indexed": true,
 					"layout": {
-						"borderWidth": 0,
-						"marginBottom": 0,
-						"marginLeft": 0,
-						"marginRight": 0,
-						"marginTop": 0,
 						"paddingBottom": 6,
-						"paddingLeft": 0,
-						"paddingRight": 0,
-						"paddingTop": 2,
-						"widthType": "Fluid"
+						"paddingTop": 2
 					}
 				},
 				"pageElements": [
@@ -257,19 +249,19 @@
 														},
 														"text": {
 															"value_i18n": {
-																"ar_SA": "<span><span data-testid=\"comment-base-item-2466150\">Thank you, your deal has been registered. Your regional Channel Account Manager has been notified and will review the deal within the next 3 working days. If you have any questions regarding the deal or would like to notify us of any updates please reach out to your Channel Account Manager.</span></span>",
-																"ca_ES": "<span><span data-testid=\"comment-base-item-2466150\">Thank you, your deal has been registered. Your regional Channel Account Manager has been notified and will review the deal within the next 3 working days. If you have any questions regarding the deal or would like to notify us of any updates please reach out to your Channel Account Manager.</span></span>",
-																"de_DE": "<span><span data-testid=\"comment-base-item-2466150\">Thank you, your deal has been registered. Your regional Channel Account Manager has been notified and will review the deal within the next 3 working days. If you have any questions regarding the deal or would like to notify us of any updates please reach out to your Channel Account Manager.</span></span>",
-																"en_US": "<span><span data-testid=\"comment-base-item-2466150\">Thank you, your deal has been registered. Your regional Channel Account Manager has been notified and will review the deal within the next 3 working days. If you have any questions regarding the deal or would like to notify us of any updates please reach out to your Channel Account Manager.</span></span>",
-																"es_ES": "<span><span data-testid=\"comment-base-item-2466150\">Thank you, your deal has been registered. Your regional Channel Account Manager has been notified and will review the deal within the next 3 working days. If you have any questions regarding the deal or would like to notify us of any updates please reach out to your Channel Account Manager.</span></span>",
-																"fi_FI": "<span><span data-testid=\"comment-base-item-2466150\">Thank you, your deal has been registered. Your regional Channel Account Manager has been notified and will review the deal within the next 3 working days. If you have any questions regarding the deal or would like to notify us of any updates please reach out to your Channel Account Manager.</span></span>",
-																"fr_FR": "<span><span data-testid=\"comment-base-item-2466150\">Thank you, your deal has been registered. Your regional Channel Account Manager has been notified and will review the deal within the next 3 working days. If you have any questions regarding the deal or would like to notify us of any updates please reach out to your Channel Account Manager.</span></span>",
-																"hu_HU": "<span><span data-testid=\"comment-base-item-2466150\">Thank you, your deal has been registered. Your regional Channel Account Manager has been notified and will review the deal within the next 3 working days. If you have any questions regarding the deal or would like to notify us of any updates please reach out to your Channel Account Manager.</span></span>",
-																"ja_JP": "<span><span data-testid=\"comment-base-item-2466150\">Thank you, your deal has been registered. Your regional Channel Account Manager has been notified and will review the deal within the next 3 working days. If you have any questions regarding the deal or would like to notify us of any updates please reach out to your Channel Account Manager.</span></span>",
-																"nl_NL": "<span><span data-testid=\"comment-base-item-2466150\">Thank you, your deal has been registered. Your regional Channel Account Manager has been notified and will review the deal within the next 3 working days. If you have any questions regarding the deal or would like to notify us of any updates please reach out to your Channel Account Manager.</span></span>",
-																"pt_BR": "<span><span data-testid=\"comment-base-item-2466150\">Thank you, your deal has been registered. Your regional Channel Account Manager has been notified and will review the deal within the next 3 working days. If you have any questions regarding the deal or would like to notify us of any updates please reach out to your Channel Account Manager.</span></span>",
-																"sv_SE": "<span><span data-testid=\"comment-base-item-2466150\">Thank you, your deal has been registered. Your regional Channel Account Manager has been notified and will review the deal within the next 3 working days. If you have any questions regarding the deal or would like to notify us of any updates please reach out to your Channel Account Manager.</span></span>",
-																"zh_CN": "<span><span data-testid=\"comment-base-item-2466150\">Thank you, your deal has been registered. Your regional Channel Account Manager has been notified and will review the deal within the next 3 working days. If you have any questions regarding the deal or would like to notify us of any updates please reach out to your Channel Account Manager.</span></span>"
+																"ar_SA": "Thank you, your deal has been registered. Your regional Channel Account Manager has been notified and will review the deal within the next 3 working days. If you have any questions regarding the deal or would like to notify us of any updates please reach out to your Channel Account Manager.",
+																"ca_ES": "Thank you, your deal has been registered. Your regional Channel Account Manager has been notified and will review the deal within the next 3 working days. If you have any questions regarding the deal or would like to notify us of any updates please reach out to your Channel Account Manager.",
+																"de_DE": "Thank you, your deal has been registered. Your regional Channel Account Manager has been notified and will review the deal within the next 3 working days. If you have any questions regarding the deal or would like to notify us of any updates please reach out to your Channel Account Manager.",
+																"en_US": "Thank you, your deal has been registered. Your regional Channel Account Manager has been notified and will review the deal within the next 3 working days. If you have any questions regarding the deal or would like to notify us of any updates please reach out to your Channel Account Manager.",
+																"es_ES": "Thank you, your deal has been registered. Your regional Channel Account Manager has been notified and will review the deal within the next 3 working days. If you have any questions regarding the deal or would like to notify us of any updates please reach out to your Channel Account Manager.",
+																"fi_FI": "Thank you, your deal has been registered. Your regional Channel Account Manager has been notified and will review the deal within the next 3 working days. If you have any questions regarding the deal or would like to notify us of any updates please reach out to your Channel Account Manager.",
+																"fr_FR": "Thank you, your deal has been registered. Your regional Channel Account Manager has been notified and will review the deal within the next 3 working days. If you have any questions regarding the deal or would like to notify us of any updates please reach out to your Channel Account Manager.",
+																"hu_HU": "Thank you, your deal has been registered. Your regional Channel Account Manager has been notified and will review the deal within the next 3 working days. If you have any questions regarding the deal or would like to notify us of any updates please reach out to your Channel Account Manager.",
+																"ja_JP": "Thank you, your deal has been registered. Your regional Channel Account Manager has been notified and will review the deal within the next 3 working days. If you have any questions regarding the deal or would like to notify us of any updates please reach out to your Channel Account Manager.",
+																"nl_NL": "Thank you, your deal has been registered. Your regional Channel Account Manager has been notified and will review the deal within the next 3 working days. If you have any questions regarding the deal or would like to notify us of any updates please reach out to your Channel Account Manager.",
+																"pt_BR": "Thank you, your deal has been registered. Your regional Channel Account Manager has been notified and will review the deal within the next 3 working days. If you have any questions regarding the deal or would like to notify us of any updates please reach out to your Channel Account Manager.",
+																"sv_SE": "Thank you, your deal has been registered. Your regional Channel Account Manager has been notified and will review the deal within the next 3 working days. If you have any questions regarding the deal or would like to notify us of any updates please reach out to your Channel Account Manager.",
+																"zh_CN": "Thank you, your deal has been registered. Your regional Channel Account Manager has been notified and will review the deal within the next 3 working days. If you have any questions regarding the deal or would like to notify us of any updates please reach out to your Channel Account Manager."
 															}
 														}
 													}
@@ -296,7 +288,7 @@
 											{
 												"definition": {
 													"fragment": {
-														"key": "dialect-dialect-button"
+														"key": "DIALECT-dialect-button"
 													},
 													"fragmentConfig": {
 														"buttonSize": "",

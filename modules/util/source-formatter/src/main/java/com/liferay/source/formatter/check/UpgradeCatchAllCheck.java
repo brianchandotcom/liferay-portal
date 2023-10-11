@@ -365,13 +365,15 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 	private boolean _hasValidClassName(
 		String[] classNames, String content, String methodCall) {
 
+		String variableName = getVariableName(methodCall);
+
 		for (String className : classNames) {
-			if (className.endsWith("Util") &&
-				StringUtil.equals(getVariableName(methodCall), className)) {
+			if (Character.isUpperCase(variableName.charAt(0)) &&
+				StringUtil.equals(variableName, className)) {
 
 				return true;
 			}
-			else if (!className.endsWith("Util") &&
+			else if (!Character.isUpperCase(variableName.charAt(0)) &&
 					 hasClassOrVariableName(
 						 className, content, content, methodCall)) {
 

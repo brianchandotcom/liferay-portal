@@ -27,8 +27,6 @@ Liferay-JS-Submodules-Bridge:\
 	metal-promise,\
 	metal-router,\
 	metal-scrollspy,\
-	metal-soy,\
-	metal-soy-bundle,\
 	metal-state,\
 	metal-storage,\
 	metal-structs,\
@@ -36,7 +34,4 @@ Liferay-JS-Submodules-Bridge:\
 	metal-toggler,\
 	metal-uri,\
 	metal-useragent
-Provide-Capability:\
-	soy;\
-		version:Version="1.0.0"
 Web-ContextPath: /frontend-js-metal-web

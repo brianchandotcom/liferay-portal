@@ -37,8 +37,5 @@ Provide-Capability:\
 	osgi.extender;\
 		osgi.extender="jsp.taglib";\
 		uri="http://liferay.com/tld/clay";\
-		version:Version="${Bundle-Version}",\
-	soy;\
-		type="clay-taglib";\
 		version:Version="${Bundle-Version}"
 Web-ContextPath: /frontend-taglib-clay

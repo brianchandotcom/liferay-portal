@@ -80,8 +80,6 @@ module.exports = {
 			'metal-promise',
 			'metal-router',
 			'metal-scrollspy',
-			'metal-soy',
-			{name: 'metal-soy-bundle', symbols: []},
 			'metal-state',
 			'metal-storage',
 			'metal-structs',

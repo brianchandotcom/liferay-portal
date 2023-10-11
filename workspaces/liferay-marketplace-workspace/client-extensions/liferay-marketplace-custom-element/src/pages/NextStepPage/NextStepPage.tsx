@@ -177,8 +177,10 @@ export function NextStepPage({
 					isTrial ? (
 						<>
 							<p>
-								You will need to create a license for your app
-								before deploying it to your DXP instance.
+								Congratulations on the purchase of{' '}
+								<strong>{appName}</strong>. You will need to
+								create a license your app before deploying to
+								your DXP instance.
 							</p>
 							<p>
 								{orderId && (

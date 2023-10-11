@@ -276,7 +276,7 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
 		loadFDSActions();
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [activeTab]);
+	}, []);
 
 	if (loading) {
 		return <ClayLoadingIndicator />;
@@ -295,8 +295,13 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
 						</h2>
 
 						<ClayTabs
+							activation="automatic"
 							active={activeTab}
-							onActiveChange={setActiveTab}
+							onActiveChange={(tab: number) => {
+								setActiveTab(tab);
+
+								loadFDSActions();
+							}}
 						>
 							<ClayTabs.Item>
 								{Liferay.Language.get('item-actions')}

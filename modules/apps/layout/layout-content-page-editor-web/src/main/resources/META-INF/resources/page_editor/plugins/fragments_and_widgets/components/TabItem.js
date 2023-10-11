@@ -38,6 +38,7 @@ const ITEM_PROPTYPES_SHAPE = PropTypes.shape({
 
 export default function TabItem({displayStyle, item, onRemoveHighlighted}) {
 	const dispatch = useDispatch();
+	const [disabled, setDisabled] = useState(item.disabled);
 
 	const onToggleHighlighted = useCallback(() => {
 		if (item.data.portletId) {
@@ -87,6 +88,8 @@ export default function TabItem({displayStyle, item, onRemoveHighlighted}) {
 				thunk = addItem;
 			}
 
+			setDisabled(true);
+
 			dispatch(
 				thunk({
 					...item.data,
@@ -94,20 +97,22 @@ export default function TabItem({displayStyle, item, onRemoveHighlighted}) {
 					parentItemId: parentId,
 					position,
 				})
-			);
+			).catch(() => {
+				setDisabled(false);
+			});
 		}
 	);
 
 	return displayStyle === FRAGMENTS_DISPLAY_STYLES.CARDS ? (
 		<CardItem
-			disabled={item.disabled || isDraggingSource}
+			disabled={item.disabled || isDraggingSource || disabled}
 			handlerRef={item.disabled ? null : sourceRef}
 			item={item}
 			onToggleHighlighted={onToggleHighlighted}
 		/>
 	) : (
 		<ListItem
-			disabled={item.disabled || isDraggingSource}
+			disabled={item.disabled || isDraggingSource || disabled}
 			handlerRef={item.disabled ? null : sourceRef}
 			item={item}
 			onToggleHighlighted={onToggleHighlighted}

@@ -1351,7 +1351,7 @@ definition {
 	@description = "This is a test for COMMERCE-12381 | Verify that Price On Application works correctly on the minicart with UOM"
 	@priority = 5
 	test CanPriceOnApplicationWithUOMBeShownInMiniCart {
-		property custom.properties = "company.security.strangers.verify=false${line.separator}feature.flag.COMMERCE-11287=true${line.separator}feature.flag.COMMERCE-11028=true${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "company.security.strangers.verify=false${line.separator}feature.flag.COMMERCE-11028=true${line.separator}feature.flag.COMMERCE-11287=true${line.separator}jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site with a buyer user") {

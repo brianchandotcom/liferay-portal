@@ -481,10 +481,6 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 		long accountEntryId = MapUtil.getLong(values, objectField.getName());
 
-		if (accountEntryId == 0) {
-			return;
-		}
-
 		long[] accountEntryIds = ListUtil.toLongArray(
 			_accountEntryLocalService.getUserAccountEntries(
 				getUserId(), AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,

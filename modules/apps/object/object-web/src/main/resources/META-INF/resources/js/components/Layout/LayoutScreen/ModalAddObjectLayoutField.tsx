@@ -175,7 +175,7 @@ export default function ModalAddObjectLayoutField({
 							</>
 						}
 						emptyStateMessage={Liferay.Language.get(
-							'there-are-no-fields-for-this-object'
+							'there-are-no-fields-in-this-definition'
 						)}
 						error={errors.objectFieldName}
 						id="modalAddObjectLayoutField"

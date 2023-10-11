@@ -92,21 +92,17 @@ definition {
 		if (isSet(relatedSchema)) {
 			if (isSet(objectFieldErc) && isSet(mainObjectDefinitionErc)) {
 				var relatedSchema = '''
-				"apiApplicationToAPISchemas": [
-    				{
-    				  "apiSchemaToAPIProperties": [
-    				    {
-    				      "objectFieldERC": "${objectFieldErc}",
-    				      "name": "${objectFieldErc}",
-    				      "description": "description"
-    				    }
-    				  ],
-					  "externalReferenceCode": "${externalReferenceCodeSchema}",
-    				  "mainObjectDefinitionERC": "${mainObjectDefinitionErc}",
-    				  "name": "${schemaName}",
-    				  "description": "description"
-    				}
-  				]
+				"apiApplicationToAPISchemas": [{
+					"apiSchemaToAPIProperties": [{
+						"objectFieldERC": "${objectFieldErc}",
+						"name": "${objectFieldErc}",
+						"description": "description"
+					}],
+					"externalReferenceCode": "${externalReferenceCodeSchema}",
+					"mainObjectDefinitionERC": "${mainObjectDefinitionErc}",
+					"name": "${schemaName}",
+					"description": "description"
+				}]
 				''';
 			}
 			else {

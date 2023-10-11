@@ -930,7 +930,7 @@ public class DLReferencesExportImportContentProcessor
 		StringPool.BACK_SLASH + StringPool.APOSTROPHE,
 		StringPool.BACK_SLASH + StringPool.QUOTE, StringPool.CLOSE_BRACKET,
 		StringPool.CLOSE_CURLY_BRACE, StringPool.CLOSE_PARENTHESIS,
-		StringPool.GREATER_THAN, StringPool.LESS_THAN, StringPool.PIPE,
+		StringPool.GREATER_THAN, StringPool.LESS_THAN, StringPool.PIPE, StringPool.POUND,
 		StringPool.QUOTE, StringPool.QUOTE_ENCODED, StringPool.SPACE
 	};
 
@@ -940,7 +940,7 @@ public class DLReferencesExportImportContentProcessor
 		StringPool.BACK_SLASH + StringPool.QUOTE, StringPool.CLOSE_BRACKET,
 		StringPool.CLOSE_CURLY_BRACE, StringPool.CLOSE_PARENTHESIS,
 		StringPool.GREATER_THAN, StringPool.LESS_THAN, StringPool.NEW_LINE,
-		StringPool.PIPE, StringPool.QUESTION, StringPool.QUOTE,
+		StringPool.PIPE, StringPool.POUND, StringPool.QUESTION, StringPool.QUOTE,
 		StringPool.QUOTE_ENCODED, StringPool.SPACE
 	};
 

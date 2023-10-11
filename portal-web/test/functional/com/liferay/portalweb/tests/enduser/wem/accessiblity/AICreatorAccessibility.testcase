@@ -194,6 +194,10 @@ definition {
 				locator1 = "//body",
 				value1 = "keys=TAB");
 
+			Type.typeKeys(
+				locator1 = "//body",
+				value1 = "keys=TAB");
+
 			AssertElementFocused(
 				key_text = "Cancel",
 				locator1 = "Button#ANY");

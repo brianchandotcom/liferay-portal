@@ -510,12 +510,12 @@ definition {
 				if (${quantityConfiguration} == "multiple") {
 					var quantityConfigurationText = "Quantity must be a multiple of ";
 				}
+				else {
+					TestUtils.fail(message = "Selected quantity configuration is not valid.");
+				}
 
 				if (isSet(quantityConfigurationDecimalText)) {
 					var quantityConfigurationDecimalText = "Quantity allows for ${quantityConfigurationDecimalText} decimal places ";
-				}
-				else {
-					TestUtils.fail(message = "Selected quantity configuration is not valid.");
 				}
 			}
 		}

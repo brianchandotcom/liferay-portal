@@ -13,16 +13,18 @@ interface IProps {
 	inputName: string;
 	labelOff: string;
 	labelOn: string;
+	onItemsChange: (value: Array<any>) => void;
 	toggled: boolean;
 }
 declare const FeatureFlagToggle: ({
 	ariaDescribedBy,
 	companyId,
-	disabled: initialDisabled,
+	disabled,
 	featureFlagKey,
 	inputName,
 	labelOff,
 	labelOn,
+	onItemsChange,
 	toggled: initialToggled,
 }: IProps) => JSX.Element;
 export default FeatureFlagToggle;

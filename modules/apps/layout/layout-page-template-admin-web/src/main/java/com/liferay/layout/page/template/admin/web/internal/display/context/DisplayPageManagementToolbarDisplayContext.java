@@ -10,10 +10,12 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateCollectionPermission;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplateEntryPermission;
 import com.liferay.layout.page.template.admin.web.internal.security.permission.resource.LayoutPageTemplatePermission;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -95,7 +97,23 @@ public class DisplayPageManagementToolbarDisplayContext
 		).build();
 	}
 
-	public String getAvailableActions(
+	public String getAvailableLayoutPageTemplateCollectionActions(
+			LayoutPageTemplateCollection layoutPageTemplateCollection)
+		throws PortalException {
+
+		List<String> availableActions = new ArrayList<>();
+
+		if (LayoutPageTemplateCollectionPermission.contains(
+				_themeDisplay.getPermissionChecker(),
+				layoutPageTemplateCollection, ActionKeys.DELETE)) {
+
+			availableActions.add("deleteSelectedEntries");
+		}
+
+		return StringUtil.merge(availableActions, StringPool.COMMA);
+	}
+
+	public String getAvailableLayoutPageTemplateEntryActions(
 			LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws PortalException {
 

@@ -86,6 +86,10 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 
 						<%
 						row.setCssClass("card-page-item card-page-item-directory " + row.getCssClass());
+						row.setData(
+							HashMapBuilder.<String, Object>put(
+								"actions", displayPageManagementToolbarDisplayContext.getAvailableLayoutPageTemplateCollectionActions(curLayoutPageTemplateCollection)
+							).build());
 						%>
 
 						<liferay-ui:search-container-column-text
@@ -102,7 +106,7 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 						<%
 						row.setData(
 							HashMapBuilder.<String, Object>put(
-								"actions", displayPageManagementToolbarDisplayContext.getAvailableActions(curLayoutPageTemplateEntry)
+								"actions", displayPageManagementToolbarDisplayContext.getAvailableLayoutPageTemplateEntryActions(curLayoutPageTemplateEntry)
 							).build());
 						%>
 

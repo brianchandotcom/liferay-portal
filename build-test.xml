@@ -14544,7 +14544,7 @@ ${custom.upgrade.properties}</echo>
 
 								echo "${output}"
 
-								if [[ (${exit_code} != "0") && ($output == *"SQL2555I"*) ]]
+								if [[ (${exit_code} != "0") ]] && [[ ($output == *"SQL2555I"*) || ($output == *"SQL2519N"*) ]]
 								then
 									exit 0
 								else
@@ -14569,7 +14569,7 @@ ${custom.upgrade.properties}</echo>
 
 									exit_code=$?
 
-									if [[ (${exit_code} != "0") && ($output == *"SQL2555I"*) ]]
+									if [[ (${exit_code} != "0") ]] && [[ ($output == *"SQL2555I"*) || ($output == *"SQL2519N"*) ]]
 									then
 										echo "$output"
 

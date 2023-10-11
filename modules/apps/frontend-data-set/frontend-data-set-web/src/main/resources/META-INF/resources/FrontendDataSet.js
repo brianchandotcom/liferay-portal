@@ -235,39 +235,58 @@ const FrontendDataSet = ({
 	}
 
 	useEffect(() => {
-		if (!initialFilters?.length) {
-			return;
-		}
+		loadClientExtensions([
+			{
+				handler: (filterModules) => {
+					const newFilters = filterModules.map(
+						({context: filter, module}) => ({
+							...filter,
+							cxFilterImplementation: module['default'],
+						})
+					);
 
-		let dispatch = false;
+					viewsDispatch({
+						type: VIEWS_ACTION_TYPES.UPDATE_FILTERS,
+						value: newFilters,
+					});
+				},
+				imports: initialFilters?.map((filter) => ({
+					context: filter,
+					url: filter.cxFilterURL,
+				})),
+			},
+			{
+				handler: (fieldModules) => {
+					fieldModules.forEach(({context: field, module}) => {
+						viewsDispatch({
+							type: VIEWS_ACTION_TYPES.UPDATE_FIELD,
+							value: {
+								htmlElementBuilder: module['default'],
+								name: field.fieldName,
+							},
+						});
+					});
+				},
+				imports: views.reduce((imports, view) => {
+					const cxFields = view.schema.fields.filter(
+						(field) => !!field.contentRendererClientExtension
+					);
 
-		const filterPromises = initialFilters.map((filter) => {
-			if (!filter.cxFilterURL) {
-				return Promise.resolve(filter);
-			}
+					for (const field of cxFields) {
+						imports.push({
+							context: field,
+							url: field.contentRendererModuleURL.replace(
+								'default from ',
+								''
+							),
+						});
+					}
 
-			dispatch = true;
-
-			return import(
-
-				/* webpackIgnore: true */
-				filter.cxFilterURL
-			).then((module) => {
-				filter.cxFilterImplementation = module['default'];
-
-				return filter;
-			});
-		});
-
-		if (dispatch) {
-			Promise.all(filterPromises).then((filters) => {
-				viewsDispatch({
-					type: VIEWS_ACTION_TYPES.UPDATE_FILTERS,
-					value: filters,
-				});
-			});
-		}
-	}, [initialFilters, viewsDispatch]);
+					return imports;
+				}, []),
+			},
+		]);
+	}, [initialFilters, views, viewsDispatch]);
 
 	useEffect(() => {
 		if (itemsProp) {
@@ -912,5 +931,26 @@ FrontendDataSet.defaultProps = {
 	sorts: [],
 	style: 'default',
 };
+
+function loadClientExtensions(importsHandlers) {
+	for (const {handler, imports} of importsHandlers) {
+		if (!imports.length) {
+			continue;
+		}
+
+		const promises = imports.map(({context, url}) => {
+			return import(
+
+				/* webpackIgnore: true */
+				url
+			).then((module) => ({
+				context,
+				module,
+			}));
+		});
+
+		Promise.all(promises).then(handler);
+	}
+}
 
 export default FrontendDataSet;

@@ -26,6 +26,7 @@ import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.batch.planner.service.BatchPlannerMappingLocalService;
 import com.liferay.batch.planner.service.BatchPlannerPlanLocalService;
 import com.liferay.batch.planner.service.BatchPlannerPolicyLocalService;
+import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -87,16 +88,17 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.PortletCategory;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -106,11 +108,12 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.util.WebAppPool;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.jackson.databind.ser.VulcanPropertyFilter;
@@ -181,62 +184,75 @@ public class BatchEngineBrokerTest {
 			_objectDefinition1.getObjectDefinitionId(),
 			TestPropsValues.getUserId());
 
-		_company2 = CompanyTestUtil.addCompany();
+		long companyId = _counterLocalService.increment();
 
-		PortalInstances.initCompany(_company2);
+		_company2 = _addCompany(companyId, "test.com");
 
-		User user = UserTestUtil.getAdminUser(_company2.getCompanyId());
+		try {
+			User user = UserTestUtil.getAdminUser(_company2.getCompanyId());
 
-		_objectDefinition2 = _publishObjectDefinition(
-			_company2.getCompanyId(), "TestObject", user);
+			_objectDefinition2 = _publishObjectDefinition(
+				_company2.getCompanyId(), "TestObject", user);
 
-		_addObjectEntry(
-			_company2.getCompanyId(), _company2.getGroupId(),
-			_objectDefinition2.getObjectDefinitionId(), user.getUserId());
+			_addObjectEntry(
+				_company2.getCompanyId(), _company2.getGroupId(),
+				_objectDefinition2.getObjectDefinitionId(), user.getUserId());
 
-		BatchPlannerPlan batchPlannerPlan =
-			_batchPlannerPlanLocalService.addBatchPlannerPlan(
-				TestPropsValues.getUserId(), true,
-				BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON, StringPool.SLASH,
-				"com.liferay.object.rest.dto.v1_0.ObjectEntry",
-				RandomTestUtil.randomString(), 0, "C_TestObject", false);
+			BatchPlannerPlan batchPlannerPlan =
+				_batchPlannerPlanLocalService.addBatchPlannerPlan(
+					TestPropsValues.getUserId(), true,
+					BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON,
+					StringPool.SLASH,
+					"com.liferay.object.rest.dto.v1_0.ObjectEntry",
+					RandomTestUtil.randomString(), 0, "C_TestObject", false);
 
-		for (String fieldName : _objectEntryExportFieldNames) {
-			_batchPlannerMappingLocalService.addBatchPlannerMapping(
-				TestPropsValues.getUserId(),
-				batchPlannerPlan.getBatchPlannerPlanId(), fieldName, "String",
-				fieldName, "String", StringPool.BLANK);
+			for (String fieldName : _objectEntryExportFieldNames) {
+				_batchPlannerMappingLocalService.addBatchPlannerMapping(
+					TestPropsValues.getUserId(),
+					batchPlannerPlan.getBatchPlannerPlanId(), fieldName,
+					"String", fieldName, "String", StringPool.BLANK);
+			}
+
+			_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
+
+			BatchEngineExportTask batchEngineExportTask =
+				_getFinishedBatchEngineExportTask(
+					batchPlannerPlan.getBatchPlannerPlanId());
+
+			_objectMapper.setFilterProvider(
+				new SimpleFilterProvider() {
+					{
+						addFilter(
+							"Liferay.Vulcan",
+							VulcanPropertyFilter.of(
+								new HashSet<>(_objectEntryExportFieldNames),
+								null));
+					}
+				});
+
+			JsonNode expectedJsonNode = _getExpectedJsonNode(
+				_objectDefinition1, objectEntry1.getObjectEntryId());
+
+			JsonNode jsonNode = _objectMapper.readTree(
+				_getZipInputStream(
+					_batchEngineExportTaskLocalService.openContentInputStream(
+						batchEngineExportTask.getBatchEngineExportTaskId())));
+
+			Assert.assertTrue(jsonNode.isArray());
+			Assert.assertEquals(1, jsonNode.size());
+
+			_assertEqualsExport(
+				expectedJsonNode, _objectEntryExportFieldNames,
+				jsonNode.get(0));
 		}
+		finally {
+			_objectDefinitionLocalService.deleteObjectDefinition(
+				_objectDefinition2.getObjectDefinitionId());
 
-		_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
+			_objectDefinition2 = null;
 
-		BatchEngineExportTask batchEngineExportTask =
-			_getFinishedBatchEngineExportTask(
-				batchPlannerPlan.getBatchPlannerPlanId());
-
-		_objectMapper.setFilterProvider(
-			new SimpleFilterProvider() {
-				{
-					addFilter(
-						"Liferay.Vulcan",
-						VulcanPropertyFilter.of(
-							new HashSet<>(_objectEntryExportFieldNames), null));
-				}
-			});
-
-		JsonNode expectedJsonNode = _getExpectedJsonNode(
-			_objectDefinition1, objectEntry1.getObjectEntryId());
-
-		JsonNode jsonNode = _objectMapper.readTree(
-			_getZipInputStream(
-				_batchEngineExportTaskLocalService.openContentInputStream(
-					batchEngineExportTask.getBatchEngineExportTaskId())));
-
-		Assert.assertTrue(jsonNode.isArray());
-		Assert.assertEquals(1, jsonNode.size());
-
-		_assertEqualsExport(
-			expectedJsonNode, _objectEntryExportFieldNames, jsonNode.get(0));
+			_companyLocalService.deleteCompany(_company2);
+		}
 	}
 
 	@Test
@@ -471,6 +487,15 @@ public class BatchEngineBrokerTest {
 		_assertEqualsImport(
 			_getExpectedJsonNode(_objectDefinition1),
 			_objectDefinitionImportFieldNames, jsonNode.get(0));
+	}
+
+	private Company _addCompany(long companyId, String webId) throws Exception {
+		WebAppPool.put(
+			companyId, WebKeys.PORTLET_CATEGORY, new PortletCategory());
+
+		return _companyLocalService.addCompany(
+			companyId, webId, webId, webId, 0, true, null, null, null, null,
+			null, null);
 	}
 
 	private DLFileEntry _addDLFileEntry(long groupId, long userId)
@@ -1117,6 +1142,12 @@ public class BatchEngineBrokerTest {
 	private BatchPlannerPolicyLocalService _batchPlannerPolicyLocalService;
 
 	private Company _company2;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private CounterLocalService _counterLocalService;
 
 	@Inject
 	private DLAppService _dlAppService;

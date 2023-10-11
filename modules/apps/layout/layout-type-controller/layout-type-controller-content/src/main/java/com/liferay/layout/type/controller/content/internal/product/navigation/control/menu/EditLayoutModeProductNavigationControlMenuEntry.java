@@ -38,7 +38,6 @@ import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuE
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
-import com.liferay.sites.kernel.util.Sites;
 import com.liferay.staging.StagingGroupHelper;
 
 import java.util.Collections;
@@ -265,9 +264,6 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
-
-	@Reference
-	private Sites _sites;
 
 	@Reference
 	private StagingGroupHelper _stagingGroupHelper;

@@ -52,7 +52,7 @@ public class DatabaseUtil {
 		DBInspector dbInspector = new DBInspector(connection);
 
 		for (String tableName : dbInspector.getTableNames(null)) {
-			if (!dbInspector.isControlTable(companyIds, tableName) &&
+			if (!dbInspector.isControlTable(tableName) &&
 				!dbInspector.isObjectTable(companyIds, tableName)) {
 
 				partitionedTableNames.add(tableName);

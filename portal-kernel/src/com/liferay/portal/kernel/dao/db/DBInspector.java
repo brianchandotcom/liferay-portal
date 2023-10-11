@@ -264,13 +264,13 @@ public class DBInspector {
 		return false;
 	}
 
-	public boolean isControlTable(List<Long> companyIds, String tableName)
-		throws Exception {
-
-		if (!isPartitionedControlTable(tableName) &&
-			!isObjectTable(companyIds, tableName) &&
-			(_controlTableNames.contains(StringUtil.toLowerCase(tableName)) ||
-			 !hasColumn(tableName, "companyId"))) {
+	public boolean isControlTable(String tableName) {
+		if (_controlTableNames.contains(StringUtil.toLowerCase(tableName)) ||
+			StringUtil.toLowerCase(
+				tableName
+			).startsWith(
+				"quartz"
+			)) {
 
 			return true;
 		}
@@ -427,7 +427,9 @@ public class DBInspector {
 	private static final Pattern _columnTypePattern = Pattern.compile(
 		"(^\\w+)", Pattern.CASE_INSENSITIVE);
 	private static final Set<String> _controlTableNames = new HashSet<>(
-		Arrays.asList("company", "virtualhost"));
+		Arrays.asList(
+			"company", "counter", "release_", "servicecomponent",
+			"virtualhost"));
 	private static final Set<String> _partitionedControlTableNames =
 		new HashSet<>(Arrays.asList("classname_", "resourceaction"));
 

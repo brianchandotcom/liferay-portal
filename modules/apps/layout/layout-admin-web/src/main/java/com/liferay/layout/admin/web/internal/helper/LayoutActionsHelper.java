@@ -75,7 +75,7 @@ public class LayoutActionsHelper {
 	}
 
 	public boolean isShowConfigureAction(Layout layout) throws PortalException {
-		return LayoutPermissionUtil.containsLayoutUpdatePermission(
+		return LayoutPermissionUtil.containsLayoutRestrictedUpdatePermission(
 			_themeDisplay.getPermissionChecker(), layout);
 	}
 

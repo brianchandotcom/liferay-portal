@@ -38,8 +38,6 @@ definition {
 			webContentContent = ${webContentContent},
 			webContentTitle = ${webContentTitle});
 
-
-
 		PortletEntry.publish();
 	}
 

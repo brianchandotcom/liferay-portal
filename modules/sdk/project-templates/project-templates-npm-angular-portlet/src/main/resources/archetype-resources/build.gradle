@@ -3,6 +3,5 @@ dependencies {
 }
 
 node {
-	nodeVersion = "10.15.1"
-	npmVersion = "6.4.1"
+	nodeVersion = "16.15.0"
 }

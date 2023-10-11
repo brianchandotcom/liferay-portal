@@ -42,7 +42,7 @@ export default function useGetListItemsFromMDFClaims(
 					item.dateCreated as string,
 					customFormatDateOptions.SHORT_MONTH
 				),
-				[MDFClaimColumnKey.PAID]: !item.claimPaid
+				[MDFClaimColumnKey.AMOUNT_PAID]: !item.claimPaid
 					? '-'
 					: getIntlNumberFormat(item.currency).format(item.claimPaid),
 			})),

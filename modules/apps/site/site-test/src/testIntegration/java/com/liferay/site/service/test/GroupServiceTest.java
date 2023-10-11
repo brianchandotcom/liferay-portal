@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ResourcePermissionTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -63,6 +64,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -328,6 +330,47 @@ public class GroupServiceTest {
 		Assert.assertEquals(
 			initialTagsCount,
 			_assetTagLocalService.getGroupTagsCount(group.getGroupId()));
+	}
+
+	@Test
+	public void testDeleteSiteRemovesSiteResourcePermissions()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		Assert.assertEquals(
+			1,
+			_resourcePermissionLocalService.getResourcePermissionsCount(
+				group.getCompanyId(), Group.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(group.getGroupId())));
+
+		ResourcePermissionTestUtil.addResourcePermission(
+			2L, DLConstants.RESOURCE_NAME, String.valueOf(group.getGroupId()),
+			ResourceConstants.SCOPE_INDIVIDUAL);
+
+		Assert.assertEquals(
+			1,
+			_resourcePermissionLocalService.getResourcePermissionsCount(
+				group.getCompanyId(), DLConstants.RESOURCE_NAME,
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(group.getGroupId())));
+
+		_groupService.deleteGroup(group.getGroupId());
+
+		Assert.assertEquals(
+			0,
+			_resourcePermissionLocalService.getResourcePermissionsCount(
+				group.getCompanyId(), Group.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(group.getGroupId())));
+
+		Assert.assertEquals(
+			0,
+			_resourcePermissionLocalService.getResourcePermissionsCount(
+				group.getCompanyId(), DLConstants.RESOURCE_NAME,
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(group.getGroupId())));
 	}
 
 	@Test

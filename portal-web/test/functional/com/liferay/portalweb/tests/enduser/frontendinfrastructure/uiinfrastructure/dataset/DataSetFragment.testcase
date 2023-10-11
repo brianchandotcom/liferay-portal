@@ -284,6 +284,123 @@ definition {
 		}
 	}
 
+	@description = "LPS-191486. Verify if a created Action entry is deleted, it will not longer appear in the fragment."
+	@priority = 3
+	test CannotViewAnDeletedActionInFragment {
+		task ("Given a new data set entry") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Data Set Test",
+				restApplication = "/data-set-manager/fields",
+				restEndpoint = "/",
+				restSchema = "FDSField");
+		}
+
+		task ("And add new view") {
+			DataSetAdmin.createFDSViewViaAPI(
+				dataSetName = "Data Set Test",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Test");
+		}
+
+		task ("When the user goes to the Action tab") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Data Set Test",
+				key_viewName = "View Test");
+		}
+
+		task ("When the user goes to the Action tab.") {
+			DataSetAdmin.goToTab(tabName = "Actions");
+		}
+
+		task ("And creates an item action") {
+			DataSetAdmin.addActions(
+				actionName = "delete",
+				icon = "trash",
+				type = "Link",
+				url = "http://localhost:8080/o/data-set-manager/");
+		}
+
+		task ("Then the Delete option is displayed in the item action dropdown menu") {
+			DataSetAdmin.goToTab(tabName = "Fields");
+
+			DataSetAdmin.addFields(key_fieldList = "name,id,label");
+		}
+
+		task ("When the user creates a new page") {
+			Navigator.openURL();
+
+			ContentPages.addPage(pageName = "Data Set Test");
+		}
+
+		task ("And adds the data set Fragment portlet in the page created") {
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+
+			Click(locator1 = "ReportsAdminViewReportEntry#INFO_MESSAGE");
+
+			Click.javaScriptClick(
+				key_value = "Select Data Set View",
+				locator1 = "Button#SECONDARY_BY_TITLE");
+
+			SelectFrame(
+				key_title = "Select",
+				locator1 = "IFrame#MODAL_ANY");
+
+			Click.clickAtNotVisible(
+				key_radioOption = "View Test",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Button.clickSave();
+
+			SelectFrame(locator1 = "DataSet#DEFOCUS");
+
+			Click.javaScriptClick(locator1 = "WorkflowMetricsIndex#METRICS_REINDEX_ALL_BUTTON");
+		}
+
+		task ("Then the item actions is present in the fragment") {
+			Navigator.gotoPage(pageName = "Data Set Test");
+
+			AssertElementPresent(
+				key_actionIcon = "delete",
+				locator1 = "DataSet#ACTION_ICON_IN_FRAGMENT");
+		}
+
+		task ("When the user goes to the new data set view admin page") {
+			DataSetAdmin.goToDataSetAdminPage();
+		}
+
+		task ("And goes to the Action tab") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Data Set Test",
+				key_viewName = "View Test");
+
+			DataSetAdmin.goToTab(tabName = "Actions");
+		}
+
+		task ("And deletes the item action") {
+			Click(
+				key_tableEntry = "delete",
+				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Delete");
+
+			Button.clickDelete();
+		}
+
+		task ("And goes to the new page") {
+			Navigator.gotoPage(pageName = "Data Set Test");
+		}
+
+		task ("Then the item action is not present in the fragment") {
+			AssertElementNotPresent(
+				key_actionIcon = "delete",
+				locator1 = "DataSet#ACTION_ICON_IN_FRAGMENT");
+		}
+	}
+
 	@description = "LPS-172403. Smoke test to verify Data Set Fragment can be removed"
 	@priority = 5
 	test CanRemoveFragment {

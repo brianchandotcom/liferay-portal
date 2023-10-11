@@ -37,6 +37,36 @@ definition {
 		DropdownMenuItem.click(menuItem = "Add Categorization");
 	}
 
+	macro addLanguageForOBJ {
+		Click(locator1 = "Button#PLUS");
+
+		Type(
+			key_label = ${key_label},
+			locator1 = "DataSet#SPECIFIC_INPUT",
+			value1 = ${key_text1});
+
+		PortletEntry.save();
+
+		Refresh();
+
+		Click(locator1 = "DataSet#SELECT_LOCALIZATION_BUTTON");
+
+		SelectFrame(locator1 = "DataSet#SELECT_FRAME_LOCAL");
+
+		Click.javaScriptClick(
+			key_menuItem = ${key_menuItem},
+			locator1 = "MenuItem#MENU_ITEM_SPECIFIC");
+
+		Type(
+			key_label = ${key_type},
+			locator1 = "DataSet#SPECIFIC_INPUT",
+			value1 = ${key_text2});
+
+		Click(locator1 = "DataSet#SELECT_FRAME_DEFOCUS");
+
+		PortletEntry.save();
+	}
+
 	macro addLayoutBlockViaUI {
 		Click(locator1 = "ObjectAdmin#ADD_BLOCK_BUTTON");
 

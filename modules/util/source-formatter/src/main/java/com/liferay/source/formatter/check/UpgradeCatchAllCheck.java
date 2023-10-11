@@ -148,9 +148,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 	private static JSONArray _getReplacementsJSONArray(String fileName)
 		throws Exception {
 
-		Class<?> clazz = UpgradeCatchAllCheck.class;
-
-		ClassLoader classLoader = clazz.getClassLoader();
+		ClassLoader classLoader = UpgradeCatchAllCheck.class.getClassLoader();
 
 		InputStream inputStream = classLoader.getResourceAsStream(
 			"dependencies/" + fileName);

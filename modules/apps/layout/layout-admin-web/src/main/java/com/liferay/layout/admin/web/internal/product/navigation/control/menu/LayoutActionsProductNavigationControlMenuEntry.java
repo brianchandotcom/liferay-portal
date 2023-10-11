@@ -104,9 +104,7 @@ public class LayoutActionsProductNavigationControlMenuEntry
 
 		if (!layoutMode.equals(Constants.EDIT) ||
 			layout.isEmbeddedPersonalApplication() ||
-			layout.isTypeControlPanel() ||
-			!(themeDisplay.isShowLayoutTemplatesIcon() ||
-			  themeDisplay.isShowPageSettingsIcon())) {
+			layout.isTypeControlPanel()) {
 
 			return false;
 		}

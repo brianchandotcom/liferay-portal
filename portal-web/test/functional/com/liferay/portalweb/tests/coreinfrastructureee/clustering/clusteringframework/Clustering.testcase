@@ -655,9 +655,11 @@ definition {
 
 				ApplicationsMenuHelper.openApplicationsMenu();
 
+				ApplicationsMenu.gotoPanel(panel = "Control Panel");
+
 				AssertElementNotPresent(
-					key_category = "Import / Export",
-					key_portlet = "Import/Export Center",
+					key_category = "Security",
+					key_portlet = "Server Logs",
 					locator1 = "ApplicationsMenu#PORTLET");
 
 				User.loginPG(
@@ -674,18 +676,16 @@ definition {
 				configurationScope = "Virtual Instance Scope");
 
 			FeatureFlag.enableFeatureFlag(
-				featureFlag = "COMMERCE-8087",
+				featureFlag = "LPS-170670",
 				scope = "Developer");
 		}
 
 		task ("Then the feature is enabled on both nodes") {
 			for (var nodePort : list "9080,8080") {
 				ApplicationsMenu.gotoPortlet(
-					category = "Import / Export",
-					panel = "Applications",
-					portlet = "Import/Export Center");
-
-				ImportExport.gotoImport();
+					category = "Security",
+					panel = "Control Panel",
+					portlet = "Server Logs");
 
 				User.loginPG(
 					nodePort = ${nodePort},
@@ -701,7 +701,7 @@ definition {
 				configurationScope = "Virtual Instance Scope");
 
 			FeatureFlag.disableFeatureFlag(
-				featureFlag = "COMMERCE-8087",
+				featureFlag = "LPS-170670",
 				scope = "Developer");
 		}
 
@@ -711,9 +711,11 @@ definition {
 
 				ApplicationsMenuHelper.openApplicationsMenu();
 
+				ApplicationsMenu.gotoPanel(panel = "Control Panel");
+
 				AssertElementNotPresent(
-					key_category = "Import / Export",
-					key_portlet = "Import/Export Center",
+					key_category = "Security",
+					key_portlet = "Server Logs",
 					locator1 = "ApplicationsMenu#PORTLET");
 
 				if (${nodePort} == 9080) {
@@ -738,9 +740,11 @@ definition {
 
 				ApplicationsMenuHelper.openApplicationsMenu();
 
+				ApplicationsMenu.gotoPanel(panel = "Control Panel");
+
 				AssertElementNotPresent(
-					key_category = "Import / Export",
-					key_portlet = "Import/Export Center",
+					key_category = "Security",
+					key_portlet = "Server Logs",
 					locator1 = "ApplicationsMenu#PORTLET");
 
 				if (${nodePort} == 9080) {
@@ -760,18 +764,16 @@ definition {
 				configurationScope = "Virtual Instance Scope");
 
 			FeatureFlag.enableFeatureFlag(
-				featureFlag = "COMMERCE-8087",
+				featureFlag = "LPS-170670",
 				scope = "Developer");
 		}
 
 		task ("Then the feature is enabled on both nodes") {
 			for (var nodePort : list "8080,9080") {
 				ApplicationsMenu.gotoPortlet(
-					category = "Import / Export",
-					panel = "Applications",
-					portlet = "Import/Export Center");
-
-				ImportExport.gotoImport();
+					category = "Security",
+					panel = "Control Panel",
+					portlet = "Server Logs");
 
 				User.loginPG(
 					nodePort = ${nodePort},
@@ -788,7 +790,7 @@ definition {
 				configurationScope = "Virtual Instance Scope");
 
 			FeatureFlag.disableFeatureFlag(
-				featureFlag = "COMMERCE-8087",
+				featureFlag = "LPS-170670",
 				scope = "Developer");
 		}
 
@@ -798,9 +800,11 @@ definition {
 
 				ApplicationsMenuHelper.openApplicationsMenu();
 
+				ApplicationsMenu.gotoPanel(panel = "Control Panel");
+
 				AssertElementNotPresent(
-					key_category = "Import / Export",
-					key_portlet = "Import/Export Center",
+					key_category = "Security",
+					key_portlet = "Server Logs",
 					locator1 = "ApplicationsMenu#PORTLET");
 
 				if (${nodePort} == 8080) {

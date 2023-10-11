@@ -76,16 +76,18 @@ definition {
 		task ("Given a feature flag is disabled") {
 			ApplicationsMenuHelper.openApplicationsMenu();
 
+			ApplicationsMenu.gotoPanel(panel = "Control Panel");
+
 			AssertElementNotPresent(
-				key_category = "Import / Export",
-				key_portlet = "Import/Export Center",
+				key_category = "Security",
+				key_portlet = "Server Logs",
 				locator1 = "ApplicationsMenu#PORTLET");
 
 			Refresh();
 		}
 
 		task ("When the feature flag is enabled via environment variable") {
-			Tomcat.addCompanyProperties(properties = "feature.flag.COMMERCE-8087=true");
+			Tomcat.addCompanyProperties(properties = "feature.flag.LPS-170670=true");
 		}
 
 		task ("And the portal is restarted") {
@@ -96,11 +98,9 @@ definition {
 
 		task ("Then the feature flag is enabled") {
 			ApplicationsMenu.gotoPortlet(
-				category = "Import / Export",
-				panel = "Applications",
-				portlet = "Import/Export Center");
-
-			ImportExport.gotoImport();
+				category = "Security",
+				panel = "Control Panel",
+				portlet = "Server Logs");
 		}
 	}
 
@@ -114,16 +114,18 @@ definition {
 		task ("Given a feature flag is disabled") {
 			ApplicationsMenuHelper.openApplicationsMenu();
 
+			ApplicationsMenu.gotoPanel(panel = "Control Panel");
+
 			AssertElementNotPresent(
-				key_category = "Import / Export",
-				key_portlet = "Import/Export Center",
+				key_category = "Security",
+				key_portlet = "Server Logs",
 				locator1 = "ApplicationsMenu#PORTLET");
 
 			Refresh();
 		}
 
 		task ("When the feature flag is enabled via environment variable") {
-			Tomcat.addCompanyProperties(properties = "feature.flag.COMMERCE-8087=true");
+			Tomcat.addCompanyProperties(properties = "feature.flag.LPS-170670=true");
 		}
 
 		task ("And company-id-properties=true is set via jvm argument") {
@@ -138,11 +140,9 @@ definition {
 
 		task ("Then the feature flag is enabled") {
 			ApplicationsMenu.gotoPortlet(
-				category = "Import / Export",
-				panel = "Applications",
-				portlet = "Import/Export Center");
-
-			ImportExport.gotoImport();
+				category = "Security",
+				panel = "Control Panel",
+				portlet = "Server Logs");
 		}
 	}
 

@@ -681,6 +681,13 @@ public class ObjectRelationshipLocalServiceTest {
 		}
 	}
 
+	private boolean _matchesWithRegex(String dbTableName) {
+		Matcher matcher = _manyToManyRelationshipTableNamePattern.matcher(
+			dbTableName);
+
+		return matcher.matches();
+	}
+
 	private void _testAddObjectRelationshipManyToMany(
 			String deletionType, ObjectDefinition objectDefinition1,
 			ObjectDefinition objectDefinition2, boolean system)
@@ -850,7 +857,8 @@ public class ObjectRelationshipLocalServiceTest {
 			objectRelationship.getDBTableName(),
 			reverseObjectRelationship.getDBTableName());
 
-		Assert.assertTrue(_matchesWithRegex(objectRelationship.getDBTableName()));
+		Assert.assertTrue(
+			_matchesWithRegex(objectRelationship.getDBTableName()));
 
 		Map<String, String> pkObjectFieldDBColumnNames =
 			ObjectRelationshipUtil.getPKObjectFieldDBColumnNames(
@@ -880,13 +888,6 @@ public class ObjectRelationshipLocalServiceTest {
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			relatedObjectDefinition);
-	}
-
-	private boolean _matchesWithRegex(String dbTableName) {
-		Pattern pattern = Pattern.compile("R_[A-Z][0-9][A-Z][0-9]$");
-		Matcher matcher = pattern.matcher(dbTableName);
-
-		return matcher.matches();
 	}
 
 	private void _testSystemObjectRelationshipOneToMany() throws Exception {
@@ -962,6 +963,9 @@ public class ObjectRelationshipLocalServiceTest {
 
 		_addObjectRelationshipSystemObjectDefinition();
 	}
+
+	private static final Pattern _manyToManyRelationshipTableNamePattern =
+		Pattern.compile("R_[A-Z][0-9][A-Z][0-9]$");
 
 	@Inject
 	private static ObjectDefinitionLocalService _objectDefinitionLocalService;

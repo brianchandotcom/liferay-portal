@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -318,8 +317,5 @@ public class UserAccountResourcePerformanceTest {
 
 	@Inject
 	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
-
-	@Inject
-	private UserLocalService _userLocalService;
 
 }

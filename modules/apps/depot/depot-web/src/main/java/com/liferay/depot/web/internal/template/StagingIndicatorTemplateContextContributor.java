@@ -6,7 +6,6 @@
 package com.liferay.depot.web.internal.template;
 
 import com.liferay.depot.web.internal.util.StagingIndicatorUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -40,14 +39,10 @@ public class StagingIndicatorTemplateContextContributor
 			if (StagingIndicatorUtil.isShowStagingIndicator(
 					httpServletRequest, _portletPermission)) {
 
-				StringBundler sb = new StringBundler(2);
-
-				sb.append(
-					GetterUtil.getString(contextObjects.get("bodyCssClass")));
-
-				sb.append(" has-staging-indicator");
-
-				contextObjects.put("bodyCssClass", sb.toString());
+				contextObjects.put(
+					"bodyCssClass",
+					GetterUtil.getString(contextObjects.get("bodyCssClass")) +
+						" has-staging-indicator");
 			}
 		}
 		catch (PortalException portalException) {

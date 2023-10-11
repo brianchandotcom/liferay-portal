@@ -929,6 +929,163 @@ definition {
 		}
 	}
 
+	@description = "LPS-187312 Confirm the creation of new translations, right after translating the page"
+	@priority = 5
+	test ConfirmThatTheCreatedTranslationWorks {
+		task ("Given object created via API") {
+			Navigator.openURL();
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Language",
+				objectName = "Language",
+				pluralLabelName = "Language");
+
+			Refresh();
+		}
+
+		task ("When the name field and enable translation entry") {
+			ACUtils.waitForScrollDown();
+
+			Click(
+				key_labelName = "Language",
+				locator1 = "CreateObject#OBJECT_NAME");
+
+			Click(
+				key_text = "",
+				locator1 = "DataSet#SELECT_PANEL_LINK");
+
+			Click(
+				key_menuItem = "Control Panel > Object",
+				locator1 = "MenuItem#MENU_ITEM_SPECIFIC");
+
+			Check.checkNotVisible(
+				checkboxName = "Enable Entry Translation",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			Button.clickSave();
+		}
+
+		task ("And add a new field "language" in Object") {
+			ObjectAdmin.goToFieldsTab();
+
+			Refresh();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "language",
+				fieldType = "Text");
+
+			ObjectCustomValidation.gotoTab(tabName = "Details");
+
+			Button.clickPublish();
+		}
+
+		task ("And go to the Language portlet") {
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Object",
+				panel = "Control Panel",
+				portlet = "Language");
+		}
+
+		task ("And create a new laguages in Object created") {
+			ObjectAdmin.addLanguageForOBJ(
+				key_label = "language",
+				key_menuItem = "português (Brasil)",
+				key_text1 = "English",
+				key_text2 = "Portugues",
+				key_type = "language");
+		}
+
+		task ("And create a user creates a new data Set entry") {
+			Navigator.openURL();
+
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "languages",
+				restApplication = "/c/languages",
+				restEndpoint = "/",
+				restSchema = "Language");
+
+			Refresh();
+		}
+
+		task ("And Add a view //Name: languages view") {
+			DataSetAdmin.goToViews(dataSetName = "languages");
+
+			DataSetAdmin.createDataSetView(
+				description = "Description",
+				key_name = "languages view");
+		}
+
+		task ("When go to the View page of the data set created.") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "languages",
+				key_viewName = "languages view");
+		}
+
+		task ("When goes to Fields Tab.") {
+			DataSetAdmin.goToTab(tabName = "Fields");
+		}
+
+		task ("And Add some fields //Add id and language") {
+			DataSetAdmin.addFields(key_fieldList = "id,language");
+		}
+
+		task ("And add a new content page and Add a data set fragment to content page created") {
+			Navigator.openURL();
+
+			ContentPages.addPage(pageName = "Test Page Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("And selected view") {
+			Click(locator1 = "ReportsAdminViewReportEntry#INFO_MESSAGE");
+
+			Click.javaScriptClick(
+				key_value = "Select Data Set View",
+				locator1 = "Button#SECONDARY_BY_TITLE");
+
+			SelectFrame(
+				key_title = "Select",
+				locator1 = "IFrame#MODAL_ANY");
+
+			Click.clickAtNotVisible(
+				key_radioOption = "languages view",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Button.clickSave();
+		}
+
+		task ("And publishes the page") {
+			SelectFrame(locator1 = "DataSet#DEFOCUS");
+
+			Click.javaScriptClick(locator1 = "WorkflowMetricsIndex#METRICS_REINDEX_ALL_BUTTON");
+		}
+
+		task ("And go to the page created") {
+			Navigator.openURL();
+
+			Click(
+				key_pageName = "Test Page Name",
+				locator1 = "Home#PAGE");
+		}
+
+		task ("And change the URL page adding /pr/ and confirm the "Portugues"") {
+			Navigator.openSpecificURL(url = "http://localhost:8080/pt/test-page-name");
+
+			AssertElementPresent(
+				key_addressType = "Portugues",
+				locator1 = "CommerceAccelerators#ACCOUNT_MANAGEMENT_ADDRESS_TYPE");
+		}
+	}
+
 	@description = "LPS-172398. Confirm that the options view and Delete is present and is visible after clicking the ellipsis button."
 	@priority = 3
 	test DeleteAndViewAreAvailable {

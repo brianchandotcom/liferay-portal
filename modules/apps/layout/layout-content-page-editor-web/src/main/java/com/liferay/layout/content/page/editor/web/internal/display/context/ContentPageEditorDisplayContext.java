@@ -508,6 +508,9 @@ public class ContentPageEditorDisplayContext {
 				"getPortletsURL",
 				_getResourceURL("/layout_content_page_editor/get_portlets")
 			).put(
+				"getUsers",
+				_getResourceURL("/layout_content_page_editor/get_users")
+			).put(
 				"imageSelectorURL", _getItemSelectorURL()
 			).put(
 				"imagesPath",

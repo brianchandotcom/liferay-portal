@@ -12,7 +12,11 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.osgi.web.http.servlet.internal.context.ServletContextHelperDataContextImpl;
+
+import java.io.File;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,7 +32,6 @@ import javax.servlet.ServletContext;
 import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
 import org.eclipse.equinox.http.servlet.internal.context.ContextController;
 import org.eclipse.equinox.http.servlet.internal.context.DispatchTargets;
-import org.eclipse.equinox.http.servlet.internal.context.ProxyContext;
 import org.eclipse.equinox.http.servlet.internal.error.IllegalContextNameException;
 import org.eclipse.equinox.http.servlet.internal.error.IllegalContextPathException;
 import org.eclipse.equinox.http.servlet.internal.servlet.Match;
@@ -63,6 +66,23 @@ public class HttpServletEndpointControllerImpl
 		_attributesMap = attributesMap;
 		_bundleContext = bundleContext;
 		_parentServletContext = parentServletContext;
+
+		File parentServletContextTempDir =
+			(File)parentServletContext.getAttribute(
+				JavaConstants.JAVAX_SERVLET_CONTEXT_TEMPDIR);
+
+		if (parentServletContextTempDir != null) {
+			parentServletContextTempDir = new File(
+				parentServletContextTempDir,
+				HttpServletEndpointController.class.getName() + hashCode());
+
+			_parentServletContextTempDir = parentServletContextTempDir;
+
+			_parentServletContextTempDir.mkdirs();
+		}
+		else {
+			_parentServletContextTempDir = null;
+		}
 
 		_contextControllers = ServiceTrackerListFactory.open(
 			bundleContext, ServletContextHelper.class, null,
@@ -265,6 +285,7 @@ public class HttpServletEndpointControllerImpl
 	private final BundleContext _bundleContext;
 	private final ServiceTrackerList<ContextController> _contextControllers;
 	private final ServletContext _parentServletContext;
+	private final File _parentServletContextTempDir;
 	private final Set<Object> _registeredObjects = Collections.newSetFromMap(
 		new ConcurrentHashMap<>());
 	private final ServiceRegistration<ServletContextHelper>
@@ -325,7 +346,9 @@ public class HttpServletEndpointControllerImpl
 
 				return new ContextController(
 					_bundleContext, _bundleContext, serviceReference,
-					new ProxyContext(contextName, _parentServletContext),
+					new ServletContextHelperDataContextImpl(
+						contextName, _parentServletContext,
+						_parentServletContextTempDir),
 					HttpServletEndpointControllerImpl.this, contextName,
 					contextPath);
 			}

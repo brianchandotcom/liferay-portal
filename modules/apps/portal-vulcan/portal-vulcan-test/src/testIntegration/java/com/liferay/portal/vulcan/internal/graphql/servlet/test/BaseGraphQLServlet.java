@@ -290,9 +290,9 @@ public class BaseGraphQLServlet {
 	private static final String _STRING_FIELD = RandomTestUtil.randomString();
 
 	private static final Map<String, String> _mapField = HashMapBuilder.put(
-		RandomTestUtil.randomString(), RandomTestUtil.randomString()
+		"a" + RandomTestUtil.randomString(), RandomTestUtil.randomString()
 	).put(
-		RandomTestUtil.randomString(), RandomTestUtil.randomString()
+		"a" + RandomTestUtil.randomString(), RandomTestUtil.randomString()
 	).build();
 
 }

@@ -747,6 +747,86 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-12456. The admin can view the base price of a product updated based on the primary SKU/UOM combination"
+	@priority = 5
+	test CanBasePriceBeUpdatedBasedOnTheOneFromPrimaryUOM {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And one UOM is added to the SKU MIN93015 with '56.00 USD' as the base price") {
+			CommerceJSONSKUsAPI._addCommerceUOM(
+				basePrice = 56,
+				productSKU = "MIN93015",
+				uomKey = "uomKey1",
+				uomName = "uomName1");
+		}
+
+		task ("And the admin navigates to Commerce → Products → ABS Sensor → SKUs → MIN93015 → Units of Measure (UOM) tab") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Units of Measure (UOM)");
+		}
+
+		task ("When the admin clicks on the plus button trying to create a second UOM") {
+			Click(locator1 = "Button#PLUS");
+
+			SelectFrameTop();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		task ("Then on the modal base price is set with default value '56.00 USD'") {
+			AssertTextEquals(
+				key_text = "Base Price",
+				locator1 = "TextInput#ANY",
+				value1 = "56.00");
+		}
+
+		task ("When the admin saves the second UOM by giving 'UOM2' as name and 'uom2' as key") {
+			ClickNoError(
+				key_modalTitle = "Add Unit of Measure",
+				locator1 = "Button#CLOSE_MODAL");
+
+			SelectFrameTop();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.addUOMEntry(
+				unitOfMeasureKey = "uom2",
+				unitOfMeasureName = "UOM2");
+		}
+
+		task ("And the admin clicks on the plus button trying to create a third UOM") {
+			SelectFrameTop();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Click(locator1 = "Button#PLUS");
+
+			SelectFrameTop();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		task ("Then on the modal base price is set with default value '56.00 USD'") {
+			AssertTextEquals(
+				key_text = "Base Price",
+				locator1 = "TextInput#ANY",
+				value1 = "56.00");
+		}
+	}
+
 	@description = "COMMERCE-12337. As admin, I can edit and delete the Units of Measure entries."
 	@priority = 5
 	test CanEditAndDeleteUOM {
@@ -863,6 +943,153 @@ definition {
 				key_firstRowValue = "UOM",
 				key_secondRowValue = "Liter",
 				locator1 = "CommerceEntry#GENERIC_TABLE_ROW_VALUE");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-12551. As a buyer user, I cannot add the UOM to the cart when the SKU/UOM's stock quantity is zero and the allow back order is disabled"
+	@priority = 5
+	test CannotAddToCartUOMWhenStockIsZeroAndBackOrderIsDisabled {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And two UOMs are added to the SKU MIN93015, the UOM2 has no inventory") {
+			for (var index : list "1,2") {
+				CommerceJSONSKUsAPI._addCommerceUOM(
+					basePrice = ${index},
+					productSKU = "MIN93015",
+					uomKey = "uomKey${index}",
+					uomName = "uomName${index}");
+			}
+		}
+
+		task ("And Allow Back Orders toggle is switched off for product ABS Sensor") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				allowBackOrder = "false",
+				productName = "ABS Sensor");
+		}
+
+		task ("And the buyer navigates to ABS Sensor's product details page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/abs-sensor");
+		}
+
+		task ("When the buyer switches to UOM2 using the select") {
+			Select(
+				locator1 = "CommerceFrontStore#FS_PRODUCT_UOM_SELECT",
+				value1 = "uomName2");
+		}
+
+		task ("Then the stock value is 0 and unavailable label is shown") {
+			AssertElementPresent(
+				key_filterOption = "0 in Stock",
+				locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
+
+			AssertElementPresent(
+				key_availability = "Unavailable",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_AVAILABILITY");
+		}
+
+		task ("When adding the UOM2 to the cart") {
+			Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+		}
+
+		task ("Then an alert is shown: Danger:The specified quantity is unavailable") {
+			Alert.viewErrorMessage(errorMessage = "Danger:The specified quantity is unavailable.");
+		}
+
+		task ("And no items are added to the cart") {
+			AssertElementNotPresent(
+				key_itemCount = 1,
+				locator1 = "CommerceAccelerators#MINI_CART_BUTTON_DATA_BADGE_COUNT");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-12461. If the feature flags for UOM and POA are set, then the admin can view the pricing section in the SKU details frame has been removed, including the POA switch"
+	@priority = 4
+	test CannotViewPricingInformationFromSKUDetails {
+		property custom.properties = "feature.flag.COMMERCE-11028=true${line.separator}feature.flag.COMMERCE-11287=true";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("When the admin navigates to Commerce → Products → ABS Sensor → SKUs → MIN93015 → Details tab") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Details");
+		}
+
+		task ("Then the whole pricing section is removed from the details, including the Price on Application switch") {
+			AssertElementNotPresent(
+				key_title = "Pricing",
+				locator1 = "Header#H4_TITLE");
+
+			for (var pricingEntry : list "Base Price,Promotion Price,Cost") {
+				AssertElementNotPresent(
+					key_text = ${pricingEntry},
+					locator1 = "TextInput#ANY");
+			}
+
+			AssertElementNotPresent(
+				key_toggleSwitchLabel = "Price on Application",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		task ("When the admin clicks the plus button for creating a new SKU") {
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrame.selectFrameTop();
+
+			Click(locator1 = "Button#PLUS");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+		}
+
+		task ("Then the whole pricing section is removed from the side panel, including the Price on Application switch") {
+			AssertElementNotPresent(
+				key_title = "Pricing",
+				locator1 = "Header#H4_TITLE");
+
+			for (var pricingEntry : list "Base Price,Promotion Price,Cost") {
+				AssertElementNotPresent(
+					key_text = ${pricingEntry},
+					locator1 = "TextInput#ANY");
+			}
+
+			AssertElementNotPresent(
+				key_toggleSwitchLabel = "Price on Application",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
 	}
 
@@ -1579,6 +1806,79 @@ definition {
 					locator1 = "CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC",
 					value1 = "$ 2.00");
 			}
+		}
+	}
+
+	@description = "This is a test for COMMERCE-12462. If the feature flag for UOM is removed, for POA is set, then the admin can view the pricing section in the SKU's details frame, including the POA switch"
+	@priority = 4
+	test CanViewPricingInformationFromSKUDetailsWithoutFeatureFlag {
+		property custom.properties = "feature.flag.COMMERCE-11028=true${line.separator}feature.flag.COMMERCE-11287=false";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("When the admin navigates to Commerce → Products → ABS Sensor → SKUs → MIN93015 → Details tab") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Details");
+		}
+
+		task ("Then the whole pricing section is not removed from the details, including the Price on Application switch") {
+			AssertVisible(
+				key_title = "Pricing",
+				locator1 = "Header#H4_TITLE");
+
+			for (var pricingEntry : list "Base Price,Promotion Price,Cost") {
+				AssertVisible(
+					key_text = ${pricingEntry},
+					locator1 = "TextInput#ANY");
+			}
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_toggleSwitchLabel = "Price on Application",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		task ("And the Units of Measure tab is not present on the side panel") {
+			AssertElementNotPresent(
+				key_menuTab = "Units of Measure (UOM)",
+				locator1 = "CommerceEntry#MENU_TAB");
+		}
+
+		task ("When the admin clicks the plus button for creating a new SKU") {
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrame.selectFrameTop();
+
+			Click(locator1 = "Button#PLUS");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+		}
+
+		task ("Then the whole pricing section is not removed from the side panel, including the Price on Application switch") {
+			AssertVisible(
+				key_title = "Pricing",
+				locator1 = "Header#H4_TITLE");
+
+			for (var pricingEntry : list "Base Price,Promotion Price,Cost") {
+				AssertVisible(
+					key_text = ${pricingEntry},
+					locator1 = "TextInput#ANY");
+			}
+
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_toggleSwitchLabel = "Price on Application",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
 	}
 

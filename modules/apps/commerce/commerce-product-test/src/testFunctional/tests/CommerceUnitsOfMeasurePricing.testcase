@@ -1,0 +1,316 @@
+@component-name = "portal-commerce"
+definition {
+
+	property custom.properties = "company.security.strangers.verify=false${line.separator}feature.flag.COMMERCE-11287=true${line.separator}jsonws.web.service.paths.excludes=";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Product Info Management";
+
+	setUp {
+		CommerceConfiguration.commerceSetUp(minium = "true");
+	}
+
+	tearDown {
+		CommerceConfiguration.commerceTearDown();
+	}
+
+	@description = "This is a test for COMMERCE-12479. As a buyer, I can view the multiple SKU/UOMs for a product applied to the Price On Application in the front store correctly"
+	@priority = 5
+	test CanAssertUOMsAreSetByPOACorrectly {
+		property custom.properties = "company.security.strangers.verify=false${line.separator}feature.flag.COMMERCE-11028=true${line.separator}feature.flag.COMMERCE-11287=true${line.separator}jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
+
+		task ("Given a Commerce Account with a Buyer User is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And two UOMs are added to the SKU MIN93015") {
+			for (var index : list "1,2") {
+				CommerceJSONSKUsAPI._addCommerceUOM(
+					basePrice = ${index},
+					productSKU = "MIN93015",
+					uomKey = "uomKey${index}",
+					uomName = "uomName${index}");
+			}
+		}
+
+		task ("And the quantity of Italy warehouse for UOM2 is set to 100") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Inventory");
+
+			CommerceSKUs.setSkuUomInventory(uomQuantityLists = "1:100");
+		}
+
+		task ("And the admin opens the Price tab (4 entities are present)") {
+			SelectFrameTop();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+			for (var index : list "1,2") {
+				AssertTextEquals(
+					key_cellName1 = "Minium Base Price List",
+					key_cellName2 = "uomKey${index}",
+					key_columnNumber = 2,
+					locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
+					value1 = "uomKey${index}");
+
+				AssertTextEquals(
+					key_cellName1 = "Minium Base Promotion",
+					key_cellName2 = "uomKey${index}",
+					key_columnNumber = 2,
+					locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
+					value1 = "uomKey${index}");
+			}
+
+			Pagination.viewResults(results = "Showing 1 to 4 of 4 entries.");
+		}
+
+		task ("And enables 'Price On Application' toggle for the 'Minium Price List' assigned to UOM2") {
+			AssertClick(
+				key_cellName1 = "Minium Base Price List",
+				key_cellName2 = "uomKey2",
+				key_columnNumber = 1,
+				locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
+				value1 = "Minium Base Price List");
+
+			CommerceSKUs.editSkuPricing(priceOnApplication = "true");
+		}
+
+		task ("And the buyer navigates to the product ABS Sensor's details page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/abs-sensor");
+		}
+
+		task ("And there is no 'Price Application' label for UOM1") {
+			AssertElementNotPresent(locator1 = "CommerceAccelerators#PRODUCT_DETAILS_PRICE_ON_APPLICATION");
+		}
+
+		task ("When the buyer switches to UOM2 using the select") {
+			Select(
+				locator1 = "CommerceFrontStore#FS_PRODUCT_UOM_SELECT",
+				value1 = "uomName2");
+		}
+
+		task ("Then the Product is marked as 'Price Application'") {
+			AssertElementPresent(locator1 = "CommerceAccelerators#PRODUCT_DETAILS_PRICE_ON_APPLICATION");
+		}
+
+		task ("When it is added to the cart") {
+			Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+		}
+
+		task ("Then the 'Price Application' label for the product entry and the 'Request A Quote' button are present in the Mini Cart") {
+			CommerceNavigator.gotoMiniCart();
+
+			AssertElementPresent(
+				key_cartItemSku = "MIN93015",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_PRICE_ON_APPLICATION");
+
+			AssertElementPresent(
+				key_text = "Request a Quote",
+				locator1 = "Button#ANY");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-12471. As an admin, I can view the UOM information for the SKU from the Price Lists and Promotion admin panels"
+	@priority = 5
+	test CanViewUOMInformationFromPriceListsAndPromotions {
+		property portal.acceptance = "true";
+
+		task ("Given two UOMs are added to the SKU MIN93015") {
+			for (var index : list "1,2") {
+				CommerceJSONSKUsAPI._addCommerceUOM(
+					basePrice = ${index},
+					productSKU = "MIN93015",
+					uomKey = "uomKey${index}",
+					uomName = "uomName${index}");
+			}
+		}
+
+		task ("When the admin searches for the SKU with the assigned UOMs in the Price List section (Commerce → Price List)") {
+			CommercePriceLists.openPriceListsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+			Type(
+				key_placeHolder = "Search",
+				locator1 = "TextInput#ANY_PLACEHOLDER",
+				value1 = "MIN93015");
+
+			KeyPress(
+				key_placeHolder = "Search",
+				locator1 = "TextInput#ANY_PLACEHOLDER",
+				value1 = "\RETURN");
+		}
+
+		task ("Then the UOM Selector for each entity in the results shows which UOM is using that entry and the UOM key is read-only on UI") {
+			for (var index : list "1,2") {
+				AssertClick(
+					key_cellName1 = "MIN93015",
+					key_cellName2 = "uomKey${index}",
+					key_columnNumber = 2,
+					locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
+					value1 = "MIN93015");
+
+				SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+				AssertSelectedLabel(
+					key_selectFieldLabel = "Unit of Measure",
+					locator1 = "Select#ANY_DISABLED",
+					value1 = "uomKey${index}");
+
+				Click(locator1 = "Icon#CLOSE");
+
+				SelectFrame.selectFrameTop();
+			}
+		}
+
+		task ("When the admin searches for the SKU with the assigned UOMs in the Promotion section (Commerce → Promotion)") {
+			CommercePromotions.openPromotionsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Promotion");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+			Type(
+				key_placeHolder = "Search",
+				locator1 = "TextInput#ANY_PLACEHOLDER",
+				value1 = "MIN93015");
+
+			KeyPress(
+				key_placeHolder = "Search",
+				locator1 = "TextInput#ANY_PLACEHOLDER",
+				value1 = "\RETURN");
+		}
+
+		task ("Then the UOM Selector for each entity in the results shows which UOM is using that entry and the UOM key is read-only on UI") {
+			for (var index : list "1,2") {
+				AssertClick(
+					key_cellName1 = "MIN93015",
+					key_cellName2 = "uomKey${index}",
+					key_columnNumber = 2,
+					locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
+					value1 = "MIN93015");
+
+				SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+				AssertSelectedLabel(
+					key_selectFieldLabel = "Unit of Measure",
+					locator1 = "Select#ANY_DISABLED",
+					value1 = "uomKey${index}");
+
+				Click(locator1 = "Icon#CLOSE");
+
+				SelectFrame.selectFrameTop();
+			}
+		}
+	}
+
+	@description = "This is a test for COMMERCE-12470. As an admin, I can view the UOM information for the SKU from the SKU's price tab"
+	@priority = 5
+	test CanViewUOMInformationFromSKU {
+		property portal.acceptance = "true";
+
+		task ("Given two UOMs are added to the SKU MIN93015") {
+			for (var index : list "1,2") {
+				CommerceJSONSKUsAPI._addCommerceUOM(
+					basePrice = ${index},
+					productSKU = "MIN93015",
+					uomKey = "uomKey${index}",
+					uomName = "uomName${index}");
+			}
+		}
+
+		task ("When the admin opens the Price tab (4 entities are present)") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+			for (var index : list "1,2") {
+				AssertTextEquals(
+					key_cellName1 = "Minium Base Price List",
+					key_cellName2 = "uomKey${index}",
+					key_columnNumber = 2,
+					locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
+					value1 = "uomKey${index}");
+
+				AssertTextEquals(
+					key_cellName1 = "Minium Base Promotion",
+					key_cellName2 = "uomKey${index}",
+					key_columnNumber = 2,
+					locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
+					value1 = "uomKey${index}");
+			}
+
+			Pagination.viewResults(results = "Showing 1 to 4 of 4 entries.");
+		}
+
+		task ("Then the UOM Selector for each entity in the results shows which UOM is using that entry and the UOM key is read-only on UI") {
+			for (var priceListAndUom : list "Price List:1,Price List:2,Promotion:1,Promotion:2") {
+				var priceListName = StringUtil.extractFirst(${priceListAndUom}, ":");
+				var index = StringUtil.extractLast(${priceListAndUom}, ":");
+
+				AssertClickNoError(
+					key_cellName1 = "Minium Base ${priceListName}",
+					key_cellName2 = "uomKey${index}",
+					key_columnNumber = 1,
+					locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
+					value1 = "Minium Base ${priceListName}");
+
+				WaitForPageLoad();
+
+				SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+				AssertSelectedLabel(
+					key_selectFieldLabel = "Unit of Measure",
+					locator1 = "Select#ANY_DISABLED",
+					value1 = "uomKey${index}");
+
+				Click(locator1 = "Icon#CLOSE");
+
+				SelectFrame.selectFrameTop();
+
+				SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+			}
+		}
+	}
+
+}

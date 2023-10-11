@@ -68,8 +68,6 @@ definition {
 			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 			CommerceEntry.setExpirationTime(minutesToExpire = 2);
-
-			Button.clickSave();
 		}
 
 		task ("And given a Test Promotion entry for U-Joint that is set to publish in 3 minutes") {

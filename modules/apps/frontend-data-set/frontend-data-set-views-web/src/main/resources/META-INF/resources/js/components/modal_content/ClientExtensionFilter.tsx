@@ -34,7 +34,7 @@ function Body({
 		return (
 			<ClayAlert displayType="info" title="Info">
 				{Liferay.Language.get(
-					'no-client-extensions-are-available.-create-a-frontend-data-set-filter-in-order-to-use-it'
+					'no-frontend-data-set-filter-client-extensions-are-available.-add-a-client-extension-first-in-order-to-create-a-filter'
 				)}
 			</ClayAlert>
 		);

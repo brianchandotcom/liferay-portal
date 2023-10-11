@@ -45,8 +45,8 @@ export interface BaseLayoutDataItem<
 	Config
 > {
 	children: string[];
-	config: Config;
+	config: Config & {name?: string};
 	itemId: string;
-	itemType: ItemType;
 	parentId: string;
+	type: ItemType;
 }

@@ -6,9 +6,12 @@
 import {LAYOUT_DATA_ITEM_TYPE_LABELS} from '../config/constants/layoutDataItemTypeLabels';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 
+import type {LayoutDataItem} from '../../types/layout_data/LayoutData';
+import type {FragmentEntryLinkMap} from '../actions/addFragmentEntryLinks';
+
 export default function selectLayoutDataItemLabel(
-	{fragmentEntryLinks},
-	item,
+	{fragmentEntryLinks}: {fragmentEntryLinks: FragmentEntryLinkMap},
+	item: LayoutDataItem,
 	{useCustomName = true} = {}
 ) {
 	if (useCustomName && item.config?.name) {

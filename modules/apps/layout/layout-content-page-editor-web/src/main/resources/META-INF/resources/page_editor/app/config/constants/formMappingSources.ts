@@ -7,4 +7,4 @@ export const FORM_MAPPING_SOURCES = {
 	default: 0,
 	displayPage: 1,
 	otherContentType: 2,
-};
+} as const;

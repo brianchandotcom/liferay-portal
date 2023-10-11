@@ -4,12 +4,14 @@
 	margin-bottom: 0;
 	padding: 1rem 1.5rem;
 
-	.panel-header,
-	.panel-header.collapsed {
-		border-color: $gray-400;
-	}
+	.panel-header {
+		&,
+		&.collapsed {
+			border-color: $gray-400;
+		}
 
-	.panel-header.panel-header-link {
-		border-radius: 0;
+		&.panel-header-link {
+			border-radius: 0;
+		}
 	}
 }

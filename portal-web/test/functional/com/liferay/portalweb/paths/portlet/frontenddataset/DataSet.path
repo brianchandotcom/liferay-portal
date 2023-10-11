@@ -366,6 +366,31 @@
 	<td>//input[contains(@class,'content-input')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SPECIFIC_INPUT</td>
+	<td>//div[contains(@class, 'input-group-item')]//input[contains(@id, '${key_label}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_PANEL_LINK</td>
+	<td>//div[@class = 'custom-select__content form-control']//span[contains(text(),'${key_text}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_LOCALIZATION_BUTTON</td>
+	<td>//button[contains(@class, 'dropdown-toggle btn btn-monospaced btn-secondary')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FRAME_LOCAL</td>
+	<td>//div[@class="dropdown-menu show"]//ul[@class="list-unstyled"]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FRAME_DEFOCUS</td>
+	<td>//div[@class="panel-group panel-group-flush"]</td>
+	<td></td>
+</tr>
 
 <!-- DATA SET ACTIONS -->
 

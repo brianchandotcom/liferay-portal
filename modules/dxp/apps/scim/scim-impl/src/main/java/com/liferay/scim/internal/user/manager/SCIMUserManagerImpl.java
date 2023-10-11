@@ -16,6 +16,7 @@ import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.osgi.util.configuration.ConfigurationFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -29,6 +30,9 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -52,8 +56,12 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-@Component(service = SCIMUserManager.class)
-public class SCIMUserManagerImpl implements SCIMUserManager {
+@Component(service = AopService.class)
+@Transactional(
+	isolation = Isolation.PORTAL, propagation = Propagation.SUPPORTS,
+	rollbackFor = Exception.class
+)
+public class SCIMUserManagerImpl implements AopService, SCIMUserManager {
 
 	@Override
 	public SCIMUser addOrUpdateSCIMUser(SCIMUser scimUser)

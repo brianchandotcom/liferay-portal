@@ -4483,6 +4483,18 @@ public class JenkinsResultsParserUtil {
 							buildProperties, "testray.admin.user.name"));
 				}
 
+				Matcher matcher = _gitHubApiUrlPattern.matcher(url);
+
+				if (matcher.matches() &&
+					_updatingHttpRequestMethods.contains(httpRequestMethod)) {
+
+					Properties buildProperties = getBuildProperties();
+
+					url =
+						buildProperties.getProperty("github.api.proxy") +
+							matcher.group(1);
+				}
+
 				URL urlObject = new URL(url);
 
 				URLConnection urlConnection = urlObject.openConnection();
@@ -6337,6 +6349,8 @@ public class JenkinsResultsParserUtil {
 	private static final List<String> _forbiddenRedactTokens = Arrays.asList(
 		"test");
 	private static JSONArray _gitDirectoriesJSONArray;
+	private static final Pattern _gitHubApiUrlPattern = Pattern.compile(
+		"https\\:\\/\\/api\\.github\\.com(.*)");
 	private static final DateFormat _gitHubDateFormat = new SimpleDateFormat(
 		"yyyy-MM-dd'T'HH:mm:ss");
 	private static JSONArray _gitWorkingDirectoriesJSONArray;
@@ -6385,6 +6399,10 @@ public class JenkinsResultsParserUtil {
 	};
 
 	private static final Set<String> _timeStamps = new HashSet<>();
+	private static final List<HttpRequestMethod> _updatingHttpRequestMethods =
+		Arrays.asList(
+			HttpRequestMethod.POST, HttpRequestMethod.PATCH,
+			HttpRequestMethod.PUT, HttpRequestMethod.DELETE);
 	private static final Pattern _urlQueryStringPattern = Pattern.compile(
 		"\\&??(\\w++)=([^\\&]*)");
 	private static final File _userHomeDir = new File(

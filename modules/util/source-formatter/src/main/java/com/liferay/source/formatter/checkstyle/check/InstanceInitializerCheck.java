@@ -87,7 +87,7 @@ public class InstanceInitializerCheck extends BaseCheck {
 			return;
 		}
 
-		_checkSetCall(exprDetailASTList, javaClass);
+		_checkSetCall(firstChildDetailAST, exprDetailASTList, javaClass);
 
 		for (DetailAST literalIfDetailAST :
 				getAllChildTokens(
@@ -250,7 +250,8 @@ public class InstanceInitializerCheck extends BaseCheck {
 	}
 
 	private void _checkSetCall(
-		List<DetailAST> exprDetailASTList, JavaClass javaClass) {
+		DetailAST detailAST, List<DetailAST> exprDetailASTList,
+		JavaClass javaClass) {
 
 		for (DetailAST exprDetailAST : exprDetailASTList) {
 			DetailAST firstChildDetailAST = exprDetailAST.getFirstChild();
@@ -287,6 +288,12 @@ public class InstanceInitializerCheck extends BaseCheck {
 
 			String variableName = StringUtil.lowerCaseFirstLetter(
 				methodName.substring(3));
+
+			List<String> names = getNames(detailAST, true);
+
+			if (names.contains(variableName)) {
+				continue;
+			}
 
 			Pattern pattern = Pattern.compile(
 				"\\s(\\S+)\\s+(\\S+\\.)?" + variableName);

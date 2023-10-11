@@ -181,17 +181,14 @@ public class PaginationContextProviderTest {
 				companyConfigurationTemporarySwapper =
 					new CompanyConfigurationTemporarySwapper(
 						TestPropsValues.getCompanyId(),
-						_CONFIGURATION_SERVICE_PID,
+						"com.liferay.portal.vulcan.internal.configuration." +
+							"HeadlessAPICompanyConfiguration",
 						MapUtil.singletonDictionary(
 							"pageSizeLimit", pageSizeLimit))) {
 
 			runnable.run();
 		}
 	}
-
-	private static final String _CONFIGURATION_SERVICE_PID =
-		"com.liferay.portal.vulcan.internal.configuration." +
-			"HeadlessAPICompanyConfiguration";
 
 	private ContextProvider<Pagination> _contextProvider;
 

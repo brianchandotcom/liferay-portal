@@ -4,7 +4,7 @@
  */
 
 import {getLocalizableLabel} from '@liferay/object-js-components-web';
-import {Edge, Node} from 'react-flow-renderer';
+import {Edge, Node, isEdge} from 'react-flow-renderer';
 
 import {defaultLanguageId} from '../../../utils/constants';
 import {manyMarkerId} from '../Edges/ManyMarker';
@@ -873,13 +873,21 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 				selectedObjectRelationshipId,
 			} = action.payload;
 
-			const selectedObjectRelationshipEdge = objectRelationshipEdges.find(
+			const {elements} = state;
+
+			const edges = objectRelationshipEdges
+				? objectRelationshipEdges
+				: (elements.filter((element) => isEdge(element)) as Edge<
+						ObjectRelationshipEdgeData
+				  >[]);
+
+			const selectedObjectRelationshipEdge = edges.find(
 				(objectRelationshipEdge) =>
 					objectRelationshipEdge.data?.objectRelationshipId ===
 					selectedObjectRelationshipId
 			);
 
-			const newObjectRelationshipEdges = objectRelationshipEdges.map(
+			const newObjectRelationshipEdges = edges.map(
 				(objectRelationshipEdge) => ({
 					...objectRelationshipEdge,
 					data: {

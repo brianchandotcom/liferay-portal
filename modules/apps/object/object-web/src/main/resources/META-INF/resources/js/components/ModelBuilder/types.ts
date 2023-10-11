@@ -144,7 +144,7 @@ export type TAction =
 	| {
 			payload: {
 				objectDefinitionNodes: Node<ObjectDefinitionNodeData>[];
-				objectRelationshipEdges: Edge<ObjectRelationshipEdgeData>[];
+				objectRelationshipEdges?: Edge<ObjectRelationshipEdgeData>[];
 				selectedObjectRelationshipId: number;
 			};
 			type: TYPES.SET_SELECTED_OBJECT_RELATIONSHIP_EDGE;

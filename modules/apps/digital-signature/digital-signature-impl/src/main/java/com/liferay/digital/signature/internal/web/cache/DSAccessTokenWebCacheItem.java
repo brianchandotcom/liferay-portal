@@ -51,15 +51,16 @@ public class DSAccessTokenWebCacheItem implements WebCacheItem {
 		String apiUsername, String environment, String integrationKey,
 		String rsaPrivateKey) {
 
+		_apiUsername = apiUsername;
+		_environment = environment;
+		_integrationKey = integrationKey;
+
 		if (environment.equals("production")) {
 			_environmentBaseURI = "account.docusign.com";
 		}
 		else {
 			_environmentBaseURI = "account-d.docusign.com";
 		}
-
-		_apiUsername = apiUsername;
-		_integrationKey = integrationKey;
 
 		if (rsaPrivateKey != null) {
 			_rsaPrivateKeyBytes = rsaPrivateKey.getBytes();
@@ -126,14 +127,12 @@ public class DSAccessTokenWebCacheItem implements WebCacheItem {
 			"typ", "JWT"
 		).toString();
 
-		Long unixTime = System.currentTimeMillis() / Time.SECOND;
-
 		String bodyJSON = JSONUtil.put(
 			"aud", _environmentBaseURI
 		).put(
-			"exp", Long.valueOf(unixTime + 3600)
+			"exp", _getUnixTime(3600)
 		).put(
-			"iat", unixTime
+			"iat", _getUnixTime(0)
 		).put(
 			"iss", _integrationKey
 		).put(
@@ -149,6 +148,16 @@ public class DSAccessTokenWebCacheItem implements WebCacheItem {
 
 		return StringUtil.removeSubstring(
 			token + "." + _encode(signature.sign()), "=");
+	}
+
+	private Object _getUnixTime(long offset) {
+		Long unixTime = (System.currentTimeMillis() / Time.SECOND) + offset;
+
+		if (_environment.equals("production")) {
+			return unixTime;
+		}
+
+		return String.valueOf(unixTime);
 	}
 
 	private PrivateKey _readPrivateKey() throws Exception {
@@ -168,6 +177,7 @@ public class DSAccessTokenWebCacheItem implements WebCacheItem {
 		DSAccessTokenWebCacheItem.class);
 
 	private final String _apiUsername;
+	private final String _environment;
 	private final String _environmentBaseURI;
 	private final String _integrationKey;
 	private final byte[] _rsaPrivateKeyBytes;

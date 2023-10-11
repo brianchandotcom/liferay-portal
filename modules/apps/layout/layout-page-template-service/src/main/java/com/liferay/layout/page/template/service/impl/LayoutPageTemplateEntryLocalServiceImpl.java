@@ -290,6 +290,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 				LayoutPageTemplateEntry.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				targetLayoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+
 			_resourceLocalService.copyModelResources(
 				sourceLayoutPageTemplateEntry.getCompanyId(),
 				LayoutPageTemplateEntry.class.getName(),

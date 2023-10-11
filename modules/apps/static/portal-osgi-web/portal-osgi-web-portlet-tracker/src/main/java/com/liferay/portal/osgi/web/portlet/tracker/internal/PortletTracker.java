@@ -7,10 +7,13 @@ package com.liferay.portal.osgi.web.portlet.tracker.internal;
 
 import com.liferay.osgi.util.StringPlus;
 import com.liferay.petra.executor.PortalExecutorManager;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.application.type.ApplicationType;
 import com.liferay.portal.kernel.bean.BeanProperties;
+import com.liferay.portal.kernel.concurrent.SystemExecutorServiceUtil;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
@@ -85,6 +88,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
+import java.util.function.Supplier;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletMode;
@@ -110,10 +114,10 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 @Component(service = {})
 public class PortletTracker
 	implements ServiceTrackerCustomizer
-		<Portlet, com.liferay.portal.kernel.model.Portlet> {
+		<Portlet, Supplier<com.liferay.portal.kernel.model.Portlet>> {
 
 	@Override
-	public com.liferay.portal.kernel.model.Portlet addingService(
+	public Supplier<com.liferay.portal.kernel.model.Portlet> addingService(
 		ServiceReference<Portlet> serviceReference) {
 
 		Portlet portlet = _bundleContext.getService(serviceReference);
@@ -165,25 +169,64 @@ public class PortletTracker
 			_log.info("Adding " + serviceReference);
 		}
 
-		portletModel = _addingPortlet(
-			serviceReference, portlet, portletName, portletId);
+		String finalPortletName = portletName;
+		String finalPortletId = portletId;
 
-		if (portletModel == null) {
-			_bundleContext.ungetService(serviceReference);
+		FutureTask<com.liferay.portal.kernel.model.Portlet> futureTask =
+			new FutureTask<>(
+				() -> {
+					com.liferay.portal.kernel.model.Portlet addedPortletModel =
+						_addingPortlet(
+							serviceReference, portlet, finalPortletName,
+							finalPortletId);
+
+					if (addedPortletModel == null) {
+						_bundleContext.ungetService(serviceReference);
+					}
+
+					return addedPortletModel;
+				});
+
+		if (_parallel) {
+			ExecutorService executorService =
+				SystemExecutorServiceUtil.getExecutorService();
+
+			executorService.submit(futureTask);
+		}
+		else {
+			futureTask.run();
 		}
 
-		return portletModel;
+		return () -> {
+			try {
+				return futureTask.get();
+			}
+			catch (Exception exception) {
+				return ReflectionUtil.throwException(exception);
+			}
+		};
 	}
 
 	@Override
 	public void modifiedService(
 		ServiceReference<Portlet> serviceReference,
-		com.liferay.portal.kernel.model.Portlet portletModel) {
+		Supplier<com.liferay.portal.kernel.model.Portlet>
+			portletModelSupplier) {
 
-		removedService(serviceReference, portletModel);
+		com.liferay.portal.kernel.model.Portlet portletModel =
+			portletModelSupplier.get();
 
-		com.liferay.portal.kernel.model.Portlet newPortletModel = addingService(
-			serviceReference);
+		removedService(serviceReference, portletModelSupplier);
+
+		Supplier<com.liferay.portal.kernel.model.Portlet>
+			newPortletModelSupplier = addingService(serviceReference);
+
+		if (newPortletModelSupplier == null) {
+			return;
+		}
+
+		com.liferay.portal.kernel.model.Portlet newPortletModel =
+			newPortletModelSupplier.get();
 
 		if (newPortletModel == null) {
 			return;
@@ -195,7 +238,15 @@ public class PortletTracker
 	@Override
 	public void removedService(
 		ServiceReference<Portlet> serviceReference,
-		com.liferay.portal.kernel.model.Portlet portletModel) {
+		Supplier<com.liferay.portal.kernel.model.Portlet>
+			portletModelSupplier) {
+
+		com.liferay.portal.kernel.model.Portlet portletModel =
+			portletModelSupplier.get();
+
+		if (portletModel == null) {
+			return;
+		}
 
 		portletModel.unsetReady();
 
@@ -262,10 +313,10 @@ public class PortletTracker
 	}
 
 	@Activate
-	protected void activate(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
+	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
+
+		_parallel = StartupHelperUtil.isDBWarmed();
 
 		_executorService = _portalExecutorManager.getPortalExecutor(
 			PortletTracker.class.getName());
@@ -1453,6 +1504,8 @@ public class PortletTracker
 	)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
+	private boolean _parallel;
+
 	@Reference
 	private Portal _portal;
 
@@ -1487,8 +1540,7 @@ public class PortletTracker
 
 	private final ConcurrentMap<Long, ServiceRegistrations>
 		_serviceRegistrations = new ConcurrentHashMap<>();
-	private ServiceTracker<Portlet, com.liferay.portal.kernel.model.Portlet>
-		_serviceTracker;
+	private ServiceTracker<Portlet, ?> _serviceTracker;
 
 	@Reference
 	private ServletContextHelperFactory _servletContextHelperFactory;

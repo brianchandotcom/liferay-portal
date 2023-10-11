@@ -5,6 +5,7 @@
 
 package com.liferay.portal.events;
 
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.io.Deserializer;
 import com.liferay.petra.io.Serializer;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -77,6 +78,133 @@ public class StartupHelperUtil {
 	}
 
 	public static boolean isDBWarmed() {
+		return _dbWarmedSCLSingleton.getSingleton(
+			StartupHelperUtil::_isDBWarmed);
+	}
+
+	public static boolean isStartupFinished() {
+		return _startupFinished;
+	}
+
+	public static boolean isUpgrading() {
+		return _upgrading;
+	}
+
+	public static void printPatchLevel() {
+		if (_log.isInfoEnabled()) {
+			String installedPatches = StringUtil.merge(
+				PatcherValues.INSTALLED_PATCH_NAMES,
+				StringPool.COMMA_AND_SPACE);
+
+			if (Validator.isNull(installedPatches)) {
+				_log.info("There are no patches installed");
+			}
+			else {
+				_log.info(
+					"The following patches are installed: " + installedPatches);
+			}
+		}
+	}
+
+	public static void setDBNew(boolean dbNew) {
+		if (dbNew != _dbNew) {
+			_dbWarmedSCLSingleton.destroy(null);
+
+			_dbNew = dbNew;
+		}
+	}
+
+	public static void setStartupFinished(boolean startupFinished) {
+		_startupFinished = startupFinished;
+	}
+
+	public static void setUpgrading(boolean upgrading) {
+		if (upgrading != _upgrading) {
+			_dbWarmedSCLSingleton.destroy(null);
+
+			_upgrading = upgrading;
+		}
+
+		if (upgrading) {
+			if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
+				LogContextRegistryUtil.registerLogContext(
+					UpgradeLogContext.getInstance());
+			}
+
+			DBUpgrader.startUpgradeLogAppender();
+		}
+		else {
+			DBUpgrader.stopUpgradeLogAppender();
+
+			LogContextRegistryUtil.unregisterLogContext(
+				UpgradeLogContext.getInstance());
+		}
+	}
+
+	public static void upgradeProcess(int buildNumber) throws UpgradeException {
+		List<String> upgradeProcessClassNames = new ArrayList<>();
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-157670")) {
+			Collections.addAll(
+				upgradeProcessClassNames,
+				"com.liferay.portal.upgrade.UpgradeProcess_6_1_1",
+				"com.liferay.portal.upgrade.UpgradeProcess_6_2_0");
+		}
+
+		Collections.addAll(
+			upgradeProcessClassNames,
+			"com.liferay.portal.upgrade.UpgradeProcess_7_0_0",
+			"com.liferay.portal.upgrade.UpgradeProcess_7_0_1",
+			"com.liferay.portal.upgrade.UpgradeProcess_7_0_3",
+			"com.liferay.portal.upgrade.UpgradeProcess_7_0_5",
+			"com.liferay.portal.upgrade.UpgradeProcess_7_0_6",
+			"com.liferay.portal.upgrade.PortalUpgradeProcess");
+
+		List<UpgradeProcess> upgradeProcesses =
+			UpgradeProcessUtil.initUpgradeProcesses(
+				PortalClassLoaderUtil.getClassLoader(),
+				upgradeProcessClassNames.toArray(new String[0]));
+
+		UpgradeProcessUtil.upgradeProcess(buildNumber, upgradeProcesses);
+	}
+
+	public static void verifyRequiredSchemaVersion() throws Exception {
+		if (_log.isDebugEnabled()) {
+			_log.debug("Check the portal's required schema version");
+		}
+
+		try (Connection connection = DataAccess.getConnection()) {
+			if (PortalUpgradeProcess.isInRequiredSchemaVersion(connection)) {
+				return;
+			}
+
+			Version currentSchemaVersion =
+				PortalUpgradeProcess.getCurrentSchemaVersion(
+					DataAccess.getConnection());
+
+			Version requiredSchemaVersion =
+				PortalUpgradeProcess.getRequiredSchemaVersion();
+
+			String msg;
+
+			if (currentSchemaVersion.compareTo(requiredSchemaVersion) < 0) {
+				msg =
+					"You must first upgrade the portal to the required " +
+						"schema version " + requiredSchemaVersion;
+			}
+			else {
+				msg =
+					"Current portal schema version " + currentSchemaVersion +
+						" requires a newer version of Liferay";
+			}
+
+			System.out.println(msg);
+
+			throw new RuntimeException(msg);
+		}
+	}
+
+	private static boolean _isDBWarmed() {
 		boolean dbWarmed = true;
 
 		if (_dbNew || _upgrading ||
@@ -121,127 +249,13 @@ public class StartupHelperUtil {
 		return dbWarmed;
 	}
 
-	public static boolean isStartupFinished() {
-		return _startupFinished;
-	}
-
-	public static boolean isUpgrading() {
-		return _upgrading;
-	}
-
-	public static void printPatchLevel() {
-		if (_log.isInfoEnabled()) {
-			String installedPatches = StringUtil.merge(
-				PatcherValues.INSTALLED_PATCH_NAMES,
-				StringPool.COMMA_AND_SPACE);
-
-			if (Validator.isNull(installedPatches)) {
-				_log.info("There are no patches installed");
-			}
-			else {
-				_log.info(
-					"The following patches are installed: " + installedPatches);
-			}
-		}
-	}
-
-	public static void setDBNew(boolean dbNew) {
-		_dbNew = dbNew;
-	}
-
-	public static void setStartupFinished(boolean startupFinished) {
-		_startupFinished = startupFinished;
-	}
-
-	public static void setUpgrading(boolean upgrading) {
-		_upgrading = upgrading;
-
-		if (_upgrading) {
-			if (PropsValues.UPGRADE_LOG_CONTEXT_ENABLED) {
-				LogContextRegistryUtil.registerLogContext(
-					UpgradeLogContext.getInstance());
-			}
-
-			DBUpgrader.startUpgradeLogAppender();
-		}
-		else {
-			DBUpgrader.stopUpgradeLogAppender();
-
-			LogContextRegistryUtil.unregisterLogContext(
-				UpgradeLogContext.getInstance());
-		}
-	}
-
-	public static void upgradeProcess(int buildNumber) throws UpgradeException {
-		List<String> upgradeProcessClassNames = new ArrayList<>();
-
-		if (FeatureFlagManagerUtil.isEnabled("LPS-157670")) {
-			Collections.addAll(
-				upgradeProcessClassNames,
-				"com.liferay.portal.upgrade.UpgradeProcess_6_1_1",
-				"com.liferay.portal.upgrade.UpgradeProcess_6_2_0");
-		}
-
-		Collections.addAll(
-			upgradeProcessClassNames,
-			"com.liferay.portal.upgrade.UpgradeProcess_7_0_0",
-			"com.liferay.portal.upgrade.UpgradeProcess_7_0_1",
-			"com.liferay.portal.upgrade.UpgradeProcess_7_0_3",
-			"com.liferay.portal.upgrade.UpgradeProcess_7_0_5",
-			"com.liferay.portal.upgrade.UpgradeProcess_7_0_6",
-			"com.liferay.portal.upgrade.PortalUpgradeProcess");
-
-		List<UpgradeProcess> upgradeProcesses =
-			UpgradeProcessUtil.initUpgradeProcesses(
-				PortalClassLoaderUtil.getClassLoader(),
-				upgradeProcessClassNames.toArray(new String[0]));
-
-		_upgraded = UpgradeProcessUtil.upgradeProcess(
-			buildNumber, upgradeProcesses);
-	}
-
-	public static void verifyRequiredSchemaVersion() throws Exception {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Check the portal's required schema version");
-		}
-
-		try (Connection connection = DataAccess.getConnection()) {
-			if (PortalUpgradeProcess.isInRequiredSchemaVersion(connection)) {
-				return;
-			}
-
-			Version currentSchemaVersion =
-				PortalUpgradeProcess.getCurrentSchemaVersion(
-					DataAccess.getConnection());
-
-			Version requiredSchemaVersion =
-				PortalUpgradeProcess.getRequiredSchemaVersion();
-
-			String msg;
-
-			if (currentSchemaVersion.compareTo(requiredSchemaVersion) < 0) {
-				msg =
-					"You must first upgrade the portal to the required " +
-						"schema version " + requiredSchemaVersion;
-			}
-			else {
-				msg =
-					"Current portal schema version " + currentSchemaVersion +
-						" requires a newer version of Liferay";
-			}
-
-			System.out.println(msg);
-
-			throw new RuntimeException(msg);
-		}
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		StartupHelperUtil.class);
 
 	private static volatile boolean _dbNew;
+	private static final DCLSingleton<Boolean> _dbWarmedSCLSingleton =
+		new DCLSingleton<>();
 	private static boolean _startupFinished;
-	private static boolean _upgraded;
-	private static boolean _upgrading;
+	private static volatile boolean _upgrading;
 
 }

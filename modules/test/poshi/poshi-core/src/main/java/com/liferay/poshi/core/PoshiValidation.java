@@ -1282,6 +1282,17 @@ public class PoshiValidation {
 			}
 		}
 
+		for (PoshiElement childElement : childPoshiElements) {
+			String nameAttributeValue = childElement.attributeValue("name");
+
+			if (Validator.isNotNull(nameAttributeValue)) {
+				_exceptions.add(
+					new PoshiElementException(
+						poshiElement, "Parameter name ", nameAttributeValue,
+						" not required"));
+			}
+		}
+
 		if (possibleMethods.isEmpty()) {
 			_exceptions.add(
 				new PoshiElementException(

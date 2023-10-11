@@ -140,7 +140,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 			regex = StringUtil.replace(from, CharPool.PERIOD, "\\.\\s*");
 		}
 
-		return Pattern.compile(regex + "\\(");
+		return Pattern.compile(regex + "[\\(;]");
 	}
 
 	private static JSONArray _getReplacementsJSONArray(String fileName)

@@ -834,7 +834,7 @@ public class ContextController {
 		List<String> endpoints = httpServletEndpointController.getHttpServiceEndpoints();
 
 		if (endpoints.isEmpty()) {
-			return proxyContext.getServletPath().concat(contextPath);
+			return contextPath;
 		}
 
 		String defaultEndpoint = endpoints.get(0);

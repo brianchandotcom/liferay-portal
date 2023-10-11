@@ -19,7 +19,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import javax.servlet.ServletContext;
-import org.eclipse.equinox.http.servlet.internal.util.Const;
 
 /**
  * The ProxyContext provides something similar to a ServletContext for all servlets and resources under a particular ProxyServlet.
@@ -51,10 +50,6 @@ public class ProxyContext {
 	public void destroy() {
 		if (proxyContextTempDir != null)
 			deleteDirectory(proxyContextTempDir);
-	}
-
-	public String getServletPath() {
-		return Const.BLANK;
 	}
 
 	public void createContextAttributes(

@@ -5,7 +5,7 @@
 
 import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 
-let cache = null;
+let cache: Map<String, any> | null = null;
 
 export const CACHE_KEYS = {
 	actionError: 'actionError',
@@ -14,12 +14,13 @@ export const CACHE_KEYS = {
 	collectionVariations: 'collectionVariations',
 	collectionWarningMessage: 'collectionWarningMessage',
 	formFields: 'formFields',
+	users: 'users',
 };
 
 export const CACHE_STATUS = {
 	loading: 'loading',
 	saved: 'saved',
-};
+} as const;
 
 export function initializeCache() {
 	cache = new Map();
@@ -29,7 +30,7 @@ export function disposeCache() {
 	cache = null;
 }
 
-export function getCacheKey(key) {
+export function getCacheKey(key: string | string[]) {
 	if (Array.isArray(key)) {
 		return key.every((subkey) => subkey) ? key.join('-') : null;
 	}
@@ -37,15 +38,19 @@ export function getCacheKey(key) {
 	return key;
 }
 
-export function getCacheItem(key) {
+export function getCacheItem(key: string | null) {
 	if (!cache) {
 		throw new Error('cache is not initialized');
+	}
+
+	if (!key) {
+		return {};
 	}
 
 	return cache.get(key) || {};
 }
 
-export function deleteCacheItem(key) {
+export function deleteCacheItem(key: string) {
 	if (!cache) {
 		throw new Error('cache is not initialized');
 	}
@@ -53,7 +58,21 @@ export function deleteCacheItem(key) {
 	cache.delete(key);
 }
 
-export function setCacheItem({data, key, loadPromise, status}) {
+export function setCacheItem({
+	data,
+	key,
+	loadPromise,
+	status,
+}: {
+	data?: Record<string, any>;
+	key: string;
+	loadPromise?: Promise<Response & {error: string}>;
+	status: typeof CACHE_STATUS[keyof typeof CACHE_STATUS];
+}) {
+	if (!cache) {
+		throw new Error('cache is not initialized');
+	}
+
 	cache.set(key, {
 		...(isNullOrUndefined(data) ? {} : {data}),
 		...(loadPromise && {loadPromise}),

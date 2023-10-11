@@ -7,7 +7,6 @@ import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 import {useCallback, useEffect, useState} from 'react';
 
-import {useDispatch} from '../contexts/StoreContext';
 import {
 	CACHE_STATUS,
 	deleteCacheItem,
@@ -16,9 +15,15 @@ import {
 	setCacheItem,
 } from './cache';
 
-export default function useCache({fetcher, key}) {
-	const dispatch = useDispatch();
+export type Fetcher = () => Promise<Response & {error: string}>;
 
+export default function useCache({
+	fetcher,
+	key,
+}: {
+	fetcher: Fetcher;
+	key: string | string[];
+}) {
 	const cacheKey = getCacheKey(key);
 
 	const {data: cachedData} = getCacheItem(cacheKey);
@@ -61,7 +66,7 @@ export default function useCache({fetcher, key}) {
 		else if (status === CACHE_STATUS.loading && loadPromise) {
 			loadPromise.then(triggerRender);
 		}
-	}, [cacheKey, dispatch, fetcher, triggerRender]);
+	}, [cacheKey, fetcher, triggerRender]);
 
 	return cachedData;
 }

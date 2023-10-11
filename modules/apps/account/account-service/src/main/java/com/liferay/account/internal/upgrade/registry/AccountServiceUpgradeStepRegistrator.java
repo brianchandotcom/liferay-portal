@@ -11,7 +11,9 @@ import com.liferay.account.internal.upgrade.v2_4_0.AccountGroupResourceUpgradePr
 import com.liferay.account.internal.upgrade.v2_5_0.AccountRoleResourceUpgradeProcess;
 import com.liferay.account.internal.upgrade.v2_7_1.AccountEntryUserRelUpgradeProcess;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseUuidUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
@@ -151,12 +153,25 @@ public class AccountServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.addColumns(
 				"AccountEntry", "statusByUserId LONG",
 				"statusByUserName VARCHAR(75) null", "statusDate DATE null"));
+
+		registry.register(
+			"2.10.0", "2.10.1",
+			new com.liferay.account.internal.upgrade.v2_10_1.
+				AccountRoleResourceUpgradeProcess(
+					_resourceActionLocalService,
+					_resourcePermissionLocalService));
 	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
+	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Reference
 	private ResourceLocalService _resourceLocalService;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 }

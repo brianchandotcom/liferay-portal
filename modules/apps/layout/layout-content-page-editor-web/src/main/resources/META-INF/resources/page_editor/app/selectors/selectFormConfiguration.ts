@@ -8,12 +8,22 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {LAYOUT_TYPES} from '../config/constants/layoutTypes';
 import {config} from '../config/index';
 
-export default function selectFormConfiguration(item, layoutData) {
+import type {
+	LayoutData,
+	LayoutDataItem,
+} from '../../types/layout_data/LayoutData';
+
+export default function selectFormConfiguration(
+	item: LayoutDataItem,
+	layoutData: LayoutData
+) {
 	if (!item) {
 		return {};
 	}
 
-	const findFormConfiguration = (childItem) => {
+	const findFormConfiguration: (childItem: LayoutDataItem) => void = (
+		childItem
+	) => {
 		const parentItem = layoutData.items[childItem?.parentId];
 
 		if (!parentItem) {

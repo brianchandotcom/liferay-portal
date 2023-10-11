@@ -2968,8 +2968,8 @@ definition {
 		}
 
 		Type(
-			key_fieldLabel = "Maximum File Upload Size",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			key_text = "Maximum File Upload Size",
+			locator1 = "TextInput#ANY",
 			value1 = ${fieldValue});
 
 		SystemSettings.saveConfiguration();

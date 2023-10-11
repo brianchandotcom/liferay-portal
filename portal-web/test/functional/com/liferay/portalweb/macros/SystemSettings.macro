@@ -311,9 +311,9 @@ definition {
 	}
 
 	macro viewInputText {
-		AssertTextEquals(
-			key_fieldLabel = ${fieldLabel},
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+		AssertTextEquals.assertValue(
+			key_text = ${fieldLabel},
+			locator1 = "TextInput#ANY",
 			value1 = ${fieldValue});
 	}
 

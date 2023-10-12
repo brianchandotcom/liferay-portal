@@ -61,6 +61,10 @@ definition {
 					value1 = ${key_actionMessageType});
 			}
 
+			Click(
+				key_fieldLabel = "Icon",
+				locator1 = "Select#GENERIC_SELECT_FIELD");
+
 			PortletEntry.save();
 		}
 	}

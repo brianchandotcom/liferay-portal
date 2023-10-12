@@ -479,6 +479,48 @@ public class COREntryServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.order.rule.model.COREntry
+			updateCOREntryTypeSettings(
+				HttpPrincipal httpPrincipal, long corEntryId,
+				String typeSettings)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				COREntryServiceUtil.class, "updateCOREntryTypeSettings",
+				_updateCOREntryTypeSettingsParameterTypes10);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, corEntryId, typeSettings);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.order.rule.model.COREntry)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(COREntryServiceHttp.class);
 
 	private static final Class<?>[] _addCOREntryParameterTypes0 = new Class[] {
@@ -517,6 +559,10 @@ public class COREntryServiceHttp {
 	private static final Class<?>[]
 		_updateCOREntryExternalReferenceCodeParameterTypes9 = new Class[] {
 			String.class, long.class
+		};
+	private static final Class<?>[]
+		_updateCOREntryTypeSettingsParameterTypes10 = new Class[] {
+			long.class, String.class
 		};
 
 }

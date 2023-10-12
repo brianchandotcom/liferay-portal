@@ -145,6 +145,15 @@ public class COREntryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.order.rule.model.COREntry
+			updateCOREntryTypeSettings(long corEntryId, String typeSettings)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _corEntryService.updateCOREntryTypeSettings(
+			corEntryId, typeSettings);
+	}
+
+	@Override
 	public COREntryService getWrappedService() {
 		return _corEntryService;
 	}

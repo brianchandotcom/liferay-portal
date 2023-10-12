@@ -128,6 +128,14 @@ public class COREntryServiceUtil {
 			externalReferenceCode, corEntryId);
 	}
 
+	public static COREntry updateCOREntryTypeSettings(
+			long corEntryId, String typeSettings)
+		throws PortalException {
+
+		return getService().updateCOREntryTypeSettings(
+			corEntryId, typeSettings);
+	}
+
 	public static COREntryService getService() {
 		return _service;
 	}

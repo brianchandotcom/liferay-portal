@@ -491,6 +491,14 @@ public class COREntryLocalServiceUtil {
 			externalReferenceCode, corEntryId);
 	}
 
+	public static COREntry updateCOREntryTypeSettings(
+			long corEntryId, String typeSettings)
+		throws PortalException {
+
+		return getService().updateCOREntryTypeSettings(
+			corEntryId, typeSettings);
+	}
+
 	public static COREntry updateStatus(
 			long userId, long corEntryId, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)

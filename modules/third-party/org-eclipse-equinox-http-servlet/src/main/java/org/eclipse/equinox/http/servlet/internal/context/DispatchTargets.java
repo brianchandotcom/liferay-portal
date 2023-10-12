@@ -30,23 +30,23 @@ import org.eclipse.equinox.http.servlet.internal.util.Params;
 public class DispatchTargets {
 
 	public DispatchTargets(
-		ContextController contextController,
+		ServletContextHelperController servletContextHelperController,
 		EndpointRegistration<?> endpointRegistration, String servletName,
 		String requestURI, String servletPath, String pathInfo, String queryString) {
 
 		this(
-			contextController, endpointRegistration,
+			servletContextHelperController, endpointRegistration,
 			Collections.<FilterRegistration>emptyList(), servletName, requestURI,
 			servletPath, pathInfo, queryString);
 	}
 
 	public DispatchTargets(
-		ContextController contextController,
+		ServletContextHelperController servletContextHelperController,
 		EndpointRegistration<?> endpointRegistration,
 		List<FilterRegistration> matchingFilterRegistrations, String servletName,
 		String requestURI, String servletPath, String pathInfo, String queryString) {
 
-		this.contextController = contextController;
+		this.servletContextHelperController = servletContextHelperController;
 		this.endpointRegistration = endpointRegistration;
 		this.matchingFilterRegistrations = matchingFilterRegistrations;
 		this.servletName = servletName;
@@ -85,7 +85,7 @@ public class DispatchTargets {
 		RequestAttributeSetter setter = new RequestAttributeSetter(originalRequest);
 
 		if (dispatcherType == DispatcherType.INCLUDE) {
-			setter.setAttribute(RequestDispatcher.INCLUDE_CONTEXT_PATH, contextController.getFullContextPath());
+			setter.setAttribute(RequestDispatcher.INCLUDE_CONTEXT_PATH, servletContextHelperController.getFullContextPath());
 			setter.setAttribute(RequestDispatcher.INCLUDE_PATH_INFO, getPathInfo());
 			setter.setAttribute(RequestDispatcher.INCLUDE_QUERY_STRING, getQueryString());
 			setter.setAttribute(RequestDispatcher.INCLUDE_REQUEST_URI, getRequestURI());
@@ -149,8 +149,8 @@ public class DispatchTargets {
 		}
 	}
 
-	public ContextController getContextController() {
-		return contextController;
+	public ServletContextHelperController getServletContextHelperController() {
+		return servletContextHelperController;
 	}
 
 	public DispatcherType getDispatcherType() {
@@ -177,7 +177,7 @@ public class DispatchTargets {
 		if (requestURI == null) {
 			return null;
 		}
-		return getContextController().getFullContextPath() + requestURI;
+		return getServletContextHelperController().getFullContextPath() + requestURI;
 	}
 
 	public String getServletName() {
@@ -205,7 +205,7 @@ public class DispatchTargets {
 		String value = string;
 
 		if (value == null) {
-			value = SIMPLE_NAME + '[' + contextController.getFullContextPath() + requestURI + (queryString != null ? '?' + queryString : "") + ", " + endpointRegistration.toString() + ']'; //$NON-NLS-1$
+			value = SIMPLE_NAME + '[' + servletContextHelperController.getFullContextPath() + requestURI + (queryString != null ? '?' + queryString : "") + ", " + endpointRegistration.toString() + ']'; //$NON-NLS-1$
 
 			string = value;
 		}
@@ -269,7 +269,7 @@ public class DispatchTargets {
 	private static final String SIMPLE_NAME =
 		DispatchTargets.class.getSimpleName();
 
-	private final ContextController contextController;
+	private final ServletContextHelperController servletContextHelperController;
 	private DispatcherType dispatcherType;
 	private final EndpointRegistration<?> endpointRegistration;
 	private final List<FilterRegistration> matchingFilterRegistrations;
@@ -283,3 +283,4 @@ public class DispatchTargets {
 	private String string;
 
 }
+/* @generated */

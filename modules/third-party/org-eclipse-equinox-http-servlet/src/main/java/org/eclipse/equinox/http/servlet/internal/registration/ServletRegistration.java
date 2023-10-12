@@ -13,8 +13,8 @@
 package org.eclipse.equinox.http.servlet.internal.registration;
 
 import javax.servlet.Servlet;
-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
 import org.eclipse.equinox.http.servlet.internal.context.ContextController.ServiceHolder;
+import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperController;
 import org.eclipse.equinox.http.servlet.internal.servlet.Match;
 import org.osgi.service.http.context.ServletContextHelper;
 import org.osgi.service.http.runtime.dto.ErrorPageDTO;
@@ -26,9 +26,9 @@ public class ServletRegistration extends EndpointRegistration<ServletDTO> {
 	public ServletRegistration(
 		ServiceHolder<Servlet> servletHolder, ServletDTO servletDTO, ErrorPageDTO errorPageDTO,
 		ServletContextHelper servletContextHelper,
-		ContextController contextController, ClassLoader legacyTCCL) {
+		ServletContextHelperController servletContextHelperController, ClassLoader legacyTCCL) {
 
-		super(servletHolder, servletDTO, servletContextHelper, contextController, legacyTCCL);
+		super(servletHolder, servletDTO, servletContextHelper, servletContextHelperController, legacyTCCL);
 
 		this.errorPageDTO = errorPageDTO;
 	}
@@ -77,3 +77,4 @@ public class ServletRegistration extends EndpointRegistration<ServletDTO> {
 	private ErrorPageDTO errorPageDTO;
 
 }
+/* @generated */

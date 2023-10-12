@@ -17,6 +17,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import org.eclipse.equinox.http.servlet.internal.context.ContextController;
 import org.eclipse.equinox.http.servlet.internal.context.DispatchTargets;
+import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperController;
 import org.eclipse.equinox.http.servlet.internal.util.Const;
 import org.eclipse.equinox.http.servlet.internal.util.EventListeners;
 import org.osgi.service.http.HttpContext;
@@ -158,7 +159,7 @@ public class HttpServletRequestWrapperImpl extends HttpServletRequestWrapper {
 	}
 
 	public String getContextPath() {
-		return dispatchTargets.peek().getContextController().getFullContextPath();
+		return dispatchTargets.peek().getServletContextHelperController().getFullContextPath();
 	}
 
 	public Object getAttribute(String attributeName) {
@@ -205,7 +206,7 @@ public class HttpServletRequestWrapperImpl extends HttpServletRequestWrapper {
 			}
 
 			if (attributeName.equals(RequestDispatcher.INCLUDE_CONTEXT_PATH)) {
-				return current.getContextController().getContextPath();
+				return current.getServletContextHelperController().getContextPath();
 			}
 			else if (attributeName.equals(RequestDispatcher.INCLUDE_PATH_INFO)) {
 				return current.getPathInfo();
@@ -240,7 +241,7 @@ public class HttpServletRequestWrapperImpl extends HttpServletRequestWrapper {
 			DispatchTargets original = dispatchTargets.getLast();
 
 			if (attributeName.equals(RequestDispatcher.FORWARD_CONTEXT_PATH)) {
-				return original.getContextController().getContextPath();
+				return original.getServletContextHelperController().getContextPath();
 			}
 			else if (attributeName.equals(RequestDispatcher.FORWARD_PATH_INFO)) {
 				return original.getPathInfo();
@@ -266,19 +267,19 @@ public class HttpServletRequestWrapperImpl extends HttpServletRequestWrapper {
 	public RequestDispatcher getRequestDispatcher(String path) {
 		DispatchTargets currentDispatchTarget = dispatchTargets.peek();
 
-		ContextController contextController =
-			currentDispatchTarget.getContextController();
+		ServletContextHelperController servletContextHelperController =
+			currentDispatchTarget.getServletContextHelperController();
 
 		// support relative paths
 		if (!path.startsWith(Const.SLASH)) {
 			path = currentDispatchTarget.getServletPath() + Const.SLASH + path;
 		}
 		// if the path starts with the full context path strip it
-		else if (path.startsWith(contextController.getFullContextPath())) {
-			path = path.substring(contextController.getFullContextPath().length());
+		else if (path.startsWith(servletContextHelperController.getFullContextPath())) {
+			path = path.substring(servletContextHelperController.getFullContextPath().length());
 		}
 
-		DispatchTargets requestedDispatchTargets = contextController.getDispatchTargets(path);
+		DispatchTargets requestedDispatchTargets = servletContextHelperController.getDispatchTargets(path);
 
 		if (requestedDispatchTargets == null) {
 			return null;
@@ -303,7 +304,7 @@ public class HttpServletRequestWrapperImpl extends HttpServletRequestWrapper {
 		if (session != null) {
 			DispatchTargets currentDispatchTarget = dispatchTargets.peek();
 
-			return currentDispatchTarget.getContextController().getSessionAdaptor(
+			return currentDispatchTarget.getServletContextHelperController().getSessionAdaptor(
 				session, currentDispatchTarget.getServletRegistration().getT().getServletConfig().getServletContext());
 		}
 
@@ -332,7 +333,7 @@ public class HttpServletRequestWrapperImpl extends HttpServletRequestWrapper {
 
 		DispatchTargets currentDispatchTarget = dispatchTargets.peek();
 
-		EventListeners eventListeners = currentDispatchTarget.getContextController().getEventListeners();
+		EventListeners eventListeners = currentDispatchTarget.getServletContextHelperController().getEventListeners();
 
 		List<ServletRequestAttributeListener> listeners = eventListeners.get(
 			ServletRequestAttributeListener.class);
@@ -364,7 +365,7 @@ public class HttpServletRequestWrapperImpl extends HttpServletRequestWrapper {
 
 		DispatchTargets currentDispatchTarget = dispatchTargets.peek();
 
-		EventListeners eventListeners = currentDispatchTarget.getContextController().getEventListeners();
+		EventListeners eventListeners = currentDispatchTarget.getServletContextHelperController().getEventListeners();
 
 		List<ServletRequestAttributeListener> listeners = eventListeners.get(
 			ServletRequestAttributeListener.class);

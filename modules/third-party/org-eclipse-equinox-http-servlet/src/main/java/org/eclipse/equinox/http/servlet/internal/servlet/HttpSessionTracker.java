@@ -18,7 +18,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import javax.servlet.http.*;
-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
+import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperController;
 import org.eclipse.equinox.http.servlet.internal.util.EventListeners;
 
 /**
@@ -35,11 +35,11 @@ public class HttpSessionTracker {
 		}
 
 		for (HttpSessionAdaptor httpSessionAdaptor : httpSessionAdaptors) {
-			ContextController contextController =
-				httpSessionAdaptor.getController();
+			ServletContextHelperController servletContextHelperController =
+				httpSessionAdaptor.getServletContextHelperController();
 
 			EventListeners eventListeners =
-				contextController.getEventListeners();
+				servletContextHelperController.getEventListeners();
 
 			List<HttpSessionListener> httpSessionListeners = eventListeners.get(
 				HttpSessionListener.class);
@@ -80,7 +80,7 @@ public class HttpSessionTracker {
 				}
 			}
 
-			contextController.removeActiveSession(httpSessionAdaptor.getId());
+			servletContextHelperController.removeActiveSession(httpSessionAdaptor.getId());
 		}
 	}
 
@@ -126,3 +126,4 @@ public class HttpSessionTracker {
 			new ConcurrentHashMap<String, Set<HttpSessionAdaptor>>();
 
 }
+/* @generated */

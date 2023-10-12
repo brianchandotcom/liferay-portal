@@ -16,13 +16,14 @@ import java.io.Serializable;
 import java.util.*;
 import javax.servlet.ServletContext;
 import javax.servlet.http.*;
-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
+
+import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperController;
 
 // This class adapts HttpSessions in order to return the right ServletContext and attributes
 public class HttpSessionAdaptor implements HttpSession, Serializable {
 	private static final long serialVersionUID = 3418610936889860782L;
 
-	private transient final ContextController controller;
+	private transient final ServletContextHelperController servletContextHelperController;
 	private transient final HttpSession session;
 	private transient final ServletContext servletContext;
 	private transient final String attributePrefix;
@@ -30,8 +31,8 @@ public class HttpSessionAdaptor implements HttpSession, Serializable {
 	private final String id;
 
 	static public HttpSessionAdaptor createHttpSessionAdaptor(
-		HttpSession session, ServletContext servletContext, ContextController controller) {
-		HttpSessionAdaptor sessionAdaptor = new HttpSessionAdaptor(session, servletContext, controller);
+		HttpSession session, ServletContext servletContext, ServletContextHelperController servletContextHelperController) {
+		HttpSessionAdaptor sessionAdaptor = new HttpSessionAdaptor(session, servletContext, servletContextHelperController);
 
 		HttpSessionTracker.addHttpSessionAdaptor(sessionAdaptor);
 
@@ -39,18 +40,18 @@ public class HttpSessionAdaptor implements HttpSession, Serializable {
 	}
 
 	private HttpSessionAdaptor(
-		HttpSession session, ServletContext servletContext, ContextController controller) {
+		HttpSession session, ServletContext servletContext, ServletContextHelperController servletContextHelperController) {
 
 		this.session = session;
 		this.servletContext = servletContext;
-		this.controller = controller;
-		this.attributePrefix = "equinox.http." + controller.getContextName(); //$NON-NLS-1$
+		this.servletContextHelperController = servletContextHelperController;
+		this.attributePrefix = "equinox.http." + servletContextHelperController.getContextName(); //$NON-NLS-1$
 
 		this.id = session.getId();
 	}
 
-	public ContextController getController() {
-		return controller;
+	public ServletContextHelperController getServletContextHelperController() {
+		return servletContextHelperController;
 	}
 
 	public HttpSession getSession() {
@@ -95,7 +96,7 @@ public class HttpSessionAdaptor implements HttpSession, Serializable {
 	public void invalidate() {
 		HttpSessionEvent httpSessionEvent = new HttpSessionEvent(this);
 
-		for (HttpSessionListener listener : controller.getEventListeners().get(HttpSessionListener.class)) {
+		for (HttpSessionListener listener : servletContextHelperController.getEventListeners().get(HttpSessionListener.class)) {
 			try {
 				listener.sessionDestroyed(httpSessionEvent);
 			}
@@ -120,7 +121,7 @@ public class HttpSessionAdaptor implements HttpSession, Serializable {
 			// outer session is already invalidated
 		}
 
-		controller.removeActiveSession(id);
+		servletContextHelperController.removeActiveSession(id);
 	}
 
 	public void invokeSessionListeners (List<Class<? extends EventListener>> classes, EventListener listener) {
@@ -172,7 +173,7 @@ public class HttpSessionAdaptor implements HttpSession, Serializable {
 		}
 
 		List<HttpSessionAttributeListener> listeners =
-			controller.getEventListeners().get(
+			servletContextHelperController.getEventListeners().get(
 				HttpSessionAttributeListener.class);
 
 		if (listeners.isEmpty()) {
@@ -206,7 +207,7 @@ public class HttpSessionAdaptor implements HttpSession, Serializable {
 		session.setAttribute(newName, value);
 
 		List<HttpSessionAttributeListener> listeners =
-			controller.getEventListeners().get(
+			servletContextHelperController.getEventListeners().get(
 				HttpSessionAttributeListener.class);
 
 		if (!listeners.isEmpty()) {
@@ -277,3 +278,4 @@ public class HttpSessionAdaptor implements HttpSession, Serializable {
 		HttpSessionAdaptor.class.getSimpleName();
 
 }
+/* @generated */

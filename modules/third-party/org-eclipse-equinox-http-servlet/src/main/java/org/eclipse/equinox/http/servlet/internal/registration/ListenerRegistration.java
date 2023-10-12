@@ -15,8 +15,8 @@ import java.lang.reflect.*;
 import java.util.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
 import org.eclipse.equinox.http.servlet.internal.context.ContextController.ServiceHolder;
+import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperController;
 import org.eclipse.equinox.http.servlet.internal.servlet.HttpSessionAdaptor;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.http.runtime.dto.ListenerDTO;
@@ -30,19 +30,19 @@ public class ListenerRegistration extends Registration<EventListener, ListenerDT
 	private final List<Class<? extends EventListener>> classes;
 	private final EventListener proxy;
 	private final ServletContext servletContext;
-	private final ContextController contextController;
+	private final ServletContextHelperController servletContextHelperController;
 	private final ClassLoader classLoader;
 
 	public ListenerRegistration(
 		ServiceHolder<EventListener> listenerHolder, List<Class<? extends EventListener>> classes,
 		ListenerDTO listenerDTO, ServletContext servletContext,
-		ContextController contextController) {
+		ServletContextHelperController servletContextHelperController) {
 
 		super(listenerHolder.get(), listenerDTO);
 		this.listenerHolder = listenerHolder;
 		this.classes = classes;
 		this.servletContext = servletContext;
-		this.contextController = contextController;
+		this.servletContextHelperController = servletContextHelperController;
 
 		classLoader = listenerHolder.getBundle().adapt(BundleWiring.class).getClassLoader();
 
@@ -58,9 +58,9 @@ public class ListenerRegistration extends Registration<EventListener, ListenerDT
 		try {
 			Thread.currentThread().setContextClassLoader(classLoader);
 
-			contextController.getListenerRegistrations().remove(this);
-			contextController.getEventListeners().remove(classes, this);
-			contextController.ungetServletContextHelper(listenerHolder.getBundle());
+			servletContextHelperController.getListenerRegistrations().remove(this);
+			servletContextHelperController.getEventListeners().remove(classes, this);
+			servletContextHelperController.ungetServletContextHelper(listenerHolder.getBundle());
 
 			super.destroy();
 
@@ -69,7 +69,7 @@ public class ListenerRegistration extends Registration<EventListener, ListenerDT
 				classes.contains(HttpSessionListener.class)) {
 
 				Map<String, HttpSessionAdaptor> activeSessions =
-					contextController.getActiveSessions();
+					servletContextHelperController.getActiveSessions();
 
 				for (HttpSessionAdaptor adaptor : activeSessions.values()) {
 					adaptor.invokeSessionListeners(classes, super.getT());

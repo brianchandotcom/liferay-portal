@@ -16,11 +16,10 @@ import java.util.Collections;
 import java.util.List;
 import javax.servlet.*;
 import javax.servlet.http.*;
-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
 import org.eclipse.equinox.http.servlet.internal.context.DispatchTargets;
+import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperController;
 import org.eclipse.equinox.http.servlet.internal.registration.EndpointRegistration;
 import org.eclipse.equinox.http.servlet.internal.registration.FilterRegistration;
-import org.eclipse.equinox.http.servlet.internal.servlet.HttpServletResponseWrapperImpl;
 
 /**
  * @author Raymond Augé
@@ -108,7 +107,7 @@ public class ResponseStateHandler {
 	}
 
 	private List<ServletRequestListener> getServletRequestListener() {
-		return dispatchTargets.getContextController().getEventListeners().get(ServletRequestListener.class);
+		return dispatchTargets.getServletContextHelperController().getEventListeners().get(ServletRequestListener.class);
 	}
 
 	private void handleErrors() throws IOException, ServletException {
@@ -152,11 +151,11 @@ public class ResponseStateHandler {
 			throwException(exception);
 		}
 
-		ContextController contextController = dispatchTargets.getContextController();
+		ServletContextHelperController servletContextHelperController = dispatchTargets.getServletContextHelperController();
 		Class<? extends Exception> clazz = exception.getClass();
 		final String className = clazz.getName();
 
-		final DispatchTargets errorDispatchTargets = contextController.getDispatchTargets(
+		final DispatchTargets errorDispatchTargets = servletContextHelperController.getDispatchTargets(
 			className, null, null, null, null, null, Match.EXACT);
 
 		if (errorDispatchTargets == null) {
@@ -243,9 +242,9 @@ public class ResponseStateHandler {
 			return;
 		}
 
-		ContextController contextController = dispatchTargets.getContextController();
+		ServletContextHelperController servletContextHelperController = dispatchTargets.getServletContextHelperController();
 
-		DispatchTargets errorDispatchTargets = contextController.getDispatchTargets(
+		DispatchTargets errorDispatchTargets = servletContextHelperController.getDispatchTargets(
 			String.valueOf(status), null, null, null, null, null, Match.EXACT);
 
 		if (errorDispatchTargets == null) {

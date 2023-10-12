@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.servlet.Filter;
 
 import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
+import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperController;
 import org.eclipse.equinox.http.servlet.internal.error.HttpWhiteboardFailureException;
 import org.eclipse.equinox.http.servlet.internal.registration.FilterRegistration;
 import org.osgi.framework.*;
@@ -29,11 +29,11 @@ public class ContextFilterTrackerCustomizer
 
 	public ContextFilterTrackerCustomizer(
 		BundleContext bundleContext, HttpServletEndpointController httpServletEndpointController,
-		ContextController contextController) {
+		ServletContextHelperController servletContextHelperController) {
 
 		super(bundleContext, httpServletEndpointController);
 
-		this.contextController = contextController;
+		this.servletContextHelperController = servletContextHelperController;
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class ContextFilterTrackerCustomizer
 			return null;
 		}
 
-		if (!contextController.matches(serviceReference)) {
+		if (!servletContextHelperController.matches(serviceReference)) {
 			return null;
 		}
 
@@ -58,7 +58,7 @@ public class ContextFilterTrackerCustomizer
 		AtomicReference<FilterRegistration> result = new AtomicReference<FilterRegistration>();
 
 		try {
-			result.set(contextController.addFilterRegistration(serviceReference));
+			result.set(servletContextHelperController.addFilterRegistration(serviceReference));
 		}
 		catch (HttpWhiteboardFailureException hwfe) {
 			httpServletEndpointController.log(hwfe.getMessage(), hwfe);
@@ -91,7 +91,7 @@ public class ContextFilterTrackerCustomizer
 		}
 	}
 
-	private ContextController contextController;
+	private ServletContextHelperController servletContextHelperController;
 
 }
 /* @generated */

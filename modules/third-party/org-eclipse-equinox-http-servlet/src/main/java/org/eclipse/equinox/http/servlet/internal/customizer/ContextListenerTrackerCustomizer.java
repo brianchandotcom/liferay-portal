@@ -15,7 +15,7 @@ import java.util.EventListener;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
+import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperController;
 import org.eclipse.equinox.http.servlet.internal.error.HttpWhiteboardFailureException;
 import org.eclipse.equinox.http.servlet.internal.registration.ListenerRegistration;
 import org.osgi.framework.*;
@@ -30,11 +30,11 @@ public class ContextListenerTrackerCustomizer
 
 	public ContextListenerTrackerCustomizer(
 		BundleContext bundleContext, HttpServletEndpointController httpServletEndpointController,
-		ContextController contextController) {
+		ServletContextHelperController servletContextHelperController) {
 
 		super(bundleContext, httpServletEndpointController);
 
-		this.contextController = contextController;
+		this.servletContextHelperController = servletContextHelperController;
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class ContextListenerTrackerCustomizer
 			return null;
 		}
 
-		if (!contextController.matches(serviceReference)) {
+		if (!servletContextHelperController.matches(serviceReference)) {
 			return null;
 		}
 
@@ -72,7 +72,7 @@ public class ContextListenerTrackerCustomizer
 				return result;
 			}
 
-			result.set(contextController.addListenerRegistration(serviceReference));
+			result.set(servletContextHelperController.addListenerRegistration(serviceReference));
 		}
 		catch (HttpWhiteboardFailureException hwfe) {
 			httpServletEndpointController.log(hwfe.getMessage(), hwfe);
@@ -105,7 +105,7 @@ public class ContextListenerTrackerCustomizer
 		}
 	}
 
-	private ContextController contextController;
+	private ServletContextHelperController servletContextHelperController;
 
 }
 /* @generated */

@@ -15,8 +15,9 @@ import java.io.IOException;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
+
 import org.eclipse.equinox.http.servlet.internal.context.ContextController.ServiceHolder;
+import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperController;
 import org.eclipse.equinox.http.servlet.internal.servlet.Match;
 import org.osgi.dto.DTO;
 import org.osgi.framework.wiring.BundleWiring;
@@ -30,17 +31,17 @@ public abstract class EndpointRegistration<D extends DTO>
 
 	private final ServiceHolder<Servlet> servletHolder;
 	private final ServletContextHelper servletContextHelper; //The context used during the registration of the servlet
-	private final ContextController contextController;
+	private final ServletContextHelperController servletContextHelperController;
 	private final ClassLoader classLoader;
 
 	public EndpointRegistration(
 		ServiceHolder<Servlet> servletHolder, D d, ServletContextHelper servletContextHelper,
-		ContextController contextController, ClassLoader legacyTCCL) {
+		ServletContextHelperController servletContextHelperController, ClassLoader legacyTCCL) {
 
 		super(servletHolder.get(), d);
 		this.servletHolder = servletHolder;
 		this.servletContextHelper = servletContextHelper;
-		this.contextController = contextController;
+		this.servletContextHelperController = servletContextHelperController;
 		if (legacyTCCL != null) {
 			// legacy registrations used the current TCCL at registration time
 			classLoader = legacyTCCL;
@@ -54,9 +55,9 @@ public abstract class EndpointRegistration<D extends DTO>
 		try {
 			Thread.currentThread().setContextClassLoader(classLoader);
 
-			contextController.getEndpointRegistrations().remove(this);
-			contextController.getHttpServletEndpointController().getRegisteredObjects().remove(this.getT());
-			contextController.ungetServletContextHelper(servletHolder.getBundle());
+			servletContextHelperController.getEndpointRegistrations().remove(this);
+			servletContextHelperController.getHttpServletEndpointController().getRegisteredObjects().remove(this.getT());
+			servletContextHelperController.ungetServletContextHelper(servletHolder.getBundle());
 
 			super.destroy();
 			getT().destroy();

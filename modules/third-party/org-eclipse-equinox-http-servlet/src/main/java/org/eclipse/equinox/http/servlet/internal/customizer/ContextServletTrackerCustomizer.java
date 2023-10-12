@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.servlet.Servlet;
 
 import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
+import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperController;
 import org.eclipse.equinox.http.servlet.internal.error.HttpWhiteboardFailureException;
 import org.eclipse.equinox.http.servlet.internal.registration.ServletRegistration;
 import org.osgi.framework.*;
@@ -29,11 +29,11 @@ public class ContextServletTrackerCustomizer
 
 	public ContextServletTrackerCustomizer(
 		BundleContext bundleContext, HttpServletEndpointController httpServletEndpointController,
-		ContextController contextController) {
+		ServletContextHelperController servletContextHelperController) {
 
 		super(bundleContext, httpServletEndpointController);
 
-		this.contextController = contextController;
+		this.servletContextHelperController = servletContextHelperController;
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class ContextServletTrackerCustomizer
 			return null;
 		}
 
-		if (!contextController.matches(serviceReference)) {
+		if (!servletContextHelperController.matches(serviceReference)) {
 			return null;
 		}
 
@@ -58,7 +58,7 @@ public class ContextServletTrackerCustomizer
 		AtomicReference<ServletRegistration> result = new AtomicReference<ServletRegistration>();
 
 		try {
-			result.set(contextController.addServletRegistration(serviceReference));
+			result.set(servletContextHelperController.addServletRegistration(serviceReference));
 		}
 		catch (HttpWhiteboardFailureException hwfe) {
 			httpServletEndpointController.log(hwfe.getMessage(), hwfe);
@@ -91,7 +91,7 @@ public class ContextServletTrackerCustomizer
 		}
 	}
 
-	private ContextController contextController;
+	private ServletContextHelperController servletContextHelperController;
 
 }
 /* @generated */

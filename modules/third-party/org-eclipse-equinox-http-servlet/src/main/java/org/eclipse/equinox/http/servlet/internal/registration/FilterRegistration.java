@@ -17,8 +17,9 @@ import java.util.regex.Pattern;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
+
 import org.eclipse.equinox.http.servlet.internal.context.ContextController.ServiceHolder;
+import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperController;
 import org.eclipse.equinox.http.servlet.internal.servlet.FilterChainImpl;
 import org.eclipse.equinox.http.servlet.internal.servlet.Match;
 import org.eclipse.equinox.http.servlet.internal.util.Const;
@@ -35,18 +36,18 @@ public class FilterRegistration
 	private final ServiceHolder<Filter> filterHolder;
 	private final ClassLoader classLoader;
 	private final int priority;
-	private final ContextController contextController;
+	private final ServletContextHelperController servletContextHelperController;
 	private final boolean initDestoyWithContextController;
 	private final Pattern[] compiledRegexs;
 
 	public FilterRegistration(
 		ServiceHolder<Filter> filterHolder, FilterDTO filterDTO, int priority,
-		ContextController contextController, ClassLoader legacyTCCL) {
+		ServletContextHelperController servletContextHelperController, ClassLoader legacyTCCL) {
 
 		super(filterHolder.get(), filterDTO);
 		this.filterHolder = filterHolder;
 		this.priority = priority;
-		this.contextController = contextController;
+		this.servletContextHelperController = servletContextHelperController;
 		this.compiledRegexs = getCompiledRegex(filterDTO);
 		if (legacyTCCL != null) {
 			// legacy filter registrations used the current TCCL at registration time
@@ -66,7 +67,7 @@ public class FilterRegistration
 			catch (InvalidSyntaxException e) {
 				// nothing
 			}
-			initDestoyWithContextController = f == null || contextController.matches(f);
+			initDestoyWithContextController = f == null || servletContextHelperController.matches(f);
 		} else {
 			initDestoyWithContextController = true;
 		}
@@ -91,9 +92,9 @@ public class FilterRegistration
 		ClassLoader original = Thread.currentThread().getContextClassLoader();
 		try {
 			Thread.currentThread().setContextClassLoader(classLoader);
-			contextController.getHttpServletEndpointController().getRegisteredObjects().remove(this.getT());
-			contextController.getFilterRegistrations().remove(this);
-			contextController.ungetServletContextHelper(filterHolder.getBundle());
+			servletContextHelperController.getHttpServletEndpointController().getRegisteredObjects().remove(this.getT());
+			servletContextHelperController.getFilterRegistrations().remove(this);
+			servletContextHelperController.ungetServletContextHelper(filterHolder.getBundle());
 			super.destroy();
 			getT().destroy();
 		}

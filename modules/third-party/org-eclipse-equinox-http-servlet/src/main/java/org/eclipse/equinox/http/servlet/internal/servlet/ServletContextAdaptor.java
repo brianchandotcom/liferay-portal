@@ -72,12 +72,12 @@ public class ServletContextAdaptor {
 	}
 
 	public ServletContextAdaptor(
-		ContextController contextController, Bundle bundle,
+		ServletContextHelperController servletContextHelperController, Bundle bundle,
 		ServletContextHelper servletContextHelper,
 		ServletContextHelperDataContext servletContextHelperDataContext,
 		EventListeners eventListeners, AccessControlContext acc) {
 
-		this.contextController = contextController;
+		this.servletContextHelperController = servletContextHelperController;
 		this.servletContextHelperDataContext = servletContextHelperDataContext;
 		this.servletContext = servletContextHelperDataContext.getServletContext();
 		this.servletContextHelper = servletContextHelper;
@@ -116,7 +116,7 @@ public class ServletContextAdaptor {
 
 		AdaptorInvocationHandler adaptorInvocationHandler = (AdaptorInvocationHandler)invocationHandler;
 
-		return contextController.equals(adaptorInvocationHandler.getContextController());
+		return servletContextHelperController.equals(adaptorInvocationHandler.getContextController());
 	}
 
 	public ClassLoader getClassLoader() {
@@ -124,7 +124,7 @@ public class ServletContextAdaptor {
 	}
 
 	public String getContextPath() {
-		return contextController.getFullContextPath();
+		return servletContextHelperController.getFullContextPath();
 	}
 
 	public Object getAttribute(String attributeName) {
@@ -143,12 +143,12 @@ public class ServletContextAdaptor {
 	}
 
 	public String getInitParameter(String name) {
-		return contextController.getInitParams().get(name);
+		return servletContextHelperController.getInitParams().get(name);
 	}
 
 	public Enumeration<String> getInitParameterNames() {
 		return Collections.enumeration(
-			contextController.getInitParams().keySet());
+			servletContextHelperController.getInitParams().keySet());
 	}
 
 	public String getMimeType(final String name) {
@@ -171,7 +171,7 @@ public class ServletContextAdaptor {
 	}
 
 	public RequestDispatcher getNamedDispatcher(String servletName) {
-		DispatchTargets dispatchTargets = contextController.getDispatchTargets(
+		DispatchTargets dispatchTargets = servletContextHelperController.getDispatchTargets(
 			servletName, null, null, null, null, null, Match.EXACT);
 
 		if (dispatchTargets == null) {
@@ -204,11 +204,11 @@ public class ServletContextAdaptor {
 			return null;
 		}
 		// if the path starts with the full context path strip it
-		if (path.startsWith(contextController.getFullContextPath())) {
-			path = path.substring(contextController.getFullContextPath().length());
+		if (path.startsWith(servletContextHelperController.getFullContextPath())) {
+			path = path.substring(servletContextHelperController.getFullContextPath().length());
 		}
 
-		DispatchTargets dispatchTargets = contextController.getDispatchTargets(path);
+		DispatchTargets dispatchTargets = servletContextHelperController.getDispatchTargets(path);
 
 		if (dispatchTargets == null) {
 			return null;
@@ -273,11 +273,11 @@ public class ServletContextAdaptor {
 	}
 
 	public String getServletContextName() {
-		return contextController.getContextName();
+		return servletContextHelperController.getContextName();
 	}
 
 	public int hashCode() {
-		return contextController.hashCode();
+		return servletContextHelperController.hashCode();
 	}
 
 	public void removeAttribute(String attributeName) {
@@ -383,7 +383,7 @@ public class ServletContextAdaptor {
 		String value = string;
 
 		if (value == null) {
-			value = SIMPLE_NAME + '[' + contextController + ']';
+			value = SIMPLE_NAME + '[' + servletContextHelperController + ']';
 
 			string = value;
 		}
@@ -425,8 +425,8 @@ public class ServletContextAdaptor {
 	private class AdaptorInvocationHandler implements InvocationHandler {
 		public AdaptorInvocationHandler() {}
 
-		public ContextController getContextController() {
-			return contextController;
+		public ServletContextHelperController getContextController() {
+			return servletContextHelperController;
 		}
 
 		public Object invoke(Object proxy, Method method, Object[] args)
@@ -444,7 +444,7 @@ public class ServletContextAdaptor {
 	private final AccessControlContext acc;
 	private final Bundle bundle;
 	private final ClassLoader classLoader;
-	final ContextController contextController;
+	final ServletContextHelperController servletContextHelperController;
 	private final EventListeners eventListeners;
 	private final ServletContextHelperDataContext servletContextHelperDataContext;
 	private final ServletContext servletContext;

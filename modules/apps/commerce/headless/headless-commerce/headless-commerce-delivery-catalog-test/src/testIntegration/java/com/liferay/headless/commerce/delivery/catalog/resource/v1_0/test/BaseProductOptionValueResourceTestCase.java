@@ -173,6 +173,7 @@ public abstract class BaseProductOptionValueResourceTestCase {
 
 		ProductOptionValue productOptionValue = randomProductOptionValue();
 
+		productOptionValue.setInfoMessage(regex);
 		productOptionValue.setKey(regex);
 		productOptionValue.setName(regex);
 		productOptionValue.setPrice(regex);
@@ -188,6 +189,7 @@ public abstract class BaseProductOptionValueResourceTestCase {
 
 		productOptionValue = ProductOptionValueSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, productOptionValue.getInfoMessage());
 		Assert.assertEquals(regex, productOptionValue.getKey());
 		Assert.assertEquals(regex, productOptionValue.getName());
 		Assert.assertEquals(regex, productOptionValue.getPrice());
@@ -521,6 +523,14 @@ public abstract class BaseProductOptionValueResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("infoMessage", additionalAssertFieldName)) {
+				if (productOptionValue.getInfoMessage() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("key", additionalAssertFieldName)) {
 				if (productOptionValue.getKey() == null) {
 					valid = false;
@@ -589,6 +599,14 @@ public abstract class BaseProductOptionValueResourceTestCase {
 					"relativePriceFormatted", additionalAssertFieldName)) {
 
 				if (productOptionValue.getRelativePriceFormatted() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("selectable", additionalAssertFieldName)) {
+				if (productOptionValue.getSelectable() == null) {
 					valid = false;
 				}
 
@@ -759,6 +777,17 @@ public abstract class BaseProductOptionValueResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("infoMessage", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						productOptionValue1.getInfoMessage(),
+						productOptionValue2.getInfoMessage())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("key", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						productOptionValue1.getKey(),
@@ -853,6 +882,17 @@ public abstract class BaseProductOptionValueResourceTestCase {
 				if (!Objects.deepEquals(
 						productOptionValue1.getRelativePriceFormatted(),
 						productOptionValue2.getRelativePriceFormatted())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("selectable", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						productOptionValue1.getSelectable(),
+						productOptionValue2.getSelectable())) {
 
 					return false;
 				}
@@ -1011,6 +1051,52 @@ public abstract class BaseProductOptionValueResourceTestCase {
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("infoMessage")) {
+			Object object = productOptionValue.getInfoMessage();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("key")) {
@@ -1305,6 +1391,11 @@ public abstract class BaseProductOptionValueResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("selectable")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("skuId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1452,6 +1543,8 @@ public abstract class BaseProductOptionValueResourceTestCase {
 		return new ProductOptionValue() {
 			{
 				id = RandomTestUtil.randomLong();
+				infoMessage = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				key = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				preselected = RandomTestUtil.randomBoolean();
@@ -1464,6 +1557,7 @@ public abstract class BaseProductOptionValueResourceTestCase {
 					RandomTestUtil.randomString());
 				relativePriceFormatted = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				selectable = RandomTestUtil.randomBoolean();
 				skuId = RandomTestUtil.randomLong();
 				totalPrice = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

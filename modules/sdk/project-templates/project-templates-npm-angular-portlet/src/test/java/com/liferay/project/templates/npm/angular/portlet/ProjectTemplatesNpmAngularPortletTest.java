@@ -1,12 +1,20 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.project.templates.npm.angular.portlet;
 
+import com.liferay.maven.executor.MavenExecutor;
+import com.liferay.project.templates.BaseProjectTemplatesTestCase;
+import com.liferay.project.templates.extensions.util.Validator;
+import com.liferay.project.templates.extensions.util.VersionUtil;
+import com.liferay.project.templates.util.FileTestUtil;
+
 import java.io.File;
+
 import java.net.URI;
+
 import java.util.Arrays;
 import java.util.Properties;
 
@@ -18,12 +26,6 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-
-import com.liferay.maven.executor.MavenExecutor;
-import com.liferay.project.templates.BaseProjectTemplatesTestCase;
-import com.liferay.project.templates.extensions.util.Validator;
-import com.liferay.project.templates.extensions.util.VersionUtil;
-import com.liferay.project.templates.util.FileTestUtil;
 
 /**
  * @author Lawrence Lee
@@ -83,16 +85,6 @@ public class ProjectTemplatesNpmAngularPortletTest
 		_nodePackageManager = nodePackageManager;
 	}
 
-	@Test
-	public void testBuildTemplateNpmAngularPortlet() throws Exception {
-		String template = "npm-angular-portlet";
-
-		testBuildAngularTemplate(
-			temporaryFolder, mavenExecutor, template, _name, _packageName,
-			_className, _liferayProduct, _liferayVersion, _nodePackageManager,
-			_gradleDistribution);
-	}
-
 	public void testBuildAngularTemplate(
 			TemporaryFolder temporaryFolder, MavenExecutor mavenExecutor,
 			String template, String name, String packageName, String className,
@@ -131,8 +123,8 @@ public class ProjectTemplatesNpmAngularPortletTest
 		}
 
 		testContains(
-			gradleProjectDir, "package.json",
-			"liferay-npm-bundler\": \"2.31.2", "\"main\": \"lib/angular-loader.js\"");
+			gradleProjectDir, "package.json", "liferay-npm-bundler\": \"2.31.2",
+			"\"main\": \"lib/angular-loader.js\"");
 
 		File mavenWorkspaceDir = buildWorkspace(
 			temporaryFolder, "maven", "mavenWS", liferayVersion, mavenExecutor);
@@ -162,7 +154,17 @@ public class ProjectTemplatesNpmAngularPortletTest
 				":modules:" + name + GRADLE_TASK_PATH_BUILD);
 		}
 	}
-	
+
+	@Test
+	public void testBuildTemplateNpmAngularPortlet() throws Exception {
+		String template = "npm-angular-portlet";
+
+		testBuildAngularTemplate(
+			temporaryFolder, mavenExecutor, template, _name, _packageName,
+			_className, _liferayProduct, _liferayVersion, _nodePackageManager,
+			_gradleDistribution);
+	}
+
 	@Rule
 	public TemporaryFolder temporaryFolder = new TemporaryFolder();
 

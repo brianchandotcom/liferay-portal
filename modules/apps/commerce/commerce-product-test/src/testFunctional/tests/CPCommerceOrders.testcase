@@ -2136,6 +2136,12 @@ definition {
 				shippingMethod = "Standard");
 		}
 
+		task ("And the multiple order quantity is set to '0.1' for U-Joint") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				multipleOrderQuantity = "0.1",
+				productName = "U-Joint");
+		}
+
 		task ("When the admin Orders page is reached by the admin") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "test@liferay.com",

@@ -625,7 +625,7 @@ definition {
 			locator1 = "Gmail#GMAIL_HTML_MODE_MESSAGE_BODY_LINK",
 			value1 = "report");
 
-		SelectWindow(locator1 = "title=Reports Definition Name - ${siteName}");
+		SelectWindow(value1 = "title=Reports Definition Name - ${siteName}");
 
 		ReportsAdmin.viewReportEntryFields(
 			dataSource = "portal",

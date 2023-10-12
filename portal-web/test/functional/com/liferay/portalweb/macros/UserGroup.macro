@@ -180,7 +180,7 @@ definition {
 
 		MenuItem.click(menuItem = "Go to Profile Pages");
 
-		SelectWindow(locator1 = "Home - ${userGroupName} - ${siteName}");
+		SelectWindow(value1 = "Home - ${userGroupName} - ${siteName}");
 	}
 
 	macro openUserGroupsAdmin {

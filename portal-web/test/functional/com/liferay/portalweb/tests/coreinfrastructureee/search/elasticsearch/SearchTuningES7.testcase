@@ -1283,7 +1283,7 @@ definition {
 		var assetName = "MB Thread Message Subject Apple";
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
-		SelectWindow(locator1 = "title=${assetName} - ${assetName} - ${siteName}");
+		SelectWindow(value1 = "title=${assetName} - ${assetName} - ${siteName}");
 
 		AssertTextEquals(
 			locator1 = "ControlMenu#HEADING",
@@ -1293,13 +1293,13 @@ definition {
 			key_threadBody = "banana, red apple, blueberry!",
 			locator1 = "MessageBoardsThread#THREAD_BODY");
 
-		Close.closeAndSelectWindow(locator1 = "title=Customize Results - ${siteName}");
+		Close.closeAndSelectWindow(value1 = "title=Customize Results - ${siteName}");
 
 		Click(
 			key_assetTitle = "Web Content Article Apple",
 			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT_TITLE");
 
-		SelectWindow(locator1 = "title=Result Rankings - ${siteName}");
+		SelectWindow(value1 = "title=Result Rankings - ${siteName}");
 
 		AssertVisible(
 			key_assetTitle = "Web Content Article Apple",

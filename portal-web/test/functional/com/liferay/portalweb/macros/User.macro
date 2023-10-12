@@ -2039,7 +2039,7 @@ definition {
 			rowEntry = ${userScreenName});
 
 		if (isSet(siteName)) {
-			SelectWindow(locator1 = "title=Home - ${siteName}");
+			SelectWindow(value1 = "title=Home - ${siteName}");
 		}
 		else {
 			SelectWindow.selectPopUp(value1 = "null");
@@ -2183,7 +2183,7 @@ definition {
 			locator1 = "Link#FACEBOOK",
 			value1 = "Facebook");
 
-		SelectWindow(locator1 = "title=Log into Facebook | Facebook");
+		SelectWindow(value1 = "title=Log into Facebook | Facebook");
 
 		Type(
 			locator1 = "FacebookLogin#LOGIN_EMAIL_FIELD",

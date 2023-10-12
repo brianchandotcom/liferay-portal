@@ -107,7 +107,7 @@ definition {
 		task ("Access the link and affirm that a new page has opened") {
 			CP2DXPCloudSetup.clickOnProductConsoleLink();
 
-			SelectWindow(locator1 = "title=Log in | DXP Cloud");
+			SelectWindow(value1 = "title=Log in | DXP Cloud");
 
 			AssertElementPresent(locator1 = "CustomerPortalSite#YOUR_ACCOUNT");
 

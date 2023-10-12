@@ -64,7 +64,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-permanent-page");
 
-		SelectWindow(locator1 = "title=Test Destination Permanent Page - Test Site Name - Liferay DXP");
+		SelectWindow(value1 = "title=Test Destination Permanent Page - Test Site Name - Liferay DXP");
 
 		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-destination-permanent-page");
 

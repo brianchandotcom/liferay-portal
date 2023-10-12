@@ -21,7 +21,7 @@ definition {
 			locator1 = "SiteTemplates#SITE_TEMPLATE_TABLE_NAME",
 			value1 = ${siteTemplateName});
 
-		SelectWindow(locator1 = "Home - ${siteTemplateName} - ${siteName}");
+		SelectWindow(value1 = "Home - ${siteTemplateName} - ${siteName}");
 
 		Navigator._gotoPage(pageName = ${pageName});
 

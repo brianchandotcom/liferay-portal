@@ -658,8 +658,9 @@ definition {
 		}
 	}
 
-	macro selectNavigatorWindow {
-		SelectWindow(locator1 = "title=${navigatorWidow}");
+	@summary = "Default summary"
+	macro selectNavigatorWindow(navigatorWidow = null) {
+		SelectWindow(value1 = "title=${navigatorWidow}");
 	}
 
 	macro setUpForCP20 {

@@ -892,7 +892,7 @@ definition {
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Access our documentation to learn more.");
 
 			task ("Switch to the documentation tab") {
-				SelectWindow(locator1 = "title=Events Analysis - Liferay Learn");
+				SelectWindow(value1 = "title=Events Analysis - Liferay Learn");
 			}
 
 			ACUtils.viewGenericText(textValueList = "Events Analysis");

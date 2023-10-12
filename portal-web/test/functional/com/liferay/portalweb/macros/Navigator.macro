@@ -30,7 +30,7 @@ definition {
 	macro closeSpecificWindow {
 		Navigator.selectSpecificWindow(windowTitle = ${closeWindowTitle});
 
-		Close.closeAndSelectWindow(locator1 = "title=${selectWindowTitle}");
+		Close.closeAndSelectWindow(value1 = "title=${selectWindowTitle}");
 	}
 
 	macro closeWindow {
@@ -385,8 +385,9 @@ definition {
 		Open(value1 = "${baseURL}/${urlAppend}");
 	}
 
-	macro selectSpecificWindow {
-		SelectWindow(locator1 = "title=${windowTitle}");
+	@summary = "Default summary"
+	macro selectSpecificWindow(windowTitle = null) {
+		SelectWindow(value1 = "title=${windowTitle}");
 	}
 
 	macro viewActivatedNavTab {

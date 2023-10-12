@@ -159,7 +159,7 @@ definition {
 
 		Button.clickSubmitButton();
 
-		SelectWindow(locator1 = "Home - ${virtualHost}");
+		SelectWindow(value1 = "Home - ${virtualHost}");
 
 		WaitForElementPresent(locator1 = "Button#I_AGREE");
 

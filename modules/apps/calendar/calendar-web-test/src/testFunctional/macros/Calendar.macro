@@ -741,7 +741,7 @@ definition {
 			siteCalendarName = ${siteCalendarName},
 			siteName = ${siteName});
 
-		SelectWindow(locator1 = "title=${siteName}");
+		SelectWindow(value1 = "title=${siteName}");
 
 		AssertTextEquals(
 			locator1 = "RSS#FEED_TITLE",
@@ -760,7 +760,7 @@ definition {
 			siteCalendarName = ${siteCalendarName},
 			siteName = ${siteName});
 
-		SelectWindow(locator1 = "title=${siteName}");
+		SelectWindow(value1 = "title=${siteName}");
 
 		AssertTextEquals(
 			locator1 = "RSS#FEED_TITLE",

@@ -4749,11 +4749,11 @@ definition {
 			key_linkText = "Learn more",
 			locator1 = "Blueprints#DOC_LINK_GENERIC");
 
-		SelectWindow(locator1 = "Search Blueprints Elements Reference - Liferay Learn");
+		SelectWindow(value1 = "Search Blueprints Elements Reference - Liferay Learn");
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
-		Close.closeAndSelectWindow(locator1 = "Edit Blueprint - ${siteName}");
+		Close.closeAndSelectWindow(value1 = "Edit Blueprint - ${siteName}");
 
 		Navigator.gotoNavNested(navNested = "Query Settings");
 
@@ -4764,9 +4764,9 @@ definition {
 			key_linkText = "Learn more",
 			locator1 = "Blueprints#DOC_LINK_GENERIC");
 
-		SelectWindow(locator1 = "Creating and Managing Search Blueprints - Liferay Learn");
+		SelectWindow(value1 = "Creating and Managing Search Blueprints - Liferay Learn");
 
-		Close.closeAndSelectWindow(locator1 = "Edit Blueprint - ${siteName}");
+		Close.closeAndSelectWindow(value1 = "Edit Blueprint - ${siteName}");
 
 		Check.checkNotVisible(
 			locator1 = "Radio#ANY",
@@ -4779,9 +4779,9 @@ definition {
 			key_linkText = "Learn more",
 			locator1 = "Blueprints#DOC_LINK_GENERIC");
 
-		SelectWindow(locator1 = "Creating and Managing Search Blueprints - Liferay Learn");
+		SelectWindow(value1 = "Creating and Managing Search Blueprints - Liferay Learn");
 
-		Close.closeAndSelectWindow(locator1 = "Edit Blueprint - ${siteName}");
+		Close.closeAndSelectWindow(value1 = "Edit Blueprint - ${siteName}");
 
 		Navigator.gotoNavTab(navTab = "Configuration");
 
@@ -4790,54 +4790,54 @@ definition {
 			key_linkText = "Learn more",
 			locator1 = "Blueprints#DOC_LINK_GENERIC");
 
-		SelectWindow(locator1 = "Search Blueprints Configuration Reference - Liferay Learn");
+		SelectWindow(value1 = "Search Blueprints Configuration Reference - Liferay Learn");
 
-		Close.closeAndSelectWindow(locator1 = "Edit Blueprint - ${siteName}");
+		Close.closeAndSelectWindow(value1 = "Edit Blueprint - ${siteName}");
 
 		Click(
 			key_linkContext = "Add aggregations to those already present",
 			key_linkText = "Learn more",
 			locator1 = "Blueprints#DOC_LINK_GENERIC");
 
-		SelectWindow(locator1 = "Search Blueprints Configuration Reference - Liferay Learn");
+		SelectWindow(value1 = "Search Blueprints Configuration Reference - Liferay Learn");
 
-		Close.closeAndSelectWindow(locator1 = "Edit Blueprint - ${siteName}");
+		Close.closeAndSelectWindow(value1 = "Edit Blueprint - ${siteName}");
 
 		Click(
 			key_linkContext = "Override the default search highlight configuration",
 			key_linkText = "Learn more",
 			locator1 = "Blueprints#DOC_LINK_GENERIC");
 
-		SelectWindow(locator1 = "Search Blueprints Configuration Reference - Liferay Learn");
+		SelectWindow(value1 = "Search Blueprints Configuration Reference - Liferay Learn");
 
-		Close.closeAndSelectWindow(locator1 = "Edit Blueprint - ${siteName}");
+		Close.closeAndSelectWindow(value1 = "Edit Blueprint - ${siteName}");
 
 		Click(
 			key_linkContext = "Add sorts to those already present in the search request",
 			key_linkText = "Learn more",
 			locator1 = "Blueprints#DOC_LINK_GENERIC");
 
-		SelectWindow(locator1 = "Search Blueprints Configuration Reference - Liferay Learn");
+		SelectWindow(value1 = "Search Blueprints Configuration Reference - Liferay Learn");
 
-		Close.closeAndSelectWindow(locator1 = "Edit Blueprint - ${siteName}");
+		Close.closeAndSelectWindow(value1 = "Edit Blueprint - ${siteName}");
 
 		Click(
 			key_linkContext = "Declare new template variables from search context attributes",
 			key_linkText = "Learn more",
 			locator1 = "Blueprints#DOC_LINK_GENERIC");
 
-		SelectWindow(locator1 = "Search Blueprints Configuration Reference - Liferay Learn");
+		SelectWindow(value1 = "Search Blueprints Configuration Reference - Liferay Learn");
 
-		Close.closeAndSelectWindow(locator1 = "Edit Blueprint - ${siteName}");
+		Close.closeAndSelectWindow(value1 = "Edit Blueprint - ${siteName}");
 
 		Click(
 			key_linkContext = "Add source includes and excludes as search request parameters",
 			key_linkText = "Learn more",
 			locator1 = "Blueprints#DOC_LINK_GENERIC");
 
-		SelectWindow(locator1 = "Search Blueprints Configuration Reference - Liferay Learn");
+		SelectWindow(value1 = "Search Blueprints Configuration Reference - Liferay Learn");
 
-		Close.closeAndSelectWindow(locator1 = "Edit Blueprint - ${siteName}");
+		Close.closeAndSelectWindow(value1 = "Edit Blueprint - ${siteName}");
 
 		ClickNoError(
 			key_text = "Cancel",
@@ -4852,9 +4852,9 @@ definition {
 			key_linkText = "Learn more",
 			locator1 = "Blueprints#DOC_LINK_GENERIC");
 
-		SelectWindow(locator1 = "Creating Elements - Liferay Learn");
+		SelectWindow(value1 = "Creating Elements - Liferay Learn");
 
-		Close.closeAndSelectWindow(locator1 = "View Element - ${siteName}");
+		Close.closeAndSelectWindow(value1 = "View Element - ${siteName}");
 
 		SearchPage.addWidgets(searchPortletList = "Blueprints Options");
 
@@ -4871,7 +4871,7 @@ definition {
 			key_linkText = "Learn how",
 			locator1 = "Blueprints#DOC_LINK_GENERIC");
 
-		SelectWindow(locator1 = "Using a Search Blueprint on a Search Page - Liferay Learn");
+		SelectWindow(value1 = "Using a Search Blueprint on a Search Page - Liferay Learn");
 	}
 
 	@priority = 3

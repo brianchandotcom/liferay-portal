@@ -50,7 +50,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-page");
 
-		SelectWindow(locator1 = "title=Test Destination Page - Test Site Name - ${siteName}");
+		SelectWindow(value1 = "title=Test Destination Page - Test Site Name - ${siteName}");
 
 		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-destination-page");
 
@@ -1284,7 +1284,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-page");
 
-		SelectWindow(locator1 = "title=Test Source Page - Test Site Name - ${siteName}");
+		SelectWindow(value1 = "title=Test Source Page - Test Site Name - ${siteName}");
 
 		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-source-page");
 
@@ -1296,7 +1296,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "${portalURL}/web/test-site-name/test-source-page");
 
-		SelectWindow(locator1 = "title=Test Destination Page - Test Site Name - ${siteName}");
+		SelectWindow(value1 = "title=Test Destination Page - Test Site Name - ${siteName}");
 
 		AssertLocation(value1 = "${portalURL}/web/test-site-name/test-destination-page");
 	}

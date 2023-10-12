@@ -145,10 +145,10 @@ definition {
 			value1 = "CONTINUE READING");
 
 		if (isSet(contentTitle)) {
-			SelectWindow(locator1 = "title=- ${contentTitle} - ${siteName}");
+			SelectWindow(value1 = "title=- ${contentTitle} - ${siteName}");
 		}
 		else {
-			SelectWindow(locator1 = "title=${pageName} - ${siteName}");
+			SelectWindow(value1 = "title=${pageName} - ${siteName}");
 		}
 	}
 
@@ -165,15 +165,15 @@ definition {
 			value1 = ${pageNameURL});
 
 		if (isSet(contentTitle)) {
-			SelectWindow(locator1 = "title=${contentTitle} - ${pageName} - ${siteName}");
+			SelectWindow(value1 = "title=${contentTitle} - ${pageName} - ${siteName}");
 		}
 		else if (${pageName} == "update_password") {
 			var pageName = "New Password";
 
-			SelectWindow(locator1 = "title=${pageName} - ${siteName}");
+			SelectWindow(value1 = "title=${pageName} - ${siteName}");
 		}
 		else {
-			SelectWindow(locator1 = "title=${pageName} - ${siteName}");
+			SelectWindow(value1 = "title=${pageName} - ${siteName}");
 		}
 	}
 

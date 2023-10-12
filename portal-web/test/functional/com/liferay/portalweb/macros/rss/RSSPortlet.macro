@@ -138,7 +138,7 @@ definition {
 			locator1 = "RSSFeed#FEEDS_TITLE",
 			value1 = ${feedTitle});
 
-		SelectWindow(locator1 = "title=Site Page Name 2 - Site Name - ${siteName}");
+		SelectWindow(value1 = "title=Site Page Name 2 - Site Name - ${siteName}");
 	}
 
 	macro updateFeedTime {

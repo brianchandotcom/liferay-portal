@@ -24,7 +24,7 @@ definition {
 		if (isSet(checkDestinationURL)) {
 			Click(locator1 = "Button#TRY_REDIRECTION");
 
-			SelectWindow(locator1 = "title=${destinationPageName} - ${groupName} - ${portalName}");
+			SelectWindow(value1 = "title=${destinationPageName} - ${groupName} - ${portalName}");
 
 			AssertLocation(value1 = ${destinationURL});
 

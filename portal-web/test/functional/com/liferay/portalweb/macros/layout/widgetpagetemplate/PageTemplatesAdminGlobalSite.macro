@@ -162,7 +162,7 @@ definition {
 			locator1 = "PageTemplates#PAGE_TEMPLATE_TABLE_NAME",
 			value1 = ${pageTemplateName});
 
-		SelectWindow(locator1 = "title=${pageTemplateName} - ${siteName}");
+		SelectWindow(value1 = "title=${pageTemplateName} - ${siteName}");
 
 		AssertTextEquals(
 			locator1 = "Home#SITE_NAME",

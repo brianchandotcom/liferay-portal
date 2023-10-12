@@ -108,7 +108,7 @@ definition {
 
 		var windowId = selenium.getTitle();
 
-		SelectWindow(locator1 = "title=${windowId}");
+		SelectWindow(value1 = "title=${windowId}");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 

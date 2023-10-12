@@ -933,7 +933,7 @@ definition {
 
 			Open.openInTheNewTab(value1 = "http://localhost:8080");
 
-			SelectWindow(locator1 = "title=Home - Liferay DXP");
+			SelectWindow(value1 = "title=Home - Liferay DXP");
 
 			ProductMenu.gotoPortlet(
 				category = "Content & Data",
@@ -949,7 +949,7 @@ definition {
 		}
 
 		task ("When the Form Page is refreshed") {
-			SelectWindow(locator1 = "title=Form Page - Liferay DXP");
+			SelectWindow(value1 = "title=Form Page - Liferay DXP");
 
 			Refresh();
 		}

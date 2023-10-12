@@ -66,7 +66,7 @@ definition {
 		task ("Login in Okta") {
 			CustomerPortal.loginOktaToUpdateCP();
 
-			SelectWindow(locator1 = "title=Home - ${testSiteName} - Liferay DXP");
+			SelectWindow(value1 = "title=Home - ${testSiteName} - Liferay DXP");
 
 			Refresh();
 		}
@@ -133,7 +133,7 @@ definition {
 		task ("Login in Okta") {
 			CustomerPortal.loginOktaToUpdateCP();
 
-			SelectWindow(locator1 = "title=Home - ${testSiteName} - Liferay DXP");
+			SelectWindow(value1 = "title=Home - ${testSiteName} - Liferay DXP");
 
 			Refresh();
 		}

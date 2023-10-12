@@ -535,7 +535,7 @@ definition {
 
 		Click(locator1 = "AP#ASSET_ABSTRACT_BOOKMARK_DETAIL_LINK");
 
-		SelectWindow(locator1 = "title=Digital Experience Software Tailored to Your Needs | Liferay");
+		SelectWindow(value1 = "title=Digital Experience Software Tailored to Your Needs | Liferay");
 
 		AssertLocation.assertPartialLocation(value1 = "https://www.liferay.com");
 

@@ -109,7 +109,7 @@ serviceTracker.close();''';
 		task ("Assert could not add page via Search page template") {
 			PageTemplatesAdminGlobalSite.gotoPageTemplateViaEdit(pageTemplateName = "Search");
 
-			SelectWindow(locator1 = "title=Search - ${siteName}");
+			SelectWindow(value1 = "title=Search - ${siteName}");
 
 			Dockbar.viewAddTabsWithNoAddPagePermission();
 		}

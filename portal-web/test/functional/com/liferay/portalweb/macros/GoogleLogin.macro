@@ -29,7 +29,7 @@ definition {
 
 		Click(locator1 = "Link#GOOGLE");
 
-		SelectWindow(locator1 = "GoogleLogin#PAGE_TITLE");
+		SelectWindow(value1 = "GoogleLogin#PAGE_TITLE");
 
 		Type(
 			locator1 = "GoogleLogin#LOGIN_EMAIL_FIELD",

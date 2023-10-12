@@ -8,7 +8,7 @@ definition {
 			value1 = "Select File");
 
 		if (isSet(userEmailAddress)) {
-			SelectWindow(locator1 = "GoogleLogin#PAGE_TITLE");
+			SelectWindow(value1 = "GoogleLogin#PAGE_TITLE");
 
 			if (IsElementPresent(locator1 = "GoogleLogin#HEADER")) {
 				AssertClick(

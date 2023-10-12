@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyU
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.UserBag;
-import com.liferay.portal.kernel.security.permission.UserBagFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
@@ -53,6 +52,7 @@ import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.comparator.GroupIdComparator;
+import com.liferay.portal.security.permission.UserBagFactoryUtil;
 import com.liferay.portal.service.base.GroupServiceBaseImpl;
 import com.liferay.ratings.kernel.transformer.RatingsDataTransformerUtil;
 

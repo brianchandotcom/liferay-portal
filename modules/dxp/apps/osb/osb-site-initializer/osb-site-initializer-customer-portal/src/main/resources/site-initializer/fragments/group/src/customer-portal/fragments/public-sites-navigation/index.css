@@ -131,12 +131,12 @@
   }
 
 .language-selector-container .language-selector[aria-expanded=false] .language-caret-icon svg {
-	transition: transform 0.5s;
 	transform: rotate(360deg);
+	transition: transform 0.5s;
 }
 .language-selector-container .language-selector[aria-expanded=true] .language-caret-icon svg {
-	transition: transform 0.5s;
 	transform: rotate(180deg);
+	transition: transform 0.5s;
 }
   nav.public-sites-navigation .language-selector-container .language-selector:hover, nav.public-sites-navigation .language-selector-container .language-selector.list-open {
 	color: var(--color-action-primary-hover);
@@ -544,13 +544,13 @@
   }
   @media (min-width: 1200px) {
 	nav.public-sites-navigation .utility-nav-container {
-		margin-right: 3rem;
 		margin-left: 2rem;
+		margin-right: 3rem;
 	}
 
 	nav.public-sites-navigation .primary-nav {
-		padding-right: 3rem;
 		padding-left: 3rem;
+		padding-right: 3rem;
 	}
 
 	nav.public-sites-navigation .utility-nav {

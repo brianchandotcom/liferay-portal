@@ -5,9 +5,9 @@
 
 package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
-import com.liferay.commerce.product.configuration.CPDefinitionLinkTypeSettings;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionLinkDisplayContext;
+import com.liferay.commerce.product.links.CPDefinitionLinkTypeRegistry;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.commerce.product.service.CPDefinitionLinkService;
 import com.liferay.item.selector.ItemSelector;
@@ -43,7 +43,7 @@ public class EditCPDefinitionLinkMVCRenderCommand implements MVCRenderCommand {
 		CPDefinitionLinkDisplayContext cpDefinitionLinkDisplayContext =
 			new CPDefinitionLinkDisplayContext(
 				_actionHelper, _portal.getHttpServletRequest(renderRequest),
-				_cpDefinitionLinkService, _cpDefinitionLinkTypeSettings,
+				_cpDefinitionLinkService, _cpDefinitionLinkTypeRegistry,
 				_itemSelector, _workflowDefinitionLinkLocalService);
 
 		renderRequest.setAttribute(
@@ -59,7 +59,7 @@ public class EditCPDefinitionLinkMVCRenderCommand implements MVCRenderCommand {
 	private CPDefinitionLinkService _cpDefinitionLinkService;
 
 	@Reference
-	private CPDefinitionLinkTypeSettings _cpDefinitionLinkTypeSettings;
+	private CPDefinitionLinkTypeRegistry _cpDefinitionLinkTypeRegistry;
 
 	@Reference
 	private ItemSelector _itemSelector;

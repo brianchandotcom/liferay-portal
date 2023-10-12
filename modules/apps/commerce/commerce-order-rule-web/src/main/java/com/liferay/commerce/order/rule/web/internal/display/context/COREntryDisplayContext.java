@@ -181,6 +181,22 @@ public class COREntryDisplayContext {
 		return _corEntryTypeRegistry.getCOREntryTypes();
 	}
 
+	public String getCProductIds() throws Exception {
+		COREntry corEntry = getCOREntry();
+
+		if (corEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.fastLoad(
+				corEntry.getTypeSettings()
+			).build();
+
+		return typeSettingsUnicodeProperties.getProperty(
+			COREntryConstants.TYPE_PRODUCTS_LIMIT_FIELD_PRODUCT_IDS);
+	}
+
 	public CreationMenu getCreationMenu() throws Exception {
 		CreationMenu creationMenu = new CreationMenu();
 
@@ -314,6 +330,22 @@ public class COREntryDisplayContext {
 		}
 
 		return portletURL;
+	}
+
+	public String getQuantity() throws Exception {
+		COREntry corEntry = getCOREntry();
+
+		if (corEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.fastLoad(
+				corEntry.getTypeSettings()
+			).build();
+
+		return typeSettingsUnicodeProperties.getProperty(
+			COREntryConstants.TYPE_PRODUCTS_LIMIT_FIELD_PRODUCT_QUANTITY);
 	}
 
 	public boolean hasAddPermission() throws PortalException {

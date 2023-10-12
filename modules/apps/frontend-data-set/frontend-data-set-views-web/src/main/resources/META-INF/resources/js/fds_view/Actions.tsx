@@ -115,7 +115,7 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
 		return breadcrumbItems;
 	};
 
-	const loadFDSActions = async () => {
+	const loadFDSActions = async ({activeTab}: {activeTab: number}) => {
 		setLoading(true);
 
 		const relationShip =
@@ -214,7 +214,7 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
 							.then(() => {
 								openDefaultSuccessToast();
 
-								loadFDSActions();
+								loadFDSActions({activeTab});
 							})
 							.catch(() => openDefaultFailureToast());
 					},
@@ -273,7 +273,7 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
 	};
 
 	useEffect(() => {
-		loadFDSActions();
+		loadFDSActions({activeTab: 0});
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
@@ -300,7 +300,7 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
 							onActiveChange={(tab: number) => {
 								setActiveTab(tab);
 
-								loadFDSActions();
+								loadFDSActions({activeTab: tab});
 							}}
 						>
 							<ClayTabs.Item>
@@ -361,10 +361,23 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
 					<ActionForm
 						activeTab={activeTab}
 						fdsView={fdsView}
-						loadFDSActions={loadFDSActions}
 						namespace={namespace}
-						sections={SECTIONS}
-						setActiveSection={setActiveSection}
+						onCancel={() => {
+							setActiveSection(
+								activeTab === 0
+									? SECTIONS.ITEM_ACTIONS
+									: SECTIONS.CREATION_ACTIONS
+							);
+						}}
+						onSave={() => {
+							setActiveSection(
+								activeTab === 0
+									? SECTIONS.ITEM_ACTIONS
+									: SECTIONS.CREATION_ACTIONS
+							);
+
+							loadFDSActions({activeTab});
+						}}
 						spritemap={spritemap}
 					/>
 				)}
@@ -376,10 +389,23 @@ const Actions = ({fdsView, namespace, spritemap}: IFDSViewSectionProps) => {
 						editing
 						fdsView={fdsView}
 						initialValues={initialActionFormValues}
-						loadFDSActions={loadFDSActions}
 						namespace={namespace}
-						sections={SECTIONS}
-						setActiveSection={setActiveSection}
+						onCancel={() => {
+							setActiveSection(
+								activeTab === 0
+									? SECTIONS.ITEM_ACTIONS
+									: SECTIONS.CREATION_ACTIONS
+							);
+						}}
+						onSave={() => {
+							setActiveSection(
+								activeTab === 0
+									? SECTIONS.ITEM_ACTIONS
+									: SECTIONS.CREATION_ACTIONS
+							);
+
+							loadFDSActions({activeTab});
+						}}
 						spritemap={spritemap}
 					/>
 				)}

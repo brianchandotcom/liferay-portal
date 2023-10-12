@@ -1504,10 +1504,15 @@ public class PortletTracker
 			long companyId, String name) {
 
 			Map<String, List<ResourcePermission>> resourcePermissions =
-				_resourcePermissionMaps.computeIfAbsent(
-					companyId,
-					_resourcePermissionLocalService::
-						getIndividualPortletResourcePermissions);
+				_resourcePermissionMaps.get(companyId);
+
+			if (resourcePermissions == null) {
+				resourcePermissions =
+					_resourcePermissionLocalService.
+						getIndividualPortletResourcePermissions(companyId);
+
+				_resourcePermissionMaps.put(companyId, resourcePermissions);
+			}
 
 			return resourcePermissions.get(name);
 		}

@@ -521,9 +521,6 @@ public class SXPBlueprintSuggestionsContributorTest {
 			_sxpBlueprintSuggestionsContributor, "_assetEntryLocalService",
 			_assetEntryLocalService);
 		ReflectionTestUtil.setFieldValue(
-			_sxpBlueprintSuggestionsContributor, "_layoutLocalService",
-			_layoutLocalService);
-		ReflectionTestUtil.setFieldValue(
 			_sxpBlueprintSuggestionsContributor, "_searcher", _searcher);
 		ReflectionTestUtil.setFieldValue(
 			_sxpBlueprintSuggestionsContributor, "_searchRequestBuilderFactory",

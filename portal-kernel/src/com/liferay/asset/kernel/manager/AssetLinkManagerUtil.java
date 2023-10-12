@@ -6,7 +6,7 @@
 package com.liferay.asset.kernel.manager;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * @author Eudaldo Alonso
@@ -14,23 +14,27 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 public class AssetLinkManagerUtil {
 
 	public static long[] getDirectLinksIds(long entryId) {
-		return _assetLinkManager.getDirectLinksIds(entryId);
+		AssetLinkManager assetLinkManager = _assetLinkManagerSnapshot.get();
+
+		return assetLinkManager.getDirectLinksIds(entryId);
 	}
 
 	public static long[] getRelatedDirectLinksIds(long entryId) {
-		return _assetLinkManager.getRelatedDirectLinksIds(entryId);
+		AssetLinkManager assetLinkManager = _assetLinkManagerSnapshot.get();
+
+		return assetLinkManager.getRelatedDirectLinksIds(entryId);
 	}
 
 	public static void updateLinks(
 			long[] assetLinkEntryIds, long entryId, long userId)
 		throws PortalException {
 
-		_assetLinkManager.updateLinks(assetLinkEntryIds, entryId, userId);
+		AssetLinkManager assetLinkManager = _assetLinkManagerSnapshot.get();
+
+		assetLinkManager.updateLinks(assetLinkEntryIds, entryId, userId);
 	}
 
-	private static volatile AssetLinkManager _assetLinkManager =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			AssetLinkManager.class, AssetLinkManagerUtil.class,
-			"_assetLinkManager", false);
+	private static final Snapshot<AssetLinkManager> _assetLinkManagerSnapshot =
+		new Snapshot<>(AssetLinkManagerUtil.class, AssetLinkManager.class);
 
 }

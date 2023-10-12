@@ -56,7 +56,10 @@ public class FragmentEntryLinkCTDisplayRender
 
 	@Override
 	public boolean isHideable(FragmentEntryLink fragmentEntryLink) {
-		if (fragmentEntryLink.getOriginalFragmentEntryLinkId() == 0) {
+		Layout layout = _layoutLocalService.fetchLayout(
+			fragmentEntryLink.getClassPK());
+
+		if (!layout.isDraft() && !layout.isDraftLayout()) {
 			return false;
 		}
 

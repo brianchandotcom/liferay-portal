@@ -5,13 +5,11 @@
 
 package org.eclipse.equinox.http.servlet.internal;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
 import javax.servlet.ServletContext;
 
-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
 import org.eclipse.equinox.http.servlet.internal.context.DispatchTargets;
 
 import org.osgi.framework.ServiceReference;
@@ -22,8 +20,6 @@ import org.osgi.framework.ServiceReference;
 public interface HttpServletEndpointController {
 
 	public void destroy();
-
-	public Collection<ContextController> getContextControllers();
 
 	public DispatchTargets getDispatchTargets(String pathString);
 

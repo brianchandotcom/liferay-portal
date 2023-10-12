@@ -660,6 +660,15 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testReferenceCardinalityValue() throws Exception {
+		test(
+			"ReferenceCardinalityValue.testjava",
+			"Please replace Optional references with Snapshot. For more " +
+				"details, see LPS-184625.",
+			24);
+	}
+
+	@Test
 	public void testReferenceMethods() throws Exception {
 		test(
 			"ReferenceMethods.testjava",

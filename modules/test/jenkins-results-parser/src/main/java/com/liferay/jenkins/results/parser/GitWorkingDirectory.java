@@ -2647,13 +2647,18 @@ public class GitWorkingDirectory {
 			String upstreamGitBranchSHA = upstreamRemoteGitBranch.getSHA();
 
 			if (!localSHAExists(upstreamGitBranchSHA)) {
-				fetch(upstreamRemoteGitBranch);
+				commands.add(
+					JenkinsResultsParserUtil.combine(
+						"git fetch -f upstream ",
+						upstreamRemoteGitBranch.getName(), ":",
+						tempBranchName));
 			}
-
-			commands.add(
-				JenkinsResultsParserUtil.combine(
-					"git branch -f ", tempBranchName, " ",
-					upstreamGitBranchSHA));
+			else {
+				commands.add(
+					JenkinsResultsParserUtil.combine(
+						"git branch -f ", tempBranchName, " ",
+						upstreamGitBranchSHA));
+			}
 
 			commands.add(
 				JenkinsResultsParserUtil.combine(

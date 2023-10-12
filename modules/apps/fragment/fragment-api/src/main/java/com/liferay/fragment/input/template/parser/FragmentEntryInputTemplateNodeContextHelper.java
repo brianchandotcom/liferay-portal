@@ -738,6 +738,10 @@ public class FragmentEntryInputTemplateNodeContextHelper {
 		}
 
 		if (infoField.getInfoFieldType() == SelectInfoFieldType.INSTANCE) {
+			if (!(infoFieldValue.getValue() instanceof List)) {
+				return defaultValue;
+			}
+
 			List<KeyLocalizedLabelPair> values =
 				(List<KeyLocalizedLabelPair>)infoFieldValue.getValue();
 

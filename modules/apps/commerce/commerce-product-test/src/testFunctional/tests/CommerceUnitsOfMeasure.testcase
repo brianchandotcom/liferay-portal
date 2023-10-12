@@ -538,12 +538,16 @@ definition {
 				productStockQuantity = 0);
 		}
 
-		task ("And adds to the cart the SKU/Second UOM combination with quantity 6") {
+		task ("And adds try to the cart the SKU/Second UOM combination with quantity 6") {
 			Type(
 				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_QUANTITY_SELECTOR_INPUT_FIELD",
 				value1 = 6);
 
 			Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+
+			task ("But an error is present") {
+				Alert.viewErrorMessage(errorMessage = "Danger:The specified quantity is unavailable.");
+			}
 		}
 
 		task ("And selects the first UOM again and adds it to the cart with quantity 3") {
@@ -561,14 +565,7 @@ definition {
 				cartItemQuantity = 6,
 				cartItemSku = "MIN55861",
 				cartItemUOMKey = "UOM1KEY",
-				cartSummaryTotal = "350.00");
-
-			FrontStore.viewMiniCartItem(
-				cartItemName = "U-Joint",
-				cartItemPromoPriceValue = "15.00",
-				cartItemQuantity = 6,
-				cartItemSku = "MIN55861",
-				cartItemUOMKey = "UOM2KEY");
+				cartSummaryTotal = "200.00");
 		}
 	}
 

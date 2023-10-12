@@ -5,7 +5,7 @@
 
 package com.liferay.mail.kernel.template;
 
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * @author Adolfo Pérez
@@ -15,18 +15,23 @@ public class MailTemplateFactoryUtil {
 	public static MailTemplate createMailTemplate(
 		String template, boolean escapeHTML) {
 
-		return _mailTemplateFactory.createMailTemplate(template, escapeHTML);
+		MailTemplateFactory mailTemplateFactory =
+			_mailTemplateFactorySnapshot.get();
+
+		return mailTemplateFactory.createMailTemplate(template, escapeHTML);
 	}
 
 	public static MailTemplateContextBuilder
 		createMailTemplateContextBuilder() {
 
-		return _mailTemplateFactory.createMailTemplateContextBuilder();
+		MailTemplateFactory mailTemplateFactory =
+			_mailTemplateFactorySnapshot.get();
+
+		return mailTemplateFactory.createMailTemplateContextBuilder();
 	}
 
-	private static volatile MailTemplateFactory _mailTemplateFactory =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			MailTemplateFactory.class, MailTemplateFactoryUtil.class,
-			"_mailTemplateFactory", false);
+	private static final Snapshot<MailTemplateFactory>
+		_mailTemplateFactorySnapshot = new Snapshot<>(
+			MailTemplateFactoryUtil.class, MailTemplateFactory.class);
 
 }

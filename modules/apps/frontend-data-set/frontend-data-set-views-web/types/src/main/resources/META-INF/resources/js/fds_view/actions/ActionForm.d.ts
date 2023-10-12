@@ -6,16 +6,15 @@
 /// <reference types="react" />
 
 import {FDSViewType} from '../../FDSViews';
-import {IFDSAction, SECTIONS} from '../Actions';
+import {IFDSAction} from '../Actions';
 interface IFDSActionFormProps {
 	activeTab: number;
 	editing?: boolean;
 	fdsView: FDSViewType;
 	initialValues?: IFDSAction;
-	loadFDSActions: () => void;
 	namespace: string;
-	sections: typeof SECTIONS;
-	setActiveSection: (arg: string) => void;
+	onCancel: () => void;
+	onSave: () => void;
 	spritemap: string;
 }
 declare const ActionForm: ({
@@ -23,10 +22,9 @@ declare const ActionForm: ({
 	editing,
 	fdsView,
 	initialValues,
-	loadFDSActions,
 	namespace,
-	sections,
-	setActiveSection,
+	onCancel,
+	onSave,
 	spritemap,
 }: IFDSActionFormProps) => JSX.Element;
 export default ActionForm;

@@ -9,6 +9,8 @@ import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.rest.dto.v1_0.CTEntry;
 import com.liferay.change.tracking.rest.dto.v1_0.Status;
 import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -54,12 +56,20 @@ public class CTEntryDTOConverter
 		return _toCTEntry(dtoConverterContext, ctEntry);
 	}
 
-	private Long _getSiteId(BaseModel<?> model) {
+	private Group _getGroup(long ctCollectionId, long groupId) {
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					ctCollectionId)) {
+
+			return _groupLocalService.fetchGroup(groupId);
+		}
+	}
+
+	private Long _getSiteId(long ctCollectionId, BaseModel<?> model) {
 		if (model instanceof GroupedModel) {
 			GroupedModel groupedModel = (GroupedModel)model;
 
-			Group group = _groupLocalService.fetchGroup(
-				groupedModel.getGroupId());
+			Group group = _getGroup(ctCollectionId, groupedModel.getGroupId());
 
 			if (group != null) {
 				return group.getGroupId();
@@ -69,12 +79,13 @@ public class CTEntryDTOConverter
 		return null;
 	}
 
-	private String _getSiteName(Locale locale, BaseModel<?> model) {
+	private String _getSiteName(
+		Locale locale, long ctCollectionId, BaseModel<?> model) {
+
 		if (model instanceof GroupedModel) {
 			GroupedModel groupedModel = (GroupedModel)model;
 
-			Group group = _groupLocalService.fetchGroup(
-				groupedModel.getGroupId());
+			Group group = _getGroup(ctCollectionId, groupedModel.getGroupId());
 
 			if (group != null) {
 				return group.getName(locale);
@@ -117,8 +128,10 @@ public class CTEntryDTOConverter
 				modelClassPK = ctEntry.getModelClassPK();
 				ownerId = ctEntry.getUserId();
 				ownerName = ctEntry.getUserName();
-				siteId = _getSiteId(model);
-				siteName = _getSiteName(dtoConverterContext.getLocale(), model);
+				siteId = _getSiteId(ctEntry.getCtCollectionId(), model);
+				siteName = _getSiteName(
+					dtoConverterContext.getLocale(),
+					ctEntry.getCtCollectionId(), model);
 				status = _toStatus(dtoConverterContext.getLocale(), model);
 				title = _ctDisplayRendererRegistry.getTitle(
 					ctEntry.getCtCollectionId(), ctEntry,

@@ -278,7 +278,7 @@ public class HttpServletRequestWrapperImpl extends HttpServletRequestWrapper {
 			path = path.substring(contextController.getFullContextPath().length());
 		}
 
-		DispatchTargets requestedDispatchTargets = contextController.getDispatchTargets(path, null);
+		DispatchTargets requestedDispatchTargets = contextController.getDispatchTargets(path);
 
 		if (requestedDispatchTargets == null) {
 			return null;
@@ -390,3 +390,4 @@ public class HttpServletRequestWrapperImpl extends HttpServletRequestWrapper {
 	}
 
 }
+/* @generated */

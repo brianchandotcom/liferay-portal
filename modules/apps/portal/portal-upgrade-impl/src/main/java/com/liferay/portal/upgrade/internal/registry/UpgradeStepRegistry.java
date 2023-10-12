@@ -42,6 +42,8 @@ public class UpgradeStepRegistry implements UpgradeStepRegistrator.Registry {
 	}
 
 	public List<UpgradeStep> getReleaseCreationUpgradeSteps() {
+		getUpgradeInfos();
+
 		return _releaseCreationUpgradeSteps;
 	}
 

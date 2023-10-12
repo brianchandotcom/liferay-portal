@@ -40,6 +40,11 @@ public class XMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testIncorrectXMLWhitespace() throws Exception {
+		test("IncorrectXMLWhitespace.testxml");
+	}
+
+	@Test
 	public void testSortTagAttributes() throws Exception {
 		test("SortTagAttributes.testjelly");
 	}

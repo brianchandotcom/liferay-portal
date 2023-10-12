@@ -19,7 +19,7 @@ import RequiredMark from '../../components/RequiredMark';
 import ValidationFeedback from '../../components/ValidationFeedback';
 import openDefaultFailureToast from '../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../utils/openDefaultSuccessToast';
-import {IFDSAction, SECTIONS} from '../Actions';
+import {IFDSAction} from '../Actions';
 
 const ACTION_TYPE = {
 	ASYNC: 'async',
@@ -91,10 +91,9 @@ interface IFDSActionFormProps {
 	editing?: boolean;
 	fdsView: FDSViewType;
 	initialValues?: IFDSAction;
-	loadFDSActions: () => void;
 	namespace: string;
-	sections: typeof SECTIONS;
-	setActiveSection: (arg: string) => void;
+	onCancel: () => void;
+	onSave: () => void;
 	spritemap: string;
 }
 
@@ -103,10 +102,9 @@ const ActionForm = ({
 	editing = false,
 	fdsView,
 	initialValues,
-	loadFDSActions,
 	namespace,
-	sections,
-	setActiveSection,
+	onCancel,
+	onSave,
 	spritemap,
 }: IFDSActionFormProps) => {
 	const [availableIconSymbols, setAvailableIconSymbols] = useState<
@@ -202,11 +200,7 @@ const ActionForm = ({
 
 		openDefaultSuccessToast();
 
-		const activeSection =
-			activeTab === 0 ? sections.ITEM_ACTIONS : sections.CREATION_ACTIONS;
-		setActiveSection(activeSection);
-
-		loadFDSActions();
+		onSave();
 	};
 
 	const validateForm = () => {
@@ -599,16 +593,7 @@ const ActionForm = ({
 					{Liferay.Language.get('save')}
 				</ClayButton>
 
-				<ClayButton
-					displayType="secondary"
-					onClick={() => {
-						const activeSection =
-							activeTab === 0
-								? sections.ITEM_ACTIONS
-								: sections.CREATION_ACTIONS;
-						setActiveSection(activeSection);
-					}}
-				>
+				<ClayButton displayType="secondary" onClick={onCancel}>
 					{Liferay.Language.get('cancel')}
 				</ClayButton>
 			</ClayButton.Group>

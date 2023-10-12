@@ -245,6 +245,7 @@ gradleTest {
 		debug true
 		debugTests true
 	}
+
 	if (project.hasProperty("testShowOutput")) {
 		testLogging.showStandardStreams = true
 	}

@@ -5,6 +5,8 @@
 
 package com.liferay.portal.proxy.internal;
 
+import com.liferay.petra.concurrent.ConcurrentReferenceKeyHashMap;
+import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -13,6 +15,9 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.FieldVisitor;
@@ -46,36 +51,40 @@ public class ASMDelegateProxyFactory implements DelegateProxyFactory {
 			pkg.getName(), StringPool.PERIOD, interfaceClass.getSimpleName(),
 			"ASMWrapper");
 
-		Class<?> asmWrapperClass = null;
+		Map<String, Class<?>> classReferences = _classReferencesMap.get(
+			classLoader);
 
-		synchronized (classLoader) {
-			try {
-				try {
-					asmWrapperClass = classLoader.loadClass(
-						asmWrapperClassName);
-				}
-				catch (ClassNotFoundException classNotFoundException) {
-					byte[] classData = _generateASMWrapperClassData(
-						StringUtil.replace(asmWrapperClassName, '.', '/'),
-						interfaceClass, delegateObject);
+		if (classReferences == null) {
+			classReferences = new ConcurrentHashMap<>();
 
-					asmWrapperClass = (Class<?>)_defineClassMethod.invoke(
-						classLoader, asmWrapperClassName, classData, 0,
-						classData.length);
-				}
+			Map<String, Class<?>> previousClassReferences =
+				_classReferencesMap.putIfAbsent(classLoader, classReferences);
 
-				Constructor<?> constructor =
-					asmWrapperClass.getDeclaredConstructor(
-						delegateObject.getClass(), interfaceClass);
-
-				constructor.setAccessible(true);
-
-				return (T)constructor.newInstance(
-					delegateObject, defaultObject);
+			if (previousClassReferences != null) {
+				classReferences = previousClassReferences;
 			}
-			catch (Throwable throwable) {
-				throw new RuntimeException(throwable);
-			}
+		}
+
+		Class<?> asmWrapperClass = classReferences.get(asmWrapperClassName);
+
+		if (asmWrapperClass == null) {
+			asmWrapperClass = _loadClass(
+				classLoader, asmWrapperClassName, interfaceClass,
+				delegateObject);
+
+			classReferences.put(asmWrapperClassName, asmWrapperClass);
+		}
+
+		try {
+			Constructor<?> constructor = asmWrapperClass.getDeclaredConstructor(
+				delegateObject.getClass(), interfaceClass);
+
+			constructor.setAccessible(true);
+
+			return (T)constructor.newInstance(delegateObject, defaultObject);
+		}
+		catch (Throwable throwable) {
+			throw new RuntimeException(throwable);
 		}
 	}
 
@@ -245,6 +254,34 @@ public class ASMDelegateProxyFactory implements DelegateProxyFactory {
 		return StringUtil.replace(className, '.', '/');
 	}
 
+	private Class<?> _loadClass(
+		ClassLoader classLoader, String asmWrapperClassName,
+		Class<?> interfaceClass, Object delegateObject) {
+
+		synchronized (classLoader) {
+			try {
+				return classLoader.loadClass(asmWrapperClassName);
+			}
+			catch (ClassNotFoundException classNotFoundException) {
+				try {
+					byte[] classData = _generateASMWrapperClassData(
+						StringUtil.replace(asmWrapperClassName, '.', '/'),
+						interfaceClass, delegateObject);
+
+					return (Class<?>)_defineClassMethod.invoke(
+						classLoader, asmWrapperClassName, classData, 0,
+						classData.length);
+				}
+				catch (Throwable throwable) {
+					throw new RuntimeException(throwable);
+				}
+			}
+		}
+	}
+
+	private static final Map<ClassLoader, Map<String, Class<?>>>
+		_classReferencesMap = new ConcurrentReferenceKeyHashMap<>(
+			FinalizeManager.WEAK_REFERENCE_FACTORY);
 	private static final Method _defineClassMethod;
 	private static final Method _equalsMethod;
 	private static final Method _hashCodeMethod;

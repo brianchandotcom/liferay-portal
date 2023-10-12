@@ -12,14 +12,13 @@ import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.util.PropsValues;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Akos Thurzo
  */
-@Component(service = SchedulerJobConfiguration.class)
+@Component(enabled = false, service = SchedulerJobConfiguration.class)
 public class CheckSystemEventSchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
@@ -30,18 +29,11 @@ public class CheckSystemEventSchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return _triggerConfiguration;
-	}
-
-	@Activate
-	protected void activate() {
-		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+		return TriggerConfiguration.createTriggerConfiguration(
 			PropsValues.STAGING_SYSTEM_EVENT_CHECK_INTERVAL, TimeUnit.HOUR);
 	}
 
 	@Reference
 	private SystemEventLocalService _systemEventLocalService;
-
-	private TriggerConfiguration _triggerConfiguration;
 
 }

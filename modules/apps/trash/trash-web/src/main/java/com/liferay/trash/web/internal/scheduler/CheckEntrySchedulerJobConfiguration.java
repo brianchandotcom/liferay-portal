@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.scheduler.TriggerConfiguration;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.trash.service.TrashEntryLocalService;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -25,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
  *
  * @author Eudaldo Alonso
  */
-@Component(service = SchedulerJobConfiguration.class)
+@Component(enabled = false, service = SchedulerJobConfiguration.class)
 public class CheckEntrySchedulerJobConfiguration
 	implements SchedulerJobConfiguration {
 
@@ -36,18 +35,11 @@ public class CheckEntrySchedulerJobConfiguration
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
-		return _triggerConfiguration;
-	}
-
-	@Activate
-	protected void activate() {
-		_triggerConfiguration = TriggerConfiguration.createTriggerConfiguration(
+		return TriggerConfiguration.createTriggerConfiguration(
 			PropsValues.TRASH_ENTRY_CHECK_INTERVAL, TimeUnit.MINUTE);
 	}
 
 	@Reference
 	private TrashEntryLocalService _trashEntryLocalService;
-
-	private TriggerConfiguration _triggerConfiguration;
 
 }

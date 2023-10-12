@@ -35,11 +35,6 @@
 	<bean class="com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil">
 		<property name="currentConnection" ref="com.liferay.portal.dao.jdbc.CurrentConnectionImpl" />
 	</bean>
-	<bean class="com.liferay.portal.kernel.dao.orm.PortalCustomSQLUtil" id="com.liferay.portal.kernel.dao.orm.PortalCustomSQLUtil">
-		<property name="portalCustomSQL">
-			<bean class="com.liferay.portal.dao.orm.common.PortalCustomSQLImpl" />
-		</property>
-	</bean>
 	<bean class="com.liferay.portal.kernel.image.ImageToolUtil" id="com.liferay.portal.kernel.image.ImageToolUtil">
 		<property name="imageTool" ref="com.liferay.portal.image.ImageToolImpl" />
 	</bean>

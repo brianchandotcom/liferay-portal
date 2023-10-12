@@ -3021,7 +3021,7 @@ tenantId=&quot;${ms.exchange.tenant.id}&quot;</echo>
 				srcFile="${patching.tool.latest.txt}"
 			>
 				<filterchain>
-					<striplinebreaks/>
+					<striplinebreaks />
 					<trim />
 				</filterchain>
 			</loadfile>

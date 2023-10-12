@@ -33,7 +33,7 @@
 				</s:complexType>
 			</s:element>
 			<s:element name="Status">
-				<s:complexType/>
+				<s:complexType />
 			</s:element>
 			<s:element name="StatusResponse">
 				<s:complexType>
@@ -58,7 +58,7 @@
 							<s:complexType>
 								<s:sequence>
 									<s:element ref="s:schema" />
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>

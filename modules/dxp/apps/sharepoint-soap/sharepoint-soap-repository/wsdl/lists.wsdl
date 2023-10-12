@@ -18,7 +18,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="GetListResult">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -39,7 +39,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="GetListAndViewResult">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -54,7 +54,7 @@
 				</s:complexType>
 			</s:element>
 			<s:element name="DeleteListResponse">
-				<s:complexType/>
+				<s:complexType />
 			</s:element>
 			<s:element name="AddList">
 				<s:complexType>
@@ -71,7 +71,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="AddListResult">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -94,7 +94,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="AddListFromFeatureResult">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -108,28 +108,28 @@
 						<s:element maxOccurs="1" minOccurs="0" name="listProperties">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
 						<s:element maxOccurs="1" minOccurs="0" name="newFields">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
 						<s:element maxOccurs="1" minOccurs="0" name="updateFields">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
 						<s:element maxOccurs="1" minOccurs="0" name="deleteFields">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -143,7 +143,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="UpdateListResult">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -151,7 +151,7 @@
 				</s:complexType>
 			</s:element>
 			<s:element name="GetListCollection">
-				<s:complexType/>
+				<s:complexType />
 			</s:element>
 			<s:element name="GetListCollectionResponse">
 				<s:complexType>
@@ -159,7 +159,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="GetListCollectionResult">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -174,14 +174,14 @@
 						<s:element maxOccurs="1" minOccurs="0" name="query">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
 						<s:element maxOccurs="1" minOccurs="0" name="viewFields">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -189,7 +189,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="queryOptions">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -203,7 +203,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="GetListItemsResult">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -217,7 +217,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="viewFields">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -225,7 +225,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="contains">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -238,7 +238,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="GetListItemChangesResult">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -253,14 +253,14 @@
 						<s:element maxOccurs="1" minOccurs="0" name="query">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
 						<s:element maxOccurs="1" minOccurs="0" name="viewFields">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -268,7 +268,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="queryOptions">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -276,14 +276,14 @@
 						<s:element maxOccurs="1" minOccurs="0" name="knowledge">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
 						<s:element maxOccurs="1" minOccurs="0" name="contains">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -296,7 +296,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="GetListItemChangesWithKnowledgeResult">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -311,14 +311,14 @@
 						<s:element maxOccurs="1" minOccurs="0" name="query">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
 						<s:element maxOccurs="1" minOccurs="0" name="viewFields">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -326,7 +326,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="queryOptions">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -334,7 +334,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="contains">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -347,7 +347,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="GetListItemChangesSinceTokenResult">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -361,7 +361,7 @@
 						<s:element name="updates">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -374,7 +374,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="UpdateListItemsResult">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -388,7 +388,7 @@
 						<s:element name="updates">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -396,7 +396,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="knowledge">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -409,7 +409,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="UpdateListItemsWithKnowledgeResult">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -430,7 +430,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="AddDiscussionBoardItemResult">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -452,7 +452,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="AddWikiPageResult">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -474,7 +474,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="GetVersionCollectionResult">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -512,7 +512,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="GetAttachmentCollectionResult">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -529,7 +529,7 @@
 				</s:complexType>
 			</s:element>
 			<s:element name="DeleteAttachmentResponse">
-				<s:complexType/>
+				<s:complexType />
 			</s:element>
 			<s:element name="CheckOutFile">
 				<s:complexType>
@@ -591,7 +591,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="GetListContentTypesResult">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -614,7 +614,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="GetListContentTypesAndPropertiesResult">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -635,7 +635,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="GetListContentTypeResult">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -651,14 +651,14 @@
 						<s:element maxOccurs="1" minOccurs="0" name="fields">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
 						<s:element maxOccurs="1" minOccurs="0" name="contentTypeProperties">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -681,28 +681,28 @@
 						<s:element maxOccurs="1" minOccurs="0" name="contentTypeProperties">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
 						<s:element maxOccurs="1" minOccurs="0" name="newFields">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
 						<s:element maxOccurs="1" minOccurs="0" name="updateFields">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
 						<s:element maxOccurs="1" minOccurs="0" name="deleteFields">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -716,7 +716,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="UpdateContentTypeResult">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -737,7 +737,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="DeleteContentTypeResult">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -752,7 +752,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="newDocument">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -765,7 +765,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="UpdateContentTypeXmlDocumentResult">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -779,7 +779,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="newDocument">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -792,7 +792,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="UpdateContentTypesXmlDocumentResult">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -814,7 +814,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="DeleteContentTypeXmlDocumentResult">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -836,7 +836,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="ApplyContentTypeToListResult">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>

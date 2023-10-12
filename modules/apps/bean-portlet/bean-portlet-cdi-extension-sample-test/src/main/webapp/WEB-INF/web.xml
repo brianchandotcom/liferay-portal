@@ -19,6 +19,6 @@
 			<web-resource-name>Facelet XHTML</web-resource-name>
 			<url-pattern>*.xhtml</url-pattern>
 		</web-resource-collection>
-		<auth-constraint/>
+		<auth-constraint />
 	</security-constraint>
 </web-app>

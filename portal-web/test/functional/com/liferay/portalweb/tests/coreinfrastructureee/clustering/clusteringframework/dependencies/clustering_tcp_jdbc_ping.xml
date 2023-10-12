@@ -26,7 +26,7 @@
 		max_interval="30000"
 		min_interval="10000"
 	/>
-	<FD_SOCK/>
+	<FD_SOCK />
 	<FD_ALL interval="3000" timeout="9000" />
 	<VERIFY_SUSPECT timeout="1500" />
 	<BARRIER />
@@ -46,5 +46,5 @@
 	/>
 	<FRAG2 frag_size="60K" />
 	<!--RSVP resend_interval="2000" timeout="10000"/-->
-	<pbcast.STATE_TRANSFER/>
+	<pbcast.STATE_TRANSFER />
 </config>

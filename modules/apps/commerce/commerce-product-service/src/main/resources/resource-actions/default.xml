@@ -317,8 +317,8 @@
 				<action-key>MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES</action-key>
 				<action-key>VIEW_COMMERCE_PRODUCT_TAX_CATEGORIES</action-key>
 			</supports>
-			<site-member-defaults/>
-			<guest-defaults/>
+			<site-member-defaults />
+			<guest-defaults />
 			<guest-unsupported>
 				<action-key>MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES</action-key>
 				<action-key>VIEW_COMMERCE_PRODUCT_TAX_CATEGORIES</action-key>

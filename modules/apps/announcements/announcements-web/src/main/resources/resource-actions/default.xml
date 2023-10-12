@@ -29,8 +29,8 @@
 				<action-key>CONFIGURATION</action-key>
 				<action-key>VIEW</action-key>
 			</supports>
-			<site-member-defaults/>
-			<guest-defaults/>
+			<site-member-defaults />
+			<guest-defaults />
 			<guest-unsupported>
 				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
 				<action-key>CONFIGURATION</action-key>

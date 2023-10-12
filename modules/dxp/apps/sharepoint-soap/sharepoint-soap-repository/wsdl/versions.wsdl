@@ -17,7 +17,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="GetVersionsResult">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -38,7 +38,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="RestoreVersionResult">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -59,7 +59,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="DeleteVersionResult">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>
@@ -79,7 +79,7 @@
 						<s:element maxOccurs="1" minOccurs="0" name="DeleteAllVersionsResult">
 							<s:complexType mixed="true">
 								<s:sequence>
-									<s:any/>
+									<s:any />
 								</s:sequence>
 							</s:complexType>
 						</s:element>

@@ -13,8 +13,8 @@
 			<supports>
 				<action-key>ADD_COMMERCE_PRICING_CLASS</action-key>
 			</supports>
-			<site-member-defaults/>
-			<guest-defaults/>
+			<site-member-defaults />
+			<guest-defaults />
 			<guest-unsupported>
 				<action-key>ADD_COMMERCE_PRICING_CLASS</action-key>
 			</guest-unsupported>
@@ -34,8 +34,8 @@
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
 			</supports>
-			<site-member-defaults/>
-			<guest-defaults/>
+			<site-member-defaults />
+			<guest-defaults />
 			<guest-unsupported>
 				<action-key>DELETE</action-key>
 				<action-key>PERMISSIONS</action-key>

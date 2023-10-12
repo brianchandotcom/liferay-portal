@@ -5,7 +5,7 @@
 		<title>NYT &gt; Technology</title>
 		<link>https://www.nytimes.com/section/technology?partner=rss&amp;emc=rss</link>
 		<atom:link href="http://www.nytimes.com/services/xml/rss/nyt/Technology.xml" rel="self" type="application/rss+xml" />
-		<description/>
+		<description />
 		<language>en-us</language>
 		<copyright>Copyright 2017 The New York Times Company</copyright>
 		<lastBuildDate>Wed, 21 Jun 2017 15:42:07 GMT </lastBuildDate>
@@ -98,7 +98,7 @@
 			<guid isPermaLink="true">https://www.nytimes.com/2017/06/21/arts/when-fan-fiction-and-reality-collide.html</guid>
 			<atom:link href="https://www.nytimes.com/2017/06/21/arts/when-fan-fiction-and-reality-collide.html?partner=rss&amp;emc=rss" rel="standout" />
 			<media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/21/arts/hess-fanfiction/hess-fanfiction-moth.jpg" width="151" />
-			<media:description/>
+			<media:description />
 			<media:credit>Tracy Ma</media:credit>
 			<description>The topsy-turvy power dynamics of internet culture are on display in &#x201C;FANtasies,&#x201D; a new fan-fiction-inspired web series.</description>
 			<dc:creator>AMANDA HESS</dc:creator>
@@ -121,7 +121,7 @@
 			<guid isPermaLink="true">https://www.nytimes.com/2017/06/21/technology/how-battling-brands-online-has-gained-urgency-and-impact.html</guid>
 			<atom:link href="https://www.nytimes.com/2017/06/21/technology/how-battling-brands-online-has-gained-urgency-and-impact.html?partner=rss&amp;emc=rss" rel="standout" />
 			<media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/22/business/22STATE/22STATE-moth.jpg" width="151" />
-			<media:description/>
+			<media:description />
 			<media:credit>Doug Chayka</media:credit>
 			<description>In a nation where politics have grown pitched, such campaigns suddenly feel like the most effective political action many of us can take.</description>
 			<dc:creator>FARHAD MANJOO</dc:creator>
@@ -218,7 +218,7 @@
 			<guid isPermaLink="true">https://www.nytimes.com/2017/06/19/health/drones-by-air.html</guid>
 			<atom:link href="https://www.nytimes.com/2017/06/19/health/drones-by-air.html?partner=rss&amp;emc=rss" rel="standout" />
 			<media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/20/science/20OBSDRONE/20OBSDRONE-moth.jpg" width="151" />
-			<media:description/>
+			<media:description />
 			<media:credit>Bas Czerwinski/Agence France-Presse &#x2014; Getty Images</media:credit>
 			<description>Researchers find that drones carrying heart defibrillators can reach cardiac arrest victims quicker than ambulances.</description>
 			<dc:creator>THE ASSOCIATED PRESS</dc:creator>
@@ -279,7 +279,7 @@
 			<guid isPermaLink="true">https://www.nytimes.com/2017/06/19/business/dealbook/sky-21st-century-fox-murdoch.html</guid>
 			<atom:link href="https://www.nytimes.com/2017/06/19/business/dealbook/sky-21st-century-fox-murdoch.html?partner=rss&amp;emc=rss" rel="standout" />
 			<media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/20/world/20Db-sky-sub/20Db-sky-sub-moth.jpg" width="151" />
-			<media:description/>
+			<media:description />
 			<media:credit>Daniel Leal-Olivas/Agence France-Presse &#x2014; Getty Images</media:credit>
 			<description>Regulators handed recommendations to the country&#x2019;s culture minister on whether the deal should go through.</description>
 			<dc:creator>MARK SCOTT and EMILY STEEL</dc:creator>
@@ -440,7 +440,7 @@
 			<guid isPermaLink="true">https://www.nytimes.com/2017/06/17/technology/whole-foods-amazon-jeff-bezos.html</guid>
 			<atom:link href="https://www.nytimes.com/2017/06/17/technology/whole-foods-amazon-jeff-bezos.html?partner=rss&amp;emc=rss" rel="standout" />
 			<media:content height="151" medium="image" url="https://static01.nyt.com/images/2017/06/19/business/statejump/17GroceryWarsArt-moth.jpg" width="151" />
-			<media:description/>
+			<media:description />
 			<media:credit>Minh Uong/The New York Times</media:credit>
 			<description>By purchasing the upscale chain, Jeff Bezos, Amazon&#x2019;s chief, has a chance to tinker with how people buy groceries &#x2014; and map the future of the physical store.</description>
 			<dc:creator>FARHAD MANJOO</dc:creator>

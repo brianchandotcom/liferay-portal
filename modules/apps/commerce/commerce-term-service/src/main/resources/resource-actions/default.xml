@@ -14,8 +14,8 @@
 				<action-key>ADD_COMMERCE_TERM_ENTRY</action-key>
 				<action-key>VIEW_COMMERCE_TERM_ENTRY</action-key>
 			</supports>
-			<site-member-defaults/>
-			<guest-defaults/>
+			<site-member-defaults />
+			<guest-defaults />
 			<guest-unsupported>
 				<action-key>ADD_COMMERCE_TERM_ENTRY</action-key>
 				<action-key>VIEW_COMMERCE_TERM_ENTRY</action-key>
@@ -35,8 +35,8 @@
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
 			</supports>
-			<site-member-defaults/>
-			<guest-defaults/>
+			<site-member-defaults />
+			<guest-defaults />
 			<guest-unsupported>
 				<action-key>DELETE</action-key>
 				<action-key>PERMISSIONS</action-key>

@@ -10,7 +10,7 @@
 		<lockType>${solr.lock.type:native}</lockType>
 		<infoStream>true</infoStream>
 	</indexConfig>
-	<jmx/>
+	<jmx />
 	<updateHandler class="solr.DirectUpdateHandler2">
 		<autoCommit>
 			<maxTime>${solr.autoCommit.maxTime:15000}</maxTime>

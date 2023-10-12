@@ -18,7 +18,7 @@
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
 				<recipients>
-					<user/>
+					<user />
 				</recipients>
 				<execution-type>onExit</execution-type>
 			</notification>

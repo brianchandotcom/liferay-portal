@@ -28,7 +28,7 @@
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
 				<recipients>
-					<user/>
+					<user />
 				</recipients>
 				<execution-type>onEntry</execution-type>
 			</notification>
@@ -115,13 +115,13 @@
 				<template-language>freemarker</template-language>
 				<notification-type>user-notification</notification-type>
 				<recipients>
-					<user/>
+					<user />
 				</recipients>
 				<execution-type>onAssignment</execution-type>
 			</notification>
 		</actions>
 		<assignments>
-			<user/>
+			<user />
 		</assignments>
 		<transitions>
 			<transition>
@@ -152,7 +152,7 @@
 				<template-language>freemarker</template-language>
 				<notification-type>user-notification</notification-type>
 				<recipients>
-					<user/>
+					<user />
 				</recipients>
 				<execution-type>onAssignment</execution-type>
 			</notification>
@@ -164,7 +164,7 @@
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
 				<recipients>
-					<user/>
+					<user />
 				</recipients>
 				<execution-type>onExit</execution-type>
 			</notification>

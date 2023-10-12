@@ -13,8 +13,8 @@
 			<supports>
 				<action-key>MANAGE_COMMERCE_CURRENCIES</action-key>
 			</supports>
-			<site-member-defaults/>
-			<guest-defaults/>
+			<site-member-defaults />
+			<guest-defaults />
 			<guest-unsupported>
 				<action-key>MANAGE_COMMERCE_CURRENCIES</action-key>
 			</guest-unsupported>

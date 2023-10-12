@@ -49,7 +49,7 @@
 				<notification-type>push-notification</notification-type>
 				<notification-type>user-notification</notification-type>
 				<recipients receptionType="to">
-					<assignees/>
+					<assignees />
 				</recipients>
 				<execution-type>onAssignment</execution-type>
 			</notification>
@@ -108,7 +108,7 @@
 				<notification-type>push-notification</notification-type>
 				<notification-type>user-notification</notification-type>
 				<recipients receptionType="to">
-					<assignees/>
+					<assignees />
 				</recipients>
 				<execution-type>onAssignment</execution-type>
 			</notification>
@@ -167,7 +167,7 @@
 				<notification-type>push-notification</notification-type>
 				<notification-type>user-notification</notification-type>
 				<recipients receptionType="to">
-					<assignees/>
+					<assignees />
 				</recipients>
 				<execution-type>onAssignment</execution-type>
 			</notification>
@@ -226,7 +226,7 @@
 				<notification-type>push-notification</notification-type>
 				<notification-type>user-notification</notification-type>
 				<recipients receptionType="to">
-					<assignees/>
+					<assignees />
 				</recipients>
 				<execution-type>onAssignment</execution-type>
 			</notification>

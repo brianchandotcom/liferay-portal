@@ -91,13 +91,13 @@
 				<notification-type>email</notification-type>
 				<notification-type>user-notification</notification-type>
 				<recipients receptionType="to">
-					<user/>
+					<user />
 				</recipients>
 				<execution-type>onAssignment</execution-type>
 			</notification>
 		</actions>
 		<assignments>
-			<user/>
+			<user />
 		</assignments>
 		<labels>
 			<label language-id="en_US">update</label>
@@ -132,7 +132,7 @@
 				<notification-type>email</notification-type>
 				<notification-type>user-notification</notification-type>
 				<recipients receptionType="to">
-					<assignees/>
+					<assignees />
 				</recipients>
 				<execution-type>onAssignment</execution-type>
 			</notification>
@@ -142,7 +142,7 @@
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
 				<recipients receptionType="to">
-					<user/>
+					<user />
 				</recipients>
 				<execution-type>onExit</execution-type>
 			</notification>
@@ -231,7 +231,7 @@
 			</task-timer>
 			<task-timer>
 				<name>Task-2</name>
-				<description/>
+				<description />
 				<delay>
 					<duration>15</duration>
 					<scale>second</scale>
@@ -244,7 +244,7 @@
 				<timer-actions>
 					<timer-action>
 						<name>Anishq</name>
-						<description/>
+						<description />
 						<script> <![CDATA[print("Timer 2")]]> </script>
 						<script-language>groovy</script-language>
 						<priority>1</priority>

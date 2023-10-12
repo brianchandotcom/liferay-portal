@@ -51,6 +51,6 @@
 	</macrodef>
 
 	<target name="prepare-selenium-keycloak-server">
-		<start-keycloak-server/>
+		<start-keycloak-server />
 	</target>
 </project>

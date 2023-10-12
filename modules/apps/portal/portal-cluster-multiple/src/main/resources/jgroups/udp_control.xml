@@ -26,8 +26,8 @@
 		max_interval="30000"
 		min_interval="10000"
 	/>
-	<FD_SOCK/>
-	<FD_ALL/>
+	<FD_SOCK />
+	<FD_ALL />
 	<VERIFY_SUSPECT timeout="1500" />
 	<!--<BARRIER />-->
 	<pbcast.NAKACK2 xmit_interval="500"

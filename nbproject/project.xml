@@ -325,7 +325,7 @@
 					<ide-action name="Test" />
 				</context-menu>
 			</view>
-			<subprojects/>
+			<subprojects />
 		</general-data>
 		<java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/4">
 			<compilation-unit>

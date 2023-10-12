@@ -51,12 +51,11 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 		}
 	}
 
-	private void _checkCardinality(DetailAST annotationDetailAST) {
-		String cardinalityValue = _getAnnotationMemberValue(
-			annotationDetailAST, "cardinality", null);
+	private void _checkCardinality(
+		DetailAST annotationDetailAST, String cardinalityName) {
 
-		if ((cardinalityValue != null) &&
-			cardinalityValue.equals("ReferenceCardinality.OPTIONAL")) {
+		if ((cardinalityName != null) &&
+			cardinalityName.equals("ReferenceCardinality.OPTIONAL")) {
 
 			log(annotationDetailAST, _MSG_NOT_USE_OPTIONAL);
 		}
@@ -112,16 +111,10 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 	}
 
 	private void _checkDynamicOption(
-		DetailAST annotationDetailAST, String policyName) {
+		DetailAST annotationDetailAST, String cardinalityName,
+		String policyName) {
 
-		if (policyName.endsWith(_POLICY_DYNAMIC)) {
-			return;
-		}
-
-		String cardinalityName = _getAnnotationMemberValue(
-			annotationDetailAST, "cardinality", null);
-
-		if ((cardinalityName == null) ||
+		if (policyName.endsWith(_POLICY_DYNAMIC) || (cardinalityName == null) ||
 			!cardinalityName.endsWith(_CARDINALITY_OPTIONAL)) {
 
 			return;
@@ -147,14 +140,17 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 			return;
 		}
 
+		String cardinalityName = _getAnnotationMemberValue(
+			annotationDetailAST, "cardinality", null);
+
 		if (isAttributeValue(_CHECK_CARDINALITY_VALUE_KEY)) {
-			_checkCardinality(annotationDetailAST);
+			_checkCardinality(annotationDetailAST, cardinalityName);
 		}
 
 		String policyName = _getAnnotationMemberValue(
 			annotationDetailAST, "policy", _POLICY_STATIC);
 
-		_checkDynamicOption(annotationDetailAST, policyName);
+		_checkDynamicOption(annotationDetailAST, cardinalityName, policyName);
 
 		_checkTarget(annotationDetailAST);
 

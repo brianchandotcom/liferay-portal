@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"commerce.order.rule.entry.type.key=" + COREntryConstants.TYPE_MINIMUM_ORDER_AMOUNT,
-		"commerce.order.rule.entry.type.order:Integer=1"
+		"commerce.order.rule.entry.type.order:Integer=100"
 	},
 	service = COREntryType.class
 )
@@ -166,6 +166,11 @@ public class MinimumAmountCOREntryTypeImpl implements COREntryType {
 			"content.Language", locale, getClass());
 
 		return _language.get(resourceBundle, "minimum-order-amount");
+	}
+
+	@Override
+	public boolean isActive() {
+		return true;
 	}
 
 	@Reference

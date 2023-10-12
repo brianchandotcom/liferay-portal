@@ -393,6 +393,11 @@ public interface COREntryLocalService
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
+	public COREntry updateCOREntryTypeSettings(
+			long corEntryId, String typeSettings)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
 	public COREntry updateStatus(
 			long userId, long corEntryId, int status,
 			ServiceContext serviceContext)

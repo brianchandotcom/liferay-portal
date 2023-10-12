@@ -193,14 +193,18 @@ public class ViewChangesDisplayContext {
 				_language.get(_httpServletRequest, "review-change"), "get",
 				"get", null),
 			new FDSActionDropdownItem(
-				PortletURLBuilder.createActionURL(
+				PortletURLBuilder.createRenderURL(
 					_renderResponse
-				).setActionName(
-					"/change_tracking/move_changes"
+				).setMVCRenderCommandName(
+					"/change_tracking/view_move_changes"
 				).setRedirect(
 					_themeDisplay.getURLCurrent()
 				).setParameter(
-					"ctCollectionId", _ctCollection.getCtCollectionId()
+					"ctCollectionId", "{ctCollectionId}"
+				).setParameter(
+					"modelClassNameId", "{modelClassNameId}"
+				).setParameter(
+					"modelClassPK", "{modelClassPK}"
 				).buildString(),
 				"move-folder", "move-changes",
 				_language.get(_httpServletRequest, "move-changes"), "post",

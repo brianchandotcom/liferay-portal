@@ -45,9 +45,11 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 
 		List<DetailAST> detailASTList = getAllChildTokens(
 			detailAST, true, TokenTypes.METHOD_DEF, TokenTypes.VARIABLE_DEF);
+		DetailAST componentDetailAST = AnnotationUtil.getAnnotation(
+			detailAST, "Component");
 
 		for (DetailAST curDetailAST : detailASTList) {
-			_checkReferenceAnnotation(curDetailAST);
+			_checkReferenceAnnotation(curDetailAST, componentDetailAST);
 		}
 	}
 
@@ -128,12 +130,25 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 		log(annotationDetailAST, _MSG_MISSING_DYNAMIC_POLICY);
 	}
 
-	private void _checkReferenceAnnotation(DetailAST detailAST) {
+	private void _checkReferenceAnnotation(
+		DetailAST detailAST, DetailAST componentDetailAST) {
+
 		DetailAST annotationDetailAST = AnnotationUtil.getAnnotation(
 			detailAST, "Reference");
 
 		if (annotationDetailAST == null) {
 			return;
+		}
+
+		if (componentDetailAST != null) {
+			String cardinalityValue = _getAnnotationMemberValue(
+				annotationDetailAST, "cardinality", null);
+
+			if ((cardinalityValue != null) &&
+				cardinalityValue.equals("ReferenceCardinality.OPTIONAL")) {
+
+				log(annotationDetailAST, _MSG_NOT_USE_OPTIONAL);
+			}
 		}
 
 		String policyName = _getAnnotationMemberValue(
@@ -345,6 +360,8 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 	private static final String _MSG_MISSING_VOLATILE = "volatile.missing";
 
 	private static final String _MSG_MOVE_REFERENCE = "reference.move";
+
+	private static final String _MSG_NOT_USE_OPTIONAL = "not.use.optional";
 
 	private static final String _MSG_REDUNDANT_DEFAULT_UNBIND =
 		"default.unbind.redundant";

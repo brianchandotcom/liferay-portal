@@ -5,8 +5,8 @@
 
 package com.liferay.commerce.product.definitions.web.internal.frontend.taglib.servlet.taglib;
 
-import com.liferay.commerce.product.configuration.CPDefinitionLinkTypeSettings;
 import com.liferay.commerce.product.definitions.web.internal.display.context.CPDefinitionLinkDisplayContext;
+import com.liferay.commerce.product.links.CPDefinitionLinkTypeRegistry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
@@ -88,7 +88,7 @@ public class CPDefinitionProductRelationsScreenNavigationEntry
 		CPDefinitionLinkDisplayContext cpDefinitionLinkDisplayContext =
 			new CPDefinitionLinkDisplayContext(
 				_actionHelper, httpServletRequest, _cpDefinitionLinkService,
-				_cpDefinitionLinkTypeSettings, _itemSelector,
+				_cpDefinitionLinkTypeRegistry, _itemSelector,
 				_workflowDefinitionLinkLocalService);
 
 		httpServletRequest.setAttribute(
@@ -114,7 +114,7 @@ public class CPDefinitionProductRelationsScreenNavigationEntry
 	private CPDefinitionLinkService _cpDefinitionLinkService;
 
 	@Reference
-	private CPDefinitionLinkTypeSettings _cpDefinitionLinkTypeSettings;
+	private CPDefinitionLinkTypeRegistry _cpDefinitionLinkTypeRegistry;
 
 	@Reference
 	private CPTypeRegistry _cpTypeRegistry;

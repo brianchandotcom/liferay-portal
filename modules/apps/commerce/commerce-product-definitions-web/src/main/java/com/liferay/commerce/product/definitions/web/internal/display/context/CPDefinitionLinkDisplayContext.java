@@ -5,9 +5,9 @@
 
 package com.liferay.commerce.product.definitions.web.internal.display.context;
 
-import com.liferay.commerce.product.configuration.CPDefinitionLinkTypeSettings;
 import com.liferay.commerce.product.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.item.selector.criterion.CPDefinitionItemSelectorCriterion;
+import com.liferay.commerce.product.links.CPDefinitionLinkTypeRegistry;
 import com.liferay.commerce.product.model.CPDefinitionLink;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
@@ -47,14 +47,14 @@ public class CPDefinitionLinkDisplayContext
 	public CPDefinitionLinkDisplayContext(
 		ActionHelper actionHelper, HttpServletRequest httpServletRequest,
 		CPDefinitionLinkService cpDefinitionLinkService,
-		CPDefinitionLinkTypeSettings cpDefinitionLinkTypeSettings,
+		CPDefinitionLinkTypeRegistry cpDefinitionLinkTypeRegistry,
 		ItemSelector itemSelector,
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
 
 		super(actionHelper, httpServletRequest);
 
 		_cpDefinitionLinkService = cpDefinitionLinkService;
-		_cpDefinitionLinkTypeSettings = cpDefinitionLinkTypeSettings;
+		_cpDefinitionLinkTypeRegistry = cpDefinitionLinkTypeRegistry;
 		_itemSelector = itemSelector;
 		_workflowDefinitionLinkLocalService =
 			workflowDefinitionLinkLocalService;
@@ -82,7 +82,8 @@ public class CPDefinitionLinkDisplayContext
 	}
 
 	public String[] getCPDefinitionLinkTypes() {
-		return _cpDefinitionLinkTypeSettings.getTypes();
+		return ArrayUtil.toStringArray(
+			_cpDefinitionLinkTypeRegistry.getTypes());
 	}
 
 	public CreationMenu getCreationMenu() {
@@ -227,7 +228,7 @@ public class CPDefinitionLinkDisplayContext
 
 	private CPDefinitionLink _cpDefinitionLink;
 	private final CPDefinitionLinkService _cpDefinitionLinkService;
-	private final CPDefinitionLinkTypeSettings _cpDefinitionLinkTypeSettings;
+	private final CPDefinitionLinkTypeRegistry _cpDefinitionLinkTypeRegistry;
 	private final ItemSelector _itemSelector;
 	private final WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;

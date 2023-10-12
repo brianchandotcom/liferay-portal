@@ -1,7 +1,7 @@
 <ul class="adt-navigation">
 	<#if entries?has_content>
 		<#list entries as navPrimaryItem>
-			<div class="adt-nav-item w-100 dropdown dropdown-action">
+			<div class="adt-nav-item dropdown dropdown-action w-100">
 				<button
 						class="adt-nav-text d-flex menu-info align-items-center d-flex py-1 pl-2"
 						data-toggle="liferay-dropdown"
@@ -25,7 +25,7 @@
 <#macro render_navigation_dropdown
 	navPrimaryItem
 >
-	<div class="adt-submenu main-menu-dropdown dropdown-menu position-absolute pt-2">
+	<div class="adt-submenu dropdown-menu main-menu-dropdown position-absolute pt-2">
 		<div class="adt-submenu-outer-wrapper">
 			<div class="adt-submenu-inner-wrapper">
 				<#list navPrimaryItem.getChildren() as navSecondaryItem>

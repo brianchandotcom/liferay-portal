@@ -774,9 +774,16 @@ definition {
 				productName = "Brake Fluid");
 		}
 
-		task ("When the buyer navigates to the Brake Fluid Product Detail page") {
-			ApplicationsMenu.gotoSite(site = "Minium");
+		task ("When the buyer user logs in ") {
+			User.logoutPG();
 
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("When the buyer navigates to the Brake Fluid Product Detail page") {
 			CommerceNavigator.searchEntry(entryName = "Brake Fluid");
 
 			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "Brake Fluid");

@@ -487,9 +487,16 @@ definition {
 				productName = "U-Joint");
 		}
 
-		task ("Then assert U-Joint product card shows the"View All Variants" button instead of the add to cart") {
-			ApplicationsMenu.gotoSite(site = "Minium");
+		task ("When the buyer user logs in ") {
+			User.logoutPG();
 
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("Then assert U-Joint product card shows the 'View All Variants' button instead of the add to cart") {
 			CommerceNavigator.searchEntry(entryName = "U-Joint");
 
 			AssertElementPresent(
@@ -565,7 +572,7 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-12394. Buyer user can view quantity selector Popover errors for not allowed quantities"
+	@description = "COMMERCE-12394. As a Buyer user, I can view quantity selector Popover errors for not allowed quantities"
 	@priority = 4
 	test CanAssertQuantitySelectorPopUpUOMErrors {
 		property portal.acceptance = "false";
@@ -613,9 +620,16 @@ definition {
 				productName = "U-Joint");
 		}
 
-		task ("When the buyer navigates to the U-Joint Product Detail page") {
-			ApplicationsMenu.gotoSite(site = "Minium");
+		task ("When the buyer user logs in ") {
+			User.logoutPG();
 
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("When the buyer navigates to the U-Joint Product Detail page") {
 			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
 		}
 

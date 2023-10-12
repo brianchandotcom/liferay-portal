@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.sites.kernel.util.Sites;
 
 import java.util.Map;
 
@@ -79,8 +78,5 @@ public class ResetPrototypeMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private Sites _sites;
 
 }

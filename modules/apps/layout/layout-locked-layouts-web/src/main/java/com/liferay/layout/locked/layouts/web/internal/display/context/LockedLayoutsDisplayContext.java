@@ -23,13 +23,13 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -66,9 +66,7 @@ public class LockedLayoutsDisplayContext {
 	}
 
 	public String getLayoutType(LockedLayout lockedLayout) {
-		return _layoutLockManager.getLayoutType(
-			lockedLayout.getClassPK(), _themeDisplay.getLocale(),
-			lockedLayout.getType());
+		return lockedLayout.getType();
 	}
 
 	public String getLayoutURL(LockedLayout lockedLayout)
@@ -130,8 +128,7 @@ public class LockedLayoutsDisplayContext {
 	}
 
 	public String getName(LockedLayout lockedLayout) {
-		return LocalizationUtil.getLocalization(
-			lockedLayout.getName(), _themeDisplay.getLanguageId());
+		return lockedLayout.getName();
 	}
 
 	public String getOrderByCol() {
@@ -218,9 +215,54 @@ public class LockedLayoutsDisplayContext {
 			return _lockedLayouts;
 		}
 
-		_lockedLayouts = _layoutLockManager.getLockedLayouts(
+		List<LockedLayout> lockedLayouts = _layoutLockManager.getLockedLayouts(
 			_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId(),
-			getLockedLayoutOrder(), getLockedLayoutType());
+			_themeDisplay.getLocale());
+
+		LockedLayoutType lockedLayoutType = getLockedLayoutType();
+
+		if (lockedLayoutType != null) {
+			String type = _language.get(
+				_themeDisplay.getLocale(), lockedLayoutType.getValue());
+
+			lockedLayouts = ListUtil.filter(
+				lockedLayouts,
+				lockedLayout -> Objects.equals(lockedLayout.getType(), type));
+		}
+
+		String orderByCol = getOrderByCol();
+		String orderByType = getOrderByType();
+
+		Comparator<LockedLayout> lockedLayoutComparator = null;
+
+		if (Objects.equals(
+				orderByCol,
+				LockedLayoutOrder.LockedLayoutOrderType.LAST_AUTOSAVE.
+					getValue())) {
+
+			lockedLayoutComparator = Comparator.comparing(
+				lockedLayout -> lockedLayout.getLastAutoSaveDate());
+		}
+		else if (Objects.equals(
+					orderByCol,
+					LockedLayoutOrder.LockedLayoutOrderType.NAME.getValue())) {
+
+			lockedLayoutComparator = Comparator.comparing(
+				lockedLayout -> StringUtil.toLowerCase(lockedLayout.getName()));
+		}
+		else {
+			lockedLayoutComparator = Comparator.comparing(
+				lockedLayout -> StringUtil.toLowerCase(
+					lockedLayout.getUserName()));
+		}
+
+		if (Objects.equals(orderByType, "desc")) {
+			lockedLayoutComparator = lockedLayoutComparator.reversed();
+		}
+
+		lockedLayouts.sort(lockedLayoutComparator);
+
+		_lockedLayouts = lockedLayouts;
 
 		return _lockedLayouts;
 	}

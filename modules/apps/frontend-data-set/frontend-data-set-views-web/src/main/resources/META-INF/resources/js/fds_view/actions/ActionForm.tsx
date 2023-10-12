@@ -203,15 +203,31 @@ const ActionForm = ({
 		onSave();
 	};
 
-	const validateForm = () => {
+	const validateForm = ({
+		labelTranslations,
+		titleTranslations,
+		url,
+	}: {
+		labelTranslations: Partial<
+			Liferay.Language.FullyLocalizedValue<string>
+		>;
+		titleTranslations: Partial<
+			Liferay.Language.FullyLocalizedValue<string>
+		>;
+		url: string;
+	}) => {
 		let valid = true;
 
 		if (
-			!actionData.url ||
-			!translationExists({translations: labelTranslations}) ||
+			!url ||
+			!translationExists({
+				translations: labelTranslations,
+			}) ||
 			((actionData.type === ACTION_TYPE.MODAL ||
 				actionData.type === ACTION_TYPE.SIDEPANEL) &&
-				!translationExists({translations: titleTranslations}))
+				!translationExists({
+					translations: titleTranslations,
+				}))
 		) {
 			valid = false;
 		}
@@ -286,16 +302,21 @@ const ActionForm = ({
 								}
 								id={labelFormElementId}
 								label={Liferay.Language.get('label')}
-								onBlur={() => {
+								onChange={(translations) => {
+									setLabelTranslations(translations);
+
 									setLabelValidationError(
 										!translationExists({
-											translations: labelTranslations,
+											translations,
 										})
 									);
 
-									validateForm();
+									validateForm({
+										labelTranslations: translations,
+										titleTranslations,
+										url: actionData.url,
+									});
 								}}
-								onChange={setLabelTranslations}
 								placeholder={Liferay.Language.get(
 									'action-name'
 								)}
@@ -392,9 +413,6 @@ const ActionForm = ({
 
 									<ClaySelectWithOption
 										id={modalSizeFormElementId}
-										onBlur={() => {
-											validateForm();
-										}}
 										onChange={(event) =>
 											setActionData({
 												...actionData,
@@ -426,16 +444,21 @@ const ActionForm = ({
 									}
 									id={titleFormElementId}
 									label={Liferay.Language.get('title')}
-									onBlur={() => {
+									onChange={(translations) => {
+										setTitleTranslations(translations);
+
 										setTitleValidationError(
 											!translationExists({
-												translations: titleTranslations,
+												translations,
 											})
 										);
 
-										validateForm();
+										validateForm({
+											labelTranslations,
+											titleTranslations: translations,
+											url: actionData.url,
+										});
 									}}
-									onChange={setTitleTranslations}
 									placeholder={Liferay.Language.get(
 										actionData.type === ACTION_TYPE.MODAL
 											? 'action-modal-title-placeholder'
@@ -465,19 +488,22 @@ const ActionForm = ({
 									<ClayInput
 										component="textarea"
 										id={urlFormElementId}
-										onBlur={() => {
-											setURLValidationError(
-												!actionData.url
-											);
+										onChange={(event) => {
+											const url = event.target.value;
 
-											validateForm();
-										}}
-										onChange={(event) =>
 											setActionData({
 												...actionData,
-												url: event.target.value,
-											})
-										}
+												url,
+											});
+
+											setURLValidationError(!url);
+
+											validateForm({
+												labelTranslations,
+												titleTranslations,
+												url,
+											});
+										}}
 										placeholder={Liferay.Language.get(
 											'add-a-url-here'
 										)}

@@ -24,8 +24,7 @@ public class DLCopyValidationUtil {
 				"item-cannot-be-copied-because-it-exceeds-the-limit-defined-" +
 					"in-site-settings");
 			String messageSuffix = LanguageUtil.format(
-				locale,
-				"the-total-size-of-all-items-to-copy-must-not-exceed-x",
+				locale, "the-total-size-of-all-items-to-copy-must-not-exceed-x",
 				LanguageUtil.formatStorageSize(groupMaxSizeToCopy, locale));
 
 			return messagePrefix + " " + messageSuffix;
@@ -37,8 +36,7 @@ public class DLCopyValidationUtil {
 				"item-cannot-be-copied-because-it-exceeds-the-limit-defined-" +
 					"in-instance-settings");
 			String messageSuffix = LanguageUtil.format(
-				locale,
-				"the-total-size-of-all-items-to-copy-must-not-exceed-x",
+				locale, "the-total-size-of-all-items-to-copy-must-not-exceed-x",
 				LanguageUtil.formatStorageSize(companyMaxSizeToCopy, locale));
 
 			return messagePrefix + " " + messageSuffix;
@@ -49,8 +47,7 @@ public class DLCopyValidationUtil {
 			"item-cannot-be-copied-because-it-exceeds-the-limit-defined-in-" +
 				"system-settings");
 		String messageSuffix = LanguageUtil.format(
-			locale,
-			"the-total-size-of-all-items-to-copy-must-not-exceed-x",
+			locale, "the-total-size-of-all-items-to-copy-must-not-exceed-x",
 			LanguageUtil.formatStorageSize(systemMaxSizeToCopy, locale));
 
 		return messagePrefix + " " + messageSuffix;

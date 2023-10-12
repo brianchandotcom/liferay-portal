@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.UserBag;
-import com.liferay.portal.kernel.security.permission.UserBagFactory;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -27,6 +26,7 @@ import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.security.permission.UserBagFactoryUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -203,7 +203,7 @@ public class UserBagFactoryTest {
 	}
 
 	protected UserBag getUserBag() throws Exception {
-		return _userBagFactory.create(_user.getUserId());
+		return UserBagFactoryUtil.create(_user.getUserId());
 	}
 
 	protected Collection<Group> getUserGroups() throws Exception {
@@ -258,9 +258,6 @@ public class UserBagFactoryTest {
 
 	@DeleteAfterTestRun
 	private User _user;
-
-	@Inject
-	private UserBagFactory _userBagFactory;
 
 	@DeleteAfterTestRun
 	private UserGroup _userGroup;

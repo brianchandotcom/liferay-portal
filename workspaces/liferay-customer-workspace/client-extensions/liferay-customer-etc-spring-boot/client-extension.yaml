@@ -1,0 +1,10 @@
+assemble:
+    - fromTask: bootJar
+liferay-customer-etc-spring-boot-oauth-application-user-agent:
+    .serviceAddress: localhost:58081
+    .serviceScheme: http
+    name: Liferay Customer Etc Spring Boot OAuth Application User Agent
+    scopes:
+        - C_TicketAttachment.everything
+        - Liferay.Headless.Admin.User.everything
+    type: oAuthApplicationUserAgent

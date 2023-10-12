@@ -6,8 +6,8 @@
 package com.liferay.dynamic.data.mapping.kernel;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Rafael Praxedes
@@ -19,18 +19,27 @@ public class StorageEngineManagerUtil {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return _storageEngineManager.create(
+		StorageEngineManager storageEngineManager =
+			_storageEngineManagerSnapshot.get();
+
+		return storageEngineManager.create(
 			companyId, ddmStructureId, ddmFormValues, serviceContext);
 	}
 
 	public static void deleteByClass(long classPK) throws PortalException {
-		_storageEngineManager.deleteByClass(classPK);
+		StorageEngineManager storageEngineManager =
+			_storageEngineManagerSnapshot.get();
+
+		storageEngineManager.deleteByClass(classPK);
 	}
 
 	public static DDMFormValues getDDMFormValues(long classPK)
 		throws PortalException {
 
-		return _storageEngineManager.getDDMFormValues(classPK);
+		StorageEngineManager storageEngineManager =
+			_storageEngineManagerSnapshot.get();
+
+		return storageEngineManager.getDDMFormValues(classPK);
 	}
 
 	public static DDMFormValues getDDMFormValues(
@@ -38,7 +47,10 @@ public class StorageEngineManagerUtil {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return _storageEngineManager.getDDMFormValues(
+		StorageEngineManager storageEngineManager =
+			_storageEngineManagerSnapshot.get();
+
+		return storageEngineManager.getDDMFormValues(
 			ddmStructureId, fieldNamespace, serviceContext);
 	}
 
@@ -47,12 +59,14 @@ public class StorageEngineManagerUtil {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_storageEngineManager.update(classPK, ddmFormValues, serviceContext);
+		StorageEngineManager storageEngineManager =
+			_storageEngineManagerSnapshot.get();
+
+		storageEngineManager.update(classPK, ddmFormValues, serviceContext);
 	}
 
-	private static volatile StorageEngineManager _storageEngineManager =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			StorageEngineManager.class, StorageEngineManagerUtil.class,
-			"_storageEngineManager", false);
+	private static final Snapshot<StorageEngineManager>
+		_storageEngineManagerSnapshot = new Snapshot<>(
+			StorageEngineManagerUtil.class, StorageEngineManager.class);
 
 }

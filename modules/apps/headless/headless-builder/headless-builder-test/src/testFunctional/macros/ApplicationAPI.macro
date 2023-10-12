@@ -59,7 +59,7 @@ definition {
 
 			if (isSet(retrieveType)) {
 				var relatedEndpoint = '''
-				"apiApplicationToAPIEndpoints": [{
+					"apiApplicationToAPIEndpoints": [{
 						"externalReferenceCode": "${externalReferenceCodeEndpoint}",
 						"httpMethod": "get",
 						"name": "${endpointName}",
@@ -68,18 +68,18 @@ definition {
 						"retrieveType": "${retrieveType}",
 						"scope": {"key": "${scopeKey}"}
 					}]
-			''';
+				''';
 			}
 			else {
 				var relatedEndpoint = '''
-				"apiApplicationToAPIEndpoints": [{
+					"apiApplicationToAPIEndpoints": [{
 						"externalReferenceCode": "${externalReferenceCodeEndpoint}",
 						"httpMethod": "get",
 						"name": "${endpointName}",
 						"path": "${endpointPath}",
 						"scope": {"key": "${scopeKey}"}
 					}]
-			''';
+				''';
 			}
 
 			var body = StringUtil.add(${body}, ", ${relatedEndpoint}", "");
@@ -92,26 +92,26 @@ definition {
 		if (isSet(relatedSchema)) {
 			if (isSet(objectFieldErc) && isSet(mainObjectDefinitionErc)) {
 				var relatedSchema = '''
-				"apiApplicationToAPISchemas": [{
-					"apiSchemaToAPIProperties": [{
-						"objectFieldERC": "${objectFieldErc}",
-						"name": "${objectFieldErc}",
+					"apiApplicationToAPISchemas": [{
+						"apiSchemaToAPIProperties": [{
+							"objectFieldERC": "${objectFieldErc}",
+							"name": "${objectFieldErc}",
+							"description": "description"
+						}],
+						"externalReferenceCode": "${externalReferenceCodeSchema}",
+						"mainObjectDefinitionERC": "${mainObjectDefinitionErc}",
+						"name": "${schemaName}",
 						"description": "description"
-					}],
-					"externalReferenceCode": "${externalReferenceCodeSchema}",
-					"mainObjectDefinitionERC": "${mainObjectDefinitionErc}",
-					"name": "${schemaName}",
-					"description": "description"
-				}]
+					}]
 				''';
 			}
 			else {
 				var relatedSchema = '''
-				"apiApplicationToAPISchemas": [{
-					"externalReferenceCode": "${externalReferenceCodeSchema}",
-					"mainObjectDefinitionERC": "${mainObjectDefinitionErc}",
-					"name": "${schemaName}"
-				}]
+					"apiApplicationToAPISchemas": [{
+						"externalReferenceCode": "${externalReferenceCodeSchema}",
+						"mainObjectDefinitionERC": "${mainObjectDefinitionErc}",
+						"name": "${schemaName}"
+					}]
 				''';
 			}
 

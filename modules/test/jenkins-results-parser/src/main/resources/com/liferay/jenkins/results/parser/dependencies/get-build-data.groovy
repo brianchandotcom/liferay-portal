@@ -6,7 +6,7 @@ startDate = endDate.minus(1)
 
 startDate = Date.parse("yyyyMMdd hh:mm:ss", startDate.format("yyyyMMdd") + " 00:00:00")
 
-buildJsons = []
+buildJSONs = []
 
 items.each { item ->
 	if (item instanceof Job) {
@@ -19,7 +19,7 @@ items.each { item ->
 				return
 			}
 
-			def buildJson = new groovy.json.JsonBuilder()
+			def buildJSON = new groovy.json.JsonBuilder()
 
 			buildUrl = Jenkins.instance.getRootUrl() + build.getUrl()
 
@@ -63,13 +63,13 @@ items.each { item ->
 
 			result = build.getResult()
 
-			buildJson url: buildUrl, startTime: build.getTimeInMillis(), result: result.toString(), duration: duration, queueDuration: queueDuration, parameters: parameters, builtOn: build.getBuiltOnStr()
+			buildJSON url: buildUrl, startTime: build.getTimeInMillis(), result: result.toString(), duration: duration, queueDuration: queueDuration, parameters: parameters, builtOn: build.getBuiltOnStr()
 
-			buildJsons.add(buildJson)
+			buildJSONs.add(buildJSON)
 		}
 	}
 }
 
-println(buildJsons)
+println(buildJSONs)
 
 return

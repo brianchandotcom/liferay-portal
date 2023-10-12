@@ -55,7 +55,7 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 		DetailAST annotationDetailAST, String cardinalityName) {
 
 		if ((cardinalityName != null) &&
-			cardinalityName.equals("ReferenceCardinality.OPTIONAL")) {
+			cardinalityName.endsWith(_CARDINALITY_OPTIONAL)) {
 
 			log(annotationDetailAST, _MSG_NOT_USE_OPTIONAL);
 		}

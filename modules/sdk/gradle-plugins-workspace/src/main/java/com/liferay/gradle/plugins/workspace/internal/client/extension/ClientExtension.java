@@ -38,6 +38,7 @@ public class ClientExtension {
 
 		Map<String, Object> configMap = new HashMap<>();
 
+		configMap.put(":configurator:policy", "force");
 		configMap.put(
 			"baseURL",
 			typeSettings.getOrDefault(

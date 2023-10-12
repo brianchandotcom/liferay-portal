@@ -95,8 +95,6 @@ public class CreateClientExtensionConfigTask extends DefaultTask {
 
 		Map<String, Object> jsonMap = new HashMap<>();
 
-		jsonMap.put(":configurator:policy", "force");
-
 		String batchType = null;
 
 		for (ClientExtension clientExtension : _clientExtensions) {

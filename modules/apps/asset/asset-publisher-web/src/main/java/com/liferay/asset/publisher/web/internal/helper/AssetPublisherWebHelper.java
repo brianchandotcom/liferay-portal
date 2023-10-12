@@ -67,7 +67,6 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portlet.StrictPortletPreferencesImpl;
-import com.liferay.sites.kernel.util.Sites;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.io.IOException;
@@ -701,9 +700,6 @@ public class AssetPublisherWebHelper {
 
 	private volatile ServiceTrackerList<AssetEntryQueryProcessor>
 		_serviceTrackerList;
-
-	@Reference
-	private Sites _sites;
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;

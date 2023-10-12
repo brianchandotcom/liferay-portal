@@ -15,6 +15,8 @@ import java.util.List;
 @ProviderType
 public interface CPDefinitionLinkTypeRegistry {
 
+	public CPDefinitionLinkType getCPDefinitionLinkType(String key);
+
 	public List<String> getTypes();
 
 }

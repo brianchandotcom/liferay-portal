@@ -15,4 +15,8 @@ public interface CPDefinitionLinkType {
 
 	public String getType();
 
+	public boolean isActive();
+
+	public boolean isBiDirectional();
+
 }

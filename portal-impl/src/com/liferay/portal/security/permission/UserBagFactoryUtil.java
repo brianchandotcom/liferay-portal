@@ -18,10 +18,6 @@ public class UserBagFactoryUtil {
 		return _userBagFactory.create(userId);
 	}
 
-	public void setUserBagFactory(UserBagFactory userBagFactory) {
-		_userBagFactory = userBagFactory;
-	}
-
 	private static UserBagFactory _userBagFactory;
 
 }

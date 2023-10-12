@@ -47,7 +47,7 @@ import org.junit.runner.RunWith;
  * @author Preston Crary
  */
 @RunWith(Arquillian.class)
-public class UserBagFactoryTest {
+public class UserBagFactoryUtilTest {
 
 	@ClassRule
 	@Rule

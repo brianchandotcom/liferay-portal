@@ -126,6 +126,7 @@ function EditItemUnitOfMeasure({cartItemId, namespace, onBack}) {
 			setCPInstance((prevState) => ({
 				...cpInstance,
 				quantity: prevState?.quantity,
+				settings: prevState?.settings,
 				skuUnitOfMeasure: prevState?.skuUnitOfMeasure,
 			}));
 			setPrice(adaptLegacyPriceModel(cpInstance.price));
@@ -231,7 +232,7 @@ function EditItemUnitOfMeasure({cartItemId, namespace, onBack}) {
 								</label>
 
 								<QuantitySelector
-									alignment="top"
+									alignment="bottom"
 									allowedQuantities={
 										cpInstance.settings?.allowedQuantities
 									}
@@ -317,6 +318,7 @@ function EditItemUnitOfMeasure({cartItemId, namespace, onBack}) {
 
 								<TierPrice
 									accountId={cartState.accountId}
+									alwaysVisible={true}
 									autoload={false}
 									channelId={channel.id}
 									cpInstanceId={cpInstance.id}

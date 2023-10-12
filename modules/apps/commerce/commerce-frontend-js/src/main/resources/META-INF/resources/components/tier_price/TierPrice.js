@@ -13,6 +13,7 @@ import {CP_INSTANCE_CHANGED} from '../../utilities/eventsDefinitions';
 
 function TierPrice({
 	accountId,
+	alwaysVisible,
 	autoload,
 	channelId,
 	cpInstanceId,
@@ -165,7 +166,7 @@ function TierPrice({
 
 	return (
 		<>
-			{rows.length > 1 ? (
+			{alwaysVisible || rows.length > 1 ? (
 				<div
 					className={classNames('table-container', {
 						expanded: isExpanded,
@@ -238,11 +239,13 @@ function TierPrice({
 }
 
 TierPrice.defaultProps = {
+	alwaysVisible: false,
 	autoload: true,
 };
 
 TierPrice.propTypes = {
 	accountId: PropTypes.number,
+	alwaysVisible: PropTypes.bool,
 	autoload: PropTypes.bool,
 	channelId: PropTypes.number.isRequired,
 	cpInstanceId: PropTypes.number.isRequired,

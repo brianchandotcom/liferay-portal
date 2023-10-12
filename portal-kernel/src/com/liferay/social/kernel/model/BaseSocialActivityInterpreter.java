@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -34,7 +35,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.social.kernel.service.SocialActivityLocalServiceUtil;
 import com.liferay.social.kernel.service.SocialActivitySetLocalServiceUtil;
@@ -425,7 +425,9 @@ public abstract class BaseSocialActivityInterpreter
 			className);
 
 		if ((trashHandler != null) && trashHandler.isInTrash(classPK)) {
-			PortletURL portletURL = _trashHelper.getViewContentURL(
+			TrashHelper trashHelper = _trashHelperSnapshot.get();
+
+			PortletURL portletURL = trashHelper.getViewContentURL(
 				serviceContext.getRequest(), className, classPK);
 
 			if (portletURL == null) {
@@ -510,9 +512,7 @@ public abstract class BaseSocialActivityInterpreter
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseSocialActivityInterpreter.class);
 
-	private static volatile TrashHelper _trashHelper =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			TrashHelper.class, BaseSocialActivityInterpreter.class,
-			"_trashHelper", false);
+	private static final Snapshot<TrashHelper> _trashHelperSnapshot =
+		new Snapshot<>(BaseSocialActivityInterpreter.class, TrashHelper.class);
 
 }

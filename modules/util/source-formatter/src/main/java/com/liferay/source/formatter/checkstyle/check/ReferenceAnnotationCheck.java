@@ -143,7 +143,7 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 		String cardinalityName = _getAnnotationMemberValue(
 			annotationDetailAST, "cardinality", null);
 
-		if (isAttributeValue(_CHECK_CARDINALITY_VALUE_KEY)) {
+		if (isAttributeValue(_CHECK_REFERENCE_CARDINALITY_OPTIONAL_KEY)) {
 			_checkCardinality(annotationDetailAST, cardinalityName);
 		}
 
@@ -338,8 +338,8 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 
 	private static final String _CARDINALITY_OPTIONAL = "OPTIONAL";
 
-	private static final String _CHECK_CARDINALITY_VALUE_KEY =
-		"checkCardinalityValue";
+	private static final String _CHECK_REFERENCE_CARDINALITY_OPTIONAL_KEY =
+		"checkReferenceCardinalityOptional";
 
 	private static final String _FORBIDDEN_REFERENCE_TARGET_VALUES =
 		"forbiddenReferenceTargetValues";

@@ -8,7 +8,6 @@ package com.liferay.portal.kernel.util;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -18,8 +17,6 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -27,11 +24,6 @@ import org.junit.Test;
  * @author Neil Zhao Jin
  */
 public class HtmlUtilTest {
-
-	@ClassRule
-	@Rule
-	public static final LiferayUnitTestRule liferayUnitTestRule =
-		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testBuildData() {

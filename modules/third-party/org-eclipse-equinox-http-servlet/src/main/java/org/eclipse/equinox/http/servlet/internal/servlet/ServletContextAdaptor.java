@@ -172,7 +172,7 @@ public class ServletContextAdaptor {
 
 	public RequestDispatcher getNamedDispatcher(String servletName) {
 		DispatchTargets dispatchTargets = contextController.getDispatchTargets(
-			servletName, null, null, null, null, null, Match.EXACT, null);
+			servletName, null, null, null, null, null, Match.EXACT);
 
 		if (dispatchTargets == null) {
 			return null;
@@ -208,7 +208,7 @@ public class ServletContextAdaptor {
 			path = path.substring(contextController.getFullContextPath().length());
 		}
 
-		DispatchTargets dispatchTargets = contextController.getDispatchTargets(path, null);
+		DispatchTargets dispatchTargets = contextController.getDispatchTargets(path);
 
 		if (dispatchTargets == null) {
 			return null;

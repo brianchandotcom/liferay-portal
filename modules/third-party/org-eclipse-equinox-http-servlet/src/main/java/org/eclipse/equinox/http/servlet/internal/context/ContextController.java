@@ -653,9 +653,7 @@ public class ContextController {
 		return contextPath;
 	}
 
-	public DispatchTargets getDispatchTargets(
-		String pathString, RequestInfoDTO requestInfoDTO) {
-
+	public DispatchTargets getDispatchTargets(String pathString) {
 		Path path = new Path(pathString);
 
 		String queryString = path.getQueryString();
@@ -663,35 +661,32 @@ public class ContextController {
 
 		// perfect match
 		DispatchTargets dispatchTargets = getDispatchTargets(
-			requestURI, null, queryString, Match.EXACT, requestInfoDTO);
+			requestURI, null, queryString, Match.EXACT);
 
 		if (dispatchTargets == null) {
 			// extension match
 
 			dispatchTargets = getDispatchTargets(
-				requestURI, path.getExtension(), queryString, Match.EXTENSION,
-				requestInfoDTO);
+				requestURI, path.getExtension(), queryString, Match.EXTENSION);
 		}
 
 		if (dispatchTargets == null) {
 			// regex match
 			dispatchTargets = getDispatchTargets(
-				requestURI, null, queryString, Match.REGEX, requestInfoDTO);
+				requestURI, null, queryString, Match.REGEX);
 		}
 
 		if (dispatchTargets == null) {
 			// handle '/' aliases
 			dispatchTargets = getDispatchTargets(
-				requestURI, null, queryString, Match.DEFAULT_SERVLET,
-				requestInfoDTO);
+				requestURI, null, queryString, Match.DEFAULT_SERVLET);
 		}
 
 		return dispatchTargets;
 	}
 
 	private DispatchTargets getDispatchTargets(
-		String requestURI, String extension, String queryString, Match match,
-		RequestInfoDTO requestInfoDTO) {
+		String requestURI, String extension, String queryString, Match match) {
 
 		int pos = requestURI.lastIndexOf('/');
 
@@ -706,7 +701,7 @@ public class ContextController {
 		do {
 			DispatchTargets dispatchTargets = getDispatchTargets(
 				null, requestURI, servletPath, pathInfo,
-				extension, queryString, match, requestInfoDTO);
+				extension, queryString, match);
 
 			if (dispatchTargets != null) {
 				return dispatchTargets;
@@ -734,8 +729,7 @@ public class ContextController {
 
 	public DispatchTargets getDispatchTargets(
 		String servletName, String requestURI, String servletPath,
-		String pathInfo, String extension, String queryString, Match match,
-		RequestInfoDTO requestInfoDTO) {
+		String pathInfo, String extension, String queryString, Match match) {
 
 		checkShutdown();
 
@@ -757,9 +751,6 @@ public class ContextController {
 			pathInfo = null;
 		}
 
-		addEnpointRegistrationsToRequestInfo(
-			endpointRegistration, requestInfoDTO);
-
 		if (filterRegistrations.isEmpty()) {
 			return new DispatchTargets(
 				this, endpointRegistration, servletName, requestURI, servletPath,
@@ -780,9 +771,6 @@ public class ContextController {
 		collectFilters(
 			matchingFilterRegistrations, endpointRegistration.getName(), requestURI,
 			servletPath, pathInfo, extension);
-
-		addFilterRegistrationsToRequestInfo(
-			matchingFilterRegistrations, requestInfoDTO);
 
 		return new DispatchTargets(
 			this, endpointRegistration, matchingFilterRegistrations, servletName,
@@ -848,10 +836,6 @@ public class ContextController {
 		return listenerRegistrations;
 	}
 
-	public long getServiceId() {
-		return contextServiceId;
-	}
-
 	public boolean matches(ServiceReference<?> whiteBoardService) {
 		String contextSelector = (String) whiteBoardService.getProperty(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT);
@@ -910,47 +894,6 @@ public class ContextController {
 		}
 
 		return value;
-	}
-
-	private void addEnpointRegistrationsToRequestInfo(
-		EndpointRegistration<?> endpointRegistration,
-		RequestInfoDTO requestInfoDTO) {
-
-		if (requestInfoDTO == null) {
-			return;
-		}
-
-		requestInfoDTO.servletContextId = getServiceId();
-
-		if (endpointRegistration instanceof ResourceRegistration) {
-			requestInfoDTO.resourceDTO =
-				(ResourceDTO)endpointRegistration.getD();
-		}
-		else {
-			requestInfoDTO.servletDTO =
-				(ServletDTO)endpointRegistration.getD();
-		}
-	}
-
-	private void addFilterRegistrationsToRequestInfo(
-		List<FilterRegistration> matchedFilterRegistrations,
-		RequestInfoDTO requestInfoDTO) {
-
-		if (requestInfoDTO == null) {
-			return;
-		}
-
-		FilterDTO[] filterDTOs =
-			new FilterDTO[matchedFilterRegistrations.size()];
-
-		for (int i = 0; i < filterDTOs.length ; i++) {
-			FilterRegistration filterRegistration =
-				matchedFilterRegistrations.get(i);
-
-			filterDTOs[i] = filterRegistration.getD();
-		}
-
-		requestInfoDTO.filterDTOs = filterDTOs;
 	}
 
 	private String[] asStringArray(

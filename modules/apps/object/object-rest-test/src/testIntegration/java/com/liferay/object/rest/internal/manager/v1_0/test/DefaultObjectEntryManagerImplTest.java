@@ -3403,17 +3403,7 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	private void _assertObjectEntriesSize(long size) throws Exception {
-		Page<ObjectEntry> page = _defaultObjectEntryManager.getObjectEntries(
-			companyId, _objectDefinition3, null, null,
-			new DefaultDTOConverterContext(
-				false, Collections.emptyMap(), dtoConverterRegistry, null,
-				LocaleUtil.getDefault(), null, _user),
-			StringPool.BLANK, null, null, null);
-
-		Collection<ObjectEntry> objectEntries = page.getItems();
-
-		Assert.assertEquals(
-			objectEntries.toString(), size, objectEntries.size());
+		_assertObjectEntriesSize(_objectDefinition3, size);
 	}
 
 	private void _assertObjectEntriesSize(

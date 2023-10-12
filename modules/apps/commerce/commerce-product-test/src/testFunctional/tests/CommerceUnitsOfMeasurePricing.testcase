@@ -14,6 +14,268 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "This is a test for COMMERCE-12473. As an admin, I can use the expiration date for the bulk pricing in a product's SKU/UOM combination"
+	@priority = 3
+	test CanAssertExpirationDateForBulkPricingUOM {
+		property osgi.module.configuration.file.names = "com.liferay.commerce.price.list.configuration.CommerceTierPriceEntryConfiguration.config";
+		property osgi.module.configurations = "checkInterval=\"1\"";
+		property portal.acceptance = "false";
+
+		task ("Given a Commerce Account with a Buyer User is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And two UOMs are added to the SKU MIN93015") {
+			for (var index : list "1,2") {
+				CommerceJSONSKUsAPI._addCommerceUOM(
+					basePrice = ${index},
+					productSKU = "MIN93015",
+					uomKey = "uomKey${index}",
+					uomName = "uomName${index}");
+			}
+		}
+
+		task ("And the quantity of Italy warehouse for UOM2 is set to 100") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Inventory");
+
+			CommerceSKUs.setSkuUomInventory(uomQuantityLists = "1:100");
+		}
+
+		task ("And a new Test Price List is created") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				priceListName = "Test Price List");
+		}
+
+		task ("And a Bulk Pricing for SKU MIN93015 is set to expire in 2 minutes") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
+				entryPrice = 20,
+				priceListName = "Test Price List",
+				productSKU = "MIN93015",
+				unitOfMeasureKey = "uomKey2");
+
+			CommercePriceLists.openPriceListsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Test Price List");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+			CommercePriceLists.createPriceListPriceTiers(
+				key_pricingType = "Bulk Pricing",
+				key_quantity = 10,
+				key_value = 10,
+				minutesToExpire = 2);
+		}
+
+		task ("And the buyer navigates to the product ABS Sensor's details page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/abs-sensor");
+		}
+
+		task ("When the buyer adds the product to the cart with reaches the quantity:10 to active the Bulk Pricing") {
+			FrontStore.addInitializerProductToCartFromProductDetails(
+				productName = "ABS Sensor",
+				productQuantity = 10,
+				uomName = "uomName2");
+		}
+
+		task ("Then the ABS Sensor price is the Bulk Pricing(10.00)") {
+			CommerceNavigator.gotoMiniCart();
+
+			AssertTextEquals.assertPartialText(
+				key_cartItemSku = "MIN93015",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_PRICE_VALUE",
+				value1 = "$ 10.00");
+		}
+
+		task ("But when the Bulk Price expires") {
+			while ((IsElementPresent(key_cartItemSku = "MIN93015", key_productPrice = "10.00", locator1 = "CommerceAccelerators#MINI_CART_ITEM_LIST_PRICE_VALUE")) && (maxIterations = "40")) {
+				Button.click(button = "Remove All Items");
+
+				Button.click(button = "Yes");
+
+				AssertElementNotPresent(
+					key_cartItemSku = "MIN93015",
+					locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_USING_SKU");
+
+				FrontStore.addInitializerProductToCartFromProductDetails(
+					productName = "ABS Sensor",
+					productQuantity = 10,
+					uomName = "uomName2");
+
+				CommerceNavigator.gotoMiniCart();
+			}
+		}
+
+		task ("Then the ABS Sensor price is the base price(20.00)") {
+			AssertTextEquals.assertPartialText(
+				key_cartItemSku = "MIN93015",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_PRICE_VALUE",
+				value1 = "$ 20.00");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-12472. As an admin, I can use the expiration date for the tiered pricing in a product's SKU/UOM combination"
+	@priority = 3
+	test CanAssertExpirationDateForTieredPricingUOM {
+		property osgi.module.configuration.file.names = "com.liferay.commerce.price.list.configuration.CommerceTierPriceEntryConfiguration.config";
+		property osgi.module.configurations = "checkInterval=\"1\"";
+		property portal.acceptance = "false";
+
+		task ("Given a Commerce Account with a Buyer User is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And two UOMs are added to the SKU MIN93015") {
+			for (var index : list "1,2") {
+				CommerceJSONSKUsAPI._addCommerceUOM(
+					basePrice = ${index},
+					productSKU = "MIN93015",
+					uomKey = "uomKey${index}",
+					uomName = "uomName${index}");
+			}
+		}
+
+		task ("And the quantity of Italy warehouse for UOM2 is set to 100") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Inventory");
+
+			CommerceSKUs.setSkuUomInventory(uomQuantityLists = "1:100");
+		}
+
+		task ("And a new Test Price List is created") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceList(
+				catalogName = "Minium",
+				currencyCode = "USD",
+				priceListName = "Test Price List");
+		}
+
+		task ("And a Tiered Pricing for SKU MIN93015 is set to expire in 2 minutes") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
+				entryPrice = 20,
+				priceListName = "Test Price List",
+				productSKU = "MIN93015",
+				unitOfMeasureKey = "uomKey2");
+
+			CommercePriceLists.openPriceListsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Test Price List");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN93015");
+
+			CommercePriceLists.createPriceListPriceTiers(
+				key_pricingType = "Tiered Pricing",
+				key_quantity = 10,
+				key_value = 10,
+				minutesToExpire = 2);
+		}
+
+		task ("And the buyer navigates to the product ABS Sensor's details page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/abs-sensor");
+		}
+
+		task ("When the buyer adds the product to the cart with reaches the quantity:10 to active the Bulk Pricing") {
+			FrontStore.addInitializerProductToCartFromProductDetails(
+				productName = "ABS Sensor",
+				productQuantity = 10,
+				uomName = "uomName2");
+		}
+
+		task ("Then the ABS Sensor price is the Tiered Pricing(19.00)") {
+			CommerceNavigator.gotoMiniCart();
+
+			AssertTextEquals.assertPartialText(
+				key_cartItemSku = "MIN93015",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_PRICE_VALUE",
+				value1 = "$ 19.00");
+		}
+
+		task ("But when the Tiered Price expires") {
+			while ((IsElementPresent(key_cartItemSku = "MIN93015", key_productPrice = "19.00", locator1 = "CommerceAccelerators#MINI_CART_ITEM_LIST_PRICE_VALUE")) && (maxIterations = "40")) {
+				Button.click(button = "Remove All Items");
+
+				Button.click(button = "Yes");
+
+				AssertElementNotPresent(
+					key_cartItemSku = "MIN93015",
+					locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_USING_SKU");
+
+				FrontStore.addInitializerProductToCartFromProductDetails(
+					productName = "ABS Sensor",
+					productQuantity = 10,
+					uomName = "uomName2");
+
+				CommerceNavigator.gotoMiniCart();
+			}
+		}
+
+		task ("Then the ABS Sensor price is the base price(20.00)") {
+			AssertTextEquals.assertPartialText(
+				key_cartItemSku = "MIN93015",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_PRICE_VALUE",
+				value1 = "$ 20.00");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-12479. As a buyer, I can view the multiple SKU/UOMs for a product applied to the Price On Application in the front store correctly"
 	@priority = 5
 	test CanAssertUOMsAreSetByPOACorrectly {

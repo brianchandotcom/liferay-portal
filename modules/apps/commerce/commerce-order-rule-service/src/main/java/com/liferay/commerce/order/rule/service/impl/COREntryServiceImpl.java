@@ -181,6 +181,18 @@ public class COREntryServiceImpl extends COREntryServiceBaseImpl {
 			externalReferenceCode, corEntryId);
 	}
 
+	@Override
+	public COREntry updateCOREntryTypeSettings(
+			long corEntryId, String typeSettings)
+		throws PortalException {
+
+		_corEntryModelResourcePermission.check(
+			getPermissionChecker(), corEntryId, ActionKeys.UPDATE);
+
+		return corEntryLocalService.updateCOREntryTypeSettings(
+			corEntryId, typeSettings);
+	}
+
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.order.rule.model.COREntry)"
 	)

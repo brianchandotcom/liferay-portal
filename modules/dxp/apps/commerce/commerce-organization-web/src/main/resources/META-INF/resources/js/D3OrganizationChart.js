@@ -396,11 +396,13 @@ class D3OrganizationChart {
 		this._root.x0 = DY / 2;
 		this._root.y0 = 0;
 
-		if (this._root.children.length > 1) {
+		if (this._root.children?.length > 1) {
 			this.collapseAllNodes();
 		}
 
-		this._storeDataTreeInfo(this._root.children, true);
+		if (this._root.children) {
+			this._storeDataTreeInfo(this._root.children, true);
+		}
 	}
 
 	_handleNodeMouseDown(d) {
@@ -795,48 +797,54 @@ class D3OrganizationChart {
 	}
 
 	_getParentNodeById(id, data, parentId, type) {
-		return this._getNodeById(parentId, type).then((parentNodes) => {
-			parentNodes = parentNodes.filter(Boolean);
+		return this._getNodeById(parentId, type, type === 'account').then(
+			(parentNodes) => {
+				parentNodes = parentNodes.filter(Boolean);
 
-			if (!parentNodes) {
-				return;
-			}
-
-			let currentNode;
-
-			parentNodes.forEach((parentNode) => {
-				showChildren(parentNode);
-
-				const node = (parentNode.children || []).find(
-					(child) => String(child.data.id) === String(id)
-				);
-
-				if (parentNode.children && parentNode.children.length && node) {
-					currentNode = node;
-					this._storeDataTreeInfo(parentNode.children);
+				if (!parentNodes) {
+					return;
 				}
-				else {
-					const {children} =
-						insertChildrenIntoNode([data], parentNode) || {};
-					currentNode = children.find(
+
+				let currentNode;
+
+				parentNodes.forEach((parentNode) => {
+					showChildren(parentNode);
+
+					const node = (parentNode.children || []).find(
 						(child) => String(child.data.id) === String(id)
 					);
-					this._storeDataTreeInfo(children);
-				}
 
-				if (currentNode) {
-					if (!currentNode.children && !currentNode._children) {
-						insertChildrenIntoNode(data.children, currentNode);
+					if (
+						parentNode.children &&
+						parentNode.children.length &&
+						node
+					) {
+						currentNode = node;
+						this._storeDataTreeInfo(parentNode.children);
+					}
+					else {
+						const {children} =
+							insertChildrenIntoNode([data], parentNode) || {};
+						currentNode = children.find(
+							(child) => String(child.data.id) === String(id)
+						);
+						this._storeDataTreeInfo(children);
 					}
 
-					currentNode.data.fetched = true;
-				}
+					if (currentNode) {
+						if (!currentNode.children && !currentNode._children) {
+							insertChildrenIntoNode(data.children, currentNode);
+						}
 
-				parentNode.data.fetched = true;
-			});
+						currentNode.data.fetched = true;
+					}
 
-			return currentNode;
-		});
+					parentNode.data.fetched = true;
+				});
+
+				return currentNode;
+			}
+		);
 	}
 
 	_expandParentNode(node) {
@@ -848,11 +856,17 @@ class D3OrganizationChart {
 	}
 
 	search(id, type) {
-		this._clearDiscoveredNodes(this._discoveredNodes, this._nodesGroup);
+		if (!id) {
+			this._clearDiscoveredNodes(this._discoveredNodes, this._nodesGroup);
 
-		if (!id || !type) {
 			return;
 		}
+
+		if (!type) {
+			return;
+		}
+
+		this._clearDiscoveredNodes(this._discoveredNodes, this._nodesGroup);
 
 		this._getNodeById(id, type, true).then((nodes = []) => {
 			nodes = nodes.filter(Boolean);

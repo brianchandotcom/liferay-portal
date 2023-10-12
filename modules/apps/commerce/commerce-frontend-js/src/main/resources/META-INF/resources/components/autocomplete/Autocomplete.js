@@ -83,6 +83,10 @@ function Autocomplete({onChange, onItemsUpdated, onValueUpdated, ...props}) {
 	]);
 
 	useEffect(() => {
+		setQuery(props.initialLabel);
+	}, [props.initialLabel]);
+
+	useEffect(() => {
 		if (!initialised) {
 			return;
 		}

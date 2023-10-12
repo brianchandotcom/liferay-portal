@@ -51,9 +51,15 @@ function ManagementBar({onSearchSelected}) {
 
 							if (currentValue) {
 								if (
-									searchSelectedItemRef.current &&
-									String(searchSelectedItemRef.current.id) ===
-										String(currentValue)
+									(searchSelectedItemRef.current &&
+										String(
+											searchSelectedItemRef.current.id
+										) === String(currentValue) &&
+										String(
+											searchSelectedItemRef.current
+												.randomId
+										) === String(selectedItem.randomId)) ||
+									!selectedItem.randomId
 								) {
 									return;
 								}
@@ -148,7 +154,10 @@ function CustomAutocompleteRenderer({items, updateActive, updateSelectedItem}) {
 					<ClayAutocomplete.Item
 						key={item.id}
 						onClick={() => {
-							updateSelectedItem(item);
+							updateSelectedItem({
+								randomId: Math.random(),
+								...item,
+							});
 							updateActive(false);
 						}}
 					>

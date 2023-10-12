@@ -1,0 +1,70 @@
+diff --git a/org/eclipse/osgi/internal/loader/BundleLoaderSources.java b/org/eclipse/osgi/internal/loader/BundleLoaderSources.java
+index 3c2c46ef4205..6fe0f8c70444 100644
+--- a/org/eclipse/osgi/internal/loader/BundleLoaderSources.java
++++ b/org/eclipse/osgi/internal/loader/BundleLoaderSources.java
+@@ -12,6 +12,7 @@ package org.eclipse.osgi.internal.loader;
+ 
+ import java.security.AccessController;
+ import java.util.Map;
++import java.util.concurrent.ConcurrentHashMap;
+ import org.eclipse.osgi.container.ModuleCapability;
+ import org.eclipse.osgi.framework.util.KeyedHashSet;
+ import org.eclipse.osgi.framework.util.SecureAction;
+@@ -20,23 +21,30 @@ import org.osgi.framework.namespace.PackageNamespace;
+ 
+ public class BundleLoaderSources {
+ 	static SecureAction secureAction = AccessController.doPrivileged(SecureAction.createSecureAction());
+-	private final KeyedHashSet pkgSources;
++	private final Map<String, PackageSource> pkgSources;
+ 	private final BundleLoader loader;
+ 
+ 	public BundleLoaderSources(BundleLoader loader) {
+-		this.pkgSources = new KeyedHashSet(false);
++		this.pkgSources = new ConcurrentHashMap<>();
+ 		this.loader = loader;
+ 	}
+ 
+ 	PackageSource getPackageSource(String pkgName) {
+-		synchronized (pkgSources) {
+-			PackageSource pkgSource = (PackageSource) pkgSources.getByKey(pkgName);
+-			if (pkgSource == null) {
+-				pkgSource = new SingleSourcePackage(pkgName, loader);
+-				pkgSources.add(pkgSource);
+-			}
++		PackageSource pkgSource = (PackageSource) pkgSources.get(pkgName);
++
++		if (pkgSource != null) {
+ 			return pkgSource;
+ 		}
++
++		pkgSource = new SingleSourcePackage(pkgName, loader);
++
++		PackageSource previousPackageSource = pkgSources.putIfAbsent(pkgName, pkgSource);
++
++		if (previousPackageSource != null) {
++			pkgSource = previousPackageSource;
++		}
++
++		return pkgSource;
+ 	}
+ 
+ 	boolean forceSourceCreation(ModuleCapability packageCapability) {
+@@ -63,11 +71,7 @@ public class BundleLoaderSources {
+ 
+ 		if (storeSource) {
+ 			if (pkgSource != null) {
+-				synchronized (pkgSources) {
+-					if (pkgSources.getByKey(name) == null) {
+-						pkgSources.add(pkgSource);
+-					}
+-				}
++				pkgSources.putIfAbsent(name, pkgSource);
+ 			}
+ 		} else {
+ 			// we are not storing the special case sources, but pkgSource == null this means this
+@@ -83,3 +87,4 @@ public class BundleLoaderSources {
+ 		return pkgSource;
+ 	}
+ }
++/* @generated */
+\ No newline at end of file

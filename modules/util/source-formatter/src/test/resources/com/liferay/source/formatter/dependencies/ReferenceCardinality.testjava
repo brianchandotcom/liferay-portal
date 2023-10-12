@@ -14,10 +14,10 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 /**
  * @author Qi Zhang
  */
-@Component(service = ReferenceCardinalityValue.class)
-public class ReferenceCardinalityValue {
+@Component(service = ReferenceCardinality.class)
+public class ReferenceCardinality {
 
-	public void testMethod() {
+	public void method() {
 		System.out.println(_regionLocalService);
 	}
 

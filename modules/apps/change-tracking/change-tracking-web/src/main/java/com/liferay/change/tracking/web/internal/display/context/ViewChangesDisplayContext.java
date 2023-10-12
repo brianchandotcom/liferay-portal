@@ -188,6 +188,9 @@ public class ViewChangesDisplayContext {
 					"ctCollectionId", "{ctCollectionId}"
 				).setParameter(
 					"ctEntryId", "{id}"
+				).setParameter(
+					"showHideable",
+					ParamUtil.getBoolean(_renderRequest, "showHideable")
 				).buildString(),
 				"list-ul", "view-change",
 				_language.get(_httpServletRequest, "review-change"), "get",

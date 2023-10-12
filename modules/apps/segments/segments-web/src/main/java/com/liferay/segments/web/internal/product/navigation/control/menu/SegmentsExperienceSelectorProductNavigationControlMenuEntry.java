@@ -37,7 +37,6 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperimentLocalService;
 import com.liferay.segments.service.SegmentsExperimentRelLocalService;
 import com.liferay.segments.web.internal.display.context.SegmentsExperienceSelectorDisplayContext;
-import com.liferay.sites.kernel.util.Sites;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -227,8 +226,5 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntry
 	@Reference
 	private SegmentsExperimentRelLocalService
 		_segmentsExperimentRelLocalService;
-
-	@Reference
-	private Sites _sites;
 
 }

@@ -521,10 +521,10 @@ public class CTCollectionLocalServiceImpl
 				"Change tracking collection " + ctCollection + " is read only");
 		}
 
+		List<CTEntry> ctEntries = new ArrayList<>();
+
 		Map<Long, List<CTEntry>> relateCTEntriesMap = _getRelateCTEntriesMap(
 			ctCollection, modelClassNameId, modelClassPK);
-
-		List<CTEntry> ctEntries = new ArrayList<>();
 
 		for (Map.Entry<Long, List<CTEntry>> entry :
 				relateCTEntriesMap.entrySet()) {

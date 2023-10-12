@@ -109,6 +109,7 @@ public class QuartzSchedulerEngineTest {
 	@AfterClass
 	public static void tearDownClass() {
 		_frameworkUtilMockedStatic.close();
+		_portalUUIDUtilMockedStatic.close();
 		_schedulerEngineHelperServiceRegistration.unregister();
 	}
 

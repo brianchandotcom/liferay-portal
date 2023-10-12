@@ -19,7 +19,7 @@ public class XMLWhitespaceCheck extends WhitespaceCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		content = StringUtil.replace(content, "\"/>\n", "\" />\n");
+		content = content.replaceAll("(?<=\\S)/>\n", " />\n");
 
 		content = content.replaceAll("([\n\t]<\\!--) (<)", "$1$2");
 

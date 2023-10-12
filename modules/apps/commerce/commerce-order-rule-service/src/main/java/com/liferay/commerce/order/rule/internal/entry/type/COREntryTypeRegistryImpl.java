@@ -64,7 +64,11 @@ public class COREntryTypeRegistryImpl implements COREntryTypeRegistry {
 		for (ServiceTrackerCustomizerFactory.ServiceWrapper<COREntryType>
 				corEntryTypeServiceWrapper : corEntryTypeServiceWrappers) {
 
-			corEntryTypes.add(corEntryTypeServiceWrapper.getService());
+			COREntryType corEntryType = corEntryTypeServiceWrapper.getService();
+
+			if (corEntryType.isActive()) {
+				corEntryTypes.add(corEntryType);
+			}
 		}
 
 		return Collections.unmodifiableList(corEntryTypes);

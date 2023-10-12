@@ -27,4 +27,6 @@ public interface COREntryType {
 
 	public String getLabel(Locale locale);
 
+	public boolean isActive();
+
 }

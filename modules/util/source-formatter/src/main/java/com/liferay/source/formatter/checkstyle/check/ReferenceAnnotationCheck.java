@@ -57,7 +57,7 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 		if ((cardinalityName != null) &&
 			cardinalityName.endsWith(_CARDINALITY_OPTIONAL)) {
 
-			log(annotationDetailAST, _MSG_NOT_USE_OPTIONAL);
+			log(annotationDetailAST, _MSG_USE_SNAPSHOT);
 		}
 	}
 
@@ -360,10 +360,10 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 
 	private static final String _MSG_MOVE_REFERENCE = "reference.move";
 
-	private static final String _MSG_NOT_USE_OPTIONAL = "not.use.optional";
-
 	private static final String _MSG_REDUNDANT_DEFAULT_UNBIND =
 		"default.unbind.redundant";
+
+	private static final String _MSG_USE_SNAPSHOT = "snapshot.use";
 
 	private static final String _NO_UNBIND = "\"-\"";
 

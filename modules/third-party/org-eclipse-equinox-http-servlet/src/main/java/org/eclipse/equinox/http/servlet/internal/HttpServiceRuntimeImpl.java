@@ -171,11 +171,6 @@ public class HttpServiceRuntimeImpl
 	}
 
 	@Override
-	public Collection<ContextController> getContextControllers() {
-		return controllerMap.values();
-	}
-
-	@Override
 	public DispatchTargets getDispatchTargets(String pathString) {
 		Path path = new Path(pathString);
 

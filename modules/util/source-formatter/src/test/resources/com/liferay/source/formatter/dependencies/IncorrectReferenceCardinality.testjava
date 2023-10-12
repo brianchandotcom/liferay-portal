@@ -14,14 +14,13 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 /**
  * @author Qi Zhang
  */
-@Component(service = ReferenceCardinality.class)
-public class ReferenceCardinality {
+@Component(service = IncorrectReferenceCardinality.class)
+public class IncorrectReferenceCardinality {
 
-	public void method() {
-		System.out.println(_regionLocalService);
-	}
-
-	@Reference(cardinality = ReferenceCardinality.OPTIONAL)
-	private volatile RegionLocalService _regionLocalService;
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected volatile RegionLocalService regionLocalService;
 
 }

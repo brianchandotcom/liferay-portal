@@ -359,6 +359,23 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testIncorrectReferenceCardinality() throws Exception {
+		test(
+			SourceProcessorTestParameters.create(
+				"IncorrectReferenceCardinality.testjava"
+			).addExpectedMessage(
+				"Use Snapshot instead of 'cardinality = ReferenceCardinality." +
+					"OPTIONAL', see LPS-184625",
+				20
+			).addExpectedMessage(
+				"When using 'cardinality = ReferenceCardinality.OPTIONAL' " +
+					"and 'policyOption = ReferencePolicyOption.GREEDY', " +
+						"always use 'policy = ReferencePolicy.DYNAMIC' as well",
+				20
+			));
+	}
+
+	@Test
 	public void testIncorrectVariableNames() throws Exception {
 		test(
 			SourceProcessorTestParameters.create(
@@ -575,16 +592,6 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testMissingReferencePolicyDynamic() throws Exception {
-		test(
-			"MissingReferencePolicyDynamic.testjava",
-			"When using 'cardinality = ReferenceCardinality.OPTIONAL' and " +
-				"'policyOption = ReferencePolicyOption.GREEDY', always use " +
-					"'policy = ReferencePolicy.DYNAMIC' as well",
-			21);
-	}
-
-	@Test
 	public void testMissingSerialVersionUID() throws Exception {
 		test(
 			"MissingSerialVersionUID.testjava",
@@ -657,15 +664,6 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test(
 			"RedundantLog.testjava",
 			"Redundant log between line '17' and line '22'.", 17);
-	}
-
-	@Test
-	public void testReferenceCardinality() throws Exception {
-		test(
-			"ReferenceCardinality.testjava",
-			"Use Snapshot instead of 'cardinality = ReferenceCardinality." +
-				"OPTIONAL', see LPS-184625",
-			24);
 	}
 
 	@Test

@@ -29,6 +29,16 @@ public class CPDefinitionLinkTypeImpl implements CPDefinitionLinkType {
 		return _cpDefinitionLinkTypeConfiguration.type();
 	}
 
+	@Override
+	public boolean isActive() {
+		return true;
+	}
+
+	@Override
+	public boolean isBiDirectional() {
+		return false;
+	}
+
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {

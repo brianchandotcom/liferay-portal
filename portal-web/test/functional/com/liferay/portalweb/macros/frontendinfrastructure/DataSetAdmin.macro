@@ -35,11 +35,6 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = ${key_actionType});
 
-			Select(
-				key_fieldLabel = "Message Type",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = ${key_actionMessageType});
-
 			Type(
 				key_fieldId = "URL",
 				locator1 = "TextArea#ANY_ID",
@@ -57,6 +52,13 @@ definition {
 					key_placeholder = "Add a message here.",
 					locator1 = "FrontendDataSet#PLACEHOLDER",
 					value1 = ${confirmationMessage});
+			}
+
+			if (isSet(key_actionMessageType)) {
+				Select(
+					key_fieldLabel = "Message Type",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = ${key_actionMessageType});
 			}
 
 			PortletEntry.save();

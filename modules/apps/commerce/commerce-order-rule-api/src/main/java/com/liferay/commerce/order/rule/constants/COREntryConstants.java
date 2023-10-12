@@ -33,4 +33,12 @@ public class COREntryConstants {
 	public static final String TYPE_MINIMUM_ORDER_AMOUNT_FIELD_CURRENCY_CODE =
 		"minimum-order-amount-field-currency-code";
 
+	public static final String TYPE_PRODUCTS_LIMIT = "products-limit";
+
+	public static final String TYPE_PRODUCTS_LIMIT_FIELD_PRODUCT_IDS =
+		"products-limit-field-product-ids";
+
+	public static final String TYPE_PRODUCTS_LIMIT_FIELD_PRODUCT_QUANTITY =
+		"products-limit-field-product-quantity";
+
 }

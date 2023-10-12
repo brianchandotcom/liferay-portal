@@ -12,6 +12,9 @@ import com.liferay.commerce.order.rule.constants.COREntryPortletKeys;
  */
 public class COREntryFDSNames {
 
+	public static final String CONFIGURABLE_PRODUCTS =
+		COREntryPortletKeys.COR_ENTRY + "-configurableProducts";
+
 	public static final String COR_ENTRIES =
 		COREntryPortletKeys.COR_ENTRY + "-corEntries";
 

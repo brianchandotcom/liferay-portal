@@ -437,6 +437,22 @@ public class COREntryLocalServiceImpl extends COREntryLocalServiceBaseImpl {
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
+	public COREntry updateCOREntryTypeSettings(
+			long corEntryId, String typeSettings)
+		throws PortalException {
+
+		COREntry corEntry = corEntryPersistence.findByPrimaryKey(corEntryId);
+
+		corEntry.setTypeSettingsUnicodeProperties(
+			UnicodePropertiesBuilder.fastLoad(
+				typeSettings
+			).build());
+
+		return corEntryPersistence.update(corEntry);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public COREntry updateStatus(
 			long userId, long corEntryId, int status,
 			ServiceContext serviceContext)

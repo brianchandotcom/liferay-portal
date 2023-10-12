@@ -122,20 +122,16 @@ public class AopInvocationHandler implements InvocationHandler {
 				method);
 
 			if (aopMethodInvocation == null) {
-				AopMethodInvocation previousAopMethodInvocation = null;
+				synchronized (method) {
+					aopMethodInvocation = _aopMethodInvocations.get(method);
 
-				synchronized (this) {
-					aopMethodInvocation = _createAopMethodInvocation(
-						_target, method, _chainableMethodAdvices,
-						_transactionInterceptor);
+					if (aopMethodInvocation == null) {
+						aopMethodInvocation = _createAopMethodInvocation(
+							_target, method, _chainableMethodAdvices,
+							_transactionInterceptor);
 
-					previousAopMethodInvocation =
-						_aopMethodInvocations.putIfAbsent(
-							method, aopMethodInvocation);
-				}
-
-				if (previousAopMethodInvocation != null) {
-					aopMethodInvocation = previousAopMethodInvocation;
+						_aopMethodInvocations.put(method, aopMethodInvocation);
+					}
 				}
 			}
 

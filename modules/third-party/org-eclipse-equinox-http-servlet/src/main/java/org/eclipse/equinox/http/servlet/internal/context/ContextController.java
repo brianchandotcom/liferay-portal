@@ -38,7 +38,7 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author Raymond Augé
  */
-public class ContextController {
+public class ContextController implements ServletContextHelperController {
 
 	public static final class ServiceHolder<S> implements Comparable<ServiceHolder<?>> {
 		final ServiceObjects<S> serviceObjects;
@@ -213,6 +213,7 @@ public class ContextController {
 		resourceServiceTracker.open();
 	}
 
+	@Override
 	public FilterRegistration addFilterRegistration(ServiceReference<Filter> filterRef) throws ServletException {
 		checkShutdown();
 
@@ -339,6 +340,7 @@ public class ContextController {
 		return newRegistration;
 	}
 
+	@Override
 	public ListenerRegistration addListenerRegistration(ServiceReference<EventListener> listenerRef) throws ServletException {
 
 		checkShutdown();
@@ -407,6 +409,7 @@ public class ContextController {
 		return listenerRegistration;
 	}
 
+	@Override
 	public ResourceRegistration addResourceRegistration(ServiceReference<?> resourceRef) {
 
 		checkShutdown();
@@ -472,6 +475,7 @@ public class ContextController {
 		return resourceRegistration;
 	}
 
+	@Override
 	public ServletRegistration addServletRegistration(ServiceReference<Servlet> servletRef) throws ServletException {
 
 		checkShutdown();
@@ -619,6 +623,7 @@ public class ContextController {
 		return servletRegistration;
 	}
 
+	@Override
 	public void destroy() {
 		flushActiveSessions();
 		resourceServiceTracker.close();
@@ -645,14 +650,17 @@ public class ContextController {
 		shutdown = true;
 	}
 
+	@Override
 	public String getContextName() {
 		return contextName;
 	}
 
+	@Override
 	public String getContextPath() {
 		return contextPath;
 	}
 
+	@Override
 	public DispatchTargets getDispatchTargets(String pathString) {
 		Path path = new Path(pathString);
 
@@ -727,6 +735,7 @@ public class ContextController {
 		return null;
 	}
 
+	@Override
 	public DispatchTargets getDispatchTargets(
 		String servletName, String requestURI, String servletPath,
 		String pathInfo, String extension, String queryString, Match match) {
@@ -791,22 +800,27 @@ public class ContextController {
 		}
 	}
 
+	@Override
 	public Map<String, HttpSessionAdaptor> getActiveSessions() {
 		return activeSessions;
 	}
 
+	@Override
 	public Set<EndpointRegistration<?>> getEndpointRegistrations() {
 		return endpointRegistrations;
 	}
 
+	@Override
 	public EventListeners getEventListeners() {
 		return eventListeners;
 	}
 
+	@Override
 	public Set<FilterRegistration> getFilterRegistrations() {
 		return filterRegistrations;
 	}
 
+	@Override
 	public String getFullContextPath() {
 		List<String> endpoints = httpServletEndpointController.getHttpServiceEndpoints();
 
@@ -824,18 +838,22 @@ public class ContextController {
 		return defaultEndpoint + contextPath;
 	}
 
+	@Override
 	public HttpServletEndpointController getHttpServletEndpointController() {
 		return httpServletEndpointController;
 	}
 
+	@Override
 	public Map<String, String> getInitParams() {
 		return initParams;
 	}
 
+	@Override
 	public Set<ListenerRegistration> getListenerRegistrations() {
 		return listenerRegistrations;
 	}
 
+	@Override
 	public boolean matches(ServiceReference<?> whiteBoardService) {
 		String contextSelector = (String) whiteBoardService.getProperty(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT);
@@ -879,6 +897,7 @@ public class ContextController {
 			ServletContextHelper.class.getName());
 	}
 
+	@Override
 	public boolean matches(org.osgi.framework.Filter targetFilter) {
 		return targetFilter.match(servletContextHelperRef);
 	}
@@ -1016,6 +1035,7 @@ public class ContextController {
 		return context.getService(servletContextHelperRef);
 	}
 
+	@Override
 	public void ungetServletContextHelper(Bundle curBundle) {
 		BundleContext context = curBundle.getBundleContext();
 		try {
@@ -1052,10 +1072,12 @@ public class ContextController {
 		}
 	}
 
+	@Override
 	public void removeActiveSession(String id) {
 		activeSessions.remove(id);
 	}
 
+	@Override
 	public HttpSessionAdaptor getSessionAdaptor(
 		HttpSession session, ServletContext servletContext) {
 

@@ -8,7 +8,7 @@ package com.liferay.asset.kernel.configuration.provider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * @author Lourdes Fernández Besada
@@ -17,7 +17,11 @@ public class AssetCategoryConfigurationProviderUtil {
 
 	public static boolean isSearchHierarchical(long companyId) {
 		try {
-			return _assetCategoryConfigurationProvider.isSearchHierarchical(
+			AssetCategoryConfigurationProvider
+				assetCategoryConfigurationProvider =
+					_assetCategoryConfigurationProviderSnapshot.get();
+
+			return assetCategoryConfigurationProvider.isSearchHierarchical(
 				companyId);
 		}
 		catch (ConfigurationException configurationException) {
@@ -33,11 +37,9 @@ public class AssetCategoryConfigurationProviderUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetCategoryConfigurationProviderUtil.class);
 
-	private static volatile AssetCategoryConfigurationProvider
-		_assetCategoryConfigurationProvider =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				AssetCategoryConfigurationProvider.class,
-				AssetCategoryConfigurationProviderUtil.class,
-				"_assetCategoryConfigurationProvider", false);
+	private static final Snapshot<AssetCategoryConfigurationProvider>
+		_assetCategoryConfigurationProviderSnapshot = new Snapshot<>(
+			AssetCategoryConfigurationProviderUtil.class,
+			AssetCategoryConfigurationProvider.class);
 
 }

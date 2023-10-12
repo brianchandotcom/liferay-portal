@@ -51,6 +51,17 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 		}
 	}
 
+	private void _checkCardinality(DetailAST annotationDetailAST) {
+		String cardinalityValue = _getAnnotationMemberValue(
+			annotationDetailAST, "cardinality", null);
+
+		if ((cardinalityValue != null) &&
+			cardinalityValue.equals("ReferenceCardinality.OPTIONAL")) {
+
+			log(annotationDetailAST, _MSG_NOT_USE_OPTIONAL);
+		}
+	}
+
 	private void _checkDynamicMethod(
 		DetailAST classDefinitionDetailAST, DetailAST methodDefinitionDetailAST,
 		String methodName, String defaultUnbindMethodName) {
@@ -137,14 +148,7 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 		}
 
 		if (isAttributeValue(_CHECK_CARDINALITY_VALUE_KEY)) {
-			String cardinalityValue = _getAnnotationMemberValue(
-				annotationDetailAST, "cardinality", null);
-
-			if ((cardinalityValue != null) &&
-				cardinalityValue.equals("ReferenceCardinality.OPTIONAL")) {
-
-				log(annotationDetailAST, _MSG_NOT_USE_OPTIONAL);
-			}
+			_checkCardinality(annotationDetailAST);
 		}
 
 		String policyName = _getAnnotationMemberValue(

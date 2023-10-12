@@ -44,6 +44,27 @@ public class ProductOptionValue implements Cloneable, Serializable {
 
 	protected Long id;
 
+	public String getInfoMessage() {
+		return infoMessage;
+	}
+
+	public void setInfoMessage(String infoMessage) {
+		this.infoMessage = infoMessage;
+	}
+
+	public void setInfoMessage(
+		UnsafeSupplier<String, Exception> infoMessageUnsafeSupplier) {
+
+		try {
+			infoMessage = infoMessageUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String infoMessage;
+
 	public String getKey() {
 		return key;
 	}
@@ -229,6 +250,27 @@ public class ProductOptionValue implements Cloneable, Serializable {
 	}
 
 	protected String relativePriceFormatted;
+
+	public Boolean getSelectable() {
+		return selectable;
+	}
+
+	public void setSelectable(Boolean selectable) {
+		this.selectable = selectable;
+	}
+
+	public void setSelectable(
+		UnsafeSupplier<Boolean, Exception> selectableUnsafeSupplier) {
+
+		try {
+			selectable = selectableUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean selectable;
 
 	public Long getSkuId() {
 		return skuId;

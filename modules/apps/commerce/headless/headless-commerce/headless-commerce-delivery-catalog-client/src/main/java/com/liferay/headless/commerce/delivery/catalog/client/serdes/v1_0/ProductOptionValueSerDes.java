@@ -56,6 +56,20 @@ public class ProductOptionValueSerDes {
 			sb.append(productOptionValue.getId());
 		}
 
+		if (productOptionValue.getInfoMessage() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"infoMessage\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(productOptionValue.getInfoMessage()));
+
+			sb.append("\"");
+		}
+
 		if (productOptionValue.getKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -170,6 +184,16 @@ public class ProductOptionValueSerDes {
 			sb.append("\"");
 		}
 
+		if (productOptionValue.getSelectable() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"selectable\": ");
+
+			sb.append(productOptionValue.getSelectable());
+		}
+
 		if (productOptionValue.getSkuId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -246,6 +270,15 @@ public class ProductOptionValueSerDes {
 			map.put("id", String.valueOf(productOptionValue.getId()));
 		}
 
+		if (productOptionValue.getInfoMessage() == null) {
+			map.put("infoMessage", null);
+		}
+		else {
+			map.put(
+				"infoMessage",
+				String.valueOf(productOptionValue.getInfoMessage()));
+		}
+
 		if (productOptionValue.getKey() == null) {
 			map.put("key", null);
 		}
@@ -318,6 +351,15 @@ public class ProductOptionValueSerDes {
 				String.valueOf(productOptionValue.getRelativePriceFormatted()));
 		}
 
+		if (productOptionValue.getSelectable() == null) {
+			map.put("selectable", null);
+		}
+		else {
+			map.put(
+				"selectable",
+				String.valueOf(productOptionValue.getSelectable()));
+		}
+
 		if (productOptionValue.getSkuId() == null) {
 			map.put("skuId", null);
 		}
@@ -377,6 +419,12 @@ public class ProductOptionValueSerDes {
 						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "infoMessage")) {
+				if (jsonParserFieldValue != null) {
+					productOptionValue.setInfoMessage(
+						(String)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "key")) {
 				if (jsonParserFieldValue != null) {
 					productOptionValue.setKey((String)jsonParserFieldValue);
@@ -428,6 +476,12 @@ public class ProductOptionValueSerDes {
 				if (jsonParserFieldValue != null) {
 					productOptionValue.setRelativePriceFormatted(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "selectable")) {
+				if (jsonParserFieldValue != null) {
+					productOptionValue.setSelectable(
+						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "skuId")) {

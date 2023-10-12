@@ -76,6 +76,34 @@ public class ProductOptionValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
+	@Schema
+	public String getInfoMessage() {
+		return infoMessage;
+	}
+
+	public void setInfoMessage(String infoMessage) {
+		this.infoMessage = infoMessage;
+	}
+
+	@JsonIgnore
+	public void setInfoMessage(
+		UnsafeSupplier<String, Exception> infoMessageUnsafeSupplier) {
+
+		try {
+			infoMessage = infoMessageUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String infoMessage;
+
 	@Schema(example = "black")
 	public String getKey() {
 		return key;
@@ -326,6 +354,34 @@ public class ProductOptionValue implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected String relativePriceFormatted;
 
+	@Schema(example = "true")
+	public Boolean getSelectable() {
+		return selectable;
+	}
+
+	public void setSelectable(Boolean selectable) {
+		this.selectable = selectable;
+	}
+
+	@JsonIgnore
+	public void setSelectable(
+		UnsafeSupplier<Boolean, Exception> selectableUnsafeSupplier) {
+
+		try {
+			selectable = selectableUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Boolean selectable;
+
 	@Schema(example = "30130")
 	public Long getSkuId() {
 		return skuId;
@@ -473,6 +529,20 @@ public class ProductOptionValue implements Serializable {
 			sb.append(id);
 		}
 
+		if (infoMessage != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"infoMessage\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(infoMessage));
+
+			sb.append("\"");
+		}
+
 		if (key != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -585,6 +655,16 @@ public class ProductOptionValue implements Serializable {
 			sb.append(_escape(relativePriceFormatted));
 
 			sb.append("\"");
+		}
+
+		if (selectable != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"selectable\": ");
+
+			sb.append(selectable);
 		}
 
 		if (skuId != null) {

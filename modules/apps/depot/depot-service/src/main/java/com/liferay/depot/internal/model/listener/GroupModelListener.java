@@ -111,7 +111,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 				depotAppCustomizations) {
 
 			_depotAppCustomizationLocalService.updateDepotAppCustomization(
-				newDepotEntryId, depotAppCustomization.getEnabled(),
+				newDepotEntryId, depotAppCustomization.isEnabled(),
 				depotAppCustomization.getPortletId());
 		}
 	}
@@ -152,9 +152,9 @@ public class GroupModelListener extends BaseModelListener<Group> {
 						depotEntryGroupRel.getGroupId());
 
 				stagedDepotEntryGroupRel.setDdmStructuresAvailable(
-					depotEntryGroupRel.getDdmStructuresAvailable());
+					depotEntryGroupRel.isDdmStructuresAvailable());
 				stagedDepotEntryGroupRel.setSearchable(
-					depotEntryGroupRel.getSearchable());
+					depotEntryGroupRel.isSearchable());
 
 				_depotEntryGroupRelLocalService.updateDepotEntryGroupRel(
 					stagedDepotEntryGroupRel);

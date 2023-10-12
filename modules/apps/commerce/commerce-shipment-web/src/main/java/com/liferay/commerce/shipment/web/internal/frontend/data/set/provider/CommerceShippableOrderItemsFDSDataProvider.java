@@ -79,7 +79,7 @@ public class CommerceShippableOrderItemsFDSDataProvider
 				fdsPagination.getEndPosition());
 
 		for (CommerceOrderItem commerceOrderItem : commerceOrderItems) {
-			if (!commerceOrderItem.getShippable()) {
+			if (!commerceOrderItem.isShippable()) {
 				continue;
 			}
 

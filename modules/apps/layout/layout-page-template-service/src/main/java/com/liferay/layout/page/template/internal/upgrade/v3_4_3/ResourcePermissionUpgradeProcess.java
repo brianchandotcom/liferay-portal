@@ -87,7 +87,7 @@ public class ResourcePermissionUpgradeProcess extends UpgradeProcess {
 			newResourcePermission.setActionIds(
 				resourcePermission.getActionIds());
 			newResourcePermission.setViewActionId(
-				resourcePermission.getViewActionId());
+				resourcePermission.isViewActionId());
 
 			_resourcePermissionLocalService.addResourcePermission(
 				newResourcePermission);

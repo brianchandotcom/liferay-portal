@@ -188,8 +188,8 @@ public class AssetPublisherPortletLayoutListener
 					continue;
 				}
 
-				assetListEntryUsage.setKey(key);
 				assetListEntryUsage.setClassNameId(classNameId);
+				assetListEntryUsage.setKey(key);
 
 				_assetListEntryUsageLocalService.updateAssetListEntryUsage(
 					assetListEntryUsage);

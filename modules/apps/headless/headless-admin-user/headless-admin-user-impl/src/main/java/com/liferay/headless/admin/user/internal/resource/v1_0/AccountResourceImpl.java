@@ -271,8 +271,8 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 				address.getStreet1(), address.getStreet2(),
 				address.getStreet3(), address.getCity(), address.getZip(),
 				address.getRegionId(), address.getCountryId(),
-				address.getListTypeId(), address.getMailing(),
-				address.getPrimary(), address.getPhoneNumber(),
+				address.getListTypeId(), address.isMailing(),
+				address.isPrimary(), address.getPhoneNumber(),
 				_createServiceContext(account));
 		}
 
@@ -324,8 +324,8 @@ public class AccountResourceImpl extends BaseAccountResourceImpl {
 				address.getDescription(), address.getStreet1(),
 				address.getStreet2(), address.getStreet3(), address.getCity(),
 				address.getZip(), address.getRegionId(), address.getCountryId(),
-				address.getListTypeId(), address.getMailing(),
-				address.getPrimary(), address.getPhoneNumber(),
+				address.getListTypeId(), address.isMailing(),
+				address.isPrimary(), address.getPhoneNumber(),
 				_createServiceContext(account));
 		}
 

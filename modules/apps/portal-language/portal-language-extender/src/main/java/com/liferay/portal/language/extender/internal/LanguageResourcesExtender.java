@@ -144,9 +144,11 @@ public class LanguageResourcesExtender
 
 			String languageId = StringPool.BLANK;
 
-			if (urlPath.contains(StringPool.UNDERLINE)) {
+			int languageIdIndex = path.length() + name.length();
+
+			if (urlPath.charAt(languageIdIndex + 1) == CharPool.UNDERLINE) {
 				languageId = urlPath.substring(
-					path.length() + name.length() + 2,
+					languageIdIndex + 2,
 					urlPath.length() - ".properties".length());
 			}
 

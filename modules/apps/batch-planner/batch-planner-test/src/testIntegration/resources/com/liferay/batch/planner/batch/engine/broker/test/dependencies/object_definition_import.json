@@ -26,7 +26,7 @@
 		"defaultLanguageId": "en_US",
 		"enableCategorization": true,
 		"enableComments": false,
-		"enableLocalization": true,
+		"enableLocalization": false,
 		"enableObjectEntryHistory": false,
 		"externalReferenceCode": "TEST-OBJECT-DEFINITION-1",
 		"label": {
@@ -58,7 +58,8 @@
 					"code": 0,
 					"label": "never-ran",
 					"label_i18n": "Never Ran"
-				}
+				},
+				"system": false
 			}
 		],
 		"objectFields": [
@@ -494,6 +495,7 @@
 				"parameterObjectFieldId": 0,
 				"parameterObjectFieldName": "",
 				"reverse": false,
+				"system": false,
 				"type": "manyToMany"
 			}
 		],
@@ -506,13 +508,18 @@
 				"engineLabel": "Groovy",
 				"errorLabel": {
 				},
+				"externalReferenceCode": "74ad169a-6ed2-d875-aff8-a5afde81682e",
 				"id": 36597,
 				"name": {
 					"en_US": "testValidation"
 				},
 				"objectDefinitionExternalReferenceCode": "TEST-OBJECT-DEFINITION-1",
 				"objectDefinitionId": 35588,
-				"script": "script_placeholder"
+				"objectValidationRuleSettings": [
+				],
+				"outputType": "fullValidation",
+				"script": "script_placeholder",
+				"system": false
 			}
 		],
 		"objectViews": [

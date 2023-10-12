@@ -1359,36 +1359,46 @@ public class PortletTracker
 			return;
 		}
 
-		List<Future<Void>> futures = new ArrayList<>();
-
 		List<Company> companies = _companyLocalService.getCompanies();
 
-		ExecutorService executorService =
-			SystemExecutorServiceUtil.getExecutorService();
-
-		for (Company company : companies) {
-			futures.add(
-				executorService.submit(
-					() -> {
-						_portletLocalService.deployRemotePortlet(
-							new long[] {company.getCompanyId()}, portletModel,
-							ArrayUtil.toStringArray(categoryNames), false,
-							false);
-
-						return null;
-					}));
-		}
-
-		for (Future<Void> future : futures) {
-			try {
-				future.get();
+		if (_parallel) {
+			for (Company company : companies) {
+				_portletLocalService.deployRemotePortlet(
+					new long[] {company.getCompanyId()}, portletModel,
+					ArrayUtil.toStringArray(categoryNames), false, false);
 			}
-			catch (Exception exception) {
-				if (exception instanceof ExecutionException) {
-					throw new PortalException(exception.getCause());
-				}
+		}
+		else {
+			List<Future<Void>> futures = new ArrayList<>();
 
-				throw new PortalException(exception);
+			ExecutorService executorService =
+				SystemExecutorServiceUtil.getExecutorService();
+
+			for (Company company : companies) {
+				futures.add(
+					executorService.submit(
+						() -> {
+							_portletLocalService.deployRemotePortlet(
+								new long[] {company.getCompanyId()},
+								portletModel,
+								ArrayUtil.toStringArray(categoryNames), false,
+								false);
+
+							return null;
+						}));
+			}
+
+			for (Future<Void> future : futures) {
+				try {
+					future.get();
+				}
+				catch (Exception exception) {
+					if (exception instanceof ExecutionException) {
+						throw new PortalException(exception.getCause());
+					}
+
+					throw new PortalException(exception);
+				}
 			}
 		}
 

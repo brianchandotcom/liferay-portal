@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
-import com.liferay.sites.kernel.util.Sites;
 import com.liferay.translation.security.permission.TranslationPermission;
 
 import java.util.Collections;
@@ -554,9 +553,6 @@ public class LayoutsTreeImpl implements LayoutsTree {
 
 	@Reference
 	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
-
-	@Reference
-	private Sites _sites;
 
 	@Reference
 	private Staging _staging;

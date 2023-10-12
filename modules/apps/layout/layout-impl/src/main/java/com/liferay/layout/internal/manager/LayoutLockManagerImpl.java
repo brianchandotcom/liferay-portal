@@ -7,28 +7,18 @@ package com.liferay.layout.internal.manager;
 
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.configuration.LockedLayoutsGroupConfiguration;
-import com.liferay.layout.constants.LockedLayoutType;
 import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.layout.model.LockedLayout;
-import com.liferay.layout.model.LockedLayoutOrder;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntryTable;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
-import com.liferay.layout.util.comparator.LayoutNameComparator;
-import com.liferay.layout.utility.page.kernel.LayoutUtilityPageEntryViewRenderer;
-import com.liferay.layout.utility.page.kernel.LayoutUtilityPageEntryViewRendererRegistryUtil;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
-import com.liferay.layout.utility.page.model.LayoutUtilityPageEntryTable;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 import com.liferay.petra.sql.dsl.expression.Predicate;
-import com.liferay.petra.sql.dsl.query.LimitStep;
-import com.liferay.petra.sql.dsl.query.OrderByStep;
-import com.liferay.petra.sql.dsl.query.sort.OrderByExpression;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -88,41 +78,6 @@ import org.osgi.service.component.annotations.Reference;
 public class LayoutLockManagerImpl implements LayoutLockManager {
 
 	@Override
-	public String getLayoutType(long classPK, Locale locale, String type) {
-		if (Objects.equals(type, LayoutConstants.TYPE_ASSET_DISPLAY)) {
-			return _language.get(locale, "display-page-template");
-		}
-
-		if (Objects.equals(type, LayoutConstants.TYPE_COLLECTION)) {
-			return _language.get(locale, "collection-page");
-		}
-
-		if (!Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
-			return StringPool.BLANK;
-		}
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.
-				fetchLayoutPageTemplateEntryByPlid(classPK);
-
-		if (layoutPageTemplateEntry != null) {
-			return _getLayoutPageTemplateEntryTypeLabel(
-				layoutPageTemplateEntry, locale);
-		}
-
-		LayoutUtilityPageEntry layoutUtilityPageEntry =
-			_layoutUtilityPageEntryLocalService.
-				fetchLayoutUtilityPageEntryByPlid(classPK);
-
-		if (layoutUtilityPageEntry != null) {
-			return _getLayoutUtilityPageEntryTypeLabel(
-				layoutUtilityPageEntry, locale);
-		}
-
-		return _language.get(locale, "content-page");
-	}
-
-	@Override
 	public void getLock(ActionRequest actionRequest) throws PortalException {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -166,16 +121,15 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 
 	@Override
 	public List<LockedLayout> getLockedLayouts(
-		long companyId, long groupId, LockedLayoutOrder lockedLayoutOrder,
-		LockedLayoutType lockedLayoutType) {
+		long companyId, long groupId, Locale locale) {
 
 		List<Object[]> results = _layoutLocalService.dslQuery(
 			DSLQueryFactoryUtil.select(
 			).from(
 				DSLQueryFactoryUtil.select(
 					LayoutTable.INSTANCE.classPK, LockTable.INSTANCE.createDate,
-					LayoutTable.INSTANCE.name, LayoutTable.INSTANCE.plid,
-					LayoutTable.INSTANCE.type, LockTable.INSTANCE.userName
+					LayoutTable.INSTANCE.plid, LayoutTable.INSTANCE.type,
+					LockTable.INSTANCE.userName
 				).from(
 					LayoutTable.INSTANCE
 				).innerJoinON(
@@ -189,33 +143,50 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 							DSLFunctionFactoryUtil.castText(
 								LayoutTable.INSTANCE.plid))
 					)
-				).leftJoinOn(
-					LayoutPageTemplateEntryTable.INSTANCE,
-					_getLayoutPageTemplateEntryTableLeftJoinOnPredicate(
-						groupId, lockedLayoutType)
-				).leftJoinOn(
-					LayoutUtilityPageEntryTable.INSTANCE,
-					_getLayoutUtilityPageEntryTableLeftJoin(
-						groupId, lockedLayoutType)
 				).where(
-					_getWherePredicate(groupId, lockedLayoutType)
+					LayoutTable.INSTANCE.groupId.eq(
+						groupId
+					).and(
+						LayoutTable.INSTANCE.classPK.gt(0L)
+					).and(
+						LayoutTable.INSTANCE.hidden.eq(true)
+					).and(
+						LayoutTable.INSTANCE.system.eq(true)
+					).and(
+						LayoutTable.INSTANCE.status.eq(
+							WorkflowConstants.STATUS_DRAFT)
+					).and(
+						LayoutTable.INSTANCE.type.in(
+							new String[] {
+								LayoutConstants.TYPE_ASSET_DISPLAY,
+								LayoutConstants.TYPE_COLLECTION,
+								LayoutConstants.TYPE_CONTENT
+							})
+					)
 				).as(
 					"LockedLayoutsTable", LockedLayoutsTable.INSTANCE
 				)
-			).orderBy(
-				orderByStep -> _getLimitStep(lockedLayoutOrder, orderByStep)
 			));
 
 		List<LockedLayout> lockedLayouts = new ArrayList<>();
 
 		for (Object[] columns : results) {
+			Layout layout = _layoutLocalService.fetchLayout(
+				GetterUtil.getLong(columns[2]));
+
+			if (layout == null) {
+				continue;
+			}
+
+			long classPK = GetterUtil.getLong(columns[0]);
+
 			lockedLayouts.add(
 				new LockedLayout(
-					GetterUtil.getLong(columns[0]), (Date)columns[1],
-					GetterUtil.getString(columns[2]),
-					GetterUtil.getLong(columns[3]),
-					GetterUtil.getString(columns[4]),
-					GetterUtil.getString(columns[5])));
+					classPK, (Date)columns[1], layout.getName(locale),
+					GetterUtil.getLong(columns[2]),
+					_getLayoutType(
+						classPK, locale, GetterUtil.getString(columns[3])),
+					GetterUtil.getString(columns[4])));
 		}
 
 		return lockedLayouts;
@@ -454,44 +425,6 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 		return lastAutosaveDate;
 	}
 
-	private Predicate _getLayoutPageTemplateEntryTableLeftJoinOnPredicate(
-		long groupId, LockedLayoutType lockedLayoutType) {
-
-		if ((lockedLayoutType == null) ||
-			Objects.equals(
-				lockedLayoutType, LockedLayoutType.COLLECTION_PAGE) ||
-			Objects.equals(
-				lockedLayoutType, LockedLayoutType.DISPLAY_PAGE_TEMPLATE) ||
-			Objects.equals(lockedLayoutType, LockedLayoutType.UTILITY_PAGE)) {
-
-			return null;
-		}
-
-		return LayoutPageTemplateEntryTable.INSTANCE.groupId.eq(
-			groupId
-		).and(
-			LayoutPageTemplateEntryTable.INSTANCE.plid.eq(
-				LayoutTable.INSTANCE.classPK)
-		);
-	}
-
-	private Integer _getLayoutPageTemplateEntryType(
-		LockedLayoutType lockedLayoutType) {
-
-		if (Objects.equals(
-				lockedLayoutType, LockedLayoutType.CONTENT_PAGE_TEMPLATE)) {
-
-			return LayoutPageTemplateEntryTypeConstants.BASIC;
-		}
-		else if (Objects.equals(
-					lockedLayoutType, LockedLayoutType.MASTER_PAGE)) {
-
-			return LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT;
-		}
-
-		return null;
-	}
-
 	private String _getLayoutPageTemplateEntryTypeLabel(
 		LayoutPageTemplateEntry layoutPageTemplateEntry, Locale locale) {
 
@@ -519,78 +452,37 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 		return StringPool.BLANK;
 	}
 
-	private String _getLayoutType(LockedLayoutType lockedLayoutType) {
-		if (Objects.equals(
-				lockedLayoutType, LockedLayoutType.COLLECTION_PAGE)) {
-
-			return LayoutConstants.TYPE_COLLECTION;
-		}
-		else if (Objects.equals(
-					lockedLayoutType, LockedLayoutType.CONTENT_PAGE)) {
-
-			return LayoutConstants.TYPE_CONTENT;
-		}
-		else if (Objects.equals(
-					lockedLayoutType, LockedLayoutType.DISPLAY_PAGE_TEMPLATE)) {
-
-			return LayoutConstants.TYPE_ASSET_DISPLAY;
+	private String _getLayoutType(long classPK, Locale locale, String type) {
+		if (Objects.equals(type, LayoutConstants.TYPE_ASSET_DISPLAY)) {
+			return _language.get(locale, "display-page-template");
 		}
 
-		return null;
-	}
-
-	private Predicate _getLayoutUtilityPageEntryTableLeftJoin(
-		long groupId, LockedLayoutType lockedLayoutType) {
-
-		if (!Objects.equals(lockedLayoutType, LockedLayoutType.CONTENT_PAGE) &&
-			!Objects.equals(lockedLayoutType, LockedLayoutType.UTILITY_PAGE)) {
-
-			return null;
+		if (Objects.equals(type, LayoutConstants.TYPE_COLLECTION)) {
+			return _language.get(locale, "collection-page");
 		}
 
-		return LayoutUtilityPageEntryTable.INSTANCE.groupId.eq(
-			groupId
-		).and(
-			LayoutUtilityPageEntryTable.INSTANCE.plid.eq(
-				LayoutTable.INSTANCE.classPK)
-		);
-	}
-
-	private String _getLayoutUtilityPageEntryTypeLabel(
-		LayoutUtilityPageEntry layoutUtilityPageEntry, Locale locale) {
-
-		LayoutUtilityPageEntryViewRenderer layoutUtilityPageEntryViewRenderer =
-			LayoutUtilityPageEntryViewRendererRegistryUtil.
-				getLayoutUtilityPageEntryViewRenderer(
-					layoutUtilityPageEntry.getType());
-
-		if (layoutUtilityPageEntryViewRenderer == null) {
+		if (!Objects.equals(type, LayoutConstants.TYPE_CONTENT)) {
 			return StringPool.BLANK;
 		}
 
-		return layoutUtilityPageEntryViewRenderer.getLabel(locale);
-	}
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByPlid(classPK);
 
-	private LimitStep _getLimitStep(
-		LockedLayoutOrder lockedLayoutOrder, OrderByStep orderByStep) {
-
-		if (lockedLayoutOrder == null) {
-			return orderByStep.orderBy(
-				LockedLayoutsTable.INSTANCE.createDateColumn.descending());
+		if (layoutPageTemplateEntry != null) {
+			return _getLayoutPageTemplateEntryTypeLabel(
+				layoutPageTemplateEntry, locale);
 		}
 
-		if (Objects.equals(
-				lockedLayoutOrder.getLockedLayoutOrderType(),
-				LockedLayoutOrder.LockedLayoutOrderType.NAME)) {
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.
+				fetchLayoutUtilityPageEntryByPlid(classPK);
 
-			return orderByStep.orderBy(
-				LockedLayoutsTable.INSTANCE,
-				new LayoutNameComparator(
-					lockedLayoutOrder.isAscending(),
-					lockedLayoutOrder.getLocale()));
+		if (layoutUtilityPageEntry != null) {
+			return _language.get(locale, "utility-page");
 		}
 
-		return orderByStep.orderBy(_getOrderByExpression(lockedLayoutOrder));
+		return _language.get(locale, "content-page");
 	}
 
 	private String _getLockedLayoutsGroupConfigurationFilterString(
@@ -647,105 +539,6 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 		}
 
 		return lockedLayoutsGroupConfigurations;
-	}
-
-	private OrderByExpression _getOrderByExpression(
-		LockedLayoutOrder lockedLayoutOrder) {
-
-		if (Objects.equals(
-				lockedLayoutOrder.getLockedLayoutOrderType(),
-				LockedLayoutOrder.LockedLayoutOrderType.LAST_AUTOSAVE)) {
-
-			if (lockedLayoutOrder.isAscending()) {
-				return LockedLayoutsTable.INSTANCE.createDateColumn.ascending();
-			}
-
-			return LockedLayoutsTable.INSTANCE.createDateColumn.descending();
-		}
-
-		if (Objects.equals(
-				lockedLayoutOrder.getLockedLayoutOrderType(),
-				LockedLayoutOrder.LockedLayoutOrderType.USER)) {
-
-			if (lockedLayoutOrder.isAscending()) {
-				return LockedLayoutsTable.INSTANCE.userNameColumn.ascending();
-			}
-
-			return LockedLayoutsTable.INSTANCE.userNameColumn.descending();
-		}
-
-		if (lockedLayoutOrder.isAscending()) {
-			return LockedLayoutsTable.INSTANCE.createDateColumn.ascending();
-		}
-
-		return LockedLayoutsTable.INSTANCE.createDateColumn.descending();
-	}
-
-	private Predicate _getWherePredicate(
-		long groupId, LockedLayoutType lockedLayoutType) {
-
-		Predicate wherePredicate = LayoutTable.INSTANCE.groupId.eq(
-			groupId
-		).and(
-			LayoutTable.INSTANCE.classPK.gt(0L)
-		).and(
-			LayoutTable.INSTANCE.hidden.eq(true)
-		).and(
-			LayoutTable.INSTANCE.system.eq(true)
-		).and(
-			LayoutTable.INSTANCE.status.eq(WorkflowConstants.STATUS_DRAFT)
-		);
-
-		if (lockedLayoutType == null) {
-			return wherePredicate.and(
-				LayoutTable.INSTANCE.type.in(
-					new String[] {
-						LayoutConstants.TYPE_ASSET_DISPLAY,
-						LayoutConstants.TYPE_COLLECTION,
-						LayoutConstants.TYPE_CONTENT
-					}));
-		}
-
-		Integer layoutPageTemplateEntryType = _getLayoutPageTemplateEntryType(
-			lockedLayoutType);
-
-		if (layoutPageTemplateEntryType != null) {
-			return wherePredicate.and(
-				LayoutPageTemplateEntryTable.INSTANCE.type.eq(
-					layoutPageTemplateEntryType));
-		}
-
-		String layoutType = _getLayoutType(lockedLayoutType);
-
-		if (layoutType != null) {
-			return wherePredicate.and(
-				LayoutTable.INSTANCE.type.eq(
-					layoutType
-				).and(
-					() -> {
-						if (Objects.equals(
-								layoutType, LayoutConstants.TYPE_CONTENT)) {
-
-							return LayoutPageTemplateEntryTable.INSTANCE.
-								layoutPageTemplateEntryId.isNull(
-								).and(
-									LayoutUtilityPageEntryTable.INSTANCE.
-										LayoutUtilityPageEntryId.isNull()
-								);
-						}
-
-						return null;
-					}
-				));
-		}
-
-		if (Objects.equals(lockedLayoutType, LockedLayoutType.UTILITY_PAGE)) {
-			return wherePredicate.and(
-				LayoutUtilityPageEntryTable.INSTANCE.LayoutUtilityPageEntryId.
-					isNotNull());
-		}
-
-		return wherePredicate;
 	}
 
 	private void _unlockLockedLayouts(
@@ -839,9 +632,6 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 		public final Column<LockedLayoutsTable, Long> groupIdColumn =
 			createColumn(
 				"groupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-		public final Column<LockedLayoutsTable, String> nameColumn =
-			createColumn(
-				"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 		public final Column<LockedLayoutsTable, Long> plidColumn = createColumn(
 			"plid", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 		public final Column<LockedLayoutsTable, String> typeColumn =

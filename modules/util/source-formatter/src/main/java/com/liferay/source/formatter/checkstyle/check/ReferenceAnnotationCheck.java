@@ -45,11 +45,9 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 
 		List<DetailAST> detailASTList = getAllChildTokens(
 			detailAST, true, TokenTypes.METHOD_DEF, TokenTypes.VARIABLE_DEF);
-		DetailAST componentDetailAST = AnnotationUtil.getAnnotation(
-			detailAST, "Component");
 
 		for (DetailAST curDetailAST : detailASTList) {
-			_checkReferenceAnnotation(curDetailAST, componentDetailAST);
+			_checkReferenceAnnotation(curDetailAST);
 		}
 	}
 
@@ -130,9 +128,7 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 		log(annotationDetailAST, _MSG_MISSING_DYNAMIC_POLICY);
 	}
 
-	private void _checkReferenceAnnotation(
-		DetailAST detailAST, DetailAST componentDetailAST) {
-
+	private void _checkReferenceAnnotation(DetailAST detailAST) {
 		DetailAST annotationDetailAST = AnnotationUtil.getAnnotation(
 			detailAST, "Reference");
 
@@ -140,9 +136,7 @@ public class ReferenceAnnotationCheck extends BaseCheck {
 			return;
 		}
 
-		if ((componentDetailAST != null) &&
-			isAttributeValue(_CHECK_CARDINALITY_VALUE_KEY)) {
-
+		if (isAttributeValue(_CHECK_CARDINALITY_VALUE_KEY)) {
 			String cardinalityValue = _getAnnotationMemberValue(
 				annotationDetailAST, "cardinality", null);
 

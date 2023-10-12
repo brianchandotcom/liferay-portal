@@ -27,6 +27,163 @@ definition {
 		CommerceConfiguration.commerceTearDown();
 	}
 
+	@description = "COMMERCE-12545. As a buyer, I want to be able to add to cart a Dynamic price bundled product with UOM"
+	@priority = 5
+	test CanAddToCartDynamicPriceBundledProductWithUOM {
+		property portal.acceptance = "true";
+
+		task ("Given 2 UOMs are created to MIN93015(base price: $30, incremental: 1 for UOM1; base price: $30, promo price: $20, incremental: 1 for UOM2)") {
+			CommerceJSONSKUsAPI._addCommerceUOM(
+				basePrice = 30,
+				productSKU = "MIN93015",
+				uomKey = "UOM1KEY",
+				uomName = "UOM1");
+
+			CommerceJSONSKUsAPI._addCommerceUOM(
+				basePrice = 30,
+				productSKU = "MIN93015",
+				promoPrice = 20,
+				uomKey = "UOM2KEY",
+				uomName = "UOM2");
+		}
+
+		task ("And a new Bundled product with an option(two values) and Dynamic Price Type is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Bundled Product",
+				productType = "Simple");
+
+			CommerceJSONOptionsAPI._addCommerceOption(
+				fieldType = "select",
+				optionKey = "color",
+				optionName = "Color",
+				optionValues = "blue:Blue:1,white:White:2");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = '''"Bundled Product"''');
+
+			CommerceNavigator.gotoEntry(entryName = "Bundled Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceRelations.assignSingleRelationToProductsEntry(
+				entryName = "Color",
+				title = "Add Option");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceProductOptions.editProductOption(
+				key_option = "Color",
+				key_priceType = "Dynamic",
+				productOptionPriceType = "true",
+				productOptionRequired = "true",
+				productOptionSkuContributor = "true");
+
+			SelectFrameTop();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrameTop();
+		}
+
+		task ("And the admin selects SKU/UOM as the linked product for each option value") {
+			for (var optionValueList : list "Blue:MIN93015 - UOM1KEY,White:MIN93015 - UOM2KEY") {
+				var optionValueName = StringUtil.extractFirst(${optionValueList}, ":");
+				var sku = StringUtil.extractLast(${optionValueList}, ":");
+
+				CommerceNavigator.gotoEntry(entryName = "Color");
+
+				CommerceProductOptions.editOptionValue(
+					optionValue = ${optionValueName},
+					sku = ${sku});
+			}
+		}
+
+		task ("And all SKUs are generated") {
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceSKUs.generateAllSkuCombinations();
+		}
+
+		task ("And Allow Back Orders is set to true for Bundled Product") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				allowBackOrder = "true",
+				productName = "Bundled Product");
+		}
+
+		task ("When the buyer navigates to Bundled Product's detail page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/bundled-product");
+		}
+
+		task ("Then assert that the prices for each SKU/UOM") {
+			for (var optionValueAndPrice : list "Blue:30.00,White:30.00") {
+				var optionValue = StringUtil.extractFirst(${optionValueAndPrice}, ":");
+				var price = StringUtil.extractLast(${optionValueAndPrice}, ":");
+				var sku = StringUtil.toUpperCase(${optionValue});
+
+				if (${optionValue} == "White") {
+					var optionValue = "${optionValue} - $ 10.00";
+				}
+
+				FrontStore.selectAssociatedFSOptionsValue(
+					fsOptionName = "Color",
+					fsOptionValue = ${optionValue});
+
+				WaitForElementPresent(
+					key_productSku = ${sku},
+					locator1 = "CommerceFrontStore#FS_PRODUCT_SKU");
+
+				if (${optionValue} == "Blue") {
+					FrontStore.assertProductDetails(
+						productListPrice = ${price},
+						productName = "Bundled Product",
+						productSKU = ${sku});
+				}
+				else {
+					FrontStore.assertProductDetails(
+						productListPriceInactive = ${price},
+						productName = "Bundled Product",
+						productSalePrice = "20.00",
+						productSKU = ${sku});
+				}
+
+				Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+			}
+		}
+
+		task ("When the buyer opens the mini-cart") {
+			CommerceNavigator.gotoMiniCart();
+		}
+
+		task ("Then 2 cart items are present, each with the respective information shown") {
+			FrontStore.viewMiniCartItem(
+				bundledItems = "1 × ABS Sensor UOM1KEY",
+				cartItemName = "Bundled Product",
+				cartItemOption = "blue",
+				cartItemPriceValue = "30.00",
+				cartItemQuantity = 1,
+				cartItemSku = "BLUE");
+
+			FrontStore.viewMiniCartItem(
+				bundledItems = "1 × ABS Sensor UOM2KEY",
+				cartItemName = "Bundled Product",
+				cartItemOption = "white",
+				cartItemPromoPriceValue = "20.00",
+				cartItemQuantity = 1,
+				cartItemSku = "WHITE");
+		}
+	}
+
 	@description = "COMMERCE-12543. As a buyer, I want to be able to add to cart a Static price bundled product with UOM"
 	@priority = 5
 	test CanAddToCartStaticPriceBundledProductWithUOM {
@@ -218,6 +375,492 @@ definition {
 				bundledItems = "1 × ABS Sensor uom2",
 				cartItemName = "Bundled Product",
 				cartItemPriceValue = "60.00",
+				cartItemQuantity = 1,
+				cartItemSku = "WHITE");
+		}
+	}
+
+	@description = "COMMERCE-12546. As a buyer, I want to be able to assert decimal UOM prices are converted in product bundles"
+	@priority = 5
+	test CanAssertDecimalUOMPricesAreConvertedInProductBundles {
+		property portal.acceptance = "true";
+
+		task ("Given 2 UOMs are created to MIN93015(base price: $30, incremental: 0.6 for UOM1; base price: $50, promo price: $40, incremental: 1.5 for UOM2)") {
+			CommerceJSONSKUsAPI._addCommerceUOM(
+				basePrice = 30,
+				incrementalOrderQuantity = "0.6",
+				productSKU = "MIN93015",
+				uomKey = "UOM1KEY",
+				uomName = "UOM1");
+
+			CommerceJSONSKUsAPI._addCommerceUOM(
+				basePrice = 50,
+				incrementalOrderQuantity = "1.5",
+				productSKU = "MIN93015",
+				promoPrice = 40,
+				uomKey = "UOM2KEY",
+				uomName = "UOM2");
+		}
+
+		task ("And a new Bundled product with an option(two values) and Dynamic Price Type is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Bundled Product",
+				productType = "Simple");
+
+			CommerceJSONOptionsAPI._addCommerceOption(
+				fieldType = "select",
+				optionKey = "color",
+				optionName = "Color",
+				optionValues = "blue:Blue:1,white:White:2");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = '''"Bundled Product"''');
+
+			CommerceNavigator.gotoEntry(entryName = "Bundled Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceRelations.assignSingleRelationToProductsEntry(
+				entryName = "Color",
+				title = "Add Option");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceProductOptions.editProductOption(
+				key_option = "Color",
+				key_priceType = "Dynamic",
+				productOptionPriceType = "true",
+				productOptionRequired = "true",
+				productOptionSkuContributor = "true");
+
+			SelectFrameTop();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrameTop();
+		}
+
+		task ("And the admin selects SKU/UOM as the linked product for each option value") {
+			for (var optionValueList : list "Blue:MIN93015 - UOM1KEY,White:MIN93015 - UOM2KEY") {
+				var optionValueName = StringUtil.extractFirst(${optionValueList}, ":");
+				var sku = StringUtil.extractLast(${optionValueList}, ":");
+
+				CommerceNavigator.gotoEntry(entryName = "Color");
+
+				CommerceProductOptions.editOptionValue(
+					optionValue = ${optionValueName},
+					sku = ${sku});
+			}
+		}
+
+		task ("And all SKUs are generated") {
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceSKUs.generateAllSkuCombinations();
+		}
+
+		task ("And Allow Back Orders is set to true for Bundled Product") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				allowBackOrder = "true",
+				productName = "Bundled Product");
+		}
+
+		task ("When the buyer navigates to Bundled Product's detail page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/bundled-product");
+		}
+
+		task ("Then assert that the prices for each SKU/UOM are converted to 1 quantity in the bundled product") {
+			for (var optionValueAndPrice : list "Blue:50.00,White:33.33") {
+				var optionValue = StringUtil.extractFirst(${optionValueAndPrice}, ":");
+				var price = StringUtil.extractLast(${optionValueAndPrice}, ":");
+				var sku = StringUtil.toUpperCase(${optionValue});
+
+				if (${optionValue} == "White") {
+					var optionValue = "${optionValue} - $ 23.00";
+				}
+
+				FrontStore.selectAssociatedFSOptionsValue(
+					fsOptionName = "Color",
+					fsOptionValue = ${optionValue});
+
+				WaitForElementPresent(
+					key_productSku = ${sku},
+					locator1 = "CommerceFrontStore#FS_PRODUCT_SKU");
+
+				if (${optionValue} == "Blue") {
+					FrontStore.assertProductDetails(
+						productListPrice = ${price},
+						productName = "Bundled Product",
+						productSKU = ${sku});
+				}
+				else {
+					FrontStore.assertProductDetails(
+						productListPriceInactive = ${price},
+						productName = "Bundled Product",
+						productSalePrice = "26.67",
+						productSKU = ${sku});
+				}
+
+				Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+			}
+		}
+
+		task ("When the buyer opens the mini-cart") {
+			CommerceNavigator.gotoMiniCart();
+		}
+
+		task ("Then assert the prices are the same as in the product detail") {
+			FrontStore.viewMiniCartItem(
+				bundledItems = "1 × ABS Sensor UOM1KEY",
+				cartItemName = "Bundled Product",
+				cartItemOption = "blue",
+				cartItemPriceValue = "50.00",
+				cartItemQuantity = 1,
+				cartItemSku = "BLUE");
+
+			FrontStore.viewMiniCartItem(
+				bundledItems = "1 × ABS Sensor UOM2KEY",
+				cartItemName = "Bundled Product",
+				cartItemOption = "white",
+				cartItemPromoPriceValue = "26.67",
+				cartItemQuantity = 1,
+				cartItemSku = "WHITE");
+		}
+	}
+
+	@description = "COMMERCE-12547. As a buyer, I want to be able to assert that a bundled product with UOMs is overlapped using normal and quick add to cart"
+	@priority = 5
+	test CanAssertUOMBundledProductIsOverlappedUsingNormalAndQuickAdd {
+		property portal.acceptance = "true";
+
+		task ("Given 2 UOMs are created to MIN93015(base price: $30, incremental: 0.6 for UOM1; base price: $50, promo price: $40, incremental: 1.5 for UOM2)") {
+			CommerceJSONSKUsAPI._addCommerceUOM(
+				basePrice = 30,
+				incrementalOrderQuantity = "0.6",
+				productSKU = "MIN93015",
+				uomKey = "UOM1KEY",
+				uomName = "UOM1");
+
+			CommerceJSONSKUsAPI._addCommerceUOM(
+				basePrice = 50,
+				incrementalOrderQuantity = "1.5",
+				productSKU = "MIN93015",
+				promoPrice = 40,
+				uomKey = "UOM2KEY",
+				uomName = "UOM2");
+		}
+
+		task ("And a new Bundled product with an option(two values) and Dynamic Price Type is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Bundled Product",
+				productType = "Simple");
+
+			CommerceJSONOptionsAPI._addCommerceOption(
+				fieldType = "select",
+				optionKey = "color",
+				optionName = "Color",
+				optionValues = "blue:Blue:1,white:White:2");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = '''"Bundled Product"''');
+
+			CommerceNavigator.gotoEntry(entryName = "Bundled Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceRelations.assignSingleRelationToProductsEntry(
+				entryName = "Color",
+				title = "Add Option");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceProductOptions.editProductOption(
+				key_option = "Color",
+				key_priceType = "Dynamic",
+				productOptionPriceType = "true",
+				productOptionRequired = "true",
+				productOptionSkuContributor = "true");
+
+			SelectFrameTop();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrameTop();
+		}
+
+		task ("And the admin selects SKU/UOM as the linked product for each option value") {
+			for (var optionValueList : list "Blue:MIN93015 - UOM1KEY,White:MIN93015 - UOM2KEY") {
+				var optionValueName = StringUtil.extractFirst(${optionValueList}, ":");
+				var sku = StringUtil.extractLast(${optionValueList}, ":");
+
+				CommerceNavigator.gotoEntry(entryName = "Color");
+
+				CommerceProductOptions.editOptionValue(
+					optionValue = ${optionValueName},
+					sku = ${sku});
+			}
+		}
+
+		task ("And all SKUs are generated") {
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceSKUs.generateAllSkuCombinations();
+		}
+
+		task ("And Allow Back Orders is set to true for Bundled Product") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				allowBackOrder = "true",
+				productName = "Bundled Product");
+		}
+
+		task ("When the buyer navigates to Bundled Product's detail page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/bundled-product");
+		}
+
+		task ("And adds both SKUs to the cart") {
+			FrontStore.addToCartFromProductDetails(
+				optionNamesAndValues = "Color:Blue",
+				productName = "Bundled Product",
+				productSku = "BLUE");
+
+			FrontStore.addToCartFromProductDetails(
+				optionNamesAndValues = "Color:White - $ 23.00",
+				productName = "Bundled Product",
+				productSku = "WHITE");
+		}
+
+		task ("And adds again BLUE(UOM1) to the cart") {
+			FrontStore.addToCartFromProductDetails(
+				optionNamesAndValues = "Color:Blue",
+				productName = "Bundled Product",
+				productSku = "BLUE");
+		}
+
+		task ("Then assert BLUE's quantity in the mini-cart is updated correctly") {
+			CommerceNavigator.gotoMiniCart();
+
+			FrontStore.viewMiniCartItem(
+				bundledItems = "2 × ABS Sensor UOM1KEY",
+				cartItemName = "Bundled Product",
+				cartItemOption = "blue",
+				cartItemPriceValue = "50.00",
+				cartItemQuantity = 2,
+				cartItemSku = "BLUE");
+
+			FrontStore.viewMiniCartItem(
+				bundledItems = "1 × ABS Sensor UOM2KEY",
+				cartItemName = "Bundled Product",
+				cartItemOption = "white",
+				cartItemPromoPriceValue = "26.67",
+				cartItemQuantity = 1,
+				cartItemSku = "WHITE");
+		}
+
+		task ("When adding WHITE(UOM2) using the quick add to cart") {
+			FrontStore.quickAddToCartSearchAndSelectItem(orderItemSku = "WHITE");
+
+			Click(locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_BUTTON");
+		}
+
+		task ("Then asserts WHITE's quantity in the mini-cart is updated correctly") {
+			FrontStore.viewMiniCartItem(
+				bundledItems = "2 × ABS Sensor UOM1KEY",
+				cartItemName = "Bundled Product",
+				cartItemOption = "blue",
+				cartItemPriceValue = "50.00",
+				cartItemQuantity = 2,
+				cartItemSku = "BLUE");
+
+			FrontStore.viewMiniCartItem(
+				bundledItems = "2 × ABS Sensor UOM2KEY",
+				cartItemName = "Bundled Product",
+				cartItemOption = "white",
+				cartItemPromoPriceValue = "26.66",
+				cartItemQuantity = 2,
+				cartItemSku = "WHITE");
+		}
+	}
+
+	@description = "COMMERCE-12544. I want to be able to add SKUs to cart with option values linked to different quantities set"
+	@priority = 5
+	test CanOptionValuesHaveLinkedSkuWithDifferentQuantitiesSet {
+		property portal.acceptance = "true";
+
+		task ("Given one UOM is added to a SKU (MIN93015)") {
+			CommerceJSONSKUsAPI._addCommerceUOM(
+				basePrice = 1,
+				productSKU = "MIN93015",
+				uomKey = "UOM1KEY",
+				uomName = "UOM1");
+		}
+
+		task ("And a new Bundled product with an option(two values) and Static Price Type is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Bundled Product",
+				productType = "Simple");
+
+			CommerceJSONOptionsAPI._addCommerceOption(
+				fieldType = "select",
+				optionKey = "color",
+				optionName = "Color",
+				optionValues = "blue:Blue:1,white:White:2");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = '''"Bundled Product"''');
+
+			CommerceNavigator.gotoEntry(entryName = "Bundled Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceRelations.assignSingleRelationToProductsEntry(
+				entryName = "Color",
+				title = "Add Option");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceProductOptions.editProductOption(
+				key_option = "Color",
+				key_priceType = "Static",
+				productOptionPriceType = "true",
+				productOptionRequired = "true",
+				productOptionSkuContributor = "true");
+		}
+
+		task ("When the sku is linked to the first option value Blue") {
+			CommerceOptions.setDeltaPrice(
+				deltaPrice = 40,
+				key_index = "Blue",
+				key_optionIndex = "Color",
+				multipleValuesLeft = "true",
+				productSKU = "MIN93015 - UOM1KEY");
+		}
+
+		task ("Then assert the same sku with quantity 1 cannot be linked to the second option value White") {
+			Click(
+				key_index = "White",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+			Type(
+				key_fieldLabel = "SKU",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "MIN93015 - UOM1KEY");
+
+			Button.clickSave();
+
+			Alert.viewErrorMessage(errorMessage = "Error:Please enter a valid quantity.");
+		}
+
+		task ("But the same SKU/UOM with different quantity(2) can be linked to the second option value(delta: $20)") {
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrameTop();
+
+			Click(
+				key_index = "Color",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceOptions.setDeltaPrice(
+				deltaPrice = 20,
+				key_index = "White",
+				productSKU = "MIN93015 - UOM1KEY",
+				quantity = 2);
+
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrameTop();
+		}
+
+		task ("And all SKUs are generated") {
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceSKUs.generateAllSkuCombinations();
+		}
+
+		task ("And a price is set for each SKU") {
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
+				entryPrice = 30,
+				priceListName = "Minium Base Price List",
+				productSKU = "BLUE");
+
+			CommerceJSONPriceListsAndPromotionsAPI._addPriceListEntry(
+				entryPrice = 40,
+				priceListName = "Minium Base Price List",
+				productSKU = "WHITE");
+		}
+
+		task ("And Allow Back Orders is set to true for Bundled Product") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				allowBackOrder = "true",
+				productName = "Bundled Product");
+		}
+
+		task ("And the buyer user navigates to Bundled Product's Detail page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/bundled-product");
+		}
+
+		task ("And adds both SKUs to the cart") {
+			FrontStore.addToCartFromProductDetails(
+				optionNamesAndValues = "Color:Blue",
+				productName = "Bundled Product",
+				productSku = "BLUE");
+
+			FrontStore.addToCartFromProductDetails(
+				optionNamesAndValues = "Color:White - $ 10.00",
+				productName = "Bundled Product",
+				productSku = "WHITE");
+		}
+
+		task ("When the buyer opens the mini-cart") {
+			CommerceNavigator.gotoMiniCart();
+		}
+
+		task ("Then 2 cart items are present, each with the respective information shown") {
+			FrontStore.viewMiniCartItem(
+				bundledItems = "1 × ABS Sensor UOM1KEY",
+				cartItemName = "Bundled Product",
+				cartItemOption = "blue",
+				cartItemPriceValue = "70.00",
+				cartItemQuantity = 1,
+				cartItemSku = "BLUE");
+
+			FrontStore.viewMiniCartItem(
+				bundledItems = "2 × ABS Sensor UOM1KEY",
+				cartItemName = "Bundled Product",
+				cartItemOption = "white",
+				cartItemPriceValue = "80.00",
 				cartItemQuantity = 1,
 				cartItemSku = "WHITE");
 		}

@@ -34,7 +34,6 @@ import {
 	loadData,
 } from './utils/index';
 import {logError} from './utils/logError';
-import getJsModule from './utils/modules';
 import ViewsContext from './views/ViewsContext';
 import getViewComponent from './views/getViewComponent';
 import {VIEWS_ACTION_TYPES, viewsReducer} from './views/viewsReducer';
@@ -262,6 +261,10 @@ const FrontendDataSet = ({
 			},
 			{
 				imports: views.reduce((imports, view) => {
+					if (!view.schema?.fields?.length) {
+						return imports;
+					}
+
 					const cxFields = view.schema.fields.filter(
 						(field) => !!field.contentRendererClientExtension
 					);
@@ -412,7 +415,7 @@ const FrontendDataSet = ({
 
 		setComponentLoading(true);
 
-		getJsModule(contentRendererModuleURL)
+		loadModule(contentRendererModuleURL)
 			.then((component) => {
 				if (isMounted()) {
 					viewsDispatch({

@@ -3,19 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {loadModule} from 'frontend-js-web';
 import React from 'react';
 
-export function getLiferayJsModule(moduleURL) {
-	return new Promise((resolve, reject) => {
-		Liferay.Loader.require(
-			moduleURL,
-			(jsModule) => resolve(jsModule.default || jsModule),
-			(error) => reject(error)
-		);
-	});
-}
-
-export function getFakeJsModule() {
+function getFakeJsModule() {
 	return new Promise((resolve) => {
 		setTimeout(
 			() =>
@@ -29,11 +20,11 @@ export function getFakeJsModule() {
 	});
 }
 
-export const getJsModule = Liferay.Loader?.require
-	? getLiferayJsModule
+const getJsModule = Liferay.Loader?.require
+	? loadModule
 	: getFakeJsModule;
 
-export const fetchedJsModules = [];
+const fetchedJsModules = [];
 
 export function getComponentByModuleURL(url) {
 	return new Promise((resolve, reject) => {

@@ -168,14 +168,16 @@ public class JenkinsCohort {
 			callables.add(callable);
 		}
 
-		ThreadPoolExecutor threadPoolExecutor =
-			JenkinsResultsParserUtil.getNewThreadPoolExecutor(
-				_jenkinsMastersMap.size(), true);
+		if (!_jenkinsMastersMap.isEmpty()) {
+			ThreadPoolExecutor threadPoolExecutor =
+				JenkinsResultsParserUtil.getNewThreadPoolExecutor(
+					_jenkinsMastersMap.size(), true);
 
-		ParallelExecutor<Void> parallelExecutor = new ParallelExecutor<>(
-			callables, threadPoolExecutor);
+			ParallelExecutor<Void> parallelExecutor = new ParallelExecutor<>(
+				callables, threadPoolExecutor);
 
-		parallelExecutor.execute();
+			parallelExecutor.execute();
+		}
 
 		for (String buildURL : buildURLs) {
 			_loadBuildURL(buildURL);

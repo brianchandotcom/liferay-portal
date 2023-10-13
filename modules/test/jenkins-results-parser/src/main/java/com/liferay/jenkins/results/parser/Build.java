@@ -24,6 +24,8 @@ public interface Build {
 
 	public static final String DEPENDENCIES_URL_TOKEN = "${dependencies.url}";
 
+	public void addInvocation(Invocation invocation);
+
 	public void addTimelineData(TimelineData timelineData);
 
 	public void archive();
@@ -65,6 +67,8 @@ public interface Build {
 	public String getBuildURLRegex();
 
 	public String getConsoleText();
+
+	public Invocation getCurrentInvocation();
 
 	public Long getDelayTime();
 
@@ -112,6 +116,8 @@ public interface Build {
 	public String getParameterValue(String name);
 
 	public Build getParentBuild();
+
+	public Invocation getPreviousInvocation();
 
 	public String getResult();
 
@@ -162,6 +168,8 @@ public interface Build {
 	public boolean isApplyReinvokeRules();
 
 	public boolean isApplySlaveOfflineRules();
+
+	public boolean hasMaximumInvocationCount();
 
 	public boolean isBuildModified();
 
@@ -234,6 +242,10 @@ public interface Build {
 			return _buildNumber;
 		}
 
+		public String getBuildURL() {
+			return _buildURL;
+		}
+
 		public JenkinsMaster getJenkinsMaster() {
 			return _jenkinsMaster;
 		}
@@ -246,10 +258,15 @@ public interface Build {
 			_buildNumber = buildNumber;
 		}
 
+		public void setBuildURL(String buildURL) {
+			_buildURL = buildURL;
+		}
+
 		public void setQueueId(long queueId) {
 			_queueId = queueId;
 		}
 
+		private String _buildURL;
 		private int _buildNumber;
 		private final JenkinsMaster _jenkinsMaster;
 		private long _queueId;

@@ -51,6 +51,11 @@ import org.json.JSONObject;
 public abstract class BaseBuild implements Build {
 
 	@Override
+	public void addInvocation(Invocation invocation) {
+		_invocations.add(invocation);
+	}
+
+	@Override
 	public void archive() {
 		archive(getArchiveName());
 	}
@@ -404,6 +409,15 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return _jenkinsConsoleTextLoader.getConsoleText();
+	}
+
+	@Override
+	public Invocation getCurrentInvocation() {
+		if (_invocations.isEmpty()) {
+			return null;
+		}
+
+		return _invocations.get(_invocations.size() - 1);
 	}
 
 	@Override
@@ -818,6 +832,15 @@ public abstract class BaseBuild implements Build {
 		return _parentBuild;
 	}
 
+	@Override
+	public Invocation getPreviousInvocation() {
+		if (_invocations.size() <= 1) {
+			return null;
+		}
+
+		return _invocations.get(_invocations.size() - 2);
+	}
+
 	public long getQueuingDuration() {
 		JSONObject buildJSONObject = getBuildJSONObject(
 			"actions[queuingDurationMillis]");
@@ -1202,6 +1225,15 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return super.hashCode();
+	}
+
+	@Override
+	public boolean hasMaximumInvocationCount() {
+		if (_invocations.size() >= _MAXIMUM_INVOCATION_COUNT) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -3055,8 +3087,6 @@ public abstract class BaseBuild implements Build {
 			JenkinsResultsParserUtil.redact(replaceBuildURL(content)));
 	}
 
-	protected static final int INVOCATION_COUNT_MAX = 2;
-
 	protected static final int PIXELS_WIDTH_INDENT = 35;
 
 	protected static final String URL_BASE_FAILURES_JOB_UPSTREAM =
@@ -3733,6 +3763,8 @@ public abstract class BaseBuild implements Build {
 		{new GenericFailureMessageGenerator()};
 
 	private static final Integer _INVOKED_BATCH_SIZE_DEFAULT = 1;
+
+	private static final int _MAXIMUM_INVOCATION_COUNT = 2;
 
 	private static final Integer _MAXIMUM_SLAVES_PER_HOST = 2;
 

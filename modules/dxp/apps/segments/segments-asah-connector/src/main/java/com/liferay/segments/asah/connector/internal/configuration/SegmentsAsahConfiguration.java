@@ -36,7 +36,7 @@ public interface SegmentsAsahConfiguration {
 	public int interestTermsCacheExpirationTime();
 
 	@Meta.AD(
-		deflt = "60", description = "check-interval-description",
+		deflt = "60", description = "check-interval-description", min = "1",
 		name = "check-interval-name", required = false
 	)
 	public int checkInterval();

@@ -28,7 +28,7 @@ public interface OnDemandAdminConfiguration {
 	public int authenticationTokenExpirationTime();
 
 	@Meta.AD(
-		deflt = "24", description = "clean-up-interval-description",
+		deflt = "24", description = "clean-up-interval-description", min = "1",
 		name = "clean-up-interval", required = false
 	)
 	public int cleanUpInterval();

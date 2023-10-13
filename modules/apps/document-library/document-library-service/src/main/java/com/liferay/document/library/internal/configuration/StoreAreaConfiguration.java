@@ -23,7 +23,7 @@ public interface StoreAreaConfiguration {
 
 	@Meta.AD(
 		deflt = "2", description = "store-area-cleanup-interval-help",
-		name = "store-area-cleanup-interval", required = false
+		min = "1", name = "store-area-cleanup-interval", required = false
 	)
 	public int cleanUpInterval();
 

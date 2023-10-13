@@ -94,7 +94,7 @@ public interface OAuth2ProviderConfiguration {
 	@Meta.AD(
 		deflt = "60",
 		description = "oauth2-expired-authorizations-check-interval-description",
-		id = "oauth2.expired.authorizations.check.interval",
+		id = "oauth2.expired.authorizations.check.interval", min = "1",
 		name = "oauth2-expired-authorizations-check-interval", required = false
 	)
 	public int expiredAuthorizationsCheckInterval();

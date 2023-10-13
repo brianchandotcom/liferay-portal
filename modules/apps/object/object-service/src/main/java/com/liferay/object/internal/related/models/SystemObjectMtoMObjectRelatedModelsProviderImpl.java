@@ -256,6 +256,13 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 			));
 	}
 
+	@Override
+	public int getUnrelatedModelsCount(
+		long companyId, long groupId, ObjectDefinition objectDefinition,
+		long objectEntryId, long objectRelationshipId) throws PortalException {
+		return 0;
+	}
+
 	private GroupByStep _getGroupByStep(
 			FromStep fromStep, long groupId, long objectRelationshipId,
 			long primaryKey, String search)

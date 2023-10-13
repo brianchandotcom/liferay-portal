@@ -364,6 +364,13 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 			));
 	}
 
+	@Override
+	public int getUnrelatedModelsCount(
+		long companyId, long groupId, ObjectDefinition objectDefinition,
+		long objectEntryId, long objectRelationshipId) throws PortalException {
+		return 0;
+	}
+
 	private DynamicObjectDefinitionTable _getDynamicObjectDefinitionTable()
 		throws PortalException {
 

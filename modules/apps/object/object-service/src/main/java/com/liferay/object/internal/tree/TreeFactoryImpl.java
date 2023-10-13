@@ -13,13 +13,13 @@ import com.liferay.object.tree.Edge;
 import com.liferay.object.tree.Node;
 import com.liferay.object.tree.Tree;
 import com.liferay.object.tree.TreeFactory;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -34,12 +34,58 @@ import org.osgi.service.component.annotations.Reference;
 public class TreeFactoryImpl implements TreeFactory {
 
 	@Override
-	public Tree create(long objectDefinitionId) throws PortalException {
-		return create(objectDefinitionId, true);
+	public Tree createObjectDefinitionTree(long objectDefinitionId)
+		throws PortalException {
+
+		return _create(
+			objectDefinitionId,
+			node -> TransformUtil.transform(
+				_objectRelationshipLocalService.getObjectRelationships(
+					node.getPrimaryKey(), true),
+				objectRelationship -> new Node(
+					new Edge(objectRelationship.getObjectRelationshipId()),
+					objectRelationship.getObjectDefinitionId2(), node)));
 	}
 
 	@Override
-	public Tree create(long primaryKey, boolean objectDefinitionNode)
+	public Tree createObjectEntryTree(long objectEntryId)
+		throws PortalException {
+
+		UnsafeFunction<Node, List<Node>, PortalException> unsafeFunction =
+			node -> {
+				ObjectEntry parentObjectEntry =
+					_objectEntryLocalService.fetchObjectEntry(
+						node.getPrimaryKey());
+
+				List<Node> childrenNodes = new ArrayList<>();
+
+				for (ObjectRelationship objectRelationship :
+						_objectRelationshipLocalService.getObjectRelationships(
+							parentObjectEntry.getObjectDefinitionId(), true)) {
+
+					childrenNodes.addAll(
+						TransformUtil.transform(
+							_objectEntryLocalService.getOneToManyObjectEntries(
+								parentObjectEntry.getGroupId(),
+								objectRelationship.getObjectRelationshipId(),
+								parentObjectEntry.getPrimaryKey(), true, null,
+								QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+							objectEntry -> new Node(
+								new Edge(
+									objectRelationship.
+										getObjectRelationshipId()),
+								objectEntry.getObjectEntryId(), node)));
+				}
+
+				return childrenNodes;
+			};
+
+		return _create(objectEntryId, unsafeFunction);
+	}
+
+	private Tree _create(
+			long primaryKey,
+			UnsafeFunction<Node, List<Node>, PortalException> unsafeFunction)
 		throws PortalException {
 
 		Node rootNode = new Node(null, primaryKey, null);
@@ -51,7 +97,7 @@ public class TreeFactoryImpl implements TreeFactory {
 		while (!queue.isEmpty()) {
 			Node node = queue.poll();
 
-			List<Node> nodes = _getChildrenNodes(node, objectDefinitionNode);
+			List<Node> nodes = unsafeFunction.apply(node);
 
 			if (ListUtil.isNotEmpty(nodes)) {
 				node.setChildNodes(nodes);
@@ -61,49 +107,6 @@ public class TreeFactoryImpl implements TreeFactory {
 		}
 
 		return new Tree(rootNode);
-	}
-
-	private List<Node> _getChildrenNodes(
-			Node node, boolean objectDefinitionNode)
-		throws PortalException {
-
-		if (objectDefinitionNode) {
-			return TransformUtil.transform(
-				_objectRelationshipLocalService.getObjectRelationships(
-					node.getPrimaryKey(), true),
-				objectRelationship -> new Node(
-					new Edge(objectRelationship.getObjectRelationshipId()),
-					objectRelationship.getObjectDefinitionId2(), node));
-		}
-
-		ObjectEntry parentObjectEntry =
-			_objectEntryLocalService.fetchObjectEntry(node.getPrimaryKey());
-
-		if (parentObjectEntry == null) {
-			return Collections.emptyList();
-		}
-
-		List<Node> childrenNodes = new ArrayList<>();
-
-		for (ObjectRelationship objectRelationship :
-				_objectRelationshipLocalService.getObjectRelationships(
-					parentObjectEntry.getObjectDefinitionId(), true)) {
-
-			for (ObjectEntry objectEntry :
-					_objectEntryLocalService.getOneToManyObjectEntries(
-						parentObjectEntry.getGroupId(),
-						objectRelationship.getObjectRelationshipId(),
-						parentObjectEntry.getPrimaryKey(), true, null,
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
-
-				childrenNodes.add(
-					new Node(
-						new Edge(objectRelationship.getObjectRelationshipId()),
-						objectEntry.getObjectEntryId(), node));
-			}
-		}
-
-		return childrenNodes;
 	}
 
 	@Reference

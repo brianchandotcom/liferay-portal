@@ -98,7 +98,8 @@ public class TreeTestUtil {
 					ObjectDefinitionTestUtil.addCustomObjectDefinition(
 						"AB", objectDefinitionLocalService))));
 
-		return treeFactory.create(objectDefinitionA.getObjectDefinitionId());
+		return treeFactory.createObjectDefinitionTree(
+			objectDefinitionA.getObjectDefinitionId());
 	}
 
 	public static void deleteObjectDefinitionHierarchy(

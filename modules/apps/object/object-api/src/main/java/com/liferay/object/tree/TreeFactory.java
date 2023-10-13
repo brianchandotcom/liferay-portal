@@ -12,9 +12,10 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public interface TreeFactory {
 
-	public Tree create(long objectDefinitionId) throws PortalException;
+	public Tree createObjectDefinitionTree(long objectDefinitionId)
+		throws PortalException;
 
-	public Tree create(long primaryKey, boolean objectDefinitionNode)
+	public Tree createObjectEntryTree(long objectEntryId)
 		throws PortalException;
 
 }

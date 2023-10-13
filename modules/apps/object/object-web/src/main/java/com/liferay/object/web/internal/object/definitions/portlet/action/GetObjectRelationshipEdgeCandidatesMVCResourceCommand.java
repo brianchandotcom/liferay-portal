@@ -85,7 +85,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommand
 				continue;
 			}
 
-			Tree tree = _treeFactory.create(
+			Tree tree = _treeFactory.createObjectDefinitionTree(
 				objectDefinition1.getRootObjectDefinitionId());
 
 			int depth = ParamUtil.getInteger(resourceRequest, "depth");

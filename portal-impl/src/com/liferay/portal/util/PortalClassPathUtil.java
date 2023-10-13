@@ -161,6 +161,12 @@ public class PortalClassPathUtil {
 		StringBundler bootstrapClassPathSB = new StringBundler(
 			files.length * 2);
 
+		if (servletContext != null) {
+			runtimeClassPathSB.append(servletContext.getRealPath(""));
+			runtimeClassPathSB.append("/WEB-INF/classes");
+			runtimeClassPathSB.append(File.pathSeparator);
+		}
+
 		for (File file : files) {
 			String filePath = file.getAbsolutePath();
 
@@ -177,12 +183,6 @@ public class PortalClassPathUtil {
 
 		if (bootstrapClassPathSB.index() > 0) {
 			bootstrapClassPathSB.setIndex(bootstrapClassPathSB.index() - 1);
-		}
-
-		if (servletContext != null) {
-			runtimeClassPathSB.append(File.pathSeparator);
-			runtimeClassPathSB.append(servletContext.getRealPath(""));
-			runtimeClassPathSB.append("/WEB-INF/classes");
 		}
 
 		ProcessConfig.Builder builder = new ProcessConfig.Builder();

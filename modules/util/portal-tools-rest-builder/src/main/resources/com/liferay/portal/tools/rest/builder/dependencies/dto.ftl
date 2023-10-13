@@ -237,7 +237,7 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 		<#if propertySchema.jsonMap>
 			@JsonAnySetter
 		</#if>
-		<#if propertySchema.jsonString>
+		<#if freeMarkerTool.isVersionCompatible(configYAML, 3) && propertySchema.jsonString>
 			@JsonDeserialize(using = JSONStringStdDeserializer.class)
 		</#if>
 		@JsonProperty(

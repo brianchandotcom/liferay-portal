@@ -15,6 +15,7 @@ import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -157,6 +158,18 @@ public class ObjectEntry1to1ObjectRelatedModelsProviderImpl
 			groupId, objectRelationshipId, primaryKey, search, 0, 1);
 
 		return relatedModels.size();
+	}
+
+	@Override
+	public int getUnrelatedModelsCount(
+		long companyId, long groupId, ObjectDefinition objectDefinition,
+		long objectEntryId, long objectRelationshipId) throws PortalException {
+
+		List<ObjectEntry> unrelatedModels = getUnrelatedModels(
+			companyId, groupId, objectDefinition, objectEntryId, objectRelationshipId,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		return unrelatedModels.size();
 	}
 
 	private final String _className;

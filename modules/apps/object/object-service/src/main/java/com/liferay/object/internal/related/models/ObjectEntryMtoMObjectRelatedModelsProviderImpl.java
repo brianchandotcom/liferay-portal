@@ -151,6 +151,20 @@ public class ObjectEntryMtoMObjectRelatedModelsProviderImpl
 			start, end);
 	}
 
+	@Override
+	public int getUnrelatedModelsCount(
+		long companyId, long groupId, ObjectDefinition objectDefinition,
+		long objectEntryId, long objectRelationshipId) throws PortalException {
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.getObjectRelationship(
+				objectRelationshipId);
+
+		return _objectEntryService.getManyToManyObjectEntriesCount(
+			groupId, objectRelationship.getObjectRelationshipId(),
+			objectEntryId, false, objectRelationship.isReverse(), null);
+	}
+
 	private final String _className;
 	private final long _companyId;
 	private final ObjectEntryService _objectEntryService;

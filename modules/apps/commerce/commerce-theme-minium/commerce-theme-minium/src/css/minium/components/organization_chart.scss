@@ -1,0 +1,7 @@
+#minium {
+	.org-char-info-panel {
+		height: auto;
+		position: fixed;
+		top: calc(var(--control-menu-container-height) + 64px);
+	}
+}

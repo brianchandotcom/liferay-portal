@@ -269,3 +269,35 @@ $btn-size: 28px;
 		}
 	}
 }
+
+.org-char-info-panel {
+	bottom: 0;
+	height: auto;
+	pointer-events: auto;
+	position: absolute;
+	top: 0;
+	z-index: 10;
+
+	&.active {
+		transform: translateX(0);
+	}
+
+	.sidebar-light {
+		border-left: 1px solid $secondary-l3;
+	}
+
+	&.info-panel {
+		.sidebar > .sidenav-close {
+			float: right;
+			margin: 16px 16px 0 8px;
+
+			& > svg {
+				font-size: 20px;
+			}
+
+			& + .info-panel-content .sidebar-header > .autofit-row {
+				width: auto;
+			}
+		}
+	}
+}

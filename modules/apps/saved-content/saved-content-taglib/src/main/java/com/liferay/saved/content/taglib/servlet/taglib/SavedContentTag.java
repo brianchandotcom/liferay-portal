@@ -7,12 +7,30 @@ package com.liferay.saved.content.taglib.servlet.taglib;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
+import com.liferay.saved.content.constants.MySavedContentPortletKeys;
+import com.liferay.saved.content.model.SavedContentEntry;
+import com.liferay.saved.content.service.SavedContentEntryLocalServiceUtil;
 import com.liferay.saved.content.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
+
+import java.util.Map;
+
+import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -28,6 +46,10 @@ public class SavedContentTag extends IncludeTag {
 
 	public long getClassPK() {
 		return _classPK;
+	}
+
+	public String getContentTitle() {
+		return _contentTitle;
 	}
 
 	public long getGroupId() {
@@ -74,8 +96,11 @@ public class SavedContentTag extends IncludeTag {
 
 		_className = null;
 		_classPK = 0;
+		_contentTitle = null;
 		_groupId = 0;
 		_inTrash = null;
+		_saved = false;
+		_url = null;
 	}
 
 	@Override
@@ -86,10 +111,96 @@ public class SavedContentTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			httpServletRequest.setAttribute(
+				"liferay-saved-content:saved-content:data",
+				_getData(httpServletRequest, themeDisplay));
 		}
 		catch (Exception exception) {
 			_log.error(exception);
 		}
+	}
+
+	private Map<String, Object> _getData(
+			HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		return HashMapBuilder.<String, Object>put(
+			"className", _className
+		).put(
+			"classPK", _classPK
+		).put(
+			"contentTitle", _contentTitle
+		).put(
+			"enabled", _isEnabled(themeDisplay)
+		).put(
+			"saved", _isSaved(themeDisplay.getUserId())
+		).put(
+			"savedContentURL", _getURL(httpServletRequest)
+		).build();
+	}
+
+	private String _getURL(HttpServletRequest httpServletRequest) {
+		if (Validator.isNull(_url)) {
+			_url = PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					httpServletRequest,
+					MySavedContentPortletKeys.MY_SAVED_CONTENT,
+					PortletRequest.ACTION_PHASE)
+			).setActionName(
+				"/saved_content/edit_saved_content"
+			).setRedirect(
+				PortalUtil.getCurrentURL(httpServletRequest)
+			).buildString();
+		}
+
+		return _url;
+	}
+
+	private boolean _isEnabled(ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		if (!_isInTrash() && themeDisplay.isSignedIn()) {
+			Group group = themeDisplay.getSiteGroup();
+
+			if (!group.isStagingGroup() && !group.isStagedRemotely()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _isInTrash() throws PortalException {
+		if (_inTrash == null) {
+			TrashHandler trashHandler =
+				TrashHandlerRegistryUtil.getTrashHandler(_className);
+
+			if (trashHandler == null) {
+				return false;
+			}
+
+			return trashHandler.isInTrash(_classPK);
+		}
+
+		return _inTrash;
+	}
+
+	private boolean _isSaved(long userId) {
+		if (!_saved) {
+			SavedContentEntry savedContentEntry =
+				SavedContentEntryLocalServiceUtil.fetchSavedContentEntry(
+					_groupId, userId, _className, _classPK);
+
+			if (savedContentEntry != null) {
+				_saved = true;
+			}
+		}
+
+		return _saved;
 	}
 
 	private static final String _PAGE = "/page.jsp";
@@ -99,7 +210,10 @@ public class SavedContentTag extends IncludeTag {
 
 	private String _className;
 	private long _classPK;
+	private String _contentTitle;
 	private long _groupId;
 	private Boolean _inTrash;
+	private boolean _saved;
+	private String _url;
 
 }

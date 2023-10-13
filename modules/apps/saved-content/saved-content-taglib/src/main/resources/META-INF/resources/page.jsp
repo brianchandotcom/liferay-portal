@@ -21,12 +21,6 @@
 
 	<react:component
 		module="js/savedContent"
-		props='<%=
-			HashMapBuilder.<String, Object>put(
-				"saved", false
-			).put(
-				"savedContentURL", "/"
-			).build()
-		%>'
+		props='<%= (Map<String, Object>)request.getAttribute("liferay-saved-content:saved-content:data") %>'
 	/>
 </div>

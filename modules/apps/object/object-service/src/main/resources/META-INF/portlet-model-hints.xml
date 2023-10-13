@@ -82,7 +82,9 @@
 	<model name="com.liferay.object.model.ObjectEntry">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
-		<field name="externalReferenceCode" type="String" />
+		<field name="externalReferenceCode" type="String">
+			<sanitize content-type="text/html" modes="ALL" />
+		</field>
 		<field name="objectEntryId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />

@@ -93,29 +93,6 @@
 		</sequential>
 	</macrodef>
 
-	<target name="bypass-expected-upgrade-error">
-		<get-database-upgrade-client-paths />
-
-		<prepare-database-upgrade-properties />
-
-		<antcall inheritAll="false" target="run-upgrade-client" />
-
-		<waitfor maxwait="300" maxwaitunit="second" timeoutproperty="upgrade.not.failed">
-			<resourcecontains
-				resource="${db.upgrade.client.log}"
-				substring="Connecting to Gogo shell because the upgrade failed or is incomplete"
-			/>
-		</waitfor>
-
-		<fail if="upgrade.not.failed" message="Unable to find expected upgrade failure message." />
-
-		<run-expect
-			db.upgrade.client.home="${db.upgrade.client.home}"
-			expect.file="check-upgrade-client-gogo-shell-connection.expect"
-			file.suffix.bat="${file.suffix.bat}"
-		/>
-	</target>
-
 	<target name="check-failed-gogoshell-connection">
 		<exec executable="/bin/bash" outputproperty="gogo.shell.content.out">
 			<redirector inputstring="telnet 127.0.0.1 11312 || true" />
@@ -658,6 +635,14 @@ upgrade.database.auto.run=false</echo>
 			expect.file="execute-all-pending-upgrades-from-gogo-shell.expect"
 			file.suffix.bat="${file.suffix.bat}"
 		/>
+	</target>
+
+	<target name="execute-upgrade-client-skip-gogoshell">
+		<prepare-database-upgrade-properties />
+
+		<antcall inheritAll="false" target="run-upgrade-client" />
+
+		<antcall inheritAll="false" target="check-upgrade-client-gogoshell-connection" />
 	</target>
 
 	<target name="run-upgrade-client">

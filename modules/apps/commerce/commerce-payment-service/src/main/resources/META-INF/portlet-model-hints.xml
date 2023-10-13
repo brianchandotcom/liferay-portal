@@ -16,7 +16,14 @@
 		<field name="callbackURL" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="cancelURL" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 		<field name="currencyCode" type="String" />
+		<field name="errorMessages" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="languageId" type="String" />
 		<field name="paymentIntegrationKey" type="String" />
 		<field name="paymentIntegrationType" type="int" />
 		<field name="paymentStatus" type="int" />

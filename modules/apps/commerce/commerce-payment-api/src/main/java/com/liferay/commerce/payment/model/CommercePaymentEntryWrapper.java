@@ -49,7 +49,10 @@ public class CommercePaymentEntryWrapper
 		attributes.put("commerceChannelId", getCommerceChannelId());
 		attributes.put("amount", getAmount());
 		attributes.put("callbackURL", getCallbackURL());
+		attributes.put("cancelURL", getCancelURL());
 		attributes.put("currencyCode", getCurrencyCode());
+		attributes.put("errorMessages", getErrorMessages());
+		attributes.put("languageId", getLanguageId());
 		attributes.put("paymentIntegrationKey", getPaymentIntegrationKey());
 		attributes.put("paymentIntegrationType", getPaymentIntegrationType());
 		attributes.put("paymentStatus", getPaymentStatus());
@@ -134,10 +137,28 @@ public class CommercePaymentEntryWrapper
 			setCallbackURL(callbackURL);
 		}
 
+		String cancelURL = (String)attributes.get("cancelURL");
+
+		if (cancelURL != null) {
+			setCancelURL(cancelURL);
+		}
+
 		String currencyCode = (String)attributes.get("currencyCode");
 
 		if (currencyCode != null) {
 			setCurrencyCode(currencyCode);
+		}
+
+		String errorMessages = (String)attributes.get("errorMessages");
+
+		if (errorMessages != null) {
+			setErrorMessages(errorMessages);
+		}
+
+		String languageId = (String)attributes.get("languageId");
+
+		if (languageId != null) {
+			setLanguageId(languageId);
 		}
 
 		String paymentIntegrationKey = (String)attributes.get(
@@ -196,6 +217,16 @@ public class CommercePaymentEntryWrapper
 	@Override
 	public String getCallbackURL() {
 		return model.getCallbackURL();
+	}
+
+	/**
+	 * Returns the cancel url of this commerce payment entry.
+	 *
+	 * @return the cancel url of this commerce payment entry
+	 */
+	@Override
+	public String getCancelURL() {
+		return model.getCancelURL();
 	}
 
 	/**
@@ -276,6 +307,26 @@ public class CommercePaymentEntryWrapper
 	@Override
 	public String getCurrencyCode() {
 		return model.getCurrencyCode();
+	}
+
+	/**
+	 * Returns the error messages of this commerce payment entry.
+	 *
+	 * @return the error messages of this commerce payment entry
+	 */
+	@Override
+	public String getErrorMessages() {
+		return model.getErrorMessages();
+	}
+
+	/**
+	 * Returns the language ID of this commerce payment entry.
+	 *
+	 * @return the language ID of this commerce payment entry
+	 */
+	@Override
+	public String getLanguageId() {
+		return model.getLanguageId();
 	}
 
 	/**
@@ -413,6 +464,16 @@ public class CommercePaymentEntryWrapper
 		model.setCallbackURL(callbackURL);
 	}
 
+	/**
+	 * Sets the cancel url of this commerce payment entry.
+	 *
+	 * @param cancelURL the cancel url of this commerce payment entry
+	 */
+	@Override
+	public void setCancelURL(String cancelURL) {
+		model.setCancelURL(cancelURL);
+	}
+
 	@Override
 	public void setClassName(String className) {
 		model.setClassName(className);
@@ -486,6 +547,26 @@ public class CommercePaymentEntryWrapper
 	@Override
 	public void setCurrencyCode(String currencyCode) {
 		model.setCurrencyCode(currencyCode);
+	}
+
+	/**
+	 * Sets the error messages of this commerce payment entry.
+	 *
+	 * @param errorMessages the error messages of this commerce payment entry
+	 */
+	@Override
+	public void setErrorMessages(String errorMessages) {
+		model.setErrorMessages(errorMessages);
+	}
+
+	/**
+	 * Sets the language ID of this commerce payment entry.
+	 *
+	 * @param languageId the language ID of this commerce payment entry
+	 */
+	@Override
+	public void setLanguageId(String languageId) {
+		model.setLanguageId(languageId);
 	}
 
 	/**

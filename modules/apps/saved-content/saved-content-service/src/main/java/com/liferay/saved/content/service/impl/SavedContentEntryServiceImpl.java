@@ -6,9 +6,18 @@
 package com.liferay.saved.content.service.impl;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.saved.content.constants.SavedContentConstants;
+import com.liferay.saved.content.model.SavedContentEntry;
 import com.liferay.saved.content.service.base.SavedContentEntryServiceBaseImpl;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Brian Wing Shun Chan
@@ -22,4 +31,58 @@ import org.osgi.service.component.annotations.Component;
 )
 public class SavedContentEntryServiceImpl
 	extends SavedContentEntryServiceBaseImpl {
+
+	@Override
+	public SavedContentEntry addSavedContentEntry(
+			long groupId, String className, long classPK)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId, ActionKeys.ADD_ENTRY);
+
+		return savedContentEntryLocalService.addSavedContentEntry(
+			groupId, getUserId(), className, classPK);
+	}
+
+	@Override
+	public void deleteSavedContentEntry(SavedContentEntry savedContentEntry)
+		throws PortalException {
+
+		_savedContentEntryModelResourcePermission.check(
+			getPermissionChecker(), savedContentEntry, ActionKeys.DELETE);
+
+		savedContentEntryLocalService.deleteSavedContentEntry(
+			savedContentEntry);
+	}
+
+	@Override
+	public SavedContentEntry fetchSavedContentEntry(
+			long groupId, String className, long classPK)
+		throws PortalException {
+
+		SavedContentEntry savedContentEntry =
+			savedContentEntryLocalService.fetchSavedContentEntry(
+				groupId, getUserId(), className, classPK);
+
+		if (savedContentEntry != null) {
+			_savedContentEntryModelResourcePermission.check(
+				getPermissionChecker(), savedContentEntry, ActionKeys.VIEW);
+		}
+
+		return savedContentEntry;
+	}
+
+	@Reference(
+		target = "(resource.name=" + SavedContentConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(model.class.name=com.liferay.saved.content.model.SavedContentEntry)"
+	)
+	private volatile ModelResourcePermission<SavedContentEntry>
+		_savedContentEntryModelResourcePermission;
+
 }

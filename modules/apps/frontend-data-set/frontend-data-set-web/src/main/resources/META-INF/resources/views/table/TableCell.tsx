@@ -8,7 +8,8 @@ import {ClientExtension} from 'frontend-js-components-web';
 import React, {ComponentType, useContext, useEffect, useState} from 'react';
 
 import FrontendDataSetContext, {
-	IFrontendDataSetContext, TRenderer
+	IFrontendDataSetContext,
+	TRenderer,
 } from '../../FrontendDataSetContext';
 import {getInternalCellRenderer} from '../../cell_renderers/getInternalCellRenderer';
 import {getInputRendererById} from '../../utils/renderer';

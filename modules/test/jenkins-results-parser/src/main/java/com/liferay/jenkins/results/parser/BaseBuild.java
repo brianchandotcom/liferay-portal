@@ -1377,9 +1377,11 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public boolean isCompleted() {
-		String result = getResult();
+		String status = getStatus();
 
-		if (result == null) {
+		if (!Objects.equals(status, "completed") &&
+			!Objects.equals(status, "reporting")) {
+
 			return false;
 		}
 
@@ -1388,13 +1390,7 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public boolean isFailing() {
-		if (!isCompleted()) {
-			return true;
-		}
-
-		String result = getResult();
-
-		if ((result == null) || !result.equals("SUCCESS")) {
+		if (!isCompleted() || Objects.equals(getResult(), "SUCCESS")) {
 			return true;
 		}
 

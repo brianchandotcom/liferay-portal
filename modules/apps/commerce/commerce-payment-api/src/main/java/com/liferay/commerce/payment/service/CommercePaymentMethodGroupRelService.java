@@ -168,6 +168,10 @@ public interface CommercePaymentMethodGroupRelService extends BaseService {
 		throws PortalException;
 
 	public CommercePaymentMethodGroupRel updateCommercePaymentMethodGroupRel(
+			CommercePaymentMethodGroupRel commercePaymentMethodGroupRel)
+		throws PortalException;
+
+	public CommercePaymentMethodGroupRel updateCommercePaymentMethodGroupRel(
 			long commercePaymentMethodGroupRelId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, File imageFile, double priority,
 			boolean active)

@@ -260,7 +260,83 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 	public int getUnrelatedModelsCount(
 		long companyId, long groupId, ObjectDefinition objectDefinition,
 		long objectEntryId, long objectRelationshipId) throws PortalException {
-		return 0;
+
+		Column<?, Long> companyIdColumn = (Column<?, Long>)_table.getColumn(
+			"companyId");
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.getObjectRelationship(
+				objectRelationshipId);
+
+		ObjectDefinition objectDefinition1 =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId1());
+
+		DynamicObjectRelationshipMappingTable
+			dynamicObjectRelationshipMappingTable =
+			new DynamicObjectRelationshipMappingTable(
+				objectDefinition1.getPKObjectFieldDBColumnName(),
+				objectDefinition.getPKObjectFieldDBColumnName(),
+				objectRelationship.getDBTableName());
+
+		PersistedModelLocalService persistedModelLocalService =
+			_persistedModelLocalServiceRegistry.getPersistedModelLocalService(
+				objectDefinition.getClassName());
+
+		return persistedModelLocalService.dslQueryCount(
+			DSLQueryFactoryUtil.count(
+			).from(
+				_table
+			).where(
+				companyIdColumn.eq(
+					companyId
+				).and(
+					() -> {
+						Column<?, Long> groupIdColumn = _table.getColumn(
+							"groupId");
+
+						if ((groupIdColumn == null) ||
+							Objects.equals(
+								ObjectDefinitionConstants.SCOPE_COMPANY,
+								objectDefinition1.getScope())) {
+
+							return null;
+						}
+
+						return groupIdColumn.eq(groupId);
+					}
+				).and(
+					() -> {
+						String primaryKeyColumnName1 =
+							objectDefinition1.getPKObjectFieldDBColumnName();
+
+						Column<DynamicObjectRelationshipMappingTable, Long>
+							primaryKeyColumn1 =
+							(Column
+								<DynamicObjectRelationshipMappingTable,
+									Long>)
+								dynamicObjectRelationshipMappingTable.
+									getColumn(primaryKeyColumnName1);
+
+						String primaryKeyColumnName2 =
+							objectDefinition.getPKObjectFieldDBColumnName();
+
+						Column<?, Long> primaryKeyColumn2 = _table.getColumn(
+							primaryKeyColumnName2);
+
+						return primaryKeyColumn2.notIn(
+							DSLQueryFactoryUtil.select(
+								dynamicObjectRelationshipMappingTable.getColumn(
+									objectDefinition.
+										getPKObjectFieldDBColumnName())
+							).from(
+								dynamicObjectRelationshipMappingTable
+							).where(
+								primaryKeyColumn1.eq(objectEntryId)
+							));
+					}
+				)
+			));
 	}
 
 	private GroupByStep _getGroupByStep(

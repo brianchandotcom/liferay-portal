@@ -1001,7 +1001,7 @@ public class DefaultObjectEntryManagerImplTest
 	public void testAddObjectEntryHierarchyWithAccountRestriction()
 		throws Exception {
 
-		// Root account entry restricted must be inherited
+		// Root account restrictions must be inherited
 
 		_addResourcePermission(
 			_rootObjectDefinition, ObjectActionKeys.ADD_OBJECT_ENTRY,

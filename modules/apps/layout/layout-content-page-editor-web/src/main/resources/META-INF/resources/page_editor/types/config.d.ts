@@ -88,7 +88,7 @@ export interface Config {
 		}
 	>;
 
-	defaultLanguageId: string;
+	defaultLanguageId: Liferay.Language.Locale;
 	defaultSegmentsEntryId: string;
 	defaultSegmentsExperienceId: string;
 	defaultStyleBookEntryImagePreviewURL: string;

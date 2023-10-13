@@ -129,73 +129,87 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 		long sourceRepositoryId = ParamUtil.getLong(
 			actionRequest, "sourceRepositoryId");
 
-		Group group = _groupLocalService.fetchGroup(destinationRepositoryId);
+		try {
+			Group group = _groupLocalService.fetchGroup(
+				destinationRepositoryId);
 
-		long[] groupIds =
-			_siteConnectedGroupGroupProvider.
-				getCurrentAndAncestorSiteAndDepotGroupIds(group.getGroupId());
+			long[] groupIds =
+				_siteConnectedGroupGroupProvider.
+					getCurrentAndAncestorSiteAndDepotGroupIds(
+						group.getGroupId());
 
-		Group sourceGroup = _groupLocalService.fetchGroup(sourceRepositoryId);
+			Group sourceGroup = _groupLocalService.fetchGroup(
+				sourceRepositoryId);
 
-		_checkDestinationGroup(group, groupIds, sourceGroup.getGroupId());
+			_checkDestinationGroup(group, groupIds, sourceGroup.getGroupId());
 
-		long[] dlObjectIds = ParamUtil.getLongValues(
-			actionRequest, "dlObjectIds");
+			long[] dlObjectIds = ParamUtil.getLongValues(
+				actionRequest, "dlObjectIds");
 
-		for (long dlObjectId : dlObjectIds) {
-			try {
-				DLFileEntry dlFileEntry =
-					_dlFileEntryLocalService.fetchDLFileEntry(dlObjectId);
+			for (long dlObjectId : dlObjectIds) {
+				try {
+					DLFileEntry dlFileEntry =
+						_dlFileEntryLocalService.fetchDLFileEntry(dlObjectId);
 
-				if (dlFileEntry != null) {
-					_dlAppService.copyFileEntry(
-						dlFileEntry.getFileEntryId(), destinationFolderId,
-						destinationRepositoryId,
-						_getFileEntryTypeId(
+					if (dlFileEntry != null) {
+						_dlAppService.copyFileEntry(
+							dlFileEntry.getFileEntryId(), destinationFolderId,
 							destinationRepositoryId,
-							dlFileEntry.getFileEntryId()),
-						groupIds,
-						ServiceContextFactory.getInstance(
-							DLFileEntry.class.getName(), actionRequest));
+							_getFileEntryTypeId(
+								destinationRepositoryId,
+								dlFileEntry.getFileEntryId()),
+							groupIds,
+							ServiceContextFactory.getInstance(
+								DLFileEntry.class.getName(), actionRequest));
 
-					continue;
+						continue;
+					}
+
+					DLFileShortcut dlFileShortcut =
+						_dlFileShortcutLocalService.fetchDLFileShortcut(
+							dlObjectId);
+
+					if (dlFileShortcut != null) {
+						_dlAppService.copyFileShortcut(
+							dlFileShortcut.getFileShortcutId(),
+							destinationFolderId, destinationRepositoryId,
+							ServiceContextFactory.getInstance(
+								DLFileShortcut.class.getName(), actionRequest));
+
+						continue;
+					}
+
+					DLFolder dlFolder = _dlFolderLocalService.fetchDLFolder(
+						dlObjectId);
+
+					if (dlFolder != null) {
+						_dlAppService.copyFolder(
+							dlFolder.getRepositoryId(), dlFolder.getFolderId(),
+							destinationRepositoryId, destinationFolderId,
+							_getFileEntryTypeIds(
+								group.getGroupId(), dlFolder.getFolderId()),
+							groupIds,
+							ServiceContextFactory.getInstance(
+								DLFolder.class.getName(), actionRequest));
+					}
 				}
+				catch (PortalException portalException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(portalException);
+					}
 
-				DLFileShortcut dlFileShortcut =
-					_dlFileShortcutLocalService.fetchDLFileShortcut(dlObjectId);
-
-				if (dlFileShortcut != null) {
-					_dlAppService.copyFileShortcut(
-						dlFileShortcut.getFileShortcutId(), destinationFolderId,
-						destinationRepositoryId,
-						ServiceContextFactory.getInstance(
-							DLFileShortcut.class.getName(), actionRequest));
-
-					continue;
-				}
-
-				DLFolder dlFolder = _dlFolderLocalService.fetchDLFolder(
-					dlObjectId);
-
-				if (dlFolder != null) {
-					_dlAppService.copyFolder(
-						dlFolder.getRepositoryId(), dlFolder.getFolderId(),
-						destinationRepositoryId, destinationFolderId,
-						_getFileEntryTypeIds(
-							group.getGroupId(), dlFolder.getFolderId()),
-						groupIds,
-						ServiceContextFactory.getInstance(
-							DLFolder.class.getName(), actionRequest));
+					errorMessages.add(
+						themeDisplay.translate(portalException.getMessage()));
 				}
 			}
-			catch (PortalException portalException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(portalException);
-				}
-
-				errorMessages.add(
-					themeDisplay.translate(portalException.getMessage()));
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
 			}
+
+			errorMessages.add(
+				themeDisplay.translate(portalException.getMessage()));
 		}
 
 		return errorMessages;

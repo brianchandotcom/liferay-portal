@@ -12,7 +12,7 @@ import {
 } from '@liferay/object-js-components-web';
 import {TBuilderScreenItem} from '@liferay/object-js-components-web/src/main/resources/META-INF/resources/components/BuilderScreen/BuilderScreen';
 import {createResourceURL, sub} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import {Alert} from '../ModalSelectObjectFields';
 import {ErrorMessage} from './ErrorMessage';
@@ -28,6 +28,7 @@ interface isMatchingObjectFieldObjectValidationRuleSettingProps {
 
 interface ModalSelectObjectFieldItem extends ObjectField {
 	checked: boolean;
+	disableCheckbox: boolean;
 }
 
 interface MultipleSelectOption {
@@ -233,6 +234,12 @@ export function UniqueCompositeKey({
 		}
 	};
 
+	const persistedObjectValidation = useMemo(() => {
+		return values;
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
 	useEffect(() => {
 		if (alerts.length >= 2) {
 			handleAddObjectFields();
@@ -342,6 +349,17 @@ export function UniqueCompositeKey({
 								'compositeKeyObjectFieldExternalReferenceCode',
 						})
 				),
+				disableCheckbox:
+					objectDefinition?.status.label === 'approved' &&
+					!!persistedObjectValidation.objectValidationRuleSettings?.find(
+						(objectValidationRuleSetting) =>
+							isMatchingObjectFieldObjectValidationRuleSetting({
+								objectField: filteredCustomObjectField,
+								objectValidationRuleSetting,
+								objectValidationRuleSettingNameMatches:
+									'compositeKeyObjectFieldExternalReferenceCode',
+							})
+					),
 			})
 		);
 
@@ -350,7 +368,7 @@ export function UniqueCompositeKey({
 		setMultipleSelectOptions(newMultipleSelectOptions);
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [values.objectValidationRuleSettings]);
+	}, [objectDefinition?.status, values.objectValidationRuleSettings]);
 
 	return (
 		<>
@@ -383,68 +401,60 @@ export function UniqueCompositeKey({
 					filter={true}
 					firstColumnHeader={Liferay.Language.get('label')}
 					onDeleteColumn={(objectFieldName) => {
-						const makeFetch = async () => {
-							const objectValidation: ObjectValidation = await API.getObjectValidationRuleById(
-								values.id as number
-							);
+						const canNotDeleteObjectField = builderScreenItems.some(
+							(builderScreenItem) =>
+								builderScreenItem.objectFieldName ===
+									objectFieldName &&
+								(objectDefinition as ObjectDefinition).status
+									.label === 'approved' &&
+								(persistedObjectValidation.objectValidationRuleSettings as ObjectValidationRuleSetting[]).some(
+									(objectValidationRuleSetting) =>
+										objectValidationRuleSetting.value ===
+										builderScreenItem.externalReferenceCode
+								)
+						);
 
-							const canNotDeleteObjectField = builderScreenItems.some(
-								(builderScreenItem) =>
-									(objectValidation.objectValidationRuleSettings as ObjectValidationRuleSetting[]).some(
-										(objectValidationRuleSetting) =>
-											objectValidationRuleSetting.value ===
-											builderScreenItem.externalReferenceCode
-									) &&
-									builderScreenItem.objectFieldName ===
-										objectFieldName &&
-									(objectDefinition as ObjectDefinition)
-										.status.label === 'approved'
-							);
+						if (canNotDeleteObjectField) {
+							const parentWindow = Liferay.Util.getOpener();
 
-							if (canNotDeleteObjectField) {
-								const parentWindow = Liferay.Util.getOpener();
-
-								parentWindow.Liferay.fire(
-									'openModalDeletionNotAllowed',
-									{
-										contentLiferayFire: (
-											<span>
-												{Liferay.Language.get(
-													'fields-cannot-be-deleted-from-unique-composite-keys-after-the-definition-is-published'
-												)}
-											</span>
-										),
-									}
-								);
-							}
-							else {
-								let removedBuilderScreenItem: TBuilderScreenItem[];
-
-								builderScreenItems.forEach(
-									(builderScreenItem, index) => {
-										if (
-											builderScreenItem.objectFieldName ===
-											objectFieldName
-										) {
-											removedBuilderScreenItem = builderScreenItems.splice(
-												index,
-												1
-											);
-										}
-									}
-								);
-								setValues({
-									objectValidationRuleSettings: values.objectValidationRuleSettings?.filter(
-										(objectValidationRuleSetting) =>
-											objectValidationRuleSetting.value !==
-											removedBuilderScreenItem[0]
-												.externalReferenceCode
+							parentWindow.Liferay.fire(
+								'openModalDeletionNotAllowed',
+								{
+									contentLiferayFire: (
+										<span>
+											{Liferay.Language.get(
+												'fields-cannot-be-deleted-from-unique-composite-keys-after-definition-publication'
+											)}
+										</span>
 									),
-								});
-							}
-						};
+								}
+							);
+						}
+						else {
+							let removedBuilderScreenItem: TBuilderScreenItem[];
 
-						makeFetch();
+							builderScreenItems.forEach(
+								(builderScreenItem, index) => {
+									if (
+										builderScreenItem.objectFieldName ===
+										objectFieldName
+									) {
+										removedBuilderScreenItem = builderScreenItems.splice(
+											index,
+											1
+										);
+									}
+								}
+							);
+							setValues({
+								objectValidationRuleSettings: values.objectValidationRuleSettings?.filter(
+									(objectValidationRuleSetting) =>
+										objectValidationRuleSetting.value !==
+										removedBuilderScreenItem[0]
+											.externalReferenceCode
+								),
+							});
+						}
 					}}
 					openModal={handleAddObjectFields}
 					secondColumnHeader={Liferay.Language.get('type')}

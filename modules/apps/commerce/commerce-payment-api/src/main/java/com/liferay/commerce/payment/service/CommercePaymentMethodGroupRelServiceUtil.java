@@ -229,6 +229,15 @@ public class CommercePaymentMethodGroupRelServiceUtil {
 
 	public static CommercePaymentMethodGroupRel
 			updateCommercePaymentMethodGroupRel(
+				CommercePaymentMethodGroupRel commercePaymentMethodGroupRel)
+		throws PortalException {
+
+		return getService().updateCommercePaymentMethodGroupRel(
+			commercePaymentMethodGroupRel);
+	}
+
+	public static CommercePaymentMethodGroupRel
+			updateCommercePaymentMethodGroupRel(
 				long commercePaymentMethodGroupRelId,
 				Map<java.util.Locale, String> nameMap,
 				Map<java.util.Locale, String> descriptionMap,

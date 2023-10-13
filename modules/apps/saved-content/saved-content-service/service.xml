@@ -42,8 +42,19 @@
 			<finder-column name="userId" />
 			<finder-column name="classNameId" />
 		</finder>
+		<finder name="G_C_C" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
 		<finder name="C_C_C" return-type="Collection">
 			<finder-column name="companyId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+		<finder name="G_U_C_C" return-type="SavedContentEntry" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="userId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>

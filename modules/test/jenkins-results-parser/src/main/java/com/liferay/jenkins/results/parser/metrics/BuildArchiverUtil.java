@@ -34,9 +34,6 @@ public class BuildArchiverUtil {
 		String startDate, String endDate, String outputDirPath) {
 
 		try {
-			Properties properties =
-				JenkinsResultsParserUtil.getBuildProperties();
-
 			String groovyScript = JenkinsResultsParserUtil.readInputStream(
 				JenkinsResultsParserUtil.class.getResourceAsStream(
 					"dependencies/get-build-data.groovy"));
@@ -54,7 +51,7 @@ public class BuildArchiverUtil {
 
 			_recordGroovyScriptResponses(
 				JenkinsResultsParserUtil.getJenkinsMasters(
-					properties, 12, 2, "test-1"),
+					_buildProperties, 12, 2, "test-1"),
 				groovyScript, new File(outputDirPath));
 		}
 		catch (IOException ioException) {
@@ -64,7 +61,22 @@ public class BuildArchiverUtil {
 	}
 
 	public static void archiveOneDay(String startDate) {
-		archiveOneDay(startDate, _DEFAULT_OUTPUT_DIR_PATH);
+		String outputDirPath = null;
+
+		try {
+			outputDirPath = _buildProperties.getProperty(
+				"archive.build.tmp.dir");
+		}
+		catch (Exception exception) {
+			System.out.println(
+				"Unable to get property \"archive.build.tmp.dir\"");
+		}
+
+		if (outputDirPath == null) {
+			outputDirPath = _DEFAULT_OUTPUT_DIR_PATH;
+		}
+
+		archiveOneDay(startDate, outputDirPath);
 	}
 
 	public static void archiveOneDay(String startDate, String outputDirPath) {
@@ -180,7 +192,17 @@ public class BuildArchiverUtil {
 	private static final String _DEFAULT_OUTPUT_DIR_PATH =
 		"/opt/dev/projects/github/liferay-jenkins-ee/tmp/jenkins";
 
+	private static final Properties _buildProperties;
 	private static final ExecutorService _executorService =
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(8, true);
+
+	static {
+		try {
+			_buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
 
 }

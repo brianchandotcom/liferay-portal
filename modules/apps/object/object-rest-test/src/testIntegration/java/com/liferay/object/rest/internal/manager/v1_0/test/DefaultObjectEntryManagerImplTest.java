@@ -1013,7 +1013,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		_assignAccountEntryRole(accountEntry1, _buyerRole, _user);
 
-		_addObjectEntryHierarchyWithAccountEntry(accountEntry1);
+		_addAccountRestrictedObjectEntryHierarchy(accountEntry1);
 
 		AccountEntry accountEntry2 = _addAccountEntry();
 
@@ -1316,7 +1316,7 @@ public class DefaultObjectEntryManagerImplTest
 		AccountEntry accountEntry1 = _addAccountEntry();
 
 		Map<Long, ObjectEntry> objectEntries =
-			_addObjectEntryHierarchyWithAccountEntry(accountEntry1);
+			_addAccountRestrictedObjectEntryHierarchy(accountEntry1);
 
 		_addResourcePermission(
 			_rootObjectDefinition, ActionKeys.VIEW, _buyerRole);
@@ -1942,11 +1942,11 @@ public class DefaultObjectEntryManagerImplTest
 
 		AccountEntry accountEntry1 = _addAccountEntry();
 
-		_addObjectEntryHierarchyWithAccountEntry(accountEntry1);
+		_addAccountRestrictedObjectEntryHierarchy(accountEntry1);
 
 		AccountEntry accountEntry2 = _addAccountEntry();
 
-		_addObjectEntryHierarchyWithAccountEntry(accountEntry2);
+		_addAccountRestrictedObjectEntryHierarchy(accountEntry2);
 
 		_user = _addUser();
 
@@ -2770,7 +2770,7 @@ public class DefaultObjectEntryManagerImplTest
 		AccountEntry accountEntry1 = _addAccountEntry();
 
 		Map<Long, ObjectEntry> objectEntries =
-			_addObjectEntryHierarchyWithAccountEntry(accountEntry1);
+			_addAccountRestrictedObjectEntryHierarchy(accountEntry1);
 
 		_addResourcePermission(
 			_rootObjectDefinition, ActionKeys.VIEW, _accountAdministratorRole);
@@ -3115,6 +3115,74 @@ public class DefaultObjectEntryManagerImplTest
 			accountEntry.getAccountEntryId(), organization.getOrganizationId());
 	}
 
+	private Map<Long, ObjectEntry> _addAccountRestrictedObjectEntryHierarchy(
+			AccountEntry accountEntry)
+		throws Exception {
+
+		Iterator<Node> iterator = _tree.iterator();
+
+		Node rootNode = iterator.next();
+
+		Map<Long, ObjectEntry> objectEntries =
+			HashMapBuilder.<Long, ObjectEntry>put(
+				rootNode.getPrimaryKey(),
+				_defaultObjectEntryManager.addObjectEntry(
+					_simpleDTOConverterContext,
+					objectDefinitionLocalService.getObjectDefinition(
+						rootNode.getPrimaryKey()),
+					new ObjectEntry() {
+						{
+							properties = HashMapBuilder.<String, Object>put(
+								"r_oneToManyRelationshipName_accountEntryId",
+								accountEntry.getAccountEntryId()
+							).build();
+						}
+					},
+					ObjectDefinitionConstants.SCOPE_COMPANY)
+			).build();
+
+		while (iterator.hasNext()) {
+			Node node = iterator.next();
+
+			objectEntries.put(
+				node.getPrimaryKey(),
+				_defaultObjectEntryManager.addObjectEntry(
+					_simpleDTOConverterContext,
+					objectDefinitionLocalService.getObjectDefinition(
+						node.getPrimaryKey()),
+					new ObjectEntry() {
+						{
+							properties = HashMapBuilder.<String, Object>put(
+								() -> {
+									ObjectRelationship objectRelationship =
+										_objectRelationshipLocalService.
+											getObjectRelationship(
+												node.getEdge(
+												).getObjectRelationshipId());
+
+									ObjectField objectField =
+										objectFieldLocalService.getObjectField(
+											objectRelationship.
+												getObjectFieldId2());
+
+									return objectField.getName();
+								},
+								() -> {
+									ObjectEntry objectEntry = objectEntries.get(
+										node.getParentNode(
+										).getPrimaryKey());
+
+									return objectEntry.getId();
+								}
+							).build();
+						}
+					},
+					ObjectDefinitionConstants.SCOPE_COMPANY));
+		}
+
+		return objectEntries;
+	}
+
 	private void _addAggregationObjectField(
 			String argumentObjectFieldName, String functionName,
 			long objectDefinitionId, String objectFieldName,
@@ -3192,74 +3260,6 @@ public class DefaultObjectEntryManagerImplTest
 				}
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
-	}
-
-	private Map<Long, ObjectEntry> _addObjectEntryHierarchyWithAccountEntry(
-			AccountEntry accountEntry)
-		throws Exception {
-
-		Iterator<Node> iterator = _tree.iterator();
-
-		Node rootNode = iterator.next();
-
-		Map<Long, ObjectEntry> objectEntries =
-			HashMapBuilder.<Long, ObjectEntry>put(
-				rootNode.getPrimaryKey(),
-				_defaultObjectEntryManager.addObjectEntry(
-					_simpleDTOConverterContext,
-					objectDefinitionLocalService.getObjectDefinition(
-						rootNode.getPrimaryKey()),
-					new ObjectEntry() {
-						{
-							properties = HashMapBuilder.<String, Object>put(
-								"r_oneToManyRelationshipName_accountEntryId",
-								accountEntry.getAccountEntryId()
-							).build();
-						}
-					},
-					ObjectDefinitionConstants.SCOPE_COMPANY)
-			).build();
-
-		while (iterator.hasNext()) {
-			Node node = iterator.next();
-
-			objectEntries.put(
-				node.getPrimaryKey(),
-				_defaultObjectEntryManager.addObjectEntry(
-					_simpleDTOConverterContext,
-					objectDefinitionLocalService.getObjectDefinition(
-						node.getPrimaryKey()),
-					new ObjectEntry() {
-						{
-							properties = HashMapBuilder.<String, Object>put(
-								() -> {
-									ObjectRelationship objectRelationship =
-										_objectRelationshipLocalService.
-											getObjectRelationship(
-												node.getEdge(
-												).getObjectRelationshipId());
-
-									ObjectField objectField =
-										objectFieldLocalService.getObjectField(
-											objectRelationship.
-												getObjectFieldId2());
-
-									return objectField.getName();
-								},
-								() -> {
-									ObjectEntry objectEntry = objectEntries.get(
-										node.getParentNode(
-										).getPrimaryKey());
-
-									return objectEntry.getId();
-								}
-							).build();
-						}
-					},
-					ObjectDefinitionConstants.SCOPE_COMPANY));
-		}
-
-		return objectEntries;
 	}
 
 	private void _addRelatedObjectEntries(

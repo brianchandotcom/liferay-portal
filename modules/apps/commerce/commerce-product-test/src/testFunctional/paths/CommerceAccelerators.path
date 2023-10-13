@@ -605,6 +605,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MINI_CART_ITEM_QUANTITY_N</td>
+	<td>xpath=(//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]/../../../../div[contains(@class,'mini-cart-item-quantity')]//input)[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MINI_CART_ITEM_QUANTITY_SELECTOR_HAS_ERROR</td>
 	<td>//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]/../../../../div[contains(@class,'mini-cart-item-quantity')]/div[contains(@class,'has-error')]/input</td>
 	<td></td>
@@ -637,6 +642,11 @@
 <tr>
 	<td>MINI_CART_ITEM_PRICE_ON_APPLICATION</td>
 	<td>//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]//../../../..//div[contains(@class,'price')]//span[(@class='price-on-application price-value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CART_ITEM_PRICE_ON_APPLICATION_N</td>
+	<td>xpath=(//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]//../../../..//div[contains(@class,'price')]//span[(@class='price-on-application price-value')])[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>

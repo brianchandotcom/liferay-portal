@@ -17,5 +17,6 @@ ViewNotificationTemplatesDisplayContext viewNotificationTemplatesDisplayContext 
 	fdsActionDropdownItems="<%= viewNotificationTemplatesDisplayContext.getFDSActionDropdownItems() %>"
 	formName="fm"
 	id="<%= NotificationFDSNames.NOTIFICATION_TEMPLATES %>"
+	propsTransformer="js/components/FDSPropsTransformer/NotificationTemplateFDSPropsTransformer"
 	style="fluid"
 />

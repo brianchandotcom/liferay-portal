@@ -237,10 +237,12 @@ const FrontendDataSet = ({
 	useEffect(() => {
 		loadClientExtensions([
 			{
-				imports: initialFilters?.map((filter) => ({
-					context: filter,
-					url: filter.cxFilterURL,
-				})),
+				imports: initialFilters
+					?.filter((filter) => filter.cxFilterURL)
+					.map((filter) => ({
+						context: filter,
+						url: filter.cxFilterURL,
+					})),
 				onLoad: (filterModules) => {
 					const newFilters = filterModules.map(
 						({context: filter, module}) => ({

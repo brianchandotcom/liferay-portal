@@ -16,6 +16,7 @@ import com.liferay.portal.search.index.SyncReindexManager;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Collections;
+import java.util.Iterator;
 
 import org.junit.After;
 import org.junit.Before;
@@ -44,6 +45,8 @@ public class SearchEngineInitializerTest {
 			SearchEngineHelperUtil.class);
 		_serviceTrackerListFactoryMockedStatic = Mockito.mockStatic(
 			ServiceTrackerListFactory.class);
+
+		_setUpServiceTrackerList(Collections.emptyIterator());
 	}
 
 	@After
@@ -53,80 +56,33 @@ public class SearchEngineInitializerTest {
 	}
 
 	@Test
-	public void testMethodsCalledInConcurrentReindex() throws Exception {
-		_setUpServiceTrackerList();
-
+	public void testConcurrentReindex() throws Exception {
 		_reindex("concurrent");
 
-		_searchEngineHelperUtilMockedStatic.verify(
-			() -> SearchEngineHelperUtil.initialize(Mockito.anyLong()),
-			Mockito.times(1));
-
-		Mockito.verify(
-			_concurrentReindexManager, Mockito.times(1)
-		).createNextIndex(
-			Mockito.anyLong()
-		);
-
-		Mockito.verify(
-			_concurrentReindexManager, Mockito.times(1)
-		).replaceCurrentIndexWithNextIndex(
-			Mockito.anyLong()
-		);
+		_verifyMethodCalls(1, 0, 0, 1, 0, 1);
 	}
 
 	@Test
-	public void testMethodsCalledInRegularReindex() throws Exception {
+	public void testConcurrentReindexExceptionThrown() throws Exception {
+		_setUpServiceTrackerList(null);
+
+		_reindex("concurrent");
+
+		_verifyMethodCalls(1, 1, 0, 1, 0, 0);
+	}
+
+	@Test
+	public void testRegularReindex() throws Exception {
 		_reindex("regular");
 
-		_searchEngineHelperUtilMockedStatic.verify(
-			() -> SearchEngineHelperUtil.initialize(Mockito.anyLong()),
-			Mockito.times(1));
-		_searchEngineHelperUtilMockedStatic.verify(
-			() -> SearchEngineHelperUtil.removeCompany(Mockito.anyLong()),
-			Mockito.times(1));
+		_verifyMethodCalls(0, 0, 0, 1, 1, 0);
 	}
 
 	@Test
-	public void testMethodsCalledInSyncReindex() throws Exception {
-		_setUpServiceTrackerList();
-
+	public void testSyncReindex() throws Exception {
 		_reindex("sync");
 
-		Mockito.verify(
-			_syncReindexManager, Mockito.times(1)
-		).deleteStaleDocuments(
-			Mockito.anyLong(), Mockito.any(), Mockito.any()
-		);
-	}
-
-	@Test
-	public void testReindexFailureWithConcurrentMode() throws Exception {
-		_reindex("concurrent");
-
-		Mockito.verify(
-			_concurrentReindexManager, Mockito.times(1)
-		).deleteNextIndex(
-			Mockito.anyLong()
-		);
-	}
-
-	@Test
-	public void testUncalledMethodsInConcurrentReindex() throws Exception {
-		_reindex("concurrent");
-
-		_searchEngineHelperUtilMockedStatic.verify(
-			() -> SearchEngineHelperUtil.removeCompany(Mockito.anyLong()),
-			Mockito.never());
-	}
-
-	@Test
-	public void testUncalledMethodsInSyncReindex() throws Exception {
-		_reindex("sync");
-
-		_searchEngineHelperUtilMockedStatic.verify(
-			() -> SearchEngineHelperUtil.removeCompany(Mockito.anyLong()),
-			Mockito.never());
+		_verifyMethodCalls(0, 0, 1, 0, 0, 0);
 	}
 
 	private void _reindex(String executionMode) {
@@ -139,14 +95,14 @@ public class SearchEngineInitializerTest {
 		searchEngineInitializer.reindex();
 	}
 
-	private void _setUpServiceTrackerList() {
+	private void _setUpServiceTrackerList(Iterator<Indexer<?>> iterator) {
 		ServiceTrackerList<Indexer<?>> serviceTrackerList = Mockito.mock(
 			ServiceTrackerList.class);
 
 		Mockito.when(
 			serviceTrackerList.iterator()
 		).thenReturn(
-			Collections.emptyIterator()
+			iterator
 		);
 
 		_serviceTrackerListFactoryMockedStatic.when(
@@ -155,6 +111,45 @@ public class SearchEngineInitializerTest {
 				"(!(system.index=true))")
 		).thenReturn(
 			serviceTrackerList
+		);
+	}
+
+	private void _verifyMethodCalls(
+			int createNextIndex, int deleteNextIndex, int deleteStaleDocuments,
+			int initialize, int removeCompany,
+			int replaceCurrentIndexWithNextIndex)
+		throws Exception {
+
+		Mockito.verify(
+			_concurrentReindexManager, Mockito.times(createNextIndex)
+		).createNextIndex(
+			Mockito.anyLong()
+		);
+
+		Mockito.verify(
+			_concurrentReindexManager, Mockito.times(deleteNextIndex)
+		).deleteNextIndex(
+			Mockito.anyLong()
+		);
+
+		Mockito.verify(
+			_concurrentReindexManager,
+			Mockito.times(replaceCurrentIndexWithNextIndex)
+		).replaceCurrentIndexWithNextIndex(
+			Mockito.anyLong()
+		);
+
+		_searchEngineHelperUtilMockedStatic.verify(
+			() -> SearchEngineHelperUtil.initialize(Mockito.anyLong()),
+			Mockito.times(initialize));
+		_searchEngineHelperUtilMockedStatic.verify(
+			() -> SearchEngineHelperUtil.removeCompany(Mockito.anyLong()),
+			Mockito.times(removeCompany));
+
+		Mockito.verify(
+			_syncReindexManager, Mockito.times(deleteStaleDocuments)
+		).deleteStaleDocuments(
+			Mockito.anyLong(), Mockito.any(), Mockito.any()
 		);
 	}
 

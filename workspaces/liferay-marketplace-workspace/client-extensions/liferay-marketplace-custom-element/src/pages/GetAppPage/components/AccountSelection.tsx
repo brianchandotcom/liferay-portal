@@ -4,74 +4,72 @@
  */
 
 import ClayLink from '@clayui/link';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 
 import RadioCardList, {
 	RadioCardContent,
 } from '../../../components/RadioCardList/RadioCardList';
-import {getAccountInfo, getUserAccount} from '../../../utils/api';
+import {getAccountInfo} from '../../../utils/api';
 
 const enabledAccountRoles = ['Account Administrator', 'Account Buyer'];
 
 interface AccountSelectionProps {
 	onSelectAccount: (account: Account) => void;
 	selectedAccount: Account | undefined;
+	userAccount?: UserAccount;
 }
 
 const AccountSelection = ({
 	onSelectAccount,
 	selectedAccount,
+	userAccount,
 }: AccountSelectionProps) => {
-	const [userAccount, setUserAccount] = useState<UserAccount>();
 	const [accounts, setAccounts] = useState<RadioCardContent<Account>[]>([]);
 
-	const getUserAccountList = async () => {
-		const userAccount: UserAccount = await getUserAccount();
+	const getAccountList = useCallback(async () => {
+		if (userAccount) {
+			const radioAccountList: RadioCardContent<Account>[] = [];
 
-		setUserAccount(userAccount);
+			for (const accountBrief of userAccount.accountBriefs) {
+				let displayAccount = false;
+				if (!accountBrief.roleBriefs.length) {
+					const accountInfo: Account = await getAccountInfo({
+						accountId: Number(accountBrief.id),
+					});
 
-		const radioAccountList: RadioCardContent<Account>[] = [];
+					if (accountInfo.type === 'person') {
+						displayAccount = true;
+					}
+				}
+				else {
+					displayAccount = accountBrief.roleBriefs.some((roleBrief) =>
+						enabledAccountRoles.includes(roleBrief.name)
+					);
+				}
 
-		for (const accountBrief of userAccount.accountBriefs) {
-			let displayAccount = false;
-			if (!accountBrief.roleBriefs.length) {
-				const accountInfo: Account = await getAccountInfo({
-					accountId: Number(accountBrief.id),
-				});
+				if (displayAccount) {
+					const accountInfo: Account = await getAccountInfo({
+						accountId: Number(accountBrief.id),
+					});
 
-				if (accountInfo.type === 'person') {
-					displayAccount = true;
+					radioAccountList.push({
+						imageURL: accountInfo.logoURL,
+						selected:
+							selectedAccount?.externalReferenceCode ===
+							accountInfo.externalReferenceCode,
+						title: accountInfo.name,
+						value: accountInfo,
+					});
 				}
 			}
-			else {
-				displayAccount = accountBrief.roleBriefs.some((roleBrief) =>
-					enabledAccountRoles.includes(roleBrief.name)
-				);
-			}
 
-			if (displayAccount) {
-				const accountInfo: Account = await getAccountInfo({
-					accountId: Number(accountBrief.id),
-				});
-
-				radioAccountList.push({
-					imageURL: accountInfo.logoURL,
-					selected:
-						selectedAccount?.externalReferenceCode ===
-						accountInfo.externalReferenceCode,
-					title: accountInfo.name,
-					value: accountInfo,
-				});
-			}
+			setAccounts(radioAccountList);
 		}
-
-		setAccounts(radioAccountList);
-	};
+	}, [selectedAccount?.externalReferenceCode, userAccount]);
 
 	useEffect(() => {
-		getUserAccountList();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+		getAccountList();
+	}, [getAccountList]);
 
 	const handleSelectAccount = (radioOption: RadioOption<Account>) => {
 		onSelectAccount(radioOption.value);

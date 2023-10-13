@@ -9,6 +9,7 @@ import {useForm} from 'react-hook-form';
 import useCart from '../../hooks/useCart';
 import {
 	getPaymentMethodURL,
+	getUserAccount,
 	postCheckoutCart,
 	postEmailAppInformation,
 } from '../../utils/api';
@@ -38,6 +39,7 @@ export type GetAppForm = {
 	selectedPaymentMethod: paymentMethod;
 	selectedSKU?: SKU;
 	selectedTimeline?: string;
+	userAccount?: UserAccount;
 };
 
 const GetAppFlow = () => {
@@ -61,10 +63,17 @@ const GetAppFlow = () => {
 			selectedPaymentMethod: paymentMethod.PAY,
 			selectedSKU: undefined,
 			selectedTimeline: '',
+			userAccount: undefined,
 		},
 	});
 
-	const {account, product, selectedPaymentMethod, selectedSKU} = watch();
+	const {
+		account,
+		product,
+		selectedPaymentMethod,
+		selectedSKU,
+		userAccount,
+	} = watch();
 
 	const {productId} = useGetProduct(
 		product,
@@ -84,7 +93,8 @@ const GetAppFlow = () => {
 		if (cartUtil?.cartItems?.length) {
 			setLincenseSelected(true);
 			setEnablePurchaseButton(true);
-		} else {
+		}
+		else {
 			setEnablePurchaseButton(false);
 			setLincenseSelected(false);
 		}
@@ -105,6 +115,14 @@ const GetAppFlow = () => {
 			}
 		})();
 	}, [productId]);
+
+	useEffect(() => {
+		(async () => {
+			const fetchedUserAccount: UserAccount = await getUserAccount();
+
+			setValue('userAccount', fetchedUserAccount);
+		})();
+	}, [setValue]);
 
 	async function handleGetApp(orderId?: number) {
 		const productSpecificationValues = await getProductSpecificationValues(
@@ -180,6 +198,7 @@ const GetAppFlow = () => {
 						setValue('account', account);
 					}}
 					selectedAccount={account}
+					userAccount={userAccount}
 				/>
 			),
 			nextStep: StepType.LICENSES,
@@ -241,6 +260,7 @@ const GetAppFlow = () => {
 				product={product}
 				selectedAccount={account}
 				step={step}
+				userAccount={userAccount}
 			/>
 
 			<div className="border d-flex flex-column mt-7 p-5 rounded">

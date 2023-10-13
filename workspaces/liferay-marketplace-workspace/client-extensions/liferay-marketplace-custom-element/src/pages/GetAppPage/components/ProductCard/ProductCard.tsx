@@ -10,7 +10,6 @@ import {useEffect, useState} from 'react';
 
 import emptyPictureIcon from '../../../../assets/icons/avatar.svg';
 import useCart from '../../../../hooks/useCart';
-import {getCustomFieldValue} from '../../../../utils/customFieldUtil';
 import {
 	getThumbnailByProductAttachment,
 	getValueFromSpecifications,
@@ -24,6 +23,7 @@ interface ProductCardProps {
 	product?: Product;
 	selectedAccount?: Account;
 	step: StepType;
+	userAccount?: UserAccount;
 }
 
 const ProductCard = ({
@@ -31,6 +31,7 @@ const ProductCard = ({
 	product,
 	selectedAccount,
 	step,
+	userAccount,
 }: ProductCardProps) => {
 	const [hasTrial, setHasTrial] = useState(false);
 	const [basePrice, setBasePrice] = useState(0);
@@ -137,10 +138,12 @@ const ProductCard = ({
 						src={getIconUrl()}
 						width="64px"
 					/>
+
 					<div className="align-items-center ml-4">
 						<h1 className="text-weight-bold">
 							{product.name.en_US}
 						</h1>
+
 						<div className="sub-text">
 							{getValueFromSpecifications(
 								product.productSpecifications,
@@ -155,11 +158,14 @@ const ProductCard = ({
 						</div>
 					</div>
 				</div>
+
 				<div className="align-items-end d-flex flex-column price-text">
 					<strong className="mr-1">Price</strong>
+
 					<div className="mr-1 py-2">
 						<FormattedValues />
 					</div>
+
 					<div className="license-tag px-2">
 						{getLicenseTagText(product)}
 					</div>
@@ -173,17 +179,16 @@ const ProductCard = ({
 						<strong className="account-banner-title-text align-self-center">
 							Account Selected
 						</strong>
+
 						<div className="align-items-center d-flex">
 							<div className="account-banner-name-text align-items-end d-flex flex-column m-2">
 								<strong>{selectedAccount?.name}</strong>
+
 								<div className="account-banner-email-text">
-									{selectedAccount?.customFields &&
-										getCustomFieldValue(
-											selectedAccount.customFields,
-											'Contact Email'
-										)}
+									{userAccount?.emailAddress}
 								</div>
 							</div>
+
 							<ClaySticker shape="circle" size="sm">
 								<ClaySticker.Image
 									alt="placeholder"

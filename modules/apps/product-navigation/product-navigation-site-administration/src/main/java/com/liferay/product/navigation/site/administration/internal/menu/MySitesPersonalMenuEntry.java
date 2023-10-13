@@ -5,6 +5,7 @@
 
 package com.liferay.product.navigation.site.administration.internal.menu;
 
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
@@ -86,6 +87,12 @@ public class MySitesPersonalMenuEntry implements PersonalMenuEntry {
 	}
 
 	@Override
+	public String getOnClickJSModuleURL() {
+		return _npmResolver.resolveModuleName(
+			"@liferay/product-navigation-site-administration/js/mySitesOpener");
+	}
+
+	@Override
 	public String getPortletURL(HttpServletRequest httpServletRequest) {
 		return null;
 	}
@@ -123,6 +130,9 @@ public class MySitesPersonalMenuEntry implements PersonalMenuEntry {
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private NPMResolver _npmResolver;
 
 	@Reference
 	private Portal _portal;

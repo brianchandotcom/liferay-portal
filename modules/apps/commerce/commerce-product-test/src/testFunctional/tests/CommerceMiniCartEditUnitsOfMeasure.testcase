@@ -1,0 +1,511 @@
+@component-name = "portal-commerce"
+definition {
+
+	property custom.properties = "feature.flag.COMMERCE-11028=true${line.separator}feature.flag.COMMERCE-11287=true${line.separator}jsonws.web.service.paths.excludes=";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Shopping Experience";
+
+	setUp {
+		CommerceConfiguration.commerceSetUp(minium = "true");
+
+		CommerceEntry.addAccountEntryUser(
+			accountName = "Commerce Account",
+			accountType = "Business",
+			agreeToTermsAndAnswerReminderQuery = "true",
+			createNewAccount = "true",
+			requireReset = "false",
+			userEmailAddress = "buyer@liferay.com",
+			userFirstName = "Buyer",
+			userLastName = "User",
+			userRole = "Buyer",
+			userScreenName = "buyeruser",
+			userSiteMembership = "Minium");
+	}
+
+	tearDown {
+		CommerceConfiguration.commerceTearDown();
+	}
+
+	@description = "COMMERCE-12619. As a user, I can verify different pricing types are applied correctly upon editing UOM in the mini cart."
+	@priority = 5
+	test CanAssertPricingTypesAreAppliedWhileEditingUOMInMiniCart {
+		property portal.acceptance = "true";
+
+		task ("Given 3 UOMs are created for MIN93015 with inventory and one of them with a promotion price") {
+			for (var uomList : list "1:45:1.5,2:15.50:0.6") {
+				var index = StringUtil.extractFirst(${uomList}, ":");
+
+				var uomList = StringUtil.replaceFirst(${uomList}, "${index}:", "");
+
+				var basePrice = StringUtil.extractFirst(${uomList}, ":");
+				var incrementalOrderQuantity = StringUtil.extractLast(${uomList}, ":");
+
+				CommerceJSONSKUsAPI._addCommerceUOM(
+					basePrice = ${basePrice},
+					incrementalOrderQuantity = ${incrementalOrderQuantity},
+					priority = ${index},
+					productSKU = "MIN93015",
+					uomKey = "uom${index}",
+					uomName = "UOM${index}");
+			}
+
+			CommerceJSONSKUsAPI._addCommerceUOM(
+				basePrice = 80,
+				incrementalOrderQuantity = 2,
+				priority = 3,
+				productSKU = "MIN93015",
+				promoPrice = 72,
+				uomKey = "uom3",
+				uomName = "UOM3");
+		}
+
+		task ("And a tier price is created for UOM2") {
+			CommerceJSONPriceListsAndPromotionsAPI._addTierPriceEntry(
+				minimumQuantity = 6,
+				price = 12,
+				priceListName = "Minium Base Price List",
+				productSKU = "MIN93015",
+				unitOfMeasureKey = "uom2");
+		}
+
+		task ("And an active 50% discount is created for MIN93015/uom1") {
+			CommerceJSONDiscountsAPI._addDiscount(
+				active = "true",
+				level = "L1",
+				percentageLevel1 = 10,
+				productSKUs = "MIN93015",
+				target = "skus",
+				title = "Test Discount",
+				unitOfMeasureKey = "uom1",
+				usePercentage = "false");
+		}
+
+		task ("And some product configurations are made for ABS Sensor") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				minOrderQuantity = "0.01",
+				multipleOrderQuantity = "0.01",
+				productName = "ABS Sensor");
+		}
+
+		task ("And the buyer logs in adds MIN93015 to cart using quick add to cart") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.gotoMiniCart();
+
+			FrontStore.quickAddToCartSearchAndSelectItem(orderItemSku = "MIN93015");
+
+			Click(locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_BUTTON");
+		}
+
+		task ("When clicks the Edit from the ellipsis in the mini cart") {
+			FrontStore.clickEllipsisItemInMiniCart(
+				menuItem = "Edit",
+				uomKey = "uom1");
+		}
+
+		task ("Then can verify the tier price is applied correctly for UOM2") {
+			Select(
+				locator1 = "CommerceAccelerators#MINI_CART_EDIT_ITEM_UOM_SELECTOR",
+				value1 = "UOM2");
+
+			Type(
+				locator1 = "CommerceAccelerators#MINI_CART_EDIT_ITEM_QUANTITY_SELECTOR_INPUT_FIELD",
+				value1 = "0.6");
+
+			for (var priceFieldAndValueList : list "Price List:$ 15.50,Price as Configured:$ 15.50") {
+				var priceField = StringUtil.extractFirst(${priceFieldAndValueList}, ":");
+				var priceValue = StringUtil.extractLast(${priceFieldAndValueList}, ":");
+
+				AssertElementPresent(
+					key_priceField = ${priceField},
+					key_priceValue = ${priceValue},
+					locator1 = "CommerceAccelerators#MINI_CART_EDIT_ITEM_UOM_PRICE_VALUE");
+			}
+
+			Type(
+				locator1 = "CommerceAccelerators#MINI_CART_EDIT_ITEM_QUANTITY_SELECTOR_INPUT_FIELD",
+				value1 = 6);
+
+			// Update Price as Configured value after the fix of the bug COMMERCE-12578
+
+			for (var priceFieldAndValueList : list "Price List:$ 14.92,Price as Configured:$ 14.92") {
+				var priceField = StringUtil.extractFirst(${priceFieldAndValueList}, ":");
+				var priceValue = StringUtil.extractLast(${priceFieldAndValueList}, ":");
+
+				AssertElementPresent(
+					key_priceField = ${priceField},
+					key_priceValue = ${priceValue},
+					locator1 = "CommerceAccelerators#MINI_CART_EDIT_ITEM_UOM_PRICE_VALUE");
+			}
+		}
+
+		task ("And can verify the discount and price information are shown correctly for UOM1") {
+			Select(
+				locator1 = "CommerceAccelerators#MINI_CART_EDIT_ITEM_UOM_SELECTOR",
+				value1 = "UOM1");
+
+			Type(
+				locator1 = "CommerceAccelerators#MINI_CART_EDIT_ITEM_QUANTITY_SELECTOR_INPUT_FIELD",
+				value1 = "1.5");
+
+			for (var priceFieldAndValueList : list "Price List:$ 45.00,Discount:22.22%,Price as Configured:$ 35.00") {
+				var priceField = StringUtil.extractFirst(${priceFieldAndValueList}, ":");
+				var priceValue = StringUtil.extractLast(${priceFieldAndValueList}, ":");
+
+				AssertElementPresent(
+					key_priceField = ${priceField},
+					key_priceValue = ${priceValue},
+					locator1 = "CommerceAccelerators#MINI_CART_EDIT_ITEM_UOM_PRICE_VALUE");
+			}
+
+			Type(
+				locator1 = "CommerceAccelerators#MINI_CART_EDIT_ITEM_QUANTITY_SELECTOR_INPUT_FIELD",
+				value1 = 3);
+
+			AssertElementPresent(
+				key_priceField = "Price as Configured",
+				key_priceValue = "$ 70.00",
+				locator1 = "CommerceAccelerators#MINI_CART_EDIT_ITEM_UOM_PRICE_VALUE");
+		}
+
+		task ("And can verify the promo price is shown correctly for UOM3") {
+			Select(
+				locator1 = "CommerceAccelerators#MINI_CART_EDIT_ITEM_UOM_SELECTOR",
+				value1 = "UOM3");
+
+			Type(
+				locator1 = "CommerceAccelerators#MINI_CART_EDIT_ITEM_QUANTITY_SELECTOR_INPUT_FIELD",
+				value1 = 4);
+
+			// Update Price as Configured value after the fix of the bug COMMERCE-12578
+
+			for (var priceFieldAndValueList : list "Price List:$ 80.00,Promo Price:$ 72.00,Price as Configured:$ 72.00") {
+				var priceField = StringUtil.extractFirst(${priceFieldAndValueList}, ":");
+				var priceValue = StringUtil.extractLast(${priceFieldAndValueList}, ":");
+
+				AssertElementPresent(
+					key_priceField = ${priceField},
+					key_priceValue = ${priceValue},
+					locator1 = "CommerceAccelerators#MINI_CART_EDIT_ITEM_UOM_PRICE_VALUE");
+			}
+		}
+	}
+
+	@description = "COMMERCE-12617. As a user, I can edit the UOM and quantity in the mini cart and verify the changes are applied correctly."
+	@priority = 5
+	test CanEditUOMInMiniCart {
+		property portal.acceptance = "true";
+
+		task ("Given 3 UOMs are created for MIN93015, the first non-purchasable, the other two purchasable with inventory") {
+			for (var uomList : list "1:false:1,2:true:0.6,3:true:2") {
+				var index = StringUtil.extractFirst(${uomList}, ":");
+
+				var uomList = StringUtil.replaceFirst(${uomList}, "${index}:", "");
+
+				var active = StringUtil.extractFirst(${uomList}, ":");
+				var incrementalOrderQuantity = StringUtil.extractLast(${uomList}, ":");
+
+				CommerceJSONSKUsAPI._addCommerceUOM(
+					active = ${active},
+					basePrice = ${index},
+					incrementalOrderQuantity = ${incrementalOrderQuantity},
+					priority = ${index},
+					productSKU = "MIN93015",
+					uomKey = "uom${index}",
+					uomName = "UOM${index}");
+			}
+
+			for (var uomKey : list "uom2,uom3") {
+				CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
+					productSku = "MIN93015",
+					quantity = 10,
+					uomKey = ${uomKey},
+					warehouseName = "Italy");
+			}
+		}
+
+		task ("And some product configurations are made for ABS Sensor") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				allowBackOrder = "false",
+				minOrderQuantity = "0.01",
+				multipleOrderQuantity = "0.01",
+				productName = "ABS Sensor");
+		}
+
+		task ("And the buyer logs in and adds MIN93015 to cart using quick add to cart") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.gotoMiniCart();
+
+			FrontStore.quickAddToCartSearchAndSelectItem(orderItemSku = "MIN93015");
+
+			Click(locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_BUTTON");
+		}
+
+		task ("When clicks the Edit from the ellipsis in the mini cart") {
+			FrontStore.clickEllipsisItemInMiniCart(
+				menuItem = "Edit",
+				uomKey = "uom2");
+		}
+
+		task ("Then can verify multiple order quantity of the product is shown correctly") {
+			for (var quantity : list "2,1,0.6") {
+				Type(
+					locator1 = "CommerceAccelerators#MINI_CART_EDIT_ITEM_QUANTITY_SELECTOR_INPUT_FIELD",
+					value1 = ${quantity});
+
+				if ((${quantity} == 2) || (${quantity} == 1)) {
+					if (${quantity} == 1) {
+						var minimumConditionNotSatisfied = "false";
+						var multipleConditionNotSatisfied = "true";
+					}
+					else {
+						var minimumConditionNotSatisfied = "true";
+						var multipleConditionNotSatisfied = "false";
+					}
+
+					AssertElementPresent(locator1 = "CommerceAccelerators#MINI_CART_EDIT_ITEM_QUANTITY_SELECTOR_HAS_ERROR");
+				}
+				else {
+					var minimumConditionNotSatisfied = "false";
+					var multipleConditionNotSatisfied = "false";
+
+					AssertElementNotPresent(locator1 = "CommerceAccelerators#MINI_CART_EDIT_ITEM_QUANTITY_SELECTOR_HAS_ERROR");
+				}
+
+				FrontStore.viewQuantitySelectorPopoverListItem(
+					conditionNotSatisfied = ${multipleConditionNotSatisfied},
+					quantity = "0.6",
+					quantityConfiguration = "multiple");
+			}
+		}
+
+		task ("And can edit the UOM and quantity of ABS Sensor verifying the price is updated accordingly") {
+			Select(
+				locator1 = "CommerceAccelerators#MINI_CART_EDIT_ITEM_UOM_SELECTOR",
+				value1 = "UOM3");
+
+			Type(
+				locator1 = "CommerceAccelerators#MINI_CART_EDIT_ITEM_QUANTITY_SELECTOR_INPUT_FIELD",
+				value1 = 4);
+
+			// Update Price as Configured value after the fix of the bug COMMERCE-12578
+
+			for (var priceFieldAndValueList : list "Price List:$ 3.00,Price as Configured:$ 3.00") {
+				var priceField = StringUtil.extractFirst(${priceFieldAndValueList}, ":");
+				var priceValue = StringUtil.extractLast(${priceFieldAndValueList}, ":");
+
+				AssertElementPresent(
+					key_priceField = ${priceField},
+					key_priceValue = ${priceValue},
+					locator1 = "CommerceAccelerators#MINI_CART_EDIT_ITEM_UOM_PRICE_VALUE");
+			}
+
+			Button.clickSave();
+		}
+
+		task ("And can verify mini cart items are updated accordingly") {
+			FrontStore.viewMiniCart(
+				cartItemName = "ABS Sensor",
+				cartItemPriceValue = "6.00",
+				cartItemQuantity = 4,
+				cartItemSku = "MIN93015",
+				cartItemUOMKey = "uom3",
+				cartSummaryTotal = "6.00");
+		}
+	}
+
+	@description = "COMMERCE-12618. As a user, I cannot add to the cart a UOM without stock in the inventory while editing the UOM in the mini cart."
+	@priority = 5
+	test CannotChooseUOMWithoutStockWhileEditingUOMInMiniCart {
+		property portal.acceptance = "true";
+
+		task ("Given 3 UOMs are created for MIN93015, the first non-purchasable, the other two purchasable with inventory") {
+			for (var uomList : list "1:false:1,2:true:0.6,3:true:2") {
+				var index = StringUtil.extractFirst(${uomList}, ":");
+
+				var uomList = StringUtil.replaceFirst(${uomList}, "${index}:", "");
+
+				var active = StringUtil.extractFirst(${uomList}, ":");
+				var incrementalOrderQuantity = StringUtil.extractLast(${uomList}, ":");
+
+				CommerceJSONSKUsAPI._addCommerceUOM(
+					active = ${active},
+					basePrice = ${index},
+					incrementalOrderQuantity = ${incrementalOrderQuantity},
+					priority = ${index},
+					productSKU = "MIN93015",
+					uomKey = "uom${index}",
+					uomName = "UOM${index}");
+			}
+
+			CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
+				productSku = "MIN93015",
+				quantity = 10,
+				uomKey = "uom2",
+				warehouseName = "Italy");
+		}
+
+		task ("And some product configurations are made for ABS Sensor") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				allowBackOrder = "false",
+				minOrderQuantity = "0.01",
+				multipleOrderQuantity = "0.01",
+				productName = "ABS Sensor");
+		}
+
+		task ("And the buyer logs in and adds MIN93015 to cart using quick add to cart") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.gotoMiniCart();
+
+			FrontStore.quickAddToCartSearchAndSelectItem(orderItemSku = "MIN93015");
+
+			Click(locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_BUTTON");
+		}
+
+		task ("When edits the UOM and Quantity to add it to the cart") {
+			FrontStore.editUOMAndQuantityInMiniCart(
+				quantity = 4,
+				uomKey = "uom2",
+				uomName = "UOM3");
+		}
+
+		task ("Then an error is shown as 'Error:The specified quantity is unavailable.'") {
+			Alert.viewErrorMessage(errorMessage = "Error:The specified quantity is unavailable.");
+		}
+
+		task ("And the UOM3 without inventory cannot be not added to the cart, so UOM2 is shown in the cart summary") {
+			Button.clickCancel();
+
+			FrontStore.viewMiniCart(
+				cartItemName = "ABS Sensor",
+				cartItemPriceValue = "2.00",
+				cartItemQuantity = "0.6",
+				cartItemSku = "MIN93015",
+				cartItemUOMKey = "uom2",
+				cartSummaryTotal = "2.00");
+		}
+	}
+
+	@description = "COMMERCE-12620. As a user, I can verify price table information in mini cart's UOM edit section."
+	@priority = 4
+	test CanVerifyPriceTableWhileEditingUOMInMiniCart {
+		property portal.acceptance = "false";
+
+		task ("Given 3 UOMs are created for MIN93015, the first non-purchasable, the other two purchasable with inventory") {
+			for (var uomList : list "1:false:1,2:true:0.6,3:true:2") {
+				var index = StringUtil.extractFirst(${uomList}, ":");
+
+				var uomList = StringUtil.replaceFirst(${uomList}, "${index}:", "");
+
+				var active = StringUtil.extractFirst(${uomList}, ":");
+				var incrementalOrderQuantity = StringUtil.extractLast(${uomList}, ":");
+
+				CommerceJSONSKUsAPI._addCommerceUOM(
+					active = ${active},
+					basePrice = ${index},
+					incrementalOrderQuantity = ${incrementalOrderQuantity},
+					priority = ${index},
+					productSKU = "MIN93015",
+					uomKey = "uom${index}",
+					uomName = "UOM${index}");
+			}
+
+			for (var uomKey : list "uom2,uom3") {
+				CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
+					productSku = "MIN93015",
+					quantity = 10,
+					uomKey = ${uomKey},
+					warehouseName = "Italy");
+			}
+		}
+
+		task ("And some product configurations are made for ABS Sensor") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				allowBackOrder = "false",
+				minOrderQuantity = "0.01",
+				multipleOrderQuantity = "0.01",
+				productName = "ABS Sensor");
+
+			CommerceJSONPriceListsAndPromotionsAPI._addTierPriceEntry(
+				minimumQuantity = 6,
+				price = 2,
+				priceListName = "Minium Base Price List",
+				productSKU = "MIN93015",
+				unitOfMeasureKey = "uom3");
+		}
+
+		task ("And the buyer logs in and adds MIN93015 to cart using quick add to cart") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.gotoMiniCart();
+
+			FrontStore.quickAddToCartSearchAndSelectItem(orderItemSku = "MIN93015");
+
+			Click(locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_BUTTON");
+		}
+
+		task ("When clicks the Edit from the ellipsis in the mini cart") {
+			FrontStore.clickEllipsisItemInMiniCart(
+				menuItem = "Edit",
+				uomKey = "uom2");
+		}
+
+		task ("Then can verify the price table in the mini cart's edit section with respective information") {
+			for (var fieldValue : list "UOM2,uom2,0.6,$ 2.00") {
+				AssertElementPresent(
+					key_fieldValue = ${fieldValue},
+					key_index = 1,
+					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_PRICE_TABLE_FIELD_ENTRY");
+			}
+
+			for (var fieldValue : list "UOM3,uom3,2,$ 3.00") {
+				AssertElementPresent(
+					key_fieldValue = ${fieldValue},
+					key_index = 2,
+					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_PRICE_TABLE_FIELD_ENTRY");
+			}
+
+			for (var fieldValue : list "UOM3,uom3,6,$ 2.00") {
+				AssertElementPresent(
+					key_fieldValue = ${fieldValue},
+					key_index = 3,
+					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_PRICE_TABLE_FIELD_ENTRY");
+			}
+
+			var index = 1;
+
+			for (var fieldValue : list "UOM1,uom1,1,$ 1.00") {
+				AssertElementNotPresent(
+					key_fieldValue = ${fieldValue},
+					key_index = ${index},
+					locator1 = "CommerceFrontStore#PRODUCT_DETAILS_PRICE_TABLE_FIELD_ENTRY");
+
+				var index = ${index} + 1;
+			}
+		}
+	}
+
+}

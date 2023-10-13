@@ -41,7 +41,7 @@ public class ClientExtensionFDSFilterContextContributor
 		BaseClientExtensionFDSFilter baseClientExtensionFDSFilter) {
 
 		return HashMapBuilder.<String, Object>put(
-			"moduleURL", baseClientExtensionFDSFilter.getModuleURL()
+			"cxFilterURL", baseClientExtensionFDSFilter.getModuleURL()
 		).build();
 	}
 

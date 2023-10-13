@@ -44,6 +44,12 @@ public class WhitespaceCheck extends BaseFileCheck {
 		return content;
 	}
 
+	protected String formatClosingTag(String content) {
+		Matcher matcher = _closingTagPattern.matcher(content);
+
+		return matcher.replaceAll("$1 $2");
+	}
+
 	protected String formatDoubleSpace(String line) {
 		String trimmedLine = StringUtil.trim(line);
 
@@ -404,6 +410,8 @@ public class WhitespaceCheck extends BaseFileCheck {
 	private static final String _ALLOW_TRAILING_EMPTY_LINES =
 		"allowTrailingEmptyLines";
 
+	private static final Pattern _closingTagPattern = Pattern.compile(
+		"(<[\\w-.:]+)(/>)");
 	private static final Pattern _selfClosingTagsPattern = Pattern.compile(
 		"<(area|base|br|col|command|embed|hr|img|input|keygen|link|meta|" +
 			"param|source|track|wbr)(?!( />|\\w))");

@@ -938,7 +938,7 @@ this task.
 		<replace
 			file="${app.server.jboss.dir}/standalone/configuration/standalone.xml"
 		>
-			<replacetoken><![CDATA[<jsp-config/>]]></replacetoken>
+			<replacetoken><![CDATA[<jsp-config />]]></replacetoken>
 			<replacevalue>
 				<![CDATA[<jsp-config development="true" source-vm="1.8" target-vm="1.8" />]]>
 			</replacevalue>
@@ -2634,7 +2634,7 @@ this task.
 		<replace
 			file="${app.server.wildfly.instance.dir}/configuration/standalone.xml"
 		>
-			<replacetoken><![CDATA[<jsp-config/>]]></replacetoken>
+			<replacetoken><![CDATA[<jsp-config />]]></replacetoken>
 			<replacevalue>
 				<![CDATA[<jsp-config development="true" source-vm="1.8" target-vm="1.8" />]]>
 			</replacevalue>

@@ -53,25 +53,25 @@ public interface MFATimeBasedOTPConfiguration {
 	@Meta.AD(
 		deflt = "${server-property://com.liferay.portal/admin.email.from.address}",
 		description = "set-the-sender-address-on-the-timebased-one-time-password-email",
-		name = "email-totp-from-field", required = false
+		name = "email-totp-replay-from-address", required = false
 	)
-	public String emailFromAddress();
+	public String emailTOTPReplayFromAddress();
 
 	@Meta.AD(
 		deflt = "${server-property://com.liferay.portal/admin.email.from.name}",
-		name = "email-totp-from-name", required = false
+		name = "email-totp-replay-from-name", required = false
 	)
-	public String emailFromName();
+	public String emailTOTPReplayFromName();
 
 	@Meta.AD(
-		deflt = "${resource:com/liferay/multi/factor/authentication/timebased/otp/configuration/dependencies/email_totp_sent_body.tmpl}",
-		name = "email-totp-sent-body", required = false
+		deflt = "${resource:com/liferay/multi/factor/authentication/timebased/otp/configuration/dependencies/email_totp_replay_body.tmpl}",
+		name = "email-totp-replay-body", required = false
 	)
 	public LocalizedValuesMap emailTOTPReplayBody();
 
 	@Meta.AD(
-		deflt = "${resource:com/liferay/multi/factor/authentication/timebased/otp/configuration/dependencies/email_totp_sent_subject.tmpl}",
-		name = "email-totp-sent-subject", required = false
+		deflt = "${resource:com/liferay/multi/factor/authentication/timebased/otp/configuration/dependencies/email_totp_replay_subject.tmpl}",
+		name = "email-totp-replay-subject", required = false
 	)
 	public LocalizedValuesMap emailTOTPReplaySubject();
 

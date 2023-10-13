@@ -473,9 +473,10 @@ public class TimeBasedOTPBrowserSetupMFAChecker
 
 		mailTemplateContextBuilder.put(
 			"[$FROM_ADDRESS$]",
-			mfaTimeBasedOTPConfiguration.emailFromAddress());
+			mfaTimeBasedOTPConfiguration.emailTOTPReplayFromAddress());
 		mailTemplateContextBuilder.put(
-			"[$FROM_NAME$]", mfaTimeBasedOTPConfiguration.emailFromName());
+			"[$FROM_NAME$]",
+			mfaTimeBasedOTPConfiguration.emailTOTPReplayFromName());
 		mailTemplateContextBuilder.put(
 			"[$PORTAL_URL$]", _portal.getPortalURL(httpServletRequest));
 		mailTemplateContextBuilder.put(
@@ -487,9 +488,10 @@ public class TimeBasedOTPBrowserSetupMFAChecker
 			"[$TO_NAME$]", new EscapableObject<>(user.getFullName()));
 
 		_sendNotificationEmail(
-			mfaTimeBasedOTPConfiguration.emailFromAddress(),
-			mfaTimeBasedOTPConfiguration.emailFromName(), emailAddress, user,
-			subject, body, mailTemplateContextBuilder.build());
+			mfaTimeBasedOTPConfiguration.emailTOTPReplayFromAddress(),
+			mfaTimeBasedOTPConfiguration.emailTOTPReplayFromName(),
+			emailAddress, user, subject, body,
+			mailTemplateContextBuilder.build());
 	}
 
 	private boolean _verify(

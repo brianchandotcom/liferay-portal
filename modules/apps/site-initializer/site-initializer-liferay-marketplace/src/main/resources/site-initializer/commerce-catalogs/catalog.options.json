@@ -56,7 +56,7 @@
 	},
 	{
 		"ddmFormFieldTypeName": "radio",
-		"description": "Specifies if a acquision of an app.",
+		"description": "Adds on support for DXP Licenses.",
 		"externalReferenceCode": "MKT-OPTION-DXP-SUPPORT",
 		"facetable": false,
 		"fieldType": "radio",

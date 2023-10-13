@@ -7,9 +7,9 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayLink from '@clayui/link';
 import ClayModal from '@clayui/modal';
-import {FrontendDataSet} from '@liferay/frontend-data-set-web';
+import {FrontendDataSet, IInternalRenderer} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
-import {IInternalRenderer, fetch, navigate, openModal} from 'frontend-js-web';
+import {fetch, navigate, openModal} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
 import {API_URL, FDS_DEFAULT_PROPS, OBJECT_RELATIONSHIP} from './Constants';

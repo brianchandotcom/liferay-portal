@@ -5,7 +5,7 @@
 
 /// <reference types="react" />
 
-import {IClientExtensionRenderer} from 'frontend-js-web';
+import {IClientExtensionRenderer} from '@liferay/frontend-data-set-web';
 declare function Header(): JSX.Element;
 interface IBodyProps {
 	fdsFilterClientExtensions: IClientExtensionRenderer[];

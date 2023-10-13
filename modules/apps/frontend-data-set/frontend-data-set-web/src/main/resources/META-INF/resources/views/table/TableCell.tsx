@@ -5,11 +5,10 @@
 
 import {FDSTableCellHTMLElementBuilderArgs} from '@liferay/js-api/data-set';
 import {ClientExtension} from 'frontend-js-components-web';
-import {TRenderer} from 'frontend-js-web';
 import React, {ComponentType, useContext, useEffect, useState} from 'react';
 
 import FrontendDataSetContext, {
-	IFrontendDataSetContext,
+	IFrontendDataSetContext, TRenderer
 } from '../../FrontendDataSetContext';
 import {getInternalCellRenderer} from '../../cell_renderers/getInternalCellRenderer';
 import {getInputRendererById} from '../../utils/renderer';

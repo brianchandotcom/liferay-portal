@@ -141,7 +141,13 @@ public class CommercePaymentEntryPersistenceTest {
 
 		newCommercePaymentEntry.setCallbackURL(RandomTestUtil.randomString());
 
+		newCommercePaymentEntry.setCancelURL(RandomTestUtil.randomString());
+
 		newCommercePaymentEntry.setCurrencyCode(RandomTestUtil.randomString());
+
+		newCommercePaymentEntry.setErrorMessages(RandomTestUtil.randomString());
+
+		newCommercePaymentEntry.setLanguageId(RandomTestUtil.randomString());
 
 		newCommercePaymentEntry.setPaymentIntegrationKey(
 			RandomTestUtil.randomString());
@@ -202,8 +208,17 @@ public class CommercePaymentEntryPersistenceTest {
 			existingCommercePaymentEntry.getCallbackURL(),
 			newCommercePaymentEntry.getCallbackURL());
 		Assert.assertEquals(
+			existingCommercePaymentEntry.getCancelURL(),
+			newCommercePaymentEntry.getCancelURL());
+		Assert.assertEquals(
 			existingCommercePaymentEntry.getCurrencyCode(),
 			newCommercePaymentEntry.getCurrencyCode());
+		Assert.assertEquals(
+			existingCommercePaymentEntry.getErrorMessages(),
+			newCommercePaymentEntry.getErrorMessages());
+		Assert.assertEquals(
+			existingCommercePaymentEntry.getLanguageId(),
+			newCommercePaymentEntry.getLanguageId());
 		Assert.assertEquals(
 			existingCommercePaymentEntry.getPaymentIntegrationKey(),
 			newCommercePaymentEntry.getPaymentIntegrationKey());
@@ -269,9 +284,9 @@ public class CommercePaymentEntryPersistenceTest {
 			"commercePaymentEntryId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"classNameId", true, "classPK", true, "commerceChannelId", true,
-			"amount", true, "currencyCode", true, "paymentIntegrationKey", true,
-			"paymentIntegrationType", true, "paymentStatus", true,
-			"transactionCode", true);
+			"amount", true, "currencyCode", true, "languageId", true,
+			"paymentIntegrationKey", true, "paymentIntegrationType", true,
+			"paymentStatus", true, "transactionCode", true);
 	}
 
 	@Test
@@ -538,7 +553,13 @@ public class CommercePaymentEntryPersistenceTest {
 
 		commercePaymentEntry.setCallbackURL(RandomTestUtil.randomString());
 
+		commercePaymentEntry.setCancelURL(RandomTestUtil.randomString());
+
 		commercePaymentEntry.setCurrencyCode(RandomTestUtil.randomString());
+
+		commercePaymentEntry.setErrorMessages(RandomTestUtil.randomString());
+
+		commercePaymentEntry.setLanguageId(RandomTestUtil.randomString());
 
 		commercePaymentEntry.setPaymentIntegrationKey(
 			RandomTestUtil.randomString());

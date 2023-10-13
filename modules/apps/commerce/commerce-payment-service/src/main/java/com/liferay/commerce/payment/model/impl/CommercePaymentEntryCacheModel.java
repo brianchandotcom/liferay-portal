@@ -71,7 +71,7 @@ public class CommercePaymentEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -97,8 +97,14 @@ public class CommercePaymentEntryCacheModel
 		sb.append(amount);
 		sb.append(", callbackURL=");
 		sb.append(callbackURL);
+		sb.append(", cancelURL=");
+		sb.append(cancelURL);
 		sb.append(", currencyCode=");
 		sb.append(currencyCode);
+		sb.append(", errorMessages=");
+		sb.append(errorMessages);
+		sb.append(", languageId=");
+		sb.append(languageId);
 		sb.append(", paymentIntegrationKey=");
 		sb.append(paymentIntegrationKey);
 		sb.append(", paymentIntegrationType=");
@@ -158,11 +164,32 @@ public class CommercePaymentEntryCacheModel
 			commercePaymentEntryImpl.setCallbackURL(callbackURL);
 		}
 
+		if (cancelURL == null) {
+			commercePaymentEntryImpl.setCancelURL("");
+		}
+		else {
+			commercePaymentEntryImpl.setCancelURL(cancelURL);
+		}
+
 		if (currencyCode == null) {
 			commercePaymentEntryImpl.setCurrencyCode("");
 		}
 		else {
 			commercePaymentEntryImpl.setCurrencyCode(currencyCode);
+		}
+
+		if (errorMessages == null) {
+			commercePaymentEntryImpl.setErrorMessages("");
+		}
+		else {
+			commercePaymentEntryImpl.setErrorMessages(errorMessages);
+		}
+
+		if (languageId == null) {
+			commercePaymentEntryImpl.setLanguageId("");
+		}
+		else {
+			commercePaymentEntryImpl.setLanguageId(languageId);
 		}
 
 		if (paymentIntegrationKey == null) {
@@ -218,7 +245,10 @@ public class CommercePaymentEntryCacheModel
 		commerceChannelId = objectInput.readLong();
 		amount = (BigDecimal)objectInput.readObject();
 		callbackURL = (String)objectInput.readObject();
+		cancelURL = (String)objectInput.readObject();
 		currencyCode = objectInput.readUTF();
+		errorMessages = (String)objectInput.readObject();
+		languageId = objectInput.readUTF();
 		paymentIntegrationKey = objectInput.readUTF();
 
 		paymentIntegrationType = objectInput.readInt();
@@ -262,11 +292,32 @@ public class CommercePaymentEntryCacheModel
 			objectOutput.writeObject(callbackURL);
 		}
 
+		if (cancelURL == null) {
+			objectOutput.writeObject("");
+		}
+		else {
+			objectOutput.writeObject(cancelURL);
+		}
+
 		if (currencyCode == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(currencyCode);
+		}
+
+		if (errorMessages == null) {
+			objectOutput.writeObject("");
+		}
+		else {
+			objectOutput.writeObject(errorMessages);
+		}
+
+		if (languageId == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(languageId);
 		}
 
 		if (paymentIntegrationKey == null) {
@@ -307,7 +358,10 @@ public class CommercePaymentEntryCacheModel
 	public long commerceChannelId;
 	public BigDecimal amount;
 	public String callbackURL;
+	public String cancelURL;
 	public String currencyCode;
+	public String errorMessages;
+	public String languageId;
 	public String paymentIntegrationKey;
 	public int paymentIntegrationType;
 	public int paymentStatus;

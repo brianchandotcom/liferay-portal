@@ -267,6 +267,21 @@ public interface CommercePaymentEntryModel
 	public void setCallbackURL(String callbackURL);
 
 	/**
+	 * Returns the cancel url of this commerce payment entry.
+	 *
+	 * @return the cancel url of this commerce payment entry
+	 */
+	@AutoEscape
+	public String getCancelURL();
+
+	/**
+	 * Sets the cancel url of this commerce payment entry.
+	 *
+	 * @param cancelURL the cancel url of this commerce payment entry
+	 */
+	public void setCancelURL(String cancelURL);
+
+	/**
 	 * Returns the currency code of this commerce payment entry.
 	 *
 	 * @return the currency code of this commerce payment entry
@@ -280,6 +295,36 @@ public interface CommercePaymentEntryModel
 	 * @param currencyCode the currency code of this commerce payment entry
 	 */
 	public void setCurrencyCode(String currencyCode);
+
+	/**
+	 * Returns the error messages of this commerce payment entry.
+	 *
+	 * @return the error messages of this commerce payment entry
+	 */
+	@AutoEscape
+	public String getErrorMessages();
+
+	/**
+	 * Sets the error messages of this commerce payment entry.
+	 *
+	 * @param errorMessages the error messages of this commerce payment entry
+	 */
+	public void setErrorMessages(String errorMessages);
+
+	/**
+	 * Returns the language ID of this commerce payment entry.
+	 *
+	 * @return the language ID of this commerce payment entry
+	 */
+	@AutoEscape
+	public String getLanguageId();
+
+	/**
+	 * Sets the language ID of this commerce payment entry.
+	 *
+	 * @param languageId the language ID of this commerce payment entry
+	 */
+	public void setLanguageId(String languageId);
 
 	/**
 	 * Returns the payment integration key of this commerce payment entry.

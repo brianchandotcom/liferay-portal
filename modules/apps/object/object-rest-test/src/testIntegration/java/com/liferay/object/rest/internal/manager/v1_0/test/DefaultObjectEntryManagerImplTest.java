@@ -3567,10 +3567,17 @@ public class DefaultObjectEntryManagerImplTest
 	private void _removeResourcePermission(String actionId, Role role)
 		throws Exception {
 
-		String name = _objectDefinition3.getClassName();
+		_removeResourcePermission(_objectDefinition3, actionId, role);
+	}
+
+	private void _removeResourcePermission(
+			ObjectDefinition objectDefinition, String actionId, Role role)
+		throws Exception {
+
+		String name = objectDefinition.getClassName();
 
 		if (Objects.equals(actionId, ObjectActionKeys.ADD_OBJECT_ENTRY)) {
-			name = _objectDefinition3.getResourceName();
+			name = objectDefinition.getResourceName();
 		}
 
 		_resourcePermissionLocalService.removeResourcePermission(

@@ -37,8 +37,7 @@ export function PaidTimeline({cartUtil, product}: PaidTimelineProps) {
 
 	const purchasebleSkus = skus?.filter((sku) =>
 		sku?.skuOptions.find(
-			(skuOption) =>
-				skuOption?.key !== 'trial' && skuOption?.value === 'yes'
+			(skuOption) => skuOption?.value.toLocaleLowerCase() !== 'trial'
 		)
 	);
 
@@ -49,33 +48,37 @@ export function PaidTimeline({cartUtil, product}: PaidTimelineProps) {
 					<p className="mt-3">Need help with license calculations?</p>
 				</span>
 
-				{purchasebleSkus?.map((sku: SKU, index) => {
-					const tierPricesList = tierPrice?.filter(
-						(tier: any) =>
-							tier?.tierPrice.length && tier.skuId === sku.id
-					);
+				{purchasebleSkus
+					?.map((sku: SKU, index) => {
+						const tierPricesList = tierPrice?.filter(
+							(tier: any) =>
+								tier?.tierPrice.length && tier.skuId === sku.id
+						);
 
-					const licenseTypeName = sku.skuOptions.find(
-						(optins) => optins.value === 'yes'
-					);
+						const licenseTypeName = sku.skuOptions.find(
+							(optins) =>
+								optins.value.toLocaleLowerCase() ===
+								sku.sku.toLocaleLowerCase()
+						);
 
-					return (
-						<div className="mb-5" key={index}>
-							<LicenseSectorCard
-								cartUtil={cartUtil}
-								licenseDescription={
-									skuInfo[
-										licenseTypeName?.key as keyof typeof skuInfo
-									]
-								}
-								licensetiers={tierPricesList}
-								lisenceType={licenseTypeName?.key}
-								productId={productId}
-								sku={sku}
-							/>
-						</div>
-					);
-				})}
+						return (
+							<div className="mb-5" key={index}>
+								<LicenseSectorCard
+									cartUtil={cartUtil}
+									licenseDescription={
+										skuInfo[
+											sku.sku.toLocaleLowerCase() as keyof typeof skuInfo
+										]
+									}
+									licensetiers={tierPricesList}
+									lisenceType={licenseTypeName?.value}
+									productId={productId}
+									sku={sku}
+								/>
+							</div>
+						);
+					})
+					.reverse()}
 			</div>
 		</div>
 	);

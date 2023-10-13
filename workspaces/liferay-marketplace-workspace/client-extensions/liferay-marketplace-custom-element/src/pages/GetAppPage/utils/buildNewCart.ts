@@ -43,7 +43,7 @@ export default function buildNewCart({
 				settings: {
 					maxQuantity: 1,
 				},
-				skuId: (selectedSKU?.id as number) || sku.id,
+				skuId: (selectedSKU?.id as number) || sku?.id,
 			},
 		],
 		currencyCode: channel.currencyCode,

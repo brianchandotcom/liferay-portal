@@ -38,7 +38,7 @@ export function LicenseSelector({
 	setLicenseSelected,
 }: LicenseSelectorProps) {
 	const [trialSKU, setTrialSKU] = useState<SKU>();
-	const [disabledButton, setDisabledButton] = useState<boolean>(false);
+	const [disabledButton, setDisabledButton] = useState<boolean>(true);
 
 	const hasTrialSkuVerification = useCallback(() => {
 		const skus = selectedProduct?.skus;
@@ -47,11 +47,14 @@ export function LicenseSelector({
 			skus?.filter((sku) =>
 				sku?.skuOptions.find(
 					(skuOption) =>
-						skuOption?.key === 'trial' && skuOption?.value === 'yes'
+						skuOption?.value.toLocaleLowerCase() === 'trial'
 				)
 			) || [];
 
-		setTrialSKU(trialSkuOption);
+		if (trialSkuOption) {
+			setDisabledButton(false);
+			setTrialSKU(trialSkuOption);
+		}
 	}, [selectedProduct?.skus]);
 
 	useEffect(() => {
@@ -62,7 +65,7 @@ export function LicenseSelector({
 		if (licenseSelected) {
 			onSelectLicense(trialSKU);
 			setLicenseSelected(true);
-			setDisabledButton(true);
+			setDisabledButton(false);
 		}
 	};
 

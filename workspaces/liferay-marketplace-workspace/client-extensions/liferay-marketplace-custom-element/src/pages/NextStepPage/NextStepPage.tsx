@@ -77,7 +77,10 @@ export function NextStepPage({
 
 			const item = cartItems.items[0];
 
-			if (item.sku.endsWith('ts')) {
+			if (
+				item.sku.endsWith('ts') ||
+				item.sku.toLowerCase().includes('trial')
+			) {
 				setIsTrial(true);
 			}
 

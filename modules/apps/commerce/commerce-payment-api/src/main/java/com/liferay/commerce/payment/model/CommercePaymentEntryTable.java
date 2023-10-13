@@ -63,9 +63,17 @@ public class CommercePaymentEntryTable
 	public final Column<CommercePaymentEntryTable, Clob> callbackURL =
 		createColumn(
 			"callbackURL", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
+	public final Column<CommercePaymentEntryTable, Clob> cancelURL =
+		createColumn("cancelURL", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<CommercePaymentEntryTable, String> currencyCode =
 		createColumn(
 			"currencyCode", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CommercePaymentEntryTable, Clob> errorMessages =
+		createColumn(
+			"errorMessages", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
+	public final Column<CommercePaymentEntryTable, String> languageId =
+		createColumn(
+			"languageId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CommercePaymentEntryTable, String>
 		paymentIntegrationKey = createColumn(
 			"paymentIntegrationKey", String.class, Types.VARCHAR,

@@ -53,15 +53,19 @@ public class CommercePaymentEntryLocalServiceUtil {
 	}
 
 	public static CommercePaymentEntry addCommercePaymentEntry(
-			long userId, long classNameId, long classPK,
-			java.math.BigDecimal amount, String currencyCode,
-			String paymentIntegrationKey, String transactionCode,
+			long userId, long classNameId, long classPK, long commerceChannelId,
+			java.math.BigDecimal amount, String callbackURL, String cancelURL,
+			String currencyCode, String languageId,
+			String paymentIntegrationKey, int paymentIntegrationType,
+			String transactionCode,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCommercePaymentEntry(
-			userId, classNameId, classPK, amount, currencyCode,
-			paymentIntegrationKey, transactionCode, serviceContext);
+			userId, classNameId, classPK, commerceChannelId, amount,
+			callbackURL, cancelURL, currencyCode, languageId,
+			paymentIntegrationKey, paymentIntegrationType, transactionCode,
+			serviceContext);
 	}
 
 	/**
@@ -340,12 +344,13 @@ public class CommercePaymentEntryLocalServiceUtil {
 	}
 
 	public static CommercePaymentEntry updateCommercePaymentEntry(
-			long commercePaymentEntryId, int paymentStatus,
-			String transactionCode)
+			long commercePaymentEntryId, String errorMessages,
+			int paymentStatus, String redirectURL, String transactionCode)
 		throws PortalException {
 
 		return getService().updateCommercePaymentEntry(
-			commercePaymentEntryId, paymentStatus, transactionCode);
+			commercePaymentEntryId, errorMessages, paymentStatus, redirectURL,
+			transactionCode);
 	}
 
 	public static CommercePaymentEntryLocalService getService() {

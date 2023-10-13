@@ -43,6 +43,7 @@ export default function RatingsStackedStars({
 
 						return (
 							<ClayIcon
+								aria-label={score}
 								className="ratings-stars-average-icon"
 								key={score}
 								symbol={symbol}
@@ -135,6 +136,7 @@ export default function RatingsStackedStars({
 						title={Liferay.Language.get('delete')}
 					>
 						<ClayIcon
+							aria-label={Liferay.Language.get('delete')}
 							className="lexicon-icon-vertical-align"
 							symbol="times-circle"
 						/>

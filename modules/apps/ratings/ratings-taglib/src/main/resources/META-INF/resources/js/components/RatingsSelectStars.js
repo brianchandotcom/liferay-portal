@@ -67,7 +67,10 @@ export default function RatingsSelectStars({
 							value={score}
 						>
 							<span className="inline-item inline-item-before">
-								<ClayIcon symbol={score ? 'star' : 'star-o'} />
+								<ClayIcon
+									aria-label={Liferay.Language.get('votes')}
+									symbol={score ? 'star' : 'star-o'}
+								/>
 							</span>
 
 							<span className="inline-item ratings-stars-button-text">
@@ -138,6 +141,7 @@ export default function RatingsSelectStars({
 				<span className="ratings-stars-average">
 					<span className="inline-item inline-item-before">
 						<ClayIcon
+							aria-label={Liferay.Language.get('average')}
 							className="ratings-stars-average-icon"
 							symbol="star"
 						/>

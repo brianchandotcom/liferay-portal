@@ -1314,69 +1314,6 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public Invocation invoke() {
-		return _invoke(
-			_getInvokedBatchSize(), _getMinimumSlaveRAM(),
-			_getMaximumSlavesPerHost());
-	}
-
-	@Override
-	public boolean isApplyReinvokeRules() {
-		if ((isCompleted() && !isFailing()) || !isCompleted() ||
-			isFromArchive() || (getInvocationCount() >= INVOCATION_COUNT_MAX)) {
-
-			return false;
-		}
-
-		for (ReinvokeRule reinvokeRule : ReinvokeRule.getReinvokeRules()) {
-			if (!reinvokeRule.matches(this)) {
-				continue;
-			}
-
-			reinvoke(reinvokeRule);
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean isApplySlaveOfflineRules() {
-		if ((isCompleted() && !isFailing()) || !isCompleted() ||
-			isFromArchive()) {
-
-			return false;
-		}
-
-		JenkinsSlave jenkinsSlave = getJenkinsSlave();
-
-		if (jenkinsSlave == null) {
-			return false;
-		}
-
-		jenkinsSlave.update();
-
-		if (jenkinsSlave.isOffline()) {
-			return false;
-		}
-
-		for (SlaveOfflineRule slaveOfflineRule :
-				SlaveOfflineRule.getSlaveOfflineRules()) {
-
-			if (!slaveOfflineRule.matches(this)) {
-				continue;
-			}
-
-			takeSlaveOffline(slaveOfflineRule);
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
 	public boolean isBuildModified() {
 		return _isDifferent(_status, _previousStatus);
 	}
@@ -1458,64 +1395,6 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return false;
-	}
-
-	@Override
-	public void reinvoke() {
-		reinvoke(null);
-	}
-
-	@Override
-	public void reinvoke(ReinvokeRule reinvokeRule) {
-		if (getInvocationCount() >= INVOCATION_COUNT_MAX) {
-			return;
-		}
-
-		Build parentBuild = getParentBuild();
-
-		if (parentBuild == null) {
-			return;
-		}
-
-		String parentBuildStatus = parentBuild.getStatus();
-
-		if (!parentBuildStatus.equals("running") ||
-			!JenkinsResultsParserUtil.isCINode() || fromCompletedBuild) {
-
-			return;
-		}
-
-		if ((reinvokeRule != null) && !fromArchive) {
-			String message = JenkinsResultsParserUtil.combine(
-				reinvokeRule.getName(), " failure detected at ", getBuildURL(),
-				". This build will be reinvoked.\n\n", reinvokeRule.toString(),
-				"\n\n");
-
-			System.out.println(message);
-
-			TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-			if (topLevelBuild != null) {
-				message = JenkinsResultsParserUtil.combine(
-					message, "Top Level Build URL: ",
-					topLevelBuild.getBuildURL());
-			}
-
-			String notificationRecipients =
-				reinvokeRule.getNotificationRecipients();
-
-			if ((notificationRecipients != null) &&
-				!notificationRecipients.isEmpty()) {
-
-				NotificationUtil.sendEmail(
-					message, "jenkins", "Build Reinvoked",
-					reinvokeRule.notificationRecipients);
-			}
-		}
-
-		_invoke(_getInvokedBatchSize(), 24, _getMaximumSlavesPerHost());
-
-		setStatus("starting");
 	}
 
 	@Override
@@ -3335,28 +3214,6 @@ public abstract class BaseBuild implements Build {
 		}
 	}
 
-	private Invocation _invoke(
-		int invokedBatchSize, int minimumSlaveRAM, int maximumSlavesPerHost) {
-
-		JenkinsCohort jenkinsCohort = getJenkinsCohort();
-
-		JenkinsMaster jenkinsMaster =
-			jenkinsCohort.getMostAvailableJenkinsMaster(
-				invokedBatchSize, minimumSlaveRAM, maximumSlavesPerHost);
-
-		JSONObject jsonObject = JenkinsResultsParserUtil.invokeJenkinsBuild(
-			jenkinsMaster, getJobName(), getParameters());
-
-		Invocation invocation = new Invocation(
-			jenkinsMaster, jsonObject.getLong("queueId"));
-
-		_invocations.add(invocation);
-
-		setStatus("starting");
-
-		return invocation;
-	}
-
 	private boolean _isDifferent(String newValue, String oldValue) {
 		if (oldValue == null) {
 			if (newValue != null) {
@@ -3479,10 +3336,6 @@ public abstract class BaseBuild implements Build {
 		_invocations.add(invocation);
 
 		loadParametersFromQueryString(invocationURL);
-
-		_invokedBatchSize = _getInvokedBatchSize();
-		_maximumSlavesPerHost = _getMaximumSlavesPerHost();
-		_minimumSlaveRAM = _getMinimumSlaveRAM();
 
 		JSONObject jsonObject = JenkinsResultsParserUtil.invokeJenkinsBuild(
 			jenkinsMaster, getJobName(), getParameters());

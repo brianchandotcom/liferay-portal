@@ -173,12 +173,6 @@ public interface Build {
 
 	public boolean hasMaximumInvocationCount();
 
-	public Invocation invoke();
-
-	public boolean isApplyReinvokeRules();
-
-	public boolean isApplySlaveOfflineRules();
-
 	public boolean isBuildModified();
 
 	public boolean isCompareToUpstream();
@@ -192,10 +186,6 @@ public interface Build {
 	public boolean isFromCompletedBuild();
 
 	public boolean isUniqueFailure();
-
-	public void reinvoke();
-
-	public void reinvoke(ReinvokeRule reinvokeRule);
 
 	public String replaceBuildURL(String text);
 

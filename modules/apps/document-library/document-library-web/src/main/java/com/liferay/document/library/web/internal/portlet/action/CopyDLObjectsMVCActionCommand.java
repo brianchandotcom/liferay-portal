@@ -20,7 +20,6 @@ import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -130,16 +129,14 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "sourceRepositoryId");
 
 		try {
-			Group group = _groupLocalService.getGroup(
-				destinationRepositoryId);
+			Group group = _groupLocalService.getGroup(destinationRepositoryId);
 
 			long[] groupIds =
 				_siteConnectedGroupGroupProvider.
 					getCurrentAndAncestorSiteAndDepotGroupIds(
 						group.getGroupId());
 
-			Group sourceGroup = _groupLocalService.getGroup(
-				sourceRepositoryId);
+			Group sourceGroup = _groupLocalService.getGroup(sourceRepositoryId);
 
 			_checkDestinationGroup(group, groupIds, sourceGroup.getGroupId());
 

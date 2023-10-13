@@ -29,10 +29,10 @@ public class LogParametersCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		return _formatLogParameters(content);
+		return _formatLogParameters(content, fileName);
 	}
 
-	private String _formatLogParameters(String content) {
+	private String _formatLogParameters(String content, String fileName) {
 		Matcher matcher = _logPattern.matcher(content);
 
 		while (matcher.find()) {
@@ -64,7 +64,7 @@ public class LogParametersCheck extends BaseFileCheck {
 			}
 
 			String variableTypeName = getVariableTypeName(
-				content, content, firstParameter);
+				content, content, fileName, firstParameter);
 
 			if (variableTypeName == null) {
 				continue;

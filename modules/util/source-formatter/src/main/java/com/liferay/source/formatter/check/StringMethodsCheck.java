@@ -70,9 +70,15 @@ public class StringMethodsCheck extends BaseFileCheck {
 
 			String s = matcher.group(1);
 
+			String variableTypeName = getVariableTypeName(
+				content, content, fileName, s);
+
+			if (variableTypeName == null) {
+				continue;
+			}
+
 			if (s.equals("String") ||
-				Objects.equals(
-					getVariableTypeName(content, content, s), "String")) {
+				Objects.equals(variableTypeName, "String")) {
 
 				addMessage(
 					fileName, "Use StringUtil." + methodName,
@@ -89,9 +95,11 @@ public class StringMethodsCheck extends BaseFileCheck {
 		while (matcher.find()) {
 			String variableName = matcher.group(1);
 
-			if (!Objects.equals(
-					getVariableTypeName(content, content, variableName),
-					"String")) {
+			String variableTypeName = getVariableTypeName(
+				content, content, fileName, variableName);
+
+			if ((variableTypeName == null) ||
+				!Objects.equals(variableTypeName, "String")) {
 
 				continue;
 			}

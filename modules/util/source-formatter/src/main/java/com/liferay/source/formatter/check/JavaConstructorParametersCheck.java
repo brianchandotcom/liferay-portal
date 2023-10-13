@@ -46,7 +46,7 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 				content, _missingLineBreakPattern2, parameters);
 
 			return _fixPassedInVariables(
-				absolutePath, content, parameters, fileContent);
+				absolutePath, content, fileContent, fileName, parameters);
 		}
 
 		return javaTerm.getContent();
@@ -303,8 +303,8 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 	}
 
 	private String _fixPassedInVariables(
-		String absolutePath, String content, List<JavaParameter> parameters,
-		String fileContent) {
+		String absolutePath, String content, String fileContent,
+		String fileName, List<JavaParameter> parameters) {
 
 		if (!isAttributeValue(_CHECK_PASSED_IN_VARIABLES_KEY, absolutePath)) {
 			return content;
@@ -327,11 +327,13 @@ public class JavaConstructorParametersCheck extends BaseJavaTermCheck {
 			String globalVariableName = matcher.group(1);
 
 			String globalVariableTypeName = getVariableTypeName(
-				content, fileContent, globalVariableName, true);
+				content, fileContent, fileName, globalVariableName, true);
 
 			String parameterTypeName = parameter.getParameterType();
 
-			if (!StringUtil.equals(parameterTypeName, globalVariableTypeName)) {
+			if ((globalVariableTypeName == null) ||
+				!StringUtil.equals(parameterTypeName, globalVariableTypeName)) {
+
 				continue;
 			}
 

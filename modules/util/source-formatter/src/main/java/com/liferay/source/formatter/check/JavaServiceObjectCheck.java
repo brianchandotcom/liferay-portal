@@ -63,10 +63,10 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 		}
 
 		String javaTermContent = _formatGetterMethodCalls(
-			javaTerm.getContent(), fileContent, importNames);
+			javaTerm.getContent(), fileContent, fileName, importNames);
 
 		return _formatSetterMethodCalls(
-			javaTermContent, fileContent, importNames);
+			javaTermContent, fileContent, fileName, importNames);
 	}
 
 	@Override
@@ -75,7 +75,8 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 	}
 
 	private String _formatGetterMethodCalls(
-			String content, String fileContent, List<String> importNames)
+			String content, String fileContent, String fileName,
+			List<String> importNames)
 		throws IOException {
 
 		Matcher matcher = _getterCallPattern.matcher(content);
@@ -84,7 +85,7 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 			String variableName = matcher.group(1);
 
 			String variableTypeName = getVariableTypeName(
-				content, fileContent, variableName);
+				content, fileContent, fileName, variableName);
 
 			if (variableTypeName == null) {
 				continue;
@@ -105,7 +106,8 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 	}
 
 	private String _formatSetterMethodCalls(
-			String content, String fileContent, List<String> importNames)
+			String content, String fileContent, String fileName,
+			List<String> importNames)
 		throws IOException {
 
 		Matcher matcher1 = _setterCallsPattern.matcher(content);
@@ -133,7 +135,11 @@ public class JavaServiceObjectCheck extends BaseJavaTermCheck {
 					previousVariableName = variableName;
 
 					variableTypeName = getVariableTypeName(
-						content, fileContent, variableName);
+						content, fileContent, fileName, variableName);
+
+					if (variableTypeName == null) {
+						continue outerLoop;
+					}
 
 					continue;
 				}

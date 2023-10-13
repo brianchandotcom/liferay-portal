@@ -47,12 +47,9 @@ public class FindLayoutsStrutsAction implements StrutsAction {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
 
-		Group group = _groupLocalService.fetchGroup(
-			themeDisplay.getSiteGroupId());
+		Group group = _groupLocalService.fetchGroup(groupId);
 
 		String keywords = ParamUtil.getString(httpServletRequest, "keywords");
 
@@ -81,7 +78,7 @@ public class FindLayoutsStrutsAction implements StrutsAction {
 			});
 
 		List<Layout> layouts = _layoutLocalService.getLayouts(
-			themeDisplay.getSiteGroupId(), privateLayout, keywords,
+			groupId, privateLayout, keywords,
 			new String[] {
 				LayoutConstants.TYPE_COLLECTION, LayoutConstants.TYPE_CONTENT,
 				LayoutConstants.TYPE_EMBEDDED,
@@ -99,6 +96,10 @@ public class FindLayoutsStrutsAction implements StrutsAction {
 			httpServletRequest, "itemSelectorReturnType");
 		long selPlid = ParamUtil.getLong(
 			httpServletRequest, "selPlid", LayoutConstants.DEFAULT_PLID);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		for (Layout layout : layouts) {
 			jsonArray.put(

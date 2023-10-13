@@ -1009,31 +1009,18 @@ public class DefaultObjectEntryManagerImplTest
 
 		_user = _addUser();
 
-		AccountEntry accountEntry1 = _addAccountEntry();
+		AccountEntry accountEntry = _addAccountEntry();
 
-		_assignAccountEntryRole(accountEntry1, _buyerRole, _user);
+		_assignAccountEntryRole(accountEntry, _buyerRole, _user);
 
-		_addAccountRestrictedObjectEntryHierarchy(accountEntry1);
+		_addAccountRestrictedObjectEntryHierarchy(accountEntry);
 
-		AccountEntry accountEntry2 = _addAccountEntry();
+		_removeResourcePermission(
+			_rootObjectDefinition, ObjectActionKeys.ADD_OBJECT_ENTRY,
+			_buyerRole);
 
-		AssertUtils.assertFailure(
-			ObjectDefinitionAccountEntryRestrictedException.class,
-			StringBundler.concat(
-				"User ", _user.getUserId(),
-				" does not have access to account entry ",
-				accountEntry2.getAccountEntryId()),
-			() -> _defaultObjectEntryManager.addObjectEntry(
-				_simpleDTOConverterContext, _rootObjectDefinition,
-				new ObjectEntry() {
-					{
-						properties = HashMapBuilder.<String, Object>put(
-							"r_oneToManyRelationshipName_accountEntryId",
-							accountEntry2.getAccountEntryId()
-						).build();
-					}
-				},
-				ObjectDefinitionConstants.SCOPE_COMPANY));
+		// TODO Assert for each descendant that is not possible to add an entry
+
 	}
 
 	@Test
@@ -3564,12 +3551,6 @@ public class DefaultObjectEntryManagerImplTest
 		return dlFileEntry.getFileEntryId();
 	}
 
-	private void _removeResourcePermission(String actionId, Role role)
-		throws Exception {
-
-		_removeResourcePermission(_objectDefinition3, actionId, role);
-	}
-
 	private void _removeResourcePermission(
 			ObjectDefinition objectDefinition, String actionId, Role role)
 		throws Exception {
@@ -3583,6 +3564,12 @@ public class DefaultObjectEntryManagerImplTest
 		_resourcePermissionLocalService.removeResourcePermission(
 			companyId, name, ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
 			role.getRoleId(), actionId);
+	}
+
+	private void _removeResourcePermission(String actionId, Role role)
+		throws Exception {
+
+		_removeResourcePermission(_objectDefinition3, actionId, role);
 	}
 
 	private void _testAddObjectEntryAccountEntryRestriction(

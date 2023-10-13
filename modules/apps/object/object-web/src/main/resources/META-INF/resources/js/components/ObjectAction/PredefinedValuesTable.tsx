@@ -219,7 +219,10 @@ export default function PredefinedValuesTable({
 			const objectFields: ObjectField[] = [];
 
 			predefinedValues?.forEach(({name}) => {
-				if (objectFieldsMap.has(name)) {
+				if (
+					objectFieldsMap.has(name) ||
+					objectFieldsMap.get(name)?.required
+				) {
 					const objectField = objectFieldsMap.get(name);
 					objectFields.push(objectField as ObjectField);
 				}
@@ -262,14 +265,21 @@ export default function PredefinedValuesTable({
 			const parentWindow = Liferay.Util.getOpener();
 
 			parentWindow.Liferay.fire('openModalSelectObjectFields', {
-				disableRequired: true,
-				disableRequiredChecked,
 				getLabel: ({label, name}: ObjectField) =>
 					getLocalizableLabel(creationLanguageId, label, name),
 				getName: ({name}: ObjectField) => name,
 				header: Liferay.Language.get('add-fields'),
-				items: currentObjectDefinitionFields.filter(
-					({localized}) => !localized
+				items: currentObjectDefinitionFields.map(
+					(currentObjectDefinitionField) => {
+						if (!currentObjectDefinitionField.localized) {
+							return {
+								...currentObjectDefinitionField,
+								disableCheckbox:
+									currentObjectDefinitionField.required &&
+									!disableRequiredChecked,
+							};
+						}
+					}
 				),
 				onSave: (items: ObjectField[]) => {
 					const predefinedValuesMap = new Map<

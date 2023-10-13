@@ -25,8 +25,6 @@ function ModalSelectObjectFields<T extends ModalItem>() {
 	const [
 		{
 			alerts,
-			disableRequired,
-			disableRequiredChecked,
 			emptyState,
 			getLabel,
 			getName,
@@ -101,25 +99,13 @@ function ModalSelectObjectFields<T extends ModalItem>() {
 			if (getName?.(item).toLowerCase().includes(loweredTerm)) {
 				filtered.push({
 					...item,
-					checked:
-						disableRequired &&
-						item.required &&
-						!disableRequiredChecked
-							? true
-							: selectedIds.has(item.id),
+					checked: selectedIds.has(item.id),
 				});
 			}
 		});
 
 		return filtered;
-	}, [
-		disableRequired,
-		disableRequiredChecked,
-		getName,
-		searchTerm,
-		selected,
-		items,
-	]);
+	}, [getName, searchTerm, selected, items]);
 
 	const toggleFieldCheckbox = (id: unknown, checked: boolean) => {
 		let selectedItems: T[];
@@ -173,15 +159,15 @@ function ModalSelectObjectFields<T extends ModalItem>() {
 											items.length !== selected.length
 										}
 										onChange={() => {
-											const requiredFields = selected.filter(
-												(item) => item.required
+											const disabledItems = selected.filter(
+												(item) => item.disableCheckbox
 											);
 											const selectedItems =
 												items.length -
-													requiredFields.length ===
+													disabledItems.length ===
 												selected.length -
-													requiredFields.length
-													? [...requiredFields]
+													disabledItems.length
+													? [...disabledItems]
 													: [...items];
 											setState((state) => ({
 												...state,
@@ -208,11 +194,7 @@ function ModalSelectObjectFields<T extends ModalItem>() {
 								<ClayList.Item flex key={`list-item-${index}`}>
 									<ClayCheckbox
 										checked={!!item.checked}
-										disabled={
-											disableRequired &&
-											item.required &&
-											!disableRequiredChecked
-										}
+										disabled={item.disableCheckbox}
 										label={
 											getLabel?.(item) ?? getName?.(item)
 										}
@@ -224,7 +206,7 @@ function ModalSelectObjectFields<T extends ModalItem>() {
 										}}
 									/>
 
-									{disableRequired && item.required && (
+									{item.required && (
 										<span className="lfr-object__object-view-modal-select-object-fields-reference-mark">
 											<ClayIcon symbol="asterisk" />
 										</span>
@@ -287,11 +269,9 @@ function ModalSelectObjectFields<T extends ModalItem>() {
 
 export default ModalSelectObjectFields;
 
-interface ModalItem {
+interface ModalItem extends ObjectField {
 	checked?: boolean;
-	id?: unknown;
-	label: LocalizedValue<string>;
-	required?: boolean;
+	disableCheckbox?: boolean;
 }
 
 interface IState<T extends ModalItem> {

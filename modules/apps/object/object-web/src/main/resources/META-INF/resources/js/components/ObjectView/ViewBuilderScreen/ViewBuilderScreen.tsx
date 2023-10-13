@@ -46,7 +46,12 @@ const ViewBuilderScreen: React.FC<{}> = () => {
 			getName: ({label, name}: ObjectField) =>
 				getLocalizableLabel(creationLanguageId, label, name),
 			header: Liferay.Language.get('add-columns'),
-			items: objectFields,
+			items: objectFields.map((objectField) => {
+				return {
+					...objectField,
+					disableCheckbox: false,
+				};
+			}),
 			onSave: (selectedObjectFields: ObjectField[]) =>
 				dispatch({
 					payload: {

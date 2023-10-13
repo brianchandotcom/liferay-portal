@@ -25,7 +25,7 @@ exports[`Field Color Picker renders field disabled 1`] = `
             class="input-group-text"
           >
             <button
-              aria-label="Select a color"
+              aria-label="select-color"
               class="clay-color-btn dropdown-toggle btn"
               disabled=""
               style="background: rgb(0, 0, 0);"
@@ -38,7 +38,7 @@ exports[`Field Color Picker renders field disabled 1`] = `
           class="input-group-item input-group-item-focusable input-group-append"
         >
           <input
-            aria-label="Color selection is 000000"
+            aria-label="color-x-selected"
             class="form-control input-group-inset input-group-inset-before"
             disabled=""
             type="text"
@@ -86,7 +86,7 @@ exports[`Field Color Picker renders field with helptext 1`] = `
             class="input-group-text"
           >
             <button
-              aria-label="Select a color"
+              aria-label="select-color"
               class="clay-color-btn dropdown-toggle btn"
               style="background: rgb(0, 0, 0);"
               title="#000000"
@@ -98,7 +98,7 @@ exports[`Field Color Picker renders field with helptext 1`] = `
           class="input-group-item input-group-item-focusable input-group-append"
         >
           <input
-            aria-label="Color selection is 000000"
+            aria-label="color-x-selected"
             class="form-control input-group-inset input-group-inset-before"
             type="text"
             value="000000"
@@ -167,7 +167,7 @@ exports[`Field Color Picker renders field with label 1`] = `
             class="input-group-text"
           >
             <button
-              aria-label="Select a color"
+              aria-label="select-color"
               class="clay-color-btn dropdown-toggle btn"
               style="background: rgb(0, 0, 0);"
               title="#000000"
@@ -179,7 +179,7 @@ exports[`Field Color Picker renders field with label 1`] = `
           class="input-group-item input-group-item-focusable input-group-append"
         >
           <input
-            aria-label="Color selection is 000000"
+            aria-label="color-x-selected"
             class="form-control input-group-inset input-group-inset-before"
             type="text"
             value="000000"

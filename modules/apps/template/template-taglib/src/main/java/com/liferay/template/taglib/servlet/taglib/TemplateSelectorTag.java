@@ -97,6 +97,7 @@ public class TemplateSelectorTag extends IncludeTag {
 
 	public List<Map<String, Object>> getDisplayStyles() {
 		List<Map<String, Object>> displayStyles = new ArrayList<>();
+
 		HttpServletRequest httpServletRequest = getRequest();
 
 		if (_displayStyles != null) {

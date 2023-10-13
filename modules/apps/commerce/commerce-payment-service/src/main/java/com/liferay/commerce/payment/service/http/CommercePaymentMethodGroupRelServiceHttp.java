@@ -965,6 +965,53 @@ public class CommercePaymentMethodGroupRelServiceHttp {
 		com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel
 				updateCommercePaymentMethodGroupRel(
 					HttpPrincipal httpPrincipal,
+					com.liferay.commerce.payment.model.
+						CommercePaymentMethodGroupRel
+							commercePaymentMethodGroupRel)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommercePaymentMethodGroupRelServiceUtil.class,
+				"updateCommercePaymentMethodGroupRel",
+				_updateCommercePaymentMethodGroupRelParameterTypes21);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, commercePaymentMethodGroupRel);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.payment.model.
+				CommercePaymentMethodGroupRel)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static
+		com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel
+				updateCommercePaymentMethodGroupRel(
+					HttpPrincipal httpPrincipal,
 					long commercePaymentMethodGroupRelId,
 					java.util.Map<java.util.Locale, String> nameMap,
 					java.util.Map<java.util.Locale, String> descriptionMap,
@@ -975,7 +1022,7 @@ public class CommercePaymentMethodGroupRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommercePaymentMethodGroupRelServiceUtil.class,
 				"updateCommercePaymentMethodGroupRel",
-				_updateCommercePaymentMethodGroupRelParameterTypes21);
+				_updateCommercePaymentMethodGroupRelParameterTypes22);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commercePaymentMethodGroupRelId, nameMap,
@@ -1103,6 +1150,11 @@ public class CommercePaymentMethodGroupRelServiceHttp {
 	};
 	private static final Class<?>[]
 		_updateCommercePaymentMethodGroupRelParameterTypes21 = new Class[] {
+			com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel.
+				class
+		};
+	private static final Class<?>[]
+		_updateCommercePaymentMethodGroupRelParameterTypes22 = new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class,
 			java.io.File.class, double.class, boolean.class
 		};

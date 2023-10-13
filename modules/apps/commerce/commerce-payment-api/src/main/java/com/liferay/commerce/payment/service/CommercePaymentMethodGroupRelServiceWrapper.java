@@ -270,6 +270,17 @@ public class CommercePaymentMethodGroupRelServiceWrapper
 	@Override
 	public com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel
 			updateCommercePaymentMethodGroupRel(
+				com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel
+					commercePaymentMethodGroupRel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commercePaymentMethodGroupRelService.
+			updateCommercePaymentMethodGroupRel(commercePaymentMethodGroupRel);
+	}
+
+	@Override
+	public com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel
+			updateCommercePaymentMethodGroupRel(
 				long commercePaymentMethodGroupRelId,
 				java.util.Map<java.util.Locale, String> nameMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,

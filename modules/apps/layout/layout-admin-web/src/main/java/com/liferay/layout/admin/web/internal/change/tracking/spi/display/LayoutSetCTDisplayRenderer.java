@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -54,25 +53,19 @@ public class LayoutSetCTDisplayRenderer
 			return null;
 		}
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				httpServletRequest, group, LayoutAdminPortletKeys.GROUP_PAGES,
 				0, 0, PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
 			"/layout_admin/edit_layout_set"
-		).buildPortletURL();
-
-		String currentURL = _portal.getCurrentURL(httpServletRequest);
-
-		portletURL.setParameter("redirect", currentURL);
-		portletURL.setParameter("backURL", currentURL);
-
-		portletURL.setParameter(
-			"groupId", String.valueOf(layoutSet.getGroupId()));
-		portletURL.setParameter(
-			"privateLayout", String.valueOf(layoutSet.isPrivateLayout()));
-
-		return portletURL.toString();
+		).setRedirect(
+			_portal.getCurrentURL(httpServletRequest)
+		).setParameter(
+			"groupId", layoutSet.getGroupId()
+		).setParameter(
+			"privateLayout", layoutSet.isPrivateLayout()
+		).buildString();
 	}
 
 	@Override

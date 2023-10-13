@@ -15,9 +15,7 @@ declare function ModalSelectObjectFields<
 	T extends ModalItem
 >(): JSX.Element | null;
 export default ModalSelectObjectFields;
-interface ModalItem {
+interface ModalItem extends ObjectField {
 	checked?: boolean;
-	id?: unknown;
-	label: LocalizedValue<string>;
-	required?: boolean;
+	disableCheckbox?: boolean;
 }

@@ -13,4 +13,4 @@ export default function selectEditableValue(
 	fragmentEntryLinkId: string,
 	editableId: string,
 	processorType?: 'com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor'
-): unknown;
+): import('../../types/editables/EditableValue').EditableValue;

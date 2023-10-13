@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {EditableValue} from '../../types/editables/EditableValue';
 import {ADD_FRAGMENT_ENTRY_LINKS} from './types';
 
 import type {LayoutData} from '../../types/layout_data/LayoutData';
@@ -27,13 +28,13 @@ export interface FragmentEntryLink<
 	};
 	editableValues: {
 		'com.liferay.fragment.entry.processor.background.image.BackgroundImageFragmentEntryProcessor': {
-			[key in EditableId]: unknown;
+			[key in EditableId]: EditableValue;
 		};
 		'com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor': {
-			[key in EditableId]: unknown;
+			[key in EditableId]: EditableValue;
 		};
 		'com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor': {
-			[key in ConfigurationFieldId]: unknown;
+			[key in ConfigurationFieldId]: EditableValue;
 		};
 	};
 	fragmentEntryId: string;

@@ -13,12 +13,18 @@ export default function selectEditableValues(
 	fragmentEntryLinkId: string
 ): {
 	'com.liferay.fragment.entry.processor.background.image.BackgroundImageFragmentEntryProcessor': {
-		[x: string]: unknown;
+		[
+			x: string
+		]: import('../../types/editables/EditableValue').EditableValue;
 	};
 	'com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor': {
-		[x: string]: unknown;
+		[
+			x: string
+		]: import('../../types/editables/EditableValue').EditableValue;
 	};
 	'com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor': {
-		[x: string]: unknown;
+		[
+			x: string
+		]: import('../../types/editables/EditableValue').EditableValue;
 	};
 };

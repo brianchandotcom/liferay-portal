@@ -29,10 +29,6 @@ public class ObjectEntryInfoItemDetailsProvider
 
 	@Override
 	public InfoItemClassDetails getInfoItemClassDetails() {
-		if (_objectDefinition.isModifiable() && _objectDefinition.isSystem()) {
-			return null;
-		}
-
 		return new InfoItemClassDetails(
 			_objectDefinition.getClassName(),
 			InfoLocalizedValue.<String>builder(

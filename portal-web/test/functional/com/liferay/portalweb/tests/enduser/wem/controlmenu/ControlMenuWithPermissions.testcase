@@ -241,8 +241,8 @@ definition {
 				siteName = ${randomSiteName});
 
 			PageEditorEditableLink.gotoEditableFieldLink(
-				fragmentName = "Heading",
-				id = "element-text");
+				fragmentName = "Image",
+				id = "image-square");
 
 			var baseURL = PropsUtil.get("portal.url");
 
@@ -261,8 +261,9 @@ definition {
 			AssertElementNotPresent(locator1 = "ControlMenu#HEADING");
 
 			Click(
-				key_text = "Welcome to Liferay",
-				locator1 = "Link#ANY");
+				fragmentName = "image",
+				index = 1,
+				locator1 = "Fragment#FRAGMENT_BODY");
 		}
 
 		task ("Then the user could see the control menu") {

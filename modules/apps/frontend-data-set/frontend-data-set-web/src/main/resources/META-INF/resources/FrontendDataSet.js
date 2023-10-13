@@ -6,7 +6,7 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useIsMounted, useThunk} from '@liferay/frontend-js-react-web';
-import {fetch, openToast} from 'frontend-js-web';
+import {fetch, loadModule, openToast} from 'frontend-js-web';
 import React, {
 	useCallback,
 	useEffect,
@@ -241,13 +241,16 @@ const FrontendDataSet = ({
 					?.filter((filter) => filter.cxFilterURL)
 					.map((filter) => ({
 						context: filter,
-						url: filter.cxFilterURL,
+						importDeclaration: `default from ${filter.cxFilterURL}`,
 					})),
-				onLoad: (filterModules) => {
-					const newFilters = filterModules.map(
-						({context: filter, module}) => ({
+				onLoad: (bindingContexts) => {
+					const newFilters = bindingContexts.map(
+						({
+							binding: cxFilterImplementation,
+							context: filter,
+						}) => ({
 							...filter,
-							cxFilterImplementation: module['default'],
+							cxFilterImplementation,
 						})
 					);
 
@@ -266,25 +269,24 @@ const FrontendDataSet = ({
 					for (const field of cxFields) {
 						imports.push({
 							context: field,
-							url: field.contentRendererModuleURL.replace(
-								'default from ',
-								''
-							),
+							importDeclaration: field.contentRendererModuleURL,
 						});
 					}
 
 					return imports;
 				}, []),
-				onLoad: (fieldModules) => {
-					fieldModules.forEach(({context: field, module}) => {
-						viewsDispatch({
-							type: VIEWS_ACTION_TYPES.UPDATE_FIELD,
-							value: {
-								htmlElementBuilder: module['default'],
-								name: field.fieldName,
-							},
-						});
-					});
+				onLoad: (bindingContexts) => {
+					bindingContexts.forEach(
+						({binding: htmlElementBuilder, context: field}) => {
+							viewsDispatch({
+								type: VIEWS_ACTION_TYPES.UPDATE_FIELD,
+								value: {
+									htmlElementBuilder,
+									name: field.fieldName,
+								},
+							});
+						}
+					);
 				},
 			},
 		]);
@@ -940,14 +942,10 @@ function loadClientExtensions(importsHandlers) {
 			continue;
 		}
 
-		const promises = imports.map(({context, url}) => {
-			return import(
-
-				/* webpackIgnore: true */
-				url
-			).then((module) => ({
+		const promises = imports.map(({context, importDeclaration}) => {
+			return loadModule(importDeclaration).then((binding) => ({
+				binding,
 				context,
-				module,
 			}));
 		});
 

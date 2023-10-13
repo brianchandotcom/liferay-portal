@@ -245,26 +245,24 @@ public class TemplateSelectorTag extends IncludeTag {
 
 			List<Map<String, Object>> ddmTemplatesValues = new ArrayList<>();
 
-			if (ddmTemplates != null) {
-				for (DDMTemplate ddmTemplate : filteredDDMTemplates) {
-					Group group = GroupLocalServiceUtil.fetchGroup(
-						ddmTemplate.getGroupId());
+			for (DDMTemplate ddmTemplate : filteredDDMTemplates) {
+				Group group = GroupLocalServiceUtil.fetchGroup(
+					ddmTemplate.getGroupId());
 
-					ddmTemplatesValues.add(
-						HashMapBuilder.<String, Object>put(
-							"groupId", ddmTemplate.getGroupId()
-						).put(
-							"label",
-							ddmTemplate.getName(themeDisplay.getLocale())
-						).put(
-							"siteName",
-							StringUtil.toLowerCase(group.getDescriptiveName())
-						).put(
-							"value",
-							PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
-								ddmTemplate.getTemplateKey()
-						).build());
-				}
+				ddmTemplatesValues.add(
+					HashMapBuilder.<String, Object>put(
+						"groupId", ddmTemplate.getGroupId()
+					).put(
+						"label",
+						ddmTemplate.getName(themeDisplay.getLocale())
+					).put(
+						"siteName",
+						StringUtil.toLowerCase(group.getDescriptiveName())
+					).put(
+						"value",
+						PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+							ddmTemplate.getTemplateKey()
+					).build());
 			}
 
 			Collator collator = CollatorUtil.getInstance(

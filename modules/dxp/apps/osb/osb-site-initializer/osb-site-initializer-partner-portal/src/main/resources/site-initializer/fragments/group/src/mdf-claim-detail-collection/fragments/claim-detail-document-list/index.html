@@ -22,7 +22,7 @@
 [#if mdf_claim_id?has_content]
 	[#assign claim = restClient.get("/c/mdfclaims/${mdf_claim_id}") /]
 
-	[#if (claim.reimbursementInvoice?has_content)! && (claim.reimbursementInvoice?boolean)! != false]
+	[#if (claim.reimbursementInvoice?has_content)!false]
 		[@document_card document=claim.reimbursementInvoice /]
 	[/#if]
 [#else]

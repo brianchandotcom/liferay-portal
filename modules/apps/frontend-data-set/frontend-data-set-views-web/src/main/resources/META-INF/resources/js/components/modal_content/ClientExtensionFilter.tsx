@@ -7,8 +7,8 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm from '@clayui/form';
+import {IClientExtensionRenderer} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
-import {IClientExtensionRenderer} from 'frontend-js-web';
 import React from 'react';
 
 function Header() {

@@ -10,11 +10,9 @@ import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
-import {FDS_INTERNAL_CELL_RENDERERS} from '@liferay/frontend-data-set-web';
+import {FDS_INTERNAL_CELL_RENDERERS, IClientExtensionRenderer, IInternalRenderer} from '@liferay/frontend-data-set-web';
 import {InputLocalized, ManagementToolbar} from 'frontend-js-components-web';
 import {
-	IClientExtensionRenderer,
-	IInternalRenderer,
 	fetch,
 	openModal,
 } from 'frontend-js-web';

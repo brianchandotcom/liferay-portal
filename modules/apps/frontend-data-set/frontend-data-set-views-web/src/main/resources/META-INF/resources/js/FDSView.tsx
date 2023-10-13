@@ -6,7 +6,8 @@
 import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayNavigationBar from '@clayui/navigation-bar';
-import {IClientExtensionRenderer, fetch} from 'frontend-js-web';
+import {IClientExtensionRenderer} from '@liferay/frontend-data-set-web';
+import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {API_URL, OBJECT_RELATIONSHIP} from './Constants';

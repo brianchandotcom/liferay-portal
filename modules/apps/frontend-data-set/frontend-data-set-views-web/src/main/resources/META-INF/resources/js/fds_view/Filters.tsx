@@ -9,9 +9,10 @@ import ClayForm from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
+import {IClientExtensionRenderer} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
 import {InputLocalized} from 'frontend-js-components-web';
-import {IClientExtensionRenderer, fetch, openModal, sub} from 'frontend-js-web';
+import {fetch, openModal, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {API_URL, OBJECT_RELATIONSHIP} from '../Constants';

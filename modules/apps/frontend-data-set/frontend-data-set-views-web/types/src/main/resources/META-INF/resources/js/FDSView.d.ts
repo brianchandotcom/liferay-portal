@@ -5,7 +5,7 @@
 
 /// <reference types="react" />
 
-import {IClientExtensionRenderer} from 'frontend-js-web';
+import {IClientExtensionRenderer} from '@liferay/frontend-data-set-web';
 import {FDSViewType} from './FDSViews';
 interface IFDSViewSectionProps {
 	fdsClientExtensionCellRenderers: IClientExtensionRenderer[];

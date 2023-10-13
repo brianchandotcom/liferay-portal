@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {TRenderer} from 'frontend-js-web';
+import {TRenderer} from './FrontendDataSetContext';
 
 export function FrontendDataSet({
 	actionParameterName,
@@ -183,4 +183,5 @@ export interface IFrontendDataSetProps {
 	viewsTitle?: string;
 }
 
+export {IClientExtensionRenderer, IInternalRenderer} from './FrontendDataSetContext';
 export {INTERNAL_CELL_RENDERERS as FDS_INTERNAL_CELL_RENDERERS} from './cell_renderers/InternalCellRenderer';

@@ -10,6 +10,7 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
+import com.liferay.info.permission.provider.InfoPermissionProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageInfoItemFieldValuesProviderRegistry;
 import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProvider;
@@ -18,6 +19,7 @@ import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 
 import java.util.Locale;
 
@@ -121,6 +123,17 @@ public class DisplayPageTypeContext {
 				InfoItemDetailsProvider.class, _className);
 
 		if (infoItemDetailsProvider == null) {
+			return false;
+		}
+
+		InfoPermissionProvider infoPermissionProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoPermissionProvider.class, _className);
+
+		if ((infoPermissionProvider != null) &&
+			!infoPermissionProvider.hasViewPermission(
+				PermissionThreadLocal.getPermissionChecker())) {
+
 			return false;
 		}
 

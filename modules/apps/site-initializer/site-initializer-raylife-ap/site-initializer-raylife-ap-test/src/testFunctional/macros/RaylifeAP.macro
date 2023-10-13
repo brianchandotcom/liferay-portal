@@ -144,22 +144,9 @@ definition {
 			label = "Raylife Application",
 			labelName = "RaylifeQuote");
 
-		ObjectAdmin.editObjectDeletionType(
-			deletionType = "Cascade",
-			field = "Deletion",
-			label = "Raylife Quote",
-			labelName = "RaylifePolicy");
+		Site.openSitesAdmin();
 
-		ObjectAdmin.editObjectDeletionType(
-			deletionType = "Cascade",
-			field = "Deletion",
-			label = "Raylife Policy",
-			labelName = "RaylifeClaim");
-
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "Raylife Applications");
+		ObjectAdmin.openObjectAdmin();
 
 		Search.searchCP(searchTerm = ${searchTerm});
 
@@ -181,7 +168,7 @@ definition {
 	}
 
 	macro goToRaylifeAPSiteWithRefresh {
-		ApplicationsMenu.gotoSite(site = "Raylife AP");
+		Navigator.openSiteURL(siteName = "Raylife AP");
 
 		Refresh();
 	}
@@ -237,12 +224,6 @@ definition {
 				locator1 = "RaylifeAP#SIGN_IN_FORM",
 				value1 = ${emailAddress});
 		}
-		else {
-			Type(
-				labelTitle = "Email Address",
-				locator1 = "RaylifeAP#SIGN_IN_FORM",
-				value1 = "test@liferay.com");
-		}
 
 		if (isSet(password)) {
 			Type(
@@ -250,16 +231,6 @@ definition {
 				locator1 = "RaylifeAP#SIGN_IN_FORM",
 				value1 = ${password});
 		}
-		else {
-			Type(
-				labelTitle = "Password",
-				locator1 = "RaylifeAP#SIGN_IN_FORM",
-				value1 = "test");
-		}
-
-		Check(
-			inputFieldId = "rememberMe",
-			locator1 = "TextInput#INPUT_ID");
 
 		Click(locator1 = "Button#SIGN_IN");
 	}
@@ -274,8 +245,6 @@ definition {
 		MenuItem.clickNoError(menuItem = "Delete");
 
 		Click(locator1 = "Button#MODAL_DELETE");
-
-		Alert.viewSuccessMessage();
 	}
 
 	macro userAvatarFunctionality {

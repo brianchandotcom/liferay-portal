@@ -110,6 +110,12 @@ public class DisplayPageTypeContext {
 	}
 
 	public boolean isAvailable() {
+		InfoItemClassDetails infoItemClassDetails = getInfoItemClassDetails();
+
+		if (infoItemClassDetails == null) {
+			return false;
+		}
+
 		InfoItemDetailsProvider<?> infoItemDetailsProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemDetailsProvider.class, _className);

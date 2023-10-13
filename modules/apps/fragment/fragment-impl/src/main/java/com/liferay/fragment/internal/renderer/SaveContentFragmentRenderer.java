@@ -9,6 +9,13 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Tuple;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.saved.content.taglib.servlet.taglib.SavedContentTag;
 
 import java.util.Locale;
 
@@ -63,7 +70,42 @@ public class SaveContentFragmentRenderer extends BaseContentFragmentRenderer {
 		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-197909")) {
+			return;
+		}
+
+		SavedContentTag savedContentTag = new SavedContentTag();
+
+		savedContentTag.isViewMode(fragmentRendererContext.isViewMode());
+
+		Tuple displayObject = getDisplayObject(
+			fragmentRendererContext, httpServletRequest);
+
+		savedContentTag.setClassName(
+			GetterUtil.getString(displayObject.getObject(0)));
+
+		savedContentTag.setClassPK(
+			GetterUtil.getLong(displayObject.getObject(1)));
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		savedContentTag.setGroupId(themeDisplay.getScopeGroupId());
+
+		savedContentTag.setInTrash(false);
+
+		try {
+			savedContentTag.doTag(httpServletRequest, httpServletResponse);
+		}
+		catch (Exception exception) {
+			_log.error("Unable to render content ratings fragment", exception);
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SaveContentFragmentRenderer.class);
 
 	@Reference
 	private Language _language;

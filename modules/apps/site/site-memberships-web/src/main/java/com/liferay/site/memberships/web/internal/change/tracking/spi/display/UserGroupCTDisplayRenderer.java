@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -66,8 +65,6 @@ public class UserGroupCTDisplayRenderer
 			"/edit_user_group.jsp"
 		).setRedirect(
 			_portal.getCurrentURL(httpServletRequest)
-		).setBackURL(
-			ParamUtil.getString(httpServletRequest, "backURL")
 		).setParameter(
 			"userGroupId", userGroup.getUserGroupId()
 		).buildString();

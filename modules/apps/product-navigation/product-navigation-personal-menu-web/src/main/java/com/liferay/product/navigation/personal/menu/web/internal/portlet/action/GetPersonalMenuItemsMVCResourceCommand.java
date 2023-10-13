@@ -233,7 +233,11 @@ public class GetPersonalMenuItemsMVCResourceCommand
 					jsonObject.put(
 						"jsOnClickConfig",
 						personalMenuEntry.getJSOnClickConfigJSONObject(
-							_portal.getHttpServletRequest(portletRequest)));
+							_portal.getHttpServletRequest(portletRequest))
+					).put(
+						"onClickJSModuleURL",
+						personalMenuEntry.getOnClickJSModuleURL()
+					);
 				}
 			}
 			catch (PortalException portalException) {
@@ -242,8 +246,6 @@ public class GetPersonalMenuItemsMVCResourceCommand
 
 			jsonObject.put(
 				"label", personalMenuEntry.getLabel(themeDisplay.getLocale())
-			).put(
-				"onClickJSModuleURL", personalMenuEntry.getOnClickJSModuleURL()
 			).put(
 				"symbolRight", personalMenuEntry.getIcon(portletRequest)
 			);

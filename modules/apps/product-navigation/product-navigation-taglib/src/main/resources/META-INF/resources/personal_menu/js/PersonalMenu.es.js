@@ -8,7 +8,7 @@ import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClaySticker from '@clayui/sticker';
-import {fetch, navigate, openSelectionModal, sub} from 'frontend-js-web';
+import {fetch, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
@@ -34,9 +34,9 @@ function getModuleAndFunctionNames(url) {
 	return [functionName, moduleName];
 }
 
-const callModuleFunction = (module, functionName) => {
+const callModuleFunction = (functionName, jsOnClickConfig, module) => {
 	if (module[functionName] && typeof module[functionName] === 'function') {
-		module[functionName]();
+		module[functionName](jsOnClickConfig);
 	}
 };
 
@@ -55,22 +55,6 @@ function mapItemsOnClick(items) {
 			newVal.items = mapItemsOnClick(nestedItems);
 		}
 
-		if (jsOnClickConfig) {
-			newVal.onClick = () => {
-				const {selectEventName, title, url} = jsOnClickConfig;
-
-				openSelectionModal({
-					id: selectEventName,
-					onSelect(selectedItem) {
-						navigate(selectedItem.url);
-					},
-					selectEventName,
-					title,
-					url,
-				});
-			};
-		}
-
 		if (onClickJSModuleURL) {
 			if (onClickJSModuleURL.includes(' from ')) {
 				newVal.onClick = async () => {
@@ -83,13 +67,13 @@ function mapItemsOnClick(items) {
 						/* webpackIgnore: true */ moduleName
 					);
 
-					callModuleFunction(module, functionName);
+					callModuleFunction(functionName, jsOnClickConfig, module);
 				};
 			}
 			else {
 				newVal.onClick = () => {
 					Liferay.Loader.require(onClickJSModuleURL, (module) =>
-						callModuleFunction(module, 'default')
+						callModuleFunction('default', jsOnClickConfig, module)
 					);
 				};
 			}

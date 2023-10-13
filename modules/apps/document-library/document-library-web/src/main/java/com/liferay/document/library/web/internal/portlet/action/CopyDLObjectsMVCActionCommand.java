@@ -289,9 +289,6 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 	private JSONFactory _jsonFactory;
 
 	@Reference
-	private Language _language;
-
-	@Reference
 	private SiteConnectedGroupGroupProvider _siteConnectedGroupGroupProvider;
 
 }

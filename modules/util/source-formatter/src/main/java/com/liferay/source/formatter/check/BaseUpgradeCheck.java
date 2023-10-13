@@ -24,15 +24,16 @@ import java.util.regex.Pattern;
 public abstract class BaseUpgradeCheck extends BaseFileCheck {
 
 	public boolean hasValidParameters(
-		int expectedParametersSize, String fileName, String javaMethodContent,
-		String message, List<String> parameterList, String[] parameterTypes) {
+		String content, int expectedParametersSize, String fileContent,
+		String fileName, String message, List<String> parameterList,
+		String[] parameterTypes) {
 
 		if (parameterList.size() != expectedParametersSize) {
 			return false;
 		}
 
 		if (!hasParameterTypes(
-				javaMethodContent, javaMethodContent,
+				content, fileContent, fileName,
 				ArrayUtil.toStringArray(parameterList), parameterTypes)) {
 
 			addMessage(fileName, message);

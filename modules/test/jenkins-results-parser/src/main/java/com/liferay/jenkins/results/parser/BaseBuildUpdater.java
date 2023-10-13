@@ -45,6 +45,8 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 
 	protected abstract boolean isBuildCompleted();
 
+	protected abstract boolean isBuildFailing();
+
 	protected abstract boolean isBuildQueued();
 
 	protected abstract boolean isBuildRunning();
@@ -96,9 +98,7 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 
 		_isApplySlaveOfflineRules();
 
-		if (_isApplyReinvokeRules() ||
-			(_build.isFailing() && !_build.hasMaximumInvocationCount())) {
-
+		if (_isApplyReinvokeRules()) {
 			_build.setStatus("starting");
 
 			return;

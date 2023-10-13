@@ -21,17 +21,43 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 	public void invoke() {
 		Build build = getBuild();
 
-		_invoke(
-			build.getInvokedBatchSize(), build.getMinimumSlaveRAM(),
-			build.getMaximumSlavesPerHost());
+		JenkinsMaster jenkinsMaster = build.getJenkinsMaster();
+
+		if (jenkinsMaster == null) {
+			JenkinsCohort jenkinsCohort = build.getJenkinsCohort();
+
+			jenkinsMaster = jenkinsCohort.getMostAvailableJenkinsMaster(
+				build.getInvokedBatchSize(), build.getMinimumSlaveRAM(),
+				build.getMaximumSlavesPerHost());
+
+			build.setJenkinsMaster(jenkinsMaster);
+		}
+
+		JSONObject jsonObject = JenkinsResultsParserUtil.invokeJenkinsBuild(
+			jenkinsMaster, build.getJobName(), build.getParameters());
+
+		build.addInvocation(
+			new Build.Invocation(jenkinsMaster, jsonObject.getLong("queueId")));
 	}
 
 	@Override
 	public void reinvoke() {
 		Build build = getBuild();
 
-		_invoke(
-			build.getInvokedBatchSize(), 24, build.getMaximumSlavesPerHost());
+		JenkinsCohort jenkinsCohort = build.getJenkinsCohort();
+
+		JenkinsMaster jenkinsMaster =
+			jenkinsCohort.getMostAvailableJenkinsMaster(
+				build.getInvokedBatchSize(), 24,
+				build.getMaximumSlavesPerHost());
+
+		build.setJenkinsMaster(jenkinsMaster);
+
+		JSONObject jsonObject = JenkinsResultsParserUtil.invokeJenkinsBuild(
+			jenkinsMaster, build.getJobName(), build.getParameters());
+
+		build.addInvocation(
+			new Build.Invocation(jenkinsMaster, jsonObject.getLong("queueId")));
 	}
 
 	protected DefaultBuildUpdater(Build build) {
@@ -54,6 +80,25 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 					return false;
 				}
 			}
+		}
+
+		return true;
+	}
+
+	@Override
+	protected boolean isBuildFailing() {
+		Build build = getBuild();
+
+		JSONObject buildJSONObject = build.getBuildJSONObject("result");
+
+		if (buildJSONObject == null) {
+			return false;
+		}
+
+		String result = buildJSONObject.optString("result");
+
+		if (!Objects.equals(result, "SUCCESS")) {
+			return false;
 		}
 
 		return true;
@@ -215,29 +260,6 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 		};
 
 		return retryable.executeWithRetries();
-	}
-
-	private void _invoke(
-		int invokedBatchSize, int minimumSlaveRAM, int maximumSlavesPerHost) {
-
-		Build build = getBuild();
-
-		JenkinsMaster jenkinsMaster = build.getJenkinsMaster();
-
-		if (jenkinsMaster == null) {
-			JenkinsCohort jenkinsCohort = build.getJenkinsCohort();
-
-			jenkinsMaster = jenkinsCohort.getMostAvailableJenkinsMaster(
-				invokedBatchSize, minimumSlaveRAM, maximumSlavesPerHost);
-
-			build.setJenkinsMaster(jenkinsMaster);
-		}
-
-		JSONObject jsonObject = JenkinsResultsParserUtil.invokeJenkinsBuild(
-			jenkinsMaster, build.getJobName(), build.getParameters());
-
-		build.addInvocation(
-			new Build.Invocation(jenkinsMaster, jsonObject.getLong("queueId")));
 	}
 
 	private boolean _isBuildCompleted(Build build) {

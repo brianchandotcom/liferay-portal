@@ -1390,7 +1390,7 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public boolean isFailing() {
-		if (!isCompleted() || Objects.equals(getResult(), "SUCCESS")) {
+		if (!Objects.equals(getResult(), "SUCCESS")) {
 			return true;
 		}
 

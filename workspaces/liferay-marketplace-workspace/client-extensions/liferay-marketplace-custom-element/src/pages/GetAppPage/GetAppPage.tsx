@@ -15,7 +15,7 @@ import {
 import AccountSelection from './components/AccountSelection';
 import ProductFooter from './components/Footer';
 import {LicenseSelector} from './components/LicenseSelector';
-import ProductCard from './components/ProductCard';
+import ProductCard from './components/ProductCard/ProductCard';
 import {SelectPaymentMethod} from './components/SelectPaymentMethod/SelectPaymentMethod';
 import StepWizard from './components/StepWizard/StepWizard';
 import {initialBillingAddress} from './constants/initialBillingAddress';
@@ -84,8 +84,7 @@ const GetAppFlow = () => {
 		if (cartUtil?.cartItems?.length) {
 			setLincenseSelected(true);
 			setEnablePurchaseButton(true);
-		}
-		else {
+		} else {
 			setEnablePurchaseButton(false);
 			setLincenseSelected(false);
 		}

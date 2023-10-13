@@ -8,16 +8,16 @@ import './ProductCard.scss';
 import ClaySticker from '@clayui/sticker';
 import {useEffect, useState} from 'react';
 
-import emptyPictureIcon from '../../../assets/icons/avatar.svg';
-import useCart from '../../../hooks/useCart';
-import {getCustomFieldValue} from '../../../utils/customFieldUtil';
+import emptyPictureIcon from '../../../../assets/icons/avatar.svg';
+import useCart from '../../../../hooks/useCart';
+import {getCustomFieldValue} from '../../../../utils/customFieldUtil';
 import {
 	getThumbnailByProductAttachment,
 	getValueFromSpecifications,
-} from '../../../utils/util';
-import {LicenseType} from '../enums/licenseType';
-import {SkuOptions} from '../enums/skuOptions';
-import {StepType} from '../enums/stepType';
+} from '../../../../utils/util';
+import {LicenseType} from '../../enums/licenseType';
+import {SkuOptions} from '../../enums/skuOptions';
+import {StepType} from '../../enums/stepType';
 
 interface ProductCardProps {
 	cartUtil: ReturnType<typeof useCart>;

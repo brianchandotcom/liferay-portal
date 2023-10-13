@@ -32,10 +32,6 @@ public class ExpandoBridgeFactoryUtil {
 			companyId, className, classPK);
 	}
 
-	public static ExpandoBridgeFactory getExpandoBridgeFactory() {
-		return _expandoBridgeFactorySnapshot.get();
-	}
-
 	private static final Snapshot<ExpandoBridgeFactory>
 		_expandoBridgeFactorySnapshot = new Snapshot<>(
 			ExpandoBridgeFactoryUtil.class, ExpandoBridgeFactory.class);

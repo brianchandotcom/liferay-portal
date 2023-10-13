@@ -50,7 +50,6 @@ public class UpgradeCatchAllCheck {
 	@Reference
 	private AssetVocabularyService _assetVocabularyService;
 
-
 	@Reference
 	private HtmlParser _htmlParser;
 

@@ -15,6 +15,8 @@ import com.liferay.portal.search.index.ConcurrentReindexManager;
 import com.liferay.portal.search.index.SyncReindexManager;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.util.Collections;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -141,18 +143,18 @@ public class SearchEngineInitializerTest {
 		ServiceTrackerList<Indexer<?>> serviceTrackerList = Mockito.mock(
 			ServiceTrackerList.class);
 
+		Mockito.when(
+			serviceTrackerList.iterator()
+		).thenReturn(
+			Collections.emptyIterator()
+		);
+
 		_serviceTrackerListFactoryMockedStatic.when(
 			() -> ServiceTrackerListFactory.open(
 				_bundleContext, (Class<Indexer<?>>)(Class<?>)Indexer.class,
 				"(!(system.index=true))")
 		).thenReturn(
 			serviceTrackerList
-		);
-
-		Mockito.when(
-			serviceTrackerList.size()
-		).thenReturn(
-			0
 		);
 	}
 

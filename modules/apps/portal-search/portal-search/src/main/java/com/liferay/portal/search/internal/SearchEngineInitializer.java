@@ -186,11 +186,7 @@ public class SearchEngineInitializer implements Runnable {
 
 			Set<String> indexerClassNames = new HashSet<>();
 
-			List<Indexer<?>> list = _indexers.toList();
-
-			for (int i = 0; i < _indexers.size(); i++) {
-				Indexer<?> indexer = list.get(i);
-
+			for (Indexer<?> indexer : _indexers) {
 				indexerClassNames.add(indexer.getClassName());
 
 				FutureTask<Void> futureTask = new FutureTask<>(

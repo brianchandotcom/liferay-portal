@@ -162,12 +162,13 @@ public class ObjectEntry1to1ObjectRelatedModelsProviderImpl
 
 	@Override
 	public int getUnrelatedModelsCount(
-		long companyId, long groupId, ObjectDefinition objectDefinition,
-		long objectEntryId, long objectRelationshipId) throws PortalException {
+			long companyId, long groupId, ObjectDefinition objectDefinition,
+			long objectEntryId, long objectRelationshipId)
+		throws PortalException {
 
 		List<ObjectEntry> unrelatedModels = getUnrelatedModels(
-			companyId, groupId, objectDefinition, objectEntryId, objectRelationshipId,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			companyId, groupId, objectDefinition, objectEntryId,
+			objectRelationshipId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		return unrelatedModels.size();
 	}

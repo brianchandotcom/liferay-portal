@@ -290,8 +290,8 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 
 	@Override
 	public List<T> getUnrelatedModels(
-		long companyId, long groupId, ObjectDefinition objectDefinition,
-		long objectEntryId, long objectRelationshipId, int start, int end)
+			long companyId, long groupId, ObjectDefinition objectDefinition,
+			long objectEntryId, long objectRelationshipId, int start, int end)
 		throws PortalException {
 
 		Column<?, Long> companyIdColumn = (Column<?, Long>)_table.getColumn(
@@ -358,7 +358,9 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 								dynamicObjectDefinitionTable
 							).where(
 								foreignKeyColumn.neq(0L)
-							).limit(start, end));
+							).limit(
+								start, end
+							));
 					}
 				)
 			));
@@ -366,8 +368,9 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 
 	@Override
 	public int getUnrelatedModelsCount(
-		long companyId, long groupId, ObjectDefinition objectDefinition,
-		long objectEntryId, long objectRelationshipId) throws PortalException {
+			long companyId, long groupId, ObjectDefinition objectDefinition,
+			long objectEntryId, long objectRelationshipId)
+		throws PortalException {
 
 		Column<?, Long> companyIdColumn = (Column<?, Long>)_table.getColumn(
 			"companyId");
@@ -413,16 +416,16 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 
 						DynamicObjectDefinitionTable
 							dynamicObjectDefinitionTable =
-							_getDynamicObjectDefinitionTable();
+								_getDynamicObjectDefinitionTable();
 						ObjectField objectField =
 							_objectFieldLocalService.getObjectField(
 								objectRelationship.getObjectFieldId2());
 
 						Column<DynamicObjectDefinitionTable, Long>
 							foreignKeyColumn =
-							(Column<DynamicObjectDefinitionTable, Long>)
-								dynamicObjectDefinitionTable.getColumn(
-									objectField.getDBColumnName());
+								(Column<DynamicObjectDefinitionTable, Long>)
+									dynamicObjectDefinitionTable.getColumn(
+										objectField.getDBColumnName());
 
 						return primaryKeyColumn.notIn(
 							DSLQueryFactoryUtil.select(

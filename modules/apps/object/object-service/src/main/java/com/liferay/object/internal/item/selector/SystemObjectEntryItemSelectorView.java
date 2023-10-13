@@ -342,11 +342,13 @@ public class SystemObjectEntryItemSelectorView
 
 			SearchContainer<BaseModel<?>> searchContainer =
 				new SearchContainer<>(
-					_portletRequest, null, null, "cur", ParamUtil.getInteger(_portletRequest, "cur"),
-					ParamUtil.getInteger(_portletRequest, "delta"), _portletURL, null,
-					"no-entries-were-found");
+					_portletRequest, null, null, "cur",
+					ParamUtil.getInteger(_portletRequest, "cur"),
+					ParamUtil.getInteger(_portletRequest, "delta"), _portletURL,
+					null, "no-entries-were-found");
 
-			searchContainer.setResultsAndTotal(ArrayList::new, searchContainer.getEnd());
+			searchContainer.setResultsAndTotal(
+				ArrayList::new, searchContainer.getEnd());
 
 			String objectRelationshipType = ParamUtil.getString(
 				_portletRequest, "objectRelationshipType");
@@ -370,7 +372,7 @@ public class SystemObjectEntryItemSelectorView
 						ParamUtil.getLong(_portletRequest, "objectEntryId"),
 						ParamUtil.getLong(
 							_portletRequest, "objectRelationshipId"),
-						searchContainer.getStart(), searchContainer.getEnd() );
+						searchContainer.getStart(), searchContainer.getEnd());
 
 				int baseModelsCount =
 					objectRelatedModelsProvider.getUnrelatedModelsCount(

@@ -109,8 +109,8 @@ public class DeleteOnDisassociateObjectRelatedModelsProvider
 
 	@Override
 	public List<ObjectEntry> getUnrelatedModels(
-		long companyId, long groupId, ObjectDefinition objectDefinition,
-		long objectEntryId, long objectRelationshipId, int start, int end)
+			long companyId, long groupId, ObjectDefinition objectDefinition,
+			long objectEntryId, long objectRelationshipId, int start, int end)
 		throws PortalException {
 
 		return _objectRelatedModelsProvider.getUnrelatedModels(
@@ -120,8 +120,9 @@ public class DeleteOnDisassociateObjectRelatedModelsProvider
 
 	@Override
 	public int getUnrelatedModelsCount(
-		long companyId, long groupId, ObjectDefinition objectDefinition,
-		long objectEntryId, long objectRelationshipId) throws PortalException {
+			long companyId, long groupId, ObjectDefinition objectDefinition,
+			long objectEntryId, long objectRelationshipId)
+		throws PortalException {
 
 		return _objectRelatedModelsProvider.getUnrelatedModelsCount(
 			companyId, groupId, objectDefinition, objectEntryId,

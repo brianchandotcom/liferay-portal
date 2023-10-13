@@ -563,6 +563,8 @@
 				}
 			}
 		);
+
+		addOtherCalendarInput.removeAttribute('aria-expanded');
 	</c:if>
 
 	var columnToggler = document.getElementById(

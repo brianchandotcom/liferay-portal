@@ -56,6 +56,8 @@ public interface Build {
 
 	public JSONObject getBuildJSONObject();
 
+	public JSONObject getBuildJSONObject(String tree);
+
 	public String getBuildName();
 
 	public int getBuildNumber();
@@ -196,6 +198,8 @@ public interface Build {
 	public void reinvoke(ReinvokeRule reinvokeRule);
 
 	public String replaceBuildURL(String text);
+
+	public void reset();
 
 	public void setArchiveName(String archiveName);
 

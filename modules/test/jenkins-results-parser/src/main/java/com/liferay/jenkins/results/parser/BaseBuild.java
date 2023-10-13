@@ -318,6 +318,19 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public JSONObject getBuildJSONObject(String tree) {
+		String urlSuffix = "api/json";
+
+		String archiveFileContent = getArchiveFileContent(urlSuffix);
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(archiveFileContent)) {
+			return new JSONObject(archiveFileContent);
+		}
+
+		return JenkinsAPIUtil.getAPIJSONObject(getBuildURL(), tree);
+	}
+
+	@Override
 	public int getBuildNumber() {
 		Invocation latestInvocation = _getLatestInvocation();
 
@@ -1533,6 +1546,16 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public void reset() {
+		consoleReadCursor = 0;
+		_duration = null;
+		_jenkinsConsoleTextLoader = null;
+		_jenkinsSlave = null;
+		_result = null;
+		_statusModifiedTime = 0;
+	}
+
+	@Override
 	public void setArchiveName(String archiveName) {
 		_archiveName = archiveName;
 	}
@@ -2224,18 +2247,6 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return _branchInformationMap.get(repositoryType);
-	}
-
-	protected JSONObject getBuildJSONObject(String tree) {
-		String urlSuffix = "api/json";
-
-		String archiveFileContent = getArchiveFileContent(urlSuffix);
-
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(archiveFileContent)) {
-			return new JSONObject(archiveFileContent);
-		}
-
-		return JenkinsAPIUtil.getAPIJSONObject(getBuildURL(), tree);
 	}
 
 	protected String getBuildMessage() {
@@ -2992,15 +3003,6 @@ public abstract class BaseBuild implements Build {
 				_parameters.put(nameValueArray[0], "");
 			}
 		}
-	}
-
-	protected void reset() {
-		consoleReadCursor = 0;
-		_duration = null;
-		_jenkinsConsoleTextLoader = null;
-		_jenkinsSlave = null;
-		_result = null;
-		_statusModifiedTime = 0;
 	}
 
 	protected void setJobName(String jobName) {
@@ -3844,6 +3846,7 @@ public abstract class BaseBuild implements Build {
 	private int _invokedBatchSize;
 	private JenkinsCohort _jenkinsCohort;
 	private JenkinsConsoleTextLoader _jenkinsConsoleTextLoader;
+	private JenkinsMaster _jenkinsMaster;
 	private JenkinsSlave _jenkinsSlave;
 	private Job _job;
 	private String _jobName;

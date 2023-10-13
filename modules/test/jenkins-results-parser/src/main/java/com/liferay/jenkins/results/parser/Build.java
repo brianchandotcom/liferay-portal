@@ -169,13 +169,13 @@ public interface Build {
 
 	public boolean hasGenericCIFailure();
 
+	public boolean hasMaximumInvocationCount();
+
 	public Invocation invoke();
 
 	public boolean isApplyReinvokeRules();
 
 	public boolean isApplySlaveOfflineRules();
-
-	public boolean hasMaximumInvocationCount();
 
 	public boolean isBuildModified();
 
@@ -201,7 +201,17 @@ public interface Build {
 
 	public void setArchiveRootDir(File archiveRootDir);
 
+	public void setBuildURL(String buildURL);
+
 	public void setCompareToUpstream(boolean compareToUpstream);
+
+	public void setJenkinsCohort(JenkinsCohort jenkinsCohort);
+
+	public void setJenkinsMaster(JenkinsMaster jenkinsMaster);
+
+	public void setResult(String result);
+
+	public void setStatus(String status);
 
 	public void takeSlaveOffline(SlaveOfflineRule slaveOfflineRule);
 
@@ -272,8 +282,8 @@ public interface Build {
 			_queueId = queueId;
 		}
 
-		private String _buildURL;
 		private int _buildNumber;
+		private String _buildURL;
 		private final JenkinsMaster _jenkinsMaster;
 		private long _queueId;
 

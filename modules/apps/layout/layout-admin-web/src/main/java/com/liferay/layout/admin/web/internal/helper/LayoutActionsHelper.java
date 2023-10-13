@@ -306,13 +306,13 @@ public class LayoutActionsHelper {
 				explicitlyAddedPortlet.getPortletId());
 		}
 
-		List<PortletPreferences> portletPreferences =
+		List<PortletPreferences> portletPreferencesList =
 			PortletPreferencesLocalServiceUtil.getPortletPreferences(
 				PortletKeys.PREFS_OWNER_ID_DEFAULT,
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid());
 
-		for (PortletPreferences curPortletPreferences : portletPreferences) {
-			String portletId = curPortletPreferences.getPortletId();
+		for (PortletPreferences portletPreferences : portletPreferencesList) {
+			String portletId = portletPreferences.getPortletId();
 
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(
 				layout.getCompanyId(), portletId);

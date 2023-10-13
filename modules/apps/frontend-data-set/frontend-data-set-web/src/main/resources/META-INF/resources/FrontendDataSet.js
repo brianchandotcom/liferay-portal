@@ -237,7 +237,11 @@ const FrontendDataSet = ({
 	useEffect(() => {
 		loadClientExtensions([
 			{
-				handler: (filterModules) => {
+				imports: initialFilters?.map((filter) => ({
+					context: filter,
+					url: filter.cxFilterURL,
+				})),
+				onLoad: (filterModules) => {
 					const newFilters = filterModules.map(
 						({context: filter, module}) => ({
 							...filter,
@@ -250,23 +254,8 @@ const FrontendDataSet = ({
 						value: newFilters,
 					});
 				},
-				imports: initialFilters?.map((filter) => ({
-					context: filter,
-					url: filter.cxFilterURL,
-				})),
 			},
 			{
-				handler: (fieldModules) => {
-					fieldModules.forEach(({context: field, module}) => {
-						viewsDispatch({
-							type: VIEWS_ACTION_TYPES.UPDATE_FIELD,
-							value: {
-								htmlElementBuilder: module['default'],
-								name: field.fieldName,
-							},
-						});
-					});
-				},
 				imports: views.reduce((imports, view) => {
 					const cxFields = view.schema.fields.filter(
 						(field) => !!field.contentRendererClientExtension
@@ -284,6 +273,17 @@ const FrontendDataSet = ({
 
 					return imports;
 				}, []),
+				onLoad: (fieldModules) => {
+					fieldModules.forEach(({context: field, module}) => {
+						viewsDispatch({
+							type: VIEWS_ACTION_TYPES.UPDATE_FIELD,
+							value: {
+								htmlElementBuilder: module['default'],
+								name: field.fieldName,
+							},
+						});
+					});
+				},
 			},
 		]);
 	}, [initialFilters, views, viewsDispatch]);
@@ -933,7 +933,7 @@ FrontendDataSet.defaultProps = {
 };
 
 function loadClientExtensions(importsHandlers) {
-	for (const {handler, imports} of importsHandlers) {
+	for (const {imports, onLoad} of importsHandlers) {
 		if (!imports.length) {
 			continue;
 		}
@@ -949,7 +949,7 @@ function loadClientExtensions(importsHandlers) {
 			}));
 		});
 
-		Promise.all(promises).then(handler);
+		Promise.all(promises).then(onLoad);
 	}
 }
 

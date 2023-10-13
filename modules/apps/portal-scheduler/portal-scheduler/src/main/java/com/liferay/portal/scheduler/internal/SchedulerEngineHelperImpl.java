@@ -457,15 +457,12 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 		@Override
 		public void receive(Message message) throws MessageListenerException {
-			if (Objects.equals(
-					DestinationNames.SCHEDULER_DISPATCH,
-					message.getString(SchedulerEngine.DESTINATION_NAME)) &&
-				(!Objects.equals(
+			if (!Objects.equals(
 					_schedulerJobConfiguration.getName(),
 					message.getString(SchedulerEngine.GROUP_NAME)) ||
-				 !Objects.equals(
-					 _schedulerJobConfiguration.getName(),
-					 message.getString(SchedulerEngine.JOB_NAME)))) {
+				!Objects.equals(
+					_schedulerJobConfiguration.getName(),
+					message.getString(SchedulerEngine.JOB_NAME))) {
 
 				return;
 			}

@@ -6,17 +6,16 @@
 package com.liferay.portal.search.tuning.rankings.web.internal.index;
 
 import com.liferay.json.storage.service.JSONStorageEntryLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.search.index.SyncReindexManager;
 import com.liferay.portal.search.spi.reindexer.IndexReindexer;
@@ -44,27 +43,14 @@ public class RankingIndexReindexer implements IndexReindexer {
 
 	@Override
 	public void reindex(long companyId, String executionMode) throws Exception {
-		if (!searchCapabilities.isResultRankingsSupported()) {
+		if (!searchCapabilities.isResultRankingsSupported() ||
+			(companyId == CompanyConstants.SYSTEM)) {
+
 			return;
 		}
-
-		List<Long> classPKs = jsonStorageEntryLocalService.getClassPKs(
-			companyId, classNameLocalService.getClassNameId(Ranking.class),
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		RankingIndexName rankingIndexName =
 			rankingIndexNameBuilder.getRankingIndexName(companyId);
-
-		if (ListUtil.isEmpty(classPKs)) {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					StringBundler.concat(
-						"Not reindexing ", rankingIndexName.getIndexName(),
-						" because the database has no ranking entries"));
-			}
-
-			return;
-		}
 
 		Date date = null;
 
@@ -75,26 +61,29 @@ public class RankingIndexReindexer implements IndexReindexer {
 		}
 		else {
 			if (_log.isInfoEnabled()) {
-				_log.info("Deleting index " + rankingIndexName.getIndexName());
+				_log.info(
+					"Deleting and creating index " +
+						rankingIndexName.getIndexName());
 			}
 
 			try {
 				rankingIndexCreator.delete(rankingIndexName);
+
+				rankingIndexCreator.create(rankingIndexName);
 			}
 			catch (RuntimeException runtimeException) {
 				_log.error(
-					"Unable to delete index " + rankingIndexName.getIndexName(),
+					"Unable to delete or create index " +
+						rankingIndexName.getIndexName(),
 					runtimeException);
+
+				return;
 			}
 		}
 
-		if (!_isExecuteSyncReindex(executionMode)) {
-			if (_log.isInfoEnabled()) {
-				_log.info("Creating index " + rankingIndexName.getIndexName());
-			}
-
-			rankingIndexCreator.create(rankingIndexName);
-		}
+		List<Long> classPKs = jsonStorageEntryLocalService.getClassPKs(
+			companyId, classNameLocalService.getClassNameId(Ranking.class),
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		int sendStatusInterval = Math.max(100, classPKs.size() / 20);
 

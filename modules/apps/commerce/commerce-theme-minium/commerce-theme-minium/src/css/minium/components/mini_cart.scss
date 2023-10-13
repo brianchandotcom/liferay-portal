@@ -1,6 +1,6 @@
 #minium .mini-cart {
 	right: -#{$frame-size};
-	top: $frame-size;
+	top: 0;
 
 	.signed-in &.is-open {
 		height: calc(100vh - #{$frame-size-small});
@@ -86,7 +86,11 @@
 
 	&-opener,
 	&-wrapper {
-		top: -#{$frame-size};
+		top: 0;
+	}
+
+	&-overlay {
+		top: #{$frame-size};
 	}
 
 	&-wrapper {

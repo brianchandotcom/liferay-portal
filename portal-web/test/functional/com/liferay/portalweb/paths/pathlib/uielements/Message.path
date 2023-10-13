@@ -546,6 +546,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WARNING_WITH_LABEL</td>
+	<td>//div[contains(@class,'form-group')][.//label[normalize-space()='${fieldLabel}']]//following-sibling::*[self::div or self::p][contains(@class,'text-warning')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WORKFLOW_STATUS</td>
 	<td>//span[contains(@class,'workflow-status')]/strong | //span[contains(@class,'workflow-status')]/span</td>
 	<td></td>

@@ -27,10 +27,10 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.xmlrpc.Fault;
 import com.liferay.portal.kernel.xmlrpc.XmlRpcConstants;
-import com.liferay.portal.kernel.xmlrpc.XmlRpcUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.xmlrpc.Fault;
+import com.liferay.portal.xmlrpc.XmlRpcUtil;
 
 import java.io.IOException;
 

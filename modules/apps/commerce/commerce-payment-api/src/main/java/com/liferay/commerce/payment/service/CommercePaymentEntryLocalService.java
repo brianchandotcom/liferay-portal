@@ -74,8 +74,10 @@ public interface CommercePaymentEntryLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommercePaymentEntry addCommercePaymentEntry(
-			long userId, long classNameId, long classPK, BigDecimal amount,
-			String currencyCode, String paymentIntegrationKey,
+			long userId, long classNameId, long classPK, long commerceChannelId,
+			BigDecimal amount, String callbackURL, String cancelURL,
+			String currencyCode, String languageId,
+			String paymentIntegrationKey, int paymentIntegrationType,
 			String transactionCode, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -297,9 +299,10 @@ public interface CommercePaymentEntryLocalService
 	public CommercePaymentEntry updateCommercePaymentEntry(
 		CommercePaymentEntry commercePaymentEntry);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CommercePaymentEntry updateCommercePaymentEntry(
-			long commercePaymentEntryId, int paymentStatus,
-			String transactionCode)
+			long commercePaymentEntryId, String errorMessages,
+			int paymentStatus, String redirectURL, String transactionCode)
 		throws PortalException;
 
 }

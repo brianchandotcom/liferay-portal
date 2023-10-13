@@ -11,7 +11,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import javax.portlet.ActionRequest;
@@ -40,7 +40,7 @@ public class GenerateWebDAVPasswordMVCActionCommand
 
 		User user = _portal.getUser(actionRequest);
 
-		String plainToken = _portalUUID.generate();
+		String plainToken = PortalUUIDUtil.generate();
 
 		user.setDigest(user.getDigest(plainToken));
 
@@ -54,9 +54,6 @@ public class GenerateWebDAVPasswordMVCActionCommand
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortalUUID _portalUUID;
 
 	@Reference
 	private UserLocalService _userLocalService;

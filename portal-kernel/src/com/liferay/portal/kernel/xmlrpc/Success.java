@@ -32,7 +32,7 @@ public class Success implements Response {
 		StringBundler sb = new StringBundler(3);
 
 		sb.append("<?xml version=\"1.0\"?><methodResponse><params><param>");
-		sb.append(XmlRpcParser.wrapValue(_description));
+		sb.append(XmlRpcUtil.wrapValue(_description));
 		sb.append("</param></params></methodResponse>");
 
 		return sb.toString();

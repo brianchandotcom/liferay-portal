@@ -41,7 +41,6 @@ definition {
 	}
 
 	@description = "LPS-160952 | Assert the subject of the e-mail: (Liferay Marketplace - Invitation from %Admin User%)"
-	@ignore = "true"
 	@priority = 4
 	test AssertTheDetailsOfTheEmail {
 		task ("Given that the user sends an invitation") {
@@ -65,7 +64,7 @@ definition {
 
 		task ("Then I should be able to assert the subject of the email") {
 			MockMock._viewMailFromInbox(
-				asset = "Liferay Marketplace - Invitation from Dashboard Administrator",
+				asset = "Liferay Marketplace - Invitation from Dashboard",
 				recipient = "test.mp@liferay.com",
 				sender = "da@administrator.com");
 		}
@@ -146,7 +145,6 @@ definition {
 	}
 
 	@description = "LPS-160952 | Verify that when the invited user accepts the invitation, and has a Liferay account, he can log in with the invited roles"
-	@ignore = "true"
 	@priority = 5
 	test CanLoginToMarketplaceAccount {
 		task ("Given that a marketplace account administrator invites a member to the Publisher Dashboard") {
@@ -221,7 +219,6 @@ definition {
 	}
 
 	@description = "LPS-160952 | Verify that after accepting the invitation, the guest user role is listed in the members section of the editor account"
-	@ignore = "true"
 	@priority = 3
 	test CanViewTheUserRoleInTheMemberList {
 		task ("Given the user accepts the invitation") {

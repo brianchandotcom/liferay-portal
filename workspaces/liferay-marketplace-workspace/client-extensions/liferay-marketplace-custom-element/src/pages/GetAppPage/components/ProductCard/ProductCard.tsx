@@ -20,6 +20,7 @@ import {StepType} from '../../enums/stepType';
 
 interface ProductCardProps {
 	cartUtil: ReturnType<typeof useCart>;
+	creatorAccount?: Account;
 	product?: Product;
 	selectedAccount?: Account;
 	step: StepType;
@@ -28,6 +29,7 @@ interface ProductCardProps {
 
 const ProductCard = ({
 	cartUtil,
+	creatorAccount,
 	product,
 	selectedAccount,
 	step,
@@ -149,12 +151,7 @@ const ProductCard = ({
 								product.productSpecifications,
 								'latest-version'
 							)}{' '}
-							by{' '}
-							{product.productSpecifications &&
-								getValueFromSpecifications(
-									product.productSpecifications,
-									'developer-name'
-								)}
+							by {creatorAccount?.name}
 						</div>
 					</div>
 				</div>
@@ -171,6 +168,7 @@ const ProductCard = ({
 					</div>
 				</div>
 			</div>
+
 			{selectedAccount && (
 				<>
 					<hr />

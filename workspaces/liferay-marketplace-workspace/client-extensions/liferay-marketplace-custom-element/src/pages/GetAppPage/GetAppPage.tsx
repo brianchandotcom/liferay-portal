@@ -25,6 +25,7 @@ import {StepType} from './enums/stepType';
 import useGetAddresses from './hooks/useGetAddresses';
 import useGetChannelInfo from './hooks/useGetChannelInfo';
 import useGetProduct from './hooks/useGetProduct';
+import useGetProductCreatorAccount from './hooks/useGetProductCreatorAccount';
 import useGetProductSkus from './hooks/useGetProductSkus';
 import useProductPriceModel from './hooks/useProductPriceModel';
 import buildNewCart from './utils/buildNewCart';
@@ -88,6 +89,7 @@ const GetAppFlow = () => {
 		channelId: channel?.id,
 		orderType,
 	});
+	const productCreatorAccount = useGetProductCreatorAccount(product);
 
 	useEffect(() => {
 		if (cartUtil?.cartItems?.length) {
@@ -257,6 +259,7 @@ const GetAppFlow = () => {
 		<>
 			<ProductCard
 				cartUtil={cartUtil}
+				creatorAccount={productCreatorAccount}
 				product={product}
 				selectedAccount={account}
 				step={step}

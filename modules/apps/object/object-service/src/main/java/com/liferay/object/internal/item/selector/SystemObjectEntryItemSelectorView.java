@@ -342,10 +342,11 @@ public class SystemObjectEntryItemSelectorView
 
 			SearchContainer<BaseModel<?>> searchContainer =
 				new SearchContainer<>(
-					_portletRequest, _portletURL, null,
+					_portletRequest, null, null, "cur", ParamUtil.getInteger(_portletRequest, "cur"),
+					ParamUtil.getInteger(_portletRequest, "delta"), _portletURL, null,
 					"no-entries-were-found");
 
-			searchContainer.setResultsAndTotal(ArrayList::new, 0);
+			searchContainer.setResultsAndTotal(ArrayList::new, searchContainer.getEnd());
 
 			String objectRelationshipType = ParamUtil.getString(
 				_portletRequest, "objectRelationshipType");

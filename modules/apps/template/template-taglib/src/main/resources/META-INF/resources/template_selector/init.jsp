@@ -13,5 +13,6 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.portal.kernel.util.HashMapBuilder" %>
 
-<portlet:defineObjects />
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />

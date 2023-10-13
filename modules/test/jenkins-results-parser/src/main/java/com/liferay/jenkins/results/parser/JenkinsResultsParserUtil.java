@@ -3339,12 +3339,12 @@ public class JenkinsResultsParserUtil {
 		sb.append("for (ParameterDefinition parameterDefinition : ");
 		sb.append("jobProperty.getParameterDefinitions()) {\n");
 
-		sb.append("String parameterName = parameterDefinition.getName();\n;");
+		sb.append("String parameterName = parameterDefinition.getName();\n");
 
-		sb.append("String parameterValue = parameters.get(parameterName);\n;");
+		sb.append("String parameterValue = parameters.get(parameterName);\n");
 
 		sb.append(
-			"if ((parameterValue == null) || parameterValue.isEmpty()) {\n;");
+			"if ((parameterValue == null) || parameterValue.isEmpty()) {\n");
 		sb.append("parameterValue = parameterDefinition.defaultValue;\n");
 		sb.append("}\n");
 
@@ -3370,16 +3370,43 @@ public class JenkinsResultsParserUtil {
 		sb.append("def waitingItem = Jenkins.instance.queue.schedule(");
 		sb.append("topLevelItem, 0, new ParametersAction(parameterValues));\n");
 
+		sb.append("if (waitingItem == null) {\n");
+
+		sb.append(
+			"for (Queue.Item item : Jenkins.instance.queue.getItems()) {\n");
+
+		sb.append("if (waitingItem != null) {break;}\n");
+
+		sb.append("for (Action action : item.getActions()) {\n");
+
+		sb.append("if (!(action instanceof ParametersAction)) ");
+		sb.append("{continue;}\n");
+
+		sb.append("if (!parameterValues.equals(action.getAllParameters())) ");
+		sb.append("{continue;}\n");
+
+		sb.append("waitingItem = item;\n");
+
+		sb.append("break;\n");
+
+		sb.append("}\n}\n}\n");
+
 		sb.append("def jsonBuilder = new groovy.json.JsonBuilder()\n");
 
 		sb.append("jsonBuilder queueId: waitingItem.getId()\n");
 
 		sb.append("println(jsonBuilder);");
 
-		String response = executeJenkinsScript(
-			jenkinsMaster.getName(), sb.toString(), true);
+		try {
+			String response = executeJenkinsScript(
+				jenkinsMaster.getName(), sb.toString(), true);
 
-		return new JSONObject(response);
+			return new JSONObject(response);
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(
+				"Unable to invoke jenkins job", exception);
+		}
 	}
 
 	public static boolean isCINode() {

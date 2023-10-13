@@ -5,7 +5,7 @@ definition {
 	property portal.accessibility = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Clay";
+	property testray.component.names = "PEDS Accessibility";
 	property testray.main.component.name = "Clay";
 
 	setUp {
@@ -45,7 +45,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-193598. Verifies that clay portlet tabs are accessible."
+	@description = "LPS-193598. Verifies clay sample portlet components are compliant with axe accessibility."
 	@priority = 5
 	test AccessibilitySmoke {
 		task ("When access all clay sample portlet tabs ") {

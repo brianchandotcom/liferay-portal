@@ -2913,11 +2913,6 @@ public abstract class BaseBuild implements Build {
 	protected static final String URL_BASE_TEMP_MAP =
 		"http://cloud-10-0-0-31.lax.liferay.com/osb-jenkins-web/map/";
 
-	protected static final Pattern invocationURLPattern = Pattern.compile(
-		JenkinsResultsParserUtil.combine(
-			"\\w+://(?<cohortName>test-\\d+)(-(?<masterId>\\d+))?",
-			"(\\.liferay\\.com)?/+job\\/+(?<jobName>[^\\/]+).*\\/",
-			"buildWithParameters\\?(?<queryString>.*)"));
 	protected static final Pattern jobNamePattern = Pattern.compile(
 		"(?<baseJob>[^\\(]+)\\((?<branchName>[^\\)]+)\\)");
 	protected static final Pattern stopWatchPattern = Pattern.compile(
@@ -3320,7 +3315,7 @@ public abstract class BaseBuild implements Build {
 				unsupportedEncodingException);
 		}
 
-		Matcher invocationURLMatcher = invocationURLPattern.matcher(
+		Matcher invocationURLMatcher = _invocationURLPattern.matcher(
 			invocationURL);
 
 		if (!invocationURLMatcher.find()) {
@@ -3368,6 +3363,11 @@ public abstract class BaseBuild implements Build {
 		JenkinsResultsParserUtil.combine(
 			"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+(/label=[^/]+)?)/",
 			"(?<buildNumber>\\d+)/?"));
+	private static final Pattern _invocationURLPattern = Pattern.compile(
+		JenkinsResultsParserUtil.combine(
+			"\\w+://(?<cohortName>test-\\d+)(-(?<masterId>\\d+))?",
+			"(\\.liferay\\.com)?/+job\\/+(?<jobName>[^\\/]+).*\\/",
+			"buildWithParameters\\?(?<queryString>.*)"));
 	private static final Pattern _testrayAttachmentURLPattern = Pattern.compile(
 		"\\[beanshell\\] Uploaded (?<url>https://testray.liferay.com/[^\\s]+)");
 	private static final Pattern _testrayS3ObjectURLPattern = Pattern.compile(

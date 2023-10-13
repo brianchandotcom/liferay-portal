@@ -109,13 +109,13 @@ public class DeleteOnDisassociateObjectRelatedModelsProvider
 
 	@Override
 	public List<ObjectEntry> getUnrelatedModels(
-			long companyId, long groupId, ObjectDefinition objectDefinition,
-			long objectEntryId, long objectRelationshipId)
+		long companyId, long groupId, ObjectDefinition objectDefinition,
+		long objectEntryId, long objectRelationshipId, int start, int end)
 		throws PortalException {
 
 		return _objectRelatedModelsProvider.getUnrelatedModels(
 			companyId, groupId, objectDefinition, objectEntryId,
-			objectRelationshipId);
+			objectRelationshipId, start, end);
 	}
 
 	private final ObjectEntryLocalService _objectEntryLocalService;

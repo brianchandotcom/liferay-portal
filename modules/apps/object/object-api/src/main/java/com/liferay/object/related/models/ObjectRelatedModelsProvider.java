@@ -53,7 +53,7 @@ public interface ObjectRelatedModelsProvider<T extends BaseModel<T>> {
 
 	public default List<T> getUnrelatedModels(
 			long companyId, long groupId, ObjectDefinition objectDefinition,
-			long objectEntryId, long objectRelationshipId)
+			long objectEntryId, long objectRelationshipId, int start, int end)
 		throws PortalException {
 
 		return new ArrayList<>();

@@ -368,7 +368,8 @@ public class SystemObjectEntryItemSelectorView
 						_themeDisplay.getScopeGroupId(), _objectDefinition,
 						ParamUtil.getLong(_portletRequest, "objectEntryId"),
 						ParamUtil.getLong(
-							_portletRequest, "objectRelationshipId"));
+							_portletRequest, "objectRelationshipId"),
+						searchContainer.getStart(), searchContainer.getEnd() );
 
 				searchContainer.setResultsAndTotal(
 					() -> baseModels, baseModels.size());

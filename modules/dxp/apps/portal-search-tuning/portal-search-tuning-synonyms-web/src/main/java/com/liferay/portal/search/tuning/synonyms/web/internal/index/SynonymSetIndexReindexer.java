@@ -6,15 +6,14 @@
 package com.liferay.portal.search.tuning.synonyms.web.internal.index;
 
 import com.liferay.json.storage.service.JSONStorageEntryLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.capabilities.SearchCapabilities;
 import com.liferay.portal.search.index.SyncReindexManager;
 import com.liferay.portal.search.spi.reindexer.IndexReindexer;
@@ -41,28 +40,14 @@ public class SynonymSetIndexReindexer implements IndexReindexer {
 
 	@Override
 	public void reindex(long companyId, String executionMode) throws Exception {
-		if (!searchCapabilities.isSynonymsSupported()) {
+		if (!searchCapabilities.isSynonymsSupported() ||
+			(companyId == CompanyConstants.SYSTEM)) {
+
 			return;
 		}
-
-		List<Long> classPKs = jsonStorageEntryLocalService.getClassPKs(
-			companyId, classNameLocalService.getClassNameId(SynonymSet.class),
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		SynonymSetIndexName synonymSetIndexName =
 			synonymSetIndexNameBuilder.getSynonymSetIndexName(companyId);
-
-		if (ListUtil.isEmpty(classPKs)) {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					StringBundler.concat(
-						"Not reindexing ", synonymSetIndexName.getIndexName(),
-						" because the database has no synonym set ",
-						"entries"));
-			}
-
-			return;
-		}
 
 		Date date = null;
 
@@ -74,28 +59,28 @@ public class SynonymSetIndexReindexer implements IndexReindexer {
 		else {
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Deleting index " + synonymSetIndexName.getIndexName());
+					"Deleting and creating index " +
+						synonymSetIndexName.getIndexName());
 			}
 
 			try {
 				synonymSetIndexCreator.delete(synonymSetIndexName);
+
+				synonymSetIndexCreator.create(synonymSetIndexName);
 			}
 			catch (RuntimeException runtimeException) {
 				_log.error(
-					"Unable to delete index " +
+					"Unable to delete or create index " +
 						synonymSetIndexName.getIndexName(),
 					runtimeException);
+
+				return;
 			}
 		}
 
-		if (!_isExecuteSyncReindex(executionMode)) {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Creating index " + synonymSetIndexName.getIndexName());
-			}
-
-			synonymSetIndexCreator.create(synonymSetIndexName);
-		}
+		List<Long> classPKs = jsonStorageEntryLocalService.getClassPKs(
+			companyId, classNameLocalService.getClassNameId(SynonymSet.class),
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		int sendStatusInterval = Math.max(100, classPKs.size() / 20);
 

@@ -2915,7 +2915,8 @@ public abstract class BaseBuild implements Build {
 
 	protected static final Pattern invocationURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
-			"\\w+://(?<master>[^/]+)/+job/+(?<jobName>[^/]+).*/",
+			"\\w+://(?<cohortName>test-\\d+)(-(?<masterId>\\d+))?",
+			"(\\.liferay\\.com)?/+job\\/+(?<jobName>[^\\/]+).*\\/",
 			"buildWithParameters\\?(?<queryString>.*)"));
 	protected static final Pattern jobNamePattern = Pattern.compile(
 		"(?<baseJob>[^\\(]+)\\((?<branchName>[^\\)]+)\\)");
@@ -3269,33 +3270,39 @@ public abstract class BaseBuild implements Build {
 			setArchiveName(matcher.group("archiveName"));
 		}
 
+		setBuildURL(JenkinsResultsParserUtil.getRemoteURL(buildURL));
+
 		JenkinsMaster jenkinsMaster = JenkinsMaster.getInstance(
 			matcher.group("master"));
 
-		Invocation invocation = new Invocation(jenkinsMaster);
+		setJenkinsMaster(jenkinsMaster);
 
-		invocation.setBuildNumber(
-			Integer.parseInt(matcher.group("buildNumber")));
-
-		_invocations.add(invocation);
+		setJenkinsCohort(jenkinsMaster.getJenkinsCohort());
 
 		setJobName(matcher.group("jobName"));
 
 		loadParametersFromBuildJSONObject();
 
-		consoleReadCursor = 0;
+		reset();
 
-		fromCompletedBuild = isFromCompletedBuild();
+		JSONObject buildJSONObject = getBuildJSONObject("result,queueId,url");
 
-		JSONObject buildJSONObject = getBuildJSONObject("queueId");
+		Invocation invocation = new Invocation(
+			jenkinsMaster, buildJSONObject.getLong("queueId"));
 
-		invocation.setQueueId(buildJSONObject.getLong("queueId"));
+		invocation.setBuildURL(buildJSONObject.getString("url"));
 
-		if (isCompleted()) {
+		addInvocation(invocation);
+
+		setStatus("running");
+
+		String result = buildJSONObject.optString("result");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(result)) {
+			fromCompletedBuild = isFromCompletedBuild();
+
+			setResult(result);
 			setStatus("completed");
-		}
-		else {
-			setStatus("running");
 		}
 	}
 
@@ -3320,21 +3327,20 @@ public abstract class BaseBuild implements Build {
 			throw new RuntimeException("Invalid invocation URL");
 		}
 
-		JenkinsMaster jenkinsMaster = JenkinsMaster.getInstance(
-			invocationURLMatcher.group("master"));
-
-		Invocation invocation = new Invocation(jenkinsMaster);
-
 		setJobName(invocationURLMatcher.group("jobName"));
 
-		_invocations.add(invocation);
+		JenkinsCohort jenkinsCohort = JenkinsCohort.getInstance(
+			invocationURLMatcher.group("cohortName"));
 
 		loadParametersFromQueryString(invocationURL);
 
-		JSONObject jsonObject = JenkinsResultsParserUtil.invokeJenkinsBuild(
-			jenkinsMaster, getJobName(), getParameters());
+		String masterId = invocationURLMatcher.group("masterId");
 
-		invocation.setQueueId(jsonObject.getLong("queueId"));
+		if (JenkinsResultsParserUtil.isInteger(masterId)) {
+			setJenkinsMaster(
+				JenkinsMaster.getInstance(
+					jenkinsCohort.getName() + "-" + masterId));
+		}
 
 		setStatus("starting");
 	}

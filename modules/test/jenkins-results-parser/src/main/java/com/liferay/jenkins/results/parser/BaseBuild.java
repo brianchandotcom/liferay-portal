@@ -164,7 +164,7 @@ public abstract class BaseBuild implements Build {
 		for (Invocation invocation :
 				_invocations.subList(0, _invocations.size() - 2)) {
 
-			badBuildURLs.add(_getBuildURL(invocation));
+			badBuildURLs.add(invocation.getBuildURL());
 		}
 
 		return badBuildURLs;
@@ -376,7 +376,7 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public String getBuildURL() {
-		return _getBuildURL(_getLatestInvocation());
+		return _buildURL;
 	}
 
 	@Override
@@ -2206,13 +2206,10 @@ public abstract class BaseBuild implements Build {
 			}
 
 			if (status.equals("running")) {
-				if (_invocations.size() > 1) {
-					String previousBuildURL = _getPreviousBuildURL();
+				Invocation previousInvocation = getPreviousInvocation();
 
-					if (JenkinsResultsParserUtil.isURL(previousBuildURL)) {
-						sb.append(" ");
-						sb.append(previousBuildURL);
-					}
+				if (previousInvocation != null) {
+					sb.append(previousInvocation.getBuildURL());
 
 					sb.append(" restarted at ");
 				}
@@ -2227,8 +2224,18 @@ public abstract class BaseBuild implements Build {
 			}
 
 			if (status.equals("starting")) {
+				String jobURL = getJobURL();
+
+				if (JenkinsResultsParserUtil.isNullOrEmpty(jobURL)) {
+					JenkinsCohort jenkinsCohort = getJenkinsCohort();
+
+					jobURL = JenkinsResultsParserUtil.combine(
+						"https://", jenkinsCohort.getName(),
+						".liferay.com/job/", getJobName());
+				}
+
 				sb.append(" invoked at ");
-				sb.append(getJobURL());
+				sb.append(jobURL);
 				sb.append(".");
 
 				return sb.toString();
@@ -2325,10 +2332,6 @@ public abstract class BaseBuild implements Build {
 		boolean showCommonFailuresCount) {
 
 		return getGitHubMessageJobResultsElement();
-	}
-
-	protected int getInvocationCount() {
-		return _invocations.size();
 	}
 
 	protected List<Element> getJenkinsReportBuildDurationsElements() {
@@ -3046,58 +3049,6 @@ public abstract class BaseBuild implements Build {
 
 	private void _archiveTestReportJSON() {
 		_archive(null, false, "testReport/api/json");
-	}
-
-	private String _getBuildURL(Invocation invocation) {
-		if (invocation == null) {
-			return null;
-		}
-
-		JenkinsMaster jenkinsMaster = invocation.getJenkinsMaster();
-		int buildNumber = invocation.getBuildNumber();
-
-		if ((jenkinsMaster == null) || (buildNumber <= 0)) {
-			return null;
-		}
-
-		String jobURL = JenkinsResultsParserUtil.combine(
-			"https://", jenkinsMaster.getName(), ".liferay.com/job/",
-			getJobName());
-
-		try {
-			jobURL = JenkinsResultsParserUtil.decode(jobURL);
-
-			return JenkinsResultsParserUtil.encode(
-				jobURL + "/" + buildNumber + "/");
-		}
-		catch (MalformedURLException | URISyntaxException exception) {
-			throw new RuntimeException("Unable to encode build URL", exception);
-		}
-		catch (UnsupportedEncodingException unsupportedEncodingException) {
-			throw new RuntimeException(
-				"Unable to decode job URL " + jobURL,
-				unsupportedEncodingException);
-		}
-	}
-
-	private Invocation _getLatestInvocation() {
-		if (_invocations.isEmpty()) {
-			return null;
-		}
-
-		return _invocations.get(_invocations.size() - 1);
-	}
-
-	private String _getPreviousBuildURL() {
-		return _getBuildURL(_getPreviousInvocation());
-	}
-
-	private Invocation _getPreviousInvocation() {
-		if (_invocations.size() <= 1) {
-			return null;
-		}
-
-		return _invocations.get(_invocations.size() - 2);
 	}
 
 	private List<Element> _getStopWatchRecordTableRowElements(

@@ -630,11 +630,9 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 
 	@Override
 	protected boolean skipUpdate() {
-		if (isBuildModified() || hasModifiedDownstreamBuilds()) {
-			return false;
-		}
+		if (isBuildModified() || hasModifiedDownstreamBuilds() ||
+			!Objects.equals(getStatus(), "completed")) {
 
-		if (!Objects.equals(getStatus(), "completed")) {
 			return false;
 		}
 

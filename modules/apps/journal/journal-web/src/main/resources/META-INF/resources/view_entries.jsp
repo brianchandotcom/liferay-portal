@@ -84,12 +84,10 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 
 				<c:choose>
 					<c:when test='<%= Objects.equals(journalDisplayContext.getDisplayStyle(), "descriptive") %>'>
-						<liferay-ui:search-container-column-text>
-							<clay:icon
-								cssClass="mt-0"
-								symbol="web-content"
-							/>
-						</liferay-ui:search-container-column-text>
+						<liferay-ui:search-container-column-icon
+							icon="web-content"
+							toggleRowChecker="<%= true %>"
+						/>
 
 						<liferay-ui:search-container-column-text
 							colspan="<%= 2 %>"
@@ -178,18 +176,29 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 							/>
 						</c:if>
 
-						<liferay-ui:search-container-column-text>
-							<clay:icon
-								symbol="web-content"
-							/>
-						</liferay-ui:search-container-column-text>
-
-						<liferay-ui:search-container-column-jsp
+						<liferay-ui:search-container-column-text
 							cssClass="table-cell-expand table-cell-minw-200 table-title"
-							href="<%= editURL %>"
 							name="title"
-							path="/article_title.jsp"
-						/>
+						>
+							<div class="autofit-row">
+								<div class="autofit-col pr-1">
+									<clay:sticker
+										cssClass="sticker-document"
+										displayType="secondary"
+										icon="web-content"
+									/>
+								</div>
+
+								<div class="autofit-col autofit-col-expand pl-1">
+									<div class="table-title">
+										<clay:link
+											href="<%= editURL %>"
+											label="<%= title %>"
+										/>
+									</div>
+								</div>
+							</div>
+						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text
 							cssClass="table-cell-expand table-cell-minw-200 text-truncate"
@@ -390,10 +399,27 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 
 						<liferay-ui:search-container-column-text
 							cssClass="table-cell-expand table-cell-minw-200 table-list-title"
-							href="<%= rowURL.toString() %>"
 							name="title"
-							value="<%= HtmlUtil.escape(curFolder.getName()) %>"
-						/>
+						>
+							<div class="autofit-row">
+								<div class="autofit-col pr-1">
+									<clay:sticker
+										cssClass="sticker-document"
+										displayType="secondary"
+										icon="folder"
+									/>
+								</div>
+
+								<div class="autofit-col autofit-col-expand pl-1">
+									<div class="table-title">
+										<clay:link
+											href="<%= rowURL.toString() %>"
+											label="<%= HtmlUtil.escape(curFolder.getName()) %>"
+										/>
+									</div>
+								</div>
+							</div>
+						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text
 							cssClass="table-cell-expand table-cell-minw-200 text-truncate"

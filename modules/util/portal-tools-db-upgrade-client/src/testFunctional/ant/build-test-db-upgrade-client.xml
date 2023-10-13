@@ -637,6 +637,16 @@ upgrade.database.auto.run=false</echo>
 		/>
 	</target>
 
+	<target name="execute-upgrade-client-gogoshell">
+		<get-database-upgrade-client-paths />
+
+		<run-expect
+			db.upgrade.client.home="${db.upgrade.client.home}"
+			expect.file="check-upgrade-client-gogo-shell-connection.expect"
+			file.suffix.bat="${file.suffix.bat}"
+		/>
+	</target>
+
 	<target name="execute-upgrade-client-skip-gogoshell">
 		<prepare-database-upgrade-properties />
 

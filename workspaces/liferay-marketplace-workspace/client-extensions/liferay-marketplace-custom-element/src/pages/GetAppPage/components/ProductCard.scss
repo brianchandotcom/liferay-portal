@@ -1,49 +1,49 @@
-.license-tag {
-	background: var(--status-info-lighten-2, #e6ebf5);
-	border-radius: 4px;
-	color: var(--status-info-darken-2, #1c3667);
-	font-size: 11px;
-	font-style: normal;
-	font-weight: 400;
-	line-height: 16px;
-}
-
-.price-text {
-	color: var(--neutral-10, #282934);
-	font-size: 13px;
-	line-height: 16px;
-}
-
-.paid-price-text {
-	font-size: 18px;
-	font-weight: 600;
-	letter-spacing: 0;
-	line-height: 20px;
-	text-align: right;
-}
-
 .product-banner {
 	background: var(--neutral-01, #f7f7f8);
 	border-radius: 10px;
-}
 
-.account-banner {
-	line-height: 16px;
-
-	&-name-text {
+	.price-text {
 		color: var(--neutral-10, #282934);
-		font-size: 14px;
-		font-weight: 600;
+		font-size: 13px;
+		line-height: 16px;
+
+		&-value {
+			font-size: 18px;
+			font-weight: 600;
+			letter-spacing: 0;
+			line-height: 20px;
+			text-align: right;
+		}
+
+		.license-tag {
+			background: var(--status-info-lighten-2, #e6ebf5);
+			border-radius: 4px;
+			color: var(--status-info-darken-2, #1c3667);
+			font-size: 11px;
+			font-style: normal;
+			font-weight: 400;
+			line-height: 16px;
+		}
 	}
 
-	&-email-text {
-		font-size: 11px;
-		font-weight: 400;
-	}
+	.account-banner {
+		line-height: 16px;
 
-	&-title-text {
-		color: var(--neutral-08, #54555f);
-		font-size: 14px;
-		font-weight: 600;
+		&-name-text {
+			color: var(--neutral-10, #282934);
+			font-size: 14px;
+			font-weight: 600;
+		}
+
+		&-email-text {
+			font-size: 11px;
+			font-weight: 400;
+		}
+
+		&-title-text {
+			color: var(--neutral-08, #54555f);
+			font-size: 14px;
+			font-weight: 600;
+		}
 	}
 }

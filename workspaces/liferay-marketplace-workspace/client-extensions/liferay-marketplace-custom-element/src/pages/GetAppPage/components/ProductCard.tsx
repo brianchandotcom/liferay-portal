@@ -72,10 +72,10 @@ const ProductCard = ({
 		});
 	};
 
-	const totalFormatted = () => {
+	const FormattedValues = () => {
 		if (step === StepType.LICENSES || step === StepType.PAYMENT) {
 			return (
-				<span className="paid-price-text">
+				<span className="price-text-value">
 					{cartUtil?.cart?.id
 						? `${cartUtil?.cart?.summary?.totalFormatted}`
 						: `$0`}
@@ -83,9 +83,15 @@ const ProductCard = ({
 			);
 		}
 
-		if (basePrice && hasTrial) {
-			return <span>{`30-day trial or $${basePrice}`}</span>;
+		if (basePrice) {
+			if (hasTrial) {
+				return <span>30-day trial or ${basePrice}</span>;
+			}
+
+			return <span>${basePrice}</span>;
 		}
+
+		return <span className="price-text-value">Free</span>;
 	};
 
 	const getIconUrl = () => {
@@ -124,7 +130,13 @@ const ProductCard = ({
 		<div className="p-5 product-banner">
 			<div className="d-flex flex-row justify-content-between">
 				<div className="d-flex flex-row">
-					<img alt="" height="64px" src={getIconUrl()} width="64px" />
+					<img
+						alt="App Icon"
+						className="rounded"
+						height="64px"
+						src={getIconUrl()}
+						width="64px"
+					/>
 					<div className="align-items-center ml-4">
 						<h1 className="text-weight-bold">
 							{product.name.en_US}
@@ -145,7 +157,9 @@ const ProductCard = ({
 				</div>
 				<div className="align-items-end d-flex flex-column price-text">
 					<strong className="mr-1">Price</strong>
-					<div className="mr-1 py-2">{totalFormatted()}</div>
+					<div className="mr-1 py-2">
+						<FormattedValues />
+					</div>
 					<div className="license-tag px-2">
 						{getLicenseTagText(product)}
 					</div>

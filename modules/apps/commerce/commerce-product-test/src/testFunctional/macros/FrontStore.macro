@@ -586,6 +586,14 @@ definition {
 	}
 
 	macro viewMiniCartItem {
+		if (!(isSet(cartItemPriceOnApplication))) {
+			var cartItemPriceOnApplication = "false";
+		}
+
+		if (!(isSet(index))) {
+			var index = 1;
+		}
+
 		AssertTextEquals(
 			key_cartItemSku = ${cartItemSku},
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_USING_SKU",
@@ -598,7 +606,8 @@ definition {
 
 		AssertTextEquals(
 			key_cartItemSku = ${cartItemSku},
-			locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
+			key_index = ${index},
+			locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY_N",
 			value1 = ${cartItemQuantity});
 
 		if (isSet(bundledItems)) {
@@ -608,6 +617,14 @@ definition {
 					locator1 = "CommerceAccelerators#MINI_CART_SPECIFIC_ITEM_BUNDLED_ITEMS",
 					value1 = ${bundledItem});
 			}
+		}
+
+		if (${cartItemPriceOnApplication} == "true") {
+			AssertTextEquals(
+				key_cartItemSku = ${cartItemSku},
+				key_index = ${index},
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_PRICE_ON_APPLICATION_N",
+				value1 = "Price on Application");
 		}
 
 		if (isSet(cartItemPriceValue)) {

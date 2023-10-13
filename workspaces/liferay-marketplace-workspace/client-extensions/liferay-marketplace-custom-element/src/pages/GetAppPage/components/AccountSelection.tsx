@@ -104,7 +104,7 @@ const AccountSelection = ({
 			/>
 
 			<div>
-				<span>Not seeing a specific Account?</span>
+				<span className="mr-1">Not seeing a specific Account?</span>
 
 				<ClayLink href="http://help.liferay.com/">
 					Contact Support

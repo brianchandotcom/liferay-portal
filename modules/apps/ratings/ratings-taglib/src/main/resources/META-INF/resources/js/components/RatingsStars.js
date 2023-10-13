@@ -34,13 +34,35 @@ const RatingsStars = ({
 		};
 	});
 
+	const findClosestScore = useCallback(
+		(score) => {
+			let closestScore = {label: 0, value: 0};
+
+			starScores.forEach((item) => {
+				if (
+					Math.abs(item.value - score) <=
+					Math.abs(closestScore.value - score)
+				) {
+					closestScore = item;
+				}
+			});
+
+			return closestScore;
+		},
+		[starScores]
+	);
+
 	const getLabelScore = useCallback(
 		(score) => {
-			const starScore = starScores.find(({value}) => score === value);
+			let starScore = starScores.find(({value}) => score === value);
+
+			if (!starScore) {
+				starScore = findClosestScore(score);
+			}
 
 			return (starScore && starScore.label) || 0;
 		},
-		[starScores]
+		[findClosestScore, starScores]
 	);
 
 	const formatAverageScore = useCallback(

@@ -91,7 +91,9 @@ public class AopCacheManagerTest {
 
 					List<Object> advices = new ArrayList<>();
 
-					_testInterfaceProxy.assertAop(advices, null);
+					synchronized (_aopInvocationHandler) {
+						_testInterfaceProxy.assertAop(advices, null);
+					}
 
 					Assert.assertTrue(
 						advices.toString(),
@@ -101,7 +103,9 @@ public class AopCacheManagerTest {
 
 					advices.clear();
 
-					_testInterfaceProxy.assertAop(advices, null);
+					synchronized (_aopInvocationHandler) {
+						_testInterfaceProxy.assertAop(advices, null);
+					}
 
 					Assert.assertFalse(
 						advices.toString(),

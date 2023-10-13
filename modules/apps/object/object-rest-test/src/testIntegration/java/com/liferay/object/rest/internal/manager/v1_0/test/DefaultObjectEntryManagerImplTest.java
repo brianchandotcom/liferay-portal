@@ -3323,15 +3323,7 @@ public class DefaultObjectEntryManagerImplTest
 	private void _addResourcePermission(String actionId, Role role)
 		throws Exception {
 
-		String name = _objectDefinition3.getClassName();
-
-		if (Objects.equals(actionId, ObjectActionKeys.ADD_OBJECT_ENTRY)) {
-			name = _objectDefinition3.getResourceName();
-		}
-
-		_resourcePermissionLocalService.addResourcePermission(
-			companyId, name, ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
-			role.getRoleId(), actionId);
+		_addResourcePermission(_objectDefinition3, actionId, role);
 	}
 
 	private Role _addRoleUser(

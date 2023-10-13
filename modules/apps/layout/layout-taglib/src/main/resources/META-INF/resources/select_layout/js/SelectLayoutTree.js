@@ -237,6 +237,7 @@ export function SelectLayoutTree({
 								checkDisplayPage={checkDisplayPage}
 								filter={filter}
 								findLayoutsURL={config.findLayoutsURL}
+								groupId={groupId}
 								itemSelectorReturnType={itemSelectorReturnType}
 								multiSelection={multiSelection}
 								onSelect={onSearchResultSelect}
@@ -369,6 +370,7 @@ function SearchResults({
 	checkDisplayPage,
 	filter,
 	findLayoutsURL,
+	groupId,
 	itemSelectorReturnType,
 	multiSelection,
 	onSelect,
@@ -389,6 +391,7 @@ function SearchResults({
 		debouncedFindLayouts(
 			findLayoutsURL,
 			checkDisplayPage,
+			groupId,
 			itemSelectorReturnType,
 			filter,
 			onFindLayouts
@@ -397,6 +400,7 @@ function SearchResults({
 		checkDisplayPage,
 		filter,
 		findLayoutsURL,
+		groupId,
 		itemSelectorReturnType,
 		onFindLayouts,
 	]);
@@ -459,6 +463,7 @@ function SearchResult({layout, multiSelection, onSelect, selection}) {
 function findLayouts(
 	url,
 	checkDisplayPage,
+	groupId,
 	itemSelectorReturnType,
 	keywords,
 	onFindLayouts
@@ -466,6 +471,7 @@ function findLayouts(
 	fetch(url, {
 		body: Liferay.Util.objectToURLSearchParams({
 			[`checkDisplayPage`]: checkDisplayPage,
+			[`groupId`]: groupId,
 			[`itemSelectorReturnType`]: itemSelectorReturnType,
 			[`keywords`]: keywords,
 		}),

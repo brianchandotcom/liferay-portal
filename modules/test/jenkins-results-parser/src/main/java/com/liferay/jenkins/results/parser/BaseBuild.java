@@ -739,13 +739,35 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public JenkinsMaster getJenkinsMaster() {
-		Invocation latestInvocation = _getLatestInvocation();
-
-		if (latestInvocation != null) {
-			return latestInvocation.getJenkinsMaster();
+		if (_jenkinsMaster != null) {
+			return _jenkinsMaster;
 		}
 
-		return null;
+		Invocation currentInvocation = getCurrentInvocation();
+
+		if (currentInvocation != null) {
+			_jenkinsMaster = currentInvocation.getJenkinsMaster();
+
+			return _jenkinsMaster;
+		}
+
+		String buildURL = getBuildURL();
+
+		if (!JenkinsResultsParserUtil.isURL(buildURL)) {
+			return null;
+		}
+
+		MultiPattern buildURLMultiPattern = getBuildURLMultiPattern();
+
+		Matcher matcher = buildURLMultiPattern.find(buildURL);
+
+		if (matcher == null) {
+			return null;
+		}
+
+		_jenkinsMaster = JenkinsMaster.getInstance(matcher.group("master"));
+
+		return _jenkinsMaster;
 	}
 
 	@Override
@@ -1449,6 +1471,7 @@ public abstract class BaseBuild implements Build {
 		consoleReadCursor = 0;
 		_duration = null;
 		_jenkinsConsoleTextLoader = null;
+		_jenkinsMaster = null;
 		_jenkinsSlave = null;
 		_result = null;
 		_statusModifiedTime = 0;

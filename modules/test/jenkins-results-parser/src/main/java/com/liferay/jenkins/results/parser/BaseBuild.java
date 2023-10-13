@@ -662,6 +662,33 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public int getInvokedBatchSize() {
+		if (_invokedBatchSize > 0) {
+			return _invokedBatchSize;
+		}
+
+		String invokedJobBatchSize = getParameterValue(
+			"INVOKED_JOB_BATCH_SIZE");
+
+		if (JenkinsResultsParserUtil.isInteger(invokedJobBatchSize)) {
+			_invokedBatchSize = Integer.parseInt(invokedJobBatchSize);
+
+			return _invokedBatchSize;
+		}
+
+		String testBatchSize = getParameterValue("TEST_BATCH_SIZE");
+
+		if (JenkinsResultsParserUtil.isInteger(testBatchSize)) {
+			_invokedBatchSize = Integer.parseInt(testBatchSize);
+		}
+		else {
+			_invokedBatchSize = _INVOKED_BATCH_SIZE_DEFAULT;
+		}
+
+		return _invokedBatchSize;
+	}
+
+	@Override
 	public Long getInvokedTime() {
 		if (invokedTime != null) {
 			return invokedTime;
@@ -809,12 +836,49 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public int getMaximumSlavesPerHost() {
+		if (_maximumSlavesPerHost > 0) {
+			return _maximumSlavesPerHost;
+		}
+
+		String maximumSlavesPerHost = getParameterValue(
+			"MAXIMUM_SLAVES_PER_HOST");
+
+		if (JenkinsResultsParserUtil.isInteger(maximumSlavesPerHost)) {
+			_maximumSlavesPerHost = Integer.parseInt(maximumSlavesPerHost);
+		}
+		else {
+			_maximumSlavesPerHost = _MAXIMUM_SLAVES_PER_HOST;
+		}
+
+		return _maximumSlavesPerHost;
+	}
+
+	@Override
 	public Map<String, String> getMetricLabels() {
 		if (_parentBuild != null) {
 			return _parentBuild.getMetricLabels();
 		}
 
 		return new TreeMap<>();
+	}
+
+	@Override
+	public int getMinimumSlaveRAM() {
+		if (_minimumSlaveRAM > 0) {
+			return _minimumSlaveRAM;
+		}
+
+		String minimumSlaveRAM = getParameterValue("MINIMUM_SLAVE_RAM");
+
+		if (JenkinsResultsParserUtil.isInteger(minimumSlaveRAM)) {
+			_minimumSlaveRAM = Integer.parseInt(minimumSlaveRAM);
+		}
+		else {
+			_minimumSlaveRAM = _MINIMUM_SLAVE_RAM_DEFAULT;
+		}
+
+		return _minimumSlaveRAM;
 	}
 
 	@Override
@@ -3267,73 +3331,12 @@ public abstract class BaseBuild implements Build {
 		}
 	}
 
-	private int _getInvokedBatchSize() {
-		if (_invokedBatchSize > 0) {
-			return _invokedBatchSize;
-		}
-
-		String invokedJobBatchSize = getParameterValue(
-			"INVOKED_JOB_BATCH_SIZE");
-
-		if (JenkinsResultsParserUtil.isInteger(invokedJobBatchSize)) {
-			_invokedBatchSize = Integer.parseInt(invokedJobBatchSize);
-
-			return _invokedBatchSize;
-		}
-
-		String testBatchSize = getParameterValue("TEST_BATCH_SIZE");
-
-		if (JenkinsResultsParserUtil.isInteger(testBatchSize)) {
-			_invokedBatchSize = Integer.parseInt(testBatchSize);
-		}
-		else {
-			_invokedBatchSize = _INVOKED_BATCH_SIZE_DEFAULT;
-		}
-
-		return _invokedBatchSize;
-	}
-
 	private Invocation _getLatestInvocation() {
 		if (_invocations.isEmpty()) {
 			return null;
 		}
 
 		return _invocations.get(_invocations.size() - 1);
-	}
-
-	private int _getMaximumSlavesPerHost() {
-		if (_maximumSlavesPerHost > 0) {
-			return _maximumSlavesPerHost;
-		}
-
-		String maximumSlavesPerHost = getParameterValue(
-			"MAXIMUM_SLAVES_PER_HOST");
-
-		if (JenkinsResultsParserUtil.isInteger(maximumSlavesPerHost)) {
-			_maximumSlavesPerHost = Integer.parseInt(maximumSlavesPerHost);
-		}
-		else {
-			_maximumSlavesPerHost = _MAXIMUM_SLAVES_PER_HOST;
-		}
-
-		return _maximumSlavesPerHost;
-	}
-
-	private int _getMinimumSlaveRAM() {
-		if (_minimumSlaveRAM > 0) {
-			return _minimumSlaveRAM;
-		}
-
-		String minimumSlaveRAM = getParameterValue("MINIMUM_SLAVE_RAM");
-
-		if (JenkinsResultsParserUtil.isInteger(minimumSlaveRAM)) {
-			_minimumSlaveRAM = Integer.parseInt(minimumSlaveRAM);
-		}
-		else {
-			_minimumSlaveRAM = _MINIMUM_SLAVE_RAM_DEFAULT;
-		}
-
-		return _minimumSlaveRAM;
 	}
 
 	private String _getPreviousBuildURL() {

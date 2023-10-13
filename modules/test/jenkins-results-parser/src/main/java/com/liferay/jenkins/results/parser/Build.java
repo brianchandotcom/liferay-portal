@@ -91,6 +91,8 @@ public interface Build {
 
 	public String getInvocationURL();
 
+	public int getInvokedBatchSize();
+
 	public Long getInvokedTime();
 
 	public JenkinsCohort getJenkinsCohort();
@@ -109,7 +111,11 @@ public interface Build {
 
 	public TestResult getLongestRunningTest();
 
+	public int getMaximumSlavesPerHost();
+
 	public Map<String, String> getMetricLabels();
+
+	public int getMinimumSlaveRAM();
 
 	public Map<String, String> getParameters();
 

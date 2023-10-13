@@ -36,7 +36,7 @@ export function CardButton({
 				'card-button--disabled': disabled,
 				'card-button--selected': selected,
 			})}
-			onClick={onClick}
+			onClick={disabled ? () => {} : onClick}
 		>
 			{step === StepType.PAYMENT ? (
 				<img

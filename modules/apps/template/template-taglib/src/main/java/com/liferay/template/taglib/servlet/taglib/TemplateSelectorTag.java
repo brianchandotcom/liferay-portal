@@ -219,7 +219,7 @@ public class TemplateSelectorTag extends IncludeTag {
 					_getGroupIds(themeDisplay.getScopeGroup()),
 					PortalUtil.getClassNameId(getClassName()), 0L);
 
-			List<DDMTemplate> filteredDDMTemplates = ListUtil.filter(
+			ddmTemplates = ListUtil.filter(
 				ddmTemplates,
 				ddmTemplate -> {
 					try {
@@ -245,7 +245,7 @@ public class TemplateSelectorTag extends IncludeTag {
 
 			List<Map<String, Object>> ddmTemplatesValues = new ArrayList<>();
 
-			for (DDMTemplate ddmTemplate : filteredDDMTemplates) {
+			for (DDMTemplate ddmTemplate : ddmTemplates) {
 				Group group = GroupLocalServiceUtil.fetchGroup(
 					ddmTemplate.getGroupId());
 

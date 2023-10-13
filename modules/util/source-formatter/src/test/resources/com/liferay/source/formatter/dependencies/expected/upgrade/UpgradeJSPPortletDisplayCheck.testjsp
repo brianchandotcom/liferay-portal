@@ -9,6 +9,7 @@
 
 <%@ include file="/panel/init.jsp" %>
 <%@ include file="/application_content/init.jsp" %>
+
 <%@ page import="com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil" %>
 
 <%

@@ -29,7 +29,6 @@
 		"frontend-js-web": "*",
 		"leaflet": "1.7.1",
 		"metal-component": "2.16.8",
-		"metal-soy": "2.16.9",
 		"metal-state": "2.16.8",
 		"moment": "2.29.4",
 		"react": "16.12.0",

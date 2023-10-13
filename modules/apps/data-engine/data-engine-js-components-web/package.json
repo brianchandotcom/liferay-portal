@@ -21,7 +21,6 @@
 		"metal-component": "2.16.8",
 		"metal-incremental-dom": "2.16.9",
 		"metal-jsx": "2.16.8",
-		"metal-soy": "2.16.9",
 		"metal-state": "2.16.8",
 		"moment": "2.29.4",
 		"react": "16.12.0",
@@ -52,7 +51,7 @@
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts fix",
-		"test": "metalsoy -s \"test/**/*.soy\" -d \"test\" && liferay-npm-scripts test"
+		"test": "liferay-npm-scripts test"
 	},
 	"version": "1.0.115"
 }

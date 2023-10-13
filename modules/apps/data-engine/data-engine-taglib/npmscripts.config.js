@@ -6,7 +6,7 @@
 module.exports = {
 	build: {
 		bundler: {
-			ignore: ['**/__tests__/*.js', '!**/*.es.js', '!**/*.soy.js'],
+			ignore: ['**/__tests__/*.js', '!**/*.es.js'],
 		},
 	},
 };

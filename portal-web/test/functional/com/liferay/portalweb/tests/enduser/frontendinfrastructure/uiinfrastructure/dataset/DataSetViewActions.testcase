@@ -146,9 +146,9 @@ definition {
 	@description = "LPS-186876. Confirm that is possible to cancel changes in the Actions tab."
 	@priority = 3
 	test CanCancelChangesOnActions {
-		task ("And clicks on Create Item Action button") {
+		task ("And clicks on New Item Action button") {
 			Click.clickNoMouseOver(
-				key_text = "Create Item Action",
+				key_text = "New Item Action",
 				locator1 = "Button#ANY_SECONDARY");
 		}
 

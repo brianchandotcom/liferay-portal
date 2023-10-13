@@ -21,8 +21,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface CommerceNotificationQueueEntryConfiguration {
 
 	@Meta.AD(
-		deflt = "15", min = "1",
-		name = "notification-queue-entry-check-interval", required = false
+		deflt = "15",
+		description = "notification-queue-entry-check-interval-description",
+		min = "1", name = "notification-queue-entry-check-interval",
+		required = false
 	)
 	public int checkInterval();
 

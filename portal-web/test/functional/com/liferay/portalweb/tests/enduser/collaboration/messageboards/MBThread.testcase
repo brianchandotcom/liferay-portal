@@ -784,6 +784,56 @@ definition {
 			threadSubject = '''<script>alert(123);</script>''');
 	}
 
+	@description = "This is a use case for LPS-131529."
+	@priority = 4
+	test NoXSSVulnerabilityInMBAttachment {
+		property test.assert.warning.exceptions = "false";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		JSONMBMessage.addMessage(
+			groupName = "Guest",
+			threadBody = "Thread Body",
+			threadSubject = "MB Thread Message Subject");
+
+		JSONMBMessage.addAttachmentToMessage(
+			fileName = "xss_test.html",
+			groupName = "Guest",
+			mimeType = "text/html",
+			threadSubject = "MB Thread Message Subject");
+
+		MessageboardsThread.openToThread(
+			groupName = "Guest",
+			layoutName = "message-boards-page",
+			siteURLKey = "guest",
+			threadSubject = "MB Thread Message Subject");
+
+		var downloadURL = selenium.getAttribute("//li[@class='message-attachment']/span/a@href");
+
+		var downloadURL = StringUtil.replace(${downloadURL}, "xss_test.html", "xss_test%.html");
+
+		var downloadURL = StringUtil.replace(${downloadURL}, "http://", "");
+
+		MessageboardsThread.openToEditThread(
+			groupName = "Guest",
+			siteURLKey = "guest",
+			threadSubject = "MB Thread Message Subject");
+
+		FormFields.addParagraphLinkToAURL(paragraphLink = ${downloadURL});
+
+		PortletEntry.publish();
+
+		SelectFrameTop();
+
+		Click(
+			key_text = ${downloadURL},
+			locator1 = "Link#ANY");
+
+		AssertTextPresent(
+			locator1 = "//body",
+			value1 = "HTTP Status 400 – Bad Request");
+	}
+
 	@description = "This is a test for LPS-68939. It ensures that the message threads appear from newest to oldest by default."
 	@priority = 4
 	test ThreadsAreSortedFromNewestToOldestByDefault {

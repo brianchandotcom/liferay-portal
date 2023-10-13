@@ -332,13 +332,21 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public int getBuildNumber() {
-		Invocation latestInvocation = _getLatestInvocation();
+		String buildURL = getBuildURL();
 
-		if (latestInvocation == null) {
+		if (!JenkinsResultsParserUtil.isURL(buildURL)) {
 			return -1;
 		}
 
-		return latestInvocation.getBuildNumber();
+		MultiPattern buildURLMultiPattern = getBuildURLMultiPattern();
+
+		Matcher matcher = buildURLMultiPattern.find(buildURL);
+
+		if (matcher == null) {
+			return -1;
+		}
+
+		return Integer.parseInt(matcher.group("buildNumber"));
 	}
 
 	@Override

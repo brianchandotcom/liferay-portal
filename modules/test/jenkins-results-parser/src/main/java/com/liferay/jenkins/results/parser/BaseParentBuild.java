@@ -650,9 +650,7 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 			return false;
 		}
 
-		String status = getStatus();
-
-		if (!status.equals("completed")) {
+		if (!Objects.equals(getStatus(), "completed")) {
 			return false;
 		}
 

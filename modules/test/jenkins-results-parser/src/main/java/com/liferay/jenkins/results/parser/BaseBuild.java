@@ -561,9 +561,9 @@ public abstract class BaseBuild implements Build {
 	}
 
 	public Element getGitHubMessageElement(boolean showCommonFailuresCount) {
-		String status = getStatus();
+		if (!Objects.equals(getStatus(), "completed") &&
+			(getParentBuild() != null)) {
 
-		if (!status.equals("completed") && (getParentBuild() != null)) {
 			return null;
 		}
 
@@ -943,6 +943,28 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public String getResult() {
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(_result)) {
+			return _result;
+		}
+
+		String status = getStatus();
+
+		if (!Objects.equals(status, "reported") &&
+			!Objects.equals(status, "completed")) {
+
+			return null;
+		}
+
+		JSONObject buildJSONObject = getBuildJSONObject("result");
+
+		String result = buildJSONObject.optString("result");
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(result)) {
+			return "MISSING";
+		}
+
+		_result = result;
+
 		return _result;
 	}
 
@@ -999,9 +1021,7 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public StopWatchRecordsGroup getStopWatchRecordsGroup() {
-		String status = getStatus();
-
-		if ((status == null) || !status.equals("completed")) {
+		if (!Objects.equals(getStatus(), "completed")) {
 			_stopWatchRecordsGroup = null;
 
 			return new StopWatchRecordsGroup();
@@ -2034,6 +2054,10 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected String getArchiveFileContent(String urlSuffix) {
+		if (!Objects.equals(getStatus(), "completed")) {
+			return null;
+		}
+
 		File archiveFile = getArchiveFile(urlSuffix);
 
 		if (!archiveFile.exists()) {
@@ -2820,13 +2844,7 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected boolean skipUpdate() {
-		if (isBuildModified()) {
-			return false;
-		}
-
-		String status = getStatus();
-
-		if (!status.equals("completed")) {
+		if (isBuildModified() || !Objects.equals(getStatus(), "completed")) {
 			return false;
 		}
 
@@ -2895,9 +2913,7 @@ public abstract class BaseBuild implements Build {
 	private void _archive(String content, boolean required, String urlSuffix) {
 		boolean readyToArchive = true;
 
-		String status = getStatus();
-
-		if (!status.equals("completed")) {
+		if (!Objects.equals(getStatus(), "completed")) {
 			readyToArchive = false;
 		}
 		else if (!(this instanceof TopLevelBuild)) {

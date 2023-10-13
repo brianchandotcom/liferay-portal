@@ -630,6 +630,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MINI_CART_EDIT_ITEM_QUANTITY_SELECTOR_INPUT_FIELD</td>
+	<td>//label[contains(@for,'minicart-quantity-selector')]//..//..//input[contains(@class,"quantity-selector")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CART_EDIT_ITEM_QUANTITY_SELECTOR_HAS_ERROR</td>
+	<td>//label[contains(@for,'minicart-quantity-selector')]//..//*[contains(@class,'has-error')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CART_EDIT_ITEM_UOM_SELECTOR</td>
+	<td>//label[contains(@for,'minicart-uom-selector')]//..//..//select[contains(@name,"uom-selector")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CART_EDIT_ITEM_UOM_PRICE_VALUE</td>
+	<td>//span[contains(text(), '${key_priceValue}')]//..//span[contains(text(), '${key_priceField}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MINI_CART_ITEM_PRICE_VALUE</td>
 	<td>//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]/../../../..//span[@class='price-value']</td>
 	<td></td>

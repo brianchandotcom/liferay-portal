@@ -25,8 +25,8 @@ public interface MBConfiguration {
 	 * expire will occur during the 2 PM run.
 	 */
 	@Meta.AD(
-		deflt = "120", min = "1", name = "expire-ban-job-interval",
-		required = false
+		deflt = "120", description = "expire-ban-job-interval-description",
+		min = "1", name = "expire-ban-job-interval", required = false
 	)
 	public int expireBanJobInterval();
 

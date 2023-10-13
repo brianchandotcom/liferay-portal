@@ -24,8 +24,9 @@ public interface SubscriptionConfiguration {
 	 * expired tickets and delete them.
 	 */
 	@Meta.AD(
-		deflt = "24", min = "1", name = "delete-expired-tickets-interval",
-		required = false
+		deflt = "24",
+		description = "delete-expired-tickets-interval-description", min = "1",
+		name = "delete-expired-tickets-interval", required = false
 	)
 	public int deleteExpiredTicketsInterval();
 

@@ -20,7 +20,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface CommerceOrderConfiguration {
 
 	@Meta.AD(
-		deflt = "15", min = "1", name = "order-check-interval", required = false
+		deflt = "15", description = "order-check-interval-description",
+		min = "1", name = "order-check-interval", required = false
 	)
 	public int checkInterval();
 

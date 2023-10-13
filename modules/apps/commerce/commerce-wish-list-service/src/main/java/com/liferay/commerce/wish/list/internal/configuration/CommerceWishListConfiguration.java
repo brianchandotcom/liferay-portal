@@ -21,8 +21,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface CommerceWishListConfiguration {
 
 	@Meta.AD(
-		deflt = "15", min = "1", name = "wish-list-check-interval",
-		required = false
+		deflt = "15", description = "wish-list-check-interval-description",
+		min = "1", name = "wish-list-check-interval", required = false
 	)
 	public int checkInterval();
 

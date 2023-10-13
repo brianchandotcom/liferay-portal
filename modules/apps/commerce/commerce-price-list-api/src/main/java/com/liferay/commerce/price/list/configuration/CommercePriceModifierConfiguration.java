@@ -22,7 +22,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface CommercePriceModifierConfiguration {
 
-	@Meta.AD(deflt = "15", min = "1", name = "check-interval", required = false)
+	@Meta.AD(
+		deflt = "15", description = "check-interval-in-minutes-description",
+		min = "1", name = "check-interval", required = false
+	)
 	public int checkInterval();
 
 }

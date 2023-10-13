@@ -34,7 +34,8 @@ public interface BlogsConfiguration {
 	 * and display blog entries scheduled to display.
 	 */
 	@Meta.AD(
-		deflt = "1", min = "1", name = "entry-check-interval", required = false
+		deflt = "1", description = "entry-check-interval-description",
+		min = "1", name = "entry-check-interval", required = false
 	)
 	public int entryCheckInterval();
 
@@ -43,7 +44,8 @@ public interface BlogsConfiguration {
 	 * backs. The value is set in one minute increments.
 	 */
 	@Meta.AD(
-		deflt = "5", min = "1", name = "linkback-job-interval", required = false
+		deflt = "5", description = "linkback-job-interval-description",
+		min = "1", name = "linkback-job-interval", required = false
 	)
 	public int linkbackJobInterval();
 

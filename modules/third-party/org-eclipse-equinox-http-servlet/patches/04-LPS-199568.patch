@@ -1,0 +1,1645 @@
+diff --git a/org/eclipse/equinox/http/servlet/internal/HttpServiceRuntimeImpl.java b/org/eclipse/equinox/http/servlet/internal/HttpServiceRuntimeImpl.java
+index 902dd361399d7..4753a76315cf4 100644
+--- a/org/eclipse/equinox/http/servlet/internal/HttpServiceRuntimeImpl.java
++++ b/org/eclipse/equinox/http/servlet/internal/HttpServiceRuntimeImpl.java
+@@ -148,18 +148,7 @@ public class HttpServiceRuntimeImpl
+ 
+ 	@Override
+ 	public RequestInfoDTO calculateRequestInfoDTO(String path) {
+-		RequestInfoDTO requestInfoDTO = new RequestInfoDTO();
+-
+-		requestInfoDTO.path = path;
+-
+-		try {
+-			getDispatchTargets(path, requestInfoDTO);
+-		}
+-		catch (Exception e) {
+-			throw new RuntimeException(e);
+-		}
+-
+-		return requestInfoDTO;
++		return null;
+ 	}
+ 
+ 	public void destroy() {
+@@ -181,19 +170,8 @@ public class HttpServiceRuntimeImpl
+ 		contextPathCustomizerHolder = null;
+ 	}
+ 
+-	@Override
+-	public Collection<ContextController> getContextControllers() {
+-		return controllerMap.values();
+-	}
+-
+ 	@Override
+ 	public DispatchTargets getDispatchTargets(String pathString) {
+-		return getDispatchTargets(pathString, null);
+-	}
+-
+-	public DispatchTargets getDispatchTargets(
+-		String pathString, RequestInfoDTO requestInfoDTO) {
+-
+ 		Path path = new Path(pathString);
+ 
+ 		String queryString = path.getQueryString();
+@@ -201,27 +179,25 @@ public class HttpServiceRuntimeImpl
+ 
+ 		// perfect match
+ 		DispatchTargets dispatchTargets = getDispatchTargets(
+-			requestURI, null, queryString, Match.EXACT, requestInfoDTO);
++			requestURI, null, queryString, Match.EXACT);
+ 
+ 		if (dispatchTargets == null) {
+ 			// extension match
+ 
+ 			dispatchTargets = getDispatchTargets(
+-				requestURI, path.getExtension(), queryString, Match.EXTENSION,
+-				requestInfoDTO);
++				requestURI, path.getExtension(), queryString, Match.EXTENSION);
+ 		}
+ 
+ 		if (dispatchTargets == null) {
+ 			// regex match
+ 			dispatchTargets = getDispatchTargets(
+-				requestURI, null, queryString, Match.REGEX, requestInfoDTO);
++				requestURI, null, queryString, Match.REGEX);
+ 		}
+ 
+ 		if (dispatchTargets == null) {
+ 			// handle '/' aliases
+ 			dispatchTargets = getDispatchTargets(
+-				requestURI, null, queryString, Match.DEFAULT_SERVLET,
+-				requestInfoDTO);
++				requestURI, null, queryString, Match.DEFAULT_SERVLET);
+ 		}
+ 
+ 		return dispatchTargets;
+@@ -255,7 +231,7 @@ public class HttpServiceRuntimeImpl
+ 		runtimeDTO.failedResourceDTOs = null;
+ 		runtimeDTO.failedServletContextDTOs = null;
+ 		runtimeDTO.failedServletDTOs = null;
+-		runtimeDTO.servletContextDTOs = getServletContextDTOs();
++		runtimeDTO.servletContextDTOs = null;
+ 
+ 		return runtimeDTO;
+ 	}
+@@ -362,7 +338,7 @@ public class HttpServiceRuntimeImpl
+ 			HttpServletRequest request, HttpServletResponse response, String path)
+ 		throws IOException, ServletException {
+ 
+-		DispatchTargets dispatchTargets = getDispatchTargets(path, null);
++		DispatchTargets dispatchTargets = getDispatchTargets(path);
+ 
+ 		if (dispatchTargets == null) {
+ 			return false;
+@@ -373,8 +349,7 @@ public class HttpServiceRuntimeImpl
+ 	}
+ 
+ 	private DispatchTargets getDispatchTargets(
+-		String requestURI, String extension, String queryString, Match match,
+-		RequestInfoDTO requestInfoDTO) {
++		String requestURI, String extension, String queryString, Match match) {
+ 
+ 		Collection<ContextController> contextControllers = getContextControllers(
+ 			requestURI);
+@@ -403,7 +378,7 @@ public class HttpServiceRuntimeImpl
+ 				DispatchTargets dispatchTargets =
+ 					contextController.getDispatchTargets(
+ 						null, requestURI, servletPath, pathInfo,
+-						extension, queryString, match, requestInfoDTO);
++						extension, queryString, match);
+ 
+ 				if (dispatchTargets != null) {
+ 					return dispatchTargets;
+@@ -430,17 +405,6 @@ public class HttpServiceRuntimeImpl
+ 		return null;
+ 	}
+ 
+-	private ServletContextDTO[] getServletContextDTOs() {
+-		List<ServletContextDTO> servletContextDTOs = new ArrayList<ServletContextDTO>();
+-
+-		for (ContextController contextController : controllerMap.values()) {
+-			servletContextDTOs.add(contextController.getServletContextDTO());
+-		}
+-
+-		return servletContextDTOs.toArray(
+-			new ServletContextDTO[servletContextDTOs.size()]);
+-	}
+-
+ 	public void registerHttpServiceFilter(
+ 		Bundle bundle, String alias, Filter filter, Dictionary<String, String> initparams, HttpContext httpContext) throws ServletException {
+ 
+@@ -812,12 +776,6 @@ public class HttpServiceRuntimeImpl
+ 		}
+ 	}
+ 
+-	public void fireSessionIdChanged(String oldSessionId) {
+-		for (ContextController contextController : controllerMap.values()) {
+-			contextController.fireSessionIdChanged(oldSessionId);
+-		}
+-	}
+-
+ 	private Map<String, Object> attributes;
+ 	private final String targetFilter;
+ 	private final ServiceRegistration<ServletContextHelper> defaultContextReg;
+diff --git a/org/eclipse/equinox/http/servlet/internal/HttpServletEndpointController.java b/org/eclipse/equinox/http/servlet/internal/HttpServletEndpointController.java
+index 187e959d4a977..a26cbe4e6c49d 100644
+--- a/org/eclipse/equinox/http/servlet/internal/HttpServletEndpointController.java
++++ b/org/eclipse/equinox/http/servlet/internal/HttpServletEndpointController.java
+@@ -5,13 +5,11 @@
+ 
+ package org.eclipse.equinox.http.servlet.internal;
+ 
+-import java.util.Collection;
+ import java.util.List;
+ import java.util.Set;
+ 
+ import javax.servlet.ServletContext;
+ 
+-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
+ import org.eclipse.equinox.http.servlet.internal.context.DispatchTargets;
+ 
+ import org.osgi.framework.ServiceReference;
+@@ -23,8 +21,6 @@ public interface HttpServletEndpointController {
+ 
+ 	public void destroy();
+ 
+-	public Collection<ContextController> getContextControllers();
+-
+ 	public DispatchTargets getDispatchTargets(String pathString);
+ 
+ 	public List<String> getHttpServiceEndpoints();
+diff --git a/org/eclipse/equinox/http/servlet/internal/context/ContextController.java b/org/eclipse/equinox/http/servlet/internal/context/ContextController.java
+index f074060e08239..95bd64feb3207 100644
+--- a/org/eclipse/equinox/http/servlet/internal/context/ContextController.java
++++ b/org/eclipse/equinox/http/servlet/internal/context/ContextController.java
+@@ -38,7 +38,7 @@ import org.osgi.util.tracker.ServiceTracker;
+ /**
+  * @author Raymond Augé
+  */
+-public class ContextController {
++public class ContextController implements ServletContextHelperController {
+ 
+ 	public static final class ServiceHolder<S> implements Comparable<ServiceHolder<?>> {
+ 		final ServiceObjects<S> serviceObjects;
+@@ -213,6 +213,7 @@ public class ContextController {
+ 		resourceServiceTracker.open();
+ 	}
+ 
++	@Override
+ 	public FilterRegistration addFilterRegistration(ServiceReference<Filter> filterRef) throws ServletException {
+ 		checkShutdown();
+ 
+@@ -339,6 +340,7 @@ public class ContextController {
+ 		return newRegistration;
+ 	}
+ 
++	@Override
+ 	public ListenerRegistration addListenerRegistration(ServiceReference<EventListener> listenerRef) throws ServletException {
+ 
+ 		checkShutdown();
+@@ -407,6 +409,7 @@ public class ContextController {
+ 		return listenerRegistration;
+ 	}
+ 
++	@Override
+ 	public ResourceRegistration addResourceRegistration(ServiceReference<?> resourceRef) {
+ 
+ 		checkShutdown();
+@@ -472,6 +475,7 @@ public class ContextController {
+ 		return resourceRegistration;
+ 	}
+ 
++	@Override
+ 	public ServletRegistration addServletRegistration(ServiceReference<Servlet> servletRef) throws ServletException {
+ 
+ 		checkShutdown();
+@@ -619,6 +623,7 @@ public class ContextController {
+ 		return servletRegistration;
+ 	}
+ 
++	@Override
+ 	public void destroy() {
+ 		flushActiveSessions();
+ 		resourceServiceTracker.close();
+@@ -645,17 +650,18 @@ public class ContextController {
+ 		shutdown = true;
+ 	}
+ 
++	@Override
+ 	public String getContextName() {
+ 		return contextName;
+ 	}
+ 
++	@Override
+ 	public String getContextPath() {
+ 		return contextPath;
+ 	}
+ 
+-	public DispatchTargets getDispatchTargets(
+-		String pathString, RequestInfoDTO requestInfoDTO) {
+-
++	@Override
++	public DispatchTargets getDispatchTargets(String pathString) {
+ 		Path path = new Path(pathString);
+ 
+ 		String queryString = path.getQueryString();
+@@ -663,35 +669,32 @@ public class ContextController {
+ 
+ 		// perfect match
+ 		DispatchTargets dispatchTargets = getDispatchTargets(
+-			requestURI, null, queryString, Match.EXACT, requestInfoDTO);
++			requestURI, null, queryString, Match.EXACT);
+ 
+ 		if (dispatchTargets == null) {
+ 			// extension match
+ 
+ 			dispatchTargets = getDispatchTargets(
+-				requestURI, path.getExtension(), queryString, Match.EXTENSION,
+-				requestInfoDTO);
++				requestURI, path.getExtension(), queryString, Match.EXTENSION);
+ 		}
+ 
+ 		if (dispatchTargets == null) {
+ 			// regex match
+ 			dispatchTargets = getDispatchTargets(
+-				requestURI, null, queryString, Match.REGEX, requestInfoDTO);
++				requestURI, null, queryString, Match.REGEX);
+ 		}
+ 
+ 		if (dispatchTargets == null) {
+ 			// handle '/' aliases
+ 			dispatchTargets = getDispatchTargets(
+-				requestURI, null, queryString, Match.DEFAULT_SERVLET,
+-				requestInfoDTO);
++				requestURI, null, queryString, Match.DEFAULT_SERVLET);
+ 		}
+ 
+ 		return dispatchTargets;
+ 	}
+ 
+ 	private DispatchTargets getDispatchTargets(
+-		String requestURI, String extension, String queryString, Match match,
+-		RequestInfoDTO requestInfoDTO) {
++		String requestURI, String extension, String queryString, Match match) {
+ 
+ 		int pos = requestURI.lastIndexOf('/');
+ 
+@@ -706,7 +709,7 @@ public class ContextController {
+ 		do {
+ 			DispatchTargets dispatchTargets = getDispatchTargets(
+ 				null, requestURI, servletPath, pathInfo,
+-				extension, queryString, match, requestInfoDTO);
++				extension, queryString, match);
+ 
+ 			if (dispatchTargets != null) {
+ 				return dispatchTargets;
+@@ -732,10 +735,10 @@ public class ContextController {
+ 		return null;
+ 	}
+ 
++	@Override
+ 	public DispatchTargets getDispatchTargets(
+ 		String servletName, String requestURI, String servletPath,
+-		String pathInfo, String extension, String queryString, Match match,
+-		RequestInfoDTO requestInfoDTO) {
++		String pathInfo, String extension, String queryString, Match match) {
+ 
+ 		checkShutdown();
+ 
+@@ -757,9 +760,6 @@ public class ContextController {
+ 			pathInfo = null;
+ 		}
+ 
+-		addEnpointRegistrationsToRequestInfo(
+-			endpointRegistration, requestInfoDTO);
+-
+ 		if (filterRegistrations.isEmpty()) {
+ 			return new DispatchTargets(
+ 				this, endpointRegistration, servletName, requestURI, servletPath,
+@@ -781,9 +781,6 @@ public class ContextController {
+ 			matchingFilterRegistrations, endpointRegistration.getName(), requestURI,
+ 			servletPath, pathInfo, extension);
+ 
+-		addFilterRegistrationsToRequestInfo(
+-			matchingFilterRegistrations, requestInfoDTO);
+-
+ 		return new DispatchTargets(
+ 			this, endpointRegistration, matchingFilterRegistrations, servletName,
+ 			requestURI, servletPath, pathInfo, queryString);
+@@ -803,22 +800,27 @@ public class ContextController {
+ 		}
+ 	}
+ 
++	@Override
+ 	public Map<String, HttpSessionAdaptor> getActiveSessions() {
+ 		return activeSessions;
+ 	}
+ 
++	@Override
+ 	public Set<EndpointRegistration<?>> getEndpointRegistrations() {
+ 		return endpointRegistrations;
+ 	}
+ 
++	@Override
+ 	public EventListeners getEventListeners() {
+ 		return eventListeners;
+ 	}
+ 
++	@Override
+ 	public Set<FilterRegistration> getFilterRegistrations() {
+ 		return filterRegistrations;
+ 	}
+ 
++	@Override
+ 	public String getFullContextPath() {
+ 		List<String> endpoints = httpServletEndpointController.getHttpServiceEndpoints();
+ 
+@@ -836,40 +838,22 @@ public class ContextController {
+ 		return defaultEndpoint + contextPath;
+ 	}
+ 
++	@Override
+ 	public HttpServletEndpointController getHttpServletEndpointController() {
+ 		return httpServletEndpointController;
+ 	}
+ 
++	@Override
+ 	public Map<String, String> getInitParams() {
+ 		return initParams;
+ 	}
+ 
++	@Override
+ 	public Set<ListenerRegistration> getListenerRegistrations() {
+ 		return listenerRegistrations;
+ 	}
+ 
+-	public long getServiceId() {
+-		return contextServiceId;
+-	}
+-
+-	public synchronized ServletContextDTO getServletContextDTO(){
+-		ServletContextDTO servletContextDTO = new ServletContextDTO();
+-
+-		ServletContext servletContext = servletContextHelperDataContext.getServletContext();
+-
+-		servletContextDTO.attributes = getDTOAttributes(servletContext);
+-		servletContextDTO.contextPath = getContextPath();
+-		servletContextDTO.initParams = new HashMap<String, String>(initParams);
+-		servletContextDTO.name = getContextName();
+-		servletContextDTO.serviceId = getServiceId();
+-
+-		collectEndpointDTOs(servletContextDTO);
+-		collectFilterDTOs(servletContextDTO);
+-		collectListenerDTOs(servletContextDTO);
+-
+-		return servletContextDTO;
+-	}
+-
++	@Override
+ 	public boolean matches(ServiceReference<?> whiteBoardService) {
+ 		String contextSelector = (String) whiteBoardService.getProperty(
+ 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT);
+@@ -913,6 +897,7 @@ public class ContextController {
+ 			ServletContextHelper.class.getName());
+ 	}
+ 
++	@Override
+ 	public boolean matches(org.osgi.framework.Filter targetFilter) {
+ 		return targetFilter.match(servletContextHelperRef);
+ 	}
+@@ -930,47 +915,6 @@ public class ContextController {
+ 		return value;
+ 	}
+ 
+-	private void addEnpointRegistrationsToRequestInfo(
+-		EndpointRegistration<?> endpointRegistration,
+-		RequestInfoDTO requestInfoDTO) {
+-
+-		if (requestInfoDTO == null) {
+-			return;
+-		}
+-
+-		requestInfoDTO.servletContextId = getServiceId();
+-
+-		if (endpointRegistration instanceof ResourceRegistration) {
+-			requestInfoDTO.resourceDTO =
+-				(ResourceDTO)endpointRegistration.getD();
+-		}
+-		else {
+-			requestInfoDTO.servletDTO =
+-				(ServletDTO)endpointRegistration.getD();
+-		}
+-	}
+-
+-	private void addFilterRegistrationsToRequestInfo(
+-		List<FilterRegistration> matchedFilterRegistrations,
+-		RequestInfoDTO requestInfoDTO) {
+-
+-		if (requestInfoDTO == null) {
+-			return;
+-		}
+-
+-		FilterDTO[] filterDTOs =
+-			new FilterDTO[matchedFilterRegistrations.size()];
+-
+-		for (int i = 0; i < filterDTOs.length ; i++) {
+-			FilterRegistration filterRegistration =
+-				matchedFilterRegistrations.get(i);
+-
+-			filterDTOs[i] = filterRegistration.getD();
+-		}
+-
+-		requestInfoDTO.filterDTOs = filterDTOs;
+-	}
+-
+ 	private String[] asStringArray(
+ 		List<Class<? extends EventListener>> clazzes) {
+ 
+@@ -1049,76 +993,6 @@ public class ContextController {
+ 		return adaptor.createServletContext();
+ 	}
+ 
+-	private void collectEndpointDTOs(
+-		ServletContextDTO servletContextDTO) {
+-
+-		List<ErrorPageDTO> errorPageDTOs = new ArrayList<ErrorPageDTO>();
+-		List<ResourceDTO> resourceDTOs = new ArrayList<ResourceDTO>();
+-		List<ServletDTO> servletDTOs = new ArrayList<ServletDTO>();
+-
+-		for (EndpointRegistration<?> endpointRegistration : endpointRegistrations) {
+-			if (endpointRegistration instanceof ResourceRegistration) {
+-				resourceDTOs.add(DTOUtil.clone((ResourceDTO)endpointRegistration.getD()));
+-			}
+-			else {
+-				ServletRegistration servletRegistration = (ServletRegistration)endpointRegistration;
+-				servletDTOs.add(DTOUtil.clone(servletRegistration.getD()));
+-
+-				ErrorPageDTO errorPageDTO = servletRegistration.getErrorPageDTO();
+-				if (errorPageDTO != null) {
+-					errorPageDTOs.add(DTOUtil.clone(errorPageDTO));
+-				}
+-			}
+-		}
+-
+-		servletContextDTO.errorPageDTOs = errorPageDTOs.toArray(
+-			new ErrorPageDTO[errorPageDTOs.size()]);
+-		servletContextDTO.resourceDTOs = resourceDTOs.toArray(
+-			new ResourceDTO[resourceDTOs.size()]);
+-		servletContextDTO.servletDTOs = servletDTOs.toArray(
+-			new ServletDTO[servletDTOs.size()]);
+-	}
+-
+-	private void collectFilterDTOs(
+-		ServletContextDTO servletContextDTO) {
+-
+-		List<FilterDTO> filterDTOs = new ArrayList<FilterDTO>();
+-
+-		for (FilterRegistration filterRegistration : filterRegistrations) {
+-			filterDTOs.add(DTOUtil.clone(filterRegistration.getD()));
+-		}
+-
+-		servletContextDTO.filterDTOs = filterDTOs.toArray(
+-			new FilterDTO[filterDTOs.size()]);
+-	}
+-
+-	private void collectListenerDTOs(
+-		ServletContextDTO servletContextDTO) {
+-
+-		List<ListenerDTO> listenerDTOs = new ArrayList<ListenerDTO>();
+-
+-		for (ListenerRegistration listenerRegistration : listenerRegistrations) {
+-			listenerDTOs.add(DTOUtil.clone(listenerRegistration.getD()));
+-		}
+-
+-		servletContextDTO.listenerDTOs = listenerDTOs.toArray(
+-			new ListenerDTO[listenerDTOs.size()]);
+-	}
+-
+-	private Map<String, Object> getDTOAttributes(ServletContext servletContext) {
+-		Map<String, Object> map = new HashMap<String, Object>();
+-
+-		for (Enumeration<String> names = servletContext.getAttributeNames();
+-				names.hasMoreElements();) {
+-
+-			String name = names.nextElement();
+-
+-			map.put(name, DTOUtil.mapValue(servletContext.getAttribute(name)));
+-		}
+-
+-		return Collections.unmodifiableMap(map);
+-	}
+-
+ 	private List<Class<? extends EventListener>> getListenerClasses(
+ 		ServiceReference<EventListener> serviceReference) {
+ 
+@@ -1161,6 +1035,7 @@ public class ContextController {
+ 		return context.getService(servletContextHelperRef);
+ 	}
+ 
++	@Override
+ 	public void ungetServletContextHelper(Bundle curBundle) {
+ 		BundleContext context = curBundle.getBundleContext();
+ 		try {
+@@ -1197,34 +1072,12 @@ public class ContextController {
+ 		}
+ 	}
+ 
++	@Override
+ 	public void removeActiveSession(String id) {
+ 		activeSessions.remove(id);
+ 	}
+ 
+-	public void fireSessionIdChanged(String oldSessionId) {
+-		if (shutdown) {
+-			return;
+-		}
+-
+-		ServletContext servletContext = servletContextHelperDataContext.getServletContext();
+-		if ((servletContext.getMajorVersion() <= 3) && (servletContext.getMinorVersion() < 1)) {
+-			return;
+-		}
+-
+-		List<javax.servlet.http.HttpSessionIdListener> listeners = eventListeners.get(javax.servlet.http.HttpSessionIdListener.class);
+-
+-		if (listeners.isEmpty()) {
+-			return;
+-		}
+-
+-		for (HttpSessionAdaptor httpSessionAdaptor : activeSessions.values()) {
+-			HttpSessionEvent httpSessionEvent = new HttpSessionEvent(httpSessionAdaptor);
+-			for (javax.servlet.http.HttpSessionIdListener listener : listeners) {
+-				listener.sessionIdChanged(httpSessionEvent, oldSessionId);
+-			}
+-		}
+-	}
+-
++	@Override
+ 	public HttpSessionAdaptor getSessionAdaptor(
+ 		HttpSession session, ServletContext servletContext) {
+ 
+diff --git a/org/eclipse/equinox/http/servlet/internal/context/DispatchTargets.java b/org/eclipse/equinox/http/servlet/internal/context/DispatchTargets.java
+index a36e4fb1169b1..fcc1bd9ec48c9 100644
+--- a/org/eclipse/equinox/http/servlet/internal/context/DispatchTargets.java
++++ b/org/eclipse/equinox/http/servlet/internal/context/DispatchTargets.java
+@@ -30,23 +30,23 @@ import org.eclipse.equinox.http.servlet.internal.util.Params;
+ public class DispatchTargets {
+ 
+ 	public DispatchTargets(
+-		ContextController contextController,
++		ServletContextHelperController servletContextHelperController,
+ 		EndpointRegistration<?> endpointRegistration, String servletName,
+ 		String requestURI, String servletPath, String pathInfo, String queryString) {
+ 
+ 		this(
+-			contextController, endpointRegistration,
++			servletContextHelperController, endpointRegistration,
+ 			Collections.<FilterRegistration>emptyList(), servletName, requestURI,
+ 			servletPath, pathInfo, queryString);
+ 	}
+ 
+ 	public DispatchTargets(
+-		ContextController contextController,
++		ServletContextHelperController servletContextHelperController,
+ 		EndpointRegistration<?> endpointRegistration,
+ 		List<FilterRegistration> matchingFilterRegistrations, String servletName,
+ 		String requestURI, String servletPath, String pathInfo, String queryString) {
+ 
+-		this.contextController = contextController;
++		this.servletContextHelperController = servletContextHelperController;
+ 		this.endpointRegistration = endpointRegistration;
+ 		this.matchingFilterRegistrations = matchingFilterRegistrations;
+ 		this.servletName = servletName;
+@@ -85,7 +85,7 @@ public class DispatchTargets {
+ 		RequestAttributeSetter setter = new RequestAttributeSetter(originalRequest);
+ 
+ 		if (dispatcherType == DispatcherType.INCLUDE) {
+-			setter.setAttribute(RequestDispatcher.INCLUDE_CONTEXT_PATH, contextController.getFullContextPath());
++			setter.setAttribute(RequestDispatcher.INCLUDE_CONTEXT_PATH, servletContextHelperController.getFullContextPath());
+ 			setter.setAttribute(RequestDispatcher.INCLUDE_PATH_INFO, getPathInfo());
+ 			setter.setAttribute(RequestDispatcher.INCLUDE_QUERY_STRING, getQueryString());
+ 			setter.setAttribute(RequestDispatcher.INCLUDE_REQUEST_URI, getRequestURI());
+@@ -149,8 +149,8 @@ public class DispatchTargets {
+ 		}
+ 	}
+ 
+-	public ContextController getContextController() {
+-		return contextController;
++	public ServletContextHelperController getServletContextHelperController() {
++		return servletContextHelperController;
+ 	}
+ 
+ 	public DispatcherType getDispatcherType() {
+@@ -177,7 +177,7 @@ public class DispatchTargets {
+ 		if (requestURI == null) {
+ 			return null;
+ 		}
+-		return getContextController().getFullContextPath() + requestURI;
++		return getServletContextHelperController().getFullContextPath() + requestURI;
+ 	}
+ 
+ 	public String getServletName() {
+@@ -205,7 +205,7 @@ public class DispatchTargets {
+ 		String value = string;
+ 
+ 		if (value == null) {
+-			value = SIMPLE_NAME + '[' + contextController.getFullContextPath() + requestURI + (queryString != null ? '?' + queryString : "") + ", " + endpointRegistration.toString() + ']'; //$NON-NLS-1$
++			value = SIMPLE_NAME + '[' + servletContextHelperController.getFullContextPath() + requestURI + (queryString != null ? '?' + queryString : "") + ", " + endpointRegistration.toString() + ']'; //$NON-NLS-1$
+ 
+ 			string = value;
+ 		}
+@@ -269,7 +269,7 @@ public class DispatchTargets {
+ 	private static final String SIMPLE_NAME =
+ 		DispatchTargets.class.getSimpleName();
+ 
+-	private final ContextController contextController;
++	private final ServletContextHelperController servletContextHelperController;
+ 	private DispatcherType dispatcherType;
+ 	private final EndpointRegistration<?> endpointRegistration;
+ 	private final List<FilterRegistration> matchingFilterRegistrations;
+@@ -282,4 +282,5 @@ public class DispatchTargets {
+ 	private final Map<String, Object> specialOverides = new ConcurrentHashMap<String, Object>();
+ 	private String string;
+ 
+-}
+\ No newline at end of file
++}
++/* @generated */
+\ No newline at end of file
+diff --git a/org/eclipse/equinox/http/servlet/internal/context/ServletContextHelperController.java b/org/eclipse/equinox/http/servlet/internal/context/ServletContextHelperController.java
+new file mode 100644
+index 0000000000000..acae997a54eb2
+--- /dev/null
++++ b/org/eclipse/equinox/http/servlet/internal/context/ServletContextHelperController.java
+@@ -0,0 +1,90 @@
++/**
++ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
++ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
++ */
++
++package org.eclipse.equinox.http.servlet.internal.context;
++
++import java.util.EventListener;
++import java.util.Map;
++import java.util.Set;
++
++import javax.servlet.Filter;
++import javax.servlet.Servlet;
++import javax.servlet.ServletContext;
++import javax.servlet.ServletException;
++import javax.servlet.http.HttpSession;
++
++import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
++import org.eclipse.equinox.http.servlet.internal.registration.EndpointRegistration;
++import org.eclipse.equinox.http.servlet.internal.registration.FilterRegistration;
++import org.eclipse.equinox.http.servlet.internal.registration.ListenerRegistration;
++import org.eclipse.equinox.http.servlet.internal.registration.ResourceRegistration;
++import org.eclipse.equinox.http.servlet.internal.registration.ServletRegistration;
++import org.eclipse.equinox.http.servlet.internal.servlet.HttpSessionAdaptor;
++import org.eclipse.equinox.http.servlet.internal.servlet.Match;
++import org.eclipse.equinox.http.servlet.internal.util.EventListeners;
++
++import org.osgi.framework.Bundle;
++import org.osgi.framework.ServiceReference;
++
++/**
++ * @author Dante Wang
++ */
++public interface ServletContextHelperController {
++
++	public FilterRegistration addFilterRegistration(
++			ServiceReference<Filter> serviceReference)
++		throws ServletException;
++
++	public ListenerRegistration addListenerRegistration(
++			ServiceReference<EventListener> serviceReference)
++		throws ServletException;
++
++	public ResourceRegistration addResourceRegistration(
++		ServiceReference<?> serviceReference);
++
++	public ServletRegistration addServletRegistration(
++			ServiceReference<Servlet> serviceReference)
++		throws ServletException;
++
++	public void destroy();
++
++	public Map<String, HttpSessionAdaptor> getActiveSessions();
++
++	public String getContextName();
++
++	public String getContextPath();
++
++	public DispatchTargets getDispatchTargets(String pathString);
++
++	public DispatchTargets getDispatchTargets(
++		String servletName, String requestURI, String servletPath,
++		String pathInfo, String extension, String queryString, Match match);
++
++	public Set<EndpointRegistration<?>> getEndpointRegistrations();
++
++	public EventListeners getEventListeners();
++
++	public Set<FilterRegistration> getFilterRegistrations();
++
++	public String getFullContextPath();
++
++	public HttpServletEndpointController getHttpServletEndpointController();
++
++	public Map<String, String> getInitParams();
++
++	public Set<ListenerRegistration> getListenerRegistrations();
++
++	public HttpSessionAdaptor getSessionAdaptor(
++		HttpSession httpSession, ServletContext servletContext);
++
++	public boolean matches(org.osgi.framework.Filter targetFilter);
++
++	public boolean matches(ServiceReference<?> serviceReference);
++
++	public void removeActiveSession(String sessionId);
++
++	public void ungetServletContextHelper(Bundle bundle);
++
++}
+\ No newline at end of file
+diff --git a/org/eclipse/equinox/http/servlet/internal/customizer/ContextFilterTrackerCustomizer.java b/org/eclipse/equinox/http/servlet/internal/customizer/ContextFilterTrackerCustomizer.java
+index 183273ef9c39c..a75538fe61b04 100644
+--- a/org/eclipse/equinox/http/servlet/internal/customizer/ContextFilterTrackerCustomizer.java
++++ b/org/eclipse/equinox/http/servlet/internal/customizer/ContextFilterTrackerCustomizer.java
+@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicReference;
+ import javax.servlet.Filter;
+ 
+ import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
+-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
++import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperController;
+ import org.eclipse.equinox.http.servlet.internal.error.HttpWhiteboardFailureException;
+ import org.eclipse.equinox.http.servlet.internal.registration.FilterRegistration;
+ import org.osgi.framework.*;
+@@ -29,11 +29,11 @@ public class ContextFilterTrackerCustomizer
+ 
+ 	public ContextFilterTrackerCustomizer(
+ 		BundleContext bundleContext, HttpServletEndpointController httpServletEndpointController,
+-		ContextController contextController) {
++		ServletContextHelperController servletContextHelperController) {
+ 
+ 		super(bundleContext, httpServletEndpointController);
+ 
+-		this.contextController = contextController;
++		this.servletContextHelperController = servletContextHelperController;
+ 	}
+ 
+ 	@Override
+@@ -47,7 +47,7 @@ public class ContextFilterTrackerCustomizer
+ 			return null;
+ 		}
+ 
+-		if (!contextController.matches(serviceReference)) {
++		if (!servletContextHelperController.matches(serviceReference)) {
+ 			return null;
+ 		}
+ 
+@@ -58,7 +58,7 @@ public class ContextFilterTrackerCustomizer
+ 		AtomicReference<FilterRegistration> result = new AtomicReference<FilterRegistration>();
+ 
+ 		try {
+-			result.set(contextController.addFilterRegistration(serviceReference));
++			result.set(servletContextHelperController.addFilterRegistration(serviceReference));
+ 		}
+ 		catch (HttpWhiteboardFailureException hwfe) {
+ 			httpServletEndpointController.log(hwfe.getMessage(), hwfe);
+@@ -91,7 +91,7 @@ public class ContextFilterTrackerCustomizer
+ 		}
+ 	}
+ 
+-	private ContextController contextController;
++	private ServletContextHelperController servletContextHelperController;
+ 
+ }
+ /* @generated */
+\ No newline at end of file
+diff --git a/org/eclipse/equinox/http/servlet/internal/customizer/ContextListenerTrackerCustomizer.java b/org/eclipse/equinox/http/servlet/internal/customizer/ContextListenerTrackerCustomizer.java
+index f10428f705e91..46f500d92c424 100644
+--- a/org/eclipse/equinox/http/servlet/internal/customizer/ContextListenerTrackerCustomizer.java
++++ b/org/eclipse/equinox/http/servlet/internal/customizer/ContextListenerTrackerCustomizer.java
+@@ -15,7 +15,7 @@ import java.util.EventListener;
+ import java.util.concurrent.atomic.AtomicReference;
+ 
+ import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
+-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
++import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperController;
+ import org.eclipse.equinox.http.servlet.internal.error.HttpWhiteboardFailureException;
+ import org.eclipse.equinox.http.servlet.internal.registration.ListenerRegistration;
+ import org.osgi.framework.*;
+@@ -30,11 +30,11 @@ public class ContextListenerTrackerCustomizer
+ 
+ 	public ContextListenerTrackerCustomizer(
+ 		BundleContext bundleContext, HttpServletEndpointController httpServletEndpointController,
+-		ContextController contextController) {
++		ServletContextHelperController servletContextHelperController) {
+ 
+ 		super(bundleContext, httpServletEndpointController);
+ 
+-		this.contextController = contextController;
++		this.servletContextHelperController = servletContextHelperController;
+ 	}
+ 
+ 	@Override
+@@ -45,7 +45,7 @@ public class ContextListenerTrackerCustomizer
+ 			return null;
+ 		}
+ 
+-		if (!contextController.matches(serviceReference)) {
++		if (!servletContextHelperController.matches(serviceReference)) {
+ 			return null;
+ 		}
+ 
+@@ -72,7 +72,7 @@ public class ContextListenerTrackerCustomizer
+ 				return result;
+ 			}
+ 
+-			result.set(contextController.addListenerRegistration(serviceReference));
++			result.set(servletContextHelperController.addListenerRegistration(serviceReference));
+ 		}
+ 		catch (HttpWhiteboardFailureException hwfe) {
+ 			httpServletEndpointController.log(hwfe.getMessage(), hwfe);
+@@ -105,7 +105,7 @@ public class ContextListenerTrackerCustomizer
+ 		}
+ 	}
+ 
+-	private ContextController contextController;
++	private ServletContextHelperController servletContextHelperController;
+ 
+ }
+ /* @generated */
+\ No newline at end of file
+diff --git a/org/eclipse/equinox/http/servlet/internal/customizer/ContextResourceTrackerCustomizer.java b/org/eclipse/equinox/http/servlet/internal/customizer/ContextResourceTrackerCustomizer.java
+index c5a337db1a093..63bcc58ec7bba 100644
+--- a/org/eclipse/equinox/http/servlet/internal/customizer/ContextResourceTrackerCustomizer.java
++++ b/org/eclipse/equinox/http/servlet/internal/customizer/ContextResourceTrackerCustomizer.java
+@@ -15,6 +15,7 @@ import java.util.concurrent.atomic.AtomicReference;
+ 
+ import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
+ import org.eclipse.equinox.http.servlet.internal.context.ContextController;
++import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperController;
+ import org.eclipse.equinox.http.servlet.internal.error.HttpWhiteboardFailureException;
+ import org.eclipse.equinox.http.servlet.internal.registration.ResourceRegistration;
+ import org.osgi.framework.*;
+@@ -28,11 +29,11 @@ public class ContextResourceTrackerCustomizer
+ 
+ 	public ContextResourceTrackerCustomizer(
+ 		BundleContext bundleContext, HttpServletEndpointController httpServletEndpointController,
+-		ContextController contextController) {
++		ServletContextHelperController servletContextHelperController) {
+ 
+ 		super(bundleContext, httpServletEndpointController);
+ 
+-		this.contextController = contextController;
++		this.servletContextHelperController = servletContextHelperController;
+ 	}
+ 
+ 	@Override
+@@ -45,7 +46,7 @@ public class ContextResourceTrackerCustomizer
+ 			return null;
+ 		}
+ 
+-		if (!contextController.matches(serviceReference)) {
++		if (!servletContextHelperController.matches(serviceReference)) {
+ 			return null;
+ 		}
+ 
+@@ -56,7 +57,7 @@ public class ContextResourceTrackerCustomizer
+ 		AtomicReference<ResourceRegistration> result = new AtomicReference<ResourceRegistration>();
+ 
+ 		try {
+-			result.set(contextController.addResourceRegistration(serviceReference));
++			result.set(servletContextHelperController.addResourceRegistration(serviceReference));
+ 		}
+ 		catch (HttpWhiteboardFailureException hwfe) {
+ 			httpServletEndpointController.log(hwfe.getMessage(), hwfe);
+@@ -89,7 +90,7 @@ public class ContextResourceTrackerCustomizer
+ 		}
+ 	}
+ 
+-	private ContextController contextController;
++	private ServletContextHelperController servletContextHelperController;
+ 
+ }
+ /* @generated */
+\ No newline at end of file
+diff --git a/org/eclipse/equinox/http/servlet/internal/customizer/ContextServletTrackerCustomizer.java b/org/eclipse/equinox/http/servlet/internal/customizer/ContextServletTrackerCustomizer.java
+index 6a0204d73a4d0..93c9a4f4d88eb 100644
+--- a/org/eclipse/equinox/http/servlet/internal/customizer/ContextServletTrackerCustomizer.java
++++ b/org/eclipse/equinox/http/servlet/internal/customizer/ContextServletTrackerCustomizer.java
+@@ -15,7 +15,7 @@ import java.util.concurrent.atomic.AtomicReference;
+ import javax.servlet.Servlet;
+ 
+ import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
+-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
++import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperController;
+ import org.eclipse.equinox.http.servlet.internal.error.HttpWhiteboardFailureException;
+ import org.eclipse.equinox.http.servlet.internal.registration.ServletRegistration;
+ import org.osgi.framework.*;
+@@ -29,11 +29,11 @@ public class ContextServletTrackerCustomizer
+ 
+ 	public ContextServletTrackerCustomizer(
+ 		BundleContext bundleContext, HttpServletEndpointController httpServletEndpointController,
+-		ContextController contextController) {
++		ServletContextHelperController servletContextHelperController) {
+ 
+ 		super(bundleContext, httpServletEndpointController);
+ 
+-		this.contextController = contextController;
++		this.servletContextHelperController = servletContextHelperController;
+ 	}
+ 
+ 	@Override
+@@ -47,7 +47,7 @@ public class ContextServletTrackerCustomizer
+ 			return null;
+ 		}
+ 
+-		if (!contextController.matches(serviceReference)) {
++		if (!servletContextHelperController.matches(serviceReference)) {
+ 			return null;
+ 		}
+ 
+@@ -58,7 +58,7 @@ public class ContextServletTrackerCustomizer
+ 		AtomicReference<ServletRegistration> result = new AtomicReference<ServletRegistration>();
+ 
+ 		try {
+-			result.set(contextController.addServletRegistration(serviceReference));
++			result.set(servletContextHelperController.addServletRegistration(serviceReference));
+ 		}
+ 		catch (HttpWhiteboardFailureException hwfe) {
+ 			httpServletEndpointController.log(hwfe.getMessage(), hwfe);
+@@ -91,7 +91,7 @@ public class ContextServletTrackerCustomizer
+ 		}
+ 	}
+ 
+-	private ContextController contextController;
++	private ServletContextHelperController servletContextHelperController;
+ 
+ }
+ /* @generated */
+\ No newline at end of file
+diff --git a/org/eclipse/equinox/http/servlet/internal/registration/EndpointRegistration.java b/org/eclipse/equinox/http/servlet/internal/registration/EndpointRegistration.java
+index c50fba584941e..8733e6eb9b0ae 100644
+--- a/org/eclipse/equinox/http/servlet/internal/registration/EndpointRegistration.java
++++ b/org/eclipse/equinox/http/servlet/internal/registration/EndpointRegistration.java
+@@ -15,8 +15,9 @@ import java.io.IOException;
+ import javax.servlet.*;
+ import javax.servlet.http.HttpServletRequest;
+ import javax.servlet.http.HttpServletResponse;
+-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
++
+ import org.eclipse.equinox.http.servlet.internal.context.ContextController.ServiceHolder;
++import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperController;
+ import org.eclipse.equinox.http.servlet.internal.servlet.Match;
+ import org.osgi.dto.DTO;
+ import org.osgi.framework.wiring.BundleWiring;
+@@ -30,17 +31,17 @@ public abstract class EndpointRegistration<D extends DTO>
+ 
+ 	private final ServiceHolder<Servlet> servletHolder;
+ 	private final ServletContextHelper servletContextHelper; //The context used during the registration of the servlet
+-	private final ContextController contextController;
++	private final ServletContextHelperController servletContextHelperController;
+ 	private final ClassLoader classLoader;
+ 
+ 	public EndpointRegistration(
+ 		ServiceHolder<Servlet> servletHolder, D d, ServletContextHelper servletContextHelper,
+-		ContextController contextController, ClassLoader legacyTCCL) {
++		ServletContextHelperController servletContextHelperController, ClassLoader legacyTCCL) {
+ 
+ 		super(servletHolder.get(), d);
+ 		this.servletHolder = servletHolder;
+ 		this.servletContextHelper = servletContextHelper;
+-		this.contextController = contextController;
++		this.servletContextHelperController = servletContextHelperController;
+ 		if (legacyTCCL != null) {
+ 			// legacy registrations used the current TCCL at registration time
+ 			classLoader = legacyTCCL;
+@@ -54,9 +55,9 @@ public abstract class EndpointRegistration<D extends DTO>
+ 		try {
+ 			Thread.currentThread().setContextClassLoader(classLoader);
+ 
+-			contextController.getEndpointRegistrations().remove(this);
+-			contextController.getHttpServletEndpointController().getRegisteredObjects().remove(this.getT());
+-			contextController.ungetServletContextHelper(servletHolder.getBundle());
++			servletContextHelperController.getEndpointRegistrations().remove(this);
++			servletContextHelperController.getHttpServletEndpointController().getRegisteredObjects().remove(this.getT());
++			servletContextHelperController.ungetServletContextHelper(servletHolder.getBundle());
+ 
+ 			super.destroy();
+ 			getT().destroy();
+diff --git a/org/eclipse/equinox/http/servlet/internal/registration/FilterRegistration.java b/org/eclipse/equinox/http/servlet/internal/registration/FilterRegistration.java
+index c816dd586aa76..f52113b1692f4 100644
+--- a/org/eclipse/equinox/http/servlet/internal/registration/FilterRegistration.java
++++ b/org/eclipse/equinox/http/servlet/internal/registration/FilterRegistration.java
+@@ -17,8 +17,9 @@ import java.util.regex.Pattern;
+ import javax.servlet.*;
+ import javax.servlet.http.HttpServletRequest;
+ import javax.servlet.http.HttpServletResponse;
+-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
++
+ import org.eclipse.equinox.http.servlet.internal.context.ContextController.ServiceHolder;
++import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperController;
+ import org.eclipse.equinox.http.servlet.internal.servlet.FilterChainImpl;
+ import org.eclipse.equinox.http.servlet.internal.servlet.Match;
+ import org.eclipse.equinox.http.servlet.internal.util.Const;
+@@ -35,18 +36,18 @@ public class FilterRegistration
+ 	private final ServiceHolder<Filter> filterHolder;
+ 	private final ClassLoader classLoader;
+ 	private final int priority;
+-	private final ContextController contextController;
++	private final ServletContextHelperController servletContextHelperController;
+ 	private final boolean initDestoyWithContextController;
+ 	private final Pattern[] compiledRegexs;
+ 
+ 	public FilterRegistration(
+ 		ServiceHolder<Filter> filterHolder, FilterDTO filterDTO, int priority,
+-		ContextController contextController, ClassLoader legacyTCCL) {
++		ServletContextHelperController servletContextHelperController, ClassLoader legacyTCCL) {
+ 
+ 		super(filterHolder.get(), filterDTO);
+ 		this.filterHolder = filterHolder;
+ 		this.priority = priority;
+-		this.contextController = contextController;
++		this.servletContextHelperController = servletContextHelperController;
+ 		this.compiledRegexs = getCompiledRegex(filterDTO);
+ 		if (legacyTCCL != null) {
+ 			// legacy filter registrations used the current TCCL at registration time
+@@ -66,7 +67,7 @@ public class FilterRegistration
+ 			catch (InvalidSyntaxException e) {
+ 				// nothing
+ 			}
+-			initDestoyWithContextController = f == null || contextController.matches(f);
++			initDestoyWithContextController = f == null || servletContextHelperController.matches(f);
+ 		} else {
+ 			initDestoyWithContextController = true;
+ 		}
+@@ -91,9 +92,9 @@ public class FilterRegistration
+ 		ClassLoader original = Thread.currentThread().getContextClassLoader();
+ 		try {
+ 			Thread.currentThread().setContextClassLoader(classLoader);
+-			contextController.getHttpServletEndpointController().getRegisteredObjects().remove(this.getT());
+-			contextController.getFilterRegistrations().remove(this);
+-			contextController.ungetServletContextHelper(filterHolder.getBundle());
++			servletContextHelperController.getHttpServletEndpointController().getRegisteredObjects().remove(this.getT());
++			servletContextHelperController.getFilterRegistrations().remove(this);
++			servletContextHelperController.ungetServletContextHelper(filterHolder.getBundle());
+ 			super.destroy();
+ 			getT().destroy();
+ 		}
+diff --git a/org/eclipse/equinox/http/servlet/internal/registration/ListenerRegistration.java b/org/eclipse/equinox/http/servlet/internal/registration/ListenerRegistration.java
+index 074bc08f3907a..f0117dbe00e15 100644
+--- a/org/eclipse/equinox/http/servlet/internal/registration/ListenerRegistration.java
++++ b/org/eclipse/equinox/http/servlet/internal/registration/ListenerRegistration.java
+@@ -15,8 +15,8 @@ import java.lang.reflect.*;
+ import java.util.*;
+ import javax.servlet.*;
+ import javax.servlet.http.*;
+-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
+ import org.eclipse.equinox.http.servlet.internal.context.ContextController.ServiceHolder;
++import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperController;
+ import org.eclipse.equinox.http.servlet.internal.servlet.HttpSessionAdaptor;
+ import org.osgi.framework.wiring.BundleWiring;
+ import org.osgi.service.http.runtime.dto.ListenerDTO;
+@@ -30,19 +30,19 @@ public class ListenerRegistration extends Registration<EventListener, ListenerDT
+ 	private final List<Class<? extends EventListener>> classes;
+ 	private final EventListener proxy;
+ 	private final ServletContext servletContext;
+-	private final ContextController contextController;
++	private final ServletContextHelperController servletContextHelperController;
+ 	private final ClassLoader classLoader;
+ 
+ 	public ListenerRegistration(
+ 		ServiceHolder<EventListener> listenerHolder, List<Class<? extends EventListener>> classes,
+ 		ListenerDTO listenerDTO, ServletContext servletContext,
+-		ContextController contextController) {
++		ServletContextHelperController servletContextHelperController) {
+ 
+ 		super(listenerHolder.get(), listenerDTO);
+ 		this.listenerHolder = listenerHolder;
+ 		this.classes = classes;
+ 		this.servletContext = servletContext;
+-		this.contextController = contextController;
++		this.servletContextHelperController = servletContextHelperController;
+ 
+ 		classLoader = listenerHolder.getBundle().adapt(BundleWiring.class).getClassLoader();
+ 
+@@ -58,9 +58,9 @@ public class ListenerRegistration extends Registration<EventListener, ListenerDT
+ 		try {
+ 			Thread.currentThread().setContextClassLoader(classLoader);
+ 
+-			contextController.getListenerRegistrations().remove(this);
+-			contextController.getEventListeners().remove(classes, this);
+-			contextController.ungetServletContextHelper(listenerHolder.getBundle());
++			servletContextHelperController.getListenerRegistrations().remove(this);
++			servletContextHelperController.getEventListeners().remove(classes, this);
++			servletContextHelperController.ungetServletContextHelper(listenerHolder.getBundle());
+ 
+ 			super.destroy();
+ 
+@@ -69,7 +69,7 @@ public class ListenerRegistration extends Registration<EventListener, ListenerDT
+ 				classes.contains(HttpSessionListener.class)) {
+ 
+ 				Map<String, HttpSessionAdaptor> activeSessions =
+-					contextController.getActiveSessions();
++					servletContextHelperController.getActiveSessions();
+ 
+ 				for (HttpSessionAdaptor adaptor : activeSessions.values()) {
+ 					adaptor.invokeSessionListeners(classes, super.getT());
+diff --git a/org/eclipse/equinox/http/servlet/internal/registration/ResourceRegistration.java b/org/eclipse/equinox/http/servlet/internal/registration/ResourceRegistration.java
+index fc6ac646d9071..a3db0787362ab 100644
+--- a/org/eclipse/equinox/http/servlet/internal/registration/ResourceRegistration.java
++++ b/org/eclipse/equinox/http/servlet/internal/registration/ResourceRegistration.java
+@@ -12,8 +12,8 @@
+ package org.eclipse.equinox.http.servlet.internal.registration;
+ 
+ import javax.servlet.Servlet;
+-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
+ import org.eclipse.equinox.http.servlet.internal.context.ContextController.ServiceHolder;
++import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperController;
+ import org.osgi.service.http.context.ServletContextHelper;
+ import org.osgi.service.http.runtime.dto.ResourceDTO;
+ /**
+@@ -24,9 +24,9 @@ public class ResourceRegistration extends EndpointRegistration<ResourceDTO> {
+ 	public ResourceRegistration(
+ 		ServiceHolder<Servlet> servletHolder, ResourceDTO resourceDTO,
+ 		ServletContextHelper servletContextHelper,
+-		ContextController contextController, ClassLoader legacyTCCL) {
++		ServletContextHelperController servletContextHelperController, ClassLoader legacyTCCL) {
+ 
+-		super(servletHolder, resourceDTO, servletContextHelper, contextController, legacyTCCL);
++		super(servletHolder, resourceDTO, servletContextHelper, servletContextHelperController, legacyTCCL);
+ 
+ 		name = servletHolder.get().getClass().getName().concat("#").concat(getD().prefix); //$NON-NLS-1$
+ 	}
+@@ -49,3 +49,4 @@ public class ResourceRegistration extends EndpointRegistration<ResourceDTO> {
+ 	private final String name;
+ 
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/eclipse/equinox/http/servlet/internal/registration/ServletRegistration.java b/org/eclipse/equinox/http/servlet/internal/registration/ServletRegistration.java
+index d22608e7e9d37..4e999e2499d1a 100644
+--- a/org/eclipse/equinox/http/servlet/internal/registration/ServletRegistration.java
++++ b/org/eclipse/equinox/http/servlet/internal/registration/ServletRegistration.java
+@@ -13,8 +13,8 @@
+ package org.eclipse.equinox.http.servlet.internal.registration;
+ 
+ import javax.servlet.Servlet;
+-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
+ import org.eclipse.equinox.http.servlet.internal.context.ContextController.ServiceHolder;
++import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperController;
+ import org.eclipse.equinox.http.servlet.internal.servlet.Match;
+ import org.osgi.service.http.context.ServletContextHelper;
+ import org.osgi.service.http.runtime.dto.ErrorPageDTO;
+@@ -26,9 +26,9 @@ public class ServletRegistration extends EndpointRegistration<ServletDTO> {
+ 	public ServletRegistration(
+ 		ServiceHolder<Servlet> servletHolder, ServletDTO servletDTO, ErrorPageDTO errorPageDTO,
+ 		ServletContextHelper servletContextHelper,
+-		ContextController contextController, ClassLoader legacyTCCL) {
++		ServletContextHelperController servletContextHelperController, ClassLoader legacyTCCL) {
+ 
+-		super(servletHolder, servletDTO, servletContextHelper, contextController, legacyTCCL);
++		super(servletHolder, servletDTO, servletContextHelper, servletContextHelperController, legacyTCCL);
+ 
+ 		this.errorPageDTO = errorPageDTO;
+ 	}
+@@ -77,3 +77,4 @@ public class ServletRegistration extends EndpointRegistration<ServletDTO> {
+ 	private ErrorPageDTO errorPageDTO;
+ 
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/eclipse/equinox/http/servlet/internal/servlet/HttpServletRequestWrapperImpl.java b/org/eclipse/equinox/http/servlet/internal/servlet/HttpServletRequestWrapperImpl.java
+index dcdac3524ad60..9e23434c6d6b0 100644
+--- a/org/eclipse/equinox/http/servlet/internal/servlet/HttpServletRequestWrapperImpl.java
++++ b/org/eclipse/equinox/http/servlet/internal/servlet/HttpServletRequestWrapperImpl.java
+@@ -17,6 +17,7 @@ import javax.servlet.*;
+ import javax.servlet.http.*;
+ import org.eclipse.equinox.http.servlet.internal.context.ContextController;
+ import org.eclipse.equinox.http.servlet.internal.context.DispatchTargets;
++import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperController;
+ import org.eclipse.equinox.http.servlet.internal.util.Const;
+ import org.eclipse.equinox.http.servlet.internal.util.EventListeners;
+ import org.osgi.service.http.HttpContext;
+@@ -158,7 +159,7 @@ public class HttpServletRequestWrapperImpl extends HttpServletRequestWrapper {
+ 	}
+ 
+ 	public String getContextPath() {
+-		return dispatchTargets.peek().getContextController().getFullContextPath();
++		return dispatchTargets.peek().getServletContextHelperController().getFullContextPath();
+ 	}
+ 
+ 	public Object getAttribute(String attributeName) {
+@@ -205,7 +206,7 @@ public class HttpServletRequestWrapperImpl extends HttpServletRequestWrapper {
+ 			}
+ 
+ 			if (attributeName.equals(RequestDispatcher.INCLUDE_CONTEXT_PATH)) {
+-				return current.getContextController().getContextPath();
++				return current.getServletContextHelperController().getContextPath();
+ 			}
+ 			else if (attributeName.equals(RequestDispatcher.INCLUDE_PATH_INFO)) {
+ 				return current.getPathInfo();
+@@ -240,7 +241,7 @@ public class HttpServletRequestWrapperImpl extends HttpServletRequestWrapper {
+ 			DispatchTargets original = dispatchTargets.getLast();
+ 
+ 			if (attributeName.equals(RequestDispatcher.FORWARD_CONTEXT_PATH)) {
+-				return original.getContextController().getContextPath();
++				return original.getServletContextHelperController().getContextPath();
+ 			}
+ 			else if (attributeName.equals(RequestDispatcher.FORWARD_PATH_INFO)) {
+ 				return original.getPathInfo();
+@@ -266,19 +267,19 @@ public class HttpServletRequestWrapperImpl extends HttpServletRequestWrapper {
+ 	public RequestDispatcher getRequestDispatcher(String path) {
+ 		DispatchTargets currentDispatchTarget = dispatchTargets.peek();
+ 
+-		ContextController contextController =
+-			currentDispatchTarget.getContextController();
++		ServletContextHelperController servletContextHelperController =
++			currentDispatchTarget.getServletContextHelperController();
+ 
+ 		// support relative paths
+ 		if (!path.startsWith(Const.SLASH)) {
+ 			path = currentDispatchTarget.getServletPath() + Const.SLASH + path;
+ 		}
+ 		// if the path starts with the full context path strip it
+-		else if (path.startsWith(contextController.getFullContextPath())) {
+-			path = path.substring(contextController.getFullContextPath().length());
++		else if (path.startsWith(servletContextHelperController.getFullContextPath())) {
++			path = path.substring(servletContextHelperController.getFullContextPath().length());
+ 		}
+ 
+-		DispatchTargets requestedDispatchTargets = contextController.getDispatchTargets(path, null);
++		DispatchTargets requestedDispatchTargets = servletContextHelperController.getDispatchTargets(path);
+ 
+ 		if (requestedDispatchTargets == null) {
+ 			return null;
+@@ -303,7 +304,7 @@ public class HttpServletRequestWrapperImpl extends HttpServletRequestWrapper {
+ 		if (session != null) {
+ 			DispatchTargets currentDispatchTarget = dispatchTargets.peek();
+ 
+-			return currentDispatchTarget.getContextController().getSessionAdaptor(
++			return currentDispatchTarget.getServletContextHelperController().getSessionAdaptor(
+ 				session, currentDispatchTarget.getServletRegistration().getT().getServletConfig().getServletContext());
+ 		}
+ 
+@@ -332,7 +333,7 @@ public class HttpServletRequestWrapperImpl extends HttpServletRequestWrapper {
+ 
+ 		DispatchTargets currentDispatchTarget = dispatchTargets.peek();
+ 
+-		EventListeners eventListeners = currentDispatchTarget.getContextController().getEventListeners();
++		EventListeners eventListeners = currentDispatchTarget.getServletContextHelperController().getEventListeners();
+ 
+ 		List<ServletRequestAttributeListener> listeners = eventListeners.get(
+ 			ServletRequestAttributeListener.class);
+@@ -364,7 +365,7 @@ public class HttpServletRequestWrapperImpl extends HttpServletRequestWrapper {
+ 
+ 		DispatchTargets currentDispatchTarget = dispatchTargets.peek();
+ 
+-		EventListeners eventListeners = currentDispatchTarget.getContextController().getEventListeners();
++		EventListeners eventListeners = currentDispatchTarget.getServletContextHelperController().getEventListeners();
+ 
+ 		List<ServletRequestAttributeListener> listeners = eventListeners.get(
+ 			ServletRequestAttributeListener.class);
+@@ -389,4 +390,5 @@ public class HttpServletRequestWrapperImpl extends HttpServletRequestWrapper {
+ 		}
+ 	}
+ 
+-}
+\ No newline at end of file
++}
++/* @generated */
+\ No newline at end of file
+diff --git a/org/eclipse/equinox/http/servlet/internal/servlet/HttpSessionAdaptor.java b/org/eclipse/equinox/http/servlet/internal/servlet/HttpSessionAdaptor.java
+index f02379752e052..23f6446f33ae9 100644
+--- a/org/eclipse/equinox/http/servlet/internal/servlet/HttpSessionAdaptor.java
++++ b/org/eclipse/equinox/http/servlet/internal/servlet/HttpSessionAdaptor.java
+@@ -16,13 +16,14 @@ import java.io.Serializable;
+ import java.util.*;
+ import javax.servlet.ServletContext;
+ import javax.servlet.http.*;
+-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
++
++import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperController;
+ 
+ // This class adapts HttpSessions in order to return the right ServletContext and attributes
+ public class HttpSessionAdaptor implements HttpSession, Serializable {
+ 	private static final long serialVersionUID = 3418610936889860782L;
+ 
+-	private transient final ContextController controller;
++	private transient final ServletContextHelperController servletContextHelperController;
+ 	private transient final HttpSession session;
+ 	private transient final ServletContext servletContext;
+ 	private transient final String attributePrefix;
+@@ -30,8 +31,8 @@ public class HttpSessionAdaptor implements HttpSession, Serializable {
+ 	private final String id;
+ 
+ 	static public HttpSessionAdaptor createHttpSessionAdaptor(
+-		HttpSession session, ServletContext servletContext, ContextController controller) {
+-		HttpSessionAdaptor sessionAdaptor = new HttpSessionAdaptor(session, servletContext, controller);
++		HttpSession session, ServletContext servletContext, ServletContextHelperController servletContextHelperController) {
++		HttpSessionAdaptor sessionAdaptor = new HttpSessionAdaptor(session, servletContext, servletContextHelperController);
+ 
+ 		HttpSessionTracker.addHttpSessionAdaptor(sessionAdaptor);
+ 
+@@ -39,18 +40,18 @@ public class HttpSessionAdaptor implements HttpSession, Serializable {
+ 	}
+ 
+ 	private HttpSessionAdaptor(
+-		HttpSession session, ServletContext servletContext, ContextController controller) {
++		HttpSession session, ServletContext servletContext, ServletContextHelperController servletContextHelperController) {
+ 
+ 		this.session = session;
+ 		this.servletContext = servletContext;
+-		this.controller = controller;
+-		this.attributePrefix = "equinox.http." + controller.getContextName(); //$NON-NLS-1$
++		this.servletContextHelperController = servletContextHelperController;
++		this.attributePrefix = "equinox.http." + servletContextHelperController.getContextName(); //$NON-NLS-1$
+ 
+ 		this.id = session.getId();
+ 	}
+ 
+-	public ContextController getController() {
+-		return controller;
++	public ServletContextHelperController getServletContextHelperController() {
++		return servletContextHelperController;
+ 	}
+ 
+ 	public HttpSession getSession() {
+@@ -95,7 +96,7 @@ public class HttpSessionAdaptor implements HttpSession, Serializable {
+ 	public void invalidate() {
+ 		HttpSessionEvent httpSessionEvent = new HttpSessionEvent(this);
+ 
+-		for (HttpSessionListener listener : controller.getEventListeners().get(HttpSessionListener.class)) {
++		for (HttpSessionListener listener : servletContextHelperController.getEventListeners().get(HttpSessionListener.class)) {
+ 			try {
+ 				listener.sessionDestroyed(httpSessionEvent);
+ 			}
+@@ -120,7 +121,7 @@ public class HttpSessionAdaptor implements HttpSession, Serializable {
+ 			// outer session is already invalidated
+ 		}
+ 
+-		controller.removeActiveSession(id);
++		servletContextHelperController.removeActiveSession(id);
+ 	}
+ 
+ 	public void invokeSessionListeners (List<Class<? extends EventListener>> classes, EventListener listener) {
+@@ -172,7 +173,7 @@ public class HttpSessionAdaptor implements HttpSession, Serializable {
+ 		}
+ 
+ 		List<HttpSessionAttributeListener> listeners =
+-			controller.getEventListeners().get(
++			servletContextHelperController.getEventListeners().get(
+ 				HttpSessionAttributeListener.class);
+ 
+ 		if (listeners.isEmpty()) {
+@@ -206,7 +207,7 @@ public class HttpSessionAdaptor implements HttpSession, Serializable {
+ 		session.setAttribute(newName, value);
+ 
+ 		List<HttpSessionAttributeListener> listeners =
+-			controller.getEventListeners().get(
++			servletContextHelperController.getEventListeners().get(
+ 				HttpSessionAttributeListener.class);
+ 
+ 		if (!listeners.isEmpty()) {
+@@ -277,3 +278,4 @@ public class HttpSessionAdaptor implements HttpSession, Serializable {
+ 		HttpSessionAdaptor.class.getSimpleName();
+ 
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/eclipse/equinox/http/servlet/internal/servlet/HttpSessionTracker.java b/org/eclipse/equinox/http/servlet/internal/servlet/HttpSessionTracker.java
+index 5628c3fc0b3fe..28ec843e7c885 100644
+--- a/org/eclipse/equinox/http/servlet/internal/servlet/HttpSessionTracker.java
++++ b/org/eclipse/equinox/http/servlet/internal/servlet/HttpSessionTracker.java
+@@ -18,7 +18,7 @@ import java.util.*;
+ import java.util.concurrent.ConcurrentHashMap;
+ import java.util.concurrent.ConcurrentMap;
+ import javax.servlet.http.*;
+-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
++import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperController;
+ import org.eclipse.equinox.http.servlet.internal.util.EventListeners;
+ 
+ /**
+@@ -35,11 +35,11 @@ public class HttpSessionTracker {
+ 		}
+ 
+ 		for (HttpSessionAdaptor httpSessionAdaptor : httpSessionAdaptors) {
+-			ContextController contextController =
+-				httpSessionAdaptor.getController();
++			ServletContextHelperController servletContextHelperController =
++				httpSessionAdaptor.getServletContextHelperController();
+ 
+ 			EventListeners eventListeners =
+-				contextController.getEventListeners();
++				servletContextHelperController.getEventListeners();
+ 
+ 			List<HttpSessionListener> httpSessionListeners = eventListeners.get(
+ 				HttpSessionListener.class);
+@@ -80,7 +80,7 @@ public class HttpSessionTracker {
+ 				}
+ 			}
+ 
+-			contextController.removeActiveSession(httpSessionAdaptor.getId());
++			servletContextHelperController.removeActiveSession(httpSessionAdaptor.getId());
+ 		}
+ 	}
+ 
+@@ -125,4 +125,5 @@ public class HttpSessionTracker {
+ 		_httpSessionAdaptorsMap =
+ 			new ConcurrentHashMap<String, Set<HttpSessionAdaptor>>();
+ 
+-}
+\ No newline at end of file
++}
++/* @generated */
+\ No newline at end of file
+diff --git a/org/eclipse/equinox/http/servlet/internal/servlet/ResponseStateHandler.java b/org/eclipse/equinox/http/servlet/internal/servlet/ResponseStateHandler.java
+index 5247943c5dbce..dc39e163a2f32 100644
+--- a/org/eclipse/equinox/http/servlet/internal/servlet/ResponseStateHandler.java
++++ b/org/eclipse/equinox/http/servlet/internal/servlet/ResponseStateHandler.java
+@@ -16,11 +16,10 @@ import java.util.Collections;
+ import java.util.List;
+ import javax.servlet.*;
+ import javax.servlet.http.*;
+-import org.eclipse.equinox.http.servlet.internal.context.ContextController;
+ import org.eclipse.equinox.http.servlet.internal.context.DispatchTargets;
++import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperController;
+ import org.eclipse.equinox.http.servlet.internal.registration.EndpointRegistration;
+ import org.eclipse.equinox.http.servlet.internal.registration.FilterRegistration;
+-import org.eclipse.equinox.http.servlet.internal.servlet.HttpServletResponseWrapperImpl;
+ 
+ /**
+  * @author Raymond Augé
+@@ -108,7 +107,7 @@ public class ResponseStateHandler {
+ 	}
+ 
+ 	private List<ServletRequestListener> getServletRequestListener() {
+-		return dispatchTargets.getContextController().getEventListeners().get(ServletRequestListener.class);
++		return dispatchTargets.getServletContextHelperController().getEventListeners().get(ServletRequestListener.class);
+ 	}
+ 
+ 	private void handleErrors() throws IOException, ServletException {
+@@ -152,12 +151,12 @@ public class ResponseStateHandler {
+ 			throwException(exception);
+ 		}
+ 
+-		ContextController contextController = dispatchTargets.getContextController();
++		ServletContextHelperController servletContextHelperController = dispatchTargets.getServletContextHelperController();
+ 		Class<? extends Exception> clazz = exception.getClass();
+ 		final String className = clazz.getName();
+ 
+-		final DispatchTargets errorDispatchTargets = contextController.getDispatchTargets(
+-			className, null, null, null, null, null, Match.EXACT, null);
++		final DispatchTargets errorDispatchTargets = servletContextHelperController.getDispatchTargets(
++			className, null, null, null, null, null, Match.EXACT);
+ 
+ 		if (errorDispatchTargets == null) {
+ 			throwException(exception);
+@@ -243,10 +242,10 @@ public class ResponseStateHandler {
+ 			return;
+ 		}
+ 
+-		ContextController contextController = dispatchTargets.getContextController();
++		ServletContextHelperController servletContextHelperController = dispatchTargets.getServletContextHelperController();
+ 
+-		DispatchTargets errorDispatchTargets = contextController.getDispatchTargets(
+-			String.valueOf(status), null, null, null, null, null, Match.EXACT, null);
++		DispatchTargets errorDispatchTargets = servletContextHelperController.getDispatchTargets(
++			String.valueOf(status), null, null, null, null, null, Match.EXACT);
+ 
+ 		if (errorDispatchTargets == null) {
+ 			wrappedResponse.sendError(status, responseWrapper.getMessage());
+@@ -320,4 +319,5 @@ public class ResponseStateHandler {
+ 	HttpServletRequest request;
+ 	HttpServletResponse response;
+ 
+-}
+\ No newline at end of file
++}
++/* @generated */
+\ No newline at end of file
+diff --git a/org/eclipse/equinox/http/servlet/internal/servlet/ServletContextAdaptor.java b/org/eclipse/equinox/http/servlet/internal/servlet/ServletContextAdaptor.java
+index 10257abe0806d..d6052110da39c 100644
+--- a/org/eclipse/equinox/http/servlet/internal/servlet/ServletContextAdaptor.java
++++ b/org/eclipse/equinox/http/servlet/internal/servlet/ServletContextAdaptor.java
+@@ -72,12 +72,12 @@ public class ServletContextAdaptor {
+ 	}
+ 
+ 	public ServletContextAdaptor(
+-		ContextController contextController, Bundle bundle,
++		ServletContextHelperController servletContextHelperController, Bundle bundle,
+ 		ServletContextHelper servletContextHelper,
+ 		ServletContextHelperDataContext servletContextHelperDataContext,
+ 		EventListeners eventListeners, AccessControlContext acc) {
+ 
+-		this.contextController = contextController;
++		this.servletContextHelperController = servletContextHelperController;
+ 		this.servletContextHelperDataContext = servletContextHelperDataContext;
+ 		this.servletContext = servletContextHelperDataContext.getServletContext();
+ 		this.servletContextHelper = servletContextHelper;
+@@ -116,7 +116,7 @@ public class ServletContextAdaptor {
+ 
+ 		AdaptorInvocationHandler adaptorInvocationHandler = (AdaptorInvocationHandler)invocationHandler;
+ 
+-		return contextController.equals(adaptorInvocationHandler.getContextController());
++		return servletContextHelperController.equals(adaptorInvocationHandler.getContextController());
+ 	}
+ 
+ 	public ClassLoader getClassLoader() {
+@@ -124,7 +124,7 @@ public class ServletContextAdaptor {
+ 	}
+ 
+ 	public String getContextPath() {
+-		return contextController.getFullContextPath();
++		return servletContextHelperController.getFullContextPath();
+ 	}
+ 
+ 	public Object getAttribute(String attributeName) {
+@@ -143,12 +143,12 @@ public class ServletContextAdaptor {
+ 	}
+ 
+ 	public String getInitParameter(String name) {
+-		return contextController.getInitParams().get(name);
++		return servletContextHelperController.getInitParams().get(name);
+ 	}
+ 
+ 	public Enumeration<String> getInitParameterNames() {
+ 		return Collections.enumeration(
+-			contextController.getInitParams().keySet());
++			servletContextHelperController.getInitParams().keySet());
+ 	}
+ 
+ 	public String getMimeType(final String name) {
+@@ -171,8 +171,8 @@ public class ServletContextAdaptor {
+ 	}
+ 
+ 	public RequestDispatcher getNamedDispatcher(String servletName) {
+-		DispatchTargets dispatchTargets = contextController.getDispatchTargets(
+-			servletName, null, null, null, null, null, Match.EXACT, null);
++		DispatchTargets dispatchTargets = servletContextHelperController.getDispatchTargets(
++			servletName, null, null, null, null, null, Match.EXACT);
+ 
+ 		if (dispatchTargets == null) {
+ 			return null;
+@@ -204,11 +204,11 @@ public class ServletContextAdaptor {
+ 			return null;
+ 		}
+ 		// if the path starts with the full context path strip it
+-		if (path.startsWith(contextController.getFullContextPath())) {
+-			path = path.substring(contextController.getFullContextPath().length());
++		if (path.startsWith(servletContextHelperController.getFullContextPath())) {
++			path = path.substring(servletContextHelperController.getFullContextPath().length());
+ 		}
+ 
+-		DispatchTargets dispatchTargets = contextController.getDispatchTargets(path, null);
++		DispatchTargets dispatchTargets = servletContextHelperController.getDispatchTargets(path);
+ 
+ 		if (dispatchTargets == null) {
+ 			return null;
+@@ -273,11 +273,11 @@ public class ServletContextAdaptor {
+ 	}
+ 
+ 	public String getServletContextName() {
+-		return contextController.getContextName();
++		return servletContextHelperController.getContextName();
+ 	}
+ 
+ 	public int hashCode() {
+-		return contextController.hashCode();
++		return servletContextHelperController.hashCode();
+ 	}
+ 
+ 	public void removeAttribute(String attributeName) {
+@@ -383,7 +383,7 @@ public class ServletContextAdaptor {
+ 		String value = string;
+ 
+ 		if (value == null) {
+-			value = SIMPLE_NAME + '[' + contextController + ']';
++			value = SIMPLE_NAME + '[' + servletContextHelperController + ']';
+ 
+ 			string = value;
+ 		}
+@@ -425,8 +425,8 @@ public class ServletContextAdaptor {
+ 	private class AdaptorInvocationHandler implements InvocationHandler {
+ 		public AdaptorInvocationHandler() {}
+ 
+-		public ContextController getContextController() {
+-			return contextController;
++		public ServletContextHelperController getContextController() {
++			return servletContextHelperController;
+ 		}
+ 
+ 		public Object invoke(Object proxy, Method method, Object[] args)
+@@ -444,7 +444,7 @@ public class ServletContextAdaptor {
+ 	private final AccessControlContext acc;
+ 	private final Bundle bundle;
+ 	private final ClassLoader classLoader;
+-	final ContextController contextController;
++	final ServletContextHelperController servletContextHelperController;
+ 	private final EventListeners eventListeners;
+ 	private final ServletContextHelperDataContext servletContextHelperDataContext;
+ 	private final ServletContext servletContext;

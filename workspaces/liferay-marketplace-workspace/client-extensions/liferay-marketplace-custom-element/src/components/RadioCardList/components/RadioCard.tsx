@@ -34,8 +34,9 @@ const NewRadioCard = ({
 	return (
 		<div
 			className={classNames(
-				'align-items-center d-flex justify-content-between form-control mb-5 cursor-pointer py-4 px-0',
+				'align-items-center cursor-pointer d-flex form-control justify-content-between mb-5 px-0 py-4 radio-card',
 				{
+					'bg-transparent': !activeRadio,
 					'radio-selected': activeRadio,
 				}
 			)}

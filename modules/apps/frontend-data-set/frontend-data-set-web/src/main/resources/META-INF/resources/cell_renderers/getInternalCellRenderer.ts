@@ -4,7 +4,6 @@
  */
 
 import {IInternalRenderer} from '../FrontendDataSetContext';
-
 import DefaultRenderer from './DefaultRenderer';
 import {INTERNAL_CELL_RENDERERS} from './InternalCellRenderer';
 

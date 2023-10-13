@@ -25,7 +25,10 @@
 		<column name="commerceChannelId" type="long" />
 		<column name="amount" type="BigDecimal" />
 		<column name="callbackURL" type="String" />
+		<column name="cancelURL" type="String" />
 		<column name="currencyCode" type="String" />
+		<column name="errorMessages" type="String" />
+		<column name="languageId" type="String" />
 		<column name="paymentIntegrationKey" type="String" />
 		<column name="paymentIntegrationType" type="int" />
 		<column name="paymentStatus" type="int" />

@@ -353,12 +353,15 @@ public class PortletDocumentFragmentEntryProcessor
 		for (com.liferay.portal.kernel.model.PortletPreferences
 				portletPreferencesImpl : portletPreferencesList) {
 
+			if (plid != portletPreferencesImpl.getPlid()) {
+				continue;
+			}
+
 			PortletPreferences currentPortletPreferences =
 				_portletPreferenceValueLocalService.getPreferences(
 					portletPreferencesImpl);
 
-			if ((plid != portletPreferencesImpl.getPlid()) ||
-				_comparePreferences(
+			if (_comparePreferences(
 					currentPortletPreferences, jxPortletPreferences)) {
 
 				continue;

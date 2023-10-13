@@ -48,7 +48,7 @@ definition {
 	@description = "LPS-158522: Upgrade client can connect to Gogo Shell"
 	@priority = 3
 	test CheckUpgradeClientGogoShell {
-		AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "check-upgrade-client-gogoshell");
+		AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "execute-upgrade-client-gogoshell");
 	}
 
 	@description = "LPS-158522: Upgrade client can connect to Gogo Shell and check upgrade"

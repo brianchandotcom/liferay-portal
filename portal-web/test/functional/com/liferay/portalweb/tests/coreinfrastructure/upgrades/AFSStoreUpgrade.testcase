@@ -62,7 +62,7 @@ definition {
 		property skip.upgrade-legacy-database = "true";
 		property testcase.url = "http://www.example.com";
 
-		AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "check-upgrade-client-gogoshell");
+		AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "execute-upgrade-client-gogoshell");
 
 		Log.viewUpgradeLogContentPresent(logContent = "Missing default Store");
 	}

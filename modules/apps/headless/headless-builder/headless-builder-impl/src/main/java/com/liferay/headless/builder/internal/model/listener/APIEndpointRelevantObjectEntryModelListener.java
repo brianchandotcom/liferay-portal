@@ -166,7 +166,12 @@ public class APIEndpointRelevantObjectEntryModelListener
 					String message = null;
 					String messageKey = null;
 
-					if (pathString.startsWith(StringPool.FORWARD_SLASH)) {
+					if (!StringUtil.isLowerCase(pathString)) {
+						message = "%s must contain only lower case characters";
+						messageKey =
+							"x-must-contain-only-lower-case-characters";
+					}
+					else if (pathString.startsWith(StringPool.FORWARD_SLASH)) {
 						message =
 							"%s can have a maximum of 255 alphanumeric " +
 								"characters";
@@ -314,6 +319,18 @@ public class APIEndpointRelevantObjectEntryModelListener
 				"single-element-id-endpoint-cannot-be-scoped-by-group");
 		}
 
+		String pathInParameterString = StringUtil.extractLast(
+			pathString, StringPool.FORWARD_SLASH);
+
+		if (!StringUtil.isLowerCase(
+				StringUtil.extractFirst(pathString, pathInParameterString))) {
+
+			throw new ObjectEntryValuesException.InvalidObjectField(
+				Arrays.asList(objectField.getLabel(user.getLocale())),
+				"%s must contain only lower case characters",
+				"x-must-contain-only-lower-case-characters");
+		}
+
 		Matcher singleElementPathMatcher = _singleElementPathPattern.matcher(
 			pathString);
 
@@ -323,9 +340,6 @@ public class APIEndpointRelevantObjectEntryModelListener
 				"%s can have a maximum of 255 alphanumeric characters",
 				"x-can-have-a-maximum-of-255-alphanumeric-characters");
 		}
-
-		String pathInParameterString = StringUtil.extractLast(
-			pathString, StringPool.FORWARD_SLASH);
 
 		Matcher curlyBraceMatcher = _curlyBracePattern.matcher(
 			pathInParameterString);
@@ -341,7 +355,7 @@ public class APIEndpointRelevantObjectEntryModelListener
 	private static final Pattern _curlyBracePattern = Pattern.compile(
 		"^\\{[a-zA-Z0-9]+\\}$");
 	private static final Pattern _pathPattern = Pattern.compile(
-		"/[a-zA-Z0-9][a-zA-Z0-9-/]{1,253}");
+		"/[a-z0-9][a-z0-9-/]{1,253}");
 	private static final Pattern _singleElementPathPattern = Pattern.compile(
 		"/[a-zA-Z0-9][a-zA-Z0-9-/-{\\-}]{1,253}");
 

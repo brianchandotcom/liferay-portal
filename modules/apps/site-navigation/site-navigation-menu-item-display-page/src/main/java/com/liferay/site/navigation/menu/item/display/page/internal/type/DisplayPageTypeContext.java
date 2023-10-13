@@ -17,6 +17,7 @@ import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProviderRe
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
+import com.liferay.petra.string.StringPool;
 
 import java.util.Locale;
 
@@ -69,7 +70,7 @@ public class DisplayPageTypeContext {
 		InfoItemClassDetails infoItemClassDetails = getInfoItemClassDetails();
 
 		if (infoItemClassDetails == null) {
-			return null;
+			return StringPool.BLANK;
 		}
 
 		return infoItemClassDetails.getLabel(locale);

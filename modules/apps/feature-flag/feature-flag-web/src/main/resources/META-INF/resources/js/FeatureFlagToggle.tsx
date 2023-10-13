@@ -12,8 +12,6 @@ interface IProps {
 	disabled: boolean;
 	featureFlagKey: string;
 	inputName: string;
-	labelOff: string;
-	labelOn: string;
 	onItemsChange: (value: Array<any>) => void;
 	toggled: boolean;
 }
@@ -24,8 +22,6 @@ const FeatureFlagToggle = ({
 	disabled,
 	featureFlagKey,
 	inputName,
-	labelOff,
-	labelOn,
 	onItemsChange,
 	toggled: initialToggled,
 }: IProps) => {
@@ -49,11 +45,12 @@ const FeatureFlagToggle = ({
 			);
 
 			if (response.ok) {
-				const responseData = await response.json();
+				const data = await response.json();
+
 				setToggled(newToggled);
 
-				if (responseData.dependentFeatureFlags.length) {
-					onItemsChange(responseData.dependentFeatureFlags);
+				if (data.dependentFeatureFlags.length) {
+					onItemsChange(data.dependentFeatureFlags);
 				}
 			}
 			else {
@@ -76,7 +73,11 @@ const FeatureFlagToggle = ({
 				aria-describedby={ariaDescribedBy}
 				disabled={disabled || isLoading}
 				id={inputName}
-				label={toggled ? labelOn : labelOff}
+				label={
+					toggled
+						? Liferay.Language.get('enabled')
+						: Liferay.Language.get('disabled')
+				}
 				onToggle={updateToggled}
 				toggled={toggled}
 				type="checkbox"

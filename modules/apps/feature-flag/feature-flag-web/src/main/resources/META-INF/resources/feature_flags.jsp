@@ -36,10 +36,8 @@ SearchContainer<FeatureFlagDisplay> searchContainer = featureFlagsDisplayContext
 			</div>
 
 			<liferay-ui:search-paginator
-				id="featureFlagPageIteratorTop"
 				markupView="lexicon"
 				searchContainer="<%= searchContainer %>"
-				type="article"
 			/>
 		</clay:sheet-section>
 	</clay:sheet>

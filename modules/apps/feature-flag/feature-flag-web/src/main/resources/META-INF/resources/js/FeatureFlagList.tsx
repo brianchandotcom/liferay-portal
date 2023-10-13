@@ -27,76 +27,6 @@ interface IFeatureFlagListProps {
 const FeatureFlagList: React.FC<IFeatureFlagListProps> = ({featureFlags}) => {
 	const [items, setItems] = useState<TFeatureFlags[]>(featureFlags);
 
-	const displayFeatureFlag = (items: TFeatureFlags[]) =>
-		items.map(
-			({
-				companyId,
-				dependenciesFulfilled,
-				dependencyKeys,
-				description,
-				enabled,
-				key,
-				title,
-			}: TFeatureFlags) => {
-				const dependency = dependencyKeys.map((dep: string) => dep);
-
-				return (
-					<ClayList.Item flex key={key}>
-						<ClayList.ItemField expand>
-							<ClayList.ItemTitle>
-								{title}{' '}
-
-								<span className="text-muted"> ({key})</span>
-							</ClayList.ItemTitle>
-
-							<ClayList.ItemText>{description}</ClayList.ItemText>
-
-							{!!dependencyKeys.length && (
-								<ClayList.ItemText>
-									{sub(
-										Liferay.Language.get('dependencies-x'),
-										[(dependency as unknown) as string]
-									)}
-								</ClayList.ItemText>
-							)}
-						</ClayList.ItemField>
-
-						<ClayList.ItemField>
-							<FeatureFlagToggle
-								ariaDescribedBy={title}
-								companyId={companyId}
-								disabled={!dependenciesFulfilled}
-								featureFlagKey={key}
-								inputName={key}
-								labelOff={Liferay.Language.get('disabled')}
-								labelOn={Liferay.Language.get('enabled')}
-								onItemsChange={(newItems) => {
-									setItems((items) =>
-										items.map((item) => {
-											const newItem = newItems.find(
-												(newItem) => {
-													return (
-														newItem.key === item.key
-													);
-												}
-											);
-
-											if (newItem) {
-												return newItem;
-											}
-
-											return item;
-										})
-									);
-								}}
-								toggled={enabled}
-							/>
-						</ClayList.ItemField>
-					</ClayList.Item>
-				);
-			}
-		);
-
 	return (
 		<>
 			{!items.length && (
@@ -114,7 +44,81 @@ const FeatureFlagList: React.FC<IFeatureFlagListProps> = ({featureFlags}) => {
 				/>
 			)}
 
-			{!!items.length && <ClayList>{displayFeatureFlag(items)}</ClayList>}
+			{!!items.length && (
+				<ClayList>
+					{items.map(
+						({
+							companyId,
+							dependenciesFulfilled,
+							dependencyKeys,
+							description,
+							enabled,
+							key,
+							title,
+						}: TFeatureFlags) => {
+							return (
+								<ClayList.Item flex key={key}>
+									<ClayList.ItemField expand>
+										<ClayList.ItemTitle>
+											{title}{' '}
+											
+											<span className="text-muted">
+												({key})
+											</span>
+										</ClayList.ItemTitle>
+
+										<ClayList.ItemText>
+											{description}
+										</ClayList.ItemText>
+
+										{!!dependencyKeys.length && (
+											<ClayList.ItemText>
+												{sub(
+													Liferay.Language.get(
+														'dependencies-x'
+													),
+													dependencyKeys as string[]
+												)}
+											</ClayList.ItemText>
+										)}
+									</ClayList.ItemField>
+
+									<ClayList.ItemField>
+										<FeatureFlagToggle
+											ariaDescribedBy={title}
+											companyId={companyId}
+											disabled={!dependenciesFulfilled}
+											featureFlagKey={key}
+											inputName={key}
+											onItemsChange={(newItems) => {
+												setItems((items) =>
+													items.map((item) => {
+														const newItem = newItems.find(
+															(newItem) => {
+																return (
+																	newItem.key ===
+																	item.key
+																);
+															}
+														);
+
+														if (newItem) {
+															return newItem;
+														}
+
+														return item;
+													})
+												);
+											}}
+											toggled={enabled}
+										/>
+									</ClayList.ItemField>
+								</ClayList.Item>
+							);
+						}
+					)}
+				</ClayList>
+			)}
 		</>
 	);
 };

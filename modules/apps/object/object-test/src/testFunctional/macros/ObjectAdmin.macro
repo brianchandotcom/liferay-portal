@@ -1306,7 +1306,7 @@ definition {
 				key_name = ${labelName},
 				locator1 = "CreateObject#SELECT_ANY_OBJECT_FIELD_IN_TABLE");
 
-			MenuItem.clickNoError(menuItem = "View");
+			MenuItem.clickNoError(menuItem = "Edit");
 		}
 		else {
 			Click(

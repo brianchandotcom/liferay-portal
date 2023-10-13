@@ -21,7 +21,10 @@ definition {
 		task ("Create a new Raylife AP Site") {
 			Site.openSitesAdmin();
 
-			Raylife.createRaylifeSite(siteName = "Raylife D2C");
+			HeadlessSite.addSite(
+				siteName = "Raylife D2C",
+				templateName = "Raylife D2C",
+				templateType = "Site Initializer");
 
 			Raylife.createRaylifeSite(siteName = "Raylife AP");
 		}
@@ -29,6 +32,10 @@ definition {
 
 	tearDown {
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "test test");
 
 		RaylifeAP.tearDownCP();
 
@@ -61,7 +68,9 @@ definition {
 
 			AssertElementPresent(locator1 = "RaylifeAP#LOGIN_PAGE");
 
-			RaylifeAP.signIn();
+			RaylifeAP.signIn(
+				emailAddress = "test@liferay.com",
+				password = "test");
 
 			AssertElementPresent(
 				key_title = "Hi, Test Test.",
@@ -121,9 +130,7 @@ definition {
 				emailAddress = "",
 				password = "test");
 
-			RaylifeAP.assertFieldRequiredMessage(field = "The Login field is required.");
-
-			User.firstLoginPG();
+			RaylifeAP.assertFieldRequiredMessage(field = "The Email Address field is required.");
 		}
 	}
 

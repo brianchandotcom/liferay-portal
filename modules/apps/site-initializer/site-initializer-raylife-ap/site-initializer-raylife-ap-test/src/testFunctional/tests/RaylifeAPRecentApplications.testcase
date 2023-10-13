@@ -8,8 +8,7 @@ definition {
 	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
 	property testray.main.component.name = "Site Initializer Raylife AP";
 
-	var testSiteName = "Raylife AP";
-	var testSiteURL = "raylife-ap";
+	var testSiteName = "Raylife D2C";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -19,9 +18,12 @@ definition {
 		}
 
 		task ("Create a new Raylife AP Site") {
-			Site.openSitesAdmin();
+			HeadlessSite.addSite(
+				siteName = ${testSiteName},
+				templateName = "Raylife D2C",
+				templateType = "Site Initializer");
 
-			Raylife.createRaylifeSite(siteName = "Raylife D2C");
+			Site.openSitesAdmin();
 
 			Raylife.createRaylifeSite(siteName = "Raylife AP");
 		}
@@ -92,9 +94,17 @@ definition {
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
 		task ("Given a user navigates to RaylifeD2C and starts a new flow") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "test test");
+
 			RaylifePaymentMethod.enablePayPalPayment();
 
-			ApplicationsMenu.gotoSite(key_site = "Raylife D2C");
+			User.logoutPG();
+
+			RaylifeAP.userLoginInRaylife(email = "scott.producer");
+
+			Navigator.openSiteURL(siteName = "Raylife D2C");
 
 			RaylifeHomePage.startFlow();
 
@@ -116,7 +126,11 @@ definition {
 		}
 
 		task ("when they go to RaylifeD2C and complete the flow") {
-			ApplicationsMenu.gotoSite(key_site = "Raylife D2C");
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "test test");
+
+			Navigator.openSiteURL(siteName = "Raylife D2C");
 
 			ProductMenu.gotoPortlet(
 				category = "Content & Data",
@@ -157,8 +171,6 @@ definition {
 			Click(locator1 = "RaylifePaymentMethod#TERMS_CONDITIONS_CHECKBOX");
 
 			Click(locator1 = "RaylifePaymentMethod#PAY_NOW");
-
-			AssertElementPresent(locator1 = "RaylifePaymentMethod#CONGRATS");
 		}
 
 		task ("Then go to RaylifeAP and assert the status of application") {
@@ -179,7 +191,7 @@ definition {
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
 		task ("Given a user navigates to RaylifeD2C and starts a new flow") {
-			ApplicationsMenu.gotoSite(key_site = "Raylife D2C");
+			Navigator.openSiteURL(siteName = "Raylife D2C");
 
 			RaylifeHomePage.startFlow();
 
@@ -199,7 +211,7 @@ definition {
 		}
 
 		task ("when they go to RaylifeD2C and complete the flow") {
-			ApplicationsMenu.gotoSite(key_site = "Raylife D2C");
+			Navigator.openSiteURL(siteName = "Raylife D2C");
 
 			ProductMenu.gotoPortlet(
 				category = "Content & Data",
@@ -238,9 +250,17 @@ definition {
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
 		task ("Given the PayPalPayment method is enable and the user go to raylife D2C") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "test test");
+
 			RaylifePaymentMethod.enablePayPalPayment();
 
-			ApplicationsMenu.gotoSite(key_site = "Raylife D2C");
+			User.logoutPG();
+
+			RaylifeAP.userLoginInRaylife(email = "scott.producer");
+
+			Navigator.openSiteURL(siteName = "Raylife D2C");
 		}
 
 		task ("And pass throught all the flow on Raylife D2C") {

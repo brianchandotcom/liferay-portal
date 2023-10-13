@@ -174,7 +174,7 @@ definition {
 
 		RaylifeApplicationModal.selectOptionInDropdownByName(
 			field = "millitary-affiliation",
-			text = ${millitaryAffiliation});
+			text = ${militaryAffiliation});
 
 		if (isSet(addAccidentCitation)) {
 			DoubleClick(

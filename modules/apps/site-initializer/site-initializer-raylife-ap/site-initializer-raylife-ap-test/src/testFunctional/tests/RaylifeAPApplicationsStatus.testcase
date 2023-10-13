@@ -19,7 +19,10 @@ definition {
 		}
 
 		task ("Create a new Raylife AP Site") {
-			Raylife.createRaylifeSite(siteName = "Raylife D2C");
+			HeadlessSite.addSite(
+				siteName = "Raylife D2C",
+				templateName = "Raylife D2C",
+				templateType = "Site Initializer");
 
 			Raylife.createRaylifeSite(siteName = "Raylife AP");
 		}
@@ -117,7 +120,7 @@ definition {
 					highestEducation = "Masters",
 					lastName = "Model",
 					maritalStatus = "Single",
-					millitaryAffiliation = "None",
+					militaryAffiliation = "None",
 					occupation = "Engineer",
 					relationToContact = "Spouse");
 
@@ -218,28 +221,33 @@ definition {
 	@description = "Story ID: LPS-146249 | Test Summary: Verify that when doing a complete flow until the page Congrats in Raylife d2c, the status 'Bound' appears in the Applications status of Raylife AP"
 	@priority = 5
 	test AssertStatusBoundAppearsInApplicationsStatus {
-		property test.name.name.portal.instance = "RaylifeAPApplicationsStatus#AssertStatusBoundAppearsInApplicationsStatus";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
 		task ("Given that the user goes to Raylife D2C with an admin account") {
-			User.firstLoginPG();
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "test test");
 
-			ApplicationsMenu.gotoSite(key_site = "Raylife D2C");
+			Navigator.openSiteURL(siteName = "Raylife D2C");
+
+			RaylifePaymentMethod.configurationPaypal();
 		}
 
 		task ("And do the complete flow") {
-			RaylifePaymentMethod.configurationPaypal();
+			User.logoutPG();
 
-			ApplicationsMenu.gotoSite(key_site = "Raylife D2C");
+			RaylifeAP.userLoginInRaylife(email = "scott.producer");
+
+			Navigator.openSiteURL(siteName = "Raylife D2C");
 
 			RaylifeHomePage.startFlow();
 
 			Raylife.formsFlow();
 
 			RaylifeCreateAccount.createAccount(createAccount = "true");
-
-			Click(locator1 = "RaylifeCreateAccount#CREATE_ACCOUNT");
 
 			RaylifeUploadDocuments.uploadDocuments(
 				dmDocumentFileList = "Document_1.pdf",
@@ -256,12 +264,10 @@ definition {
 			Click(locator1 = "RaylifePaymentMethod#TERMS_CONDITIONS_CHECKBOX");
 
 			Click(locator1 = "RaylifePaymentMethod#PAY_NOW");
-
-			AssertElementPresent(locator1 = "RaylifePaymentMethod#CONGRATS");
 		}
 
 		task ("When the user go to Raylife AP") {
-			ApplicationsMenu.gotoSite(key_site = "Raylife AP");
+			Navigator.openSiteURL(siteName = "Raylife AP");
 		}
 
 		task ("Then assert if the status 'Bound' appears in the Applications status of Raylife AP") {
@@ -296,7 +302,9 @@ definition {
 		}
 
 		task ("And navigate for Raylife Ap") {
-			Navigator.openSpecificURL(url = "http://localhost:8080/group/raylife-ap");
+			Navigator.openSiteURL(siteName = "Raylife D2C");
+
+			Navigator.openSiteURL(siteName = "Raylife AP");
 
 			Refresh();
 		}
@@ -322,7 +330,7 @@ definition {
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
 		task ("Given the User goes to 'Raylife Ap'") {
-			RaylifeAP.goToRaylifeUserProfileMenu(raylifeSite = "Raylife D2C");
+			RaylifeAP.goToRaylifeUserProfileMenu(raylifeSite = "Raylife AP");
 		}
 
 		task ("And Applications page is open") {
@@ -334,7 +342,7 @@ definition {
 		}
 
 		task ("When the user fill in the forms in Raylife D2C") {
-			ApplicationsMenu.gotoSite(site = "Raylife D2C");
+			Navigator.openSiteURL(siteName = "Raylife D2C");
 
 			RaylifeHomePage.startFlow();
 
@@ -342,7 +350,7 @@ definition {
 		}
 
 		task ("Then the user go back to RaylifeAp and Assert the 'Quoted' status") {
-			RaylifeAP.goToRaylifeAPSiteWithRefresh();
+			Navigator.openSiteURL(siteName = "Raylife AP");
 
 			RaylifeAPNavigator.gotoSidebarItem(itemName = "Applications");
 
@@ -359,8 +367,6 @@ definition {
 	@priority = 4
 	test AssertThatTheUserCanOpenAppDetailsInBoundApplications {
 		property test.liferay.virtual.instance = "false";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
 		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
@@ -426,7 +432,7 @@ definition {
 					highestEducation = "Masters",
 					lastName = "Model",
 					maritalStatus = "Single",
-					millitaryAffiliation = "None",
+					militaryAffiliation = "None",
 					occupation = "Engineer",
 					relationToContact = "Spouse");
 

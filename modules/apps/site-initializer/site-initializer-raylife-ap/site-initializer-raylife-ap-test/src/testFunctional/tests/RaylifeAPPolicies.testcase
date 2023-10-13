@@ -21,7 +21,10 @@ definition {
 		task ("Create a new Raylife AP Site") {
 			Site.openSitesAdmin();
 
-			Raylife.createRaylifeSite(siteName = "Raylife D2C");
+			HeadlessSite.addSite(
+				siteName = "Raylife D2C",
+				templateName = "Raylife D2C",
+				templateType = "Site Initializer");
 
 			Raylife.createRaylifeSite(siteName = "Raylife AP");
 		}
@@ -37,6 +40,10 @@ definition {
 
 	tearDown {
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "test test");
 
 		RaylifeAP.deleteAllCreatedEntries(searchTerm = "Testing");
 
@@ -57,10 +64,6 @@ definition {
 		property test.run.type = "single";
 
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
-
-		task ("Given that I go to Raylife AP") {
-			ApplicationsMenu.gotoSite(site = "Raylife AP");
-		}
 
 		task ("When I go to the Policies page") {
 			RaylifeAPNavigator.gotoSidebarItem(itemName = "Policies");
@@ -128,6 +131,8 @@ definition {
 				uninsuredOrUnderinsuredMPD = "$150,000");
 
 			Button.click(button = "Generate Quote");
+
+			WaitForPageLoad();
 		}
 
 		task ("And I go to the Policies page") {
@@ -156,8 +161,6 @@ definition {
 		// Skip portal instance due to LRQA-79129. Unskip after it is resolved
 
 		task ("Given that I go to the Policies page and state the total number of active Policies") {
-			ApplicationsMenu.gotoSite(site = "Raylife AP");
-
 			RaylifeAPNavigator.gotoSidebarItem(itemName = "Policies");
 
 			RaylifeAPApplications.getValue(legendItem = "BOP,WC,Health,Life,Property,Home,Auto,PL,GL");

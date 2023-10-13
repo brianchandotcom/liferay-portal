@@ -130,7 +130,7 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "sourceRepositoryId");
 
 		try {
-			Group group = _groupLocalService.fetchGroup(
+			Group group = _groupLocalService.getGroup(
 				destinationRepositoryId);
 
 			long[] groupIds =
@@ -138,7 +138,7 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 					getCurrentAndAncestorSiteAndDepotGroupIds(
 						group.getGroupId());
 
-			Group sourceGroup = _groupLocalService.fetchGroup(
+			Group sourceGroup = _groupLocalService.getGroup(
 				sourceRepositoryId);
 
 			_checkDestinationGroup(group, groupIds, sourceGroup.getGroupId());

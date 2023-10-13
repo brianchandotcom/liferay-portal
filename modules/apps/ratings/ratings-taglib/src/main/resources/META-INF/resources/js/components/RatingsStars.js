@@ -56,7 +56,7 @@ const RatingsStars = ({
 		(score) => {
 			let starScore = starScores.find(({value}) => score === value);
 
-			if (!starScore) {
+			if (score > 0 && !starScore) {
 				starScore = findClosestScore(score);
 			}
 

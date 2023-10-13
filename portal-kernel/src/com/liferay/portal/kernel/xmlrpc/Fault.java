@@ -44,11 +44,11 @@ public class Fault implements Response {
 		sb.append("<struct>");
 		sb.append("<member>");
 		sb.append("<name>faultCode</name>");
-		sb.append(XmlRpcParser.wrapValue(_code));
+		sb.append(XmlRpcUtil.wrapValue(_code));
 		sb.append("</member>");
 		sb.append("<member>");
 		sb.append("<name>faultString</name>");
-		sb.append(XmlRpcParser.wrapValue(_description));
+		sb.append(XmlRpcUtil.wrapValue(_description));
 		sb.append("</member>");
 		sb.append("</struct>");
 		sb.append("</value>");

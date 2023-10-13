@@ -332,6 +332,8 @@ definition {
 
 		MenuItem.click(menuItem = ${experienceName});
 
+		WaitForPageLoad();
+
 		ContentPages.viewCurrentExperience(experienceName = ${experienceName});
 	}
 

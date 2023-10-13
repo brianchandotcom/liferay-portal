@@ -22,7 +22,7 @@ public interface BackgroundTaskCleanerConfiguration {
 
 	@Meta.AD(
 		deflt = "5", description = "background-task-cleaner-interval-help",
-		name = "background-task-cleaner-interval", required = false
+		min = "1", name = "background-task-cleaner-interval", required = false
 	)
 	public int interval();
 

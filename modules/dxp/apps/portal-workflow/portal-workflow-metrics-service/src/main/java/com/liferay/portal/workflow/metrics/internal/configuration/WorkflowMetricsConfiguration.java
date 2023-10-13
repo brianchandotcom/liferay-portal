@@ -22,14 +22,14 @@ public interface WorkflowMetricsConfiguration {
 
 	@Meta.AD(
 		deflt = "10", description = "check-sla-job-interval-description",
-		name = "check-sla-job-interval", required = false
+		min = "1", name = "check-sla-job-interval", required = false
 	)
 	public int checkSLAJobInterval();
 
 	@Meta.AD(
 		deflt = "10",
 		description = "check-sla-definitions-job-interval-description",
-		name = "check-sla-definitions-job-interval", required = false
+		min = "1", name = "check-sla-definitions-job-interval", required = false
 	)
 	public int checkSLADefinitionsJobInterval();
 

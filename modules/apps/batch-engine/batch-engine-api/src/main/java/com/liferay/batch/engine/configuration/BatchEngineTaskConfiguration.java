@@ -23,7 +23,8 @@ public interface BatchEngineTaskConfiguration {
 	@Meta.AD(
 		deflt = "14",
 		description = "completed-tasks-cleaner-scan-interval-description",
-		name = "completed-tasks-cleaner-scan-interval", required = false
+		min = "1", name = "completed-tasks-cleaner-scan-interval",
+		required = false
 	)
 	public int completedTasksCleanerScanInterval();
 
@@ -35,7 +36,7 @@ public interface BatchEngineTaskConfiguration {
 
 	@Meta.AD(
 		deflt = "60", description = "orphan-scan-interval-description",
-		name = "orphan-scan-interval", required = false
+		min = "1", name = "orphan-scan-interval", required = false
 	)
 	public int orphanScanInterval();
 

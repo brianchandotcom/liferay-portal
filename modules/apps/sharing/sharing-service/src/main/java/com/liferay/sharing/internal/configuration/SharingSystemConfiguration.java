@@ -26,7 +26,8 @@ public interface SharingSystemConfiguration {
 	@Meta.AD(
 		deflt = "60",
 		description = "expired-sharing-entries-check-interval-key-description",
-		name = "expired-sharing-entries-check-interval", required = false
+		min = "1", name = "expired-sharing-entries-check-interval",
+		required = false
 	)
 	public int expiredSharingEntriesCheckInterval();
 

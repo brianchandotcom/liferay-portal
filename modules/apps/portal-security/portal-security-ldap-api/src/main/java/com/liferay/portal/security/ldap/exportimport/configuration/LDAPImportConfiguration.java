@@ -34,7 +34,9 @@ public interface LDAPImportConfiguration extends CompanyScopedConfiguration {
 	)
 	public boolean importOnStartup();
 
-	@Meta.AD(deflt = "10", name = "import-interval", required = false)
+	@Meta.AD(
+		deflt = "10", min = "1", name = "import-interval", required = false
+	)
 	public int importInterval();
 
 	@Meta.AD(

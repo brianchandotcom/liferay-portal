@@ -22,7 +22,7 @@ public interface UserNotificationConfiguration {
 
 	@Meta.AD(
 		description = "user-notification-event-check-interval-key-description",
-		name = "user-notification-event-check-interval"
+		min = "1", name = "user-notification-event-check-interval"
 	)
 	public int userNotificationEventCheckInterval();
 

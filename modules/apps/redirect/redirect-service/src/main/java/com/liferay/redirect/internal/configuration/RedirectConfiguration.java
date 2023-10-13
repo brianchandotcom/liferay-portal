@@ -42,7 +42,8 @@ public interface RedirectConfiguration {
 	@Meta.AD(
 		deflt = "24",
 		description = "check-redirect-not-found-entries-interval-help",
-		name = "check-redirect-not-found-entries-interval", required = false
+		min = "1", name = "check-redirect-not-found-entries-interval",
+		required = false
 	)
 	public int checkRedirectNotFoundEntriesInterval();
 

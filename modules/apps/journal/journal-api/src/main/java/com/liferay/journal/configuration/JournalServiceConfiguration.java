@@ -42,7 +42,7 @@ public interface JournalServiceConfiguration {
 	)
 	public String errorTemplateFTL();
 
-	@Meta.AD(deflt = "15", name = "check-interval", required = false)
+	@Meta.AD(deflt = "15", min = "1", name = "check-interval", required = false)
 	public int checkInterval();
 
 	@Meta.AD(

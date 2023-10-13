@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ReflectionUtilTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DelegateProxyFactory;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -22,6 +23,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 import java.util.Arrays;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -89,6 +91,38 @@ public class ASMDelegateProxyFactoryTest {
 		catch (ExceptionInInitializerError eiie) {
 			Assert.assertSame(securityException, eiie.getCause());
 		}
+	}
+
+	@NewEnv(type = NewEnv.Type.CLASSLOADER)
+	@Test
+	public void testConcurrentCreat() throws Exception {
+		DelegateProxyFactory delegateProxyFactory =
+			new ASMDelegateProxyFactory();
+
+		Map<Object, Object> map = ReflectionTestUtil.getFieldValue(
+			ASMDelegateProxyFactory.class, "_classReferencesMap");
+
+		ReflectionTestUtil.setFieldValue(
+			ASMDelegateProxyFactory.class, "_classReferencesMap",
+			ProxyUtil.newDelegateProxyInstance(
+				ClassLoader.getSystemClassLoader(), Map.class,
+				new Object() {
+
+					public Object putIfAbsent(Object key, Object value) {
+						map.put(key, value);
+
+						return map.putIfAbsent(key, value);
+					}
+
+				},
+				map));
+
+		delegateProxyFactory.newDelegateProxyInstance(
+			TestInterface.class.getClassLoader(), TestInterface.class,
+			new TestDelegate(), new TestDefault());
+
+		ReflectionTestUtil.setFieldValue(
+			ASMDelegateProxyFactory.class, "_classReferencesMap", map);
 	}
 
 	@Test
@@ -171,6 +205,20 @@ public class ASMDelegateProxyFactoryTest {
 			Assert.assertEquals(
 				Object.class + " is not an interface",
 				illegalArgumentException.getMessage());
+		}
+
+		SecurityException securityException = new SecurityException();
+
+		try (SwappableSecurityManager swappableSecurityManager =
+				ReflectionUtilTestUtil.throwForSuppressAccessChecks(
+					securityException)) {
+
+			delegateProxyFactory.newDelegateProxyInstance(
+				TestInterface.class.getClassLoader(), TestInterface.class,
+				new TestDelegate(), new TestDefault());
+		}
+		catch (RuntimeException runtimeException) {
+			Assert.assertSame(securityException, runtimeException.getCause());
 		}
 	}
 

@@ -284,4 +284,15 @@ describe('RatingsSelectStars', () => {
 			});
 		});
 	});
+
+	describe('when a decimal score is set from the API', () => {
+		it('it rounds the score to the nearest valid rating', () => {
+			const result = renderComponent({
+				userScore: 0.5,
+			});
+			const starsDropdownToggle = result.getAllByRole('button')[0];
+
+			expect(starsDropdownToggle.value).toBe('3');
+		});
+	});
 });

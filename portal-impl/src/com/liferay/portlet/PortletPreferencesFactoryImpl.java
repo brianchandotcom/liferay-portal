@@ -646,15 +646,13 @@ public class PortletPreferencesFactoryImpl
 					privateLayout);
 
 		for (com.liferay.portal.kernel.model.PortletPreferences
-				curPortletPreferences : portletPreferencesList) {
-
-			PortletPreferences portletPreferences =
-				PortletPreferencesLocalServiceUtil.getPreferences(
-					companyId, ownerId, ownerType,
-					curPortletPreferences.getPlid(), portletId);
+				portletPreferences : portletPreferencesList) {
 
 			portletSetupMap.put(
-				curPortletPreferences.getPlid(), portletPreferences);
+				portletPreferences.getPlid(),
+				PortletPreferencesLocalServiceUtil.getPreferences(
+					companyId, ownerId, ownerType, portletPreferences.getPlid(),
+					portletId));
 		}
 
 		return portletSetupMap;

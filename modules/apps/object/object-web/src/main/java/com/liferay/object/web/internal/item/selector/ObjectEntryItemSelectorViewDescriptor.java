@@ -168,7 +168,8 @@ public class ObjectEntryItemSelectorViewDescriptor
 			_objectDefinition.getCompanyId(),
 			ParamUtil.getLong(_portletRequest, "groupId"), _objectDefinition,
 			ParamUtil.getLong(_portletRequest, "objectEntryId"),
-			ParamUtil.getLong(_portletRequest, "objectRelationshipId"));
+			ParamUtil.getLong(_portletRequest, "objectRelationshipId"),
+			getSearchContainer().getStart(), getSearchContainer().getEnd());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

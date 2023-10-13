@@ -52,6 +52,10 @@ public class ObjectEntryInfoPermissionProvider
 
 	@Override
 	public boolean hasViewPermission(PermissionChecker permissionChecker) {
+		if (_objectDefinition.isModifiable() && _objectDefinition.isSystem()) {
+			return false;
+		}
+
 		Portlet portlet = _portletLocalService.getPortletById(
 			_objectDefinition.getCompanyId(), _objectDefinition.getPortletId());
 

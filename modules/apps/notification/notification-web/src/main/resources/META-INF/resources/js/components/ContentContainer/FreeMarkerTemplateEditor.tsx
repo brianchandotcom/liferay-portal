@@ -74,6 +74,7 @@ export function FreeMarkerTemplateEditor({
 		<CodeEditorLocalized
 			CustomSidebarContent={
 				<AutoComplete<ObjectDefinition>
+					disabled={values.system}
 					emptyStateMessage={Liferay.Language.get(
 						'no-entities-were-found'
 					)}

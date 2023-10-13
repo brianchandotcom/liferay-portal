@@ -188,6 +188,7 @@ export function UserNotificationSettings({
 	return (
 		<>
 			<SingleSelect
+				disabled={values.system}
 				label={Liferay.Language.get('recipients')}
 				onChange={(item) => {
 					setValues({
@@ -212,6 +213,7 @@ export function UserNotificationSettings({
 				<>
 					<Input
 						component="textarea"
+						disabled={values.system}
 						label={Liferay.Language.get('to')}
 						onChange={({target}) => {
 							setToTerms(target.value);
@@ -235,6 +237,7 @@ export function UserNotificationSettings({
 						<label>{Liferay.Language.get('role')}</label>
 
 						<ClayMultiSelect
+							disabled={values.system}
 							items={multiSelectItems}
 							loadingState={4}
 							onChange={setSearchTerm}
@@ -259,6 +262,7 @@ export function UserNotificationSettings({
 						<label>{Liferay.Language.get('users')}</label>
 
 						<ClayMultiSelect
+							disabled={values.system}
 							items={multiSelectItems}
 							loadingState={4}
 							onChange={setSearchTerm}

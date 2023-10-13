@@ -66,6 +66,7 @@ export default function ContentContainer({
 				{...(values.type === 'userNotification' && {
 					component: 'textarea',
 				})}
+				disabled={values.system}
 				error={errors.subject}
 				label={Liferay.Language.get('subject')}
 				name="subject"
@@ -84,6 +85,7 @@ export default function ContentContainer({
 			{values.type === 'email' && (
 				<>
 					<SingleSelect<EditorType>
+						disabled={values.system}
 						label={Liferay.Language.get('editor-type')}
 						onChange={({value}: EditorType) => {
 							setValues({

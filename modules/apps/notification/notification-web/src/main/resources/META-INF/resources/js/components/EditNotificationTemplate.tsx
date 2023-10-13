@@ -215,6 +215,7 @@ export default function EditNotificationTemplate({
 					recipientType,
 					recipients,
 					subject,
+					system,
 					type,
 				} = await API.getNotificationTemplateById(
 					notificationTemplateId
@@ -233,6 +234,7 @@ export default function EditNotificationTemplate({
 					recipientType,
 					recipients,
 					subject,
+					system,
 					type,
 				});
 

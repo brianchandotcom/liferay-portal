@@ -134,6 +134,7 @@ export function Attachments({setValues, values}: IProps) {
 				<div className="lfr__notification-template-attachments">
 					<div className="lfr__notification-template-attachments-fields">
 						<AutoComplete<ObjectDefinition>
+							disabled={values.system}
 							emptyStateMessage={Liferay.Language.get(
 								'no-data-sources-were-found'
 							)}
@@ -202,7 +203,7 @@ export function Attachments({setValues, values}: IProps) {
 
 					<div className="lfr__notification-template-attachments-fields">
 						<MultipleSelect
-							disabled={!selectedEntity}
+							disabled={!selectedEntity || values.system}
 							label={Liferay.Language.get('field')}
 							options={attachmentsFields}
 							placeholder={Liferay.Language.get('select-a-field')}

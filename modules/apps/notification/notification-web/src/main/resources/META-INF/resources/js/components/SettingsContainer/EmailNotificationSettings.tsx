@@ -28,6 +28,7 @@ export function EmailNotificationSettings({
 	return (
 		<>
 			<InputLocalized
+				disabled={values.system}
 				error={errors.to}
 				label={Liferay.Language.get('to')}
 				name="to"
@@ -55,6 +56,7 @@ export function EmailNotificationSettings({
 							(values.recipients[0] as EmailRecipients)
 								.singleRecipient
 						}
+						disabled={values.system}
 						label={Liferay.Language.get('send-emails-separately')}
 						onChange={({target: {checked}}) => {
 							setValues({
@@ -87,6 +89,7 @@ export function EmailNotificationSettings({
 			<div className="row">
 				<div className="col-lg-6">
 					<Input
+						disabled={values.system}
 						label={Liferay.Language.get('cc')}
 						name="cc"
 						onChange={({target}) =>
@@ -106,6 +109,7 @@ export function EmailNotificationSettings({
 
 				<div className="col-lg-6">
 					<Input
+						disabled={values.system}
 						label={Liferay.Language.get('bcc')}
 						name="bcc"
 						onChange={({target}) =>
@@ -127,6 +131,7 @@ export function EmailNotificationSettings({
 			<div className="row">
 				<div className="col-lg-6">
 					<Input
+						disabled={values.system}
 						error={errors.from}
 						label={Liferay.Language.get('from-address')}
 						name="fromAddress"
@@ -148,6 +153,7 @@ export function EmailNotificationSettings({
 
 				<div className="col-lg-6">
 					<InputLocalized
+						disabled={values.system}
 						error={errors.fromName}
 						label={Liferay.Language.get('from-name')}
 						name="fromName"

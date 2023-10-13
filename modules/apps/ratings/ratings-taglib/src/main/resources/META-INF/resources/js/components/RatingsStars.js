@@ -40,8 +40,8 @@ const RatingsStars = ({
 
 			starScores.forEach((item) => {
 				if (
-					Math.abs(item.value - score) <=
-					Math.abs(closestScore.value - score)
+					Math.abs((item.value - score).toFixed(1)) <=
+					Math.abs((closestScore.value - score).toFixed(1))
 				) {
 					closestScore = item;
 				}

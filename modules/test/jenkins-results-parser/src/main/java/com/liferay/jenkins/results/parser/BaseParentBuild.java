@@ -433,6 +433,15 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 	}
 
 	@Override
+	public void reset() {
+		super.reset();
+
+		if (_downstreamBuilds != null) {
+			_downstreamBuilds.clear();
+		}
+	}
+
+	@Override
 	public void update() {
 		if (skipUpdate()) {
 			return;
@@ -617,31 +626,6 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 		}
 
 		return tableRowElements;
-	}
-
-	protected boolean isJenkinsBuildCompleted() {
-		if (!super.isJenkinsBuildCompleted()) {
-			return false;
-		}
-
-		for (Build downstreamBuild : getDownstreamBuilds()) {
-			if (!downstreamBuild.isCompleted()) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	@Override
-	protected void reset() {
-		super.reset();
-
-		if (_downstreamBuilds == null) {
-			getDownstreamBuilds();
-		}
-
-		_downstreamBuilds.clear();
 	}
 
 	@Override

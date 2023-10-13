@@ -23,10 +23,8 @@ import com.liferay.jenkins.results.parser.failure.message.generator.StartupFailu
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
 
 import java.text.ParseException;
@@ -120,7 +118,21 @@ public class AxisBuild extends BaseBuild {
 	}
 
 	public String getAxisVariable() {
-		return axisVariable;
+		if (_axisVariable != null) {
+			return _axisVariable;
+		}
+
+		String buildURL = getBuildURL();
+
+		Matcher matcher = buildURLMultiPattern.find(buildURL);
+
+		if (matcher == null) {
+			throw new IllegalArgumentException("Invalid build URL " + buildURL);
+		}
+
+		_axisVariable = matcher.group("axisVariable");
+
+		return _axisVariable;
 	}
 
 	public String getBatchName() {
@@ -186,45 +198,6 @@ public class AxisBuild extends BaseBuild {
 	public String getBuildName() {
 		return JenkinsResultsParserUtil.combine(
 			getJobVariant(), "/", getAxisVariable());
-	}
-
-	@Override
-	public String getBuildURL() {
-		String jobURL = getJobURL();
-		int buildNumber = getBuildNumber();
-
-		if ((jobURL == null) || (buildNumber == -1)) {
-			return null;
-		}
-
-		if (fromArchive) {
-			return JenkinsResultsParserUtil.combine(
-				jobURL, "/", axisVariable, "/", String.valueOf(buildNumber),
-				"/");
-		}
-
-		try {
-			jobURL = JenkinsResultsParserUtil.decode(jobURL);
-		}
-		catch (UnsupportedEncodingException unsupportedEncodingException) {
-			throw new RuntimeException(
-				"Unable to decode " + jobURL, unsupportedEncodingException);
-		}
-
-		String buildURL = JenkinsResultsParserUtil.combine(
-			jobURL, "/", axisVariable, "/", String.valueOf(buildNumber), "/");
-
-		try {
-			return JenkinsResultsParserUtil.encode(buildURL);
-		}
-		catch (MalformedURLException malformedURLException) {
-			throw new RuntimeException(
-				"Unable to encode " + buildURL, malformedURLException);
-		}
-		catch (URISyntaxException uriSyntaxException) {
-			throw new RuntimeException(
-				"Unable to encode " + buildURL, uriSyntaxException);
-		}
 	}
 
 	@Override
@@ -493,38 +466,6 @@ public class AxisBuild extends BaseBuild {
 		return warningMessages;
 	}
 
-	@Override
-	public boolean isApplySlaveOfflineRules() {
-		return false;
-	}
-
-	@Override
-	public void reinvoke() {
-		throw new RuntimeException("Axis builds cannot be reinvoked");
-	}
-
-	@Override
-	public void setBuildURL(String buildURL) {
-		super.setBuildURL(buildURL);
-
-		MultiPattern buildURLMultiPattern = getBuildURLMultiPattern();
-
-		Matcher matcher = buildURLMultiPattern.find(buildURL);
-
-		if (matcher == null) {
-			axisVariable = null;
-
-			return;
-		}
-
-		try {
-			axisVariable = matcher.group("axisVariable");
-		}
-		catch (IllegalArgumentException illegalArgumentException) {
-			axisVariable = null;
-		}
-	}
-
 	protected AxisBuild(String url) {
 		this(url, null);
 	}
@@ -604,8 +545,6 @@ public class AxisBuild extends BaseBuild {
 	protected static final String defaultLogBaseURL =
 		"https://testray.liferay.com/reports/production/logs";
 
-	protected String axisVariable;
-
 	private static final String _AXIS_VARIABLE_REGEX =
 		"AXIS_VARIABLE=(?<axisNumber>[^,/]+)(,[^/]+)?";
 
@@ -634,5 +573,7 @@ public class AxisBuild extends BaseBuild {
 		"\\s*\\[echo\\] startTime: (?<startTime>[^\\n]+)");
 	private static final Pattern _axisVariablePattern = Pattern.compile(
 		_AXIS_VARIABLE_REGEX);
+
+	private String _axisVariable;
 
 }

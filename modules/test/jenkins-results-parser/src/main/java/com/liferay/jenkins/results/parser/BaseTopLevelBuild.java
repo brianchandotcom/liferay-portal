@@ -630,11 +630,6 @@ public abstract class BaseTopLevelBuild
 	}
 
 	@Override
-	public boolean isApplyReinvokeRules() {
-		return false;
-	}
-
-	@Override
 	public boolean isCompareToUpstream() {
 		return _compareToUpstream;
 	}

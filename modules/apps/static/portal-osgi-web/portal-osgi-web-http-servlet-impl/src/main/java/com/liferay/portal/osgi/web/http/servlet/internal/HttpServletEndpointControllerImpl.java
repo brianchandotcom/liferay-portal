@@ -19,7 +19,6 @@ import com.liferay.portal.osgi.web.http.servlet.internal.context.ServletContextH
 import java.io.File;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +31,7 @@ import javax.servlet.ServletContext;
 import org.eclipse.equinox.http.servlet.internal.HttpServletEndpointController;
 import org.eclipse.equinox.http.servlet.internal.context.ContextController;
 import org.eclipse.equinox.http.servlet.internal.context.DispatchTargets;
+import org.eclipse.equinox.http.servlet.internal.context.ServletContextHelperController;
 import org.eclipse.equinox.http.servlet.internal.error.IllegalContextNameException;
 import org.eclipse.equinox.http.servlet.internal.error.IllegalContextPathException;
 import org.eclipse.equinox.http.servlet.internal.servlet.Match;
@@ -84,7 +84,7 @@ public class HttpServletEndpointControllerImpl
 			_parentServletContextTempDir = null;
 		}
 
-		_contextControllers = ServiceTrackerListFactory.open(
+		_servletContextHelperControllers = ServiceTrackerListFactory.open(
 			bundleContext, ServletContextHelper.class, null,
 			new ServletContextHelperServiceTrackerCustomizer());
 
@@ -110,12 +110,7 @@ public class HttpServletEndpointControllerImpl
 	public void destroy() {
 		_serviceRegistration.unregister();
 
-		_contextControllers.close();
-	}
-
-	@Override
-	public Collection<ContextController> getContextControllers() {
-		return _contextControllers.toList();
+		_servletContextHelperControllers.close();
 	}
 
 	@Override
@@ -124,32 +119,34 @@ public class HttpServletEndpointControllerImpl
 
 		String requestURI = path.getRequestURI();
 
-		List<ContextController> contextControllers = _getContextControllers(
-			requestURI);
+		List<ServletContextHelperController> servletContextHelperControllers =
+			_getServletContextHelperControllers(requestURI);
 
-		if (ListUtil.isEmpty(contextControllers)) {
+		if (ListUtil.isEmpty(servletContextHelperControllers)) {
 			return null;
 		}
 
 		String queryString = path.getQueryString();
 
 		DispatchTargets dispatchTargets = _getDispatchTargets(
-			contextControllers, requestURI, null, queryString, Match.EXACT);
+			servletContextHelperControllers, requestURI, null, queryString,
+			Match.EXACT);
 
 		if (dispatchTargets == null) {
 			dispatchTargets = _getDispatchTargets(
-				contextControllers, requestURI, path.getExtension(),
-				queryString, Match.EXTENSION);
+				servletContextHelperControllers, requestURI,
+				path.getExtension(), queryString, Match.EXTENSION);
 		}
 
 		if (dispatchTargets == null) {
 			dispatchTargets = _getDispatchTargets(
-				contextControllers, requestURI, null, queryString, Match.REGEX);
+				servletContextHelperControllers, requestURI, null, queryString,
+				Match.REGEX);
 		}
 
 		if (dispatchTargets == null) {
 			dispatchTargets = _getDispatchTargets(
-				contextControllers, requestURI, null, queryString,
+				servletContextHelperControllers, requestURI, null, queryString,
 				Match.DEFAULT_SERVLET);
 		}
 
@@ -201,43 +198,15 @@ public class HttpServletEndpointControllerImpl
 		return false;
 	}
 
-	private List<ContextController> _getContextControllers(String requestURI) {
-		int index = requestURI.lastIndexOf('/');
-
-		while (true) {
-			List<ContextController> contextControllers = new ArrayList<>();
-
-			for (ContextController contextController : _contextControllers) {
-				if (Objects.equals(
-						contextController.getContextPath(), requestURI)) {
-
-					contextControllers.add(contextController);
-				}
-			}
-
-			if (!contextControllers.isEmpty()) {
-				return contextControllers;
-			}
-
-			if (index == -1) {
-				break;
-			}
-
-			requestURI = requestURI.substring(0, index);
-
-			index = requestURI.lastIndexOf('/');
-		}
-
-		return null;
-	}
-
 	private DispatchTargets _getDispatchTargets(
-		List<ContextController> contextControllers, String requestURI,
-		String extension, String queryString, Match match) {
+		List<ServletContextHelperController> servletContextHelperControllers,
+		String requestURI, String extension, String queryString, Match match) {
 
-		ContextController firstContextController = contextControllers.get(0);
+		ServletContextHelperController firstServletContextHelperController =
+			servletContextHelperControllers.get(0);
 
-		String contextPath = firstContextController.getContextPath();
+		String contextPath =
+			firstServletContextHelperController.getContextPath();
 
 		requestURI = requestURI.substring(contextPath.length());
 
@@ -253,11 +222,13 @@ public class HttpServletEndpointControllerImpl
 		}
 
 		while (true) {
-			for (ContextController contextController : contextControllers) {
+			for (ServletContextHelperController servletContextHelperController :
+					servletContextHelperControllers) {
+
 				DispatchTargets dispatchTargets =
-					contextController.getDispatchTargets(
+					servletContextHelperController.getDispatchTargets(
 						null, requestURI, servletPath, pathInfo, extension,
-						queryString, match, null);
+						queryString, match);
 
 				if (dispatchTargets != null) {
 					return dispatchTargets;
@@ -278,18 +249,56 @@ public class HttpServletEndpointControllerImpl
 		return null;
 	}
 
+	private List<ServletContextHelperController>
+		_getServletContextHelperControllers(String requestURI) {
+
+		int index = requestURI.lastIndexOf('/');
+
+		while (true) {
+			List<ServletContextHelperController>
+				servletContextHelperControllers = new ArrayList<>();
+
+			for (ServletContextHelperController servletContextHelperController :
+					_servletContextHelperControllers) {
+
+				if (Objects.equals(
+						servletContextHelperController.getContextPath(),
+						requestURI)) {
+
+					servletContextHelperControllers.add(
+						servletContextHelperController);
+				}
+			}
+
+			if (!servletContextHelperControllers.isEmpty()) {
+				return servletContextHelperControllers;
+			}
+
+			if (index == -1) {
+				break;
+			}
+
+			requestURI = requestURI.substring(0, index);
+
+			index = requestURI.lastIndexOf('/');
+		}
+
+		return null;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		HttpServletEndpointControllerImpl.class.getName());
 
 	private final Map<String, Object> _attributesMap;
 	private final BundleContext _bundleContext;
-	private final ServiceTrackerList<ContextController> _contextControllers;
 	private final ServletContext _parentServletContext;
 	private final File _parentServletContextTempDir;
 	private final Set<Object> _registeredObjects = Collections.newSetFromMap(
 		new ConcurrentHashMap<>());
 	private final ServiceRegistration<ServletContextHelper>
 		_serviceRegistration;
+	private final ServiceTrackerList<ServletContextHelperController>
+		_servletContextHelperControllers;
 
 	private static class DefaultServletContextHelperFactory
 		implements ServiceFactory<ServletContextHelper> {
@@ -314,10 +323,10 @@ public class HttpServletEndpointControllerImpl
 
 	private class ServletContextHelperServiceTrackerCustomizer
 		implements EagerServiceTrackerCustomizer
-			<ServletContextHelper, ContextController> {
+			<ServletContextHelper, ServletContextHelperController> {
 
 		@Override
-		public ContextController addingService(
+		public ServletContextHelperController addingService(
 			ServiceReference<ServletContextHelper> serviceReference) {
 
 			if (!matches(serviceReference)) {
@@ -362,15 +371,15 @@ public class HttpServletEndpointControllerImpl
 		@Override
 		public void modifiedService(
 			ServiceReference<ServletContextHelper> serviceReference,
-			ContextController contextController) {
+			ServletContextHelperController servletContextHelperController) {
 		}
 
 		@Override
 		public void removedService(
 			ServiceReference<ServletContextHelper> serviceReference,
-			ContextController contextController) {
+			ServletContextHelperController servletContextHelperController) {
 
-			contextController.destroy();
+			servletContextHelperController.destroy();
 		}
 
 	}

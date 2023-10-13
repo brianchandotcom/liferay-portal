@@ -6,7 +6,7 @@
 package com.liferay.expando.kernel.util;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * @author Brian Wing Shun Chan
@@ -16,23 +16,28 @@ public class ExpandoBridgeFactoryUtil {
 	public static ExpandoBridge getExpandoBridge(
 		long companyId, String className) {
 
-		return _expandoBridgeFactory.getExpandoBridge(companyId, className);
+		ExpandoBridgeFactory expandoBridgeFactory =
+			_expandoBridgeFactorySnapshot.get();
+
+		return expandoBridgeFactory.getExpandoBridge(companyId, className);
 	}
 
 	public static ExpandoBridge getExpandoBridge(
 		long companyId, String className, long classPK) {
 
-		return _expandoBridgeFactory.getExpandoBridge(
+		ExpandoBridgeFactory expandoBridgeFactory =
+			_expandoBridgeFactorySnapshot.get();
+
+		return expandoBridgeFactory.getExpandoBridge(
 			companyId, className, classPK);
 	}
 
 	public static ExpandoBridgeFactory getExpandoBridgeFactory() {
-		return _expandoBridgeFactory;
+		return _expandoBridgeFactorySnapshot.get();
 	}
 
-	private static volatile ExpandoBridgeFactory _expandoBridgeFactory =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			ExpandoBridgeFactory.class, ExpandoBridgeFactoryUtil.class,
-			"_expandoBridgeFactory", false);
+	private static final Snapshot<ExpandoBridgeFactory>
+		_expandoBridgeFactorySnapshot = new Snapshot<>(
+			ExpandoBridgeFactoryUtil.class, ExpandoBridgeFactory.class);
 
 }

@@ -368,7 +368,74 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 	public int getUnrelatedModelsCount(
 		long companyId, long groupId, ObjectDefinition objectDefinition,
 		long objectEntryId, long objectRelationshipId) throws PortalException {
-		return 0;
+
+		Column<?, Long> companyIdColumn = (Column<?, Long>)_table.getColumn(
+			"companyId");
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.getObjectRelationship(
+				objectRelationshipId);
+
+		ObjectDefinition objectDefinition1 =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectRelationship.getObjectDefinitionId1());
+
+		PersistedModelLocalService persistedModelLocalService =
+			_persistedModelLocalServiceRegistry.getPersistedModelLocalService(
+				objectDefinition.getClassName());
+
+		return persistedModelLocalService.dslQueryCount(
+			DSLQueryFactoryUtil.count(
+			).from(
+				_table
+			).where(
+				companyIdColumn.eq(
+					companyId
+				).and(
+					() -> {
+						Column<?, Long> groupIdColumn = _table.getColumn(
+							"groupId");
+
+						if ((groupIdColumn == null) ||
+							Objects.equals(
+								ObjectDefinitionConstants.SCOPE_COMPANY,
+								objectDefinition1.getScope())) {
+
+							return null;
+						}
+
+						return groupIdColumn.eq(groupId);
+					}
+				).and(
+					() -> {
+						Column<?, Long> primaryKeyColumn = _table.getColumn(
+							objectDefinition.getPKObjectFieldDBColumnName());
+
+						DynamicObjectDefinitionTable
+							dynamicObjectDefinitionTable =
+							_getDynamicObjectDefinitionTable();
+						ObjectField objectField =
+							_objectFieldLocalService.getObjectField(
+								objectRelationship.getObjectFieldId2());
+
+						Column<DynamicObjectDefinitionTable, Long>
+							foreignKeyColumn =
+							(Column<DynamicObjectDefinitionTable, Long>)
+								dynamicObjectDefinitionTable.getColumn(
+									objectField.getDBColumnName());
+
+						return primaryKeyColumn.notIn(
+							DSLQueryFactoryUtil.select(
+								dynamicObjectDefinitionTable.
+									getPrimaryKeyColumn()
+							).from(
+								dynamicObjectDefinitionTable
+							).where(
+								foreignKeyColumn.neq(0L)
+							));
+					}
+				)
+			));
 	}
 
 	private DynamicObjectDefinitionTable _getDynamicObjectDefinitionTable()

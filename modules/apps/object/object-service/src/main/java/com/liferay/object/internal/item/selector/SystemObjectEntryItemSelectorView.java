@@ -371,8 +371,16 @@ public class SystemObjectEntryItemSelectorView
 							_portletRequest, "objectRelationshipId"),
 						searchContainer.getStart(), searchContainer.getEnd() );
 
+				int baseModelsCount =
+					objectRelatedModelsProvider.getUnrelatedModelsCount(
+						_themeDisplay.getCompanyId(),
+						_themeDisplay.getScopeGroupId(), _objectDefinition,
+						ParamUtil.getLong(_portletRequest, "objectEntryId"),
+						ParamUtil.getLong(
+							_portletRequest, "objectRelationshipId"));
+
 				searchContainer.setResultsAndTotal(
-					() -> baseModels, baseModels.size());
+					() -> baseModels, baseModelsCount);
 			}
 			catch (Exception exception) {
 				_log.error(exception);

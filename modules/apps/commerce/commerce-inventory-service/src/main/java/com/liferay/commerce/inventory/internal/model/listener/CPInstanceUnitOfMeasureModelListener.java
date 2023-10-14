@@ -49,7 +49,7 @@ public class CPInstanceUnitOfMeasureModelListener
 			_commerceInventoryWarehouseItemLocalService.
 				getCommerceInventoryWarehouseItemsCount(
 					cpInstanceUnitOfMeasure.getCompanyId(),
-					cpInstanceUnitOfMeasure.getSku(), StringPool.BLANK);
+					cpInstanceUnitOfMeasure.getSku(), StringPool.BLANK, false);
 
 		if ((cpInstanceUnitOfMeasuresCount == 1) &&
 			(commerceInventoryWarehouseItemsCount > 0)) {
@@ -150,7 +150,7 @@ public class CPInstanceUnitOfMeasureModelListener
 					_commerceInventoryReplenishmentItemLocalService.
 						getCommerceInventoryReplenishmentItemsByCompanyIdSkuAndUnitOfMeasureKey(
 							companyId, sku, originalKey, QueryUtil.ALL_POS,
-							QueryUtil.ALL_POS)) {
+							QueryUtil.ALL_POS, false)) {
 
 			commerceInventoryReplenishmentItem.setUnitOfMeasureKey(key);
 
@@ -163,7 +163,7 @@ public class CPInstanceUnitOfMeasureModelListener
 				_commerceInventoryWarehouseItemLocalService.
 					getCommerceInventoryWarehouseItemsByCompanyIdSkuAndUnitOfMeasureKey(
 						companyId, sku, originalKey, QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS)) {
+						QueryUtil.ALL_POS, false)) {
 
 			commerceInventoryWarehouseItem.setUnitOfMeasureKey(key);
 

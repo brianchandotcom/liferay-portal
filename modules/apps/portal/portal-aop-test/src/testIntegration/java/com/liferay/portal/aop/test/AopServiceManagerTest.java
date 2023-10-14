@@ -305,8 +305,8 @@ public class AopServiceManagerTest {
 				ConfigurationListener.class,
 				configurationEvent -> {
 					if (Objects.equals(
-							"com.liferay.portal.aop.internal.AopServiceManager",
-							configurationEvent.getPid())) {
+							configurationEvent.getPid(),
+							"com.liferay.portal.aop.internal.AopServiceManager")) {
 
 						countDownLatch.countDown();
 					}

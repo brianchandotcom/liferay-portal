@@ -42,15 +42,15 @@ import java.util.Set;
 public class OrganizationFixture {
 
 	public OrganizationFixture(
-		OrganizationService organizationService, CountryService countryService,
-		RegionService regionService, Language language,
-		ListTypeService listTypeService) {
+		CountryService countryService, Language language,
+		ListTypeService listTypeService,
+		OrganizationService organizationService, RegionService regionService) {
 
-		_organizationService = organizationService;
 		_countryService = countryService;
-		_regionService = regionService;
 		_language = language;
 		_listTypeService = listTypeService;
+		_organizationService = organizationService;
+		_regionService = regionService;
 	}
 
 	public Organization createOrganization(String organizationName)

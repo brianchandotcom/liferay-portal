@@ -84,8 +84,8 @@ public class OrganizationIndexerIndexedFieldsTest {
 		Group group = groupSearchFixture.addGroup(new GroupBlueprint());
 
 		OrganizationFixture organizationFixture = new OrganizationFixture(
-			organizationService, countryService, regionService, language,
-			listTypeService);
+			countryService, language, listTypeService, organizationService,
+			regionService);
 
 		organizationFixture.setUp();
 

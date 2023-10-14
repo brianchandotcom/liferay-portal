@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManager;
 import com.liferay.portal.kernel.security.ldap.LDAPSettingsUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -27,6 +26,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.security.auth.session.AuthenticatedSessionManagerUtil;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
@@ -156,7 +156,7 @@ public class UpdatePasswordMVCActionCommand extends BaseMVCActionCommand {
 						passwordModifiedDate.getTime());
 				}
 
-				_authenticatedSessionManager.login(
+				AuthenticatedSessionManagerUtil.login(
 					httpServletRequest,
 					_portal.getHttpServletResponse(actionResponse), login,
 					newPassword1, false, null);
@@ -186,9 +186,6 @@ public class UpdatePasswordMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 	}
-
-	@Reference
-	private AuthenticatedSessionManager _authenticatedSessionManager;
 
 	@Reference
 	private Portal _portal;

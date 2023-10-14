@@ -56,7 +56,6 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.auth.Authenticator;
-import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManager;
 import com.liferay.portal.kernel.security.ldap.LDAPSettingsUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -1358,7 +1357,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 				login = String.valueOf(user.getUserId());
 			}
 
-			_authenticatedSessionManager.login(
+			AuthenticatedSessionManagerUtil.login(
 				contextHttpServletRequest, contextHttpServletResponse, login,
 				password, false, null);
 		}
@@ -1393,9 +1392,6 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 	@Reference
 	private AnnouncementsDeliveryLocalService
 		_announcementsDeliveryLocalService;
-
-	@Reference
-	private AuthenticatedSessionManager _authenticatedSessionManager;
 
 	@Reference
 	private CaptchaSettings _captchaSettings;

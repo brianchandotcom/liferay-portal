@@ -12,13 +12,13 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.session.AuthenticatedSessionManager;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.security.auth.session.AuthenticatedSessionManagerUtil;
 
 import java.util.Objects;
 
@@ -94,7 +94,7 @@ public class CTOnDemandUserPreAction extends Action {
 		}
 
 		if (!_isPublicationsPortletRequest(httpServletRequest)) {
-			_authenticatedSessionManager.logout(
+			AuthenticatedSessionManagerUtil.logout(
 				httpServletRequest, httpServletResponse);
 
 			httpServletRequest.setAttribute(WebKeys.LOGOUT, Boolean.TRUE);
@@ -106,9 +106,6 @@ public class CTOnDemandUserPreAction extends Action {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CTOnDemandUserPreAction.class);
-
-	@Reference
-	private AuthenticatedSessionManager _authenticatedSessionManager;
 
 	@Reference
 	private FeatureFlagManager _featureFlagManager;

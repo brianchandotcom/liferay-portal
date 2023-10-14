@@ -15,9 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.security.AccessControlContext;
-import java.security.AccessController;
 import java.security.Permission;
-import java.security.PrivilegedAction;
 import java.security.ProtectionDomain;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
@@ -630,19 +628,14 @@ public class EquinoxBundle implements Bundle, BundleReference {
 			String reportMessage = report.getResolutionReportMessage(module.getCurrentRevision());
 			equinoxContainer.getEventPublisher().publishFrameworkEvent(FrameworkEvent.ERROR, this, new BundleException(reportMessage, BundleException.RESOLVE_ERROR));
 		}
-		return AccessController.doPrivileged(new PrivilegedAction<ModuleClassLoader>() {
-			@Override
-			public ModuleClassLoader run() {
-				ModuleWiring wiring = getModule().getCurrentRevision().getWiring();
-				if (wiring != null) {
-					ModuleLoader moduleLoader = wiring.getModuleLoader();
-					if (moduleLoader instanceof BundleLoader) {
-						return ((BundleLoader) moduleLoader).getModuleClassLoader();
-					}
-				}
-				return null;
+		ModuleWiring wiring = getModule().getCurrentRevision().getWiring();
+		if (wiring != null) {
+			ModuleLoader moduleLoader = wiring.getModuleLoader();
+			if (moduleLoader instanceof BundleLoader) {
+				return ((BundleLoader) moduleLoader).getModuleClassLoader();
 			}
-		});
+		}
+		return null;
 	}
 
 	@Override
@@ -1057,3 +1050,4 @@ public class EquinoxBundle implements Bundle, BundleReference {
 		return (name + '_' + getVersion() + " [" + getBundleId() + "]"); //$NON-NLS-1$ //$NON-NLS-2$
 	}
 }
+/* @generated */

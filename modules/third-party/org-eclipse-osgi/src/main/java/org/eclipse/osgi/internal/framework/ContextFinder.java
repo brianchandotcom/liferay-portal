@@ -12,7 +12,6 @@ package org.eclipse.osgi.internal.framework;
 
 import java.io.IOException;
 import java.net.URL;
-import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.*;
 import org.eclipse.osgi.internal.loader.BundleLoader;
@@ -28,17 +27,8 @@ public class ContextFinder extends ClassLoader implements PrivilegedAction<List<
 	//This is used to detect cycle that could be caused while delegating the loading to other classloaders
 	//It keeps track on a thread basis of the set of requested classes and resources
 	private static ThreadLocal<Set<String>> cycleDetector = new ThreadLocal<>();
-	static ClassLoader finderClassLoader;
-	static Finder contextFinder;
-	static {
-		AccessController.doPrivileged(new PrivilegedAction<Void>() {
-			public Void run() {
-				finderClassLoader = ContextFinder.class.getClassLoader();
-				contextFinder = new Finder();
-				return null;
-			}
-		});
-	}
+	static ClassLoader finderClassLoader = ContextFinder.class.getClassLoader();
+	static Finder contextFinder = new Finder();
 
 	private static Class<ContextFinder> THIS = ContextFinder.class;
 
@@ -87,9 +77,7 @@ public class ContextFinder extends ClassLoader implements PrivilegedAction<List<
 	}
 
 	private List<ClassLoader> findClassLoaders() {
-		if (System.getSecurityManager() == null)
-			return basicFindClassLoaders();
-		return AccessController.doPrivileged(this);
+		return basicFindClassLoaders();
 	}
 
 	public List<ClassLoader> run() {
@@ -175,3 +163,4 @@ public class ContextFinder extends ClassLoader implements PrivilegedAction<List<
 		}
 	}
 }
+/* @generated */

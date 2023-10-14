@@ -205,16 +205,8 @@ public class BundleContextImpl implements BundleContext, EventDispatcher<Object,
 			allBundles = new ArrayList<>(allBundles);
 		}
 		final Collection<Bundle> shrinkable = new ShrinkableCollection<>(allBundles);
-		if (System.getSecurityManager() == null) {
-			notifyFindHooksPriviledged(context, shrinkable);
-		} else {
-			AccessController.doPrivileged(new PrivilegedAction<Void>() {
-				public Void run() {
-					notifyFindHooksPriviledged(context, shrinkable);
-					return null;
-				}
-			});
-		}
+
+		notifyFindHooksPriviledged(context, shrinkable);
 	}
 
 	void notifyFindHooksPriviledged(final BundleContextImpl context, final Collection<Bundle> allBundles) {
@@ -769,22 +761,17 @@ public class BundleContextImpl implements BundleContext, EventDispatcher<Object,
 	 */
 	private void startActivator(final BundleActivator bundleActivator) throws BundleException {
 		try {
-			AccessController.doPrivileged(new PrivilegedExceptionAction<Void>() {
-				public Void run() throws Exception {
-					if (bundleActivator != null) {
-						// make sure the context class loader is set correctly
-						Object previousTCCL = setContextFinder();
-						/* Start the bundle synchronously */
-						try {
-							bundleActivator.start(BundleContextImpl.this);
-						} finally {
-							if (previousTCCL != Boolean.FALSE)
-								Thread.currentThread().setContextClassLoader((ClassLoader) previousTCCL);
-						}
-					}
-					return null;
+			if (bundleActivator != null) {
+				// make sure the context class loader is set correctly
+				Object previousTCCL = setContextFinder();
+				/* Start the bundle synchronously */
+				try {
+					bundleActivator.start(BundleContextImpl.this);
+				} finally {
+					if (previousTCCL != Boolean.FALSE)
+						Thread.currentThread().setContextClassLoader((ClassLoader) previousTCCL);
 				}
-			});
+			}
 		} catch (Throwable t) {
 			if (t instanceof PrivilegedActionException) {
 				t = ((PrivilegedActionException) t).getException();
@@ -825,22 +812,17 @@ public class BundleContextImpl implements BundleContext, EventDispatcher<Object,
 	protected void stop() throws BundleException {
 		try {
 			final BundleActivator bundleActivator = activator;
-			AccessController.doPrivileged(new PrivilegedExceptionAction<Void>() {
-				public Void run() throws Exception {
-					if (bundleActivator != null) {
-						// make sure the context class loader is set correctly
-						Object previousTCCL = setContextFinder();
-						try {
-							/* Stop the bundle synchronously */
-							bundleActivator.stop(BundleContextImpl.this);
-						} finally {
-							if (previousTCCL != Boolean.FALSE)
-								Thread.currentThread().setContextClassLoader((ClassLoader) previousTCCL);
-						}
-					}
-					return null;
+			if (bundleActivator != null) {
+				// make sure the context class loader is set correctly
+				Object previousTCCL = setContextFinder();
+				try {
+					/* Stop the bundle synchronously */
+					bundleActivator.stop(BundleContextImpl.this);
+				} finally {
+					if (previousTCCL != Boolean.FALSE)
+						Thread.currentThread().setContextClassLoader((ClassLoader) previousTCCL);
 				}
-			});
+			}
 		} catch (Throwable t) {
 			if (t instanceof PrivilegedActionException) {
 				t = ((PrivilegedActionException) t).getException();
@@ -1045,3 +1027,4 @@ public class BundleContextImpl implements BundleContext, EventDispatcher<Object,
 		return serviceObjects;
 	}
 }
+/* @generated */

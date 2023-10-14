@@ -796,16 +796,7 @@ public class ServiceRegistry {
 	 * @param event The ServiceEvent to deliver.
 	 */
 	public void publishServiceEvent(final ServiceEvent event) {
-		if (System.getSecurityManager() == null) {
-			publishServiceEventPrivileged(event);
-		} else {
-			AccessController.doPrivileged(new PrivilegedAction<Void>() {
-				public Void run() {
-					publishServiceEventPrivileged(event);
-					return null;
-				}
-			});
-		}
+		publishServiceEventPrivileged(event);
 	}
 
 	void publishServiceEventPrivileged(final ServiceEvent event) {
@@ -1188,11 +1179,8 @@ public class ServiceRegistry {
 	 * @return The name of the class that is not satisfied by the service object.
 	 */
 	static String checkServiceClass(final String[] clazzes, final Object serviceObject) {
-		ClassLoader cl = AccessController.doPrivileged(new PrivilegedAction<ClassLoader>() {
-			public ClassLoader run() {
-				return serviceObject.getClass().getClassLoader();
-			}
-		});
+		ClassLoader cl = serviceObject.getClass().getClassLoader();
+
 		for (int i = 0, len = clazzes.length; i < len; i++) {
 			try {
 				Class<?> serviceClazz = cl == null ? Class.forName(clazzes[i]) : cl.loadClass(clazzes[i]);
@@ -1242,16 +1230,7 @@ public class ServiceRegistry {
 	 * @param result The result to return to the caller which may have been shrunk by the FindHooks.
 	 */
 	private void notifyFindHooks(final BundleContextImpl context, final String clazz, final String filterstring, final boolean allservices, final Collection<ServiceReference<?>> result) {
-		if (System.getSecurityManager() == null) {
-			notifyFindHooksPrivileged(context, clazz, filterstring, allservices, result);
-		} else {
-			AccessController.doPrivileged(new PrivilegedAction<Void>() {
-				public Void run() {
-					notifyFindHooksPrivileged(context, clazz, filterstring, allservices, result);
-					return null;
-				}
-			});
-		}
+		notifyFindHooksPrivileged(context, clazz, filterstring, allservices, result);
 	}
 
 	void notifyFindHooksPrivileged(final BundleContextImpl context, final String clazz, final String filterstring, final boolean allservices, final Collection<ServiceReference<?>> result) {
@@ -1402,17 +1381,7 @@ public class ServiceRegistry {
 	 * @param registration The newly registered ListenerHook service.
 	 */
 	private void notifyNewListenerHook(final ServiceRegistrationImpl<?> registration) {
-		if (System.getSecurityManager() == null) {
-			notifyNewListenerHookPrivileged(registration);
-		} else {
-			AccessController.doPrivileged(new PrivilegedAction<Void>() {
-				public Void run() {
-					notifyNewListenerHookPrivileged(registration);
-					return null;
-				}
-			});
-		}
-
+		notifyNewListenerHookPrivileged(registration);
 	}
 
 	void notifyNewListenerHookPrivileged(ServiceRegistrationImpl<?> registration) {
@@ -1464,17 +1433,7 @@ public class ServiceRegistry {
 	 * if they are being removed.
 	 */
 	private void notifyListenerHooks(final Collection<ListenerInfo> listeners, final boolean added) {
-		if (System.getSecurityManager() == null) {
-			notifyListenerHooksPrivileged(listeners, added);
-		} else {
-			AccessController.doPrivileged(new PrivilegedAction<Void>() {
-				public Void run() {
-					notifyListenerHooksPrivileged(listeners, added);
-					return null;
-				}
-			});
-		}
-
+		notifyListenerHooksPrivileged(listeners, added);
 	}
 
 	void notifyListenerHooksPrivileged(final Collection<ListenerInfo> listeners, final boolean added) {

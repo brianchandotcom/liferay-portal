@@ -207,11 +207,7 @@ public class ServiceFactoryUse<S> extends ServiceUse<S> {
 	S factoryGetService() {
 		final S service;
 		try {
-			service = AccessController.doPrivileged(new PrivilegedAction<S>() {
-				public S run() {
-					return factory.getService(context.getBundleImpl(), registration);
-				}
-			});
+			service = factory.getService(context.getBundleImpl(), registration);
 		} catch (Throwable t) {
 			if (debug.DEBUG_SERVICES) {
 				Debug.println(factory + ".getService() exception: " + t.getMessage()); //$NON-NLS-1$
@@ -255,12 +251,7 @@ public class ServiceFactoryUse<S> extends ServiceUse<S> {
 	/* @GuardedBy("this") */
 	void factoryUngetService(final S service) {
 		try {
-			AccessController.doPrivileged(new PrivilegedAction<Void>() {
-				public Void run() {
-					factory.ungetService(context.getBundleImpl(), registration, service);
-					return null;
-				}
-			});
+			factory.ungetService(context.getBundleImpl(), registration, service);
 		} catch (Throwable t) {
 			if (debug.DEBUG_SERVICES) {
 				Debug.println(factory + ".ungetService() exception"); //$NON-NLS-1$
@@ -272,3 +263,4 @@ public class ServiceFactoryUse<S> extends ServiceUse<S> {
 		}
 	}
 }
+/* @generated */

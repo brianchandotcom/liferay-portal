@@ -1,0 +1,387 @@
+diff --git a/org/eclipse/osgi/internal/framework/BundleContextImpl.java b/org/eclipse/osgi/internal/framework/BundleContextImpl.java
+index a19273b9e679..b9fdf2c2e7a8 100644
+--- a/org/eclipse/osgi/internal/framework/BundleContextImpl.java
++++ b/org/eclipse/osgi/internal/framework/BundleContextImpl.java
+@@ -205,16 +205,8 @@ public class BundleContextImpl implements BundleContext, EventDispatcher<Object,
+ 			allBundles = new ArrayList<>(allBundles);
+ 		}
+ 		final Collection<Bundle> shrinkable = new ShrinkableCollection<>(allBundles);
+-		if (System.getSecurityManager() == null) {
+-			notifyFindHooksPriviledged(context, shrinkable);
+-		} else {
+-			AccessController.doPrivileged(new PrivilegedAction<Void>() {
+-				public Void run() {
+-					notifyFindHooksPriviledged(context, shrinkable);
+-					return null;
+-				}
+-			});
+-		}
++
++		notifyFindHooksPriviledged(context, shrinkable);
+ 	}
+ 
+ 	void notifyFindHooksPriviledged(final BundleContextImpl context, final Collection<Bundle> allBundles) {
+@@ -769,22 +761,17 @@ public class BundleContextImpl implements BundleContext, EventDispatcher<Object,
+ 	 */
+ 	private void startActivator(final BundleActivator bundleActivator) throws BundleException {
+ 		try {
+-			AccessController.doPrivileged(new PrivilegedExceptionAction<Void>() {
+-				public Void run() throws Exception {
+-					if (bundleActivator != null) {
+-						// make sure the context class loader is set correctly
+-						Object previousTCCL = setContextFinder();
+-						/* Start the bundle synchronously */
+-						try {
+-							bundleActivator.start(BundleContextImpl.this);
+-						} finally {
+-							if (previousTCCL != Boolean.FALSE)
+-								Thread.currentThread().setContextClassLoader((ClassLoader) previousTCCL);
+-						}
+-					}
+-					return null;
++			if (bundleActivator != null) {
++				// make sure the context class loader is set correctly
++				Object previousTCCL = setContextFinder();
++				/* Start the bundle synchronously */
++				try {
++					bundleActivator.start(BundleContextImpl.this);
++				} finally {
++					if (previousTCCL != Boolean.FALSE)
++						Thread.currentThread().setContextClassLoader((ClassLoader) previousTCCL);
+ 				}
+-			});
++			}
+ 		} catch (Throwable t) {
+ 			if (t instanceof PrivilegedActionException) {
+ 				t = ((PrivilegedActionException) t).getException();
+@@ -825,22 +812,17 @@ public class BundleContextImpl implements BundleContext, EventDispatcher<Object,
+ 	protected void stop() throws BundleException {
+ 		try {
+ 			final BundleActivator bundleActivator = activator;
+-			AccessController.doPrivileged(new PrivilegedExceptionAction<Void>() {
+-				public Void run() throws Exception {
+-					if (bundleActivator != null) {
+-						// make sure the context class loader is set correctly
+-						Object previousTCCL = setContextFinder();
+-						try {
+-							/* Stop the bundle synchronously */
+-							bundleActivator.stop(BundleContextImpl.this);
+-						} finally {
+-							if (previousTCCL != Boolean.FALSE)
+-								Thread.currentThread().setContextClassLoader((ClassLoader) previousTCCL);
+-						}
+-					}
+-					return null;
++			if (bundleActivator != null) {
++				// make sure the context class loader is set correctly
++				Object previousTCCL = setContextFinder();
++				try {
++					/* Stop the bundle synchronously */
++					bundleActivator.stop(BundleContextImpl.this);
++				} finally {
++					if (previousTCCL != Boolean.FALSE)
++						Thread.currentThread().setContextClassLoader((ClassLoader) previousTCCL);
+ 				}
+-			});
++			}
+ 		} catch (Throwable t) {
+ 			if (t instanceof PrivilegedActionException) {
+ 				t = ((PrivilegedActionException) t).getException();
+@@ -1045,3 +1027,4 @@ public class BundleContextImpl implements BundleContext, EventDispatcher<Object,
+ 		return serviceObjects;
+ 	}
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/eclipse/osgi/internal/framework/ContextFinder.java b/org/eclipse/osgi/internal/framework/ContextFinder.java
+index 7ce416cd5cdb..2c9e6d25bad8 100644
+--- a/org/eclipse/osgi/internal/framework/ContextFinder.java
++++ b/org/eclipse/osgi/internal/framework/ContextFinder.java
+@@ -12,7 +12,6 @@ package org.eclipse.osgi.internal.framework;
+ 
+ import java.io.IOException;
+ import java.net.URL;
+-import java.security.AccessController;
+ import java.security.PrivilegedAction;
+ import java.util.*;
+ import org.eclipse.osgi.internal.loader.BundleLoader;
+@@ -28,17 +27,8 @@ public class ContextFinder extends ClassLoader implements PrivilegedAction<List<
+ 	//This is used to detect cycle that could be caused while delegating the loading to other classloaders
+ 	//It keeps track on a thread basis of the set of requested classes and resources
+ 	private static ThreadLocal<Set<String>> cycleDetector = new ThreadLocal<>();
+-	static ClassLoader finderClassLoader;
+-	static Finder contextFinder;
+-	static {
+-		AccessController.doPrivileged(new PrivilegedAction<Void>() {
+-			public Void run() {
+-				finderClassLoader = ContextFinder.class.getClassLoader();
+-				contextFinder = new Finder();
+-				return null;
+-			}
+-		});
+-	}
++	static ClassLoader finderClassLoader = ContextFinder.class.getClassLoader();
++	static Finder contextFinder = new Finder();
+ 
+ 	private static Class<ContextFinder> THIS = ContextFinder.class;
+ 
+@@ -87,9 +77,7 @@ public class ContextFinder extends ClassLoader implements PrivilegedAction<List<
+ 	}
+ 
+ 	private List<ClassLoader> findClassLoaders() {
+-		if (System.getSecurityManager() == null)
+-			return basicFindClassLoaders();
+-		return AccessController.doPrivileged(this);
++		return basicFindClassLoaders();
+ 	}
+ 
+ 	public List<ClassLoader> run() {
+@@ -175,3 +163,4 @@ public class ContextFinder extends ClassLoader implements PrivilegedAction<List<
+ 		}
+ 	}
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/eclipse/osgi/internal/framework/EquinoxBundle.java b/org/eclipse/osgi/internal/framework/EquinoxBundle.java
+index ded552786564..ad6c85e627f3 100644
+--- a/org/eclipse/osgi/internal/framework/EquinoxBundle.java
++++ b/org/eclipse/osgi/internal/framework/EquinoxBundle.java
+@@ -15,9 +15,7 @@ import java.io.IOException;
+ import java.io.InputStream;
+ import java.net.URL;
+ import java.security.AccessControlContext;
+-import java.security.AccessController;
+ import java.security.Permission;
+-import java.security.PrivilegedAction;
+ import java.security.ProtectionDomain;
+ import java.security.cert.Certificate;
+ import java.security.cert.X509Certificate;
+@@ -630,19 +628,14 @@ public class EquinoxBundle implements Bundle, BundleReference {
+ 			String reportMessage = report.getResolutionReportMessage(module.getCurrentRevision());
+ 			equinoxContainer.getEventPublisher().publishFrameworkEvent(FrameworkEvent.ERROR, this, new BundleException(reportMessage, BundleException.RESOLVE_ERROR));
+ 		}
+-		return AccessController.doPrivileged(new PrivilegedAction<ModuleClassLoader>() {
+-			@Override
+-			public ModuleClassLoader run() {
+-				ModuleWiring wiring = getModule().getCurrentRevision().getWiring();
+-				if (wiring != null) {
+-					ModuleLoader moduleLoader = wiring.getModuleLoader();
+-					if (moduleLoader instanceof BundleLoader) {
+-						return ((BundleLoader) moduleLoader).getModuleClassLoader();
+-					}
+-				}
+-				return null;
++		ModuleWiring wiring = getModule().getCurrentRevision().getWiring();
++		if (wiring != null) {
++			ModuleLoader moduleLoader = wiring.getModuleLoader();
++			if (moduleLoader instanceof BundleLoader) {
++				return ((BundleLoader) moduleLoader).getModuleClassLoader();
+ 			}
+-		});
++		}
++		return null;
+ 	}
+ 
+ 	@Override
+@@ -1057,3 +1050,4 @@ public class EquinoxBundle implements Bundle, BundleReference {
+ 		return (name + '_' + getVersion() + " [" + getBundleId() + "]"); //$NON-NLS-1$ //$NON-NLS-2$
+ 	}
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/eclipse/osgi/internal/loader/BundleLoader.java b/org/eclipse/osgi/internal/loader/BundleLoader.java
+index 69e30a31204a..1dedaf8e2b76 100644
+--- a/org/eclipse/osgi/internal/loader/BundleLoader.java
++++ b/org/eclipse/osgi/internal/loader/BundleLoader.java
+@@ -76,11 +76,7 @@ public class BundleLoader extends ModuleLoader {
+ 	public final static String DEFAULT_PACKAGE = "."; //$NON-NLS-1$
+ 	public final static String JAVA_PACKAGE = "java."; //$NON-NLS-1$
+ 
+-	public final static ClassContext CLASS_CONTEXT = AccessController.doPrivileged(new PrivilegedAction<ClassContext>() {
+-		public ClassContext run() {
+-			return new ClassContext();
+-		}
+-	});
++	public final static ClassContext CLASS_CONTEXT = new ClassContext();
+ 	public final static ClassLoader FW_CLASSLOADER = getClassLoader(EquinoxContainer.class);
+ 
+ 	private static final int PRE_CLASS = 1;
+@@ -267,12 +263,7 @@ public class BundleLoader extends ModuleLoader {
+ 			result = createClassLoaderPrivledged(parent, generation.getBundleInfo().getStorage().getConfiguration(), this, generation, hooks);
+ 		} else {
+ 			final ClassLoader cl = parent;
+-			result = AccessController.doPrivileged(new PrivilegedAction<ModuleClassLoader>() {
+-				@Override
+-				public ModuleClassLoader run() {
+-					return createClassLoaderPrivledged(cl, generation.getBundleInfo().getStorage().getConfiguration(), BundleLoader.this, generation, hooks);
+-				}
+-			});
++			result = createClassLoaderPrivledged(cl, generation.getBundleInfo().getStorage().getConfiguration(), BundleLoader.this, generation, hooks);
+ 		}
+ 
+ 		// Synchronize on classLoaderCreatedMonitor in order to ensure hooks are called before returning.
+@@ -285,17 +276,9 @@ public class BundleLoader extends ModuleLoader {
+ 				classLoaderCreated = result;
+ 				// only send to hooks if this thread wins in creating the class loader.
+ 				final ModuleClassLoader cl = result;
+-				// protect with doPriv to avoid bubbling up permission checks that hooks may require
+-				AccessController.doPrivileged(new PrivilegedAction<Object>() {
+-					@Override
+-					public Object run() {
+-						for (ClassLoaderHook hook : hooks) {
+-							hook.classLoaderCreated(cl);
+-						}
+-						return null;
+-					}
+-
+-				});
++				for (ClassLoaderHook hook : hooks) {
++					hook.classLoaderCreated(cl);
++				}
+ 				// finally set the class loader for use after calling hooks
+ 				classloader = classLoaderCreated;
+ 			} else {
+@@ -594,13 +577,7 @@ public class BundleLoader extends ModuleLoader {
+ 	}
+ 
+ 	private static ClassLoader getClassLoader(final Class<?> clazz) {
+-		if (System.getSecurityManager() == null)
+-			return clazz.getClassLoader();
+-		return AccessController.doPrivileged(new PrivilegedAction<ClassLoader>() {
+-			public ClassLoader run() {
+-				return clazz.getClassLoader();
+-			}
+-		});
++		return clazz.getClassLoader();
+ 	}
+ 
+ 	/**
+diff --git a/org/eclipse/osgi/internal/serviceregistry/ServiceFactoryUse.java b/org/eclipse/osgi/internal/serviceregistry/ServiceFactoryUse.java
+index e98ec6b7af65..5090a595aff8 100644
+--- a/org/eclipse/osgi/internal/serviceregistry/ServiceFactoryUse.java
++++ b/org/eclipse/osgi/internal/serviceregistry/ServiceFactoryUse.java
+@@ -207,11 +207,7 @@ public class ServiceFactoryUse<S> extends ServiceUse<S> {
+ 	S factoryGetService() {
+ 		final S service;
+ 		try {
+-			service = AccessController.doPrivileged(new PrivilegedAction<S>() {
+-				public S run() {
+-					return factory.getService(context.getBundleImpl(), registration);
+-				}
+-			});
++			service = factory.getService(context.getBundleImpl(), registration);
+ 		} catch (Throwable t) {
+ 			if (debug.DEBUG_SERVICES) {
+ 				Debug.println(factory + ".getService() exception: " + t.getMessage()); //$NON-NLS-1$
+@@ -255,12 +251,7 @@ public class ServiceFactoryUse<S> extends ServiceUse<S> {
+ 	/* @GuardedBy("this") */
+ 	void factoryUngetService(final S service) {
+ 		try {
+-			AccessController.doPrivileged(new PrivilegedAction<Void>() {
+-				public Void run() {
+-					factory.ungetService(context.getBundleImpl(), registration, service);
+-					return null;
+-				}
+-			});
++			factory.ungetService(context.getBundleImpl(), registration, service);
+ 		} catch (Throwable t) {
+ 			if (debug.DEBUG_SERVICES) {
+ 				Debug.println(factory + ".ungetService() exception"); //$NON-NLS-1$
+@@ -272,3 +263,4 @@ public class ServiceFactoryUse<S> extends ServiceUse<S> {
+ 		}
+ 	}
+ }
++/* @generated */
+\ No newline at end of file
+diff --git a/org/eclipse/osgi/internal/serviceregistry/ServiceRegistry.java b/org/eclipse/osgi/internal/serviceregistry/ServiceRegistry.java
+index 76605ff9ff4d..fe014c2d1c7c 100644
+--- a/org/eclipse/osgi/internal/serviceregistry/ServiceRegistry.java
++++ b/org/eclipse/osgi/internal/serviceregistry/ServiceRegistry.java
+@@ -796,16 +796,7 @@ public class ServiceRegistry {
+ 	 * @param event The ServiceEvent to deliver.
+ 	 */
+ 	public void publishServiceEvent(final ServiceEvent event) {
+-		if (System.getSecurityManager() == null) {
+-			publishServiceEventPrivileged(event);
+-		} else {
+-			AccessController.doPrivileged(new PrivilegedAction<Void>() {
+-				public Void run() {
+-					publishServiceEventPrivileged(event);
+-					return null;
+-				}
+-			});
+-		}
++		publishServiceEventPrivileged(event);
+ 	}
+ 
+ 	void publishServiceEventPrivileged(final ServiceEvent event) {
+@@ -1188,11 +1179,8 @@ public class ServiceRegistry {
+ 	 * @return The name of the class that is not satisfied by the service object.
+ 	 */
+ 	static String checkServiceClass(final String[] clazzes, final Object serviceObject) {
+-		ClassLoader cl = AccessController.doPrivileged(new PrivilegedAction<ClassLoader>() {
+-			public ClassLoader run() {
+-				return serviceObject.getClass().getClassLoader();
+-			}
+-		});
++		ClassLoader cl = serviceObject.getClass().getClassLoader();
++
+ 		for (int i = 0, len = clazzes.length; i < len; i++) {
+ 			try {
+ 				Class<?> serviceClazz = cl == null ? Class.forName(clazzes[i]) : cl.loadClass(clazzes[i]);
+@@ -1242,16 +1230,7 @@ public class ServiceRegistry {
+ 	 * @param result The result to return to the caller which may have been shrunk by the FindHooks.
+ 	 */
+ 	private void notifyFindHooks(final BundleContextImpl context, final String clazz, final String filterstring, final boolean allservices, final Collection<ServiceReference<?>> result) {
+-		if (System.getSecurityManager() == null) {
+-			notifyFindHooksPrivileged(context, clazz, filterstring, allservices, result);
+-		} else {
+-			AccessController.doPrivileged(new PrivilegedAction<Void>() {
+-				public Void run() {
+-					notifyFindHooksPrivileged(context, clazz, filterstring, allservices, result);
+-					return null;
+-				}
+-			});
+-		}
++		notifyFindHooksPrivileged(context, clazz, filterstring, allservices, result);
+ 	}
+ 
+ 	void notifyFindHooksPrivileged(final BundleContextImpl context, final String clazz, final String filterstring, final boolean allservices, final Collection<ServiceReference<?>> result) {
+@@ -1402,17 +1381,7 @@ public class ServiceRegistry {
+ 	 * @param registration The newly registered ListenerHook service.
+ 	 */
+ 	private void notifyNewListenerHook(final ServiceRegistrationImpl<?> registration) {
+-		if (System.getSecurityManager() == null) {
+-			notifyNewListenerHookPrivileged(registration);
+-		} else {
+-			AccessController.doPrivileged(new PrivilegedAction<Void>() {
+-				public Void run() {
+-					notifyNewListenerHookPrivileged(registration);
+-					return null;
+-				}
+-			});
+-		}
+-
++		notifyNewListenerHookPrivileged(registration);
+ 	}
+ 
+ 	void notifyNewListenerHookPrivileged(ServiceRegistrationImpl<?> registration) {
+@@ -1464,17 +1433,7 @@ public class ServiceRegistry {
+ 	 * if they are being removed.
+ 	 */
+ 	private void notifyListenerHooks(final Collection<ListenerInfo> listeners, final boolean added) {
+-		if (System.getSecurityManager() == null) {
+-			notifyListenerHooksPrivileged(listeners, added);
+-		} else {
+-			AccessController.doPrivileged(new PrivilegedAction<Void>() {
+-				public Void run() {
+-					notifyListenerHooksPrivileged(listeners, added);
+-					return null;
+-				}
+-			});
+-		}
+-
++		notifyListenerHooksPrivileged(listeners, added);
+ 	}
+ 
+ 	void notifyListenerHooksPrivileged(final Collection<ListenerInfo> listeners, final boolean added) {

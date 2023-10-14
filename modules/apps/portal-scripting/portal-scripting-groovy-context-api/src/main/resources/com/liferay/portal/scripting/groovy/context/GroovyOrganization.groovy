@@ -78,6 +78,7 @@ class GroovyOrganization {
 			groovyScriptingContext.guestUserId, parentOrganizationId, name,
 			type, regionId, countryId,
 			ListTypeServiceUtil.getListTypeId(
+				groovyScriptingContext.companyId,
 				ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
 				ListTypeConstants.ORGANIZATION_STATUS),
 			comments, site, groovyScriptingContext.getServiceContext());

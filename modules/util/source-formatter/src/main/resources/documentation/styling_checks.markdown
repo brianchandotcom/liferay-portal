@@ -51,7 +51,7 @@ GroovyImportsCheck | .groovy | Sorts and groups imports in `.groovy` files. |
 HTMLEmptyLinesCheck | .html or .path | Finds missing and unnecessary empty lines. |
 HTMLWhitespaceCheck | .html or .path | Finds missing and unnecessary whitespace in `.html` files. |
 [IfStatementCheck](check/if_statement_check.markdown#ifstatementcheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Finds empty if-statements and consecutive if-statements with identical bodies |
-InstanceInitializerCheck | .java | Performs several checks on class instance initializer. |
+[InstanceInitializerCheck](check/instance_initializer_check.markdown#instanceinitializercheck) | .java | Performs several checks on class instance initializer. |
 InstanceofOrderCheck | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Check the order of `instanceof` calls. |
 JSONStylingCheck | .ipynb, .json or .npmbridgerc | Applies rules to enforce consistency in code style. |
 [JSONUtilCheck](check/json_util_check.markdown#jsonutilcheck) | .java, .jsp, .jspf, .jspx, .tag, .tpl or .vm | Checks for utilization of class `JSONUtil`. |
@@ -175,6 +175,7 @@ XMLFriendlyURLRoutesFileCheck | .action, .function, .jelly, .jrxml, .macro, .pom
 XMLHBMFileCheck | .action, .function, .jelly, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of imports in `*-hbm.xml` file. |
 XMLImportsCheck | .action, .function, .jelly, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Sorts and groups imports in `.xml` files. |
 XMLIndentationCheck | .action, .function, .jelly, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .tld, .toggle, .tpl, .wsdl, .xml or .xsd | Finds incorrect indentation in `.xml` files. |
+XMLInstanceWrappersFileCheck | .action, .function, .jelly, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of instance-wrappers in `instance_wrappers.xml` file. |
 XMLIvyFileCheck | .action, .function, .jelly, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of dependencies in `ivy.xml` file. |
 XMLLog4jFileCheck | .action, .function, .jelly, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of categories in `*-log4j.xml` file. |
 XMLLookAndFeelFileCheck | .action, .function, .jelly, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd | Checks the order of attributes in `*--look-and-feel.xml` file. |

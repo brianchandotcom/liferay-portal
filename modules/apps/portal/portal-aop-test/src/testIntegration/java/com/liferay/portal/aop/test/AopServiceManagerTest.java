@@ -86,7 +86,8 @@ public class AopServiceManagerTest {
 			"ungetService", Object.class);
 
 		_configuration = _configurationAdmin.getConfiguration(
-			_CONFIG_NAME, StringPool.QUESTION);
+			"com.liferay.portal.aop.internal.AopServiceManager",
+			StringPool.QUESTION);
 
 		_updateConfiguration(
 			MapUtil.singletonDictionary("parallel.enabled", false));
@@ -304,7 +305,8 @@ public class AopServiceManagerTest {
 				ConfigurationListener.class,
 				configurationEvent -> {
 					if (Objects.equals(
-							_CONFIG_NAME, configurationEvent.getPid())) {
+							"com.liferay.portal.aop.internal.AopServiceManager",
+							configurationEvent.getPid())) {
 
 						countDownLatch.countDown();
 					}
@@ -325,9 +327,6 @@ public class AopServiceManagerTest {
 			serviceRegistration.unregister();
 		}
 	}
-
-	private static final String _CONFIG_NAME =
-		"com.liferay.portal.aop.internal.AopServiceManager";
 
 	private BundleContext _bundleContext;
 	private Configuration _configuration;

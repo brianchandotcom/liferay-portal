@@ -32,9 +32,6 @@
 		"setupFilesAfterEnv": [
 			"<rootDir>/jest-setup.config.js"
 		],
-		"snapshotSerializers": [
-			"metal-jest-serializer"
-		],
 		"testMatch": [
 			"<rootDir>/test/js/**/*.es.js"
 		],

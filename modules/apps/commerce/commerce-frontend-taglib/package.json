@@ -9,7 +9,6 @@
 		"clay-icon": "2.24.1",
 		"commerce-frontend-js": "*",
 		"frontend-js-web": "*",
-		"metal-component": "2.16.8",
 		"react": "16.12.0"
 	},
 	"name": "commerce-frontend-taglib",

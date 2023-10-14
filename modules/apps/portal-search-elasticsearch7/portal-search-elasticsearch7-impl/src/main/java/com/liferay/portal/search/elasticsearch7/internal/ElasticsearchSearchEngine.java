@@ -136,13 +136,16 @@ public class ElasticsearchSearchEngine implements SearchEngine {
 
 		_putTimestampPipeline(restHighLevelClient);
 
-		_indexFactory.createIndices(restHighLevelClient.indices(), companyId);
+		boolean created = _indexFactory.createIndices(
+			restHighLevelClient.indices(), companyId);
 
 		_indexFactory.registerCompanyId(companyId);
 
 		_indexConfigurationDynamicUpdatesExecutor.execute(companyId);
 
-		_waitForYellowStatus();
+		if (created) {
+			_waitForYellowStatus();
+		}
 
 		CrossClusterReplicationHelper crossClusterReplicationHelper =
 			_crossClusterReplicationHelperSnapshot.get();

@@ -124,12 +124,13 @@ public class AddressLocalServiceTest {
 
 	@Test
 	public void testSearchAddressesWithInvalidTypeName() throws Exception {
-		ListType businessType = _listTypeLocalService.getListType(
+		ListType businessListType = _listTypeLocalService.getListType(
 			TestPropsValues.getCompanyId(), "business",
 			ListTypeConstants.CONTACT_ADDRESS);
 
 		Address address = _addAddress(
-			RandomTestUtil.randomString(), businessType.getListTypeId(), null);
+			RandomTestUtil.randomString(), businessListType.getListTypeId(),
+			null);
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				_LOG_NAME, LoggerTestUtil.DEBUG)) {
@@ -143,7 +144,7 @@ public class AddressLocalServiceTest {
 				Arrays.asList(address), null,
 				_getLinkedHashMap(
 					"typeNames",
-					new String[] {businessType.getName(), typeName}));
+					new String[] {businessListType.getName(), typeName}));
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -196,12 +197,13 @@ public class AddressLocalServiceTest {
 
 	@Test
 	public void testSearchAddressesWithParam() throws Exception {
-		ListType businessType = _listTypeLocalService.getListType(
+		ListType businessListType = _listTypeLocalService.getListType(
 			TestPropsValues.getCompanyId(), "business",
 			ListTypeConstants.CONTACT_ADDRESS);
 
 		Address businessAddress = _addAddress(
-			RandomTestUtil.randomString(), businessType.getListTypeId(), null);
+			RandomTestUtil.randomString(), businessListType.getListTypeId(),
+			null);
 
 		ListType personalType = _listTypeLocalService.getListType(
 			TestPropsValues.getCompanyId(), "personal",
@@ -213,23 +215,26 @@ public class AddressLocalServiceTest {
 		_assertSearchAddress(
 			Arrays.asList(businessAddress), null,
 			_getLinkedHashMap(
-				"listTypeIds", new long[] {businessType.getListTypeId()}));
+				"listTypeIds", new long[] {businessListType.getListTypeId()}));
 		_assertSearchAddress(
 			Arrays.asList(businessAddress, personalAddress), null,
 			_getLinkedHashMap(
 				"listTypeIds",
 				new long[] {
-					businessType.getListTypeId(), personalType.getListTypeId()
+					businessListType.getListTypeId(),
+					personalType.getListTypeId()
 				}));
 		_assertSearchAddress(
 			Arrays.asList(businessAddress), null,
 			_getLinkedHashMap(
-				"typeNames", new String[] {businessType.getName()}));
+				"typeNames", new String[] {businessListType.getName()}));
 		_assertSearchAddress(
 			Arrays.asList(businessAddress, personalAddress), null,
 			_getLinkedHashMap(
 				"typeNames",
-				new String[] {businessType.getName(), personalType.getName()}));
+				new String[] {
+					businessListType.getName(), personalType.getName()
+				}));
 	}
 
 	@Test

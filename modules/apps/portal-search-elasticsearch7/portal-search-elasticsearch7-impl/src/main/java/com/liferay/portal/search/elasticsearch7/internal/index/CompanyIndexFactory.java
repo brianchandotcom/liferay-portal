@@ -45,18 +45,20 @@ public class CompanyIndexFactory
 	}
 
 	@Override
-	public void createIndices(IndicesClient indicesClient, long companyId) {
+	public boolean createIndices(IndicesClient indicesClient, long companyId) {
 		String indexName = _companyIndexFactoryHelper.getIndexName(companyId);
 
 		if (_companyIndexFactoryHelper.hasIndex(indicesClient, indexName)) {
-			return;
+			return false;
 		}
 
 		_companyIndexFactoryHelper.createIndex(indexName, indicesClient);
+
+		return true;
 	}
 
 	@Override
-	public void deleteIndices(IndicesClient indicesClient, long companyId) {
+	public boolean deleteIndices(IndicesClient indicesClient, long companyId) {
 		String indexName = _companyIndexFactoryHelper.getIndexName(companyId);
 
 		Company company = _companyLocalService.fetchCompany(companyId);
@@ -68,13 +70,15 @@ public class CompanyIndexFactory
 		}
 
 		if (!_companyIndexFactoryHelper.hasIndex(indicesClient, indexName)) {
-			return;
+			return false;
 		}
 
 		_executeIndexContributorsBeforeRemove(indexName);
 
 		_companyIndexFactoryHelper.deleteIndex(
 			indexName, indicesClient, companyId, true);
+
+		return true;
 	}
 
 	@Override

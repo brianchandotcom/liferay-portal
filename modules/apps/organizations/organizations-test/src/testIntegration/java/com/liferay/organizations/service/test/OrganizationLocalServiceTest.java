@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.OrganizationParentException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
@@ -366,7 +365,7 @@ public class OrganizationLocalServiceTest {
 			_organizationLocalService.deleteOrganization(organization);
 		}
 
-		ListType listType = _listTypeLocalService.getListType(
+		long listTypeId = _listTypeLocalService.getListTypeId(
 			TestPropsValues.getCompanyId(),
 			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
 			ListTypeConstants.ORGANIZATION_STATUS);
@@ -375,16 +374,14 @@ public class OrganizationLocalServiceTest {
 			null, TestPropsValues.getUserId(),
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 			RandomTestUtil.randomString(),
-			OrganizationConstants.TYPE_ORGANIZATION, 0, 0,
-			listType.getListTypeId(), StringPool.BLANK, false,
-			new ServiceContext());
+			OrganizationConstants.TYPE_ORGANIZATION, 0, 0, listTypeId,
+			StringPool.BLANK, false, new ServiceContext());
 
 		Organization organizationB = _organizationLocalService.addOrganization(
 			null, TestPropsValues.getUserId(),
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID, "Test2",
-			OrganizationConstants.TYPE_ORGANIZATION, 0, 0,
-			listType.getListTypeId(), StringPool.BLANK, false,
-			new ServiceContext());
+			OrganizationConstants.TYPE_ORGANIZATION, 0, 0, listTypeId,
+			StringPool.BLANK, false, new ServiceContext());
 
 		_organizations.add(organizationB);
 

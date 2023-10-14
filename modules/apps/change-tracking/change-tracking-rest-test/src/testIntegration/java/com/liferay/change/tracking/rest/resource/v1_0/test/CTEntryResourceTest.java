@@ -14,7 +14,6 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Contact;
-import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.AddressLocalService;
@@ -224,17 +223,15 @@ public class CTEntryResourceTest extends BaseCTEntryResourceTestCase {
 
 			User user = TestPropsValues.getUser();
 
-			ListType listType = _listTypeLocalService.getListType(
-				testCompany.getCompanyId(), "personal",
-				ListTypeConstants.CONTACT_ADDRESS);
-
 			address = _addressLocalService.addAddress(
 				null, user.getUserId(), Contact.class.getName(),
 				user.getContactId(), name, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), null, null,
 				RandomTestUtil.randomString(), null, 0, 0,
-				listType.getListTypeId(), false, false, null,
-				ServiceContextTestUtil.getServiceContext());
+				_listTypeLocalService.getListTypeId(
+					testCompany.getCompanyId(), "personal",
+					ListTypeConstants.CONTACT_ADDRESS),
+				false, false, null, ServiceContextTestUtil.getServiceContext());
 		}
 
 		com.liferay.change.tracking.model.CTEntry serviceBuilderCTEntry =

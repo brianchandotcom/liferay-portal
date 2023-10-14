@@ -81,13 +81,9 @@ public class AddressDisplay {
 	private AddressDisplay() {
 		_addressId = 0;
 		_city = StringPool.BLANK;
-
-		ListType listType = ListTypeLocalServiceUtil.getListType(
+		_listTypeId = ListTypeLocalServiceUtil.getListTypeId(
 			CompanyThreadLocal.getCompanyId(), "billing-and-shipping",
 			AccountEntry.class.getName() + ListTypeConstants.ADDRESS);
-
-		_listTypeId = listType.getListTypeId();
-
 		_listTypeName = StringPool.BLANK;
 		_name = StringPool.BLANK;
 		_region = null;

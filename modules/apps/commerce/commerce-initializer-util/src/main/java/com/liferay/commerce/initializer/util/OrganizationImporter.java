@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Country;
-import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
@@ -66,15 +65,14 @@ public class OrganizationImporter {
 		Country country = _countryService.getCountryByA2(
 			serviceContext.getCompanyId(), twoLetterISOCode);
 
-		ListType listType = _listTypeLocalService.getListType(
-			serviceContext.getCompanyId(),
-			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
-			ListTypeConstants.ORGANIZATION_STATUS);
-
 		organization = _organizationLocalService.addOrganization(
 			null, serviceContext.getUserId(), parentOrganizationId, name,
 			OrganizationConstants.TYPE_ORGANIZATION, 0, country.getCountryId(),
-			listType.getListTypeId(), StringPool.BLANK, false, serviceContext);
+			_listTypeLocalService.getListTypeId(
+				serviceContext.getCompanyId(),
+				ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
+				ListTypeConstants.ORGANIZATION_STATUS),
+			StringPool.BLANK, false, serviceContext);
 
 		JSONArray suborganizationsJSONArray = jsonObject.getJSONArray(
 			"suborganizations");

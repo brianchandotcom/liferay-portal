@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Country;
-import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
@@ -203,16 +202,14 @@ public class CommerceAccountsImporter {
 					serviceContext.getCompanyId(), relatedOrganization);
 
 			if (organization == null) {
-				ListType listType = _listTypeLocalService.getListType(
-					serviceContext.getCompanyId(),
-					ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
-					ListTypeConstants.ORGANIZATION_STATUS);
-
 				organization = _organizationLocalService.addOrganization(
 					null, serviceContext.getUserId(), 0, name,
 					OrganizationConstants.TYPE_ORGANIZATION, 0, 0,
-					listType.getListTypeId(), StringPool.BLANK, false,
-					serviceContext);
+					_listTypeLocalService.getListTypeId(
+						serviceContext.getCompanyId(),
+						ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
+						ListTypeConstants.ORGANIZATION_STATUS),
+					StringPool.BLANK, false, serviceContext);
 			}
 
 			AccountEntryOrganizationRel accountEntryOrganizationRel =

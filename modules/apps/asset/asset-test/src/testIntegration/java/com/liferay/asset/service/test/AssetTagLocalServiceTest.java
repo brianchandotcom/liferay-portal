@@ -18,7 +18,6 @@ import com.liferay.asset.util.AssetHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
@@ -210,18 +209,16 @@ public class AssetTagLocalServiceTest {
 
 		serviceContext.setAssetTagNames(new String[] {assetTag.getName()});
 
-		ListType listType = _listTypeLocalService.getListType(
-			assetTag.getCompanyId(),
-			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
-			ListTypeConstants.ORGANIZATION_STATUS);
-
 		_organization = OrganizationLocalServiceUtil.addOrganization(
 			null, TestPropsValues.getUserId(),
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 			RandomTestUtil.randomString(),
 			OrganizationConstants.TYPE_ORGANIZATION, 0, 0,
-			listType.getListTypeId(), RandomTestUtil.randomString(), true,
-			serviceContext);
+			_listTypeLocalService.getListTypeId(
+				assetTag.getCompanyId(),
+				ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
+				ListTypeConstants.ORGANIZATION_STATUS),
+			RandomTestUtil.randomString(), true, serviceContext);
 
 		TestAssetIndexer testAssetIndexer = new TestAssetIndexer();
 

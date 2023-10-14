@@ -172,10 +172,6 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 			return;
 		}
 
-		ListType listType = _listTypeLocalService.getListType(
-			address.getCompanyId(), "phone-number",
-			ListTypeConstants.ADDRESS_PHONE);
-
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setUserId(address.getUserId());
@@ -184,7 +180,10 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 			_phoneLocalService.addPhone(
 				serviceContext.getUserId(), Address.class.getName(),
 				address.getAddressId(), phoneNumber, null,
-				listType.getListTypeId(), false, serviceContext);
+				_listTypeLocalService.getListTypeId(
+					address.getCompanyId(), "phone-number",
+					ListTypeConstants.ADDRESS_PHONE),
+				false, serviceContext);
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);

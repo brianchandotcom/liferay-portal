@@ -15,7 +15,6 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.test.util.ExpandoTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
@@ -1168,7 +1167,11 @@ public class OrganizationODataRetrieverCustomFieldsTest {
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 			RandomTestUtil.randomString(),
 			_organizationLocalService.getTypes()[0], 0, 0,
-			listType.getListTypeId(), StringPool.BLANK, false, serviceContext);
+			_listTypeLocalService.getListTypeId(
+				TestPropsValues.getCompanyId(),
+				ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
+				ListTypeConstants.ORGANIZATION_STATUS),
+			StringPool.BLANK, false, serviceContext);
 	}
 
 	private String _encodeName(ExpandoColumn expandoColumn) {

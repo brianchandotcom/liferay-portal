@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
@@ -94,17 +93,16 @@ public class OrganizationFixture {
 			serviceContext.setExpandoBridgeAttributes(expando);
 		}
 
-		ListType listType = _listTypeService.getListType(
-			country.getCompanyId(),
-			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
-			ListTypeConstants.ORGANIZATION_STATUS);
-
 		Organization organization = _organizationService.addOrganization(
 			null, OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 			organizationName, OrganizationConstants.TYPE_ORGANIZATION,
 			region.getRegionId(), country.getCountryId(),
-			listType.getListTypeId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomBoolean(), serviceContext);
+			_listTypeService.getListTypeId(
+				country.getCompanyId(),
+				ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
+				ListTypeConstants.ORGANIZATION_STATUS),
+			RandomTestUtil.randomString(), RandomTestUtil.randomBoolean(),
+			serviceContext);
 
 		_organizatons.add(organization);
 

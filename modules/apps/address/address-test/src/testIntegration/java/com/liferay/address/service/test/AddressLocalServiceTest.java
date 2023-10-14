@@ -270,11 +270,9 @@ public class AddressLocalServiceTest {
 		User user = TestPropsValues.getUser();
 
 		if (listTypeId < 0) {
-			ListType listType = _listTypeLocalService.getListType(
+			listTypeId = _listTypeLocalService.getListTypeId(
 				user.getCompanyId(), "personal",
 				ListTypeConstants.CONTACT_ADDRESS);
-
-			listTypeId = listType.getListTypeId();
 		}
 
 		return _addressLocalService.addAddress(

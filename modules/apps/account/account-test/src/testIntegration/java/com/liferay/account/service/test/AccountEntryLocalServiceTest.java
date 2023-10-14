@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
@@ -465,16 +464,15 @@ public class AccountEntryLocalServiceTest {
 	public void testDeleteAccountEntryWithAddress() throws Exception {
 		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry();
 
-		ListType listType = _listTypeLocalService.getListType(
-			accountEntry.getCompanyId(), "personal",
-			ListTypeConstants.CONTACT_ADDRESS);
-
 		Address address = _addressLocalService.addAddress(
 			null, accountEntry.getUserId(), AccountEntry.class.getName(),
 			accountEntry.getAccountEntryId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
 			null, RandomTestUtil.randomString(), null, 0, 0,
-			listType.getListTypeId(), false, false, "1234567890",
+			_listTypeLocalService.getListTypeId(
+				accountEntry.getCompanyId(), "personal",
+				ListTypeConstants.CONTACT_ADDRESS),
+			false, false, "1234567890",
 			ServiceContextTestUtil.getServiceContext());
 
 		Assert.assertNotNull(address);

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
@@ -86,15 +85,14 @@ public class MembershipPolicyTestUtil {
 	public static Organization addOrganization() throws Exception {
 		String name = RandomTestUtil.randomString();
 
-		ListType listType = ListTypeServiceUtil.getListType(
-			TestPropsValues.getCompanyId(),
-			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
-			ListTypeConstants.ORGANIZATION_STATUS);
-
 		return OrganizationServiceUtil.addOrganization(
 			null, OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID, name,
 			OrganizationConstants.TYPE_ORGANIZATION, 0, 0,
-			listType.getListTypeId(), StringPool.BLANK, false,
+			ListTypeServiceUtil.getListTypeId(
+				TestPropsValues.getCompanyId(),
+				ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
+				ListTypeConstants.ORGANIZATION_STATUS),
+			StringPool.BLANK, false,
 			populateServiceContext(Organization.class, true));
 	}
 

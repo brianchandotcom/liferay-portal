@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.OrgLabor;
 import com.liferay.portal.kernel.model.OrganizationConstants;
@@ -346,21 +345,19 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 
 		long countryId = _getCountryId(organization);
 
-		ListType listType = _listTypeLocalService.getListType(
-			contextCompany.getCompanyId(),
-			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
-			ListTypeConstants.ORGANIZATION_STATUS);
-
 		com.liferay.portal.kernel.model.Organization
 			serviceBuilderOrganization = _organizationService.addOrganization(
 				organization.getExternalReferenceCode(),
 				_getDefaultParentOrganizationId(organization),
 				organization.getName(), OrganizationConstants.TYPE_ORGANIZATION,
 				_getRegionId(organization, countryId), countryId,
-				listType.getListTypeId(), organization.getComment(), false,
-				_getAddresses(organization), _getEmailAddresses(organization),
-				_getOrgLabors(organization), _getPhones(organization),
-				_getWebsites(organization),
+				_listTypeLocalService.getListTypeId(
+					contextCompany.getCompanyId(),
+					ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
+					ListTypeConstants.ORGANIZATION_STATUS),
+				organization.getComment(), false, _getAddresses(organization),
+				_getEmailAddresses(organization), _getOrgLabors(organization),
+				_getPhones(organization), _getWebsites(organization),
 				_createServiceContext(organization));
 
 		return _organizationResourceDTOConverter.toDTO(
@@ -480,12 +477,10 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 
 		long countryId = _getCountryId(organization);
 
-		ListType listType = _listTypeLocalService.getListType(
+		long statusListTypeId = _listTypeLocalService.getListTypeId(
 			contextCompany.getCompanyId(),
 			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
 			ListTypeConstants.ORGANIZATION_STATUS);
-
-		long statusListTypeId = listType.getListTypeId();
 
 		boolean site = false;
 

@@ -5,7 +5,6 @@
 
 package com.liferay.portal.scripting.groovy.context;
 
-import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
@@ -75,15 +74,13 @@ class GroovyOrganization {
 			type = OrganizationConstants.TYPE_ORGANIZATION;
 		}
 
-		ListType listType = ListTypeServiceUtil.getListType(
-			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
-			ListTypeConstants.ORGANIZATION_STATUS)
-
 		organization = OrganizationLocalServiceUtil.addOrganization(
 			groovyScriptingContext.guestUserId, parentOrganizationId, name,
 			type, regionId, countryId,
-			listType.getListTypeId(), comments, site,
-			groovyScriptingContext.getServiceContext());
+			ListTypeServiceUtil.getListTypeId(
+				ListTypeConstants.ORGANIZATION_STATUS_DEFAULT,
+				ListTypeConstants.ORGANIZATION_STATUS),
+			comments, site, groovyScriptingContext.getServiceContext());
 	}
 
 	String comments;

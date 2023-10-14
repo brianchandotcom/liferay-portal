@@ -72,7 +72,12 @@ public class CartCommentResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _cartCommentResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, CartCommentResource>
+					cartCommentResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_cartCommentResourceProxyProviderFunction;
+
+				return cartCommentResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -229,8 +234,13 @@ public class CartCommentResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, CartCommentResource>
-		_cartCommentResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, CartCommentResource>
+			_cartCommentResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

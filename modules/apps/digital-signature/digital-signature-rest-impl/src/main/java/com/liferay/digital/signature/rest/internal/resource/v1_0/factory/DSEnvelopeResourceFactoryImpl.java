@@ -72,7 +72,12 @@ public class DSEnvelopeResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _dsEnvelopeResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, DSEnvelopeResource>
+					dsEnvelopeResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_dsEnvelopeResourceProxyProviderFunction;
+
+				return dsEnvelopeResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -229,8 +234,13 @@ public class DSEnvelopeResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, DSEnvelopeResource>
-		_dsEnvelopeResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, DSEnvelopeResource>
+			_dsEnvelopeResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

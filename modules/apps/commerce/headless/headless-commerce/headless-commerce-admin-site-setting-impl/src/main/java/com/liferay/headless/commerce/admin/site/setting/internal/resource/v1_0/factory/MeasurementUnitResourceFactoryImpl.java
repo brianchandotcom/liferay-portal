@@ -72,7 +72,12 @@ public class MeasurementUnitResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _measurementUnitResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, MeasurementUnitResource>
+					measurementUnitResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_measurementUnitResourceProxyProviderFunction;
+
+				return measurementUnitResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -231,9 +236,14 @@ public class MeasurementUnitResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, MeasurementUnitResource>
-		_measurementUnitResourceProxyProviderFunction =
-			_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, MeasurementUnitResource>
+				_measurementUnitResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

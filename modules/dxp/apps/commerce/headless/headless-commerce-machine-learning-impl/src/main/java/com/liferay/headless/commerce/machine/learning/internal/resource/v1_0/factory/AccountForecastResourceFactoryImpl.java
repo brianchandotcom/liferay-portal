@@ -72,7 +72,12 @@ public class AccountForecastResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _accountForecastResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, AccountForecastResource>
+					accountForecastResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_accountForecastResourceProxyProviderFunction;
+
+				return accountForecastResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -231,9 +236,14 @@ public class AccountForecastResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, AccountForecastResource>
-		_accountForecastResourceProxyProviderFunction =
-			_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, AccountForecastResource>
+				_accountForecastResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

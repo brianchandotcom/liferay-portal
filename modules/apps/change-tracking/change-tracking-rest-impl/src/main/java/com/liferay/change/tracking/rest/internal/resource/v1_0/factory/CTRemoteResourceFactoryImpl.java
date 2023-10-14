@@ -71,7 +71,12 @@ public class CTRemoteResourceFactoryImpl implements CTRemoteResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _ctRemoteResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, CTRemoteResource>
+					ctRemoteResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_ctRemoteResourceProxyProviderFunction;
+
+				return ctRemoteResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -227,8 +232,13 @@ public class CTRemoteResourceFactoryImpl implements CTRemoteResource.Factory {
 		}
 	}
 
-	private static final Function<InvocationHandler, CTRemoteResource>
-		_ctRemoteResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, CTRemoteResource>
+			_ctRemoteResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

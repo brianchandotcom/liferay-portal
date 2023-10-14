@@ -72,7 +72,12 @@ public class PlacedOrderItemResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _placedOrderItemResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, PlacedOrderItemResource>
+					placedOrderItemResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_placedOrderItemResourceProxyProviderFunction;
+
+				return placedOrderItemResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -231,9 +236,14 @@ public class PlacedOrderItemResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, PlacedOrderItemResource>
-		_placedOrderItemResourceProxyProviderFunction =
-			_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, PlacedOrderItemResource>
+				_placedOrderItemResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

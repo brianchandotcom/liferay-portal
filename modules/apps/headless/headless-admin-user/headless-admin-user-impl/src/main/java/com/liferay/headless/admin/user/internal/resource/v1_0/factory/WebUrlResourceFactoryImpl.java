@@ -71,7 +71,12 @@ public class WebUrlResourceFactoryImpl implements WebUrlResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _webUrlResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, WebUrlResource>
+					webUrlResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_webUrlResourceProxyProviderFunction;
+
+				return webUrlResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -226,8 +231,12 @@ public class WebUrlResourceFactoryImpl implements WebUrlResource.Factory {
 		}
 	}
 
-	private static final Function<InvocationHandler, WebUrlResource>
-		_webUrlResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, WebUrlResource>
+			_webUrlResourceProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

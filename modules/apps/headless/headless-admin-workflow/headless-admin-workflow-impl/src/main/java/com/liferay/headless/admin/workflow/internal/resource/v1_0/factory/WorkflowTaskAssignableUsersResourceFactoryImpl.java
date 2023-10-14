@@ -72,7 +72,12 @@ public class WorkflowTaskAssignableUsersResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _workflowTaskAssignableUsersResourceProxyProviderFunction.
+				Function<InvocationHandler, WorkflowTaskAssignableUsersResource>
+					workflowTaskAssignableUsersResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_workflowTaskAssignableUsersResourceProxyProviderFunction;
+
+				return workflowTaskAssignableUsersResourceProxyProviderFunction.
 					apply(
 						(proxy, method, arguments) -> _invoke(
 							method, arguments, _checkPermissions,
@@ -243,10 +248,14 @@ public class WorkflowTaskAssignableUsersResourceFactoryImpl
 		}
 	}
 
-	private static final Function
-		<InvocationHandler, WorkflowTaskAssignableUsersResource>
-			_workflowTaskAssignableUsersResourceProxyProviderFunction =
-				_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, WorkflowTaskAssignableUsersResource>
+				_workflowTaskAssignableUsersResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

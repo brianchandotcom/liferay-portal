@@ -72,7 +72,13 @@ public class AccountChannelShippingOptionResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _accountChannelShippingOptionResourceProxyProviderFunction.
+				Function
+					<InvocationHandler, AccountChannelShippingOptionResource>
+						accountChannelShippingOptionResourceProxyProviderFunction =
+							ResourceProxyProviderFunctionHolder.
+								_accountChannelShippingOptionResourceProxyProviderFunction;
+
+				return accountChannelShippingOptionResourceProxyProviderFunction.
 					apply(
 						(proxy, method, arguments) -> _invoke(
 							method, arguments, _checkPermissions,
@@ -245,10 +251,14 @@ public class AccountChannelShippingOptionResourceFactoryImpl
 		}
 	}
 
-	private static final Function
-		<InvocationHandler, AccountChannelShippingOptionResource>
-			_accountChannelShippingOptionResourceProxyProviderFunction =
-				_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, AccountChannelShippingOptionResource>
+				_accountChannelShippingOptionResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

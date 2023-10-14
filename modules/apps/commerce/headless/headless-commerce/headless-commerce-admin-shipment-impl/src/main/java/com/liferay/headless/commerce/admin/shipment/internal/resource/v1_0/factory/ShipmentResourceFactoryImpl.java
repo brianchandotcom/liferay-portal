@@ -71,7 +71,12 @@ public class ShipmentResourceFactoryImpl implements ShipmentResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _shipmentResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, ShipmentResource>
+					shipmentResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_shipmentResourceProxyProviderFunction;
+
+				return shipmentResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -227,8 +232,13 @@ public class ShipmentResourceFactoryImpl implements ShipmentResource.Factory {
 		}
 	}
 
-	private static final Function<InvocationHandler, ShipmentResource>
-		_shipmentResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, ShipmentResource>
+			_shipmentResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

@@ -71,7 +71,12 @@ public class SLAResourceFactoryImpl implements SLAResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _slaResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, SLAResource>
+					slaResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_slaResourceProxyProviderFunction;
+
+				return slaResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -223,8 +228,12 @@ public class SLAResourceFactoryImpl implements SLAResource.Factory {
 		}
 	}
 
-	private static final Function<InvocationHandler, SLAResource>
-		_slaResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, SLAResource>
+			_slaResourceProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

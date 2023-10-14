@@ -71,7 +71,12 @@ public class WikiPageResourceFactoryImpl implements WikiPageResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _wikiPageResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, WikiPageResource>
+					wikiPageResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_wikiPageResourceProxyProviderFunction;
+
+				return wikiPageResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -227,8 +232,13 @@ public class WikiPageResourceFactoryImpl implements WikiPageResource.Factory {
 		}
 	}
 
-	private static final Function<InvocationHandler, WikiPageResource>
-		_wikiPageResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, WikiPageResource>
+			_wikiPageResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

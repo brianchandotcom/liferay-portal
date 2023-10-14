@@ -72,7 +72,12 @@ public class CommerceChannelResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _commerceChannelResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, CommerceChannelResource>
+					commerceChannelResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_commerceChannelResourceProxyProviderFunction;
+
+				return commerceChannelResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -231,9 +236,14 @@ public class CommerceChannelResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, CommerceChannelResource>
-		_commerceChannelResourceProxyProviderFunction =
-			_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, CommerceChannelResource>
+				_commerceChannelResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

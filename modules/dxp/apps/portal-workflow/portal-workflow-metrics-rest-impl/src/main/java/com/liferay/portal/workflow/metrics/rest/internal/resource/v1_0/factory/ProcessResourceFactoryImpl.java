@@ -71,7 +71,12 @@ public class ProcessResourceFactoryImpl implements ProcessResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _processResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, ProcessResource>
+					processResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_processResourceProxyProviderFunction;
+
+				return processResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -226,8 +231,12 @@ public class ProcessResourceFactoryImpl implements ProcessResource.Factory {
 		}
 	}
 
-	private static final Function<InvocationHandler, ProcessResource>
-		_processResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, ProcessResource>
+			_processResourceProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

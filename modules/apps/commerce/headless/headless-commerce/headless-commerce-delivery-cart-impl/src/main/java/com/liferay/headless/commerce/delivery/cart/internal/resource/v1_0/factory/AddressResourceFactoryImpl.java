@@ -71,7 +71,12 @@ public class AddressResourceFactoryImpl implements AddressResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _addressResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, AddressResource>
+					addressResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_addressResourceProxyProviderFunction;
+
+				return addressResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -226,8 +231,12 @@ public class AddressResourceFactoryImpl implements AddressResource.Factory {
 		}
 	}
 
-	private static final Function<InvocationHandler, AddressResource>
-		_addressResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, AddressResource>
+			_addressResourceProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

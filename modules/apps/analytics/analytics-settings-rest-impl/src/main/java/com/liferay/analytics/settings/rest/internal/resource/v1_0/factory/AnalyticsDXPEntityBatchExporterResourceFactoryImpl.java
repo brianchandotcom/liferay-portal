@@ -72,7 +72,13 @@ public class AnalyticsDXPEntityBatchExporterResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _analyticsDXPEntityBatchExporterResourceProxyProviderFunction.
+				Function
+					<InvocationHandler, AnalyticsDXPEntityBatchExporterResource>
+						analyticsDXPEntityBatchExporterResourceProxyProviderFunction =
+							ResourceProxyProviderFunctionHolder.
+								_analyticsDXPEntityBatchExporterResourceProxyProviderFunction;
+
+				return analyticsDXPEntityBatchExporterResourceProxyProviderFunction.
 					apply(
 						(proxy, method, arguments) -> _invoke(
 							method, arguments, _checkPermissions,
@@ -245,10 +251,14 @@ public class AnalyticsDXPEntityBatchExporterResourceFactoryImpl
 		}
 	}
 
-	private static final Function
-		<InvocationHandler, AnalyticsDXPEntityBatchExporterResource>
-			_analyticsDXPEntityBatchExporterResourceProxyProviderFunction =
-				_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, AnalyticsDXPEntityBatchExporterResource>
+				_analyticsDXPEntityBatchExporterResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

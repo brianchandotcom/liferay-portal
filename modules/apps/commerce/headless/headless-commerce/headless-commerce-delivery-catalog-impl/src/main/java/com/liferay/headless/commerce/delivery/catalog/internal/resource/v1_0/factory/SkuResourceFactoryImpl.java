@@ -71,7 +71,12 @@ public class SkuResourceFactoryImpl implements SkuResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _skuResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, SkuResource>
+					skuResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_skuResourceProxyProviderFunction;
+
+				return skuResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -223,8 +228,12 @@ public class SkuResourceFactoryImpl implements SkuResource.Factory {
 		}
 	}
 
-	private static final Function<InvocationHandler, SkuResource>
-		_skuResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, SkuResource>
+			_skuResourceProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

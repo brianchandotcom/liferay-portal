@@ -71,7 +71,12 @@ public class WarehouseResourceFactoryImpl implements WarehouseResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _warehouseResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, WarehouseResource>
+					warehouseResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_warehouseResourceProxyProviderFunction;
+
+				return warehouseResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -227,8 +232,13 @@ public class WarehouseResourceFactoryImpl implements WarehouseResource.Factory {
 		}
 	}
 
-	private static final Function<InvocationHandler, WarehouseResource>
-		_warehouseResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, WarehouseResource>
+			_warehouseResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

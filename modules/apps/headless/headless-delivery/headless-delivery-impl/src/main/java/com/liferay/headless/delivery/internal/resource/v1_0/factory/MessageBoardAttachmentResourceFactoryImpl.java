@@ -72,7 +72,12 @@ public class MessageBoardAttachmentResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _messageBoardAttachmentResourceProxyProviderFunction.
+				Function<InvocationHandler, MessageBoardAttachmentResource>
+					messageBoardAttachmentResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_messageBoardAttachmentResourceProxyProviderFunction;
+
+				return messageBoardAttachmentResourceProxyProviderFunction.
 					apply(
 						(proxy, method, arguments) -> _invoke(
 							method, arguments, _checkPermissions,
@@ -237,10 +242,14 @@ public class MessageBoardAttachmentResourceFactoryImpl
 		}
 	}
 
-	private static final Function
-		<InvocationHandler, MessageBoardAttachmentResource>
-			_messageBoardAttachmentResourceProxyProviderFunction =
-				_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, MessageBoardAttachmentResource>
+				_messageBoardAttachmentResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

@@ -72,7 +72,12 @@ public class PunchOutSessionResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _punchOutSessionResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, PunchOutSessionResource>
+					punchOutSessionResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_punchOutSessionResourceProxyProviderFunction;
+
+				return punchOutSessionResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -231,9 +236,14 @@ public class PunchOutSessionResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, PunchOutSessionResource>
-		_punchOutSessionResourceProxyProviderFunction =
-			_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, PunchOutSessionResource>
+				_punchOutSessionResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

@@ -72,7 +72,12 @@ public class AccountCategoryForecastResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _accountCategoryForecastResourceProxyProviderFunction.
+				Function<InvocationHandler, AccountCategoryForecastResource>
+					accountCategoryForecastResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_accountCategoryForecastResourceProxyProviderFunction;
+
+				return accountCategoryForecastResourceProxyProviderFunction.
 					apply(
 						(proxy, method, arguments) -> _invoke(
 							method, arguments, _checkPermissions,
@@ -239,10 +244,14 @@ public class AccountCategoryForecastResourceFactoryImpl
 		}
 	}
 
-	private static final Function
-		<InvocationHandler, AccountCategoryForecastResource>
-			_accountCategoryForecastResourceProxyProviderFunction =
-				_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, AccountCategoryForecastResource>
+				_accountCategoryForecastResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

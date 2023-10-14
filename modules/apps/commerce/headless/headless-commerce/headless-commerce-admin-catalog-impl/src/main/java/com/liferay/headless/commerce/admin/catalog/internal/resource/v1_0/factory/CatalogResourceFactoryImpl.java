@@ -71,7 +71,12 @@ public class CatalogResourceFactoryImpl implements CatalogResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _catalogResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, CatalogResource>
+					catalogResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_catalogResourceProxyProviderFunction;
+
+				return catalogResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -226,8 +231,12 @@ public class CatalogResourceFactoryImpl implements CatalogResource.Factory {
 		}
 	}
 
-	private static final Function<InvocationHandler, CatalogResource>
-		_catalogResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, CatalogResource>
+			_catalogResourceProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

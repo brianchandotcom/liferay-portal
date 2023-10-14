@@ -72,7 +72,12 @@ public class DisplayPageTemplateResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _displayPageTemplateResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, DisplayPageTemplateResource>
+					displayPageTemplateResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_displayPageTemplateResourceProxyProviderFunction;
+
+				return displayPageTemplateResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -234,10 +239,14 @@ public class DisplayPageTemplateResourceFactoryImpl
 		}
 	}
 
-	private static final Function
-		<InvocationHandler, DisplayPageTemplateResource>
-			_displayPageTemplateResourceProxyProviderFunction =
-				_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, DisplayPageTemplateResource>
+				_displayPageTemplateResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

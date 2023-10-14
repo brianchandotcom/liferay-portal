@@ -71,7 +71,12 @@ public class RegionResourceFactoryImpl implements RegionResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _regionResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, RegionResource>
+					regionResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_regionResourceProxyProviderFunction;
+
+				return regionResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -226,8 +231,12 @@ public class RegionResourceFactoryImpl implements RegionResource.Factory {
 		}
 	}
 
-	private static final Function<InvocationHandler, RegionResource>
-		_regionResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, RegionResource>
+			_regionResourceProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

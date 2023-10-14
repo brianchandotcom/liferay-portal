@@ -71,7 +71,12 @@ public class KeywordResourceFactoryImpl implements KeywordResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _keywordResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, KeywordResource>
+					keywordResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_keywordResourceProxyProviderFunction;
+
+				return keywordResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -226,8 +231,12 @@ public class KeywordResourceFactoryImpl implements KeywordResource.Factory {
 		}
 	}
 
-	private static final Function<InvocationHandler, KeywordResource>
-		_keywordResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, KeywordResource>
+			_keywordResourceProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

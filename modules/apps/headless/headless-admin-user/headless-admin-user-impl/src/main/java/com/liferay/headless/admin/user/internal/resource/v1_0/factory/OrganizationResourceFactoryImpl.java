@@ -72,7 +72,12 @@ public class OrganizationResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _organizationResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, OrganizationResource>
+					organizationResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_organizationResourceProxyProviderFunction;
+
+				return organizationResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -229,9 +234,13 @@ public class OrganizationResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, OrganizationResource>
-		_organizationResourceProxyProviderFunction =
-			_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, OrganizationResource>
+			_organizationResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

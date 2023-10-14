@@ -72,7 +72,12 @@ public class PriceListOrderTypeResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _priceListOrderTypeResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, PriceListOrderTypeResource>
+					priceListOrderTypeResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_priceListOrderTypeResourceProxyProviderFunction;
+
+				return priceListOrderTypeResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -232,9 +237,14 @@ public class PriceListOrderTypeResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, PriceListOrderTypeResource>
-		_priceListOrderTypeResourceProxyProviderFunction =
-			_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, PriceListOrderTypeResource>
+				_priceListOrderTypeResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

@@ -72,7 +72,12 @@ public class FieldSummaryResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _fieldSummaryResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, FieldSummaryResource>
+					fieldSummaryResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_fieldSummaryResourceProxyProviderFunction;
+
+				return fieldSummaryResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -229,9 +234,13 @@ public class FieldSummaryResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, FieldSummaryResource>
-		_fieldSummaryResourceProxyProviderFunction =
-			_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, FieldSummaryResource>
+			_fieldSummaryResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

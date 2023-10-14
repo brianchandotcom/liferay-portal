@@ -71,7 +71,12 @@ public class OrderNoteResourceFactoryImpl implements OrderNoteResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _orderNoteResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, OrderNoteResource>
+					orderNoteResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_orderNoteResourceProxyProviderFunction;
+
+				return orderNoteResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -227,8 +232,13 @@ public class OrderNoteResourceFactoryImpl implements OrderNoteResource.Factory {
 		}
 	}
 
-	private static final Function<InvocationHandler, OrderNoteResource>
-		_orderNoteResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, OrderNoteResource>
+			_orderNoteResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

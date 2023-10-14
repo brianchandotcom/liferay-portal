@@ -72,7 +72,12 @@ public class SkuVirtualSettingsResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _skuVirtualSettingsResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, SkuVirtualSettingsResource>
+					skuVirtualSettingsResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_skuVirtualSettingsResourceProxyProviderFunction;
+
+				return skuVirtualSettingsResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -232,9 +237,14 @@ public class SkuVirtualSettingsResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, SkuVirtualSettingsResource>
-		_skuVirtualSettingsResourceProxyProviderFunction =
-			_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, SkuVirtualSettingsResource>
+				_skuVirtualSettingsResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

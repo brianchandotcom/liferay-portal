@@ -72,7 +72,12 @@ public class SXPElementResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _sxpElementResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, SXPElementResource>
+					sxpElementResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_sxpElementResourceProxyProviderFunction;
+
+				return sxpElementResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -229,8 +234,13 @@ public class SXPElementResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, SXPElementResource>
-		_sxpElementResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, SXPElementResource>
+			_sxpElementResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

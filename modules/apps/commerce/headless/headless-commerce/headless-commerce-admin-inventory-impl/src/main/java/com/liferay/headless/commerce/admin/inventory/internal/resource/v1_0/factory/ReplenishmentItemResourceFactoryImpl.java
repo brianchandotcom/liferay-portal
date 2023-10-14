@@ -72,7 +72,12 @@ public class ReplenishmentItemResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _replenishmentItemResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, ReplenishmentItemResource>
+					replenishmentItemResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_replenishmentItemResourceProxyProviderFunction;
+
+				return replenishmentItemResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -232,9 +237,14 @@ public class ReplenishmentItemResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, ReplenishmentItemResource>
-		_replenishmentItemResourceProxyProviderFunction =
-			_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, ReplenishmentItemResource>
+				_replenishmentItemResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

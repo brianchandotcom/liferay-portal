@@ -71,7 +71,12 @@ public class CommentResourceFactoryImpl implements CommentResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _commentResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, CommentResource>
+					commentResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_commentResourceProxyProviderFunction;
+
+				return commentResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -226,8 +231,12 @@ public class CommentResourceFactoryImpl implements CommentResource.Factory {
 		}
 	}
 
-	private static final Function<InvocationHandler, CommentResource>
-		_commentResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, CommentResource>
+			_commentResourceProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

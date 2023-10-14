@@ -72,7 +72,12 @@ public class UserNotificationResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _userNotificationResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, UserNotificationResource>
+					userNotificationResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_userNotificationResourceProxyProviderFunction;
+
+				return userNotificationResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -231,9 +236,14 @@ public class UserNotificationResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, UserNotificationResource>
-		_userNotificationResourceProxyProviderFunction =
-			_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, UserNotificationResource>
+				_userNotificationResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

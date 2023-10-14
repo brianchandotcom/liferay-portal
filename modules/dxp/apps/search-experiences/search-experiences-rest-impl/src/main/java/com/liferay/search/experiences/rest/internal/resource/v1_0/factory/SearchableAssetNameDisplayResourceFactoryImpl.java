@@ -72,7 +72,12 @@ public class SearchableAssetNameDisplayResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _searchableAssetNameDisplayResourceProxyProviderFunction.
+				Function<InvocationHandler, SearchableAssetNameDisplayResource>
+					searchableAssetNameDisplayResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_searchableAssetNameDisplayResourceProxyProviderFunction;
+
+				return searchableAssetNameDisplayResourceProxyProviderFunction.
 					apply(
 						(proxy, method, arguments) -> _invoke(
 							method, arguments, _checkPermissions,
@@ -241,10 +246,14 @@ public class SearchableAssetNameDisplayResourceFactoryImpl
 		}
 	}
 
-	private static final Function
-		<InvocationHandler, SearchableAssetNameDisplayResource>
-			_searchableAssetNameDisplayResourceProxyProviderFunction =
-				_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, SearchableAssetNameDisplayResource>
+				_searchableAssetNameDisplayResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

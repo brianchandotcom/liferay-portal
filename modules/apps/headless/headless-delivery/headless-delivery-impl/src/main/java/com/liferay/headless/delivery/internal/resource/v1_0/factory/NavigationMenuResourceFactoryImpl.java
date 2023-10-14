@@ -72,7 +72,12 @@ public class NavigationMenuResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _navigationMenuResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, NavigationMenuResource>
+					navigationMenuResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_navigationMenuResourceProxyProviderFunction;
+
+				return navigationMenuResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -230,9 +235,13 @@ public class NavigationMenuResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, NavigationMenuResource>
-		_navigationMenuResourceProxyProviderFunction =
-			_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, NavigationMenuResource>
+			_navigationMenuResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

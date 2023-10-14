@@ -72,12 +72,16 @@ public class PriceModifierCategoryResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _priceModifierCategoryResourceProxyProviderFunction.
-					apply(
-						(proxy, method, arguments) -> _invoke(
-							method, arguments, _checkPermissions,
-							_httpServletRequest, _httpServletResponse,
-							_preferredLocale, _uriInfo, _user));
+				Function<InvocationHandler, PriceModifierCategoryResource>
+					priceModifierCategoryResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_priceModifierCategoryResourceProxyProviderFunction;
+
+				return priceModifierCategoryResourceProxyProviderFunction.apply(
+					(proxy, method, arguments) -> _invoke(
+						method, arguments, _checkPermissions,
+						_httpServletRequest, _httpServletResponse,
+						_preferredLocale, _uriInfo, _user));
 			}
 
 			@Override
@@ -237,10 +241,14 @@ public class PriceModifierCategoryResourceFactoryImpl
 		}
 	}
 
-	private static final Function
-		<InvocationHandler, PriceModifierCategoryResource>
-			_priceModifierCategoryResourceProxyProviderFunction =
-				_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, PriceModifierCategoryResource>
+				_priceModifierCategoryResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

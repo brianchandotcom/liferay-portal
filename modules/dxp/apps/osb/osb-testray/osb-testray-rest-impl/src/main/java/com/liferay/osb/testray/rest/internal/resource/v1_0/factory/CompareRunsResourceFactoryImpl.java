@@ -72,7 +72,12 @@ public class CompareRunsResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _compareRunsResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, CompareRunsResource>
+					compareRunsResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_compareRunsResourceProxyProviderFunction;
+
+				return compareRunsResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -229,8 +234,13 @@ public class CompareRunsResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, CompareRunsResource>
-		_compareRunsResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, CompareRunsResource>
+			_compareRunsResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

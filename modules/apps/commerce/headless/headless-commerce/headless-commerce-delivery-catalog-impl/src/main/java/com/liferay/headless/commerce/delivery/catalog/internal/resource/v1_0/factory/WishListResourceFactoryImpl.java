@@ -71,7 +71,12 @@ public class WishListResourceFactoryImpl implements WishListResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _wishListResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, WishListResource>
+					wishListResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_wishListResourceProxyProviderFunction;
+
+				return wishListResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -227,8 +232,13 @@ public class WishListResourceFactoryImpl implements WishListResource.Factory {
 		}
 	}
 
-	private static final Function<InvocationHandler, WishListResource>
-		_wishListResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, WishListResource>
+			_wishListResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

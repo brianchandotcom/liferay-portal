@@ -71,7 +71,12 @@ public class CTEntryResourceFactoryImpl implements CTEntryResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _ctEntryResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, CTEntryResource>
+					ctEntryResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_ctEntryResourceProxyProviderFunction;
+
+				return ctEntryResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -226,8 +231,12 @@ public class CTEntryResourceFactoryImpl implements CTEntryResource.Factory {
 		}
 	}
 
-	private static final Function<InvocationHandler, CTEntryResource>
-		_ctEntryResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, CTEntryResource>
+			_ctEntryResourceProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

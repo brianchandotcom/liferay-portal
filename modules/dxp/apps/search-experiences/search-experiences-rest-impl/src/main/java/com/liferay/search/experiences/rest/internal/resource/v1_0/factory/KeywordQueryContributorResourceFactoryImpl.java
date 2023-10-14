@@ -72,7 +72,12 @@ public class KeywordQueryContributorResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _keywordQueryContributorResourceProxyProviderFunction.
+				Function<InvocationHandler, KeywordQueryContributorResource>
+					keywordQueryContributorResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_keywordQueryContributorResourceProxyProviderFunction;
+
+				return keywordQueryContributorResourceProxyProviderFunction.
 					apply(
 						(proxy, method, arguments) -> _invoke(
 							method, arguments, _checkPermissions,
@@ -239,10 +244,14 @@ public class KeywordQueryContributorResourceFactoryImpl
 		}
 	}
 
-	private static final Function
-		<InvocationHandler, KeywordQueryContributorResource>
-			_keywordQueryContributorResourceProxyProviderFunction =
-				_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, KeywordQueryContributorResource>
+				_keywordQueryContributorResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

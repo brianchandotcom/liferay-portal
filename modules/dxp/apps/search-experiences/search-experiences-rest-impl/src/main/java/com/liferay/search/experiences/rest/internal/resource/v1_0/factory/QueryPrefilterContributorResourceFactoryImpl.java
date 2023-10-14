@@ -72,7 +72,12 @@ public class QueryPrefilterContributorResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _queryPrefilterContributorResourceProxyProviderFunction.
+				Function<InvocationHandler, QueryPrefilterContributorResource>
+					queryPrefilterContributorResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_queryPrefilterContributorResourceProxyProviderFunction;
+
+				return queryPrefilterContributorResourceProxyProviderFunction.
 					apply(
 						(proxy, method, arguments) -> _invoke(
 							method, arguments, _checkPermissions,
@@ -241,10 +246,14 @@ public class QueryPrefilterContributorResourceFactoryImpl
 		}
 	}
 
-	private static final Function
-		<InvocationHandler, QueryPrefilterContributorResource>
-			_queryPrefilterContributorResourceProxyProviderFunction =
-				_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, QueryPrefilterContributorResource>
+				_queryPrefilterContributorResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

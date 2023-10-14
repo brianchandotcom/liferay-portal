@@ -72,7 +72,12 @@ public class MappedProductResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _mappedProductResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, MappedProductResource>
+					mappedProductResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_mappedProductResourceProxyProviderFunction;
+
+				return mappedProductResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -230,9 +235,13 @@ public class MappedProductResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, MappedProductResource>
-		_mappedProductResourceProxyProviderFunction =
-			_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, MappedProductResource>
+			_mappedProductResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

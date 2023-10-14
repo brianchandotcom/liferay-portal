@@ -72,7 +72,12 @@ public class OptionValueResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _optionValueResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, OptionValueResource>
+					optionValueResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_optionValueResourceProxyProviderFunction;
+
+				return optionValueResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -229,8 +234,13 @@ public class OptionValueResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, OptionValueResource>
-		_optionValueResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, OptionValueResource>
+			_optionValueResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

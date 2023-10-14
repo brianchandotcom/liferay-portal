@@ -71,7 +71,12 @@ public class PhoneResourceFactoryImpl implements PhoneResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _phoneResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, PhoneResource>
+					phoneResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_phoneResourceProxyProviderFunction;
+
+				return phoneResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -226,8 +231,12 @@ public class PhoneResourceFactoryImpl implements PhoneResource.Factory {
 		}
 	}
 
-	private static final Function<InvocationHandler, PhoneResource>
-		_phoneResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, PhoneResource>
+			_phoneResourceProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

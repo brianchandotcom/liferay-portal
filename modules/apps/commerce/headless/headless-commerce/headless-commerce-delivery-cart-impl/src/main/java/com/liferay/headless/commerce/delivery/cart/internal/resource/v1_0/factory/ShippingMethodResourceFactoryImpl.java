@@ -72,7 +72,12 @@ public class ShippingMethodResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _shippingMethodResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, ShippingMethodResource>
+					shippingMethodResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_shippingMethodResourceProxyProviderFunction;
+
+				return shippingMethodResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -230,9 +235,13 @@ public class ShippingMethodResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, ShippingMethodResource>
-		_shippingMethodResourceProxyProviderFunction =
-			_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, ShippingMethodResource>
+			_shippingMethodResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

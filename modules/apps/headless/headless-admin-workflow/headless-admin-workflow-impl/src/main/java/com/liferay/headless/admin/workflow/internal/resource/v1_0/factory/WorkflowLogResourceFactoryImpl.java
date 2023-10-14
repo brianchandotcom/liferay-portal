@@ -72,7 +72,12 @@ public class WorkflowLogResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _workflowLogResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, WorkflowLogResource>
+					workflowLogResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_workflowLogResourceProxyProviderFunction;
+
+				return workflowLogResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -229,8 +234,13 @@ public class WorkflowLogResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, WorkflowLogResource>
-		_workflowLogResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, WorkflowLogResource>
+			_workflowLogResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

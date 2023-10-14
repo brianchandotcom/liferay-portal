@@ -72,7 +72,12 @@ public class ProductAccountGroupResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _productAccountGroupResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, ProductAccountGroupResource>
+					productAccountGroupResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_productAccountGroupResourceProxyProviderFunction;
+
+				return productAccountGroupResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -234,10 +239,14 @@ public class ProductAccountGroupResourceFactoryImpl
 		}
 	}
 
-	private static final Function
-		<InvocationHandler, ProductAccountGroupResource>
-			_productAccountGroupResourceProxyProviderFunction =
-				_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, ProductAccountGroupResource>
+				_productAccountGroupResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

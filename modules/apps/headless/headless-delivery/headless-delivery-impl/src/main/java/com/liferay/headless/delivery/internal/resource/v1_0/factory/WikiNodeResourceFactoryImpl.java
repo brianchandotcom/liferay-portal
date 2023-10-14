@@ -71,7 +71,12 @@ public class WikiNodeResourceFactoryImpl implements WikiNodeResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _wikiNodeResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, WikiNodeResource>
+					wikiNodeResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_wikiNodeResourceProxyProviderFunction;
+
+				return wikiNodeResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -227,8 +232,13 @@ public class WikiNodeResourceFactoryImpl implements WikiNodeResource.Factory {
 		}
 	}
 
-	private static final Function<InvocationHandler, WikiNodeResource>
-		_wikiNodeResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, WikiNodeResource>
+			_wikiNodeResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

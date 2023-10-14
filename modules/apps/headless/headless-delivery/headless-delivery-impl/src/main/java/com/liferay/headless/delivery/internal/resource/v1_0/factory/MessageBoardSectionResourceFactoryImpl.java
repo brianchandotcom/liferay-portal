@@ -72,7 +72,12 @@ public class MessageBoardSectionResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _messageBoardSectionResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, MessageBoardSectionResource>
+					messageBoardSectionResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_messageBoardSectionResourceProxyProviderFunction;
+
+				return messageBoardSectionResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -234,10 +239,14 @@ public class MessageBoardSectionResourceFactoryImpl
 		}
 	}
 
-	private static final Function
-		<InvocationHandler, MessageBoardSectionResource>
-			_messageBoardSectionResourceProxyProviderFunction =
-				_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, MessageBoardSectionResource>
+				_messageBoardSectionResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

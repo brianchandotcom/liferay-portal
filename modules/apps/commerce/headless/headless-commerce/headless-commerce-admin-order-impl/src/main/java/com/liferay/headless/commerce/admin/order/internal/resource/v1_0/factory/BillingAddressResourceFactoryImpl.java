@@ -72,7 +72,12 @@ public class BillingAddressResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _billingAddressResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, BillingAddressResource>
+					billingAddressResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_billingAddressResourceProxyProviderFunction;
+
+				return billingAddressResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -230,9 +235,13 @@ public class BillingAddressResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, BillingAddressResource>
-		_billingAddressResourceProxyProviderFunction =
-			_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, BillingAddressResource>
+			_billingAddressResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

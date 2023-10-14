@@ -72,7 +72,12 @@ public class ContactUserGroupResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _contactUserGroupResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, ContactUserGroupResource>
+					contactUserGroupResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_contactUserGroupResourceProxyProviderFunction;
+
+				return contactUserGroupResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -231,9 +236,14 @@ public class ContactUserGroupResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, ContactUserGroupResource>
-		_contactUserGroupResourceProxyProviderFunction =
-			_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, ContactUserGroupResource>
+				_contactUserGroupResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

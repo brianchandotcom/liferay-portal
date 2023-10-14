@@ -72,7 +72,12 @@ public class PaymentMethodResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _paymentMethodResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, PaymentMethodResource>
+					paymentMethodResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_paymentMethodResourceProxyProviderFunction;
+
+				return paymentMethodResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -230,9 +235,13 @@ public class PaymentMethodResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, PaymentMethodResource>
-		_paymentMethodResourceProxyProviderFunction =
-			_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, PaymentMethodResource>
+			_paymentMethodResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

@@ -72,7 +72,12 @@ public class PaymentMethodGroupRelTermResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _paymentMethodGroupRelTermResourceProxyProviderFunction.
+				Function<InvocationHandler, PaymentMethodGroupRelTermResource>
+					paymentMethodGroupRelTermResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_paymentMethodGroupRelTermResourceProxyProviderFunction;
+
+				return paymentMethodGroupRelTermResourceProxyProviderFunction.
 					apply(
 						(proxy, method, arguments) -> _invoke(
 							method, arguments, _checkPermissions,
@@ -241,10 +246,14 @@ public class PaymentMethodGroupRelTermResourceFactoryImpl
 		}
 	}
 
-	private static final Function
-		<InvocationHandler, PaymentMethodGroupRelTermResource>
-			_paymentMethodGroupRelTermResourceProxyProviderFunction =
-				_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, PaymentMethodGroupRelTermResource>
+				_paymentMethodGroupRelTermResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

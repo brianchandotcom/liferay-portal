@@ -72,12 +72,16 @@ public class OrderRuleAccountGroupResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _orderRuleAccountGroupResourceProxyProviderFunction.
-					apply(
-						(proxy, method, arguments) -> _invoke(
-							method, arguments, _checkPermissions,
-							_httpServletRequest, _httpServletResponse,
-							_preferredLocale, _uriInfo, _user));
+				Function<InvocationHandler, OrderRuleAccountGroupResource>
+					orderRuleAccountGroupResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_orderRuleAccountGroupResourceProxyProviderFunction;
+
+				return orderRuleAccountGroupResourceProxyProviderFunction.apply(
+					(proxy, method, arguments) -> _invoke(
+						method, arguments, _checkPermissions,
+						_httpServletRequest, _httpServletResponse,
+						_preferredLocale, _uriInfo, _user));
 			}
 
 			@Override
@@ -237,10 +241,14 @@ public class OrderRuleAccountGroupResourceFactoryImpl
 		}
 	}
 
-	private static final Function
-		<InvocationHandler, OrderRuleAccountGroupResource>
-			_orderRuleAccountGroupResourceProxyProviderFunction =
-				_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, OrderRuleAccountGroupResource>
+				_orderRuleAccountGroupResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

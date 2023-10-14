@@ -72,7 +72,12 @@ public class ReindexStatusResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _reindexStatusResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, ReindexStatusResource>
+					reindexStatusResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_reindexStatusResourceProxyProviderFunction;
+
+				return reindexStatusResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -230,9 +235,13 @@ public class ReindexStatusResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, ReindexStatusResource>
-		_reindexStatusResourceProxyProviderFunction =
-			_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, ReindexStatusResource>
+			_reindexStatusResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

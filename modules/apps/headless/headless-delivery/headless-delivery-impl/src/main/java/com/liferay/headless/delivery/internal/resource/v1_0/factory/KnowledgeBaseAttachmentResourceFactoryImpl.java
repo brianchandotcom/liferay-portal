@@ -72,7 +72,12 @@ public class KnowledgeBaseAttachmentResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _knowledgeBaseAttachmentResourceProxyProviderFunction.
+				Function<InvocationHandler, KnowledgeBaseAttachmentResource>
+					knowledgeBaseAttachmentResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_knowledgeBaseAttachmentResourceProxyProviderFunction;
+
+				return knowledgeBaseAttachmentResourceProxyProviderFunction.
 					apply(
 						(proxy, method, arguments) -> _invoke(
 							method, arguments, _checkPermissions,
@@ -239,10 +244,14 @@ public class KnowledgeBaseAttachmentResourceFactoryImpl
 		}
 	}
 
-	private static final Function
-		<InvocationHandler, KnowledgeBaseAttachmentResource>
-			_knowledgeBaseAttachmentResourceProxyProviderFunction =
-				_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, KnowledgeBaseAttachmentResource>
+				_knowledgeBaseAttachmentResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

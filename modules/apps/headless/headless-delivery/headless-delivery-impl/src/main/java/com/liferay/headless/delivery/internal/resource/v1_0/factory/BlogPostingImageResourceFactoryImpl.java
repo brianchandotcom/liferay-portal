@@ -72,7 +72,12 @@ public class BlogPostingImageResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _blogPostingImageResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, BlogPostingImageResource>
+					blogPostingImageResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_blogPostingImageResourceProxyProviderFunction;
+
+				return blogPostingImageResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -231,9 +236,14 @@ public class BlogPostingImageResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, BlogPostingImageResource>
-		_blogPostingImageResourceProxyProviderFunction =
-			_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, BlogPostingImageResource>
+				_blogPostingImageResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

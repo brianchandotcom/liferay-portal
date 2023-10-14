@@ -72,7 +72,12 @@ public class ObjectRelationshipResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _objectRelationshipResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, ObjectRelationshipResource>
+					objectRelationshipResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_objectRelationshipResourceProxyProviderFunction;
+
+				return objectRelationshipResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -232,9 +237,14 @@ public class ObjectRelationshipResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, ObjectRelationshipResource>
-		_objectRelationshipResourceProxyProviderFunction =
-			_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, ObjectRelationshipResource>
+				_objectRelationshipResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

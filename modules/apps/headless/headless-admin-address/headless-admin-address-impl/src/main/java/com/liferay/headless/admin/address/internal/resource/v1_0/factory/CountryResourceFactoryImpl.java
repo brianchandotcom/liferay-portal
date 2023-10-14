@@ -71,7 +71,12 @@ public class CountryResourceFactoryImpl implements CountryResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _countryResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, CountryResource>
+					countryResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_countryResourceProxyProviderFunction;
+
+				return countryResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -226,8 +231,12 @@ public class CountryResourceFactoryImpl implements CountryResource.Factory {
 		}
 	}
 
-	private static final Function<InvocationHandler, CountryResource>
-		_countryResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, CountryResource>
+			_countryResourceProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

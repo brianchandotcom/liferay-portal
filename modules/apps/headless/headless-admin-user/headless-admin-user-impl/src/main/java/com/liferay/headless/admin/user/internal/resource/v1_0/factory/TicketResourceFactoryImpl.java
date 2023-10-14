@@ -71,7 +71,12 @@ public class TicketResourceFactoryImpl implements TicketResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _ticketResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, TicketResource>
+					ticketResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_ticketResourceProxyProviderFunction;
+
+				return ticketResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -226,8 +231,12 @@ public class TicketResourceFactoryImpl implements TicketResource.Factory {
 		}
 	}
 
-	private static final Function<InvocationHandler, TicketResource>
-		_ticketResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, TicketResource>
+			_ticketResourceProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

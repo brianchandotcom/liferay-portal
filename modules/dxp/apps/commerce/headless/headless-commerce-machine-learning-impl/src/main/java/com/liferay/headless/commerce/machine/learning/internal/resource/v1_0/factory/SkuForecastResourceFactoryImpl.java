@@ -72,7 +72,12 @@ public class SkuForecastResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _skuForecastResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, SkuForecastResource>
+					skuForecastResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_skuForecastResourceProxyProviderFunction;
+
+				return skuForecastResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -229,8 +234,13 @@ public class SkuForecastResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, SkuForecastResource>
-		_skuForecastResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, SkuForecastResource>
+			_skuForecastResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

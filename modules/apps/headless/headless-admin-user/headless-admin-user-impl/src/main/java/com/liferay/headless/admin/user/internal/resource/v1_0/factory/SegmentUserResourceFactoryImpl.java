@@ -72,7 +72,12 @@ public class SegmentUserResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _segmentUserResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, SegmentUserResource>
+					segmentUserResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_segmentUserResourceProxyProviderFunction;
+
+				return segmentUserResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -229,8 +234,13 @@ public class SegmentUserResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, SegmentUserResource>
-		_segmentUserResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, SegmentUserResource>
+			_segmentUserResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

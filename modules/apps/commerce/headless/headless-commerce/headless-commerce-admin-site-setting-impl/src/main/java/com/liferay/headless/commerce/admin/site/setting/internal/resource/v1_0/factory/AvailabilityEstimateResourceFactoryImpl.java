@@ -72,7 +72,12 @@ public class AvailabilityEstimateResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _availabilityEstimateResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, AvailabilityEstimateResource>
+					availabilityEstimateResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_availabilityEstimateResourceProxyProviderFunction;
+
+				return availabilityEstimateResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -234,10 +239,14 @@ public class AvailabilityEstimateResourceFactoryImpl
 		}
 	}
 
-	private static final Function
-		<InvocationHandler, AvailabilityEstimateResource>
-			_availabilityEstimateResourceProxyProviderFunction =
-				_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, AvailabilityEstimateResource>
+				_availabilityEstimateResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

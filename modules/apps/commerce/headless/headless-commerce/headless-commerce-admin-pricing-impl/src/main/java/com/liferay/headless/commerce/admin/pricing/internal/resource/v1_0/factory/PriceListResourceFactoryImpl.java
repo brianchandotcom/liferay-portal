@@ -71,7 +71,12 @@ public class PriceListResourceFactoryImpl implements PriceListResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _priceListResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, PriceListResource>
+					priceListResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_priceListResourceProxyProviderFunction;
+
+				return priceListResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -227,8 +232,13 @@ public class PriceListResourceFactoryImpl implements PriceListResource.Factory {
 		}
 	}
 
-	private static final Function<InvocationHandler, PriceListResource>
-		_priceListResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, PriceListResource>
+			_priceListResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

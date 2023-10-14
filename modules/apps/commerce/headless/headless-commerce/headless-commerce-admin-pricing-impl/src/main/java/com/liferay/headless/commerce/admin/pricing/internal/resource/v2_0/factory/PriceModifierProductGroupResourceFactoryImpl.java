@@ -72,7 +72,12 @@ public class PriceModifierProductGroupResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _priceModifierProductGroupResourceProxyProviderFunction.
+				Function<InvocationHandler, PriceModifierProductGroupResource>
+					priceModifierProductGroupResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_priceModifierProductGroupResourceProxyProviderFunction;
+
+				return priceModifierProductGroupResourceProxyProviderFunction.
 					apply(
 						(proxy, method, arguments) -> _invoke(
 							method, arguments, _checkPermissions,
@@ -241,10 +246,14 @@ public class PriceModifierProductGroupResourceFactoryImpl
 		}
 	}
 
-	private static final Function
-		<InvocationHandler, PriceModifierProductGroupResource>
-			_priceModifierProductGroupResourceProxyProviderFunction =
-				_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, PriceModifierProductGroupResource>
+				_priceModifierProductGroupResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

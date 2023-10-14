@@ -72,7 +72,12 @@ public class ContentSetElementResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _contentSetElementResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, ContentSetElementResource>
+					contentSetElementResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_contentSetElementResourceProxyProviderFunction;
+
+				return contentSetElementResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -232,9 +237,14 @@ public class ContentSetElementResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, ContentSetElementResource>
-		_contentSetElementResourceProxyProviderFunction =
-			_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, ContentSetElementResource>
+				_contentSetElementResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

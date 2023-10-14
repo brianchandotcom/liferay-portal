@@ -71,7 +71,12 @@ public class PinResourceFactoryImpl implements PinResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _pinResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, PinResource>
+					pinResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_pinResourceProxyProviderFunction;
+
+				return pinResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -223,8 +228,12 @@ public class PinResourceFactoryImpl implements PinResource.Factory {
 		}
 	}
 
-	private static final Function<InvocationHandler, PinResource>
-		_pinResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, PinResource>
+			_pinResourceProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

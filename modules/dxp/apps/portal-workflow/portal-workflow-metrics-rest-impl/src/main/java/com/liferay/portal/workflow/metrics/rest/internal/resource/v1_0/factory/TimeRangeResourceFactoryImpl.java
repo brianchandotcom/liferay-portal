@@ -71,7 +71,12 @@ public class TimeRangeResourceFactoryImpl implements TimeRangeResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _timeRangeResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, TimeRangeResource>
+					timeRangeResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_timeRangeResourceProxyProviderFunction;
+
+				return timeRangeResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -227,8 +232,13 @@ public class TimeRangeResourceFactoryImpl implements TimeRangeResource.Factory {
 		}
 	}
 
-	private static final Function<InvocationHandler, TimeRangeResource>
-		_timeRangeResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, TimeRangeResource>
+			_timeRangeResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

@@ -72,7 +72,12 @@ public class SubscriptionResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _subscriptionResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, SubscriptionResource>
+					subscriptionResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_subscriptionResourceProxyProviderFunction;
+
+				return subscriptionResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -229,9 +234,13 @@ public class SubscriptionResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, SubscriptionResource>
-		_subscriptionResourceProxyProviderFunction =
-			_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, SubscriptionResource>
+			_subscriptionResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

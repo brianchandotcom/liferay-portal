@@ -72,7 +72,12 @@ public class ObjectValidationRuleResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _objectValidationRuleResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, ObjectValidationRuleResource>
+					objectValidationRuleResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_objectValidationRuleResourceProxyProviderFunction;
+
+				return objectValidationRuleResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -234,10 +239,14 @@ public class ObjectValidationRuleResourceFactoryImpl
 		}
 	}
 
-	private static final Function
-		<InvocationHandler, ObjectValidationRuleResource>
-			_objectValidationRuleResourceProxyProviderFunction =
-				_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, ObjectValidationRuleResource>
+				_objectValidationRuleResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

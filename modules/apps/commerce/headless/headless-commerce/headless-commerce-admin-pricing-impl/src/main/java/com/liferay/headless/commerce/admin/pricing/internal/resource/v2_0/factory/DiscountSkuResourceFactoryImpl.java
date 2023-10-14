@@ -72,7 +72,12 @@ public class DiscountSkuResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _discountSkuResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, DiscountSkuResource>
+					discountSkuResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_discountSkuResourceProxyProviderFunction;
+
+				return discountSkuResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -229,8 +234,13 @@ public class DiscountSkuResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, DiscountSkuResource>
-		_discountSkuResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, DiscountSkuResource>
+			_discountSkuResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

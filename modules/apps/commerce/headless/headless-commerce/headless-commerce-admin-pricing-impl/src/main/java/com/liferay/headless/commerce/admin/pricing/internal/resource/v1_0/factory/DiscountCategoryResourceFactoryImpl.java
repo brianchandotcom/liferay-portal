@@ -72,7 +72,12 @@ public class DiscountCategoryResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _discountCategoryResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, DiscountCategoryResource>
+					discountCategoryResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_discountCategoryResourceProxyProviderFunction;
+
+				return discountCategoryResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -231,9 +236,14 @@ public class DiscountCategoryResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, DiscountCategoryResource>
-		_discountCategoryResourceProxyProviderFunction =
-			_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, DiscountCategoryResource>
+				_discountCategoryResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

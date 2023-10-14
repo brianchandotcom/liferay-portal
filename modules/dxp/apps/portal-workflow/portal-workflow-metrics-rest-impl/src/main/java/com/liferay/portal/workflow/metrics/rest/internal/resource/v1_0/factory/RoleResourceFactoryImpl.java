@@ -71,7 +71,12 @@ public class RoleResourceFactoryImpl implements RoleResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _roleResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, RoleResource>
+					roleResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_roleResourceProxyProviderFunction;
+
+				return roleResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -225,8 +230,12 @@ public class RoleResourceFactoryImpl implements RoleResource.Factory {
 		}
 	}
 
-	private static final Function<InvocationHandler, RoleResource>
-		_roleResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, RoleResource>
+			_roleResourceProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

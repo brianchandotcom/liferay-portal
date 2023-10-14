@@ -71,7 +71,12 @@ public class SiteResourceFactoryImpl implements SiteResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _siteResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, SiteResource>
+					siteResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_siteResourceProxyProviderFunction;
+
+				return siteResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -225,8 +230,12 @@ public class SiteResourceFactoryImpl implements SiteResource.Factory {
 		}
 	}
 
-	private static final Function<InvocationHandler, SiteResource>
-		_siteResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, SiteResource>
+			_siteResourceProxyProviderFunction = _getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

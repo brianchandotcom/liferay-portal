@@ -72,7 +72,12 @@ public class ExperimentRunResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _experimentRunResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, ExperimentRunResource>
+					experimentRunResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_experimentRunResourceProxyProviderFunction;
+
+				return experimentRunResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -230,9 +235,13 @@ public class ExperimentRunResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, ExperimentRunResource>
-		_experimentRunResourceProxyProviderFunction =
-			_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, ExperimentRunResource>
+			_experimentRunResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

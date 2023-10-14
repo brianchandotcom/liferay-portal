@@ -72,7 +72,13 @@ public class SkuSubscriptionConfigurationResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _skuSubscriptionConfigurationResourceProxyProviderFunction.
+				Function
+					<InvocationHandler, SkuSubscriptionConfigurationResource>
+						skuSubscriptionConfigurationResourceProxyProviderFunction =
+							ResourceProxyProviderFunctionHolder.
+								_skuSubscriptionConfigurationResourceProxyProviderFunction;
+
+				return skuSubscriptionConfigurationResourceProxyProviderFunction.
 					apply(
 						(proxy, method, arguments) -> _invoke(
 							method, arguments, _checkPermissions,
@@ -245,10 +251,14 @@ public class SkuSubscriptionConfigurationResourceFactoryImpl
 		}
 	}
 
-	private static final Function
-		<InvocationHandler, SkuSubscriptionConfigurationResource>
-			_skuSubscriptionConfigurationResourceProxyProviderFunction =
-				_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, SkuSubscriptionConfigurationResource>
+				_skuSubscriptionConfigurationResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

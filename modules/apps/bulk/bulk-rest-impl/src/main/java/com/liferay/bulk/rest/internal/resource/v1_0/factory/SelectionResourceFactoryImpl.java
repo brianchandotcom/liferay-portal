@@ -71,7 +71,12 @@ public class SelectionResourceFactoryImpl implements SelectionResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _selectionResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, SelectionResource>
+					selectionResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_selectionResourceProxyProviderFunction;
+
+				return selectionResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -227,8 +232,13 @@ public class SelectionResourceFactoryImpl implements SelectionResource.Factory {
 		}
 	}
 
-	private static final Function<InvocationHandler, SelectionResource>
-		_selectionResourceProxyProviderFunction = _getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, SelectionResource>
+			_selectionResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

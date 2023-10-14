@@ -72,7 +72,14 @@ public class SXPParameterContributorDefinitionResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _sxpParameterContributorDefinitionResourceProxyProviderFunction.
+				Function
+					<InvocationHandler,
+					 SXPParameterContributorDefinitionResource>
+						sxpParameterContributorDefinitionResourceProxyProviderFunction =
+							ResourceProxyProviderFunctionHolder.
+								_sxpParameterContributorDefinitionResourceProxyProviderFunction;
+
+				return sxpParameterContributorDefinitionResourceProxyProviderFunction.
 					apply(
 						(proxy, method, arguments) -> _invoke(
 							method, arguments, _checkPermissions,
@@ -245,10 +252,14 @@ public class SXPParameterContributorDefinitionResourceFactoryImpl
 		}
 	}
 
-	private static final Function
-		<InvocationHandler, SXPParameterContributorDefinitionResource>
-			_sxpParameterContributorDefinitionResourceProxyProviderFunction =
-				_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, SXPParameterContributorDefinitionResource>
+				_sxpParameterContributorDefinitionResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

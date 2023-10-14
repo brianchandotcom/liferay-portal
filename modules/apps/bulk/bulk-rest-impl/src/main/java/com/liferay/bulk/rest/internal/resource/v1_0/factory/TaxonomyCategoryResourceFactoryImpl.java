@@ -72,7 +72,12 @@ public class TaxonomyCategoryResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _taxonomyCategoryResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, TaxonomyCategoryResource>
+					taxonomyCategoryResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_taxonomyCategoryResourceProxyProviderFunction;
+
+				return taxonomyCategoryResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -231,9 +236,14 @@ public class TaxonomyCategoryResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, TaxonomyCategoryResource>
-		_taxonomyCategoryResourceProxyProviderFunction =
-			_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, TaxonomyCategoryResource>
+				_taxonomyCategoryResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

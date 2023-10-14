@@ -72,7 +72,12 @@ public class PostalAddressResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _postalAddressResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, PostalAddressResource>
+					postalAddressResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_postalAddressResourceProxyProviderFunction;
+
+				return postalAddressResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -230,9 +235,13 @@ public class PostalAddressResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, PostalAddressResource>
-		_postalAddressResourceProxyProviderFunction =
-			_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function<InvocationHandler, PostalAddressResource>
+			_postalAddressResourceProxyProviderFunction =
+				_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

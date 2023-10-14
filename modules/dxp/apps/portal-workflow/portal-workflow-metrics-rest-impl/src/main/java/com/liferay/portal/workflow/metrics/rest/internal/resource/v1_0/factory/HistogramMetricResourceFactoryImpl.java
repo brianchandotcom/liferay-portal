@@ -72,7 +72,12 @@ public class HistogramMetricResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return _histogramMetricResourceProxyProviderFunction.apply(
+				Function<InvocationHandler, HistogramMetricResource>
+					histogramMetricResourceProxyProviderFunction =
+						ResourceProxyProviderFunctionHolder.
+							_histogramMetricResourceProxyProviderFunction;
+
+				return histogramMetricResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -231,9 +236,14 @@ public class HistogramMetricResourceFactoryImpl
 		}
 	}
 
-	private static final Function<InvocationHandler, HistogramMetricResource>
-		_histogramMetricResourceProxyProviderFunction =
-			_getProxyProviderFunction();
+	private static class ResourceProxyProviderFunctionHolder {
+
+		private static final Function
+			<InvocationHandler, HistogramMetricResource>
+				_histogramMetricResourceProxyProviderFunction =
+					_getProxyProviderFunction();
+
+	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

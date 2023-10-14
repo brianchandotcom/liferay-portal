@@ -69,12 +69,13 @@ public class JournalFeedTableReferenceDefinitionTest
 			_rendererDDMTemplate.getTemplateKey());
 	}
 
-	private DDMTemplate _rendererDDMTemplate;
 	private DDMStructure _ddmStructure;
 	private DDMTemplate _ddmTemplate;
 	private Layout _layout;
 
 	@Inject
 	private Portal _portal;
+
+	private DDMTemplate _rendererDDMTemplate;
 
 }

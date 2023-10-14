@@ -19,6 +19,10 @@
 	/>
 	<instance-wrapper
 		parent-dir="../portal-kernel/src"
+		src-file="com/liferay/portal/kernel/language/UnicodeLanguageUtil.java"
+	/>
+	<instance-wrapper
+		parent-dir="../portal-kernel/src"
 		src-file="com/liferay/portal/kernel/portlet/PortletModeFactory.java"
 	/>
 	<instance-wrapper
@@ -88,9 +92,5 @@
 	<instance-wrapper
 		parent-dir="../portal-kernel/src"
 		src-file="com/liferay/portal/kernel/util/Validator.java"
-	/>
-	<instance-wrapper
-		parent-dir="../portal-kernel/src"
-		src-file="com/liferay/portal/kernel/language/UnicodeLanguageUtil.java"
 	/>
 </instance-wrappers>

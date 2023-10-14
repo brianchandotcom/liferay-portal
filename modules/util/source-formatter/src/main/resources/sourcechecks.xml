@@ -1923,6 +1923,10 @@
 			<category name="Styling" />
 			<description name="Finds incorrect indentation in `.xml` files." />
 		</check>
+		<check name="XMLInstanceWrappersFileCheck">
+			<category name="Styling" />
+			<description name="Checks the order of instance-wrappers in `instance_wrappers.xml` file." />
+		</check>
 		<check name="XMLLog4jFileCheck">
 			<category name="Styling" />
 			<description name="Checks the order of categories in `*-log4j.xml` file." />

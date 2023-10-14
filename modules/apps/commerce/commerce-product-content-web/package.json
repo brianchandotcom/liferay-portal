@@ -6,8 +6,6 @@
 		"asset-taglib": "*",
 		"commerce-frontend-js": "*",
 		"frontend-js-web": "*",
-		"metal-component": "2.16.8",
-		"metal-state": "2.16.8",
 		"react": "16.12.0"
 	},
 	"name": "commerce-product-content-web",

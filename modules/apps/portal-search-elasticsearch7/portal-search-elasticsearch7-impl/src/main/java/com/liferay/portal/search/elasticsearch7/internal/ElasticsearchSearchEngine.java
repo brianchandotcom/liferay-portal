@@ -260,6 +260,10 @@ public class ElasticsearchSearchEngine implements SearchEngine {
 	}
 
 	private void _checkNodeVersions() {
+		if (!_elasticsearchConfigurationWrapper.productionModeEnabled()) {
+			return;
+		}
+
 		String minimumVersionString =
 			_elasticsearchConfigurationWrapper.minimumRequiredNodeVersion();
 

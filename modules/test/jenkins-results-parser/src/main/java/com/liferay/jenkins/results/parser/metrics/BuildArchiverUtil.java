@@ -39,13 +39,12 @@ public class BuildArchiverUtil {
 					"dependencies/get-build-data.groovy"));
 
 			groovyScript = groovyScript.replaceFirst(
-				"startDate\\.format\\(\"yyyyMMdd\"\\) \\+ \"",
-				"\"" + startDate);
-
-			groovyScript = groovyScript.replaceFirst(
 				"new Date\\(\\)",
 				"Date.parse(\"yyyyMMdd hh:mm:ss\", \"" + endDate +
 					" 00:00:00\")");
+			groovyScript = groovyScript.replaceFirst(
+				"startDate\\.format\\(\"yyyyMMdd\"\\) \\+ \"",
+				"\"" + startDate);
 
 			System.out.println(groovyScript);
 

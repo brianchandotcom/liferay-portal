@@ -114,6 +114,10 @@ public class AssetRendererFactoryRegistryUtil {
 	private static <T> AssetRendererFactory<T> _customize(
 		AssetRendererFactory<T> assetRendererFactory) {
 
+		if (assetRendererFactory == null) {
+			return null;
+		}
+
 		AssetRendererFactoryCustomizer assetRendererFactoryCustomizer =
 			_assetRendererFactoryCustomizerSnapshot.get();
 

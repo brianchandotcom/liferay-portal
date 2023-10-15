@@ -134,8 +134,6 @@ public class ElasticsearchSearchEngine implements SearchEngine {
 		RestHighLevelClient restHighLevelClient =
 			_elasticsearchConnectionManager.getRestHighLevelClient();
 
-		_putTimestampPipeline(restHighLevelClient);
-
 		boolean created = _indexFactory.createIndices(
 			restHighLevelClient.indices(), companyId);
 
@@ -234,6 +232,8 @@ public class ElasticsearchSearchEngine implements SearchEngine {
 				removeCompany(companyId);
 			}
 		}
+
+		_putTimestampPipeline();
 
 		initialize(CompanyConstants.SYSTEM);
 	}
@@ -348,9 +348,7 @@ public class ElasticsearchSearchEngine implements SearchEngine {
 		return true;
 	}
 
-	private void _putTimestampPipeline(
-		RestHighLevelClient restHighLevelClient) {
-
+	private void _putTimestampPipeline() {
 		String source = JSONUtil.put(
 			"description", "Adds timestamp to documents"
 		).put(
@@ -369,6 +367,9 @@ public class ElasticsearchSearchEngine implements SearchEngine {
 			"timestamp",
 			new BytesArray(source.getBytes(StandardCharsets.UTF_8)),
 			XContentType.JSON);
+
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchConnectionManager.getRestHighLevelClient();
 
 		IngestClient ingestClient = restHighLevelClient.ingest();
 

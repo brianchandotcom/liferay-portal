@@ -8,8 +8,6 @@ package com.liferay.site.admin.web.internal.display.context;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -74,17 +72,8 @@ public class AddGroupDisplayContext {
 		long[] groupsIds = {themeDisplay.getCompanyGroupId()};
 
 		if (_getParentGroupId() > 0) {
-			try {
-				groupsIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(
-					_getParentGroupId());
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
-
-				return groupsIds;
-			}
+			groupsIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(
+				_getParentGroupId());
 		}
 
 		_groupsIds = groupsIds;
@@ -158,9 +147,6 @@ public class AddGroupDisplayContext {
 
 		return _parentGroupId;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		AddGroupDisplayContext.class);
 
 	private final boolean _disablePrivateLayouts;
 	private long[] _groupsIds;

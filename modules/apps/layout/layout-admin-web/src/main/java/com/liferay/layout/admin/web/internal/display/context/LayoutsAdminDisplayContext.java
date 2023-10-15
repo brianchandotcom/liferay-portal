@@ -2177,17 +2177,8 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	private long[] _getGroupIds() {
-		try {
-			return PortalUtil.getCurrentAndAncestorSiteGroupIds(
-				themeDisplay.getScopeGroupId());
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
-
-		return new long[0];
+		return PortalUtil.getCurrentAndAncestorSiteGroupIds(
+			themeDisplay.getScopeGroupId());
 	}
 
 	private String _getLayoutMessage(Layout layout) throws PortalException {

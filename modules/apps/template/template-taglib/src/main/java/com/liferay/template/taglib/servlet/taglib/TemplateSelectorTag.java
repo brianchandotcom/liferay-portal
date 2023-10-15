@@ -9,7 +9,6 @@ import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -246,16 +245,7 @@ public class TemplateSelectorTag extends IncludeTag {
 			}
 		}
 
-		try {
-			return PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId);
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException);
-			}
-		}
-
-		return new long[] {groupId};
+		return PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId);
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE =

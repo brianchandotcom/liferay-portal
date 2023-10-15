@@ -533,16 +533,7 @@ public class SiteNavigationAdminDisplayContext {
 			}
 		}
 
-		try {
-			return PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId);
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException);
-			}
-		}
-
-		return new long[] {groupId};
+		return PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId);
 	}
 
 	private String _getPreviewSiteNavigationMenuURL() {

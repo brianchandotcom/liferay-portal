@@ -257,24 +257,11 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 	private List<AssetVocabulary> _getNoninternalAssetVocabularies(
 		String itemClassName, long itemClassTypeId, long scopeGroupId) {
 
-		try {
-			if (itemClassTypeId > 0) {
-				List<AssetVocabulary> groupsAssetVocabularies =
-					_assetVocabularyLocalService.getGroupsVocabularies(
-						_portal.getCurrentAndAncestorSiteGroupIds(scopeGroupId),
-						itemClassName, itemClassTypeId);
-
-				return ListUtil.filter(
-					groupsAssetVocabularies,
-					assetVocabulary ->
-						!(assetVocabulary.getVisibilityType() ==
-							AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL));
-			}
-
+		if (itemClassTypeId > 0) {
 			List<AssetVocabulary> groupsAssetVocabularies =
 				_assetVocabularyLocalService.getGroupsVocabularies(
 					_portal.getCurrentAndAncestorSiteGroupIds(scopeGroupId),
-					itemClassName);
+					itemClassName, itemClassTypeId);
 
 			return ListUtil.filter(
 				groupsAssetVocabularies,
@@ -282,9 +269,17 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 					!(assetVocabulary.getVisibilityType() ==
 						AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL));
 		}
-		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
-		}
+
+		List<AssetVocabulary> groupsAssetVocabularies =
+			_assetVocabularyLocalService.getGroupsVocabularies(
+				_portal.getCurrentAndAncestorSiteGroupIds(scopeGroupId),
+				itemClassName);
+
+		return ListUtil.filter(
+			groupsAssetVocabularies,
+			assetVocabulary ->
+				!(assetVocabulary.getVisibilityType() ==
+					AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL));
 	}
 
 	private List<String> _getTags(List<AssetTag> assetTags) {

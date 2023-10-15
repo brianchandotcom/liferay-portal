@@ -60,10 +60,6 @@ public class FileEntryInfoItemFormVariationsProvider
 	public Collection<InfoItemFormVariation> getInfoItemFormVariations(
 		long groupId) {
 
-		List<InfoItemFormVariation> infoItemFormVariations = new ArrayList<>();
-
-		infoItemFormVariations.add(_getBasicDocumentInfoItemFormVariation());
-
 		try {
 			return getInfoItemFormVariations(
 				_getCurrentAndAncestorSiteGroupIds(groupId));

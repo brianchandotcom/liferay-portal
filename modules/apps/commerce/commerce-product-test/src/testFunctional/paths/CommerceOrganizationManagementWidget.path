@@ -55,6 +55,56 @@
 	<td>//*[contains(@class,'node-title') and contains(.,'${key_nodeName}')]//following::*[contains(@class,'node-menu-wrapper')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>REDUCE_ZOOM_BUTTON</td>
+	<td>//div[contains(@class,'org-chart-container')]//*[*[name()='svg'][contains(@class,'icon-hr')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INCREASE_ZOOM_BUTTON</td>
+	<td>//div[contains(@class,'org-chart-container')]//*[*[name()='svg'][contains(@class,'icon-plus')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPAND_BUTTON</td>
+	<td>//div[contains(@class,'org-chart-container')]//*[*[name()='svg'][contains(@class,'icon-expand')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//div[contains(@class,'input-group-item')]//input[contains(@placeholder,'Type Here')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHART_DISCOVERED_ENTRY</td>
+	<td>//div[contains(@class,'org-chart-container')]//*[name()='g' and contains (@class,"discovered")]//*[name()='text' and contains (.,'${key_entry}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHART_DISCOVERED_ENTRY_ROW</td>
+	<td>//div[contains(@class,'org-chart-container')]//*[name()='g' and contains (@class,"discovered")][${key_row}]//*[name()='text' and contains (.,'${key_entry}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHART_ENTRY</td>
+	<td>//div[contains(@class,'org-chart-container')]//*[name()='g' and contains (@class,"chart-item")]//*[name()='text' and contains (.,'${key_entry}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHART_SEARCH_RESULTS</td>
+	<td>//div[contains(@class,'org-chart-result-helper') and contains (.,'${key_searchResults}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_AUTO_COMPLETE_OPTION_ROW</td>
+	<td>//li[contains(@role,"presentation")][${key_row}]//button[(@class='dropdown-item') and contains(.,'${key_columnOption}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_AUTO_DISABLED</td>
+	<td>//div[contains(@class,'autocomplete-dropdown-menu')]//span[contains(@class,'disabled') and contains(.,'No items were found.')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -73,20 +73,22 @@ public class AssetRendererFactoryLookupImpl
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		_serviceTracker = ServiceTrackerFactory.open(
-			_bundleContext,
-			(Class<AssetRendererFactory<?>>)
-				(Class<?>)AssetRendererFactory.class,
-			new AssetRendererFactoryServiceTrackerCustomizer());
+		if (_isIndexOnStartupWithDelayEnabled()) {
+			_serviceTracker = ServiceTrackerFactory.open(
+				_bundleContext,
+				(Class<AssetRendererFactory<?>>)
+					(Class<?>)AssetRendererFactory.class,
+				new AssetRendererFactoryServiceTrackerCustomizer());
 
-		_activated = Instant.now();
+			_activated = Instant.now();
+		}
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTracker.close();
-
-		_serviceTracker = null;
+		if (_serviceTracker != null) {
+			_serviceTracker.close();
+		}
 	}
 
 	private boolean _isAssetRendererFactoryInitialized(String className) {

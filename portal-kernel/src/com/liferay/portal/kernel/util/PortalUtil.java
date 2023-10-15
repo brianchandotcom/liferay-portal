@@ -600,45 +600,37 @@ public class PortalUtil {
 		return _portal.getCreateAccountURL(httpServletRequest, themeDisplay);
 	}
 
-	public static long[] getCurrentAndAncestorSiteGroupIds(long groupId)
-		throws PortalException {
-
+	public static long[] getCurrentAndAncestorSiteGroupIds(long groupId) {
 		return _portal.getCurrentAndAncestorSiteGroupIds(groupId);
 	}
 
 	public static long[] getCurrentAndAncestorSiteGroupIds(
-			long groupId, boolean checkContentSharingWithChildrenEnabled)
-		throws PortalException {
+		long groupId, boolean checkContentSharingWithChildrenEnabled) {
 
 		return _portal.getCurrentAndAncestorSiteGroupIds(
 			groupId, checkContentSharingWithChildrenEnabled);
 	}
 
-	public static long[] getCurrentAndAncestorSiteGroupIds(long[] groupIds)
-		throws PortalException {
-
+	public static long[] getCurrentAndAncestorSiteGroupIds(long[] groupIds) {
 		return _portal.getCurrentAndAncestorSiteGroupIds(groupIds);
 	}
 
 	public static long[] getCurrentAndAncestorSiteGroupIds(
-			long[] groupIds, boolean checkContentSharingWithChildrenEnabled)
-		throws PortalException {
+		long[] groupIds, boolean checkContentSharingWithChildrenEnabled) {
 
 		return _portal.getCurrentAndAncestorSiteGroupIds(
 			groupIds, checkContentSharingWithChildrenEnabled);
 	}
 
 	public static List<Group> getCurrentAndAncestorSiteGroups(
-			long groupId, boolean checkContentSharingWithChildrenEnabled)
-		throws PortalException {
+		long groupId, boolean checkContentSharingWithChildrenEnabled) {
 
 		return _portal.getCurrentAndAncestorSiteGroups(
 			groupId, checkContentSharingWithChildrenEnabled);
 	}
 
 	public static List<Group> getCurrentAndAncestorSiteGroups(
-			long[] groupIds, boolean checkContentSharingWithChildrenEnabled)
-		throws PortalException {
+		long[] groupIds, boolean checkContentSharingWithChildrenEnabled) {
 
 		return _portal.getCurrentAndAncestorSiteGroups(
 			groupIds, checkContentSharingWithChildrenEnabled);

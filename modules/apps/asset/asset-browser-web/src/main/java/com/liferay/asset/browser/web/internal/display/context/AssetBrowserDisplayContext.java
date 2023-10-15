@@ -12,10 +12,8 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.util.AssetHelper;
-import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryService;
+import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.item.selector.criteria.asset.criterion.AssetEntryItemSelectorCriterion;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -26,7 +24,6 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -49,7 +46,6 @@ public class AssetBrowserDisplayContext {
 	public AssetBrowserDisplayContext(
 		AssetEntryLocalService assetEntryLocalService, AssetHelper assetHelper,
 		AssetEntryItemSelectorCriterion assetEntryItemSelectorCriterion,
-		DepotEntryService depotEntryService,
 		HttpServletRequest httpServletRequest, Portal portal,
 		PortletURL portletURL, RenderRequest renderRequest,
 		RenderResponse renderResponse) {
@@ -57,7 +53,6 @@ public class AssetBrowserDisplayContext {
 		_assetEntryLocalService = assetEntryLocalService;
 		_assetHelper = assetHelper;
 		_assetEntryItemSelectorCriterion = assetEntryItemSelectorCriterion;
-		_depotEntryService = depotEntryService;
 		_httpServletRequest = httpServletRequest;
 		_portal = portal;
 		_portletURL = portletURL;
@@ -264,12 +259,9 @@ public class AssetBrowserDisplayContext {
 			_filterGroupIds = new long[] {getGroupId()};
 		}
 		else {
-			_filterGroupIds = ArrayUtil.append(
-				_portal.getCurrentAndAncestorSiteGroupIds(getGroupId()),
-				ListUtil.toLongArray(
-					_depotEntryService.getGroupConnectedDepotEntries(
-						getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-					DepotEntry::getGroupId));
+			_filterGroupIds =
+				SiteConnectedGroupGroupProviderUtil.
+					getCurrentAndAncestorSiteAndDepotGroupIds(getGroupId());
 		}
 
 		return _filterGroupIds;
@@ -308,7 +300,6 @@ public class AssetBrowserDisplayContext {
 	private final AssetHelper _assetHelper;
 	private AssetRendererFactory<?> _assetRendererFactory;
 	private long[] _classNameIds;
-	private final DepotEntryService _depotEntryService;
 	private long[] _filterGroupIds;
 	private final HttpServletRequest _httpServletRequest;
 	private String _keywords;

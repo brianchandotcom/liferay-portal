@@ -5,21 +5,16 @@
 
 package com.liferay.document.library.web.internal.info.item.provider;
 
-import com.liferay.depot.model.DepotEntry;
-import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -122,25 +117,9 @@ public class FileEntryInfoItemFormVariationsProvider
 	private long[] _getCurrentAndAncestorSiteGroupIds(long groupId)
 		throws PortalException {
 
-		DepotEntryLocalService depotEntryLocalService =
-			_depotEntryLocalServiceSnapshot.get();
-
-		if (depotEntryLocalService == null) {
-			return _portal.getCurrentAndAncestorSiteGroupIds(groupId);
-		}
-
-		return ArrayUtil.append(
-			_portal.getCurrentAndAncestorSiteGroupIds(groupId),
-			ListUtil.toLongArray(
-				depotEntryLocalService.getGroupConnectedDepotEntries(
-					groupId, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-				DepotEntry::getGroupId));
+		return SiteConnectedGroupGroupProviderUtil.
+			getCurrentAndAncestorSiteAndDepotGroupIds(groupId, true);
 	}
-
-	private static final Snapshot<DepotEntryLocalService>
-		_depotEntryLocalServiceSnapshot = new Snapshot<>(
-			FileEntryInfoItemFormVariationsProvider.class,
-			DepotEntryLocalService.class, null, true);
 
 	@Reference
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;

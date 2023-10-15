@@ -9,6 +9,7 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -41,23 +42,26 @@ public class AssetRendererFactoryRegistryUtil {
 	public static <T> AssetRendererFactory<T> getAssetRendererFactoryByClass(
 		Class<T> clazz) {
 
-		return (AssetRendererFactory<T>)
-			_classNameAssetRenderFactoriesServiceTrackerMap.getService(
-				clazz.getName());
+		return _customize(
+			(AssetRendererFactory<T>)
+				_classNameAssetRenderFactoriesServiceTrackerMap.getService(
+					clazz.getName()));
 	}
 
 	public static AssetRendererFactory<?> getAssetRendererFactoryByClassName(
 		String className) {
 
-		return _classNameAssetRenderFactoriesServiceTrackerMap.getService(
-			className);
+		return _customize(
+			_classNameAssetRenderFactoriesServiceTrackerMap.getService(
+				className));
 	}
 
 	public static AssetRendererFactory<?> getAssetRendererFactoryByClassNameId(
 		long classNameId) {
 
-		return _classNameAssetRenderFactoriesServiceTrackerMap.getService(
-			PortalUtil.getClassName(classNameId));
+		return _customize(
+			_classNameAssetRenderFactoriesServiceTrackerMap.getService(
+				PortalUtil.getClassName(classNameId)));
 	}
 
 	public static AssetRendererFactory<?> getAssetRendererFactoryByType(
@@ -82,9 +86,9 @@ public class AssetRendererFactoryRegistryUtil {
 		return TransformUtil.transformToLongArray(
 			_classNameAssetRenderFactoriesServiceTrackerMap.keySet(),
 			className -> {
-				AssetRendererFactory<?> assetRendererFactory =
+				AssetRendererFactory<?> assetRendererFactory = _customize(
 					_classNameAssetRenderFactoriesServiceTrackerMap.getService(
-						className);
+						className));
 
 				return assetRendererFactory.getClassNameId();
 			});
@@ -107,6 +111,20 @@ public class AssetRendererFactoryRegistryUtil {
 			});
 	}
 
+	private static <T> AssetRendererFactory<T> _customize(
+		AssetRendererFactory<T> assetRendererFactory) {
+
+		AssetRendererFactoryCustomizer assetRendererFactoryCustomizer =
+			_assetRendererFactoryCustomizerSnapshot.get();
+
+		if (assetRendererFactoryCustomizer != null) {
+			assetRendererFactory = assetRendererFactoryCustomizer.customize(
+				assetRendererFactory);
+		}
+
+		return assetRendererFactory;
+	}
+
 	private static List<AssetRendererFactory<?>> _filterAssetRendererFactories(
 		long companyId, boolean filterSelectable) {
 
@@ -116,8 +134,9 @@ public class AssetRendererFactoryRegistryUtil {
 		for (String key :
 				_classNameAssetRenderFactoriesServiceTrackerMap.keySet()) {
 
-			AssetRendererFactory<?> assetRendererFactory =
-				_classNameAssetRenderFactoriesServiceTrackerMap.getService(key);
+			AssetRendererFactory<?> assetRendererFactory = _customize(
+				_classNameAssetRenderFactoriesServiceTrackerMap.getService(
+					key));
 
 			if (assetRendererFactory.isActive(companyId) &&
 				(!filterSelectable || assetRendererFactory.isSelectable())) {
@@ -132,6 +151,10 @@ public class AssetRendererFactoryRegistryUtil {
 	private AssetRendererFactoryRegistryUtil() {
 	}
 
+	private static final Snapshot<AssetRendererFactoryCustomizer>
+		_assetRendererFactoryCustomizerSnapshot = new Snapshot<>(
+			AssetRendererFactoryRegistryUtil.class,
+			AssetRendererFactoryCustomizer.class);
 	private static final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
 

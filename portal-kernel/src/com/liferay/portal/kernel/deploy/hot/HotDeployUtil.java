@@ -18,12 +18,13 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.servlet.ServletContext;
 
@@ -34,9 +35,7 @@ import javax.servlet.ServletContext;
  */
 public class HotDeployUtil {
 
-	public static synchronized void fireDeployEvent(
-		final HotDeployEvent hotDeployEvent) {
-
+	public static void fireDeployEvent(final HotDeployEvent hotDeployEvent) {
 		ServletContext servletContext = hotDeployEvent.getServletContext();
 
 		ServletContextPool.put(
@@ -70,9 +69,7 @@ public class HotDeployUtil {
 		}
 	}
 
-	public static synchronized void fireUndeployEvent(
-		HotDeployEvent hotDeployEvent) {
-
+	public static void fireUndeployEvent(HotDeployEvent hotDeployEvent) {
 		for (int i = _hotDeployListeners.size() - 1; i >= 0; i--) {
 			HotDeployListener hotDeployListener = _hotDeployListeners.get(i);
 
@@ -94,7 +91,7 @@ public class HotDeployUtil {
 			hotDeployEvent.getServletContextName());
 	}
 
-	public static synchronized boolean registerDependentPortalLifecycle(
+	public static boolean registerDependentPortalLifecycle(
 		String servletContextName, PortalLifecycle portalLifecycle) {
 
 		for (HotDeployEvent hotDeployEvent : _dependentHotDeployEvents) {
@@ -111,32 +108,28 @@ public class HotDeployUtil {
 		return false;
 	}
 
-	public static synchronized void registerListener(
-		HotDeployListener hotDeployListener) {
-
+	public static void registerListener(HotDeployListener hotDeployListener) {
 		_hotDeployListeners.add(hotDeployListener);
 	}
 
-	public static synchronized void reset() {
+	public static void reset() {
 		_capturePrematureEvents = true;
 		_dependentHotDeployEvents.clear();
 		_deployedServletContextNames.clear();
 		_hotDeployListeners.clear();
 	}
 
-	public static synchronized void setCapturePrematureEvents(
+	public static void setCapturePrematureEvents(
 		boolean capturePrematureEvents) {
 
 		_capturePrematureEvents = capturePrematureEvents;
 	}
 
-	public static synchronized void unregisterListener(
-		HotDeployListener hotDeployListener) {
-
+	public static void unregisterListener(HotDeployListener hotDeployListener) {
 		_hotDeployListeners.remove(hotDeployListener);
 	}
 
-	public static synchronized void unregisterListeners() {
+	public static void unregisterListeners() {
 		_hotDeployListeners.clear();
 	}
 
@@ -271,12 +264,12 @@ public class HotDeployUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(HotDeployUtil.class);
 
-	private static boolean _capturePrematureEvents = true;
+	private static volatile boolean _capturePrematureEvents = true;
 	private static final Queue<HotDeployEvent> _dependentHotDeployEvents =
 		new ConcurrentLinkedQueue<>();
 	private static final Set<String> _deployedServletContextNames =
-		new HashSet<>();
+		Collections.newSetFromMap(new ConcurrentHashMap<>());
 	private static final List<HotDeployListener> _hotDeployListeners =
-		new ArrayList<>();
+		new CopyOnWriteArrayList<>();
 
 }

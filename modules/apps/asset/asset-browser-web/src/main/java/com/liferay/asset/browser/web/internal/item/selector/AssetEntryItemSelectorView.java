@@ -8,7 +8,6 @@ package com.liferay.asset.browser.web.internal.item.selector;
 import com.liferay.asset.browser.web.internal.display.context.AssetBrowserDisplayContext;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.util.AssetHelper;
-import com.liferay.depot.service.DepotEntryService;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
@@ -81,9 +80,8 @@ public class AssetEntryItemSelectorView
 		AssetBrowserDisplayContext assetBrowserDisplayContext =
 			new AssetBrowserDisplayContext(
 				_assetEntryLocalService, _assetHelper,
-				assetEntryItemSelectorCriterion, _depotEntryService,
-				httpServletRequest, _portal, portletURL, renderRequest,
-				renderResponse);
+				assetEntryItemSelectorCriterion, httpServletRequest, _portal,
+				portletURL, renderRequest, renderResponse);
 
 		_itemSelectorViewDescriptorRenderer.renderHTML(
 			httpServletRequest, servletResponse,
@@ -103,9 +101,6 @@ public class AssetEntryItemSelectorView
 
 	@Reference
 	private AssetHelper _assetHelper;
-
-	@Reference
-	private DepotEntryService _depotEntryService;
 
 	@Reference
 	private ItemSelectorViewDescriptorRenderer<AssetEntryItemSelectorCriterion>

@@ -201,15 +201,6 @@ public interface Portlet extends PersistedModel, PortletModel {
 	public java.util.List<String> getAssetRendererFactoryClasses();
 
 	/**
-	 * Returns the asset type instances of the portlet.
-	 *
-	 * @return the asset type instances of the portlet
-	 */
-	public java.util.List
-		<com.liferay.asset.kernel.model.AssetRendererFactory<?>>
-			getAssetRendererFactoryInstances();
-
-	/**
 	 * Returns the names of the parameters that will be automatically propagated
 	 * through the portlet.
 	 *

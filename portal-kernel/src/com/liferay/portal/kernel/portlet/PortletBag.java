@@ -5,7 +5,6 @@
 
 package com.liferay.portal.kernel.portlet;
 
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.expando.kernel.model.CustomAttributesDisplay;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
@@ -44,8 +43,6 @@ public interface PortletBag extends Cloneable {
 	public Object clone();
 
 	public void destroy();
-
-	public List<AssetRendererFactory<?>> getAssetRendererFactoryInstances();
 
 	public List<ConfigurationAction> getConfigurationActionInstances();
 

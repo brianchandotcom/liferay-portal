@@ -5,7 +5,6 @@
 
 package com.liferay.portlet.internal;
 
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.expando.kernel.model.CustomAttributesDisplay;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
@@ -109,11 +108,6 @@ public class PortletBagImpl implements PortletBag {
 
 			serviceTrackerList.close();
 		}
-	}
-
-	@Override
-	public List<AssetRendererFactory<?>> getAssetRendererFactoryInstances() {
-		return _getList(AssetRendererFactory.class);
 	}
 
 	@Override

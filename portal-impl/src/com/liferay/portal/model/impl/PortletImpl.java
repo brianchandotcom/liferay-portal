@@ -5,7 +5,6 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.expando.kernel.model.CustomAttributesDisplay;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
@@ -591,22 +590,6 @@ public class PortletImpl extends PortletBaseImpl {
 	@Override
 	public List<String> getAssetRendererFactoryClasses() {
 		return _assetRendererFactoryClasses;
-	}
-
-	/**
-	 * Returns the asset type instances of the portlet.
-	 *
-	 * @return the asset type instances of the portlet
-	 */
-	@Override
-	public List<AssetRendererFactory<?>> getAssetRendererFactoryInstances() {
-		if (_assetRendererFactoryClasses.isEmpty()) {
-			return null;
-		}
-
-		PortletBag portletBag = PortletBagPool.get(getRootPortletId());
-
-		return portletBag.getAssetRendererFactoryInstances();
 	}
 
 	/**

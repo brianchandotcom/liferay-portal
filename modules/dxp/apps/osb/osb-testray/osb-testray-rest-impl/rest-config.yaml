@@ -6,6 +6,6 @@ application:
     name: "OsbTestrayRest"
 author: "José Abelenda"
 clientDir: "../osb-testray-rest-client/src/main/java"
-compatibilityVersion: 2
+compatibilityVersion: 3
 forcePredictableOperationId: true
 testDir: "../osb-testray-rest-test/src/testIntegration/java"

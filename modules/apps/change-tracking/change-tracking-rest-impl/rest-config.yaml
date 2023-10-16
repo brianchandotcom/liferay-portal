@@ -6,6 +6,6 @@ application:
     name: "Liferay.Change.Tracking.REST"
 author: "David Truong"
 clientDir: "../change-tracking-rest-client/src/main/java"
-compatibilityVersion: 2
+compatibilityVersion: 3
 forcePredictableOperationId: true
 testDir: "../change-tracking-rest-test/src/testIntegration/java"

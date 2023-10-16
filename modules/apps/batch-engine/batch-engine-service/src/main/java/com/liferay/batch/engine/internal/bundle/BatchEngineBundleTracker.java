@@ -91,10 +91,6 @@ public class BatchEngineBundleTracker {
 				new ArrayList<>();
 
 			for (BatchEngineUnit batchEngineUnit : batchEngineUnits) {
-				if (!batchEngineUnit.isValid()) {
-					continue;
-				}
-
 				try {
 					BatchEngineUnitConfiguration batchEngineUnitConfiguration =
 						batchEngineUnit.getBatchEngineUnitConfiguration();

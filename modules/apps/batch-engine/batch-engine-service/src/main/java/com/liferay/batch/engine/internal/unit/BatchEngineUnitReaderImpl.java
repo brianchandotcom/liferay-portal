@@ -9,17 +9,35 @@ import com.liferay.batch.engine.BatchEngineTaskContentType;
 import com.liferay.batch.engine.internal.bundle.AdvancedBundleBatchEngineUnitImpl;
 import com.liferay.batch.engine.internal.bundle.ClassicBundleBatchEngineUnitImpl;
 import com.liferay.batch.engine.unit.BatchEngineUnit;
+import com.liferay.batch.engine.unit.BatchEngineUnitConfiguration;
 import com.liferay.batch.engine.unit.BatchEngineUnitReader;
+import com.liferay.petra.io.Deserializer;
+import com.liferay.petra.io.Serializer;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.Serializable;
 
 import java.net.URL;
 
+import java.nio.ByteBuffer;
+
+import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Dictionary;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,6 +87,34 @@ public class BatchEngineUnitReaderImpl implements BatchEngineUnitReader {
 		return false;
 	}
 
+	private void _addBundleBatchEngineUnit(
+		BatchEngineUnit batchEngineUnit, List<URL> urls,
+		List<BatchEngineUnit> batchEngineUnits,
+		List<Map.Entry<String, URL>> featureFlagURLs) {
+
+		if (!batchEngineUnit.isValid()) {
+			return;
+		}
+
+		try {
+			String featureFlagKey = _getFeatureFlagKey(
+				batchEngineUnit.getBatchEngineUnitConfiguration());
+
+			for (URL url : urls) {
+				featureFlagURLs.add(
+					new AbstractMap.SimpleImmutableEntry<>(
+						featureFlagKey, url));
+			}
+
+			if (!_isFeatureFlagDisabled(featureFlagKey)) {
+				batchEngineUnits.add(batchEngineUnit);
+			}
+		}
+		catch (IOException ioException) {
+			_log.error(ioException);
+		}
+	}
+
 	private String _getBatchEngineBundleEntryKey(URL url) {
 		String zipEntryName = url.getPath();
 
@@ -91,11 +137,20 @@ public class BatchEngineUnitReaderImpl implements BatchEngineUnitReader {
 			new HashMap<>();
 		List<BatchEngineUnit> batchEngineUnits = new ArrayList<>();
 
-		Enumeration<URL> enumeration = bundle.findEntries(batchPath, "*", true);
+		List<URL> entryURLs = _loadEntryURLs(bundle);
 
-		while (enumeration.hasMoreElements()) {
-			URL url = enumeration.nextElement();
+		boolean needSave = false;
 
+		if (entryURLs == null) {
+			needSave = true;
+
+			entryURLs = Collections.list(
+				bundle.findEntries(batchPath, "*", true));
+		}
+
+		List<Map.Entry<String, URL>> featureFlagURLs = new ArrayList<>();
+
+		for (URL url : entryURLs) {
 			if (StringUtil.endsWith(url.getPath(), StringPool.SLASH)) {
 				continue;
 			}
@@ -103,8 +158,9 @@ public class BatchEngineUnitReaderImpl implements BatchEngineUnitReader {
 			String key = _getBatchEngineBundleEntryKey(url);
 
 			if (_isAdvancedBundleBatchEngineUnit(url.toString())) {
-				batchEngineUnits.add(
-					new AdvancedBundleBatchEngineUnitImpl(bundle, url));
+				_addBundleBatchEngineUnit(
+					new AdvancedBundleBatchEngineUnitImpl(bundle, url),
+					Arrays.asList(url), batchEngineUnits, featureFlagURLs);
 
 				continue;
 			}
@@ -118,16 +174,107 @@ public class BatchEngineUnitReaderImpl implements BatchEngineUnitReader {
 		}
 
 		for (List<URL> urls : classicBundleBatchEngineUnitURLs.values()) {
-			batchEngineUnits.add(
-				new ClassicBundleBatchEngineUnitImpl(bundle, urls));
+			_addBundleBatchEngineUnit(
+				new ClassicBundleBatchEngineUnitImpl(bundle, urls), urls,
+				batchEngineUnits, featureFlagURLs);
+		}
+
+		if (needSave) {
+			_saveEntryURLs(bundle, featureFlagURLs);
 		}
 
 		return batchEngineUnits;
+	}
+
+	private String _getFeatureFlagKey(
+		BatchEngineUnitConfiguration batchEngineUnitConfiguration) {
+
+		Map<String, Serializable> parameters =
+			batchEngineUnitConfiguration.getParameters();
+
+		if (parameters == null) {
+			return StringPool.BLANK;
+		}
+
+		return GetterUtil.getString(parameters.get("featureFlag"));
 	}
 
 	private boolean _isAdvancedBundleBatchEngineUnit(String url) {
 		return url.endsWith(
 			BatchEngineTaskContentType.JSONT.getFileExtension());
 	}
+
+	private boolean _isFeatureFlagDisabled(String featureFlagKey) {
+		if (Validator.isNotNull(featureFlagKey) &&
+			!FeatureFlagManagerUtil.isEnabled(featureFlagKey)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private List<URL> _loadEntryURLs(Bundle bundle) {
+		File file = bundle.getDataFile("entryURLs.data");
+
+		if (file.exists()) {
+			try {
+				Deserializer deserializer = new Deserializer(
+					ByteBuffer.wrap(FileUtil.getBytes(file)));
+
+				if (deserializer.readLong() == bundle.getLastModified()) {
+					int size = deserializer.readInt();
+
+					List<URL> urls = new ArrayList<>();
+
+					for (int i = 0; i < size; i++) {
+						String featureFlagKey = deserializer.readString();
+						String path = deserializer.readString();
+
+						if (!_isFeatureFlagDisabled(featureFlagKey)) {
+							urls.add(bundle.getEntry(path));
+						}
+					}
+
+					return urls;
+				}
+			}
+			catch (IOException ioException) {
+				_log.error(
+					"Unable to read batch engine entry urls", ioException);
+			}
+		}
+
+		return null;
+	}
+
+	private void _saveEntryURLs(
+		Bundle bundle, List<Map.Entry<String, URL>> featureFlagURLs) {
+
+		Serializer serializer = new Serializer();
+
+		serializer.writeLong(bundle.getLastModified());
+		serializer.writeInt(featureFlagURLs.size());
+
+		for (Map.Entry<String, URL> entry : featureFlagURLs) {
+			serializer.writeString(entry.getKey());
+
+			URL url = entry.getValue();
+
+			serializer.writeString(url.getPath());
+		}
+
+		try (OutputStream outputStream = new FileOutputStream(
+				bundle.getDataFile("entryURLs.data"))) {
+
+			serializer.writeTo(outputStream);
+		}
+		catch (IOException ioException) {
+			_log.error("Unable to write batch engine entry urls", ioException);
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BatchEngineUnitReaderImpl.class);
 
 }

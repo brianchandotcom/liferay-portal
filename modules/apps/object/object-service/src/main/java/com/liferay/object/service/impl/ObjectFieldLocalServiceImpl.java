@@ -1613,8 +1613,8 @@ public class ObjectFieldLocalServiceImpl
 	private final Set<String> _readOnlyObjectFieldNames = SetUtil.fromArray(
 		"createDate", "creator", "id", "modifiedDate", "status");
 	private final Set<String> _reservedNames = SetUtil.fromArray(
-		"actions", "companyid", "createdate", "creator", "datecreated",
-		"datemodified", "externalreferencecode", "groupid", "id",
+		"actions", "companyid", "createdate", "creator", "currentdate",
+		"datecreated", "datemodified", "externalreferencecode", "groupid", "id",
 		"lastpublishdate", "modifieddate", "status", "statusbyuserid",
 		"statusbyusername", "statusdate", "userid", "username");
 	private ServiceTrackerMap<String, ObjectFieldSettingContributor>

@@ -456,11 +456,7 @@ definition {
 		}
 
 		task ("Copy the token from AC") {
-			ACSettings.goToDataSources();
-
 			Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
-
-			Click(locator1 = "ACSettings#DXP_DATA_SOURCE_OPTION");
 
 			var token = selenium.getElementValue("ACSettings#TOKEN_INPUT_FIELD");
 		}
@@ -469,6 +465,8 @@ definition {
 			ACUtils.launchDXP();
 
 			ACDXPSettings.connectAnalyticsCloud(acToken = ${token});
+
+			ACDXPSettings.completeWizardConfiguration();
 		}
 
 		task ("Go to AC > Go to Settings > Go to Properties") {

@@ -70,6 +70,12 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 			return;
 		}
 
+		if (!_build.hasMaximumInvocationCount()) {
+			_build.setStatus("starting");
+
+			return;
+		}
+
 		runReporting();
 	}
 

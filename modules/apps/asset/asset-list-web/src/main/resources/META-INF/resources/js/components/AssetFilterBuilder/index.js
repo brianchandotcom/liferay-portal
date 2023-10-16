@@ -147,7 +147,7 @@ function Rule({
 	return (
 		<div className="align-items-baseline c-gap-3 d-flex justify-content-between">
 			<div className="border-top-0 panel panel-default">
-				<div className="align-items-baseline c-gap-3 d-flex mb-0 panel-body">
+				<div className="align-items-baseline c-gap-3 d-flex flex-wrap mb-0 panel-body">
 					<ClayForm.Group className="flex-shrink-0">
 						<ClaySelectWithOption
 							aria-label={Liferay.Language.get('query-contains')}

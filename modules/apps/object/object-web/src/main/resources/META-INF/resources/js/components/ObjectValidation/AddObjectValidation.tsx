@@ -83,6 +83,14 @@ function ModalAddObjectValidation({
 					item: {
 						active: typeSelection.name === 'compositeKey',
 						engine: typeSelection.name,
+						errorLabel: {
+							[defaultLanguageId]:
+								typeSelection.name === 'compositeKey'
+									? Liferay.Language.get(
+											'the-fields-values-are-already-in-use'
+									  )
+									: '',
+						},
 						name: {
 							[defaultLanguageId]: labelInput[defaultLanguageId],
 						},

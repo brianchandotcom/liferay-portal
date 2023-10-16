@@ -7,6 +7,7 @@ package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.document.library.constants.DLPortletKeys;
+import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
@@ -20,6 +21,7 @@ import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -30,6 +32,9 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.upload.FileItem;
+import com.liferay.portal.kernel.upload.UploadException;
+import com.liferay.portal.kernel.upload.configuration.UploadServletRequestConfigurationProvider;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -69,16 +74,26 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		try {
-			_copyDLObjects(actionRequest, errorMessages, themeDisplay);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
+		UploadException uploadException =
+			(UploadException)actionRequest.getAttribute(
+				WebKeys.UPLOAD_EXCEPTION);
 
+		if (uploadException != null) {
 			errorMessages.add(
-				themeDisplay.translate(portalException.getMessage()));
+				_getUploadExceptionErrorMessage(uploadException, themeDisplay));
+		}
+		else {
+			try {
+				_copyDLObjects(actionRequest, errorMessages, themeDisplay);
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException);
+				}
+
+				errorMessages.add(
+					themeDisplay.translate(portalException.getMessage()));
+			}
 		}
 
 		if (!errorMessages.isEmpty()) {
@@ -259,6 +274,41 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 			folder.getCompanyId(), groupIds, folder.getTreePath());
 	}
 
+	private String _getUploadExceptionErrorMessage(
+		UploadException uploadException, ThemeDisplay themeDisplay) {
+
+		if (uploadException.isExceededFileSizeLimit()) {
+			Throwable throwable = uploadException.getCause();
+
+			FileSizeException fileSizeException = new FileSizeException(
+				throwable);
+
+			return themeDisplay.translate(
+				"please-enter-a-file-with-a-valid-file-size-no-larger-than-x",
+				_language.formatStorageSize(
+					fileSizeException.getMaxSize(), themeDisplay.getLocale()));
+		}
+
+		if (uploadException.isExceededLiferayFileItemSizeLimit()) {
+			return themeDisplay.translate(
+				"please-enter-valid-content-with-valid-content-size-no-" +
+					"larger-than-x",
+				_language.formatStorageSize(
+					FileItem.THRESHOLD_SIZE, themeDisplay.getLocale()));
+		}
+
+		if (uploadException.isExceededUploadRequestSizeLimit()) {
+			return themeDisplay.translate(
+				"please-enter-a-file-with-a-valid-file-size-no-larger-than-x",
+				_language.formatStorageSize(
+					_uploadServletRequestConfigurationProvider.getMaxSize(),
+					themeDisplay.getLocale()));
+		}
+
+		return themeDisplay.translate(
+			"an-unexpected-error-occurred-while-saving-your-document");
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CopyDLObjectsMVCActionCommand.class);
 
@@ -284,6 +334,13 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 	private JSONFactory _jsonFactory;
 
 	@Reference
+	private Language _language;
+
+	@Reference
 	private SiteConnectedGroupGroupProvider _siteConnectedGroupGroupProvider;
+
+	@Reference
+	private UploadServletRequestConfigurationProvider
+		_uploadServletRequestConfigurationProvider;
 
 }

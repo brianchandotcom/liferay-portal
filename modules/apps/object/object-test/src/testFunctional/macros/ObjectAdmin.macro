@@ -475,6 +475,20 @@ definition {
 				locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
 		}
 
+		if (isSet(fieldEntryLanguage)) {
+			Click(
+				key_buttonFieldEntryLanguage = ${buttonFieldEntryLanguage},
+				locator1 = "ObjectField#BUTTON_FIELD_ENTRY_LANGUAGE");
+
+			Click(
+				key_locale = ${locale},
+				locator1 = "Translation#DROPDOWN_MENU_ITEM");
+
+			Type(
+				locator1 = "ObjectAdmin#ENTRY_STRING_VALUE_FIELD",
+				value1 = ${entryValueTranslated});
+		}
+
 		if (${invalidEntry} == "true") {
 			Button.clickSave();
 		}

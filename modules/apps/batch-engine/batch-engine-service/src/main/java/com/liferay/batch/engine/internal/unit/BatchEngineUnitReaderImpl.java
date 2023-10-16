@@ -88,9 +88,8 @@ public class BatchEngineUnitReaderImpl implements BatchEngineUnitReader {
 	}
 
 	private void _addBundleBatchEngineUnit(
-		BatchEngineUnit batchEngineUnit, List<URL> urls,
-		List<BatchEngineUnit> batchEngineUnits,
-		List<Map.Entry<String, URL>> featureFlagURLs) {
+		BatchEngineUnit batchEngineUnit, List<BatchEngineUnit> batchEngineUnits,
+		List<Map.Entry<String, URL>> featureFlagURLs, List<URL> urls) {
 
 		if (!batchEngineUnit.isValid()) {
 			return;
@@ -160,7 +159,7 @@ public class BatchEngineUnitReaderImpl implements BatchEngineUnitReader {
 			if (_isAdvancedBundleBatchEngineUnit(url.toString())) {
 				_addBundleBatchEngineUnit(
 					new AdvancedBundleBatchEngineUnitImpl(bundle, url),
-					Arrays.asList(url), batchEngineUnits, featureFlagURLs);
+					batchEngineUnits, featureFlagURLs, Arrays.asList(url));
 
 				continue;
 			}
@@ -175,8 +174,8 @@ public class BatchEngineUnitReaderImpl implements BatchEngineUnitReader {
 
 		for (List<URL> urls : classicBundleBatchEngineUnitURLs.values()) {
 			_addBundleBatchEngineUnit(
-				new ClassicBundleBatchEngineUnitImpl(bundle, urls), urls,
-				batchEngineUnits, featureFlagURLs);
+				new ClassicBundleBatchEngineUnitImpl(bundle, urls),
+				batchEngineUnits, featureFlagURLs, urls);
 		}
 
 		if (needSave) {

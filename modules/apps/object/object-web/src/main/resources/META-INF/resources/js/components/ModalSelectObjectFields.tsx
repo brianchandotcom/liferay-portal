@@ -14,9 +14,12 @@ import React, {useEffect, useMemo, useState} from 'react';
 
 import './ModalSelectObjectFields.scss';
 
+import ClayAlert, {IClayAlertProps} from '@clayui/alert';
+
 function ModalSelectObjectFields<T extends ModalItem>() {
 	const [
 		{
+			alert,
 			disableRequired,
 			disableRequiredChecked,
 			getLabel,
@@ -41,12 +44,17 @@ function ModalSelectObjectFields<T extends ModalItem>() {
 
 	useEffect(() => {
 		const openModal = ({
+			alert = {
+				content: '',
+				otherProps: {},
+				showAlert: false,
+			},
 			items = [],
 			searchTerm = '',
 			selected = [],
 			...otherProps
 		}: Partial<IState<T>>) => {
-			setState({items, searchTerm, selected, ...otherProps});
+			setState({alert, items, searchTerm, selected, ...otherProps});
 		};
 
 		Liferay.on('openModalSelectObjectFields', openModal);
@@ -105,6 +113,16 @@ function ModalSelectObjectFields<T extends ModalItem>() {
 			observer={observer}
 		>
 			<ClayModal.Header>{header}</ClayModal.Header>
+
+			{alert?.showAlert && (
+				<ClayAlert
+					displayType={alert.otherProps.displayType}
+					title={alert.otherProps.title}
+					variant={alert.otherProps.variant}
+				>
+					{alert.content}
+				</ClayAlert>
+			)}
 
 			<ClayModal.Body>
 				<div className="lfr-object__object-view-modal-select-object-fields-selection-title">
@@ -208,6 +226,11 @@ interface ModalItem {
 }
 
 interface IState<T extends ModalItem> {
+	alert?: {
+		content: string;
+		otherProps: IClayAlertProps;
+		showAlert: boolean;
+	};
 	disableRequired?: boolean;
 	disableRequiredChecked?: boolean;
 	getLabel?: (label: T) => string;

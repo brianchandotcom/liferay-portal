@@ -1763,6 +1763,12 @@ public class ObjectDefinitionLocalServiceImpl
 			long userId, ObjectDefinition objectDefinition)
 		throws PortalException {
 
+		if (objectDefinition.isApproved()) {
+			throw new ObjectDefinitionStatusException(
+				"The object definition is already published",
+				"the-object-definition-is-already-published");
+		}
+
 		if (!ListUtil.exists(
 				_objectFieldPersistence.findByObjectDefinitionId(
 					objectDefinition.getObjectDefinitionId()),

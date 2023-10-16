@@ -1052,14 +1052,6 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 
 	@Test
 	public void testGetWithRelatedModelProperty() throws Exception {
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					"L_API_ENDPOINT", TestPropsValues.getCompanyId());
-
-		ObjectField objectField = _objectFieldLocalService.getObjectField(
-			objectDefinition.getObjectDefinitionId(), "externalReferenceCode");
-
 		JSONObject apiApplicationJSONObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"applicationStatus", "published"
@@ -1069,6 +1061,14 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 				"title", RandomTestUtil.randomString()
 			).toString(),
 			"headless-builder/applications", Http.Method.POST);
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					"L_API_ENDPOINT", TestPropsValues.getCompanyId());
+
+		ObjectField objectField = _objectFieldLocalService.getObjectField(
+			objectDefinition.getObjectDefinitionId(), "externalReferenceCode");
 
 		JSONObject apiEndpointJSONObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(

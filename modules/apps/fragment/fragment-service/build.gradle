@@ -46,5 +46,5 @@ dependencies {
 	testImplementation group: "com.github.everit-org.json-schema", name: "org.everit.json.schema", version: "1.11.1"
 	testImplementation group: "com.google.re2j", name: "re2j", version: "1.2"
 	testImplementation group: "joda-time", name: "joda-time", version: "2.12.1"
-	testImplementation group: "org.json", name: "json", version: "20230618"
+	testImplementation group: "org.json", name: "json", version: "20231013"
 }

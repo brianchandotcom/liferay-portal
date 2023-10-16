@@ -4,7 +4,7 @@
 			<@clay["icon"] symbol="globe-lines" />
 		</div>
 
-		<div class="language-selector-text">
+		<div class="language-selector-text text-nowrap">
 			<#assign current_locale = locale />
 			<#if current_locale?has_content>
 				<#assign current_locale = locale[0..1]

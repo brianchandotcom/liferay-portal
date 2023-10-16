@@ -15,6 +15,7 @@ import com.liferay.portal.configuration.persistence.InMemoryOnlyConfigurationThr
 import com.liferay.portal.configuration.persistence.ReloadablePersistenceManager;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
+import com.liferay.portal.db.partition.DBPartitionUtil;
 import com.liferay.portal.file.install.constants.FileInstallConstants;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -201,7 +202,7 @@ public class ConfigurationPersistenceManager
 		try {
 			_populateDictionaries();
 		}
-		catch (IOException | SQLException exception) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
@@ -434,31 +435,37 @@ public class ConfigurationPersistenceManager
 		return dictionary;
 	}
 
-	private void _populateDictionaries() throws IOException, SQLException {
+	private void _populateDictionaries() throws Exception {
 		Map<String, Map<String, Object>> overridePropertiesMap = new HashMap<>(
 			ConfigurationOverridePropertiesUtil.getOverridePropertiesMap());
 
-		try (Connection connection = _dataSource.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				_db.buildSQL(
-					"select configurationId, dictionary from Configuration_"),
-				ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+		DBPartitionUtil.forEachCompanyId(
+			companyId -> {
+				try (Connection connection = _dataSource.getConnection();
+					PreparedStatement preparedStatement =
+						connection.prepareStatement(
+							_db.buildSQL(
+								"select configurationId, dictionary from " +
+									"Configuration_"),
+							ResultSet.TYPE_FORWARD_ONLY,
+							ResultSet.CONCUR_READ_ONLY);
+					ResultSet resultSet = preparedStatement.executeQuery()) {
 
-			while (resultSet.next()) {
-				String pid = resultSet.getString(1);
+					while (resultSet.next()) {
+						String pid = resultSet.getString(1);
 
-				Dictionary<Object, Object> dictionary = _verifyDictionary(
-					pid, resultSet.getString(2));
+						Dictionary<Object, Object> dictionary =
+							_verifyDictionary(pid, resultSet.getString(2));
 
-				if (dictionary != null) {
-					overridePropertiesMap.remove(pid);
+						if (dictionary != null) {
+							overridePropertiesMap.remove(pid);
 
-					_dictionaries.put(
-						pid, _overrideDictionary(pid, dictionary));
+							_dictionaries.put(
+								pid, _overrideDictionary(pid, dictionary));
+						}
+					}
 				}
-			}
-		}
+			});
 
 		overridePropertiesMap.forEach(
 			(key, value) -> _dictionaries.put(

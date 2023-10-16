@@ -532,22 +532,24 @@ public abstract class BaseBuild implements Build {
 		String result = getResult();
 
 		while (result == null) {
-			if (i == 20) {
-				throw new RuntimeException(
+			if (i == 2) {
+				System.out.println(
 					JenkinsResultsParserUtil.combine(
 						"Unable to create build anchor element. The process ",
 						"timed out while waiting for a build result for ",
 						getBuildURL(), "."));
+
+				break;
 			}
 
-			JenkinsResultsParserUtil.sleep(1000 * 30);
+			JenkinsResultsParserUtil.sleep(1000 * 5);
 
 			result = getResult();
 
 			i++;
 		}
 
-		if (result.equals("SUCCESS")) {
+		if (Objects.equals(result, "SUCCESS")) {
 			return Dom4JUtil.getNewAnchorElement(
 				getBuildURL(), getDisplayName());
 		}

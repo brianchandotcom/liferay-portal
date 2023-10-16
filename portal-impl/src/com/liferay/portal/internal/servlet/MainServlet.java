@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.model.PortletFilter;
 import com.liferay.portal.kernel.model.PortletURLListener;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.module.util.ServiceLatch;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
@@ -1048,7 +1049,10 @@ public class MainServlet extends HttpServlet {
 			return false;
 		}
 
-		_inactiveRequestHandler.processInactiveRequest(
+		InactiveRequestHandler inactiveRequestHandler =
+			_inactiveRequestHandlerSnapshot.get();
+
+		inactiveRequestHandler.processInactiveRequest(
 			httpServletRequest, httpServletResponse,
 			"this-instance-is-inactive-please-contact-the-administrator");
 
@@ -1072,7 +1076,10 @@ public class MainServlet extends HttpServlet {
 			return false;
 		}
 
-		_inactiveRequestHandler.processInactiveRequest(
+		InactiveRequestHandler inactiveRequestHandler =
+			_inactiveRequestHandlerSnapshot.get();
+
+		inactiveRequestHandler.processInactiveRequest(
 			httpServletRequest, httpServletResponse,
 			"this-site-is-inactive-please-contact-the-administrator");
 
@@ -1244,7 +1251,10 @@ public class MainServlet extends HttpServlet {
 			messageKey = "the-system-is-shutdown-please-try-again-later";
 		}
 
-		_inactiveRequestHandler.processInactiveRequest(
+		InactiveRequestHandler inactiveRequestHandler =
+			_inactiveRequestHandlerSnapshot.get();
+
+		inactiveRequestHandler.processInactiveRequest(
 			httpServletRequest, httpServletResponse, messageKey);
 
 		return true;
@@ -1317,10 +1327,9 @@ public class MainServlet extends HttpServlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(MainServlet.class);
 
-	private static volatile InactiveRequestHandler _inactiveRequestHandler =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			InactiveRequestHandler.class, MainServlet.class,
-			"_inactiveRequestHandler", false);
+	private static final Snapshot<InactiveRequestHandler>
+		_inactiveRequestHandlerSnapshot = new Snapshot<>(
+			MainServlet.class, InactiveRequestHandler.class);
 	private static volatile ReleaseManager _releaseManager =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			ReleaseManager.class, MainServlet.class, "_releaseManager", false);

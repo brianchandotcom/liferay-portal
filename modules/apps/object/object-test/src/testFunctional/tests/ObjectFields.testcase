@@ -3196,33 +3196,19 @@ definition {
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject162179");
 		}
 
-		task ("On Custom Object, go to Validations tab") {
+		task ("Add a Custom Validation using an expression 'is Greater Than' (via API)") {
+			JSONObject.addObjectValidation(
+				labelName = "Custom validation",
+				objectName = "CustomObject162179",
+				script = "customObjectField == externalReferenceCode",
+				validationType = "ddm");
+		}
+
+		task ("Create Custom View and go to it") {
 			ObjectAdmin.openObjectAdmin();
 
 			ObjectPortlet.selectCustomObject(label = "Custom Object 162179");
 
-			ObjectAdmin.goToValidationsTab();
-		}
-
-		task ("Add a Custom Validation using an expression 'is Greater Than'") {
-			ObjectCustomValidation.addObjectValidation(
-				validationName = "Custom Validation",
-				validationType = "Expression Builder");
-
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-			ObjectCustomValidation.activeValidation();
-
-			ObjectCustomValidation.gotoTab(tabName = "Conditions");
-
-			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "customObjectField == externalReferenceCode");
-
-			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
-
-			PortletEntry.save();
-		}
-
-		task ("Create Custom View and go to it") {
 			ObjectCustomViews.goToViewsTab();
 
 			ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
@@ -3250,7 +3236,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
-				value1 = "This entry is not possible.");
+				value1 = "Please enter a valid entry.");
 		}
 	}
 
@@ -3277,31 +3263,19 @@ definition {
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject162178");
 		}
 
-		task ("And add a Custom Validation using a Groovy Script") {
+		task ("And add a Custom Validation using a Groovy Script (via API)") {
+			JSONObject.addObjectValidation(
+				labelName = "Custom validation",
+				objectName = "CustomObject162178",
+				script = "invalidFields = (customObjectField == externalReferenceCode)",
+				validationType = "groovy");
+		}
+
+		task ("When create Custom View, mark Custom View as default, go to View Builder and add ERC") {
 			ObjectAdmin.openObjectAdmin();
 
 			ObjectPortlet.selectCustomObject(label = "Custom Object 162178");
 
-			ObjectAdmin.goToValidationsTab();
-
-			ObjectCustomValidation.addObjectValidation(
-				validationName = "Custom Validation",
-				validationType = "Groovy");
-
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-			ObjectCustomValidation.activeValidation();
-
-			ObjectCustomValidation.gotoTab(tabName = "Conditions");
-
-			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customObjectField == externalReferenceCode)");
-
-			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
-
-			PortletEntry.save();
-		}
-
-		task ("When create Custom View, mark Custom View as default, go to View Builder and add ERC") {
 			ObjectCustomViews.goToViewsTab();
 
 			ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
@@ -3340,7 +3314,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
-				value1 = "This entry is not possible.");
+				value1 = "Please enter a valid entry.");
 		}
 	}
 
@@ -3374,34 +3348,17 @@ definition {
 				isRequired = "false",
 				objectName = "CustomObject176853",
 				outputOption = "Integer");
-		}
-
-		task ("When a Custom Validation is created to limit Formula Field value to 50 or less") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 176853");
-
-			ObjectAdmin.goToFieldsTab();
-
-			ObjectAdmin.goToValidationsTab();
-
-			ObjectCustomValidation.addObjectValidation(
-				validationName = "Custom Validation Formula Plus",
-				validationType = "Expression Builder");
-
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation Formula Plus");
-
-			ObjectCustomValidation.activeValidation();
-
-			ObjectCustomValidation.gotoTab(tabName = "Conditions");
-
-			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "customFormulaField <= 50");
-
-			ObjectCustomValidation.addErrorMessage(errorMessage = "The sum must be less than or equal to 50");
-
-			PortletEntry.save();
 
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject176853");
+		}
+
+		task ("When a Custom Validation is created to limit Formula Field value to 50 or less (via API)") {
+			JSONObject.addObjectValidation(
+				errorMessage = "The sum must be less than or equal to 50",
+				labelName = "Custom validation",
+				objectName = "CustomObject176853",
+				script = "customFormulaField <= 50",
+				validationType = "ddm");
 		}
 
 		task ("Then only object entries where the Formula Field value is less than or equal to 50 are created") {

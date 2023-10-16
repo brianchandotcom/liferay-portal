@@ -52,10 +52,10 @@ definition {
 			ObjectAdmin.goToValidationsTab();
 
 			ObjectCustomValidation.addObjectValidation(
-				validationName = "Custom Validation",
+				validationName = "Custom validation",
 				validationType = "Groovy");
 
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom validation");
 
 			ObjectCustomValidation.activeValidation();
 
@@ -101,29 +101,13 @@ definition {
 			isRequired = "false",
 			objectName = "CustomObject153559");
 
+		JSONObject.addObjectValidation(
+			labelName = "Custom validation",
+			objectName = "CustomObject153559",
+			script = "invalidFields = (customField != 'Allowed Entry')",
+			validationType = "groovy");
+
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153559");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 153559");
-
-		ObjectAdmin.goToValidationsTab();
-
-		ObjectCustomValidation.addObjectValidation(
-			validationName = "Custom Validation",
-			validationType = "Groovy");
-
-		ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-		ObjectCustomValidation.activeValidation();
-
-		ObjectCustomValidation.gotoTab(tabName = "Conditions");
-
-		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField != 'Allowed Entry')");
-
-		ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
-
-		PortletEntry.save();
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customField",
@@ -140,7 +124,7 @@ definition {
 
 		ObjectAdmin.goToValidationsTab();
 
-		ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+		ObjectCustomValidation.gotoCustomValidation(validationName = "Custom validation");
 
 		ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
@@ -156,7 +140,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR",
-			value1 = "This entry is not possible.");
+			value1 = "Please enter a valid entry.");
 	}
 
 	@description = "LPS-144474 - Verify an invalid object entry can be added after the validation is deactivated"
@@ -183,28 +167,13 @@ definition {
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject192646");
 		}
 
-		task ("and Given a groovy script validation set to full validation") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 192646");
-
-			ObjectAdmin.goToValidationsTab();
-
-			ObjectCustomValidation.addObjectValidation(
-				validationName = "Custom Validation",
-				validationType = "Groovy");
-
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-			ObjectCustomValidation.activeValidation();
-
-			ObjectCustomValidation.gotoTab(tabName = "Conditions");
-
-			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (longText == 'Build Incredible Digital Experiences with Liferay DXP')");
-
-			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not valid for long text field.");
-
-			PortletEntry.save();
+		task ("and Given a groovy script validation set to full validation (via API)") {
+			JSONObject.addObjectValidation(
+				errorMessage = "This entry is not valid for long text field.",
+				labelName = "Custom validation",
+				objectName = "CustomObject192646",
+				script = "invalidFields = (longText == 'Build Incredible Digital Experiences with Liferay DXP')",
+				validationType = "groovy");
 		}
 
 		task ("When the user attempts to create an invalid object entry") {
@@ -230,7 +199,7 @@ definition {
 
 			ObjectAdmin.goToValidationsTab();
 
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom validation");
 
 			ObjectCustomValidation.desactiveValidation();
 
@@ -276,30 +245,12 @@ definition {
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject156694");
 		}
 
-		task ("On Custom Object, go to validations tab") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 156694");
-
-			ObjectAdmin.goToValidationsTab();
-		}
-
-		task ("Add a Custom Validation using an expression 'concat'") {
-			ObjectCustomValidation.addObjectValidation(
-				validationName = "Custom Validation",
-				validationType = "Expression Builder");
-
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-			ObjectCustomValidation.activeValidation();
-
-			ObjectCustomValidation.gotoTab(tabName = "Conditions");
-
-			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "customTextA == concat(customTextB, customTextC, customTextD)");
-
-			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
-
-			PortletEntry.save();
+		task ("Add a Custom Validation using an expression 'concat' (Via API)") {
+			JSONObject.addObjectValidation(
+				labelName = "Custom validation",
+				objectName = "CustomObject156694",
+				script = "customTextA == concat(customTextB, customTextC, customTextD)",
+				validationType = "ddm");
 		}
 
 		task ("Assert that Custom Validation with 'concat' is working") {
@@ -327,7 +278,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
-				value1 = "This entry is not possible.");
+				value1 = "Please enter a valid entry.");
 
 			Navigator.gotoBack();
 
@@ -384,30 +335,12 @@ definition {
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject156703A");
 		}
 
-		task ("On Custom Object, go to validations tab") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 156703A");
-
-			ObjectAdmin.goToValidationsTab();
-		}
-
-		task ("Add a Custom Validation using an expression 'condition with custom text'") {
-			ObjectCustomValidation.addObjectValidation(
-				validationName = "Custom Validation",
-				validationType = "Expression Builder");
-
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-			ObjectCustomValidation.activeValidation();
-
-			ObjectCustomValidation.gotoTab(tabName = "Conditions");
-
-			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "equals(customFood, condition(customCategory == 'fruit', 'banana', 'other'))");
-
-			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
-
-			PortletEntry.save();
+		task ("Add a Custom Validation using an expression 'condition with custom text'(via API)") {
+			JSONObject.addObjectValidation(
+				labelName = "Custom validation",
+				objectName = "CustomObject156703A",
+				script = "equals(customFood, condition(customCategory == 'fruit', 'banana', 'other'))",
+				validationType = "ddm");
 		}
 
 		task ("Assert that Custom Validation with 'condition with custom text' is working") {
@@ -427,7 +360,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
-				value1 = "This entry is not possible.");
+				value1 = "Please enter a valid entry.");
 
 			Navigator.gotoBack();
 
@@ -469,30 +402,12 @@ definition {
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject156703B");
 		}
 
-		task ("On Custom Object, go to validations tab") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 156703B");
-
-			ObjectAdmin.goToValidationsTab();
-		}
-
-		task ("Add a Custom Validation using an expression 'condition with custom boolean'") {
-			ObjectCustomValidation.addObjectValidation(
-				validationName = "Custom Validation",
-				validationType = "Expression Builder");
-
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-			ObjectCustomValidation.activeValidation();
-
-			ObjectCustomValidation.gotoTab(tabName = "Conditions");
-
-			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "equals(customShoes, condition(customMark == 'true', 'false', 'true'))");
-
-			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
-
-			PortletEntry.save();
+		task ("Add a Custom Validation using an expression 'condition with custom boolean' (via API)") {
+			JSONObject.addObjectValidation(
+				labelName = "Custom validation",
+				objectName = "CustomObject156703B",
+				script = "equals(customShoes, condition(customMark == 'true', 'false', 'true'))",
+				validationType = "ddm");
 		}
 
 		task ("Assert that Custom Validation with 'condition with custom boolean' is working") {
@@ -510,7 +425,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
-				value1 = "This entry is not possible.");
+				value1 = "Please enter a valid entry.");
 
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject156703B");
 
@@ -558,30 +473,12 @@ definition {
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject156703C");
 		}
 
-		task ("On Custom Object, go to validations tab") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 156703C");
-
-			ObjectAdmin.goToValidationsTab();
-		}
-
-		task ("Add a Custom Validation using an expression 'condition with custom integer' (1234 - yes) and (4321 - no)") {
-			ObjectCustomValidation.addObjectValidation(
-				validationName = "Custom Validation",
-				validationType = "Expression Builder");
-
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-			ObjectCustomValidation.activeValidation();
-
-			ObjectCustomValidation.gotoTab(tabName = "Conditions");
-
-			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "customIsHundred == condition(customValidate == 100, 1234, 4321)");
-
-			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
-
-			PortletEntry.save();
+		task ("Add a Custom Validation using an expression 'condition with custom integer' (1234 - yes) and (4321 - no) - (via API)") {
+			JSONObject.addObjectValidation(
+				labelName = "Custom validation",
+				objectName = "CustomObject156703C",
+				script = "customIsHundred == condition(customValidate == 100, 1234, 4321)",
+				validationType = "ddm");
 		}
 
 		task ("Assert that Custom Validation with 'condition with custom boolean' is working") {
@@ -601,7 +498,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
-				value1 = "This entry is not possible.");
+				value1 = "Please enter a valid entry.");
 
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject156703C");
 
@@ -656,33 +553,15 @@ definition {
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject156688");
 		}
 
-		task ("On Custom Object, go to validations tab") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 156688");
-
-			ObjectAdmin.goToValidationsTab();
+		task ("Add a Custom Validation using an expression 'contains' (Via API)") {
+			JSONObject.addObjectValidation(
+				labelName = "Custom validation",
+				objectName = "CustomObject156688",
+				script = "contains(customText, 'Allowed Entry')",
+				validationType = "ddm");
 		}
 
-		task ("Add a Custom Validation using an expression 'contains'") {
-			ObjectCustomValidation.addObjectValidation(
-				validationName = "Custom Validation",
-				validationType = "Expression Builder");
-
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-			ObjectCustomValidation.activeValidation();
-
-			ObjectCustomValidation.gotoTab(tabName = "Conditions");
-
-			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "contains(customText, 'Allowed Entry')");
-
-			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
-
-			PortletEntry.save();
-		}
-
-		task ("Assert that Custom Validation with 'contains' is working") {
+		task ("Assert that Custom Validation with 'contains' is working (via API)") {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject156688");
 
 			ObjectAdmin.addObjectStringFieldEntryViaUI(
@@ -691,7 +570,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
-				value1 = "This entry is not possible.");
+				value1 = "Please enter a valid entry.");
 
 			Navigator.gotoBack();
 
@@ -711,7 +590,7 @@ definition {
 
 			ObjectAdmin.goToValidationsTab();
 
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom validation");
 
 			ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
@@ -730,7 +609,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
-				value1 = "This entry is not possible.");
+				value1 = "Please enter a valid entry.");
 
 			Navigator.gotoBack();
 
@@ -769,30 +648,12 @@ definition {
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject156701");
 		}
 
-		task ("On Custom Object, go to validations tab") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 156701");
-
-			ObjectAdmin.goToValidationsTab();
-		}
-
-		task ("Add a Custom Validation using an expression 'Past Dates'") {
-			ObjectCustomValidation.addObjectValidation(
-				validationName = "Custom Validation",
-				validationType = "Expression Builder");
-
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-			ObjectCustomValidation.activeValidation();
-
-			ObjectCustomValidation.gotoTab(tabName = "Conditions");
-
-			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "pastDates(customDate, '2022-06-01')");
-
-			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
-
-			PortletEntry.save();
+		task ("Add a Custom Validation using an expression 'Past Dates' (via API)") {
+			JSONObject.addObjectValidation(
+				labelName = "Custom validation",
+				objectName = "CustomObject156701",
+				script = "pastDates(customDate, '2022-06-01')",
+				validationType = "ddm");
 		}
 
 		task ("Assert that Custom Validation with 'Past Dates' is working") {
@@ -804,7 +665,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
-				value1 = "This entry is not possible.");
+				value1 = "Please enter a valid entry.");
 
 			Navigator.gotoBack();
 
@@ -824,7 +685,7 @@ definition {
 
 			ObjectAdmin.goToValidationsTab();
 
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom validation");
 
 			ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
@@ -842,7 +703,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
-				value1 = "This entry is not possible.");
+				value1 = "Please enter a valid entry.");
 
 			Navigator.gotoBack();
 
@@ -879,30 +740,12 @@ definition {
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject156690");
 		}
 
-		task ("On Custom Object, go to validations tab") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 156690");
-
-			ObjectAdmin.goToValidationsTab();
-		}
-
-		task ("Add a Custom Validation using an expression 'is an Email'") {
-			ObjectCustomValidation.addObjectValidation(
-				validationName = "Custom Validation",
-				validationType = "Expression Builder");
-
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-			ObjectCustomValidation.activeValidation();
-
-			ObjectCustomValidation.gotoTab(tabName = "Conditions");
-
-			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "isEmailAddress(customText)");
-
-			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
-
-			PortletEntry.save();
+		task ("Add a Custom Validation using an expression 'is an Email' (via API)") {
+			JSONObject.addObjectValidation(
+				labelName = "Custom validation",
+				objectName = "CustomObject156690",
+				script = "isEmailAddress(customText)",
+				validationType = "ddm");
 		}
 
 		task ("Assert that Custom Validation with 'is an Email' is working") {
@@ -914,7 +757,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
-				value1 = "This entry is not possible.");
+				value1 = "Please enter a valid entry.");
 
 			Navigator.gotoBack();
 
@@ -951,30 +794,12 @@ definition {
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject156698");
 		}
 
-		task ("On Custom Object, go to validations tab") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 156698");
-
-			ObjectAdmin.goToValidationsTab();
-		}
-
-		task ("Add a Custom Validation using an expression 'is integer'") {
-			ObjectCustomValidation.addObjectValidation(
-				validationName = "Custom Validation",
-				validationType = "Expression Builder");
-
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-			ObjectCustomValidation.activeValidation();
-
-			ObjectCustomValidation.gotoTab(tabName = "Conditions");
-
-			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "isInteger(customText)");
-
-			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
-
-			PortletEntry.save();
+		task ("Add a Custom Validation using an expression 'is integer' (via API)") {
+			JSONObject.addObjectValidation(
+				labelName = "Custom validation",
+				objectName = "CustomObject156698",
+				script = "isInteger(customText)",
+				validationType = "ddm");
 		}
 
 		task ("Assert that Custom Validation with 'is integer' is working") {
@@ -986,7 +811,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
-				value1 = "This entry is not possible.");
+				value1 = "Please enter a valid entry.");
 
 			Navigator.gotoBack();
 
@@ -1006,7 +831,7 @@ definition {
 
 			ObjectAdmin.goToValidationsTab();
 
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom validation");
 
 			ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
@@ -1024,7 +849,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
-				value1 = "This entry is not possible.");
+				value1 = "Please enter a valid entry.");
 
 			Navigator.gotoBack();
 
@@ -1061,30 +886,12 @@ definition {
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject156695");
 		}
 
-		task ("On Custom Object, go to validations tab") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 156695");
-
-			ObjectAdmin.goToValidationsTab();
-		}
-
-		task ("Add a Custom Validation using an expression 'is empty'") {
-			ObjectCustomValidation.addObjectValidation(
-				validationName = "Custom Validation",
-				validationType = "Expression Builder");
-
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-			ObjectCustomValidation.activeValidation();
-
-			ObjectCustomValidation.gotoTab(tabName = "Conditions");
-
-			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "isEmpty(customText)");
-
-			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
-
-			PortletEntry.save();
+		task ("Add a Custom Validation using an expression 'is empty' (via API)") {
+			JSONObject.addObjectValidation(
+				labelName = "Custom validation",
+				objectName = "CustomObject156695",
+				script = "isEmpty(customText)",
+				validationType = "ddm");
 		}
 
 		task ("Assert that Custom Validation with 'is empty' is working") {
@@ -1096,7 +903,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
-				value1 = "This entry is not possible.");
+				value1 = "Please enter a valid entry.");
 
 			Navigator.gotoBack();
 
@@ -1135,30 +942,12 @@ definition {
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject156693");
 		}
 
-		task ("On Custom Object, go to validations tab") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 156693");
-
-			ObjectAdmin.goToValidationsTab();
-		}
-
-		task ("Add a Custom Validation using an expression 'is Equal To'") {
-			ObjectCustomValidation.addObjectValidation(
-				validationName = "Custom Validation",
-				validationType = "Expression Builder");
-
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-			ObjectCustomValidation.activeValidation();
-
-			ObjectCustomValidation.gotoTab(tabName = "Conditions");
-
-			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "customInteger == 12345");
-
-			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
-
-			PortletEntry.save();
+		task ("Add a Custom Validation using an expression 'is Equal To' (via API)") {
+			JSONObject.addObjectValidation(
+				labelName = "Custom validation",
+				objectName = "CustomObject156693",
+				script = "customInteger == 12345",
+				validationType = "ddm");
 		}
 
 		task ("Assert that Custom Validation with 'is Equal To' is working") {
@@ -1171,7 +960,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
-				value1 = "This entry is not possible.");
+				value1 = "Please enter a valid entry.");
 
 			Navigator.gotoBack();
 
@@ -1193,7 +982,7 @@ definition {
 
 			ObjectAdmin.goToValidationsTab();
 
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom validation");
 
 			ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
@@ -1212,7 +1001,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
-				value1 = "This entry is not possible.");
+				value1 = "Please enter a valid entry.");
 
 			Navigator.gotoBack();
 
@@ -1251,30 +1040,12 @@ definition {
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject156696");
 		}
 
-		task ("On Custom Object, go to validations tab") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 156696");
-
-			ObjectAdmin.goToValidationsTab();
-		}
-
-		task ("Add a Custom Validation using an expression 'is Greater Than Or Equal To'") {
-			ObjectCustomValidation.addObjectValidation(
-				validationName = "Custom Validation",
-				validationType = "Expression Builder");
-
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-			ObjectCustomValidation.activeValidation();
-
-			ObjectCustomValidation.gotoTab(tabName = "Conditions");
-
-			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "customInteger >= 5000");
-
-			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
-
-			PortletEntry.save();
+		task ("Add a Custom Validation using an expression 'is Greater Than Or Equal To' (via API)") {
+			JSONObject.addObjectValidation(
+				labelName = "Custom validation",
+				objectName = "CustomObject156696",
+				script = "customInteger >= 5000",
+				validationType = "ddm");
 		}
 
 		task ("Assert that Custom Validation with 'is Greater Than Or Equal To' is working") {
@@ -1287,7 +1058,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
-				value1 = "This entry is not possible.");
+				value1 = "Please enter a valid entry.");
 
 			Navigator.gotoBack();
 
@@ -1334,30 +1105,12 @@ definition {
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject156697");
 		}
 
-		task ("On Custom Object, go to validations tab") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 156697");
-
-			ObjectAdmin.goToValidationsTab();
-		}
-
-		task ("Add a Custom Validation using an expression 'is Less Than Or Equal To'") {
-			ObjectCustomValidation.addObjectValidation(
-				validationName = "Custom Validation",
-				validationType = "Expression Builder");
-
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-			ObjectCustomValidation.activeValidation();
-
-			ObjectCustomValidation.gotoTab(tabName = "Conditions");
-
-			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "customInteger <= 5000");
-
-			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
-
-			PortletEntry.save();
+		task ("Add a Custom Validation using an expression 'is Less Than Or Equal To' (via API)") {
+			JSONObject.addObjectValidation(
+				labelName = "Custom validation",
+				objectName = "CustomObject156697",
+				script = "customInteger <= 5000",
+				validationType = "ddm");
 		}
 
 		task ("Assert that Custom Validation with 'is Less Than Or Equal To' is working") {
@@ -1370,7 +1123,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
-				value1 = "This entry is not possible.");
+				value1 = "Please enter a valid entry.");
 
 			Navigator.gotoBack();
 
@@ -1417,30 +1170,12 @@ definition {
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject156689");
 		}
 
-		task ("On Custom Object, go to validations tab") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 156689");
-
-			ObjectAdmin.goToValidationsTab();
-		}
-
-		task ("Add a Custom Validation using an expression 'is a URL'") {
-			ObjectCustomValidation.addObjectValidation(
-				validationName = "Custom Validation",
-				validationType = "Expression Builder");
-
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-			ObjectCustomValidation.activeValidation();
-
-			ObjectCustomValidation.gotoTab(tabName = "Conditions");
-
-			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "isURL(customText)");
-
-			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
-
-			PortletEntry.save();
+		task ("Add a Custom Validation using an expression 'is a URL' (via API)") {
+			JSONObject.addObjectValidation(
+				labelName = "Custom validation",
+				objectName = "CustomObject156689",
+				script = "isURL(customText)",
+				validationType = "ddm");
 		}
 
 		task ("Assert that Custom Validation with 'is a URL' is working") {
@@ -1452,7 +1187,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
-				value1 = "This entry is not possible.");
+				value1 = "Please enter a valid entry.");
 
 			Navigator.gotoBack();
 
@@ -1489,30 +1224,12 @@ definition {
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject156692");
 		}
 
-		task ("On Custom Object, go to validations tab") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 156692");
-
-			ObjectAdmin.goToValidationsTab();
-		}
-
-		task ("Add a Custom Validation using an expression 'Match' - reGex expression contains all uppercase letters") {
-			ObjectCustomValidation.addObjectValidation(
-				validationName = "Custom Validation",
-				validationType = "Expression Builder");
-
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-			ObjectCustomValidation.activeValidation();
-
-			ObjectCustomValidation.gotoTab(tabName = "Conditions");
-
-			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "match(customText, '[A-Z]')");
-
-			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
-
-			PortletEntry.save();
+		task ("Add a Custom Validation using an expression 'Match' - reGex expression contains all uppercase letters (via API)") {
+			JSONObject.addObjectValidation(
+				labelName = "Custom validation",
+				objectName = "CustomObject156692",
+				script = "match(customText, '[A-Z]')",
+				validationType = "ddm");
 		}
 
 		task ("Assert that Custom Validation with 'Match' is working only with UPPERCASE letters") {
@@ -1524,7 +1241,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
-				value1 = "This entry is not possible.");
+				value1 = "Please enter a valid entry.");
 
 			Navigator.gotoBack();
 
@@ -1563,30 +1280,12 @@ definition {
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject156700");
 		}
 
-		task ("On Custom Object, go to validations tab") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 156700");
-
-			ObjectAdmin.goToValidationsTab();
-		}
-
-		task ("Add a Custom Validation using an expression that contains operation 'plus'") {
-			ObjectCustomValidation.addObjectValidation(
-				validationName = "Custom Validation",
-				validationType = "Expression Builder");
-
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-			ObjectCustomValidation.activeValidation();
-
-			ObjectCustomValidation.gotoTab(tabName = "Conditions");
-
-			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "customIntegerA == customIntegerB + customIntegerC");
-
-			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
-
-			PortletEntry.save();
+		task ("Add a Custom Validation using an expression that contains operation 'plus' (via API)") {
+			JSONObject.addObjectValidation(
+				labelName = "Custom validation",
+				objectName = "CustomObject156700",
+				script = "customIntegerA == customIntegerB + customIntegerC",
+				validationType = "ddm");
 		}
 
 		task ("Assert that Custom Validation with 'plus' is working") {
@@ -1610,7 +1309,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
-				value1 = "This entry is not possible.");
+				value1 = "Please enter a valid entry.");
 
 			Navigator.gotoBack();
 
@@ -1644,7 +1343,7 @@ definition {
 
 			ObjectAdmin.goToValidationsTab();
 
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom validation");
 
 			ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
@@ -1674,7 +1373,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
-				value1 = "This entry is not possible.");
+				value1 = "Please enter a valid entry.");
 
 			Navigator.gotoBack();
 
@@ -1708,7 +1407,7 @@ definition {
 
 			ObjectAdmin.goToValidationsTab();
 
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom validation");
 
 			ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
@@ -1738,7 +1437,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
-				value1 = "This entry is not possible.");
+				value1 = "Please enter a valid entry.");
 
 			Navigator.gotoBack();
 
@@ -1772,7 +1471,7 @@ definition {
 
 			ObjectAdmin.goToValidationsTab();
 
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom validation");
 
 			ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
@@ -1802,7 +1501,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
-				value1 = "This entry is not possible.");
+				value1 = "Please enter a valid entry.");
 
 			Navigator.gotoBack();
 
@@ -1853,30 +1552,12 @@ definition {
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject156702");
 		}
 
-		task ("On Custom Object, go to validations tab") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 156702");
-
-			ObjectAdmin.goToValidationsTab();
-		}
-
-		task ("Add a Custom Validation using an expression 'Range'") {
-			ObjectCustomValidation.addObjectValidation(
-				validationName = "Custom Validation",
-				validationType = "Expression Builder");
-
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-			ObjectCustomValidation.activeValidation();
-
-			ObjectCustomValidation.gotoTab(tabName = "Conditions");
-
-			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "futureDates(customDate, '2022-06-01') AND pastDates(customDate, '2022-06-30')");
-
-			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
-
-			PortletEntry.save();
+		task ("Add a Custom Validation using an expression 'Range' (via API)") {
+			JSONObject.addObjectValidation(
+				labelName = "Custom validation",
+				objectName = "CustomObject156702",
+				script = "futureDates(customDate, '2022-06-01') AND pastDates(customDate, '2022-06-30')",
+				validationType = "ddm");
 		}
 
 		task ("Assert that Custom Validation with 'Range' is working") {
@@ -1888,7 +1569,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
-				value1 = "This entry is not possible.");
+				value1 = "Please enter a valid entry.");
 
 			Navigator.gotoBack();
 
@@ -1898,7 +1579,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
-				value1 = "This entry is not possible.");
+				value1 = "Please enter a valid entry.");
 
 			Navigator.gotoBack();
 
@@ -1939,30 +1620,12 @@ definition {
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject156699");
 		}
 
-		task ("On Custom Object, go to validations tab") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 156699");
-
-			ObjectAdmin.goToValidationsTab();
-		}
-
-		task ("Add a Custom Validation using an expression 'sum'") {
-			ObjectCustomValidation.addObjectValidation(
-				validationName = "Custom Validation",
-				validationType = "Expression Builder");
-
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-			ObjectCustomValidation.activeValidation();
-
-			ObjectCustomValidation.gotoTab(tabName = "Conditions");
-
-			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "customIntegerA >= sum(customIntegerB, customIntegerC, customIntegerD)");
-
-			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
-
-			PortletEntry.save();
+		task ("Add a Custom Validation using an expression 'sum' (via API)") {
+			JSONObject.addObjectValidation(
+				labelName = "Custom validation",
+				objectName = "CustomObject156699",
+				script = "customIntegerA >= sum(customIntegerB, customIntegerC, customIntegerD)",
+				validationType = "ddm");
 		}
 
 		task ("Assert that Custom Validation with 'sum' is working") {
@@ -1990,7 +1653,7 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR",
-				value1 = "This entry is not possible.");
+				value1 = "Please enter a valid entry.");
 
 			Navigator.gotoBack();
 
@@ -2070,29 +1733,13 @@ definition {
 			isRequired = "false",
 			objectName = "CustomObject153550");
 
+		JSONObject.addObjectValidation(
+			labelName = "Custom validation",
+			objectName = "CustomObject153550",
+			script = "invalidFields = (customField == 'Decline Entry')",
+			validationType = "groovy");
+
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153550");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 153550");
-
-		ObjectAdmin.goToValidationsTab();
-
-		ObjectCustomValidation.addObjectValidation(
-			validationName = "Custom Validation",
-			validationType = "Groovy");
-
-		ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-		ObjectCustomValidation.activeValidation();
-
-		ObjectCustomValidation.gotoTab(tabName = "Conditions");
-
-		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField == 'Decline Entry')");
-
-		ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
-
-		PortletEntry.save();
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153550");
 
@@ -2100,7 +1747,7 @@ definition {
 			entry = "Decline Entry",
 			invalidEntry = "true");
 
-		Alert.viewErrorMessage(errorMessage = "This entry is not possible.");
+		Alert.viewErrorMessage(errorMessage = "Please enter a valid entry.");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153550");
 
@@ -2130,28 +1777,12 @@ definition {
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject192647");
 		}
 
-		task ("and Given a expression builder validation set to full validation") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 192647");
-
-			ObjectAdmin.goToValidationsTab();
-
-			ObjectCustomValidation.addObjectValidation(
-				validationName = "Custom Validation",
-				validationType = "Expression Builder");
-
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-			ObjectCustomValidation.activeValidation();
-
-			ObjectCustomValidation.gotoTab(tabName = "Conditions");
-
-			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "NOT(contains(text, 'lazy'))");
-
-			ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not valid for text entry.");
-
-			PortletEntry.save();
+		task ("and Given a expression builder validation set to full validation (via API)") {
+			JSONObject.addObjectValidation(
+				labelName = "Custom validation",
+				objectName = "CustomObject192647",
+				script = "NOT(contains(text, 'lazy'))",
+				validationType = "ddm");
 		}
 
 		task ("and Given a valid object entry") {
@@ -2161,10 +1792,18 @@ definition {
 				value = "Quick brown fox");
 		}
 
-		task ("When editing the custom validation") {
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
+		task ("Go to Custom Objects and Validations tab") {
+			ObjectAdmin.openObjectAdmin();
 
-			ObjectCustomValidation.editLabelOnCustomValidation(editValidationName = "Custom Validation Updated");
+			ObjectPortlet.selectCustomObject(label = "Custom Object 192647");
+
+			ObjectAdmin.goToValidationsTab();
+		}
+
+		task ("When editing the custom validation") {
+			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom validation");
+
+			ObjectCustomValidation.editLabelOnCustomValidation(editValidationName = "Custom validation updated");
 
 			ObjectCustomValidation.gotoTab(tabName = "Conditions");
 
@@ -2215,29 +1854,13 @@ definition {
 			isRequired = "false",
 			objectName = "CustomObject153558");
 
+		JSONObject.addObjectValidation(
+			labelName = "Custom validation",
+			objectName = "CustomObject153558",
+			script = "invalidFields = (customField == 'Decline Entry')",
+			validationType = "groovy");
+
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153558");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 153558");
-
-		ObjectAdmin.goToValidationsTab();
-
-		ObjectCustomValidation.addObjectValidation(
-			validationName = "Custom Validation",
-			validationType = "Groovy");
-
-		ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-		ObjectCustomValidation.activeValidation();
-
-		ObjectCustomValidation.gotoTab(tabName = "Conditions");
-
-		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField == 'Decline Entry')");
-
-		ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
-
-		PortletEntry.save();
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customField",
@@ -2726,29 +2349,13 @@ definition {
 			isRequired = "false",
 			objectName = "CustomObject153546");
 
+		JSONObject.addObjectValidation(
+			labelName = "Custom validation",
+			objectName = "CustomObject153546",
+			script = "invalidFields = (customField == 'Invalid Entry')",
+			validationType = "groovy");
+
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153546");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "Custom Object 153546");
-
-		ObjectAdmin.goToValidationsTab();
-
-		ObjectCustomValidation.addObjectValidation(
-			validationName = "Custom Validation",
-			validationType = "Groovy");
-
-		ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-		ObjectCustomValidation.activeValidation();
-
-		ObjectCustomValidation.gotoTab(tabName = "Conditions");
-
-		ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "invalidFields = (customField == \"Invalid Entry\")");
-
-		ObjectCustomValidation.addErrorMessage(errorMessage = "This entry is not possible.");
-
-		PortletEntry.save();
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153546");
 
@@ -2758,7 +2365,7 @@ definition {
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR",
-			value1 = "This entry is not possible.");
+			value1 = "Please enter a valid entry.");
 	}
 
 	@description = "LPS-144474 - Verify that the message 'There was an unexpected error in fields validation. Please contact support' is displayed when the goovy sintax is incorrect"

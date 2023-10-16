@@ -806,27 +806,11 @@ definition {
 				addressStreet1 = "1400 Montefino Ave",
 				addressType = "Billing");
 
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Postal Address");
-
-			ObjectAdmin.goToValidationsTab();
-
-			ObjectCustomValidation.addObjectValidation(
-				validationName = "Custom Validation",
-				validationType = "Expression Builder");
-
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-			ObjectCustomValidation.activeValidation();
-
-			ObjectCustomValidation.gotoTab(tabName = "Conditions");
-
-			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = "oldValue('Name') == 'Test'");
-
-			ObjectCustomValidation.addErrorMessage(errorMessage = "Invalid Value");
-
-			PortletEntry.save();
+			JSONObject.addObjectValidation(
+				labelName = "Custom validation",
+				objectName = "Address",
+				script = "oldValue('Name') == 'Test'",
+				validationType = "ddm");
 		}
 
 		task ("When the address from created account is edited") {
@@ -851,7 +835,7 @@ definition {
 		}
 
 		task ("Then the error message appears on the log") {
-			AssertConsoleTextPresent(value1 = "Invalid Value");
+			AssertConsoleTextPresent(value1 = "Please enter a valid entry");
 		}
 	}
 
@@ -890,26 +874,12 @@ definition {
 				picklistName = "Status");
 		}
 
-		task ("And given a custom validation with expression builder is created and the object is published") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 175196");
-
-			ObjectAdmin.goToValidationsTab();
-
-			ObjectCustomValidation.addObjectValidation(
-				validationName = "Custom Validation",
-				validationType = "Expression Builder");
-
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-			ObjectCustomValidation.gotoTab(tabName = "Conditions");
-
-			ObjectCustomValidation.insertScriptOnValidation(scriptValidation = '''oldValue("customPicklistField") == "open"''');
-
-			ObjectCustomValidation.addErrorMessage(errorMessage = "Invalid Value.");
-
-			PortletEntry.save();
+		task ("And given a custom validation with expression builder is created and the object is published (via API)") {
+			JSONObject.addObjectValidation(
+				labelName = "Custom validation",
+				objectName = "CustomObject175196",
+				script = "oldValue('customPicklistField') == 'open'",
+				validationType = "ddm");
 
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject175196");
 		}
@@ -918,20 +888,6 @@ definition {
 			ObjectAdmin.goToCustomObject(objectName = "CustomObject175196");
 
 			ObjectAdmin.addObjectPicklistFieldEntryViaUI(picklistOption = "Open");
-		}
-
-		task ("And when the validation toggle is active") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 175196");
-
-			ObjectAdmin.goToValidationsTab();
-
-			ObjectCustomValidation.gotoCustomValidation(validationName = "Custom Validation");
-
-			ObjectCustomValidation.activeValidation();
-
-			PortletEntry.save();
 		}
 
 		task ("Then the validation condition is met and the entry can be updated") {

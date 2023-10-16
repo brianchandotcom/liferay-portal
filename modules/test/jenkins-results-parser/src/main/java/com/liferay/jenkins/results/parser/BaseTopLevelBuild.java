@@ -221,6 +221,12 @@ public abstract class BaseTopLevelBuild
 
 	@Override
 	public String getBuildName() {
+		String jenkinsJobVariant = getParameterValue("JENKINS_JOB_VARIANT");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(jenkinsJobVariant)) {
+			return getJobName() + "/" + jenkinsJobVariant;
+		}
+
 		return "top-level";
 	}
 

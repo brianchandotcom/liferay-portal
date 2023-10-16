@@ -101,26 +101,34 @@ export function UniqueCompositeKey({
 			header: Liferay.Language.get('add-fields-to-unique-composite-key'),
 			items: modalSelectObjectFieldsItems,
 			onSave: (selectedObjectFields: ObjectField[]) => {
-				const objectValidationRuleSetting = values.objectValidationRuleSettings?.filter(
-					(objectValidationRuleSetting) =>
-						selectedObjectFields.some((selectedObjectField) => {
-							return (
-								selectedObjectField.externalReferenceCode ===
-									objectValidationRuleSetting.value &&
-								objectValidationRuleSetting.name ===
-									'outputObjectFieldExternalReferenceCode'
-							);
-						})
-				);
+				const objectValidationRuleSettings: ObjectValidationRuleSetting[] = [];
+
 				selectedObjectFields.map((selectedObjectField) =>
-					objectValidationRuleSetting?.push({
-						name: 'compositeKeyObjectFieldExternalReferenceCode',
-						value: selectedObjectField.externalReferenceCode,
-					})
+					values.outputType === 'partialValidation'
+						? objectValidationRuleSettings?.push(
+								{
+									name:
+										'compositeKeyObjectFieldExternalReferenceCode',
+									value:
+										selectedObjectField.externalReferenceCode,
+								},
+								{
+									name:
+										'outputObjectFieldExternalReferenceCode',
+									value:
+										selectedObjectField.externalReferenceCode,
+								}
+						  )
+						: objectValidationRuleSettings?.push({
+								name:
+									'compositeKeyObjectFieldExternalReferenceCode',
+								value:
+									selectedObjectField.externalReferenceCode,
+						  })
 				);
 
 				setValues({
-					objectValidationRuleSettings: objectValidationRuleSetting,
+					objectValidationRuleSettings,
 				});
 			},
 			selected: modalSelectObjectFieldsItems.filter(

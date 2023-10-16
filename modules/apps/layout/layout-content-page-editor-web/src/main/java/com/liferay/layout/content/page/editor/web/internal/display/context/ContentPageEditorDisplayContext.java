@@ -511,7 +511,7 @@ public class ContentPageEditorDisplayContext {
 				"getRolesURL",
 				_getResourceURL("/layout_content_page_editor/get_roles")
 			).put(
-				"getUsers",
+				"getUsersURL",
 				_getResourceURL("/layout_content_page_editor/get_users")
 			).put(
 				"imageSelectorURL", _getItemSelectorURL()

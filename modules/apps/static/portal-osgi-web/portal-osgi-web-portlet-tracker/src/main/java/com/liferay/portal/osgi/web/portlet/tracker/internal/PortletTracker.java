@@ -6,6 +6,7 @@
 package com.liferay.portal.osgi.web.portlet.tracker.internal;
 
 import com.liferay.osgi.util.StringPlus;
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
@@ -1555,27 +1556,46 @@ public class PortletTracker
 		public List<ResourcePermission> getResourcePermissions(
 			long companyId, String name) {
 
-			Map<String, List<ResourcePermission>> resourcePermissions =
-				_resourcePermissionMaps.get(companyId);
+			DCLSingleton<Map<String, List<ResourcePermission>>>
+				resourcePermissionsDCLSingleton = _resourcePermissionMaps.get(
+					companyId);
 
-			if (resourcePermissions == null) {
-				resourcePermissions =
-					_resourcePermissionLocalService.
-						getIndividualPortletResourcePermissions(companyId);
+			if (resourcePermissionsDCLSingleton == null) {
+				resourcePermissionsDCLSingleton = new DCLSingleton<>();
 
-				_resourcePermissionMaps.put(companyId, resourcePermissions);
+				DCLSingleton<Map<String, List<ResourcePermission>>>
+					previousResourcePermissionsDCLSingleton =
+						_resourcePermissionMaps.putIfAbsent(
+							companyId, resourcePermissionsDCLSingleton);
+
+				if (previousResourcePermissionsDCLSingleton != null) {
+					resourcePermissionsDCLSingleton =
+						previousResourcePermissionsDCLSingleton;
+				}
 			}
+
+			Map<String, List<ResourcePermission>> resourcePermissions =
+				resourcePermissionsDCLSingleton.getSingleton(
+					() ->
+						_resourcePermissionLocalService.
+							getIndividualPortletResourcePermissions(companyId));
 
 			return resourcePermissions.get(name);
 		}
 
 		@Override
 		public void removeResourcePermissions(long companyId, String name) {
-			Map<String, List<ResourcePermission>> resourcePermissions =
-				_resourcePermissionMaps.get(companyId);
+			DCLSingleton<Map<String, List<ResourcePermission>>>
+				resourcePermissionsDCLSingleton = _resourcePermissionMaps.get(
+					companyId);
 
-			if (resourcePermissions != null) {
-				resourcePermissions.remove(name);
+			if (resourcePermissionsDCLSingleton != null) {
+				Map<String, List<ResourcePermission>> resourcePermissions =
+					resourcePermissionsDCLSingleton.getSingleton(() -> null);
+
+				if (resourcePermissions != null) {
+					resourcePermissions.remove(name);
+				}
 			}
 		}
 
@@ -1587,8 +1607,9 @@ public class PortletTracker
 
 		private final ResourcePermissionLocalService
 			_resourcePermissionLocalService;
-		private final Map<Long, Map<String, List<ResourcePermission>>>
-			_resourcePermissionMaps = new ConcurrentHashMap<>();
+		private final Map
+			<Long, DCLSingleton<Map<String, List<ResourcePermission>>>>
+				_resourcePermissionMaps = new ConcurrentHashMap<>();
 
 	}
 

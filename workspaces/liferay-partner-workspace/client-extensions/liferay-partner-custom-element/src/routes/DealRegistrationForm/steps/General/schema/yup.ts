@@ -90,6 +90,7 @@ const generalSchema = object({
 		}).test('is-empty', 'Required', (value) => !isObjectEmpty(value)),
 		postalCode: string()
 			.trim()
+			.max(20, 'reached max characters')
 			.matches(postalCodetRegex, 'Postal Code is not valid')
 			.required('Required'),
 		state: object({

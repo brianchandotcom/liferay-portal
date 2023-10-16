@@ -60,6 +60,10 @@ public class Tree {
 		return node;
 	}
 
+	public Node getRootNode() {
+		return rootNode;
+	}
+
 	public Iterator<Node> iterator() {
 		return iterator(TreeConstants.ITERATOR_TYPE_BREADTH_FIRST);
 	}

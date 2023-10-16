@@ -254,29 +254,36 @@ definition {
 			text = ${projectId});
 
 		Select(
-			key_fieldLabel = "Primary Region",
+			key_fieldLabel = "Primary Data Center Region",
 			locator1 = "CP2Utils#LABEL_GENERIC_SELECT",
 			value1 = ${primaryRegion});
 
-		Type(
-			locator1 = "TextInput#ANY_WITH_NAME",
-			name = "lxc.admins[0].fullName",
-			value1 = ${fullName});
+		Select(
+			key_fieldLabel = "Disaster Recovery Data Center Region",
+			locator1 = "CP2Utils#LABEL_GENERIC_SELECT",
+			value1 = ${disasterRegion});
 
 		Type(
 			locator1 = "TextInput#ANY_WITH_NAME",
-			name = "lxc.admins[0].email",
+			name = "dxp.admins[0].email",
 			value1 = ${email});
 
 		Type(
 			locator1 = "TextInput#ANY_WITH_NAME",
-			name = "lxc.incidentManagementFullName",
-			value1 = ${incidentManagementFullName});
+			name = "dxp.admins[0].firstName",
+			value1 = ${firstName});
 
 		Type(
 			locator1 = "TextInput#ANY_WITH_NAME",
-			name = "lxc.incidentManagementEmail",
-			value1 = ${incidentManagementEmail});
+			name = "dxp.admins[0].lastName",
+			value1 = ${lastName});
+
+		Type(
+			locator1 = "TextInput#ANY_WITH_NAME",
+			name = "dxp.admins[0].github",
+			value1 = ${githubUserName});
+
+		Button.click(button = "Next");
 
 		Button.click(button = "Submit");
 

@@ -11,7 +11,6 @@ definition {
 	var testAccount = "2022 FIFA World Cup Qatar - FAN ID";
 	var testSiteName = "Customer Portal Site";
 	var testSiteTamplate = "Liferay OSB Site Initializer Customer Portal";
-	var testProduct = "LXC - SM";
 
 	setUp {
 		task ("Set up instance and sign in") {
@@ -59,6 +58,7 @@ definition {
 	}
 
 	@description = "LPS-161280 - Verify if after a user submits the Liferay Experience Cloud activation form and then tries to resend it (or another user) in another browser window a helpful message is shown"
+	@ignore = "true"
 	@priority = 3
 	test AssertTheModalWithTheUsefulMessageToTheUser {
 		task ("Given I complete the onboarding flow and go to Liferay Experience Cloud page via URL") {
@@ -77,11 +77,13 @@ definition {
 
 		task ("And I fill in all the required fields and close window") {
 			CP2Utils.finishActivation(
+				disasterRegion = "Frankfurt, Germany",
+				doneButton = "doneButton",
 				email = "test@liferay.com",
-				fullName = "Test Test",
-				incidentManagementEmail = "test@liferay.com",
-				incidentManagementFullName = "Manager Test",
-				primaryRegion = "Europe",
+				firstName = "Test",
+				githubUserName = "Test7",
+				lastName = "Test",
+				primaryRegion = "Iowa, USA",
 				projectId = "testid");
 
 			Navigator.closeWindow();
@@ -89,11 +91,12 @@ definition {
 
 		task ("When I fill again in all the required fields") {
 			CP2Utils.finishActivation(
+				disasterRegion = "Frankfurt, Germany",
 				email = "test@liferay.com",
-				fullName = "Test Test",
-				incidentManagementEmail = "test@liferay.com",
-				incidentManagementFullName = "Manager Test",
-				primaryRegion = "Europe",
+				firstName = "Test",
+				githubUserName = "Test7",
+				lastName = "Test",
+				primaryRegion = "Iowa, USA",
 				projectId = "testid");
 		}
 

@@ -79,12 +79,13 @@ definition {
 
 		task ("When I fill in all the required fields") {
 			CP2Utils.finishActivation(
+				disasterRegion = "Frankfurt, Germany",
 				doneButton = "doneButton",
 				email = "test@liferay.com",
-				fullName = "Test Test",
-				incidentManagementEmail = "test@liferay.com",
-				incidentManagementFullName = "Manager Test",
-				primaryRegion = "Europe",
+				firstName = "Test",
+				githubUserName = "Test7",
+				lastName = "Test",
+				primaryRegion = "Iowa, USA",
 				projectId = "testid");
 		}
 

@@ -29,8 +29,6 @@ definition {
 	tearDown {
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		ACUtils.tearDownAC();
-
 		ACUtils.tearDownDXP();
 
 		if (${testLiferayVirtualInstance} == "true") {
@@ -43,6 +41,8 @@ definition {
 
 			UserGroup.tearDownCP();
 		}
+
+		ACUtils.tearDownAC();
 	}
 
 	@description = "Story: LRAC-10859 | Automation ID: LRAC-12667 | Test Summary: Can search for account groups in the select contacts modal"

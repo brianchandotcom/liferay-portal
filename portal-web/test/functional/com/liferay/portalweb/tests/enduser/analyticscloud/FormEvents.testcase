@@ -51,8 +51,6 @@ definition {
 	tearDown {
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		ACUtils.tearDownAC();
-
 		ACUtils.tearDownDXP();
 
 		if (${testLiferayVirtualInstance} == "true") {
@@ -61,6 +59,8 @@ definition {
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Site Name");
 		}
+
+		ACUtils.tearDownAC();
 	}
 
 	@description = "Bug: LRAC-7832 | Automation ID: LRAC-9867 | Test Summary: Check fieldBlurred and fieldFocused is triggered when interacting with form fields (Text, Date, Date and Time, Image, Rich Text, Upload and Color[by color picker and color field])"

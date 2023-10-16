@@ -26,6 +26,15 @@ definition {
 
 		ACUtils.tearDownDXP();
 
+		if (${testPortalInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONUser.tearDownNonAdminUsers();
+
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+
 		ACUtils.launchAC();
 
 		ACNavigation.goToSettings();
@@ -37,15 +46,6 @@ definition {
 		ACUtils.clickAnyButton(button = "Continue");
 
 		ACUtils.tearDownAC();
-
-		if (${testPortalInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONUser.tearDownNonAdminUsers();
-
-			JSONGroup.deleteGroupByName(groupName = "Site Name");
-		}
 	}
 
 	@description = "Feature ID: LRAC-13255 | Automation ID: LRAC-13691 | Test Summary: Can revoke token and generate a new one"

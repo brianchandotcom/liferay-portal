@@ -33,8 +33,6 @@ definition {
 	tearDown {
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		ACUtils.tearDownAC();
-
 		ACUtils.tearDownDXP();
 
 		if (${testLiferayVirtualInstance} == "true") {
@@ -45,6 +43,8 @@ definition {
 
 			ACUtils.tearDownCommerce();
 		}
+
+		ACUtils.tearDownAC();
 	}
 
 	@description = "Story: LRAC-11044 | Automation ID: LRAC-12677 | Test Summary: Check that you can modify the sync of contacts in the people review sidebar"

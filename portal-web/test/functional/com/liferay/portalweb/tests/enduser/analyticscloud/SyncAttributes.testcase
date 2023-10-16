@@ -64,8 +64,6 @@ definition {
 	tearDown {
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		ACUtils.tearDownAC();
-
 		ACUtils.tearDownDXP();
 
 		if (${testLiferayVirtualInstance} == "true") {
@@ -76,6 +74,8 @@ definition {
 
 			ACUtils.tearDownCommerce();
 		}
+
+		ACUtils.tearDownAC();
 	}
 
 	@description = "Story: LRAC-10867 | Automation ID: LRAC-12909 | Test Summary: Check that all attributes for Orders are marked as required"

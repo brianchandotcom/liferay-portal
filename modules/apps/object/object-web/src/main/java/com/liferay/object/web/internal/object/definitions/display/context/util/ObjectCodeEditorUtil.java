@@ -17,7 +17,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -76,7 +76,14 @@ public class ObjectCodeEditorUtil {
 		if (includeGeneralVariables) {
 			codeEditorElements.add(
 				_createCodeEditorElement(
-					Collections.singletonList(
+					Arrays.asList(
+						HashMapBuilder.put(
+							"content", "currentDate"
+						).put(
+							"helpText", StringPool.BLANK
+						).put(
+							"label", LanguageUtil.get(locale, "current-date")
+						).build(),
 						HashMapBuilder.put(
 							"content", "currentUserId"
 						).put(
@@ -112,6 +119,24 @@ public class ObjectCodeEditorUtil {
 
 	public enum DDMExpressionFunction {
 
+		ADD_DAYS(
+			"addDays(field_name, parameter)",
+			"calculates-the-result-of-adding-or-subtracting-a-specified-" +
+				"number-of-days-from-a-given-date.-to-subtract,-prefix-the-" +
+					"number-of-days-with-a-minus-sign",
+			"add-days"),
+		ADD_MONTHS(
+			"addMonths(field_name, parameter)",
+			"calculates-the-result-of-adding-or-subtracting-a-specified-" +
+				"number-of-months-from-a-given-date.-to-subtract,-prefix-the-" +
+					"number-of-months-with-a-minus-sign",
+			"add-months"),
+		ADD_YEARS(
+			"addYears(field_name, parameter)",
+			"calculates-the-result-of-adding-or-subtracting-a-specified-" +
+				"number-of-years-from-a-given-date.-to-subtract,-prefix-the-" +
+					"number-of-years-with-a-minus-sign",
+			"add-years"),
 		COMPARE_DATES(
 			"compareDates(field_name, parameter)",
 			"check-if-a-field-has-the-same-date-of-the-value", "compare-dates"),

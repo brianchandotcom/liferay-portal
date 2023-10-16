@@ -31,6 +31,7 @@ interface CodeEditorLocalizedProps {
 	readOnly?: boolean;
 	selectedLocale: Liferay.Language.Locale;
 	sidebarElements: SidebarCategory[];
+	sidebarElementsDisabled?: boolean;
 	translations: LocalizedValue<string>;
 }
 
@@ -63,6 +64,7 @@ export function CodeEditorLocalized({
 	readOnly = false,
 	selectedLocale,
 	sidebarElements,
+	sidebarElementsDisabled,
 	translations,
 }: CodeEditorLocalizedProps) {
 	const [active, setActive] = useState(false);
@@ -91,6 +93,7 @@ export function CodeEditorLocalized({
 					placeholder={placeholder}
 					readOnly={readOnly}
 					sidebarElements={sidebarElements}
+					sidebarElementsDisabled={sidebarElementsDisabled}
 					value={translations[selectedLocale] ?? ''}
 				/>
 			) : (

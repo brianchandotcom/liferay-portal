@@ -22,6 +22,7 @@ interface CodeEditorProps extends ICodeMirrorEditor {
 	CustomSidebarContent?: ReactNode;
 	className?: string;
 	error?: string;
+	readOnly?: boolean;
 	sidebarElements?: SidebarCategory[];
 	sidebarElementsDisabled?: boolean;
 }
@@ -33,6 +34,7 @@ const CodeEditor = React.forwardRef<CodeMirror.Editor, CodeEditorProps>(
 			className,
 			error,
 			mode,
+			readOnly,
 			sidebarElements,
 			sidebarElementsDisabled,
 			...options
@@ -62,12 +64,14 @@ const CodeEditor = React.forwardRef<CodeMirror.Editor, CodeEditorProps>(
 		return (
 			<FieldBase
 				className={classNames('lfr-objects__code-editor', className)}
+				disabled={readOnly}
 				errorMessage={error}
 			>
 				<div className="form-control lfr-objects__code-editor-source">
 					<CodeMirrorEditor
 						lineWrapping={true}
 						mode={mode}
+						readOnly={readOnly}
 						ref={handleDomNodeChange}
 						{...options}
 					/>

@@ -14,6 +14,7 @@ export declare function RichTextLocalized({
 	label,
 	onSelectedLocaleChange,
 	onTranslationsChange,
+	readOnly,
 	selectedLocale,
 	translations,
 }: IProps): JSX.Element;
@@ -33,6 +34,7 @@ interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
 	label: string;
 	onSelectedLocaleChange: (val: IItem) => void;
 	onTranslationsChange: (val: LocalizedValue<string>) => void;
+	readOnly?: boolean;
 	selectedLocale: Liferay.Language.Locale;
 	translations: LocalizedValue<string>;
 }

@@ -116,6 +116,7 @@ export default function ContentContainer({
 									body: translation,
 								});
 							}}
+							readOnly={values.system}
 							selectedLocale={selectedLocale}
 							translations={values.body}
 						/>

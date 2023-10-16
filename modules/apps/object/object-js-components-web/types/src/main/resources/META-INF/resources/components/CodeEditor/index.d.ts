@@ -16,6 +16,7 @@ interface CodeEditorProps extends ICodeMirrorEditor {
 	CustomSidebarContent?: ReactNode;
 	className?: string;
 	error?: string;
+	readOnly?: boolean;
 	sidebarElements?: SidebarCategory[];
 	sidebarElementsDisabled?: boolean;
 }

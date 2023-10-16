@@ -8,4 +8,8 @@
 	&-flag {
 		margin-left: 0.5rem;
 	}
+
+	&-readonly {
+		pointer-events: none;
+	}
 }

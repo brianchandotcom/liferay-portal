@@ -1042,30 +1042,18 @@ public class JournalArticleLocalServiceImpl
 		targetArticle.setStatusByUserName(user.getFullName());
 		targetArticle.setStatusDate(modifiedDate);
 
-		int uniqueUrlTitleCount = _getUniqueUrlTitleCount(
-			groupId, targetArticleId,
-			JournalUtil.getUrlTitle(id, sourceArticle.getUrlTitle()));
-
 		Map<Locale, String> newTitleMap = sourceArticle.getTitleMap();
 		Map<Locale, String> newUniqueURLTitleMap = new HashMap<>();
 
 		for (Map.Entry<Locale, String> entry : newTitleMap.entrySet()) {
 			Locale locale = entry.getKey();
-			String title = entry.getValue();
 
-			newTitleMap.put(
-				locale,
-				StringBundler.concat(
-					title, StringPool.SPACE, StringPool.OPEN_PARENTHESIS,
-					_language.get(locale, "copy"), StringPool.SPACE,
-					uniqueUrlTitleCount, StringPool.CLOSE_PARENTHESIS));
+			String uniqueUrlTitle = _getUniqueUrlTitle(
+				groupId, targetArticleId, entry.getValue());
+
+			newTitleMap.put(locale, uniqueUrlTitle);
 			newUniqueURLTitleMap.put(
-				locale,
-				getUniqueUrlTitle(
-					id, groupId, targetArticleId,
-					StringBundler.concat(
-						title, StringPool.SPACE, _language.get(locale, "copy"),
-						StringPool.SPACE, uniqueUrlTitleCount)));
+				locale, JournalUtil.getUrlTitle(id, uniqueUrlTitle));
 		}
 
 		DDMFormValues ddmFormValues = sourceArticle.getDDMFormValues();
@@ -7785,11 +7773,12 @@ public class JournalArticleLocalServiceImpl
 		return JournalArticleConstants.SMALL_IMAGE_SOURCE_USER_COMPUTER;
 	}
 
-	private int _getUniqueUrlTitleCount(
+	private String _getUniqueUrlTitle(
 		long groupId, String articleId, String urlTitle) {
 
 		String copy = _language.get(LocaleUtil.getMostRelevantLocale(), "copy");
 		String prefix = urlTitle;
+		String title = urlTitle;
 
 		for (int i = 1;; i++) {
 			JournalArticle article = fetchArticleByUrlTitle(groupId, urlTitle);
@@ -7797,11 +7786,25 @@ public class JournalArticleLocalServiceImpl
 			if ((article == null) ||
 				Objects.equals(articleId, article.getArticleId())) {
 
-				return i - 1;
+				return title;
+			}
+
+			if (i == 1) {
+				urlTitle = StringBundler.concat(
+					prefix, StringPool.DASH, copy, StringPool.DASH);
+				title = StringBundler.concat(
+					prefix, StringPool.SPACE, StringPool.OPEN_PARENTHESIS, copy,
+					StringPool.CLOSE_PARENTHESIS);
+
+				continue;
 			}
 
 			urlTitle = StringBundler.concat(
-				prefix, StringPool.DASH, copy, StringPool.DASH, i);
+				prefix, StringPool.DASH, copy, StringPool.DASH, i - 1,
+				StringPool.DASH);
+			title = StringBundler.concat(
+				prefix, StringPool.SPACE, StringPool.OPEN_PARENTHESIS, copy,
+				StringPool.SPACE, i - 1, StringPool.CLOSE_PARENTHESIS);
 		}
 	}
 

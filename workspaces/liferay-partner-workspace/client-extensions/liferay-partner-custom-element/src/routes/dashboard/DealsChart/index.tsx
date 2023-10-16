@@ -7,12 +7,11 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayChart from '@clayui/charts';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {useEffect, useMemo, useState} from 'react';
+import {useEffect, useState} from 'react';
 
 import Container from '../../../common/components/dashboard/components/Container';
 import {dealsChartColumnColors} from '../../../common/components/dashboard/utils/constants/chartColumnsColors';
 import getLeadsChartValues from '../../../common/components/dashboard/utils/getLeadsChartValues';
-import {getOpportunitiesChartValues} from '../../../common/components/dashboard/utils/getOpportunitiesChartValues';
 import {siteURL} from '../../../common/components/dashboard/utils/siteURL';
 import {Liferay} from '../../../common/services/liferay';
 
@@ -20,17 +19,19 @@ import './index.css';
 import {retry} from '../../../common/utils/retry';
 
 const DealsChart = () => {
-	const [opportunities, setOpportunities] = useState([]);
-	const [leads, setLeads] = useState([]);
+	const [rejectedLeads, setRejectedLeads] = useState([]);
+	const [submittedLeads, setSubmittedLeads] = useState([]);
+	const [approvedLeads, setApprovedLeads] = useState([]);
+
 	const [loading, setLoading] = useState(false);
 
-	const getOpportunities = async () => {
+	const getLeads = async () => {
 		setLoading(true);
 
 		// eslint-disable-next-line @liferay/portal/no-global-fetch
-		const response = await retry<Response>(() =>
+		const responseApproved = await retry<Response>(() =>
 			fetch(
-				`/o/c/opportunitysfs?pageSize=200&filter=stage ne 'Closed Lost' and stage ne 'Disqualified' and stage ne 'Rolled into another opportunity'`,
+				"/o/c/leadsfs?pageSize=200&filter=leadType eq 'Partner Qualified Lead (PQL)' and leadStatus eq 'Qualified'",
 				{
 					headers: {
 						'accept': 'application/json',
@@ -40,32 +41,42 @@ const DealsChart = () => {
 			)
 		);
 
-		if (response.ok) {
-			const data = await response.json();
-			setOpportunities(data?.items);
-
-			return;
-		}
-
-		setLoading(false);
-	};
-
-	const getLeads = async () => {
-		setLoading(true);
-
-		// eslint-disable-next-line @liferay/portal/no-global-fetch
-		const response = await retry<Response>(() =>
-			fetch('/o/c/leadsfs?pageSize=200', {
-				headers: {
-					'accept': 'application/json',
-					'x-csrf-token': Liferay.authToken,
-				},
-			})
+		const responseRejected = await retry<Response>(() =>
+			fetch(
+				"/o/c/leadsfs?pageSize=200&filter=leadType eq 'Partner Qualified Lead (PQL)' and leadStatus eq 'CAM rejected'",
+				{
+					headers: {
+						'accept': 'application/json',
+						'x-csrf-token': Liferay.authToken,
+					},
+				}
+			)
 		);
 
-		if (response.ok) {
-			const data = await response.json();
-			setLeads(data?.items);
+		const responseSubmitted = await retry<Response>(() =>
+			fetch(
+				"/o/c/leadsfs?pageSize=200&filter=leadType eq 'Partner Qualified Lead (PQL)' and leadStatus ne 'Qualified' and leadStatus ne 'CAM rejected'",
+				{
+					headers: {
+						'accept': 'application/json',
+						'x-csrf-token': Liferay.authToken,
+					},
+				}
+			)
+		);
+
+		if (
+			responseApproved.ok &&
+			responseRejected.ok &&
+			responseSubmitted.ok
+		) {
+			const approvedData = await responseApproved.json();
+			const rejectedData = await responseRejected.json();
+			const sumbittedData = await responseSubmitted.json();
+
+			setApprovedLeads(approvedData?.items);
+			setRejectedLeads(rejectedData?.items);
+			setSubmittedLeads(sumbittedData?.items);
 
 			return;
 		}
@@ -74,25 +85,14 @@ const DealsChart = () => {
 	};
 
 	useEffect(() => {
-		getOpportunities();
 		getLeads();
 	}, []);
 
-	const opportunitiesChartValues = useMemo(
-		() => getOpportunitiesChartValues(opportunities),
-		[opportunities]
+	const leadsChartValues = getLeadsChartValues(
+		rejectedLeads,
+		submittedLeads,
+		approvedLeads
 	);
-
-	const leadsChartValues = getLeadsChartValues(leads);
-
-	const totalRejectedChartValues = useMemo(() => {
-		return (
-			opportunitiesChartValues?.rejected?.map(
-				(chartValue, index) =>
-					chartValue + leadsChartValues?.rejected[index]
-			) || []
-		);
-	}, [leadsChartValues?.rejected, opportunitiesChartValues?.rejected]);
 
 	const Chart = () => {
 		const chart = {
@@ -109,8 +109,8 @@ const DealsChart = () => {
 				columns: [
 					['x', 'Q1', 'Q2', 'Q3', 'Q4'],
 					['Submitted', ...leadsChartValues?.submitted],
-					['Approved', ...opportunitiesChartValues?.approved],
-					['Rejected', ...totalRejectedChartValues],
+					['Approved', ...leadsChartValues?.approved],
+					['Rejected', ...leadsChartValues?.rejected],
 				],
 				groups: [['submitted', 'approved']],
 				order: 'desc',
@@ -132,7 +132,7 @@ const DealsChart = () => {
 			<ClayLoadingIndicator className="mb-10 mt-9" size="md" />;
 		}
 
-		if (!loading && !(opportunitiesChartValues || leadsChartValues)) {
+		if (!loading && !leadsChartValues) {
 			<ClayAlert
 				className="mx-auto w-50"
 				displayType="info"

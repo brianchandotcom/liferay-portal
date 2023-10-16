@@ -280,11 +280,11 @@ definition {
 		}
 
 		task ("Check that the existing properties in the AC appear in the list") {
-			ACUtils.assertItemsName(itemList = "Property DeletedPropertiesNotAppearAsOptionInSyncSites 1");
+			ACDXPSettings.viewGenericListItem(itemValueList = "Property DeletedPropertiesNotAppearAsOptionInSyncSites 1");
 		}
 
 		task ("Check that the deleted AC properties do not appear in the list") {
-			ACUtils.assertItemsNameNotPresent(itemList = "Property DeletedPropertiesNotAppearAsOptionInSyncSites 2");
+			ACDXPSettings.viewGenericListItemNotPresent(itemValueList = "Property DeletedPropertiesNotAppearAsOptionInSyncSites 2");
 		}
 
 		task ("Disconnect the DXP to AC") {

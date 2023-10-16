@@ -34,7 +34,7 @@ const CheckBoxItem = ({
 	};
 
 	return (
-		<div className="d-flex mb-4">
+		<div className="d-flex mb-3">
 			<div
 				className={classNames('d-flex p-0 align-items-center', {
 					'col': !children,

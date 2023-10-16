@@ -161,32 +161,34 @@ const DealsChart = () => {
 		<Container
 			className="deals-chart-card-height"
 			footer={
-				<>
+				<div className="pt-5">
 					<ClayButton
-						className="border-brand-primary-darken-1 mt-2 text-brand-primary-darken-1"
+						className="bg-neutral-0 border-brand-primary-darken-1 text-brand-primary-darken-1"
 						displayType="secondary"
 						onClick={() =>
 							Liferay.Util.navigate(
 								`${siteURL}/sales/deal-registrations`
 							)
 						}
+						size="sm"
 						type="button"
 					>
 						View All
 					</ClayButton>
 					<ClayButton
-						className="btn btn-primary ml-4 mt-2"
+						className="btn btn-primary ml-4"
 						displayType="primary"
 						onClick={() =>
 							Liferay.Util.navigate(
 								`${siteURL}/sales/deal-registrations/new`
 							)
 						}
+						size="sm"
 						type="button"
 					>
 						Register New Deal
 					</ClayButton>
-				</>
+				</div>
 			}
 			title="Deal Registrations"
 		>

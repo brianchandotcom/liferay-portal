@@ -259,7 +259,8 @@
 	margin-right: 2px;
 	width: 10px;
 }
-.dashboard-mdf-revenue-chart {
+.dashboard-revenue-chart {
+	height: 544px;
 	min-height: 544px;
 }
 .square-status-legend {

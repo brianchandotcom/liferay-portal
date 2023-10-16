@@ -167,6 +167,11 @@ public class AccountServiceUpgradeStepRegistrator
 				AccountRoleResourceUpgradeProcess(
 					_resourceActionLocalService,
 					_resourcePermissionLocalService));
+
+		registry.register(
+			"2.10.2", "2.10.3",
+			UpgradeProcessFactory.alterColumnType(
+				"AccountEntry", "name", "VARCHAR(250) null"));
 	}
 
 	@Reference

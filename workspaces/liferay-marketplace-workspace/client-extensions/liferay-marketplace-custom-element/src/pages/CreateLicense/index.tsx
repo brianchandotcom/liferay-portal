@@ -20,14 +20,14 @@ const CreateLicense = () => {
 	const StepsInformation = {
 		[StepCreateLicense.SUBSCRIPTION]: {
 			backStep: StepCreateLicense.SUBSCRIPTION,
-			component: <div>Subscription Oi</div>,
+			component: <div>Subscription</div>,
 			nextStep: StepCreateLicense.LICENSE_KEY_DETAILS,
 			stepTitle: 'Subscription',
 			title: 'Subscription',
 		},
 		[StepCreateLicense.LICENSE_KEY_DETAILS]: {
 			backStep: StepCreateLicense.SUBSCRIPTION,
-			component: <div>License Oi</div>,
+			component: <div>License</div>,
 			nextStep: StepCreateLicense.SUBSCRIPTION,
 			stepTitle: 'License Key Details',
 			title: 'License Key Details',

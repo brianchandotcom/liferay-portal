@@ -40,7 +40,6 @@ definition {
 	@description = "This is a use case for LPP-8122 and LPS-190360 TC-2. Verify that when remote publishing, the child pages are not published when they are unselected."
 	@priority = 3
 	test AssertCannotPublishChildPageWhenUnselected {
-		property custom.properties = "auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}feature.flag.LPS-190129=true${line.separator}tunneling.servlet.shared.secret=1234567890123456";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -62,13 +61,13 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "Message#WARNING",
-				value1 = "Recommendation:Please, publish small, incremental changes to avoid huge publishing processes that can take a long time to execute.");
+				value1 = "Recommendation:Publish small incremental changes to avoid large publishing processes that can take a long time to execute.");
 
 			Staging.configurePublishToLive(uncheckChildPagesNameList = "Test Child Page 1,Test Child Page 2");
 
 			AssertTextEquals(
 				locator1 = "Message#WARNING",
-				value1 = "Recommendation:Please, publish small, incremental changes to avoid huge publishing processes that can take a long time to execute.");
+				value1 = "Recommendation:Publish small incremental changes to avoid large publishing processes that can take a long time to execute.");
 
 			Staging.publishToLive(remoteStaging = "true");
 		}
@@ -571,7 +570,6 @@ definition {
 	@description = "This is a use case for LRQA-7589 and LPS-190360 TC-6. Web contents are only published if their content date is in correspondence with the content data range of the publish configuration."
 	@priority = 3
 	test StagingRemoteLiveWebContent {
-		property custom.properties = "auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}feature.flag.LPS-190129=true${line.separator}tunneling.servlet.shared.secret=1234567890123456";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
@@ -637,7 +635,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Message#WARNING",
-			value1 = "Recommendation:Please, publish small, incremental changes to avoid huge publishing processes that can take a long time to execute.");
+			value1 = "Recommendation:Publish small incremental changes to avoid large publishing processes that can take a long time to execute.");
 
 		Staging.configurePublishToLive(
 			contentDateRange = "Date Range",
@@ -691,7 +689,6 @@ definition {
 	@description = "This is a use case for LPS-82839 and LPS-190360 TC-4. Web contents can be published on remote staging."
 	@priority = 3
 	test StagingRemoteLiveWebContentViaPortletCP {
-		property custom.properties = "auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}feature.flag.LPS-190129=true${line.separator}tunneling.servlet.shared.secret=1234567890123456";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -716,7 +713,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "Message#WARNING",
-			value1 = "Recommendation:Please, publish small, incremental changes to avoid huge publishing processes that can take a long time to execute.");
+			value1 = "Recommendation:Publish small incremental changes to avoid large publishing processes that can take a long time to execute.");
 
 		ClickNoError(locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON");
 

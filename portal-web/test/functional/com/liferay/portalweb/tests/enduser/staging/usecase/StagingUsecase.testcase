@@ -1194,7 +1194,6 @@ definition {
 	@description = "This is a use case for LPS-190360. TC-3: User can publish WC to live directly from the portlet and can see Staging recommendation."
 	@priority = 4
 	test PublishPortlet {
-		property custom.properties = "feature.flag.LPS-190129=true";
 		property portal.acceptance = "true";
 		property testray.component.names = "Training";
 
@@ -1217,7 +1216,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "Message#WARNING",
-				value1 = "Recommendation:Please, publish small, incremental changes to avoid huge publishing processes that can take a long time to execute.");
+				value1 = "Recommendation:Publish small incremental changes to avoid large publishing processes that can take a long time to execute.");
 
 			ClickNoError(locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON");
 

@@ -20,6 +20,7 @@ import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -29,7 +30,10 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
 import java.io.Serializable;
 
+import java.text.DateFormat;
+
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -206,6 +210,23 @@ public class ObjectEntryVariablesUtil {
 					}
 
 					return MapUtil.getString(objectEntry, "userId");
+				}
+			).put(
+				"currentDate",
+				() -> {
+					ObjectField objectField =
+						ObjectFieldLocalServiceUtil.fetchObjectField(
+							objectDefinition.getObjectDefinitionId(),
+							"currentDate");
+
+					if (objectField != null) {
+						return null;
+					}
+
+					DateFormat dateFormat =
+						DateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd");
+
+					return dateFormat.format(new Date());
 				}
 			).put(
 				"currentUserId", userId

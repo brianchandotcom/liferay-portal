@@ -187,7 +187,11 @@ const View: React.FC<IViewProps> = ({
 						}}
 						onSubmit={({name}) =>
 							API.channels
-								.update({groupId, id, name})
+								.update({
+									groupId,
+									id,
+									name: encodeURIComponent(name)
+								})
 								.then(({name}) => setName(name))
 								.catch(() =>
 									addAlert({

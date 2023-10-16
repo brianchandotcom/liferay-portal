@@ -4,11 +4,8 @@
  */
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import {loadModule} from 'frontend-js-web';
 import React, {ReactElement, useContext, useEffect, useState} from 'react';
-
-// @ts-ignore
-
-import {getComponentByModuleURL} from '../../../utils/modules';
 
 // @ts-ignore
 
@@ -64,6 +61,24 @@ const FILTER_IMPLEMENTATIONS = {
 	selection: selectionFilterImplementation,
 };
 
+// @ts-ignore
+
+const getComponent = Liferay.Loader?.require ? loadModule : getFakeComponent;
+
+function getFakeComponent() {
+	return new Promise((resolve) => {
+		setTimeout(
+			() =>
+				resolve(() => (
+					<div className="custom-component">
+						fakely fetched component
+					</div>
+				)),
+			3000
+		);
+	});
+}
+
 const Filter = ({id, moduleURL, type, ...otherProps}: FilterComponentArgs) => {
 
 	// @ts-ignore
@@ -82,9 +97,7 @@ const Filter = ({id, moduleURL, type, ...otherProps}: FilterComponentArgs) => {
 
 	useEffect(() => {
 		if (moduleURL) {
-			getComponentByModuleURL(
-				moduleURL
-			).then((FetchedComponent: React.Component) =>
+			getComponent(moduleURL).then((FetchedComponent: React.Component) =>
 				setComponent(() => FetchedComponent)
 			);
 		}

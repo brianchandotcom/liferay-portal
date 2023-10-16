@@ -685,7 +685,7 @@ definition {
 
 		WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
 
-		Uncheck(
+		Uncheck.uncheckNotVisible(
 			checkboxName = "Cacheable",
 			locator1 = "Checkbox#ANY_CHECKBOX");
 

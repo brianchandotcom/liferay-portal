@@ -526,6 +526,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TREEVIEW_NODE_BUTTON</td>
+	<td>//ul[contains(@class,'treeview')]//button[text()='${key_nodeName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TREEVIEW_NODE_COLLAPSED_PAGES</td>
 	<td>//div[contains(normalize-space(text()), '${key_site}')]//..//..//div//button[contains(@class,'component-expander')][@aria-expanded='false']</td>
 	<td></td>

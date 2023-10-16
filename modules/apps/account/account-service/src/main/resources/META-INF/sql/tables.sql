@@ -16,7 +16,7 @@ create table AccountEntry (
 	domains STRING null,
 	emailAddress VARCHAR(254) null,
 	logoId LONG,
-	name VARCHAR(100) null,
+	name VARCHAR(250) null,
 	restrictMembership BOOLEAN,
 	taxExemptionCode VARCHAR(75) null,
 	taxIdNumber VARCHAR(75) null,

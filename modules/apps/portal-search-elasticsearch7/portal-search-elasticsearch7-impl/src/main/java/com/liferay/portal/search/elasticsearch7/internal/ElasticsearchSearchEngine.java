@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.search.ccr.CrossClusterReplicationHelper;
+import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationObserver;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch7.internal.index.IndexConfigurationDynamicUpdatesExecutor;
@@ -79,7 +80,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = "search.engine.impl=Elasticsearch", service = SearchEngine.class
 )
-public class ElasticsearchSearchEngine implements SearchEngine {
+public class ElasticsearchSearchEngine
+	implements ElasticsearchConfigurationObserver, SearchEngine {
 
 	@Override
 	public synchronized String backup(long companyId, String backupName)
@@ -113,6 +115,14 @@ public class ElasticsearchSearchEngine implements SearchEngine {
 	}
 
 	@Override
+	public int compareTo(
+		ElasticsearchConfigurationObserver elasticsearchConfigurationObserver) {
+
+		return _elasticsearchConfigurationWrapper.compare(
+			this, elasticsearchConfigurationObserver);
+	}
+
+	@Override
 	public IndexSearcher getIndexSearcher() {
 		return _indexSearcher;
 	}
@@ -120,6 +130,11 @@ public class ElasticsearchSearchEngine implements SearchEngine {
 	@Override
 	public IndexWriter getIndexWriter() {
 		return _indexWriter;
+	}
+
+	@Override
+	public int getPriority() {
+		return 4;
 	}
 
 	@Override
@@ -152,6 +167,11 @@ public class ElasticsearchSearchEngine implements SearchEngine {
 			crossClusterReplicationHelper.follow(
 				_indexNameBuilder.getIndexName(companyId));
 		}
+	}
+
+	@Override
+	public void onElasticsearchConfigurationUpdate() {
+		_putTimestampPipeline();
 	}
 
 	@Override
@@ -225,6 +245,8 @@ public class ElasticsearchSearchEngine implements SearchEngine {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
+		_elasticsearchConfigurationWrapper.register(this);
+
 		_checkNodeVersions();
 
 		if (StartupHelperUtil.isDBNew()) {

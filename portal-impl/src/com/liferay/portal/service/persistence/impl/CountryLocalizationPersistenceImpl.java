@@ -6,6 +6,7 @@
 package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.model.CountryLocalizationTable;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CountryLocalizationPersistence;
 import com.liferay.portal.kernel.service.persistence.CountryLocalizationUtil;
+import com.liferay.portal.kernel.service.persistence.change.tracking.helper.CTPersistenceHelperUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -36,6 +38,12 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -148,18 +156,21 @@ public class CountryLocalizationPersistenceImpl
 		OrderByComparator<CountryLocalization> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			CountryLocalization.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindByCountryId;
 				finderArgs = new Object[] {countryId};
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindByCountryId;
 			finderArgs = new Object[] {
 				countryId, start, end, orderByComparator
@@ -168,7 +179,7 @@ public class CountryLocalizationPersistenceImpl
 
 		List<CountryLocalization> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<CountryLocalization>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 
@@ -224,7 +235,7 @@ public class CountryLocalizationPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
@@ -534,12 +545,22 @@ public class CountryLocalizationPersistenceImpl
 	 */
 	@Override
 	public int countByCountryId(long countryId) {
-		FinderPath finderPath = _finderPathCountByCountryId;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			CountryLocalization.class);
 
-		Object[] finderArgs = new Object[] {countryId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByCountryId;
+
+			finderArgs = new Object[] {countryId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(2);
@@ -563,7 +584,9 @@ public class CountryLocalizationPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
 				throw processException(exception);
@@ -662,6 +685,9 @@ public class CountryLocalizationPersistenceImpl
 				_finderPathFetchByCountryId_LanguageId, finderArgs, this);
 		}
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			CountryLocalization.class);
+
 		if (result instanceof CountryLocalization) {
 			CountryLocalization countryLocalization =
 				(CountryLocalization)result;
@@ -672,6 +698,15 @@ public class CountryLocalizationPersistenceImpl
 
 				result = null;
 			}
+			else if (!CTPersistenceHelperUtil.isProductionMode(
+						CountryLocalization.class,
+						countryLocalization.getPrimaryKey())) {
+
+				result = null;
+			}
+		}
+		else if (!productionMode && (result instanceof List<?>)) {
+			result = null;
 		}
 
 		if (result == null) {
@@ -712,7 +747,7 @@ public class CountryLocalizationPersistenceImpl
 				List<CountryLocalization> list = query.list();
 
 				if (list.isEmpty()) {
-					if (useFinderCache) {
+					if (useFinderCache && productionMode) {
 						FinderCacheUtil.putResult(
 							_finderPathFetchByCountryId_LanguageId, finderArgs,
 							list);
@@ -771,12 +806,22 @@ public class CountryLocalizationPersistenceImpl
 	public int countByCountryId_LanguageId(long countryId, String languageId) {
 		languageId = Objects.toString(languageId, "");
 
-		FinderPath finderPath = _finderPathCountByCountryId_LanguageId;
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			CountryLocalization.class);
 
-		Object[] finderArgs = new Object[] {countryId, languageId};
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Long count = (Long)FinderCacheUtil.getResult(
-			finderPath, finderArgs, this);
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByCountryId_LanguageId;
+
+			finderArgs = new Object[] {countryId, languageId};
+
+			count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+		}
 
 		if (count == null) {
 			StringBundler sb = new StringBundler(3);
@@ -815,7 +860,9 @@ public class CountryLocalizationPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				}
 			}
 			catch (Exception exception) {
 				throw processException(exception);
@@ -856,6 +903,10 @@ public class CountryLocalizationPersistenceImpl
 	 */
 	@Override
 	public void cacheResult(CountryLocalization countryLocalization) {
+		if (countryLocalization.getCtCollectionId() != 0) {
+			return;
+		}
+
 		EntityCacheUtil.putResult(
 			CountryLocalizationImpl.class, countryLocalization.getPrimaryKey(),
 			countryLocalization);
@@ -887,6 +938,10 @@ public class CountryLocalizationPersistenceImpl
 		}
 
 		for (CountryLocalization countryLocalization : countryLocalizations) {
+			if (countryLocalization.getCtCollectionId() != 0) {
+				continue;
+			}
+
 			if (EntityCacheUtil.getResult(
 					CountryLocalizationImpl.class,
 					countryLocalization.getPrimaryKey()) == null) {
@@ -1045,7 +1100,9 @@ public class CountryLocalizationPersistenceImpl
 					countryLocalization.getPrimaryKeyObj());
 			}
 
-			if (countryLocalization != null) {
+			if ((countryLocalization != null) &&
+				CTPersistenceHelperUtil.isRemove(countryLocalization)) {
+
 				session.delete(countryLocalization);
 			}
 		}
@@ -1094,7 +1151,13 @@ public class CountryLocalizationPersistenceImpl
 		try {
 			session = openSession();
 
-			if (isNew) {
+			if (CTPersistenceHelperUtil.isInsert(countryLocalization)) {
+				if (!isNew) {
+					session.evict(
+						CountryLocalizationImpl.class,
+						countryLocalization.getPrimaryKeyObj());
+				}
+
 				session.save(countryLocalization);
 			}
 			else {
@@ -1107,6 +1170,16 @@ public class CountryLocalizationPersistenceImpl
 		}
 		finally {
 			closeSession(session);
+		}
+
+		if (countryLocalization.getCtCollectionId() != 0) {
+			if (isNew) {
+				countryLocalization.setNew(false);
+			}
+
+			countryLocalization.resetOriginalValues();
+
+			return countryLocalization;
 		}
 
 		EntityCacheUtil.putResult(
@@ -1166,12 +1239,148 @@ public class CountryLocalizationPersistenceImpl
 	/**
 	 * Returns the country localization with the primary key or returns <code>null</code> if it could not be found.
 	 *
+	 * @param primaryKey the primary key of the country localization
+	 * @return the country localization, or <code>null</code> if a country localization with the primary key could not be found
+	 */
+	@Override
+	public CountryLocalization fetchByPrimaryKey(Serializable primaryKey) {
+		if (CTPersistenceHelperUtil.isProductionMode(
+				CountryLocalization.class, primaryKey)) {
+
+			return super.fetchByPrimaryKey(primaryKey);
+		}
+
+		CountryLocalization countryLocalization = null;
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			countryLocalization = (CountryLocalization)session.get(
+				CountryLocalizationImpl.class, primaryKey);
+
+			if (countryLocalization != null) {
+				cacheResult(countryLocalization);
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return countryLocalization;
+	}
+
+	/**
+	 * Returns the country localization with the primary key or returns <code>null</code> if it could not be found.
+	 *
 	 * @param countryLocalizationId the primary key of the country localization
 	 * @return the country localization, or <code>null</code> if a country localization with the primary key could not be found
 	 */
 	@Override
 	public CountryLocalization fetchByPrimaryKey(long countryLocalizationId) {
 		return fetchByPrimaryKey((Serializable)countryLocalizationId);
+	}
+
+	@Override
+	public Map<Serializable, CountryLocalization> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+
+		if (CTPersistenceHelperUtil.isProductionMode(
+				CountryLocalization.class)) {
+
+			return super.fetchByPrimaryKeys(primaryKeys);
+		}
+
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, CountryLocalization> map =
+			new HashMap<Serializable, CountryLocalization>();
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable primaryKey = iterator.next();
+
+			CountryLocalization countryLocalization = fetchByPrimaryKey(
+				primaryKey);
+
+			if (countryLocalization != null) {
+				map.put(primaryKey, countryLocalization);
+			}
+
+			return map;
+		}
+
+		if ((databaseInMaxParameters > 0) &&
+			(primaryKeys.size() > databaseInMaxParameters)) {
+
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			while (iterator.hasNext()) {
+				Set<Serializable> page = new HashSet<>();
+
+				for (int i = 0;
+					 (i < databaseInMaxParameters) && iterator.hasNext(); i++) {
+
+					page.add(iterator.next());
+				}
+
+				map.putAll(fetchByPrimaryKeys(page));
+			}
+
+			return map;
+		}
+
+		StringBundler sb = new StringBundler((primaryKeys.size() * 2) + 1);
+
+		sb.append(getSelectSQL());
+		sb.append(" WHERE ");
+		sb.append(getPKDBName());
+		sb.append(" IN (");
+
+		for (Serializable primaryKey : primaryKeys) {
+			sb.append((long)primaryKey);
+
+			sb.append(",");
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(")");
+
+		String sql = sb.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query query = session.createQuery(sql);
+
+			for (CountryLocalization countryLocalization :
+					(List<CountryLocalization>)query.list()) {
+
+				map.put(
+					countryLocalization.getPrimaryKeyObj(),
+					countryLocalization);
+
+				cacheResult(countryLocalization);
+			}
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return map;
 	}
 
 	/**
@@ -1239,25 +1448,28 @@ public class CountryLocalizationPersistenceImpl
 		OrderByComparator<CountryLocalization> orderByComparator,
 		boolean useFinderCache) {
 
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			CountryLocalization.class);
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			if (useFinderCache) {
+			if (useFinderCache && productionMode) {
 				finderPath = _finderPathWithoutPaginationFindAll;
 				finderArgs = FINDER_ARGS_EMPTY;
 			}
 		}
-		else if (useFinderCache) {
+		else if (useFinderCache && productionMode) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
 		List<CountryLocalization> list = null;
 
-		if (useFinderCache) {
+		if (useFinderCache && productionMode) {
 			list = (List<CountryLocalization>)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
 		}
@@ -1295,7 +1507,7 @@ public class CountryLocalizationPersistenceImpl
 
 				cacheResult(list);
 
-				if (useFinderCache) {
+				if (useFinderCache && productionMode) {
 					FinderCacheUtil.putResult(finderPath, finderArgs, list);
 				}
 			}
@@ -1328,8 +1540,15 @@ public class CountryLocalizationPersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(
-			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			CountryLocalization.class);
+
+		Long count = null;
+
+		if (productionMode) {
+			count = (Long)FinderCacheUtil.getResult(
+				_finderPathCountAll, FINDER_ARGS_EMPTY, this);
+		}
 
 		if (count == null) {
 			Session session = null;
@@ -1342,8 +1561,10 @@ public class CountryLocalizationPersistenceImpl
 
 				count = (Long)query.uniqueResult();
 
-				FinderCacheUtil.putResult(
-					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				if (productionMode) {
+					FinderCacheUtil.putResult(
+						_finderPathCountAll, FINDER_ARGS_EMPTY, count);
+				}
 			}
 			catch (Exception exception) {
 				throw processException(exception);
@@ -1372,8 +1593,63 @@ public class CountryLocalizationPersistenceImpl
 	}
 
 	@Override
-	protected Map<String, Integer> getTableColumnsMap() {
+	public Set<String> getCTColumnNames(
+		CTColumnResolutionType ctColumnResolutionType) {
+
+		return _ctColumnNamesMap.getOrDefault(
+			ctColumnResolutionType, Collections.emptySet());
+	}
+
+	@Override
+	public List<String> getMappingTableNames() {
+		return _mappingTableNames;
+	}
+
+	@Override
+	public Map<String, Integer> getTableColumnsMap() {
 		return CountryLocalizationModelImpl.TABLE_COLUMNS_MAP;
+	}
+
+	@Override
+	public String getTableName() {
+		return "CountryLocalization";
+	}
+
+	@Override
+	public List<String[]> getUniqueIndexColumnNames() {
+		return _uniqueIndexColumnNames;
+	}
+
+	private static final Map<CTColumnResolutionType, Set<String>>
+		_ctColumnNamesMap = new EnumMap<CTColumnResolutionType, Set<String>>(
+			CTColumnResolutionType.class);
+	private static final List<String> _mappingTableNames =
+		new ArrayList<String>();
+	private static final List<String[]> _uniqueIndexColumnNames =
+		new ArrayList<String[]>();
+
+	static {
+		Set<String> ctControlColumnNames = new HashSet<String>();
+		Set<String> ctMergeColumnNames = new HashSet<String>();
+		Set<String> ctStrictColumnNames = new HashSet<String>();
+
+		ctControlColumnNames.add("mvccVersion");
+		ctControlColumnNames.add("ctCollectionId");
+		ctStrictColumnNames.add("companyId");
+		ctStrictColumnNames.add("countryId");
+		ctStrictColumnNames.add("languageId");
+		ctMergeColumnNames.add("title");
+
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.CONTROL, ctControlColumnNames);
+		_ctColumnNamesMap.put(CTColumnResolutionType.MERGE, ctMergeColumnNames);
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.PK,
+			Collections.singleton("countryLocalizationId"));
+		_ctColumnNamesMap.put(
+			CTColumnResolutionType.STRICT, ctStrictColumnNames);
+
+		_uniqueIndexColumnNames.add(new String[] {"countryId", "languageId"});
 	}
 
 	/**

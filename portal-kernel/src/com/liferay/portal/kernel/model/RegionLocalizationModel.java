@@ -6,6 +6,7 @@
 package com.liferay.portal.kernel.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -22,7 +23,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface RegionLocalizationModel
-	extends BaseModel<RegionLocalization>, MVCCModel, ShardedModel {
+	extends BaseModel<RegionLocalization>, CTModel<RegionLocalization>,
+			MVCCModel, ShardedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -35,6 +37,7 @@ public interface RegionLocalizationModel
 	 *
 	 * @return the primary key of this region localization
 	 */
+	@Override
 	public long getPrimaryKey();
 
 	/**
@@ -42,6 +45,7 @@ public interface RegionLocalizationModel
 	 *
 	 * @param primaryKey the primary key of this region localization
 	 */
+	@Override
 	public void setPrimaryKey(long primaryKey);
 
 	/**
@@ -59,6 +63,22 @@ public interface RegionLocalizationModel
 	 */
 	@Override
 	public void setMvccVersion(long mvccVersion);
+
+	/**
+	 * Returns the ct collection ID of this region localization.
+	 *
+	 * @return the ct collection ID of this region localization
+	 */
+	@Override
+	public long getCtCollectionId();
+
+	/**
+	 * Sets the ct collection ID of this region localization.
+	 *
+	 * @param ctCollectionId the ct collection ID of this region localization
+	 */
+	@Override
+	public void setCtCollectionId(long ctCollectionId);
 
 	/**
 	 * Returns the region localization ID of this region localization.

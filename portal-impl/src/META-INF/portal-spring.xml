@@ -119,6 +119,7 @@
 	<bean class="com.liferay.portal.service.impl.CountryServiceImpl" id="com.liferay.portal.kernel.service.CountryService" />
 	<bean class="com.liferay.portal.service.persistence.impl.CountryModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.CountryModelArgumentsResolver" />
 	<bean class="com.liferay.portal.service.persistence.impl.CountryPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.CountryPersistence" />
+	<bean class="com.liferay.portal.service.impl.CountryLocalizationCTServiceImpl" id="com.liferay.portal.kernel.service.CountryLocalizationCTService" />
 	<bean class="com.liferay.portal.service.persistence.impl.CountryLocalizationModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.CountryLocalizationModelArgumentsResolver" />
 	<bean class="com.liferay.portal.service.persistence.impl.CountryLocalizationPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.CountryLocalizationPersistence" />
 	<bean class="com.liferay.portal.service.impl.EmailAddressLocalServiceImpl" id="com.liferay.portal.kernel.service.EmailAddressLocalService" />
@@ -240,6 +241,7 @@
 	<bean class="com.liferay.portal.service.impl.RegionServiceImpl" id="com.liferay.portal.kernel.service.RegionService" />
 	<bean class="com.liferay.portal.service.persistence.impl.RegionModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.RegionModelArgumentsResolver" />
 	<bean class="com.liferay.portal.service.persistence.impl.RegionPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.RegionPersistence" />
+	<bean class="com.liferay.portal.service.impl.RegionLocalizationCTServiceImpl" id="com.liferay.portal.kernel.service.RegionLocalizationCTService" />
 	<bean class="com.liferay.portal.service.persistence.impl.RegionLocalizationModelArgumentsResolver" id="com.liferay.portal.service.persistence.impl.RegionLocalizationModelArgumentsResolver" />
 	<bean class="com.liferay.portal.service.persistence.impl.RegionLocalizationPersistenceImpl" id="com.liferay.portal.kernel.service.persistence.RegionLocalizationPersistence" />
 	<bean class="com.liferay.portal.service.impl.ReleaseLocalServiceImpl" id="com.liferay.portal.kernel.service.ReleaseLocalService" />

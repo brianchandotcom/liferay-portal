@@ -289,11 +289,13 @@ create table Country (
 
 create table CountryLocalization (
 	mvccVersion LONG default 0 not null,
-	countryLocalizationId LONG not null primary key,
+	ctCollectionId LONG default 0 not null,
+	countryLocalizationId LONG not null,
 	companyId LONG,
 	countryId LONG,
 	languageId VARCHAR(75) null,
-	title VARCHAR(75) null
+	title VARCHAR(75) null,
+	primary key (countryLocalizationId, ctCollectionId)
 );
 
 create table DLFileEntry (
@@ -1115,11 +1117,13 @@ create table Region (
 
 create table RegionLocalization (
 	mvccVersion LONG default 0 not null,
-	regionLocalizationId LONG not null primary key,
+	ctCollectionId LONG default 0 not null,
+	regionLocalizationId LONG not null,
 	companyId LONG,
 	regionId LONG,
 	languageId VARCHAR(75) null,
-	title VARCHAR(75) null
+	title VARCHAR(75) null,
+	primary key (regionLocalizationId, ctCollectionId)
 );
 
 create table Release_ (

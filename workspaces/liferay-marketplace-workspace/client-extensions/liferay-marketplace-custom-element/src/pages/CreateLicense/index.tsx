@@ -36,7 +36,7 @@ const CreateLicense = () => {
 
 	return (
 		<div className="d-flex justify-content-center mb-7">
-			<div className="d-flex flex-column justify-content-center mkt-create-license mt-7 p-6">
+			<div className="d-flex flex-column justify-content-center mkt-create-license-content mt-7 p-6">
 				<div className="align-self-center h1">
 					Generate License Key(s)
 				</div>

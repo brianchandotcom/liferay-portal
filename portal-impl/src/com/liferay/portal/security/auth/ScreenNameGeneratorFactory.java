@@ -5,8 +5,8 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.security.auth.ScreenNameGenerator;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Brian Wing Shun Chan
@@ -16,15 +16,15 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 public class ScreenNameGeneratorFactory {
 
 	public static ScreenNameGenerator getInstance() {
-		return _screenNameGenerator;
+		return _screenNameGeneratorSnapshot.get();
 	}
 
 	private ScreenNameGeneratorFactory() {
 	}
 
-	private static volatile ScreenNameGenerator _screenNameGenerator =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			ScreenNameGenerator.class, ScreenNameGeneratorFactory.class,
-			"_screenNameGenerator", false, true);
+	private static final Snapshot<ScreenNameGenerator>
+		_screenNameGeneratorSnapshot = new Snapshot<>(
+			ScreenNameGeneratorFactory.class, ScreenNameGenerator.class, null,
+			true);
 
 }

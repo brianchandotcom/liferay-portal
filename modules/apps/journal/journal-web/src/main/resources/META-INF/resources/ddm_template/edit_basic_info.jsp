@@ -30,7 +30,7 @@ DDMStructure ddmStructure = journalEditDDMTemplateDisplayContext.getDDMStructure
 
 	<div class="input-group">
 		<div class="input-group-item">
-			<input placeholder="<%= LanguageUtil.format(locale, "select-x", "structure") %>" id="<%= liferayPortletResponse.getNamespace() %>ddmStructure" name="structure" readonly value="<%= (ddmStructure != null) ? ddmStructure.getName(locale) : StringPool.BLANK %>" class="form-control lfr-input-resource" />
+			<input placeholder="<%= LanguageUtil.format(locale, "no-x-selected", "structure") %>" id="<%= liferayPortletResponse.getNamespace() %>ddmStructure" name="structure" readonly value="<%= (ddmStructure != null) ? ddmStructure.getName(locale) : StringPool.BLANK %>" class="form-control lfr-input-resource" />
 		</div>
 
 		<c:if test="<%= (ddmTemplate == null) || (ddmTemplate.getClassPK() == 0) %>">
@@ -97,10 +97,6 @@ DDMStructure ddmStructure = journalEditDDMTemplateDisplayContext.getDDMStructure
 			'<portlet:namespace />selectDDMStructure'
 		);
 
-		const ddmStructure = document.getElementById(
-			'<portlet:namespace />ddmStructure'
-		);
-
 		const onClick = (event) => {
 			Liferay.Util.openSelectionModal({
 				onSelect: function (selectedItem) {
@@ -127,10 +123,6 @@ DDMStructure ddmStructure = journalEditDDMTemplateDisplayContext.getDDMStructure
 
 		if (selectDDMStructure) {
 			selectDDMStructure.addEventListener('click', onClick);
-		}
-
-		if (ddmStructure) {
-			ddmStructure.addEventListener('click', onClick);
 		}
 	</aui:script>
 </c:if>

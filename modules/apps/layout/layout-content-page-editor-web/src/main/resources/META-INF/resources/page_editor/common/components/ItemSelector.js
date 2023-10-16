@@ -207,18 +207,12 @@ export default function ItemSelector({
 							'page-editor__item-selector__content-input': showEditControls,
 						})}
 						id={itemSelectorInputId}
-						onClick={() => {
-							if (showEditControls) {
-								openModal();
-							}
-						}}
 						placeholder={sub(
-							Liferay.Language.get('select-x'),
+							Liferay.Language.get('no-x-selected'),
 							label
 						)}
 						readOnly
 						sizing="sm"
-						title={selectedItemTitle}
 						type="text"
 						value={selectedItemTitle}
 					/>

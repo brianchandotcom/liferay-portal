@@ -78,9 +78,8 @@ export default function AssetDisplayPageSelector({
 					<ClayInput.GroupItem>
 						<ClayInput
 							disabled={disabled}
-							onClick={() => openAssetDisplayPageSelector()}
 							placeholder={sub(
-								Liferay.Language.get('select-x'),
+								Liferay.Language.get('no-x-selected'),
 								Liferay.Language.get('display-page')
 							)}
 							readOnly

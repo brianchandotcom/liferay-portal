@@ -102,6 +102,8 @@ public class CommerceOrderEngineTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_originalCompanyId = CompanyThreadLocal.getCompanyId();
+
 		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
 
 		_group = GroupTestUtil.addGroup();
@@ -152,6 +154,8 @@ public class CommerceOrderEngineTest {
 	@After
 	public void tearDown() throws PortalException {
 		_commerceOrderLocalService.deleteCommerceOrder(_commerceOrder);
+
+		CompanyThreadLocal.setCompanyId(_originalCompanyId);
 	}
 
 	@Test
@@ -1114,6 +1118,7 @@ public class CommerceOrderEngineTest {
 	private CommerceShipmentLocalService _commerceShipmentLocalService;
 
 	private Group _group;
+	private long _originalCompanyId;
 
 	@Inject
 	private ServiceComponentRuntime _serviceComponentRuntime;

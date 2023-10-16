@@ -120,6 +120,8 @@ public class CommerceOrderTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_originalCompanyId = CompanyThreadLocal.getCompanyId();
+
 		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
 
 		_group = GroupTestUtil.addGroup();
@@ -170,6 +172,8 @@ public class CommerceOrderTest {
 			componentDescriptionDTO);
 
 		voidPromise.getValue();
+
+		CompanyThreadLocal.setCompanyId(_originalCompanyId);
 	}
 
 	@Test
@@ -1162,6 +1166,7 @@ public class CommerceOrderTest {
 	@Inject
 	private OrganizationLocalService _organizationLocalService;
 
+	private long _originalCompanyId;
 	private Region _region;
 
 	@Inject

@@ -142,7 +142,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -2781,67 +2780,19 @@ public class ObjectEntryLocalServiceTest {
 	private void _testAddOrUpdateObjectEntryRootObjectEntryId()
 		throws Exception {
 
-		Tree tree = TreeTestUtil.createObjectDefinitionTree(
+		Tree objectDefinitionTree = TreeTestUtil.createObjectDefinitionTree(
 			_objectDefinitionLocalService, _objectRelationshipLocalService,
 			_treeFactory);
 
-		Iterator<Node> iterator = tree.iterator();
-
-		Node rootNode = iterator.next();
+		Node rootNode = objectDefinitionTree.getRootNode();
 
 		_objectDefinitionLocalService.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(), rootNode.getPrimaryKey());
 
-		ObjectEntry rootObjectEntry1 = _objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), 0, rootNode.getPrimaryKey(),
-			Collections.emptyMap(), ServiceContextTestUtil.getServiceContext());
-
-		Map<Long, Long> objectEntryIds = HashMapBuilder.put(
-			rootNode.getPrimaryKey(), rootObjectEntry1.getObjectEntryId()
-		).build();
-
-		while (iterator.hasNext()) {
-			Node node = iterator.next();
-
-			ObjectEntry nodeObjectEntry =
-				_objectEntryLocalService.addObjectEntry(
-					TestPropsValues.getUserId(), 0, node.getPrimaryKey(),
-					HashMapBuilder.<String, Serializable>put(
-						() -> {
-							ObjectRelationship objectRelationship =
-								_objectRelationshipLocalService.
-									getObjectRelationship(
-										node.getEdge(
-										).getObjectRelationshipId());
-
-							ObjectField objectField =
-								_objectFieldLocalService.getObjectField(
-									objectRelationship.getObjectFieldId2());
-
-							return objectField.getName();
-						},
-						objectEntryIds.get(
-							node.getParentNode(
-							).getPrimaryKey())
-					).build(),
-					ServiceContextTestUtil.getServiceContext());
-
-			objectEntryIds.put(
-				node.getPrimaryKey(), nodeObjectEntry.getObjectEntryId());
-		}
-
-		TreeTestUtil.forEachNodeObjectDefinition(
-			tree.iterator(), _objectDefinitionLocalService,
-			objectDefinition -> {
-				ObjectEntry objectEntry =
-					_objectEntryLocalService.getObjectEntry(
-						objectEntryIds.get(
-							objectDefinition.getObjectDefinitionId()));
-
-				Assert.assertEquals(
-					rootObjectEntry1.getObjectEntryId(),
-					objectEntry.getRootObjectEntryId());
-			});
+		Tree objectEntryTree = TreeTestUtil.createObjectEntryTree(
+			_objectEntryLocalService, _objectFieldLocalService,
+			rootNode.getPrimaryKey(), _objectRelationshipLocalService,
+			_treeFactory, 1);
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(

@@ -38,7 +38,7 @@ public class TreeFactoryTest {
 
 	@Test
 	public void testCreate() throws PortalException, PortletException {
-		TreeTestUtil.assertTree(
+		TreeTestUtil.assertObjectDefinitionTree(
 			LinkedHashMapBuilder.put(
 				"A", new String[] {"AA", "AB"}
 			).put(

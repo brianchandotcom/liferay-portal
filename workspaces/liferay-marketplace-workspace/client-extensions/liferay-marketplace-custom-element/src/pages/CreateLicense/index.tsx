@@ -8,6 +8,7 @@ import {useState} from 'react';
 
 import './index.scss';
 import StepWizard from '../GetAppPage/components/StepWizard/StepWizard';
+import LicenseDetails from './LicenseDetails';
 
 export enum StepCreateLicense {
 	LICENSE_KEY_DETAILS = 'licenseKeyDetails',
@@ -17,7 +18,7 @@ export enum StepCreateLicense {
 const CreateLicense = () => {
 	const [step, setStep] = useState<string>(StepCreateLicense.SUBSCRIPTION);
 
-	const StepsInformation = {
+	const StepsInformation: any = {
 		[StepCreateLicense.SUBSCRIPTION]: {
 			backStep: StepCreateLicense.SUBSCRIPTION,
 			component: <div>Subscription</div>,
@@ -27,7 +28,9 @@ const CreateLicense = () => {
 		},
 		[StepCreateLicense.LICENSE_KEY_DETAILS]: {
 			backStep: StepCreateLicense.SUBSCRIPTION,
-			component: <div>License</div>,
+			component: (
+				<LicenseDetails expDate="01" keyType="02" startDate="03" />
+			),
 			nextStep: StepCreateLicense.SUBSCRIPTION,
 			stepTitle: 'License Key Details',
 			title: 'License Key Details',
@@ -54,7 +57,9 @@ const CreateLicense = () => {
 					/>
 				</div>
 
-				<div className="d-flex justify-content-between">
+				<div>{StepsInformation[step].component}</div>
+
+				<div className="d-flex justify-content-between mt-6">
 					<ClayButton displayType="unstyled">Cancel</ClayButton>
 					{step === StepCreateLicense.SUBSCRIPTION ? (
 						<ClayButton
@@ -66,9 +71,21 @@ const CreateLicense = () => {
 							Continue
 						</ClayButton>
 					) : (
-						<ClayButton displayType="primary">
-							Generate Key
-						</ClayButton>
+						<div className="d-flex justify-content-end">
+							<ClayButton
+								className="mr-6"
+								displayType="secondary"
+								onClick={() =>
+									setStep(StepCreateLicense.SUBSCRIPTION)
+								}
+							>
+								Back
+							</ClayButton>
+
+							<ClayButton displayType="primary">
+								Generate Key
+							</ClayButton>
+						</div>
 					)}
 				</div>
 			</div>

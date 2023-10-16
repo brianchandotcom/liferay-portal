@@ -40,6 +40,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -51,10 +52,9 @@ public class ProcessSummaryDisplayContext {
 	public String getAssetTitle(
 		Map<String, ?> taskContextMap, Portlet portlet) {
 
-		if (portlet.getPortletId(
-			).equals(
-				_PORTLET_ID_JOURNAL_PORTLET
-			) && FeatureFlagManagerUtil.isEnabled("LPS-165481")) {
+		if (Objects.equals(
+				portlet.getPortletId(), _PORTLET_ID_JOURNAL_PORTLET) &&
+			FeatureFlagManagerUtil.isEnabled("LPS-165481")) {
 
 			Map<String, LongWrapper> modelAdditionCounters =
 				(Map<String, LongWrapper>)taskContextMap.get(

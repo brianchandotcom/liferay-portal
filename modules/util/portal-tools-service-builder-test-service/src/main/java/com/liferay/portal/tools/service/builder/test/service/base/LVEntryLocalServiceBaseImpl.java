@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.version.VersionService;
 import com.liferay.portal.kernel.service.version.VersionServiceListener;
@@ -876,19 +875,12 @@ public abstract class LVEntryLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.portal.tools.service.builder.test.model.LVEntry",
-			lvEntryLocalService);
-
 		registerListener(new LVEntryLocalizationVersionServiceListener());
 
 		LVEntryLocalServiceUtil.setService(lvEntryLocalService);
 	}
 
 	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portal.tools.service.builder.test.model.LVEntry");
-
 		LVEntryLocalServiceUtil.setService(null);
 	}
 
@@ -1310,10 +1302,6 @@ public abstract class LVEntryLocalServiceBaseImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LVEntryLocalServiceBaseImpl.class);
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 	private class LVEntryLocalizationVersionServiceListener
 		implements VersionServiceListener<LVEntry, LVEntryVersion> {

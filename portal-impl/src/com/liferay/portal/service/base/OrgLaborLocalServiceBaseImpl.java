@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.OrgLaborLocalService;
 import com.liferay.portal.kernel.service.OrgLaborLocalServiceUtil;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.OrgLaborPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -429,16 +428,10 @@ public abstract class OrgLaborLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.portal.kernel.model.OrgLabor", orgLaborLocalService);
-
 		OrgLaborLocalServiceUtil.setService(orgLaborLocalService);
 	}
 
 	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portal.kernel.model.OrgLabor");
-
 		OrgLaborLocalServiceUtil.setService(null);
 	}
 
@@ -498,9 +491,5 @@ public abstract class OrgLaborLocalServiceBaseImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OrgLaborLocalServiceBaseImpl.class);
-
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

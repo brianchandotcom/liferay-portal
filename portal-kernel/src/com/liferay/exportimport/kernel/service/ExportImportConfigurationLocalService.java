@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -46,6 +47,11 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ExportImportConfigurationLocalServiceUtil
  * @generated
  */
+@OSGiBeanProperties(
+	property = {
+		"model.class.name=com.liferay.exportimport.kernel.model.ExportImportConfiguration"
+	}
+)
 @ProviderType
 @Transactional(
 	isolation = Isolation.PORTAL,

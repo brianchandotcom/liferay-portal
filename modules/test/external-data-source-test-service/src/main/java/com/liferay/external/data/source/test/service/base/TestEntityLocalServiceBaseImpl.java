@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -431,17 +430,10 @@ public abstract class TestEntityLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.external.data.source.test.model.TestEntity",
-			testEntityLocalService);
-
 		TestEntityLocalServiceUtil.setService(testEntityLocalService);
 	}
 
 	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.external.data.source.test.model.TestEntity");
-
 		TestEntityLocalServiceUtil.setService(null);
 	}
 
@@ -501,9 +493,5 @@ public abstract class TestEntityLocalServiceBaseImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		TestEntityLocalServiceBaseImpl.class);
-
-	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

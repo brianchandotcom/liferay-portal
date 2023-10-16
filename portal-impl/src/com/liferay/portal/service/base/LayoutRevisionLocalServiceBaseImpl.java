@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalServiceUtil;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.LayoutRevisionPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -439,17 +438,10 @@ public abstract class LayoutRevisionLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.portal.kernel.model.LayoutRevision",
-			layoutRevisionLocalService);
-
 		LayoutRevisionLocalServiceUtil.setService(layoutRevisionLocalService);
 	}
 
 	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portal.kernel.model.LayoutRevision");
-
 		LayoutRevisionLocalServiceUtil.setService(null);
 	}
 
@@ -509,9 +501,5 @@ public abstract class LayoutRevisionLocalServiceBaseImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutRevisionLocalServiceBaseImpl.class);
-
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

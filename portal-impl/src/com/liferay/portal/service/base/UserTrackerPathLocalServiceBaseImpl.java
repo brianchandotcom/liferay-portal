@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.UserTrackerPathLocalService;
 import com.liferay.portal.kernel.service.UserTrackerPathLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
@@ -440,17 +439,10 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.portal.kernel.model.UserTrackerPath",
-			userTrackerPathLocalService);
-
 		UserTrackerPathLocalServiceUtil.setService(userTrackerPathLocalService);
 	}
 
 	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portal.kernel.model.UserTrackerPath");
-
 		UserTrackerPathLocalServiceUtil.setService(null);
 	}
 
@@ -510,9 +502,5 @@ public abstract class UserTrackerPathLocalServiceBaseImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserTrackerPathLocalServiceBaseImpl.class);
-
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

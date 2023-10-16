@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.WebDAVPropsLocalService;
 import com.liferay.portal.kernel.service.WebDAVPropsLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
@@ -435,17 +434,10 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.portal.kernel.model.WebDAVProps",
-			webDAVPropsLocalService);
-
 		WebDAVPropsLocalServiceUtil.setService(webDAVPropsLocalService);
 	}
 
 	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portal.kernel.model.WebDAVProps");
-
 		WebDAVPropsLocalServiceUtil.setService(null);
 	}
 
@@ -505,9 +497,5 @@ public abstract class WebDAVPropsLocalServiceBaseImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WebDAVPropsLocalServiceBaseImpl.class);
-
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -437,17 +436,10 @@ public abstract class ExpandoColumnLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.expando.kernel.model.ExpandoColumn",
-			expandoColumnLocalService);
-
 		ExpandoColumnLocalServiceUtil.setService(expandoColumnLocalService);
 	}
 
 	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.expando.kernel.model.ExpandoColumn");
-
 		ExpandoColumnLocalServiceUtil.setService(null);
 	}
 
@@ -522,9 +514,5 @@ public abstract class ExpandoColumnLocalServiceBaseImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExpandoColumnLocalServiceBaseImpl.class);
-
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

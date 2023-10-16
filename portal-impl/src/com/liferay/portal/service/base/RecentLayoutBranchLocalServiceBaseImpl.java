@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.RecentLayoutBranchLocalService;
 import com.liferay.portal.kernel.service.RecentLayoutBranchLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
@@ -454,18 +453,11 @@ public abstract class RecentLayoutBranchLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.portal.kernel.model.RecentLayoutBranch",
-			recentLayoutBranchLocalService);
-
 		RecentLayoutBranchLocalServiceUtil.setService(
 			recentLayoutBranchLocalService);
 	}
 
 	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portal.kernel.model.RecentLayoutBranch");
-
 		RecentLayoutBranchLocalServiceUtil.setService(null);
 	}
 
@@ -526,9 +518,5 @@ public abstract class RecentLayoutBranchLocalServiceBaseImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		RecentLayoutBranchLocalServiceBaseImpl.class);
-
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

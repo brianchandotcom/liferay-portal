@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -454,18 +453,11 @@ public abstract class SocialActivityLimitLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.social.kernel.model.SocialActivityLimit",
-			socialActivityLimitLocalService);
-
 		SocialActivityLimitLocalServiceUtil.setService(
 			socialActivityLimitLocalService);
 	}
 
 	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.social.kernel.model.SocialActivityLimit");
-
 		SocialActivityLimitLocalServiceUtil.setService(null);
 	}
 
@@ -541,9 +533,5 @@ public abstract class SocialActivityLimitLocalServiceBaseImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SocialActivityLimitLocalServiceBaseImpl.class);
-
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

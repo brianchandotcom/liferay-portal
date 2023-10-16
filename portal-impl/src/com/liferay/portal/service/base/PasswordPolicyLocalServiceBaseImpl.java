@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PasswordPolicyLocalService;
 import com.liferay.portal.kernel.service.PasswordPolicyLocalServiceUtil;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.PasswordPolicyFinder;
 import com.liferay.portal.kernel.service.persistence.PasswordPolicyPersistence;
@@ -564,17 +563,10 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.portal.kernel.model.PasswordPolicy",
-			passwordPolicyLocalService);
-
 		PasswordPolicyLocalServiceUtil.setService(passwordPolicyLocalService);
 	}
 
 	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portal.kernel.model.PasswordPolicy");
-
 		PasswordPolicyLocalServiceUtil.setService(null);
 	}
 
@@ -637,9 +629,5 @@ public abstract class PasswordPolicyLocalServiceBaseImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PasswordPolicyLocalServiceBaseImpl.class);
-
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

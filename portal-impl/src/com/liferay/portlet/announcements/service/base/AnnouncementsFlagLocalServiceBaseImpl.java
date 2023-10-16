@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -445,18 +444,11 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.announcements.kernel.model.AnnouncementsFlag",
-			announcementsFlagLocalService);
-
 		AnnouncementsFlagLocalServiceUtil.setService(
 			announcementsFlagLocalService);
 	}
 
 	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.announcements.kernel.model.AnnouncementsFlag");
-
 		AnnouncementsFlagLocalServiceUtil.setService(null);
 	}
 
@@ -532,9 +524,5 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnnouncementsFlagLocalServiceBaseImpl.class);
-
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

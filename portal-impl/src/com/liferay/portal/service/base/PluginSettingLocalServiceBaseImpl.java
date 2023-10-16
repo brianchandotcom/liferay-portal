@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.PluginSettingLocalService;
 import com.liferay.portal.kernel.service.PluginSettingLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
@@ -436,17 +435,10 @@ public abstract class PluginSettingLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.portal.kernel.model.PluginSetting",
-			pluginSettingLocalService);
-
 		PluginSettingLocalServiceUtil.setService(pluginSettingLocalService);
 	}
 
 	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portal.kernel.model.PluginSetting");
-
 		PluginSettingLocalServiceUtil.setService(null);
 	}
 
@@ -506,9 +498,5 @@ public abstract class PluginSettingLocalServiceBaseImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PluginSettingLocalServiceBaseImpl.class);
-
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

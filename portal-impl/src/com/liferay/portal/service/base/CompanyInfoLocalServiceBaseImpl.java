@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.CompanyInfoLocalService;
 import com.liferay.portal.kernel.service.CompanyInfoLocalServiceUtil;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.CompanyInfoPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -435,17 +434,10 @@ public abstract class CompanyInfoLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.portal.kernel.model.CompanyInfo",
-			companyInfoLocalService);
-
 		CompanyInfoLocalServiceUtil.setService(companyInfoLocalService);
 	}
 
 	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portal.kernel.model.CompanyInfo");
-
 		CompanyInfoLocalServiceUtil.setService(null);
 	}
 
@@ -505,9 +497,5 @@ public abstract class CompanyInfoLocalServiceBaseImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CompanyInfoLocalServiceBaseImpl.class);
-
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

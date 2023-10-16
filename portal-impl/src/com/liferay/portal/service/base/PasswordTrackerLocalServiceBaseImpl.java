@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PasswordTrackerLocalService;
 import com.liferay.portal.kernel.service.PasswordTrackerLocalServiceUtil;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.PasswordTrackerPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -440,17 +439,10 @@ public abstract class PasswordTrackerLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.portal.kernel.model.PasswordTracker",
-			passwordTrackerLocalService);
-
 		PasswordTrackerLocalServiceUtil.setService(passwordTrackerLocalService);
 	}
 
 	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portal.kernel.model.PasswordTracker");
-
 		PasswordTrackerLocalServiceUtil.setService(null);
 	}
 
@@ -510,9 +502,5 @@ public abstract class PasswordTrackerLocalServiceBaseImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PasswordTrackerLocalServiceBaseImpl.class);
-
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

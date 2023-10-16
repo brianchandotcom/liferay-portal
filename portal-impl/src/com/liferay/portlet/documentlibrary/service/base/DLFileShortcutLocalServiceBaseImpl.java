@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -643,17 +642,10 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.document.library.kernel.model.DLFileShortcut",
-			dlFileShortcutLocalService);
-
 		DLFileShortcutLocalServiceUtil.setService(dlFileShortcutLocalService);
 	}
 
 	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.document.library.kernel.model.DLFileShortcut");
-
 		DLFileShortcutLocalServiceUtil.setService(null);
 	}
 
@@ -728,9 +720,5 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileShortcutLocalServiceBaseImpl.class);
-
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

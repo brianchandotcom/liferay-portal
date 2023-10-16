@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
@@ -479,18 +478,11 @@ public abstract class PortletPreferencesLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.portal.kernel.model.PortletPreferences",
-			portletPreferencesLocalService);
-
 		PortletPreferencesLocalServiceUtil.setService(
 			portletPreferencesLocalService);
 	}
 
 	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portal.kernel.model.PortletPreferences");
-
 		PortletPreferencesLocalServiceUtil.setService(null);
 	}
 
@@ -569,9 +561,5 @@ public abstract class PortletPreferencesLocalServiceBaseImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletPreferencesLocalServiceBaseImpl.class);
-
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

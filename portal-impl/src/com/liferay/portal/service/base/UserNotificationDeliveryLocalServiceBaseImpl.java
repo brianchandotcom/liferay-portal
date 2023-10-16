@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.UserNotificationDeliveryLocalService;
 import com.liferay.portal.kernel.service.UserNotificationDeliveryLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
@@ -474,18 +473,11 @@ public abstract class UserNotificationDeliveryLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.portal.kernel.model.UserNotificationDelivery",
-			userNotificationDeliveryLocalService);
-
 		UserNotificationDeliveryLocalServiceUtil.setService(
 			userNotificationDeliveryLocalService);
 	}
 
 	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portal.kernel.model.UserNotificationDelivery");
-
 		UserNotificationDeliveryLocalServiceUtil.setService(null);
 	}
 
@@ -548,9 +540,5 @@ public abstract class UserNotificationDeliveryLocalServiceBaseImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserNotificationDeliveryLocalServiceBaseImpl.class);
-
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

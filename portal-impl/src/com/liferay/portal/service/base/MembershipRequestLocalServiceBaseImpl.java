@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.MembershipRequestLocalService;
 import com.liferay.portal.kernel.service.MembershipRequestLocalServiceUtil;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.MembershipRequestPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -446,18 +445,11 @@ public abstract class MembershipRequestLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.portal.kernel.model.MembershipRequest",
-			membershipRequestLocalService);
-
 		MembershipRequestLocalServiceUtil.setService(
 			membershipRequestLocalService);
 	}
 
 	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portal.kernel.model.MembershipRequest");
-
 		MembershipRequestLocalServiceUtil.setService(null);
 	}
 
@@ -518,9 +510,5 @@ public abstract class MembershipRequestLocalServiceBaseImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MembershipRequestLocalServiceBaseImpl.class);
-
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

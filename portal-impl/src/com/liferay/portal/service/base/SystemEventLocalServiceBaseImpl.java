@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.service.SystemEventLocalServiceUtil;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
@@ -437,17 +436,10 @@ public abstract class SystemEventLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.portal.kernel.model.SystemEvent",
-			systemEventLocalService);
-
 		SystemEventLocalServiceUtil.setService(systemEventLocalService);
 	}
 
 	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portal.kernel.model.SystemEvent");
-
 		SystemEventLocalServiceUtil.setService(null);
 	}
 
@@ -522,9 +514,5 @@ public abstract class SystemEventLocalServiceBaseImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SystemEventLocalServiceBaseImpl.class);
-
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.BrowserTrackerLocalService;
 import com.liferay.portal.kernel.service.BrowserTrackerLocalServiceUtil;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.BrowserTrackerPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -436,17 +435,10 @@ public abstract class BrowserTrackerLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.portal.kernel.model.BrowserTracker",
-			browserTrackerLocalService);
-
 		BrowserTrackerLocalServiceUtil.setService(browserTrackerLocalService);
 	}
 
 	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portal.kernel.model.BrowserTracker");
-
 		BrowserTrackerLocalServiceUtil.setService(null);
 	}
 
@@ -506,9 +498,5 @@ public abstract class BrowserTrackerLocalServiceBaseImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BrowserTrackerLocalServiceBaseImpl.class);
-
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

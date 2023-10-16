@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -458,17 +457,10 @@ public abstract class SocialActivityLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.social.kernel.model.SocialActivity",
-			socialActivityLocalService);
-
 		SocialActivityLocalServiceUtil.setService(socialActivityLocalService);
 	}
 
 	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.social.kernel.model.SocialActivity");
-
 		SocialActivityLocalServiceUtil.setService(null);
 	}
 
@@ -546,9 +538,5 @@ public abstract class SocialActivityLocalServiceBaseImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SocialActivityLocalServiceBaseImpl.class);
-
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

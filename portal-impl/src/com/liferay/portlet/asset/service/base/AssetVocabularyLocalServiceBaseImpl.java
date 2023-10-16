@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServic
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -597,17 +596,10 @@ public abstract class AssetVocabularyLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.asset.kernel.model.AssetVocabulary",
-			assetVocabularyLocalService);
-
 		AssetVocabularyLocalServiceUtil.setService(assetVocabularyLocalService);
 	}
 
 	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.asset.kernel.model.AssetVocabulary");
-
 		AssetVocabularyLocalServiceUtil.setService(null);
 	}
 
@@ -682,9 +674,5 @@ public abstract class AssetVocabularyLocalServiceBaseImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetVocabularyLocalServiceBaseImpl.class);
-
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

@@ -271,4 +271,66 @@ definition {
 		}
 	}
 
+	@description = "LPS-165215 | Verify that after inviting a member, as Publisher, if the member is still listed as invited, the member can be reinvited to marketplace account"
+	@priority = 4
+	test CanReinviteListedUser {
+		task ("Given that the admin user invites a new user to the Publisher Dashboard") {
+			MP2Navigator.openSitePage(pageName = "Publisher Dashboard");
+
+			MP2Navigator.gotoNavItem(navItem = "Members");
+
+			MP2Dashboards.inviteNewMember(
+				button = "true",
+				checkboxName = "App Editor",
+				emailAddress = "test.mp@liferay.com",
+				firstName = "Test",
+				lastName = "QA");
+		}
+
+		task ("And the user receives the invitation email") {
+			User.logoutPG();
+
+			MockMock._gotoMail();
+
+			MockMock._viewMailFromInbox(
+				asset = "Liferay Marketplace - Invitation from Dashboard",
+				recipient = "test.mp@liferay.com",
+				sender = "da@administrator.com");
+		}
+
+		task ("And delete the invitation email without accepting it") {
+			MockMock.deleteMail(deleteAll = "true");
+
+			MockMock.viewNoMail();
+		}
+
+		task ("And the user remains in the member list as a invited") {
+			User.loginUserPG(
+				password = "test",
+				userEmailAddress = "da@administrator.com");
+
+			MP2Navigator.openSitePage(pageName = "Publisher Dashboard");
+
+			MP2Navigator.gotoNavItem(navItem = "Members");
+
+			MP2Dashboards.clickOnTheInvitedUser(
+				label = "Role",
+				value = "Invited Member");
+		}
+
+		task ("When I click the 'Resend Invitation' button") {
+			MP2Dashboards.clickOnTheResendInvitationButton();
+		}
+
+		task ("Then I should be able to assert that the invitation can be resended") {
+			User.logoutPG();
+
+			MockMock._gotoMail();
+			
+			MockMock._viewMailFromInbox(
+				asset = "Liferay Marketplace - Invitation from Dashboard",
+				recipient = "test.mp@liferay.com",
+				sender = "da@administrator.com");
+		}
+	}
 }

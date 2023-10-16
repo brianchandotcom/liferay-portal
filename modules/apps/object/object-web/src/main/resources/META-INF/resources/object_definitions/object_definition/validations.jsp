@@ -37,22 +37,11 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 			).put(
 				"objectDefinitionExternalReferenceCode", objectDefinition.getExternalReferenceCode()
 			).put(
+				"objectValidationRuleEngines", objectDefinitionsValidationsDisplayContext.getObjectValidationRuleEngines()
+			).put(
 				"style", "fluid"
 			).put(
 				"url", objectDefinitionsValidationsDisplayContext.getEditObjectValidationURL()
-			).build()
-		%>'
-	/>
-</div>
-
-<div id="<portlet:namespace />AddObjectValidation">
-	<react:component
-		module="js/components/ObjectValidation/AddObjectValidation"
-		props='<%=
-			HashMapBuilder.<String, Object>put(
-				"apiURL", objectDefinitionsValidationsDisplayContext.getAPIURL()
-			).put(
-				"objectValidationRuleEngines", objectDefinitionsValidationsDisplayContext.getObjectValidationRuleEngines()
 			).build()
 		%>'
 	/>

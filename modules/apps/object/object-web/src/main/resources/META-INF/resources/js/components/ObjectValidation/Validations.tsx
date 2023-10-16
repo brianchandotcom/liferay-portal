@@ -3,17 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {
-	FrontendDataSet,
-
-	// @ts-ignore
-
-} from '@liferay/frontend-data-set-web';
+import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 
 // @ts-ignore
 
 import moment from 'moment/min/moment-with-locales';
-import React from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import {
 	IFDSTableProps,
@@ -22,6 +17,7 @@ import {
 	formatActionURL,
 } from '../../utils/fds';
 import FDSSourceDataRenderer from '../FDSPropsTransformer/FDSSourceDataRenderer';
+import {ModalAddObjectValidation} from './ModalAddObjectValidation';
 
 interface ItemData {
 	active: boolean;
@@ -36,15 +32,32 @@ function ObjectFieldActiveDataRenderer({itemData}: {itemData: ItemData}) {
 
 const language = Liferay.ThemeDisplay.getBCP47LanguageId();
 
+interface ValidationsProps extends IFDSTableProps {
+	objectValidationRuleEngines: LabelKeyObject[];
+}
+
 export default function Validations({
 	apiURL,
 	creationMenu,
 	formName,
 	id,
 	items,
+	objectValidationRuleEngines,
 	style,
 	url,
-}: IFDSTableProps) {
+}: ValidationsProps) {
+	const [
+		showAddObjectRelationshipModal,
+		setShowAddObjectRelationshipModal,
+	] = useState(false);
+
+	const objectValidationRuleEnginesItems = useMemo(() => {
+		return objectValidationRuleEngines.map(({key, label}) => ({
+			label,
+			value: key,
+		})) as LabelValueObject[];
+	}, [objectValidationRuleEngines]);
+
 	function ObjectFieldLabelDataRenderer({
 		itemData,
 		openSidePanel,
@@ -144,5 +157,31 @@ export default function Validations({
 		],
 	};
 
-	return <FrontendDataSet {...dataSetProps} />;
+	useEffect(() => {
+		Liferay.on('addObjectValidation', () =>
+			setShowAddObjectRelationshipModal(true)
+		);
+
+		return () => Liferay.detach('addObjectValidation');
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	return (
+		<>
+			<FrontendDataSet {...dataSetProps} />
+
+			{showAddObjectRelationshipModal && (
+				<ModalAddObjectValidation
+					apiURL={apiURL as string}
+					objectValidationRuleEngines={
+						objectValidationRuleEnginesItems
+					}
+					setShowAddObjectRelationshipModal={
+						setShowAddObjectRelationshipModal
+					}
+				/>
+			)}
+		</>
+	);
 }

@@ -6,12 +6,17 @@
 /// <reference types="react" />
 
 import {IFDSTableProps} from '../../utils/fds';
+interface ValidationsProps extends IFDSTableProps {
+	objectValidationRuleEngines: LabelKeyObject[];
+}
 export default function Validations({
 	apiURL,
 	creationMenu,
 	formName,
 	id,
 	items,
+	objectValidationRuleEngines,
 	style,
 	url,
-}: IFDSTableProps): JSX.Element;
+}: ValidationsProps): JSX.Element;
+export {};

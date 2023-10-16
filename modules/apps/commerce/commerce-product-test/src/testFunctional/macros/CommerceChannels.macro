@@ -333,11 +333,18 @@ definition {
 			CommerceEntry.gotoMenuTab(menuTab = "Private Pages");
 		}
 
-		CommerceNavigator.searchEntry(entryName = ${pageName});
+		if (IsElementNotPresent(key_nodeName = ${pageName}, locator1 = "Treeview#NODE_ITEM")) {
+			CommerceNavigator.searchEntry(entryName = ${pageName});
 
-		Click.mouseDownMouseUp(
-			key_nodeName = ${pageName},
-			locator1 = "Treeview#NODE_ITEM");
+			Click.mouseDownMouseUp(
+				key_nodeName = ${pageName},
+				locator1 = "CommerceEntry#TREEVIEW_NODE_BUTTON");
+		}
+		else {
+			Click.mouseDownMouseUp(
+				key_nodeName = ${pageName},
+				locator1 = "Treeview#NODE_ITEM");
+		}
 
 		SelectFrame.selectFrameTop();
 
@@ -375,11 +382,16 @@ definition {
 
 		if (IsElementNotPresent(key_nodeName = ${pageName}, locator1 = "Treeview#NODE_ITEM")) {
 			CommerceNavigator.searchEntry(entryName = ${pageName});
-		}
 
-		Click.mouseDownMouseUp(
-			key_nodeName = ${pageName},
-			locator1 = "Treeview#NODE_ITEM");
+			Click.mouseDownMouseUp(
+				key_nodeName = ${pageName},
+				locator1 = "CommerceEntry#TREEVIEW_NODE_BUTTON");
+		}
+		else {
+			Click.mouseDownMouseUp(
+				key_nodeName = ${pageName},
+				locator1 = "Treeview#NODE_ITEM");
+		}
 
 		SelectFrame.selectFrameTop();
 

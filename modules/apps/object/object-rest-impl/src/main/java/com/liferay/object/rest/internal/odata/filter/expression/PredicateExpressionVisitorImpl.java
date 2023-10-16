@@ -630,11 +630,18 @@ public class PredicateExpressionVisitorImpl
 		EntityField.Type entityType = entityField.getType();
 
 		if (entityType.equals(EntityField.Type.DATE_TIME) &&
-			(DBManagerUtil.getDBType() == DBType.HYPERSONIC)) {
+			(Objects.equals(DBManagerUtil.getDBType(), DBType.HYPERSONIC) ||
+			 Objects.equals(DBManagerUtil.getDBType(), DBType.ORACLE))) {
+
+			String pattern = "dd-MMM-yyyy HH:mm:ss.SSS";
+
+			if (Objects.equals(DBManagerUtil.getDBType(), DBType.ORACLE)) {
+				pattern = "dd-MMM-yyyy hh:mm:ss.SSS a";
+			}
 
 			try {
 				Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
-					"dd-MMM-yyyy HH:mm:ss.SSS");
+					pattern);
 
 				DateFormat dateFormat =
 					DateFormatFactoryUtil.getSimpleDateFormat(

@@ -2835,12 +2835,11 @@ public class DefaultObjectEntryManagerImplTest
 			_addAccountRestrictedObjectEntryHierarchy(accountEntry1);
 
 		_addResourcePermission(
-			_rootObjectDefinition, ActionKeys.VIEW, _accountAdministratorRole);
+			_rootObjectDefinition, ActionKeys.VIEW, _buyerRole);
 
 		_user = _addUser();
 
-		_assignAccountEntryRole(
-			accountEntry1, _accountAdministratorRole, _user);
+		_assignAccountEntryRole(accountEntry1, _buyerRole, _user);
 
 		ObjectEntry rootObjectEntry = objectEntries.get(
 			_rootObjectDefinition.getObjectDefinitionId());
@@ -2864,8 +2863,7 @@ public class DefaultObjectEntryManagerImplTest
 			});
 
 		_addResourcePermission(
-			_rootObjectDefinition, ActionKeys.UPDATE,
-			_accountAdministratorRole);
+			_rootObjectDefinition, ActionKeys.UPDATE, _buyerRole);
 
 		TreeTestUtil.forEachNodeObjectDefinition(
 			_tree.iterator(), objectDefinitionLocalService,

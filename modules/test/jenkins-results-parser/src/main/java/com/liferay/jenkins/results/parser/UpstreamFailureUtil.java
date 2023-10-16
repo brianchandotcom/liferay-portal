@@ -39,7 +39,9 @@ public class UpstreamFailureUtil {
 		TopLevelBuildReport topLevelBuildReport =
 			getUpstreamTopLevelBuildReport(topLevelBuild);
 
-		if (topLevelBuildReport == null) {
+		if ((topLevelBuildReport == null) ||
+			(topLevelBuildReport.getDownstreamBuildReports() == null)) {
+
 			return upstreamFailures;
 		}
 
@@ -147,10 +149,14 @@ public class UpstreamFailureUtil {
 			TopLevelBuildReport topLevelBuildReport =
 				testrayBuild.getTopLevelBuildReport();
 
+			if (topLevelBuildReport == null) {
+				continue;
+			}
+
 			List<DownstreamBuildReport> downstreamBuildReports =
 				topLevelBuildReport.getDownstreamBuildReports();
 
-			if ((topLevelBuildReport == null) ||
+			if ((downstreamBuildReports == null) ||
 				downstreamBuildReports.isEmpty()) {
 
 				continue;

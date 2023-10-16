@@ -22,7 +22,7 @@ dependencies {
 	api group: "com.liferay", name: "com.liferay.petra.http.invoker", version: "1.0.1"
 	api group: "com.liferay", name: "com.liferay.petra.lang", version: "5.1.2"
 	api group: "com.liferay", name: "com.liferay.petra.string", version: "5.2.0"
-	api group: "org.json", name: "json", version: "20230618"
+	api group: "org.json", name: "json", version: "20231013"
 	api group: "org.rauschig", name: "jarchivelib", version: "0.7.1"
 }
 

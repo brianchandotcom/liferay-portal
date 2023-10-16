@@ -222,31 +222,36 @@ public class DisplayPageActionDropdownItemsProvider {
 		_getCopyDisplayPageWithPermissionsActionUnsafeConsumer() {
 
 		return dropdownContextItem -> {
-			dropdownContextItem.setDropdownItems(
-				DropdownItemListBuilder.add(
-					dropdownItem -> {
-						dropdownItem.putData("action", "copyDisplayPage");
-						dropdownItem.putData(
-							"copyDisplayPageURL", _getCopyURL(false));
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest, "display-page"));
-					}
-				).add(
-					dropdownItem -> {
-						dropdownItem.putData("action", "copyDisplayPage");
-						dropdownItem.putData(
-							"copyDisplayPageURL", _getCopyURL(true));
-						dropdownItem.setLabel(
-							LanguageUtil.get(
-								_httpServletRequest,
-								"display-page-with-permissions"));
-					}
-				).build());
+			if (_layoutPageTemplateEntry.isDraft()) {
+				dropdownContextItem.setDisabled(true);
+			}
+			else {
+				dropdownContextItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						dropdownItem -> {
+							dropdownItem.putData("action", "copyDisplayPage");
+							dropdownItem.putData(
+								"copyDisplayPageURL", _getCopyURL(false));
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest, "display-page"));
+						}
+					).add(
+						dropdownItem -> {
+							dropdownItem.putData("action", "copyDisplayPage");
+							dropdownItem.putData(
+								"copyDisplayPageURL", _getCopyURL(true));
+							dropdownItem.setLabel(
+								LanguageUtil.get(
+									_httpServletRequest,
+									"display-page-with-permissions"));
+						}
+					).build());
+			}
+
 			dropdownContextItem.setIcon("copy");
 			dropdownContextItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "make-a-copy"));
-			dropdownContextItem.setDisabled(_layoutPageTemplateEntry.isDraft());
 		};
 	}
 

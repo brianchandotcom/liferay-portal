@@ -23,6 +23,12 @@ definition {
 			locator1 = "MP2Dashboards#DASHBOARD_TABLE");
 	}
 
+	macro clickOnTheResendInvitationButton {
+		Click(locator1 = "MP2Dashboards#RESEND_INVITATION");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro inviteNewMember {
 		MP2Dashboards.clickNewMemberButton(buttonName = "New Member");
 

@@ -11,11 +11,15 @@ package com.liferay.portal.kernel.spring.orm;
 public class LastSessionRecorderHelperUtil {
 
 	public static void syncLastSessionState() {
-		_lastSessionRecorderHelper.syncLastSessionState();
+		if (_lastSessionRecorderHelper != null) {
+			_lastSessionRecorderHelper.syncLastSessionState();
+		}
 	}
 
 	public static void syncLastSessionState(boolean portalSessionOnly) {
-		_lastSessionRecorderHelper.syncLastSessionState(portalSessionOnly);
+		if (_lastSessionRecorderHelper != null) {
+			_lastSessionRecorderHelper.syncLastSessionState(portalSessionOnly);
+		}
 	}
 
 	public void setLastSessionRecorderHelper(

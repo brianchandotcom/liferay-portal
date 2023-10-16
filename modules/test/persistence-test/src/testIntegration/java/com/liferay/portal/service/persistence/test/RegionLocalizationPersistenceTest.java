@@ -113,6 +113,8 @@ public class RegionLocalizationPersistenceTest {
 
 		newRegionLocalization.setMvccVersion(RandomTestUtil.nextLong());
 
+		newRegionLocalization.setCtCollectionId(RandomTestUtil.nextLong());
+
 		newRegionLocalization.setCompanyId(RandomTestUtil.nextLong());
 
 		newRegionLocalization.setRegionId(RandomTestUtil.nextLong());
@@ -130,6 +132,9 @@ public class RegionLocalizationPersistenceTest {
 		Assert.assertEquals(
 			existingRegionLocalization.getMvccVersion(),
 			newRegionLocalization.getMvccVersion());
+		Assert.assertEquals(
+			existingRegionLocalization.getCtCollectionId(),
+			newRegionLocalization.getCtCollectionId());
 		Assert.assertEquals(
 			existingRegionLocalization.getRegionLocalizationId(),
 			newRegionLocalization.getRegionLocalizationId());
@@ -189,9 +194,9 @@ public class RegionLocalizationPersistenceTest {
 
 	protected OrderByComparator<RegionLocalization> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"RegionLocalization", "mvccVersion", true, "regionLocalizationId",
-			true, "companyId", true, "regionId", true, "languageId", true,
-			"title", true);
+			"RegionLocalization", "mvccVersion", true, "ctCollectionId", true,
+			"regionLocalizationId", true, "companyId", true, "regionId", true,
+			"languageId", true, "title", true);
 	}
 
 	@Test
@@ -461,6 +466,8 @@ public class RegionLocalizationPersistenceTest {
 		RegionLocalization regionLocalization = _persistence.create(pk);
 
 		regionLocalization.setMvccVersion(RandomTestUtil.nextLong());
+
+		regionLocalization.setCtCollectionId(RandomTestUtil.nextLong());
 
 		regionLocalization.setCompanyId(RandomTestUtil.nextLong());
 

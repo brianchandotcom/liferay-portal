@@ -5,8 +5,8 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.security.auth.EmailAddressValidator;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Brian Wing Shun Chan
@@ -16,15 +16,15 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 public class EmailAddressValidatorFactory {
 
 	public static EmailAddressValidator getInstance() {
-		return _emailAddressValidator;
+		return _emailAddressValidatorSnapshot.get();
 	}
 
 	private EmailAddressValidatorFactory() {
 	}
 
-	private static volatile EmailAddressValidator _emailAddressValidator =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			EmailAddressValidator.class, EmailAddressValidatorFactory.class,
-			"_emailAddressValidator", false, true);
+	private static final Snapshot<EmailAddressValidator>
+		_emailAddressValidatorSnapshot = new Snapshot<>(
+			EmailAddressValidatorFactory.class, EmailAddressValidator.class,
+			null, true);
 
 }

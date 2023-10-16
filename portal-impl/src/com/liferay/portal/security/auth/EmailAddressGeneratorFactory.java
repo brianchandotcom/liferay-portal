@@ -5,8 +5,8 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.security.auth.EmailAddressGenerator;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Amos Fong
@@ -16,12 +16,12 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 public class EmailAddressGeneratorFactory {
 
 	public static EmailAddressGenerator getInstance() {
-		return _emailAddressGenerator;
+		return _emailAddressGeneratorSnapshot.get();
 	}
 
-	private static volatile EmailAddressGenerator _emailAddressGenerator =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			EmailAddressGenerator.class, EmailAddressGeneratorFactory.class,
-			"_emailAddressGenerator", false, true);
+	private static final Snapshot<EmailAddressGenerator>
+		_emailAddressGeneratorSnapshot = new Snapshot<>(
+			EmailAddressGeneratorFactory.class, EmailAddressGenerator.class,
+			null, true);
 
 }

@@ -54,7 +54,37 @@ export function ErrorMessage({
 				onChange={(value) => {
 					if (value === 'fullValidation') {
 						setValues({
-							objectValidationRuleSettings: [],
+							objectValidationRuleSettings:
+								values.engine === 'compositeKey'
+									? values.objectValidationRuleSettings?.filter(
+											(objectValidationRuleSetting) =>
+												objectValidationRuleSetting.name ===
+												'compositeKeyObjectFieldExternalReferenceCode'
+									  )
+									: [],
+							outputType: value as string,
+						});
+
+						return;
+					}
+					else if (
+						value === 'partialValidation' &&
+						values.engine === 'compositeKey'
+					) {
+						const outputObjectFieldExternalReferenceCode = values.objectValidationRuleSettings?.map(
+							(objectValidationRuleSetting) => {
+								return {
+									name:
+										'outputObjectFieldExternalReferenceCode',
+									value: objectValidationRuleSetting.value,
+								};
+							}
+						) as ObjectValidationRuleSetting[];
+
+						setValues({
+							objectValidationRuleSettings: values.objectValidationRuleSettings?.concat(
+								outputObjectFieldExternalReferenceCode
+							),
 							outputType: value as string,
 						});
 

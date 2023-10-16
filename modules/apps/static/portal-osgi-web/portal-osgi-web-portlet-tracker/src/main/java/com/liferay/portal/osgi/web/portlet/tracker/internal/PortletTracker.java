@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.servlet.InitialRequestSyncUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DelegateProxyFactory;
@@ -340,7 +341,7 @@ public class PortletTracker
 									_resourcePermissionLocalService),
 								null);
 
-					DependencyManagerSyncUtil.registerSyncCallable(
+					InitialRequestSyncUtil.registerSyncCallable(
 						() -> {
 							serviceRegistration.unregister();
 

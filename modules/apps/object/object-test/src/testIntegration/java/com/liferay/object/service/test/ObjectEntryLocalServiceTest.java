@@ -2800,7 +2800,7 @@ public class ObjectEntryLocalServiceTest {
 				Collections.emptyMap(),
 				ServiceContextTestUtil.getServiceContext());
 
-		Map<Long, Long> objectEntriesId = HashMapBuilder.put(
+		Map<Long, Long> objectEntryIds = HashMapBuilder.put(
 			rootNode.getPrimaryKey(), rootObjectEntry1.getObjectEntryId()
 		).build();
 
@@ -2824,13 +2824,13 @@ public class ObjectEntryLocalServiceTest {
 
 							return objectField.getName();
 						},
-						objectEntriesId.get(
+						objectEntryIds.get(
 							node.getParentNode(
 							).getPrimaryKey())
 					).build(),
 					ServiceContextTestUtil.getServiceContext());
 
-			objectEntriesId.put(
+			objectEntryIds.put(
 				node.getPrimaryKey(), nodeObjectEntry.getObjectEntryId());
 		}
 
@@ -2839,7 +2839,7 @@ public class ObjectEntryLocalServiceTest {
 			objectDefinition -> {
 				ObjectEntry objectEntry =
 					_objectEntryLocalService.getObjectEntry(
-						objectEntriesId.get(
+						objectEntryIds.get(
 							objectDefinition.getObjectDefinitionId()));
 
 				Assert.assertEquals(
@@ -2877,7 +2877,7 @@ public class ObjectEntryLocalServiceTest {
 				ServiceContextTestUtil.getServiceContext());
 
 		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-			objectEntriesId.get(objectDefinition.getObjectDefinitionId()));
+			objectEntryIds.get(objectDefinition.getObjectDefinitionId()));
 
 		Map<String, Serializable> values = objectEntry.getValues();
 
@@ -2889,7 +2889,7 @@ public class ObjectEntryLocalServiceTest {
 
 		List<String> objectDefinitionNames = ListUtil.fromArray("C_A", "C_AB");
 
-		for (Map.Entry<Long, Long> entry : objectEntriesId.entrySet()) {
+		for (Map.Entry<Long, Long> entry : objectEntryIds.entrySet()) {
 			Long objectDefinitionId = entry.getKey();
 			Long objectEntryId = entry.getValue();
 

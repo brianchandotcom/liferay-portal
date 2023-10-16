@@ -67,9 +67,9 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author     Raymond Augé
- * @author     Douglas Wong
- * @author     Alexander Chow
+ * @author Raymond Augé
+ * @author Douglas Wong
+ * @author Alexander Chow
  */
 @Component(service = VerifyProcess.class)
 public class DLServiceVerifyProcess extends VerifyProcess {

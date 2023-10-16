@@ -72,15 +72,14 @@ public class UniqueCompositeKeyObjectValidationRuleEngineImpl
 			"baseModel");
 		Map<String, Object> entryDTO = (Map<String, Object>)inputObjects.get(
 			"entryDTO");
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				objectValidationRule.getObjectDefinitionId());
 
 		long objectEntriesCount = 0;
 
 		try {
 			objectEntriesCount = _objectEntryLocalService.getObjectEntriesCount(
-				GetterUtil.getLong(baseModel.get("groupId")), objectDefinition,
+				GetterUtil.getLong(baseModel.get("groupId")),
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					objectValidationRule.getObjectDefinitionId()),
 				_getPredicate(
 					(Map<String, Object>)entryDTO.get("properties"),
 					objectValidationRule.getObjectDefinitionId(),

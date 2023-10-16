@@ -81,7 +81,7 @@ dependencies {
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.rest", version: "1.0.189"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.rest.builder", version: "1.0.98"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.service", version: "1.0.186"
-	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.service.builder", version: "1.0.188"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.service.builder", version: "1.0.189"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.service.wrapper", version: "1.0.184"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.simulation.panel.entry", version: "1.0.187"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.spring.mvc.portlet", version: "1.0.185"

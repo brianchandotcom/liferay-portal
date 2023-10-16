@@ -8,6 +8,7 @@ import {
 	Card,
 	Input,
 	RadioField,
+	SingleSelect,
 	Toggle,
 	filterArrayByQuery,
 	getLocalizableLabel,
@@ -16,7 +17,6 @@ import {InputLocalized} from 'frontend-js-components-web';
 import React, {useMemo, useState} from 'react';
 
 import {NAME_OUTPUT_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE} from '../../utils/constants';
-import {TriggerEventContainer} from './TriggerEventContainer';
 import {TabProps} from './useObjectValidationForm';
 
 export interface BasicInfoProps extends TabProps {
@@ -33,6 +33,13 @@ const outputValidationTypeArray = [
 	{
 		label: Liferay.Language.get('partial-validation-inline-field'),
 		value: 'partialValidation',
+	},
+];
+
+const TriggerEventOptions = [
+	{
+		label: Liferay.Language.get('on-submission'),
+		value: 'onSubmission',
 	},
 ];
 
@@ -107,10 +114,14 @@ export function BasicInfo({
 				)}
 			</Card>
 
-			<TriggerEventContainer
-				disabled={disabled}
-				eventTypes={[{label: Liferay.Language.get('on-submission')}]}
-			/>
+			<Card title={Liferay.Language.get('trigger-event')}>
+				<SingleSelect
+					defaultSelectedKey="onSubmission"
+					disabled={disabled}
+					items={TriggerEventOptions}
+					label={Liferay.Language.get('event')}
+				/>
+			</Card>
 
 			{values.engine?.startsWith('function#') && (
 				<Card title={Liferay.Language.get('error-message')}>

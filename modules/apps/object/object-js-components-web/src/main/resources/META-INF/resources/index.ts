@@ -25,7 +25,6 @@ export {CustomVerticalBar} from './components/VerticalBar/CustomVerticalBar';
 export {ListTypeEntryBaseField} from './components/BaseEntryFields/ListTypeEntryBaseField';
 export {RadioField} from './components/RadioField/RadioField';
 export {RichTextLocalized} from './components/RichTextLocalized';
-export {Select} from './components/Select';
 export {CustomItem} from './components/Select/BaseSelect';
 export {CheckboxItem} from './components/Select/CheckBoxItem';
 export {MultipleSelect} from './components/Select/MultipleSelect';

@@ -13,7 +13,7 @@ import {
 	FormError,
 	Input,
 	REQUIRED_MSG,
-	Select,
+	SingleSelect,
 	openToast,
 	useForm,
 } from '@liferay/object-js-components-web';
@@ -37,7 +37,7 @@ type TInitialValues = {
 	label: string;
 	name?: string;
 	pluralLabel: string;
-	storageType: LabelValueObject;
+	storageType: string;
 };
 
 export function ModalAddObjectDefinition({
@@ -73,7 +73,7 @@ export function ModalAddObjectDefinition({
 		label: '',
 		name: undefined,
 		pluralLabel: '',
-		storageType: objectDefinitionStorageTypesSortedByLabel[0],
+		storageType: 'default',
 	};
 
 	const onSubmit = async ({
@@ -102,7 +102,7 @@ export function ModalAddObjectDefinition({
 		}
 
 		if (Liferay.FeatureFlags['LPS-135430']) {
-			objectDefinition.storageType = storageType.value;
+			objectDefinition.storageType = storageType;
 		}
 		try {
 			const newObjectDefinition = (await API.postObjectDefinition(
@@ -150,18 +150,6 @@ export function ModalAddObjectDefinition({
 		validate,
 	});
 
-	const selectedObjectDefinitionStorageTypes = (
-		objectDefinitionStorageType: string
-	) => {
-		const selectedObjectDefinitionStorageType = objectDefinitionStorageTypesSortedByLabel.find(
-			(currentObjectDefinitionStorageType) =>
-				currentObjectDefinitionStorageType.value ===
-				objectDefinitionStorageType
-		);
-
-		return selectedObjectDefinitionStorageType?.value;
-	};
-
 	return (
 		<ClayModalProvider>
 			<ClayModal center observer={observer}>
@@ -207,33 +195,20 @@ export function ModalAddObjectDefinition({
 
 						{Liferay.FeatureFlags['LPS-135430'] && (
 							<div className="lfr__object-web-modal-add-object-definition-storage-type">
-								<Select
+								<SingleSelect<LabelValueObject>
+									items={
+										objectDefinitionStorageTypesSortedByLabel
+									}
 									label={Liferay.Language.get('storage-type')}
-									name="storageType"
-									onChange={({target: {value}}) => {
+									onSelectionChange={(value) => {
 										setValues({
 											...values,
-											storageType: objectDefinitionStorageTypesSortedByLabel.find(
-												(storageType) =>
-													storageType.value === value
-											),
+											storageType: value as string,
 										});
 									}}
-									options={objectDefinitionStorageTypesSortedByLabel.map(
-										(objectDefinitionStorageType) => {
-											return {
-												key:
-													objectDefinitionStorageType.value,
-												label:
-													objectDefinitionStorageType.label,
-											};
-										}
-									)}
+									selectedKey={values.storageType}
 									tooltip={Liferay.Language.get(
 										'object-definition-storage-type-tooltip'
-									)}
-									value={selectedObjectDefinitionStorageTypes(
-										values.storageType.value
 									)}
 								/>
 

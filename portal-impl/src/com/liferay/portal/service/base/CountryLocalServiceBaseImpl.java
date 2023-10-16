@@ -547,6 +547,8 @@ public abstract class CountryLocalServiceBaseImpl
 				countryLocalizationPersistence.remove(countryLocalization);
 			}
 			else {
+				countryLocalization.setCtCollectionId(
+					country.getCtCollectionId());
 				countryLocalization.setCompanyId(country.getCompanyId());
 
 				countryLocalization.setTitle(localizedValues[0]);
@@ -570,6 +572,7 @@ public abstract class CountryLocalServiceBaseImpl
 			CountryLocalization countryLocalization =
 				countryLocalizationPersistence.create(++batchCounter);
 
+			countryLocalization.setCtCollectionId(country.getCtCollectionId());
 			countryLocalization.setCountryId(country.getCountryId());
 			countryLocalization.setCompanyId(country.getCompanyId());
 
@@ -600,6 +603,7 @@ public abstract class CountryLocalServiceBaseImpl
 			countryLocalization.setLanguageId(languageId);
 		}
 
+		countryLocalization.setCtCollectionId(country.getCtCollectionId());
 		countryLocalization.setCompanyId(country.getCompanyId());
 
 		countryLocalization.setTitle(title);

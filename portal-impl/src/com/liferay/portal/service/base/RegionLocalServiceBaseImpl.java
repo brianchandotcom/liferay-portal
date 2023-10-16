@@ -544,6 +544,8 @@ public abstract class RegionLocalServiceBaseImpl
 				regionLocalizationPersistence.remove(regionLocalization);
 			}
 			else {
+				regionLocalization.setCtCollectionId(
+					region.getCtCollectionId());
 				regionLocalization.setCompanyId(region.getCompanyId());
 
 				regionLocalization.setTitle(localizedValues[0]);
@@ -567,6 +569,7 @@ public abstract class RegionLocalServiceBaseImpl
 			RegionLocalization regionLocalization =
 				regionLocalizationPersistence.create(++batchCounter);
 
+			regionLocalization.setCtCollectionId(region.getCtCollectionId());
 			regionLocalization.setRegionId(region.getRegionId());
 			regionLocalization.setCompanyId(region.getCompanyId());
 
@@ -597,6 +600,7 @@ public abstract class RegionLocalServiceBaseImpl
 			regionLocalization.setLanguageId(languageId);
 		}
 
+		regionLocalization.setCtCollectionId(region.getCtCollectionId());
 		regionLocalization.setCompanyId(region.getCompanyId());
 
 		regionLocalization.setTitle(title);

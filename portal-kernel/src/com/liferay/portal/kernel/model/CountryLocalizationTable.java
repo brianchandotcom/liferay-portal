@@ -26,6 +26,9 @@ public class CountryLocalizationTable
 	public final Column<CountryLocalizationTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<CountryLocalizationTable, Long> ctCollectionId =
+		createColumn(
+			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<CountryLocalizationTable, Long> countryLocalizationId =
 		createColumn(
 			"countryLocalizationId", Long.class, Types.BIGINT,

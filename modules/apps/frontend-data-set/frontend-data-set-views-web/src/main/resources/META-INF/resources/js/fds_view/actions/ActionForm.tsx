@@ -461,8 +461,8 @@ const ActionForm = ({
 									}}
 									placeholder={Liferay.Language.get(
 										actionData.type === ACTION_TYPE.MODAL
-											? 'action-modal-title-placeholder'
-											: 'action-side-panel-title-placeholder'
+											? 'add-here-the-title-of-the-modal'
+											: 'add-here-the-title-of-the-side-panel'
 									)}
 									required
 									translations={titleTranslations}

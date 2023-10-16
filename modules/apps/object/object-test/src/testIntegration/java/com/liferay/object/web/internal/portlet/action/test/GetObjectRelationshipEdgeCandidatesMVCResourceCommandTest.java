@@ -61,7 +61,7 @@ public class GetObjectRelationshipEdgeCandidatesMVCResourceCommandTest {
 
 		// Object definition, hierarchical structure, maximum height
 
-		Tree tree = TreeTestUtil.createTree(
+		Tree tree = TreeTestUtil.createObjectDefinitionTree(
 			_objectDefinitionLocalService, _objectRelationshipLocalService,
 			_treeFactory);
 

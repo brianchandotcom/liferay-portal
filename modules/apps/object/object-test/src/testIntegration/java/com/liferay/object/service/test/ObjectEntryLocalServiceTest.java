@@ -2783,7 +2783,7 @@ public class ObjectEntryLocalServiceTest {
 	private void _testAddOrUpdateObjectEntryRootObjectEntryId()
 		throws Exception {
 
-		Tree tree = TreeTestUtil.createTree(
+		Tree tree = TreeTestUtil.createObjectDefinitionTree(
 			_objectDefinitionLocalService, _objectRelationshipLocalService,
 			_treeFactory);
 

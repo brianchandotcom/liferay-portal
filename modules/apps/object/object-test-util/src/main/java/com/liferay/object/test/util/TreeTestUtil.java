@@ -65,7 +65,7 @@ public class TreeTestUtil {
 				ObjectRelationship::getObjectRelationshipId));
 	}
 
-	public static Tree createTree(
+	public static Tree createObjectDefinitionTree(
 			ObjectDefinitionLocalService objectDefinitionLocalService,
 			ObjectRelationshipLocalService objectRelationshipLocalService,
 			TreeFactory treeFactory)

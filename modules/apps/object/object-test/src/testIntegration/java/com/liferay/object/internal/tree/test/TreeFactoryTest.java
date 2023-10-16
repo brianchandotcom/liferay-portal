@@ -50,7 +50,7 @@ public class TreeFactoryTest {
 			).put(
 				"AAB", new String[0]
 			).build(),
-			TreeTestUtil.createTree(
+			TreeTestUtil.createObjectDefinitionTree(
 				_objectDefinitionLocalService, _objectRelationshipLocalService,
 				_treeFactory),
 			_objectDefinitionLocalService);

@@ -499,7 +499,7 @@ public class DefaultObjectEntryManagerImplTest
 						"Id")),
 				null, null, null, null));
 
-		_tree = TreeTestUtil.createTree(
+		_tree = TreeTestUtil.createObjectDefinitionTree(
 			objectDefinitionLocalService, _objectRelationshipLocalService,
 			_treeFactory);
 

@@ -295,7 +295,7 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertFalse(
 			_hasTable(objectDefinition.getExtensionDBTableName()));
 
-		Tree tree = TreeTestUtil.createTree(
+		Tree tree = TreeTestUtil.createObjectDefinitionTree(
 			_objectDefinitionLocalService, _objectRelationshipLocalService,
 			_treeFactory);
 
@@ -1639,7 +1639,7 @@ public class ObjectDefinitionLocalServiceTest {
 			).put(
 				"AAB", new String[0]
 			).build(),
-			TreeTestUtil.createTree(
+			TreeTestUtil.createObjectDefinitionTree(
 				_objectDefinitionLocalService, _objectRelationshipLocalService,
 				_treeFactory),
 			_objectDefinitionLocalService);

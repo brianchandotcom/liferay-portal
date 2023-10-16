@@ -26,13 +26,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SVG_DROPDOWN</td>
-	<td>//*[contains(@class, 'dashboard-navigation-header')]/following-sibling::div</td>
+	<td>HEADER</td>
+	<td>//*[contains(@class, 'header-container')]//*[contains(text(), '${key_header}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SVG_DROPDOWN_LIST</td>
-	<td>//*[contains(@class, 'dropdown-item') and contains(text(), '${key_accountTitle}')]</td>
+	<td>INVITED_MEMBER</td>
+	<td>//span[text()='${key_name}']/following::span[text()='Invited']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESEND_INVITATION</td>
+	<td>//button[contains(@class, 'resend-invitation')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -41,13 +46,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>HEADER</td>
-	<td>//*[contains(@class, 'header-container')]//*[contains(text(), '${key_header}')]</td>
+	<td>SVG_DROPDOWN</td>
+	<td>//*[contains(@class, 'dashboard-navigation-header')]/following-sibling::div</td>
 	<td></td>
 </tr>
 <tr>
-	<td>INVITED_MEMBER</td>
-	<td>//span[text()='${key_name}']/following::span[text()='Invited']</td>
+	<td>SVG_DROPDOWN_LIST</td>
+	<td>//*[contains(@class, 'dropdown-item') and contains(text(), '${key_accountTitle}')]</td>
 	<td></td>
 </tr>
 

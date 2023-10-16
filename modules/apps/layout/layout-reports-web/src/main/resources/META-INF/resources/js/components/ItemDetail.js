@@ -112,7 +112,10 @@ function IssueDetail({issue}) {
 				<Html>{tips}</Html>
 			</DetailPanel>
 
-			<DetailPanel badge={badge} title={Liferay.Language.get('tips')}>
+			<DetailPanel
+				badge={badge}
+				title={Liferay.Language.get('failing-elements')}
+			>
 				<List
 					ItemComponent={FailingElement}
 					items={normalizeFailingElements(failingElements, key)}

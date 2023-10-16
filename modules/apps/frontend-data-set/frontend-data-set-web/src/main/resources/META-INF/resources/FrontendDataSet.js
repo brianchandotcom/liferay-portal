@@ -236,7 +236,7 @@ const FrontendDataSet = ({
 	useEffect(() => {
 		loadClientExtensions([
 			{
-				imports: initialFilters
+				cxDefinitions: initialFilters
 					?.filter((filter) => filter.cxFilterURL)
 					.map((filter) => ({
 						context: filter,
@@ -260,9 +260,9 @@ const FrontendDataSet = ({
 				},
 			},
 			{
-				imports: views.reduce((imports, view) => {
+				cxDefinitions: views.reduce((cxDefinitions, view) => {
 					if (!view.schema?.fields?.length) {
-						return imports;
+						return cxDefinitions;
 					}
 
 					const cxFields = view.schema.fields.filter(
@@ -270,13 +270,13 @@ const FrontendDataSet = ({
 					);
 
 					for (const field of cxFields) {
-						imports.push({
+						cxDefinitions.push({
 							context: field,
 							importDeclaration: field.contentRendererModuleURL,
 						});
 					}
 
-					return imports;
+					return cxDefinitions;
 				}, []),
 				onLoad: (bindingContexts) => {
 					bindingContexts.forEach(
@@ -939,13 +939,13 @@ FrontendDataSet.defaultProps = {
 	style: 'default',
 };
 
-function loadClientExtensions(importsHandlers) {
-	for (const {imports, onLoad} of importsHandlers) {
-		if (!imports.length) {
+function loadClientExtensions(cxDefinitionsHandlers) {
+	for (const {cxDefinitions, onLoad} of cxDefinitionsHandlers) {
+		if (!cxDefinitions.length) {
 			continue;
 		}
 
-		const promises = imports.map(({context, importDeclaration}) => {
+		const promises = cxDefinitions.map(({context, importDeclaration}) => {
 			return loadModule(importDeclaration).then((binding) => ({
 				binding,
 				context,

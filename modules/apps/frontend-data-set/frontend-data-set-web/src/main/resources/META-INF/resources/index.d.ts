@@ -183,5 +183,8 @@ export interface IFrontendDataSetProps {
 	viewsTitle?: string;
 }
 
-export {IClientExtensionRenderer, IInternalRenderer} from './FrontendDataSetContext';
+export {
+	IClientExtensionRenderer,
+	IInternalRenderer,
+} from './FrontendDataSetContext';
 export {INTERNAL_CELL_RENDERERS as FDS_INTERNAL_CELL_RENDERERS} from './cell_renderers/InternalCellRenderer';

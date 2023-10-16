@@ -5,6 +5,7 @@
 
 import {Liferay} from './liferay/liferay';
 import {AppCreationFlow} from './pages/AppCreationFlow/AppCreationFlow';
+import CreateLicense from './pages/CreateLicense';
 import {CustomerGatePage} from './pages/CustomerGatePage/CustomerGatePage';
 import GetAppPage from './pages/GetAppPage/GetAppPage';
 import {NextStepPage} from './pages/NextStepPage/NextStepPage';
@@ -20,6 +21,9 @@ export default function AppRoutes({route}: AppRoutesProps) {
 	if (Liferay.ThemeDisplay.isSignedIn()) {
 		if (route === 'create-app') {
 			return <AppCreationFlow />;
+		}
+		if (route === 'create-license') {
+			return <CreateLicense />;
 		}
 		else if (route === 'get-app') {
 			return <GetAppPage />;

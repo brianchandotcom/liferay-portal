@@ -17,8 +17,6 @@ public class JournalArticleConstants {
 		WorkflowConstants.STATUS_SCHEDULED
 	};
 
-	public static final String ASSET_TITLE = "assetTitle";
-
 	public static final String CANONICAL_URL_SEPARATOR = "/-/";
 
 	public static final long CLASS_NAME_ID_DEFAULT = 0;
@@ -53,6 +51,9 @@ public class JournalArticleConstants {
 	public static final int SMALL_IMAGE_SOURCE_USER_COMPUTER = 4;
 
 	public static final String STAND_ALONE = "stand-alone";
+
+	public static final String
+		SYSTEM_EVENT_EXTRA_DATA_JOURNAL_ARTICLE_ASSET_TITLE = "assetTitle";
 
 	public static final double VERSION_DEFAULT = 1.0;
 

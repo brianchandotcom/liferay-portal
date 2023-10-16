@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Joan Kim
  */
 @Component(
-	property = "module.class.name=com.liferay.marketplace.model.Module",
+	property = "model.class.name=com.liferay.marketplace.model.Module",
 	service = AopService.class
 )
 public class ModuleLocalServiceImpl extends ModuleLocalServiceBaseImpl {

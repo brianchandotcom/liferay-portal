@@ -1,0 +1,22 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"widgetInstance": {
+						"widgetConfig": {},
+						"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$COMPANY_ID$]_LXC_liferay_marketplace_custom_element_create_license"
+					}
+				},
+				"type": "Widget"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "marketplace-master"
+		}
+	},
+	"version": 1.1
+}

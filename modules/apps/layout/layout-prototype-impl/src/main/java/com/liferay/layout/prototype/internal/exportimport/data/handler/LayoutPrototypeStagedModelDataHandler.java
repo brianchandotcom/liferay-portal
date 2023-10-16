@@ -207,6 +207,12 @@ public class LayoutPrototypeStagedModelDataHandler
 				StagedModelDataHandlerUtil.exportReferenceStagedModel(
 					portletDataContext, layoutPrototype, layout,
 					PortletDataContext.REFERENCE_TYPE_EMBEDDED);
+
+				Element layoutElement = portletDataContext.getExportDataElement(
+					layout);
+
+				layoutElement.addAttribute(
+					"layout-layout-prototype", Boolean.TRUE.toString());
 			}
 		}
 		finally {
@@ -236,7 +242,6 @@ public class LayoutPrototypeStagedModelDataHandler
 		throws Exception {
 
 		long groupId = portletDataContext.getGroupId();
-		boolean privateLayout = portletDataContext.isPrivateLayout();
 		long scopeGroupId = portletDataContext.getScopeGroupId();
 
 		Map<String, String[]> parameterMap =
@@ -247,7 +252,6 @@ public class LayoutPrototypeStagedModelDataHandler
 
 		try {
 			portletDataContext.setGroupId(importedGroupId);
-			portletDataContext.setPrivateLayout(true);
 			portletDataContext.setScopeGroupId(importedGroupId);
 
 			if (!portletDataContext.isDataStrategyMirror()) {
@@ -264,7 +268,6 @@ public class LayoutPrototypeStagedModelDataHandler
 		}
 		finally {
 			portletDataContext.setGroupId(groupId);
-			portletDataContext.setPrivateLayout(privateLayout);
 			portletDataContext.setScopeGroupId(scopeGroupId);
 
 			if (Validator.isNull(layoutsImportMode)) {

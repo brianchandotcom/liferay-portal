@@ -110,6 +110,12 @@ definition {
 
 		WaitForPageLoad();
 
+		Button.click(button = "See MDF Home");
+
+		WaitForPageLoad();
+
+		PRMMDFRequest.goToMDF(campaignName = "Campaign Name 1");
+
 		WaitForVisible(
 			key_title = "Campaign MDF Request",
 			locator1 = "Header#H1_TITLE");

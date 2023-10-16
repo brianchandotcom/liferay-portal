@@ -446,7 +446,7 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 				layoutPageTemplateEntry.getType(),
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT)) {
 
-			return _language.get(locale, "master");
+			return _language.get(locale, "master-page");
 		}
 
 		return StringPool.BLANK;

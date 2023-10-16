@@ -14,7 +14,10 @@ definition {
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(siteName = ${testSiteName});
+		HeadlessSite.addSite(
+			siteName = ${testSiteName},
+			templateName = "Raylife D2C",
+			templateType = "Site Initializer");
 	}
 
 	tearDown {
@@ -111,17 +114,24 @@ definition {
 
 		Type(
 			locator1 = "RaylifeCreateAccount#EMAIL_FIELD",
-			value1 = "test@liferay.com");
+			value1 = "test1@liferay.com");
 
 		Type(
 			label = "password",
 			locator1 = "RaylifeCreateAccount#PASSWORD_FIELD",
 			value1 = "test@123");
 
+		Button.click(button = "CREATE NEW ACCOUNT");
+
 		Type(
 			label = "rePassword",
 			locator1 = "RaylifeCreateAccount#PASSWORD_FIELD",
 			value1 = "test@123");
+
+		Type(
+			inputFieldId = "input-captcha",
+			locator1 = "TextInput#INPUT_ID",
+			value1 = "a");
 
 		Click(locator1 = "RaylifeCreateAccount#CREATE_ACCOUNT");
 
@@ -281,14 +291,11 @@ definition {
 			locator1 = "RaylifeCreateAccount#PASSWORD_FIELD",
 			value1 = "test@12");
 
-		Type(
-			label = "rePassword",
-			locator1 = "RaylifeCreateAccount#PASSWORD_FIELD",
-			value1 = "test@12");
+		Button.click(button = "CREATE NEW ACCOUNT");
 
 		AssertElementPresent(
 			locator1 = "RaylifeCreateAccount#VALIDATION_UNCHECKED",
-			text = "8 characters");
+			text = "At least 8 characters");
 	}
 
 	@description = "LPS-144336 - Verify that when entering a password with repeated numbers and letters the message 'At least 5 unique characters' is highlighted"
@@ -324,15 +331,12 @@ definition {
 		Type(
 			label = "password",
 			locator1 = "RaylifeCreateAccount#PASSWORD_FIELD",
-			value1 = "test@12");
+			value1 = "test1");
 
-		Type(
-			label = "rePassword",
-			locator1 = "RaylifeCreateAccount#PASSWORD_FIELD",
-			value1 = "test@12");
+		Button.click(button = "CREATE NEW ACCOUNT");
 
 		AssertElementPresent(
-			locator1 = "RaylifeCreateAccount#VALIDATION_CHECKED",
+			locator1 = "RaylifeCreateAccount#VALIDATION_UNCHECKED",
 			text = "5 unique characters");
 	}
 
@@ -369,12 +373,9 @@ definition {
 		Type(
 			label = "password",
 			locator1 = "RaylifeCreateAccount#PASSWORD_FIELD",
-			value1 = "test1234");
+			value1 = "Test1234");
 
-		Type(
-			label = "rePassword",
-			locator1 = "RaylifeCreateAccount#PASSWORD_FIELD",
-			value1 = "test1234");
+		Button.click(button = "CREATE NEW ACCOUNT");
 
 		AssertElementPresent(
 			locator1 = "RaylifeCreateAccount#VALIDATION_UNCHECKED",

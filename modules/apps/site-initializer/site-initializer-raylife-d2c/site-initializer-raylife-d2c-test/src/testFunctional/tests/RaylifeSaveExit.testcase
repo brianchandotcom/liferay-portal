@@ -14,7 +14,10 @@ definition {
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(siteName = ${testSiteName});
+		HeadlessSite.addSite(
+			siteName = ${testSiteName},
+			templateName = "Raylife D2C",
+			templateType = "Site Initializer");
 	}
 
 	tearDown {
@@ -154,23 +157,17 @@ definition {
 
 		ApplicationsMenu.gotoSite(key_site = ${testSiteName});
 
-		RaylifeHomePage.startFlow();
+		RaylifeHomePage.getAQuote();
 
-		RaylifeContactInfo.typeBasicsInfoFields(
-			label = "basics.businessInformation.business.email",
-			value = "test@liferay.com");
+		Click(
+			locator1 = "RaylifeProduct#SELECT_PRODUCT",
+			selectProduct = "Business Owners Policy");
 
-		Click(locator1 = "RaylifeSaveExit#SAVE_EXIT");
+		Raylife.clickAtButton(text = "Continue");
 
 		AssertTextEquals(
 			locator1 = "Raylife#ERROR_MESSAGE",
-			value1 = "Unable to save your information. Please try again.");
-
-		Click(
-			locator1 = "RaylifeNavigation#SECTION_INCOMPLETED",
-			section = "Basics");
-
-		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+			value1 = "Application object is disabled");
 	}
 
 	@description = "LPS-143607 - Check when you fill in the Business Email field, the Save and Exit button is enabled in the Basics - Contact Info page"

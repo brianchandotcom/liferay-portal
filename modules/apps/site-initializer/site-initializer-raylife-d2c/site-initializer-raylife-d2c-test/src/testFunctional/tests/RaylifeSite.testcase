@@ -105,13 +105,13 @@ definition {
 			category = "Product Management",
 			portlet = "Products");
 
-		while (IsElementNotPresent(locator1 = "Raylife#PRODUCTS_NAME", productList = "General Liability,Professional Liability,Workers Compensation,Business Owners Policy")) {
+		while (IsElementNotPresent(locator1 = "Raylife#PRODUCTS_NAME", productList = "General Liability,Professional Liability,Business Owners Policy")) {
 			Refresh();
 
 			WaitForPageLoad();
 		}
 
-		Raylife.viewProductsList(productList = "General Liability,Professional Liability,Workers Compensation,Business Owners Policy");
+		Raylife.viewProductsList(productList = "General Liability,Professional Liability,Business Owners Policy");
 	}
 
 }

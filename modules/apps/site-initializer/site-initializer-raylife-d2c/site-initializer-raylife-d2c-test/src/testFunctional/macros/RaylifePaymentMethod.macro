@@ -166,10 +166,6 @@ definition {
 		Click(locator1 = "RaylifePaymentMethod#BUTTON_LOGIN_PAYPAL");
 
 		AssertElementPresent(
-			locator1 = "RaylifePaymentMethod#TEST_BUYER_PAYPAL",
-			text = "test buyer");
-
-		AssertElementPresent(
 			locator1 = "RaylifePaymentMethod#VALUE_QUOTATION_PAYPAL",
 			value = "$683.05");
 

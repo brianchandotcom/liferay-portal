@@ -15,7 +15,10 @@ definition {
 
 		User.firstLoginPG();
 
-		Raylife.createRaylifeSite(siteName = ${testSiteName});
+		HeadlessSite.addSite(
+			siteName = ${testSiteName},
+			templateName = "Raylife D2C",
+			templateType = "Site Initializer");
 	}
 
 	tearDown {

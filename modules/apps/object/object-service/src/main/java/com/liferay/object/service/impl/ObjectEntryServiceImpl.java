@@ -424,14 +424,20 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
-		ObjectField objectField = _objectFieldLocalService.getObjectField(
-			objectDefinition.getAccountEntryRestrictedObjectFieldId());
-
-		long accountEntryId = MapUtil.getLong(values, objectField.getName());
+		long accountEntryId = 0;
 
 		if (objectDefinition.isRootDescendantNode()) {
 			accountEntryId = _getRootObjectEntryAccountEntryId(
 				objectDefinition, values);
+
+			objectDefinition = _objectDefinitionPersistence.findByPrimaryKey(
+				objectDefinition.getRootObjectDefinitionId());
+		}
+		else {
+			ObjectField objectField = _objectFieldLocalService.getObjectField(
+				objectDefinition.getAccountEntryRestrictedObjectFieldId());
+
+			accountEntryId = MapUtil.getLong(values, objectField.getName());
 		}
 
 		long[] accountEntryIds = ListUtil.toLongArray(

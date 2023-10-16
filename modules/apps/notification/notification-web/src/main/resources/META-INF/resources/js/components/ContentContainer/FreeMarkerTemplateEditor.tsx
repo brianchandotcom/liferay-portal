@@ -119,8 +119,10 @@ export function FreeMarkerTemplateEditor({
 			placeholder={`<#--${Liferay.Language.get(
 				'add-elements-from-the-sidebar-to-define-your-template'
 			)}-->`}
+			readOnly={values.system}
 			selectedLocale={selectedLocale}
 			sidebarElements={entityFields}
+			sidebarElementsDisabled={values.system}
 			translations={values.body}
 		/>
 	);

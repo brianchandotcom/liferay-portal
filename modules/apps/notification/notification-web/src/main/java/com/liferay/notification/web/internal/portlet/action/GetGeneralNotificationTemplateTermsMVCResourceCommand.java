@@ -57,6 +57,8 @@ public class GetGeneralNotificationTemplateTermsMVCResourceCommand
 	}
 
 	private final Map<String, String> _termNames = HashMapBuilder.put(
+		"current-date", "[%CURRENT_DATE%]"
+	).put(
 		"current-user-email-address", "[%CURRENT_USER_EMAIL_ADDRESS%]"
 	).put(
 		"current-user-first-name", "[%CURRENT_USER_FIRST_NAME%]"

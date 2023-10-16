@@ -19,6 +19,163 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-173628. Account Manager cannot view or assign specific Account Roles without permissions."
+	@priority = 4
+	test AccountManagerCannotViewOrAssignSpecificAccountRolesWithoutPermissions {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Given the admin creates 2 organizations called Org1 and Org2, also 2 business accounts") {
+			for (var index : list "1,2") {
+				JSONOrganization.addOrganization(
+					organizationName = "Organization${index}",
+					organizationSite = "true");
+
+				JSONAccountEntry.addAccountEntry(
+					accountEntryName = "Account${index}",
+					accountEntryType = "Business");
+			}
+		}
+
+		task ("And associates each account to the corresponding organization") {
+			for (var index : list "1,2") {
+				Account.openAccountsAdmin();
+
+				LexiconEntry.gotoEntry(rowEntry = "Account${index}");
+
+				Account.assignOrganizations(
+					accountName = "Account${index}",
+					assigneeName = "Organization${index}");
+
+				Account.viewAssignee(assigneeName = "Organization${index}");
+			}
+		}
+
+		task ("And creates 2 users into the accounts assigning them the Account Manager role on Org1 and Org2 respectively") {
+			for (var index : list "1,2") {
+				JSONUser.addUser(
+					userEmailAddress = "accountmgr${index}@liferay.com",
+					userFirstName = "Account${index}",
+					userLastName = "Mgr${index}",
+					userScreenName = "accountmgr${index}");
+
+				JSONAccountEntryUser.addExistUsertoAccount(
+					accountEntryName = "Account${index}",
+					userEmailAddress = "accountmgr${index}@liferay.com");
+
+				JSONOrganization.assignUserToOrganization(
+					organizationName = "Organization${index}",
+					userEmailAddress = "accountmgr${index}@liferay.com");
+
+				User.openUsersAdmin();
+
+				User.assignOrgRoleCP(
+					roleTitle = "Account Manager",
+					userScreenName = "accountmgr${index}");
+			}
+		}
+
+		task ("And creates a new Regular role, assigning AccountMgr1 to the role") {
+			JSONRole.addRegularRole(roleTitle = "AccountRole1 Role Manager");
+
+			JSONRole.assignRoleToUser(
+				roleTitle = "AccountRole1 Role Manager",
+				userEmailAddress = "accountmgr1@liferay.com");
+		}
+
+		task ("And creates a new Account Role, updating the permissions on that role so the AccountRole1 Role Manager role can View and Assign Members") {
+			Role.openRolesAdmin();
+
+			Navigator.gotoNavTab(navTab = "Account Roles");
+
+			Role.add(roleTitle = "AccountRole1");
+
+			Click(locator1 = "Icon#BACK");
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Permissions",
+				rowEntry = "AccountRole1");
+
+			for (var resourceActionIndex : list "INLINE_PERMISSIONS_ASSIGN_MEMBERS_CHECKBOX,INLINE_PERMISSIONS_VIEW_CHECKBOX") {
+				PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
+					addOrRemoveViewPermission = "Add",
+					permissionsKeyList = ${resourceActionIndex},
+					roleTitle = "AccountRole1 Role Manager");
+			}
+		}
+
+		task ("And removes the view permissions of account roles for Account Managers") {
+			Permissions.removePermissionViaAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.account.model.AccountRole",
+				roleTitle = "Account Manager",
+				roleType = "organization");
+		}
+
+		task ("When the first account manager logs in") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "accountmgr1@liferay.com",
+				userLoginFullName = "Account1 Mgr1");
+		}
+
+		task ("And navigates to Account -> Users -> Assign Roles modal") {
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account1");
+
+			Navigator.gotoNavTab(navTab = "Users");
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Assign Roles",
+				rowEntry = "Account1 Mgr1");
+
+			SelectFrame(
+				key_title = "Assign Roles",
+				locator1 = "IFrame#MODAL_ANY");
+		}
+
+		task ("Then the role is visible and assignable") {
+			AssertElementPresent(
+				key_tableEntry = "AccountRole1",
+				locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+
+			AssertElementNotPresent(
+				key_tableEntry = "AccountRole1",
+				locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX_DISABLED");
+		}
+
+		task ("When the second account manager logs in") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "accountmgr2@liferay.com",
+				userLoginFullName = "Account2 Mgr2");
+		}
+
+		task ("And navigates to Account -> Users -> Assign Roles modal") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "accountmgr2@liferay.com",
+				userLoginFullName = "Account2 Mgr2");
+
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account2");
+
+			Navigator.gotoNavTab(navTab = "Users");
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Assign Roles",
+				rowEntry = "Account2 Mgr2");
+
+			SelectFrame(
+				key_title = "Assign Roles",
+				locator1 = "IFrame#MODAL_ANY");
+		}
+
+		task ("Then the role is not visible and not assignable") {
+			AssertElementNotPresent(
+				key_tableEntry = "AccountRole1",
+				locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+		}
+	}
+
 	@description = "This test assert the account manager can view account users by default."
 	@priority = 4
 	test AccountManagersCanViewUsersbyDefault {

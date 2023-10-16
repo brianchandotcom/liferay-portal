@@ -387,6 +387,14 @@ public class ObjectDefinitionLocalServiceTest {
 				true
 			).build());
 
+		long objectDefinitionId = objectDefinition.getObjectDefinitionId();
+
+		AssertUtils.assertFailure(
+			ObjectDefinitionStatusException.class,
+			"The object definition is already published",
+			() -> _objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(), objectDefinitionId));
+
 		TreeTestUtil.forEachNodeObjectDefinition(
 			tree.iterator(), _objectDefinitionLocalService,
 			nodeObjectDefinition -> {

@@ -246,6 +246,41 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			).toString(),
 			JSONCompareMode.STRICT);
 
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title", "Path must contain only lower case characters."
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"httpMethod", "get"
+				).put(
+					"name", RandomTestUtil.randomString()
+				).put(
+					"path",
+					StringBundler.concat(
+						StringPool.FORWARD_SLASH,
+						StringUtil.toUpperCase(RandomTestUtil.randomString()),
+						StringPool.FORWARD_SLASH, StringPool.OPEN_CURLY_BRACE,
+						RandomTestUtil.randomString(),
+						StringPool.CLOSE_CURLY_BRACE)
+				).put(
+					"pathParameter", HeadlessBuilderConstants.PATH_PARAMETER_ERC
+				).put(
+					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					apiApplicationJSONObject1.getLong("id")
+				).put(
+					"retrieveType",
+					APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT.
+						getValue()
+				).put(
+					"scope", APIApplication.Endpoint.Scope.COMPANY.getValue()
+				).toString(),
+				"headless-builder/endpoints", Http.Method.POST
+			).toString(),
+			JSONCompareMode.STRICT);
+
 		JSONObject apiSchemaJSONObject1 = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"mainObjectDefinitionERC",

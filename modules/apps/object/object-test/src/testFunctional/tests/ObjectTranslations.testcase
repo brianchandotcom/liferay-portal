@@ -156,4 +156,72 @@ definition {
 		}
 	}
 
+	@description = "LPS-198382 - Verify an object entry can contain translations and be restricted by unique values"
+	@priority = 4
+	test CanUseUniqueValue {
+		task ("Given an object definition with translatable fields enabled") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 198382",
+				objectName = "CustomObject198382",
+				pluralLabelName = "Custom Objects 198382");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 198382");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Enable Entry Translation",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			CreateObject.saveObject();
+		}
+
+		task ("and Given a text field with translations and unique values enabled") {
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				acceptUniqueValuesOnly = "true",
+				fieldLabel = "Text Field",
+				fieldType = "Text");
+		}
+
+		task ("and Given an object entry with a translation") {
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject198382");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject198382");
+
+			ObjectField.addTranslatableTextEntryViaUI(
+				buttonFieldEntryLanguage = "en-us",
+				fieldLabel = "Text Field",
+				locale = "português (Brasil)",
+				mainEntryValue = "Entry",
+				translatedEntryValue = "Entrada");
+		}
+
+		task ("When the user attempts to add another object entry with the same translation") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject198382");
+
+			LexiconEntry.gotoAdd();
+
+			Type(
+				key_fieldLabel = "Text Field",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "Entry");
+
+			PortletEntry.save();
+		}
+
+		task ("Then an error is displayed and the object entry isn't created") {
+			AssertElementPresent(locator1 = "Message#ERROR");
+
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject198382");
+
+			AssertElementNotPresent(
+				key_tableCell = 2,
+				key_tableRow = 2,
+				key_tableValue = "Entry",
+				locator1 = "CreateObject#VIEW_ENTRY_FIELD_BY_INDEX");
+		}
+	}
+
 }

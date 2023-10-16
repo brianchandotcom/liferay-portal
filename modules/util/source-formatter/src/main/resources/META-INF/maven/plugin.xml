@@ -343,7 +343,7 @@
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<type>jar</type>
-			<version>20230618</version>
+			<version>20231013</version>
 		</dependency>
 		<dependency>
 			<groupId>org.reflections</groupId>

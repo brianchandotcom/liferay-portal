@@ -140,7 +140,7 @@ export default function EditObjectFolder({
 
 			{showModal.publishObjectDefinitions && (
 				<ModalPublishObjectDefinitions
-					disableAutoClose={false}
+					disableAutoClose={true}
 					dispatch={dispatch}
 					elements={elements}
 					handleOnClose={() => {

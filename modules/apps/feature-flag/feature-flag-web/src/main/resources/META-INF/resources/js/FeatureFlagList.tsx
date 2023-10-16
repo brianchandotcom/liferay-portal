@@ -60,8 +60,8 @@ const FeatureFlagList: React.FC<IFeatureFlagListProps> = ({featureFlags}) => {
 								<ClayList.Item flex key={key}>
 									<ClayList.ItemField expand>
 										<ClayList.ItemTitle>
-											{title}{' '}
-											
+											{`${title} `}
+
 											<span className="text-muted">
 												({key})
 											</span>
@@ -88,6 +88,7 @@ const FeatureFlagList: React.FC<IFeatureFlagListProps> = ({featureFlags}) => {
 											ariaDescribedBy={title}
 											companyId={companyId}
 											disabled={!dependenciesFulfilled}
+											enabled={enabled}
 											featureFlagKey={key}
 											inputName={key}
 											onItemsChange={(newItems) => {
@@ -103,14 +104,16 @@ const FeatureFlagList: React.FC<IFeatureFlagListProps> = ({featureFlags}) => {
 														);
 
 														if (newItem) {
-															return newItem;
+															return {
+																...item,
+																...newItem,
+															};
 														}
 
 														return item;
 													})
 												);
 											}}
-											toggled={enabled}
 										/>
 									</ClayList.ItemField>
 								</ClayList.Item>

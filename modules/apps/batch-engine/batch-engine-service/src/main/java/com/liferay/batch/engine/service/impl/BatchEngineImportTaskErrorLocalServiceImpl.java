@@ -9,6 +9,7 @@ import com.liferay.batch.engine.model.BatchEngineImportTaskError;
 import com.liferay.batch.engine.service.base.BatchEngineImportTaskErrorLocalServiceBaseImpl;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -22,6 +23,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "model.class.name=com.liferay.batch.engine.model.BatchEngineImportTaskError",
 	service = AopService.class
 )
+@CTAware
 public class BatchEngineImportTaskErrorLocalServiceImpl
 	extends BatchEngineImportTaskErrorLocalServiceBaseImpl {
 

@@ -31,6 +31,7 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -78,7 +79,8 @@ public class BatchEngineImportTaskExecutorImpl
 		boolean checkPermissions) {
 
 		SafeCloseable safeCloseable = CompanyThreadLocal.setWithSafeCloseable(
-			batchEngineImportTask.getCompanyId());
+			batchEngineImportTask.getCompanyId(),
+			CTCollectionThreadLocal.getCTCollectionId());
 
 		try {
 			batchEngineImportTask.setExecuteStatus(

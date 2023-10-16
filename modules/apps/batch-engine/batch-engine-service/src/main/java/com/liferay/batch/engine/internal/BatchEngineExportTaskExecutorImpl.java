@@ -23,6 +23,7 @@ import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -61,7 +62,8 @@ public class BatchEngineExportTaskExecutorImpl
 	@Override
 	public void execute(BatchEngineExportTask batchEngineExportTask) {
 		SafeCloseable safeCloseable = CompanyThreadLocal.setWithSafeCloseable(
-			batchEngineExportTask.getCompanyId());
+			batchEngineExportTask.getCompanyId(),
+			CTCollectionThreadLocal.getCTCollectionId());
 
 		try {
 			batchEngineExportTask.setExecuteStatus(

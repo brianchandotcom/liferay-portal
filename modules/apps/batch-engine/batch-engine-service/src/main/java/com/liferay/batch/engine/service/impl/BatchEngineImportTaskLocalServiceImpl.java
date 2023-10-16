@@ -13,6 +13,7 @@ import com.liferay.batch.engine.service.base.BatchEngineImportTaskLocalServiceBa
 import com.liferay.batch.engine.service.persistence.BatchEngineImportTaskErrorPersistence;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
@@ -36,6 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.batch.engine.model.BatchEngineImportTask",
 	service = AopService.class
 )
+@CTAware
 public class BatchEngineImportTaskLocalServiceImpl
 	extends BatchEngineImportTaskLocalServiceBaseImpl {
 

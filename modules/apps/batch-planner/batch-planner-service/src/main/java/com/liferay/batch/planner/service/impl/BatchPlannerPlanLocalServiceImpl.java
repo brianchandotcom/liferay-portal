@@ -20,6 +20,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -46,6 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.batch.planner.model.BatchPlannerPlan",
 	service = AopService.class
 )
+@CTAware
 public class BatchPlannerPlanLocalServiceImpl
 	extends BatchPlannerPlanLocalServiceBaseImpl {
 

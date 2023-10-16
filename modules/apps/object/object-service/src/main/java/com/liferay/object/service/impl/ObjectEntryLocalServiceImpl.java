@@ -845,14 +845,7 @@ public class ObjectEntryLocalServiceImpl
 				ObjectEntryTable.INSTANCE.objectEntryId.eq(
 					dynamicObjectDefinitionTable.getPrimaryKeyColumn())
 			).where(
-				predicate.and(
-					() -> {
-						if (groupId == 0) {
-							return null;
-						}
-
-						return ObjectEntryTable.INSTANCE.groupId.eq(groupId);
-					})
+				predicate.and(ObjectEntryTable.INSTANCE.groupId.eq(groupId))
 			));
 	}
 

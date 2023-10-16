@@ -11,6 +11,7 @@ import {
 	getLocalizableLabel,
 } from '@liferay/object-js-components-web';
 import {TBuilderScreenItem} from '@liferay/object-js-components-web/src/main/resources/META-INF/resources/components/BuilderScreen/BuilderScreen';
+import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {ErrorMessage} from './ErrorMessage';
@@ -96,6 +97,20 @@ export function UniqueCompositeKey({
 		const parentWindow = Liferay.Util.getOpener();
 
 		parentWindow.Liferay.fire('openModalSelectObjectFields', {
+			alert: {
+				content: sub(
+					Liferay.Language.get('x-has-already-been-published'),
+					(objectDefinition as ObjectDefinition).name
+				),
+				otherProps: {
+					displayType: 'info',
+					title: Liferay.Language.get('info'),
+					variant: 'stripe',
+				},
+				showAlert:
+					(objectDefinition as ObjectDefinition).status.label ===
+					'approved',
+			},
 			getName: ({label, name}: ObjectField) =>
 				getLocalizableLabel(creationLanguageId, label, name),
 			header: Liferay.Language.get('add-fields-to-unique-composite-key'),

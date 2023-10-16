@@ -467,6 +467,8 @@ public class LayoutStagedModelDataHandler
 			GetterUtil.getBoolean(
 				layoutElement.attributeValue("layout-content-page-template")) ||
 			GetterUtil.getBoolean(
+				layoutElement.attributeValue("layout-layout-prototype")) ||
+			GetterUtil.getBoolean(
 				layoutElement.attributeValue("layout-master-page-template"))) {
 
 			privateLayout = true;

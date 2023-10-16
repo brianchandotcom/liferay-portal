@@ -27,6 +27,7 @@ import Modal from './modal/Modal';
 import SidePanel from './side_panel/SidePanel';
 import filterCreationActions from './utils/actionItems/filterCreationActions';
 import EVENTS from './utils/eventsDefinitions';
+import loadClientExtensions from './utils/loadClientExtensions';
 import {
 	formatItemChanges,
 	getCurrentItemUpdates,
@@ -938,22 +939,5 @@ FrontendDataSet.defaultProps = {
 	sorts: [],
 	style: 'default',
 };
-
-function loadClientExtensions(cxDefinitionsHandlers) {
-	for (const {cxDefinitions, onLoad} of cxDefinitionsHandlers) {
-		if (!cxDefinitions.length) {
-			continue;
-		}
-
-		const promises = cxDefinitions.map(({context, importDeclaration}) => {
-			return loadModule(importDeclaration).then((binding) => ({
-				binding,
-				context,
-			}));
-		});
-
-		Promise.all(promises).then(onLoad);
-	}
-}
 
 export default FrontendDataSet;

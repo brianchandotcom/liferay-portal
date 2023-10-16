@@ -239,12 +239,24 @@ public interface Build {
 
 	public class Invocation {
 
-		public Invocation(JenkinsMaster jenkinsMaster, long queueId) {
+		public Invocation(
+			Build build, JenkinsMaster jenkinsMaster, long queueId) {
+
+			_build = build;
 			_jenkinsMaster = jenkinsMaster;
 			_queueId = queueId;
 		}
 
 		public String getBuildURL() {
+			if ((_buildURL != null) ||
+				JenkinsResultsParserUtil.isURL(_buildURL)) {
+
+				return _buildURL;
+			}
+
+			_buildURL = JenkinsResultsParserUtil.getBuildURL(
+				_build.getJobName(), getJenkinsMaster(), getQueueId());
+
 			return _buildURL;
 		}
 
@@ -260,6 +272,7 @@ public interface Build {
 			_buildURL = buildURL;
 		}
 
+		private final Build _build;
 		private String _buildURL;
 		private final JenkinsMaster _jenkinsMaster;
 		private final long _queueId;

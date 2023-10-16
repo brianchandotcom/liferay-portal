@@ -1473,6 +1473,52 @@ public class JenkinsResultsParserUtil {
 		return Arrays.asList(propertyContent.split(","));
 	}
 
+	public static String getBuildURL(
+		String jenkinsJobName, JenkinsMaster jenkinsMaster,
+		long jenkinsQueueId) {
+
+		if (isNullOrEmpty(jenkinsJobName) || (jenkinsMaster == null) ||
+			(jenkinsQueueId < 0)) {
+
+			return null;
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("Map<String, TopLevelItem> topLevelItems = ");
+		sb.append("Jenkins.instance.getItemMap();\n");
+
+		sb.append("TopLevelItem topLevelItem = topLevelItems.get(\"");
+		sb.append(jenkinsJobName);
+		sb.append("\");\n");
+
+		sb.append("for (def build : topLevelItem.getBuilds()) {\n");
+
+		sb.append("if (build.getQueueId() == ");
+		sb.append(jenkinsQueueId);
+		sb.append(") {\n");
+
+		sb.append("println(Jenkins.instance.getRootUrl() + build.getUrl());\n");
+
+		sb.append("break;\n");
+
+		sb.append("}\n}\n");
+
+		try {
+			String response = executeJenkinsScript(
+				jenkinsMaster.getName(), sb.toString(), true);
+
+			if (isURL(response)) {
+				return response;
+			}
+
+			return null;
+		}
+		catch (Exception exception) {
+			return null;
+		}
+	}
+
 	public static String getBuildURLByBuildID(String buildID) {
 		Matcher matcher = _buildIDPattern.matcher(buildID);
 

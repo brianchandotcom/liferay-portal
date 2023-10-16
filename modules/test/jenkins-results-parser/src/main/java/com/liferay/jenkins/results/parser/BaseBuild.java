@@ -1499,12 +1499,6 @@ public abstract class BaseBuild implements Build {
 	@Override
 	public void setBuildURL(String buildURL) {
 		_buildURL = buildURL;
-
-		Invocation currentInvocation = getCurrentInvocation();
-
-		if (currentInvocation != null) {
-			currentInvocation.setBuildURL(buildURL);
-		}
 	}
 
 	@Override
@@ -2203,6 +2197,8 @@ public abstract class BaseBuild implements Build {
 				Invocation previousInvocation = getPreviousInvocation();
 
 				if (previousInvocation != null) {
+					sb.append(" ");
+
 					sb.append(previousInvocation.getBuildURL());
 
 					sb.append(" restarted at ");
@@ -3277,7 +3273,7 @@ public abstract class BaseBuild implements Build {
 		JSONObject buildJSONObject = getBuildJSONObject("result,queueId,url");
 
 		Invocation invocation = new Invocation(
-			jenkinsMaster, buildJSONObject.getLong("queueId"));
+			this, jenkinsMaster, buildJSONObject.getLong("queueId"));
 
 		invocation.setBuildURL(buildJSONObject.getString("url"));
 

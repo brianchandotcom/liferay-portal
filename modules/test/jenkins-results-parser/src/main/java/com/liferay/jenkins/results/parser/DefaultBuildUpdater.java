@@ -37,7 +37,8 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 			jenkinsMaster, build.getJobName(), build.getParameters());
 
 		build.addInvocation(
-			new Build.Invocation(jenkinsMaster, jsonObject.getLong("queueId")));
+			new Build.Invocation(
+				build, jenkinsMaster, jsonObject.getLong("queueId")));
 	}
 
 	@Override
@@ -57,7 +58,8 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 			jenkinsMaster, build.getJobName(), build.getParameters());
 
 		build.addInvocation(
-			new Build.Invocation(jenkinsMaster, jsonObject.getLong("queueId")));
+			new Build.Invocation(
+				build, jenkinsMaster, jsonObject.getLong("queueId")));
 	}
 
 	protected DefaultBuildUpdater(Build build) {

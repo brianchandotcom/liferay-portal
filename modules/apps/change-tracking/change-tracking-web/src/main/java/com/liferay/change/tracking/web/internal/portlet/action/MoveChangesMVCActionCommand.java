@@ -9,7 +9,6 @@ import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -94,9 +93,6 @@ public class MoveChangesMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CTCollectionService _ctCollectionService;
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private Portal _portal;

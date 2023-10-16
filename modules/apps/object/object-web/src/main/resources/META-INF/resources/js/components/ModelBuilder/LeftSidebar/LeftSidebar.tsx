@@ -55,10 +55,14 @@ export default function LeftSidebar({setShowModal}: LeftSidebarProps) {
 			};
 		});
 
-		setExpandedKeys(new Set(keys));
+		const selectedObjectFolderKey = keys.find(
+			(key) => key === selectedObjectFolder.name
+		) as string;
+
+		setExpandedKeys(new Set([selectedObjectFolderKey]));
 
 		return newLeftSidebarItems;
-	}, [leftSidebarItems, query]);
+	}, [leftSidebarItems, query, selectedObjectFolder]);
 
 	const leftSidebarOtherObjectFoldersItems = filteredLeftSidebarItems.filter(
 		(filteredLeftSidebarItem) =>

@@ -9,12 +9,14 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.PortletPreferencesImpl;
+import com.liferay.ratings.kernel.definition.PortletRatingsDefinitionUtil;
+import com.liferay.ratings.kernel.definition.PortletRatingsDefinitionValues;
 import com.liferay.ratings.kernel.transformer.RatingsDataTransformer;
 import com.liferay.ratings.kernel.transformer.RatingsDataTransformerUtil;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.PortletPreferences;
@@ -34,6 +36,7 @@ import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Leon Chi
+ * @author Roberto Díaz
  */
 @RunWith(Arquillian.class)
 public class RatingsDataTransformerUtilTest {
@@ -65,6 +68,9 @@ public class RatingsDataTransformerUtilTest {
 					return null;
 				}),
 			MapUtil.singletonDictionary("service.ranking", Integer.MAX_VALUE));
+
+		_portletRatingsDefinitionValuesMap =
+			PortletRatingsDefinitionUtil.getPortletRatingsDefinitionValuesMap();
 	}
 
 	@AfterClass
@@ -76,29 +82,9 @@ public class RatingsDataTransformerUtilTest {
 	public void testTransformCompanyRatingsData() throws Exception {
 		_calledTransformRatingsData = false;
 
-		PortletPreferences oldPortletPreferences = new PortletPreferencesImpl();
-
-		oldPortletPreferences.setValue(
-			"com.liferay.blogs.model.BlogsEntry_RatingsType", "like");
-		oldPortletPreferences.setValue(
-			"com.liferay.bookmarks.model.BookmarksEntry_RatingsType", "like");
-		oldPortletPreferences.setValue(
-			"com.liferay.document.library.kernel.model.DLFileEntry_RatingsType",
-			"like");
-		oldPortletPreferences.setValue(
-			"com.liferay.journal.model.JournalArticle_RatingsType", "like");
-		oldPortletPreferences.setValue(
-			"com.liferay.knowledge.base.model.KBArticle_RatingsType", "like");
-		oldPortletPreferences.setValue(
-			"com.liferay.message.boards.model.MBDiscussion_RatingsType",
-			"like");
-		oldPortletPreferences.setValue(
-			"com.liferay.message.boards.model.MBMessage_RatingsType", "like");
-		oldPortletPreferences.setValue(
-			"com.liferay.wiki.model.WikiPage_RatingsType", "like");
-
 		RatingsDataTransformerUtil.transformCompanyRatingsData(
-			1, oldPortletPreferences, _createUnicodeProperties("stars"));
+			1, _createPortletPreferences("like"),
+			_createUnicodeProperties("stars"));
 
 		Assert.assertTrue(_calledTransformRatingsData);
 	}
@@ -114,28 +100,41 @@ public class RatingsDataTransformerUtilTest {
 		Assert.assertTrue(_calledTransformRatingsData);
 	}
 
+	private PortletPreferences _createPortletPreferences(String value)
+		throws Exception {
+
+		PortletPreferences portletPreferences = new PortletPreferencesImpl();
+
+		for (Map.Entry<String, PortletRatingsDefinitionValues> entry :
+				_portletRatingsDefinitionValuesMap.entrySet()) {
+
+			String className = entry.getKey();
+
+			portletPreferences.setValue(
+				RatingsDataTransformerUtil.getPropertyKey(className), value);
+		}
+
+		return portletPreferences;
+	}
+
 	private UnicodeProperties _createUnicodeProperties(String value) {
-		return UnicodePropertiesBuilder.put(
-			"com.liferay.blogs.model.BlogsEntry_RatingsType", value
-		).put(
-			"com.liferay.bookmarks.model.BookmarksEntry_RatingsType", value
-		).put(
-			"com.liferay.document.library.kernel.model.DLFileEntry_RatingsType",
-			value
-		).put(
-			"com.liferay.journal.model.JournalArticle_RatingsType", value
-		).put(
-			"com.liferay.knowledge.base.model.KBArticle_RatingsType", value
-		).put(
-			"com.liferay.message.boards.model.MBDiscussion_RatingsType", value
-		).put(
-			"com.liferay.message.boards.model.MBMessage_RatingsType", value
-		).put(
-			"com.liferay.wiki.model.WikiPage_RatingsType", value
-		).build();
+		UnicodeProperties unicodeProperties = new UnicodeProperties();
+
+		for (Map.Entry<String, PortletRatingsDefinitionValues> entry :
+				_portletRatingsDefinitionValuesMap.entrySet()) {
+
+			String className = entry.getKey();
+
+			unicodeProperties.put(
+				RatingsDataTransformerUtil.getPropertyKey(className), value);
+		}
+
+		return unicodeProperties;
 	}
 
 	private static boolean _calledTransformRatingsData;
+	private static Map<String, PortletRatingsDefinitionValues>
+		_portletRatingsDefinitionValuesMap;
 	private static ServiceRegistration<RatingsDataTransformer>
 		_serviceRegistration;
 

@@ -628,6 +628,12 @@ definition {
 				locator1 = "ACSettings#SELECT_ALL_CHECKBOX",
 				value1 = "\SPACE");
 
+			if (IsElementPresent(itemName = "Beryl Commerce", locator1 = "ACSettings#ITEM_ON_LIST")) {
+				Click.clickAtNotVisible(
+					key_propertyName = "Beryl Commerce",
+					locator1 = "ACSettings#PROPERTY_CHECKBOX");
+			}
+
 			Click(locator1 = "ACSettings#GENERIC_DELETE_BUTTON");
 
 			var confirmMessage = selenium.getText("ACSettings#DELETE_CONFIRMATION_MESSAGE");

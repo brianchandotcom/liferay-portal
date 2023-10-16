@@ -10,7 +10,7 @@ definition {
 
 		selenium.waitForElementNotPresent("//div[contains(@class,'lfr-notification-wrapper') and contains(@style,'height: 82px;')]");
 
-		selenium.waitForElementPresent("//body");
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.assertJavaScriptErrors("true");
 

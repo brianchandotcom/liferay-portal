@@ -4,7 +4,7 @@ definition {
 	function isNotText {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.isNotText();
 	}
@@ -12,7 +12,7 @@ definition {
 	function isNotValue {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.isNotValue();
 	}

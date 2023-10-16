@@ -14,7 +14,7 @@ definition {
 	function dragAndDropObjectMoveTwice {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent(${locator1});
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.mouseOver(${locator1});
 
@@ -40,7 +40,7 @@ definition {
 	function dragAndDropPortletToObject {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent(${locator1});
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.mouseOver(${locator1});
 
@@ -76,7 +76,7 @@ definition {
 	function dragAndDropPortletToPortlet {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent(${locator1});
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.mouseOver(${locator1});
 
@@ -106,7 +106,7 @@ definition {
 	function dragAndDropPortletToPortletNoError {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent(${locator1});
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.mouseOver(${locator1});
 
@@ -134,7 +134,7 @@ definition {
 	function dragAndDropReorganizeObjects {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent(${locator1});
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.mouseOver(${locator1});
 
@@ -180,7 +180,7 @@ definition {
 	function dragAndDropWithMouseMove {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent(${locator1});
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.mouseOver(${locator1});
 
@@ -212,9 +212,9 @@ definition {
 	function javaScriptDragAndDropObjectAboveShortNestedObject {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent(${locator1});
+		selenium.waitForElementPresent(${locator1}, "false");
 
-		selenium.waitForElementPresent(${locator2});
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		var javaScript = '''
 Simulate = {
@@ -262,9 +262,9 @@ Simulate.dragAndDrop(arguments[0], arguments[1]);
 	function javaScriptDragAndDropObjectAboveTallNestedObject {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent(${locator1});
+		selenium.waitForElementPresent(${locator1}, "false");
 
-		selenium.waitForElementPresent(${locator2});
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		var javaScript = '''
 Simulate = {
@@ -312,9 +312,9 @@ Simulate.dragAndDrop(arguments[0], arguments[1]);
 	function javaScriptDragAndDropObjectBelowShortNestedObject {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent(${locator1});
+		selenium.waitForElementPresent(${locator1}, "false");
 
-		selenium.waitForElementPresent(${locator2});
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		var javaScript = '''
 Simulate = {
@@ -362,9 +362,9 @@ Simulate.dragAndDrop(arguments[0], arguments[1]);
 	function javaScriptDragAndDropObjectBelowTallNestedObject {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent(${locator1});
+		selenium.waitForElementPresent(${locator1}, "false");
 
-		selenium.waitForElementPresent(${locator2});
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		if (contains(${ratio}, "ratio")) {
 			var ratio = "5 / 4";
@@ -416,9 +416,9 @@ Simulate.dragAndDrop(arguments[0], arguments[1], ${ratio});
 	function javaScriptDragAndDropToBottom {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent(${locator1});
+		selenium.waitForElementPresent(${locator1}, "false");
 
-		selenium.waitForElementPresent(${locator2});
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		var javaScript = '''
 Simulate = {
@@ -462,9 +462,9 @@ Simulate.dragAndDrop(arguments[0], arguments[1]);
 	function javaScriptDragAndDropToObject {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent(${locator1});
+		selenium.waitForElementPresent(${locator1}, "false");
 
-		selenium.waitForElementPresent(${locator2});
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		var javaScript = '''
 Simulate = {
@@ -508,9 +508,9 @@ Simulate.dragAndDrop(arguments[0], arguments[1]);
 	function javaScriptDragAndDropToUp {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent(${locator1});
+		selenium.waitForElementPresent(${locator1}, "false");
 
-		selenium.waitForElementPresent(${locator2});
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		var javaScript = '''
 Simulate = {
@@ -558,9 +558,9 @@ Simulate.dragAndDrop(arguments[0], arguments[1]);
 	function javaScriptDragAndDropUpperLeftCorner {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent(${locator1});
+		selenium.waitForElementPresent(${locator1}, "false");
 
-		selenium.waitForElementPresent(${locator2});
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		var javaScript = '''
 Simulate = {

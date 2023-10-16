@@ -4,7 +4,7 @@ definition {
 	function assertCssValue {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.assertCssValue(${locator1}, ${locator2}, ${value1});
 

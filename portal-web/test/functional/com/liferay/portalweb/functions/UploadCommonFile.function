@@ -30,7 +30,7 @@ definition {
 	function uploadCommonFileHiddenNoMouseOver {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.uploadCommonFile();
 

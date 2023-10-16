@@ -4,7 +4,7 @@ definition {
 	function isNotChecked {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.waitForVisible();
 
@@ -14,7 +14,7 @@ definition {
 	function isNotCheckedNotVisible {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.isNotChecked();
 	}

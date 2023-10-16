@@ -32,7 +32,7 @@ definition {
 	function doubleClickNotVisible {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.mouseOver();
 

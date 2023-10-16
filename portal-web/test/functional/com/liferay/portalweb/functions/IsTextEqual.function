@@ -4,7 +4,7 @@ definition {
 	function isPartialText {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.waitForVisible();
 
@@ -14,7 +14,7 @@ definition {
 	function isText {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.waitForVisible();
 
@@ -35,7 +35,7 @@ definition {
 	function isValue {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.waitForVisible();
 

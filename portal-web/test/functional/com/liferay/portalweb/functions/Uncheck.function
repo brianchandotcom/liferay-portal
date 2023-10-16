@@ -22,7 +22,7 @@ definition {
 	function uncheckHiddenToggleSwitch {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.mouseOver();
 
@@ -40,7 +40,7 @@ definition {
 	function uncheckNotVisible {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.mouseOver();
 
@@ -60,7 +60,7 @@ definition {
 	function uncheckToggleSwitch {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.mouseOver();
 
@@ -78,7 +78,7 @@ definition {
 	function uncheckToggleSwitchAndPause {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.mouseOver();
 
@@ -98,7 +98,7 @@ definition {
 	function uncheckToggleSwitchNoErrorNoAssert {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.mouseOver();
 

@@ -4,7 +4,7 @@ definition {
 	function uploadFile {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.uploadFile();
 

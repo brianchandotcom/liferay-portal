@@ -16,7 +16,7 @@ definition {
 	function assertNotCheckedHiddenToggleSwitch {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.assertNotChecked("xpath=(${locator1})/../../input");
 
@@ -28,7 +28,7 @@ definition {
 	function assertNotCheckedNotVisible {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.assertNotChecked();
 

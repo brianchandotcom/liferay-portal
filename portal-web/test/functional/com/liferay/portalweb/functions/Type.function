@@ -47,7 +47,7 @@ definition {
 	function sendKeysAceEditor {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.waitForEditable();
 
@@ -91,7 +91,7 @@ definition {
 	function typeAceEditor {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.waitForEditable();
 
@@ -107,7 +107,7 @@ definition {
 	function typeAceEditorNoError {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.waitForEditable();
 
@@ -119,7 +119,7 @@ definition {
 	function typeAceEditorNoMouseOver {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.waitForEditable();
 
@@ -151,7 +151,7 @@ definition {
 	function typeCodeMirrorEditorNoError {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.mouseOver();
 
@@ -161,7 +161,7 @@ definition {
 	function typeEditor {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.waitForEditable();
 
@@ -203,7 +203,7 @@ definition {
 	function typeNoMouseOver {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.waitForEditable();
 
@@ -257,7 +257,7 @@ definition {
 	function typeWaitForCKEditorScript {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent("//script[contains(@src,'ckeditor/config.js') or contains(@id,'ckEditorScript')]");
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.waitForEditable();
 

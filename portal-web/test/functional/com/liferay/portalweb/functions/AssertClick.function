@@ -92,7 +92,7 @@ definition {
 
 		selenium.assertLiferayErrors();
 
-		selenium.waitForElementPresent("xpath=(//script)[last()]");
+		selenium.waitForElementPresent(${locator1}, "false");
 	}
 
 	function assertTextClickCaseSensitive {
@@ -150,7 +150,7 @@ definition {
 	function waitForDMHomeAssertTextEqualsClick {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent("//div[contains(@id,'documentLibraryContainer')]");
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.pause(1500);
 

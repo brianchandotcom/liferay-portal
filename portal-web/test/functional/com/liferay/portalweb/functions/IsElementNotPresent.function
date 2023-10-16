@@ -15,7 +15,7 @@ definition {
 	function isNotVisible {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.isNotVisible();
 	}

@@ -47,7 +47,7 @@ arguments[0].dispatchEvent(event);
 	function mouseOverInvisible {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.mouseOver();
 
@@ -59,7 +59,7 @@ arguments[0].dispatchEvent(event);
 	function mouseOverNotVisible {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.mouseOver();
 
@@ -73,7 +73,7 @@ arguments[0].dispatchEvent(event);
 	function waitForMenuToggleJSMouseOver {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.pause(1000);
 

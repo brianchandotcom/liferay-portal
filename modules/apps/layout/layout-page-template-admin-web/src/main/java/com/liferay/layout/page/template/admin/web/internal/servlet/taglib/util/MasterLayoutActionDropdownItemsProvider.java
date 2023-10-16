@@ -170,7 +170,7 @@ public class MasterLayoutActionDropdownItemsProvider {
 							(layoutPageTemplateEntryId > 0) &&
 							hasUpdatePermission &&
 							FeatureFlagManagerUtil.isEnabled("LPS-197408"),
-						_getCopyMasterLayoutActionUnsafeConsumerWithPermissions()
+						_getCopyMasterLayoutWithPermissionsActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);
 			}
@@ -217,7 +217,7 @@ public class MasterLayoutActionDropdownItemsProvider {
 	}
 
 	private UnsafeConsumer<DropdownContextItem, Exception>
-		_getCopyMasterLayoutActionUnsafeConsumerWithPermissions() {
+		_getCopyMasterLayoutWithPermissionsActionUnsafeConsumer() {
 
 		return dropdownContextItem -> {
 			dropdownContextItem.setDropdownItems(

@@ -140,7 +140,7 @@ public class DisplayPageActionDropdownItemsProvider {
 						() ->
 							FeatureFlagManagerUtil.isEnabled("LPS-195263") &&
 							hasUpdatePermission,
-						_getCopyDisplayPageActionUnsafeConsumer()
+						_getCopyDisplayPageWithPermissionsActionUnsafeConsumer()
 					).add(
 						() ->
 							_layoutPageTemplateEntry.getLayoutPrototypeId() ==
@@ -219,7 +219,7 @@ public class DisplayPageActionDropdownItemsProvider {
 	}
 
 	private UnsafeConsumer<DropdownContextItem, Exception>
-		_getCopyDisplayPageActionUnsafeConsumer() {
+		_getCopyDisplayPageWithPermissionsActionUnsafeConsumer() {
 
 		return dropdownContextItem -> {
 			dropdownContextItem.setDropdownItems(

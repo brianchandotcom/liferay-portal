@@ -31,9 +31,15 @@ const TriggerLabel = React.forwardRef<HTMLButtonElement, any>(
 	)
 );
 
-export function RuleBuilderActionSection() {
-	const [actions, setActions] = useState<ActionType[]>([]);
+type RuleBuilderActionProps = {
+	actions: ActionType[];
+	setActions: (initializer: (previous: ActionType[]) => ActionType[]) => {};
+};
 
+export function RuleBuilderActionSection({
+	actions,
+	setActions,
+}: RuleBuilderActionProps) {
 	return (
 		<ClayPanel
 			className="page-editor__rule-builder-section"
@@ -101,10 +107,18 @@ export function RuleBuilderActionSection() {
 	);
 }
 
-export function RuleBuilderConditionSection() {
-	const [selectedConditionType, setSelectedConditonType] = useState('all');
+type RuleBuilderConditionProps = {
+	conditions: ConditionType[];
+	setConditions: (
+		initializer: (previous: ConditionType[]) => ConditionType[]
+	) => {};
+};
 
-	const [conditions, setConditions] = useState<ConditionType[]>([]);
+export function RuleBuilderConditionSection({
+	conditions,
+	setConditions,
+}: RuleBuilderConditionProps) {
+	const [selectedConditionType, setSelectedConditonType] = useState('all');
 
 	return (
 		<ClayPanel

@@ -28,6 +28,7 @@ interface CodeEditorLocalizedProps {
 	onSelectedLocaleChange: (val: IItem) => void;
 	onTranslationsChange: (val: LocalizedValue<string>) => void;
 	placeholder?: string;
+	readOnly?: boolean;
 	selectedLocale: Liferay.Language.Locale;
 	sidebarElements: SidebarCategory[];
 	translations: LocalizedValue<string>;
@@ -59,6 +60,7 @@ export function CodeEditorLocalized({
 	onSelectedLocaleChange,
 	onTranslationsChange,
 	placeholder,
+	readOnly = false,
 	selectedLocale,
 	sidebarElements,
 	translations,
@@ -87,6 +89,7 @@ export function CodeEditorLocalized({
 						});
 					}}
 					placeholder={placeholder}
+					readOnly={readOnly}
 					sidebarElements={sidebarElements}
 					value={translations[selectedLocale] ?? ''}
 				/>

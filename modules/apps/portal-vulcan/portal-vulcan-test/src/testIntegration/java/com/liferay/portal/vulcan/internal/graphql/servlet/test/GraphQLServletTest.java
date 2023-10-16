@@ -53,12 +53,12 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		TestServletData testServletData = new TestServletData();
+		_testDTO = new TestDTO();
+
+		TestServletData testServletData = new TestServletData(_testDTO);
 
 		_serviceRegistration = bundleContext.registerService(
 			ServletData.class, testServletData, null);
-
-		_testQuery = testServletData.getQuery();
 	}
 
 	@After
@@ -76,17 +76,12 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 					"createTestDTO",
 					Collections.singletonMap(
 						"testDTO", toGraphQLString(testDTO)),
-					new GraphQLField("id"), new GraphQLField("mapField"),
-					new GraphQLField("stringField")),
+					new GraphQLField("id"), new GraphQLField("map"),
+					new GraphQLField("string")),
 				"mutation"),
 			"JSONObject/data", "JSONObject/createTestDTO");
 
-		Assert.assertEquals(jsonObject.get("id"), testDTO.getId());
-		Assert.assertEquals(
-			JSONUtil.toStringMap(jsonObject.getJSONObject("mapField")),
-			testDTO.getMapField());
-		Assert.assertEquals(
-			jsonObject.get("stringField"), testDTO.getStringField());
+		assertEquals(false, testDTO, jsonObject);
 	}
 
 	@Test
@@ -94,21 +89,13 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 		JSONObject jsonObject = JSONUtil.getValueAsJSONObject(
 			invoke(
 				new GraphQLField(
-					"testDTO", new GraphQLField("extendedStringField"),
-					new GraphQLField("id"), new GraphQLField("mapField"),
-					new GraphQLField("stringField")),
+					"testDTO", new GraphQLField("extendedString"),
+					new GraphQLField("id"), new GraphQLField("map"),
+					new GraphQLField("string")),
 				"query"),
 			"JSONObject/data", "JSONObject/testDTO");
 
-		Assert.assertEquals(
-			jsonObject.get("extendedStringField"),
-			_testQuery.getExtendedStringField());
-		Assert.assertEquals(
-			JSONUtil.toStringMap(jsonObject.getJSONObject("mapField")),
-			_testQuery.getMapField());
-		Assert.assertEquals(jsonObject.get("id"), _testQuery.getId());
-		Assert.assertEquals(
-			jsonObject.get("stringField"), _testQuery.getStringField());
+		assertEquals(true, _testDTO, jsonObject);
 	}
 
 	@Test
@@ -135,8 +122,8 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 
 			JSONObject jsonObject = invoke(
 				new GraphQLField(
-					"testDTO", new GraphQLField("id"),
-					new GraphQLField("stringField")),
+					"testDTO", new GraphQLField("extendedString"),
+					new GraphQLField("id"), new GraphQLField("string")),
 				"query");
 
 			Assert.assertNull(
@@ -167,14 +154,13 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 			jsonObject = JSONUtil.getValueAsJSONObject(
 				invoke(
 					new GraphQLField(
-						"testDTO", new GraphQLField("id"),
-						new GraphQLField("stringField")),
+						"testDTO", new GraphQLField("extendedString"),
+						new GraphQLField("id"), new GraphQLField("map"),
+						new GraphQLField("string")),
 					"query"),
 				"JSONObject/data", "JSONObject/testDTO");
 
-			Assert.assertEquals(jsonObject.get("id"), _testQuery.getId());
-			Assert.assertEquals(
-				jsonObject.get("stringField"), _testQuery.getStringField());
+			assertEquals(true, _testDTO, jsonObject);
 		}
 		finally {
 			if (configurations == null) {
@@ -192,6 +178,6 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 	private ConfigurationAdmin _configurationAdmin;
 
 	private ServiceRegistration<ServletData> _serviceRegistration;
-	private TestQuery _testQuery;
+	private TestDTO _testDTO;
 
 }

@@ -40,7 +40,7 @@ import java.util.Queue;
  */
 public class TreeTestUtil {
 
-	public static void assertTree(
+	public static void assertObjectDefinitionTree(
 			Map<String, String[]> expectedMap, Tree actualTree,
 			ObjectDefinitionLocalService objectDefinitionLocalService)
 		throws PortalException {

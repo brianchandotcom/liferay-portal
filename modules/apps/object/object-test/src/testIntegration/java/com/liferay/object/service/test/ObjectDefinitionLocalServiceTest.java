@@ -1627,7 +1627,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		// Unbind object definition internal node
 
-		TreeTestUtil.assertTree(
+		TreeTestUtil.assertObjectDefinitionTree(
 			LinkedHashMapBuilder.put(
 				"A", new String[] {"AA", "AB"}
 			).put(
@@ -1650,7 +1650,7 @@ public class ObjectDefinitionLocalServiceTest {
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				TestPropsValues.getCompanyId(), "C_A");
 
-		TreeTestUtil.assertTree(
+		TreeTestUtil.assertObjectDefinitionTree(
 			LinkedHashMapBuilder.put(
 				"A", new String[] {"AB"}
 			).put(
@@ -1664,7 +1664,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		TreeTestUtil.unbind(_objectDefinitionLocalService, "C_AB");
 
-		TreeTestUtil.assertTree(
+		TreeTestUtil.assertObjectDefinitionTree(
 			LinkedHashMapBuilder.put(
 				"A", new String[0]
 			).build(),
@@ -2377,7 +2377,7 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE);
 		}
 
-		TreeTestUtil.assertTree(
+		TreeTestUtil.assertObjectDefinitionTree(
 			expectedMap,
 			_treeFactory.createObjectDefinitionTree(rootObjectDefinitionId),
 			_objectDefinitionLocalService);

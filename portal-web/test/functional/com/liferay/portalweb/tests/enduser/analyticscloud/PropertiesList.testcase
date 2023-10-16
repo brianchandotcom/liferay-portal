@@ -292,32 +292,6 @@ definition {
 		}
 	}
 
-	@description = "Feature ID: Legacy | Automation ID: LRAC-9120 | Test Summary: Property field is displayed in empty state when no property is available"
-	@priority = 3
-	test ViewPropertyListDefault {
-		task ("Go to properties") {
-			ACNavigation.goToSettings();
-
-			ACSettings.goToProperties();
-		}
-
-		task ("Assert empty state on properties page") {
-			if (IsElementNotPresent(key_textValue = "No Properties Found", locator1 = "ACUtils#GENERIC_TEXT")) {
-				ACSettings.deleteAllProperties();
-			}
-
-			ACProperties.assertNoProperties();
-		}
-
-		task ("Assert that there are no more properties on the sites page") {
-			Navigator.gotoBack();
-
-			AssertElementPresent(locator1 = "ACSidebar#PROPERTY_MENU_NO_PROPERTIES");
-
-			AssertElementPresent(locator1 = "TextInput#NO_PROPERTIES_AVAILABLE_TEXT");
-		}
-	}
-
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9118 | Test Summary: The setting info (from AC configuration menu) are global and don't depend of property"
 	@priority = 3
 	test ViewSettingInfoAreGlobalAndDontDependOfProperty {

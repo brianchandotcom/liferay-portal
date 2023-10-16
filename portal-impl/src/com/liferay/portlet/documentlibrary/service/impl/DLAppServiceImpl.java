@@ -22,6 +22,7 @@ import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppHelperLocalService;
 import com.liferay.document.library.kernel.util.DLAppHelperThreadLocal;
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
+import com.liferay.document.library.kernel.util.DLValidatorUtil;
 import com.liferay.document.library.kernel.util.comparator.FolderNameComparator;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelModifiedDateComparator;
 import com.liferay.document.library.kernel.util.comparator.RepositoryModelTitleComparator;
@@ -3141,6 +3142,10 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			fileVersions.size() - 1);
 
 		String sourceFileName = DLAppUtil.getSourceFileName(latestFileVersion);
+
+		DLValidatorUtil.validateFileSize(
+			toRepository.getRepositoryId(), sourceFileName,
+			latestFileVersion.getMimeType(), latestFileVersion.getSize());
 
 		_populateServiceContext(
 			serviceContext, DLFileEntryConstants.getClassName(),

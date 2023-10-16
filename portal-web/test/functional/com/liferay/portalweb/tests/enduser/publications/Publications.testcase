@@ -775,7 +775,7 @@ definition {
 				locale = "es-ES");
 
 			PageEditor.editFragmentText(
-				fragmentName = "Heading",
+				fragmentName = "Paragraph",
 				id = "element-text",
 				text = "Bienvenido a Liferay Edit");
 

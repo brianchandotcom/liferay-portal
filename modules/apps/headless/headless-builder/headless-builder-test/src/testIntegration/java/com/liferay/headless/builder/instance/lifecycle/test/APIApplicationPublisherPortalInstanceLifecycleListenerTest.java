@@ -94,6 +94,9 @@ public class APIApplicationPublisherPortalInstanceLifecycleListenerTest
 
 		String apiEndpointExternalReferenceCode = RandomTestUtil.randomString();
 		String apiSchemaExternalReferenceCode = RandomTestUtil.randomString();
+		String path =
+			StringPool.FORWARD_SLASH +
+				StringUtil.toLowerCase(RandomTestUtil.randomString());
 
 		HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -109,8 +112,7 @@ public class APIApplicationPublisherPortalInstanceLifecycleListenerTest
 					).put(
 						"name", "name"
 					).put(
-						"path",
-						StringPool.FORWARD_SLASH + RandomTestUtil.randomString()
+						"path", path
 					).put(
 						"retrieveType",
 						APIApplication.Endpoint.RetrieveType.COLLECTION.

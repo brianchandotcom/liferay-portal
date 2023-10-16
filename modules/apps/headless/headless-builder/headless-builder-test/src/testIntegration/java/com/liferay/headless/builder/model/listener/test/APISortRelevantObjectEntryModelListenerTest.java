@@ -132,6 +132,9 @@ public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 		throws Exception {
 
 		String apiSchemaExternalReferenceCode = RandomTestUtil.randomString();
+		String path =
+			StringPool.SLASH +
+				StringUtil.toLowerCase(RandomTestUtil.randomString());
 
 		HTTPTestUtil.invokeToHttpCode(
 			JSONUtil.put(
@@ -146,7 +149,7 @@ public class APISortRelevantObjectEntryModelListenerTest extends BaseTestCase {
 					).put(
 						"name", "name"
 					).put(
-						"path", StringPool.SLASH + RandomTestUtil.randomString()
+						"path", path
 					).put(
 						"retrieveType", "collection"
 					).put(

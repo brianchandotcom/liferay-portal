@@ -66,7 +66,8 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 					"name", RandomTestUtil.randomString()
 				).put(
 					"path",
-					StringPool.FORWARD_SLASH + RandomTestUtil.randomString()
+					StringPool.FORWARD_SLASH +
+						StringUtil.toLowerCase(RandomTestUtil.randomString())
 				).put(
 					"retrieveType",
 					APIApplication.Endpoint.RetrieveType.COLLECTION.getValue()
@@ -91,7 +92,8 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 					"name", RandomTestUtil.randomString()
 				).put(
 					"path",
-					StringPool.FORWARD_SLASH + RandomTestUtil.randomString()
+					StringPool.FORWARD_SLASH +
+						StringUtil.toLowerCase(RandomTestUtil.randomString())
 				).put(
 					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
 					RandomTestUtil.randomLong()
@@ -119,7 +121,8 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 					"name", RandomTestUtil.randomString()
 				).put(
 					"path",
-					StringPool.FORWARD_SLASH + RandomTestUtil.randomString()
+					StringPool.FORWARD_SLASH +
+						StringUtil.toLowerCase(RandomTestUtil.randomString())
 				).put(
 					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
 					TestPropsValues.getUserId()
@@ -156,7 +159,8 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 					"name", RandomTestUtil.randomString()
 				).put(
 					"path",
-					StringPool.FORWARD_SLASH + RandomTestUtil.randomString()
+					StringPool.FORWARD_SLASH +
+						StringUtil.toLowerCase(RandomTestUtil.randomString())
 				).put(
 					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
 					apiApplicationJSONObject1.getLong("id")
@@ -191,8 +195,10 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				).put(
 					"path",
 					StringBundler.concat(
-						StringPool.FORWARD_SLASH, RandomTestUtil.randomString(),
-						StringPool.FORWARD_SLASH, RandomTestUtil.randomString(),
+						StringPool.FORWARD_SLASH,
+						StringUtil.toLowerCase(RandomTestUtil.randomString()),
+						StringPool.FORWARD_SLASH,
+						StringUtil.toLowerCase(RandomTestUtil.randomString()),
 						StringPool.COMMA)
 				).put(
 					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
@@ -221,7 +227,8 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				).put(
 					"path",
 					StringBundler.concat(
-						StringPool.FORWARD_SLASH, RandomTestUtil.randomString(),
+						StringPool.FORWARD_SLASH,
+						StringUtil.toLowerCase(RandomTestUtil.randomString()),
 						StringPool.FORWARD_SLASH, StringPool.OPEN_CURLY_BRACE)
 				).put(
 					"pathParameter", HeadlessBuilderConstants.PATH_PARAMETER_ERC
@@ -267,7 +274,8 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				).put(
 					"path",
 					StringBundler.concat(
-						StringPool.FORWARD_SLASH, RandomTestUtil.randomString(),
+						StringPool.FORWARD_SLASH,
+						StringUtil.toLowerCase(RandomTestUtil.randomString()),
 						StringPool.FORWARD_SLASH, StringPool.OPEN_CURLY_BRACE,
 						RandomTestUtil.randomString(),
 						StringPool.CLOSE_CURLY_BRACE)
@@ -304,8 +312,8 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				).put(
 					"path",
 					StringBundler.concat(
-						RandomTestUtil.randomString(), StringPool.FORWARD_SLASH,
-						StringPool.COMMA)
+						StringUtil.toLowerCase(RandomTestUtil.randomString()),
+						StringPool.FORWARD_SLASH, StringPool.COMMA)
 				).put(
 					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
 					apiApplicationJSONObject1.getLong("id")
@@ -332,7 +340,8 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				).put(
 					"path",
 					StringBundler.concat(
-						StringPool.FORWARD_SLASH, RandomTestUtil.randomString(),
+						StringPool.FORWARD_SLASH,
+						StringUtil.toLowerCase(RandomTestUtil.randomString()),
 						StringPool.FORWARD_SLASH, StringPool.OPEN_CURLY_BRACE,
 						RandomTestUtil.randomString(),
 						StringPool.CLOSE_CURLY_BRACE)
@@ -372,7 +381,8 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 					"name", RandomTestUtil.randomString()
 				).put(
 					"path",
-					StringPool.FORWARD_SLASH + RandomTestUtil.randomString()
+					StringPool.FORWARD_SLASH +
+						StringUtil.toLowerCase(RandomTestUtil.randomString())
 				).put(
 					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
 					apiApplicationJSONObject1.getLong("id")
@@ -406,7 +416,8 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				).put(
 					"path",
 					StringBundler.concat(
-						StringPool.FORWARD_SLASH, RandomTestUtil.randomString(),
+						StringPool.FORWARD_SLASH,
+						StringUtil.toLowerCase(RandomTestUtil.randomString()),
 						StringPool.FORWARD_SLASH, StringPool.OPEN_CURLY_BRACE,
 						RandomTestUtil.randomString(),
 						StringPool.CLOSE_CURLY_BRACE)
@@ -432,7 +443,9 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			).toString(),
 			JSONCompareMode.LENIENT);
 
-		String path = StringPool.FORWARD_SLASH + RandomTestUtil.randomString();
+		String path =
+			StringPool.FORWARD_SLASH +
+				StringUtil.toLowerCase(RandomTestUtil.randomString());
 
 		JSONObject apiEndpointJSONObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
@@ -542,7 +555,8 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 					"name", RandomTestUtil.randomString()
 				).put(
 					"path",
-					StringPool.FORWARD_SLASH + RandomTestUtil.randomString()
+					StringPool.FORWARD_SLASH +
+						StringUtil.toLowerCase(RandomTestUtil.randomString())
 				).put(
 					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
 					apiApplicationJSONObject1.getLong("id")

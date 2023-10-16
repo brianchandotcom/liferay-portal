@@ -338,7 +338,8 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 	}
 
 	private static final String _API_APPLICATION_PATH =
-		StringPool.SLASH + RandomTestUtil.randomString();
+		StringPool.SLASH +
+			StringUtil.toLowerCase(RandomTestUtil.randomString());
 
 	private static final String _API_ENDPOINT_ERC =
 		RandomTestUtil.randomString();

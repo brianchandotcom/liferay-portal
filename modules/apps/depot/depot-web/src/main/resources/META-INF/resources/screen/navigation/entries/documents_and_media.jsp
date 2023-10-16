@@ -22,7 +22,7 @@ DepotAdminDLDisplayContext depotAdminDLDisplayContext = (DepotAdminDLDisplayCont
 		<liferay-frontend:fieldset
 			collapsible="<%= true %>"
 			cssClass="mt-5"
-			label='<%= LanguageUtil.get(request, "maximum-file-size-and-mimetypes") %>'
+			label='<%= LanguageUtil.get(request, "mime-type-limit") %>'
 		>
 			<div>
 				<span aria-hidden="true" class="loading-animation"></span>

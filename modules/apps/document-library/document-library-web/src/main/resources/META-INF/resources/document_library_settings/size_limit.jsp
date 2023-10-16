@@ -40,7 +40,7 @@ DLSizeLimitConfigurationDisplayContext dlSizeLimitConfigurationDisplayContext = 
 		</clay:sheet-section>
 
 		<clay:sheet-section>
-			<h3 class="c-mb-2 sheet-subtitle text-2 text-secondary"><liferay-ui:message key="maximum-file-size-and-mimetypes" /></h3>
+			<h3 class="c-mb-2 sheet-subtitle text-2 text-secondary"><liferay-ui:message key="mime-type-limit" /></h3>
 
 			<div>
 				<span aria-hidden="true" class="loading-animation"></span>

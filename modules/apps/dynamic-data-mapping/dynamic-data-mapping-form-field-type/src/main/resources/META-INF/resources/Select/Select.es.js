@@ -83,7 +83,7 @@ function toArray(value = '') {
 		newValue = [newValue];
 	}
 
-	return newValue.map((value) => value.toString());
+	return newValue.map((value) => value?.toString());
 }
 
 function handleDropdownItemClick({currentValue, multiple, option}) {

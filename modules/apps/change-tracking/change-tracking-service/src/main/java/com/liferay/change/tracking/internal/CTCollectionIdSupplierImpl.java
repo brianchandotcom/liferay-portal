@@ -9,6 +9,8 @@ import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.change.tracking.model.CTPreferences;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.portal.kernel.change.tracking.CTCollectionIdSupplier;
+import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 
@@ -30,10 +32,18 @@ public class CTCollectionIdSupplierImpl implements CTCollectionIdSupplier {
 			return ctCollectionId;
 		}
 
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		long userId = PrincipalThreadLocal.getUserId();
+
+		if ((companyId == CompanyConstants.SYSTEM) &&
+			(userId == UserConstants.USER_ID_DEFAULT)) {
+
+			return CTConstants.CT_COLLECTION_ID_PRODUCTION;
+		}
+
 		CTPreferences ctPreferences =
-			_ctPreferencesLocalService.fetchCTPreferences(
-				CompanyThreadLocal.getCompanyId(),
-				PrincipalThreadLocal.getUserId());
+			_ctPreferencesLocalService.fetchCTPreferences(companyId, userId);
 
 		if (ctPreferences == null) {
 			return CTConstants.CT_COLLECTION_ID_PRODUCTION;

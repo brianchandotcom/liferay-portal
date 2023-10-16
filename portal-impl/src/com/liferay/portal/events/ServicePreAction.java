@@ -1997,6 +1997,9 @@ public class ServicePreAction extends Action {
 
 		Group group = themeDisplay.getScopeGroup();
 
+		httpServletResponse.addHeader(
+			"X-Liferay-Request-Group", group.getType() + "t");
+
 		Layout layout = themeDisplay.getLayout();
 
 		if (group.getGroupId() == themeDisplay.getCompanyGroupId()) {
@@ -2041,24 +2044,7 @@ public class ServicePreAction extends Action {
 		}
 
 		if (group.isSite()) {
-			if (group.getType() == GroupConstants.TYPE_SITE_OPEN) {
-				httpServletResponse.addHeader("X-Liferay-Request-Group", "1");
-			}
-
-			if (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED) {
-				httpServletResponse.addHeader("X-Liferay-Request-Group", "2");
-			}
-
-			if (group.getType() == GroupConstants.TYPE_SITE_PRIVATE) {
-				httpServletResponse.addHeader("X-Liferay-Request-Group", "3");
-			}
-
-			if (group.getType() == GroupConstants.TYPE_DEPOT) {
-				httpServletResponse.addHeader("X-Liferay-Request-Group", "5");
-			}
-		}
-		else {
-			httpServletResponse.addHeader("X-Liferay-Request-Group", "4");
+			httpServletResponse.addHeader("X-Liferay-Request-Group", "s");
 		}
 
 		User user = themeDisplay.getUser();

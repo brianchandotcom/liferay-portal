@@ -82,20 +82,6 @@ const General = ({
 	);
 
 	const {
-		onSelected: onCurrencySelected,
-		options: currencyOptions,
-	} = getPicklistOptions(
-		fieldEntries[LiferayPicklistName.CURRENCIES],
-		(selected) => setFieldValue('currency', selected)
-	);
-
-	const companyCurrencies =
-		currencyOptions &&
-		currencyOptions.filter(
-			(currency) => currency.value === values.currency.key
-		);
-
-	const {
 		onSelected: onIndustrySelected,
 		options: industryOptions,
 	} = getPicklistOptions(
@@ -146,15 +132,6 @@ const General = ({
 						name="mdfActivityAssociated"
 						onChange={onMDFActivitySelected}
 						options={mdfActivitiesOptions}
-					/>
-
-					<PRMFormik.Field
-						component={PRMForm.Select}
-						label="Currency"
-						name="currency"
-						onChange={onCurrencySelected}
-						options={companyCurrencies}
-						required
 					/>
 				</PRMForm.Group>
 			</PRMForm.Section>

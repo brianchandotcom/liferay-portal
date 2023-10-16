@@ -7,49 +7,49 @@ import ClayAlert from '@clayui/alert';
 import ClayForm, {ClayRadio, ClayRadioGroup} from '@clayui/form';
 import {SingleSelect, Toggle} from '@liferay/object-js-components-web';
 import classNames from 'classnames';
-import React, {useMemo} from 'react';
+import React, {useEffect} from 'react';
 
 import {defaultLanguageId} from '../../../../utils/constants';
 
 import '../../EditObjectFieldContent.scss';
 
 const languages = Liferay.Language.available;
-const languageLabels = Object.values(languages).map((language) => {
-	return {label: language};
+const languageLabels = Object.entries(languages).map(([key, value]) => {
+	return {label: value, value: key};
 });
-const defaultLanguage = languageLabels[0].label;
 
 interface SearchableProps {
 	isApproved: boolean;
 	modelBuilder?: boolean;
-	objectField: Partial<ObjectField>;
-	onSubmit?: () => void;
+	onSubmit?: (value?: Partial<ObjectField>) => void;
 	readOnly: boolean;
 	setValues: (values: Partial<ObjectField>) => void;
+	values: Partial<ObjectField>;
 }
 
 export function SearchableContainer({
 	isApproved,
 	modelBuilder,
-	objectField,
 	onSubmit,
 	readOnly,
 	setValues,
+	values,
 }: SearchableProps) {
 	const isSearchableString =
-		objectField.indexed &&
-		(objectField.DBType === 'Clob' ||
-			objectField.DBType === 'String' ||
-			objectField.businessType === 'Attachment') &&
-		objectField.businessType !== 'Aggregation';
+		values.indexed &&
+		(values.DBType === 'Clob' ||
+			values.DBType === 'String' ||
+			values.businessType === 'Attachment') &&
+		values.businessType !== 'Aggregation';
 
-	const selectedLanguage = useMemo(() => {
-		const label =
-			objectField.indexedLanguageId &&
-			languages[objectField.indexedLanguageId];
-
-		return label || defaultLanguage;
-	}, [objectField.indexedLanguageId]);
+	useEffect(() => {
+		if (!values.indexedLanguageId) {
+			setValues({
+				indexedLanguageId: defaultLanguageId,
+			});
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<div
@@ -70,8 +70,7 @@ export function SearchableContainer({
 			<ClayForm.Group>
 				<Toggle
 					disabled={
-						objectField.businessType === 'Encrypted' ||
-						objectField.system
+						values.businessType === 'Encrypted' || values.system
 					}
 					label={Liferay.Language.get('searchable')}
 					name="indexed"
@@ -83,7 +82,7 @@ export function SearchableContainer({
 						}
 					}}
 					onToggle={(indexed) => setValues({indexed})}
-					toggled={objectField.indexed}
+					toggled={values.indexed}
 				/>
 			</ClayForm.Group>
 
@@ -101,7 +100,7 @@ export function SearchableContainer({
 						onChange={(selected: string | number) => {
 							const indexedAsKeyword = selected === 'true';
 							const indexedLanguageId = indexedAsKeyword
-								? null
+								? ''
 								: defaultLanguageId;
 
 							setValues({
@@ -109,9 +108,7 @@ export function SearchableContainer({
 								indexedLanguageId,
 							});
 						}}
-						value={new Boolean(
-							objectField.indexedAsKeyword
-						).toString()}
+						value={new Boolean(values.indexedAsKeyword).toString()}
 					>
 						<ClayRadio
 							disabled={readOnly}
@@ -128,29 +125,22 @@ export function SearchableContainer({
 				</ClayForm.Group>
 			)}
 
-			{isSearchableString && !objectField.indexedAsKeyword && (
+			{isSearchableString && !values.indexedAsKeyword && (
 				<SingleSelect
+					items={languageLabels}
 					label={Liferay.Language.get('language')}
-					onBlur={(event) => {
-						event.stopPropagation();
+					onSelectionChange={(value) => {
+						setValues({indexedLanguageId: value as string});
 
 						if (onSubmit) {
-							onSubmit();
+							onSubmit({
+								...values,
+								indexedLanguageId: value as string,
+							});
 						}
 					}}
-					onChange={(value) => {
-						const [indexedLanguageId] = Object.entries(
-							languages
-						).find(([, label]) => value.label === label) as [
-							Liferay.Language.Locale,
-							string
-						];
-
-						setValues({indexedLanguageId});
-					}}
-					options={languageLabels}
 					required
-					value={selectedLanguage}
+					selectedKey={values.indexedLanguageId as string}
 				/>
 			)}
 		</div>

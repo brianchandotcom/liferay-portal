@@ -34,10 +34,6 @@ export declare enum TYPES {
 	SET_OBJECT_VIEW_AS_DEFAULT = 'SET_OBJECT_VIEW_AS_DEFAULT',
 }
 declare const initialState: TState;
-declare type TSortOptions = {
-	label: string;
-	value: string;
-};
 export declare type TAction =
 	| {
 			payload: {
@@ -69,7 +65,7 @@ export declare type TAction =
 				objectFieldName: string;
 				objectFields: ObjectField[];
 				objectViewSortColumns?: TObjectViewSortColumn[];
-				selectedObjetSort: TSortOptions;
+				selectedObjetSortValue: string;
 			};
 			type: TYPES.ADD_OBJECT_VIEW_SORT_COLUMN;
 	  }

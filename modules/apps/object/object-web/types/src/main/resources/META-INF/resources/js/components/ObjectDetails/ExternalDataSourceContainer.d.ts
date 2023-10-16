@@ -8,13 +8,11 @@
 import {FormError} from '@liferay/object-js-components-web';
 interface ExternalDataSourceContainerProps {
 	errors: FormError<ObjectDefinition>;
-	setValues: (values: Partial<ObjectDefinition>) => void;
 	storageTypes: LabelValueObject[];
 	values: Partial<ObjectDefinition>;
 }
 export declare function ExternalDataSourceContainer({
 	errors,
-	setValues,
 	storageTypes,
 	values,
 }: ExternalDataSourceContainerProps): JSX.Element;

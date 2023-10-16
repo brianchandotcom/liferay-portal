@@ -7,19 +7,19 @@
 
 interface EditObjectRelationshipProps {
 	baseResourceURL: string;
-	deletionTypes: LabelValueObject[];
 	hasUpdateObjectDefinitionPermission: boolean;
 	objectDefinitionExternalReferenceCode: string;
 	objectRelationship: ObjectRelationship;
+	objectRelationshipDeletionTypes: LabelValueObject[];
 	parameterRequired: boolean;
 	restContextPath: string;
 }
 export default function EditObjectRelationship({
 	baseResourceURL,
-	deletionTypes,
 	hasUpdateObjectDefinitionPermission,
 	objectDefinitionExternalReferenceCode,
 	objectRelationship: initialValues,
+	objectRelationshipDeletionTypes,
 	parameterRequired,
 	restContextPath,
 }: EditObjectRelationshipProps): JSX.Element;

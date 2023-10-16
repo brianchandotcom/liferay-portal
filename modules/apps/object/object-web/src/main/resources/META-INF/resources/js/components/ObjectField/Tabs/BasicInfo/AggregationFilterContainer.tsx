@@ -269,7 +269,7 @@ export function AggregationFilterContainer({
 			checkedItems,
 			items,
 			selectedFilterBy,
-			selectedFilterType,
+			selectedFilterTypeValue,
 			setErrors,
 			value,
 		}: FilterValidation) => {
@@ -280,7 +280,7 @@ export function AggregationFilterContainer({
 				currentErrors.selectedFilterBy = REQUIRED_MSG;
 			}
 
-			if (!selectedFilterType) {
+			if (!selectedFilterTypeValue) {
 				currentErrors.selectedFilterType = REQUIRED_MSG;
 			}
 
@@ -294,7 +294,7 @@ export function AggregationFilterContainer({
 
 			if (
 				selectedFilterBy?.businessType === 'Date' &&
-				selectedFilterType?.value === 'range'
+				selectedFilterTypeValue === 'range'
 			) {
 				const startDate = items.find((date) => date.value === 'ge');
 				const endDate = items.find((date) => date.value === 'le');

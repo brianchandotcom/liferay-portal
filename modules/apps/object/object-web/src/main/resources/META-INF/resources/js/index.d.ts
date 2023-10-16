@@ -55,6 +55,11 @@ type IncludesFilterOperator = {
 	in: string[] | number[];
 };
 
+interface LabelKeyObject {
+	key: string;
+	label: string;
+}
+
 interface LabelNameObject {
 	label: string;
 	name: string;
@@ -241,7 +246,7 @@ interface ObjectField {
 	id: number;
 	indexed: boolean;
 	indexedAsKeyword: boolean;
-	indexedLanguageId: Liferay.Language.Locale | null;
+	indexedLanguageId: Liferay.Language.Locale | string;
 	label: LocalizedValue<string>;
 	listTypeDefinitionExternalReferenceCode: string;
 	listTypeDefinitionId?: number;

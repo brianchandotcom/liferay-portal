@@ -35,7 +35,7 @@ interface IProps {
 		disableDateValues,
 		items,
 		selectedFilterBy,
-		selectedFilterType,
+		selectedFilterTypeValue,
 		setErrors,
 		value,
 	}: FilterValidation) => FilterErrors;
@@ -57,7 +57,7 @@ export declare type FilterValidation = {
 	disableDateValues?: boolean;
 	items: IItem[];
 	selectedFilterBy?: ObjectField;
-	selectedFilterType?: LabelValueObject | null;
+	selectedFilterTypeValue?: string;
 	setErrors: (value: FilterErrors) => void;
 	value?: string;
 };

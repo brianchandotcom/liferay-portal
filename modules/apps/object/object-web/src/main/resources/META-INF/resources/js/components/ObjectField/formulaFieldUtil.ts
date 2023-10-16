@@ -11,16 +11,6 @@ export type FormulaOutput = {
 
 export const FORMULA_OUTPUT_OPTIONS: FormulaOutput[] = [
 	{
-		description: Liferay.Language.get('select-between-two-possible-values'),
-		label: Liferay.Language.get('boolean'),
-		value: 'Boolean',
-	},
-	{
-		description: Liferay.Language.get('calculate-date-values'),
-		label: Liferay.Language.get('date'),
-		value: 'Date',
-	},
-	{
 		description: Liferay.Language.get('calculate-decimal-numeric-values'),
 		label: Liferay.Language.get('decimal'),
 		value: 'Decimal',
@@ -31,10 +21,5 @@ export const FORMULA_OUTPUT_OPTIONS: FormulaOutput[] = [
 		),
 		label: Liferay.Language.get('integer'),
 		value: 'Integer',
-	},
-	{
-		description: Liferay.Language.get('add-text-fields'),
-		label: Liferay.Language.get('text'),
-		value: 'Text',
 	},
 ];

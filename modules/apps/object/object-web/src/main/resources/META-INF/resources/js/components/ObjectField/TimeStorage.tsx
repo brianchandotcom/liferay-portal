@@ -17,8 +17,9 @@ import './ObjectFieldFormBase.scss';
 interface TimeStorageProps {
 	disabled?: boolean;
 	objectFieldSettings: ObjectFieldSetting[];
-	onSubmit?: () => void;
+	onSubmit?: (value: Partial<ObjectField>) => void;
 	setValues: (values: Partial<ObjectField>) => void;
+	values: Partial<ObjectField>;
 }
 
 const timeStorageOptions = [
@@ -37,6 +38,7 @@ export function TimeStorage({
 	objectFieldSettings,
 	onSubmit,
 	setValues,
+	values,
 }: TimeStorageProps) {
 	const settings = normalizeFieldSettings(objectFieldSettings);
 
@@ -44,7 +46,7 @@ export function TimeStorage({
 		({value}) => value === settings.timeStorage
 	);
 
-	const handleValueChange = ({value}: {value: string}) =>
+	const handleValueChange = (value: string) => {
 		setValues({
 			objectFieldSettings: updateFieldSettings(objectFieldSettings, {
 				name: 'timeStorage',
@@ -52,22 +54,28 @@ export function TimeStorage({
 			}),
 		});
 
+		if (onSubmit) {
+			onSubmit({
+				...values,
+				objectFieldSettings: updateFieldSettings(objectFieldSettings, {
+					name: 'timeStorage',
+					value,
+				}),
+			});
+		}
+	};
+
 	return (
 		<ClayForm.Group>
 			<SingleSelect
 				disabled={disabled}
+				items={timeStorageOptions}
 				label={Liferay.Language.get('time-storage')}
-				onBlur={(event) => {
-					event.stopPropagation();
-
-					if (onSubmit) {
-						onSubmit();
-					}
-				}}
-				onChange={handleValueChange}
-				options={timeStorageOptions}
+				onSelectionChange={(value) =>
+					handleValueChange(value as string)
+				}
 				required
-				value={timeStorageOption?.label}
+				selectedKey={timeStorageOption?.value}
 			/>
 		</ClayForm.Group>
 	);

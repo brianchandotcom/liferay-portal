@@ -46,7 +46,7 @@ const RECIPIENT_OPTIONS = [
 		label: Liferay.Language.get('role'),
 		value: 'role',
 	},
-];
+] as LabelValueObject[];
 
 export function UserNotificationSettings({
 	setValues,
@@ -187,26 +187,22 @@ export function UserNotificationSettings({
 
 	return (
 		<>
-			<SingleSelect
+			<SingleSelect<LabelValueObject>
 				disabled={values.system}
+				items={RECIPIENT_OPTIONS}
 				label={Liferay.Language.get('recipients')}
-				onChange={(item) => {
+				onSelectionChange={(value) => {
 					setValues({
 						...values,
-						recipientType: item.value,
+						recipientType: value as string,
 						recipients: [],
 					});
 
-					if (item.value === 'role') {
+					if (value === 'role') {
 						getRoles('');
 					}
 				}}
-				options={RECIPIENT_OPTIONS}
-				value={
-					RECIPIENT_OPTIONS.find(
-						(recipient) => values.recipientType === recipient.value
-					)?.label
-				}
+				selectedKey={values.recipientType}
 			/>
 
 			{values.recipientType === 'term' && (

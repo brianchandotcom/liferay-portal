@@ -39,11 +39,7 @@ interface UseObjectRelationshipFormProps {
 	parameterRequired: boolean;
 }
 
-export enum ObjectRelationshipType {
-	MANY_TO_MANY = 'manyToMany',
-	ONE_TO_MANY = 'oneToMany',
-	ONE_TO_ONE = 'oneToOne',
-}
+export type ObjectRelationshipType = 'manyToMany' | 'oneToMany' | 'oneToOne';
 
 type ObjectRelationshipTypeInfo = {
 	description: string;
@@ -60,8 +56,9 @@ const MANY_TO_MANY = {
 	label: Liferay.Language.get('many-to-many'),
 	objectInputLabel1: Liferay.Language.get('many-records-of'),
 	objectInputLabel2: Liferay.Language.get('many-records-of'),
-	value: ObjectRelationshipType.MANY_TO_MANY,
-};
+	value: 'manyToMany',
+} as ObjectRelationshipTypeInfo;
+
 const ONE_TO_MANY = {
 	description: Liferay.Language.get(
 		"one-object's-entry-interacts-with-many-others-object's-entries"
@@ -69,8 +66,9 @@ const ONE_TO_MANY = {
 	label: Liferay.Language.get('one-to-many'),
 	objectInputLabel1: Liferay.Language.get('one-record-of'),
 	objectInputLabel2: Liferay.Language.get('many-records-of'),
-	value: ObjectRelationshipType.ONE_TO_MANY,
-};
+	value: 'oneToMany',
+} as ObjectRelationshipTypeInfo;
+
 const ONE_TO_ONE = {
 	description: Liferay.Language.get(
 		"one-object's-entry-interacts-only-with-one-other-object's-entry"
@@ -78,8 +76,8 @@ const ONE_TO_ONE = {
 	label: Liferay.Language.get('one-to-one'),
 	objectInputLabel1: Liferay.Language.get('one-record-of'),
 	objectInputLabel2: Liferay.Language.get('one-record-of'),
-	value: ObjectRelationshipType.ONE_TO_ONE,
-};
+	value: 'oneToOne',
+} as ObjectRelationshipTypeInfo;
 
 export const OBJECT_RELATIONSHIP_TYPES = [
 	MANY_TO_MANY,
@@ -119,7 +117,7 @@ export function useObjectRelationshipForm({
 
 		if (
 			parameterRequired &&
-			relationship.type === ObjectRelationshipType.ONE_TO_MANY &&
+			relationship.type === 'oneToMany' &&
 			!relationship.parameterObjectFieldName
 		) {
 			errors.parameterObjectFieldName = REQUIRED_MSG;
@@ -178,8 +176,8 @@ export function ObjectRelationshipFormBase({
 		Partial<ObjectDefinition>[]
 	>([]);
 	const [objectRelationshipTypes, setObjectRelationshipTypes] = useState<
-		ObjectRelationshipTypeInfo[] | undefined
-	>();
+		ObjectRelationshipTypeInfo[]
+	>([ONE_TO_MANY]);
 	const [query, setQuery] = useState<string>('');
 	const [reverseOrder, setReverseOrder] = useState<boolean>(false);
 
@@ -356,8 +354,9 @@ export function ObjectRelationshipFormBase({
 			<SingleSelect
 				disabled={readonly}
 				error={errors.type}
+				items={objectRelationshipTypes}
 				label={Liferay.Language.get('type')}
-				onChange={({value}) => {
+				onSelectionChange={(value) => {
 					if (
 						(value === 'manyToMany' || value === 'oneToOne') &&
 						currentObjectDefinition?.id !== objectDefinition1?.id
@@ -382,17 +381,12 @@ export function ObjectRelationshipFormBase({
 							objectDefinitionExternalReferenceCode1:
 								objectDefinition1?.externalReferenceCode,
 							objectDefinitionId1: objectDefinition1?.id,
-							type: value,
+							type: value as ObjectRelationshipType,
 						});
 					}
 				}}
-				options={objectRelationshipTypes ?? [ONE_TO_MANY]}
 				required
-				value={
-					OBJECT_RELATIONSHIP_TYPES.find(
-						({value}) => value === values.type
-					)?.label
-				}
+				selectedKey={values.type}
 			/>
 
 			{values.type &&

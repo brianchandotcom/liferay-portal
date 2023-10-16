@@ -49,7 +49,7 @@ export function ModalAddObjectField({
 	const initialValues: Partial<ObjectField> = {
 		indexed: true,
 		indexedAsKeyword: false,
-		indexedLanguageId: null,
+		indexedLanguageId: '',
 		listTypeDefinitionExternalReferenceCode: '',
 		listTypeDefinitionId: 0,
 		readOnly: 'false',

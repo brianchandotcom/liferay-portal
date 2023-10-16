@@ -21,10 +21,15 @@ export function DefaultSortScreen() {
 
 	const [visibleModal, setVisibleModal] = useState(false);
 	const [isEditingSort, setIsEditingSort] = useState(false);
-	const [editingObjectFieldName, setEditingObjectFieldName] = useState('');
+	const [editingObjectFieldName, setEditingObjectFieldName] = useState<
+		string
+	>();
 
 	const {observer, onClose} = useModal({
-		onClose: () => setVisibleModal(false),
+		onClose: () => {
+			setVisibleModal(false);
+			setEditingObjectFieldName(undefined);
+		},
 	});
 
 	useEffect(() => {

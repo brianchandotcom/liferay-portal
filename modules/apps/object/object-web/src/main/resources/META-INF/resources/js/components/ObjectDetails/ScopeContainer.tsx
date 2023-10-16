@@ -107,29 +107,25 @@ export function ScopeContainer({
 					isLinkedObjectDefinition
 				}
 				error={errors.titleObjectFieldId}
+				items={SCOPE_OPTIONS}
 				label={Liferay.Language.get('scope')}
-				onChange={({value}) => {
+				onSelectionChange={(value) => {
 					setValues({
 						panelCategoryKey: '',
-						scope: value,
+						scope: value as string,
 					});
 
 					if (onSubmit) {
 						onSubmit({
 							...values,
 							panelCategoryKey: '',
-							scope: value,
+							scope: value as string,
 						});
 					}
 
 					setSelectedPanelCategoryKey('');
 				}}
-				options={SCOPE_OPTIONS}
-				value={
-					SCOPE_OPTIONS.find(
-						(scopeOption) => scopeOption.value === values.scope
-					)?.label
-				}
+				selectedKey={values.scope}
 			/>
 
 			<AutoComplete<KeyValuePair>

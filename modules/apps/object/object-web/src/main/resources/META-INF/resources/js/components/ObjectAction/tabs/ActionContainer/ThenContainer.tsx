@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {Option, Text} from '@clayui/core';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
@@ -14,8 +15,9 @@ import {
 	SelectWithOption,
 	SingleSelect,
 } from '@liferay/object-js-components-web';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
+import {ActionError} from '../..';
 import {
 	ObjectsOptionsList,
 	fetchObjectDefinitionFields,
@@ -23,7 +25,6 @@ import {
 } from '../../fetchUtil';
 
 import './ThenContainer.scss';
-import {ActionError} from '../..';
 
 interface ThenContainerProps {
 	errors: ActionError;
@@ -63,29 +64,11 @@ export function ThenContainer({
 		CustomItem<string>[]
 	>([]);
 
-	const notificationTemplateLabel = useMemo(() => {
-		return notificationTemplates.find(
-			({value}) =>
-				value ===
-				values.parameters?.notificationTemplateExternalReferenceCode
-		)?.label;
-	}, [notificationTemplates, values.parameters]);
-
 	const [objectsOptions, setObjectOptions] = useState<ObjectsOptionsList>([]);
 
 	const [selectedObjectDefinition, setSelectedObjectDefinition] = useState(
 		''
 	);
-
-	const actionExecutors = useMemo(() => {
-		const executors = new Map<string, string>();
-
-		newObjectActionExecutors.forEach(({label, value}) => {
-			value && executors.set(value, label);
-		});
-
-		return executors;
-	}, [newObjectActionExecutors]);
 
 	useEffect(() => {
 		if (values.objectActionExecutorKey === 'notification') {
@@ -149,24 +132,36 @@ export function ThenContainer({
 				<SingleSelect
 					disabled={values.system}
 					error={errors.objectActionExecutorKey}
-					onChange={({value}) => {
-						if (values.objectActionExecutorKey !== value) {
-							return setValues({
-								objectActionExecutorKey: value,
-								parameters: {},
-							});
-						}
-					}}
-					options={
+					items={
 						Liferay.FeatureFlags['LPS-153714']
 							? newObjectActionExecutors
 							: objectActionExecutors
 					}
+					onSelectionChange={(value) => {
+						if (values.objectActionExecutorKey !== value) {
+							return setValues({
+								objectActionExecutorKey: value as string,
+								parameters: {},
+							});
+						}
+					}}
 					placeholder={Liferay.Language.get('choose-an-action')}
-					value={actionExecutors.get(
-						values.objectActionExecutorKey ?? ''
+					selectedKey={values.objectActionExecutorKey}
+				>
+					{(item) => (
+						<Option key={item.value} textValue={item.label}>
+							<div className="lfr-objects__object-action-builder-when-option">
+								<Text size={3} weight="semi-bold">
+									{item.label}
+								</Text>
+
+								<Text aria-hidden color="secondary" size={2}>
+									{item.description}
+								</Text>
+							</div>
+						</Option>
 					)}
-				/>
+				</SingleSelect>
 
 				{values.objectActionExecutorKey === 'add-object-entry' && (
 					<>
@@ -231,35 +226,44 @@ export function ThenContainer({
 						className="lfr-object__action-builder-notification-then"
 						disabled={values.system}
 						error={errors.objectActionExecutorKey}
-						onChange={({value}) => {
+						items={notificationTemplates}
+						onSelectionChange={(value) => {
 							setValues({
 								parameters: {
 									...values.parameters,
-									notificationTemplateExternalReferenceCode: value,
+									notificationTemplateExternalReferenceCode: value as string,
 								},
 							});
 						}}
-						options={notificationTemplates}
 						required
-						value={notificationTemplateLabel}
+						selectedKey={
+							values.parameters
+								?.notificationTemplateExternalReferenceCode
+						}
 					>
-						{notificationTemplates.map(
-							(option) =>
-								option.type && (
+						{(item) => (
+							<Option key={item.value} textValue={item.label}>
+								<div className="lfr-object__action-builder-notification-option">
+									<Text size={3} weight="semi-bold">
+										{item.label}
+									</Text>
+
 									<ClayLabel
+										className="lfr-object__action-builder-notification-option-label"
 										displayType={
-											option.type === 'email'
+											item.type === 'email'
 												? 'success'
 												: 'info'
 										}
 									>
-										{option.type === 'email'
+										{item.type === 'email'
 											? Liferay.Language.get('email')
 											: Liferay.Language.get(
 													'user-notification'
 											  )}
 									</ClayLabel>
-								)
+								</div>
+							</Option>
 						)}
 					</SingleSelect>
 				)}

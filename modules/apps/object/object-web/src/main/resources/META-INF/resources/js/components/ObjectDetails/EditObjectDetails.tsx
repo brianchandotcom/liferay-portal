@@ -290,7 +290,6 @@ export default function EditObjectDetails({
 								<div className="lfr__object-web-edit-object-details-external-data-source-container">
 									<ExternalDataSourceContainer
 										errors={errors}
-										setValues={setValues}
 										storageTypes={storageTypes}
 										values={values}
 									/>

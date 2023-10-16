@@ -39,7 +39,6 @@ export function AccountRestrictionContainer({
 		LabelValueObject[]
 	>([]);
 
-	const [selectedAccount, setSelectedAccount] = useState<string>();
 	const [disableAccountToggle, setDisableAccountToggle] = useState<boolean>(
 		false
 	);
@@ -81,16 +80,6 @@ export function AccountRestrictionContainer({
 				)
 			);
 
-			const currentAccountRelationship = accountRelationshipFieldsResponse.find(
-				(relationshipField) =>
-					relationshipField.name ===
-					values.accountEntryRestrictedObjectFieldName
-			);
-
-			setSelectedAccount(
-				currentAccountRelationship?.label[defaultLanguageId] ?? ''
-			);
-
 			if (isApproved && values.accountEntryRestricted) {
 				setDisableAccountToggle(true);
 			}
@@ -101,19 +90,6 @@ export function AccountRestrictionContainer({
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [objectFields]);
-
-	useEffect(() => {
-		const selectedAccountLabel = accountRelationshipFields.find(
-			(relationshipField) =>
-				relationshipField.value ===
-				values.accountEntryRestrictedObjectFieldName
-		)?.label;
-
-		setSelectedAccount(selectedAccountLabel ?? '');
-	}, [
-		values.accountEntryRestrictedObjectFieldName,
-		accountRelationshipFields,
-	]);
 
 	return (
 		<>
@@ -159,28 +135,28 @@ export function AccountRestrictionContainer({
 					isRootDescendantNode
 				}
 				error={errors.accountEntryRestrictedObjectFieldName}
+				items={accountRelationshipFields}
 				label={Liferay.Language.get(
 					'account-entry-restricted-object-field-id'
 				)}
-				onBlur={(event) => {
-					event.stopPropagation();
+				onSelectionChange={(value) => {
+					setValues({
+						accountEntryRestrictedObjectFieldName: value as string,
+					});
 
 					if (onSubmit) {
-						onSubmit();
+						onSubmit({
+							...values,
+							accountEntryRestrictedObjectFieldName: value as string,
+						});
 					}
 				}}
-				onChange={({value}) => {
-					setValues({
-						accountEntryRestrictedObjectFieldName: value,
-					});
-				}}
-				options={accountRelationshipFields}
 				required={
 					!!accountRelationshipFields.length &&
 					values.accountEntryRestricted &&
 					!disableAccountSelect
 				}
-				value={selectedAccount}
+				selectedKey={values.accountEntryRestrictedObjectFieldName}
 			/>
 		</>
 	);

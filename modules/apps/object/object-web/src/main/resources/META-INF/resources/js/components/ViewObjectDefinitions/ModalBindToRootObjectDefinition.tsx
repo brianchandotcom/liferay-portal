@@ -3,14 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayButton from '@clayui/button';
 import ClayLabel from '@clayui/label';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal, {useModal} from '@clayui/modal';
-import React, {useEffect, useState} from 'react';
-
-import './ModalBindToRootObject.scss';
-
-import ClayButton from '@clayui/button';
 import {
 	Input,
 	SingleSelect,
@@ -18,6 +14,9 @@ import {
 	openToast,
 } from '@liferay/object-js-components-web';
 import {createResourceURL, fetch} from 'frontend-js-web';
+import React, {useEffect, useState} from 'react';
+
+import './ModalBindToRootObject.scss';
 
 interface ModalBindToRootObjectDefinitionProps {
 	baseResourceURL: string;
@@ -29,12 +28,35 @@ interface TreeEdgeOption {
 	ancestors?: {
 		label: string;
 		objectRelationshipId: number;
+		value: number;
 	}[];
 	isAncestor?: boolean;
 	isRoot?: boolean;
 	label: string;
 	objectRelationshipId: number;
+	value?: number;
 }
+
+const SingleSelectTrigger = React.forwardRef<HTMLDivElement>(
+	({children, ...otherProps}, ref) => (
+		<div
+			ref={ref}
+			style={{
+				alignItems: 'center',
+				display: 'flex',
+				justifyContent: 'space-between',
+			}}
+			tabIndex={0}
+			{...otherProps}
+		>
+			{children}
+
+			<ClayLabel displayType="info">
+				{Liferay.Language.get('root-object')}
+			</ClayLabel>
+		</div>
+	)
+);
 
 export function ModalBindToRootObjectDefinition({
 	baseResourceURL,
@@ -189,12 +211,41 @@ export function ModalBindToRootObjectDefinition({
 					}).toString()
 				);
 
-				const responseJSON = (await response.json()) as TreeEdgeOption[];
+				const treeEdgeOptionsResponseJSON = (await response.json()) as TreeEdgeOption[];
 
-				if (!!responseJSON.length && allTreeEdgeOptions.length <= 4) {
+				if (
+					!!treeEdgeOptionsResponseJSON.length &&
+					allTreeEdgeOptions.length <= 4
+				) {
+					const newTreeEdgeOptionsResponseJSON = treeEdgeOptionsResponseJSON.map(
+						(treeEdgeOption) => {
+							if (treeEdgeOption.ancestors) {
+								const newAncestors = treeEdgeOption.ancestors.map(
+									(ancestor) => ({
+										...ancestor,
+										value: ancestor.objectRelationshipId,
+									})
+								);
+
+								return {
+									...treeEdgeOption,
+									ancestors: newAncestors,
+									value: treeEdgeOption.objectRelationshipId,
+								};
+							}
+
+							return {
+								...treeEdgeOption,
+								value: treeEdgeOption.objectRelationshipId,
+							};
+						}
+					) as TreeEdgeOption[];
+
 					const newTreeEdgeOptions = allTreeEdgeOptions;
 
-					newTreeEdgeOptions[currentDepth] = responseJSON;
+					newTreeEdgeOptions[
+						currentDepth
+					] = newTreeEdgeOptionsResponseJSON;
 
 					setAllTreeEdgeOptions(newTreeEdgeOptions);
 				}
@@ -235,13 +286,16 @@ export function ModalBindToRootObjectDefinition({
 				) : (
 					allTreeEdgeOptions.map((treeEdgeOptions, index) => (
 						<SingleSelect<TreeEdgeOption>
-							contentRight={
-								selectedTreeEdgeOptions[index]?.isRoot && (
-									<ClayLabel displayType="info">
-										{Liferay.Language.get('root-object')}
-									</ClayLabel>
-								)
+							as={
+								selectedTreeEdgeOptions[index]?.isRoot
+									? SingleSelectTrigger
+									: 'button'
 							}
+							disabled={
+								selectedTreeEdgeOptions[index]?.isAncestor ??
+								false
+							}
+							items={treeEdgeOptions}
 							key={
 								selectedTreeEdgeOptions[index]
 									?.objectRelationshipId ?? index
@@ -253,26 +307,28 @@ export function ModalBindToRootObjectDefinition({
 									  )
 									: ''
 							}
-							onChange={(selectedTreeEdgeOption) => {
+							onSelectionChange={(value) => {
 								const isOptionAlreadySelected = selectedTreeEdgeOptions.some(
 									({objectRelationshipId}) =>
-										objectRelationshipId ===
-										selectedTreeEdgeOption.objectRelationshipId
+										objectRelationshipId === value
 								);
 
-								if (!isOptionAlreadySelected) {
+								const selectedTreeEdgeOption = treeEdgeOptions.find(
+									(treeEdgeOption) =>
+										treeEdgeOption.value === value
+								);
+
+								if (
+									!isOptionAlreadySelected &&
+									selectedTreeEdgeOption
+								) {
 									handleSelectTreeEdgeOption(
 										selectedTreeEdgeOption,
 										index
 									);
 								}
 							}}
-							options={treeEdgeOptions}
-							readonly={
-								selectedTreeEdgeOptions[index]?.isAncestor ??
-								false
-							}
-							value={selectedTreeEdgeOptions[index]?.label ?? ''}
+							selectedKey={selectedTreeEdgeOptions[index]?.value}
 						/>
 					))
 				)}

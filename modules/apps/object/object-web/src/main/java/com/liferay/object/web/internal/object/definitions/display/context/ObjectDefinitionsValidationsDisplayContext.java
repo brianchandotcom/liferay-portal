@@ -92,11 +92,11 @@ public class ObjectDefinitionsValidationsDisplayContext
 						objectDefinition.getCompanyId(),
 						objectDefinition.getName()),
 				objectValidationRuleEngine -> HashMapBuilder.put(
+					"key", objectValidationRuleEngine.getKey()
+				).put(
 					"label",
 					objectValidationRuleEngine.getLabel(
 						objectRequestHelper.getLocale())
-				).put(
-					"name", objectValidationRuleEngine.getKey()
 				).build()),
 			Comparator.comparing(item -> item.get("label")));
 	}

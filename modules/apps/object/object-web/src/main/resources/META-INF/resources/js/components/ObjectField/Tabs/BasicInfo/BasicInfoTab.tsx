@@ -205,10 +205,10 @@ export function BasicInfoTab({
 					<SearchableContainer
 						isApproved={isApproved}
 						modelBuilder={modelBuilder}
-						objectField={values}
 						onSubmit={onSubmit}
 						readOnly={readOnly}
 						setValues={setValues}
+						values={values}
 					/>
 				</ContainerWrapper>
 			)}

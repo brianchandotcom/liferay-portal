@@ -61,7 +61,7 @@ interface IProps {
 		disableDateValues,
 		items,
 		selectedFilterBy,
-		selectedFilterType,
+		selectedFilterTypeValue,
 		setErrors,
 		value,
 	}: FilterValidation) => FilterErrors;
@@ -86,7 +86,7 @@ export type FilterValidation = {
 	disableDateValues?: boolean;
 	items: IItem[];
 	selectedFilterBy?: ObjectField;
-	selectedFilterType?: LabelValueObject | null;
+	selectedFilterTypeValue?: string;
 	setErrors: (value: FilterErrors) => void;
 	value?: string;
 };
@@ -136,10 +136,9 @@ export function ModalAddFilter({
 
 	const [selectedFilterBy, setSelectedFilterBy] = useState<ObjectField>();
 
-	const [
-		selectedFilterType,
-		setSelectedFilterType,
-	] = useState<LabelValueObject | null>();
+	const [selectedFilterTypeValue, setSelectedFilterTypeValue] = useState<
+		string
+	>();
 	const [value, setValue] = useState<string>();
 
 	const [errors, setErrors] = useState<FilterErrors>({});
@@ -176,10 +175,7 @@ export function ModalAddFilter({
 		);
 
 		if (editingFilterType) {
-			setSelectedFilterType({
-				label: editingFilterType.label,
-				value: editingFilterType.value,
-			});
+			setSelectedFilterTypeValue(editingFilterType.value as string);
 		}
 
 		return valuesArray;
@@ -378,7 +374,7 @@ export function ModalAddFilter({
 			disableDateValues,
 			items,
 			selectedFilterBy,
-			selectedFilterType,
+			selectedFilterTypeValue,
 			setErrors,
 			value,
 		});
@@ -393,7 +389,7 @@ export function ModalAddFilter({
 				selectedFilterBy?.name,
 				selectedFilterBy?.label,
 				selectedFilterBy?.businessType,
-				selectedFilterType?.value,
+				selectedFilterTypeValue,
 				selectedFilterBy?.name === 'status' ||
 					selectedFilterBy?.businessType === 'MultiselectPicklist' ||
 					selectedFilterBy?.businessType === 'Picklist' ||
@@ -409,7 +405,7 @@ export function ModalAddFilter({
 				selectedFilterBy?.name,
 				selectedFilterBy?.label,
 				selectedFilterBy?.businessType,
-				selectedFilterType?.value,
+				selectedFilterTypeValue,
 				selectedFilterBy?.name === 'status' ||
 					selectedFilterBy?.businessType === 'MultiselectPicklist' ||
 					selectedFilterBy?.businessType === 'Picklist' ||
@@ -434,7 +430,7 @@ export function ModalAddFilter({
 		}
 
 		if (
-			selectedFilterType &&
+			selectedFilterTypeValue &&
 			(selectedFilterBy?.name === 'status' ||
 				selectedFilterBy?.businessType === 'MultiselectPicklist' ||
 				selectedFilterBy?.businessType === 'Picklist' ||
@@ -486,13 +482,12 @@ export function ModalAddFilter({
 								userRelationship &&
 								aggregationFilter
 							) {
-								return setSelectedFilterType({
-									label: 'currentUser',
-									value: 'currentUser',
-								});
+								return setSelectedFilterTypeValue(
+									'currentUser'
+								);
 							}
 
-							setSelectedFilterType(null);
+							setSelectedFilterTypeValue(undefined);
 						}}
 						query={query}
 						required
@@ -519,18 +514,18 @@ export function ModalAddFilter({
 					!aggregationRelationshipOrDateFieldType && (
 						<SingleSelect
 							error={errors.selectedFilterType}
-							label={Liferay.Language.get('filter-type')}
-							onChange={(target: LabelValueObject) =>
-								setSelectedFilterType(target)
-							}
-							options={
+							items={
 								selectedFilterBy?.businessType === 'Integer' ||
 								selectedFilterBy?.businessType === 'LongInteger'
 									? filterOperators.numericOperators
 									: filterOperators.picklistOperators
 							}
+							label={Liferay.Language.get('filter-type')}
+							onSelectionChange={(value) =>
+								setSelectedFilterTypeValue(value as string)
+							}
 							required={filterTypeRequired}
-							value={selectedFilterType?.label ?? ''}
+							selectedKey={selectedFilterTypeValue}
 						/>
 					)}
 
@@ -539,17 +534,17 @@ export function ModalAddFilter({
 					!disableDateValues && (
 						<SingleSelect
 							error={errors.selectedFilterType}
+							items={filterOperators.dateOperators}
 							label={Liferay.Language.get('filter-type')}
-							onChange={(target: LabelValueObject) =>
-								setSelectedFilterType(target)
+							onSelectionChange={(value) =>
+								setSelectedFilterTypeValue(value as string)
 							}
-							options={filterOperators.dateOperators}
 							required={filterTypeRequired}
-							value={selectedFilterType?.label ?? ''}
+							selectedKey={selectedFilterTypeValue}
 						/>
 					)}
 
-				{selectedFilterType &&
+				{selectedFilterTypeValue &&
 					(selectedFilterBy?.businessType === 'Integer' ||
 						selectedFilterBy?.businessType === 'LongInteger') && (
 						<Input
@@ -575,7 +570,7 @@ export function ModalAddFilter({
 					/>
 				)}
 
-				{selectedFilterType &&
+				{selectedFilterTypeValue &&
 					selectedFilterBy?.businessType === 'Date' &&
 					!disableDateValues && (
 						<div className="row">

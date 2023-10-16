@@ -16,30 +16,28 @@ import {
 import {InputLocalized} from 'frontend-js-components-web';
 import React from 'react';
 
-import {firstLetterUppercase} from '../../utils/string';
 import {
 	ObjectRelationshipFormBase,
-	ObjectRelationshipType,
 	useObjectRelationshipForm,
 } from './ObjectRelationshipFormBase';
 import SelectObjectRelationship from './SelectObjectRelationship';
 
 interface EditObjectRelationshipProps {
 	baseResourceURL: string;
-	deletionTypes: LabelValueObject[];
 	hasUpdateObjectDefinitionPermission: boolean;
 	objectDefinitionExternalReferenceCode: string;
 	objectRelationship: ObjectRelationship;
+	objectRelationshipDeletionTypes: LabelValueObject[];
 	parameterRequired: boolean;
 	restContextPath: string;
 }
 
 export default function EditObjectRelationship({
 	baseResourceURL,
-	deletionTypes,
 	hasUpdateObjectDefinitionPermission,
 	objectDefinitionExternalReferenceCode,
 	objectRelationship: initialValues,
+	objectRelationshipDeletionTypes,
 	parameterRequired,
 	restContextPath,
 }: EditObjectRelationshipProps) {
@@ -133,37 +131,36 @@ export default function EditObjectRelationship({
 						readOnly ||
 						(Liferay.FeatureFlags['LPS-187142'] && values.edge)
 					}
+					items={objectRelationshipDeletionTypes}
 					label={Liferay.Language.get('deletion-type')}
-					onChange={(deletionType) =>
-						setValues({deletionType: deletionType.value})
+					onSelectionChange={(value) =>
+						setValues({deletionType: value as string})
 					}
-					options={deletionTypes}
 					required
-					value={firstLetterUppercase(values.deletionType as string)}
+					selectedKey={values.deletionType}
 				/>
 			</Card>
 
-			{parameterRequired &&
-				values.type === ObjectRelationshipType.ONE_TO_MANY && (
-					<Card title={Liferay.Language.get('parameters')}>
-						<Input
-							label={Liferay.Language.get('api-endpoint')}
-							readOnly
-							value={restContextPath}
-						/>
+			{parameterRequired && values.type === 'oneToMany' && (
+				<Card title={Liferay.Language.get('parameters')}>
+					<Input
+						label={Liferay.Language.get('api-endpoint')}
+						readOnly
+						value={restContextPath}
+					/>
 
-						<SelectObjectRelationship
-							error={errors.parameterObjectFieldName}
-							objectDefinitionExternalReferenceCode1={
-								values.objectDefinitionExternalReferenceCode2 as string
-							}
-							onChange={(parameterObjectFieldName) =>
-								setValues({parameterObjectFieldName})
-							}
-							value={values.parameterObjectFieldName}
-						/>
-					</Card>
-				)}
+					<SelectObjectRelationship
+						error={errors.parameterObjectFieldName}
+						objectDefinitionExternalReferenceCode1={
+							values.objectDefinitionExternalReferenceCode2 as string
+						}
+						onChange={(parameterObjectFieldName) =>
+							setValues({parameterObjectFieldName})
+						}
+						value={values.parameterObjectFieldName}
+					/>
+				</Card>
+			)}
 		</SidePanelForm>
 	);
 }

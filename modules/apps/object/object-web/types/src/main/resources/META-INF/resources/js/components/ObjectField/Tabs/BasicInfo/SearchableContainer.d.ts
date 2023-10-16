@@ -9,17 +9,17 @@ import '../../EditObjectFieldContent.scss';
 interface SearchableProps {
 	isApproved: boolean;
 	modelBuilder?: boolean;
-	objectField: Partial<ObjectField>;
-	onSubmit?: () => void;
+	onSubmit?: (value?: Partial<ObjectField>) => void;
 	readOnly: boolean;
 	setValues: (values: Partial<ObjectField>) => void;
+	values: Partial<ObjectField>;
 }
 export declare function SearchableContainer({
 	isApproved,
 	modelBuilder,
-	objectField,
 	onSubmit,
 	readOnly,
 	setValues,
+	values,
 }: SearchableProps): JSX.Element;
 export {};

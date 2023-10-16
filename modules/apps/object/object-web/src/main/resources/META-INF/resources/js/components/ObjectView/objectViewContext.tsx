@@ -73,11 +73,6 @@ const handleChangeColumnOrder = (
 	return newColumn;
 };
 
-type TSortOptions = {
-	label: string;
-	value: string;
-};
-
 export type TAction =
 	| {
 			payload: {
@@ -109,7 +104,7 @@ export type TAction =
 				objectFieldName: string;
 				objectFields: ObjectField[];
 				objectViewSortColumns?: TObjectViewSortColumn[];
-				selectedObjetSort: TSortOptions;
+				selectedObjetSortValue: string;
 			};
 			type: TYPES.ADD_OBJECT_VIEW_SORT_COLUMN;
 	  }
@@ -483,7 +478,7 @@ const viewReducer = (state: TState, action: TAction) => {
 				objectFieldName,
 				objectFields,
 				objectViewSortColumns,
-				selectedObjetSort,
+				selectedObjetSortValue,
 			} = action.payload;
 
 			const objectView = {...state.objectView};
@@ -507,7 +502,7 @@ const viewReducer = (state: TState, action: TAction) => {
 				fieldLabel: getLocalizableLabel(creationLanguageId, label),
 				label,
 				objectFieldName,
-				sortOrder: selectedObjetSort.value,
+				sortOrder: selectedObjetSortValue,
 			};
 
 			if (!objectViewSortColumns) {

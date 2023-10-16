@@ -179,7 +179,7 @@ export default function EditNotificationTemplate({
 			[defaultLanguageId]: '',
 		},
 		description: '',
-		editorType: 'richText' as editorTypeOptions,
+		editorType: 'richText' as EditorTypeOptions,
 		externalReferenceCode: '',
 		name: '',
 		objectDefinitionExternalReferenceCode: '',

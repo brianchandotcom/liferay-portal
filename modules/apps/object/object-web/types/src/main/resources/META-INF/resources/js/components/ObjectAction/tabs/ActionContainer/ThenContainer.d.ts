@@ -6,8 +6,8 @@
 /// <reference types="react" />
 
 import {CustomItem} from '@liferay/object-js-components-web';
-import './ThenContainer.scss';
 import {ActionError} from '../..';
+import './ThenContainer.scss';
 interface ThenContainerProps {
 	errors: ActionError;
 	isValidField: (

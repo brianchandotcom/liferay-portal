@@ -85,9 +85,9 @@ export function AggregationFormBase({
 		LabelNameObject
 	>();
 	const [
-		selectedAggregationFunction,
-		setSelectedAggregationFunction,
-	] = useState<{label: string; value: string}>();
+		selectedAggregationFunctionValue,
+		setSelectedAggregationFunctionValue,
+	] = useState<string>();
 	const [objectRelationships, setObjectRelationships] = useState<
 		TObjectRelationship[]
 	>();
@@ -182,7 +182,7 @@ export function AggregationFormBase({
 						currentRelatedObjectRelationship
 					);
 
-					setSelectedAggregationFunction(currentFunction);
+					setSelectedAggregationFunctionValue(currentFunction?.value);
 
 					if (currentSummarizeField) {
 						setSelectedSummarizeField({
@@ -271,14 +271,12 @@ export function AggregationFormBase({
 		}
 	};
 
-	const handleAggregationFunctionChange = ({
-		label,
-		value,
-	}: {
-		label: string;
-		value: string;
-	}) => {
-		setSelectedAggregationFunction({label, value});
+	const handleAggregationFunctionChange = (value: string) => {
+		const aggregationFunction = aggregationFunctions.find(
+			(aggregationFunction) => aggregationFunction.value === value
+		);
+
+		setSelectedAggregationFunctionValue(aggregationFunction?.value);
 
 		let newObjectFieldSettings: ObjectFieldSetting[] | undefined;
 
@@ -306,6 +304,13 @@ export function AggregationFormBase({
 				objectFieldSettings: newObjectFieldSettings,
 			});
 
+			if (onSubmit) {
+				onSubmit({
+					...values,
+					objectFieldSettings: newObjectFieldSettings,
+				});
+			}
+
 			return;
 		}
 
@@ -322,6 +327,13 @@ export function AggregationFormBase({
 		setValues({
 			objectFieldSettings: newObjectFieldSettings,
 		});
+
+		if (onSubmit) {
+			onSubmit({
+				...values,
+				objectFieldSettings: newObjectFieldSettings,
+			});
+		}
 	};
 
 	const handleSummarizeFieldChange = (objectField: ObjectField) => {
@@ -390,21 +402,16 @@ export function AggregationFormBase({
 			<SingleSelect
 				disabled={disabled}
 				error={errors.function}
+				items={aggregationFunctions}
 				label={Liferay.Language.get('function')}
-				onBlur={(event) => {
-					event.stopPropagation();
-
-					if (onSubmit) {
-						onSubmit();
-					}
-				}}
-				onChange={handleAggregationFunctionChange}
-				options={aggregationFunctions}
+				onSelectionChange={(value) =>
+					handleAggregationFunctionChange(value as string)
+				}
 				required
-				value={selectedAggregationFunction?.label}
+				selectedKey={selectedAggregationFunctionValue}
 			/>
 
-			{selectedAggregationFunction?.value !== 'COUNT' && (
+			{selectedAggregationFunctionValue !== 'COUNT' && (
 				<AutoComplete<ObjectField>
 					emptyStateMessage={Liferay.Language.get(
 						'no-fields-were-found'

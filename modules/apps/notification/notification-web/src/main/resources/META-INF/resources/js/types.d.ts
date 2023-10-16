@@ -6,12 +6,12 @@
 type Locale = Liferay.Language.Locale;
 type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
 
-interface LabelValueObject {
+interface LabelValueObject<T = string> {
 	label: string;
-	value: string;
+	value: T;
 }
 
-type editorTypeOptions = 'freemarker' | 'richText';
+type EditorTypeOptions = 'freemarker' | 'richText';
 
 type EmailRecipients = {
 	bcc: string;
@@ -29,7 +29,7 @@ interface NotificationTemplate {
 	attachmentObjectFieldIds: string[] | number[];
 	body: LocalizedValue<string>;
 	description: string;
-	editorType: editorTypeOptions;
+	editorType: EditorTypeOptions;
 	externalReferenceCode: string;
 	name: string;
 	objectDefinitionExternalReferenceCode: string;

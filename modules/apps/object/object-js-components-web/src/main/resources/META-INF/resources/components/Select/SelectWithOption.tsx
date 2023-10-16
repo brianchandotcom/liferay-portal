@@ -99,7 +99,10 @@ export function SelectWithOption({
 								<DropDown.Item
 									key={item.value}
 									onClick={() => {
-										onSelectChange(item.label, item.value);
+										onSelectChange(
+											item.label as string,
+											item.value as string
+										);
 										setDropdownActive(false);
 									}}
 								>

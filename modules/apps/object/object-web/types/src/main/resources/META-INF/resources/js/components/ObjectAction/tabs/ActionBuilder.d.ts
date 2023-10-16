@@ -7,6 +7,7 @@
 
 import {CustomItem, SidebarCategory} from '@liferay/object-js-components-web';
 import {ActionError} from '../index';
+import './ActionBuilder.scss';
 interface ActionBuilderProps {
 	errors: ActionError;
 	isApproved: boolean;

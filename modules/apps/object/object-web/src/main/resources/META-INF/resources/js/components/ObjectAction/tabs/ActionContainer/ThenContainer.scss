@@ -1,6 +1,20 @@
 @import 'atlas-variables';
 
 .lfr-object__action-builder {
+	&-notification-option {
+		align-items: center;
+		display: flex;
+		justify-content: space-between;
+
+		&-label {
+			width: min-content;
+		}
+	}
+
+	&-notification-then {
+		width: 320px;
+	}
+
 	&-then {
 		align-items: center;
 		display: flex;
@@ -14,10 +28,6 @@
 		.custom-control.custom-checkbox {
 			margin: 0;
 		}
-	}
-
-	&-notification-then {
-		width: 320px;
 	}
 
 	&-tooltip-icon {

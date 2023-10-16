@@ -22,7 +22,6 @@ import {
 import {InputLocalized} from 'frontend-js-components-web';
 
 import {defaultLanguageId} from '../../../utils/constants';
-import {firstLetterUppercase} from '../../../utils/string';
 import {ModalDeleteObjectRelationship} from '../../ObjectRelationship/ModalDeleteObjectRelationship';
 import {
 	OBJECT_RELATIONSHIP_TYPES,
@@ -339,22 +338,22 @@ export function RightSidebarObjectRelationshipDetails({
 				/>
 
 				<SingleSelect
-					disabled={readOnly}
+					disabled={
+						readOnly ||
+						(Liferay.FeatureFlags['LPS-187142'] && values.edge)
+					}
+					items={objectRelationshipDeletionTypes}
 					label={Liferay.Language.get('deletion-type')}
-					onBlur={(event) => {
-						event.stopPropagation();
+					onSelectionChange={(value) => {
+						setValues({deletionType: value as string});
 
-						onSubmit();
+						onSubmit({
+							...values,
+							deletionType: value as string,
+						});
 					}}
-					onChange={(deletionType) =>
-						setValues({deletionType: deletionType.value})
-					}
-					options={objectRelationshipDeletionTypes}
 					required
-					value={
-						values.deletionType &&
-						firstLetterUppercase(values.deletionType)
-					}
+					selectedKey={values.deletionType}
 				/>
 
 				{objectRelationshipParameterRequired &&

@@ -25,11 +25,7 @@ const EDITOR_TYPES = [
 		label: Liferay.Language.get('rich-text'),
 		value: 'richText',
 	},
-];
-
-interface EditorType extends LabelValueObject {
-	value: editorTypeOptions;
-}
+] as LabelValueObject<EditorTypeOptions>[];
 
 interface ContentContainerProps {
 	baseResourceURL: string;
@@ -84,22 +80,18 @@ export default function ContentContainer({
 
 			{values.type === 'email' && (
 				<>
-					<SingleSelect<EditorType>
+					<SingleSelect<LabelValueObject<EditorTypeOptions>>
 						disabled={values.system}
+						items={EDITOR_TYPES}
 						label={Liferay.Language.get('editor-type')}
-						onChange={({value}: EditorType) => {
+						onSelectionChange={(value) => {
 							setValues({
 								...values,
-								editorType: value,
+								editorType: value as EditorTypeOptions,
 							});
 						}}
-						options={EDITOR_TYPES as EditorType[]}
 						required
-						value={
-							EDITOR_TYPES.find(
-								({value}) => value === values.editorType
-							)?.label
-						}
+						selectedKey={values.editorType}
 					/>
 
 					{values.editorType === 'richText' ? (

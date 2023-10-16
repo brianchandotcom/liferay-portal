@@ -8,11 +8,6 @@ import React from 'react';
 import {getLocalizableLabel} from '../../utils/string';
 import {SingleSelect} from '../Select/SingleSelect';
 
-type SelectedPicklistOption = {
-	label: string;
-	value: string;
-};
-
 interface ListTypeEntry {
 	externalReferenceCode: string;
 	id: number;
@@ -42,22 +37,12 @@ export function ListTypeEntryBaseField({
 	required,
 	selectedPicklistItemKey,
 }: ListTypeEntryBaseFieldProps) {
-	const handleChange = (selectedPicklistOption: SelectedPicklistOption) => {
-		onChange(
-			picklistItems.find(
-				(item) => item.key === selectedPicklistOption.value
-			)
-		);
-	};
-
 	return (
 		<>
 			{picklistItems.length ? (
 				<SingleSelect
 					error={error}
-					label={label}
-					onChange={handleChange}
-					options={picklistItems.map((item) => ({
+					items={picklistItems.map((item) => ({
 						label: creationLanguageId
 							? getLocalizableLabel(
 									creationLanguageId,
@@ -66,12 +51,18 @@ export function ListTypeEntryBaseField({
 							: item.name,
 						value: item.key,
 					}))}
+					label={label}
+					onSelectionChange={(value) => {
+						onChange(
+							picklistItems.find((item) => item.key === value)
+						);
+					}}
 					placeholder={placeholder}
 					required={required}
-					value={
+					selectedKey={
 						picklistItems.find(
 							(item) => item.key === selectedPicklistItemKey
-						)?.name ?? ''
+						)?.key
 					}
 				/>
 			) : null}

@@ -21,18 +21,18 @@ interface UseObjectRelationshipFormProps {
 	onSubmit: (relationship: ObjectRelationship) => void;
 	parameterRequired: boolean;
 }
-export declare enum ObjectRelationshipType {
-	MANY_TO_MANY = 'manyToMany',
-	ONE_TO_MANY = 'oneToMany',
-	ONE_TO_ONE = 'oneToOne',
-}
-export declare const OBJECT_RELATIONSHIP_TYPES: {
+export declare type ObjectRelationshipType =
+	| 'manyToMany'
+	| 'oneToMany'
+	| 'oneToOne';
+declare type ObjectRelationshipTypeInfo = {
 	description: string;
 	label: string;
 	objectInputLabel1: string;
 	objectInputLabel2: string;
 	value: ObjectRelationshipType;
-}[];
+};
+export declare const OBJECT_RELATIONSHIP_TYPES: ObjectRelationshipTypeInfo[];
 export declare function useObjectRelationshipForm({
 	initialValues,
 	onSubmit,

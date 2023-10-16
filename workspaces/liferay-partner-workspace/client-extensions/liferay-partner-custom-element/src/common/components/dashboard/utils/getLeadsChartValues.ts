@@ -3,34 +3,37 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {dealsChartStatus} from './constants/dealsChartStatus';
 import getChartQuarterCount from './getDealsChartQuarterCount';
 
-export default function getLeadsChartValues(leads: any[]) {
-	const INITIAL_LEADS_CHART_VALUES = {
-		rejected: [0, 0, 0, 0],
-		submitted: [0, 0, 0, 0],
+export default function getLeadsChartValues(
+	rejectedLeads: any[],
+	submittedLeads: any[],
+	approvedLeads: any[]
+) {
+	return {
+		approved: approvedLeads?.reduce(
+			(accumulatedApprovedValues, item) =>
+				getChartQuarterCount(
+					accumulatedApprovedValues,
+					item.dateCreated
+				),
+			[0, 0, 0, 0]
+		),
+		rejected: rejectedLeads?.reduce(
+			(accumulatedRejectedValues, item) =>
+				getChartQuarterCount(
+					accumulatedRejectedValues,
+					item.dateCreated
+				),
+			[0, 0, 0, 0]
+		),
+		submitted: submittedLeads?.reduce(
+			(accumulatedSubmittedValues, item) =>
+				getChartQuarterCount(
+					accumulatedSubmittedValues,
+					item.dateCreated
+				),
+			[0, 0, 0, 0]
+		),
 	};
-
-	return leads?.reduce((accumulatedChartValues, item) => {
-		if (item.leadStatus === dealsChartStatus.STATUS_CAMREJECTED) {
-			accumulatedChartValues.rejected = getChartQuarterCount(
-				accumulatedChartValues.rejected,
-				item.dateCreated
-			);
-		}
-		if (
-			item.leadType === dealsChartStatus.TYPE_PARTNER_QUALIFIED_LEAD &&
-			(item.leadStatus !==
-				dealsChartStatus.STATUS_SALES_QUALIFIED_OPPORTUNITY ||
-				item.leadStatus !== dealsChartStatus.STATUS_CAMREJECTED)
-		) {
-			accumulatedChartValues.submitted = getChartQuarterCount(
-				accumulatedChartValues.submitted,
-				item.dateCreated
-			);
-		}
-
-		return accumulatedChartValues;
-	}, INITIAL_LEADS_CHART_VALUES);
 }

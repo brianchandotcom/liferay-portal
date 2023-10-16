@@ -2423,7 +2423,7 @@ public class ObjectEntryLocalServiceImpl
 					}
 
 					return _getPermissionWherePredicate(
-						objectDefinition2,
+						groupId, objectDefinition2,
 						dynamicObjectDefinitionTablePrimaryKeyColumn);
 				}
 			).and(
@@ -2619,6 +2619,7 @@ public class ObjectEntryLocalServiceImpl
 					}
 
 					return _getPermissionWherePredicate(
+						groupId,
 						_objectDefinitionPersistence.findByPrimaryKey(
 							objectRelationship.getObjectDefinitionId2()),
 						primaryKeyColumn);
@@ -2683,11 +2684,11 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private Predicate _getPermissionWherePredicate(
-			ObjectDefinition objectDefinition,
+			long groupId, ObjectDefinition objectDefinition,
 			Column<DynamicObjectDefinitionTable, Long> primaryKeyColumn)
 		throws PortalException {
 
-		long[] groupIds = new long[0];
+		long[] groupIds = {groupId};
 
 		if (objectDefinition.isAccountEntryRestricted()) {
 			PermissionChecker permissionChecker =

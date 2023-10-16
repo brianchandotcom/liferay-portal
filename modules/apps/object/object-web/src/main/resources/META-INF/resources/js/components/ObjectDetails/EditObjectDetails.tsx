@@ -145,10 +145,13 @@ export default function EditObjectDetails({
 				);
 
 				if (!publishResponse.ok) {
+					const {title} = (await publishResponse.json()) as {
+						status: string;
+						title: string;
+					};
+
 					openToast({
-						message: Liferay.Language.get(
-							'the-object-definition-is-already-published'
-						),
+						message: title,
 						type: 'danger',
 					});
 

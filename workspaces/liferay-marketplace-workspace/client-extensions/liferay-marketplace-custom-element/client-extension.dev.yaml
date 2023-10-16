@@ -3,6 +3,11 @@ liferay-marketplace-custom-element-create-app:
         - http://localhost:5173/@vite/client
         - http://localhost:5173/@vite/refresh.ts
         - http://localhost:5173/src/main.tsx
+liferay-marketplace-custom-element-create-license:
+    urls:
+        - http://localhost:5173/@vite/client
+        - http://localhost:5173/@vite/refresh.ts
+        - http://localhost:5173/src/main.tsx
 liferay-marketplace-custom-element-customer-gate:
     urls:
         - http://localhost:5173/@vite/client

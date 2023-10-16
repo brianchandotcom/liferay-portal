@@ -15,6 +15,20 @@ liferay-marketplace-custom-element-create-app:
     urls:
         - "*.js"
     useESM: true
+liferay-marketplace-custom-element-create-license:
+    cssURLs:
+        - "**/*.css"
+    friendlyURLMapping: liferay-marketplace-custom-element-create-license
+    htmlElementName: liferay-marketplace-custom-element
+    instanceable: false
+    name: Liferay Marketplace Create License
+    portletCategoryName: category.client-extensions
+    properties:
+        route: create-license
+    type: customElement
+    urls:
+        - "*.js"
+    useESM: true
 liferay-marketplace-custom-element-customer-gate:
     cssURLs:
         - "**/*.css"

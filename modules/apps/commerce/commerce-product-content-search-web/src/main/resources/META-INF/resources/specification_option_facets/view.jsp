@@ -94,7 +94,7 @@ CPSpecificationOptionFacetsDisplayContext cpSpecificationOptionFacetsDisplayCont
 													<input
 														<%= cpSpecificationOptionsSearchFacetTermDisplayContext.isSelected() ? "checked" : StringPool.BLANK %>
 														class="custom-control-input facet-term"
-														data-term-id="<%= cpSpecificationOptionsSearchFacetTermDisplayContext.getDisplayName() %>"
+														data-term-id="<%= HtmlUtil.escapeAttribute(cpSpecificationOptionsSearchFacetTermDisplayContext.getDisplayName()) %>"
 														id="<portlet:namespace />term_<%= parameterName + i %>"
 														name="<portlet:namespace />term_<%= parameterName + i %>"
 														onChange="Liferay.Search.FacetUtil.changeSelection(event);"

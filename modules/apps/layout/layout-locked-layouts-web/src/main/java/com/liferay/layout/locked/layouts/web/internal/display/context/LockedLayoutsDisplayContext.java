@@ -313,6 +313,12 @@ public class LockedLayoutsDisplayContext {
 			_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId(),
 			_themeDisplay.getLocale());
 
+		if (ListUtil.isEmpty(lockedLayouts)) {
+			_lockedLayouts = lockedLayouts;
+
+			return _lockedLayouts;
+		}
+
 		LockedLayoutType lockedLayoutType = getLockedLayoutType();
 
 		if (lockedLayoutType != null) {

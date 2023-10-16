@@ -64,7 +64,7 @@ const DonutChart = ({
 		if (!hasChartData && !isLoading) {
 			return (
 				<ClayAlert
-					className="mb-10 mt-9 text-center w-50"
+					className="my-10 text-center w-50"
 					displayType="info"
 					title="Info:"
 				>
@@ -82,7 +82,7 @@ const DonutChart = ({
 				</span>
 
 				<div className="d-flex">
-					<div className="d-flex flex-column flex-sm-row justify-content-start">
+					<div className="d-flex flex-column flex-lg-row justify-content-start my-n4">
 						<>
 							<ClayChart
 								data={chartDataColumns}
@@ -129,7 +129,7 @@ const DonutChart = ({
 
 							{!hasLegend && (
 								<div className="d-flex flex-column justify-content-around pb-4 pl-4">
-									<div className="d-flex flex-column flex-wrap h-100 justify-content-center mb-1">
+									<div className="d-flex flex-column flex-wrap h-100 justify-content-center">
 										{legendItems?.map(
 											(item: any, index: any) => {
 												return (

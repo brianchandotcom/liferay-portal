@@ -14,7 +14,7 @@ interface IProps {
 
 const Container = ({children, className, footer, title}: IProps) => (
 	<div
-		className={`bg-neutral-0 d-flex flex-column justify-content-between py-4 rounded ${className}`}
+		className={`bg-neutral-1 d-flex flex-column justify-content-between p-4 rounded m-2 ${className}`}
 	>
 		<div>
 			<div className="font-weight-semi-bold h5 m-0">{title}</div>
@@ -25,10 +25,6 @@ const Container = ({children, className, footer, title}: IProps) => (
 		</div>
 
 		<div className="align-items-stretch d-flex flex-column">{children}</div>
-
-		<div>
-			<hr className="mb-3 mt-1" />
-		</div>
 
 		{footer && (
 			<div className="d-flex justify-content-end">

@@ -77,24 +77,27 @@ const MDFRequestChart = () => {
 			footer={
 				<>
 					<ClayButton
-						className="border-brand-primary-darken-1 mr-4 text-brand-primary-darken-1"
+						className="bg-neutral-0 border-brand-primary-darken-1 text-brand-primary-darken-1"
 						displayType="secondary"
 						onClick={() =>
 							Liferay.Util.navigate(
 								`${siteURL}/marketing/mdf-requests`
 							)
 						}
+						size="sm"
 					>
 						View all
 					</ClayButton>
 
 					<ClayButton
+						className="btn btn-primary ml-4"
 						displayType="primary"
 						onClick={() =>
 							Liferay.Util.navigate(
 								`${siteURL}/marketing/mdf-requests/new`
 							)
 						}
+						size="sm"
 					>
 						New MDF Request
 					</ClayButton>

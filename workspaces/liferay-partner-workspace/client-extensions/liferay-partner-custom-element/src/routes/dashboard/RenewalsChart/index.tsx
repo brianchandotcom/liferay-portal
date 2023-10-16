@@ -63,13 +63,13 @@ export default function () {
 
 	const buildChart = () => {
 		if (isLoading) {
-			return <ClayLoadingIndicator className="mb-10 mt-9" size="md" />;
+			return <ClayLoadingIndicator className="mb-10 mt-10" size="md" />;
 		}
 
 		if (!renewalsData.length && !isLoading) {
 			return (
 				<ClayAlert
-					className="mb-8 mt-8 mx-auto text-center w-50"
+					className="mx-auto text-center"
 					displayType="info"
 					title="Info:"
 				>
@@ -79,7 +79,7 @@ export default function () {
 		}
 
 		return (
-			<div className="align-items-start d-flex flex-column justify-content-center mt-3">
+			<div className="align-items-start d-flex flex-column justify-content-center">
 				{renewalsData?.map((item, index) => {
 					getCurrentStatusColor(item);
 
@@ -122,16 +122,19 @@ export default function () {
 		<Container
 			className="renewal-chart-card-height"
 			footer={
-				<ClayButton
-					className="border-brand-primary-darken-1 mt-2 text-brand-primary-darken-1"
-					displayType="secondary"
-					onClick={() =>
-						Liferay.Util.navigate(`${siteURL}/sales/renewals`)
-					}
-					type="button"
-				>
-					View all
-				</ClayButton>
+				<div className="pt-4">
+					<ClayButton
+						className="bg-neutral-0 border-brand-primary-darken-1 text-brand-primary-darken-1"
+						displayType="secondary"
+						onClick={() =>
+							Liferay.Util.navigate(`${siteURL}/sales/renewals`)
+						}
+						size="sm"
+						type="button"
+					>
+						View all
+					</ClayButton>
+				</div>
 			}
 			title="Renewals"
 		>

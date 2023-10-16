@@ -15,5 +15,11 @@
 }
 
 .dashboard-mdf-request-chart {
-	min-height: 624px;
+	min-height: 544px;
+}
+
+@media (max-width: 768px) {
+	.dashboard-mdf-request-chart {
+		min-height: 544px;
+	}
 }

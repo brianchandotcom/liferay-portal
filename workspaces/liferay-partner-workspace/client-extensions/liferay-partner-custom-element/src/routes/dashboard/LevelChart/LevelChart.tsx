@@ -23,7 +23,7 @@ const LevelChart = () => {
 
 	const BuildPartnershipLevel = () => {
 		if (loading) {
-			return <ClayLoadingIndicator className="mb-10 mt-9" size="md" />;
+			return <ClayLoadingIndicator className="mb-10 mt-10" size="md" />;
 		}
 
 		if (!account || !partnerLevel) {
@@ -51,7 +51,10 @@ const LevelChart = () => {
 
 	return (
 		<ClayIconProvider>
-			<Container title="Partnership Level">
+			<Container
+				className="dashboard-mdf-request-chart"
+				title="Partnership Level"
+			>
 				<BuildPartnershipLevel />
 			</Container>
 		</ClayIconProvider>

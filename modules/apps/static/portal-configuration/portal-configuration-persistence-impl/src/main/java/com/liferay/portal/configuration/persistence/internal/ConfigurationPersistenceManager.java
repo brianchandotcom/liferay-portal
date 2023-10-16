@@ -16,6 +16,7 @@ import com.liferay.portal.configuration.persistence.ReloadablePersistenceManager
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.db.partition.DBPartitionUtil;
+import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.file.install.constants.FileInstallConstants;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -436,6 +437,11 @@ public class ConfigurationPersistenceManager
 	}
 
 	private void _populateDictionaries() throws Exception {
+		if (StartupHelperUtil.isDBNew()) {
+			throw new Exception(
+				"Database is new. Configuration_ table does not exist.");
+		}
+
 		Map<String, Map<String, Object>> overridePropertiesMap = new HashMap<>(
 			ConfigurationOverridePropertiesUtil.getOverridePropertiesMap());
 

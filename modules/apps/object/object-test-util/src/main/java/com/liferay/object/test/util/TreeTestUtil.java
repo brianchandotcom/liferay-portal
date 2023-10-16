@@ -6,8 +6,12 @@
 package com.liferay.object.test.util;
 
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.tree.Edge;
 import com.liferay.object.tree.Node;
@@ -17,13 +21,19 @@ import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
+import java.io.Serializable;
+
+import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
 /**
  * @author Feliphe Marinho
@@ -100,6 +110,73 @@ public class TreeTestUtil {
 
 		return treeFactory.createObjectDefinitionTree(
 			objectDefinitionA.getObjectDefinitionId());
+	}
+
+	public static Tree createObjectEntryTree(
+			ObjectEntryLocalService objectEntryLocalService,
+			ObjectFieldLocalService objectFieldLocalService,
+			long rootObjectDefinitionId,
+			ObjectRelationshipLocalService objectRelationshipLocalService,
+			TreeFactory treeFactory, int treeId)
+		throws PortalException {
+
+		Tree objectDefinitionTree = treeFactory.createObjectDefinitionTree(
+			rootObjectDefinitionId);
+
+		Iterator<Node> iterator = objectDefinitionTree.iterator();
+
+		Node rootNode = iterator.next();
+
+		Queue<String> externalReferenceCodes = new ArrayDeque<>(
+			Arrays.asList("A", "AA", "AB", "AAA", "AAB"));
+
+		ObjectEntry rootObjectEntry = objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0, rootNode.getPrimaryKey(),
+			HashMapBuilder.<String, Serializable>put(
+				"externalReferenceCode", externalReferenceCodes.poll() + treeId
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Map<Long, Long> objectEntryIds = HashMapBuilder.put(
+			rootNode.getPrimaryKey(), rootObjectEntry.getObjectEntryId()
+		).build();
+
+		while (iterator.hasNext()) {
+			Node node = iterator.next();
+
+			ObjectEntry objectEntry = objectEntryLocalService.addObjectEntry(
+				TestPropsValues.getUserId(), 0, node.getPrimaryKey(),
+				HashMapBuilder.<String, Serializable>put(
+					"externalReferenceCode",
+					externalReferenceCodes.poll() + treeId
+				).put(
+					() -> {
+						ObjectRelationship objectRelationship =
+							objectRelationshipLocalService.
+								getObjectRelationship(
+									node.getEdge(
+									).getObjectRelationshipId());
+
+						ObjectField objectField =
+							objectFieldLocalService.getObjectField(
+								objectRelationship.getObjectFieldId2());
+
+						return objectField.getName();
+					},
+					() -> {
+						Node parentNode = node.getParentNode();
+
+						return objectEntryIds.get(parentNode.getPrimaryKey());
+					}
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
+
+			objectEntryIds.put(
+				node.getPrimaryKey(), objectEntry.getObjectEntryId());
+		}
+
+		return treeFactory.createObjectEntryTree(
+			rootObjectEntry.getObjectEntryId());
 	}
 
 	public static void deleteObjectDefinitionHierarchy(

@@ -3,99 +3,83 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayDropDown from '@clayui/drop-down';
-import ClayPopover from '@clayui/popover';
-import React, {Children, Fragment, ReactNode, useEffect, useState} from 'react';
-
-import {BaseSelect, CustomItem, SelectProps} from './BaseSelect';
+import {Option, Picker} from '@clayui/core';
+import {FieldBase} from 'frontend-js-components-web';
+import React, {Key, ReactElement} from 'react';
 
 import './index.scss';
 
-interface SingleSelectProps<T> extends SelectProps {
-	children?: ReactNode;
-	contentRight?: ReactNode;
-	onChange?: (selected: T) => void;
-	options: T[];
+type SingleSelectOption = {
+	label?: string;
+	value?: string | number;
+};
+
+interface SingleSelectProps<T extends SingleSelectOption> {
+	as?:
+		| 'button'
+		| React.ForwardRefExoticComponent<any>
+		| ((props: React.HTMLAttributes<HTMLElement>) => JSX.Element);
+	children?: (item: T) => ReactElement;
+	className?: string;
+	defaultSelectedKey?: Key;
+	disabled?: boolean;
+	error?: string;
+	feedbackMessage?: string;
+	id?: string;
+	items: T[];
+	label?: string;
+	onSelectionChange?: (itemValue: React.Key) => void;
+	placeholder?: string;
+	required?: boolean;
+	selectedKey?: string | number;
+	tooltip?: string;
 }
 
-export function SingleSelect<
-	T extends CustomItem<number | string> = CustomItem
->({
-	contentRight,
+export function SingleSelect<T extends SingleSelectOption>({
+	as,
 	children,
-	onBlur,
-	onChange = () => {},
-	options,
-	...otherProps
+	className,
+	defaultSelectedKey,
+	disabled,
+	error,
+	feedbackMessage,
+	id,
+	items,
+	label,
+	onSelectionChange,
+	placeholder,
+	required,
+	selectedKey,
+	tooltip,
 }: SingleSelectProps<T>) {
-	const [dropdownActive, setDropdownActive] = useState<boolean>(false);
-	const arrayChildren = Children.toArray(children);
-	const [showPopover, setShowPopover] = useState(false);
-
-	useEffect(() => {
-		if (!dropdownActive) {
-			setShowPopover(false);
-		}
-	}, [dropdownActive]);
-
 	return (
-		<BaseSelect
-			contentRight={contentRight}
-			dropdownActive={dropdownActive}
-			onBlur={onBlur}
-			setDropdownActive={setDropdownActive}
-			{...otherProps}
+		<FieldBase
+			className={className}
+			disabled={disabled}
+			errorMessage={error}
+			helpMessage={feedbackMessage}
+			id={id}
+			label={label}
+			required={required}
+			tooltip={tooltip}
 		>
-			{options.map((option, index) => {
-				let events = {};
-				if (option.popover) {
-					events = {
-						onMouseOut: () => setShowPopover(false),
-						onMouseOver: () => setShowPopover(true),
-					};
+			<Picker<T>
+				as={as}
+				defaultSelectedKey={defaultSelectedKey}
+				disabled={disabled}
+				items={items}
+				onSelectionChange={onSelectionChange}
+				placeholder={placeholder}
+				selectedKey={selectedKey}
+			>
+				{(item) =>
+					children ? (
+						children(item)
+					) : (
+						<Option key={item.value}>{item.label}</Option>
+					)
 				}
-
-				return (
-					<Fragment key={option.name ?? option.value ?? index}>
-						<ClayPopover
-							alignPosition="right"
-							disableScroll={false}
-							header={option.popover?.header}
-							onShowChange={setShowPopover}
-							show={showPopover && !!Object.keys(events).length}
-							trigger={
-								<ClayDropDown.Item
-									{...events}
-									active={option.label === otherProps.value}
-									className={
-										option.type
-											? 'lfr-object__single-select--with-label'
-											: ''
-									}
-									disabled={option.disabled}
-									key={index}
-									onClick={() => {
-										setDropdownActive(false);
-										onChange(option);
-									}}
-								>
-									<div>{option.label}</div>
-
-									{option.description && (
-										<span className="text-small">
-											{option.description}
-										</span>
-									)}
-
-									{arrayChildren?.[index]}
-								</ClayDropDown.Item>
-							}
-						>
-							{option.popover?.body}
-						</ClayPopover>
-					</Fragment>
-				);
-			})}
-		</BaseSelect>
+			</Picker>
+		</FieldBase>
 	);
 }

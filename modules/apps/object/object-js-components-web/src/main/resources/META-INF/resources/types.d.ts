@@ -65,7 +65,12 @@ interface ObjectField {
 	state: boolean;
 	system?: boolean;
 }
-type LabelValueObject = {label: string; value: string};
+
+type LabelValueObject = {
+	label?: string;
+	value?: string | number;
+};
+
 type ObjectFieldBusinessType =
 	| 'Attachment'
 	| 'LongText'

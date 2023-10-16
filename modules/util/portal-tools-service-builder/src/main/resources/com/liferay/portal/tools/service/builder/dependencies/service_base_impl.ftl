@@ -1602,11 +1602,13 @@ import org.osgi.service.component.annotations.Reference;
 
 	<#if !dependencyInjectorDS>
 		public void afterPropertiesSet() {
-			<#if stringUtil.equals(sessionTypeName, "Local") && entity.hasEntityColumns() && entity.hasPersistence()>
-				<#if validator.isNotNull(pluginName)>
-					PersistedModelLocalServiceRegistryUtil.register("${apiPackagePath}.model.${entity.name}", ${entity.variableName}LocalService);
-				<#else>
-					persistedModelLocalServiceRegistry.register("${apiPackagePath}.model.${entity.name}", ${entity.variableName}LocalService);
+			<#if serviceBuilder.isVersionLTE_7_3_0()>
+				<#if stringUtil.equals(sessionTypeName, "Local") && entity.hasEntityColumns() && entity.hasPersistence()>
+					<#if validator.isNotNull(pluginName)>
+						PersistedModelLocalServiceRegistryUtil.register("${apiPackagePath}.model.${entity.name}", ${entity.variableName}LocalService);
+					<#else>
+						persistedModelLocalServiceRegistry.register("${apiPackagePath}.model.${entity.name}", ${entity.variableName}LocalService);
+					</#if>
 				</#if>
 			</#if>
 
@@ -1684,11 +1686,13 @@ import org.osgi.service.component.annotations.Reference;
 		}
 	<#else>
 		public void destroy() {
-			<#if stringUtil.equals(sessionTypeName, "Local") && entity.hasEntityColumns() && entity.hasPersistence()>
-				<#if validator.isNotNull(pluginName)>
-					PersistedModelLocalServiceRegistryUtil.unregister("${apiPackagePath}.model.${entity.name}");
-				<#else>
-					persistedModelLocalServiceRegistry.unregister("${apiPackagePath}.model.${entity.name}");
+			<#if serviceBuilder.isVersionLTE_7_3_0()>
+				<#if stringUtil.equals(sessionTypeName, "Local") && entity.hasEntityColumns() && entity.hasPersistence()>
+					<#if validator.isNotNull(pluginName)>
+						PersistedModelLocalServiceRegistryUtil.unregister("${apiPackagePath}.model.${entity.name}");
+					<#else>
+						persistedModelLocalServiceRegistry.unregister("${apiPackagePath}.model.${entity.name}");
+					</#if>
 				</#if>
 			</#if>
 
@@ -2171,15 +2175,17 @@ import org.osgi.service.component.annotations.Reference;
 		private boolean _useTempFile;
 	</#if>
 
-	<#if stringUtil.equals(sessionTypeName, "Local") && entity.hasEntityColumns() && entity.hasPersistence() && !dependencyInjectorDS>
-		<#if validator.isNull(pluginName)>
-			<#if osgiModule>
-				@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-			<#else>
-				@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-			</#if>
+	<#if serviceBuilder.isVersionLTE_7_3_0()>
+		<#if stringUtil.equals(sessionTypeName, "Local") && entity.hasEntityColumns() && entity.hasPersistence() && !dependencyInjectorDS>
+			<#if validator.isNull(pluginName)>
+				<#if osgiModule>
+					@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
+				<#else>
+					@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+				</#if>
 
-			protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
+				protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
+			</#if>
 		</#if>
 	</#if>
 

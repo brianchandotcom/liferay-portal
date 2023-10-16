@@ -38,8 +38,6 @@ definition {
 	tearDown {
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-		ACUtils.tearDownAC();
-
 		ACUtils.tearDownDXP();
 
 		if (${testLiferayVirtualInstance} == "true") {
@@ -50,6 +48,8 @@ definition {
 
 			JSONGroup.deleteGroupByName(groupName = "AC Test");
 		}
+
+		ACUtils.tearDownAC();
 	}
 
 	@description = "Feature ID: LRAC-10999 | Automation ID: LRAC-11308 | Test Summary: Delete browser storage changes userid and anonymous user appears"

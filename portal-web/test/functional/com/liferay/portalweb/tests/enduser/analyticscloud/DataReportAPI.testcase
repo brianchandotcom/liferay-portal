@@ -26,6 +26,15 @@ definition {
 
 		ACUtils.tearDownDXP();
 
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONUser.tearDownNonAdminUsers();
+
+			JSONGroup.deleteGroupByName(groupName = "Site Name");
+		}
+
 		ACUtils.launchAC();
 
 		ACNavigation.goToSettings();
@@ -37,15 +46,6 @@ definition {
 		ACUtils.clickAnyButton(button = "Continue");
 
 		ACUtils.tearDownAC();
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONUser.tearDownNonAdminUsers();
-
-			JSONGroup.deleteGroupByName(groupName = "Site Name");
-		}
 	}
 
 	@description = "Feature ID: LRAC-8103 | Automation ID: LRAC-11502 | Test Summary: Assert the user is able to query data using Analytics Cloud API"

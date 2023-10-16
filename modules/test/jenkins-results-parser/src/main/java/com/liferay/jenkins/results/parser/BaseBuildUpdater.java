@@ -105,7 +105,7 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 		_isApplySlaveOfflineRules();
 
 		if (_isApplyReinvokeRules()) {
-			_build.setStatus("starting");
+			_build.setStatus("queued");
 
 			return;
 		}

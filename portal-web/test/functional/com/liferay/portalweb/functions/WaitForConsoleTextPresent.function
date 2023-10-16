@@ -6,7 +6,7 @@ definition {
 
 		selenium.waitForConsoleTextPresent();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

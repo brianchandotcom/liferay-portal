@@ -10,7 +10,7 @@ definition {
 
 		selenium.tripleClick();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

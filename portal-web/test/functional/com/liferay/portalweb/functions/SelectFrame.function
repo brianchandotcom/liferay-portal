@@ -11,7 +11,7 @@ definition {
 
 			selenium.selectFrame();
 
-			selenium.assertJavaScriptErrors();
+			selenium.assertJavaScriptErrors("true");
 
 			selenium.assertLiferayErrors();
 		}
@@ -30,7 +30,7 @@ definition {
 
 			selenium.selectFrame();
 
-			selenium.assertJavaScriptErrors();
+			selenium.assertJavaScriptErrors("true");
 
 			selenium.assertLiferayErrors();
 		}
@@ -44,7 +44,7 @@ definition {
 	function selectFrameTop {
 		selenium.selectFrame("relative=top");
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 
@@ -59,7 +59,7 @@ definition {
 
 			selenium.selectFrame();
 
-			selenium.assertJavaScriptErrors();
+			selenium.assertJavaScriptErrors("true");
 
 			selenium.assertLiferayErrors();
 		}

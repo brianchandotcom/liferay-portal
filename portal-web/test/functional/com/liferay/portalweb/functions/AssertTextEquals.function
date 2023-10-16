@@ -11,7 +11,7 @@ definition {
 
 		selenium.assertPartialTextCaseInsensitive();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -25,7 +25,7 @@ definition {
 
 		selenium.assertPartialTextAceEditor();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -47,7 +47,7 @@ definition {
 
 		selenium.assertTextCaseInsensitive();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -61,7 +61,7 @@ definition {
 
 		selenium.assertText();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -86,7 +86,7 @@ definition {
 
 		selenium.assertValue();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

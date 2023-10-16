@@ -10,7 +10,7 @@ definition {
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -22,7 +22,7 @@ definition {
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -32,7 +32,7 @@ definition {
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

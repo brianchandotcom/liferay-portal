@@ -6,7 +6,7 @@ definition {
 
 		selenium.mouseUp();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -18,7 +18,7 @@ definition {
 
 		selenium.mouseUpAt(${locator1}, ${value1});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

@@ -8,7 +8,7 @@ definition {
 
 		selenium.assertCssValue(${locator1}, ${locator2}, ${value1});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

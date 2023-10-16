@@ -9,7 +9,7 @@ definition {
 
 		selenium.verifyElementNotPresent();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

@@ -13,7 +13,7 @@ definition {
 
 		selenium.assertElementAccessible(${locator1}, ${ignorableImpacts});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

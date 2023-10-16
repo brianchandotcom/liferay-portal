@@ -10,7 +10,7 @@ definition {
 
 		selenium.uploadTempFile();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -22,7 +22,7 @@ definition {
 
 		selenium.uploadTempFile();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

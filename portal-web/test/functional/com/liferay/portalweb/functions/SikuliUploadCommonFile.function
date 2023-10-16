@@ -6,7 +6,7 @@ definition {
 
 		selenium.sikuliUploadCommonFile();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

@@ -10,7 +10,7 @@ definition {
 
 		selenium.rightClick();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

@@ -8,7 +8,7 @@ definition {
 
 		selenium.assertTextNotPresent();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

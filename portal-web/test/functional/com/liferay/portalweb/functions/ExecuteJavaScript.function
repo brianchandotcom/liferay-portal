@@ -6,7 +6,7 @@ definition {
 
 		selenium.executeJavaScript();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

@@ -6,7 +6,7 @@ definition {
 
 		selenium.dragAndDrop();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -32,7 +32,7 @@ definition {
 
 		selenium.mouseRelease(${locator1});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -68,7 +68,7 @@ definition {
 
 		selenium.mouseRelease(${locator2});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -98,7 +98,7 @@ definition {
 
 		selenium.mouseRelease();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -152,7 +152,7 @@ definition {
 
 		selenium.mouseRelease();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -172,7 +172,7 @@ definition {
 
 		selenium.dragAndDropToObject(${locator1}, ${locator2});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -194,7 +194,7 @@ definition {
 
 		selenium.mouseRelease();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -204,7 +204,7 @@ definition {
 
 		selenium.dragAtAndDrop(${locator1}, ${locator2}, ${value1});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -254,7 +254,7 @@ Simulate.dragAndDrop(arguments[0], arguments[1]);
 			value2 = ${locator1},
 			value3 = ${locator2});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -304,7 +304,7 @@ Simulate.dragAndDrop(arguments[0], arguments[1]);
 			value2 = ${locator1},
 			value3 = ${locator2});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -354,7 +354,7 @@ Simulate.dragAndDrop(arguments[0], arguments[1]);
 			value2 = ${locator1},
 			value3 = ${locator2});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -408,7 +408,7 @@ Simulate.dragAndDrop(arguments[0], arguments[1], ${ratio});
 			value2 = ${locator1},
 			value3 = ${locator2});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -454,7 +454,7 @@ Simulate.dragAndDrop(arguments[0], arguments[1]);
 			value2 = ${locator1},
 			value3 = ${locator2});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -500,7 +500,7 @@ Simulate.dragAndDrop(arguments[0], arguments[1]);
 			value2 = ${locator1},
 			value3 = ${locator2});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -550,7 +550,7 @@ Simulate.dragAndDrop(arguments[0], arguments[1]);
 			value2 = ${locator1},
 			value3 = ${locator2});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -602,7 +602,7 @@ Simulate.dragAndDrop(arguments[0], arguments[1]);
 			value2 = ${locator1},
 			value3 = ${locator2});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

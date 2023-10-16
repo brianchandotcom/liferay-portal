@@ -8,7 +8,7 @@ definition {
 
 		selenium.selectFrame("relative=top");
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -24,7 +24,7 @@ definition {
 
 		selenium.selectWindow();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -40,7 +40,7 @@ definition {
 
 		selenium.selectFrame("relative=top");
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

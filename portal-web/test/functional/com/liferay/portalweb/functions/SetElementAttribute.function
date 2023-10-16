@@ -14,7 +14,7 @@ element.setAttribute("${attribute1}", "${value1}");
 
 		ExecuteJavaScript(value1 = ${javascript});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

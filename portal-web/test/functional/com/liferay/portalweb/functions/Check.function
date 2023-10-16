@@ -14,7 +14,7 @@ definition {
 
 		selenium.assertChecked("xpath=( //div[@class='checkbox']//input[@title='Select All'])[2]");
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -32,7 +32,7 @@ definition {
 
 		AssertChecked.assertCheckedHiddenToggleSwitch();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -54,7 +54,7 @@ definition {
 
 		selenium.assertChecked();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -82,7 +82,7 @@ definition {
 			selenium.clickAt();
 		}
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -102,7 +102,7 @@ definition {
 
 		AssertChecked.assertCheckedNotVisible();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -122,7 +122,7 @@ definition {
 
 		AssertChecked.assertChecked();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -140,7 +140,7 @@ definition {
 
 		AssertElementPresent();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

@@ -10,7 +10,7 @@ definition {
 
 		selenium.assertNotAttributeValue(${attribute1}, ${locator1}, ${value1});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

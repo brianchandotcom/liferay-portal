@@ -17,7 +17,7 @@ arguments[0].dispatchEvent(event);
 			value1 = ${javaScript},
 			value2 = ${locator1});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -27,7 +27,7 @@ arguments[0].dispatchEvent(event);
 
 		selenium.javaScriptMouseOver();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -39,7 +39,7 @@ arguments[0].dispatchEvent(event);
 
 		selenium.mouseOver();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -51,7 +51,7 @@ arguments[0].dispatchEvent(event);
 
 		selenium.mouseOver();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -65,7 +65,7 @@ arguments[0].dispatchEvent(event);
 
 		selenium.waitForVisible();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -79,7 +79,7 @@ arguments[0].dispatchEvent(event);
 
 		selenium.mouseOver();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

@@ -8,7 +8,7 @@ definition {
 
 		selenium.scrollWebElementIntoView();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

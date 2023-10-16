@@ -10,7 +10,7 @@ definition {
 
 		selenium.assertNotEditable();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -24,7 +24,7 @@ definition {
 
 		selenium.assertNotEditable();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

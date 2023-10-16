@@ -14,7 +14,7 @@ definition {
 
 		AssertNotChecked.assertNotChecked();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -32,7 +32,7 @@ definition {
 
 		AssertNotChecked.assertNotCheckedHiddenToggleSwitch();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -52,7 +52,7 @@ definition {
 
 		selenium.assertNotChecked();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -70,7 +70,7 @@ definition {
 
 		AssertNotChecked.assertNotCheckedNotVisible();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -90,7 +90,7 @@ definition {
 
 		AssertNotChecked.assertNotCheckedNotVisible();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

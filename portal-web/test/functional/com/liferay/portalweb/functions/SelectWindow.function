@@ -8,7 +8,7 @@ definition {
 
 		selenium.selectPopUp();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -20,7 +20,7 @@ definition {
 
 		selenium.selectWindow();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -30,7 +30,7 @@ definition {
 
 		selenium.selectWindow();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -40,7 +40,7 @@ definition {
 
 		selenium.selectWindow("null");
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -52,7 +52,7 @@ definition {
 
 		selenium.selectPopUp();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

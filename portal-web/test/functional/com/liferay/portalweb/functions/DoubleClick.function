@@ -10,7 +10,7 @@ definition {
 
 		selenium.doubleClick();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -24,7 +24,7 @@ definition {
 
 		selenium.doubleClickAt();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -38,7 +38,7 @@ definition {
 
 		selenium.doubleClick();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -52,7 +52,7 @@ definition {
 
 		selenium.javaScriptDoubleClick();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

@@ -4,7 +4,7 @@ definition {
 	function assertElementFocused {
 		selenium.assertElementFocused();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

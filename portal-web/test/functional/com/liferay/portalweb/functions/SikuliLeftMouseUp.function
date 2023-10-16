@@ -8,7 +8,7 @@ definition {
 
 		selenium.sikuliLeftMouseUp();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

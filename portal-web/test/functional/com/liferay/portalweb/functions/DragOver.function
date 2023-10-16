@@ -45,7 +45,7 @@ Simulate.dragOver(arguments[0], arguments[1], ${ratio});
 			value2 = ${locator1},
 			value3 = ${locator2});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -90,7 +90,7 @@ Simulate.dragOver(arguments[0], arguments[1]);
 			value2 = ${locator1},
 			value3 = ${locator2});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

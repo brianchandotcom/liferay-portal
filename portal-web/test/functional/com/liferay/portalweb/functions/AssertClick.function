@@ -22,7 +22,7 @@ definition {
 
 		selenium.clickAt();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -34,7 +34,7 @@ definition {
 
 		selenium.clickAt();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -48,7 +48,7 @@ definition {
 
 		selenium.clickAt();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -62,7 +62,7 @@ definition {
 
 		selenium.clickAt();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 
@@ -88,7 +88,7 @@ definition {
 
 		AssertClick.assertTextClickAt();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 
@@ -104,7 +104,7 @@ definition {
 
 		selenium.click();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -116,7 +116,7 @@ definition {
 
 		selenium.click();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -130,7 +130,7 @@ definition {
 
 		selenium.clickAt();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -142,7 +142,7 @@ definition {
 
 		AssertClick.assertTextClickAt();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -156,7 +156,7 @@ definition {
 
 		AssertClick.assertTextClickAt();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

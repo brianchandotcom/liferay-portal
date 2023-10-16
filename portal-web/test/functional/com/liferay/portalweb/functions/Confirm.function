@@ -9,7 +9,7 @@ definition {
 	function confirm {
 		selenium.getConfirmation();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 

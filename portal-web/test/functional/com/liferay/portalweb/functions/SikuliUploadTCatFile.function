@@ -6,7 +6,7 @@ definition {
 
 		selenium.sikuliUploadTCatFile();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

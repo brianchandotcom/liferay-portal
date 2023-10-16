@@ -10,7 +10,7 @@ definition {
 
 		selenium.uploadCommonFile();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -22,7 +22,7 @@ definition {
 
 		selenium.uploadCommonFile();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
@@ -34,7 +34,7 @@ definition {
 
 		selenium.uploadCommonFile();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

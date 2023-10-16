@@ -6,7 +6,7 @@ definition {
 
 		selenium.sikuliAssertElementNotPresent();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

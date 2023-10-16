@@ -6,7 +6,7 @@ definition {
 
 		selenium.pause(5000);
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

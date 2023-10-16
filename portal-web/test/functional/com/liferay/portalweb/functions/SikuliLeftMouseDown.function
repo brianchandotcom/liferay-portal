@@ -8,7 +8,7 @@ definition {
 
 		selenium.pause(1000);
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

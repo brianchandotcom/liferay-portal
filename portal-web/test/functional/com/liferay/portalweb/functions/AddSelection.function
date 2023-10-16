@@ -10,7 +10,7 @@ definition {
 
 		selenium.addSelection();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

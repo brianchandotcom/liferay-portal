@@ -352,7 +352,7 @@ public class RESTBuilder {
 						context, escapedVersion, schemaName);
 				}
 
-				if (ConfigUtil.isVersionCompatible(_configYAML, 3)) {
+				if (ConfigUtil.isVersionCompatible(_configYAML, 4)) {
 					_createBaseDTOActionMetadataProviderFile(
 						context, escapedVersion, schemaName);
 					_createDTOActionMetadataProviderFile(

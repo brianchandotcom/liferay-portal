@@ -13,6 +13,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>BUTTON_FIELD_ENTRY_LANGUAGE</td>
+		<td>//button[contains(@class, 'dropdown-toggle btn btn-monospaced btn-secondary')]//span[contains(.,'${key_buttonFieldEntryLanguage}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>DOCUMENT_NAME</td>
 		<td>//p[contains(@class,'card-title text-truncate')]//a</td>
 		<td></td>

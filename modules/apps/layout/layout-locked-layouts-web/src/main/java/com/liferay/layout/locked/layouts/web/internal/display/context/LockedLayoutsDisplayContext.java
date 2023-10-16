@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.CollatorUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -248,12 +249,13 @@ public class LockedLayoutsDisplayContext {
 					LockedLayoutOrder.LockedLayoutOrderType.NAME.getValue())) {
 
 			lockedLayoutComparator = Comparator.comparing(
-				lockedLayout -> StringUtil.toLowerCase(lockedLayout.getName()));
+				LockedLayout::getName,
+				CollatorUtil.getInstance(_themeDisplay.getLocale()));
 		}
 		else {
 			lockedLayoutComparator = Comparator.comparing(
-				lockedLayout -> StringUtil.toLowerCase(
-					lockedLayout.getUserName()));
+				LockedLayout::getUserName,
+				CollatorUtil.getInstance(_themeDisplay.getLocale()));
 		}
 
 		if (Objects.equals(orderByType, "desc")) {

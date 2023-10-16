@@ -4,7 +4,7 @@
  */
 
 import ClayTabs from '@clayui/tabs';
-import React, {useState} from 'react';
+import React from 'react';
 
 import LayoutReports from './layout_reports/LayoutReports';
 import RenderTimes from './render_times/RenderTimes';
@@ -14,8 +14,7 @@ const TAB_COMPONENTS = {
 	'performance': RenderTimes,
 };
 
-export default function Tabs({segments, tabs}) {
-	const [activeTab, setActiveTab] = useState(0);
+export default function Tabs({activeTab, segments, setActiveTab, tabs}) {
 	const {segmentsExperiences, selectedSegmentsExperience} = segments;
 
 	return (

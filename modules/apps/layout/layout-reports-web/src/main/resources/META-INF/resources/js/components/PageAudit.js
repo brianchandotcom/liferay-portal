@@ -20,6 +20,7 @@ import {SET_SELECTED_ITEM} from '../constants/actionTypes';
 export default function PageAudit({panelIsOpen}) {
 	const [data, setData] = useState(null);
 	const [loading, setLoading] = useState(true);
+	const [activeTab, setActiveTab] = useState(0);
 
 	const {layoutReportsDataURL} = useContext(ConstantsContext);
 	const {selectedItem} = useContext(StoreStateContext);
@@ -79,7 +80,9 @@ export default function PageAudit({panelIsOpen}) {
 					<ItemDetail selectedItem={selectedItem} />
 				) : (
 					<Tabs
+						activeTab={activeTab}
 						segments={data.segmentsExperienceSelectorData}
+						setActiveTab={setActiveTab}
 						tabs={data.tabsData}
 					/>
 				)}

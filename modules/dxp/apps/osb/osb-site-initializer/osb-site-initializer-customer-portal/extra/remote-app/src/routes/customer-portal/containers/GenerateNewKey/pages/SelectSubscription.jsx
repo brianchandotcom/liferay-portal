@@ -31,7 +31,11 @@ const SelectSubscription = ({
 	urlPreviousPage,
 }) => {
 	const [{subscriptionGroups}] = useCustomerPortal();
-	const {featureFlags, provisioningServerAPI} = useAppPropertiesContext();
+	const {
+		articleDeactivateKey,
+		featureFlags,
+		provisioningServerAPI,
+	} = useAppPropertiesContext();
 
 	const {data: generateFormValues, isLoading} = useSWR(
 		sessionId ? `/${accountKey}/${productGroupName}/form-values` : null,
@@ -161,38 +165,6 @@ const SelectSubscription = ({
 				(key) => key.productKey === selectedProductKey
 			),
 		[generateFormValues?.subscriptionTerms, selectedProductKey]
-	);
-
-	const getCustomAlert = (subscriptionTerm) => (
-		<ClayAlert className="px-4 py-3" displayType="info">
-			<span className="text-paragraph">
-				{hasNotPermanentLicence || doesNotAllowPermanentLicense
-					? i18n.sub('activation-keys-will-be-valid-x-x', [
-							getDateCustomFormat(
-								subscriptionTerm.startDate,
-								FORMAT_DATE_TYPES.day2DMonthSYearN
-							),
-							getDateCustomFormat(
-								getLicenseKeyEndDatesByLicenseType({
-									...infoSelectedKey,
-									selectedSubscription: {
-										...subscriptionTerm,
-									},
-								}),
-								FORMAT_DATE_TYPES.day2DMonthSYearN
-							),
-					  ])
-					: i18n.sub(
-							'activation-keys-will-be-valid-indefinitely-starting-x-or-until-manually-deactivated',
-							[
-								getDateCustomFormat(
-									subscriptionTerm.startDate,
-									FORMAT_DATE_TYPES.day2DMonthSYearN
-								),
-							]
-					  )}
-			</span>
-		</ClayAlert>
 	);
 
 	if (!generateFormValues || !accountKey || !sessionId || isLoading) {
@@ -353,7 +325,8 @@ const SelectSubscription = ({
 						{subscriptionTerms
 							?.filter((subscriptionTerm) => {
 								return (
-									new Date() < new Date(subscriptionTerm.endDate) &&
+									new Date() <
+										new Date(subscriptionTerm.endDate) &&
 									subscriptionTerm
 								);
 							})
@@ -398,10 +371,6 @@ const SelectSubscription = ({
 									productVersion: selectedVersion,
 								};
 
-								const displayAlertType = getCustomAlert(
-									subscriptionTerm
-								);
-
 								let numberOfActivationKeysAvailable =
 									subscriptionTerm.quantity -
 									subscriptionTerm.provisionedCount;
@@ -409,6 +378,91 @@ const SelectSubscription = ({
 									numberOfActivationKeysAvailable < 0
 										? 0
 										: numberOfActivationKeysAvailable;
+
+								const getCustomAlert = (subscriptionTerm) => {
+									return (
+										<>
+											{numberOfActivationKeysAvailable !==
+											0 ? (
+												<ClayAlert
+													className="px-4 py-3"
+													displayType="info"
+												>
+													<span className="text-paragraph">
+														{hasNotPermanentLicence ||
+														doesNotAllowPermanentLicense
+															? i18n.sub(
+																	'activation-keys-will-be-valid-x-x',
+																	[
+																		getDateCustomFormat(
+																			subscriptionTerm.startDate,
+																			FORMAT_DATE_TYPES.day2DMonthSYearN
+																		),
+																		getDateCustomFormat(
+																			getLicenseKeyEndDatesByLicenseType(
+																				{
+																					...infoSelectedKey,
+																					selectedSubscription: {
+																						...subscriptionTerm,
+																					},
+																				}
+																			),
+																			FORMAT_DATE_TYPES.day2DMonthSYearN
+																		),
+																	]
+															  )
+															: i18n.sub(
+																	'activation-keys-will-be-valid-indefinitely-starting-x-or-until-manually-deactivated',
+																	[
+																		getDateCustomFormat(
+																			subscriptionTerm.startDate,
+																			FORMAT_DATE_TYPES.day2DMonthSYearN
+																		),
+																	]
+															  )}
+													</span>
+												</ClayAlert>
+											) : (
+												<ClayAlert
+													className="px-4 py-3"
+													displayType="warning"
+												>
+													<span className="text-paragraph">
+														{`${i18n.translate(
+															'key-activations-available-is-zero-to-deactivate-a-key-or-reach-out-to-provisioning-read'
+														)} `}
+
+														<a
+															href={
+																articleDeactivateKey
+															}
+															rel="noreferrer noopener"
+															target="_blank"
+														>
+															<u className="font-weight-semi-bold warning-content-link">
+																{i18n.translate(
+																	'this-article'
+																)}
+															</u>
+														</a>
+													</span>
+												</ClayAlert>
+											)}
+										</>
+									);
+								};
+
+								const displayAlertType = getCustomAlert(
+									subscriptionTerm
+								);
+
+								const handleCustomAlert = () => {
+									if (numberOfActivationKeysAvailable === 0) {
+										return displayAlertType;
+									} else {
+										return selected && displayAlertType;
+									}
+								};
 
 								return (
 									<Radio
@@ -419,9 +473,7 @@ const SelectSubscription = ({
 												subscriptionTerm.quantity,
 											]
 										)}
-										hasCustomAlert={
-											selected && displayAlertType
-										}
+										hasCustomAlert={handleCustomAlert()}
 										isActivationKeyAvailable={
 											subscriptionTerm.quantity -
 												subscriptionTerm.provisionedCount >

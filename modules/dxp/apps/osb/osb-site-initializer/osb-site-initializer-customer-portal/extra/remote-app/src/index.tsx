@@ -33,6 +33,7 @@ const AppRoutes = {
 type Properties = {
 	accountSettingsURL: string | null;
 	articleAccountSupportURL: string | null;
+	articleDeactivateKey: string | null;
 	articleDeployingActivationKeysURL: string | null;
 	articleGettingStartedWithLiferayEnterpriseSearchURL: string | null;
 	articleNotifiedWhenMyActivationKeyIsAboutToExpireURL: string | null;
@@ -101,6 +102,9 @@ class CustomerPortalWebComponent extends HTMLElement {
 			accountSettingsURL: super.getAttribute('account-settings-url'),
 			articleAccountSupportURL: super.getAttribute(
 				'article-account-support-url'
+			),
+			articleDeactivateKey: super.getAttribute(
+				'article-deactivate-key-url'
 			),
 			articleDeployingActivationKeysURL: super.getAttribute(
 				'article-deploying-activation-keys-url'

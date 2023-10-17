@@ -9,6 +9,7 @@ import {createContext, useContext} from 'react';
 export const AppPropertiesContext = createContext({
 	accountSettingsURL: '',
 	articleAccountSupportURL: '',
+	articleDeactivateKey: '',
 	articleDeployingActivationKeysURL: '',
 	articleGettingStartedWithLiferayEnterpriseSearchURL: '',
 	articleNotifiedWhenMyActivationKeyIsAboutToExpireURL: '',

@@ -40,6 +40,7 @@ const initialState = {
 	rightSidebarType: 'empty' as RightSidebarType,
 	selectedObjectFolder: {},
 	showChangesSaved: false,
+	showSidebars: true,
 } as TState;
 
 export function ObjectFolderContextProvider({

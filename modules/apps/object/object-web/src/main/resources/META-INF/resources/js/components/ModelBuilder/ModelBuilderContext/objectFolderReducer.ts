@@ -939,6 +939,15 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 			};
 		}
 
+		case TYPES.SET_SHOW_SIDEBARS: {
+			const {updatedShowSidebars} = action.payload;
+
+			return {
+				...state,
+				showSidebars: updatedShowSidebars,
+			};
+		}
+
 		case TYPES.UPDATE_OBJECT_DEFINITION_NODE: {
 			const {
 				currentObjectFolderName,

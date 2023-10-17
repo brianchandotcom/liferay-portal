@@ -157,6 +157,12 @@ export type TAction =
 	  }
 	| {
 			payload: {
+				updatedShowSidebars: boolean;
+			};
+			type: TYPES.SET_SHOW_SIDEBARS;
+	  }
+	| {
+			payload: {
 				currentObjectFolderName: string;
 				objectDefinitionNodes: Node<ObjectDefinitionNodeData>[];
 				objectDefinitionRelationshipEdges: Edge<
@@ -200,6 +206,7 @@ export type TState = {
 	selectedObjectFolder: ObjectFolder;
 	selectedObjectRelationship?: Edge<ObjectRelationshipEdgeData>;
 	showChangesSaved: boolean;
+	showSidebars: boolean;
 	workflowStatusJSONArray: LabelValueObject[];
 };
 

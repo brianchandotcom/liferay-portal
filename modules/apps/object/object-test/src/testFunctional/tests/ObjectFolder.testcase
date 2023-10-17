@@ -1,0 +1,60 @@
+@component-name = "portal-object"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		JSONObjectFolder.tearDown();
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-185675 Verify that when deleting a object folder with object definitions inside, the object definitions will be moved to the uncategorized folder"
+	@priority = 4
+	test ObjectDefinitionsAreMovedAfterFolderDeletion {
+		property custom.properties = "feature.flag.LPS-148856=true";
+
+		task ("Given an object folder with object definitions inside") {
+			JSONObjectFolder.addFolder(
+				folderLabel = "Custom Folder 194540",
+				folderName = "CustomFolder194540");
+
+			ObjectAdmin.addObjectViaAPI(
+				folderName = "CustomFolder194540",
+				labelName = "Custom Object 194540",
+				objectName = "CustomObject194540",
+				pluralLabelName = "Custom Objects 194540");
+		}
+
+		task ("When the user deletes the object folder") {
+			JSONObjectFolder.deleteObjectFolder(folderName = "CustomFolder194540");
+		}
+
+		task ("Then the object definitions are moved to the uncategorized folder") {
+			ObjectAdmin.openObjectAdmin();
+
+			Click.javaScriptClick(
+				folderLabel = "Uncategorized",
+				locator1 = "ObjectAdmin#SIDEBAR_ITEM");
+
+			AssertVisible(
+				key_itemName = "Custom Object 194540",
+				locator1 = "DataSet#TABLE_CELL");
+		}
+	}
+
+}

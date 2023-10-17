@@ -28,6 +28,7 @@ import com.liferay.object.exception.ObjectEntryStatusException;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
+import com.liferay.object.field.builder.DateObjectFieldBuilder;
 import com.liferay.object.field.builder.DateTimeObjectFieldBuilder;
 import com.liferay.object.field.builder.DecimalObjectFieldBuilder;
 import com.liferay.object.field.builder.EncryptedObjectFieldBuilder;
@@ -124,6 +125,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -267,6 +269,15 @@ public class ObjectEntryLocalServiceTest {
 					ObjectFieldConstants.DB_TYPE_CLOB, false, false, null,
 					"Script", "script", false)));
 
+		_addCustomObjectField(
+			new DateObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap("Date")
+			).name(
+				"date"
+			).objectDefinitionId(
+				_objectDefinition.getObjectDefinitionId()
+			).build());
 		_addCustomObjectField(
 			new PrecisionDecimalObjectFieldBuilder(
 			).labelMap(
@@ -846,6 +857,28 @@ public class ObjectEntryLocalServiceTest {
 	@Test
 	public void testAddObjectEntryWithObjectValidationRule() throws Exception {
 
+		// Date must be in the future
+
+		ObjectValidationRule objectValidationRule1 = _addObjectValidationRule(
+			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+			LocalizedMapUtil.getLocalizedMap("Date must be in the future"),
+			"futureDates(date, currentDate)");
+
+		LocalDate todayLocalDate = LocalDate.now();
+
+		LocalDate tomorrowLocalDate = todayLocalDate.plusDays(1);
+
+		_addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"date", tomorrowLocalDate.toString()
+			).put(
+				"emailAddressRequired", "bob@liferay.com"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).build());
+
+		_assertCount(1);
+
 		// Date time must be in the future
 
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(
@@ -854,7 +887,7 @@ public class ObjectEntryLocalServiceTest {
 		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
 			_objectDefinition.getObjectDefinitionId(), "time");
 
-		ObjectValidationRule objectValidationRule1 = _addObjectValidationRule(
+		ObjectValidationRule objectValidationRule2 = _addObjectValidationRule(
 			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 			LocalizedMapUtil.getLocalizedMap("Date time must be in the future"),
 			ObjectValidationRuleConstants.OUTPUT_TYPE_PARTIAL_VALIDATION,
@@ -872,6 +905,8 @@ public class ObjectEntryLocalServiceTest {
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
+				"date", tomorrowLocalDate.toString()
+			).put(
 				"emailAddressRequired", RandomTestUtil.randomString()
 			).put(
 				"listTypeEntryKeyRequired", "listTypeEntryKey1"
@@ -879,17 +914,19 @@ public class ObjectEntryLocalServiceTest {
 				"time", dateTimeFormatter.format(LocalDateTime.now())
 			).build());
 
-		_assertCount(1);
+		_assertCount(2);
 
 		// Field must be an email address
 
-		ObjectValidationRule objectValidationRule2 = _addObjectValidationRule(
+		ObjectValidationRule objectValidationRule3 = _addObjectValidationRule(
 			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 			LocalizedMapUtil.getLocalizedMap("Field must be an email address"),
 			"isEmailAddress(emailAddress)");
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
+				"date", tomorrowLocalDate.toString()
+			).put(
 				"emailAddress", "bob@liferay.com"
 			).put(
 				"emailAddressRequired", "bob@liferay.com"
@@ -899,13 +936,13 @@ public class ObjectEntryLocalServiceTest {
 				"time", dateTimeFormatter.format(LocalDateTime.now())
 			).build());
 
-		_assertCount(2);
+		_assertCount(3);
 
 		// Must be over 18 years old
 
 		Class<?> clazz = getClass();
 
-		ObjectValidationRule objectValidationRule3 = _addObjectValidationRule(
+		ObjectValidationRule objectValidationRule4 = _addObjectValidationRule(
 			ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY,
 			LocalizedMapUtil.getLocalizedMap("Must be over 18 years old"),
 			StringUtil.read(
@@ -918,6 +955,8 @@ public class ObjectEntryLocalServiceTest {
 			HashMapBuilder.<String, Serializable>put(
 				"birthday", "2000-12-25"
 			).put(
+				"date", tomorrowLocalDate.toString()
+			).put(
 				"emailAddressRequired", "bob@liferay.com"
 			).put(
 				"listTypeEntryKeyRequired", "listTypeEntryKey1"
@@ -925,11 +964,11 @@ public class ObjectEntryLocalServiceTest {
 				"time", dateTimeFormatter.format(LocalDateTime.now())
 			).build());
 
-		_assertCount(3);
+		_assertCount(4);
 
 		// Names must be equals
 
-		ObjectValidationRule objectValidationRule4 = _addObjectValidationRule(
+		ObjectValidationRule objectValidationRule5 = _addObjectValidationRule(
 			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 			LocalizedMapUtil.getLocalizedMap("Names must be equals"),
 			"equals(lastName, middleName)");
@@ -937,6 +976,8 @@ public class ObjectEntryLocalServiceTest {
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
 				"birthday", "2000-12-25"
+			).put(
+				"date", tomorrowLocalDate.toString()
 			).put(
 				"emailAddress", "john@liferay.com"
 			).put(
@@ -951,11 +992,13 @@ public class ObjectEntryLocalServiceTest {
 				"time", dateTimeFormatter.format(LocalDateTime.now())
 			).build());
 
-		_assertCount(4);
+		_assertCount(5);
 
 		Map<String, Serializable> values =
 			HashMapBuilder.<String, Serializable>put(
 				"birthday", "2010-12-25"
+			).put(
+				"date", "2010-12-25"
 			).put(
 				"emailAddress", RandomTestUtil.randomString()
 			).put(
@@ -986,33 +1029,38 @@ public class ObjectEntryLocalServiceTest {
 					getObjectValidationRuleResults();
 
 			Assert.assertEquals(
-				objectValidationRuleResults.toString(), 4,
+				objectValidationRuleResults.toString(), 5,
 				objectValidationRuleResults.size());
 
 			_assertObjectValidationRuleResult(
 				objectValidationRule1.getErrorLabel(LocaleUtil.getDefault()),
-				objectField.getName(), objectValidationRuleResults.get(0));
+				null, objectValidationRuleResults.get(0));
 			_assertObjectValidationRuleResult(
 				objectValidationRule2.getErrorLabel(LocaleUtil.getDefault()),
-				null, objectValidationRuleResults.get(1));
+				objectField.getName(), objectValidationRuleResults.get(1));
 			_assertObjectValidationRuleResult(
 				objectValidationRule3.getErrorLabel(LocaleUtil.getDefault()),
 				null, objectValidationRuleResults.get(2));
 			_assertObjectValidationRuleResult(
 				objectValidationRule4.getErrorLabel(LocaleUtil.getDefault()),
 				null, objectValidationRuleResults.get(3));
+			_assertObjectValidationRuleResult(
+				objectValidationRule5.getErrorLabel(LocaleUtil.getDefault()),
+				null, objectValidationRuleResults.get(4));
 		}
 
 		// Disable object validation rule 4
 
-		objectValidationRule4.setActive(false);
+		objectValidationRule5.setActive(false);
 
 		_objectValidationRuleLocalService.updateObjectValidationRule(
-			objectValidationRule4);
+			objectValidationRule5);
 
 		_addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
 				"birthday", "2000-12-25"
+			).put(
+				"date", tomorrowLocalDate.toString()
 			).put(
 				"emailAddressRequired", "bob@liferay.com"
 			).put(
@@ -1025,7 +1073,7 @@ public class ObjectEntryLocalServiceTest {
 				"time", dateTimeFormatter.format(LocalDateTime.now())
 			).build());
 
-		_assertCount(5);
+		_assertCount(6);
 
 		// Skip object validation rules
 
@@ -1042,7 +1090,7 @@ public class ObjectEntryLocalServiceTest {
 			TestPropsValues.getUserId(), 0,
 			_objectDefinition.getObjectDefinitionId(), values, serviceContext);
 
-		_assertCount(6);
+		_assertCount(7);
 	}
 
 	@Test

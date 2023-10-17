@@ -22,6 +22,16 @@ public class SegmentEntryCTDisplayRenderer
 	extends BaseCTDisplayRenderer<SegmentsEntry> {
 
 	@Override
+	public String[] getAvailableLanguageIds(SegmentsEntry segmentsEntry) {
+		return segmentsEntry.getAvailableLanguageIds();
+	}
+
+	@Override
+	public String getDefaultLanguageId(SegmentsEntry segmentsEntry) {
+		return segmentsEntry.getDefaultLanguageId();
+	}
+
+	@Override
 	public Class<SegmentsEntry> getModelClass() {
 		return SegmentsEntry.class;
 	}

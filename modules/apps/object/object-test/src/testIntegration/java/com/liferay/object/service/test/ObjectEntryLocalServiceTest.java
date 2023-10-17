@@ -103,6 +103,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -118,6 +119,7 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;
@@ -175,6 +177,7 @@ public class ObjectEntryLocalServiceTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
@@ -1160,14 +1163,136 @@ public class ObjectEntryLocalServiceTest {
 
 		_assertCount(3);
 
-		_testAddOrUpdateObjectEntryRootObjectEntryId();
-
 		// TODO Test where group ID is not 0
 
 		// TODO Test where group ID does not belong to right company
 
 		// TODO Test object entries scoped to company vs. scoped to group
 
+	}
+
+	@Test
+	public void testAddOrUpdateObjectEntryRootObjectEntryId() throws Exception {
+		Tree objectDefinitionTree = TreeTestUtil.createObjectDefinitionTree(
+			_objectDefinitionLocalService, _objectRelationshipLocalService,
+			_treeFactory);
+
+		Node rootObjectDefinitionNode = objectDefinitionTree.getRootNode();
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			TestPropsValues.getUserId(),
+			rootObjectDefinitionNode.getPrimaryKey());
+
+		Tree objectEntryTree1 = TreeTestUtil.createObjectEntryTree(
+			"1", _objectEntryLocalService, _objectFieldLocalService,
+			rootObjectDefinitionNode.getPrimaryKey(),
+			_objectRelationshipLocalService, _treeFactory);
+
+		TreeTestUtil.assertObjectEntryTree(
+			LinkedHashMapBuilder.put(
+				"A1", new String[] {"AA1", "AB1"}
+			).put(
+				"AA1", new String[] {"AAA1", "AAB1"}
+			).put(
+				"AB1", new String[0]
+			).put(
+				"AAA1", new String[0]
+			).put(
+				"AAB1", new String[0]
+			).build(),
+			objectEntryTree1, _objectEntryLocalService);
+
+		Tree objectEntryTree2 = TreeTestUtil.createObjectEntryTree(
+			"2", _objectEntryLocalService, _objectFieldLocalService,
+			rootObjectDefinitionNode.getPrimaryKey(),
+			_objectRelationshipLocalService, _treeFactory);
+
+		TreeTestUtil.assertObjectEntryTree(
+			LinkedHashMapBuilder.put(
+				"A2", new String[] {"AA2", "AB2"}
+			).put(
+				"AA2", new String[] {"AAA2", "AAB2"}
+			).put(
+				"AB2", new String[0]
+			).put(
+				"AAA2", new String[0]
+			).put(
+				"AAB2", new String[0]
+			).build(),
+			objectEntryTree2, _objectEntryLocalService);
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				TestPropsValues.getCompanyId(), "C_AA");
+
+		_objectEntryLocalService.addOrUpdateObjectEntry(
+			"AA1", TestPropsValues.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				() -> {
+					Node node = objectDefinitionTree.getNode(
+						objectDefinition.getObjectDefinitionId());
+
+					ObjectRelationship objectRelationship =
+						_objectRelationshipLocalService.getObjectRelationship(
+							node.getEdge(
+							).getObjectRelationshipId());
+
+					ObjectField objectField =
+						_objectFieldLocalService.fetchObjectField(
+							objectRelationship.getObjectFieldId2());
+
+					return objectField.getName();
+				},
+				() -> {
+					ObjectEntry objectEntry =
+						_objectEntryLocalService.getObjectEntry(
+							"A2", rootObjectDefinitionNode.getPrimaryKey());
+
+					return objectEntry.getObjectEntryId();
+				}
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		objectEntryTree1 = _treeFactory.createObjectEntryTree(
+			objectEntryTree1.getRootNode(
+			).getPrimaryKey());
+
+		TreeTestUtil.assertObjectEntryTree(
+			LinkedHashMapBuilder.put(
+				"A1", new String[] {"AB1"}
+			).put(
+				"AB1", new String[0]
+			).build(),
+			objectEntryTree1, _objectEntryLocalService);
+
+		objectEntryTree2 = _treeFactory.createObjectEntryTree(
+			objectEntryTree2.getRootNode(
+			).getPrimaryKey());
+
+		TreeTestUtil.assertObjectEntryTree(
+			LinkedHashMapBuilder.put(
+				"A2", new String[] {"AA1", "AA2", "AB2"}
+			).put(
+				"AA1", new String[] {"AAA1", "AAB1"}
+			).put(
+				"AA2", new String[] {"AAA2", "AAB2"}
+			).put(
+				"AB2", new String[0]
+			).put(
+				"AAA1", new String[0]
+			).put(
+				"AAB1", new String[0]
+			).put(
+				"AAA2", new String[0]
+			).put(
+				"AAB2", new String[0]
+			).build(),
+			objectEntryTree2, _objectEntryLocalService);
+
+		TreeTestUtil.deleteObjectDefinitionHierarchy(
+			_objectDefinitionLocalService,
+			new String[] {"C_A", "C_AA", "C_AB", "C_AAA", "C_AAB"});
 	}
 
 	@Test
@@ -2777,93 +2902,6 @@ public class ObjectEntryLocalServiceTest {
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED, objectEntry.getStatus());
-	}
-
-	private void _testAddOrUpdateObjectEntryRootObjectEntryId()
-		throws Exception {
-
-		Tree objectDefinitionTree = TreeTestUtil.createObjectDefinitionTree(
-			_objectDefinitionLocalService, _objectRelationshipLocalService,
-			_treeFactory);
-
-		Node rootNode = objectDefinitionTree.getRootNode();
-
-		_objectDefinitionLocalService.publishCustomObjectDefinition(
-			TestPropsValues.getUserId(), rootNode.getPrimaryKey());
-
-		Tree objectEntryTree = TreeTestUtil.createObjectEntryTree(
-			_objectEntryLocalService, _objectFieldLocalService,
-			rootNode.getPrimaryKey(), _objectRelationshipLocalService,
-			_treeFactory, 1);
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				TestPropsValues.getCompanyId(), "C_AA");
-
-		String objectFieldName = null;
-
-		for (ObjectRelationship objectRelationship :
-				_objectRelationshipLocalService.getObjectRelationships(
-					rootNode.getPrimaryKey(), true)) {
-
-			if (objectRelationship.getObjectDefinitionId2() ==
-					objectDefinition.getObjectDefinitionId()) {
-
-				ObjectField objectField =
-					_objectFieldLocalService.getObjectField(
-						objectRelationship.getObjectFieldId2());
-
-				objectFieldName = objectField.getName();
-
-				break;
-			}
-		}
-
-		ObjectEntry rootObjectEntry2 = _objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), 0, rootNode.getPrimaryKey(),
-			Collections.emptyMap(), ServiceContextTestUtil.getServiceContext());
-
-		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-			objectEntryIds.get(objectDefinition.getObjectDefinitionId()));
-
-		Map<String, Serializable> values = objectEntry.getValues();
-
-		values.put(objectFieldName, rootObjectEntry2.getObjectEntryId());
-
-		_objectEntryLocalService.updateObjectEntry(
-			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(), values,
-			ServiceContextTestUtil.getServiceContext());
-
-		List<String> objectDefinitionNames = ListUtil.fromArray("C_A", "C_AB");
-
-		for (Map.Entry<Long, Long> entry : objectEntryIds.entrySet()) {
-			Long objectDefinitionId = entry.getKey();
-			Long objectEntryId = entry.getValue();
-
-			ObjectDefinition nodeObjectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectDefinitionId);
-
-			ObjectEntry nodeObjectEntry =
-				_objectEntryLocalService.getObjectEntry(objectEntryId);
-
-			if (objectDefinitionNames.contains(
-					nodeObjectDefinition.getName())) {
-
-				Assert.assertEquals(
-					rootObjectEntry1.getObjectEntryId(),
-					nodeObjectEntry.getRootObjectEntryId());
-			}
-			else {
-				Assert.assertEquals(
-					rootObjectEntry2.getObjectEntryId(),
-					nodeObjectEntry.getRootObjectEntryId());
-			}
-		}
-
-		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			_objectDefinitionLocalService,
-			new String[] {"C_A", "C_AA", "C_AB", "C_AAA", "C_AAB"});
 	}
 
 	private void _testScope(long groupId, String scope, boolean expectSuccess)

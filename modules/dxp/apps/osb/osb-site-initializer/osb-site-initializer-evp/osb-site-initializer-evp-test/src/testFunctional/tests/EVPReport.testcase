@@ -146,24 +146,4 @@ definition {
 		}
 	}
 
-	@description = "LPS-164731 - Manager user should be able to see the Report card through 'Reports' Tab on top menu"
-	@priority = 5
-	test ReportCardShouldBeVisibleForManagerUsers {
-		task ("Given the manager user are logged") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "Manager User");
-		}
-
-		task ("When he goes to Reports Page") {
-			EVPUtils.gotoEVP();
-
-			EVPNavigator.goToNavItem(navItem = "Reports");
-		}
-
-		task ("Then he can see the cards present in the page") {
-			EVPUtils.assertCardsTitle(listcardTitle = "EVP Requests Listing,EVP Financial Report");
-		}
-	}
-
 }

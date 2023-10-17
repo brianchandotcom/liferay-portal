@@ -135,11 +135,11 @@ public class TokenAutoLogin extends BaseAutoLogin {
 		if (tokenConfiguration.importFromLDAP()) {
 			try {
 				if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
-					user = _userImporter.importUser(
+					user = _ldapUserImporter.importUser(
 						companyId, StringPool.BLANK, login);
 				}
 				else if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
-					user = _userImporter.importUser(
+					user = _ldapUserImporter.importUser(
 						companyId, login, StringPool.BLANK);
 				}
 				else {
@@ -192,12 +192,12 @@ public class TokenAutoLogin extends BaseAutoLogin {
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
+	private LDAPUserImporter _ldapUserImporter;
+
+	@Reference
 	private Portal _portal;
 
 	private ServiceTrackerMap<String, TokenRetriever> _serviceTrackerMap;
-
-	@Reference
-	private LDAPUserImporter _userImporter;
 
 	@Reference
 	private UserLocalService _userLocalService;

@@ -81,7 +81,7 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 
 		if (isLDAPImportEnabled(companyId)) {
 			try {
-				user = _userImporter.importUser(
+				user = _ldapUserImporter.importUser(
 					companyId, StringPool.BLANK, screenName);
 			}
 			catch (Exception exception) {
@@ -177,10 +177,10 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
-	private Portal _portal;
+	private LDAPUserImporter _ldapUserImporter;
 
 	@Reference
-	private LDAPUserImporter _userImporter;
+	private Portal _portal;
 
 	@Reference
 	private UserLocalService _userLocalService;

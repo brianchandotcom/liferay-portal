@@ -137,11 +137,11 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 					PropsValues.COMPANY_SECURITY_AUTH_TYPE);
 
 				if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
-					user = _userImporter.importUser(
+					user = _ldapUserImporter.importUser(
 						companyId, StringPool.BLANK, screenName);
 				}
 				else {
-					user = _userImporter.importUser(
+					user = _ldapUserImporter.importUser(
 						companyId, emailAddress, StringPool.BLANK);
 				}
 			}
@@ -318,6 +318,9 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
+	private LDAPUserImporter _ldapUserImporter;
+
+	@Reference
 	private OpenSSO _openSSO;
 
 	@Reference
@@ -325,9 +328,6 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 
 	@Reference
 	private ScreenNameGenerator _screenNameGenerator;
-
-	@Reference
-	private LDAPUserImporter _userImporter;
 
 	@Reference
 	private UserLocalService _userLocalService;

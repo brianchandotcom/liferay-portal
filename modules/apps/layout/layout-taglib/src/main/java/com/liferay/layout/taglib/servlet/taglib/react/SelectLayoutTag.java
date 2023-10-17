@@ -137,6 +137,9 @@ public class SelectLayoutTag extends IncludeTag {
 		String[] selectedLayoutIds = ParamUtil.getStringValues(
 			httpServletRequest, "layoutUuid");
 
+		long selPlid = ParamUtil.getLong(
+			httpServletRequest, "selPlid", LayoutConstants.DEFAULT_PLID);
+
 		return HashMapBuilder.<String, Object>put(
 			"checkDisplayPage", _checkDisplayPage
 		).put(
@@ -145,10 +148,7 @@ public class SelectLayoutTag extends IncludeTag {
 				"findLayoutsURL",
 				HttpComponentsUtil.addParameter(
 					themeDisplay.getPathMain() + "/portal/find_layouts",
-					"selPlid",
-					ParamUtil.getLong(
-						httpServletRequest, "selPlid",
-						LayoutConstants.DEFAULT_PLID))
+					"selPlid", selPlid)
 			).put(
 				"loadMoreItemsURL",
 				themeDisplay.getPathMain() + "/portal/get_layouts"
@@ -168,7 +168,8 @@ public class SelectLayoutTag extends IncludeTag {
 		).put(
 			"namespace", _namespace
 		).put(
-			"nodes", _getLayoutsJSONArray(selectedLayoutIds, themeDisplay)
+			"nodes",
+			_getLayoutsJSONArray(selectedLayoutIds, selPlid, themeDisplay)
 		).put(
 			"privateLayout", _privateLayout
 		).put(
@@ -177,7 +178,7 @@ public class SelectLayoutTag extends IncludeTag {
 	}
 
 	private JSONArray _getLayoutsJSONArray(
-			String[] selectedLayoutIds, ThemeDisplay themeDisplay)
+			String[] selectedLayoutIds, long selPlid, ThemeDisplay themeDisplay)
 		throws Exception {
 
 		Group group = themeDisplay.getScopeGroup();
@@ -195,7 +196,7 @@ public class SelectLayoutTag extends IncludeTag {
 					_checkDisplayPage, _enableCurrentPage,
 					themeDisplay.getScopeGroupId(), getRequest(),
 					_itemSelectorReturnType, _privateLayout, 0,
-					selectedLayoutIds, 0,
+					selectedLayoutIds, selPlid, 0,
 					GetterUtil.getInteger(
 						PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN))
 			).put(

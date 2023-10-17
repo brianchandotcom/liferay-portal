@@ -11,14 +11,12 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
@@ -82,8 +80,8 @@ public class LayoutUtil {
 			boolean checkDisplayPage, boolean enableCurrentPage, long groupId,
 			HttpServletRequest httpServletRequest,
 			String itemSelectorReturnType, boolean privateLayout,
-			long parentLayoutId, String[] selectedLayoutUuid, int start,
-			int end)
+			long parentLayoutId, String[] selectedLayoutUuid, long selPlid,
+			int start, int end)
 		throws Exception {
 
 		ThemeDisplay themeDisplay =
@@ -107,8 +105,7 @@ public class LayoutUtil {
 						if ((checkDisplayPage &&
 							 !layout.isContentDisplayPage()) ||
 							(!enableCurrentPage &&
-							 (layout.getPlid() == _getSelPlid(
-								 httpServletRequest)))) {
+							 (layout.getPlid() == selPlid))) {
 
 							return true;
 						}
@@ -172,11 +169,6 @@ public class LayoutUtil {
 		}
 
 		return jsonArray;
-	}
-
-	private static long _getSelPlid(HttpServletRequest httpServletRequest) {
-		return ParamUtil.getLong(
-			httpServletRequest, "selPlid", LayoutConstants.DEFAULT_PLID);
 	}
 
 	private static boolean _isExcludedLayout(Layout layout) {

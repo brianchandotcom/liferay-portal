@@ -119,6 +119,7 @@ definition {
 		ContentPages.viewFragmentText(
 			fragmentName = "paragraph",
 			id = "element-text",
+			position = 2,
 			text = "Enjoy using the best DXP on Earth!");
 	}
 

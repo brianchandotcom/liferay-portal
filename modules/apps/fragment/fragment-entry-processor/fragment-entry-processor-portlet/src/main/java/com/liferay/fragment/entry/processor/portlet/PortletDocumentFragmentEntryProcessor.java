@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferenceValueLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -325,19 +324,23 @@ public class PortletDocumentFragmentEntryProcessor
 
 			_updateLayoutPortletSetup(portletPreferences, jxPortletPreferences);
 		}
-		else if (ListUtil.isNotEmpty(
-					_portletPreferencesLocalService.getPortletPreferences(
-						fragmentEntryLink.getCompanyId(),
-						PortletKeys.PREFS_OWNER_ID_DEFAULT,
-						PortletKeys.PREFS_OWNER_TYPE_LAYOUT, portletId))) {
-
-			jxPortletPreferences =
-				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+		else {
+			int portletPreferencesCount =
+				_portletPreferencesLocalService.getPortletPreferencesCount(
 					fragmentEntryLink.getCompanyId(),
 					PortletKeys.PREFS_OWNER_ID_DEFAULT,
-					PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-					fragmentEntryLink.getPlid(), portletId,
-					PortletPreferencesFactoryUtil.toXML(jxPortletPreferences));
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, portletId);
+
+			if (portletPreferencesCount > 0) {
+				jxPortletPreferences =
+					PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+						fragmentEntryLink.getCompanyId(),
+						PortletKeys.PREFS_OWNER_ID_DEFAULT,
+						PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+						fragmentEntryLink.getPlid(), portletId,
+						PortletPreferencesFactoryUtil.toXML(
+							jxPortletPreferences));
+			}
 		}
 
 		Document preferencesDocument = _getDocument(

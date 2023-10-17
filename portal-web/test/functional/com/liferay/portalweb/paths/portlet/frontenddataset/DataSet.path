@@ -391,6 +391,11 @@
 	<td>//div[@class="panel-group panel-group-flush"]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ACTIONS_EMPTY_TABLE</td>
+	<td>//div[@class="c-empty-state"]//*[contains(text(),'${key_textName}')]</td>
+	<td></td>
+</tr>
 
 <!-- DATA SET ACTIONS -->
 

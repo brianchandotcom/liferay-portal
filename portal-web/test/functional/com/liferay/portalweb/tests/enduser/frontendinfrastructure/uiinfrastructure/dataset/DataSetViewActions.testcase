@@ -224,6 +224,55 @@ definition {
 		}
 	}
 
+	@description = "LPS-192149. Verify if the user can an Action"
+	@priority = 5
+	test CanCreateActionEntry {
+		task ("And clicks on Create Item Action button") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("And fills the fields in the Action tab") {
+			Type(
+				key_unnamedTitle = "",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE",
+				value1 = "View");
+
+			Select(
+				key_fieldLabel = "Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Link");
+
+			Select(
+				key_fieldLabel = "Icon",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "view");
+
+			Type(
+				key_fieldId = "URL",
+				locator1 = "TextArea#ANY_ID",
+				value1 = "http://localhost:8080/o/data-set-manager/");
+		}
+
+		task ("And clicks on the Save button") {
+			Click(
+				key_fieldLabel = "Icon",
+				locator1 = "Select#GENERIC_SELECT_FIELD");
+
+			PortletEntry.save();
+		}
+
+		task ("Then a confirmation message is displayed") {
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And the item action is saved and it appears in the list of the Item Actions tab") {
+			AssertElementPresent(
+				key_position = 1,
+				keyName = "View",
+				locator1 = "DataSet#FIELDS_TABLE");
+		}
+	}
+
 	@description = "LPS-191486. Verify if the user can delete an Action entry"
 	@priority = 5
 	test CanDeleteAction {

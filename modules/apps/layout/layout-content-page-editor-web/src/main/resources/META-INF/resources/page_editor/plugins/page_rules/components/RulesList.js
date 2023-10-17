@@ -11,8 +11,8 @@ import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-import {deleteRule} from '../../../app/actions/index';
 import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
+import deleteRule from '../../../app/thunks/deleteRule';
 import RulesModal from './RulesModal';
 
 export default function RulesList() {
@@ -27,14 +27,9 @@ export default function RulesList() {
 	const onCreateRule = () => setModalVisible(true);
 
 	const onDeleteRule = (rule) => {
-		const nextLayoutData = {
-			...layoutData,
-			rules: rules.filter(({id}) => id !== rule.id),
-		};
-
 		dispatch(
 			deleteRule({
-				layoutData: nextLayoutData,
+				ruleId: rule.id,
 			})
 		);
 	};

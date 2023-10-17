@@ -5,7 +5,7 @@ definition {
 	function clickAtType {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.waitForEditable();
 
@@ -31,7 +31,7 @@ definition {
 	function sendKeys {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.waitForEditable();
 
@@ -75,7 +75,7 @@ definition {
 	function type {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.waitForEditable();
 
@@ -133,7 +133,7 @@ definition {
 	function typeClickAt {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.waitForEditable();
 
@@ -177,7 +177,7 @@ definition {
 	function typeEditorWaitForEditor {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible("//a[contains(@class,'cke_button__source') and contains(@class,'cke_button_off')]");
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.pause(1000);
 
@@ -239,7 +239,7 @@ definition {
 	function typePause {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.waitForEditable();
 

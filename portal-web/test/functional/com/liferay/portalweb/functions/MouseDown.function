@@ -14,7 +14,7 @@ definition {
 	function mouseDownAt {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.mouseDownAt(${locator1}, ${value1});
 

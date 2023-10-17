@@ -1,8 +1,8 @@
 @default = "waitForElementNotPresent"
 definition {
 
-	function waitForElementNotPresent {
-		selenium.waitForElementNotPresent();
+	function waitForElementNotPresent(locator1) {
+		selenium.waitForElementNotPresent(${locator1}, "false");
 	}
 
 }

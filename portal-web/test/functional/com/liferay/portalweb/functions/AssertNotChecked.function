@@ -4,7 +4,7 @@ definition {
 	function assertNotChecked {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.assertNotChecked();
 

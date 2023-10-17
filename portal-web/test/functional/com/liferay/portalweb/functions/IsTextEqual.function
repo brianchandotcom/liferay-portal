@@ -6,7 +6,7 @@ definition {
 
 		selenium.waitForElementPresent(${locator1}, "false");
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.isPartialTextCaseInsensitive();
 	}
@@ -16,7 +16,7 @@ definition {
 
 		selenium.waitForElementPresent(${locator1}, "false");
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.isTextCaseInsensitive();
 	}
@@ -37,7 +37,7 @@ definition {
 
 		selenium.waitForElementPresent(${locator1}, "false");
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.isValue();
 	}

@@ -5,7 +5,7 @@ definition {
 	function click {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.mouseOver();
 
@@ -15,7 +15,7 @@ definition {
 	function clickNoMouseOver {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.click();
 	}

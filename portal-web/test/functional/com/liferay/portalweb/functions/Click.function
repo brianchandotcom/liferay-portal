@@ -5,7 +5,7 @@ definition {
 	function click {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.mouseOver();
 
@@ -19,7 +19,7 @@ definition {
 	function clickAt {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.mouseOver();
 
@@ -65,7 +65,7 @@ definition {
 	function clickNoMouseOver {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.click();
 
@@ -84,8 +84,8 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function clickNoSPARefresh {
-		selenium.waitForVisible();
+	function clickNoSPARefresh(locator1,value1) {
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.mouseOver();
 
@@ -119,7 +119,7 @@ definition {
 
 		selenium.waitForElementPresent(${locator1}, "false");
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.mouseDown();
 
@@ -133,7 +133,7 @@ definition {
 
 		selenium.mouseOver();
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.click();
 

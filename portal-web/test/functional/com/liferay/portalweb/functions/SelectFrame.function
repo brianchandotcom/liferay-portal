@@ -5,7 +5,7 @@ definition {
 		if (contains(${locator1}, "/iframe")) {
 			WaitForFrameLoad();
 
-			selenium.waitForVisible();
+			selenium.waitForVisible(${locator1}, "false");
 
 			selenium.mouseOver();
 
@@ -24,7 +24,7 @@ definition {
 
 	function selectFrameNoLoading {
 		if (contains(${locator1}, "/iframe")) {
-			selenium.waitForVisible();
+			selenium.waitForVisible(${locator1}, "false");
 
 			selenium.mouseOver();
 
@@ -53,7 +53,7 @@ definition {
 
 	function selectSecondFrame {
 		if (contains(${locator1}, "/iframe")) {
-			selenium.waitForVisible();
+			selenium.waitForVisible(${locator1}, "false");
 
 			selenium.mouseOver();
 

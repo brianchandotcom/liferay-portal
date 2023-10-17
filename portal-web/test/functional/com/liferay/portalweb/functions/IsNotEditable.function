@@ -6,7 +6,7 @@ definition {
 
 		selenium.waitForElementPresent(${locator1}, "false");
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.isNotEditable();
 	}

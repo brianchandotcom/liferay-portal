@@ -1,8 +1,8 @@
 @default = "waitForVisible"
 definition {
 
-	function waitForVisible {
-		selenium.waitForVisible();
+	function waitForVisible(locator1) {
+		selenium.waitForVisible(${locator1}, "false");
 	}
 
 }

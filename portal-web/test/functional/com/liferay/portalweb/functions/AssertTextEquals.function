@@ -5,7 +5,7 @@ definition {
 	function assertPartialText {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.waitForPartialTextCaseInsensitive();
 
@@ -19,7 +19,7 @@ definition {
 	function assertPartialTextAceEditor {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.waitForPartialTextAceEditor();
 
@@ -30,8 +30,8 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function assertPartialTextCaseSensitive {
-		selenium.waitForVisible();
+	function assertPartialTextCaseSensitive(locator1,value1) {
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.waitForPartialText();
 
@@ -41,7 +41,7 @@ definition {
 	function assertText {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.waitForTextCaseInsensitive();
 
@@ -55,7 +55,7 @@ definition {
 	function assertTextCaseSensitive {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.waitForText();
 
@@ -80,7 +80,7 @@ definition {
 	function assertValue {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.waitForValue();
 

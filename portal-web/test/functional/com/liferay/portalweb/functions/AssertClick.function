@@ -84,7 +84,7 @@ definition {
 	function assertTextClickAtWaitForLastScript {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
 		AssertClick.assertTextClickAt();
 

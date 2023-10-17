@@ -4,7 +4,7 @@ definition {
 	function doubleClick {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.mouseOver();
 
@@ -18,7 +18,7 @@ definition {
 	function doubleClickAt {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.mouseOver();
 
@@ -46,7 +46,7 @@ definition {
 	function javaScriptDoubleClick {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.mouseOver();
 

@@ -4,7 +4,7 @@ definition {
 	function assertTextMatches {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.assertTextMatches();
 

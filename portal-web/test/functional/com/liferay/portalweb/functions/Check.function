@@ -4,7 +4,7 @@ definition {
 	function checkAll {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.mouseOver();
 
@@ -110,7 +110,7 @@ definition {
 	function clickAt {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.waitForEditable();
 

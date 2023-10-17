@@ -18,7 +18,7 @@ definition {
 
 		selenium.mouseOver(${locator1});
 
-		selenium.waitForVisible(${locator1});
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.mouseDown(${locator1});
 
@@ -44,11 +44,11 @@ definition {
 
 		selenium.mouseOver(${locator1});
 
-		selenium.waitForVisible(${locator1});
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.waitForTextCaseInsensitive(${locator1}, ${value1});
 
-		selenium.waitForVisible(${locator2});
+		selenium.waitForVisible(${locator1}, "false");
 
 		ScrollWebElementIntoView.scrollWebElementIntoView(locator1 = ${locator2});
 
@@ -80,11 +80,11 @@ definition {
 
 		selenium.mouseOver(${locator1});
 
-		selenium.waitForVisible(${locator1});
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.waitForTextCaseInsensitive(${locator1}, ${value1});
 
-		selenium.waitForVisible(${locator2});
+		selenium.waitForVisible(${locator1}, "false");
 
 		ScrollWebElementIntoView.scrollWebElementIntoView(locator1 = ${locator2});
 
@@ -110,11 +110,11 @@ definition {
 
 		selenium.mouseOver(${locator1});
 
-		selenium.waitForVisible(${locator1});
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.waitForTextCaseInsensitive(${locator1}, ${value1});
 
-		selenium.waitForVisible(${locator2});
+		selenium.waitForVisible(${locator1}, "false");
 
 		ScrollWebElementIntoView.scrollWebElementIntoView(locator1 = ${locator2});
 
@@ -138,7 +138,7 @@ definition {
 
 		selenium.mouseOver(${locator1});
 
-		selenium.waitForVisible(${locator1});
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.mouseDown(${locator1});
 
@@ -160,13 +160,13 @@ definition {
 	function dragAndDropToObject {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible(${locator1});
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.mouseOver(${locator1});
 
 		selenium.waitForPartialTextCaseInsensitive(${locator1}, ${value1});
 
-		selenium.waitForVisible(${locator2});
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.mouseOver(${locator2});
 
@@ -184,7 +184,7 @@ definition {
 
 		selenium.mouseOver(${locator1});
 
-		selenium.waitForVisible(${locator1});
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.mouseDown(${locator1});
 

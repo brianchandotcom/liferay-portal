@@ -35,7 +35,7 @@ arguments[0].dispatchEvent(event);
 	function mouseOver {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.mouseOver();
 
@@ -63,7 +63,7 @@ arguments[0].dispatchEvent(event);
 
 		selenium.mouseOver();
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.assertJavaScriptErrors("true");
 

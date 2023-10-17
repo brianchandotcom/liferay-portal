@@ -85,6 +85,12 @@ public abstract class BaseAddLayoutMVCActionCommand
 				WindowState.NORMAL.toString());
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		configureLayoutURL.setParameter(
+			"backURLTitle", language.get(themeDisplay.getLocale(), "pages"));
+
 		configureLayoutURL.setParameter("redirect", backURL);
 
 		String portletResource = ParamUtil.getString(

@@ -113,6 +113,8 @@ public class ManageLayoutProductNavigationControlMenuEntry
 			"groupId", String.valueOf(layout.getGroupId()));
 		editPageURL.setParameter("selPlid", String.valueOf(layout.getPlid()));
 		editPageURL.setParameter(
+			"backURLTitle", layout.getName(themeDisplay.getLocale()));
+		editPageURL.setParameter(
 			"privateLayout", String.valueOf(layout.isPrivateLayout()));
 
 		Map<String, String> values = HashMapBuilder.put(

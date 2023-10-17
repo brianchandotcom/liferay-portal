@@ -8,6 +8,7 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.util.BulkLayoutConverter;
 import com.liferay.layout.util.template.LayoutConversionResult;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -64,11 +65,10 @@ public class AddLayoutConversionPreviewMVCActionCommand
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
-			layoutFullURL = HttpComponentsUtil.setParameter(
-				layoutFullURL, "p_l_back_url", redirect);
-
-			layoutFullURL = HttpComponentsUtil.setParameter(
-				layoutFullURL, "p_l_mode", Constants.EDIT);
+			layoutFullURL = HttpComponentsUtil.addParameters(
+				layoutFullURL, "p_l_back_url", redirect, "p_l_back_url_title",
+				_language.get(themeDisplay.getLocale(), "pages"), "p_l_mode",
+				Constants.EDIT);
 
 			MultiSessionMessages.add(
 				actionRequest, "layoutConversionWarningMessages",
@@ -88,6 +88,9 @@ public class AddLayoutConversionPreviewMVCActionCommand
 
 	@Reference
 	private BulkLayoutConverter _bulkLayoutConverter;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

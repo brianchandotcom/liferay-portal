@@ -5,9 +5,11 @@
 
 package com.liferay.document.library.taglib.servlet.taglib;
 
+import com.liferay.document.library.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Brian Wing Shun Chan
@@ -30,6 +32,13 @@ public class UploadProgressTag extends IncludeTag {
 
 	public void setMessage(String message) {
 		_message = message;
+	}
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		setServletContext(ServletContextUtil.getServletContext());
 	}
 
 	@Override

@@ -8,8 +8,8 @@
 <%@ include file="/upload_progress/init.jsp" %>
 
 <%
-String id = (String)request.getAttribute("liferay-document-library:upload-progressprogress:id");
-String message = (String)request.getAttribute("liferay-document-library:upload-progressprogress:message");
+String id = (String)request.getAttribute("liferay-document-library:upload-progress:id");
+String message = (String)request.getAttribute("liferay-document-library:upload-progress:message");
 %>
 
 <div id="<%= id %>Bar"></div>

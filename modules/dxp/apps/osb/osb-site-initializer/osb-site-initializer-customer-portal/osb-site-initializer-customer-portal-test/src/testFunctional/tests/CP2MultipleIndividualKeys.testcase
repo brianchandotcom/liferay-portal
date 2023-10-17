@@ -43,17 +43,17 @@ definition {
 		}
 	}
 
-		tearDown {
-			var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
-			CustomerPortal.customerPortalApisTearDown();
+		CustomerPortal.customerPortalApisTearDown();
 
-			JSONGroup.deleteGroupByName(groupName = ${testSiteName});
+		JSONGroup.deleteGroupByName(groupName = ${testSiteName});
 
-			if (${testLiferayVirtualInstance} == "true") {
-				PortalInstances.tearDownCP();
-			}
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
 		}
+	}
 
 	@description = "Story ID: LPS-146061 | Test Summary: Verify success message when the Individual Key is downloaded."
 	@ignore = "true"
@@ -186,8 +186,8 @@ definition {
 		}
 	}
 
-	@description = "Story ID: LPS-140168 | Test Summary: Verify that projects that does not have Keys shows alert message with the text 'Unable to download key, please try again.' when the user click at 'Export All Key Details (csv)' at Action dropdown button."
-	@priority = 5
+	@description = "Story ID: LPS-140168 | Test Summary: Verify that projects that do not have keys show a warning message 'Could not download key, try again' when the user clicks on Export all key details (csv)."
+	@priority = 3
 	test ErrorMessageFromIndividualKeysDownload {
 		task ("Given the user go to the test account") {
 			CustomerPortal.search(searchItem = "Test Account QA 7.4");
@@ -195,17 +195,17 @@ definition {
 			CustomerPortal.enterOnProject(title = "Test Account QA 7.4");
 		}
 
-		task ("And click on DXP product") {
+		task ("And goes to DXP product") {
 			CP2NavigationMenu.goToProductActivation();
 
 			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
 		}
 
-		task ("When click at the Actions button") {
+		task ("And click at the Actions button") {
 			CustomerPortal.clickAtButton(text = "Actions");
 		}
 
-		task ("And click at the 'Export All Key Details (csv)") {
+		task ("When click at the 'Export All Key Details (csv)") {
 			CP2ActivationKeys.clickAtDropdownItem(dropdownItem = "Export All Key Details (csv)");
 		}
 

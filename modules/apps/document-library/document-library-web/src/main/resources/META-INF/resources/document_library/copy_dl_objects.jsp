@@ -8,7 +8,7 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-CopyDLObjectsDisplayContext copyDLObjectsDisplayContext = new CopyDLObjectsDisplayContext(request, liferayPortletResponse, themeDisplay);
+CopyDLObjectsDisplayContext copyDLObjectsDisplayContext = (CopyDLObjectsDisplayContext)request.getAttribute(CopyDLObjectsDisplayContext.class.getName());
 
 copyDLObjectsDisplayContext.setViewAttributes();
 %>
@@ -27,6 +27,8 @@ copyDLObjectsDisplayContext.setViewAttributes();
 				"redirect", copyDLObjectsDisplayContext.getRedirect()
 			).put(
 				"selectionModalURL", copyDLObjectsDisplayContext.getSelectionModalURL()
+			).put(
+				"size", copyDLObjectsDisplayContext.getSize()
 			).put(
 				"sourceRepositoryId", copyDLObjectsDisplayContext.getSourceRepositoryId()
 			).build()

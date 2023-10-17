@@ -150,6 +150,8 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 
 		_checkDestinationGroup(group, groupIds, sourceGroup.getGroupId());
 
+		long size = ParamUtil.getLong(actionRequest, "size");
+
 		long[] dlObjectIds = ParamUtil.getLongValues(
 			actionRequest, "dlObjectIds");
 

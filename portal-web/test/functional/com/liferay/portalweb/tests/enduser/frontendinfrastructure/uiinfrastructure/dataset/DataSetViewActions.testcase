@@ -273,6 +273,56 @@ definition {
 		}
 	}
 
+	@description = "LPS-192149. Verify if the user can change the entry order with drag and drop in the action entries table"
+	@priority = 4
+	test CanDragAndDropActionEntry {
+		task ("And creates two or more item actions") {
+			DataSetAdmin.addActions(
+				actionName = "delete",
+				icon = "trash",
+				type = "Link",
+				url = "http://localhost:8080/o/data-set-manager/");
+
+			DataSetAdmin.addActions(
+				actionName = "view",
+				icon = "view",
+				type = "Link",
+				url = "http://localhost:8080/o/data-set-manager/");
+		}
+
+		task ("Then the list of item actions includes the correct information about the Icon, Label and Type") {
+			for (var name_listTable : list "view,view,link") {
+				AssertElementPresent(
+					key_position = 1,
+					keyName = ${name_listTable},
+					locator1 = "DataSet#FIELDS_TABLE");
+			}
+
+			for (var name_listTable : list "trash,delete,link") {
+				AssertElementPresent(
+					key_position = 2,
+					keyName = ${name_listTable},
+					locator1 = "DataSet#FIELDS_TABLE");
+			}
+		}
+
+		task ("When the user changes the item actions position using drag and drop") {
+			DragAndDrop.javaScriptDragAndDropToBottom(
+				key_position = 2,
+				key_rowNumber = 1,
+				keyName = "delete",
+				locator1 = "DataSet#DRAG_ROW",
+				locator2 = "DataSet#FIELDS_TABLE");
+		}
+
+		task ("Then the item actions are ordered correctly following the changes") {
+			AssertElementPresent(
+				key_position = 2,
+				keyName = "view",
+				locator1 = "DataSet#FIELDS_TABLE");
+		}
+	}
+
 	@description = "LPS-191488. Confirm that is possible to save an Action only with mandatory fields filled and the rest empty"
 	@priority = 4
 	test CanFillOnlyMandatoryFields {

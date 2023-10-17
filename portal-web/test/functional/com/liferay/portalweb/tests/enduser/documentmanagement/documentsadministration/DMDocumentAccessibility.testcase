@@ -1,0 +1,44 @@
+@component-name = "portal-platform-experience-and-design-system"
+definition {
+
+	property portal.accessibility = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "PEDS Accessibility";
+	property testray.main.component.name = "Accessibility Framework";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		task ("Given admin page") {
+			User.firstLoginPG();
+		}
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-186092 - Assert that the file upload page is accessible."
+	@priority = 5
+	test AssertFileUploadPageIsAccessible {
+		property portal.acceptance = "true";
+
+		task ("When accessing the multiple files upload page") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Documents and Media");
+
+			DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "Multiple Files Upload");
+		}
+
+		task ("And when run axe-core, Then no error are returned") {
+			AssertAccessible(value1 = "minor,moderate");
+		}
+	}
+
+}

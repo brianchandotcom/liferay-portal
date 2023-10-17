@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.service.DLFileShortcutLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -81,20 +82,25 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 				themeDisplay.translate(portalException.getMessage()));
 		}
 
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
 		if (!errorMessages.isEmpty()) {
-			JSONPortletResponseUtil.writeJSON(
-				actionRequest, actionResponse,
-				JSONUtil.put(
+			int size = errorMessages.size();
+
+			if (size <= 10) {
+				jsonObject.put(
 					"errorMessages",
 					JSONUtil.toJSONArray(
-						errorMessages, errorMessage -> errorMessage)));
+						errorMessages, errorMessage -> errorMessage));
+			}
+
+			jsonObject.put("errorSize", size);
 
 			hideDefaultSuccessMessage(actionRequest);
 		}
-		else {
-			JSONPortletResponseUtil.writeJSON(
-				actionRequest, actionResponse, _jsonFactory.createJSONObject());
-		}
+
+		JSONPortletResponseUtil.writeJSON(
+			actionRequest, actionResponse, jsonObject);
 	}
 
 	private void _checkDestinationGroup(

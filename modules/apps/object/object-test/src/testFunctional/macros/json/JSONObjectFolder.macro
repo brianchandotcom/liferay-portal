@@ -47,6 +47,21 @@ definition {
 		JSONCurlUtil.delete(${curl});
 	}
 
+	macro getAllCustomObjectFolderId {
+		var portalURL = JSONCompany.getDefaultPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-folders \
+				-u ${userLoginInfo} \
+				-H Content-Type: application/json
+		''';
+
+		var folderIdList = JSONCurlUtil.get(${curl}, "$.items[?(@['name'] != 'Uncategorized')]['id']");
+
+		return ${folderIdList};
+	}
+
 	macro getObjectFolderERC {
 		var portalURL = JSONCompany.getDefaultPortalURL();
 		var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();
@@ -75,6 +90,16 @@ definition {
 		var folderId = JSONCurlUtil.get(${curl}, "$.items[?(@['name'] == '${folderName}')]['id']");
 
 		return ${folderId};
+	}
+
+	macro tearDown {
+		var folderIdList = JSONObjectFolder.getAllCustomObjectFolderId();
+
+		if (${folderIdList} != "") {
+			for (var folderId : list ${folderIdList}) {
+				JSONObjectFolder.deleteObjectFolder(folderId = ${folderId});
+			}
+		}
 	}
 
 }

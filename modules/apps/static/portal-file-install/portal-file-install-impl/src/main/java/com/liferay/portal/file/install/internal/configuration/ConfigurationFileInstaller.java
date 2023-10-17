@@ -28,6 +28,8 @@ import java.util.Enumeration;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
 import org.osgi.framework.Constants;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -38,9 +40,11 @@ import org.osgi.service.cm.ConfigurationAdmin;
 public class ConfigurationFileInstaller implements FileInstaller {
 
 	public ConfigurationFileInstaller(
-		ConfigurationAdmin configurationAdmin, String encoding) {
+		ConfigurationAdmin configurationAdmin, DataSource dataSource,
+		String encoding) {
 
 		_configurationAdmin = configurationAdmin;
+		_dataSource = dataSource;
 		_encoding = encoding;
 
 		_configsDirPath = Util.getFilePath(
@@ -312,6 +316,7 @@ public class ConfigurationFileInstaller implements FileInstaller {
 
 	private final String _configsDirPath;
 	private final ConfigurationAdmin _configurationAdmin;
+	private final DataSource _dataSource;
 	private final String _encoding;
 
 }

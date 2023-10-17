@@ -80,11 +80,17 @@ const DonutChart = ({
 				<span className="text-nowrap">
 					{titleChart}
 
-					<b>{valueChart}</b>
+					<b>
+						{formatCurrency(
+							valueChart,
+							dataCurrency,
+							'lessPrecision'
+						)}
+					</b>
 				</span>
 
 				<div className="d-flex">
-					<div className="d-flex flex-column flex-md-row justify-content-start my-n4">
+					<div className="d-flex flex-column flex-md-row justify-content-start">
 						<>
 							<ClayChart
 								data={chartDataColumns}
@@ -110,7 +116,8 @@ const DonutChart = ({
 											} Activities</span>
 											<span class="text-weight-bold text-primary">Total ${formatCurrency(
 												chartColumnsData[1],
-												dataCurrency
+												dataCurrency,
+												'lessPrecision'
 											)}</span>
 											</div>`;
 										}
@@ -120,7 +127,8 @@ const DonutChart = ({
 											${chartColumnsData[0]}</span>
 											<span class="text-weight-bold text-primary">Total ${formatCurrency(
 												chartColumnsData[1],
-												dataCurrency
+												dataCurrency,
+												'lessPrecision'
 											)}</span>
 											</div>`;
 									},
@@ -130,7 +138,7 @@ const DonutChart = ({
 							<LegendElement />
 
 							{!hasLegend && (
-								<div className="d-flex flex-column justify-content-around pb-4 pl-4">
+								<div className="d-flex flex-column justify-content-around pl-4">
 									<div className="d-flex flex-column flex-wrap h-100 justify-content-center">
 										{legendItems?.map(
 											(item: any, index: any) => {

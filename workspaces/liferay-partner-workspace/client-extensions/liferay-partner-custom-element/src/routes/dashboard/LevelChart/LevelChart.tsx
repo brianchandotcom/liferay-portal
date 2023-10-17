@@ -29,7 +29,7 @@ const LevelChart = () => {
 		if (!account || !partnerLevel) {
 			return (
 				<ClayAlert
-					className="mb-8 mt-8 mx-auto text-center w-50"
+					className="mx-auto my-9 text-center w-75"
 					displayType="info"
 					title="Info:"
 				>
@@ -52,7 +52,7 @@ const LevelChart = () => {
 	return (
 		<ClayIconProvider>
 			<Container
-				className="dashboard-mdf-request-chart"
+				className="dashboard-mdf-request-chart justify-content-start"
 				title="Partnership Level"
 			>
 				<BuildPartnershipLevel />

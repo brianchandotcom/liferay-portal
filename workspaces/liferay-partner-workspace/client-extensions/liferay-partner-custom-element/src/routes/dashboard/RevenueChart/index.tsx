@@ -98,7 +98,10 @@ export default function () {
 	};
 
 	return (
-		<Container className="dashboard-revenue-chart pb-7" title="Revenue">
+		<Container
+			className="dashboard-mdf-request-chart justify-content-between pb-7"
+			title="Revenue"
+		>
 			<DonutChart
 				chartDataColumns={chartData}
 				dataCurrency={currencyData}

@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import formatCurrency from './formatCurrency';
-
 export default function getChartColumns(
 	mdfCurrency: any,
 	mdfRequests: any,
@@ -28,7 +26,7 @@ export default function getChartColumns(
 	expiringSoonTotalActivities(mdfRequests, chartColumns);
 
 	expiredTotalActivites(mdfRequests, chartColumns);
-	setValueChart(formatCurrency(totalMDFActivitiesAmount, mdfCurrency));
+	setValueChart(totalMDFActivitiesAmount);
 	setTitleChart('Total MDF ');
 	setColumnsMDFChart(chartColumns);
 }

@@ -42,8 +42,8 @@ const ProductCard = ({
 		skus?.forEach((sku) => {
 			const licenseUsageTypes = sku?.skuOptions.filter(
 				(skuOption) =>
-					skuOption?.value === 'standard' ||
-					skuOption?.value === 'trial'
+					skuOption?.value === SkuOptions.STANDARD.toLowerCase() ||
+					skuOption?.value === SkuOptions.TRIAL.toLowerCase()
 			);
 
 			licenseUsageTypes.forEach((licenseUsageType) => {
@@ -54,7 +54,6 @@ const ProductCard = ({
 					case SkuOptions.TRIAL.toLowerCase():
 						setHasTrial(true);
 						break;
-
 					default:
 						break;
 				}

@@ -87,12 +87,12 @@
 </tr>
 <tr>
 	<td>HIDE_BUTTON</td>
-	<td>//a[contains(@class, 'font-weight-bold') and contains(text(), 'Hide')]</td>
+	<td>//div[contains(@class, "quick-links")]//a[contains(text(),'Hide')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SHOW_BUTTON</td>
-	<td>//a[contains(@class, 'font-weight-bold')]</td>
+	<td>//div[contains(@class, "quick-links")]//a/child::*[contains(@class,'icon-plus')]</td>
 	<td></td>
 </tr>
 <tr>

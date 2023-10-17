@@ -928,16 +928,15 @@ public class ObjectRelationshipLocalServiceImpl
 			boolean system, String type)
 		throws PortalException {
 
-		ObjectDefinition objectDefinition1 =
-			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId1);
-
 		_validateInvokerBundle(
 			"Only allowed bundles can add system object relationships", system);
-		_validateName(objectDefinitionId1, name);
 
+		ObjectDefinition objectDefinition1 =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId1);
 		ObjectDefinition objectDefinition2 =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId2);
 
+		_validateName(objectDefinitionId1, name);
 		_validateType(
 			objectDefinition1, objectDefinition2, name, parameterObjectFieldId,
 			type);

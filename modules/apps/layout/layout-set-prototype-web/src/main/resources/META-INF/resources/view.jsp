@@ -111,7 +111,13 @@
 						cssClass="table-cell-expand-small table-cell-minw-200 table-title"
 						name="name"
 					>
-						<aui:a href="<%= rowURL %>" target="_blank"><%= layoutSetPrototype.getName(locale) %></aui:a>
+						<clay:link
+							cssClass="d-inline-block"
+							href="<%= rowURL %>"
+							iconAfter="shortcut"
+							label="<%= layoutSetPrototype.getName(locale) %>"
+							target="_blank"
+						/>
 
 						<%
 						int mergeFailCount = layoutSetPrototype.getMergeFailCount();

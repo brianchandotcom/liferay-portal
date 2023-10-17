@@ -192,19 +192,19 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 					cssClass="c-mt-2"
 				>
 					<clay:content-col>
+						<div>
+							<clay:label
+								displayType="info"
+								label='<%= LanguageUtil.format(request, "version-x", article.getVersion()) %>'
+							/>
+						</div>
+					</clay:content-col>
+
+					<clay:content-col>
 						<liferay-portal-workflow:status
 							showStatusLabel="<%= false %>"
 							status="<%= article.getStatus() %>"
 						/>
-					</clay:content-col>
-
-					<clay:content-col>
-						<div>
-							<clay:label
-								displayType="info"
-								label='<%= LanguageUtil.format(request, "version-x", article.getVersion(), false) %>'
-							/>
-						</div>
 					</clay:content-col>
 				</clay:content-row>
 			</c:if>

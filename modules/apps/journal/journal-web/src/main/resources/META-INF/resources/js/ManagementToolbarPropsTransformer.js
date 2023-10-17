@@ -6,6 +6,7 @@
 import {addParams, navigate, openSelectionModal} from 'frontend-js-web';
 
 import openDeleteArticleModal from './modals/openDeleteArticleModal';
+import openPublishArticlesModal from './modals/openPublishArticlesModal';
 
 export default function propsTransformer({
 	additionalProps: {
@@ -33,6 +34,16 @@ export default function propsTransformer({
 			onDelete: () => {
 				Liferay.fire(`${portletNamespace}editEntry`, {
 					action: '/journal/delete_articles_and_folders',
+				});
+			},
+		});
+	};
+
+	const publishEntries = () => {
+		openPublishArticlesModal({
+			onPublish: () => {
+				Liferay.fire(`${portletNamespace}editEntry`, {
+					action: '/journal/publish_articles',
 				});
 			},
 		});
@@ -109,6 +120,9 @@ export default function propsTransformer({
 			}
 			else if (action === 'moveEntries') {
 				moveEntries();
+			}
+			else if (action === 'publishEntriesToLive') {
+				publishEntries();
 			}
 		},
 		onFilterDropdownItemClick(event, {item}) {

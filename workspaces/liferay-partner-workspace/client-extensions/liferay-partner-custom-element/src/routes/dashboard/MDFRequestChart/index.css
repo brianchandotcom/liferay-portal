@@ -1,3 +1,8 @@
+.dashboard-mdf-request-chart {
+	height: 544px;
+	min-height: 544px;
+}
+
 .label-chart {
 	font-weight: 500;
 }
@@ -12,14 +17,4 @@
 	background-color: #37d27e;
 	border-color: #37d27e;
 	color: #fff;
-}
-
-.dashboard-mdf-request-chart {
-	min-height: 544px;
-}
-
-@media (max-width: 768px) {
-	.dashboard-mdf-request-chart {
-		min-height: 544px;
-	}
 }

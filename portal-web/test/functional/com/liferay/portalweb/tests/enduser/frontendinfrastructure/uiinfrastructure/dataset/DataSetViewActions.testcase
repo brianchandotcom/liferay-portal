@@ -661,4 +661,72 @@ definition {
 		}
 	}
 
+	@description = "LPS-192149. Verify if the Icon field is not mandatory and shows the correct icon"
+	@priority = 4
+	test IconFieldIsNotMandatory {
+		task ("And clicks on Create Item Action button") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("Then the New Item Action modal is displayed") {
+			AssertElementPresent(
+				key_title = "New Item Action",
+				locator1 = "Header#H2_TITLE");
+		}
+
+		task ("Then the Icon field is not mandatory") {
+			AssertElementNotPresent(
+				key_fieldName = "Icon",
+				locator1 = "DataSet#MANDATORY_FIELD");
+		}
+
+		task ("When the user clicks on the Icon field") {
+			Click(
+				key_fieldLabel = "Icon",
+				locator1 = "Select#GENERIC_SELECT_FIELD");
+		}
+
+		task ("Then a dropdown list all the icons in clay with the name and the corresponding icon") {
+			Select(
+				key_fieldLabel = "Icon",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "accessibility");
+
+			AssertElementPresent(
+				key_text = "pt-br",
+				locator1 = "Icon#ANY");
+		}
+
+		task ("When the mandatory fields are filled") {
+			Type(
+				key_unnamedTitle = "",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE",
+				value1 = "New Action");
+
+			Type(
+				key_fieldId = "URL",
+				locator1 = "TextArea#ANY_ID",
+				value1 = "http://localhost:8080/o/data-set-manager/");
+		}
+
+		task ("And clicks on Save button") {
+			Click(
+				key_fieldLabel = "Icon",
+				locator1 = "Select#GENERIC_SELECT_FIELD");
+
+			PortletEntry.save();
+		}
+
+		task ("And a successful toast message is displayed") {
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the changes are saved") {
+			AssertElementPresent(
+				key_position = 1,
+				keyName = "New Action",
+				locator1 = "DataSet#FIELDS_TABLE");
+		}
+	}
+
 }

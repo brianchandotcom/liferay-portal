@@ -4,23 +4,24 @@
  */
 
 export declare type ObjectsOptionsList = {
+	items: ObjectOptionsListItem[];
 	label: string;
-	options: LabelValueObject[];
-	type: string;
 }[];
+export declare type ObjectOptionsListItem = {
+	isSystemObjectDefinition: boolean;
+	label?: string;
+	objectDefinitionExternalReferenceCode: string;
+	objectDefinitionId: number;
+};
 interface FetchObjectDefinitionsProps {
 	objectDefinitionsRelationshipsURL: string;
 	setAddObjectEntryDefinitions: (values: AddObjectEntryDefinitions[]) => void;
 	setObjectOptions: (values: ObjectsOptionsList) => void;
-	setSelectedObjectDefinition?: (value: string) => void;
-	values: Partial<ObjectAction>;
 }
 export declare function fetchObjectDefinitions({
 	objectDefinitionsRelationshipsURL,
 	setAddObjectEntryDefinitions,
 	setObjectOptions,
-	setSelectedObjectDefinition,
-	values,
 }: FetchObjectDefinitionsProps): Promise<void>;
 export declare function fetchObjectDefinitionFields(
 	objectDefinitionId: number,

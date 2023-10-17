@@ -151,7 +151,9 @@ public class SelectLayoutTag extends IncludeTag {
 					"selPlid", selPlid)
 			).put(
 				"loadMoreItemsURL",
-				themeDisplay.getPathMain() + "/portal/get_layouts"
+				HttpComponentsUtil.addParameter(
+					themeDisplay.getPathMain() + "/portal/get_layouts",
+					"selPlid", selPlid)
 			).put(
 				"maxPageSize",
 				GetterUtil.getInteger(

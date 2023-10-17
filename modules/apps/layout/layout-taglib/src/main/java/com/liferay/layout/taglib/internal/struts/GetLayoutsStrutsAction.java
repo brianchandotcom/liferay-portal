@@ -7,6 +7,7 @@ package com.liferay.layout.taglib.internal.struts;
 
 import com.liferay.layout.taglib.internal.util.LayoutUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
@@ -45,6 +46,8 @@ public class GetLayoutsStrutsAction implements StrutsAction {
 			httpServletRequest, "parentLayoutId");
 		String[] selectedLayoutUuids = ParamUtil.getStringValues(
 			httpServletRequest, "layoutUuid");
+		long selPlid = ParamUtil.getLong(
+			httpServletRequest, "selPlid", LayoutConstants.DEFAULT_PLID);
 
 		int start = ParamUtil.getInteger(httpServletRequest, "start");
 
@@ -77,7 +80,7 @@ public class GetLayoutsStrutsAction implements StrutsAction {
 				LayoutUtil.getLayoutsJSONArray(
 					checkDisplayPage, enableCurrentPage, groupId,
 					httpServletRequest, itemSelectorReturnType, privateLayout,
-					parentLayoutId, selectedLayoutUuids, start, end)
+					parentLayoutId, selectedLayoutUuids, selPlid, start, end)
 			).toString());
 
 		return null;

@@ -9,14 +9,20 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.rule.model.COREntry;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.List;
 import java.util.Locale;
 
 /**
  * @author Luca Pellizzon
+ * @author Alessio Antonio Rendina
  */
 public interface COREntryType {
 
 	public boolean evaluate(COREntry corEntry, CommerceOrder commerceOrder)
+		throws PortalException;
+
+	public boolean evaluate(
+			COREntry corEntry, List<COREntryTypeItem> corEntryTypeItems)
 		throws PortalException;
 
 	public String getErrorMessage(

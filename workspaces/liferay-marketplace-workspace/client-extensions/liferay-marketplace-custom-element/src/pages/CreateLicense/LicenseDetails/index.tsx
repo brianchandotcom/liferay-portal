@@ -23,7 +23,7 @@ const LicenseDetails = ({expDate, keyType, startDate}: LicenseDetailsType) => {
 		macAddresses: '',
 	};
 
-	const [form, setForm] = useState<any>(formInformation);
+	const [form, setForm] = useState<LicenseDetailsType>(formInformation);
 
 	return (
 		<>
@@ -40,7 +40,6 @@ const LicenseDetails = ({expDate, keyType, startDate}: LicenseDetailsType) => {
 						description: target.value,
 					})
 				}
-				value={formInformation?.description}
 			/>
 
 			<h4>
@@ -57,7 +56,6 @@ const LicenseDetails = ({expDate, keyType, startDate}: LicenseDetailsType) => {
 						hostName: target.value,
 					})
 				}
-				value={formInformation?.hostName}
 			/>
 			<Input
 				component="textarea"
@@ -70,7 +68,6 @@ const LicenseDetails = ({expDate, keyType, startDate}: LicenseDetailsType) => {
 					})
 				}
 				placeholder={`1.1.1.1` + '\n' + `2.2.2.2`}
-				value={formInformation?.IP}
 			/>
 			<Input
 				component="textarea"
@@ -83,7 +80,6 @@ const LicenseDetails = ({expDate, keyType, startDate}: LicenseDetailsType) => {
 					})
 				}
 				placeholder={`XX-XX-XX-XX-XX-XX` + '\n' + `XX-XX-XX-XX-XX-XX`}
-				value={formInformation?.macAddresses}
 			/>
 		</>
 	);

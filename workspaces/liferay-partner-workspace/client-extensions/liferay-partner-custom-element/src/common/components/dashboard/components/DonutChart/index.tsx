@@ -58,7 +58,9 @@ const DonutChart = ({
 
 	const buildChart = () => {
 		if (isLoading) {
-			return <ClayLoadingIndicator className="mb-10 mt-9" size="md" />;
+			return (
+				<ClayLoadingIndicator className="h-100 mb-10 mt-9" size="md" />
+			);
 		}
 
 		if (!hasChartData && !isLoading) {
@@ -82,7 +84,7 @@ const DonutChart = ({
 				</span>
 
 				<div className="d-flex">
-					<div className="d-flex flex-column flex-lg-row justify-content-start my-n4">
+					<div className="d-flex flex-column flex-md-row justify-content-start my-n4">
 						<>
 							<ClayChart
 								data={chartDataColumns}

@@ -3,10 +3,6 @@
 	font-size: 1.3em;
 }
 
-.deals-chart-card-height {
-	height: 544px;
-}
-
 .bb-chart-arcs .bb-chart-arcs-background {
 	fill: #e0e0e0;
 	stroke: none;
@@ -262,4 +258,8 @@
 	height: 10px;
 	margin-right: 2px;
 	width: 10px;
+}
+
+.deals-chart-card-height {
+	height: 544px;
 }

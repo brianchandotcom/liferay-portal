@@ -406,6 +406,11 @@
 	<td>//label[contains(text(),'${key_fieldName}')]/*[contains(text(),'Mandatory')] | //label[contains(text(),'${key_fieldName}')]/*[contains(text(),'Required')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>LOCALIZED_FIELD</td>
+	<td>//div[contains(@class,'input-localized')]//*[text()="${key_field}"]/..//span[contains(text(),'${key_localizedLanguage}')]</td>
+	<td></td>
+</tr>
 
 <!-- DATA SET ACTIONS -->
 

@@ -595,4 +595,70 @@ definition {
 		}
 	}
 
+	@description = "LPS-192149. Verify if the Headless Action Key is not mandatory and contains an tooltip Icon with an message"
+	@priority = 3
+	test HeadlessActionKeyIsNotMandatory {
+		task ("And clicks on Create Item Action button") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("Then the Headless Action Key field is not mandatory") {
+			AssertElementNotPresent(
+				key_fieldName = "Headless Action Key",
+				locator1 = "DataSet#MANDATORY_FIELD");
+		}
+
+		task ("And next to the Headless Action Key field title there is a tooltip icon.") {
+			AssertElementPresent(
+				key_indexNumber = 1,
+				key_text = "question-circle-full",
+				locator1 = "Icon#ANY_N");
+		}
+
+		task ("When the user hovers the tooltip icon") {
+			MouseOver(
+				key_indexNumber = 1,
+				key_text = "question-circle-full",
+				locator1 = "Icon#ANY_N");
+		}
+
+		task ("Then the message “This key allows the action to be performed when the permission is associated with it” is displayed.") {
+			AssertElementPresent(
+				key_title = "",
+				locator1 = "DataSet#FILTER_TOOLTIP",
+				value1 = "This key is used to display the action if the user has the permission for it by checking if the key is present in the data item's actions array.");
+		}
+
+		task ("When the mandatory fields are filled") {
+			Type(
+				key_unnamedTitle = "",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE",
+				value1 = "New Action");
+
+			Type(
+				key_fieldId = "URL",
+				locator1 = "TextArea#ANY_ID",
+				value1 = "http://localhost:8080/o/data-set-manager/");
+		}
+
+		task ("And clicks on Save button") {
+			Click(
+				key_fieldLabel = "Icon",
+				locator1 = "Select#GENERIC_SELECT_FIELD");
+
+			PortletEntry.save();
+		}
+
+		task ("And a successful toast message is displayed") {
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the changes are saved") {
+			AssertElementPresent(
+				key_position = 1,
+				keyName = "New Action",
+				locator1 = "DataSet#FIELDS_TABLE");
+		}
+	}
+
 }

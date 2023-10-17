@@ -9,6 +9,7 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryService;
 import com.liferay.commerce.account.web.internal.display.context.CommerceAccountDisplayContext;
+import com.liferay.commerce.constants.CommerceAccountActionKeys;
 import com.liferay.commerce.constants.CommerceAccountWebKeys;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelService;
 import com.liferay.commerce.product.service.CommerceChannelService;
@@ -22,6 +23,8 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.Portal;
@@ -65,7 +68,24 @@ public class AccountEntryCommerceChannelDefaultsScreenNavigationEntry
 			return false;
 		}
 
-		return true;
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		try {
+			if (_accountEntryModelResourcePermission.contains(
+					permissionChecker, accountEntry.getAccountEntryId(),
+					CommerceAccountActionKeys.VIEW_CHANNEL_DEFAULTS)) {
+
+				return true;
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return false;
 	}
 
 	@Override

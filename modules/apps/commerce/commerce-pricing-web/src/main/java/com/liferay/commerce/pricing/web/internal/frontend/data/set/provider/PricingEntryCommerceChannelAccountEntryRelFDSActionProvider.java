@@ -7,6 +7,7 @@ package com.liferay.commerce.pricing.web.internal.frontend.data.set.provider;
 
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.model.AccountEntry;
+import com.liferay.commerce.constants.CommerceAccountActionKeys;
 import com.liferay.commerce.pricing.web.internal.constants.CommercePricingFDSNames;
 import com.liferay.commerce.pricing.web.internal.model.PricingEntry;
 import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
@@ -18,7 +19,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -63,7 +63,7 @@ public class PricingEntryCommerceChannelAccountEntryRelFDSActionProvider
 		return DropdownItemListBuilder.add(
 			() -> _accountEntryModelResourcePermission.contains(
 				permissionChecker, pricingEntry.getAccountEntryId(),
-				ActionKeys.UPDATE),
+				CommerceAccountActionKeys.MANAGE_CHANNEL_DEFAULTS),
 			dropdownItem -> {
 				dropdownItem.setHref(
 					_getCommerceChannelAccountEntryRelEditURL(
@@ -77,7 +77,7 @@ public class PricingEntryCommerceChannelAccountEntryRelFDSActionProvider
 		).add(
 			() -> _accountEntryModelResourcePermission.contains(
 				permissionChecker, pricingEntry.getAccountEntryId(),
-				ActionKeys.UPDATE),
+				CommerceAccountActionKeys.MANAGE_CHANNEL_DEFAULTS),
 			dropdownItem -> {
 				dropdownItem.setHref(
 					_getCommerceChannelAccountEntryRelDeleteURL(

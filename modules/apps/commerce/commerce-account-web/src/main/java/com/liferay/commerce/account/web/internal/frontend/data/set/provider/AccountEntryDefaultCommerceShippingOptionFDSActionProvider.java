@@ -9,6 +9,7 @@ import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.account.web.internal.constants.CommerceAccountFDSNames;
 import com.liferay.commerce.account.web.internal.model.ShippingOption;
+import com.liferay.commerce.constants.CommerceAccountActionKeys;
 import com.liferay.frontend.data.set.provider.FDSActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
@@ -16,7 +17,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -57,7 +57,7 @@ public class AccountEntryDefaultCommerceShippingOptionFDSActionProvider
 		return DropdownItemListBuilder.add(
 			() -> _accountEntryModelResourcePermission.contains(
 				permissionChecker, shippingOption.getAccountEntryId(),
-				ActionKeys.UPDATE),
+				CommerceAccountActionKeys.MANAGE_CHANNEL_DEFAULTS),
 			dropdownItem -> {
 				dropdownItem.setHref(
 					_getCommerceShippingOptionAccountEntryRelEditURL(

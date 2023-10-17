@@ -7,6 +7,7 @@ package com.liferay.commerce.payment.web.internal.frontend.data.set.provider;
 
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.account.model.AccountEntry;
+import com.liferay.commerce.constants.CommerceAccountActionKeys;
 import com.liferay.commerce.payment.web.internal.constants.CommercePaymentMethodGroupRelFDSNames;
 import com.liferay.commerce.payment.web.internal.model.PaymentMethod;
 import com.liferay.frontend.data.set.provider.FDSActionProvider;
@@ -16,7 +17,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -57,7 +57,7 @@ public class AccountEntryDefaultCommercePaymentsFDSActionProvider
 		return DropdownItemListBuilder.add(
 			() -> _accountEntryModelResourcePermission.contains(
 				permissionChecker, paymentMethod.getAccountEntryId(),
-				ActionKeys.UPDATE),
+				CommerceAccountActionKeys.MANAGE_CHANNEL_DEFAULTS),
 			dropdownItem -> {
 				dropdownItem.setHref(
 					_getAccountEntryDefaultCommercePaymentMethodEditURL(

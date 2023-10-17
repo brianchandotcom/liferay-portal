@@ -270,6 +270,15 @@ public class LayoutStructure {
 		return layoutStructureItem;
 	}
 
+	public LayoutStructureRule addLayoutStructureRule(String name) {
+		LayoutStructureRule layoutStructureRule = new LayoutStructureRule(
+			PortalUUIDUtil.generate(), name);
+
+		_layoutStructureRules.add(layoutStructureRule);
+
+		return layoutStructureRule;
+	}
+
 	public LayoutStructureRule addLayoutStructureRule(String id, String name) {
 		LayoutStructureRule layoutStructureRule = new LayoutStructureRule(
 			id, name);

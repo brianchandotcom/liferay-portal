@@ -7,6 +7,8 @@
 
 <%@ include file="/init.jsp" %>
 
+<%@ page import="com.liferay.portal.kernel.util.HashMapBuilder" %>
+
 <%
 boolean closeButton = GetterUtil.getBoolean(String.valueOf(request.getAttribute("liferay-frontend:sidebar-panel:closeButton")));
 String resourceURL = (String)request.getAttribute("liferay-frontend:sidebar-panel:resourceURL");

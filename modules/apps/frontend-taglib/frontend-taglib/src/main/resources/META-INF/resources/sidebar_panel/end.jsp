@@ -12,12 +12,16 @@
 </div>
 
 <c:if test="<%= (resourceURL != null) && Validator.isNotNull(searchContainerId) %>">
-	<aui:script use="liferay-sidebar-panel">
-		new Liferay.SidebarPanel({
-			namespace: '<%= namespace %>',
-			resourceUrl: '<%= resourceURL %>',
-			searchContainerId: '<%= namespace + searchContainerId %>',
-			targetNode: '#<%= namespace %>sidebarPanel',
-		});
-	</aui:script>
+	<liferay-frontend:component
+		context='<%=
+			HashMapBuilder.<String, Object>put(
+				"resourceURL", resourceURL
+			).put(
+				"searchContainerId", namespace + searchContainerId
+			).put(
+				"targetNodeId", namespace + "sidebarPanel"
+			).build()
+				%>'
+		module="sidebar_panel/js/SidebarPanel"
+	/>
 </c:if>

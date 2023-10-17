@@ -261,6 +261,10 @@ public class ContentPageEditorDisplayContext {
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor/add_portlet")
 			).put(
+				"addRuleURL",
+				getFragmentEntryActionURL(
+					"/layout_content_page_editor/add_rule")
+			).put(
 				"assetCategoryTreeNodeItemSelectorURL",
 				_getAssetCategoryTreeNodeItemSelectorURL()
 			).put(
@@ -329,6 +333,10 @@ public class ContentPageEditorDisplayContext {
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor" +
 						"/delete_fragment_entry_link_comment")
+			).put(
+				"deleteRuleURL",
+				getFragmentEntryActionURL(
+					"/layout_content_page_editor/delete_rule")
 			).put(
 				"discardDraftURL", _getDiscardDraftURL()
 			).put(
@@ -699,6 +707,10 @@ public class ContentPageEditorDisplayContext {
 				"updateRowColumnsURL",
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor/update_row_columns")
+			).put(
+				"updateRuleURL",
+				getFragmentEntryActionURL(
+					"/layout_content_page_editor/update_rule")
 			).put(
 				"updateSegmentsExperiencePriorityURL",
 				getFragmentEntryActionURL(

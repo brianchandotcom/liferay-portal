@@ -43,6 +43,8 @@ public class CommerceAccountServiceVerifyProcess extends VerifyProcess {
 				companyId -> {
 					ServiceContext serviceContext = new ServiceContext();
 
+					serviceContext.setAttribute(
+						"forceReloadPermissions", Boolean.TRUE);
 					serviceContext.setCompanyId(companyId);
 					serviceContext.setUserId(_getAdminUserId(companyId));
 					serviceContext.setUuid(PortalUUIDUtil.generate());

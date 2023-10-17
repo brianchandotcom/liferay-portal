@@ -11,6 +11,7 @@ import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalService;
+import com.liferay.commerce.constants.CommerceAccountActionKeys;
 import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.notification.constants.CommerceNotificationActionKeys;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 
 import java.util.Arrays;
@@ -57,6 +59,12 @@ public class CommerceAccountRoleHelperImpl
 		_checkAccountRole(
 			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR,
 			serviceContext);
+		_checkRole(
+			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER,
+			RoleConstants.TYPE_ORGANIZATION, serviceContext);
+		_checkAccountRole(
+			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER,
+			serviceContext);
 		_checkAccountRole(
 			AccountRoleConstants.ROLE_NAME_ACCOUNT_BUYER, serviceContext);
 		_checkAccountRole(
@@ -67,7 +75,9 @@ public class CommerceAccountRoleHelperImpl
 			_checkAccountRole(
 				AccountRoleConstants.ROLE_NAME_ACCOUNT_SUPPLIER,
 				serviceContext);
-			_checkRole(AccountRoleConstants.ROLE_NAME_SUPPLIER, serviceContext);
+			_checkRole(
+				AccountRoleConstants.ROLE_NAME_SUPPLIER,
+				RoleConstants.TYPE_REGULAR, serviceContext);
 		}
 	}
 
@@ -88,15 +98,17 @@ public class CommerceAccountRoleHelperImpl
 
 			_setRolePermissions(role, serviceContext);
 		}
-
-		if (AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR.
-				equals(name)) {
+		else if (AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_ADMINISTRATOR.
+					equals(name) ||
+				 GetterUtil.getBoolean(
+					 serviceContext.getAttribute("forceReloadPermissions"))) {
 
 			_setRolePermissions(role, serviceContext);
 		}
 	}
 
-	private void _checkRole(String name, ServiceContext serviceContext)
+	private void _checkRole(
+			String name, int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		Role role = _roleLocalService.fetchRole(
@@ -106,8 +118,12 @@ public class CommerceAccountRoleHelperImpl
 			role = _roleLocalService.addRole(
 				serviceContext.getUserId(), null, 0, name,
 				Collections.singletonMap(serviceContext.getLocale(), name),
-				Collections.emptyMap(), RoleConstants.TYPE_REGULAR, null,
-				serviceContext);
+				Collections.emptyMap(), type, null, serviceContext);
+
+			_setRolePermissions(role, serviceContext);
+		}
+		else if (GetterUtil.getBoolean(
+					serviceContext.getAttribute("forceReloadPermissions"))) {
 
 			_setRolePermissions(role, serviceContext);
 		}
@@ -155,11 +171,18 @@ public class CommerceAccountRoleHelperImpl
 			groupResourceActionIds.put(
 				AccountEntry.class.getName(),
 				new String[] {
+					ActionKeys.UPDATE, ActionKeys.MANAGE_USERS, ActionKeys.VIEW,
+					AccountActionKeys.ASSIGN_USERS,
 					AccountActionKeys.MANAGE_ADDRESSES,
-					AccountActionKeys.ASSIGN_USERS, ActionKeys.UPDATE,
-					ActionKeys.VIEW, AccountActionKeys.VIEW_ADDRESSES,
-					AccountActionKeys.VIEW_USERS
+					AccountActionKeys.VIEW_ADDRESSES,
+					AccountActionKeys.VIEW_ACCOUNT_ROLES,
+					AccountActionKeys.VIEW_ORGANIZATIONS,
+					AccountActionKeys.VIEW_USERS,
+					CommerceAccountActionKeys.MANAGE_CHANNEL_DEFAULTS,
+					CommerceAccountActionKeys.VIEW_CHANNEL_DEFAULTS
 				});
+			groupResourceActionIds.put(
+				AccountRole.class.getName(), new String[] {ActionKeys.VIEW});
 			groupResourceActionIds.put(
 				"com.liferay.commerce.order",
 				new String[] {
@@ -173,6 +196,30 @@ public class CommerceAccountRoleHelperImpl
 					"MANAGE_COMMERCE_ORDERS", "VIEW_BILLING_ADDRESS",
 					"VIEW_COMMERCE_ORDERS", "VIEW_OPEN_COMMERCE_ORDERS"
 				});
+		}
+		else if (name.equals(
+					AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER)) {
+
+			groupResourceActionIds.put(
+				AccountEntry.class.getName(),
+				new String[] {
+					ActionKeys.UPDATE, ActionKeys.MANAGE_USERS, ActionKeys.VIEW,
+					AccountActionKeys.MANAGE_ADDRESSES,
+					AccountActionKeys.VIEW_ADDRESSES,
+					AccountActionKeys.VIEW_ACCOUNT_ROLES,
+					AccountActionKeys.VIEW_ORGANIZATIONS,
+					AccountActionKeys.VIEW_USERS,
+					CommerceAccountActionKeys.MANAGE_CHANNEL_DEFAULTS,
+					CommerceAccountActionKeys.VIEW_CHANNEL_DEFAULTS
+				});
+			groupResourceActionIds.put(
+				AccountRole.class.getName(), new String[] {ActionKeys.VIEW});
+		}
+		else if (name.equals(
+					AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MEMBER)) {
+
+			groupResourceActionIds.put(
+				AccountEntry.class.getName(), new String[] {ActionKeys.VIEW});
 		}
 		else if (name.equals(AccountRoleConstants.ROLE_NAME_ACCOUNT_BUYER)) {
 			companyResourceActionIds.put(

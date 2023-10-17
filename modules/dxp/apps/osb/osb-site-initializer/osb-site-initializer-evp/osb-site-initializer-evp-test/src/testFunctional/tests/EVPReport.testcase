@@ -114,23 +114,35 @@ definition {
 		}
 	}
 
-	@description = "LPS-164731 - Finance user should be able to see the Report card through 'Reports' Tab on top menu"
+	@description = "LPS-164731 - Liferay Staff users should be able to see the Report card through 'Reports' Tab on top menu"
 	@priority = 5
-	test CanReportCardShouldBeVisibleForFinanceUsers {
-		task ("Given the finance user are logged") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "finance@liferay.com",
-				userLoginFullName = "Finance User");
-		}
+	test ReportCardShouldBeVisibleForLiferayStaffUsers {
+		var table = '''
+				| finance@liferay.com | Finance User |
+				| manager@liferay.com | Manager User |
+			''';
 
-		task ("When he goes to Reports Page") {
-			EVPUtils.gotoEVP();
+		var rawTable = TableUtil.newTable(${table});
+		
+		for (var row : table ${rawTable}) {
+			var liferayStaffEmail = "${row[0]}";
+			var userLoginFullName = "${row[1]}";
 
-			EVPNavigator.goToNavItem(navItem = "Reports");
-		}
+			task ("Given a Liferay Staff user is logged in") {
+				User.logoutAndLoginPG(
+					userLoginEmailAddress = ${liferayStaffEmail},
+					userLoginFullName = ${userLoginFullName});
+			}
 
-		task ("Then he can see the cards present in the page") {
-			EVPUtils.assertCardsTitle(listcardTitle = "EVP Requests Listing,EVP Financial Report");
+			task ("When the user goes to Reports Page") {
+				EVPUtils.gotoEVP();
+
+				EVPNavigator.goToNavItem(navItem = "Reports");
+			}
+
+			task ("Then the user can see the cards presented on the page") {
+				EVPUtils.assertCardsTitle(listcardTitle = "EVP Requests Listing,EVP Financial Report");
+			}
 		}
 	}
 

@@ -59,7 +59,7 @@ public class SearchEngineInitializerTest {
 	public void testConcurrentReindex() throws Exception {
 		_reindex("concurrent");
 
-		_verifyMethodCalls(1, 0, 0, 1, 0, 1);
+		_verify(1, 0, 0, 1, 0, 1);
 	}
 
 	@Test
@@ -68,21 +68,21 @@ public class SearchEngineInitializerTest {
 
 		_reindex("concurrent");
 
-		_verifyMethodCalls(1, 1, 0, 1, 0, 0);
+		_verify(1, 1, 0, 1, 0, 0);
 	}
 
 	@Test
 	public void testRegularReindex() throws Exception {
 		_reindex("regular");
 
-		_verifyMethodCalls(0, 0, 0, 1, 1, 0);
+		_verify(0, 0, 0, 1, 1, 0);
 	}
 
 	@Test
 	public void testSyncReindex() throws Exception {
 		_reindex("sync");
 
-		_verifyMethodCalls(0, 0, 1, 0, 0, 0);
+		_verify(0, 0, 1, 0, 0, 0);
 	}
 
 	private void _reindex(String executionMode) {
@@ -114,7 +114,7 @@ public class SearchEngineInitializerTest {
 		);
 	}
 
-	private void _verifyMethodCalls(
+	private void _verify(
 			int createNextIndex, int deleteNextIndex, int deleteStaleDocuments,
 			int initialize, int removeCompany,
 			int replaceCurrentIndexWithNextIndex)

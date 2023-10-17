@@ -3349,15 +3349,23 @@ public class JenkinsResultsParserUtil {
 		JenkinsMaster jenkinsMaster, String jenkinsJobName,
 		Map<String, String> buildParameters) {
 
+		Class<?> clazz = JenkinsResultsParserUtil.class;
+
+		String script;
+
+		try {
+			script = readInputStream(
+				clazz.getResourceAsStream(
+					"dependencies/invoke-jenkins-build.groovy"));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to load groovy script", ioException);
+		}
+
+		script = script.replace("${jenkinsJobName}", jenkinsJobName);
+
 		StringBuilder sb = new StringBuilder();
-
-		sb.append("import org.jvnet.jenkins.plugins.nodelabelparameter.");
-		sb.append("LabelParameterDefinition;\n");
-
-		sb.append("import org.jvnet.jenkins.plugins.nodelabelparameter.");
-		sb.append("LabelParameterValue;\n");
-
-		sb.append("Map<String, String> parameters = new HashMap<>();\n");
 
 		for (Map.Entry<String, String> buildParameter :
 				buildParameters.entrySet()) {
@@ -3369,83 +3377,11 @@ public class JenkinsResultsParserUtil {
 			sb.append("\");\n");
 		}
 
-		sb.append("Map<String, TopLevelItem> topLevelItems = ");
-		sb.append("Jenkins.instance.getItemMap();\n");
-
-		sb.append("TopLevelItem topLevelItem = topLevelItems.get(\"");
-		sb.append(jenkinsJobName);
-		sb.append("\");\n");
-
-		sb.append(
-			"List<ParameterValue> parameterValues = new ArrayList<>();\n");
-
-		sb.append("JobProperty jobProperty = topLevelItem.getProperty(");
-		sb.append("\"hudson.model.ParametersDefinitionProperty\");\n");
-
-		sb.append("for (ParameterDefinition parameterDefinition : ");
-		sb.append("jobProperty.getParameterDefinitions()) {\n");
-
-		sb.append("String parameterName = parameterDefinition.getName();\n");
-
-		sb.append("String parameterValue = parameters.get(parameterName);\n");
-
-		sb.append(
-			"if ((parameterValue == null) || parameterValue.isEmpty()) {\n");
-		sb.append("parameterValue = parameterDefinition.defaultValue;\n");
-		sb.append("}\n");
-
-		sb.append("if (parameterDefinition instanceof ");
-		sb.append("StringParameterDefinition) {\n");
-
-		sb.append("parameterValues.add(");
-		sb.append(
-			"new StringParameterValue(parameterName, parameterValue));\n");
-
-		sb.append("}\n");
-
-		sb.append("else if (parameterDefinition instanceof ");
-		sb.append("LabelParameterDefinition) {\n");
-
-		sb.append("parameterValues.add(");
-		sb.append("new LabelParameterValue(parameterName, parameterValue));\n");
-
-		sb.append("}\n");
-
-		sb.append("}\n");
-
-		sb.append("def waitingItem = Jenkins.instance.queue.schedule(");
-		sb.append("topLevelItem, 0, new ParametersAction(parameterValues));\n");
-
-		sb.append("if (waitingItem == null) {\n");
-
-		sb.append(
-			"for (Queue.Item item : Jenkins.instance.queue.getItems()) {\n");
-
-		sb.append("if (waitingItem != null) {break;}\n");
-
-		sb.append("for (Action action : item.getActions()) {\n");
-
-		sb.append("if (!(action instanceof ParametersAction)) ");
-		sb.append("{continue;}\n");
-
-		sb.append("if (!parameterValues.equals(action.getAllParameters())) ");
-		sb.append("{continue;}\n");
-
-		sb.append("waitingItem = item;\n");
-
-		sb.append("break;\n");
-
-		sb.append("}\n}\n}\n");
-
-		sb.append("def jsonBuilder = new groovy.json.JsonBuilder()\n");
-
-		sb.append("jsonBuilder queueId: waitingItem.getId()\n");
-
-		sb.append("println(jsonBuilder);");
+		script = script.replace("${parameters}", sb.toString());
 
 		try {
 			String response = executeJenkinsScript(
-				jenkinsMaster.getName(), sb.toString(), true);
+				jenkinsMaster.getName(), script, true);
 
 			return new JSONObject(response);
 		}

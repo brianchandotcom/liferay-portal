@@ -695,6 +695,19 @@ public class LayoutStructure {
 		return layoutStructureItem;
 	}
 
+	public LayoutStructureRule updateLayoutStructureRule(
+		String name, String ruleId) {
+
+		LayoutStructureRule layoutStructureRule = _layoutStructureRulesMap.get(
+			ruleId);
+
+		if (layoutStructureRule != null) {
+			layoutStructureRule.setName(name);
+		}
+
+		return layoutStructureRule;
+	}
+
 	public void updateRowColumnsLayoutStructureItem(
 		String itemId, int numberOfColumns) {
 

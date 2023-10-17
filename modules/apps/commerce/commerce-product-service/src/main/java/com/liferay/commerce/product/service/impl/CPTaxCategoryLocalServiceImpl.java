@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -33,6 +32,7 @@ import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
@@ -168,8 +168,7 @@ public class CPTaxCategoryLocalServiceImpl
 		List<CPTaxCategory> cpTaxCategories = TransformUtil.transform(
 			searchHits.getSearchHits(),
 			searchHit -> {
-				com.liferay.portal.search.document.Document document =
-					searchHit.getDocument();
+				Document document = searchHit.getDocument();
 
 				long cpTaxCategoryId = document.getLong(Field.ENTRY_CLASS_PK);
 

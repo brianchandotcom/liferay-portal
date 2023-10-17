@@ -17,6 +17,7 @@ import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.currency.util.ExchangeRateProviderRegistry;
 import com.liferay.commerce.currency.web.internal.util.CommerceCurrencyUtil;
+import com.liferay.commerce.product.constants.CPField;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
@@ -39,6 +40,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+
+import java.util.LinkedHashMap;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -204,21 +207,18 @@ public class CommerceCurrenciesDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Boolean active;
+		Boolean activeNavigation = null;
 		String emptyResultsMessage = "there-are-no-currencies";
 
 		String navigation = _getNavigation();
 
 		if (navigation.equals("active")) {
-			active = Boolean.TRUE;
+			activeNavigation = Boolean.TRUE;
 			emptyResultsMessage = "there-are-no-active-currencies";
 		}
 		else if (navigation.equals("inactive")) {
-			active = Boolean.FALSE;
+			activeNavigation = Boolean.FALSE;
 			emptyResultsMessage = "there-are-no-inactive-currencies";
-		}
-		else {
-			active = null;
 		}
 
 		_searchContainer = new SearchContainer<>(
@@ -230,19 +230,40 @@ public class CommerceCurrenciesDisplayContext {
 				getOrderByCol(), getOrderByType()));
 		_searchContainer.setOrderByType(getOrderByType());
 
-		if (Validator.isBlank(getKeywords())) {
-			_searchContainer.setResultsAndTotal(
-				() -> _commerceCurrencyService.getCommerceCurrencies(
-					themeDisplay.getCompanyId(), active,
-					_searchContainer.getStart(), _searchContainer.getEnd(),
-					_searchContainer.getOrderByComparator()),
-				_commerceCurrencyService.getCommerceCurrenciesCount(
-					themeDisplay.getCompanyId(), active));
+		String keywords = ParamUtil.getString(_renderRequest, "keywords");
+
+		if (Validator.isBlank(keywords)) {
+			if (activeNavigation != null) {
+				boolean active = activeNavigation;
+
+				_searchContainer.setResultsAndTotal(
+					() -> _commerceCurrencyService.getCommerceCurrencies(
+						themeDisplay.getCompanyId(), active,
+						_searchContainer.getStart(), _searchContainer.getEnd(),
+						_searchContainer.getOrderByComparator()),
+					_commerceCurrencyService.getCommerceCurrenciesCount(
+						themeDisplay.getCompanyId(), active));
+			}
+			else {
+				_searchContainer.setResultsAndTotal(
+					() -> _commerceCurrencyService.getCommerceCurrencies(
+						themeDisplay.getCompanyId(),
+						_searchContainer.getStart(), _searchContainer.getEnd(),
+						_searchContainer.getOrderByComparator()),
+					_commerceCurrencyService.getCommerceCurrenciesCount(
+						themeDisplay.getCompanyId()));
+			}
 		}
 		else {
+			LinkedHashMap<String, Object> params = new LinkedHashMap<>();
+
+			if (activeNavigation != null) {
+				params.put(CPField.ACTIVE, activeNavigation);
+			}
+
 			_searchContainer.setResultsAndTotal(
 				_commerceCurrencyService.searchCommerceCurrencies(
-					themeDisplay.getCompanyId(), getKeywords(), active,
+					themeDisplay.getCompanyId(), keywords, params,
 					_searchContainer.getStart(), _searchContainer.getEnd(),
 					CommerceCurrencyUtil.getCommerceCurrencySort(
 						getOrderByCol(), getOrderByType())));
@@ -260,10 +281,6 @@ public class CommerceCurrenciesDisplayContext {
 		return _portletResourcePermission.contains(
 			themeDisplay.getPermissionChecker(), null,
 			CommerceCurrencyActionKeys.MANAGE_COMMERCE_CURRENCIES);
-	}
-
-	protected String getKeywords() {
-		return ParamUtil.getString(_renderRequest, "keywords");
 	}
 
 	private String _getNavigation() {

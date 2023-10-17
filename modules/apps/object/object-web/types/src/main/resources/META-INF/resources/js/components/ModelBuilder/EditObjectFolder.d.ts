@@ -6,6 +6,7 @@
 /// <reference types="react" />
 
 import {KeyValuePair} from '../ObjectDetails/EditObjectDetails';
+import './EditObjectFolder.scss';
 interface EditObjectFolder {
 	companyKeyValuePairs: KeyValuePair[];
 	objectRelationshipDeletionTypes: LabelValueObject[];

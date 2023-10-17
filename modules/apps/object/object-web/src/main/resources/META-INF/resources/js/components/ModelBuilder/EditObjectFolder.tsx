@@ -18,6 +18,8 @@ import {useObjectFolderContext} from './ModelBuilderContext/objectFolderContext'
 import {TYPES} from './ModelBuilderContext/typesEnum';
 import {RightSideBar} from './RightSidebar/index';
 
+import './EditObjectFolder.scss';
+
 interface EditObjectFolder {
 	companyKeyValuePairs: KeyValuePair[];
 	objectRelationshipDeletionTypes: LabelValueObject[];
@@ -175,7 +177,7 @@ export default function EditObjectFolder({
 				selectedObjectFolder={selectedObjectFolder}
 				setShowModal={setShowModal}
 			/>
-			<div className="lfr-objects__model-builder-diagram-container">
+			<div className="lfr-objects__model-builder-content">
 				<LeftSidebar setShowModal={setShowModal} />
 
 				<Diagram setShowModal={setShowModal} />

@@ -531,6 +531,23 @@ definition {
 		}
 	}
 
+	@description = "LPS-192149. Verify if when an Action entry was not created, a text and an empty table will appears"
+	@priority = 4
+	test CanSeeEmptyActionTable {
+		task ("And there are no item actions created") {
+			AssertElementNotPresent(
+				key_position = 1,
+				keyName = "delete",
+				locator1 = "DataSet#FIELDS_TABLE");
+		}
+
+		task ("Then the text “No actions were created. Start creating one action to interact with your data.” is displayed above the Create Item Action button") {
+			AssertElementPresent(
+				key_textName = "No actions were created.",
+				locator1 = "DataSet#ACTIONS_EMPTY_TABLE");
+		}
+	}
+
 	@description = "LPS-191488. Verify if the user can edit a created Action and see the informations"
 	@priority = 5
 	test CanSeeModalWhenClicksOnEditAction {

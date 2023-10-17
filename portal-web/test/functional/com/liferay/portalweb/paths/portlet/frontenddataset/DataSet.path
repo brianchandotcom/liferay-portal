@@ -401,6 +401,11 @@
 	<td>//table[contains(@class,'table-list')]//tr[@class='orderable-table-row'][${key_rowNumber}]//button[@aria-label="Drag view"]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>MANDATORY_FIELD</td>
+	<td>//label[contains(text(),'${key_fieldName}')]/*[contains(text(),'Mandatory')] | //label[contains(text(),'${key_fieldName}')]/*[contains(text(),'Required')]</td>
+	<td></td>
+</tr>
 
 <!-- DATA SET ACTIONS -->
 

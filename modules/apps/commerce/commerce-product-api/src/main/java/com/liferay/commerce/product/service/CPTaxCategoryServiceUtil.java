@@ -98,6 +98,16 @@ public class CPTaxCategoryServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult
+		<CPTaxCategory> searchCPTaxCategories(
+				long companyId, String keywords, int start, int end,
+				com.liferay.portal.kernel.search.Sort sort)
+			throws PortalException {
+
+		return getService().searchCPTaxCategories(
+			companyId, keywords, start, end, sort);
+	}
+
 	public static CPTaxCategory updateCPTaxCategory(
 			String externalReferenceCode, long cpTaxCategoryId,
 			Map<java.util.Locale, String> nameMap,

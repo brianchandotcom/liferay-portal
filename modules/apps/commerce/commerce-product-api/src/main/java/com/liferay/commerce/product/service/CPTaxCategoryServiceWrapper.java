@@ -107,6 +107,17 @@ public class CPTaxCategoryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<CPTaxCategory>
+			searchCPTaxCategories(
+				long companyId, String keywords, int start, int end,
+				com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpTaxCategoryService.searchCPTaxCategories(
+			companyId, keywords, start, end, sort);
+	}
+
+	@Override
 	public CPTaxCategory updateCPTaxCategory(
 			String externalReferenceCode, long cpTaxCategoryId,
 			java.util.Map<java.util.Locale, String> nameMap,

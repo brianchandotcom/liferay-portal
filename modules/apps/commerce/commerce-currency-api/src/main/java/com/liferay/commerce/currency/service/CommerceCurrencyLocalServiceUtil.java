@@ -389,6 +389,17 @@ public class CommerceCurrencyLocalServiceUtil {
 		getService().importDefaultValues(updateExchangeRate, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult
+		<CommerceCurrency> searchCommerceCurrencies(
+				long companyId, String keywords,
+				java.util.LinkedHashMap<String, Object> params, int start,
+				int end, com.liferay.portal.kernel.search.Sort sort)
+			throws PortalException {
+
+		return getService().searchCommerceCurrencies(
+			companyId, keywords, params, start, end, sort);
+	}
+
 	public static CommerceCurrency setActive(
 			long commerceCurrencyId, boolean active)
 		throws PortalException {

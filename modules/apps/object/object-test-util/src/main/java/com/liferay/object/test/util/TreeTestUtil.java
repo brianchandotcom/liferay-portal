@@ -64,6 +64,30 @@ public class TreeTestUtil {
 		AssertUtils.assertEquals(expectedMap, actualMap);
 	}
 
+	public static void assertObjectEntryTree(
+			Map<String, String[]> expectedMap, Tree actualTree,
+			ObjectEntryLocalService objectEntryLocalService)
+		throws PortalException {
+
+		Map<String, String[]> actualMap = new LinkedHashMap<>();
+
+		Iterator<Node> iterator = actualTree.iterator();
+
+		while (iterator.hasNext()) {
+			Node node = iterator.next();
+
+			actualMap.put(
+				_getExternalReferenceCode(node, objectEntryLocalService),
+				TransformUtil.transformToArray(
+					node.getChildNodes(),
+					childNode -> _getExternalReferenceCode(
+						childNode, objectEntryLocalService),
+					String.class));
+		}
+
+		AssertUtils.assertEquals(expectedMap, actualMap);
+	}
+
 	public static void bind(
 			ObjectDefinitionLocalService objectDefinitionLocalService,
 			List<ObjectRelationship> objectRelationships)
@@ -244,6 +268,16 @@ public class TreeTestUtil {
 
 		objectDefinitionLocalService.unbindObjectDefinition(
 			objectDefinition.getObjectDefinitionId());
+	}
+
+	private static String _getExternalReferenceCode(
+			Node node, ObjectEntryLocalService objectEntryLocalService)
+		throws PortalException {
+
+		ObjectEntry objectEntry = objectEntryLocalService.getObjectEntry(
+			node.getPrimaryKey());
+
+		return objectEntry.getExternalReferenceCode();
 	}
 
 	private static String _getShortName(

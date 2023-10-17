@@ -18,6 +18,7 @@ import com.liferay.object.tree.Node;
 import com.liferay.object.tree.Tree;
 import com.liferay.object.tree.TreeFactory;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.AssertUtils;
@@ -45,23 +46,9 @@ public class TreeTestUtil {
 			ObjectDefinitionLocalService objectDefinitionLocalService)
 		throws PortalException {
 
-		Map<String, String[]> actualMap = new LinkedHashMap<>();
-
-		Iterator<Node> iterator = actualTree.iterator();
-
-		while (iterator.hasNext()) {
-			Node node = iterator.next();
-
-			actualMap.put(
-				_getShortName(node, objectDefinitionLocalService),
-				TransformUtil.transformToArray(
-					node.getChildNodes(),
-					childNode -> _getShortName(
-						childNode, objectDefinitionLocalService),
-					String.class));
-		}
-
-		AssertUtils.assertEquals(expectedMap, actualMap);
+		_assertTree(
+			expectedMap, actualTree,
+			node -> _getShortName(node, objectDefinitionLocalService));
 	}
 
 	public static void assertObjectEntryTree(
@@ -69,23 +56,9 @@ public class TreeTestUtil {
 			ObjectEntryLocalService objectEntryLocalService)
 		throws PortalException {
 
-		Map<String, String[]> actualMap = new LinkedHashMap<>();
-
-		Iterator<Node> iterator = actualTree.iterator();
-
-		while (iterator.hasNext()) {
-			Node node = iterator.next();
-
-			actualMap.put(
-				_getExternalReferenceCode(node, objectEntryLocalService),
-				TransformUtil.transformToArray(
-					node.getChildNodes(),
-					childNode -> _getExternalReferenceCode(
-						childNode, objectEntryLocalService),
-					String.class));
-		}
-
-		AssertUtils.assertEquals(expectedMap, actualMap);
+		_assertTree(
+			expectedMap, actualTree,
+			node -> _getExternalReferenceCode(node, objectEntryLocalService));
 	}
 
 	public static void bind(
@@ -268,6 +241,27 @@ public class TreeTestUtil {
 
 		objectDefinitionLocalService.unbindObjectDefinition(
 			objectDefinition.getObjectDefinitionId());
+	}
+
+	private static void _assertTree(
+			Map<String, String[]> expectedMap, Tree actualTree,
+			UnsafeFunction<Node, String, PortalException> unsafeFunction)
+		throws PortalException {
+
+		Map<String, String[]> actualMap = new LinkedHashMap<>();
+
+		Iterator<Node> iterator = actualTree.iterator();
+
+		while (iterator.hasNext()) {
+			Node node = iterator.next();
+
+			actualMap.put(
+				unsafeFunction.apply(node),
+				TransformUtil.transformToArray(
+					node.getChildNodes(), unsafeFunction, String.class));
+		}
+
+		AssertUtils.assertEquals(expectedMap, actualMap);
 	}
 
 	private static String _getExternalReferenceCode(

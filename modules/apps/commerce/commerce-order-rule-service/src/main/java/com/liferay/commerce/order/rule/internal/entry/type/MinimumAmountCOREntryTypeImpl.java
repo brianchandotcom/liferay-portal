@@ -11,6 +11,7 @@ import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.rule.constants.COREntryConstants;
 import com.liferay.commerce.order.rule.entry.type.COREntryType;
+import com.liferay.commerce.order.rule.entry.type.COREntryTypeItem;
 import com.liferay.commerce.order.rule.model.COREntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -91,6 +93,13 @@ public class MinimumAmountCOREntryTypeImpl implements COREntryType {
 		}
 
 		return true;
+	}
+
+	@Override
+	public boolean evaluate(
+		COREntry corEntry, List<COREntryTypeItem> corEntryTypeItems) {
+
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

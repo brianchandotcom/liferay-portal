@@ -208,12 +208,16 @@ definition {
 			Publications.enablePublicationSharing();
 
 			var shareLinkURL = Publications.getShareLinkURL();
+
+			echo("shareLinkURL is ${shareLinkURL}");
 		}
 
 		task ("Sign out and access to URL as guest user") {
 			SignOut.signOut();
 
 			Navigator.openSpecificURL(url = ${shareLinkURL});
+
+			echo("shareLinkURL is ${shareLinkURL}");
 		}
 
 		task ("Assert guest user can view Publication with link") {
@@ -317,6 +321,8 @@ definition {
 			Publications.enablePublicationSharing();
 
 			var shareLinkURL = Publications.getShareLinkURL();
+
+			echo("shareLinkURL is ${shareLinkURL}");
 		}
 
 		task ("Publish Publication") {
@@ -327,6 +333,8 @@ definition {
 			SignOut.signOut();
 
 			Navigator.openSpecificURL(url = ${shareLinkURL});
+
+			echo("shareLinkURL is ${shareLinkURL}");
 		}
 
 		task ("Assert 404 page shows up indicating the link is expired") {
@@ -370,6 +378,8 @@ definition {
 			Publications.enablePublicationSharing();
 
 			var shareLinkURL = Publications.getShareLinkURL();
+
+			echo("shareLinkURL is ${shareLinkURL}");
 		}
 
 		task ("Disable Share Publication Link") {
@@ -380,6 +390,8 @@ definition {
 			SignOut.signOut();
 
 			Navigator.openSpecificURL(url = ${shareLinkURL});
+
+			echo("shareLinkURL is ${shareLinkURL}");
 		}
 
 		task ("Assert 404 page shows up indicating the link is expired") {

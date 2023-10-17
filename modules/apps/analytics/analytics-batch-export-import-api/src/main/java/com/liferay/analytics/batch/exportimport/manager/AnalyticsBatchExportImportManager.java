@@ -17,6 +17,12 @@ import java.util.Map;
 public interface AnalyticsBatchExportImportManager {
 
 	public void exportToAnalyticsCloud(
+			List<String> batchEngineExportTaskItemDelegateNames, long companyId,
+			UnsafeConsumer<String, Exception> notificationUnsafeConsumer,
+			Date resourceLastModifiedDate, String resourceName, long userId)
+		throws Exception;
+
+	public void exportToAnalyticsCloud(
 			String batchEngineExportTaskItemDelegateName, long companyId,
 			List<String> fieldNamesList, String filterString,
 			UnsafeConsumer<String, Exception> notificationUnsafeConsumer,

@@ -1,8 +1,31 @@
 {
-	"configuration": {
-		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
-		"parameters": {
+	"actions": {
+		"createBatch": {
+			"href": "/o/headless-batch-engine/v1.0/import-task/com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+			"method": "POST"
 		},
+		"deleteBatch": {
+			"href": "/o/headless-batch-engine/v1.0/import-task/com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+			"method": "DELETE"
+		},
+		"updateBatch": {
+			"href": "/o/headless-batch-engine/v1.0/import-task/com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+			"method": "PUT"
+		}
+	},
+	"configuration": {
+		"callbackURL": null,
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
+		"companyId": 20095,
+		"multiCompany": false,
+		"parameters": {
+			"containsHeaders": "false",
+			"createStrategy": "INSERT",
+			"importStrategy": "ON_ERROR_FAIL",
+			"taskItemDelegateName": "DEFAULT",
+			"updateStrategy": "UPDATE"
+		},
+		"userId": 20123,
 		"version": "v1.0"
 	},
 	"items": [

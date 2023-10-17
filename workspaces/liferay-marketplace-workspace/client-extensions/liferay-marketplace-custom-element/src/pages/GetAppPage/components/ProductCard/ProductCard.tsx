@@ -149,9 +149,11 @@ const ProductCard = ({
 						<FormattedValues />
 					</div>
 
-					<div className="license-tag px-2">
-						{getLicenseTagText(product)}
-					</div>
+					{!!basePrice && (
+						<div className="license-tag px-2">
+							{getLicenseTagText(product)}
+						</div>
+					)}
 				</div>
 			</div>
 

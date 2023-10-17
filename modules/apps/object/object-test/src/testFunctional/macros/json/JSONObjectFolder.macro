@@ -30,6 +30,23 @@ definition {
 		return ${objectFolderERC};
 	}
 
+	macro deleteObjectFolder {
+		var portalURL = JSONCompany.getDefaultPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();
+
+		if (!(isSet(folderId))) {
+			var folderId = JSONObjectFolder.getObjectFolderId(folderName = ${folderName});
+		}
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-folders/${folderId} \
+				-u ${userLoginInfo} \
+				-H Content-Type: application/json
+		''';
+
+		JSONCurlUtil.delete(${curl});
+	}
+
 	macro getObjectFolderERC {
 		var portalURL = JSONCompany.getDefaultPortalURL();
 		var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();

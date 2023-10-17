@@ -151,7 +151,7 @@ export function NextStepPage({
 					) : (
 						<>
 							<p>
-								Your <strong>{appName}</strong> app is ready for
+								<strong>{appName}</strong> app is ready for
 								download.
 							</p>
 							<p>
@@ -238,28 +238,24 @@ export function NextStepPage({
 			>
 				<div className="next-step-page-content">
 					{!children && (
-						<>
-							<div className="next-step-page-cards">
-								<AccountAndAppCard
-									category="Application"
-									logo={appLogo ? appLogo : catalogIcon}
-									title={appName ?? ''}
-								></AccountAndAppCard>
+						<div className="next-step-page-cards">
+							<AccountAndAppCard
+								category="Application"
+								logo={appLogo ? appLogo : catalogIcon}
+								title={appName ?? ''}
+							></AccountAndAppCard>
 
-								<ClayIcon
-									className="next-step-page-icon"
-									symbol="arrow-right-full"
-								/>
+							<ClayIcon
+								className="next-step-page-icon"
+								symbol="arrow-right-full"
+							/>
 
-								<AccountAndAppCard
-									category="DXP Console"
-									logo={showAccountImage(
-										accountLogo as string
-									)}
-									title={accountName ?? ''}
-								></AccountAndAppCard>
-							</div>
-						</>
+							<AccountAndAppCard
+								category="DXP Console"
+								logo={showAccountImage(accountLogo as string)}
+								title={accountName ?? ''}
+							></AccountAndAppCard>
+						</div>
 					)}
 
 					<div className="next-step-page-text">
@@ -278,16 +274,25 @@ export function NextStepPage({
 
 							window.location.href = customerDashboardCallbackURL;
 						}}
-						onClickContinue={
-							onClickContinue ??
-							(() => {
+						onClickContinue={() => {
+							if (onClickContinue) {
 								window.location.href =
 									'https://console.marketplacedemo.liferay.sh/projects';
-							})
-						}
+							}
+						}}
 						showBackButton={showBackButton}
 						showContinueButton={false}
 					/>
+					{!(
+						paymentStatus === PaymentStatus.PAYMENT_PENDING &&
+						!isTrial
+					) && (
+						<div className="d-flex justify-content-end">
+							<a href="#">
+								<ins>Learn more about App Configuration</ins>
+							</a>
+						</div>
+					)}
 				</div>
 			</div>
 		</>

@@ -14,13 +14,13 @@ interface IProps {
 
 const Container = ({children, className, footer, title}: IProps) => (
 	<div
-		className={`bg-neutral-1 d-flex flex-column justify-content-between p-4 rounded m-2 ${className}`}
+		className={`bg-neutral-1 d-flex flex-column p-4 rounded m-2 ${className}`}
 	>
 		<div>
 			<div className="font-weight-semi-bold h5 m-0">{title}</div>
 
 			<div>
-				<hr className="mb-4 mt-1" />
+				<hr className="mb-3 mt-1" />
 			</div>
 		</div>
 

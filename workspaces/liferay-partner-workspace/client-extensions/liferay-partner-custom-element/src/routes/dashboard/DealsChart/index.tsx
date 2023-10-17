@@ -78,10 +78,10 @@ const DealsChart = () => {
 			setRejectedLeads(rejectedData?.items);
 			setSubmittedLeads(sumbittedData?.items);
 
+			setLoading(false);
+
 			return;
 		}
-
-		setLoading(false);
 	};
 
 	useEffect(() => {
@@ -129,17 +129,19 @@ const DealsChart = () => {
 			},
 		};
 		if (loading) {
-			<ClayLoadingIndicator className="mb-10 mt-9" size="md" />;
+			return <ClayLoadingIndicator className="mb-10 mt-10" size="md" />;
 		}
 
 		if (!loading && !leadsChartValues) {
-			<ClayAlert
-				className="mx-auto w-50"
-				displayType="info"
-				title="Info:"
-			>
-				No Data Available
-			</ClayAlert>;
+			return (
+				<ClayAlert
+					className="mx-auto text-center w-75"
+					displayType="info"
+					title="Info:"
+				>
+					No Data Available
+				</ClayAlert>
+			);
 		}
 
 		return (
@@ -159,7 +161,7 @@ const DealsChart = () => {
 
 	return (
 		<Container
-			className="deals-chart-card-height"
+			className="deals-chart-card-height justify-content-between"
 			footer={
 				<div className="pt-5">
 					<ClayButton

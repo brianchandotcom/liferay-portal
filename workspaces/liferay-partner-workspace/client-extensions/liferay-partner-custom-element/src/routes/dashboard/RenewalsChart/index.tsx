@@ -69,7 +69,7 @@ export default function () {
 		if (!renewalsData.length && !isLoading) {
 			return (
 				<ClayAlert
-					className="mx-auto text-center"
+					className="h-75 mx-auto text-center"
 					displayType="info"
 					title="Info:"
 				>
@@ -79,7 +79,7 @@ export default function () {
 		}
 
 		return (
-			<div className="align-items-start d-flex flex-column justify-content-center">
+			<div className="align-items-center d-flex flex-column justify-content-center">
 				{renewalsData?.map((item, index) => {
 					getCurrentStatusColor(item);
 
@@ -120,7 +120,7 @@ export default function () {
 
 	return (
 		<Container
-			className="renewal-chart-card-height"
+			className="justify-content-between renewal-chart-card-height"
 			footer={
 				<div className="pt-4">
 					<ClayButton

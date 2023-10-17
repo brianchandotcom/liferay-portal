@@ -73,9 +73,9 @@ const MDFRequestChart = () => {
 
 	return (
 		<Container
-			className="dashboard-mdf-request-chart"
+			className="dashboard-mdf-request-chart justify-content-between"
 			footer={
-				<>
+				<div className="mt-n2">
 					<ClayButton
 						className="bg-neutral-0 border-brand-primary-darken-1 text-brand-primary-darken-1"
 						displayType="secondary"
@@ -101,7 +101,7 @@ const MDFRequestChart = () => {
 					>
 						New MDF Request
 					</ClayButton>
-				</>
+				</div>
 			}
 			title="Market Development Funds"
 		>

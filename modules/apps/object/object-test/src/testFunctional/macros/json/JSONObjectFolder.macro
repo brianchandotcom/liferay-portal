@@ -1,0 +1,33 @@
+definition {
+
+	macro addFolder {
+		Variables.assertDefined(parameterList = "${folderLabel},${folderName}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		if (!(isSet(userEmailAddress))) {
+			var userEmailAddress = "test@liferay.com";
+		}
+
+		if (!(isSet(userPassword))) {
+			var userPassword = "test";
+		}
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-folders \
+				-H 'Content-Type: application/json' \
+				-u ${userEmailAddress}:${userPassword} \
+				-d '{
+					"label": {
+						"en_US": "${folderLabel}"
+					},
+					"name": "${folderName}"
+				}'
+		''';
+
+		var objectFolderERC = JSONCurlUtil.post(${curl}, "$.externalReferenceCode");
+
+		return ${objectFolderERC};
+	}
+
+}

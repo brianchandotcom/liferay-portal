@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.math.BigDecimal;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -83,7 +84,7 @@ public class CommerceCurrencyServiceImpl
 
 	@Override
 	public List<CommerceCurrency> getCommerceCurrencies(
-			long companyId, Boolean active, int start, int end,
+			long companyId, boolean active, int start, int end,
 			OrderByComparator<CommerceCurrency> orderByComparator)
 		throws PortalException {
 
@@ -122,7 +123,7 @@ public class CommerceCurrencyServiceImpl
 	}
 
 	@Override
-	public int getCommerceCurrenciesCount(long companyId, Boolean active)
+	public int getCommerceCurrenciesCount(long companyId, boolean active)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -159,12 +160,12 @@ public class CommerceCurrencyServiceImpl
 
 	@Override
 	public BaseModelSearchResult<CommerceCurrency> searchCommerceCurrencies(
-			long companyId, String keywords, Boolean navigationActive,
-			int start, int end, Sort sort)
+			long companyId, String keywords,
+			LinkedHashMap<String, Object> params, int start, int end, Sort sort)
 		throws PortalException {
 
 		return commerceCurrencyLocalService.searchCommerceCurrencies(
-			companyId, keywords, navigationActive, start, end, sort);
+			companyId, keywords, params, start, end, sort);
 	}
 
 	@Override

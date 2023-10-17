@@ -1,15 +1,6 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
- *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.product.internal.search.spi.model.index.contributor;
@@ -35,15 +26,10 @@ public class CPTaxCategoryModelDocumentContributor
 
 	@Override
 	public void contribute(Document document, CPTaxCategory cpTaxCategory) {
-		document.addText(Field.DESCRIPTION, cpTaxCategory.getDescription());
-
-		document.addText(Field.NAME, cpTaxCategory.getName());
-
 		document.addDateSortable(
 			Field.CREATE_DATE, cpTaxCategory.getCreateDate());
-
-		String cpTaxCategoryDefaultLanguageId =
-			_localization.getDefaultLanguageId(cpTaxCategory.getName());
+		document.addText(Field.DESCRIPTION, cpTaxCategory.getDescription());
+		document.addText(Field.NAME, cpTaxCategory.getName());
 
 		String[] languageIds = _localization.getAvailableLanguageIds(
 			cpTaxCategory.getName());
@@ -56,13 +42,17 @@ public class CPTaxCategoryModelDocumentContributor
 			document.addText(Field.CONTENT, description);
 
 			document.addText(
-				_localization.getLocalizedName(Field.NAME, languageId), name);
-
-			document.addText(
 				_localization.getLocalizedName(Field.DESCRIPTION, languageId),
 				description);
 
+			document.addText(
+				_localization.getLocalizedName(Field.NAME, languageId), name);
+
+			String cpTaxCategoryDefaultLanguageId =
+				_localization.getDefaultLanguageId(cpTaxCategory.getName());
+
 			if (languageId.equals(cpTaxCategoryDefaultLanguageId)) {
+				document.addText(Field.NAME, name);
 				document.addText("defaultLanguageId", languageId);
 			}
 		}

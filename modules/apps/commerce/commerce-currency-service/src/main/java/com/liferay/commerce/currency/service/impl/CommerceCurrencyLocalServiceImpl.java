@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -57,6 +56,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
@@ -73,6 +73,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -197,16 +198,11 @@ public class CommerceCurrencyLocalServiceImpl
 
 	@Override
 	public List<CommerceCurrency> getCommerceCurrencies(
-		long companyId, Boolean active, int start, int end,
+		long companyId, boolean active, int start, int end,
 		OrderByComparator<CommerceCurrency> orderByComparator) {
 
-		if (active != null) {
-			return commerceCurrencyPersistence.findByC_A(
-				companyId, active, start, end, orderByComparator);
-		}
-
-		return commerceCurrencyPersistence.findByCompanyId(
-			companyId, start, end, orderByComparator);
+		return commerceCurrencyPersistence.findByC_A(
+			companyId, active, start, end, orderByComparator);
 	}
 
 	@Override
@@ -224,12 +220,8 @@ public class CommerceCurrencyLocalServiceImpl
 	}
 
 	@Override
-	public int getCommerceCurrenciesCount(long companyId, Boolean active) {
-		if (active != null) {
-			return commerceCurrencyPersistence.countByC_A(companyId, active);
-		}
-
-		return commerceCurrencyPersistence.countByCompanyId(companyId);
+	public int getCommerceCurrenciesCount(long companyId, boolean active) {
+		return commerceCurrencyPersistence.countByC_A(companyId, active);
 	}
 
 	@Override
@@ -314,21 +306,19 @@ public class CommerceCurrencyLocalServiceImpl
 
 	@Override
 	public BaseModelSearchResult<CommerceCurrency> searchCommerceCurrencies(
-			long companyId, String keywords, Boolean navigationActive,
-			int start, int end, Sort sort)
+			long companyId, String keywords,
+			LinkedHashMap<String, Object> params, int start, int end, Sort sort)
 		throws PortalException {
 
 		SearchResponse searchResponse = _searcher.search(
-			_getSearchRequest(
-				companyId, keywords, navigationActive, start, end, sort));
+			_getSearchRequest(companyId, keywords, params, start, end, sort));
 
 		SearchHits searchHits = searchResponse.getSearchHits();
 
 		List<CommerceCurrency> commerceCurrencies = TransformUtil.transform(
 			searchHits.getSearchHits(),
 			searchHit -> {
-				com.liferay.portal.search.document.Document document =
-					searchHit.getDocument();
+				Document document = searchHit.getDocument();
 
 				long commerceCurrencyId = document.getLong(
 					Field.ENTRY_CLASS_PK);
@@ -542,8 +532,8 @@ public class CommerceCurrencyLocalServiceImpl
 	}
 
 	private SearchRequest _getSearchRequest(
-		long companyId, String keywords, Boolean navigationActive, int start,
-		int end, Sort sort) {
+		long companyId, String keywords, LinkedHashMap<String, Object> params,
+		int start, int end, Sort sort) {
 
 		SearchRequestBuilder searchRequestBuilder =
 			_searchRequestBuilderFactory.builder();
@@ -556,8 +546,7 @@ public class CommerceCurrencyLocalServiceImpl
 			false
 		).withSearchContext(
 			searchContext -> _populateSearchContext(
-				searchContext, companyId, keywords, navigationActive, start,
-				end, sort)
+				searchContext, companyId, keywords, params, start, end, sort)
 		);
 
 		if (start != QueryUtil.ALL_POS) {
@@ -585,12 +574,10 @@ public class CommerceCurrencyLocalServiceImpl
 
 	private void _populateSearchContext(
 		SearchContext searchContext, long companyId, String keywords,
-		Boolean navigationActive, int start, int end, Sort sort) {
+		LinkedHashMap<String, Object> params, int start, int end, Sort sort) {
 
 		searchContext.setAttributes(
 			HashMapBuilder.<String, Serializable>put(
-				CPField.ACTIVE, navigationActive
-			).put(
 				CPField.CODE, keywords
 			).put(
 				Field.NAME, keywords
@@ -600,6 +587,12 @@ public class CommerceCurrencyLocalServiceImpl
 					"keywords", keywords
 				).build()
 			).build());
+
+		Boolean active = (Boolean)params.get("active");
+
+		if (active != null) {
+			searchContext.setAttribute(CPField.ACTIVE, active);
+		}
 
 		searchContext.setCompanyId(companyId);
 		searchContext.setEnd(end);

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -82,7 +83,12 @@ public class AccountEntryModelResourcePermission
 		throws PortalException {
 
 		if (_accountEntryModelResourcePermission.contains(
-				permissionChecker, accountEntryId, actionId)) {
+				permissionChecker, accountEntryId, actionId) ||
+			(Objects.equals(
+				actionId, CommerceAccountActionKeys.VIEW_CHANNEL_DEFAULTS) &&
+			 _accountEntryModelResourcePermission.contains(
+				 permissionChecker, accountEntryId,
+				 CommerceAccountActionKeys.MANAGE_CHANNEL_DEFAULTS))) {
 
 			return true;
 		}

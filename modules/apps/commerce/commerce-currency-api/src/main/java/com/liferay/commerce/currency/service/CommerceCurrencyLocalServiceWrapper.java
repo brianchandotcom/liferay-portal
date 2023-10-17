@@ -455,6 +455,19 @@ public class CommerceCurrencyLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult
+		<com.liferay.commerce.currency.model.CommerceCurrency>
+				searchCommerceCurrencies(
+					long companyId, String keywords,
+					java.util.LinkedHashMap<String, Object> params, int start,
+					int end, com.liferay.portal.kernel.search.Sort sort)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceCurrencyLocalService.searchCommerceCurrencies(
+			companyId, keywords, params, start, end, sort);
+	}
+
+	@Override
 	public com.liferay.commerce.currency.model.CommerceCurrency setActive(
 			long commerceCurrencyId, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {

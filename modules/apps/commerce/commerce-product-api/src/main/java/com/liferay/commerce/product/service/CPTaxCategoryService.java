@@ -10,6 +10,8 @@ import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -86,6 +88,11 @@ public interface CPTaxCategoryService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CPTaxCategory> searchCPTaxCategories(
+			long companyId, String keywords, int start, int end, Sort sort)
+		throws PortalException;
 
 	public CPTaxCategory updateCPTaxCategory(
 			String externalReferenceCode, long cpTaxCategoryId,

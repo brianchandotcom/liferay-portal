@@ -367,6 +367,16 @@ public class CPTaxCategoryLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult
+		<CPTaxCategory> searchCPTaxCategories(
+				long companyId, String keywords, int start, int end,
+				com.liferay.portal.kernel.search.Sort sort)
+			throws PortalException {
+
+		return getService().searchCPTaxCategories(
+			companyId, keywords, start, end, sort);
+	}
+
 	/**
 	 * Updates the cp tax category in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

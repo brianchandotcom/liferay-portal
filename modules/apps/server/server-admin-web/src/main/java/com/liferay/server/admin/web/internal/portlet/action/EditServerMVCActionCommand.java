@@ -64,7 +64,6 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershipPolicy;
 import com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershipPolicyFactory;
 import com.liferay.portal.kernel.security.membershippolicy.RoleMembershipPolicy;
-import com.liferay.portal.kernel.security.membershippolicy.RoleMembershipPolicyFactory;
 import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicy;
 import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyFactory;
 import com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicy;
@@ -101,6 +100,7 @@ import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.log4j.Log4JUtil;
+import com.liferay.portal.security.membershippolicy.RoleMembershipPolicyFactoryUtil;
 import com.liferay.portal.util.MaintenanceUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.ShutdownUtil;
@@ -876,7 +876,7 @@ public class EditServerMVCActionCommand
 		organizationMembershipPolicy.verifyPolicy();
 
 		RoleMembershipPolicy roleMembershipPolicy =
-			_roleMembershipPolicyFactory.getRoleMembershipPolicy();
+			RoleMembershipPolicyFactoryUtil.getRoleMembershipPolicy();
 
 		roleMembershipPolicy.verifyPolicy();
 
@@ -961,9 +961,6 @@ public class EditServerMVCActionCommand
 
 	@Reference
 	private RoleLocalService _roleLocalService;
-
-	@Reference
-	private RoleMembershipPolicyFactory _roleMembershipPolicyFactory;
 
 	@Reference
 	private ServerScripting _serverScripting;

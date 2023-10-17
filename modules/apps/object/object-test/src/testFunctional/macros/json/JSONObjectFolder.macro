@@ -45,4 +45,19 @@ definition {
 		return ${folderERC};
 	}
 
+	macro getObjectFolderId {
+		var portalURL = JSONCompany.getDefaultPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-folders \
+				-u ${userLoginInfo} \
+				-H Content-Type: application/json
+		''';
+
+		var folderId = JSONCurlUtil.get(${curl}, "$.items[?(@['name'] == '${folderName}')]['id']");
+
+		return ${folderId};
+	}
+
 }

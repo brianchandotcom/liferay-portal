@@ -93,6 +93,10 @@ public class HttpRequestUtil {
 		return httpResponse.getResponseErrorMessage();
 	}
 
+	public static String getResponseTime(HttpResponse httpResponse) {
+		return httpResponse.getResponseTime();
+	}
+
 	public static String getStatusCode(HttpResponse httpResponse) {
 		return httpResponse.getStatusCode();
 	}
@@ -107,6 +111,8 @@ public class HttpRequestUtil {
 		url = _fixURL(url);
 
 		int retryCount = 0;
+
+		long start = System.currentTimeMillis();
 
 		while (true) {
 			try {
@@ -195,7 +201,10 @@ public class HttpRequestUtil {
 
 						String body = _readInputStream(inputStream, false);
 
-						return new HttpResponse(body, null, responseCode);
+						long duration = System.currentTimeMillis() - start;
+
+						return new HttpResponse(
+							body, null, responseCode, duration);
 					}
 				}
 
@@ -205,7 +214,10 @@ public class HttpRequestUtil {
 					String errorMessage = _readInputStream(
 						errorInputStream, false);
 
-					return new HttpResponse(null, errorMessage, responseCode);
+					long duration = System.currentTimeMillis() - start;
+
+					return new HttpResponse(
+						null, errorMessage, responseCode, duration);
 				}
 			}
 			catch (IOException ioException) {
@@ -279,10 +291,14 @@ public class HttpRequestUtil {
 
 	public static class HttpResponse {
 
-		public HttpResponse(String body, String errorMessage, int statusCode) {
+		public HttpResponse(
+			String body, String errorMessage, int statusCode,
+			long responseTime) {
+
 			this.body = body;
 			this.errorMessage = errorMessage;
 			this.statusCode = String.valueOf(statusCode);
+			this.responseTime = String.valueOf(responseTime);
 		}
 
 		public String getResponseBody() {
@@ -293,12 +309,17 @@ public class HttpRequestUtil {
 			return errorMessage;
 		}
 
+		public String getResponseTime() {
+			return responseTime;
+		}
+
 		public String getStatusCode() {
 			return statusCode;
 		}
 
 		protected String body;
 		protected String errorMessage;
+		protected String responseTime;
 		protected String statusCode;
 
 	}

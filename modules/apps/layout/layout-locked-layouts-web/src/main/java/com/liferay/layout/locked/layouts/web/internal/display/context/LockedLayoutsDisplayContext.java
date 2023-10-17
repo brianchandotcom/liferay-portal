@@ -7,10 +7,8 @@ package com.liferay.layout.locked.layouts.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
-import com.liferay.layout.constants.LockedLayoutType;
 import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.layout.model.LockedLayout;
-import com.liferay.layout.model.LockedLayoutOrder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -33,6 +31,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -180,6 +179,100 @@ public class LockedLayoutsDisplayContext {
 		}
 
 		return true;
+	}
+
+	public static class LockedLayoutOrder {
+
+		public LockedLayoutOrder(
+			boolean ascending, Locale locale,
+			LockedLayoutOrderType lockedLayoutOrderType) {
+
+			_ascending = ascending;
+			_locale = locale;
+			_lockedLayoutOrderType = lockedLayoutOrderType;
+		}
+
+		public Locale getLocale() {
+			return _locale;
+		}
+
+		public LockedLayoutOrderType getLockedLayoutOrderType() {
+			return _lockedLayoutOrderType;
+		}
+
+		public boolean isAscending() {
+			return _ascending;
+		}
+
+		public enum LockedLayoutOrderType {
+
+			LAST_AUTOSAVE("last-autosave"), NAME("name"), USER("user");
+
+			public static LockedLayoutOrderType create(String value) {
+				if (Validator.isNull(value)) {
+					return null;
+				}
+
+				for (LockedLayoutOrderType lockedLayoutType :
+						LockedLayoutOrderType.values()) {
+
+					if (Objects.equals(lockedLayoutType.getValue(), value)) {
+						return lockedLayoutType;
+					}
+				}
+
+				return null;
+			}
+
+			public String getValue() {
+				return _value;
+			}
+
+			private LockedLayoutOrderType(String value) {
+				_value = value;
+			}
+
+			private final String _value;
+
+		}
+
+		private final boolean _ascending;
+		private final Locale _locale;
+		private final LockedLayoutOrderType _lockedLayoutOrderType;
+
+	}
+
+	public enum LockedLayoutType {
+
+		COLLECTION_PAGE("collection-page"), CONTENT_PAGE("content-page"),
+		CONTENT_PAGE_TEMPLATE("content-page-template"),
+		DISPLAY_PAGE_TEMPLATE("display-page-template"),
+		MASTER_PAGE("master-page"), UTILITY_PAGE("utility-page");
+
+		public static LockedLayoutType create(String value) {
+			if (Validator.isNull(value)) {
+				return null;
+			}
+
+			for (LockedLayoutType lockedLayoutType : values()) {
+				if (Objects.equals(lockedLayoutType.getValue(), value)) {
+					return lockedLayoutType;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		private LockedLayoutType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
 	}
 
 	private List<LockedLayout> _getFilteredLockedLayouts() {

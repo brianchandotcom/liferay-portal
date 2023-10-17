@@ -13,8 +13,10 @@ interface RadioCardListProps<T> {
 }
 
 export interface RadioCardContent<T> {
+	customization?: any;
 	description?: string;
 	imageURL?: string;
+	label?: string;
 	selected: boolean;
 	title: string;
 	value: T;
@@ -36,10 +38,12 @@ const RadioCardList = <T extends unknown>({
 				{contentList.map((content, index) => (
 					<RadioCard
 						activeRadio={content.selected}
+						customization={content.customization}
 						description={content.description}
 						imageURL={content.imageURL}
 						index={index}
 						key={index}
+						label={content.label}
 						leftRadio={leftRadio}
 						selectRadio={() =>
 							handleSelectRadio({index, value: content.value})

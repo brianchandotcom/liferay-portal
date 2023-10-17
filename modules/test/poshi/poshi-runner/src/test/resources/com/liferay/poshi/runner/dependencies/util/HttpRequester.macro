@@ -22,10 +22,13 @@ definition {
 		var status = HttpRequestUtil.getStatusCode(${response});
 		var body = HttpRequestUtil.getResponseBody(${response});
 		var errorMessage = HttpRequestUtil.getResponseErrorMessage(${response});
+		var responseTime = HttpRequestUtil.getResponseTime(${response});
 
 		echo("Response Code: ${status}");
 
 		echo("Response: ${body}");
+
+		echo("Response Time: ${responseTime}");
 
 		echo("Error: ${errorMessage}");
 	}

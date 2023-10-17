@@ -8,11 +8,13 @@ import {DELETE_RULE} from './types';
 
 type Props = {
 	layoutData: LayoutData;
+	ruleId: string;
 };
 
-export default function deleteRule({layoutData}: Props) {
+export default function deleteRule({layoutData, ruleId}: Props) {
 	return {
 		layoutData,
+		ruleId,
 		type: DELETE_RULE,
 	} as const;
 }

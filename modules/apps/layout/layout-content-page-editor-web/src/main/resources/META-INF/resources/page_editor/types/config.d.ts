@@ -14,6 +14,7 @@ export interface Config {
 	addFragmentEntryLinksURL: string;
 	addItemURL: string;
 	addPortletURL: string;
+	addRuleURL: string;
 	addSegmentsExperienceURL: string;
 
 	assetCategoryTreeNodeItemSelectorURL: string;
@@ -94,6 +95,7 @@ export interface Config {
 	defaultStyleBookEntryImagePreviewURL: string;
 	defaultStyleBookEntryName: string;
 	deleteFragmentEntryLinkCommentURL: string;
+	deleteRuleURL: string;
 	deleteSegmentsExperienceURL: string;
 	discardDraftURL: string;
 	duplicateItemURL: string;
@@ -208,6 +210,7 @@ export interface Config {
 	updateItemConfigURL: string;
 	updateLayoutPageTemplateDataURL: string;
 	updateRowColumnsURL: string;
+	updateRuleURL: string;
 	updateSegmentsExperiencePriorityURL: string;
 	updateSegmentsExperienceURL: string;
 	videoItemSelectorURL: string;

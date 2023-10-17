@@ -8,11 +8,13 @@ import {UPDATE_RULE} from './types';
 
 type Props = {
 	layoutData: LayoutData;
+	ruleId: string;
 };
 
-export default function updateRule({layoutData}: Props) {
+export default function updateRule({layoutData, ruleId}: Props) {
 	return {
 		layoutData,
+		ruleId,
 		type: UPDATE_RULE,
 	} as const;
 }

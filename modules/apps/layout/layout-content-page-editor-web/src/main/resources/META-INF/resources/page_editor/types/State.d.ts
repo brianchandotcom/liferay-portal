@@ -7,4 +7,5 @@ import layoutDataReducer from '../app/reducers/layoutDataReducer';
 
 export interface State {
 	layoutData: ReturnType<typeof layoutDataReducer>;
+	segmentsExperienceId: string;
 }

@@ -396,6 +396,11 @@
 	<td>//div[@class="c-empty-state"]//*[contains(text(),'${key_textName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DRAG_ROW</td>
+	<td>//table[contains(@class,'table-list')]//tr[@class='orderable-table-row'][${key_rowNumber}]//button[@aria-label="Drag view"]</td>
+	<td></td>
+</tr>
 
 <!-- DATA SET ACTIONS -->
 

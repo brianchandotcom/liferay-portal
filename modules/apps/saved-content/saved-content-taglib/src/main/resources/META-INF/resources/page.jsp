@@ -18,4 +18,13 @@
 			symbol="bookmarks"
 		/>
 	</clay:button>
+
+	<react:component
+		module="js/savedContent"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"saved", false
+			).build()
+		%>'
+	/>
 </div>

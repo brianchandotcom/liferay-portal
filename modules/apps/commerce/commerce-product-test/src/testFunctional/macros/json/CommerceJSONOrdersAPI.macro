@@ -26,6 +26,13 @@ definition {
 			var deliveryTermId = CommerceJSONTermsAndConditionsAPI._getCommerceTermsAndConditionsIdByName(termsAndConditionsName = ${deliveryTermName});
 		}
 
+		if (isSet(orderDate)) {
+			var orderDate = '''"orderDate": "${orderDate}",''';
+		}
+		else {
+			var orderDate = "";
+		}
+
 		var commerceChannelIds = CommerceJSONChannelsAPI._getCommerceChannelIds();
 		var orderItemsList = "";
 
@@ -171,7 +178,7 @@ definition {
 					"billingAddressId": ${billingAddressId},
 					"channelId": "${commerceChannelIds}",
 					"currencyCode": "USD",
-					"deliveryTermId": ${deliveryTermId},
+					"deliveryTermId": ${deliveryTermId},${orderDate}
 					"orderItems": [${orderItemsList}],
 					"orderStatus": ${orderStatus},
 					"paymentMethod": "${paymentMethod}",

@@ -36,6 +36,7 @@ public class ListTypeLocalServiceImpl extends ListTypeLocalServiceBaseImpl {
 
 		listType = listTypePersistence.create(listTypeId);
 
+		listType.setCompanyId(companyId);
 		listType.setName(name);
 		listType.setType(type);
 

@@ -262,6 +262,7 @@ interface PlacedOrderItems {
 	subscription: boolean;
 	thumbnail: string;
 	version: string;
+	virtualItemURLs: string;
 }
 
 interface PostalAddressResponse {

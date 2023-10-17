@@ -111,9 +111,7 @@ public class LCPProject {
 		SA("ac-southamericaeast1", "southamerica-east1-ac1-c1"),
 		UAT("ac-asahuat", "us-west1-ac-uat-c1"),
 		US("ac-uswest1", "us-west1-ac4-c1"),
-		US_LRDCOM(
-			"ac-uswest1asah652a6babdba143d086a19db542781bc2",
-			"us-west1-ac4-c1-2");
+		US_LRDCOM("ac-uswest1", "us-west1-ac4-c1-2");
 
 		public static Cluster fromString(String value) {
 			if (StringUtil.equals(value, Cluster.AS1._value)) {

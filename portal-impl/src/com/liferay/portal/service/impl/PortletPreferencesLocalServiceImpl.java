@@ -491,6 +491,14 @@ public class PortletPreferencesLocalServiceImpl
 	}
 
 	@Override
+	public int getPortletPreferencesCount(
+		long companyId, long ownerId, int ownerType, String portletId) {
+
+		return portletPreferencesPersistence.countByC_O_O_LikeP(
+			companyId, ownerId, ownerType, portletId);
+	}
+
+	@Override
 	@Retry(
 		acceptor = SQLStateAcceptor.class,
 		properties = {

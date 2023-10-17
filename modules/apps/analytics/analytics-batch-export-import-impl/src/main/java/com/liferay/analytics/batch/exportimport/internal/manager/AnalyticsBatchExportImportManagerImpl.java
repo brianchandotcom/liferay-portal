@@ -6,6 +6,7 @@
 package com.liferay.analytics.batch.exportimport.internal.manager;
 
 import com.liferay.analytics.batch.exportimport.manager.AnalyticsBatchExportImportManager;
+import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
 import com.liferay.analytics.message.storage.service.AnalyticsMessageLocalService;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
@@ -20,6 +21,7 @@ import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineExportTaskLocalService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -32,13 +34,17 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.zip.ZipReaderFactory;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.Serializable;
 
@@ -48,11 +54,18 @@ import java.nio.file.Files;
 
 import java.text.Format;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -63,6 +76,115 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = AnalyticsBatchExportImportManager.class)
 public class AnalyticsBatchExportImportManagerImpl
 	implements AnalyticsBatchExportImportManager {
+
+	@Override
+	public void exportToAnalyticsCloud(
+			List<String> batchEngineExportTaskItemDelegateNames, long companyId,
+			UnsafeConsumer<String, Exception> notificationUnsafeConsumer,
+			Date resourceLastModifiedDate, String resourceName, long userId)
+		throws Exception {
+
+		_notify(
+			"Exporting resource " + resourceName, notificationUnsafeConsumer);
+
+		File tempFile = FileUtil.createTempFile();
+
+		ZipOutputStream zipOutputStream = new ZipOutputStream(
+			new FileOutputStream(tempFile));
+
+		zipOutputStream.putNextEntry(new ZipEntry("export.jsonl"));
+
+		List<BatchEngineExportTask> batchEngineExportTasks = new ArrayList<>();
+
+		for (String batchEngineExportTaskItemDelegateName :
+				batchEngineExportTaskItemDelegateNames) {
+
+			BatchEngineExportTask batchEngineExportTask =
+				_batchEngineExportTaskLocalService.addBatchEngineExportTask(
+					null, companyId, userId, null, resourceName,
+					BatchEngineTaskContentType.JSONL.name(),
+					BatchEngineTaskExecuteStatus.INITIAL.name(), null,
+					null,
+					batchEngineExportTaskItemDelegateName);
+
+			batchEngineExportTasks.add(batchEngineExportTask);
+
+			_batchEngineExportTaskExecutor.execute(batchEngineExportTask);
+
+			BatchEngineTaskExecuteStatus batchEngineTaskExecuteStatus =
+				BatchEngineTaskExecuteStatus.valueOf(
+					batchEngineExportTask.getExecuteStatus());
+
+			if (batchEngineTaskExecuteStatus.equals(
+					BatchEngineTaskExecuteStatus.COMPLETED)) {
+
+				_notify(
+					StringBundler.concat(
+						"Exported ", batchEngineExportTask.getTotalItemsCount(),
+						" items from task ",
+						batchEngineExportTaskItemDelegateName),
+					notificationUnsafeConsumer);
+
+				if (batchEngineExportTask.getTotalItemsCount() == 0) {
+					_notify(
+						"There are no items from task " +
+							batchEngineExportTaskItemDelegateName,
+						notificationUnsafeConsumer);
+
+					continue;
+				}
+
+				try (ZipInputStream zipInputStream = new ZipInputStream(
+						_batchEngineExportTaskLocalService.
+							openContentInputStream(
+								batchEngineExportTask.
+									getBatchEngineExportTaskId()))) {
+
+					zipInputStream.getNextEntry();
+
+					StreamUtil.transfer(zipInputStream, zipOutputStream, false);
+				}
+			}
+			else {
+				throw new PortalException(
+					"Unable to export resource " +
+						batchEngineExportTaskItemDelegateName);
+			}
+		}
+
+		StreamUtil.cleanUp(zipOutputStream);
+
+		_notify(
+			"Uploading resources " + resourceName, notificationUnsafeConsumer);
+
+		try (FileInputStream fileInputStream = new FileInputStream(tempFile)) {
+			_upload(
+				companyId, fileInputStream, resourceLastModifiedDate,
+				DXPEntity.class.getName());
+		}
+
+		_notify(
+			"Completed uploading resources " + resourceName,
+			notificationUnsafeConsumer);
+
+		for (BatchEngineExportTask batchEngineExportTask :
+				batchEngineExportTasks) {
+
+			_batchEngineExportTaskLocalService.deleteBatchEngineExportTask(
+				batchEngineExportTask);
+		}
+
+		boolean deleted = tempFile.delete();
+
+		if (_log.isDebugEnabled()) {
+			if (deleted) {
+				_log.debug("Deleted temp file: " + tempFile.getName());
+			}
+			else {
+				_log.debug("Unable to delete temp file: " + tempFile.getName());
+			}
+		}
+	}
 
 	@Override
 	public void exportToAnalyticsCloud(
@@ -220,6 +342,9 @@ public class AnalyticsBatchExportImportManagerImpl
 
 	@Reference
 	protected BatchEngineExportTaskExecutor batchEngineExportTaskExecutor;
+
+	@Reference
+	protected ZipReaderFactory zipReaderFactory;
 
 	private void _checkCompany(long companyId) {
 		if (_analyticsConfigurationRegistry.isActive()) {

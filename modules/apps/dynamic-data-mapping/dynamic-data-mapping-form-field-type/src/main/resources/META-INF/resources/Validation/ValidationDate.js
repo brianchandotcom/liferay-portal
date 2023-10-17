@@ -136,7 +136,7 @@ export default function ValidationDate({
 			<div className="ddm-form-field-type__validation-date-accepted-date">
 				<DDMSelect
 					className="lfr-ddm__validation-date-select"
-					disabled={readOnly || localizationMode}
+					disabled={readOnly}
 					label={Liferay.Language.get('accepted-date')}
 					name="selectedValidation"
 					onChange={({target: {value}}) => {

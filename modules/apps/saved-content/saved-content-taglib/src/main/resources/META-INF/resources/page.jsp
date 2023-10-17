@@ -6,3 +6,16 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<div>
+	<clay:button
+		disabled="<%= true %>"
+		displayType="secondary"
+		monospaced="<%= true %>"
+		small="<%= true %>"
+	>
+		<clay:icon
+			symbol="bookmarks"
+		/>
+	</clay:button>
+</div>

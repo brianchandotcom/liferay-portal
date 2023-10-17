@@ -36,6 +36,7 @@ export default function EditObjectFolder({
 			objectFolderName,
 			rightSidebarType,
 			selectedObjectFolder,
+			showChangesSaved,
 		},
 		dispatch,
 	] = useObjectFolderContext();
@@ -89,6 +90,19 @@ export default function EditObjectFolder({
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [objectFolderName]);
+
+	useEffect(() => {
+		if (showChangesSaved) {
+			setTimeout(() => {
+				dispatch({
+					payload: {updatedShowChangesSaved: false},
+					type: TYPES.SET_SHOW_CHANGES_SAVED,
+				});
+			}, 5000);
+		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [showChangesSaved]);
 
 	return (
 		<>

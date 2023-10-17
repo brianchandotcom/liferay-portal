@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -65,12 +66,14 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import java.time.Month;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -265,7 +268,15 @@ public class BaseNotificationTypeTest {
 		).put(
 			getTermName("AUTHOR_SUFFIX"), _getListType("SUFFIX", user2)
 		).build();
-		_currentUserTermValues = HashMapBuilder.<String, Object>put(
+		_generalTermValues = HashMapBuilder.<String, Object>put(
+			"[%CURRENT_DATE%]",
+			() -> {
+				DateFormat dateFormat =
+					DateFormatFactoryUtil.getSimpleDateFormat("yyyy-MM-dd");
+
+				return dateFormat.format(new Date());
+			}
+		).put(
 			"[%CURRENT_USER_EMAIL_ADDRESS%]", user2.getEmailAddress()
 		).put(
 			"[%CURRENT_USER_FIRST_NAME%]", user2.getFirstName()
@@ -383,7 +394,7 @@ public class BaseNotificationTypeTest {
 	protected List<String> getTermNames() {
 		return ListUtil.concat(
 			ListUtil.fromMapKeys(_childAuthorTermValues),
-			ListUtil.fromMapKeys(_currentUserTermValues),
+			ListUtil.fromMapKeys(_generalTermValues),
 			ListUtil.fromMapKeys(_parentAuthorTermValues),
 			Arrays.asList(
 				getTermName("booleanObjectField"),
@@ -398,7 +409,7 @@ public class BaseNotificationTypeTest {
 	protected List<Object> getTermValues() {
 		return ListUtil.concat(
 			ListUtil.fromMapValues(_childAuthorTermValues),
-			ListUtil.fromMapValues(_currentUserTermValues),
+			ListUtil.fromMapValues(_generalTermValues),
 			ListUtil.fromMapValues(_parentAuthorTermValues),
 			ListUtil.fromMapValues(childObjectEntryValues),
 			ListUtil.fromMapValues(parentObjectEntryValues));
@@ -495,7 +506,7 @@ public class BaseNotificationTypeTest {
 	private static UserLocalService _userLocalService;
 
 	private Map<String, Object> _childAuthorTermValues;
-	private Map<String, Object> _currentUserTermValues;
+	private Map<String, Object> _generalTermValues;
 
 	@Inject
 	private NotificationRecipientSettingLocalService

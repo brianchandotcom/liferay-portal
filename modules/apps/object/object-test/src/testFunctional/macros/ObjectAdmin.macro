@@ -433,6 +433,7 @@ definition {
 	macro addObjectViaAPI {
 		JSONObject.addObject(
 			externalReferenceCode = ${externalReferenceCode},
+			folderName = ${folderName},
 			labelName = ${labelName},
 			objectName = ${objectName},
 			panelCategoryKey = ${panelCategoryKey},

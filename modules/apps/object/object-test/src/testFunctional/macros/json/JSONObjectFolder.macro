@@ -30,4 +30,19 @@ definition {
 		return ${objectFolderERC};
 	}
 
+	macro getObjectFolderERC {
+		var portalURL = JSONCompany.getDefaultPortalURL();
+		var userLoginInfo = JSONUtil2.formatJSONSuperAdminUser();
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-folders \
+				-u ${userLoginInfo} \
+				-H Content-Type: application/json
+		''';
+
+		var folderERC = JSONCurlUtil.get(${curl}, "$.items[?(@['name'] == '${folderName}')]['externalReferenceCode']");
+
+		return ${folderERC};
+	}
+
 }

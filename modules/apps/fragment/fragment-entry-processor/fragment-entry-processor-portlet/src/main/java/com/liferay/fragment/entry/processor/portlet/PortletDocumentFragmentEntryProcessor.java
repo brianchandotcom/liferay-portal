@@ -153,9 +153,8 @@ public class PortletDocumentFragmentEntryProcessor
 	}
 
 	private boolean _checkNoninstanceablePortletUsed(
-			FragmentEntryLink currentFragmentEntryLink,
-			String currentPortletName, HttpServletRequest httpServletRequest)
-		throws PortalException {
+		FragmentEntryLink currentFragmentEntryLink, String currentPortletName,
+		HttpServletRequest httpServletRequest) {
 
 		if ((currentFragmentEntryLink.getFragmentEntryLinkId() <= 0) ||
 			(currentFragmentEntryLink.getPlid() <= 0)) {
@@ -290,9 +289,8 @@ public class PortletDocumentFragmentEntryProcessor
 	}
 
 	private String _getPreferences(
-			long plid, String portletName, FragmentEntryLink fragmentEntryLink,
-			String id, String defaultPreferences)
-		throws PortalException {
+		long plid, String portletName, FragmentEntryLink fragmentEntryLink,
+		String id, String defaultPreferences) {
 
 		String defaultPortletId = _getPortletId(
 			portletName, fragmentEntryLink.getNamespace(), id);

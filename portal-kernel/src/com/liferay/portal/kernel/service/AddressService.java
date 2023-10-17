@@ -44,6 +44,14 @@ public interface AddressService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.AddressServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the address remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link AddressServiceUtil} if injection and service tracking are not available.
 	 */
 	public Address addAddress(
+			String externalReferenceCode, long userId, String className,
+			long classPK, String name, String description, String street1,
+			String street2, String street3, String city, String zip,
+			long regionId, long countryId, long listTypeId, boolean mailing,
+			boolean primary, String phoneNumber, ServiceContext serviceContext)
+		throws PortalException;
+
+	public Address addAddress(
 			String className, long classPK, String street1, String street2,
 			String street3, String city, String zip, long regionId,
 			long countryId, long listTypeId, boolean mailing, boolean primary,
@@ -70,6 +78,13 @@ public interface AddressService extends BaseService {
 			long addressId, String street1, String street2, String street3,
 			String city, String zip, long regionId, long countryId,
 			long listTypeId, boolean mailing, boolean primary)
+		throws PortalException;
+
+	public Address updateAddress(
+			long addressId, String name, String description, String street1,
+			String street2, String street3, String city, String zip,
+			long regionId, long countryId, long listTypeId, boolean mailing,
+			boolean primary, String phoneNumber)
 		throws PortalException;
 
 }

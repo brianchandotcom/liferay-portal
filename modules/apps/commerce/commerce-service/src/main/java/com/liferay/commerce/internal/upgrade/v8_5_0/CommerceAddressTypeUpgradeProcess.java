@@ -8,7 +8,7 @@ package com.liferay.commerce.internal.upgrade.v8_5_0;
 import com.liferay.account.constants.AccountListTypeConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.ListType;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
@@ -18,29 +18,36 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 public class CommerceAddressTypeUpgradeProcess extends UpgradeProcess {
 
 	public CommerceAddressTypeUpgradeProcess(
+		CompanyLocalService companyLocalService,
 		ListTypeLocalService listTypeLocalService) {
 
+		_companyLocalService = companyLocalService;
 		_listTypeLocalService = listTypeLocalService;
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_setAddressListType(
-			_getListTypeId(
-				CompanyThreadLocal.getCompanyId(),
-				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING),
-			14000);
-		_setAddressListType(
-			_getListTypeId(
-				CompanyThreadLocal.getCompanyId(),
-				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS_TYPE_SHIPPING),
-			14002);
-		_setAddressListType(
-			_getListTypeId(
-				CompanyThreadLocal.getCompanyId(),
-				AccountListTypeConstants.
-					ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING_AND_SHIPPING),
-			14001);
+		_companyLocalService.forEachCompanyId(
+			companyId -> {
+				_setAddressListType(
+					_getListTypeId(
+						companyId,
+						AccountListTypeConstants.
+							ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING),
+					14000);
+				_setAddressListType(
+					_getListTypeId(
+						companyId,
+						AccountListTypeConstants.
+							ACCOUNT_ENTRY_ADDRESS_TYPE_SHIPPING),
+					14002);
+				_setAddressListType(
+					_getListTypeId(
+						companyId,
+						AccountListTypeConstants.
+							ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING_AND_SHIPPING),
+					14001);
+			});
 	}
 
 	private long _getListTypeId(long companyId, String name) {
@@ -65,6 +72,7 @@ public class CommerceAddressTypeUpgradeProcess extends UpgradeProcess {
 				" where listTypeId = ", oldListTypeId));
 	}
 
+	private final CompanyLocalService _companyLocalService;
 	private final ListTypeLocalService _listTypeLocalService;
 
 }

@@ -434,7 +434,8 @@ public class CommerceServiceUpgradeStepRegistrator
 
 		registry.register(
 			"8.4.1", "8.5.0",
-			new CommerceAddressTypeUpgradeProcess(_listTypeLocalService));
+			new CommerceAddressTypeUpgradeProcess(
+				_companyLocalService, _listTypeLocalService));
 
 		registry.register(
 			"8.5.0", "8.6.0",

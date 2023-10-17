@@ -178,6 +178,7 @@ definition {
 	@summary = "Default summary"
 	macro addObjectEntryViaAPI(userPassword = null, valueList = null, objectName = null, userEmailAddress = null, fieldNameList = null) {
 		var objectEntryId = JSONObject.addObjectEntry(
+			entryLanguageList = ${entryLanguageList},
 			fieldNameList = ${fieldNameList},
 			objectName = ${objectName},
 			userEmailAddress = ${userEmailAddress},

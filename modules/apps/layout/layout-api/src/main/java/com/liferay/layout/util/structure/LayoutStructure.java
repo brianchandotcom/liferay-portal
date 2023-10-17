@@ -106,6 +106,8 @@ public class LayoutStructure {
 				});
 
 			List<LayoutStructureRule> layoutStructureRules = new ArrayList<>();
+			Map<String, LayoutStructureRule> layoutStructureRulesMap =
+				new HashMap<>();
 
 			JSONArray layoutStructureRulesJSONArray =
 				layoutStructureJSONObject.getJSONArray("pageRules");
@@ -114,9 +116,14 @@ public class LayoutStructure {
 				for (int i = 0; i < layoutStructureRulesJSONArray.length();
 					 i++) {
 
-					layoutStructureRules.add(
+					LayoutStructureRule layoutStructureRule =
 						LayoutStructureRule.of(
-							layoutStructureRulesJSONArray.getJSONObject(i)));
+							layoutStructureRulesJSONArray.getJSONObject(i));
+
+					layoutStructureRules.add(layoutStructureRule);
+
+					layoutStructureRulesMap.put(
+						layoutStructureRule.getId(), layoutStructureRule);
 				}
 			}
 
@@ -125,7 +132,7 @@ public class LayoutStructure {
 				deletedLayoutStructureItems, deletedPortletIds,
 				formStyledLayoutStructureItems, fragmentLayoutStructureItems,
 				layoutStructureItems, layoutStructureRules,
-				rootItemsJSONObject.getString("main"));
+				layoutStructureRulesMap, rootItemsJSONObject.getString("main"));
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
@@ -145,6 +152,7 @@ public class LayoutStructure {
 		_fragmentLayoutStructureItems = new HashMap<>();
 		_layoutStructureItems = new HashMap<>();
 		_layoutStructureRules = new ArrayList<>();
+		_layoutStructureRulesMap = new HashMap<>();
 		_mainItemId = StringPool.BLANK;
 	}
 
@@ -350,6 +358,17 @@ public class LayoutStructure {
 		_layoutStructureItems.remove(itemId);
 
 		return deletedLayoutStructureItems;
+	}
+
+	public LayoutStructureRule deleteLayoutStructureRule(String ruleId) {
+		LayoutStructureRule layoutStructureRule = _layoutStructureRulesMap.get(
+			ruleId);
+
+		if (layoutStructureRule != null) {
+			_layoutStructureRules.remove(layoutStructureRule);
+		}
+
+		return layoutStructureRule;
 	}
 
 	public List<LayoutStructureItem> duplicateLayoutStructureItem(
@@ -796,7 +815,9 @@ public class LayoutStructure {
 		List<FormStyledLayoutStructureItem> formStyledLayoutStructureItems,
 		Map<Long, LayoutStructureItem> fragmentLayoutStructureItems,
 		Map<String, LayoutStructureItem> layoutStructureItems,
-		List<LayoutStructureRule> layoutStructureRules, String mainItemId) {
+		List<LayoutStructureRule> layoutStructureRules,
+		Map<String, LayoutStructureRule> layoutStructureRulesMap,
+		String mainItemId) {
 
 		_collectionStyledLayoutStructureItems =
 			collectionStyledLayoutStructureItems;
@@ -807,6 +828,7 @@ public class LayoutStructure {
 		_fragmentLayoutStructureItems = fragmentLayoutStructureItems;
 		_layoutStructureItems = layoutStructureItems;
 		_layoutStructureRules = layoutStructureRules;
+		_layoutStructureRulesMap = layoutStructureRulesMap;
 		_mainItemId = mainItemId;
 	}
 
@@ -1071,6 +1093,7 @@ public class LayoutStructure {
 	private final Map<Long, LayoutStructureItem> _fragmentLayoutStructureItems;
 	private final Map<String, LayoutStructureItem> _layoutStructureItems;
 	private final List<LayoutStructureRule> _layoutStructureRules;
+	private final Map<String, LayoutStructureRule> _layoutStructureRulesMap;
 	private String _mainItemId;
 
 }

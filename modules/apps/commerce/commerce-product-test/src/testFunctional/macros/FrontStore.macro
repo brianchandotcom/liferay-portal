@@ -411,6 +411,14 @@ definition {
 		}
 	}
 
+	macro clickEllipsisItemInMiniCart {
+		Click(
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS_WITH_UOM",
+			uomKey = ${uomKey});
+
+		DropdownMenuItem.click(menuItem = ${menuItem});
+	}
+
 	macro compareProducts {
 		var comparisonItems = 0;
 
@@ -439,6 +447,26 @@ definition {
 		if (${clickCompare} != "false") {
 			Click(locator1 = "CommerceFrontStore#MINI_COMPARE_COMPARE_BUTTON");
 		}
+	}
+
+	macro editUOMAndQuantityInMiniCart {
+		Click(
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS_WITH_UOM",
+			uomKey = ${uomKey});
+
+		DropdownMenuItem.click(menuItem = "Edit");
+
+		Select(
+			locator1 = "CommerceAccelerators#MINI_CART_EDIT_ITEM_UOM_SELECTOR",
+			value1 = ${uomName});
+
+		if (isSet(quantity)) {
+			Type(
+				locator1 = "CommerceAccelerators#MINI_CART_EDIT_ITEM_QUANTITY_SELECTOR_INPUT_FIELD",
+				value1 = ${quantity});
+		}
+
+		Button.clickSave();
 	}
 
 	macro getCurrentCartDataBadgeCount {

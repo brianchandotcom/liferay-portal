@@ -12,12 +12,6 @@ import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
 import com.liferay.dispatch.executor.DispatchTaskStatus;
 import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.model.DispatchTrigger;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -78,7 +72,7 @@ public class DXPEntityAnalyticsExportDispatchTaskExecutor
 				"user-analytics-dxp-entities",
 				"user-group-analytics-dxp-entities"),
 			dispatchTrigger.getCompanyId(),
-			message -> _updateDispatchLog(
+			message -> updateDispatchLog(
 				dispatchLog.getDispatchLogId(), dispatchTaskExecutorOutput,
 				message),
 			resourceLastModifiedDate, DXPEntity.class.getName(),
@@ -99,34 +93,6 @@ public class DXPEntityAnalyticsExportDispatchTaskExecutor
 	protected boolean shouldExport(long companyId) {
 		return _analyticsConfigurationRegistry.isActive();
 	}
-
-	private void _updateDispatchLog(
-			long dispatchLogId,
-			DispatchTaskExecutorOutput dispatchTaskExecutorOutput,
-			String message)
-		throws PortalException {
-
-		StringBundler sb = new StringBundler(5);
-
-		if (dispatchTaskExecutorOutput.getOutput() != null) {
-			sb.append(dispatchTaskExecutorOutput.getOutput());
-		}
-
-		sb.append(_dateFormat.format(new Date()));
-		sb.append(StringPool.SPACE);
-		sb.append(message);
-		sb.append(StringPool.NEW_LINE);
-
-		dispatchTaskExecutorOutput.setOutput(sb.toString());
-
-		dispatchLogLocalService.updateDispatchLog(
-			dispatchLogId, new Date(), dispatchTaskExecutorOutput.getError(),
-			dispatchTaskExecutorOutput.getOutput(),
-			DispatchTaskStatus.IN_PROGRESS);
-	}
-
-	private static final DateFormat _dateFormat = new SimpleDateFormat(
-		"yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
 	@Reference
 	private AnalyticsConfigurationRegistry _analyticsConfigurationRegistry;

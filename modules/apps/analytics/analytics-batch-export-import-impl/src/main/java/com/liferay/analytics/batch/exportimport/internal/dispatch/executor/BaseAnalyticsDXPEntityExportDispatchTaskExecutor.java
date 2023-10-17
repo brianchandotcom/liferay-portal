@@ -60,7 +60,7 @@ public abstract class BaseAnalyticsDXPEntityExportDispatchTaskExecutor
 			getBatchEngineExportTaskItemDelegateName(),
 			dispatchTrigger.getCompanyId(), null,
 			getFilterString(dispatchTrigger.getCompanyId()),
-			message -> _updateDispatchLog(
+			message -> updateDispatchLog(
 				dispatchLog.getDispatchLogId(), dispatchTaskExecutorOutput,
 				message),
 			resourceLastModifiedDate, DXPEntity.class.getName(),
@@ -77,14 +77,7 @@ public abstract class BaseAnalyticsDXPEntityExportDispatchTaskExecutor
 		return true;
 	}
 
-	@Reference
-	protected AnalyticsBatchExportImportManager
-		analyticsBatchExportImportManager;
-
-	@Reference
-	protected DispatchLogLocalService dispatchLogLocalService;
-
-	private void _updateDispatchLog(
+	protected void updateDispatchLog(
 			long dispatchLogId,
 			DispatchTaskExecutorOutput dispatchTaskExecutorOutput,
 			String message)
@@ -108,6 +101,13 @@ public abstract class BaseAnalyticsDXPEntityExportDispatchTaskExecutor
 			dispatchTaskExecutorOutput.getOutput(),
 			DispatchTaskStatus.IN_PROGRESS);
 	}
+
+	@Reference
+	protected AnalyticsBatchExportImportManager
+		analyticsBatchExportImportManager;
+
+	@Reference
+	protected DispatchLogLocalService dispatchLogLocalService;
 
 	private static final DateFormat _dateFormat = new SimpleDateFormat(
 		"yyyy-MM-dd'T'HH:mm:ss.SSSZ");

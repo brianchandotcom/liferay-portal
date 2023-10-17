@@ -12,8 +12,8 @@ export const mdfChartColumnColors = {
 };
 
 export const revenueChartColumnColors = {
-	'Growth Revenue': '#000239',
-	'Renewal Revenue': '#83B6FE',
+	'Growth Revenue': '#00256C',
+	'Renewal Revenue': '#8FB5FF',
 };
 
 export const dealsChartColumnColors = {

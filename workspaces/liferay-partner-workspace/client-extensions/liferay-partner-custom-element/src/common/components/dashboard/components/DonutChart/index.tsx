@@ -8,6 +8,7 @@ import ClayChart from '@clayui/charts';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React, {useCallback, useMemo} from 'react';
 
+import './index.css';
 import formatCurrency from '../../utils/formatCurrency';
 
 interface iProps {

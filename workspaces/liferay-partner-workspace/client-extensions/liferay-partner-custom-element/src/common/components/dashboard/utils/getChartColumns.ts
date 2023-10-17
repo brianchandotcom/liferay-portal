@@ -37,9 +37,7 @@ function expiredTotalActivites(mdfRequests: any, chartColumns: any) {
 	const expiredActivities = mdfRequests?.items
 		?.map((activity: any) =>
 			activity?.mdfReqToActs?.filter(
-				(request: any) =>
-					new Date(request.endDate).setTime(expiredDate) >
-					new Date().getTime()
+				(activity: any) => activity.activityStatus.key === 'expired'
 			)
 		)
 		.flat();
@@ -61,9 +59,10 @@ function expiringSoonTotalActivities(mdfRequests: any, chartColumns: any) {
 	const expiringSoonActivitiesDate = mdfRequests?.items
 		?.map((activity: any) =>
 			activity.mdfReqToActs.filter(
-				(request: any) =>
-					new Date(request.endDate).setTime(expiredDate) <
-					new Date().getTime()
+				(activity: any) =>
+					new Date(activity.endDate).setTime(expiredDate) <
+						new Date().getTime() &&
+					activity.activityStatus.key !== 'expired'
 			)
 		)
 		.flat();
@@ -86,7 +85,8 @@ function totalApprovedMDFToClaims(mdfRequests: any, chartColumns: any) {
 	const claimedRequests = mdfRequests?.items
 		?.map((claim: any) =>
 			claim.mdfReqToMDFClms.filter(
-				(request: any) => request.mdfClaimStatus.key === 'approved'
+				(request: any) =>
+					request.mdfClaimStatus.key === 'inFinanceReview'
 			)
 		)
 		.flat();
@@ -106,18 +106,22 @@ function totalApprovedMDFToClaims(mdfRequests: any, chartColumns: any) {
 }
 
 function totalMDFRequestToClaims(mdfRequests: any, chartColumns: any) {
-	const totalClaimedRequestsAmount = mdfRequests?.items?.reduce(
-		(acc: any, value: any) =>
-			acc + parseFloat(value.totalClaimedRequest || 0),
-		0
-	);
 	const claimedRequests = mdfRequests?.items
 		?.map((claim: any) =>
 			claim.mdfReqToMDFClms.filter(
-				(request: any) => request.mdfClaimStatus.key === 'claimPaid'
+				(request: any) =>
+					request.mdfClaimStatus.key === 'claimPaid' ||
+					request.mdfClaimStatus.key === 'inDirectorReview' ||
+					request.mdfClaimStatus.key === 'pendingMarketingReview' ||
+					request.mdfClaimStatus.key === 'approved'
 			)
 		)
 		.flat();
+
+	const totalClaimedRequestsAmount = claimedRequests?.reduce(
+		(acc: any, value: any) => acc + parseFloat(value.totalClaimAmount || 0),
+		0
+	);
 
 	const totalClaimedActivites = claimedRequests.reduce(
 		(acc: any, value: any) =>

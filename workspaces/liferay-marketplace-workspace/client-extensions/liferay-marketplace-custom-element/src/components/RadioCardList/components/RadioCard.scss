@@ -1,6 +1,13 @@
 .radio-card {
 	border-radius: 10px !important;
 
+	.radio-card-label {
+		background-color: #e6ebf5;
+		color: #2e5aac !important;
+		border: none;
+		border-radius: 4px;
+	}
+
 	&.radio-selected {
 		background-color: #e6edfb !important;
 		border: solid #6a8fea 2px !important;

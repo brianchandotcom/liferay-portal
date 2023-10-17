@@ -4,6 +4,7 @@
  */
 
 import {ClayRadio} from '@clayui/form';
+import ClayLabel from '@clayui/label';
 import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
 
@@ -12,9 +13,11 @@ import emptyPictureIcon from '../../../assets/icons/avatar.svg';
 
 interface RadioCardProps {
 	activeRadio: boolean | undefined;
+	customization?: any;
 	description?: string;
 	imageURL?: string;
-	index: number;
+	index?: number;
+	label?: string;
 	leftRadio?: boolean;
 	selectRadio: () => void;
 	showImage?: boolean;
@@ -23,9 +26,11 @@ interface RadioCardProps {
 
 const NewRadioCard = ({
 	activeRadio,
+	customization,
 	description,
 	imageURL,
 	index,
+	label,
 	leftRadio,
 	selectRadio,
 	showImage,
@@ -34,7 +39,7 @@ const NewRadioCard = ({
 	return (
 		<div
 			className={classNames(
-				'align-items-center cursor-pointer d-flex form-control justify-content-between mb-5 px-0 py-4 radio-card',
+				`align-items-center cursor-pointer d-flex form-control justify-content-between mb-5 px-0 py-4 radio-card`,
 				{
 					'bg-transparent': !activeRadio,
 					'radio-selected': activeRadio,
@@ -80,14 +85,33 @@ const NewRadioCard = ({
 							</div>
 						)}
 
-						<h5
-							className={classNames('col-10 mb-0', {
-								'pl-0': !leftRadio,
-							})}
-						>
-							{title}
-						</h5>
+						{!customization ? (
+							<h5
+								className={classNames('col-10 mb-0', {
+									'pl-0': !leftRadio,
+								})}
+							>
+								{title}
+							</h5>
+						) : (
+							<h3
+								className={classNames('col-10 mb-0', {
+									'pl-0': !leftRadio,
+								})}
+							>
+								{title}
+							</h3>
+						)}
 					</div>
+
+					{label && (
+						<ClayLabel
+							className="radio-card-label"
+							displayType="info"
+						>
+							{label}
+						</ClayLabel>
+					)}
 				</div>
 
 				{description && (
@@ -97,9 +121,14 @@ const NewRadioCard = ({
 								'col-10': showImage,
 								'col-11': !showImage,
 								'pl-6': !leftRadio && showImage,
+								'text-success': customization,
 							})}
 						>
-							{description}
+							{!customization ? (
+								description
+							) : (
+								<small>{description}</small>
+							)}
 						</p>
 					</div>
 				)}

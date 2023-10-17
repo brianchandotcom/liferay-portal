@@ -6,6 +6,7 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
+import com.liferay.document.library.configuration.DLSizeLimitConfigurationProvider;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
@@ -17,6 +18,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
 import com.liferay.document.library.kernel.service.DLFileShortcutLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
+import com.liferay.document.library.web.internal.exception.DLObjectSizeLimitExceededException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -97,6 +99,29 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	private void _checkDestinationCopyToSizeLimit(
+			Group group, long size, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		if (!DLCopyValidationUtil.isCopyToAllowed(
+				_dlSizeLimitConfigurationProvider.getCompanyMaxSizeToCopy(
+					group.getCompanyId()),
+				_dlSizeLimitConfigurationProvider.getGroupMaxSizeToCopy(
+					group.getGroupId()),
+				_dlSizeLimitConfigurationProvider.getSystemMaxSizeToCopy(),
+				size)) {
+
+			throw new DLObjectSizeLimitExceededException(
+				DLCopyValidationUtil.getCopyToValidationMessage(
+					_dlSizeLimitConfigurationProvider.getCompanyMaxSizeToCopy(
+						group.getCompanyId()),
+					_dlSizeLimitConfigurationProvider.getGroupMaxSizeToCopy(
+						group.getGroupId()),
+					_dlSizeLimitConfigurationProvider.getSystemMaxSizeToCopy(),
+					size, themeDisplay.getLocale()));
+		}
+	}
+
 	private void _checkDestinationGroup(
 			Group group, long[] groupIds, long sourceGroupId)
 		throws Exception {
@@ -150,7 +175,9 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 
 		_checkDestinationGroup(group, groupIds, sourceGroup.getGroupId());
 
-		long size = ParamUtil.getLong(actionRequest, "size");
+		_checkDestinationCopyToSizeLimit(
+			group, ParamUtil.getLong(actionRequest, "size"),
+			(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY));
 
 		long[] dlObjectIds = ParamUtil.getLongValues(
 			actionRequest, "dlObjectIds");
@@ -278,6 +305,9 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private DLFolderLocalService _dlFolderLocalService;
+
+	@Reference
+	private DLSizeLimitConfigurationProvider _dlSizeLimitConfigurationProvider;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

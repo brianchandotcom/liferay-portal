@@ -11,9 +11,9 @@ import classNames from 'classnames';
 import {useId} from 'frontend-js-components-web';
 import React, {useState} from 'react';
 
-import {addRule} from '../../../app/actions/index';
-import updateRule from '../../../app/actions/updateRule';
 import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
+import addRule from '../../../app/thunks/addRule';
+import updateRule from '../../../app/thunks/updateRule';
 import {
 	RuleBuilderActionSection,
 	RuleBuilderConditionSection,
@@ -45,33 +45,27 @@ export default function RulesModal({editingRule, onCloseModal}) {
 			return;
 		}
 
+		const filteredActions = actions.filter((action) => action.itemId);
+		const filteredConditions = conditions.filter(
+			(condition) => condition.value
+		);
+
 		if (editingRule) {
-			const nextLayoutData = {
-				...layoutData,
-				rules: rules.map((rule) => {
-					if (rule.id === editingRule.id) {
-						return {id: editingRule.id, name};
-					}
-
-					return rule;
-				}),
-			};
-
 			dispatch(
 				updateRule({
-					layoutData: nextLayoutData,
+					actions: filteredActions,
+					conditions: filteredConditions,
+					name,
+					ruleId: editingRule.id,
 				})
 			);
 		}
 		else {
-			const nextLayoutData = {
-				...layoutData,
-				rules: [...rules, {id: nameId, name}],
-			};
-
 			dispatch(
 				addRule({
-					layoutData: nextLayoutData,
+					actions: filteredActions,
+					conditions: filteredConditions,
+					name,
 				})
 			);
 		}

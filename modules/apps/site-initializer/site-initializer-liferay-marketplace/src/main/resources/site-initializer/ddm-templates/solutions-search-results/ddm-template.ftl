@@ -93,8 +93,7 @@
 						productId = entry.getClassPK() + 1
 						product = restClient.get("/headless-commerce-admin-catalog/v1.0/products/" + productId + "?nestedFields=productSpecifications,attachments")
 						productAttachments = product.attachments![]
-						productCategories = restClient.get("/headless-commerce-admin-catalog/v1.0/products/" + productId + "/categories").items
-						productCategoriesItems = []
+						productCategories=product.categories![]
 						productDescription = stringUtil.shorten(htmlUtil.stripHtml(product.description.en_US!""), 150, "...")
 						productSpecifications = product.productSpecifications![]
 						productURL = portalURL?replace("solutions-marketplace", "p") + "/" + product.urls.en_US
@@ -134,29 +133,25 @@
 							</div>
 
 							<#if productCategories?has_content>
-								<div class="align-center d-flex labels">
-									<#list productCategories as category>
+								<#assign solutionCategories = productCategories?filter(category -> category.vocabulary == 'marketplace solution category') />
 
-										<#if category.vocabulary == 'marketplace solution category'>
-											<div class="border-radius-small category-label font-size-paragraph-small font-weight-semi-bold px-1 rounded">
-												${category.name}
-											</div>
-											<#break>
-										</#if>
+								<div class="align-items-center d-flex labels">
+									<#list solutionCategories as category>
+										<div class="border-radius-small category-label font-size-paragraph-small font-weight-semi-bold px-1 rounded">
+											${category.name}
+										</div>
+										<#break>
 									</#list>
-									<#list productCategories as category>
-										<#if category.vocabulary == 'marketplace solution category'>
-											<#assign productCategoriesItems = productCategoriesItems + [category.name] />
-										</#if>
-									</#list>
+
+									<#assign productCategoriesItems = solutionCategories?map(category -> category.name) />
 
 									<#if (productCategoriesItems?size > 1)>
 										<div class="category-label-remainder pl-2 position-relative text-primary">
 											+${productCategoriesItems?size - 1}
 											<div class="category-names font-size-paragraph-base p-4 position-absolute rounded text-white">
-												<#list productCategories as category>
-													<#if !category?is_first && category.vocabulary == 'marketplace solution category'>
-														${category.name}
+												<#list productCategoriesItems as category>
+													<#if category_index != 0>
+														${category}
 														<#sep>,</#sep>
 													</#if>
 												</#list>

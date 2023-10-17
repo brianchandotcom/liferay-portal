@@ -30,8 +30,8 @@ definition {
 		task ("Given with postAPIApplication to create a published api Application with site scope endpoint with related schema") {
 			var response = ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
-				endpointName = "testEndpoint",
-				endpointPath = "/testEndpoint",
+				endpointName = "testendpoint",
+				endpointPath = "/testendpoint",
 				mainObjectDefinitionErc = "L_API_APPLICATION",
 				relatedEndpoint = "true",
 				relatedSchema = "true",
@@ -60,7 +60,7 @@ definition {
 				site = "true");
 
 			APIExplorer.executeAPIMethod(
-				method = "getScopeScopeKeyTestEndpointPage",
+				method = "getScopeScopeKeyTestendpointPage",
 				parameter = "scopeKey",
 				service = "testSchema",
 				value = ${siteId});
@@ -69,7 +69,7 @@ definition {
 		task ("Then I can get correct 200 response code") {
 			AssertTextEquals(
 				locator1 = "OpenAPI#RESPONSE_CODE",
-				method = "getScopeScopeKeyTestEndpointPage",
+				method = "getScopeScopeKeyTestendpointPage",
 				value1 = 200);
 		}
 	}
@@ -81,8 +81,8 @@ definition {
 		task ("Given with postAPIApplication to create an unpublished api Application with site scope endpoint") {
 			ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
-				endpointName = "testEndpoint",
-				endpointPath = "/testEndpoint",
+				endpointName = "testendpoint",
+				endpointPath = "/testendpoint",
 				relatedEndpoint = "true",
 				scopeKey = "group",
 				status = "unpublished",
@@ -107,8 +107,8 @@ definition {
 		task ("Given with postAPIApplication to create a published api Application with site scope endpoint and company scope endpoint") {
 			var response = ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
-				endpointName = "testEndpoint",
-				endpointPath = "/testEndpoint",
+				endpointName = "testendpoint",
+				endpointPath = "/testendpoint",
 				relatedEndpoint = "true",
 				scopeKey = "group",
 				status = "published",
@@ -118,8 +118,8 @@ definition {
 
 			EndpointAPI.createAPIEndpoint(
 				externalReferenceCode = "My-app",
-				name = "myEndpoint",
-				path = "/myEndpoint");
+				name = "myendpoint",
+				path = "/myendpoint");
 		}
 
 		task ("When I navigate to /o/c/{apiApplication}") {
@@ -129,17 +129,17 @@ definition {
 		task ("Then getScopes{siteScopeEndpointPath}Page is present under default") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "OpenAPI#API_METHOD",
-				method = "getScopeScopeKeyTestEndpointPage",
+				method = "getScopeScopeKeyTestendpointPage",
 				service = "default",
-				value1 = "/testEndpoint");
+				value1 = "/testendpoint");
 		}
 
 		task ("And Then get{companyScopeEndpointPath}Page is present under default") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "OpenAPI#API_METHOD",
-				method = "getMyEndpointPage",
+				method = "getMyendpointPage",
 				service = "default",
-				value1 = "/myEndpoint");
+				value1 = "/myendpoint");
 		}
 	}
 
@@ -150,8 +150,8 @@ definition {
 		task ("Given created an published api application with site scope endpoint and company scope endpoint with related request and response schemas") {
 			var responseFromApplication = ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
-				endpointName = "testEndpoint",
-				endpointPath = "/testEndpoint",
+				endpointName = "testendpoint",
+				endpointPath = "/testendpoint",
 				mainObjectDefinitionErc = "L_API_APPLICATION",
 				relatedEndpoint = "true",
 				relatedSchema = "true",
@@ -173,8 +173,8 @@ definition {
 
 			var responseFromEndpoint = EndpointAPI.createAPIEndpoint(
 				externalReferenceCode = "My-app",
-				name = "myEndpoint",
-				path = "/myEndpoint");
+				name = "myendpoint",
+				path = "/myendpoint");
 
 			var endpointId2 = JSONPathUtil.getIdValue(response = ${responseFromEndpoint});
 
@@ -194,17 +194,17 @@ definition {
 		task ("Then getScopeScopeKey{siteScopeEndpointPath}Page is present under {schemaName}") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "OpenAPI#API_METHOD",
-				method = "getScopeScopeKeyTestEndpointPage",
+				method = "getScopeScopeKeyTestendpointPage",
 				service = "testSchema",
-				value1 = "/testEndpoint");
+				value1 = "/testendpoint");
 		}
 
 		task ("And Then get{companyScopeEndpointPath}Page is present under {schemaName}") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "OpenAPI#API_METHOD",
-				method = "getMyEndpointPage",
+				method = "getMyendpointPage",
 				service = "testSchema",
-				value1 = "/myEndpoint");
+				value1 = "/myendpoint");
 		}
 	}
 

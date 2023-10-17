@@ -46,8 +46,8 @@ definition {
 
 			EndpointAPI.createAPIEndpoint(
 				externalReferenceCode = "App-test",
-				name = "AppTest",
-				path = "/AppTest",
+				name = "apptest",
+				path = "/apptest",
 				responseSchemaId = ${schemaId});
 		}
 
@@ -66,7 +66,7 @@ definition {
 
 			WaitForElementPresent(
 				locator1 = "OpenAPI#API_METHOD",
-				method = "getAppTestPage",
+				method = "getApptestPage",
 				service = "AppTest");
 		}
 	}
@@ -78,8 +78,8 @@ definition {
 		task ("And Given an API endpoint 'AppTest' related to an Application by post request postAPIEndpoint") {
 			EndpointAPI.createAPIEndpoint(
 				externalReferenceCode = "App-test",
-				name = "AppTest",
-				path = "/AppTest");
+				name = "apptest",
+				path = "/apptest");
 		}
 
 		task ("When I can navigate to App-test page in API Explorer") {
@@ -91,7 +91,7 @@ definition {
 
 			WaitForElementPresent(
 				locator1 = "OpenAPI#API_METHOD",
-				method = "getAppTestPage",
+				method = "getApptestPage",
 				service = "default");
 		}
 	}

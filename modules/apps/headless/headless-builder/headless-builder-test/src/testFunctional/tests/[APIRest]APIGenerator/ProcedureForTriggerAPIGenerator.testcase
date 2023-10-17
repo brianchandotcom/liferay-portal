@@ -30,8 +30,8 @@ definition {
 		task ("Given api-application with GET endpoint is published") {
 			ApplicationAPI.createAPIApplication(
 				baseURL = "app-test",
-				endpointName = "testEndpoint",
-				endpointPath = "/testEndpoint",
+				endpointName = "testendpoint",
+				endpointPath = "/testendpoint",
 				relatedEndpoint = "true",
 				status = "published",
 				title = "App-test");
@@ -57,7 +57,7 @@ definition {
 
 			WaitForElementPresent(
 				locator1 = "OpenAPI#API_METHOD",
-				method = "getTestEndpointPage",
+				method = "getTestendpointPage",
 				service = "default");
 		}
 	}

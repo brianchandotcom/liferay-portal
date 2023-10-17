@@ -86,8 +86,8 @@ definition {
 		task ("And Given create an API Endpoint in the Application") {
 			EndpointAPI.createAPIEndpoint(
 				externalReferenceCode = "My-app",
-				name = "myEndpoint",
-				path = "/myEndpoint");
+				name = "myendpoint",
+				path = "/myendpoint");
 		}
 
 		task ("When I delete the API Schema") {
@@ -102,9 +102,9 @@ definition {
 
 			AssertTextEquals.assertPartialText(
 				locator1 = "OpenAPI#API_METHOD",
-				method = "getMyEndpointPage",
+				method = "getMyendpointPage",
 				service = "default",
-				value1 = "/myEndpoint");
+				value1 = "/myendpoint");
 
 			AssertElementNotPresent(
 				locator1 = "OpenAPI#SCHEMA_COLLAPSED",

@@ -60,8 +60,8 @@ definition {
 		task ("And Given I create an endpoint associate to the API application") {
 			EndpointAPI.createAPIEndpoint(
 				externalReferenceCode = "My-app",
-				name = "myEndpoint",
-				path = "/myEndpoint");
+				name = "myendpoint",
+				path = "/myendpoint");
 		}
 
 		task ("When I click over the path of the endpoint") {
@@ -71,12 +71,12 @@ definition {
 
 			Click(
 				locator1 = "Button#BUTTON_WITH_VALUE",
-				value = "/myEndpoint/");
+				value = "/myendpoint/");
 		}
 
 		task ("Then it navigates to another page") {
 			AssertElementPresent(
-				key_breadcrumbName = "GET /myEndpoint",
+				key_breadcrumbName = "GET /myendpoint",
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK");
 		}
 	}
@@ -90,8 +90,8 @@ definition {
 		task ("And Given I create an endpoint associate to the API application") {
 			EndpointAPI.createAPIEndpoint(
 				externalReferenceCode = "My-app",
-				name = "myEndpoint",
-				path = "/myEndpoint");
+				name = "myendpoint",
+				path = "/myendpoint");
 		}
 
 		task ("When I click Copy URL in Actions icon") {
@@ -115,7 +115,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "TextInput#SEARCH",
-				value1 = "${portalURL}/o/c/my-app/myEndpoint");
+				value1 = "${portalURL}/o/c/my-app/myendpoint");
 		}
 	}
 
@@ -128,8 +128,8 @@ definition {
 		task ("And Given I create an endpoint associate to the API application") {
 			EndpointAPI.createAPIEndpoint(
 				externalReferenceCode = "My-app",
-				name = "myEndpoint",
-				path = "/myEndpoint");
+				name = "myendpoint",
+				path = "/myendpoint");
 		}
 
 		task ("When I filter endpoints with Last updated from ${schema_creation_date} to ${schema_creation_date}") {
@@ -146,7 +146,7 @@ definition {
 
 		task ("Then I can see the endpoint is listed") {
 			AssertElementPresent(
-				key_name = "/myEndpoint/",
+				key_name = "/myendpoint/",
 				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
 		}
 	}
@@ -160,8 +160,8 @@ definition {
 		task ("And Given I create an endpoint associate to the API application") {
 			EndpointAPI.createAPIEndpoint(
 				externalReferenceCode = "My-app",
-				name = "myEndpoint",
-				path = "/myEndpoint");
+				name = "myendpoint",
+				path = "/myendpoint");
 		}
 
 		task ("When I filter endpoints with Last updated from ${schema_creation_date} - 1 day to ${schema_creation_date} - 1 day") {
@@ -179,7 +179,7 @@ definition {
 
 		task ("Then I can see No API Endpoint Found") {
 			AssertElementNotPresent(
-				key_name = "/myEndpoint/",
+				key_name = "/myendpoint/",
 				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
 		}
 	}
@@ -193,8 +193,8 @@ definition {
 		task ("And Given with postEndpointAPI to create an endpoint associate to the API application") {
 			EndpointAPI.createAPIEndpoint(
 				externalReferenceCode = "My-app",
-				name = "myEndpoint",
-				path = "/myEndpoint");
+				name = "myendpoint",
+				path = "/myendpoint");
 		}
 
 		task ("When I navigate to Endpoints in Edit API Application") {
@@ -205,7 +205,7 @@ definition {
 
 		task ("Then the created endpoint is listed") {
 			AssertElementPresent(
-				key_name = "/myEndpoint/",
+				key_name = "/myendpoint/",
 				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
 		}
 
@@ -223,9 +223,9 @@ definition {
 		task ("And Given with postEndpointAPI to create two endpoints associate to the API application") {
 			EndpointAPI.createNAPIEndpoints(
 				externalReferenceCode = "My-app",
-				name = "myEndpoint",
+				name = "myendpoint",
 				numberOfEndpoints = 2,
-				path = "/myEndpoint");
+				path = "/myendpoint");
 		}
 
 		task ("And Given I navigate to Endpoints in Edit API Application") {
@@ -241,7 +241,7 @@ definition {
 		}
 
 		task ("Then the endpoints are ordered") {
-			APIBuilderUI.viewItemsInOrder(itemList = "/myEndpoint1/,/myEndpoint2/");
+			APIBuilderUI.viewItemsInOrder(itemList = "/myendpoint1/,/myendpoint2/");
 		}
 	}
 
@@ -254,9 +254,9 @@ definition {
 		task ("And Given postAPIEndpoint to create 11 endpoints associate to the API application") {
 			EndpointAPI.createNAPIEndpoints(
 				externalReferenceCode = "My-app",
-				name = "myEndpoint",
+				name = "myendpoint",
 				numberOfEndpoints = 11,
-				path = "/myEndpoint");
+				path = "/myendpoint");
 		}
 
 		task ("And Given I navigate to Endpoints in Edit API Application") {
@@ -277,7 +277,7 @@ definition {
 
 		task ("Then the 11th endpoint is present with Showing 11 to 11 of 11 entries message") {
 			AssertElementPresent(
-				key_name = "/myEndpoint11/",
+				key_name = "/myendpoint11/",
 				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
 
 			Pagination.viewResults(results = "Showing 11 to 11 of 11 entries.");
@@ -293,8 +293,8 @@ definition {
 		task ("And Given I create an edpoint associate to the API application") {
 			EndpointAPI.createAPIEndpoint(
 				externalReferenceCode = "My-app",
-				name = "myEndpoint",
-				path = "/myEndpoint");
+				name = "myendpoint",
+				path = "/myendpoint");
 		}
 
 		task ("When I search endpoints with existing name") {
@@ -302,12 +302,12 @@ definition {
 				entity = "Endpoints",
 				title = "My-app");
 
-			APIBuilderUI.searchItem(value = "myEndpoint");
+			APIBuilderUI.searchItem(value = "myendpoint");
 		}
 
 		task ("Then I can see the endpoint is listed") {
 			AssertElementPresent(
-				key_name = "/myEndpoint/",
+				key_name = "/myendpoint/",
 				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
 		}
 	}
@@ -321,8 +321,8 @@ definition {
 		task ("When I create an endpoint associate to the API application") {
 			EndpointAPI.createAPIEndpoint(
 				externalReferenceCode = "My-app",
-				name = "myEndpoint",
-				path = "/myEndpoint");
+				name = "myendpoint",
+				path = "/myendpoint");
 		}
 
 		task ("Then Method, Path, Description and Last updated are visible") {

@@ -32,8 +32,8 @@ definition {
 		task ("Given APIApplication ‘my-app’ with APIEndpoints with related APISchemas created") {
 			var response = ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
-				endpointName = "testEndpoint",
-				endpointPath = "/testEndpoint",
+				endpointName = "testendpoint",
+				endpointPath = "/testendpoint",
 				mainObjectDefinitionErc = "L_API_APPLICATION",
 				relatedEndpoint = "true",
 				relatedSchema = "true",
@@ -68,9 +68,9 @@ definition {
 		task ("Then I am redirected to the OpenApi page with endpoints and schemas details") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "OpenAPI#API_METHOD",
-				method = "getTestEndpointPage",
+				method = "getTestendpointPage",
 				service = "testSchema",
-				value1 = "/testEndpoint");
+				value1 = "/testendpoint");
 
 			AssertElementPresent(
 				locator1 = "OpenAPI#SCHEMA_COLLAPSED",
@@ -91,8 +91,8 @@ definition {
 		task ("Given APIApplication ‘my-app’ of status ‘published’ with APIEndpoints with related APISchemas created") {
 			var response = ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
-				endpointName = "testEndpoint",
-				endpointPath = "/testEndpoint",
+				endpointName = "testendpoint",
+				endpointPath = "/testendpoint",
 				mainObjectDefinitionErc = "L_API_APPLICATION",
 				relatedEndpoint = "true",
 				relatedSchema = "true",
@@ -128,8 +128,8 @@ definition {
 		task ("When APIApplication ‘my-app’ of status ‘unpublished’ with APIEndpoints with related APISchemas created") {
 			var response = ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
-				endpointName = "testEndpoint",
-				endpointPath = "/testEndpoint",
+				endpointName = "testendpoint",
+				endpointPath = "/testendpoint",
 				mainObjectDefinitionErc = "L_API_APPLICATION",
 				relatedEndpoint = "true",
 				relatedSchema = "true",
@@ -167,8 +167,8 @@ definition {
 		task ("Given APIApplication ‘my-app’ with APIEndpoints with related APISchemas created") {
 			var response = ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
-				endpointName = "testEndpoint",
-				endpointPath = "/testEndpoint",
+				endpointName = "testendpoint",
+				endpointPath = "/testendpoint",
 				mainObjectDefinitionErc = "L_API_APPLICATION",
 				relatedEndpoint = "true",
 				relatedSchema = "true",

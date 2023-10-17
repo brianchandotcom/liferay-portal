@@ -80,8 +80,8 @@ definition {
 		task ("And Given APIApplication with endpoint created on the default node") {
 			var response = ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
-				endpointName = "testEndpoint",
-				endpointPath = "/testEndpoint",
+				endpointName = "testendpoint",
+				endpointPath = "/testendpoint",
 				mainObjectDefinitionErc = "Student",
 				objectFieldErc = "nameStudent",
 				relatedEndpoint = "true",
@@ -91,18 +91,18 @@ definition {
 				title = "My-app");
 
 			SchemaAPI.relateRequestSchemaToEndpointByErc(
-				endpointErc = "testEndpoint",
+				endpointErc = "testendpoint",
 				requestSchemaErc = "testSchema");
 
 			SchemaAPI.relateResponseSchemaToEndpointByErc(
-				endpointErc = "testEndpoint",
+				endpointErc = "testendpoint",
 				responseSchemaErc = "testSchema");
 		}
 
 		task ("When executing the endpoint on second node") {
 			var response = APIApplicationEndpoint.getEndpoint(
 				baseURL = "my-app",
-				path = "/testEndpoint",
+				path = "/testendpoint",
 				portalURL = "http://localhost:9080");
 		}
 
@@ -144,8 +144,8 @@ definition {
 		task ("And Given APIApplication with endpoint created on the second node") {
 			var response = ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
-				endpointName = "testEndpoint",
-				endpointPath = "/testEndpoint",
+				endpointName = "testendpoint",
+				endpointPath = "/testendpoint",
 				mainObjectDefinitionErc = "Student",
 				objectFieldErc = "nameStudent",
 				portalURL = "http://localhost:9080",
@@ -156,12 +156,12 @@ definition {
 				title = "My-app");
 
 			SchemaAPI.relateRequestSchemaToEndpointByErc(
-				endpointErc = "testEndpoint",
+				endpointErc = "testendpoint",
 				portalURL = "http://localhost:9080",
 				requestSchemaErc = "testSchema");
 
 			SchemaAPI.relateResponseSchemaToEndpointByErc(
-				endpointErc = "testEndpoint",
+				endpointErc = "testendpoint",
 				portalURL = "http://localhost:9080",
 				responseSchemaErc = "testSchema");
 		}
@@ -169,7 +169,7 @@ definition {
 		task ("When executing the endpoint on the default node") {
 			var response = APIApplicationEndpoint.getEndpoint(
 				baseURL = "my-app",
-				path = "/testEndpoint",
+				path = "/testendpoint",
 				portalURL = "http://localhost:8080");
 		}
 

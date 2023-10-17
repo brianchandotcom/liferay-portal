@@ -31,8 +31,8 @@ definition {
 		task ("Given published API Application with Endpoint created") {
 			ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
-				endpointName = "testEndpoint",
-				endpointPath = "/testEndpoint",
+				endpointName = "testendpoint",
+				endpointPath = "/testendpoint",
 				relatedEndpoint = "true",
 				status = "published",
 				title = "My-app");
@@ -41,7 +41,7 @@ definition {
 		task ("And Given delete API Endpoint") {
 			APIBuilderUI.deleteAPIEndpoint(
 				applicationTitle = "My-app",
-				endpointPath = "/testEndpoint");
+				endpointPath = "/testendpoint");
 		}
 
 		task ("When I click cancel button") {
@@ -50,7 +50,7 @@ definition {
 
 		task ("Then I can see the API Endpoint in the UI") {
 			AssertElementPresent(
-				key_name = "/testEndpoint",
+				key_name = "/testendpoint",
 				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
 		}
 	}
@@ -63,8 +63,8 @@ definition {
 		task ("Given published API Application with Endpoint created") {
 			ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
-				endpointName = "testEndpoint",
-				endpointPath = "/testEndpoint",
+				endpointName = "testendpoint",
+				endpointPath = "/testendpoint",
 				relatedEndpoint = "true",
 				status = "published",
 				title = "My-app");
@@ -73,7 +73,7 @@ definition {
 		task ("And Given goto dropdown menu and click delete") {
 			APIBuilderUI.deleteAPIEndpoint(
 				applicationTitle = "My-app",
-				endpointPath = "/testEndpoint");
+				endpointPath = "/testendpoint");
 		}
 
 		task ("When I click delete button") {
@@ -84,7 +84,7 @@ definition {
 			Alert.viewSuccessMessageText(successMessage = "The endpoint was deleted successfully.");
 
 			AssertElementNotPresent(
-				key_name = "/testEndpoint",
+				key_name = "/testendpoint",
 				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
 		}
 	}
@@ -98,8 +98,8 @@ definition {
 		task ("Given published API Application with Endpoint created") {
 			ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
-				endpointName = "testEndpoint",
-				endpointPath = "/testEndpoint",
+				endpointName = "testendpoint",
+				endpointPath = "/testendpoint",
 				relatedEndpoint = "true",
 				status = "published",
 				title = "My-app");
@@ -109,7 +109,7 @@ definition {
 			APIBuilderUI.deleteAPIEndpoint(
 				applicationTitle = "My-app",
 				confirmDeletion = "true",
-				endpointPath = "testEndpoint");
+				endpointPath = "testendpoint");
 		}
 
 		task ("Then API Endpoint is not visible in the created API Application in API Explorer") {
@@ -117,7 +117,7 @@ definition {
 
 			AssertElementNotPresent(
 				locator1 = "OpenAPI#API_METHOD",
-				method = "getTestEndpointPage",
+				method = "getTestendpointPage",
 				service = "default");
 		}
 	}
@@ -131,8 +131,8 @@ definition {
 		task ("Given published API Application with group scoped Endpoint with related schema created") {
 			ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
-				endpointName = "testEndpoint",
-				endpointPath = "/testEndpoint",
+				endpointName = "testendpoint",
+				endpointPath = "/testendpoint",
 				mainObjectDefinitionErc = "L_API_APPLICATION",
 				relatedEndpoint = "true",
 				relatedSchema = "true",
@@ -146,7 +146,7 @@ definition {
 			APIBuilderUI.deleteAPIEndpoint(
 				applicationTitle = "My-app",
 				confirmDeletion = "true",
-				endpointPath = "/testEndpoint");
+				endpointPath = "/testendpoint");
 		}
 
 		task ("When navigate to API Explorer's created API Application") {
@@ -156,7 +156,7 @@ definition {
 		task ("Then API Endpoint is not visible under {schema} in the created API Application in API Explorer") {
 			AssertElementNotPresent(
 				locator1 = "OpenAPI#API_METHOD",
-				method = "getScopeScopeKeyTestEndpointPage",
+				method = "getScopeScopeKeyTestendpointPage",
 				service = "testSchema");
 		}
 	}
@@ -170,8 +170,8 @@ definition {
 		task ("Given published API Application with Endpoint created") {
 			ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
-				endpointName = "testEndpoint",
-				endpointPath = "/testEndpoint",
+				endpointName = "testendpoint",
+				endpointPath = "/testendpoint",
 				relatedEndpoint = "true",
 				status = "published",
 				title = "My-app");
@@ -180,7 +180,7 @@ definition {
 		task ("When delete API Endpoint") {
 			APIBuilderUI.deleteAPIEndpoint(
 				applicationTitle = "My-app",
-				endpointPath = "/testEndpoint");
+				endpointPath = "/testendpoint");
 		}
 
 		task ("Then I can see the Delete API Endpoint dialog with warning message") {

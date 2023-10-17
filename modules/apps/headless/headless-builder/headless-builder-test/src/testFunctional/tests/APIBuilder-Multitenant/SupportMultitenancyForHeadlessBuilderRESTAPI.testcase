@@ -15,8 +15,8 @@ definition {
 		task ("Given an published API application with endpoint and schema created in default instance") {
 			ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
-				endpointName = "testEndpoint",
-				endpointPath = "/testEndpoint",
+				endpointName = "testendpoint",
+				endpointPath = "/testendpoint",
 				mainObjectDefinitionErc = "L_API_APPLICATION",
 				relatedEndpoint = "true",
 				relatedSchema = "true",

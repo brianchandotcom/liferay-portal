@@ -105,8 +105,8 @@ definition {
 
 			APIBuilderUI.createAPIEndpoint(
 				applicationId = ${applicationId},
-				name = "testEndpoint",
-				path = "/testEndpoint");
+				name = "testendpoint",
+				path = "/testendpoint");
 		}
 
 		task ("Then I can see endpoint is created with correct path") {
@@ -117,7 +117,7 @@ definition {
 				title = "App-test");
 
 			AssertElementPresent(
-				key_name = "/testEndpoint/",
+				key_name = "/testendpoint/",
 				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
 		}
 	}
@@ -174,8 +174,8 @@ definition {
 
 			APIBuilderUI.createAPIEndpoint(
 				applicationId = ${applicationId},
-				name = "testEndpoint",
-				path = "testEndpoint");
+				name = "testendpoint",
+				path = "testendpoint");
 		}
 
 		task ("Then I can see error message") {
@@ -188,7 +188,7 @@ definition {
 				title = "App-test");
 
 			AssertElementNotPresent(
-				key_name = "/testEndpoint/",
+				key_name = "/testendpoint/",
 				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
 		}
 	}
@@ -202,8 +202,8 @@ definition {
 		task ("Given with postAPIApplication including apiApplicationToAPIEndpoints and path to create an API application with its endpoint") {
 			ApplicationAPI.createAPIApplication(
 				baseURL = "app-test",
-				endpointName = "testEndpoint",
-				endpointPath = "/testEndpoint",
+				endpointName = "testendpoint",
+				endpointPath = "/testendpoint",
 				relatedEndpoint = "true",
 				status = "unpublished",
 				title = "App-test");
@@ -217,7 +217,7 @@ definition {
 
 		task ("Then I can see correct path") {
 			AssertElementPresent(
-				key_name = "/testEndpoint/",
+				key_name = "/testendpoint/",
 				locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
 		}
 	}
@@ -231,8 +231,8 @@ definition {
 		task ("Given with postAPIApplication including apiApplicationToAPIEndpoints and path to create an published API application with its endpoint") {
 			ApplicationAPI.createAPIApplication(
 				baseURL = "app-test",
-				endpointName = "testEndpoint",
-				endpointPath = "/testEndpoint",
+				endpointName = "testendpoint",
+				endpointPath = "/testendpoint",
 				relatedEndpoint = "true",
 				status = "published",
 				title = "App-test");
@@ -245,9 +245,9 @@ definition {
 		task ("Then I can see '/{path}' is present under get{Endpoint}Page") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "OpenAPI#API_METHOD",
-				method = "getTestEndpointPage",
+				method = "getTestendpointPage",
 				service = "default",
-				value1 = "/testEndpoint");
+				value1 = "/testendpoint");
 		}
 	}
 

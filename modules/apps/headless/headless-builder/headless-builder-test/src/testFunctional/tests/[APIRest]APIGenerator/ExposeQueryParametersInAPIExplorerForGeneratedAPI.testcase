@@ -56,8 +56,8 @@ definition {
 		task ("And Given an published API application with endpoint with related schema with Student as the main object") {
 			var response = ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
-				endpointName = "testEndpoint",
-				endpointPath = "/testEndpoint",
+				endpointName = "testendpoint",
+				endpointPath = "/testendpoint",
 				mainObjectDefinitionErc = "student",
 				relatedEndpoint = "true",
 				relatedSchema = "true",
@@ -66,11 +66,11 @@ definition {
 				title = "My-app");
 
 			SchemaAPI.relateRequestSchemaToEndpointByErc(
-				endpointErc = "testEndpoint",
+				endpointErc = "testendpoint",
 				requestSchemaErc = "testSchema");
 
 			SchemaAPI.relateResponseSchemaToEndpointByErc(
-				endpointErc = "testEndpoint",
+				endpointErc = "testendpoint",
 				responseSchemaErc = "testSchema");
 		}
 
@@ -87,7 +87,7 @@ definition {
 			APIExplorer.navigateToOpenAPI(customObjectPlural = "my-app");
 
 			APIExplorer.executeAPIMethod(
-				method = "getTestEndpointPage",
+				method = "getTestendpointPage",
 				parameter = "filter",
 				service = "testSchema",
 				value = "entryName eq 'Able'");
@@ -96,7 +96,7 @@ definition {
 		task ("Then I can see correct response with property equals to Able") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "OpenAPI#RESPONSE_BODY",
-				method = "getTestEndpointPage",
+				method = "getTestendpointPage",
 				value1 = "\"items\": [     {       \"entryName\": \"Able\"     }   ]");
 		}
 	}
@@ -108,8 +108,8 @@ definition {
 		task ("And Given an published API application with endpoint with related schema with Student as the main object") {
 			var response = ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
-				endpointName = "testEndpoint",
-				endpointPath = "/testEndpoint",
+				endpointName = "testendpoint",
+				endpointPath = "/testendpoint",
 				mainObjectDefinitionErc = "student",
 				relatedEndpoint = "true",
 				relatedSchema = "true",
@@ -118,11 +118,11 @@ definition {
 				title = "My-app");
 
 			SchemaAPI.relateRequestSchemaToEndpointByErc(
-				endpointErc = "testEndpoint",
+				endpointErc = "testendpoint",
 				requestSchemaErc = "testSchema");
 
 			SchemaAPI.relateResponseSchemaToEndpointByErc(
-				endpointErc = "testEndpoint",
+				endpointErc = "testendpoint",
 				responseSchemaErc = "testSchema");
 		}
 
@@ -147,7 +147,7 @@ definition {
 			APIExplorer.navigateToOpenAPI(customObjectPlural = "my-app");
 
 			APIExplorer.executeAPIMethod(
-				method = "getTestEndpointPage",
+				method = "getTestendpointPage",
 				parameter = "filter",
 				service = "testSchema",
 				value = "entryName ne 'Able'");
@@ -156,7 +156,7 @@ definition {
 		task ("Then only Tom returned in response") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "OpenAPI#RESPONSE_BODY",
-				method = "getTestEndpointPage",
+				method = "getTestendpointPage",
 				value1 = "\"items\": [     {       \"entryName\": \"Tom\"     }   ]");
 		}
 	}
@@ -168,8 +168,8 @@ definition {
 		task ("And Given an published API application with site scoped endpoint with related schema with Student as the main object") {
 			var response = ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
-				endpointName = "testEndpoint",
-				endpointPath = "/testEndpoint",
+				endpointName = "testendpoint",
+				endpointPath = "/testendpoint",
 				mainObjectDefinitionErc = "student",
 				relatedEndpoint = "true",
 				relatedSchema = "true",
@@ -179,11 +179,11 @@ definition {
 				title = "My-app");
 
 			SchemaAPI.relateRequestSchemaToEndpointByErc(
-				endpointErc = "testEndpoint",
+				endpointErc = "testendpoint",
 				requestSchemaErc = "testSchema");
 
 			SchemaAPI.relateResponseSchemaToEndpointByErc(
-				endpointErc = "testEndpoint",
+				endpointErc = "testendpoint",
 				responseSchemaErc = "testSchema");
 		}
 
@@ -212,7 +212,7 @@ definition {
 			APIExplorer.navigateToOpenAPI(customObjectPlural = "my-app");
 
 			APIExplorer.executeAPIMethod(
-				method = "getScopeScopeKeyTestEndpointPage",
+				method = "getScopeScopeKeyTestendpointPage",
 				parameter = "filter",
 				parameter_two = "sort",
 				scopeKey = ${scopeKey},
@@ -224,7 +224,7 @@ definition {
 		task ("Then I can get correct response with items in desc {Tom, Able}") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "OpenAPI#RESPONSE_BODY",
-				method = "getScopeScopeKeyTestEndpointPage",
+				method = "getScopeScopeKeyTestendpointPage",
 				value1 = "\"items\": [     {       \"entryName\": \"Tom\"     },     {       \"entryName\": \"Able\"     }   ]");
 		}
 	}
@@ -236,8 +236,8 @@ definition {
 		task ("And Given an published API application with endpoint with related schema with Student as the main object") {
 			var response = ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
-				endpointName = "testEndpoint",
-				endpointPath = "/testEndpoint",
+				endpointName = "testendpoint",
+				endpointPath = "/testendpoint",
 				mainObjectDefinitionErc = "student",
 				relatedEndpoint = "true",
 				relatedSchema = "true",
@@ -246,11 +246,11 @@ definition {
 				title = "My-app");
 
 			SchemaAPI.relateRequestSchemaToEndpointByErc(
-				endpointErc = "testEndpoint",
+				endpointErc = "testendpoint",
 				requestSchemaErc = "testSchema");
 
 			SchemaAPI.relateResponseSchemaToEndpointByErc(
-				endpointErc = "testEndpoint",
+				endpointErc = "testendpoint",
 				responseSchemaErc = "testSchema");
 		}
 
@@ -267,7 +267,7 @@ definition {
 			APIExplorer.navigateToOpenAPI(customObjectPlural = "my-app");
 
 			APIExplorer.executeAPIMethod(
-				method = "getTestEndpointPage",
+				method = "getTestendpointPage",
 				parameter = "sort",
 				service = "testSchema",
 				value = "entryName:desc");
@@ -276,7 +276,7 @@ definition {
 		task ("Then I can see correct response with items in desc {Test,Tom,Able}") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "OpenAPI#RESPONSE_BODY",
-				method = "getTestEndpointPage",
+				method = "getTestendpointPage",
 				value1 = "\"items\": [     {       \"entryName\": \"Tom\"     },     {       \"entryName\": \"Test\"     },     {       \"entryName\": \"Able\"     }   ]");
 		}
 	}
@@ -288,8 +288,8 @@ definition {
 		task ("And Given an published API application with endpoint with related schema with Student as the main object") {
 			var response = ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
-				endpointName = "testEndpoint",
-				endpointPath = "/testEndpoint",
+				endpointName = "testendpoint",
+				endpointPath = "/testendpoint",
 				mainObjectDefinitionErc = "student",
 				relatedEndpoint = "true",
 				relatedSchema = "true",
@@ -298,11 +298,11 @@ definition {
 				title = "My-app");
 
 			SchemaAPI.relateRequestSchemaToEndpointByErc(
-				endpointErc = "testEndpoint",
+				endpointErc = "testendpoint",
 				requestSchemaErc = "testSchema");
 
 			SchemaAPI.relateResponseSchemaToEndpointByErc(
-				endpointErc = "testEndpoint",
+				endpointErc = "testendpoint",
 				responseSchemaErc = "testSchema");
 		}
 
@@ -327,7 +327,7 @@ definition {
 			APIExplorer.navigateToOpenAPI(customObjectPlural = "my-app");
 
 			APIExplorer.executeAPIMethod(
-				method = "getTestEndpointPage",
+				method = "getTestendpointPage",
 				parameter = "sort",
 				service = "testSchema",
 				value = "entryName:desc");
@@ -336,7 +336,7 @@ definition {
 		task ("Then I can see items in desc sort order in response") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "OpenAPI#RESPONSE_BODY",
-				method = "getTestEndpointPage",
+				method = "getTestendpointPage",
 				value1 = "\"items\": [     {       \"entryName\": \"Tom\"     },     {       \"entryName\": \"Test\"     },     {       \"entryName\": \"Able\"     }   ]");
 		}
 	}
@@ -348,8 +348,8 @@ definition {
 		task ("Given an published API application with singleElement endpoint") {
 			ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
-				endpointName = "testEndpoint",
-				endpointPath = "/testEndpoint/{id}",
+				endpointName = "testendpoint",
+				endpointPath = "/testendpoint/{id}",
 				pathParameter = "ID",
 				relatedEndpoint = "true",
 				retrieveType = "singleElement",
@@ -361,19 +361,19 @@ definition {
 			APIExplorer.navigateToOpenAPI(customObjectPlural = "my-app");
 
 			APIExplorer.expandAPIMethod(
-				method = "getTestEndpointId",
+				method = "getTestendpointId",
 				service = "default");
 		}
 
 		task ("Then filter and sort parameters are not present") {
 			AssertElementNotPresent(
 				locator1 = "OpenAPI#PARAMETER_UNDER_METHOD",
-				method = "getTestEndpointId",
+				method = "getTestendpointId",
 				parameter = "filter");
 
 			AssertElementNotPresent(
 				locator1 = "OpenAPI#PARAMETER_UNDER_METHOD",
-				method = "getTestEndpointId",
+				method = "getTestendpointId",
 				parameter = "sort");
 		}
 	}
@@ -385,8 +385,8 @@ definition {
 		task ("Given an published API application with company scoped endpoint") {
 			ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
-				endpointName = "testEndpoint",
-				endpointPath = "/testEndpoint",
+				endpointName = "testendpoint",
+				endpointPath = "/testendpoint",
 				relatedEndpoint = "true",
 				status = "published",
 				title = "My-app");
@@ -396,7 +396,7 @@ definition {
 			APIExplorer.navigateToOpenAPI(customObjectPlural = "my-app");
 
 			APIExplorer.expandAPIMethod(
-				method = "getTestEndpointPage",
+				method = "getTestendpointPage",
 				service = "default");
 		}
 
@@ -420,8 +420,8 @@ definition {
 		task ("Given an published API application with site scoped endpoint") {
 			ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
-				endpointName = "testEndpoint",
-				endpointPath = "/testEndpoint",
+				endpointName = "testendpoint",
+				endpointPath = "/testendpoint",
 				relatedEndpoint = "true",
 				scopeKey = "group",
 				status = "published",
@@ -432,7 +432,7 @@ definition {
 			APIExplorer.navigateToOpenAPI(customObjectPlural = "my-app");
 
 			APIExplorer.expandAPIMethod(
-				method = "getScopeScopeKeyTestEndpointPage",
+				method = "getScopeScopeKeyTestendpointPage",
 				service = "default");
 		}
 

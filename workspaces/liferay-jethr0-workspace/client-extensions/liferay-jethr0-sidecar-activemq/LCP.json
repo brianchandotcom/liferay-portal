@@ -27,5 +27,8 @@
 			"port": 8161
 		}
 	},
-	"scale": 1
+	"scale": 1,
+	"volumes": {
+		"activemqdata": "/opt/activemq/data"
+	}
 }

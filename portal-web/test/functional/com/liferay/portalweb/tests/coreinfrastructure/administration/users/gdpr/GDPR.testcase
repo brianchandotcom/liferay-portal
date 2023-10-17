@@ -1692,7 +1692,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		FormsAdmin.addForm(groupName = "Global");
+		FormsAdmin.addForm();
 
 		Form.editName();
 

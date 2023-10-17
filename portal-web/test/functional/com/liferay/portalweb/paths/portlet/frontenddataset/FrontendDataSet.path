@@ -256,6 +256,12 @@
 	<td>//ul[contains(@class,'list-unstyled')][@role='listbox']//li</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ICON_IN_DATA_SET_FRAGMENT</td>
+	<td>xpath=(//div[(@class="dnd-tr")]/div[contains(@class,"dnd-td") and contains(string(), "${key_entryName}")]/..//*[contains(@class,'${key_icon}')])[${key_rowNumber}]</td>
+	<td></td>
+</tr>
+
 </tbody>
 </table>
 </body>

@@ -113,11 +113,12 @@ public class TreeTestUtil {
 	}
 
 	public static Tree createObjectEntryTree(
+			String externalReferenceCodeSuffix,
 			ObjectEntryLocalService objectEntryLocalService,
 			ObjectFieldLocalService objectFieldLocalService,
 			long rootObjectDefinitionId,
 			ObjectRelationshipLocalService objectRelationshipLocalService,
-			TreeFactory treeFactory, int treeId)
+			TreeFactory treeFactory)
 		throws PortalException {
 
 		Tree objectDefinitionTree = treeFactory.createObjectDefinitionTree(
@@ -133,7 +134,8 @@ public class TreeTestUtil {
 		ObjectEntry rootObjectEntry = objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0, rootNode.getPrimaryKey(),
 			HashMapBuilder.<String, Serializable>put(
-				"externalReferenceCode", externalReferenceCodes.poll() + treeId
+				"externalReferenceCode",
+				externalReferenceCodes.poll() + externalReferenceCodeSuffix
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
@@ -148,7 +150,7 @@ public class TreeTestUtil {
 				TestPropsValues.getUserId(), 0, node.getPrimaryKey(),
 				HashMapBuilder.<String, Serializable>put(
 					"externalReferenceCode",
-					externalReferenceCodes.poll() + treeId
+					externalReferenceCodes.poll() + externalReferenceCodeSuffix
 				).put(
 					() -> {
 						ObjectRelationship objectRelationship =

@@ -11,6 +11,7 @@ import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInf
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordTable;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersionTable;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceReportTable;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceTable;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersionTable;
 import com.liferay.dynamic.data.mapping.model.DDMStorageLinkTable;
@@ -56,12 +57,15 @@ public class DDMFormInstanceRecordTableReferenceDefinition
 						DDMFormInstanceVersionTable.INSTANCE.version)
 				)
 			)
-		).singleColumnReference(
-			DDMFormInstanceRecordTable.INSTANCE.storageId,
-			DDMStorageLinkTable.INSTANCE.classPK
 		).assetEntryReference(
 			DDMFormInstanceRecordTable.INSTANCE.formInstanceRecordId,
 			DDMFormInstanceRecord.class
+		).singleColumnReference(
+			DDMFormInstanceRecordTable.INSTANCE.storageId,
+			DDMStorageLinkTable.INSTANCE.classPK
+		).singleColumnReference(
+			DDMFormInstanceRecordTable.INSTANCE.formInstanceId,
+			DDMFormInstanceReportTable.INSTANCE.formInstanceId
 		).systemEventReference(
 			DDMFormInstanceRecordTable.INSTANCE.formInstanceRecordId,
 			DDMFormInstanceRecord.class

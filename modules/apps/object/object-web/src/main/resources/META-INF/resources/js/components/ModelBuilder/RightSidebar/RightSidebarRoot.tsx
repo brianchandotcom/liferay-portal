@@ -19,6 +19,7 @@ export function RightSideBarRoot({children}: IRightSidebarRoot) {
 			selectedObjectDefinitionNode,
 			selectedObjectField,
 			selectedObjectRelationship,
+			showSidebars,
 		},
 	] = useObjectFolderContext();
 	const [loading, setLoading] = useState(false);
@@ -59,7 +60,7 @@ export function RightSideBarRoot({children}: IRightSidebarRoot) {
 					panelWidth={verticalBarWidth}
 					position="right"
 					resize={false}
-					triggerSideBarAnimation={true}
+					triggerSideBarAnimation={showSidebars}
 					verticalBarItems={[
 						{
 							title: 'objectsModelBuilderRightSidebar',

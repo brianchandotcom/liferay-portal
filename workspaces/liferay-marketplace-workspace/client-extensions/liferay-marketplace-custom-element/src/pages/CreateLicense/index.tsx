@@ -9,6 +9,7 @@ import {useState} from 'react';
 import './index.scss';
 import StepWizard from '../GetAppPage/components/StepWizard/StepWizard';
 import LicenseDetails from './LicenseDetails';
+import SelectSubscription from './SelectSubscription';
 
 export enum StepCreateLicense {
 	LICENSE_KEY_DETAILS = 'licenseKeyDetails',
@@ -21,7 +22,7 @@ const CreateLicense = () => {
 	const StepsInformation: any = {
 		[StepCreateLicense.SUBSCRIPTION]: {
 			backStep: StepCreateLicense.SUBSCRIPTION,
-			component: <div>Subscription</div>,
+			component: <SelectSubscription />,
 			nextStep: StepCreateLicense.LICENSE_KEY_DETAILS,
 			stepTitle: 'Subscription',
 			title: 'Subscription',

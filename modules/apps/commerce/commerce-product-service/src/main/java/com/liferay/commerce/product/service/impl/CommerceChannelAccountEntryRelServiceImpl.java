@@ -5,12 +5,12 @@
 
 package com.liferay.commerce.product.service.impl;
 
+import com.liferay.commerce.constants.CommerceAccountActionKeys;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
 import com.liferay.commerce.product.service.base.CommerceChannelAccountEntryRelServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -18,6 +18,8 @@ import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Alessio Antonio Rendina
@@ -40,7 +42,8 @@ public class CommerceChannelAccountEntryRelServiceImpl
 		throws PortalException {
 
 		_accountEntryModelResourcePermission.check(
-			getPermissionChecker(), accountEntryId, ActionKeys.UPDATE);
+			getPermissionChecker(), accountEntryId,
+			CommerceAccountActionKeys.MANAGE_CHANNEL_DEFAULTS);
 
 		return commerceChannelAccountEntryRelLocalService.
 			addCommerceChannelAccountEntryRel(
@@ -61,7 +64,7 @@ public class CommerceChannelAccountEntryRelServiceImpl
 		_accountEntryModelResourcePermission.check(
 			getPermissionChecker(),
 			commerceChannelAccountEntryRel.getAccountEntryId(),
-			ActionKeys.UPDATE);
+			CommerceAccountActionKeys.MANAGE_CHANNEL_DEFAULTS);
 
 		commerceChannelAccountEntryRelLocalService.
 			deleteCommerceChannelAccountEntryRel(
@@ -82,7 +85,7 @@ public class CommerceChannelAccountEntryRelServiceImpl
 			_accountEntryModelResourcePermission.check(
 				getPermissionChecker(),
 				commerceChannelAccountEntryRel.getAccountEntryId(),
-				ActionKeys.VIEW);
+				CommerceAccountActionKeys.VIEW_CHANNEL_DEFAULTS);
 		}
 
 		return commerceChannelAccountEntryRel;
@@ -102,7 +105,7 @@ public class CommerceChannelAccountEntryRelServiceImpl
 			_accountEntryModelResourcePermission.check(
 				getPermissionChecker(),
 				commerceChannelAccountEntryRel.getAccountEntryId(),
-				ActionKeys.VIEW);
+				CommerceAccountActionKeys.VIEW_CHANNEL_DEFAULTS);
 		}
 
 		return commerceChannelAccountEntryRel;
@@ -121,7 +124,7 @@ public class CommerceChannelAccountEntryRelServiceImpl
 		_accountEntryModelResourcePermission.check(
 			getPermissionChecker(),
 			commerceChannelAccountEntryRel.getAccountEntryId(),
-			ActionKeys.VIEW);
+			CommerceAccountActionKeys.VIEW_CHANNEL_DEFAULTS);
 
 		return commerceChannelAccountEntryRel;
 	}
@@ -135,7 +138,8 @@ public class CommerceChannelAccountEntryRelServiceImpl
 		throws PortalException {
 
 		_accountEntryModelResourcePermission.check(
-			getPermissionChecker(), accountEntryId, ActionKeys.VIEW);
+			getPermissionChecker(), accountEntryId,
+			CommerceAccountActionKeys.VIEW_CHANNEL_DEFAULTS);
 
 		return commerceChannelAccountEntryRelLocalService.
 			getCommerceChannelAccountEntryRels(
@@ -158,7 +162,8 @@ public class CommerceChannelAccountEntryRelServiceImpl
 		throws PortalException {
 
 		_accountEntryModelResourcePermission.check(
-			getPermissionChecker(), accountEntryId, ActionKeys.VIEW);
+			getPermissionChecker(), accountEntryId,
+			CommerceAccountActionKeys.VIEW_CHANNEL_DEFAULTS);
 
 		return commerceChannelAccountEntryRelLocalService.
 			getCommerceChannelAccountEntryRelsCount(accountEntryId, type);
@@ -178,7 +183,7 @@ public class CommerceChannelAccountEntryRelServiceImpl
 		_accountEntryModelResourcePermission.check(
 			getPermissionChecker(),
 			commerceChannelAccountEntryRel.getAccountEntryId(),
-			ActionKeys.UPDATE);
+			CommerceAccountActionKeys.MANAGE_CHANNEL_DEFAULTS);
 
 		return commerceChannelAccountEntryRelLocalService.
 			updateCommerceChannelAccountEntryRel(
@@ -188,9 +193,11 @@ public class CommerceChannelAccountEntryRelServiceImpl
 	}
 
 	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(model.class.name=com.liferay.account.model.AccountEntry)"
 	)
-	private ModelResourcePermission<CommerceCatalog>
+	private volatile ModelResourcePermission<CommerceCatalog>
 		_accountEntryModelResourcePermission;
 
 }

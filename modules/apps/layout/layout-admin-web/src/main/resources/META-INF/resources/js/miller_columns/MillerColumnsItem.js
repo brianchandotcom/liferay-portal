@@ -552,6 +552,7 @@ const MillerColumnsItem = ({
 								borderless
 								displayType="secondary"
 								onClick={loadDropdownActions}
+								size="sm"
 								symbol="ellipsis-v"
 								title={Liferay.Language.get(
 									'open-page-options-menu'

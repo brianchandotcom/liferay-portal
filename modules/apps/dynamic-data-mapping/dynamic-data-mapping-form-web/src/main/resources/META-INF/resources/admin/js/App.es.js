@@ -50,6 +50,7 @@ export default function App({
 	...otherProps
 }) {
 	const {config, state} = parseProps(otherProps);
+	const {defaultLanguageId} = state;
 
 	return (
 		<DndProvider backend={HTML5Backend} context={window}>
@@ -60,7 +61,11 @@ export default function App({
 				<ClayModalProvider>
 					<FormProvider
 						init={initState}
-						initialState={BUILDER_INITIAL_STATE}
+						initialState={{
+							...BUILDER_INITIAL_STATE,
+							defaultLanguageId,
+							editingLanguageId: defaultLanguageId,
+						}}
 						reducers={[
 							dragAndDropReducer,
 							elementSetReducer,

@@ -10,7 +10,6 @@ import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -69,23 +68,23 @@ public class UnlockLayoutsSchedulerJobConfigurationTest {
 	public void testUnlockLayouts() throws Exception {
 		Lock lock = _getLock();
 
-		_testUnlockLayouts(false, lock.getLockId(), lock, 0);
+		_testUnlockLayouts(lock.getLockId(), false, 0, lock);
 		_testUnlockLayouts(
-			true, lock.getLockId(), lock, _LOCK_MINUTE_ADDITION + 1);
+			lock.getLockId(), true, _LOCK_MINUTE_ADDITION + 1, lock);
 		_testUnlockLayouts(
-			true, lock.getLockId(), null, _LOCK_MINUTE_ADDITION - 1);
+			lock.getLockId(), true, _LOCK_MINUTE_ADDITION - 1, null);
 
 		lock = _getLock();
 
-		_testUnlockLayouts(true, false, lock.getLockId(), lock, 1, 1);
-		_testUnlockLayouts(true, true, lock.getLockId(), null, 100, 1);
+		_testUnlockLayouts(lock.getLockId(), true, false, 1, 1, lock);
+		_testUnlockLayouts(lock.getLockId(), true, true, 100, 1, null);
 
 		lock = _getLock();
 
 		_testUnlockLayouts(
-			true, true, lock.getLockId(), lock, 100, _LOCK_MINUTE_ADDITION + 1);
+			lock.getLockId(), true, true, 100, _LOCK_MINUTE_ADDITION + 1, lock);
 		_testUnlockLayouts(
-			true, true, lock.getLockId(), null, 100, _LOCK_MINUTE_ADDITION - 1);
+			lock.getLockId(), true, true, 100, _LOCK_MINUTE_ADDITION - 1, null);
 	}
 
 	private Layout _getDraftLayout() throws Exception {
@@ -130,10 +129,10 @@ public class UnlockLayoutsSchedulerJobConfigurationTest {
 	}
 
 	private void _testUnlockLayouts(
-			boolean allowAutomaticUnlockingProcess,
+			long actualLockId, boolean allowAutomaticUnlockingProcess,
 			boolean allowAutomaticUnlockingProcessGroupConfiguration,
-			long actualLockId, Lock expectedLock, int autosaveMinutes,
-			int autosaveMinutesGroupConfiguration)
+			int autosaveMinutes, int autosaveMinutesGroupConfiguration,
+			Lock expectedLock)
 		throws Exception {
 
 		Configuration configuration =
@@ -155,14 +154,14 @@ public class UnlockLayoutsSchedulerJobConfigurationTest {
 					).build())) {
 
 			_testUnlockLayouts(
-				allowAutomaticUnlockingProcess, actualLockId, expectedLock,
-				autosaveMinutes);
+				actualLockId, allowAutomaticUnlockingProcess, autosaveMinutes,
+				expectedLock);
 		}
 	}
 
 	private void _testUnlockLayouts(
-			boolean allowAutomaticUnlockingProcess, long actualLockId,
-			Lock expectedLock, int autosaveMinutes)
+			long actualLockId, boolean allowAutomaticUnlockingProcess,
+			int autosaveMinutes, Lock expectedLock)
 		throws Exception {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =

@@ -40,4 +40,19 @@ describe('Tabs', () => {
 		expect(screen.getByText('Performance')).toBeInTheDocument();
 		expect(screen.getByText('Page Speed')).toBeInTheDocument();
 	});
+
+	it('sets correctly the active tab', () => {
+		const setActiveTab = jest.fn(() => {});
+		render(
+			<Tabs
+				activeTab={1}
+				segments={{}}
+				setActiveTab={setActiveTab}
+				tabs={mockTabs}
+			/>
+		);
+
+		const activeTab = screen.getByText('Performance');
+		expect(activeTab.className).toContain('active');
+	});
 });

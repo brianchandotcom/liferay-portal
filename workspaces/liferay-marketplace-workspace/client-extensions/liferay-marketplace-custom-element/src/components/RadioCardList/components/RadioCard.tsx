@@ -13,7 +13,7 @@ import emptyPictureIcon from '../../../assets/icons/avatar.svg';
 
 interface RadioCardProps {
 	activeRadio: boolean | undefined;
-	customization?: any;
+	customization?: boolean;
 	description?: string;
 	imageURL?: string;
 	index?: number;

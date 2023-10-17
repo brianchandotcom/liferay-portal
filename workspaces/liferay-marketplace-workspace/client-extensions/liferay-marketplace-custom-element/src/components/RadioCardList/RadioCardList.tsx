@@ -7,13 +7,13 @@ import RadioCard from './components/RadioCard';
 
 interface RadioCardListProps<T> {
 	contentList: RadioCardContent<T>[];
+	customization?: boolean;
 	leftRadio?: boolean;
 	onSelect: (value: RadioOption<T>) => void;
 	showImage?: boolean;
 }
 
 export interface RadioCardContent<T> {
-	customization?: any;
 	description?: string;
 	imageURL?: string;
 	label?: string;
@@ -24,6 +24,7 @@ export interface RadioCardContent<T> {
 
 const RadioCardList = <T extends unknown>({
 	contentList,
+	customization,
 	leftRadio,
 	onSelect,
 	showImage,
@@ -38,7 +39,7 @@ const RadioCardList = <T extends unknown>({
 				{contentList.map((content, index) => (
 					<RadioCard
 						activeRadio={content.selected}
-						customization={content.customization}
+						customization={customization}
 						description={content.description}
 						imageURL={content.imageURL}
 						index={index}

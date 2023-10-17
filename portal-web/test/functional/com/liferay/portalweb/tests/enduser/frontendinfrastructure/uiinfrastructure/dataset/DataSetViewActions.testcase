@@ -779,4 +779,42 @@ definition {
 		}
 	}
 
+	@description = "LPS-192149. Verify if the Label field is mandatory and localized in Action"
+	@priority = 5
+	test MandatoryAndLocalizedLabelField {
+		task ("And clicks on Create Item Action button") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("Then the New Item Action modal is displayed ") {
+			AssertElementPresent(
+				key_title = "New Item Action",
+				locator1 = "Header#H2_TITLE");
+		}
+
+		task ("And the Label field is mandatory") {
+			AssertElementPresent(
+				key_fieldName = "Label",
+				locator1 = "DataSet#MANDATORY_FIELD");
+		}
+
+		task ("And Label field is localized") {
+			AssertElementPresent(
+				key_field = "Label",
+				key_localizedLanguage = "en_US",
+				locator1 = "DataSet#LOCALIZED_FIELD");
+		}
+
+		task ("And the URL and Type field are filled") {
+			Type(
+				key_fieldId = "URL",
+				locator1 = "TextArea#ANY_ID",
+				value1 = "http://localhost:8080/o/data-set-manager/");
+		}
+
+		task ("Then is not possible to save") {
+			AssertElementPresent(locator1 = "Button#DISABLED_BUTTON");
+		}
+	}
+
 }

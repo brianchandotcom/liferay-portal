@@ -108,37 +108,68 @@ definition {
 			var userPassword = "test";
 		}
 
+		var entryLanguage = ${entryLanguage};
 		var objectName = StringUtil.toLowerCase(${objectName});
 		var list1 = ListUtil.newListFromString(${fieldNameList});
 		var list2 = ListUtil.newListFromString(${valueList});
-		var size = ListUtil.size(${list1});
+		var list3 = ListUtil.newListFromString(${entryLanguageList});
+		var size1 = ListUtil.size(${list1});
+		var size2 = ListUtil.size(${list3});
 		var fieldName = ListUtil.get(${list1}, 0);
 		var value = ListUtil.get(${list2}, 0);
-
-		var data = "\"${fieldName}\": \"${value}\"";
+		var language = ListUtil.get(${list3}, 0);
+		var data1 = "\"${fieldName}\": \"${value}\"";
+		var data2 = "\"${language}\": \"${value}\"";
 		var i = 1;
 
-		while (${i} != ${size}) {
-			var fieldName = ListUtil.get(${list1}, ${i});
-			var value = ListUtil.get(${list2}, ${i});
+		if (isSet(entryLanguageList)) {
+			while (${i} != ${size2}) {
+				var language = ListUtil.get(${list3}, ${i});
+				var value = ListUtil.get(${list2}, ${i});
 
-			var data = StringUtil.add(${data}, ",\"${fieldName}\": \"${value}\"", "");
-			var i = ${i} + 1;
+				var data2 = StringUtil.add(${data2}, ",\"${language}\": \"${value}\"", "");
+				var i = ${i} + 1;
+			}
+
+			var curl = '''
+				${portalURL}/o/c/${objectName}s \
+					-H accept: application/json \
+					-H Content-Type: application/json \
+					-u ${userEmailAddress}:${userPassword} \
+					-d {
+						"${fieldNameList}_i18n": {
+							${data2}
+						}
+					}
+			''';
+
+			var objectEntryId = JSONCurlUtil.post(${curl}, "$.id");
+
+			return ${objectEntryId};
 		}
+		else {
+			while (${i} != ${size1}) {
+				var fieldName = ListUtil.get(${list1}, ${i});
+				var value = ListUtil.get(${list2}, ${i});
 
-		var curl = '''
-			${portalURL}/o/c/${objectName}s \
-				-H accept: application/json \
-				-H Content-Type: application/json \
-				-u ${userEmailAddress}:${userPassword} \
-				-d {
-					${data}
-				}
-		''';
+				var data1 = StringUtil.add(${data1}, ",\"${fieldName}\": \"${value}\"", "");
+				var i = ${i} + 1;
+			}
 
-		var objectEntryId = JSONCurlUtil.post(${curl}, "$.id");
+			var curl = '''
+				${portalURL}/o/c/${objectName}s \
+					-H accept: application/json \
+					-H Content-Type: application/json \
+					-u ${userEmailAddress}:${userPassword} \
+					-d {
+						${data1}
+					}
+			''';
 
-		return ${objectEntryId};
+			var objectEntryId = JSONCurlUtil.post(${curl}, "$.id");
+
+			return ${objectEntryId};
+		}
 	}
 
 	@summary = "Default summary"

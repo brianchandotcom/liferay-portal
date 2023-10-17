@@ -1,0 +1,1086 @@
+@component-name = "portal-commerce"
+definition {
+
+	property custom.properties = "company.security.strangers.verify=false${line.separator}jsonws.web.service.paths.excludes=";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Order Management";
+
+	setUp {
+		CommerceConfiguration.commerceSetUp(minium = "true");
+
+		task ("Setup: Create an account with a buyer user") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+	}
+
+	tearDown {
+		CommerceConfiguration.commerceTearDown();
+	}
+
+	@description = "COMMERCE-12598. As an Operations Manager, I can assert the order items are split in the orders admin when the 'Show Separate Order Items' toggle is enabled"
+	@priority = 5
+	test CanAssertOrderItemsAreSplitInOrdersAdmin {
+		property portal.acceptance = "true";
+
+		task ("Given the admin enables the toggle 'Show Separate Order Items' for Minium Portal channel") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Show Separate Order Items",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickSave();
+		}
+
+		task ("And a user with the Operations Manager role") {
+			JSONUser.addUserWithRole(
+				roleTitle = "Operations Manager",
+				userEmailAddress = "om@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("And the buyer adds MIN55861 to cart twice with different quantities, e.g. quantity:1;quantity:2") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			for (var quantity : list "1,2") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+				Type(
+					key_productName = "U-Joint",
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
+					value1 = ${quantity});
+
+				Click(
+					key_productName = "U-Joint",
+					locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+			}
+		}
+
+		task ("When the buyer completes the checkout") {
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.checkout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				shippingMethod = "Standard");
+		}
+
+		task ("Then the Operations Manager can view the order items shown separately with the correct data on the order admin page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "om@liferay.com",
+				userLoginFullName = "Operations Manager");
+
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "24.00",
+				productName = "U-Joint",
+				productQuantity = 1,
+				productSku = "MIN55861",
+				productTotalPrice = "24.00");
+
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "24.00",
+				productName = "U-Joint",
+				productQuantity = 2,
+				productSku = "MIN55861",
+				productTotalPrice = "48.00");
+
+			Pagination.viewResults(results = "Showing 1 to 2 of 2 entries.");
+
+			CommerceOrders.viewOrderSummary(
+				deliveryValue = "$ 15.00",
+				subtotalValue = "$ 72.00",
+				totalValue = "$ 87.00");
+		}
+	}
+
+	@description = "COMMERCE-12600. As a buyer, I can assert the order items are split in the placed order when the 'Show Separate Order Items' toggle is enabled"
+	@priority = 5
+	test CanAssertOrderItemsAreSplitInPlacedOrders {
+		property portal.acceptance = "true";
+
+		task ("Given the admin enables the toggle 'Show Separate Order Items' for Minium Portal channel") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Show Separate Order Items",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickSave();
+		}
+
+		task ("And the buyer adds MIN55861 to cart twice with different quantities, e.g. quantity:1;quantity:2") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			for (var quantity : list "1,2") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+				Type(
+					key_productName = "U-Joint",
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
+					value1 = ${quantity});
+
+				Click(
+					key_productName = "U-Joint",
+					locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+			}
+		}
+
+		task ("When the buyer checkout the order") {
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.setAddress(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code");
+
+			Click(locator1 = "Button#CONTINUE");
+
+			Click(
+				key_radioOption = "Standard",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Click(locator1 = "Button#CONTINUE");
+		}
+
+		task ("Then the order items are shown separately with the correct data in the checkout") {
+			CommerceCheckout.viewCheckoutOrderSummary(
+				addressAddress = "Test Address",
+				addressCity = "Test City",
+				addressCountry = "United States",
+				addressName = "Address Name",
+				productName = "U-Joint",
+				productPrice = 24,
+				productQuantity = 1);
+
+			CommerceCheckout.viewCheckoutOrderSummary(
+				addressAddress = "Test Address",
+				addressCity = "Test City",
+				addressCountry = "United States",
+				addressName = "Address Name",
+				deliveryValue = 15,
+				productName = "U-Joint",
+				productPrice = 24,
+				productQuantity = 2,
+				subtotalValue = 72,
+				totalValue = 87);
+
+			Click(locator1 = "Button#CONTINUE");
+		}
+
+		task ("When the buyer views the order on the Placed Orders page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/placed-orders");
+
+			Button.click(button = "View");
+		}
+
+		task ("Then the order items are shown separately with the correct data in the placed order") {
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "24.00",
+				productName = "U-Joint",
+				productPrice = "24.00",
+				productQuantity = 1,
+				productSku = "MIN55861",
+				productTotalPrice = "24.00");
+
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "24.00",
+				productName = "U-Joint",
+				productPrice = "24.00",
+				productQuantity = 2,
+				productSku = "MIN55861",
+				productTotalPrice = "48.00");
+
+			Pagination.viewResults(results = "Showing 1 to 2 of 2 entries.");
+
+			CommerceOrders.viewOrderPrices(
+				deliveryPrice = "15.00",
+				subTotalPrice = "72.00",
+				taxPrice = "0.00",
+				totalPrice = "87.00");
+		}
+	}
+
+	@description = "COMMERCE-12599. As an Operations Manager, I can assert the order items are split in the order shipments section with correct quantities when the 'Show Separate Order Items' toggle is enabled"
+	@priority = 5
+	test CanAssertOrderItemsAreSplitInShipments {
+		property portal.acceptance = "true";
+
+		task ("Given the admin enables the toggle 'Show Separate Order Items' for Minium Portal channel") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Show Separate Order Items",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickSave();
+		}
+
+		task ("And a user with the Operations Manager role") {
+			JSONUser.addUserWithRole(
+				roleTitle = "Operations Manager",
+				userEmailAddress = "om@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("And 'Money Order' payment method is activated") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			CommerceChannels.activatePaymentMethod(paymentMethod = "Money Order");
+		}
+
+		task ("And an order is placed for MIN55861 with two order items one with quantity:3, one with quantity:4") {
+			var orderId = CommerceJSONOrdersAPI._addCommerceOrder(
+				accountEntryName = "Commerce Account",
+				orderItems = "MIN55861:3,MIN55861:4",
+				orderStatus = 1,
+				paymentMethod = "money-order",
+				paymentStatus = 2);
+		}
+
+		task ("When the Operations Manager navigates to the Shipments section in the order") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "om@liferay.com",
+				userLoginFullName = "Operations Manager");
+
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			Click(
+				key_text = "Accept Order",
+				locator1 = "Link#ANY");
+
+			Click(
+				key_text = "Create Shipment",
+				locator1 = "Button#ANY");
+
+			Click(locator1 = "Button#PLUS");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		task ("Then the shipment items for the order are split with the correct outstanding quantity") {
+			for (var outstandingQuantity : list "3,4") {
+				AssertElementPresent(
+					key_cellName1 = "MIN55861",
+					key_cellName2 = ${orderId},
+					key_columnNumber = 3,
+					locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
+					value1 = ${outstandingQuantity});
+			}
+
+			Pagination.viewResults(results = "Showing 1 to 2 of 2 entries.");
+		}
+
+		task ("When the admin ships 2 of 3 quantities for order item 1") {
+			Check.checkToggleSwitch(
+				key_orderId = ${orderId},
+				key_productSku = "MIN55861",
+				locator1 = "Checkbox#ADD_SHIPMENT_ITEMS_CHECKBOX_WITH_ORDER_ID");
+
+			Button.clickSubmitButton();
+
+			CommerceNavigator.gotoEntry(entryName = "MIN55861");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Type(
+				key_warehouseName = "Italy",
+				locator1 = "CommerceOrders#ORDER_QUANTITY_IN_SHIPMENT_BY_WAREHOUSE",
+				value1 = 2);
+
+			Button.clickSave();
+
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrameTop();
+
+			Click(
+				key_index = "Finish Processing",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+			Click(
+				key_index = "Ship",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+
+			Click(
+				key_index = "Deliver",
+				locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
+		}
+
+		task ("And the admin navigates to the Shipments section in the order again") {
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Partially Shipped");
+
+			Click(
+				key_text = "Create Shipment",
+				locator1 = "Button#ANY");
+
+			Click(locator1 = "Button#PLUS");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		}
+
+		task ("Then the outstanding quantity for order item 1 is updated to 1 accordingly") {
+			for (var outstandingQuantity : list "1,4") {
+				AssertElementPresent(
+					key_cellName1 = "MIN55861",
+					key_cellName2 = ${orderId},
+					key_columnNumber = 3,
+					locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
+					value1 = ${outstandingQuantity});
+			}
+
+			Pagination.viewResults(results = "Showing 1 to 2 of 2 entries.");
+		}
+	}
+
+	@description = "COMMERCE-12486. As a buyer, I can verify the order items are not split on the Mini Cart by adding products to the cart when the 'Show Separate Order Items' toggle is disabled"
+	@priority = 5
+	test CanVerifyOrderItemsAreNotSplitOnTheMiniCart {
+		property portal.acceptance = "true";
+
+		task ("Given the admin enables the toggle 'Show Separate Order Items' for Minium Portal channel") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Show Separate Order Items",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickSave();
+		}
+
+		task ("When the buyer logs in and clicks 2 times on the 'Add to cart' button for MIN55861") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			for (var count : list "1,2") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+				Click(
+					key_productName = "U-Joint",
+					locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+			}
+		}
+
+		task ("Then the order items on the mini-cart are split") {
+			CommerceNavigator.gotoMiniCart();
+
+			FrontStore.viewMiniCartItem(
+				cartItemName = "U-Joint",
+				cartItemPriceValue = "24.00",
+				cartItemQuantity = 1,
+				cartItemSku = "MIN55861");
+
+			FrontStore.viewMiniCartItem(
+				cartItemName = "U-Joint",
+				cartItemPriceValue = "24.00",
+				cartItemQuantity = 1,
+				cartItemSku = "MIN55861",
+				index = 2);
+		}
+
+		task ("When the admin disables the toggle 'Show Separate Order Items' for Minium Portal channel") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			Uncheck.uncheckToggleSwitch(
+				key_toggleSwitchLabel = "Show Separate Order Items",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickSave();
+		}
+
+		task ("And the buyer clicks the 'Add to cart' button for MIN55861") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Click(
+				key_productName = "U-Joint",
+				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+		}
+
+		task ("Then there is just one order item on the mini-cart") {
+			CommerceNavigator.gotoMiniCart();
+
+			FrontStore.viewMiniCartItem(
+				cartItemName = "U-Joint",
+				cartItemPriceValue = "24.00",
+				cartItemQuantity = 3,
+				cartItemSku = "MIN55861");
+		}
+
+		task ("And all the information in summary table is correct") {
+			FrontStore.viewMiniCart(
+				cartSummaryQuantity = 3,
+				cartSummarySubtotal = "72.00",
+				cartSummaryTotal = "72.00");
+		}
+	}
+
+	@description = "COMMERCE-12488. As a buyer, I can verify the order items are not split on the Mini Cart by using quick add products to the cart when the 'Show Separate Order Items' toggle is disabled"
+	@priority = 3
+	test CanVerifyOrderItemsAreNotSplitUsingQuickAddToCart {
+		property portal.acceptance = "false";
+
+		task ("Given the admin enables the toggle 'Show Separate Order Items' for Minium Portal channel") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Show Separate Order Items",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickSave();
+		}
+
+		task ("When the buyer logs in and clicks 2 times on the 'Add to cart' button for MIN55861") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.gotoMiniCart();
+
+			for (var count : list "1,2") {
+				FrontStore.quickAddToCartSearchAndSelectItem(orderItemSku = "MIN55861");
+
+				Click(locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_BUTTON");
+			}
+		}
+
+		task ("Then the order items on the mini-cart are split") {
+			CommerceNavigator.gotoMiniCart();
+
+			FrontStore.viewMiniCartItem(
+				cartItemName = "U-Joint",
+				cartItemPriceValue = "24.00",
+				cartItemQuantity = 1,
+				cartItemSku = "MIN55861");
+
+			FrontStore.viewMiniCartItem(
+				cartItemName = "U-Joint",
+				cartItemPriceValue = "24.00",
+				cartItemQuantity = 1,
+				cartItemSku = "MIN55861",
+				index = 2);
+		}
+
+		task ("When the admin disables the toggle 'Show Separate Order Items' for Minium Portal channel") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			Uncheck.uncheckToggleSwitch(
+				key_toggleSwitchLabel = "Show Separate Order Items",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickSave();
+		}
+
+		task ("And the buyer clicks the 'Add to cart' button for MIN55861") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.gotoMiniCart();
+
+			FrontStore.quickAddToCartSearchAndSelectItem(orderItemSku = "MIN55861");
+
+			Click(locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_BUTTON");
+		}
+
+		task ("Then there is just one order item on the mini-cart") {
+			FrontStore.viewMiniCartItem(
+				cartItemName = "U-Joint",
+				cartItemPriceValue = "24.00",
+				cartItemQuantity = 3,
+				cartItemSku = "MIN55861");
+		}
+
+		task ("And all the information in summary table is correct") {
+			FrontStore.viewMiniCart(
+				cartSummaryQuantity = 3,
+				cartSummarySubtotal = "72.00",
+				cartSummaryTotal = "72.00");
+		}
+	}
+
+	@description = "COMMERCE-12485. As a buyer, I can verify the order items are split on the Mini Cart by adding products to the cart when the 'Show Separate Order Items' toggle is enabled"
+	@priority = 5
+	test CanVerifyOrderItemsAreSplitOnTheMiniCart {
+		property portal.acceptance = "true";
+
+		task ("When the buyer logs in and clicks 2 times on the 'Add to cart' button for MIN55861") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			for (var count : list "1,2") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+				Click(
+					key_productName = "U-Joint",
+					locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+			}
+		}
+
+		task ("Then the order items on the mini-cart are not split") {
+			CommerceNavigator.gotoMiniCart();
+
+			FrontStore.viewMiniCartItem(
+				cartItemName = "U-Joint",
+				cartItemPriceValue = "24.00",
+				cartItemQuantity = 2,
+				cartItemSku = "MIN55861");
+		}
+
+		task ("When the admin enables the toggle 'Show Separate Order Items' for Minium Portal channel") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Show Separate Order Items",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickSave();
+		}
+
+		task ("And hovering over the question mark icon appears the text explaining the toggle functionality") {
+			MouseOver(
+				key_label = "Show Separate Order Items",
+				locator1 = "CommerceEntry#LABEL_TOOLTIP_ICON");
+
+			VerifyElementPresent(
+				key_label = "Show Separate Order Items",
+				key_text = "Add to cart button will create a new order line item rather than update existing quantity.",
+				locator1 = "CommerceEntry#LABEL_TOOLTIP_TEXT_WITH_TITLE");
+		}
+
+		task ("And the buyer clicks the 'Add to cart' button for MIN55861") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Click(
+				key_productName = "U-Joint",
+				locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+		}
+
+		task ("Then another order item shows up on the mini-cart, sharing the same SKU as the 2 added before") {
+			CommerceNavigator.gotoMiniCart();
+
+			FrontStore.viewMiniCartItem(
+				cartItemName = "U-Joint",
+				cartItemPriceValue = "24.00",
+				cartItemQuantity = 2,
+				cartItemSku = "MIN55861");
+
+			FrontStore.viewMiniCartItem(
+				cartItemName = "U-Joint",
+				cartItemPriceValue = "24.00",
+				cartItemQuantity = 1,
+				cartItemSku = "MIN55861",
+				index = 2);
+		}
+
+		task ("And all the information in summary table is correct") {
+			FrontStore.viewMiniCart(
+				cartSummaryQuantity = 3,
+				cartSummarySubtotal = "72.00",
+				cartSummaryTotal = "72.00");
+		}
+
+		task ("When the buyer views the order on the Pending Orders page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/pending-orders");
+
+			Button.click(button = "View");
+		}
+
+		task ("Then the order items are shown separately with the correct data") {
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "24.00",
+				productName = "U-Joint",
+				productPrice = "24.00",
+				productQuantity = 2,
+				productSku = "MIN55861",
+				productTotalPrice = "48.00");
+
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "24.00",
+				productName = "U-Joint",
+				productPrice = "24.00",
+				productQuantity = 1,
+				productSku = "MIN55861",
+				productTotalPrice = "24.00");
+		}
+	}
+
+	@description = "COMMERCE-12487. As a buyer, I can verify the order items are split on the Mini Cart by using quick add products to the cart when the 'Show Separate Order Items' toggle is enabled"
+	@priority = 3
+	test CanVerifyOrderItemsAreSplitUsingQuickAddToCart {
+		property portal.acceptance = "false";
+
+		task ("When the buyer logs in and clicks 2 times on the 'Add to cart' button for MIN55861") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.gotoMiniCart();
+
+			for (var count : list "1,2") {
+				FrontStore.quickAddToCartSearchAndSelectItem(orderItemSku = "MIN55861");
+
+				Click(locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_BUTTON");
+			}
+		}
+
+		task ("Then the order items on the mini-cart are not split") {
+			FrontStore.viewMiniCartItem(
+				cartItemName = "U-Joint",
+				cartItemPriceValue = "24.00",
+				cartItemQuantity = 2,
+				cartItemSku = "MIN55861");
+		}
+
+		task ("When the admin enables the toggle 'Show Separate Order Items' for Minium Portal channel") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Show Separate Order Items",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickSave();
+		}
+
+		task ("And the buyer clicks the 'Add to cart' button for MIN55861") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			CommerceNavigator.gotoMiniCart();
+
+			FrontStore.quickAddToCartSearchAndSelectItem(orderItemSku = "MIN55861");
+
+			Click(locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_BUTTON");
+		}
+
+		task ("Then another order item shows up on the mini-cart, sharing the same SKU as the 2 added before") {
+			CommerceNavigator.gotoMiniCart();
+
+			FrontStore.viewMiniCartItem(
+				cartItemName = "U-Joint",
+				cartItemPriceValue = "24.00",
+				cartItemQuantity = 2,
+				cartItemSku = "MIN55861");
+
+			FrontStore.viewMiniCartItem(
+				cartItemName = "U-Joint",
+				cartItemPriceValue = "24.00",
+				cartItemQuantity = 1,
+				cartItemSku = "MIN55861",
+				index = 2);
+		}
+
+		task ("And all the information in summary table is correct") {
+			FrontStore.viewMiniCart(
+				cartSummaryQuantity = 3,
+				cartSummarySubtotal = "72.00",
+				cartSummaryTotal = "72.00");
+		}
+	}
+
+	@description = "COMMERCE-12491. As a buyer, I can verify the order items are split on the Mini Cart by adding multiple SKU products to the cart when the 'Show Separate Order Items' toggle is enabled"
+	@priority = 5
+	test CanVerifyOrderItemsAreSplitWithMultipleSKUProduct {
+		property portal.acceptance = "true";
+
+		task ("Given the admin enables the toggle 'Show Separate Order Items' for Minium Portal channel") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Show Separate Order Items",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickSave();
+		}
+
+		task ("And the buyer navigates to the product Brake Fluid's details page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/brake-fluid");
+		}
+
+		task ("When the buyer sets the quantities for MIN93016A to 1, for MIN93016B to 2, for MIN93016C to 3 and clicks 2 times on the 'Add to cart' button for each option value") {
+			for (var rowList : list "12:1,48:2,112:3") {
+				var optionValue = StringUtil.extractFirst(${rowList}, ":");
+				var quantity = StringUtil.extractLast(${rowList}, ":");
+
+				for (var count : list "1,2") {
+					FrontStore.selectAssociatedFSOptionsValue(
+						fsOptionName = "Package Quantity",
+						fsOptionValue = ${optionValue});
+
+					Type(
+						locator1 = "CommerceAccelerators#PRODUCT_DETAILS_QUANTITY_SELECTOR_INPUT_FIELD",
+						value1 = ${quantity});
+
+					Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+				}
+			}
+		}
+
+		task ("Then the order items on the mini-cart are split") {
+			CommerceNavigator.gotoMiniCart();
+
+			for (var rowList : list "MIN93016A:1,MIN93016B:2,MIN93016C:3") {
+				var cartItemSku = StringUtil.extractFirst(${rowList}, ":");
+				var cartItemQuantity = StringUtil.extractLast(${rowList}, ":");
+
+				FrontStore.viewMiniCartItem(
+					cartItemName = "Brake Fluid",
+					cartItemPromoPriceValue = "72.00",
+					cartItemQuantity = ${cartItemQuantity},
+					cartItemSku = ${cartItemSku});
+
+				FrontStore.viewMiniCartItem(
+					cartItemName = "Brake Fluid",
+					cartItemPromoPriceValue = "72.00",
+					cartItemQuantity = ${cartItemQuantity},
+					cartItemSku = ${cartItemSku},
+					index = 2);
+			}
+		}
+
+		task ("And all the information in summary table is correct") {
+			FrontStore.viewMiniCart(
+				cartSummaryQuantity = 12,
+				cartSummarySubtotal = "864.00",
+				cartSummaryTotal = "864.00");
+		}
+	}
+
+	@description = "COMMERCE-12492. As a buyer, I can verify the order items are split on the Mini Cart for an SKU/UOM that applied to the Price On Application when the 'Show Separate Order Items' toggle is enabled"
+	@priority = 3
+	test CanVerifySplitOrderItemsWorksWhenSKUHasUOMAndPOA {
+		property custom.properties = "company.security.strangers.verify=false${line.separator}feature.flag.COMMERCE-11028=true${line.separator}feature.flag.COMMERCE-11287=true${line.separator}jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "false";
+
+		task ("Given the admin enables the toggle 'Show Separate Order Items' for Minium Portal channel") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Show Separate Order Items",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickSave();
+		}
+
+		task ("And one UOM is added to the SKU MIN55861") {
+			CommerceJSONSKUsAPI._addCommerceUOM(
+				basePrice = 10,
+				productSKU = "MIN55861",
+				uomKey = "uomKey1",
+				uomName = "uomName1");
+		}
+
+		task ("And enables 'Price On Application' toggle for the 'Minium Price List' assigned to UOM1") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = "U-Joint");
+
+			CommerceNavigator.gotoEntry(entryName = "U-Joint");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoEntry(entryName = "MIN55861");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Price");
+
+			AssertClick(
+				key_cellName1 = "Minium Base Price List",
+				key_cellName2 = "uomKey1",
+				key_columnNumber = 1,
+				locator1 = "CommerceEntry#TABLE_CELL_BY_COLUMN_ORDER_NO_TITLE",
+				value1 = "Minium Base Price List");
+
+			CommerceSKUs.editSkuPricing(priceOnApplication = "true");
+		}
+
+		task ("When the buyer logs in and clicks 2 times on the 'Add to cart' button for MIN55861") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			for (var count : list "1,2") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+				Click(
+					key_productName = "U-Joint",
+					locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+			}
+		}
+
+		task ("Then the order items on the mini-cart are split") {
+			CommerceNavigator.gotoMiniCart();
+
+			FrontStore.viewMiniCartItem(
+				cartItemName = "U-Joint",
+				cartItemPriceOnApplication = "true",
+				cartItemQuantity = 1,
+				cartItemSku = "MIN55861",
+				cartItemUOMKey = "uomKey1");
+
+			FrontStore.viewMiniCartItem(
+				cartItemName = "U-Joint",
+				cartItemPriceOnApplication = "true",
+				cartItemQuantity = 1,
+				cartItemSku = "MIN55861",
+				cartItemUOMKey = "uomKey1",
+				index = 2);
+		}
+
+		task ("And all the information in summary table is correct") {
+			FrontStore.viewMiniCart(
+				cartSummaryQuantity = 2,
+				cartSummarySubtotal = "0.00",
+				cartSummaryTotal = "0.00");
+		}
+	}
+
+	@description = "COMMERCE-12489. As a buyer, I can verify the order items are split on the Mini Cart with tiered and bulk prices when the 'Show Separate Order Items' toggle is enabled"
+	@priority = 5
+	test CanVerifySplitOrderItemsWorksWithTieredAndBulkPrice {
+		property portal.acceptance = "true";
+
+		task ("Given the admin enables the toggle 'Show Separate Order Items' for Minium Portal channel") {
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Portal");
+
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Show Separate Order Items",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickSave();
+		}
+
+		task ("And a Tiered Pricing for SKU MIN93015 and a Bulk Pricing for SKU MIN93015 are set") {
+			CommercePriceLists.openPriceListsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Minium Base Price List");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Entries");
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "MIN55861");
+
+			CommercePriceLists.createPriceListPriceTiers(
+				key_pricingType = "Tiered Pricing",
+				key_quantity = 2,
+				key_value = 40);
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "MIN93015");
+
+			CommercePriceLists.createPriceListPriceTiers(
+				key_pricingType = "Bulk Pricing",
+				key_quantity = 2,
+				key_value = 60);
+		}
+
+		task ("When the buyer logs in and clicks 2 times on the 'Add to cart' button with quantity 1 for MIN55861 and MIN93015") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			for (var productName : list "U-Joint,ABS Sensor") {
+				for (var count : list "1,2") {
+					Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+					CommerceNavigator.searchEntry(entryName = ${productName});
+
+					Click(
+						key_productName = ${productName},
+						locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+				}
+			}
+		}
+
+		task ("Then the order items on the mini-cart are split but not applied to the tiered pricing") {
+			CommerceNavigator.gotoMiniCart();
+
+			for (var rowList : list "U-Joint:MIN55861:24.00,ABS Sensor:MIN93015:50.00") {
+				var cartItemName = StringUtil.extractFirst(${rowList}, ":");
+
+				var rowList = StringUtil.replaceFirst(${rowList}, "${cartItemName}:", "");
+
+				var cartItemSku = StringUtil.extractFirst(${rowList}, ":");
+				var cartItemPriceValue = StringUtil.extractLast(${rowList}, ":");
+
+				FrontStore.viewMiniCartItem(
+					cartItemName = ${cartItemName},
+					cartItemPriceValue = ${cartItemPriceValue},
+					cartItemQuantity = 1,
+					cartItemSku = ${cartItemSku});
+
+				FrontStore.viewMiniCartItem(
+					cartItemName = ${cartItemName},
+					cartItemPriceValue = ${cartItemPriceValue},
+					cartItemQuantity = 1,
+					cartItemSku = ${cartItemSku},
+					index = 2);
+			}
+		}
+
+		task ("When the buyer removes all items from the mini-cart") {
+			Button.click(button = "Remove All Items");
+
+			Button.click(button = "Yes");
+		}
+
+		task ("And the buyer clicks 1 time on the 'Add to cart' button with quantity 2 for MIN55861 and MIN93015") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
+
+			for (var productName : list "U-Joint,ABS Sensor") {
+				Type(
+					key_productName = ${productName},
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_QUANTITY_SELECTOR_INPUT_FIELD",
+					value1 = 2);
+
+				Click(
+					key_productName = ${productName},
+					locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON");
+
+				CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
+			}
+		}
+
+		task ("Then the order items on the mini-cart are applied to the tiered pricing") {
+			CommerceNavigator.gotoMiniCart();
+
+			for (var rowList : list "U-Joint:MIN55861:32.00,ABS Sensor:MIN93015:60.00") {
+				var cartItemName = StringUtil.extractFirst(${rowList}, ":");
+
+				var rowList = StringUtil.replaceFirst(${rowList}, "${cartItemName}:", "");
+
+				var cartItemSku = StringUtil.extractFirst(${rowList}, ":");
+				var cartItemPriceValue = StringUtil.extractLast(${rowList}, ":");
+
+				FrontStore.viewMiniCartItem(
+					cartItemName = ${cartItemName},
+					cartItemPriceValue = ${cartItemPriceValue},
+					cartItemQuantity = 2,
+					cartItemSku = ${cartItemSku});
+			}
+		}
+	}
+
+}

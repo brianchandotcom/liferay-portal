@@ -1348,6 +1348,80 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-12564. As an admin, I can filter order by date range"
+	@priority = 5
+	test CanFilterOrderByDateRange {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site with a business account is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceJSONAccountsAPI._addCommerceAccount(
+				accountName = "Commerce Account",
+				accountType = "Business");
+		}
+
+		task ("And an order is placed") {
+			CommerceJSONOrdersAPI._addCommerceOrder(
+				accountEntryName = "Commerce Account",
+				orderDate = "2023-10-13T16:04:00Z",
+				orderItems = "MIN55861:1",
+				orderStatus = 1,
+				paymentMethod = "money-order",
+				paymentStatus = 2);
+		}
+
+		task ("When the admin goes to the Orders Admin") {
+			CommerceOrders.openOrdersAdmin();
+		}
+
+		task ("Then the admin can filter the order by Date Range") {
+			var orderId = CommerceJSONOrdersAPI._getCommerceOrder();
+
+			FrontendDataSetFilters.openFilters();
+
+			Click(
+				key_filter = "Order Date Range",
+				locator1 = "FrontendDataSet#FILTER_OPTION");
+
+			Type.sendKeys(
+				key_dateId = "from-orderDate",
+				locator1 = "FrontendDataSet#FILTER_DATE_RANGE",
+				value1 = "10/10/2023");
+
+			Type.sendKeys(
+				key_dateId = "to-orderDate",
+				locator1 = "FrontendDataSet#FILTER_DATE_RANGE",
+				value1 = "14/10/2023");
+
+			Click(locator1 = "FrontendDataSet#ADD_FILTER_BUTTON");
+
+			AssertElementPresent(
+				key_entryName = ${orderId},
+				locator1 = "CommerceNavigation#ENTRY_NAME");
+
+			FrontendDataSetFilters.resetFilter();
+
+			FrontendDataSetFilters.openFilters();
+
+			Type.sendKeys(
+				key_dateId = "from-orderDate",
+				locator1 = "FrontendDataSet#FILTER_DATE_RANGE",
+				value1 = "15/10/2023");
+
+			Type.sendKeys(
+				key_dateId = "to-orderDate",
+				locator1 = "FrontendDataSet#FILTER_DATE_RANGE",
+				value1 = "17/10/2023");
+
+			Click(locator1 = "FrontendDataSet#ADD_FILTER_BUTTON");
+
+			AssertElementNotPresent(
+				key_entryName = ${orderId},
+				locator1 = "CommerceNavigation#ENTRY_NAME");
+		}
+	}
+
 	@description = "This is a test for the story COMMERCE-9217, with the testplan COMMERCE-9336 and test ticket COMMERCE-9345"
 	@priority = 5
 	test CanReorderAFailedPayment {

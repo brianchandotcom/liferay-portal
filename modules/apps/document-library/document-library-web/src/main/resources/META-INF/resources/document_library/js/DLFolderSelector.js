@@ -95,10 +95,20 @@ const DLFolderSelector = ({
 			method: 'POST',
 		})
 			.then((response) => response.json())
-			.then(({errorMessages}) => {
+			.then(({errorMessages, errorSize}) => {
 				if (errorMessages) {
 					openToast({
 						message: errorMessages[0],
+						title: Liferay.Language.get('error'),
+						type: 'danger',
+					});
+				}
+				else if (errorSize) {
+					openToast({
+						message: sub(
+							Liferay.Language.get('x-items-could-not-be-copied'),
+							errorSize
+						),
 						title: Liferay.Language.get('error'),
 						type: 'danger',
 					});

@@ -182,10 +182,7 @@ public class AnalyticsConfigurationRegistryImpl
 					"AnalyticsConfiguration.scoped"
 			).build());
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext,
-			(Class<AnalyticsEntityModel<?>>)
-				(Class<?>)AnalyticsEntityModel.class,
-			null,
+			bundleContext, AnalyticsEntityModel.class, null,
 			new AnalyticsEntityModelServiceReferenceMapper(bundleContext));
 	}
 
@@ -426,62 +423,70 @@ public class AnalyticsConfigurationRegistryImpl
 						DISPATCH_TRIGGER_NAME_PRODUCT);
 			}
 
-			_analyticsDXPEntityBatchExporter.scheduleExportTriggers(
-				companyId, dispatchTriggerNames.toArray(new String[0]));
+			if (FeatureFlagManagerUtil.isEnabled("LRAC-10632") ||
+				!dispatchTriggerNames.isEmpty()) {
 
-			_analyticsDXPEntityBatchExporter.export(
-				companyId, dispatchTriggerNames.toArray(new String[0]));
+				_analyticsDXPEntityBatchExporter.scheduleExportTriggers(
+					companyId, dispatchTriggerNames.toArray(new String[0]));
 
-			AnalyticsConfiguration analyticsConfiguration =
-				getAnalyticsConfiguration(companyId);
-
-			Collection<AnalyticsEntityModel<?>> analyticsEntityModels =
-				_serviceTrackerMap.values();
-
-			for (AnalyticsEntityModel<?> analyticsEntityModel :
-					analyticsEntityModels) {
-
-				analyticsEntityModel.syncAll(companyId);
+				_analyticsDXPEntityBatchExporter.export(
+					companyId, dispatchTriggerNames.toArray(new String[0]));
 			}
 
-			_syncDefaultFields(
-				companyId, analyticsConfiguration.syncedContactFieldNames(),
-				analyticsConfiguration.syncedUserFieldNames());
+			if (!FeatureFlagManagerUtil.isEnabled("LRAC-10632")) {
+				AnalyticsConfiguration analyticsConfiguration =
+					getAnalyticsConfiguration(companyId);
 
-			_syncUserCustomFields(
-				companyId, analyticsConfiguration.syncedUserFieldNames());
+				Collection<AnalyticsEntityModel<?>> analyticsEntityModels =
+					_serviceTrackerMap.values();
 
-			if (GetterUtil.getBoolean(
-					analyticsConfiguration.syncAllContacts())) {
+				for (AnalyticsEntityModel<?> analyticsEntityModel :
+						analyticsEntityModels) {
 
-				_syncContacts(companyId);
+					analyticsEntityModel.syncAll(companyId);
+				}
+
+				_syncDefaultFields(
+					companyId, analyticsConfiguration.syncedContactFieldNames(),
+					analyticsConfiguration.syncedUserFieldNames());
+
+				_syncUserCustomFields(
+					companyId, analyticsConfiguration.syncedUserFieldNames());
+
+				if (GetterUtil.getBoolean(
+						analyticsConfiguration.syncAllContacts())) {
+
+					_syncContacts(companyId);
+				}
+				else {
+					_syncOrganizationUsers(
+						companyId,
+						analyticsConfiguration.syncedOrganizationIds());
+					_syncUserGroupUsers(
+						companyId, analyticsConfiguration.syncedUserGroupIds());
+				}
+
+				Message message = new Message();
+
+				message.put("command", AnalyticsMessagesProcessorCommand.SEND);
+				message.put("companyId", companyId);
+				message.put(
+					"principalName", _getAnalyticsAdminUserId(companyId));
+
+				if (_log.isInfoEnabled()) {
+					_log.info("Queueing send analytics messages message");
+				}
+
+				TransactionCommitCallbackUtil.registerCallback(
+					() -> {
+						_messageBus.sendMessage(
+							AnalyticsMessagesDestinationNames.
+								ANALYTICS_MESSAGES_PROCESSOR,
+							message);
+
+						return null;
+					});
 			}
-			else {
-				_syncOrganizationUsers(
-					companyId, analyticsConfiguration.syncedOrganizationIds());
-				_syncUserGroupUsers(
-					companyId, analyticsConfiguration.syncedUserGroupIds());
-			}
-
-			Message message = new Message();
-
-			message.put("command", AnalyticsMessagesProcessorCommand.SEND);
-			message.put("companyId", companyId);
-			message.put("principalName", _getAnalyticsAdminUserId(companyId));
-
-			if (_log.isInfoEnabled()) {
-				_log.info("Queueing send analytics messages message");
-			}
-
-			TransactionCommitCallbackUtil.registerCallback(
-				() -> {
-					_messageBus.sendMessage(
-						AnalyticsMessagesDestinationNames.
-							ANALYTICS_MESSAGES_PROCESSOR,
-						message);
-
-					return null;
-				});
 
 			_analyticsSettingsManager.updateCompanyConfiguration(
 				companyId, Collections.singletonMap("firstSync", false));
@@ -534,7 +539,8 @@ public class AnalyticsConfigurationRegistryImpl
 
 	private void _sync(long companyId, Dictionary<String, ?> dictionary) {
 		try {
-			if (Validator.isNotNull(dictionary.get("token")) &&
+			if (!FeatureFlagManagerUtil.isEnabled("LRAC-10632") &&
+				Validator.isNotNull(dictionary.get("token")) &&
 				Validator.isNull(dictionary.get("previousToken"))) {
 
 				Collection<AnalyticsEntityModel<?>> analyticsEntityModels =

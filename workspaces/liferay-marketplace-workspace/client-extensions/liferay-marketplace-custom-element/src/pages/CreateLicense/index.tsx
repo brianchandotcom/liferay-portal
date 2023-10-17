@@ -7,6 +7,9 @@ import ClayButton from '@clayui/button';
 import {useState} from 'react';
 
 import './index.scss';
+
+import {useForm} from 'react-hook-form';
+
 import StepWizard from '../GetAppPage/components/StepWizard/StepWizard';
 import LicenseDetails from './LicenseDetails';
 import SelectSubscription from './SelectSubscription';
@@ -16,13 +19,32 @@ export enum StepCreateLicense {
 	SUBSCRIPTION = 'subscription',
 }
 
+export type CreateLicenseForm = {
+	subscription: string;
+};
+
 const CreateLicense = () => {
 	const [step, setStep] = useState<string>(StepCreateLicense.SUBSCRIPTION);
+
+	const {setValue, watch} = useForm<CreateLicenseForm>({
+		defaultValues: {
+			subscription: undefined,
+		},
+	});
+
+	const {subscription} = watch();
 
 	const StepsInformation: any = {
 		[StepCreateLicense.SUBSCRIPTION]: {
 			backStep: StepCreateLicense.SUBSCRIPTION,
-			component: <SelectSubscription />,
+			component: (
+				<SelectSubscription
+					onSelectSubscription={(subscription: any) => {
+						setValue('subscription', subscription);
+					}}
+					selectedSubscriptionValue={subscription}
+				/>
+			),
 			nextStep: StepCreateLicense.LICENSE_KEY_DETAILS,
 			stepTitle: 'Subscription',
 			title: 'Subscription',
@@ -61,7 +83,14 @@ const CreateLicense = () => {
 				<div>{StepsInformation[step].component}</div>
 
 				<div className="d-flex justify-content-between mt-6">
-					<ClayButton displayType="unstyled">Cancel</ClayButton>
+					<ClayButton
+						displayType="unstyled"
+						onClick={() => {
+							window.location.href = origin;
+						}}
+					>
+						Cancel
+					</ClayButton>
 					{step === StepCreateLicense.SUBSCRIPTION ? (
 						<ClayButton
 							displayType="primary"

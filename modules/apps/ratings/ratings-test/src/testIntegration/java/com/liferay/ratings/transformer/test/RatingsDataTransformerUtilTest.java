@@ -48,6 +48,9 @@ public class RatingsDataTransformerUtilTest {
 
 	@BeforeClass
 	public static void setUpClass() {
+		_portletRatingsDefinitionValuesMap =
+			PortletRatingsDefinitionUtil.getPortletRatingsDefinitionValuesMap();
+
 		Bundle bundle = FrameworkUtil.getBundle(
 			RatingsDataTransformerUtilTest.class);
 
@@ -68,9 +71,6 @@ public class RatingsDataTransformerUtilTest {
 					return null;
 				}),
 			MapUtil.singletonDictionary("service.ranking", Integer.MAX_VALUE));
-
-		_portletRatingsDefinitionValuesMap =
-			PortletRatingsDefinitionUtil.getPortletRatingsDefinitionValuesMap();
 	}
 
 	@AfterClass

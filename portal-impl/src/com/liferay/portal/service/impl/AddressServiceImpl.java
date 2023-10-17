@@ -9,10 +9,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.service.base.AddressServiceBaseImpl;
 import com.liferay.portal.service.permission.CommonPermissionUtil;
 

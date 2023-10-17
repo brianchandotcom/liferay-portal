@@ -479,6 +479,14 @@ public class PortletPreferencesLocalServiceWrapper
 			ownerId, ownerType, portletId, excludeDefaultPreferences);
 	}
 
+	@Override
+	public int getPortletPreferencesCount(
+		long companyId, long ownerId, int ownerType, String portletId) {
+
+		return _portletPreferencesLocalService.getPortletPreferencesCount(
+			companyId, ownerId, ownerType, portletId);
+	}
+
 	/**
 	 * Returns a range of all the portlet preferenceses.
 	 *

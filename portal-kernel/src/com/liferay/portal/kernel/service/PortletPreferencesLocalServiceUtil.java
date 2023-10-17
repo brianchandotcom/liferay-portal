@@ -415,6 +415,13 @@ public class PortletPreferencesLocalServiceUtil {
 			ownerId, ownerType, portletId, excludeDefaultPreferences);
 	}
 
+	public static int getPortletPreferencesCount(
+		long companyId, long ownerId, int ownerType, String portletId) {
+
+		return getService().getPortletPreferencesCount(
+			companyId, ownerId, ownerType, portletId);
+	}
+
 	/**
 	 * Returns a range of all the portlet preferenceses.
 	 *

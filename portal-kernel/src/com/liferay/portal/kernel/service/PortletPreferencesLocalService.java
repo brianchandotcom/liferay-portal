@@ -331,6 +331,10 @@ public interface PortletPreferencesLocalService
 		long ownerId, int ownerType, String portletId,
 		boolean excludeDefaultPreferences);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getPortletPreferencesCount(
+		long companyId, long ownerId, int ownerType, String portletId);
+
 	/**
 	 * Returns a range of all the portlet preferenceses.
 	 *

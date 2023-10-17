@@ -1,5 +1,10 @@
+.lfr__objects-custom-vertical-bar--left-closed.c-slideout-start,
+.lfr__objects-custom-vertical-bar--right-closed.c-slideout-end {
+	top: 121px;
+}
+
 .lfr-objects__model-builder-content {
-    display: flex;
-	height: calc(100vh - 129px);
+	display: flex;
+	height: calc(100vh - 121px);
 	width: 100%;
 }

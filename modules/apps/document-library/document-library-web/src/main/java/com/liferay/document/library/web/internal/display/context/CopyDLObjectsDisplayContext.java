@@ -128,6 +128,10 @@ public class CopyDLObjectsDisplayContext {
 					_getSourceFolderId(), getSourceRepositoryId())));
 	}
 
+	public long getSize() {
+		return _size;
+	}
+
 	public long getSourceRepositoryId() {
 		if (_sourceRepositoryId != 0) {
 			return _sourceRepositoryId;
@@ -137,6 +141,10 @@ public class CopyDLObjectsDisplayContext {
 			_httpServletRequest, "sourceRepositoryId");
 
 		return _sourceRepositoryId;
+	}
+
+	public void setSize(long size) {
+		_size = size;
 	}
 
 	public void setViewAttributes() {
@@ -204,6 +212,7 @@ public class CopyDLObjectsDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _redirect;
+	private long _size;
 	private long _sourceFolderId = -1;
 	private long _sourceRepositoryId;
 	private final ThemeDisplay _themeDisplay;

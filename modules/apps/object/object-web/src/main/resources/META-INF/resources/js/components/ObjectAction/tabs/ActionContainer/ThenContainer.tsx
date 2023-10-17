@@ -4,6 +4,7 @@
  */
 
 import {Option, Text} from '@clayui/core';
+import DropDown from '@clayui/drop-down';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
@@ -12,13 +13,13 @@ import {
 	API,
 	Card,
 	CustomItem,
-	SelectWithOption,
 	SingleSelect,
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
 import {ActionError} from '../..';
 import {
+	ObjectOptionsListItem,
 	ObjectsOptionsList,
 	fetchObjectDefinitionFields,
 	fetchObjectDefinitions,
@@ -41,7 +42,7 @@ interface ThenContainerProps {
 	setCurrentObjectDefinitionFields: (values: ObjectField[]) => void;
 	setValues: (values: Partial<ObjectAction>) => void;
 	systemObject: boolean;
-	updateParameters: (value: string) => Promise<void>;
+	updateParameters: (value: ObjectOptionsListItem) => Promise<void>;
 	values: Partial<ObjectAction>;
 }
 
@@ -65,10 +66,6 @@ export function ThenContainer({
 	>([]);
 
 	const [objectsOptions, setObjectOptions] = useState<ObjectsOptionsList>([]);
-
-	const [selectedObjectDefinition, setSelectedObjectDefinition] = useState(
-		''
-	);
 
 	useEffect(() => {
 		if (values.objectActionExecutorKey === 'notification') {
@@ -103,8 +100,6 @@ export function ThenContainer({
 				objectDefinitionsRelationshipsURL,
 				setAddObjectEntryDefinitions,
 				setObjectOptions,
-				setSelectedObjectDefinition,
-				values,
 			});
 
 			fetchObjectDefinitionFields(
@@ -166,22 +161,58 @@ export function ThenContainer({
 				{values.objectActionExecutorKey === 'add-object-entry' && (
 					<>
 						on
-						<SelectWithOption
+						<SingleSelect
 							aria-label={Liferay.Language.get(
 								'choose-an-object'
 							)}
 							disabled={values.system}
 							error={errors.objectDefinitionExternalReferenceCode}
 							items={objectsOptions}
-							onSelectChange={(label, value) => {
-								updateParameters(value);
-								setSelectedObjectDefinition(label);
+							onSelectionChange={(value) => {
+								let selectedObjectDefinition:
+									| ObjectOptionsListItem
+									| undefined = undefined;
+
+								objectsOptions.forEach((objectOption) =>
+									objectOption.items.forEach((item) => {
+										if (
+											item.objectDefinitionExternalReferenceCode ===
+											value
+										) {
+											selectedObjectDefinition = item;
+										}
+									})
+								);
+
+								if (selectedObjectDefinition) {
+									updateParameters(selectedObjectDefinition);
+								}
 							}}
 							placeholder={Liferay.Language.get(
 								'choose-an-object'
 							)}
-							value={selectedObjectDefinition}
-						/>
+							selectedKey={
+								values.parameters
+									?.objectDefinitionExternalReferenceCode
+							}
+						>
+							{(group) => (
+								<DropDown.Group
+									header={group.label}
+									items={group.items}
+								>
+									{(item) => (
+										<Option
+											key={
+												item.objectDefinitionExternalReferenceCode
+											}
+										>
+											{item.label}
+										</Option>
+									)}
+								</DropDown.Group>
+							)}
+						</SingleSelect>
 						{values.parameters?.relatedObjectEntries !==
 							undefined && (
 							<>

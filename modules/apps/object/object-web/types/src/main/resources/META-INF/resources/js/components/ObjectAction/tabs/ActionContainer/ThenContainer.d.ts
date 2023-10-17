@@ -7,6 +7,7 @@
 
 import {CustomItem} from '@liferay/object-js-components-web';
 import {ActionError} from '../..';
+import {ObjectOptionsListItem} from '../../fetchUtil';
 import './ThenContainer.scss';
 interface ThenContainerProps {
 	errors: ActionError;
@@ -23,7 +24,7 @@ interface ThenContainerProps {
 	setCurrentObjectDefinitionFields: (values: ObjectField[]) => void;
 	setValues: (values: Partial<ObjectAction>) => void;
 	systemObject: boolean;
-	updateParameters: (value: string) => Promise<void>;
+	updateParameters: (value: ObjectOptionsListItem) => Promise<void>;
 	values: Partial<ObjectAction>;
 }
 export declare function ThenContainer({

@@ -3,21 +3,27 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {API, getLocalizableLabel} from '@liferay/object-js-components-web';
+import {API} from '@liferay/object-js-components-web';
 
 export type ObjectsOptionsList = {
+	items: ObjectOptionsListItem[];
 	label: string;
-	options: LabelValueObject[];
-	type: string;
 }[];
 
+export type ObjectOptionsListItem = {
+	isSystemObjectDefinition: boolean;
+	label?: string;
+	objectDefinitionExternalReferenceCode: string;
+	objectDefinitionId: number;
+};
+
 function fillSelect(
+	items: ObjectOptionsListItem[],
 	label: string,
-	options: LabelValueObject[],
 	objectsOptionsList: ObjectsOptionsList
 ) {
-	if (options.length) {
-		objectsOptionsList.push({label, options, type: 'group'});
+	if (items.length) {
+		objectsOptionsList.push({items, label});
 	}
 }
 
@@ -25,63 +31,46 @@ interface FetchObjectDefinitionsProps {
 	objectDefinitionsRelationshipsURL: string;
 	setAddObjectEntryDefinitions: (values: AddObjectEntryDefinitions[]) => void;
 	setObjectOptions: (values: ObjectsOptionsList) => void;
-	setSelectedObjectDefinition?: (value: string) => void;
-	values: Partial<ObjectAction>;
 }
 
 export async function fetchObjectDefinitions({
 	objectDefinitionsRelationshipsURL,
 	setAddObjectEntryDefinitions,
 	setObjectOptions,
-	setSelectedObjectDefinition,
-	values,
 }: FetchObjectDefinitionsProps) {
 	const addObjectEntryDefinitions = await API.fetchJSON<
 		AddObjectEntryDefinitions[]
 	>(objectDefinitionsRelationshipsURL);
 
-	const relatedObjects: LabelValueObject[] = [];
-	const unrelatedObjects: LabelValueObject[] = [];
+	const relatedObjects: ObjectOptionsListItem[] = [];
+	const unrelatedObjects: ObjectOptionsListItem[] = [];
 
 	addObjectEntryDefinitions?.forEach((object) => {
 		const {externalReferenceCode, id, label, system} = object;
 
 		const target = object.related ? relatedObjects : unrelatedObjects;
 
-		target.push({label, value: `${externalReferenceCode},${id},${system}`});
+		target.push({
+			isSystemObjectDefinition: system as boolean,
+			label,
+			objectDefinitionExternalReferenceCode: externalReferenceCode,
+			objectDefinitionId: id,
+		});
 	});
 
 	const objectsOptionsList: ObjectsOptionsList = [];
 
 	fillSelect(
-		Liferay.Language.get('related-objects'),
 		relatedObjects,
+		Liferay.Language.get('related-objects'),
 		objectsOptionsList
 	);
 
 	fillSelect(
-		Liferay.Language.get('unrelated-objects'),
 		unrelatedObjects,
+		Liferay.Language.get('unrelated-objects'),
 		objectsOptionsList
 	);
-
-	const {
-		objectDefinitionExternalReferenceCode,
-	} = values.parameters as ObjectActionParameters;
-
-	if (setSelectedObjectDefinition && objectDefinitionExternalReferenceCode) {
-		const {
-			defaultLanguageId,
-			label,
-			name,
-		} = await API.getObjectDefinitionByExternalReferenceCode(
-			objectDefinitionExternalReferenceCode
-		);
-
-		setSelectedObjectDefinition(
-			getLocalizableLabel(defaultLanguageId, label, name)
-		);
-	}
 
 	setObjectOptions(objectsOptionsList);
 	setAddObjectEntryDefinitions(addObjectEntryDefinitions);

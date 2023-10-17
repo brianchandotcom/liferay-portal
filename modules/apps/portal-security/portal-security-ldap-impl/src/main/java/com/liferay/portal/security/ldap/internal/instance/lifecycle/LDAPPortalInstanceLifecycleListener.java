@@ -36,7 +36,7 @@ public class LDAPPortalInstanceLifecycleListener
 
 		if (_ldapSettings.isImportOnStartup(company.getCompanyId())) {
 			try {
-				_userImporter.importUsers(company.getCompanyId());
+				_ldapUserImporter.importUsers(company.getCompanyId());
 			}
 			catch (Exception exception) {
 				_log.error(
@@ -64,6 +64,6 @@ public class LDAPPortalInstanceLifecycleListener
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	private volatile LDAPUserImporter _userImporter;
+	private volatile LDAPUserImporter _ldapUserImporter;
 
 }

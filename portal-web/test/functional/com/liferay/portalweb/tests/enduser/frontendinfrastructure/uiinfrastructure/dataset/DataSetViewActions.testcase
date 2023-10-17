@@ -817,4 +817,27 @@ definition {
 		}
 	}
 
+	@description = "LPS-192149. Verify if the URL field is mandatory"
+	@priority = 4
+	test MandatoryURLField {
+		task ("And clicks on plus button") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("Then the URL field is mandatory") {
+			AssertElementPresent(
+				key_fieldName = "URL",
+				locator1 = "DataSet#MANDATORY_FIELD");
+
+			Type(
+				key_unnamedTitle = "",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE",
+				value1 = "New Action");
+		}
+
+		task ("And is not possible to save") {
+			AssertElementPresent(locator1 = "Button#DISABLED_BUTTON");
+		}
+	}
+
 }

@@ -143,6 +143,10 @@ export default function _JournalPortlet({
 		publishingLock.unlock();
 		console.error(error);
 
+		if (error.error?.statusCode) {
+			showAlert(error.error.message);
+		}
+
 		const workflowActionInput = document.getElementById(
 			`${namespace}workflowAction`
 		);

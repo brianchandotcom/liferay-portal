@@ -153,6 +153,10 @@ const doEvaluate = debounce((fieldName, evaluatorContext, callback) => {
 		url: EVALUATOR_URL,
 	})
 		.then((newPages) => {
+			if (newPages.statusCode) {
+				callback(newPages);
+			}
+
 			const mergedPages = mergePages(
 				defaultLanguageId,
 				editingLanguageId,

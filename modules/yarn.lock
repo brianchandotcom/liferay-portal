@@ -11105,14 +11105,14 @@ metal-scrollspy@2.1.1:
     metal-position "^2.1.2"
     metal-state "^2.16.6"
 
-metal-soy-bundle@2.16.9, metal-soy-bundle@^2.16.9:
+metal-soy-bundle@^2.16.9:
   version "2.16.9"
   resolved "https://registry.yarnpkg.com/metal-soy-bundle/-/metal-soy-bundle-2.16.9.tgz#e5ecc441b60f3ce3ed3ef2df3feeca93d03ef824"
   integrity sha512-I44mk07no/F5zDDRPmR5N3aV1PjaubyPl1wTQnSZqk6GjxcIRiQDG2j5GM+egDKCcTxupibCH+eEERztIUrDXQ==
   dependencies:
     metal-incremental-dom "^2.16.9"
 
-metal-soy@2.16.9, metal-soy@^2.0.0, metal-soy@^2.13.2, metal-soy@^2.16.0, metal-soy@^2.5.18:
+metal-soy@^2.0.0, metal-soy@^2.13.2, metal-soy@^2.16.0, metal-soy@^2.5.18:
   version "2.16.9"
   resolved "https://registry.yarnpkg.com/metal-soy/-/metal-soy-2.16.9.tgz#b8be82ceb05e3234a7ab40ee6165dcfe094c13ca"
   integrity sha512-RZyThJ1nRAreb7QsTeKfTuOX9Xj7PJaLOqt/y0oGDSPLWtAFElwVIgB/AvWKTCmOLski5z8Rr+zM3ydZB/AD8g==

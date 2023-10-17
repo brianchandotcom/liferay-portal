@@ -14,4 +14,9 @@ public class CommerceAccountActionKeys {
 	public static final String MANAGE_AVAILABLE_ACCOUNTS_VIA_USER_CHANNEL_REL =
 		"MANAGE_AVAILABLE_ACCOUNTS_VIA_USER_CHANNEL_REL";
 
+	public static final String MANAGE_CHANNEL_DEFAULTS =
+		"MANAGE_CHANNEL_DEFAULTS";
+
+	public static final String VIEW_CHANNEL_DEFAULTS = "VIEW_CHANNEL_DEFAULTS";
+
 }

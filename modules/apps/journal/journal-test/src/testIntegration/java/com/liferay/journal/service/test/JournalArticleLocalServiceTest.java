@@ -1730,8 +1730,7 @@ public class JournalArticleLocalServiceTest {
 	private String _getNewTitle(Locale locale, String title) {
 		return StringBundler.concat(
 			title, StringPool.SPACE, StringPool.OPEN_PARENTHESIS,
-			_language.get(locale, "copy"), StringPool.SPACE, 1,
-			StringPool.CLOSE_PARENTHESIS);
+			_language.get(locale, "copy"), StringPool.CLOSE_PARENTHESIS);
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws Exception {

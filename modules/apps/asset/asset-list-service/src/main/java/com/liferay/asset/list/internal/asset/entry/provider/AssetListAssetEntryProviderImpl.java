@@ -12,6 +12,7 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
@@ -364,6 +365,39 @@ public class AssetListAssetEntryProviderImpl
 		return ArrayUtil.toArray(assetCategoryIdsList.toArray(new Long[0]));
 	}
 
+	private List<AssetListEntryAssetEntryRel>
+		_filterAssetListEntryAssetEntryRels(
+			List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels) {
+
+		return ListUtil.filter(
+			assetListEntryAssetEntryRels,
+			assetListEntryAssetEntryRel -> {
+				AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+					assetListEntryAssetEntryRel.getAssetEntryId());
+
+				if ((assetEntry == null) || !assetEntry.isVisible()) {
+					return false;
+				}
+
+				AssetRendererFactory<?> assetRendererFactory =
+					AssetRendererFactoryRegistryUtil.
+						getAssetRendererFactoryByClassName(
+							assetEntry.getClassName());
+
+				if (assetRendererFactory == null) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"No asset renderer factory found for class " +
+								assetEntry.getClassName());
+					}
+
+					return false;
+				}
+
+				return true;
+			});
+	}
+
 	private long[] _getAssetCategoryIds(UnicodeProperties unicodeProperties) {
 		long[] assetCategoryIds = new long[0];
 
@@ -439,11 +473,12 @@ public class AssetListAssetEntryProviderImpl
 			for (long segmentId : segmentsEntryIds) {
 				assetListEntryAssetEntryRels.addAll(
 					ListUtil.sort(
-						_assetListEntryAssetEntryRelLocalService.
-							getAssetListEntryAssetEntryRels(
-								assetListEntry.getAssetListEntryId(),
-								new long[] {segmentId}, QueryUtil.ALL_POS,
-								QueryUtil.ALL_POS),
+						_filterAssetListEntryAssetEntryRels(
+							_assetListEntryAssetEntryRelLocalService.
+								getAssetListEntryAssetEntryRels(
+									assetListEntry.getAssetListEntryId(),
+									new long[] {segmentId}, QueryUtil.ALL_POS,
+									QueryUtil.ALL_POS)),
 						Comparator.comparing(
 							AssetListEntryAssetEntryRelModel::getPosition)));
 			}
@@ -451,13 +486,15 @@ public class AssetListAssetEntryProviderImpl
 			return assetListEntryAssetEntryRels;
 		}
 
-		return _assetListEntryAssetEntryRelLocalService.
-			getAssetListEntryAssetEntryRels(
-				assetListEntry.getAssetListEntryId(),
-				new long[] {
-					_getFirstSegmentsEntryId(assetListEntry, segmentsEntryIds)
-				},
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		return _filterAssetListEntryAssetEntryRels(
+			_assetListEntryAssetEntryRelLocalService.
+				getAssetListEntryAssetEntryRels(
+					assetListEntry.getAssetListEntryId(),
+					new long[] {
+						_getFirstSegmentsEntryId(
+							assetListEntry, segmentsEntryIds)
+					},
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 	}
 
 	private String[] _getAssetTagNames(UnicodeProperties unicodeProperties) {
@@ -1087,6 +1124,9 @@ public class AssetListAssetEntryProviderImpl
 
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Reference
+	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Reference
 	private AssetHelper _assetHelper;

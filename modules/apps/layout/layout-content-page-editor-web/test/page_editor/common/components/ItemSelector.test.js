@@ -76,7 +76,7 @@ describe('ItemSelector', () => {
 		const {getByPlaceholderText} = renderItemSelector({});
 
 		expect(
-			getByPlaceholderText('select-itemSelectorLabel')
+			getByPlaceholderText('no-itemSelectorLabel-selected')
 		).toBeInTheDocument();
 	});
 

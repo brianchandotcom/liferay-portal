@@ -62,6 +62,27 @@ components:
                         name: xmlProperty
                 property-with-hyphens:
                     type: string
+        TestJSONMapAttribute:
+            description:
+                Test Component to test the generation of getValue method on DTOs when one or multiple JSON Maps are
+                present.
+            properties:
+                description:
+                    type: string
+                name:
+                    type: string
+                properties1:
+                    additionalProperties:
+                        type: object
+                    type: object
+                    x-json-map: true
+                properties2:
+                    additionalProperties:
+                        type: object
+                    type: object
+                    x-json-map: true
+            title: TestJsonMap
+            type: object
         TestNestedArrayItems:
             description:
                 Test Component to test the REST Builder support for nested array items

@@ -161,7 +161,7 @@ export function UniqueCompositeKey({
 											  )
 											: newSelectedObjectFieldsIds[0],
 									p_p_resource_id:
-										'/object_definitions/add_object_field_key_candidates',
+										'/object_definitions/add_object_field_composite_key_candidates',
 								}
 							).href;
 

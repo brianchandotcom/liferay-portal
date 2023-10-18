@@ -30,10 +30,6 @@
 	<bean class="com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershipPolicyFactoryUtil" id="com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershipPolicyFactoryUtil">
 		<property name="organizationMembershipPolicyFactory" ref="com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershipPolicyFactory" />
 	</bean>
-	<bean class="com.liferay.portal.security.membershippolicy.SiteMembershipPolicyFactoryImpl" id="com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyFactory" />
-	<bean class="com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyFactoryUtil" id="com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyFactoryUtil">
-		<property name="siteMembershipPolicyFactory" ref="com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyFactory" />
-	</bean>
 	<bean class="com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyFactoryImpl" id="com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyFactory" />
 	<bean class="com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyFactoryUtil" id="com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyFactoryUtil">
 		<property name="userGroupMembershipPolicyFactory" ref="com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyFactory" />

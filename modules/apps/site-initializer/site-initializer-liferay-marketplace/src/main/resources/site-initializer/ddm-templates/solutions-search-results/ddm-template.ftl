@@ -98,15 +98,32 @@
 						productCategories=product.categories![]
 						productDescription = stringUtil.shorten(htmlUtil.stripHtml(product.description.en_US!""), 150, "...")
 						productSpecifications = product.productSpecifications![]
-						productURL = portalURL?replace("solutions-marketplace", "p") + "/" + product.urls.en_US
 					/>
+
+					<#if product.name.en_US?has_content>
+						<#assign productName = product.name.en_US />
+					<#else>
+						<#assign productName = "" />
+					</#if>
+
+					<#if product.thumbnail?has_content>
+						<#assign productThumbnail = product.thumbnail />
+					<#else>
+						<#assign productThumbnail = "" />
+					</#if>
+
+					<#if product.urls.en_US?has_content>
+						<#assign productURL = portalURL?replace("solutions-marketplace", "p") + "/" + product.urls.en_US />
+					<#else>
+						<#assign productURL = "" />
+					</#if>
 
 					<a class="solution-search-results-card bg-white border-radius-medium d-flex flex-column mb-0 rounded text-dark text-decoration-none" href=${productURL}>
 						<div class="align-items-center d-flex image-container justify-content-center mb-3">
 							<img
-								alt=${product.name.en_US}
+								alt=${productName}
 								class="solution-search-image rounded"
-								src="${product.thumbnail}"
+								src="${productThumbnail}"
 							/>
 						</div>
 
@@ -123,7 +140,7 @@
 								</#if>
 
 								<div class="font-weight-semi-bold h2 mt-1">
-									${product.name.en_US}
+									${productName}
 								</div>
 							</div>
 						</div>

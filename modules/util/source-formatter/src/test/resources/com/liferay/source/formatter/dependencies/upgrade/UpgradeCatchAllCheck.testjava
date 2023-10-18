@@ -45,6 +45,15 @@ public class UpgradeCatchAllCheck {
 	}
 
 	public void method(
+		long cpDefinitionId, long cProductId, double priority, String type,
+		ServiceContext serviceContext) {
+
+		CPDefinitionLinkLocalServiceUtil.addCPDefinitionLinkByCProductId(123, cProductId, priority, type, serviceContext);
+		CPDefinitionLinkLocalServiceUtil.addCPDefinitionLinkByCProductId(cpDefinitionId, cProductId, priority, type, serviceContext);
+		_cpDefinitionLinkLocalService.addCPDefinitionLinkByCProductId(cpDefinitionId, cProductId, priority, type, serviceContext);
+	}
+
+	public void method(
 		long userId, long groupId, long billingAddressId,
 		long commerceAccountId, long commerceCurrencyId,
 		long commerceOrderTypeId, long commerceShippingMethodId,
@@ -142,6 +151,9 @@ public class UpgradeCatchAllCheck {
 
 	@Reference
 	private CommercePriceListLocalService _commercePriceListLocalService;
+
+	@Reference
+	private CPDefinitionLinkLocalService _cpDefinitionLinkLocalService;
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;

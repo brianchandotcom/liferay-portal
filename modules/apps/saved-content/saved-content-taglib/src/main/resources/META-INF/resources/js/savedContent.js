@@ -4,15 +4,64 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import React from 'react';
+import {fetch, openToast} from 'frontend-js-web';
+import React, {useState} from 'react';
 
-export default function savedContent({saved = true}) {
+function showNotification(message, error = false) {
+	openToast({
+		message,
+		type: error ? 'danger' : undefined,
+	});
+}
+
+export default function SavedContent({
+	saved: initialSaved,
+	savedContentURL,
+}) {
+	const [saved, setSaved] = useState(initialSaved);
+	const [loading, setLoading] = useState(false);
+
+	const handleSubmit = (event) => {
+		event.preventDefault();
+
+		setLoading(true);
+		setSaved((saved) => !saved);
+
+		fetch(savedContentURL)
+			.then((response) => response.json())
+			.then(({errorMessage, successMessage}) => {
+				if (errorMessage) {
+					showNotification(errorMessage, true);
+
+					return;
+				}
+
+				showNotification(successMessage);
+			})
+			.catch((error) => {
+				setSaved((saved) => !saved);
+				showNotification(error.message, true);
+			})
+			.finally(() => {
+				setLoading(false);
+			});
+	};
+
 	return (
-		<ClayButtonWithIcon
-			displayType="secondary"
-			monospaced
-			size="sm"
-			symbol={saved ? 'bookmarks-full' : 'bookmarks'}
-		/>
+		<form onSubmit={handleSubmit}>
+			<ClayButtonWithIcon
+				disabled={loading}
+				displayType="secondary"
+				monospaced
+				size="sm"
+				symbol={saved ? 'bookmarks-full' : 'bookmarks'}
+				title={
+					saved
+						? Liferay.Language.get('remove-content')
+						: Liferay.Language.get('save-content')
+				}
+				type="submit"
+			/>
+		</form>
 	);
 }

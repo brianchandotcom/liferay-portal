@@ -104,9 +104,6 @@ export default function PageTemplateModal({
 						)
 					);
 				}
-				else {
-					throw new Error();
-				}
 			})
 			.catch((error) => {
 				console.error(error);

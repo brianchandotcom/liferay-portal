@@ -325,19 +325,6 @@ public class GroupServiceTest {
 			initialTagsCount + 1,
 			_assetTagLocalService.getGroupTagsCount(group.getGroupId()));
 
-		_groupService.deleteGroup(group.getGroupId());
-
-		Assert.assertEquals(
-			initialTagsCount,
-			_assetTagLocalService.getGroupTagsCount(group.getGroupId()));
-	}
-
-	@Test
-	public void testDeleteSiteRemovesSiteResourcePermissions()
-		throws Exception {
-
-		Group group = GroupTestUtil.addGroup();
-
 		Assert.assertEquals(
 			1,
 			_resourcePermissionLocalService.getResourcePermissionsCount(
@@ -357,6 +344,10 @@ public class GroupServiceTest {
 				String.valueOf(group.getGroupId())));
 
 		_groupService.deleteGroup(group.getGroupId());
+
+		Assert.assertEquals(
+			initialTagsCount,
+			_assetTagLocalService.getGroupTagsCount(group.getGroupId()));
 
 		Assert.assertEquals(
 			0,

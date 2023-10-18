@@ -265,7 +265,8 @@ export function getProductTypeFromSpecifications(
 
 			if (productType === 'cloud') {
 				productType = 'Cloud';
-			} else if (productType === 'dxp') {
+			}
+			else if (productType === 'dxp') {
 				productType = 'DXP';
 			}
 		}

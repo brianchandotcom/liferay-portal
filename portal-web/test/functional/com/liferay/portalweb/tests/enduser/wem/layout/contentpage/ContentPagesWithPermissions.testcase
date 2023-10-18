@@ -127,15 +127,8 @@ definition {
 		task ("Given a page marketer with update-basic permission has a content page") {
 			User.logoutAndLoginPG(userLoginEmailAddress = "test@liferay.com");
 
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "UPDATE_LAYOUT_BASIC",
-				resourceName = "com.liferay.portal.kernel.model.Layout",
-				roleTitle = ${randomRoleKey},
-				roleType = "site");
-
-			Permissions.removePermissionViaAPI(
-				resourceAction = "UPDATE_LAYOUT_LIMITED",
-				resourceName = "com.liferay.portal.kernel.model.Layout",
+			Permissions.definePermissionsViaJSONAPI(
+				resourceNameActionList = "com.liferay.portal.kernel.model.Layout,UPDATE_LAYOUT_BASIC,UPDATE_LAYOUT_LIMITED",
 				roleTitle = ${randomRoleKey},
 				roleType = "site");
 

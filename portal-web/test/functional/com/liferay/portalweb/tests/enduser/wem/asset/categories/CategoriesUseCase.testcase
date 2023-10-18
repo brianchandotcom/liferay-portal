@@ -553,51 +553,8 @@ definition {
 		}
 
 		task ("Define the permissions") {
-			for (var resourceActionIndex : list "ADD_VOCABULARY,ADD_CATEGORY") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = ${resourceActionIndex},
-					resourceName = "com.liferay.asset.categories",
-					roleTitle = "Category Role Name",
-					roleType = "site");
-			}
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW_SITE_ADMINISTRATION",
-				resourceName = "com.liferay.portal.kernel.model.Group",
-				roleTitle = "Category Role Name",
-				roleType = "site");
-
-			for (var resourceActionIndex : list "VIEW,CONFIGURATION,ACCESS_IN_CONTROL_PANEL") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = ${resourceActionIndex},
-					resourceName = "com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet",
-					roleTitle = "Category Role Name",
-					roleType = "site");
-			}
-
-			for (var resourceActionIndex : list "ADD_TO_PAGE,PERMISSIONS,CONFIGURATION,VIEW") {
-				Permissions.definePermissionViaJSONAPI(
-					resourceAction = ${resourceActionIndex},
-					resourceName = "com_liferay_asset_categories_navigation_web_portlet_AssetCategoriesNavigationPortlet",
-					roleTitle = "Category Role Name",
-					roleType = "site");
-			}
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW_SITE_ADMINISTRATION",
-				resourceName = "com.liferay.portal.kernel.model.Group",
-				roleTitle = "Category Role Name",
-				roleType = "site");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW",
-				resourceName = "com.liferay.asset.kernel.model.AssetCategory",
-				roleTitle = "Category Role Name",
-				roleType = "site");
-
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "VIEW",
-				resourceName = "com.liferay.asset.kernel.model.AssetVocabulary",
+			Permissions.definePermissionsViaJSONAPI(
+				resourceNameActionList = "com.liferay.asset.categories,ADD_VOCABULARY,ADD_CATEGORY:com.liferay.portal.kernel.model.Group,VIEW_SITE_ADMINISTRATION:com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet,VIEW,CONFIGURATION,ACCESS_IN_CONTROL_PANEL:com_liferay_asset_categories_navigation_web_portlet_AssetCategoriesNavigationPortlet,ADD_TO_PAGE,PERMISSIONS,CONFIGURATION,VIEW:com.liferay.asset.kernel.model.AssetCategory,VIEW:com.liferay.asset.kernel.model.AssetVocabulary,VIEW",
 				roleTitle = "Category Role Name",
 				roleType = "site");
 		}

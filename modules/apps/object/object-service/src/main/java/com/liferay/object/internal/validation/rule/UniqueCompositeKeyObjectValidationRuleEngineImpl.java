@@ -128,8 +128,7 @@ public class UniqueCompositeKeyObjectValidationRuleEngineImpl
 			Predicate uniqueCompositeKeyObjectFieldPredicate =
 				ObjectEntrySearchUtil.getUniqueCompositeKeyObjectFieldPredicate(
 					(Column<?, Object>)column, objectField.getDBType(),
-					GetterUtil.getString(
-						entryValues.get(objectField.getName())));
+					String.valueOf(entryValues.get(objectField.getName())));
 
 			if (predicate == null) {
 				predicate = uniqueCompositeKeyObjectFieldPredicate;

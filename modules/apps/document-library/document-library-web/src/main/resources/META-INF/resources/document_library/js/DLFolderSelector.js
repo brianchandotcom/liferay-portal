@@ -122,17 +122,17 @@ const DLFolderSelector = ({
 		})
 			.then((response) => response.json())
 			.then(({errorMessages, errorSize}) => {
-				if (errorMessages) {
-					showErrorMessage(
-						formatErrorMessages(errorMessages, errorSize)
-					);
-				}
-				else if (errorSize) {
+				if (errorSize > 10) {
 					showErrorMessage(
 						sub(
 							Liferay.Language.get('x-items-could-not-be-copied'),
 							errorSize
 						)
+					);
+				}
+				else if (errorMessages) {
+					showErrorMessage(
+						formatErrorMessages(errorMessages, errorSize)
 					);
 				}
 				else {

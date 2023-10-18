@@ -779,14 +779,14 @@
 		}
 	},
 	{
-		"dataType": 15,
+		"dataType": 20,
 		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
 		"name": "Profile",
 		"properties": {
 			"height": "150",
 			"hidden": false,
 			"indexType": 2,
-			"localizeField": false,
+			"localizeField": true,
 			"localizeFieldName": true,
 			"secret": false,
 			"visibleWithUpdatePermission": false,
@@ -818,6 +818,20 @@
 			"localizeFieldName": false,
 			"secret": false,
 			"visibleWithUpdatePermission": false,
+			"width": "0"
+		}
+	},
+	{
+		"dataType": 15,
+		"modelResource": "com.liferay.commerce.product.model.CPDefinition",
+		"name": "Source",
+		"properties": {
+			"hidden": false,
+			"indexType": 0,
+			"localizeField": false,
+			"localizeFieldName": false,
+			"secret": false,
+			"visibleWithUpdatePermission": true,
 			"width": "0"
 		}
 	},

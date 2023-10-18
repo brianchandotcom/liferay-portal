@@ -24,6 +24,8 @@
 		props='<%=
 			HashMapBuilder.<String, Object>put(
 				"saved", false
+			).put(
+				"savedContentURL", "/"
 			).build()
 		%>'
 	/>

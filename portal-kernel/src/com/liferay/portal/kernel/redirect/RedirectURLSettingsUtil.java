@@ -5,8 +5,8 @@
 
 package com.liferay.portal.kernel.redirect;
 
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Drew Brokke
@@ -14,24 +14,32 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 public class RedirectURLSettingsUtil {
 
 	public static String[] getAllowedDomains(long companyId) {
+		RedirectURLSettings redirectURLSettings =
+			_redirectURLSettingsSnapshot.get();
+
 		return GetterUtil.getStringValues(
-			_redirectURLSettings.getAllowedDomains(companyId));
+			redirectURLSettings.getAllowedDomains(companyId));
 	}
 
 	public static String[] getAllowedIPs(long companyId) {
+		RedirectURLSettings redirectURLSettings =
+			_redirectURLSettingsSnapshot.get();
+
 		return GetterUtil.getStringValues(
-			_redirectURLSettings.getAllowedIPs(companyId),
+			redirectURLSettings.getAllowedIPs(companyId),
 			new String[] {"127.0.0.1", "SERVER_IP"});
 	}
 
 	public static String getSecurityMode(long companyId) {
+		RedirectURLSettings redirectURLSettings =
+			_redirectURLSettingsSnapshot.get();
+
 		return GetterUtil.getString(
-			_redirectURLSettings.getSecurityMode(companyId), "ip");
+			redirectURLSettings.getSecurityMode(companyId), "ip");
 	}
 
-	private static volatile RedirectURLSettings _redirectURLSettings =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			RedirectURLSettings.class, RedirectURLSettingsUtil.class,
-			"_redirectURLSettings", false);
+	private static final Snapshot<RedirectURLSettings>
+		_redirectURLSettingsSnapshot = new Snapshot<>(
+			RedirectURLSettingsUtil.class, RedirectURLSettings.class);
 
 }

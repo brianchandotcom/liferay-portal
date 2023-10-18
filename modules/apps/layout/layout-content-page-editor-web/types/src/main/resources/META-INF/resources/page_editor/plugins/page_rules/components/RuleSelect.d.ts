@@ -3,19 +3,19 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {InternalDispatch} from '@clayui/shared';
-import React from 'react';
-interface RuleSelectProps {
-	items: {
+/// <reference types="react" />
+
+interface RuleSelectProps<T> {
+	items: ReadonlyArray<{
 		label: string;
-		value: string;
-	}[];
-	onSelectionChange: InternalDispatch<React.Key>;
+		value: T;
+	}>;
+	onSelectionChange: (selection: T) => void;
 	selectedKey?: string;
 }
-export default function RuleSelect({
+export default function RuleSelect<T extends string>({
 	items,
 	onSelectionChange,
 	selectedKey,
-}: RuleSelectProps): JSX.Element;
+}: RuleSelectProps<T>): JSX.Element;
 export {};

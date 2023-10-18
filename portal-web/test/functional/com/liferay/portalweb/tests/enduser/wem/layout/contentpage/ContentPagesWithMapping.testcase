@@ -1578,25 +1578,9 @@ definition {
 
 			NavItem.gotoStructures();
 
-			WebContentStructures.addCP(structureName = "WC Structure Name");
-
-			DataEngine.addFieldsWithDefaultReference(fieldNameList = "Text,Rich Text,Date");
-
-			DataEngine.addField(
-				fieldFieldLabel = "Text Box",
-				fieldName = "Text",
-				fieldType = "Multiple Lines");
-
-			DataEngine.addField(
-				fieldFieldLabel = "Integer",
-				fieldName = "Numeric");
-
-			DataEngine.addField(
-				fieldFieldLabel = "Decimal",
-				fieldName = "Numeric",
-				numericType = "Decimal");
-
-			WebContentStructures.saveCP();
+			WebContentStructures.importStructure(
+				structureName = "WC Structure Name",
+				uploadFileName = "Structure_All_Fields.json");
 		}
 
 		task ("Add a web content based on new structure") {

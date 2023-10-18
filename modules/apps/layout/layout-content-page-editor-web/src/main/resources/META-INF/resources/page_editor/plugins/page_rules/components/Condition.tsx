@@ -3,10 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React from 'react';
+import React, {FC} from 'react';
 
+import RulesService from '../../../app/services/RulesService';
 import {CACHE_KEYS} from '../../../app/utils/cache';
-import useCache, {Fetcher} from '../../../app/utils/useCache';
+import useCache from '../../../app/utils/useCache';
 import RuleBuilderItem from './RuleBuilderItem';
 import RuleSelect from './RuleSelect';
 
@@ -19,27 +20,26 @@ export interface Condition {
 
 interface ConditionProps {
 	condition: Condition;
-	fetcher: Fetcher;
 	onConditionChange: (condition: Condition) => void;
 	onDeleteCondition: () => void;
 }
 
 const TYPE_VALUES = {
 	user: 'user',
-};
+} as const;
 
 const TYPE_ITEMS = [
 	{
 		label: Liferay.Language.get('user'),
 		value: TYPE_VALUES.user,
 	},
-];
+] as const;
 
 const CONDITION_VALUES = {
 	role: 'role',
 	segment: 'segment',
 	user: 'user',
-};
+} as const;
 
 const CONDITION_ITEMS = {
 	[TYPE_VALUES.user]: [
@@ -57,19 +57,23 @@ const CONDITION_ITEMS = {
 			value: CONDITION_VALUES.segment,
 		},
 	],
-};
+} as const;
 
-const VALUE_SELECTOR_COMPONENTS = {
+const VALUE_SELECTOR_COMPONENTS: Record<
+	typeof CONDITION_VALUES[keyof typeof CONDITION_VALUES],
+	FC<SelectorProps> | null
+> = {
 	[CONDITION_VALUES.user]: UserSelector,
+	[CONDITION_VALUES.role]: null,
+	[CONDITION_VALUES.segment]: null,
 };
 
 export default function Condition({
 	condition,
-	fetcher,
 	onConditionChange,
 	onDeleteCondition,
 }: ConditionProps) {
-	const ValueSelectorComponent: any = condition.condition
+	const ValueSelectorComponent: FC<SelectorProps> | null = condition.condition
 		? VALUE_SELECTOR_COMPONENTS[condition.condition]
 		: null;
 
@@ -80,7 +84,7 @@ export default function Condition({
 		>
 			<RuleSelect
 				items={TYPE_ITEMS}
-				onSelectionChange={(type: any) =>
+				onSelectionChange={(type) =>
 					onConditionChange({...condition, type})
 				}
 				selectedKey={condition.type}
@@ -89,7 +93,7 @@ export default function Condition({
 			{condition.type && CONDITION_ITEMS[condition.type] ? (
 				<RuleSelect
 					items={CONDITION_ITEMS[condition.type]}
-					onSelectionChange={(selectedCondition: any) =>
+					onSelectionChange={(selectedCondition) =>
 						onConditionChange({
 							...condition,
 							condition: selectedCondition,
@@ -101,23 +105,28 @@ export default function Condition({
 			) : null}
 
 			{ValueSelectorComponent ? (
-				<ValueSelectorComponent fetcher={fetcher} />
+				<ValueSelectorComponent
+					onValueChanged={(value) =>
+						onConditionChange({
+							...condition,
+							value,
+						})
+					}
+					value={condition.value}
+				/>
 			) : null}
 		</RuleBuilderItem>
 	);
 }
 
-function UserSelector({
-	fetcher,
-	onValueChanged,
-	value,
-}: {
-	fetcher: Fetcher;
+interface SelectorProps {
 	onValueChanged: (value: string) => void;
-	value: string;
-}) {
-	const users: {screenName: string; userId: string}[] = useCache({
-		fetcher,
+	value: string | undefined;
+}
+
+function UserSelector({onValueChanged, value}: SelectorProps) {
+	const users = useCache({
+		fetcher: () => RulesService.getUsers(),
 		key: [CACHE_KEYS.users],
 	});
 

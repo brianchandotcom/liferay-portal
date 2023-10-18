@@ -13,7 +13,6 @@ import React, {useState} from 'react';
 
 import {v4 as uuidv4} from 'uuid';
 
-import {Fetcher} from '../../../app/utils/useCache';
 import Action, {Action as ActionType} from './Action';
 import Condition, {Condition as ConditionType} from './Condition';
 
@@ -102,7 +101,7 @@ export function RuleBuilderActionSection() {
 	);
 }
 
-export function RuleBuilderConditionSection({fetcher}: {fetcher: Fetcher}) {
+export function RuleBuilderConditionSection() {
 	const [selectedConditionType, setSelectedConditonType] = useState('all');
 
 	const [conditions, setConditions] = useState<ConditionType[]>([]);
@@ -135,8 +134,8 @@ export function RuleBuilderConditionSection({fetcher}: {fetcher: Fetcher}) {
 										value: 'all',
 									},
 								]}
-								onSelectionChange={(key: any) =>
-									setSelectedConditonType(key)
+								onSelectionChange={(key: React.Key) =>
+									setSelectedConditonType(key as string)
 								}
 								selectedKey={selectedConditionType}
 							>
@@ -163,7 +162,6 @@ export function RuleBuilderConditionSection({fetcher}: {fetcher: Fetcher}) {
 				{conditions.map((condition, index) => (
 					<Condition
 						condition={condition}
-						fetcher={fetcher}
 						key={condition.id}
 						onConditionChange={(condition) =>
 							setConditions((previousConditions) => {

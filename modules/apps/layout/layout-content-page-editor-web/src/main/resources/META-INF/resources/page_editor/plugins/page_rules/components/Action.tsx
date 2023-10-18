@@ -31,14 +31,14 @@ const TYPE_ITEMS = [
 		label: Liferay.Language.get('hide'),
 		value: 'hide',
 	},
-];
+] as const;
 
 const ACTION_ITEMS = [
 	{
 		label: Liferay.Language.get('fragment'),
 		value: 'fragment',
 	},
-];
+] as const;
 
 export default function Condition({
 	action,
@@ -49,16 +49,14 @@ export default function Condition({
 		<RuleBuilderItem onDeleteButtonClick={onDeleteAction} type="action">
 			<RuleSelect
 				items={TYPE_ITEMS}
-				onSelectionChange={(type: any) =>
-					onActionChange({...action, type})
-				}
+				onSelectionChange={(type) => onActionChange({...action, type})}
 				selectedKey={action.type}
 			/>
 
 			{action.type ? (
 				<RuleSelect
 					items={ACTION_ITEMS}
-					onSelectionChange={(selectedAction: any) =>
+					onSelectionChange={(selectedAction) =>
 						onActionChange({
 							...action,
 							action: selectedAction,

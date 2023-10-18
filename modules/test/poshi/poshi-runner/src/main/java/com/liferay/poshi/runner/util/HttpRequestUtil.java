@@ -130,10 +130,6 @@ public class HttpRequestUtil {
 		return httpResponse.getResponseErrorMessage();
 	}
 
-	public static String getResponseTime(HttpResponse httpResponse) {
-		return httpResponse.getResponseTime();
-	}
-
 	public static Map<String, List<String>> getResponseHeaderFields(
 		HttpResponse httpResponse) {
 
@@ -148,6 +144,10 @@ public class HttpRequestUtil {
 		).get(
 			headerKey
 		).toString();
+	}
+
+	public static String getResponseTime(HttpResponse httpResponse) {
+		return httpResponse.getResponseTime();
 	}
 
 	public static String getStatusCode(HttpResponse httpResponse) {
@@ -345,6 +345,14 @@ public class HttpRequestUtil {
 	public static class HttpResponse {
 
 		public HttpResponse(
+			String body, String errorMessage, int statusCode,
+			long responseTime) {
+
+			new HttpResponse(
+				body, errorMessage, null, statusCode, responseTime);
+		}
+
+		public HttpResponse(
 			String body, String errorMessage, Map<String, List<String>> headers,
 			int statusCode, long responseTime) {
 
@@ -363,12 +371,12 @@ public class HttpRequestUtil {
 			return errorMessage;
 		}
 
-		public String getResponseTime() {
-			return responseTime;
-		}
-		
 		public Map<String, List<String>> getResponseHeaders() {
 			return headers;
+		}
+
+		public String getResponseTime() {
+			return responseTime;
 		}
 
 		public String getStatusCode() {
@@ -377,8 +385,8 @@ public class HttpRequestUtil {
 
 		protected String body;
 		protected String errorMessage;
-		protected String responseTime;
 		protected Map<String, List<String>> headers;
+		protected String responseTime;
 		protected String statusCode;
 
 	}

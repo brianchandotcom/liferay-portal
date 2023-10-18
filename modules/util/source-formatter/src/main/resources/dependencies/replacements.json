@@ -165,5 +165,14 @@
 		"from": "SUBSCRIPTION_STATUS",
 		"issueKey": "LPS-197981",
 		"to": "COMMERCE_SUBSCRIPTION_STATUS"
+	},
+	{
+		"classNames": [
+			"CommerceOrderLocalService",
+			"CommerceOrderLocalServiceUtil"
+		],
+		"from": "addCommerceOrder(long, long, long, long, long, long, long, long, String, int, int, int, int, int, int, int, String, BigDecimal, String, BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal, BigDecimal, ServiceContext)",
+		"issueKey": "LPS-198138",
+		"to": "addCommerceOrder(param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, param#8#, param#9#, param#10#, param#11#, param#12#, param#13#, param#14#, param#15#, param#16#, param#17#, param#18#)"
 	}
 ]

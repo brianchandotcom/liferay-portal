@@ -66,11 +66,20 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 
 	private boolean _isAnnotationParameter(String content, String line) {
 		int x = -1;
+		int y = -1;
+		int z = -1;
 
 		while (true) {
 			x = line.indexOf(StringPool.COMMA_AND_SPACE, x + 1);
 
 			if (x == -1) {
+				break;
+			}
+
+			y = line.indexOf(StringPool.OPEN_PARENTHESIS);
+			z = line.lastIndexOf(StringPool.CLOSE_PARENTHESIS);
+
+			if ((y != -1) && (z != -1) && (x > y) && (z > x)) {
 				break;
 			}
 

@@ -13,6 +13,7 @@ definition {
 			contactName = ${contactName},
 			contactPhone = ${contactPhone},
 			country = ${country},
+			emailAddress = ${emailAddress},
 			key_status = ${key_status},
 			messageEVPManager = ${messageEVPManager},
 			organizationId = ${organizationId},

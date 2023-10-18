@@ -19,29 +19,29 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/c/evporganizations \
-				-u test@liferay.com:${password} \
+				-u  ${emailAddress}:${password} \
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
-					"accountOwnerName": "${accountOwnerName}",
+					"zip": "${zipCode}",
+					"country": "${country}",
+					"messageEVPManager": "${messageEVPManager}",
 					"bankingInfo": "${bankingInfo}",
+					"organizationName": "${organizationName}",
 					"city": "${city}",
 					"contactEmail": "${contactEmail}",
 					"contactName": "${contactName}",
-					"contactPhone": "${contactPhone}",
-					"country": "${country}",
-					"messageEVPManager": "${messageEVPManager}",
-					"organizationName": "${organizationName}",
-					"organizationSiteSocialMediaLink": "${organizationSite}",
+					"smallDescription": "${smallDescription}",
 					"organizationStatus": {
 						"key": "${key_status}",
 						"name": "${status}"
 					},
-					"smallDescription": "${smallDescription}",
-					"state": "${state}",
+					"organizationSiteSocialMediaLink": "${organizationSite}",
 					"street": "${street}",
 					"taxId": "${taxId}",
-					"zip": "${zipCode}"
+					"state": "${state}",
+					"accountOwnerName": "${accountOwnerName}",
+					"contactPhone": "${contactPhone}"
 				}'
 		''';
 

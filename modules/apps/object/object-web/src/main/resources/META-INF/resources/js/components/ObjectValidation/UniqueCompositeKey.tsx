@@ -401,7 +401,7 @@ export function UniqueCompositeKey({
 					filter={true}
 					firstColumnHeader={Liferay.Language.get('label')}
 					onDeleteColumn={(objectFieldName) => {
-						const canNotDeleteObjectField = builderScreenItems.some(
+						const cannotDeleteObjectField = builderScreenItems.some(
 							(builderScreenItem) =>
 								builderScreenItem.objectFieldName ===
 									objectFieldName &&
@@ -414,7 +414,7 @@ export function UniqueCompositeKey({
 								)
 						);
 
-						if (canNotDeleteObjectField) {
+						if (cannotDeleteObjectField) {
 							const parentWindow = Liferay.Util.getOpener();
 
 							parentWindow.Liferay.fire(

@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,7 +22,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -45,7 +45,20 @@ import javax.servlet.http.Part;
  */
 public class RESTClientHttpRequest implements HttpServletRequest {
 
-	public RESTClientHttpRequest(HttpServletRequest httpServletRequest) {
+	public RESTClientHttpRequest(
+		Map<String, Object> contextObjects,
+		HttpServletRequest httpServletRequest) {
+
+		_attributes = HashMapBuilder.<String, Object>put(
+			WebKeys.USER,
+			() -> {
+				if (contextObjects.containsKey("user")) {
+					return contextObjects.get("user");
+				}
+
+				return null;
+			}
+		).build();
 		_headers = HashMapBuilder.put(
 			HttpHeaders.ACCEPT, ContentTypes.APPLICATION_JSON
 		).put(
@@ -417,7 +430,7 @@ public class RESTClientHttpRequest implements HttpServletRequest {
 		return _httpServletRequest.upgrade(handlerClass);
 	}
 
-	private final Map<String, Object> _attributes = new HashMap<>();
+	private final Map<String, Object> _attributes;
 	private final Map<String, String> _headers;
 	private final HttpServletRequest _httpServletRequest;
 

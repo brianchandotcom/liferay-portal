@@ -1266,6 +1266,32 @@ definition {
 			locator1 = "Permissions#CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX");
 	}
 
+	@description = "LPS-197275 - Assert client extension changes can display in publications"
+	@priority = 3
+	test ClientExtensionChangesCanDisplayInPublications {
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		ClientExtensionGeneral.goToRemoteAppsPortlet();
+
+		ClientExtensionGeneral.addCustomElement(
+			entryHtmlName = "vanilla-counter",
+			entryName = "Vanilla Counter",
+			entryURL = " http://remote-component-test.wincent.com/packages/vanilla-counter/index.js");
+
+		PublicationsNavigator.gotoReviewChanges(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Client Extension Entry",
+			changeSite = "Global",
+			changeTitle = "Vanilla Counter",
+			changeType = "Added",
+			changeUser = "Test Test");
+	}
+
 	@description = "This is a use case for LPS-186677 - As a publication user, I would like to configure the context view to display production entities."
 	@priority = 4
 	test ConfigureContextViewToDisplayProductionEntities {

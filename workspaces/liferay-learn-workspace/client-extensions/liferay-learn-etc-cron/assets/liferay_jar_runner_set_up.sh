@@ -37,7 +37,7 @@ function copy_images {
 	# Include must come before exclude.
 	#
 
-	rsync --include="images/*" --include="*/" --exclude="*" --prune-empty-dirs --recursive ~/liferay-learn/docs /public_html/images
+	rsync --include="images/*" --include="*/" --exclude="*" --prune-empty-dirs --recursive ~/liferay-learn/docs/ /public_html/images
 }
 
 function generate_zip_files {

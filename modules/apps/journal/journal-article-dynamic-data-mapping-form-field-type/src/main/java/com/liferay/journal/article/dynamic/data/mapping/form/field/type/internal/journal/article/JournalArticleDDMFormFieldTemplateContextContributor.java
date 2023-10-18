@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Locale;
 import java.util.Map;
@@ -104,6 +105,7 @@ public class JournalArticleDDMFormFieldTemplateContextContributor
 			new JournalArticleItemSelectorReturnType());
 		infoItemItemSelectorCriterion.setRefererClassPK(
 			_getRefererClassPK(httpServletRequest));
+		infoItemItemSelectorCriterion.setStatus(WorkflowConstants.STATUS_ANY);
 
 		return String.valueOf(
 			_itemSelector.getItemSelectorURL(

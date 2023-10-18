@@ -67,7 +67,6 @@ import com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershi
 import com.liferay.portal.kernel.security.membershippolicy.OrganizationMembershipPolicyFactory;
 import com.liferay.portal.kernel.security.membershippolicy.RoleMembershipPolicy;
 import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicy;
-import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyFactory;
 import com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicy;
 import com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyFactory;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -104,6 +103,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.log4j.Log4JUtil;
 import com.liferay.portal.security.membershippolicy.RoleMembershipPolicyFactoryUtil;
+import com.liferay.portal.security.membershippolicy.SiteMembershipPolicyFactoryUtil;
 import com.liferay.portal.util.MaintenanceUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.ShutdownUtil;
@@ -914,7 +914,7 @@ public class EditServerMVCActionCommand
 		roleMembershipPolicy.verifyPolicy();
 
 		SiteMembershipPolicy siteMembershipPolicy =
-			_siteMembershipPolicyFactory.getSiteMembershipPolicy();
+			SiteMembershipPolicyFactoryUtil.getSiteMembershipPolicy();
 
 		siteMembershipPolicy.verifyPolicy();
 
@@ -1000,9 +1000,6 @@ public class EditServerMVCActionCommand
 
 	@Reference
 	private SingleVMPool _singleVMPool;
-
-	@Reference
-	private SiteMembershipPolicyFactory _siteMembershipPolicyFactory;
 
 	@Reference(target = "(default=true)")
 	private Store _store;

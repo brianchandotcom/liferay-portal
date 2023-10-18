@@ -145,15 +145,7 @@ public class LayoutActionDropdownItemsProvider {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
 						() -> _isShowConvertToPageTemplateAction(layout),
-						dropdownItem -> {
-							dropdownItem.putData(
-								"action", "convertToPageTemplate");
-							dropdownItem.setIcon("page-template");
-							dropdownItem.setLabel(
-								LanguageUtil.get(
-									_httpServletRequest,
-									"convert-to-page-template"));
-						}
+						_getConvertToPageTemplateActionUnsafeConsumer(layout)
 					).addContext(
 						_getCopyLayoutWithPermissionsActionUnsafeConsumer(
 							layout)
@@ -274,6 +266,26 @@ public class LayoutActionDropdownItemsProvider {
 			dropdownItem.setLabel(
 				LanguageUtil.get(
 					_httpServletRequest, "convert-to-content-page..."));
+		};
+	}
+
+	private UnsafeConsumer<DropdownItem, Exception>
+		_getConvertToPageTemplateActionUnsafeConsumer(Layout layout) {
+
+		return dropdownItem -> {
+			if (_layoutActionsHelper.isShowCopyLayoutAction(
+					layout, _layoutsAdminDisplayContext.getSelGroup())) {
+
+				dropdownItem.putData("action", "convertToPageTemplate");
+			}
+			else {
+				dropdownItem.setDisabled(true);
+			}
+
+			dropdownItem.setIcon("page-template");
+			dropdownItem.setLabel(
+				LanguageUtil.get(
+					_httpServletRequest, "convert-to-page-template"));
 		};
 	}
 

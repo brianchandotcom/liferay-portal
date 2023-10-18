@@ -20,12 +20,11 @@ import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
 import com.liferay.oauth2.provider.util.builder.OAuth2ScopeBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
+import com.liferay.portal.instance.lifecycle.InitialRequestPortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
@@ -77,17 +76,13 @@ import org.osgi.service.component.annotations.Reference;
 	service = PortalInstanceLifecycleListener.class
 )
 public class AnalyticsCloudPortalInstanceLifecycleListener
-	extends BasePortalInstanceLifecycleListener {
-
-	@Override
-	public void portalInstanceRegistered(Company company) throws Exception {
-		OAuth2Application oAuth2Application = _addOAuth2Application(company);
-
-		_addResourcePermissions(oAuth2Application);
-	}
+	extends InitialRequestPortalInstanceLifecycleListener {
 
 	@Activate
+	@Override
 	protected void activate(BundleContext bundleContext) {
+		super.activate(bundleContext);
+
 		_scopeAliasesList = new ArrayList<>(_SAP_ENTRY_OBJECT_ARRAYS.length);
 
 		for (String[] sapEntryObjectArray : _SAP_ENTRY_OBJECT_ARRAYS) {
@@ -116,7 +111,14 @@ public class AnalyticsCloudPortalInstanceLifecycleListener
 		_serviceRegistration.unregister();
 	}
 
-	private OAuth2Application _addOAuth2Application(Company company)
+	@Override
+	protected void doPortalInstanceRegistered(long companyId) throws Exception {
+		OAuth2Application oAuth2Application = _addOAuth2Application(companyId);
+
+		_addResourcePermissions(oAuth2Application);
+	}
+
+	private OAuth2Application _addOAuth2Application(long companyId)
 		throws Exception {
 
 		DynamicQuery dynamicQuery =
@@ -124,7 +126,7 @@ public class AnalyticsCloudPortalInstanceLifecycleListener
 
 		Property companyIdProperty = PropertyFactoryUtil.forName("companyId");
 
-		dynamicQuery.add(companyIdProperty.eq(company.getCompanyId()));
+		dynamicQuery.add(companyIdProperty.eq(companyId));
 
 		Property nameProperty = PropertyFactoryUtil.forName("name");
 
@@ -137,13 +139,13 @@ public class AnalyticsCloudPortalInstanceLifecycleListener
 			return oAuth2Applications.get(0);
 		}
 
-		User user = _userLocalService.getGuestUser(company.getCompanyId());
+		User user = _userLocalService.getGuestUser(companyId);
 
-		_addSAPEntries(company.getCompanyId(), user.getUserId());
+		_addSAPEntries(companyId, user.getUserId());
 
 		OAuth2Application oAuth2Application =
 			_oAuth2ApplicationLocalService.addOAuth2Application(
-				company.getCompanyId(), user.getUserId(), user.getScreenName(),
+				companyId, user.getUserId(), user.getScreenName(),
 				new ArrayList<GrantType>() {
 					{
 						add(GrantType.AUTHORIZATION_CODE);

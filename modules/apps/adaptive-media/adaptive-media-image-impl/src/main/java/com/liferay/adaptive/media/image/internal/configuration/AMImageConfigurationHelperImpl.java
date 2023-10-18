@@ -16,7 +16,6 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
-import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
@@ -561,9 +560,6 @@ public class AMImageConfigurationHelperImpl
 
 	@Reference
 	private AMImageEntryLocalService _amImageEntryLocalService;
-
-	@Reference
-	private DestinationFactory _destinationFactory;
 
 	@Reference
 	private JournalContent _journalContent;

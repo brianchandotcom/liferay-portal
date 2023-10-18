@@ -300,8 +300,10 @@ const claimSchema = object({
 						selected &&
 						typeActivity.key === TypeActivityKey.CONTENT_MARKETING,
 					then: (schema) =>
-						schema
-							.max(250, 'You have exceeded the character limit')
+						schema.max(
+							250,
+							'You have exceeded the character limit'
+						),
 				}),
 			})
 		)

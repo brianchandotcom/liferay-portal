@@ -47,4 +47,10 @@
 			font-weight: 600;
 		}
 	}
+
+	small {
+		&.subscription-banner-text {
+			color: #54555f !important;
+		}
+	}
 }

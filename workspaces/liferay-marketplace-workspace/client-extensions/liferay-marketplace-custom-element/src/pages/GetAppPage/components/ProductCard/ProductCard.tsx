@@ -21,8 +21,11 @@ import {StepType} from '../../enums/stepType';
 interface ProductCardProps {
 	cartUtil: ReturnType<typeof useCart>;
 	creatorAccount?: Account;
+
+	isSelectSubscription?: boolean;
+
 	product?: Product;
-	selectedAccount?: Account;
+	selectedAccount?: any;
 	step: StepType;
 	userAccount?: UserAccount;
 }
@@ -30,6 +33,9 @@ interface ProductCardProps {
 const ProductCard = ({
 	cartUtil,
 	creatorAccount,
+
+	isSelectSubscription,
+
 	product,
 	selectedAccount,
 	step,
@@ -114,8 +120,77 @@ const ProductCard = ({
 		return null;
 	}
 
+	const AccountEmailInfo = () => (
+		<div className="align-items-center d-flex">
+			<div className="account-banner-name-text align-items-end d-flex flex-column m-2">
+				<strong>{selectedAccount?.name}</strong>
+
+				<div className="account-banner-email-text">
+					{userAccount?.emailAddress}
+				</div>
+			</div>
+
+			<ClaySticker shape="circle" size="sm">
+				<ClaySticker.Image
+					alt="placeholder"
+					height="24"
+					src={selectedAccount?.logoURL ?? emptyPictureIcon}
+					width="24"
+				/>
+			</ClaySticker>
+		</div>
+	);
+
+	const PriceTypeInfo = () => (
+		<div className="align-items-end d-flex flex-column price-text">
+			<strong className="mr-1">Price</strong>
+
+			<div className="mr-1 py-2">
+				<FormattedValues />
+			</div>
+
+			<div className="license-tag px-2">{getLicenseTagText(product)}</div>
+		</div>
+	);
+
+	const ExtendBanner = () => (
+		<>
+			<hr />
+
+			{!isSelectSubscription ? (
+				<div className="d-flex flex-row justify-content-between">
+					<strong className="account-banner-title-text align-self-center">
+						Account Selected
+					</strong>
+
+					<AccountEmailInfo />
+				</div>
+			) : (
+				<>
+					<div className="align-items-center d-flex mb-3 row">
+						<small className="col-6 col-md-4 font-weight-bold m-0">
+							Key type
+						</small>
+						<small className="col-6 col-md-4 subscription-banner-text">
+							Trial
+						</small>
+					</div>
+
+					<div className="align-items-center d-flex row">
+						<small className="col-6 col-md-4 font-weight-bold m-0">
+							Start Date - Exp. Date
+						</small>
+						<small className="col-6 col-md-4 subscription-banner-text text-nowrap">
+							Sep 24, 2023 &ndash; Oct 24, 2024
+						</small>
+					</div>
+				</>
+			)}
+		</>
+	);
+
 	return (
-		<div className="p-5 product-banner">
+		<div className="pb-3 product-banner pt-5 px-5">
 			<div className="d-flex flex-row justify-content-between">
 				<div className="d-flex flex-row">
 					<img
@@ -141,54 +216,14 @@ const ProductCard = ({
 					</div>
 				</div>
 
-				<div className="align-items-end d-flex flex-column price-text">
-					<strong className="mr-1">Price</strong>
-
-					<div className="mr-1 py-2">
-						<FormattedValues />
-					</div>
-
-					{!!basePrice && (
-						<div className="license-tag px-2">
-							{getLicenseTagText(product)}
-						</div>
-					)}
-				</div>
+				{!isSelectSubscription ? (
+					<PriceTypeInfo />
+				) : (
+					<AccountEmailInfo />
+				)}
 			</div>
 
-			{selectedAccount && (
-				<>
-					<hr />
-
-					<div className="d-flex flex-row justify-content-between">
-						<strong className="account-banner-title-text align-self-center">
-							Account Selected
-						</strong>
-
-						<div className="align-items-center d-flex">
-							<div className="account-banner-name-text align-items-end d-flex flex-column m-2">
-								<strong>{selectedAccount?.name}</strong>
-
-								<div className="account-banner-email-text">
-									{userAccount?.emailAddress}
-								</div>
-							</div>
-
-							<ClaySticker shape="circle" size="sm">
-								<ClaySticker.Image
-									alt="placeholder"
-									height="24"
-									src={
-										selectedAccount?.logoURL ??
-										emptyPictureIcon
-									}
-									width="24"
-								/>
-							</ClaySticker>
-						</div>
-					</div>
-				</>
-			)}
+			{selectedAccount && <ExtendBanner />}
 		</div>
 	);
 };

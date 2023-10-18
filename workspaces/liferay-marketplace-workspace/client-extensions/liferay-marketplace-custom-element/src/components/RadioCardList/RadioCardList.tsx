@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ReactNode} from 'react';
+
 import RadioCard from './components/RadioCard';
 
 interface RadioCardListProps<T> {
@@ -14,17 +16,17 @@ interface RadioCardListProps<T> {
 }
 
 export interface RadioCardContent<T> {
-	description?: string;
+	children?: ReactNode;
+	description?: ReactNode;
 	imageURL?: string;
 	label?: string;
 	selected: boolean;
-	title: string;
+	title: ReactNode;
 	value: T;
 }
 
 const RadioCardList = <T extends unknown>({
 	contentList,
-	customization,
 	leftRadio,
 	onSelect,
 	showImage,
@@ -39,7 +41,6 @@ const RadioCardList = <T extends unknown>({
 				{contentList.map((content, index) => (
 					<RadioCard
 						activeRadio={content.selected}
-						customization={customization}
 						description={content.description}
 						imageURL={content.imageURL}
 						index={index}

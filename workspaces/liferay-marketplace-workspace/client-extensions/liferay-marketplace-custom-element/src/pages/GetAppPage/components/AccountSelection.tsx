@@ -40,8 +40,7 @@ const AccountSelection = ({
 					if (accountInfo.type === 'person') {
 						displayAccount = true;
 					}
-				}
-				else {
+				} else {
 					displayAccount = accountBrief.roleBriefs.some((roleBrief) =>
 						enabledAccountRoles.includes(roleBrief.name)
 					);
@@ -57,7 +56,7 @@ const AccountSelection = ({
 						selected:
 							selectedAccount?.externalReferenceCode ===
 							accountInfo.externalReferenceCode,
-						title: accountInfo.name,
+						title: <h5>{accountInfo.name}</h5>,
 						value: accountInfo,
 					});
 				}

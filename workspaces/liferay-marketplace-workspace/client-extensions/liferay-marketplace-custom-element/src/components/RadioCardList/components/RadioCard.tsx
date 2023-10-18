@@ -9,24 +9,25 @@ import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
 
 import './RadioCard.scss';
+
+import {ReactNode} from 'react';
+
 import emptyPictureIcon from '../../../assets/icons/avatar.svg';
 
 interface RadioCardProps {
 	activeRadio: boolean | undefined;
-	customization?: boolean;
-	description?: string;
+	description?: ReactNode;
 	imageURL?: string;
 	index?: number;
 	label?: string;
 	leftRadio?: boolean;
 	selectRadio: () => void;
 	showImage?: boolean;
-	title: string;
+	title: ReactNode;
 }
 
 const NewRadioCard = ({
 	activeRadio,
-	customization,
 	description,
 	imageURL,
 	index,
@@ -60,7 +61,7 @@ const NewRadioCard = ({
 								checked={activeRadio}
 								onChange={() => selectRadio()}
 								type="radio"
-								value={title}
+								value={String(title)}
 							/>
 						</div>
 					)}
@@ -85,23 +86,13 @@ const NewRadioCard = ({
 							</div>
 						)}
 
-						{!customization ? (
-							<h5
-								className={classNames('col-10 mb-0', {
-									'pl-0': !leftRadio,
-								})}
-							>
-								{title}
-							</h5>
-						) : (
-							<h3
-								className={classNames('col-10 mb-0', {
-									'pl-0': !leftRadio,
-								})}
-							>
-								{title}
-							</h3>
-						)}
+						<div
+							className={classNames('mt-2 col-10 mb-0', {
+								'pl-0': !leftRadio,
+							})}
+						>
+							{title}
+						</div>
 					</div>
 
 					{label && (
@@ -121,14 +112,9 @@ const NewRadioCard = ({
 								'col-10': showImage,
 								'col-11': !showImage,
 								'pl-6': !leftRadio && showImage,
-								'text-success': customization,
 							})}
 						>
-							{!customization ? (
-								description
-							) : (
-								<small>{description}</small>
-							)}
+							{description}
 						</p>
 					</div>
 				)}
@@ -140,7 +126,7 @@ const NewRadioCard = ({
 						checked={activeRadio}
 						onChange={() => selectRadio()}
 						type="radio"
-						value={title}
+						value={String(title)}
 					/>
 				</div>
 			)}

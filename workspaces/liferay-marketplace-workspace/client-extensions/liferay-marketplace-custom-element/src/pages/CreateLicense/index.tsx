@@ -10,6 +10,7 @@ import './index.scss';
 
 import {useForm} from 'react-hook-form';
 
+import ProductCard from '../GetAppPage/components/ProductCard/ProductCard';
 import StepWizard from '../GetAppPage/components/StepWizard/StepWizard';
 import LicenseDetails from './LicenseDetails';
 import SelectSubscription from './SelectSubscription';
@@ -24,7 +25,7 @@ export type CreateLicenseForm = {
 };
 
 const CreateLicense = () => {
-	const [step, setStep] = useState<string>(StepCreateLicense.SUBSCRIPTION);
+	const [step, setStep] = useState<any>(StepCreateLicense.SUBSCRIPTION);
 
 	const {setValue, watch} = useForm<CreateLicenseForm>({
 		defaultValues: {
@@ -60,8 +61,46 @@ const CreateLicense = () => {
 		},
 	};
 
+	const cartUtil: any = {
+		cart: {
+			id: undefined,
+		},
+	};
+
+	const productCreatorAccount: any = {
+		name: 'Joana',
+	};
+
+	const product: any = {
+		attachments: [],
+		name: {en_US: 'Test Joana Product'},
+		productSpecifications: [],
+		skus: [
+			{
+				sku: 'TESTFREEPRODUCTSKU',
+				skuOptions: [],
+			},
+		],
+	};
+
+	const userAccount: any = {
+		emailAddress: 'joana@liferay.com',
+	};
+
 	return (
-		<div className="d-flex justify-content-center mb-7">
+		<div className="align-items-center d-flex flex-column">
+			<div className="w-100">
+				<ProductCard
+					cartUtil={cartUtil}
+					creatorAccount={productCreatorAccount}
+					isSelectSubscription={true}
+					product={product}
+					selectedAccount={productCreatorAccount}
+					step={step}
+					userAccount={userAccount}
+				/>
+			</div>
+
 			<div className="d-flex flex-column justify-content-center mkt-create-license-content mt-7 p-6">
 				<div className="align-self-center h1">
 					Generate License Key(s)
@@ -93,6 +132,7 @@ const CreateLicense = () => {
 					</ClayButton>
 					{step === StepCreateLicense.SUBSCRIPTION ? (
 						<ClayButton
+							disabled={!subscription}
 							displayType="primary"
 							onClick={() =>
 								setStep(StepCreateLicense.LICENSE_KEY_DETAILS)

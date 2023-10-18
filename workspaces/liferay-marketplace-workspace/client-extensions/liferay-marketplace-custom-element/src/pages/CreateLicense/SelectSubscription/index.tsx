@@ -9,7 +9,7 @@ import RadioCardList from '../../../components/RadioCardList/RadioCardList';
 
 interface SubscriptionSelectionProps {
 	onSelectSubscription: (subscription: Subscription) => void;
-	selectedSubscriptionValue: string | undefined;
+	selectedSubscriptionValue: string;
 }
 
 const SelectSubscription = ({
@@ -25,10 +25,15 @@ const SelectSubscription = ({
 
 	const contentList = [
 		{
-			description: `Key activations available: ${avaliableKeys.purchasedCount} of ${avaliableKeys.provisionedCount}`,
+			description: (
+				<small className="text-success">
+					Key activations available: {avaliableKeys.purchasedCount} of{' '}
+					{avaliableKeys.provisionedCount}
+				</small>
+			),
 			label: `${supportLifeStartDate} - ${supportLifeEndDate}`,
 			selected: selectedSubscriptionValue === 'Trial',
-			title: 'Trial',
+			title: <h3 className="mt-0">Trial</h3>,
 			value: 'Trial',
 		},
 	];
@@ -55,7 +60,6 @@ const SelectSubscription = ({
 			<div className="radio-card-subscription">
 				<RadioCardList
 					contentList={subscription}
-					customization={true}
 					leftRadio
 					onSelect={handleSelect}
 				/>

@@ -162,7 +162,8 @@ const PurchasedSolutions: React.FC = () => {
 						'We are unable to start your trial. Please contact our sales team via email - sales@liferay.com',
 					type: 'danger',
 				});
-			} else {
+			}
+			else {
 				const product = await getProductById({
 					productId: Number(productId),
 				});

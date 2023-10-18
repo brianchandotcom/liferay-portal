@@ -52,18 +52,7 @@ export function DashboardTable<T>({
 	items,
 	tableHeaders,
 }: DashboardTableProps<T>) {
-	const {description1, description2, title} = emptyStateMessage;
-
-	if (!items.length) {
-		return (
-			<DashboardEmptyTable
-				description1={description1}
-				description2={description2}
-				icon={icon}
-				title={title}
-			/>
-		);
-	} else {
+	if (items.length) {
 		return (
 			<ClayTable borderless className="dashboard-table-container">
 				<ClayTable.Head>
@@ -90,4 +79,15 @@ export function DashboardTable<T>({
 			</ClayTable>
 		);
 	}
+
+	const {description1, description2, title} = emptyStateMessage;
+
+	return (
+		<DashboardEmptyTable
+			description1={description1}
+			description2={description2}
+			icon={icon}
+			title={title}
+		/>
+	);
 }

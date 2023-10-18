@@ -6,7 +6,7 @@
 package com.liferay.users.admin.kernel.util;
 
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.Locale;
 
@@ -18,17 +18,22 @@ public class UserInitialsGeneratorUtil {
 	public static String getInitials(
 		Locale locale, String firstName, String middleName, String lastName) {
 
-		return _userInitialsGenerator.getInitials(
+		UserInitialsGenerator userInitialsGenerator =
+			_userInitialsGeneratorSnapshot.get();
+
+		return userInitialsGenerator.getInitials(
 			locale, firstName, middleName, lastName);
 	}
 
 	public static String getInitials(User user) {
-		return _userInitialsGenerator.getInitials(user);
+		UserInitialsGenerator userInitialsGenerator =
+			_userInitialsGeneratorSnapshot.get();
+
+		return userInitialsGenerator.getInitials(user);
 	}
 
-	private static volatile UserInitialsGenerator _userInitialsGenerator =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			UserInitialsGenerator.class, UserInitialsGeneratorUtil.class,
-			"_userInitialsGenerator", false);
+	private static final Snapshot<UserInitialsGenerator>
+		_userInitialsGeneratorSnapshot = new Snapshot<>(
+			UserInitialsGeneratorUtil.class, UserInitialsGenerator.class);
 
 }

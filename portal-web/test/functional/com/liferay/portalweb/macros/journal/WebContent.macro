@@ -1271,19 +1271,19 @@ definition {
 			else {
 				if (${pageType} == "Public Pages") {
 					AssertTextEquals(
-						key_placeHolder = "Select Display Page",
+						key_placeHolder = "No Display Page Selected",
 						locator1 = "TextInput#ANY_PLACEHOLDER",
 						value1 = "Public Pages > ${pageName}");
 				}
 				else if (${pageType} == "Pages") {
 					AssertTextEquals(
-						key_placeHolder = "Select Display Page",
+						key_placeHolder = "No Display Page Selected",
 						locator1 = "TextInput#ANY_PLACEHOLDER",
 						value1 = "Pages > ${pageName}");
 				}
 				else {
 					AssertTextEquals(
-						key_placeHolder = "Select Display Page",
+						key_placeHolder = "No Display Page Selected",
 						locator1 = "TextInput#ANY_PLACEHOLDER",
 						value1 = ${pageName});
 				}
@@ -2486,7 +2486,7 @@ definition {
 				}
 				else {
 					AssertTextEquals(
-						key_placeHolder = "Select Display Page",
+						key_placeHolder = "No Display Page Selected",
 						locator1 = "TextInput#ANY_PLACEHOLDER",
 						value1 = ${displayPageTemplateName});
 				}

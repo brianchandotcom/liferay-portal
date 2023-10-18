@@ -578,7 +578,7 @@ definition {
 				attribute1 = "placeholder",
 				key_fieldLabel = "Item",
 				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
-				value1 = "Select Item");
+				value1 = "No Item Selected");
 		}
 
 		task ("View the default empty message is shown in Content Display") {
@@ -798,7 +798,7 @@ definition {
 				attribute1 = "placeholder",
 				key_fieldLabel = "Collection",
 				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
-				value1 = "Select Collection");
+				value1 = "No Collection Selected");
 		}
 
 		task ("View the default empty message is shown in Collection Display") {
@@ -955,7 +955,7 @@ definition {
 				attribute1 = "placeholder",
 				key_fieldLabel = "Item",
 				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
-				value1 = "Select Item");
+				value1 = "No Item Selected");
 		}
 
 		task ("View the default inline text is shown in Heading") {

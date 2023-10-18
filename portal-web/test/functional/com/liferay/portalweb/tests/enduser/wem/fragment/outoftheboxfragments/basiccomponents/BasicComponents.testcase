@@ -426,7 +426,7 @@ definition {
 				attribute1 = "placeholder",
 				key_fieldLabel = "Image",
 				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
-				value1 = "Select Image");
+				value1 = "No Image Selected");
 		}
 
 		task ("Duplicate the Image") {

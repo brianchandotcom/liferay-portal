@@ -3862,6 +3862,110 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-184279. TC-1: Verify user can get the logoId and logoURL fields when calling the proper endpoint."
+	@priority = 3
+	test GetAccountLogoFieldInfoViaAPIExplorerGUI {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Given: Create an account and add a logo") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
+
+			Account.openAccountsAdmin();
+
+			var key_tableEntry = "Account Name";
+			var key_columnName = "lfr-id";
+			var accountId = selenium.getText("LexiconTable#TABLE_ENTRY_INFO");
+
+			Account.editCP(
+				accountLogoEdit = "marketplace_icon.png",
+				accountName = "Account Name",
+				accountNameEdit = "Update Account Name");
+		}
+
+		task ("When: Get the account's info via the API Explorer GUI") {
+			APIExplorer.navigateToOpenAPI(
+				api = "headless-admin-user",
+				version = "v1.0");
+
+			APIExplorer.executeAPIMethod(
+				method = "getAccount",
+				parameter = "accountId",
+				service = "Account",
+				value = ${accountId});
+		}
+
+		task ("Then: Assert that logoId and logoURL fields are displayed in the response body") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "getAccount",
+				value1 = "\"logoId\":");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "getAccount",
+				value1 = "\"logoURL\":");
+		}
+	}
+
+	@description = "This is a use case for LPS-184279. TC-2: Verify user can get the logoId and logoURL fields when calling the proper endpoint in the virtual instance."
+	@priority = 3
+	test GetAccountLogoFieldInfoViaAPIExplorerGUIInVirtualInstance {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		task ("Given: Add a virtual instance and create an account in it") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			User.firstLoginUI(
+				password = "test",
+				specificURL = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com");
+
+			Account.openAccountsAdmin(baseURL = "http://www.able.com:8080");
+
+			Account.addBusinessAccount(accountName = "Account Name");
+
+			Account.openAccountsAdmin(baseURL = "http://www.able.com:8080");
+
+			var key_tableEntry = "Account Name";
+			var key_columnName = "lfr-id";
+			var accountId = selenium.getText("LexiconTable#TABLE_ENTRY_INFO");
+
+			Account.editCP(
+				accountLogoEdit = "marketplace_icon.png",
+				accountName = "Account Name",
+				accountNameEdit = "Update Account Name");
+		}
+
+		task ("When: Get the account's info via the API Explorer GUI") {
+			APIExplorer.navigateToOpenAPI(
+				api = "headless-admin-user",
+				version = "v1.0");
+
+			APIExplorer.executeAPIMethod(
+				method = "getAccount",
+				parameter = "accountId",
+				service = "Account",
+				value = ${accountId});
+		}
+
+		task ("Then: Assert that logoId and logoURL fields are displayed in the response body") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "getAccount",
+				value1 = "\"logoId\":");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "getAccount",
+				value1 = "\"logoURL\":");
+		}
+	}
+
 	@description = "This is a use case for LPS-117171. It asserts that Filter By Navigation does not display when assigning a user to a Person Account since domains are not applicable for this type of account."
 	@priority = 4
 	test NoFilterByNavigationForPersonAccount {

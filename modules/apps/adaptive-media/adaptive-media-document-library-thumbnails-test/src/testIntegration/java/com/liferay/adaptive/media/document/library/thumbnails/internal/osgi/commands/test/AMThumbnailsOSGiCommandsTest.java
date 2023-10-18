@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.DLProcessor;
+import com.liferay.document.library.kernel.util.DLProcessorRegistry;
 import com.liferay.document.library.kernel.util.ImageProcessor;
 import com.liferay.document.library.preview.processor.BasePreviewableDLProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -43,6 +45,7 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -264,13 +267,24 @@ public class AMThumbnailsOSGiCommandsTest {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
+		DLProcessor imagePreviewableDLProcessor =
+			new ImagePreviewableDLProcessor();
+
 		_serviceRegistration = bundleContext.registerService(
 			new String[] {
 				DLProcessor.class.getName(), ImageProcessor.class.getName()
 			},
-			new ImagePreviewableDLProcessor(),
+			imagePreviewableDLProcessor,
 			MapUtil.singletonDictionary(
 				"type", DLProcessorConstants.IMAGE_PROCESSOR));
+
+		ReflectionTestUtil.setFieldValue(
+			imagePreviewableDLProcessor, "dlProcessorRegistry",
+			_dlProcessorRegistry);
+		ReflectionTestUtil.setFieldValue(
+			imagePreviewableDLProcessor, "messageBus", _messageBus);
+		ReflectionTestUtil.setFieldValue(
+			imagePreviewableDLProcessor, "store", _store);
 	}
 
 	private static void _disableDocumentLibraryAM() throws Exception {
@@ -417,9 +431,18 @@ public class AMThumbnailsOSGiCommandsTest {
 	private static DLProcessor _dlProcessor;
 
 	@Inject
+	private static DLProcessorRegistry _dlProcessorRegistry;
+
+	@Inject
+	private static MessageBus _messageBus;
+
+	@Inject
 	private static ServiceComponentRuntime _serviceComponentRuntime;
 
 	private static ServiceRegistration<?> _serviceRegistration;
+
+	@Inject(filter = "default=true")
+	private static Store _store;
 
 	private Company _company;
 	private Group _group;
@@ -882,7 +905,7 @@ public class AMThumbnailsOSGiCommandsTest {
 
 		private static final Snapshot<FileVersionPreviewEventListener>
 			_fileVersionPreviewEventListenerSnapshot = new Snapshot<>(
-			ImagePreviewableDLProcessor.class,
+				ImagePreviewableDLProcessor.class,
 				FileVersionPreviewEventListener.class);
 
 		private final List<Long> _fileVersionIds = new Vector<>();

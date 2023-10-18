@@ -28,7 +28,6 @@ const ContentMarketingPopFields = ({
 				component={PRMForm.InputText}
 				label="Video Link"
 				name={`activities[${currentActivityIndex}].videoLink`}
-				required={activity.selected}
 			/>
 
 			<InputMultipleFilesListing

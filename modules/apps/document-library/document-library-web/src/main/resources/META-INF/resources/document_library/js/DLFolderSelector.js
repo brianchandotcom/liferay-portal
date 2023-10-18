@@ -16,6 +16,8 @@ import {
 } from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
+const TPL_ERROR_MESSAGES = `<span>{title}</span><ul class="mb-0 mt-2 pl-3">{messages}</ul>`;
+
 const DLFolderSelector = ({
 	copyActionURL,
 	dlObjectIds,
@@ -80,20 +82,20 @@ const DLFolderSelector = ({
 		});
 	};
 
-	const formatErrorMessages = (errorMessages, errorSize) => {
-		let formattedMessage = `${sub(
-			Liferay.Language.get('x-items-could-not-be-copied'),
-			errorSize
-		)}
-			<ul class="mb-0 mt-2 pl-3">`;
+	const formatErrorMessages = (errorMessages, failedItems) => {
+		const errors = errorMessages
+			.map((message) => {
+				return `<li>${message}</li>`;
+			})
+			.join('');
 
-		errorMessages.forEach((message) => {
-			formattedMessage = `${formattedMessage}<li>${message}</li>`;
+		return sub(TPL_ERROR_MESSAGES, {
+			messages: errors,
+			title: sub(
+				Liferay.Language.get('x-items-could-not-be-copied'),
+				failedItems
+			),
 		});
-
-		formattedMessage = `${formattedMessage}</ul>`;
-
-		return formattedMessage;
 	};
 
 	const showErrorMessage = (message) => {

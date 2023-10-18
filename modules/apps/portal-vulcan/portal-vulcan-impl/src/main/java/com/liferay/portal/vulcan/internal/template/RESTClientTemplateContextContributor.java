@@ -42,12 +42,17 @@ public class RESTClientTemplateContextContributor
 		Map<String, Object> contextObjects,
 		HttpServletRequest httpServletRequest) {
 
-		contextObjects.put("restClient", new RESTClient(httpServletRequest));
+		contextObjects.put(
+			"restClient", new RESTClient(contextObjects, httpServletRequest));
 	}
 
 	public class RESTClient {
 
-		public RESTClient(HttpServletRequest httpServletRequest) {
+		public RESTClient(
+			Map<String, Object> contextObjects,
+			HttpServletRequest httpServletRequest) {
+
+			_contextObjects = contextObjects;
 			_httpServletRequest = httpServletRequest;
 		}
 
@@ -63,7 +68,7 @@ public class RESTClientTemplateContextContributor
 				new RESTClientHttpResponse(), unsyncStringWriter);
 
 			requestDispatcher.forward(
-				new RESTClientHttpRequest(_httpServletRequest),
+				new RESTClientHttpRequest(_contextObjects, _httpServletRequest),
 				httpServletResponse);
 
 			String responseString = unsyncStringWriter.toString();
@@ -78,6 +83,7 @@ public class RESTClientTemplateContextContributor
 			return responseString;
 		}
 
+		private final Map<String, Object> _contextObjects;
 		private final HttpServletRequest _httpServletRequest;
 
 	}

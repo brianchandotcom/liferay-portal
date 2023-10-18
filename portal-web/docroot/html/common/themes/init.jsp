@@ -13,6 +13,7 @@ page import="com.liferay.portal.kernel.model.Portlet" %><%@
 page import="com.liferay.portal.kernel.model.portlet.PortletDependency" %><%@
 page import="com.liferay.portal.kernel.portlet.render.PortletRenderUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.BrowserMetadata" %><%@
+page import="com.liferay.portal.kernel.session.timeout.SessionTimeoutUtil" %><%@
 page import="com.liferay.portal.kernel.upload.configuration.UploadServletRequestConfigurationProviderUtil" %><%@
 page import="com.liferay.portal.util.LayoutTypeAccessPolicyTracker" %><%@
 page import="com.liferay.portlet.PortletTreeSet" %><%@

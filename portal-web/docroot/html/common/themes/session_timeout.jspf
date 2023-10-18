@@ -18,11 +18,11 @@ String rememberMe = CookiesManagerUtil.getCookieValue(CookiesConstants.NAME_REME
 			function() {
 				Liferay.Session = new Liferay.SessionBase(
 					{
-						autoExtend: <%= !themeDisplay.isSignedIn() || PropsValues.SESSION_TIMEOUT_AUTO_EXTEND %>,
+						autoExtend: <%= !themeDisplay.isSignedIn() || SessionTimeoutUtil.isAutoExtend(request) %>,
 						redirectOnExpire: <%= SSOUtil.isSessionRedirectOnExpire(themeDisplay.getCompanyId()) %>,
 						redirectUrl: '<%= HtmlUtil.escapeJS(SSOUtil.getSessionExpirationRedirectURL(themeDisplay.getCompanyId(), themeDisplay.getURLHome())) %>',
 						sessionLength: <%= PropsValues.SESSION_TIMEOUT * 60 %>,
-						sessionTimeoutOffset: <%= PropsValues.SESSION_TIMEOUT_AUTO_EXTEND_OFFSET %>,
+						sessionTimeoutOffset: <%= SessionTimeoutUtil.getAutoExtendOffset(request) %>,
 						warningLength: <%= PropsValues.SESSION_TIMEOUT_WARNING * 60 %>
 					}
 				);

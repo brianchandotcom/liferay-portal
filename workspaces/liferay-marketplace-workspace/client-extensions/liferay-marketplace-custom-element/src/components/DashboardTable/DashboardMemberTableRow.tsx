@@ -8,7 +8,7 @@ import ClayTable from '@clayui/table';
 
 import './PublishedAppsDashboardTableRow.scss';
 import {useAppContext} from '../../manage-app-state/AppManageState';
-import {MemberProps} from '../../pages/PublishedAppsDashboardPage/PublishedDashboardPageUtil';
+import {MemberProps} from '../../pages/PublishedAppsDashboard/PublishedDashboardPageUtil';
 import {Avatar} from '../Avatar/Avatar';
 
 import './DashboardMemberTableRow.scss';

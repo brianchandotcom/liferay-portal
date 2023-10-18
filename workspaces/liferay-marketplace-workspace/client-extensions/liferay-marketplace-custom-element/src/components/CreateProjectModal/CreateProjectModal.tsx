@@ -27,7 +27,6 @@ interface CreateProjectModalProps {
 	currentChannel: Channel;
 	handleClose: () => void;
 	selectedAccount: Account;
-	setShowDashboardNavigation: (value: boolean) => void;
 	setShowNextStepsPage: (value: boolean) => void;
 }
 
@@ -48,7 +47,6 @@ export function CreateProjectModal({
 	currentChannel,
 	handleClose,
 	selectedAccount,
-	setShowDashboardNavigation,
 	setShowNextStepsPage,
 }: CreateProjectModalProps) {
 	const [multiStepItems, setMultiStepItems] = useState(
@@ -149,7 +147,6 @@ export function CreateProjectModal({
 
 			handleClose();
 
-			setShowDashboardNavigation(false);
 			setShowNextStepsPage(true);
 		}
 	};

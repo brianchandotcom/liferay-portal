@@ -5,7 +5,7 @@
 
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import {Dispatch} from 'react';
+import {useNavigate, useSearchParams} from 'react-router-dom';
 
 import {showAccountImage} from '../../utils/util';
 import {DashboardNavigationList} from './DashboardNavigationList';
@@ -15,9 +15,10 @@ import {AppProps} from '../DashboardTable/DashboardTable';
 export interface DashboardListItems {
 	itemIcon: string;
 	itemName: string;
-	itemSelected: boolean;
+	itemSelected?: boolean;
 	itemTitle: string;
 	items?: AppProps[];
+	path: string;
 }
 
 interface DashboardNavigationProps {
@@ -26,9 +27,6 @@ interface DashboardNavigationProps {
 	accounts: Account[];
 	currentAccount: Account;
 	dashboardNavigationItems: DashboardListItems[];
-	onSelectAppChange?: (value: AppProps | undefined) => void;
-	setDashboardNavigationItems: (values: DashboardListItems[]) => void;
-	setSelectedAccount: Dispatch<React.SetStateAction<Account>>;
 }
 
 export function DashboardNavigation({
@@ -37,10 +35,12 @@ export function DashboardNavigation({
 	accounts,
 	currentAccount,
 	dashboardNavigationItems,
-	onSelectAppChange,
-	setDashboardNavigationItems,
-	setSelectedAccount,
 }: DashboardNavigationProps) {
+	const navigate = useNavigate();
+	const [searchParams] = useSearchParams();
+
+	const accountId = searchParams.get('accountId');
+
 	return (
 		<div className="dashboard-navigation-container">
 			<ClayDropDown
@@ -75,7 +75,7 @@ export function DashboardNavigation({
 					{accounts.map((account) => (
 						<ClayDropDown.Item
 							key={account.id}
-							onClick={() => setSelectedAccount(account)}
+							onClick={() => navigate(`?accountId=${account.id}`)}
 						>
 							{account.name}
 						</ClayDropDown.Item>
@@ -84,16 +84,11 @@ export function DashboardNavigation({
 			</ClayDropDown>
 
 			<div className="dashboard-navigation-body">
-				{dashboardNavigationItems.map((navigationMock) => (
+				{dashboardNavigationItems.map((navigationMock, index) => (
 					<DashboardNavigationList
-						dashboardNavigationItems={dashboardNavigationItems}
-						key={navigationMock.itemName}
+						accountId={accountId as string}
+						key={index}
 						navigationItemMock={navigationMock}
-						navigationItemsMock={dashboardNavigationItems}
-						onSelectAppChange={onSelectAppChange}
-						setDashboardNavigationItems={
-							setDashboardNavigationItems
-						}
 					/>
 				))}
 			</div>

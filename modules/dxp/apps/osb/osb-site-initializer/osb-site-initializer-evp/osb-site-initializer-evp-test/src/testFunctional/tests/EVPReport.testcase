@@ -66,7 +66,7 @@ definition {
 	@description = "LPS-172931 - Manager user can generate a report with filters applied"
 	@priority = 5
 	test CanManagerGenerateReportWithFilters {
-		task ("Given the manager user are logged in") {
+		task ("Given the manager user is logged in") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "manager@liferay.com",
 				userLoginFullName = "Manager User");
@@ -128,7 +128,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-164731 - Employee user should not be able to see Report tab on top menu"
+	@description = "LPS-164731 - Employee user should not be able to see Reports tab on top menu"
 	@priority = 4
 	test ReportTabIsNotVisibleForEmployeeUser {
 		task ("Given that the employee user is logged in") {

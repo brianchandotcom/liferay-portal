@@ -136,14 +136,20 @@ public class SearchBarPortletDisplayContextFactory {
 		searchBarPortletDisplayContext.setInputPlaceholder(
 			LanguageUtil.get(
 				getHttpServletRequest(_renderRequest), "search-..."));
+
+		String keywordsParameterName = _getKeywordsParameterName(
+			portletPreferencesLookup,
+			portletSharedSearchResponse.getSearchSettings(),
+			searchBarPrecedenceHelper, searchBarPortletPreferences,
+			themeDisplay);
+
 		searchBarPortletDisplayContext.setKeywords(
-			GetterUtil.getString(searchRequest.getQueryString()));
+			GetterUtil.getString(
+				portletSharedSearchResponse.getParameter(
+					keywordsParameterName, _renderRequest)));
 		searchBarPortletDisplayContext.setKeywordsParameterName(
-			_getKeywordsParameterName(
-				portletPreferencesLookup,
-				portletSharedSearchResponse.getSearchSettings(),
-				searchBarPrecedenceHelper, searchBarPortletPreferences,
-				themeDisplay));
+			keywordsParameterName);
+
 		searchBarPortletDisplayContext.setPaginationStartParameterName(
 			GetterUtil.getString(
 				searchRequest.getPaginationStartParameterName()));

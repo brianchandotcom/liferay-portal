@@ -238,6 +238,189 @@ definition {
 		}
 	}
 
+	@description = "LPS-186878 Confirm that the translated option appears when selecting pt_BR in the translation modal"
+	@priority = 4
+	test AssertTheTranslatedOption {
+		task ("And adds a new filter") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("And Choose a Selection option") {
+			Click(
+				key_fieldName = "Selection",
+				locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
+		}
+
+		task ("And clicks on language button") {
+			Click(
+				key_symbolName = "",
+				locator1 = "FormViewBuilder#BUTTON_LOCALIZATION");
+		}
+
+		task ("And select pt_BR language, and add a label in this translation") {
+			Click(
+				key_dropdownItem = "pt_BR",
+				locator1 = "ObjectAdmin#SELECT_DROPDOWN_ITEM_DEFAULT_VALUE");
+
+			Click(
+				locator1 = "Portlet#MODAL_TITLE",
+				value1 = "New Selection Filter");
+
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "PT-BR");
+
+			Click(
+				key_symbolName = "",
+				locator1 = "FormViewBuilder#BUTTON_LOCALIZATION");
+		}
+
+		task ("Then assert the translated status green in PT-BR language") {
+			AssertElementPresent(
+				locator1 = "CommerceWidget#TAG_FACET_LABEL_LAYOUT",
+				tagName = "Translated");
+		}
+	}
+
+	@description = "LPS-186878 Confirm that translation options in filters are displayed on the page by adding pt to the URL"
+	@priority = 5
+	test AssertTheTranslationInFilters {
+		task ("And creating a picklist") {
+			Picklist.addPicklistViaAPI(picklistName = "Transport");
+		}
+
+		task ("And Add items to the created picklist") {
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "bike",
+				itemName = "bike",
+				picklistName = "Transport");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "car",
+				itemName = "car",
+				picklistName = "Transport");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "bus",
+				itemName = "bus",
+				picklistName = "Transport");
+		}
+
+		task ("When the user accesses the Fields tab and add datecreated,datemodified") {
+			DataSetAdmin.goToTab(tabName = "Fields");
+
+			LexiconEntry.gotoAdd();
+
+			DataSetAdmin.checkFields(key_fieldList = "dateCreated,dateModified");
+
+			Button.clickSave();
+		}
+
+		task ("When the user accesses the Filters tab and create filter with translation pt_BR") {
+			DataSetAdmin.goToTab(tabName = "Filters");
+
+			DataSetAdmin.addAFilterWithTranslation(
+				defocusModal = "New Selection Filter",
+				filterType = "Selection",
+				key_changeName = "Name",
+				key_newValue = "PT-BR",
+				key_sortOption = "Relationship_c_fdsViewERC",
+				selectLanguage = "pt_BR");
+		}
+
+		task ("And selects the Transport option in the Source Option drop-down") {
+			Select(
+				locator1 = "DataSet#SOURCE_OPTIONS_SELECT",
+				value1 = "Transport");
+		}
+
+		task ("And Preselected Values car,bike,bus ") {
+			Click(
+				key_fieldName = "Select a default value for your filter.",
+				locator1 = "ObjectCustomViews#FROM_DATE_INPUT");
+
+			for (var clicktransport : list "car,bike,bus") {
+				Click(
+					key_sortOption = ${clicktransport},
+					locator1 = "ObjectCustomViews#SORT_OPTION");
+			}
+
+			Click.clickAtNotVisible(
+				key_radioOption = "Multiple",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Click.clickAtNotVisible(
+				key_radioOption = "Include",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Button.clickSave();
+		}
+
+		task ("When the user adds a widget page and add a fragment Data Set") {
+			Navigator.openURL();
+
+			ContentPages.addPage(pageName = "Data Set Test");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("And viewing the configuration menu of the portlet and selects a View created") {
+			DataSetAdmin.selectDataSetFragmentView(
+				key_modalTitle = "Select",
+				key_selectView = "Select Data Set View",
+				key_viewName = "View Test");
+		}
+
+		task ("And publishes the page") {
+			SelectFrame(locator1 = "DataSet#DEFOCUS");
+
+			Click.javaScriptClick(locator1 = "WorkflowMetricsIndex#METRICS_REINDEX_ALL_BUTTON");
+		}
+
+		task ("And go to the page created, and put a "pt" in URL page") {
+			Navigator.openURL();
+
+			Navigator.gotoPage(pageName = "Data Set Test");
+
+			Navigator.openSpecificURL(url = "http://localhost:8080/pt/data-set-test");
+		}
+
+		task ("Then Confirm the page translation according to PT-BR") {
+			AssertElementPresent(
+				key_filter = "PT-BR",
+				locator1 = "ObjectCustomViews#LABEL_SECTION_FILTER_ENTRY");
+		}
+	}
+
+	@description = " LPS-186878 Confirm that the translation modal is opened and displayed correctly"
+	@priority = 4
+	test AssertTheTranslationModal {
+		task ("And adds a new filter") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("And Choose a Selection option") {
+			Click(
+				key_fieldName = "Selection",
+				locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
+		}
+
+		task ("And Click in translation button") {
+			Click(
+				key_symbolName = "",
+				locator1 = "FormViewBuilder#BUTTON_LOCALIZATION");
+		}
+
+		task ("Then Confirm that the translation modal is displayed") {
+			AssertElementPresent(
+				key_menuItem = "en_US",
+				locator1 = "CommerceNavigation#DROPDOWN_ITEM");
+		}
+	}
+
 	@description = "LPS-176188. Confirm that the Delete option is present."
 	@priority = 3
 	test CanAssertDeleteIsPresent {
@@ -1731,6 +1914,250 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#SUCCESS",
 				value1 = "Your request completed successfully.");
+		}
+	}
+
+	@description = "LPS-186878 When canceling filter creation on the cancel button, confirm that it is not possible to translate a page with translation filters"
+	@priority = 3
+	test NotTranslatedWhenCanceledOnCancelButton {
+		task ("And creating a picklist") {
+			Picklist.addPicklistViaAPI(picklistName = "Transport");
+		}
+
+		task ("And Add items to the created picklist") {
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "bike",
+				itemName = "bike",
+				picklistName = "Transport");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "car",
+				itemName = "car",
+				picklistName = "Transport");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "bus",
+				itemName = "bus",
+				picklistName = "Transport");
+		}
+
+		task ("When the user accesses the Fields tab") {
+			DataSetAdmin.goToTab(tabName = "Fields");
+		}
+
+		task ("And adds a new filter") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("And Check two options (dateCreated,dateModified)") {
+			DataSetAdmin.checkFields(key_fieldList = "dateCreated,dateModified");
+
+			Button.clickSave();
+		}
+
+		task ("When the user accesses the Filters tab") {
+			DataSetAdmin.goToTab(tabName = "Filters");
+		}
+
+		task ("And Choose a Selection option and create filter with translation pt_BR") {
+			DataSetAdmin.addAFilterWithTranslation(
+				defocusModal = "New Selection Filter",
+				filterType = "Selection",
+				key_changeName = "Name",
+				key_newValue = "PT-BR",
+				key_sortOption = "Relationship_c_fdsViewERC",
+				selectLanguage = "pt_BR");
+		}
+
+		task ("And selects the Transport option in the Source Option drop-down") {
+			Select(
+				locator1 = "DataSet#SOURCE_OPTIONS_SELECT",
+				value1 = "Transport");
+		}
+
+		task ("And Preselected Values car,bike,bus") {
+			Click(
+				key_fieldName = "Select a default value for your filter.",
+				locator1 = "ObjectCustomViews#FROM_DATE_INPUT");
+
+			for (var clicktransport : list "car,bike,bus") {
+				Click(
+					key_sortOption = ${clicktransport},
+					locator1 = "ObjectCustomViews#SORT_OPTION");
+			}
+		}
+
+		task ("And Select the option Multiple,Include radio button") {
+			Click.clickAtNotVisible(
+				key_radioOption = "Multiple",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Click.clickAtNotVisible(
+				key_radioOption = "Include",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+		}
+
+		task ("And the user cant save the change clicking on Cancel button") {
+			Button.clickCancel();
+		}
+
+		task ("When the user adds a widget page and add a fragment Data Set") {
+			Navigator.openURL();
+
+			ContentPages.addPage(pageName = "Data Set Test");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("And viewing the configuration menu of the portlet and selects a View created") {
+			DataSetAdmin.selectDataSetFragmentView(
+				key_modalTitle = "Select",
+				key_selectView = "Select Data Set View",
+				key_viewName = "View Test");
+		}
+
+		task ("And publishes the page") {
+			SelectFrame(locator1 = "DataSet#DEFOCUS");
+
+			Click.javaScriptClick(locator1 = "WorkflowMetricsIndex#METRICS_REINDEX_ALL_BUTTON");
+		}
+
+		task ("And go to the page created, and put a "pt" in URL page") {
+			Navigator.openURL();
+
+			Navigator.gotoPage(pageName = "Data Set Test");
+
+			Navigator.openSpecificURL(url = "http://localhost:8080/pt/data-set-test");
+		}
+
+		task ("Then Confirm the page translation is not according to PT-BR") {
+			AssertElementNotPresent(
+				key_column = "PT-BR",
+				locator1 = "ObjectPortlet#ENTRY_COLUMN");
+		}
+	}
+
+	@description = "LPS-186878 When canceling filter creation on the close button, confirm that it is not possible to translate a page with translation filters"
+	@priority = 2
+	test NotTranslatedWhenCanceledOnCloseButton {
+		task ("And creating a picklist") {
+			Picklist.addPicklistViaAPI(picklistName = "Transport");
+		}
+
+		task ("And Add items to the created picklist") {
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "bike",
+				itemName = "bike",
+				picklistName = "Transport");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "car",
+				itemName = "car",
+				picklistName = "Transport");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "bus",
+				itemName = "bus",
+				picklistName = "Transport");
+		}
+
+		task ("When the user accesses the Fields tab") {
+			DataSetAdmin.goToTab(tabName = "Fields");
+		}
+
+		task ("And adds a new filter") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("And Check two options (dateCreated,dateModified)") {
+			DataSetAdmin.checkFields(key_fieldList = "dateCreated,dateModified");
+
+			Button.clickSave();
+		}
+
+		task ("When the user accesses the Filters tab") {
+			DataSetAdmin.goToTab(tabName = "Filters");
+		}
+
+		task ("And Choose a Selection option and create filter with translation pt_BR") {
+			DataSetAdmin.addAFilterWithTranslation(
+				defocusModal = "New Selection Filter",
+				filterType = "Selection",
+				key_changeName = "Name",
+				key_newValue = "PT-BR",
+				key_sortOption = "Relationship_c_fdsViewERC",
+				selectLanguage = "pt_BR");
+		}
+
+		task ("And selects the Transport option in the Source Option drop-down") {
+			Select(
+				locator1 = "DataSet#SOURCE_OPTIONS_SELECT",
+				value1 = "Transport");
+		}
+
+		task ("And Preselected Values car,bike,bus") {
+			Click(
+				key_fieldName = "Select a default value for your filter.",
+				locator1 = "ObjectCustomViews#FROM_DATE_INPUT");
+
+			for (var clicktransport : list "car,bike,bus") {
+				Click(
+					key_sortOption = ${clicktransport},
+					locator1 = "ObjectCustomViews#SORT_OPTION");
+			}
+		}
+
+		task ("And Select the option Multiple,Include radio button") {
+			Click.clickAtNotVisible(
+				key_radioOption = "Multiple",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Click.clickAtNotVisible(
+				key_radioOption = "Include",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+		}
+
+		task ("And the user cant save the change clicking on close button") {
+			Click(locator1 = "Icon#CLOSE");
+		}
+
+		task ("When the user adds a widget page and add a fragment Data Set") {
+			Navigator.openURL();
+
+			ContentPages.addPage(pageName = "Data Set Test");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("And viewing the configuration menu of the portlet and selects a View created") {
+			DataSetAdmin.selectDataSetFragmentView(
+				key_modalTitle = "Select",
+				key_selectView = "Select Data Set View",
+				key_viewName = "View Test");
+		}
+
+		task ("And publishes the page") {
+			SelectFrame(locator1 = "DataSet#DEFOCUS");
+
+			Click.javaScriptClick(locator1 = "WorkflowMetricsIndex#METRICS_REINDEX_ALL_BUTTON");
+		}
+
+		task ("And go to the page created, and put a "pt" in URL page") {
+			Navigator.openURL();
+
+			Navigator.gotoPage(pageName = "Data Set Test");
+
+			Navigator.openSpecificURL(url = "http://localhost:8080/pt/data-set-test");
+		}
+
+		task ("Then Confirm the page translation is not according to PT-BR") {
+			AssertElementNotPresent(
+				key_column = "PT-BR",
+				locator1 = "ObjectPortlet#ENTRY_COLUMN");
 		}
 	}
 

@@ -12,6 +12,7 @@ EditCollectionConfigurationDisplayContext editCollectionConfigurationDisplayCont
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(editCollectionConfigurationDisplayContext.getRedirect());
+portletDisplay.setURLBackTitle(ParamUtil.getString(request, "backURLTitle"));
 
 renderResponse.setTitle(LanguageUtil.get(request, "filter-collection"));
 %>

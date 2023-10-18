@@ -28,15 +28,15 @@ definition {
 		if (isSet(kbDescription)) {
 			if (${description} == "Disabled") {
 				AssertElementNotPresent(
-					key_title = "Description",
-					locator1 = "Header#H3_TITLE");
+					key_text = "Description",
+					locator1 = "Sidebar#SUBTITLE");
 
 				AssertElementNotPresent(locator1 = "KnowledgeBase#ARTICLE_DESCRIPTION");
 			}
 			else {
 				AssertTextEquals(
-					key_title = "Description",
-					locator1 = "Header#H3_TITLE",
+					key_text = "Description",
+					locator1 = "Sidebar#SUBTITLE",
 					value1 = "Description");
 
 				AssertTextEquals(

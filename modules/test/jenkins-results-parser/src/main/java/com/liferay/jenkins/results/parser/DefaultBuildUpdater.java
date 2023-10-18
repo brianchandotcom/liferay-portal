@@ -243,7 +243,7 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 				String url = JenkinsResultsParserUtil.getLocalURL(
 					JenkinsResultsParserUtil.combine(
 						String.valueOf(jenkinsMaster.getURL()), "/job/",
-						JenkinsResultsParserUtil.fixURL(build.getJobName()),
+						build.getJobName(),
 						"/api/json?tree=allBuilds[queueId,url]{",
 						String.valueOf(page * 100), ",",
 						String.valueOf((page + 1) * 100), "}"));

@@ -8,7 +8,7 @@ definition {
 	setUp {
 		TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+		SignIn.signInTestSetup();
 	}
 
 	tearDown {
@@ -16,6 +16,28 @@ definition {
 
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 4
+	test CanLoadAPIExplorerWithProxy {
+		property portal.acceptance = "true";
+		property portal.proxy.path = "portal";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("When navigate to /o/api") {
+			APIExplorer.navigateToOpenAPI();
+		}
+
+		task ("Then page should load successfully") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			AssertTextEquals(
+				locator1 = "OpenAPI#API_URL",
+				value1 = "${portalURL}/o/headless-delivery/v1.0/openapi.json");
+
+			AssertConsoleTextNotPresent(value1 = "Failed to load API definition.");
 		}
 	}
 

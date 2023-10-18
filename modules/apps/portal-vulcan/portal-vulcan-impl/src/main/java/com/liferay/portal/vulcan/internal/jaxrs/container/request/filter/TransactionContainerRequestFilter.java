@@ -162,7 +162,7 @@ public class TransactionContainerRequestFilter
 				rollback("Rollback due to uncaught exception");
 			}
 
-			_wrappedFaultObserver.onMessage(message);
+			_messageObserver.onMessage(message);
 		}
 
 		public void rollback(String message) {
@@ -184,18 +184,18 @@ public class TransactionContainerRequestFilter
 		}
 
 		private TransactionCleanupHandler(
-			MessageObserver wrappedFaultObserver,
+			MessageObserver messageObserver,
 			TransactionStatusAdapter transactionStatusAdapter) {
 
 			super(Phase.POST_INVOKE);
 
-			_wrappedFaultObserver = wrappedFaultObserver;
+			_messageObserver = messageObserver;
 			_transactionStatusAdapter = transactionStatusAdapter;
 		}
 
 		private boolean _complete;
+		private final MessageObserver _messageObserver;
 		private final TransactionStatusAdapter _transactionStatusAdapter;
-		private final MessageObserver _wrappedFaultObserver;
 
 	}
 

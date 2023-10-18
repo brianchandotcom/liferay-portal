@@ -72,13 +72,6 @@ definition {
 			var externalReferenceCode = "";
 		}
 
-		if (!(isSet(folderName))) {
-			var objectFolderERC = "uncategorized";
-		}
-		else {
-			var objectFolderERC = JSONObjectFolder.getObjectFolderERC(folderName = ${folderName});
-		}
-
 		var curl = '''
 			${portalURL}/o/object-admin/v1.0/object-definitions \
 				-H 'Content-Type: application/json' \
@@ -90,7 +83,6 @@ definition {
 					"externalReferenceCode": "${externalReferenceCode}",
 					"name": "${objectName}",
 					"objectFields": [],
-					"objectFolderExternalReferenceCode": "${objectFolderERC}",
 					"panelCategoryKey": "${panelCategoryKey}",
 					"pluralLabel": {
 						"en_US": "${pluralLabelName}"

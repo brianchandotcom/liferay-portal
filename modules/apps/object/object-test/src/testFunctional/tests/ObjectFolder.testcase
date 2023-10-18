@@ -33,11 +33,18 @@ definition {
 				folderLabel = "Custom Folder 194540",
 				folderName = "CustomFolder194540");
 
-			ObjectAdmin.addObjectViaAPI(
-				folderName = "CustomFolder194540",
-				labelName = "Custom Object 194540",
-				objectName = "CustomObject194540",
+			ObjectAdmin.openObjectAdmin();
+
+			Click.javaScriptClick(
+				folderLabel = "Custom Folder 194540",
+				locator1 = "ObjectAdmin#SIDEBAR_ITEM");
+
+			ObjectAdmin.addNewObject(
+				fieldLabelName = "Custom Object 194540",
+				fieldName = "CustomObject194540",
 				pluralLabelName = "Custom Objects 194540");
+
+			CreateObject.saveObject();
 		}
 
 		task ("When the user deletes the object folder") {

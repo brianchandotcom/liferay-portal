@@ -8,6 +8,7 @@ package com.liferay.journal.web.internal.portlet;
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.change.tracking.spi.constants.CTTimelineKeys;
 import com.liferay.document.library.kernel.exception.DuplicateFileEntryException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
@@ -141,6 +142,9 @@ public class JournalPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			AssetDisplayPageFriendlyURLProvider.class.getName(),
 			_assetDisplayPageFriendlyURLProvider);
+		renderRequest.setAttribute(
+			AssetVocabularyLocalService.class.getName(),
+			_assetVocabularyLocalService);
 		renderRequest.setAttribute(TrashWebKeys.TRASH_HELPER, _trashHelper);
 
 		if (Objects.equals(
@@ -359,6 +363,9 @@ public class JournalPortlet extends MVCPortlet {
 	@Reference
 	private AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
+
+	@Reference
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

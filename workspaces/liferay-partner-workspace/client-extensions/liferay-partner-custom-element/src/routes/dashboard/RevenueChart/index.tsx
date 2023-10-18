@@ -5,6 +5,7 @@
 
 import React, {useEffect, useState} from 'react';
 
+import './index.css';
 import Container from '../../../common/components/dashboard/components/Container';
 import DonutChart from '../../../common/components/dashboard/components/DonutChart';
 import {revenueChartColumnColors} from '../../../common/components/dashboard/utils/constants/chartColumnsColors';
@@ -99,7 +100,7 @@ export default function () {
 
 	return (
 		<Container
-			className="dashboard-mdf-request-chart justify-content-between pb-7"
+			className="dashboard-revenue-chart justify-content-between pb-7"
 			title="Revenue"
 		>
 			<DonutChart

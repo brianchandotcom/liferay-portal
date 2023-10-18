@@ -2,12 +2,12 @@
 	display: none;
 }
 
-.dashboard-mdf-request-chart {
+.dashboard-mdf-chart {
 	min-height: 544px;
 }
 
 @media (min-width: 768px) {
-	.dashboard-mdf-request-chart {
+	.dashboard-mdf-chart {
 		height: 544px;
 		min-height: 544px;
 	}

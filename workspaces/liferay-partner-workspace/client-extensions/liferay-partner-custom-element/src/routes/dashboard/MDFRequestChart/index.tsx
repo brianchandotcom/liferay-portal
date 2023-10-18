@@ -73,7 +73,7 @@ const MDFRequestChart = () => {
 
 	return (
 		<Container
-			className="dashboard-mdf-request-chart justify-content-between"
+			className="dashboard-mdf-chart justify-content-between"
 			footer={
 				<div className="mt-n2">
 					<ClayButton

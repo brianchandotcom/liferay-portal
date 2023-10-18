@@ -1,0 +1,10 @@
+.dashboard-level-chart {
+	min-height: 544px;
+}
+
+@media (min-width: 768px) {
+	.dashboard-level-chart {
+		height: 544px;
+		min-height: 544px;
+	}
+}

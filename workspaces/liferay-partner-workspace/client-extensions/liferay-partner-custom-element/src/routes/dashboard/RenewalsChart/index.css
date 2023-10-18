@@ -1,5 +1,12 @@
-.renewal-chart-card-height {
-	height: 544px;
+.dashboard-renewal-chart {
+	min-height: 544px;
+}
+
+@media (min-width: 768px) {
+	.dashboard-renewal-chart {
+		height: 544px;
+		min-height: 544px;
+	}
 }
 
 .status-bar-vertical {

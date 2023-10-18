@@ -52,11 +52,9 @@ export default function () {
 	const getCurrentStatusColor = (item: any) => {
 		if (item?.expirationDays <= 5) {
 			return status[5];
-		}
-		else if (item?.expirationDays <= 15) {
+		} else if (item?.expirationDays <= 15) {
 			return status[15];
-		}
-		else if (item?.expirationDays <= 30) {
+		} else if (item?.expirationDays <= 30) {
 			return status[30];
 		}
 	};
@@ -120,7 +118,7 @@ export default function () {
 
 	return (
 		<Container
-			className="justify-content-between renewal-chart-card-height"
+			className="dashboard-renewal-chart justify-content-between"
 			footer={
 				<div className="pt-4">
 					<ClayButton

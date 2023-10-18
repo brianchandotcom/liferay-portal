@@ -6,6 +6,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 
+import './LevelChart.css';
 import Container from '../../../common/components/dashboard/components/Container';
 import ClayIconProvider from '../../../common/components/dashboard/utils/ClayIconProvider';
 import PartnershipLevel from './components/PartnershipLevel';
@@ -52,7 +53,7 @@ const LevelChart = () => {
 	return (
 		<ClayIconProvider>
 			<Container
-				className="dashboard-mdf-request-chart justify-content-start"
+				className="dashboard-level-chart justify-content-start"
 				title="Partnership Level"
 			>
 				<BuildPartnershipLevel />

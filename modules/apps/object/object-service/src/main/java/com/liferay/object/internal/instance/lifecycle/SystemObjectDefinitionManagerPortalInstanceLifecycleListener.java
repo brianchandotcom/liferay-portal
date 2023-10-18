@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -226,7 +225,6 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 				new SystemObjectMtoMObjectRelatedModelsProviderImpl(
 					objectDefinition, _objectDefinitionLocalService,
 					_objectFieldLocalService, _objectRelationshipLocalService,
-					_persistedModelLocalServiceRegistry,
 					systemObjectDefinitionManager,
 					_systemObjectDefinitionManagerRegistry));
 			_objectRelatedModelsProviderRegistrarHelper.register(
@@ -235,7 +233,6 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 					objectDefinition, _objectDefinitionLocalService,
 					_objectEntryLocalService, _objectFieldLocalService,
 					_objectRelationshipLocalService,
-					_persistedModelLocalServiceRegistry,
 					systemObjectDefinitionManager,
 					_systemObjectDefinitionManagerRegistry));
 		}
@@ -296,10 +293,6 @@ public class SystemObjectDefinitionManagerPortalInstanceLifecycleListener
 
 	@Reference
 	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
-
-	@Reference
-	private PersistedModelLocalServiceRegistry
-		_persistedModelLocalServiceRegistry;
 
 	@Reference
 	private Portal _portal;

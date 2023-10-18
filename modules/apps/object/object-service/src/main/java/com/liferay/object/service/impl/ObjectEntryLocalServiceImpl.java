@@ -142,7 +142,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -178,6 +177,7 @@ import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
@@ -929,8 +929,8 @@ public class ObjectEntryLocalServiceImpl
 		Map<String, Object> baseModelAttributes = new HashMap<>();
 
 		PersistedModelLocalService persistedModelLocalService =
-			_persistedModelLocalServiceRegistry.getPersistedModelLocalService(
-				objectDefinition.getClassName());
+			PersistedModelLocalServiceRegistryUtil.
+				getPersistedModelLocalService(objectDefinition.getClassName());
 
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable =
 			_getDynamicObjectDefinitionTable(
@@ -1044,8 +1044,8 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		PersistedModelLocalService persistedModelLocalService =
-			_persistedModelLocalServiceRegistry.getPersistedModelLocalService(
-				objectDefinition.getClassName());
+			PersistedModelLocalServiceRegistryUtil.
+				getPersistedModelLocalService(objectDefinition.getClassName());
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			String.valueOf(
@@ -4637,10 +4637,6 @@ public class ObjectEntryLocalServiceImpl
 
 	@Reference
 	private ObjectStateLocalService _objectStateLocalService;
-
-	@Reference
-	private PersistedModelLocalServiceRegistry
-		_persistedModelLocalServiceRegistry;
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;

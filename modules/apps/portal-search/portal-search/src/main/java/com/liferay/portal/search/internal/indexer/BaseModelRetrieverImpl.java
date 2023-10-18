@@ -13,11 +13,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.search.indexer.BaseModelRetriever;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -67,8 +66,8 @@ public class BaseModelRetrieverImpl implements BaseModelRetriever {
 		String className) {
 
 		PersistedModelLocalService persistedModelLocalService =
-			_persistedModelLocalServiceRegistry.getPersistedModelLocalService(
-				className);
+			PersistedModelLocalServiceRegistryUtil.
+				getPersistedModelLocalService(className);
 
 		if (persistedModelLocalService == null) {
 			throw new SystemException(
@@ -81,9 +80,5 @@ public class BaseModelRetrieverImpl implements BaseModelRetriever {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseModelRetrieverImpl.class);
-
-	@Reference
-	private PersistedModelLocalServiceRegistry
-		_persistedModelLocalServiceRegistry;
 
 }

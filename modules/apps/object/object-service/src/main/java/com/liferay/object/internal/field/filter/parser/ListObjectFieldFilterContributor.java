@@ -27,7 +27,6 @@ import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 
 import java.util.Locale;
 import java.util.Map;
@@ -120,7 +119,6 @@ public class ListObjectFieldFilterContributor
 			_objectDefinitionLocalService, _objectEntryLocalService,
 			objectField, _objectFieldLocalService,
 			_objectRelationshipLocalService, objectViewFilterColumn,
-			_persistedModelLocalServiceRegistry,
 			_systemObjectDefinitionManagerRegistry);
 	}
 
@@ -146,10 +144,6 @@ public class ListObjectFieldFilterContributor
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
-
-	@Reference
-	private PersistedModelLocalServiceRegistry
-		_persistedModelLocalServiceRegistry;
 
 	@Reference
 	private SystemObjectDefinitionManagerRegistry

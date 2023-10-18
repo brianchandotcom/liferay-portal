@@ -113,7 +113,6 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
@@ -883,9 +882,9 @@ public class ObjectDefinitionLocalServiceImpl
 				_objectRelatedModelsProviderRegistrarHelper,
 				_objectRelationshipLocalService, _objectScopeProviderRegistry,
 				_objectViewLocalService, _organizationLocalService,
-				_persistedModelLocalServiceRegistry, _ploEntryLocalService,
-				_portal, _portletLocalService, _resourceActions, _treeFactory,
-				_userLocalService, _resourcePermissionLocalService,
+				_ploEntryLocalService, _portal, _portletLocalService,
+				_resourceActions, _treeFactory, _userLocalService,
+				_resourcePermissionLocalService,
 				_workflowStatusModelPreFilterContributor,
 				_userGroupRoleLocalService);
 
@@ -2456,10 +2455,6 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;
-
-	@Reference
-	private PersistedModelLocalServiceRegistry
-		_persistedModelLocalServiceRegistry;
 
 	@Reference
 	private PLOEntryLocalService _ploEntryLocalService;

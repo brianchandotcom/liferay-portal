@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
 
 import java.util.List;
 import java.util.Objects;
@@ -45,7 +45,6 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
-		PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry,
 		SystemObjectDefinitionManager systemObjectDefinitionManager,
 		SystemObjectDefinitionManagerRegistry
 			systemObjectDefinitionManagerRegistry) {
@@ -54,8 +53,6 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
-		_persistedModelLocalServiceRegistry =
-			persistedModelLocalServiceRegistry;
 		_systemObjectDefinitionManager = systemObjectDefinitionManager;
 		_systemObjectDefinitionManagerRegistry =
 			systemObjectDefinitionManagerRegistry;
@@ -142,8 +139,9 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 		throws PortalException {
 
 		PersistedModelLocalService persistedModelLocalService =
-			_persistedModelLocalServiceRegistry.getPersistedModelLocalService(
-				_systemObjectDefinitionManager.getModelClassName());
+			PersistedModelLocalServiceRegistryUtil.
+				getPersistedModelLocalService(
+					_systemObjectDefinitionManager.getModelClassName());
 
 		return persistedModelLocalService.dslQuery(
 			_getGroupByStep(
@@ -161,8 +159,9 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 		throws PortalException {
 
 		PersistedModelLocalService persistedModelLocalService =
-			_persistedModelLocalServiceRegistry.getPersistedModelLocalService(
-				_systemObjectDefinitionManager.getModelClassName());
+			PersistedModelLocalServiceRegistryUtil.
+				getPersistedModelLocalService(
+					_systemObjectDefinitionManager.getModelClassName());
 
 		return persistedModelLocalService.dslQueryCount(
 			_getGroupByStep(
@@ -197,8 +196,8 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 					objectRelationship.getDBTableName());
 
 		PersistedModelLocalService persistedModelLocalService =
-			_persistedModelLocalServiceRegistry.getPersistedModelLocalService(
-				objectDefinition.getClassName());
+			PersistedModelLocalServiceRegistryUtil.
+				getPersistedModelLocalService(objectDefinition.getClassName());
 
 		return persistedModelLocalService.dslQuery(
 			DSLQueryFactoryUtil.select(
@@ -342,8 +341,6 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
-	private final PersistedModelLocalServiceRegistry
-		_persistedModelLocalServiceRegistry;
 	private final SystemObjectDefinitionManager _systemObjectDefinitionManager;
 	private final SystemObjectDefinitionManagerRegistry
 		_systemObjectDefinitionManagerRegistry;

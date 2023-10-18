@@ -17,8 +17,8 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -37,16 +37,13 @@ public class ObjectEntryRelatedObjectsResourceImpl
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryManagerRegistry objectEntryManagerRegistry,
 		ObjectRelatedModelsProviderRegistry objectRelatedModelsProviderRegistry,
-		ObjectRelationshipLocalService objectRelationshipLocalService,
-		PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry) {
+		ObjectRelationshipLocalService objectRelationshipLocalService) {
 
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryManagerRegistry = objectEntryManagerRegistry;
 		_objectRelatedModelsProviderRegistry =
 			objectRelatedModelsProviderRegistry;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
-		_persistedModelLocalServiceRegistry =
-			persistedModelLocalServiceRegistry;
 	}
 
 	@Override
@@ -200,8 +197,9 @@ public class ObjectEntryRelatedObjectsResourceImpl
 		throws Exception {
 
 		PersistedModelLocalService persistedModelLocalService =
-			_persistedModelLocalServiceRegistry.getPersistedModelLocalService(
-				systemObjectDefinition.getClassName());
+			PersistedModelLocalServiceRegistryUtil.
+				getPersistedModelLocalService(
+					systemObjectDefinition.getClassName());
 
 		persistedModelLocalService.getPersistedModel(objectEntryId);
 	}
@@ -256,7 +254,5 @@ public class ObjectEntryRelatedObjectsResourceImpl
 		_objectRelatedModelsProviderRegistry;
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
-	private final PersistedModelLocalServiceRegistry
-		_persistedModelLocalServiceRegistry;
 
 }

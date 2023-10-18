@@ -41,11 +41,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"javax.portlet.name=" + ObjectPortletKeys.OBJECT_DEFINITIONS,
-		"mvc.command.name=/object_definitions/add_object_field_key_candidates"
+		"mvc.command.name=/object_definitions/add_object_field_composite_key_candidates"
 	},
 	service = MVCResourceCommand.class
 )
-public class AddObjectFieldKeyCandidatesMVCResourceCommand
+public class AddObjectFieldCompositeKeyCandidatesMVCResourceCommand
 	extends BaseMVCResourceCommand {
 
 	@Override

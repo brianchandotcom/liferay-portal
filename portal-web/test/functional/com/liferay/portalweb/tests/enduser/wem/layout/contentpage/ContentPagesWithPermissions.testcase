@@ -26,12 +26,12 @@ definition {
 		}
 
 		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${randomSiteName});
+			var groupId = HeadlessSite.addSite(siteName = ${randomSiteName});
 		}
 
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				layoutName = "Test Content Page Name",
 				type = "content");
 		}
@@ -51,7 +51,7 @@ definition {
 
 		task ("Assign the user to site") {
 			JSONUser.addUserToSite(
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
 
@@ -1799,8 +1799,10 @@ definition {
 		}
 
 		task ("Assign the site role to new user") {
+			var groupId = JSONGroupSetter.setGroupId(groupName = ${randomSiteName});
+
 			JSONRole.assignSiteRoleToUser(
-				groupName = ${randomSiteName},
+				groupId = ${groupId},
 				roleTitle = ${randomRoleKey},
 				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
 		}
@@ -1809,7 +1811,7 @@ definition {
 			for (var webContentTitle : list "WC WebContent Title 1,WC WebContent Title 2") {
 				JSONWebcontent.addWebContent(
 					content = "WC WebContent Content",
-					groupName = ${randomSiteName},
+					groupId = ${groupId},
 					title = ${webContentTitle});
 			}
 		}
@@ -1848,13 +1850,11 @@ definition {
 
 		task ("Select the second web content") {
 			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title 2");
+
+			IFrame.closeFrame();
 		}
 
 		task ("Add a Paragraph fragment below the Web Content Display") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Content Page Name",
-				siteName = ${randomSiteName});
-
 			PageEditor.addFragment(
 				collectionName = "Basic Components",
 				fragmentName = "Paragraph",

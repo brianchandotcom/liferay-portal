@@ -85,12 +85,18 @@ export function UniqueCompositeKey({
 		ObjectDefinition
 	>();
 
+	const allowedObjectFieldBusinessTypes = [
+		'Integer',
+		'Picklist',
+		'Relationship',
+		'Text',
+	];
+
 	const filteredCustomObjectFields = customObjectFields.filter(
 		(customObjectField) =>
-			customObjectField.businessType === 'Integer' ||
-			'Picklist' ||
-			'Relationship' ||
-			'Text'
+			allowedObjectFieldBusinessTypes.includes(
+				customObjectField.businessType
+			)
 	);
 
 	const handleAddObjectFields = () => {

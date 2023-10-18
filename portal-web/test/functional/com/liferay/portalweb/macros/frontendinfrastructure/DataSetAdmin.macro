@@ -69,6 +69,42 @@ definition {
 		}
 	}
 
+	macro addAFilterWithTranslation {
+		LexiconEntry.gotoAdd();
+
+		Click(
+			key_fieldName = ${filterType},
+			locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
+
+		Click(
+			key_symbolName = "",
+			locator1 = "FormViewBuilder#BUTTON_LOCALIZATION");
+
+		Click(
+			key_dropdownItem = ${selectLanguage},
+			locator1 = "ObjectAdmin#SELECT_DROPDOWN_ITEM_DEFAULT_VALUE");
+
+		Click(
+			locator1 = "Portlet#MODAL_TITLE",
+			value1 = ${defocusModal});
+
+		Type(
+			key_text = ${key_changeName},
+			locator1 = "TextInput#ANY",
+			value1 = ${key_newValue});
+
+		Click(
+			key_class = "btn-secondary",
+			key_index = 3,
+			locator1 = "Button#ANY_WITH_CLASS_AND_INDEX");
+
+		SelectFrameTop();
+
+		Click.javaScriptClick(
+			key_sortOption = ${key_sortOption},
+			locator1 = "ObjectCustomViews#SORT_OPTION");
+	}
+
 	macro addFields {
 		LexiconEntry.gotoAdd();
 
@@ -612,6 +648,24 @@ definition {
 		Type(
 			locator1 = "MenuItem#SEARCH_FIELD",
 			value1 = ${searchTerm});
+	}
+
+	macro selectDataSetFragmentView {
+		Click(locator1 = "ReportsAdminViewReportEntry#INFO_MESSAGE");
+
+		Click.javaScriptClick(
+			key_value = ${key_selectView},
+			locator1 = "Button#SECONDARY_BY_TITLE");
+
+		SelectFrame(
+			key_title = ${key_modalTitle},
+			locator1 = "IFrame#MODAL_ANY");
+
+		Click.clickAtNotVisible(
+			key_radioOption = ${key_viewName},
+			locator1 = "CommerceEntry#RADIO_BUTTON");
+
+		Button.clickSave();
 	}
 
 	macro selectFilters {

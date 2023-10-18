@@ -13,6 +13,7 @@ import DropDown from '@clayui/drop-down/lib/DropDown';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 
+import {orderType} from '../../enums/orderType';
 import {PurchasedAppProps} from '../../pages/PurchasedAppsDashboardPage/PurchasedAppsDashboardPage';
 import {showAppImage} from '../../utils/util';
 
@@ -145,7 +146,7 @@ export function PurchasedAppsDashboardTableRow({
 						>
 							Access Console
 						</DropDown.Item>
-						{orderTypeExternalReferenceCode === 'DXPAPP' && (
+						{orderTypeExternalReferenceCode === orderType.DXP && (
 							<ClayTooltipProvider>
 								<DropDown.Item
 									data-tooltip-align="left"

@@ -11,7 +11,6 @@ import com.liferay.headless.admin.user.dto.v1_0.PostalAddress;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.PostalAddressUtil;
 import com.liferay.headless.admin.user.resource.v1_0.PostalAddressResource;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Country;
@@ -350,9 +349,6 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 	@Reference
 	private CountryService _countryService;
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private ListTypeLocalService _listTypeLocalService;

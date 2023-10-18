@@ -45,7 +45,7 @@
 		display: block;
 	}
 
-	.developer-name {
+	solution-search-results-card .card-image-title-container .developer-name {
 		color: #545d69;
 	}
 
@@ -53,8 +53,10 @@
 		color: #545d69;
 	}
 
-	.solution-search-image {
+	.adt-solutions-search-results .solution-search-results-card .solution-search-image {
+		height: 180px;
 		object-fit: cover;
+		width: 329px;
 	}
 
 	@media screen and (max-width: 599px) {
@@ -102,7 +104,6 @@
 					<a class="solution-search-results-card bg-white border-radius-medium d-flex flex-column mb-0 rounded text-dark text-decoration-none" href=${productURL}>
 						<div class="align-items-center d-flex image-container justify-content-center mb-3">
 							<img
-								width="329" height="180"
 								alt=${product.name.en_US}
 								class="solution-search-image rounded"
 								src="${product.thumbnail}"

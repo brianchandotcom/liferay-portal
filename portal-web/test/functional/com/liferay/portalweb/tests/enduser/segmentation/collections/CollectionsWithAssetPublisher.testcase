@@ -247,7 +247,7 @@ definition {
 	@description = "This is a use case for LPS-91001. The collection providers should be available in all areas where the Asset Publisher is available."
 	@priority = 4
 	@uitest
-	test ViewCollectionProvidersInAssetPublisher {
+	test ViewCollectionProvidersOnPage {
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -327,7 +327,12 @@ definition {
 				LexiconCard.viewCardPresent(card = ${collectionProviderName});
 			}
 		}
+	}
 
+	@description = "This is a use case for LPS-91001. The collection providers should be available in all areas where the Asset Publisher is available."
+	@priority = 4
+	@uitest
+	test ViewCollectionProvidersOnPageTemplates {
 		task ("Add a page template collection") {
 			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
 				groupName = "Test Site Name",

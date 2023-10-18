@@ -11,6 +11,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.check.util.BNDSourceUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
@@ -23,8 +24,12 @@ import java.io.StringReader;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -49,7 +54,10 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 
 		_checkUnnecessaryFeatureFlags(fileName, content);
 
-		return _generateFeatureFlags(content);
+		content = _generateFeatureFlags(content);
+		content = _generateFeatureFlagUI(fileName, content);
+
+		return content;
 	}
 
 	private void _checkUnnecessaryFeatureFlags(String fileName, String content)
@@ -81,7 +89,7 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 	}
 
 	private String _generateFeatureFlags(String content) throws IOException {
-		List<String> featureFlagKeys = new ArrayList<>();
+		_featureFlagKeys = new ArrayList<>();
 
 		List<String> fileNames = SourceFormatterUtil.filterFileNames(
 			_allFileNames, new String[] {"**/test/**"},
@@ -91,13 +99,13 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 			},
 			getSourceFormatterExcludes(), true);
 
-		for (String fileName : fileNames) {
-			fileName = StringUtil.replace(
-				fileName, CharPool.BACK_SLASH, CharPool.SLASH);
+		for (String curFileName : fileNames) {
+			curFileName = StringUtil.replace(
+				curFileName, CharPool.BACK_SLASH, CharPool.SLASH);
 
-			String fileContent = FileUtil.read(new File(fileName));
+			String fileContent = FileUtil.read(new File(curFileName));
 
-			if (fileName.endsWith("bnd.bnd")) {
+			if (curFileName.endsWith("bnd.bnd")) {
 				String liferaySiteInitializerFeatureFlagKey =
 					BNDSourceUtil.getDefinitionValue(
 						fileContent, "Liferay-Site-Initializer-Feature-Flag");
@@ -106,36 +114,39 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 					continue;
 				}
 
-				featureFlagKeys.add(liferaySiteInitializerFeatureFlagKey);
+				_featureFlagKeys.add(liferaySiteInitializerFeatureFlagKey);
 			}
-			else if (fileName.endsWith(".java")) {
-				featureFlagKeys.addAll(
+			else if (curFileName.endsWith(".java")) {
+				_featureFlagKeys.addAll(
 					_getFeatureFlagKeys(fileContent, _featureFlagPattern1));
-				featureFlagKeys.addAll(_getFeatureFlagKeys(fileContent, true));
+				_featureFlagKeys.addAll(_getFeatureFlagKeys(fileContent, true));
 			}
-			else if (fileName.endsWith(".json")) {
-				featureFlagKeys.addAll(
+			else if (curFileName.endsWith(".json")) {
+				_featureFlagKeys.addAll(
 					_getFeatureFlagKeys(fileContent, _featureFlagPattern4));
 			}
-			else if (fileName.endsWith(".jsp") || fileName.endsWith(".jspf")) {
-				featureFlagKeys.addAll(
+			else if (curFileName.endsWith(".jsp") ||
+					 curFileName.endsWith(".jspf")) {
+
+				_featureFlagKeys.addAll(
 					_getFeatureFlagKeys(fileContent, _featureFlagPattern3));
-				featureFlagKeys.addAll(_getFeatureFlagKeys(fileContent, false));
+				_featureFlagKeys.addAll(
+					_getFeatureFlagKeys(fileContent, false));
 			}
 			else {
-				featureFlagKeys.addAll(
+				_featureFlagKeys.addAll(
 					_getFeatureFlagKeys(fileContent, _featureFlagPattern3));
 			}
 		}
 
-		ListUtil.distinct(featureFlagKeys, new NaturalOrderStringComparator());
+		ListUtil.distinct(_featureFlagKeys, new NaturalOrderStringComparator());
 
 		Matcher matcher = _featureFlagsPattern.matcher(content);
 
 		if (matcher.find()) {
 			String matchedFeatureFlags = matcher.group(2);
 
-			if (featureFlagKeys.isEmpty()) {
+			if (_featureFlagKeys.isEmpty()) {
 				if (matchedFeatureFlags.contains("feature.flag.")) {
 					return StringUtil.replaceFirst(
 						content, matchedFeatureFlags, StringPool.BLANK,
@@ -155,9 +166,9 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 					deprecationFeatureFlagKeyMatcher.group(1));
 			}
 
-			StringBundler sb = new StringBundler(featureFlagKeys.size() * 14);
+			StringBundler sb = new StringBundler(_featureFlagKeys.size() * 14);
 
-			for (String featureFlagKey : featureFlagKeys) {
+			for (String featureFlagKey : _featureFlagKeys) {
 				String featureFlagPropertyKey =
 					"feature.flag." + featureFlagKey;
 
@@ -199,6 +210,87 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 		}
 
 		return content;
+	}
+
+	private String _generateFeatureFlagUI(String fileName, String content) {
+		Map<String, Map<String, String>> featureFlagKeysUIMap = new TreeMap<>(
+			new NaturalOrderStringComparator());
+
+		for (String featureFlagKey : _featureFlagKeys) {
+			featureFlagKeysUIMap.put(featureFlagKey, new HashMap<>());
+		}
+
+		Matcher matcher = _featureFlagUIPattern.matcher(content);
+
+		if (!matcher.find()) {
+			return content;
+		}
+
+		String matchedFeatureFlagUI = matcher.group(2);
+		int startPos = -1;
+
+		Matcher featureFlagMatcher = _featureFlagPattern5.matcher(
+			matchedFeatureFlagUI);
+
+		while (featureFlagMatcher.find()) {
+			if (startPos == -1) {
+				startPos = featureFlagMatcher.start();
+			}
+
+			if (_featureFlagKeys.isEmpty()) {
+				return StringUtil.replaceFirst(
+					content, matchedFeatureFlagUI,
+					matchedFeatureFlagUI.substring(0, startPos),
+					matcher.start(2));
+			}
+
+			String featureFlagKey = featureFlagMatcher.group(2);
+
+			if (!featureFlagKeysUIMap.containsKey(featureFlagKey)) {
+				addMessage(fileName, "Remove " + featureFlagKey);
+
+				featureFlagKeysUIMap.put(featureFlagKey, new HashMap<>());
+			}
+
+			Map<String, String> propertyMap = featureFlagKeysUIMap.get(
+				featureFlagKey);
+
+			propertyMap.put(
+				featureFlagMatcher.group(3), featureFlagMatcher.group(1));
+		}
+
+		if (startPos == -1) {
+			return content;
+		}
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(matchedFeatureFlagUI.substring(0, startPos));
+
+		for (Map.Entry<String, Map<String, String>> entry :
+				featureFlagKeysUIMap.entrySet()) {
+
+			Map<String, String> propertyMap = entry.getValue();
+
+			if (Validator.isNotNull(propertyMap.get("type")) &&
+				(Validator.isNull(propertyMap.get("title")) ||
+				 Validator.isNull(propertyMap.get("description")))) {
+
+				addMessage(
+					fileName,
+					"Description and Title is necessary when have type for " +
+						entry.getKey());
+			}
+
+			String propertyMapString = _propertyMapToString(propertyMap);
+
+			if (Validator.isNotNull(propertyMapString)) {
+				sb.append(propertyMapString);
+			}
+		}
+
+		return StringUtil.replaceFirst(
+			content, matchedFeatureFlagUI, sb.toString(), matcher.start(2));
 	}
 
 	private List<String> _getFeatureFlagKeys(
@@ -258,6 +350,51 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 		return featureFlagKeys;
 	}
 
+	private String _propertyMapToString(Map<String, String> propertyMap) {
+		Set<String> keySet = propertyMap.keySet();
+
+		List<String> keys = new ArrayList<>(keySet);
+
+		keys.sort(new NaturalOrderStringComparator());
+
+		StringBundler sb = new StringBundler();
+
+		for (String key : keys) {
+			sb.append(StringPool.NEW_LINE);
+			sb.append(StringPool.NEW_LINE);
+			sb.append(StringPool.FOUR_SPACES);
+
+			String description = propertyMap.get("description");
+			String title = propertyMap.get("title");
+			String type = propertyMap.get("type");
+
+			if (StringUtil.equals(key, "description") &&
+				Validator.isNotNull(description)) {
+
+				sb.append(description);
+			}
+			else if (StringUtil.equals(key, "title") &&
+					 Validator.isNotNull(title)) {
+
+				sb.append(title);
+			}
+			else if (StringUtil.equals(key, "type") &&
+					 Validator.isNotNull(type)) {
+
+				sb.append(type);
+			}
+			else {
+				String value = propertyMap.get(key);
+
+				if (Validator.isNotNull(value)) {
+					sb.append(value);
+				}
+			}
+		}
+
+		return sb.toString();
+	}
+
 	private static final Pattern _deprecationFeatureFlagPattern =
 		Pattern.compile("feature\\.flag\\.([A-Z]+-\\d+)\\.type=deprecation");
 	private static final Pattern _featureFlagPattern1 = Pattern.compile(
@@ -268,9 +405,15 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 		"Liferay\\.FeatureFlags\\['(.+?)'\\]");
 	private static final Pattern _featureFlagPattern4 = Pattern.compile(
 		"\"featureFlag\": \"(.+?)\"");
+	private static final Pattern _featureFlagPattern5 = Pattern.compile(
+		"\n+ +(#\n +# Env: LIFERAY_FEATURE_PERIOD_FLAG_PERIOD__.+\n +#\n +" +
+			"feature\\.flag\\.([A-Z]+-\\d+)\\.(\\w+)=.+)");
 	private static final Pattern _featureFlagsPattern = Pattern.compile(
 		"(\n|\\A)##\n## Feature Flag\n##(\n\n[\\s\\S]*?)(?=(\n\n##|\\Z))");
+	private static final Pattern _featureFlagUIPattern = Pattern.compile(
+		"(\n|\\A)##\n## Feature Flag UI\n##(\n\n[\\s\\S]*?)(?=(\n\n##|\\Z))");
 
 	private List<String> _allFileNames;
+	private List<String> _featureFlagKeys;
 
 }

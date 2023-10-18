@@ -262,6 +262,42 @@ definition {
 		}
 	}
 
+	@description = "ISSD-1261 | After an Administrator Account invite a new member, assert if the user is able to see the email in their email box"
+	@priority = 5
+	test CanViewInviteEmail {
+		task ("Given that the user goes to the Customer Dashboard page") {
+			MP2Navigator.openSitePage(pageName = "Customer Dashboard");
+		}
+
+		task ("And the admin user invites a new member") {
+			MP2Dashboards.clickBreadcrumb(accountTitle = "QA Development");
+
+			MP2Navigator.gotoNavItem(navItem = "Members");
+
+			MP2Dashboards.inviteNewMember(
+				button = "true",
+				checkboxName = "Account Buyer",
+				emailAddress = "test.mp@liferay.com",
+				firstName = "Test",
+				lastName = "QA");
+		}
+
+		task ("When I go to MockMock") {
+			User.logoutPG();
+
+			MockMock._gotoMail();
+		}
+
+		// Needs refactoring after this bug ISSD-1362 is made
+
+		task ("Then I should be able to assert that the invitation email is present on the page") {
+			MockMock._viewMailFromInbox(
+				asset = "Liferay Marketplace - Invitation from Dashboard",
+				recipient = "test.mp@liferay.com",
+				sender = "da@administrator.com");
+		}
+	}
+
 	@description = "LPS-174845 | Verify that after accepting the invitation, the invited user role is listed in the members section of the Customer Dashboard."
 	@priority = 3
 	test CanViewListedGuestNoGreyedOut {

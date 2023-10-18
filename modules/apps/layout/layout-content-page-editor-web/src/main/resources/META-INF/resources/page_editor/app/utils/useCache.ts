@@ -9,20 +9,21 @@ import {useCallback, useEffect, useState} from 'react';
 
 import {
 	CACHE_STATUS,
+	CacheKey,
 	deleteCacheItem,
 	getCacheItem,
 	getCacheKey,
 	setCacheItem,
 } from './cache';
 
-export type Fetcher = () => Promise<Response & {error: string}>;
+export type Fetcher<T> = () => Promise<T & {error?: string}>;
 
-export default function useCache({
+export default function useCache<T>({
 	fetcher,
 	key,
 }: {
-	fetcher: Fetcher;
-	key: string | string[];
+	fetcher: Fetcher<T>;
+	key: CacheKey | [CacheKey, ...string[]];
 }) {
 	const cacheKey = getCacheKey(key);
 
@@ -68,7 +69,7 @@ export default function useCache({
 		}
 	}, [cacheKey, fetcher, triggerRender]);
 
-	return cachedData;
+	return cachedData as T | null;
 }
 
 function useTriggerRender() {

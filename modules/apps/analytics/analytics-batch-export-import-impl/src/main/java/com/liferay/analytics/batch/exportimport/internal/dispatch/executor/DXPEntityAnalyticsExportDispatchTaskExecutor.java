@@ -9,12 +9,10 @@ import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
-import com.liferay.dispatch.executor.DispatchTaskStatus;
-import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.model.DispatchTrigger;
 
 import java.util.Arrays;
-import java.util.Date;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,39 +42,14 @@ public class DXPEntityAnalyticsExportDispatchTaskExecutor
 			return;
 		}
 
-		DispatchLog dispatchLog =
-			dispatchLogLocalService.fetchLatestDispatchLog(
-				dispatchTrigger.getDispatchTriggerId(),
-				DispatchTaskStatus.IN_PROGRESS);
-
-		DispatchLog latestSuccessfulDispatchLog =
-			dispatchLogLocalService.fetchLatestDispatchLog(
-				dispatchTrigger.getDispatchTriggerId(),
-				DispatchTaskStatus.SUCCESSFUL);
-
-		Date resourceLastModifiedDate = null;
-
-		if (latestSuccessfulDispatchLog != null) {
-			resourceLastModifiedDate = latestSuccessfulDispatchLog.getEndDate();
-		}
-
 		analyticsBatchExportImportManager.exportToAnalyticsCloud(
-			Arrays.asList(
-				"account-group-analytics-dxp-entities",
-				"analytics-association-analytics-dxp-entities",
-				"analytics-delete-message-analytics-dxp-entities",
-				"expando-column-analytics-dxp-entities",
-				"group-analytics-dxp-entities",
-				"organization-analytics-dxp-entities",
-				"role-analytics-dxp-entities", "team-analytics-dxp-entities",
-				"user-analytics-dxp-entities",
-				"user-group-analytics-dxp-entities"),
+			_batchEngineExportTaskItemDelegateNames,
 			dispatchTrigger.getCompanyId(),
-			message -> updateDispatchLog(
-				dispatchLog.getDispatchLogId(), dispatchTaskExecutorOutput,
-				message),
-			resourceLastModifiedDate, DXPEntity.class.getName(),
-			dispatchTrigger.getUserId());
+			getNotificationUnsafeConsumer(
+				dispatchTrigger.getDispatchTriggerId(),
+				dispatchTaskExecutorOutput),
+			getResourceLastModifiedDate(dispatchTrigger.getDispatchTriggerId()),
+			DXPEntity.class.getName(), dispatchTrigger.getUserId());
 	}
 
 	@Override
@@ -93,6 +66,17 @@ public class DXPEntityAnalyticsExportDispatchTaskExecutor
 	protected boolean shouldExport(long companyId) {
 		return _analyticsConfigurationRegistry.isActive();
 	}
+
+	private static final List<String> _batchEngineExportTaskItemDelegateNames =
+		Arrays.asList(
+			"account-group-analytics-dxp-entities",
+			"analytics-association-analytics-dxp-entities",
+			"analytics-delete-message-analytics-dxp-entities",
+			"expando-column-analytics-dxp-entities",
+			"group-analytics-dxp-entities",
+			"organization-analytics-dxp-entities",
+			"role-analytics-dxp-entities", "team-analytics-dxp-entities",
+			"user-analytics-dxp-entities", "user-group-analytics-dxp-entities");
 
 	@Reference
 	private AnalyticsConfigurationRegistry _analyticsConfigurationRegistry;

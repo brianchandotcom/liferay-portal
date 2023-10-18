@@ -38,11 +38,13 @@ definition {
 		}
 
 		task ("Add a dynamic collection for Web Content Article and Basic Web Content") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
 				itemSubtype = "Basic Web Content",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection");
+				itemType = "Web Content Article");
 		}
 
 		task ("Add a Collection Display fragment to a content page") {
@@ -146,11 +148,13 @@ definition {
 		}
 
 		task ("Add a dynamic Collections and select Web Content Article as Asset Entry Type") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
 				itemSubtype = "Basic Web Content",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection");
+				itemType = "Web Content Article");
 		}
 
 		task ("Add a Collection Display to page") {
@@ -230,11 +234,13 @@ definition {
 		}
 
 		task ("Add a dynamic Collections and select Web Content Article as Asset Entry Type") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
 				itemSubtype = "Basic Web Content",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection");
+				itemType = "Web Content Article");
 		}
 
 		task ("Add a Collection Display to page") {
@@ -462,16 +468,15 @@ definition {
 		}
 
 		task ("Add a manual collecton with Web Content Article item type and WC Structure Name item subtype") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemSubtype = "WC Structure Name",
-				itemType = "Web Content Article",
-				title = "Manual Collection");
-
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(
+				itemSubtype = "WC Structure Name",
+				itemType = "Web Content Article");
+
 			AssetListsAdmin.selectAsset(
-				assetListName = "Manual Collection",
 				assetName = "Web Content Title",
 				assetType = "WC Structure Name");
 		}
@@ -649,11 +654,13 @@ definition {
 		}
 
 		task ("Add a dynamic Collections and select Document as Asset Entry Type") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
 				itemSubtype = "Basic Document",
-				itemType = "Document",
-				title = "Dynamic Collection");
+				itemType = "Document");
 		}
 
 		task ("Add a Collection Display to page") {
@@ -797,11 +804,13 @@ definition {
 		}
 
 		task ("Add a dynamic collection for Document and Basic Document") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
 				itemSubtype = "Basic Document",
-				itemType = "Document",
-				title = "Dynamic Collection");
+				itemType = "Document");
 		}
 
 		task ("Add a Collection Display to a content page") {
@@ -877,10 +886,11 @@ definition {
 		}
 
 		task ("Add a dynamic Collection and select Any as Asset Entry Type") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemType = "All Types",
-				title = "Dynamic Collection");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
 		}
 
 		task ("Add a Collection Display to page") {
@@ -979,11 +989,13 @@ definition {
 		}
 
 		task ("Add a dynamic collection for Web Content Article and Basic Web Content") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
 				itemSubtype = "Basic Web Content",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection");
+				itemType = "Web Content Article");
 		}
 
 		task ("Add a Collection Display to a content page") {
@@ -1070,43 +1082,33 @@ definition {
 		}
 
 		task ("Add a dynamic collection for All Types") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemType = "All Types",
-				title = "Dynamic Collection");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
 		}
 
 		task ("Add a manual collection for All Types") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemType = "All Types",
-				title = "Manual Collection");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(itemType = "All Types");
 		}
 
 		task ("Select all assets in manual collection") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
 			AssetListsAdmin.selectAsset(
-				assetListName = "Manual Collection",
 				assetName = "Document Title",
 				assetType = "Basic Document");
 
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
 			AssetListsAdmin.selectAsset(
-				assetListName = "Manual Collection",
 				assetName = "Blogs Entry Title",
-				assetType = "Blogs Entry",
-				siteURLKey = "test-site-name");
-
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+				assetType = "Blogs Entry");
 
 			AssetListsAdmin.selectAsset(
-				assetListName = "Manual Collection",
 				assetName = "Web Content Title",
-				assetType = "Basic Web Content",
-				pageName = "Content Page Name",
-				siteName = "Test Site Name");
+				assetType = "Basic Web Content");
 		}
 
 		task ("Add a Collection Display to a content page") {
@@ -1204,26 +1206,27 @@ definition {
 		}
 
 		task ("Add a dynamic collection for Web Content Article and Basic Web Content") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
 				itemSubtype = "Basic Web Content",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection");
+				itemType = "Web Content Article");
 		}
 
 		task ("Add a manual collection for Document and Basic Document") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(
 				itemSubtype = "Basic Document",
-				itemType = "Document",
-				title = "Manual Collection");
+				itemType = "Document");
 		}
 
 		task ("Select the document in manual collection") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
 			AssetListsAdmin.selectAsset(
-				assetListName = "Manual Collection",
 				assetName = "Document Title",
 				assetType = "Basic Document");
 		}
@@ -1318,33 +1321,35 @@ definition {
 		}
 
 		task ("Add the first dynamic collection for Web Content Article and Basic Web Content") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "First Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
 				itemSubtype = "Basic Web Content",
-				itemType = "Web Content Article",
-				title = "First Dynamic Collection");
+				itemType = "Web Content Article");
 		}
 
 		task ("Add the second dynamic collection for Blogs Entry") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemType = "Blogs Entry",
-				title = "Second Dynamic Collection");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Second Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "Blogs Entry");
 		}
 
 		task ("Add a manual collection for Document and All Subtypes") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(
 				itemSubtype = "All Subtypes",
-				itemType = "Document",
-				title = "Manual Collection");
+				itemType = "Document");
 		}
 
 		task ("Select the document in manual collection") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
 			AssetListsAdmin.selectAsset(
-				assetListName = "Manual Collection",
 				assetName = "Document Title",
 				assetType = "Basic Document");
 		}
@@ -1456,29 +1461,21 @@ definition {
 		}
 
 		task ("Add a manual Collection and select the Web Content Article,Blogs Entry and document") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemType = "All Types",
-				title = "Manual Collection");
-
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(itemType = "All Types");
+
 			AssetListsAdmin.selectAsset(
-				assetListName = "Manual Collection",
 				assetName = "Web Content Title",
 				assetType = "Basic Web Content");
 
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
 			AssetListsAdmin.selectAsset(
-				assetListName = "Manual Collection",
 				assetName = "Blogs Entry Title",
 				assetType = "Blogs Entry");
 
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
-
 			AssetListsAdmin.selectAsset(
-				assetListName = "Manual Collection",
 				assetName = "Document Title",
 				assetType = "Basic Document");
 		}
@@ -1815,11 +1812,13 @@ definition {
 		}
 
 		task ("Add a dynamic collection") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
 				itemSubtype = "Basic Web Content",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection");
+				itemType = "Web Content Article");
 		}
 
 		task ("Add a Collection Display to a content page") {
@@ -1915,10 +1914,11 @@ definition {
 		}
 
 		task ("Add a dynamic collection with All Types") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemType = "All Types",
-				title = "Dynamic Collection");
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(itemType = "All Types");
 		}
 
 		task ("Add a Collection Display fragment to page") {
@@ -2159,23 +2159,23 @@ definition {
 		}
 
 		task ("Add a dynamic Collections and select Web Content Article as Asset Entry Type") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
 				itemSubtype = "Basic Web Content",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection");
+				itemType = "Web Content Article");
 		}
 
 		task ("Add a manual Collections and select three Blogs entries") {
-			JSONAssetlist.addManualAssetListEntryWithItemType(
-				groupName = "Test Site Name",
-				itemType = "Blogs Entry",
-				title = "Manual Collection");
-
 			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
+			AssetListsAdmin.addManualSelection(assetListTitle = "Manual Collection");
+
+			AssetListsAdmin.configureItemTypeInManualCollection(itemType = "Blogs Entry");
+
 			AssetListsAdmin.selectAsset(
-				assetListName = "Manual Collection",
 				assetName = "First Blogs Entry",
 				assetType = "Blogs Entry");
 
@@ -2442,11 +2442,13 @@ definition {
 		}
 
 		task ("Add a dynamic collection for Web Content Article and Basic Web Content") {
-			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = "Test Site Name",
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
+
+			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
+
+			AssetListsAdmin.configureItemTypeInDynamicCollection(
 				itemSubtype = "Basic Web Content",
-				itemType = "Web Content Article",
-				title = "Dynamic Collection");
+				itemType = "Web Content Article");
 		}
 
 		task ("Add a Collection Display to a content page") {

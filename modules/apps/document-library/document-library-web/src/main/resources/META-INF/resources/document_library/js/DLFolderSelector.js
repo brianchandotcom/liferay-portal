@@ -80,6 +80,22 @@ const DLFolderSelector = ({
 		});
 	};
 
+	const formatErrorMessages = (errorMessages, errorSize) => {
+		let formattedMessage = `${sub(
+			Liferay.Language.get('x-items-could-not-be-copied'),
+			errorSize
+		)}
+			<ul class="mb-0 mt-2 pl-3">`;
+
+		errorMessages.forEach((message) => {
+			formattedMessage = `${formattedMessage}<li>${message}</li>`;
+		});
+
+		formattedMessage = `${formattedMessage}</ul>`;
+
+		return formattedMessage;
+	};
+
 	const showErrorMessage = (message) => {
 		openToast({
 			message,
@@ -105,7 +121,9 @@ const DLFolderSelector = ({
 			.then((response) => response.json())
 			.then(({errorMessages, errorSize}) => {
 				if (errorMessages) {
-					showErrorMessage(errorMessages[0]);
+					showErrorMessage(
+						formatErrorMessages(errorMessages, errorSize)
+					);
 				}
 				else if (errorSize) {
 					showErrorMessage(

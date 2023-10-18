@@ -21,8 +21,11 @@
 	position: relative;
 }
 
-.lfr__object-web-edit-object-details-external-data-source-container-beta {
-	left: 200px;
-	margin-top: 7px;
-	position: absolute;
+.lfr__object-web-edit-object-details-external-data-source-panel {
+	align-items: center;
+	display: flex;
+
+	&-container-beta {
+		margin-left: 5px;
+	}
 }

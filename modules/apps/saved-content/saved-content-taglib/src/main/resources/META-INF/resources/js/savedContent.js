@@ -5,6 +5,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {fetch, openToast, sub} from 'frontend-js-web';
+import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
 function showNotification(message, error = false) {
@@ -16,7 +17,7 @@ function showNotification(message, error = false) {
 
 export default function SavedContent({
 	contentName,
-	saved: initialSaved,
+	saved: initialSaved = false,
 	savedContentURL,
 }) {
 	const [saved, setSaved] = useState(initialSaved);
@@ -71,3 +72,9 @@ export default function SavedContent({
 		</form>
 	);
 }
+
+SavedContent.propTypes = {
+	contentName: PropTypes.string.isRequired,
+	saved: PropTypes.bool,
+	savedContentURL: PropTypes.string.isRequired,
+};

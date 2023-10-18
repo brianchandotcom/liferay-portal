@@ -4,7 +4,7 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import {fetch, openToast} from 'frontend-js-web';
+import {fetch, openToast, sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 function showNotification(message, error = false) {
@@ -15,6 +15,7 @@ function showNotification(message, error = false) {
 }
 
 export default function SavedContent({
+	contentName,
 	saved: initialSaved,
 	savedContentURL,
 }) {
@@ -50,6 +51,11 @@ export default function SavedContent({
 	return (
 		<form onSubmit={handleSubmit}>
 			<ClayButtonWithIcon
+				aria-label={
+					saved
+						? sub(Liferay.Language.get('remove-x'), contentName)
+						: sub(Liferay.Language.get('save-x'), contentName)
+				}
 				disabled={loading}
 				displayType="secondary"
 				monospaced

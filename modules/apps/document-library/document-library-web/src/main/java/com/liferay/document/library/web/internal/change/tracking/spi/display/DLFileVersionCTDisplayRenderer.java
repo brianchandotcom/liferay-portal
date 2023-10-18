@@ -65,9 +65,9 @@ public class DLFileVersionCTDisplayRenderer
 		throws PortalException {
 
 		return getDownloadInputStream(
-			_store, _audioProcessor, _dlAppLocalService, dlFileVersion,
-			(ImageProcessor)_imageDLProcessor, key,
-			(PDFProcessor)_pdfDLProcessor, _videoProcessor);
+			_store, (AudioProcessor)_audioDLProcessor, _dlAppLocalService,
+			dlFileVersion, (ImageProcessor)_imageDLProcessor, key,
+			(PDFProcessor)_pdfDLProcessor, (VideoProcessor)_videoDLProcessor);
 	}
 
 	@Override
@@ -102,8 +102,10 @@ public class DLFileVersionCTDisplayRenderer
 		String fileName = fileVersion.getFileName();
 		String mimeType = fileVersion.getMimeType();
 
-		if (_audioProcessor.isSupported(mimeType)) {
-			if (!_audioProcessor.hasAudio(fileVersion) ||
+		AudioProcessor audioProcessor = (AudioProcessor)_audioDLProcessor;
+
+		if (audioProcessor.isSupported(mimeType)) {
+			if (!audioProcessor.hasAudio(fileVersion) ||
 				_dlFileVersionPreviewLocalService.hasDLFileVersionPreview(
 					fileVersion.getFileEntryId(),
 					fileVersion.getFileVersionId(),
@@ -118,12 +120,12 @@ public class DLFileVersionCTDisplayRenderer
 				"px;\"><source src=\"",
 				displayContext.getDownloadURL(
 					_AUDIO_PREVIEW + ",mp3",
-					_audioProcessor.getPreviewFileSize(fileVersion, "mp3"),
+					audioProcessor.getPreviewFileSize(fileVersion, "mp3"),
 					FileUtil.stripExtension(fileName) + ".mp3"),
 				"\" type=\"audio/mp3\"/><source src=\"",
 				displayContext.getDownloadURL(
 					_AUDIO_PREVIEW + ",ogg",
-					_audioProcessor.getPreviewFileSize(fileVersion, "ogg"),
+					audioProcessor.getPreviewFileSize(fileVersion, "ogg"),
 					FileUtil.stripExtension(fileName) + ".ogg"),
 				"\" type=\"audio/ogg\"/></audio>");
 		}
@@ -194,14 +196,16 @@ public class DLFileVersionCTDisplayRenderer
 				"\">");
 		}
 
-		Set<String> videoMimeTypes = _videoProcessor.getVideoMimeTypes();
+		VideoProcessor videoProcessor = (VideoProcessor)_videoDLProcessor;
+
+		Set<String> videoMimeTypes = videoProcessor.getVideoMimeTypes();
 
 		if (videoMimeTypes.contains(mimeType) ||
 			mimeType.equals(
 				ContentTypes.
 					APPLICATION_VND_LIFERAY_VIDEO_EXTERNAL_SHORTCUT_HTML)) {
 
-			if (!_videoProcessor.hasVideo(fileVersion)) {
+			if (!videoProcessor.hasVideo(fileVersion)) {
 				return null;
 			}
 
@@ -213,12 +217,12 @@ public class DLFileVersionCTDisplayRenderer
 				"px;\"><source src=\"",
 				displayContext.getDownloadURL(
 					_VIDEO_PREVIEW + ",mp4",
-					_audioProcessor.getPreviewFileSize(fileVersion, "mp4"),
+					audioProcessor.getPreviewFileSize(fileVersion, "mp4"),
 					FileUtil.stripExtension(fileName) + ".mp4"),
 				"\" type=\"video/mp4\"/><source src=\"",
 				displayContext.getDownloadURL(
 					_VIDEO_PREVIEW + ",ogv",
-					_audioProcessor.getPreviewFileSize(fileVersion, "ogv"),
+					audioProcessor.getPreviewFileSize(fileVersion, "ogv"),
 					FileUtil.stripExtension(fileName) + ".ogv"),
 				"\" type=\"video/ogv\"/></audio>");
 		}
@@ -330,8 +334,11 @@ public class DLFileVersionCTDisplayRenderer
 
 	private static final String _VIDEO_PREVIEW = "VIDEO_PREVIEW";
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
-	private AudioProcessor _audioProcessor;
+	@Reference(
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(type=" + DLProcessorConstants.AUDIO_PROCESSOR + ")"
+	)
+	private DLProcessor _audioDLProcessor;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
@@ -365,7 +372,10 @@ public class DLFileVersionCTDisplayRenderer
 	@Reference(target = "(default=true)")
 	private Store _store;
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
-	private VideoProcessor _videoProcessor;
+	@Reference(
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(type=" + DLProcessorConstants.VIDEO_PROCESSOR + ")"
+	)
+	private DLProcessor _videoDLProcessor;
 
 }

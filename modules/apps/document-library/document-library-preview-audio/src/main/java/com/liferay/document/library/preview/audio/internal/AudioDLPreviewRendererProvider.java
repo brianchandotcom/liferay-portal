@@ -6,7 +6,9 @@
 package com.liferay.document.library.preview.audio.internal;
 
 import com.liferay.document.library.constants.DLFileVersionPreviewConstants;
+import com.liferay.document.library.kernel.model.DLProcessorConstants;
 import com.liferay.document.library.kernel.util.AudioProcessor;
+import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
 import com.liferay.document.library.preview.DLPreviewRenderer;
 import com.liferay.document.library.preview.DLPreviewRendererProvider;
@@ -45,15 +47,19 @@ public class AudioDLPreviewRendererProvider
 
 	@Override
 	public Set<String> getMimeTypes() {
-		return _audioProcessor.getAudioMimeTypes();
+		AudioProcessor audioProcessor = (AudioProcessor)_dlProcessor;
+
+		return audioProcessor.getAudioMimeTypes();
 	}
 
 	@Override
 	public DLPreviewRenderer getPreviewDLPreviewRenderer(
 		FileVersion fileVersion) {
 
-		if (!_audioProcessor.hasAudio(fileVersion) &&
-			!_audioProcessor.isAudioSupported(fileVersion.getMimeType())) {
+		AudioProcessor audioProcessor = (AudioProcessor)_dlProcessor;
+
+		if (!audioProcessor.hasAudio(fileVersion) &&
+			!audioProcessor.isAudioSupported(fileVersion.getMimeType())) {
 
 			return null;
 		}
@@ -91,7 +97,9 @@ public class AudioDLPreviewRendererProvider
 			throw new DLFileEntryPreviewGenerationException();
 		}
 
-		if (!_audioProcessor.hasAudio(fileVersion)) {
+		AudioProcessor audioProcessor = (AudioProcessor)_dlProcessor;
+
+		if (!audioProcessor.hasAudio(fileVersion)) {
 			if (!DLProcessorRegistryUtil.isPreviewableSize(fileVersion)) {
 				throw new DLPreviewSizeException(
 					DLProcessorRegistryUtil.getPreviewableProcessorMaxSize(
@@ -122,10 +130,12 @@ public class AudioDLPreviewRendererProvider
 		List<String> previewFileURLs = new ArrayList<>();
 
 		try {
+			AudioProcessor audioProcessor = (AudioProcessor)_dlProcessor;
+
 			for (String dlFileEntryPreviewAudioContainer :
 					PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS) {
 
-				long previewFileSize = _audioProcessor.getPreviewFileSize(
+				long previewFileSize = audioProcessor.getPreviewFileSize(
 					fileVersion, dlFileEntryPreviewAudioContainer);
 
 				if (previewFileSize > 0) {
@@ -150,11 +160,14 @@ public class AudioDLPreviewRendererProvider
 		return previewFileURLs;
 	}
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
-	private AudioProcessor _audioProcessor;
-
 	@Reference
 	private DLFileVersionPreviewLocalService _dlFileVersionPreviewLocalService;
+
+	@Reference(
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(type=" + DLProcessorConstants.AUDIO_PROCESSOR + ")"
+	)
+	private DLProcessor _dlProcessor;
 
 	@Reference
 	private DLURLHelper _dlURLHelper;

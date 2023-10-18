@@ -52,14 +52,11 @@ public class DLFileEntryCTDisplayRenderer
 			DLFileEntry dlFileEntry, String key)
 		throws PortalException {
 
-		PDFProcessor pdfProcessor = (PDFProcessor)_pdfDLProcessor;
-
-		ImageProcessor imageProcessor = (ImageProcessor)_imageDLProcessor;
-
 		return DLFileVersionCTDisplayRenderer.getDownloadInputStream(
-			_store, _audioProcessor, _dlAppLocalService,
-			dlFileEntry.getFileVersion(), imageProcessor, key, pdfProcessor,
-			_videoProcessor);
+			_store, (AudioProcessor)_audioDLProcessor, _dlAppLocalService,
+			dlFileEntry.getFileVersion(), (ImageProcessor)_imageDLProcessor,
+			key, (PDFProcessor)_pdfDLProcessor,
+			(VideoProcessor)_videoDLProcessor);
 	}
 
 	@Override
@@ -131,8 +128,11 @@ public class DLFileEntryCTDisplayRenderer
 			dlFileEntry.getFileVersion(), displayContext.getLocale());
 	}
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
-	private AudioProcessor _audioProcessor;
+	@Reference(
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(type=" + DLProcessorConstants.AUDIO_PROCESSOR + ")"
+	)
+	private DLProcessor _audioDLProcessor;
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
@@ -161,7 +161,10 @@ public class DLFileEntryCTDisplayRenderer
 	@Reference
 	private TrashHelper _trashHelper;
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
-	private VideoProcessor _videoProcessor;
+	@Reference(
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(type=" + DLProcessorConstants.VIDEO_PROCESSOR + ")"
+	)
+	private DLProcessor _videoDLProcessor;
 
 }

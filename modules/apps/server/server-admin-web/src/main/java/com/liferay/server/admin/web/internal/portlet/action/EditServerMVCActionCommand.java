@@ -217,7 +217,9 @@ public class EditServerMVCActionCommand
 			_deleteFiles();
 		}
 		else if (cmd.equals("dlGenerateAudioPreviews")) {
-			_audioProcessor.generatePreviews();
+			AudioProcessor audioProcessor = (AudioProcessor)_audioDLProcessor;
+
+			audioProcessor.generatePreviews();
 
 			hideDefaultSuccessMessage(actionRequest);
 
@@ -240,7 +242,9 @@ public class EditServerMVCActionCommand
 			SessionMessages.add(actionRequest, "dlGeneratePDFPreviews");
 		}
 		else if (cmd.equals("dlGenerateVideoPreviews")) {
-			_videoProcessor.generatePreviews();
+			VideoProcessor videoProcessor = (VideoProcessor)_videoDLProcessor;
+
+			videoProcessor.generatePreviews();
 
 			hideDefaultSuccessMessage(actionRequest);
 
@@ -933,8 +937,8 @@ public class EditServerMVCActionCommand
 		EditServerMVCActionCommand.class, "_updateLogLevels", Map.class,
 		String.class);
 
-	@Reference
-	private AudioProcessor _audioProcessor;
+	@Reference(target = "(type=" + DLProcessorConstants.AUDIO_PROCESSOR + ")")
+	private DLProcessor _audioDLProcessor;
 
 	@Reference
 	private ClusterExecutor _clusterExecutor;
@@ -1006,7 +1010,7 @@ public class EditServerMVCActionCommand
 	@Reference
 	private UserGroupMembershipPolicyFactory _userGroupMembershipPolicyFactory;
 
-	@Reference
-	private VideoProcessor _videoProcessor;
+	@Reference(target = "(type=" + DLProcessorConstants.VIDEO_PROCESSOR + ")")
+	private DLProcessor _videoDLProcessor;
 
 }

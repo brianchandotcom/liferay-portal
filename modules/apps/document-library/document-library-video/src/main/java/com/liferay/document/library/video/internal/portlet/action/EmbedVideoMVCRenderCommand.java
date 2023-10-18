@@ -6,7 +6,9 @@
 package com.liferay.document.library.video.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLFileVersionPreviewConstants;
+import com.liferay.document.library.kernel.model.DLProcessorConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.VideoProcessor;
 import com.liferay.document.library.preview.exception.DLFileEntryPreviewGenerationException;
 import com.liferay.document.library.service.DLFileVersionPreviewLocalService;
@@ -59,7 +61,9 @@ public class EmbedVideoMVCRenderCommand implements MVCRenderCommand {
 				renderRequest.setAttribute(
 					FileVersion.class.getName(), fileVersion);
 
-				if (_videoProcessor.hasVideo(fileVersion)) {
+				VideoProcessor videoProcessor = (VideoProcessor)_dlProcessor;
+
+				if (videoProcessor.hasVideo(fileVersion)) {
 					String videoPosterURL = _getVideoPosterURL(
 						fileVersion,
 						(ThemeDisplay)renderRequest.getAttribute(
@@ -109,10 +113,12 @@ public class EmbedVideoMVCRenderCommand implements MVCRenderCommand {
 			List<String> previewFileURLs = new ArrayList<>();
 
 			try {
+				VideoProcessor videoProcessor = (VideoProcessor)_dlProcessor;
+
 				for (String dlFileEntryPreviewVideoContainer :
 						PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS) {
 
-					long previewFileSize = _videoProcessor.getPreviewFileSize(
+					long previewFileSize = videoProcessor.getPreviewFileSize(
 						fileVersion, dlFileEntryPreviewVideoContainer);
 
 					if (previewFileSize > 0) {
@@ -151,10 +157,12 @@ public class EmbedVideoMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	private boolean _isPreviewFailure(FileVersion fileVersion) {
+		VideoProcessor videoProcessor = (VideoProcessor)_dlProcessor;
+
 		if (_dlFileVersionPreviewLocalService.hasDLFileVersionPreview(
 				fileVersion.getFileEntryId(), fileVersion.getFileVersionId(),
 				DLFileVersionPreviewConstants.STATUS_FAILURE) ||
-			!_videoProcessor.isVideoSupported(fileVersion)) {
+			!videoProcessor.isVideoSupported(fileVersion)) {
 
 			return true;
 		}
@@ -171,10 +179,13 @@ public class EmbedVideoMVCRenderCommand implements MVCRenderCommand {
 	@Reference
 	private DLFileVersionPreviewLocalService _dlFileVersionPreviewLocalService;
 
+	@Reference(
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(type=" + DLProcessorConstants.VIDEO_PROCESSOR + ")"
+	)
+	private DLProcessor _dlProcessor;
+
 	@Reference
 	private DLURLHelper _dlURLHelper;
-
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
-	private VideoProcessor _videoProcessor;
 
 }

@@ -245,9 +245,7 @@ export function PurchasedAppsDashboardPage() {
 							type: placeOrderItem.subscription
 								? 'Subscription'
 								: 'Perpetual',
-							version: !Object.keys(version).length
-								? ''
-								: version,
+							version: Object.keys(version).length ? version : '',
 							virtualURL: placeOrderItem?.virtualItemURLs,
 						};
 					})

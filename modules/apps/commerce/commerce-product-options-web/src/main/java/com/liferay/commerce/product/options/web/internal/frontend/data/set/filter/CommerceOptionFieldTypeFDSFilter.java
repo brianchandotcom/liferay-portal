@@ -15,7 +15,6 @@ import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -99,8 +98,5 @@ public class CommerceOptionFieldTypeFDSFilter extends BaseSelectionFDSFilter {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
-
-	@Reference
-	private Language _language;
 
 }

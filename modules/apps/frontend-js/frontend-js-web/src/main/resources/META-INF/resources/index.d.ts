@@ -272,6 +272,7 @@ export function openToast({
 
 export function openWindow(config: object, callback?: Function): void;
 
+export {default as openCategorySelectionModal} from './liferay/modal/commands/openCategorySelectionModal';
 export {default as openTagSelectionModal} from './liferay/modal/commands/openTagSelectionModal';
 
 /**

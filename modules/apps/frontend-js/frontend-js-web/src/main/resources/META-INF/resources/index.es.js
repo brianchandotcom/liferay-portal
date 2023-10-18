@@ -70,6 +70,7 @@ export {
 } from './liferay/modal/Modal';
 
 export {default as openAlertModal} from './liferay/modal/commands/open_alert_modal';
+export {default as openCategorySelectionModal} from './liferay/modal/commands/openCategorySelectionModal';
 export {default as openConfirmModal} from './liferay/modal/commands/open_confirm_modal';
 export {default as openTagSelectionModal} from './liferay/modal/commands/openTagSelectionModal';
 export {default as openSimpleInputModal} from './liferay/modal/commands/OpenSimpleInputModal.es';

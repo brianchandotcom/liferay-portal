@@ -9,6 +9,7 @@ interface ILiferay {
 		getCanonicalURL: () => string;
 		getCompanyGroupId: () => string;
 		getCompanyId: () => string;
+		getDefaultLanguageId: () => string;
 		getLanguageId: () => string;
 		getLayoutRelativeURL: () => string;
 		getLayoutURL: () => string;
@@ -20,6 +21,12 @@ interface ILiferay {
 	};
 	Util: {
 		navigate: (path: string) => void;
+		openToast: (options?: {
+			message: string;
+			onClick?: ({event}: {event: any}) => void;
+			title?: string;
+			type?: 'danger' | 'success';
+		}) => void;
 	};
 	authToken: string;
 	detach: Function;
@@ -38,6 +45,7 @@ export const Liferay = window.Liferay || {
 		getCanonicalURL: () => window.location.href,
 		getCompanyGroupId: () => '',
 		getCompanyId: () => '',
+		getDefaultLanguageId: () => 'en_US',
 		getLanguageId: () => '',
 		getLayoutRelativeURL: () => '',
 		getLayoutURL: () => '',

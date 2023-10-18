@@ -1,0 +1,47 @@
+[
+	{
+		"actions": [
+		],
+		"name": "Test Role 1",
+		"name_i18n": {
+			"en-US": "Test Role 1"
+		},
+		"scope": 1,
+		"type": 1
+	},
+	{
+		"actions": [
+			{
+				"actionId": "VIEW",
+				"resource": "com.liferay.portal.kernel.model.Role",
+				"scope": 1
+			}
+		],
+		"name": "Test Role 2",
+		"name_i18n": {
+			"en-US": "Test Role 2"
+		},
+		"scope": 1,
+		"type": 6
+	},
+	{
+		"actions": [
+		],
+		"name": "Test Role 3",
+		"name_i18n": {
+			"en-US": "Test Role 3"
+		},
+		"scope": 1,
+		"type": 1
+	},
+	{
+		"actions": [
+		],
+		"name": "Test Role 4",
+		"name_i18n": {
+			"en-US": "Test Role 4"
+		},
+		"scope": 3,
+		"type": 2
+	}
+]

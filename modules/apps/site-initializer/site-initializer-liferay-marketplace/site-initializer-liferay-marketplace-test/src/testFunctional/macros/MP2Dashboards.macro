@@ -1,11 +1,11 @@
 definition {
 
-	macro assertResendInvitationButton {
-		AssertElementPresent(locator1 = "MP2Dashboards#RESEND_INVITATION");
-	}
-
 	macro assertNoResendInvitationButton {
 		AssertElementNotPresent(locator1 = "MP2Dashboards#RESEND_INVITATION");
+	}
+
+	macro assertResendInvitationButton {
+		AssertElementPresent(locator1 = "MP2Dashboards#RESEND_INVITATION");
 	}
 
 	macro clickBreadcrumb {

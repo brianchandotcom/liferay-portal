@@ -190,6 +190,63 @@ definition {
 
 	}
 
+	@description = "LPS-165215 | Verify that after the member accepts the invitation to the marketplace account, the 'Resend Invitation' button is no longer displayed"
+	@priority = 3
+	test CannotViewReinviteButton {
+		task ("Given that the admin user invites a new user to the Publisher Dashboard") {
+			MP2Navigator.openSitePage(pageName = "Publisher Dashboard");
+
+			MP2Navigator.gotoNavItem(navItem = "Members");
+
+			MP2Dashboards.inviteNewMember(
+				button = "true",
+				checkboxName = "App Editor",
+				emailAddress = "test.mp@liferay.com",
+				firstName = "Test",
+				lastName = "QA");
+		}
+
+		task ("And I see that the resend button is present on the page") {
+			MP2Dashboards.clickOnTheInvitedUser(
+				label = "Role",
+				value = "Invited Member");
+
+			MP2Dashboards.assertResendInvitationButton();
+		}
+
+		task ("When the invited member accepts the invitation") {
+			User.logoutPG();
+
+			MockMock._gotoMail();
+
+			MP2Utils.firstLoginMKT(
+				asset = "Liferay Marketplace - Invitation from Dashboard Administrator",
+				bodyLink = "Accept invitation",
+				recipient = "da@administrator.com",
+				userEmailAddress = "test.mp@liferay.com");
+		}
+
+		task ("And I go back to the members page details") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "da@administrator.com",
+				userLoginFullName = "Dashboard Administrator");
+
+			MP2Navigator.gotoMP2();
+
+			MP2Navigator.openSitePage(pageName = "Publisher Dashboard");
+
+			MP2Navigator.gotoNavItem(navItem = "Members");
+
+			MP2Dashboards.clickOnTheInvitedUser(
+				label = "Role",
+				value = "App Editor");
+		}
+
+		task ("Then I should be able to assert that the 'Resend Invitation' button is not present on the page") {
+			MP2Dashboards.assertNoResendInvitationButton();
+		}
+	}
+
 	@description = "LPS-162211 | Assert that when you have an App Editor role, you should not be able to invite new members"
 	@priority = 4
 	test CannotViewTheNewMemberButton {
@@ -215,59 +272,6 @@ definition {
 
 		task ("Then I should be able to assert that the '+ New Member' button is not present on the page") {
 			MP2Dashboards.viewNewMemberButtonNotPresent();
-		}
-	}
-
-	@description = "LPS-160952 | Verify that after accepting the invitation, the guest user role is listed in the members section of the editor account"
-	@priority = 3
-	test CanViewTheUserRoleInTheMemberList {
-		task ("Given the user accepts the invitation") {
-			MP2Navigator.openSitePage(pageName = "Publisher Dashboard");
-
-			MP2Navigator.gotoNavItem(navItem = "Members");
-
-			MP2Dashboards.inviteNewMember(
-				button = "true",
-				checkboxName = "App Editor",
-				emailAddress = "test.mp@liferay.com",
-				firstName = "Test",
-				lastName = "QA");
-
-			User.logoutPG();
-
-			MockMock._gotoMail();
-		}
-
-		task ("And logs into the panel with the invited roles") {
-			MP2Utils.firstLoginMKT(
-				asset = "Liferay Marketplace - Invitation from Dashboard Administrator",
-				bodyLink = "Accept invitation",
-				recipient = "da@administrator.com",
-				userEmailAddress = "test.mp@liferay.com");
-		}
-
-		task ("When I go to the member page") {
-			MP2Navigator.gotoNavItem(navItem = "Members");
-		}
-
-		task ("Then I should be able to assert that the invited user's status is now Active") {
-			var table = '''
-				| Name    | Test QA             |
-				| Email   | test.mp@liferay.com |
-				| Role    | App Editor          |
-			''';
-
-			var rawTable = TableUtil.newTable(${table});
-
-			for (var row : table ${rawTable}) {
-				var label = "${row[0]}";
-				var value = "${row[1]}";
-
-				AssertElementPresent(
-					key_label = ${label},
-					key_text = ${value},
-					locator1 = "MP2Dashboards#DASHBOARD_TABLE");
-			}
 		}
 	}
 
@@ -326,7 +330,7 @@ definition {
 			User.logoutPG();
 
 			MockMock._gotoMail();
-			
+
 			MockMock._viewMailFromInbox(
 				asset = "Liferay Marketplace - Invitation from Dashboard",
 				recipient = "test.mp@liferay.com",
@@ -334,10 +338,10 @@ definition {
 		}
 	}
 
-	@description = "LPS-165215 | Verify that after the member accepts the invitation to the marketplace account, the 'Resend Invitation' button is no longer displayed"
+	@description = "LPS-160952 | Verify that after accepting the invitation, the guest user role is listed in the members section of the editor account"
 	@priority = 3
-	test CannotViewReinviteButton {
-		task ("Given that the admin user invites a new user to the Publisher Dashboard") {
+	test CanViewTheUserRoleInTheMemberList {
+		task ("Given the user accepts the invitation") {
 			MP2Navigator.openSitePage(pageName = "Publisher Dashboard");
 
 			MP2Navigator.gotoNavItem(navItem = "Members");
@@ -348,21 +352,13 @@ definition {
 				emailAddress = "test.mp@liferay.com",
 				firstName = "Test",
 				lastName = "QA");
-		}
 
-		task ("And I see that the resend button is present on the page") {
-			MP2Dashboards.clickOnTheInvitedUser(
-				label = "Role",
-				value = "Invited Member");
-
-			MP2Dashboards.assertResendInvitationButton();
-		}
-
-		task ("When the invited member accepts the invitation") {
 			User.logoutPG();
 
 			MockMock._gotoMail();
+		}
 
+		task ("And logs into the panel with the invited roles") {
 			MP2Utils.firstLoginMKT(
 				asset = "Liferay Marketplace - Invitation from Dashboard Administrator",
 				bodyLink = "Accept invitation",
@@ -370,24 +366,29 @@ definition {
 				userEmailAddress = "test.mp@liferay.com");
 		}
 
-		task ("And I go back to the members page details") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "da@administrator.com",
-				userLoginFullName = "Dashboard Administrator");
-
-			MP2Navigator.gotoMP2();
-
-			MP2Navigator.openSitePage(pageName = "Publisher Dashboard");
-
+		task ("When I go to the member page") {
 			MP2Navigator.gotoNavItem(navItem = "Members");
-
-			MP2Dashboards.clickOnTheInvitedUser(
-				label = "Role",
-				value = "App Editor");
 		}
 
-		task ("Then I should be able to assert that the 'Resend Invitation' button is not present on the page") {
-			MP2Dashboards.assertNoResendInvitationButton();
+		task ("Then I should be able to assert that the invited user's status is now Active") {
+			var table = '''
+				| Name    | Test QA             |
+				| Email   | test.mp@liferay.com |
+				| Role    | App Editor          |
+			''';
+
+			var rawTable = TableUtil.newTable(${table});
+
+			for (var row : table ${rawTable}) {
+				var label = "${row[0]}";
+				var value = "${row[1]}";
+
+				AssertElementPresent(
+					key_label = ${label},
+					key_text = ${value},
+					locator1 = "MP2Dashboards#DASHBOARD_TABLE");
+			}
 		}
 	}
+
 }

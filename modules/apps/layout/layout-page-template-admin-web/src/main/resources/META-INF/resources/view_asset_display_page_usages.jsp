@@ -14,6 +14,7 @@ AssetDisplayPageUsagesManagementToolbarDisplayContext assetDisplayPageUsagesMana
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(assetDisplayPageUsagesDisplayContext.getRedirect());
+portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 LayoutPageTemplateEntry layoutPageTemplateEntry = LayoutPageTemplateEntryServiceUtil.fetchLayoutPageTemplateEntry(assetDisplayPageUsagesDisplayContext.getLayoutPageTemplateEntryId());
 

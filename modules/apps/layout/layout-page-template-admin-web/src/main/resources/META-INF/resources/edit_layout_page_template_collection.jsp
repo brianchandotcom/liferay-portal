@@ -16,6 +16,7 @@ LayoutPageTemplateCollection layoutPageTemplateCollection = LayoutPageTemplateCo
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 renderResponse.setTitle((layoutPageTemplateCollection != null) ? layoutPageTemplateCollection.getName() : LanguageUtil.get(request, "add-page-template-set"));
 %>

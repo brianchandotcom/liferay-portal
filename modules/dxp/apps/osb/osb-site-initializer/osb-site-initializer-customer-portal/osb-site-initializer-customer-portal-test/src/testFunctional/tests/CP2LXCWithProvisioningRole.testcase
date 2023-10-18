@@ -45,6 +45,58 @@ definition {
 		}
 	}
 
+	@description = "Story ID: LPS-153497 | Test Summary: Verify if you cancel the pop-up the card status remains the same"
+	@priority = 3
+	test AssertThatAfterCloseTheModalTheStatusDontChange {
+		task ("Give the user has Admin and provisioning role in the project") {
+			JSONAccountRole.associateUser(
+				accountEntryName = ${testAccount},
+				accountRole = "Account Administrator",
+				userEmailAddress = "test@liferay.com");
+
+			JSONAccountRole.associateUser(
+				accountEntryName = ${testAccount},
+				accountRole = "Provisioning",
+				userEmailAddress = "test@liferay.com");
+		}
+
+		task ("And the user goes to CP2.0 and join a project") {
+			ApplicationsMenu.gotoSite(key_site = ${testSiteName});
+
+			CustomerPortal.search(searchItem = ${testAccount});
+
+			CustomerPortal.enterOnProject(title = ${testAccount});
+
+			CP2Utils.ifOnboardingPresent();
+		}
+
+		task ("And Go to the product activation page and Finish Activation") {
+			CP2NavigationMenu.goToProductActivation();
+
+			CP2NavigationMenu.clickOnProductButton(product = ${testProduct});
+
+			CustomerPortal.clickOnFinishActivationButton();
+
+			CP2DXPCloudSetup.typeAllSetupDXPCloudInfoFields(
+				dataCenterRegion = "Frankfurt, Germany",
+				email = "test@liferay.com",
+				firstName = "FirstName",
+				github = "GitHub User",
+				lastName = "LastName",
+				projectId = 001);
+
+			CustomerPortal.clickAtButton(text = "Submit");
+		}
+
+		task ("When Change the activation card status to Active") {
+			CustomerPortal.activeStatusViaDropdown(dropdownItem = "Set to Active");
+		}
+
+		task ("Then Assert that the card status has changed to 'In Progress'") {
+			CP2DXPCloudSetup.assertCardStatusChanged(status = "In Progress");
+		}
+	}
+
 	@description = "Story ID: LPS-153497 | Test Summary: Verify that when the user activate the LXC-SM, the status change to active."
 	@priority = 4
 	test AssertThatLXCCardChangeToActive {

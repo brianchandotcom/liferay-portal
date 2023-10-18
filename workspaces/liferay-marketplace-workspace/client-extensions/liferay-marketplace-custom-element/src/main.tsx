@@ -5,9 +5,11 @@
 
 import React from 'react';
 import {Root, createRoot} from 'react-dom/client';
+import {SWRConfig} from 'swr';
 
 import App from './App';
 import {AppContextProvider} from './manage-app-state/AppManageState';
+import SWRCacheProvider from './services/SWRCacheProvider';
 
 const GRAVATAR_API = `https://www.gravatar.com/avatar`;
 
@@ -19,11 +21,16 @@ class WebComponent extends HTMLElement {
 			this.root = createRoot(this);
 
 			this.root.render(
-				<React.StrictMode>
-					<AppContextProvider gravatarAPI={GRAVATAR_API}>
-						<App route={this.getAttribute('route') || '/'} />
-					</AppContextProvider>
-				</React.StrictMode>
+				<SWRConfig
+					value={{
+						provider: SWRCacheProvider,
+						revalidateOnFocus: false,
+					}}
+				>
+						<AppContextProvider gravatarAPI={GRAVATAR_API}>
+							<App route={this.getAttribute('route') || '/'} />
+						</AppContextProvider>
+				</SWRConfig>
 			);
 		}
 	}

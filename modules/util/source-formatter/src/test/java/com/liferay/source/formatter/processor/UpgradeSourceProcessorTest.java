@@ -111,11 +111,6 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testUpgradeJavaCaptchaUtilCheck() throws Exception {
-		test("upgrade/UpgradeJavaCaptchaUtilCheck.testjava");
-	}
-
-	@Test
 	public void testUpgradeJavaCheck() throws Exception {
 		test("upgrade/UpgradeJavaCheck.testjava");
 	}

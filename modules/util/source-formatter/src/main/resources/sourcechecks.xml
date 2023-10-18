@@ -1643,10 +1643,6 @@
 			<category name="Upgrade" />
 			<description name="Replace the setPortlet method with getPortlet" />
 		</check>
-		<check name="UpgradeJavaCaptchaUtilCheck">
-			<category name="Upgrade" />
-			<description name="Replaces the usages of `CaptchaUti.serveImage(resourceRequest, resourceResponse)` with `CaptchaUti.serveImage(httpServletRequest, httpServletResponse)`" />
-		</check>
 		<check name="UpgradeJavaCheck">
 			<category name="Upgrade" />
 			<description name="Performs upgrade checks for `java` files" />

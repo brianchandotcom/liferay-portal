@@ -166,13 +166,9 @@ public class APIEndpointRelevantObjectEntryModelListener
 					String message = null;
 					String messageKey = null;
 
-					if (pathString.startsWith(StringPool.FORWARD_SLASH)) {
-						message =
-							"%s can have a maximum of 255 alphanumeric " +
-								"characters";
-						messageKey =
-							"x-can-have-a-maximum-of-255-alphanumeric-" +
-								"characters";
+					if (!pathString.startsWith(StringPool.FORWARD_SLASH)) {
+						message = "%s must start with the \"/\" character";
+						messageKey = "x-must-start-with-the-x-character";
 					}
 					else if (!StringUtil.isLowerCase(pathString)) {
 						message = "%s must contain only lower case characters";
@@ -180,8 +176,12 @@ public class APIEndpointRelevantObjectEntryModelListener
 							"x-must-contain-only-lower-case-characters";
 					}
 					else {
-						message = "%s must start with the \"/\" character";
-						messageKey = "x-must-start-with-the-x-character";
+						message =
+							"%s can have a maximum of 255 alphanumeric " +
+								"characters";
+						messageKey =
+							"x-can-have-a-maximum-of-255-alphanumeric-" +
+								"characters";
 					}
 
 					String label = objectField.getLabel(user.getLocale());

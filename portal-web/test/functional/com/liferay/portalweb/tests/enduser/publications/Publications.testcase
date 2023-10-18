@@ -842,6 +842,75 @@ definition {
 			value1 = "Publication Name");
 	}
 
+	@description = "This is a use case for LPS-187183 - As a publication user, I would like to review the changes related to User Experiences added to a Publication."
+	@priority = 3
+	test CanReviewChangesRelatedToUserExperiences {
+		property custom.properties = "feature.flag.LPS-187183=true";
+
+		task ("Create new Content Page and new Publication") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Test Content Page",
+				type = "content");
+
+			JSONLayout.publishLayout(
+				groupName = "Guest",
+				layoutName = "Test Content Page");
+
+			JSONPublications.addPublication(publicationName = "Test Publication");
+
+			JSONPublications.selectPublication(publicationName = "Test Publication");
+		}
+
+		task ("Add an Image fragment with an image to the Content Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page",
+				siteName = "Guest");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Image");
+
+			PageEditor.editFragmentImage(
+				fileName = "Document_1.jpg",
+				fragmentName = "Image",
+				id = "image-square");
+		}
+
+		task ("Add a new Experience, change the image fragment with another image and publish the page") {
+			PageEditor.addExperience(
+				experienceName = "New Experience",
+				segmentName = "Anyone");
+
+			PageEditor.editFragmentImage(
+				fileName = "Document_2.jpg",
+				fragmentName = "Image",
+				id = "image-square");
+
+			PageEditor.publish();
+		}
+
+		task ("Go to review the Content Page entry and assert that the Experiences selector is on 'Default' experience by default") {
+			PublicationsNavigator.gotoReviewChanges(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Test Publication");
+
+			PublicationsNavigator.gotoViewChangeDetails(
+				changeCategory = "Page",
+				changeTitle = "Test Content Page");
+
+			AssertElementPresent(locator1 = "//button[contains(text(), 'Default')]");
+		}
+
+		task ("Assert that the publication and production previews exist") {
+			var ctCollectionId = JSONPublicationsAPI._getCTCollectionId(publicationName = "Test Publication");
+
+			PublicationsChangeDetails.viewFragmentChangePreviewInDisplay(
+				fragmentPreviewInProduction = "previewCTCollectionId=0",
+				fragmentPreviewInPublication = "previewCTCollectionId=${ctCollectionId}");
+		}
+	}
+
 	@description = "This is use case for LPS-170779. File upload causes publication to become unusable"
 	@ignore = "true"
 	@priority = 4

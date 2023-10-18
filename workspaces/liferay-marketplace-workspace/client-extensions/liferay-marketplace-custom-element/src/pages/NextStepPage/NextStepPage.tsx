@@ -283,10 +283,7 @@ export function NextStepPage({
 						showBackButton={showBackButton}
 						showContinueButton={false}
 					/>
-					{!(
-						paymentStatus === PaymentStatus.PAYMENT_PENDING &&
-						!isTrial
-					) && (
+					{(paymentStatus === PaymentStatus.PAID || isTrial) && (
 						<div className="d-flex justify-content-end">
 							<a href="#">
 								<ins>Learn more about App Configuration</ins>

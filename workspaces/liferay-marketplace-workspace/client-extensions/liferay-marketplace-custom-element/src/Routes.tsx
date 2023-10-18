@@ -9,41 +9,33 @@ import CreateLicense from './pages/CreateLicense';
 import {CustomerGatePage} from './pages/CustomerGatePage/CustomerGatePage';
 import GetAppPage from './pages/GetAppPage/GetAppPage';
 import {NextStepPage} from './pages/NextStepPage/NextStepPage';
-import {PublishedAppsDashboardPage} from './pages/PublishedAppsDashboardPage/PublishedAppsDashboardPage';
-import {PurchasedAppsDashboardPage} from './pages/PurchasedAppsDashboardPage/PurchasedAppsDashboardPage';
+import PublishedAppsDashboardRouter from './pages/PublishedAppsDashboard/PublishedAppsDashboardRouter';
+import PurchasedAppsDashboardRouter from './pages/PurchasedAppsDashboard/PurchasedAppsDashboardRouter';
 import PurchasedSolutions from './pages/PurchasedSolutions/PurchasedSolutions';
 
-interface AppRoutesProps {
-	route: string;
-}
+const Routes = {
+	'create-app': AppCreationFlow,
+	'create-license': CreateLicense,
+	'customer-gate': CustomerGatePage,
+	'get-app': GetAppPage,
+	'next-steps': NextStepPage,
+	'published-apps': PublishedAppsDashboardRouter,
+	'purchased-apps': PurchasedAppsDashboardRouter,
+	'purchased-solutions': PurchasedSolutions,
+} as const;
+
+export type RouteType = keyof typeof Routes;
+
+type AppRoutesProps = {
+	route: RouteType;
+};
 
 export default function AppRoutes({route}: AppRoutesProps) {
-	if (Liferay.ThemeDisplay.isSignedIn()) {
-		if (route === 'create-app') {
-			return <AppCreationFlow />;
-		}
-		if (route === 'create-license') {
-			return <CreateLicense />;
-		}
-		else if (route === 'get-app') {
-			return <GetAppPage />;
-		}
-		else if (route === 'next-steps') {
-			return <NextStepPage />;
-		}
-		else if (route === 'purchased-apps') {
-			return <PurchasedAppsDashboardPage />;
-		}
-		else if (route === 'published-apps') {
-			return <PublishedAppsDashboardPage />;
-		}
-		else if (route === 'customer-gate') {
-			return <CustomerGatePage />;
-		}
-		else if (route === 'purchased-solutions') {
-			return <PurchasedSolutions />;
-		}
+	const Route = Routes[route];
+
+	if (!Liferay.ThemeDisplay.isSignedIn() || !Route) {
+		return null;
 	}
 
-	return <></>;
+	return <Route />;
 }

@@ -383,6 +383,14 @@ definition {
 		Button.click(button = "Skip for now");
 	}
 
+	macro ifOnboardingPresent {
+		if (IsElementPresent(key_text = "Start Project Setup", locator1 = "Button#ANY")) {
+			task ("And pass through onboarding") {
+				CP2Utils.onboardingFlow();
+			}
+		}
+	}
+
 	macro onlySeeExportAllKeys {
 		WaitForVisible(
 			key_text = "Redacted",

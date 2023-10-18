@@ -762,17 +762,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	}
 
 	private Dictionary<String, Object> _getProperties(
-		Object bean, String beanName) {
-
-		Class<?> clazz = bean.getClass();
-
-		OSGiBeanProperties osgiBeanProperties = clazz.getAnnotation(
-			OSGiBeanProperties.class);
-
-		return _getProperties(osgiBeanProperties, beanName);
-	}
-
-	private Dictionary<String, Object> _getProperties(
 		OSGiBeanProperties osgiBeanProperties, String beanName) {
 
 		HashMapDictionary<String, Object> properties =
@@ -1600,10 +1589,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		bundleContext.registerService(
 			ProcessExecutor.class, new LocalProcessExecutor(), null);
 
-		Props props = PropsUtil.getProps();
-
 		bundleContext.registerService(
-			Props.class, props, _getProperties(props, Props.class.getName()));
+			Props.class, PropsUtil.getProps(),
+			_getProperties(null, Props.class.getName()));
 	}
 
 	private void _startConfigurationBundles(Collection<Bundle> bundles)

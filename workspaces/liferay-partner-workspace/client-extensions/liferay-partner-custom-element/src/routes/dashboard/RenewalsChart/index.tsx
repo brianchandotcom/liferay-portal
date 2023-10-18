@@ -115,6 +115,8 @@ export default function () {
 									<span className="font-weight-semi-bold">
 										{item.expirationDays === 0
 											? 'today'
+											: item.expirationDays === 1
+											? `in ${item.expirationDays} day`
 											: `in ${item.expirationDays} days`}
 									</span>
 									&nbsp;

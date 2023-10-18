@@ -39,8 +39,8 @@ const DonutChart = ({
 	width = 300,
 }: iProps) => {
 	const legendTransformData = useCallback((newItems: any, colors: any) => {
-		return newItems.map((item: any, index: any) => ({
-			color: Object.entries(colors)[index][1],
+		return newItems.map((item: any) => ({
+			color: colors[item[0]],
 			name: item[0],
 			value: item[1],
 		}));

@@ -4,10 +4,11 @@
  */
 export const mdfChartColumnColors = {
 	'Approved': '#003EB3',
-	'Claim Approved': '#377CFF',
-	'Claimed': '#0053F0',
-	'Expired': '#BBD2FF',
-	'Expiring Soon': '#8FB5FF',
+	'Claim Approved': '#6399FF',
+	'Claim Paid': '#8FB5FF',
+	'Claim Requested': '#377CFF',
+	'Expired': '#E7EFFF',
+	'Expiring Soon': '#BBD2FF',
 	'Requested': '#00256C',
 };
 

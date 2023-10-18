@@ -11,6 +11,7 @@ Export-Package:\
 	com.liferay.portal.plugin,\
 	com.liferay.portal.security.auth,\
 	com.liferay.portal.security.lang,\
+	com.liferay.portal.service,\
 	com.liferay.portal.service.http,\
 	com.liferay.portal.service.permission,\
 	com.liferay.portal.service.persistence.constants,\

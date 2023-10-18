@@ -3,16 +3,19 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClaySticker from '@clayui/sticker';
 import {useCallback, useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 
 import {useMarketplaceContext} from '../../context/MarketplaceContext';
+import emptyPictureIcon from '../../assets/icons/avatar.svg';
 import useCart from '../../hooks/useCart';
 import {
 	getPaymentMethodURL,
 	postCheckoutCart,
 	postEmailAppInformation,
 } from '../../utils/api';
+import {getValueFromSpecifications} from '../../utils/util';
 import AccountSelection from './components/AccountSelection';
 import ProductFooter from './components/Footer';
 import {LicenseSelector} from './components/LicenseSelector';
@@ -20,7 +23,9 @@ import ProductCard from './components/ProductCard/ProductCard';
 import {SelectPaymentMethod} from './components/SelectPaymentMethod/SelectPaymentMethod';
 import StepWizard from './components/StepWizard/StepWizard';
 import {initialBillingAddress} from './constants/initialBillingAddress';
+import {LicenseType} from './enums/licenseType';
 import {paymentMethod} from './enums/paymentMethod';
+import {SkuOptions} from './enums/skuOptions';
 import {StepType} from './enums/stepType';
 import useGetAddresses from './hooks/useGetAddresses';
 import useGetProduct from './hooks/useGetProduct';
@@ -48,9 +53,8 @@ const GetAppFlow = () => {
 		initialBillingAddress
 	);
 	const [email, setEmail] = useState<string>('');
-	const [enablePurchaseButton, setEnablePurchaseButton] = useState<boolean>(
-		false
-	);
+	const [enablePurchaseButton, setEnablePurchaseButton] =
+		useState<boolean>(false);
 	const [enableTrialMethod, setEnableTrialMethod] = useState<boolean>(false);
 	const [licenseSelected, setLincenseSelected] = useState<boolean>(false);
 	const [orderType, setOrderType] = useState<OrderType>();
@@ -96,9 +100,8 @@ const GetAppFlow = () => {
 	useEffect(() => {
 		(async () => {
 			if (productId) {
-				const productSpecificationValues = await getProductSpecificationValues(
-					Number(productId)
-				);
+				const productSpecificationValues =
+					await getProductSpecificationValues(Number(productId));
 
 				const orderType = await getProductOrderTypes(
 					productSpecificationValues
@@ -238,9 +241,140 @@ const GetAppFlow = () => {
 		},
 	};
 
+	const [hasTrial, setHasTrial] = useState(false);
+	const [basePrice, setBasePrice] = useState(0);
+
+	const productHasTrialSKU = (skus: SKU[]) => {
+		skus.forEach(async (sku) => {
+			const licenseUsageType = sku?.skuOptions.find((option) => {
+				return (
+					option?.key === 'trial' &&
+					option?.value === 'yes' &&
+					option?.key
+				);
+			});
+			if (
+				licenseUsageType &&
+				licenseUsageType?.key.toLowerCase() ===
+					SkuOptions.TRIAL.toLowerCase()
+			) {
+				setHasTrial(true);
+			}
+		});
+	};
+
+	const getProductBasePrice = (product: Product) => {
+		product?.skus?.forEach((sku) => {
+			const licenseUsageType = sku?.skuOptions.find(
+				(skuOption) =>
+					skuOption?.key === 'standard' &&
+					skuOption?.value === 'yes' &&
+					skuOption?.key
+			);
+
+			if (
+				licenseUsageType?.key.toLowerCase() ===
+				SkuOptions.STANDARD.toLowerCase()
+			) {
+				setBasePrice(sku.price);
+			}
+		});
+	};
+
+	const getLicenseTagText = (product: Product) => {
+		const licenseTypeSpecification = getValueFromSpecifications(
+			product.productSpecifications,
+			'license-type'
+		).toLowerCase();
+
+		if (licenseTypeSpecification) {
+			return licenseTypeSpecification === LicenseType.Perpetual
+				? 'One-Time'
+				: 'Annually';
+		}
+	};
+
+	useEffect(() => {
+		if (product) {
+			productHasTrialSKU(product.skus);
+			getProductBasePrice(product);
+		}
+	}, [product]);
+
+	if (!product) {
+		return null;
+	}
+
+	const FormattedValues = () => {
+		if (step === StepType.LICENSES || step === StepType.PAYMENT) {
+			return (
+				<span className="price-text-value">
+					{cartUtil?.cart?.id
+						? `${cartUtil?.cart?.summary?.totalFormatted}`
+						: `$0`}
+				</span>
+			);
+		}
+
+		if (basePrice) {
+			if (hasTrial) {
+				return <span>30-day trial or ${basePrice}</span>;
+			}
+
+			return <span>${basePrice}</span>;
+		}
+
+		return <span className="price-text-value">Free</span>;
+	};
+
+	const PriceTypeInfo = () => (
+		<div className="align-items-end d-flex flex-column price-text">
+			<strong className="mr-1">Price</strong>
+
+			<div className="mr-1 py-2">
+				<FormattedValues />
+			</div>
+
+			<div className="license-tag px-2">{getLicenseTagText(product)}</div>
+		</div>
+	);
+
+	const AccountEmailInfo = () => (
+		<div className="align-items-center d-flex">
+			<div className="account-banner-name-text align-items-end d-flex flex-column m-2">
+				<strong>{productCreatorAccount?.name}</strong>
+
+				<div className="account-banner-email-text">
+					{myUserAccount?.emailAddress}
+				</div>
+			</div>
+
+			<ClaySticker shape="circle" size="sm">
+				<ClaySticker.Image
+					alt="placeholder"
+					height="24"
+					src={productCreatorAccount?.logoURL ?? emptyPictureIcon}
+					width="24"
+				/>
+			</ClaySticker>
+		</div>
+	);
+
+	const ExtendBanner = () => (
+		<div className="d-flex flex-row justify-content-between">
+			<strong className="account-banner-title-text align-self-center">
+				Account Selected
+			</strong>
+
+			<AccountEmailInfo />
+		</div>
+	);
+
 	return (
 		<>
 			<ProductCard
+				ExtendBanner={ExtendBanner}
+				RightSideBanner={PriceTypeInfo}
 				cartUtil={cartUtil}
 				creatorAccount={productCreatorAccount}
 				product={product}

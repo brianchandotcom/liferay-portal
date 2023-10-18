@@ -6,6 +6,7 @@
 package com.liferay.dynamic.data.mapping.form.field.type.internal.document.library;
 
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
@@ -64,8 +65,10 @@ public class DocumentLibraryDDMFormFieldValueRenderer
 	@Reference
 	protected DLAppService dlAppService;
 
-	@Reference
-	protected DocumentLibraryDDMFormFieldValueAccessor
+	@Reference(
+		target = "(ddm.form.field.type.name=" + DDMFormFieldTypeConstants.DOCUMENT_LIBRARY + ")"
+	)
+	protected DDMFormFieldValueAccessor<JSONObject>
 		documentLibraryDDMFormFieldValueAccessor;
 
 	private static final Log _log = LogFactoryUtil.getLog(

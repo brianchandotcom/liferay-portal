@@ -11,7 +11,6 @@ import com.liferay.dynamic.data.mapping.constants.DDMFormConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
-import com.liferay.dynamic.data.mapping.form.field.type.internal.security.permission.DDMPermissionCheckerRegistry;
 import com.liferay.dynamic.data.mapping.form.item.selector.criterion.DDMUserPersonalFolderItemSelectorCriterion;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
@@ -22,6 +21,8 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -77,7 +78,10 @@ import javax.portlet.ResourceURL;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -147,30 +151,27 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 		).build();
 	}
 
-	protected ResourceBundle getResourceBundle(Locale locale) {
-		return new AggregateResourceBundle(
-			ResourceBundleUtil.getBundle(
-				"content.Language", locale, getClass()),
-			_portal.getResourceBundle(locale));
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, DDMPermissionChecker.class, "javax.portlet.name");
 	}
 
-	protected ThemeDisplay getThemeDisplay(
-		HttpServletRequest httpServletRequest) {
-
-		return (ThemeDisplay)httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-	}
-
-	private boolean _containsPermission(
+	protected boolean containsPermission(
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext,
-		PortletDisplay portletDisplay) {
+		String portletId) {
 
 		try {
 			DDMPermissionChecker ddmPermissionChecker =
-				_ddmPermissionCheckerRegistry.getDDMPermissionChecker(
-					portletDisplay.getRootPortletId());
+				_serviceTrackerMap.getService(portletId);
 
 			if (ddmPermissionChecker == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"No dynamic data mapping permission checker found " +
+							"for portlet " + portletId);
+				}
+
 				return true;
 			}
 
@@ -184,6 +185,25 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 
 			return false;
 		}
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
+	}
+
+	protected ResourceBundle getResourceBundle(Locale locale) {
+		return new AggregateResourceBundle(
+			ResourceBundleUtil.getBundle(
+				"content.Language", locale, getClass()),
+			_portal.getResourceBundle(locale));
+	}
+
+	protected ThemeDisplay getThemeDisplay(
+		HttpServletRequest httpServletRequest) {
+
+		return (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	private User _createDDMFormDefaultUser(long companyId) {
@@ -643,9 +663,11 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 			return new HashMap<>();
 		}
 
-		if (!_containsPermission(
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		if (!containsPermission(
 				ddmFormFieldRenderingContext,
-				themeDisplay.getPortletDisplay())) {
+				portletDisplay.getRootPortletId())) {
 
 			return HashMapBuilder.<String, Object>put(
 				"showUploadPermissionMessage", true
@@ -740,9 +762,6 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;
 
 	@Reference
-	private DDMPermissionCheckerRegistry _ddmPermissionCheckerRegistry;
-
-	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
@@ -762,6 +781,9 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 
 	@Reference
 	private PortletFileRepository _portletFileRepository;
+
+	private volatile ServiceTrackerMap<String, DDMPermissionChecker>
+		_serviceTrackerMap;
 
 	@Reference
 	private UserLocalService _userLocalService;

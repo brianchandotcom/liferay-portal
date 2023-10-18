@@ -29,10 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "ddm.form.field.type.name=" + DDMFormFieldTypeConstants.DOCUMENT_LIBRARY,
-	service = {
-		DDMFormFieldValueAccessor.class,
-		DocumentLibraryDDMFormFieldValueAccessor.class
-	}
+	service = DDMFormFieldValueAccessor.class
 )
 public class DocumentLibraryDDMFormFieldValueAccessor
 	implements DDMFormFieldValueAccessor<JSONObject> {

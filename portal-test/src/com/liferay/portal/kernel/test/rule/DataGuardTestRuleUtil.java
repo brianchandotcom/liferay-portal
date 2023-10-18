@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.test.rule;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.petra.io.unsync.UnsyncPrintWriter;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
 
 import java.io.Closeable;
 import java.io.Serializable;
@@ -521,20 +522,15 @@ public class DataGuardTestRuleUtil {
 		Map<String, PersistedModelLocalService>
 			scrubbedPersistedModelLocalServices = new HashMap<>();
 
-		Map<String, PersistedModelLocalService> persistedModelLocalServices =
-			ReflectionTestUtil.getFieldValue(
-				PersistedModelLocalServiceRegistryUtil.
-					getPersistedModelLocalServiceRegistry(),
-				"_persistedModelLocalServices");
+		ServiceTrackerMap<String, PersistedModelLocalService>
+			serviceTrackerMap = ReflectionTestUtil.getFieldValue(
+				PersistedModelLocalServiceRegistryUtil.class,
+				"_serviceTrackerMap");
 
-		for (Map.Entry<String, PersistedModelLocalService> entry :
-				persistedModelLocalServices.entrySet()) {
-
-			String className = entry.getKey();
-
-			if (className.indexOf(CharPool.POUND) == -1) {
+		for (String modeClassName : serviceTrackerMap.keySet()) {
+			if (modeClassName.indexOf(CharPool.POUND) == -1) {
 				scrubbedPersistedModelLocalServices.put(
-					className, entry.getValue());
+					modeClassName, serviceTrackerMap.getService(modeClassName));
 			}
 		}
 

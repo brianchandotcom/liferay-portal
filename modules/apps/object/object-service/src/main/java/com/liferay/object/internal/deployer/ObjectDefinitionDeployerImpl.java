@@ -67,7 +67,7 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
@@ -75,6 +75,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
@@ -128,7 +129,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		ObjectScopeProviderRegistry objectScopeProviderRegistry,
 		ObjectViewLocalService objectViewLocalService,
 		OrganizationLocalService organizationLocalService,
-		PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry,
 		PLOEntryLocalService ploEntryLocalService, Portal portal,
 		PortletLocalService portletLocalService,
 		ResourceActions resourceActions, TreeFactory treeFactory,
@@ -159,8 +159,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
 		_objectViewLocalService = objectViewLocalService;
 		_organizationLocalService = organizationLocalService;
-		_persistedModelLocalServiceRegistry =
-			persistedModelLocalServiceRegistry;
 		_ploEntryLocalService = ploEntryLocalService;
 		_portal = portal;
 		_portletLocalService = portletLocalService;
@@ -180,9 +178,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		if (objectDefinition.isUnmodifiableSystemObject()) {
 			return Collections.emptyList();
 		}
-
-		_persistedModelLocalServiceRegistry.register(
-			objectDefinition.getClassName(), _objectEntryLocalService);
 
 		try {
 			ObjectDefinitionResourcePermissionUtil.populateResourceActions(
@@ -283,6 +278,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				new ObjectEntryMtoMObjectRelatedModelsPredicateProviderImpl(
 					objectDefinition, _objectFieldLocalService),
 				null),
+			_bundleContext.registerService(
+				PersistedModelLocalService.class, _objectEntryLocalService,
+				MapUtil.singletonDictionary(
+					"model.class.name", objectDefinition.getClassName())),
 			_bundleContext.registerService(
 				PortletResourcePermission.class, portletResourcePermission,
 				HashMapDictionaryBuilder.<String, Object>put(
@@ -425,9 +424,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			objectDefinition.getCompanyId(),
 			"model.resource.com.liferay.object.model.ObjectDefinition#" +
 				objectDefinition.getObjectDefinitionId());
-
-		_persistedModelLocalServiceRegistry.unregister(
-			objectDefinition.getClassName());
 	}
 
 	private String _getServiceRegistrationKey(
@@ -530,8 +526,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 	private final ObjectViewLocalService _objectViewLocalService;
 	private final OrganizationLocalService _organizationLocalService;
-	private final PersistedModelLocalServiceRegistry
-		_persistedModelLocalServiceRegistry;
 	private final PLOEntryLocalService _ploEntryLocalService;
 	private final Portal _portal;
 	private final PortletLocalService _portletLocalService;

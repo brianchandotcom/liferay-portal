@@ -69,7 +69,6 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.DateUtil;
@@ -85,6 +84,7 @@ import com.liferay.portal.search.aggregation.bucket.NestedAggregation;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.aggregation.Facet;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -188,8 +188,9 @@ public class DefaultObjectEntryManagerImpl
 				getSystemObjectDefinitionManager(objectDefinition.getName());
 
 		PersistedModelLocalService persistedModelLocalService =
-			_persistedModelLocalServiceRegistry.getPersistedModelLocalService(
-				systemObjectDefinitionManager.getModelClassName());
+			PersistedModelLocalServiceRegistryUtil.
+				getPersistedModelLocalService(
+					systemObjectDefinitionManager.getModelClassName());
 
 		return _toDTO(
 			(BaseModel<?>)persistedModelLocalService.getPersistedModel(
@@ -1263,8 +1264,9 @@ public class DefaultObjectEntryManagerImpl
 				getSystemObjectDefinitionManager(objectDefinition.getName());
 
 		PersistedModelLocalService persistedModelLocalService =
-			_persistedModelLocalServiceRegistry.getPersistedModelLocalService(
-				systemObjectDefinitionManager.getModelClassName());
+			PersistedModelLocalServiceRegistryUtil.
+				getPersistedModelLocalService(
+					systemObjectDefinitionManager.getModelClassName());
 
 		PersistedModel persistedModel =
 			persistedModelLocalService.getPersistedModel(objectEntryId);
@@ -1707,10 +1709,6 @@ public class DefaultObjectEntryManagerImpl
 
 	@Reference
 	private ObjectRelationshipService _objectRelationshipService;
-
-	@Reference
-	private PersistedModelLocalServiceRegistry
-		_persistedModelLocalServiceRegistry;
 
 	@Reference
 	private Queries _queries;

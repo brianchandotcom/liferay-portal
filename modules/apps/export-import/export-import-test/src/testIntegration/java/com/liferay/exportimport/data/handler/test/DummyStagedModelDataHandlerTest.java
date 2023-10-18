@@ -17,10 +17,10 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistryUtil;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.Serializable;
@@ -30,10 +30,16 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Akos Thurzo
@@ -62,8 +68,13 @@ public class DummyStagedModelDataHandlerTest
 				StagedModelRepositoryRegistryUtil.getStagedModelRepository(
 					DummyFolder.class.getName());
 
-		PersistedModelLocalServiceRegistryUtil.register(
-			Dummy.class.getName(),
+		Bundle bundle = FrameworkUtil.getBundle(
+			DummyStagedModelDataHandlerTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_serviceRegistration = bundleContext.registerService(
+			PersistedModelLocalService.class,
 			new PersistedModelLocalService() {
 
 				@Override
@@ -97,7 +108,17 @@ public class DummyStagedModelDataHandlerTest
 					return null;
 				}
 
-			});
+			},
+			MapUtil.singletonDictionary(
+				"model.class.name", Dummy.class.getName()));
+	}
+
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		_serviceRegistration.unregister();
+
+		super.tearDown();
 	}
 
 	@Override
@@ -164,5 +185,6 @@ public class DummyStagedModelDataHandlerTest
 	private StagedModelRepository<DummyFolder>
 		_dummyFolderStagedModelRepository;
 	private StagedModelRepository<Dummy> _dummyStagedModelRepository;
+	private ServiceRegistration<?> _serviceRegistration;
 
 }

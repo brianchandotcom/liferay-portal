@@ -27,11 +27,11 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +51,6 @@ public class OneToManyObjectFieldFilterStrategy
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
 		ObjectViewFilterColumn objectViewFilterColumn,
-		PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry,
 		SystemObjectDefinitionManagerRegistry
 			systemObjectDefinitionManagerRegistry) {
 
@@ -63,8 +62,6 @@ public class OneToManyObjectFieldFilterStrategy
 		_objectField = objectField;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
-		_persistedModelLocalServiceRegistry =
-			persistedModelLocalServiceRegistry;
 		_systemObjectDefinitionManagerRegistry =
 			systemObjectDefinitionManagerRegistry;
 	}
@@ -171,7 +168,7 @@ public class OneToManyObjectFieldFilterStrategy
 
 		if (_objectDefinition1.isUnmodifiableSystemObject()) {
 			PersistedModelLocalService persistedModelLocalService =
-				_persistedModelLocalServiceRegistry.
+				PersistedModelLocalServiceRegistryUtil.
 					getPersistedModelLocalService(
 						_objectDefinition1.getClassName());
 
@@ -210,8 +207,6 @@ public class OneToManyObjectFieldFilterStrategy
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
-	private final PersistedModelLocalServiceRegistry
-		_persistedModelLocalServiceRegistry;
 	private final SystemObjectDefinitionManagerRegistry
 		_systemObjectDefinitionManagerRegistry;
 

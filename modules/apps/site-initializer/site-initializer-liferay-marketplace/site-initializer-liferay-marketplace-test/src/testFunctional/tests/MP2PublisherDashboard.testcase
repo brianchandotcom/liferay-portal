@@ -14,7 +14,7 @@ definition {
 
 	setUp {
 		task ("Set up instance and create a new Marketplace Site") {
-			MP2Configuration.marketplaceSetUp();
+			MP2Configuration.marketplaceSetUp(clientExtensionDeploy = "true");
 		}
 
 		task ("Update the account with catalogId field") {

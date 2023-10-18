@@ -79,12 +79,14 @@ definition {
 
 		User.firstLoginPG();
 
-		var companyWebId = JSONCompany.getWebId();
-		var clientExtension = "liferay-marketplace-custom-element";
+		if (${clientExtensionDeploy} == "true") {
+			var companyWebId = JSONCompany.getWebId();
+			var clientExtension = "liferay-marketplace-custom-element";
 
-		AntCommands.runCommand("build-test-workspace.xml", "deploy-workspace-client-extension -Dvirtual.instance.id=${companyWebId} -Dworkspace.client.extension.name=${clientExtension}");
+			AntCommands.runCommand("build-test-workspace.xml", "deploy-workspace-client-extension -Dvirtual.instance.id=${companyWebId} -Dworkspace.client.extension.name=${clientExtension}");
 
-		WaitForConsoleTextPresent(value1 = "STARTED liferaymarketplacecustomelement");
+			WaitForConsoleTextPresent(value1 = "STARTED liferaymarketplacecustomelement");
+		}
 
 		HeadlessSite.addSite(
 			siteName = "Marketplace Site",

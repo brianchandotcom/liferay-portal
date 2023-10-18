@@ -8,8 +8,10 @@ import {useState} from 'react';
 
 import './index.scss';
 
+import ClaySticker from '@clayui/sticker';
 import {useForm} from 'react-hook-form';
 
+import emptyPictureIcon from '../../assets/icons/avatar.svg';
 import ProductCard from '../GetAppPage/components/ProductCard/ProductCard';
 import StepWizard from '../GetAppPage/components/StepWizard/StepWizard';
 import LicenseDetails from './LicenseDetails';
@@ -87,10 +89,55 @@ const CreateLicense = () => {
 		emailAddress: 'joana@liferay.com',
 	};
 
+	const AccountEmailInfo = () => (
+		<div className="align-items-center d-flex">
+			<div className="account-banner-name-text align-items-end d-flex flex-column m-2">
+				<strong>{productCreatorAccount?.name}</strong>
+
+				<div className="account-banner-email-text">
+					{userAccount?.emailAddress}
+				</div>
+			</div>
+
+			<ClaySticker shape="circle" size="sm">
+				<ClaySticker.Image
+					alt="placeholder"
+					height="24"
+					src={productCreatorAccount?.logoURL ?? emptyPictureIcon}
+					width="24"
+				/>
+			</ClaySticker>
+		</div>
+	);
+
+	const ExtendBanner = () => (
+		<>
+			<div className="align-items-center d-flex mb-3 row">
+				<small className="col-6 col-md-4 font-weight-bold m-0">
+					Key type
+				</small>
+				<small className="col-6 col-md-4 subscription-banner-text">
+					Trial
+				</small>
+			</div>
+
+			<div className="align-items-center d-flex row">
+				<small className="col-6 col-md-4 font-weight-bold m-0">
+					Start Date - Exp. Date
+				</small>
+				<small className="col-6 col-md-4 subscription-banner-text text-nowrap">
+					Sep 24, 2023 &ndash; Oct 24, 2024
+				</small>
+			</div>
+		</>
+	);
+
 	return (
 		<div className="align-items-center d-flex flex-column">
 			<div className="w-100">
 				<ProductCard
+					ExtendBanner={ExtendBanner}
+					RightSideBanner={AccountEmailInfo}
 					cartUtil={cartUtil}
 					creatorAccount={productCreatorAccount}
 					isSelectSubscription={true}

@@ -432,7 +432,7 @@ public class EditServerMVCActionCommand
 					}
 
 					_portletPreferencesLocalService.deletePortletPreferences(
-						portletPreferences);
+						portletPreferences.getPortletPreferencesId());
 				});
 
 			actionableDynamicQuery.performActions();
@@ -502,7 +502,8 @@ public class EditServerMVCActionCommand
 
 					if (orphan) {
 						_portletPreferencesLocalService.
-							deletePortletPreferences(pref);
+							deletePortletPreferences(
+								pref.getPortletPreferencesId());
 					}
 				});
 

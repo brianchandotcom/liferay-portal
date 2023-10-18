@@ -111,9 +111,11 @@ export default function () {
 								</div>
 
 								<div>
-									Expires in &nbsp;
+									Expires &nbsp;
 									<span className="font-weight-semi-bold">
-										{item.expirationDays} days.
+										{item.expirationDays === 0
+											? 'today'
+											: `in ${item.expirationDays} days`}
 									</span>
 									&nbsp;
 									<span className="ml-2">

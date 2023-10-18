@@ -1745,6 +1745,25 @@ public class JenkinsResultsParserUtil {
 		return System.currentTimeMillis() - _currentTimeMillisDelta;
 	}
 
+	public static String[] getDateStrings(long startTime, long duration) {
+		long durationDays = TimeUnit.MILLISECONDS.toDays(duration);
+
+		String[] dateStrings = new String[(int)durationDays];
+
+		LocalDate localDate = getLocalDate(startTime);
+
+		for (int i = 0; i < durationDays; i++) {
+			String dateString = localDate.format(
+				DateTimeFormatter.ofPattern("yyyyMMdd"));
+
+			dateStrings[i] = dateString;
+
+			localDate = localDate.plusDays(1);
+		}
+
+		return dateStrings;
+	}
+
 	public static List<File> getDirectoriesContainingFiles(
 		List<File> directories, List<File> files) {
 
@@ -2590,6 +2609,14 @@ public class JenkinsResultsParserUtil {
 		return zonedDateTime.toLocalDate();
 	}
 
+	public static LocalDate getLocalDate(long milliseconds) {
+		Instant instant = Instant.ofEpochMilli(milliseconds);
+
+		ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
+
+		return zonedDateTime.toLocalDate();
+	}
+
 	public static LocalDateTime getLocalDateTime(Date date) {
 		Instant instant = date.toInstant();
 
@@ -2686,6 +2713,15 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return localURL + localURLQueryString;
+	}
+
+	public static long getMillis(LocalDateTime localDateTime) {
+		ZonedDateTime zonedDateTime = ZonedDateTime.of(
+			localDateTime, ZoneId.systemDefault());
+
+		Instant instant = zonedDateTime.toInstant();
+
+		return instant.toEpochMilli();
 	}
 
 	public static JenkinsMaster getMostAvailableJenkinsMaster(

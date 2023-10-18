@@ -5,7 +5,7 @@
 
 package com.liferay.portal.kernel.audit;
 
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * @author Michael C. Han
@@ -14,19 +14,22 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 public class AuditRouterUtil {
 
 	public static AuditRouter getAuditRouter() {
-		return _auditRouter;
+		return _auditRouterSnapshot.get();
 	}
 
 	public static boolean isDeployed() {
-		return _auditRouter.isDeployed();
+		AuditRouter auditRouter = _auditRouterSnapshot.get();
+
+		return auditRouter.isDeployed();
 	}
 
 	public static void route(AuditMessage auditMessage) throws AuditException {
-		_auditRouter.route(auditMessage);
+		AuditRouter auditRouter = _auditRouterSnapshot.get();
+
+		auditRouter.route(auditMessage);
 	}
 
-	private static volatile AuditRouter _auditRouter =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			AuditRouter.class, AuditRouterUtil.class, "_auditRouter", false);
+	private static final Snapshot<AuditRouter> _auditRouterSnapshot =
+		new Snapshot<>(AuditRouterUtil.class, AuditRouter.class);
 
 }

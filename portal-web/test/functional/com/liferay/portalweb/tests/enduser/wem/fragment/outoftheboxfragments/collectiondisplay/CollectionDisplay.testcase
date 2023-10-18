@@ -2257,28 +2257,10 @@ definition {
 			task ("Add a section fragment to the fragment collection via JSON") {
 				JSONFragment.addSection(
 					collectionName = "Collection Name",
+					fragmentStatus = "Approved",
 					groupName = "Test Site Name",
+					html = "<div class=\"fragment_name\">${fragmentElementId}</div>",
 					name = "Fragment Name");
-			}
-
-			task ("Navigate to fragments admin") {
-				FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
-			}
-
-			task ("Edit this fragment with the following codes") {
-				FragmentsAdminNavigator.gotoCollection(collectionName = "Collection Name");
-
-				FragmentsAdminNavigator.gotoEntryEllipsisItem(
-					entry = "Fragment Name",
-					item = "Edit");
-
-				var htmlContent = '''<div class="fragment_name">${fragmentElementId}</div>''';
-
-				FragmentsEditor.typeHtmlEditor(content = ${htmlContent});
-
-				FragmentsEditor.waitForAutoSave();
-
-				FragmentsEditor.publish();
 			}
 		}
 

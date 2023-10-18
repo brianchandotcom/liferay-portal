@@ -98,24 +98,32 @@ public class AddObjectFieldCompositeKeyCandidatesMVCResourceCommand
 			}
 		}
 
-		String errorLabel = "";
-		String status = "success";
-
-		if (!objectFieldLabels.isEmpty()) {
-			errorLabel = _language.format(
-				_portal.getHttpServletRequest(resourceRequest),
-				"the-selected-fields-x-cannot-be-added-to-the-unique-" +
-					"composite-key",
-				StringUtil.merge(objectFieldLabels, ", "), false);
-			status = "error";
-		}
+		boolean objectFieldLabelsEmpty = objectFieldLabels.isEmpty();
 
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
 			JSONUtil.put(
-				"errorLabel", errorLabel
+				"errorLabel",
+				() -> {
+					if (objectFieldLabelsEmpty) {
+						return "";
+					}
+
+					return _language.format(
+						_portal.getHttpServletRequest(resourceRequest),
+						"the-selected-fields-x-cannot-be-added-to-the-unique-" +
+							"composite-key",
+						StringUtil.merge(objectFieldLabels, ", "), false);
+				}
 			).put(
-				"status", status
+				"status",
+				() -> {
+					if (objectFieldLabelsEmpty) {
+						return "success";
+					}
+
+					return "error";
+				}
 			));
 	}
 

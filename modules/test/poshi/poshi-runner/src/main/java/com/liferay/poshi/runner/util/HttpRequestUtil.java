@@ -106,6 +106,12 @@ public class HttpRequestUtil {
 			"GET", _RETRY_PERIOD_DEFAULT, _TIMEOUT_DEFAULT, url);
 	}
 
+	public static HttpResponse get(String url) throws IOException {
+		return request(
+			null, _MAX_RETRIES_DEFAULT, null, null, "GET",
+			_RETRY_PERIOD_DEFAULT, _TIMEOUT_DEFAULT, url);
+	}
+
 	public static HttpAuthorization getHttpAuthorization(
 		String type, String value) {
 

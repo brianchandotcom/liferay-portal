@@ -12,7 +12,8 @@ import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 
 import java.lang.reflect.Method;
 
-import java.util.Arrays;
+import java.util.Collection;
+import java.util.Map;
 import java.util.function.Consumer;
 
 import org.osgi.util.tracker.ServiceTracker;
@@ -31,10 +32,11 @@ public class SystemCheckerUtil {
 
 		serviceTracker.open(true);
 
-		Object[] systemCheckers = serviceTracker.getServices(new Object[0]);
+		Map<?, Object> trackedMap = serviceTracker.getTracked();
 
-		infoConsumer.accept(
-			"Available checkers: " + Arrays.toString(systemCheckers));
+		Collection<Object> systemCheckers = trackedMap.values();
+
+		infoConsumer.accept("Available checkers: " + systemCheckers);
 
 		try {
 			for (Object systemChecker : systemCheckers) {
@@ -47,6 +49,8 @@ public class SystemCheckerUtil {
 				try {
 					Method method = clazz.getMethod("getName");
 
+					method.setAccessible(true);
+
 					String name = (String)method.invoke(systemChecker);
 
 					sb.append(name);
@@ -55,6 +59,8 @@ public class SystemCheckerUtil {
 
 					method = clazz.getMethod("getOSGiCommand");
 
+					method.setAccessible(true);
+
 					sb.append(method.invoke(systemChecker));
 
 					sb.append("\" in gogo shell.");
@@ -62,6 +68,8 @@ public class SystemCheckerUtil {
 					infoConsumer.accept(sb.toString());
 
 					method = clazz.getMethod("check");
+
+					method.setAccessible(true);
 
 					String result = (String)method.invoke(systemChecker);
 

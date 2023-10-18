@@ -270,7 +270,7 @@ definition {
 
 		EVPNavigator.goToNavItem(navItem = ${listingPage});
 
-		EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test");
+		EVPOrganization.kebabMenuOrganization(organizationName = ${organizationName});
 
 		MenuItem.click(menuItem = "Review");
 

@@ -14,7 +14,6 @@ import React, {useState} from 'react';
 import {addRule} from '../../../app/actions/index';
 import updateRule from '../../../app/actions/updateRule';
 import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
-import RulesService from '../../../app/services/RulesService';
 import {
 	RuleBuilderActionSection,
 	RuleBuilderConditionSection,
@@ -133,9 +132,7 @@ export default function RulesModal({editingRule, onCloseModal}) {
 					)}
 				</p>
 
-				<RuleBuilderConditionSection
-					fetcher={() => RulesService.getUsers()}
-				/>
+				<RuleBuilderConditionSection />
 
 				<RuleBuilderActionSection />
 			</ClayModal.Body>

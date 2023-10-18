@@ -5,9 +5,10 @@
 
 import ClayButton from '@clayui/button';
 import {Option, Picker} from '@clayui/core';
-import {InternalDispatch} from '@clayui/shared';
 import classNames from 'classnames';
 import React from 'react';
+
+import {getSelectOptions} from '../../../common/getSelectOptions';
 
 const TriggerLabel = React.forwardRef<HTMLButtonElement, any>(
 	({children, className: _className, onClick, ...otherProps}, ref) => (
@@ -26,22 +27,24 @@ const TriggerLabel = React.forwardRef<HTMLButtonElement, any>(
 	)
 );
 
-interface RuleSelectProps {
-	items: {label: string; value: string}[];
-	onSelectionChange: InternalDispatch<React.Key>;
+interface RuleSelectProps<T> {
+	items: ReadonlyArray<{label: string; value: T}>;
+	onSelectionChange: (selection: T) => void;
 	selectedKey?: string;
 }
 
-export default function RuleSelect({
+export default function RuleSelect<T extends string>({
 	items,
 	onSelectionChange,
 	selectedKey,
-}: RuleSelectProps) {
+}: RuleSelectProps<T>) {
 	return (
 		<Picker
 			as={TriggerLabel}
-			items={items}
-			onSelectionChange={onSelectionChange}
+			items={getSelectOptions(items)}
+			onSelectionChange={(selection: React.Key) =>
+				onSelectionChange(selection as T)
+			}
 			placeholder={Liferay.Language.get('select')}
 			selectedKey={selectedKey}
 		>

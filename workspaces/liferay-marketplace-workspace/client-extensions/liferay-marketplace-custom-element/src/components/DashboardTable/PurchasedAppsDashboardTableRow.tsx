@@ -155,7 +155,7 @@ export function PurchasedAppsDashboardTableRow({
 									}}
 									title={
 										orderStatusIsNotCompleted
-											? 'You must first complete payment before downloading this app.'
+											? 'This order must be completed before downloading this app.'
 											: ''
 									}
 								>

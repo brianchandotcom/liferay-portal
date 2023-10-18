@@ -21,36 +21,35 @@ definition {
 			EVPUtils.addEVPSite();
 		}
 
-		task ("Add Liferay Manager Role to users can see Resquests and Organizations") {
+		task ("Add Liferay Manager Role to allow Liferay Staff users to see Resquests and Organizations") {
 			EVPUtils.addLiferayManagerUserRole();
 		}
 
-		task ("Employee use create a new organization") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "employee@liferay.com",
-				userLoginFullName = "Employee User");
+		task ("Create new organizations") {
+			for (var organizationName : list "Organization Test 1, Organization Test 2") {
+				var organizationId = JSONEVP.createOrganization(
+					accountOwnerName = "User 4",
+					bankingInfo = "Bank Test",
+					city = "City Test",
+					contactEmail = "OrganizationTest@liferay.com",
+					contactName = "Contact Test",
+					contactPhone = 12345,
+					country = "Country Test",
+					emailAddress = "employee@liferay.com",
+					key_status = "awaitingApprovalOnEvp",
+					organizationName = ${organizationName},
+					organizationSite = "www.test.com.br",
+					smallDescription = "Description Test",
+					state = "State Test",
+					status = "Awaiting Approval On EVP",
+					street = "Street Test",
+					taxId = 12345,
+					zipCode = "12.345-67");
+			}
 
-			EVPUtils.gotoEVP();
-
-			EVPOrganization.goToCreateOrganization(
-				button = "Create an Organization",
-				navItem = "Organization");
-
-			EVPOrganization.fillOrganizationForm(
-				bankingInfo = "Banking Info",
-				city = "City",
-				contactEmail = "Contact Email",
-				contactName = "Contact Name",
-				contactPhone = "Contact Phone",
-				country = "Country",
-				done = "true",
-				organizationName = "Organization Test",
-				organizationSite = "Social Media Link",
-				smallDescription = "Small Description",
-				state = "State",
-				street = "Street",
-				taxId = "Tax Id",
-				zipCode = "Zip");
+			EVPUtils.managerApproval(
+				listingPage = "Organization",
+				organizationName = "Organization Test 2");
 		}
 	}
 

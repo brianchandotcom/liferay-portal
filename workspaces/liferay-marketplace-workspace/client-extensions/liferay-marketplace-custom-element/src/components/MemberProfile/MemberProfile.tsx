@@ -3,10 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {DisplayType} from '@clayui/alert';
 import ClayIcon from '@clayui/icon';
 
-import {MemberProps} from '../../pages/PublishedAppsDashboardPage/PublishedDashboardPageUtil';
+import {MemberProps} from '../../pages/PublishedAppsDashboard/PublishedDashboardPageUtil';
 
 import './MemberProfile.scss';
 
@@ -34,9 +33,12 @@ import {
 
 interface MemberProfileProps {
 	memberUser: MemberProps;
-	renderToast: (message: string, title: string, type: DisplayType) => void;
 	setSelectedMember: (value: MemberProps | undefined) => void;
-	userLogged?: UserLogged;
+	userLogged?: UserAccount & {
+		isAdminAccount?: boolean;
+		isCustomerAccount?: boolean;
+		isPublisherAccount?: boolean;
+	};
 }
 
 const finalPathUrl = {
@@ -46,11 +48,10 @@ const finalPathUrl = {
 
 export function MemberProfile({
 	memberUser,
-	renderToast,
 	setSelectedMember,
 	userLogged,
 }: MemberProfileProps) {
-	const [{gravatarAPI}, _] = useAppContext();
+	const [{gravatarAPI}] = useAppContext();
 
 	const paths = Liferay.ThemeDisplay.getLayoutURL().split('/');
 
@@ -66,12 +67,12 @@ export function MemberProfile({
 
 	useEffect(() => {
 		const getUserInfo = async () => {
-			const myUserAdditionalInfos = await getMyUserAditionalInfos(
+			const userAdditionalInfos = await getMyUserAditionalInfos(
 				memberUser.userId
 			);
-			setUserAdditionalInfo(myUserAdditionalInfos?.items);
+			setUserAdditionalInfo(userAdditionalInfos?.items);
 			setCheckInviteStatus(
-				myUserAdditionalInfos?.items?.some(
+				userAdditionalInfos?.items?.some(
 					(item: AdditionalInfoBody) => !item.acceptInviteStatus
 				)
 			);
@@ -128,19 +129,17 @@ export function MemberProfile({
 					userFirstName: updatedUserInfos.userFirstName,
 				});
 
-				const userAdditionalInfoList = [];
 				const userAdditionalInfoData = await newInvite.json();
 
-				userAdditionalInfoList.push(userAdditionalInfoData);
+				setUserAdditionalInfo(userAdditionalInfoData);
 
-				setUserAdditionalInfo(userAdditionalInfoList);
-
-				const toastMessage = newInvite.ok
-					? `invited again successfully`
-					: `Please contact Administrator`;
-				const toastType = newInvite.ok ? 'success' : 'danger';
-
-				renderToast(toastMessage, `${memberUser.name}`, toastType);
+				Liferay.Util.openToast({
+					message: newInvite.ok
+						? `invited again successfully`
+						: `Please contact Administrator`,
+					title: memberUser.name as string,
+					type: newInvite.ok ? 'success' : 'danger',
+				});
 			}
 		}
 	};

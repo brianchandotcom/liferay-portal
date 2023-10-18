@@ -8,68 +8,29 @@ import classNames from 'classnames';
 import circleFill from '../../assets/icons/circle_fill_icon.svg';
 
 import './DashboardNavigationListItem.scss';
+
+import {NavLink} from 'react-router-dom';
+
 import {getThumbnailByProductAttachment, showAppImage} from '../../utils/util';
 import {AppProps} from '../DashboardTable/DashboardTable';
-import {DashboardListItems} from './DashboardNavigation';
 interface DashboardNavigationListItem {
-	dashboardNavigationItems: DashboardListItems[];
 	item: AppProps;
-	items: AppProps[];
-	listName: string;
-	onSelectAppChange?: (value: AppProps) => void;
-	setDashboardNavigationItems: (values: DashboardListItems[]) => void;
 }
 
 export function DashboardNavigationListItem({
-	dashboardNavigationItems,
 	item,
-	items,
-	listName,
-	onSelectAppChange,
-	setDashboardNavigationItems,
 }: DashboardNavigationListItem) {
-	const {attachments, name, selected, status, version} = item;
+	const {attachments, name, status, version} = item;
 	const thumbnail = getThumbnailByProductAttachment(attachments);
 
 	return (
-		<div
-			className={classNames('dashboard-navigation-body-list-item', {
-				'dashboard-navigation-body-list-item-selected': selected,
-			})}
-			onClick={() => {
-				const newItems = items.map((item) => {
-					if (item.name === name) {
-						return {
-							...item,
-							selected: !item.selected,
-						};
-					}
-
-					return {
-						...item,
-						selected: false,
-					};
-				});
-
-				const newDashboardNavigationItems = dashboardNavigationItems.map(
-					(navigationItem) => {
-						if (navigationItem.itemName === listName) {
-							return {
-								...navigationItem,
-								items: newItems,
-							};
-						}
-
-						return navigationItem;
-					}
-				);
-
-				setDashboardNavigationItems(newDashboardNavigationItems);
-
-				if (onSelectAppChange) {
-					onSelectAppChange(item);
-				}
-			}}
+		<NavLink
+			className={({isActive}) =>
+				classNames('dashboard-navigation-body-list-item', {
+					'dashboard-navigation-body-list-item-selected': isActive,
+				})
+			}
+			to={`/app/${item.productId}`}
 		>
 			<div>
 				<img
@@ -102,6 +63,6 @@ export function DashboardNavigationListItem({
 				)}
 				src={circleFill}
 			/>
-		</div>
+		</NavLink>
 	);
 }

@@ -21,18 +21,17 @@ import {
 	getProductById,
 	getProductSKU,
 	getProductSpecifications,
-	getUserAccount,
 	postAccountByERCUserAccountByERC,
 } from '../../utils/api';
 
 import './PurchasedSolutions.scss';
 
-import ClayAlert, {DisplayType} from '@clayui/alert';
 import ClaySticker from '@clayui/sticker';
 
 import emptyPictureIcon from '../../assets/icons/avatar.svg';
 import {getSiteURL} from '../../components/InviteMemberModal/services';
 import Select from '../../components/Select/Select';
+import {useMarketplaceContext} from '../../context/MarketplaceContext';
 import {Liferay} from '../../liferay/liferay';
 import fetcher from '../../services/fetcher';
 import CreatedProjectCard from './CreatedProjectCard';
@@ -115,6 +114,7 @@ const Input: React.FC<InputProps> = ({
 const PurchasedSolutions: React.FC = () => {
 	const queryString = window.location.search;
 
+	const {myUserAccount} = useMarketplaceContext();
 	const urlParams = new URLSearchParams(queryString);
 
 	const productId = Number(urlParams.get('productId')) + 1;
@@ -127,31 +127,22 @@ const PurchasedSolutions: React.FC = () => {
 	});
 	const [product, setProduct] = useState<Product>();
 	const [sku, setSku] = useState<number>();
-	const [currentUserAccount, setCurrentUserAccount] = useState<UserAccount>();
 	const [industries, setIndustries] = useState<Industries[]>();
 	const [accounts, setAccounts] = useState<Account[]>([]);
 	const [order, setOrder] = useState<OrderInfo>();
 	const [disabledButton, setDisabledButton] = useState<boolean>(false);
-	const [toastItems, setToastItems] = useState<
-		{message: string; title?: string; type: DisplayType}[]
-	>([]);
+
 	const [specifications, setSpecifications] = useState<
 		ProductSpecification[]
 	>();
 
-	const renderToast = (message: string, title: string, type: DisplayType) => {
-		setToastItems([...toastItems, {message, title, type}]);
-	};
-
 	useEffect(() => {
 		(async () => {
-			setCurrentUserAccount(await getUserAccount());
-
-			const insdustriesListTypeEntries = await getListTypeDefinitionByExternalReferenceCode(
+			const industriesListTypeEntries = await getListTypeDefinitionByExternalReferenceCode(
 				externalReferenceCode
 			);
 
-			setIndustries(insdustriesListTypeEntries?.listTypeEntries);
+			setIndustries(industriesListTypeEntries?.listTypeEntries);
 
 			const skuProduct = await getProductSKU({
 				appProductId: Number(productId),
@@ -165,18 +156,18 @@ const PurchasedSolutions: React.FC = () => {
 
 			if (!skuProduct.items[0] || productId === 1 || productId === null) {
 				setDisabledButton(true);
-				renderToast(
-					`We are unable to start your trial. Please contact our sales team via email - sales@liferay.com`,
-					'',
-					'danger'
-				);
-			}
-			else {
-				const productById = await getProductById({
+
+				Liferay.Util.openToast({
+					message:
+						'We are unable to start your trial. Please contact our sales team via email - sales@liferay.com',
+					type: 'danger',
+				});
+			} else {
+				const product = await getProductById({
 					productId: Number(productId),
 				});
 				setSku(skuProduct.items[0].id);
-				setProduct(productById);
+				setProduct(product);
 			}
 		})();
 
@@ -186,10 +177,9 @@ const PurchasedSolutions: React.FC = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [productId]);
 
-	const accountBriefs = useMemo(
-		() => currentUserAccount?.accountBriefs || [],
-		[currentUserAccount?.accountBriefs]
-	);
+	const accountBriefs = useMemo(() => myUserAccount?.accountBriefs || [], [
+		myUserAccount?.accountBriefs,
+	]);
 
 	useEffect(() => {
 		const fetchAccount = async () => {
@@ -227,12 +217,12 @@ const PurchasedSolutions: React.FC = () => {
 			};
 
 			const account = getAccountInfo();
+
 			setOrder({account, product, sku, specifications});
 
-			const pageDefault = hasPersonAccount
-				? 'accountSelection'
-				: 'accountCreation';
-			setStep({page: pageDefault});
+			setStep({
+				page: hasPersonAccount ? 'accountSelection' : 'accountCreation',
+			});
 		})();
 	}, [accountBriefs, product, sku, specifications]);
 
@@ -259,29 +249,28 @@ const PurchasedSolutions: React.FC = () => {
 	});
 
 	useEffect(() => {
-		if (currentUserAccount) {
-			const {emailAddress, familyName, givenName} = currentUserAccount;
+		if (myUserAccount) {
+			const {emailAddress, familyName, givenName} = myUserAccount;
 			setValue('emailAddress', emailAddress || '');
 			setValue('givenName', givenName || '');
 			setValue('familyName', familyName || '');
 		}
-	}, [currentUserAccount, setValue]);
+	}, [myUserAccount, setValue]);
 
 	const addUserAccountInAccount = async (data: Account) => {
-		if (currentUserAccount) {
+		if (myUserAccount) {
 			await postAccountByERCUserAccountByERC(
 				data?.externalReferenceCode,
-				currentUserAccount.externalReferenceCode
+				myUserAccount.externalReferenceCode
 			);
 
-			setCurrentUserAccount(await getUserAccount());
 			setStep({page: 'accountSelection'});
 		}
 	};
 
 	const _submit = async (form: UserForm) => {
-		const response: Account = await fetcher(`/accounts`, {
-			body: JSON.stringify({
+		const response: Account = await fetcher
+			.post('/accounts', {
 				company: form.companyName,
 				customFields: [
 					{
@@ -306,13 +295,7 @@ const PurchasedSolutions: React.FC = () => {
 				externalReferenceCode: `ACCOUNT${form.givenName}${form.familyName}`,
 				name: `${form.givenName} ${form.familyName}`,
 				type: accountTypes.PERSON,
-			}),
-			method: 'POST',
-		})
-			.then(async (response) => {
-				return response;
 			})
-
 			.catch((error) => console.error(error));
 
 		await addUserAccountInAccount(response);
@@ -331,325 +314,304 @@ const PurchasedSolutions: React.FC = () => {
 	const hasAllValidations = agreeToTermsAndConditions && isValid;
 
 	return (
-		<>
-			<div className="align-items-center d-flex flex-column justify-content-center purchased-solutions">
-				{step.page !== 'projectCreated' && (
-					<div className="product-card">
-						<div className="mr-5">
-							{!product ? (
-								<img alt="Circle Icon" src={emptyPictureIcon} />
-							) : (
-								<ClaySticker size="xl">
-									<ClaySticker.Image
-										alt="placeholder"
-										src={product?.thumbnail}
-									/>
-								</ClaySticker>
-							)}
-						</div>
-
-						<h2 className="mb-0">
-							<span className="mr-2">{product?.name?.en_US}</span>
-
-							<span>
-								<ClayLink className="font-weight-bold">
-									Trial
-								</ClayLink>
-							</span>
-						</h2>
-					</div>
-				)}
-
-				<div>
-					{step?.page === 'accountCreation' && (
-						<div className="align-items-center d-flex flex-column justify-content-center purchased-solutions-container">
-							<div className="border p-8 purchased-solutions-body rounded">
-								<Header
-									description
-									title="Marketplace Account Creation"
+		<div className="align-items-center d-flex flex-column justify-content-center purchased-solutions">
+			{step.page !== 'projectCreated' && (
+				<div className="product-card">
+					<div className="mr-5">
+						{!product ? (
+							<img alt="Circle Icon" src={emptyPictureIcon} />
+						) : (
+							<ClaySticker size="xl">
+								<ClaySticker.Image
+									alt="placeholder"
+									src={product?.thumbnail}
 								/>
+							</ClaySticker>
+						)}
+					</div>
 
-								<ClayForm>
-									<div className="align-items-baseline d-flex">
-										<div className="align-items-center d-flex">
-											<label className="font-weight-bold mr-4 title-label">
-												Profile Info
-											</label>
+					<h2 className="mb-0">
+						<span className="mr-2">{product?.name?.en_US}</span>
+
+						<span>
+							<ClayLink className="font-weight-bold">
+								Trial
+							</ClayLink>
+						</span>
+					</h2>
+				</div>
+			)}
+
+			<div>
+				{step?.page === 'accountCreation' && (
+					<div className="align-items-center d-flex flex-column justify-content-center purchased-solutions-container">
+						<div className="border p-8 purchased-solutions-body rounded">
+							<Header
+								description
+								title="Marketplace Account Creation"
+							/>
+
+							<ClayForm>
+								<div className="align-items-baseline d-flex">
+									<div className="align-items-center d-flex">
+										<label className="font-weight-bold mr-4 title-label">
+											Profile Info
+										</label>
+									</div>
+								</div>
+
+								<hr className="solid" />
+
+								<ClayForm.Group>
+									<div className="d-flex justify-content-between">
+										<div className="form-group mb-0 pr-3 w-50">
+											<Input
+												{...inputProps}
+												boldLabel
+												disabled
+												label="First Name"
+												name="givenName"
+											/>
+										</div>
+
+										<div className="form-group mb-0 pl-3 w-50">
+											<Input
+												{...inputProps}
+												boldLabel
+												disabled
+												label="Last Name"
+												name="familyName"
+											/>
 										</div>
 									</div>
 
-									<hr className="solid" />
+									<div className="form-group mb-5">
+										<Input
+											{...inputProps}
+											boldLabel
+											label="Company name"
+											name="companyName"
+											placeholder="Enter company name"
+										/>
+									</div>
+
+									<div className="form-group mb-5">
+										<Select
+											{...inputProps}
+											boldLabel
+											className="p-2"
+											defaultOption
+											defaultOptionLabel="Select an industry"
+											label="Industry"
+											name="industry"
+											options={industries}
+											placeholder="Select an industry"
+										/>
+									</div>
 
 									<ClayForm.Group>
-										<div className="d-flex justify-content-between">
-											<div className="form-group mb-0 pr-3 w-50">
-												<Input
-													{...inputProps}
-													boldLabel
-													disabled
-													label="First Name"
-													name="givenName"
-												/>
-											</div>
-
-											<div className="form-group mb-0 pl-3 w-50">
-												<Input
-													{...inputProps}
-													boldLabel
-													disabled
-													label="Last Name"
-													name="familyName"
-												/>
+										<div className="align-items-baseline d-flex">
+											<div className="align-items-center d-flex">
+												<label
+													className="font-weight-bold mr-4 title-label"
+													htmlFor="emailAddress"
+												>
+													Contact Info
+												</label>
 											</div>
 										</div>
+
+										<hr className="solid" />
 
 										<div className="form-group mb-5">
 											<Input
 												{...inputProps}
 												boldLabel
-												label="Company name"
-												name="companyName"
-												placeholder="Enter company name"
+												disabled
+												label="Email"
+												name="emailAddress"
+												type="email"
 											/>
 										</div>
 
-										<div className="form-group mb-5">
-											<Select
-												{...inputProps}
-												boldLabel
-												className="p-2"
-												defaultOption
-												defaultOptionLabel="Select an industry"
-												label="Industry"
-												name="industry"
-												options={industries}
-												placeholder="Select an industry"
-											/>
-										</div>
+										<label
+											className="required"
+											htmlFor="phone"
+										>
+											Phone
+										</label>
 
-										<ClayForm.Group>
-											<div className="align-items-baseline d-flex">
-												<div className="align-items-center d-flex">
-													<label
-														className="font-weight-bold mr-4 title-label"
-														htmlFor="emailAddress"
+										<div className="d-flex justify-content-between purchased-solutions-phone">
+											<div className="col-3 pl-0">
+												<DropDown
+													closeOnClick
+													trigger={
+														<div className="align-items-center custom-select d-flex form-control p-2 rounded-xs">
+															<ClayIcon
+																className="mr-2"
+																symbol={
+																	currentPhonesFlags.flag
+																}
+															/>
+
+															{
+																currentPhonesFlags.code
+															}
+														</div>
+													}
+												>
+													<DropDown.ItemList
+														items={phonesFlags}
 													>
-														Contact Info
-													</label>
+														{(item) => {
+															const itemList = item as PhonesFlags;
+
+															return (
+																<DropDown.Item
+																	onClick={() => {
+																		setCurrentPhonesFlags(
+																			{
+																				code:
+																					itemList.code,
+																				flag:
+																					itemList.flag,
+																			}
+																		);
+
+																		setValue(
+																			'phone',
+																			{
+																				code:
+																					itemList.code,
+																				flag:
+																					itemList.flag,
+																			}
+																		);
+																	}}
+																>
+																	<ClayIcon
+																		className="mr-2"
+																		symbol={
+																			itemList.flag
+																		}
+																	/>
+
+																	{
+																		itemList.code
+																	}
+																</DropDown.Item>
+															);
+														}}
+													</DropDown.ItemList>
+												</DropDown>
+
+												<div className="form-feedback-group">
+													<div className="form-text">
+														Intl. code
+													</div>
 												</div>
 											</div>
 
-											<hr className="solid" />
-
-											<div className="form-group mb-5">
+											<div className="col-6">
 												<Input
 													{...inputProps}
-													boldLabel
-													disabled
-													label="Email"
-													name="emailAddress"
-													type="email"
+													className="w-100"
+													description="Phone number"
+													name="phoneNumber"
+													placeholder="___–___–____"
 												/>
 											</div>
 
-											<label
-												className="required"
-												htmlFor="phone"
-											>
-												Phone
-											</label>
-
-											<div className="d-flex justify-content-between purchased-solutions-phone">
-												<div className="col-3 pl-0">
-													<DropDown
-														closeOnClick
-														trigger={
-															<div className="align-items-center custom-select d-flex form-control p-2 rounded-xs">
-																<ClayIcon
-																	className="mr-2"
-																	symbol={
-																		currentPhonesFlags.flag
-																	}
-																/>
-
-																{
-																	currentPhonesFlags.code
-																}
-															</div>
-														}
-													>
-														<DropDown.ItemList
-															items={phonesFlags}
-														>
-															{(item) => {
-																const itemList = item as PhonesFlags;
-
-																return (
-																	<DropDown.Item
-																		onClick={() => {
-																			setCurrentPhonesFlags(
-																				{
-																					code:
-																						itemList.code,
-																					flag:
-																						itemList.flag,
-																				}
-																			);
-
-																			setValue(
-																				'phone',
-																				{
-																					code:
-																						itemList.code,
-																					flag:
-																						itemList.flag,
-																				}
-																			);
-																		}}
-																	>
-																		<ClayIcon
-																			className="mr-2"
-																			symbol={
-																				itemList.flag
-																			}
-																		/>
-
-																		{
-																			itemList.code
-																		}
-																	</DropDown.Item>
-																);
-															}}
-														</DropDown.ItemList>
-													</DropDown>
-
-													<div className="form-feedback-group">
-														<div className="form-text">
-															Intl. code
-														</div>
-													</div>
-												</div>
-
-												<div className="col-6">
-													<Input
-														{...inputProps}
-														className="w-100"
-														description="Phone number"
-														name="phoneNumber"
-														placeholder="___–___–____"
-													/>
-												</div>
-
-												<div className="col-3">
-													<Input
-														{...inputProps}
-														className="mr-0 pl-1"
-														description="Extension (optional)"
-														name="extension"
-														placeholder="Enter +ext"
-													/>
-												</div>
-											</div>
-										</ClayForm.Group>
-
-										<ClayForm.Group>
-											<div className="d-flex justify-content-start">
-												<>
-													<ClayCheckbox
-														checked={
-															agreeToTermsAndConditions
-														}
-														className="danger"
-														id="newsSubscription"
-														onChange={() =>
-															setValue(
-																'agreeToTermsAndConditions',
-																!agreeToTermsAndConditions
-															)
-														}
-													/>
-													<label
-														className="ml-4"
-														htmlFor="agreeToTermsAndConditions"
-													>
-														I agree to the
-													</label>
-													<label className="ml-2">
-														<ClayLink
-															displayType="primary"
-															href="https://www.liferay.com/en/legal/marketplace-terms-of-service"
-														>
-															Terms & Conditions
-														</ClayLink>
-													</label>
-												</>
-											</div>
-										</ClayForm.Group>
-
-										<div className="purchased-solutions-button-container">
-											<div className="align-items-center d-flex justify-content-between mb-4 w-100">
-												<div>
-													<ClayButton
-														displayType="unstyled"
-														onClick={() => {
-															window.location.href = `${Liferay.ThemeDisplay.getPortalURL()}${getSiteURL()}/solutions-marketplace`;
-														}}
-													>
-														Cancel
-													</ClayButton>
-												</div>
-
-												<ClayButton
-													disabled={
-														!hasAllValidations ||
-														disabledButton
-													}
-													onClick={handleSubmit(
-														_submit
-													)}
-												>
-													Continue
-												</ClayButton>
+											<div className="col-3">
+												<Input
+													{...inputProps}
+													className="mr-0 pl-1"
+													description="Extension (optional)"
+													name="extension"
+													placeholder="Enter +ext"
+												/>
 											</div>
 										</div>
 									</ClayForm.Group>
-								</ClayForm>
-							</div>
+
+									<ClayForm.Group>
+										<div className="d-flex justify-content-start">
+											<>
+												<ClayCheckbox
+													checked={
+														agreeToTermsAndConditions
+													}
+													className="danger"
+													id="newsSubscription"
+													onChange={() =>
+														setValue(
+															'agreeToTermsAndConditions',
+															!agreeToTermsAndConditions
+														)
+													}
+												/>
+												<label
+													className="ml-4"
+													htmlFor="agreeToTermsAndConditions"
+												>
+													I agree to the
+												</label>
+												<label className="ml-2">
+													<ClayLink
+														displayType="primary"
+														href="https://www.liferay.com/en/legal/marketplace-terms-of-service"
+													>
+														Terms & Conditions
+													</ClayLink>
+												</label>
+											</>
+										</div>
+									</ClayForm.Group>
+
+									<div className="purchased-solutions-button-container">
+										<div className="align-items-center d-flex justify-content-between mb-4 w-100">
+											<div>
+												<ClayButton
+													displayType="unstyled"
+													onClick={() => {
+														window.location.href = `${Liferay.ThemeDisplay.getPortalURL()}${getSiteURL()}/solutions-marketplace`;
+													}}
+												>
+													Cancel
+												</ClayButton>
+											</div>
+
+											<ClayButton
+												disabled={
+													!hasAllValidations ||
+													disabledButton
+												}
+												onClick={handleSubmit(_submit)}
+											>
+												Continue
+											</ClayButton>
+										</div>
+									</div>
+								</ClayForm.Group>
+							</ClayForm>
 						</div>
-					)}
+					</div>
+				)}
 
-					{step?.page === 'accountSelection' && (
-						<PurchasedSolutionsAccountSelection
-							accounts={accounts}
-							currentUserAccount={currentUserAccount}
-							orderInfo={order}
-							setStep={setStep}
-						/>
-					)}
+				{step?.page === 'accountSelection' && (
+					<PurchasedSolutionsAccountSelection
+						accounts={accounts}
+						currentUserAccount={myUserAccount}
+						orderInfo={order}
+						setStep={setStep}
+					/>
+				)}
 
-					{step?.page === 'projectCreated' && (
-						<CreatedProjectCard product={product} />
-					)}
-				</div>
+				{step?.page === 'projectCreated' && (
+					<CreatedProjectCard product={product} />
+				)}
 			</div>
-			<ClayAlert.ToastContainer>
-				{toastItems?.map((alert, index) => (
-					<ClayAlert
-						autoClose={5000}
-						displayType={alert.type}
-						key={index}
-						onClose={() => {
-							setToastItems((prevItems) =>
-								prevItems.filter((item) => item !== alert)
-							);
-						}}
-						title={alert.title}
-					>
-						{alert.message}
-					</ClayAlert>
-				))}
-			</ClayAlert.ToastContainer>
-		</>
+		</div>
 	);
 };
 

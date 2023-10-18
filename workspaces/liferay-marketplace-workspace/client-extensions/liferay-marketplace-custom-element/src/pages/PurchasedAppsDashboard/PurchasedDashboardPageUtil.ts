@@ -105,21 +105,21 @@ export const initialDashboardNavigationItems: DashboardListItems[] = [
 	{
 		itemIcon: appsIcon,
 		itemName: 'myApps',
-		itemSelected: true,
 		itemTitle: 'My Apps',
 		items: appList,
+		path: '/',
 	},
 	{
 		itemIcon: solutionsIcon,
 		itemName: 'solutions',
-		itemSelected: false,
 		itemTitle: 'Solutions',
+		path: '/solutions',
 	},
 	{
 		itemIcon: membersIcon,
 		itemName: 'members',
-		itemSelected: false,
 		itemTitle: 'Members',
+		path: '/members',
 	},
 ];
 

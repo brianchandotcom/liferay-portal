@@ -6,10 +6,10 @@
 import {useCallback, useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
 
+import {useMarketplaceContext} from '../../context/MarketplaceContext';
 import useCart from '../../hooks/useCart';
 import {
 	getPaymentMethodURL,
-	getUserAccount,
 	postCheckoutCart,
 	postEmailAppInformation,
 } from '../../utils/api';
@@ -23,7 +23,6 @@ import {initialBillingAddress} from './constants/initialBillingAddress';
 import {paymentMethod} from './enums/paymentMethod';
 import {StepType} from './enums/stepType';
 import useGetAddresses from './hooks/useGetAddresses';
-import useGetChannelInfo from './hooks/useGetChannelInfo';
 import useGetProduct from './hooks/useGetProduct';
 import useGetProductCreatorAccount from './hooks/useGetProductCreatorAccount';
 import useGetProductSkus from './hooks/useGetProductSkus';
@@ -44,6 +43,7 @@ export type GetAppForm = {
 };
 
 const GetAppFlow = () => {
+	const {channel, myUserAccount} = useMarketplaceContext();
 	const [billingAddress, setBillingAddress] = useState<BillingAddress>(
 		initialBillingAddress
 	);
@@ -64,24 +64,16 @@ const GetAppFlow = () => {
 			selectedPaymentMethod: paymentMethod.PAY,
 			selectedSKU: undefined,
 			selectedTimeline: '',
-			userAccount: undefined,
 		},
 	});
 
-	const {
-		account,
-		product,
-		selectedPaymentMethod,
-		selectedSKU,
-		userAccount,
-	} = watch();
+	const {account, product, selectedPaymentMethod, selectedSKU} = watch();
 
 	const {productId} = useGetProduct(
 		product,
 		useCallback((value: Product) => setValue('product', value), [setValue])
 	);
 	const {sku} = useGetProductSkus(setEnableTrialMethod, product);
-	const {channel} = useGetChannelInfo();
 	const {addresses} = useGetAddresses(account?.id);
 	const {isFreeApp, priceModel} = useProductPriceModel(product);
 	const cartUtil = useCart({
@@ -95,8 +87,7 @@ const GetAppFlow = () => {
 		if (cartUtil?.cartItems?.length) {
 			setLincenseSelected(true);
 			setEnablePurchaseButton(true);
-		}
-		else {
+		} else {
 			setEnablePurchaseButton(false);
 			setLincenseSelected(false);
 		}
@@ -117,14 +108,6 @@ const GetAppFlow = () => {
 			}
 		})();
 	}, [productId]);
-
-	useEffect(() => {
-		(async () => {
-			const fetchedUserAccount: UserAccount = await getUserAccount();
-
-			setValue('userAccount', fetchedUserAccount);
-		})();
-	}, [setValue]);
 
 	async function handleGetApp(orderId?: number) {
 		const productSpecificationValues = await getProductSpecificationValues(
@@ -200,7 +183,7 @@ const GetAppFlow = () => {
 						setValue('account', account);
 					}}
 					selectedAccount={account}
-					userAccount={userAccount}
+					userAccount={myUserAccount}
 				/>
 			),
 			nextStep: StepType.LICENSES,
@@ -263,7 +246,7 @@ const GetAppFlow = () => {
 				product={product}
 				selectedAccount={account}
 				step={step}
-				userAccount={userAccount}
+				userAccount={myUserAccount}
 			/>
 
 			<div className="border d-flex flex-column mt-7 p-5 rounded">

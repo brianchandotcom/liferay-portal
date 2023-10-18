@@ -48,6 +48,42 @@ public class HttpRequestUtil {
 		return requestHeaders;
 	}
 
+	public static void assertResponseBody(
+		HttpResponse httpResponse, String response) {
+
+		String responseBody = httpResponse.getResponseBody();
+
+		if (!StringUtil.equals(responseBody, response)) {
+			throw new RuntimeException(
+				"Expected response code: " + response +
+					"\nActual response code: " + responseBody);
+		}
+	}
+
+	public static void assertResponseCode(
+		HttpResponse httpResponse, String statusCode) {
+
+		String responseCode = httpResponse.getStatusCode();
+
+		if (!StringUtil.equals(responseCode, statusCode)) {
+			throw new RuntimeException(
+				"Expected response code: " + statusCode +
+					"\nActual response code: " + responseCode);
+		}
+	}
+
+	public static void assertResponseDuration(
+		HttpResponse httpResponse, String responseDuration) {
+
+		String responseTime = httpResponse.getResponseTime();
+
+		if (!StringUtil.equals(responseTime, responseDuration)) {
+			throw new RuntimeException(
+				"Expected response code: " + responseDuration +
+					"\nActual response code: " + responseTime);
+		}
+	}
+
 	public static HttpResponse get(
 			HttpAuthorization httpAuthorizationHeader, Integer maxRetries,
 			Map<String, String> requestHeaders, Integer retryPeriod,

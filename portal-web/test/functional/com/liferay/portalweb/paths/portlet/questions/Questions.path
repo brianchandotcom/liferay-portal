@@ -116,6 +116,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>QUESTIONS_CATEGORY_LABEL_BADGE</td>
+	<td>//span[contains(@class,'label-badge') and contains(.,'${key_categoryItem}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>QUESTIONS_BELL_BUTTON</td>
 	<td>//button[*[name()='svg'][contains(@class,'bell-on')]]</td>
 	<td></td>

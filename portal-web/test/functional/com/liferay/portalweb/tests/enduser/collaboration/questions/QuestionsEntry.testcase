@@ -179,7 +179,7 @@ definition {
 
 			AssertVisible(
 				key_categoryItem = "Questions Test Category",
-				locator1 = "Questions#QUESTIONS_CATEGORY_LABEL_ITEM");
+				locator1 = "Questions#QUESTIONS_CATEGORY_LABEL_BADGE");
 
 			var parentCategoryId = JSONMBMessage.getCategoryIdByName(
 				categoryName = "Questions Test Category",

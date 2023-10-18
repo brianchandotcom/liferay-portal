@@ -10,17 +10,6 @@ module.exports = {
 			presets: ['@babel/preset-react'],
 		},
 	},
-	plugins: [
-		[
-			'incremental-dom',
-			{
-				components: true,
-				namespaceAttributes: true,
-				prefix: 'IncrementalDOM',
-				runtime: 'iDOMHelpers',
-			},
-		],
-	],
 	presets: [
 		[
 			'@babel/preset-env',

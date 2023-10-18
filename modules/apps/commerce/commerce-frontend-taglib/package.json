@@ -6,7 +6,6 @@
 		"@clayui/link": "3.88.0",
 		"@liferay/frontend-js-react-web": "*",
 		"classnames": "2.3.1",
-		"clay-icon": "2.24.1",
 		"commerce-frontend-js": "*",
 		"frontend-js-web": "*",
 		"react": "16.12.0"

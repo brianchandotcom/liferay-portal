@@ -4,6 +4,5 @@
  */
 
 module.exports = {
-	extends: ['plugin:@liferay/metal'],
 	plugins: ['@liferay'],
 };

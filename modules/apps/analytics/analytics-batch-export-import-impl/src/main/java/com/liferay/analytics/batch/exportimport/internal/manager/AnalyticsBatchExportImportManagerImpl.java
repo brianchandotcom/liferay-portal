@@ -55,11 +55,8 @@ import java.nio.file.Files;
 import java.text.Format;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
-import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -103,8 +100,7 @@ public class AnalyticsBatchExportImportManagerImpl
 				_batchEngineExportTaskLocalService.addBatchEngineExportTask(
 					null, companyId, userId, null, resourceName,
 					BatchEngineTaskContentType.JSONL.name(),
-					BatchEngineTaskExecuteStatus.INITIAL.name(), null,
-					null,
+					BatchEngineTaskExecuteStatus.INITIAL.name(), null, null,
 					batchEngineExportTaskItemDelegateName);
 
 			batchEngineExportTasks.add(batchEngineExportTask);

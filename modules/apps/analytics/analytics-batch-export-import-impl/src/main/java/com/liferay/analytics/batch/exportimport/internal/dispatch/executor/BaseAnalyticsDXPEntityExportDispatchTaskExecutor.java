@@ -13,6 +13,7 @@ import com.liferay.dispatch.executor.DispatchTaskStatus;
 import com.liferay.dispatch.model.DispatchLog;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchLogLocalService;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -40,37 +41,46 @@ public abstract class BaseAnalyticsDXPEntityExportDispatchTaskExecutor
 			return;
 		}
 
-		DispatchLog dispatchLog =
-			dispatchLogLocalService.fetchLatestDispatchLog(
-				dispatchTrigger.getDispatchTriggerId(),
-				DispatchTaskStatus.IN_PROGRESS);
-
-		DispatchLog latestSuccessfulDispatchLog =
-			dispatchLogLocalService.fetchLatestDispatchLog(
-				dispatchTrigger.getDispatchTriggerId(),
-				DispatchTaskStatus.SUCCESSFUL);
-
-		Date resourceLastModifiedDate = null;
-
-		if (latestSuccessfulDispatchLog != null) {
-			resourceLastModifiedDate = latestSuccessfulDispatchLog.getEndDate();
-		}
-
 		analyticsBatchExportImportManager.exportToAnalyticsCloud(
 			getBatchEngineExportTaskItemDelegateName(),
 			dispatchTrigger.getCompanyId(), null,
 			getFilterString(dispatchTrigger.getCompanyId()),
-			message -> updateDispatchLog(
-				dispatchLog.getDispatchLogId(), dispatchTaskExecutorOutput,
-				message),
-			resourceLastModifiedDate, DXPEntity.class.getName(),
-			dispatchTrigger.getUserId());
+			getNotificationUnsafeConsumer(
+				dispatchTrigger.getDispatchTriggerId(),
+				dispatchTaskExecutorOutput),
+			getResourceLastModifiedDate(dispatchTrigger.getDispatchTriggerId()),
+			DXPEntity.class.getName(), dispatchTrigger.getUserId());
 	}
 
 	protected abstract String getBatchEngineExportTaskItemDelegateName();
 
 	protected String getFilterString(long companyId) throws PortalException {
 		return null;
+	}
+
+	protected UnsafeConsumer<String, Exception> getNotificationUnsafeConsumer(
+		long dispatchTriggerId,
+		DispatchTaskExecutorOutput dispatchTaskExecutorOutput) {
+
+		DispatchLog dispatchLog =
+			dispatchLogLocalService.fetchLatestDispatchLog(
+				dispatchTriggerId, DispatchTaskStatus.IN_PROGRESS);
+
+		return message -> updateDispatchLog(
+			dispatchLog.getDispatchLogId(), dispatchTaskExecutorOutput,
+			message);
+	}
+
+	protected Date getResourceLastModifiedDate(long dispatchTriggerId) {
+		DispatchLog latestSuccessfulDispatchLog =
+			dispatchLogLocalService.fetchLatestDispatchLog(
+				dispatchTriggerId, DispatchTaskStatus.SUCCESSFUL);
+
+		if (latestSuccessfulDispatchLog == null) {
+			return null;
+		}
+
+		return latestSuccessfulDispatchLog.getEndDate();
 	}
 
 	protected boolean shouldExport(long companyId) {

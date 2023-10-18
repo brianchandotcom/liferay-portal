@@ -66,10 +66,10 @@ definition {
 		}
 	}
 
-	@description = "LPS-172949 - Finance user should edit Organizations with 'Awaiting Finance Review' status"
+	@description = "LPS-172949 - Finance user should edit Organizations with 'Awaiting Finance Review' status."
 	@priority = 4
 	test CanFinanceUserEditOrganization {
-		task ("Given the finance user is in the Organization page") {
+		task ("Given that the finance user is in the Organization page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "finance@liferay.com",
 				userLoginFullName = "Finance User");
@@ -79,33 +79,25 @@ definition {
 			EVPNavigator.goToNavItem(navItem = "Organization");
 		}
 
-		task ("When the finance user edit an Organization with 'Awaiting Finance Review' status") {
-			EVPOrganization.kebabMenuOrganization(organizationName = "Organization 2");
+		task ("When the finance user edits an Organization with 'Awaiting Finance Review' status") {
+			EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test 2");
 
 			MenuItem.click(menuItem = "Edit");
 
-			EVPOrganization.fillOrganizationForm(organizationName = "Organization Test");
+			EVPOrganization.fillOrganizationForm(organizationName = "Organization Test 2 Edit");
 		}
 
-		task ("Then the finance user can see the organization with edited name in the list") {
+		task ("Then the finance user can see the organization with edited name in the Organization Page list") {
 			EVPUtils.viewStatus(
-				organizationName = "Organization Test",
+				organizationName = "Organization Test 2",
 				status = "Verified");
 		}
 	}
 
-	@description = "LPS-180358 - Verify that the status follow the correct workflow after a finance user request more info"
+	@description = "LPS-180358 - Verify that the status follow the correct workflow after a finance user request more info."
 	@priority = 5
 	test CanFinanceUserVerifyStatusAfterRequestMoreInfo {
-		task ("Given there is a organization is 'Awaiting finance Approval' status") {
-			EVPUtils.managerApproval(listingPage = "Organization");
-
-			EVPUtils.viewStatus(
-				organizationName = "Organization Test",
-				status = "Awaiting Finance Approval");
-		}
-
-		task ("When the Finance user asks for more information") {
+		task ("Given that Finance user sees an organization with 'Awaiting finance Approval' status") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "finance@liferay.com",
 				userLoginFullName = "Finance User");
@@ -114,7 +106,13 @@ definition {
 
 			EVPNavigator.goToNavItem(navItem = "Organization");
 
-			EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test");
+			EVPUtils.viewStatus(
+				organizationName = "Organization Test 2",
+				status = "Awaiting Finance Approval");
+		}
+
+		task ("When the Finance user asks for more information") {
+			EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test 2");
 
 			MenuItem.click(menuItem = "Review");
 
@@ -125,12 +123,12 @@ definition {
 
 		task ("Then the organization status should be 'Awaiting More Info From Employee'") {
 			EVPUtils.viewStatus(
-				organizationName = "Organization Test",
+				organizationName = "Organization Test 2",
 				status = "Awaiting More Info From Employee");
 		}
 	}
 
-	@description = "This is a test for LPS-172949. Make sure the edit button does not appear when the user's role is 'User employee'."
+	@description = "LPS-172949. Make sure the edit button does not appear when the user's role is 'User employee'."
 	@priority = 5
 	test EmployeeCannotEditOrganizationInAwatingApprovalStatus {
 		task ("Given the Employee user is in the Organization page") {
@@ -144,15 +142,15 @@ definition {
 		}
 
 		task ("When the Employee user clicks on ellipsis button of an Organization with 'Awaiting Finance Approval' status") {
-			EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test");
+			EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test 2");
 		}
 
-		task ("Then the edit button dont appear") {
+		task ("Then the edit button doesn't appear") {
 			MenuItem.viewNotPresent(menuItem = "Edit");
 		}
 	}
 
-	@description = "This is a test for LPS-172949. Make sure the edit button does not appear when the user's role is 'User manager'."
+	@description = "LPS-172949. Make sure the edit button does not appear when the user's role is 'User manager'."
 	@priority = 5
 	test ManagerCannotEditOrganizationInAwatingApprovalStatus {
 		task ("Given the Manager user is in the Organization page") {
@@ -166,15 +164,15 @@ definition {
 		}
 
 		task ("When the Manager user clicks on ellipsis button of an Organization with 'Awaiting Finance Approval' status") {
-			EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test");
+			EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test 2");
 		}
 
-		task ("Then the edit button dont appear") {
+		task ("Then the edit button doesn't appear") {
 			MenuItem.viewNotPresent(menuItem = "Edit");
 		}
 	}
 
-	@description = "LPS-180358 - Verify all status changes after 'need more info' request"
+	@description = "LPS-180358 - Verify that the status follow the correct workflow after a manager user request more info."
 	@priority = 5
 	test VerifyStatusAfterRequestMoreInfo {
 		task ("When the Manager click in 'Need more info' shows only one action.") {
@@ -186,7 +184,7 @@ definition {
 
 			EVPNavigator.goToNavItem(navItem = "Organization");
 
-			EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test");
+			EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test 1");
 
 			MenuItem.click(menuItem = "Review");
 
@@ -197,7 +195,7 @@ definition {
 
 		task ("Then the organization status should be 'Awaiting More Info From Employee'") {
 			EVPUtils.viewStatus(
-				organizationName = "Organization Test",
+				organizationName = "Organization Test 1",
 				status = "Awaiting More Info From Employee");
 		}
 
@@ -210,16 +208,16 @@ definition {
 
 			EVPNavigator.goToNavItem(navItem = "Organization");
 
-			EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test");
+			EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test 1");
 
 			MenuItem.click(menuItem = "Edit");
 
-			EVPOrganization.fillOrganizationForm(organizationName = "Organization Test Edited");
+			EVPOrganization.fillOrganizationForm(organizationName = "Organization Test 1 Edited");
 		}
 
 		task ("Then the organization status should be 'Awaiting Approval on EVP'") {
 			EVPUtils.viewStatus(
-				organizationName = "Organization Test Edited",
+				organizationName = "Organization Test 1 Edited",
 				status = "Awaiting Approval On EVP");
 		}
 	}

@@ -7,18 +7,28 @@ package com.liferay.portal.security.membershippolicy;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroupRole;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicy;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
 
 import java.util.List;
 import java.util.Map;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Roberto Díaz
@@ -30,10 +40,7 @@ public class SiteMembershipPolicyUtil {
 			long[] userIds, long[] addGroupIds, long[] removeGroupIds)
 		throws PortalException {
 
-		SiteMembershipPolicy siteMembershipPolicy =
-			SiteMembershipPolicyFactoryUtil.getSiteMembershipPolicy();
-
-		siteMembershipPolicy.checkMembership(
+		getSiteMembershipPolicy().checkMembership(
 			userIds, addGroupIds, removeGroupIds);
 	}
 
@@ -42,49 +49,42 @@ public class SiteMembershipPolicyUtil {
 			List<UserGroupRole> removeUserGroupRoles)
 		throws PortalException {
 
-		SiteMembershipPolicy siteMembershipPolicy =
-			SiteMembershipPolicyFactoryUtil.getSiteMembershipPolicy();
-
-		siteMembershipPolicy.checkRoles(
+		getSiteMembershipPolicy().checkRoles(
 			addUserGroupRoles, removeUserGroupRoles);
+	}
+
+	public static SiteMembershipPolicy getSiteMembershipPolicy() {
+		ServiceTracker<SiteMembershipPolicy, SiteMembershipPolicy>
+			serviceTracker = _serviceTrackerDCLSingleton.getSingleton(
+				SiteMembershipPolicyUtil::_createServiceTracker);
+
+		return serviceTracker.getService();
 	}
 
 	public static boolean isMembershipAllowed(long userId, long groupId)
 		throws PortalException {
 
-		SiteMembershipPolicy siteMembershipPolicy =
-			SiteMembershipPolicyFactoryUtil.getSiteMembershipPolicy();
-
-		return siteMembershipPolicy.isMembershipAllowed(userId, groupId);
+		return getSiteMembershipPolicy().isMembershipAllowed(userId, groupId);
 	}
 
 	public static boolean isMembershipProtected(
 			PermissionChecker permissionChecker, long userId, long groupId)
 		throws PortalException {
 
-		SiteMembershipPolicy siteMembershipPolicy =
-			SiteMembershipPolicyFactoryUtil.getSiteMembershipPolicy();
-
-		return siteMembershipPolicy.isMembershipProtected(
+		return getSiteMembershipPolicy().isMembershipProtected(
 			permissionChecker, userId, groupId);
 	}
 
 	public static boolean isMembershipRequired(long userId, long groupId)
 		throws PortalException {
 
-		SiteMembershipPolicy siteMembershipPolicy =
-			SiteMembershipPolicyFactoryUtil.getSiteMembershipPolicy();
-
-		return siteMembershipPolicy.isMembershipRequired(userId, groupId);
+		return getSiteMembershipPolicy().isMembershipRequired(userId, groupId);
 	}
 
 	public static boolean isRoleAllowed(long userId, long groupId, long roleId)
 		throws PortalException {
 
-		SiteMembershipPolicy siteMembershipPolicy =
-			SiteMembershipPolicyFactoryUtil.getSiteMembershipPolicy();
-
-		return siteMembershipPolicy.isRoleAllowed(userId, groupId, roleId);
+		return getSiteMembershipPolicy().isRoleAllowed(userId, groupId, roleId);
 	}
 
 	public static boolean isRoleProtected(
@@ -92,30 +92,22 @@ public class SiteMembershipPolicyUtil {
 			long roleId)
 		throws PortalException {
 
-		SiteMembershipPolicy siteMembershipPolicy =
-			SiteMembershipPolicyFactoryUtil.getSiteMembershipPolicy();
-
-		return siteMembershipPolicy.isRoleProtected(
+		return getSiteMembershipPolicy().isRoleProtected(
 			permissionChecker, userId, groupId, roleId);
 	}
 
 	public static boolean isRoleRequired(long userId, long groupId, long roleId)
 		throws PortalException {
 
-		SiteMembershipPolicy siteMembershipPolicy =
-			SiteMembershipPolicyFactoryUtil.getSiteMembershipPolicy();
-
-		return siteMembershipPolicy.isRoleRequired(userId, groupId, roleId);
+		return getSiteMembershipPolicy().isRoleRequired(
+			userId, groupId, roleId);
 	}
 
 	public static void propagateMembership(
 			long[] userIds, long[] addGroupIds, long[] removeGroupIds)
 		throws PortalException {
 
-		SiteMembershipPolicy siteMembershipPolicy =
-			SiteMembershipPolicyFactoryUtil.getSiteMembershipPolicy();
-
-		siteMembershipPolicy.propagateMembership(
+		getSiteMembershipPolicy().propagateMembership(
 			userIds, addGroupIds, removeGroupIds);
 	}
 
@@ -124,25 +116,16 @@ public class SiteMembershipPolicyUtil {
 			List<UserGroupRole> removeUserGroupRoles)
 		throws PortalException {
 
-		SiteMembershipPolicy siteMembershipPolicy =
-			SiteMembershipPolicyFactoryUtil.getSiteMembershipPolicy();
-
-		siteMembershipPolicy.propagateRoles(
+		getSiteMembershipPolicy().propagateRoles(
 			addUserGroupRoles, removeUserGroupRoles);
 	}
 
 	public static void verifyPolicy() throws PortalException {
-		SiteMembershipPolicy siteMembershipPolicy =
-			SiteMembershipPolicyFactoryUtil.getSiteMembershipPolicy();
-
-		siteMembershipPolicy.verifyPolicy();
+		getSiteMembershipPolicy().verifyPolicy();
 	}
 
 	public static void verifyPolicy(Group group) throws PortalException {
-		SiteMembershipPolicy siteMembershipPolicy =
-			SiteMembershipPolicyFactoryUtil.getSiteMembershipPolicy();
-
-		siteMembershipPolicy.verifyPolicy(group);
+		getSiteMembershipPolicy().verifyPolicy(group);
 	}
 
 	public static void verifyPolicy(
@@ -152,19 +135,13 @@ public class SiteMembershipPolicyUtil {
 			UnicodeProperties oldTypeSettingsUnicodeProperties)
 		throws PortalException {
 
-		SiteMembershipPolicy siteMembershipPolicy =
-			SiteMembershipPolicyFactoryUtil.getSiteMembershipPolicy();
-
-		siteMembershipPolicy.verifyPolicy(
+		getSiteMembershipPolicy().verifyPolicy(
 			group, oldGroup, oldAssetCategories, oldAssetTags,
 			oldExpandoAttributes, oldTypeSettingsUnicodeProperties);
 	}
 
 	public static void verifyPolicy(Role role) throws PortalException {
-		SiteMembershipPolicy siteMembershipPolicy =
-			SiteMembershipPolicyFactoryUtil.getSiteMembershipPolicy();
-
-		siteMembershipPolicy.verifyPolicy(role);
+		getSiteMembershipPolicy().verifyPolicy(role);
 	}
 
 	public static void verifyPolicy(
@@ -172,10 +149,74 @@ public class SiteMembershipPolicyUtil {
 			Map<String, Serializable> oldExpandoAttributes)
 		throws PortalException {
 
-		SiteMembershipPolicy siteMembershipPolicy =
-			SiteMembershipPolicyFactoryUtil.getSiteMembershipPolicy();
+		getSiteMembershipPolicy().verifyPolicy(
+			role, oldRole, oldExpandoAttributes);
+	}
 
-		siteMembershipPolicy.verifyPolicy(role, oldRole, oldExpandoAttributes);
+	public void destroy() {
+		_serviceTrackerDCLSingleton.destroy(ServiceTracker::close);
+	}
+
+	private static ServiceTracker<SiteMembershipPolicy, SiteMembershipPolicy>
+		_createServiceTracker() {
+
+		ServiceTracker<SiteMembershipPolicy, SiteMembershipPolicy>
+			serviceTracker = new ServiceTracker<>(
+				_bundleContext, SiteMembershipPolicy.class,
+				new SiteMembershipPolicyUtil.
+					SiteMembershipPolicyTrackerCustomizer());
+
+		serviceTracker.open();
+
+		return serviceTracker;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SiteMembershipPolicyUtil.class);
+
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
+	private static final DCLSingleton
+		<ServiceTracker<SiteMembershipPolicy, SiteMembershipPolicy>>
+			_serviceTrackerDCLSingleton = new DCLSingleton<>();
+
+	private static class SiteMembershipPolicyTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<SiteMembershipPolicy, SiteMembershipPolicy> {
+
+		@Override
+		public SiteMembershipPolicy addingService(
+			ServiceReference<SiteMembershipPolicy> serviceReference) {
+
+			SiteMembershipPolicy siteMembershipPolicy =
+				_bundleContext.getService(serviceReference);
+
+			if (PropsValues.MEMBERSHIP_POLICY_AUTO_VERIFY) {
+				try {
+					siteMembershipPolicy.verifyPolicy();
+				}
+				catch (PortalException portalException) {
+					_log.error(portalException);
+				}
+			}
+
+			return siteMembershipPolicy;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<SiteMembershipPolicy> serviceReference,
+			SiteMembershipPolicy siteMembershipPolicy) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<SiteMembershipPolicy> serviceReference,
+			SiteMembershipPolicy siteMembershipPolicy) {
+
+			_bundleContext.ungetService(serviceReference);
+		}
+
 	}
 
 }

@@ -14,6 +14,7 @@ import membersIcon from '../../assets/icons/person_fill_icon.svg';
 import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
 import {DashboardTable} from '../../components/DashboardTable/DashboardTable';
 import {PurchasedAppsDashboardTableRow} from '../../components/DashboardTable/PurchasedAppsDashboardTableRow';
+import {getSiteURL} from '../../components/InviteMemberModal/services';
 import {getCompanyId} from '../../liferay/constants';
 import {
 	baseURL,
@@ -413,7 +414,7 @@ export function PurchasedAppsDashboardPage() {
 
 			{!loading && selectedNavigationItem === 'My Apps' && (
 				<DashboardPage
-					buttonHref={baseURL + '/web/marketplace/'}
+					buttonHref={baseURL + getSiteURL()}
 					buttonMessage="Add Apps"
 					dashboardNavigationItems={dashboardNavigationItems}
 					messages={appMessages}

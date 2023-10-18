@@ -18,6 +18,8 @@ type UserForm = z.infer<typeof zodSchema.newCustomer>;
 export const baseURL =
 	window.location.origin + Liferay.ThemeDisplay.getPathContext();
 
+// LiferayJsonWS.addExpandoValue
+
 export async function addExpandoValue({
 	attributeValues,
 	className,
@@ -39,6 +41,8 @@ export async function addExpandoValue({
 		tableName,
 	});
 }
+
+// HeadlessCommerceAdminCatalog.createProduct
 
 export function createApp({
 	appCategories,
@@ -70,6 +74,8 @@ export function createApp({
 	});
 }
 
+// HeadlessCommerceAdminPricing.getPricelist
+
 export async function getPricelist() {
 	const response = await fetch(
 		`${baseURL}o/headless-commerce-admin-pricing/v2.0/price-lists`,
@@ -93,6 +99,8 @@ export async function getPricelistByCatalogName(catalogName: string) {
 
 	return await response.json();
 }
+
+// HeadlessCommerceAdminPricing.getPricelist
 
 export async function getPriceEntrieListByPricelistId(priceListId: string) {
 	const response = await fetch(
@@ -477,20 +485,6 @@ export async function getChannelById(channelId: number) {
 	return (await channelResponse.json()) as Channel;
 }
 
-export async function getChannels() {
-	const channelsResponse = await fetch(
-		`${baseURL}/o/headless-commerce-delivery-catalog/v1.0/channels`,
-		{
-			headers,
-			method: 'GET',
-		}
-	);
-
-	const response = await channelsResponse.json();
-
-	return response.items as Channel[];
-}
-
 export async function getDeliveryProduct({
 	accountId,
 	appId,
@@ -510,6 +504,8 @@ export async function getDeliveryProduct({
 
 	return await response.json();
 }
+
+// HeadlessAdminUser.getMyUserAccount
 
 export async function getMyUserAccount(): Promise<UserAccount> {
 	const response = await fetch(
@@ -801,14 +797,7 @@ export async function getSpecifications() {
 	return await response.json();
 }
 
-export async function getUserAccount() {
-	const response = await fetch(
-		`${baseURL}/o/headless-admin-user/v1.0/my-user-account`,
-		{headers, method: 'GET'}
-	);
-
-	return response.json();
-}
+// HeadlessAdminUser.getUserAccounts
 
 export async function getUserAccounts() {
 	const response = await fetch(
@@ -822,6 +811,8 @@ export async function getUserAccounts() {
 	return await response.json();
 }
 
+// HeadlessAdminUser.getUserAccountById
+
 export async function getUserAccountsById() {
 	const response = await fetch(
 		`${baseURL}/o/headless-admin-user/v1.0/user-accounts/${Liferay.ThemeDisplay.getUserId()}`,
@@ -833,6 +824,8 @@ export async function getUserAccountsById() {
 
 	return response;
 }
+
+// HeadlessAdminUser.getUserAccountsByAccountId
 
 export async function getUserAccountsByAccountId(accountId: number) {
 	const response = await fetch(
@@ -1126,6 +1119,8 @@ export async function getMyUserAditionalInfos(userId: number) {
 	return await userAdditionalInfos.json();
 }
 
+// HeadlessAdminUser.updateUserAccount
+
 export async function updateUserPassword(password: string, id: number) {
 	const response = await fetch(
 		`/o/headless-admin-user/v1.0/user-accounts/${id}`,
@@ -1138,6 +1133,8 @@ export async function updateUserPassword(password: string, id: number) {
 
 	return response.json();
 }
+
+// HeadlessAdminUser.sendRoleAccountUser
 
 export async function sendRoleAccountUser(
 	accountId: number,

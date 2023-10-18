@@ -1005,12 +1005,7 @@ definition {
 	}
 
 	macro viewSearchField {
-		if (isSet(noQuestion)) {
-			AssertElementNotPresent(locator1 = "Questions#SEARCH_QUESTION_FIELD");
-		}
-		else {
-			AssertElementPresent(locator1 = "Questions#SEARCH_QUESTION_FIELD");
-		}
+		AssertElementPresent(locator1 = "Questions#SEARCH_QUESTION_FIELD");
 	}
 
 	macro viewSearchResults {
@@ -1023,12 +1018,9 @@ definition {
 	}
 
 	macro viewSelectFilter {
-		if (isSet(noQuestion)) {
-			AssertElementNotPresent(locator1 = "Questions#QUESTIONS_SELECT_FILTER");
-		}
-		else {
-			AssertElementPresent(locator1 = "Questions#QUESTIONS_SELECT_FILTER");
-		}
+		AssertElementPresent(
+			key_text = "Filter and Order",
+			locator1 = "Button#ANY");
 	}
 
 	macro viewStatistics {

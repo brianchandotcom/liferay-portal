@@ -1375,12 +1375,6 @@ definition {
 				topicName = "questions-test-category");
 		}
 
-		task ("And the user can se that there are not questions created") {
-			Questions.viewSearchField(noQuestion = "true");
-
-			Questions.viewSelectFilter(noQuestion = "true");
-		}
-
 		task ("When the user creates a question") {
 			JSONQuestions.addQuestion(
 				bodyField = "Body AddQuestionWithTheTestBody",
@@ -1394,7 +1388,7 @@ definition {
 				topicName = "questions-test-category");
 		}
 
-		task ("Then he can see the select filter and serarch field") {
+		task ("Then he can see the select filter and search field") {
 			Questions.viewSearchField();
 
 			Questions.viewSelectFilter();

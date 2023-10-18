@@ -25,7 +25,7 @@ import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.AggregationContextProvider;
 import com.liferay.portal.vulcan.internal.jaxrs.context.provider.FilterContextProvider;
 import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.pagination.provider.PaginationProvider;
 import com.liferay.portal.vulcan.util.SortUtil;
 
 import java.io.Serializable;
@@ -116,7 +116,9 @@ public class GraphQLDTOContributorDataFetchingProcessor {
 			_getFilter(
 				acceptLanguage, graphQLDTOContributor.getEntityModel(),
 				filterString),
-			Pagination.of(page, pageSize), search,
+			_paginationProvider.getPagination(
+				_portal.getCompanyId(httpServletRequest), page, pageSize),
+			search,
 			SortUtil.getSorts(
 				acceptLanguage, graphQLDTOContributor.getEntityModel(),
 				_sortParserProvider.provide(
@@ -196,6 +198,9 @@ public class GraphQLDTOContributorDataFetchingProcessor {
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private PaginationProvider _paginationProvider;
 
 	@Reference
 	private Portal _portal;

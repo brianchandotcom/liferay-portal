@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 
 <mime-info>
+	<mime-type type="application/javascript">
+		<glob pattern="*.js" />
+	</mime-type>
 	<mime-type type="application/zip">
 		<glob pattern="*.lar" />
 	</mime-type>

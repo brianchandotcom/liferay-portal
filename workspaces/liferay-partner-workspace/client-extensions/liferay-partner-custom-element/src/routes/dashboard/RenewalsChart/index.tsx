@@ -23,14 +23,24 @@ export default function () {
 
 	const getRenewalsData = async () => {
 		setIsLoading(true);
+
+		const todayDate = new Date();
+		const todayDateISO = todayDate.toISOString().split('T')[0];
+
+		todayDate.setDate(todayDate.getDate() + 30);
+		const todayDate30Days = todayDate.toISOString().split('T')[0];
+
 		// eslint-disable-next-line @liferay/portal/no-global-fetch
 		const response = await retry<Response>(() =>
-			fetch('/o/c/opportunitysfs?pageSize=200&sort=closeDate:asc', {
-				headers: {
-					'accept': 'application/json',
-					'x-csrf-token': Liferay.authToken,
-				},
-			})
+			fetch(
+				`/o/c/opportunitysfs?pageSize=200&sort=closeDate:asc&filter=type eq 'Existing Business' and stage ne 'Closed Lost' and stage ne 'Disqualified' and stage ne 'Rejected' and stage ne 'Rolled into another opportunity' and closeDate ge ${todayDateISO} and closeDate le ${todayDate30Days}`,
+				{
+					headers: {
+						'accept': 'application/json',
+						'x-csrf-token': Liferay.authToken,
+					},
+				}
+			)
 		);
 
 		if (response.ok) {

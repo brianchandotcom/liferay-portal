@@ -14,8 +14,6 @@ import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 
@@ -54,12 +52,6 @@ public class DLFileEntryTypePermissionPortalInstanceLifecycleListener
 			String.valueOf(company.getCompanyId()), role.getRoleId(),
 			new String[] {ActionKeys.VIEW});
 	}
-
-	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private ResourceActionLocalService _resourceActionLocalService;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

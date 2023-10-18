@@ -5,7 +5,6 @@
 
 package com.liferay.analytics.settings.rest.internal.resource.v1_0;
 
-import com.liferay.analytics.batch.exportimport.AnalyticsDXPEntityBatchExporter;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.analytics.settings.rest.resource.v1_0.AnalyticsDXPEntityBatchExporterResource;
 
@@ -32,9 +31,6 @@ public class AnalyticsDXPEntityBatchExporterResourceImpl
 			contextCompany.getCompanyId(),
 			Collections.singletonMap("wizardMode", false));
 	}
-
-	@Reference
-	private AnalyticsDXPEntityBatchExporter _analyticsDXPEntityBatchExporter;
 
 	@Reference
 	private AnalyticsSettingsManager _analyticsSettingsManager;

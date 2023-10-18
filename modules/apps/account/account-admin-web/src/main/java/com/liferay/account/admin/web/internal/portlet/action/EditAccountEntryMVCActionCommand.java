@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -232,8 +231,5 @@ public class EditAccountEntryMVCActionCommand
 
 	@Reference
 	private File _file;
-
-	@Reference
-	private Portal _portal;
 
 }

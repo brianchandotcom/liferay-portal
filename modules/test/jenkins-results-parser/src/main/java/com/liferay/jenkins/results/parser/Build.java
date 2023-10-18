@@ -248,9 +248,7 @@ public interface Build {
 		}
 
 		public String getBuildURL() {
-			if ((_buildURL != null) ||
-				JenkinsResultsParserUtil.isURL(_buildURL)) {
-
+			if (JenkinsResultsParserUtil.isURL(_buildURL)) {
 				return _buildURL;
 			}
 

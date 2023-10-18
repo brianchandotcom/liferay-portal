@@ -12,21 +12,6 @@ definition {
 		User.firstLoginPG();
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			User.firstLoginPG();
-
-			Site.tearDownCP();
-
-			PagesAdmin.tearDownCP();
-		}
-	}
-
 	@description = "This is for LPS-121422. The elements are still shown in edit mode after executing reset changes."
 	@priority = 3
 	test SitesTemplatePermissionPersistence {

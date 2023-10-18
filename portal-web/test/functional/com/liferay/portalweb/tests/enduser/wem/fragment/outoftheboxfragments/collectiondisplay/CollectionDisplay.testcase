@@ -25,17 +25,6 @@ definition {
 		}
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-		}
-	}
-
 	@description = "This is a test for LPS-112249. The Content Flags, Content Ratings and Content Display are compatible and consistent in the same cell of Collection Display."
 	@priority = 4
 	test AddAllThreeContentFragmentsToOneCell {

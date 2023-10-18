@@ -14,17 +14,6 @@ definition {
 		HeadlessSite.addSite(siteName = "Test Site Name");
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-		}
-	}
-
 	@priority = 5
 	test AddTemplateWithStructure {
 		property portal.acceptance = "true";

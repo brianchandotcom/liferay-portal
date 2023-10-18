@@ -14,17 +14,6 @@ definition {
 		HeadlessSite.addSite(siteName = "Test Site Name");
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-		}
-	}
-
 	@description = "This is a use case for LPS-110191. The related assets should be in AP when select Related Assets as Collection Provider."
 	@priority = 5
 	@uitest

@@ -15,17 +15,6 @@ definition {
 		HeadlessSite.addSite(siteName = "Test Site Name");
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-		}
-	}
-
 	@description = "Add a category as Site Role."
 	@priority = 4
 	test AddCategoryAsSiteRole {

@@ -3,7 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-/// <reference types="react" />
+declare const _default: {
 
-export declare function RuleBuilderActionSection(): JSX.Element;
-export declare function RuleBuilderConditionSection(): JSX.Element;
+	/**
+	 * Get users
+	 */
+	getUsers(): Promise<
+		Array<{
+			screenName: string;
+			userId: string;
+		}>
+	>;
+};
+export default _default;

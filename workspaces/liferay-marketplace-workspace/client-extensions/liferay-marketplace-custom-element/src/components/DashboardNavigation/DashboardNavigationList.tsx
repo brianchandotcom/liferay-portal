@@ -6,120 +6,69 @@
 import classNames from 'classnames';
 
 import './DashboardNavigationList.scss';
-import {AppProps} from '../DashboardTable/DashboardTable';
+
+import {NavLink, useLocation} from 'react-router-dom';
+
 import {DashboardListItems} from './DashboardNavigation';
 import {DashboardNavigationListItem} from './DashboardNavigationListItem';
 
 interface DashboardNavigationListProps {
-	dashboardNavigationItems: DashboardListItems[];
+	accountId: string;
 	navigationItemMock: DashboardListItems;
-	navigationItemsMock: DashboardListItems[];
-	onSelectAppChange?: (value: AppProps | undefined) => void;
-	setDashboardNavigationItems: (values: DashboardListItems[]) => void;
 }
 
 export function DashboardNavigationList({
-	dashboardNavigationItems,
+	accountId,
 	navigationItemMock,
-	navigationItemsMock,
-	onSelectAppChange,
-	setDashboardNavigationItems,
 }: DashboardNavigationListProps) {
-	const {
-		itemIcon,
-		itemName,
-		itemSelected,
-		itemTitle,
-		items,
-	} = navigationItemMock;
+	const {itemIcon, itemTitle, items, path} = navigationItemMock;
+
+	const location = useLocation();
+
+	const isAppRoute =
+		location.pathname === '/' || location.pathname.includes('/app');
 
 	return (
 		<>
-			<div
-				className={classNames('dashboard-navigation-body-list', {
-					'dashboard-navigation-body-list-selected': itemSelected,
-				})}
-				onClick={() => {
-					const newItems = navigationItemsMock.map(
-						(navigationItem) => {
-							if (navigationItem.itemName === itemName) {
-								return {
-									...navigationItem,
-									itemSelected: true,
-								};
-							}
-
-							if (navigationItem.itemName === 'apps') {
-								const newAppNavigationItems = navigationItem.items?.map(
-									(item) => {
-										return {
-											...item,
-											selected: false,
-										};
-									}
-								);
-
-								const newNavigationItem = {
-									...navigationItem,
-									items: newAppNavigationItems,
-								};
-
-								return {
-									...newNavigationItem,
-									itemSelected: false,
-								};
-							}
-
-							return {
-								...navigationItem,
-								itemSelected: false,
-							};
-						}
-					);
-
-					if (onSelectAppChange) {
-						onSelectAppChange(undefined);
-					}
-
-					setDashboardNavigationItems(newItems);
-				}}
+			<NavLink
+				className={({isActive}) =>
+					classNames('dashboard-navigation-body-list', {
+						'dashboard-navigation-body-list-selected':
+							isActive || (path === '/' && isAppRoute),
+					})
+				}
+				to={`${path}${accountId ? `?account=${accountId}` : ''}`}
 			>
-				<img
-					alt="Apps icon"
-					className={classNames(
-						'dashboard-navigation-body-list-icon',
-						{
-							'dashboard-navigation-body-list-icon-selected': itemSelected,
-						}
-					)}
-					src={itemIcon}
-				/>
+				{({isActive}) => (
+					<>
+						<img
+							alt="Apps icon"
+							className={classNames(
+								'dashboard-navigation-body-list-icon',
+								{
+									'dashboard-navigation-body-list-icon-selected': isActive,
+								}
+							)}
+							src={itemIcon}
+						/>
 
-				<span
-					className={classNames(
-						'dashboard-navigation-body-list-text',
-						{
-							'dashboard-navigation-body-list-text-selected': itemSelected,
-						}
-					)}
-				>
-					{itemTitle}
-				</span>
-			</div>
+						<span
+							className={classNames(
+								'dashboard-navigation-body-list-text',
+								{
+									'dashboard-navigation-body-list-text-selected': isActive,
+								}
+							)}
+						>
+							{itemTitle}
+						</span>
+					</>
+				)}
+			</NavLink>
 
-			{itemSelected &&
-				items?.map((item) => (
-					<DashboardNavigationListItem
-						dashboardNavigationItems={dashboardNavigationItems}
-						item={item}
-						items={items}
-						key={item.name}
-						listName={itemName}
-						onSelectAppChange={onSelectAppChange}
-						setDashboardNavigationItems={
-							setDashboardNavigationItems
-						}
-					/>
+			{isAppRoute &&
+				items?.map((item, index) => (
+					<DashboardNavigationListItem item={item} key={index} />
 				))}
 		</>
 	);

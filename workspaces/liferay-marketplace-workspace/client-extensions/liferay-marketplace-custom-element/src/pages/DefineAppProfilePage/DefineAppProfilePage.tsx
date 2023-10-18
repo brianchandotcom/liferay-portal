@@ -24,13 +24,13 @@ import {
 	createApp,
 	createAttachment,
 	getCategories,
-	getChannels,
 	getVocabularies,
 	updateApp,
 } from '../../utils/api';
 import {submitBase64EncodedFile} from '../../utils/util';
 
 import './DefineAppProfilePage.scss';
+import {useMarketplaceContext} from '../../context/MarketplaceContext';
 import {getCompanyId} from '../../liferay/constants';
 
 interface DefineAppProfilePageProps {
@@ -58,6 +58,7 @@ export function DefineAppProfilePage({
 		},
 		dispatch,
 	] = useAppContext();
+	const {channel} = useMarketplaceContext();
 	const [categories, setCategories] = useState<VocabDropdownItem[]>([]);
 	const [productType, setProductType] = useState<Categories>();
 	const [tags, setTags] = useState<VocabDropdownItem[]>([]);
@@ -97,20 +98,13 @@ export function DefineAppProfilePage({
 		let product;
 		let response;
 
-		const channels = await getChannels();
-
-		const marketplaceChannel = channels.find(
-			(channel) => channel.name === 'Marketplace Channel'
-		);
-
 		if (appERC) {
 			response = await updateApp({
 				appDescription,
 				appERC,
 				appName,
 			});
-		}
-		else {
+		} else {
 			response = await createApp({
 				appCategories: [
 					...appCategories,
@@ -122,12 +116,12 @@ export function DefineAppProfilePage({
 				catalogId,
 				productChannels: [
 					{
-						channelId: marketplaceChannel?.id as number,
-						currencyCode: marketplaceChannel?.currencyCode as string,
-						externalReferenceCode: marketplaceChannel?.externalReferenceCode as string,
-						id: marketplaceChannel?.id as number,
-						name: marketplaceChannel?.name as string,
-						type: marketplaceChannel?.type as string,
+						channelId: channel?.id as number,
+						currencyCode: channel?.currencyCode as string,
+						externalReferenceCode: channel?.externalReferenceCode as string,
+						id: channel?.id as number,
+						name: channel?.name as string,
+						type: channel?.type as string,
 					},
 				],
 			});

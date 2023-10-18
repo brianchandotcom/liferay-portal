@@ -10,14 +10,13 @@ import {InputHTMLAttributes, useCallback, useEffect, useState} from 'react';
 
 import './inviteMemberModal.scss';
 
-import {DisplayType} from '@clayui/alert';
 import ClayIcon from '@clayui/icon';
 import {useForm} from 'react-hook-form';
 import {z} from 'zod';
 
+import {useMarketplaceContext} from '../../context/MarketplaceContext';
 import {Liferay} from '../../liferay/liferay';
 import zodSchema, {zodResolver} from '../../schema/zod';
-import {getMyUserAccount} from '../../utils/api';
 import {createPassword} from '../../utils/createPassword';
 import BaseWarning from '../Input/base/BaseWarning';
 import BaseWrapper from '../Input/base/BaseWrapper';
@@ -32,11 +31,15 @@ import {
 	sendRoleAccountUser,
 } from './services';
 
+const finalPathUrl = {
+	'customer-dashboard': 'customer-gate',
+	'publisher-dashboard': 'loading',
+};
+
 interface InviteMemberModalProps {
-	dashboardType: false | 'customer-dashboard' | 'publisher-dashboard';
+	dashboardType: 'customer-dashboard' | 'publisher-dashboard';
 	handleClose: () => void;
 	listOfRoles: string[];
-	renderToast: (message: string, title: string, type: DisplayType) => void;
 	rolesPermissionDescription: {
 		appPermissions: PermissionDescription[];
 		dashboardPermissions: PermissionDescription[];
@@ -106,13 +109,14 @@ export function InviteMemberModal({
 	dashboardType,
 	handleClose,
 	listOfRoles,
-	renderToast,
 	rolesPermissionDescription,
 	selectedAccount,
 }: InviteMemberModalProps) {
 	const {observer, onClose} = useModal({
 		onClose: () => handleClose(),
 	});
+
+	const {myUserAccount} = useMarketplaceContext();
 
 	const {
 		clearErrors,
@@ -158,11 +162,6 @@ export function InviteMemberModal({
 		getAccountRoles();
 		setUserPassword(createPassword());
 	}, [getAccountRoles, listOfRoles]);
-
-	const finalPathUrl = {
-		'customer-dashboard': 'customer-gate',
-		'publisher-dashboard': 'loading',
-	};
 
 	const emailInviteURL = `${Liferay.ThemeDisplay.getPortalURL()}/c/login?redirect=${getSiteURL()}/${
 		finalPathUrl[dashboardType as keyof typeof finalPathUrl]
@@ -218,24 +217,20 @@ export function InviteMemberModal({
 		};
 
 		// eslint-disable-next-line prefer-const
-		let [user, myUser] = await Promise.all([
-			getUserByEmail(form.emailAddress),
-			getMyUserAccount(),
-		]);
+		let user = await getUserByEmail(form.emailAddress);
 
 		if (user && checkIfUserIsInvited(user, selectedAccount.id)) {
-			renderToast(
-				"There's already a user with this email invited to this account",
-				'',
-				'danger'
-			);
+			Liferay.Util.openToast({
+				message:
+					"There's already a user with this email invited to this account",
+				type: 'danger',
+			});
 
 			return onClose();
 		}
 
-		if (!user) {
-			user = await createNewUser(jsonBody);
-		}
+		user = await createNewUser(jsonBody);
+
 		if (
 			checkboxRoles.some(
 				(role) =>
@@ -253,7 +248,7 @@ export function InviteMemberModal({
 			accountName: selectedAccount.name,
 			emailOfMember: form.emailAddress,
 			inviteURL: emailInviteURL,
-			inviterName: myUser.givenName,
+			inviterName: myUserAccount.givenName,
 			mothersName: userPassword,
 			r_accountEntryToUserAdditionalInfo_accountEntryId:
 				selectedAccount.id,
@@ -263,11 +258,11 @@ export function InviteMemberModal({
 			userFirstName: form.firstName,
 		});
 
-		renderToast(
-			'invited succesfully',
-			`${user.givenName} ${user.familyName}`,
-			'success'
-		);
+		Liferay.Util.openToast({
+			message: 'Invitetd successfully',
+			title: `${user.givenName} ${user.familyName}`,
+			type: 'success',
+		});
 
 		onClose();
 	};

@@ -75,30 +75,35 @@ export const initialDashboardNavigationItems: DashboardListItems[] = [
 		itemSelected: true,
 		itemTitle: 'Apps',
 		items: [] as AppProps[],
+		path: '/',
 	},
 	{
 		itemIcon: solutionsIcon,
 		itemName: 'solutions',
 		itemSelected: false,
 		itemTitle: 'Solutions',
+		path: '/solutions',
 	},
 	{
 		itemIcon: projectsIcon,
 		itemName: 'projects',
 		itemSelected: false,
 		itemTitle: 'Projects',
+		path: '/projects',
 	},
 	{
 		itemIcon: membersIcon,
 		itemName: 'members',
 		itemSelected: false,
 		itemTitle: 'Members',
+		path: '/members',
 	},
 	{
 		itemIcon: businessIcon,
 		itemName: 'account',
 		itemSelected: false,
 		itemTitle: 'Account',
+		path: '/accounts',
 	},
 ];
 
@@ -260,8 +265,7 @@ export function getProductTypeFromSpecifications(
 
 			if (productType === 'cloud') {
 				productType = 'Cloud';
-			}
-			else if (productType === 'dxp') {
+			} else if (productType === 'dxp') {
 				productType = 'DXP';
 			}
 		}

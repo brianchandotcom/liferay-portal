@@ -1,10 +1,17 @@
+.dashboard-navigation-body-list-text {
+	color: #272833;
+	text-decoration: none;
+}
+
 .dashboard-navigation-body-list-item {
 	align-items: center;
 	cursor: pointer;
+	color: #272833;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 	padding: 1rem;
+	text-decoration: none;
 
 	transition: background-color 0.3s;
 

@@ -14,7 +14,7 @@ import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 
 import {orderType} from '../../enums/orderType';
-import {PurchasedAppProps} from '../../pages/PurchasedAppsDashboardPage/PurchasedAppsDashboardPage';
+import {PurchasedAppProps} from '../../pages/PurchasedAppsDashboard/PurchasedAppsDashboardOutlet';
 import {showAppImage} from '../../utils/util';
 
 interface PurchasedAppsDashboardTableRowProps {

@@ -5,47 +5,52 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import classNames from 'classnames';
-import {useEffect, useState} from 'react';
+import {useEffect, useMemo} from 'react';
+import {useParams} from 'react-router-dom';
+import useSWR from 'swr';
 
-import arrowDown from '../../assets/icons/arrow_down_icon.svg';
-import arrowLeft from '../../assets/icons/arrow_left_icon.svg';
-import circleFullIcon from '../../assets/icons/circle_fill_icon.svg';
-import {DashboardListItems} from '../../components/DashboardNavigation/DashboardNavigation';
-import {AppProps} from '../../components/DashboardTable/DashboardTable';
-import {useAppContext} from '../../manage-app-state/AppManageState';
-import {TYPES} from '../../manage-app-state/actionTypes';
-import {ReviewAndSubmitAppPage} from '../ReviewAndSubmitAppPage/ReviewAndSubmitAppPage';
+import arrowDown from '../../../assets/icons/arrow_down_icon.svg';
+import circleFullIcon from '../../../assets/icons/circle_fill_icon.svg';
+import {useAppContext} from '../../../manage-app-state/AppManageState';
+import {TYPES} from '../../../manage-app-state/actionTypes';
+import {ReviewAndSubmitAppPage} from '../../ReviewAndSubmitAppPage/ReviewAndSubmitAppPage';
 
-import './AppDetailsPage.scss';
-import {getProductSpecifications} from '../../utils/api';
+import './App.scss';
+import HeadlessCommerceAdminCatalogImpl from '../../../services/rest/HeadlessCommerceAdminCatalog';
 import {
 	getProductVersionFromSpecifications,
 	getThumbnailByProductAttachment,
 	showAppImage,
-} from '../../utils/util';
+} from '../../../utils/util';
 
-interface AppDetailsPageProps {
-	dashboardNavigationItems: DashboardListItems[];
-	selectedApp: AppProps;
-	setSelectedApp?: (value: AppProps | undefined) => void;
-}
+const App = () => {
+	const [, dispatch] = useAppContext();
+	const {appId: productId} = useParams();
 
-export function AppDetailsPage({
-	dashboardNavigationItems,
-	selectedApp,
-	setSelectedApp,
-}: AppDetailsPageProps) {
-	const [appVersion, setAppVersion] = useState('0');
-	const [navigationBarActive, setNavigationBarActive] = useState(
-		'App Details'
+	const {data = []} = useSWR(`/apps/app/${productId}`, () =>
+		Promise.all([
+			HeadlessCommerceAdminCatalogImpl.getProduct(productId as string),
+			HeadlessCommerceAdminCatalogImpl.getProductSpecifications(
+				productId as string
+			),
+		])
 	);
 
-	const [_, dispatch] = useAppContext();
-	const thumbnail = getThumbnailByProductAttachment(selectedApp.attachments);
+	const [selectedApp, productSpecifications = []] = data ?? [];
+
+	const appVersion = useMemo(
+		() => getProductVersionFromSpecifications(productSpecifications as []),
+		[productSpecifications]
+	);
 
 	useEffect(() => {
+		if (!selectedApp) {
+			return;
+		}
+
 		dispatch({
 			payload: {
 				value: {
@@ -55,53 +60,32 @@ export function AppDetailsPage({
 			},
 			type: TYPES.SUBMIT_APP_PROFILE,
 		});
+	}, [
+		dispatch,
+		selectedApp,
+		selectedApp?.externalReferenceCode,
+		selectedApp?.productId,
+	]);
 
-		const fetchProductSpecifications = async () => {
-			const productSpecifications = await getProductSpecifications({
-				appProductId: selectedApp.productId,
-			});
+	if (!selectedApp) {
+		return null;
+	}
 
-			const appVersion = getProductVersionFromSpecifications(
-				productSpecifications
-			);
+	const status = selectedApp.workflowStatusInfo.label.replace(
+		/(^\w|\s\w)/g,
+		(m: string) => m.toUpperCase()
+	);
 
-			setAppVersion(appVersion);
-		};
-
-		fetchProductSpecifications();
-	}, [dispatch, selectedApp]);
+	const thumbnail = getThumbnailByProductAttachment(selectedApp?.attachments);
 
 	return (
 		<div className="app-details-page-container">
-			<button
-				className="app-details-page-back-button"
-				onClick={() => {
-					dashboardNavigationItems.forEach(({itemName, items}) => {
-						if (itemName === 'apps') {
-							items?.forEach((item) => {
-								if (item.name === selectedApp.name) {
-									item.selected = false;
-								}
-							});
-						}
-					});
-
-					if (setSelectedApp) {
-						setSelectedApp(undefined);
-					}
-				}}
-			>
-				<div>
-					<img
-						alt="arrow left"
-						className="app-details-page-back-button-icon"
-						src={arrowLeft}
-					/>
-					Back to Apps
-				</div>
+			<button className="app-details-page-back-button">
+				<ClayIcon symbol="order-arrow-left" />
+				Back to Apps
 			</button>
 
-			{selectedApp.status === 'Draft' && (
+			{status === 'Draft' && (
 				<ClayAlert
 					className="app-details-page-alert-container"
 					displayType="info"
@@ -128,7 +112,7 @@ export function AppDetailsPage({
 
 					<div>
 						<span className="app-details-page-app-info-title">
-							{selectedApp.name}
+							{selectedApp.name?.en_US}
 						</span>
 
 						<div className="app-details-page-app-info-subtitle-container">
@@ -178,18 +162,10 @@ export function AppDetailsPage({
 			<div>
 				<ClayNavigationBar
 					className="app-details-page-navigation-bar"
-					triggerLabel={navigationBarActive}
+					triggerLabel="App Detatils"
 				>
-					<ClayNavigationBar.Item
-						active={navigationBarActive === 'App Details'}
-					>
-						<ClayButton
-							onClick={() =>
-								setNavigationBarActive('App Details')
-							}
-						>
-							<span>App Details</span>
-						</ClayButton>
+					<ClayNavigationBar.Item active>
+						<ClayButton>App Details</ClayButton>
 					</ClayNavigationBar.Item>
 				</ClayNavigationBar>
 
@@ -203,4 +179,6 @@ export function AppDetailsPage({
 			</div>
 		</div>
 	);
-}
+};
+
+export default App;

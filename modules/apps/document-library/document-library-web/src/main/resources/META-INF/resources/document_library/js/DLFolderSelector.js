@@ -75,8 +75,16 @@ const DLFolderSelector = ({
 				setCopyButtonDisabled(false);
 			},
 			selectEventName: `${portletNamespace}folderSelected`,
-			title: sub(Liferay.Language.get('select')),
+			title: Liferay.Language.get('select'),
 			url: selectionModalURL,
+		});
+	};
+
+	const showErrorMessage = (message) => {
+		openToast({
+			message,
+			title: Liferay.Language.get('error'),
+			type: 'danger',
 		});
 	};
 
@@ -97,32 +105,22 @@ const DLFolderSelector = ({
 			.then((response) => response.json())
 			.then(({errorMessages, errorSize}) => {
 				if (errorMessages) {
-					openToast({
-						message: errorMessages[0],
-						title: Liferay.Language.get('error'),
-						type: 'danger',
-					});
+					showErrorMessage(errorMessages[0]);
 				}
 				else if (errorSize) {
-					openToast({
-						message: sub(
+					showErrorMessage(
+						sub(
 							Liferay.Language.get('x-items-could-not-be-copied'),
 							errorSize
-						),
-						title: Liferay.Language.get('error'),
-						type: 'danger',
-					});
+						)
+					);
 				}
 				else {
 					navigate(redirect);
 				}
 			})
 			.catch((error) => {
-				openToast({
-					message: error.message,
-					title: Liferay.Language.get('error'),
-					type: 'danger',
-				});
+				showErrorMessage(error.message);
 			});
 	};
 

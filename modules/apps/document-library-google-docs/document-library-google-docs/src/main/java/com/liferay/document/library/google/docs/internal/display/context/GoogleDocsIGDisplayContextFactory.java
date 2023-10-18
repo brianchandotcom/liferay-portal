@@ -9,10 +9,6 @@ import com.liferay.document.library.display.context.IGDisplayContextFactory;
 import com.liferay.document.library.display.context.IGViewFileVersionDisplayContext;
 import com.liferay.document.library.google.drive.configuration.DLGoogleDriveCompanyConfiguration;
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
-import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
-import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -102,18 +98,6 @@ public class GoogleDocsIGDisplayContextFactory
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
-	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
-
-	@Reference
-	private DDMStructureLocalService _ddmStructureLocalService;
-
-	@Reference
 	private DLAppService _dlAppService;
-
-	@Reference
-	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
-
-	@Reference
-	private FieldsToDDMFormValuesConverter _fieldsToDDMFormValuesConverter;
 
 }

@@ -214,7 +214,27 @@ public class ObjectRelationshipLocalServiceImpl
 				objectRelationship);
 		}
 
-		objectRelationship.setDBTableName(_generateDBTableName());
+		String dbTableName = null;
+
+		while (true) {
+			StringBuilder sb = new StringBuilder(5);
+
+			sb.append("R_");
+			sb.append(StringUtil.toUpperCase(StringUtil.randomId(1)));
+			sb.append(RandomUtil.nextInt(10));
+			sb.append(StringUtil.toUpperCase(StringUtil.randomId(1)));
+			sb.append(RandomUtil.nextInt(10));
+
+			ObjectRelationship existingObjectRelationship =
+				objectRelationshipPersistence.fetchByDTN_R(sb.toString(), false);
+
+			if (existingObjectRelationship == null) {
+				dbTableName = sb.toString();
+				break;
+			}
+		}
+
+		objectRelationship.setDBTableName(dbTableName);
 
 		objectRelationship =
 			objectRelationshipLocalService.updateObjectRelationship(
@@ -1006,33 +1026,6 @@ public class ObjectRelationshipLocalServiceImpl
 					objectField.getObjectFieldId());
 			}
 		}
-	}
-
-	private String _generateDBTableName() {
-		boolean invalidSequence = true;
-		String dbTableName = null;
-
-		while (invalidSequence) {
-			dbTableName = StringBundler.concat(
-				"R_",
-				StringUtil.randomAlphabeticString(
-					1
-				).toUpperCase(),
-				RandomUtil.nextInt(10),
-				StringUtil.randomAlphabeticString(
-					1
-				).toUpperCase(),
-				RandomUtil.nextInt(10));
-
-			ObjectRelationship objectRelationship =
-				objectRelationshipPersistence.fetchByDTN_R(dbTableName, false);
-
-			if (objectRelationship == null) {
-				invalidSequence = false;
-			}
-		}
-
-		return dbTableName;
 	}
 
 	private String _getServiceRegistrationKey(

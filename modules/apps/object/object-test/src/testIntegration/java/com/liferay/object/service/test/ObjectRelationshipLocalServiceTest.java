@@ -681,13 +681,6 @@ public class ObjectRelationshipLocalServiceTest {
 		}
 	}
 
-	private boolean _matchesWithRegex(String dbTableName) {
-		Matcher matcher = _manyToManyRelationshipTableNamePattern.matcher(
-			dbTableName);
-
-		return matcher.matches();
-	}
-
 	private void _testAddObjectRelationshipManyToMany(
 			String deletionType, ObjectDefinition objectDefinition1,
 			ObjectDefinition objectDefinition2, boolean system)
@@ -857,8 +850,10 @@ public class ObjectRelationshipLocalServiceTest {
 			objectRelationship.getDBTableName(),
 			reverseObjectRelationship.getDBTableName());
 
-		Assert.assertTrue(
-			_matchesWithRegex(objectRelationship.getDBTableName()));
+		Matcher matcher = _manyToManyObjectRelationshipTableNamePattern.matcher(
+			objectRelationship.getDBTableName());
+
+		Assert.assertTrue(matcher.matches());
 
 		Map<String, String> pkObjectFieldDBColumnNames =
 			ObjectRelationshipUtil.getPKObjectFieldDBColumnNames(
@@ -964,7 +959,7 @@ public class ObjectRelationshipLocalServiceTest {
 		_addObjectRelationshipSystemObjectDefinition();
 	}
 
-	private static final Pattern _manyToManyRelationshipTableNamePattern =
+	private static final Pattern _manyToManyObjectRelationshipTableNamePattern =
 		Pattern.compile("R_[A-Z][0-9][A-Z][0-9]$");
 
 	@Inject

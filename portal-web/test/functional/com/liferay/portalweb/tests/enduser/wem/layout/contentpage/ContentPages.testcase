@@ -325,7 +325,7 @@ definition {
 
 			PortletEntry.save();
 
-			Close.closeWindow();
+			Navigator.gotoBack();
 		}
 
 		task ("Then the page designer can see new page name in pages admin") {

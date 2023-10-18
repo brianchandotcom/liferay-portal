@@ -11,7 +11,7 @@ export default {
 	/**
 	 * Get users
 	 */
-	getUsers() {
-		return serviceFetch(config.getUsers, {}, () => {});
+	getUsers(): Promise<Array<{screenName: string; userId: string}>> {
+		return serviceFetch(config.getUsers, {});
 	},
 };

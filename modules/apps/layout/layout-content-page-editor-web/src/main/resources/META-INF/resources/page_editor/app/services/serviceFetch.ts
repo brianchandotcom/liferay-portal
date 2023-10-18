@@ -27,7 +27,7 @@ function getFormData(body: Record<string, string>) {
 }
 
 interface Options extends Omit<RequestInit, 'body' | 'method'> {
-	body: Record<string, any>;
+	body?: Record<string, any>;
 	method?: string;
 }
 

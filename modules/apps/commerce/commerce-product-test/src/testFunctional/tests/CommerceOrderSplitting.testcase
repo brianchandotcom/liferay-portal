@@ -28,6 +28,158 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-12574. Admin can view an order with a single line item that can be split."
+	@priority = 5
+	test CanAssertAnOrderWithSingleLineItemSplit {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site with a business account and a buyer user is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a Supplier account with a supplier user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Supplier Account",
+				accountType = "Supplier",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "supplier@liferay.com",
+				userFirstName = "Supplier",
+				userLastName = "User",
+				userRole = "Account Supplier",
+				userScreenName = "supplieruser");
+		}
+
+		task ("And a catalog linked to the supplier account is created") {
+			var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = "Supplier Account");
+
+			CommerceJSONCatalogsAPI._addCatalog(catalogName = "Supplier Catalog");
+
+			CommerceJSONCatalogsAPI._patchCommerceCatalog(
+				accountId = ${accountEntryId},
+				catalogName = "Supplier Catalog");
+		}
+
+		task ("And the admin can assert that the catalog is successfully linked to the account using GET API") {
+			var accountId = CommerceJSONCatalogsAPI._getCommerceAccountIdByCatalogId(catalogName = "Supplier Catalog");
+
+			TestUtils.assertEquals(
+				actual = ${accountId},
+				expected = ${accountEntryId});
+		}
+
+		task ("And a channel is created and the supplier account is linked to it") {
+			CommerceJSONChannelsAPI._addChannel(
+				accountId = ${accountEntryId},
+				channelName = "Supplier Channel",
+				channelType = "site",
+				currencyCode = "USD");
+		}
+
+		task ("And a product is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Supplier Catalog",
+				price = 5,
+				productName = "Simple Product",
+				productType = "simple",
+				sku = "TESTSKU");
+		}
+
+		task ("And the 'Order Split by Catalog Action' health check is checked") {
+			CommerceNavigator.goToHealthCheckAdmin();
+
+			Click(
+				key_buttonRowName = "Order Split by Catalog Action",
+				key_buttonStatus = "",
+				locator1 = "CommerceEntry#FIX_ISSUE_BUTTON_NAME");
+
+			WaitForElementPresent(
+				key_value = "Order Split by Catalog Action",
+				locator1 = "CommerceEntry#HEALTH_CHECK_ICON_CHECK_NAME");
+
+			CommerceJSONOrdersAPI._patchCommerceOrderObjectAction(
+				active = "true",
+				objectActionName = "SplitOrderByCatalog",
+				objectDefinitionName = "CommerceOrder");
+		}
+
+		task ("And the buyer creates an order with a single product") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "Simple Product",
+				productQuantity = 1);
+
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.checkout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				shippingMethod = "Standard");
+		}
+
+		task ("And the admin reaches the Orders Admin page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			CommerceOrders.openOrdersAdmin();
+		}
+
+		task ("And the admin checks that only one order is displayed") {
+			var orderIdBuyer = CommerceJSONOrdersAPI._getCommerceOrderIds(email = "buyer@liferay.com");
+
+			AssertTextEquals(
+				locator1 = "CommerceOrders#PLACED_ORDERS_ID",
+				value1 = ${orderIdBuyer});
+		}
+
+		task ("When the customer order is split") {
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			Click(
+				key_text = "Accept Order",
+				locator1 = "Link#ANY");
+
+			Alert.viewSuccessMessage();
+
+			CommerceOrders.openOrdersAdmin();
+		}
+
+		task ("Then admin can view both orders") {
+			var orderIdBuyer = CommerceJSONOrdersAPI._getCommerceOrderIds(email = "buyer@liferay.com");
+			var orderIdSupplier = CommerceJSONOrdersAPI._getCommerceOrderIds(email = "supplier@liferay.com");
+
+			for (var orderId : list "${orderIdBuyer},${orderIdSupplier}") {
+				AssertElementPresent(
+					key_entryName = ${orderId},
+					locator1 = "CommerceNavigation#ENTRY_NAME");
+			}
+		}
+	}
+
 	@description = "This is a test for COMMERCE-11801. When the admin changes the price of an order line item from a splitted supplier order, the changes are reflected to the order line item of the customer order"
 	@priority = 5
 	test CanAssertCustomerOrderReflectsSupplierOrderItemPriceChanges {

@@ -1,0 +1,111 @@
+@component-name = "OSB Site Initializer Partner Portal"
+definition {
+
+	property custom.properties = "feature.flag.LPS-135430=true";
+	property osgi.modules.includes = "osb-site-initializer-partner-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property test.liferay.virtual.instance = "true";
+	property testray.main.component.name = "OSB Site Initializer Partner Portal";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Partner Portal Site and connect with Salesforce") {
+			PRMUtils.addSite();
+
+			PRMUtils.connectWithSalesforce();
+		}
+
+		task ("Update the account with Salesforce fields") {
+			JSONPRM.updateAccount();
+		}
+
+		task ("Assign the users to the account") {
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Company Name 1",
+				userEmailAddress = "pmu@partner.com");
+
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Company Name 1",
+				userEmailAddress = "cmm@liferaytest.com");
+		}
+
+		task ("Login with the Partner user and create an MDF Request") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "pmu@partner.com",
+				userLoginFullName = "Partner Marketing User");
+
+			var requestId = JSONPRM.createMDFRequest(
+				accountEntryName = "Company Name 1",
+				userEmailAddress = "pmu@partner.com");
+		}
+
+		task ("Login with the Manager user and approves the created MDF") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "cmm@liferaytest.com",
+				userLoginFullName = "Channel Marketing Manager");
+
+			JSONPRM.changeMDFStatus(
+				mdfStatus = "Approved",
+				requestId = ${requestId},
+				userEmailAddress = "cmm@liferaytest.com");
+		}
+
+		task ("Login with the Partner user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "pmu@partner.com",
+				userLoginFullName = "Partner Marketing User");
+
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
+		}
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			PRMUtils.tearDown();
+		}
+	}
+
+	@description = "This is a test for ISSD-855. Verify that an MDF Claim on ‘Pending Marketing Review’ only can go to the following status: In Finance Review, More Info Requested, Rejected."
+	@priority = 5
+	test ViewPendingMarketingReviewStatusOptions {
+		task ("Given that the PMU creates a new Claim") {
+			PRMMDFRequest.goToMDF(campaignName = "Campaign Name 1");
+
+			PRMMDFClaim.createNewClaim(
+				listLeads = "Document_1.xlsx",
+				reimbursementInvoice = "Document_1.png",
+				thirdInvoice = "Document_1.jpg");
+			
+			PRMMDFClaim.getClaimIdOnDetailPage(index = 1);
+		}
+
+		task ("When the CMM open the created MDF Claim"){
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "cmm@liferaytest.com",
+				userLoginFullName = "Channel Marketing Manager");
+			
+			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
+		}
+
+		task ("Then the 'Rejected,'In Finance Review' and 'Request More Info' MDF Claim status will be available"){
+			PRMMDFClaim.viewStatusOptionVisible(statusButton = "Rejected");
+
+			PRMMDFClaim.viewStatusOptionVisible(statusButton = "In Finance Review");
+
+			PRMMDFClaim.viewStatusOptionVisible(statusButton = "Request More Info");
+		}
+	}
+
+}

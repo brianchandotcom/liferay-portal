@@ -58,7 +58,7 @@ definition {
 		}
 
 		if (!(isSet(campaignName))) {
-			var campaignName = "Campaign Name";
+			var campaignName = "Campaign Name 1";
 		}
 
 		if (!(isSet(campaignDescription))) {

@@ -30,13 +30,13 @@ accountRoleDisplaySearchContainer.setRowChecker(new SelectAccountUserAccountRole
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand-small table-cell-minw-150"
 				name="name"
-				value="<%= accountRole.getName(locale) %>"
+				value="<%= HtmlUtil.escape(accountRole.getName(locale)) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand-small table-cell-minw-150"
 				name="description"
-				value="<%= accountRole.getDescription(locale) %>"
+				value="<%= HtmlUtil.escape(accountRole.getDescription(locale)) %>"
 			/>
 		</liferay-ui:search-container-row>
 

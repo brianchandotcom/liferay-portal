@@ -8,12 +8,15 @@ import {useState} from 'react';
 
 import './index.scss';
 
-import ClaySticker from '@clayui/sticker';
+// import ClaySticker from '@clayui/sticker';
+
 import {useForm} from 'react-hook-form';
 
-import emptyPictureIcon from '../../assets/icons/avatar.svg';
+// import emptyPictureIcon from '../../assets/icons/avatar.svg';
+
 import ProductCard from '../GetAppPage/components/ProductCard/ProductCard';
 import StepWizard from '../GetAppPage/components/StepWizard/StepWizard';
+import AccountEmailInfo from './AccountEmail';
 import LicenseDetails from './LicenseDetails';
 import SelectSubscription from './SelectSubscription';
 
@@ -27,7 +30,7 @@ export type CreateLicenseForm = {
 };
 
 const CreateLicense = () => {
-	const [step, setStep] = useState<any>(StepCreateLicense.SUBSCRIPTION);
+	const [step, setStep] = useState<string>(StepCreateLicense.SUBSCRIPTION);
 
 	const {setValue, watch} = useForm<CreateLicenseForm>({
 		defaultValues: {
@@ -63,52 +66,31 @@ const CreateLicense = () => {
 		},
 	};
 
-	const cartUtil: any = {
-		cart: {
-			id: undefined,
+	const subscriptionDataInfo: any = {
+		cartUtil: {
+			cart: {
+				id: undefined,
+			},
+		},
+		product: {
+			attachments: [],
+			name: {en_US: 'Test Joana Product'},
+			productSpecifications: [],
+			skus: [
+				{
+					sku: 'TESTFREEPRODUCTSKU',
+					skuOptions: [],
+				},
+			],
+		},
+		productCreatorAccount: {
+			logoURL: null,
+			name: 'Joana',
+		},
+		userAccount: {
+			emailAddress: 'joana@liferay.com',
 		},
 	};
-
-	const productCreatorAccount: any = {
-		name: 'Joana',
-	};
-
-	const product: any = {
-		attachments: [],
-		name: {en_US: 'Test Joana Product'},
-		productSpecifications: [],
-		skus: [
-			{
-				sku: 'TESTFREEPRODUCTSKU',
-				skuOptions: [],
-			},
-		],
-	};
-
-	const userAccount: any = {
-		emailAddress: 'joana@liferay.com',
-	};
-
-	const AccountEmailInfo = () => (
-		<div className="align-items-center d-flex">
-			<div className="account-banner-name-text align-items-end d-flex flex-column m-2">
-				<strong>{productCreatorAccount?.name}</strong>
-
-				<div className="account-banner-email-text">
-					{userAccount?.emailAddress}
-				</div>
-			</div>
-
-			<ClaySticker shape="circle" size="sm">
-				<ClaySticker.Image
-					alt="placeholder"
-					height="24"
-					src={productCreatorAccount?.logoURL ?? emptyPictureIcon}
-					width="24"
-				/>
-			</ClaySticker>
-		</div>
-	);
 
 	const ExtendBanner = () => (
 		<>
@@ -137,15 +119,22 @@ const CreateLicense = () => {
 			<div className="w-100">
 				<ProductCard
 					ExtendBanner={ExtendBanner}
-					RightSideBanner={AccountEmailInfo}
-					cartUtil={cartUtil}
-					creatorAccount={productCreatorAccount}
+					RightSideBanner={() => (
+						<AccountEmailInfo
+							productCreatorAccount={
+								subscriptionDataInfo.productCreatorAccount
+							}
+							userAccount={subscriptionDataInfo.userAccount}
+						/>
+					)}
+					cartUtil={subscriptionDataInfo.cartUtil}
+					creatorAccount={subscriptionDataInfo.productCreatorAccount}
 					isSelectSubscription={true}
-					product={product}
+					product={subscriptionDataInfo.product}
 					showExtendBanner={
 						step === StepCreateLicense.LICENSE_KEY_DETAILS
 					}
-					userAccount={userAccount}
+					userAccount={subscriptionDataInfo.userAccount}
 				/>
 			</div>
 

@@ -421,6 +421,111 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-195025. Using Keyboard navigation is possible to click on the new added Preview button. The screen reader should announce Preview Success/Error Notification for Preview button."
+	@priority = 3
+	test PreviewNotification {
+		property custom.properties = "feature.flag.LPS-187846=true";
+
+		task ("Given a page creator has a content page with a Button fragment mapped to a standalone action") {
+			for (var objectName : list "Question,Student") {
+				ObjectAdmin.addObjectViaAPI(
+					labelName = ${objectName},
+					objectName = ${objectName},
+					pluralLabelName = "${objectName}s");
+
+				ObjectAdmin.addObjectFieldViaAPI(
+					fieldBusinessType = "Text",
+					fieldLabelName = "Name",
+					fieldName = "name",
+					fieldType = "String",
+					isRequired = "false",
+					objectName = ${objectName});
+
+				ObjectAdmin.publishObjectViaAPI(objectName = ${objectName});
+			}
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Student");
+
+			ObjectAdmin.goToActionsTab();
+
+			ObjectAdmin.addObjectActionViaUI(
+				actionLabel = "Submit",
+				active = "true",
+				errorMessage = "You don't have permissions.",
+				fieldName = "Name",
+				inputExpressionValue = "name",
+				inputMethod = "false",
+				objectLabel = "Question",
+				thenAction = "Add an Object Entry",
+				whenAction = "Standalone");
+
+			var objectEntryId = ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "name",
+				objectName = "Student",
+				value = "Jack");
+
+			JSONLayout.addPublicLayout(
+				groupName = ${randomSiteName},
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = ${randomSiteName});
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Button");
+
+			PageEditorAction.gotoEditableFieldAction(
+				className = "btn",
+				fragmentName = "Button",
+				id = "action");
+
+			PageEditorMapping.mapEditableFieldToAsset(
+				entryTitle = ${objectEntryId},
+				navItem = "Students",
+				rowItem = "//*[@data-qa-id='row'][contains(.,'${objectEntryId}')]");
+		}
+
+		task ("When the page creator enables notification") {
+			PageEditor.configureFragment(
+				action = "Submit",
+				errorInteraction = "Show Notification",
+				errorText = "You don't have permissions.",
+				successInteraction = "Show Notification",
+				successText = "We are glad to receive your Form!");
+		}
+
+		task ("Then the page creator could preview notification via keyboard") {
+			KeyPress(
+				key_text = "Success Text",
+				locator1 = "TextInput#ANY",
+				value1 = "\TAB");
+
+			KeyPress(
+				ariaLabel = "Preview Success Notification",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL",
+				value1 = "\ENTER");
+
+			Alert.viewSuccessMessageText(successMessage = "We are glad to receive your Form!");
+
+			KeyPress(
+				key_text = "Error Text",
+				locator1 = "TextInput#ANY",
+				value1 = "\TAB");
+
+			KeyPress(
+				ariaLabel = "Preview Error Notification",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL",
+				value1 = "\ENTER");
+
+			Alert.viewErrorMessage(errorMessage = "You don't have permissions.");
+		}
+	}
+
 	@description = "This is a test for LPS-165776. The page creator could reorder fragments on page editor via Browser panel with keyboard."
 	@priority = 5
 	test ReorderElements {

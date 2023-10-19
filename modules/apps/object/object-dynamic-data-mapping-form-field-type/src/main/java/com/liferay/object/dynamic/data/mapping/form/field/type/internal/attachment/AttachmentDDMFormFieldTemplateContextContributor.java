@@ -152,13 +152,16 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 	}
 
 	private long _getGroupId(
+		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		long groupId = GetterUtil.getLong(
-			ddmFormFieldRenderingContext.getProperty("groupId"));
+		if (GetterUtil.getBoolean(ddmFormField.getProperty("groupAware"))) {
+			long groupId = GetterUtil.getLong(
+				ddmFormFieldRenderingContext.getProperty("groupId"));
 
-		if (groupId != 0) {
-			return groupId;
+			if (groupId != 0) {
+				return groupId;
+			}
 		}
 
 		HttpServletRequest httpServletRequest =
@@ -228,7 +231,7 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 
 		if (Objects.equals(fileSource, "documentsAndMedia")) {
 			return _getItemSelectorURL(
-				_getGroupId(ddmFormFieldRenderingContext),
+				_getGroupId(ddmFormField, ddmFormFieldRenderingContext),
 				ddmFormFieldRenderingContext.getPortletNamespace(),
 				requestBackedPortletURLFactory);
 		}

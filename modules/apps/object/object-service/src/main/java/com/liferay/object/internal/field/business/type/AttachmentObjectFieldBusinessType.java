@@ -14,6 +14,9 @@ import com.liferay.object.field.render.ObjectFieldRenderingContext;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
+import com.liferay.object.scope.ObjectScopeProvider;
+import com.liferay.object.scope.ObjectScopeProviderRegistry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -94,6 +97,19 @@ public class AttachmentObjectFieldBusinessType
 			ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH);
 
 		return HashMapBuilder.<String, Object>put(
+			"groupAware",
+			() -> {
+				ObjectDefinition objectDefinition =
+					_objectDefinitionLocalService.getObjectDefinition(
+						objectField.getObjectDefinitionId());
+
+				ObjectScopeProvider objectScopeProvider =
+					_objectScopeProviderRegistry.getObjectScopeProvider(
+						objectDefinition.getScope());
+
+				return objectScopeProvider.isGroupAware();
+			}
+		).put(
 			"objectFieldId", objectField.getObjectFieldId()
 		).put(
 			"portletId", objectFieldRenderingContext.getPortletId()
@@ -224,5 +240,11 @@ public class AttachmentObjectFieldBusinessType
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 
 }

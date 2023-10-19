@@ -9,20 +9,20 @@ import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.CollatorUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
@@ -32,14 +32,10 @@ import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.taglib.internal.security.permission.resource.DDMTemplatePermission;
 import com.liferay.template.taglib.internal.servlet.ServletContextUtil;
 
-import java.text.Collator;
-
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -94,36 +90,8 @@ public class TemplateSelectorTag extends IncludeTag {
 		return themeDisplay.getScopeGroupId();
 	}
 
-	public List<Map<String, Object>> getDisplayStyles() {
-		List<Map<String, Object>> displayStyles = new ArrayList<>();
-
-		HttpServletRequest httpServletRequest = getRequest();
-
-		if (_displayStyles != null) {
-			for (String style : _displayStyles) {
-				displayStyles.add(
-					HashMapBuilder.<String, Object>put(
-						"label", LanguageUtil.get(httpServletRequest, style)
-					).put(
-						"value", style
-					).build());
-			}
-		}
-
-		if (isShowEmptyOption()) {
-			displayStyles.add(
-				HashMapBuilder.<String, Object>put(
-					"label", LanguageUtil.get(httpServletRequest, "default")
-				).put(
-					"value", "default"
-				).build());
-		}
-
-		displayStyles.sort(
-			Comparator.comparing(
-				displayStyle -> (String)displayStyle.get("label")));
-
-		return displayStyles;
+	public List<String> getDisplayStyles() {
+		return _displayStyles;
 	}
 
 	public String getRefreshURL() {
@@ -203,117 +171,78 @@ public class TemplateSelectorTag extends IncludeTag {
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		setNamespacedAttribute(
 			httpServletRequest, "templateSelectorProps",
-			_getTemplateSelectorProps(httpServletRequest));
+			HashMapBuilder.<String, Object>put(
+				"displayStyle",
+				() -> {
+					String displayStyle = getDisplayStyle();
+
+					if (Validator.isNull(displayStyle) && isShowEmptyOption()) {
+						return "default";
+					}
+
+					return displayStyle;
+				}
+			).put(
+				"displayStyleGroupId",
+				() -> {
+					DDMTemplate portletDisplayDDMTemplate =
+						getPortletDisplayDDMTemplate();
+
+					if (portletDisplayDDMTemplate != null) {
+						return portletDisplayDDMTemplate.getGroupId();
+					}
+
+					return getDisplayStyleGroupId();
+				}
+			).put(
+				"items", _getItemsJSONArray(httpServletRequest)
+			).build());
 	}
 
-	private Map<String, List<Map<String, Object>>> _getDDMTemplates(
-		HttpServletRequest httpServletRequest) {
+	private JSONArray _getDDMTemplatesJSONArray(
+		long groupId, Locale locale, PermissionChecker permissionChecker) {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		JSONArray ddmTemplatesJSONArray = JSONFactoryUtil.createJSONArray();
 
-		try {
-			List<DDMTemplate> ddmTemplates =
-				DDMTemplateLocalServiceUtil.getTemplates(
-					_getGroupIds(themeDisplay.getScopeGroup()),
-					PortalUtil.getClassNameId(getClassName()), 0L);
+		List<DDMTemplate> ddmTemplates = ListUtil.sort(
+			DDMTemplateLocalServiceUtil.getTemplates(
+				groupId, PortalUtil.getClassNameId(getClassName()), 0L),
+			Comparator.comparing(
+				ddmTemplate -> ddmTemplate.getName(locale),
+				String::compareToIgnoreCase));
 
-			ddmTemplates = ListUtil.filter(
-				ddmTemplates,
-				ddmTemplate -> {
-					try {
-						if (!DDMTemplatePermission.contains(
-								themeDisplay.getPermissionChecker(),
-								ddmTemplate.getTemplateId(), ActionKeys.VIEW) ||
-							!DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY.equals(
-								ddmTemplate.getType())) {
+		for (DDMTemplate ddmTemplate : ddmTemplates) {
+			try {
+				if (!DDMTemplatePermission.contains(
+						permissionChecker, ddmTemplate.getTemplateId(),
+						ActionKeys.VIEW) ||
+					!DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY.equals(
+						ddmTemplate.getType())) {
 
-							return false;
-						}
-					}
-					catch (Exception exception) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(exception);
-						}
-
-						return false;
-					}
-
-					return true;
-				});
-
-			List<Map<String, Object>> ddmTemplatesValues = new ArrayList<>();
-
-			for (DDMTemplate ddmTemplate : ddmTemplates) {
-				Group group = GroupLocalServiceUtil.fetchGroup(
-					ddmTemplate.getGroupId());
-
-				ddmTemplatesValues.add(
-					HashMapBuilder.<String, Object>put(
-						"groupId", ddmTemplate.getGroupId()
-					).put(
-						"label",
-						ddmTemplate.getName(themeDisplay.getLocale())
-					).put(
-						"siteName",
-						StringUtil.toLowerCase(group.getDescriptiveName())
-					).put(
-						"value",
-						PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
-							ddmTemplate.getTemplateKey()
-					).build());
-			}
-
-			Collator collator = CollatorUtil.getInstance(
-				themeDisplay.getLocale());
-
-			ddmTemplatesValues.sort(
-				(map1, map2) -> {
-					int siteNameComparison = collator.compare(
-						MapUtil.getString(map1, "siteName"),
-						MapUtil.getString(map2, "siteName"));
-
-					if (siteNameComparison == 0) {
-						return collator.compare(
-							MapUtil.getString(map1, "label"),
-							MapUtil.getString(map2, "label"));
-					}
-
-					return siteNameComparison;
-				});
-
-			Map<String, List<Map<String, Object>>> ddmTemplatesBySiteName =
-				new HashMap<>();
-
-			for (Map<String, Object> ddmTemplate : ddmTemplatesValues) {
-				String siteName = (String)ddmTemplate.get("siteName");
-
-				if (ddmTemplatesBySiteName.containsKey(siteName)) {
-					List<Map<String, Object>> innerList =
-						ddmTemplatesBySiteName.get(siteName);
-
-					innerList.add(ddmTemplate);
-				}
-				else {
-					ddmTemplatesBySiteName.put(
-						siteName, ListUtil.fromArray(ddmTemplate));
+					continue;
 				}
 			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
 
-			return TreeMapBuilder.<String, List<Map<String, Object>>>create(
-				String.CASE_INSENSITIVE_ORDER
-			).putAll(
-				ddmTemplatesBySiteName
-			).build();
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
+				continue;
 			}
 
-			return new TreeMap<>();
+			ddmTemplatesJSONArray.put(
+				JSONUtil.put(
+					"groupId", ddmTemplate.getGroupId()
+				).put(
+					"label", ddmTemplate.getName(locale)
+				).put(
+					"value",
+					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+						ddmTemplate.getTemplateKey()
+				));
 		}
+
+		return ddmTemplatesJSONArray;
 	}
 
 	private long[] _getGroupIds(Group group) {
@@ -334,53 +263,85 @@ public class TemplateSelectorTag extends IncludeTag {
 		return PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId);
 	}
 
-	private Map<String, Object> _getTemplateSelectorProps(
+	private JSONArray _getItemsJSONArray(
 		HttpServletRequest httpServletRequest) {
 
-		Map<String, List<Map<String, Object>>> ddmTemplates = _getDDMTemplates(
-			httpServletRequest);
+		JSONArray itemsJSONArray = JSONFactoryUtil.createJSONArray();
 
-		List<Map<String, Object>> getDisplayStyles = getDisplayStyles();
+		if ((_displayStyles != null) || isShowEmptyOption()) {
+			itemsJSONArray.put(
+				JSONUtil.put(
+					"items",
+					() -> {
+						JSONArray displayStylesJSONArray =
+							JSONFactoryUtil.createJSONArray();
 
-		List<Map<String, Object>> templateSelectorItems = new ArrayList<>();
+						List<String> displayStyles = new ArrayList<>();
 
-		if (!getDisplayStyles.isEmpty()) {
-			templateSelectorItems.add(
-				HashMapBuilder.<String, Object>put(
-					"items", getDisplayStyles
+						if (_displayStyles != null) {
+							displayStyles.addAll(_displayStyles);
+						}
+
+						if (isShowEmptyOption()) {
+							displayStyles.add("default");
+						}
+
+						for (String displayStyle :
+								ListUtil.sort(displayStyles)) {
+
+							displayStylesJSONArray.put(
+								JSONUtil.put(
+									"label",
+									LanguageUtil.get(
+										httpServletRequest, displayStyle)
+								).put(
+									"value", displayStyle
+								));
+						}
+
+						return displayStylesJSONArray;
+					}
 				).put(
 					"label", LanguageUtil.get(httpServletRequest, "default")
-				).build());
+				));
 		}
 
-		for (Map.Entry<String, List<Map<String, Object>>> ddmTemplate :
-				ddmTemplates.entrySet()) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-			templateSelectorItems.add(
-				HashMapBuilder.<String, Object>put(
-					"items", ddmTemplate.getValue()
-				).put(
-					"label", ddmTemplate.getKey()
-				).build());
-		}
+		for (long groupId : _getGroupIds(themeDisplay.getScopeGroup())) {
+			Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
-		return HashMapBuilder.<String, Object>put(
-			"displayStyle", getDisplayStyle()
-		).put(
-			"displayStyleGroupId",
-			() -> {
-				DDMTemplate portletDisplayDDMTemplate =
-					getPortletDisplayDDMTemplate();
-
-				if (portletDisplayDDMTemplate != null) {
-					return portletDisplayDDMTemplate.getGroupId();
-				}
-
-				return getDisplayStyleGroupId();
+			if (group == null) {
+				continue;
 			}
-		).put(
-			"items", templateSelectorItems
-		).build();
+
+			JSONArray ddmTempaltesJSONArray = _getDDMTemplatesJSONArray(
+				groupId, themeDisplay.getLocale(),
+				themeDisplay.getPermissionChecker());
+
+			if (ddmTempaltesJSONArray.length() <= 0) {
+				continue;
+			}
+
+			try {
+				itemsJSONArray.put(
+					JSONUtil.put(
+						"items", ddmTempaltesJSONArray
+					).put(
+						"label",
+						group.getDescriptiveName(themeDisplay.getLocale())
+					));
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
+			}
+		}
+
+		return itemsJSONArray;
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE =

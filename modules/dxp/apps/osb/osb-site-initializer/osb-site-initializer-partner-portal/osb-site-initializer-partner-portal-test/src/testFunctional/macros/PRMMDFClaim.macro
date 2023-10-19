@@ -112,6 +112,8 @@ definition {
 
 		Button.click(button = "See MDF Home");
 
+		PRMNavigator.openSitePage(pageName = "MDF Requests");
+
 		WaitForPageLoad();
 
 		PRMMDFRequest.goToMDF(campaignName = "Campaign Name 1");

@@ -38,6 +38,12 @@ public class NotificationContextBuilder {
 		return this;
 	}
 
+	public NotificationContextBuilder groupId(long groupId) {
+		_notificationContext.setGroupId(groupId);
+
+		return this;
+	}
+
 	public NotificationContextBuilder notificationTemplate(
 		NotificationTemplate notificationTemplate) {
 

@@ -47,6 +47,10 @@ public class NotificationContext {
 		return _fileEntryIds;
 	}
 
+	public long getGroupId() {
+		return _groupId;
+	}
+
 	public NotificationQueueEntry getNotificationQueueEntry() {
 		return _notificationQueueEntry;
 	}
@@ -103,6 +107,10 @@ public class NotificationContext {
 		_fileEntryIds = fileEntryIds;
 	}
 
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
 	public void setNotificationQueueEntry(
 		NotificationQueueEntry notificationQueueEntry) {
 
@@ -148,6 +156,7 @@ public class NotificationContext {
 	private long _classPK;
 	private String _externalReferenceCode;
 	private List<Long> _fileEntryIds;
+	private long _groupId;
 	private NotificationQueueEntry _notificationQueueEntry;
 	private NotificationRecipient _notificationRecipient;
 	private List<NotificationRecipientSetting> _notificationRecipientSettings;

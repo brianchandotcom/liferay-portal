@@ -74,6 +74,8 @@ public class NotificationTemplateObjectActionExecutorImpl
 				GetterUtil.getLong(termValues.get("id"))
 			).externalReferenceCode(
 				GetterUtil.getString(termValues.get("externalReferenceCode"))
+			).groupId(
+				GetterUtil.getLong(termValues.get("groupId"))
 			).notificationTemplate(
 				notificationTemplate
 			).termValues(

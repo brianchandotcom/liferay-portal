@@ -46,6 +46,15 @@
 		"to": "addCategory(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#)"
 	},
 	{
+		"classNames": [
+			"CommercePriceListLocalService",
+			"CommercePriceListLocalServiceUtil"
+		],
+		"from": "fetchByExternalReferenceCode(long, String)",
+		"issueKey": "LPS-196611",
+		"to": "fetchByExternalReferenceCode(param#1#, param#0#)"
+	},
+	{
 		"from": "CommerceOrderConstants.PAYMENT_STATUS_AUTHORIZED",
 		"issueKey": "LPS-197623",
 		"newImports": [

@@ -26,29 +26,26 @@ definition {
 		}
 
 		task ("Employee user creates an organization") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "employee@liferay.com",
-				userLoginFullName = "Employee User");
-
-			EVPUtils.gotoEVP();
-
-			EVPOrganization.goToCreateOrganization();
-
-			EVPOrganization.fillOrganizationForm(
+			var organizationId = JSONEVP.createOrganization(
+				accountOwnerName = "User 4",
 				bankingInfo = "Bank Test",
 				city = "City Test",
-				contactEmail = "test@liferay.com",
+				contactEmail = "OrganizationTest@liferay.com",
 				contactName = "Contact Test",
 				contactPhone = 12345,
 				country = "Country Test",
-				done = "true",
+				emailAddress = "employee@liferay.com",
+				key_status = "awaitingApprovalOnEvp",
 				organizationName = "Organization Test",
 				organizationSite = "www.test.com.br",
 				smallDescription = "Description Test",
 				state = "State Test",
+				status = "Awaiting Approval On EVP",
 				street = "Street Test",
 				taxId = 12345,
 				zipCode = "12.345-67");
+
+			EVPUtils.gotoEVP();
 		}
 	}
 

@@ -2798,6 +2798,20 @@ plugins.includes=</echo>
 				</if>
 
 				<if>
+					<available file="${zip.executable.dir}/../glowroot" />
+					<then>
+						<copy
+							preservelastmodified="true"
+							todir="dist/${tstamp.value}/liferay-portal-${lp.version}/glowroot"
+						>
+							<fileset
+								dir="${zip.executable.dir}/../glowroot"
+							/>
+						</copy>
+					</then>
+				</if>
+
+				<if>
 					<available file="${zip.executable.dir}/../osgi" />
 					<then>
 						<copy

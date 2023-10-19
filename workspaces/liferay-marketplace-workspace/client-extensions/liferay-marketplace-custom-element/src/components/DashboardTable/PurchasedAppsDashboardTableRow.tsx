@@ -13,6 +13,7 @@ import DropDown from '@clayui/drop-down/lib/DropDown';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 
+import {OrderStatus} from '../../enums/OrderStatus';
 import {orderType} from '../../enums/orderType';
 import {PurchasedAppProps} from '../../pages/PurchasedAppsDashboard/PurchasedAppsDashboardOutlet';
 import {showAppImage} from '../../utils/util';
@@ -39,7 +40,8 @@ export function PurchasedAppsDashboardTableRow({
 		virtualURL,
 	} = item;
 
-	const orderStatusIsNotCompleted = provisioningLabel !== 'completed';
+	const orderStatusIsNotCompleted =
+		provisioningLabel !== OrderStatus.COMPLETED;
 
 	return (
 		<ClayTable.Row>
@@ -113,11 +115,12 @@ export function PurchasedAppsDashboardTableRow({
 							'dashboard-table-row-provisioning-icon',
 							{
 								'dashboard-table-row-provisioning-icon-completed':
-									provisioningLabel === 'completed',
+									provisioningLabel === OrderStatus.COMPLETED,
 								'dashboard-table-row-provisioning-icon-pending':
-									provisioningLabel === 'pending',
+									provisioningLabel === OrderStatus.PENDING,
 								'dashboard-table-row-provisioning-icon-processing':
-									provisioningLabel === 'processing',
+									provisioningLabel ===
+									OrderStatus.PROCESSING,
 							}
 						)}
 						symbol="circle"

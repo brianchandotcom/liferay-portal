@@ -144,7 +144,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -2007,11 +2006,11 @@ public class DefaultObjectEntryManagerImplTest
 
 		AccountEntry accountEntry1 = _addAccountEntry();
 
-		_addAccountRestrictedObjectEntryHierarchy(accountEntry1);
+		_createObjectEntryTree(accountEntry1);
 
 		AccountEntry accountEntry2 = _addAccountEntry();
 
-		_addAccountRestrictedObjectEntryHierarchy(accountEntry2);
+		_createObjectEntryTree(accountEntry2);
 
 		_user = _addUser();
 
@@ -2834,8 +2833,8 @@ public class DefaultObjectEntryManagerImplTest
 
 		AccountEntry accountEntry1 = _addAccountEntry();
 
-		Map<Long, ObjectEntry> objectEntries =
-			_addAccountRestrictedObjectEntryHierarchy(accountEntry1);
+		Map<Long, ObjectEntry> objectEntries = _createObjectEntryTree(
+			accountEntry1);
 
 		_addResourcePermission(
 			_rootObjectDefinition, ActionKeys.VIEW, _buyerRole);
@@ -3178,74 +3177,6 @@ public class DefaultObjectEntryManagerImplTest
 			accountEntry.getAccountEntryId(), organization.getOrganizationId());
 	}
 
-	private Map<Long, ObjectEntry> _addAccountRestrictedObjectEntryHierarchy(
-			AccountEntry accountEntry)
-		throws Exception {
-
-		Iterator<Node> iterator = _tree.iterator();
-
-		Node rootNode = iterator.next();
-
-		Map<Long, ObjectEntry> objectEntries =
-			HashMapBuilder.<Long, ObjectEntry>put(
-				rootNode.getPrimaryKey(),
-				_defaultObjectEntryManager.addObjectEntry(
-					_simpleDTOConverterContext,
-					objectDefinitionLocalService.getObjectDefinition(
-						rootNode.getPrimaryKey()),
-					new ObjectEntry() {
-						{
-							properties = HashMapBuilder.<String, Object>put(
-								"r_oneToManyRelationshipName2_accountEntryId",
-								accountEntry.getAccountEntryId()
-							).build();
-						}
-					},
-					ObjectDefinitionConstants.SCOPE_COMPANY)
-			).build();
-
-		while (iterator.hasNext()) {
-			Node node = iterator.next();
-
-			objectEntries.put(
-				node.getPrimaryKey(),
-				_defaultObjectEntryManager.addObjectEntry(
-					_simpleDTOConverterContext,
-					objectDefinitionLocalService.getObjectDefinition(
-						node.getPrimaryKey()),
-					new ObjectEntry() {
-						{
-							properties = HashMapBuilder.<String, Object>put(
-								() -> {
-									ObjectRelationship objectRelationship =
-										_objectRelationshipLocalService.
-											getObjectRelationship(
-												node.getEdge(
-												).getObjectRelationshipId());
-
-									ObjectField objectField =
-										objectFieldLocalService.getObjectField(
-											objectRelationship.
-												getObjectFieldId2());
-
-									return objectField.getName();
-								},
-								() -> {
-									ObjectEntry objectEntry = objectEntries.get(
-										node.getParentNode(
-										).getPrimaryKey());
-
-									return objectEntry.getId();
-								}
-							).build();
-						}
-					},
-					ObjectDefinitionConstants.SCOPE_COMPANY));
-		}
-
-		return objectEntries;
-	}
-
 	private void _addAggregationObjectField(
 			String argumentObjectFieldName, String functionName,
 			long objectDefinitionId, String objectFieldName,
@@ -3584,6 +3515,34 @@ public class DefaultObjectEntryManagerImplTest
 
 		return objectDefinitionLocalService.publishCustomObjectDefinition(
 			adminUser.getUserId(), objectDefinition.getObjectDefinitionId());
+	}
+
+	private Tree _createObjectEntryTree(AccountEntry accountEntry)
+		throws Exception {
+
+		Tree tree = TreeTestUtil.createObjectEntryTree(
+			StringPool.BLANK, _objectEntryLocalService, objectFieldLocalService,
+			_rootObjectDefinition.getObjectDefinitionId(),
+			_objectRelationshipLocalService, _treeFactory);
+
+		Node node = tree.getRootNode();
+
+		_objectEntryLocalService.updateObjectEntry(
+			adminUser.getUserId(), node.getPrimaryKey(),
+			HashMapBuilder.<String, Serializable>put(
+				() -> {
+					ObjectField objectField =
+						objectFieldLocalService.getObjectField(
+							_rootObjectDefinition.
+								getAccountEntryRestrictedObjectFieldId());
+
+					return objectField.getName();
+				},
+				accountEntry.getAccountEntryId()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		return tree;
 	}
 
 	private ObjectFieldSetting _createObjectFieldSetting(

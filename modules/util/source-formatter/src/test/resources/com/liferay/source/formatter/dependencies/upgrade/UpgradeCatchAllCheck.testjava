@@ -44,6 +44,11 @@ public class UpgradeCatchAllCheck {
 		).getCode();
 	}
 
+	public void method(HttpServletRequest httpServletRequest) {
+		_commerceAccountHelper.getCurrentCommerceAccount(httpServletRequest);
+		_commerceAccountHelper.getCurrentCommerceAccount(null);
+	}
+
 	public void method(
 		long cpDefinitionId, long cProductId, double priority, String type,
 		ServiceContext serviceContext) {
@@ -153,6 +158,9 @@ public class UpgradeCatchAllCheck {
 
 	@Reference
 	private AssetVocabularyService _assetVocabularyService;
+
+	@Reference
+    private CommerceAccountHelper _commerceAccountHelper;
 
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;

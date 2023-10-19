@@ -2347,12 +2347,6 @@ public interface PropsKeys {
 
 	public static final String SESSION_TIMEOUT = "session.timeout";
 
-	public static final String SESSION_TIMEOUT_AUTO_EXTEND =
-		"session.timeout.auto.extend";
-
-	public static final String SESSION_TIMEOUT_AUTO_EXTEND_OFFSET =
-		"session.timeout.auto.extend.offset";
-
 	public static final String SESSION_TIMEOUT_REDIRECT_ON_EXPIRE =
 		"session.timeout.redirect.on.expire";
 

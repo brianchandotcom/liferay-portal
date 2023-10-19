@@ -1,4 +1,14 @@
+task deployGlowroot
+
 dependencies {
 	compileInclude group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	compileInclude group: "org.glowroot", name: "glowroot-agent-plugin-api", version: "0.13.6"
+}
+
+deployGlowroot {
+	finalizedBy deploy
+}
+
+liferay {
+	deployDir = file("${liferayHome}/glowroot/plugins")
 }

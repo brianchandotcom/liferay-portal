@@ -313,5 +313,14 @@
 		"resourceName": "com.liferay.portal.kernel.model.Organization",
 		"roleName": "Organization User",
 		"scope": "3"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.expando.kernel.model.ExpandoColumn",
+		"roleName": "User",
+		"scope": "1"
 	}
 ]

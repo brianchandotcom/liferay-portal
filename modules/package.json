@@ -1,7 +1,7 @@
 {
 	"devDependencies": {
 		"@liferay/eslint-plugin": "1.5.0",
-		"@liferay/npm-scripts": "48.1.4",
+		"@liferay/npm-scripts": "49.0.0",
 		"@types/ckeditor4": "4.16.2",
 		"@types/codemirror": "^5.60.5",
 		"@types/react-router-dom": "^5.3.3",

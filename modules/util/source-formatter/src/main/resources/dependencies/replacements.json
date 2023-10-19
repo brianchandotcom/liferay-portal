@@ -104,6 +104,15 @@
 		"to": "getCurrentAccountEntry(0, param#0#)"
 	},
 	{
+		"classNames": [
+			"AccountGroupLocalService",
+			"AccountGroupLocalServiceUtil"
+		],
+		"from": "fetchCommerceAccountGroupByExternalReferenceCode(long, String)",
+		"issueKey": "LPS-196639",
+		"to": "fetchAccountGroupByExternalReferenceCode(param#1#, param#0#)"
+	},
+	{
 		"from": "CommerceOrderConstants.PAYMENT_STATUS_AUTHORIZED",
 		"issueKey": "LPS-197623",
 		"newImports": [

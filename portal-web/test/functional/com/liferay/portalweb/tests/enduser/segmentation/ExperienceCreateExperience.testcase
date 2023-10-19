@@ -4047,6 +4047,8 @@ definition {
 
 			PageEditor.publish();
 
+			ContentPages.gotoPageEditor();
+
 			PageEditor.addFragment(
 				collectionName = "Layout Elements",
 				fragmentName = "Container");

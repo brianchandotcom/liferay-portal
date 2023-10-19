@@ -649,6 +649,10 @@ definition {
 	}
 
 	macro gotoCategory {
+		WaitForElementPresent(
+			key_card = ${categoryName},
+			locator1 = "Card#CARD_TITLE");
+
 		Click(
 			key_card = ${categoryName},
 			locator1 = "Card#CARD_TITLE");

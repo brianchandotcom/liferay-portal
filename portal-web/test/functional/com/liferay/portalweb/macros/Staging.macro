@@ -772,7 +772,7 @@ definition {
 	}
 
 	macro gotoHistory {
-		while (IsElementNotPresent(locator1 = "Staging#HISTORY_BUTTON")) {
+		if (IsElementNotPresent(locator1 = "Staging#HISTORY_BUTTON")) {
 			Click(locator1 = "Icon#STAGING_BAR_VERTICAL_ELLIPSIS");
 		}
 

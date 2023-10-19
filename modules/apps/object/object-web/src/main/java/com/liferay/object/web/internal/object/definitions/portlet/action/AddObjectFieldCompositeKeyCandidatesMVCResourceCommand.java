@@ -70,20 +70,13 @@ public class AddObjectFieldCompositeKeyCandidatesMVCResourceCommand
 			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
 				objectFieldId);
 
-			Table<?> table = null;
-
 			try {
-				table = _objectFieldLocalService.getTable(
+				Table<?> table = _objectFieldLocalService.getTable(
 					objectDefinitionId, objectField.getName());
-			}
-			catch (PortalException portalException) {
-				SessionErrors.add(resourceRequest, portalException.getClass());
-			}
 
-			Column<?, ?> column = table.getColumn(
-				objectField.getDBColumnName());
+				Column<?, ?> column = table.getColumn(
+					objectField.getDBColumnName());
 
-			try {
 				long count = _objectEntryLocalService.getObjectEntriesCount(
 					0, objectDefinition, column.isNotNull());
 

@@ -83,6 +83,10 @@ definition {
 	}
 
 	macro answerQuestion {
+		WaitForElementPresent(
+			key_text = "Add Answer",
+			locator1 = "Button#ANY");
+
 		Click(
 			key_text = "Add Answer",
 			locator1 = "Button#ANY");

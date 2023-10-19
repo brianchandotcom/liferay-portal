@@ -205,11 +205,11 @@ definition {
 				groupName = "Guest",
 				titleField = "あなたの好きな日本料理は何ですか");
 
-			Questions.openToQuestionDetails(
-				layoutName = "questions-page",
-				localization = "true",
-				siteURLKey = "guest",
-				topicName = "質問トピック");
+			Navigator.gotoPage(pageName = "Questions Page");
+
+			Questions.gotoCategory(categoryName = "質問トピック");
+
+			Questions.gotoDetails(questionTitle = "あなたの好きな日本料理は何ですか");
 
 			Questions.answerQuestion(contentField = "私の好きな日本料理はフグ刺しと天ぷらです");
 
@@ -315,11 +315,11 @@ definition {
 		}
 
 		task ("When the user creates an answer with non-Latin characters and edits the answer") {
-			Questions.openToQuestionDetails(
-				layoutName = "questions-page",
-				localization = "true",
-				siteURLKey = "guest",
-				topicName = "質問トピック");
+			Navigator.gotoPage(pageName = "Questions Page");
+
+			Questions.gotoCategory(categoryName = "質問トピック");
+
+			Questions.gotoDetails(questionTitle = "あなたの好きな日本料理は何ですか");
 
 			Questions.answerQuestion(contentField = "私の好きな日本料理は焼肉と鮭の刺身です");
 

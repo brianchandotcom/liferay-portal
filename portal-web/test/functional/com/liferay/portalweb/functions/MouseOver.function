@@ -73,7 +73,7 @@ arguments[0].dispatchEvent(event);
 
 		selenium.waitForElementPresent();
 
-		selenium.waitForElementPresent("//script[contains(@src,'/o/frontend-js-loader-modules-extender/loader.js')]");
+		selenium.pause(1000);
 
 		selenium.mouseOver();
 

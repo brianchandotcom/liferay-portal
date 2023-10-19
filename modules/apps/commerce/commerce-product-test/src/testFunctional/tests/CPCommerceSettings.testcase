@@ -322,7 +322,7 @@ definition {
 
 			var link = selenium.getHtmlNodeText("//*[contains(text(),'${uuid}')][1]");
 
-			Open.openNoErrorNoSPARefresh(locator1 = ${link});
+			Open.openNoErrorNoSPARefresh(value1 = ${link});
 		}
 
 		task ("Then the default and translated category friendly URL are shown") {
@@ -399,7 +399,7 @@ definition {
 				}
 			}
 
-			Open.openNoErrorNoSPARefresh(locator1 = ${basePortalURL});
+			Open.openNoErrorNoSPARefresh(value1 = ${basePortalURL});
 		}
 	}
 
@@ -459,7 +459,7 @@ definition {
 
 			var link = selenium.getHtmlNodeText("//*[contains(text(),'${uuid}')][1]");
 
-			Open.openNoErrorNoSPARefresh(locator1 = ${link});
+			Open.openNoErrorNoSPARefresh(value1 = ${link});
 		}
 
 		task ("Then both the category and subcategoty URL are shown") {
@@ -470,7 +470,7 @@ definition {
 					locator1 = "CommerceEntry#CATEGORY_SITEMAP_URL");
 			}
 
-			Open.openNoErrorNoSPARefresh(locator1 = ${basePortalURL});
+			Open.openNoErrorNoSPARefresh(value1 = ${basePortalURL});
 		}
 	}
 

@@ -707,7 +707,7 @@ definition {
 
 			AssertHTMLSourceTextPresent.assertHTMLSourceTextPresentNoSPARefresh(value1 = "ds:Signature");
 
-			Open.openNoErrorNoSPARefresh(locator1 = "http://localhost:8080/group/guest/~/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
+			Open.openNoErrorNoSPARefresh(value1 = "http://localhost:8080/group/guest/~/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
 		}
 
 		task ("Disable IdP") {
@@ -748,7 +748,7 @@ definition {
 		}
 
 		task ("Assert http://www.w3.org/2001/04/xmldsig-more#rsa-sha256,http://www.w3.org/2001/04/xmldsig-more#rsa-sha384,http://www.w3.org/2001/04/xmldsig-more#rsa-sha512 not present in localhost:8080 HTML source text ") {
-			Open.openNoErrorNoSPARefresh(locator1 = "http://localhost:8080/c/portal/saml/metadata");
+			Open.openNoErrorNoSPARefresh(value1 = "http://localhost:8080/c/portal/saml/metadata");
 
 			for (var algorithm : list "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256,http://www.w3.org/2001/04/xmldsig-more#rsa-sha384,http://www.w3.org/2001/04/xmldsig-more#rsa-sha512") {
 				AssertHTMLSourceTextNotPresent.assertHTMLSourceTextNotPresentNoSPARefresh(value1 = "algorithm");
@@ -756,7 +756,7 @@ definition {
 		}
 
 		task ("Logout and open able.com:9080") {
-			Open.openNoErrorNoSPARefresh(locator1 = "http://localhost:8080/web/guest/home");
+			Open.openNoErrorNoSPARefresh(value1 = "http://localhost:8080/web/guest/home");
 
 			UserBar.signOut();
 

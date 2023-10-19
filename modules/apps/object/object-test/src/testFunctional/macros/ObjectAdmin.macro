@@ -253,6 +253,12 @@ definition {
 			ObjectField.checkToggleMandatory();
 		}
 
+		if (${acceptUniqueValuesOnly} == "true") {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Accept Unique Values Only",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
 		if (isSet(fieldPicklist)) {
 			Click(locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE");
 

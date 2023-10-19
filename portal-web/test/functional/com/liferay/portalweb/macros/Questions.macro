@@ -257,7 +257,23 @@ definition {
 		AssertElementNotPresent(locator1 = "Questions#SEARCH_RESULTS_CLEAR_BUTTON");
 	}
 
+	macro clickFilterAndOrderBy {
+		Click(
+			key_text = "Filter and Order",
+			locator1 = "Button#ANY");
+
+		Click(
+			key_option = ${option},
+			locator1 = "Questions#QUESTIONS_SELECT_FILTER");
+
+		Button.click(button = "Apply");
+	}
+
 	macro configureFilter {
+		WaitForElementPresent(
+			locator1 = "Questions#QUESTIONS_SELECT_FILTER",
+			value1 = ${filterBy});
+
 		Select(
 			locator1 = "Questions#QUESTIONS_SELECT_FILTER",
 			value1 = ${filterBy});

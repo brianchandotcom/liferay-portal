@@ -1756,7 +1756,7 @@ definition {
 				questionTitle = "Question 3",
 				votedCount = 0);
 
-			Questions.configureFilter(filterBy = "Most Voted");
+			Questions.clickFilterAndOrderBy(option = "Highest Score");
 
 			Questions.viewFilterResults(
 				lastQuestionTitle = "Question 1",
@@ -1875,31 +1875,23 @@ definition {
 			PortletEntry.publish();
 		}
 
-		task ("When the user select the filter 'Latest Edited'") {
+		task ("When the user select the filter 'No Answer'") {
 			Questions.openToQuestionsTopic(
 				layoutName = "questions-page",
 				siteURLKey = "guest",
 				topicName = "questions-test-category");
 
-			Questions.configureFilter(filterBy = "Latest Edited");
+			Questions.clickFilterAndOrderBy(option = "No Answer");
 		}
 
-		task ("Then he can see questions that had been edited lately") {
+		task ("Then he can see questions that had been No Answer") {
 			Questions.viewFilterResults(
 				lastQuestionTitle = "Question 2",
 				questionTitle = "Question 1 Edit");
 		}
 
 		task ("When the user select another kind of filters then he can see the expected results") {
-			Questions.configureFilter(filterBy = "Voted in the Last Week");
-
-			Questions.viewNoFilteredResult();
-
-			Questions.configureFilter(filterBy = "Voted in the Last Month");
-
-			Questions.viewNoFilteredResult();
-
-			Questions.configureFilter(filterBy = "Latest Created");
+			Questions.clickFilterAndOrderBy(option = "Most Frequent");
 
 			Questions.viewFilterResults(
 				lastQuestionTitle = "Question 1 Edit",

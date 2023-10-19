@@ -262,7 +262,7 @@
 </tr>
 <tr>
 	<td>QUESTIONS_SELECT_FILTER</td>
-	<td>//select[contains(@id,'questionsFilter')]</td>
+	<td>//div[contains(@class,'dropdown-menu')]//span[@class='custom-control-label'][normalize-space()='${key_option}']</td>
 	<td></td>
 </tr>
 <tr>

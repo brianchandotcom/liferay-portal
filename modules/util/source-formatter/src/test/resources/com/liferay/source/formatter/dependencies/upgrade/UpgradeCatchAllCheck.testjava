@@ -49,6 +49,10 @@ public class UpgradeCatchAllCheck {
 	}
 
 	public void method(long companyId, String externalReferenceCode) {
+		CommercePriceListLocalServiceUtil.fetchByExternalReferenceCode(companyId, externalReferenceCode);
+		_commercePriceListLocalService.fetchByExternalReferenceCode(1234, "externalReferenceCode");
+		_commercePriceListLocalService.fetchByExternalReferenceCode(companyId, externalReferenceCode);
+
 		CPInstanceLocalServiceUtil.fetchByExternalReferenceCode(1234, "1234");
 		CPInstanceLocalServiceUtil.fetchByExternalReferenceCode(companyId, externalReferenceCode);
 		CPInstanceLocalServiceUtil.fetchCPInstanceByExternalReferenceCode(1234, "1234");
@@ -78,6 +82,9 @@ public class UpgradeCatchAllCheck {
 
 	@Reference
 	private AssetVocabularyService _assetVocabularyService;
+
+	@Reference
+	private CommercePriceListLocalService _commercePriceListLocalService;
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;

@@ -106,23 +106,16 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 
 		String from = jsonObject.getString("from");
 
-		int periodIndex = from.indexOf(CharPool.PERIOD);
+		int index = from.indexOf(CharPool.PERIOD);
 
-		if (periodIndex != -1) {
+		if (index != -1) {
 			from = StringUtil.replace(from, CharPool.PERIOD, CharPool.POUND);
 		}
 		else {
 			sb.append(StringPool.POUND);
 		}
 
-		int parenthesisIndex = from.indexOf(CharPool.OPEN_PARENTHESIS);
-
-		if (parenthesisIndex != -1) {
-			sb.append(from.substring(0, parenthesisIndex));
-		}
-		else {
-			sb.append(from);
-		}
+		sb.append(from);
 
 		return sb.toString();
 	}

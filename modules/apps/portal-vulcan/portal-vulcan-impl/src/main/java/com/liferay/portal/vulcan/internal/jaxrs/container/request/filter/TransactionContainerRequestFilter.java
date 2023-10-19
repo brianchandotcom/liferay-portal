@@ -70,16 +70,20 @@ public class TransactionContainerRequestFilter
 
 			InterceptorChain interceptorChain = message.getInterceptorChain();
 
-			TransactionCleanupHandler transactionCleanupHandler =
-				new TransactionCleanupHandler(
-					interceptorChain.getFaultObserver(),
-					_transactionExecutor.start(_transactionAttributeAdapter));
+			TransactionCleanUpMessageObserver
+				transactionCleanUpMessageObserver =
+					new TransactionCleanUpMessageObserver(
+						interceptorChain.getFaultObserver(),
+						_transactionExecutor.start(
+							_transactionAttributeAdapter));
 
 			containerRequestContext.setProperty(
-				_TRANSACTION_CLEANUP_HANDLER, transactionCleanupHandler);
+				_TRANSACTION_CLEAN_UP_MESSAGE_OBSERVER,
+				transactionCleanUpMessageObserver);
 
-			interceptorChain.add(transactionCleanupHandler);
-			interceptorChain.setFaultObserver(transactionCleanupHandler);
+			interceptorChain.add(transactionCleanUpMessageObserver);
+			interceptorChain.setFaultObserver(
+				transactionCleanUpMessageObserver);
 		}
 	}
 
@@ -89,11 +93,12 @@ public class TransactionContainerRequestFilter
 			ContainerResponseContext containerResponseContext)
 		throws IOException {
 
-		TransactionCleanupHandler transactionCleanupHandler =
-			(TransactionCleanupHandler)containerRequestContext.getProperty(
-				_TRANSACTION_CLEANUP_HANDLER);
+		TransactionCleanUpMessageObserver transactionCleanUpMessageObserver =
+			(TransactionCleanUpMessageObserver)
+				containerRequestContext.getProperty(
+					_TRANSACTION_CLEAN_UP_MESSAGE_OBSERVER);
 
-		if (transactionCleanupHandler == null) {
+		if (transactionCleanUpMessageObserver == null) {
 			return;
 		}
 
@@ -101,19 +106,19 @@ public class TransactionContainerRequestFilter
 			containerResponseContext.getStatus());
 
 		if (family == Response.Status.Family.SUCCESSFUL) {
-			transactionCleanupHandler.commit();
+			transactionCleanUpMessageObserver.commit();
 		}
 		else {
-			transactionCleanupHandler.rollback(
+			transactionCleanUpMessageObserver.rollback(
 				StringBundler.concat(
 					"Rollback due to ", family, ": ",
 					containerResponseContext.getStatus()));
 		}
 	}
 
-	private static final String _TRANSACTION_CLEANUP_HANDLER =
+	private static final String _TRANSACTION_CLEAN_UP_MESSAGE_OBSERVER =
 		TransactionContainerRequestFilter.class.getName() +
-			"#TRANSACTION_CLEANUP_HANDLER";
+			"#TRANSACTION_CLEAN_UP_MESSAGE_OBSERVER";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		TransactionContainerRequestFilter.class);
@@ -129,7 +134,7 @@ public class TransactionContainerRequestFilter
 	private static final Set<String> _transactionRequiredMethodNames =
 		new HashSet<>(Arrays.asList("DELETE", "PATCH", "POST", "PUT"));
 
-	private static class TransactionCleanupHandler
+	private static class TransactionCleanUpMessageObserver
 		extends AbstractPhaseInterceptor implements MessageObserver {
 
 		public void commit() {
@@ -183,7 +188,7 @@ public class TransactionContainerRequestFilter
 			}
 		}
 
-		private TransactionCleanupHandler(
+		private TransactionCleanUpMessageObserver(
 			MessageObserver messageObserver,
 			TransactionStatusAdapter transactionStatusAdapter) {
 

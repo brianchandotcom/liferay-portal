@@ -122,6 +122,7 @@ public class TransactionContainerRequestFilterTest {
 				_getResponseCode(
 					"http://localhost:8080/o/test-vulcan/rollback/" +
 						group.getGroupId() + "?failInExceptionMapper=false"));
+
 			Assert.assertNotNull(
 				GroupLocalServiceUtil.getGroup(group.getGroupId()));
 
@@ -130,6 +131,7 @@ public class TransactionContainerRequestFilterTest {
 				_getResponseCode(
 					"http://localhost:8080/o/test-vulcan/rollback/" +
 						group.getGroupId() + "?failInExceptionMapper=true"));
+
 			Assert.assertNotNull(
 				GroupLocalServiceUtil.getGroup(group.getGroupId()));
 		}

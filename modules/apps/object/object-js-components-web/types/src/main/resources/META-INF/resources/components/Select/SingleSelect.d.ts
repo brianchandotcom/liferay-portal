@@ -4,7 +4,6 @@
  */
 
 import React, {Key, ReactElement} from 'react';
-import './index.scss';
 declare type SingleSelectOption = {
 	label?: string;
 	value?: string | number;

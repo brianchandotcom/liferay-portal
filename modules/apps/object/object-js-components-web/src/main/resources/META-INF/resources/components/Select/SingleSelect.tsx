@@ -7,8 +7,6 @@ import {Option, Picker} from '@clayui/core';
 import {FieldBase} from 'frontend-js-components-web';
 import React, {Key, ReactElement} from 'react';
 
-import './index.scss';
-
 type SingleSelectOption = {
 	label?: string;
 	value?: string | number;

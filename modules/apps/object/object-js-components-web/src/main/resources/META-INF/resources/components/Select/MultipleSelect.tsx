@@ -3,34 +3,46 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAutocomplete from '@clayui/autocomplete';
+import ClayDropDown from '@clayui/drop-down';
+import {ClayCheckbox} from '@clayui/form';
 import ClayMultiSelect from '@clayui/multi-select';
-import React, {useEffect, useState} from 'react';
+import {FieldBase} from 'frontend-js-components-web';
+import React, {FocusEvent, useEffect, useState} from 'react';
 
-import {BaseSelect, CustomItem, SelectProps} from './BaseSelect';
-import {CheckboxItem} from './CheckBoxItem';
-
-import './index.scss';
-
-interface IProps<T extends CustomItem<number | string> = CustomItem>
-	extends SelectProps {
-	options: T[];
+interface MultipleSelectProps {
+	className?: string;
+	disabled?: boolean;
+	error?: string;
+	feedbackMessage?: string;
+	id?: string;
+	label?: string;
+	onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
+	options: MultiSelectItem[];
+	placeholder?: string;
+	required?: boolean;
 	selectAllOption?: boolean;
-	setOptions: (options: T[]) => void;
-	setSelectAllChecked?: Function;
+	setOptions: (options: MultiSelectItem[]) => void;
 }
 
-type LabelValueObject = {
-	label?: string;
-	value?: string;
-};
-
-interface MultiSelectItem extends LabelValueObject {
+export interface MultiSelectItem extends LabelValueObject {
 	checked?: boolean;
 }
 
-export function MultipleSelect<
-	T extends CustomItem<number | string> = CustomItem
->({options, required, selectAllOption, setOptions, ...restProps}: IProps<T>) {
+export function MultipleSelect({
+	className,
+	disabled,
+	error,
+	feedbackMessage,
+	id,
+	label,
+	onBlur,
+	options,
+	placeholder,
+	required,
+	selectAllOption,
+	setOptions,
+}: MultipleSelectProps) {
 	const [selectAllChecked, setSelectAllChecked] = useState<boolean>(false);
 	const [dropdownActive, setDropdownActive] = useState<boolean>(false);
 	const [multiSelectItems, setMultiSelectItems] = useState<
@@ -70,27 +82,30 @@ export function MultipleSelect<
 	}, [options]);
 
 	return (
-		<BaseSelect
-			{...restProps}
-			dropdownActive={dropdownActive}
+		<FieldBase
+			className={className}
+			disabled={disabled}
+			errorMessage={error}
+			helpMessage={feedbackMessage}
+			id={id}
+			label={label}
 			required={required}
-			setDropdownActive={setDropdownActive}
-			trigger={
-				<ClayMultiSelect
+		>
+			<ClayAutocomplete onBlur={onBlur}>
+				<ClayMultiSelect<MultiSelectItem>
 					items={multiSelectItems as MultiSelectItem[]}
 					loadingState={4}
 					onClick={() => setDropdownActive((active) => !active)}
-					onInput={() => {}}
 					onItemsChange={(items: MultiSelectItem[]) => {
 						if (!items.length && setSelectAllChecked) {
 							setSelectAllChecked(false);
 						}
 						const newDropDownOptions = options?.map((option) => {
-							const ckeckedItem = items.find(
+							const checkedItem = items.find(
 								(item) => item.label === option.label
 							);
 
-							if (ckeckedItem) {
+							if (checkedItem) {
 								return {
 									...option,
 									checked: true,
@@ -109,54 +124,64 @@ export function MultipleSelect<
 						}
 					}}
 					onKeyDown={(event) => event.preventDefault()}
-					{...restProps}
+					placeholder={placeholder}
 				/>
-			}
-		>
-			<>
-				{selectAllOption && (
-					<CheckboxItem
-						checked={selectAllChecked}
-						label={Liferay.Language.get('select-all')}
-						onChange={({target: {checked}}) => {
-							setOptions(
-								options.map((option) => {
-									return {
-										...option,
-										checked,
-									};
-								})
-							);
-							setSelectAllChecked(checked);
-						}}
-					/>
-				)}
 
-				{options.map(({checked, label, value}) => (
-					<CheckboxItem
-						checked={checked}
-						key={value}
-						label={label}
-						onChange={({target: {checked}}) => {
-							setOptions(
-								options.map((option) =>
-									option.label === label &&
-									option.value === value
-										? {
-												...option,
-												checked,
-										  }
-										: option
-								)
-							);
+				<ClayAutocomplete.DropDown
+					active={dropdownActive}
+					alignmentByViewport
+					closeOnClickOutside
+					onActiveChange={setDropdownActive}
+				>
+					<ClayDropDown.ItemList>
+						{selectAllOption && (
+							<div className="dropdown-item">
+								<ClayCheckbox
+									checked={selectAllChecked}
+									label={Liferay.Language.get('select-all')}
+									onChange={({target: {checked}}) => {
+										setOptions(
+											options.map((option) => {
+												return {
+													...option,
+													checked,
+												};
+											})
+										);
+										setSelectAllChecked(checked);
+									}}
+								/>
+							</div>
+						)}
 
-							if (!checked) {
-								setSelectAllChecked(checked);
-							}
-						}}
-					/>
-				))}
-			</>
-		</BaseSelect>
+						{options.map(({checked, label, value}) => (
+							<div className="dropdown-item" key={value}>
+								<ClayCheckbox
+									checked={checked as boolean}
+									label={label as string}
+									onChange={({target: {checked}}) => {
+										setOptions(
+											options.map((option) =>
+												option.label === label &&
+												option.value === value
+													? {
+															...option,
+															checked,
+													  }
+													: option
+											)
+										);
+
+										if (!checked) {
+											setSelectAllChecked(checked);
+										}
+									}}
+								/>
+							</div>
+						))}
+					</ClayDropDown.ItemList>
+				</ClayAutocomplete.DropDown>
+			</ClayAutocomplete>
+		</FieldBase>
 	);
 }

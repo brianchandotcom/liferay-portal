@@ -3,24 +3,36 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-/// <reference types="react" />
-
-import {CustomItem, SelectProps} from './BaseSelect';
-import './index.scss';
-interface IProps<T extends CustomItem<number | string> = CustomItem>
-	extends SelectProps {
-	options: T[];
+import {FocusEvent} from 'react';
+interface MultipleSelectProps {
+	className?: string;
+	disabled?: boolean;
+	error?: string;
+	feedbackMessage?: string;
+	id?: string;
+	label?: string;
+	onBlur?: (event: FocusEvent<HTMLInputElement>) => void;
+	options: MultiSelectItem[];
+	placeholder?: string;
+	required?: boolean;
 	selectAllOption?: boolean;
-	setOptions: (options: T[]) => void;
-	setSelectAllChecked?: Function;
+	setOptions: (options: MultiSelectItem[]) => void;
 }
-export declare function MultipleSelect<
-	T extends CustomItem<number | string> = CustomItem
->({
+export interface MultiSelectItem extends LabelValueObject {
+	checked?: boolean;
+}
+export declare function MultipleSelect({
+	className,
+	disabled,
+	error,
+	feedbackMessage,
+	id,
+	label,
+	onBlur,
 	options,
+	placeholder,
 	required,
 	selectAllOption,
 	setOptions,
-	...restProps
-}: IProps<T>): JSX.Element;
+}: MultipleSelectProps): JSX.Element;
 export {};

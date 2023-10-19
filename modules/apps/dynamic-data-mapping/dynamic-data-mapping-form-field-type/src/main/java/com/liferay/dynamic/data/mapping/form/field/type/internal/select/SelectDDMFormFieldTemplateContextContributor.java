@@ -30,12 +30,14 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.CollatorUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -113,6 +115,22 @@ public class SelectDDMFormFieldTemplateContextContributor
 		).build();
 	}
 
+	protected List<Map<String, String>> alphabeticalOrder(
+		List<Map<String, String>> options, Locale locale) {
+
+		Collator collator = CollatorUtil.getInstance(locale);
+
+		options.sort(
+			(map1, map2) -> {
+				String label1 = map1.get("label");
+				String label2 = map2.get("label");
+
+				return collator.compare(label1, label2);
+			});
+
+		return options;
+	}
+
 	protected boolean getMultiple(
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
@@ -140,7 +158,20 @@ public class SelectDDMFormFieldTemplateContextContributor
 		List<Map<String, String>> objectFieldOptions = _getObjectFieldOptions(
 			ddmFormField, ddmFormFieldOptions, ddmFormFieldRenderingContext);
 
+		boolean alphabeticalOrder = GetterUtil.getBoolean(
+			ddmFormField.getProperty("alphabeticalOrder"));
+
 		if (ListUtil.isNotEmpty(objectFieldOptions)) {
+			String language = ServiceContextThreadLocal.getServiceContext(
+			).getLanguageId();
+
+			Locale newLocale = LocaleUtil.fromLanguageId(language);
+
+			if (alphabeticalOrder && (locale != newLocale)) {
+				objectFieldOptions = alphabeticalOrder(
+					objectFieldOptions, newLocale);
+			}
+
 			return objectFieldOptions;
 		}
 
@@ -168,19 +199,8 @@ public class SelectDDMFormFieldTemplateContextContributor
 				).build());
 		}
 
-		boolean alphabeticalOrder = GetterUtil.getBoolean(
-			ddmFormField.getProperty("alphabeticalOrder"));
-
 		if (alphabeticalOrder) {
-			Collator collator = CollatorUtil.getInstance(locale);
-
-			options.sort(
-				(map1, map2) -> {
-					String label1 = map1.get("label");
-					String label2 = map2.get("label");
-
-					return collator.compare(label1, label2);
-				});
+			options = alphabeticalOrder(options, locale);
 		}
 
 		return options;

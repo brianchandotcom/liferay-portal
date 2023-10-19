@@ -17,6 +17,7 @@ function showNotification(message, error = false) {
 
 export default function SavedContent({
 	contentName,
+	mySavedContentURL,
 	saved: initialSaved = false,
 	savedContentURL,
 }) {
@@ -31,18 +32,37 @@ export default function SavedContent({
 
 		fetch(savedContentURL)
 			.then((response) => response.json())
-			.then(({errorMessage, successMessage}) => {
+			.then(({errorMessage}) => {
 				if (errorMessage) {
 					showNotification(errorMessage, true);
 
 					return;
 				}
 
-				showNotification(successMessage);
+				const mySavedContentLink = `
+					<a href="${mySavedContentURL}" class="alert-link">${Liferay.Language.get(
+					'my-saved-content'
+				)}</a>
+				`.trim();
+
+				showNotification(
+					sub(
+						saved
+							? Liferay.Language.get(
+									'x-has-been-successfully-removed-from-x'
+							  )
+							: Liferay.Language.get('x-has-been-saved-in-x'),
+						contentName,
+						mySavedContentLink
+					)
+				);
 			})
-			.catch((error) => {
+			.catch(() => {
 				setSaved((saved) => !saved);
-				showNotification(error.message, true);
+				showNotification(
+					Liferay.Language.get('an-unexpected-error-occurred'),
+					true
+				);
 			})
 			.finally(() => {
 				setLoading(false);
@@ -75,6 +95,7 @@ export default function SavedContent({
 
 SavedContent.propTypes = {
 	contentName: PropTypes.string.isRequired,
+	mySavedContentURL: PropTypes.string.isRequired,
 	saved: PropTypes.bool,
 	savedContentURL: PropTypes.string.isRequired,
 };

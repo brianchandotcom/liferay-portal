@@ -17,7 +17,6 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,27 +26,6 @@ import jodd.util.Base64;
  * @author Michael Hashimoto
  */
 public class HttpRequestUtil {
-
-	public static Map<String, String> addRequestHeaders(
-		Map<String, String> requestHeaders, String header) {
-
-		if (requestHeaders == null) {
-			requestHeaders = new HashMap<>();
-		}
-
-		int i = header.indexOf("=");
-
-		if (i == -1) {
-			throw new IllegalArgumentException("Invalid header: " + header);
-		}
-
-		String key = header.substring(0, i);
-		String value = header.substring(i + 1);
-
-		requestHeaders.put(key, value);
-
-		return requestHeaders;
-	}
 
 	public static void assertResponseBody(
 		HttpResponse httpResponse, String expectedResponseBody) {

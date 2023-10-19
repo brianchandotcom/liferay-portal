@@ -41,7 +41,7 @@ public class UpgradeJavaGetLayoutDisplayPageProviderCheck
 			while (matcher.find()) {
 				if (!hasClassOrVariableName(
 						"LayoutDisplayPageProviderRegistry", javaMethodContent,
-						content, matcher.group())) {
+						content, fileName, matcher.group())) {
 
 					continue;
 				}

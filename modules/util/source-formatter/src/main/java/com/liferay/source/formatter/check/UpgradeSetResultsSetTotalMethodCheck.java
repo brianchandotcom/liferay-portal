@@ -27,20 +27,20 @@ public class UpgradeSetResultsSetTotalMethodCheck extends BaseFileCheck {
 			return content;
 		}
 
-		content = _removeSetTotal(content);
-		content = _replaceSetResults(content);
+		content = _removeSetTotal(content, fileName);
+		content = _replaceSetResults(content, fileName);
 
 		return content;
 	}
 
-	private String _removeSetTotal(String content) {
+	private String _removeSetTotal(String content, String fileName) {
 		String newContent = content;
 
 		Matcher setTotalMatcher = _setTotalPattern.matcher(content);
 
 		while (setTotalMatcher.find()) {
 			if (hasClassOrVariableName(
-					"SearchContainer", content, content,
+					"SearchContainer", content, content, fileName,
 					JavaSourceUtil.getMethodCall(
 						content, setTotalMatcher.start()))) {
 
@@ -52,7 +52,7 @@ public class UpgradeSetResultsSetTotalMethodCheck extends BaseFileCheck {
 		return newContent;
 	}
 
-	private String _replaceSetResults(String content) {
+	private String _replaceSetResults(String content, String fileName) {
 		String newContent = content;
 
 		Matcher setResultsMatcher = _setResultsPattern.matcher(content);
@@ -62,7 +62,8 @@ public class UpgradeSetResultsSetTotalMethodCheck extends BaseFileCheck {
 				content, setResultsMatcher.start());
 
 			if (hasClassOrVariableName(
-					"SearchContainer", content, content, methodCall)) {
+					"SearchContainer", content, content, fileName,
+					methodCall)) {
 
 				newContent = StringUtil.replace(
 					newContent, methodCall,

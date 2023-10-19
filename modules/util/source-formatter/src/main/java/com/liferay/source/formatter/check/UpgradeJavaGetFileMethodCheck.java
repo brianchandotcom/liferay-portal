@@ -49,7 +49,8 @@ public class UpgradeJavaGetFileMethodCheck extends BaseFileCheck {
 
 			if (methodCall.contains("DLFileEntryLocalServiceUtil") ||
 				hasClassOrVariableName(
-					"DLFileEntryLocalService", content, content, methodCall)) {
+					"DLFileEntryLocalService", content, content, fileName,
+					methodCall)) {
 
 				content = _formatMethodCall(
 					content, methodCall, matcher.group(1));

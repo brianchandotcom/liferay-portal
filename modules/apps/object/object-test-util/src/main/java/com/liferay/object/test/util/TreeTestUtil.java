@@ -216,6 +216,20 @@ public class TreeTestUtil {
 		}
 	}
 
+	public static void forEachNodeObjectEntry(
+			Iterator<Node> iterator,
+			ObjectEntryLocalService objectEntryLocalService,
+			UnsafeConsumer<ObjectEntry, Exception> unsafeConsumer)
+		throws Exception {
+
+		while (iterator.hasNext()) {
+			Node node = iterator.next();
+
+			unsafeConsumer.accept(
+				objectEntryLocalService.getObjectEntry(node.getPrimaryKey()));
+		}
+	}
+
 	public static ObjectRelationship getEdgeObjectRelationship(
 			ObjectDefinition objectDefinition,
 			ObjectRelationshipLocalService objectRelationshipLocalService,

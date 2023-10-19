@@ -71,5 +71,25 @@
 			"java",
 			"jsp"
 		]
+	},
+	{
+		"classNames": [
+			"CPInstanceLocalService",
+			"CPInstanceLocalServiceUtil",
+			"CPInstanceService",
+			"CPInstanceServiceUtil"
+		],
+		"from": "fetchByExternalReferenceCode(long, String)",
+		"issueKey": "LPS-197965",
+		"to": "fetchByExternalReferenceCode(param#1#, param#0#)"
+	},
+	{
+		"classNames": [
+			"CPInstanceLocalService",
+			"CPInstanceLocalServiceUtil"
+		],
+		"from": "fetchCPInstanceByExternalReferenceCode(long, String)",
+		"issueKey": "LPS-197965",
+		"to": "fetchCPInstanceByExternalReferenceCode(param#1#, param#0#)"
 	}
 ]

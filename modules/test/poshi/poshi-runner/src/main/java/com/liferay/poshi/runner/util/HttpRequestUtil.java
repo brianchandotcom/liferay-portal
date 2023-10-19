@@ -50,38 +50,40 @@ public class HttpRequestUtil {
 	}
 
 	public static void assertResponseBody(
-		HttpResponse httpResponse, String response) {
+		HttpResponse httpResponse, String expectedResponseBody) {
 
-		String responseBody = httpResponse.getResponseBody();
+		String actualResponseBody = httpResponse.getResponseBody();
 
-		if (!StringUtil.equals(responseBody, response)) {
+		if (!StringUtil.equals(actualResponseBody, expectedResponseBody)) {
 			throw new RuntimeException(
-				"Expected response code: " + response +
-					"\nActual response code: " + responseBody);
-		}
-	}
-
-	public static void assertResponseCode(
-		HttpResponse httpResponse, String statusCode) {
-
-		String responseCode = httpResponse.getStatusCode();
-
-		if (!StringUtil.equals(responseCode, statusCode)) {
-			throw new RuntimeException(
-				"Expected response code: " + statusCode +
-					"\nActual response code: " + responseCode);
+				"Expected response body: " + expectedResponseBody +
+					"\nActual response body: " + actualResponseBody);
 		}
 	}
 
 	public static void assertResponseDuration(
-		HttpResponse httpResponse, String responseDuration) {
+		HttpResponse httpResponse, String expectedResponseDuration) {
 
-		String responseTime = httpResponse.getResponseTime();
+		String actualResponseDuration = httpResponse.getDuration();
 
-		if (!StringUtil.equals(responseTime, responseDuration)) {
+		if (!StringUtil.equals(
+				actualResponseDuration, expectedResponseDuration)) {
+
 			throw new RuntimeException(
-				"Expected response code: " + responseDuration +
-					"\nActual response code: " + responseTime);
+				"Expected response duration: " + expectedResponseDuration +
+					"\nActual response duration: " + actualResponseDuration);
+		}
+	}
+
+	public static void assertResponseStatusCode(
+		HttpResponse httpResponse, String expectedStatusCode) {
+
+		String actualStatusCode = httpResponse.getStatusCode();
+
+		if (!StringUtil.equals(actualStatusCode, expectedStatusCode)) {
+			throw new RuntimeException(
+				"Expected status code: " + expectedStatusCode +
+					"\nActual status code: " + actualStatusCode);
 		}
 	}
 
@@ -132,6 +134,10 @@ public class HttpRequestUtil {
 		return httpResponse.getResponseBody();
 	}
 
+	public static String getResponseDuration(HttpResponse httpResponse) {
+		return httpResponse.getDuration();
+	}
+
 	public static String getResponseErrorMessage(HttpResponse httpResponse) {
 		return httpResponse.getResponseErrorMessage();
 	}
@@ -152,10 +158,6 @@ public class HttpRequestUtil {
 		).toString();
 	}
 
-	public static String getResponseTime(HttpResponse httpResponse) {
-		return httpResponse.getResponseTime();
-	}
-
 	public static String getStatusCode(HttpResponse httpResponse) {
 		return httpResponse.getStatusCode();
 	}
@@ -171,7 +173,7 @@ public class HttpRequestUtil {
 
 		int retryCount = 0;
 
-		long start = System.currentTimeMillis();
+		long startTimeMillis = System.currentTimeMillis();
 
 		while (true) {
 			try {
@@ -260,7 +262,8 @@ public class HttpRequestUtil {
 
 						String body = _readInputStream(inputStream, false);
 
-						long duration = System.currentTimeMillis() - start;
+						long duration =
+							System.currentTimeMillis() - startTimeMillis;
 
 						return new HttpResponse(
 							body, null, responseCode, duration);
@@ -273,7 +276,8 @@ public class HttpRequestUtil {
 					String errorMessage = _readInputStream(
 						errorInputStream, false);
 
-					long duration = System.currentTimeMillis() - start;
+					long duration =
+						System.currentTimeMillis() - startTimeMillis;
 
 					return new HttpResponse(
 						null, errorMessage, responseCode, duration);
@@ -351,22 +355,24 @@ public class HttpRequestUtil {
 	public static class HttpResponse {
 
 		public HttpResponse(
-			String body, String errorMessage, int statusCode,
-			long responseTime) {
+			String body, String errorMessage, int statusCode, long duration) {
 
-			new HttpResponse(
-				body, errorMessage, null, statusCode, responseTime);
+			new HttpResponse(body, errorMessage, null, statusCode, duration);
 		}
 
 		public HttpResponse(
 			String body, String errorMessage, Map<String, List<String>> headers,
-			int statusCode, long responseTime) {
+			int statusCode, long duration) {
 
 			this.body = body;
 			this.errorMessage = errorMessage;
 			this.headers = headers;
 			this.statusCode = String.valueOf(statusCode);
-			this.responseTime = String.valueOf(responseTime);
+			this.duration = String.valueOf(duration);
+		}
+
+		public String getDuration() {
+			return duration;
 		}
 
 		public String getResponseBody() {
@@ -381,15 +387,12 @@ public class HttpRequestUtil {
 			return headers;
 		}
 
-		public String getResponseTime() {
-			return responseTime;
-		}
-
 		public String getStatusCode() {
 			return statusCode;
 		}
 
 		protected String body;
+		protected String duration;
 		protected String errorMessage;
 		protected Map<String, List<String>> headers;
 		protected String responseTime;

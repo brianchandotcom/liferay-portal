@@ -96,6 +96,14 @@
 		"to": "fetchByExternalReferenceCode(param#1#, param#0#)"
 	},
 	{
+		"classNames": [
+			"CommerceAccountHelper"
+		],
+		"from": "getCurrentCommerceAccount(HttpServletRequest)",
+		"issueKey": "LPS-196638",
+		"to": "getCurrentAccountEntry(0, param#0#)"
+	},
+	{
 		"from": "CommerceOrderConstants.PAYMENT_STATUS_AUTHORIZED",
 		"issueKey": "LPS-197623",
 		"newImports": [

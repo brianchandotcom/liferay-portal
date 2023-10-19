@@ -145,17 +145,16 @@ public class HttpRequestUtil {
 	public static Map<String, List<String>> getResponseHeaderFields(
 		HttpResponse httpResponse) {
 
-		return httpResponse.getResponseHeaders();
+		return httpResponse.getHeaderFields();
 	}
 
-	public static String getResponseHeaderValue(
-		HttpResponse httpResponse, String headerKey) {
+	public static List<String> getResponseHeaderFieldValue(
+		HttpResponse httpResponse, String headerFieldKey) {
 
-		return getResponseHeaderFields(
-			httpResponse
-		).get(
-			headerKey
-		).toString();
+		Map<String, List<String>> responseHeaderFields =
+			getResponseHeaderFields(httpResponse);
+
+		return responseHeaderFields.get(headerFieldKey);
 	}
 
 	public static String getStatusCode(HttpResponse httpResponse) {
@@ -361,18 +360,23 @@ public class HttpRequestUtil {
 		}
 
 		public HttpResponse(
-			String body, String errorMessage, Map<String, List<String>> headers,
-			int statusCode, long duration) {
+			String body, String errorMessage,
+			Map<String, List<String>> headerFields, int statusCode,
+			long duration) {
 
 			this.body = body;
 			this.errorMessage = errorMessage;
-			this.headers = headers;
+			this.headerFields = headerFields;
 			this.statusCode = String.valueOf(statusCode);
 			this.duration = String.valueOf(duration);
 		}
 
 		public String getDuration() {
 			return duration;
+		}
+
+		public Map<String, List<String>> getHeaderFields() {
+			return headerFields;
 		}
 
 		public String getResponseBody() {
@@ -383,10 +387,6 @@ public class HttpRequestUtil {
 			return errorMessage;
 		}
 
-		public Map<String, List<String>> getResponseHeaders() {
-			return headers;
-		}
-
 		public String getStatusCode() {
 			return statusCode;
 		}
@@ -394,7 +394,7 @@ public class HttpRequestUtil {
 		protected String body;
 		protected String duration;
 		protected String errorMessage;
-		protected Map<String, List<String>> headers;
+		protected Map<String, List<String>> headerFields;
 		protected String responseTime;
 		protected String statusCode;
 

@@ -2631,7 +2631,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					if (deployToGlowroot) {
 						return new File(
 							liferayExtension.getLiferayHome(),
-							"glowroot/" + project.getName());
+							"glowroot/plugins");
 					}
 
 					if (deployToTools) {

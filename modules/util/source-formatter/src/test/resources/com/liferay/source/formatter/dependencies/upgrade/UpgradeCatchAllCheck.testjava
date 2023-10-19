@@ -24,6 +24,10 @@ public class UpgradeCatchAllCheck {
 		DestinationNames.STOCK_QUANTITY;
 		DestinationNames.SUBSCRIPTION_STATUS;
 
+		FDSTableSchemaBuilder fDSTableSchemaBuilder =_fDSTableSchemaBuilderFactory.create();
+
+		fDSTableSchemaBuilder.addFDSTableSchemaField("purchaseOrderNumber", "purchase-order-number");
+
 		HtmlUtil.extractText(testEntry.getContent());
 
 		if (true) {
@@ -84,5 +88,8 @@ public class UpgradeCatchAllCheck {
 
 	@Reference
 	private CPInstanceService _cpInstanceService;
+
+	@Reference
+	private FDSTableSchemaBuilderFactory _fDSTableSchemaBuilderFactory;
 
 }

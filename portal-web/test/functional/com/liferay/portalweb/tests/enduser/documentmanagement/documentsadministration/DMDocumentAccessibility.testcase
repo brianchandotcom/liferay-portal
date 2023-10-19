@@ -1,11 +1,10 @@
-@component-name = "portal-platform-experience-and-design-system"
+@component-name = "portal-document-management"
 definition {
 
 	property portal.accessibility = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "PEDS Accessibility";
-	property testray.main.component.name = "Accessibility Framework";
+	property testray.main.component.name = "Document Management";
 
 	setUp {
 		TestCase.setUpPortalInstance();

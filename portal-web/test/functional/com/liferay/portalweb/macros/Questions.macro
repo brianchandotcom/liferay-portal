@@ -463,6 +463,14 @@ definition {
 				value1 = ${questionTitle});
 		}
 		else if (isSet(deleteInActivity)) {
+			Click.waitForMenuToggleJSClick(
+				key_questionTitle = ${questionTitle},
+				locator1 = "Questions#QUESTIONS_ELLIPSIS_ICON");
+
+			Click(
+				key_text = "Delete",
+				locator1 = "Questions#DROPDOWN_ITEM_BUTTON");
+
 			Click(
 				key_text = "Delete",
 				locator1 = "Questions#MODAL_ITEM_BUTTON");

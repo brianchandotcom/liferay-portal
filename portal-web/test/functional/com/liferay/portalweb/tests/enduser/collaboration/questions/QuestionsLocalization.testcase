@@ -356,17 +356,19 @@ definition {
 		}
 
 		task ("When a comment with non-Latin characters is added") {
-			Questions.openToQuestionDetails(
-				layoutName = "questions-page",
-				localization = "true",
-				siteURLKey = "guest",
-				topicName = "質問トピック");
+			Navigator.gotoPage(pageName = "Questions Page");
+
+			Questions.gotoCategory(categoryName = "質問トピック");
+
+			Questions.gotoDetails(questionTitle = "あなたの好きな日本料理は何ですか");
 
 			Questions.replyToComment(commentReply = "私の好きな日本料理は焼肉と鮭の刺身です");
 		}
 
 		task ("Then the user should be able to delete the Question") {
-			Questions.deleteQuestion();
+			Questions.deleteQuestion(
+				deleteInActivity = "true",
+				questionTitle = "あなたの好きな日本料理は何ですか");
 		}
 	}
 
@@ -419,11 +421,11 @@ definition {
 		}
 
 		task ("When the user adds a comment to an answer, then the comment should persist") {
-			Questions.openToQuestionDetails(
-				layoutName = "questions-page",
-				localization = "true",
-				siteURLKey = "guest",
-				topicName = "質問トピック");
+			Navigator.gotoPage(pageName = "Questions Page");
+
+			Questions.gotoCategory(categoryName = "質問トピック");
+
+			Questions.gotoDetails(questionTitle = "あなたの好きな日本料理は何ですか");
 
 			Questions.replyToComment(commentReply = "私の好きな日本料理は焼肉と鮭の刺身です");
 		}

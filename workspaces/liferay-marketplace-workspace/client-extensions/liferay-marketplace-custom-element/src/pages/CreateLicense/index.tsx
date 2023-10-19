@@ -12,7 +12,7 @@ import {useForm} from 'react-hook-form';
 import {FooterButtons} from '../../components/FooterButtons';
 import ProductCard from '../GetAppPage/components/ProductCard/ProductCard';
 import StepWizard from '../GetAppPage/components/StepWizard/StepWizard';
-import AccountEmailInfo from './AccountEmail';
+import AccountEmailInfo from './AccountInfo';
 import LicenseDetails from './LicenseDetails';
 import SelectSubscription from './SelectSubscription';
 

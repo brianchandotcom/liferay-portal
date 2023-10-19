@@ -319,8 +319,6 @@ definition {
 
 			LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
 
-			SelectWindow.selectPopUp(locator1 = "null");
-
 			PortletEntry.inputName(name = "Test Page Name Edited");
 
 			PortletEntry.save();

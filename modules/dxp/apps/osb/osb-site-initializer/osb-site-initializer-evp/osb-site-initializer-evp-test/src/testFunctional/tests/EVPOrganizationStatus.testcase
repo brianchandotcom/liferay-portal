@@ -25,7 +25,7 @@ definition {
 			EVPUtils.addLiferayManagerUserRole();
 		}
 
-		task ("Employee user creates an organization") {
+		task ("Create an organization") {
 			var organizationId = JSONEVP.createOrganization(
 				accountOwnerName = "User 4",
 				bankingInfo = "Bank Test",

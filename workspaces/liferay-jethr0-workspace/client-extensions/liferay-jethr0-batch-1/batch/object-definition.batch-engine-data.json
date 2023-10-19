@@ -14,9 +14,7 @@
 		}
 	},
 	"configuration": {
-		"callbackURL": null,
 		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition",
-		"companyId": 0,
 		"multiCompany": false,
 		"parameters": {
 			"containsHeaders": "false",
@@ -25,7 +23,6 @@
 			"taskItemDelegateName": "DEFAULT",
 			"updateStrategy": "UPDATE"
 		},
-		"userId": 0,
 		"version": "v1.0"
 	},
 	"items": [

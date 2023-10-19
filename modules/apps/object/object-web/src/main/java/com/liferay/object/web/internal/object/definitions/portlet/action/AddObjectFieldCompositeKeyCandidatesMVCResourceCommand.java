@@ -64,11 +64,11 @@ public class AddObjectFieldCompositeKeyCandidatesMVCResourceCommand
 
 		List<String> objectFieldLabels = new ArrayList<>();
 
-		for (Long objectFieldsId :
+		for (Long objectFieldId :
 				ParamUtil.getLongValues(resourceRequest, "objectFieldsIds")) {
 
 			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
-				objectFieldsId);
+				objectFieldId);
 
 			Table<?> table = null;
 

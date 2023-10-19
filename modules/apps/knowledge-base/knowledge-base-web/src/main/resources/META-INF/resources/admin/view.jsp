@@ -137,12 +137,14 @@ String kbArticleScheduledSuccessMessage = GetterUtil.getString(MultiSessionMessa
 %>
 
 <c:if test="<%= Validator.isNotNull(kbArticleScheduledSuccessMessage) %>">
-	<script>
-		Liferay.Util.openToast({
-			message: '<%= kbArticleScheduledSuccessMessage %>',
-			toastProps: {
-				autoClose: 20000,
-			},
-		});
-	</script>
+	<liferay-frontend:component
+		context='<%=
+			HashMapBuilder.<String, Object>put(
+				"autoClose", 20000
+			).put(
+				"message", kbArticleScheduledSuccessMessage
+			).build()
+		%>'
+		module="admin/js/utils/openToast"
+	/>
 </c:if>

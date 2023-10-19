@@ -5,7 +5,6 @@
 
 package com.liferay.portal.kernel.login;
 
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
@@ -14,8 +13,7 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 public class AuthLoginGroupSettingsUtil {
 
 	public static boolean isPromptEnabled(long groupId) {
-		return GetterUtil.getBoolean(
-			_authLoginGroupSettings.isPromptEnabled(groupId));
+		return _authLoginGroupSettings.isPromptEnabled(groupId);
 	}
 
 	private static volatile AuthLoginGroupSettings _authLoginGroupSettings =

@@ -30,7 +30,7 @@ public class HttpRequestUtil {
 	public static void assertResponseBody(
 		HttpResponse httpResponse, String expectedResponseBody) {
 
-		String actualResponseBody = httpResponse.getResponseBody();
+		String actualResponseBody = httpResponse.getBody();
 
 		if (!StringUtil.equals(actualResponseBody, expectedResponseBody)) {
 			throw new RuntimeException(
@@ -109,7 +109,7 @@ public class HttpRequestUtil {
 	}
 
 	public static String getResponseBody(HttpResponse httpResponse) {
-		return httpResponse.getResponseBody();
+		return httpResponse.getBody();
 	}
 
 	public static String getResponseDuration(HttpResponse httpResponse) {
@@ -117,7 +117,7 @@ public class HttpRequestUtil {
 	}
 
 	public static String getResponseErrorMessage(HttpResponse httpResponse) {
-		return httpResponse.getResponseErrorMessage();
+		return httpResponse.getErrorMessage();
 	}
 
 	public static Map<String, List<String>> getResponseHeaderFields(
@@ -135,7 +135,7 @@ public class HttpRequestUtil {
 		return responseHeaderFields.get(headerFieldKey);
 	}
 
-	public static String getStatusCode(HttpResponse httpResponse) {
+	public static String getResponseStatusCode(HttpResponse httpResponse) {
 		return httpResponse.getStatusCode();
 	}
 
@@ -349,20 +349,20 @@ public class HttpRequestUtil {
 			_duration = String.valueOf(duration);
 		}
 
+		public String getBody() {
+			return _body;
+		}
+
 		public String getDuration() {
 			return _duration;
 		}
 
+		public String getErrorMessage() {
+			return _errorMessage;
+		}
+
 		public Map<String, List<String>> getHeaderFields() {
 			return _headerFields;
-		}
-
-		public String getResponseBody() {
-			return _body;
-		}
-
-		public String getResponseErrorMessage() {
-			return _errorMessage;
 		}
 
 		public String getStatusCode() {

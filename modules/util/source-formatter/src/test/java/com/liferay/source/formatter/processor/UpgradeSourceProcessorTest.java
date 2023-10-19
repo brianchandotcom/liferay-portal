@@ -105,11 +105,6 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testUpgradeJavaAddFDSTableSchemaFieldCheck() throws Exception {
-		test("upgrade/UpgradeJavaAddFDSTableSchemaFieldCheck.testjava");
-	}
-
-	@Test
 	public void testUpgradeJavaAddFileEntryParameterCheck() throws Exception {
 		test(
 			"upgrade/UpgradeJavaAddFileEntryParameterCheck.testjava",

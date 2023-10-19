@@ -1643,11 +1643,6 @@
 			<category name="Upgrade" />
 			<description name="Fill the new parameter of the method 'addAddress' of AddressLocalService, AddressLocalServiceUtil, AddressService and AddressServiceUtil" />
 		</check>
-		<check name="UpgradeJavaAddFDSTableSchemaFieldCheck">
-			<category name="Upgrade" />
-			<description name="Replace method addFDSTableSchemaFieldCheck by add" />
-			<weight>1</weight>
-		</check>
 		<check name="UpgradeJavaAddFileEntryParameterCheck">
 			<category name="Upgrade" />
 			<description name="Fill the new parameter of the method 'addFileEntry' of 'DLAppLocalServiceUtil' and 'DLAppLocalService'" />

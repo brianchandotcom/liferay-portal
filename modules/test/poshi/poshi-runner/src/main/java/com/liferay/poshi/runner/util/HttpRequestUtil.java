@@ -342,39 +342,38 @@ public class HttpRequestUtil {
 			Map<String, List<String>> headerFields, int statusCode,
 			long duration) {
 
-			this.body = body;
-			this.errorMessage = errorMessage;
-			this.headerFields = headerFields;
-			this.statusCode = String.valueOf(statusCode);
-			this.duration = String.valueOf(duration);
+			_body = body;
+			_errorMessage = errorMessage;
+			_headerFields = headerFields;
+			_statusCode = String.valueOf(statusCode);
+			_duration = String.valueOf(duration);
 		}
 
 		public String getDuration() {
-			return duration;
+			return _duration;
 		}
 
 		public Map<String, List<String>> getHeaderFields() {
-			return headerFields;
+			return _headerFields;
 		}
 
 		public String getResponseBody() {
-			return body;
+			return _body;
 		}
 
 		public String getResponseErrorMessage() {
-			return errorMessage;
+			return _errorMessage;
 		}
 
 		public String getStatusCode() {
-			return statusCode;
+			return _statusCode;
 		}
 
-		protected String body;
-		protected String duration;
-		protected String errorMessage;
-		protected Map<String, List<String>> headerFields;
-		protected String responseTime;
-		protected String statusCode;
+		private String _body;
+		private String _duration;
+		private String _errorMessage;
+		private Map<String, List<String>> _headerFields;
+		private String _statusCode;
 
 	}
 

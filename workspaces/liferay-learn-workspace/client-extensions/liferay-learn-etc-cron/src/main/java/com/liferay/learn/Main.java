@@ -145,6 +145,8 @@ public class Main {
 		_markdownImportDirName = markdownImportDirName;
 		_offline = offline;
 
+		_taxonomyCategoriesJSONObject = new JSONObject();
+
 		System.out.println("Liferay URL: " + _liferayURL);
 
 		_addFileNames(_markdownImportDirName);
@@ -984,7 +986,17 @@ public class Main {
 	}
 
 	private void _loadTaxonomyCategories() throws Exception {
-		_taxonomyCategoriesJSONObject = new JSONObject();
+		JSONObject taxonomyVocabulariesJSONObject = new JSONObject(
+			FileUtils.readFileToString(
+				new File(
+					_markdownImportDirName + "/../taxonomy-vocabularies.json"),
+				StandardCharsets.UTF_8));
+
+		if (taxonomyVocabulariesJSONObject.isEmpty()) {
+			return;
+		}
+
+		Map<String, String> existingTaxonomyCategories = new HashMap<>();
 
 		com.liferay.headless.admin.taxonomy.client.pagination.Page
 			<TaxonomyVocabulary> taxonomyVocabulariesPage =
@@ -997,11 +1009,15 @@ public class Main {
 		for (TaxonomyVocabulary taxonomyVocabulary :
 				taxonomyVocabulariesPage.getItems()) {
 
+			existingTaxonomyCategories.put(
+				taxonomyVocabulary.getName(),
+				String.valueOf(taxonomyVocabulary.getId()));
+
 			com.liferay.headless.admin.taxonomy.client.pagination.Page
 				<TaxonomyCategory> taxonomyCategoriesPage =
 					_taxonomyCategoryResource.
 						getTaxonomyVocabularyTaxonomyCategoriesPage(
-							taxonomyVocabulary.getId(), null, null, null, null,
+							taxonomyVocabulary.getId(), true, null, null, null,
 							com.liferay.headless.admin.taxonomy.client.
 								pagination.Pagination.of(-1, -1),
 							null);
@@ -1009,38 +1025,93 @@ public class Main {
 			for (TaxonomyCategory taxonomyCategory :
 					taxonomyCategoriesPage.getItems()) {
 
-				_taxonomyCategoriesJSONObject.put(
+				existingTaxonomyCategories.put(
 					taxonomyCategory.getName(), taxonomyCategory.getId());
-
-				_loadTaxonomyCategories(taxonomyCategory);
 			}
+		}
+
+		JSONArray jsonArray = taxonomyVocabulariesJSONObject.getJSONArray(
+			"taxonomyVocabularies");
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject taxonomyVocabularyJSONObject = jsonArray.getJSONObject(
+				i);
+
+			String name = taxonomyVocabularyJSONObject.getString("name");
+
+			if (!existingTaxonomyCategories.containsKey(name)) {
+				TaxonomyVocabulary taxonomyVocabulary =
+					new TaxonomyVocabulary();
+
+				taxonomyVocabulary.setName(name);
+
+				taxonomyVocabulary =
+					_taxonomyVocabularyResource.postSiteTaxonomyVocabulary(
+						_liferaySiteId, taxonomyVocabulary);
+
+				_taxonomyCategoriesJSONObject.put(
+					taxonomyVocabulary.getName(), taxonomyVocabulary.getId());
+			}
+			else {
+				_taxonomyCategoriesJSONObject.put(
+					name, existingTaxonomyCategories.get(name));
+			}
+
+			_loadTaxonomyCategories(
+				existingTaxonomyCategories, taxonomyVocabularyJSONObject, null,
+				_taxonomyCategoriesJSONObject.getLong(name));
 		}
 	}
 
 	private void _loadTaxonomyCategories(
-			TaxonomyCategory parentTaxonomyCategory)
+			Map<String, String> existingTaxonomyCategories,
+			JSONObject jsonObject, String parentTaxonomyCategoryId,
+			long taxonomyVocabularyId)
 		throws Exception {
 
-		if (parentTaxonomyCategory.getNumberOfTaxonomyCategories() == 0) {
+		if (!jsonObject.has("taxonomyCategories")) {
 			return;
 		}
 
-		com.liferay.headless.admin.taxonomy.client.pagination.Page
-			<TaxonomyCategory> taxonomyCategoriesPage =
-				_taxonomyCategoryResource.
-					getTaxonomyCategoryTaxonomyCategoriesPage(
-						parentTaxonomyCategory.getId(), null, null, null,
-						com.liferay.headless.admin.taxonomy.client.pagination.
-							Pagination.of(-1, -1),
-						null);
+		JSONArray jsonArray = jsonObject.getJSONArray("taxonomyCategories");
 
-		for (TaxonomyCategory taxonomyCategory :
-				taxonomyCategoriesPage.getItems()) {
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject taxonomyCategoryJSONObject = jsonArray.getJSONObject(i);
 
-			_taxonomyCategoriesJSONObject.put(
-				taxonomyCategory.getName(), taxonomyCategory.getId());
+			String name = taxonomyCategoryJSONObject.getString("name");
 
-			_loadTaxonomyCategories(taxonomyCategory);
+			if (!existingTaxonomyCategories.containsKey(name)) {
+				TaxonomyCategory taxonomyCategory = new TaxonomyCategory();
+
+				taxonomyCategory.setName(name);
+				taxonomyCategory.setTaxonomyVocabularyId(taxonomyVocabularyId);
+
+				if (parentTaxonomyCategoryId != null) {
+					taxonomyCategory =
+						_taxonomyCategoryResource.
+							postTaxonomyCategoryTaxonomyCategory(
+								parentTaxonomyCategoryId, taxonomyCategory);
+				}
+				else {
+					taxonomyCategory =
+						_taxonomyCategoryResource.
+							postTaxonomyVocabularyTaxonomyCategory(
+								taxonomyCategory.getTaxonomyVocabularyId(),
+								taxonomyCategory);
+				}
+
+				_taxonomyCategoriesJSONObject.put(
+					name, taxonomyCategory.getId());
+			}
+			else {
+				_taxonomyCategoriesJSONObject.put(
+					name, existingTaxonomyCategories.get(name));
+			}
+
+			_loadTaxonomyCategories(
+				existingTaxonomyCategories, taxonomyCategoryJSONObject,
+				_taxonomyCategoriesJSONObject.getString(name),
+				taxonomyVocabularyId);
 		}
 	}
 
@@ -1978,7 +2049,7 @@ public class Main {
 		new HashMap<>();
 	private StructuredContentFolderResource _structuredContentFolderResource;
 	private StructuredContentResource _structuredContentResource;
-	private JSONObject _taxonomyCategoriesJSONObject;
+	private final JSONObject _taxonomyCategoriesJSONObject;
 	private TaxonomyCategoryResource _taxonomyCategoryResource;
 	private TaxonomyVocabularyResource _taxonomyVocabularyResource;
 	private final List<String> _warningMessages = new ArrayList<>();

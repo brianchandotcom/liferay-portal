@@ -31,6 +31,7 @@ const AppRoutes = {
 };
 
 type Properties = {
+	accountSettingsURL: string | null;
 	articleAccountSupportURL: string | null;
 	articleDeployingActivationKeysURL: string | null;
 	articleGettingStartedWithLiferayEnterpriseSearchURL: string | null;
@@ -96,6 +97,7 @@ class CustomerPortalWebComponent extends HTMLElement {
 
 	connectedCallback() {
 		const properties = {
+			accountSettingsURL: super.getAttribute('account-settings-url'),
 			articleAccountSupportURL: super.getAttribute(
 				'article-account-support-url'
 			),

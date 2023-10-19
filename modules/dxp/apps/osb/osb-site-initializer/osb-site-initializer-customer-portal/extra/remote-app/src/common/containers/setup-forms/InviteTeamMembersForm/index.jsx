@@ -399,6 +399,7 @@ const InviteTeamMembersPage = ({
 											availableAdminsRoles
 										}
 										disableError={hasInitialError}
+										errors={errors}
 										id={index}
 										invite={invite}
 										key={index}

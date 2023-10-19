@@ -5,7 +5,10 @@
 
 import {ClayInput} from '@clayui/form';
 import {useEffect, useMemo} from 'react';
+import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
+import useCurrentKoroneikiAccount from '~/common/hooks/useCurrentKoroneikiAccount';
 import useProvisioningLicenseKeys from '~/common/hooks/useProvisioningLicenseKeys';
+import useUserAccountsByAccountExternalReferenceCode from '~/routes/customer-portal/pages/Project/TeamMembers/components/TeamMembersTable/hooks/useUserAccountsByAccountExternalReferenceCode';
 import i18n from '../../../../I18n';
 import {Input, Select} from '../../../../components';
 import useBannedDomains from '../../../../hooks/useBannedDomains';
@@ -21,6 +24,7 @@ const FETCH_DELAY_AFTER_TYPING = 500;
 const TeamMemberInputs = ({
 	administratorsAssetsAvailable,
 	disableError,
+	errors,
 	id,
 	invite,
 	onSelectRole,
@@ -28,6 +32,7 @@ const TeamMemberInputs = ({
 	placeholderEmail,
 	selectOnChange,
 }) => {
+	const {accountSettingsURL, featureFlags} = useAppPropertiesContext();
 	const provisioningService = useProvisioningLicenseKeys();
 
 	const bannedDomains = useBannedDomains(
@@ -35,9 +40,30 @@ const TeamMemberInputs = ({
 		FETCH_DELAY_AFTER_TYPING
 	);
 
-	const validateEmail = useMemo(async () => {
-		const [, domain] = invite?.email.split('@');
+	const {data} = useCurrentKoroneikiAccount();
+	const koroneikiAccount = data?.koroneikiAccountByExternalReferenceCode;
 
+	const [
+		,
+		{data: userAccountsData},
+	] = useUserAccountsByAccountExternalReferenceCode(
+		koroneikiAccount?.accountKey
+	);
+
+	const currentDomain = userAccountsData?.accountUserAccountsByExternalReferenceCode.items
+		.map(({emailAddress}) => emailAddress.split('@')[1])
+		.flat();
+
+	const [, domain] = invite?.email.split('@');
+
+	const mathEmail = currentDomain?.includes(domain) || false;
+
+	const isEmailValid = !!errors.invites?.[id]?.email;
+
+	const warningMessage =
+		invite?.email.length > 1 && !mathEmail && !isEmailValid;
+
+	const validateEmail = useMemo(async () => {
 		if (isValidEmail(invite?.email, bannedDomains)) {
 			return isValidEmail(invite?.email, bannedDomains);
 		}

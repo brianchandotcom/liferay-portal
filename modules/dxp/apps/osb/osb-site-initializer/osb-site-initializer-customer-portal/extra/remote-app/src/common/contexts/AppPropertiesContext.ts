@@ -7,6 +7,7 @@ import {ApolloClient} from '@apollo/client';
 import {createContext, useContext} from 'react';
 
 export const AppPropertiesContext = createContext({
+	accountSettingsURL: '',
 	articleAccountSupportURL: '',
 	articleDeployingActivationKeysURL: '',
 	articleGettingStartedWithLiferayEnterpriseSearchURL: '',

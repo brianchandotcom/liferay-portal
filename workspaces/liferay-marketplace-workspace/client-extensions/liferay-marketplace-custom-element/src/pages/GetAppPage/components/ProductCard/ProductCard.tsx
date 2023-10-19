@@ -4,7 +4,6 @@
  */
 
 import './ProductCard.scss';
-import useCart from '../../../../hooks/useCart';
 import {
 	getThumbnailByProductAttachment,
 	getValueFromSpecifications,
@@ -13,12 +12,9 @@ import {
 interface ProductCardProps {
 	ExtendBanner?: any;
 	RightSideBanner?: any;
-	cartUtil: ReturnType<typeof useCart>;
 	creatorAccount?: Account;
-	isSelectSubscription?: boolean;
 	product?: Product;
 	showExtendBanner?: boolean;
-	userAccount?: UserAccount;
 }
 
 const ProductCard = ({

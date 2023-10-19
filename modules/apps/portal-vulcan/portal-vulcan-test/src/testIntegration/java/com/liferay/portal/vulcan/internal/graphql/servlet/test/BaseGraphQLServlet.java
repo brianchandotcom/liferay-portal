@@ -98,6 +98,33 @@ public class BaseGraphQLServlet {
 
 	}
 
+	public static class TestPagination {
+
+		public TestPagination() {
+			this(0, 0);
+		}
+
+		public TestPagination(int page, int pageSize) {
+			this.page = page;
+			this.pageSize = pageSize;
+		}
+
+		public int getPage() {
+			return page;
+		}
+
+		public int getPageSize() {
+			return pageSize;
+		}
+
+		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+		protected int page;
+
+		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+		protected int pageSize;
+
+	}
+
 	public static class TestQuery {
 
 		public TestQuery() {
@@ -107,9 +134,22 @@ public class BaseGraphQLServlet {
 			_testDTO = testDTO;
 		}
 
+		public TestQuery(TestPagination testPagination) {
+			_testPagination = testPagination;
+		}
+
 		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
 		public BaseGraphQLServlet.TestDTO testDTO() throws Exception {
 			return _testDTO;
+		}
+
+		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+		public BaseGraphQLServlet.TestPagination testPagination(
+				@GraphQLName("page") int page,
+				@GraphQLName("pageSize") int pageSize)
+			throws Exception {
+
+			return new TestPagination(page, pageSize);
 		}
 
 		@GraphQLTypeExtension(TestDTO.class)
@@ -129,6 +169,7 @@ public class BaseGraphQLServlet {
 		}
 
 		private static TestDTO _testDTO;
+		private static TestPagination _testPagination;
 
 	}
 
@@ -136,6 +177,10 @@ public class BaseGraphQLServlet {
 
 		public TestServletData(TestDTO testDTO) {
 			_testQuery = new TestQuery(testDTO);
+		}
+
+		public TestServletData(TestPagination testPagination) {
+			_testQuery = new TestQuery(testPagination);
 		}
 
 		@Override

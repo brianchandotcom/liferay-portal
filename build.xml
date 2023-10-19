@@ -449,13 +449,6 @@ message.
 					<arg value="-Dbuild.profile=${build.profile}" />
 				</gradle-execute>
 
-				<gradle-execute dir="${project.dir}/modules" task="deployGlowroot">
-					<arg value="--parallel" />
-					<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
-					<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
-					<arg value="-Dbuild.profile=${build.profile}" />
-				</gradle-execute>
-
 				<pathconvert property="build.app.server.lib.marker.files" setonempty="false">
 					<fileset
 						dir="${project.dir}/modules"

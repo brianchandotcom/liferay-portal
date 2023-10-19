@@ -259,8 +259,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	public static final String DEPLOY_TOOL_TASK_NAME = "deployTool";
 
-	public static final String DEPLOY_GLOWROOT_TASK_NAME = "deployGlowroot";
-
 	public static final String DOWNLOAD_COMPILED_JSP_TASK_NAME =
 		"downloadCompiledJSP";
 
@@ -337,14 +335,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		final boolean publishing = _isPublishing(project);
 
 		boolean deployToAppServerLibs = false;
-		boolean deployToGlowroot = false;
 		boolean deployToTools = false;
 
 		if (FileUtil.exists(project, ".lfrbuild-app-server-lib")) {
 			deployToAppServerLibs = true;
-		}
-		else if (FileUtil.exists(project, ".lfrbuild-glowroot")) {
-			deployToGlowroot = true;
 		}
 		else if (FileUtil.exists(project, ".lfrbuild-tool")) {
 			deployToTools = true;
@@ -431,11 +425,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				project, DEPLOY_TOOL_TASK_NAME,
 				LiferayBasePlugin.DEPLOY_TASK_NAME);
 		}
-		else if (deployToGlowroot) {
-			_addTaskAlias(
-				project, DEPLOY_GLOWROOT_TASK_NAME,
-				LiferayBasePlugin.DEPLOY_TASK_NAME);
-		}
 
 		final Jar jarJSPsTask = _addTaskJarJSP(project);
 		final Jar jarJavadocTask = _addTaskJarJavadoc(project);
@@ -457,8 +446,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			project, appBndFile, liferayExtension, publishing);
 		_configureDependencyChecker(project);
 		_configureDeployDir(
-			project, liferayExtension, deployToAppServerLibs, deployToGlowroot,
-			deployToTools);
+			project, liferayExtension, deployToAppServerLibs, deployToTools);
 		_configureEclipse(project);
 		_configureJavaPlugin(project);
 		_configureLocalPortalTool(
@@ -2614,8 +2602,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	private void _configureDeployDir(
 		final Project project, final LiferayExtension liferayExtension,
-		final boolean deployToAppServerLibs, final boolean deployToGlowroot,
-		final boolean deployToTools) {
+		final boolean deployToAppServerLibs, final boolean deployToTools) {
 
 		liferayExtension.setDeployDir(
 			new Callable<File>() {
@@ -2626,12 +2613,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 						return new File(
 							liferayExtension.getAppServerPortalDir(),
 							"WEB-INF/lib");
-					}
-
-					if (deployToGlowroot) {
-						return new File(
-							liferayExtension.getLiferayHome(),
-							"glowroot/plugins");
 					}
 
 					if (deployToTools) {

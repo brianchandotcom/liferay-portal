@@ -5,7 +5,7 @@
 
 package com.liferay.portal.kernel.encryptor;
 
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.security.Key;
 
@@ -17,47 +17,62 @@ public class EncryptorUtil {
 	public static String decrypt(Key key, String encryptedString)
 		throws EncryptorException {
 
-		return _encryptor.decrypt(key, encryptedString);
+		Encryptor encryptor = _encryptorSnapshot.get();
+
+		return encryptor.decrypt(key, encryptedString);
 	}
 
 	public static byte[] decryptUnencodedAsBytes(Key key, byte[] encryptedBytes)
 		throws EncryptorException {
 
-		return _encryptor.decryptUnencodedAsBytes(key, encryptedBytes);
+		Encryptor encryptor = _encryptorSnapshot.get();
+
+		return encryptor.decryptUnencodedAsBytes(key, encryptedBytes);
 	}
 
 	public static Key deserializeKey(String base64String) {
-		return _encryptor.deserializeKey(base64String);
+		Encryptor encryptor = _encryptorSnapshot.get();
+
+		return encryptor.deserializeKey(base64String);
 	}
 
 	public static String encrypt(Key key, String plainText)
 		throws EncryptorException {
 
-		return _encryptor.encrypt(key, plainText);
+		Encryptor encryptor = _encryptorSnapshot.get();
+
+		return encryptor.encrypt(key, plainText);
 	}
 
 	public static byte[] encryptUnencoded(Key key, byte[] plainBytes)
 		throws EncryptorException {
 
-		return _encryptor.encryptUnencoded(key, plainBytes);
+		Encryptor encryptor = _encryptorSnapshot.get();
+
+		return encryptor.encryptUnencoded(key, plainBytes);
 	}
 
 	public static byte[] encryptUnencoded(Key key, String plainText)
 		throws EncryptorException {
 
-		return _encryptor.encryptUnencoded(key, plainText);
+		Encryptor encryptor = _encryptorSnapshot.get();
+
+		return encryptor.encryptUnencoded(key, plainText);
 	}
 
 	public static Key generateKey() throws EncryptorException {
-		return _encryptor.generateKey();
+		Encryptor encryptor = _encryptorSnapshot.get();
+
+		return encryptor.generateKey();
 	}
 
 	public static String serializeKey(Key key) {
-		return _encryptor.serializeKey(key);
+		Encryptor encryptor = _encryptorSnapshot.get();
+
+		return encryptor.serializeKey(key);
 	}
 
-	private static volatile Encryptor _encryptor =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			Encryptor.class, EncryptorUtil.class, "_encryptor", false);
+	private static final Snapshot<Encryptor> _encryptorSnapshot =
+		new Snapshot<>(EncryptorUtil.class, Encryptor.class);
 
 }

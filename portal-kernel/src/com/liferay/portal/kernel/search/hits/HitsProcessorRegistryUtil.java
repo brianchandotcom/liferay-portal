@@ -5,10 +5,10 @@
 
 package com.liferay.portal.kernel.search.hits;
 
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Michael C. Han
@@ -18,12 +18,14 @@ public class HitsProcessorRegistryUtil {
 	public static boolean process(SearchContext searchContext, Hits hits)
 		throws SearchException {
 
-		return _hitsProcessorRegistry.process(searchContext, hits);
+		HitsProcessorRegistry hitsProcessorRegistry =
+			_hitsProcessorRegistrySnapshot.get();
+
+		return hitsProcessorRegistry.process(searchContext, hits);
 	}
 
-	private static volatile HitsProcessorRegistry _hitsProcessorRegistry =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			HitsProcessorRegistry.class, HitsProcessorRegistryUtil.class,
-			"_hitsProcessorRegistry", false);
+	private static final Snapshot<HitsProcessorRegistry>
+		_hitsProcessorRegistrySnapshot = new Snapshot<>(
+			HitsProcessorRegistryUtil.class, HitsProcessorRegistry.class);
 
 }

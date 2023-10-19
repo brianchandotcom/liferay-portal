@@ -671,6 +671,10 @@ definition {
 				locator1 = "Questions#QUESTIONS_TITLE_LAST");
 		}
 		else {
+			WaitForElementPresent(
+				key_questionTitle = ${questionTitle},
+				locator1 = "Questions#QUESTIONS_TITLE");
+
 			Click(
 				key_questionTitle = ${questionTitle},
 				locator1 = "Questions#QUESTIONS_TITLE");
@@ -734,10 +738,14 @@ definition {
 
 	macro openToQuestionsTopic {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${layoutName}#/questions/${topicName}");
+
+		WaitForPageLoad();
 	}
 
 	macro openToTagsTab {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${layoutName}#/tags");
+
+		WaitForPageLoad();
 	}
 
 	macro removeRootTopicConfiguration {
@@ -828,6 +836,8 @@ definition {
 	}
 
 	macro subscribeFromTag {
+		WaitForElementPresent(locator1 = "Questions#QUESTIONS_BELL_BUTTON");
+
 		Click(locator1 = "Questions#QUESTIONS_BELL_BUTTON");
 
 		AssertElementPresent(locator1 = "Questions#QUESTIONS_UNSUBSCRIBE");
@@ -1225,7 +1235,9 @@ definition {
 				locator1 = "Questions#VOTE_BUTTON");
 		}
 
-		AssertVisible(locator1 = "Questions#QUESTIONS_BELL_BUTTON");
+		Click.waitForMenuToggleJSClick(
+			key_questionTitle = ${questionTitle},
+			locator1 = "Questions#QUESTIONS_ELLIPSIS_ICON");
 
 		AssertVisible(locator1 = "Icon#MOVE_TO_RECYCLE_BIN");
 

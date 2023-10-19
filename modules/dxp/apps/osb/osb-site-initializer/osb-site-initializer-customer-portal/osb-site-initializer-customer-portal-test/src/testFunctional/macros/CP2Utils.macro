@@ -375,20 +375,20 @@ definition {
 		CP2Utils.onlySeeExportAllKeys(text = "Actions");
 	}
 
-	macro onboardingFlow {
-		Button.click(button = "Start Project Setup");
-
-		Button.click(button = "Skip for now");
-
-		Button.click(button = "Skip for now");
-	}
-
 	macro ifOnboardingPresent {
 		if (IsElementPresent(key_text = "Start Project Setup", locator1 = "Button#ANY")) {
 			task ("And pass through onboarding") {
 				CP2Utils.onboardingFlow();
 			}
 		}
+	}
+
+	macro onboardingFlow {
+		Button.click(button = "Start Project Setup");
+
+		Button.click(button = "Skip for now");
+
+		Button.click(button = "Skip for now");
 	}
 
 	macro onlySeeExportAllKeys {

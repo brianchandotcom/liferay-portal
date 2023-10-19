@@ -27,7 +27,9 @@ import org.springframework.jms.core.JmsTemplate;
 @Configuration
 public class EventJmsController {
 
-	@JmsListener(destination = "${jms.jenkins.event.queue}")
+	@JmsListener(
+		destination = "${jethr0-jms-jenkins-event-queue:jenkins-events}"
+	)
 	public void process(String message) {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Received " + message);
@@ -89,7 +91,7 @@ public class EventJmsController {
 	@Autowired
 	private EventHandlerFactory _eventHandlerFactory;
 
-	@Value("${jms.jenkins.event.queue}")
+	@Value("${jethr0-jms-jenkins-event-queue:jenkins-events}")
 	private String _jmsJenkinsEventQueue;
 
 	@Autowired

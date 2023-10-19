@@ -65,7 +65,9 @@ public class CheckAssetEntrySchedulerJobConfigurationTest {
 		);
 
 		TriggerConfiguration triggerConfiguration =
-			_checkAssetEntrySchedulerJobConfiguration.getTriggerConfiguration();
+			(TriggerConfiguration)ReflectionTestUtil.invoke(
+				_checkAssetEntrySchedulerJobConfiguration,
+				"_getTriggerConfiguration", null, null);
 
 		Assert.assertNull(triggerConfiguration.getCronExpression());
 		Assert.assertEquals(checkInterval, triggerConfiguration.getInterval());
@@ -91,7 +93,9 @@ public class CheckAssetEntrySchedulerJobConfigurationTest {
 		);
 
 		TriggerConfiguration triggerConfiguration =
-			_checkAssetEntrySchedulerJobConfiguration.getTriggerConfiguration();
+			(TriggerConfiguration)ReflectionTestUtil.invoke(
+				_checkAssetEntrySchedulerJobConfiguration,
+				"_getTriggerConfiguration", null, null);
 
 		Assert.assertNull(triggerConfiguration.getCronExpression());
 		Assert.assertEquals(checkInterval, triggerConfiguration.getInterval());
@@ -117,7 +121,9 @@ public class CheckAssetEntrySchedulerJobConfigurationTest {
 		);
 
 		TriggerConfiguration triggerConfiguration =
-			_checkAssetEntrySchedulerJobConfiguration.getTriggerConfiguration();
+			(TriggerConfiguration)ReflectionTestUtil.invoke(
+				_checkAssetEntrySchedulerJobConfiguration,
+				"_getTriggerConfiguration", null, null);
 
 		Assert.assertEquals(
 			checkCronExpression, triggerConfiguration.getCronExpression());

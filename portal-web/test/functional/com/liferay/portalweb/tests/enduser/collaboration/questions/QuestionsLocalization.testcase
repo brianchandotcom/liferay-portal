@@ -502,6 +502,10 @@ definition {
 				localization = "true",
 				siteURLKey = "guest",
 				topicName = "質問トピックを編集する");
+
+			Navigator.gotoPage(pageName = "Questions Page");
+
+			Questions.gotoCategory(categoryName = "質問トピックを編集する");
 		}
 
 		task ("Then the edited Question should be available") {

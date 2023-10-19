@@ -12,10 +12,7 @@ interface LicenseDetailsType {
 	[key: string]: string;
 }
 
-const LicenseDetails = ({expDate, keyType, startDate}: LicenseDetailsType) => {
-	// eslint-disable-next-line no-console
-	console.log(expDate, keyType, startDate);
-
+const LicenseDetails = () => {
 	const formInformation = {
 		IP: '',
 		description: '',

@@ -8,11 +8,7 @@ import {useState} from 'react';
 
 import './index.scss';
 
-// import ClaySticker from '@clayui/sticker';
-
 import {useForm} from 'react-hook-form';
-
-// import emptyPictureIcon from '../../assets/icons/avatar.svg';
 
 import ProductCard from '../GetAppPage/components/ProductCard/ProductCard';
 import StepWizard from '../GetAppPage/components/StepWizard/StepWizard';
@@ -57,9 +53,7 @@ const CreateLicense = () => {
 		},
 		[StepCreateLicense.LICENSE_KEY_DETAILS]: {
 			backStep: StepCreateLicense.SUBSCRIPTION,
-			component: (
-				<LicenseDetails expDate="01" keyType="02" startDate="03" />
-			),
+			component: <LicenseDetails />,
 			nextStep: StepCreateLicense.SUBSCRIPTION,
 			stepTitle: 'License Key Details',
 			title: 'License Key Details',
@@ -67,10 +61,10 @@ const CreateLicense = () => {
 	};
 
 	const subscriptionDataInfo: any = {
-		cartUtil: {
-			cart: {
-				id: undefined,
-			},
+		licenseKeyData: {
+			endDate: 'Oct 24, 2024',
+			keyType: 'Trial',
+			startDate: 'Sep 24, 2023',
 		},
 		product: {
 			attachments: [],
@@ -87,9 +81,6 @@ const CreateLicense = () => {
 			logoURL: null,
 			name: 'Joana',
 		},
-		userAccount: {
-			emailAddress: 'joana@liferay.com',
-		},
 	};
 
 	const ExtendBanner = () => (
@@ -99,7 +90,7 @@ const CreateLicense = () => {
 					Key type
 				</small>
 				<small className="col-6 col-md-4 subscription-banner-text">
-					Trial
+					{subscriptionDataInfo.licenseKeyData.keyType}
 				</small>
 			</div>
 
@@ -108,7 +99,8 @@ const CreateLicense = () => {
 					Start Date - Exp. Date
 				</small>
 				<small className="col-6 col-md-4 subscription-banner-text text-nowrap">
-					Sep 24, 2023 &ndash; Oct 24, 2024
+					{subscriptionDataInfo.licenseKeyData.startDate} &ndash;{' '}
+					{subscriptionDataInfo.licenseKeyData.endDate}
 				</small>
 			</div>
 		</>
@@ -127,14 +119,11 @@ const CreateLicense = () => {
 							userAccount={subscriptionDataInfo.userAccount}
 						/>
 					)}
-					cartUtil={subscriptionDataInfo.cartUtil}
 					creatorAccount={subscriptionDataInfo.productCreatorAccount}
-					isSelectSubscription={true}
 					product={subscriptionDataInfo.product}
 					showExtendBanner={
 						step === StepCreateLicense.LICENSE_KEY_DETAILS
 					}
-					userAccount={subscriptionDataInfo.userAccount}
 				/>
 			</div>
 

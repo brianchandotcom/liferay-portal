@@ -30,6 +30,7 @@ export function PurchasedAppsDashboardTableRow({
 		orderTypeExternalReferenceCode,
 		project,
 		provisioning,
+		provisioningLabel,
 		purchasedBy,
 		purchasedDate,
 		thumbnail,
@@ -38,7 +39,7 @@ export function PurchasedAppsDashboardTableRow({
 		virtualURL,
 	} = item;
 
-	const orderStatusIsNotCompleted = provisioning !== 'Completed';
+	const orderStatusIsNotCompleted = provisioningLabel !== 'completed';
 
 	return (
 		<ClayTable.Row>
@@ -112,11 +113,11 @@ export function PurchasedAppsDashboardTableRow({
 							'dashboard-table-row-provisioning-icon',
 							{
 								'dashboard-table-row-provisioning-icon-completed':
-									provisioning === 'Completed',
+									provisioningLabel === 'completed',
 								'dashboard-table-row-provisioning-icon-pending':
-									provisioning === 'Pending',
+									provisioningLabel === 'pending',
 								'dashboard-table-row-provisioning-icon-processing':
-									provisioning === 'Processing',
+									provisioningLabel === 'processing',
 							}
 						)}
 						symbol="circle"
@@ -138,6 +139,22 @@ export function PurchasedAppsDashboardTableRow({
 					}
 				>
 					<DropDown.ItemList>
+						{orderTypeExternalReferenceCode === orderType.DXP && (
+							<ClayTooltipProvider>
+								<DropDown.Item
+									data-tooltip-align="left"
+									disabled={orderStatusIsNotCompleted}
+									onClick={() => {}}
+									title={
+										orderStatusIsNotCompleted
+											? 'The order must be completed before licensing this app.'
+											: undefined
+									}
+								>
+									Create License Key
+								</DropDown.Item>
+							</ClayTooltipProvider>
+						)}
 						<DropDown.Item
 							onClick={() => {
 								window.location.href =
@@ -157,7 +174,7 @@ export function PurchasedAppsDashboardTableRow({
 									title={
 										orderStatusIsNotCompleted
 											? 'This order must be completed before downloading this app.'
-											: ''
+											: undefined
 									}
 								>
 									Download App

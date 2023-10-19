@@ -11,7 +11,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.sharing.display.context.util.SharingDropdownItemFactory;
 import com.liferay.sharing.display.context.util.SharingJavaScriptFactory;
 
@@ -64,7 +63,8 @@ public class SharingDropdownItemFactoryImpl
 						dropdownItem.putData("action", "copyLink");
 						dropdownItem.setIcon("link");
 						dropdownItem.setLabel(
-							LanguageUtil.get(httpServletRequest, "copy-link"));
+							SharingItemFactoryUtil.getCopyLinkLabel(
+								httpServletRequest));
 					}
 				).build());
 			dropdownContextItem.setIcon("share");

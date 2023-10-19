@@ -1483,30 +1483,26 @@ public class JenkinsResultsParserUtil {
 			return null;
 		}
 
-		StringBuilder sb = new StringBuilder();
+		Class<?> clazz = JenkinsResultsParserUtil.class;
 
-		sb.append("Map<String, TopLevelItem> topLevelItems = ");
-		sb.append("Jenkins.instance.getItemMap();\n");
+		String script;
 
-		sb.append("TopLevelItem topLevelItem = topLevelItems.get(\"");
-		sb.append(jenkinsJobName);
-		sb.append("\");\n");
+		try {
+			script = readInputStream(
+				clazz.getResourceAsStream("dependencies/get-build-url.groovy"));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to load groovy script", ioException);
+		}
 
-		sb.append("for (def build : topLevelItem.getBuilds()) {\n");
-
-		sb.append("if (build.getQueueId() == ");
-		sb.append(jenkinsQueueId);
-		sb.append(") {\n");
-
-		sb.append("println(Jenkins.instance.getRootUrl() + build.getUrl());\n");
-
-		sb.append("break;\n");
-
-		sb.append("}\n}\n");
+		script = script.replace("${jenkinsJobName}", jenkinsJobName);
+		script = script.replace(
+			"${jenkinsQueueId}", String.valueOf(jenkinsQueueId));
 
 		try {
 			String response = executeJenkinsScript(
-				jenkinsMaster.getName(), sb.toString(), true);
+				jenkinsMaster.getName(), script, true);
 
 			if (isURL(response)) {
 				return response;

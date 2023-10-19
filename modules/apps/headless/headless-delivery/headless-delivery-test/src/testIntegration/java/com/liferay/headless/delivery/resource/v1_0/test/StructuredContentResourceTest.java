@@ -28,7 +28,6 @@ import com.liferay.headless.delivery.client.dto.v1_0.Geo;
 import com.liferay.headless.delivery.client.dto.v1_0.RelatedContent;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContentLink;
-import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.problem.Problem;
@@ -43,6 +42,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -642,17 +642,22 @@ public class StructuredContentResourceTest
 		randomStructuredContent2.setExternalReferenceCode(
 			postStructuredContent3.getExternalReferenceCode());
 
-		HttpInvoker.HttpResponse httpResponse =
-			structuredContentResource.
-				postAssetLibraryStructuredContentHttpResponse(
-					testDepotEntry.getDepotEntryId(), randomStructuredContent2);
+		try {
+			structuredContentResource.postAssetLibraryStructuredContent(
+				testDepotEntry.getDepotEntryId(), randomStructuredContent2);
 
-		Assert.assertEquals(
-			StringBundler.concat(
-				"Duplicate journal article external reference code ",
-				postStructuredContent3.getExternalReferenceCode(), "in group ",
-				testDepotEntry.getGroupId()),
-			httpResponse.getContent());
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertEquals(
+				_language.get(
+					LocaleUtil.getDefault(),
+					"this-external-reference-code-is-already-in-use"),
+				problem.getTitle());
+		}
 	}
 
 	@Override
@@ -1708,6 +1713,10 @@ public class StructuredContentResourceTest
 	private JournalArticleLocalService _journalArticleLocalService;
 
 	private JournalFolder _journalFolder;
+
+	@Inject
+	private Language _language;
+
 	private Layout _layout;
 
 	@Inject

@@ -62,14 +62,14 @@ renderResponse.setTitle(accountEntryDisplay.getName());
 					cssClass="table-cell-expand-small table-cell-minw-150"
 					href="<%= rowURL %>"
 					name="name"
-					value="<%= accountRoleDisplay.getName(locale) %>"
+					value="<%= HtmlUtil.escape(accountRoleDisplay.getName(locale)) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-small table-cell-minw-150"
 					href="<%= rowURL %>"
 					name="description"
-					value="<%= accountRoleDisplay.getDescription(locale) %>"
+					value="<%= HtmlUtil.escape(accountRoleDisplay.getDescription(locale)) %>"
 				/>
 
 				<liferay-ui:search-container-column-text

@@ -29,13 +29,13 @@ SearchContainer<Organization> organizationSearchContainer = AssignableAccountOrg
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand-small table-cell-minw-150"
 				name="name"
-				property="name"
+				value="<%= HtmlUtil.escape(organization.getName()) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand-small table-cell-minw-150"
 				name="parent-organization"
-				property="parentOrganizationName"
+				value="<%= HtmlUtil.escape(organization.getParentOrganizationName()) %>"
 			/>
 		</liferay-ui:search-container-row>
 

@@ -20,7 +20,7 @@ export interface DashboardListItems {
 }
 
 interface DashBoardPageProps {
-	buttonMessage?: string;
+	buttonMessage?: string | ReactNode;
 	children: ReactNode;
 	messages: {
 		description: string;

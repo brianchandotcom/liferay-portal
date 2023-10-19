@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayIcon from '@clayui/icon';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useState} from 'react';
 import {useOutletContext} from 'react-router-dom';
@@ -34,7 +35,12 @@ const Apps = () => {
 
 	return (
 		<DashboardPage
-			buttonMessage="New App"
+			buttonMessage={
+				<>
+					<ClayIcon className="mr-1" symbol="plus" />
+					New App
+				</>
+			}
 			messages={appMessages}
 			onButtonClick={() => {
 				window.location.href =

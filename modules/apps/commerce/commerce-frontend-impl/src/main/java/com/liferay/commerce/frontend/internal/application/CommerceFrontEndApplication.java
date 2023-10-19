@@ -43,7 +43,7 @@ public class CommerceFrontEndApplication extends Application {
 		singletons.add(_commerceCartResource);
 		singletons.add(_commerceSearchResource);
 		singletons.add(_commerceWishListResource);
-		singletons.add(_themeDisplayContextProvider);
+		singletons.add(new ThemeDisplayContextProvider());
 
 		return singletons;
 	}
@@ -62,8 +62,5 @@ public class CommerceFrontEndApplication extends Application {
 
 	@Reference
 	private CommerceWishListResource _commerceWishListResource;
-
-	@Reference
-	private ThemeDisplayContextProvider _themeDisplayContextProvider;
 
 }

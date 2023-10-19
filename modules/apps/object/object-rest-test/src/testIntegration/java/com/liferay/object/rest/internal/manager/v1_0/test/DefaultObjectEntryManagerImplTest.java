@@ -2140,10 +2140,10 @@ public class DefaultObjectEntryManagerImplTest
 
 		_addAccountEntryOrganizationRel(accountEntry, organization);
 
-		_user = _addUser();
+		User user = _addUser();
 
 		_organizationLocalService.addUserOrganization(
-			_user.getUserId(), organization.getOrganizationId());
+			user.getUserId(), organization.getOrganizationId());
 
 		page = _defaultObjectEntryManager.getObjectEntryRelatedObjectEntries(
 			_simpleDTOConverterContext, _objectDefinition3,
@@ -2153,8 +2153,78 @@ public class DefaultObjectEntryManagerImplTest
 
 		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
 
-		objectDefinitionLocalService.deleteObjectDefinition(
-			childObjectDefinition);
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(adminUser));
+
+		PrincipalThreadLocal.setName(adminUser.getUserId());
+
+		// Many to many relationships
+
+		ObjectRelationship objectRelationship3 =
+			_objectRelationshipLocalService.addObjectRelationship(
+				adminUser.getUserId(),
+				_objectDefinition3.getObjectDefinitionId(),
+				childObjectDefinition.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(), false,
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		ObjectEntry objectEntry3 = _defaultObjectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, _objectDefinition3,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"r_oneToManyRelationshipName_accountEntryId",
+						accountEntry.getAccountEntryId()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		ObjectEntry objectEntry4 = _defaultObjectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, childObjectDefinition,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						objectField2.getName(), accountEntry.getAccountEntryId()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		ObjectRelationshipTestUtil.relateObjectEntries(
+			objectEntry3.getId(), objectEntry4.getId(), objectRelationship3,
+			adminUser.getUserId());
+
+		objectEntry4 = _defaultObjectEntryManager.addObjectEntry(
+			_simpleDTOConverterContext, childObjectDefinition,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						objectField2.getName(),
+						_addAccountEntry().getAccountEntryId()
+					).build();
+				}
+			},
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		ObjectRelationshipTestUtil.relateObjectEntries(
+			objectEntry3.getId(), objectEntry4.getId(), objectRelationship3,
+			adminUser.getUserId());
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
+		PrincipalThreadLocal.setName(user.getUserId());
+
+		page = _defaultObjectEntryManager.getObjectEntryRelatedObjectEntries(
+			_simpleDTOConverterContext, _objectDefinition3,
+			objectEntry3.getId(), objectRelationship3.getName(), null);
+
+		objectEntries = page.getItems();
+
+		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
 	}
 
 	@Test

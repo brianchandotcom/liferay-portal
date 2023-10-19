@@ -11,13 +11,13 @@ declare module 'warning';
 
 type Account = {
 	customFields?: CustomField[];
-	description: string;
-	emailAddress: string;
-	externalReferenceCode: string;
-	id: number;
+	description?: string;
+	emailAddress?: string;
+	externalReferenceCode?: string;
+	id?: number;
 	logoURL?: string;
 	name: string;
-	type: string;
+	type?: string;
 };
 
 type Categories = {
@@ -310,29 +310,29 @@ interface PostCheckoutCartResponse extends PostCartResponse {
 }
 
 interface Product {
-	active: boolean;
+	active?: boolean;
 	attachments: ProductAttachment[];
-	catalog: Catalog;
-	catalogId: number;
-	categories: ProductCategories[];
+	catalog?: Catalog;
+	catalogId?: number;
+	categories?: ProductCategories[];
 	customFields?: CustomField[];
-	description: {[key: string]: string};
-	externalReferenceCode: string;
+	description?: {[key: string]: string};
+	externalReferenceCode?: string;
 	finalPrice?: number;
 	id?: number;
-	images: ProductImages[];
-	modifiedDate: string;
+	images?: ProductImages[];
+	modifiedDate?: string;
 	name: {[key: string]: string};
 	price?: number;
-	productChannels: Channel[];
-	productId: number;
+	productChannels?: Channel[];
+	productId?: number;
 	productSpecifications: ProductSpecification[];
-	productStatus: number;
-	productType: string;
+	productStatus?: number;
+	productType?: string;
 	skus: SKU[];
-	thumbnail: string;
-	version: number;
-	workflowStatusInfo: {
+	thumbnail?: string;
+	version?: number;
+	workflowStatusInfo?: {
 		code: number;
 		label: string;
 		label_i18n: string;
@@ -376,10 +376,10 @@ type PermissionDescription = {
 };
 
 type SKU = {
-	cost: number;
+	cost?: number;
 	customFields?: CustomField[];
-	externalReferenceCode: string;
-	id: number;
+	externalReferenceCode?: string;
+	id?: number;
 	price: number;
 	sku: string;
 	skuOptions: {key: string; value: string}[];

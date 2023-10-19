@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
 import {useState} from 'react';
 
 import './index.scss';
 
 import {useForm} from 'react-hook-form';
 
+import {FooterButtons} from '../../components/FooterButtons';
 import ProductCard from '../GetAppPage/components/ProductCard/ProductCard';
 import StepWizard from '../GetAppPage/components/StepWizard/StepWizard';
 import AccountEmailInfo from './AccountEmail';
@@ -25,6 +25,37 @@ export type CreateLicenseForm = {
 	subscription: string;
 };
 
+type ProductCardProps = {
+	licenseKeyData: {[key: string]: string};
+	product: {
+		attachments: [];
+		name: {
+			en_US: string;
+		};
+		productSpecifications: [];
+		skus: {
+			price: number;
+			sku: string;
+			skuOptions: [];
+		}[];
+	};
+	productCreatorAccount: {logoURL: undefined; name: string};
+	userAccount: {[key: string]: string};
+};
+
+type StepsInformationProps = {
+	backStep: string;
+	component: JSX.Element;
+	nextStep: string;
+	stepTitle: string;
+	title: string;
+};
+
+type StepsInformation = {
+	[StepCreateLicense.LICENSE_KEY_DETAILS]: StepsInformationProps;
+	[StepCreateLicense.SUBSCRIPTION]: StepsInformationProps;
+};
+
 const CreateLicense = () => {
 	const [step, setStep] = useState<string>(StepCreateLicense.SUBSCRIPTION);
 
@@ -36,12 +67,12 @@ const CreateLicense = () => {
 
 	const {subscription} = watch();
 
-	const StepsInformation: any = {
+	const stepsInformation: StepsInformation = {
 		[StepCreateLicense.SUBSCRIPTION]: {
 			backStep: StepCreateLicense.SUBSCRIPTION,
 			component: (
 				<SelectSubscription
-					onSelectSubscription={(subscription: any) => {
+					onSelectSubscription={(subscription: string) => {
 						setValue('subscription', subscription);
 					}}
 					selectedSubscriptionValue={subscription}
@@ -60,7 +91,7 @@ const CreateLicense = () => {
 		},
 	};
 
-	const subscriptionDataInfo: any = {
+	const ProductCardInfo: ProductCardProps = {
 		licenseKeyData: {
 			endDate: 'Oct 24, 2024',
 			keyType: 'Trial',
@@ -68,18 +99,22 @@ const CreateLicense = () => {
 		},
 		product: {
 			attachments: [],
-			name: {en_US: 'Test Joana Product'},
+			name: {en_US: 'Test Product'},
 			productSpecifications: [],
 			skus: [
 				{
+					price: 0,
 					sku: 'TESTFREEPRODUCTSKU',
 					skuOptions: [],
 				},
 			],
 		},
 		productCreatorAccount: {
-			logoURL: null,
-			name: 'Joana',
+			logoURL: undefined,
+			name: 'Test Name',
+		},
+		userAccount: {
+			emailAddress: 'test@liferay.com',
 		},
 	};
 
@@ -90,7 +125,7 @@ const CreateLicense = () => {
 					Key type
 				</small>
 				<small className="col-6 col-md-4 subscription-banner-text">
-					{subscriptionDataInfo.licenseKeyData.keyType}
+					{ProductCardInfo.licenseKeyData.keyType}
 				</small>
 			</div>
 
@@ -99,12 +134,31 @@ const CreateLicense = () => {
 					Start Date - Exp. Date
 				</small>
 				<small className="col-6 col-md-4 subscription-banner-text text-nowrap">
-					{subscriptionDataInfo.licenseKeyData.startDate} &ndash;{' '}
-					{subscriptionDataInfo.licenseKeyData.endDate}
+					{ProductCardInfo.licenseKeyData.startDate} &ndash;{' '}
+					{ProductCardInfo.licenseKeyData.endDate}
 				</small>
 			</div>
 		</>
 	);
+
+	const ButtonsInfo = {
+		backButton: {
+			displayType: 'unstyled',
+			show: true,
+		},
+		customizedButton: {
+			displayType: 'secondary',
+			show: step !== StepCreateLicense.SUBSCRIPTION,
+			text: 'Back',
+		},
+		nextButton: {
+			className: 'ml-6',
+			disabled: !subscription,
+			displayType: 'primary',
+			show: true,
+			text: 'Generate Key',
+		},
+	};
 
 	return (
 		<div className="align-items-center d-flex flex-column">
@@ -114,13 +168,13 @@ const CreateLicense = () => {
 					RightSideBanner={() => (
 						<AccountEmailInfo
 							productCreatorAccount={
-								subscriptionDataInfo.productCreatorAccount
+								ProductCardInfo.productCreatorAccount
 							}
-							userAccount={subscriptionDataInfo.userAccount}
+							userAccount={ProductCardInfo.userAccount}
 						/>
 					)}
-					creatorAccount={subscriptionDataInfo.productCreatorAccount}
-					product={subscriptionDataInfo.product}
+					creatorAccount={ProductCardInfo.productCreatorAccount}
+					product={ProductCardInfo.product}
 					showExtendBanner={
 						step === StepCreateLicense.LICENSE_KEY_DETAILS
 					}
@@ -136,7 +190,7 @@ const CreateLicense = () => {
 					<StepWizard
 						className="col-8"
 						currentStep={step}
-						stepsInformation={StepsInformation}
+						stepsInformation={stepsInformation}
 						wizardSteps={{
 							[StepCreateLicense.SUBSCRIPTION]:
 								step !== StepCreateLicense.SUBSCRIPTION,
@@ -145,45 +199,23 @@ const CreateLicense = () => {
 					/>
 				</div>
 
-				<div>{StepsInformation[step].component}</div>
-
-				<div className="d-flex justify-content-between mt-6">
-					<ClayButton
-						displayType="unstyled"
-						onClick={() => {
-							window.location.href = origin;
-						}}
-					>
-						Cancel
-					</ClayButton>
-					{step === StepCreateLicense.SUBSCRIPTION ? (
-						<ClayButton
-							disabled={!subscription}
-							displayType="primary"
-							onClick={() =>
-								setStep(StepCreateLicense.LICENSE_KEY_DETAILS)
-							}
-						>
-							Continue
-						</ClayButton>
-					) : (
-						<div className="d-flex justify-content-end">
-							<ClayButton
-								className="mr-6"
-								displayType="secondary"
-								onClick={() =>
-									setStep(StepCreateLicense.SUBSCRIPTION)
-								}
-							>
-								Back
-							</ClayButton>
-
-							<ClayButton displayType="primary">
-								Generate Key
-							</ClayButton>
-						</div>
-					)}
+				<div>
+					{stepsInformation[step as keyof StepsInformation].component}
 				</div>
+
+				<FooterButtons
+					className="d-flex justify-content-between mt-6"
+					dataButtons={ButtonsInfo}
+					onClickCancel={() => {
+						window.location.href = origin;
+					}}
+					onClickCustomized={() =>
+						setStep(StepCreateLicense.SUBSCRIPTION)
+					}
+					onClickNext={() =>
+						setStep(StepCreateLicense.LICENSE_KEY_DETAILS)
+					}
+				/>
 			</div>
 		</div>
 	);

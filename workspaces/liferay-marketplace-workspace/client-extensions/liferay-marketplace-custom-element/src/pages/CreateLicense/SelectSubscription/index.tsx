@@ -3,14 +3,22 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useState} from 'react';
+import {ReactNode, useState} from 'react';
 
 import RadioCardList from '../../../components/RadioCardList/RadioCardList';
 
 interface SubscriptionSelectionProps {
-	onSelectSubscription: (subscription: Subscription) => void;
+	onSelectSubscription: (subscription: string) => void;
 	selectedSubscriptionValue: string;
 }
+
+type ContentListType = {
+	description: ReactNode;
+	label: ReactNode;
+	selected: boolean;
+	title: ReactNode;
+	value: string;
+};
 
 const SelectSubscription = ({
 	onSelectSubscription,
@@ -23,7 +31,7 @@ const SelectSubscription = ({
 	const supportLifeStartDate = 'Sep 24, 2023';
 	const supportLifeEndDate = 'Sep 24, 2024';
 
-	const contentList = [
+	const contentList: ContentListType[] = [
 		{
 			description: (
 				<small className="text-success">

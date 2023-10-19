@@ -10,8 +10,8 @@ import {
 } from '../../../../utils/util';
 
 interface ProductCardProps {
-	ExtendBanner?: any;
-	RightSideBanner?: any;
+	ExtendBanner: React.FC;
+	RightSideBanner: React.FC;
 	creatorAccount?: Account;
 	product?: Product;
 	showExtendBanner?: boolean;

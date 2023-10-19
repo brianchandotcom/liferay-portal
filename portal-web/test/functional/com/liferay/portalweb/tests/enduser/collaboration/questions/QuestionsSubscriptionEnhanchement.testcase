@@ -333,11 +333,6 @@ definition {
 	@priority = 5
 	test CanUnsubscribeAQuestion {
 		task ("Given there are a Topic and a question created") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Questions Test Topic",
-				userEmailAddress = "test@liferay.com");
-
 			JSONQuestions.addQuestion(
 				bodyField = "Content AddQuestion",
 				categoryName = "Questions Test Topic",
@@ -386,11 +381,6 @@ definition {
 	@priority = 5
 	test CanUnsubscribeATag {
 		task ("Given there are a category and a question with a tag created") {
-			JSONMBMessage.addCategory(
-				categoryDescription = "Description",
-				categoryName = "Questions Test Topic",
-				userEmailAddress = "test@liferay.com");
-
 			JSONQuestions.addQuestionWithTag(
 				bodyField = "Content1",
 				categoryName = "Questions Test Topic",

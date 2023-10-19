@@ -1030,7 +1030,7 @@ definition {
 				siteURLKey = "guest",
 				topicName = "questions-test-category");
 
-			Questions.subscribeQuestion();
+			Questions.subscribeFromQuestion(questionTitle = "Title AddQuestion");
 		}
 
 		task ("Then he can see that he was subscribed on 'Subscriptions' page") {

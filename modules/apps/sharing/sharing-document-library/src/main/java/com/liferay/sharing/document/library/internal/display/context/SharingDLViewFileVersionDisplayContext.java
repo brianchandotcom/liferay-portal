@@ -10,9 +10,13 @@ import com.liferay.document.library.display.context.BaseDLViewFileVersionDisplay
 import com.liferay.document.library.display.context.DLUIItemKeys;
 import com.liferay.document.library.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownContextItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownGroupItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
@@ -74,11 +78,7 @@ public class SharingDLViewFileVersionDisplayContext
 			return dropdownItems;
 		}
 
-		return _addSharingDropdownItem(
-			dropdownItems,
-			_sharingDropdownItemFactory.createShareDropdownItem(
-				DLFileEntryConstants.getClassName(),
-				_fileEntry.getFileEntryId(), _httpServletRequest));
+		return _addSharingDropdownItem(dropdownItems);
 	}
 
 	@Override
@@ -113,7 +113,8 @@ public class SharingDLViewFileVersionDisplayContext
 	}
 
 	private List<DropdownItem> _addSharingDropdownItem(
-		List<DropdownItem> dropdownItems, DropdownItem sharingDropdownItem) {
+			List<DropdownItem> dropdownItems)
+		throws PortalException {
 
 		int i = 1;
 
@@ -123,8 +124,7 @@ public class SharingDLViewFileVersionDisplayContext
 					(DropdownGroupItem)dropdownItem;
 
 				if (_addSharingDropdownItemGroup(
-						(List<DropdownItem>)dropdownGroupItem.get("items"),
-						sharingDropdownItem)) {
+						(List<DropdownItem>)dropdownGroupItem.get("items"))) {
 
 					return dropdownItems;
 				}
@@ -138,18 +138,46 @@ public class SharingDLViewFileVersionDisplayContext
 			i++;
 		}
 
+		DropdownItem sharingDropdownItem =
+			_sharingDropdownItemFactory.createShareDropdownItem(
+				DLFileEntryConstants.getClassName(),
+				_fileEntry.getFileEntryId(), _httpServletRequest);
+
+		UnsafeConsumer<DropdownContextItem, Exception> sharingActionItem =
+			_sharingDropdownItemFactory.createShareActionUnsafeConsumer(
+				DLFileEntryConstants.getClassName(),
+				_fileEntry.getFileEntryId(), _httpServletRequest);
+
 		if (i >= dropdownItems.size()) {
-			dropdownItems.add(sharingDropdownItem);
+			if (FeatureFlagManagerUtil.isEnabled("LPS-197477")) {
+				dropdownItems.addAll(
+					DropdownItemListBuilder.addContext(
+						sharingActionItem
+					).build());
+			}
+			else {
+				dropdownItems.add(sharingDropdownItem);
+			}
 		}
 		else {
-			dropdownItems.add(i, sharingDropdownItem);
+			if (FeatureFlagManagerUtil.isEnabled("LPS-197477")) {
+				dropdownItems.addAll(
+					i,
+					DropdownItemListBuilder.addContext(
+						sharingActionItem
+					).build());
+			}
+			else {
+				dropdownItems.add(i, sharingDropdownItem);
+			}
 		}
 
 		return dropdownItems;
 	}
 
 	private boolean _addSharingDropdownItemGroup(
-		List<DropdownItem> dropdownItems, DropdownItem sharingDropdownItem) {
+			List<DropdownItem> dropdownItems)
+		throws PortalException {
 
 		int i = 1;
 
@@ -159,8 +187,7 @@ public class SharingDLViewFileVersionDisplayContext
 					(DropdownGroupItem)dropdownItem;
 
 				if (_addSharingDropdownItemGroup(
-						(List<DropdownItem>)dropdownGroupItem.get("items"),
-						sharingDropdownItem)) {
+						(List<DropdownItem>)dropdownGroupItem.get("items"))) {
 
 					return true;
 				}
@@ -174,8 +201,27 @@ public class SharingDLViewFileVersionDisplayContext
 			i++;
 		}
 
+		DropdownItem sharingDropdownItem =
+			_sharingDropdownItemFactory.createShareDropdownItem(
+				DLFileEntryConstants.getClassName(),
+				_fileEntry.getFileEntryId(), _httpServletRequest);
+
+		UnsafeConsumer<DropdownContextItem, Exception> sharingActionItem =
+			_sharingDropdownItemFactory.createShareActionUnsafeConsumer(
+				DLFileEntryConstants.getClassName(),
+				_fileEntry.getFileEntryId(), _httpServletRequest);
+
 		if (i < dropdownItems.size()) {
-			dropdownItems.add(i, sharingDropdownItem);
+			if (FeatureFlagManagerUtil.isEnabled("LPS-197477")) {
+				dropdownItems.addAll(
+					i,
+					DropdownItemListBuilder.addContext(
+						sharingActionItem
+					).build());
+			}
+			else {
+				dropdownItems.add(i, sharingDropdownItem);
+			}
 
 			return true;
 		}

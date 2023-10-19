@@ -3482,19 +3482,17 @@ definition {
 			PageEditor.editLayoutContainer(
 				backgroundColor = "Danger",
 				panel = "Styles");
-
-			PageEditor.publish();
 		}
 
 		task ("Create an experience") {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "Anyone");
-
-			PageEditor.publish();
 		}
 
 		task ("Change the background color of the default experience") {
+			PageEditor.changeExperience(newExperience = "Default");
+
 			PageEditor.editLayoutContainer(
 				backgroundColor = "Success",
 				panel = "Styles");
@@ -3503,9 +3501,7 @@ definition {
 		}
 
 		task ("Check if any experience has its own container with its own background color") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
+			ContentPages.gotoPageEditor();
 
 			PageEditor.viewContainerStyle(
 				backgroundColor = "success",
@@ -3897,6 +3893,8 @@ definition {
 
 			PageEditor.publish();
 
+			ContentPages.gotoPageEditor();
+
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "Anyone");
@@ -3936,6 +3934,8 @@ definition {
 				fragmentName = "Heading");
 
 			PageEditor.publish();
+
+			ContentPages.gotoPageEditor();
 
 			PageEditor.addExperience(
 				experienceName = "New Experience",
@@ -4094,13 +4094,11 @@ definition {
 				id = "element-text",
 				text = "Default");
 
-			Button.clickPublish();
+			PageEditor.publish();
 		}
 
 		task ("Add a first experience to page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
+			ContentPages.gotoPageEditor();
 
 			PageEditor.addExperience(
 				experienceName = "NewExp1",
@@ -4120,15 +4118,9 @@ definition {
 
 		task ("Duplicate the first experience") {
 			PageEditor.duplicateExperience(experienceName = "NewExp1");
-
-			Button.clickPublish();
 		}
 
 		task ("Modify the second experience") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
-
 			PageEditor.changeExperience(newExperience = "Copy of NewExp1");
 
 			AssertTextEquals(
@@ -4147,8 +4139,6 @@ definition {
 			AssertTextEquals(
 				locator1 = "Experience#FRAGMENT_HEADING",
 				value1 = "Exp1");
-
-			PageEditor.publish();
 		}
 
 		task ("Check that the duplicated experience is bellow default experience") {
@@ -5417,8 +5407,6 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "Anyone");
-
-			PageEditor.publish();
 		}
 
 		task ("Add a Banner Center to default experience") {
@@ -5442,8 +5430,6 @@ definition {
 				fragmentName = "Heading",
 				id = "element-text",
 				text = "Title of Banner");
-
-			PageEditor.publish();
 		}
 
 		task ("Check that Banner fragment was properly added") {

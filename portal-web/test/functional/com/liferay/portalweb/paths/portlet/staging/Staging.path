@@ -214,12 +214,12 @@
 </tr>
 <tr>
 	<td>MANAGE_VARIATIONS</td>
-	<td>//button[contains(@data-action,'viewLayoutSetBranches')]</td>
+	<td>//div[contains(@class,'dropdown-menu')][contains(@class,'show')]//button[contains(@data-action,'viewLayoutSetBranches')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>HISTORY_BUTTON</td>
-	<td>//button[contains(@data-action,'viewHistory')]</td>
+	<td>//div[contains(@class,'dropdown-menu')][contains(@class,'show')]//button[contains(@data-action,'viewHistory')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -367,17 +367,17 @@
 </tr>
 <tr>
 	<td>STAGING_MENU_MANAGE_PAGE_VARIATION</td>
-	<td>//button[contains(@data-action,'viewLayoutBranches')]</td>
+	<td>//div[contains(@class,'dropdown-menu')][contains(@class,'show')]//button[contains(@data-action,'viewLayoutBranches')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>STAGING_MENU_REDO_BUTTON</td>
-	<td>//button[contains(@data-action,'redo')]</td>
+	<td>//div[contains(@class,'dropdown-menu')][contains(@class,'show')]//button[contains(@data-action,'redo')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>STAGING_MENU_UNDO_BUTTON</td>
-	<td>//button[contains(@data-action,'undo')]</td>
+	<td>//div[contains(@class,'dropdown-menu')][contains(@class,'show')]//button[contains(@data-action,'undo')]</td>
 	<td></td>
 </tr>
 <tr>

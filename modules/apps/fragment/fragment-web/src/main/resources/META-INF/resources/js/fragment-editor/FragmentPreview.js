@@ -27,11 +27,11 @@ const SIZE_RATIOS = {
 		height: '',
 		width: '',
 	},
-	'portrait-phone': {
+	'mobile-portrait': {
 		height: 16,
 		width: 10,
 	},
-	'tablet': {
+	'tablet-portrait': {
 		height: 3,
 		width: 4,
 	},
@@ -40,13 +40,18 @@ const SIZE_RATIOS = {
 /**
  * Available preview sizes in order.
  */
-const PREVIEW_SIZES = ['desktop', 'tablet', 'portrait-phone', 'full-size'];
+const PREVIEW_SIZES = [
+	'desktop',
+	'tablet-portrait',
+	'mobile-portrait',
+	'full-size',
+];
 
 const PREVIEW_SIZES_LABELS = {
 	'desktop': Liferay.Language.get('desktop'),
 	'full-size': Liferay.Language.get('full-size'),
-	'portrait-phone': Liferay.Language.get('portrait-phone'),
-	'tablet': Liferay.Language.get('tablet'),
+	'mobile-portrait': Liferay.Language.get('portrait-phone'),
+	'tablet-portrait': Liferay.Language.get('tablet'),
 };
 
 const stopEventPropagation = (event) => {

@@ -287,7 +287,11 @@ definition {
 				locator1 = "ObjectField#SELECT_FORMULA_FIELD_OPTION");
 		}
 
-		PortletEntry.save();
+		Button.clickSave();
+
+		WaitForVisible(
+			key_fieldLabel = ${fieldLabel},
+			locator1 = "ObjectAdmin#VIEW_OBJECT_FIELD_LABEL");
 	}
 
 	macro addObjectLayoutViaAPI {

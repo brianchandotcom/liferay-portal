@@ -44,7 +44,6 @@ import com.liferay.portal.vulcan.permission.Permission;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -762,8 +761,11 @@ public class ResourceOpenAPIParser {
 
 		String operationId = operation.getOperationId();
 
+		Schema schema = OpenAPIParserUtil.getOperationSchema(
+			operation, requestBodyMediaTypes);
+
 		if ((operationId != null) && operationId.endsWith("PermissionsPage") &&
-			operationId.startsWith("put") && requestBodyMediaTypes.isEmpty()) {
+			operationId.startsWith("put") && (schema == null)) {
 
 			javaMethodParameters.add(
 				new JavaMethodParameter(
@@ -808,16 +810,12 @@ public class ResourceOpenAPIParser {
 					"application/x-www-form-urlencoded is not supported");
 			}
 			else if (!requestBodyMediaTypes.contains("multipart/form-data")) {
-				RequestBody requestBody = operation.getRequestBody();
-
-				Map<String, Content> contents = requestBody.getContent();
-
-				Iterator<String> iterator = requestBodyMediaTypes.iterator();
-
-				Content content = contents.get(iterator.next());
+				if (schema == null) {
+					return javaMethodParameters;
+				}
 
 				String parameterType = OpenAPIParserUtil.getJavaDataType(
-					javaDataTypeMap, content.getSchema());
+					javaDataTypeMap, schema);
 
 				String simpleClassName = parameterType.substring(
 					parameterType.lastIndexOf(".") + 1);

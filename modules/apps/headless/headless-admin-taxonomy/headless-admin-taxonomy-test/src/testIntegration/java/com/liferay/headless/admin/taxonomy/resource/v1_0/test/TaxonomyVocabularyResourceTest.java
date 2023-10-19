@@ -210,6 +210,48 @@ public class TaxonomyVocabularyResourceTest
 
 	@Override
 	@Test
+	public void testGetAssetLibraryTaxonomyVocabulariesPageWithPagination()
+		throws Exception {
+
+		Long assetLibraryId =
+			testGetAssetLibraryTaxonomyVocabulariesPage_getAssetLibraryId();
+
+		TaxonomyVocabulary taxonomyVocabulary1 =
+			testGetAssetLibraryTaxonomyVocabulariesPage_addTaxonomyVocabulary(
+				assetLibraryId, randomTaxonomyVocabulary());
+
+		TaxonomyVocabulary taxonomyVocabulary2 =
+			testGetAssetLibraryTaxonomyVocabulariesPage_addTaxonomyVocabulary(
+				assetLibraryId, randomTaxonomyVocabulary());
+
+		TaxonomyVocabulary taxonomyVocabulary3 =
+			testGetAssetLibraryTaxonomyVocabulariesPage_addTaxonomyVocabulary(
+				assetLibraryId, randomTaxonomyVocabulary());
+
+		Page<TaxonomyVocabulary> page1 =
+			taxonomyVocabularyResource.getAssetLibraryTaxonomyVocabulariesPage(
+				assetLibraryId, null, null, null, Pagination.of(1, 3), null);
+
+		List<TaxonomyVocabulary> taxonomyVocabularies1 =
+			(List<TaxonomyVocabulary>)page1.getItems();
+
+		Assert.assertEquals(
+			taxonomyVocabularies1.toString(), 3, taxonomyVocabularies1.size());
+
+		Assert.assertEquals(6, page1.getTotalCount());
+
+		Page<TaxonomyVocabulary> page2 =
+			taxonomyVocabularyResource.getAssetLibraryTaxonomyVocabulariesPage(
+				assetLibraryId, null, null, null, Pagination.of(2, 3), null);
+
+		assertEqualsIgnoringOrder(
+			Arrays.asList(
+				taxonomyVocabulary1, taxonomyVocabulary2, taxonomyVocabulary3),
+			(List<TaxonomyVocabulary>)page2.getItems());
+	}
+
+	@Override
+	@Test
 	public void testGetAssetLibraryTaxonomyVocabularyByExternalReferenceCode()
 		throws Exception {
 

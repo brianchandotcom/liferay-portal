@@ -5,8 +5,8 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.redirect.RedirectURLSettings;
-import com.liferay.portal.kernel.redirect.RedirectURLSettingsUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
@@ -28,6 +28,9 @@ import org.junit.Test;
 
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Tomas Polesovsky
@@ -52,9 +55,8 @@ public class PortalImplEscapeRedirectTest {
 
 	@Before
 	public void setUp() {
-		_originalRedirectURLSettings = ReflectionTestUtil.getAndSetFieldValue(
-			RedirectURLSettingsUtil.class, "_redirectURLSettings",
-			_redirectURLSettingsImpl);
+		_serviceRegistration = _bundleContext.registerService(
+			RedirectURLSettings.class, _redirectURLSettingsImpl, null);
 
 		_prefsPropsUtilMockedStatic.when(
 			() -> PrefsPropsUtil.getString(
@@ -67,9 +69,9 @@ public class PortalImplEscapeRedirectTest {
 
 	@After
 	public void tearDown() {
-		ReflectionTestUtil.setFieldValue(
-			RedirectURLSettingsUtil.class, "_redirectURLSettings",
-			_originalRedirectURLSettings);
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
 
 		_prefsPropsUtilMockedStatic.close();
 	}
@@ -289,7 +291,11 @@ public class PortalImplEscapeRedirectTest {
 			_portalImpl.escapeRedirect("http://prefixtest.liferay.com"));
 	}
 
-	private RedirectURLSettings _originalRedirectURLSettings;
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
+	private static ServiceRegistration<RedirectURLSettings>
+		_serviceRegistration;
+
 	private final PortalImpl _portalImpl = new PortalImpl();
 	private final MockedStatic<PrefsPropsUtil> _prefsPropsUtilMockedStatic =
 		Mockito.mockStatic(PrefsPropsUtil.class);

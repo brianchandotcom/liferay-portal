@@ -355,10 +355,10 @@ public class HttpRequestUtil {
 			long duration) {
 
 			_body = body;
-			_duration = duration;
 			_errorMessage = errorMessage;
 			_headerFields = headerFields;
 			_statusCode = statusCode;
+			_duration = duration;
 		}
 
 		public String getBody() {

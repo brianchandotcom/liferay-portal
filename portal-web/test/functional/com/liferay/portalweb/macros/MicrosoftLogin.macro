@@ -9,7 +9,7 @@ definition {
 		WaitForElementPresent.waitForLastScript();
 
 		if (isSet(windowTitle)) {
-			SelectWindow(value1 = "MicrosoftLogin#LOGIN_PAGE_TITLE");
+			SelectWindow(value1 = "title=Sign in to your account");
 		}
 
 		if (IsElementPresent(locator1 = "MicrosoftLogin#LOGIN_USER_CHOOSER")) {

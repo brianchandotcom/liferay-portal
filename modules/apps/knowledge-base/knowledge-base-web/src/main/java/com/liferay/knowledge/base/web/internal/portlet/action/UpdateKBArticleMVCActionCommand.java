@@ -13,6 +13,7 @@ import com.liferay.knowledge.base.exception.KBArticleExpirationDateException;
 import com.liferay.knowledge.base.exception.KBArticleReviewDateException;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleService;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
@@ -21,10 +22,13 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -32,6 +36,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
+
+import java.text.Format;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -160,6 +166,24 @@ public class UpdateKBArticleMVCActionCommand
 					_getContentRedirect(
 						KBArticle.class, kbArticle.getResourcePrimKey(),
 						redirect));
+			}
+
+			if (kbArticle.isScheduled()) {
+				Format dateTimeFormat = FastDateFormatFactoryUtil.getDateTime(
+					themeDisplay.getLocale());
+
+				MultiSessionMessages.add(
+					actionRequest, "kbArticleScheduledSuccessMessage",
+					_language.format(
+						_portal.getHttpServletRequest(actionRequest),
+						"x-will-be-published-on-x",
+						new Object[] {
+							"<strong>`" + HtmlUtil.escapeURL(title) +
+								"`</strong>",
+							dateTimeFormat.format(displayDate)
+						}));
+
+				hideDefaultSuccessMessage(actionRequest);
 			}
 		}
 	}
@@ -327,6 +351,9 @@ public class UpdateKBArticleMVCActionCommand
 
 	@Reference
 	private KBArticleService _kbArticleService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private Portal _portal;

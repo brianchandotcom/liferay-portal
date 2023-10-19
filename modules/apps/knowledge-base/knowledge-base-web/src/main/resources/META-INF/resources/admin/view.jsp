@@ -131,3 +131,18 @@ KBAdminManagementToolbarDisplayContext kbAdminManagementToolbarDisplayContext = 
 		</clay:container-fluid>
 	</div>
 </div>
+
+<%
+String kbArticleScheduledSuccessMessage = GetterUtil.getString(MultiSessionMessages.get(renderRequest, "kbArticleScheduledSuccessMessage"));
+%>
+
+<c:if test="<%= Validator.isNotNull(kbArticleScheduledSuccessMessage) %>">
+	<script>
+		Liferay.Util.openToast({
+			message: '<%= kbArticleScheduledSuccessMessage %>',
+			toastProps: {
+				autoClose: 20000,
+			},
+		});
+	</script>
+</c:if>

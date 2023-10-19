@@ -180,7 +180,8 @@ public class TransactionContainerRequestFilter
 			}
 			catch (Throwable throwable) {
 				if (throwable != exception) {
-					_log.error("Unable to rollback the transaction", throwable);
+					_log.error(
+						"Unable to roll back the transaction", throwable);
 				}
 			}
 			finally {

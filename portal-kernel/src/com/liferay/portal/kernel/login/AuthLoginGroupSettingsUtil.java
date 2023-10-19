@@ -5,7 +5,7 @@
 
 package com.liferay.portal.kernel.login;
 
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * @author Erick Monteiro
@@ -13,12 +13,14 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 public class AuthLoginGroupSettingsUtil {
 
 	public static boolean isPromptEnabled(long groupId) {
-		return _authLoginGroupSettings.isPromptEnabled(groupId);
+		AuthLoginGroupSettings authLoginGroupSettings =
+			_authLoginGroupSettingsSnapshot.get();
+
+		return authLoginGroupSettings.isPromptEnabled(groupId);
 	}
 
-	private static volatile AuthLoginGroupSettings _authLoginGroupSettings =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			AuthLoginGroupSettings.class, AuthLoginGroupSettingsUtil.class,
-			"_authLoginGroupSettings", false);
+	private static final Snapshot<AuthLoginGroupSettings>
+		_authLoginGroupSettingsSnapshot = new Snapshot<>(
+			AuthLoginGroupSettingsUtil.class, AuthLoginGroupSettings.class);
 
 }

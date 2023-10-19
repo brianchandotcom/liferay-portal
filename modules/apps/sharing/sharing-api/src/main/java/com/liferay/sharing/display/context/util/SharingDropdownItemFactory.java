@@ -5,7 +5,9 @@
 
 package com.liferay.sharing.display.context.util;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownContextItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +25,11 @@ public interface SharingDropdownItemFactory {
 	public DropdownItem createShareDropdownItem(
 			String className, long classPK,
 			HttpServletRequest httpServletRequest)
+		throws PortalException;
+
+	public UnsafeConsumer<DropdownContextItem, Exception> createShareActionUnsafeConsumer(
+		String className, long classPK,
+		HttpServletRequest httpServletRequest)
 		throws PortalException;
 
 }

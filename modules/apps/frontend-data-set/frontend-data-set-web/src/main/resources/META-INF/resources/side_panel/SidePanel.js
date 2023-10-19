@@ -329,11 +329,12 @@ export default class SidePanel extends React.Component {
 	}
 
 	render() {
-		const visibility = this.state.visible ? 'is-visible' : 'is-hidden';
 		const loading =
 			this.state.loading || (this.state.moving && this.state.visible)
 				? 'is-loading'
 				: '';
+		const moving = this.state.moving ? 'is-moving' : '';
+		const visibility = this.state.visible ? 'is-visible' : 'is-hidden';
 
 		const content = (
 			<>
@@ -366,6 +367,7 @@ export default class SidePanel extends React.Component {
 					className={classNames(
 						'fds-side-panel',
 						`fds-side-panel-${this.state.size}`,
+						moving,
 						visibility,
 						loading
 					)}

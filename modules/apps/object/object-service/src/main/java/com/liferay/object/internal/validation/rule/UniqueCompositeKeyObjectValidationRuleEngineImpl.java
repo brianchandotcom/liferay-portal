@@ -5,6 +5,7 @@
 
 package com.liferay.object.internal.validation.rule;
 
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.constants.ObjectValidationRuleSettingConstants;
 import com.liferay.object.internal.entry.util.ObjectEntrySearchUtil;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -125,10 +127,24 @@ public class UniqueCompositeKeyObjectValidationRuleEngineImpl
 				continue;
 			}
 
+			String value = null;
+
+			if (StringUtil.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+
+				Map<String, Object> objectFieldProperties =
+					(Map<String, Object>)entryValues.get(objectField.getName());
+
+				value = String.valueOf(objectFieldProperties.get("key"));
+			}
+			else {
+				value = String.valueOf(entryValues.get(objectField.getName()));
+			}
+
 			Predicate uniqueCompositeKeyObjectFieldPredicate =
 				ObjectEntrySearchUtil.getUniqueCompositeKeyObjectFieldPredicate(
-					(Column<?, Object>)column, objectField.getDBType(),
-					String.valueOf(entryValues.get(objectField.getName())));
+					(Column<?, Object>)column, objectField.getDBType(), value);
 
 			if (predicate == null) {
 				predicate = uniqueCompositeKeyObjectFieldPredicate;

@@ -1281,8 +1281,6 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		var siteName = TestCase.getSiteName(siteName = ${siteName});
-
 		task ("Given: Add new site template and two new sites based on this site template") {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
 
@@ -1322,19 +1320,17 @@ definition {
 
 			PageEditor.publish();
 
-			Navigator.gotoSitePage(
-				pageName = "Home",
-				siteName = "Site Name A");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name-a/home");
 
 			Refresh();
 		}
 
 		task ("And: Navigate to the Site Name B to trigger the propagation") {
-			Navigator.gotoSitePage(
-				pageName = "Home",
-				siteName = "Site Name B");
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name-b/home");
 
 			Refresh();
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name-b/home");
 		}
 
 		task ("Then: Verify the propagation of Site Name B should reuse the cached site template Lar file") {

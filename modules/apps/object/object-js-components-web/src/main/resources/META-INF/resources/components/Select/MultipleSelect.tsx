@@ -8,7 +8,9 @@ import ClayDropDown from '@clayui/drop-down';
 import {ClayCheckbox} from '@clayui/form';
 import ClayMultiSelect from '@clayui/multi-select';
 import {FieldBase} from 'frontend-js-components-web';
-import React, {FocusEvent, useEffect, useState} from 'react';
+import React, {FocusEvent, useEffect, useMemo, useState} from 'react';
+
+import {stringIncludesQuery} from '../../utils/string';
 
 interface MultipleSelectProps {
 	className?: string;
@@ -43,11 +45,18 @@ export function MultipleSelect({
 	selectAllOption,
 	setOptions,
 }: MultipleSelectProps) {
-	const [selectAllChecked, setSelectAllChecked] = useState<boolean>(false);
 	const [dropdownActive, setDropdownActive] = useState<boolean>(false);
 	const [multiSelectItems, setMultiSelectItems] = useState<
 		LabelValueObject[]
 	>([]);
+	const [query, setQuery] = useState('');
+	const [selectAllChecked, setSelectAllChecked] = useState<boolean>(false);
+
+	const filteredOptions = useMemo(() => {
+		return options.filter((option) =>
+			stringIncludesQuery(option.label as string, query)
+		);
+	}, [query, options]);
 
 	useEffect(() => {
 		if (selectAllOption) {
@@ -95,7 +104,8 @@ export function MultipleSelect({
 				<ClayMultiSelect<MultiSelectItem>
 					items={multiSelectItems as MultiSelectItem[]}
 					loadingState={4}
-					onClick={() => setDropdownActive((active) => !active)}
+					onChange={setQuery}
+					onFocus={() => setDropdownActive((active) => !active)}
 					onItemsChange={(items: MultiSelectItem[]) => {
 						if (!items.length && setSelectAllChecked) {
 							setSelectAllChecked(false);
@@ -154,7 +164,7 @@ export function MultipleSelect({
 							</div>
 						)}
 
-						{options.map(({checked, label, value}) => (
+						{filteredOptions.map(({checked, label, value}) => (
 							<div className="dropdown-item" key={value}>
 								<ClayCheckbox
 									checked={checked as boolean}

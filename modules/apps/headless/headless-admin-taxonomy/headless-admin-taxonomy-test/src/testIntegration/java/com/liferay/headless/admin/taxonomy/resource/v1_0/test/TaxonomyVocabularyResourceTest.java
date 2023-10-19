@@ -20,8 +20,11 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.odata.entity.EntityField;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -39,8 +42,6 @@ public class TaxonomyVocabularyResourceTest
 	@Test
 	public void testDeleteAssetLibraryTaxonomyVocabularyByExternalReferenceCode()
 		throws Exception {
-
-		super.testDeleteAssetLibraryTaxonomyVocabularyByExternalReferenceCode();
 
 		testDeleteAssetLibraryTaxonomyVocabularyByExternalReferenceCode_addTaxonomyVocabulary();
 
@@ -71,19 +72,61 @@ public class TaxonomyVocabularyResourceTest
 	@Override
 	@Test
 	public void testGetAssetLibraryTaxonomyVocabulariesPage() throws Exception {
-		super.testGetAssetLibraryTaxonomyVocabulariesPage();
+		Long assetLibraryId =
+			testGetAssetLibraryTaxonomyVocabulariesPage_getAssetLibraryId();
 
-		TaxonomyVocabulary taxonomyVocabulary =
+		Page<TaxonomyVocabulary> page =
+			taxonomyVocabularyResource.getAssetLibraryTaxonomyVocabulariesPage(
+				assetLibraryId, null, null, null, Pagination.of(1, 10), null);
+
+		Assert.assertEquals(3, page.getTotalCount());
+
+		TaxonomyVocabulary taxonomyVocabulary1 =
+			testGetAssetLibraryTaxonomyVocabulariesPage_addTaxonomyVocabulary(
+				assetLibraryId, randomTaxonomyVocabulary());
+
+		TaxonomyVocabulary taxonomyVocabulary2 =
+			testGetAssetLibraryTaxonomyVocabulariesPage_addTaxonomyVocabulary(
+				assetLibraryId, randomTaxonomyVocabulary());
+
+		List<TaxonomyVocabulary> expectedTaxonomyVocabularies =
+			new ArrayList<>();
+
+		expectedTaxonomyVocabularies.add(taxonomyVocabulary1);
+		expectedTaxonomyVocabularies.add(taxonomyVocabulary2);
+		expectedTaxonomyVocabularies.addAll(page.getItems());
+
+		page =
+			taxonomyVocabularyResource.getAssetLibraryTaxonomyVocabulariesPage(
+				assetLibraryId, null, null, null, Pagination.of(1, 10), null);
+
+		Assert.assertEquals(5, page.getTotalCount());
+
+		assertEqualsIgnoringOrder(
+			expectedTaxonomyVocabularies,
+			(List<TaxonomyVocabulary>)page.getItems());
+		assertValid(
+			page,
+			testGetAssetLibraryTaxonomyVocabulariesPage_getExpectedActions(
+				assetLibraryId));
+
+		taxonomyVocabularyResource.deleteTaxonomyVocabulary(
+			taxonomyVocabulary1.getId());
+
+		taxonomyVocabularyResource.deleteTaxonomyVocabulary(
+			taxonomyVocabulary2.getId());
+
+		TaxonomyVocabulary taxonomyVocabulary3 =
 			testGetAssetLibraryTaxonomyVocabulariesPage_addTaxonomyVocabulary(
 				testGetAssetLibraryTaxonomyVocabulariesPage_getAssetLibraryId(),
 				randomTaxonomyVocabulary());
 
-		Page<TaxonomyVocabulary> page =
+		page =
 			taxonomyVocabularyResource.getAssetLibraryTaxonomyVocabulariesPage(
 				testGetAssetLibraryTaxonomyVocabulariesPage_getAssetLibraryId(),
 				null, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(1, page.getTotalCount());
+		Assert.assertEquals(4, page.getTotalCount());
 
 		assertValid(
 			page,
@@ -143,9 +186,13 @@ public class TaxonomyVocabularyResourceTest
 					"id,numberOfTaxonomyCategories"
 		).build();
 
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.STRING);
+
 		page =
 			taxonomyVocabularyResource.getAssetLibraryTaxonomyVocabulariesPage(
-				testDepotEntry.getDepotEntryId(), null, null, null,
+				testDepotEntry.getDepotEntryId(), null, null,
+				getFilterString(entityFields.get(0), "eq", taxonomyVocabulary3),
 				Pagination.of(1, 10), null);
 
 		Assert.assertEquals(1, page.getTotalCount());
@@ -153,7 +200,7 @@ public class TaxonomyVocabularyResourceTest
 		assertEquals(
 			new TaxonomyVocabulary() {
 				{
-					name = taxonomyVocabulary.getName();
+					name = taxonomyVocabulary3.getName();
 				}
 			},
 			page.fetchFirstItem());

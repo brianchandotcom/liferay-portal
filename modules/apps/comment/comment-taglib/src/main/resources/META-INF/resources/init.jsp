@@ -70,6 +70,10 @@ if (Validator.isNull(namespace)) {
 	namespace = AUIUtil.getNamespace(request);
 }
 
+if (Validator.isNull(namespace)) {
+	namespace = portletDisplay.getNamespace();
+}
+
 String currentURL = null;
 
 if ((portletRequest != null) && (portletResponse != null)) {

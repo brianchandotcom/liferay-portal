@@ -62,48 +62,10 @@ definition {
 		}
 	}
 
-	@description = "LPS-177441 - Manager should see comment on Organizations details page"
-	@priority = 4
-	test CanSeeCommentOnDetailsPage {
-		task ("Given that Sign as Manager user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "Manager User");
-		}
-
-		task ("And go to organization page") {
-			EVPUtils.gotoEVP();
-
-			EVPNavigator.goToNavItem(navItem = "Organization");
-		}
-
-		task ("When the manager approve the organization created") {
-			EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test");
-
-			MenuItem.click(menuItem = "Review");
-
-			EVPUtils.changeStatus(
-				button = "Approve",
-				typeMessage = "Your organization has been approved!");
-		}
-
-		task ("And go to details page") {
-			EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test");
-
-			MenuItem.click(menuItem = "Details");
-		}
-
-		task ("Then the manager user can see the comment 'Your organization has been approved!' in the details page") {
-			EVPUtils.assertHeadersTitle(listHeaderTitle = "Organization Test,Your organization has been approved!");
-		}
-	}
-
 	@description = "LPS-164733 - Verify that Only the Employee user can not see 'Review button' when organization are in 'Awaiting Approval On EVP' status"
 	@priority = 5
 	test EmployeeCanNotSeeReviewInAwaitingEVPStatus {
-		task ("When the Employee goes to organization page") {
-			EVPUtils.gotoEVP();
-
+		task ("When the Employee user goes to organization page") {
 			EVPNavigator.goToNavItem(navItem = "Organization");
 		}
 
@@ -114,10 +76,10 @@ definition {
 		}
 	}
 
-	@description = "LPS-164733 - Verify that Only the Finance user can not see 'Review button' when organization are in 'Awaiting Approval On EVP' status"
+	@description = "LPS-164733 - Verify that the Finance user can not see 'Review button' when organization are in 'Awaiting Approval On EVP' status"
 	@priority = 5
 	test FinanceCanNotSeeReviewInAwaitingEVPStatus {
-		task ("Given that login with Finance user") {
+		task ("Given that Finance user is logged") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "finance@liferay.com",
 				userLoginFullName = "Finance User");
@@ -136,29 +98,13 @@ definition {
 		}
 	}
 
-	@description = "LPS-164733 - Verify that the EVP Staff can approve a new organization"
+	@description = "LPS-164733 - Verify that the EVP Manager can approve a new organization and see the comment in details page"
 	@priority = 4
-	test ManagerCanApproveOrganization {
-		task ("Given that Sign as Manager user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "Manager User");
-		}
-
-		task ("And go to organization page") {
-			EVPUtils.gotoEVP();
-
-			EVPNavigator.goToNavItem(navItem = "Organization");
-		}
-
-		task ("When the manager approve the organization created") {
-			EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test");
-
-			MenuItem.click(menuItem = "Review");
-
-			EVPUtils.changeStatus(
-				button = "Approve",
-				typeMessage = "Your organization has been approved!");
+	test ManagerCanApproveOrganizationWithComment {
+		task ("When Manager user approves the created organization") {
+			EVPUtils.managerApproval(
+				listingPage = "Organization",
+				organizationName = "Organization Test");
 		}
 
 		task ("Then the status will be updated to 'Awaiting Finance Approval'") {
@@ -166,36 +112,32 @@ definition {
 				organizationName = "Organization Test",
 				status = "Awaiting Finance Approval");
 		}
+
+		task ("When Manager user goes to details page") {
+			EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test");
+
+			MenuItem.click(menuItem = "Details");
+		}
+
+		task ("Then the manager user can see the comment 'Your organization has been approved!' in the details page") {
+			EVPUtils.assertHeadersTitle(listHeaderTitle = "Organization Test,Your organization has been approved!");
+		}
 	}
 
 	@description = "LPS-164733 - Verify that the Manager can not see 'Review button' when organization are in 'Awaiting Finance Approval' status"
 	@priority = 4
 	test ManagerCannotSeeReviewButtonInAwaitingFinanceStatus {
-		task ("Given that Sign as Manager user") {
-			User.logoutAndLoginPG(
-				userLoginEmailAddress = "manager@liferay.com",
-				userLoginFullName = "Manager User");
+		task ("Given that the created Organization has already been approved by Manager user") {
+			EVPUtils.managerApproval(
+				listingPage = "Organization",
+				organizationName = "Organization Test");
 		}
 
-		task ("And go to organization page") {
-			EVPUtils.gotoEVP();
-
-			EVPNavigator.goToNavItem(navItem = "Organization");
-		}
-
-		task ("When the manager approve the organization created") {
+		task ("When the manager user clicks on kebab menu of a Organization with 'Awaiting Finance Approval' status") {
 			EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test");
-
-			MenuItem.click(menuItem = "Review");
-
-			EVPUtils.changeStatus(
-				button = "Approve",
-				typeMessage = "Your organization has been approved!");
 		}
 
-		task ("Then the manager user can not see Review option in kebab menu") {
-			EVPOrganization.kebabMenuOrganization(organizationName = "Organization Test");
-
+		task ("Then the manager user can't see the Review option") {
 			MenuItem.viewNotPresent(menuItem = "Review");
 		}
 	}
@@ -203,7 +145,7 @@ definition {
 	@description = "LPS-164733 - Verify that the EVP Staff can Reject a new organization"
 	@priority = 5
 	test ManagerCanRejectOrganization {
-		task ("Given that Sign as Manager user") {
+		task ("Given that Manager user is logged") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "manager@liferay.com",
 				userLoginFullName = "Manager User");

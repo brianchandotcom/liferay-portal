@@ -34,11 +34,19 @@ public class MapUtil {
 		return false;
 	}
 
-	public static Map<String, Object> newHashMap() {
+	public static Map<String, String> newHashMap() {
 		return new HashMap<>();
 	}
 
-	public static Map<String, Object> newTreeMap() {
+	public static Map<String, Object> newObjectHashMap() {
+		return new HashMap<>();
+	}
+
+	public static Map<String, Object> newObjectTreeMap() {
+		return new TreeMap<>();
+	}
+
+	public static Map<String, String> newTreeMap() {
 		return new TreeMap<>();
 	}
 

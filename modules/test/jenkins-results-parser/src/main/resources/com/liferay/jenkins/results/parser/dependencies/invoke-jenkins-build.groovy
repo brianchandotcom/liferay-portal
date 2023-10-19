@@ -11,8 +11,8 @@ TopLevelItem topLevelItem = topLevelItems.get("${jenkinsJobName}");
 
 List<ParameterValue> parameterValues = new ArrayList<>();
 
-JobProperty jobProperty =
-	topLevelItem.getProperty("hudson.model.ParametersDefinitionProperty");
+JobProperty jobProperty = topLevelItem.getProperty(
+	"hudson.model.ParametersDefinitionProperty");
 
 for (ParameterDefinition parameterDefinition :
 		jobProperty.getParameterDefinitions()) {
@@ -35,9 +35,8 @@ for (ParameterDefinition parameterDefinition :
 	}
 }
 
-def waitingItem =
-	Jenkins.instance.queue.schedule(
-		topLevelItem, 0, new ParametersAction(parameterValues));
+def waitingItem = Jenkins.instance.queue.schedule(
+	topLevelItem, 0, new ParametersAction(parameterValues));
 
 if (waitingItem == null) {
 	for (Queue.Item item : Jenkins.instance.queue.getItems()) {
@@ -65,4 +64,4 @@ def jsonBuilder = new groovy.json.JsonBuilder()
 
 jsonBuilder queueId: waitingItem.getId()
 
-	println(jsonBuilder);
+println(jsonBuilder);

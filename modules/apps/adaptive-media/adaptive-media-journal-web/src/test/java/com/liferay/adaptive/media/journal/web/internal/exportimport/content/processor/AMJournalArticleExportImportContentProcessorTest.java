@@ -12,7 +12,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
@@ -50,8 +49,6 @@ public class AMJournalArticleExportImportContentProcessorTest {
 			_amJournalArticleExportImportContentProcessor,
 			"_journalArticleExportImportContentProcessor",
 			_journalArticleExportImportContentProcessor);
-		ReflectionTestUtil.setFieldValue(
-			_amJournalArticleExportImportContentProcessor, "_portal", _portal);
 
 		Mockito.when(
 			_amJournalArticleContentHTMLReplacer.replace(
@@ -195,7 +192,6 @@ public class AMJournalArticleExportImportContentProcessorTest {
 	private final ExportImportContentProcessor<String>
 		_journalArticleExportImportContentProcessor = Mockito.mock(
 			ExportImportContentProcessor.class);
-	private final Portal _portal = Mockito.mock(Portal.class);
 	private final PortletDataContext _portletDataContext = Mockito.mock(
 		PortletDataContext.class);
 

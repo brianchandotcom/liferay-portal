@@ -1,3 +1,13 @@
+.add-price-entry-modal-form {
+	.add-price-entry-sheet {
+		padding: 10px 6px 0;
+
+		& + .add-price-entry-sheet {
+			margin-top: 1.5rem;
+		}
+	}
+}
+
 .discount-label-wrapper {
 	display: grid;
 	grid-template-columns: min-content auto;

@@ -56,13 +56,13 @@ public class AddObjectFieldCompositeKeyCandidatesMVCResourceCommand
 		long objectDefinitionId = ParamUtil.getLong(
 			resourceRequest, "objectDefinitionId");
 
-		List<String> objectFieldLabels = new ArrayList<>();
-
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				objectDefinitionId);
 
 		User user = _userLocalService.getUser(objectDefinition.getUserId());
+
+		List<String> objectFieldLabels = new ArrayList<>();
 
 		for (Long objectFieldsId :
 				ParamUtil.getLongValues(resourceRequest, "objectFieldsIds")) {

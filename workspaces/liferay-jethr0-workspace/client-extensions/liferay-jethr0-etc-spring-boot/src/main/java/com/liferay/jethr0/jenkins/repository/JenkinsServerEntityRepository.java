@@ -21,7 +21,6 @@ import java.util.regex.Pattern;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -73,20 +72,6 @@ public class JenkinsServerEntityRepository
 			"jenkinsUserPassword", jenkinsUserPassword
 		).put(
 			"name", name
-		).put(
-			"url", String.valueOf(url)
-		);
-
-		return create(jsonObject);
-	}
-
-	public JenkinsServerEntity create(URL url) {
-		JSONObject jsonObject = new JSONObject();
-
-		jsonObject.put(
-			"jenkinsUserName", _jenkinsUserName
-		).put(
-			"jenkinsUserPassword", _jenkinsUserPassword
 		).put(
 			"url", String.valueOf(url)
 		);
@@ -190,11 +175,5 @@ public class JenkinsServerEntityRepository
 	@Autowired
 	private JenkinsServerToJenkinsNodesEntityRelationshipDALO
 		_jenkinsServerToJenkinsNodesEntityRelationshipDALO;
-
-	@Value("${jenkins.user.name}")
-	private String _jenkinsUserName;
-
-	@Value("${jenkins.user.password}")
-	private String _jenkinsUserPassword;
 
 }

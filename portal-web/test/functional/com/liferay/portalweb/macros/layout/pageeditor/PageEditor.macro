@@ -1484,6 +1484,26 @@ definition {
 			PageEditor.waitForAutoSave();
 		}
 
+		if (isSet(errorInteraction)) {
+			Select(
+				key_fieldLabel = "Error Interaction",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = ${errorInteraction});
+
+			if (isSet(errorText)) {
+				Type(
+					key_text = "Error Text",
+					locator1 = "TextInput#ANY",
+					value1 = ${errorText});
+
+				Click(
+					key_sidebarButton = "Browser",
+					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+			}
+
+			PageEditor.waitForAutoSave();
+		}
+
 		if (isSet(fontSize)) {
 			Select(
 				key_text = "font-size",

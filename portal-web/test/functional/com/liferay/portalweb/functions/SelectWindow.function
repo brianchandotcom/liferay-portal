@@ -1,12 +1,12 @@
 @default = "selectWindow"
 definition {
 
-	function selectPopUp {
+	function selectPopUp(value1) {
 		WaitForSPARefresh();
 
 		selenium.pause(5000);
 
-		selenium.selectPopUp();
+		selenium.selectPopUp(${value1});
 
 		selenium.assertJavaScriptErrors("true");
 

@@ -1379,8 +1379,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		AccountEntry accountEntry1 = _addAccountEntry();
 
-		Map<Long, ObjectEntry> objectEntries =
-			_addAccountRestrictedObjectEntryHierarchy(accountEntry1);
+		Tree objectEntriesTree = _createObjectEntryTree(accountEntry1);
 
 		_addResourcePermission(
 			_rootObjectDefinition, ActionKeys.VIEW, _buyerRole);
@@ -1389,15 +1388,15 @@ public class DefaultObjectEntryManagerImplTest
 
 		_assignAccountEntryRole(accountEntry1, _buyerRole, _user);
 
-		ObjectEntry rootObjectEntry = objectEntries.get(
-			_rootObjectDefinition.getObjectDefinitionId());
+		Node rootNode = objectEntriesTree.getRootNode();
 
-		TreeTestUtil.forEachNodeObjectDefinition(
-			_tree.iterator(TreeConstants.ITERATOR_TYPE_POST_ORDER),
-			objectDefinitionLocalService,
-			objectDefinition -> {
-				ObjectEntry objectEntry = objectEntries.get(
-					objectDefinition.getObjectDefinitionId());
+		TreeTestUtil.forEachNodeObjectEntry(
+			objectEntriesTree.iterator(TreeConstants.ITERATOR_TYPE_POST_ORDER),
+			_objectEntryLocalService,
+			objectEntry -> {
+				ObjectDefinition objectDefinition =
+					objectDefinitionLocalService.fetchObjectDefinition(
+						objectEntry.getObjectDefinitionId());
 
 				AssertUtils.assertFailure(
 					PrincipalException.MustHavePermission.class,
@@ -1405,23 +1404,24 @@ public class DefaultObjectEntryManagerImplTest
 						"User ", _user.getUserId(),
 						" must have DELETE permission for ",
 						_rootObjectDefinition.getClassName(), StringPool.SPACE,
-						rootObjectEntry.getId()),
+						rootNode.getPrimaryKey()),
 					() -> _defaultObjectEntryManager.deleteObjectEntry(
-						objectDefinition, objectEntry.getId()));
+						objectDefinition, objectEntry.getObjectEntryId()));
 			});
 
 		_addResourcePermission(
 			_rootObjectDefinition, ActionKeys.DELETE, _buyerRole);
 
-		TreeTestUtil.forEachNodeObjectDefinition(
-			_tree.iterator(TreeConstants.ITERATOR_TYPE_POST_ORDER),
-			objectDefinitionLocalService,
-			objectDefinition -> {
-				ObjectEntry objectEntry = objectEntries.get(
-					objectDefinition.getObjectDefinitionId());
+		TreeTestUtil.forEachNodeObjectEntry(
+			objectEntriesTree.iterator(TreeConstants.ITERATOR_TYPE_POST_ORDER),
+			_objectEntryLocalService,
+			objectEntry -> {
+				ObjectDefinition objectDefinition =
+					objectDefinitionLocalService.fetchObjectDefinition(
+						objectEntry.getObjectDefinitionId());
 
 				_defaultObjectEntryManager.deleteObjectEntry(
-					objectDefinition, objectEntry.getId());
+					objectDefinition, objectEntry.getObjectEntryId());
 			});
 	}
 

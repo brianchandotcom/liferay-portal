@@ -343,8 +343,6 @@ public class AnalyticsConfigurationRegistryImpl
 					companyId,
 					new String[] {
 						AnalyticsDXPEntityBatchExporterConstants.
-							DISPATCH_TRIGGER_NAME_ACCOUNT_ENTRY_DXP_ENTITIES,
-						AnalyticsDXPEntityBatchExporterConstants.
 							DISPATCH_TRIGGER_NAME_DXP_ENTITIES,
 						AnalyticsDXPEntityBatchExporterConstants.
 							DISPATCH_TRIGGER_NAME_ORDER,
@@ -390,21 +388,11 @@ public class AnalyticsConfigurationRegistryImpl
 						DISPATCH_TRIGGER_NAME_DXP_ENTITIES);
 			}
 
-			if (_analyticsSettingsManager.syncedAccountSettingsEnabled(
-					companyId)) {
-
-				dispatchTriggerNames.add(
-					AnalyticsDXPEntityBatchExporterConstants.
-						DISPATCH_TRIGGER_NAME_ACCOUNT_ENTRY_DXP_ENTITIES);
-			}
-
 			if (_analyticsSettingsManager.syncedCommerceSettingsEnabled(
 					companyId)) {
 
 				Collections.addAll(
 					dispatchTriggerNames,
-					AnalyticsDXPEntityBatchExporterConstants.
-						DISPATCH_TRIGGER_NAME_ACCOUNT_ENTRY_DXP_ENTITIES,
 					AnalyticsDXPEntityBatchExporterConstants.
 						DISPATCH_TRIGGER_NAME_ORDER,
 					AnalyticsDXPEntityBatchExporterConstants.
@@ -547,33 +535,6 @@ public class AnalyticsConfigurationRegistryImpl
 				Set<String> refreshDispatchTriggerNames = new HashSet<>();
 				Set<String> unscheduleDispatchTriggerNames = new HashSet<>();
 
-				if (_analyticsSettingsManager.syncedAccountSettingsChanged(
-						companyId)) {
-
-					if (_analyticsSettingsManager.syncedAccountSettingsEnabled(
-							companyId)) {
-
-						refreshDispatchTriggerNames.add(
-							AnalyticsDXPEntityBatchExporterConstants.
-								DISPATCH_TRIGGER_NAME_ACCOUNT_ENTRY_DXP_ENTITIES);
-					}
-					else {
-						unscheduleDispatchTriggerNames.add(
-							AnalyticsDXPEntityBatchExporterConstants.
-								DISPATCH_TRIGGER_NAME_ACCOUNT_ENTRY_DXP_ENTITIES);
-					}
-				}
-
-				if (_analyticsSettingsManager.syncedAccountSettingsEnabled(
-						companyId) &&
-					_analyticsSettingsManager.syncedAccountFieldsChanged(
-						companyId)) {
-
-					refreshDispatchTriggerNames.add(
-						AnalyticsDXPEntityBatchExporterConstants.
-							DISPATCH_TRIGGER_NAME_ACCOUNT_ENTRY_DXP_ENTITIES);
-				}
-
 				if (_analyticsSettingsManager.syncedCommerceSettingsChanged(
 						companyId)) {
 
@@ -618,8 +579,16 @@ public class AnalyticsConfigurationRegistryImpl
 				}
 
 				if (FeatureFlagManagerUtil.isEnabled("LRAC-10632") &&
-					((_analyticsSettingsManager.syncedContactSettingsChanged(
+					((_analyticsSettingsManager.syncedAccountSettingsChanged(
 						companyId) &&
+					  _analyticsSettingsManager.syncedAccountSettingsEnabled(
+						  companyId)) ||
+					 (_analyticsSettingsManager.syncedAccountSettingsEnabled(
+						 companyId) &&
+					  _analyticsSettingsManager.syncedAccountFieldsChanged(
+						  companyId)) ||
+					 (_analyticsSettingsManager.syncedContactSettingsChanged(
+						 companyId) &&
 					  _analyticsSettingsManager.syncedContactSettingsEnabled(
 						  companyId)) ||
 					 (_analyticsSettingsManager.syncedContactSettingsEnabled(

@@ -836,6 +836,146 @@ definition {
 		}
 	}
 
+	@description = "LPS-192150. Verify if is possible to see the Action icon in the Data Set fragment."
+	@priority = 5
+	test CanViewActionIconInFragment {
+		task ("Given a new Object entity") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Data Set Object",
+				objectName = "DataSetObject",
+				pluralLabelName = "Data Set Objects");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Data Set Object");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Text Field",
+				fieldType = "Text");
+
+			ObjectAdmin.goToDetailsTab();
+
+			ObjectAdmin.publishObjectViaUI();
+		}
+
+		task ("And new entries in the new Object entity") {
+			ObjectAdmin.goToCustomObject(objectName = "DataSetObject");
+
+			for (var letters : list "A,B") {
+				ObjectPortlet.addSingleFieldEntryViaUI(entry = "Entry Test ${letters}");
+
+				WaitForSPARefresh();
+
+				Navigator.gotoBack();
+			}
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry Test A");
+
+			var portalURL = Navigator.getCurrentURL();
+
+			var portalURL = StringUtil.replace(${portalURL}, "http://localhost:8080", "");
+
+			var erc = StringUtil.replace(${portalURL}, "_externalReferenceCode=", "_externalReferenceCode={externalReferenceCode}");
+		}
+
+		task ("And a new data set entry") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Data Set Object",
+				restApplication = "/c/datasetobjects",
+				restEndpoint = "/",
+				restSchema = "DataSetObject");
+		}
+
+		task ("And a new view") {
+			DataSetAdmin.createFDSViewViaAPI(
+				dataSetName = "Data Set Object",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Object Test");
+
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Data Set Object",
+				key_viewName = "View Object Test");
+		}
+
+		task ("Add new fields to the view") {
+			DataSetAdmin.goToTab(tabName = "Fields");
+
+			DataSetAdmin.addFields(key_fieldList = "id,status");
+		}
+
+		task ("When the user goes to the Action tab") {
+			DataSetAdmin.goToTab(tabName = "Actions");
+		}
+
+		task ("And creates a new link item action") {
+			var erc = StringUtil.substring(${erc}, 0, 470);
+
+			DataSetAdmin.addActions(
+				actionName = "edit",
+				icon = "pencil",
+				type = "Link",
+				url = ${erc});
+		}
+
+		task ("And creates a new content Page") {
+			Navigator.openURL();
+
+			ContentPages.addPage(pageName = "Data Set Object");
+		}
+
+		task ("And adds the data set fragment to the page") {
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("And configure it to the new view") {
+			Click(locator1 = "ReportsAdminViewReportEntry#INFO_MESSAGE");
+
+			Click.javaScriptClick(
+				key_value = "Select Data Set View",
+				locator1 = "Button#SECONDARY_BY_TITLE");
+
+			SelectFrame(
+				key_title = "Select",
+				locator1 = "IFrame#MODAL_ANY");
+
+			Click.clickAtNotVisible(
+				key_radioOption = "View Object Test",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Button.clickSave();
+		}
+
+		task ("And publishes the page") {
+			SelectFrame(locator1 = "DataSet#DEFOCUS");
+
+			Click.javaScriptClick(locator1 = "WorkflowMetricsIndex#METRICS_REINDEX_ALL_BUTTON");
+		}
+
+		task ("Then the link action created is displayed close to each item") {
+			Navigator.openURL();
+
+			Navigator.gotoPage(pageName = "Data Set Object");
+
+			AssertElementPresent(
+				key_entryName = "Approved",
+				key_icon = "pencil",
+				key_rowNumber = 1,
+				locator1 = "FrontendDataSet#ICON_IN_DATA_SET_FRAGMENT");
+
+			AssertElementPresent(
+				key_entryName = "Approved",
+				key_icon = "pencil",
+				key_rowNumber = 2,
+				locator1 = "FrontendDataSet#ICON_IN_DATA_SET_FRAGMENT");
+		}
+	}
+
 	@description = "LPS-191486. Verify if the user can view the delete modal when it will delete an Action entry."
 	@priority = 3
 	test CanViewDeleteModalInActions {

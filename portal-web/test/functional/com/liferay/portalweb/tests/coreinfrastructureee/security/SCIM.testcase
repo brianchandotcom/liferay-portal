@@ -1,0 +1,125 @@
+@component-name = "portal-security"
+definition {
+
+	property ci.retries.disabled = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.run.environment = "EE";
+	property testray.main.component.name = "SCIM";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			PagesAdmin.tearDownCP();
+		}
+	}
+
+	@description = "This is a use case for LPS-191052. TC-1 and TC-2 and TC-3: Verify that the system administrator can configure a SCIM client by deploying a config file and then register the SCIM client in the OAuth2 application."
+	@ignore = "true"
+	@priority = 5
+	test SCIMClientCanBeConfiguredViaConfigFile {
+		property custom.properties = "feature.flag.LPS-96845=true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("When: Deploy the config file of the SCIM client") {
+			var companyId = JSONCompany.getCompanyId();
+
+			OSGiConfig.deployOSGiConfigFile(
+				osgiConfigFileName = "com.liferay.scim.client.internal.configuration.SCIMClientOAuth2ApplicationConfiguration.config",
+				osgiConfigs = "applicationName=\"Test Application Name\",companyId=L\"${companyId}\",matcherField=\"userName\"");
+
+			OSGiConfig.waitForOSGiConfig();
+		}
+
+		task ("Then: Assert an access token is generated in the log and an OAuth2 application is added") {
+			WaitForConsoleTextPresent(value1 = "New access token for SCIM OAuth 2 application Test Application Name generated");
+
+			OAuth2.openOAuth2Admin();
+
+			OAuth2.viewApplicationInAuthorizationsTable(
+				entryIndex = 1,
+				tableEntry = "Test Application Name");
+		}
+
+		task ("And: Assert a new access token is generated in the log after modifying entries in config file") {
+			OSGiConfig.deployOSGiConfigFile(
+				osgiConfigFileName = "com.liferay.scim.client.internal.configuration.SCIMClientOAuth2ApplicationConfiguration.config",
+				osgiConfigs = "applicationName=\"Test Application Name\",companyId=L\"${companyId}\",matcherField=\"emailAddress\"");
+
+			OSGiConfig.waitForOSGiConfig();
+
+			WaitForConsoleTextPresent(value1 = "New access token for SCIM OAuth 2 application Test Application Name generated");
+
+			OAuth2.openOAuth2Admin();
+
+			OAuth2.viewApplicationInAuthorizationsTable(
+				entryIndex = 2,
+				tableEntry = "Test Application Name");
+		}
+
+		task ("And: Assert SCIM client is removed after removing the config file") {
+			OSGiConfig.deleteOSGiConfigFile(osgiConfigFileName = "com.liferay.scim.client.internal.configuration.SCIMClientOAuth2ApplicationConfiguration.config");
+
+			OSGiConfig.waitForOSGiConfig();
+
+			OAuth2.openOAuth2Admin();
+
+			LexiconEntry.viewNoEntry(rowEntry = "Test Application Name");
+		}
+	}
+
+	@description = "This is a use case for LPS-191052. TC-4: Verify that the config file of the SCIM client works well with companyWebID."
+	@ignore = "true"
+	@priority = 5
+	test SCIMClientConfigFileCanWorkByCompanyWebID {
+		property custom.properties = "feature.flag.LPS-96845=true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("Given: Add a virtual instance") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+		}
+
+		task ("When: Deploy the config file") {
+			OSGiConfig.deployOSGiConfigFile(
+				osgiConfigFileName = "com.liferay.scim.client.internal.configuration.SCIMClientOAuth2ApplicationConfiguration.config",
+				osgiConfigs = "applicationName=\"Test Application Name\",companyWebId=\"www.able.com\",matcherField=\"userName\"");
+
+			OSGiConfig.waitForOSGiConfig();
+		}
+
+		task ("Then: Assert an access token is generated in the log and an OAuth2 application is added in virtual instance") {
+			User.logoutPG();
+
+			User.viewLoggedOutPG();
+
+			User.firstLoginPG(
+				password = "test",
+				userEmailAddress = "test@www.able.com",
+				virtualHostsURL = "http://www.able.com:8080");
+
+			AssertConsoleTextPresent(value1 = "New access token for SCIM OAuth 2 application Test Application Name generated");
+
+			OAuth2.openOAuth2Admin(baseURL = "http://www.able.com:8080");
+
+			OAuth2.viewApplicationInAuthorizationsTable(
+				entryIndex = 1,
+				tableEntry = "Test Application Name");
+		}
+	}
+
+}

@@ -279,11 +279,11 @@ definition {
 		}
 
 		task ("When the user deletes the comment that contains non-Latin characters") {
-			Questions.openToQuestionDetails(
-				layoutName = "questions-page",
-				localization = "true",
-				siteURLKey = "guest",
-				topicName = "質問トピック");
+			Navigator.gotoPage(pageName = "Questions Page");
+
+			Questions.gotoCategory(categoryName = "質問トピック");
+
+			Questions.gotoDetails(questionTitle = "あなたの好きな日本料理は何ですか");
 
 			Questions.replyToComment(commentReply = "私の好きな日本料理は焼肉と鮭の刺身です");
 

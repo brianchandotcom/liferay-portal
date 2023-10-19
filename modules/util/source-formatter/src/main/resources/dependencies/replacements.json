@@ -1,6 +1,14 @@
 [
 	{
 		"classNames": [
+			"FDSTableSchemaBuilder"
+		],
+		"from": "addFDSTableSchemaField",
+		"issueKey": "LPS-187692",
+		"to": "add"
+	},
+	{
+		"classNames": [
 			"CommerceAddress"
 		],
 		"from": "getCode",

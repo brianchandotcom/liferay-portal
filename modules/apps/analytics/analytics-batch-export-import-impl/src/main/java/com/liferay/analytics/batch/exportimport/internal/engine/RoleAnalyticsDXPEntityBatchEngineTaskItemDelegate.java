@@ -49,7 +49,7 @@ public class RoleAnalyticsDXPEntityBatchEngineTaskItemDelegate
 		List<DXPEntity> dxpEntities = new ArrayList<>();
 
 		DynamicQuery dynamicQuery = _buildDynamicQuery(
-			contextCompany.getCompanyId(), filter);
+			contextCompany.getCompanyId(), parameters);
 
 		List<Role> roles = _roleLocalService.dynamicQuery(
 			dynamicQuery, pagination.getStartPosition(),
@@ -64,7 +64,9 @@ public class RoleAnalyticsDXPEntityBatchEngineTaskItemDelegate
 			_roleLocalService.dynamicQueryCount(dynamicQuery));
 	}
 
-	private DynamicQuery _buildDynamicQuery(long companyId, Filter filter) {
+	private DynamicQuery _buildDynamicQuery(
+		long companyId, Map<String, Serializable> parameters) {
+
 		DynamicQuery dynamicQuery = _roleLocalService.dynamicQuery();
 
 		Property nameProperty = PropertyFactoryUtil.forName("name");
@@ -76,7 +78,7 @@ public class RoleAnalyticsDXPEntityBatchEngineTaskItemDelegate
 
 		dynamicQuery.add(typeProperty.eq(RoleConstants.TYPE_REGULAR));
 
-		return buildDynamicQuery(companyId, dynamicQuery, filter);
+		return buildDynamicQuery(companyId, dynamicQuery, parameters);
 	}
 
 	@Reference(target = DTOConverterConstants.DXP_ENTITY_DTO_CONVERTER)

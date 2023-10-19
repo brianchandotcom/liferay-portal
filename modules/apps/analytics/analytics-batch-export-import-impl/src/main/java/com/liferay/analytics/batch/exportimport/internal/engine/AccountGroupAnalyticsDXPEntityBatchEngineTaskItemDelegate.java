@@ -49,34 +49,34 @@ public class AccountGroupAnalyticsDXPEntityBatchEngineTaskItemDelegate
 			TransformUtil.transform(
 				_accountGroupLocalService.<List<AccountGroup>>dslQuery(
 					_createSelectDSLQuery(
-						contextCompany.getCompanyId(), filter, pagination)),
+						contextCompany.getCompanyId(), pagination, parameters)),
 				accountGroup -> _dxpEntityDTOConverter.toDTO(accountGroup)),
 			Pagination.of(pagination.getPage(), pagination.getPageSize()),
 			_accountGroupLocalService.dslQuery(
-				_createCountDSLQuery(contextCompany.getCompanyId(), filter)));
+				_createCountDSLQuery(
+					contextCompany.getCompanyId(), parameters)));
 	}
 
-	private DSLQuery _createCountDSLQuery(long companyId, Filter filter) {
+	private DSLQuery _createCountDSLQuery(
+		long companyId, Map<String, Serializable> parameters) {
+
 		return DSLQueryFactoryUtil.count(
 		).from(
 			AccountGroupTable.INSTANCE
 		).where(
-			buildPredicate(
-				AccountGroupTable.INSTANCE, companyId,
-				AccountGroupTable.INSTANCE.companyId.isNotNull(), filter)
+			buildPredicate(AccountGroupTable.INSTANCE, companyId, parameters)
 		);
 	}
 
 	private DSLQuery _createSelectDSLQuery(
-		long companyId, Filter filter, Pagination pagination) {
+		long companyId, Pagination pagination,
+		Map<String, Serializable> parameters) {
 
 		return DSLQueryFactoryUtil.select(
 		).from(
 			AccountGroupTable.INSTANCE
 		).where(
-			buildPredicate(
-				AccountGroupTable.INSTANCE, companyId,
-				AccountGroupTable.INSTANCE.companyId.isNotNull(), filter)
+			buildPredicate(AccountGroupTable.INSTANCE, companyId, parameters)
 		).limit(
 			pagination.getPage() * pagination.getPageSize(),
 			(pagination.getPage() + 1) * pagination.getPageSize()

@@ -47,7 +47,7 @@ public class TeamAnalyticsDXPEntityBatchEngineTaskItemDelegate
 
 		DynamicQuery dynamicQuery = buildDynamicQuery(
 			contextCompany.getCompanyId(), _teamLocalService.dynamicQuery(),
-			filter);
+			parameters);
 
 		List<Team> teams = _teamLocalService.dynamicQuery(
 			dynamicQuery, pagination.getStartPosition(),

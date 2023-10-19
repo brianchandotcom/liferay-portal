@@ -54,7 +54,7 @@ public class ExpandoColumnAnalyticsDXPEntityBatchEngineTaskItemDelegate
 		throws Exception {
 
 		DynamicQuery dynamicQuery = _buildDynamicQuery(
-			contextCompany.getCompanyId(), filter);
+			contextCompany.getCompanyId(), parameters);
 
 		if (dynamicQuery == null) {
 			return Page.of(Collections.emptyList(), pagination, 0);
@@ -76,7 +76,9 @@ public class ExpandoColumnAnalyticsDXPEntityBatchEngineTaskItemDelegate
 			_expandoColumnLocalService.dynamicQueryCount(dynamicQuery));
 	}
 
-	private DynamicQuery _buildDynamicQuery(long companyId, Filter filter) {
+	private DynamicQuery _buildDynamicQuery(
+		long companyId, Map<String, Serializable> parameters) {
+
 		ExpandoTable organizationExpandoTable =
 			_expandoTableLocalService.fetchTable(
 				companyId,
@@ -110,7 +112,7 @@ public class ExpandoColumnAnalyticsDXPEntityBatchEngineTaskItemDelegate
 			dynamicQuery.add(tableIdProperty.eq(userExpandoTable.getTableId()));
 		}
 
-		return buildDynamicQuery(companyId, dynamicQuery, filter);
+		return buildDynamicQuery(companyId, dynamicQuery, parameters);
 	}
 
 	@Reference

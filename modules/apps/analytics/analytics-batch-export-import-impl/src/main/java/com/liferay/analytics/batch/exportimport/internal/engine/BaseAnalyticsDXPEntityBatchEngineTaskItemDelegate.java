@@ -13,14 +13,9 @@ import com.liferay.petra.sql.dsl.base.BaseTable;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.search.Query;
-import com.liferay.portal.kernel.search.TermRangeQuery;
-import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.search.filter.QueryFilter;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
+
+import java.io.Serializable;
 
 import java.util.Date;
 import java.util.List;
@@ -41,88 +36,46 @@ public abstract class BaseAnalyticsDXPEntityBatchEngineTaskItemDelegate
 	}
 
 	protected DynamicQuery buildDynamicQuery(
-		long companyId, DynamicQuery dynamicQuery, Filter filter) {
+		long companyId, DynamicQuery dynamicQuery,
+		Map<String, Serializable> parameters) {
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("companyId", companyId));
 
-		if (filter instanceof QueryFilter) {
-			QueryFilter queryFilter = (QueryFilter)filter;
+		Serializable resourceLastModifiedDate = parameters.get(
+			"resourceLastModifiedDate");
 
-			Query query = queryFilter.getQuery();
-
-			if (query instanceof TermRangeQuery) {
-				TermRangeQuery termRangeQuery = (TermRangeQuery)query;
-
-				if (StringUtil.startsWith(
-						termRangeQuery.getField(), "modified")) {
-
-					String lowerTerm = termRangeQuery.getLowerTerm();
-
-					if ((lowerTerm != null) && Validator.isNumber(lowerTerm)) {
-						dynamicQuery.add(
-							RestrictionsFactoryUtil.gt(
-								"modifiedDate",
-								new Date(GetterUtil.getLong(lowerTerm))));
-					}
-
-					String upperTerm = termRangeQuery.getUpperTerm();
-
-					if ((upperTerm != null) && Validator.isNumber(upperTerm)) {
-						dynamicQuery.add(
-							RestrictionsFactoryUtil.le(
-								"modifiedDate",
-								new Date(GetterUtil.getLong(upperTerm))));
-					}
-				}
-			}
+		if (resourceLastModifiedDate == null) {
+			return dynamicQuery;
 		}
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.gt(
+				"modifiedDate", resourceLastModifiedDate));
 
 		return dynamicQuery;
 	}
 
 	protected Predicate buildPredicate(
-		BaseTable<?> baseTable, long companyId, Predicate predicate,
-		Filter filter) {
+		BaseTable<?> baseTable, long companyId,
+		Map<String, Serializable> parameters) {
 
 		Column<?, Long> companyIdColumn = (Column<?, Long>)baseTable.getColumn(
 			"companyId");
 
-		predicate = predicate.and(companyIdColumn.eq(companyId));
+		Predicate predicate = companyIdColumn.eq(companyId);
 
-		if (filter instanceof QueryFilter) {
-			QueryFilter queryFilter = (QueryFilter)filter;
+		Serializable resourceLastModifiedDate = parameters.get(
+			"resourceLastModifiedDate");
 
-			Query query = queryFilter.getQuery();
-
-			if (query instanceof TermRangeQuery) {
-				TermRangeQuery termRangeQuery = (TermRangeQuery)query;
-
-				if (StringUtil.startsWith(
-						termRangeQuery.getField(), "modified")) {
-
-					Column<?, Date> modifiedDateColumn =
-						(Column<?, Date>)baseTable.getColumn("modifiedDate");
-
-					String lowerTerm = termRangeQuery.getLowerTerm();
-
-					if ((lowerTerm != null) && Validator.isNumber(lowerTerm)) {
-						predicate = predicate.and(
-							modifiedDateColumn.gt(
-								new Date(GetterUtil.getLong(lowerTerm))));
-					}
-
-					String upperTerm = termRangeQuery.getUpperTerm();
-
-					if ((upperTerm != null) && Validator.isNumber(upperTerm)) {
-						predicate = predicate.and(
-							modifiedDateColumn.lte(
-								new Date(GetterUtil.getLong(upperTerm))));
-					}
-				}
-			}
+		if (resourceLastModifiedDate == null) {
+			return predicate;
 		}
 
-		return predicate;
+		Column<?, Date> modifiedDateColumn =
+			(Column<?, Date>)baseTable.getColumn("modifiedDate");
+
+		return predicate.and(
+			modifiedDateColumn.gt((Date)resourceLastModifiedDate));
 	}
 
 	private static final EntityModel _entityModel =

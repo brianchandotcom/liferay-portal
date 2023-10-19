@@ -52,7 +52,7 @@ public class GroupAnalyticsDXPEntityBatchEngineTaskItemDelegate
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("site", true));
 
 		dynamicQuery = buildDynamicQuery(
-			contextCompany.getCompanyId(), dynamicQuery, filter);
+			contextCompany.getCompanyId(), dynamicQuery, parameters);
 
 		List<Group> groups = _groupLocalService.dynamicQuery(
 			dynamicQuery, pagination.getStartPosition(),

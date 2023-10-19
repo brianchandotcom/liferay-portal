@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -100,7 +101,10 @@ public class AnalyticsBatchExportImportManagerImpl
 				_batchEngineExportTaskLocalService.addBatchEngineExportTask(
 					null, companyId, userId, null, resourceName,
 					BatchEngineTaskContentType.JSONL.name(),
-					BatchEngineTaskExecuteStatus.INITIAL.name(), null, null,
+					BatchEngineTaskExecuteStatus.INITIAL.name(), null,
+					HashMapBuilder.<String, Serializable>put(
+						"resourceLastModifiedDate", resourceLastModifiedDate
+					).build(),
 					batchEngineExportTaskItemDelegateName);
 
 			batchEngineExportTasks.add(batchEngineExportTask);

@@ -75,11 +75,12 @@ public class AccountEntryAnalyticsDXPEntityBatchEngineTaskItemDelegate
 			TransformUtil.transform(
 				_accountEntryLocalService.<List<AccountEntry>>dslQuery(
 					_createSelectDSLQuery(
-						contextCompany.getCompanyId(), pagination)),
+						contextCompany.getCompanyId(), pagination, parameters)),
 				accountEntry -> _dxpEntityDTOConverter.toDTO(accountEntry)),
 			Pagination.of(pagination.getPage(), pagination.getPageSize()),
 			_accountEntryLocalService.dslQuery(
-				_createCountDSLQuery(contextCompany.getCompanyId())));
+				_createCountDSLQuery(
+					contextCompany.getCompanyId(), parameters)));
 	}
 
 	private DSLQuery _buildAccountEntryIdsDSLQuery(long companyId)
@@ -114,12 +115,12 @@ public class AccountEntryAnalyticsDXPEntityBatchEngineTaskItemDelegate
 		);
 	}
 
-	private Predicate _buildPredicate(long companyId) throws Exception {
-		AccountEntryTable accountEntryTable = AccountEntryTable.INSTANCE;
+	private Predicate _buildPredicate(
+			long companyId, Map<String, Serializable> parameters)
+		throws Exception {
 
-		Predicate predicate = accountEntryTable.companyId.isNotNull();
-
-		predicate = predicate.and(accountEntryTable.companyId.eq(companyId));
+		Predicate predicate = buildPredicate(
+			AccountEntryTable.INSTANCE, companyId, parameters);
 
 		DSLQuery dslQuery = _buildAccountEntryIdsDSLQuery(companyId);
 
@@ -127,27 +128,32 @@ public class AccountEntryAnalyticsDXPEntityBatchEngineTaskItemDelegate
 			return predicate;
 		}
 
-		return predicate.and(accountEntryTable.accountEntryId.in(dslQuery));
+		return predicate.and(
+			AccountEntryTable.INSTANCE.accountEntryId.in(dslQuery));
 	}
 
-	private DSLQuery _createCountDSLQuery(long companyId) throws Exception {
+	private DSLQuery _createCountDSLQuery(
+			long companyId, Map<String, Serializable> parameters)
+		throws Exception {
+
 		return DSLQueryFactoryUtil.count(
 		).from(
 			AccountEntryTable.INSTANCE
 		).where(
-			_buildPredicate(companyId)
+			_buildPredicate(companyId, parameters)
 		);
 	}
 
 	private DSLQuery _createSelectDSLQuery(
-			long companyId, Pagination pagination)
+			long companyId, Pagination pagination,
+			Map<String, Serializable> parameters)
 		throws Exception {
 
 		return DSLQueryFactoryUtil.select(
 		).from(
 			AccountEntryTable.INSTANCE
 		).where(
-			_buildPredicate(companyId)
+			_buildPredicate(companyId, parameters)
 		).limit(
 			pagination.getPage() * pagination.getPageSize(),
 			(pagination.getPage() + 1) * pagination.getPageSize()

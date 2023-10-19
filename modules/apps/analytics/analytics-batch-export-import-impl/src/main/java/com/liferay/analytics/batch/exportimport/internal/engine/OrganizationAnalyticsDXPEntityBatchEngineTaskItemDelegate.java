@@ -49,34 +49,34 @@ public class OrganizationAnalyticsDXPEntityBatchEngineTaskItemDelegate
 			TransformUtil.transform(
 				_organizationLocalService.<List<Organization>>dslQuery(
 					_createSelectDSLQuery(
-						contextCompany.getCompanyId(), filter, pagination)),
+						contextCompany.getCompanyId(), pagination, parameters)),
 				organization -> _dxpEntityDTOConverter.toDTO(organization)),
 			Pagination.of(pagination.getPage(), pagination.getPageSize()),
 			_organizationLocalService.dslQuery(
-				_createCountDSLQuery(contextCompany.getCompanyId(), filter)));
+				_createCountDSLQuery(
+					contextCompany.getCompanyId(), parameters)));
 	}
 
-	private DSLQuery _createCountDSLQuery(long companyId, Filter filter) {
+	private DSLQuery _createCountDSLQuery(
+		long companyId, Map<String, Serializable> parameters) {
+
 		return DSLQueryFactoryUtil.count(
 		).from(
 			OrganizationTable.INSTANCE
 		).where(
-			buildPredicate(
-				OrganizationTable.INSTANCE, companyId,
-				OrganizationTable.INSTANCE.companyId.isNotNull(), filter)
+			buildPredicate(OrganizationTable.INSTANCE, companyId, parameters)
 		);
 	}
 
 	private DSLQuery _createSelectDSLQuery(
-		long companyId, Filter filter, Pagination pagination) {
+		long companyId, Pagination pagination,
+		Map<String, Serializable> parameters) {
 
 		return DSLQueryFactoryUtil.select(
 		).from(
 			OrganizationTable.INSTANCE
 		).where(
-			buildPredicate(
-				OrganizationTable.INSTANCE, companyId,
-				OrganizationTable.INSTANCE.companyId.isNotNull(), filter)
+			buildPredicate(OrganizationTable.INSTANCE, companyId, parameters)
 		).limit(
 			pagination.getPage() * pagination.getPageSize(),
 			(pagination.getPage() + 1) * pagination.getPageSize()

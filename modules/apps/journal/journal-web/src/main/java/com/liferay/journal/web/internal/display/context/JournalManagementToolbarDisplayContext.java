@@ -566,37 +566,39 @@ public class JournalManagementToolbarDisplayContext
 				LanguageUtil.get(httpServletRequest, "structures")
 			).build());
 
-		filterNavigationDropdownItems.add(
-			DropdownItemBuilder.putData(
-				"action", "openCategoriesSelector"
-			).putData(
-				"redirectURL",
-				PortletURLBuilder.create(
-					getPortletURL()
-				).setParameter(
-					"assetCategoryId", (String)null
-				).buildString()
-			).setActive(
-				ArrayUtil.isNotEmpty(_getAssetCategoryIds())
-			).setLabel(
-				LanguageUtil.get(httpServletRequest, "categories")
-			).build());
+		if (FeatureFlagManagerUtil.isEnabled("LPS-196766")) {
+			filterNavigationDropdownItems.add(
+				DropdownItemBuilder.putData(
+					"action", "openCategoriesSelector"
+				).putData(
+					"redirectURL",
+					PortletURLBuilder.create(
+						getPortletURL()
+					).setParameter(
+						"assetCategoryId", (String)null
+					).buildString()
+				).setActive(
+					ArrayUtil.isNotEmpty(_getAssetCategoryIds())
+				).setLabel(
+					LanguageUtil.get(httpServletRequest, "categories")
+				).build());
 
-		filterNavigationDropdownItems.add(
-			DropdownItemBuilder.putData(
-				"action", "openTagsSelector"
-			).putData(
-				"redirectURL",
-				PortletURLBuilder.create(
-					getPortletURL()
-				).setParameter(
-					"assetTagId", (String)null
-				).buildString()
-			).setActive(
-				ArrayUtil.isNotEmpty(_getAssetTagIds())
-			).setLabel(
-				LanguageUtil.get(httpServletRequest, "tags")
-			).build());
+			filterNavigationDropdownItems.add(
+				DropdownItemBuilder.putData(
+					"action", "openTagsSelector"
+				).putData(
+					"redirectURL",
+					PortletURLBuilder.create(
+						getPortletURL()
+					).setParameter(
+						"assetTagId", (String)null
+					).buildString()
+				).setActive(
+					ArrayUtil.isNotEmpty(_getAssetTagIds())
+				).setLabel(
+					LanguageUtil.get(httpServletRequest, "tags")
+				).build());
+		}
 
 		return filterNavigationDropdownItems;
 	}

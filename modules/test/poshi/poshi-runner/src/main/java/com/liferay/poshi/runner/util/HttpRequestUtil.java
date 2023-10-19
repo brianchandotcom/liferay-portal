@@ -5,6 +5,8 @@
 
 package com.liferay.poshi.runner.util;
 
+import com.liferay.poshi.core.util.GetterUtil;
+import com.liferay.poshi.core.util.MathUtil;
 import com.liferay.poshi.core.util.StringUtil;
 
 import java.io.IOException;
@@ -35,33 +37,50 @@ public class HttpRequestUtil {
 		if (!StringUtil.equals(actualResponseBody, expectedResponseBody)) {
 			throw new RuntimeException(
 				"Expected response body: " + expectedResponseBody +
-					"\nActual response body: " + actualResponseBody);
+					"does not match actual response body " +
+						actualResponseBody);
+		}
+	}
+
+	public static void assertResponseBodyContains(
+		HttpResponse httpResponse, String expectedText) {
+
+		String actualResponseBody = httpResponse.getBody();
+
+		if (!StringUtil.contains(actualResponseBody, expectedText)) {
+			throw new RuntimeException(
+				"Expected text \"" + expectedText + "\" was not found in " +
+					actualResponseBody);
 		}
 	}
 
 	public static void assertResponseDuration(
 		HttpResponse httpResponse, String expectedResponseDuration) {
 
-		String actualResponseDuration = httpResponse.getDuration();
+		Long actualResponseDuration = httpResponse.getDuration();
 
-		if (!StringUtil.equals(
-				actualResponseDuration, expectedResponseDuration)) {
+		if (MathUtil.isGreaterThan(
+				actualResponseDuration,
+				GetterUtil.getLong(expectedResponseDuration))) {
 
 			throw new RuntimeException(
-				"Expected response duration: " + expectedResponseDuration +
-					"\nActual response duration: " + actualResponseDuration);
+				"Actual response duration of " + actualResponseDuration +
+					"ms exceeded expected response duration of " +
+						expectedResponseDuration + "ms");
 		}
 	}
 
 	public static void assertResponseStatusCode(
 		HttpResponse httpResponse, String expectedStatusCode) {
 
-		String actualStatusCode = httpResponse.getStatusCode();
+		Integer actualStatusCode = httpResponse.getStatusCode();
 
-		if (!StringUtil.equals(actualStatusCode, expectedStatusCode)) {
+		if (!StringUtil.equals(
+				actualStatusCode.toString(), expectedStatusCode)) {
+
 			throw new RuntimeException(
-				"Expected status code: " + expectedStatusCode +
-					"\nActual status code: " + actualStatusCode);
+				"Expected status code " + expectedStatusCode +
+					" does not match actual status code " + actualStatusCode);
 		}
 	}
 
@@ -112,7 +131,7 @@ public class HttpRequestUtil {
 		return httpResponse.getBody();
 	}
 
-	public static String getResponseDuration(HttpResponse httpResponse) {
+	public static Long getResponseDuration(HttpResponse httpResponse) {
 		return httpResponse.getDuration();
 	}
 
@@ -135,7 +154,7 @@ public class HttpRequestUtil {
 		return responseHeaderFields.get(headerFieldKey);
 	}
 
-	public static String getResponseStatusCode(HttpResponse httpResponse) {
+	public static Integer getResponseStatusCode(HttpResponse httpResponse) {
 		return httpResponse.getStatusCode();
 	}
 
@@ -336,17 +355,17 @@ public class HttpRequestUtil {
 			long duration) {
 
 			_body = body;
+			_duration = duration;
 			_errorMessage = errorMessage;
 			_headerFields = headerFields;
-			_statusCode = String.valueOf(statusCode);
-			_duration = String.valueOf(duration);
+			_statusCode = statusCode;
 		}
 
 		public String getBody() {
 			return _body;
 		}
 
-		public String getDuration() {
+		public long getDuration() {
 			return _duration;
 		}
 
@@ -358,15 +377,15 @@ public class HttpRequestUtil {
 			return _headerFields;
 		}
 
-		public String getStatusCode() {
+		public int getStatusCode() {
 			return _statusCode;
 		}
 
 		private final String _body;
-		private final String _duration;
+		private final long _duration;
 		private final String _errorMessage;
 		private final Map<String, List<String>> _headerFields;
-		private final String _statusCode;
+		private final int _statusCode;
 
 	}
 

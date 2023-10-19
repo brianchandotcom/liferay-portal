@@ -138,38 +138,39 @@ public class SharingDLViewFileVersionDisplayContext
 			i++;
 		}
 
-		DropdownItem sharingDropdownItem =
-			_sharingDropdownItemFactory.createShareDropdownItem(
-				DLFileEntryConstants.getClassName(),
-				_fileEntry.getFileEntryId(), _httpServletRequest);
+		if (FeatureFlagManagerUtil.isEnabled("LPS-197477")) {
+			UnsafeConsumer<DropdownContextItem, Exception> sharingActionItem =
+				_sharingDropdownItemFactory.createShareActionUnsafeConsumer(
+					DLFileEntryConstants.getClassName(),
+					_fileEntry.getFileEntryId(), _httpServletRequest);
 
-		UnsafeConsumer<DropdownContextItem, Exception> sharingActionItem =
-			_sharingDropdownItemFactory.createShareActionUnsafeConsumer(
-				DLFileEntryConstants.getClassName(),
-				_fileEntry.getFileEntryId(), _httpServletRequest);
-
-		if (i >= dropdownItems.size()) {
-			if (FeatureFlagManagerUtil.isEnabled("LPS-197477")) {
+			if (i >= dropdownItems.size()) {
 				dropdownItems.addAll(
 					DropdownItemListBuilder.addContext(
 						sharingActionItem
 					).build());
 			}
 			else {
-				dropdownItems.add(sharingDropdownItem);
-			}
-		}
-		else {
-			if (FeatureFlagManagerUtil.isEnabled("LPS-197477")) {
 				dropdownItems.addAll(
 					i,
 					DropdownItemListBuilder.addContext(
 						sharingActionItem
 					).build());
 			}
-			else {
-				dropdownItems.add(i, sharingDropdownItem);
-			}
+
+			return dropdownItems;
+		}
+
+		DropdownItem sharingDropdownItem =
+			_sharingDropdownItemFactory.createShareDropdownItem(
+				DLFileEntryConstants.getClassName(),
+				_fileEntry.getFileEntryId(), _httpServletRequest);
+
+		if (i >= dropdownItems.size()) {
+			dropdownItems.add(sharingDropdownItem);
+		}
+		else {
+			dropdownItems.add(i, sharingDropdownItem);
 		}
 
 		return dropdownItems;
@@ -201,26 +202,24 @@ public class SharingDLViewFileVersionDisplayContext
 			i++;
 		}
 
-		DropdownItem sharingDropdownItem =
-			_sharingDropdownItemFactory.createShareDropdownItem(
-				DLFileEntryConstants.getClassName(),
-				_fileEntry.getFileEntryId(), _httpServletRequest);
-
-		UnsafeConsumer<DropdownContextItem, Exception> sharingActionItem =
-			_sharingDropdownItemFactory.createShareActionUnsafeConsumer(
-				DLFileEntryConstants.getClassName(),
-				_fileEntry.getFileEntryId(), _httpServletRequest);
-
 		if (i < dropdownItems.size()) {
 			if (FeatureFlagManagerUtil.isEnabled("LPS-197477")) {
 				dropdownItems.addAll(
 					i,
 					DropdownItemListBuilder.addContext(
-						sharingActionItem
+						_sharingDropdownItemFactory.
+							createShareActionUnsafeConsumer(
+								DLFileEntryConstants.getClassName(),
+								_fileEntry.getFileEntryId(),
+								_httpServletRequest)
 					).build());
 			}
 			else {
-				dropdownItems.add(i, sharingDropdownItem);
+				dropdownItems.add(
+					i,
+					_sharingDropdownItemFactory.createShareDropdownItem(
+						DLFileEntryConstants.getClassName(),
+						_fileEntry.getFileEntryId(), _httpServletRequest));
 			}
 
 			return true;

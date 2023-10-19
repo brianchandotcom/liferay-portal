@@ -22,14 +22,15 @@ public interface SharingDropdownItemFactory {
 			HttpServletRequest httpServletRequest)
 		throws PortalException;
 
+	public UnsafeConsumer<DropdownContextItem, Exception>
+			createShareActionUnsafeConsumer(
+				String className, long classPK,
+				HttpServletRequest httpServletRequest)
+		throws PortalException;
+
 	public DropdownItem createShareDropdownItem(
 			String className, long classPK,
 			HttpServletRequest httpServletRequest)
-		throws PortalException;
-
-	public UnsafeConsumer<DropdownContextItem, Exception> createShareActionUnsafeConsumer(
-		String className, long classPK,
-		HttpServletRequest httpServletRequest)
 		throws PortalException;
 
 }

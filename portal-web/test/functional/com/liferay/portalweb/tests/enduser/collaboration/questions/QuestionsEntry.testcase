@@ -592,7 +592,7 @@ definition {
 		}
 
 		task ("Then he can delete an answer") {
-			Questions.deleteQuestion();
+			Questions.deleteQuestion(questionTitle = "Title AddQuestion");
 		}
 	}
 

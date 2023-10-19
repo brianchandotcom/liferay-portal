@@ -15,12 +15,9 @@ import javax.ws.rs.ext.Provider;
 import org.apache.cxf.jaxrs.ext.ContextProvider;
 import org.apache.cxf.message.Message;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Marco Leo
  */
-@Component(service = ThemeDisplayContextProvider.class)
 @Provider
 public class ThemeDisplayContextProvider
 	implements ContextProvider<ThemeDisplay> {

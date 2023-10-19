@@ -6394,15 +6394,15 @@ public class ServiceBuilder {
 			boolean colJsonEnabled = GetterUtil.getBoolean(
 				columnElement.attributeValue("json-enabled"), jsonEnabled);
 
-			String changeTrackingResolutionType = "STRICT";
+			String changeTrackingResolutionType = "strict";
 
 			if (primary) {
-				changeTrackingResolutionType = "PK";
+				changeTrackingResolutionType = "pk";
 			}
 			else if (columnName.equals("modifiedDate") &&
 					 columnType.equals("Date")) {
 
-				changeTrackingResolutionType = "IGNORE";
+				changeTrackingResolutionType = "ignore";
 			}
 
 			changeTrackingResolutionType = StringUtil.toUpperCase(

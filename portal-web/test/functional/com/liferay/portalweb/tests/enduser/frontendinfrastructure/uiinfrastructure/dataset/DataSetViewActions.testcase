@@ -563,6 +563,167 @@ definition {
 		}
 	}
 
+	@description = "LPS-192150. Verify if it is not possible to see the 3 dots button and icon in the Data Set fragment if the Action was not created."
+	@priority = 4
+	test CannotSeeActionIconNotCreated {
+		task ("Given a new Object entity") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Data Set Object",
+				objectName = "DataSetObject",
+				pluralLabelName = "Data Set Objects");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Data Set Object");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Text Field",
+				fieldType = "Text");
+
+			ObjectAdmin.goToDetailsTab();
+
+			ObjectAdmin.publishObjectViaUI();
+		}
+
+		task ("And new entries in the new Object entity") {
+			ObjectAdmin.goToCustomObject(objectName = "DataSetObject");
+
+			for (var letters : list "A,B") {
+				ObjectPortlet.addSingleFieldEntryViaUI(entry = "Entry Test ${letters}");
+
+				WaitForSPARefresh();
+
+				Navigator.gotoBack();
+			}
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry Test A");
+
+			var portalURL = Navigator.getCurrentURL();
+
+			var portalURL = StringUtil.replace(${portalURL}, "http://localhost:8080", "");
+
+			var erc = StringUtil.replace(${portalURL}, "_externalReferenceCode=", "_externalReferenceCode={externalReferenceCode}");
+		}
+
+		task ("And a new data set entry") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Data Set Object",
+				restApplication = "/c/datasetobjects",
+				restEndpoint = "/",
+				restSchema = "DataSetObject");
+		}
+
+		task ("And a new view") {
+			DataSetAdmin.createFDSViewViaAPI(
+				dataSetName = "Data Set Object",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Object Test");
+
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Data Set Object",
+				key_viewName = "View Object Test");
+		}
+
+		task ("Add new fields to the view") {
+			DataSetAdmin.goToTab(tabName = "Fields");
+
+			DataSetAdmin.addFields(key_fieldList = "id,status");
+		}
+
+		task ("When the user goes to the Action tab") {
+			DataSetAdmin.goToTab(tabName = "Actions");
+		}
+
+		task ("And clicks on plus button") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("And fills the new item action fields") {
+			var erc = StringUtil.substring(${erc}, 0, 469);
+
+			Type(
+				key_unnamedTitle = "",
+				locator1 = "TextInput#DEPOT_UNNAMED_DEFAULT_TITLE",
+				value1 = "edit");
+
+			Select(
+				key_fieldLabel = "Icon",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "pencil");
+
+			Select(
+				key_fieldLabel = "Type",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Link");
+
+			Type(
+				key_fieldId = "URL",
+				locator1 = "TextArea#ANY_ID",
+				value1 = ${erc});
+		}
+
+		task ("And clicks on Cancel button") {
+			Button.clickCancel();
+		}
+
+		task ("Then there is no item action in the Actions tab") {
+			AssertElementNotPresent(
+				key_position = 1,
+				keyName = "edit",
+				locator1 = "DataSet#FIELDS_TABLE");
+		}
+
+		task ("And creates a new content Page") {
+			Navigator.openURL();
+
+			ContentPages.addPage(pageName = "Data Set Object");
+		}
+
+		task ("And adds the data set fragment to the page") {
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Data Set");
+		}
+
+		task ("And configure it to the new view") {
+			Click(locator1 = "ReportsAdminViewReportEntry#INFO_MESSAGE");
+
+			Click.javaScriptClick(
+				key_value = "Select Data Set View",
+				locator1 = "Button#SECONDARY_BY_TITLE");
+
+			SelectFrame(
+				key_title = "Select",
+				locator1 = "IFrame#MODAL_ANY");
+
+			Click.clickAtNotVisible(
+				key_radioOption = "View Object Test",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Button.clickSave();
+		}
+
+		task ("And publishes the page") {
+			SelectFrame(locator1 = "DataSet#DEFOCUS");
+
+			Click.javaScriptClick(locator1 = "WorkflowMetricsIndex#METRICS_REINDEX_ALL_BUTTON");
+		}
+
+		task ("Then there is no 3 dot menu button on table elements") {
+			Navigator.openURL();
+
+			Navigator.gotoPage(pageName = "Data Set Object");
+
+			AssertElementNotPresent(
+				key_tableEntry = "edit",
+				locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
+		}
+	}
+
 	@description = "LPS-191488. Confirm that it's possible to save an Action after changing all fields in the Actions tab."
 	@priority = 5
 	test CanSaveAfterChangeAllFields {

@@ -43,6 +43,9 @@ The logic that chooses the default deploy directory is as follows:
 	1. If the project directory contains a `.lfrbuild-app-server-lib` marker
 	file, the module is deployed to `${app.server.portal.dir}/WEB-INF/lib`.
 
+	1. If the project directory contains a `.lfrbuild-glowroot` marker file, the
+	module is deployed to `${liferay.home}/glowroot/plugins`.
+
 	1. If the project directory contains a `.lfrbuild-tool` marker file, the
 	module is deployed to `${liferay.home}/tools/${module.dir.name}`.
 
@@ -110,6 +113,7 @@ File Name | Description
 File Name | Description
 --------- | -----------
 `.lfrbuild-app-server-lib` | Deploys the module to `${app.server.portal.dir}/WEB-INF/lib`.
+`.lfrbuild-glowroot` | Deploys the module to `${liferay.home}/glowroot/plugins`.
 `.lfrbuild-static` | Deploys the module to `${liferay home}/osgi/static`.
 `.lfrbuild-tool` | Deploys the module to `${liferay.home}/tools/${module.dir.name}`.
 

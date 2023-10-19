@@ -257,9 +257,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 	public static final String DEPLOY_CONFIGS_TASK_NAME = "deployConfigs";
 
-	public static final String DEPLOY_TOOL_TASK_NAME = "deployTool";
-
 	public static final String DEPLOY_GLOWROOT_TASK_NAME = "deployGlowroot";
+
+	public static final String DEPLOY_TOOL_TASK_NAME = "deployTool";
 
 	public static final String DOWNLOAD_COMPILED_JSP_TASK_NAME =
 		"downloadCompiledJSP";
@@ -426,14 +426,14 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				project, DEPLOY_APP_SERVER_LIB_TASK_NAME,
 				LiferayBasePlugin.DEPLOY_TASK_NAME);
 		}
-		else if (deployToTools) {
-			_addTaskAlias(
-				project, DEPLOY_TOOL_TASK_NAME,
-				LiferayBasePlugin.DEPLOY_TASK_NAME);
-		}
 		else if (deployToGlowroot) {
 			_addTaskAlias(
 				project, DEPLOY_GLOWROOT_TASK_NAME,
+				LiferayBasePlugin.DEPLOY_TASK_NAME);
+		}
+		else if (deployToTools) {
+			_addTaskAlias(
+				project, DEPLOY_TOOL_TASK_NAME,
 				LiferayBasePlugin.DEPLOY_TASK_NAME);
 		}
 

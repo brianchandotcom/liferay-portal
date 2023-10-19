@@ -534,6 +534,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
+
 		// Temporarily skip portal instances to get tests running for pending release. LRQA-80052
 
 		task ("Given I go to add a new MDF Request and when I fill all the goals") {
@@ -555,6 +556,10 @@ definition {
 				targetOfLeads = 03,
 				targetRolesOptions = "Administrator",
 				typeOfActivity = "Miscellaneous Marketing");
+
+			Button.click(button = "See MDF Home");
+
+			PRMNavigator.openSitePage(pageName = "MDF Requests");
 		}
 
 		task ("Then the MDF status appears on list") {

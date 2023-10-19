@@ -227,8 +227,8 @@ public class HttpRequestUtil {
 				}
 
 				if (timeout != 0) {
-					urlConnection.setConnectTimeout(timeout);
-					urlConnection.setReadTimeout(timeout);
+					httpURLConnection.setConnectTimeout(timeout);
+					httpURLConnection.setReadTimeout(timeout);
 				}
 
 				int responseCode = httpURLConnection.getResponseCode();
@@ -237,27 +237,26 @@ public class HttpRequestUtil {
 					try (InputStream inputStream =
 							httpURLConnection.getInputStream()) {
 
-						String body = _readInputStream(inputStream, false);
-
 						long duration =
 							System.currentTimeMillis() - startTimeMillis;
 
 						return new HttpResponse(
-							body, null, responseCode, duration);
+							_readInputStream(inputStream, false), null,
+							httpURLConnection.getHeaderFields(), responseCode,
+							duration);
 					}
 				}
 
 				try (InputStream errorInputStream =
 						httpURLConnection.getErrorStream()) {
 
-					String errorMessage = _readInputStream(
-						errorInputStream, false);
-
 					long duration =
 						System.currentTimeMillis() - startTimeMillis;
 
 					return new HttpResponse(
-						null, errorMessage, responseCode, duration);
+						null, _readInputStream(errorInputStream, false),
+						httpURLConnection.getHeaderFields(), responseCode,
+						duration);
 				}
 			}
 			catch (IOException ioException) {
@@ -332,12 +331,6 @@ public class HttpRequestUtil {
 	public static class HttpResponse {
 
 		public HttpResponse(
-			String body, String errorMessage, int statusCode, long duration) {
-
-			new HttpResponse(body, errorMessage, null, statusCode, duration);
-		}
-
-		public HttpResponse(
 			String body, String errorMessage,
 			Map<String, List<String>> headerFields, int statusCode,
 			long duration) {
@@ -369,11 +362,11 @@ public class HttpRequestUtil {
 			return _statusCode;
 		}
 
-		private String _body;
-		private String _duration;
-		private String _errorMessage;
-		private Map<String, List<String>> _headerFields;
-		private String _statusCode;
+		private final String _body;
+		private final String _duration;
+		private final String _errorMessage;
+		private final Map<String, List<String>> _headerFields;
+		private final String _statusCode;
 
 	}
 

@@ -7790,21 +7790,21 @@ public class JournalArticleLocalServiceImpl
 			}
 
 			if (i == 1) {
-				urlTitle = StringBundler.concat(
-					prefix, StringPool.DASH, copy, StringPool.DASH);
 				title = StringBundler.concat(
 					prefix, StringPool.SPACE, StringPool.OPEN_PARENTHESIS, copy,
 					StringPool.CLOSE_PARENTHESIS);
+				urlTitle = StringBundler.concat(
+					prefix, StringPool.DASH, copy, StringPool.DASH);
 
 				continue;
 			}
 
-			urlTitle = StringBundler.concat(
-				prefix, StringPool.DASH, copy, StringPool.DASH, i - 1,
-				StringPool.DASH);
 			title = StringBundler.concat(
 				prefix, StringPool.SPACE, StringPool.OPEN_PARENTHESIS, copy,
 				StringPool.SPACE, i - 1, StringPool.CLOSE_PARENTHESIS);
+			urlTitle = StringBundler.concat(
+				prefix, StringPool.DASH, copy, StringPool.DASH, i - 1,
+				StringPool.DASH);
 		}
 	}
 

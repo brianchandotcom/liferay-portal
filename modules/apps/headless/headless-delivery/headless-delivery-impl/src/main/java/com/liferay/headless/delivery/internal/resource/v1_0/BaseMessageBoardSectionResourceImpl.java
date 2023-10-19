@@ -477,6 +477,7 @@ public abstract class BaseMessageBoardSectionResourceImpl
 			)
 		}
 	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
 		"/message-board-sections/{messageBoardSectionId}/permissions"
 	)
@@ -1129,6 +1130,7 @@ public abstract class BaseMessageBoardSectionResourceImpl
 			)
 		}
 	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path("/sites/{siteId}/message-board-sections/permissions")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT

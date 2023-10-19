@@ -590,6 +590,7 @@ public abstract class BaseStructuredContentResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "StructuredContent")
 		}
 	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
 		"/asset-libraries/{assetLibraryId}/structured-contents/permissions"
 	)
@@ -1415,6 +1416,7 @@ public abstract class BaseStructuredContentResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "StructuredContent")
 		}
 	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path("/sites/{siteId}/structured-contents/permissions")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT
@@ -2304,6 +2306,7 @@ public abstract class BaseStructuredContentResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "StructuredContent")
 		}
 	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path("/structured-contents/{structuredContentId}/permissions")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT

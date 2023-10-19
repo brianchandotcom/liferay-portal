@@ -582,6 +582,7 @@ public abstract class BaseDataDefinitionResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "DataDefinition")
 		}
 	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path("/data-definitions/{dataDefinitionId}/permissions")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT

@@ -676,6 +676,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 			)
 		}
 	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
 		"/knowledge-base-articles/{knowledgeBaseArticleId}/permissions"
 	)
@@ -1730,6 +1731,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 			)
 		}
 	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path("/sites/{siteId}/knowledge-base-articles/permissions")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT

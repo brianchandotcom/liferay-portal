@@ -991,6 +991,7 @@ public abstract class BaseMessageBoardThreadResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "MessageBoardThread")
 		}
 	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
 		"/message-board-threads/{messageBoardThreadId}/permissions"
 	)
@@ -1509,6 +1510,7 @@ public abstract class BaseMessageBoardThreadResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "MessageBoardThread")
 		}
 	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path("/sites/{siteId}/message-board-threads/permissions")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT

@@ -477,6 +477,7 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 			)
 		}
 	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
 		"/knowledge-base-folders/{knowledgeBaseFolderId}/permissions"
 	)
@@ -1101,6 +1102,7 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 			)
 		}
 	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path("/sites/{siteId}/knowledge-base-folders/permissions")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT

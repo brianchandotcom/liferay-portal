@@ -619,6 +619,7 @@ public abstract class BaseStructuredContentFolderResourceImpl
 			)
 		}
 	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
 		"/asset-libraries/{assetLibraryId}/structured-content-folders/permissions"
 	)
@@ -1178,6 +1179,7 @@ public abstract class BaseStructuredContentFolderResourceImpl
 			)
 		}
 	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path("/sites/{siteId}/structured-content-folders/permissions")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT
@@ -1319,6 +1321,7 @@ public abstract class BaseStructuredContentFolderResourceImpl
 			)
 		}
 	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
 		"/structured-content-folder/{structuredContentFolderId}/permissions"
 	)

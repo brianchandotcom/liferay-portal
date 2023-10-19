@@ -638,6 +638,7 @@ public abstract class BaseDataRecordCollectionResourceImpl
 			)
 		}
 	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
 		"/data-record-collections/{dataRecordCollectionId}/permissions"
 	)

@@ -443,6 +443,7 @@ public abstract class BaseDocumentFolderResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "DocumentFolder")
 		}
 	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
 		"/asset-libraries/{assetLibraryId}/document-folders/permissions"
 	)
@@ -1051,6 +1052,7 @@ public abstract class BaseDocumentFolderResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "DocumentFolder")
 		}
 	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path("/document-folders/{documentFolderId}/permissions")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT
@@ -1634,6 +1636,7 @@ public abstract class BaseDocumentFolderResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "DocumentFolder")
 		}
 	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path("/sites/{siteId}/document-folders/permissions")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT

@@ -572,6 +572,7 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "TaxonomyVocabulary")
 		}
 	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
 		"/asset-libraries/{assetLibraryId}/taxonomy-vocabularies/permissions"
 	)
@@ -1099,6 +1100,7 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "TaxonomyVocabulary")
 		}
 	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path("/sites/{siteId}/taxonomy-vocabularies/permissions")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT
@@ -1508,6 +1510,7 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "TaxonomyVocabulary")
 		}
 	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
 		"/taxonomy-vocabularies/{taxonomyVocabularyId}/permissions"
 	)

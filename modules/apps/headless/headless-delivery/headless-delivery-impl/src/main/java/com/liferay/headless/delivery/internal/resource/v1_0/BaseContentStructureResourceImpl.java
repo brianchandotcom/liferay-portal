@@ -345,6 +345,7 @@ public abstract class BaseContentStructureResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "ContentStructure")
 		}
 	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path(
 		"/asset-libraries/{assetLibraryId}/content-structures/permissions"
 	)
@@ -528,6 +529,7 @@ public abstract class BaseContentStructureResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "ContentStructure")
 		}
 	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path("/content-structures/{contentStructureId}/permissions")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT
@@ -830,6 +832,7 @@ public abstract class BaseContentStructureResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "ContentStructure")
 		}
 	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path("/sites/{siteId}/content-structures/permissions")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT

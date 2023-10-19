@@ -383,6 +383,7 @@ public abstract class BaseNavigationMenuResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "NavigationMenu")
 		}
 	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path("/navigation-menus/{navigationMenuId}/permissions")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT
@@ -729,6 +730,7 @@ public abstract class BaseNavigationMenuResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "NavigationMenu")
 		}
 	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path("/sites/{siteId}/navigation-menus/permissions")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT

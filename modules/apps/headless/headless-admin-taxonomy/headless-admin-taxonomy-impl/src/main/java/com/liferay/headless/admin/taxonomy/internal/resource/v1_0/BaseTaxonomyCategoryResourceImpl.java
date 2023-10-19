@@ -621,6 +621,7 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 			@io.swagger.v3.oas.annotations.tags.Tag(name = "TaxonomyCategory")
 		}
 	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
 	@javax.ws.rs.Path("/taxonomy-categories/{taxonomyCategoryId}/permissions")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT

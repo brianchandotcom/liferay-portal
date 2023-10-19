@@ -48,6 +48,7 @@ Group group = themeDisplay.getSiteGroup();
 if (!group.isLayoutSetPrototype()) {
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(redirect);
+	portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 	renderResponse.setTitle(layoutSetPrototype.isNew() ? LanguageUtil.get(request, "new-site-template") : layoutSetPrototype.getName(locale));
 }

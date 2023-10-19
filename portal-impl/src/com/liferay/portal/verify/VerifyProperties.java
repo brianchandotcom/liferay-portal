@@ -1470,6 +1470,17 @@ public class VerifyProperties {
 			"com.liferay.search.web"
 		},
 
+		// Session
+
+		{
+			"session.timeout.auto.extend", "auto-extend",
+			"com.liferay.frontend.js.web"
+		},
+		{
+			"session.timeout.auto.extend.offset", "auto-extend-offset",
+			"com.liferay.frontend.js.web"
+		},
+
 		// Site Map
 
 		{

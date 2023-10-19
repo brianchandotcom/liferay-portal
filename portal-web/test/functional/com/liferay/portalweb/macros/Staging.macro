@@ -510,6 +510,21 @@ definition {
 		}
 	}
 
+	macro configurePublishToLiveViaPortletCP {
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "Staging");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		if (isSet(contentDateRange)) {
+			ContentConfiguration.contentDateRange(
+				contentDateRange = ${contentDateRange},
+				dateRangeEndDate = ${dateRangeEndDate},
+				dateRangeStartDate = ${dateRangeStartDate});
+		}
+	}
+
 	macro configureScheduleTime {
 		Click(locator1 = "StagingPublishToLive#DATE_SCHEDULE_RADIO");
 
@@ -952,11 +967,7 @@ definition {
 	}
 
 	macro publishToLiveNowViaPortletCP {
-		LexiconEntry.gotoHeaderMenuItem(menuItem = "Staging");
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+		Staging.configurePublishToLiveViaPortletCP();
 
 		if (${replicateIndividualDeletions} == "true") {
 			AssertVisible(locator1 = "Staging#STAGING_CONTENT_DELETIONS");

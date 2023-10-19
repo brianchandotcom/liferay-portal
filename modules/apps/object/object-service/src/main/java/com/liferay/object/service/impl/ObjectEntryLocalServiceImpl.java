@@ -458,11 +458,15 @@ public class ObjectEntryLocalServiceImpl
 
 		Map<String, Serializable> values = objectEntry.getValues();
 
-		objectEntry = objectEntryPersistence.remove(objectEntry);
+		deleteRelatedObjectEntries(
+			objectEntry.getGroupId(), objectEntry.getObjectDefinitionId(),
+			objectEntry.getPrimaryKey());
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectEntry.getObjectDefinitionId());
+
+		objectEntry = objectEntryPersistence.remove(objectEntry);
 
 		_resourceLocalService.deleteResource(
 			objectEntry.getCompanyId(), objectDefinition.getClassName(),
@@ -490,10 +494,6 @@ public class ObjectEntryLocalServiceImpl
 				objectDefinition.getPKObjectFieldDBColumnName(),
 				objectEntry.getObjectEntryId());
 		}
-
-		deleteRelatedObjectEntries(
-			objectEntry.getGroupId(), objectDefinition.getObjectDefinitionId(),
-			objectEntry.getPrimaryKey());
 
 		_deleteFileEntries(
 			Collections.emptyMap(), objectDefinition.getObjectDefinitionId(),

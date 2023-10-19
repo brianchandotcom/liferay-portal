@@ -1388,8 +1388,6 @@ definition {
 		task ("Then the page marketer could configue the page via options menu") {
 			LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
 
-			SelectWindow.selectPopUp(locator1 = "null");
-
 			AssertVisible(
 				key_title = "General",
 				locator1 = "Header#H2_TITLE");
@@ -1440,8 +1438,6 @@ definition {
 
 		task ("Then the page marketer could configue the page via options menu") {
 			LexiconEntry.gotoHeaderMenuItem(menuItem = "Configure");
-
-			SelectWindow.selectPopUp(locator1 = "null");
 
 			AssertVisible(
 				key_title = "General",

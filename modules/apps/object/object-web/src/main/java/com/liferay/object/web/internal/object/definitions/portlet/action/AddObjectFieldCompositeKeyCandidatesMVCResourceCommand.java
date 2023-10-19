@@ -13,6 +13,7 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -91,27 +92,27 @@ public class AddObjectFieldCompositeKeyCandidatesMVCResourceCommand
 			}
 		}
 
-		boolean objectFieldLabelsEmpty = objectFieldLabels.isEmpty();
-
 		JSONPortletResponseUtil.writeJSON(
 			resourceRequest, resourceResponse,
 			JSONUtil.put(
 				"errorLabel",
 				() -> {
-					if (objectFieldLabelsEmpty) {
-						return "";
+					if (objectFieldLabels.isEmpty()) {
+						return StringPool.BLANK;
 					}
 
 					return _language.format(
 						_portal.getHttpServletRequest(resourceRequest),
 						"the-selected-fields-x-cannot-be-added-to-the-unique-" +
 							"composite-key",
-						StringUtil.merge(objectFieldLabels, ", "), false);
+						StringUtil.merge(
+							objectFieldLabels, StringPool.COMMA_AND_SPACE),
+						false);
 				}
 			).put(
 				"status",
 				() -> {
-					if (objectFieldLabelsEmpty) {
+					if (objectFieldLabels.isEmpty()) {
 						return "success";
 					}
 

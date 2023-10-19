@@ -250,11 +250,13 @@ definition {
 	}
 
 	macro clearSearchResults {
-		Click(locator1 = "Questions#SEARCH_RESULTS_CLEAR_BUTTON");
+		Button.click(button = "Clear");
 
 		AssertElementNotPresent(locator1 = "Search#SEARCH_INFO");
 
-		AssertElementNotPresent(locator1 = "Questions#SEARCH_RESULTS_CLEAR_BUTTON");
+		AssertElementNotPresent(
+			key_text = "Clear",
+			locator1 = "Button#ANY");
 	}
 
 	macro clickFilterAndOrderBy {
@@ -767,9 +769,8 @@ definition {
 				locator1 = "TextInput#ANY_PLACEHOLDER");
 
 			KeyPress(
-				key_placeHolder = "Search",
-				locator1 = "TextInput#ANY_PLACEHOLDER",
-				value1 = "\RETURN");
+				locator1 = "Questions#SEARCH_QUESTION_FIELD",
+				value1 = "\ENTER");
 
 			if (isSet(noQuestionsResults)) {
 				AssertElementPresent(
@@ -782,7 +783,9 @@ definition {
 					locator1 = "Questions#SEARCH_INFO",
 					value1 = ${resultsInfo});
 
-				AssertVisible(locator1 = "Questions#SEARCH_RESULTS_CLEAR_BUTTON");
+				AssertVisible(
+					key_text = "Clear",
+					locator1 = "Button#ANY");
 			}
 		}
 	}

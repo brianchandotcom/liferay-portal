@@ -34,7 +34,7 @@ public class UpgradePortletDisplayCheck extends BaseUpgradeCheck {
 
 			while (getPortletInstanceConfigurationMatcher.find()) {
 				return _getNewContent(
-					newContent, fileName,
+					newContent, newContent, fileName,
 					getPortletInstanceConfigurationMatcher, content,
 					"themeDisplay");
 			}
@@ -62,13 +62,13 @@ public class UpgradePortletDisplayCheck extends BaseUpgradeCheck {
 
 					if (themeDisplayMatcher.find()) {
 						newContent = _getNewContent(
-							javaMethodContent, fileName,
+							javaMethodContent, newContent, fileName,
 							getPortletInstanceConfigurationMatcher, newContent,
 							themeDisplayMatcher.group(1));
 					}
 					else {
 						newContent = _getNewContent(
-							javaMethodContent, fileName,
+							javaMethodContent, newContent, fileName,
 							getPortletInstanceConfigurationMatcher, newContent,
 							getPortletInstanceConfigurationMatcher.group(1) +
 								".getThemeDisplay()");
@@ -94,8 +94,8 @@ public class UpgradePortletDisplayCheck extends BaseUpgradeCheck {
 	}
 
 	private String _getNewContent(
-		String content, String fileName, Matcher matcher, String newContent,
-		String newParameters) {
+		String content, String fileContent, String fileName, Matcher matcher,
+		String newContent, String newParameters) {
 
 		String methodCall = JavaSourceUtil.getMethodCall(
 			content, matcher.start());
@@ -103,7 +103,7 @@ public class UpgradePortletDisplayCheck extends BaseUpgradeCheck {
 		String variableName = getVariableName(methodCall);
 
 		if (!hasClassOrVariableName(
-				"PortletDisplay", newContent, fileName, methodCall) &&
+				"PortletDisplay", content, fileContent, fileName, methodCall) &&
 			!variableName.contains("portletDisplay")) {
 
 			return newContent;

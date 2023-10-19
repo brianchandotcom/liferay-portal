@@ -36,11 +36,13 @@ public class UpgradeJavaAssetEntryAssetCategoriesCheck
 
 	@Override
 	protected String format(
-		String fileName, String absolutePath, String content) {
+			String fileName, String absolutePath, String content)
+		throws Exception {
 
-		String newContent = _replaceAddOrDeleteAssetCategories(content);
+		String newContent = _replaceAddOrDeleteAssetCategories(
+			content, fileName);
 
-		return _replaceAddOrDeleteAssetCategory(newContent);
+		return _replaceAddOrDeleteAssetCategory(newContent, fileName);
 	}
 
 	@Override
@@ -52,7 +54,9 @@ public class UpgradeJavaAssetEntryAssetCategoriesCheck
 		};
 	}
 
-	private String _replaceAddOrDeleteAssetCategories(String content) {
+	private String _replaceAddOrDeleteAssetCategories(
+		String content, String fileName) {
+
 		String newContent = content;
 
 		Matcher matcher = _addOrDeleteAssetEntryAssetCategoriesPattern.matcher(
@@ -63,7 +67,7 @@ public class UpgradeJavaAssetEntryAssetCategoriesCheck
 
 			if (!hasClassOrVariableName(
 					"AssetCategoryLocalService", newContent, newContent,
-					methodCall)) {
+					fileName, methodCall)) {
 
 				continue;
 			}
@@ -71,15 +75,19 @@ public class UpgradeJavaAssetEntryAssetCategoriesCheck
 			String line = getLine(
 				content, getLineNumber(content, matcher.start()));
 
+			String secondParameter = matcher.group(2);
+
+			String variableTypeName = getVariableTypeName(
+				newContent, newContent, fileName, secondParameter, true);
+
+			if (variableTypeName == null) {
+				continue;
+			}
+
 			String indent = SourceUtil.getIndent(line);
 
 			String newLine = null;
 			String newMethodCall = null;
-
-			String secondParameter = matcher.group(2);
-
-			String variableTypeName = getVariableTypeName(
-				newContent, newContent, secondParameter, true);
 
 			if (variableTypeName.equals("List<AssetCategory>")) {
 				newLine = StringBundler.concat(
@@ -126,7 +134,10 @@ public class UpgradeJavaAssetEntryAssetCategoriesCheck
 		return newContent;
 	}
 
-	private String _replaceAddOrDeleteAssetCategory(String content) {
+	private String _replaceAddOrDeleteAssetCategory(
+			String content, String fileName)
+		throws Exception {
+
 		String newContent = content;
 
 		Matcher matcher = _addOrDeleteAssetEntryAssetCategoryPattern.matcher(
@@ -137,7 +148,7 @@ public class UpgradeJavaAssetEntryAssetCategoriesCheck
 
 			if (!hasClassOrVariableName(
 					"AssetCategoryLocalService", newContent, newContent,
-					methodCall)) {
+					fileName, methodCall)) {
 
 				continue;
 			}
@@ -158,7 +169,7 @@ public class UpgradeJavaAssetEntryAssetCategoriesCheck
 			String secondParameter = matcher.group(2);
 
 			String variableTypeName = getVariableTypeName(
-				newContent, newContent, secondParameter);
+				newContent, newContent, fileName, secondParameter);
 
 			if ((variableTypeName != null) &&
 				variableTypeName.equals("AssetCategory")) {

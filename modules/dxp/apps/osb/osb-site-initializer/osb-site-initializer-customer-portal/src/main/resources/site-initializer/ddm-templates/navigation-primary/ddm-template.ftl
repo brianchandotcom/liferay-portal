@@ -69,7 +69,7 @@
 
 										<h5 class="adt-submenu-item-title">${navTertiaryItem.getName()}</h5>
 
-										<#if (menuItemType == '' || stringUtil.equals(menuItemType, "Text")) && descriptionText?has_content>
+										<#if descriptionText?has_content>
 											<div class="adt-submenu-item-description">${descriptionText}</div>
 										</#if>
 									</div>

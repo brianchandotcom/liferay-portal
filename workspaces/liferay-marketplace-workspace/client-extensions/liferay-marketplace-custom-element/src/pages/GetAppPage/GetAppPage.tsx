@@ -13,7 +13,7 @@ import {
 	postEmailAppInformation,
 } from '../../utils/api';
 import {getValueFromSpecifications} from '../../utils/util';
-import AccountEmailInfo from '../CreateLicense/AccountEmail';
+import AccountEmailInfo from '../CreateLicense/AccountInfo';
 import AccountSelection from './components/AccountSelection';
 import ProductFooter from './components/Footer';
 import {LicenseSelector} from './components/LicenseSelector';

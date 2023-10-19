@@ -7,7 +7,15 @@ import ClaySticker from '@clayui/sticker';
 
 import emptyPictureIcon from '../../../assets/icons/empty_picture_icon.svg';
 
-const AccountEmailInfo = ({productCreatorAccount, userAccount}: any) => (
+type AccountInfoProps = {
+	productCreatorAccount?: {logoURL: undefined; name: string} | Account;
+	userAccount?: {[key: string]: string} | UserAccount;
+};
+
+const AccountEmailInfo = ({
+	productCreatorAccount,
+	userAccount,
+}: AccountInfoProps) => (
 	<div className="align-items-center d-flex">
 		<div className="account-banner-name-text align-items-end d-flex flex-column m-2">
 			<strong>{productCreatorAccount?.name}</strong>

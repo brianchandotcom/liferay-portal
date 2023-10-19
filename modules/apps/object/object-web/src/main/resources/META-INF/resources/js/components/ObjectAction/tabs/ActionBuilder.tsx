@@ -7,7 +7,6 @@ import ClayAlert from '@clayui/alert';
 import {Option, Text} from '@clayui/core';
 import {
 	Card,
-	CustomItem,
 	SidebarCategory,
 	SingleSelect,
 	invalidateRequired,
@@ -26,8 +25,8 @@ interface ActionBuilderProps {
 	errors: ActionError;
 	isApproved: boolean;
 	objectActionCodeEditorElements: SidebarCategory[];
-	objectActionExecutors: CustomItem[];
-	objectActionTriggers: CustomItem[];
+	objectActionExecutors: ObjectActionTriggerExecutorItem[];
+	objectActionTriggers: ObjectActionTriggerExecutorItem[];
 	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionId: number;
 	objectDefinitionsRelationshipsURL: string;
@@ -67,7 +66,7 @@ export default function ActionBuilder({
 	values,
 }: ActionBuilderProps) {
 	const [newObjectActionExecutors, setNewObjectActionExecutors] = useState<
-		CustomItem[]
+		ObjectActionTriggerExecutorItem[]
 	>(objectActionExecutors);
 
 	const [infoAlert, setInfoAlert] = useState(true);

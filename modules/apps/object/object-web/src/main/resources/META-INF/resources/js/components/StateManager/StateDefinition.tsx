@@ -5,7 +5,7 @@
 
 import {
 	Card,
-	CustomItem,
+	MultiSelectItem,
 	MultipleSelect,
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
@@ -21,7 +21,7 @@ export default function StateDefinition({
 	stateName,
 	values,
 }: IProps) {
-	const [items, setItems] = useState<CustomItem[]>(
+	const [items, setItems] = useState<MultiSelectItem[]>(
 		initialValues.map(({checked, key, name}) => {
 			return {checked, label: name, value: key};
 		})

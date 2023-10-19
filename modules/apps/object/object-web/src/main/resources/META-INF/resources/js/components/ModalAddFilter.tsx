@@ -11,6 +11,7 @@ import {
 	AutoComplete,
 	DatePicker,
 	Input,
+	MultiSelectItem,
 	MultipleSelect,
 	SingleSelect,
 	filterArrayByQuery,
@@ -33,7 +34,7 @@ import {
 
 import './ModalAddFilter.scss';
 
-interface IProps {
+interface ModalAddFilterProps {
 	aggregationFilter?: boolean;
 	creationLanguageId?: Liferay.Language.Locale;
 	currentFilters: CurrentFilter[];
@@ -53,7 +54,7 @@ interface IProps {
 		fieldLabel?: LocalizedValue<string>,
 		objectFieldBusinessType?: string,
 		filterType?: string,
-		valueList?: IItem[],
+		valueList?: MultiSelectItem[],
 		value?: string
 	) => void;
 	validate: ({
@@ -68,10 +69,6 @@ interface IProps {
 	workflowStatusJSONArray: LabelValueObject[];
 }
 
-interface IItem extends LabelValueObject {
-	checked?: boolean;
-}
-
 export type FilterErrors = {
 	endDate?: string;
 	items?: string;
@@ -82,9 +79,9 @@ export type FilterErrors = {
 };
 
 export type FilterValidation = {
-	checkedItems: IItem[];
+	checkedItems: MultiSelectItem[];
 	disableDateValues?: boolean;
-	items: IItem[];
+	items: MultiSelectItem[];
 	selectedFilterBy?: ObjectField;
 	selectedFilterTypeValue?: string;
 	setErrors: (value: FilterErrors) => void;
@@ -131,8 +128,8 @@ export function ModalAddFilter({
 	onSave,
 	validate,
 	workflowStatusJSONArray,
-}: IProps) {
-	const [items, setItems] = useState<IItem[]>([]);
+}: ModalAddFilterProps) {
+	const [items, setItems] = useState<MultiSelectItem[]>([]);
 
 	const [selectedFilterBy, setSelectedFilterBy] = useState<ObjectField>();
 
@@ -217,7 +214,7 @@ export function ModalAddFilter({
 				makeFetch();
 			}
 			else if (objectField.name === 'status') {
-				let newItems: IItem[] = [];
+				let newItems: MultiSelectItem[] = [];
 
 				if (editingFilter) {
 					newItems = getCheckedWorkflowStatusItems(

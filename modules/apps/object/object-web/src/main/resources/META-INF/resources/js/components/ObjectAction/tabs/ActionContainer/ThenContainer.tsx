@@ -9,12 +9,7 @@ import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {
-	API,
-	Card,
-	CustomItem,
-	SingleSelect,
-} from '@liferay/object-js-components-web';
+import {API, Card, SingleSelect} from '@liferay/object-js-components-web';
 import React, {useEffect, useState} from 'react';
 
 import {ActionError} from '../..';
@@ -33,8 +28,8 @@ interface ThenContainerProps {
 		{businessType, name, objectFieldSettings, system}: ObjectField,
 		isObjectActionSystem?: boolean
 	) => boolean;
-	newObjectActionExecutors: CustomItem<string>[];
-	objectActionExecutors: CustomItem[];
+	newObjectActionExecutors: ObjectActionTriggerExecutorItem[];
+	objectActionExecutors: ObjectActionTriggerExecutorItem[];
 	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionId: number;
 	objectDefinitionsRelationshipsURL: string;
@@ -45,6 +40,12 @@ interface ThenContainerProps {
 	updateParameters: (value: ObjectOptionsListItem) => Promise<void>;
 	values: Partial<ObjectAction>;
 }
+
+type NotificationTemplateAction = {
+	label: string;
+	type: string;
+	value: string;
+};
 
 export function ThenContainer({
 	errors,
@@ -62,7 +63,7 @@ export function ThenContainer({
 	values,
 }: ThenContainerProps) {
 	const [notificationTemplates, setNotificationTemplates] = useState<
-		CustomItem<string>[]
+		NotificationTemplateAction[]
 	>([]);
 
 	const [objectsOptions, setObjectOptions] = useState<ObjectsOptionsList>([]);
@@ -253,7 +254,7 @@ export function ThenContainer({
 				)}
 
 				{values.objectActionExecutorKey === 'notification' && (
-					<SingleSelect<CustomItem<string>>
+					<SingleSelect<NotificationTemplateAction>
 						className="lfr-object__action-builder-notification-then"
 						disabled={values.system}
 						error={errors.objectActionExecutorKey}

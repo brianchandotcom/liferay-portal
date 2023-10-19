@@ -7,7 +7,6 @@ import {
 	API,
 	Card,
 	CodeEditor,
-	CustomItem,
 	Input,
 	SidebarCategory,
 } from '@liferay/object-js-components-web';
@@ -24,9 +23,9 @@ import {ThenContainer} from './ThenContainer';
 interface ActionContainerProps {
 	currentObjectDefinitionFields: ObjectField[];
 	errors: ActionError;
-	newObjectActionExecutors: CustomItem<string>[];
+	newObjectActionExecutors: ObjectActionTriggerExecutorItem[];
 	objectActionCodeEditorElements: SidebarCategory[];
-	objectActionExecutors: CustomItem[];
+	objectActionExecutors: ObjectActionTriggerExecutorItem[];
 	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionId: number;
 	objectDefinitionsRelationshipsURL: string;

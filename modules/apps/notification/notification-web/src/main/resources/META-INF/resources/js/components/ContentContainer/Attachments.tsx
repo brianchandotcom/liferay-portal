@@ -7,7 +7,7 @@ import ClayPanel from '@clayui/panel';
 import {
 	API,
 	AutoComplete,
-	CustomItem,
+	MultiSelectItem,
 	MultipleSelect,
 	filterArrayByQuery,
 	getLocalizableLabel,
@@ -20,9 +20,9 @@ export function Attachments({setValues, values}: IProps) {
 	const [objectDefinitions, setObjectDefinitions] = useState<
 		ObjectDefinition[]
 	>();
-	const [attachmentsFields, setAttachmentsFields] = useState<CustomItem[]>(
-		[]
-	);
+	const [attachmentsFields, setAttachmentsFields] = useState<
+		MultiSelectItem[]
+	>([]);
 	const [query, setQuery] = useState<string>('');
 	const [selectedEntity, setSelectedEntity] = useState<ObjectDefinition>();
 
@@ -37,7 +37,7 @@ export function Attachments({setValues, values}: IProps) {
 	}, [objectDefinitions, query]);
 
 	const parseFields = (fields: ObjectField[]) => {
-		const parsedFields: CustomItem[] = [];
+		const parsedFields: MultiSelectItem[] = [];
 
 		const attachmentObjectFieldIds = new Set(
 			values?.attachmentObjectFieldIds as number[]
@@ -51,7 +51,7 @@ export function Attachments({setValues, values}: IProps) {
 					label,
 					name
 				),
-				value: id?.toString(),
+				value: id?.toString() as string,
 			});
 		});
 

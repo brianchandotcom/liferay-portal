@@ -3,16 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {CustomItem, SidebarCategory} from '@liferay/object-js-components-web';
+import {SidebarCategory} from '@liferay/object-js-components-web';
 import React from 'react';
 import {ActionError} from '../..';
 import {WarningStates} from '../ActionBuilder';
 interface ActionContainerProps {
 	currentObjectDefinitionFields: ObjectField[];
 	errors: ActionError;
-	newObjectActionExecutors: CustomItem<string>[];
+	newObjectActionExecutors: ObjectActionTriggerExecutorItem[];
 	objectActionCodeEditorElements: SidebarCategory[];
-	objectActionExecutors: CustomItem[];
+	objectActionExecutors: ObjectActionTriggerExecutorItem[];
 	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionId: number;
 	objectDefinitionsRelationshipsURL: string;

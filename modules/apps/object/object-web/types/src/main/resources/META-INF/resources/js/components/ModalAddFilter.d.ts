@@ -6,8 +6,9 @@
 /// <reference types="react" />
 
 import {Observer} from '@clayui/modal/lib/types';
+import {MultiSelectItem} from '@liferay/object-js-components-web';
 import './ModalAddFilter.scss';
-interface IProps {
+interface ModalAddFilterProps {
 	aggregationFilter?: boolean;
 	creationLanguageId?: Liferay.Language.Locale;
 	currentFilters: CurrentFilter[];
@@ -27,7 +28,7 @@ interface IProps {
 		fieldLabel?: LocalizedValue<string>,
 		objectFieldBusinessType?: string,
 		filterType?: string,
-		valueList?: IItem[],
+		valueList?: MultiSelectItem[],
 		value?: string
 	) => void;
 	validate: ({
@@ -41,9 +42,6 @@ interface IProps {
 	}: FilterValidation) => FilterErrors;
 	workflowStatusJSONArray: LabelValueObject[];
 }
-interface IItem extends LabelValueObject {
-	checked?: boolean;
-}
 export declare type FilterErrors = {
 	endDate?: string;
 	items?: string;
@@ -53,9 +51,9 @@ export declare type FilterErrors = {
 	value?: string;
 };
 export declare type FilterValidation = {
-	checkedItems: IItem[];
+	checkedItems: MultiSelectItem[];
 	disableDateValues?: boolean;
-	items: IItem[];
+	items: MultiSelectItem[];
 	selectedFilterBy?: ObjectField;
 	selectedFilterTypeValue?: string;
 	setErrors: (value: FilterErrors) => void;
@@ -91,5 +89,5 @@ export declare function ModalAddFilter({
 	onSave,
 	validate,
 	workflowStatusJSONArray,
-}: IProps): JSX.Element;
+}: ModalAddFilterProps): JSX.Element;
 export {};

@@ -7,7 +7,6 @@ import 'codemirror/mode/groovy/groovy';
 import ClayTabs from '@clayui/tabs';
 import {
 	API,
-	CustomItem,
 	FormError,
 	SidePanelForm,
 	SidebarCategory,
@@ -29,8 +28,8 @@ interface ActionProps {
 	isApproved?: boolean;
 	objectAction: Partial<ObjectAction>;
 	objectActionCodeEditorElements: SidebarCategory[];
-	objectActionExecutors: CustomItem[];
-	objectActionTriggers: CustomItem[];
+	objectActionExecutors: ObjectActionTriggerExecutorItem[];
+	objectActionTriggers: ObjectActionTriggerExecutorItem[];
 	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionId: number;
 	objectDefinitionsRelationshipsURL: string;

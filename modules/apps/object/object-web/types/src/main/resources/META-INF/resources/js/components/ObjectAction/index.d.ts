@@ -6,17 +6,13 @@
 /// <reference types="react" />
 
 import 'codemirror/mode/groovy/groovy';
-import {
-	CustomItem,
-	FormError,
-	SidebarCategory,
-} from '@liferay/object-js-components-web';
+import {FormError, SidebarCategory} from '@liferay/object-js-components-web';
 interface ActionProps {
 	isApproved?: boolean;
 	objectAction: Partial<ObjectAction>;
 	objectActionCodeEditorElements: SidebarCategory[];
-	objectActionExecutors: CustomItem[];
-	objectActionTriggers: CustomItem[];
+	objectActionExecutors: ObjectActionTriggerExecutorItem[];
+	objectActionTriggers: ObjectActionTriggerExecutorItem[];
 	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionId: number;
 	objectDefinitionsRelationshipsURL: string;

@@ -5,12 +5,12 @@
 
 /// <reference types="react" />
 
-import {CustomItem, SidebarCategory} from '@liferay/object-js-components-web';
+import {SidebarCategory} from '@liferay/object-js-components-web';
 interface AddObjectActionProps {
 	apiURL: string;
 	objectActionCodeEditorElements: SidebarCategory[];
-	objectActionExecutors: CustomItem[];
-	objectActionTriggers: CustomItem[];
+	objectActionExecutors: ObjectActionTriggerExecutorItem[];
+	objectActionTriggers: ObjectActionTriggerExecutorItem[];
 	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionId: number;
 	objectDefinitionsRelationshipsURL: string;

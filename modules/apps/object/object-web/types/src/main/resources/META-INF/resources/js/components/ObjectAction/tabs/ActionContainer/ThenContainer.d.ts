@@ -5,7 +5,6 @@
 
 /// <reference types="react" />
 
-import {CustomItem} from '@liferay/object-js-components-web';
 import {ActionError} from '../..';
 import {ObjectOptionsListItem} from '../../fetchUtil';
 import './ThenContainer.scss';
@@ -15,8 +14,8 @@ interface ThenContainerProps {
 		{businessType, name, objectFieldSettings, system}: ObjectField,
 		isObjectActionSystem?: boolean
 	) => boolean;
-	newObjectActionExecutors: CustomItem<string>[];
-	objectActionExecutors: CustomItem[];
+	newObjectActionExecutors: ObjectActionTriggerExecutorItem[];
+	objectActionExecutors: ObjectActionTriggerExecutorItem[];
 	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionId: number;
 	objectDefinitionsRelationshipsURL: string;

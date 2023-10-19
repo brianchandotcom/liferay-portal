@@ -121,10 +121,10 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 			_cpInstanceHelper.getCPDefinitionOptionValueRelsMap(
 				cpInstance.getCPDefinitionId(), jsonArray.toString()));
 
-		CPInstance replacementCPInstance =
+		CPInstance replacementCPInstance = _checkReplacementCPInstance(
 			_cpInstanceLocalService.fetchCProductInstance(
 				cpInstance.getReplacementCProductId(),
-				cpInstance.getReplacementCPInstanceUuid());
+				cpInstance.getReplacementCPInstanceUuid()));
 
 		return new Sku() {
 			{
@@ -263,6 +263,19 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 					});
 			}
 		};
+	}
+
+	private CPInstance _checkReplacementCPInstance(CPInstance cpInstance) {
+		if ((cpInstance != null) && cpInstance.isDiscontinued()) {
+			CPInstance replacedCPInstance =
+				_cpInstanceLocalService.fetchCPInstance(
+					cpInstance.getReplacementCProductId(),
+					cpInstance.getReplacementCPInstanceUuid());
+
+			return _checkReplacementCPInstance(replacedCPInstance);
+		}
+
+		return cpInstance;
 	}
 
 	private Availability _getAvailability(

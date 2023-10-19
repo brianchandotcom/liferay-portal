@@ -688,12 +688,8 @@ paths:
             responses:
                 200:
                     content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/ObjectEntry"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/ObjectEntry"
+                        application/json: {}
+                        application/xml: {}
             tags: ["ObjectEntry"]
         put:
             operationId: putObjectEntryPermissionsPage

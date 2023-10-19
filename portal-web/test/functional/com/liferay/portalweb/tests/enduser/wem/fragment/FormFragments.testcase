@@ -370,6 +370,73 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-194108. View Unique Field Value error when submitting a form."
+	@priority = 4
+	test CannotSubmitSameValueWithExistingEntryToUniqueField {
+		task ("Given a page creator has a content page with a Text Input fragment mapped to an unique field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Purchase Order",
+				objectName = "PurchaseOrder",
+				pluralLabelName = "Purchase Orders");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Purchase Order");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				acceptUniqueValuesOnly = "true",
+				fieldLabel = "Email Address",
+				fieldType = "Text");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Form Components",
+				fragmentName = "Form Container");
+
+			PageEditor.mapFormContainerToObject(contentType = "Purchase Order");
+
+			PageEditor.publish();
+		}
+
+		task ("When the page creator submits a form") {
+			Type(
+				key_text = "Email Address",
+				locator1 = "TextInput#ANY",
+				value1 = "test@liferay.com");
+
+			Button.clickSubmitButton();
+
+			AssertTextPresent(value1 = "Thank you. Your information was successfully received.");
+		}
+
+		task ("When the page creator cannot submit another form with same value") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			Type(
+				key_text = "Email Address",
+				locator1 = "TextInput#ANY",
+				value1 = "test@liferay.com");
+
+			Button.clickSubmitButton();
+
+			Alert.viewErrorMessage(errorMessage = "The Email Address is already in use. Please enter a unique Email Address.");
+		}
+	}
+
 	@description = "This is a test for LPS-162848. The Form Components should be available to Fragments admin and style book by default."
 	@priority = 4
 	test ViewFormComponentsInFragmentsAdminAndStyleBook {

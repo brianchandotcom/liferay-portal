@@ -50,11 +50,36 @@ public class UpgradeCatchAllCheck {
 			companyId, 551, "test", start, end);
 	}
 
+	public void method(long companyId, String externalReferenceCode) {
+		_cpInstanceLocalService.fetchByExternalReferenceCode(externalReferenceCode, companyId);
+
+		_cpInstanceLocalService.fetchCPInstanceByExternalReferenceCode(externalReferenceCode, companyId);
+
+		CPInstanceLocalServiceUtil.fetchByExternalReferenceCode(externalReferenceCode, companyId);
+
+		CPInstanceLocalServiceUtil.fetchCPInstanceByExternalReferenceCode(externalReferenceCode, companyId);
+
+		_cpInstanceService.fetchByExternalReferenceCode(externalReferenceCode, companyId);
+
+		CPInstanceServiceUtil.fetchByExternalReferenceCode(externalReferenceCode, companyId);
+
+		CPInstanceLocalServiceUtil.fetchByExternalReferenceCode(1234, "1234");
+
+		CPInstanceLocalServiceUtil.fetchCPInstanceByExternalReferenceCode(
+			1234, "1234");
+	}
+
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	@Reference
 	private AssetVocabularyService _assetVocabularyService;
+
+	@Reference
+	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private CPInstanceService _cpInstanceService;
 
 	@Reference
 	private HtmlParser _htmlParser;

@@ -1,34 +1,3 @@
-import com.liferay.gradle.util.copy.StripPathSegmentsAction
-
-task buildClay(type: Copy)
-
-File jsDestinationDir = file("tmp/META-INF/resources")
-
-buildClay {
-	File clayDestinationDir = new File(jsDestinationDir, "clay")
-
-	dependsOn npmInstall
-
-	doFirst {
-		delete clayDestinationDir
-	}
-
-	eachFile new StripPathSegmentsAction(3)
-
-	from npmInstall.nodeModulesDir
-	include "clay/lib/js/"
-	includeEmptyDirs = false
-	into clayDestinationDir
-}
-
-classes {
-	dependsOn buildClay
-}
-
-clean {
-	delete "tmp"
-}
-
 dependencies {
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"

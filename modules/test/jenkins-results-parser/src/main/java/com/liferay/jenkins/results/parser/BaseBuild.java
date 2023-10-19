@@ -3281,8 +3281,6 @@ public abstract class BaseBuild implements Build {
 
 		addInvocation(invocation);
 
-		setStatus("running");
-
 		String result = buildJSONObject.optString("result");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(result)) {
@@ -3290,6 +3288,9 @@ public abstract class BaseBuild implements Build {
 
 			setResult(result);
 			setStatus("completed");
+		}
+		else {
+			setStatus("running");
 		}
 	}
 

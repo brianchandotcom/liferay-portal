@@ -12,6 +12,7 @@ import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateR
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorFieldContextKey;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.form.web.internal.FormInstanceFieldSettingsException;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -141,6 +142,43 @@ public class DDMFormInstanceFieldSettingsValidator {
 						return getLocalizedValue(
 							jsonObject.getString("localizedValue"),
 							availableLocales, defaultLocale);
+					}
+					else if (StringUtil.equals(
+								jsonObject.getString("type"),
+								DDMFormFieldTypeConstants.OPTIONS)) {
+
+						try {
+							JSONObject optionsJSONObject =
+								_jsonFactory.createJSONObject(
+									jsonObject.getString("value"));
+
+							JSONArray defaultJSONArray =
+								optionsJSONObject.getJSONArray(
+									LocaleUtil.toLanguageId(defaultLocale));
+
+							for (Locale availableLocale : availableLocales) {
+								JSONArray jsonArray =
+									optionsJSONObject.getJSONArray(
+										LocaleUtil.toLanguageId(
+											availableLocale));
+
+								if (jsonArray != null) {
+									continue;
+								}
+
+								optionsJSONObject.put(
+									LocaleUtil.toLanguageId(availableLocale),
+									defaultJSONArray);
+							}
+
+							return new UnlocalizedValue(
+								optionsJSONObject.toString());
+						}
+						catch (JSONException jsonException) {
+							if (_log.isDebugEnabled()) {
+								_log.debug(jsonException);
+							}
+						}
 					}
 
 					return new UnlocalizedValue(jsonObject.getString("value"));

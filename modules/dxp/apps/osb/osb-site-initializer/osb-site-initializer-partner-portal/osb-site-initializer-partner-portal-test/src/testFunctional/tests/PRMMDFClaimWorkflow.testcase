@@ -87,19 +87,19 @@ definition {
 				listLeads = "Document_1.xlsx",
 				reimbursementInvoice = "Document_1.png",
 				thirdInvoice = "Document_1.jpg");
-			
+
 			PRMMDFClaim.getClaimIdOnDetailPage(index = 1);
 		}
 
-		task ("When the CMM open the created MDF Claim"){
+		task ("When the CMM open the created MDF Claim") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "cmm@liferaytest.com",
 				userLoginFullName = "Channel Marketing Manager");
-			
+
 			PRMNavigator.gotoClaim(claimId = ${staticClaimId1});
 		}
 
-		task ("Then the 'Rejected,'In Finance Review' and 'Request More Info' MDF Claim status will be available"){
+		task ("Then the 'Rejected,'In Finance Review' and 'Request More Info' MDF Claim status will be available") {
 			PRMMDFClaim.viewStatusOptionVisible(statusButton = "Rejected");
 
 			PRMMDFClaim.viewStatusOptionVisible(statusButton = "In Finance Review");

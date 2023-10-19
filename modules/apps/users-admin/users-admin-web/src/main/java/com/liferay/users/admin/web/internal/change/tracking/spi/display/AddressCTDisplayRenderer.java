@@ -8,7 +8,6 @@ package com.liferay.users.admin.web.internal.change.tracking.spi.display;
 import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
@@ -114,9 +113,6 @@ public class AddressCTDisplayRenderer extends BaseCTDisplayRenderer<Address> {
 			"mailing", address.isMailing()
 		);
 	}
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private Portal _portal;

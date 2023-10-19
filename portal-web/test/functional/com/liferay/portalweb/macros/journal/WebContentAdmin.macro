@@ -53,7 +53,7 @@ definition {
 			entry = ${entry},
 			item = "Delete");
 
-		Confirm();
+		Confirm(value1 = "null");
 	}
 
 	macro viewEntryNotPresent {

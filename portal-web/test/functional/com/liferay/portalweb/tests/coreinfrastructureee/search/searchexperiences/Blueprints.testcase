@@ -913,7 +913,7 @@ definition {
 			key_text = "Cancel",
 			locator1 = "Link#ANY");
 
-		Confirm();
+		Confirm(value1 = "null");
 
 		Blueprints.createElement(
 			elementSourceJson = ${customElementJson},
@@ -1181,7 +1181,7 @@ definition {
 			key_text = "Cancel",
 			locator1 = "Link#ANY");
 
-		Confirm();
+		Confirm(value1 = "null");
 
 		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
@@ -1216,7 +1216,7 @@ definition {
 			key_text = "Cancel",
 			locator1 = "Link#ANY");
 
-		Confirm();
+		Confirm(value1 = "null");
 
 		Blueprints.gotoBlueprint(title = "Test Blueprint");
 
@@ -3560,7 +3560,7 @@ definition {
 			key_text = "Cancel",
 			locator1 = "Link#ANY");
 
-		Confirm();
+		Confirm(value1 = "null");
 
 		Blueprints.gotoBlueprint(title = "Test Blueprint");
 

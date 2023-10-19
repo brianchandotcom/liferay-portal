@@ -32,7 +32,7 @@ definition {
 			item = "Delete",
 			tableEntry = ${tableEntry});
 
-		Confirm();
+		Confirm(value1 = "null");
 	}
 
 	macro viewTableEntryFormFragment {

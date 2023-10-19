@@ -39,7 +39,7 @@ definition {
 			key_card = ${card},
 			locator1 = "Card#CARD");
 
-		Confirm();
+		Confirm(value1 = "null");
 	}
 
 	macro clickEllipsisItem {
@@ -62,7 +62,7 @@ definition {
 			card = ${card},
 			item = "Delete");
 
-		Confirm();
+		Confirm(value1 = "null");
 	}
 
 	macro viewCardLabel {

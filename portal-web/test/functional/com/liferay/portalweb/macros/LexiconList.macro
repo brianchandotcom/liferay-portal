@@ -32,7 +32,7 @@ definition {
 			item = "Delete",
 			listEntry = ${listEntry});
 
-		Confirm();
+		Confirm(value1 = "null");
 	}
 
 	macro viewAnyList {

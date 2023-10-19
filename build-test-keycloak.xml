@@ -7,7 +7,7 @@
 		<sequential>
 			<property name="liferay.dependency.dir" value="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies" />
 			<property name="keycloak.dependency.dir" value="${project.dir}/portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/openidconnect/dependencies" />
-			<mirrors-get
+			<get
 				dest="${liferay.dependency.dir}"
 				src="https://github.com/keycloak/keycloak/releases/download/16.1.0/keycloak-16.1.0.tar.gz"
 			/>

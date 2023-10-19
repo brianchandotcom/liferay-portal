@@ -9,7 +9,6 @@ import {
 	getThumbnailByProductAttachment,
 	getValueFromSpecifications,
 } from '../../../../utils/util';
-import {StepType} from '../../enums/stepType';
 
 interface ProductCardProps {
 	ExtendBanner?: any;
@@ -18,17 +17,16 @@ interface ProductCardProps {
 	creatorAccount?: Account;
 	isSelectSubscription?: boolean;
 	product?: Product;
-	selectedAccount?: any;
-	step: StepType;
+	showExtendBanner?: boolean;
 	userAccount?: UserAccount;
 }
 
 const ProductCard = ({
-	ExtendBanner = () => null,
-	RightSideBanner = () => null,
+	ExtendBanner,
+	RightSideBanner,
 	creatorAccount,
 	product,
-	selectedAccount,
+	showExtendBanner = false,
 }: ProductCardProps) => {
 	const getIconUrl = () => {
 		const iconURL = product
@@ -72,7 +70,7 @@ const ProductCard = ({
 				<RightSideBanner />
 			</div>
 
-			{selectedAccount && (
+			{showExtendBanner && (
 				<>
 					<hr /> <ExtendBanner />
 				</>

@@ -142,8 +142,9 @@ const CreateLicense = () => {
 					creatorAccount={productCreatorAccount}
 					isSelectSubscription={true}
 					product={product}
-					selectedAccount={productCreatorAccount}
-					step={step}
+					showExtendBanner={
+						step === StepCreateLicense.LICENSE_KEY_DETAILS
+					}
 					userAccount={userAccount}
 				/>
 			</div>

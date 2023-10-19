@@ -60,6 +60,8 @@ const GetAppFlow = () => {
 	const [orderType, setOrderType] = useState<OrderType>();
 	const [purchaseOrderNumber, setPurchaseOrderNumber] = useState<string>('');
 	const [step, setStep] = useState<StepType>(StepType.ACCOUNT);
+	const [hasTrial, setHasTrial] = useState(false);
+	const [basePrice, setBasePrice] = useState(0);
 
 	const {setValue, watch} = useForm<GetAppForm>({
 		defaultValues: {
@@ -241,69 +243,28 @@ const GetAppFlow = () => {
 		},
 	};
 
-	const [hasTrial, setHasTrial] = useState(false);
-	const [basePrice, setBasePrice] = useState(0);
-
-	const productHasTrialSKU = (skus: SKU[]) => {
-		skus.forEach(async (sku) => {
-			const licenseUsageType = sku?.skuOptions.find((option) => {
-				return (
-					option?.key === 'trial' &&
-					option?.value === 'yes' &&
-					option?.key
-				);
-			});
-			if (
-				licenseUsageType &&
-				licenseUsageType?.key.toLowerCase() ===
-					SkuOptions.TRIAL.toLowerCase()
-			) {
-				setHasTrial(true);
-			}
-		});
-	};
-
-	const getProductBasePrice = (product: Product) => {
-		product?.skus?.forEach((sku) => {
-			const licenseUsageType = sku?.skuOptions.find(
+	const getProductBasePriceAndTrial = (skus: SKU[]) => {
+		skus?.forEach((sku) => {
+			const licenseUsageTypes = sku?.skuOptions.filter(
 				(skuOption) =>
-					skuOption?.key === 'standard' &&
-					skuOption?.value === 'yes' &&
-					skuOption?.key
+					skuOption?.value === SkuOptions.STANDARD.toLowerCase() ||
+					skuOption?.value === SkuOptions.TRIAL.toLowerCase()
 			);
 
-			if (
-				licenseUsageType?.key.toLowerCase() ===
-				SkuOptions.STANDARD.toLowerCase()
-			) {
-				setBasePrice(sku.price);
-			}
+			licenseUsageTypes.forEach((licenseUsageType) => {
+				switch (licenseUsageType?.value.toLowerCase()) {
+					case SkuOptions.STANDARD.toLowerCase():
+						setBasePrice(sku.price);
+						break;
+					case SkuOptions.TRIAL.toLowerCase():
+						setHasTrial(true);
+						break;
+					default:
+						break;
+				}
+			});
 		});
 	};
-
-	const getLicenseTagText = (product: Product) => {
-		const licenseTypeSpecification = getValueFromSpecifications(
-			product.productSpecifications,
-			'license-type'
-		).toLowerCase();
-
-		if (licenseTypeSpecification) {
-			return licenseTypeSpecification === LicenseType.Perpetual
-				? 'One-Time'
-				: 'Annually';
-		}
-	};
-
-	useEffect(() => {
-		if (product) {
-			productHasTrialSKU(product.skus);
-			getProductBasePrice(product);
-		}
-	}, [product]);
-
-	if (!product) {
-		return null;
-	}
 
 	const FormattedValues = () => {
 		if (step === StepType.LICENSES || step === StepType.PAYMENT) {
@@ -327,6 +288,29 @@ const GetAppFlow = () => {
 		return <span className="price-text-value">Free</span>;
 	};
 
+	const getLicenseTagText = (product: Product) => {
+		const licenseTypeSpecification = getValueFromSpecifications(
+			product.productSpecifications,
+			'license-type'
+		).toLowerCase();
+
+		if (licenseTypeSpecification) {
+			return licenseTypeSpecification === LicenseType.Perpetual
+				? 'One-Time'
+				: 'Annually';
+		}
+	};
+
+	useEffect(() => {
+		if (product) {
+			getProductBasePriceAndTrial(product.skus);
+		}
+	}, [product]);
+
+	if (!product) {
+		return null;
+	}
+
 	const PriceTypeInfo = () => (
 		<div className="align-items-end d-flex flex-column price-text">
 			<strong className="mr-1">Price</strong>
@@ -335,7 +319,11 @@ const GetAppFlow = () => {
 				<FormattedValues />
 			</div>
 
-			<div className="license-tag px-2">{getLicenseTagText(product)}</div>
+			{!!basePrice && (
+				<div className="license-tag px-2">
+					{getLicenseTagText(product)}
+				</div>
+			)}
 		</div>
 	);
 
@@ -378,9 +366,8 @@ const GetAppFlow = () => {
 				cartUtil={cartUtil}
 				creatorAccount={productCreatorAccount}
 				product={product}
-				selectedAccount={account}
-				step={step}
 				userAccount={myUserAccount}
+				showExtendBanner={!!account}
 			/>
 
 			<div className="border d-flex flex-column mt-7 p-5 rounded">

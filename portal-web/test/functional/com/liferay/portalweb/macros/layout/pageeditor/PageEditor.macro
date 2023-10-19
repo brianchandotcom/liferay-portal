@@ -1721,6 +1721,17 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = ${successInteraction});
 
+			if (isSet(successText)) {
+				Type(
+					key_text = "Success Text",
+					locator1 = "TextInput#ANY",
+					value1 = ${successText});
+
+				Click(
+					key_sidebarButton = "Browser",
+					locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+			}
+
 			PageEditor.waitForAutoSave();
 		}
 

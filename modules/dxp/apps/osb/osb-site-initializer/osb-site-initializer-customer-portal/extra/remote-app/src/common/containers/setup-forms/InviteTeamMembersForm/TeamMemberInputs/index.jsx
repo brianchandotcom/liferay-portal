@@ -4,6 +4,7 @@
  */
 
 import {ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import {useEffect, useMemo} from 'react';
 import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
 import useCurrentKoroneikiAccount from '~/common/hooks/useCurrentKoroneikiAccount';
@@ -166,6 +167,56 @@ const TeamMemberInputs = ({
 					/>
 				</ClayInput.GroupItem>
 			</ClayInput.Group>
+
+			{featureFlags.includes('ISSD-100') && warningMessage && (
+				<div
+					className="alert alert-warning align-items-top d-flex m-3 p-3"
+					role="alert"
+				>
+					<div className="alert-indicator mt-1">
+						<span>
+							<ClayIcon symbol="warning-full" />
+						</span>
+					</div>
+
+					<div className="mx-2">
+						{`${i18n.translate('is')} `}
+
+						<strong>{invite.email}</strong>
+
+						{` ${i18n.sub(
+							'part-of-your-organization-it-looks-like-x-is-a-new-domain-name',
+							[`${domain}`]
+						)}`}
+
+						<ul className="mb-0">
+							<li>
+								{`${i18n.translate(
+									'to-update-an-existing-users-email-address-have-the-user-log-in-with-their-current-address-to-access'
+								)} `}
+
+								<a
+									className="alert-link"
+									href={accountSettingsURL}
+									rel="noreferrer noopener"
+									target="_blank"
+								>
+									<u className="font-weight-semi-bold text-warning">
+										{i18n.translate('account-settings')}
+									</u>
+								</a>
+							</li>
+
+							<li>
+								{i18n.translate(
+									'be-aware-that-adding-new-users-from-outside-your-organization-may-compromise-the-security-of-your-project'
+								)}
+							</li>
+						</ul>
+					</div>
+				</div>
+			)}
+
 			<hr className="mb-3 mt-2" />
 		</>
 	);

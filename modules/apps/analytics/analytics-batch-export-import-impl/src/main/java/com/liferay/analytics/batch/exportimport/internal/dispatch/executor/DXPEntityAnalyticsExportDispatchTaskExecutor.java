@@ -69,6 +69,7 @@ public class DXPEntityAnalyticsExportDispatchTaskExecutor
 
 	private static final List<String> _batchEngineExportTaskItemDelegateNames =
 		Arrays.asList(
+			"account-entry-analytics-dxp-entities",
 			"account-group-analytics-dxp-entities",
 			"analytics-association-analytics-dxp-entities",
 			"analytics-delete-message-analytics-dxp-entities",

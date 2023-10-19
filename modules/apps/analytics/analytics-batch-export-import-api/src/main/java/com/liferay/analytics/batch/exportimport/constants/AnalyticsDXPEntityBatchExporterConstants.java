@@ -10,10 +10,6 @@ package com.liferay.analytics.batch.exportimport.constants;
  */
 public class AnalyticsDXPEntityBatchExporterConstants {
 
-	public static final String
-		DISPATCH_TRIGGER_NAME_ACCOUNT_ENTRY_DXP_ENTITIES =
-			"export-account-entry-analytics-dxp-entities";
-
 	public static final String DISPATCH_TRIGGER_NAME_DXP_ENTITIES =
 		"export-analytics-dxp-entities";
 

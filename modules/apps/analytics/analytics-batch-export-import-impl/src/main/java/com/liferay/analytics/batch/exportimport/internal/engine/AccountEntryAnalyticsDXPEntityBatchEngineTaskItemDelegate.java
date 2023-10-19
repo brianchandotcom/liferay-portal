@@ -7,24 +7,32 @@ package com.liferay.analytics.batch.exportimport.internal.engine;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryTable;
+import com.liferay.account.model.AccountGroupRelTable;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.analytics.batch.exportimport.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.analytics.batch.exportimport.internal.odata.entity.AccountEntryAnalyticsDXPEntityEntityModel;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
+import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.pagination.Page;
 import com.liferay.batch.engine.pagination.Pagination;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -54,38 +62,92 @@ public class AccountEntryAnalyticsDXPEntityBatchEngineTaskItemDelegate
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
+		if (!_analyticsSettingsManager.syncedAccountSettingsEnabled(
+				contextCompany.getCompanyId())) {
+
+			return Page.of(
+				Collections.emptyList(),
+				Pagination.of(pagination.getPage(), pagination.getPageSize()),
+				0);
+		}
+
 		return Page.of(
 			TransformUtil.transform(
 				_accountEntryLocalService.<List<AccountEntry>>dslQuery(
 					_createSelectDSLQuery(
-						contextCompany.getCompanyId(), filter, pagination)),
+						contextCompany.getCompanyId(), pagination)),
 				accountEntry -> _dxpEntityDTOConverter.toDTO(accountEntry)),
 			Pagination.of(pagination.getPage(), pagination.getPageSize()),
 			_accountEntryLocalService.dslQuery(
-				_createCountDSLQuery(contextCompany.getCompanyId(), filter)));
+				_createCountDSLQuery(contextCompany.getCompanyId())));
 	}
 
-	private DSLQuery _createCountDSLQuery(long companyId, Filter filter) {
+	private DSLQuery _buildAccountEntryIdsDSLQuery(long companyId)
+		throws Exception {
+
+		AnalyticsConfiguration analyticsConfiguration =
+			_analyticsSettingsManager.getAnalyticsConfiguration(companyId);
+
+		String[] syncedAccountGroupIds =
+			analyticsConfiguration.syncedAccountGroupIds();
+
+		if (ArrayUtil.isEmpty(syncedAccountGroupIds)) {
+			return null;
+		}
+
+		AccountGroupRelTable accountGroupRelTable =
+			AccountGroupRelTable.INSTANCE;
+
+		return DSLQueryFactoryUtil.selectDistinct(
+			accountGroupRelTable.classPK
+		).from(
+			accountGroupRelTable
+		).where(
+			accountGroupRelTable.classNameId.eq(
+				_classNameLocalService.getClassNameId(
+					AccountEntry.class.getName())
+			).and(
+				accountGroupRelTable.accountGroupId.in(
+					TransformUtil.transform(
+						syncedAccountGroupIds, GetterUtil::getLong, Long.class))
+			)
+		);
+	}
+
+	private Predicate _buildPredicate(long companyId) throws Exception {
+		AccountEntryTable accountEntryTable = AccountEntryTable.INSTANCE;
+
+		Predicate predicate = accountEntryTable.companyId.isNotNull();
+
+		predicate = predicate.and(accountEntryTable.companyId.eq(companyId));
+
+		DSLQuery dslQuery = _buildAccountEntryIdsDSLQuery(companyId);
+
+		if (dslQuery == null) {
+			return predicate;
+		}
+
+		return predicate.and(accountEntryTable.accountEntryId.in(dslQuery));
+	}
+
+	private DSLQuery _createCountDSLQuery(long companyId) throws Exception {
 		return DSLQueryFactoryUtil.count(
 		).from(
 			AccountEntryTable.INSTANCE
 		).where(
-			buildPredicate(
-				AccountEntryTable.INSTANCE, companyId,
-				AccountEntryTable.INSTANCE.companyId.isNotNull(), filter)
+			_buildPredicate(companyId)
 		);
 	}
 
 	private DSLQuery _createSelectDSLQuery(
-		long companyId, Filter filter, Pagination pagination) {
+			long companyId, Pagination pagination)
+		throws Exception {
 
 		return DSLQueryFactoryUtil.select(
 		).from(
 			AccountEntryTable.INSTANCE
 		).where(
-			buildPredicate(
-				AccountEntryTable.INSTANCE, companyId,
-				AccountEntryTable.INSTANCE.companyId.isNotNull(), filter)
+			_buildPredicate(companyId)
 		).limit(
 			pagination.getPage() * pagination.getPageSize(),
 			(pagination.getPage() + 1) * pagination.getPageSize()
@@ -97,6 +159,12 @@ public class AccountEntryAnalyticsDXPEntityBatchEngineTaskItemDelegate
 
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference
+	private AnalyticsSettingsManager _analyticsSettingsManager;
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference(target = DTOConverterConstants.DXP_ENTITY_DTO_CONVERTER)
 	private DTOConverter<BaseModel<?>, DXPEntity> _dxpEntityDTOConverter;

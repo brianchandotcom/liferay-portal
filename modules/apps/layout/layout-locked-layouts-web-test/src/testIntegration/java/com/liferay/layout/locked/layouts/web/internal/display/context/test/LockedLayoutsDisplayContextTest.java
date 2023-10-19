@@ -502,7 +502,6 @@ public class LockedLayoutsDisplayContextTest {
 			_getMockLiferayPortletRenderRequest();
 
 		mockLiferayPortletRenderRequest.setParameter("orderByCol", orderByCol);
-
 		mockLiferayPortletRenderRequest.setParameter(
 			"orderByType", orderByType);
 

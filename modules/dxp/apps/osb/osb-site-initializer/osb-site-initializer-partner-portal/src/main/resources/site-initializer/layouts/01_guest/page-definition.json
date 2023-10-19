@@ -494,38 +494,38 @@
 																			"value": {
 																				"href": {
 																					"value_i18n": {
-																						"ar_SA": "mailto:partner-marketing@liferay.com",
-																						"ca_ES": "mailto:partner-marketing@liferay.com",
-																						"de_DE": "mailto:partner-marketing@liferay.com",
-																						"en_US": "mailto:partner-marketing@liferay.com",
-																						"es_ES": "mailto:partner-marketing@liferay.com",
-																						"fi_FI": "mailto:partner-marketing@liferay.com",
-																						"fr_FR": "mailto:partner-marketing@liferay.com",
-																						"hu_HU": "mailto:partner-marketing@liferay.com",
-																						"ja_JP": "mailto:partner-marketing@liferay.com",
-																						"nl_NL": "mailto:partner-marketing@liferay.com",
-																						"pt_BR": "mailto:partner-marketing@liferay.com",
-																						"sv_SE": "mailto:partner-marketing@liferay.com",
-																						"zh_CN": "mailto:partner-marketing@liferay.com"
+																						"ar_SA": "mailto:partner-operations@liferay.com",
+																						"ca_ES": "mailto:partner-operations@liferay.com",
+																						"de_DE": "mailto:partner-operations@liferay.com",
+																						"en_US": "mailto:partner-operations@liferay.com",
+																						"es_ES": "mailto:partner-operations@liferay.com",
+																						"fi_FI": "mailto:partner-operations@liferay.com",
+																						"fr_FR": "mailto:partner-operations@liferay.com",
+																						"hu_HU": "mailto:partner-operations@liferay.com",
+																						"ja_JP": "mailto:partner-operations@liferay.com",
+																						"nl_NL": "mailto:partner-operations@liferay.com",
+																						"pt_BR": "mailto:partner-operations@liferay.com",
+																						"sv_SE": "mailto:partner-operations@liferay.com",
+																						"zh_CN": "mailto:partner-operations@liferay.com"
 																					}
 																				}
 																			}
 																		},
 																		"text": {
 																			"value_i18n": {
-																				"ar_SA": "partner-marketing@liferay.com",
-																				"ca_ES": "partner-marketing@liferay.com",
-																				"de_DE": "partner-marketing@liferay.com",
-																				"en_US": "partner-marketing@liferay.com",
-																				"es_ES": "partner-marketing@liferay.com",
-																				"fi_FI": "partner-marketing@liferay.com",
-																				"fr_FR": "partner-marketing@liferay.com",
-																				"hu_HU": "partner-marketing@liferay.com",
-																				"ja_JP": "partner-marketing@liferay.com",
-																				"nl_NL": "partner-marketing@liferay.com",
-																				"pt_BR": "partner-marketing@liferay.com",
-																				"sv_SE": "partner-marketing@liferay.com",
-																				"zh_CN": "partner-marketing@liferay.com"
+																				"ar_SA": "partner-operations@liferay.com",
+																				"ca_ES": "partner-operations@liferay.com",
+																				"de_DE": "partner-operations@liferay.com",
+																				"en_US": "partner-operations@liferay.com",
+																				"es_ES": "partner-operations@liferay.com",
+																				"fi_FI": "partner-operations@liferay.com",
+																				"fr_FR": "partner-operations@liferay.com",
+																				"hu_HU": "partner-operations@liferay.com",
+																				"ja_JP": "partner-operations@liferay.com",
+																				"nl_NL": "partner-operations@liferay.com",
+																				"pt_BR": "partner-operations@liferay.com",
+																				"sv_SE": "partner-operations@liferay.com",
+																				"zh_CN": "partner-operations@liferay.com"
 																			}
 																		}
 																	}
@@ -707,19 +707,19 @@
 																				},
 																				"text": {
 																					"value_i18n": {
-																						"ar_SA": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
-																						"ca_ES": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
-																						"de_DE": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
-																						"en_US": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
-																						"es_ES": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
-																						"fi_FI": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
-																						"fr_FR": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
-																						"hu_HU": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
-																						"ja_JP": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
-																						"nl_NL": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
-																						"pt_BR": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
-																						"sv_SE": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>",
-																						"zh_CN": "<a href=\"https://www.liferay.com/partners\" rel=\"noopener noreferrer\">Learn about partnership</a>"
+																						"ar_SA": "<a href=\"https://www.liferay.com/partners#explorePartnership\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																						"ca_ES": "<a href=\"https://www.liferay.com/partners#explorePartnership\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																						"de_DE": "<a href=\"https://www.liferay.com/partners#explorePartnership\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																						"en_US": "<a href=\"https://www.liferay.com/partners#explorePartnership\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																						"es_ES": "<a href=\"https://www.liferay.com/partners#explorePartnership\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																						"fi_FI": "<a href=\"https://www.liferay.com/partners#explorePartnership\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																						"fr_FR": "<a href=\"https://www.liferay.com/partners#explorePartnership\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																						"hu_HU": "<a href=\"https://www.liferay.com/partners#explorePartnership\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																						"ja_JP": "<a href=\"https://www.liferay.com/partners#explorePartnership\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																						"nl_NL": "<a href=\"https://www.liferay.com/partners#explorePartnership\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																						"pt_BR": "<a href=\"https://www.liferay.com/partners#explorePartnership\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																						"sv_SE": "<a href=\"https://www.liferay.com/partners#explorePartnership\" rel=\"noopener noreferrer\">Learn about partnership</a>",
+																						"zh_CN": "<a href=\"https://www.liferay.com/partners#explorePartnership\" rel=\"noopener noreferrer\">Learn about partnership</a>"
 																					}
 																				}
 																			}
@@ -741,7 +741,7 @@
 																		"siteKey": "Partner Portal"
 																	},
 																	"fragmentConfig": {
-																		"iconLink": "https://www.liferay.com/partners",
+																		"iconLink": "https://www.liferay.com/partners#explorePartnership",
 																		"iconName": "order-arrow-right"
 																	},
 																	"fragmentFields": [

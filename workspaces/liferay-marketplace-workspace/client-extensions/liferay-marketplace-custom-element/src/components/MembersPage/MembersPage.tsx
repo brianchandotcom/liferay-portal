@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useMemo, useState} from 'react';
 import {useSearchParams} from 'react-router-dom';
@@ -114,7 +115,14 @@ export function MembersPage({
 			) : (
 				<DashboardPage
 					buttonMessage={
-						myUserAccount.isAdminAccount ? 'New Member' : ''
+						<>
+							{myUserAccount.isAdminAccount && (
+								<>
+									<ClayIcon className="mr-1" symbol="plus" />
+									New Member
+								</>
+							)}
+						</>
 					}
 					messages={memberMessages}
 					onButtonClick={() => setVisible(true)}

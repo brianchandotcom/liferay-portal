@@ -15,6 +15,9 @@ import {NextStepPage} from '../NextStepPage/NextStepPage';
 import {ProjectsTableRow} from './ProjectsTableRow';
 
 import './ProjectsPage.scss';
+
+import ClayIcon from '@clayui/icon';
+
 import {useMarketplaceContext} from '../../context/MarketplaceContext';
 
 interface ProjectsPageProps {
@@ -114,7 +117,12 @@ export function ProjectsPage({
 	return (
 		<>
 			<DashboardPage
-				buttonMessage="New Project"
+				buttonMessage={
+					<>
+						<ClayIcon className="mr-1" symbol="plus" />
+						New Project
+					</>
+				}
 				messages={{
 					description:
 						'Manage projects to build and test your apps and solutions',

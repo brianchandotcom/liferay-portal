@@ -61,5 +61,6 @@ public class UpgradeJavaGetLayoutDisplayPageObjectProviderCheck {
 	private final LayoutDisplayPageProviderRegistry
 		_layoutDisplayPageProviderRegistry;
 	private final Portal _portal;
+	private LayoutDisplayPageProvider layoutDisplayPageProvider;
 
 }

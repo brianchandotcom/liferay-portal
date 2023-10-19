@@ -5,25 +5,33 @@
 
 package com.liferay.commerce.pricing.web.internal.display.context;
 
+import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.item.selector.criterion.CommercePriceListItemSelectorCriterion;
+import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.portlet.action.CommercePriceListActionHelper;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
+import com.liferay.commerce.price.list.service.CommercePriceListService;
+import com.liferay.commerce.price.list.util.comparator.CommercePriceListPriorityComparator;
+import com.liferay.commerce.pricing.web.internal.constants.CommercePricingFDSNames;
 import com.liferay.commerce.product.display.context.BaseCPDefinitionsDisplayContext;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceUnitOfMeasure;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
+import com.liferay.commerce.product.util.comparator.CPInstanceUnitOfMeasurePriorityComparator;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
@@ -34,6 +42,9 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+
+import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -55,12 +66,14 @@ public class CPInstanceCommercePriceEntryDisplayContext
 		ActionHelper actionHelper,
 		CommercePriceEntryService commercePriceEntryService,
 		CommercePriceListActionHelper commercePriceListActionHelper,
+		CommercePriceListService commercePriceListService,
 		HttpServletRequest httpServletRequest, ItemSelector itemSelector) {
 
 		super(actionHelper, httpServletRequest);
 
 		_commercePriceEntryService = commercePriceEntryService;
 		_commercePriceListActionHelper = commercePriceListActionHelper;
+		_commercePriceListService = commercePriceListService;
 		_itemSelector = itemSelector;
 	}
 
@@ -133,10 +146,28 @@ public class CPInstanceCommercePriceEntryDisplayContext
 		CPInstance cpInstance = getCPInstance();
 
 		return cpInstance.getCPInstanceUnitOfMeasures(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new CPInstanceUnitOfMeasurePriorityComparator());
 	}
 
 	public CreationMenu getCreationMenu() throws PortalException {
+		if (FeatureFlagManagerUtil.isEnabled("COMMERCE-11287")) {
+			CPInstance cpInstance = getCPInstance();
+
+			return CreationMenuBuilder.addDropdownItem(
+				dropdownItem -> {
+					dropdownItem.setHref(
+						liferayPortletResponse.getNamespace() +
+							"addCommercePriceEntry");
+					dropdownItem.setLabel(
+						LanguageUtil.format(
+							httpServletRequest, "add-x-to-price-list",
+							HtmlUtil.escape(cpInstance.getSku()), false));
+					dropdownItem.setTarget("event");
+				}
+			).build();
+		}
+
 		CreationMenu creationMenu = new CreationMenu();
 
 		List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures =
@@ -209,6 +240,21 @@ public class CPInstanceCommercePriceEntryDisplayContext
 	public HashMap<String, Object> getJSContext() throws PortalException {
 		CPInstance cpInstance = getCPInstance();
 
+		if (FeatureFlagManagerUtil.isEnabled("COMMERCE-11287")) {
+			return HashMapBuilder.<String, Object>put(
+				"url",
+				PortletURLBuilder.createRenderURL(
+					liferayPortletResponse
+				).setMVCRenderCommandName(
+					"/cp_definitions/add_cp_instance_commerce_price_entry"
+				).setRedirect(
+					cpRequestHelper.getCurrentURL()
+				).setParameter(
+					"cpInstanceId", cpInstance.getCPInstanceId()
+				).buildString()
+			).build();
+		}
+
 		List<String> eventNames = new ArrayList<>();
 		List<String> keys = new ArrayList<>();
 		List<String> titles = new ArrayList<>();
@@ -252,6 +298,80 @@ public class CPInstanceCommercePriceEntryDisplayContext
 			"titles", titles.toArray(new String[0])
 		).put(
 			"urls", urls.toArray(new String[0])
+		).build();
+	}
+
+	public HashMap<String, Object> getModalJSContext() throws PortalException {
+		BigDecimal basePrice = BigDecimal.ZERO;
+		CPInstance cpInstance = getCPInstance();
+		String cpInstanceUnitOfMeasureKey = StringPool.BLANK;
+		String currencyCode = StringPool.BLANK;
+		int maxFractionDigits = 2;
+
+		List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures =
+			getCPInstanceUnitOfMeasures();
+
+		if (!cpInstanceUnitOfMeasures.isEmpty()) {
+			CPInstanceUnitOfMeasure cpInstanceUnitOfMeasure =
+				cpInstanceUnitOfMeasures.get(0);
+
+			cpInstanceUnitOfMeasureKey = cpInstanceUnitOfMeasure.getKey();
+		}
+
+		CommercePriceEntry commercePriceEntry =
+			_commercePriceEntryService.getInstanceBaseCommercePriceEntry(
+				cpInstance.getCPInstanceUuid(),
+				CommercePriceListConstants.TYPE_PRICE_LIST,
+				cpInstanceUnitOfMeasureKey);
+
+		if (commercePriceEntry != null) {
+			CommercePriceList commercePriceList =
+				commercePriceEntry.getCommercePriceList();
+
+			CommerceCurrency commerceCurrency =
+				commercePriceList.getCommerceCurrency();
+
+			basePrice = commercePriceEntry.getPrice();
+			currencyCode = commerceCurrency.getCode();
+			maxFractionDigits = commerceCurrency.getMaxFractionDigits();
+		}
+
+		return HashMapBuilder.<String, Object>put(
+			"basePrice", basePrice
+		).put(
+			"cpInstanceId", cpInstance.getCPInstanceId()
+		).put(
+			"currency", currencyCode
+		).put(
+			"dataSetId", CommercePricingFDSNames.INSTANCE_PRICE_ENTRIES
+		).put(
+			"namespace", liferayPortletResponse.getNamespace()
+		).put(
+			"precision", maxFractionDigits
+		).put(
+			"priceLists",
+			TransformUtil.transform(
+				_commercePriceListService.getCommercePriceLists(
+					cpInstance.getCompanyId(),
+					CommercePriceListConstants.TYPE_PRICE_LIST,
+					WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS,
+					new CommercePriceListPriorityComparator()),
+				commercePriceList -> HashMapBuilder.<String, Object>put(
+					"label", commercePriceList.getName()
+				).put(
+					"value", commercePriceList.getCommercePriceListId()
+				).build())
+		).put(
+			"unitOfMeasures",
+			TransformUtil.transform(
+				cpInstanceUnitOfMeasures,
+				cpInstanceUnitOfMeasure -> HashMapBuilder.<String, Object>put(
+					"label",
+					cpInstanceUnitOfMeasure.getName(cpRequestHelper.getLocale())
+				).put(
+					"value", cpInstanceUnitOfMeasure.getKey()
+				).build())
 		).build();
 	}
 
@@ -338,6 +458,7 @@ public class CPInstanceCommercePriceEntryDisplayContext
 
 	private final CommercePriceEntryService _commercePriceEntryService;
 	private final CommercePriceListActionHelper _commercePriceListActionHelper;
+	private final CommercePriceListService _commercePriceListService;
 	private CPInstance _cpInstance;
 	private final ItemSelector _itemSelector;
 

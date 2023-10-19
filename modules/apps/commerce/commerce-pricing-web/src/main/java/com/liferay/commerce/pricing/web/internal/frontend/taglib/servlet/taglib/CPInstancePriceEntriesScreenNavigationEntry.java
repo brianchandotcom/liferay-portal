@@ -9,6 +9,7 @@ import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.portlet.action.CommercePriceListActionHelper;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
+import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.commerce.pricing.web.internal.display.context.CPInstanceCommercePriceEntryDisplayContext;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
@@ -80,7 +81,8 @@ public class CPInstancePriceEntriesScreenNavigationEntry
 				cpInstanceCommercePriceEntryDisplayContext =
 					new CPInstanceCommercePriceEntryDisplayContext(
 						_actionHelper, _commercePriceEntryService,
-						_commercePriceListActionHelper, httpServletRequest,
+						_commercePriceListActionHelper,
+						_commercePriceListService, httpServletRequest,
 						_itemSelector);
 
 			httpServletRequest.setAttribute(
@@ -113,6 +115,9 @@ public class CPInstancePriceEntriesScreenNavigationEntry
 	)
 	private ModelResourcePermission<CommercePriceList>
 		_commercePriceListModelResourcePermission;
+
+	@Reference
+	private CommercePriceListService _commercePriceListService;
 
 	@Reference
 	private ItemSelector _itemSelector;

@@ -67,17 +67,21 @@ export function UserNotificationSettings({
 
 		const {items} = (await response.json()) as {items: Role[]};
 
-		const roles = items.map(({name}) => {
-			const selectedRole = !!(values.recipients as Partial<
-				UserNotificationRecipients
-			>[]).find((recipient) => recipient.roleName === name);
+		const roles: MultiSelectItem[] = [];
 
-			return {
-				checked: selectedRole,
-				label: name,
-				value: name,
-			};
-		}) as MultiSelectItem[];
+		items.forEach(({name}) => {
+			if (name !== 'Guest') {
+				const selectedRole = !!(values.recipients as Partial<
+					UserNotificationRecipients
+				>[]).find((recipient) => recipient.roleName === name);
+
+				roles.push({
+					checked: selectedRole,
+					label: name,
+					value: name,
+				});
+			}
+		});
 
 		setRolesList(roles);
 		setUserList([]);

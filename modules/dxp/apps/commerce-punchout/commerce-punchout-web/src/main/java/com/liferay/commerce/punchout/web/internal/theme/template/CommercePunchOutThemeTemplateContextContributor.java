@@ -5,13 +5,14 @@
 
 package com.liferay.commerce.punchout.web.internal.theme.template;
 
-import com.liferay.commerce.punchout.web.internal.helper.CommercePunchOutThemeHttpHelper;
+import com.liferay.commerce.punchout.web.internal.helper.PunchOutSessionHelper;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -35,7 +36,29 @@ public class CommercePunchOutThemeTemplateContextContributor
 			_commercePunchOutThemeHttpHelper);
 	}
 
-	@Reference
+	@Activate
+	protected void activate() {
+		_commercePunchOutThemeHttpHelper =
+			new CommercePunchOutThemeHttpHelper();
+	}
+
 	private CommercePunchOutThemeHttpHelper _commercePunchOutThemeHttpHelper;
+
+	@Reference
+	private PunchOutSessionHelper _punchOutSessionHelper;
+
+	private class CommercePunchOutThemeHttpHelper {
+
+		public boolean punchOutSession(HttpServletRequest httpServletRequest) {
+			if (_punchOutSessionHelper.punchOutEnabled(httpServletRequest) &&
+				_punchOutSessionHelper.punchOutAllowed(httpServletRequest)) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+	}
 
 }

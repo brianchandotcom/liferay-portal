@@ -5,7 +5,7 @@
 
 package com.liferay.portal.kernel.cluster;
 
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 
@@ -18,28 +18,36 @@ public class ClusterExecutorUtil {
 	public static FutureClusterResponses execute(
 		ClusterRequest clusterRequest) {
 
-		return _clusterExecutor.execute(clusterRequest);
+		ClusterExecutor clusterExecutor = _clusterExecutorSnapshot.get();
+
+		return clusterExecutor.execute(clusterRequest);
 	}
 
 	public static List<ClusterNode> getClusterNodes() {
-		return _clusterExecutor.getClusterNodes();
+		ClusterExecutor clusterExecutor = _clusterExecutorSnapshot.get();
+
+		return clusterExecutor.getClusterNodes();
 	}
 
 	public static ClusterNode getLocalClusterNode() {
-		return _clusterExecutor.getLocalClusterNode();
+		ClusterExecutor clusterExecutor = _clusterExecutorSnapshot.get();
+
+		return clusterExecutor.getLocalClusterNode();
 	}
 
 	public static boolean isClusterNodeAlive(String clusterNodeId) {
-		return _clusterExecutor.isClusterNodeAlive(clusterNodeId);
+		ClusterExecutor clusterExecutor = _clusterExecutorSnapshot.get();
+
+		return clusterExecutor.isClusterNodeAlive(clusterNodeId);
 	}
 
 	public static boolean isEnabled() {
-		return _clusterExecutor.isEnabled();
+		ClusterExecutor clusterExecutor = _clusterExecutorSnapshot.get();
+
+		return clusterExecutor.isEnabled();
 	}
 
-	private static volatile ClusterExecutor _clusterExecutor =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			ClusterExecutor.class, ClusterExecutorUtil.class,
-			"_clusterExecutor", false);
+	private static final Snapshot<ClusterExecutor> _clusterExecutorSnapshot =
+		new Snapshot<>(ClusterExecutorUtil.class, ClusterExecutor.class);
 
 }

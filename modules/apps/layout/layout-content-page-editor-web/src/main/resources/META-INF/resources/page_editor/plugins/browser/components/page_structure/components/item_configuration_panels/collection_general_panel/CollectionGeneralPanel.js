@@ -34,6 +34,7 @@ import updateCollectionDisplayCollection from '../../../../../../../app/thunks/u
 import updateItemConfig from '../../../../../../../app/thunks/updateItemConfig';
 import {CACHE_KEYS} from '../../../../../../../app/utils/cache';
 import {getResponsiveConfig} from '../../../../../../../app/utils/getResponsiveConfig';
+import {isLayoutDataItemDeleted} from '../../../../../../../app/utils/isLayoutDataItemDeleted';
 import useCache from '../../../../../../../app/utils/useCache';
 import CollectionSelector from '../../../../../../../common/components/CollectionSelector';
 import {CommonStyles} from '../CommonStyles';
@@ -204,8 +205,12 @@ export function CollectionGeneralPanel({item}) {
 		({preventDefault}) => {
 			const state = getState();
 
-			const isLinkedToFilter = Object.values(state.layoutData.items).some(
-				(layoutDataItem) => {
+			const isLinkedToFilter = Object.values(state.layoutData.items)
+				.filter(
+					({itemId}) =>
+						!isLayoutDataItemDeleted(state.layoutData, itemId)
+				)
+				.some((layoutDataItem) => {
 					if (
 						layoutDataItem.type !== LAYOUT_DATA_ITEM_TYPES.fragment
 					) {
@@ -229,8 +234,7 @@ export function CollectionGeneralPanel({item}) {
 					return fragmentEntryLink.editableValues[
 						FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
 					]?.targetCollections?.includes(item.itemId);
-				}
-			);
+				});
 
 			if (isLinkedToFilter) {
 				openConfirmModal({

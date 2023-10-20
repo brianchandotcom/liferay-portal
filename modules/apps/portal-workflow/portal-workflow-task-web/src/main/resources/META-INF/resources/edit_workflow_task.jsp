@@ -313,12 +313,3 @@ renderResponse.setTitle(workflowTaskDisplayContext.getHeaderTitle(workflowTask))
 		</clay:sheet>
 	</clay:col>
 </clay:container-fluid>
-
-<aui:script use="liferay-workflow-tasks">
-	var onTaskClickFn = A.rbind('onTaskClick', Liferay.WorkflowTasks, '');
-
-	Liferay.delegateClick(
-		'<portlet:namespace /><%= randomId %>taskAssignLink',
-		onTaskClickFn
-	);
-</aui:script>

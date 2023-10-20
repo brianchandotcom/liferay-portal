@@ -13,10 +13,10 @@ import {API_URL, OBJECT_RELATIONSHIP} from './Constants';
 import {FDSViewType} from './FDSViews';
 import Actions from './fds_view/Actions';
 import Details from './fds_view/Details';
-import Fields from './fds_view/Fields';
 import Filters from './fds_view/Filters';
 import Pagination from './fds_view/Pagination';
 import Sorting from './fds_view/Sorting';
+import Fields from './fds_view/fields/Fields';
 import openDefaultFailureToast from './utils/openDefaultFailureToast';
 
 const NAVIGATION_BAR_ITEMS = [

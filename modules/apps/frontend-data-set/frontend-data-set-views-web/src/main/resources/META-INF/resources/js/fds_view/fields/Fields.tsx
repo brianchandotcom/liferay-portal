@@ -21,20 +21,22 @@ import {
 import fuzzy from 'fuzzy';
 import React, {useEffect, useState} from 'react';
 
-import {API_URL, FUZZY_OPTIONS, OBJECT_RELATIONSHIP} from '../Constants';
-import {IFDSViewSectionProps} from '../FDSView';
-import {FDSViewType} from '../FDSViews';
-import {getFields} from '../api';
-import OrderableTable from '../components/OrderableTable';
-import openDefaultFailureToast from '../utils/openDefaultFailureToast';
-import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
+import {API_URL, FUZZY_OPTIONS, OBJECT_RELATIONSHIP} from '../../Constants';
+import {IFDSViewSectionProps} from '../../FDSView';
+import {FDSViewType} from '../../FDSViews';
+import {getFields} from '../../api';
+import OrderableTable from '../../components/OrderableTable';
+import openDefaultFailureToast from '../../utils/openDefaultFailureToast';
+import openDefaultSuccessToast from '../../utils/openDefaultSuccessToast';
 
-import '../../css/Fields.scss';
+import '../../../css/Fields.scss';
+import {IField} from '../../types';
+import AddFieldsModalContent from './modal_content/AddFieldsModalContent';
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
 
-interface IFDSField {
+export interface IFDSField {
 	externalReferenceCode: string;
 	id: number;
 	label: string;
@@ -44,14 +46,6 @@ interface IFDSField {
 	rendererLabel?: string;
 	sortable: boolean;
 	type: string;
-}
-
-interface IField {
-	id: number | null;
-	name: string;
-	selected: boolean;
-	type: string;
-	visible: boolean;
 }
 
 interface ISaveFDSFieldsModalContentProps {
@@ -230,7 +224,7 @@ const SaveFDSFieldsModalContent = ({
 					);
 
 					return {
-						id: fdsField?.id || null,
+						id: fdsField?.id,
 						name: field.name,
 						selected: Boolean(fdsField),
 						type: field.type,
@@ -335,7 +329,7 @@ const SaveFDSFieldsModalContent = ({
 										key={name}
 									>
 										<ClayCheckbox
-											checked={selected}
+											checked={selected ?? false}
 											label={name}
 											onChange={({target: {checked}}) => {
 												setFields(
@@ -768,40 +762,57 @@ const Fields = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	const onCreationButtonClick = () =>
-		openModal({
-			className: 'overflow-auto',
-			contentComponent: ({closeModal}: {closeModal: Function}) => (
-				<SaveFDSFieldsModalContent
-					closeModal={closeModal}
-					fdsFields={fdsFields || []}
-					fdsView={fdsView}
-					namespace={namespace}
-					onSave={({
-						createdFDSFields,
-						deletedFDSFieldsIds,
-					}: {
-						createdFDSFields: Array<IFDSField>;
-						deletedFDSFieldsIds: Array<number>;
-					}) => {
-						const newFDSFields: Array<IFDSField> = [];
+	const onCreationButtonClick = () => {
+		if (Liferay.FeatureFlags['LPS-186871']) {
+			openModal({
+				contentComponent: ({closeModal}: {closeModal: Function}) => (
+					<AddFieldsModalContent
+						closeModal={closeModal}
+						fdsFields={fdsFields || []}
+						fdsView={fdsView}
+					/>
+				),
+				size: 'full-screen',
+			});
+		}
+		else {
+			openModal({
+				className: 'overflow-auto',
+				contentComponent: ({closeModal}: {closeModal: Function}) => (
+					<SaveFDSFieldsModalContent
+						closeModal={closeModal}
+						fdsFields={fdsFields || []}
+						fdsView={fdsView}
+						namespace={namespace}
+						onSave={({
+							createdFDSFields,
+							deletedFDSFieldsIds,
+						}: {
+							createdFDSFields: Array<IFDSField>;
+							deletedFDSFieldsIds: Array<number>;
+						}) => {
+							const newFDSFields: Array<IFDSField> = [];
 
-						fdsFields?.forEach((fdsField) => {
-							if (!deletedFDSFieldsIds.includes(fdsField.id)) {
+							fdsFields?.forEach((fdsField) => {
+								if (
+									!deletedFDSFieldsIds.includes(fdsField.id)
+								) {
+									newFDSFields.push(fdsField);
+								}
+							});
+
+							createdFDSFields.forEach((fdsField) => {
 								newFDSFields.push(fdsField);
-							}
-						});
+							});
 
-						createdFDSFields.forEach((fdsField) => {
-							newFDSFields.push(fdsField);
-						});
-
-						setFDSFields(newFDSFields);
-					}}
-					saveFDSFieldsURL={saveFDSFieldsURL}
-				/>
-			),
-		});
+							setFDSFields(newFDSFields);
+						}}
+						saveFDSFieldsURL={saveFDSFieldsURL}
+					/>
+				),
+			});
+		}
+	};
 
 	const onEditFDSField = ({editedFDSField}: {editedFDSField: IFDSField}) => {
 		setFDSFields(

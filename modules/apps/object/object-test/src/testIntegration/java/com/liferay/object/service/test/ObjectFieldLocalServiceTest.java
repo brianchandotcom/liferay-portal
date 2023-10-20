@@ -302,8 +302,11 @@ public class ObjectFieldLocalServiceTest {
 		AssertUtils.assertFailure(
 			ObjectFieldNameException.MustNotBeEqualToObjectRelationshipName.
 				class,
-			"Name must not be equal to object relationship name " +
-				objectRelationshipName,
+			StringBundler.concat(
+				"There is already a relationship with this name in the ",
+				"current ", objectDefinition1.getShortName(),
+				" object definition. Object fields and object relationships ",
+				"can’t have the same name. Please, choose another name."),
 			() -> _addCustomObjectField(
 				new TextObjectFieldBuilder(
 				).labelMap(

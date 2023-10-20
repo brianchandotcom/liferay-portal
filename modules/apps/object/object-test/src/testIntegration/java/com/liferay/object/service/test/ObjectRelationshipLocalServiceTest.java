@@ -195,8 +195,11 @@ public class ObjectRelationshipLocalServiceTest {
 
 		AssertUtils.assertFailure(
 			ObjectRelationshipNameException.class,
-			"Name must not be equal to a field name in object definition " +
+			StringBundler.concat(
+				"There is already a field with this name in the ",
 				_objectDefinition2.getShortName(),
+				" object definition. Object fields and object relationships ",
+				"can’t have the same name. Please, choose another name."),
 			() -> _objectRelationshipLocalService.addObjectRelationship(
 				TestPropsValues.getUserId(),
 				_objectDefinition1.getObjectDefinitionId(),

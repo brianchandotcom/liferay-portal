@@ -511,6 +511,7 @@ describe('CollectionGeneralPanel', () => {
 
 					itemId: 'collection-display-a',
 					layoutData: {
+						deletedItems: [],
 						items: {
 							'collection-display-a': {
 								itemId: 'collection-display-a',

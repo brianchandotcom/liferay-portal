@@ -13,6 +13,7 @@ import com.liferay.headless.admin.taxonomy.client.pagination.Pagination;
 import com.liferay.headless.admin.taxonomy.client.problem.Problem;
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.admin.taxonomy.client.serdes.v1_0.TaxonomyVocabularySerDes;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -22,8 +23,11 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 
+import java.lang.reflect.Method;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -346,6 +350,65 @@ public class TaxonomyVocabularyResourceTest
 
 	@Override
 	@Test
+	public void testGetSiteTaxonomyVocabulariesPageWithSortString()
+		throws Exception {
+
+		testGetSiteTaxonomyVocabulariesPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, taxonomyVocabulary1, taxonomyVocabulary2) -> {
+				Class<?> clazz = taxonomyVocabulary1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanTestUtil.setProperty(
+						taxonomyVocabulary1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanTestUtil.setProperty(
+						taxonomyVocabulary2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanTestUtil.setProperty(
+						taxonomyVocabulary1, entityFieldName,
+						StringBundler.concat(
+							"aaa",
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()),
+							"@liferay.com"));
+					BeanTestUtil.setProperty(
+						taxonomyVocabulary2, entityFieldName,
+						StringBundler.concat(
+							"bbb",
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()),
+							"@liferay.com"));
+				}
+				else {
+					String randomString1 = StringUtil.toLowerCase(
+						RandomTestUtil.randomString());
+
+					BeanTestUtil.setProperty(
+						taxonomyVocabulary1, entityFieldName,
+						"aaa" + randomString1);
+
+					String randomString2 = StringUtil.toLowerCase(
+						RandomTestUtil.randomString());
+
+					BeanTestUtil.setProperty(
+						taxonomyVocabulary2, entityFieldName,
+						"bbb" + randomString2);
+				}
+			});
+	}
+
+	@Override
+	@Test
 	public void testGetTaxonomyVocabulary() throws Exception {
 		super.testGetTaxonomyVocabulary();
 
@@ -653,6 +716,68 @@ public class TaxonomyVocabularyResourceTest
 		throws Exception {
 
 		return testDepotEntry.getDepotEntryId();
+	}
+
+	protected void testGetSiteTaxonomyVocabulariesPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer
+				<EntityField, TaxonomyVocabulary, TaxonomyVocabulary, Exception>
+					unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long siteId = testGetSiteTaxonomyVocabulariesPage_getSiteId();
+
+		TaxonomyVocabulary taxonomyVocabulary1 = randomTaxonomyVocabulary();
+		TaxonomyVocabulary taxonomyVocabulary2 = randomTaxonomyVocabulary();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(
+				entityField, taxonomyVocabulary1, taxonomyVocabulary2);
+		}
+
+		taxonomyVocabulary1 =
+			testGetSiteTaxonomyVocabulariesPage_addTaxonomyVocabulary(
+				siteId, taxonomyVocabulary1);
+
+		taxonomyVocabulary2 =
+			testGetSiteTaxonomyVocabulariesPage_addTaxonomyVocabulary(
+				siteId, taxonomyVocabulary2);
+
+		for (EntityField entityField : entityFields) {
+			Page<TaxonomyVocabulary> ascPage =
+				taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
+					siteId, null, null,
+					StringBundler.concat(
+						getFilterString(entityField, "eq", taxonomyVocabulary1),
+						" or ",
+						getFilterString(
+							entityField, "eq", taxonomyVocabulary2)),
+					Pagination.of(1, 2), entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(taxonomyVocabulary1, taxonomyVocabulary2),
+				(List<TaxonomyVocabulary>)ascPage.getItems());
+
+			Page<TaxonomyVocabulary> descPage =
+				taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
+					siteId, null, null,
+					StringBundler.concat(
+						getFilterString(entityField, "eq", taxonomyVocabulary1),
+						" or ",
+						getFilterString(
+							entityField, "eq", taxonomyVocabulary2)),
+					Pagination.of(1, 2), entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(taxonomyVocabulary2, taxonomyVocabulary1),
+				(List<TaxonomyVocabulary>)descPage.getItems());
+		}
 	}
 
 	@Override

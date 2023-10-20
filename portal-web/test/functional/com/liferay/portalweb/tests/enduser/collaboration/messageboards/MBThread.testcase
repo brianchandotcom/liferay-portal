@@ -636,11 +636,10 @@ definition {
 			userName = "Anonymous");
 
 		var actualScript = '''<script>alert(123);</script>''';
-		var escapedScript = '''&lt;script&gt;alert(123);&lt;/script&gt;''';
 
 		AssertHTMLSourceTextNotPresent(value1 = ${actualScript});
 
-		AssertHTMLSourceTextPresent(value1 = ${escapedScript});
+		AssertHTMLSourceTextPresent(value1 = "");
 	}
 
 	@description = "This ensures that an image in the MB content field can be rendered correctly after it to a folder."

@@ -492,6 +492,10 @@ paths:
                   schema:
                       format: int64
                       type: integer
+            requestBody:
+                content:
+                    application/json: {}
+                    application/xml: {}
             responses:
                 204:
                     content:
@@ -715,6 +719,10 @@ paths:
                   schema:
                       format: int64
                       type: integer
+            requestBody:
+                content:
+                    application/json: {}
+                    application/xml: {}
             responses:
                 204:
                     content:
@@ -999,6 +1007,10 @@ paths:
                   schema:
                       format: int64
                       type: integer
+            requestBody:
+                content:
+                    application/json: {}
+                    application/xml: {}
             responses:
                 204:
                     content:
@@ -1226,6 +1238,10 @@ paths:
                   schema:
                       format: int64
                       type: integer
+            requestBody:
+                content:
+                    application/json: {}
+                    application/xml: {}
             responses:
                 204:
                     content:
@@ -1496,6 +1512,10 @@ paths:
                   required: true
                   schema:
                       type: string
+            requestBody:
+                content:
+                    application/json: {}
+                    application/xml: {}
             responses:
                 204:
                     content:
@@ -1645,6 +1665,10 @@ paths:
                   schema:
                       format: int64
                       type: integer
+            requestBody:
+                content:
+                    application/json: {}
+                    application/xml: {}
             responses:
                 204:
                     content:

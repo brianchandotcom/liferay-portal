@@ -256,6 +256,27 @@ public class TaxonomyVocabularyResourceTest
 
 	@Override
 	@Test
+	public void testGetAssetLibraryTaxonomyVocabulariesPageWithSortString()
+		throws Exception {
+
+		testAssetLibrarySiteTaxonomyVocabulariesPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, taxonomyVocabulary1, taxonomyVocabulary2) -> {
+				Class<?> clazz = taxonomyVocabulary1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				_setEntityFieldNames(
+					taxonomyVocabulary1, taxonomyVocabulary2, entityFieldName,
+					method.getReturnType());
+			});
+	}
+
+	@Override
+	@Test
 	public void testGetAssetLibraryTaxonomyVocabularyByExternalReferenceCode()
 		throws Exception {
 
@@ -363,47 +384,9 @@ public class TaxonomyVocabularyResourceTest
 				Method method = clazz.getMethod(
 					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
 
-				Class<?> returnType = method.getReturnType();
-
-				if (returnType.isAssignableFrom(Map.class)) {
-					BeanTestUtil.setProperty(
-						taxonomyVocabulary1, entityFieldName,
-						Collections.singletonMap("Aaa", "Aaa"));
-					BeanTestUtil.setProperty(
-						taxonomyVocabulary2, entityFieldName,
-						Collections.singletonMap("Bbb", "Bbb"));
-				}
-				else if (entityFieldName.contains("email")) {
-					BeanTestUtil.setProperty(
-						taxonomyVocabulary1, entityFieldName,
-						StringBundler.concat(
-							"aaa",
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()),
-							"@liferay.com"));
-					BeanTestUtil.setProperty(
-						taxonomyVocabulary2, entityFieldName,
-						StringBundler.concat(
-							"bbb",
-							StringUtil.toLowerCase(
-								RandomTestUtil.randomString()),
-							"@liferay.com"));
-				}
-				else {
-					String randomString1 = StringUtil.toLowerCase(
-						RandomTestUtil.randomString());
-
-					BeanTestUtil.setProperty(
-						taxonomyVocabulary1, entityFieldName,
-						"aaa" + randomString1);
-
-					String randomString2 = StringUtil.toLowerCase(
-						RandomTestUtil.randomString());
-
-					BeanTestUtil.setProperty(
-						taxonomyVocabulary2, entityFieldName,
-						"bbb" + randomString2);
-				}
+				_setEntityFieldNames(
+					taxonomyVocabulary1, taxonomyVocabulary2, entityFieldName,
+					method.getReturnType());
 			});
 	}
 
@@ -684,6 +667,73 @@ public class TaxonomyVocabularyResourceTest
 		};
 	}
 
+	protected void testAssetLibrarySiteTaxonomyVocabulariesPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer
+				<EntityField, TaxonomyVocabulary, TaxonomyVocabulary, Exception>
+					unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long assetLibraryId =
+			testGetAssetLibraryTaxonomyVocabulariesPage_getAssetLibraryId();
+
+		TaxonomyVocabulary taxonomyVocabulary1 = randomTaxonomyVocabulary();
+		TaxonomyVocabulary taxonomyVocabulary2 = randomTaxonomyVocabulary();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(
+				entityField, taxonomyVocabulary1, taxonomyVocabulary2);
+		}
+
+		taxonomyVocabulary1 =
+			testGetAssetLibraryTaxonomyVocabulariesPage_addTaxonomyVocabulary(
+				assetLibraryId, taxonomyVocabulary1);
+
+		taxonomyVocabulary2 =
+			testGetAssetLibraryTaxonomyVocabulariesPage_addTaxonomyVocabulary(
+				assetLibraryId, taxonomyVocabulary2);
+
+		for (EntityField entityField : entityFields) {
+			Page<TaxonomyVocabulary> ascPage =
+				taxonomyVocabularyResource.
+					getAssetLibraryTaxonomyVocabulariesPage(
+						assetLibraryId, null, null,
+						StringBundler.concat(
+							getFilterString(
+								entityField, "eq", taxonomyVocabulary1),
+							" or ",
+							getFilterString(
+								entityField, "eq", taxonomyVocabulary2)),
+						Pagination.of(1, 2), entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(taxonomyVocabulary1, taxonomyVocabulary2),
+				(List<TaxonomyVocabulary>)ascPage.getItems());
+
+			Page<TaxonomyVocabulary> descPage =
+				taxonomyVocabularyResource.
+					getAssetLibraryTaxonomyVocabulariesPage(
+						assetLibraryId, null, null,
+						StringBundler.concat(
+							getFilterString(
+								entityField, "eq", taxonomyVocabulary1),
+							" or ",
+							getFilterString(
+								entityField, "eq", taxonomyVocabulary2)),
+						Pagination.of(1, 2), entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(taxonomyVocabulary2, taxonomyVocabulary1),
+				(List<TaxonomyVocabulary>)descPage.getItems());
+		}
+	}
+
 	@Override
 	protected TaxonomyVocabulary
 			testDeleteAssetLibraryTaxonomyVocabularyByExternalReferenceCode_addTaxonomyVocabulary()
@@ -802,6 +852,49 @@ public class TaxonomyVocabularyResourceTest
 		throws Exception {
 
 		return testDepotEntry.getDepotEntryId();
+	}
+
+	private void _setEntityFieldNames(
+			TaxonomyVocabulary taxonomyVocabulary1,
+			TaxonomyVocabulary taxonomyVocabulary2, String entityFieldName,
+			Class<?> returnType)
+		throws Exception {
+
+		if (returnType.isAssignableFrom(Map.class)) {
+			BeanTestUtil.setProperty(
+				taxonomyVocabulary1, entityFieldName,
+				Collections.singletonMap("Aaa", "Aaa"));
+			BeanTestUtil.setProperty(
+				taxonomyVocabulary2, entityFieldName,
+				Collections.singletonMap("Bbb", "Bbb"));
+		}
+		else if (entityFieldName.contains("email")) {
+			BeanTestUtil.setProperty(
+				taxonomyVocabulary1, entityFieldName,
+				StringBundler.concat(
+					"aaa",
+					StringUtil.toLowerCase(RandomTestUtil.randomString()),
+					"@liferay.com"));
+			BeanTestUtil.setProperty(
+				taxonomyVocabulary2, entityFieldName,
+				StringBundler.concat(
+					"bbb",
+					StringUtil.toLowerCase(RandomTestUtil.randomString()),
+					"@liferay.com"));
+		}
+		else {
+			String randomString1 = StringUtil.toLowerCase(
+				RandomTestUtil.randomString());
+
+			BeanTestUtil.setProperty(
+				taxonomyVocabulary1, entityFieldName, "aaa" + randomString1);
+
+			String randomString2 = StringUtil.toLowerCase(
+				RandomTestUtil.randomString());
+
+			BeanTestUtil.setProperty(
+				taxonomyVocabulary2, entityFieldName, "bbb" + randomString2);
+		}
 	}
 
 }

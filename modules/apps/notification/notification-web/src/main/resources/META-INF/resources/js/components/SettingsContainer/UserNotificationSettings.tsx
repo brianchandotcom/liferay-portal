@@ -3,9 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayForm from '@clayui/form';
-import ClayMultiSelect from '@clayui/multi-select';
-import {Input, SingleSelect} from '@liferay/object-js-components-web';
+import {
+	Input,
+	MultiSelectItem,
+	MultipleSelect,
+	SingleSelect,
+} from '@liferay/object-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
@@ -20,8 +23,6 @@ interface User {
 	alternateName: string;
 	givenName: string;
 }
-
-interface Item extends Partial<LabelValueObject> {}
 
 interface UserNotificationSettingsProps {
 	setValues: (values: Partial<NotificationTemplate>) => void;
@@ -52,112 +53,99 @@ export function UserNotificationSettings({
 	setValues,
 	values,
 }: UserNotificationSettingsProps) {
-	const [multiSelectItems, setMultiSelectItems] = useState<Item[]>([]);
+	const [rolesList, setRolesList] = useState<MultiSelectItem[]>([]);
 	const [toTerms, setToTerms] = useState<string>('');
-	const [rolesList, setRolesList] = useState<Item[]>([]);
-	const [userList, setUserList] = useState<Item[]>([]);
-	const [searchTerm, setSearchTerm] = useState('');
+	const [userList, setUserList] = useState<MultiSelectItem[]>([]);
 
-	const getRoles = async (searchTerm: string) => {
-		const query = `/o/headless-admin-user/v1.0/roles?page=1&pageSize=10${
-			searchTerm ? `&search=${searchTerm}` : ''
-		}`;
+	const getRoles = async () => {
+		const query = `/o/headless-admin-user/v1.0/roles?page=-1`;
 
 		const response = await fetch(query, {
 			headers: HEADERS,
 			method: 'GET',
 		});
 
-		const responseJSON = await response.json();
+		const {items} = (await response.json()) as {items: Role[]};
 
-		const roles = responseJSON.items.map(({name}: Role) => {
+		const roles = items.map(({name}) => {
+			const selectedRole = !!(values.recipients as Partial<
+				UserNotificationRecipients
+			>[]).find((recipient) => recipient.roleName === name);
+
 			return {
+				checked: selectedRole,
 				label: name,
 				value: name,
 			};
-		});
+		}) as MultiSelectItem[];
 
 		setRolesList(roles);
+		setUserList([]);
 	};
 
-	const getUserAccounts = async (searchTerm: string) => {
+	const getUserAccounts = async () => {
 		const apiURL = '/o/headless-admin-user/v1.0/user-accounts';
-		const query = `${apiURL}?page=1&pageSize=10&sort=givenName:asc${
-			searchTerm ? `&search=${searchTerm}` : ''
-		}`;
+		const query = `${apiURL}?page=-1&sort=givenName:asc`;
 
 		const response = await fetch(query, {
 			headers: HEADERS,
 			method: 'GET',
 		});
 
-		const responseJSON = await response.json();
+		const {items} = (await response.json()) as {items: User[]};
 
-		const users = responseJSON.items.map(
-			({alternateName, givenName}: User) => {
-				return {
-					label: givenName,
-					value: alternateName,
-				};
-			}
-		);
+		const users = items.map(({alternateName, givenName}) => {
+			const selectedUser = !!(values.recipients as Partial<
+				UserNotificationRecipients
+			>[]).find(
+				(recipient) => recipient['userScreenName'] === alternateName
+			);
+
+			return {
+				checked: selectedUser,
+				label: givenName,
+				value: alternateName,
+			};
+		}) as MultiSelectItem[];
 
 		setUserList(users);
+		setRolesList([]);
 	};
 
-	const handleMultiSelectItemsChange = (items: Item[]) => {
+	const handleMultiSelectItemsChange = (items: MultiSelectItem[]) => {
 		const key =
 			values.recipientType === 'role' ? 'roleName' : 'userScreenName';
 
-		const newRecipients = items.map((item) => ({[key]: item.value}));
+		const newRecipients: UserNotificationRecipients[] = [];
+
+		items.forEach((item) => {
+			if (item.checked) {
+				newRecipients.push({[key]: item.value});
+			}
+		});
 
 		setValues({
 			...values,
 			recipients: newRecipients,
 		});
-
-		setMultiSelectItems(items);
 	};
 
 	useEffect(() => {
-		const delayDebounceFn = setTimeout(() => {
-			values.recipientType === 'role'
-				? getRoles(searchTerm)
-				: getUserAccounts(searchTerm);
-		}, 500);
+		const makeFetch = async () => {
+			if (values.recipientType === 'user') {
+				await getUserAccounts();
 
-		return () => clearTimeout(delayDebounceFn);
-	}, [searchTerm, values.recipientType]);
+				return;
+			}
 
-	useEffect(() => {
-		const recipientList = values.recipients as UserNotificationRecipients[];
+			if (values.recipientType === 'role') {
+				await getRoles();
 
-		const generateMultiSelectItems = () => {
-			return recipientList.map((item) => {
-				if (values.recipientType === 'user') {
-					return {
-						label: item.userScreenName,
-						value: item.userScreenName,
-					};
-				}
-
-				return {
-					label: item.roleName,
-					value: item.roleName,
-				};
-			});
+				return;
+			}
 		};
 
-		if (
-			values.recipientType === 'role' ||
-			values.recipientType === 'user'
-		) {
-			setMultiSelectItems(generateMultiSelectItems());
-		}
-
-		if (values.recipientType === 'term') {
-			setToTerms(recipientList.map(({term}) => term).join());
-		}
+		makeFetch();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [values.recipientType]);
 
@@ -199,84 +187,56 @@ export function UserNotificationSettings({
 					});
 
 					if (value === 'role') {
-						getRoles('');
+						getRoles();
 					}
 				}}
 				selectedKey={values.recipientType}
 			/>
 
 			{values.recipientType === 'term' && (
-				<>
-					<Input
-						component="textarea"
-						disabled={values.system}
-						label={Liferay.Language.get('to')}
-						onChange={({target}) => {
-							setToTerms(target.value);
-						}}
-						placeholder={Liferay.Util.sub(
-							Liferay.Language.get(
-								'use-terms-to-configure-recipients-for-this-notification-x'
-							),
-							'[%OBJECT_AUTHOR_ID%]',
-							'.'
-						)}
-						type="text"
-						value={toTerms}
-					/>
-				</>
+				<Input
+					component="textarea"
+					disabled={values.system}
+					label={Liferay.Language.get('to')}
+					onChange={({target}) => {
+						setToTerms(target.value);
+					}}
+					placeholder={Liferay.Util.sub(
+						Liferay.Language.get(
+							'use-terms-to-configure-recipients-for-this-notification-x'
+						),
+						'[%OBJECT_AUTHOR_ID%]',
+						'.'
+					)}
+					type="text"
+					value={toTerms}
+				/>
 			)}
 
 			{values.recipientType === 'role' && (
-				<>
-					<ClayForm.Group>
-						<label>{Liferay.Language.get('role')}</label>
-
-						<ClayMultiSelect
-							disabled={values.system}
-							items={multiSelectItems}
-							loadingState={4}
-							onChange={setSearchTerm}
-							onItemsChange={handleMultiSelectItemsChange}
-							placeholder={Liferay.Language.get('enter-a-role')}
-							sourceItems={rolesList}
-							value={searchTerm}
-						/>
-
-						<ClayForm.Text>
-							{Liferay.Language.get(
-								'you-can-use-a-comma-to-enter-multiple-users'
-							)}
-						</ClayForm.Text>
-					</ClayForm.Group>
-				</>
+				<MultipleSelect
+					disabled={values.system}
+					label={Liferay.Language.get('role')}
+					options={rolesList}
+					placeholder={Liferay.Language.get('enter-a-role')}
+					setOptions={(items) => {
+						handleMultiSelectItemsChange(items);
+						setRolesList(items);
+					}}
+				/>
 			)}
 
 			{values.recipientType === 'user' && (
-				<>
-					<ClayForm.Group>
-						<label>{Liferay.Language.get('users')}</label>
-
-						<ClayMultiSelect
-							disabled={values.system}
-							items={multiSelectItems}
-							loadingState={4}
-							onChange={setSearchTerm}
-							onItemsChange={handleMultiSelectItemsChange}
-							placeholder={Liferay.Language.get(
-								'enter-user-name'
-							)}
-							sourceItems={userList}
-							value={searchTerm}
-						/>
-
-						<ClayForm.Text>
-							{Liferay.Language.get(
-								'you-can-use-a-comma-to-enter-multiple-users'
-							)}
-						</ClayForm.Text>
-					</ClayForm.Group>
-				</>
+				<MultipleSelect
+					disabled={values.system}
+					label={Liferay.Language.get('users')}
+					options={userList}
+					placeholder={Liferay.Language.get('enter-user-name')}
+					setOptions={(items) => {
+						handleMultiSelectItemsChange(items);
+						setUserList(items);
+					}}
+				/>
 			)}
 		</>
 	);

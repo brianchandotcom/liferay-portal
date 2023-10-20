@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>PRMDealRegistration</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PRMDealRegistration</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>DEAL_ACCOUNT_NAME</td>
+	<td>//thead//th//*[text()='Account Name']//ancestor::table//tbody//th//span[text()='${key_accountName}']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

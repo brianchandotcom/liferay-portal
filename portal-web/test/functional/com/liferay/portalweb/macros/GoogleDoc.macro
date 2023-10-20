@@ -71,20 +71,14 @@ definition {
 
 		WaitForFrameLoad();
 
-		if (IsElementNotPresent(key_text = "Save and Return to ${siteName}", locator1 = "Button#ANY")) {
-			takeScreenshot();
-
-			Refresh();
+		while ((IsElementNotPresent(key_text = "Save and Return to ${siteName}", locator1 = "Button#ANY")) && (${i} != 5)) {
+			var i = ${i} + 1;
 
 			WaitForPageLoad();
 
 			WaitForFrameLoad();
 
-			Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
-
-			MenuItem.click(menuItem = "Edit in ${dmDocumentTypeName}");
-
-			WaitForPageLoad();
+			takeScreenshot();
 		}
 
 		AssertElementPresent(

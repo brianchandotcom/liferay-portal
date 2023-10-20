@@ -98,7 +98,7 @@ public class DLFileEntryConfigurationProviderImpl
 			this::_getGroupMaxNumberOfPagesLimit,
 			() ->
 				DLFileEntryConfigurationConstants.
-					UNLIMITED_MAX_NUMBER_OF_PAGES);
+					MAX_NUMBER_OF_PAGES_UNLIMITED);
 	}
 
 	@Override
@@ -120,7 +120,7 @@ public class DLFileEntryConfigurationProviderImpl
 			this::_getGroupPreviewableProcessorMaxSizeLimit,
 			() ->
 				DLFileEntryConfigurationConstants.
-					UNLIMITED_PREVIEWABLE_PROCESSOR_MAX_SIZE);
+					PREVIEWABLE_PROCESSOR_MAX_SIZE_UNLIMITED);
 	}
 
 	@Override
@@ -207,14 +207,14 @@ public class DLFileEntryConfigurationProviderImpl
 
 	private int _getMinimumMaxNumberOfPages(long... values) {
 		return (int)_getMinimum(
-			DLFileEntryConfigurationConstants.UNLIMITED_MAX_NUMBER_OF_PAGES,
+			DLFileEntryConfigurationConstants.MAX_NUMBER_OF_PAGES_UNLIMITED,
 			values);
 	}
 
 	private long _getMinimumPreviewableProcessorMaxSize(long... values) {
 		return _getMinimum(
 			DLFileEntryConfigurationConstants.
-				UNLIMITED_PREVIEWABLE_PROCESSOR_MAX_SIZE,
+				PREVIEWABLE_PROCESSOR_MAX_SIZE_UNLIMITED,
 			values);
 	}
 
@@ -295,7 +295,7 @@ public class DLFileEntryConfigurationProviderImpl
 		if (_isLimitExceeded(
 				maxNumberOfPagesLimit, maxNumberOfPages,
 				DLFileEntryConfigurationConstants.
-					UNLIMITED_MAX_NUMBER_OF_PAGES)) {
+					MAX_NUMBER_OF_PAGES_UNLIMITED)) {
 
 			throw new DLFileEntryConfigurationException.
 				InvalidMaxNumberOfPagesException();
@@ -310,7 +310,7 @@ public class DLFileEntryConfigurationProviderImpl
 		if (_isLimitExceeded(
 				previewableProcessorMaxSizeLimit, previewableProcessorMaxSize,
 				DLFileEntryConfigurationConstants.
-					UNLIMITED_PREVIEWABLE_PROCESSOR_MAX_SIZE)) {
+					PREVIEWABLE_PROCESSOR_MAX_SIZE_UNLIMITED)) {
 
 			throw new DLFileEntryConfigurationException.
 				InvalidPreviewableProcessorMaxSizeException();

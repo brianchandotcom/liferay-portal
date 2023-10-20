@@ -118,14 +118,14 @@ public class DLFileEntryConfigurationProviderTest {
 
 						Assert.assertEquals(
 							DLFileEntryConfigurationConstants.
-								UNLIMITED_MAX_NUMBER_OF_PAGES,
+								MAX_NUMBER_OF_PAGES_UNLIMITED,
 							_dlFileEntryConfigurationProvider.
 								getMaxNumberOfPagesLimit(
 									ExtendedObjectClassDefinition.Scope.SYSTEM,
 									0L));
 						Assert.assertEquals(
 							DLFileEntryConfigurationConstants.
-								UNLIMITED_PREVIEWABLE_PROCESSOR_MAX_SIZE,
+								PREVIEWABLE_PROCESSOR_MAX_SIZE_UNLIMITED,
 							_dlFileEntryConfigurationProvider.
 								getPreviewableProcessorMaxSizeLimit(
 									ExtendedObjectClassDefinition.Scope.SYSTEM,
@@ -211,9 +211,9 @@ public class DLFileEntryConfigurationProviderTest {
 					_CONFIGURATION_CLASS_NAME,
 					_createDictionary(
 						DLFileEntryConfigurationConstants.
-							UNLIMITED_MAX_NUMBER_OF_PAGES,
+							MAX_NUMBER_OF_PAGES_UNLIMITED,
 						DLFileEntryConfigurationConstants.
-							UNLIMITED_PREVIEWABLE_PROCESSOR_MAX_SIZE))) {
+							PREVIEWABLE_PROCESSOR_MAX_SIZE_UNLIMITED))) {
 
 			_withCompanyConfiguration(
 				20, 2000,
@@ -259,11 +259,11 @@ public class DLFileEntryConfigurationProviderTest {
 					_CONFIGURATION_CLASS_NAME, new HashMapDictionary<>())) {
 
 			Assert.assertEquals(
-				DLFileEntryConfigurationConstants.DEFAULT_MAX_NUMBER_OF_PAGES,
+				DLFileEntryConfigurationConstants.MAX_NUMBER_OF_PAGES_DEFAULT,
 				_dlFileEntryConfigurationProvider.getSystemMaxNumberOfPages());
 			Assert.assertEquals(
 				DLFileEntryConfigurationConstants.
-					DEFAULT_PREVIEWABLE_PROCESSOR_MAX_SIZE,
+					PREVIEWABLE_PROCESSOR_MAX_SIZE_DEFAULT,
 				_dlFileEntryConfigurationProvider.
 					getSystemPreviewableProcessorMaxSize());
 		}

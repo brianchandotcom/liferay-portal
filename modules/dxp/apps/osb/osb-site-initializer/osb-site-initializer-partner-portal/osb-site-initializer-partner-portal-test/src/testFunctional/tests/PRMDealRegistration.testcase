@@ -1,0 +1,104 @@
+@component-name = "OSB Site Initializer Partner Portal"
+definition {
+
+	property custom.properties = "feature.flag.LPS-135430=true";
+	property osgi.modules.includes = "osb-site-initializer-partner-portal";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property release.feature.flags.disable.DISABLE_PRIVATE_LAYOUTS = "true";
+	property test.liferay.virtual.instance = "true";
+	property testray.main.component.name = "OSB Site Initializer Partner Portal";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Create a new Partner Portal Site and connect with Salesforce") {
+			PRMUtils.addSite();
+
+			PRMUtils.connectWithSalesforce();
+		}
+
+		task ("Update the account with Salesforce fields") {
+			JSONPRM.updateAccount();
+		}
+
+		task ("Assign the users to the account") {
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Company Name 1",
+				userEmailAddress = "pm@partner.com");
+
+			JSONAccountEntryUser.addExistUsertoAccount(
+				accountEntryName = "Company Name 1",
+				userEmailAddress = "psu@partner.com");
+		}
+
+		task ("Go to Partner Portal and login with the created user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "psu@partner.com",
+				userLoginFullName = "Partner Sales User");
+
+			PRMUtils.gotoPRM();
+		}
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			PRMUtils.tearDown();
+		}
+	}
+
+	@description = "This is a test for LPS-197220. Verify that it's possible to create a Deal Registration"
+	@priority = 5
+	test CanCreateADeal {
+
+		task ("Given that the PSU user goes to Deal Registrations page") {
+			PRMHomePage.gotoQuickLinksOption(
+				buttonLink = "deal-registrations",
+
+				buttonText = "Deal Registration");
+		}
+
+		task ("And creates a new Deal Registration") {
+			Button.click(button = "Register New Deal");
+
+			PRMDealRegistration.createNewDeal(
+				accountName = "Test Account Name",
+				address = "Test Address",
+				businessUnit = "Test Business Unit",
+				city = "Test City",
+				country = "United States",
+				department = "Business - Marketing",
+				emailAddress = "test@liferay.com",
+				firstName = "Test",
+				industry = "Technology",
+				jobRole = "Associate/Analyst",
+				lastName = "User",
+				partnerAccountName = "Company Name 1",
+				phone = 123456789,
+				postalCode = 91765,
+				projectNeedOptions = "Customer Portal,Integration Platform",
+				projectSolutionCategoriesOptions = "B2B,B2E",
+				projectTimeline = "Test Project Timeline",
+				state = "California");
+		}
+
+		task ("When the PSU goes to Deal Registrations page") {
+			PRMNavigator.openSitePage(pageName = "Deal Registrations");
+		}
+
+
+		task ("Then the created deal should be present") {
+			PRMDealRegistration.viewDealRegistrationByAccountName(dealAccountName = "Test Account Name");
+		}
+	}
+
+}

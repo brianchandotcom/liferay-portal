@@ -513,7 +513,7 @@ definition {
 		task ("Then the edited Question should be available") {
 			AssertTextEquals(
 				key_questionTitle = "あなたの好きな日本料理は何ですか",
-				locator1 = "Questions#QUESTIONS_DETAILS_TITLE",
+				locator1 = "Questions#QUESTIONS_TITLE",
 				value1 = "あなたの好きな日本料理は何ですか");
 		}
 	}

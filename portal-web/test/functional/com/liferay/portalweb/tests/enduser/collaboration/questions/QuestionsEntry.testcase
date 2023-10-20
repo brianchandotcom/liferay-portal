@@ -1638,10 +1638,9 @@ definition {
 		}
 
 		task ("When the user do to the main category and change topic to 'Questions Test Category2'") {
-			Questions.openToQuestionsTopic(
-				layoutName = "questions-page",
-				siteURLKey = "guest",
-				topicName = "questions-test-category1");
+			Navigator.gotoPage(pageName = "Questions Page");
+
+			Questions.gotoCategory(categoryName = "Questions Test Category1");
 
 			Questions.changeTopic(
 				parentTopicName = "Questions Test Category1",

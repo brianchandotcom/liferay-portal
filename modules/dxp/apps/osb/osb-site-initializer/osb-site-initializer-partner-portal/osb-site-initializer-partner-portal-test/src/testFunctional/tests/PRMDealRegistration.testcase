@@ -59,11 +59,9 @@ definition {
 	@description = "This is a test for LPS-197220. Verify that it's possible to create a Deal Registration"
 	@priority = 5
 	test CanCreateADeal {
-
 		task ("Given that the PSU user goes to Deal Registrations page") {
 			PRMHomePage.gotoQuickLinksOption(
 				buttonLink = "deal-registrations",
-
 				buttonText = "Deal Registration");
 		}
 
@@ -94,7 +92,6 @@ definition {
 		task ("When the PSU goes to Deal Registrations page") {
 			PRMNavigator.openSitePage(pageName = "Deal Registrations");
 		}
-
 
 		task ("Then the created deal should be present") {
 			PRMDealRegistration.viewDealRegistrationByAccountName(dealAccountName = "Test Account Name");

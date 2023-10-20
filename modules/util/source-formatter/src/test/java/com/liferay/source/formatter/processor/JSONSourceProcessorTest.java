@@ -13,6 +13,11 @@ import org.junit.Test;
 public class JSONSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
+	public void testCdataValueStyle() throws Exception {
+		test("CdataValueStyle.testjson");
+	}
+
+	@Test
 	public void testCheckMissingScripts() throws Exception {
 		/*
 		test(

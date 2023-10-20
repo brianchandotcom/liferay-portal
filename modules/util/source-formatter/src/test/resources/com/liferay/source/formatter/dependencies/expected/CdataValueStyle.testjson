@@ -1,0 +1,32 @@
+{
+	"items": [
+		{
+			"active": true,
+			"content": {
+				"#child-nodes": [
+					{
+						"#child-nodes": [
+							{
+								"#tag-name": "name",
+								"#value": "start"
+							},
+							{
+								"#cdata-value": [
+									"{",
+									"    \"xy\": [",
+									"        648.683349609375,",
+									"        303.63330078125",
+									"    ],",
+									"    \"terminal\": true",
+									"}"
+								],
+								"#tag-name": "metadata"
+							}
+						],
+						"#tag-name": "state"
+					}
+				]
+			}
+		}
+	]
+}

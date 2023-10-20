@@ -1526,7 +1526,8 @@ public class Main {
 				}
 			});
 
-		structuredContent.setPermissions(permissions.toArray());
+		structuredContent.setPermissions(
+			permissions.toArray(new Permission[0]));
 	}
 
 	private String _toFriendlyURLPath(File file) {

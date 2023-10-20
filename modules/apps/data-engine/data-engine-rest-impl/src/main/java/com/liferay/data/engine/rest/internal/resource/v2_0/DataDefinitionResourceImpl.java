@@ -578,11 +578,47 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 						groupId, _portal.getClassNameId(DDMStructure.class),
 						dataDefinitionId, fieldSetDDMStructureId,
 						ddmFormField.getName());
-
-				_addDataDefinitionFieldLinks(
-					dataDefinitionId, ddmFormField.getNestedDDMFormFields(),
-					groupId);
 			}
+
+			_addDataDefinitionFieldLinks(
+				dataDefinitionId, ddmFormField.getNestedDDMFormFields(),
+				groupId);
+		}
+	}
+
+	private void _createDataDefinitionFieldsMap(
+		DataDefinitionField[] dataDefinitionFields,
+		Map<Long, DataDefinitionField[]> dataDefinitionFieldsMap) {
+
+		if (dataDefinitionFields == null) {
+			return;
+		}
+
+		for (DataDefinitionField dataDefinitionField : dataDefinitionFields) {
+			_createDataDefinitionFieldsMap(
+				dataDefinitionField.getNestedDataDefinitionFields(),
+				dataDefinitionFieldsMap);
+
+			Map<String, Object> customProperties =
+				dataDefinitionField.getCustomProperties();
+
+			if (customProperties == null) {
+				continue;
+			}
+
+			long ddmStructureId = MapUtil.getLong(
+				customProperties, "ddmStructureId");
+
+			if (ddmStructureId == 0) {
+				continue;
+			}
+
+			dataDefinitionFieldsMap.put(
+				ddmStructureId,
+				ArrayUtil.append(
+					dataDefinitionFieldsMap.computeIfAbsent(
+						ddmStructureId, key -> new DataDefinitionField[0]),
+					dataDefinitionField));
 		}
 	}
 
@@ -908,28 +944,8 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 		Map<Long, DataDefinitionField[]> dataDefinitionFieldsMap =
 			new HashMap<>();
 
-		for (DataDefinitionField dataDefinitionField : dataDefinitionFields) {
-			Map<String, Object> customProperties =
-				dataDefinitionField.getCustomProperties();
-
-			if (customProperties == null) {
-				continue;
-			}
-
-			long ddmStructureId = MapUtil.getLong(
-				customProperties, "ddmStructureId");
-
-			if (ddmStructureId == 0) {
-				continue;
-			}
-
-			dataDefinitionFieldsMap.put(
-				ddmStructureId,
-				ArrayUtil.append(
-					dataDefinitionFieldsMap.computeIfAbsent(
-						ddmStructureId, key -> new DataDefinitionField[0]),
-					dataDefinitionField));
-		}
+		_createDataDefinitionFieldsMap(
+			dataDefinitionFields, dataDefinitionFieldsMap);
 
 		if (MapUtil.isEmpty(dataDefinitionFieldsMap)) {
 			return;
@@ -1008,7 +1024,9 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			DataDefinitionField[] nestedDataDefinitionFields)
 		throws Exception {
 
-		if (dataDefinitionFieldsCount == 0) {
+		if ((dataDefinitionFieldsCount == 0) ||
+			(nestedDataDefinitionFields == null)) {
+
 			return;
 		}
 

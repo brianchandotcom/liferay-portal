@@ -644,6 +644,8 @@ definition {
 			}
 
 			task ("Assert the Name of object entries are respectively shown in each cell") {
+				ContentPages.gotoPageEditor();
+
 				var n = 1;
 
 				for (var title : list "Banana,Apple") {
@@ -858,6 +860,8 @@ definition {
 			}
 
 			task ("Assert the Name of object entries are respectively shown in each cell") {
+				ContentPages.gotoPageEditor();
+
 				var n = 1;
 
 				for (var title : list "Banana,Apple") {
@@ -1224,6 +1228,8 @@ definition {
 			}
 
 			task ("Assert the Name of object entries are respectively shown in each cell") {
+				ContentPages.gotoPageEditor();
+
 				var n = 1;
 
 				for (var title : list "Banana,Apple") {

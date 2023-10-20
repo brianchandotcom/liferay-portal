@@ -8,6 +8,7 @@ package com.liferay.batch.engine.internal.bundle;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.batch.engine.unit.BatchEngineUnitConfiguration;
+import com.liferay.batch.engine.unit.BatchEngineUnitMetaInfo;
 import com.liferay.batch.engine.unit.BundleBatchEngineUnit;
 
 import java.io.IOException;
@@ -57,6 +58,11 @@ public class ClassicBundleBatchEngineUnitImpl implements BundleBatchEngineUnit {
 	}
 
 	@Override
+	public BatchEngineUnitMetaInfo getBatchEngineUnitMetaInfo() {
+		return _batchEngineUnitMetaInfo;
+	}
+
+	@Override
 	public Bundle getBundle() {
 		return _bundle;
 	}
@@ -90,6 +96,12 @@ public class ClassicBundleBatchEngineUnitImpl implements BundleBatchEngineUnit {
 		return true;
 	}
 
+	public void setBatchEngineUnitMetaInfo(
+		BatchEngineUnitMetaInfo batchEngineUnitMetaInfo) {
+
+		_batchEngineUnitMetaInfo = batchEngineUnitMetaInfo;
+	}
+
 	private boolean _isBatchEngineConfiguration(URL url) {
 		if (url == null) {
 			return false;
@@ -106,6 +118,7 @@ public class ClassicBundleBatchEngineUnitImpl implements BundleBatchEngineUnit {
 		return false;
 	}
 
+	private BatchEngineUnitMetaInfo _batchEngineUnitMetaInfo;
 	private final Bundle _bundle;
 	private URL _configurationURL;
 	private URL _dataURL;

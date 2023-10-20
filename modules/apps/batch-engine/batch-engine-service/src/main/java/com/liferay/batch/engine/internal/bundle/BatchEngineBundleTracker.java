@@ -7,7 +7,7 @@ package com.liferay.batch.engine.internal.bundle;
 
 import com.liferay.batch.engine.internal.unit.MultiCompanyBatchEngineUnitProcessor;
 import com.liferay.batch.engine.unit.BatchEngineUnit;
-import com.liferay.batch.engine.unit.BatchEngineUnitConfiguration;
+import com.liferay.batch.engine.unit.BatchEngineUnitMetaInfo;
 import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
 import com.liferay.batch.engine.unit.BatchEngineUnitReader;
 import com.liferay.petra.string.StringPool;
@@ -92,10 +92,10 @@ public class BatchEngineBundleTracker {
 
 			for (BatchEngineUnit batchEngineUnit : batchEngineUnits) {
 				try {
-					BatchEngineUnitConfiguration batchEngineUnitConfiguration =
-						batchEngineUnit.getBatchEngineUnitConfiguration();
+					BatchEngineUnitMetaInfo batchEngineUnitMetaInfo =
+						batchEngineUnit.getBatchEngineUnitMetaInfo();
 
-					if (batchEngineUnitConfiguration.isMultiCompany()) {
+					if (batchEngineUnitMetaInfo.isMultiCompany()) {
 						multiCompanyBatchEngineUnits.add(batchEngineUnit);
 					}
 					else {

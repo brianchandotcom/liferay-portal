@@ -3681,11 +3681,11 @@ definition {
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "Anyone");
-
-			PageEditor.publish();
 		}
 
 		task ("Add content to both experiences") {
+			PageEditor.changeExperience(newExperience = "Default");
+
 			AssetPublisherPortlet.configureManualAssetSelectionPG(
 				assetTitle = "WC Title 1",
 				assetType = "Basic Web Content");
@@ -3704,9 +3704,7 @@ definition {
 		}
 
 		task ("Check if the content is present only in the New Experience") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Experience Content Page",
-				siteName = "Test Site Name");
+			ContentPages.gotoPageEditor();
 
 			AssertTextEquals(
 				key_assetTitle = "WC Title 1",

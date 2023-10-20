@@ -86,10 +86,10 @@
 </#if>
 
 <#if themeDisplay?has_content>
-	<#assign scopeGroupId = themeDisplay.getScopeGroupId()/> 
+	<#assign scopeGroupId = themeDisplay.getScopeGroupId() />
 </#if>
 
-<#assign channel= restClient.get("/headless-commerce-delivery-catalog/v1.0/channels?accountId=-1&filter=name eq 'Marketplace Channel' and siteGroupId eq '${scopeGroupId}' ") />
+<#assign channel = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels?accountId=-1&filter=name eq 'Marketplace Channel' and siteGroupId eq '${scopeGroupId}'") />
 
 <#if channel?has_content>
 	<#assign channelId = channel.items[0].id />
@@ -113,7 +113,7 @@
 					<#else>
 						<#assign productName = "" />
 					</#if>
-						
+
 					<#if product.description?has_content>
 						<#assign productDescription = stringUtil.shorten(htmlUtil.stripHtml(product.description!""), 150, "...") />
 					<#else>
@@ -121,8 +121,9 @@
 					</#if>
 
 					<#if product.urlImage?has_content>
-						<#assign productThumbnail = product.urlImage />
-						<#assign productImageParts = productThumbnail?split("/o/") />	
+						<#assign
+							productThumbnail = product.urlImage?split("/o/")
+						/>
 					<#else>
 						<#assign productThumbnail = "" />
 					</#if>
@@ -138,7 +139,7 @@
 							<img
 								alt=${productName}
 								class="solution-search-image rounded"
-								src="/o/${productImageParts[1]}"
+								src="/o/${productThumbnail[1]}"
 							/>
 						</div>
 

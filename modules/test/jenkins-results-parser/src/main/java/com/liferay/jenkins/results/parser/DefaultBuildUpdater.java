@@ -7,6 +7,8 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.IOException;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import org.json.JSONArray;
@@ -33,12 +35,7 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 			build.setJenkinsMaster(jenkinsMaster);
 		}
 
-		JSONObject jsonObject = JenkinsResultsParserUtil.invokeJenkinsBuild(
-			jenkinsMaster, build.getJobName(), build.getParameters());
-
-		build.addInvocation(
-			new Build.Invocation(
-				build, jenkinsMaster, jsonObject.getLong("queueId")));
+		build.addInvocation(_invoke(jenkinsMaster));
 	}
 
 	@Override
@@ -54,12 +51,7 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 
 		build.setJenkinsMaster(jenkinsMaster);
 
-		JSONObject jsonObject = JenkinsResultsParserUtil.invokeJenkinsBuild(
-			jenkinsMaster, build.getJobName(), build.getParameters());
-
-		build.addInvocation(
-			new Build.Invocation(
-				build, jenkinsMaster, jsonObject.getLong("queueId")));
+		build.addInvocation(_invoke(jenkinsMaster));
 	}
 
 	protected DefaultBuildUpdater(Build build) {
@@ -115,6 +107,12 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 				return false;
 			}
 
+			Build build = getBuild();
+
+			Build.Invocation buildInvocation = build.getCurrentInvocation();
+
+			buildInvocation.setQueueId(queueItemJSONObject.getLong("id"));
+
 			return true;
 		}
 		catch (Exception exception) {
@@ -140,6 +138,11 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 
 			build.setBuildURL(runningBuildJSONObject.getString("url"));
 
+			Build.Invocation buildInvocation = build.getCurrentInvocation();
+
+			buildInvocation.setQueueId(
+				runningBuildJSONObject.getLong("queueId"));
+
 			return true;
 		}
 		catch (Exception exception) {
@@ -155,6 +158,47 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 		return false;
 	}
 
+	private Map<String, String> _getBuildParameters(JSONObject jsonObject) {
+		Map<String, String> buildParameters = new HashMap<>();
+
+		if (!jsonObject.has("actions")) {
+			return buildParameters;
+		}
+
+		JSONArray actionsJSONArray = jsonObject.getJSONArray("actions");
+
+		if (actionsJSONArray.length() <= 0) {
+			return buildParameters;
+		}
+
+		JSONArray parametersJSONArray = null;
+
+		for (int i = 0; i < actionsJSONArray.length(); i++) {
+			JSONObject actionJSONObject = actionsJSONArray.getJSONObject(i);
+
+			if (!actionJSONObject.has("parameters")) {
+				continue;
+			}
+
+			parametersJSONArray = actionJSONObject.getJSONArray("parameters");
+		}
+
+		if ((parametersJSONArray == null) || parametersJSONArray.isEmpty()) {
+			return buildParameters;
+		}
+
+		for (int i = 0; i < parametersJSONArray.length(); i++) {
+			JSONObject parameterJSONObject = parametersJSONArray.getJSONObject(
+				i);
+
+			buildParameters.put(
+				parameterJSONObject.getString("name"),
+				parameterJSONObject.getString("value"));
+		}
+
+		return buildParameters;
+	}
+
 	private JSONObject _getQueueItemJSONObject() {
 		try {
 			Build build = getBuild();
@@ -167,8 +211,8 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 
 			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
 				JenkinsResultsParserUtil.combine(
-					String.valueOf(jenkinsMaster.getURL()),
-					"/queue/api/json?tree=items[id]"),
+					String.valueOf(jenkinsMaster.getURL()), "/queue/api/json?",
+					"tree=items[actions[parameters[name,value]],id,task[url]]"),
 				false);
 
 			JSONArray queueItemsJSONArray = jsonObject.getJSONArray("items");
@@ -177,15 +221,38 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 				return null;
 			}
 
+			String jenkinsJobName = build.getJobName();
+
 			Build.Invocation currentInvocation = build.getCurrentInvocation();
+
+			long currentQueueId = currentInvocation.getQueueId();
 
 			for (int i = 0; i < queueItemsJSONArray.length(); i++) {
 				JSONObject queueItemJSONObject =
 					queueItemsJSONArray.getJSONObject(i);
 
-				if (Objects.equals(
-						queueItemJSONObject.getLong("id"),
-						currentInvocation.getQueueId())) {
+				if (currentQueueId > 0) {
+					if (Objects.equals(
+							queueItemJSONObject.getLong("id"),
+							currentQueueId)) {
+
+						return queueItemJSONObject;
+					}
+
+					continue;
+				}
+
+				JSONObject taskJSONObject = queueItemJSONObject.getJSONObject(
+					"task");
+
+				String taskURL = taskJSONObject.getString("url");
+
+				if (!taskURL.contains("/job/" + jenkinsJobName)) {
+					continue;
+				}
+
+				if (_matchesBuildParameters(
+						_getBuildParameters(queueItemJSONObject))) {
 
 					return queueItemJSONObject;
 				}
@@ -203,6 +270,8 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 
 		Build.Invocation currentInvocation = build.getCurrentInvocation();
 
+		long currentQueueId = currentInvocation.getQueueId();
+
 		int page = 0;
 
 		while (true) {
@@ -216,9 +285,19 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 				JSONObject runningBuildJSONObject =
 					runningBuildsJSONArray.getJSONObject(i);
 
-				if (Objects.equals(
-						runningBuildJSONObject.getLong("queueId"),
-						currentInvocation.getQueueId())) {
+				if (currentQueueId > 0) {
+					if (Objects.equals(
+							runningBuildJSONObject.getLong("queueId"),
+							currentQueueId)) {
+
+						return runningBuildJSONObject;
+					}
+
+					continue;
+				}
+
+				if (_matchesBuildParameters(
+						_getBuildParameters(runningBuildJSONObject))) {
 
 					return runningBuildJSONObject;
 				}
@@ -243,8 +322,8 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 				String url = JenkinsResultsParserUtil.getLocalURL(
 					JenkinsResultsParserUtil.combine(
 						String.valueOf(jenkinsMaster.getURL()), "/job/",
-						build.getJobName(),
-						"/api/json?tree=allBuilds[queueId,url]{",
+						build.getJobName(), "/api/json?tree=allBuilds[",
+						"actions[parameters[name,value]],queueId,url]{",
 						String.valueOf(page * 100), ",",
 						String.valueOf((page + 1) * 100), "}"));
 
@@ -264,6 +343,59 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 		return retryable.executeWithRetries();
 	}
 
+	private Build.Invocation _invoke(JenkinsMaster jenkinsMaster) {
+		Build build = getBuild();
+
+		try {
+			JSONObject jsonObject = JenkinsResultsParserUtil.invokeJenkinsBuild(
+				jenkinsMaster, build.getJobName(), build.getParameters());
+
+			return new Build.Invocation(
+				build, jenkinsMaster, jsonObject.getLong("queueId"));
+		}
+		catch (Exception exception) {
+			System.out.println(
+				"WARNING: Unable to invoke jenkins using groovy");
+
+			try {
+				StringBuilder sb = new StringBuilder();
+
+				sb.append(jenkinsMaster.getURL());
+				sb.append("job/");
+				sb.append(build.getJobName());
+				sb.append("/buildWithParameters?token=");
+				sb.append(
+					JenkinsResultsParserUtil.getBuildProperty(
+						"jenkins.authentication.token"));
+
+				Map<String, String> buildParameters = new HashMap<>(
+					build.getParameters());
+
+				for (Map.Entry<String, String> buildParameter :
+						buildParameters.entrySet()) {
+
+					String buildParameterName = buildParameter.getKey();
+
+					if (!buildParameterName.matches("[A-Z0-9_]+")) {
+						continue;
+					}
+
+					sb.append("&");
+					sb.append(buildParameterName);
+					sb.append("=");
+					sb.append(buildParameter.getValue());
+				}
+
+				JenkinsResultsParserUtil.toString(sb.toString());
+
+				return new Build.Invocation(build, jenkinsMaster);
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+		}
+	}
+
 	private boolean _isBuildCompleted(Build build) {
 		JSONObject buildJSONObject = build.getBuildJSONObject(
 			"duration,result");
@@ -276,6 +408,29 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 		String result = buildJSONObject.optString("result");
 
 		if ((duration == 0) || JenkinsResultsParserUtil.isNullOrEmpty(result)) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private boolean _matchesBuildParameters(
+		Map<String, String> buildParameters) {
+
+		Build build = getBuild();
+
+		for (Map.Entry<String, String> buildParameter :
+				buildParameters.entrySet()) {
+
+			String parameterValue = build.getParameterValue(
+				buildParameter.getKey());
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(parameterValue) ||
+				Objects.equals(buildParameter.getValue(), parameterValue)) {
+
+				continue;
+			}
+
 			return false;
 		}
 

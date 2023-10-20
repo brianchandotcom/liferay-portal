@@ -239,6 +239,11 @@ public interface Build {
 
 	public class Invocation {
 
+		public Invocation(Build build, JenkinsMaster jenkinsMaster) {
+			_build = build;
+			_jenkinsMaster = jenkinsMaster;
+		}
+
 		public Invocation(
 			Build build, JenkinsMaster jenkinsMaster, long queueId) {
 
@@ -270,10 +275,14 @@ public interface Build {
 			_buildURL = buildURL;
 		}
 
+		public void setQueueId(long queueId) {
+			_queueId = queueId;
+		}
+
 		private final Build _build;
 		private String _buildURL;
 		private final JenkinsMaster _jenkinsMaster;
-		private final long _queueId;
+		private long _queueId;
 
 	}
 

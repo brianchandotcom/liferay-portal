@@ -98,16 +98,14 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 	protected void runReporting() {
 		_build.setStatus("reporting");
 
-		if (!isBuildCompleted()) {
-			return;
-		}
+		if (isBuildCompleted()) {
+			_isApplySlaveOfflineRules();
 
-		_isApplySlaveOfflineRules();
+			if (_isApplyReinvokeRules()) {
+				_build.setStatus("queued");
 
-		if (_isApplyReinvokeRules()) {
-			_build.setStatus("queued");
-
-			return;
+				return;
+			}
 		}
 
 		runCompleted();

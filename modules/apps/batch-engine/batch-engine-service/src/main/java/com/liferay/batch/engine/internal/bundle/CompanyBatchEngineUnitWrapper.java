@@ -7,6 +7,7 @@ package com.liferay.batch.engine.internal.bundle;
 
 import com.liferay.batch.engine.unit.BatchEngineUnit;
 import com.liferay.batch.engine.unit.BatchEngineUnitConfiguration;
+import com.liferay.batch.engine.unit.BatchEngineUnitMetaInfo;
 import com.liferay.batch.engine.unit.BundleBatchEngineUnit;
 import com.liferay.portal.kernel.model.Company;
 
@@ -49,6 +50,20 @@ public class CompanyBatchEngineUnitWrapper implements BundleBatchEngineUnit {
 				setVersion(batchEngineUnitConfiguration.getVersion());
 			}
 		};
+	}
+
+	@Override
+	public BatchEngineUnitMetaInfo getBatchEngineUnitMetaInfo()
+		throws IOException {
+
+		BatchEngineUnitMetaInfo batchEngineUnitMetaInfo =
+			_batchEngineUnit.getBatchEngineUnitMetaInfo();
+
+		return new BatchEngineUnitMetaInfo(
+			batchEngineUnitMetaInfo.isAdvanced(), _company.getCompanyId(),
+			batchEngineUnitMetaInfo.getFeatureFlag(),
+			batchEngineUnitMetaInfo.isMultiCompany(),
+			batchEngineUnitMetaInfo.getPaths());
 	}
 
 	@Override

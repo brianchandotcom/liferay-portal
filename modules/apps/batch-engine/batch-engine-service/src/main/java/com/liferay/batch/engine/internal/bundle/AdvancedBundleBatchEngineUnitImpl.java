@@ -7,6 +7,7 @@ package com.liferay.batch.engine.internal.bundle;
 
 import com.liferay.batch.engine.internal.json.AdvancedJSONReader;
 import com.liferay.batch.engine.unit.BatchEngineUnitConfiguration;
+import com.liferay.batch.engine.unit.BatchEngineUnitMetaInfo;
 import com.liferay.batch.engine.unit.BundleBatchEngineUnit;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -43,6 +44,11 @@ public class AdvancedBundleBatchEngineUnitImpl
 			return advancedJSONReader.getObject(
 				"configuration", BatchEngineUnitConfiguration.class);
 		}
+	}
+
+	@Override
+	public BatchEngineUnitMetaInfo getBatchEngineUnitMetaInfo() {
+		return _batchEngineUnitMetaInfo;
 	}
 
 	@Override
@@ -102,9 +108,16 @@ public class AdvancedBundleBatchEngineUnitImpl
 		return false;
 	}
 
+	public void setBatchEngineUnitMetaInfo(
+		BatchEngineUnitMetaInfo batchEngineUnitMetaInfo) {
+
+		_batchEngineUnitMetaInfo = batchEngineUnitMetaInfo;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		AdvancedBundleBatchEngineUnitImpl.class);
 
+	private BatchEngineUnitMetaInfo _batchEngineUnitMetaInfo;
 	private final Bundle _bundle;
 	private final URL _url;
 

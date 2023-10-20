@@ -15,6 +15,7 @@ import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.batch.engine.unit.BatchEngineUnit;
 import com.liferay.batch.engine.unit.BatchEngineUnitConfiguration;
+import com.liferay.batch.engine.unit.BatchEngineUnitMetaInfo;
 import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
 import com.liferay.batch.engine.unit.BatchEngineUnitThreadLocal;
 import com.liferay.batch.engine.unit.BundleBatchEngineUnit;
@@ -40,13 +41,11 @@ import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegateA
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -75,17 +74,15 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 
 		for (BatchEngineUnit batchEngineUnit : batchEngineUnits) {
 			try {
-				BatchEngineUnitConfiguration batchEngineUnitConfiguration =
-					batchEngineUnit.getBatchEngineUnitConfiguration();
+				BatchEngineUnitMetaInfo batchEngineUnitMetaInfo =
+					batchEngineUnit.getBatchEngineUnitMetaInfo();
 
-				String featureFlagKey = _getFeatureFlagKey(
-					batchEngineUnitConfiguration);
+				String featureFlag = batchEngineUnitMetaInfo.getFeatureFlag();
 
-				if (_isFeatureFlagDisabled(featureFlagKey)) {
+				if (_isFeatureFlagDisabled(featureFlag)) {
 					_featureFlagBatchEngineUnitProcessor.
 						registerBatchEngineUnit(
-							batchEngineUnitConfiguration.getCompanyId(),
-							featureFlagKey,
+							batchEngineUnitMetaInfo.getCompanyId(), featureFlag,
 							() -> _processBatchEngineUnit(batchEngineUnit));
 
 					continue;
@@ -248,19 +245,6 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 			(BundleBatchEngineUnit)batchEngineUnit;
 
 		return bundleBatchEngineUnit.getBundle();
-	}
-
-	private String _getFeatureFlagKey(
-		BatchEngineUnitConfiguration batchEngineUnitConfiguration) {
-
-		Map<String, Serializable> parameters =
-			batchEngineUnitConfiguration.getParameters();
-
-		if (parameters == null) {
-			return null;
-		}
-
-		return (String)parameters.get("featureFlag");
 	}
 
 	private String _getObjectEntryClassName(

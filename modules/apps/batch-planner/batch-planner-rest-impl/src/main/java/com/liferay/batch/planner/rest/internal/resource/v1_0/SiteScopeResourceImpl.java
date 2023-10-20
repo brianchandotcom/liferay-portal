@@ -8,6 +8,8 @@ package com.liferay.batch.planner.rest.internal.resource.v1_0;
 import com.liferay.batch.planner.rest.dto.v1_0.SiteScope;
 import com.liferay.batch.planner.rest.internal.vulcan.yaml.openapi.OpenAPIYAMLProvider;
 import com.liferay.batch.planner.rest.resource.v1_0.SiteScopeResource;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -20,6 +22,7 @@ import com.liferay.portal.vulcan.util.OpenAPIUtil;
 import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -41,6 +44,15 @@ public class SiteScopeResourceImpl extends BaseSiteScopeResourceImpl {
 			String internalClassNameKey, Boolean export)
 		throws Exception {
 
+		int index = internalClassNameKey.indexOf(StringPool.POUND);
+
+		if (index > 0) {
+			return Page.of(
+				_getSiteScopes(
+					_getObjectScope(
+						internalClassNameKey.substring(index + 1))));
+		}
+
 		List<String> entityScopes = null;
 
 		OpenAPIYAML openAPIYAML = _openAPIYAMLProvider.getOpenAPIYAML(
@@ -59,6 +71,14 @@ public class SiteScopeResourceImpl extends BaseSiteScopeResourceImpl {
 		}
 
 		return Page.of(_getSiteScopes(entityScopes));
+	}
+
+	private List<String> _getObjectScope(String name) {
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				contextCompany.getCompanyId(), name);
+
+		return Collections.singletonList(objectDefinition.getScope());
 	}
 
 	private List<SiteScope> _getSiteScopes(List<String> entityScopes)
@@ -95,6 +115,9 @@ public class SiteScopeResourceImpl extends BaseSiteScopeResourceImpl {
 
 	@Reference
 	private GroupService _groupService;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private OpenAPIYAMLProvider _openAPIYAMLProvider;

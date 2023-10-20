@@ -1,0 +1,417 @@
+components:
+    schemas:
+        BaseScim:
+            description:
+                Each SCIM resource (Users, Groups, etc.) includes the following common attributes.
+            properties:
+                externalId:
+                    description:
+                        A String that is an identifier for the resource as defined by the provisioning client.
+                    type: string
+                id:
+                    description:
+                        A unique identifier for a SCIM resource as defined by the service provider.
+                    readOnly: true
+                    type: string
+                meta:
+                    $ref: "#/components/schemas/Meta"
+            type: object
+        Meta:
+            description:
+                A complex attribute containing resource metadata.
+            properties:
+                created:
+                    description:
+                        The "DateTime" that the resource was added to the service provider.
+                    format: date-time
+                    type: string
+                lastModified:
+                    description:
+                        The most recent DateTime that the details of this resource were updated at the service provider.
+                    format: date-time
+                    type: string
+                location:
+                    description:
+                        The URI of the resource being returned.
+                    type: string
+                resourceType:
+                    description:
+                        The name of the resource type of the resource.
+                    type: string
+                version:
+                    description:
+                        The version of the resource being returned.
+                    type: string
+            readOnly: true
+            type: object
+        MultiValuedAttribute:
+            description:
+                Multi-valued attributes contain a list of elements using the JSON array format.
+            properties:
+                $ref:
+                    description:
+                        The reference URI of a target resource, if the attribute is a reference.
+                    type: string
+                display:
+                    description:
+                        A human-readable name, primarily used for display purposes and having a mutability of
+                        "immutable".
+                    type: string
+                primary:
+                    description:
+                        Boolean value indicating the 'primary' or preferred attribute value for this attribute, e.g.,
+                        the preferred mailing address or the primary email address.
+                    type: boolean
+                type:
+                    description:
+                        A label indicating the attribute's function, e.g., "work" or "home".
+                    type: string
+                value:
+                    description:
+                        The attribute's significant value, e.g., email address, phone number.
+                    type: string
+            type: object
+        QueryAttributes:
+            properties:
+                attributes:
+                    description:
+                        A multi-valued list of strings indicating the names of resource attributes to return in the
+                        response, overriding the set of attributes that would be returned by default.
+                    items:
+                        type: string
+                    type: array
+                count:
+                    description:
+                        An integer indicating the desired maximum number of query results per page.
+                    type: integer
+                excludedAttributes:
+                    description:
+                        A multi-valued list of strings indicating the names of resource attributes to be removed from
+                        the default set of attributes to return.
+                    items:
+                        type: string
+                    type: array
+                filter:
+                    description:
+                        The filter string used to request a subset of resources.
+                    type: string
+                sortBy:
+                    description:
+                        A string indicating the attribute whose value SHALL be used to order the returned responses.
+                    type: string
+                sortOrder:
+                    description:
+                        A string indicating the order in which the "sortBy" parameter is applied.
+                    type: string
+                startIndex:
+                    description:
+                        An integer indicating the 1-based index of the first query result.
+                    type: integer
+            type: object
+        QueryResponse:
+            properties:
+                Resources:
+                    description:
+                        A multi-valued list of complex objects containing the requested resources.
+                    oneOf:
+                        - $ref: "#/components/schemas/User"
+                    type: object
+                itemsPerPage:
+                    description:
+                        The number of resources returned in a list response page.
+                    type: integer
+                startIndex:
+                    description:
+                        The 1-based index of the first result in the current set of list results.
+                    type: integer
+                totalResults:
+                    description:
+                        The total number of results returned by the list or query operation.
+                    type: integer
+            type: object
+        User:
+            allOf:
+                - $ref: "#/components/schemas/BaseScim"
+                - properties:
+                      active:
+                          description:
+                              A Boolean value indicating the user's administrative status.
+                          type: boolean
+                      addresses:
+                          description:
+                              A physical mailing address for this user.
+                          items:
+                              allOf:
+                                  - $ref: "#/components/schemas/MultiValuedAttribute"
+                                  - properties:
+                                        country:
+                                            description:
+                                                The country name component.
+                                            type: string
+                                        formatted:
+                                            description:
+                                                The full mailing address, formatted for display or use with a mailing
+                                                label.
+                                            type: string
+                                        locality:
+                                            description:
+                                                The city or locality component.
+                                            type: string
+                                        postalCode:
+                                            description:
+                                                The zip code or postal code component.
+                                            type: string
+                                        region:
+                                            description:
+                                                The state or region component.
+                                            type: string
+                                        streetAddress:
+                                            description:
+                                                The full street address component, which may include house number,
+                                                street name, P.O. box, and multi-line extended street address
+                                                information.
+                                            type: string
+                                    type: object
+                              type: object
+                          type: array
+                      displayName:
+                          description:
+                              The name of the user, suitable for display to end-users.
+                          type: string
+                      emails:
+                          description:
+                              Email addresses for the User.
+                          items:
+                              $ref: "#/components/schemas/MultiValuedAttribute"
+                          type: array
+                      entitlements:
+                          description:
+                              A list of entitlements for the user that represent a thing the user has.
+                          items:
+                              $ref: "#/components/schemas/MultiValuedAttribute"
+                          type: array
+                      groups:
+                          description:
+                              A list of groups to which the user belongs, either through direct membership, through
+                              nested groups, or dynamically calculated.
+                          items:
+                              $ref: "#/components/schemas/MultiValuedAttribute"
+                          type: array
+                      ims:
+                          description:
+                              Instant messaging address for the user.
+                          items:
+                              $ref: "#/components/schemas/MultiValuedAttribute"
+                          type: array
+                      locale:
+                          description:
+                              Used to indicate the User's default location for purposes of localizing such items as
+                              currency, date time format, or numerical representations.
+                          type: string
+                      name:
+                          description:
+                              The components of the user's name.
+                          properties:
+                              familyName:
+                                  type: string
+                              formatted:
+                                  type: string
+                              givenName:
+                                  type: string
+                              honorificPrefix:
+                                  type: string
+                              honorificSuffix:
+                                  type: string
+                              middleName:
+                                  type: string
+                          type: object
+                      nickName:
+                          description:
+                              The casual way to address the user in real life, e.g., "Bob" or "Bobby" instead of
+                              "Robert".
+                          type: string
+                      password:
+                          description:
+                              This attribute is intended to be used as a means to set, replace, or compare (i.e., filter
+                              for equality) a password.
+                          type: string
+                          writeOnly: true
+                      phoneNumbers:
+                          description:
+                              Phone numbers for the user.
+                          items:
+                              $ref: "#/components/schemas/MultiValuedAttribute"
+                          type: array
+                      photos:
+                          description:
+                              A URI that is a uniform resource locator that points to a resource location representing
+                              the user's image.
+                          items:
+                              $ref: "#/components/schemas/MultiValuedAttribute"
+                          type: array
+                      preferredLanguage:
+                          description:
+                              Indicates the user's preferred written or spoken languages and is generally used for
+                              selecting a localized user interface.
+                          type: string
+                      profileUrl:
+                          description:
+                              A URI that is a uniform resource locator and that points to a location representing the
+                              user's online profile (e.g., a web page).
+                          type: string
+                      roles:
+                          description:
+                              A list of roles for the user that collectively represent who the user is, e.g., "Student",
+                              "Faculty".
+                          items:
+                              $ref: "#/components/schemas/MultiValuedAttribute"
+                          type: array
+                      timezone:
+                          description:
+                              The User's time zone, in IANA Time Zone database format, also known as the "Olson" time
+                              zone database format (e.g., "America/Los_Angeles").
+                          type: string
+                      title:
+                          description:
+                              The user's title, such as "Vice President".
+                          type: string
+                      userName:
+                          description:
+                              A service provider's unique identifier for the user, typically used by the user to
+                              directly authenticate to the service provider.
+                          type: string
+                      userType:
+                          description:
+                              Used to identify the relationship between the organization and the user.
+                          type: string
+                      x509Certificates:
+                          description:
+                              A list of certificates associated with the resource (e.g., a User).
+                          items:
+                              $ref: "#/components/schemas/MultiValuedAttribute"
+                          type: array
+                  type: object
+info:
+    description:
+        "Liferay SCIM endpoints"
+    license:
+        name: "Apache 2.0"
+        url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+    title: "System for Cross-domain Identity Management"
+    version: v1.0
+openapi: 3.0.1
+paths:
+    "/v2/Users":
+        get:
+            description:
+                Lists users.
+            operationId: getV2User
+            parameters:
+                - in: query
+                  name: count
+                  schema:
+                      type: integer
+                - in: query
+                  name: startIndex
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/scim+json:
+                            schema:
+                                $ref: "#/components/schemas/QueryResponse"
+                    description:
+                        The list of users.
+        post:
+            description:
+                Creates a user.
+            operationId: postV2User
+            requestBody:
+                content:
+                    application/scim+json:
+                        schema:
+                            $ref: "#/components/schemas/User"
+            responses:
+                201:
+                    content:
+                        application/scim+json:
+                            schema:
+                                $ref: "#/components/schemas/User"
+                    description:
+                        The User was successfully created.
+    "/v2/Users/.search":
+        post:
+            description:
+                Query users.
+            operationId: postV2UserSearch
+            requestBody:
+                content:
+                    application/scim+json:
+                        schema:
+                            $ref: "#/components/schemas/QueryAttributes"
+            responses:
+                200:
+                    content:
+                        application/scim+json:
+                            schema:
+                                $ref: "#/components/schemas/QueryResponse"
+                    description:
+                        List of found users based on query
+    "/v2/Users/{id}":
+        delete:
+            description:
+                Deletes a user.
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    description:
+                        In response to a successful DELETE, the server SHALL return a successful HTTP status code 204
+                        (No Content).
+        get:
+            description:
+                Retrieves a user.
+            operationId: getV2User
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/scim+json:
+                            schema:
+                                $ref: "#/components/schemas/User"
+                    description:
+                        If the resource exists, the server responds with HTTP status code 200 (OK) and includes the
+                        result in the body of the response.
+        put:
+            description:
+                Updates a user.
+            operationId: putV2User
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/scim+json:
+                        schema:
+                            $ref: "#/components/schemas/User"
+            responses:
+                200:
+                    content:
+                        application/scim+json:
+                            schema:
+                                $ref: "#/components/schemas/User"
+                    description:
+                        The User was successfully updated.

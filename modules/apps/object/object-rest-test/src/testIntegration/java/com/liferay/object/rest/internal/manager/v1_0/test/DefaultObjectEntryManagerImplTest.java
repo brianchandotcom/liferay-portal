@@ -1379,7 +1379,8 @@ public class DefaultObjectEntryManagerImplTest
 
 		AccountEntry accountEntry1 = _addAccountEntry();
 
-		Tree objectEntriesTree = _createObjectEntryTree(accountEntry1);
+		Tree objectEntriesTree = _createObjectEntryTree(
+			accountEntry1, StringPool.BLANK);
 
 		_addResourcePermission(
 			_rootObjectDefinition, ActionKeys.VIEW, _buyerRole);
@@ -2006,11 +2007,11 @@ public class DefaultObjectEntryManagerImplTest
 
 		AccountEntry accountEntry1 = _addAccountEntry();
 
-		_createObjectEntryTree(accountEntry1);
+		_createObjectEntryTree(accountEntry1, "1");
 
 		AccountEntry accountEntry2 = _addAccountEntry();
 
-		_createObjectEntryTree(accountEntry2);
+		_createObjectEntryTree(accountEntry2, "2");
 
 		_user = _addUser();
 
@@ -3517,11 +3518,13 @@ public class DefaultObjectEntryManagerImplTest
 			adminUser.getUserId(), objectDefinition.getObjectDefinitionId());
 	}
 
-	private Tree _createObjectEntryTree(AccountEntry accountEntry)
+	private Tree _createObjectEntryTree(
+			AccountEntry accountEntry, String externalReferenceCodeSuffix)
 		throws Exception {
 
 		Tree tree = TreeTestUtil.createObjectEntryTree(
-			StringPool.BLANK, _objectEntryLocalService, objectFieldLocalService,
+			externalReferenceCodeSuffix, _objectEntryLocalService,
+			objectFieldLocalService,
 			_rootObjectDefinition.getObjectDefinitionId(),
 			_objectRelationshipLocalService, _treeFactory);
 

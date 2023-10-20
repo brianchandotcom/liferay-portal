@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en_US": "Ticket Attachment"
+	},
+	"name": "accountEntryToTicketAttachment",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:AccountEntry$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:TicketAttachment$]",
+	"objectDefinitionName2": "TicketAttachment",
+	"type": "oneToMany"
+}

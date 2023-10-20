@@ -1,0 +1,84 @@
+{
+	"label": {
+		"en-US": "Ticket Attachment"
+	},
+	"name": "TicketAttachment",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Account Key"
+			},
+			"name": "accountKey",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Zendesk Ticket"
+			},
+			"name": "zendeskTicketId",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Storage Provider"
+			},
+			"name": "storageProvider",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Storage Bucket"
+			},
+			"name": "storageBucket",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "File Name"
+			},
+			"name": "fileName",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "File Size"
+			},
+			"name": "fileSize",
+			"required": true
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Type"
+			},
+			"name": "type",
+			"required": true
+		}
+	],
+	"panelCategoryKey": "control_panel.object",
+	"pluralLabel": {
+		"en_US": "Ticket Attachments"
+	},
+	"scope": "company",
+	"system": false
+}

@@ -36,9 +36,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionConfig;
-import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.io.InputStream;
@@ -154,24 +151,16 @@ public class BatchEngineImportTaskExecutorImpl
 			List<Object> items, int processedItemsCount)
 		throws Throwable {
 
-		TransactionInvokerUtil.invoke(
-			_transactionConfig,
-			() -> {
-				batchEngineTaskItemDelegateExecutor.saveItems(
-					_batchEngineImportStrategyFactory.create(
-						batchEngineImportTask),
-					BatchEngineTaskOperation.valueOf(
-						batchEngineImportTask.getOperation()),
-					items);
+		batchEngineTaskItemDelegateExecutor.saveItems(
+			_batchEngineImportStrategyFactory.create(batchEngineImportTask),
+			BatchEngineTaskOperation.valueOf(
+				batchEngineImportTask.getOperation()),
+			items);
 
-				batchEngineImportTask.setProcessedItemsCount(
-					processedItemsCount);
+		batchEngineImportTask.setProcessedItemsCount(processedItemsCount);
 
-				_batchEngineImportTaskLocalService.updateBatchEngineImportTask(
-					batchEngineImportTask);
-
-				return null;
-			});
+		_batchEngineImportTaskLocalService.updateBatchEngineImportTask(
+			batchEngineImportTask);
 	}
 
 	private BatchEngineImportTaskItemReader _getBatchEngineImportTaskItemReader(
@@ -376,10 +365,6 @@ public class BatchEngineImportTaskExecutorImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BatchEngineImportTaskExecutorImpl.class);
-
-	private static final TransactionConfig _transactionConfig =
-		TransactionConfig.Factory.create(
-			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
 
 	@Reference
 	private BatchEngineImportStrategyFactory _batchEngineImportStrategyFactory;

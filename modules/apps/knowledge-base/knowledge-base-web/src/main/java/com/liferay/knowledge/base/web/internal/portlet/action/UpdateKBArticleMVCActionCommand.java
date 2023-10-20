@@ -178,7 +178,7 @@ public class UpdateKBArticleMVCActionCommand
 						_portal.getHttpServletRequest(actionRequest),
 						"x-will-be-published-on-x",
 						new Object[] {
-							"<strong>`" + HtmlUtil.escapeURL(title) +
+							"<strong>`" + HtmlUtil.escape(title) +
 								"`</strong>",
 							dateTimeFormat.format(displayDate)
 						}));

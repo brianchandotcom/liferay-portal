@@ -38,7 +38,7 @@ public class DLFileEntryConfigurationUpgradeProcess extends UpgradeProcess {
 
 		_updateScopedConfigurations(systemPreviewableProcessorMaxSize);
 
-		_deleteConfigurations(_CLASS_NAME_PDFPREVIEW_CONFIGURATION);
+		_deleteConfigurations(_CLASS_NAME_PDF_PREVIEW_CONFIGURATION);
 	}
 
 	private HashMapDictionary<String, Object> _createDictionary(
@@ -119,7 +119,7 @@ public class DLFileEntryConfigurationUpgradeProcess extends UpgradeProcess {
 		throws Exception {
 
 		Configuration[] configurations = _getScopedConfigurations(
-			_CLASS_NAME_PDFPREVIEW_CONFIGURATION);
+			_CLASS_NAME_PDF_PREVIEW_CONFIGURATION);
 
 		for (Configuration configuration : configurations) {
 			Dictionary<String, Object> dictionary = _createDictionary(
@@ -157,9 +157,9 @@ public class DLFileEntryConfigurationUpgradeProcess extends UpgradeProcess {
 
 	private long _updateSystemConfiguration() throws Exception {
 		Configuration dlFileEntryConfiguration = _getSystemConfiguration(
-			_CLASS_NAME_DLFILE_ENTRY_CONFIGURATION);
+			_CLASS_NAME_DL_FILE_ENTRY_CONFIGURATION);
 		Configuration pdfPreviewConfiguration = _getSystemConfiguration(
-			_CLASS_NAME_PDFPREVIEW_CONFIGURATION);
+			_CLASS_NAME_PDF_PREVIEW_CONFIGURATION);
 
 		if ((dlFileEntryConfiguration != null) ||
 			(pdfPreviewConfiguration != null)) {
@@ -185,10 +185,10 @@ public class DLFileEntryConfigurationUpgradeProcess extends UpgradeProcess {
 			PREVIEWABLE_PROCESSOR_MAX_SIZE_DEFAULT;
 	}
 
-	private static final String _CLASS_NAME_DLFILE_ENTRY_CONFIGURATION =
+	private static final String _CLASS_NAME_DL_FILE_ENTRY_CONFIGURATION =
 		"com.liferay.document.library.configuration.DLFileEntryConfiguration";
 
-	private static final String _CLASS_NAME_PDFPREVIEW_CONFIGURATION =
+	private static final String _CLASS_NAME_PDF_PREVIEW_CONFIGURATION =
 		"com.liferay.document.library.preview.pdf.internal.configuration." +
 			"PDFPreviewConfiguration";
 

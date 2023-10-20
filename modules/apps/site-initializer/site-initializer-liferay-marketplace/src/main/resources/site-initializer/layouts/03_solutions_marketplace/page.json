@@ -3,9 +3,9 @@
 	"fragmentCompositionDefinitionPath": "page-definition.json",
 	"friendlyURL": "/solutions-marketplace",
 	"hidden": false,
-	"name": "Solutions Marketplace",
+	"name": "Solutions",
 	"name_i18n": {
-		"en_US": "Solutions Marketplace"
+		"en_US": "Solutions"
 	},
 	"private": false,
 	"system": false,

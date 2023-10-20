@@ -3,9 +3,9 @@
 	"fragmentCompositionDefinitionPath": "page-definition.json",
 	"friendlyURL": "/home",
 	"hidden": false,
-	"name": "App Marketplace",
+	"name": "Applications",
 	"name_i18n": {
-		"en_US": "App Marketplace"
+		"en_US": "Applications"
 	},
 	"private": false,
 	"system": false,

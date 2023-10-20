@@ -44,7 +44,7 @@
 			<#elseif entries?has_content && !stringUtil.equals(curTitle, "Liferay") && !stringUtil.equals(curTitle, "Marketplace")>
 				<div class="color-neutral-3">&nbsp;/&nbsp;</div>
 
-				<#if curTitle == "Solutions Marketplace">
+				<#if stringUtil.equals(curTitle, "Solutions")>
 					<a class="color-neutral-3" href="/solutions">
 				<#else>
 					<a class="color-neutral-3" href="${curURL}">

@@ -3,9 +3,9 @@
 	"fragmentCompositionDefinitionPath": "page-definition.json",
 	"friendlyURL": "/customer-dashboard",
 	"hidden": false,
-	"name": "Customer Dashboard",
+	"name": "Customer",
 	"name_i18n": {
-		"en_US": "Customer Dashboard"
+		"en_US": "Customer"
 	},
 	"private": false,
 	"system": false,

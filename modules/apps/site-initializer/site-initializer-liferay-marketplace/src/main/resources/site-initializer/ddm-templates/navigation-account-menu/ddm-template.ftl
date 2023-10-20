@@ -7,11 +7,6 @@
 </#function>
 
 <style>
-	.account-menu-item {
-		border-radius: 4px;
-		width: 100%;
-	}
-
 	.account-menu-item-text {
 		color: var(--color-neutral-10);
 	}

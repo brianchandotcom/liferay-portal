@@ -72,6 +72,12 @@
 	border-radius: 3.5rem;
 }
 
+.account .account-info .signed-out-account .create-account-icon>svg,
+.account .account-info .signed-out-account .sign-in-icon>svg{
+	width:16px; 
+	height:16px
+}
+
 .account .account-dropdown {
 	left: -170px !important;
 }
@@ -110,3 +116,5 @@
 .account .account-dropdown .dropdown-option-text {
 	font-size: 16px;
 }
+
+

@@ -5,7 +5,7 @@
 		],
 		"primKey": "[$EXPANDO_COLUMN_ID:Svg Sprite Map Id$]",
 		"resourceName": "com.liferay.expando.kernel.model.ExpandoColumn",
-		"roleName": "Guest",
+		"roleName": "Test Role 2",
 		"scope": "4"
 	},
 	{

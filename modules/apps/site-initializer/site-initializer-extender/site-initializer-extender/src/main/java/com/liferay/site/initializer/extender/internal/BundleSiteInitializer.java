@@ -37,7 +37,6 @@ import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
-import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.fragment.importer.FragmentsImportStrategy;
@@ -264,7 +263,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		LayoutCopyHelper layoutCopyHelper,
 		LayoutLocalService layoutLocalService,
 		LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService,
-		ExpandoColumnLocalService expandoColumnLocalService,
 		LayoutsImporter layoutsImporter,
 		LayoutPageTemplateStructureLocalService
 			layoutPageTemplateStructureLocalService,
@@ -348,7 +346,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_layoutLocalService = layoutLocalService;
 		_layoutPageTemplateEntryLocalService =
 			layoutPageTemplateEntryLocalService;
-		_expandoColumnLocalService = expandoColumnLocalService;
 		_layoutsImporter = layoutsImporter;
 		_layoutPageTemplateStructureLocalService =
 			layoutPageTemplateStructureLocalService;
@@ -3166,19 +3163,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 					layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
 		}
 
-		List<ExpandoColumn> expandoColumns =
-			_expandoColumnLocalService.getExpandoColumns(-1, -1);
-
-		for (ExpandoColumn expandoColumn :
-			expandoColumns) {
-
-			stringUtilReplaceValues.put(
-				"EXPANDO_COLUMN_ID:" +
-				expandoColumn.getName(),
-				String.valueOf(
-					expandoColumn.getColumnId()));
-		}
-
 		JSONArray jsonArray = _jsonFactory.createJSONArray(
 			_replace(json, stringUtilReplaceValues));
 
@@ -5067,9 +5051,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final LayoutLocalService _layoutLocalService;
 	private final LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
-
-	private final ExpandoColumnLocalService
-		_expandoColumnLocalService;
 	private final LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
 	private final LayoutPageTemplateStructureRelLocalService

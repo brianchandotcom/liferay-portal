@@ -2,6 +2,7 @@
 	{
 		"menuItems": [
 			{
+				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM1",
 				"friendlyURL": "/Home",
 				"name": "Home",
 				"privateLayout": false,
@@ -14,6 +15,7 @@
 	{
 		"menuItems": [
 			{
+				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM2",
 				"name": "Liferay.com",
 				"privateLayout": false,
 				"type": "url",
@@ -21,6 +23,7 @@
 				"useNewTab": true
 			},
 			{
+				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM3",
 				"name": "Videos",
 				"privateLayout": false,
 				"type": "url",
@@ -28,6 +31,7 @@
 				"useNewTab": true
 			},
 			{
+				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM4",
 				"name": "Community",
 				"privateLayout": false,
 				"type": "url",
@@ -35,6 +39,7 @@
 				"useNewTab": true
 			},
 			{
+				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM5",
 				"name": "Help Center",
 				"privateLayout": false,
 				"type": "url",
@@ -48,12 +53,14 @@
 	{
 		"menuItems": [
 			{
+				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM6",
 				"name": "Analytics Cloud",
 				"privateLayout": false,
 				"type": "url",
 				"url": "/w/analytics-cloud/index"
 			},
 			{
+				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM7",
 				"name": "Commerce",
 				"privateLayout": false,
 				"searchable": true,
@@ -61,18 +68,21 @@
 				"url": "/w/commerce/index"
 			},
 			{
+				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM8",
 				"name": "DXP",
 				"privateLayout": false,
 				"type": "url",
 				"url": "/w/dxp/index"
 			},
 			{
+				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM9",
 				"name": "Liferay Cloud",
 				"privateLayout": false,
 				"type": "url",
 				"url": "/w/liferay-cloud/index"
 			},
 			{
+				"externalReferenceCode": "LEARNSITENAVIGATIONMENUITEM10",
 				"name": "Reference",
 				"privateLayout": false,
 				"type": "url",

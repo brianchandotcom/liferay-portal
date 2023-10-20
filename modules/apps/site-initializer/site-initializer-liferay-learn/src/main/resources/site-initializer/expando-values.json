@@ -1,0 +1,62 @@
+[
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LEARNSITENAVIGATIONMENUITEM1#]",
+		"columnName": "Menu Item Image Url",
+		"data": "www.google.com"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LEARNSITENAVIGATIONMENUITEM2#]",
+		"columnName": "Svg Sprite Map Id",
+		"data": "lrdc"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LEARNSITENAVIGATIONMENUITEM3#]",
+		"columnName": "Svg Sprite Map Id",
+		"data": "training-icon"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LEARNSITENAVIGATIONMENUITEM4#]",
+		"columnName": "Svg Sprite Map Id",
+		"data": "community-icon"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LEARNSITENAVIGATIONMENUITEM5#]",
+		"columnName": "Svg Sprite Map Id",
+		"data": "help-center-icon"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LEARNSITENAVIGATIONMENUITEM6#]",
+		"columnName": "Svg Sprite Map Id",
+		"data": "analytics-cloud-logo"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LEARNSITENAVIGATIONMENUITEM7#]",
+		"columnName": "Svg Sprite Map Id",
+		"data": "commerce-logo"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LEARNSITENAVIGATIONMENUITEM8#]",
+		"columnName": "Svg Sprite Map Id",
+		"data": "dxp-logo"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LEARNSITENAVIGATIONMENUITEM9#]",
+		"columnName": "Svg Sprite Map Id",
+		"data": "dxp-cloud-logo"
+	},
+	{
+		"className": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
+		"classPk": "[#SITE_NAVIGATION_MENU_ITEM_ID:LEARNSITENAVIGATIONMENUITEM10#]",
+		"columnName": "Svg Sprite Map Id",
+		"data": "other-products-icon"
+	}
+]

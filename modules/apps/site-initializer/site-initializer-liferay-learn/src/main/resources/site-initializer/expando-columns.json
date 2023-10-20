@@ -14,7 +14,7 @@
 		}
 	},
 	{
-		"dataType": 20,
+		"dataType": 15,
 		"modelResource": "com.liferay.site.navigation.model.SiteNavigationMenuItem",
 		"name": "Menu Item Image Url",
 		"properties": {

@@ -1462,13 +1462,23 @@ public class ObjectFieldLocalServiceImpl
 					objectDefinition.getObjectDefinitionId(), name);
 
 		if (objectRelationship != null) {
+			String prefix = "related";
+
 			ObjectDefinition objectDefinition1 =
 				_objectDefinitionPersistence.findByPrimaryKey(
 					objectRelationship.getObjectDefinitionId1());
 
+			if (objectDefinition1.getObjectDefinitionId() ==
+					objectDefinition.getObjectDefinitionId()) {
+
+				prefix = "current";
+			}
+
 			throw new ObjectFieldNameException.
 				MustNotBeEqualToObjectRelationshipName(
-					objectDefinition1.getShortName());
+					StringBundler.concat(
+						prefix, StringPool.SPACE,
+						objectDefinition1.getShortName()));
 		}
 	}
 

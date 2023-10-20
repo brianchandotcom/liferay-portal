@@ -127,7 +127,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 			from = from.substring(0, from.indexOf(CharPool.OPEN_PARENTHESIS));
 		}
 
-		String regex = "\\w+\\.[\\w\\(\\)\\s\\.]*" + from;
+		String regex = "\\w+\\.[\\w\\(\\)\\s\\.]*\\b" + from;
 
 		if (from.contains(StringPool.PERIOD)) {
 			regex = StringUtil.replace(from, CharPool.PERIOD, "\\.\\s*");

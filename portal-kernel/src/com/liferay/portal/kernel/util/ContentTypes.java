@@ -112,6 +112,8 @@ public interface ContentTypes {
 
 	public static final String TEXT_X_JSP = "text/x-jsp";
 
+	public static final String TEXT_XMATLAB = "text/x-matlab";
+
 	public static final String TEXT_XML = "text/xml";
 
 	public static final String TEXT_XML_UTF8 = "text/xml; charset=UTF-8";

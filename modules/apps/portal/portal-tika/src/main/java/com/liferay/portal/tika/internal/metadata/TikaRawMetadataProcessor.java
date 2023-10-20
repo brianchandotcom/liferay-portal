@@ -247,6 +247,18 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 			}
 		}
 
+		if (mimeType.endsWith(ContentTypes.APPLICATION_JAVASCRIPT)) {
+			String contentType = metadata.get(HttpHeaders.CONTENT_TYPE);
+
+			if (contentType.startsWith(ContentTypes.TEXT_XMATLAB)) {
+				metadata.set(
+					HttpHeaders.CONTENT_TYPE,
+					StringUtil.replace(
+						contentType, ContentTypes.TEXT_XMATLAB,
+						ContentTypes.APPLICATION_JAVASCRIPT));
+			}
+		}
+
 		if (_log.isDebugEnabled()) {
 			_log.debug("Extracted metadata: " + metadata);
 		}

@@ -6,11 +6,12 @@
 package com.liferay.layout.locked.layouts.web.internal.scheduler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.configuration.LockedLayoutsGroupConfiguration;
 import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
-import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
@@ -68,6 +69,21 @@ public class UnlockLayoutsSchedulerJobConfigurationTest {
 		_testUnlockLayouts(false, _lock, 0);
 		_testUnlockLayouts(true, _lock, _LOCK_MINUTE_ADDITION + 1);
 		_testUnlockLayouts(true, null, _LOCK_MINUTE_ADDITION - 1);
+	}
+
+	@Test
+	public void testUnlockLayoutWithGroupConfigurationAllowAutomaticUnlockDisabled()
+		throws Exception {
+
+		_configurationProvider.saveGroupConfiguration(
+			LockedLayoutsGroupConfiguration.class, _group.getGroupId(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"allowAutomaticUnlockingProcess", false
+			).put(
+				"timeWithoutAutosave", 1
+			).build());
+
+		_testUnlockLayouts(true, _lock, 1);
 	}
 
 	private Layout _getDraftLayout() throws Exception {
@@ -141,6 +157,9 @@ public class UnlockLayoutsSchedulerJobConfigurationTest {
 
 	private static final int _LOCK_MINUTE_ADDITION = 10;
 
+	@Inject
+	private ConfigurationProvider _configurationProvider;
+
 	@DeleteAfterTestRun
 	private Group _group;
 
@@ -154,9 +173,6 @@ public class UnlockLayoutsSchedulerJobConfigurationTest {
 
 	@Inject
 	private LockLocalService _lockLocalService;
-
-	@Inject
-	private LockManager _lockManager;
 
 	@Inject(
 		filter = "component.name=com.liferay.layout.locked.layouts.web.internal.scheduler.UnlockLayoutsSchedulerJobConfiguration"

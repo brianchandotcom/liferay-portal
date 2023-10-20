@@ -985,6 +985,58 @@ public class Main {
 		).build();
 	}
 
+	private void _loadTaxonomyCategories(
+			Map<String, String> existingTaxonomyCategories,
+			JSONObject jsonObject, String parentTaxonomyCategoryId,
+			long taxonomyVocabularyId)
+		throws Exception {
+
+		if (!jsonObject.has("taxonomyCategories")) {
+			return;
+		}
+
+		JSONArray jsonArray = jsonObject.getJSONArray("taxonomyCategories");
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject taxonomyCategoryJSONObject = jsonArray.getJSONObject(i);
+
+			String name = taxonomyCategoryJSONObject.getString("name");
+
+			if (!existingTaxonomyCategories.containsKey(name)) {
+				TaxonomyCategory taxonomyCategory = new TaxonomyCategory();
+
+				taxonomyCategory.setName(name);
+				taxonomyCategory.setTaxonomyVocabularyId(taxonomyVocabularyId);
+
+				if (parentTaxonomyCategoryId != null) {
+					taxonomyCategory =
+						_taxonomyCategoryResource.
+							postTaxonomyCategoryTaxonomyCategory(
+								parentTaxonomyCategoryId, taxonomyCategory);
+				}
+				else {
+					taxonomyCategory =
+						_taxonomyCategoryResource.
+							postTaxonomyVocabularyTaxonomyCategory(
+								taxonomyCategory.getTaxonomyVocabularyId(),
+								taxonomyCategory);
+				}
+
+				_taxonomyCategoriesJSONObject.put(
+					name, taxonomyCategory.getId());
+			}
+			else {
+				_taxonomyCategoriesJSONObject.put(
+					name, existingTaxonomyCategories.get(name));
+			}
+
+			_loadTaxonomyCategories(
+				existingTaxonomyCategories, taxonomyCategoryJSONObject,
+				_taxonomyCategoriesJSONObject.getString(name),
+				taxonomyVocabularyId);
+		}
+	}
+
 	private void _loadTaxonomyVocabularies() throws Exception {
 		JSONObject taxonomyVocabulariesJSONObject = new JSONObject(
 			FileUtils.readFileToString(
@@ -1056,58 +1108,6 @@ public class Main {
 
 			_loadTaxonomyCategories(
 				existingTaxonomyCategories, taxonomyVocabularyJSONObject, null,
-				taxonomyVocabularyId);
-		}
-	}
-
-	private void _loadTaxonomyCategories(
-			Map<String, String> existingTaxonomyCategories,
-			JSONObject jsonObject, String parentTaxonomyCategoryId,
-			long taxonomyVocabularyId)
-		throws Exception {
-
-		if (!jsonObject.has("taxonomyCategories")) {
-			return;
-		}
-
-		JSONArray jsonArray = jsonObject.getJSONArray("taxonomyCategories");
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject taxonomyCategoryJSONObject = jsonArray.getJSONObject(i);
-
-			String name = taxonomyCategoryJSONObject.getString("name");
-
-			if (!existingTaxonomyCategories.containsKey(name)) {
-				TaxonomyCategory taxonomyCategory = new TaxonomyCategory();
-
-				taxonomyCategory.setName(name);
-				taxonomyCategory.setTaxonomyVocabularyId(taxonomyVocabularyId);
-
-				if (parentTaxonomyCategoryId != null) {
-					taxonomyCategory =
-						_taxonomyCategoryResource.
-							postTaxonomyCategoryTaxonomyCategory(
-								parentTaxonomyCategoryId, taxonomyCategory);
-				}
-				else {
-					taxonomyCategory =
-						_taxonomyCategoryResource.
-							postTaxonomyVocabularyTaxonomyCategory(
-								taxonomyCategory.getTaxonomyVocabularyId(),
-								taxonomyCategory);
-				}
-
-				_taxonomyCategoriesJSONObject.put(
-					name, taxonomyCategory.getId());
-			}
-			else {
-				_taxonomyCategoriesJSONObject.put(
-					name, existingTaxonomyCategories.get(name));
-			}
-
-			_loadTaxonomyCategories(
-				existingTaxonomyCategories, taxonomyCategoryJSONObject,
-				_taxonomyCategoriesJSONObject.getString(name),
 				taxonomyVocabularyId);
 		}
 	}

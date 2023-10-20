@@ -139,12 +139,11 @@ export default function _JournalPortlet({
 		}
 	};
 
-	const handleDDMFormError = ({error}) => {
+	const handleDDMFormError = (event) => {
 		publishingLock.unlock();
-		console.error(error);
 
-		if (error.statusCode) {
-			showAlert(error.message);
+		if (event.error?.statusCode) {
+			showAlert(event.error.message);
 		}
 
 		const workflowActionInput = document.getElementById(

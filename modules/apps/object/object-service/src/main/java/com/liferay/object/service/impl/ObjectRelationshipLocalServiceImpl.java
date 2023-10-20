@@ -226,10 +226,12 @@ public class ObjectRelationshipLocalServiceImpl
 			sb.append(RandomUtil.nextInt(10));
 
 			ObjectRelationship existingObjectRelationship =
-				objectRelationshipPersistence.fetchByDTN_R(sb.toString(), false);
+				objectRelationshipPersistence.fetchByDTN_R(
+					sb.toString(), false);
 
 			if (existingObjectRelationship == null) {
 				dbTableName = sb.toString();
+
 				break;
 			}
 		}

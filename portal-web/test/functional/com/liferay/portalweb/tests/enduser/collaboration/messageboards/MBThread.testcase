@@ -599,9 +599,6 @@ definition {
 	@refactordone
 	test CanViewBBCodeNoXSSWithRemoteServices {
 		property custom.properties = "message.boards.message.formats.default=bbcode";
-		property portal.acceptance = "false";
-		property portal.release = "quarantine";
-		property portal.upstream = "quarantine";
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

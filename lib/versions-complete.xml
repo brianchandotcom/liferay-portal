@@ -317,7 +317,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.commerce.payment.method.paypal.jar!json.jar</file-name>
-				<version>20230618</version>
+				<version>20231013</version>
 				<project-name>JSON in Java</project-name>
 				<project-url>https://github.com/douglascrockford/JSON-java</project-url>
 				<licenses>
@@ -1319,7 +1319,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.frontend.js.loader.modules.extender.jar!json.jar</file-name>
-				<version>20230618</version>
+				<version>20231013</version>
 				<project-name>JSON in Java</project-name>
 				<project-url>https://github.com/douglascrockford/JSON-java</project-url>
 				<licenses>
@@ -2050,7 +2050,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.json.validator.jar!json.jar</file-name>
-				<version>20230618</version>
+				<version>20231013</version>
 				<project-name>JSON in Java</project-name>
 				<project-url>https://github.com/douglascrockford/JSON-java</project-url>
 				<licenses>
@@ -4374,7 +4374,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.workflow.kaleo.service.jar!json.jar</file-name>
-				<version>20230618</version>
+				<version>20231013</version>
 				<project-name>JSON in Java</project-name>
 				<project-url>https://github.com/douglascrockford/JSON-java</project-url>
 				<licenses>
@@ -7091,7 +7091,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/json-java.jar</file-name>
-				<version>20230618</version>
+				<version>20231013</version>
 				<project-name>JSON in Java</project-name>
 				<project-url>https://github.com/douglascrockford/JSON-java</project-url>
 				<licenses>

@@ -110,11 +110,11 @@ public class DefaultMessagingConfigurator implements MessagingConfigurator {
 	}
 
 	protected void registerDestinations() {
-		DestinationFactory destinationFactory =
-			_destinationFactorySnapshot.get();
-
 		for (DestinationConfiguration destinationConfiguration :
 				_destinationConfigurations) {
+
+			DestinationFactory destinationFactory =
+				_destinationFactorySnapshot.get();
 
 			_destinations.add(
 				destinationFactory.createDestination(destinationConfiguration));

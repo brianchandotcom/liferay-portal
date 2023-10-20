@@ -71,9 +71,11 @@ const ReactPortal = React.forwardRef<HTMLElement, IProps>(
 		 * This ensures the portal children are unmounted first.
 		 */
 		Liferay.on('beforeNavigate', () => {
-			ReactDOM.unmountComponentAtNode(
-				content as Element | DocumentFragment
-			);
+			if (content) {
+				ReactDOM.unmountComponentAtNode(
+					content as Element | DocumentFragment
+				);
+			}
 		});
 
 		// eslint-disable-next-line @liferay/portal/no-react-dom-create-portal

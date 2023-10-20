@@ -996,7 +996,8 @@ public class Main {
 			return;
 		}
 
-		Map<String, String> existingTaxonomyVocabularies = new HashMap<>();
+		Map<String, String> existingTaxonomyCategories = new HashMap<>();
+		Map<String, Long> existingTaxonomyVocabularies = new HashMap<>();
 
 		com.liferay.headless.admin.taxonomy.client.pagination.Page
 			<TaxonomyVocabulary> taxonomyVocabulariesPage =
@@ -1010,8 +1011,7 @@ public class Main {
 				taxonomyVocabulariesPage.getItems()) {
 
 			existingTaxonomyVocabularies.put(
-				taxonomyVocabulary.getName(),
-				String.valueOf(taxonomyVocabulary.getId()));
+				taxonomyVocabulary.getName(), taxonomyVocabulary.getId());
 
 			com.liferay.headless.admin.taxonomy.client.pagination.Page
 				<TaxonomyCategory> taxonomyCategoriesPage =
@@ -1025,7 +1025,7 @@ public class Main {
 			for (TaxonomyCategory taxonomyCategory :
 					taxonomyCategoriesPage.getItems()) {
 
-				existingTaxonomyVocabularies.put(
+				existingTaxonomyCategories.put(
 					taxonomyCategory.getName(), taxonomyCategory.getId());
 			}
 		}
@@ -1039,7 +1039,9 @@ public class Main {
 
 			String name = taxonomyVocabularyJSONObject.getString("name");
 
-			if (!existingTaxonomyVocabularies.containsKey(name)) {
+			Long taxonomyVocabularyId = existingTaxonomyVocabularies.get(name);
+
+			if (taxonomyVocabularyId == null) {
 				TaxonomyVocabulary taxonomyVocabulary =
 					new TaxonomyVocabulary();
 
@@ -1049,22 +1051,17 @@ public class Main {
 					_taxonomyVocabularyResource.postSiteTaxonomyVocabulary(
 						_liferaySiteId, taxonomyVocabulary);
 
-				_taxonomyCategoriesJSONObject.put(
-					taxonomyVocabulary.getName(), taxonomyVocabulary.getId());
-			}
-			else {
-				_taxonomyCategoriesJSONObject.put(
-					name, existingTaxonomyVocabularies.get(name));
+				taxonomyVocabularyId = taxonomyVocabulary.getId();
 			}
 
 			_loadTaxonomyCategories(
-				existingTaxonomyVocabularies, taxonomyVocabularyJSONObject, null,
-				_taxonomyCategoriesJSONObject.getLong(name));
+				existingTaxonomyCategories, taxonomyVocabularyJSONObject, null,
+				taxonomyVocabularyId);
 		}
 	}
 
 	private void _loadTaxonomyCategories(
-			Map<String, String> existingTaxonomyVocabularies,
+			Map<String, String> existingTaxonomyCategories,
 			JSONObject jsonObject, String parentTaxonomyCategoryId,
 			long taxonomyVocabularyId)
 		throws Exception {
@@ -1080,7 +1077,7 @@ public class Main {
 
 			String name = taxonomyCategoryJSONObject.getString("name");
 
-			if (!existingTaxonomyVocabularies.containsKey(name)) {
+			if (!existingTaxonomyCategories.containsKey(name)) {
 				TaxonomyCategory taxonomyCategory = new TaxonomyCategory();
 
 				taxonomyCategory.setName(name);
@@ -1105,11 +1102,11 @@ public class Main {
 			}
 			else {
 				_taxonomyCategoriesJSONObject.put(
-					name, existingTaxonomyVocabularies.get(name));
+					name, existingTaxonomyCategories.get(name));
 			}
 
 			_loadTaxonomyCategories(
-				existingTaxonomyVocabularies, taxonomyCategoryJSONObject,
+				existingTaxonomyCategories, taxonomyCategoryJSONObject,
 				_taxonomyCategoriesJSONObject.getString(name),
 				taxonomyVocabularyId);
 		}

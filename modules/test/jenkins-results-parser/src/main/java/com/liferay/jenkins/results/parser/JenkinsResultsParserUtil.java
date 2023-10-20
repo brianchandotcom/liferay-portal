@@ -1745,12 +1745,10 @@ public class JenkinsResultsParserUtil {
 		return System.currentTimeMillis() - _currentTimeMillisDelta;
 	}
 
-	public static String[] getDateStrings(long startTime, long duration) {
-		long durationDays = TimeUnit.MILLISECONDS.toDays(duration);
+	public static String[] getDateStrings(
+		long durationDays, LocalDate localDate) {
 
 		String[] dateStrings = new String[(int)durationDays];
-
-		LocalDate localDate = getLocalDate(startTime);
 
 		for (int i = 0; i < durationDays; i++) {
 			String dateString = localDate.format(
@@ -1762,6 +1760,12 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return dateStrings;
+	}
+
+	public static String[] getDateStrings(long startTime, long duration) {
+		long durationDays = TimeUnit.MILLISECONDS.toDays(duration);
+
+		return getDateStrings(durationDays, getLocalDate(startTime));
 	}
 
 	public static List<File> getDirectoriesContainingFiles(

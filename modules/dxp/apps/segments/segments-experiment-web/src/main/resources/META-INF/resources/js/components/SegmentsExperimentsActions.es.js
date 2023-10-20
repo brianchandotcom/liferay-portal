@@ -83,7 +83,8 @@ function SegmentsExperimentsActions({
 				</>
 			)}
 
-			{(experiment.status.value === STATUS_FINISHED_WINNER || experiment.status.value === STATUS_FINISHED_NO_WINNER) && (
+			{(experiment.status.value === STATUS_FINISHED_WINNER ||
+				experiment.status.value === STATUS_FINISHED_NO_WINNER) && (
 				<>
 					<ClayButton
 						className="w-100"
@@ -94,7 +95,7 @@ function SegmentsExperimentsActions({
 					</ClayButton>
 				</>
 			)}
-			
+
 			{experiment.status.value === STATUS_TERMINATED && (
 				<ClayButton
 					className="w-100"

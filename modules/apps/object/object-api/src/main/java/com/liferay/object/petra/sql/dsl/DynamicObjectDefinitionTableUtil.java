@@ -52,16 +52,14 @@ public class DynamicObjectDefinitionTableUtil {
 	}
 
 	public static String getSQLColumnNull(String dbType) {
-		if (dbType.equals("BigDecimal") || dbType.equals("Double") ||
+		if (dbType.equals("BigDecimal") || dbType.equals("Date") ||
+			dbType.equals("DateTime") || dbType.equals("Double") ||
 			dbType.equals("Integer") || dbType.equals("Long")) {
 
-			return " default 0";
+			return " null";
 		}
 		else if (dbType.equals("Boolean")) {
 			return " default FALSE";
-		}
-		else if (dbType.equals("Date") || dbType.equals("DateTime")) {
-			return " null";
 		}
 
 		return StringPool.BLANK;

@@ -404,24 +404,68 @@ public class TaxonomyVocabularyResourceTest
 	@Override
 	@Test
 	public void testGraphQLGetSiteTaxonomyVocabulariesPage() throws Exception {
-		super.testGraphQLGetSiteTaxonomyVocabulariesPage();
+		Long siteId = testGetSiteTaxonomyVocabulariesPage_getSiteId();
+
+		GraphQLField graphQLField = new GraphQLField(
+			"taxonomyVocabularies",
+			HashMapBuilder.<String, Object>put(
+				"page", 1
+			).put(
+				"pageSize", 10
+			).put(
+				"siteKey", "\"" + siteId + "\""
+			).build(),
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		JSONObject taxonomyVocabulariesJSONObject =
+			JSONUtil.getValueAsJSONObject(
+				invokeGraphQLQuery(graphQLField), "JSONObject/data",
+				"JSONObject/taxonomyVocabularies");
+
+		Assert.assertEquals(
+			3, taxonomyVocabulariesJSONObject.get("totalCount"));
 
 		Page<TaxonomyVocabulary> page =
 			taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
-				testGroup.getGroupId(), null, null, null, Pagination.of(1, 10),
-				null);
-
-		for (TaxonomyVocabulary taxonomyVocabulary : page.getItems()) {
-			taxonomyVocabularyResource.deleteTaxonomyVocabulary(
-				taxonomyVocabulary.getId());
-		}
+				siteId, null, null, null, Pagination.of(1, 10), null);
 
 		TaxonomyVocabulary taxonomyVocabulary1 =
 			testGraphQLGetSiteTaxonomyVocabulariesPage_addTaxonomyVocabulary();
 		TaxonomyVocabulary taxonomyVocabulary2 =
 			testGraphQLGetSiteTaxonomyVocabulariesPage_addTaxonomyVocabulary();
 
-		GraphQLField graphQLField = new GraphQLField(
+		taxonomyVocabulariesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/taxonomyVocabularies");
+
+		Assert.assertEquals(
+			5, taxonomyVocabulariesJSONObject.getLong("totalCount"));
+
+		List<TaxonomyVocabulary> expectedTaxonomyVocabularies =
+			new ArrayList<>();
+
+		expectedTaxonomyVocabularies.add(taxonomyVocabulary1);
+		expectedTaxonomyVocabularies.add(taxonomyVocabulary2);
+		expectedTaxonomyVocabularies.addAll(page.getItems());
+
+		assertEqualsIgnoringOrder(
+			expectedTaxonomyVocabularies,
+			Arrays.asList(
+				TaxonomyVocabularySerDes.toDTOs(
+					taxonomyVocabulariesJSONObject.getString("items"))));
+
+		taxonomyVocabularyResource.deleteTaxonomyVocabulary(
+			taxonomyVocabulary1.getId());
+		taxonomyVocabularyResource.deleteTaxonomyVocabulary(
+			taxonomyVocabulary2.getId());
+
+		taxonomyVocabulary1 =
+			testGraphQLGetSiteTaxonomyVocabulariesPage_addTaxonomyVocabulary();
+		taxonomyVocabulary2 =
+			testGraphQLGetSiteTaxonomyVocabulariesPage_addTaxonomyVocabulary();
+
+		graphQLField = new GraphQLField(
 			"taxonomyVocabularies",
 			HashMapBuilder.<String, Object>put(
 				"aggregation", "[\"id\"]"
@@ -437,13 +481,12 @@ public class TaxonomyVocabularyResourceTest
 			new GraphQLField("items", getGraphQLFields()),
 			new GraphQLField("totalCount"));
 
-		JSONObject taxonomyVocabulariesJSONObject =
-			JSONUtil.getValueAsJSONObject(
-				invokeGraphQLQuery(graphQLField), "JSONObject/data",
-				"JSONObject/taxonomyVocabularies");
+		taxonomyVocabulariesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/taxonomyVocabularies");
 
 		Assert.assertEquals(
-			2, taxonomyVocabulariesJSONObject.getLong("totalCount"));
+			5, taxonomyVocabulariesJSONObject.getLong("totalCount"));
 		Assert.assertEquals(
 			"id",
 			taxonomyVocabulariesJSONObject.getJSONArray(
@@ -476,7 +519,7 @@ public class TaxonomyVocabularyResourceTest
 				).getJSONArray(
 					"facetValues"
 				).getJSONObject(
-					0
+					3
 				).getString(
 					"term"
 				)));
@@ -503,13 +546,19 @@ public class TaxonomyVocabularyResourceTest
 				).getJSONArray(
 					"facetValues"
 				).getJSONObject(
-					1
+					4
 				).getString(
 					"term"
 				)));
 
+		expectedTaxonomyVocabularies = new ArrayList<>();
+
+		expectedTaxonomyVocabularies.add(taxonomyVocabulary1);
+		expectedTaxonomyVocabularies.add(taxonomyVocabulary2);
+		expectedTaxonomyVocabularies.addAll(page.getItems());
+
 		assertEqualsIgnoringOrder(
-			Arrays.asList(taxonomyVocabulary1, taxonomyVocabulary2),
+			expectedTaxonomyVocabularies,
 			Arrays.asList(
 				TaxonomyVocabularySerDes.toDTOs(
 					taxonomyVocabulariesJSONObject.getString("items"))));

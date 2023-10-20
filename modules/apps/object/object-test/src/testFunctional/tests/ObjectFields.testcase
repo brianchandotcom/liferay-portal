@@ -470,7 +470,7 @@ definition {
 	test CanCreateEntryWithAggregationField {
 		property portal.acceptance = "true";
 
-		task ("Given two object definitions related") {
+		task ("Given two related object definitions") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object A",
 				objectName = "CustomObjectA",
@@ -4272,8 +4272,6 @@ definition {
 				filterValue = 1);
 		}
 	}
-
-
 
 	@description = "Verify that the Is Not Equals to operator is available when adding filters for the long integer fields to select data from the object"
 	@priority = 4

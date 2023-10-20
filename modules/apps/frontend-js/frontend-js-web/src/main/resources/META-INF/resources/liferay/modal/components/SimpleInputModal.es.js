@@ -5,7 +5,7 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
-import {ClayCheckbox} from '@clayui/form';
+import {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
@@ -19,6 +19,8 @@ import navigate from '../../util/navigate.es';
  */
 const SimpleInputModal = ({
 	alert,
+	buttonSubmitLabel = Liferay.Language.get('save'),
+	center,
 	checkboxFieldLabel,
 	checkboxFieldName,
 	checkboxFieldValue,
@@ -28,6 +30,7 @@ const SimpleInputModal = ({
 	idFieldName,
 	idFieldValue,
 	initialVisible,
+	mainFieldComponent,
 	mainFieldLabel,
 	mainFieldName,
 	mainFieldValue = '',
@@ -35,6 +38,8 @@ const SimpleInputModal = ({
 	namespace,
 	onFormSuccess,
 	placeholder,
+	required = true,
+	size = 'md',
 }) => {
 	const isMounted = useIsMounted();
 	const [errorMessage, setErrorMessage] = useState();
@@ -111,7 +116,7 @@ const SimpleInputModal = ({
 
 	return (
 		visible && (
-			<ClayModal observer={observer} size="md">
+			<ClayModal center={center} observer={observer} size={size}>
 				<ClayModal.Header>{dialogTitle}</ClayModal.Header>
 
 				<form id={`${namespace}form`} onSubmit={_handleSubmit}>
@@ -147,9 +152,10 @@ const SimpleInputModal = ({
 								</span>
 							</label>
 
-							<input
+							<ClayInput
 								autoFocus
 								className="form-control"
+								component={mainFieldComponent}
 								disabled={loadingResponse}
 								id={`${namespace}${mainFieldName}`}
 								name={`${namespace}${mainFieldName}`}
@@ -158,7 +164,7 @@ const SimpleInputModal = ({
 								}
 								placeholder={placeholder}
 								ref={handleMainFieldRef}
-								required
+								required={required}
 								type="text"
 								value={inputValue}
 							/>
@@ -215,7 +221,7 @@ const SimpleInputModal = ({
 										</span>
 									)}
 
-									{Liferay.Language.get('save')}
+									{buttonSubmitLabel}
 								</ClayButton>
 							</ClayButton.Group>
 						}

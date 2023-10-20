@@ -60,6 +60,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -213,13 +214,27 @@ public class ObjectRelationshipLocalServiceImpl
 				objectRelationship);
 		}
 
-		User user = _userLocalService.getUser(userId);
+		String dbTableName = null;
 
-		objectRelationship.setDBTableName(
-			StringBundler.concat(
-				"R_", user.getCompanyId(), objectDefinition1.getShortName(),
-				"_", objectDefinition2.getShortName(), "_",
-				objectRelationship.getName()));
+		while (true) {
+			StringBuilder sb = new StringBuilder(5);
+
+			sb.append("R_");
+			sb.append(StringUtil.toUpperCase(StringUtil.randomId(1)));
+			sb.append(RandomUtil.nextInt(10));
+			sb.append(StringUtil.toUpperCase(StringUtil.randomId(1)));
+			sb.append(RandomUtil.nextInt(10));
+
+			ObjectRelationship existingObjectRelationship =
+				objectRelationshipPersistence.fetchByDTN_R(sb.toString(), false);
+
+			if (existingObjectRelationship == null) {
+				dbTableName = sb.toString();
+				break;
+			}
+		}
+
+		objectRelationship.setDBTableName(dbTableName);
 
 		objectRelationship =
 			objectRelationshipLocalService.updateObjectRelationship(

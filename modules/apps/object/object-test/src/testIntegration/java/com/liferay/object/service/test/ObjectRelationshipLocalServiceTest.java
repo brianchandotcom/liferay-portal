@@ -58,6 +58,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -855,12 +857,10 @@ public class ObjectRelationshipLocalServiceTest {
 			objectRelationship.getDBTableName(),
 			reverseObjectRelationship.getDBTableName());
 
-		Assert.assertEquals(
-			StringBundler.concat(
-				"R_", objectRelationship.getCompanyId(),
-				objectDefinition.getShortName(), "_",
-				relatedObjectDefinition.getShortName(), "_", name),
+		Matcher matcher = _manyToManyObjectRelationshipTableNamePattern.matcher(
 			objectRelationship.getDBTableName());
+
+		Assert.assertTrue(matcher.matches());
 
 		Map<String, String> pkObjectFieldDBColumnNames =
 			ObjectRelationshipUtil.getPKObjectFieldDBColumnNames(
@@ -965,6 +965,9 @@ public class ObjectRelationshipLocalServiceTest {
 
 		_addObjectRelationshipSystemObjectDefinition();
 	}
+
+	private static final Pattern _manyToManyObjectRelationshipTableNamePattern =
+		Pattern.compile("R_[A-Z][0-9][A-Z][0-9]$");
 
 	@Inject
 	private static ObjectDefinitionLocalService _objectDefinitionLocalService;

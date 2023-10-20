@@ -6,16 +6,13 @@
 package com.liferay.portal.vulcan.internal.graphql.servlet.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.function.UnsafeRunnable;
-import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
+import com.liferay.portal.vulcan.internal.util.PaginationConfigurationTestUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -84,44 +81,73 @@ public class GraphQLPaginationServletTest extends BaseGraphQLServlet {
 
 		// Limited page size configured and limited page size requested
 
-		_withPageSizeLimit(10, () -> _test(1, 10, null, null));
-		_withPageSizeLimit(10, () -> _test(1, 5, null, 5));
-		_withPageSizeLimit(10, () -> _test(1, 10, null, 30));
-		_withPageSizeLimit(30, () -> _test(1, 20, null, null));
-		_withPageSizeLimit(30, () -> _test(1, 15, null, 15));
-		_withPageSizeLimit(30, () -> _test(1, 30, null, 30));
-		_withPageSizeLimit(30, () -> _test(1, 30, null, 40));
-		_withPageSizeLimit(50, () -> _test(2, 20, 2, null));
-		_withPageSizeLimit(50, () -> _test(3, 20, 3, null));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			10, () -> _test(1, 10, null, null));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			10, () -> _test(1, 5, null, 5));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			10, () -> _test(1, 10, null, 30));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			30, () -> _test(1, 20, null, null));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			30, () -> _test(1, 15, null, 15));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			30, () -> _test(1, 30, null, 30));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			30, () -> _test(1, 30, null, 40));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			50, () -> _test(2, 20, 2, null));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			50, () -> _test(3, 20, 3, null));
 
 		// Limited page size configured and unlimited page size requested
 
-		_withPageSizeLimit(50, () -> _test(1, 50, null, -1));
-		_withPageSizeLimit(50, () -> _test(1, 50, null, 0));
-		_withPageSizeLimit(50, () -> _test(1, 50, -1, null));
-		_withPageSizeLimit(50, () -> _test(1, 50, 0, null));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			50, () -> _test(1, 50, null, -1));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			50, () -> _test(1, 50, null, 0));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			50, () -> _test(1, 50, -1, null));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			50, () -> _test(1, 50, 0, null));
 
 		// Unlimited page size configured and limited page size requested
 
-		_withPageSizeLimit(-1, () -> _test(1, 20, null, null));
-		_withPageSizeLimit(-1, () -> _test(1, 25, null, 25));
-		_withPageSizeLimit(-1, () -> _test(2, 20, 2, null));
-		_withPageSizeLimit(-1, () -> _test(2, 25, 2, 25));
-		_withPageSizeLimit(0, () -> _test(1, 20, null, null));
-		_withPageSizeLimit(0, () -> _test(1, 25, null, 25));
-		_withPageSizeLimit(0, () -> _test(2, 20, 2, null));
-		_withPageSizeLimit(0, () -> _test(2, 25, 2, 25));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			-1, () -> _test(1, 20, null, null));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			-1, () -> _test(1, 25, null, 25));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			-1, () -> _test(2, 20, 2, null));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			-1, () -> _test(2, 25, 2, 25));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			0, () -> _test(1, 20, null, null));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			0, () -> _test(1, 25, null, 25));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			0, () -> _test(2, 20, 2, null));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			0, () -> _test(2, 25, 2, 25));
 
 		// Unlimited page size configured and unlimited page size requested
 
-		_withPageSizeLimit(-1, () -> _test(-1, -1, -1, null));
-		_withPageSizeLimit(-1, () -> _test(-1, -1, 0, null));
-		_withPageSizeLimit(-1, () -> _test(-1, -1, null, -1));
-		_withPageSizeLimit(-1, () -> _test(-1, -1, null, 0));
-		_withPageSizeLimit(0, () -> _test(-1, -1, -1, null));
-		_withPageSizeLimit(0, () -> _test(-1, -1, 0, null));
-		_withPageSizeLimit(0, () -> _test(-1, -1, null, -1));
-		_withPageSizeLimit(0, () -> _test(-1, -1, null, 0));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			-1, () -> _test(-1, -1, -1, null));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			-1, () -> _test(-1, -1, 0, null));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			-1, () -> _test(-1, -1, null, -1));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			-1, () -> _test(-1, -1, null, 0));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			0, () -> _test(-1, -1, -1, null));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			0, () -> _test(-1, -1, 0, null));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			0, () -> _test(-1, -1, null, -1));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			0, () -> _test(-1, -1, null, 0));
 	}
 
 	private void _test(
@@ -144,23 +170,6 @@ public class GraphQLPaginationServletTest extends BaseGraphQLServlet {
 
 		Assert.assertEquals(expectedPage, jsonObject.getInt("page"));
 		Assert.assertEquals(expectedPageSize, jsonObject.getInt("pageSize"));
-	}
-
-	private void _withPageSizeLimit(
-			int pageSizeLimit, UnsafeRunnable<Exception> runnable)
-		throws Exception {
-
-		try (CompanyConfigurationTemporarySwapper
-				companyConfigurationTemporarySwapper =
-					new CompanyConfigurationTemporarySwapper(
-						TestPropsValues.getCompanyId(),
-						"com.liferay.portal.vulcan.internal.configuration." +
-							"HeadlessAPICompanyConfiguration",
-						MapUtil.singletonDictionary(
-							"pageSizeLimit", pageSizeLimit))) {
-
-			runnable.run();
-		}
 	}
 
 	@Inject

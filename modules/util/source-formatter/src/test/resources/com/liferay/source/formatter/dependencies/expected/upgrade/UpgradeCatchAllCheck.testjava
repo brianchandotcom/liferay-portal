@@ -67,6 +67,19 @@ public class UpgradeCatchAllCheck {
 	}
 
 	public void method(
+		long userId, long groupId, long repositoryId, boolean mountPoint,
+		long parentFolderId, String name, String description, boolean hidden,
+		ServiceContext serviceContext) {
+
+		DLFolderLocalServiceUtil.addFolder(123, groupId, repositoryId, mountPoint, parentFolderId, name, description, hidden, serviceContext);
+		DLFolderLocalServiceUtil.addFolder(null, userId, groupId, repositoryId, mountPoint, parentFolderId, name, description, hidden, serviceContext);
+		DLFolderServiceUtil.addFolder(123, repositoryId, mountPoint, parentFolderId, name, description, serviceContext);
+		DLFolderServiceUtil.addFolder(null, groupId, repositoryId, mountPoint, parentFolderId, name, description, serviceContext);
+		_dlFolderLocalService.addFolder(null, userId, groupId, repositoryId, mountPoint, parentFolderId, name, description, hidden, serviceContext);
+		_dlFolderService.addFolder(null, groupId, repositoryId, mountPoint, parentFolderId, name, description, serviceContext);
+	}
+
+	public void method(
 		long userId, long groupId, long billingAddressId,
 		long commerceAccountId, long commerceCurrencyId,
 		long commerceOrderTypeId, long commerceShippingMethodId,
@@ -212,6 +225,12 @@ public class UpgradeCatchAllCheck {
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private DLFolderLocalService _dlFolderLocalService;
+
+	@Reference
+	private DLFolderService _dlFolderService;
 
 	@Reference
 	private FDSTableSchemaBuilderFactory _fDSTableSchemaBuilderFactory;

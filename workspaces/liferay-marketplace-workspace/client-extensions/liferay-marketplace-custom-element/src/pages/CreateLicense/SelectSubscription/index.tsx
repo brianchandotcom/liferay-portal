@@ -3,27 +3,25 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ReactNode, useState} from 'react';
+import {useState} from 'react';
 
-import RadioCardList from '../../../components/RadioCardList/RadioCardList';
+import RadioCardList, {
+	RadioCardContent,
+} from '../../../components/RadioCardList/RadioCardList';
 
 interface SubscriptionSelectionProps {
 	onSelectSubscription: (subscription: string) => void;
-	selectedSubscriptionValue: string;
+	selectedSubscriptionValue?: string;
 }
-
-type ContentListType = {
-	description: ReactNode;
-	label: ReactNode;
-	selected: boolean;
-	title: ReactNode;
-	value: string;
-};
 
 const SelectSubscription = ({
 	onSelectSubscription,
 	selectedSubscriptionValue,
 }: SubscriptionSelectionProps) => {
+	const [subscription, setSubscription] = useState<
+		RadioCardContent<String>[]
+	>([]);
+
 	const avaliableKeys = {
 		provisionedCount: 1,
 		purchasedCount: 1,
@@ -31,7 +29,7 @@ const SelectSubscription = ({
 	const supportLifeStartDate = 'Sep 24, 2023';
 	const supportLifeEndDate = 'Sep 24, 2024';
 
-	const contentList: ContentListType[] = [
+	const contentList: RadioCardContent<String>[] = [
 		{
 			description: (
 				<small className="text-success">
@@ -46,13 +44,13 @@ const SelectSubscription = ({
 		},
 	];
 
-	const [subscription, setSubscription] = useState<any>(contentList);
+	setSubscription(contentList);
 
-	const handleSelect = (radioOption: RadioOption<any>) => {
-		onSelectSubscription(radioOption.value);
+	const handleSelect = (radioOption: RadioOption<String>) => {
+		onSelectSubscription(String(radioOption.value));
 
-		setSubscription((previousValue: any) =>
-			previousValue.map((subscription: any, index: number) => ({
+		setSubscription((previousValue) =>
+			previousValue.map((subscription, index) => ({
 				...subscription,
 				selected: index === radioOption.index,
 			}))

@@ -546,8 +546,8 @@ public class ConfigurationPersistenceManager
 
 		boolean needSave = false;
 
-		if (dictionary.get(_SERVIE_BUNDLE_LOCATION) == null) {
-			dictionary.put(_SERVIE_BUNDLE_LOCATION, "?");
+		if (dictionary.get(_SERVICE_BUNDLE_LOCATION) == null) {
+			dictionary.put(_SERVICE_BUNDLE_LOCATION, "?");
 
 			needSave = true;
 		}
@@ -621,7 +621,7 @@ public class ConfigurationPersistenceManager
 		}
 	}
 
-	private static final String _SERVIE_BUNDLE_LOCATION =
+	private static final String _SERVICE_BUNDLE_LOCATION =
 		"service.bundleLocation";
 
 	private static final Log _log = LogFactoryUtil.getLog(

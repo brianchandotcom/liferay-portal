@@ -290,14 +290,15 @@ public class ObjectFieldLocalServiceTest {
 
 		String objectRelationshipName = "a" + RandomTestUtil.randomString();
 
-		_objectRelationshipLocalService.addObjectRelationship(
-			TestPropsValues.getUserId(),
-			objectDefinition1.getObjectDefinitionId(),
-			objectDefinition2.getObjectDefinitionId(), 0,
-			ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			objectRelationshipName, false,
-			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				TestPropsValues.getUserId(),
+				objectDefinition1.getObjectDefinitionId(),
+				objectDefinition2.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				objectRelationshipName, false,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		AssertUtils.assertFailure(
 			ObjectFieldNameException.MustNotBeEqualToObjectRelationshipName.
@@ -317,6 +318,77 @@ public class ObjectFieldLocalServiceTest {
 				).objectDefinitionId(
 					objectDefinition1.getObjectDefinitionId()
 				).build()));
+		AssertUtils.assertFailure(
+			ObjectFieldNameException.MustNotBeEqualToObjectRelationshipName.
+				class,
+			StringBundler.concat(
+				"There is already a relationship with this name in the ",
+				"related ", objectDefinition1.getShortName(),
+				" object definition. Object fields and object relationships ",
+				"can’t have the same name. Please, choose another name."),
+			() -> _addCustomObjectField(
+				new TextObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					objectRelationshipName
+				).objectDefinitionId(
+					objectDefinition2.getObjectDefinitionId()
+				).build()));
+
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			objectRelationship);
+
+		objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				TestPropsValues.getUserId(),
+				objectDefinition1.getObjectDefinitionId(),
+				objectDefinition2.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				objectRelationshipName, false,
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		AssertUtils.assertFailure(
+			ObjectFieldNameException.MustNotBeEqualToObjectRelationshipName.
+				class,
+			StringBundler.concat(
+				"There is already a relationship with this name in the ",
+				"current ", objectDefinition1.getShortName(),
+				" object definition. Object fields and object relationships ",
+				"can’t have the same name. Please, choose another name."),
+			() -> _addCustomObjectField(
+				new TextObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					objectRelationshipName
+				).objectDefinitionId(
+					objectDefinition1.getObjectDefinitionId()
+				).build()));
+		AssertUtils.assertFailure(
+			ObjectFieldNameException.MustNotBeEqualToObjectRelationshipName.
+				class,
+			StringBundler.concat(
+				"There is already a relationship with this name in the ",
+				"related ", objectDefinition1.getShortName(),
+				" object definition. Object fields and object relationships ",
+				"can’t have the same name. Please, choose another name."),
+			() -> _addCustomObjectField(
+				new TextObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).name(
+					objectRelationshipName
+				).objectDefinitionId(
+					objectDefinition2.getObjectDefinitionId()
+				).build()));
+
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			objectRelationship);
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition1);
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition2);

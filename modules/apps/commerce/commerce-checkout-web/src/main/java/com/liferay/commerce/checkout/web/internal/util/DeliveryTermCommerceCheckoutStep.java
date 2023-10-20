@@ -75,11 +75,8 @@ public class DeliveryTermCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 					_language.getLanguageId(
 						_portal.getLocale(httpServletRequest)));
 
-		commerceOrder = _commerceOrderLocalService.getCommerceOrder(
-			commerceOrder.getCommerceOrderId());
-
-		httpServletRequest.setAttribute(
-			CommerceCheckoutWebKeys.COMMERCE_ORDER, commerceOrder);
+		commerceOrder = (CommerceOrder)httpServletRequest.getAttribute(
+			CommerceCheckoutWebKeys.COMMERCE_ORDER);
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(

@@ -105,9 +105,6 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 			CommerceOrder commerceOrder = _getCommerceOrder(renderRequest);
 
 			if (commerceOrder != null) {
-				renderRequest.setAttribute(
-					CommerceCheckoutWebKeys.COMMERCE_ORDER, commerceOrder);
-
 				HttpServletRequest httpServletRequest =
 					_portal.getHttpServletRequest(renderRequest);
 				HttpServletResponse httpServletResponse =
@@ -190,6 +187,14 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 	private CommerceOrder _getCommerceOrder(PortletRequest portletRequest)
 		throws PortalException {
 
+		CommerceOrder commerceOrder =
+			(CommerceOrder)portletRequest.getAttribute(
+				CommerceCheckoutWebKeys.COMMERCE_ORDER);
+
+		if (commerceOrder != null) {
+			return commerceOrder;
+		}
+
 		String commerceOrderUuid = ParamUtil.getString(
 			portletRequest, "commerceOrderUuid");
 
@@ -199,12 +204,19 @@ public class CommerceCheckoutPortlet extends MVCPortlet {
 					getCommerceChannelGroupIdBySiteGroupId(
 						_portal.getScopeGroupId(portletRequest));
 
-			return _commerceOrderService.getCommerceOrderByUuidAndGroupId(
-				commerceOrderUuid, groupId);
+			commerceOrder =
+				_commerceOrderService.getCommerceOrderByUuidAndGroupId(
+					commerceOrderUuid, groupId);
+		}
+		else {
+			commerceOrder = _commerceOrderHttpHelper.getCurrentCommerceOrder(
+				_portal.getHttpServletRequest(portletRequest));
 		}
 
-		return _commerceOrderHttpHelper.getCurrentCommerceOrder(
-			_portal.getHttpServletRequest(portletRequest));
+		portletRequest.setAttribute(
+			CommerceCheckoutWebKeys.COMMERCE_ORDER, commerceOrder);
+
+		return commerceOrder;
 	}
 
 	private String _getOrderDetailsURL(

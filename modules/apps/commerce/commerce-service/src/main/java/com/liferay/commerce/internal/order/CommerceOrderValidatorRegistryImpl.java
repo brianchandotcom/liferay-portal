@@ -156,10 +156,9 @@ public class CommerceOrderValidatorRegistryImpl
 				itemCommerceOrderValidatorResults = validate(
 					locale, commerceOrderItem);
 
-			for (CommerceOrderValidatorResult commerceOrderValidatorResult :
-					itemCommerceOrderValidatorResults) {
-
-				commerceOrderValidatorResults.add(commerceOrderValidatorResult);
+			if (ListUtil.isNotEmpty(itemCommerceOrderValidatorResults)) {
+				commerceOrderValidatorResults.addAll(
+					itemCommerceOrderValidatorResults);
 			}
 		}
 

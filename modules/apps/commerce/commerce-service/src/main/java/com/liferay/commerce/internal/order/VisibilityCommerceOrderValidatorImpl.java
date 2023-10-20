@@ -86,12 +86,11 @@ public class VisibilityCommerceOrderValidatorImpl
 			return new CommerceOrderValidatorResult(false);
 		}
 
-		if (!_isAccountEnabled(
-				commerceOrderItem.getCommerceOrder(),
-				cpInstance.getCPDefinition()) ||
+		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
+
+		if (!_isAccountEnabled(commerceOrder, cpInstance.getCPDefinition()) ||
 			!_isChannelEnabled(
-				commerceOrderItem.getCommerceOrder(),
-				commerceOrderItem.getCPDefinition())) {
+				commerceOrder, commerceOrderItem.getCPDefinition())) {
 
 			return new CommerceOrderValidatorResult(
 				commerceOrderItem.getCommerceOrderItemId(), false,

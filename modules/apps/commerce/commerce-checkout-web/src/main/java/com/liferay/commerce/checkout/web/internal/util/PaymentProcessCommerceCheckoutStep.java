@@ -7,7 +7,6 @@ package com.liferay.commerce.checkout.web.internal.util;
 
 import com.liferay.commerce.checkout.web.internal.display.context.PaymentProcessCheckoutStepDisplayContext;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
-import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.util.BaseCommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceCheckoutStep;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -66,14 +65,10 @@ public class PaymentProcessCommerceCheckoutStep
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		CommerceOrder commerceOrder =
-			(CommerceOrder)httpServletRequest.getAttribute(
-				CommerceCheckoutWebKeys.COMMERCE_ORDER);
-
 		PaymentProcessCheckoutStepDisplayContext
 			paymentProcessCheckoutStepDisplayContext =
 				new PaymentProcessCheckoutStepDisplayContext(
-					_cartResourceFactory, commerceOrder, httpServletRequest);
+					_cartResourceFactory, httpServletRequest);
 
 		// Redirection only works with the original servlet response
 

@@ -205,10 +205,14 @@ public class BillingAddressCommerceCheckoutStep
 						_countryLocalService,
 						_commerceOrderModelResourcePermission);
 
-			addressCommerceCheckoutStepDisplayContext.
-				updateCommerceOrderAddress(
-					actionRequest,
-					CommerceCheckoutWebKeys.BILLING_ADDRESS_PARAM_NAME);
+			CommerceOrder commerceOrder =
+				addressCommerceCheckoutStepDisplayContext.
+					updateCommerceOrderAddress(
+						actionRequest,
+						CommerceCheckoutWebKeys.BILLING_ADDRESS_PARAM_NAME);
+
+			actionRequest.setAttribute(
+				CommerceCheckoutWebKeys.COMMERCE_ORDER, commerceOrder);
 		}
 		catch (Exception exception) {
 			if (exception instanceof CommerceAddressCityException ||

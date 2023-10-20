@@ -97,6 +97,9 @@ public class ImportCommerceOrderItemsMVCActionCommand
 				_importRows(
 					actionRequest, commerceOrder, commerceOrderImporterTypeKey,
 					counts);
+
+				commerceOrder = _commerceOrderService.getCommerceOrder(
+					commerceOrderId);
 			}
 		}
 		catch (Exception exception) {

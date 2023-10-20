@@ -124,19 +124,11 @@ public class PaymentMethodCommerceCheckoutStep
 			throw new CommerceOrderPaymentMethodException();
 		}
 
+		CommerceOrder commerceOrder = (CommerceOrder)actionRequest.getAttribute(
+			CommerceCheckoutWebKeys.COMMERCE_ORDER);
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		String commerceOrderUuid = ParamUtil.getString(
-			actionRequest, "commerceOrderUuid");
-
-		CommerceContext commerceContext =
-			(CommerceContext)actionRequest.getAttribute(
-				CommerceWebKeys.COMMERCE_CONTEXT);
-
-		CommerceOrder commerceOrder =
-			_commerceOrderService.getCommerceOrderByUuidAndGroupId(
-				commerceOrderUuid, commerceContext.getCommerceChannelGroupId());
 
 		if (!_commerceOrderModelResourcePermission.contains(
 				themeDisplay.getPermissionChecker(), commerceOrder,
@@ -144,6 +136,10 @@ public class PaymentMethodCommerceCheckoutStep
 
 			return;
 		}
+
+		CommerceContext commerceContext =
+			(CommerceContext)actionRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
 
 		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
 			null, commerceOrder.getCommerceOrderId(),

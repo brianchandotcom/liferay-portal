@@ -6,6 +6,7 @@
 package com.liferay.commerce.checkout.web.internal.display.context;
 
 import com.liferay.commerce.checkout.web.internal.display.context.helper.CommerceCheckoutRequestHelper;
+import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartResource;
 import com.liferay.petra.string.StringPool;
@@ -19,11 +20,13 @@ import javax.servlet.http.HttpServletRequest;
 public class PaymentProcessCheckoutStepDisplayContext {
 
 	public PaymentProcessCheckoutStepDisplayContext(
-		CartResource.Factory cartResourceFactory, CommerceOrder commerceOrder,
+		CartResource.Factory cartResourceFactory,
 		HttpServletRequest httpServletRequest) {
 
 		_cartResourceFactory = cartResourceFactory;
-		_commerceOrder = commerceOrder;
+
+		_commerceOrder = (CommerceOrder)httpServletRequest.getAttribute(
+			CommerceCheckoutWebKeys.COMMERCE_ORDER);
 
 		_commerceCheckoutRequestHelper = new CommerceCheckoutRequestHelper(
 			httpServletRequest);

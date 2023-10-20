@@ -5,6 +5,7 @@
 
 import {HashRouter, Route, Routes} from 'react-router-dom';
 
+import CreateLicense from '../CreateLicense';
 import Apps from './Apps';
 import App from './Apps/App';
 import Members from './Members';
@@ -17,7 +18,13 @@ const PurchasedAppsDashboardRouter = () => (
 			<Route element={<PurchasedAppsDashboardOutlet />}>
 				<Route path="/">
 					<Route element={<Apps />} index />
-					<Route element={<App />} path="app/:appId" />
+					<Route path="app/:appId">
+						<Route element={<App />} index />
+						<Route
+							element={<CreateLicense />}
+							path="create-license"
+						/>
+					</Route>
 				</Route>
 				<Route element={<Members />} path="members" />
 				<Route element={<Solutions />} path="solutions" />

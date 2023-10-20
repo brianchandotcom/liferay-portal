@@ -12,6 +12,7 @@ import './PurchasedAppsDashboardTableRow.scss';
 import DropDown from '@clayui/drop-down/lib/DropDown';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
+import {useNavigate} from 'react-router-dom';
 
 import {OrderStatus} from '../../enums/OrderStatus';
 import {orderType} from '../../enums/orderType';
@@ -29,6 +30,7 @@ export function PurchasedAppsDashboardTableRow({
 		name,
 		orderId,
 		orderTypeExternalReferenceCode,
+		productId,
 		project,
 		provisioning,
 		provisioningLabel,
@@ -39,6 +41,8 @@ export function PurchasedAppsDashboardTableRow({
 		version,
 		virtualURL,
 	} = item;
+
+	const navigate = useNavigate();
 
 	const orderStatusIsNotCompleted =
 		provisioningLabel !== OrderStatus.COMPLETED;
@@ -147,7 +151,11 @@ export function PurchasedAppsDashboardTableRow({
 								<DropDown.Item
 									data-tooltip-align="left"
 									disabled={orderStatusIsNotCompleted}
-									onClick={() => {}}
+									onClick={() =>
+										navigate(
+											`/app/${productId}/create-license`
+										)
+									}
 									title={
 										orderStatusIsNotCompleted
 											? 'The order must be completed before licensing this app.'

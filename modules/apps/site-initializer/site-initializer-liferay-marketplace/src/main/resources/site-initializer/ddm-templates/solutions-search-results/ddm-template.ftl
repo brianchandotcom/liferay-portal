@@ -85,6 +85,16 @@
 	</div>
 </#if>
 
+<#if themeDisplay?has_content>
+	<#assign scopeGroupId = themeDisplay.getScopeGroupId()/> 
+</#if>
+
+<#assign channel= restClient.get("/headless-commerce-delivery-catalog/v1.0/channels?accountId=-1&filter=name eq 'Marketplace Channel' and siteGroupId eq '${scopeGroupId}' ") />
+
+<#if channel?has_content>
+	<#assign channelId = channel.items[0].id />
+</#if>
+
 <div class="adt-solutions-search-results">
 	<div class="cards-container pb-6">
 		<#if entries?has_content>
@@ -93,26 +103,31 @@
 					<#assign
 						portalURL = portalUtil.getLayoutURL(themeDisplay)
 						productId = entry.getClassPK() + 1
-						product = restClient.get("/headless-commerce-admin-catalog/v1.0/products/" + productId + "?nestedFields=productSpecifications,attachments")
-						productAttachments = product.attachments![]
+						product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&nestedFields=productSpecifications,categories")
 						productCategories=product.categories![]
-						productDescription = stringUtil.shorten(htmlUtil.stripHtml(product.description.en_US!""), 150, "...")
 						productSpecifications = product.productSpecifications![]
 					/>
 
-					<#if product.name.en_US?has_content>
-						<#assign productName = product.name.en_US />
+					<#if product.name?has_content>
+						<#assign productName = product.name />
 					<#else>
 						<#assign productName = "" />
 					</#if>
+						
+					<#if product.description?has_content>
+						<#assign productDescription = stringUtil.shorten(htmlUtil.stripHtml(product.description!""), 150, "...") />
+					<#else>
+						<#assign productDescription = "" />
+					</#if>
 
-					<#if product.thumbnail?has_content>
-						<#assign productThumbnail = product.thumbnail />
+					<#if product.urlImage?has_content>
+						<#assign productThumbnail = product.urlImage />
+						<#assign productImageParts = productThumbnail?split("/o/") />	
 					<#else>
 						<#assign productThumbnail = "" />
 					</#if>
 
-					<#if product.urls.en_US?has_content>
+					<#if product.urls?has_content>
 						<#assign productURL = portalURL?replace("solutions-marketplace", "p") + "/" + product.urls.en_US />
 					<#else>
 						<#assign productURL = "" />
@@ -123,7 +138,7 @@
 							<img
 								alt=${productName}
 								class="solution-search-image rounded"
-								src="${productThumbnail}"
+								src="/o/${productImageParts[1]}"
 							/>
 						</div>
 

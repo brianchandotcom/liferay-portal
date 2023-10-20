@@ -186,7 +186,7 @@ public class UpgradeListTypeCompanyId extends UpgradeProcess {
 			runSQL("update ListType set companyId = " + defaultCompanyId);
 		}
 		else {
-			DBPartitionUtil.replaceByTable(connection, "ListType");
+			DBPartitionUtil.replaceByTable(connection, true, "ListType");
 
 			runSQL(
 				"update ListType set companyId = " +

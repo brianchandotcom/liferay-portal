@@ -20,7 +20,7 @@ public class UpgradePartitionedControlTable extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		DBPartitionUtil.replaceByTable(connection, _tableName);
+		DBPartitionUtil.replaceByTable(connection, true, _tableName);
 	}
 
 	@Override

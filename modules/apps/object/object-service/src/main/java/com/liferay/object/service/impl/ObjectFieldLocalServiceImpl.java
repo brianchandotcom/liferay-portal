@@ -1462,8 +1462,13 @@ public class ObjectFieldLocalServiceImpl
 					objectDefinition.getObjectDefinitionId(), name);
 
 		if (objectRelationship != null) {
+			ObjectDefinition objectDefinition1 =
+				_objectDefinitionPersistence.findByPrimaryKey(
+					objectRelationship.getObjectDefinitionId1());
+
 			throw new ObjectFieldNameException.
-				MustNotBeEqualToObjectRelationshipName(name);
+				MustNotBeEqualToObjectRelationshipName(
+					objectDefinition1.getShortName());
 		}
 	}
 

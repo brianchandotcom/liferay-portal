@@ -5,6 +5,7 @@
 
 package com.liferay.object.exception;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
@@ -41,8 +42,16 @@ public class ObjectFieldNameException extends PortalException {
 	public static class MustNotBeEqualToObjectRelationshipName
 		extends ObjectFieldNameException {
 
-		public MustNotBeEqualToObjectRelationshipName(String name) {
-			super("Name must not be equal to object relationship name " + name);
+		public MustNotBeEqualToObjectRelationshipName(
+			String objectDefinitionName) {
+
+			super(
+				StringBundler.concat(
+					"There is already a relationship with this name in the ",
+					objectDefinitionName,
+					" object definition. Object fields and object ",
+					"relationships can’t have the same name. Please, choose ",
+					"another name."));
 		}
 
 	}

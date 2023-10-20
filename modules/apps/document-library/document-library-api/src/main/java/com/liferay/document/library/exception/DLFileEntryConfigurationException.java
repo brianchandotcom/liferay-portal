@@ -12,22 +12,7 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class DLFileEntryConfigurationException extends PortalException {
 
-	public DLFileEntryConfigurationException() {
-	}
-
-	public DLFileEntryConfigurationException(String msg) {
-		super(msg);
-	}
-
-	public DLFileEntryConfigurationException(String msg, Throwable throwable) {
-		super(msg, throwable);
-	}
-
-	public DLFileEntryConfigurationException(Throwable throwable) {
-		super(throwable);
-	}
-
-	public static final class InvalidMaxNumberOfPagesException
+	public static class InvalidMaxNumberOfPagesException
 		extends DLFileEntryConfigurationException {
 
 		public InvalidMaxNumberOfPagesException() {
@@ -37,19 +22,9 @@ public class DLFileEntryConfigurationException extends PortalException {
 			super(msg);
 		}
 
-		public InvalidMaxNumberOfPagesException(
-			String msg, Throwable throwable) {
-
-			super(msg, throwable);
-		}
-
-		public InvalidMaxNumberOfPagesException(Throwable throwable) {
-			super(throwable);
-		}
-
 	}
 
-	public static final class InvalidPreviewableProcessorMaxSizeException
+	public static class InvalidPreviewableProcessorMaxSizeException
 		extends DLFileEntryConfigurationException {
 
 		public InvalidPreviewableProcessorMaxSizeException() {
@@ -59,18 +34,13 @@ public class DLFileEntryConfigurationException extends PortalException {
 			super(msg);
 		}
 
-		public InvalidPreviewableProcessorMaxSizeException(
-			String msg, Throwable throwable) {
+	}
 
-			super(msg, throwable);
-		}
+	private DLFileEntryConfigurationException() {
+	}
 
-		public InvalidPreviewableProcessorMaxSizeException(
-			Throwable throwable) {
-
-			super(throwable);
-		}
-
+	private DLFileEntryConfigurationException(String msg) {
+		super(msg);
 	}
 
 }

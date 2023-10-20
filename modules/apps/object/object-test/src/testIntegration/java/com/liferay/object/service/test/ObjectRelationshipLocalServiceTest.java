@@ -181,16 +181,18 @@ public class ObjectRelationshipLocalServiceTest {
 		_objectRelationshipLocalService.deleteObjectRelationship(
 			objectRelationship);
 
-		String objectFieldName = "a" + RandomTestUtil.randomString();
+		String objectFieldName2 = "a" + RandomTestUtil.randomString();
 
-		_objectFieldLocalService.addObjectField(
+		ObjectFieldUtil.addCustomObjectField(
 			new TextObjectFieldBuilder(
 			).labelMap(
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
 			).name(
-				objectFieldName
+				objectFieldName2
 			).objectDefinitionId(
 				_objectDefinition2.getObjectDefinitionId()
+			).userId(
+				TestPropsValues.getUserId()
 			).build());
 
 		AssertUtils.assertFailure(
@@ -206,7 +208,7 @@ public class ObjectRelationshipLocalServiceTest {
 				_objectDefinition2.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				objectFieldName, false,
+				objectFieldName2, false,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
 
 		AssertUtils.assertFailure(

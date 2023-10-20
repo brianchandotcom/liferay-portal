@@ -506,27 +506,6 @@
 													},
 													{
 														"definition": {
-															"customCSS": ".breadcrumb-left-desktop {\ndisplay: flex;\nalign-items: center;\n}\n.breadcrumb-left-desktop svg {\nmargin-bottom: 6px;\n}",
-															"fragmentStyle": {
-																"textColor": "#54555F"
-															},
-															"widgetInstance": {
-																"widgetConfig": {
-																	"displayStyle": "ddmTemplate_MARKETPLACE-BREADCRUMB",
-																	"displayStyleGroupId": "[$GROUP_ID$]",
-																	"showCurrentGroup": "true",
-																	"showGuestGroup": "false",
-																	"showLayout": "true",
-																	"showParentGroups": "true",
-																	"showPortletBreadcrumb": "true"
-																},
-																"widgetName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
-															}
-														},
-														"type": "Widget"
-													},
-													{
-														"definition": {
 															"fragmentStyle": {
 																"hidden": true
 															},
@@ -534,6 +513,16 @@
 																"widgetConfig": {
 																},
 																"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPOptionFacetsPortlet"
+															}
+														},
+														"type": "Widget"
+													},
+													{
+														"definition": {
+															"widgetInstance": {
+																"widgetConfig": {
+																},
+																"widgetName": "com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet"
 															}
 														},
 														"type": "Widget"

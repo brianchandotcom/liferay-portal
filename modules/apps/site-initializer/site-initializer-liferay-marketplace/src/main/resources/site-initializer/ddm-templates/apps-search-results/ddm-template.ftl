@@ -15,6 +15,12 @@
 		min-width: 3rem;
 	}
 
+	.adt-apps-search-results .card-image-title-container .image-container .app-search-image {
+		height: 100%;
+		max-width: 100%;
+	  	object-fit: cover;
+	}
+
 	.adt-apps-search-results .labels .category-label-remainder:hover .category-names {
 		display: block;
 	}
@@ -49,6 +55,16 @@
 	</div>
 </#if>
 
+<#if themeDisplay?has_content>
+	<#assign scopeGroupId = themeDisplay.getScopeGroupId() />
+</#if>
+
+<#assign channel = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels?accountId=-1&filter=name eq 'Marketplace Channel' and siteGroupId eq '${scopeGroupId}' ") />
+
+<#if channel?has_content>
+	<#assign channelId = channel.items[0].id />
+</#if>
+
 <div class="adt-apps-search-results">
 	<div class="cards-container pb-6">
 		<#if entries?has_content>
@@ -57,41 +73,57 @@
 					<#assign
 						portalURL = portalUtil.getLayoutURL(themeDisplay)
 						productId = entry.getClassPK() + 1
-						product = restClient.get("/headless-commerce-admin-catalog/v1.0/products/" + productId + "?nestedFields=productSpecifications,attachments" )
-						productAttachments = product.attachments![]
-						productDescription = stringUtil.shorten(htmlUtil.stripHtml(product.description.en_US!""), 150, "..." )
+						product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ channelId +"/products/"+ productId +"?accountId=-1&nestedFields=productSpecifications,categories")
 						productSpecifications = product.productSpecifications![]
-						productURL=portalURL?replace("home", "p" ) + "/" + product.urls.en_US />
+						productURL=portalURL?replace("home", "p" ) + "/" + product.urls.en_US
+					/>
+
+					<#if product.name?has_content>
+						<#assign productName = product.name />
+					<#else>
+						<#assign productName = "" />
+					</#if>
+
+					<#if product.description?has_content>
+						<#assign productDescription = stringUtil.shorten(htmlUtil.stripHtml(product.description!""), 150, "...") />
+					<#else>
+						<#assign productDescription = "" />
+					</#if>
+
+					<#if product.urlImage?has_content>
+						<#assign
+							productThumbnail = product.urlImage
+							productImageParts = productThumbnail?split("/o/")
+						/>
+					<#else>
+						<#assign productThumbnail = "" />
+					</#if>
 
 					<a class="app-search-results-card bg-white border-radius-medium d-flex flex-column mb-0 p-3 text-dark text-decoration-none" href=${productURL}>
 						<div class="align-items-center card-image-title-container d-flex pb-3">
 							<div class="image-container rounded">
-								<#if productAttachments?has_content>
-									<#list productAttachments as attachmentFields>
-										<#list attachmentFields.customFields as field>
-											<#if (field.name=="App Icon" ) && (stringUtil.equals(field.customValue.data[0]?lower_case, "yes"))>
-												<#assign srcName = "/o/" + attachmentFields.src?keep_after("/o/") />
-
-												<img
-													alt=${product.name.en_US}
-													class="h-100 mw-100"
-													src="${srcName}" />
-											</#if>
-										</#list>
-									</#list>
-								</#if>
+								<img
+									alt=${productName}
+									class="app-search-image"
+									src="/o/${productImageParts[1]}"
+								/>
 							</div>
 
 							<div class="pl-2">
 								<div class="font-weight-semi-bold h2 mt-1">
-									${product.name.en_US}
+									${productName}
 								</div>
 								<#if productSpecifications?has_content>
-									<#assign productPriceModels = productSpecifications?filter(item -> item.specificationKey == "developer-name") />
+									<#assign productPriceModelsDeveloperName = productSpecifications?filter(item -> item.specificationKey == "developer-name") />
 
-									<#list productPriceModels as productPriceModel>
+									<#list productPriceModelsDeveloperName as productPriceModelDeveloperName>
+										<#if productPriceModelDeveloperName.value?has_content>
+											<#assign developerName = productPriceModelDeveloperName.value />
+											<#else>
+												<#assign developerName = "" />
+										</#if>
 										<div class="color-neutral-3 font-size-paragraph-small mt-1">
-											${productPriceModel.value.en_US}
+											${developerName}
 										</div>
 									</#list>
 								</#if>
@@ -99,20 +131,23 @@
 						</div>
 
 						<div class="d-flex flex-column font-size-paragraph-small h-100 justify-content-between">
-							<div>
-								<div class="font-weight-normal mb-2">
-									${productDescription}
-								</div>
-								<#if productSpecifications?has_content>
-									<#assign productPriceModels = productSpecifications?filter(item -> item.specificationKey == "price-model") />
-
-									<#list productPriceModels as productPriceModel>
-										<div class="font-weight-semi-bold mt-1">
-											${productPriceModel.value.en_US}
-										</div>
-									</#list>
-								</#if>
+							<div class="font-weight-normal mb-2">
+								${productDescription}
 							</div>
+							<#if productSpecifications?has_content>
+								<#assign productPriceModels = productSpecifications?filter(item -> item.specificationKey == "price-model") />
+
+								<#list productPriceModels as productPriceModel>
+									<#if productPriceModel.value?has_content>
+										<#assign priceModel = productPriceModel.value />
+										<#else>
+											<#assign priceModel = "" />
+									</#if>
+									<div class="font-weight-semi-bold mt-1">
+										${priceModel}
+									</div>
+								</#list>
+							</#if>
 						</div>
 					</a>
 				</#if>

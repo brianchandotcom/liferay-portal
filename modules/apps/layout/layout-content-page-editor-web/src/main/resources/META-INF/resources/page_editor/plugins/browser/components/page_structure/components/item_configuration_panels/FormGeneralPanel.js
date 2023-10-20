@@ -352,8 +352,7 @@ function SuccessInteractionOptions({item, onValueSelect}) {
 
 			{type === DISPLAY_PAGE_OPTION && (
 				<DisplayPageSelector
-					classNameId={item.config.classNameId}
-					classTypeId={item.config.classTypeId}
+					mappingIds={item.config}
 					onConfigChange={onConfigChange}
 					selectedValue={displayPage}
 				/>

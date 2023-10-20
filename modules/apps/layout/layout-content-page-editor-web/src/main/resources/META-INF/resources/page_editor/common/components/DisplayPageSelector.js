@@ -33,8 +33,7 @@ function filterFields(fieldSets) {
 }
 
 export default function DisplayPageSelector({
-	classNameId,
-	classTypeId,
+	mappingIds,
 	onConfigChange,
 	selectedValue,
 }) {
@@ -45,7 +44,7 @@ export default function DisplayPageSelector({
 	const [displayPageFields, setDisplayPageFields] = useState(null);
 
 	useEffect(() => {
-		const key = getMappingFieldsKey({classNameId, classTypeId});
+		const key = getMappingFieldsKey(mappingIds);
 
 		const fieldSets = mappingFields[key];
 
@@ -54,13 +53,12 @@ export default function DisplayPageSelector({
 		}
 		else {
 			InfoItemService.getAvailableStructureMappingFields({
-				classNameId,
-				classTypeId,
+				...mappingIds,
 			}).then((newFields) => {
 				dispatch(addMappingFields({fields: newFields, key}));
 			});
 		}
-	}, [dispatch, classNameId, classTypeId, mappingFields]);
+	}, [dispatch, mappingIds, mappingFields]);
 
 	return (
 		<MappingFieldSelector

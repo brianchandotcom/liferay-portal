@@ -16,6 +16,7 @@ import {SelectField} from '../../../../../../app/components/fragment_configurati
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../../../../../app/config/constants/editableTypes';
 import {config} from '../../../../../../app/config/index';
+import {useCollectionConfig} from '../../../../../../app/contexts/CollectionItemContext';
 import {
 	useDispatch,
 	useSelector,
@@ -191,6 +192,8 @@ function InteractionSelector({
 		({layoutData}) => layoutData.items[fragmentId].config
 	);
 
+	const collectionConfig = useCollectionConfig();
+
 	const dispatch = useDispatch();
 	const previewId = useId();
 	const textInputId = useId();
@@ -233,6 +236,10 @@ function InteractionSelector({
 		previewElement?.remove();
 	};
 
+	const mappingIds = collectionConfig
+		? collectionConfig.collection
+		: config.mappedAction;
+
 	return (
 		<>
 			<SelectField
@@ -251,7 +258,7 @@ function InteractionSelector({
 
 			{interaction === INTERACTION_DISPLAY_PAGE && (
 				<DisplayPageSelector
-					classNameId={config.mappedAction.classNameId}
+					mappingIds={mappingIds}
 					onConfigChange={(layout) => {
 						onConfigChange(
 							INTERACTION_DISPLAY_PAGE,

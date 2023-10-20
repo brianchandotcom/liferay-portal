@@ -4,9 +4,20 @@
  */
 
 export default function getMappingFieldsKey(item) {
+
+	// Display page structures
+
 	if (item.type?.id) {
 		return `${item.type.id}-${item.subtype.id || 0}`;
 	}
+
+	// Collection Providers
+
+	if (item.key) {
+		return item.key;
+	}
+
+	// Mapping normal, Collections
 
 	return `${item.classNameId}-${
 		item.classTypeId || item.classPK || item.externalReferenceCode

@@ -6,7 +6,7 @@
 package com.liferay.portal.kernel.words;
 
 import com.liferay.portal.kernel.jazzy.InvalidWord;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 import java.util.Set;
@@ -17,31 +17,40 @@ import java.util.Set;
 public class WordsUtil {
 
 	public static List<InvalidWord> checkSpelling(String text) {
-		return _words.checkSpelling(text);
+		Words words = _wordsSnapshot.get();
+
+		return words.checkSpelling(text);
 	}
 
 	public static List<String> getDictionaryList() {
-		return _words.getDictionaryList();
+		Words words = _wordsSnapshot.get();
+
+		return words.getDictionaryList();
 	}
 
 	public static Set<String> getDictionarySet() {
-		return _words.getDictionarySet();
+		Words words = _wordsSnapshot.get();
+
+		return words.getDictionarySet();
 	}
 
 	public static String getRandomWord() {
-		return _words.getRandomWord();
+		Words words = _wordsSnapshot.get();
+
+		return words.getRandomWord();
 	}
 
 	public static Words getWords() {
-		return _words;
+		return _wordsSnapshot.get();
 	}
 
 	public static boolean isDictionaryWord(String word) {
-		return _words.isDictionaryWord(word);
+		Words words = _wordsSnapshot.get();
+
+		return words.isDictionaryWord(word);
 	}
 
-	private static volatile Words _words =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			Words.class, WordsUtil.class, "_words", true);
+	private static final Snapshot<Words> _wordsSnapshot = new Snapshot<>(
+		WordsUtil.class, Words.class);
 
 }

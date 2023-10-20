@@ -48,7 +48,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -153,29 +152,21 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 					Object service = _bundleContext.getService(
 						serviceReference);
 
-					ExecutorService executorService =
-						_portalExecutorManager.getPortalExecutor(
-							BatchEngineUnitProcessorImpl.class.getName());
+					try {
+						_execute(
+							batchEngineUnit, batchEngineUnitConfiguration,
+							content, contentType, service, this);
+					}
+					catch (Exception exception) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(exception);
+						}
+					}
+					finally {
+						completableFuture.complete(null);
+					}
 
-					executorService.submit(
-						() -> {
-							try {
-								_execute(
-									batchEngineUnit,
-									batchEngineUnitConfiguration, content,
-									contentType, service, this);
-							}
-							catch (Exception exception) {
-								if (_log.isWarnEnabled()) {
-									_log.warn(exception);
-								}
-							}
-							finally {
-								completableFuture.complete(null);
-							}
-
-							_bundleContext.ungetService(serviceReference);
-						});
+					_bundleContext.ungetService(serviceReference);
 
 					return null;
 				}

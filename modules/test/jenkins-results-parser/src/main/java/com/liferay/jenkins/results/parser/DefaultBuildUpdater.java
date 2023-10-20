@@ -347,51 +347,53 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 		Build build = getBuild();
 
 		try {
-			JSONObject jsonObject = JenkinsResultsParserUtil.invokeJenkinsBuild(
-				jenkinsMaster, build.getJobName(), build.getParameters());
+			StringBuilder sb = new StringBuilder();
 
-			return new Build.Invocation(
-				build, jenkinsMaster, jsonObject.getLong("queueId"));
-		}
-		catch (Exception exception) {
-			System.out.println(
-				"WARNING: Unable to invoke jenkins using groovy");
+			sb.append(jenkinsMaster.getURL());
+			sb.append("job/");
+			sb.append(build.getJobName());
+			sb.append("/buildWithParameters?token=");
+			sb.append(
+				JenkinsResultsParserUtil.getBuildProperty(
+					"jenkins.authentication.token"));
 
-			try {
-				StringBuilder sb = new StringBuilder();
+			Map<String, String> buildParameters = new HashMap<>(
+				build.getParameters());
 
-				sb.append(jenkinsMaster.getURL());
-				sb.append("job/");
-				sb.append(build.getJobName());
-				sb.append("/buildWithParameters?token=");
-				sb.append(
-					JenkinsResultsParserUtil.getBuildProperty(
-						"jenkins.authentication.token"));
+			for (Map.Entry<String, String> buildParameter :
+					buildParameters.entrySet()) {
 
-				Map<String, String> buildParameters = new HashMap<>(
-					build.getParameters());
+				String buildParameterName = buildParameter.getKey();
 
-				for (Map.Entry<String, String> buildParameter :
-						buildParameters.entrySet()) {
-
-					String buildParameterName = buildParameter.getKey();
-
-					if (!buildParameterName.matches("[A-Z0-9_]+")) {
-						continue;
-					}
-
-					sb.append("&");
-					sb.append(buildParameterName);
-					sb.append("=");
-					sb.append(buildParameter.getValue());
+				if (!buildParameterName.matches("[A-Z0-9_]+")) {
+					continue;
 				}
 
-				JenkinsResultsParserUtil.toString(sb.toString());
-
-				return new Build.Invocation(build, jenkinsMaster);
+				sb.append("&");
+				sb.append(buildParameterName);
+				sb.append("=");
+				sb.append(buildParameter.getValue());
 			}
-			catch (IOException ioException) {
-				throw new RuntimeException(ioException);
+
+			JenkinsResultsParserUtil.toString(sb.toString());
+
+			return new Build.Invocation(build, jenkinsMaster);
+		}
+		catch (IOException ioException) {
+			System.out.println(
+				"WARNING: Unable to invoke jenkins using a curl");
+
+			try {
+				JSONObject jsonObject =
+					JenkinsResultsParserUtil.invokeJenkinsBuild(
+						jenkinsMaster, build.getJobName(),
+						build.getParameters());
+
+				return new Build.Invocation(
+					build, jenkinsMaster, jsonObject.getLong("queueId"));
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
 			}
 		}
 	}

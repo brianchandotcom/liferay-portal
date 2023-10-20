@@ -213,7 +213,6 @@ public class FDSViewsPortlet extends MVCPortlet {
 				"FDSView FDSCreationAction Relationship"),
 			"fdsViewFDSCreationActionRelationship", false,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
 		_objectRelationshipLocalService.addObjectRelationship(
 			userId, fdsViewObjectDefinition.getObjectDefinitionId(),
 			fdsActionObjectDefinition.getObjectDefinitionId(), 0,

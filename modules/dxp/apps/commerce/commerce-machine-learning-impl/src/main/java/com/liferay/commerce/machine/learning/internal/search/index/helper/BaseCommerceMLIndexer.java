@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.machine.learning.internal.search.index.helper;
 
+import com.liferay.commerce.machine.learning.internal.search.api.CommerceMLIndexer;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -17,18 +18,17 @@ import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexResponse;
+import com.liferay.portal.search.index.IndexNameBuilder;
 
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Riccardo Ferrari
  */
-@Component(service = CommerceMLSearchEngineHelper.class)
-public class CommerceMLSearchEngineHelper {
+public abstract class BaseCommerceMLIndexer implements CommerceMLIndexer {
 
 	public void createIndex(String indexName, String indexMappingFileName) {
-		if (!_searchCapabilities.isCommerceSupported()) {
+		if (!searchCapabilities.isCommerceSupported()) {
 			return;
 		}
 
@@ -55,7 +55,7 @@ public class CommerceMLSearchEngineHelper {
 	}
 
 	public void dropIndex(String indexName) {
-		if (!_searchCapabilities.isCommerceSupported()) {
+		if (!searchCapabilities.isCommerceSupported()) {
 			return;
 		}
 
@@ -79,6 +79,15 @@ public class CommerceMLSearchEngineHelper {
 	}
 
 	@Reference
+	protected IndexNameBuilder indexNameBuilder;
+
+	@Reference
+	protected JSONFactory jsonFactory;
+
+	@Reference
+	protected SearchCapabilities searchCapabilities;
+
+	@Reference
 	protected SearchEngineAdapter searchEngineAdapter;
 
 	private boolean _indicesExists(String indexName) {
@@ -93,8 +102,10 @@ public class CommerceMLSearchEngineHelper {
 
 	private String _readJSON(String fileName) {
 		try {
-			JSONObject jsonObject = _jsonFactory.createJSONObject(
-				StringUtil.read(getClass(), "/META-INF/search/" + fileName));
+			JSONObject jsonObject = jsonFactory.createJSONObject(
+				StringUtil.read(
+					BaseCommerceMLIndexer.class,
+					"/META-INF/search/" + fileName));
 
 			return jsonObject.toString();
 		}
@@ -106,12 +117,6 @@ public class CommerceMLSearchEngineHelper {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceMLSearchEngineHelper.class);
-
-	@Reference
-	private JSONFactory _jsonFactory;
-
-	@Reference
-	private SearchCapabilities _searchCapabilities;
+		BaseCommerceMLIndexer.class);
 
 }

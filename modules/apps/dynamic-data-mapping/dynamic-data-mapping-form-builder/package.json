@@ -1,22 +1,9 @@
 {
-	"jest": {
-		"collectCoverageFrom": [
-			"src/main/resources/META-INF/resources/js/**/*.es.js"
-		],
-		"moduleNameMapper": {
-			"^./liferay/modal/Modal$": "<rootDir>/test/js/__mock__/Modal.js"
-		},
-		"modulePathIgnorePatterns": [
-			"/__mock__/"
-		]
-	},
-	"main": "js/index.es.js",
 	"name": "dynamic-data-mapping-form-builder",
 	"scripts": {
 		"build": "liferay-npm-scripts build",
 		"checkFormat": "liferay-npm-scripts check",
-		"format": "liferay-npm-scripts fix",
-		"test": "liferay-npm-scripts test"
+		"format": "liferay-npm-scripts fix"
 	},
 	"version": "4.0.52"
 }

@@ -79,6 +79,9 @@ definition {
 		if ((${pageName} == "MDF Requests") || (${pageName} == "MDF Claims")) {
 			Open(locator1 = "${baseURL}/web/${siteNameURL}/marketing/${pageNameURL}");
 		}
+		else if (${pageName} == "Deal Registrations") {
+			Open(locator1 = "${baseURL}/web/${siteNameURL}/sales/${pageNameURL}");
+		}
 		else {
 			Open(locator1 = "${baseURL}/web/${siteNameURL}/${pageNameURL}");
 		}

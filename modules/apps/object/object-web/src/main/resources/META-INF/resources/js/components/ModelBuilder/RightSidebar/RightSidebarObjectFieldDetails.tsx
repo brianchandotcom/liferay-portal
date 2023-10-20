@@ -296,7 +296,7 @@ export function RightSidebarObjectFieldDetails() {
 						) : (
 							<Text>
 								{Liferay.Language.get(
-									'this-field-cannot-be-deleted-as-it-is-used-in-a-composite-unique-key-validation'
+									'this-field-cannot-be-deleted-as-it-is-used-in-a-unique-composite-key-validation'
 								)}
 							</Text>
 						)

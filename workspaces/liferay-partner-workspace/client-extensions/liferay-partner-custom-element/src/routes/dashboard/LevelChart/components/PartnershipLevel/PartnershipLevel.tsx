@@ -29,6 +29,7 @@ interface IPropsPartnershipLevel {
 	checkedProperties: {
 		[keys: string]: boolean | undefined;
 	};
+	currency: string;
 	headcount: {
 		[keys: string]: number;
 	};
@@ -55,6 +56,7 @@ const PartnershipLevel = ({
 	aRRResults,
 	account,
 	checkedProperties,
+	currency,
 	headcount,
 	partnerLevel,
 }: IPropsPartnershipLevel) => {
@@ -122,6 +124,7 @@ const PartnershipLevel = ({
 							title="ARR"
 						>
 							<LevelProgressBar
+								currency={currency}
 								currentValue={aRRResults.aRRAmountTotal}
 								total={getTotalARR()}
 								type={ChartTypes.ARR}
@@ -135,6 +138,7 @@ const PartnershipLevel = ({
 									</div>
 
 									<LevelProgressBar
+										currency={currency}
 										currentValue={
 											account.newProjectExistingBusiness
 										}

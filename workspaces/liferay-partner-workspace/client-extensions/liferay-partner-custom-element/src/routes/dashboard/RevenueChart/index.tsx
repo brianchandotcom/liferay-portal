@@ -11,6 +11,7 @@ import DonutChart from '../../../common/components/dashboard/components/DonutCha
 import {revenueChartColumnColors} from '../../../common/components/dashboard/utils/constants/chartColumnsColors';
 import getRevenueChartColumns from '../../../common/components/dashboard/utils/getRevenueChartColumns';
 import {Liferay} from '../../../common/services/liferay';
+import {LiferayAPIs} from '../../../common/services/liferay/common/enums/apis';
 import {retry} from '../../../common/utils/retry';
 
 export default function () {
@@ -60,21 +61,48 @@ export default function () {
 			)
 		);
 
+		const myUserAccountResponse = await retry<Response>(() =>
+			fetch(`/o/${LiferayAPIs.HEADERLESS_ADMIN_USER}/my-user-account`, {
+				headers: {
+					'accept': 'application/json',
+					'x-csrf-token': Liferay.authToken,
+				},
+			})
+		);
+		const myUserAccount = await myUserAccountResponse.json();
+
+		const accountResponse =
+			myUserAccount.accountBriefs[0]?.externalReferenceCode &&
+			(await retry<Response>(() =>
+				fetch(
+					`/o/${LiferayAPIs.HEADERLESS_ADMIN_USER}/accounts/by-external-reference-code/${myUserAccount.accountBriefs[0]?.externalReferenceCode}`,
+					{
+						headers: {
+							'accept': 'application/json',
+							'x-csrf-token': Liferay.authToken,
+						},
+					}
+				)
+			));
+
+		const account = await accountResponse?.json();
+
+		const currency = account ? account.currency : 'USD';
+
 		if (
 			growthRevenueResponseNewProject.ok &&
 			renewalRevenueResponse.ok &&
-			growthRevenueResponseNewBusiness.ok
+			growthRevenueResponseNewBusiness.ok &&
+			currency
 		) {
 			const growthRevenueResponseNewProjectData = await growthRevenueResponseNewProject.json();
 			const growthRevenueResponseNewBusinessData = await growthRevenueResponseNewBusiness.json();
 			const renewalRevenueData = await renewalRevenueResponse.json();
 
-			const revenueCurrency = 'USD';
-
-			setCurrencyData(revenueCurrency);
+			setCurrencyData(currency);
 
 			getRevenueChartColumns(
-				revenueCurrency,
+				currency,
 				growthRevenueResponseNewProjectData,
 				growthRevenueResponseNewBusinessData,
 				renewalRevenueData,

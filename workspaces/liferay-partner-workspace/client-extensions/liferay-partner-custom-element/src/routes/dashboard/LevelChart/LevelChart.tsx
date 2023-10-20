@@ -17,6 +17,7 @@ const LevelChart = () => {
 		aRRResults,
 		account,
 		checkedProperties,
+		currency,
 		headcount,
 		loading,
 		partnerLevel,
@@ -44,6 +45,7 @@ const LevelChart = () => {
 				aRRResults={aRRResults}
 				account={account}
 				checkedProperties={checkedProperties}
+				currency={currency}
 				headcount={headcount}
 				partnerLevel={partnerLevel}
 			/>

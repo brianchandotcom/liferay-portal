@@ -46,6 +46,8 @@ export default function useAccountInformation() {
 			`/o/${LiferayAPIs.HEADERLESS_ADMIN_USER}/accounts/by-external-reference-code/${userAccount.accountBriefs[0].externalReferenceCode}`
 	);
 
+	const currency = account ? account.currency : 'USD';
+
 	const {data: accountUserAccounts} = useGet<LiferayItems<UserAccount[]>>(
 		account?.externalReferenceCode &&
 			`/o/${LiferayAPIs.HEADERLESS_ADMIN_USER}/accounts/by-external-reference-code/${account.externalReferenceCode}/user-accounts`
@@ -230,6 +232,7 @@ export default function useAccountInformation() {
 		aRRResults,
 		account,
 		checkedProperties,
+		currency,
 		headcount: headcountAccumulator,
 		loading:
 			isValidatingOpportunities ||

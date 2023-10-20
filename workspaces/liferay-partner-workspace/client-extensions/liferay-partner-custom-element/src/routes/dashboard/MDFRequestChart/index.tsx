@@ -13,6 +13,7 @@ import {mdfChartColumnColors} from '../../../common/components/dashboard/utils/c
 import getChartColumns from '../../../common/components/dashboard/utils/getChartColumns';
 import {siteURL} from '../../../common/components/dashboard/utils/siteURL';
 import {Liferay} from '../../../common/services/liferay';
+import {LiferayAPIs} from '../../../common/services/liferay/common/enums/apis';
 import {retry} from '../../../common/utils/retry';
 
 const MDFRequestChart = () => {
@@ -39,14 +40,41 @@ const MDFRequestChart = () => {
 			)
 		);
 
-		if (response.ok) {
-			const mdfRequests = await response.json();
-			const mdfCurrency = 'USD';
+		const myUserAccountResponse = await retry<Response>(() =>
+			fetch(`/o/${LiferayAPIs.HEADERLESS_ADMIN_USER}/my-user-account`, {
+				headers: {
+					'accept': 'application/json',
+					'x-csrf-token': Liferay.authToken,
+				},
+			})
+		);
+		const myUserAccount = await myUserAccountResponse.json();
 
-			setCurrencyData(mdfCurrency);
+		const accountResponse =
+			myUserAccount.accountBriefs[0]?.externalReferenceCode &&
+			(await retry<Response>(() =>
+				fetch(
+					`/o/${LiferayAPIs.HEADERLESS_ADMIN_USER}/accounts/by-external-reference-code/${myUserAccount.accountBriefs[0]?.externalReferenceCode}`,
+					{
+						headers: {
+							'accept': 'application/json',
+							'x-csrf-token': Liferay.authToken,
+						},
+					}
+				)
+			));
+
+		const account = await accountResponse?.json();
+
+		const currency = account ? account.currency : 'USD';
+
+		if (response.ok && currency) {
+			const mdfRequests = await response.json();
+
+			setCurrencyData(currency);
 
 			getChartColumns(
-				mdfCurrency,
+				currency,
 				mdfRequests,
 				setColumnsMDFChart,
 				setTitleChart,

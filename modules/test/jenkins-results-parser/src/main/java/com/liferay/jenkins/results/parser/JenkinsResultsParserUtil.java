@@ -4158,6 +4158,72 @@ public class JenkinsResultsParserUtil {
 		return files;
 	}
 
+	public static void rsync(
+		String destinationHostName, String destinationDirPath,
+		String sourceHostName, String sourceFilePath) {
+
+		rsync(
+			destinationHostName, destinationDirPath, sourceHostName,
+			sourceFilePath, "-aqsz --chmod=go=rx");
+	}
+
+	public static void rsync(
+		String destinationHostName, String destinationDirPath,
+		String sourceHostName, String sourceFilePath, String argumentString) {
+
+		if ((destinationHostName != null) &&
+			!destinationDirPath.startsWith("::")) {
+
+			RemoteExecutor remoteExecutor = new RemoteExecutor();
+
+			int returnCode = remoteExecutor.execute(
+				1, new String[] {destinationHostName},
+				new String[] {"mkdir -p " + destinationDirPath});
+
+			if (returnCode != 0) {
+				throw new RuntimeException("Unable to create target directory");
+			}
+		}
+		else {
+			File destinationDir = new File(destinationDirPath);
+
+			destinationDir.mkdirs();
+		}
+
+		int maxRetries = 3;
+		int retries = 0;
+
+		while (retries < maxRetries) {
+			try {
+				retries++;
+
+				String command = _combineCommandArgs(
+					"time", "timeout", "1200", "rsync", argumentString,
+					_getRyncPath(sourceHostName, sourceFilePath),
+					_getRyncPath(destinationHostName, destinationDirPath));
+
+				executeBashCommands(command);
+
+				break;
+			}
+			catch (IOException | TimeoutException exception) {
+				if (retries == maxRetries) {
+					throw new RuntimeException(
+						"Unable to rsync " +
+							_getRyncPath(sourceHostName, sourceFilePath),
+						exception);
+				}
+
+				System.out.println(
+					"Unable to execute bash commands, retrying... ");
+
+				exception.printStackTrace();
+
+				sleep(3000);
+			}
+		}
+	}
+
 	public static void saveToCacheFile(String key, String text) {
 		File cacheFile = _getCacheFile(key);
 
@@ -5747,6 +5813,22 @@ public class JenkinsResultsParserUtil {
 		return duration;
 	}
 
+	private static String _combineCommandArgs(String... args) {
+		StringBuilder sb = new StringBuilder();
+
+		for (String arg : args) {
+			if (arg == null) {
+				continue;
+			}
+
+			sb.append(" ");
+
+			sb.append(arg);
+		}
+
+		return sb.toString();
+	}
+
 	private static void _executeCommandService(
 		final String command, final File baseDir,
 		final Map<String, String> environments, final long maxLogSize,
@@ -6371,6 +6453,14 @@ public class JenkinsResultsParserUtil {
 
 	private static String _getRedactTokenKey(int index) {
 		return "github.message.redact.token[" + index + "]";
+	}
+
+	private static String _getRyncPath(String hostName, String filePath) {
+		if (hostName == null) {
+			return filePath;
+		}
+
+		return hostName + ":" + filePath;
 	}
 
 	private static void _initializeRedactTokens() {

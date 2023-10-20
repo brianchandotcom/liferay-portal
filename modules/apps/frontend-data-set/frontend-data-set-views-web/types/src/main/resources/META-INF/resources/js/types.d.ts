@@ -15,10 +15,14 @@ export declare enum EFieldFormat {
 	STRING = 'string',
 }
 export interface IField {
-	format: EFieldFormat;
-	label: string;
+	children?: Array<IField>;
+	format?: EFieldFormat;
+	id?: number;
+	label?: string;
 	name: string;
+	selected?: boolean;
 	type: string;
+	visible?: boolean;
 }
 export interface IFilter {
 	fieldName: string;

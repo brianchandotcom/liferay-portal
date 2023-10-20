@@ -7,25 +7,45 @@ import {fetch} from 'frontend-js-web';
 
 import {OBJECT_RELATIONSHIP} from './Constants';
 import {FDSViewType} from './FDSViews';
-import {IField, IPickList} from './types';
+import {EFieldFormat, IField, IPickList} from './types';
 import openDefaultFailureToast from './utils/openDefaultFailureToast';
+
+const INVALID_FIELDS = ['actions', 'scopeKey', 'x-class-name', 'x-schema-name'];
 
 const LOCALIZABLE_PROPERTY_SUFFIX = '_i18n';
 
-const NOT_ALLOWED_KEYS_AS_FIELD_NAME = [
-	'actions',
-	'scopeKey',
-	'x-class-name',
-	'x-schema-name',
-];
+interface IProperty {
+	$ref?: string;
+	format?: EFieldFormat;
+	type: string;
+}
 
-function getValidFields(properties: any): Array<IField> {
+interface IProperties {
+	[key: string]: IProperty;
+}
+
+interface ISchemas {
+	[key: string]: {
+		properties: IProperties;
+		type: string;
+	};
+}
+
+function getValidFields({
+	schemaName,
+	schemas,
+}: {
+	schemaName: string;
+	schemas: ISchemas;
+}): Array<IField> {
 	const fields: Array<IField> = [];
+
+	const properties: IProperties = schemas[schemaName]?.properties;
 
 	Object.keys(properties).map((propertyKey) => {
 		const propertyValue = properties[propertyKey];
 
-		if (NOT_ALLOWED_KEYS_AS_FIELD_NAME.includes(propertyKey)) {
+		if (INVALID_FIELDS.includes(propertyKey)) {
 			return;
 		}
 
@@ -39,12 +59,24 @@ function getValidFields(properties: any): Array<IField> {
 			return;
 		}
 
-		if (propertyValue.$ref) {
+		if (type === 'object' && propertyValue.$ref) {
+			if (Liferay.FeatureFlags['LPS-186871']) {
+				fields.push({
+					children: getValidFields({
+						schemaName: propertyValue.$ref.replace(/^.*\//, ''),
+						schemas,
+					}),
+					label: propertyKey,
+					name: propertyKey,
+					type,
+				});
+			}
+
 			return;
 		}
 
 		fields.push({
-			format: properties[propertyKey].format || type,
+			format: properties[propertyKey].format,
 			label: propertyKey,
 			name: propertyKey,
 			type,
@@ -69,18 +101,15 @@ export async function getFields(fdsView: FDSViewType) {
 
 	const responseJSON = await response.json();
 
-	const properties =
-		responseJSON?.components?.schemas[restSchema]?.properties;
+	const schemas = responseJSON?.components?.schemas;
 
-	if (!properties) {
+	if (!schemas?.[restSchema]?.properties) {
 		openDefaultFailureToast();
 
 		return [];
 	}
 
-	const fieldsArray: Array<IField> = getValidFields(properties);
-
-	return fieldsArray;
+	return getValidFields({schemaName: restSchema, schemas});
 }
 
 export async function getAllPicklists(

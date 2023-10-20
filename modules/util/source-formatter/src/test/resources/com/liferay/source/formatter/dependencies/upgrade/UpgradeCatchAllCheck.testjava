@@ -17,6 +17,13 @@ public class UpgradeCatchAllCheck {
 		CommerceOrderConstants.PAYMENT_STATUS_PAID;
 		CommerceOrderConstants.PAYMENT_STATUS_PENDING;
 
+		DestinationNames.BASE_PRICE_LIST;
+		DestinationNames.ORDER_STATUS;
+		DestinationNames.PAYMENT_STATUS;
+		DestinationNames.SHIPMENT_STATUS;
+		DestinationNames.STOCK_QUANTITY;
+		DestinationNames.SUBSCRIPTION_STATUS;
+
 		HtmlUtil.extractText(testEntry.getContent());
 
 		if (true) {

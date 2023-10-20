@@ -58,6 +58,20 @@ public class UpgradeCatchAllCheck {
 		_cpInstanceService.fetchByExternalReferenceCode(externalReferenceCode, companyId);
 	}
 
+	public void method(
+		long userId, long groupId, long parentCategoryId,
+		Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+		long vocabularyId, String[] categoryProperties,
+		ServiceContext serviceContext) {
+
+		AssetCategoryLocalServiceUtil.addCategory(null, userId, groupId, parentCategoryId, titleMap, descriptionMap, vocabularyId, categoryProperties, serviceContext);
+		AssetCategoryLocalServiceUtil.addCategory(1234, groupId, parentCategoryId, titleMap, descriptionMap, vocabularyId, categoryProperties, serviceContext);
+		_assetCategoryLocalService.addCategory(null, userId, groupId, parentCategoryId, titleMap, descriptionMap, vocabularyId, categoryProperties, serviceContext);
+	}
+
+	@Reference
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 

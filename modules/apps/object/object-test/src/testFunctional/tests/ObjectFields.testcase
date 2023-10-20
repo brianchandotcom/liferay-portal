@@ -545,14 +545,12 @@ definition {
 			PortletEntry.save();
 
 			ObjectAdmin.goToCustomObject(objectName = "CustomObjectB");
-
 		}
 
 		task ("Then the user is able to add an entry in aggregation field") {
 			AssertElementPresent(
 				key_entry = 0,
 				locator1 = "ObjectPortlet#ENTRY_VALUE");
-
 		}
 
 		task ("and When the user adds an entry in the relationship field") {
@@ -563,7 +561,7 @@ definition {
 					customField = "Custom Integer Field",
 					entry = 10);
 
-				ObjectPortlet.chooseEntryOnRelationshipField(entryOption = "${entryValue}");
+				ObjectPortlet.chooseEntryOnRelationshipField(entryOption = ${entryValue});
 
 				PortletEntry.save();
 			}
@@ -4219,8 +4217,6 @@ definition {
 		}
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	@description = "Verify that the Is Not Equals to operator is available when adding filters for the integer fields to select data from the object"
 	@priority = 4
 	test IsEqualToIsAvailableForIntegerFields {
@@ -4281,11 +4277,7 @@ definition {
 				filterValue = 1);
 		}
 	}
-=======
->>>>>>> ab669da (LPS-194538 Remove the IsEqualToIsAvailableForIntegerFields since the case is being covered by CanCreateEntryWithAggregationField)
 
-=======
->>>>>>> 9c791af (LPS-194538 Add task to add entries to ensure the aggregation field is working)
 	@description = "Verify that the Is Not Equals to operator is available when adding filters for the long integer fields to select data from the object"
 	@priority = 4
 	test IsNotEqualToIsAvailableForLongIntegerFields {
@@ -4329,11 +4321,8 @@ definition {
 				field = "Custom Long Integer Field",
 				fieldLabel = "Custom Aggregation",
 				fieldType = "Aggregation",
-<<<<<<< HEAD
-				functionType = "Max",
-=======
 				function = "Sum",
->>>>>>> 9c791af (LPS-194538 Add task to add entries to ensure the aggregation field is working)
+				functionType = "Max",
 				relationship = "Relationship");
 
 			ObjectAdmin.goToDetailsTab();
@@ -4505,6 +4494,8 @@ definition {
 				relationshipLabel = "Relationship",
 				relationshipName = "relationship",
 				relationshipType = "oneToMany");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectA");
 		}
 
 		task ("and Given the aggregation field") {
@@ -4519,21 +4510,63 @@ definition {
 				fieldType = "Aggregation",
 				functionType = "Count",
 				relationship = "Relationship");
+
+			ObjectAdmin.goToDetailsTab();
+
+			CreateObject.selectTitleField(fieldLabel = "Custom Aggregation");
+
+			CreateObject.saveObject();
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectB");
 		}
 
-		task ("When a new filter is created with the custom date field with range selected") {
+		task ("and Given a new filter created with the custom date field with range selected") {
+			ObjectAdmin.goToFieldsTab();
+
 			ObjectAdmin.goToFieldsDetails(label = "Custom Aggregation");
 
 			ObjectCustomViews.addNewAggregationFilterViaUI(
 				dateValueList = "01-01-2000, 01-01-2001",
 				filterBy = "Custom Date Field",
 				filterType = "Range");
+
+			ObjectField.save();
 		}
 
-		task ("Then the new filter is created") {
-			ObjectCustomViews.assertPresentEntriesOnFilters(
-				filterBy = "Custom Date Field",
-				filterValue = "2000-01-01, 2001-01-01");
+		task ("When the user adds an entry in aggregation fields") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObjectB");
+
+			LexiconEntry.gotoAdd();
+
+			PortletEntry.save();
+		}
+
+		task ("and When the user adds an entry in the relationship field") {
+			for (var entryValue : list "0,1") {
+				ObjectAdmin.goToCustomObject(objectName = "CustomObjectA");
+
+				LexiconEntry.gotoAdd();
+
+				Type.type(
+					locator1 = "ObjectPortlet#ADD_OBJECT_ENTRY",
+					value1 = "10/01/2000");
+
+				Click(locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY");
+
+				Click(
+					key_dropdownItem = ${entryValue},
+					locator1 = "ObjectPortlet#CHECK_UNCHECK_DROPDOWN_ITEM");
+
+				PortletEntry.save();
+			}
+		}
+
+		task ("Then the count is done in the aggregation field") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObjectA");
+
+			AssertElementPresent(
+				key_entry = 2,
+				locator1 = "ObjectPortlet#ENTRY_VALUE");
 		}
 	}
 

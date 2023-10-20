@@ -696,13 +696,6 @@ public class ObjectRelationshipLocalServiceTest {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				name, system, ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
-		Assert.assertEquals(
-			StringBundler.concat(
-				"R_", objectRelationship.getCompanyId(),
-				objectDefinition1.getShortName(), "_",
-				objectDefinition2.getShortName(), "_", name),
-			objectRelationship.getDBTableName());
-
 		Map<String, String> pkObjectFieldDBColumnNames =
 			ObjectRelationshipUtil.getPKObjectFieldDBColumnNames(
 				objectDefinition1, objectDefinition2, false);

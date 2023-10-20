@@ -12,6 +12,7 @@ import LiferayItems from '../../../common/services/liferay/common/interfaces/lif
 import {ResourceName} from '../../../common/services/liferay/object/enum/resourceName';
 import useGet from '../../../common/services/liferay/object/useGet';
 import getDealDates from '../utils/getDealDates';
+import getDealStatus from '../utils/getDealStatus';
 
 export default function useGetListItemsFromDealRegistration(
 	page: number,
@@ -48,7 +49,7 @@ export default function useGetListItemsFromDealRegistration(
 				...getDealDates(item.dateCreated),
 
 				[DealRegistrationColumnKey.STATUS]: item.leadStatus
-					? item.leadStatus
+					? getDealStatus(item.leadStatus)
 					: ' - ',
 				...getDealDates(item.dateCreated),
 				[DealRegistrationColumnKey.PRIMARY_PROSPECT_NAME]: `${
@@ -80,9 +81,6 @@ export default function useGetListItemsFromDealRegistration(
 					: ' - ',
 				[DealRegistrationColumnKey.TYPE]: item.leadType
 					? item.leadType
-					: ' - ',
-				[DealRegistrationColumnKey.CURRENCY]: item.currency
-					? item.currency.name
 					: ' - ',
 				[DealRegistrationColumnKey.PROSPECT_ADDRESS]: item.prospectAddress
 					? item.prospectAddress

@@ -953,7 +953,9 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			).put(
 				"name", RandomTestUtil.randomString()
 			).put(
-				"path", StringPool.FORWARD_SLASH + RandomTestUtil.randomString()
+				"path",
+				StringPool.FORWARD_SLASH +
+					StringUtil.toLowerCase(RandomTestUtil.randomString())
 			).put(
 				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
 				apiApplicationJSONObject.getLong("id")
@@ -1078,7 +1080,9 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			).put(
 				"name", RandomTestUtil.randomString()
 			).put(
-				"path", StringPool.FORWARD_SLASH + RandomTestUtil.randomString()
+				"path",
+				StringPool.FORWARD_SLASH +
+					StringUtil.toLowerCase(RandomTestUtil.randomString())
 			).put(
 				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
 				apiApplicationJSONObject.getLong("id")

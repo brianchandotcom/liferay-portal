@@ -246,7 +246,8 @@ public class DBPartitionUtil {
 		return true;
 	}
 
-	public static void replaceByTable(Connection connection, String viewName)
+	public static void replaceByTable(
+			Connection connection, boolean copyData, String viewName)
 		throws Exception {
 
 		long companyId = getCurrentCompanyId();
@@ -265,10 +266,12 @@ public class DBPartitionUtil {
 					_defaultPartitionName, _getPartitionName(companyId),
 					viewName));
 
-			statement.executeUpdate(
-				_getCopyDataSQL(
-					_defaultPartitionName, _getPartitionName(companyId),
-					viewName, StringPool.BLANK));
+			if (copyData) {
+				statement.executeUpdate(
+					_getCopyDataSQL(
+						_defaultPartitionName, _getPartitionName(companyId),
+						viewName, StringPool.BLANK));
+			}
 		}
 	}
 

@@ -125,8 +125,6 @@ public class ResourceOpenAPIParser {
 
 		String path = javaMethodSignature.getPath();
 		Operation operation = javaMethodSignature.getOperation();
-		Set<String> requestBodyMediaTypes =
-			javaMethodSignature.getRequestBodyMediaTypes();
 
 		Set<String> methodAnnotations = new TreeSet<>();
 
@@ -148,7 +146,11 @@ public class ResourceOpenAPIParser {
 				sb.append(operation.getDescription());
 				sb.append("\"");
 
-				if (requestBodyMediaTypes.contains("multipart/form-data")) {
+				if (javaMethodSignature.getRequestBodyMediaTypes(
+					).contains(
+						"multipart/form-data"
+					)) {
+
 					sb.append(", requestBody = ");
 					sb.append("@io.swagger.v3.oas.annotations.parameters.");
 					sb.append("RequestBody(content = @io.swagger.v3.oas.");
@@ -239,17 +241,7 @@ public class ResourceOpenAPIParser {
 		methodAnnotations.add("@javax.ws.rs." + annotationString);
 
 		String methodAnnotation = _getMethodAnnotationConsumes(
-			requestBodyMediaTypes);
-
-		String methodName = javaMethodSignature.getMethodName();
-
-		if (methodName.endsWith("PermissionsPage") &&
-			methodName.startsWith("put") && requestBodyMediaTypes.isEmpty()) {
-
-			methodAnnotations.add(
-				"@javax.ws.rs.Consumes({\"application/json\", \"application/x" +
-					"ml\"})");
-		}
+			javaMethodSignature.getRequestBodyMediaTypes());
 
 		if (Validator.isNotNull(methodAnnotation)) {
 			methodAnnotations.add(methodAnnotation);

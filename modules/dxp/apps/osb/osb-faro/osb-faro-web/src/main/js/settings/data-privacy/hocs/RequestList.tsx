@@ -469,7 +469,7 @@ const RequestList: React.FC<IRequestListProps> = ({
 									className='btn btn-primary button-root nav-btn '
 									href={`/o/proxy/download/data-control-tasks?projectGroupId=${groupId}&ids=${selectedItems
 										.map(({id}) => id)
-										.join('&ids=')})`}
+										.join('&ids=')}`}
 									onClick={() =>
 										analytics.track(
 											'Downloaded User Data Request'

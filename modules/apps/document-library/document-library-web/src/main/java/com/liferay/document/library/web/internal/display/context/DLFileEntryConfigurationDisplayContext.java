@@ -83,12 +83,12 @@ public class DLFileEntryConfigurationDisplayContext {
 	}
 
 	public int getUnlimitedMaxNumberOfPages() {
-		return DLFileEntryConfigurationConstants.UNLIMITED_MAX_NUMBER_OF_PAGES;
+		return DLFileEntryConfigurationConstants.MAX_NUMBER_OF_PAGES_UNLIMITED;
 	}
 
 	public long getUnlimitedPreviewableProcessorMaxSize() {
 		return DLFileEntryConfigurationConstants.
-			UNLIMITED_PREVIEWABLE_PROCESSOR_MAX_SIZE;
+			PREVIEWABLE_PROCESSOR_MAX_SIZE_UNLIMITED;
 	}
 
 	private String _getLimitExceededErrorMessage(long limitValue)

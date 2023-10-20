@@ -10,12 +10,12 @@ package com.liferay.document.library.constants;
  */
 public class DLFileEntryConfigurationConstants {
 
-	public static final int DEFAULT_MAX_NUMBER_OF_PAGES = 3;
+	public static final int MAX_NUMBER_OF_PAGES_DEFAULT = 3;
 
-	public static final long DEFAULT_PREVIEWABLE_PROCESSOR_MAX_SIZE = 20971520;
+	public static final long PREVIEWABLE_PROCESSOR_MAX_SIZE_DEFAULT = 20971520;
 
-	public static final int UNLIMITED_MAX_NUMBER_OF_PAGES = 0;
+	public static final int MAX_NUMBER_OF_PAGES_UNLIMITED = 0;
 
-	public static final long UNLIMITED_PREVIEWABLE_PROCESSOR_MAX_SIZE = -1;
+	public static final long PREVIEWABLE_PROCESSOR_MAX_SIZE_UNLIMITED = -1;
 
 }

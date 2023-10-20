@@ -121,7 +121,7 @@ public class DLFileEntryConfigurationUpgradeProcessTest {
 			_createDictionary(
 				_PREVIEWABLE_PROCESSOR_MAX_SIZE_KEY,
 				DLFileEntryConfigurationConstants.
-					DEFAULT_PREVIEWABLE_PROCESSOR_MAX_SIZE * 2));
+					PREVIEWABLE_PROCESSOR_MAX_SIZE_DEFAULT * 2));
 		_createSystemConfiguration(
 			_CLASS_NAME_PDF_PREVIEW_CONFIGURATION,
 			_createDictionary(_MAX_NUMBER_OF_PAGES_KEY, 10));
@@ -148,19 +148,19 @@ public class DLFileEntryConfigurationUpgradeProcessTest {
 					ExtendedObjectClassDefinition.Scope.SYSTEM),
 				10,
 				DLFileEntryConfigurationConstants.
-					DEFAULT_PREVIEWABLE_PROCESSOR_MAX_SIZE * 2);
+					PREVIEWABLE_PROCESSOR_MAX_SIZE_DEFAULT * 2);
 			_assertConfigurationValuesEquals(
 				_getDLFileEntryConfiguration(
 					ExtendedObjectClassDefinition.Scope.COMPANY),
 				8,
 				DLFileEntryConfigurationConstants.
-					DEFAULT_PREVIEWABLE_PROCESSOR_MAX_SIZE * 2);
+					PREVIEWABLE_PROCESSOR_MAX_SIZE_DEFAULT * 2);
 			_assertConfigurationValuesEquals(
 				_getDLFileEntryConfiguration(
 					ExtendedObjectClassDefinition.Scope.GROUP),
 				6,
 				DLFileEntryConfigurationConstants.
-					DEFAULT_PREVIEWABLE_PROCESSOR_MAX_SIZE * 2);
+					PREVIEWABLE_PROCESSOR_MAX_SIZE_DEFAULT * 2);
 
 			Assert.assertNull(
 				_getConfigurations(_CLASS_NAME_PDF_PREVIEW_CONFIGURATION));
@@ -226,13 +226,13 @@ public class DLFileEntryConfigurationUpgradeProcessTest {
 					ExtendedObjectClassDefinition.Scope.COMPANY),
 				8,
 				DLFileEntryConfigurationConstants.
-					DEFAULT_PREVIEWABLE_PROCESSOR_MAX_SIZE);
+					PREVIEWABLE_PROCESSOR_MAX_SIZE_DEFAULT);
 			_assertConfigurationValuesEquals(
 				_getDLFileEntryConfiguration(
 					ExtendedObjectClassDefinition.Scope.GROUP),
 				6,
 				DLFileEntryConfigurationConstants.
-					DEFAULT_PREVIEWABLE_PROCESSOR_MAX_SIZE);
+					PREVIEWABLE_PROCESSOR_MAX_SIZE_DEFAULT);
 
 			_assertConfigurationValuesEquals(
 				_getScopedConfiguration(
@@ -240,7 +240,7 @@ public class DLFileEntryConfigurationUpgradeProcessTest {
 					ExtendedObjectClassDefinition.Scope.COMPANY, 77777),
 				7,
 				DLFileEntryConfigurationConstants.
-					DEFAULT_PREVIEWABLE_PROCESSOR_MAX_SIZE);
+					PREVIEWABLE_PROCESSOR_MAX_SIZE_DEFAULT);
 
 			_assertConfigurationValuesEquals(
 				_getScopedConfiguration(
@@ -248,7 +248,7 @@ public class DLFileEntryConfigurationUpgradeProcessTest {
 					ExtendedObjectClassDefinition.Scope.GROUP, 55555),
 				5,
 				DLFileEntryConfigurationConstants.
-					DEFAULT_PREVIEWABLE_PROCESSOR_MAX_SIZE);
+					PREVIEWABLE_PROCESSOR_MAX_SIZE_DEFAULT);
 
 			Assert.assertNull(
 				_getConfigurations(_CLASS_NAME_PDF_PREVIEW_CONFIGURATION));
@@ -285,7 +285,7 @@ public class DLFileEntryConfigurationUpgradeProcessTest {
 					ExtendedObjectClassDefinition.Scope.COMPANY),
 				8,
 				DLFileEntryConfigurationConstants.
-					DEFAULT_PREVIEWABLE_PROCESSOR_MAX_SIZE);
+					PREVIEWABLE_PROCESSOR_MAX_SIZE_DEFAULT);
 			Assert.assertNull(
 				_getDLFileEntryConfiguration(
 					ExtendedObjectClassDefinition.Scope.GROUP));
@@ -328,7 +328,7 @@ public class DLFileEntryConfigurationUpgradeProcessTest {
 					ExtendedObjectClassDefinition.Scope.GROUP),
 				6,
 				DLFileEntryConfigurationConstants.
-					DEFAULT_PREVIEWABLE_PROCESSOR_MAX_SIZE);
+					PREVIEWABLE_PROCESSOR_MAX_SIZE_DEFAULT);
 
 			Assert.assertNull(
 				_getConfigurations(_CLASS_NAME_PDF_PREVIEW_CONFIGURATION));
@@ -383,7 +383,7 @@ public class DLFileEntryConfigurationUpgradeProcessTest {
 			_assertConfigurationValuesEquals(
 				_getDLFileEntryConfiguration(
 					ExtendedObjectClassDefinition.Scope.SYSTEM),
-				DLFileEntryConfigurationConstants.DEFAULT_MAX_NUMBER_OF_PAGES,
+				DLFileEntryConfigurationConstants.MAX_NUMBER_OF_PAGES_DEFAULT,
 				1000L);
 			Assert.assertNull(
 				_getDLFileEntryConfiguration(
@@ -422,7 +422,7 @@ public class DLFileEntryConfigurationUpgradeProcessTest {
 					ExtendedObjectClassDefinition.Scope.SYSTEM),
 				10,
 				DLFileEntryConfigurationConstants.
-					DEFAULT_PREVIEWABLE_PROCESSOR_MAX_SIZE);
+					PREVIEWABLE_PROCESSOR_MAX_SIZE_DEFAULT);
 			Assert.assertNull(
 				_getDLFileEntryConfiguration(
 					ExtendedObjectClassDefinition.Scope.COMPANY));

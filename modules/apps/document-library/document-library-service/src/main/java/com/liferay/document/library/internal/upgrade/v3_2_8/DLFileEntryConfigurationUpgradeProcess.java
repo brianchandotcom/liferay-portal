@@ -126,10 +126,10 @@ public class DLFileEntryConfigurationUpgradeProcess extends UpgradeProcess {
 				_getAttributeValue(
 					configuration, "maxNumberOfPages",
 					DLFileEntryConfigurationConstants.
-						DEFAULT_MAX_NUMBER_OF_PAGES),
+						MAX_NUMBER_OF_PAGES_DEFAULT),
 				Math.max(
 					DLFileEntryConfigurationConstants.
-						DEFAULT_PREVIEWABLE_PROCESSOR_MAX_SIZE,
+						PREVIEWABLE_PROCESSOR_MAX_SIZE_DEFAULT,
 					systemPreviewableProcessorMaxSize));
 
 			long companyId = _getAttributeValue(
@@ -166,12 +166,12 @@ public class DLFileEntryConfigurationUpgradeProcess extends UpgradeProcess {
 
 			int maxNumberOfPages = _getAttributeValue(
 				pdfPreviewConfiguration, "maxNumberOfPages",
-				DLFileEntryConfigurationConstants.DEFAULT_MAX_NUMBER_OF_PAGES);
+				DLFileEntryConfigurationConstants.MAX_NUMBER_OF_PAGES_DEFAULT);
 
 			long previewableProcessorMaxSize = _getAttributeValue(
 				dlFileEntryConfiguration, "previewableProcessorMaxSize",
 				DLFileEntryConfigurationConstants.
-					DEFAULT_PREVIEWABLE_PROCESSOR_MAX_SIZE);
+					PREVIEWABLE_PROCESSOR_MAX_SIZE_DEFAULT);
 
 			_configurationProvider.saveSystemConfiguration(
 				DLFileEntryConfiguration.class,
@@ -182,7 +182,7 @@ public class DLFileEntryConfigurationUpgradeProcess extends UpgradeProcess {
 		}
 
 		return DLFileEntryConfigurationConstants.
-			DEFAULT_PREVIEWABLE_PROCESSOR_MAX_SIZE;
+			PREVIEWABLE_PROCESSOR_MAX_SIZE_DEFAULT;
 	}
 
 	private static final String _CLASS_NAME_DLFILE_ENTRY_CONFIGURATION =

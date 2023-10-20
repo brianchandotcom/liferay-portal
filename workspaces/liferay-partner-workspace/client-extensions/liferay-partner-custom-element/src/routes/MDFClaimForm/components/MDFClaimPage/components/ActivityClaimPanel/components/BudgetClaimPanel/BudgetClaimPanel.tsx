@@ -62,7 +62,7 @@ const BudgetClaimPanel = ({
 					<div>
 						<PRMFormik.Field
 							component={PRMForm.InputCurrency}
-							description="Silver Partner can claim up to 50%"
+							description="Partners can claim up to 50%"
 							label="Invoice Amount"
 							name={`${budgetFieldName}.invoiceAmount`}
 							onAccept={(liferayFile: LiferayFile) => {

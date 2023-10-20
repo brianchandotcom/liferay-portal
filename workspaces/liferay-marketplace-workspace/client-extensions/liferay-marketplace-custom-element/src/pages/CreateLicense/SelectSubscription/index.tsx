@@ -18,10 +18,6 @@ const SelectSubscription = ({
 	onSelectSubscription,
 	selectedSubscriptionValue,
 }: SubscriptionSelectionProps) => {
-	const [subscription, setSubscription] = useState<
-		RadioCardContent<String>[]
-	>([]);
-
 	const avaliableKeys = {
 		provisionedCount: 1,
 		purchasedCount: 1,
@@ -44,7 +40,9 @@ const SelectSubscription = ({
 		},
 	];
 
-	setSubscription(contentList);
+	const [subscription, setSubscription] = useState<
+		RadioCardContent<String>[]
+	>(contentList);
 
 	const handleSelect = (radioOption: RadioOption<String>) => {
 		onSelectSubscription(String(radioOption.value));

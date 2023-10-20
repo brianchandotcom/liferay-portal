@@ -20,7 +20,7 @@ export default function useGetListItemsFromDealRegistration(
 	sort: string
 ) {
 	const swrResponse = useGet<LiferayItems<DealRegistrationDTO[]>>(
-		`/o/${LiferayAPIs.OBJECT}/${ResourceName.LEADS_SALESFORCE}?${filtersTerm}&page=${page}&pageSize=${pageSize}&sort=${sort}
+		`/o/${LiferayAPIs.OBJECT}/${ResourceName.LEADS_SALESFORCE}?&filter=${filtersTerm}&page=${page}&pageSize=${pageSize}&sort=${sort}
 			 `
 	);
 

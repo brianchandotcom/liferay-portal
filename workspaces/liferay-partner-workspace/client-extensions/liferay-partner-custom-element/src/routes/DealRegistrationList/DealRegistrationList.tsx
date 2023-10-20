@@ -32,15 +32,15 @@ export type DealRegistrationItem = {
 	[key in DealRegistrationColumnKey]?: any;
 };
 interface IProps {
-	getFilteredItems: (items: DealRegistrationItem[]) => DealRegistrationItem[];
+	dealRegistrationFilter?: string;
 	sort: string;
 }
 
 const BASE_PAGE = 1;
 const MAX_ITEMS = 200;
 
-const DealRegistrationList = ({getFilteredItems, sort}: IProps) => {
-	const {filters, filtersTerm, onFilter} = useFilters();
+const DealRegistrationList = ({dealRegistrationFilter, sort}: IProps) => {
+	const {filters, filtersTerm, onFilter} = useFilters(dealRegistrationFilter);
 
 	const [isVisibleModal, setIsVisibleModal] = useState(false);
 	const [modalContent, setModalContent] = useState<DealRegistrationItem>({});
@@ -69,8 +69,8 @@ const DealRegistrationList = ({getFilteredItems, sort}: IProps) => {
 
 	const actions = usePermissionActions(ObjectActionName.DEAL_REGISTRATION);
 
-	const filteredData = data.items && getFilteredItems(data.items);
-	const filteredCSVData = dataCSV.items && getFilteredItems(dataCSV.items);
+	const filteredData = data.items;
+	const filteredCSVData = dataCSV.items;
 
 	const columns = [
 		{

@@ -8,7 +8,7 @@ import {useEffect, useState} from 'react';
 import getSearchFilterTerm from '../../../common/utils/getSearchFilterTerm';
 import {INITIAL_FILTER} from '../utils/constants/initialFilter';
 
-export default function useFilters() {
+export default function useFilters(dealRegistrationFilter?: string) {
 	const [filters, setFilters] = useState(INITIAL_FILTER);
 
 	const [filtersTerm, setFilterTerm] = useState('');
@@ -19,12 +19,20 @@ export default function useFilters() {
 	useEffect(() => {
 		let initialFilter = '';
 
+		if (dealRegistrationFilter) {
+			initialFilter = initialFilter
+				? initialFilter.concat(dealRegistrationFilter)
+				: `${dealRegistrationFilter}`;
+		}
+
 		if (filters.searchTerm) {
-			initialFilter = getSearchFilterTerm(filters.searchTerm);
+			initialFilter = initialFilter
+				? initialFilter.concat(getSearchFilterTerm(filters.searchTerm))
+				: getSearchFilterTerm(filters.searchTerm);
 		}
 
 		setFilterTerm(initialFilter);
-	}, [filters.searchTerm, setFilters]);
+	}, [dealRegistrationFilter, filters.searchTerm, setFilters]);
 
 	return {filters, filtersTerm, onFilter};
 }

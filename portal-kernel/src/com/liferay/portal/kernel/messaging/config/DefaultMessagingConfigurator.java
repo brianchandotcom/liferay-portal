@@ -11,11 +11,11 @@ import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.module.util.ServiceLatch;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
@@ -110,12 +110,14 @@ public class DefaultMessagingConfigurator implements MessagingConfigurator {
 	}
 
 	protected void registerDestinations() {
+		DestinationFactory destinationFactory =
+			_destinationFactorySnapshot.get();
+
 		for (DestinationConfiguration destinationConfiguration :
 				_destinationConfigurations) {
 
 			_destinations.add(
-				_destinationFactory.createDestination(
-					destinationConfiguration));
+				destinationFactory.createDestination(destinationConfiguration));
 		}
 
 		if (_destinations.isEmpty()) {
@@ -133,10 +135,9 @@ public class DefaultMessagingConfigurator implements MessagingConfigurator {
 		}
 	}
 
-	private static volatile DestinationFactory _destinationFactory =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			DestinationFactory.class, DefaultMessagingConfigurator.class,
-			"_destinationFactory", false);
+	private static final Snapshot<DestinationFactory>
+		_destinationFactorySnapshot = new Snapshot<>(
+			DefaultMessagingConfigurator.class, DestinationFactory.class);
 
 	private final Set<DestinationConfiguration> _destinationConfigurations =
 		new HashSet<>();

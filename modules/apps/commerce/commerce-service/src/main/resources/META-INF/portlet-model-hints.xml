@@ -117,6 +117,7 @@
 		</field>
 		<field name="purchaseOrderNumber" type="String" />
 		<field name="requestedDeliveryDate" type="Date" />
+		<field name="shippable" type="boolean" />
 		<field name="shippingAmount" type="BigDecimal" />
 		<field name="shippingDiscountAmount" type="BigDecimal" />
 		<field name="shippingDiscountPercentageLevel1" type="BigDecimal" />

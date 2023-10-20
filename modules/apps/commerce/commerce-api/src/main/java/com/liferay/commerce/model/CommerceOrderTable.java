@@ -128,6 +128,8 @@ public class CommerceOrderTable extends BaseTable<CommerceOrderTable> {
 		createColumn(
 			"requestedDeliveryDate", Date.class, Types.TIMESTAMP,
 			Column.FLAG_DEFAULT);
+	public final Column<CommerceOrderTable, Boolean> shippable = createColumn(
+		"shippable", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<CommerceOrderTable, BigDecimal> shippingAmount =
 		createColumn(
 			"shippingAmount", BigDecimal.class, Types.DECIMAL,

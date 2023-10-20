@@ -70,7 +70,7 @@ public class CommerceOrderCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(153);
+		StringBundler sb = new StringBundler(155);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -138,6 +138,8 @@ public class CommerceOrderCacheModel
 		sb.append(purchaseOrderNumber);
 		sb.append(", requestedDeliveryDate=");
 		sb.append(requestedDeliveryDate);
+		sb.append(", shippable=");
+		sb.append(shippable);
 		sb.append(", shippingAmount=");
 		sb.append(shippingAmount);
 		sb.append(", shippingDiscountAmount=");
@@ -383,6 +385,7 @@ public class CommerceOrderCacheModel
 				new Date(requestedDeliveryDate));
 		}
 
+		commerceOrderImpl.setShippable(shippable);
 		commerceOrderImpl.setShippingAmount(shippingAmount);
 		commerceOrderImpl.setShippingDiscountAmount(shippingDiscountAmount);
 		commerceOrderImpl.setShippingDiscountPercentageLevel1(
@@ -537,6 +540,8 @@ public class CommerceOrderCacheModel
 		printedNote = objectInput.readUTF();
 		purchaseOrderNumber = objectInput.readUTF();
 		requestedDeliveryDate = objectInput.readLong();
+
+		shippable = objectInput.readBoolean();
 		shippingAmount = (BigDecimal)objectInput.readObject();
 		shippingDiscountAmount = (BigDecimal)objectInput.readObject();
 		shippingDiscountPercentageLevel1 = (BigDecimal)objectInput.readObject();
@@ -721,6 +726,8 @@ public class CommerceOrderCacheModel
 		}
 
 		objectOutput.writeLong(requestedDeliveryDate);
+
+		objectOutput.writeBoolean(shippable);
 		objectOutput.writeObject(shippingAmount);
 		objectOutput.writeObject(shippingDiscountAmount);
 		objectOutput.writeObject(shippingDiscountPercentageLevel1);
@@ -821,6 +828,7 @@ public class CommerceOrderCacheModel
 	public String printedNote;
 	public String purchaseOrderNumber;
 	public long requestedDeliveryDate;
+	public boolean shippable;
 	public BigDecimal shippingAmount;
 	public BigDecimal shippingDiscountAmount;
 	public BigDecimal shippingDiscountPercentageLevel1;

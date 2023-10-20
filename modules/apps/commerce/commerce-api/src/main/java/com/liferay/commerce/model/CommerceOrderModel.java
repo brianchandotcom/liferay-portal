@@ -577,6 +577,27 @@ public interface CommerceOrderModel
 	public void setRequestedDeliveryDate(Date requestedDeliveryDate);
 
 	/**
+	 * Returns the shippable of this commerce order.
+	 *
+	 * @return the shippable of this commerce order
+	 */
+	public boolean getShippable();
+
+	/**
+	 * Returns <code>true</code> if this commerce order is shippable.
+	 *
+	 * @return <code>true</code> if this commerce order is shippable; <code>false</code> otherwise
+	 */
+	public boolean isShippable();
+
+	/**
+	 * Sets whether this commerce order is shippable.
+	 *
+	 * @param shippable the shippable of this commerce order
+	 */
+	public void setShippable(boolean shippable);
+
+	/**
 	 * Returns the shipping amount of this commerce order.
 	 *
 	 * @return the shipping amount of this commerce order

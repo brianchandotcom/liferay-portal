@@ -190,6 +190,8 @@ public class CommerceOrderPersistenceTest {
 
 		newCommerceOrder.setRequestedDeliveryDate(RandomTestUtil.nextDate());
 
+		newCommerceOrder.setShippable(RandomTestUtil.randomBoolean());
+
 		newCommerceOrder.setShippingAmount(
 			new BigDecimal(RandomTestUtil.nextDouble()));
 
@@ -416,6 +418,9 @@ public class CommerceOrderPersistenceTest {
 				existingCommerceOrder.getRequestedDeliveryDate()),
 			Time.getShortTimestamp(
 				newCommerceOrder.getRequestedDeliveryDate()));
+		Assert.assertEquals(
+			existingCommerceOrder.isShippable(),
+			newCommerceOrder.isShippable());
 		Assert.assertEquals(
 			existingCommerceOrder.getShippingAmount(),
 			newCommerceOrder.getShippingAmount());
@@ -753,9 +758,10 @@ public class CommerceOrderPersistenceTest {
 			"manuallyAdjusted", true, "orderDate", true, "orderStatus", true,
 			"paymentCommerceTermEntryName", true, "paymentStatus", true,
 			"printedNote", true, "purchaseOrderNumber", true,
-			"requestedDeliveryDate", true, "shippingAmount", true,
-			"shippingDiscountAmount", true, "shippingDiscountPercentageLevel1",
-			true, "shippingDiscountPercentageLevel2", true,
+			"requestedDeliveryDate", true, "shippable", true, "shippingAmount",
+			true, "shippingDiscountAmount", true,
+			"shippingDiscountPercentageLevel1", true,
+			"shippingDiscountPercentageLevel2", true,
 			"shippingDiscountPercentageLevel3", true,
 			"shippingDiscountPercentageLevel4", true,
 			"shippingDiscountPercentageLevel1WithTaxAmount", true,
@@ -1147,6 +1153,8 @@ public class CommerceOrderPersistenceTest {
 		commerceOrder.setPurchaseOrderNumber(RandomTestUtil.randomString());
 
 		commerceOrder.setRequestedDeliveryDate(RandomTestUtil.nextDate());
+
+		commerceOrder.setShippable(RandomTestUtil.randomBoolean());
 
 		commerceOrder.setShippingAmount(
 			new BigDecimal(RandomTestUtil.nextDouble()));

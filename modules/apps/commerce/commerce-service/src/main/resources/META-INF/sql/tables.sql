@@ -113,6 +113,7 @@ create table CommerceOrder (
 	printedNote STRING null,
 	purchaseOrderNumber VARCHAR(75) null,
 	requestedDeliveryDate DATE null,
+	shippable BOOLEAN,
 	shippingAmount BIGDECIMAL null,
 	shippingDiscountAmount BIGDECIMAL null,
 	shippingDiscountPercentLevel1 BIGDECIMAL null,

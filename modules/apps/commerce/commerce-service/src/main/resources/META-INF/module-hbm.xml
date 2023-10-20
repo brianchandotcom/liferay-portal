@@ -83,6 +83,7 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="printedNote" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="purchaseOrderNumber" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="requestedDeliveryDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="shippable" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="shippingAmount" type="org.hibernate.type.BigDecimalType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="shippingDiscountAmount" type="org.hibernate.type.BigDecimalType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" column="shippingDiscountPercentLevel1" name="shippingDiscountPercentageLevel1" type="org.hibernate.type.BigDecimalType" />

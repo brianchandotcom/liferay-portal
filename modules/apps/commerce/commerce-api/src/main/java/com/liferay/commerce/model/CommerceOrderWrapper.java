@@ -80,6 +80,7 @@ public class CommerceOrderWrapper
 		attributes.put("printedNote", getPrintedNote());
 		attributes.put("purchaseOrderNumber", getPurchaseOrderNumber());
 		attributes.put("requestedDeliveryDate", getRequestedDeliveryDate());
+		attributes.put("shippable", isShippable());
 		attributes.put("shippingAmount", getShippingAmount());
 		attributes.put("shippingDiscountAmount", getShippingDiscountAmount());
 		attributes.put(
@@ -391,6 +392,12 @@ public class CommerceOrderWrapper
 
 		if (requestedDeliveryDate != null) {
 			setRequestedDeliveryDate(requestedDeliveryDate);
+		}
+
+		Boolean shippable = (Boolean)attributes.get("shippable");
+
+		if (shippable != null) {
+			setShippable(shippable);
 		}
 
 		BigDecimal shippingAmount = (BigDecimal)attributes.get(
@@ -1094,6 +1101,16 @@ public class CommerceOrderWrapper
 		return model.getScopeGroupId();
 	}
 
+	/**
+	 * Returns the shippable of this commerce order.
+	 *
+	 * @return the shippable of this commerce order
+	 */
+	@Override
+	public boolean getShippable() {
+		return model.getShippable();
+	}
+
 	@Override
 	public CommerceAddress getShippingAddress()
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1765,6 +1782,16 @@ public class CommerceOrderWrapper
 		return model.isScheduled();
 	}
 
+	/**
+	 * Returns <code>true</code> if this commerce order is shippable.
+	 *
+	 * @return <code>true</code> if this commerce order is shippable; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isShippable() {
+		return model.isShippable();
+	}
+
 	@Override
 	public boolean isSubscription() {
 		return model.isSubscription();
@@ -2090,6 +2117,16 @@ public class CommerceOrderWrapper
 	@Override
 	public void setRequestedDeliveryDate(Date requestedDeliveryDate) {
 		model.setRequestedDeliveryDate(requestedDeliveryDate);
+	}
+
+	/**
+	 * Sets whether this commerce order is shippable.
+	 *
+	 * @param shippable the shippable of this commerce order
+	 */
+	@Override
+	public void setShippable(boolean shippable) {
+		model.setShippable(shippable);
 	}
 
 	/**

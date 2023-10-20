@@ -92,7 +92,7 @@ public class CommerceOrderModelImpl
 		{"paymentStatus", Types.INTEGER}, {"printedNote", Types.VARCHAR},
 		{"purchaseOrderNumber", Types.VARCHAR},
 		{"requestedDeliveryDate", Types.TIMESTAMP},
-		{"shippingAmount", Types.DECIMAL},
+		{"shippable", Types.BOOLEAN}, {"shippingAmount", Types.DECIMAL},
 		{"shippingDiscountAmount", Types.DECIMAL},
 		{"shippingDiscountPercentLevel1", Types.DECIMAL},
 		{"shippingDiscountPercentLevel2", Types.DECIMAL},
@@ -168,6 +168,7 @@ public class CommerceOrderModelImpl
 		TABLE_COLUMNS_MAP.put("printedNote", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("purchaseOrderNumber", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("requestedDeliveryDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("shippable", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("shippingAmount", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("shippingDiscountAmount", Types.DECIMAL);
 		TABLE_COLUMNS_MAP.put("shippingDiscountPercentLevel1", Types.DECIMAL);
@@ -214,7 +215,7 @@ public class CommerceOrderModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CommerceOrder (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commerceOrderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,billingAddressId LONG,commerceAccountId LONG,commerceCurrencyId LONG,commerceOrderTypeId LONG,commerceShippingMethodId LONG,deliveryCommerceTermEntryId LONG,paymentCommerceTermEntryId LONG,shippingAddressId LONG,advanceStatus VARCHAR(75) null,commercePaymentMethodKey VARCHAR(75) null,couponCode VARCHAR(75) null,deliveryCTermEntryDescription TEXT null,deliveryCommerceTermEntryName VARCHAR(75) null,lastPriceUpdateDate DATE null,manuallyAdjusted BOOLEAN,orderDate DATE null,orderStatus INTEGER,paymentCTermEntryDescription TEXT null,paymentCommerceTermEntryName VARCHAR(75) null,paymentStatus INTEGER,printedNote STRING null,purchaseOrderNumber VARCHAR(75) null,requestedDeliveryDate DATE null,shippingAmount BIGDECIMAL null,shippingDiscountAmount BIGDECIMAL null,shippingDiscountPercentLevel1 BIGDECIMAL null,shippingDiscountPercentLevel2 BIGDECIMAL null,shippingDiscountPercentLevel3 BIGDECIMAL null,shippingDiscountPercentLevel4 BIGDECIMAL null,shippingDiscountPctLev1WithTax BIGDECIMAL null,shippingDiscountPctLev2WithTax BIGDECIMAL null,shippingDiscountPctLev3WithTax BIGDECIMAL null,shippingDiscountPctLev4WithTax BIGDECIMAL null,shippingDiscountWithTaxAmount BIGDECIMAL null,shippingOptionName VARCHAR(255) null,shippingWithTaxAmount BIGDECIMAL null,subtotal BIGDECIMAL null,subtotalDiscountAmount BIGDECIMAL null,subtotalDiscountPercentLevel1 BIGDECIMAL null,subtotalDiscountPercentLevel2 BIGDECIMAL null,subtotalDiscountPercentLevel3 BIGDECIMAL null,subtotalDiscountPercentLevel4 BIGDECIMAL null,subtotalDiscountPctLev1WithTax BIGDECIMAL null,subtotalDiscountPctLev2WithTax BIGDECIMAL null,subtotalDiscountPctLev3WithTax BIGDECIMAL null,subtotalDiscountPctLev4WithTax BIGDECIMAL null,subtotalDiscountWithTaxAmount BIGDECIMAL null,subtotalWithTaxAmount BIGDECIMAL null,taxAmount BIGDECIMAL null,total BIGDECIMAL null,totalDiscountAmount BIGDECIMAL null,totalDiscountPercentageLevel1 BIGDECIMAL null,totalDiscountPercentageLevel2 BIGDECIMAL null,totalDiscountPercentageLevel3 BIGDECIMAL null,totalDiscountPercentageLevel4 BIGDECIMAL null,totalDiscountPctLev1WithTax BIGDECIMAL null,totalDiscountPctLev2WithTax BIGDECIMAL null,totalDiscountPctLev3WithTax BIGDECIMAL null,totalDiscountPctLev4WithTax BIGDECIMAL null,totalDiscountWithTaxAmount BIGDECIMAL null,totalWithTaxAmount BIGDECIMAL null,transactionId TEXT null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table CommerceOrder (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,commerceOrderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,billingAddressId LONG,commerceAccountId LONG,commerceCurrencyId LONG,commerceOrderTypeId LONG,commerceShippingMethodId LONG,deliveryCommerceTermEntryId LONG,paymentCommerceTermEntryId LONG,shippingAddressId LONG,advanceStatus VARCHAR(75) null,commercePaymentMethodKey VARCHAR(75) null,couponCode VARCHAR(75) null,deliveryCTermEntryDescription TEXT null,deliveryCommerceTermEntryName VARCHAR(75) null,lastPriceUpdateDate DATE null,manuallyAdjusted BOOLEAN,orderDate DATE null,orderStatus INTEGER,paymentCTermEntryDescription TEXT null,paymentCommerceTermEntryName VARCHAR(75) null,paymentStatus INTEGER,printedNote STRING null,purchaseOrderNumber VARCHAR(75) null,requestedDeliveryDate DATE null,shippable BOOLEAN,shippingAmount BIGDECIMAL null,shippingDiscountAmount BIGDECIMAL null,shippingDiscountPercentLevel1 BIGDECIMAL null,shippingDiscountPercentLevel2 BIGDECIMAL null,shippingDiscountPercentLevel3 BIGDECIMAL null,shippingDiscountPercentLevel4 BIGDECIMAL null,shippingDiscountPctLev1WithTax BIGDECIMAL null,shippingDiscountPctLev2WithTax BIGDECIMAL null,shippingDiscountPctLev3WithTax BIGDECIMAL null,shippingDiscountPctLev4WithTax BIGDECIMAL null,shippingDiscountWithTaxAmount BIGDECIMAL null,shippingOptionName VARCHAR(255) null,shippingWithTaxAmount BIGDECIMAL null,subtotal BIGDECIMAL null,subtotalDiscountAmount BIGDECIMAL null,subtotalDiscountPercentLevel1 BIGDECIMAL null,subtotalDiscountPercentLevel2 BIGDECIMAL null,subtotalDiscountPercentLevel3 BIGDECIMAL null,subtotalDiscountPercentLevel4 BIGDECIMAL null,subtotalDiscountPctLev1WithTax BIGDECIMAL null,subtotalDiscountPctLev2WithTax BIGDECIMAL null,subtotalDiscountPctLev3WithTax BIGDECIMAL null,subtotalDiscountPctLev4WithTax BIGDECIMAL null,subtotalDiscountWithTaxAmount BIGDECIMAL null,subtotalWithTaxAmount BIGDECIMAL null,taxAmount BIGDECIMAL null,total BIGDECIMAL null,totalDiscountAmount BIGDECIMAL null,totalDiscountPercentageLevel1 BIGDECIMAL null,totalDiscountPercentageLevel2 BIGDECIMAL null,totalDiscountPercentageLevel3 BIGDECIMAL null,totalDiscountPercentageLevel4 BIGDECIMAL null,totalDiscountPctLev1WithTax BIGDECIMAL null,totalDiscountPctLev2WithTax BIGDECIMAL null,totalDiscountPctLev3WithTax BIGDECIMAL null,totalDiscountPctLev4WithTax BIGDECIMAL null,totalDiscountWithTaxAmount BIGDECIMAL null,totalWithTaxAmount BIGDECIMAL null,transactionId TEXT null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrder";
 
@@ -413,6 +414,8 @@ public class CommerceOrderModelImpl
 			attributeGetterFunctions.put(
 				"requestedDeliveryDate",
 				CommerceOrder::getRequestedDeliveryDate);
+			attributeGetterFunctions.put(
+				"shippable", CommerceOrder::getShippable);
 			attributeGetterFunctions.put(
 				"shippingAmount", CommerceOrder::getShippingAmount);
 			attributeGetterFunctions.put(
@@ -677,6 +680,10 @@ public class CommerceOrderModelImpl
 				"requestedDeliveryDate",
 				(BiConsumer<CommerceOrder, Date>)
 					CommerceOrder::setRequestedDeliveryDate);
+			attributeSetterBiConsumers.put(
+				"shippable",
+				(BiConsumer<CommerceOrder, Boolean>)
+					CommerceOrder::setShippable);
 			attributeSetterBiConsumers.put(
 				"shippingAmount",
 				(BiConsumer<CommerceOrder, BigDecimal>)
@@ -1554,6 +1561,27 @@ public class CommerceOrderModelImpl
 		}
 
 		_requestedDeliveryDate = requestedDeliveryDate;
+	}
+
+	@JSON
+	@Override
+	public boolean getShippable() {
+		return _shippable;
+	}
+
+	@JSON
+	@Override
+	public boolean isShippable() {
+		return _shippable;
+	}
+
+	@Override
+	public void setShippable(boolean shippable) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_shippable = shippable;
 	}
 
 	@JSON
@@ -2457,6 +2485,7 @@ public class CommerceOrderModelImpl
 		commerceOrderImpl.setPrintedNote(getPrintedNote());
 		commerceOrderImpl.setPurchaseOrderNumber(getPurchaseOrderNumber());
 		commerceOrderImpl.setRequestedDeliveryDate(getRequestedDeliveryDate());
+		commerceOrderImpl.setShippable(isShippable());
 		commerceOrderImpl.setShippingAmount(getShippingAmount());
 		commerceOrderImpl.setShippingDiscountAmount(
 			getShippingDiscountAmount());
@@ -2608,6 +2637,8 @@ public class CommerceOrderModelImpl
 			this.<String>getColumnOriginalValue("purchaseOrderNumber"));
 		commerceOrderImpl.setRequestedDeliveryDate(
 			this.<Date>getColumnOriginalValue("requestedDeliveryDate"));
+		commerceOrderImpl.setShippable(
+			this.<Boolean>getColumnOriginalValue("shippable"));
 		commerceOrderImpl.setShippingAmount(
 			this.<BigDecimal>getColumnOriginalValue("shippingAmount"));
 		commerceOrderImpl.setShippingDiscountAmount(
@@ -3001,6 +3032,8 @@ public class CommerceOrderModelImpl
 			commerceOrderCacheModel.requestedDeliveryDate = Long.MIN_VALUE;
 		}
 
+		commerceOrderCacheModel.shippable = isShippable();
+
 		commerceOrderCacheModel.shippingAmount = getShippingAmount();
 
 		commerceOrderCacheModel.shippingDiscountAmount =
@@ -3240,6 +3273,7 @@ public class CommerceOrderModelImpl
 	private String _printedNote;
 	private String _purchaseOrderNumber;
 	private Date _requestedDeliveryDate;
+	private boolean _shippable;
 	private BigDecimal _shippingAmount;
 	private BigDecimal _shippingDiscountAmount;
 	private BigDecimal _shippingDiscountPercentageLevel1;
@@ -3359,6 +3393,7 @@ public class CommerceOrderModelImpl
 		_columnOriginalValues.put("purchaseOrderNumber", _purchaseOrderNumber);
 		_columnOriginalValues.put(
 			"requestedDeliveryDate", _requestedDeliveryDate);
+		_columnOriginalValues.put("shippable", _shippable);
 		_columnOriginalValues.put("shippingAmount", _shippingAmount);
 		_columnOriginalValues.put(
 			"shippingDiscountAmount", _shippingDiscountAmount);

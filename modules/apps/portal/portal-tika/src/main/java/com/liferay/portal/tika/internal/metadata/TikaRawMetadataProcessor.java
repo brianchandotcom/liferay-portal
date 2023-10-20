@@ -242,7 +242,7 @@ public class TikaRawMetadataProcessor implements RawMetadataProcessor {
 				metadata.set(
 					HttpHeaders.CONTENT_TYPE,
 					StringUtil.replace(
-						mimeType, ContentTypes.TEXT_PLAIN,
+						contentType, ContentTypes.TEXT_PLAIN,
 						ContentTypes.IMAGE_SVG_XML));
 			}
 		}

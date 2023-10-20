@@ -5,7 +5,7 @@
 
 package com.liferay.portal.kernel.model.portlet;
 
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import javax.portlet.PortletRequest;
 
@@ -17,7 +17,10 @@ public class PortletDependencyFactoryUtil {
 	public static PortletDependency createPortletDependency(
 		String name, String scope, String version) {
 
-		return _portletDependencyFactory.createPortletDependency(
+		PortletDependencyFactory portletDependencyFactory =
+			_portletDependencyFactorySnapshot.get();
+
+		return portletDependencyFactory.createPortletDependency(
 			name, scope, version);
 	}
 
@@ -25,13 +28,15 @@ public class PortletDependencyFactoryUtil {
 		String name, String scope, String version, String markup,
 		PortletRequest portletRequest) {
 
-		return _portletDependencyFactory.createPortletDependency(
+		PortletDependencyFactory portletDependencyFactory =
+			_portletDependencyFactorySnapshot.get();
+
+		return portletDependencyFactory.createPortletDependency(
 			name, scope, version, markup, portletRequest);
 	}
 
-	private static volatile PortletDependencyFactory _portletDependencyFactory =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			PortletDependencyFactory.class, PortletDependencyFactoryUtil.class,
-			"_portletDependencyFactory", false);
+	private static final Snapshot<PortletDependencyFactory>
+		_portletDependencyFactorySnapshot = new Snapshot<>(
+			PortletDependencyFactoryUtil.class, PortletDependencyFactory.class);
 
 }

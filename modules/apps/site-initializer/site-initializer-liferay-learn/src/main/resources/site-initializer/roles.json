@@ -1,47 +1,18 @@
 [
 	{
 		"actions": [
-		],
-		"name": "Test Role 1",
-		"name_i18n": {
-			"en-US": "Test Role 1"
-		},
-		"scope": 1,
-		"type": 1
-	},
-	{
-		"actions": [
 			{
 				"actionId": "VIEW",
-				"resource": "com.liferay.portal.kernel.model.Role",
+				"resource": "com.liferay.expando.kernel.model.ExpandoColumn",
 				"scope": 1
 			}
 		],
-		"name": "Test Role 2",
+		"name": "Guest",
 		"name_i18n": {
-			"en-US": "Test Role 2"
+			"en-US": "Guest"
 		},
-		"scope": 1,
-		"type": 6
-	},
-	{
-		"actions": [
-		],
-		"name": "Test Role 3",
-		"name_i18n": {
-			"en-US": "Test Role 3"
-		},
-		"scope": 1,
+		"scope": 4,
 		"type": 1
-	},
-	{
-		"actions": [
-		],
-		"name": "Test Role 4",
-		"name_i18n": {
-			"en-US": "Test Role 4"
-		},
-		"scope": 3,
-		"type": 2
 	}
+
 ]

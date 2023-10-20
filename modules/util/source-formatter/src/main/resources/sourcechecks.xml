@@ -1639,10 +1639,6 @@
 			<description name="Replace constants of CommerceAccountPortletKeys by constants of AccountPortletKeys" />
 			<weight>2</weight>
 		</check>
-		<check name="UpgradeJavaAddFileEntryParameterCheck">
-			<category name="Upgrade" />
-			<description name="Fill the new parameter of the method 'addFileEntry' of 'DLAppLocalServiceUtil' and 'DLAppLocalService'" />
-		</check>
 		<check name="UpgradeJavaAssetEntryAssetCategoriesCheck">
 			<category name="Upgrade" />
 			<description name="Replaces methods referring to class `AssetEntryAssetCategory` in class `AssetCategoryLocalService` with equivalent methods in class `AssetEntryAssetCategoryRelLocalService`." />

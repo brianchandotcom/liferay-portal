@@ -743,7 +743,8 @@ public class ResourcePermissionLocalServiceImpl
 				resourcePermissionsMap.computeIfAbsent(
 					resourcePermission.getName(), key -> new ArrayList<>());
 
-			resourcePermissions.add(resourcePermission);
+			resourcePermissions.add(
+				(ResourcePermission)resourcePermission.clone());
 		}
 
 		return resourcePermissionsMap;

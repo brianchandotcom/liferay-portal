@@ -6,33 +6,30 @@
 package com.liferay.commerce.machine.learning.internal.recommendation.search.index;
 
 import com.liferay.commerce.machine.learning.internal.search.api.CommerceMLIndexer;
-import com.liferay.commerce.machine.learning.internal.search.index.helper.CommerceMLSearchEngineHelper;
-import com.liferay.portal.search.index.IndexNameBuilder;
+import com.liferay.commerce.machine.learning.internal.search.index.helper.BaseCommerceMLIndexer;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Riccardo Ferrari
  */
 @Component(service = CommerceMLIndexer.class)
-public class UserCommerceMLRecommendationIndexer implements CommerceMLIndexer {
+public class UserCommerceMLRecommendationIndexer extends BaseCommerceMLIndexer {
 
 	@Override
 	public void createIndex(long companyId) {
-		_commerceMLSearchEngineHelper.createIndex(
-			getIndexName(companyId), _INDEX_MAPPING_FILE_NAME);
+		createIndex(getIndexName(companyId), _INDEX_MAPPING_FILE_NAME);
 	}
 
 	@Override
 	public void dropIndex(long companyId) {
-		_commerceMLSearchEngineHelper.dropIndex(getIndexName(companyId));
+		dropIndex(getIndexName(companyId));
 	}
 
 	@Override
 	public String getIndexName(long companyId) {
 		return String.format(
-			_INDEX_NAME_PATTERN, _indexNameBuilder.getIndexName(companyId));
+			_INDEX_NAME_PATTERN, indexNameBuilder.getIndexName(companyId));
 	}
 
 	private static final String _INDEX_MAPPING_FILE_NAME =
@@ -40,11 +37,5 @@ public class UserCommerceMLRecommendationIndexer implements CommerceMLIndexer {
 
 	private static final String _INDEX_NAME_PATTERN =
 		"%s-user-commerce-ml-recommendation";
-
-	@Reference
-	private CommerceMLSearchEngineHelper _commerceMLSearchEngineHelper;
-
-	@Reference
-	private IndexNameBuilder _indexNameBuilder;
 
 }

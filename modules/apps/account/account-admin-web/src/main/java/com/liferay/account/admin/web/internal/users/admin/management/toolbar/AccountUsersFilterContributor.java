@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Drew Brokke
  */
 @Component(
-	property = "filter.contributor.key= " + UsersAdminManagementToolbarKeys.VIEW_FLAT_USERS,
+	property = "filter.contributor.key=" + UsersAdminManagementToolbarKeys.VIEW_FLAT_USERS,
 	service = FilterContributor.class
 )
 public class AccountUsersFilterContributor implements FilterContributor {

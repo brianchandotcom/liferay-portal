@@ -5,8 +5,8 @@
 
 package com.liferay.portal.kernel.cluster;
 
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.MethodHandler;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.concurrent.Future;
 
@@ -19,33 +19,47 @@ public class ClusterMasterExecutorUtil {
 		ClusterMasterTokenTransitionListener
 			clusterMasterTokenTransitionListener) {
 
-		_clusterMasterExecutor.addClusterMasterTokenTransitionListener(
+		ClusterMasterExecutor clusterMasterExecutor =
+			_clusterMasterExecutorSnapshot.get();
+
+		clusterMasterExecutor.addClusterMasterTokenTransitionListener(
 			clusterMasterTokenTransitionListener);
 	}
 
 	public static <T> Future<T> executeOnMaster(MethodHandler methodHandler) {
-		return _clusterMasterExecutor.executeOnMaster(methodHandler);
+		ClusterMasterExecutor clusterMasterExecutor =
+			_clusterMasterExecutorSnapshot.get();
+
+		return clusterMasterExecutor.executeOnMaster(methodHandler);
 	}
 
 	public static boolean isEnabled() {
-		return _clusterMasterExecutor.isEnabled();
+		ClusterMasterExecutor clusterMasterExecutor =
+			_clusterMasterExecutorSnapshot.get();
+
+		return clusterMasterExecutor.isEnabled();
 	}
 
 	public static boolean isMaster() {
-		return _clusterMasterExecutor.isMaster();
+		ClusterMasterExecutor clusterMasterExecutor =
+			_clusterMasterExecutorSnapshot.get();
+
+		return clusterMasterExecutor.isMaster();
 	}
 
 	public static void removeClusterMasterTokenTransitionListener(
 		ClusterMasterTokenTransitionListener
 			clusterMasterTokenTransitionListener) {
 
-		_clusterMasterExecutor.removeClusterMasterTokenTransitionListener(
+		ClusterMasterExecutor clusterMasterExecutor =
+			_clusterMasterExecutorSnapshot.get();
+
+		clusterMasterExecutor.removeClusterMasterTokenTransitionListener(
 			clusterMasterTokenTransitionListener);
 	}
 
-	private static volatile ClusterMasterExecutor _clusterMasterExecutor =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			ClusterMasterExecutor.class, ClusterMasterExecutorUtil.class,
-			"_clusterMasterExecutor", false);
+	private static final Snapshot<ClusterMasterExecutor>
+		_clusterMasterExecutorSnapshot = new Snapshot<>(
+			ClusterMasterExecutorUtil.class, ClusterMasterExecutor.class);
 
 }

@@ -181,8 +181,20 @@ public class ObjectRelationshipLocalServiceTest {
 		_objectRelationshipLocalService.deleteObjectRelationship(
 			objectRelationship);
 
+		String objectFieldName1 = "a" + RandomTestUtil.randomString();
 		String objectFieldName2 = "a" + RandomTestUtil.randomString();
 
+		ObjectFieldUtil.addCustomObjectField(
+			new TextObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				objectFieldName1
+			).objectDefinitionId(
+				_objectDefinition1.getObjectDefinitionId()
+			).userId(
+				TestPropsValues.getUserId()
+			).build());
 		ObjectFieldUtil.addCustomObjectField(
 			new TextObjectFieldBuilder(
 			).labelMap(
@@ -195,6 +207,21 @@ public class ObjectRelationshipLocalServiceTest {
 				TestPropsValues.getUserId()
 			).build());
 
+		AssertUtils.assertFailure(
+			ObjectRelationshipNameException.class,
+			StringBundler.concat(
+				"There is already a field with this name in the ",
+				_objectDefinition1.getShortName(),
+				" object definition. Object fields and object relationships ",
+				"can’t have the same name. Please, choose another name."),
+			() -> _objectRelationshipLocalService.addObjectRelationship(
+				TestPropsValues.getUserId(),
+				_objectDefinition1.getObjectDefinitionId(),
+				_objectDefinition2.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				objectFieldName1, false,
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
 		AssertUtils.assertFailure(
 			ObjectRelationshipNameException.class,
 			StringBundler.concat(

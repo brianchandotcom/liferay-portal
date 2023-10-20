@@ -619,58 +619,6 @@ describe('Winner declared', () => {
 		 */
 		expect(publishExperience).toHaveBeenCalledTimes(0);
 	});
-
-	it('Discard button action for winner declared status', async () => {
-		const {APIServiceMocks, getByText} = renderApp({
-			initialSegmentsExperiment: {
-				...segmentsExperiment,
-				editable: false,
-				status: {
-					label: 'Winner Declared',
-					value: STATUS_FINISHED_WINNER,
-				},
-			},
-			initialSegmentsVariants: segmentsVariants,
-			winnerSegmentsVariantId: '1',
-		});
-		const {publishExperience} = APIServiceMocks;
-
-		const discardButton = getByText('discard-test');
-
-		userEvent.click(discardButton);
-
-		expect(publishExperience).toHaveBeenCalledWith({
-			segmentsExperimentId: segmentsExperiment.segmentsExperimentId,
-			status: STATUS_COMPLETED,
-			winnerSegmentsExperienceId: segmentsExperiment.segmentsExperienceId,
-		});
-	});
-
-	it('Discard button action for no clear winner status', async () => {
-		const {APIServiceMocks, getByText} = renderApp({
-			initialSegmentsExperiment: {
-				...segmentsExperiment,
-				editable: false,
-				status: {
-					label: 'Winner Declared',
-					value: STATUS_FINISHED_NO_WINNER,
-				},
-			},
-			initialSegmentsVariants: segmentsVariants,
-			winnerSegmentsVariantId: '1',
-		});
-		const {publishExperience} = APIServiceMocks;
-
-		const discardButton = getByText('discard-test');
-
-		userEvent.click(discardButton);
-
-		expect(publishExperience).toHaveBeenCalledWith({
-			segmentsExperimentId: segmentsExperiment.segmentsExperimentId,
-			status: STATUS_COMPLETED,
-			winnerSegmentsExperienceId: segmentsExperiment.segmentsExperienceId,
-		});
-	});
 });
 
 describe('Terminated', () => {

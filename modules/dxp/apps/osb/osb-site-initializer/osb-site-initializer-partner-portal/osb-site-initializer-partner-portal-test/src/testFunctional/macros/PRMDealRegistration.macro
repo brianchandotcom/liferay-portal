@@ -1,0 +1,181 @@
+definition {
+
+	macro createNewDeal {
+		WaitForPageLoad();
+
+		PRMDealRegistration.fillGeneralDealRegistrationForm(
+			accountName = ${accountName},
+			address = ${address},
+			businessUnit = ${businessUnit},
+			city = ${city},
+			country = ${country},
+			department = ${department},
+			emailAddress = ${emailAddress},
+			firstName = ${firstName},
+			industry = ${industry},
+			jobRole = ${jobRole},
+			lastName = ${lastName},
+			mdfActivityAssociated = ${mdfActivityAssociated},
+			partnerAccountName = ${partnerAccountName},
+			phone = ${phone},
+			postalCode = ${postalCode},
+			projectNeedOptions = ${projectNeedOptions},
+			projectSolutionCategoriesOptions = ${projectSolutionCategoriesOptions},
+			projectTimeline = ${projectTimeline},
+			state = ${state});
+
+		Button.click(button = "Proceed");
+
+		WaitForPageLoad();
+
+		Button.click(button = "Proceed");
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro fillGeneralDealRegistrationForm {
+		if (isSet(partnerAccountName)) {
+			Select(
+				key_fieldName = "partnerAccount",
+				locator1 = "PRMMDFRequest#SELECT",
+				value1 = ${partnerAccountName});
+		}
+
+		if (isSet(mdfActivityAssociated)) {
+			Select(
+				key_fieldName = "mdfActivityAssociated",
+				locator1 = "PRMMDFRequest#SELECT",
+				value1 = ${mdfActivityAssociated});
+		}
+
+		if (isSet(accountName)) {
+			Type(
+				key_fieldName = "accountName",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = ${accountName});
+		}
+
+		if (isSet(industry)) {
+			Select(
+				key_fieldName = "industry",
+				locator1 = "PRMMDFRequest#SELECT",
+				value1 = ${industry});
+		}
+
+		if (isSet(address)) {
+			Type(
+				key_fieldName = "address",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = ${address});
+		}
+
+		if (isSet(city)) {
+			Type(
+				key_fieldName = "city",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = ${city});
+		}
+
+		if (isSet(postalCode)) {
+			Type(
+				key_fieldName = "postalCode",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = ${postalCode});
+		}
+
+		if (isSet(country)) {
+			Select(
+				key_fieldName = "country",
+				locator1 = "PRMMDFRequest#SELECT",
+				value1 = ${country});
+		}
+
+		if (isSet(state)) {
+			Select(
+				key_fieldName = "state",
+				locator1 = "PRMMDFRequest#SELECT",
+				value1 = ${state});
+		}
+
+		if (isSet(firstName)) {
+			Type(
+				key_fieldName = "firstName",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = ${firstName});
+		}
+
+		if (isSet(lastName)) {
+			Type(
+				key_fieldName = "lastName",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = ${lastName});
+		}
+
+		if (isSet(emailAddress)) {
+			Type(
+				key_fieldName = "emailAddress",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = ${emailAddress});
+		}
+
+		if (isSet(phone)) {
+			Type(
+				key_fieldName = "phone",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = ${phone});
+		}
+
+		if (isSet(businessUnit)) {
+			Type(
+				key_fieldName = "businessUnit",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = ${businessUnit});
+		}
+
+		if (isSet(department)) {
+			Select(
+				key_fieldName = "department",
+				locator1 = "PRMMDFRequest#SELECT",
+				value1 = ${department});
+		}
+
+		if (isSet(jobRole)) {
+			Select(
+				key_fieldName = "jobRole",
+				locator1 = "PRMMDFRequest#SELECT",
+				value1 = ${jobRole});
+		}
+
+		if (isSet(projectNeedOptions)) {
+			for (var projectNeedList : list ${projectNeedOptions}) {
+				Click.clickAtNotVisible(
+					key_fieldName = "projectNeed",
+					key_optionValue = ${projectNeedList},
+					locator1 = "PRMMDFRequest#CHECKBOX");
+			}
+		}
+
+		if (isSet(projectSolutionCategoriesOptions)) {
+			for (var projectSolutionCategoriesList : list ${projectSolutionCategoriesOptions}) {
+				Click.clickAtNotVisible(
+					key_fieldName = "projectCategories",
+					key_optionValue = ${projectSolutionCategoriesList},
+					locator1 = "PRMMDFRequest#CHECKBOX");
+			}
+		}
+
+		if (isSet(projectTimeline)) {
+			Type(
+				key_fieldName = "projectTimeline",
+				locator1 = "PRMMDFRequest#TEXT_FIELD",
+				value1 = ${projectTimeline});
+		}
+	}
+
+	macro viewDealRegistrationByAccountName {
+		AssertElementPresent(
+			key_accountName = ${dealAccountName},
+			locator1 = "PRMDealRegistration#DEAL_ACCOUNT_NAME");
+	}
+
+}

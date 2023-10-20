@@ -91,5 +91,53 @@
 		"from": "fetchCPInstanceByExternalReferenceCode(long, String)",
 		"issueKey": "LPS-197965",
 		"to": "fetchCPInstanceByExternalReferenceCode(param#1#, param#0#)"
+	},
+	{
+		"classNames": [
+			"DestinationNames"
+		],
+		"from": "BASE_PRICE_LIST",
+		"issueKey": "LPS-197981",
+		"to": "COMMERCE_BASE_PRICE_LIST"
+	},
+	{
+		"classNames": [
+			"DestinationNames"
+		],
+		"from": "ORDER_STATUS",
+		"issueKey": "LPS-197981",
+		"to": "COMMERCE_ORDER_STATUS"
+	},
+	{
+		"classNames": [
+			"DestinationNames"
+		],
+		"from": "PAYMENT_STATUS",
+		"issueKey": "LPS-197981",
+		"to": "COMMERCE_PAYMENT_STATUS"
+	},
+	{
+		"classNames": [
+			"DestinationNames"
+		],
+		"from": "SHIPMENT_STATUS",
+		"issueKey": "LPS-197981",
+		"to": "COMMERCE_SHIPMENT_STATUS"
+	},
+	{
+		"classNames": [
+			"DestinationNames"
+		],
+		"from": "STOCK_QUANTITY",
+		"issueKey": "LPS-197981",
+		"to": "COMMERCE_STOCK_QUANTITY"
+	},
+	{
+		"classNames": [
+			"DestinationNames"
+		],
+		"from": "SUBSCRIPTION_STATUS",
+		"issueKey": "LPS-197981",
+		"to": "COMMERCE_SUBSCRIPTION_STATUS"
 	}
 ]

@@ -12,7 +12,6 @@ UpgradeGradleIncludeResourceCheck | [Upgrade](upgrade_checks.markdown#upgrade-ch
 UpgradeJSPFieldSetGroupCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Run code to remove 'fieldset-group' tag |
 UpgradeJavaAccountPortletKeysCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace constants of CommerceAccountPortletKeys by constants of AccountPortletKeys |
 UpgradeJavaAddAddressMethodCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Fill the new parameter of the method 'addAddress' of AddressLocalService, AddressLocalServiceUtil, AddressService and AddressServiceUtil |
-UpgradeJavaAddCategoryParameterCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Fill the new parameter of the method 'addCategory' of 'AssetCategoryLocalService' and 'AssetCategoryLocalServiceUtil' classes |
 UpgradeJavaAddFDSTableSchemaFieldCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace method addFDSTableSchemaFieldCheck by add |
 UpgradeJavaAddFileEntryParameterCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Fill the new parameter of the method 'addFileEntry' of 'DLAppLocalServiceUtil' and 'DLAppLocalService' |
 UpgradeJavaAddFolderParameterCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Fill the new parameter of the method `addFolder` of `JournalFolderService`, `JournalFolderLocalService`, and `JournalFolderLocalServiceUtil` classes |

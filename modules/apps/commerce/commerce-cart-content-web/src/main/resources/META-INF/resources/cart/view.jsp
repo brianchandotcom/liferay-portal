@@ -96,10 +96,11 @@ Map<Long, List<CommerceOrderValidatorResult>> commerceOrderValidatorResultsMap =
 							<span class="sticker-overlay">
 								<c:choose>
 									<c:when test="<%= Validator.isNotNull(cpInstanceCDNURL) %>">
-										<img class="sticker-img" src="<%= cpInstanceCDNURL %>" />
+										<img alt="thumbnail" class="sticker-img" src="<%= cpInstanceCDNURL %>" />
 									</c:when>
 									<c:otherwise>
 										<liferay-adaptive-media:img
+											alt="thumbnail"
 											class="sticker-img"
 											fileVersion="<%= commerceCartContentDisplayContext.getCPInstanceImageFileVersion(commerceOrderItem) %>"
 										/>

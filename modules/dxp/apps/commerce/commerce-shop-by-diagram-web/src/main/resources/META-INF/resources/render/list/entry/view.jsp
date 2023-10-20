@@ -26,6 +26,7 @@ String url = cpContentHelper.getFriendlyURL(cpCatalogEntry, themeDisplay);
 		<div class="card-item-first position-relative">
 			<a href="<%= url %>">
 				<liferay-adaptive-media:img
+					alt="thumbnail"
 					class="img-fluid product-card-picture"
 					fileVersion="<%= csDiagramCPTypeHelper.getCPDiagramImageFileVersion(cpCatalogEntry.getCPDefinitionId(), csDiagramSetting, request) %>"
 				/>

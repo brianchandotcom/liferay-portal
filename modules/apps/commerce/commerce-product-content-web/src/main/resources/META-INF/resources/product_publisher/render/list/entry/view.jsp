@@ -35,10 +35,11 @@ boolean hasMultipleCPSkus = cpContentHelper.hasMultipleCPSkus(cpCatalogEntry);
 
 				<c:choose>
 					<c:when test="<%= Validator.isNotNull(cpDefinitionCDNURL) %>">
-						<img class="img-fluid product-card-picture" src="<%= cpDefinitionCDNURL %>" />
+						<img alt="thumbnail" class="img-fluid product-card-picture" src="<%= cpDefinitionCDNURL %>" />
 					</c:when>
 					<c:otherwise>
 						<liferay-adaptive-media:img
+							alt="thumbnail"
 							class="img-fluid product-card-picture"
 							fileVersion="<%= cpContentHelper.getCPDefinitionImageFileVersion(cpCatalogEntry.getCPDefinitionId(), request) %>"
 						/>

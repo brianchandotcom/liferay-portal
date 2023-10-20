@@ -324,9 +324,9 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			commerceAccountId, companyId, cpInstanceId);
 
 		String originalImgTag = StringBundler.concat(
-			"<img class=\"aspect-ratio-bg-cover aspect-ratio-item ",
-			"aspect-ratio-item-center-middle aspect-ratio-item-fluid ",
-			"card-type-asset-icon\" src=\"",
+			"<img alt=\"thumbnail\" class=\"aspect-ratio-bg-cover ",
+			"aspect-ratio-item aspect-ratio-item-center-middle",
+			"aspect-ratio-item-fluid card-type-asset-icon\" src=\"",
 			getCPInstanceThumbnailSrc(commerceAccountId, cpInstanceId),
 			"\" />");
 

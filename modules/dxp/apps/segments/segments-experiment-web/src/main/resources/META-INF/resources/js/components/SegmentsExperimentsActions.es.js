@@ -16,10 +16,8 @@ import {
 	openTerminateModal,
 	reviewAndRunExperiment,
 	runExperiment,
-	updateSegmentsExperimentStatus,
 } from '../state/actions.es';
 import {
-	STATUS_COMPLETED,
 	STATUS_DRAFT,
 	STATUS_FINISHED_NO_WINNER,
 	STATUS_FINISHED_WINNER,
@@ -32,6 +30,7 @@ import {ReviewExperimentModal} from './ReviewExperimentModal.es';
 
 function SegmentsExperimentsActions({
 	onCreateSegmentsExperiment,
+	onDeleteSegmentsExperiment,
 	onEditSegmentsExperimentStatus,
 }) {
 	const {
@@ -84,28 +83,18 @@ function SegmentsExperimentsActions({
 				</>
 			)}
 
-			{experiment.status.value === STATUS_FINISHED_WINNER && (
+			{(experiment.status.value === STATUS_FINISHED_WINNER || experiment.status.value === STATUS_FINISHED_NO_WINNER) && (
 				<>
 					<ClayButton
 						className="w-100"
 						displayType="secondary"
-						onClick={_handleDiscardExperiment}
+						onClick={onDeleteSegmentsExperiment}
 					>
 						{Liferay.Language.get('discard-test')}
 					</ClayButton>
 				</>
 			)}
-
-			{experiment.status.value === STATUS_FINISHED_NO_WINNER && (
-				<ClayButton
-					className="w-100"
-					displayType="primary"
-					onClick={_handleDiscardExperiment}
-				>
-					{Liferay.Language.get('discard-test')}
-				</ClayButton>
-			)}
-
+			
 			{experiment.status.value === STATUS_TERMINATED && (
 				<ClayButton
 					className="w-100"
@@ -157,18 +146,6 @@ function SegmentsExperimentsActions({
 					splitVariantsMap,
 				})
 			);
-		});
-	}
-
-	function _handleDiscardExperiment() {
-		const body = {
-			segmentsExperimentId: experiment.segmentsExperimentId,
-			status: STATUS_COMPLETED,
-			winnerSegmentsExperienceId: experiment.segmentsExperienceId,
-		};
-
-		APIService.publishExperience(body).then(({segmentsExperiment}) => {
-			dispatch(updateSegmentsExperimentStatus(segmentsExperiment));
 		});
 	}
 }

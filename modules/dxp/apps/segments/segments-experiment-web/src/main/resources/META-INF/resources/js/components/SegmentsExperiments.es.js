@@ -204,6 +204,7 @@ function Experiments({
 
 					<SegmentsExperimentsActions
 						onCreateSegmentsExperiment={onCreateSegmentsExperiment}
+						onDeleteSegmentsExperiment={onDeleteSegmentsExperiment}
 						onEditSegmentsExperimentStatus={
 							onEditSegmentsExperimentStatus
 						}

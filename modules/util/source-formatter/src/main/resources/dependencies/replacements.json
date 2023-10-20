@@ -97,6 +97,24 @@
 	},
 	{
 		"classNames": [
+			"DLFolderService",
+			"DLFolderServiceUtil"
+		],
+		"from": "addFolder(long, long, boolean, long, String, String, ServiceContext)",
+		"issueKey": "LPS-194001",
+		"to": "addFolder(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#)"
+	},
+	{
+		"classNames": [
+			"DLFolderLocalService",
+			"DLFolderLocalServiceUtil"
+		],
+		"from": "addFolder(long, long, long, boolean, long, String, String, boolean, ServiceContext)",
+		"issueKey": "LPS-194001",
+		"to": "addFolder(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, param#8#)"
+	},
+	{
+		"classNames": [
 			"DLAppLocalService",
 			"DLAppLocalServiceUtil"
 		],

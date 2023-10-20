@@ -19,6 +19,7 @@ import {FDSViewType} from '../FDSViews';
 import {getFields} from '../api';
 import OrderableTable from '../components/OrderableTable';
 import RequiredMark from '../components/RequiredMark';
+import {IField} from '../types';
 import openDefaultFailureToast from '../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../utils/openDefaultSuccessToast';
 
@@ -39,13 +40,6 @@ interface IFDSSort {
 	fieldName: string;
 	id: number;
 	sortingDirection: string;
-}
-
-interface IField {
-	format: string;
-	label: string;
-	name: string;
-	type: string;
 }
 
 const SORTING_DIRECTION = {

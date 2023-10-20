@@ -63,8 +63,6 @@ definition {
 	function sendKeysApplicationSearch {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent("//script[contains(@src,'/autocomplete-filters/autocomplete-filters')]");
-
 		selenium.waitForEditable();
 
 		Type.sendKeys();

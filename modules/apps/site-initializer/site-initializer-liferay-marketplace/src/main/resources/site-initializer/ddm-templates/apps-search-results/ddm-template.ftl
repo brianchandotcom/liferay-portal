@@ -59,7 +59,7 @@
 	<#assign scopeGroupId = themeDisplay.getScopeGroupId() />
 </#if>
 
-<#assign channel = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels?accountId=-1&filter=name eq 'Marketplace Channel' and siteGroupId eq '${scopeGroupId}' ") />
+<#assign channel = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels?accountId=-1&filter=name eq 'Marketplace Channel' and siteGroupId eq '${scopeGroupId}'") />
 
 <#if channel?has_content>
 	<#assign channelId = channel.items[0].id />
@@ -92,8 +92,7 @@
 
 					<#if product.urlImage?has_content>
 						<#assign
-							productThumbnail = product.urlImage
-							productImageParts = productThumbnail?split("/o/")
+							productThumbnail = product.urlImage?split("/o/")
 						/>
 					<#else>
 						<#assign productThumbnail = "" />
@@ -105,7 +104,7 @@
 								<img
 									alt=${productName}
 									class="app-search-image"
-									src="/o/${productImageParts[1]}"
+									src="/o/${productThumbnail[1]}"
 								/>
 							</div>
 
@@ -114,13 +113,13 @@
 									${productName}
 								</div>
 								<#if productSpecifications?has_content>
-									<#assign productPriceModelsDeveloperName = productSpecifications?filter(item -> item.specificationKey == "developer-name") />
+									<#assign productDeveloperName = productSpecifications?filter(item -> item.specificationKey == "developer-name") />
 
-									<#list productPriceModelsDeveloperName as productPriceModelDeveloperName>
-										<#if productPriceModelDeveloperName.value?has_content>
-											<#assign developerName = productPriceModelDeveloperName.value />
-											<#else>
-												<#assign developerName = "" />
+									<#list productDeveloperName as developerNameItem>
+										<#if developerNameItem.value?has_content>
+											<#assign developerName = developerNameItem.value />
+										<#else>
+											<#assign developerName = "" />
 										</#if>
 										<div class="color-neutral-3 font-size-paragraph-small mt-1">
 											${developerName}
@@ -140,8 +139,8 @@
 								<#list productPriceModels as productPriceModel>
 									<#if productPriceModel.value?has_content>
 										<#assign priceModel = productPriceModel.value />
-										<#else>
-											<#assign priceModel = "" />
+									<#else>
+										<#assign priceModel = "" />
 									</#if>
 									<div class="font-weight-semi-bold mt-1">
 										${priceModel}

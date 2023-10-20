@@ -204,7 +204,7 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 		LiferayPortletResponse liferayPortletResponse =
 			cpContentRequestHelper.getLiferayPortletResponse();
 
-		if (_hasCPContentPortlet()) {
+		if (_hasCPContentPortlet() || (_getCProductId() != 0)) {
 			PortletURL portletURL = new PortletURLWrapper(
 				liferayPortletResponse.createRenderURL()) {
 

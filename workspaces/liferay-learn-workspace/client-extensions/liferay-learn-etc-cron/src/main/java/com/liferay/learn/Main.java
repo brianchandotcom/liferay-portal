@@ -265,7 +265,7 @@ public class Main {
 						"Updating structured content " +
 							structuredContent.getFriendlyUrlPath());
 
-					_setVisibility(fileName, structuredContent);
+					_setPermissions(fileName, structuredContent);
 
 					importedStructuredContent =
 						_structuredContentResource.putStructuredContent(
@@ -296,7 +296,7 @@ public class Main {
 						"Adding structured content " +
 							structuredContent.getFriendlyUrlPath());
 
-					_setVisibility(fileName, structuredContent);
+					_setPermissions(fileName, structuredContent);
 
 					importedStructuredContent =
 						_structuredContentResource.
@@ -1461,7 +1461,7 @@ public class Main {
 		return line;
 	}
 
-	private void _setVisibility(
+	private void _setPermissions(
 			String fileName, StructuredContent structuredContent)
 		throws Exception {
 

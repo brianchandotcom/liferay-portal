@@ -15,6 +15,7 @@ import cleanSuggestionsContributorConfiguration from '../../utils/clean_suggesti
 import {
 	CONTRIBUTOR_TYPES,
 	CONTRIBUTOR_TYPES_ASAH_DEFAULT_DISPLAY_GROUP_NAMES,
+	CONTRIBUTOR_TYPES_DEFAULT_ATTRIBUTES,
 } from '../../utils/types/contributorTypes';
 import SuggestionContributorAddButton from './SuggestionContributorAddButton';
 import ContributorInputSetItem from './contributor_input_set_item/index';
@@ -139,24 +140,35 @@ function SearchBarConfigurationSuggestions({
 	const _handleInputSetAdd = (contributorName) => () => {
 		if (contributorName === CONTRIBUTOR_TYPES.BASIC) {
 			onInputSetsAdd({
-				attributes: {
-					characterThreshold: '',
-				},
+				attributes:
+					CONTRIBUTOR_TYPES_DEFAULT_ATTRIBUTES[contributorName],
 				contributorName,
 				displayGroupName: 'suggestions',
 				size: '5',
 			});
 		}
+		else if (contributorName === CONTRIBUTOR_TYPES.SXP_BLUEPRINT) {
+			onInputSetsAdd({
+				attributes:
+					CONTRIBUTOR_TYPES_DEFAULT_ATTRIBUTES[contributorName],
+				contributorName,
+				displayGroupName: '',
+				size: '',
+			});
+		}
 		else if (
-			contributorName === CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCH_KEYWORDS ||
-			contributorName === CONTRIBUTOR_TYPES.ASAH_TOP_SEARCH_KEYWORDS
+			[
+				CONTRIBUTOR_TYPES.ASAH_RECENTLY_VIEWED,
+				CONTRIBUTOR_TYPES.ASAH_RECENT_PAGES,
+				CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCHES,
+				CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCH_KEYWORDS,
+				CONTRIBUTOR_TYPES.ASAH_RECENT_SITES,
+				CONTRIBUTOR_TYPES.ASAH_TOP_SEARCH_KEYWORDS,
+			].includes(contributorName)
 		) {
 			onInputSetsAdd({
-				attributes: {
-					characterThreshold: '0',
-					matchDisplayLanguageId: true,
-					minCounts: '5',
-				},
+				attributes:
+					CONTRIBUTOR_TYPES_DEFAULT_ATTRIBUTES[contributorName],
 				contributorName,
 				displayGroupName:
 					CONTRIBUTOR_TYPES_ASAH_DEFAULT_DISPLAY_GROUP_NAMES[
@@ -164,20 +176,6 @@ function SearchBarConfigurationSuggestions({
 					] || '',
 
 				size: '3',
-			});
-		}
-		else if (contributorName === CONTRIBUTOR_TYPES.SXP_BLUEPRINT) {
-			onInputSetsAdd({
-				attributes: {
-					characterThreshold: '',
-					fields: [],
-					includeAssetSearchSummary: true,
-					includeAssetURL: true,
-					sxpBlueprintExternalReferenceCode: '',
-				},
-				contributorName,
-				displayGroupName: '',
-				size: '',
 			});
 		}
 	};

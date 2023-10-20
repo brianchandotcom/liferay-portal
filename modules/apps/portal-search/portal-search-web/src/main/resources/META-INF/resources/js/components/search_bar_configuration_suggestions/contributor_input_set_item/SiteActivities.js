@@ -8,22 +8,24 @@ import ClayDropDown from '@clayui/drop-down';
 import {ClayInput, ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import React, {useContext} from 'react';
+import React, {useContext, useRef, useState} from 'react';
 
 import LearnMessage from '../../../shared/LearnMessage';
 import SearchContext from '../../../shared/SearchContext';
 import {
 	CONTRIBUTOR_TYPES,
 	CONTRIBUTOR_TYPES_ASAH_DEFAULT_DISPLAY_GROUP_NAMES,
+	CONTRIBUTOR_TYPES_DEFAULT_ATTRIBUTES,
 } from '../../../utils/types/contributorTypes';
 import InputSetItemHeader from './InputSetItemHeader';
 import CharacterThresholdInput from './inputs/CharacterThresholdInput';
+import ContentTypeInput from './inputs/ContentTypeInput';
 import DisplayGroupNameInput from './inputs/DisplayGroupNameInput';
 import MinimumSearchesInput from './inputs/MinimumSearchesInput';
 import SizeInput from './inputs/SizeInput';
 
 function getSiteActivitiesContributorActivityOptions(learnMessages) {
-	return [
+	const options = [
 		{
 			contributorName: CONTRIBUTOR_TYPES.ASAH_TOP_SEARCH_KEYWORDS,
 			description: (
@@ -55,9 +57,80 @@ function getSiteActivitiesContributorActivityOptions(learnMessages) {
 			title: Liferay.Language.get('trending-searches'),
 		},
 	];
+
+	if (Liferay.FeatureFlags['LPS-176691']) {
+		return options.concat([
+			{
+				contributorName: CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCHES,
+				description: (
+					<>
+						{Liferay.Language.get('recent-searches-help')}
+
+						<LearnMessage
+							className="c-ml-1"
+							learnMessages={learnMessages}
+							resourceKey="search-bar-suggestions-site-activities"
+						/>
+					</>
+				),
+				title: Liferay.Language.get('recent-searches'),
+			},
+			{
+				contributorName: CONTRIBUTOR_TYPES.ASAH_RECENT_PAGES,
+				description: (
+					<>
+						{Liferay.Language.get('recent-pages-help')}
+
+						<LearnMessage
+							className="c-ml-1"
+							learnMessages={learnMessages}
+							resourceKey="search-bar-suggestions-site-activities"
+						/>
+					</>
+				),
+				title: Liferay.Language.get('recent-pages'),
+			},
+			{
+				contributorName: CONTRIBUTOR_TYPES.ASAH_RECENT_SITES,
+				description: (
+					<>
+						{Liferay.Language.get('recent-sites-help')}
+
+						<LearnMessage
+							className="c-ml-1"
+							learnMessages={learnMessages}
+							resourceKey="search-bar-suggestions-site-activities"
+						/>
+					</>
+				),
+				title: Liferay.Language.get('recent-sites'),
+			},
+			{
+				contributorName: CONTRIBUTOR_TYPES.ASAH_RECENT_ASSETS,
+				description: (
+					<>
+						{Liferay.Language.get('recently-viewed-help')}
+
+						<LearnMessage
+							className="c-ml-1"
+							learnMessages={learnMessages}
+							resourceKey="search-bar-suggestions-site-activities"
+						/>
+					</>
+				),
+				title: Liferay.Language.get('recently-viewed'),
+			},
+		]);
+	}
+
+	return options;
 }
 
 function SiteActivities({index, onBlur, onInputSetItemChange, touched, value}) {
+	const [showActivityDropdown, setShowActivityDropdown] = useState(false);
+
+	const alignElementRef = useRef();
+
 	const {learnMessages} = useContext(SearchContext);
 
 	const SITE_ACTIVITIES_CONTRIBUTOR_ACTIVITY_OPTIONS = getSiteActivitiesContributorActivityOptions(
@@ -73,14 +146,38 @@ function SiteActivities({index, onBlur, onInputSetItemChange, touched, value}) {
 		});
 	};
 
-	const _handleActivityInputClick = (contributorName) => () => {
+	const _handleChangeAttributeValue = (property) => (newValue) => {
 		onInputSetItemChange(index, {
+			attributes: {
+				...value.attributes,
+				[property]: newValue,
+			},
+		});
+	};
+
+	const _handleActivityDropdownClick = () => {
+		setShowActivityDropdown(!showActivityDropdown);
+	};
+
+	const _handleActivityInputClick = (contributorName) => () => {
+		const attributes = {};
+
+		Object.entries(
+			CONTRIBUTOR_TYPES_DEFAULT_ATTRIBUTES[contributorName]
+		).forEach(([attr, attrValue]) => {
+			attributes[attr] = value.attributes[attr] || attrValue;
+		});
+
+		onInputSetItemChange(index, {
+			attributes,
 			contributorName,
 			displayGroupName:
 				CONTRIBUTOR_TYPES_ASAH_DEFAULT_DISPLAY_GROUP_NAMES[
 					contributorName
 				] || '',
 		});
+
+		setShowActivityDropdown(false);
 	};
 
 	return (
@@ -115,26 +212,33 @@ function SiteActivities({index, onBlur, onInputSetItemChange, touched, value}) {
 						</span>
 					</label>
 
-					<ClayDropDown
-						closeOnClick
-						menuWidth="sm"
-						trigger={
-							<ClayButton
-								aria-label={Liferay.Language.get(
-									'suggestion-contributor'
-								)}
-								className="form-control form-control-select"
-								displayType="unstyled"
-							>
-								{
-									SITE_ACTIVITIES_CONTRIBUTOR_ACTIVITY_OPTIONS.find(
-										({contributorName}) =>
-											contributorName ===
-											value.contributorName
-									).title
-								}
-							</ClayButton>
+					<ClayButton
+						aria-label={Liferay.Language.get(
+							'suggestion-contributor'
+						)}
+						className="form-control form-control-select"
+						displayType="unstyled"
+						onClick={_handleActivityDropdownClick}
+						ref={alignElementRef}
+					>
+						{
+							SITE_ACTIVITIES_CONTRIBUTOR_ACTIVITY_OPTIONS.find(
+								({contributorName}) =>
+									contributorName === value.contributorName
+							).title
 						}
+					</ClayButton>
+
+					<ClayDropDown.Menu
+						active={showActivityDropdown}
+						alignElementRef={alignElementRef}
+						closeOnClickOutside
+						onSetActive={setShowActivityDropdown}
+						style={{
+							maxWidth:
+								alignElementRef.current &&
+								alignElementRef.current.clientWidth + 'px',
+						}}
 					>
 						<ClayDropDown.ItemList
 							items={SITE_ACTIVITIES_CONTRIBUTOR_ACTIVITY_OPTIONS}
@@ -158,7 +262,7 @@ function SiteActivities({index, onBlur, onInputSetItemChange, touched, value}) {
 								</ClayDropDown.Item>
 							)}
 						</ClayDropDown.ItemList>
-					</ClayDropDown>
+					</ClayDropDown.Menu>
 				</ClayInput.GroupItem>
 			</div>
 
@@ -186,50 +290,71 @@ function SiteActivities({index, onBlur, onInputSetItemChange, touched, value}) {
 					value={value.attributes?.characterThreshold}
 				/>
 
-				<ClayInput.GroupItem>
-					<label>
-						{Liferay.Language.get('match-display-language')}
+				{[
+					CONTRIBUTOR_TYPES.ASAH_TOP_SEARCH_KEYWORDS,
+					CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCH_KEYWORDS,
+					CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCHES,
+				].includes(value.contributorName) && (
+					<ClayInput.GroupItem>
+						<label>
+							{Liferay.Language.get('match-display-language')}
 
-						<ClayTooltipProvider>
-							<span
-								className="c-ml-2"
-								data-tooltip-align="top"
-								title={Liferay.Language.get(
-									'match-display-language-help'
-								)}
-							>
-								<ClayIcon symbol="question-circle-full" />
-							</span>
-						</ClayTooltipProvider>
-					</label>
+							<ClayTooltipProvider>
+								<span
+									className="c-ml-2"
+									data-tooltip-align="top"
+									title={Liferay.Language.get(
+										'match-display-language-help'
+									)}
+								>
+									<ClayIcon symbol="question-circle-full" />
+								</span>
+							</ClayTooltipProvider>
+						</label>
 
-					<ClaySelect
-						aria-label={Liferay.Language.get(
-							'match-display-language'
-						)}
-						onChange={_handleChangeAttribute(
-							'matchDisplayLanguageId'
-						)}
-						value={value.attributes?.matchDisplayLanguageId}
-					>
-						<ClaySelect.Option
-							label={Liferay.Language.get('true')}
-							value={true}
-						/>
+						<ClaySelect
+							aria-label={Liferay.Language.get(
+								'match-display-language'
+							)}
+							onChange={_handleChangeAttribute(
+								'matchDisplayLanguageId'
+							)}
+							value={value.attributes?.matchDisplayLanguageId}
+						>
+							<ClaySelect.Option
+								label={Liferay.Language.get('true')}
+								value={true}
+							/>
 
-						<ClaySelect.Option
-							label={Liferay.Language.get('false')}
-							value={false}
-						/>
-					</ClaySelect>
-				</ClayInput.GroupItem>
+							<ClaySelect.Option
+								label={Liferay.Language.get('false')}
+								value={false}
+							/>
+						</ClaySelect>
+					</ClayInput.GroupItem>
+				)}
 
-				<MinimumSearchesInput
-					onBlur={onBlur('attributes.minCounts')}
-					onChange={_handleChangeAttribute('minCounts')}
-					touched={touched['attributes.minCounts']}
-					value={value.attributes?.minCounts}
-				/>
+				{[
+					CONTRIBUTOR_TYPES.ASAH_TOP_SEARCH_KEYWORDS,
+					CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCH_KEYWORDS,
+				].includes(value.contributorName) && (
+					<MinimumSearchesInput
+						onBlur={onBlur('attributes.minCounts')}
+						onChange={_handleChangeAttribute('minCounts')}
+						touched={touched['attributes.minCounts']}
+						value={value.attributes?.minCounts}
+					/>
+				)}
+
+				{value.contributorName ===
+					CONTRIBUTOR_TYPES.ASAH_RECENT_ASSETS && (
+					<ContentTypeInput
+						onBlur={onBlur('attributes.contentType')}
+						onChange={_handleChangeAttributeValue('contentType')}
+						touched={touched['attributes.contentType']}
+						value={value.attributes?.contentType}
+					/>
+				)}
 			</div>
 		</>
 	);

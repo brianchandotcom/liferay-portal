@@ -30,14 +30,7 @@ export default function cleanSuggestionsContributorConfiguration(
 				return false;
 			}
 
-			if (
-				!isDXP &&
-				(item.contributorName === CONTRIBUTOR_TYPES.SXP_BLUEPRINT ||
-					item.contributorName ===
-						CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCH_KEYWORDS ||
-					item.contributorName ===
-						CONTRIBUTOR_TYPES.ASAH_TOP_SEARCH_KEYWORDS)
-			) {
+			if (!isDXP && item.contributorName !== CONTRIBUTOR_TYPES.BASIC) {
 				return false;
 			}
 

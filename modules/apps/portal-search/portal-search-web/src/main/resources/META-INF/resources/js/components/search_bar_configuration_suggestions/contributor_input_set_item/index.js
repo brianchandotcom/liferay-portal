@@ -24,10 +24,14 @@ function ContributorInputSetItem({index, onInputSetItemChange, value = {}}) {
 
 	return (
 		<ClayInput.GroupItem>
-			{(value.contributorName ===
-				CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCH_KEYWORDS ||
-				value.contributorName ===
-					CONTRIBUTOR_TYPES.ASAH_TOP_SEARCH_KEYWORDS) && (
+			{[
+				CONTRIBUTOR_TYPES.ASAH_RECENT_ASSETS,
+				CONTRIBUTOR_TYPES.ASAH_RECENT_PAGES,
+				CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCHES,
+				CONTRIBUTOR_TYPES.ASAH_RECENT_SEARCH_KEYWORDS,
+				CONTRIBUTOR_TYPES.ASAH_RECENT_SITES,
+				CONTRIBUTOR_TYPES.ASAH_TOP_SEARCH_KEYWORDS,
+			].includes(value.contributorName) && (
 				<SiteActivitiesInputs
 					index={index}
 					onBlur={_handleBlur}

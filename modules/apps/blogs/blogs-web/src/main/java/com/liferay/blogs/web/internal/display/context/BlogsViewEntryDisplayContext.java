@@ -159,7 +159,7 @@ public class BlogsViewEntryDisplayContext {
 		BlogsEntry[] previousAndNextBlogsEntries =
 			_getPreviousAndNextBlogsEntries();
 
-		return previousAndNextBlogsEntries[1];
+		return previousAndNextBlogsEntries[2];
 	}
 
 	public BlogsEntry getPreviousBlogsEntry() throws PortalException {

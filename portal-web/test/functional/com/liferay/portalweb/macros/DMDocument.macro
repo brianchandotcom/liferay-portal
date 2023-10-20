@@ -1077,7 +1077,7 @@ definition {
 
 		DMNavigator.gotoVerticalEllipsisMenuItem(menuItem = "Checkin");
 
-		if (IsElementPresent.isElementPresentAfterWait(locator1 = "DocumentsAndMedia#CHECKIN_DIALOG_TITLE")) {
+		if (IsElementPresent.pauseIsElementPresent(locator1 = "DocumentsAndMedia#CHECKIN_DIALOG_TITLE")) {
 			if (${revision} == "Major") {
 				Click(locator1 = "Radio#MAJOR_VERSION");
 			}

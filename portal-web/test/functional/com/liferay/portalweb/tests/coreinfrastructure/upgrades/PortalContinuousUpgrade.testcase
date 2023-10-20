@@ -106,7 +106,7 @@ definition {
 			specificURL = "http://localhost:8080",
 			userEmailAddress = "test@liferay.com");
 
-		PortalInstances.openVirtualInstancesAdmin();
+		PortalInstances.openVirtualInstancesAdmin(baseURL = "http://localhost:8080");
 
 		PortalInstances.addCP(
 			mailDomain = "www.able.com",

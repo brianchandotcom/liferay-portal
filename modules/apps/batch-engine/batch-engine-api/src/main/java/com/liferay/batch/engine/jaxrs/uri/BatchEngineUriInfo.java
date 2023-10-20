@@ -150,7 +150,13 @@ public class BatchEngineUriInfo implements UriInfo {
 
 	private BatchEngineUriInfo(Builder builder) {
 		_pathParameters = builder._pathParameters;
+
 		_queryParameters = builder._queryParameters;
+
+		if (_queryParameters.containsKey("siteId")) {
+			_queryParameters.add(
+				"scopeKey", _queryParameters.getFirst("siteId"));
+		}
 	}
 
 	private final MultivaluedHashMap<String, String> _pathParameters;

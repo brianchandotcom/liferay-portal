@@ -2834,8 +2834,8 @@ public class DefaultObjectEntryManagerImplTest
 
 		AccountEntry accountEntry1 = _addAccountEntry();
 
-		Map<Long, ObjectEntry> objectEntries = _createObjectEntryTree(
-			accountEntry1);
+		Tree objectEntriesTree = _createObjectEntryTree(
+			accountEntry1, StringPool.BLANK);
 
 		_addResourcePermission(
 			_rootObjectDefinition, ActionKeys.VIEW, _buyerRole);
@@ -2844,14 +2844,14 @@ public class DefaultObjectEntryManagerImplTest
 
 		_assignAccountEntryRole(accountEntry1, _buyerRole, _user);
 
-		ObjectEntry rootObjectEntry = objectEntries.get(
-			_rootObjectDefinition.getObjectDefinitionId());
+		Node rootNode = objectEntriesTree.getRootNode();
 
-		TreeTestUtil.forEachNodeObjectDefinition(
-			_tree.iterator(), objectDefinitionLocalService,
-			objectDefinition -> {
-				ObjectEntry objectEntry = objectEntries.get(
-					objectDefinition.getObjectDefinitionId());
+		TreeTestUtil.forEachNodeObjectEntry(
+			objectEntriesTree.iterator(), _objectEntryLocalService,
+			objectEntry -> {
+				ObjectDefinition objectDefinition =
+					objectDefinitionLocalService.fetchObjectDefinition(
+						objectEntry.getObjectDefinitionId());
 
 				AssertUtils.assertFailure(
 					PrincipalException.MustHavePermission.class,
@@ -2859,24 +2859,31 @@ public class DefaultObjectEntryManagerImplTest
 						"User ", _user.getUserId(),
 						" must have UPDATE permission for ",
 						_rootObjectDefinition.getClassName(), StringPool.SPACE,
-						rootObjectEntry.getId()),
+						rootNode.getPrimaryKey()),
 					() -> _defaultObjectEntryManager.updateObjectEntry(
 						_simpleDTOConverterContext, objectDefinition,
-						objectEntry.getId(), objectEntry));
+						objectEntry.getObjectEntryId(),
+						_defaultObjectEntryManager.getObjectEntry(
+							_simpleDTOConverterContext, objectDefinition,
+							objectEntry.getObjectEntryId())));
 			});
 
 		_addResourcePermission(
 			_rootObjectDefinition, ActionKeys.UPDATE, _buyerRole);
 
-		TreeTestUtil.forEachNodeObjectDefinition(
-			_tree.iterator(), objectDefinitionLocalService,
-			objectDefinition -> {
-				ObjectEntry objectEntry = objectEntries.get(
-					objectDefinition.getObjectDefinitionId());
+		TreeTestUtil.forEachNodeObjectEntry(
+			objectEntriesTree.iterator(), _objectEntryLocalService,
+			objectEntry -> {
+				ObjectDefinition objectDefinition =
+					objectDefinitionLocalService.fetchObjectDefinition(
+						objectEntry.getObjectDefinitionId());
 
 				_defaultObjectEntryManager.updateObjectEntry(
 					_simpleDTOConverterContext, objectDefinition,
-					objectEntry.getId(), objectEntry);
+					objectEntry.getObjectEntryId(),
+					_defaultObjectEntryManager.getObjectEntry(
+						_simpleDTOConverterContext, objectDefinition,
+						objectEntry.getObjectEntryId()));
 			});
 	}
 

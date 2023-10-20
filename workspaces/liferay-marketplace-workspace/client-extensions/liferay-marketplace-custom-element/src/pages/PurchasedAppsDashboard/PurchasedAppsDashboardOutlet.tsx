@@ -29,6 +29,7 @@ export interface PurchasedAppProps {
 	name: string;
 	orderId: number;
 	orderTypeExternalReferenceCode: string;
+	productId: number;
 	project?: string;
 	provisioning: string;
 	provisioningLabel: string;
@@ -164,6 +165,7 @@ const PurchasedAppsDashboardOutlet = () => {
 						orderId: order.id,
 						orderTypeExternalReferenceCode:
 							order.orderTypeExternalReferenceCode,
+						productId: order.placedOrderItems[0].productId,
 						provisioning: order.orderStatusInfo.label_i18n,
 						provisioningLabel: order.orderStatusInfo.label,
 						purchasedBy: order.author,

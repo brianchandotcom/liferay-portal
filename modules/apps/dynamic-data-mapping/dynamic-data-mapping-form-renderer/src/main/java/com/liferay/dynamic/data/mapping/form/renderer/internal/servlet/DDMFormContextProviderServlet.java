@@ -77,7 +77,7 @@ public class DDMFormContextProviderServlet extends HttpServlet {
 			httpServletResponse.sendError(
 				HttpServletResponse.SC_REQUEST_ENTITY_TOO_LARGE,
 				_language.get(
-					httpServletRequest, "upload-size-limit-has-been-exceeded"));
+					httpServletRequest, "upload-size-is-too-large"));
 
 			return;
 		}

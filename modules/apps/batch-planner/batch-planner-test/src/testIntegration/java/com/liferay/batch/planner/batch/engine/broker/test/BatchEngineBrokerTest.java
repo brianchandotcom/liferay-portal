@@ -88,6 +88,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.PortletCategory;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -99,6 +100,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -177,7 +179,7 @@ public class BatchEngineBrokerTest {
 	public void testExportCompanyScopeObjectEntry() throws Exception {
 		_objectDefinition1 = _publishObjectDefinition(
 			TestPropsValues.getCompanyId(), "TestObject",
-			TestPropsValues.getUser());
+			ObjectDefinitionConstants.SCOPE_COMPANY, TestPropsValues.getUser());
 
 		ObjectEntry objectEntry1 = _addObjectEntry(
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
@@ -192,7 +194,8 @@ public class BatchEngineBrokerTest {
 			User user = UserTestUtil.getAdminUser(_company2.getCompanyId());
 
 			_objectDefinition2 = _publishObjectDefinition(
-				_company2.getCompanyId(), "TestObject", user);
+				_company2.getCompanyId(), "TestObject",
+				ObjectDefinitionConstants.SCOPE_COMPANY, user);
 
 			_addObjectEntry(
 				_company2.getCompanyId(), _company2.getGroupId(),
@@ -259,7 +262,7 @@ public class BatchEngineBrokerTest {
 	public void testExportObjectDefinition() throws Exception {
 		_objectDefinition1 = _publishObjectDefinition(
 			TestPropsValues.getCompanyId(), "TestObject1",
-			TestPropsValues.getUser());
+			ObjectDefinitionConstants.SCOPE_COMPANY, TestPropsValues.getUser());
 
 		_objectActionLocalService.addObjectAction(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
@@ -291,7 +294,7 @@ public class BatchEngineBrokerTest {
 
 		_objectDefinition2 = _publishObjectDefinition(
 			TestPropsValues.getCompanyId(), "TestObject2",
-			TestPropsValues.getUser());
+			ObjectDefinitionConstants.SCOPE_COMPANY, TestPropsValues.getUser());
 
 		_objectRelationshipLocalService.addObjectRelationship(
 			TestPropsValues.getUserId(),
@@ -371,10 +374,78 @@ public class BatchEngineBrokerTest {
 	}
 
 	@Test
+	public void testExportSiteScopeObjectEntry() throws Exception {
+		_objectDefinition1 = _publishObjectDefinition(
+			TestPropsValues.getCompanyId(), "TestObject",
+			ObjectDefinitionConstants.SCOPE_SITE, TestPropsValues.getUser());
+
+		ObjectEntry objectEntry1 = _addObjectEntry(
+			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
+			_objectDefinition1.getObjectDefinitionId(),
+			TestPropsValues.getUserId());
+
+		Group group = GroupTestUtil.addGroup();
+
+		_addObjectEntry(
+			TestPropsValues.getCompanyId(), group.getGroupId(),
+			_objectDefinition1.getObjectDefinitionId(),
+			TestPropsValues.getUserId());
+
+		BatchPlannerPlan batchPlannerPlan =
+			_batchPlannerPlanLocalService.addBatchPlannerPlan(
+				TestPropsValues.getUserId(), true,
+				BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON, StringPool.SLASH,
+				"com.liferay.object.rest.dto.v1_0.ObjectEntry",
+				RandomTestUtil.randomString(), 0, "C_TestObject", false);
+
+		for (String fieldName : _objectEntryExportFieldNames) {
+			_batchPlannerMappingLocalService.addBatchPlannerMapping(
+				TestPropsValues.getUserId(),
+				batchPlannerPlan.getBatchPlannerPlanId(), fieldName, "String",
+				fieldName, "String", StringPool.BLANK);
+		}
+
+		_batchPlannerPolicyLocalService.addBatchPlannerPolicy(
+			TestPropsValues.getUserId(),
+			batchPlannerPlan.getBatchPlannerPlanId(), "siteId",
+			String.valueOf(TestPropsValues.getGroupId()));
+
+		_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
+
+		BatchEngineExportTask batchEngineExportTask =
+			_getFinishedBatchEngineExportTask(
+				batchPlannerPlan.getBatchPlannerPlanId());
+
+		_objectMapper.setFilterProvider(
+			new SimpleFilterProvider() {
+				{
+					addFilter(
+						"Liferay.Vulcan",
+						VulcanPropertyFilter.of(
+							new HashSet<>(_objectEntryExportFieldNames), null));
+				}
+			});
+
+		JsonNode expectedJsonNode = _getExpectedJsonNode(
+			_objectDefinition1, objectEntry1.getObjectEntryId());
+
+		JsonNode jsonNode = _objectMapper.readTree(
+			_getZipInputStream(
+				_batchEngineExportTaskLocalService.openContentInputStream(
+					batchEngineExportTask.getBatchEngineExportTaskId())));
+
+		Assert.assertTrue(jsonNode.isArray());
+		Assert.assertEquals(1, jsonNode.size());
+
+		_assertEqualsExport(
+			expectedJsonNode, _objectEntryExportFieldNames, jsonNode.get(0));
+	}
+
+	@Test
 	public void testImportCompanyScopeObjectEntry() throws Exception {
 		_objectDefinition1 = _publishObjectDefinition(
 			TestPropsValues.getCompanyId(), "TestObject",
-			TestPropsValues.getUser());
+			ObjectDefinitionConstants.SCOPE_COMPANY, TestPropsValues.getUser());
 
 		File file = _createImportFile(
 			_addDLFileEntry(
@@ -454,7 +525,7 @@ public class BatchEngineBrokerTest {
 
 		_objectDefinition2 = _publishObjectDefinition(
 			TestPropsValues.getCompanyId(), "TestObject2",
-			TestPropsValues.getUser());
+			ObjectDefinitionConstants.SCOPE_COMPANY, TestPropsValues.getUser());
 
 		_objectDefinition2 =
 			_objectDefinitionLocalService.updateExternalReferenceCode(
@@ -537,7 +608,7 @@ public class BatchEngineBrokerTest {
 			DLFileEntry dlFileEntry = _addDLFileEntry(groupId, userId);
 
 			return _objectEntryLocalService.addObjectEntry(
-				userId, 0, objectDefinitionId,
+				userId, groupId, objectDefinitionId,
 				HashMapBuilder.<String, Serializable>put(
 					"testAttachmentField", dlFileEntry.getFileEntryId()
 				).put(
@@ -846,7 +917,7 @@ public class BatchEngineBrokerTest {
 	}
 
 	private ObjectDefinition _publishObjectDefinition(
-			long companyId, String name, User user)
+			long companyId, String name, String scope, User user)
 		throws Exception {
 
 		String originalName = PrincipalThreadLocal.getName();
@@ -888,7 +959,7 @@ public class BatchEngineBrokerTest {
 					name, null, null,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
-					false, ObjectDefinitionConstants.SCOPE_COMPANY,
+					false, scope,
 					ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 					Arrays.asList(
 						new AttachmentObjectFieldBuilder(

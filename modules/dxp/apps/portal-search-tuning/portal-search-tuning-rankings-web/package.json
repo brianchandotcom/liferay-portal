@@ -46,5 +46,5 @@
 		"storybook": "liferay-npm-scripts storybook",
 		"test": "liferay-npm-scripts test"
 	},
-	"version": "3.0.72"
+	"version": "3.0.73"
 }

@@ -3,11 +3,11 @@
 		<#list entries as navPrimaryItem>
 			<div class="adt-nav-item dropdown dropdown-action w-100">
 				<button
-						class="adt-nav-text d-flex menu-info align-items-center d-flex py-1 pl-2"
+						class="adt-nav-text align-items-center d-flex menu-info py-1 pl-2"
 						data-toggle="liferay-dropdown"
 						id="main-menu-id"
 						aria-expanded="true"
-					  tabindex="4"
+					  	tabindex="4"
 				>
 					<span class="adt-nav-title text-truncate">
 						${navPrimaryItem.getName()}

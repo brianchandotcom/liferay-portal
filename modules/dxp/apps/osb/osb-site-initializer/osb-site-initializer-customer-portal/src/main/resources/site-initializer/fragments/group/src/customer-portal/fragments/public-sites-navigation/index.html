@@ -14,25 +14,25 @@
 	<div class="utility-nav-container">
 		<div class="align-items-center d-flex justify-content-between py-1 utility-nav w-100">
 			<div class="d-flex sites-languages-container">
-<div class="d-flex p-2 sites" data-toggle="liferay-dropdown" id="liferay-sites-id" tabindex="6">
-	<span class="align-self-center opacity-50 pr-1 sites-icon">
-		[@clay["icon"] symbol="sites"/]
-	</span>
+				<div class="d-flex p-2 sites" data-toggle="liferay-dropdown" id="liferay-sites-id" tabindex="6">
+					<span class="align-self-center opacity-50 pr-1 sites-icon">
+						[@clay["icon"] symbol="sites"/]
+					</span>
 
-	<div class="d-flex font-weight-semi-bold liferay-sites position-relative">
-		<div class="liferay-sites-text opacity-80">
-			${languageUtil.get(locale, "liferay-sites", "Liferay Sites")}
-		</div>
+					<div class="d-flex font-weight-semi-bold liferay-sites position-relative">
+						<div class="liferay-sites-text opacity-80">
+							${languageUtil.get(locale, "liferay-sites", "Liferay Sites")}
+						</div>
 
-		<span class="caret-bottom-icon opacity-50">
-			[@clay["icon"] symbol="caret-bottom-l"/]
-		</span>
-	</div>
-</div>
+						<span class="caret-bottom-icon opacity-50">
+							[@clay["icon"] symbol="caret-bottom-l"/]
+						</span>
+					</div>
+				</div>
 
-<div aria-labelledby="liferay-sites-id" class="dropdown-menu liferay-sites-dropdown">
-	<lfr-drop-zone></lfr-drop-zone>
-</div>
+				<div aria-labelledby="liferay-sites-id" class="dropdown-menu liferay-sites-dropdown">
+					<lfr-drop-zone></lfr-drop-zone>
+				</div>
 				[#if configuration.showLanguageMenu]
 				<div class="language-selector-container ml-2">
 					<div class="d-flex language language-selector px-2 py-2 utility-nav-link" data-toggle="liferay-dropdown" id="language-selector-id" tabindex="7">

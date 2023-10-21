@@ -333,24 +333,21 @@ definition {
 	@priority = 5
 	test CanUnsubscribeAQuestion {
 		task ("Given there are a Topic and a question created") {
-			JSONQuestions.addQuestion(
-				bodyField = "Content AddQuestion",
-				categoryName = "Questions Test Topic",
-				groupName = "Guest",
-				titleField = "Question1");
-		}
-
-		task ("And the user Subsribes on the Question") {
 			Questions.openToQuestionsTopic(
 				layoutName = "questions-page",
 				siteURLKey = "guest",
 				topicName = "questions-test-topic");
 
-			Questions.gotoDetails(
-				questionTabField = "Questions",
-				questionTitle = "Question1");
+			Questions.askQuestionFillingTheMandatoryFields(
+				contentField = "Body AddQuestion",
+				titleField = "Question1");
+		}
 
-			Questions.subscribeFromQuestion(questionTitle = "Question1");
+		task ("And he can see that the question is subscribed by default") {
+			Questions.openToQuestionsTopic(
+				layoutName = "questions-page",
+				siteURLKey = "guest",
+				topicName = "questions-test-topic");
 
 			Questions.gotoTab(questionTabField = "Subscriptions");
 
@@ -370,7 +367,7 @@ definition {
 			Questions.unsubscribeFromQuestion(questionTitle = "Question1");
 		}
 
-		task ("Then he can see that is possible unsubcribe on a Question") {
+		task ("Then the user can see that the question Unsubsribes to the Question") {
 			Questions.gotoTab(questionTabField = "Subscriptions");
 
 			Questions.viewSubscribedQuestion(noSubscribedQuestion = "true");

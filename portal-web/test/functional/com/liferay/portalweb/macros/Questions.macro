@@ -189,7 +189,7 @@ definition {
 	macro assertCanonicalURL {
 		var html = '''<link href="''';
 		var html2 = '''" rel="canonical" data-react-helmet="true">''';
-		var portalURL = "${portalURL}/web/guest";
+		var portalURL = ${portalURL};
 		var pageName = StringUtil.lowerCase(${pageName});
 
 		var pageNameURL = StringUtil.replace(${pageName}, " ", "-");
@@ -610,6 +610,8 @@ definition {
 		FormFields.viewCheckboxChecked(fieldName = "enableAnonymousRead");
 
 		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			Button.clickUpdate();
+
 			Button.clickUpdate();
 		}
 		else {

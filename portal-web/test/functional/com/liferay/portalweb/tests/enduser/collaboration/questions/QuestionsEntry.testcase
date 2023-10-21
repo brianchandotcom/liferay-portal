@@ -1221,7 +1221,7 @@ definition {
 
 			Questions.assertCanonicalURL(
 				category = "category",
-				pageName = "Questions Page",
+				pageName = "questions-page",
 				portalURL = ${portalURL},
 				title = "question");
 		}
@@ -1288,13 +1288,7 @@ definition {
 		}
 
 		task ("When an anonymous user goes to the most recently created question's detail page") {
-			Navigator.openSpecificURL(url = "${portalURL}/web/guest/questions-page");
-
-			Questions.gotoCategory(categoryName = "Category");
-
-			Questions.gotoDetails(
-				questionTabField = "Questions",
-				questionTitle = "Question");
+			Navigator.openSpecificURL(url = "${portalURL}/questions-page/questions/category/question-1");
 		}
 
 		task ("Then a he can see the question title on url as 'question-1'") {
@@ -1755,7 +1749,7 @@ definition {
 				questionTitle = "Question 3",
 				votedCount = 0);
 
-			Questions.clickFilterAndOrderBy(option = "Highest Score");
+			Questions.clickFilterAndOrderBy(option = "Most Frequent");
 
 			Questions.viewFilterResults(
 				lastQuestionTitle = "Question 1",

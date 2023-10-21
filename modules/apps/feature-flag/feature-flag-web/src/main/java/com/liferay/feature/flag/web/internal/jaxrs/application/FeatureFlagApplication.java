@@ -88,7 +88,7 @@ public class FeatureFlagApplication extends Application {
 		if (featureFlag == null) {
 			_log.error(
 				StringBundler.concat(
-					"Feature flag ", key, " not found for company ",
+					"Feature flag ", key, " does not exist for company ",
 					companyId));
 
 			return new ArrayList<>();

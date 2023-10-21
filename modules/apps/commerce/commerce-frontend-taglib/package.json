@@ -17,5 +17,5 @@
 		"checkFormat": "liferay-npm-scripts check",
 		"format": "liferay-npm-scripts format"
 	},
-	"version": "22.0.1"
+	"version": "22.0.2"
 }

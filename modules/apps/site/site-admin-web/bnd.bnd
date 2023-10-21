@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Site Admin Web
 Bundle-SymbolicName: com.liferay.site.admin.web
-Bundle-Version: 5.0.102
+Bundle-Version: 5.0.103
 Web-ContextPath: /site-admin-web
 -dsannotations-options: inherit

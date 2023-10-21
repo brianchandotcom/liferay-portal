@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PermissionPropagationLocalService;
 import com.liferay.portal.kernel.service.PermissionPropagationLocalServiceUtil;
-import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.PermissionPropagationPersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
@@ -467,18 +466,11 @@ public abstract class PermissionPropagationLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register(
-			"com.liferay.portal.kernel.model.PermissionPropagation",
-			permissionPropagationLocalService);
-
 		PermissionPropagationLocalServiceUtil.setService(
 			permissionPropagationLocalService);
 	}
 
 	public void destroy() {
-		persistedModelLocalServiceRegistry.unregister(
-			"com.liferay.portal.kernel.model.PermissionPropagation");
-
 		PermissionPropagationLocalServiceUtil.setService(null);
 	}
 
@@ -555,9 +547,5 @@ public abstract class PermissionPropagationLocalServiceBaseImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PermissionPropagationLocalServiceBaseImpl.class);
-
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry
-		persistedModelLocalServiceRegistry;
 
 }

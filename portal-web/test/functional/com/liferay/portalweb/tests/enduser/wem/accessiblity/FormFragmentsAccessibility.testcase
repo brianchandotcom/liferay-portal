@@ -12,9 +12,6 @@ definition {
 	static var randomSiteName = StringUtil.randomString(8);
 
 	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
-	static var randomLabelName = StringUtil.randomString(8);
-
-	static var randomObjectName = "A${randomLabelName}";
 
 	setUp {
 		task ("Set up virtual instance") {
@@ -31,9 +28,9 @@ definition {
 
 		task ("Add an object") {
 			ObjectAdmin.addObjectViaAPI(
-				labelName = ${randomLabelName},
-				objectName = ${randomObjectName},
-				pluralLabelName = "${randomLabelName}s");
+				labelName = "Purchase Order",
+				objectName = "PurchaseOrder",
+				pluralLabelName = "Purchase Orders");
 		}
 	}
 
@@ -47,26 +44,26 @@ definition {
 				fieldName = "price",
 				fieldType = "Double",
 				isRequired = "false",
-				objectName = ${randomObjectName});
+				objectName = "PurchaseOrder");
 
-			ObjectAdmin.publishObjectViaAPI(objectName = ${randomObjectName});
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
 
 			var objectEntryId = ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 				fieldName = "price",
-				objectName = ${randomObjectName},
+				objectName = "PurchaseOrder",
 				value = "9.9");
 
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
 
 			DisplayPageTemplatesAdmin.addDisplayPage(
-				contentType = ${randomLabelName},
+				contentType = "Purchase Order",
 				displayPageName = "Display Page Name");
 
 			PageEditor.addFragment(
 				collectionName = "Form Components",
 				fragmentName = "Form Container");
 
-			PageEditor.mapFormContainerToObject(contentType = "${randomLabelName} (Default)");
+			PageEditor.mapFormContainerToObject(contentType = "Purchase Order (Default)");
 
 			PageEditor.publish();
 
@@ -87,7 +84,7 @@ definition {
 
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
-				infoListProviderName = "${randomLabelName}s");
+				infoListProviderName = "Purchase Orders");
 
 			PageEditor.addFragmentToCollectionDisplay(
 				collectionName = "Basic Components",
@@ -128,7 +125,7 @@ definition {
 				fieldName = "age",
 				fieldType = "Integer",
 				isRequired = "false",
-				objectName = ${randomObjectName});
+				objectName = "PurchaseOrder");
 
 			ObjectAdmin.addObjectFieldViaAPI(
 				fieldBusinessType = "LongInteger",
@@ -136,26 +133,26 @@ definition {
 				fieldName = "postcode",
 				fieldType = "Long",
 				isRequired = "false",
-				objectName = ${randomObjectName});
+				objectName = "PurchaseOrder");
 
-			ObjectAdmin.publishObjectViaAPI(objectName = ${randomObjectName});
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
 
 			var objectEntryId = ObjectAdmin.addObjectEntryViaAPI(
 				fieldNameList = "age,postcode",
-				objectName = ${randomObjectName},
+				objectName = "PurchaseOrder",
 				valueList = "30,20231010");
 
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
 
 			DisplayPageTemplatesAdmin.addDisplayPage(
-				contentType = ${randomLabelName},
+				contentType = "Purchase Order",
 				displayPageName = "Display Page Name");
 
 			PageEditor.addFragment(
 				collectionName = "Form Components",
 				fragmentName = "Form Container");
 
-			PageEditor.mapFormContainerToObject(contentType = "${randomLabelName} (Default)");
+			PageEditor.mapFormContainerToObject(contentType = "Purchase Order (Default)");
 
 			PageEditor.publish();
 
@@ -176,7 +173,7 @@ definition {
 
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
-				infoListProviderName = "${randomLabelName}s");
+				infoListProviderName = "Purchase Orders");
 
 			PageEditor.addFragmentToCollectionDisplay(
 				collectionName = "Basic Components",
@@ -219,31 +216,31 @@ definition {
 				fieldName = "description",
 				fieldType = "Clob",
 				isRequired = "false",
-				objectName = ${randomObjectName});
+				objectName = "PurchaseOrder");
 
-			ObjectAdmin.publishObjectViaAPI(objectName = ${randomObjectName});
+			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
 
 			ApplicationsMenu.gotoPortlet(
 				category = "Object",
 				panel = "Control Panel",
-				portlet = "${randomLabelName}s");
+				portlet = "Purchase Orders");
 
 			var objectEntryId = ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 				fieldName = "description",
-				objectName = ${randomObjectName},
+				objectName = "PurchaseOrder",
 				value = "Create custom digital experiences without sacrificing speed, flexibility, or cost.");
 
 			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
 
 			DisplayPageTemplatesAdmin.addDisplayPage(
-				contentType = ${randomLabelName},
+				contentType = "Purchase Order",
 				displayPageName = "Display Page Name");
 
 			PageEditor.addFragment(
 				collectionName = "Form Components",
 				fragmentName = "Form Container");
 
-			PageEditor.mapFormContainerToObject(contentType = "${randomLabelName} (Default)");
+			PageEditor.mapFormContainerToObject(contentType = "Purchase Order (Default)");
 
 			PageEditor.publish();
 
@@ -264,7 +261,7 @@ definition {
 
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
-				infoListProviderName = "${randomLabelName}s");
+				infoListProviderName = "Purchase Orders");
 
 			PageEditor.addFragmentToCollectionDisplay(
 				collectionName = "Basic Components",

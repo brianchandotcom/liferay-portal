@@ -107,7 +107,7 @@
 </tr>
 <tr>
 	<td>DISPLAY_TEMPLATE</td>
-	<td>//div[label[contains(.,'Display Template')]]/select</td>
+	<td>//button[contains(@class,'display-template-selector')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -146,7 +146,7 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		AssertSelectedLabel(
+		AssertTextEquals(
 			locator1 = "Select#DISPLAY_TEMPLATE",
 			value1 = "Search Results Test ADT");
 	}

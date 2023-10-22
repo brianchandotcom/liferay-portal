@@ -84,9 +84,9 @@ definition {
 	}
 
 	macro selectDisplayTemplate {
-		Select(
-			locator1 = "Select#DISPLAY_TEMPLATE",
-			value1 = ${displayTemplate});
+		Click(locator1 = "Select#DISPLAY_TEMPLATE");
+
+		MenuItem.click(menuItem = ${displayTemplate});
 	}
 
 	macro selectMaximumItemstoDisplay {
@@ -142,7 +142,7 @@ definition {
 			locator1 = "Select#PAGE_DELTA",
 			value1 = 20);
 
-		AssertTextEquals.assertValue(
+		AssertTextEquals(
 			locator1 = "Select#DISPLAY_TEMPLATE",
 			value1 = "abstract");
 

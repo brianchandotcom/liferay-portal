@@ -90,7 +90,7 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if (isSet(displayTemplate)) {
-			AssertSelectedLabel(
+			AssertTextEquals(
 				locator1 = "Select#DISPLAY_TEMPLATE",
 				value1 = ${displayTemplate});
 		}

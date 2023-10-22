@@ -732,7 +732,7 @@ definition {
 
 			NavigationMenusWidget.selectDisplayTemplate(templateName = "Bar With Links");
 
-			AssertSelectedLabel(
+			AssertTextEquals(
 				locator1 = "Select#DISPLAY_TEMPLATE",
 				value1 = "Bar With Links");
 

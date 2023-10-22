@@ -321,7 +321,7 @@ definition {
 
 		BlogsConfiguration.selectConfigurationIFrame();
 
-		AssertSelectedLabel(
+		AssertTextEquals(
 			locator1 = "Select#DISPLAY_TEMPLATE",
 			value1 = "Card");
 	}

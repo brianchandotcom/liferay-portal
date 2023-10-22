@@ -81,9 +81,9 @@ definition {
 		}
 
 		if (isSet(feedDisplayStyle)) {
-			Select(
-				locator1 = "Select#DISPLAY_TEMPLATE",
-				value1 = ${feedDisplayStyle});
+			Click(locator1 = "Select#DISPLAY_TEMPLATE");
+
+			MenuItem.click(menuItem = ${feedDisplayStyle});
 		}
 
 		if (!(isSet(configureWithoutSave))) {

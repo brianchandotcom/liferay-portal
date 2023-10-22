@@ -594,7 +594,7 @@ definition {
 
 			NavigationMenusWidget.selectDisplayTemplate(templateName = "Bar minimally styled");
 
-			AssertSelectedLabel(
+			AssertTextEquals(
 				locator1 = "Select#DISPLAY_TEMPLATE",
 				value1 = "Bar minimally styled");
 
@@ -656,7 +656,7 @@ definition {
 
 			NavigationMenusWidget.selectDisplayTemplate(templateName = "Bar minimally styled");
 
-			AssertSelectedLabel(
+			AssertTextEquals(
 				locator1 = "Select#DISPLAY_TEMPLATE",
 				value1 = "Bar minimally styled");
 
@@ -732,7 +732,7 @@ definition {
 
 			NavigationMenusWidget.selectDisplayTemplate(templateName = "List Menu");
 
-			AssertSelectedLabel(
+			AssertTextEquals(
 				locator1 = "Select#DISPLAY_TEMPLATE",
 				value1 = "List Menu");
 
@@ -964,7 +964,7 @@ definition {
 
 			NavigationMenusWidget.selectDisplayTemplate(templateName = "Menu Display Test ADT");
 
-			AssertSelectedLabel(
+			AssertTextEquals(
 				locator1 = "Select#DISPLAY_TEMPLATE",
 				value1 = "Menu Display Test ADT");
 

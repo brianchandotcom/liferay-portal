@@ -1604,10 +1604,6 @@ definition {
 				webContentText = "This is a Text Box field",
 				webContentTextFieldLabel = "Text Box");
 
-			WebContent.addWithStructureCP(
-				webContentText = "This is a Text field",
-				webContentTitle = "Web Content Title");
-
 			PortletEntry.publish();
 		}
 

@@ -1591,7 +1591,7 @@ definition {
 			WebContent.addWithStructureCP(
 				webContentDate = "10/10/2020",
 				webContentNumeric = 9,
-				webContentNumericFieldLabel = "Integer",
+				webContentNumericFieldLabel = "Numeric",
 				webContentRichText = "This is a Rich Text field",
 				webContentText = "This is a Text field",
 				webContentTitle = "Web Content Title");
@@ -1679,7 +1679,7 @@ definition {
 
 			Select(
 				locator1 = "PageEditorEditableLink#FIELD",
-				value1 = "Integer");
+				value1 = "Numeric");
 
 			PageEditor.waitForAutoSave();
 

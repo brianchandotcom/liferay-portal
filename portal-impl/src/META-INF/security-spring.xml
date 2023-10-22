@@ -17,7 +17,6 @@
 	<bean class="com.liferay.portal.security.auth.AuthTokenWhitelistImpl" id="com.liferay.portal.kernel.security.auth.AuthTokenWhitelist" />
 	<bean class="com.liferay.portal.kernel.security.auth.DefaultEmailAddressGenerator" id="com.liferay.portal.kernel.security.auth.DefaultEmailAddressGenerator" />
 	<bean class="com.liferay.portal.kernel.security.auth.DefaultEmailAddressValidator" id="com.liferay.portal.kernel.security.auth.DefaultEmailAddressValidator" />
-	<bean class="com.liferay.portal.kernel.security.auth.DefaultFullNameGenerator" id="com.liferay.portal.kernel.security.auth.DefaultFullNameGenerator" />
 	<bean class="com.liferay.portal.kernel.security.auth.DefaultFullNameValidator" id="com.liferay.portal.kernel.security.auth.DefaultFullNameValidator" />
 	<bean class="com.liferay.portal.kernel.security.auth.DefaultScreenNameGenerator" id="com.liferay.portal.kernel.security.auth.DefaultScreenNameGenerator" />
 	<bean class="com.liferay.portal.kernel.security.auth.DefaultScreenNameValidator" id="com.liferay.portal.kernel.security.auth.DefaultScreenNameValidator" />

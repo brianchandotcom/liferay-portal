@@ -24,11 +24,14 @@ public class JSLoaderModulesUtil {
 	}
 
 	public static void updateEtag() {
-		_etag = StringBundler.concat(
+		_etag = _newEtag();
+	}
+
+	private static String _newEtag() {
+		return StringBundler.concat(
 			"W/\"", UUID.randomUUID(), StringPool.QUOTE);
 	}
 
-	private static volatile String _etag = StringBundler.concat(
-		"W/\"", UUID.randomUUID(), StringPool.QUOTE);
+	private static volatile String _etag = _newEtag();
 
 }

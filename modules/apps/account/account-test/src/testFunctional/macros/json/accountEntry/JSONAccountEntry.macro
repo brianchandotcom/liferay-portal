@@ -44,4 +44,19 @@ definition {
 			organizationId = ${organizationId});
 	}
 
+	macro addAccountEntrySubOrganization {
+		Variables.assertDefined(parameterList = "${accountEntryName},${subOrganizationName},${parentOrganizationName}");
+
+		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});
+		var parentOrganizationId = JSONOrganization.getOrganizationIdByName(organizationName = ${parentOrganizationName});
+
+		var organizationId = JSONOrganization.getOrganizationIdByName(
+			organizationName = ${subOrganizationName},
+			parentOrganizationId = ${parentOrganizationId});
+
+		JSONAccountEntryAPI._addAccountEntryOrganization(
+			accountEntryId = ${accountEntryId},
+			organizationId = ${organizationId});
+	}
+
 }

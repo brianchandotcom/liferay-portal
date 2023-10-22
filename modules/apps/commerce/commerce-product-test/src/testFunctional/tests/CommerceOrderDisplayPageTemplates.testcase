@@ -545,9 +545,9 @@ definition {
 		task ("And use the template created before instead of the Default one") {
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
-			Select(
-				locator1 = "Select#DISPLAY_TEMPLATE",
-				value1 = "Placed Orders Test ADT");
+			Click(locator1 = "Select#DISPLAY_TEMPLATE");
+
+			MenuItem.click(menuItem = "Placed Orders Test ADT");
 
 			PortletEntry.save();
 		}
@@ -563,7 +563,7 @@ definition {
 
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
-			AssertSelectedLabel(
+			AssertTextEquals(
 				locator1 = "Select#DISPLAY_TEMPLATE",
 				value1 = "Placed Orders Test ADT");
 		}

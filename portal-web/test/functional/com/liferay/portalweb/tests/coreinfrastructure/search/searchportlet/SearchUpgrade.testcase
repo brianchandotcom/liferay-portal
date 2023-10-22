@@ -451,7 +451,7 @@ definition {
 
 			SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-			AssertSelectedLabel(
+			AssertTextEquals(
 				locator1 = "Select#DISPLAY_TEMPLATE",
 				value1 = "U43 ${facetType} Facet Template");
 

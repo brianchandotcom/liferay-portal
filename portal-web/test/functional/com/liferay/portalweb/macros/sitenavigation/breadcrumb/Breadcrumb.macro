@@ -45,9 +45,9 @@ definition {
 	macro displayTemplatePreview {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		Select(
-			locator1 = "Select#DISPLAY_TEMPLATE",
-			value1 = ${displayStyle});
+		Click(locator1 = "Select#DISPLAY_TEMPLATE");
+
+		MenuItem.click(menuItem = ${displayStyle});
 
 		SelectFrame(value1 = "relative=top");
 	}
@@ -148,7 +148,7 @@ definition {
 	macro viewDisplayTemplatePreview {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		AssertTextEquals.assertPartialText(
+		AssertTextEquals(
 			locator1 = "Select#DISPLAY_TEMPLATE",
 			value1 = ${displayStyle});
 

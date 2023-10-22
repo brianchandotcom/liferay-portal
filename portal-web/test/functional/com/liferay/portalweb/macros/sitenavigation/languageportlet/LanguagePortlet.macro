@@ -4,14 +4,12 @@ definition {
 		Panel.expandPanel(panel = "Display Settings");
 
 		if (isSet(displayTemplate)) {
-			Select(
-				key_selectFieldLabel = "Display Template",
-				locator1 = "Select#ANY",
-				value1 = ${displayTemplate});
+			Click(locator1 = "Select#DISPLAY_TEMPLATE");
 
-			AssertSelectedLabel(
-				key_selectFieldLabel = "Display Template",
-				locator1 = "Select#ANY",
+			MenuItem.click(menuItem = ${displayTemplate});
+
+			AssertTextEquals(
+				locator1 = "Select#DISPLAY_TEMPLATE",
 				value1 = ${displayTemplate});
 		}
 

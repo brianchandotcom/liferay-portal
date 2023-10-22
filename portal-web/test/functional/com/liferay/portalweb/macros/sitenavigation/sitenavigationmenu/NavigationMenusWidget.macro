@@ -70,9 +70,9 @@ definition {
 	}
 
 	macro selectDisplayTemplate {
-		Select(
-			locator1 = "Select#DISPLAY_TEMPLATE",
-			value1 = ${templateName});
+		Click(locator1 = "Select#DISPLAY_TEMPLATE");
+
+		MenuItem.click(menuItem = ${templateName});
 	}
 
 	macro selectLevelsToDisplay {

@@ -415,9 +415,9 @@ definition {
 		}
 
 		if (isSet(displayTemplate)) {
-			Select(
-				locator1 = "Select#DISPLAY_TEMPLATE",
-				value1 = ${displayTemplate});
+			Click(locator1 = "Select#DISPLAY_TEMPLATE");
+
+			MenuItem.click(menuItem = ${displayTemplate});
 		}
 
 		if (isSet(fields)) {

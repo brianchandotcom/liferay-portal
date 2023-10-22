@@ -241,7 +241,7 @@ public class MultiVMEhcachePortalCacheManager
 				if (objectValuePair == null) {
 					mergedPropertiesMap.put(
 						portalCacheName,
-						new ObjectValuePair(null, replicatorProperties));
+						new ObjectValuePair<>(null, replicatorProperties));
 				}
 				else {
 					objectValuePair.setValue(replicatorProperties);

@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 
 import java.io.Serializable;
@@ -19,7 +18,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Tina Tian
@@ -63,9 +61,6 @@ public class SingleVMEhcachePortalCacheManager<K extends Serializable, V>
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SingleVMEhcachePortalCacheManager.class);
-
-	@Reference
-	private Props _props;
 
 	private final SingleVMEhcachePortalCacheManagerConfigurator
 		_singleVMEhcachePortalCacheManagerConfigurator =

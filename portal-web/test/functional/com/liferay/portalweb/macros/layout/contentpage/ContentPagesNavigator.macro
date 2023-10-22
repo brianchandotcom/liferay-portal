@@ -17,6 +17,10 @@ definition {
 	}
 
 	macro openEditContentPage {
+		if (contains(${siteName}, "Staging")) {
+			Navigator.openSiteURL(siteName = ${siteName});
+		}
+
 		ContentPagesNavigator.openViewContentPage(
 			locale = ${locale},
 			pageFriendlyURL = ${pageFriendlyURL},

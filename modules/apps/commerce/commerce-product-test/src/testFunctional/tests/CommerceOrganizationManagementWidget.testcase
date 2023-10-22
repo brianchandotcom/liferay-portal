@@ -42,9 +42,8 @@ definition {
 			for (var organizationEntries : list "Org 1:SubOrg 1,Org 2:SubOrg 2") {
 				var organization = StringUtil.extractFirst(${organizationEntries}, ":");
 				var subOrganization = StringUtil.extractLast(${organizationEntries}, ":");
+				var parentOrganizationId = JSONOrganization.getOrganizationIdByName(organizationName = ${organization});
 
-				var parentOrganizationId = JSONOrganization.getOrganizationIdByName(organizationName = ${organization}); 
-				
 				var organizationId = JSONOrganization.getOrganizationIdByName(
 					organizationName = ${subOrganization},
 					parentOrganizationId = ${parentOrganizationId});
@@ -159,6 +158,120 @@ definition {
 
 		task ("Then the user is present in the admin console") {
 			CommerceWidget.assertOrganizationManagementWigetTitlePresent(key_nodeName = "Buyer User");
+		}
+	}
+
+	@description = "COMMERCE-12586 | Verify that changing the root configuration for the Organization Management widget affect the search results"
+	@priority = 5
+	test CanChangeTheRootAffectTheSearchOrganizationManagement {
+		property portal.acceptance = "true";
+
+		task ("Given a setup scenario is created for the Organization Management Widget") {
+			for (var organizationAccountEntries : list "Org 1:Account A,Org 2:Account B") {
+				var organization = StringUtil.extractFirst(${organizationAccountEntries}, ":");
+				var account = StringUtil.extractLast(${organizationAccountEntries}, ":");
+
+				JSONOrganization.addOrganization(
+					organizationName = ${organization},
+					organizationSite = "false");
+
+				JSONAccountEntry.addAccountEntry(
+					accountEntryName = ${account},
+					accountEntryType = "Business");
+
+				JSONAccountEntry.addAccountEntryOrganization(
+					accountEntryName = ${account},
+					organizationName = ${organization});
+			}
+
+			JSONAccountEntry.addAccountEntryOrganization(
+				accountEntryName = "Account A",
+				organizationName = "Org 2");
+		}
+
+		task ("And the admin goes to the widget page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Organization Management Widget Page");
+		}
+
+		task ("And before changing the root the search work normally") {
+			Type(
+				locator1 = "CommerceOrganizationManagementWidget#SEARCH_FIELD",
+				value1 = "Account A");
+
+			Click(
+				key_columnOption = "Account A",
+				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
+
+			for (var rowList : list "1,2") {
+				AssertElementPresent(
+					key_entry = "Account A",
+					key_row = ${rowList},
+					locator1 = "CommerceOrganizationManagementWidget#CHART_DISCOVERED_ENTRY_ROW");
+			}
+		}
+
+		task ("When the Organization Management root is changed for only 'Org 1'") {
+			Portlet.gotoPortletOptions(
+				portletName = "Organization Management",
+				portletOption = "Configuration");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			Type(
+				locator1 = "CommerceOrganizationManagementWidget#SEARCH_FIELD",
+				value1 = "Org 1");
+
+			PortletEntry.save();
+
+			IFrame.closeFrame();
+		}
+
+		task ("And the admin searches 'Account A'") {
+			Type(
+				locator1 = "CommerceOrganizationManagementWidget#SEARCH_FIELD",
+				value1 = "Account A");
+
+			Click(
+				key_columnOption = "Account A",
+				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
+		}
+
+		task ("Then only one result should be present in the select search results, and in the graph") {
+			AssertElementPresent(
+				key_entry = "Account A",
+				key_row = 1,
+				locator1 = "CommerceOrganizationManagementWidget#CHART_DISCOVERED_ENTRY_ROW");
+
+			AssertElementNotPresent(
+				key_entry = "Account A",
+				key_row = 2,
+				locator1 = "CommerceOrganizationManagementWidget#CHART_DISCOVERED_ENTRY_ROW");
+
+			AssertElementPresent(
+				key_searchResults = "1 Result for Account A",
+				locator1 = "CommerceOrganizationManagementWidget#CHART_SEARCH_RESULTS");
+		}
+
+		task ("But if the admin searches for 'Org 2'") {
+			Type(
+				locator1 = "CommerceOrganizationManagementWidget#SEARCH_FIELD",
+				value1 = "Org 2");
+
+			Click(
+				key_columnOption = "Org 2",
+				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
+		}
+
+		task ("Then no entries are present in the graph (no entry will be highlighted)") {
+			AssertElementNotPresent(
+				key_entry = "Org 2",
+				locator1 = "CommerceOrganizationManagementWidget#CHART_DISCOVERED_ENTRY");
+
+			AssertElementPresent(
+				key_searchResults = "0 Result for Org 2",
+				locator1 = "CommerceOrganizationManagementWidget#CHART_SEARCH_RESULTS");
 		}
 	}
 
@@ -283,53 +396,234 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-9399. Verify organizations can be viewed in the Organization Management widget."
-	@priority = 3
-	test CanViewOrganizationWidget {
-		property portal.acceptance = "false";
+	@description = "COMMERCE-12584 | Verify that is possibile to search for an entry that is present multiple times inside the widget"
+	@priority = 5
+	test CanSearchAnEntryPresentMultipleTimesIntoOrganizationManagement {
+		property portal.acceptance = "true";
 
-		task ("Setup: Add an organization") {
+		task ("And an organization is created and configured") {
+			for (var organizationList : list "Org 1,Org 2") {
+				JSONOrganization.addOrganization(
+					organizationName = ${organizationList},
+					organizationSite = "false");
+			}
+
 			JSONOrganization.addOrganization(
-				organizationName = "Organization 1",
-				organizationSite = "false");
+				organizationName = "SubOrg 1",
+				parentOrganizationName = "Org 1");
+
+			for (var accountsList : list "Account A,Account B_1,Account B_2") {
+				JSONAccountEntry.addAccountEntry(
+					accountEntryName = ${accountsList},
+					accountEntryType = "Business");
+
+				if (${accountsList} != "Account B_1") {
+					JSONAccountEntryUser.addExistUsertoAccount(
+						accountEntryName = ${accountsList},
+						userEmailAddress = "buyer@liferay.com");
+				}
+			}
+
+			JSONAccountEntry.addAccountEntrySubOrganization(
+				accountEntryName = "Account A",
+				parentOrganizationName = "Org 1",
+				subOrganizationName = "SubOrg 1");
+
+			for (var accountsList : list "Account B_1,Account B_2") {
+				JSONAccountEntry.addAccountEntryOrganization(
+					accountEntryName = ${accountsList},
+					organizationName = "Org 2");
+			}
 		}
 
-		task ("When the Organization Management Widget Page is reached") {
-			CommerceWidget.openOrganizationWidget();
-		}
-
-		task ("Then the organization is shown within the widget") {
-			CommerceWidget.assertOrganizationManagementWigetTitlePresent(key_nodeName = "Organization 1");
-		}
-	}
-
-	@description = "COMMERCE-12581 | Verify that the Organization Management Widget is still working even without any entities"
-    @priority = 3
-    test CanUseOrganizationManagementWithoutAnyEntity { 
-		property portal.acceptance = "false";
-
-		task ("Given the admin navigates to the Organization Management Widget Page") {
+		task ("And the admin goes to the widget page") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
 
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Organization Management Widget Page");
 		}
 
-		task ("Then even without any entity, the widget is still usable") {
+		task ("And the admin searches 'buyer@liferay.com'") {
+			Type(
+				locator1 = "CommerceOrganizationManagementWidget#SEARCH_FIELD",
+				value1 = "buyer@liferay.com");
+
+			Click(
+				key_columnOption = "Buyer User",
+				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
+		}
+
+		task ("Then the Organization widget expands and opens the graph to show the entries highlighted with the black color") {
 			AssertElementPresent(
+				key_entry = "Buyer User",
+				key_row = 1,
+				locator1 = "CommerceOrganizationManagementWidget#CHART_DISCOVERED_ENTRY_ROW");
+
+			AssertElementPresent(
+				key_entry = "Buyer User",
+				key_row = 2,
+				locator1 = "CommerceOrganizationManagementWidget#CHART_DISCOVERED_ENTRY_ROW");
+
+			task ("And the message 2 entities found is present") {
+				AssertElementPresent(
+					key_searchResults = "2 Result for Buyer User",
+					locator1 = "CommerceOrganizationManagementWidget#CHART_SEARCH_RESULTS");
+			}
+		}
+
+		task ("But if the admin clicks on the 'Collapse' button") {
+			Click(
 				key_text = "Collapse All",
 				locator1 = "Button#ANY");
+		}
 
-			AssertElementPresent(locator1 = "CommerceOrganizationManagementWidget#REDUCE_ZOOM_BUTTON");
+		task ("And search again the 'buyer@liferay.com'") {
+			Click(locator1 = "CommerceOrganizationManagementWidget#SEARCH_FIELD");
 
-			AssertElementPresent(locator1 = "CommerceOrganizationManagementWidget#INCREASE_ZOOM_BUTTON");
+			Click(
+				key_columnOption = "Buyer User",
+				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
+		}
 
-			AssertElementPresent(locator1 = "CommerceOrganizationManagementWidget#EXPAND_BUTTON");
+		task ("Then again the Organization widget expands and opens the graph to show the entries highlighted with the black color") {
+			AssertElementPresent(
+				key_entry = "Buyer User",
+				key_row = 1,
+				locator1 = "CommerceOrganizationManagementWidget#CHART_DISCOVERED_ENTRY_ROW");
+
+			AssertElementPresent(
+				key_entry = "Buyer User",
+				key_row = 2,
+				locator1 = "CommerceOrganizationManagementWidget#CHART_DISCOVERED_ENTRY_ROW");
+
+			task ("And the message 2 entities found is still present") {
+				AssertElementPresent(
+					key_searchResults = "2 Result for Buyer User",
+					locator1 = "CommerceOrganizationManagementWidget#CHART_SEARCH_RESULTS");
+			}
+		}
+	}
+
+	@description = "COMMERCE-12594 | Verify that even if all the accounts has the same name, when the admin use the search can highlight the correct one based on the ID"
+	@priority = 5
+	test CanSearchDifferentAccountsWithTheSameNameOrganizationManagement {
+		property portal.acceptance = "true";
+
+		task ("And an organization is created and configured") {
+			for (var organizationEntries : list "Org 1,Org 2") {
+				JSONOrganization.addOrganization(
+					organizationName = ${organizationEntries},
+					organizationSite = "false");
+			}
+
+			for (var accountEntries : list "Account A,Account B") {
+				JSONAccountEntry.addAccountEntry(
+					accountEntryName = ${accountEntries},
+					accountEntryType = "Business");
+			}
+
+			for (var accountEntries : list "Account A,Account B") {
+				JSONAccountEntry.addAccountEntryOrganization(
+					accountEntryName = ${accountEntries},
+					organizationName = "Org 1");
+			}
+
+			JSONAccountEntry.addAccountEntryOrganization(
+				accountEntryName = "Account A",
+				organizationName = "Org 2");
+
+			Account.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account B");
+
+			PortletEntry.inputName(name = "Account A");
+
+			Button.clickSave();
+		}
+
+		task ("And the admin goes to the widget page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Organization Management Widget Page");
+		}
+
+		task ("And the admin searches 'Account A'") {
+			Type(
+				locator1 = "CommerceOrganizationManagementWidget#SEARCH_FIELD",
+				value1 = "Account A");
+		}
+
+		task ("Then two results should be present in the select with the same name") {
+			for (var row : list "1,2") {
+				AssertElementPresent(
+					key_columnOption = "Account A",
+					key_row = ${row},
+					locator1 = "CommerceOrganizationManagementWidget#SELECT_AUTO_COMPLETE_OPTION_ROW");
+			}
+
+			AssertElementNotPresent(
+				key_columnOption = "Account A",
+				key_row = 3,
+				locator1 = "CommerceOrganizationManagementWidget#SELECT_AUTO_COMPLETE_OPTION_ROW");
+		}
+
+		task ("When the admin clicks on the first one") {
+			Click(
+				key_columnOption = "Account A",
+				key_row = 1,
+				locator1 = "CommerceOrganizationManagementWidget#SELECT_AUTO_COMPLETE_OPTION_ROW");
+		}
+
+		task ("Then the Organization widget expands and opens the graph to show the entries highlighted with the black color") {
+			for (var row : list "1,2") {
+				AssertElementPresent(
+					key_entry = "Account A",
+					key_row = ${row},
+					locator1 = "CommerceOrganizationManagementWidget#CHART_DISCOVERED_ENTRY_ROW");
+			}
+
+			AssertElementNotPresent(
+				key_entry = "Account A",
+				key_row = 3,
+				locator1 = "CommerceOrganizationManagementWidget#CHART_DISCOVERED_ENTRY_ROW");
+
+			task ("And the message 2 entities found is present") {
+				AssertElementPresent(
+					key_searchResults = "2 Result for Account A",
+					locator1 = "CommerceOrganizationManagementWidget#CHART_SEARCH_RESULTS");
+			}
+		}
+
+		task ("But if the admin clicks on the second one") {
+			Click(locator1 = "CommerceOrganizationManagementWidget#SEARCH_FIELD");
+
+			Click(
+				key_columnOption = "Account A",
+				key_row = 2,
+				locator1 = "CommerceOrganizationManagementWidget#SELECT_AUTO_COMPLETE_OPTION_ROW");
+		}
+
+		task ("Then again the Organization widget expands and opens the graph to show the entries highlighted with the black color") {
+			AssertElementPresent(
+				key_entry = "Account A",
+				key_row = 1,
+				locator1 = "CommerceOrganizationManagementWidget#CHART_DISCOVERED_ENTRY_ROW");
+
+			AssertElementNotPresent(
+				key_entry = "Account A",
+				key_row = 2,
+				locator1 = "CommerceOrganizationManagementWidget#CHART_DISCOVERED_ENTRY_ROW");
+
+			task ("And the message 1 entities found is present") {
+				AssertElementPresent(
+					key_searchResults = "1 Result for Account A",
+					locator1 = "CommerceOrganizationManagementWidget#CHART_SEARCH_RESULTS");
+			}
 		}
 	}
 
 	@description = "COMMERCE-12582 | Verify that is possibile to search an entity into Organization Management Widget and that the position change based on the entity searched"
-    @priority = 4
-    test CanSearchOneEntityIntoOrganizationManagement { 
+	@priority = 4
+	test CanSearchOneEntityIntoOrganizationManagement {
 		property portal.acceptance = "false";
 
 		task ("Given a setup scenario is created for the Organization Management Widget") {
@@ -374,7 +668,7 @@ definition {
 
 			// Pausing 5 seconds need it for giving the time to actually change the position COMMERCE-12430
 
-			Pause(locator1 = 5000); 
+			Pause(locator1 = 5000);
 
 			var second_position = selenium.getAttribute("//div[contains(@class,'org-chart-container')]//*[name()='svg']//*[name()='g']@transform");
 
@@ -392,27 +686,27 @@ definition {
 	}
 
 	@description = "COMMERCE-12583 | Verify that is possibile to search an entity two times in a row"
-    @priority = 5
-    test CanSearchTwoTimesInRowTheSameEntityIntoOrganizationManagement { 
+	@priority = 5
+	test CanSearchTwoTimesInRowTheSameEntityIntoOrganizationManagement {
 		property portal.acceptance = "true";
 
 		task ("Given a setup scenario is created for the Organization Management Widget") {
-			for (var organizationAccountEntries : list "Org 1:Account A,Org 2:Account B") { 
+			for (var organizationAccountEntries : list "Org 1:Account A,Org 2:Account B") {
 				var organization = StringUtil.extractFirst(${organizationAccountEntries}, ":");
 				var account = StringUtil.extractLast(${organizationAccountEntries}, ":");
 
 				JSONOrganization.addOrganization(
-					organizationName = "${organization}",
+					organizationName = ${organization},
 					organizationSite = "false");
 
 				JSONAccountEntry.addAccountEntry(
-					accountEntryName = "${account}",
+					accountEntryName = ${account},
 					accountEntryType = "Business");
 
 				JSONAccountEntry.addAccountEntryOrganization(
-					accountEntryName = "${account}",
-					organizationName = "${organization}");
-			}			
+					accountEntryName = ${account},
+					organizationName = ${organization});
+			}
 		}
 
 		task ("And the admin goes to the widget page") {
@@ -442,8 +736,7 @@ definition {
 				key_entry = "Org 2",
 				locator1 = "CommerceOrganizationManagementWidget#CHART_ENTRY");
 
-			Click(
-				locator1 = "CommerceOrganizationManagementWidget#SEARCH_FIELD");
+			Click(locator1 = "CommerceOrganizationManagementWidget#SEARCH_FIELD");
 
 			Click(
 				key_columnOption = "Org 1",
@@ -496,24 +789,24 @@ definition {
 	}
 
 	@description = "COMMERCE-12586 | Verify that the select dropdown is working when it used for compile the search field for the searching"
-    @priority = 5
-    test CanSelectDropdownIsWorkingIntoOrganizationManagement { 
+	@priority = 5
+	test CanSelectDropdownIsWorkingIntoOrganizationManagement {
 		property portal.acceptance = "true";
 
 		task ("Given a setup scenario is created for the Organization Management Widget") {
 			for (var organizationEntries : list "Org 1:SubOrg 1,Org 2:SubOrg 2") {
 				var organization = StringUtil.extractFirst(${organizationEntries}, ":");
-				var subOrganization = StringUtil.extractLast(${organizationEntries}, ":"); 
-				
+				var subOrganization = StringUtil.extractLast(${organizationEntries}, ":");
+
 				JSONOrganization.addOrganization(
-					organizationName = "${organization}",
+					organizationName = ${organization},
 					organizationSite = "false");
 
 				JSONOrganization.addOrganization(
-					organizationName = "${subOrganization}",
-					parentOrganizationName = "${organization}");
+					organizationName = ${subOrganization},
+					parentOrganizationName = ${organization});
 			}
-			
+
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
 
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Organization Management Widget Page");
@@ -558,9 +851,10 @@ definition {
 		}
 
 		task ("Then the select should take the “Org 2“ as a parameter for the search") {
+
 			// Pausing 5 seconds for to be able to test a timing issue that was present into the story COMMERCE-12430
-			
-			Pause(locator1 = 5000); 
+
+			Pause(locator1 = 5000);
 
 			task ("And highlight 'Org 2' with the black color") {
 				AssertElementPresent(
@@ -568,235 +862,11 @@ definition {
 					locator1 = "CommerceOrganizationManagementWidget#CHART_DISCOVERED_ENTRY");
 			}
 		}
-
-	}
-
-	@description = "COMMERCE-12586 | Verify that changing the root configuration for the Organization Management widget affect the search results"
-    @priority = 5
-    test CanChangeTheRootAffectTheSearchOrganizationManagement { 
-		property portal.acceptance = "true";
-
-		task ("Given a setup scenario is created for the Organization Management Widget") {
-			for (var organizationAccountEntries : list "Org 1:Account A,Org 2:Account B") { 
-				var organization = StringUtil.extractFirst(${organizationAccountEntries}, ":");
-				var account = StringUtil.extractLast(${organizationAccountEntries}, ":");
-
-				JSONOrganization.addOrganization(
-					organizationName = "${organization}",
-					organizationSite = "false");
-
-				JSONAccountEntry.addAccountEntry(
-					accountEntryName = "${account}",
-					accountEntryType = "Business");
-
-				JSONAccountEntry.addAccountEntryOrganization(
-					accountEntryName = "${account}",
-					organizationName = "${organization}");
-			}
-
-			JSONAccountEntry.addAccountEntryOrganization(
-					accountEntryName = "Account A",
-					organizationName = "Org 2");			
-		}
-
-		task ("And the admin goes to the widget page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
-
-			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Organization Management Widget Page");
-		}
-
-		task ("And before changing the root the search work normally") {
-			Type(
-				locator1 = "CommerceOrganizationManagementWidget#SEARCH_FIELD",
-				value1 = "Account A");
-
-			Click(
-				key_columnOption = "Account A",
-				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
-
-			for (var rowList : list "1,2") { 		
-				AssertElementPresent(
-					key_entry = "Account A",
-					key_row = ${rowList},
-					locator1 = "CommerceOrganizationManagementWidget#CHART_DISCOVERED_ENTRY_ROW");				
-			}
-
-		}
-
-		task ("When the Organization Management root is changed for only 'Org 1'") {
-			Portlet.gotoPortletOptions(
-				portletName = "Organization Management",
-				portletOption = "Configuration");
-
-			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
-
-			Type(
-				locator1 = "CommerceOrganizationManagementWidget#SEARCH_FIELD",
-				value1 = "Org 1");
-
-			PortletEntry.save();
-
-			IFrame.closeFrame();
-		}
-
-		task ("And the admin searches 'Account A'") {
-			Type(
-				locator1 = "CommerceOrganizationManagementWidget#SEARCH_FIELD",
-				value1 = "Account A");
-
-			Click(
-				key_columnOption = "Account A",
-				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
-		}
-
-		task ("Then only one result should be present in the select search results, and in the graph") {	
-			AssertElementPresent(
-				key_entry = "Account A",
-				key_row = "1",
-				locator1 = "CommerceOrganizationManagementWidget#CHART_DISCOVERED_ENTRY_ROW");
-
-			AssertElementNotPresent(
-				key_entry = "Account A",
-				key_row = "2",
-				locator1 = "CommerceOrganizationManagementWidget#CHART_DISCOVERED_ENTRY_ROW");
-
-			AssertElementPresent(
-				key_searchResults = "1 Result for Account A",
-				locator1 = "CommerceOrganizationManagementWidget#CHART_SEARCH_RESULTS");
-		}
-
-		task ("But if the admin searches for 'Org 2'") {
-			Type(
-				locator1 = "CommerceOrganizationManagementWidget#SEARCH_FIELD",
-				value1 = "Org 2");
-
-			Click(
-				key_columnOption = "Org 2",
-				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
-		}
-
-		task ("Then no entries are present in the graph (no entry will be highlighted)") {
-			AssertElementNotPresent(
-				key_entry = "Org 2",
-				locator1 = "CommerceOrganizationManagementWidget#CHART_DISCOVERED_ENTRY");
-
-			AssertElementPresent(
-				key_searchResults = "0 Result for Org 2",
-				locator1 = "CommerceOrganizationManagementWidget#CHART_SEARCH_RESULTS");
-		}
-	}
-
-	@description = "COMMERCE-12584 | Verify that is possibile to search for an entry that is present multiple times inside the widget"
-    @priority = 5
-    test CanSearchAnEntryPresentMultipleTimesIntoOrganizationManagement {
-		property portal.acceptance = "true";
-
-		task ("And an organization is created and configured") {
-			for (var organizationList : list "Org 1,Org 2") { 		
-				JSONOrganization.addOrganization(
-					organizationName = "${organizationList}",
-					organizationSite = "false");				
-			}
-
-			JSONOrganization.addOrganization(
-				organizationName = "SubOrg 1",
-				parentOrganizationName = "Org 1");
-
-			for (var accountsList : list "Account A,Account B_1,Account B_2") { 		
-				JSONAccountEntry.addAccountEntry(
-					accountEntryName = "${accountsList}",
-					accountEntryType = "Business");
-
-				if(${accountsList} != "Account B_1") {
-					JSONAccountEntryUser.addExistUsertoAccount(
-						accountEntryName = "${accountsList}",
-						userEmailAddress = "buyer@liferay.com");
-				}			
-			}
-
-			JSONAccountEntry.addAccountEntrySubOrganization(
-				accountEntryName = "Account A",
-				subOrganizationName = "SubOrg 1",
-				parentOrganizationName = "Org 1");
-
-			for (var accountsList : list "Account B_1,Account B_2") { 		
-				JSONAccountEntry.addAccountEntryOrganization(
-					accountEntryName = "${accountsList}",
-					organizationName = "Org 2");			
-			}
-		}
-
-		task ("And the admin goes to the widget page") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
-
-			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Organization Management Widget Page");
-		}
-
-		task ("And the admin searches 'buyer@liferay.com'") {
-			Type(
-				locator1 = "CommerceOrganizationManagementWidget#SEARCH_FIELD",
-				value1 = "buyer@liferay.com");
-
-			Click(
-				key_columnOption = "Buyer User",
-				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
-		}
-
-		task ("Then the Organization widget expands and opens the graph to show the entries highlighted with the black color") {	
-			AssertElementPresent(
-				key_entry = "Buyer User",
-				key_row = "1",
-				locator1 = "CommerceOrganizationManagementWidget#CHART_DISCOVERED_ENTRY_ROW");
-
-			AssertElementPresent(
-				key_entry = "Buyer User",
-				key_row = "2",
-				locator1 = "CommerceOrganizationManagementWidget#CHART_DISCOVERED_ENTRY_ROW");
-
-			task ("And the message 2 entities found is present") {
-				AssertElementPresent(
-					key_searchResults = "2 Result for Buyer User",
-					locator1 = "CommerceOrganizationManagementWidget#CHART_SEARCH_RESULTS");
-			}	
-		}
-
-		task ("But if the admin clicks on the 'Collapse' button") {
-			Click(
-				key_text = "Collapse All",
-				locator1 = "Button#ANY");
-		}
-
-		task ("And search again the 'buyer@liferay.com'") {
-			Click(
-				locator1 = "CommerceOrganizationManagementWidget#SEARCH_FIELD");
-
-			Click(
-				key_columnOption = "Buyer User",
-				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
-		}
-
-		task ("Then again the Organization widget expands and opens the graph to show the entries highlighted with the black color") {	
-			AssertElementPresent(
-				key_entry = "Buyer User",
-				key_row = "1",
-				locator1 = "CommerceOrganizationManagementWidget#CHART_DISCOVERED_ENTRY_ROW");
-
-			AssertElementPresent(
-				key_entry = "Buyer User",
-				key_row = "2",
-				locator1 = "CommerceOrganizationManagementWidget#CHART_DISCOVERED_ENTRY_ROW");
-
-			task ("And the message 2 entities found is still present") {
-				AssertElementPresent(
-					key_searchResults = "2 Result for Buyer User",
-					locator1 = "CommerceOrganizationManagementWidget#CHART_SEARCH_RESULTS");
-			}	
-		}
 	}
 
 	@description = "COMMERCE-12584 | Verify that is possible to use the suggestion into the autocomplete for the searching"
-    @priority = 4
-    test CanUseAutoSearchSuggestionIntoOrganizationManagement {
+	@priority = 4
+	test CanUseAutoSearchSuggestionIntoOrganizationManagement {
 		property portal.acceptance = "false";
 
 		task ("And an organization is created and configured") {
@@ -805,19 +875,18 @@ definition {
 				var subOrganization = StringUtil.extractLast(${organizationEntries}, ":");
 
 				JSONOrganization.addOrganization(
-					organizationName = "${organization}",
+					organizationName = ${organization},
 					organizationSite = "false");
 
 				JSONOrganization.addOrganization(
-					organizationName = "${subOrganization}",
-					parentOrganizationName = "${organization}");	
-
+					organizationName = ${subOrganization},
+					parentOrganizationName = ${organization});
 			}
 
-			for (var accountList : list "Account A_1,Account B_1,SubOrg 2") { 		
+			for (var accountList : list "Account A_1,Account B_1,SubOrg 2") {
 				JSONAccountEntry.addAccountEntry(
-					accountEntryName = "${accountList}",
-					accountEntryType = "Business");				
+					accountEntryName = ${accountList},
+					accountEntryType = "Business");
 			}
 
 			CommerceEntry.addAccountEntryUser(
@@ -832,24 +901,24 @@ definition {
 				userScreenName = "adminuser",
 				userSiteMembership = "Minium");
 
-			for (var accountList : list "Account A_1,SubOrg 2") { 		
+			for (var accountList : list "Account A_1,SubOrg 2") {
 				JSONAccountEntryUser.addExistUsertoAccount(
-					accountEntryName = "${accountList}",
-					userEmailAddress = "buyer@liferay.com");			
+					accountEntryName = ${accountList},
+					userEmailAddress = "buyer@liferay.com");
 			}
 
-			for (var accountList : list "Account A_1,Account A_2") { 		
+			for (var accountList : list "Account A_1,Account A_2") {
 				JSONAccountEntry.addAccountEntrySubOrganization(
-					accountEntryName = "${accountList}",
-					subOrganizationName = "SubOrg 1",
-					parentOrganizationName = "Org 1");				
+					accountEntryName = ${accountList},
+					parentOrganizationName = "Org 1",
+					subOrganizationName = "SubOrg 1");
 			}
 
-			for (var accountList : list "Account B_1,SubOrg 2") { 		
+			for (var accountList : list "Account B_1,SubOrg 2") {
 				JSONAccountEntry.addAccountEntrySubOrganization(
-					accountEntryName = "${accountList}",
-					subOrganizationName = "SubOrg 2",
-					parentOrganizationName = "Org 2");				
+					accountEntryName = ${accountList},
+					parentOrganizationName = "Org 2",
+					subOrganizationName = "SubOrg 2");
 			}
 		}
 
@@ -865,10 +934,10 @@ definition {
 				value1 = "Org");
 
 			task ("Then the select will show “Org 1” and “Org 2” as the results") {
-				for (var organizationName : list "Org 1,Org 2") { 		
+				for (var organizationName : list "Org 1,Org 2") {
 					AssertElementPresent(
-						key_columnOption = "${organizationName}",
-						locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");			
+						key_columnOption = ${organizationName},
+						locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
 				}
 			}
 		}
@@ -882,7 +951,7 @@ definition {
 		task ("Then is possible to see the account in the select, but if the admin clicks on it, no results will be present") {
 			AssertElementPresent(
 				key_columnOption = "Commerce Account",
-				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");	
+				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
 
 			Click(
 				key_columnOption = "Commerce Account",
@@ -890,7 +959,7 @@ definition {
 
 			AssertElementNotPresent(
 				key_entry = "Commerce Account",
-				locator1 = "CommerceOrganizationManagementWidget#CHART_DISCOVERED_ENTRY");	
+				locator1 = "CommerceOrganizationManagementWidget#CHART_DISCOVERED_ENTRY");
 		}
 
 		task ("And the message “0 entities found” is present") {
@@ -906,11 +975,11 @@ definition {
 		}
 
 		task ("Then two results will be presented in the select") {
-			for (var entryName : list "SubOrg 2 - Organization,SubOrg 2 - Account") { 		
-					AssertElementPresent(
-						key_columnOption = "${entryName}",
-						locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");			
-				}
+			for (var entryName : list "SubOrg 2 - Organization,SubOrg 2 - Account") {
+				AssertElementPresent(
+					key_columnOption = ${entryName},
+					locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
+			}
 		}
 
 		task ("When the SubOrg 2 - Organization is selected") {
@@ -934,12 +1003,11 @@ definition {
 				AssertElementPresent(
 					key_searchResults = "1 Result for SubOrg 2",
 					locator1 = "CommerceOrganizationManagementWidget#CHART_SEARCH_RESULTS");
-			}		
+			}
 		}
 
 		task ("When the SubOrg 2 - Account is selected") {
-			Click(
-				locator1 = "CommerceOrganizationManagementWidget#SEARCH_FIELD");
+			Click(locator1 = "CommerceOrganizationManagementWidget#SEARCH_FIELD");
 
 			Click(
 				key_columnOption = "SubOrg 2 - Account",
@@ -961,129 +1029,52 @@ definition {
 				AssertElementPresent(
 					key_searchResults = "1 Result for SubOrg 2",
 					locator1 = "CommerceOrganizationManagementWidget#CHART_SEARCH_RESULTS");
-			}		
+			}
 		}
 	}
 
-	@description = "COMMERCE-12594 | Verify that even if all the accounts has the same name, when the admin use the search can highlight the correct one based on the ID"
-    @priority = 5
-    test CanSearchDifferentAccountsWithTheSameNameOrganizationManagement  {
-		property portal.acceptance = "true";
+	@description = "COMMERCE-12581 | Verify that the Organization Management Widget is still working even without any entities"
+	@priority = 3
+	test CanUseOrganizationManagementWithoutAnyEntity {
+		property portal.acceptance = "false";
 
-		task ("And an organization is created and configured") {
-
-			for (var organizationEntries : list "Org 1,Org 2") { 			
-				JSONOrganization.addOrganization(
-					organizationName = "${organizationEntries}",
-					organizationSite = "false");
-			}
-			
-			for (var accountEntries : list "Account A,Account B") { 			
-				JSONAccountEntry.addAccountEntry(
-					accountEntryName = "${accountEntries}",
-					accountEntryType = "Business");
-			}
-			
-			for (var accountEntries : list "Account A,Account B") { 			
-				JSONAccountEntry.addAccountEntryOrganization(
-					accountEntryName = "${accountEntries}",
-					organizationName = "Org 1");
-			}
-
-			JSONAccountEntry.addAccountEntryOrganization(
-				accountEntryName = "Account A",
-				organizationName = "Org 2");
-
-			Account.openAccountsAdmin();
-
-			LexiconEntry.gotoEntry(rowEntry = "Account B");
-
-			PortletEntry.inputName(name = "Account A");
-
-			Button.clickSave();
-		} 
-
-		task ("And the admin goes to the widget page") {
+		task ("Given the admin navigates to the Organization Management Widget Page") {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
 
 			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Organization Management Widget Page");
 		}
 
-		task ("And the admin searches 'Account A'") {
-			Type(
-				locator1 = "CommerceOrganizationManagementWidget#SEARCH_FIELD",
-				value1 = "Account A");
-		}
-
-		task ("Then two results should be present in the select with the same name") {
-			for (var row : list "1,2") { 			
-				AssertElementPresent(
-					key_columnOption = "Account A",
-					key_row = ${row},
-					locator1 = "CommerceOrganizationManagementWidget#SELECT_AUTO_COMPLETE_OPTION_ROW");
-			}
-
-			AssertElementNotPresent(
-					key_columnOption = "Account A",
-					key_row = 3,
-					locator1 = "CommerceOrganizationManagementWidget#SELECT_AUTO_COMPLETE_OPTION_ROW");
-		}
-
-		task ("When the admin clicks on the first one") {
-			Click(
-				key_columnOption = "Account A",
-				key_row = 1,
-				locator1 = "CommerceOrganizationManagementWidget#SELECT_AUTO_COMPLETE_OPTION_ROW");
-		}
-
-		task ("Then the Organization widget expands and opens the graph to show the entries highlighted with the black color") {
-			for (var row : list "1,2") { 			
-				AssertElementPresent(
-					key_entry = "Account A",
-					key_row = ${row},
-					locator1 = "CommerceOrganizationManagementWidget#CHART_DISCOVERED_ENTRY_ROW");
-			}
-
-			AssertElementNotPresent(
-					key_entry = "Account A",
-					key_row = 3,
-					locator1 = "CommerceOrganizationManagementWidget#CHART_DISCOVERED_ENTRY_ROW");
-
-			task ("And the message 2 entities found is present") {
-				AssertElementPresent(
-					key_searchResults = "2 Result for Account A",
-					locator1 = "CommerceOrganizationManagementWidget#CHART_SEARCH_RESULTS");
-			}
-		}
-
-		task ("But if the admin clicks on the second one") {
-			Click(
-				locator1 = "CommerceOrganizationManagementWidget#SEARCH_FIELD");
-
-			Click(
-				key_columnOption = "Account A",
-				key_row = 2,
-				locator1 = "CommerceOrganizationManagementWidget#SELECT_AUTO_COMPLETE_OPTION_ROW");	
-		}
-
-		task ("Then again the Organization widget expands and opens the graph to show the entries highlighted with the black color") {
+		task ("Then even without any entity, the widget is still usable") {
 			AssertElementPresent(
-				key_entry = "Account A",
-				key_row = 1,
-				locator1 = "CommerceOrganizationManagementWidget#CHART_DISCOVERED_ENTRY_ROW");
+				key_text = "Collapse All",
+				locator1 = "Button#ANY");
 
-			AssertElementNotPresent(
-				key_entry = "Account A",
-				key_row = 2,
-				locator1 = "CommerceOrganizationManagementWidget#CHART_DISCOVERED_ENTRY_ROW");
+			AssertElementPresent(locator1 = "CommerceOrganizationManagementWidget#REDUCE_ZOOM_BUTTON");
 
-			task ("And the message 1 entities found is present") {
-				AssertElementPresent(
-					key_searchResults = "1 Result for Account A",
-					locator1 = "CommerceOrganizationManagementWidget#CHART_SEARCH_RESULTS");
-			}
+			AssertElementPresent(locator1 = "CommerceOrganizationManagementWidget#INCREASE_ZOOM_BUTTON");
+
+			AssertElementPresent(locator1 = "CommerceOrganizationManagementWidget#EXPAND_BUTTON");
+		}
+	}
+
+	@description = "COMMERCE-9399. Verify organizations can be viewed in the Organization Management widget."
+	@priority = 3
+	test CanViewOrganizationWidget {
+		property portal.acceptance = "false";
+
+		task ("Setup: Add an organization") {
+			JSONOrganization.addOrganization(
+				organizationName = "Organization 1",
+				organizationSite = "false");
 		}
 
+		task ("When the Organization Management Widget Page is reached") {
+			CommerceWidget.openOrganizationWidget();
+		}
+
+		task ("Then the organization is shown within the widget") {
+			CommerceWidget.assertOrganizationManagementWigetTitlePresent(key_nodeName = "Organization 1");
+		}
 	}
 
 }

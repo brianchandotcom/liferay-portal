@@ -31,6 +31,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>OBJECT_REJECTED_ERROR_MESSAGE</td>
+		<td>//*[text()='${objectDefinition}']/../following-sibling::span[contains(@class, 'rejected')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>MODEL_BUILDER_CHANGES_SAVED</td>
 		<td>//span[text()='Changes Saved']</td>
 		<td></td>

@@ -7,6 +7,7 @@ package com.liferay.commerce.inventory.service;
 
 import com.liferay.commerce.inventory.exception.NoSuchInventoryBookedQuantityException;
 import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
+import com.liferay.commerce.inventory.type.CommerceInventoryAuditType;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -134,6 +135,13 @@ public interface CommerceInventoryBookedQuantityLocalService
 	public CommerceInventoryBookedQuantity
 			deleteCommerceInventoryBookedQuantity(
 				long commerceInventoryBookedQuantityId)
+		throws PortalException;
+
+	public CommerceInventoryBookedQuantity
+			deleteCommerceInventoryBookedQuantity(
+				long userId, long commerceInventoryBookedQuantityId,
+				Map<String, String> context,
+				CommerceInventoryAuditType commerceInventoryAuditType)
 		throws PortalException;
 
 	/**

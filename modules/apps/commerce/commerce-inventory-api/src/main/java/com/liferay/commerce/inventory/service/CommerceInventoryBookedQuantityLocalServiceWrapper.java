@@ -155,6 +155,21 @@ public class CommerceInventoryBookedQuantityLocalServiceWrapper
 				commerceInventoryBookedQuantityId);
 	}
 
+	@Override
+	public com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity
+			deleteCommerceInventoryBookedQuantity(
+				long userId, long commerceInventoryBookedQuantityId,
+				java.util.Map<String, String> context,
+				com.liferay.commerce.inventory.type.CommerceInventoryAuditType
+					commerceInventoryAuditType)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceInventoryBookedQuantityLocalService.
+			deleteCommerceInventoryBookedQuantity(
+				userId, commerceInventoryBookedQuantityId, context,
+				commerceInventoryAuditType);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

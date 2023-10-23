@@ -35,6 +35,15 @@ import org.osgi.service.component.annotations.Reference;
 public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 
 	@Override
+	public String createCopyLinkClickMethod(String className, long classPK) {
+		requestSharingJavascript();
+
+		String link = className + "_" + classPK;
+
+		return StringBundler.concat("Liferay.Sharing.copyLink('", link, "')");
+	}
+
+	@Override
 	public String createManageCollaboratorsOnClickMethod(
 		String className, long classPK, HttpServletRequest httpServletRequest) {
 

@@ -34,6 +34,15 @@ PortletURL sharingURL = PortletURLBuilder.create(
 	}
 
 	var Sharing = {
+		copyLink: function (link) {
+			navigator.clipboard.writeText(link);
+
+			Liferay.Util.openToast({
+				message:
+					'<%= LanguageUtil.get(resourceBundle, "copied-link-to-the-clipboard") %>',
+			});
+		},
+
 		manageCollaborators: function (classNameId, classPK) {
 			var manageCollaboratorsParameters = {
 				classNameId: classNameId,

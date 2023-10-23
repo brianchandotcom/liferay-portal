@@ -1579,11 +1579,10 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		try {
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 			layoutFullURL = HttpComponentsUtil.addParameters(
 				layoutFullURL, "p_l_back_url", _getBackURL(),
-				"p_l_back_url_title", portletDisplay.getTitle());
+				"p_l_back_url_title",
+				LanguageUtil.get(httpServletRequest, "pages"));
 		}
 		catch (Exception exception) {
 			_log.error(
@@ -2169,12 +2168,11 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	private String _getDraftLayoutURL(Layout layout) throws Exception {
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
 		return HttpComponentsUtil.addParameters(
 			PortalUtil.getLayoutFullURL(getDraftLayout(layout), themeDisplay),
 			"p_l_back_url", _getBackURL(), "p_l_back_url_title",
-			portletDisplay.getPortletDisplayName(), "p_l_mode", Constants.EDIT);
+			LanguageUtil.get(httpServletRequest, "pages"), "p_l_mode",
+			Constants.EDIT);
 	}
 
 	private String _getFriendlyURLWarningURL() {

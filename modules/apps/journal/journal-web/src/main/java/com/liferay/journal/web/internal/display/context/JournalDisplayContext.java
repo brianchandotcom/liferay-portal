@@ -1482,7 +1482,7 @@ public class JournalDisplayContext {
 	}
 
 	private BooleanClause<Query>[] _getBooleanClauses(
-		long[] assetCategoryIds, String[] assetTagNames) {
+		long[] assetCategoryIds, String[] assetTagNames, long userId) {
 
 		BooleanQuery booleanQuery = new BooleanQueryImpl();
 
@@ -1498,6 +1498,11 @@ public class JournalDisplayContext {
 			booleanFilter.add(
 				_getAssetTagNamesFilter(assetTagNames),
 				BooleanClauseOccur.MUST);
+		}
+
+		if (userId > 0) {
+			booleanFilter.addTerm(
+				Field.USER_ID, String.valueOf(userId), BooleanClauseOccur.MUST);
 		}
 
 		booleanQuery.setPreBooleanFilter(booleanFilter);
@@ -1761,8 +1766,15 @@ public class JournalDisplayContext {
 
 		searchContext.setAttributes(attributes);
 
+		long userId = 0;
+
+		if (isNavigationMine()) {
+			userId = _themeDisplay.getUserId();
+		}
+
 		searchContext.setBooleanClauses(
-			_getBooleanClauses(_getAssetCategoryIds(), _getAssetTagNames()));
+			_getBooleanClauses(
+				_getAssetCategoryIds(), _getAssetTagNames(), userId));
 
 		long ddmStructureId = ParamUtil.getLong(
 			_httpServletRequest, "ddmStructureId");

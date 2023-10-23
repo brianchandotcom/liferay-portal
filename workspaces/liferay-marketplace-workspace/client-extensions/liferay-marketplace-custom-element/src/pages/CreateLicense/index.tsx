@@ -9,52 +9,18 @@ import './index.scss';
 
 import {useForm} from 'react-hook-form';
 
-import {FooterButtons} from '../../components/FooterButtons';
+import FooterButtons from '../../components/FooterButtons';
 import ProductCard from '../GetAppPage/components/ProductCard/ProductCard';
 import StepWizard from '../GetAppPage/components/StepWizard/StepWizard';
 import AccountEmailInfo from './AccountInfo';
 import LicenseDetails from './LicenseDetails';
 import SelectSubscription from './SelectSubscription';
-
-export enum StepCreateLicense {
-	LICENSE_KEY_DETAILS = 'licenseKeyDetails',
-	SUBSCRIPTION = 'subscription',
-}
-
-export type CreateLicenseForm = {
-	subscription: string;
-};
-
-type ProductCardProps = {
-	licenseKeyData: {[key: string]: string};
-	product: {
-		attachments: [];
-		name: {
-			en_US: string;
-		};
-		productSpecifications: [];
-		skus: {
-			price: number;
-			sku: string;
-			skuOptions: [];
-		}[];
-	};
-	productCreatorAccount: {logoURL: undefined; name: string};
-	userAccount: {[key: string]: string};
-};
-
-type StepsInformationProps = {
-	backStep: string;
-	component: JSX.Element;
-	nextStep: string;
-	stepTitle: string;
-	title: string;
-};
-
-type StepsInformation = {
-	[StepCreateLicense.LICENSE_KEY_DETAILS]: StepsInformationProps;
-	[StepCreateLicense.SUBSCRIPTION]: StepsInformationProps;
-};
+import {
+	CreateLicenseForm,
+	ProductCardProps,
+	StepCreateLicense,
+	StepsInformation,
+} from './Types';
 
 const CreateLicense = () => {
 	const [step, setStep] = useState<string>(StepCreateLicense.SUBSCRIPTION);
@@ -142,7 +108,7 @@ const CreateLicense = () => {
 	);
 
 	const ButtonsInfo = {
-		backButton: {
+		cancelButton: {
 			displayType: 'unstyled',
 			show: true,
 		},
@@ -211,7 +177,7 @@ const CreateLicense = () => {
 					onClickCancel={() => {
 						window.location.href = origin;
 					}}
-					onClickCustomized={() =>
+					onClickCustomizedButton={() =>
 						setStep(StepCreateLicense.SUBSCRIPTION)
 					}
 					onClickNext={() =>

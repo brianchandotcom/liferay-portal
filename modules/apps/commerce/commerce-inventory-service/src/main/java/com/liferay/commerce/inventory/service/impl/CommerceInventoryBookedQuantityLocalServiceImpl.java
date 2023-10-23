@@ -138,6 +138,28 @@ public class CommerceInventoryBookedQuantityLocalServiceImpl
 	}
 
 	@Override
+	public CommerceInventoryBookedQuantity
+			deleteCommerceInventoryBookedQuantity(
+				long userId, long commerceInventoryBookedQuantityId,
+				Map<String, String> context,
+				CommerceInventoryAuditType commerceInventoryAuditType)
+		throws PortalException {
+
+		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity =
+			commerceInventoryBookedQuantityPersistence.remove(
+				commerceInventoryBookedQuantityId);
+
+		_commerceInventoryAuditLocalService.addCommerceInventoryAudit(
+			userId, commerceInventoryAuditType.getType(),
+			commerceInventoryAuditType.getLog(context),
+			commerceInventoryBookedQuantity.getQuantity(),
+			commerceInventoryBookedQuantity.getSku(),
+			commerceInventoryBookedQuantity.getUnitOfMeasureKey());
+
+		return commerceInventoryBookedQuantity;
+	}
+
+	@Override
 	public List<CommerceInventoryBookedQuantity>
 		getCommerceInventoryBookedQuantities(
 			long companyId, String sku, String unitOfMeasureKey, int start,

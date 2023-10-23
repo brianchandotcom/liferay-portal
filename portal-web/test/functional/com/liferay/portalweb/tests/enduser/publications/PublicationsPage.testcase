@@ -606,6 +606,10 @@ definition {
 		}
 
 		task ("Add Content Display Fragment to the page and configure it to display WC2") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Guest");
+
 			PageEditor.addFragment(
 				collectionName = "Content Display",
 				fragmentName = "Content Display",

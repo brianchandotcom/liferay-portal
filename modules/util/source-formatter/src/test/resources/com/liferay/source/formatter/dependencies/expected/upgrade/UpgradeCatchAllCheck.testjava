@@ -196,6 +196,16 @@ public class UpgradeCatchAllCheck {
 		_addressService.addAddress(null, userId, className, classPK, null, null, street1, street2, street3, city, zip, regionId, countryId, typeId, mailing, primary, null, serviceContext);
 	}
 
+	public void method(
+		String externalReferenceCode, long cProductId,
+		String cpInstanceUuid, long commercePriceListId, BigDecimal price,
+		BigDecimal promoPrice, ServiceContext serviceContext) {
+
+		CommercePriceEntryLocalServiceUtil.addCommercePriceEntry(externalReferenceCode, cProductId, cpInstanceUuid, commercePriceListId, price, false, promoPrice, null, serviceContext);
+		_commercePriceEntryLocalService.addCommercePriceEntry("test123", cProductId, cpInstanceUuid, commercePriceListId, price, promoPrice, serviceContext);
+		_commercePriceEntryLocalService.addCommercePriceEntry(externalReferenceCode, cProductId, cpInstanceUuid, commercePriceListId, price, false, promoPrice, null, serviceContext);
+	 }
+
 	@Reference
 	private AccountGroupLocalService _accountGroupLocalService;
 
@@ -219,6 +229,9 @@ public class UpgradeCatchAllCheck {
 
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;
+
+	@Reference
+	private CommercePriceEntryLocalService _commercePriceEntryLocalService;
 
 	@Reference
 	private CommercePriceListLocalService _commercePriceListLocalService;

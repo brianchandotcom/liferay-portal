@@ -396,16 +396,15 @@ public class SystemObject1toMObjectRelatedModelsProviderImpl
 					companyId
 				).and(
 					() -> {
-						Column<?, Long> groupIdColumn = _table.getColumn(
-							"groupId");
-
-						if ((groupIdColumn == null) ||
-							Objects.equals(
+						if (Objects.equals(
 								ObjectDefinitionConstants.SCOPE_COMPANY,
 								objectDefinition1.getScope())) {
 
 							return null;
 						}
+
+						Column<?, Long> groupIdColumn = _table.getColumn(
+							"groupId");
 
 						return groupIdColumn.eq(groupId);
 					}

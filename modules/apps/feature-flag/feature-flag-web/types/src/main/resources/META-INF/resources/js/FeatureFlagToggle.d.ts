@@ -6,7 +6,7 @@
 /// <reference types="react" />
 
 interface IProps {
-	ariaDescribedBy: string;
+	ariaLabel: string;
 	companyId: number;
 	disabled: boolean;
 	enabled: boolean;
@@ -15,7 +15,7 @@ interface IProps {
 	onItemsChange: (value: Array<any>) => void;
 }
 declare const FeatureFlagToggle: ({
-	ariaDescribedBy,
+	ariaLabel,
 	companyId,
 	disabled,
 	enabled,

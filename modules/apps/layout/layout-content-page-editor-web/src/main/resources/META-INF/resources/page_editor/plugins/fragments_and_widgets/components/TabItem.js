@@ -154,7 +154,7 @@ const ListItem = ({disabled, handlerRef, item, onToggleHighlighted}) => {
 				<div className="align-items-center d-flex page-editor__fragments-widgets__tab-list-item-body">
 					<ClayIcon className="mr-3" symbol={item.icon} />
 
-					<div className="text-truncate title">{item.label}</div>
+					<div className="title">{item.label}</div>
 				</div>
 
 				{!disabled && (

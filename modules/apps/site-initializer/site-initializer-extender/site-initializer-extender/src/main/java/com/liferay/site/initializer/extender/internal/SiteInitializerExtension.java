@@ -17,6 +17,7 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionResource;
@@ -123,6 +124,7 @@ public class SiteInitializerExtension {
 		LayoutCopyHelper layoutCopyHelper,
 		LayoutLocalService layoutLocalService,
 		LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService,
+		ExpandoColumnLocalService expandoColumnLocalService,
 		LayoutPageTemplateStructureLocalService
 			layoutPageTemplateStructureLocalService,
 		LayoutPageTemplateStructureRelLocalService
@@ -193,7 +195,7 @@ public class SiteInitializerExtension {
 			journalArticleLocalService, jsonFactory,
 			knowledgeBaseArticleResourceFactory,
 			knowledgeBaseFolderResourceFactory, layoutCopyHelper,
-			layoutLocalService, layoutPageTemplateEntryLocalService,
+			layoutLocalService, layoutPageTemplateEntryLocalService, expandoColumnLocalService,
 			layoutsImporter, layoutPageTemplateStructureLocalService,
 			layoutPageTemplateStructureRelLocalService, layoutSetLocalService,
 			layoutUtilityPageEntryLocalService, listTypeDefinitionResource,

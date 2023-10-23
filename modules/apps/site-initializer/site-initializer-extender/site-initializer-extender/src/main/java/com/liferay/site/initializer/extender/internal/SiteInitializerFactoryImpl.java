@@ -17,6 +17,7 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.fragment.importer.FragmentsImporter;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionResource;
@@ -130,7 +131,7 @@ public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 			_journalArticleLocalService, _jsonFactory,
 			_knowledgeBaseArticleResourceFactory,
 			_knowledgeBaseFolderResourceFactory, _layoutCopyHelper,
-			_layoutLocalService, _layoutPageTemplateEntryLocalService,
+			_layoutLocalService, _layoutPageTemplateEntryLocalService, _expandoColumnLocalService,
 			_layoutsImporter, _layoutPageTemplateStructureLocalService,
 			_layoutPageTemplateStructureRelLocalService, _layoutSetLocalService,
 			_layoutUtilityPageEntryLocalService, _listTypeDefinitionResource,
@@ -262,6 +263,9 @@ public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
 
+	@Reference
+	private ExpandoColumnLocalService
+		_expandoColumnLocalService;
 	@Reference
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;

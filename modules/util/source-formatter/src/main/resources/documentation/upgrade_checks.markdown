@@ -21,7 +21,6 @@ UpgradeGradleIncludeResourceCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .js
 UpgradeJSPFieldSetGroupCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Run code to remove 'fieldset-group' tag |
 UpgradeJavaAccountPortletKeysCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replace constants of CommerceAccountPortletKeys by constants of AccountPortletKeys |
 UpgradeJavaAddAddressMethodCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Fill the new parameter of the method 'addAddress' of AddressLocalService, AddressLocalServiceUtil, AddressService and AddressServiceUtil |
-UpgradeJavaAddFDSTableSchemaFieldCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replace method addFDSTableSchemaFieldCheck by add |
 UpgradeJavaAddFileEntryParameterCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Fill the new parameter of the method 'addFileEntry' of 'DLAppLocalServiceUtil' and 'DLAppLocalService' |
 UpgradeJavaAddFolderParameterCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Fill the new parameter of the method `addFolder` of `JournalFolderService`, `JournalFolderLocalService`, and `JournalFolderLocalServiceUtil` classes |
 UpgradeJavaAssetEntryAssetCategoriesCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replaces methods referring to class `AssetEntryAssetCategory` in class `AssetCategoryLocalService` with equivalent methods in class `AssetEntryAssetCategoryRelLocalService`. |

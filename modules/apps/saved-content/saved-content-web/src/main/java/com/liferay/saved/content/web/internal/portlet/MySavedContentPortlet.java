@@ -7,7 +7,7 @@ package com.liferay.saved.content.web.internal.portlet;
 
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.saved.content.web.internal.constants.MySavedContentPortletKeys;
+import com.liferay.saved.content.constants.MySavedContentPortletKeys;
 
 import javax.portlet.Portlet;
 

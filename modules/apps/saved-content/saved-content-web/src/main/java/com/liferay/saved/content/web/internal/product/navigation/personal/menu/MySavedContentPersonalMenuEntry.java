@@ -10,7 +10,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.product.navigation.personal.menu.BasePersonalMenuEntry;
 import com.liferay.product.navigation.personal.menu.PersonalMenuEntry;
-import com.liferay.saved.content.web.internal.constants.MySavedContentPortletKeys;
+import com.liferay.saved.content.constants.MySavedContentPortletKeys;
 
 import javax.portlet.PortletRequest;
 

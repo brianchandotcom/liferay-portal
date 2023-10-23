@@ -46,9 +46,9 @@ function generate_zip_files {
 		return
 	fi
 
-	pushd ~/liferay-learn > /dev/null
+	pushd ~/liferay-learn/docs > /dev/null
 
-	for zip_dir_name in $(find docs -name \*.zip -type d)
+	for zip_dir_name in $(find * -name \*.zip -type d)
 	do
 		pushd "${zip_dir_name}"
 

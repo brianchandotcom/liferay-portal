@@ -853,6 +853,9 @@ components:
                 skuOptionKey:
                     example: Sku Option Key
                     type: string
+                skuOptionName:
+                    example: Sku Option Name
+                    type: string
                 skuOptionValueId:
                     example: 30130
                     format: int64
@@ -860,6 +863,10 @@ components:
                 skuOptionValueKey:
                     example: Sku Option Value Key
                     type: string
+                skuOptionValueNames:
+                    items:
+                        type: string
+                    type: array
                 value:
                     example: 31130
                     format: int64

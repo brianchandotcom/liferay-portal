@@ -15,8 +15,8 @@ import java.util.UUID;
  */
 public class JSLoaderModulesUtil {
 
-	public static boolean eTagEquals(String header) {
-		return _eTag.equals(header);
+	public static boolean eTagEquals(String headerValue) {
+		return _eTag.equals(headerValue);
 	}
 
 	public static String getETag() {

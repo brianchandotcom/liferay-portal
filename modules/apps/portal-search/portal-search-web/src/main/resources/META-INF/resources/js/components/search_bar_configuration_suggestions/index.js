@@ -5,10 +5,9 @@
 
 import ClayDropDown from '@clayui/drop-down';
 import getCN from 'classnames';
+import {LearnMessage, LearnResourcesContext} from 'frontend-js-components-web';
 import React, {useMemo} from 'react';
 
-import LearnMessage from '../../shared/LearnMessage';
-import SearchContext from '../../shared/SearchContext';
 import InputSets, {useInputSets} from '../../shared/input_sets/index';
 import {ITEM_ID_PROPERTY} from '../../shared/input_sets/useInputSets';
 import cleanSuggestionsContributorConfiguration from '../../utils/clean_suggestions_contributor_configuration';
@@ -45,7 +44,7 @@ function SearchBarConfigurationSuggestions({
 	initialSuggestionsContributorConfiguration = '[]',
 	isDXP = false,
 	isSearchExperiencesSupported = true,
-	learnMessages,
+	learnResources,
 	namespace = '',
 	suggestionsContributorConfigurationName = '',
 }) {
@@ -89,7 +88,7 @@ function SearchBarConfigurationSuggestions({
 
 					<LearnMessage
 						className="c-ml-1"
-						learnMessages={learnMessages}
+						resource="portal-search-web"
 						resourceKey="search-bar-suggestions-blueprints"
 					/>
 				</>
@@ -107,7 +106,7 @@ function SearchBarConfigurationSuggestions({
 
 					<LearnMessage
 						className="c-ml-1"
-						learnMessages={learnMessages}
+						resource="portal-search-web"
 						resourceKey="search-bar-suggestions-site-activities"
 					/>
 				</>
@@ -181,7 +180,7 @@ function SearchBarConfigurationSuggestions({
 	};
 
 	return (
-		<SearchContext.Provider value={{learnMessages}}>
+		<LearnResourcesContext.Provider value={learnResources}>
 			<div className="search-bar-configuration-suggestions-root">
 				{removeEmptyFields(suggestionsContributorConfiguration)
 					.length ? (
@@ -247,7 +246,7 @@ function SearchBarConfigurationSuggestions({
 					)}
 				</InputSets>
 			</div>
-		</SearchContext.Provider>
+		</LearnResourcesContext.Provider>
 	);
 }
 

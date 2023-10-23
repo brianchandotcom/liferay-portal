@@ -10,10 +10,9 @@ import {ClayCheckbox, ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import getCN from 'classnames';
+import {LearnMessage, LearnResourcesContext} from 'frontend-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useRef, useState} from 'react';
-
-import LearnMessage from '../shared/LearnMessage';
 
 const CONFIGURATION = {
 	headers: new Headers({
@@ -234,7 +233,6 @@ function VocabularyTree({
 function SelectVocabularies({
 	disabled = false,
 	initialSelectedVocabularyIds = SELECT_OPTIONS.ALL,
-	learnMessages,
 	namespace = '',
 	vocabularyIdsInputName = '',
 }) {
@@ -384,7 +382,7 @@ function SelectVocabularies({
 				{!disabled && (
 					<LearnMessage
 						className="c-ml-1"
-						learnMessages={learnMessages}
+						resource="portal-search-web"
 						resourceKey="tag-and-category-facet"
 					/>
 				)}
@@ -417,7 +415,7 @@ function SelectVocabularies({
 
 						<LearnMessage
 							className="c-ml-1"
-							learnMessages={learnMessages}
+							resource="portal-search-web"
 							resourceKey="tag-and-category-facet"
 						/>
 					</ClayAlert>
@@ -436,4 +434,21 @@ function SelectVocabularies({
 	);
 }
 
-export default SelectVocabularies;
+export default function ({
+	disabled,
+	initialSelectedVocabularyIds,
+	learnResources,
+	namespace,
+	vocabularyIdsInputName,
+}) {
+	return (
+		<LearnResourcesContext.Provider value={learnResources}>
+			<SelectVocabularies
+				disabled={disabled}
+				initialSelectedVocabularyIds={initialSelectedVocabularyIds}
+				namespace={namespace}
+				vocabularyIdsInputName={vocabularyIdsInputName}
+			/>
+		</LearnResourcesContext.Provider>
+	);
+}

@@ -94,7 +94,7 @@ CategoryFacetPortletPreferences categoryFacetPortletPreferences = new CategoryFa
 						).put(
 							"initialSelectedVocabularyIds", StringUtil.merge(categoryFacetPortletPreferences.getVocabularyIds())
 						).put(
-							"learnMessages", LearnMessageUtil.getJSONObject("portal-search-web")
+							"learnResources", LearnMessageUtil.getReactDataJSONObject("portal-search-web")
 						).put(
 							"namespace", liferayPortletResponse.getNamespace()
 						).put(

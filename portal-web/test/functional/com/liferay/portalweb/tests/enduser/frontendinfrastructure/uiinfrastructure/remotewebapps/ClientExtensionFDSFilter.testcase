@@ -26,4 +26,28 @@ definition {
 		}
 	}
 
+	@description = "LPS-190220. Verify that the User can go to the CX Documentation when clicks on the help text."
+	@priority = 3
+	test CanClickOnHelpText {
+		task ("Given Client Extension admin page") {
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
+		}
+
+		task ("When to select the FDS filter option") {
+			LexiconEntry.gotoAdd();
+
+			DropdownMenuItem.click(menuItem = "Add Frontend Data Set Filter");
+		}
+
+		task ("And clicks on hyperlink help text “Learn more about browser based client extensions”") {
+			Click(
+				key_text = "Learn more about browser based client extensions.",
+				locator1 = "Link#ANY");
+		}
+
+		task ("Then the user is redirected to Client Extension documentation") {
+			Navigator.selectSpecificWindow(windowTitle = "Client Extensions - Liferay Learn");
+		}
+	}
+
 }

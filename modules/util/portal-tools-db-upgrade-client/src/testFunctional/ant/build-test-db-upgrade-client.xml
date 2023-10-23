@@ -37,14 +37,14 @@
 		<sequential>
 			<get-database-upgrade-client-paths />
 
-			<waitfor maxwait="150" maxwaitunit="second" timeoutproperty="upgrade.status">
+			<waitfor maxwait="150" maxwaitunit="second" timeoutproperty="upgrade.status.timeout">
 				<resourcecontains
 					resource="${db.upgrade.client.log}"
 					substring="upgrade finished with result @{upgrade.finished.status}"
 				/>
 			</waitfor>
 
-			<fail if="upgrade.status" message="Unable to find expected upgrade status &quot;@{upgrade.finished.status}&quot; on the log message." />
+			<fail if="upgrade.status.timeout" message="Unable to find expected upgrade status &quot;@{upgrade.finished.status}&quot; on the log message." />
 		</sequential>
 	</macrodef>
 

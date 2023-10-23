@@ -10,6 +10,50 @@
 	},
 	{
 		"classNames": [
+			"Country",
+			"CommerceAddress"
+		],
+		"from": "getThreeLettersISOCode",
+		"issueKey": "LPS-186923",
+		"to": "getA3"
+	},
+	{
+		"classNames": [
+			"Country",
+			"CommerceAddress"
+		],
+		"from": "setThreeLettersISOCode",
+		"issueKey": "LPS-186923",
+		"to": "setA3"
+	},
+	{
+		"classNames": [
+			"Country",
+			"CommerceAddress"
+		],
+		"from": "getTwoLettersISOCode",
+		"issueKey": "LPS-186923",
+		"to": "getA2"
+	},
+	{
+		"classNames": [
+			"Country",
+			"CommerceAddress"
+		],
+		"from": "setTwoLettersISOCode",
+		"issueKey": "LPS-186923",
+		"to": "setA2"
+	},
+	{
+		"classNames": [
+			"CountryService"
+		],
+		"from": "fetchCommerceCountry",
+		"issueKey": "LPS-187663",
+		"to": "fetchCountryByA2"
+	},
+	{
+		"classNames": [
 			"FDSTableSchemaBuilder"
 		],
 		"from": "addFDSTableSchemaField",

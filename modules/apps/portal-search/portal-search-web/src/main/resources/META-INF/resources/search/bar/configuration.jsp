@@ -124,7 +124,7 @@ String suggestionsContributorConfiguration = StringBundler.concat(StringPool.OPE
 								).put(
 									"isSearchExperiencesSupported", searchBarPortletDisplayContext.isSearchExperiencesSupported()
 								).put(
-									"learnMessages", LearnMessageUtil.getJSONObject("portal-search-web")
+									"learnResources", LearnMessageUtil.getReactDataJSONObject("portal-search-web")
 								).put(
 									"namespace", liferayPortletResponse.getNamespace()
 								).put(

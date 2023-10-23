@@ -224,22 +224,18 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 					}
 				).and(
 					() -> {
-						String primaryKeyColumnName1 =
-							objectDefinition1.getPKObjectFieldDBColumnName();
-
 						Column<DynamicObjectRelationshipMappingTable, Long>
 							primaryKeyColumn1 =
 								(Column
 									<DynamicObjectRelationshipMappingTable,
 									 Long>)
 										 dynamicObjectRelationshipMappingTable.
-											 getColumn(primaryKeyColumnName1);
-
-						String primaryKeyColumnName2 =
-							objectDefinition.getPKObjectFieldDBColumnName();
+											 getColumn(
+												 objectDefinition1.
+													 getPKObjectFieldDBColumnName());
 
 						Column<?, Long> primaryKeyColumn2 = _table.getColumn(
-							primaryKeyColumnName2);
+							objectDefinition.getPKObjectFieldDBColumnName());
 
 						return primaryKeyColumn2.notIn(
 							DSLQueryFactoryUtil.select(
@@ -295,16 +291,15 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 					companyId
 				).and(
 					() -> {
-						Column<?, Long> groupIdColumn = _table.getColumn(
-							"groupId");
-
-						if ((groupIdColumn == null) ||
-							Objects.equals(
+						if (Objects.equals(
 								ObjectDefinitionConstants.SCOPE_COMPANY,
 								objectDefinition1.getScope())) {
 
 							return null;
 						}
+
+						Column<?, Long> groupIdColumn = _table.getColumn(
+							"groupId");
 
 						return groupIdColumn.eq(groupId);
 					}

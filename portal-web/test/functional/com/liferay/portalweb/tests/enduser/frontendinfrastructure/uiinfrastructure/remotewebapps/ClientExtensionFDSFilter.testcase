@@ -144,6 +144,59 @@ definition {
 		}
 	}
 
+	@description = "LPS-190220. Verify that the user can Delete the FDS Filter entry"
+	@priority = 5
+	test CanDeleteACXFilterEntry {
+		task ("Given Client Extension admin page") {
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
+		}
+
+		task ("When to select the FDS filter option") {
+			LexiconEntry.gotoAdd();
+
+			DropdownMenuItem.click(menuItem = "Add Frontend Data Set Filter");
+		}
+
+		task ("And fill in fields JS URL, Source Code URL and Description :") {
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Date Filter Improvements");
+
+			Type.typeNoMouseOver(
+				key_text = "JavaScript URL",
+				locator1 = "TextInput#ANY",
+				value1 = "https://liferay.github.io/liferay-frontend-projects/date-filter.js");
+
+			Type(
+				locator1 = "CKEditor#BODY_FIELD_IFRAME",
+				value1 = "This filter adds the possibility to add slider ranges to the date filter.");
+
+			Type(
+				key_text = "Source Code URL",
+				locator1 = "TextInput#ANY",
+				value1 = "https://liferay.github.io/liferay-frontend-projects/date-filter.js");
+		}
+
+		task ("And clicks on Publish button") {
+			PortletEntry.publish();
+		}
+
+		task ("And delete the Date Filter Improvements entry") {
+			Click(locator1 = "Icon#SVG_ELLIPSIS");
+
+			MenuItem.clickNoError(menuItem = "Delete");
+
+			AssertConfirm(value1 = "Are you sure you want to delete Date Filter Improvements? Client extension will be removed immediately. Sites using this client extension will be affected. This action cannot be undone.");
+		}
+
+		task ("Then the Client Extension admin page is empty") {
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_STATE_INFO",
+				value1 = "No Results Found");
+		}
+	}
+
 	@description = "LPS-190220. Verify that the user can edit the CX Filter entry"
 	@priority = 5
 	test CanEditCXFilterEntry {

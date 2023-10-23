@@ -1232,7 +1232,8 @@ public class JournalDisplayContext {
 
 	public boolean isSearch() {
 		if (Validator.isNotNull(getKeywords()) ||
-			ArrayUtil.isNotEmpty(_getAssetTagNames())) {
+			ArrayUtil.isNotEmpty(_getAssetTagNames()) ||
+			ArrayUtil.isNotEmpty(_getAssetCategoryIds())) {
 
 			return true;
 		}
@@ -1428,6 +1429,31 @@ public class JournalDisplayContext {
 		return _articleSearchContainer;
 	}
 
+	private long[] _getAssetCategoryIds() {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-196766")) {
+			return null;
+		}
+
+		if (_assetCategoryIds == null) {
+			_assetCategoryIds = ParamUtil.getLongValues(
+				_httpServletRequest, "assetCategoryId");
+		}
+
+		return _assetCategoryIds;
+	}
+
+	private Filter _getAssetCategoryIdsFilter(long[] assetCategoryIds) {
+		BooleanFilter booleanFilter = new BooleanFilter();
+
+		for (long assetCategoryId : assetCategoryIds) {
+			booleanFilter.addTerm(
+				Field.ASSET_CATEGORY_IDS, String.valueOf(assetCategoryId),
+				BooleanClauseOccur.MUST);
+		}
+
+		return booleanFilter;
+	}
+
 	private String[] _getAssetTagNames() {
 		if (!FeatureFlagManagerUtil.isEnabled("LPS-196766")) {
 			return null;
@@ -1444,10 +1470,6 @@ public class JournalDisplayContext {
 	}
 
 	private Filter _getAssetTagNamesFilter(String[] assetTagNames) {
-		if (ArrayUtil.isEmpty(assetTagNames)) {
-			return null;
-		}
-
 		BooleanFilter booleanFilter = new BooleanFilter();
 
 		for (String assetTagName : assetTagNames) {
@@ -1459,10 +1481,18 @@ public class JournalDisplayContext {
 		return booleanFilter;
 	}
 
-	private BooleanClause<Query>[] _getBooleanClauses(String[] assetTagNames) {
+	private BooleanClause<Query>[] _getBooleanClauses(
+		long[] assetCategoryIds, String[] assetTagNames) {
+
 		BooleanQuery booleanQuery = new BooleanQueryImpl();
 
 		BooleanFilter booleanFilter = new BooleanFilter();
+
+		if (ArrayUtil.isNotEmpty(assetCategoryIds)) {
+			booleanFilter.add(
+				_getAssetCategoryIdsFilter(assetCategoryIds),
+				BooleanClauseOccur.MUST);
+		}
 
 		if (ArrayUtil.isNotEmpty(assetTagNames)) {
 			booleanFilter.add(
@@ -1732,7 +1762,7 @@ public class JournalDisplayContext {
 		searchContext.setAttributes(attributes);
 
 		searchContext.setBooleanClauses(
-			_getBooleanClauses(_getAssetTagNames()));
+			_getBooleanClauses(_getAssetCategoryIds(), _getAssetTagNames()));
 
 		long ddmStructureId = ParamUtil.getLong(
 			_httpServletRequest, "ddmStructureId");
@@ -1778,6 +1808,7 @@ public class JournalDisplayContext {
 	private JournalArticleDisplay _articleDisplay;
 	private SearchContainer<?> _articleSearchContainer;
 	private SearchContainer<JournalArticle> _articleVersionsSearchContainer;
+	private long[] _assetCategoryIds;
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
 	private String[] _assetTagNames;

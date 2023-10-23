@@ -76,21 +76,24 @@ String unsubscribeActionName = StringPool.BLANK;
 
 						<clay:link
 							aria-label='<%= LanguageUtil.get(request, "unsubscribe") %>'
-							cssClass="align-items-center d-flex icon-monospaced lfr-portal-tooltip"
+							borderless="<%= true %>"
+							cssClass="lfr-portal-tooltip"
+							displayType="secondary"
 							href="<%= unsubscribeURL %>"
 							icon="bell-off"
+							monospaced="<%= true %>"
+							small="<%= true %>"
 							title='<%= LanguageUtil.get(request, "unsubscribe") %>'
+							type="button"
 						/>
 					</c:when>
 					<c:otherwise>
-						<span class="align-items-center lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "subscribed-to-a-parent-folder") %>">
-							<clay:icon
-								aria-label='<%= LanguageUtil.get(request, "subscribed-to-a-parent-folder") %>'
-								cssClass="icon-monospaced mt-0"
-								symbol="bell-off"
-								title='<%= LanguageUtil.get(request, "subscribed-to-a-parent-folder") %>'
-							/>
-						</span>
+						<clay:icon
+							aria-label='<%= LanguageUtil.get(request, "subscribed-to-a-parent-folder") %>'
+							cssClass="icon-monospaced lfr-portal-tooltip mt-0"
+							symbol="bell-off"
+							title='<%= LanguageUtil.get(request, "subscribed-to-a-parent-folder") %>'
+						/>
 					</c:otherwise>
 				</c:choose>
 			</c:when>
@@ -113,10 +116,15 @@ String unsubscribeActionName = StringPool.BLANK;
 
 				<clay:link
 					aria-label='<%= LanguageUtil.get(request, "subscribe") %>'
-					cssClass="align-items-center d-flex icon-monospaced lfr-portal-tooltip mt-1"
+					borderless="<%= true %>"
+					cssClass="lfr-portal-tooltip"
+					displayType="secondary"
 					href="<%= subscribeURL %>"
 					icon="bell-on"
+					monospaced="<%= true %>"
+					small="<%= true %>"
 					title='<%= LanguageUtil.get(request, "subscribe") %>'
+					type="button"
 				/>
 			</c:otherwise>
 		</c:choose>

@@ -17,33 +17,33 @@ type ButtonProps = {
 type FooterButtonsProps = {
 	className?: string;
 	dataButtons: {
-		backButton: ButtonProps;
+		cancelButton: ButtonProps;
 		customizedButton: ButtonProps;
 		nextButton: ButtonProps;
 	};
 	onClickCancel?: () => void;
-	onClickCustomized: () => void;
+	onClickCustomizedButton: () => void;
 	onClickNext: () => void;
 };
 
-export function FooterButtons({
+const FooterButtons = ({
 	className,
 	dataButtons,
 	onClickCancel,
-	onClickCustomized,
+	onClickCustomizedButton,
 	onClickNext,
-}: FooterButtonsProps) {
-	const {backButton, customizedButton, nextButton} = dataButtons;
+}: FooterButtonsProps) => {
+	const {cancelButton, customizedButton, nextButton} = dataButtons;
 
 	return (
 		<div className={className}>
-			{backButton?.show && (
+			{cancelButton?.show && (
 				<ClayButton
-					className={backButton?.className}
-					displayType={backButton?.displayType as DisplayType}
+					className={cancelButton?.className}
+					displayType={cancelButton?.displayType as DisplayType}
 					onClick={() => onClickCancel && onClickCancel()}
 				>
-					{backButton?.text ?? 'Cancel'}
+					{cancelButton?.text ?? 'Cancel'}
 				</ClayButton>
 			)}
 
@@ -53,7 +53,7 @@ export function FooterButtons({
 						displayType={
 							customizedButton?.displayType as DisplayType
 						}
-						onClick={() => onClickCustomized()}
+						onClick={() => onClickCustomizedButton()}
 					>
 						{customizedButton?.text}
 					</ClayButton>
@@ -72,4 +72,6 @@ export function FooterButtons({
 			</div>
 		</div>
 	);
-}
+};
+
+export default FooterButtons;

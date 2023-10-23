@@ -60,8 +60,8 @@ const GetAppFlow = () => {
 	const [orderType, setOrderType] = useState<OrderType>();
 	const [purchaseOrderNumber, setPurchaseOrderNumber] = useState<string>('');
 	const [step, setStep] = useState<StepType>(StepType.ACCOUNT);
-	const [hasTrial, setHasTrial] = useState(false);
-	const [basePrice, setBasePrice] = useState(0);
+	const [hasTrial, setHasTrial] = useState<boolean>(false);
+	const [basePrice, setBasePrice] = useState<number>(0);
 
 	const {setValue, watch} = useForm<GetAppForm>({
 		defaultValues: {
@@ -247,13 +247,13 @@ const GetAppFlow = () => {
 
 	const getProductBasePriceAndTrial = (skus: SKU[]) => {
 		skus?.forEach((sku) => {
-			const licenseUsageTypes = sku?.skuOptions.filter(
+			const licenseUsageTypes = sku?.skuOptions?.filter(
 				(skuOption) =>
 					skuOption?.value === SkuOptions.STANDARD.toLowerCase() ||
 					skuOption?.value === SkuOptions.TRIAL.toLowerCase()
 			);
 
-			licenseUsageTypes.forEach((licenseUsageType) => {
+			licenseUsageTypes?.forEach((licenseUsageType) => {
 				switch (licenseUsageType?.value.toLowerCase()) {
 					case SkuOptions.STANDARD.toLowerCase():
 						setBasePrice(sku.price);

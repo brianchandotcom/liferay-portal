@@ -140,9 +140,9 @@ const CreateLicense = () => {
 						/>
 					)}
 					creatorAccount={
-						ProductCardInfo.productCreatorAccount as any
+						ProductCardInfo.productCreatorAccount as Account
 					}
-					product={ProductCardInfo.product as any}
+					product={(ProductCardInfo.product as any) as Product}
 					showExtendBanner={
 						step === StepCreateLicense.LICENSE_KEY_DETAILS
 					}

@@ -1,4 +1,4 @@
-ext.expectedErrorMessage = "Client extension site-initializer-cx with type siteInitializer must define the property \"siteName\""
+ext.expectedErrorMessage = "Client extension site-initializer with type siteInitializer must define the property \"siteName\""
 ext.taskPath = ":missing-setting-siteName:validateClientExtensions"
 
 apply from: "./_baseShouldFailTestCase.gradle"

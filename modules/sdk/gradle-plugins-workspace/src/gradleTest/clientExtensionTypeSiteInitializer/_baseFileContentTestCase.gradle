@@ -7,14 +7,14 @@ String expectedFilePath = ext.expectedFilePath
 String[] expectedContentStrings = ext.expectedContentStrings
 
 runGradleTest {
-	dependsOn ":site-initializer-cx:createClientExtensionConfig"
+	dependsOn ":site-initializer:createClientExtensionConfig"
 
 	doLast {
-		Project siteInitializerCxProject = project(":site-initializer-cx")
+		Project siteInitializerProject = project(":site-initializer")
 
-		File cxBuildDir = siteInitializerCxProject.file("${siteInitializerCxProject.buildDir}/liferay-client-extension-build")
+		File cxBuildDir = siteInitializerProject.file("${siteInitializerProject.buildDir}/liferay-client-extension-build")
 
-		File file = siteInitializerCxProject.file("${cxBuildDir}/${expectedFilePath}")
+		File file = siteInitializerProject.file("${cxBuildDir}/${expectedFilePath}")
 
 		assert file.exists()
 

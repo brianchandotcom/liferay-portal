@@ -1,4 +1,4 @@
-ext.expectedErrorMessage = 'Client extension site-initializer-cx has an invalid value "fooBarInvalid" for the property "membershipType". Valid values are: open, private, restricted.'
+ext.expectedErrorMessage = 'Client extension site-initializer has an invalid value "fooBarInvalid" for the property "membershipType". Valid values are: open, private, restricted.'
 ext.taskPath = ":invalid-setting-value-memebershipType:validateClientExtensions"
 
 apply from: "./_baseShouldFailTestCase.gradle"

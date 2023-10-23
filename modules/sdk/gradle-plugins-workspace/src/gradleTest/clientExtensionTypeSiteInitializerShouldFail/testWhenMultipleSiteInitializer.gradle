@@ -1,4 +1,4 @@
 ext.expectedErrorMessage = "A client extension project must not contain more than one batch or siteInitializer type client extension"
-ext.taskPath = ":multiple-site-initializer-cx:createClientExtensionConfig"
+ext.taskPath = ":multiple-site-initializer:createClientExtensionConfig"
 
 apply from: "./_baseShouldFailTestCase.gradle"

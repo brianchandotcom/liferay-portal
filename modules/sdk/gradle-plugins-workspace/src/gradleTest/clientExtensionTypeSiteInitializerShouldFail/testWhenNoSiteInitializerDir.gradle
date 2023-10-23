@@ -1,4 +1,4 @@
-ext.expectedErrorMessage = 'A "site-initializer" directory is required for client extension site-initializer-cx with type siteInitializer'
+ext.expectedErrorMessage = 'A "site-initializer" directory is required for client extension site-initializer with type siteInitializer'
 ext.taskPath = ":no-site-initializer-dir:validateClientExtensions"
 
 apply from: "./_baseShouldFailTestCase.gradle"

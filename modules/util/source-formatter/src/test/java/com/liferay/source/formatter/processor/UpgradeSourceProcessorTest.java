@@ -7,6 +7,7 @@ package com.liferay.source.formatter.processor;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.source.formatter.SourceFormatterArgs;
+import com.liferay.source.formatter.check.JSONUpgradeLiferayThemePackageJSONCheck;
 import com.liferay.source.formatter.check.UpgradeCatchAllCheck;
 
 import java.util.ArrayList;
@@ -26,6 +27,8 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
 	public void testJSONUpgradeLiferayThemePackageJSONCheck() throws Exception {
+		JSONUpgradeLiferayThemePackageJSONCheck.setTestMode(true);
+
 		test(
 			"upgrade/json-upgrade-liferay-theme-package-json-check/package." +
 				"testjson");

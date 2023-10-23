@@ -31,6 +31,10 @@ import java.util.Set;
  */
 public class JSONUpgradeLiferayThemePackageJSONCheck extends BaseUpgradeCheck {
 
+	public static void setTestMode(boolean testMode) {
+		_testMode = testMode;
+	}
+
 	@Override
 	protected String format(
 			String fileName, String absolutePath, String content)
@@ -152,6 +156,11 @@ public class JSONUpgradeLiferayThemePackageJSONCheck extends BaseUpgradeCheck {
 
 				JSONObject jsonObject = new JSONObjectImpl(content);
 
+				if (_testMode) {
+					jsonObject = new JSONObjectImpl(
+						"{\"versions\":{\"2.0.0\":{}}}");
+				}
+
 				String latestVersion = _getLatestVersion(jsonObject);
 
 				if (latestVersion.equals("")) {
@@ -198,5 +207,7 @@ public class JSONUpgradeLiferayThemePackageJSONCheck extends BaseUpgradeCheck {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JSONUpgradeLiferayThemePackageJSONCheck.class);
+
+	private static boolean _testMode;
 
 }

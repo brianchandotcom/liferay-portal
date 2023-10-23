@@ -1,12 +1,12 @@
 {
 	"devDependencies": {
-		"compass-mixins": "0.12.12",
-		"gulp": "4.0.2",
-		"liferay-font-awesome": "3.5.2",
-		"liferay-frontend-css-common": "6.0.8",
-		"liferay-frontend-theme-styled": "6.0.68",
-		"liferay-frontend-theme-unstyled": "6.0.56",
-		"liferay-theme-tasks": "^11.5.3"
+		"compass-mixins": "2.0.0",
+		"gulp": "2.0.0",
+		"liferay-font-awesome": "2.0.0",
+		"liferay-frontend-css-common": "2.0.0",
+		"liferay-frontend-theme-styled": "2.0.0",
+		"liferay-frontend-theme-unstyled": "2.0.0",
+		"liferay-theme-tasks": "^2.0.0"
 	},
 	"liferayTheme": {
 		"version": "7.4"

@@ -1,10 +1,10 @@
 {
 	"devDependencies": {
-		"gulp": "4.0.2",
-		"liferay-font-awesome": "3.4.1",
-		"liferay-frontend-css-common": "5.0.4",
-		"liferay-frontend-theme-styled": "4.0.10",
-		"liferay-theme-tasks": "^11.2.2"
+		"gulp": "2.0.0",
+		"liferay-font-awesome": "1.0.0",
+		"liferay-frontend-css-common": "1.0.0",
+		"liferay-frontend-theme-styled": "1.0.0",
+		"liferay-theme-tasks": "^1.0.0"
 	},
 	"liferayTheme": {
 		"version": "7.3"

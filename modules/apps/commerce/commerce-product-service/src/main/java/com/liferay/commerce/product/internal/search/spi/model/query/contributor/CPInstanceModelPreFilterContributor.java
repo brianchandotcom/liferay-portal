@@ -36,6 +36,7 @@ public class CPInstanceModelPreFilterContributor
 		_filterByCPDefinitionStatus(booleanFilter, searchContext);
 		_filterByHasChildDefinitions(booleanFilter, searchContext);
 		_filterByOptions(booleanFilter, searchContext);
+		_filterByReplacedCPInstances(booleanFilter, searchContext);
 		_filterByPublished(booleanFilter, searchContext);
 		_filterByPurchasable(booleanFilter, searchContext);
 		_filterByStatus(booleanFilter, searchContext);
@@ -121,6 +122,27 @@ public class CPInstanceModelPreFilterContributor
 
 		if (published) {
 			booleanFilter.addRequiredTerm(CPField.PURCHASABLE, true);
+		}
+	}
+
+	private void _filterByReplacedCPInstances(
+		BooleanFilter booleanFilter, SearchContext searchContext) {
+
+		String replacementCPInstanceUuid = GetterUtil.getString(
+			searchContext.getAttribute(CPField.REPLACEMENT_CP_INSTANCE_UUID));
+
+		long replacementCProductId = GetterUtil.getLong(
+			searchContext.getAttribute(CPField.REPLACEMENT_CPRODUCT_ID));
+
+		if (Validator.isNotNull(replacementCPInstanceUuid) &&
+			(replacementCProductId > 0)) {
+
+			booleanFilter.addRequiredTerm(
+				CPField.REPLACEMENT_CP_INSTANCE_UUID,
+				replacementCPInstanceUuid);
+
+			booleanFilter.addRequiredTerm(
+				CPField.REPLACEMENT_CPRODUCT_ID, replacementCProductId);
 		}
 	}
 

@@ -114,6 +114,12 @@ public class CPField {
 
 	public static final String RELATED_ENTITY_CLASS_PK = "relatedEntityClassPK";
 
+	public static final String REPLACEMENT_CP_INSTANCE_UUID =
+		"replacementCPInstanceUuid";
+
+	public static final String REPLACEMENT_CPRODUCT_ID =
+		"replacementCProductId";
+
 	public static final String SHORT_DESCRIPTION = "shortDescription";
 
 	public static final String SKU = "sku";

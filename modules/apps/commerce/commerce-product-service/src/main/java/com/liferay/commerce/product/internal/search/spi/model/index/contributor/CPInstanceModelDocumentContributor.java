@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.Localization;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import java.util.List;
@@ -66,6 +67,18 @@ public class CPInstanceModelDocumentContributor
 			document.addKeyword(CPField.UNSPSC, cpInstance.getUnspsc());
 			document.addText(Field.CONTENT, cpInstance.getSku());
 			document.addText(Field.NAME, cpDefinition.getName());
+
+			if (Validator.isNotNull(
+					cpInstance.getReplacementCPInstanceUuid()) &&
+				(cpInstance.getReplacementCProductId() > 0)) {
+
+				document.addKeyword(
+					CPField.REPLACEMENT_CP_INSTANCE_UUID,
+					cpInstance.getReplacementCPInstanceUuid());
+				document.addKeyword(
+					CPField.REPLACEMENT_CPRODUCT_ID,
+					cpInstance.getReplacementCProductId());
+			}
 
 			List<String> languageIds =
 				_cpDefinitionLocalService.

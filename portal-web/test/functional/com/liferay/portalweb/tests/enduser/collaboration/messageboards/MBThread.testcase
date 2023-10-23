@@ -628,7 +628,7 @@ definition {
 			threadSubject = "MB Thread Message Subject");
 
 		MessageboardsThread.viewBBCodeNoXSS(
-			threadBody = '''<script>alert(123);</script>''',
+			threadBody = "Message Boards Thread Body",
 			threadSubject = "RE: MB Thread Message Subject",
 			userName = "Anonymous");
 

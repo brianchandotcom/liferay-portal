@@ -71,8 +71,8 @@ public class UpgradeCatchAllCheck {
 		long vocabularyId, String[] categoryProperties,
 		ServiceContext serviceContext) {
 
-		AssetCategoryLocalServiceUtil.addCategory(null, userId, groupId, parentCategoryId, titleMap, descriptionMap, vocabularyId, categoryProperties, serviceContext);
 		AssetCategoryLocalServiceUtil.addCategory(1234, groupId, parentCategoryId, titleMap, descriptionMap, vocabularyId, categoryProperties, serviceContext);
+		AssetCategoryLocalServiceUtil.addCategory(null, userId, groupId, parentCategoryId, titleMap, descriptionMap, vocabularyId, categoryProperties, serviceContext);
 		_assetCategoryLocalService.addCategory(null, userId, groupId, parentCategoryId, titleMap, descriptionMap, vocabularyId, categoryProperties, serviceContext);
 	}
 

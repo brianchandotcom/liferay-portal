@@ -13,7 +13,7 @@ import com.liferay.document.library.kernel.util.AudioProcessor;
 import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.PDFProcessor;
 import com.liferay.document.library.kernel.util.VideoProcessor;
-import com.liferay.document.library.preview.processor.DLPreviewableProcessor;
+import com.liferay.document.library.preview.processor.BasePreviewableDLProcessor;
 import com.liferay.image.Ghostscript;
 import com.liferay.image.ImageMagick;
 import com.liferay.mail.kernel.model.Account;
@@ -606,12 +606,12 @@ public class EditServerMVCActionCommand
 		_companyLocalService.forEachCompanyId(
 			companyId -> {
 				_store.deleteDirectory(
-					companyId, DLPreviewableProcessor.REPOSITORY_ID,
-					DLPreviewableProcessor.PREVIEW_PATH);
+					companyId, BasePreviewableDLProcessor.REPOSITORY_ID,
+					BasePreviewableDLProcessor.PREVIEW_PATH);
 
 				_store.deleteDirectory(
-					companyId, DLPreviewableProcessor.REPOSITORY_ID,
-					DLPreviewableProcessor.THUMBNAIL_PATH);
+					companyId, BasePreviewableDLProcessor.REPOSITORY_ID,
+					BasePreviewableDLProcessor.THUMBNAIL_PATH);
 			});
 	}
 

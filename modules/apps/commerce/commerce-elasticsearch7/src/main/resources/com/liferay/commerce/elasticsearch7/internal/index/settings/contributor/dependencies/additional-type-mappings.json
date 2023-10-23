@@ -116,6 +116,14 @@
 			"store": true,
 			"type": "keyword"
 		},
+		"replacementCPInstanceUuid": {
+			"store": true,
+			"type": "keyword"
+		},
+		"replacementCProductId": {
+			"store": true,
+			"type": "keyword"
+		},
 		"sku": {
 			"analyzer": "keyword_lowercase",
 			"fields": {

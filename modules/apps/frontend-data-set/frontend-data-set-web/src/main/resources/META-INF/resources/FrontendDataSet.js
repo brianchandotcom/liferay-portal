@@ -27,13 +27,13 @@ import Modal from './modal/Modal';
 import SidePanel from './side_panel/SidePanel';
 import filterCreationActions from './utils/actionItems/filterCreationActions';
 import EVENTS from './utils/eventsDefinitions';
-import loadClientExtensions from './utils/loadClientExtensions';
 import {
 	formatItemChanges,
 	getCurrentItemUpdates,
 	getRandomId,
 	loadData,
 } from './utils/index';
+import loadClientExtensions from './utils/loadClientExtensions';
 import {logError} from './utils/logError';
 import ViewsContext from './views/ViewsContext';
 import getViewComponent from './views/getViewComponent';

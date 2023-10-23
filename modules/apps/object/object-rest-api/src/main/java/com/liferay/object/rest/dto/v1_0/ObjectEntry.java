@@ -459,7 +459,7 @@ public class ObjectEntry implements Serializable {
 		return Objects.equals(toString(), objectEntry.toString());
 	}
 
-	public Object getValue(String propertyName) {
+	public Object getPropertyValue(String propertyName) {
 		if (Objects.equals(propertyName, "actions")) {
 			return actions;
 		}

@@ -137,16 +137,10 @@ public class LiferayMethodDataFetchingProcessor {
 
 			Object argument = arguments.get(parameterName);
 
-			if (parameterName.equals("page")) {
-				argument = pagination.getPage();
-			}
-			else if (parameterName.equals("pageSize")) {
-				argument = pagination.getPageSize();
-			}
-			else if (argument == null) {
-				if (parameter.isAnnotationPresent(NotNull.class)) {
-					throw new ValidationException(parameterName + " is null");
-				}
+			if ((argument == null) &&
+				parameter.isAnnotationPresent(NotNull.class)) {
+
+				throw new ValidationException(parameterName + " is null");
 			}
 
 			if (parameterName.equals("assetLibraryId") && (argument != null)) {
@@ -165,6 +159,14 @@ public class LiferayMethodDataFetchingProcessor {
 							"\" to group ID",
 						exception);
 				}
+			}
+
+			if (parameterName.equals("page")) {
+				argument = pagination.getPage();
+			}
+
+			if (parameterName.equals("pageSize")) {
+				argument = pagination.getPageSize();
 			}
 
 			if (parameterName.equals("siteKey") && (argument != null)) {

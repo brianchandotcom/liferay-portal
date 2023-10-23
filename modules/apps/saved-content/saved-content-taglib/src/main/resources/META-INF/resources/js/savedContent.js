@@ -16,7 +16,7 @@ function showNotification(message, error = false) {
 }
 
 export default function SavedContent({
-	contentName,
+	contentTitle,
 	mySavedContentURL,
 	saved: initialSaved = false,
 	savedContentURL,
@@ -52,7 +52,7 @@ export default function SavedContent({
 									'x-has-been-successfully-removed-from-x'
 							  )
 							: Liferay.Language.get('x-has-been-saved-in-x'),
-						contentName,
+						contentTitle,
 						mySavedContentLink
 					)
 				);
@@ -74,8 +74,8 @@ export default function SavedContent({
 			<ClayButtonWithIcon
 				aria-label={
 					saved
-						? sub(Liferay.Language.get('remove-x'), contentName)
-						: sub(Liferay.Language.get('save-x'), contentName)
+						? sub(Liferay.Language.get('remove-x'), contentTitle)
+						: sub(Liferay.Language.get('save-x'), contentTitle)
 				}
 				disabled={loading}
 				displayType="secondary"
@@ -94,7 +94,7 @@ export default function SavedContent({
 }
 
 SavedContent.propTypes = {
-	contentName: PropTypes.string.isRequired,
+	contentTitle: PropTypes.string.isRequired,
 	mySavedContentURL: PropTypes.string.isRequired,
 	saved: PropTypes.bool,
 	savedContentURL: PropTypes.string.isRequired,

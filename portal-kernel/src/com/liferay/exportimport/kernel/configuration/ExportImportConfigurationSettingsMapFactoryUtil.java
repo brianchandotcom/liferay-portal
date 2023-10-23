@@ -7,7 +7,7 @@ package com.liferay.exportimport.kernel.configuration;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.io.Serializable;
 
@@ -32,7 +32,11 @@ public class ExportImportConfigurationSettingsMapFactoryUtil {
 		long userId, long groupId, boolean privateLayout, long[] layoutIds,
 		Map<String, String[]> parameterMap, Locale locale, TimeZone timeZone) {
 
-		return _exportImportConfigurationSettingsMapFactory.
+		ExportImportConfigurationSettingsMapFactory
+			exportImportConfigurationSettingsMapFactory =
+				_exportImportConfigurationSettingsMapFactorySnapshot.get();
+
+		return exportImportConfigurationSettingsMapFactory.
 			buildExportLayoutSettingsMap(
 				userId, groupId, privateLayout, layoutIds, parameterMap, locale,
 				timeZone);
@@ -42,7 +46,11 @@ public class ExportImportConfigurationSettingsMapFactoryUtil {
 		User user, long groupId, boolean privateLayout, long[] layoutIds,
 		Map<String, String[]> parameterMap) {
 
-		return _exportImportConfigurationSettingsMapFactory.
+		ExportImportConfigurationSettingsMapFactory
+			exportImportConfigurationSettingsMapFactory =
+				_exportImportConfigurationSettingsMapFactorySnapshot.get();
+
+		return exportImportConfigurationSettingsMapFactory.
 			buildExportLayoutSettingsMap(
 				user, groupId, privateLayout, layoutIds, parameterMap);
 	}
@@ -52,7 +60,11 @@ public class ExportImportConfigurationSettingsMapFactoryUtil {
 		Map<String, String[]> parameterMap, Locale locale, TimeZone timeZone,
 		String fileName) {
 
-		return _exportImportConfigurationSettingsMapFactory.
+		ExportImportConfigurationSettingsMapFactory
+			exportImportConfigurationSettingsMapFactory =
+				_exportImportConfigurationSettingsMapFactorySnapshot.get();
+
+		return exportImportConfigurationSettingsMapFactory.
 			buildExportPortletSettingsMap(
 				userId, sourcePlid, sourceGroupId, portletId, parameterMap,
 				locale, timeZone, fileName);
@@ -62,7 +74,11 @@ public class ExportImportConfigurationSettingsMapFactoryUtil {
 		User user, long sourcePlid, long sourceGroupId, String portletId,
 		Map<String, String[]> parameterMap, String fileName) {
 
-		return _exportImportConfigurationSettingsMapFactory.
+		ExportImportConfigurationSettingsMapFactory
+			exportImportConfigurationSettingsMapFactory =
+				_exportImportConfigurationSettingsMapFactorySnapshot.get();
+
+		return exportImportConfigurationSettingsMapFactory.
 			buildExportPortletSettingsMap(
 				user, sourcePlid, sourceGroupId, portletId, parameterMap,
 				fileName);
@@ -73,7 +89,11 @@ public class ExportImportConfigurationSettingsMapFactoryUtil {
 		long[] layoutIds, Map<String, String[]> parameterMap, Locale locale,
 		TimeZone timeZone) {
 
-		return _exportImportConfigurationSettingsMapFactory.
+		ExportImportConfigurationSettingsMapFactory
+			exportImportConfigurationSettingsMapFactory =
+				_exportImportConfigurationSettingsMapFactorySnapshot.get();
+
+		return exportImportConfigurationSettingsMapFactory.
 			buildImportLayoutSettingsMap(
 				userId, targetGroupId, privateLayout, layoutIds, parameterMap,
 				locale, timeZone);
@@ -83,7 +103,11 @@ public class ExportImportConfigurationSettingsMapFactoryUtil {
 		User user, long targetGroupId, boolean privateLayout, long[] layoutIds,
 		Map<String, String[]> parameterMap) {
 
-		return _exportImportConfigurationSettingsMapFactory.
+		ExportImportConfigurationSettingsMapFactory
+			exportImportConfigurationSettingsMapFactory =
+				_exportImportConfigurationSettingsMapFactorySnapshot.get();
+
+		return exportImportConfigurationSettingsMapFactory.
 			buildImportLayoutSettingsMap(
 				user, targetGroupId, privateLayout, layoutIds, parameterMap);
 	}
@@ -92,7 +116,11 @@ public class ExportImportConfigurationSettingsMapFactoryUtil {
 		long userId, long targetPlid, long targetGroupId, String portletId,
 		Map<String, String[]> parameterMap, Locale locale, TimeZone timeZone) {
 
-		return _exportImportConfigurationSettingsMapFactory.
+		ExportImportConfigurationSettingsMapFactory
+			exportImportConfigurationSettingsMapFactory =
+				_exportImportConfigurationSettingsMapFactorySnapshot.get();
+
+		return exportImportConfigurationSettingsMapFactory.
 			buildImportPortletSettingsMap(
 				userId, targetPlid, targetGroupId, portletId, parameterMap,
 				locale, timeZone);
@@ -102,7 +130,11 @@ public class ExportImportConfigurationSettingsMapFactoryUtil {
 		User user, long targetPlid, long targetGroupId, String portletId,
 		Map<String, String[]> parameterMap) {
 
-		return _exportImportConfigurationSettingsMapFactory.
+		ExportImportConfigurationSettingsMapFactory
+			exportImportConfigurationSettingsMapFactory =
+				_exportImportConfigurationSettingsMapFactorySnapshot.get();
+
+		return exportImportConfigurationSettingsMapFactory.
 			buildImportPortletSettingsMap(
 				user, targetPlid, targetGroupId, portletId, parameterMap);
 	}
@@ -112,7 +144,11 @@ public class ExportImportConfigurationSettingsMapFactoryUtil {
 		boolean privateLayout, long[] layoutIds,
 		Map<String, String[]> parameterMap, Locale locale, TimeZone timeZone) {
 
-		return _exportImportConfigurationSettingsMapFactory.
+		ExportImportConfigurationSettingsMapFactory
+			exportImportConfigurationSettingsMapFactory =
+				_exportImportConfigurationSettingsMapFactorySnapshot.get();
+
+		return exportImportConfigurationSettingsMapFactory.
 			buildPublishLayoutLocalSettingsMap(
 				userId, sourceGroupId, targetGroupId, privateLayout, layoutIds,
 				parameterMap, locale, timeZone);
@@ -123,7 +159,11 @@ public class ExportImportConfigurationSettingsMapFactoryUtil {
 		boolean privateLayout, long[] layoutIds,
 		Map<String, String[]> parameterMap) {
 
-		return _exportImportConfigurationSettingsMapFactory.
+		ExportImportConfigurationSettingsMapFactory
+			exportImportConfigurationSettingsMapFactory =
+				_exportImportConfigurationSettingsMapFactorySnapshot.get();
+
+		return exportImportConfigurationSettingsMapFactory.
 			buildPublishLayoutLocalSettingsMap(
 				user, sourceGroupId, targetGroupId, privateLayout, layoutIds,
 				parameterMap);
@@ -136,7 +176,11 @@ public class ExportImportConfigurationSettingsMapFactoryUtil {
 		boolean secureConnection, long remoteGroupId,
 		boolean remotePrivateLayout, Locale locale, TimeZone timeZone) {
 
-		return _exportImportConfigurationSettingsMapFactory.
+		ExportImportConfigurationSettingsMapFactory
+			exportImportConfigurationSettingsMapFactory =
+				_exportImportConfigurationSettingsMapFactorySnapshot.get();
+
+		return exportImportConfigurationSettingsMapFactory.
 			buildPublishLayoutRemoteSettingsMap(
 				userId, sourceGroupId, privateLayout, layoutIdMap, parameterMap,
 				remoteAddress, remotePort, remotePathContext, secureConnection,
@@ -150,7 +194,11 @@ public class ExportImportConfigurationSettingsMapFactoryUtil {
 		boolean secureConnection, long remoteGroupId,
 		boolean remotePrivateLayout) {
 
-		return _exportImportConfigurationSettingsMapFactory.
+		ExportImportConfigurationSettingsMapFactory
+			exportImportConfigurationSettingsMapFactory =
+				_exportImportConfigurationSettingsMapFactorySnapshot.get();
+
+		return exportImportConfigurationSettingsMapFactory.
 			buildPublishLayoutRemoteSettingsMap(
 				user, sourceGroupId, privateLayout, layoutIdMap, parameterMap,
 				remoteAddress, remotePort, remotePathContext, secureConnection,
@@ -162,7 +210,11 @@ public class ExportImportConfigurationSettingsMapFactoryUtil {
 		long targetPlid, String portletId, Map<String, String[]> parameterMap,
 		Locale locale, TimeZone timeZone) {
 
-		return _exportImportConfigurationSettingsMapFactory.
+		ExportImportConfigurationSettingsMapFactory
+			exportImportConfigurationSettingsMapFactory =
+				_exportImportConfigurationSettingsMapFactorySnapshot.get();
+
+		return exportImportConfigurationSettingsMapFactory.
 			buildPublishPortletSettingsMap(
 				userId, sourceGroupId, sourcePlid, targetGroupId, targetPlid,
 				portletId, parameterMap, locale, timeZone);
@@ -172,7 +224,11 @@ public class ExportImportConfigurationSettingsMapFactoryUtil {
 		User user, long sourceGroupId, long sourcePlid, long targetGroupId,
 		long targetPlid, String portletId, Map<String, String[]> parameterMap) {
 
-		return _exportImportConfigurationSettingsMapFactory.
+		ExportImportConfigurationSettingsMapFactory
+			exportImportConfigurationSettingsMapFactory =
+				_exportImportConfigurationSettingsMapFactorySnapshot.get();
+
+		return exportImportConfigurationSettingsMapFactory.
 			buildPublishPortletSettingsMap(
 				user, sourceGroupId, sourcePlid, targetGroupId, targetPlid,
 				portletId, parameterMap);
@@ -195,15 +251,17 @@ public class ExportImportConfigurationSettingsMapFactoryUtil {
 			PortletRequest portletRequest, long groupId, int type)
 		throws PortalException {
 
-		return _exportImportConfigurationSettingsMapFactory.buildSettingsMap(
+		ExportImportConfigurationSettingsMapFactory
+			exportImportConfigurationSettingsMapFactory =
+				_exportImportConfigurationSettingsMapFactorySnapshot.get();
+
+		return exportImportConfigurationSettingsMapFactory.buildSettingsMap(
 			portletRequest, groupId, type);
 	}
 
-	private static volatile ExportImportConfigurationSettingsMapFactory
-		_exportImportConfigurationSettingsMapFactory =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				ExportImportConfigurationSettingsMapFactory.class,
-				ExportImportConfigurationSettingsMapFactoryUtil.class,
-				"_exportImportConfigurationSettingsMapFactory", false);
+	private static final Snapshot<ExportImportConfigurationSettingsMapFactory>
+		_exportImportConfigurationSettingsMapFactorySnapshot = new Snapshot<>(
+			ExportImportConfigurationSettingsMapFactoryUtil.class,
+			ExportImportConfigurationSettingsMapFactory.class);
 
 }

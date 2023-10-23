@@ -44,10 +44,9 @@ public class SegmentsEntryRelTableReferenceDefinitionTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_layout = LayoutTestUtil.addTypeContentLayout(group);
+		Layout layout = LayoutTestUtil.addTypeContentLayout(group);
 
-		_segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
-			_layout.getGroupId());
+		_segmentsEntry = SegmentsTestUtil.addSegmentsEntry(layout.getGroupId());
 	}
 
 	@Override
@@ -55,10 +54,10 @@ public class SegmentsEntryRelTableReferenceDefinitionTest
 		return _segmentsEntryRelLocalService.addSegmentsEntryRel(
 			_segmentsEntry.getSegmentsEntryId(), RandomTestUtil.randomInt(),
 			RandomTestUtil.randomInt(),
-			ServiceContextTestUtil.getServiceContext(_layout.getGroupId()));
+			ServiceContextTestUtil.getServiceContext(
+				_segmentsEntry.getGroupId()));
 	}
 
-	private Layout _layout;
 	private SegmentsEntry _segmentsEntry;
 
 	@Inject

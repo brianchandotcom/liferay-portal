@@ -46,10 +46,9 @@ public class SegmentsEntryRoleTableReferenceDefinitionTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_layout = LayoutTestUtil.addTypeContentLayout(group);
+		Layout layout = LayoutTestUtil.addTypeContentLayout(group);
 
-		_segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
-			_layout.getGroupId());
+		_segmentsEntry = SegmentsTestUtil.addSegmentsEntry(layout.getGroupId());
 
 		_role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 	}
@@ -61,7 +60,6 @@ public class SegmentsEntryRoleTableReferenceDefinitionTest
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	private Layout _layout;
 	private Role _role;
 	private SegmentsEntry _segmentsEntry;
 

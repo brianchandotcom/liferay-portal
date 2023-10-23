@@ -41,25 +41,24 @@ public class SegmentsExperimentTableReferenceDefinitionTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_layout = LayoutTestUtil.addTypeContentLayout(group);
+		Layout layout = LayoutTestUtil.addTypeContentLayout(group);
 
-		_segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
-			_layout.getGroupId());
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			layout.getGroupId());
 
 		_segmentsExperience = SegmentsTestUtil.addSegmentsExperience(
-			_layout.getGroupId(), _segmentsEntry.getSegmentsEntryId(),
-			_layout.getPlid());
+			layout.getGroupId(), segmentsEntry.getSegmentsEntryId(),
+			layout.getPlid());
 	}
 
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
 		return SegmentsTestUtil.addSegmentsExperiment(
-			_layout.getGroupId(), _segmentsExperience.getSegmentsExperienceId(),
-			_layout.getPlid());
+			_segmentsExperience.getGroupId(),
+			_segmentsExperience.getSegmentsExperienceId(),
+			_segmentsExperience.getPlid());
 	}
 
-	private Layout _layout;
-	private SegmentsEntry _segmentsEntry;
 	private SegmentsExperience _segmentsExperience;
 
 }

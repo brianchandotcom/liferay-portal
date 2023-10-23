@@ -45,31 +45,29 @@ public class SegmentsExperimentRelTableReferenceDefinitionTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_layout = LayoutTestUtil.addTypeContentLayout(group);
+		Layout layout = LayoutTestUtil.addTypeContentLayout(group);
 
-		_segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
-			_layout.getGroupId());
+		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
+			layout.getGroupId());
 
-		_segmentsExperience = SegmentsTestUtil.addSegmentsExperience(
-			_layout.getGroupId(), _segmentsEntry.getSegmentsEntryId(),
-			_layout.getPlid());
+		SegmentsExperience segmentsExperience =
+			SegmentsTestUtil.addSegmentsExperience(
+				layout.getGroupId(), segmentsEntry.getSegmentsEntryId(),
+				layout.getPlid());
 
 		_segmentsExperiment = SegmentsTestUtil.addSegmentsExperiment(
-			_layout.getGroupId(), _segmentsExperience.getSegmentsExperienceId(),
-			_layout.getPlid());
+			layout.getGroupId(), segmentsExperience.getSegmentsExperienceId(),
+			layout.getPlid());
 	}
 
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
 		return _segmentsExperimentRelLocalService.addSegmentsExperimentRel(
 			_segmentsExperiment.getSegmentsExperimentId(),
-			_segmentsExperience.getSegmentsExperienceId(),
+			_segmentsExperiment.getSegmentsExperienceId(),
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	private Layout _layout;
-	private SegmentsEntry _segmentsEntry;
-	private SegmentsExperience _segmentsExperience;
 	private SegmentsExperiment _segmentsExperiment;
 
 	@Inject

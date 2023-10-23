@@ -1,6 +1,5 @@
 import BillboardChart from 'react-billboardjs';
 import React from 'react';
-import {isDefAndNotNull} from 'metal';
 
 /**
  * Predictive Chart component.
@@ -17,6 +16,10 @@ type State = {
 	columns: string[] | number[];
 	regions: Object[];
 };
+
+function isDefAndNotNull(value) {
+	return value !== 'undefined' && value !== null;
+}
 
 export default class PredictiveChart extends React.Component<
 	IPredictiveChartProps,

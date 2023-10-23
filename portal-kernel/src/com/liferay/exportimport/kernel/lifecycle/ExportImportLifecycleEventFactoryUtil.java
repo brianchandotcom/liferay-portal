@@ -5,7 +5,7 @@
 
 package com.liferay.exportimport.kernel.lifecycle;
 
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.io.Serializable;
 
@@ -18,15 +18,16 @@ public class ExportImportLifecycleEventFactoryUtil {
 		int code, int processFlag, String processId,
 		Serializable... attributes) {
 
-		return _exportImportLifecycleEventFactory.create(
+		ExportImportLifecycleEventFactory exportImportLifecycleEventFactory =
+			_exportImportLifecycleEventFactorySnapshot.get();
+
+		return exportImportLifecycleEventFactory.create(
 			code, processFlag, processId, attributes);
 	}
 
-	private static volatile ExportImportLifecycleEventFactory
-		_exportImportLifecycleEventFactory =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				ExportImportLifecycleEventFactory.class,
-				ExportImportLifecycleEventFactoryUtil.class,
-				"_exportImportLifecycleEventFactory", false);
+	private static final Snapshot<ExportImportLifecycleEventFactory>
+		_exportImportLifecycleEventFactorySnapshot = new Snapshot<>(
+			ExportImportLifecycleEventFactoryUtil.class,
+			ExportImportLifecycleEventFactory.class);
 
 }

@@ -102,8 +102,7 @@ html#{$cadmin-selector} .cadmin .page-editor__fragments-widgets__tab {
 	&-list-item {
 		color: $cadmin-secondary-d2;
 		cursor: grab;
-		height: 32px;
-		padding: 0 12px;
+		padding: 8px 12px;
 		transition: transform ease 0.3s;
 		width: 100%;
 

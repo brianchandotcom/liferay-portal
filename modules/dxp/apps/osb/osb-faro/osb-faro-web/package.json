@@ -47,7 +47,6 @@
 		"metal-dom": "^2.16.2",
 		"metal-events": "^2.16.2",
 		"metal-position": "^2.1.0",
-		"metal-promise": "^2.0.1",
 		"metal-storage": "^1.1.0",
 		"metal-structs": "^1.0.1",
 		"metal-uri": "^2.4.0",

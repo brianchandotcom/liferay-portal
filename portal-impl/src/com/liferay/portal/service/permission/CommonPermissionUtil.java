@@ -8,6 +8,7 @@ package com.liferay.portal.service.permission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Organization;
@@ -15,6 +16,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionRegistryUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
@@ -70,12 +73,20 @@ public class CommonPermissionUtil {
 			UserPermissionUtil.check(permissionChecker, classPK, actionId);
 		}
 		else {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Invalid class name " + className);
+			ModelResourcePermission<ClassedModel> modelResourcePermission =
+				ModelResourcePermissionRegistryUtil.getModelResourcePermission(
+					className);
+
+			if (modelResourcePermission == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Invalid class name " + className);
+				}
+
+				throw new PrincipalException.MustHavePermission(
+					permissionChecker, className, classPK, actionId);
 			}
 
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, className, classPK, actionId);
+			modelResourcePermission.check(permissionChecker, classPK, actionId);
 		}
 	}
 

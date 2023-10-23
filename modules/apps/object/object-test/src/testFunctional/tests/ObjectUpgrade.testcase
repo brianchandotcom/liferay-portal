@@ -563,6 +563,8 @@ definition {
 		property portal.version = "7.4.13.u33";
 
 		task ("View a Picklist after Upgrade") {
+			SetWindowSize.maximizeWindow();
+
 			Picklist.gotoPicklists();
 
 			WaitForElementPresent(

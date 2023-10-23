@@ -119,7 +119,8 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 
 		SkuOption[] skuOptionsArray = _getSkuOptions(
 			_cpInstanceHelper.getCPDefinitionOptionValueRelsMap(
-				cpInstance.getCPDefinitionId(), jsonArray.toString()));
+				cpInstance.getCPDefinitionId(), jsonArray.toString()),
+			skuDTOConverterContext.getLocale());
 
 		CPInstance replacementCPInstance = _checkReplacementCPInstance(
 			_cpInstanceLocalService.fetchCProductInstance(
@@ -435,12 +436,14 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 
 	private SkuOption[] _getSkuOptions(
 			Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-				cpDefinitionOptionValueRelsMap)
+				cpDefinitionOptionValueRelsMap,
+			Locale locale)
 		throws Exception {
 
 		if (MapUtil.isNotEmpty(cpDefinitionOptionValueRelsMap)) {
 			return SkuOptionUtil.getSkuOptions(
-				cpDefinitionOptionValueRelsMap, _cpInstanceLocalService);
+				cpDefinitionOptionValueRelsMap, _cpInstanceLocalService,
+				locale);
 		}
 
 		return null;
@@ -483,7 +486,8 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 		SkuOption[] replacementSkuSkuOptions = _getSkuOptions(
 			_cpInstanceHelper.getCPDefinitionOptionValueRelsMap(
 				replacementCPInstance.getCPDefinitionId(),
-				jsonArray.toString()));
+				jsonArray.toString()),
+			skuDTOConverterContext.getLocale());
 
 		List<CPInstanceUnitOfMeasure> replacementUnitOfMeasures =
 			_cpInstanceUnitOfMeasureLocalService.
@@ -548,7 +552,8 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 						_cpInstanceHelper.
 							getCPInstanceCPDefinitionOptionRelsMap(
 								replacementCPInstance.getCPInstanceId()),
-						_cpInstanceLocalService));
+						_cpInstanceLocalService,
+						skuDTOConverterContext.getLocale()));
 			}
 		};
 	}

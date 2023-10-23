@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -25,7 +26,7 @@ public class SkuOptionUtil {
 	public static SkuOption[] getSkuOptions(
 			Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
 				cpDefinitionOptionValueRelsMap,
-			CPInstanceLocalService cpInstanceLocalService)
+			CPInstanceLocalService cpInstanceLocalService, Locale locale)
 		throws Exception {
 
 		List<SkuOption> skuOptions = new ArrayList<>();
@@ -64,10 +65,14 @@ public class SkuOptionUtil {
 						skuOptionId =
 							cpDefinitionOptionRel.getCPDefinitionOptionRelId();
 						skuOptionKey = cpDefinitionOptionRel.getKey();
+						skuOptionName = cpDefinitionOptionRel.getName(locale);
 						skuOptionValueId =
 							cpDefinitionOptionValueRel.
 								getCPDefinitionOptionValueRelId();
 						skuOptionValueKey = cpDefinitionOptionValueRel.getKey();
+						skuOptionValueNames = new String[] {
+							cpDefinitionOptionValueRel.getName(locale)
+						};
 						value =
 							cpDefinitionOptionValueRel.
 								getCPDefinitionOptionValueRelId();

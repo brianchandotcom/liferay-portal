@@ -85,7 +85,7 @@ const FeatureFlagList: React.FC<IFeatureFlagListProps> = ({featureFlags}) => {
 
 									<ClayList.ItemField>
 										<FeatureFlagToggle
-											ariaDescribedBy={title}
+											ariaLabel={title}
 											companyId={companyId}
 											disabled={!dependenciesFulfilled}
 											enabled={enabled}

@@ -50,7 +50,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 				>
 					<h1 class="component-title"><%= (folder != null) ? HtmlUtil.escape(folder.getName()) : LanguageUtil.get(request, "home") %></h1>
 
-					<h2 class="component-subtitle">
+					<h2 class="c-mt-3 text-3 text-secondary text-weight-normal">
 						<liferay-ui:message key="folder" />
 					</h2>
 				</clay:content-col>
@@ -161,7 +161,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 					DDMStructure ddmStructure = article.getDDMStructure();
 					%>
 
-					<h2 class="component-subtitle">
+					<h2 class="c-mt-3 text-3 text-secondary text-weight-normal">
 						<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>
 					</h2>
 				</clay:content-col>
@@ -188,25 +188,19 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 			</clay:content-row>
 
 			<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPS-197307") %>'>
-				<clay:content-row
-					cssClass="c-mt-2"
-				>
-					<clay:content-col>
-						<div>
-							<clay:label
-								displayType="info"
-								label='<%= LanguageUtil.format(request, "version-x", article.getVersion()) %>'
-							/>
-						</div>
-					</clay:content-col>
-
-					<clay:content-col>
-						<liferay-portal-workflow:status
-							showStatusLabel="<%= false %>"
-							status="<%= article.getStatus() %>"
+				<div class="d-flex">
+					<div>
+						<clay:label
+							displayType="info"
+							label='<%= LanguageUtil.format(request, "version-x", article.getVersion()) %>'
 						/>
-					</clay:content-col>
-				</clay:content-row>
+					</div>
+
+					<liferay-portal-workflow:status
+						showStatusLabel="<%= false %>"
+						status="<%= article.getStatus() %>"
+					/>
+				</div>
 			</c:if>
 		</div>
 

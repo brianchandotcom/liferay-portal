@@ -8,10 +8,9 @@ import ClayDropDown from '@clayui/drop-down';
 import {ClayInput, ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import React, {useContext, useRef, useState} from 'react';
+import {LearnMessage} from 'frontend-js-components-web';
+import React, {useRef, useState} from 'react';
 
-import LearnMessage from '../../../shared/LearnMessage';
-import SearchContext from '../../../shared/SearchContext';
 import {
 	CONTRIBUTOR_TYPES,
 	CONTRIBUTOR_TYPES_ASAH_DEFAULT_DISPLAY_GROUP_NAMES,
@@ -24,7 +23,7 @@ import DisplayGroupNameInput from './inputs/DisplayGroupNameInput';
 import MinimumSearchesInput from './inputs/MinimumSearchesInput';
 import SizeInput from './inputs/SizeInput';
 
-function getSiteActivitiesContributorActivityOptions(learnMessages) {
+function getSiteActivitiesContributorActivityOptions() {
 	const options = [
 		{
 			contributorName: CONTRIBUTOR_TYPES.ASAH_TOP_SEARCH_KEYWORDS,
@@ -34,7 +33,7 @@ function getSiteActivitiesContributorActivityOptions(learnMessages) {
 
 					<LearnMessage
 						className="c-ml-1"
-						learnMessages={learnMessages}
+						resource="portal-search-web"
 						resourceKey="search-bar-suggestions-site-activities"
 					/>
 				</>
@@ -49,7 +48,7 @@ function getSiteActivitiesContributorActivityOptions(learnMessages) {
 
 					<LearnMessage
 						className="c-ml-1"
-						learnMessages={learnMessages}
+						resource="portal-search-web"
 						resourceKey="search-bar-suggestions-site-activities"
 					/>
 				</>
@@ -68,7 +67,7 @@ function getSiteActivitiesContributorActivityOptions(learnMessages) {
 
 						<LearnMessage
 							className="c-ml-1"
-							learnMessages={learnMessages}
+							resource="portal-search-web"
 							resourceKey="search-bar-suggestions-site-activities"
 						/>
 					</>
@@ -83,7 +82,7 @@ function getSiteActivitiesContributorActivityOptions(learnMessages) {
 
 						<LearnMessage
 							className="c-ml-1"
-							learnMessages={learnMessages}
+							resource="portal-search-web"
 							resourceKey="search-bar-suggestions-site-activities"
 						/>
 					</>
@@ -98,7 +97,7 @@ function getSiteActivitiesContributorActivityOptions(learnMessages) {
 
 						<LearnMessage
 							className="c-ml-1"
-							learnMessages={learnMessages}
+							resource="portal-search-web"
 							resourceKey="search-bar-suggestions-site-activities"
 						/>
 					</>
@@ -113,7 +112,7 @@ function getSiteActivitiesContributorActivityOptions(learnMessages) {
 
 						<LearnMessage
 							className="c-ml-1"
-							learnMessages={learnMessages}
+							resource="portal-search-web"
 							resourceKey="search-bar-suggestions-site-activities"
 						/>
 					</>
@@ -131,11 +130,7 @@ function SiteActivities({index, onBlur, onInputSetItemChange, touched, value}) {
 
 	const alignElementRef = useRef();
 
-	const {learnMessages} = useContext(SearchContext);
-
-	const SITE_ACTIVITIES_CONTRIBUTOR_ACTIVITY_OPTIONS = getSiteActivitiesContributorActivityOptions(
-		learnMessages
-	);
+	const SITE_ACTIVITIES_CONTRIBUTOR_ACTIVITY_OPTIONS = getSiteActivitiesContributorActivityOptions();
 
 	const _handleChangeAttribute = (property) => (event) => {
 		onInputSetItemChange(index, {
@@ -196,7 +191,7 @@ function SiteActivities({index, onBlur, onInputSetItemChange, touched, value}) {
 
 					<LearnMessage
 						className="c-ml-1"
-						learnMessages={learnMessages}
+						resource="portal-search-web"
 						resourceKey="search-bar-suggestions-site-activities"
 					/>
 				</InputSetItemHeader.Description>

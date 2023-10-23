@@ -1,7 +1,6 @@
 import * as API from 'shared/api';
 import BaseListPage from 'contacts/components/BaseListPage';
 import ClayButton from '@clayui/button';
-import Promise from 'metal-promise';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import RowActions from 'shared/components/RowActions';
 import SearchableEntityTable from 'shared/components/SearchableEntityTable';
@@ -120,7 +119,7 @@ export const List: React.FC<IListProps> = ({
 
 	const [alerts, setAlerts] = useState([]);
 
-	const _disableSegmentsRequestRef = useRef<typeof Promise>();
+	const _disableSegmentsRequestRef = useRef<Promise<any>>();
 	const {
 		showUnassignedAlert,
 		unassignedSegments,
@@ -128,14 +127,24 @@ export const List: React.FC<IListProps> = ({
 	} = useContext(UnassignedSegmentsContext);
 
 	useEffect(() => {
-		_disableSegmentsRequestRef.current = getDisabledSegmentsAlert();
+		const abortController = new AbortController();
 
-		return () => _disableSegmentsRequestRef.current.cancel();
+		_disableSegmentsRequestRef.current = getDisabledSegmentsAlert(
+			abortController.signal
+		);
+
+		return () => {
+			abortController.abort();
+		};
 	}, []);
 
-	const getDisabledSegmentsAlert = () =>
+	const getDisabledSegmentsAlert = (abortSignal: AbortSignal) =>
 		fetchDisabledSegments(channelId, groupId, orderIOMap).then(
 			({total}) => {
+				if (abortSignal.aborted) {
+					return;
+				}
+
 				if (total) {
 					setAlerts(() => handleDisabledSegmentsAlert());
 				}

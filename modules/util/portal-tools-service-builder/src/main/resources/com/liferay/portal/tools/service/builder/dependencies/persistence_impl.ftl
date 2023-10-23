@@ -257,13 +257,13 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		<#assign columnBitmaskEnabled = (entity.finderEntityColumns?size &gt; 0) && (entity.finderEntityColumns?size &lt; 64) && !entity.hasEagerBlobColumn() />
 	</#if>
 
-	private FinderPath _finderPathWithPaginationFindAll;
-	private FinderPath _finderPathWithoutPaginationFindAll;
-	private FinderPath _finderPathCountAll;
-
 	<#if !serviceBuilder.isVersionGTE_7_1_0()>
 		private int _databaseInMaxParameters;
 	</#if>
+
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
 
 	<#if entity.isHierarchicalTree()>
 		private FinderPath _finderPathWithPaginationCountAncestors;

@@ -20,6 +20,21 @@
 		<td>//*[contains(@class,'objectDefinitionNode')][contains(.,'${objectDefinition}')] //*[contains(@class,'label-item')][normalize-space(text())='${labelText}']</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>OBJECT_DEFINITION_NODE</td>
+		<td>//div[contains(@class, 'model-builder-node')]//span[text()='${objectLabel}']</td>
+		<td></td>
+	</tr>
+	 <tr>
+		<td>OBJECT_FIELD_NODE</td>
+		<td>//div[contains(@class, 'node-field-label')]//span[text()='${fieldLabel}']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>MODEL_BUILDER_CHANGES_SAVED</td>
+		<td>//span[text()='Changes Saved']</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

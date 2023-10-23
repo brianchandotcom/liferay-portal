@@ -25,6 +25,8 @@ definition {
 	@description = "LPS-148856 - Verify multiple custom object definitions can be published"
 	@priority = 5
 	test CanPublishMultipleObjectDefinitions {
+		property custom.properties = "feature.flag.LPS-148856=true";
+
 		task ("Given three custom object definitions that contains long text fields") {
 			for (var letter : list "A,B,C") {
 				ObjectAdmin.addObjectViaAPI(
@@ -67,6 +69,60 @@ definition {
 				labelText = "draft",
 				locator1 = "ObjectModelBuilder#OBJECT_CARD_LABEL",
 				objectDefinition = "Custom Object 197932 C");
+		}
+	}
+
+	@description = "LPS-185679 - Verify the user can update a field in model builder view"
+	@priority = 5
+	test CanUpdateField {
+		property custom.properties = "feature.flag.LPS-148856=true";
+
+		task ("Given a custom object definition with a rich text field") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 199362",
+				objectName = "CustomObject199362",
+				pluralLabelName = "Custom Objects 199362");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "RichText",
+				fieldLabelName = "Rich Text Field",
+				fieldName = "richTextField",
+				fieldType = "Clob",
+				isRequired = "false",
+				objectName = "CustomObject199362");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject199362");
+		}
+
+		task ("and Given the user is in model builder view") {
+			ObjectModelBuilder.openObjectFolderInModelBuilder();
+		}
+
+		task ("When the user edits the label of the field in the right sidebar") {
+			ObjectModelBuilder.selectObjectNode(objectLabel = "Custom Object 199362");
+
+			Click(
+				key_text = "Show All Fields",
+				locator1 = "Button#ANY_LAST");
+
+			Click(
+				fieldLabel = "Rich Text Field",
+				locator1 = "ObjectModelBuilder#OBJECT_FIELD_NODE");
+
+			Type(
+				key_fieldLabel = "Label",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "Rich Text Field Updated");
+
+			Click(locator1 = "ObjectField#NAME_FIELD_DISABLED");
+		}
+
+		task ("Then the rich text field is updated") {
+			AssertElementPresent(locator1 = "ObjectModelBuilder#MODEL_BUILDER_CHANGES_SAVED");
+
+			AssertElementPresent(
+				key_fieldValue = "Rich Text Field Updated",
+				locator1 = "FormFields#TEXT_FIELD_3");
 		}
 	}
 

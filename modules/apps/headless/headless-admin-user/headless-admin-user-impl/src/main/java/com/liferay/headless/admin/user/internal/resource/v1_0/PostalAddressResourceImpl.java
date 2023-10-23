@@ -18,13 +18,10 @@ import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.AddressService;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.RegionService;
@@ -42,8 +39,6 @@ import javax.ws.rs.BadRequestException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -57,18 +52,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 	@Override
 	public void deletePostalAddress(Long postalAddressId) throws Exception {
-		Address address = _addressLocalService.getAddress(postalAddressId);
-
-		String className = address.getClassName();
-
-		if (className.equals(AccountEntry.class.getName())) {
-			_check(address.getClassPK(), ActionKeys.UPDATE);
-
-			_addressLocalService.deleteAddress(postalAddressId);
-		}
-		else {
-			_addressService.deleteAddress(postalAddressId);
-		}
+		_addressLocalService.deleteAddress(postalAddressId);
 	}
 
 	@Override
@@ -111,19 +95,6 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 	@Override
 	public PostalAddress getPostalAddress(Long postalAddressId)
 		throws Exception {
-
-		Address address = _addressLocalService.getAddress(postalAddressId);
-
-		String className = address.getClassName();
-
-		if (className.equals(AccountEntry.class.getName())) {
-			_check(address.getClassPK(), ActionKeys.VIEW);
-
-			return PostalAddressUtil.toPostalAddress(
-				contextAcceptLanguage.isAcceptAllLanguages(), address,
-				contextCompany.getCompanyId(),
-				contextAcceptLanguage.getPreferredLocale());
-		}
 
 		return PostalAddressUtil.toPostalAddress(
 			contextAcceptLanguage.isAcceptAllLanguages(),
@@ -216,28 +187,12 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 			address.setStreet3(postalAddress.getStreetAddressLine3());
 		}
 
-		String className = address.getClassName();
-
-		if (className.equals(AccountEntry.class.getName())) {
-			_check(address.getClassPK(), ActionKeys.UPDATE);
-
-			address = _addressLocalService.updateAddress(
-				address.getAddressId(), address.getName(),
-				address.getDescription(), address.getStreet1(),
-				address.getStreet2(), address.getStreet3(), address.getCity(),
-				address.getZip(), address.getRegionId(), address.getCountryId(),
-				address.getListTypeId(), address.isMailing(),
-				address.isPrimary(), phoneNumber);
-		}
-		else {
-			address = _addressService.updateAddress(
-				address.getAddressId(), address.getName(),
-				address.getDescription(), address.getStreet1(),
-				address.getStreet2(), address.getStreet3(), address.getCity(),
-				address.getZip(), address.getRegionId(), address.getCountryId(),
-				address.getListTypeId(), address.isMailing(),
-				address.isPrimary(), phoneNumber);
-		}
+		address = _addressLocalService.updateAddress(
+			address.getAddressId(), address.getName(), address.getDescription(),
+			address.getStreet1(), address.getStreet2(), address.getStreet3(),
+			address.getCity(), address.getZip(), address.getRegionId(),
+			address.getCountryId(), address.getListTypeId(),
+			address.isMailing(), address.isPrimary(), phoneNumber);
 
 		return PostalAddressUtil.toPostalAddress(
 			contextAcceptLanguage.isAcceptAllLanguages(), address,
@@ -255,8 +210,6 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 		long regionId = _getRegionId(postalAddress, country);
 
 		ListType listType = _getListType(postalAddress);
-
-		_check(accountId, ActionKeys.UPDATE);
 
 		Address address = _addressLocalService.addAddress(
 			null, contextUser.getUserId(), AccountEntry.class.getName(),
@@ -288,42 +241,20 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 		ListType listType = _getListType(postalAddress);
 
-		String className = address.getClassName();
-
-		if (className.equals(AccountEntry.class.getName())) {
-			_check(address.getClassPK(), ActionKeys.UPDATE);
-
-			address = _addressLocalService.updateAddress(
-				address.getAddressId(), postalAddress.getName(),
-				address.getDescription(), postalAddress.getStreetAddressLine1(),
-				postalAddress.getStreetAddressLine2(),
-				postalAddress.getStreetAddressLine3(),
-				postalAddress.getAddressLocality(),
-				postalAddress.getPostalCode(), regionId, country.getCountryId(),
-				listType.getListTypeId(), address.isMailing(),
-				postalAddress.getPrimary(), postalAddress.getPhoneNumber());
-		}
-		else {
-			address = _addressService.updateAddress(
-				address.getAddressId(), postalAddress.getName(),
-				address.getDescription(), postalAddress.getStreetAddressLine1(),
-				postalAddress.getStreetAddressLine2(),
-				postalAddress.getStreetAddressLine3(),
-				postalAddress.getAddressLocality(),
-				postalAddress.getPostalCode(), regionId, country.getCountryId(),
-				listType.getListTypeId(), address.isMailing(),
-				postalAddress.getPrimary(), postalAddress.getPhoneNumber());
-		}
+		address = _addressLocalService.updateAddress(
+			address.getAddressId(), postalAddress.getName(),
+			address.getDescription(), postalAddress.getStreetAddressLine1(),
+			postalAddress.getStreetAddressLine2(),
+			postalAddress.getStreetAddressLine3(),
+			postalAddress.getAddressLocality(), postalAddress.getPostalCode(),
+			regionId, country.getCountryId(), listType.getListTypeId(),
+			address.isMailing(), postalAddress.getPrimary(),
+			postalAddress.getPhoneNumber());
 
 		return PostalAddressUtil.toPostalAddress(
 			contextAcceptLanguage.isAcceptAllLanguages(), address,
 			contextCompany.getCompanyId(),
 			contextAcceptLanguage.getPreferredLocale());
-	}
-
-	private void _check(long accountId, String action) throws Exception {
-		_accountEntryModelResourcePermission.check(
-			GuestOrUserUtil.getPermissionChecker(), accountId, action);
 	}
 
 	private Country _getCountryByTitle(PostalAddress postalAddress) {
@@ -407,14 +338,6 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 		return region.getRegionId();
 	}
 
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(model.class.name=com.liferay.account.model.AccountEntry)"
-	)
-	private volatile ModelResourcePermission<AccountEntry>
-		_accountEntryModelResourcePermission;
-
 	@Reference
 	private AccountEntryService _accountEntryService;
 
@@ -423,9 +346,6 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 	@Reference
 	private AddressService _addressService;
-
-	@Reference
-	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private CountryService _countryService;

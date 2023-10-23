@@ -105,6 +105,19 @@
 		"to": "fetchByExternalReferenceCode(param#1#, param#0#)"
 	},
 	{
+		"from": "AssetCategory::getLeftCategoryId",
+		"issueKey": "LPS-196624",
+		"to": "AssetCategory::getCategoryId"
+	},
+	{
+		"classNames": [
+			"AssetCategory"
+		],
+		"from": "getLeftCategoryId",
+		"issueKey": "LPS-196624",
+		"to": "getCategoryId"
+	},
+	{
 		"classNames": [
 			"CommerceAccountHelper"
 		],

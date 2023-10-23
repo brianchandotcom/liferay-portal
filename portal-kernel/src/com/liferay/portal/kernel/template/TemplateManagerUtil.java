@@ -5,8 +5,6 @@
 
 package com.liferay.portal.kernel.template;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 
 import java.util.Collections;
@@ -24,14 +22,6 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Raymond Augé
  */
 public class TemplateManagerUtil {
-
-	public static void destroy() {
-		for (TemplateManager templateManager : _templateManagers.values()) {
-			templateManager.destroy();
-		}
-
-		_templateManagers.clear();
-	}
 
 	public static Template getTemplate(
 			String templateManagerName, TemplateResource templateResource,
@@ -80,9 +70,6 @@ public class TemplateManagerUtil {
 	private TemplateManagerUtil() {
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		TemplateManagerUtil.class);
-
 	private static final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
 	private static final ServiceTracker<TemplateManager, TemplateManager>
@@ -100,21 +87,7 @@ public class TemplateManagerUtil {
 			TemplateManager templateManager = _bundleContext.getService(
 				serviceReference);
 
-			try {
-				templateManager.init();
-
-				_templateManagers.put(
-					templateManager.getName(), templateManager);
-			}
-			catch (TemplateException templateException) {
-				if (_log.isWarnEnabled()) {
-					String name = templateManager.getName();
-
-					_log.warn(
-						"Unable to init template manager " + name,
-						templateException);
-				}
-			}
+			_templateManagers.put(templateManager.getName(), templateManager);
 
 			return templateManager;
 		}
@@ -123,26 +96,6 @@ public class TemplateManagerUtil {
 		public void modifiedService(
 			ServiceReference<TemplateManager> serviceReference,
 			TemplateManager templateManager) {
-
-			_templateManagers.compute(
-				templateManager.getName(),
-				(key, value) -> {
-					templateManager.destroy();
-
-					try {
-						templateManager.init();
-					}
-					catch (TemplateException templateException) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"unable to init " + templateManager.getName() +
-									" Template Manager ",
-								templateException);
-						}
-					}
-
-					return templateManager;
-				});
 		}
 
 		@Override
@@ -153,8 +106,6 @@ public class TemplateManagerUtil {
 			_bundleContext.ungetService(serviceReference);
 
 			_templateManagers.remove(templateManager.getName());
-
-			templateManager.destroy();
 		}
 
 	}

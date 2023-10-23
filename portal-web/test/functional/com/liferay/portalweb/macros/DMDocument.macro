@@ -1290,6 +1290,24 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro configureMaxCopySize {
+		if (isSet(existingLimit)) {
+			AssertTextEquals(
+				key_text = "Size Limit for Copying Files",
+				locator1 = "TextInput#ANY",
+				value1 = ${existingLimit});
+		}
+
+		Type(
+			key_text = "Size Limit for Copying Files",
+			locator1 = "TextInput#ANY",
+			value1 = ${copyLimit});
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro copy {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Copy To",
@@ -1366,6 +1384,9 @@ definition {
 			Alert.viewErrorMessage(errorMessage = "Cannot copy to the live version of a site. Make your changes in staging and publish them to Live afterwards to make them public.");
 		}
 		else if (isSet(copyWithRequiredField)) {
+			Alert.viewErrorMessage(errorMessage = "No value defined for field name");
+		}
+		else if (isSet(copyExceedsSizeLimit)) {
 			Alert.viewErrorMessage(errorMessage = "No value defined for field name");
 		}
 		else {

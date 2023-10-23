@@ -155,6 +155,15 @@
 	},
 	{
 		"classNames": [
+			"CommercePriceEntryLocalService",
+			"CommercePriceEntryLocalServiceUtil"
+		],
+		"from": "addCommercePriceEntry(String, long, String, long, BigDecimal, BigDecimal, ServiceContext)",
+		"issueKey": "LPS-196627",
+		"to": "addCommercePriceEntry(param#0#, param#1#, param#2#, param#3#, param#4#, false, param#5#, null, param#6#)"
+	},
+	{
+		"classNames": [
 			"CommerceAccountHelper"
 		],
 		"from": "getCurrentCommerceAccount(HttpServletRequest)",

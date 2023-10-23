@@ -1108,6 +1108,15 @@ export function ObjectFolderReducer(state: TState, action: TAction): TState {
 			};
 		}
 
+		case TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS: {
+			const {modelBuilderModals} = action.payload;
+
+			return {
+				...state,
+				modelBuilderModals,
+			};
+		}
+
 		default:
 			return state;
 	}

@@ -179,6 +179,12 @@ export declare type TAction =
 				updatedObjectField: ObjectField;
 			};
 			type: TYPES.UPDATE_OBJECT_FIELD_NODE_ROW;
+	  }
+	| {
+			payload: {
+				modelBuilderModals: ModelBuilderModals;
+			};
+			type: TYPES.UPDATE_VISIBILITY_MODEL_BUILDER_MODALS;
 	  };
 export declare type TState = {
 	baseResourceURL: string;
@@ -190,6 +196,7 @@ export declare type TState = {
 	forbiddenNames: string[];
 	isLoadingObjectFolder: boolean;
 	leftSidebarItems: LeftSidebarItem[];
+	modelBuilderModals: ModelBuilderModals;
 	objectDefinitionPermissionsURL: string;
 	objectDefinitions: ObjectDefinition[];
 	objectDefinitionsStorageTypes: LabelValueObject[];

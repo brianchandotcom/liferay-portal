@@ -144,6 +144,68 @@ definition {
 		}
 	}
 
+	@description = "LPS-190220. Verify that the user can edit the CX Filter entry"
+	@priority = 5
+	test CanEditCXFilterEntry {
+		task ("Given Client Extension admin page") {
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
+		}
+
+		task ("When to select the FDS filter option") {
+			LexiconEntry.gotoAdd();
+
+			DropdownMenuItem.click(menuItem = "Add Frontend Data Set Filter");
+		}
+
+		task ("And fill in fields JS URL, Source Code URL and Description :") {
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Date Filter Improvements");
+
+			Type.typeNoMouseOver(
+				key_text = "JavaScript URL",
+				locator1 = "TextInput#ANY",
+				value1 = "https://liferay.github.io/liferay-frontend-projects/date-filter.js");
+
+			Type(
+				locator1 = "CKEditor#BODY_FIELD_IFRAME",
+				value1 = "This filter adds the possibility to add slider ranges to the date filter.");
+
+			Type(
+				key_text = "Source Code URL",
+				locator1 = "TextInput#ANY",
+				value1 = "https://liferay.github.io/liferay-frontend-projects/date-filter.js");
+		}
+
+		task ("And clicks on Publish button") {
+			PortletEntry.publish();
+		}
+
+		task ("And go to the edit page of the Extension client created ") {
+			Click(locator1 = "Icon#SVG_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Edit");
+		}
+
+		task ("And change the name of client extension") {
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Date Filter Improvements Edited");
+		}
+
+		task ("And clicks on Publish button") {
+			PortletEntry.publish();
+		}
+
+		task ("And “Date Filter Improvements Edited” entry is present on Client Extension admin page") {
+			ClientExtensionGeneral.viewTableEntries(
+				entryName = "Date Filter Improvements Edited",
+				entryType = "Frontend Data Set Filter");
+		}
+	}
+
 	@description = "LPS-190220. Verify that the user can hide Additional Resources section, clicking on the collapse icon"
 	@priority = 3
 	test CanHideAdditionalResourcesSection {

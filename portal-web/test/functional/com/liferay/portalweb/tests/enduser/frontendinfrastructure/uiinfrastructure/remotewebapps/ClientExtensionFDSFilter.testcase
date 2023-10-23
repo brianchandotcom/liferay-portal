@@ -106,6 +106,44 @@ definition {
 		}
 	}
 
+	@description = "LPS-190220. Verify that the JavaScript URL field is mandatory."
+	@priority = 5
+	test CannotLeaveJSURLFieldEmpty {
+		task ("Given Client Extension admin page") {
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
+		}
+
+		task ("When to select the FDS filter option") {
+			LexiconEntry.gotoAdd();
+
+			DropdownMenuItem.click(menuItem = "Add Frontend Data Set Filter");
+		}
+
+		task ("And fill in fields JS URL, Source Code URL and Description :") {
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Date Filter Improvements");
+
+			Type(
+				locator1 = "CKEditor#BODY_FIELD_IFRAME",
+				value1 = "This filter adds the possibility to add slider ranges to the date filter.");
+
+			Type(
+				key_text = "Source Code URL",
+				locator1 = "TextInput#ANY",
+				value1 = "https://liferay.github.io/liferay-frontend-projects/date-filter.js");
+		}
+
+		task ("And clicks on Publish button") {
+			PortletEntry.publish();
+		}
+
+		task ("Then an error message should be displayed") {
+			Alert.viewSpecificRequiredField(fieldFieldLabel = "JavaScript URL");
+		}
+	}
+
 	@description = "LPS-190220. Verify that the Name field cannot be empty"
 	@priority = 5
 	test CannotLeaveNameFieldEmpty {

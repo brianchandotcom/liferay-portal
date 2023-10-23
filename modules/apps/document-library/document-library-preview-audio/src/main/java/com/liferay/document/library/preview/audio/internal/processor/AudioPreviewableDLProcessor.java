@@ -12,7 +12,7 @@ import com.liferay.document.library.kernel.util.AudioConverter;
 import com.liferay.document.library.kernel.util.AudioProcessor;
 import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.DLUtil;
-import com.liferay.document.library.preview.processor.DLPreviewableProcessor;
+import com.liferay.document.library.preview.processor.BasePreviewableDLProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
@@ -61,8 +61,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "type=" + DLProcessorConstants.AUDIO_PROCESSOR,
 	service = DLProcessor.class
 )
-public class AudioProcessorImpl
-	extends DLPreviewableProcessor implements AudioProcessor {
+public class AudioPreviewableDLProcessor
+	extends BasePreviewableDLProcessor implements AudioProcessor {
 
 	@Override
 	public void afterPropertiesSet() {
@@ -463,7 +463,7 @@ public class AudioProcessorImpl
 		PropsValues.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AudioProcessorImpl.class);
+		AudioPreviewableDLProcessor.class);
 
 	@Reference
 	private AudioConverter _audioConverter;

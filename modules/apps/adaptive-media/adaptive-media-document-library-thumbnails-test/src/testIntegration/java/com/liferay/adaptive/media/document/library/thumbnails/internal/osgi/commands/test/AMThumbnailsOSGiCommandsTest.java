@@ -19,7 +19,7 @@ import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.ImageProcessor;
-import com.liferay.document.library.preview.processor.DLPreviewableProcessor;
+import com.liferay.document.library.preview.processor.BasePreviewableDLProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
@@ -268,7 +268,7 @@ public class AMThumbnailsOSGiCommandsTest {
 			new String[] {
 				DLProcessor.class.getName(), ImageProcessor.class.getName()
 			},
-			new ImageProcessorImpl(),
+			new ImagePreviewableDLProcessor(),
 			MapUtil.singletonDictionary(
 				"type", DLProcessorConstants.IMAGE_PROCESSOR));
 	}
@@ -373,8 +373,8 @@ public class AMThumbnailsOSGiCommandsTest {
 
 	private int _getThumbnailCount() throws Exception {
 		String[] fileNames = DLStoreUtil.getFileNames(
-			_company.getCompanyId(), DLPreviewableProcessor.REPOSITORY_ID,
-			DLPreviewableProcessor.THUMBNAIL_PATH);
+			_company.getCompanyId(), BasePreviewableDLProcessor.REPOSITORY_ID,
+			BasePreviewableDLProcessor.THUMBNAIL_PATH);
 
 		return fileNames.length;
 	}
@@ -427,8 +427,8 @@ public class AMThumbnailsOSGiCommandsTest {
 	private ServiceContext _serviceContext;
 	private User _user;
 
-	private static class ImageProcessorImpl
-		extends DLPreviewableProcessor implements ImageProcessor {
+	private static class ImagePreviewableDLProcessor
+		extends BasePreviewableDLProcessor implements ImageProcessor {
 
 		@Override
 		public void afterPropertiesSet() {
@@ -878,11 +878,11 @@ public class AMThumbnailsOSGiCommandsTest {
 		}
 
 		private static final Log _log = LogFactoryUtil.getLog(
-			ImageProcessorImpl.class);
+			ImagePreviewableDLProcessor.class);
 
 		private static final Snapshot<FileVersionPreviewEventListener>
 			_fileVersionPreviewEventListenerSnapshot = new Snapshot<>(
-				ImageProcessorImpl.class,
+			ImagePreviewableDLProcessor.class,
 				FileVersionPreviewEventListener.class);
 
 		private final List<Long> _fileVersionIds = new Vector<>();

@@ -12,7 +12,7 @@ import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.VideoConverter;
 import com.liferay.document.library.kernel.util.VideoProcessor;
-import com.liferay.document.library.preview.processor.DLPreviewableProcessor;
+import com.liferay.document.library.preview.processor.BasePreviewableDLProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.image.ImageToolUtil;
@@ -67,8 +67,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "type=" + DLProcessorConstants.VIDEO_PROCESSOR,
 	service = DLProcessor.class
 )
-public class VideoProcessorImpl
-	extends DLPreviewableProcessor implements VideoProcessor {
+public class VideoPreviewableDLProcessor
+	extends BasePreviewableDLProcessor implements VideoProcessor {
 
 	@Override
 	public void afterPropertiesSet() {
@@ -598,7 +598,7 @@ public class VideoProcessorImpl
 		PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_CONTAINERS;
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		VideoProcessorImpl.class);
+		VideoPreviewableDLProcessor.class);
 
 	@Reference
 	private BackgroundTaskManager _backgroundTaskManager;

@@ -80,4 +80,68 @@ definition {
 		}
 	}
 
+	@description = "LPS-190220. Verify that the Name field is localizable."
+	@priority = 3
+	test LocalizedNameField {
+		task ("Given Client Extension admin page") {
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
+		}
+
+		task ("When to select the FDS filter option") {
+			LexiconEntry.gotoAdd();
+
+			DropdownMenuItem.click(menuItem = "Add Frontend Data Set Filter");
+		}
+
+		task ("Add a title name in the English language") {
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Date Filter Improvements");
+		}
+
+		task ("Add a title name in the Portuguese language") {
+			Click(
+				key_locale = "en-US",
+				locator1 = "Translation#CURRENT_LOCALE_NAME");
+
+			DropdownMenuItem.click(menuItem = "pt-BR");
+
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Date Filter Improvements translated");
+		}
+
+		task ("And change the title to English") {
+			Click(
+				key_locale = "pt-BR",
+				locator1 = "Translation#CURRENT_LOCALE_NAME");
+
+			DropdownMenuItem.click(menuItem = "en-US");
+		}
+
+		task ("Then the title “Date Filter Improvements“ is shown in the Title field") {
+			AssertElementPresent(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Date Filter Improvements");
+		}
+
+		task ("When changing the title to portuguese") {
+			Click(
+				key_locale = "en-US",
+				locator1 = "Translation#CURRENT_LOCALE_NAME");
+
+			DropdownMenuItem.click(menuItem = "pt-BR");
+		}
+
+		task ("Then the title “Date Filter Improvements translated“ is shown in the Title field") {
+			AssertElementPresent(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Date Filter Improvements translated");
+		}
+	}
+
 }

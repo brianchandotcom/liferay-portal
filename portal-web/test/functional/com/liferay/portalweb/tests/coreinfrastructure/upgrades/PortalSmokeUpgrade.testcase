@@ -3,7 +3,6 @@ definition {
 
 	property app.server.types = "jboss,tomcat,weblogic,websphere,wildfly";
 	property ci.retries.disabled = "true";
-	property custom.properties = "initial.system.check.enabled=false";
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 	property portal.release = "true";
 	property portal.upstream = "true";

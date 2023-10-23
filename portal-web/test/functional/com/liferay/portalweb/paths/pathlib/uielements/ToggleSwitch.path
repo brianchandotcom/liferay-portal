@@ -82,7 +82,7 @@
 </tr>
 <tr>
 	<td>ENABLE_BETA_TOGGLE_SWITCH</td>
-	<td>//*[@id="${key_featureFlag}-toggle"]</td>
+	<td>//*[@id="${key_featureFlag}"]</td>
 	<td></td>
 </tr>
 </tbody>

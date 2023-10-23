@@ -257,6 +257,17 @@
 	},
 	{
 		"classNames": [
+			"AccountGroupRelLocalService",
+			"AccountGroupRelLocalServiceUtil",
+			"AccountGroupRelService",
+			"AccountGroupRelServiceUtil"
+		],
+		"from": "addCommerceAccountGroupRel(String, long, long, ServiceContext)",
+		"issueKey": "LPS-196652",
+		"to": "addAccountGroupRel(param#2#, param#0#, param#1#)"
+	},
+	{
+		"classNames": [
 			"CPDefinitionLocalService",
 			"CPDefinitionLocalServiceUtil",
 			"CPDefinitionService",

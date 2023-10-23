@@ -33,6 +33,7 @@ interface IPropsPartnershipLevel {
 	headcount: {
 		[keys: string]: number;
 	};
+	newProjectExistingBusiness: number;
 	partnerLevel: PartnerLevel;
 }
 
@@ -58,6 +59,7 @@ const PartnershipLevel = ({
 	checkedProperties,
 	currency,
 	headcount,
+	newProjectExistingBusiness,
 	partnerLevel,
 }: IPropsPartnershipLevel) => {
 	const getTotalARR = () => {
@@ -140,7 +142,7 @@ const PartnershipLevel = ({
 									<LevelProgressBar
 										currency={currency}
 										currentValue={
-											account.newProjectExistingBusiness
+											newProjectExistingBusiness
 										}
 										total={
 											partnerLevelProperties[

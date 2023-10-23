@@ -24,6 +24,8 @@ definition {
 	@description = "LPS-149508 - Verify CRUD events appear in the Audit records for object definitions"
 	@priority = 5
 	test AssertCRUDEventsWithObjectDefinition {
+		property portal.acceptance = "true";
+
 		task ("Given a custom object definition") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 193625",
@@ -86,6 +88,8 @@ definition {
 	@description = "LPS-164582 - Verify CRUD events appear in the Audit records for object entries when entry history is enabled"
 	@priority = 5
 	test AssertCRUDEventsWithObjectEntry {
+		property portal.acceptance = "true";
+
 		task ("Given a custom object definition with a text field and Entry History enabled") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 193633",

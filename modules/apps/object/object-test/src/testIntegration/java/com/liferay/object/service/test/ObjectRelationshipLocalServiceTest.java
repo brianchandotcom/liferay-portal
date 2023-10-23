@@ -850,9 +850,7 @@ public class ObjectRelationshipLocalServiceTest {
 			objectRelationship.getDBTableName(),
 			reverseObjectRelationship.getDBTableName());
 
-		Pattern pattern = Pattern.compile("R_[A-Z][0-9][A-Z][0-9]$");
-
-		Matcher matcher = pattern.matcher(objectRelationship.getDBTableName());
+		Matcher matcher = _pattern.matcher(objectRelationship.getDBTableName());
 
 		Assert.assertTrue(matcher.matches());
 
@@ -963,6 +961,8 @@ public class ObjectRelationshipLocalServiceTest {
 	@Inject
 	private static ObjectDefinitionLocalService _objectDefinitionLocalService;
 
+	private static final Pattern _pattern = Pattern.compile(
+		"R_[A-Z][0-9][A-Z][0-9]$");
 	private static ObjectDefinition _systemObjectDefinition1;
 
 	@DeleteAfterTestRun

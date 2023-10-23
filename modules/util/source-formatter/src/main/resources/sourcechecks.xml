@@ -1656,11 +1656,6 @@
 			<description name="Performs upgrade checks for `java` files" />
 			<weight>3</weight>
 		</check>
-		<check name="UpgradeJavaCommerceCountryServiceCheck">
-			<category name="Upgrade" />
-			<description name="Replaces the old methods of class `CommerceCountryService` with the new equivalents in the `CountryService` class." />
-			<weight>1</weight>
-		</check>
 		<check name="UpgradeJavaCommerceOrderItemServicesCheck">
 			<category name="Upgrade" />
 			<description name="Fill the new parameters of the method `addCommerceOrderItem` and `deleteCommerceOrderItems` of `CommerceOrderItemLocalService`, `CommerceOrderItemLocalServiceUtil`, `CommerceOrderItemService` and `CommerceOrderItemServiceUtil` classes" />

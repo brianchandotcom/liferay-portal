@@ -5,10 +5,12 @@
 
 package com.liferay.headless.builder.internal.model.listener;
 
+import com.liferay.headless.builder.application.APIApplication;
 import com.liferay.headless.builder.internal.helper.ObjectEntryHelper;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.listener.RelevantObjectEntryModelListener;
+import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -17,7 +19,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -63,6 +67,28 @@ public class APISortRelevantObjectEntryModelListener
 				throw new ObjectEntryValuesException.InvalidObjectField(
 					null, "An API sort must be related to an API endpoint",
 					"an-api-sort-must-be-related-to-an-api-endpoint");
+			}
+
+			com.liferay.object.rest.dto.v1_0.ObjectEntry
+				apiEndpointObjectEntry = _objectEntryHelper.getObjectEntry(
+					objectEntry.getCompanyId(), Collections.emptyList(),
+					apiEndpointId, "L_API_ENDPOINT");
+
+			ListEntry listEntry =
+				(ListEntry)apiEndpointObjectEntry.getPropertyValue(
+					"retrieveType");
+
+			if (!Objects.equals(
+					listEntry.getKey(),
+					APIApplication.Endpoint.RetrieveType.COLLECTION.
+						getValue())) {
+
+				throw new ObjectEntryValuesException.InvalidObjectField(
+					null,
+					"An API sort can only be associated to API endpoints " +
+						"with a \"collection\" retrieve type",
+					"an-api-sort-can-only-be-associated-to-api-endpoints-" +
+						"with-a-\"collection\"-retrieve-type");
 			}
 
 			if (Validator.isNotNull(

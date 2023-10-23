@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -181,9 +180,6 @@ public class UpdateCollectionDisplayConfigMVCActionCommand
 
 	@Reference
 	private JSONFactory _jsonFactory;
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private Portal _portal;

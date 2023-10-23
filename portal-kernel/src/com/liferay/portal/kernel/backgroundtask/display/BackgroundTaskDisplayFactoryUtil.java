@@ -6,7 +6,7 @@
 package com.liferay.portal.kernel.backgroundtask.display;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * @author Andrew Betts
@@ -16,22 +16,26 @@ public class BackgroundTaskDisplayFactoryUtil {
 	public static BackgroundTaskDisplay getBackgroundTaskDisplay(
 		BackgroundTask backgroundTask) {
 
-		return _backgroundTaskDisplayFactory.getBackgroundTaskDisplay(
+		BackgroundTaskDisplayFactory backgroundTaskDisplayFactory =
+			_backgroundTaskDisplayFactorySnapshot.get();
+
+		return backgroundTaskDisplayFactory.getBackgroundTaskDisplay(
 			backgroundTask);
 	}
 
 	public static BackgroundTaskDisplay getBackgroundTaskDisplay(
 		long backgroundTaskId) {
 
-		return _backgroundTaskDisplayFactory.getBackgroundTaskDisplay(
+		BackgroundTaskDisplayFactory backgroundTaskDisplayFactory =
+			_backgroundTaskDisplayFactorySnapshot.get();
+
+		return backgroundTaskDisplayFactory.getBackgroundTaskDisplay(
 			backgroundTaskId);
 	}
 
-	private static volatile BackgroundTaskDisplayFactory
-		_backgroundTaskDisplayFactory =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				BackgroundTaskDisplayFactory.class,
-				BackgroundTaskDisplayFactoryUtil.class,
-				"_backgroundTaskDisplayFactory", false);
+	private static final Snapshot<BackgroundTaskDisplayFactory>
+		_backgroundTaskDisplayFactorySnapshot = new Snapshot<>(
+			BackgroundTaskDisplayFactoryUtil.class,
+			BackgroundTaskDisplayFactory.class);
 
 }

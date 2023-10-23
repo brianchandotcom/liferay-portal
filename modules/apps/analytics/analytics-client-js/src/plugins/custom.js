@@ -97,10 +97,14 @@ function trackCustomAssetSubmitted(analytics) {
 	const onSubmit = (event) => {
 		const {target} = event;
 		const customAssetElement = getClosestAssetElement(target, 'custom');
+		const isElementTrackable = isTrackable(customAssetElement, [
+			'analyticsAssetId',
+			'analyticsAssetType',
+		]);
 
 		if (
-			!isTrackable(customAssetElement) ||
-			(isTrackable(customAssetElement) &&
+			!isElementTrackable ||
+			(isElementTrackable &&
 				(target.tagName !== 'FORM' || event.defaultPrevented))
 		) {
 			return;
@@ -131,7 +135,9 @@ function trackCustomAssetViewed(analytics) {
 					'[data-analytics-asset-type="custom"]'
 				)
 			)
-			.filter((element) => isTrackable(element))
+			.filter((element) =>
+				isTrackable(element, ['analyticsAssetId', 'analyticsAssetType'])
+			)
 			.forEach((element) => {
 				const formEnabled = !!element.getElementsByTagName('form')
 					.length;
@@ -166,7 +172,8 @@ function trackCustomAssetClick(analytics) {
 		applicationId,
 		eventType: 'assetClicked',
 		getPayload: getCustomAssetPayload,
-		isTrackable,
+		isTrackable: (element) =>
+			isTrackable(element, ['analyticsAssetId', 'analyticsAssetType']),
 		type: 'custom',
 	});
 }

@@ -248,6 +248,15 @@ public class ObjectValidationRulePersistenceTest {
 	}
 
 	@Test
+	public void testCountByODI_E() throws Exception {
+		_persistence.countByODI_E(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByODI_E(0L, "null");
+
+		_persistence.countByODI_E(0L, (String)null);
+	}
+
+	@Test
 	public void testCountByODI_O() throws Exception {
 		_persistence.countByODI_O(RandomTestUtil.nextLong(), "");
 

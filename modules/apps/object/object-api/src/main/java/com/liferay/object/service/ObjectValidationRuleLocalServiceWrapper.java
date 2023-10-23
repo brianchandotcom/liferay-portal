@@ -387,6 +387,14 @@ public class ObjectValidationRuleLocalServiceWrapper
 			objectDefinitionId, active);
 	}
 
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectValidationRule>
+		getObjectValidationRules(long objectDefinitionId, String engine) {
+
+		return _objectValidationRuleLocalService.getObjectValidationRules(
+			objectDefinitionId, engine);
+	}
+
 	/**
 	 * Returns the number of object validation rules.
 	 *

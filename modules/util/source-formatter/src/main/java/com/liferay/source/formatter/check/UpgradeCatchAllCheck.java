@@ -132,6 +132,9 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		if (from.contains(StringPool.PERIOD)) {
 			regex = StringUtil.replace(from, CharPool.PERIOD, "\\.\\s*");
 		}
+		else if (from.contains("::")) {
+			regex = from;
+		}
 
 		return Pattern.compile(regex + "[\\(;]");
 	}

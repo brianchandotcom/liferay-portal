@@ -159,9 +159,9 @@ ProductMenu.gotoPortlet(
 
 ...
 
-com.liferay.poshi.runner.util.JSONCurlUtil.delete("${curl}");
+com.liferay.poshi.runner.util.JSONCurlUtil.delete(${curl});
 
-JSONCurlUtil.post("${curl}");
+JSONCurlUtil.post(${curl});
 
 ```
 
@@ -199,7 +199,7 @@ The Poshi XML and Poshi Script comparisons are listed below:
 *Poshi Script:*
 
 ```javascript
-var siteName = TestCase.getSiteName(siteName = "${siteName}");
+var siteName = TestCase.getSiteName(siteName = ${siteName});
 ```
 
 ##### Assigning a `var` to the value of a Java method
@@ -222,11 +222,11 @@ The Poshi XML and Poshi Script comparisons are listed below:
 *Poshi Script:*
 
 ```javascript
-var breadcrumbNameUppercase = StringUtil.upperCase("${breadcrumbName}");
+var breadcrumbNameUppercase = StringUtil.upperCase(${breadcrumbName});
 
 ...
 
-var breadcrumbNameUppercase = com.liferay.poshi.runner.util.StringUtil.upperCase("${breadcrumbName}");
+var breadcrumbNameUppercase = com.liferay.poshi.runner.util.StringUtil.upperCase(${breadcrumbName});
 ```
 
 Notice that while there are two ways to set a variable to a Java method in Poshi
@@ -304,7 +304,7 @@ that can return a value, see [Returning values](#returning-values).
 *Example:*
 
 ```javascript
-var breadcrumbNameUppercase = StringUtil.upperCase("${breadcrumbName}");
+var breadcrumbNameUppercase = StringUtil.upperCase(${breadcrumbName});
 ```
 
 ##### Referencing `var`s
@@ -315,7 +315,7 @@ var breadcrumbNameUppercase = StringUtil.upperCase("${breadcrumbName}");
 var userEmailAddress = "${firstName}.${lastName}@liferay.com";
 ```
 
-`var`s can be referenced in any string using the `${}` notation.
+`var`s can be referenced in any string using the `${}` notation. When referencing a var, you do not need to put quotes around it as you would a regular string.
 
 #### `property` assignments
 
@@ -420,33 +420,28 @@ supported.
 
 ```javascript
 macro viewPG {
-	var breadcrumbNameUppercase = StringUtil.upperCase("${breadcrumbName}");
+	var breadcrumbNameUppercase = StringUtil.upperCase(${breadcrumbName});
 
 	AssertTextEquals(
 		locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-		value1 = "${breadcrumbNameUppercase}"
+		value1 = ${breadcrumbNameUppercase}
 	);
 
-	return "${breadcrumbNameUppercase}";
+	return ${breadcrumbNameUppercase};
 }
 ```
 
 ### Creating or requesting Java functionality
 
 Java method executions are limited to methods from classes in the
-[`com.liferay.poshi.runner.util`](https://github.com/liferay/com-liferay-poshi-runner/tree/master/poshi-runner/src/main/java/com/liferay/poshi/runner/util)
-package.
-
-If additional functionality is required, contact a member of
-[QA Engineering](https://loop.liferay.com/web/guest/home/-/loop/teams/_QA+Engineering)
-for guidance.
+`com.liferay.poshi.runner.util` and `com.liferay.poshi.core.util`.
 
 ### Executing Poshi functions, Poshi macros, and Java methods
 
 #### Executing Poshi functions
 
 Poshi functions have the following required parameters: *locator1*, *value1*,
-*locator2*, and/or *value2*.
+*locator2*, *value2* and/or *value3*.
 
 While executing Poshi functions macros, the parameter name and value must be
 included when passing in parameters.
@@ -479,7 +474,7 @@ Invocation of a function while passing in an additional `var` parameter:
 ```javascript
 Type.sendKeys(
 	locator1 = "AlloyEditor#EDITOR",
-	value1 = "${kbArticleTitle}",
+	value1 = ${kbArticleTitle},
 	key_editor = "title"
 );
 ```
@@ -503,8 +498,7 @@ ProductMenu.gotoPortlet(
 #### Executing Java Methods
 
 Java method executions are limited to methods from classes in the
-[`com.liferay.poshi.runner.util`](https://github.com/liferay/com-liferay-poshi-runner/tree/master/poshi-runner/src/main/java/com/liferay/poshi/runner/util)
-package.
+`com.liferay.poshi.runner.util` and `com.liferay.poshi.core.util`.
 
 Parameter names are not required when invoking Java methods. Parameters may be
 passed using raw values wrapped in double quotes (different from the single
@@ -516,13 +510,13 @@ full class name or simple class name can be used to invoke methods.
 Java method invocation using the full class name:
 
 ```javascript
-com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 ```
 
 Java method invocation using the simple class name:
 
 ```javascript
-JSONCurlUtil.post("${curl}");
+JSONCurlUtil.post(${curl});
 ```
 
 #### Additional utilities
@@ -573,20 +567,20 @@ section below.
 *Example:*
 
 ```javascript
-if ("${pageStaging}" == "true") {
+if (${pageStaging} == "true") {
 	Navigator.gotoStagedSitePage(
-		pageName = "${pageName}",
-		siteName = "${siteName}"
+		pageName = ${pageName},
+		siteName = ${siteName}
 	);
 }
-else if ("${siteURL}" == "true") {
+else if (${siteURL} == "true") {
 	Navigator.gotoSitePage(
-		pageName = "${pageName}",
-		siteName = "${siteName}"
+		pageName = ${pageName},
+		siteName = ${siteName}
 	);
 }
 else {
-	Navigator.gotoPage(pageName = "${pageName}");
+	Navigator.gotoPage(pageName = ${pageName});
 }
 ```
 
@@ -650,7 +644,7 @@ Please note that the `!=` operator is not currently supported.
 *Example:*
 
 ```javascript
-if ("${check}" == "true") {
+if (${check} == "true") {
 	Alert.viewSuccessMessage();
 }
 ```
@@ -705,7 +699,7 @@ and separated by `&&` between each condition.
 *Example:*
 
 ```javascript
-if ((IsElementPresent(locator1 = "Blogs#ADD_BLOGS_ENTRY")) && ("${check}" == "true") && (isSet(duplicate))) {
+if ((IsElementPresent(locator1 = "Blogs#ADD_BLOGS_ENTRY")) && (${check} == "true") && (isSet(duplicate))) {
 	Alert.viewSuccessMessage();
 }
 ```
@@ -721,7 +715,7 @@ and separated by `||` between each condition.
 *Example:*
 
 ```javascript
-if ((IsElementPresent(locator1 = "Blogs#ADD_BLOGS_ENTRY")) || ("${check}" == "true") || (isSet(duplicate))) {
+if ((IsElementPresent(locator1 = "Blogs#ADD_BLOGS_ENTRY")) || (${check} == "true") || (isSet(duplicate))) {
 	Alert.viewSuccessMessage();
 }
 ```
@@ -792,17 +786,15 @@ while (IsElementPresent(locator1 = "AssetCategorization#TAGS_REMOVE_ICON_GENERIC
 #### `for` loops
 
 `for` blocks are loops that iterate through each item in a given collection.
-Currently, the only valid collections are lists and tables. Note that tables are
-only for use in conjunction with Poshi Prose syntax.
-
+Currently, the only valid collections are lists and tables. 
 *Examples:*
 
 List example #1
 ```javascript
 var tagNameList = "tag1,tag2";
 
-for (var tagName : list "${tagNameList}") {
-	Type.clickAtType(locator1 = "AssetCategorization#CATEGORIES_SEARCH_FIELD", value1 = "${tagName}");
+for (var tagName : list ${tagNameList}) {
+	Type.clickAtType(locator1 = "AssetCategorization#CATEGORIES_SEARCH_FIELD", value1 = ${tagName});
 
 	AssertClick(locator1 = "Button#ADD_TAGS", value1 = "Add");
 }
@@ -812,16 +804,16 @@ List example #2
 
 ```javascript
 for (var panel : list "Source,Filter,Custom User Attributes,Ordering and Grouping") {
-	AssertElementPresent(locator1 = "Panel#PANEL_COLLAPSED", key_panel = "${panel}");
+	AssertElementPresent(locator1 = "Panel#PANEL_COLLAPSED", key_panel = ${panel});
 }
 ```
 
 Raw table example:
 
 ```javascript
-var RawTable rawTable = new RawTable("${table}");
+var rawTable = TableUtil.newTable(${table});
 
-for (var row : table "${rawTable}") {
+for (var row : table ${rawTable}) {
 	TableEcho.echoTwoVars(
 		v0 = "${row[0]}",
 		v1 = "${row[1]}"
@@ -832,9 +824,9 @@ for (var row : table "${rawTable}") {
 Hash table example:
 
 ```javascript
-var RowsHashTable rowsHashTable = new RowsHashTable("${table}");
+var rowsHashTable = TableUtil.newTableWithRowNames(${table});
 
-for (var row : table "${rowsHashTable}") {
+for (var row : table ${rowsHashTable}) {
 	TableEcho.echoTwoVars(
 		v0 = "${row.hash('project_id')}",
 		v1 = "${row.hash('status')}"
@@ -855,6 +847,36 @@ for (var row : table "${rowsHashTable}") {
 **Valid parent blocks:**
 
 - All blocks except `definition`.
+
+### `break` and `continue` in loops
+
+Within a `for` or `while` loop you can add a break or continue if a certain condtion is met within the loop.
+
+Break example:
+
+```javascript
+for(var test : list "1,2,3,4,5,6,7,8,9") {
+			if(${test} == 3){
+				break;
+			}
+			echo(${test});
+		}
+```
+
+In the example above, when the loop would reach the value of `3` it would exit the loop as the break condition would be met.
+
+Continue example:
+
+```javascript
+for(var test : list "1,2,3,4,5,6,7,8,9") {
+			if(${test} == 3){
+				continue;
+			}
+			echo(${test});
+		}
+```
+
+In the example above, when the loop would reach the value of `3` it would skip to the next value in the loop as the continue condition would be met.
 
 ## Writing a Test
 
@@ -1018,6 +1040,20 @@ This is used to describe the use case of the test.
 ```javascript
 @description = "Ensure that the super admin can add pages, add portlets, navigate to the product menu, use the WYSIWYG editor, and view alert messages."
 test Smoke {
+	...
+}
+```
+
+##### `@disable-webdriver`
+
+This can be set to `true` which will then disable the use of SeleniumWebDriver and will not start up a browser. 
+This is set above the testcase you wish to disable webdriver in.
+
+*Example:*
+
+```javascript
+@disalbe-webdriver= "true"
+test TestName {
 	...
 }
 ```

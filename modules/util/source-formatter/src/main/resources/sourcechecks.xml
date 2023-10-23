@@ -1656,11 +1656,6 @@
 			<description name="Performs upgrade checks for `java` files" />
 			<weight>3</weight>
 		</check>
-		<check name="UpgradeJavaCommerceCountryCheck">
-			<category name="Upgrade" />
-			<description name="Replaces the old methods of class `CommerceCountry` with the new equivalents in the `Country` class." />
-			<weight>1</weight>
-		</check>
 		<check name="UpgradeJavaCommerceCountryServiceCheck">
 			<category name="Upgrade" />
 			<description name="Replaces the old methods of class `CommerceCountryService` with the new equivalents in the `CountryService` class." />

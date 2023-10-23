@@ -126,11 +126,6 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testUpgradeJavaCommerceCountryCheck() throws Exception {
-		test("upgrade/UpgradeJavaCommerceCountryCheck.testjava");
-	}
-
-	@Test
 	public void testUpgradeJavaCommerceCountryServiceCheck() throws Exception {
 		test("upgrade/UpgradeJavaCommerceCountryServiceCheck.testjava");
 	}

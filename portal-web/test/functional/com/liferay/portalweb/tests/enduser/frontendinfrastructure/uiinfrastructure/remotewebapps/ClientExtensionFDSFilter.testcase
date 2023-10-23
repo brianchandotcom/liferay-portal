@@ -50,6 +50,32 @@ definition {
 		}
 	}
 
+	@description = "LPS-190220. Verify that the use can hide Content section"
+	@priority = 3
+	test CanHideContentSection {
+		task ("Given Client Extension admin page") {
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
+		}
+
+		task ("When to select the FDS filter option") {
+			LexiconEntry.gotoAdd();
+
+			DropdownMenuItem.click(menuItem = "Add Frontend Data Set Filter");
+		}
+
+		task ("And clicks on Content collapse icon") {
+			ClientExtensionGeneral.openOrCloseCollapseField(
+				key_fieldName = "Content",
+				key_status = "Close");
+		}
+
+		task ("Then JS URL field is hidden") {
+			AssertNotVisible(
+				key_fieldName = "JavaScript URL",
+				locator1 = "ClientExtension#ANY_FIELD");
+		}
+	}
+
 	@description = "LPS-190220. Verify that the user can hide Identity field, clicking on the collapse icon"
 	@priority = 3
 	test CanHideIdentityField {

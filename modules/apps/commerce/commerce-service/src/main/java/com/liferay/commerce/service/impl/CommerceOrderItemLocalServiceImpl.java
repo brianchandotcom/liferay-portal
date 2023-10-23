@@ -18,11 +18,13 @@ import com.liferay.commerce.exception.NoSuchOrderItemException;
 import com.liferay.commerce.exception.ProductBundleException;
 import com.liferay.commerce.internal.search.CommerceOrderItemIndexer;
 import com.liferay.commerce.internal.util.CommercePriceConverterUtil;
+import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
 import com.liferay.commerce.inventory.exception.CommerceInventoryWarehouseItemUnitOfMeasureKeyException;
 import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem;
 import com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityLocalService;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseItemLocalService;
+import com.liferay.commerce.inventory.type.CommerceInventoryAuditTypeRegistry;
 import com.liferay.commerce.inventory.type.constants.CommerceInventoryAuditTypeConstants;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
@@ -1467,7 +1469,18 @@ public class CommerceOrderItemLocalServiceImpl
 			if (commerceInventoryBookedQuantity != null) {
 				_commerceInventoryBookedQuantityLocalService.
 					deleteCommerceInventoryBookedQuantity(
-						commerceInventoryBookedQuantity);
+						userId,
+						commerceOrderItem.
+							getCommerceInventoryBookedQuantityId(),
+						HashMapBuilder.put(
+							CommerceInventoryAuditTypeConstants.ORDER_ID,
+							String.valueOf(
+								commerceOrderItem.getCommerceOrderId())
+						).build(),
+						_commerceInventoryAuditTypeRegistry.
+							getCommerceInventoryAuditType(
+								CommerceInventoryConstants.
+									AUDIT_TYPE_DELETE_BOOKED_QUANTITY));
 			}
 		}
 
@@ -2561,6 +2574,10 @@ public class CommerceOrderItemLocalServiceImpl
 				CommerceOrderLocalService.class,
 				CommerceOrderItemLocalServiceImpl.class,
 				"_commerceOrderLocalService", true);
+
+	@Reference
+	private CommerceInventoryAuditTypeRegistry
+		_commerceInventoryAuditTypeRegistry;
 
 	@Reference
 	private CommerceInventoryBookedQuantityLocalService

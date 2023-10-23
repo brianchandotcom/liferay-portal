@@ -11,8 +11,11 @@ import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
 import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
 import com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityLocalService;
+import com.liferay.commerce.inventory.type.CommerceInventoryAuditTypeRegistry;
+import com.liferay.commerce.inventory.type.constants.CommerceInventoryAuditTypeConstants;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
@@ -35,6 +38,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -304,7 +308,20 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 						if (commerceInventoryBookedQuantity != null) {
 							_commerceInventoryBookedQuantityLocalService.
 								deleteCommerceInventoryBookedQuantity(
-									commerceInventoryBookedQuantity);
+									_portal.getUserId(actionRequest),
+									commerceOrderItem.
+										getCommerceInventoryBookedQuantityId(),
+									HashMapBuilder.put(
+										CommerceInventoryAuditTypeConstants.
+											ORDER_ID,
+										String.valueOf(
+											commerceOrderItem.
+												getCommerceOrderId())
+									).build(),
+									_commerceInventoryAuditTypeRegistry.
+										getCommerceInventoryAuditType(
+											CommerceInventoryConstants.
+												AUDIT_TYPE_CANCEL_BOOKED_QUANTITY));
 						}
 					}
 				}
@@ -654,6 +671,10 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CommerceAddressService _commerceAddressService;
+
+	@Reference
+	private CommerceInventoryAuditTypeRegistry
+		_commerceInventoryAuditTypeRegistry;
 
 	@Reference
 	private CommerceInventoryBookedQuantityLocalService

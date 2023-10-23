@@ -26,6 +26,51 @@ definition {
 		}
 	}
 
+	@description = "LPS-190220. Verify that when the user clicks on Cancel, the changes are not saved."
+	@priority = 5
+	test CanCancelChanges {
+		task ("Given Client Extension admin page") {
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
+		}
+
+		task ("When to select the FDS filter option") {
+			LexiconEntry.gotoAdd();
+
+			DropdownMenuItem.click(menuItem = "Add Frontend Data Set Filter");
+		}
+
+		task ("And fill in fields JS URL, Source Code URL and Description :") {
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Date Filter Improvements");
+
+			Type.typeNoMouseOver(
+				key_text = "JavaScript URL",
+				locator1 = "TextInput#ANY",
+				value1 = "https://liferay.github.io/liferay-frontend-projects/date-filter.js");
+
+			Type(
+				locator1 = "CKEditor#BODY_FIELD_IFRAME",
+				value1 = "This filter adds the possibility to add slider ranges to the date filter.");
+
+			Type(
+				key_text = "Source Code URL",
+				locator1 = "TextInput#ANY",
+				value1 = "https://liferay.github.io/liferay-frontend-projects/date-filter.js");
+		}
+
+		task ("And clicks on Cancel button") {
+			Button.clickCancel();
+		}
+
+		task ("Then there is no “Date Filter Improvements” entry on Client Extension admin page") {
+			AssertElementNotPresent(
+				key_tableEntryName = "Date Filter Improvements",
+				locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE");
+		}
+	}
+
 	@description = "LPS-190220. Verify that the User can go to the CX Documentation when clicks on the help text."
 	@priority = 3
 	test CanClickOnHelpText {

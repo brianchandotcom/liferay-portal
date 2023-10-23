@@ -48,6 +48,7 @@ export function ObjectDataContainer({
 			<Input
 				disabled={isApproved || noPermissionOrLinked}
 				error={errors.name}
+				id="lfr-objects__object-data-container-name"
 				label={Liferay.Language.get('name')}
 				name="name"
 				onBlur={(event) => {

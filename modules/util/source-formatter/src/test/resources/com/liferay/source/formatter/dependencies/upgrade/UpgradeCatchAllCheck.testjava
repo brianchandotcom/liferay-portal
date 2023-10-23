@@ -89,6 +89,14 @@ public class UpgradeCatchAllCheck {
 	}
 
 	public void method(
+		long userId, long groupId, long parentFolderId, String name,
+		String description, ServiceContext serviceContext) {
+
+		JournalFolderLocalServiceUtil.addFolder(123, groupId, parentFolderId, "test123", description, serviceContext);
+		_journalFolderLocalService.addFolder(userId, groupId, parentFolderId, name, description, serviceContext);
+	}
+
+	public void method(
 		long companyId, long groupId, String title, int start, int end) {
 
 		_assetVocabularyLocalService.searchVocabularies(companyId, groupId, title, start, end);
@@ -179,5 +187,8 @@ public class UpgradeCatchAllCheck {
 
 	@Reference
 	private FDSTableSchemaBuilderFactory _fDSTableSchemaBuilderFactory;
+
+	@Reference
+	private JournalFolderLocalService _journalFolderLocalService;
 
 }

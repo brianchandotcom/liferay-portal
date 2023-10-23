@@ -84,6 +84,7 @@ const ProductOptionText = ({
 						{
 							key: productOption.key,
 							skuOptionKey: productOption.key,
+							skuOptionName: productOption.name,
 							value: [value],
 						},
 				  ],
@@ -121,6 +122,7 @@ const ProductOptionText = ({
 					return {
 						key: productOption.key,
 						skuOptionKey: productOption.key,
+						skuOptionName: productOption.name,
 						value: [value],
 					};
 				}
@@ -134,6 +136,7 @@ const ProductOptionText = ({
 				{
 					key: productOption.key,
 					skuOptionKey: productOption.key,
+					skuOptionName: productOption.name,
 					value: [value],
 				},
 			];

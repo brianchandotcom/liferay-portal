@@ -143,6 +143,19 @@ public class CommerceInventoryBookedQuantityLocalServiceUtil {
 			commerceInventoryBookedQuantityId);
 	}
 
+	public static CommerceInventoryBookedQuantity
+			deleteCommerceInventoryBookedQuantity(
+				long userId, long commerceInventoryBookedQuantityId,
+				Map<String, String> context,
+				com.liferay.commerce.inventory.type.CommerceInventoryAuditType
+					commerceInventoryAuditType)
+		throws PortalException {
+
+		return getService().deleteCommerceInventoryBookedQuantity(
+			userId, commerceInventoryBookedQuantityId, context,
+			commerceInventoryAuditType);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

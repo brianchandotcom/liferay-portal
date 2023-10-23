@@ -1,5 +1,10 @@
-.mkt-create-license-content {
-	border: 1px solid #e2e2e4 !important;
-	border-radius: 0.6rem !important;
-	width: 600px;
+.mkt-create-license {
+	.generate-license-content {
+		border: 1px solid #e2e2e4 !important;
+		border-radius: 0.6rem !important;
+		width: 600px;
+	}
+	.product-card-content {
+		width: 600px;
+	}
 }

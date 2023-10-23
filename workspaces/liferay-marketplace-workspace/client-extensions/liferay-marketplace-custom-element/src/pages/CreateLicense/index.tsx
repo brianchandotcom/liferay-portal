@@ -10,6 +10,7 @@ import './index.scss';
 import {useForm} from 'react-hook-form';
 
 import FooterButtons from '../../components/FooterButtons';
+import {Liferay} from '../../liferay/liferay';
 import ProductCard from '../GetAppPage/components/ProductCard/ProductCard';
 import StepWizard from '../GetAppPage/components/StepWizard/StepWizard';
 import AccountEmailInfo from './AccountInfo';
@@ -127,8 +128,8 @@ const CreateLicense = () => {
 	};
 
 	return (
-		<div className="align-items-center d-flex flex-column">
-			<div className="w-100">
+		<div className="align-items-center d-flex flex-column mb-6 mkt-create-license mt-6">
+			<div className="mt-6 product-card-content">
 				<ProductCard
 					ExtendBanner={ExtendBanner}
 					RightSideBanner={() => (
@@ -149,7 +150,7 @@ const CreateLicense = () => {
 				/>
 			</div>
 
-			<div className="d-flex flex-column justify-content-center mkt-create-license-content mt-7 p-6">
+			<div className="d-flex flex-column generate-license-content justify-content-center mb-7 mt-7 p-6">
 				<div className="align-self-center h1">
 					Generate License Key(s)
 				</div>
@@ -175,7 +176,7 @@ const CreateLicense = () => {
 					className="d-flex justify-content-between mt-6"
 					dataButtons={ButtonsInfo}
 					onClickCancel={() => {
-						window.location.href = origin;
+						window.location.href = Liferay.ThemeDisplay.getCanonicalURL();
 					}}
 					onClickCustomizedButton={() =>
 						setStep(StepCreateLicense.SUBSCRIPTION)

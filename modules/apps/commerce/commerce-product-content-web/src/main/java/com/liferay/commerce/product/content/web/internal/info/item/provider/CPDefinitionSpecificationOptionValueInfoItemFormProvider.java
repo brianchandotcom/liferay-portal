@@ -14,7 +14,6 @@ import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.localized.bundle.ModelResourceLocalizedValue;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
 import org.osgi.framework.Constants;
@@ -142,9 +141,6 @@ public class CPDefinitionSpecificationOptionValueInfoItemFormProvider
 	@Reference
 	private InfoItemFieldReaderFieldSetProvider
 		_infoItemFieldReaderFieldSetProvider;
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private TemplateInfoItemFieldSetProvider _templateInfoItemFieldSetProvider;

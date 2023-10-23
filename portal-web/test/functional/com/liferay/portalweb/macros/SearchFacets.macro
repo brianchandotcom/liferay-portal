@@ -385,10 +385,12 @@ definition {
 		}
 
 		if (isSet(displayTemplate)) {
-			Select(
-				key_fieldLabel = "Display Template",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = ${displayTemplate});
+			Click(
+				key_class = "display-template-selector",
+				key_index = 1,
+				locator1 = "Button#ANY_WITH_CLASS_AND_INDEX");
+
+			MenuItem.click(menuItem = ${displayTemplate});
 		}
 
 		if (isSet(parameterName)) {

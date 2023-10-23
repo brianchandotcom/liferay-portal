@@ -147,6 +147,65 @@ public class APIFilterRelevantObjectEntryModelListenerTest
 				"headless-builder/filters", Http.Method.POST
 			).toString(),
 			JSONCompareMode.LENIENT);
+
+		JSONObject apiApplicationJSONObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"applicationStatus", "published"
+			).put(
+				"baseURL", StringUtil.toLowerCase(RandomTestUtil.randomString())
+			).put(
+				"externalReferenceCode", RandomTestUtil.randomString()
+			).put(
+				"title", RandomTestUtil.randomString()
+			).toString(),
+			"headless-builder/applications", Http.Method.POST);
+
+		JSONObject apiEndpointJSONObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"description", "description"
+			).put(
+				"externalReferenceCode", RandomTestUtil.randomString()
+			).put(
+				"httpMethod", "get"
+			).put(
+				"name", "name"
+			).put(
+				"path",
+				StringBundler.concat(
+					StringPool.FORWARD_SLASH,
+					StringUtil.toLowerCase(RandomTestUtil.randomString()),
+					"/{pathParameterId}")
+			).put(
+				"pathParameter", "id"
+			).put(
+				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+				apiApplicationJSONObject.get("id")
+			).put(
+				"retrieveType", "singleElement"
+			).put(
+				"scope", APIApplication.Endpoint.Scope.COMPANY.getValue()
+			).toString(),
+			"headless-builder/endpoints", Http.Method.POST);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title",
+				"An API filter can only be associated to API endpoints with " +
+					"a \"collection\" retrieve type."
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"oDataFilter", "test:desc"
+				).put(
+					"r_apiEndpointToAPIFilters_c_apiEndpointId",
+					apiEndpointJSONObject.get("id")
+				).toString(),
+				"headless-builder/filters", Http.Method.POST
+			).toString(),
+			JSONCompareMode.LENIENT);
+
 		JSONAssert.assertEquals(
 			JSONUtil.put(
 				"status", "BAD_REQUEST"

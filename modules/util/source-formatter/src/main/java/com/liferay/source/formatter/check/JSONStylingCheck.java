@@ -32,14 +32,16 @@ public class JSONStylingCheck extends BaseFileCheck {
 			if (StringUtil.startsWith(
 					StringUtil.trim(content), StringPool.OPEN_BRACKET)) {
 
-				return JSONUtil.toString(new JSONArrayImpl(content));
+				content = JSONUtil.toString(new JSONArrayImpl(content));
 			}
+			else if (content.endsWith("\n") &&
+					 fileName.endsWith("/package.json")) {
 
-			if (content.endsWith("\n") && fileName.endsWith("/package.json")) {
-				return JSONUtil.toString(new JSONObjectImpl(content)) + "\n";
+				content = JSONUtil.toString(new JSONObjectImpl(content)) + "\n";
 			}
-
-			return JSONUtil.toString(new JSONObjectImpl(content));
+			else {
+				content = JSONUtil.toString(new JSONObjectImpl(content));
+			}
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
@@ -48,6 +50,8 @@ public class JSONStylingCheck extends BaseFileCheck {
 
 			return content;
 		}
+
+		return content;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

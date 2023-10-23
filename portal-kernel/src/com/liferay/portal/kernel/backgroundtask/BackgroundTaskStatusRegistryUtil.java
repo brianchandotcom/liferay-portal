@@ -5,7 +5,7 @@
 
 package com.liferay.portal.kernel.backgroundtask;
 
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * @author Michael C. Han
@@ -15,7 +15,10 @@ public class BackgroundTaskStatusRegistryUtil {
 	public static BackgroundTaskStatus getBackgroundTaskStatus(
 		long backgroundTaskId) {
 
-		return _backgroundTaskStatusRegistry.getBackgroundTaskStatus(
+		BackgroundTaskStatusRegistry backgroundTaskStatusRegistry =
+			_backgroundTaskStatusRegistrySnapshot.get();
+
+		return backgroundTaskStatusRegistry.getBackgroundTaskStatus(
 			backgroundTaskId);
 	}
 
@@ -24,22 +27,26 @@ public class BackgroundTaskStatusRegistryUtil {
 		BackgroundTaskStatusMessageTranslator
 			backgroundTaskStatusMessageTranslator) {
 
-		return _backgroundTaskStatusRegistry.registerBackgroundTaskStatus(
+		BackgroundTaskStatusRegistry backgroundTaskStatusRegistry =
+			_backgroundTaskStatusRegistrySnapshot.get();
+
+		return backgroundTaskStatusRegistry.registerBackgroundTaskStatus(
 			backgroundTaskId, backgroundTaskStatusMessageTranslator);
 	}
 
 	public static BackgroundTaskStatus unregisterBackgroundTaskStatus(
 		long backgroundTaskId) {
 
-		return _backgroundTaskStatusRegistry.unregisterBackgroundTaskStatus(
+		BackgroundTaskStatusRegistry backgroundTaskStatusRegistry =
+			_backgroundTaskStatusRegistrySnapshot.get();
+
+		return backgroundTaskStatusRegistry.unregisterBackgroundTaskStatus(
 			backgroundTaskId);
 	}
 
-	private static volatile BackgroundTaskStatusRegistry
-		_backgroundTaskStatusRegistry =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				BackgroundTaskStatusRegistry.class,
-				BackgroundTaskStatusRegistryUtil.class,
-				"_backgroundTaskStatusRegistry", false);
+	private static final Snapshot<BackgroundTaskStatusRegistry>
+		_backgroundTaskStatusRegistrySnapshot = new Snapshot<>(
+			BackgroundTaskStatusRegistryUtil.class,
+			BackgroundTaskStatusRegistry.class);
 
 }

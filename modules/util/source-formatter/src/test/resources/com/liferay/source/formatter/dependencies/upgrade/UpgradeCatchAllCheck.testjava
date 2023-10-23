@@ -264,9 +264,19 @@ public class UpgradeCatchAllCheck {
 	}
 
 	public void method(
-		String externalReferenceCode, long cProductId,
-		String cpInstanceUuid, long commercePriceListId, BigDecimal price,
-		BigDecimal promoPrice, ServiceContext serviceContext) {
+		String className, long classPK, long accountGroupId,
+		ServiceContext serviceContext) {
+
+		AccountGroupRelLocalServiceUtil.addCommerceAccountGroupRel(className, classPK, accountGroupId, serviceContext);
+		AccountGroupRelServiceUtil.addCommerceAccountGroupRel("test123", classPK, 123, serviceContext);
+		_accountGroupRelLocalService.addCommerceAccountGroupRel(className, classPK, accountGroupId, serviceContext);
+		_accountGroupRelService.addCommerceAccountGroupRel(className, classPK, accountGroupId, serviceContext);
+	}
+
+	public void method(
+		String externalReferenceCode, long cProductId, String cpInstanceUuid,
+		long commercePriceListId, BigDecimal price, BigDecimal promoPrice,
+		ServiceContext serviceContext) {
 
 		CommercePriceEntryLocalServiceUtil.addCommercePriceEntry(externalReferenceCode, cProductId, cpInstanceUuid, commercePriceListId, price, promoPrice, serviceContext);
 		_commercePriceEntryLocalService.addCommercePriceEntry("test123", cProductId, cpInstanceUuid, commercePriceListId, price, promoPrice, serviceContext);
@@ -275,6 +285,12 @@ public class UpgradeCatchAllCheck {
 
 	@Reference
 	private AccountGroupLocalService _accountGroupLocalService;
+
+	@Reference
+	private AccountGroupRelLocalService _accountGroupRelLocalService;
+
+	@Reference
+	private AccountGroupRelService _accountGroupRelService;
 
 	@Reference
 	private AddressLocalService _addressLocalService;

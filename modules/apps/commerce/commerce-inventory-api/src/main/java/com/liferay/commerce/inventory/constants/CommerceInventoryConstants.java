@@ -13,7 +13,13 @@ public class CommerceInventoryConstants {
 
 	public static final String AUDIT_TYPE_BOOKED_QUANTITY = "booked-quantity";
 
+	public static final String AUDIT_TYPE_CANCEL_BOOKED_QUANTITY =
+		"cancel-booked-quantity";
+
 	public static final String AUDIT_TYPE_CONSUME_QUANTITY = "consume-quantity";
+
+	public static final String AUDIT_TYPE_DELETE_BOOKED_QUANTITY =
+		"delete-booked-quantity";
 
 	public static final String AUDIT_TYPE_INCREASE_QUANTITY =
 		"increase-quantity";

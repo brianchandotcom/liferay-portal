@@ -158,7 +158,7 @@ public class JSONUpgradeLiferayThemePackageJSONCheck extends BaseUpgradeCheck {
 
 				if (_testMode) {
 					jsonObject = new JSONObjectImpl(
-						"{\"versions\":{\"2.0.0\":{}}}");
+						"{\"versions\": {\"2.0.0\": {}}}");
 				}
 
 				String latestVersion = _getLatestVersion(jsonObject);

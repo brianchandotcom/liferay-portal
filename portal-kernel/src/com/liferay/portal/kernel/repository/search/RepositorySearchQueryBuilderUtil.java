@@ -5,10 +5,10 @@
 
 package com.liferay.portal.kernel.repository.search;
 
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Mika Koivisto
@@ -18,20 +18,21 @@ public class RepositorySearchQueryBuilderUtil {
 	public static BooleanQuery getFullQuery(SearchContext searchContext)
 		throws SearchException {
 
-		return _repositorySearchQueryBuilder.getFullQuery(searchContext);
+		RepositorySearchQueryBuilder repositorySearchQueryBuilder =
+			_repositorySearchQueryBuilderSnapshot.get();
+
+		return repositorySearchQueryBuilder.getFullQuery(searchContext);
 	}
 
 	public static RepositorySearchQueryBuilder
 		getRepositorySearchQueryBuilder() {
 
-		return _repositorySearchQueryBuilder;
+		return _repositorySearchQueryBuilderSnapshot.get();
 	}
 
-	private static volatile RepositorySearchQueryBuilder
-		_repositorySearchQueryBuilder =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				RepositorySearchQueryBuilder.class,
-				RepositorySearchQueryBuilderUtil.class,
-				"_repositorySearchQueryBuilder", null, false, true);
+	private static final Snapshot<RepositorySearchQueryBuilder>
+		_repositorySearchQueryBuilderSnapshot = new Snapshot<>(
+			RepositorySearchQueryBuilderUtil.class,
+			RepositorySearchQueryBuilder.class);
 
 }

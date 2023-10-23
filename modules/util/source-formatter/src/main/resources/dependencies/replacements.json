@@ -285,6 +285,14 @@
 	},
 	{
 		"classNames": [
+			"AssetVocabularyLocalService",
+			"AssetVocabularyLocalServiceUtil"
+		],
+		"from": "fetchAssetVocabularyByExternalReferenceCode(long, String)",
+		"issueKey": "LPS-198292"
+	},
+	{
+		"classNames": [
 			"CommerceOrderLocalService",
 			"CommerceOrderLocalServiceUtil"
 		],

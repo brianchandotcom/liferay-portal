@@ -738,7 +738,7 @@ definition {
 		}
 
 		task ("Wait for upgrade to complete") {
-			AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "check-warn-upgrade-log");
+			AntCommands.runCommand("modules/util/portal-tools-db-upgrade-client/src/testFunctional/ant/build-test-db-upgrade-client.xml", "check-upgrade-status -Dupgrade.status=warning");
 		}
 
 		task ("Given upgrade.report is set When the portal gets upgraded and an warn was captured during the upgrade") {

@@ -111,18 +111,6 @@
 		</if>
 	</target>
 
-	<target name="check-failed-upgrade-log">
-		<get-upgrade-finished-status upgrade.finished.status="failure" />
-
-		<antcall inheritAll="false" target="check-upgrade-client-gogoshell-connection" />
-	</target>
-
-	<target name="check-unresolved-upgrade-log">
-		<get-upgrade-finished-status upgrade.finished.status="unresolved" />
-
-		<antcall inheritAll="false" target="check-upgrade-client-gogoshell-connection" />
-	</target>
-
 	<target name="check-upgrade-client-additional-settings">
 		<get-database-upgrade-client-paths />
 
@@ -598,8 +586,17 @@
 		</fail>
 	</target>
 
-	<target name="check-warn-upgrade-log">
-		<get-upgrade-finished-status upgrade.finished.status="warning" />
+	<target name="check-upgrade-status">
+		<get-upgrade-finished-status upgrade.finished.status="${upgrade.status}" />
+
+		<if>
+			<not>
+				<equals arg1="${upgrade.status}" arg2="warning" />
+			</not>
+			<then>
+				<antcall inheritAll="false" target="check-upgrade-client-gogoshell-connection" />
+			</then>
+		</if>
 	</target>
 
 	<target name="clean-database-upgrade-client">

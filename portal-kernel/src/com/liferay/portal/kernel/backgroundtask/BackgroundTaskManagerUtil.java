@@ -6,9 +6,9 @@
 package com.liferay.portal.kernel.backgroundtask;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.io.File;
 import java.io.Serializable;
@@ -28,7 +28,10 @@ public class BackgroundTaskManagerUtil {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return _backgroundTaskManager.addBackgroundTask(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.addBackgroundTask(
 			userId, groupId, name, taskExecutorClassName, taskContextMap,
 			serviceContext);
 	}
@@ -40,7 +43,10 @@ public class BackgroundTaskManagerUtil {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return _backgroundTaskManager.addBackgroundTask(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.addBackgroundTask(
 			userId, groupId, name, servletContextNames, taskExecutorClass,
 			taskContextMap, serviceContext);
 	}
@@ -49,7 +55,10 @@ public class BackgroundTaskManagerUtil {
 			long userId, long backgroundTaskId, String fileName, File file)
 		throws PortalException {
 
-		_backgroundTaskManager.addBackgroundTaskAttachment(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		backgroundTaskManager.addBackgroundTaskAttachment(
 			userId, backgroundTaskId, fileName, file);
 	}
 
@@ -57,7 +66,10 @@ public class BackgroundTaskManagerUtil {
 		long backgroundTaskId, Map<String, Serializable> taskContextMap,
 		int status, ServiceContext serviceContext) {
 
-		return _backgroundTaskManager.amendBackgroundTask(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.amendBackgroundTask(
 			backgroundTaskId, taskContextMap, status, serviceContext);
 	}
 
@@ -65,7 +77,10 @@ public class BackgroundTaskManagerUtil {
 		long backgroundTaskId, Map<String, Serializable> taskContextMap,
 		int status, String statusMessage, ServiceContext serviceContext) {
 
-		return _backgroundTaskManager.amendBackgroundTask(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.amendBackgroundTask(
 			backgroundTaskId, taskContextMap, status, statusMessage,
 			serviceContext);
 	}
@@ -73,55 +88,82 @@ public class BackgroundTaskManagerUtil {
 	public static void cleanUpBackgroundTask(
 		BackgroundTask backgroundTask, int status) {
 
-		_backgroundTaskManager.cleanUpBackgroundTask(backgroundTask, status);
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		backgroundTaskManager.cleanUpBackgroundTask(backgroundTask, status);
 	}
 
 	public static void cleanUpBackgroundTasks() {
-		_backgroundTaskManager.cleanUpBackgroundTasks();
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		backgroundTaskManager.cleanUpBackgroundTasks();
 	}
 
 	public static BackgroundTask deleteBackgroundTask(long backgroundTaskId)
 		throws PortalException {
 
-		return _backgroundTaskManager.deleteBackgroundTask(backgroundTaskId);
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.deleteBackgroundTask(backgroundTaskId);
 	}
 
 	public static void deleteCompanyBackgroundTasks(long companyId)
 		throws PortalException {
 
-		_backgroundTaskManager.deleteCompanyBackgroundTasks(companyId);
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		backgroundTaskManager.deleteCompanyBackgroundTasks(companyId);
 	}
 
 	public static void deleteGroupBackgroundTasks(long groupId)
 		throws PortalException {
 
-		_backgroundTaskManager.deleteGroupBackgroundTasks(groupId);
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		backgroundTaskManager.deleteGroupBackgroundTasks(groupId);
 	}
 
 	public static void deleteGroupBackgroundTasks(
 			long groupId, String name, String taskExecutorClassName)
 		throws PortalException {
 
-		_backgroundTaskManager.deleteGroupBackgroundTasks(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		backgroundTaskManager.deleteGroupBackgroundTasks(
 			groupId, name, taskExecutorClassName);
 	}
 
 	public static BackgroundTask fetchBackgroundTask(long backgroundTaskId) {
-		return _backgroundTaskManager.fetchBackgroundTask(backgroundTaskId);
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.fetchBackgroundTask(backgroundTaskId);
 	}
 
 	public static BackgroundTask fetchFirstBackgroundTask(
 		long groupId, String taskExecutorClassName, boolean completed,
 		OrderByComparator<BackgroundTask> orderByComparator) {
 
-		return _backgroundTaskManager.fetchFirstBackgroundTask(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.fetchFirstBackgroundTask(
 			groupId, taskExecutorClassName, completed, orderByComparator);
 	}
 
 	public static BackgroundTask fetchFirstBackgroundTask(
 		String taskExecutorClassName, int status) {
 
-		return _backgroundTaskManager.fetchFirstBackgroundTask(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.fetchFirstBackgroundTask(
 			taskExecutorClassName, status);
 	}
 
@@ -129,26 +171,38 @@ public class BackgroundTaskManagerUtil {
 		String taskExecutorClassName, int status,
 		OrderByComparator<BackgroundTask> orderByComparator) {
 
-		return _backgroundTaskManager.fetchFirstBackgroundTask(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.fetchFirstBackgroundTask(
 			taskExecutorClassName, status, orderByComparator);
 	}
 
 	public static BackgroundTask getBackgroundTask(long backgroundTaskId)
 		throws PortalException {
 
-		return _backgroundTaskManager.getBackgroundTask(backgroundTaskId);
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.getBackgroundTask(backgroundTaskId);
 	}
 
 	public static List<BackgroundTask> getBackgroundTasks(
 		long groupId, int status) {
 
-		return _backgroundTaskManager.getBackgroundTasks(groupId, status);
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.getBackgroundTasks(groupId, status);
 	}
 
 	public static List<BackgroundTask> getBackgroundTasks(
 		long groupId, String taskExecutorClassName) {
 
-		return _backgroundTaskManager.getBackgroundTasks(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.getBackgroundTasks(
 			groupId, taskExecutorClassName);
 	}
 
@@ -157,7 +211,10 @@ public class BackgroundTaskManagerUtil {
 		int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator) {
 
-		return _backgroundTaskManager.getBackgroundTasks(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.getBackgroundTasks(
 			groupId, taskExecutorClassName, completed, start, end,
 			orderByComparator);
 	}
@@ -165,7 +222,10 @@ public class BackgroundTaskManagerUtil {
 	public static List<BackgroundTask> getBackgroundTasks(
 		long groupId, String taskExecutorClassName, int status) {
 
-		return _backgroundTaskManager.getBackgroundTasks(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.getBackgroundTasks(
 			groupId, taskExecutorClassName, status);
 	}
 
@@ -173,7 +233,10 @@ public class BackgroundTaskManagerUtil {
 		long groupId, String taskExecutorClassName, int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator) {
 
-		return _backgroundTaskManager.getBackgroundTasks(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.getBackgroundTasks(
 			groupId, taskExecutorClassName, start, end, orderByComparator);
 	}
 
@@ -181,7 +244,10 @@ public class BackgroundTaskManagerUtil {
 		long groupId, String name, String taskExecutorClassName, int start,
 		int end, OrderByComparator<BackgroundTask> orderByComparator) {
 
-		return _backgroundTaskManager.getBackgroundTasks(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.getBackgroundTasks(
 			groupId, name, taskExecutorClassName, start, end,
 			orderByComparator);
 	}
@@ -189,14 +255,20 @@ public class BackgroundTaskManagerUtil {
 	public static List<BackgroundTask> getBackgroundTasks(
 		long groupId, String[] taskExecutorClassNames) {
 
-		return _backgroundTaskManager.getBackgroundTasks(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.getBackgroundTasks(
 			groupId, taskExecutorClassNames);
 	}
 
 	public static List<BackgroundTask> getBackgroundTasks(
 		long groupId, String[] taskExecutorClassNames, int status) {
 
-		return _backgroundTaskManager.getBackgroundTasks(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.getBackgroundTasks(
 			groupId, taskExecutorClassNames, status);
 	}
 
@@ -204,7 +276,10 @@ public class BackgroundTaskManagerUtil {
 		long groupId, String[] taskExecutorClassNames, int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator) {
 
-		return _backgroundTaskManager.getBackgroundTasks(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.getBackgroundTasks(
 			groupId, taskExecutorClassNames, start, end, orderByComparator);
 	}
 
@@ -213,7 +288,10 @@ public class BackgroundTaskManagerUtil {
 		int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator) {
 
-		return _backgroundTaskManager.getBackgroundTasks(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.getBackgroundTasks(
 			groupIds, taskExecutorClassName, completed, start, end,
 			orderByComparator);
 	}
@@ -222,7 +300,10 @@ public class BackgroundTaskManagerUtil {
 		long[] groupIds, String taskExecutorClassName, int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator) {
 
-		return _backgroundTaskManager.getBackgroundTasks(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.getBackgroundTasks(
 			groupIds, taskExecutorClassName, start, end, orderByComparator);
 	}
 
@@ -230,7 +311,10 @@ public class BackgroundTaskManagerUtil {
 		long[] groupIds, String name, String taskExecutorClassName, int start,
 		int end, OrderByComparator<BackgroundTask> orderByComparator) {
 
-		return _backgroundTaskManager.getBackgroundTasks(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.getBackgroundTasks(
 			groupIds, name, taskExecutorClassName, start, end,
 			orderByComparator);
 	}
@@ -240,7 +324,10 @@ public class BackgroundTaskManagerUtil {
 		int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator) {
 
-		return _backgroundTaskManager.getBackgroundTasks(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.getBackgroundTasks(
 			groupIds, name, taskExecutorClassNames, start, end,
 			orderByComparator);
 	}
@@ -248,7 +335,10 @@ public class BackgroundTaskManagerUtil {
 	public static List<BackgroundTask> getBackgroundTasks(
 		String taskExecutorClassName, int status) {
 
-		return _backgroundTaskManager.getBackgroundTasks(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.getBackgroundTasks(
 			taskExecutorClassName, status);
 	}
 
@@ -256,14 +346,20 @@ public class BackgroundTaskManagerUtil {
 		String taskExecutorClassName, int status, int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator) {
 
-		return _backgroundTaskManager.getBackgroundTasks(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.getBackgroundTasks(
 			taskExecutorClassName, status, start, end, orderByComparator);
 	}
 
 	public static List<BackgroundTask> getBackgroundTasks(
 		String[] taskExecutorClassNames, int status) {
 
-		return _backgroundTaskManager.getBackgroundTasks(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.getBackgroundTasks(
 			taskExecutorClassNames, status);
 	}
 
@@ -271,7 +367,10 @@ public class BackgroundTaskManagerUtil {
 		String[] taskExecutorClassNames, int status, int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator) {
 
-		return _backgroundTaskManager.getBackgroundTasks(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.getBackgroundTasks(
 			taskExecutorClassNames, status, start, end, orderByComparator);
 	}
 
@@ -279,7 +378,10 @@ public class BackgroundTaskManagerUtil {
 		long[] groupIds, String[] taskExecutorClassName, boolean completed,
 		int start, int end, boolean orderByType) {
 
-		return _backgroundTaskManager.getBackgroundTasksByDuration(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.getBackgroundTasksByDuration(
 			groupIds, taskExecutorClassName, completed, start, end,
 			orderByType);
 	}
@@ -288,28 +390,40 @@ public class BackgroundTaskManagerUtil {
 		long[] groupIds, String[] taskExecutorClassName, int start, int end,
 		boolean orderByType) {
 
-		return _backgroundTaskManager.getBackgroundTasksByDuration(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.getBackgroundTasksByDuration(
 			groupIds, taskExecutorClassName, start, end, orderByType);
 	}
 
 	public static int getBackgroundTasksCount(
 		long groupId, String taskExecutorClassName) {
 
-		return _backgroundTaskManager.getBackgroundTasksCount(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.getBackgroundTasksCount(
 			groupId, taskExecutorClassName);
 	}
 
 	public static int getBackgroundTasksCount(
 		long groupId, String taskExecutorClassName, boolean completed) {
 
-		return _backgroundTaskManager.getBackgroundTasksCount(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.getBackgroundTasksCount(
 			groupId, taskExecutorClassName, completed);
 	}
 
 	public static int getBackgroundTasksCount(
 		long groupId, String name, String taskExecutorClassName) {
 
-		return _backgroundTaskManager.getBackgroundTasksCount(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.getBackgroundTasksCount(
 			groupId, name, taskExecutorClassName);
 	}
 
@@ -317,42 +431,60 @@ public class BackgroundTaskManagerUtil {
 		long groupId, String name, String taskExecutorClassName,
 		boolean completed) {
 
-		return _backgroundTaskManager.getBackgroundTasksCount(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.getBackgroundTasksCount(
 			groupId, name, taskExecutorClassName, completed);
 	}
 
 	public static int getBackgroundTasksCount(
 		long groupId, String[] taskExecutorClassNames) {
 
-		return _backgroundTaskManager.getBackgroundTasksCount(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.getBackgroundTasksCount(
 			groupId, taskExecutorClassNames);
 	}
 
 	public static int getBackgroundTasksCount(
 		long groupId, String[] taskExecutorClassNames, boolean completed) {
 
-		return _backgroundTaskManager.getBackgroundTasksCount(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.getBackgroundTasksCount(
 			groupId, taskExecutorClassNames, completed);
 	}
 
 	public static int getBackgroundTasksCount(
 		long[] groupIds, String taskExecutorClassName) {
 
-		return _backgroundTaskManager.getBackgroundTasksCount(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.getBackgroundTasksCount(
 			groupIds, taskExecutorClassName);
 	}
 
 	public static int getBackgroundTasksCount(
 		long[] groupIds, String taskExecutorClassName, boolean completed) {
 
-		return _backgroundTaskManager.getBackgroundTasksCount(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.getBackgroundTasksCount(
 			groupIds, taskExecutorClassName, completed);
 	}
 
 	public static int getBackgroundTasksCount(
 		long[] groupIds, String name, String taskExecutorClassName) {
 
-		return _backgroundTaskManager.getBackgroundTasksCount(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.getBackgroundTasksCount(
 			groupIds, name, taskExecutorClassName);
 	}
 
@@ -360,33 +492,47 @@ public class BackgroundTaskManagerUtil {
 		long[] groupIds, String name, String taskExecutorClassName,
 		boolean completed) {
 
-		return _backgroundTaskManager.getBackgroundTasksCount(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.getBackgroundTasksCount(
 			groupIds, name, taskExecutorClassName, completed);
 	}
 
 	public static int getBackgroundTasksCount(
 		long[] groupIds, String name, String[] taskExecutorClassNames) {
 
-		return _backgroundTaskManager.getBackgroundTasksCount(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.getBackgroundTasksCount(
 			groupIds, name, taskExecutorClassNames);
 	}
 
 	public static String getBackgroundTaskStatusJSON(long backgroundTaskId) {
-		return _backgroundTaskManager.getBackgroundTaskStatusJSON(
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		return backgroundTaskManager.getBackgroundTaskStatusJSON(
 			backgroundTaskId);
 	}
 
 	public static void resumeBackgroundTask(long backgroundTaskId) {
-		_backgroundTaskManager.resumeBackgroundTask(backgroundTaskId);
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		backgroundTaskManager.resumeBackgroundTask(backgroundTaskId);
 	}
 
 	public static void triggerBackgroundTask(long backgroundTaskId) {
-		_backgroundTaskManager.triggerBackgroundTask(backgroundTaskId);
+		BackgroundTaskManager backgroundTaskManager =
+			_backgroundTaskManagerSnapshot.get();
+
+		backgroundTaskManager.triggerBackgroundTask(backgroundTaskId);
 	}
 
-	private static volatile BackgroundTaskManager _backgroundTaskManager =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			BackgroundTaskManager.class, BackgroundTaskManagerUtil.class,
-			"_backgroundTaskManager", false);
+	private static final Snapshot<BackgroundTaskManager>
+		_backgroundTaskManagerSnapshot = new Snapshot<>(
+			BackgroundTaskManagerUtil.class, BackgroundTaskManager.class);
 
 }

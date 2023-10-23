@@ -6,7 +6,7 @@
 package com.liferay.exportimport.kernel.lar;
 
 import com.liferay.portal.kernel.model.StagedModel;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * @author Michael C. Han
@@ -16,7 +16,10 @@ public class PortletDataHandlerStatusMessageSenderUtil {
 	public static void sendStatusMessage(
 		String messageType, String portletId, ManifestSummary manifestSummary) {
 
-		_dataHandlerStatusMessageSender.sendStatusMessage(
+		PortletDataHandlerStatusMessageSender dataHandlerStatusMessageSender =
+			_dataHandlerStatusMessageSenderSnapshot.get();
+
+		dataHandlerStatusMessageSender.sendStatusMessage(
 			messageType, portletId, manifestSummary);
 	}
 
@@ -24,22 +27,26 @@ public class PortletDataHandlerStatusMessageSenderUtil {
 		String messageType, String[] portletIds,
 		ManifestSummary manifestSummary) {
 
-		_dataHandlerStatusMessageSender.sendStatusMessage(
+		PortletDataHandlerStatusMessageSender dataHandlerStatusMessageSender =
+			_dataHandlerStatusMessageSenderSnapshot.get();
+
+		dataHandlerStatusMessageSender.sendStatusMessage(
 			messageType, portletIds, manifestSummary);
 	}
 
 	public static <T extends StagedModel> void sendStatusMessage(
 		String messageType, T stagedModel, ManifestSummary manifestSummary) {
 
-		_dataHandlerStatusMessageSender.sendStatusMessage(
+		PortletDataHandlerStatusMessageSender dataHandlerStatusMessageSender =
+			_dataHandlerStatusMessageSenderSnapshot.get();
+
+		dataHandlerStatusMessageSender.sendStatusMessage(
 			messageType, stagedModel, manifestSummary);
 	}
 
-	private static volatile PortletDataHandlerStatusMessageSender
-		_dataHandlerStatusMessageSender =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				PortletDataHandlerStatusMessageSender.class,
-				PortletDataHandlerStatusMessageSenderUtil.class,
-				"_dataHandlerStatusMessageSender", false);
+	private static final Snapshot<PortletDataHandlerStatusMessageSender>
+		_dataHandlerStatusMessageSenderSnapshot = new Snapshot<>(
+			PortletDataHandlerStatusMessageSenderUtil.class,
+			PortletDataHandlerStatusMessageSender.class);
 
 }

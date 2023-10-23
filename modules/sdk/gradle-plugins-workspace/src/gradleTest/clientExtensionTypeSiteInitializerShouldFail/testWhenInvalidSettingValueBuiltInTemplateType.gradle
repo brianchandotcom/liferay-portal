@@ -1,4 +1,4 @@
-ext.expectedErrorMessage = 'Client extension site-initializer-cx has an invalid value "fooBarInvalid" for the property "builtInTemplateType". Valid values are: site-initializer, site-template.'
+ext.expectedErrorMessage = 'Client extension site-initializer has an invalid value "fooBarInvalid" for the property "builtInTemplateType". Valid values are: site-initializer, site-template.'
 ext.taskPath = ":invalid-setting-value-builtInTemplateType:validateClientExtensions"
 
 apply from: "./_baseShouldFailTestCase.gradle"

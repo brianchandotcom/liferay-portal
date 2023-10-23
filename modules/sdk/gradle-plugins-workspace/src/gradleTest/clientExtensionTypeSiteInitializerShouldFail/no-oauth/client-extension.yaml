@@ -1,4 +1,4 @@
-site-initializer-cx:
+site-initializer:
     name: site initializer
     oAuthApplicationHeadlessServer: non-existent
     siteExternalReferenceCode: externalReferenceCode

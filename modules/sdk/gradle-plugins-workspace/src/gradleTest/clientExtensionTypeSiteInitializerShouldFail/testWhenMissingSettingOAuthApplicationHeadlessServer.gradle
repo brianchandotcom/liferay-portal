@@ -1,4 +1,4 @@
-ext.expectedErrorMessage = "Client extension site-initializer-cx with type siteInitializer must define the property \"oAuthApplicationHeadlessServer\""
+ext.expectedErrorMessage = "Client extension site-initializer with type siteInitializer must define the property \"oAuthApplicationHeadlessServer\""
 ext.taskPath = ":missing-setting-oAuthApplicationHeadlessServer:validateClientExtensions"
 
 apply from: "./_baseShouldFailTestCase.gradle"

@@ -1,6 +1,6 @@
 ext.expectedContentStrings = [
-	'"LIFERAY_BATCH_OAUTH_APP_ERC": "oauth-cx"',
-	'"id": "siteinitializercx"',
+	'"LIFERAY_BATCH_OAUTH_APP_ERC": "oauth"',
+	'"id": "siteinitializer"',
 ]
 ext.expectedFilePath = "LCP.json"
 

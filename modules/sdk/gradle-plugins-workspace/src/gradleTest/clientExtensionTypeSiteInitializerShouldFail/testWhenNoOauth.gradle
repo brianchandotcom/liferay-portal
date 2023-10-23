@@ -1,4 +1,4 @@
 ext.expectedErrorMessage = "A batch or siteInitializer type client extension requires exactly one oAuthApplicationHeadlessServer type client extension"
-ext.taskPath = ":no-oauth-cx:createClientExtensionConfig"
+ext.taskPath = ":no-oauth:createClientExtensionConfig"
 
 apply from: "./_baseShouldFailTestCase.gradle"

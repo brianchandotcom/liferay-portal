@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
 import java.text.Format;
@@ -186,9 +185,6 @@ public class AssetEntryInfoItemFieldValuesProvider
 	@Reference
 	private AssetEntryInfoItemFieldSetProvider
 		_assetEntryInfoItemFieldSetProvider;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private TemplateInfoItemFieldSetProvider _templateInfoItemFieldSetProvider;

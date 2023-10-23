@@ -8,7 +8,7 @@ import React, {useEffect} from 'react';
 import {
 	useMovementText,
 	useSetMovementText,
-} from '../contexts/KeyboardMovementContext';
+} from '../../contexts/KeyboardMovementContext';
 
 export default function KeyboardMovementText() {
 	const text = useMovementText();

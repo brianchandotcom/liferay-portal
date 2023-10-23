@@ -7,7 +7,7 @@ import {useEventListener} from '@liferay/frontend-js-react-web';
 import {openToast, sub} from 'frontend-js-web';
 import {useEffect, useRef} from 'react';
 
-import {FRAGMENT_ENTRY_TYPES} from '../config/constants/fragmentEntryTypes';
+import {FRAGMENT_ENTRY_TYPES} from '../../config/constants/fragmentEntryTypes';
 import {
 	ARROW_DOWN_KEY_CODE,
 	ARROW_UP_KEY_CODE,
@@ -15,27 +15,27 @@ import {
 	ENTER_KEY_CODE,
 	ESCAPE_KEY_CODE,
 	HOME_KEY_CODE,
-} from '../config/constants/keyboardCodes';
-import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
-import {useSelectItem} from '../contexts/ControlsContext';
+} from '../../config/constants/keyboardCodes';
+import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
+import {useSelectItem} from '../../contexts/ControlsContext';
 import {
 	useDisableKeyboardMovement,
 	useMovementSource,
 	useMovementTarget,
 	useSetMovementTarget,
 	useSetMovementText,
-} from '../contexts/KeyboardMovementContext';
-import {useDispatch, useSelectorRef} from '../contexts/StoreContext';
-import selectLayoutDataItemLabel from '../selectors/selectLayoutDataItemLabel';
-import addFragment from '../thunks/addFragment';
-import addItem from '../thunks/addItem';
-import addWidget from '../thunks/addWidget';
-import moveItem from '../thunks/moveItem';
-import checkAllowedChild from '../utils/drag_and_drop/checkAllowedChild';
-import {TARGET_POSITIONS} from '../utils/drag_and_drop/constants/targetPositions';
-import getDropData from '../utils/drag_and_drop/getDropData';
-import itemIsAncestor from '../utils/drag_and_drop/itemIsAncestor';
-import {isUnmappedCollection} from '../utils/isUnmappedCollection';
+} from '../../contexts/KeyboardMovementContext';
+import {useDispatch, useSelectorRef} from '../../contexts/StoreContext';
+import selectLayoutDataItemLabel from '../../selectors/selectLayoutDataItemLabel';
+import addFragment from '../../thunks/addFragment';
+import addItem from '../../thunks/addItem';
+import addWidget from '../../thunks/addWidget';
+import moveItem from '../../thunks/moveItem';
+import checkAllowedChild from '../../utils/drag_and_drop/checkAllowedChild';
+import {TARGET_POSITIONS} from '../../utils/drag_and_drop/constants/targetPositions';
+import getDropData from '../../utils/drag_and_drop/getDropData';
+import itemIsAncestor from '../../utils/drag_and_drop/itemIsAncestor';
+import {isUnmappedCollection} from '../../utils/isUnmappedCollection';
 
 const DIRECTIONS = {
 	down: 'down',

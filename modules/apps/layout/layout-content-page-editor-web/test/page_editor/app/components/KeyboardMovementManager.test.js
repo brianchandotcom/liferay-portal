@@ -6,7 +6,7 @@
 import {render} from '@testing-library/react';
 import React from 'react';
 
-import KeyboardMovementManager from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/KeyboardMovementManager';
+import KeyboardMovementManager from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/keyboard_movement/KeyboardMovementManager';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
 import {
 	useDisableKeyboardMovement,

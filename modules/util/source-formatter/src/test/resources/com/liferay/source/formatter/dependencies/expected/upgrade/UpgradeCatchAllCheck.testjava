@@ -7,6 +7,8 @@ package com.liferay.source.formatter.dependencies.upgrade;
 
 import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
 
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+
 import com.liferay.portal.kernel.util.HtmlParser;
 
 import com.liferay.portal.kernel.search.Sort;
@@ -101,6 +103,14 @@ public class UpgradeCatchAllCheck {
 		_cpInstanceLocalService.fetchByExternalReferenceCode(externalReferenceCode, companyId);
 		_cpInstanceLocalService.fetchCPInstanceByExternalReferenceCode(externalReferenceCode, companyId);
 		_cpInstanceService.fetchByExternalReferenceCode(externalReferenceCode, companyId);
+	}
+
+	public void method(
+		long userId, String className, long classPK, String number,
+		String extension, long listTypeId, boolean primary) {
+
+		PhoneLocalServiceUtil.addPhone(123, className, classPK, number, extension, listTypeId, primary);
+		PhoneLocalServiceUtil.addPhone(userId, className, classPK, number, extension, listTypeId, primary, ServiceContextThreadLocal.getServiceContext());
 	}
 
 	public void method(

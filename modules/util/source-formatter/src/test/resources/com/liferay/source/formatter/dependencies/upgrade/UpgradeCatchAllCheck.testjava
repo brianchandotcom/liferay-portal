@@ -98,6 +98,14 @@ public class UpgradeCatchAllCheck {
 	}
 
 	public void method(
+		long userId, String className, long classPK, String number,
+		String extension, long listTypeId, boolean primary) {
+
+		PhoneLocalServiceUtil.addPhone(123, className, classPK, number, extension, listTypeId, primary);
+		PhoneLocalServiceUtil.addPhone(userId, className, classPK, number, extension, listTypeId, primary);
+	}
+
+	public void method(
 		long userId, String className, long classPK, String street1,
 		String street2, String street3, String city, String zip, long regionId,
 		long countryId, long typeId, boolean mailing, boolean primary) {

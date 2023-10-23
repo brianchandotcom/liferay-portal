@@ -6,7 +6,7 @@
 package com.liferay.portal.kernel.portlet;
 
 import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.io.IOException;
 
@@ -24,18 +24,23 @@ public class ClientDataRequestHelperUtil {
 	public static Part getPart(String name, Object request, Portlet portlet)
 		throws IOException, PortletException {
 
-		return _clientDataRequestHelper.getPart(name, request, portlet);
+		ClientDataRequestHelper clientDataRequestHelper =
+			_clientDataRequestHelperSnapshot.get();
+
+		return clientDataRequestHelper.getPart(name, request, portlet);
 	}
 
 	public static Collection<Part> getParts(Object request, Portlet portlet)
 		throws IOException, PortletException {
 
-		return _clientDataRequestHelper.getParts(request, portlet);
+		ClientDataRequestHelper clientDataRequestHelper =
+			_clientDataRequestHelperSnapshot.get();
+
+		return clientDataRequestHelper.getParts(request, portlet);
 	}
 
-	private static volatile ClientDataRequestHelper _clientDataRequestHelper =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			ClientDataRequestHelper.class, ClientDataRequestHelperUtil.class,
-			"_clientDataRequestHelper", false);
+	private static final Snapshot<ClientDataRequestHelper>
+		_clientDataRequestHelperSnapshot = new Snapshot<>(
+			ClientDataRequestHelperUtil.class, ClientDataRequestHelper.class);
 
 }

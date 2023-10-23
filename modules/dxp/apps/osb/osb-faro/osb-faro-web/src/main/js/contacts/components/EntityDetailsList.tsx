@@ -3,7 +3,6 @@ import Card from 'shared/components/Card';
 import Checkbox from 'shared/components/Checkbox';
 import getCN from 'classnames';
 import Nav from 'shared/components/Nav';
-import Promise from 'metal-promise';
 import React from 'react';
 import SearchableEntityTable from 'shared/components/SearchableEntityTable';
 import {detailsListColumns} from 'shared/util/table-columns';

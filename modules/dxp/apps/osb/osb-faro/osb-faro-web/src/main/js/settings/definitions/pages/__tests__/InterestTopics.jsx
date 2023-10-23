@@ -2,7 +2,6 @@ import * as API from 'shared/api';
 import * as data from 'test/data';
 import InterestTopics from '../InterestTopics';
 import mockStore, {mockStoreData, toRD} from 'test/mock-store';
-import Promise from 'metal-promise';
 import React from 'react';
 import {cleanup, render} from '@testing-library/react';
 import {MemoryRouter, Route} from 'react-router-dom';

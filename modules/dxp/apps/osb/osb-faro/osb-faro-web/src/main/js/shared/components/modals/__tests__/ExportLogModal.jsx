@@ -1,5 +1,4 @@
 import ExportLogModal from '../ExportLogModal';
-import Promise from 'metal-promise';
 import React from 'react';
 import {
 	cleanup,

@@ -1,5 +1,4 @@
 import FaroConstants from 'shared/util/constants';
-import Promise from 'metal-promise';
 import sendRequest from 'shared/util/request';
 import {escapeSingleQuotes} from 'segment/segment-editor/dynamic/utils/odata';
 import {RESTParams} from 'shared/types';

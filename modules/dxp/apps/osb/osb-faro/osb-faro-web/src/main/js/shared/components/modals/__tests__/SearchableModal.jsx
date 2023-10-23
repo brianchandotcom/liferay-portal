@@ -1,4 +1,3 @@
-import Promise from 'metal-promise';
 import React from 'react';
 import SearchableModal from '../SearchableModal';
 import {cleanup, render} from '@testing-library/react';

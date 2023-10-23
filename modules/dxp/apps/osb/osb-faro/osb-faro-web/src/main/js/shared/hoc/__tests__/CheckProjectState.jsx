@@ -5,7 +5,6 @@ jest.mock('shared/components/workspaces/SuccessDisplay', () => () =>
 import * as API from 'shared/api';
 import checkProjectState from '../CheckProjectState';
 import mockStore from 'test/mock-store';
-import Promise from 'metal-promise';
 import React from 'react';
 import {cleanup, render} from '@testing-library/react';
 import {Provider} from 'react-redux';

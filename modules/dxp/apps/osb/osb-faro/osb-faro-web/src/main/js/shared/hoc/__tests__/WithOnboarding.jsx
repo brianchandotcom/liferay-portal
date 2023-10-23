@@ -2,7 +2,6 @@ import 'test/mock-modal';
 
 import * as API from 'shared/api';
 import mockStore from 'test/mock-store';
-import Promise from 'metal-promise';
 import React from 'react';
 import withOnboarding from '../WithOnboarding';
 import {cleanup, render} from '@testing-library/react';

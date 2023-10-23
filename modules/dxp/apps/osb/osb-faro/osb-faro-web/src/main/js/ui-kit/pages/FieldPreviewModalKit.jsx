@@ -1,5 +1,4 @@
 import FieldPreviewModal from 'shared/components/modals/FieldPreviewModal';
-import Promise from 'metal-promise';
 import React from 'react';
 
 class FieldPreviewModalKit extends React.Component {

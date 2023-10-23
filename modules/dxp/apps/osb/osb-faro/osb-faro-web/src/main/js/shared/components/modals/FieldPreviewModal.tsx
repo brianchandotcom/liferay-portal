@@ -1,7 +1,6 @@
 import getCN from 'classnames';
 import ListGroup from 'shared/components/list-group';
 import Modal from 'shared/components/modal';
-import Promise from 'metal-promise';
 import React, {useEffect, useState} from 'react';
 import {get, noop} from 'lodash';
 import {sub} from 'shared/util/lang';

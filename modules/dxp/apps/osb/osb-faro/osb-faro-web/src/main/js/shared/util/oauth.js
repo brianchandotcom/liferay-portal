@@ -1,5 +1,4 @@
 import * as API from 'shared/api';
-import Promise from 'metal-promise';
 import {Routes} from 'shared/util/router';
 
 export const OAUTH_CALLBACK_URL = `${location.origin}${Routes.OAUTH_RECEIVE}`;

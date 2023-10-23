@@ -7,7 +7,6 @@ import DataSourceList, {
 	StatusRenderer
 } from '../DataSourceList';
 import mockStore, {mockStoreData} from 'test/mock-store';
-import Promise from 'metal-promise';
 import React from 'react';
 import {cleanup, render} from '@testing-library/react';
 import {DataSourceStates} from 'shared/util/constants';

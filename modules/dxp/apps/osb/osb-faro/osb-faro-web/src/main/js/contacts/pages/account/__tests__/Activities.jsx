@@ -2,7 +2,6 @@ import * as API from 'shared/api';
 import * as data from 'test/data';
 import Activities from '../Activities';
 import mockStore from 'test/mock-store';
-import Promise from 'metal-promise';
 import React from 'react';
 import {Account} from 'shared/util/records';
 import {MemoryRouter, Route} from 'react-router-dom';

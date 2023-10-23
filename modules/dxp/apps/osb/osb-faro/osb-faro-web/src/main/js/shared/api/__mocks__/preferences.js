@@ -1,5 +1,3 @@
-import Promise from 'metal-promise';
-
 export const addDistributionTab = jest.fn(() =>
 	Promise.resolve({
 		distributionCardTabPreferencesMap: {

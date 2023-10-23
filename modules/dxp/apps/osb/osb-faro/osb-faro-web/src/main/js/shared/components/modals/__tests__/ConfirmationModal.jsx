@@ -1,5 +1,4 @@
 import ConfirmationModal from '../ConfirmationModal';
-import Promise from 'metal-promise';
 import React from 'react';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import {noop} from 'lodash';

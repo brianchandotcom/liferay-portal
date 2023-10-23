@@ -1,5 +1,4 @@
 import autobind from 'autobind-decorator';
-import Promise from 'metal-promise';
 import React from 'react';
 import SelectInput from 'shared/components/SelectInput';
 

@@ -2,7 +2,6 @@ import * as API from 'shared/api';
 import * as data from 'test/data';
 import mockStore from 'test/mock-store';
 import ModalRenderer from 'shared/components/ModalRenderer';
-import Promise from 'metal-promise';
 import React from 'react';
 import useModalNotifications from '../useModalNotifications';
 import {close, open} from 'shared/actions/modals';

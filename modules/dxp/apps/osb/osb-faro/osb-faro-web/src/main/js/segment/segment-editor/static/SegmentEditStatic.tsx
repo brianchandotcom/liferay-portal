@@ -1,7 +1,6 @@
 import * as API from 'shared/api';
 import EntityRowActions from './EntityRowActions';
 import getCN from 'classnames';
-import Promise from 'metal-promise';
 import React, {useEffect, useState} from 'react';
 import SearchableTableWithAdded from './SearchableTableWithAdded';
 import ToolbarActionsRenderer from './ToolbarActionsRenderer';

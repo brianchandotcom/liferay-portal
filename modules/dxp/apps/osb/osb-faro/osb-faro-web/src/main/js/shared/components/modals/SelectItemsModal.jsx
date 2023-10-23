@@ -6,7 +6,6 @@ import ListView from 'shared/components/ListView';
 import Loading, {Align} from 'shared/components/Loading';
 import Modal from 'shared/components/modal';
 import omitDefinedProps from 'shared/util/omitDefinedProps';
-import Promise from 'metal-promise';
 import React from 'react';
 import SearchableModal from './SearchableModal';
 import {noop} from 'lodash';

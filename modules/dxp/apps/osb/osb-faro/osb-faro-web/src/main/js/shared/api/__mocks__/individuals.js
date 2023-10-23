@@ -1,5 +1,4 @@
 import * as data from 'test/data';
-import Promise from 'metal-promise';
 
 export const fetch = jest.fn(() => Promise.resolve(data.mockIndividual()));
 

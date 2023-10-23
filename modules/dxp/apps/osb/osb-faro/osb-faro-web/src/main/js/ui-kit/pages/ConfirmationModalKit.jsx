@@ -1,7 +1,6 @@
 import ConfirmationModal from 'shared/components/modals/ConfirmationModal';
 import mockStore from 'test/mock-store';
 import ModalRenderer from 'shared/components/ModalRenderer';
-import Promise from 'metal-promise';
 import React from 'react';
 import {Provider} from 'react-redux';
 

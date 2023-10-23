@@ -1,6 +1,5 @@
 import * as API from 'shared/api';
 import * as data from 'test/data';
-import Promise from 'metal-promise';
 import React from 'react';
 import WorkspaceListItem from '../ListItem';
 import {cleanup, fireEvent, render} from '@testing-library/react';

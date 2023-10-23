@@ -2,7 +2,6 @@ import * as API from 'shared/api';
 import * as data from 'test/data';
 import mockStore from 'test/mock-store';
 import NotificationAlertList from '../NotificationAlertList';
-import Promise from 'metal-promise';
 import React from 'react';
 import {fireEvent, render} from '@testing-library/react';
 import {Provider} from 'react-redux';

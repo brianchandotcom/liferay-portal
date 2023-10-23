@@ -1,7 +1,6 @@
 import * as API from 'shared/api';
 import * as data from 'test/data';
 import ActivitiesCard from '../ActivitiesCard';
-import Promise from 'metal-promise';
 import React from 'react';
 import {Account} from 'shared/util/records';
 import {render} from '@testing-library/react';

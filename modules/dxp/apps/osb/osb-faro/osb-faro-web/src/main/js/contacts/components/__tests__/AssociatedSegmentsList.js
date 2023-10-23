@@ -1,5 +1,4 @@
 import AssociatedSegmentsList from '../AssociatedSegmentsList';
-import Promise from 'metal-promise';
 import {renderWithStore} from 'test/mock-store';
 
 describe('AssociatedSegmentsList', () => {

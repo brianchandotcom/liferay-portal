@@ -1,5 +1,4 @@
 import * as data from 'test/data';
-import Promise from 'metal-promise';
 import {EntityTypes} from 'shared/util/constants';
 
 export const fetch = jest.fn(() => Promise.resolve(data.mockCSVDataSource()));

@@ -2,7 +2,6 @@ import BaseSelect, {Item} from '../BaseSelect';
 import client from 'shared/apollo/client';
 import EventAttributeValuesQuery from 'event-analysis/queries/EventAttributeValuesQuery';
 import mockStore from 'test/mock-store';
-import Promise from 'metal-promise';
 import React from 'react';
 import {ApolloProvider} from '@apollo/react-components';
 import {fireEvent, render} from '@testing-library/react';

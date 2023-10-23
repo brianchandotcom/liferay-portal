@@ -5,7 +5,6 @@ import ClayButton from '@clayui/button';
 import DateFilterConjunctionInput from './components/DateFilterConjunctionInput';
 import Form from 'shared/components/form';
 import getCN from 'classnames';
-import Promise from 'metal-promise';
 import React from 'react';
 import {CustomValue} from 'shared/util/records';
 import {fromJS, Map} from 'immutable';

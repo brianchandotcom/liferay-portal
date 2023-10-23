@@ -1,5 +1,4 @@
 import * as data from 'test/data';
-import Promise from 'metal-promise';
 import React from 'react';
 import SearchableVerticalTimeline from 'shared/components/SearchableVerticalTimelineDeprecated';
 import {formatSessions} from 'shared/util/activitiesDeprecated';

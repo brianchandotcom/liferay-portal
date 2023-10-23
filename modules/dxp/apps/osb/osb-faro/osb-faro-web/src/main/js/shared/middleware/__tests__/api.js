@@ -1,7 +1,6 @@
 jest.mock('shared/util/request');
 
 import api, {CALL_API, toAction} from '../api';
-import Promise from 'metal-promise';
 import sendRequest from 'shared/util/request';
 
 describe('API Middleware', () => {

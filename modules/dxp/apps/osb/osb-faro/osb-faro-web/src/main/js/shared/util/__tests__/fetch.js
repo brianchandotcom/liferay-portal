@@ -2,7 +2,6 @@ jest.mock('metal-ajax');
 
 import Ajax from 'metal-ajax';
 import fetch from '../fetch';
-import Promise from 'metal-promise';
 
 describe('fetch', () => {
 	it('should return a Promise', () => {

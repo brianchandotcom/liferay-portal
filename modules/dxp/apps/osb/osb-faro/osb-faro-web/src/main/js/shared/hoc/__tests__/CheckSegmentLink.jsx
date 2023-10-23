@@ -1,6 +1,5 @@
 import * as API from 'shared/api';
 import CheckSegmentLink from '../CheckSegmentLink';
-import Promise from 'metal-promise';
 import React from 'react';
 import {cleanup, render} from '@testing-library/react';
 

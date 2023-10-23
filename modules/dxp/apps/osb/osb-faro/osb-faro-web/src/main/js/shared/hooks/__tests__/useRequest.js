@@ -1,4 +1,3 @@
-import Promise from 'metal-promise';
 import useRequest from '../useRequest';
 import {renderHook} from '@testing-library/react-hooks';
 

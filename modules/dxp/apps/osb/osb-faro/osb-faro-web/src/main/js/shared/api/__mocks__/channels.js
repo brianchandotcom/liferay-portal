@@ -1,4 +1,3 @@
-import Promise from 'metal-promise';
 import {mockChannel, mockSearch, mockUser} from 'test/data';
 
 export const create = jest.fn(() => Promise.resolve([mockChannel()]));

@@ -1,4 +1,3 @@
-import Promise from 'metal-promise';
 import React from 'react';
 import SearchableEntitiesTableModal from '../SearchableEntitiesTableModal';
 import {cleanup, render} from '@testing-library/react';

@@ -1,4 +1,3 @@
-import Promise from 'metal-promise';
 import {mockSearch, mockUser} from 'test/data';
 
 const delete$ = jest.fn(() => Promise.resolve(''));

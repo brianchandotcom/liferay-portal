@@ -1,4 +1,3 @@
-import Promise from 'metal-promise';
 import {mockInterestData, mockSearch} from 'test/data';
 
 export const fetch = jest.fn(() => Promise.resolve(mockInterestData()));

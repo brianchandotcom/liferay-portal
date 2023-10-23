@@ -1,6 +1,5 @@
 import * as API from 'shared/api';
 import EnrichedProfilesCard from '../EnrichedProfilesCard';
-import Promise from 'metal-promise';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {cleanup, queryByText, render} from '@testing-library/react';

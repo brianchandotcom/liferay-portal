@@ -1,4 +1,3 @@
-import Promise from 'metal-promise';
 import React from 'react';
 import SearchableTableWithAdded from '../SearchableTableWithAdded';
 import {cleanup, render} from '@testing-library/react';

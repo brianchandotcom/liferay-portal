@@ -1,7 +1,6 @@
 import BaseSelect from 'shared/components/BaseSelect';
 import getCN from 'classnames';
 import MetadataTag from './MetadataTag';
-import Promise from 'metal-promise';
 import React, {useEffect, useRef} from 'react';
 import {BACKSPACE, ENTER} from 'shared/util/key-constants';
 import {METADATA_TAGS} from '../utils/utils';

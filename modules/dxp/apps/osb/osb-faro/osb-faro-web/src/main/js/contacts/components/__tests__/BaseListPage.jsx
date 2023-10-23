@@ -2,7 +2,6 @@ import * as data from 'test/data';
 import * as useDataSource from 'shared/hooks/useDataSource';
 import BaseListPage from '../BaseListPage';
 import mockStore from 'test/mock-store';
-import Promise from 'metal-promise';
 import React from 'react';
 import {ChannelContext} from 'shared/context/channel';
 import {cleanup, render, waitForElement} from '@testing-library/react';

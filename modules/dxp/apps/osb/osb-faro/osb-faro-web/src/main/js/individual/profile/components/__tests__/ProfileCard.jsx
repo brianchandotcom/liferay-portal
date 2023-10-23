@@ -1,6 +1,5 @@
 import * as API from 'shared/api';
 import IndividualProfileCard from '../ProfileCard';
-import Promise from 'metal-promise';
 import React from 'react';
 import {fireEvent, render} from '@testing-library/react';
 import {Individual} from 'shared/util/records';

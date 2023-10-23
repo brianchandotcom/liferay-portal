@@ -2,7 +2,6 @@ jest.mock('../fetch');
 jest.mock('../router');
 
 import fetch from '../fetch';
-import Promise from 'metal-promise';
 import request, {
 	addParams,
 	getFormData,

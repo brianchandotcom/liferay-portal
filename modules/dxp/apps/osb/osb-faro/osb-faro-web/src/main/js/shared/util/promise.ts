@@ -1,5 +1,3 @@
-import Promise from 'metal-promise';
-
 /**
  * Executes functions that return Promises in sequence. If a Promise is to reject, the execution will stop.
  * @param {Array} fns - an array of functions that return Promises.

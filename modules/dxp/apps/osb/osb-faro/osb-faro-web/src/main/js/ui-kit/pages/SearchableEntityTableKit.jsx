@@ -1,5 +1,4 @@
 import autobind from 'autobind-decorator';
-import Promise from 'metal-promise';
 import React from 'react';
 import SearchableEntityTable from 'shared/components/SearchableEntityTable';
 import {createOrderIOMap} from 'shared/util/pagination';

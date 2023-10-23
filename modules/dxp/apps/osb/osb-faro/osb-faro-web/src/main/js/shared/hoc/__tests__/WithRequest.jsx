@@ -1,6 +1,5 @@
 jest.mock('shared/hoc/WithQuery');
 
-import Promise from 'metal-promise';
 import React from 'react';
 import withQuery from 'shared/hoc/WithQuery';
 import withRequest from '../WithRequest';

@@ -1,7 +1,6 @@
 import * as data from 'test/data';
 import BaseDetails from '../BaseDetails';
 import mockStore from 'test/mock-store';
-import Promise from 'metal-promise';
 import React from 'react';
 import {cleanup, render} from '@testing-library/react';
 import {Provider} from 'react-redux';

@@ -1,6 +1,5 @@
 import BaseSelect from 'shared/components/BaseSelect';
 import Item from '../components/Item';
-import Promise from 'metal-promise';
 import React from 'react';
 import Row from '../components/Row';
 

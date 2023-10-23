@@ -1,4 +1,3 @@
-import Promise from 'metal-promise';
 import React from 'react';
 import SelectItemsModal from 'shared/components/modals/SelectItemsModal';
 

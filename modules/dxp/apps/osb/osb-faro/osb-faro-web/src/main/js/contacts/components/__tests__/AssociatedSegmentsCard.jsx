@@ -1,7 +1,6 @@
 import * as data from 'test/data';
 import AssociatedSegmentsCard from '../AssociatedSegmentsCard';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
-import Promise from 'metal-promise';
 import React from 'react';
 import {render} from '@testing-library/react';
 import {StaticRouter} from 'react-router';

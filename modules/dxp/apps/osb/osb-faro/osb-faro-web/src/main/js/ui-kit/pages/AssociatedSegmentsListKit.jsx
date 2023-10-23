@@ -1,6 +1,5 @@
 import * as data from 'test/data';
 import AssociatedSegmentsList from 'contacts/components/AssociatedSegmentsList';
-import Promise from 'metal-promise';
 import React from 'react';
 
 const dataSourceFn = () =>

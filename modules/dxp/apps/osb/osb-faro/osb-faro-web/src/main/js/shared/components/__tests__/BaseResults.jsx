@@ -1,6 +1,5 @@
 import * as data from 'test/data';
 import BaseResults from '../BaseResults';
-import Promise from 'metal-promise';
 import React from 'react';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import {noop, times} from 'lodash';

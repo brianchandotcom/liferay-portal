@@ -1,6 +1,5 @@
 import * as API from 'shared/api';
 import client from 'shared/apollo/client';
-import Promise from 'metal-promise';
 import React from 'react';
 import withPropertyGroups from '../WithPropertyGroups';
 import {render} from '@testing-library/react';

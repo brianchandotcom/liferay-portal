@@ -1,4 +1,3 @@
-import Promise from 'metal-promise';
 import {mockFieldMapping, mockSearch} from 'test/data';
 
 export const fetch = jest.fn(() => Promise.resolve(mockFieldMapping()));

@@ -1,7 +1,6 @@
 import * as API from 'shared/api';
 import client from 'shared/apollo/client';
 import EventDefinitionsQuery from 'event-analysis/queries/EventDefinitionsQuery';
-import Promise from 'metal-promise';
 import React from 'react';
 import {compose} from 'redux';
 import {

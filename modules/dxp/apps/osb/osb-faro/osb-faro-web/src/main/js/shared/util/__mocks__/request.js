@@ -1,5 +1,3 @@
-import Promise from 'metal-promise';
-
 let responseData;
 
 function setResponseData(data) {

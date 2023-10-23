@@ -1,4 +1,3 @@
-import Promise from 'metal-promise';
 import {
 	mockMembershipChange,
 	mockMembershipChangeAggregation,

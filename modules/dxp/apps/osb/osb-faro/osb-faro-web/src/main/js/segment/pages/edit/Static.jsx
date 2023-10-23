@@ -4,7 +4,6 @@ import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
 import Form, {validateRequired} from 'shared/components/form';
 import NavigationWarning from 'shared/components/NavigationWarning';
-import Promise from 'metal-promise';
 import React from 'react';
 import SegmentEditStatic from 'segment/segment-editor/static/SegmentEditStatic';
 import Sheet from 'shared/components/Sheet';

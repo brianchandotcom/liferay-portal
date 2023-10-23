@@ -2,7 +2,6 @@ import * as API from 'shared/api';
 import autobind from 'autobind-decorator';
 import CustomNumberInput from './CustomNumberInput';
 import CustomStringInput from './CustomStringInput';
-import Promise from 'metal-promise';
 import React from 'react';
 import {getPropertyValue} from '../utils/custom-inputs';
 import {ISegmentEditorCustomInputBase} from '../utils/types';

@@ -1,6 +1,5 @@
 import * as API from 'shared/api';
 import DeleteChannelModal from '../DeleteChannelModal';
-import Promise from 'metal-promise';
 import React from 'react';
 import {cleanup, render} from '@testing-library/react';
 import {noop} from 'lodash';

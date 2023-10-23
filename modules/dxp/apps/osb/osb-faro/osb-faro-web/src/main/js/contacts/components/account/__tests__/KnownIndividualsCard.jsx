@@ -1,6 +1,5 @@
 import * as data from 'test/data';
 import KnownIndividualsCard from '../KnownIndividualsCard';
-import Promise from 'metal-promise';
 import React from 'react';
 import {render} from '@testing-library/react';
 import {StaticRouter} from 'react-router';

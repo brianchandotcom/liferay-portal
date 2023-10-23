@@ -1,4 +1,3 @@
-import Promise from 'metal-promise';
 import React from 'react';
 import SelectItemsModal, {ItemComponent} from '../SelectItemsModal';
 import {cleanup, fireEvent, render} from '@testing-library/react';

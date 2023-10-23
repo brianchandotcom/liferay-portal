@@ -1,4 +1,3 @@
-import Promise from 'metal-promise';
 import {mockCardTemplate, mockFieldMapping, mockSegment} from 'test/data';
 
 export const preview = jest.fn(() =>

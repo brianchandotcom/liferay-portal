@@ -244,10 +244,10 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 					matcher.start(2));
 			}
 
-			String featureFlagKey = featureFlagMatcher.group(2);
+			String featureFlagKey = featureFlagMatcher.group(3);
 
 			if (!featureFlagKeysUIMap.containsKey(featureFlagKey)) {
-				addMessage(fileName, "Remove " + featureFlagKey);
+				addMessage(fileName, "Remove " + featureFlagMatcher.group(2));
 
 				featureFlagKeysUIMap.put(featureFlagKey, new HashMap<>());
 			}
@@ -256,7 +256,7 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 				featureFlagKey);
 
 			propertyMap.put(
-				featureFlagMatcher.group(3), featureFlagMatcher.group(1));
+				featureFlagMatcher.group(4), featureFlagMatcher.group(1));
 		}
 
 		if (startPos == -1) {
@@ -407,7 +407,7 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 		"\"featureFlag\": \"(.+?)\"");
 	private static final Pattern _featureFlagPattern5 = Pattern.compile(
 		"\n+ +(#\n +# Env: LIFERAY_FEATURE_PERIOD_FLAG_PERIOD__.+\n +#\n +" +
-			"feature\\.flag\\.([A-Z]+-\\d+)\\.(\\w+)=.+)");
+			"(feature\\.flag\\.([A-Z]+-\\d+)\\.(\\w+))=.+)");
 	private static final Pattern _featureFlagsPattern = Pattern.compile(
 		"(\n|\\A)##\n## Feature Flag\n##(\n\n[\\s\\S]*?)(?=(\n\n##|\\Z))");
 	private static final Pattern _featureFlagUIPattern = Pattern.compile(

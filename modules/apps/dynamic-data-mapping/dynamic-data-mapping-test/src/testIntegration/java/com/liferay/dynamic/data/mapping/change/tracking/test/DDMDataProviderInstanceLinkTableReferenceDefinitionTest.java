@@ -19,10 +19,9 @@ import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -51,7 +50,8 @@ public class DDMDataProviderInstanceLinkTableReferenceDefinitionTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm("dataProviderName");
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			RandomTestUtil.randomString());
 
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
@@ -59,11 +59,8 @@ public class DDMDataProviderInstanceLinkTableReferenceDefinitionTest
 		_ddmDataProviderInstance =
 			_ddmDataProviderInstanceLocalService.addDataProviderInstance(
 				TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
-				HashMapBuilder.put(
-					LocaleUtil.US, "Test"
-				).build(),
-				null, ddmFormValues, "rest",
-				ServiceContextTestUtil.getServiceContext());
+				RandomTestUtil.randomLocaleStringMap(), null, ddmFormValues,
+				"rest", ServiceContextTestUtil.getServiceContext());
 
 		_ddmStructure = DDMStructureTestUtil.addStructure(
 			group.getGroupId(), DLFileEntryMetadata.class.getName());

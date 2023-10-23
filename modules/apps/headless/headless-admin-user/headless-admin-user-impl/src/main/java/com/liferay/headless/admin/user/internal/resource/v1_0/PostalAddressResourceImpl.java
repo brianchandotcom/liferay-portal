@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.AddressLocalService;
 import com.liferay.portal.kernel.service.AddressService;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
@@ -52,7 +51,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 	@Override
 	public void deletePostalAddress(Long postalAddressId) throws Exception {
-		_addressLocalService.deleteAddress(postalAddressId);
+		_addressService.deleteAddress(postalAddressId);
 	}
 
 	@Override
@@ -63,9 +62,8 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 		return Page.of(
 			transform(
-				_addressLocalService.getAddresses(
-					contextCompany.getCompanyId(), AccountEntry.class.getName(),
-					accountId),
+				_addressService.getAddresses(
+					AccountEntry.class.getName(), accountId),
 				address -> PostalAddressUtil.toPostalAddress(
 					contextAcceptLanguage.isAcceptAllLanguages(), address,
 					contextCompany.getCompanyId(),
@@ -82,8 +80,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 		return Page.of(
 			transform(
-				_addressLocalService.getAddresses(
-					contextCompany.getCompanyId(),
+				_addressService.getAddresses(
 					organization.getModelClassName(),
 					organization.getOrganizationId()),
 				address -> PostalAddressUtil.toPostalAddress(
@@ -116,9 +113,8 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 		return Page.of(
 			transform(
-				_addressLocalService.getAddresses(
-					user.getCompanyId(), Contact.class.getName(),
-					user.getContactId()),
+				_addressService.getAddresses(
+					Contact.class.getName(), user.getContactId()),
 				address -> PostalAddressUtil.toPostalAddress(
 					contextAcceptLanguage.isAcceptAllLanguages(), address,
 					contextCompany.getCompanyId(),
@@ -130,7 +126,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 			Long postalAddressId, PostalAddress postalAddress)
 		throws Exception {
 
-		Address address = _addressLocalService.getAddress(postalAddressId);
+		Address address = _addressService.getAddress(postalAddressId);
 
 		Country country = null;
 
@@ -187,7 +183,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 			address.setStreet3(postalAddress.getStreetAddressLine3());
 		}
 
-		address = _addressLocalService.updateAddress(
+		address = _addressService.updateAddress(
 			address.getAddressId(), address.getName(), address.getDescription(),
 			address.getStreet1(), address.getStreet2(), address.getStreet3(),
 			address.getCity(), address.getZip(), address.getRegionId(),
@@ -211,7 +207,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 		ListType listType = _getListType(postalAddress);
 
-		Address address = _addressLocalService.addAddress(
+		Address address = _addressService.addAddress(
 			null, contextUser.getUserId(), AccountEntry.class.getName(),
 			accountId, postalAddress.getName(), null,
 			postalAddress.getStreetAddressLine1(),
@@ -233,7 +229,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 			Long postalAddressId, PostalAddress postalAddress)
 		throws Exception {
 
-		Address address = _addressLocalService.getAddress(postalAddressId);
+		Address address = _addressService.getAddress(postalAddressId);
 
 		Country country = _getCountryByTitle(postalAddress);
 
@@ -241,7 +237,7 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 		ListType listType = _getListType(postalAddress);
 
-		address = _addressLocalService.updateAddress(
+		address = _addressService.updateAddress(
 			address.getAddressId(), postalAddress.getName(),
 			address.getDescription(), postalAddress.getStreetAddressLine1(),
 			postalAddress.getStreetAddressLine2(),
@@ -340,9 +336,6 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 
 	@Reference
 	private AccountEntryService _accountEntryService;
-
-	@Reference
-	private AddressLocalService _addressLocalService;
 
 	@Reference
 	private AddressService _addressService;

@@ -5,6 +5,7 @@ import URLConstants from 'shared/util/url-constants';
 import {connect, ConnectedProps} from 'react-redux';
 import {fetchIndividualsDistribution} from 'shared/actions/distributions';
 import {Routes, toRoute} from 'shared/util/router';
+import {toPromise} from 'shared/util/validators';
 import {useParams} from 'react-router-dom';
 
 const connector = connect(null, {
@@ -31,7 +32,7 @@ const IndividualsDistributionCard: React.FC<IIndividualsDistributionCardProps> =
 		<DistributionCard
 			channelId={channelId}
 			distributionKey='individualsDashboard'
-			fetchDistribution={fetchDistribution}
+			fetchDistribution={name => toPromise(fetchDistribution(name))}
 			groupId={groupId}
 			id={id}
 			noResultsRenderer={() => (

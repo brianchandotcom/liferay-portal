@@ -197,7 +197,9 @@ class LiferayOverview extends React.Component<ILiferayOverviewProps> {
 							inputWidth={100}
 							label={Liferay.Language.get('name')}
 							name='dataSourceName'
-							onSubmit={this.handleUpdateName}
+							onSubmit={name =>
+								toPromise(this.handleUpdateName(name))
+							}
 							required
 							validate={sequence([
 								validateRequired,

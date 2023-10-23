@@ -205,6 +205,24 @@
 	},
 	{
 		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.account.model.AccountRole",
+		"roleName": "Sales Agent",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.account.model.AccountRole",
+		"roleName": "Operations Manager",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
 			"UPDATE",
 			"VIEW"
 		],

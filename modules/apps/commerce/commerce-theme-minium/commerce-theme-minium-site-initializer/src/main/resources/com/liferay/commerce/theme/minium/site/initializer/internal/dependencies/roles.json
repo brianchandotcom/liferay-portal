@@ -21,6 +21,12 @@
 			},
 			{
 				"actionIds": [
+					"VIEW"
+				],
+				"resource": "com.liferay.account.model.AccountRole"
+			},
+			{
+				"actionIds": [
 					"ADD_COMMERCE_ORDER",
 					"CHECKOUT_OPEN_COMMERCE_ORDERS",
 					"MANAGE_QUOTES",

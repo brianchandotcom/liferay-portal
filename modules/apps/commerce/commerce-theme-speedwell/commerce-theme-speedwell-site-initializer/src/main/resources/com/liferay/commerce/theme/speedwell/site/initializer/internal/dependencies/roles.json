@@ -18,6 +18,12 @@
 					"MANAGE_USERS"
 				],
 				"resource": "com.liferay.account.model.AccountEntry"
+			},
+			{
+				"actionIds": [
+					"VIEW"
+				],
+				"resource": "com.liferay.account.model.AccountRole"
 			}
 		],
 		"name": "Sales Agent",

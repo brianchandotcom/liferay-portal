@@ -30,21 +30,21 @@ public class SCIMClientBearerTokenProvider implements BearerTokenProvider {
 
 	protected String generateTokenKey(int size) {
 		if (size < 0) {
-			throw new IllegalArgumentException("Token key size is less than 0");
+			throw new IllegalArgumentException("Size is less than 0");
 		}
 
 		int count = (int)Math.ceil((double)size / 8);
 
-		byte[] buffer = new byte[count * 8];
+		byte[] bytes = new byte[count * 8];
 
 		for (int i = 0; i < count; i++) {
-			BigEndianCodec.putLong(buffer, i * 8, SecureRandomUtil.nextLong());
+			BigEndianCodec.putLong(bytes, i * 8, SecureRandomUtil.nextLong());
 		}
 
 		StringBundler sb = new StringBundler(size);
 
 		for (int i = 0; i < size; i++) {
-			sb.append(Integer.toHexString(0xFF & buffer[i]));
+			sb.append(Integer.toHexString(0xFF & bytes[i]));
 		}
 
 		return sb.toString();

@@ -1,7 +1,6 @@
 import Form from 'shared/components/form';
 import getCN from 'classnames';
 import Input from 'shared/components/Input';
-import Promise from 'metal-promise';
 import React from 'react';
 import {close, modalTypes, open} from 'shared/actions/modals';
 import {Columns} from 'shared/types';
@@ -17,7 +16,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 interface ISelectEntityFromModalProps extends PropsFromRedux {
 	columns: Columns;
-	dataSourceFn?: (params: {[key: string]: any}) => typeof Promise;
+	dataSourceFn?: (params: {[key: string]: any}) => Promise<any>;
 	entity: {dataSourceName?: string; [key: string]: any};
 	error: boolean;
 	graphqlProps?: {[key: string]: any};

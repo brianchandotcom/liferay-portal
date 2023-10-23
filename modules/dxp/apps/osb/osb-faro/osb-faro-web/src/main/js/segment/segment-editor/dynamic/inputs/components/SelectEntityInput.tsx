@@ -1,6 +1,5 @@
 import Form from 'shared/components/form';
 import getCN from 'classnames';
-import Promise from 'metal-promise';
 import React, {useContext, useEffect} from 'react';
 import SelectEntityFromModal from '../components/SelectEntityFromModal';
 import {Columns} from 'shared/types';
@@ -14,7 +13,7 @@ import {OrderParams} from 'shared/util/records';
 
 interface ISelectEntityInputProps {
 	columns: Columns;
-	dataSourceFn?: () => typeof Promise;
+	dataSourceFn?: () => Promise<any>;
 	delta?: number;
 	entityLabel: string;
 	entityType: EntityType;

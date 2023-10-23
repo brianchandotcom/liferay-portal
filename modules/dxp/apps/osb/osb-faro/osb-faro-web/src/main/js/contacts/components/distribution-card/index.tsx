@@ -5,7 +5,6 @@ import Card from 'shared/components/Card';
 import DistributionChart from './DistributionChart';
 import ErrorDisplay from 'shared/components/ErrorDisplay';
 import Loading from 'shared/components/Loading';
-import Promise from 'metal-promise';
 import React from 'react';
 import Tabs from './Tabs';
 import {addAlert} from 'shared/actions/alerts';
@@ -49,7 +48,7 @@ interface IDistributionCardProps
 		PropsFromRedux {
 	channelId: string;
 	distributionKey: string;
-	fetchDistribution: (params: object) => typeof Promise;
+	fetchDistribution: (params: object) => Promise<any>;
 	groupId: string;
 	id: string;
 	noResultsRenderer?: () => React.ReactElement;

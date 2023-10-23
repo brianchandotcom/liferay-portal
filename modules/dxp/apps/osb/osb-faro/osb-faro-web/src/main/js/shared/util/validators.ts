@@ -1,4 +1,3 @@
-import Promise from 'metal-promise';
 import {formatStringToLowercase} from 'shared/util/util';
 import {formatTime, getMillisecondsFromTime} from 'shared/util/time';
 import {isArray, isNil, isObject, isString} from 'lodash';
@@ -10,11 +9,9 @@ import {sub} from 'shared/util/lang';
  * @return {Promise}
  */
 
-export function toPromise(
-	value: typeof Promise | Object | string
-): typeof Promise {
+export function toPromise<T>(value: Promise<T> | T): Promise<T> {
 	if (value instanceof Promise) {
-		return (value as typeof Promise).then(val => toPromise(val));
+		return value;
 	} else if (value) {
 		return Promise.reject(value);
 	}
@@ -156,7 +153,7 @@ export function validateMaxLength(maxLength: number) {
 export function validatePattern(
 	regex,
 	errorMessage: string
-): (value: any) => typeof Promise {
+): (value: any) => Promise<any> {
 	return value => {
 		let error = '';
 

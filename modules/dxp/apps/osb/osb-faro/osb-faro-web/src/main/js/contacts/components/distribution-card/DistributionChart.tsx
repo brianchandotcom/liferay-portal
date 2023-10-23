@@ -4,7 +4,6 @@ import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ErrorDisplay from 'shared/components/ErrorDisplay';
 import Loading from 'shared/components/Loading';
-import Promise from 'metal-promise';
 import React from 'react';
 import {ANIMATION_DURATION, AXIS, getTextWidth} from 'shared/util/recharts';
 import {autoCancel, hasRequest} from 'shared/util/request-decorator';
@@ -54,7 +53,7 @@ interface IDistributionChartProps extends PropsFromRedux {
 	channelId: string;
 	distributionKey: string;
 	error: boolean;
-	fetchDistribution: (params: object) => typeof Promise;
+	fetchDistribution: (params: object) => Promise<any>;
 	groupId: string;
 	id: string;
 	individualFieldDistributionIList: List<Map<string, any>>;

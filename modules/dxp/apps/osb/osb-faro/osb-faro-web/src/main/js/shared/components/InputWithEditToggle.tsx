@@ -5,7 +5,6 @@ import Form from 'shared/components/form';
 import getCN from 'classnames';
 import Label from 'shared/components/form/Label';
 import Loading, {Align} from 'shared/components/Loading';
-import Promise from 'metal-promise';
 import React from 'react';
 import {Formik} from 'formik';
 interface IInputWithEditToggleProps {
@@ -14,9 +13,9 @@ interface IInputWithEditToggleProps {
 	inputWidth?: number;
 	label: string;
 	name?: string;
-	onSubmit: (value, name) => typeof Promise;
+	onSubmit: (value, name) => Promise<any>;
 	required: boolean;
-	validate: typeof Promise;
+	validate: (value) => Promise<any>;
 	value: string;
 }
 

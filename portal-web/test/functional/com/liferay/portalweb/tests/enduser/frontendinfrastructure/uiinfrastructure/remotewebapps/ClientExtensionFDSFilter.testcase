@@ -326,4 +326,48 @@ definition {
 		}
 	}
 
+	@description = "LPS-190220. Verify if Source Code URL field is not mandatory and can be empty"
+	@priority = 3
+	test SourceCodeURLFieldIsNotMandatory {
+		task ("Given Client Extension admin page") {
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
+		}
+
+		task ("When to select the FDS filter option") {
+			LexiconEntry.gotoAdd();
+
+			DropdownMenuItem.click(menuItem = "Add Frontend Data Set Filter");
+		}
+
+		task ("And fill in fields JS URL, Source Code URL and Description :") {
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Date Filter Improvements");
+
+			Type.typeNoMouseOver(
+				key_text = "JavaScript URL",
+				locator1 = "TextInput#ANY",
+				value1 = "https://liferay.github.io/liferay-frontend-projects/date-filter.js");
+
+			Type(
+				locator1 = "CKEditor#BODY_FIELD_IFRAME",
+				value1 = "This filter adds the possibility to add slider ranges to the date filter.");
+		}
+
+		task ("And clicks on Publish button") {
+			PortletEntry.publish();
+		}
+
+		task ("Then a confirmation message is displayed") {
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And “Date Filter Improvements” entry is present on Client Extension admin page") {
+			ClientExtensionGeneral.viewTableEntries(
+				entryName = "Date Filter Improvements",
+				entryType = "Frontend Data Set Filter");
+		}
+	}
+
 }

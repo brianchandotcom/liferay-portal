@@ -50,4 +50,34 @@ definition {
 		}
 	}
 
+	@description = "LPS-190220. Verify that the user can hide Identity field, clicking on the collapse icon"
+	@priority = 3
+	test CanHideIdentityField {
+		task ("Given Client Extension admin page") {
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
+		}
+
+		task ("When to select the FDS filter option") {
+			LexiconEntry.gotoAdd();
+
+			DropdownMenuItem.click(menuItem = "Add Frontend Data Set Filter");
+		}
+
+		task ("And clicks on Identity collapse icon") {
+			ClientExtensionGeneral.openOrCloseCollapseField(
+				key_fieldName = "Identity",
+				key_status = "Close");
+		}
+
+		task ("Then Name and Description fields are hidden") {
+			AssertNotVisible(
+				key_fieldName = "Name",
+				locator1 = "ClientExtension#ANY_FIELD");
+
+			AssertNotVisible(
+				key_fieldName = "Description",
+				locator1 = "ClientExtension#ANY_FIELD");
+		}
+	}
+
 }

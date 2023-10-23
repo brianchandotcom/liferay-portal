@@ -45,7 +45,6 @@ default.landing.page.path
 default.regular.color.scheme.id
 default.regular.theme.id
 dl.file.entry.drafts.enabled
-dl.file.entry.processors
 dl.repository.impl
 dl.store.antivirus.enabled
 dl.store.antivirus.impl

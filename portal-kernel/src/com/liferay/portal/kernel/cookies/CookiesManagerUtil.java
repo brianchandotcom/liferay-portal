@@ -5,7 +5,7 @@
 
 package com.liferay.portal.kernel.cookies;
 
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +20,9 @@ public class CookiesManagerUtil {
 		Cookie cookie, HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		return _cookiesManager.addCookie(
+		CookiesManager cookiesManager = _cookiesManagerSnapshot.get();
+
+		return cookiesManager.addCookie(
 			cookie, httpServletRequest, httpServletResponse);
 	}
 
@@ -28,7 +30,9 @@ public class CookiesManagerUtil {
 		Cookie cookie, HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, boolean secure) {
 
-		return _cookiesManager.addCookie(
+		CookiesManager cookiesManager = _cookiesManagerSnapshot.get();
+
+		return cookiesManager.addCookie(
 			cookie, httpServletRequest, httpServletResponse, secure);
 	}
 
@@ -36,7 +40,9 @@ public class CookiesManagerUtil {
 		int consentType, Cookie cookie, HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		return _cookiesManager.addCookie(
+		CookiesManager cookiesManager = _cookiesManagerSnapshot.get();
+
+		return cookiesManager.addCookie(
 			consentType, cookie, httpServletRequest, httpServletResponse);
 	}
 
@@ -44,7 +50,9 @@ public class CookiesManagerUtil {
 		int consentType, Cookie cookie, HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, boolean secure) {
 
-		return _cookiesManager.addCookie(
+		CookiesManager cookiesManager = _cookiesManagerSnapshot.get();
+
+		return cookiesManager.addCookie(
 			consentType, cookie, httpServletRequest, httpServletResponse,
 			secure);
 	}
@@ -53,7 +61,9 @@ public class CookiesManagerUtil {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		return _cookiesManager.addSupportCookie(
+		CookiesManager cookiesManager = _cookiesManagerSnapshot.get();
+
+		return cookiesManager.addSupportCookie(
 			httpServletRequest, httpServletResponse);
 	}
 
@@ -61,56 +71,72 @@ public class CookiesManagerUtil {
 		String domain, HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse, String... cookieNames) {
 
-		return _cookiesManager.deleteCookies(
+		CookiesManager cookiesManager = _cookiesManagerSnapshot.get();
+
+		return cookiesManager.deleteCookies(
 			domain, httpServletRequest, httpServletResponse, cookieNames);
 	}
 
 	public static String getCookieValue(
 		String cookieName, HttpServletRequest httpServletRequest) {
 
-		return _cookiesManager.getCookieValue(cookieName, httpServletRequest);
+		CookiesManager cookiesManager = _cookiesManagerSnapshot.get();
+
+		return cookiesManager.getCookieValue(cookieName, httpServletRequest);
 	}
 
 	public static String getCookieValue(
 		String cookieName, HttpServletRequest httpServletRequest,
 		boolean toUpperCase) {
 
-		return _cookiesManager.getCookieValue(
+		CookiesManager cookiesManager = _cookiesManagerSnapshot.get();
+
+		return cookiesManager.getCookieValue(
 			cookieName, httpServletRequest, toUpperCase);
 	}
 
 	public static String getDomain(HttpServletRequest httpServletRequest) {
-		return _cookiesManager.getDomain(httpServletRequest);
+		CookiesManager cookiesManager = _cookiesManagerSnapshot.get();
+
+		return cookiesManager.getDomain(httpServletRequest);
 	}
 
 	public static String getDomain(String host) {
-		return _cookiesManager.getDomain(host);
+		CookiesManager cookiesManager = _cookiesManagerSnapshot.get();
+
+		return cookiesManager.getDomain(host);
 	}
 
 	public static boolean hasConsentType(
 		int consentType, HttpServletRequest httpServletRequest) {
 
-		return _cookiesManager.hasConsentType(consentType, httpServletRequest);
+		CookiesManager cookiesManager = _cookiesManagerSnapshot.get();
+
+		return cookiesManager.hasConsentType(consentType, httpServletRequest);
 	}
 
 	public static boolean hasSessionId(HttpServletRequest httpServletRequest) {
-		return _cookiesManager.hasSessionId(httpServletRequest);
+		CookiesManager cookiesManager = _cookiesManagerSnapshot.get();
+
+		return cookiesManager.hasSessionId(httpServletRequest);
 	}
 
 	public static boolean isEncodedCookie(String cookieName) {
-		return _cookiesManager.isEncodedCookie(cookieName);
+		CookiesManager cookiesManager = _cookiesManagerSnapshot.get();
+
+		return cookiesManager.isEncodedCookie(cookieName);
 	}
 
 	public static void validateSupportCookie(
 			HttpServletRequest httpServletRequest)
 		throws UnsupportedCookieException {
 
-		_cookiesManager.validateSupportCookie(httpServletRequest);
+		CookiesManager cookiesManager = _cookiesManagerSnapshot.get();
+
+		cookiesManager.validateSupportCookie(httpServletRequest);
 	}
 
-	private static volatile CookiesManager _cookiesManager =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			CookiesManager.class, CookiesManagerUtil.class, "_cookiesManager",
-			false);
+	private static final Snapshot<CookiesManager> _cookiesManagerSnapshot =
+		new Snapshot<>(CookiesManagerUtil.class, CookiesManager.class);
 
 }

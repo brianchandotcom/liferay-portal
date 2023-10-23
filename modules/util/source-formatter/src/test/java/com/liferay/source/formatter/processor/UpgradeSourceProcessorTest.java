@@ -107,11 +107,6 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testUpgradeJavaAddFolderParameterCheck() throws Exception {
-		test("upgrade/UpgradeJavaAddFolderParameterCheck.testjava");
-	}
-
-	@Test
 	public void testUpgradeJavaAssetEntryAssetCategoriesCheck()
 		throws Exception {
 

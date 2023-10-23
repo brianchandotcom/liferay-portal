@@ -5,7 +5,7 @@
 
 package com.liferay.portal.kernel.scripting;
 
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.Map;
 import java.util.Set;
@@ -18,13 +18,17 @@ import java.util.Set;
 public class ScriptingUtil {
 
 	public static void clearCache(String language) throws ScriptingException {
-		_scripting.clearCache(language);
+		Scripting scripting = _scriptingSnapshot.get();
+
+		scripting.clearCache(language);
 	}
 
 	public static ScriptingExecutor createScriptingExecutor(
 		String language, boolean executeInSeparateThread) {
 
-		return _scripting.createScriptingExecutor(
+		Scripting scripting = _scriptingSnapshot.get();
+
+		return scripting.createScriptingExecutor(
 			language, executeInSeparateThread);
 	}
 
@@ -33,16 +37,19 @@ public class ScriptingUtil {
 			Set<String> outputNames, String language, String script)
 		throws ScriptingException {
 
-		return _scripting.eval(
+		Scripting scripting = _scriptingSnapshot.get();
+
+		return scripting.eval(
 			allowedClasses, inputObjects, outputNames, language, script);
 	}
 
 	public static Set<String> getSupportedLanguages() {
-		return _scripting.getSupportedLanguages();
+		Scripting scripting = _scriptingSnapshot.get();
+
+		return scripting.getSupportedLanguages();
 	}
 
-	private static volatile Scripting _scripting =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			Scripting.class, ScriptingUtil.class, "_scripting", false);
+	private static final Snapshot<Scripting> _scriptingSnapshot =
+		new Snapshot<>(ScriptingUtil.class, Scripting.class);
 
 }

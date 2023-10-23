@@ -29,15 +29,15 @@ import CommonStylesManager from './CommonStylesManager';
 import {DisplayPagePreviewItemSelector} from './DisplayPagePreviewItemSelector';
 import DragPreviewWrapper from './DragPreviewWrapper';
 import ItemConfigurationSidebar from './ItemConfigurationSidebar';
-import KeyboardMovementManager from './KeyboardMovementManager';
-import KeyboardMovementPreview from './KeyboardMovementPreview';
-import KeyboardMovementText from './KeyboardMovementText';
 import {LayoutBreadcrumbs} from './LayoutBreadcrumbs';
 import LayoutViewport from './LayoutViewport';
 import ShortcutManager from './ShortcutManager';
 import Sidebar from './Sidebar';
 import Toolbar from './Toolbar';
 import WidgetsManager from './WidgetsManager';
+import KeyboardMovementManager from './keyboard_movement/KeyboardMovementManager';
+import KeyboardMovementPreview from './keyboard_movement/KeyboardMovementPreview';
+import KeyboardMovementText from './keyboard_movement/KeyboardMovementText';
 
 export default function App({state}) {
 	const initialState = reducer(state, {type: INIT});

@@ -13,9 +13,9 @@ import {
 	useMovementSource,
 	useMovementTarget,
 	useMovementTargetPosition,
-} from '../contexts/KeyboardMovementContext';
-import {TARGET_POSITIONS} from '../utils/drag_and_drop/constants/targetPositions';
-import getLayoutDataItemTopperUniqueClassName from '../utils/getLayoutDataItemTopperUniqueClassName';
+} from '../../contexts/KeyboardMovementContext';
+import {TARGET_POSITIONS} from '../../utils/drag_and_drop/constants/targetPositions';
+import getLayoutDataItemTopperUniqueClassName from '../../utils/getLayoutDataItemTopperUniqueClassName';
 
 const INITIAL_STYLE = {opacity: 0};
 const DRAG_FEEDBACK_HEIGHT = 6;

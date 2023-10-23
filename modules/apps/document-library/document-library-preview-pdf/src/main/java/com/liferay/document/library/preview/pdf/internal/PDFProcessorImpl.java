@@ -15,6 +15,7 @@ import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.PDFProcessor;
 import com.liferay.document.library.preview.pdf.internal.background.task.PDFPreviewBackgroundTaskExecutor;
 import com.liferay.document.library.preview.pdf.internal.util.ProcessConfigUtil;
+import com.liferay.document.library.preview.processor.DLPreviewableProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.image.Ghostscript;
 import com.liferay.petra.process.ProcessCallable;
@@ -47,7 +48,6 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.util.DLPreviewableProcessor;
 
 import java.io.File;
 import java.io.IOException;

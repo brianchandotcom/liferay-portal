@@ -12,8 +12,8 @@ interface CXDefinitionsHandlerItem<T> {
 	context: T;
 }
 interface CXDefinitionsHandler<T> {
-	cxDefinitions: CXDefinition<T>[];
 	onLoad(items: CXDefinitionsHandlerItem<T>[]): void;
+	cxDefinitions: CXDefinition<T>[];
 }
 export default function loadClientExtensions(
 	cxDefinitionsHandlers: CXDefinitionsHandler<unknown>[]

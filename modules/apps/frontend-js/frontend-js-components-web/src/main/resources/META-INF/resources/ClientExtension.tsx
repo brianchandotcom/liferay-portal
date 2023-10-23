@@ -7,7 +7,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React, {useEffect, useRef} from 'react';
 
 export interface IHTMLElementBuilder<T> {
-	(args: T) : HTMLElement;
+	(args: T): HTMLElement;
 }
 
 interface IClientExtensionProps<T> {
@@ -46,5 +46,9 @@ export default function ClientExtension<T>({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [htmlElementBuilder]);
 
-	return htmlElementBuilder ? <div ref={containerRef}></div> : <ClayLoadingIndicator/>;
+	return htmlElementBuilder ? (
+		<div ref={containerRef}></div>
+	) : (
+		<ClayLoadingIndicator />
+	);
 }

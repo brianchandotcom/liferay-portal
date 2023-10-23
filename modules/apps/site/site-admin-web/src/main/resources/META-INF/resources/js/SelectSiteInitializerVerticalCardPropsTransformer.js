@@ -9,19 +9,24 @@ export default function SelectSiteInitializerVerticalCardPropsTransformer({
 	portletNamespace: namespace,
 	...otherProps
 }) {
+	const openModalAddSite = (event) => {
+		openModal({
+			disableAutoClose: true,
+			height: '60vh',
+			id: `${namespace}addSiteDialog`,
+			size: 'md',
+			title: Liferay.Language.get('add-site'),
+			url: event.currentTarget.dataset.addSiteUrl,
+		});
+	};
+
 	return {
 		...otherProps,
-		onClick: (event) => {
-			event.preventDefault();
-
-			openModal({
-				disableAutoClose: true,
-				height: '60vh',
-				id: `${namespace}addSiteDialog`,
-				size: 'md',
-				title: Liferay.Language.get('add-site'),
-				url: event.currentTarget.dataset.addSiteUrl,
-			});
+		onClick: openModalAddSite,
+		onKeyDown: (event) => {
+			if (event.key === 'Enter') {
+				openModalAddSite(event);
+			}
 		},
 	};
 }

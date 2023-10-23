@@ -86,25 +86,9 @@ public class BaseGraphQLServlet {
 
 	}
 
-	public static class TestMutation {
+	public static class TestDTOPage {
 
-		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
-		public BaseGraphQLServlet.TestDTO createTestDTO(
-				@GraphQLName("testDTO") TestDTO testDTO)
-			throws Exception {
-
-			return testDTO;
-		}
-
-	}
-
-	public static class TestPagination {
-
-		public TestPagination() {
-			this(0, 0);
-		}
-
-		public TestPagination(int page, int pageSize) {
+		public TestDTOPage(int page, int pageSize) {
 			this.page = page;
 			this.pageSize = pageSize;
 		}
@@ -125,6 +109,18 @@ public class BaseGraphQLServlet {
 
 	}
 
+	public static class TestMutation {
+
+		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+		public BaseGraphQLServlet.TestDTO createTestDTO(
+				@GraphQLName("testDTO") TestDTO testDTO)
+			throws Exception {
+
+			return testDTO;
+		}
+
+	}
+
 	public static class TestQuery {
 
 		public TestQuery() {
@@ -134,22 +130,18 @@ public class BaseGraphQLServlet {
 			_testDTO = testDTO;
 		}
 
-		public TestQuery(TestPagination testPagination) {
-			_testPagination = testPagination;
-		}
-
 		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
 		public BaseGraphQLServlet.TestDTO testDTO() throws Exception {
 			return _testDTO;
 		}
 
 		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
-		public BaseGraphQLServlet.TestPagination testPagination(
+		public BaseGraphQLServlet.TestDTOPage testDTOPage(
 				@GraphQLName("page") int page,
 				@GraphQLName("pageSize") int pageSize)
 			throws Exception {
 
-			return new TestPagination(page, pageSize);
+			return new TestDTOPage(page, pageSize);
 		}
 
 		@GraphQLTypeExtension(TestDTO.class)
@@ -169,7 +161,7 @@ public class BaseGraphQLServlet {
 		}
 
 		private static TestDTO _testDTO;
-		private static TestPagination _testPagination;
+		private static TestDTOPage _testDTOPage;
 
 	}
 
@@ -177,10 +169,6 @@ public class BaseGraphQLServlet {
 
 		public TestServletData(TestDTO testDTO) {
 			_testQuery = new TestQuery(testDTO);
-		}
-
-		public TestServletData(TestPagination testPagination) {
-			_testQuery = new TestQuery(testPagination);
 		}
 
 		@Override

@@ -11,10 +11,12 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
+import com.liferay.portal.vulcan.internal.util.PaginationConfigurationTestUtil;
 
 import java.util.Collections;
 
@@ -172,6 +174,121 @@ public class GraphQLServletTest extends BaseGraphQLServlet {
 				factoryConfiguration.update(configuration.getProperties());
 			}
 		}
+	}
+
+	@Test
+	public void testQueryPagination() throws Exception {
+
+		// Default limited page size and limited page size requested
+
+		_test(1, 20, null, null);
+		_test(1, 5, null, 5);
+		_test(1, 30, null, 30);
+		_test(1, 20, null, null);
+		_test(1, 15, null, 15);
+		_test(1, 30, null, 30);
+		_test(1, 40, null, 40);
+		_test(2, 20, 2, null);
+		_test(3, 20, 3, null);
+
+		// Default limited page size and unlimited page size requested
+
+		_test(1, 500, null, -1);
+		_test(1, 500, null, 0);
+		_test(1, 500, -1, null);
+		_test(1, 500, 0, null);
+
+		// Limited page size configured and limited page size requested
+
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			10, () -> _test(1, 10, null, null));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			10, () -> _test(1, 5, null, 5));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			10, () -> _test(1, 10, null, 30));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			30, () -> _test(1, 20, null, null));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			30, () -> _test(1, 15, null, 15));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			30, () -> _test(1, 30, null, 30));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			30, () -> _test(1, 30, null, 40));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			50, () -> _test(2, 20, 2, null));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			50, () -> _test(3, 20, 3, null));
+
+		// Limited page size configured and unlimited page size requested
+
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			50, () -> _test(1, 50, null, -1));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			50, () -> _test(1, 50, null, 0));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			50, () -> _test(1, 50, -1, null));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			50, () -> _test(1, 50, 0, null));
+
+		// Unlimited page size configured and limited page size requested
+
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			-1, () -> _test(1, 20, null, null));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			-1, () -> _test(1, 25, null, 25));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			-1, () -> _test(2, 20, 2, null));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			-1, () -> _test(2, 25, 2, 25));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			0, () -> _test(1, 20, null, null));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			0, () -> _test(1, 25, null, 25));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			0, () -> _test(2, 20, 2, null));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			0, () -> _test(2, 25, 2, 25));
+
+		// Unlimited page size configured and unlimited page size requested
+
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			-1, () -> _test(-1, -1, -1, null));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			-1, () -> _test(-1, -1, 0, null));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			-1, () -> _test(-1, -1, null, -1));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			-1, () -> _test(-1, -1, null, 0));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			0, () -> _test(-1, -1, -1, null));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			0, () -> _test(-1, -1, 0, null));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			0, () -> _test(-1, -1, null, -1));
+		PaginationConfigurationTestUtil.withPageSizeLimit(
+			0, () -> _test(-1, -1, null, 0));
+	}
+
+	private void _test(
+			int expectedPage, int expectedPageSize, Integer requestPage,
+			Integer requestPageSize)
+		throws Exception {
+
+		JSONObject jsonObject = JSONUtil.getValueAsJSONObject(
+			invoke(
+				new GraphQLField(
+					"testDTOPage",
+					HashMapBuilder.put(
+						"page", (Object)requestPage
+					).put(
+						"pageSize", (Object)requestPageSize
+					).build(),
+					new GraphQLField("page"), new GraphQLField("pageSize")),
+				"query"),
+			"JSONObject/data", "JSONObject/testDTOPage");
+
+		Assert.assertEquals(expectedPage, jsonObject.getInt("page"));
+		Assert.assertEquals(expectedPageSize, jsonObject.getInt("pageSize"));
 	}
 
 	@Inject

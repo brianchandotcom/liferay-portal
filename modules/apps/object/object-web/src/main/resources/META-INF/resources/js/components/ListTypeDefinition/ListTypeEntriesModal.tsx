@@ -74,7 +74,10 @@ function ListTypeEntriesModal() {
 		let newItemKey = itemKey;
 
 		if (modalType !== 'edit' && keyChanged === false) {
-			newItemKey = toCamelCase(newName_i18n[defaultLanguageId] as string);
+			newItemKey = toCamelCase(
+				newName_i18n[defaultLanguageId] as string,
+				true
+			);
 		}
 
 		setState((previousValues) => ({

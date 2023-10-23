@@ -20,6 +20,7 @@ const LevelChart = () => {
 		currency,
 		headcount,
 		loading,
+		newProjectExistingBusiness,
 		partnerLevel,
 	} = useGetAccountInformation();
 
@@ -28,7 +29,11 @@ const LevelChart = () => {
 			return <ClayLoadingIndicator className="mb-10 mt-10" size="md" />;
 		}
 
-		if (!account || !partnerLevel) {
+		if (
+			!account ||
+			!partnerLevel ||
+			newProjectExistingBusiness === undefined
+		) {
 			return (
 				<ClayAlert
 					className="mx-auto my-9 text-center w-75"
@@ -47,6 +52,7 @@ const LevelChart = () => {
 				checkedProperties={checkedProperties}
 				currency={currency}
 				headcount={headcount}
+				newProjectExistingBusiness={newProjectExistingBusiness}
 				partnerLevel={partnerLevel}
 			/>
 		);

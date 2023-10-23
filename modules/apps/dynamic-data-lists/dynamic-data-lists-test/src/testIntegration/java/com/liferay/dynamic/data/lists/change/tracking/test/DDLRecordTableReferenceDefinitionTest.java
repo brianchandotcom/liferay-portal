@@ -49,14 +49,14 @@ public class DDLRecordTableReferenceDefinitionTest
 		DDLRecordSet ddlRecordSet = ddlRecordSetTestHelper.addRecordSet(
 			ddmStructure);
 
-		_recordTestHelper = new DDLRecordTestHelper(group, ddlRecordSet);
+		_ddlRecordTestHelper = new DDLRecordTestHelper(group, ddlRecordSet);
 	}
 
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
-		return _recordTestHelper.addRecord();
+		return _ddlRecordTestHelper.addRecord();
 	}
 
-	private DDLRecordTestHelper _recordTestHelper;
+	private DDLRecordTestHelper _ddlRecordTestHelper;
 
 }

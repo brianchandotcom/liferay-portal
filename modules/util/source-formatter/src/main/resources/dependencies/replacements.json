@@ -1,6 +1,15 @@
 [
 	{
 		"classNames": [
+			"JournalFolderLocalService",
+			"JournalFolderLocalServiceUtil"
+		],
+		"from": "addFolder(long, long, long, String, String, ServiceContext)",
+		"issueKey": "LPS-184731",
+		"to": "addFolder(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#)"
+	},
+	{
+		"classNames": [
 			"FDSTableSchemaBuilder"
 		],
 		"from": "addFDSTableSchemaField",

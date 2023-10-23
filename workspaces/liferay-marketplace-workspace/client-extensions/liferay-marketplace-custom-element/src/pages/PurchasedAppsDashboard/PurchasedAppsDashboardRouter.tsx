@@ -20,15 +20,15 @@ const PurchasedAppsDashboardRouter = () => (
 					<Route element={<Apps />} index />
 					<Route path="app/:appId">
 						<Route element={<App />} index />
-						<Route
-							element={<CreateLicense />}
-							path="create-license"
-						/>
 					</Route>
 				</Route>
 				<Route element={<Members />} path="members" />
 				<Route element={<Solutions />} path="solutions" />
 			</Route>
+			<Route
+				element={<CreateLicense />}
+				path="app/:appId/create-license"
+			/>
 		</Routes>
 	</HashRouter>
 );

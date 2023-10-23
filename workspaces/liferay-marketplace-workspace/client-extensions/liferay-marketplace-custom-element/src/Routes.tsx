@@ -5,7 +5,6 @@
 
 import {Liferay} from './liferay/liferay';
 import {AppCreationFlow} from './pages/AppCreationFlow/AppCreationFlow';
-import CreateLicense from './pages/CreateLicense';
 import {CustomerGatePage} from './pages/CustomerGatePage/CustomerGatePage';
 import GetAppPage from './pages/GetAppPage/GetAppPage';
 import {NextStepPage} from './pages/NextStepPage/NextStepPage';
@@ -15,7 +14,6 @@ import PurchasedSolutions from './pages/PurchasedSolutions/PurchasedSolutions';
 
 const Routes = {
 	'create-app': AppCreationFlow,
-	'create-license': CreateLicense,
 	'customer-gate': CustomerGatePage,
 	'get-app': GetAppPage,
 	'next-steps': NextStepPage,

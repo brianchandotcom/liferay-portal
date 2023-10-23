@@ -60,6 +60,7 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -76,15 +77,23 @@ import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.search.BooleanClause;
+import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
@@ -1222,7 +1231,9 @@ public class JournalDisplayContext {
 	}
 
 	public boolean isSearch() {
-		if (Validator.isNotNull(getKeywords())) {
+		if (Validator.isNotNull(getKeywords()) ||
+			ArrayUtil.isNotEmpty(_getAssetTagNames())) {
+
 			return true;
 		}
 
@@ -1415,6 +1426,56 @@ public class JournalDisplayContext {
 		_articleSearchContainer = articleAndFolderSearchContainer;
 
 		return _articleSearchContainer;
+	}
+
+	private String[] _getAssetTagNames() {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-196766")) {
+			return null;
+		}
+
+		if (_assetTagNames != null) {
+			return _assetTagNames;
+		}
+
+		_assetTagNames = ParamUtil.getStringValues(
+			_httpServletRequest, "assetTagId");
+
+		return _assetTagNames;
+	}
+
+	private Filter _getAssetTagNamesFilter(String[] assetTagNames) {
+		if (ArrayUtil.isEmpty(assetTagNames)) {
+			return null;
+		}
+
+		BooleanFilter booleanFilter = new BooleanFilter();
+
+		for (String assetTagName : assetTagNames) {
+			booleanFilter.addTerm(
+				Field.ASSET_TAG_NAMES + ".raw", assetTagName,
+				BooleanClauseOccur.MUST);
+		}
+
+		return booleanFilter;
+	}
+
+	private BooleanClause<Query>[] _getBooleanClauses(String[] assetTagNames) {
+		BooleanQuery booleanQuery = new BooleanQueryImpl();
+
+		BooleanFilter booleanFilter = new BooleanFilter();
+
+		if (ArrayUtil.isNotEmpty(assetTagNames)) {
+			booleanFilter.add(
+				_getAssetTagNamesFilter(assetTagNames),
+				BooleanClauseOccur.MUST);
+		}
+
+		booleanQuery.setPreBooleanFilter(booleanFilter);
+
+		return new BooleanClause[] {
+			BooleanClauseFactoryUtil.create(
+				booleanQuery, BooleanClauseOccur.MUST.getName())
+		};
 	}
 
 	private SearchContainer<MBMessage> _getCommentsSearchContainer()
@@ -1670,6 +1731,9 @@ public class JournalDisplayContext {
 
 		searchContext.setAttributes(attributes);
 
+		searchContext.setBooleanClauses(
+			_getBooleanClauses(_getAssetTagNames()));
+
 		long ddmStructureId = ParamUtil.getLong(
 			_httpServletRequest, "ddmStructureId");
 
@@ -1716,6 +1780,7 @@ public class JournalDisplayContext {
 	private SearchContainer<JournalArticle> _articleVersionsSearchContainer;
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
+	private String[] _assetTagNames;
 	private Long _ddmStructureId;
 	private String _ddmStructureName;
 	private List<DDMStructure> _ddmStructures;

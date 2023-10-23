@@ -55,6 +55,14 @@ const FeatureFlagToggle = ({
 						? data.dependentFeatureFlags
 						: []),
 				]);
+
+				const toggleButton = document.querySelector(
+					`#${featureFlagKey}`
+				) as HTMLElement;
+
+				setTimeout(() => {
+					toggleButton?.focus();
+				}, 10);
 			}
 			else {
 				Liferay.Util.openToast({
@@ -71,21 +79,19 @@ const FeatureFlagToggle = ({
 	};
 
 	return (
-		<>
-			<ClayToggle
-				aria-describedby={ariaDescribedBy}
-				disabled={disabled || isLoading}
-				id={inputName}
-				label={
-					enabled
-						? Liferay.Language.get('enabled')
-						: Liferay.Language.get('disabled')
-				}
-				onToggle={updateToggled}
-				toggled={enabled}
-				type="checkbox"
-			/>
-		</>
+		<ClayToggle
+			aria-describedby={ariaDescribedBy}
+			disabled={disabled || isLoading}
+			id={inputName}
+			label={
+				enabled
+					? Liferay.Language.get('enabled')
+					: Liferay.Language.get('disabled')
+			}
+			onToggle={updateToggled}
+			toggled={enabled}
+			type="checkbox"
+		/>
 	);
 };
 

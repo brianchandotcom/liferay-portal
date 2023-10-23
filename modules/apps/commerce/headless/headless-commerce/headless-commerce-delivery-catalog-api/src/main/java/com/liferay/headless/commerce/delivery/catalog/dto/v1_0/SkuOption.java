@@ -242,6 +242,34 @@ public class SkuOption implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String skuOptionKey;
 
+	@Schema(example = "Sku Option Name")
+	public String getSkuOptionName() {
+		return skuOptionName;
+	}
+
+	public void setSkuOptionName(String skuOptionName) {
+		this.skuOptionName = skuOptionName;
+	}
+
+	@JsonIgnore
+	public void setSkuOptionName(
+		UnsafeSupplier<String, Exception> skuOptionNameUnsafeSupplier) {
+
+		try {
+			skuOptionName = skuOptionNameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String skuOptionName;
+
 	@Schema(example = "30130")
 	public Long getSkuOptionValueId() {
 		return skuOptionValueId;
@@ -297,6 +325,34 @@ public class SkuOption implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String skuOptionValueKey;
+
+	@Schema
+	public String[] getSkuOptionValueNames() {
+		return skuOptionValueNames;
+	}
+
+	public void setSkuOptionValueNames(String[] skuOptionValueNames) {
+		this.skuOptionValueNames = skuOptionValueNames;
+	}
+
+	@JsonIgnore
+	public void setSkuOptionValueNames(
+		UnsafeSupplier<String[], Exception> skuOptionValueNamesUnsafeSupplier) {
+
+		try {
+			skuOptionValueNames = skuOptionValueNamesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String[] skuOptionValueNames;
 
 	@DecimalMin("0")
 	@Schema(example = "31130")
@@ -438,6 +494,20 @@ public class SkuOption implements Serializable {
 			sb.append("\"");
 		}
 
+		if (skuOptionName != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"skuOptionName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(skuOptionName));
+
+			sb.append("\"");
+		}
+
 		if (skuOptionValueId != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -460,6 +530,30 @@ public class SkuOption implements Serializable {
 			sb.append(_escape(skuOptionValueKey));
 
 			sb.append("\"");
+		}
+
+		if (skuOptionValueNames != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"skuOptionValueNames\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < skuOptionValueNames.length; i++) {
+				sb.append("\"");
+
+				sb.append(_escape(skuOptionValueNames[i]));
+
+				sb.append("\"");
+
+				if ((i + 1) < skuOptionValueNames.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (value != null) {

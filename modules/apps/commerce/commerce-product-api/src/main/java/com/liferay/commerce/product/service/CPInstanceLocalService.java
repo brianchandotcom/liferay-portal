@@ -378,6 +378,11 @@ public interface CPInstanceLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPInstance> getCPInstances(long companyId, String sku);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPInstance> getCPInstances(
+		String replacementCPInstanceUuid, long replacementCProductId,
+		int status);
+
 	/**
 	 * Returns all the cp instances matching the UUID and company.
 	 *
@@ -490,7 +495,19 @@ public interface CPInstanceLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPInstance> searchCPInstances(
+			long companyId, String cpInstanceUuid, long cProductId,
+			String keywords, int status, int start, int end, Sort sort)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CPInstance> searchCPInstances(
 			SearchContext searchContext)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCPInstancesCount(
+			long companyId, String cpInstanceUuid, long cProductId,
+			String keywords, int status)
 		throws PortalException;
 
 	/**

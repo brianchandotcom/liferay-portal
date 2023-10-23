@@ -469,6 +469,14 @@ public class CPInstanceLocalServiceUtil {
 		return getService().getCPInstances(companyId, sku);
 	}
 
+	public static List<CPInstance> getCPInstances(
+		String replacementCPInstanceUuid, long replacementCProductId,
+		int status) {
+
+		return getService().getCPInstances(
+			replacementCPInstanceUuid, replacementCProductId, status);
+	}
+
 	/**
 	 * Returns all the cp instances matching the UUID and company.
 	 *
@@ -635,10 +643,31 @@ public class CPInstanceLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<CPInstance> searchCPInstances(
+				long companyId, String cpInstanceUuid, long cProductId,
+				String keywords, int status, int start, int end,
+				com.liferay.portal.kernel.search.Sort sort)
+			throws PortalException {
+
+		return getService().searchCPInstances(
+			companyId, cpInstanceUuid, cProductId, keywords, status, start, end,
+			sort);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult
+		<CPInstance> searchCPInstances(
 				com.liferay.portal.kernel.search.SearchContext searchContext)
 			throws PortalException {
 
 		return getService().searchCPInstances(searchContext);
+	}
+
+	public static int searchCPInstancesCount(
+			long companyId, String cpInstanceUuid, long cProductId,
+			String keywords, int status)
+		throws PortalException {
+
+		return getService().searchCPInstancesCount(
+			companyId, cpInstanceUuid, cProductId, keywords, status);
 	}
 
 	/**

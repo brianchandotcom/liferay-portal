@@ -1976,6 +1976,185 @@ public interface CPInstancePersistence
 		long CPDefinitionId, Date displayDate, int status);
 
 	/**
+	 * Returns all the cp instances where replacementCPInstanceUuid = &#63; and replacementCProductId = &#63; and status = &#63;.
+	 *
+	 * @param replacementCPInstanceUuid the replacement cp instance uuid
+	 * @param replacementCProductId the replacement c product ID
+	 * @param status the status
+	 * @return the matching cp instances
+	 */
+	public java.util.List<CPInstance> findByR_R_S(
+		String replacementCPInstanceUuid, long replacementCProductId,
+		int status);
+
+	/**
+	 * Returns a range of all the cp instances where replacementCPInstanceUuid = &#63; and replacementCProductId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPInstanceModelImpl</code>.
+	 * </p>
+	 *
+	 * @param replacementCPInstanceUuid the replacement cp instance uuid
+	 * @param replacementCProductId the replacement c product ID
+	 * @param status the status
+	 * @param start the lower bound of the range of cp instances
+	 * @param end the upper bound of the range of cp instances (not inclusive)
+	 * @return the range of matching cp instances
+	 */
+	public java.util.List<CPInstance> findByR_R_S(
+		String replacementCPInstanceUuid, long replacementCProductId,
+		int status, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the cp instances where replacementCPInstanceUuid = &#63; and replacementCProductId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPInstanceModelImpl</code>.
+	 * </p>
+	 *
+	 * @param replacementCPInstanceUuid the replacement cp instance uuid
+	 * @param replacementCProductId the replacement c product ID
+	 * @param status the status
+	 * @param start the lower bound of the range of cp instances
+	 * @param end the upper bound of the range of cp instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching cp instances
+	 */
+	public java.util.List<CPInstance> findByR_R_S(
+		String replacementCPInstanceUuid, long replacementCProductId,
+		int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the cp instances where replacementCPInstanceUuid = &#63; and replacementCProductId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPInstanceModelImpl</code>.
+	 * </p>
+	 *
+	 * @param replacementCPInstanceUuid the replacement cp instance uuid
+	 * @param replacementCProductId the replacement c product ID
+	 * @param status the status
+	 * @param start the lower bound of the range of cp instances
+	 * @param end the upper bound of the range of cp instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching cp instances
+	 */
+	public java.util.List<CPInstance> findByR_R_S(
+		String replacementCPInstanceUuid, long replacementCProductId,
+		int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first cp instance in the ordered set where replacementCPInstanceUuid = &#63; and replacementCProductId = &#63; and status = &#63;.
+	 *
+	 * @param replacementCPInstanceUuid the replacement cp instance uuid
+	 * @param replacementCProductId the replacement c product ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp instance
+	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
+	 */
+	public CPInstance findByR_R_S_First(
+			String replacementCPInstanceUuid, long replacementCProductId,
+			int status,
+			com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
+				orderByComparator)
+		throws NoSuchCPInstanceException;
+
+	/**
+	 * Returns the first cp instance in the ordered set where replacementCPInstanceUuid = &#63; and replacementCProductId = &#63; and status = &#63;.
+	 *
+	 * @param replacementCPInstanceUuid the replacement cp instance uuid
+	 * @param replacementCProductId the replacement c product ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching cp instance, or <code>null</code> if a matching cp instance could not be found
+	 */
+	public CPInstance fetchByR_R_S_First(
+		String replacementCPInstanceUuid, long replacementCProductId,
+		int status,
+		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
+			orderByComparator);
+
+	/**
+	 * Returns the last cp instance in the ordered set where replacementCPInstanceUuid = &#63; and replacementCProductId = &#63; and status = &#63;.
+	 *
+	 * @param replacementCPInstanceUuid the replacement cp instance uuid
+	 * @param replacementCProductId the replacement c product ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp instance
+	 * @throws NoSuchCPInstanceException if a matching cp instance could not be found
+	 */
+	public CPInstance findByR_R_S_Last(
+			String replacementCPInstanceUuid, long replacementCProductId,
+			int status,
+			com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
+				orderByComparator)
+		throws NoSuchCPInstanceException;
+
+	/**
+	 * Returns the last cp instance in the ordered set where replacementCPInstanceUuid = &#63; and replacementCProductId = &#63; and status = &#63;.
+	 *
+	 * @param replacementCPInstanceUuid the replacement cp instance uuid
+	 * @param replacementCProductId the replacement c product ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching cp instance, or <code>null</code> if a matching cp instance could not be found
+	 */
+	public CPInstance fetchByR_R_S_Last(
+		String replacementCPInstanceUuid, long replacementCProductId,
+		int status,
+		com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
+			orderByComparator);
+
+	/**
+	 * Returns the cp instances before and after the current cp instance in the ordered set where replacementCPInstanceUuid = &#63; and replacementCProductId = &#63; and status = &#63;.
+	 *
+	 * @param CPInstanceId the primary key of the current cp instance
+	 * @param replacementCPInstanceUuid the replacement cp instance uuid
+	 * @param replacementCProductId the replacement c product ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next cp instance
+	 * @throws NoSuchCPInstanceException if a cp instance with the primary key could not be found
+	 */
+	public CPInstance[] findByR_R_S_PrevAndNext(
+			long CPInstanceId, String replacementCPInstanceUuid,
+			long replacementCProductId, int status,
+			com.liferay.portal.kernel.util.OrderByComparator<CPInstance>
+				orderByComparator)
+		throws NoSuchCPInstanceException;
+
+	/**
+	 * Removes all the cp instances where replacementCPInstanceUuid = &#63; and replacementCProductId = &#63; and status = &#63; from the database.
+	 *
+	 * @param replacementCPInstanceUuid the replacement cp instance uuid
+	 * @param replacementCProductId the replacement c product ID
+	 * @param status the status
+	 */
+	public void removeByR_R_S(
+		String replacementCPInstanceUuid, long replacementCProductId,
+		int status);
+
+	/**
+	 * Returns the number of cp instances where replacementCPInstanceUuid = &#63; and replacementCProductId = &#63; and status = &#63;.
+	 *
+	 * @param replacementCPInstanceUuid the replacement cp instance uuid
+	 * @param replacementCProductId the replacement c product ID
+	 * @param status the status
+	 * @return the number of matching cp instances
+	 */
+	public int countByR_R_S(
+		String replacementCPInstanceUuid, long replacementCProductId,
+		int status);
+
+	/**
 	 * Returns the cp instance where externalReferenceCode = &#63; and companyId = &#63; or throws a <code>NoSuchCPInstanceException</code> if it could not be found.
 	 *
 	 * @param externalReferenceCode the external reference code

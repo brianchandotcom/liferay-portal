@@ -105,6 +105,8 @@ create index IX_BDD42A9C on CPInstance (displayDate, status, ctCollectionId);
 create unique index IX_B7FE5C91 on CPInstance (externalReferenceCode[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
 create index IX_921194A0 on CPInstance (groupId, ctCollectionId);
 create index IX_78B7E586 on CPInstance (groupId, status, ctCollectionId);
+create index IX_C4A02CD0 on CPInstance (replacementCPInstanceUuid[$COLUMN_LENGTH:75$], replacementCProductId, ctCollectionId);
+create index IX_AC034DB6 on CPInstance (replacementCPInstanceUuid[$COLUMN_LENGTH:75$], replacementCProductId, status, ctCollectionId);
 create index IX_B692DDBA on CPInstance (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
 create index IX_F137BAA on CPInstance (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
 create unique index IX_D664473C on CPInstance (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);

@@ -492,6 +492,16 @@ public class CPInstancePersistenceTest {
 	}
 
 	@Test
+	public void testCountByR_R_S() throws Exception {
+		_persistence.countByR_R_S(
+			"", RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+
+		_persistence.countByR_R_S("null", 0L, 0);
+
+		_persistence.countByR_R_S((String)null, 0L, 0);
+	}
+
+	@Test
 	public void testCountByERC_C() throws Exception {
 		_persistence.countByERC_C("", RandomTestUtil.nextLong());
 

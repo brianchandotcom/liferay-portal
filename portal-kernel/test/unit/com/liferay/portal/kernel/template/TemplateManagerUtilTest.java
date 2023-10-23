@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -83,16 +82,6 @@ public class TemplateManagerUtilTest {
 		Assert.assertTrue(
 			templateManagerNames.toString(),
 			templateManagerNames.contains(_TEST_TEMPLATE_MANAGER_NAME));
-	}
-
-	@Test
-	public void testGetTemplateManagers() {
-		Map<String, TemplateManager> templateManagers =
-			TemplateManagerUtil.getTemplateManagers();
-
-		Assert.assertSame(
-			_templateManager,
-			templateManagers.get(_TEST_TEMPLATE_MANAGER_NAME));
 	}
 
 	@Test

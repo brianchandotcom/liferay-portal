@@ -5,7 +5,7 @@
 
 package com.liferay.exportimport.kernel.configuration;
 
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 import java.util.Map;
@@ -18,19 +18,30 @@ import javax.portlet.PortletRequest;
 public class ExportImportConfigurationParameterMapFactoryUtil {
 
 	public static Map<String, String[]> buildFullPublishParameterMap() {
-		return _exportImportConfigurationParameterMapFactory.
+		ExportImportConfigurationParameterMapFactory
+			exportImportConfigurationParameterMapFactory =
+				_exportImportConfigurationParameterMapFactorySnapshot.get();
+
+		return exportImportConfigurationParameterMapFactory.
 			buildFullPublishParameterMap();
 	}
 
 	public static Map<String, String[]> buildParameterMap() {
-		return _exportImportConfigurationParameterMapFactory.
-			buildParameterMap();
+		ExportImportConfigurationParameterMapFactory
+			exportImportConfigurationParameterMapFactory =
+				_exportImportConfigurationParameterMapFactorySnapshot.get();
+
+		return exportImportConfigurationParameterMapFactory.buildParameterMap();
 	}
 
 	public static Map<String, String[]> buildParameterMap(
 		PortletRequest portletRequest) {
 
-		return _exportImportConfigurationParameterMapFactory.buildParameterMap(
+		ExportImportConfigurationParameterMapFactory
+			exportImportConfigurationParameterMapFactory =
+				_exportImportConfigurationParameterMapFactorySnapshot.get();
+
+		return exportImportConfigurationParameterMapFactory.buildParameterMap(
 			portletRequest);
 	}
 
@@ -46,7 +57,11 @@ public class ExportImportConfigurationParameterMapFactoryUtil {
 		String range, Boolean themeReference, Boolean updateLastPublishDate,
 		String userIdStrategy) {
 
-		return _exportImportConfigurationParameterMapFactory.buildParameterMap(
+		ExportImportConfigurationParameterMapFactory
+			exportImportConfigurationParameterMapFactory =
+				_exportImportConfigurationParameterMapFactorySnapshot.get();
+
+		return exportImportConfigurationParameterMapFactory.buildParameterMap(
 			dataStrategy, deleteMissingLayouts, deletePortletData, deletions,
 			ignoreLastPublishDate, layoutSetPrototypeLinkEnabled,
 			layoutSetSettings, logo, permissions, portletConfiguration,
@@ -56,11 +71,9 @@ public class ExportImportConfigurationParameterMapFactoryUtil {
 			updateLastPublishDate, userIdStrategy);
 	}
 
-	private static volatile ExportImportConfigurationParameterMapFactory
-		_exportImportConfigurationParameterMapFactory =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				ExportImportConfigurationParameterMapFactory.class,
-				ExportImportConfigurationParameterMapFactoryUtil.class,
-				"_exportImportConfigurationParameterMapFactory", false);
+	private static final Snapshot<ExportImportConfigurationParameterMapFactory>
+		_exportImportConfigurationParameterMapFactorySnapshot = new Snapshot<>(
+			ExportImportConfigurationParameterMapFactoryUtil.class,
+			ExportImportConfigurationParameterMapFactory.class);
 
 }

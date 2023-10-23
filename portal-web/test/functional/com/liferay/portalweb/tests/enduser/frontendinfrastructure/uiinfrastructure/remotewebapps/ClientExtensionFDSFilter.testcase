@@ -262,6 +262,51 @@ definition {
 		}
 	}
 
+	@description = "LPS-190220. Verify if the Description field is not mandatory and can be empty"
+	@priority = 3
+	test DescriptionFieldIsNotMandatory {
+		task ("Given Client Extension admin page") {
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
+		}
+
+		task ("When to select the FDS filter option") {
+			LexiconEntry.gotoAdd();
+
+			DropdownMenuItem.click(menuItem = "Add Frontend Data Set Filter");
+		}
+
+		task ("And fill in fields Name, JS URL, Source Code URL") {
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Date Filter Improvements");
+
+			Type.typeNoMouseOver(
+				key_text = "JavaScript URL",
+				locator1 = "TextInput#ANY",
+				value1 = "https://liferay.github.io/liferay-frontend-projects/date-filter.js");
+
+			Type(
+				key_text = "Source Code URL",
+				locator1 = "TextInput#ANY",
+				value1 = "https://liferay.github.io/liferay-frontend-projects/date-filter.js");
+		}
+
+		task ("And clicks on Publish button") {
+			PortletEntry.publish();
+		}
+
+		task ("Then a confirmation message is displayed") {
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And “Date Filter Improvements” entry is present on Client Extension admin page") {
+			ClientExtensionGeneral.viewTableEntries(
+				entryName = "Date Filter Improvements",
+				entryType = "Frontend Data Set Filter");
+		}
+	}
+
 	@description = "LPS-190220. Verify that the Name field is localizable."
 	@priority = 3
 	test LocalizedNameField {

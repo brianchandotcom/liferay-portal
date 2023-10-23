@@ -12,6 +12,7 @@ import com.liferay.document.library.kernel.util.AudioProcessor;
 import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.PDFProcessor;
 import com.liferay.document.library.kernel.util.VideoProcessor;
+import com.liferay.document.library.preview.processor.DLPreviewableProcessor;
 import com.liferay.image.Ghostscript;
 import com.liferay.image.ImageMagick;
 import com.liferay.mail.kernel.model.Account;
@@ -104,7 +105,6 @@ import com.liferay.portal.security.membershippolicy.RoleMembershipPolicyFactoryU
 import com.liferay.portal.util.MaintenanceUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.ShutdownUtil;
-import com.liferay.portlet.documentlibrary.util.DLPreviewableProcessor;
 import com.liferay.server.admin.web.internal.constants.ImageMagickResourceLimitConstants;
 import com.liferay.server.admin.web.internal.scripting.util.ServerScriptingUtil;
 

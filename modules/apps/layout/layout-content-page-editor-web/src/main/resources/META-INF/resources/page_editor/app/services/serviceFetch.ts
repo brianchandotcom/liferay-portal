@@ -26,7 +26,7 @@ function getFormData(body: Record<string, string>) {
 	return formData;
 }
 
-interface Options extends Omit<RequestInit, 'body' | 'method'> {
+export interface Options extends Omit<RequestInit, 'body' | 'method'> {
 	body?: Record<string, any>;
 	method?: string;
 }

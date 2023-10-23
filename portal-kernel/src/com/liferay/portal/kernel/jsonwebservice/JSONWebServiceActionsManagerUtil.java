@@ -5,7 +5,7 @@
 
 package com.liferay.portal.kernel.jsonwebservice;
 
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.lang.reflect.Method;
 
@@ -22,14 +22,20 @@ import javax.servlet.http.HttpServletRequest;
 public class JSONWebServiceActionsManagerUtil {
 
 	public static Set<String> getContextNames() {
-		return _jsonWebServiceActionsManager.getContextNames();
+		JSONWebServiceActionsManager jsonWebServiceActionsManager =
+			_jsonWebServiceActionsManagerSnapshot.get();
+
+		return jsonWebServiceActionsManager.getContextNames();
 	}
 
 	public static JSONWebServiceAction getJSONWebServiceAction(
 			HttpServletRequest httpServletRequest)
 		throws NoSuchJSONWebServiceException {
 
-		return _jsonWebServiceActionsManager.getJSONWebServiceAction(
+		JSONWebServiceActionsManager jsonWebServiceActionsManager =
+			_jsonWebServiceActionsManagerSnapshot.get();
+
+		return jsonWebServiceActionsManager.getJSONWebServiceAction(
 			httpServletRequest);
 	}
 
@@ -38,59 +44,78 @@ public class JSONWebServiceActionsManagerUtil {
 			Map<String, Object> parameterMap)
 		throws NoSuchJSONWebServiceException {
 
-		return _jsonWebServiceActionsManager.getJSONWebServiceAction(
+		JSONWebServiceActionsManager jsonWebServiceActionsManager =
+			_jsonWebServiceActionsManagerSnapshot.get();
+
+		return jsonWebServiceActionsManager.getJSONWebServiceAction(
 			httpServletRequest, path, method, parameterMap);
 	}
 
 	public static JSONWebServiceActionMapping getJSONWebServiceActionMapping(
 		String signature) {
 
-		return _jsonWebServiceActionsManager.getJSONWebServiceActionMapping(
+		JSONWebServiceActionsManager jsonWebServiceActionsManager =
+			_jsonWebServiceActionsManagerSnapshot.get();
+
+		return jsonWebServiceActionsManager.getJSONWebServiceActionMapping(
 			signature);
 	}
 
 	public static List<JSONWebServiceActionMapping>
 		getJSONWebServiceActionMappings(String contextName) {
 
-		return _jsonWebServiceActionsManager.getJSONWebServiceActionMappings(
+		JSONWebServiceActionsManager jsonWebServiceActionsManager =
+			_jsonWebServiceActionsManagerSnapshot.get();
+
+		return jsonWebServiceActionsManager.getJSONWebServiceActionMappings(
 			contextName);
 	}
 
 	public static JSONWebServiceActionsManager
 		getJSONWebServiceActionsManager() {
 
-		return _jsonWebServiceActionsManager;
+		return _jsonWebServiceActionsManagerSnapshot.get();
 	}
 
 	public static void registerJSONWebServiceAction(
 		String contextName, String contextPath, Object actionObject,
 		Class<?> actionClass, Method actionMethod, String path, String method) {
 
-		_jsonWebServiceActionsManager.registerJSONWebServiceAction(
+		JSONWebServiceActionsManager jsonWebServiceActionsManager =
+			_jsonWebServiceActionsManagerSnapshot.get();
+
+		jsonWebServiceActionsManager.registerJSONWebServiceAction(
 			contextName, contextPath, actionObject, actionClass, actionMethod,
 			path, method);
 	}
 
 	public static int registerServletContext(ServletContext servletContext) {
-		return _jsonWebServiceActionsManager.registerServletContext(
+		JSONWebServiceActionsManager jsonWebServiceActionsManager =
+			_jsonWebServiceActionsManagerSnapshot.get();
+
+		return jsonWebServiceActionsManager.registerServletContext(
 			servletContext);
 	}
 
 	public static int unregisterJSONWebServiceActions(Object actionObject) {
-		return _jsonWebServiceActionsManager.unregisterJSONWebServiceActions(
+		JSONWebServiceActionsManager jsonWebServiceActionsManager =
+			_jsonWebServiceActionsManagerSnapshot.get();
+
+		return jsonWebServiceActionsManager.unregisterJSONWebServiceActions(
 			actionObject);
 	}
 
 	public static int unregisterServletContext(ServletContext servletContext) {
-		return _jsonWebServiceActionsManager.unregisterServletContext(
+		JSONWebServiceActionsManager jsonWebServiceActionsManager =
+			_jsonWebServiceActionsManagerSnapshot.get();
+
+		return jsonWebServiceActionsManager.unregisterServletContext(
 			servletContext);
 	}
 
-	private static volatile JSONWebServiceActionsManager
-		_jsonWebServiceActionsManager =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				JSONWebServiceActionsManager.class,
-				JSONWebServiceActionsManagerUtil.class,
-				"_jsonWebServiceActionsManager", false);
+	private static final Snapshot<JSONWebServiceActionsManager>
+		_jsonWebServiceActionsManagerSnapshot = new Snapshot<>(
+			JSONWebServiceActionsManagerUtil.class,
+			JSONWebServiceActionsManager.class);
 
 }

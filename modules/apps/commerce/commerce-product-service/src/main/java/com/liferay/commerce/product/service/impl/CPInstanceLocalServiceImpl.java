@@ -794,6 +794,15 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 	}
 
 	@Override
+	public List<CPInstance> getCPInstances(
+		String replacementCPInstanceUuid, long replacementCProductId,
+		int status) {
+
+		return cpInstancePersistence.findByR_R_S(
+			replacementCPInstanceUuid, replacementCProductId, status);
+	}
+
+	@Override
 	public int getCPInstancesCount(long groupId, int status)
 		throws PortalException {
 
@@ -944,6 +953,18 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		return searchCPInstances(searchContext);
 	}
 
+	public BaseModelSearchResult<CPInstance> searchCPInstances(
+			long companyId, String cpInstanceUuid, long cProductId,
+			String keywords, int status, int start, int end, Sort sort)
+		throws PortalException {
+
+		SearchContext searchContext = _buildSearchContext(
+			companyId, cpInstanceUuid, cProductId, keywords, status, start, end,
+			sort);
+
+		return searchCPInstances(searchContext);
+	}
+
 	@Override
 	public BaseModelSearchResult<CPInstance> searchCPInstances(
 			SearchContext searchContext)
@@ -965,6 +986,19 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 		throw new SearchException(
 			"Unable to fix the search index after 10 attempts");
+	}
+
+	@Override
+	public int searchCPInstancesCount(
+			long companyId, String cpInstanceUuid, long cProductId,
+			String keywords, int status)
+		throws PortalException {
+
+		SearchContext searchContext = _buildSearchContext(
+			companyId, cpInstanceUuid, cProductId, keywords, status,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		return _searchCPInstancesCount(searchContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -1519,6 +1553,48 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		return searchContext;
 	}
 
+	private SearchContext _buildSearchContext(
+		long companyId, String cpInstanceUuid, long cProductId, String keywords,
+		int status, int start, int end, Sort sort) {
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setAttributes(
+			HashMapBuilder.<String, Serializable>put(
+				CPField.REPLACEMENT_CP_INSTANCE_UUID, cpInstanceUuid
+			).put(
+				CPField.REPLACEMENT_CPRODUCT_ID, cProductId
+			).put(
+				Field.CONTENT, keywords
+			).put(
+				Field.STATUS, status
+			).put(
+				"params",
+				LinkedHashMapBuilder.<String, Object>put(
+					"keywords", keywords
+				).build()
+			).build());
+		searchContext.setCompanyId(companyId);
+		searchContext.setEnd(end);
+
+		if (Validator.isNotNull(keywords)) {
+			searchContext.setKeywords(keywords);
+		}
+
+		if (sort != null) {
+			searchContext.setSorts(sort);
+		}
+
+		searchContext.setStart(start);
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		return searchContext;
+	}
+
 	private void _checkCPInstancesByExpirationDate() throws PortalException {
 		List<CPInstance> cpInstances = cpInstanceFinder.findByExpirationDate(
 			new Date(),
@@ -1816,6 +1892,15 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			CPDefinition.class);
 
 		indexer.reindex(CPDefinition.class.getName(), cpDefinitionId);
+	}
+
+	private int _searchCPInstancesCount(SearchContext searchContext)
+		throws PortalException {
+
+		Indexer<CPInstance> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			CPInstance.class);
+
+		return GetterUtil.getInteger(indexer.searchCount(searchContext));
 	}
 
 	private CPInstance _startWorkflowInstance(

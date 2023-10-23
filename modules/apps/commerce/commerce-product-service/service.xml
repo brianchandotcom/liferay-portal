@@ -846,6 +846,11 @@
 			<finder-column comparator="&lt;" name="displayDate" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="R_R_S" return-type="Collection">
+			<finder-column name="replacementCPInstanceUuid" />
+			<finder-column name="replacementCProductId" />
+			<finder-column name="status" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="CPInstanceOptionValueRel" remote-service="true" uuid="true">
 

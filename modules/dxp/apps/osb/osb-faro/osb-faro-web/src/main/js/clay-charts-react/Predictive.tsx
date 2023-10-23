@@ -1,6 +1,6 @@
 import BillboardChart from 'react-billboardjs';
 import React from 'react';
-import {isDefAndNotNull, isNumber} from 'metal';
+import {isDefAndNotNull} from 'metal';
 
 /**
  * Predictive Chart component.
@@ -32,7 +32,7 @@ export default class PredictiveChart extends React.Component<
 			columns = columns.map(dataSeries => {
 				if (dataSeries[0] !== 'x') {
 					dataSeries = dataSeries.map(element =>
-						isNumber(element)
+						typeof element === 'number'
 							? {
 									high: element,
 									low: element,

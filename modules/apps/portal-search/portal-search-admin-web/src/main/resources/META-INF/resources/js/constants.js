@@ -29,6 +29,8 @@ export const EXECUTION_MODES = {
 	},
 };
 
+export const INTERVAL_RENDER_IN_PROGRESS = 2000;
+
 export const SCOPES = {
 	ALL: 'all',
 	SELECTED: 'selected',

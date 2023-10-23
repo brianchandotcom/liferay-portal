@@ -101,6 +101,9 @@ public class IndexActionsDisplayContextBuilder {
 
 	protected Map<String, Object> getData() {
 		return HashMapBuilder.<String, Object>put(
+			"concurrentModeSupported",
+			_searchCapabilities.isConcurrentModeSupported()
+		).put(
 			"controlMenuCategoryKey",
 			ProductNavigationControlMenuCategoryKeys.TOOLS
 		).put(
@@ -115,9 +118,6 @@ public class IndexActionsDisplayContextBuilder {
 			"initialExecutionMode", _getInitialExecutionMode()
 		).put(
 			"initialScope", _getInitialScope()
-		).put(
-			"isConcurrentModeSupported",
-			_searchCapabilities.isConcurrentModeSupported()
 		).put(
 			"virtualInstances", _getVirtualInstancesJSONArray()
 		).build();

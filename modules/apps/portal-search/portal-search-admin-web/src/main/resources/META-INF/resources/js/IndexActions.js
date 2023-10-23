@@ -8,11 +8,12 @@ import ClayLayout from '@clayui/layout';
 import ClayList from '@clayui/list';
 import {ClayModalProvider, Context as ClayModalContext} from '@clayui/modal';
 import ClayProgressBar from '@clayui/progress-bar';
-import {fetch, openToast} from 'frontend-js-web';
+import {fetch, localStorage, openToast} from 'frontend-js-web';
 import React, {useContext, useRef, useState} from 'react';
 
 import {
 	EXECUTION_MODES,
+	INTERVAL_RENDER_IN_PROGRESS,
 	PORTAL_TOOLTIP_TRIGGER_CLASS,
 	SCOPES,
 } from './constants';
@@ -80,7 +81,7 @@ function IndexActions({
 	initialCompanyIds,
 	initialExecutionMode,
 	initialScope,
-	isConcurrentModeSupported = true,
+	concurrentModeSupported = true,
 	virtualInstances = [],
 	indexReindexerNames = [],
 	portletNamespace,
@@ -88,14 +89,14 @@ function IndexActions({
 	reindexURL = '',
 }) {
 	const [backgroundTaskMap, setBackgroundTaskMap] = useState({});
-	const [selectedCompanyIds, setSelectedCompanyIds] = useState(
-		initialCompanyIds || []
-	);
 	const [executionMode, setExecutionMode] = useState(
 		initialExecutionMode || EXECUTION_MODES.FULL.value
 	);
 	const [executionScope, setExecutionScope] = useState(
 		initialScope || SCOPES.ALL
+	);
+	const [selectedCompanyIds, setSelectedCompanyIds] = useState(
+		initialCompanyIds || []
 	);
 
 	const [state, dispatch] = useContext(ClayModalContext);
@@ -168,7 +169,7 @@ function IndexActions({
 							type: 'danger',
 						});
 					});
-			}, 1000);
+			}, INTERVAL_RENDER_IN_PROGRESS);
 		}
 	};
 
@@ -194,12 +195,20 @@ function IndexActions({
 			document.getElementById(`${portletNamespace}hideModalCheckbox`)
 				?.checked
 		) {
-			Liferay.Util.LocalStorage?.setItem(
+			localStorage.setItem(
 				`${portletNamespace}${Liferay.ThemeDisplay.getUserId()}_hideReindexConfirmationModal`,
 				true,
-				Liferay.Util.LocalStorage.TYPES.FUNCTIONAL
+				localStorage.TYPES.FUNCTIONAL
 			);
 		}
+	};
+
+	const _handleExecutionModeChange = (value) => {
+		setExecutionMode(value);
+	};
+
+	const _handleExecutionScopeChange = (value) => {
+		setExecutionScope(value);
 	};
 
 	/*
@@ -227,9 +236,9 @@ function IndexActions({
 				? 'warning'
 				: 'info';
 
-		const hideModal = Liferay.Util.LocalStorage?.getItem(
+		const hideModal = localStorage?.getItem(
 			`${portletNamespace}${Liferay.ThemeDisplay.getUserId()}_hideReindexConfirmationModal`,
-			Liferay.Util.LocalStorage.TYPES.FUNCTIONAL
+			localStorage.TYPES.FUNCTIONAL
 		);
 
 		if (
@@ -369,6 +378,10 @@ function IndexActions({
 			});
 	};
 
+	const _handleSelectedCompanyIdsChange = (value) => {
+		setSelectedCompanyIds(value);
+	};
+
 	/*
 	 * Appends sync icon to the control menu, if not already there.
 	 * Called after the reindex fetch.
@@ -390,15 +403,16 @@ function IndexActions({
 			const syncIcon = document.createElement('div');
 
 			syncIcon.className = PORTAL_TOOLTIP_TRIGGER_CLASS;
-			syncIcon.setAttribute(
-				'data-title',
-				Liferay.Language.get('the-portal-is-currently-reindexing')
-			);
 			syncIcon.id = `${portletNamespace}syncIcon`;
 			syncIcon.innerHTML = `
 			<svg class="lexicon-icon" focusable="false">
 				<use href="${Liferay.Icons.spritemap}#reload" />
 			</svg>`;
+
+			syncIcon.setAttribute(
+				'data-title',
+				Liferay.Language.get('the-portal-is-currently-reindexing')
+			);
 
 			currentControlMenuCategory.appendChild(syncIcon);
 		}
@@ -448,16 +462,16 @@ function IndexActions({
 				<ClayLayout.Row>
 					<ClayLayout.Col size={4}>
 						<ExecutionOptions
-							companyIds={selectedCompanyIds}
+							concurrentModeSupported={concurrentModeSupported}
 							executionMode={executionMode}
 							executionScope={executionScope}
-							isConcurrentModeSupported={
-								isConcurrentModeSupported
+							onExecutionModeChange={_handleExecutionModeChange}
+							onExecutionScopeChange={_handleExecutionScopeChange}
+							onSelectedCompanyIdsChange={
+								_handleSelectedCompanyIdsChange
 							}
 							portletNamespace={portletNamespace}
-							setCompanyIds={setSelectedCompanyIds}
-							setExecutionMode={setExecutionMode}
-							setExecutionScope={setExecutionScope}
+							selectedCompanyIds={selectedCompanyIds}
 							virtualInstances={virtualInstances}
 						/>
 					</ClayLayout.Col>
@@ -596,6 +610,7 @@ export default function ({
 	reindexURL = '',
 }) {
 	const {
+		concurrentModeSupported,
 		controlMenuCategoryKey,
 		elasticSearchDiskSpace,
 		indexReindexerNames,
@@ -603,13 +618,13 @@ export default function ({
 		initialCompanyIds,
 		initialExecutionMode,
 		initialScope,
-		isConcurrentModeSupported,
 		virtualInstances,
 	} = data;
 
 	return (
 		<ClayModalProvider>
 			<IndexActions
+				concurrentModeSupported={concurrentModeSupported}
 				controlMenuCategoryKey={controlMenuCategoryKey}
 				elasticSearchDiskSpace={elasticSearchDiskSpace}
 				indexReindexerNames={indexReindexerNames}
@@ -617,7 +632,6 @@ export default function ({
 				initialCompanyIds={initialCompanyIds}
 				initialExecutionMode={initialExecutionMode}
 				initialScope={initialScope}
-				isConcurrentModeSupported={isConcurrentModeSupported}
 				portletNamespace={portletNamespace}
 				redirectURL={redirectURL}
 				reindexURL={reindexURL}

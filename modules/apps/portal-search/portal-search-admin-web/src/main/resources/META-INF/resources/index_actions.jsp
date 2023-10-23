@@ -86,7 +86,7 @@ if (!backgroundTasksList.isEmpty()) {
 			).put(
 				"reindexURL",
 				PortletURLBuilder.createActionURL(
-					liferayPortletResponse
+					renderResponse
 				).setActionName(
 					"/portal_search_admin/edit"
 				).buildString()

@@ -24,14 +24,14 @@ import InstanceSelector from './InstanceSelector';
  * 	- Execution Mode: Value is submitted as `executionMode`.
  */
 function ExecutionOptions({
-	companyIds = [],
+	concurrentModeSupported,
 	executionMode,
 	executionScope,
-	setCompanyIds,
-	setExecutionMode,
-	setExecutionScope,
-	isConcurrentModeSupported,
+	onExecutionModeChange,
+	onExecutionScopeChange,
+	onSelectedCompanyIdsChange,
 	portletNamespace,
+	selectedCompanyIds = [],
 	virtualInstances = [],
 }) {
 	const [
@@ -42,16 +42,12 @@ function ExecutionOptions({
 	const alignElementRef = useRef();
 
 	const _handleExecutionModeChange = (mode) => {
-		setExecutionMode(mode);
+		onExecutionModeChange(mode);
 		setExecutionModeDropdownActive(false);
 	};
 
 	const _handleExecutionModeDropdownChange = () =>
 		setExecutionModeDropdownActive(!executionModeDropdownActive);
-
-	const _handleExecutionScopeChange = (value) => {
-		setExecutionScope(value);
-	};
 
 	return (
 		<div className="execution-scope-sheet sheet sheet-lg">
@@ -59,7 +55,7 @@ function ExecutionOptions({
 				{Liferay.Language.get('configuration')}
 			</h2>
 
-			{isConcurrentModeSupported && (
+			{concurrentModeSupported && (
 				<div className="c-mb-1 sheet-section">
 					<div
 						className="sheet-subtitle text-secondary"
@@ -189,7 +185,7 @@ function ExecutionOptions({
 				<ClayRadioGroup
 					className="c-pb-2"
 					name={`${portletNamespace}scope`}
-					onChange={_handleExecutionScopeChange}
+					onChange={onExecutionScopeChange}
 					value={executionScope}
 				>
 					<ClayRadio
@@ -205,8 +201,8 @@ function ExecutionOptions({
 
 				{executionScope === SCOPES.SELECTED && (
 					<InstanceSelector
-						selected={companyIds}
-						setSelected={setCompanyIds}
+						onSelectedChange={onSelectedCompanyIdsChange}
+						selected={selectedCompanyIds}
 						virtualInstances={virtualInstances}
 					/>
 				)}
@@ -217,7 +213,7 @@ function ExecutionOptions({
 					value={
 						executionScope === SCOPES.ALL
 							? virtualInstances.map(({id}) => id)?.toString()
-							: companyIds.toString()
+							: selectedCompanyIds.toString()
 					}
 				/>
 			</div>

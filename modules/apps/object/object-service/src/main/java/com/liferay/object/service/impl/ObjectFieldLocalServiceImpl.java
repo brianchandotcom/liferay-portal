@@ -1461,25 +1461,28 @@ public class ObjectFieldLocalServiceImpl
 				fetchObjectRelationshipByObjectDefinitionId(
 					objectDefinition.getObjectDefinitionId(), name);
 
-		if (objectRelationship != null) {
-			String prefix = "related";
+		if (objectRelationship == null) {
+			return;
+		}
+
+		String objectDefinitionShortName = objectDefinition.getShortName();
+		String prefix = "current";
+
+		if (objectRelationship.getObjectDefinitionId1() !=
+				objectDefinition.getObjectDefinitionId()) {
 
 			ObjectDefinition objectDefinition1 =
 				_objectDefinitionPersistence.findByPrimaryKey(
 					objectRelationship.getObjectDefinitionId1());
 
-			if (objectDefinition1.getObjectDefinitionId() ==
-					objectDefinition.getObjectDefinitionId()) {
-
-				prefix = "current";
-			}
-
-			throw new ObjectFieldNameException.
-				MustNotBeEqualToObjectRelationshipName(
-					StringBundler.concat(
-						prefix, StringPool.SPACE,
-						objectDefinition1.getShortName()));
+			objectDefinitionShortName = objectDefinition1.getShortName();
+			prefix = "related";
 		}
+
+		throw new ObjectFieldNameException.
+			MustNotBeEqualToObjectRelationshipName(
+				StringBundler.concat(
+					prefix, StringPool.SPACE, objectDefinitionShortName));
 	}
 
 	private void _validateObjectRelationshipDeletionType(

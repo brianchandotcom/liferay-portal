@@ -22,11 +22,71 @@ definition {
 		}
 	}
 
+	@description = "LPS-148856 - Verify an error message is seen when attempting to publish invalid object definitions in model builder view"
+	@priority = 5
+	test CannotPublishObjectDefinitionsWithErrors {
+		task ("Given a custom object definition with a decimal field, Object A") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object 198013 A",
+				objectName = "CustomObject198013A",
+				pluralLabelName = "Custom Objects 198013 A");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Decimal",
+				fieldLabelName = "Custom Decimal Field",
+				fieldName = "customDecimalField",
+				fieldType = "Double",
+				isRequired = "false",
+				objectName = "CustomObject198013A");
+		}
+
+		task ("and Given two custom object definitions without any custom fields, Object B and Object C") {
+			for (var letter : list "B,C") {
+				ObjectAdmin.addObjectViaAPI(
+					labelName = "Custom Object 198013 ${letter}",
+					objectName = "CustomObject198013${letter}",
+					pluralLabelName = "Custom Objects 198013 ${letter}");
+			}
+		}
+
+		task ("and Given the user is in the model builder view") {
+			ObjectModelBuilder.openObjectFolderInModelBuilder();
+		}
+
+		task ("When the user publishes all of the custom object definitions") {
+			Button.clickPublish();
+
+			for (var objectDefinitionName : list "Custom Object 198013 A,Custom Object 198013 B,Custom Object 198013 C") {
+				Check.checkNotVisible(
+					locator1 = "ObjectModelBuilder#CONFIRM_PUBLISHING_OBJECT_DEFINITION_INPUT",
+					objectDefinition = ${objectDefinitionName});
+			}
+
+			Click(
+				key_text = "Publish Objects",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
+		}
+
+		task ("Then two error messages are seen and Object B and Object C aren't published") {
+			for (var letter : list "B,C") {
+				AssertTextEquals(
+					locator1 = "ObjectModelBuilder#OBJECT_REJECTED_ERROR_MESSAGE",
+					objectDefinition = "Custom Object 198013 ${letter}",
+					value1 = "At least one object field must be added.");
+			}
+		}
+
+		task ("and Then Object A is published") {
+			AssertVisible(
+				labelText = "approved",
+				locator1 = "ObjectModelBuilder#OBJECT_CARD_LABEL",
+				objectDefinition = "Custom Object 198013 A");
+		}
+	}
+
 	@description = "LPS-148856 - Verify multiple custom object definitions can be published"
 	@priority = 5
 	test CanPublishMultipleObjectDefinitions {
-		property custom.properties = "feature.flag.LPS-148856=true";
-
 		task ("Given three custom object definitions that contains long text fields") {
 			for (var letter : list "A,B,C") {
 				ObjectAdmin.addObjectViaAPI(
@@ -75,8 +135,6 @@ definition {
 	@description = "LPS-185679 - Verify the user can update a field in model builder view"
 	@priority = 5
 	test CanUpdateField {
-		property custom.properties = "feature.flag.LPS-148856=true";
-
 		task ("Given a custom object definition with a rich text field") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object 199362",

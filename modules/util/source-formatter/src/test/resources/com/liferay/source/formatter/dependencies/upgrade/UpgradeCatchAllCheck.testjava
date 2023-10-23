@@ -17,6 +17,8 @@ public class UpgradeCatchAllCheck {
 		CommerceOrderConstants.PAYMENT_STATUS_PAID;
 		CommerceOrderConstants.PAYMENT_STATUS_PENDING;
 
+		_countryService.fetchCommerceCountry(123, "test123");
+
 		DestinationNames.BASE_PRICE_LIST;
 		DestinationNames.ORDER_STATUS;
 		DestinationNames.PAYMENT_STATUS;
@@ -41,6 +43,14 @@ public class UpgradeCatchAllCheck {
 	}
 
 	public void method(CommerceAddress commerceAddress) {
+		Country country = commerceAddress.getCountry();
+
+		commerceAddress.getCountry().getTwoLettersISOCode();
+		country.getTwoLettersISOCode();
+		country.setTwoLettersISOCode();
+		country.getThreeLettersISOCode();
+		country.setThreeLettersISOCode();
+
 		Region region = commerceAddress.getCountry();
 
 		region.getCode();
@@ -231,6 +241,9 @@ public class UpgradeCatchAllCheck {
 
 	@Reference
 	private CommercePriceListLocalService _commercePriceListLocalService;
+
+	@Reference
+	private CountryService _countryService;
 
 	@Reference
 	private CPDefinitionLinkLocalService _cpDefinitionLinkLocalService;

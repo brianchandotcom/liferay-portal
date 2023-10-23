@@ -27,7 +27,6 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -111,8 +110,5 @@ public class AssetEntryItemSelectorView
 
 	@Reference
 	private Portal _portal;
-
-	@Reference(target = "(osgi.web.symbolicname=com.liferay.asset.browser.web)")
-	private ServletContext _servletContext;
 
 }

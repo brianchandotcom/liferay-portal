@@ -91,7 +91,6 @@ export default function useAccountInformation() {
 
 	useEffect(() => {
 		const getARRValues = (
-			accountData: AccountEntry,
 			opportunitiesData: LiferayItems<Opportunity[]>
 		) => {
 			const aRRResults = opportunitiesData.items.reduce(
@@ -232,7 +231,7 @@ export default function useAccountInformation() {
 			accountUserAccounts &&
 			partnerLevel
 		) {
-			const aRRResults = getARRValues(account, opportunities);
+			const aRRResults = getARRValues(opportunities);
 
 			const {headcount, properties} = formatCheckedProperties(
 				aRRResults,

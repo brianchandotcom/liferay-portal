@@ -48,7 +48,6 @@ const LevelChart = () => {
 		return (
 			<PartnershipLevel
 				aRRResults={aRRResults}
-				account={account}
 				checkedProperties={checkedProperties}
 				currency={currency}
 				headcount={headcount}

@@ -12,7 +12,6 @@ import SilverPartnerIcon from '../../../../../common/components/dashboard/compon
 import {ChartTypes} from '../../../../../common/components/dashboard/enums/chartTypes';
 import {PartnershipLevels} from '../../../../../common/components/dashboard/enums/partnershipLevels';
 import {partnerLevelProperties} from '../../../../../common/components/dashboard/mock';
-import AccountEntry from '../../../../../common/interfaces/accountEntry';
 import PartnerLevel from '../../../../../common/interfaces/partnerLevel';
 import CheckBoxItem from '../CheckBoxItem';
 import LevelProgressBar from '../LevelProgressBar';
@@ -25,7 +24,6 @@ interface IPropsPartnershipLevel {
 	aRRResults: {
 		[keys: string]: number;
 	};
-	account: AccountEntry;
 	checkedProperties: {
 		[keys: string]: boolean | undefined;
 	};
@@ -55,7 +53,6 @@ const PartnerIcon = ({level}: IPropsPartnerIcon) => {
 
 const PartnershipLevel = ({
 	aRRResults,
-	account,
 	checkedProperties,
 	currency,
 	headcount,
@@ -169,12 +166,6 @@ const PartnershipLevel = ({
 					<CheckBoxItem
 						completed={checkedProperties.marketingPlan}
 						title="Marketing Plan"
-					/>
-
-					<CheckBoxItem
-						completed={checkedProperties.marketingPerformance}
-						text={`${account.marketingPerformance} Leads`}
-						title="Marketing Performance"
 					/>
 
 					<CheckBoxItem

@@ -97,8 +97,10 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 		}
 
 		try {
+			Detector detector = DetectorHolder._detector;
+
 			contentType = String.valueOf(
-				_detector.detect(inputStream, metadata));
+				detector.detect(inputStream, metadata));
 		}
 		catch (IOException ioException) {
 			_log.error(ioException);
@@ -264,7 +266,12 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 	private static final Log _log = LogFactoryUtil.getLog(MimeTypesImpl.class);
 
 	private final Map<String, String> _contentTypes = new HashMap<>();
-	private final Detector _detector = new DefaultDetector();
 	private final Map<String, Set<String>> _extensionsMap = new HashMap<>();
+
+	private static class DetectorHolder {
+
+		private static final Detector _detector = new DefaultDetector();
+
+	}
 
 }

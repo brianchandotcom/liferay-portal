@@ -35,6 +35,11 @@ public class UpgradeCatchAllCheck {
 		}
 	}
 
+	public void method(AssetCategory<?> assetCategory) {
+		AssetCategory::getLeftCategoryId;
+		assetCategory.getLeftCategoryId;
+	}
+
 	public void method(CommerceAddress commerceAddress) {
 		Region region = commerceAddress.getCountry();
 

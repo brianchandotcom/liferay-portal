@@ -1,0 +1,29 @@
+@component-name = "portal-frontend-infrastructure"
+definition {
+
+	property custom.properties = "feature.flag.LPS-164563=true${line.separator}feature.flag.LPS-167253=true${line.separator}feature.flag.LPS-184016=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Client Extensions";
+	property testray.main.component.name = "Client Extensions";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Navigator.gotoPage(pageName = "Home");
+
+			ClientExtensionGeneral.tearDown();
+		}
+	}
+
+}

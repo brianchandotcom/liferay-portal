@@ -50,7 +50,8 @@ public class CPDefinitionKeywordQueryContributor
 			keywordQueryContributorHelper.getSearchContext();
 
 		_queryHelper.addSearchTerm(
-			booleanQuery, searchContext, CPField.ASSET_CATEGORY_NAMES, false);
+			booleanQuery, searchContext, CPField.ASSET_CATEGORY_NAMES + ".text",
+			false);
 		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, CPField.EXTERNAL_REFERENCE_CODE,
 			false);

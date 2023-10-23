@@ -5,7 +5,7 @@
 
 package com.liferay.portal.kernel.backgroundtask;
 
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * @author Michael C. Han
@@ -15,15 +15,16 @@ public class BackgroundTaskExecutorRegistryUtil {
 	public static BackgroundTaskExecutor getBackgroundTaskExecutor(
 		String backgroundTaskExecutorClassName) {
 
-		return _backgroundTaskExecutorRegistry.getBackgroundTaskExecutor(
+		BackgroundTaskExecutorRegistry backgroundTaskExecutorRegistry =
+			_backgroundTaskExecutorRegistrySnapshot.get();
+
+		return backgroundTaskExecutorRegistry.getBackgroundTaskExecutor(
 			backgroundTaskExecutorClassName);
 	}
 
-	private static volatile BackgroundTaskExecutorRegistry
-		_backgroundTaskExecutorRegistry =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				BackgroundTaskExecutorRegistry.class,
-				BackgroundTaskExecutorRegistryUtil.class,
-				"_backgroundTaskExecutorRegistry", false);
+	private static final Snapshot<BackgroundTaskExecutorRegistry>
+		_backgroundTaskExecutorRegistrySnapshot = new Snapshot<>(
+			BackgroundTaskExecutorRegistryUtil.class,
+			BackgroundTaskExecutorRegistry.class);
 
 }

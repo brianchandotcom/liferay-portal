@@ -254,8 +254,6 @@ definition {
 				key_button = "Select",
 				locator1 = "CommerceWidget#PRODUCT_PUBLISHER_FILTER_ADD_SELECT_BUTTON");
 
-			SelectFrameTop();
-
 			CommerceWidget.setFilterItems(
 				categories = ${categories},
 				filterTitle = ${filterType},
@@ -306,6 +304,10 @@ definition {
 
 			SelectFrameTop();
 
+			SelectFrame.selectFrameNoLoading(
+				key_title = "Configuration",
+				locator1 = "IFrame#MODAL_ANY");
+
 			Button.click(button = "Done");
 		}
 		else if (${filterTitle} == "Categories") {
@@ -317,7 +319,11 @@ definition {
 
 			SelectFrameTop();
 
-			Button.click(button = "Add");
+			SelectFrame.selectFrameNoLoading(
+				key_title = "Configuration",
+				locator1 = "IFrame#MODAL_ANY");
+
+			Button.click(button = "Done");
 		}
 
 		SelectFrameTop();

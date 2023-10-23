@@ -160,6 +160,13 @@ public class AccountServiceUpgradeStepRegistrator
 				AccountRoleResourceUpgradeProcess(
 					_resourceActionLocalService,
 					_resourcePermissionLocalService));
+
+		registry.register(
+			"2.10.1", "2.10.2",
+			new com.liferay.account.internal.upgrade.v2_10_2.
+				AccountRoleResourceUpgradeProcess(
+					_resourceActionLocalService,
+					_resourcePermissionLocalService));
 	}
 
 	@Reference

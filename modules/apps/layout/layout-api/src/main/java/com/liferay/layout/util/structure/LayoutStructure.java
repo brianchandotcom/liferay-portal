@@ -105,11 +105,27 @@ public class LayoutStructure {
 						deletedLayoutStructureItem);
 				});
 
+			List<LayoutStructureRule> layoutStructureRules = new ArrayList<>();
+
+			JSONArray layoutStructureRulesJSONArray =
+				layoutStructureJSONObject.getJSONArray("pageRules");
+
+			if (!JSONUtil.isEmpty(layoutStructureRulesJSONArray)) {
+				for (int i = 0; i < layoutStructureRulesJSONArray.length();
+					 i++) {
+
+					layoutStructureRules.add(
+						LayoutStructureRule.of(
+							layoutStructureRulesJSONArray.getJSONObject(i)));
+				}
+			}
+
 			return new LayoutStructure(
 				collectionStyledLayoutStructureItems, deletedItemIds,
 				deletedLayoutStructureItems, deletedPortletIds,
 				formStyledLayoutStructureItems, fragmentLayoutStructureItems,
-				layoutStructureItems, rootItemsJSONObject.getString("main"));
+				layoutStructureItems, layoutStructureRules,
+				rootItemsJSONObject.getString("main"));
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
@@ -128,6 +144,7 @@ public class LayoutStructure {
 		_formStyledLayoutStructureItems = new ArrayList<>();
 		_fragmentLayoutStructureItems = new HashMap<>();
 		_layoutStructureItems = new HashMap<>();
+		_layoutStructureRules = new ArrayList<>();
 		_mainItemId = StringPool.BLANK;
 	}
 
@@ -251,6 +268,15 @@ public class LayoutStructure {
 		_updateLayoutStructure(layoutStructureItem, position);
 
 		return layoutStructureItem;
+	}
+
+	public LayoutStructureRule addLayoutStructureRule(String id, String name) {
+		LayoutStructureRule layoutStructureRule = new LayoutStructureRule(
+			id, name);
+
+		_layoutStructureRules.add(layoutStructureRule);
+
+		return layoutStructureRule;
 	}
 
 	public LayoutStructureItem addRootLayoutStructureItem() {
@@ -403,6 +429,10 @@ public class LayoutStructure {
 		return ListUtil.fromCollection(_layoutStructureItems.values());
 	}
 
+	public List<LayoutStructureRule> getLayoutStructureRules() {
+		return _layoutStructureRules;
+	}
+
 	public String getMainItemId() {
 		return _mainItemId;
 	}
@@ -525,10 +555,20 @@ public class LayoutStructure {
 				deletedLayoutStructureItem.toJSONObject());
 		}
 
+		JSONArray layoutStructureRulesJSONArray =
+			JSONFactoryUtil.createJSONArray();
+
+		for (LayoutStructureRule layoutStructureRule : _layoutStructureRules) {
+			layoutStructureRulesJSONArray.put(
+				layoutStructureRule.toJSONObject());
+		}
+
 		return JSONUtil.put(
 			"deletedItems", deletedLayoutStructureItemsJSONArray
 		).put(
 			"items", layoutStructureItemsJSONObject
+		).put(
+			"pageRules", layoutStructureRulesJSONArray
 		).put(
 			"rootItems",
 			JSONUtil.put(
@@ -747,7 +787,7 @@ public class LayoutStructure {
 		List<FormStyledLayoutStructureItem> formStyledLayoutStructureItems,
 		Map<Long, LayoutStructureItem> fragmentLayoutStructureItems,
 		Map<String, LayoutStructureItem> layoutStructureItems,
-		String mainItemId) {
+		List<LayoutStructureRule> layoutStructureRules, String mainItemId) {
 
 		_collectionStyledLayoutStructureItems =
 			collectionStyledLayoutStructureItems;
@@ -757,6 +797,7 @@ public class LayoutStructure {
 		_formStyledLayoutStructureItems = formStyledLayoutStructureItems;
 		_fragmentLayoutStructureItems = fragmentLayoutStructureItems;
 		_layoutStructureItems = layoutStructureItems;
+		_layoutStructureRules = layoutStructureRules;
 		_mainItemId = mainItemId;
 	}
 
@@ -1020,6 +1061,7 @@ public class LayoutStructure {
 		_formStyledLayoutStructureItems;
 	private final Map<Long, LayoutStructureItem> _fragmentLayoutStructureItems;
 	private final Map<String, LayoutStructureItem> _layoutStructureItems;
+	private final List<LayoutStructureRule> _layoutStructureRules;
 	private String _mainItemId;
 
 }

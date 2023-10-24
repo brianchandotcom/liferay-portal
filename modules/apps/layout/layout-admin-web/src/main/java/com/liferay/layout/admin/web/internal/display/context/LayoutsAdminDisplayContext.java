@@ -728,8 +728,8 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public PortletURL getLayoutScreenNavigationPortletURL(long plid) {
-		return PortletURLBuilder.create(
-			getPortletURL()
+		return PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
 		).setMVCRenderCommandName(
 			"/layout_admin/edit_layout"
 		).setBackURL(
@@ -742,8 +742,8 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public PortletURL getLayoutSetScreenNavigationPortletURL() {
-		return PortletURLBuilder.create(
-			getPortletURL()
+		return PortletURLBuilder.createRenderURL(
+			_liferayPortletResponse
 		).setMVCRenderCommandName(
 			"/layout_admin/edit_layout_set"
 		).setBackURL(

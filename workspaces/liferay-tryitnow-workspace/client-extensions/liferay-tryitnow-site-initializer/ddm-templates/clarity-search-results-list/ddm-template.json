@@ -1,6 +1,0 @@
-{
-	"className": "com.liferay.portal.search.web.internal.result.display.context.SearchResultSummaryDisplayContext",
-	"ddmTemplateKey": "CLARITY-SEARCH-RESULTS-LIST",
-	"name": "Clarity Search Results List",
-	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
-}

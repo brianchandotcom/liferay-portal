@@ -44,23 +44,6 @@ public class AddressServiceImpl extends AddressServiceBaseImpl {
 	}
 
 	@Override
-	public Address addAddress(
-			String className, long classPK, String street1, String street2,
-			String street3, String city, String zip, long regionId,
-			long countryId, long listTypeId, boolean mailing, boolean primary,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		CommonPermissionUtil.check(
-			getPermissionChecker(), className, classPK, ActionKeys.UPDATE);
-
-		return addressLocalService.addAddress(
-			null, getUserId(), className, classPK, null, null, street1, street2,
-			street3, city, zip, regionId, countryId, listTypeId, mailing,
-			primary, null, serviceContext);
-	}
-
-	@Override
 	public void deleteAddress(long addressId) throws PortalException {
 		Address address = addressPersistence.findByPrimaryKey(addressId);
 
@@ -93,24 +76,6 @@ public class AddressServiceImpl extends AddressServiceBaseImpl {
 
 		return addressLocalService.getAddresses(
 			user.getCompanyId(), className, classPK);
-	}
-
-	@Override
-	public Address updateAddress(
-			long addressId, String street1, String street2, String street3,
-			String city, String zip, long regionId, long countryId,
-			long listTypeId, boolean mailing, boolean primary)
-		throws PortalException {
-
-		Address address = addressPersistence.findByPrimaryKey(addressId);
-
-		CommonPermissionUtil.check(
-			getPermissionChecker(), address.getClassNameId(),
-			address.getClassPK(), ActionKeys.UPDATE);
-
-		return addressLocalService.updateAddress(
-			addressId, street1, street2, street3, city, zip, regionId,
-			countryId, listTypeId, mailing, primary);
 	}
 
 	@Override

@@ -132,7 +132,7 @@
 </tr>
 <tr>
 	<td>ACTIVITY_TOTAL_COST</td>
-	<td>//*[@route='mdf-request-form']//div[contains(@class,'text-paragraph') and contains(text(),'Total cost')]//following-sibling::div</td>
+	<td>//*[@path='mdf-request-form']//div[contains(@class,'text-paragraph') and contains(text(),'Total cost')]//following-sibling::div</td>
 	<td></td>
 </tr>
 <tr>

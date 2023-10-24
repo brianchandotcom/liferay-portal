@@ -14,8 +14,9 @@ arguments[0].dispatchEvent(event);
 		''';
 
 		ExecuteJavaScript(
-			value1 = ${javaScript},
-			value2 = ${locator1});
+			value1 = ${javascript},
+			value2 = ${locator1},
+			value3 = "null");
 
 		selenium.assertJavaScriptErrors("true");
 

@@ -171,12 +171,12 @@ export function RightSidebarObjectRelationshipDetails({
 
 			let newObjectRelationship = {};
 
+			const isSelfObjectRelationship =
+				objectRelationship.objectDefinitionId1 ===
+				objectRelationship.objectDefinitionId2;
+
 			const updatedElements = elements.map((element) => {
-				if (
-					isEdge(element) &&
-					(element as Edge<ObjectRelationshipEdgeData>).data
-						?.objectRelationshipId === objectRelationship?.id
-				) {
+				if (isEdge(element)) {
 					const selfObjectRelationships = (element as Edge<
 						ObjectRelationshipEdgeData
 					>).data?.selfObjectRelationships;
@@ -197,20 +197,32 @@ export function RightSidebarObjectRelationshipDetails({
 						}
 					);
 
-					newObjectRelationship = {
-						...element.data,
-						deletionType: objectRelationship.deletionType,
-						label:
-							selfObjectRelationships &&
-							selfObjectRelationships?.length > 1
-								? selfObjectRelationships.length.toString()
-								: getLocalizableLabel(
-										defaultLanguageId,
-										objectRelationship.label,
-										objectRelationship.name
-								  ),
-						selfObjectRelationships: newSelfObjectRelationships,
-					};
+					if (
+						(element as Edge<ObjectRelationshipEdgeData>).data
+							?.objectRelationshipId === objectRelationship?.id
+					) {
+						newObjectRelationship = {
+							...element.data,
+							deletionType: objectRelationship.deletionType,
+							label:
+								isSelfObjectRelationship &&
+								selfObjectRelationships &&
+								selfObjectRelationships?.length > 1
+									? selfObjectRelationships.length.toString()
+									: getLocalizableLabel(
+											defaultLanguageId,
+											objectRelationship.label,
+											objectRelationship.name
+									  ),
+							selfObjectRelationships: newSelfObjectRelationships,
+						};
+					}
+					else {
+						newObjectRelationship = {
+							...element.data,
+							selfObjectRelationships: newSelfObjectRelationships,
+						};
+					}
 
 					return {
 						...element,

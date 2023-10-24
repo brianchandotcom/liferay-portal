@@ -143,8 +143,8 @@ definition {
 			locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK");
 
 		AssertElementPresent(
-				key_fieldLabel = "Display Template",
-				locator1 = "CommerceEntry#COMMERCE_FACET_BUTTON");
+			key_fieldLabel = "Display Template",
+			locator1 = "CommerceEntry#COMMERCE_FACET_BUTTON");
 
 		AssertElementPresent(
 			key_fieldName = "maxTerms",

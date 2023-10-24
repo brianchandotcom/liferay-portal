@@ -5,6 +5,7 @@
 
 package com.liferay.jethr0.event.controller;
 
+import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.event.handler.EventHandler;
 import com.liferay.jethr0.event.handler.EventHandlerFactory;
 import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
@@ -37,6 +38,13 @@ public class EventJmsController {
 		_process(message);
 	}
 
+	@JmsListener(
+			destination = "${jethr0-jms-queue-jrp-to-jethr0:jrp-to-jethr0}"
+	)
+	public void processFromJRP(String message) {
+		_process(message);
+	}
+
 	public void sendToJenkins(
 		JenkinsServerEntity jenkinsServerEntity, String message) {
 
@@ -47,6 +55,26 @@ public class EventJmsController {
 				@Override
 				public Message postProcessMessage(Message message)
 					throws JMSException {
+
+					message.setStringProperty(
+						"jenkins-master-name", jenkinsServerEntity.getName());
+
+					return message;
+				}
+
+			});
+	}
+
+	public void sendToJRP(
+		JenkinsServerEntity jenkinsServerEntity, String message) {
+
+		_jmsTemplate.convertAndSend(
+			_jmsQueueJethr0ToJRP, message,
+			new MessagePostProcessor() {
+
+				@Override
+				public Message postProcessMessage(Message message)
+						throws JMSException {
 
 					message.setStringProperty(
 						"jenkins-master-name", jenkinsServerEntity.getName());
@@ -108,6 +136,9 @@ public class EventJmsController {
 
 	@Value("${jethr0-jms-queue-jethr0-to-jenkins:jethr0-to-jenkins}")
 	private String _jmsQueueJethr0ToJenkins;
+
+	@Value("${jethr0-jms-queue-jethr0-to-jenkins:jethr0-to-jrp}")
+	private String _jmsQueueJethr0ToJRP;
 
 	@Autowired
 	private JmsTemplate _jmsTemplate;

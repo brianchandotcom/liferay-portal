@@ -6,11 +6,16 @@
 package com.liferay.jenkins.plugin.events.listener;
 
 import hudson.model.Action;
+import hudson.model.Job;
+import hudson.model.JobProperty;
 import hudson.model.Label;
+import hudson.model.ParameterDefinition;
 import hudson.model.ParameterValue;
 import hudson.model.ParametersAction;
+import hudson.model.ParametersDefinitionProperty;
 import hudson.model.Project;
 import hudson.model.Queue;
+import hudson.model.StringParameterDefinition;
 import hudson.model.StringParameterValue;
 import hudson.model.TopLevelItem;
 import hudson.model.labels.LabelAssignmentAction;
@@ -31,6 +36,9 @@ import jenkins.model.Jenkins;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import org.jvnet.jenkins.plugins.nodelabelparameter.LabelParameterDefinition;
+import org.jvnet.jenkins.plugins.nodelabelparameter.LabelParameterValue;
 
 /**
  * @author Michael Hashimoto
@@ -87,7 +95,7 @@ public class JMSMessageListener implements MessageListener {
 
 		queue.schedule(
 			(Project)topLevelItem, 0, _getLabelAction(jsonObject),
-			_getParametersAction(jsonObject));
+			_getParametersAction(topLevelItem, jsonObject));
 	}
 
 	private Action _getLabelAction(JSONObject jsonObject) {
@@ -107,22 +115,57 @@ public class JMSMessageListener implements MessageListener {
 		return new SimpleLabelAssignmentAction(primaryLabel);
 	}
 
-	private Action _getParametersAction(JSONObject jsonObject) {
-		JSONObject jobParametersJSONObject = jsonObject.optJSONObject(
-			"jobParameters");
+	private Action _getParametersAction(
+		TopLevelItem topLevelItem, JSONObject jsonObject) {
 
-		if ((jobParametersJSONObject == null) ||
-			jobParametersJSONObject.isEmpty()) {
+		if (!(topLevelItem instanceof Job)) {
+			return null;
+		}
 
+		Job job = (Job)topLevelItem;
+
+		JobProperty jobProperty = job.getProperty(
+			ParametersDefinitionProperty.class);
+
+		if (!(jobProperty instanceof ParametersDefinitionProperty)) {
 			return null;
 		}
 
 		List<ParameterValue> parameterValues = new ArrayList<>();
 
-		for (String key : jobParametersJSONObject.keySet()) {
-			parameterValues.add(
-				new StringParameterValue(
-					key, jobParametersJSONObject.getString(key)));
+		JSONObject jobParametersJSONObject = jsonObject.optJSONObject(
+			"jobParameters");
+
+		if (jobParametersJSONObject == null) {
+			jobParametersJSONObject = new JSONObject();
+		}
+
+		ParametersDefinitionProperty parametersDefinitionProperty =
+			(ParametersDefinitionProperty)jobProperty;
+
+		for (ParameterDefinition parameterDefinition :
+				parametersDefinitionProperty.getParameterDefinitions()) {
+
+			String parameterName = parameterDefinition.getName();
+
+			String parameterValue = jobParametersJSONObject.optString(
+				parameterName);
+
+			if ((parameterValue == null) || parameterValue.isEmpty()) {
+				parameterValues.add(
+					parameterDefinition.getDefaultParameterValue());
+
+				continue;
+			}
+
+			if (parameterDefinition instanceof StringParameterDefinition) {
+				parameterValues.add(
+					new StringParameterValue(parameterName, parameterValue));
+			}
+			else if (parameterDefinition instanceof LabelParameterDefinition) {
+				parameterValues.add(
+					new LabelParameterValue(parameterName, parameterValue));
+			}
 		}
 
 		return new ParametersAction(parameterValues);

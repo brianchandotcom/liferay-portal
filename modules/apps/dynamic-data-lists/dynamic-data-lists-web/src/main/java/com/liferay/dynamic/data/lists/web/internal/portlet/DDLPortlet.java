@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.PortletPreferencesException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -99,6 +100,10 @@ public class DDLPortlet extends MVCPortlet {
 	public void render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-196935")) {
+			return;
+		}
 
 		try {
 			setDDLRecordRequestAttribute(renderRequest);

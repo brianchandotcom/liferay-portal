@@ -6,8 +6,8 @@
 package com.liferay.exportimport.kernel.staging.permission;
 
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Jorge Ferrer
@@ -18,7 +18,9 @@ public class StagingPermissionUtil {
 		PermissionChecker permissionChecker, Group group, String className,
 		long classPK, String portletId, String actionId) {
 
-		return _stagingPermission.hasPermission(
+		StagingPermission stagingPermission = _stagingPermissionSnapshot.get();
+
+		return stagingPermission.hasPermission(
 			permissionChecker, group, className, classPK, portletId, actionId);
 	}
 
@@ -26,14 +28,15 @@ public class StagingPermissionUtil {
 		PermissionChecker permissionChecker, long groupId, String className,
 		long classPK, String portletId, String actionId) {
 
-		return _stagingPermission.hasPermission(
+		StagingPermission stagingPermission = _stagingPermissionSnapshot.get();
+
+		return stagingPermission.hasPermission(
 			permissionChecker, groupId, className, classPK, portletId,
 			actionId);
 	}
 
-	private static volatile StagingPermission _stagingPermission =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			StagingPermission.class, StagingPermissionUtil.class,
-			"_stagingPermission", false);
+	private static final Snapshot<StagingPermission>
+		_stagingPermissionSnapshot = new Snapshot<>(
+			StagingPermissionUtil.class, StagingPermission.class);
 
 }

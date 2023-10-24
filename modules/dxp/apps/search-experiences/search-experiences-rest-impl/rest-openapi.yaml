@@ -86,6 +86,17 @@ components:
             properties:
                 advancedConfiguration:
                     properties:
+                        collapse:
+                            properties:
+                                field:
+                                    type: string
+                                innerHits:
+                                    items:
+                                        $ref: "#/components/schemas/InnerHit"
+                                    type: array
+                                maxConcurrentGroupRequests:
+                                    type: integer
+                            type: object
                         source:
                             properties:
                                 excludes:
@@ -359,6 +370,21 @@ components:
                     type: integer
                 number_of_fragments:
                     type: integer
+        InnerHit:
+            properties:
+                innerCollapse:
+                    properties:
+                        field:
+                            type: string
+                    type: object
+                name:
+                    type: string
+                size:
+                    type: integer
+                sorts:
+                    items:
+                        type: object
+                    type: array
         KeywordQueryContributor:
             properties:
                 className:

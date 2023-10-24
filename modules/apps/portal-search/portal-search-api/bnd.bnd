@@ -12,6 +12,7 @@ Export-Package:\
 	com.liferay.portal.search.capabilities,\
 	com.liferay.portal.search.ccr,\
 	com.liferay.portal.search.cluster,\
+	com.liferay.portal.search.collapse,\
 	com.liferay.portal.search.configuration,\
 	com.liferay.portal.search.constants,\
 	com.liferay.portal.search.context,\

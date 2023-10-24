@@ -89,7 +89,8 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 		}
 		else {
 			try {
-				itemsCopied = _copyDLObjects(actionRequest, errorMessages, themeDisplay);
+				itemsCopied = _copyDLObjects(
+					actionRequest, errorMessages, themeDisplay);
 			}
 			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
@@ -114,7 +115,6 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			jsonObject.put("failedItems", failedItems);
-
 		}
 
 		jsonObject.put("successItems", itemsCopied);
@@ -223,6 +223,7 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 						groupIds,
 						ServiceContextFactory.getInstance(
 							DLFileEntry.class.getName(), actionRequest));
+
 					continue;
 				}
 

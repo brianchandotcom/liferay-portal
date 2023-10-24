@@ -983,6 +983,10 @@ public abstract class BaseBuild implements Build {
 
 		JSONObject buildJSONObject = getBuildJSONObject("result");
 
+		if (buildJSONObject == null) {
+			return "MISSING";
+		}
+
 		String result = buildJSONObject.optString("result");
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(result)) {
@@ -1916,8 +1920,6 @@ public abstract class BaseBuild implements Build {
 	protected BaseBuild(String url, Build parentBuild) {
 		_parentBuild = parentBuild;
 
-		_buildUpdater = BuildUpdaterFactory.newBuildUpdater(this);
-
 		if (url.contains("buildWithParameters")) {
 			_setInvocationURL(url);
 		}
@@ -1935,6 +1937,8 @@ public abstract class BaseBuild implements Build {
 				_archiveRootDir = new File(getBuildDirPath());
 			}
 		}
+
+		_buildUpdater = BuildUpdaterFactory.newBuildUpdater(this);
 
 		if (fromArchive || isFromCompletedBuild()) {
 			update();
@@ -2070,6 +2074,12 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected File getArchiveFile(String urlSuffix) {
+		JenkinsMaster jenkinsMaster = getJenkinsMaster();
+
+		if (jenkinsMaster == null) {
+			return null;
+		}
+
 		return new File(
 			getArchiveRootDir(), getArchivePath() + "/" + urlSuffix);
 	}
@@ -2081,7 +2091,7 @@ public abstract class BaseBuild implements Build {
 
 		File archiveFile = getArchiveFile(urlSuffix);
 
-		if (!archiveFile.exists()) {
+		if ((archiveFile == null) || !archiveFile.exists()) {
 			return null;
 		}
 
@@ -2952,6 +2962,12 @@ public abstract class BaseBuild implements Build {
 			else {
 				readyToArchive = false;
 			}
+		}
+
+		JenkinsMaster jenkinsMaster = getJenkinsMaster();
+
+		if (jenkinsMaster == null) {
+			return;
 		}
 
 		File archiveFile = getArchiveFile(urlSuffix);

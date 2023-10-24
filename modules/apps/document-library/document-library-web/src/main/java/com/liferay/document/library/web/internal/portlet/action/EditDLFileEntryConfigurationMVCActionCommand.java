@@ -78,7 +78,7 @@ public class EditDLFileEntryConfigurationMVCActionCommand
 					"Maximum number of pages limit must be greater than or " +
 						"equal to " +
 							DLFileEntryConfigurationConstants.
-						MAX_NUMBER_OF_PAGES_UNLIMITED);
+								MAX_NUMBER_OF_PAGES_UNLIMITED);
 		}
 
 		return maxNumberOfPages;
@@ -92,7 +92,7 @@ public class EditDLFileEntryConfigurationMVCActionCommand
 			actionRequest, "previewableProcessorMaxSize");
 
 		if (previewableProcessorMaxSize < DLFileEntryConfigurationConstants.
-			PREVIEWABLE_PROCESSOR_MAX_SIZE_UNLIMITED) {
+				PREVIEWABLE_PROCESSOR_MAX_SIZE_UNLIMITED) {
 
 			throw new DLFileEntryConfigurationException.
 				InvalidPreviewableProcessorMaxSizeException(

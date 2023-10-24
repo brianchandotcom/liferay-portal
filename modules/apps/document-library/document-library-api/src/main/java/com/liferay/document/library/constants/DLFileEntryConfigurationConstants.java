@@ -12,9 +12,9 @@ public class DLFileEntryConfigurationConstants {
 
 	public static final int MAX_NUMBER_OF_PAGES_DEFAULT = 3;
 
-	public static final long PREVIEWABLE_PROCESSOR_MAX_SIZE_DEFAULT = 20971520;
-
 	public static final int MAX_NUMBER_OF_PAGES_UNLIMITED = 0;
+
+	public static final long PREVIEWABLE_PROCESSOR_MAX_SIZE_DEFAULT = 20971520;
 
 	public static final long PREVIEWABLE_PROCESSOR_MAX_SIZE_UNLIMITED = -1;
 

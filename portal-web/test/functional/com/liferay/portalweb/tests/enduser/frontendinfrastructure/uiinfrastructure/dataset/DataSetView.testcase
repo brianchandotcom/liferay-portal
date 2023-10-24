@@ -465,6 +465,40 @@ definition {
 		}
 	}
 
+	@description = "LPS-181575 - Verify if when users clicks on edit dataset view, they will be sent to the page to edit a dataset view."
+	@priority = 5
+	test CanGoToEditViewPage {
+		task ("And a new view") {
+			DataSetAdmin.createDataSetView(
+				description = "Description Test",
+				key_name = "View Test");
+		}
+
+		task ("When the user clicks on the data set view 3 dots option menu") {
+			Click(
+				key_text = "View Test",
+				locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+		}
+
+		task ("And there is a pencil icon next to the Edit option name") {
+			AssertElementPresent(locator1 = "Icon#EDIT_PENCIL");
+		}
+
+		task ("Then there is an Edit option instead of View option in the dropdown") {
+			MenuItem.viewPresent(menuItem = "Edit");
+		}
+
+		task ("When the user clicks on the Edit option") {
+			MenuItem.clickNoError(menuItem = "Edit");
+		}
+
+		task ("Then the user is sent to the data set view edit page") {
+			AssertElementPresent(
+				key_title = "Details",
+				locator1 = "Header#H2_TITLE");
+		}
+	}
+
 	@description = "LPS-181575 - Verify if when the user opens the 3 dots option menu of a Data Set, the “view” action is now called “edit”."
 	@priority = 5
 	test CanGoToViewPage {

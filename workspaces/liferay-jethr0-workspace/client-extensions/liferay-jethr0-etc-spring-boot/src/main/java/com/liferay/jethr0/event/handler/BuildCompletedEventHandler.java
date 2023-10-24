@@ -62,6 +62,8 @@ public class BuildCompletedEventHandler extends BaseJenkinsEventHandler {
 
 		buildRunEntityRepository.update(buildRunEntity);
 
+		updateJRPStatus(buildRunEntity, buildEntity, jobEntity, "completed");
+
 		return buildRunEntity.toString();
 	}
 

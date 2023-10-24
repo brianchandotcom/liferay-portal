@@ -57,6 +57,8 @@ public class BuildStartedEventHandler extends BaseJenkinsEventHandler {
 
 		buildRunEntityRepository.update(buildRunEntity);
 
+		updateJRPStatus(buildRunEntity, buildEntity, jobEntity, "running");
+
 		return buildRunEntity.toString();
 	}
 

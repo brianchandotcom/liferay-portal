@@ -17,6 +17,7 @@ import com.liferay.jethr0.jenkins.repository.JenkinsServerEntityRepository;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -65,6 +66,10 @@ public class EventHandlerContext {
 		return _jobEntityRepository;
 	}
 
+	public String getLiferayPortalURL() {
+		return _liferayPortalURL;
+	}
+
 	public void setEventJmsController(EventJmsController eventJmsController) {
 		_eventJmsController = eventJmsController;
 	}
@@ -97,5 +102,10 @@ public class EventHandlerContext {
 
 	@Autowired
 	private JobEntityRepository _jobEntityRepository;
+
+	@Value(
+		"${com.liferay.lxc.dxp.server.protocol}://${com.liferay.lxc.dxp.main.domain}"
+	)
+	private String _liferayPortalURL;
 
 }

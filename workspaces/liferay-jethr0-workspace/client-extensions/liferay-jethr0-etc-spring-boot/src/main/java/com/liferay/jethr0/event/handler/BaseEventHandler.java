@@ -5,16 +5,24 @@
 
 package com.liferay.jethr0.event.handler;
 
+import com.liferay.jethr0.bui1d.BuildEntity;
+import com.liferay.jethr0.bui1d.parameter.BuildParameterEntity;
 import com.liferay.jethr0.bui1d.queue.BuildQueue;
 import com.liferay.jethr0.bui1d.repository.BuildEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildParameterEntityRepository;
 import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
+import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.event.controller.EventJmsController;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.jenkins.repository.JenkinsCohortEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsNodeEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsServerEntityRepository;
+import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
+import com.liferay.jethr0.util.StringUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+
+import java.util.Map;
 
 import org.json.JSONObject;
 
@@ -70,8 +78,66 @@ public abstract class BaseEventHandler implements EventHandler {
 		return _eventHandlerContext.getJobEntityRepository();
 	}
 
+	protected String getLiferayPortalURL() {
+		return _eventHandlerContext.getLiferayPortalURL();
+	}
+
 	protected JSONObject getMessageJSONObject() {
 		return _messageJSONObject;
+	}
+
+	protected void updateJRPStatus(
+		BuildRunEntity buildRunEntity, BuildEntity buildEntity,
+		JobEntity jobEntity, String status) {
+
+		EventJmsController eventJmsController = getEventJmsController();
+
+		Map<String, String> messageProperties = HashMapBuilder.put(
+			"jenkins-build-id",
+			() -> {
+				if (buildEntity == null) {
+					return null;
+				}
+
+				BuildParameterEntity buildParameterEntity =
+					buildEntity.getBuildParameterEntity("JENKINS_BUILD_ID");
+
+				if (buildParameterEntity == null) {
+					return null;
+				}
+
+				return buildParameterEntity.getValue();
+			}
+		).put(
+			"jethr0-job-id",
+			() -> {
+				if (jobEntity == null) {
+					return null;
+				}
+
+				return String.valueOf(jobEntity.getId());
+			}
+		).build();
+
+		JSONObject jsonObject = new JSONObject();
+
+		if (buildEntity != null) {
+			jsonObject.put(
+				"jethr0BuildURL",
+				StringUtil.combine(
+					getLiferayPortalURL(), "/#/jobs/builds/",
+					buildEntity.getId()));
+		}
+
+		if (buildRunEntity != null) {
+			jsonObject.put(
+				"jenkinsBuildURL",
+				String.valueOf(buildRunEntity.getJenkinsBuildURL()));
+		}
+
+		jsonObject.put("status", status);
+
+		eventJmsController.sendToJRP(jsonObject.toString(), messageProperties);
 	}
 
 	private final EventHandlerContext _eventHandlerContext;

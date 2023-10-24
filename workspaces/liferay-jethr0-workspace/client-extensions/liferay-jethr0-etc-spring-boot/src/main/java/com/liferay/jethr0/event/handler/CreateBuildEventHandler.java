@@ -70,6 +70,8 @@ public class CreateBuildEventHandler extends BaseObjectEventHandler {
 
 		jenkinsQueue.invoke();
 
+		updateJRPStatus(null, buildEntity, jobEntity, "queued");
+
 		return jobEntity.toString();
 	}
 

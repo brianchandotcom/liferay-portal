@@ -1,0 +1,182 @@
+@component-name = "portal-document-management"
+definition {
+
+	property custom.properties = "feature.flag.LPS-182512=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Document Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		HeadlessSite.addSite(siteName = "Site 1");
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
+
+			Site.tearDownCP();
+		}
+	}
+
+	@description = "This test ensures that user cannot copy a file with a size that exceeds the limit set in the destination site."
+	@priority = 5
+	test CannotCopyFileThatExceedsMaxSizeInDestinationSite {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "large_file.pdf",
+			groupName = "Site 1",
+			mimeType = "application/pdf",
+			sourceFileName = "large_file.pdf");
+
+		DMNavigator.openToConfigInSiteSettings(
+			portlet = "Documents and Media Size Limits",
+			siteURLKey = "guest");
+
+		DMDocument.configureMaxCopySize(
+			copyLimit = 1048576,
+			existingLimit = 52428800);
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-1");
+
+		DMDocument.copy(
+			copyExceedsSizeLimit = "1 MB",
+			dmDocumentTitle = "large_file.pdf",
+			homeFolder = "true",
+			limitingHierarchy = "site",
+			siteName = "Guest");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.cannotViewCP(dmDocumentTitle = "large_file.pdf");
+	}
+
+	@description = "This test ensures that user cannot copy a file with a size that exceeds the limit set in site settings."
+	@priority = 5
+	test CannotCopyFileThatExceedsMaxSizeInTargetSite {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "large_file.pdf",
+			groupName = "Guest",
+			mimeType = "application/pdf",
+			sourceFileName = "large_file.pdf");
+
+		DMNavigator.openToConfigInInstanceSettings(portlet = "Documents and Media Size Limits");
+
+		DMDocument.configureMaxCopySize(
+			copyLimit = 5242880,
+			existingLimit = 52428800);
+
+		DMNavigator.openToConfigInSiteSettings(
+			portlet = "Documents and Media Size Limits",
+			siteURLKey = "guest");
+
+		DMDocument.configureMaxCopySize(
+			copyLimit = 1048576,
+			existingLimit = 5242880);
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.copy(
+			copyExceedsSizeLimit = "1 MB",
+			dmDocumentTitle = "large_file.pdf",
+			homeFolder = "true",
+			limitingHierarchy = "site",
+			siteName = "Guest");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-1");
+
+		DMDocument.cannotViewCP(dmDocumentTitle = "large_file.pdf");
+	}
+
+	@description = "This test ensures that the instance limit for file size copying will override the system limit"
+	@priority = 5
+	test InstanceLimitOverridesSystemLimit {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "large_file.pdf",
+			groupName = "Guest",
+			mimeType = "application/pdf",
+			sourceFileName = "large_file.pdf");
+
+		DMNavigator.openToConfigInSystemSettings(portlet = "Documents and Media Size Limits");
+
+		DMDocument.configureMaxCopySize(copyLimit = 1048576);
+
+		DMNavigator.openToConfigInInstanceSettings(portlet = "Documents and Media Size Limits");
+
+		DMDocument.configureMaxCopySize(
+			copyLimit = 5242880,
+			existingLimit = 1048576);
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.copy(
+			dmDocumentTitle = "large_file.pdf",
+			homeFolder = "true",
+			siteName = "Site 1");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-1");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "large_file.pdf");
+	}
+
+	@description = "This test ensures that the site limit for file size copying will override the instance limit"
+	@priority = 5
+	test SiteLimitOverridesInstanceLimit {
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "large_file.pdf",
+			groupName = "Guest",
+			mimeType = "application/pdf",
+			sourceFileName = "large_file.pdf");
+
+		DMNavigator.openToConfigInInstanceSettings(portlet = "Documents and Media Size Limits");
+
+		DMDocument.configureMaxCopySize(copyLimit = 1048576);
+
+		DMNavigator.openToConfigInSiteSettings(
+			portlet = "Documents and Media Size Limits",
+			siteURLKey = "guest");
+
+		DMDocument.configureMaxCopySize(
+			copyLimit = 5242880,
+			existingLimit = 1048576);
+
+		DMNavigator.openToConfigInSiteSettings(
+			portlet = "Documents and Media Size Limits",
+			siteURLKey = "site-1");
+
+		DMDocument.configureMaxCopySize(
+			copyLimit = 10485760,
+			existingLimit = 1048576);
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.copy(
+			dmDocumentTitle = "large_file.pdf",
+			homeFolder = "true",
+			siteName = "Site 1");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-1");
+
+		DMNavigator.gotoDocumentCP(dmDocumentTitle = "large_file.pdf");
+	}
+
+}

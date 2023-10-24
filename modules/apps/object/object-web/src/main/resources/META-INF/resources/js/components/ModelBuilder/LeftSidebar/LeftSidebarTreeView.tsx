@@ -240,7 +240,7 @@ export default function LeftSidebarTreeView({
 								</div>
 
 								<div className="lfr-objects__model-builder-left-sidebar-current-object-folder-content-title">
-									<Text weight="semi-bold">
+									<Text truncate weight="semi-bold">
 										{leftSidebarItem.name}
 									</Text>
 								</div>

@@ -25,6 +25,10 @@
 		gap: 1rem;
 		width: 100%;
 
+		&-title {
+			max-width: 10rem;
+		}
+
 		&:hover {
 			.lfr-objects__model-builder-left-sidebar-go-to-folder-button {
 				visibility: visible;

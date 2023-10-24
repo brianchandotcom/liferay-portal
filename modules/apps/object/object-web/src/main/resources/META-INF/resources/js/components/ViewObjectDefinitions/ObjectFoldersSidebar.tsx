@@ -4,6 +4,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import {Text} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import {getLocalizableLabel} from '@liferay/object-js-components-web';
@@ -71,11 +72,13 @@ export default function ObjectFoldersSideBar({
 						}}
 					>
 						<span className="lfr__object-web-view-object-definitions-object-folder-list-item-label">
-							{getLocalizableLabel(
-								defaultLanguageId,
-								currentObjectFolder.label,
-								currentObjectFolder.name
-							)}
+							<Text truncate>
+								{getLocalizableLabel(
+									defaultLanguageId,
+									currentObjectFolder.label,
+									currentObjectFolder.name
+								)}
+							</Text>
 						</span>
 					</ClayList.Item>
 				))}

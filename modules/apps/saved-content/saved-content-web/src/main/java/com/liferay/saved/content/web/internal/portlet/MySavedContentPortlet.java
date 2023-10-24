@@ -18,7 +18,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Alicia García
  */
 @Component(
-	enabled = false,
 	property = {
 		"com.liferay.portlet.css-class-wrapper=saved-content-portlet",
 		"com.liferay.portlet.display-category=category.collaboration",

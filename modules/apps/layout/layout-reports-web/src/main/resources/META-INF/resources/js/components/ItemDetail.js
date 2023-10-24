@@ -288,13 +288,14 @@ function TextSection({labelType, text, title}) {
 function Warning({item}) {
 	return (
 		<ClayList.Item className="border-0 c-p-0">
-			<ClayAlert displayType="warning" role="none" variant="feedback">
-				<span className="c-mb-3 d-block text-weight-semi-bold">
-					{item.title}
-				</span>
+			<ClayAlert
+				displayType="warning"
+				role="none"
+				title={item.title}
+				variant="feedback"
+			/>
 
-				<span>{item.description}</span>
-			</ClayAlert>
+			<p className="c-mb-0 c-mt-3 text-warning">{item.description}</p>
 		</ClayList.Item>
 	);
 }

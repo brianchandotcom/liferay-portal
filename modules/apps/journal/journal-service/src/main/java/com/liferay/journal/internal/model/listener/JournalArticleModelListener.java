@@ -6,6 +6,7 @@
 package com.liferay.journal.internal.model.listener;
 
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -29,9 +30,21 @@ public class JournalArticleModelListener
 	public void onAfterRemove(JournalArticle journalArticle) {
 		clearCache(journalArticle);
 
-		_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
-			_portal.getClassNameId(JournalArticle.class),
-			journalArticle.getResourcePrimKey());
+		boolean areThereOtherVersions = false;
+
+		int versionsCount =
+			_journalArticleLocalService.getArticlesByResourcePrimKeyCount(
+				journalArticle.getResourcePrimKey());
+
+		if (versionsCount > 0) {
+			areThereOtherVersions = true;
+		}
+
+		if (!areThereOtherVersions) {
+			_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
+				_portal.getClassNameId(JournalArticle.class),
+				journalArticle.getResourcePrimKey());
+		}
 	}
 
 	@Override
@@ -56,6 +69,9 @@ public class JournalArticleModelListener
 
 		CacheUtil.clearCache(journalArticle.getCompanyId());
 	}
+
+	@Reference
+	private JournalArticleLocalService _journalArticleLocalService;
 
 	@Reference
 	private JournalContent _journalContent;

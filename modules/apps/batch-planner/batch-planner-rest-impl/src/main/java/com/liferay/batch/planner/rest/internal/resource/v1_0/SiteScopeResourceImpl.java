@@ -74,9 +74,9 @@ public class SiteScopeResourceImpl extends BaseSiteScopeResourceImpl {
 		return Page.of(_getSiteScopes(entityScopes));
 	}
 
-	private List<String> _getObjectScope(String name) {
+	private List<String> _getObjectScope(String name) throws Exception {
 		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
+			_objectDefinitionLocalService.getObjectDefinition(
 				contextCompany.getCompanyId(), name);
 
 		return Collections.singletonList(objectDefinition.getScope());

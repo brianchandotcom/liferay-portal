@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -36,6 +37,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -52,19 +54,23 @@ public class EditServerMVCActionCommandTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
+		_layout = LayoutTestUtil.addTypePortletLayout(_group, false);
+	}
+
 	@Test
 	public void testCleanUpLayoutRevisionPortletPreferencesWithOrphanedPortletPreferences()
 		throws Exception {
 
 		LayoutRevision layoutRevision = _getLayoutRevision();
 
-		PortletPreferences portletPreferences =
-			_portletPreferencesLocalService.addPortletPreferences(
-				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(), 0,
-				layoutRevision.getLayoutRevisionId(),
-				RandomTestUtil.randomString(), null, StringPool.BLANK);
-
-		Assert.assertNotNull(portletPreferences);
+		_portletPreferences = _addPortletPreferences(
+			TestPropsValues.getUserId(), 0,
+			layoutRevision.getLayoutRevisionId(),
+			RandomTestUtil.randomString());
 
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_cleanUpLayoutRevisionPortletPreferences",
@@ -72,7 +78,7 @@ public class EditServerMVCActionCommandTest {
 
 		Assert.assertNull(
 			_portletPreferencesLocalService.fetchPortletPreferences(
-				portletPreferences.getPortletPreferencesId()));
+				_portletPreferences.getPortletPreferencesId()));
 	}
 
 	@Test
@@ -92,13 +98,9 @@ public class EditServerMVCActionCommandTest {
 		layoutRevision = _layoutRevisionLocalService.updateLayoutRevision(
 			layoutRevision);
 
-		PortletPreferences portletPreferences =
-			_portletPreferencesLocalService.addPortletPreferences(
-				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(), 0,
-				layoutRevision.getLayoutRevisionId(), portletId, null,
-				StringPool.BLANK);
-
-		Assert.assertNotNull(portletPreferences);
+		_portletPreferences = _addPortletPreferences(
+			TestPropsValues.getUserId(), 0,
+			layoutRevision.getLayoutRevisionId(), portletId);
 
 		Layout layout = _layoutLocalService.getLayout(layoutRevision.getPlid());
 
@@ -115,14 +117,40 @@ public class EditServerMVCActionCommandTest {
 
 		Assert.assertNotNull(
 			_portletPreferencesLocalService.fetchPortletPreferences(
-				portletPreferences.getPortletPreferencesId()));
+				_portletPreferences.getPortletPreferencesId()));
+	}
+
+	@Test
+	public void testCleanUpOrphanedPortletPreferencesWithLayoutRevision()
+		throws Exception {
+
+		LayoutRevision layoutRevision = _getLayoutRevision();
+
+		_portletPreferences = _addPortletPreferences(
+			PortletKeys.PREFS_OWNER_ID_DEFAULT,
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+			layoutRevision.getLayoutRevisionId(),
+			RandomTestUtil.randomString());
+
+		ReflectionTestUtil.invoke(
+			_mvcActionCommand, "_cleanUpOrphanedPortletPreferences",
+			new Class<?>[0]);
+
+		Assert.assertNotNull(
+			_portletPreferencesLocalService.fetchPortletPreferences(
+				_portletPreferences.getPortletPreferencesId()));
+	}
+
+	private PortletPreferences _addPortletPreferences(
+			long ownerId, int ownerType, long plid, String portletId)
+		throws Exception {
+
+		return _portletPreferencesLocalService.addPortletPreferences(
+			TestPropsValues.getCompanyId(), ownerId, ownerType, plid, portletId,
+			null, StringPool.BLANK);
 	}
 
 	private LayoutRevision _getLayoutRevision() throws Exception {
-		_group = GroupTestUtil.addGroup();
-
-		Layout layout = LayoutTestUtil.addTypePortletLayout(_group, false);
-
 		LayoutSetBranch layoutSetBranch =
 			_layoutSetBranchLocalService.addLayoutSetBranch(
 				TestPropsValues.getUserId(), _group.getGroupId(), false,
@@ -131,15 +159,17 @@ public class EditServerMVCActionCommandTest {
 
 		LayoutBranch layoutBranch =
 			_layoutBranchLocalService.getMasterLayoutBranch(
-				layoutSetBranch.getLayoutSetBranchId(), layout.getPlid());
+				layoutSetBranch.getLayoutSetBranchId(), _layout.getPlid());
 
 		return _layoutRevisionLocalService.getLayoutRevision(
 			layoutSetBranch.getLayoutSetBranchId(),
-			layoutBranch.getLayoutBranchId(), layout.getPlid());
+			layoutBranch.getLayoutBranchId(), _layout.getPlid());
 	}
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private Layout _layout;
 
 	@Inject
 	private LayoutBranchLocalService _layoutBranchLocalService;
@@ -155,6 +185,8 @@ public class EditServerMVCActionCommandTest {
 
 	@Inject(filter = "mvc.command.name=/server_admin/edit_server")
 	private MVCActionCommand _mvcActionCommand;
+
+	private PortletPreferences _portletPreferences;
 
 	@Inject
 	private PortletPreferencesLocalService _portletPreferencesLocalService;

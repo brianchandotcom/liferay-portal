@@ -39,6 +39,11 @@
 	&__content {
 		padding: calc(#{$frame-size} + var(--control-menu-container-height)) 0 0
 			$frame-size;
+
+		@media screen and (hover: none) {
+			padding: calc(#{$frame-size} + var(--control-menu-container-height))
+				0 $frame-size 0;
+		}
 	}
 
 	&__overlay {

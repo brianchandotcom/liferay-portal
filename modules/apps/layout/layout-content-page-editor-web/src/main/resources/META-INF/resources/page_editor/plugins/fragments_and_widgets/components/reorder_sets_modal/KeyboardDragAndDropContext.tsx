@@ -18,7 +18,10 @@ import React, {
 	useRef,
 	useState,
 } from 'react';
-import {flushSync} from 'react-dom';
+
+// @ts-ignore
+
+import {v4 as uuidv4} from 'uuid';
 
 import {
 	DRAG_OVER_POSITIONS,
@@ -72,27 +75,31 @@ export function KeyboardDragAndDropContextProvider({
 	const itemListElementRef = useRef<HTMLDivElement | null>(null);
 	const [sourceItem, setSourceItem] = useState<Item | null>(null);
 	const [targetItem, setTargetItem] = useState<Item | null>(null);
-	const [text, setText] = useState('');
+	const [textMap, setTextMap] = useState<Record<string, string>>({});
 
 	const itemListRef = useRef(itemList);
 	itemListRef.current = itemList;
 
-	const clearMessageTimeoutRef = useRef<NodeJS.Timeout>();
-
 	const sendMessage = useCallback((message: string) => {
-		setText(message);
+		const messageId = uuidv4();
 
-		if (clearMessageTimeoutRef.current) {
-			clearTimeout(clearMessageTimeoutRef.current);
+		setTextMap((previousTextMap) => {
+			const nextTextMap = {...previousTextMap};
 
-			clearMessageTimeoutRef.current = undefined;
-		}
+			nextTextMap[messageId] = message;
 
-		if (message) {
-			clearMessageTimeoutRef.current = setTimeout(() => {
-				setText('');
-			}, 1000);
-		}
+			return nextTextMap;
+		});
+
+		setTimeout(() => {
+			setTextMap((previousTextMap) => {
+				const nextTextMap = {...previousTextMap};
+
+				delete nextTextMap[messageId];
+
+				return nextTextMap;
+			});
+		}, 10000);
 	}, []);
 
 	const contextValue: Context = {
@@ -171,7 +178,9 @@ export function KeyboardDragAndDropContextProvider({
 	return (
 		<KeyboardDragAndDropContext.Provider value={contextValue}>
 			<span aria-live="assertive" className="sr-only">
-				{text}
+				{Object.entries(textMap).map(([messageId, message]) => (
+					<p key={messageId}>{message}</p>
+				))}
 			</span>
 
 			<div
@@ -282,11 +291,28 @@ export function useKeyboardDragItem(
 				const targetItemIndex = itemList.indexOf(targetItem);
 
 				if (position === DRAG_OVER_POSITIONS.bottom) {
+					sendMessage(
+						sub(Liferay.Language.get('targeting-x-of-x'), [
+							DRAG_OVER_POSITIONS_LABELS[DRAG_OVER_POSITIONS.top],
+							targetItem.name,
+						])
+					);
+
 					setDragOverPosition(DRAG_OVER_POSITIONS.top);
 				}
 				else if (targetItemIndex > 0) {
+					const nextTargetItem =
+						itemListRef.current[targetItemIndex - 1];
+
+					sendMessage(
+						sub(Liferay.Language.get('targeting-x-of-x'), [
+							DRAG_OVER_POSITIONS_LABELS[DRAG_OVER_POSITIONS.top],
+							nextTargetItem.name,
+						])
+					);
+
 					setDragOverPosition(DRAG_OVER_POSITIONS.top);
-					setTargetItem(itemListRef.current[targetItemIndex - 1]);
+					setTargetItem(nextTargetItem);
 				}
 			}
 			else if (event.key === 'ArrowDown' && targetItem) {
@@ -295,10 +321,29 @@ export function useKeyboardDragItem(
 				const targetItemIndex = itemList.indexOf(targetItem);
 
 				if (targetItemIndex < itemList.length - 1) {
+					const nextTargetItem =
+						itemListRef.current[targetItemIndex + 1];
+
+					sendMessage(
+						sub(Liferay.Language.get('targeting-x-of-x'), [
+							DRAG_OVER_POSITIONS_LABELS[DRAG_OVER_POSITIONS.top],
+							nextTargetItem.name,
+						])
+					);
+
 					setDragOverPosition(DRAG_OVER_POSITIONS.top);
-					setTargetItem(itemListRef.current[targetItemIndex + 1]);
+					setTargetItem(nextTargetItem);
 				}
 				else if (position === DRAG_OVER_POSITIONS.top) {
+					sendMessage(
+						sub(Liferay.Language.get('targeting-x-of-x'), [
+							DRAG_OVER_POSITIONS_LABELS[
+								DRAG_OVER_POSITIONS.bottom
+							],
+							targetItem.name,
+						])
+					);
+
 					setDragOverPosition(DRAG_OVER_POSITIONS.bottom);
 				}
 			}
@@ -318,15 +363,13 @@ export function useKeyboardDragItem(
 						return;
 					}
 
-					flushSync(() => {
-						sendMessage(
-							sub(Liferay.Language.get('x-placed-on-x-of-x'), [
-								item.name,
-								DRAG_OVER_POSITIONS_LABELS[position],
-								targetItem.name,
-							])
-						);
-					});
+					sendMessage(
+						sub(Liferay.Language.get('x-placed-on-x-of-x'), [
+							item.name,
+							DRAG_OVER_POSITIONS_LABELS[position],
+							targetItem.name,
+						])
+					);
 
 					onDropItem(item.id, targetIndex, position);
 					setDragOverPosition(null);
@@ -334,16 +377,14 @@ export function useKeyboardDragItem(
 					setTargetItem(null);
 				}
 				else {
-					flushSync(() => {
-						sendMessage(
-							sub(
-								Liferay.Language.get(
-									'use-up-and-down-arrows-to-move-the-set-and-press-enter-to-place-it-in-desired-position.-currently-targeting-x-of-x'
-								),
-								[DRAG_OVER_POSITIONS_LABELS.top, item.name]
-							)
-						);
-					});
+					sendMessage(
+						sub(
+							Liferay.Language.get(
+								'use-up-and-down-arrows-to-move-the-set-and-press-enter-to-place-it-in-desired-position.-currently-targeting-x-of-x'
+							),
+							[DRAG_OVER_POSITIONS_LABELS.top, item.name]
+						)
+					);
 
 					setDragOverPosition(DRAG_OVER_POSITIONS.top);
 					setSourceItem(item);
@@ -375,17 +416,6 @@ export function useKeyboardDragItem(
 		setSourceItem,
 		setTargetItem,
 	]);
-
-	useEffect(() => {
-		if (dragOverPosition && sourceItem && targetItem) {
-			sendMessage(
-				sub(Liferay.Language.get('targeting-x-of-x'), [
-					DRAG_OVER_POSITIONS_LABELS[dragOverPosition],
-					targetItem.name,
-				])
-			);
-		}
-	}, [dragOverPosition, sendMessage, sourceItem, targetItem]);
 
 	return {
 		dragOverPosition: targetItem === item ? dragOverPosition : null,

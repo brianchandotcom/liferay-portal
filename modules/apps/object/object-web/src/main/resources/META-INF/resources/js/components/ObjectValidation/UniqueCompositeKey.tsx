@@ -105,7 +105,7 @@ export function UniqueCompositeKey({
 		parentWindow.Liferay.fire('openModalSelectObjectFields', {
 			alert: {
 				content: sub(
-					Liferay.Language.get('x-has-already-been-published'),
+					Liferay.Language.get('x-is-already-published.-as-a-result,-you-can-only-add-fields-to-unique-composite-keys-with-no-data'),
 					(objectDefinition as ObjectDefinition).name
 				),
 				otherProps: {

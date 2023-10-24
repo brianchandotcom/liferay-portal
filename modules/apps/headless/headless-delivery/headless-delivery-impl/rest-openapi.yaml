@@ -3625,6 +3625,13 @@ components:
                     # @review
                     description:
                         The page's page element.
+                pageRules:
+                    # @review
+                    description:
+                        A list of the page rules this page has.
+                    items:
+                        $ref: "#/components/schemas/PageRule"
+                    type: array
                 settings:
                     allOf:
                         - $ref: "#/components/schemas/Settings"
@@ -3983,6 +3990,23 @@ components:
                     # @review
                     description:
                         The vertical aligment property of the page row.
+                    type: string
+            type: object
+        PageRule:
+            # @review
+            description:
+                Represents a definition of a Page Rule.
+            properties:
+                id:
+                    # @review
+                    description:
+                        The page rule ID.
+                    readOnly: true
+                    type: string
+                name:
+                    # @review
+                    description:
+                        The custom name of a Page rule.
                     type: string
             type: object
         PageSectionDefinition:

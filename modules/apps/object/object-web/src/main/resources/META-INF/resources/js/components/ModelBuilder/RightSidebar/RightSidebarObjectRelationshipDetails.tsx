@@ -177,9 +177,13 @@ export function RightSidebarObjectRelationshipDetails({
 
 			const updatedElements = elements.map((element) => {
 				if (isEdge(element)) {
-					const selfObjectRelationships = (element as Edge<
+					const edgeData = (element as Edge<
 						ObjectRelationshipEdgeData
-					>).data?.selfObjectRelationships;
+					>).data;
+
+					const objectRelationshipId = edgeData?.objectRelationshipId;
+					const selfObjectRelationships =
+						edgeData?.selfObjectRelationships;
 
 					const newSelfObjectRelationships = selfObjectRelationships?.map(
 						(selfObjectRelationship) => {
@@ -197,12 +201,9 @@ export function RightSidebarObjectRelationshipDetails({
 						}
 					);
 
-					if (
-						(element as Edge<ObjectRelationshipEdgeData>).data
-							?.objectRelationshipId === objectRelationship?.id
-					) {
+					if (objectRelationshipId === objectRelationship?.id) {
 						newObjectRelationship = {
-							...element.data,
+							...edgeData,
 							deletionType: objectRelationship.deletionType,
 							label:
 								isSelfObjectRelationship &&
@@ -219,7 +220,7 @@ export function RightSidebarObjectRelationshipDetails({
 					}
 					else {
 						newObjectRelationship = {
-							...element.data,
+							...edgeData,
 							selfObjectRelationships: newSelfObjectRelationships,
 						};
 					}

@@ -169,6 +169,10 @@ export function RightSidebarObjectRelationshipDetails({
 				openToast({message, type: 'danger'});
 			}
 
+			if (!objectRelationship || !objectRelationship?.id) {
+				return;
+			}
+
 			let newObjectRelationship = {};
 
 			const isSelfObjectRelationship =

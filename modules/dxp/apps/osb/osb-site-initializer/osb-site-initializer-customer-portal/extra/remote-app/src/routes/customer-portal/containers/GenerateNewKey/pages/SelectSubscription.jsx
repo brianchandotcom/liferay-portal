@@ -8,7 +8,6 @@ import {ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import {Link} from 'react-router-dom';
-import useSWR from 'swr';
 import i18n from '~/common/I18n';
 import {Button} from '~/common/components';
 import {Radio} from '~/common/components/Radio';
@@ -37,16 +36,26 @@ const SelectSubscription = ({
 		provisioningServerAPI,
 	} = useAppPropertiesContext();
 
-	const {data: generateFormValues, isLoading} = useSWR(
-		sessionId ? `/${accountKey}/${productGroupName}/form-values` : null,
-		() =>
-			getNewGenerateKeyFormValues(
+	const [generateFormValues, setGenerateFormValues] = useState();
+
+	useEffect(() => {
+		const fetchGenerateFormData = async () => {
+			const data = await getNewGenerateKeyFormValues(
 				accountKey,
 				provisioningServerAPI,
 				productGroupName,
 				sessionId
-			)
-	);
+			);
+
+			if (data) {
+				setGenerateFormValues(data);
+			}
+		};
+
+		if (sessionId) {
+			fetchGenerateFormData();
+		}
+	}, [accountKey, provisioningServerAPI, productGroupName, sessionId]);
 
 	const [selectedSubscription, setSelectedSubscription] = useState(
 		infoSelectedKey?.selectedSubscription
@@ -167,7 +176,7 @@ const SelectSubscription = ({
 		[generateFormValues?.subscriptionTerms, selectedProductKey]
 	);
 
-	const customComplimentaryKeyAlert = () => {
+	const CustomComplimentaryKeyAlert = () => {
 		return (
 			<ClayAlert className="px-4 py-3" displayType="info">
 				<span className="text-paragraph">
@@ -179,7 +188,7 @@ const SelectSubscription = ({
 		);
 	};
 
-	const getCustomAlert = (subscriptionTerm, activeKeysAvailable) => {
+	const GetCustomAlert = ({activeKeysAvailable, subscriptionTerm}) => {
 		if (activeKeysAvailable === 0) {
 			return (
 				<ClayAlert className="px-4 py-3" displayType="warning">
@@ -235,7 +244,7 @@ const SelectSubscription = ({
 		);
 	};
 
-	if (!generateFormValues || !accountKey || !sessionId || isLoading) {
+	if (!generateFormValues || !accountKey || !sessionId) {
 		return <GenerateNewKeySkeleton />;
 	}
 
@@ -447,12 +456,16 @@ const SelectSubscription = ({
 										? 0
 										: numberOfActivationKeysAvailable;
 
-								const displayAlertType = getCustomAlert(
-									subscriptionTerm,
-									numberOfActivationKeysAvailable
+								const displayAlertType = (
+									<GetCustomAlert
+										activeKeysAvailable={
+											numberOfActivationKeysAvailable
+										}
+										subscriptionTerm={subscriptionTerm}
+									/>
 								);
 
-								const handleCustomAlert = () => {
+								const HandleCustomAlert = () => {
 									if (numberOfActivationKeysAvailable === 0) {
 										return displayAlertType;
 									}
@@ -469,7 +482,7 @@ const SelectSubscription = ({
 												subscriptionTerm.quantity,
 											]
 										)}
-										hasCustomAlert={handleCustomAlert()}
+										hasCustomAlert={<HandleCustomAlert />}
 										isActivationKeyAvailable={
 											subscriptionTerm.quantity -
 												subscriptionTerm.provisionedCount >
@@ -498,8 +511,9 @@ const SelectSubscription = ({
 					{featureFlags.includes('LPS-148342') && allowComplimentary && (
 						<Radio
 							hasCustomAlert={
-								hasKeyComplimentary &&
-								customComplimentaryKeyAlert()
+								hasKeyComplimentary && (
+									<CustomComplimentaryKeyAlert />
+								)
 							}
 							isActivationKeyAvailable={5}
 							label="Complimentary"

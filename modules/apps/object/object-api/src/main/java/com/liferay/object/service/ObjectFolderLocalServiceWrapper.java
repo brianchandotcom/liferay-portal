@@ -388,6 +388,11 @@ public class ObjectFolderLocalServiceWrapper
 	}
 
 	@Override
+	public int getObjectFoldersCount(long companyId) {
+		return _objectFolderLocalService.getObjectFoldersCount(companyId);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectFolder
 			getOrAddUncategorizedObjectFolder(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {

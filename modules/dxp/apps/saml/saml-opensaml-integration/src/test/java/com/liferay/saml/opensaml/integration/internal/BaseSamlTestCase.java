@@ -77,7 +77,6 @@ import org.junit.Before;
 import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
 
-import org.opensaml.core.config.ConfigurationService;
 import org.opensaml.core.criterion.EntityIdCriterion;
 import org.opensaml.core.xml.config.XMLObjectProviderRegistry;
 import org.opensaml.saml.common.xml.SAMLConstants;
@@ -678,7 +677,8 @@ public abstract class BaseSamlTestCase {
 
 	private void _setupParserPool() {
 		XMLObjectProviderRegistry xmlObjectProviderRegistry =
-			ConfigurationService.get(XMLObjectProviderRegistry.class);
+			ConfigurationServiceBootstrapUtil.get(
+				XMLObjectProviderRegistry.class);
 
 		parserPool = xmlObjectProviderRegistry.getParserPool();
 	}

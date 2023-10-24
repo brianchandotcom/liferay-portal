@@ -145,8 +145,6 @@ public class Main {
 		_markdownImportDirName = markdownImportDirName;
 		_offline = offline;
 
-		_taxonomyCategoriesJSONObject = new JSONObject();
-
 		System.out.println("Liferay URL: " + _liferayURL);
 
 		_addFileNames(_markdownImportDirName);
@@ -2046,7 +2044,7 @@ public class Main {
 		new HashMap<>();
 	private StructuredContentFolderResource _structuredContentFolderResource;
 	private StructuredContentResource _structuredContentResource;
-	private final JSONObject _taxonomyCategoriesJSONObject;
+	private final JSONObject _taxonomyCategoriesJSONObject = new JSONObject();
 	private TaxonomyCategoryResource _taxonomyCategoryResource;
 	private TaxonomyVocabularyResource _taxonomyVocabularyResource;
 	private final List<String> _warningMessages = new ArrayList<>();

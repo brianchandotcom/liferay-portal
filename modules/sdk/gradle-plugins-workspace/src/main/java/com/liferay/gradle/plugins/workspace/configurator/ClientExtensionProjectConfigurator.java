@@ -264,11 +264,9 @@ public class ClientExtensionProjectConfigurator
 						if (clientExtension.type.equals("siteInitializer")) {
 							buildSiteInitializerZipTaskProvider.configure(
 								zip -> {
-									zip.from(
-										project.file("site-initializer"));
+									zip.from(project.file("site-initializer"));
 									zip.into("site-initializer");
-								}
-							);
+								});
 						}
 					}
 					catch (JsonProcessingException jsonProcessingException) {

@@ -43,9 +43,9 @@ public interface SamlConfiguration {
 	public String keyStoreType();
 
 	/**
-	 * Set the interval, greater than 0, in minutes on how often to check for
-	 * and delete SAML IDP SSO sessions that are older than the maximum age
-	 * set in the property "saml.idp.sso.session.max.age".
+	 * Set the interval in minutes on how often to check for and delete SAML
+	 * IDP SSO sessions that are older than the maximum age set in the property
+	 * "saml.idp.sso.session.max.age".
 	 */
 	@Meta.AD(
 		deflt = "60",
@@ -75,9 +75,9 @@ public interface SamlConfiguration {
 	public int getReplayChacheDuration();
 
 	/**
-	 * Set the interval, greater than 0, in minutes on how often to check for
-	 * and delete SAML SP authentication requests that are older than the
-	 * maximum age set in the property "saml.sp.auth.request.max.age".
+	 * Set the interval in minutes on how often to check for and delete SAML SP
+	 * authentication requests that are older than the maximum age set in the
+	 * property "saml.sp.auth.request.max.age".
 	 */
 	@Meta.AD(
 		deflt = "60",
@@ -100,8 +100,8 @@ public interface SamlConfiguration {
 	public int getSpAuthRequestMaxAge();
 
 	/**
-	 * Set the interval, greater than 0, in minutes on how often to check for
-	 * and delete expired SAML SP messages.
+	 * Set the interval in minutes on how often to check for and delete expired
+	 * SAML SP messages.
 	 */
 	@Meta.AD(
 		deflt = "60",

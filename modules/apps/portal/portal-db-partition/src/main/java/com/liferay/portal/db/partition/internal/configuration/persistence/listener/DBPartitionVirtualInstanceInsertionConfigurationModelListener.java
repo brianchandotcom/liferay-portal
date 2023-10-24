@@ -40,8 +40,7 @@ public class DBPartitionVirtualInstanceInsertionConfigurationModelListener
 		throws ConfigurationModelListenerException {
 
 		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Inserting virtual instance " + properties.get("newWebId"));
+			_log.info("Inserting virtual instance " + properties.get("webId"));
 		}
 
 		_deleteConfiguration(pid);

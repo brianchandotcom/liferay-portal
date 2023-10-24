@@ -20,10 +20,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface DBPartitionVirtualInstanceInsertionConfiguration {
 
-	@Meta.AD(name = "old-web-id")
-	public String oldWebId();
-
-	@Meta.AD(name = "new-web-id")
+	@Meta.AD(name = "new-web-id", required = false)
 	public String newWebId();
+
+	@Meta.AD(name = "web-id")
+	public String webId();
 
 }

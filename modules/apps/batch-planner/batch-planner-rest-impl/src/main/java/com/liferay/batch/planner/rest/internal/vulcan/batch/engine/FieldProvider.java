@@ -5,6 +5,7 @@
 
 package com.liferay.batch.planner.rest.internal.vulcan.batch.engine;
 
+import com.liferay.batch.planner.batch.engine.task.TaskItemUtil;
 import com.liferay.batch.planner.rest.internal.vulcan.yaml.openapi.OpenAPIYAMLProvider;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.openapi.v1_0.ObjectEntryOpenAPIResource;
@@ -13,7 +14,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.batch.engine.Field;
 import com.liferay.portal.vulcan.util.OpenAPIUtil;
@@ -66,14 +66,14 @@ public class FieldProvider {
 
 			return ListUtil.fromMapValues(
 				OpenAPIUtil.getDTOEntityFields(
-					StringUtil.extractLast(
-						internalClassNameKey, StringPool.PERIOD),
+					TaskItemUtil.getSimpleClassName(internalClassNameKey),
 					openAPIYAML));
 		}
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
-				companyId, internalClassNameKey.substring(index + 1));
+				companyId,
+				TaskItemUtil.getTaskItemDelegateName(internalClassNameKey));
 
 		ObjectEntryOpenAPIResource objectEntryOpenAPIResource =
 			_objectEntryOpenAPIResourceProvider.getObjectEntryOpenAPIResource(

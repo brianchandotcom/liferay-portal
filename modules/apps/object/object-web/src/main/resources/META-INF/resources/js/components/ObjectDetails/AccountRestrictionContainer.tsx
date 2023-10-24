@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayForm from '@clayui/form';
 import {
 	FormError,
 	SingleSelect,
@@ -116,36 +117,38 @@ export function AccountRestrictionContainer({
 
 	return (
 		<>
-			<Toggle
-				disabled={
-					!accountRelationshipFields.length ||
-					disableAccountToggle ||
-					isLinkedObjectDefinition ||
-					isRootDescendantNode
-				}
-				label={sub(
-					Liferay.Language.get('enable-x'),
-					Liferay.Language.get('account-restriction')
-				)}
-				name="accountEntryRestricted"
-				onBlur={(event) => {
-					event.stopPropagation();
-
-					if (onSubmit) {
-						onSubmit();
+			<ClayForm.Group>
+				<Toggle
+					disabled={
+						!accountRelationshipFields.length ||
+						disableAccountToggle ||
+						isLinkedObjectDefinition ||
+						isRootDescendantNode
 					}
-				}}
-				onToggle={() =>
-					setValues({
-						accountEntryRestricted: !values.accountEntryRestricted,
-						accountEntryRestrictedObjectFieldName:
-							!values.accountEntryRestricted === false
-								? ''
-								: values.accountEntryRestrictedObjectFieldName,
-					})
-				}
-				toggled={values.accountEntryRestricted}
-			/>
+					label={sub(
+						Liferay.Language.get('enable-x'),
+						Liferay.Language.get('account-restriction')
+					)}
+					name="accountEntryRestricted"
+					onBlur={(event) => {
+						event.stopPropagation();
+
+						if (onSubmit) {
+							onSubmit();
+						}
+					}}
+					onToggle={() =>
+						setValues({
+							accountEntryRestricted: !values.accountEntryRestricted,
+							accountEntryRestrictedObjectFieldName:
+								!values.accountEntryRestricted === false
+									? ''
+									: values.accountEntryRestrictedObjectFieldName,
+						})
+					}
+					toggled={values.accountEntryRestricted}
+				/>
+			</ClayForm.Group>
 
 			<SingleSelect<LabelValueObject>
 				disabled={

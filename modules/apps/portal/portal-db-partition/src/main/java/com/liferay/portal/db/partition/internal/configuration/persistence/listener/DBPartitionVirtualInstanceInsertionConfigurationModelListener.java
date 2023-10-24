@@ -7,10 +7,8 @@ package com.liferay.portal.db.partition.internal.configuration.persistence.liste
 
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.util.PropsValues;
 
@@ -31,43 +29,22 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false,
-	property = "model.class.name=com.liferay.portal.db.partition.internal.configuration.DBPartitionCompanyDeactivationConfiguration",
+	property = "model.class.name=com.liferay.portal.db.partition.internal.configuration.DBPartitionVirtualInstanceInsertionConfiguration",
 	service = ConfigurationModelListener.class
 )
-public class DBPartitionCompanyDeactivationConfigurationModelListener
+public class DBPartitionVirtualInstanceInsertionConfigurationModelListener
 	implements ConfigurationModelListener {
 
 	@Override
 	public void onAfterSave(String pid, Dictionary<String, Object> properties)
 		throws ConfigurationModelListenerException {
 
-		try {
-			Company company = _companyLocalService.getCompanyByWebId(
-				(String)properties.get("webId"));
-
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Company " + company.getCompanyId() +
-						" is going to be deactivated ");
-			}
-
-			_companyLocalService.deleteCompany(company.getCompanyId());
-
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Company " + company.getCompanyId() +
-						" has been deactivated ");
-			}
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Inserting virtual instance " + properties.get("newWebId"));
 		}
-		catch (PortalException portalException) {
-			throw new ConfigurationModelListenerException(
-				portalException.getMessage(),
-				DBPartitionCompanyDeactivationConfigurationModelListener.class,
-				getClass(), properties);
-		}
-		finally {
-			_deleteConfiguration(pid);
-		}
+
+		_deleteConfiguration(pid);
 	}
 
 	private void _deleteConfiguration(String pid) {
@@ -88,10 +65,10 @@ public class DBPartitionCompanyDeactivationConfigurationModelListener
 
 	private static final String _FILE_NAME =
 		"com.liferay.portal.db.partition.internal.configuration." +
-			"DBPartitionCompanyDeactivationConfiguration.config";
+			"DBPartitionVirtualInstanceInsertionConfiguration.config";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DBPartitionCompanyDeactivationConfigurationModelListener.class);
+		DBPartitionVirtualInstanceInsertionConfigurationModelListener.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

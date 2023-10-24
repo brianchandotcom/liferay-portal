@@ -141,6 +141,51 @@ public class EditServerMVCActionCommandTest {
 				_portletPreferences.getPortletPreferencesId()));
 	}
 
+	@Test
+	public void testCleanUpOrphanedPortletPreferencesWithoutLayoutRevision()
+		throws Exception {
+
+		_portletPreferences = _addPortletPreferences(
+			PortletKeys.PREFS_OWNER_ID_DEFAULT,
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(),
+			RandomTestUtil.randomString());
+
+		ReflectionTestUtil.invoke(
+			_mvcActionCommand, "_cleanUpOrphanedPortletPreferences",
+			new Class<?>[0]);
+
+		Assert.assertNull(
+			_portletPreferencesLocalService.fetchPortletPreferences(
+				_portletPreferences.getPortletPreferencesId()));
+	}
+
+	@Test
+	public void testCleanUpOrphanedPortletPreferencesWithProperPortletPreferences()
+		throws Exception {
+
+		String portletId = PortletIdCodec.encode(
+			"com_liferay_test_portlet_TestPortlet");
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			_layout.getTypeSettingsProperties();
+
+		typeSettingsUnicodeProperties.setProperty("column-1", portletId);
+
+		_layout = _layoutLocalService.updateLayout(_layout);
+
+		_portletPreferences = _addPortletPreferences(
+			PortletKeys.PREFS_OWNER_ID_DEFAULT,
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, _layout.getPlid(), portletId);
+
+		ReflectionTestUtil.invoke(
+			_mvcActionCommand, "_cleanUpOrphanedPortletPreferences",
+			new Class<?>[0]);
+
+		Assert.assertNotNull(
+			_portletPreferencesLocalService.fetchPortletPreferences(
+				_portletPreferences.getPortletPreferencesId()));
+	}
+
 	private PortletPreferences _addPortletPreferences(
 			long ownerId, int ownerType, long plid, String portletId)
 		throws Exception {

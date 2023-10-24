@@ -46,6 +46,16 @@ public class AdvancedConfigurationSerDes {
 
 		sb.append("{");
 
+		if (advancedConfiguration.getCollapse() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"collapse\": ");
+
+			sb.append(String.valueOf(advancedConfiguration.getCollapse()));
+		}
+
 		if (advancedConfiguration.getSource() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -103,6 +113,15 @@ public class AdvancedConfigurationSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (advancedConfiguration.getCollapse() == null) {
+			map.put("collapse", null);
+		}
+		else {
+			map.put(
+				"collapse",
+				String.valueOf(advancedConfiguration.getCollapse()));
+		}
+
 		if (advancedConfiguration.getSource() == null) {
 			map.put("source", null);
 		}
@@ -141,7 +160,13 @@ public class AdvancedConfigurationSerDes {
 			AdvancedConfiguration advancedConfiguration,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "source")) {
+			if (Objects.equals(jsonParserFieldName, "collapse")) {
+				if (jsonParserFieldValue != null) {
+					advancedConfiguration.setCollapse(
+						CollapseSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "source")) {
 				if (jsonParserFieldValue != null) {
 					advancedConfiguration.setSource(
 						SourceSerDes.toDTO((String)jsonParserFieldValue));

@@ -802,15 +802,21 @@ public class SalesforceObjectEntryManagerImpl
 		private JSONObject _getSalesforceAccessTokenJSONObject(
 			SalesforceConfiguration salesforceConfiguration) {
 
-			JSONObject jSONObject = SalesforceAccessTokenWebCacheItem.get(
-				salesforceConfiguration);
+			int retry = 0;
 
-			if (jSONObject == null) {
-				throw new ObjectEntryManagerHttpException(
-					"Unable to authenticate with Salesforce");
+			while (retry < 3) {
+				JSONObject jSONObject = SalesforceAccessTokenWebCacheItem.get(
+					salesforceConfiguration);
+
+				if (jSONObject != null) {
+					return jSONObject;
+				}
+
+				retry++;
 			}
 
-			return jSONObject;
+			throw new ObjectEntryManagerHttpException(
+				"Unable to authenticate with Salesforce");
 		}
 
 		private SalesforceConfiguration _getSalesforceConfiguration(

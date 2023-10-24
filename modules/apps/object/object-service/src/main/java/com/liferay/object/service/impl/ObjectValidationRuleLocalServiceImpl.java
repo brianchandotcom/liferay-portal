@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -65,6 +66,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -123,9 +125,18 @@ public class ObjectValidationRuleLocalServiceImpl
 		objectValidationRule = objectValidationRulePersistence.update(
 			objectValidationRule);
 
+		long objectValidationRuleId =
+			objectValidationRule.getObjectValidationRuleId();
+
 		objectValidationRule.setObjectValidationRuleSettings(
-			_addObjectValidationRuleSettings(
-				objectValidationRule, objectValidationRuleSettings));
+			TransformUtil.transform(
+				objectValidationRuleSettings,
+				objectValidationRuleSetting ->
+					_objectValidationRuleSettingLocalService.
+						addObjectValidationRuleSetting(
+							userId, objectValidationRuleId,
+							objectValidationRuleSetting.getName(),
+							objectValidationRuleSetting.getValue())));
 
 		return objectValidationRule;
 	}
@@ -318,8 +329,8 @@ public class ObjectValidationRuleLocalServiceImpl
 			objectValidationRuleId);
 
 		objectValidationRule.setObjectValidationRuleSettings(
-			_addObjectValidationRuleSettings(
-				objectValidationRule, objectValidationRuleSettings));
+			_updateObjectValidationRuleSettings(
+				objectValidationRuleSettings, objectValidationRule));
 
 		return objectValidationRule;
 	}
@@ -450,21 +461,6 @@ public class ObjectValidationRuleLocalServiceImpl
 		}
 	}
 
-	private List<ObjectValidationRuleSetting> _addObjectValidationRuleSettings(
-		ObjectValidationRule objectValidationRule,
-		List<ObjectValidationRuleSetting> objectValidationRuleSettings) {
-
-		return TransformUtil.transform(
-			objectValidationRuleSettings,
-			objectValidationRuleSetting ->
-				_objectValidationRuleSettingLocalService.
-					addObjectValidationRuleSetting(
-						objectValidationRule.getUserId(),
-						objectValidationRule.getObjectValidationRuleId(),
-						objectValidationRuleSetting.getName(),
-						objectValidationRuleSetting.getValue()));
-	}
-
 	private List<ObjectValidationRule> _getObjectValidationRules(
 		List<ObjectValidationRule> objectValidationRules) {
 
@@ -478,6 +474,62 @@ public class ObjectValidationRuleLocalServiceImpl
 		}
 
 		return objectValidationRules;
+	}
+
+	private List<ObjectValidationRuleSetting>
+			_updateObjectValidationRuleSettings(
+				List<ObjectValidationRuleSetting>
+					newObjectValidationRuleSettings,
+				ObjectValidationRule objectValidationRule)
+		throws PortalException {
+
+		Set<ObjectValidationRuleSetting> objectValidationRuleSettings =
+			SetUtil.fromCollection(newObjectValidationRuleSettings);
+
+		for (ObjectValidationRuleSetting oldObjectValidationRuleSetting :
+				_objectValidationRuleSettingPersistence.
+					findByObjectValidationRuleId(
+						objectValidationRule.getObjectValidationRuleId())) {
+
+			boolean delete = true;
+
+			for (ObjectValidationRuleSetting newObjectValidationRuleSetting :
+					newObjectValidationRuleSettings) {
+
+				if (StringUtil.equals(
+						oldObjectValidationRuleSetting.getName(),
+						newObjectValidationRuleSetting.getName()) &&
+					StringUtil.equals(
+						oldObjectValidationRuleSetting.getValue(),
+						newObjectValidationRuleSetting.getValue())) {
+
+					delete = false;
+
+					objectValidationRuleSettings.remove(
+						newObjectValidationRuleSetting);
+
+					break;
+				}
+			}
+
+			if (delete) {
+				_objectValidationRuleSettingPersistence.remove(
+					oldObjectValidationRuleSetting);
+			}
+		}
+
+		for (ObjectValidationRuleSetting objectValidationRuleSetting :
+				objectValidationRuleSettings) {
+
+			_objectValidationRuleSettingLocalService.
+				addObjectValidationRuleSetting(
+					objectValidationRule.getUserId(),
+					objectValidationRule.getObjectValidationRuleId(),
+					objectValidationRuleSetting.getName(),
+					objectValidationRuleSetting.getValue());
+		}
+
+		return newObjectValidationRuleSettings;
 	}
 
 	private void _validate(

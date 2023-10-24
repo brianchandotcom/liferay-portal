@@ -99,13 +99,10 @@ public class DeletionSystemEventExporter {
 					continue;
 				}
 
-				String assetTitle = jsonObject.get(
-					_ASSET_TITLE
-				).toString();
-
 				portletDataContext.getManifestSummary(
 				).addAssetTitle(
-					systemEvent.getClassName(), assetTitle
+					systemEvent.getClassName(),
+					String.valueOf(jsonObject.get(_ASSET_TITLE))
 				);
 			}
 		}

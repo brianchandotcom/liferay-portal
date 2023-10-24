@@ -16,17 +16,19 @@ const api = async (url, options = {}) => {
 	});
 };
 
+function Greeting() {
+	return React.createElement(
+		'h1',
+		{className: 'greeting'},
+		'Hello ',
+		React.createElement('i', null, name),
+		'. Welcome!'
+	);
+}
+
 class CustomElement extends HTMLElement {
 	connectedCallback() {
-		const Greeting = React.createElement(
-			'h1',
-			{className: 'greeting'},
-			'Hello ',
-			React.createElement('i', null, name),
-			'. Welcome!'
-		);
-
-		ReactDOM.render(Greeting, this);
+		ReactDOM.render(React.createElement(Greeting), this);
 
 		if (Liferay.ThemeDisplay.isSignedIn()) {
 			api('o/headless-admin-user/v1.0/my-user-account')

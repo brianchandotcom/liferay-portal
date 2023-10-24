@@ -45,10 +45,10 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function waitForSelectPopUp {
+	function waitForSelectPopUp(value1, value2) {
 		WaitForSPARefresh();
 
-		selenium.waitForPopUp(${locator1}, ${value1});
+		selenium.waitForPopUp(${value1}, value2);
 
 		selenium.selectPopUp();
 

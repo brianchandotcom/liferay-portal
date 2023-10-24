@@ -1909,6 +1909,24 @@
 			"title": "The PageRowDefinition Schema",
 			"type": "object"
 		},
+		"PageRule": {
+			"additionalProperties": false,
+			"properties": {
+				"id": {
+					"title": "The rule ID Schema",
+					"type": "string"
+				},
+				"name": {
+					"title": "The name Schema",
+					"type": "string"
+				}
+			},
+			"required": [
+				"id"
+			],
+			"title": "The PageRule Schema",
+			"type": "object"
+		},
 		"PageSectionDefinition": {
 			"additionalProperties": false,
 			"properties": {
@@ -2400,6 +2418,13 @@
 			"$id": "#/properties/pageElement",
 			"$ref": "#/definitions/PageElement",
 			"title": "The pageElement Schema"
+		},
+		"pageRules": {
+			"items": {
+				"$ref": "#/definitions/PageRule"
+			},
+			"title": "The pageRules Schema",
+			"type": "array"
 		},
 		"settings": {
 			"additionalProperties": false,

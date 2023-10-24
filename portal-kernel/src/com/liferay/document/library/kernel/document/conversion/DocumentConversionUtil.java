@@ -5,7 +5,7 @@
 
 package com.liferay.document.library.kernel.document.conversion;
 
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,33 +22,50 @@ public class DocumentConversionUtil {
 			String targetExtension)
 		throws IOException {
 
-		return _documentConversion.convert(
+		DocumentConversion documentConversion =
+			_documentConversionSnapshot.get();
+
+		return documentConversion.convert(
 			id, inputStream, sourceExtension, targetExtension);
 	}
 
 	public static String[] getConversions(String extension) {
-		return _documentConversion.getConversions(extension);
+		DocumentConversion documentConversion =
+			_documentConversionSnapshot.get();
+
+		return documentConversion.getConversions(extension);
 	}
 
 	public static String getFilePath(String id, String targetExtension) {
-		return _documentConversion.getFilePath(id, targetExtension);
+		DocumentConversion documentConversion =
+			_documentConversionSnapshot.get();
+
+		return documentConversion.getFilePath(id, targetExtension);
 	}
 
 	public static boolean isComparableVersion(String extension) {
-		return _documentConversion.isComparableVersion(extension);
+		DocumentConversion documentConversion =
+			_documentConversionSnapshot.get();
+
+		return documentConversion.isComparableVersion(extension);
 	}
 
 	public static boolean isConvertBeforeCompare(String extension) {
-		return _documentConversion.isConvertBeforeCompare(extension);
+		DocumentConversion documentConversion =
+			_documentConversionSnapshot.get();
+
+		return documentConversion.isConvertBeforeCompare(extension);
 	}
 
 	public static boolean isEnabled() {
-		return _documentConversion.isEnabled();
+		DocumentConversion documentConversion =
+			_documentConversionSnapshot.get();
+
+		return documentConversion.isEnabled();
 	}
 
-	private static volatile DocumentConversion _documentConversion =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			DocumentConversion.class, DocumentConversionUtil.class,
-			"_documentConversion", false);
+	private static final Snapshot<DocumentConversion>
+		_documentConversionSnapshot = new Snapshot<>(
+			DocumentConversionUtil.class, DocumentConversion.class);
 
 }

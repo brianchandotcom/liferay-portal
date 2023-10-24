@@ -76,7 +76,9 @@ public class EditServerMVCActionCommandTest {
 	}
 
 	@Test
-	public void testCleanUpProperPortletPreferences() throws Exception {
+	public void testCleanUpLayoutRevisionPortletPreferencesWithProperPortletPreferences()
+		throws Exception {
+
 		LayoutRevision layoutRevision = _getLayoutRevision();
 
 		String portletId = PortletIdCodec.encode(

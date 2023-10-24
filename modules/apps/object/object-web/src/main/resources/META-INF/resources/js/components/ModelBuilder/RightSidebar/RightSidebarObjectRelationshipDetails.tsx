@@ -208,7 +208,7 @@ export function RightSidebarObjectRelationshipDetails({
 							label:
 								isSelfObjectRelationship &&
 								selfObjectRelationships &&
-								selfObjectRelationships?.length > 1
+								selfObjectRelationships.length > 1
 									? selfObjectRelationships.length.toString()
 									: getLocalizableLabel(
 											defaultLanguageId,

@@ -9,6 +9,7 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
+import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.web.internal.object.definitions.display.context.ViewObjectDefinitionsDisplayContext;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -47,7 +48,7 @@ public class ObjectsObjectDefinitionsScreenNavigationEntry
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new ViewObjectDefinitionsDisplayContext(
 				httpServletRequest, _objectDefinitionModelResourcePermission,
-				_objectEntryManagerRegistry));
+				_objectEntryManagerRegistry, _objectFolderLocalService));
 
 		_jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse,
@@ -65,5 +66,8 @@ public class ObjectsObjectDefinitionsScreenNavigationEntry
 
 	@Reference
 	private ObjectEntryManagerRegistry _objectEntryManagerRegistry;
+
+	@Reference
+	private ObjectFolderLocalService _objectFolderLocalService;
 
 }

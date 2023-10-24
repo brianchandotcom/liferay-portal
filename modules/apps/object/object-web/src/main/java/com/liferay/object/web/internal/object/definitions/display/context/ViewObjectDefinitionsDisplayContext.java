@@ -10,6 +10,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
+import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -44,11 +45,13 @@ public class ViewObjectDefinitionsDisplayContext {
 		HttpServletRequest httpServletRequest,
 		ModelResourcePermission<ObjectDefinition>
 			objectDefinitionModelResourcePermission,
-		ObjectEntryManagerRegistry objectEntryManagerRegistry) {
+		ObjectEntryManagerRegistry objectEntryManagerRegistry,
+		ObjectFolderLocalService objectFolderLocalService) {
 
 		_objectDefinitionModelResourcePermission =
 			objectDefinitionModelResourcePermission;
 		_objectEntryManagerRegistry = objectEntryManagerRegistry;
+		_objectFolderLocalService = objectFolderLocalService;
 
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
 	}
@@ -116,7 +119,10 @@ public class ViewObjectDefinitionsDisplayContext {
 					_objectRequestHelper.getRequest(), "export-as-json"),
 				"get", null, null));
 
-		if (FeatureFlagManagerUtil.isEnabled("LPS-148856")) {
+		int count = _objectFolderLocalService.getObjectFoldersCount(
+			_objectRequestHelper.getCompanyId());
+
+		if ((count > 1) && FeatureFlagManagerUtil.isEnabled("LPS-148856")) {
 			fdsActionDropdownItems.add(
 				new FDSActionDropdownItem(
 					null, "move-folder", "moveObjectDefinition",
@@ -212,6 +218,7 @@ public class ViewObjectDefinitionsDisplayContext {
 	private final ModelResourcePermission<ObjectDefinition>
 		_objectDefinitionModelResourcePermission;
 	private final ObjectEntryManagerRegistry _objectEntryManagerRegistry;
+	private final ObjectFolderLocalService _objectFolderLocalService;
 	private final ObjectRequestHelper _objectRequestHelper;
 
 }

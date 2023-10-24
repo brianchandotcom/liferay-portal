@@ -154,9 +154,10 @@ const ProductOptionCheckboxMultiple = ({
 			(skuOption) => skuOption.skuOptionKey === productOption.key
 		)[0];
 
-		const curProductOptionValue = productOptionValues.filter(
-			(productOptionValue) => productOptionValue.key === value
-		)[0];
+		const curProductOptionValue =
+			productOptionValues.find(
+				(productOptionValue) => productOptionValue.key === value
+			) || {};
 
 		if (currentSkuOption) {
 			currentSkuOptions = currentSkuOptions.map((skuOption) => {
@@ -175,7 +176,7 @@ const ProductOptionCheckboxMultiple = ({
 									curSkuOptionIndex
 							  ].skuOptionValueNames.filter(
 									(curVal) =>
-										!(curVal === curProductOptionValue.name)
+										curVal !== curProductOptionValue.name
 							  ),
 						value: checked
 							? [

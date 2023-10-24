@@ -25,7 +25,7 @@ import {
 	REMOVAL_TIMEOUT,
 	UNEXPECTED_ERROR,
 } from './util/constants';
-import {generateProductPageURL, parseOptions} from './util/index';
+import {filterOptions, generateProductPageURL} from './util/index';
 
 const CartResource = ServiceProvider.DeliveryCartAPI('v1');
 
@@ -80,7 +80,7 @@ function CartItem({
 	const hasChildItems = !!childItems?.length;
 	const hasSkuUnitOfMeasure = !!skuUnitOfMeasure?.key;
 	const isMounted = useIsMounted();
-	const options = parseOptions(rawOptions);
+	const options = filterOptions(rawOptions);
 
 	useEffect(() => {
 		setSelectorQuantity(cartItemQuantity);

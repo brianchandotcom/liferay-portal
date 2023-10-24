@@ -9,7 +9,6 @@ import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -59,9 +58,6 @@ public class LayoutPrototypeCTDisplayRenderer
 
 		return layoutPrototype.getName(locale);
 	}
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private Portal _portal;

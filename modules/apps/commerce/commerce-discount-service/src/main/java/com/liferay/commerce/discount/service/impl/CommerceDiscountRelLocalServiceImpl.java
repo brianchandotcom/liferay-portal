@@ -20,6 +20,7 @@ import com.liferay.commerce.product.model.CPDefinitionLocalizationTable;
 import com.liferay.commerce.product.model.CPDefinitionTable;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPInstanceTable;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Expression;
@@ -212,14 +213,18 @@ public class CommerceDiscountRelLocalServiceImpl
 	public List<CommerceDiscountRel> getCommerceDiscountRels(
 		long classNameId, long classPK, String unitOfMeasureKey) {
 
-		return dslQuery(
-			_getGroupByStep(
-				DSLQueryFactoryUtil.selectDistinct(
-					CommerceDiscountRelTable.INSTANCE
-				).from(
-					CommerceDiscountRelTable.INSTANCE
-				),
-				classNameId, classPK, unitOfMeasureKey));
+		return TransformUtil.transform(
+			dslQuery(
+				_getGroupByStep(
+					DSLQueryFactoryUtil.selectDistinct(
+						CommerceDiscountRelTable.INSTANCE.commerceDiscountRelId
+					).from(
+						CommerceDiscountRelTable.INSTANCE
+					),
+					classNameId, classPK, unitOfMeasureKey)),
+			commerceDiscountRelId ->
+				commerceDiscountRelLocalService.getCommerceDiscountRel(
+					(Long)commerceDiscountRelId));
 	}
 
 	@Override

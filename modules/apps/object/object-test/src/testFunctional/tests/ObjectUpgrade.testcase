@@ -187,6 +187,14 @@ definition {
 			Uncheck.uncheckToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_IN_PAGE_BUILDER_TOGGLE");
 
 			CreateObject.saveObject();
+
+			AssertTextEquals(
+				locator1 = "CreateObject#OBJECT_LABEL",
+				value1 = "Custom Object1 Edit After Upgrade");
+
+			AssertTextEquals(
+				locator1 = "CreateObject#OBJECT_PLURAL_LABEL",
+				value1 = "Custom Objects1 Edit After Upgrade");
 		}
 
 		task ("Delete an Object Definition after Upgrade") {

@@ -67,7 +67,7 @@ public class RankingIndexReindexer implements IndexReindexer {
 			}
 
 			try {
-				rankingIndexCreator.delete(rankingIndexName);
+				rankingIndexCreator.deleteIfExists(rankingIndexName);
 
 				rankingIndexCreator.create(rankingIndexName);
 			}

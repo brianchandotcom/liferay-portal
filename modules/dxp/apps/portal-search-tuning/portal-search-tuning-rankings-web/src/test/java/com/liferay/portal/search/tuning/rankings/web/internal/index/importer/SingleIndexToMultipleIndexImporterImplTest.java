@@ -85,7 +85,7 @@ public class SingleIndexToMultipleIndexImporterImplTest
 		);
 		Mockito.verify(
 			_rankingIndexCreator, Mockito.times(1)
-		).delete(
+		).deleteIfExists(
 			Mockito.any()
 		);
 	}

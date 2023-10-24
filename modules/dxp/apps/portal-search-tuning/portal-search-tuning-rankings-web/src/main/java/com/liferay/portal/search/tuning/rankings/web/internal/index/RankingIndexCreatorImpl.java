@@ -42,7 +42,7 @@ public class RankingIndexCreatorImpl implements RankingIndexCreator {
 	}
 
 	@Override
-	public void delete(RankingIndexName rankingIndexName) {
+	public void deleteIfExists(RankingIndexName rankingIndexName) {
 		IndicesExistsIndexRequest indicesExistsIndexRequest =
 			new IndicesExistsIndexRequest(rankingIndexName.getIndexName());
 

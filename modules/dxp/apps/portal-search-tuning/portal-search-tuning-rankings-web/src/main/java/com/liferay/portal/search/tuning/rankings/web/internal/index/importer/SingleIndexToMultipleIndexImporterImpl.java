@@ -74,7 +74,7 @@ public class SingleIndexToMultipleIndexImporterImpl
 				_log.info("Deleting index " + SINGLE_INDEX_NAME.getIndexName());
 			}
 
-			_rankingIndexCreator.delete(SINGLE_INDEX_NAME);
+			_rankingIndexCreator.deleteIfExists(SINGLE_INDEX_NAME);
 		}
 	}
 

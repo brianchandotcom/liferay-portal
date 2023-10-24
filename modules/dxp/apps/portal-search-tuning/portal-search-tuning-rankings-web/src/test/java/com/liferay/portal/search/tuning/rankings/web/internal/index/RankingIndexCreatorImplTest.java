@@ -58,7 +58,8 @@ public class RankingIndexCreatorImplTest extends BaseRankingsIndexTestCase {
 	public void testDelete() {
 		setUpSearchEngineAdapter((DocumentResponse)null);
 
-		_rankingIndexCreatorImpl.delete(Mockito.mock(RankingIndexName.class));
+		_rankingIndexCreatorImpl.deleteIfExists(
+			Mockito.mock(RankingIndexName.class));
 
 		Mockito.verify(
 			searchEngineAdapter, Mockito.times(1)

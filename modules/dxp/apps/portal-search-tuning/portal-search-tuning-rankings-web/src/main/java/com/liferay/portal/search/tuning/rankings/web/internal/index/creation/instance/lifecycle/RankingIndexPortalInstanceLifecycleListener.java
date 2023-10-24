@@ -69,7 +69,7 @@ public class RankingIndexPortalInstanceLifecycleListener
 			return;
 		}
 
-		_rankingIndexCreator.delete(rankingIndexName);
+		_rankingIndexCreator.deleteIfExists(rankingIndexName);
 	}
 
 	@Reference

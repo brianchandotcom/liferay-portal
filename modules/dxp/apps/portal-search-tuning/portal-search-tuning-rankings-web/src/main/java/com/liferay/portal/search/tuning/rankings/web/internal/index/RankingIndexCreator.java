@@ -14,6 +14,6 @@ public interface RankingIndexCreator {
 
 	public void create(RankingIndexName rankingIndexName);
 
-	public void delete(RankingIndexName rankingIndexName);
+	public void deleteIfExists(RankingIndexName rankingIndexName);
 
 }

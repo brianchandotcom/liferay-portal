@@ -151,6 +151,10 @@ const ActionForm = ({
 		initialValues?.label_i18n ?? {}
 	);
 	const [labelValidationError, setLabelValidationError] = useState(false);
+	const [
+		permissionKeyValidationError,
+		setPermissionKeyValidationError,
+	] = useState(false);
 	const [saveButtonDisabled, setSaveButtonDisabled] = useState(!editing);
 	const [
 		successMessageTranslations,
@@ -257,12 +261,14 @@ const ActionForm = ({
 
 	const validateForm = ({
 		labelTranslations,
+		permissionKey,
 		titleTranslations,
 		url,
 	}: {
 		labelTranslations: Partial<
 			Liferay.Language.FullyLocalizedValue<string>
 		>;
+		permissionKey: string;
 		titleTranslations: Partial<
 			Liferay.Language.FullyLocalizedValue<string>
 		>;
@@ -272,6 +278,7 @@ const ActionForm = ({
 
 		if (
 			(!url && actionData.type !== ACTION_TYPE.HEADLESS) ||
+			(!permissionKey && actionData.type === ACTION_TYPE.HEADLESS) ||
 			!translationExists({
 				translations: labelTranslations,
 			}) ||
@@ -368,6 +375,7 @@ const ActionForm = ({
 
 									validateForm({
 										labelTranslations: translations,
+										permissionKey: actionData.permissionKey,
 										titleTranslations,
 										url: actionData.url,
 									});
@@ -539,6 +547,8 @@ const ActionForm = ({
 
 										validateForm({
 											labelTranslations,
+											permissionKey:
+												actionData.permissionKey,
 											titleTranslations: translations,
 											url: actionData.url,
 										});
@@ -584,6 +594,8 @@ const ActionForm = ({
 
 											validateForm({
 												labelTranslations,
+												permissionKey:
+													actionData.permissionKey,
 												titleTranslations,
 												url,
 											});
@@ -604,10 +616,19 @@ const ActionForm = ({
 
 					<ClayLayout.Row justify="start">
 						<ClayLayout.Col>
-							<ClayForm.Group>
+							<ClayForm.Group
+								className={classNames({
+									'has-error': permissionKeyValidationError,
+								})}
+							>
 								<label htmlFor={permissionKeyFormElementId}>
 									{Liferay.Language.get(
 										'headless-action-key'
+									)}
+
+									{actionData.type ===
+										ACTION_TYPE.HEADLESS && (
+										<RequiredMark />
 									)}
 
 									<span
@@ -622,17 +643,40 @@ const ActionForm = ({
 
 								<ClayInput
 									id={permissionKeyFormElementId}
-									onChange={(event) =>
+									onChange={(event) => {
+										const permissionKey =
+											event.target.value;
+
 										setActionData({
 											...actionData,
-											permissionKey: event.target.value,
-										})
-									}
+											permissionKey,
+										});
+
+										if (
+											actionData.type ===
+											ACTION_TYPE.HEADLESS
+										) {
+											setPermissionKeyValidationError(
+												!permissionKey
+											);
+										}
+
+										validateForm({
+											labelTranslations,
+											permissionKey,
+											titleTranslations,
+											url: actionData.url,
+										});
+									}}
 									placeholder={Liferay.Language.get(
 										'add-a-value-here'
 									)}
 									value={actionData.permissionKey}
 								/>
+
+								{permissionKeyValidationError && (
+									<ValidationFeedback />
+								)}
 							</ClayForm.Group>
 						</ClayLayout.Col>
 					</ClayLayout.Row>

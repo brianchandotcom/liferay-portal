@@ -24,6 +24,12 @@ if (group != null) {
 		).buildString());
 	portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
+	Group parentGroup = group.getParentGroup();
+
+	if (parentGroup != null) {
+		portletDisplay.setURLBackTitle(parentGroup.getDescriptiveName(locale));
+	}
+
 	renderResponse.setTitle(group.getDescriptiveName(locale));
 }
 

@@ -81,16 +81,13 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 			(UploadException)actionRequest.getAttribute(
 				WebKeys.UPLOAD_EXCEPTION);
 
-		int itemsCopied = 0;
-
 		if (uploadException != null) {
 			errorMessages.add(
 				_getUploadExceptionErrorMessage(uploadException, themeDisplay));
 		}
 		else {
 			try {
-				itemsCopied = _copyDLObjects(
-					actionRequest, errorMessages, themeDisplay);
+				_copyDLObjects(actionRequest, errorMessages, themeDisplay);
 			}
 			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
@@ -117,7 +114,8 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 			jsonObject.put("failedItems", failedItems);
 		}
 
-		jsonObject.put("successItems", itemsCopied);
+		jsonObject.put(
+			"successItems", _getItemsCopied(actionRequest, errorMessages));
 
 		hideDefaultSuccessMessage(actionRequest);
 
@@ -179,7 +177,7 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private int _copyDLObjects(
+	private void _copyDLObjects(
 			ActionRequest actionRequest, List<String> errorMessages,
 			ThemeDisplay themeDisplay)
 		throws Exception {
@@ -263,8 +261,6 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 					themeDisplay.translate(portalException.getMessage()));
 			}
 		}
-
-		return dlObjectIds.length - errorMessages.size();
 	}
 
 	private long _getFileEntryTypeId(long groupId, long fileEntryId)
@@ -314,6 +310,15 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 
 		return _dlFileEntryLocalService.getFileEntryTypeIds(
 			folder.getCompanyId(), groupIds, folder.getTreePath());
+	}
+
+	private int _getItemsCopied(
+		ActionRequest actionRequest, List<String> errorMessages) {
+
+		long[] dlObjectIds = ParamUtil.getLongValues(
+			actionRequest, "dlObjectIds");
+
+		return dlObjectIds.length - errorMessages.size();
 	}
 
 	private String _getUploadExceptionErrorMessage(

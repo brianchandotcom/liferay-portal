@@ -1,7 +1,50 @@
 {
 	"$id": "advanced-configuration.schema.json",
 	"$schema": "http://json-schema.org/draft-07/schema#",
+	"definitions": {
+		"InnerHit": {
+			"properties": {
+				"innerCollapse": {
+					"properties": {
+						"field": {
+							"type": "string"
+						}
+					},
+					"type": "object"
+				},
+				"name": {
+					"type": "string"
+				},
+				"size": {
+					"type": "number"
+				},
+				"sorts": {
+					"items": {
+						"type": "object"
+					},
+					"type": "array"
+				}
+			}
+		}
+	},
 	"properties": {
+		"collapse": {
+			"properties": {
+				"field": {
+					"type": "string"
+				},
+				"innerHits": {
+					"items": {
+						"$ref": "#/definitions/InnerHit"
+					},
+					"type": "array"
+				},
+				"maxConcurrentGroupRequests": {
+					"type": "number"
+				}
+			},
+			"type": "object"
+		},
 		"source": {
 			"properties": {
 				"excludes": {

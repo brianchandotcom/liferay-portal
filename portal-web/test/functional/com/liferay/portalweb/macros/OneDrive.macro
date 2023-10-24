@@ -147,6 +147,8 @@ definition {
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#WEB_APPLICATION");
 
+		WaitForElementPresent(locator1 = "OneDrive#DOCUMENTS_SAVE_STATUS");
+
 		Click(locator1 = "OneDrive#DOCUMENTS_TITLE");
 
 		if (IsElementNotPresent(locator1 = "OneDrive#DOCUMENTS_TITLE_RENAME")) {
@@ -154,6 +156,8 @@ definition {
 				Click(locator1 = "OneDrive#DOCUMENTS_TITLE");
 			}
 		}
+
+		WaitForEditable(locator1 = "OneDrive#DOCUMENTS_TITLE_RENAME");
 
 		Type(
 			locator1 = "OneDrive#DOCUMENTS_TITLE_RENAME",

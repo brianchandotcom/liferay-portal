@@ -7,6 +7,7 @@ package com.liferay.portal.search.engine.adapter.search;
 
 import com.liferay.portal.kernel.search.GroupBy;
 import com.liferay.portal.kernel.search.Stats;
+import com.liferay.portal.search.collapse.Collapse;
 import com.liferay.portal.search.groupby.GroupByRequest;
 import com.liferay.portal.search.highlight.Highlight;
 import com.liferay.portal.search.sort.Sort;
@@ -42,6 +43,10 @@ public class SearchSearchRequest
 
 	public String getAlternateUidFieldName() {
 		return _alternateUidFieldName;
+	}
+
+	public Collapse getCollapse() {
+		return _collapse;
 	}
 
 	public Boolean getFetchSource() {
@@ -186,6 +191,10 @@ public class SearchSearchRequest
 		_alternateUidFieldName = alternateUidFieldName;
 	}
 
+	public void setCollapse(Collapse collapse) {
+		_collapse = collapse;
+	}
+
 	public void setFetchSource(Boolean fetchSource) {
 		_fetchSource = fetchSource;
 	}
@@ -304,6 +313,7 @@ public class SearchSearchRequest
 
 	private boolean _allFieldsSelected;
 	private String _alternateUidFieldName;
+	private Collapse _collapse;
 	private Boolean _fetchSource;
 	private String[] _fetchSourceExcludes;
 	private String[] _fetchSourceIncludes;

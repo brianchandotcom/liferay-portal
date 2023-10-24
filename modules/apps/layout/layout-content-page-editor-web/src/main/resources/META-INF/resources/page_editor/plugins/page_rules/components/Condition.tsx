@@ -5,6 +5,7 @@
 
 import React, {FC} from 'react';
 
+import {config} from '../../../app/config/index';
 import RulesService from '../../../app/services/RulesService';
 import {CACHE_KEYS} from '../../../app/utils/cache';
 import useCache from '../../../app/utils/useCache';
@@ -65,7 +66,7 @@ const VALUE_SELECTOR_COMPONENTS: Record<
 > = {
 	[CONDITION_VALUES.user]: UserSelector,
 	[CONDITION_VALUES.role]: null,
-	[CONDITION_VALUES.segment]: null,
+	[CONDITION_VALUES.segment]: SegmentsSelector,
 };
 
 export default function Condition({
@@ -140,6 +141,23 @@ function UserSelector({onValueChanged, value}: SelectorProps) {
 				label: user.screenName,
 				value: user.userId,
 			}))}
+			onSelectionChange={(value: React.Key) =>
+				onValueChanged(value as string)
+			}
+			selectedKey={value}
+		/>
+	);
+}
+
+function SegmentsSelector({onValueChanged, value}: SelectorProps) {
+	return (
+		<RuleSelect
+			items={Object.values(config.availableSegmentsEntries).map(
+				(segmentsEntry) => ({
+					label: segmentsEntry.name,
+					value: segmentsEntry.segmentsEntryId,
+				})
+			)}
 			onSelectionChange={(value: React.Key) =>
 				onValueChanged(value as string)
 			}

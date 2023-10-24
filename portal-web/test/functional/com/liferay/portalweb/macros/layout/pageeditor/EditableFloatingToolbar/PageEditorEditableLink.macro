@@ -94,15 +94,19 @@ definition {
 			Type(
 				locator1 = "TextInput#SEARCH",
 				value1 = ${keywords});
+
+			Click(
+				key_nodeName = ${pageName},
+				locator1 = "Treeview#SEARCH_RESULT_ITEM");
 		}
 		else {
 			Portlet.expandTree();
-		}
 
-		AssertClick.assertPartialTextClickAt(
-			key_nodeName = ${pageName},
-			locator1 = "Treeview#NODE_UNSELECTED",
-			value1 = ${pageName});
+			AssertClick.assertPartialTextClickAt(
+				key_nodeName = ${pageName},
+				locator1 = "Treeview#NODE_UNSELECTED",
+				value1 = ${pageName});
+		}
 
 		SelectFrameTop();
 

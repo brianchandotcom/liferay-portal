@@ -101,7 +101,7 @@ public class WorkflowPermissionUtil {
 				permissionChecker, workflowInstance);
 
 			if (!hasPermission && actionId.equals(ActionKeys.VIEW)) {
-				return null;
+				return Boolean.FALSE;
 			}
 
 			return hasPermission;

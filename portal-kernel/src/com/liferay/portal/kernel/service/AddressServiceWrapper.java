@@ -27,31 +27,17 @@ public class AddressServiceWrapper
 
 	@Override
 	public Address addAddress(
-			String externalReferenceCode, long userId, String className,
-			long classPK, String name, String description, String street1,
-			String street2, String street3, String city, String zip,
-			long regionId, long countryId, long listTypeId, boolean mailing,
-			boolean primary, String phoneNumber, ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _addressService.addAddress(
-			externalReferenceCode, userId, className, classPK, name,
-			description, street1, street2, street3, city, zip, regionId,
-			countryId, listTypeId, mailing, primary, phoneNumber,
-			serviceContext);
-	}
-
-	@Override
-	public Address addAddress(
-			String className, long classPK, String street1, String street2,
+			String externalReferenceCode, String className, long classPK,
+			String name, String description, String street1, String street2,
 			String street3, String city, String zip, long regionId,
 			long countryId, long listTypeId, boolean mailing, boolean primary,
-			ServiceContext serviceContext)
+			String phoneNumber, ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _addressService.addAddress(
-			className, classPK, street1, street2, street3, city, zip, regionId,
-			countryId, listTypeId, mailing, primary, serviceContext);
+			externalReferenceCode, className, classPK, name, description,
+			street1, street2, street3, city, zip, regionId, countryId,
+			listTypeId, mailing, primary, phoneNumber, serviceContext);
 	}
 
 	@Override
@@ -83,18 +69,6 @@ public class AddressServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _addressService.getOSGiServiceIdentifier();
-	}
-
-	@Override
-	public Address updateAddress(
-			long addressId, String street1, String street2, String street3,
-			String city, String zip, long regionId, long countryId,
-			long listTypeId, boolean mailing, boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _addressService.updateAddress(
-			addressId, street1, street2, street3, city, zip, regionId,
-			countryId, listTypeId, mailing, primary);
 	}
 
 	@Override

@@ -30,30 +30,17 @@ public class AddressServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.AddressServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static Address addAddress(
-			String externalReferenceCode, long userId, String className,
-			long classPK, String name, String description, String street1,
-			String street2, String street3, String city, String zip,
-			long regionId, long countryId, long listTypeId, boolean mailing,
-			boolean primary, String phoneNumber, ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addAddress(
-			externalReferenceCode, userId, className, classPK, name,
-			description, street1, street2, street3, city, zip, regionId,
-			countryId, listTypeId, mailing, primary, phoneNumber,
-			serviceContext);
-	}
-
-	public static Address addAddress(
-			String className, long classPK, String street1, String street2,
+			String externalReferenceCode, String className, long classPK,
+			String name, String description, String street1, String street2,
 			String street3, String city, String zip, long regionId,
 			long countryId, long listTypeId, boolean mailing, boolean primary,
-			ServiceContext serviceContext)
+			String phoneNumber, ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addAddress(
-			className, classPK, street1, street2, street3, city, zip, regionId,
-			countryId, listTypeId, mailing, primary, serviceContext);
+			externalReferenceCode, className, classPK, name, description,
+			street1, street2, street3, city, zip, regionId, countryId,
+			listTypeId, mailing, primary, phoneNumber, serviceContext);
 	}
 
 	public static void deleteAddress(long addressId) throws PortalException {
@@ -77,17 +64,6 @@ public class AddressServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
-	}
-
-	public static Address updateAddress(
-			long addressId, String street1, String street2, String street3,
-			String city, String zip, long regionId, long countryId,
-			long listTypeId, boolean mailing, boolean primary)
-		throws PortalException {
-
-		return getService().updateAddress(
-			addressId, street1, street2, street3, city, zip, regionId,
-			countryId, listTypeId, mailing, primary);
 	}
 
 	public static Address updateAddress(

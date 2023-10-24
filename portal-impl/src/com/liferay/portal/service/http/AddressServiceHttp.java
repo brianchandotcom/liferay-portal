@@ -43,11 +43,10 @@ public class AddressServiceHttp {
 
 	public static com.liferay.portal.kernel.model.Address addAddress(
 			HttpPrincipal httpPrincipal, String externalReferenceCode,
-			long userId, String className, long classPK, String name,
-			String description, String street1, String street2, String street3,
-			String city, String zip, long regionId, long countryId,
-			long listTypeId, boolean mailing, boolean primary,
-			String phoneNumber,
+			String className, long classPK, String name, String description,
+			String street1, String street2, String street3, String city,
+			String zip, long regionId, long countryId, long listTypeId,
+			boolean mailing, boolean primary, String phoneNumber,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -57,55 +56,9 @@ public class AddressServiceHttp {
 				_addAddressParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, userId, className, classPK,
-				name, description, street1, street2, street3, city, zip,
-				regionId, countryId, listTypeId, mailing, primary, phoneNumber,
-				serviceContext);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.portal.kernel.model.Address)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static com.liferay.portal.kernel.model.Address addAddress(
-			HttpPrincipal httpPrincipal, String className, long classPK,
-			String street1, String street2, String street3, String city,
-			String zip, long regionId, long countryId, long listTypeId,
-			boolean mailing, boolean primary,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				AddressServiceUtil.class, "addAddress",
-				_addAddressParameterTypes1);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, className, classPK, street1, street2, street3, city,
-				zip, regionId, countryId, listTypeId, mailing, primary,
+				methodKey, externalReferenceCode, className, classPK, name,
+				description, street1, street2, street3, city, zip, regionId,
+				countryId, listTypeId, mailing, primary, phoneNumber,
 				serviceContext);
 
 			Object returnObj = null;
@@ -143,7 +96,7 @@ public class AddressServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AddressServiceUtil.class, "deleteAddress",
-				_deleteAddressParameterTypes2);
+				_deleteAddressParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, addressId);
@@ -179,7 +132,7 @@ public class AddressServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AddressServiceUtil.class, "getAddress",
-				_getAddressParameterTypes3);
+				_getAddressParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, addressId);
@@ -220,7 +173,7 @@ public class AddressServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AddressServiceUtil.class, "getAddresses",
-				_getAddressesParameterTypes4);
+				_getAddressesParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, className, classPK);
@@ -255,50 +208,6 @@ public class AddressServiceHttp {
 	}
 
 	public static com.liferay.portal.kernel.model.Address updateAddress(
-			HttpPrincipal httpPrincipal, long addressId, String street1,
-			String street2, String street3, String city, String zip,
-			long regionId, long countryId, long listTypeId, boolean mailing,
-			boolean primary)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				AddressServiceUtil.class, "updateAddress",
-				_updateAddressParameterTypes5);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, addressId, street1, street2, street3, city, zip,
-				regionId, countryId, listTypeId, mailing, primary);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.portal.kernel.model.Address)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static com.liferay.portal.kernel.model.Address updateAddress(
 			HttpPrincipal httpPrincipal, long addressId, String name,
 			String description, String street1, String street2, String street3,
 			String city, String zip, long regionId, long countryId,
@@ -309,7 +218,7 @@ public class AddressServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				AddressServiceUtil.class, "updateAddress",
-				_updateAddressParameterTypes6);
+				_updateAddressParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, addressId, name, description, street1, street2,
@@ -347,33 +256,20 @@ public class AddressServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(AddressServiceHttp.class);
 
 	private static final Class<?>[] _addAddressParameterTypes0 = new Class[] {
-		String.class, long.class, String.class, long.class, String.class,
+		String.class, String.class, long.class, String.class, String.class,
 		String.class, String.class, String.class, String.class, String.class,
-		String.class, long.class, long.class, long.class, boolean.class,
-		boolean.class, String.class,
-		com.liferay.portal.kernel.service.ServiceContext.class
+		long.class, long.class, long.class, boolean.class, boolean.class,
+		String.class, com.liferay.portal.kernel.service.ServiceContext.class
 	};
-	private static final Class<?>[] _addAddressParameterTypes1 = new Class[] {
-		String.class, long.class, String.class, String.class, String.class,
-		String.class, String.class, long.class, long.class, long.class,
-		boolean.class, boolean.class,
-		com.liferay.portal.kernel.service.ServiceContext.class
-	};
-	private static final Class<?>[] _deleteAddressParameterTypes2 =
+	private static final Class<?>[] _deleteAddressParameterTypes1 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getAddressParameterTypes3 = new Class[] {
+	private static final Class<?>[] _getAddressParameterTypes2 = new Class[] {
 		long.class
 	};
-	private static final Class<?>[] _getAddressesParameterTypes4 = new Class[] {
+	private static final Class<?>[] _getAddressesParameterTypes3 = new Class[] {
 		String.class, long.class
 	};
-	private static final Class<?>[] _updateAddressParameterTypes5 =
-		new Class[] {
-			long.class, String.class, String.class, String.class, String.class,
-			String.class, long.class, long.class, long.class, boolean.class,
-			boolean.class
-		};
-	private static final Class<?>[] _updateAddressParameterTypes6 =
+	private static final Class<?>[] _updateAddressParameterTypes4 =
 		new Class[] {
 			long.class, String.class, String.class, String.class, String.class,
 			String.class, String.class, String.class, long.class, long.class,

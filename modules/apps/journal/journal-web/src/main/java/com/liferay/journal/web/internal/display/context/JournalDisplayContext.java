@@ -1304,6 +1304,14 @@ public class JournalDisplayContext {
 		articleAndFolderSearchContainer.setOrderByComparator(
 			_getFolderOrderByComparator());
 		articleAndFolderSearchContainer.setOrderByType(getOrderByType());
+		articleAndFolderSearchContainer.setRowChecker(_getEntriesChecker());
+
+		if (!BrowserSnifferUtil.isMobile(_httpServletRequest)) {
+			articleAndFolderSearchContainer.setRowMover(
+				new EntriesMover(
+					_trashHelper.isTrashEnabled(
+						_themeDisplay.getScopeGroupId())));
+		}
 
 		return articleAndFolderSearchContainer;
 	}
@@ -1348,6 +1356,14 @@ public class JournalDisplayContext {
 				JournalPortletUtil.getArticleOrderByComparator(
 					getOrderByCol(), getOrderByType()));
 			articleSearchContainer.setOrderByType(getOrderByType());
+			articleSearchContainer.setRowChecker(_getEntriesChecker());
+
+			if (!BrowserSnifferUtil.isMobile(_httpServletRequest)) {
+				articleSearchContainer.setRowMover(
+					new EntriesMover(
+						_trashHelper.isTrashEnabled(
+							_themeDisplay.getScopeGroupId())));
+			}
 
 			if (isNavigationMine() || isNavigationRecent()) {
 				if (isNavigationRecent()) {
@@ -1365,15 +1381,6 @@ public class JournalDisplayContext {
 						_themeDisplay.getScopeGroupId(),
 						_themeDisplay.getUserId(), getFolderId(), getStatus(),
 						false));
-
-				articleSearchContainer.setRowChecker(_getEntriesChecker());
-
-				if (!BrowserSnifferUtil.isMobile(_httpServletRequest)) {
-					articleSearchContainer.setRowMover(
-						new EntriesMover(
-							_trashHelper.isTrashEnabled(
-								_themeDisplay.getScopeGroupId())));
-				}
 
 				_articleSearchContainer = articleSearchContainer;
 
@@ -1393,14 +1400,6 @@ public class JournalDisplayContext {
 						_themeDisplay.getScopeGroupId(), getFolderId(),
 						JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
 						getDDMStructureId(), getStatus()));
-				articleSearchContainer.setRowChecker(_getEntriesChecker());
-
-				if (!BrowserSnifferUtil.isMobile(_httpServletRequest)) {
-					articleSearchContainer.setRowMover(
-						new EntriesMover(
-							_trashHelper.isTrashEnabled(
-								_themeDisplay.getScopeGroupId())));
-				}
 
 				_articleSearchContainer = articleSearchContainer;
 
@@ -1422,15 +1421,6 @@ public class JournalDisplayContext {
 			() -> JournalSearcherUtil.transformJournalArticleAndFolders(
 				searchResponse.getDocuments71()),
 			searchResponse.getTotalHits());
-
-		articleAndFolderSearchContainer.setRowChecker(_getEntriesChecker());
-
-		if (!BrowserSnifferUtil.isMobile(_httpServletRequest)) {
-			articleAndFolderSearchContainer.setRowMover(
-				new EntriesMover(
-					_trashHelper.isTrashEnabled(
-						_themeDisplay.getScopeGroupId())));
-		}
 
 		_articleSearchContainer = articleAndFolderSearchContainer;
 

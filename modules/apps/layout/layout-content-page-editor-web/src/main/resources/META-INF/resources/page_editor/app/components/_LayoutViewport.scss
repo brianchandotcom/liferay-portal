@@ -2,10 +2,13 @@ $selector: '.page-editor__layout-viewport';
 
 html#{$cadmin-selector} #{$selector} {
 	align-items: stretch;
-	background-color: $cadmin-gray-400;
 	display: flex;
 	justify-content: center;
 	position: relative;
+
+	&:not(.page-editor__layout-viewport--size-desktop) {
+		background-color: $cadmin-gray-400;
+	}
 
 	#{$selector}__resizer {
 		background-color: var(--body-bg);

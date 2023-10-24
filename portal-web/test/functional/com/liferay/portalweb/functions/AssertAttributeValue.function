@@ -25,16 +25,4 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function assertAttributeValueAtNotVisible(locator1,value1,value2) {
-		WaitForSPARefresh();
-
-		selenium.waitForElementPresent(${locator1}, "false");
-
-		selenium.assertAttributeValue(${locator1}, ${value1}, ${value2});
-
-		selenium.assertJavaScriptErrors("true");
-
-		selenium.assertLiferayErrors();
-	}
-
 }

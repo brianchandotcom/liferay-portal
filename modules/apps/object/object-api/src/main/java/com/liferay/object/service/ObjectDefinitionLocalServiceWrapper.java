@@ -444,6 +444,15 @@ public class ObjectDefinitionLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectDefinition getObjectDefinition(
+			long companyId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectDefinitionLocalService.getObjectDefinition(
+			companyId, name);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectDefinition
 			getObjectDefinitionByExternalReferenceCode(
 				String externalReferenceCode, long companyId)

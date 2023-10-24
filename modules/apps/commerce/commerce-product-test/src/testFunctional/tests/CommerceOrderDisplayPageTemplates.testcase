@@ -568,8 +568,8 @@ definition {
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 			AssertElementPresent(
-				key_fieldLabel = "Display Template",
 				key_entry = "Placed Orders Test ADT",
+				key_fieldLabel = "Display Template",
 				locator1 = "CommerceEntry#COMMERCE_FACET_BUTTON_ASSERT_TEXT");
 		}
 	}

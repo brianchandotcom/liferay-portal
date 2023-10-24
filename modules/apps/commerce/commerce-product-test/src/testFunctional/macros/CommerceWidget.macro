@@ -348,14 +348,14 @@ definition {
 					key_fieldLabel = "Display Template",
 					locator1 = "Select#GENERIC_SELECT_FIELD",
 					value1 = ${displayTemplate});
-			} 
+			}
 			else {
 				Click(
 					key_fieldLabel = "Display Template",
 					locator1 = "CommerceEntry#COMMERCE_FACET_BUTTON");
 
 				Click(
-					key_entry = "${displayTemplate}",
+					key_entry = ${displayTemplate},
 					locator1 = "CommerceEntry#COMMERCE_FACET_DROPDOWN");
 			}
 		}

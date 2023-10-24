@@ -8,6 +8,9 @@ package com.liferay.jenkins.results.parser.jethr0;
 import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
+import java.io.File;
+
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,13 +26,25 @@ public class Jethr0ClientFactory {
 			return _jethr0Clients.get(key);
 		}
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(
-				System.getenv("CACHE_DIR"))) {
+		boolean opEnabled = false;
 
-			_jethr0Clients.put(key, new LocalJethr0Client(jenkinsMaster));
+		try {
+			opEnabled = Boolean.parseBoolean(
+				JenkinsResultsParserUtil.getBuildProperty(
+					"jethr0.1password.enabled"));
+		}
+		catch (IOException ioException) {
+			ioException.printStackTrace();
+		}
+
+		File opConnectFile = new File(
+			System.getProperty("user.home") + "/.1password.connect");
+
+		if (opEnabled && opConnectFile.exists()) {
+			_jethr0Clients.put(key, new CIJethr0Client(jenkinsMaster));
 		}
 		else {
-			_jethr0Clients.put(key, new CIJethr0Client(jenkinsMaster));
+			_jethr0Clients.put(key, new LocalJethr0Client(jenkinsMaster));
 		}
 
 		return _jethr0Clients.get(key);

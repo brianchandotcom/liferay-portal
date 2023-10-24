@@ -181,6 +181,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_IMAGE_MINI_CART_WITH_ALT_ATTRIBUTE</td>
+	<td>//div[@class= 'mini-cart-item-thumbnail']//img[contains(@alt,'thumbnail')]/../../../div[@class='mini-cart-item-info ml-3']//p[contains(text(),'${key_productSku}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_IMAGE_CHECKOUT_WITH_ALT_ATTRIBUTE</td>
+	<td>//div[@class='table-responsive']//img[contains(@alt,'thumbnail')]/../../../../..//div[@class='list-group-title' and contains(text(),'${key_productName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PRODUCT_DETAILS_ATTACHMENTS_ICON_DEFAULT</td>
 	<td>//h5[text()='${key_entryName}']/../..//*[name()='svg'][contains(@class,'icon-document-default')]</td>
 	<td></td>

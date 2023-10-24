@@ -190,7 +190,7 @@ public class TestJSONMapAttribute implements Serializable {
 		return Objects.equals(toString(), testJSONMapAttribute.toString());
 	}
 
-	public Object getValue(String propertyName) {
+	public Object getPropertyValue(String propertyName) {
 		if (Objects.equals(propertyName, "description")) {
 			return description;
 		}

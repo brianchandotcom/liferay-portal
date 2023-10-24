@@ -124,6 +124,21 @@ const DLFolderSelector = ({
 		})
 			.then((response) => response.json())
 			.then(({errorMessages, failedItems, successItems}) => {
+				if (successItems) {
+					openToast({
+						message: sub(
+							successItems > 1
+								? Liferay.Language.get(
+										'x-items-were-copied-successfully'
+								  )
+								: Liferay.Language.get(
+										'x-item-was-copied-successfully'
+								  ),
+							successItems
+						),
+					});
+				}
+
 				if (failedItems > 10) {
 					showErrorMessage(
 						sub(

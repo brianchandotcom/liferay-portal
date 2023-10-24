@@ -8,7 +8,7 @@ package com.liferay.portal.kernel.social;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.GroupedModel;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.Date;
 
@@ -56,7 +56,7 @@ public class SocialActivityManagerUtil {
 	public static <T extends ClassedModel & GroupedModel>
 		SocialActivityManager<T> getSocialActivityManager() {
 
-		return (SocialActivityManager<T>)_socialActivityManager;
+		return (SocialActivityManager<T>)_socialActivityManagerSnapshot.get();
 	}
 
 	public static <T extends ClassedModel & GroupedModel> void
@@ -68,9 +68,9 @@ public class SocialActivityManagerUtil {
 			userId, classedModel, type, createDate);
 	}
 
-	private static volatile SocialActivityManager<?> _socialActivityManager =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			SocialActivityManager.class, SocialActivityManagerUtil.class,
-			"_socialActivityManager", "(!(model.class.name=*))", false, false);
+	private static final Snapshot<SocialActivityManager>
+		_socialActivityManagerSnapshot = new Snapshot<>(
+			SocialActivityManagerUtil.class, SocialActivityManager.class,
+			"(!(model.class.name=*))");
 
 }

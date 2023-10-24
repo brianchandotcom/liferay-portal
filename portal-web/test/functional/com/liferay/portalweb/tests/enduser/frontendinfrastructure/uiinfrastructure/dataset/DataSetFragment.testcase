@@ -1025,9 +1025,9 @@ definition {
 			SelectFrameTop();
 
 			AssertAttributeValue(
-				attribute1 = "title",
+				value1= "title",
 				locator1 = "DataSet#SELECT_DATA_SET_VIEW",
-				value1 = "Full countries View");
+				value2 = "Full countries View");
 		}
 	}
 

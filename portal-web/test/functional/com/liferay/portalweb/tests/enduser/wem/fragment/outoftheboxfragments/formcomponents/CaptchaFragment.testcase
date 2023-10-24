@@ -73,10 +73,10 @@ definition {
 
 		task ("Then the page creator cannot type text verification and reload simple captcha") {
 			AssertAttributeValue(
-				attribute1 = "disabled",
+				value1 = "disabled",
 				index = 1,
 				locator1 = "Fragment#INPUT_CAPTCHA_BODY",
-				value1 = "true");
+				value2 = "true");
 		}
 	}
 

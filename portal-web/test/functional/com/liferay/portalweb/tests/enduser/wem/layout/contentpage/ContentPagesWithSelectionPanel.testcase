@@ -575,10 +575,10 @@ definition {
 			PageEditor.waitForAutoSave();
 
 			AssertAttributeValue(
-				attribute1 = "placeholder",
+				value1 = "placeholder",
 				key_fieldLabel = "Item",
 				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
-				value1 = "No Item Selected");
+				value2 = "No Item Selected");
 		}
 
 		task ("View the default empty message is shown in Content Display") {
@@ -795,10 +795,10 @@ definition {
 			PageEditor.waitForAutoSave();
 
 			AssertAttributeValue(
-				attribute1 = "placeholder",
+				value1 = "placeholder",
 				key_fieldLabel = "Collection",
 				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
-				value1 = "No Collection Selected");
+				value2 = "No Collection Selected");
 		}
 
 		task ("View the default empty message is shown in Collection Display") {
@@ -952,10 +952,10 @@ definition {
 			PageEditor.waitForAutoSave();
 
 			AssertAttributeValue(
-				attribute1 = "placeholder",
+				value1 = "placeholder",
 				key_fieldLabel = "Item",
 				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
-				value1 = "No Item Selected");
+				value2 = "No Item Selected");
 		}
 
 		task ("View the default inline text is shown in Heading") {

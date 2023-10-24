@@ -204,10 +204,10 @@ definition {
 
 		task ("Then the content creator sees the default values on modal") {
 			AssertAttributeValue(
-				attribute1 = "placeholder",
+				value1 = "placeholder",
 				key_text = "Description",
 				locator1 = "TextInput#ANY",
-				value1 = "Write something...");
+				value2 = "Write something...");
 
 			AssertSelectedLabel(
 				key_fieldLabel = "Tone",

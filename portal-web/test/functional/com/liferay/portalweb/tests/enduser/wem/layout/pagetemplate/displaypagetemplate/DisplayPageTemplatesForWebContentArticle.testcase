@@ -887,10 +887,10 @@ definition {
 				locator1 = "TextInput#ANY");
 
 			AssertAttributeValue(
-				attribute1 = "disabled",
+				value1 = "disabled",
 				key_text = "Preview",
 				locator1 = "Button#ANY",
-				value1 = "true");
+				value2 = "true");
 		}
 
 		task ("When the site designer selects the default display page") {
@@ -1031,10 +1031,10 @@ definition {
 				locator1 = "TextInput#ANY");
 
 			AssertAttributeValue(
-				attribute1 = "disabled",
+				value1 = "disabled",
 				key_text = "Preview",
 				locator1 = "Button#ANY",
-				value1 = "true");
+				value2 = "true");
 		}
 
 		task ("When the site designer selects the default display page") {

@@ -182,9 +182,9 @@ definition {
 		Redirect.openToPatterns(siteURLKey = "test-site");
 
 		AssertAttributeValue(
-			attribute1 = "value",
+			value1 = "value",
 			locator1 = "TextInput#REDIRECT_DESTINATION_URL",
-			value1 = "/web/test-site/$1/000000000000000000000000000000000");
+			value2 = "/web/test-site/$1/000000000000000000000000000000000");
 
 		AssertCssValue(
 			locator1 = "TextInput#REDIRECT_DESTINATION_URL",

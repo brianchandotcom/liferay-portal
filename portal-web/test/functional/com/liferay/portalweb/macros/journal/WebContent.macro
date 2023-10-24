@@ -2755,23 +2755,23 @@ definition {
 
 			if (${webContentDate} == "__/__/____") {
 				AssertAttributeValue(
-					attribute1 = "placeholder",
+					value1 = "placeholder",
 					key_fieldFieldLabel = ${webContentDateFieldLabel},
 					locator1 = "WCEditWebContent#DATE_INPUT",
-					value1 = ${webContentDate});
+					value2 = ${webContentDate});
 
 				AssertAttributeValue(
-					attribute1 = "value",
+					value1 = "value",
 					key_fieldFieldLabel = ${webContentDateFieldLabel},
 					locator1 = "WCEditWebContent#DATE_INPUT",
-					value1 = "");
+					value2 = "");
 			}
 			else {
 				AssertAttributeValue(
-					attribute1 = "value",
+					value1 = "value",
 					key_fieldFieldLabel = ${webContentDateFieldLabel},
 					locator1 = "WCEditWebContent#DATE_INPUT",
-					value1 = ${webContentDate});
+					value2 = ${webContentDate});
 			}
 		}
 

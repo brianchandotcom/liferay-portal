@@ -65,11 +65,11 @@ definition {
 
 		task ("Then the screen reader should announce relevant info") {
 			AssertAttributeValue(
-				attribute1 = "title",
+				value1 = "title",
 				key_itemName = "Web Content Title",
 				key_relationship = "before",
 				locator1 = "SiteNavigationMenu#ITEM_ENTRY_ADD_ICON",
-				value1 = "Add item before Web Content Title.");
+				value2 = "Add item before Web Content Title.");
 		}
 
 		task ("When the navigation menu creator focuses on the below plus icon of Web Content Article type item") {
@@ -81,11 +81,11 @@ definition {
 
 		task ("Then the screen reader should announce relevant info") {
 			AssertAttributeValue(
-				attribute1 = "title",
+				value1 = "title",
 				key_itemName = "Web Content Title",
 				key_relationship = "after",
 				locator1 = "SiteNavigationMenu#ITEM_ENTRY_ADD_ICON",
-				value1 = "Add item after Web Content Title.");
+				value2 = "Add item after Web Content Title.");
 		}
 
 		task ("When the navigation menu creator focuses on the card body of Web Content Article type item via Tab key") {

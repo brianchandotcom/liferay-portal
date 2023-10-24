@@ -820,46 +820,46 @@ definition {
 		WebContentNavigator.gotoEditCP(webContentTitle = "My Web Content based on My Structure with repeated fields");
 
 		AssertAttributeValue(
-			attribute1 = "value",
+			value1 = "value",
 			index = 1,
 			key_fieldFieldLabel = "Text",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
-			value1 = "Text - en_US");
+			value2 = "Text - en_US");
 
 		AssertAttributeValue(
-			attribute1 = "value",
+			value1 = "value",
 			index = 1,
 			key_fieldFieldLabel = "Date",
 			locator1 = "WCEditWebContent#REPEATED_DATE_FIELD",
-			value1 = "02/22/2021");
+			value2 = "02/22/2021");
 
 		AssertAttributeValue(
-			attribute1 = "value",
+			value1 = "value",
 			index = 1,
 			key_fieldFieldLabel = "Number",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
-			value1 = "1.1");
+			value2 = "1.1");
 
 		AssertAttributeValue(
-			attribute1 = "value",
+			value1 = "value",
 			index = 2,
 			key_fieldFieldLabel = "Text",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
-			value1 = "REP Text - en_US");
+			value2 = "REP Text - en_US");
 
 		AssertAttributeValue(
-			attribute1 = "value",
+			value1 = "value",
 			index = 2,
 			key_fieldFieldLabel = "Date",
 			locator1 = "WCEditWebContent#REPEATED_DATE_FIELD",
-			value1 = "02/23/2021");
+			value2 = "02/23/2021");
 
 		AssertAttributeValue(
-			attribute1 = "value",
+			value1 = "value",
 			index = 2,
 			key_fieldFieldLabel = "Number",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
-			value1 = "1.2");
+			value2 = "1.2");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
@@ -868,46 +868,46 @@ definition {
 			value1 = "My Web Content based on My Structure with repeated fields - pt_BR");
 
 		AssertAttributeValue(
-			attribute1 = "value",
+			value1 = "value",
 			index = 1,
 			key_fieldFieldLabel = "Text - pt_BR",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
-			value1 = "Text - pt_BR");
+			value2 = "Text - pt_BR");
 
 		AssertAttributeValue(
-			attribute1 = "value",
+			value1 = "value",
 			index = 1,
 			key_fieldFieldLabel = "Date - pt_BR",
 			locator1 = "WCEditWebContent#REPEATED_DATE_FIELD",
-			value1 = "23/02/2021");
+			value2 = "23/02/2021");
 
 		AssertAttributeValue(
-			attribute1 = "value",
+			value1 = "value",
 			index = 1,
 			key_fieldFieldLabel = "Number - pt_BR",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
-			value1 = "2,1");
+			value2 = "2,1");
 
 		AssertAttributeValue(
-			attribute1 = "value",
+			value1 = "value",
 			index = 2,
 			key_fieldFieldLabel = "Text - pt_BR",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
-			value1 = "REP Text - pt_BR");
+			value2 = "REP Text - pt_BR");
 
 		AssertAttributeValue(
-			attribute1 = "value",
+			value1 = "value",
 			index = 2,
 			key_fieldFieldLabel = "Date - pt_BR",
 			locator1 = "WCEditWebContent#REPEATED_DATE_FIELD",
-			value1 = "24/02/2021");
+			value2 = "24/02/2021");
 
 		AssertAttributeValue(
-			attribute1 = "value",
+			value1 = "value",
 			index = 2,
 			key_fieldFieldLabel = "Number - pt_BR",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
-			value1 = "2,2");
+			value2 = "2,2");
 
 		PortletEntry.changeLocale(locale = "ca-ES");
 
@@ -916,46 +916,46 @@ definition {
 			value1 = "My Web Content based on My Structure with repeated fields - ca_ES");
 
 		AssertAttributeValue(
-			attribute1 = "value",
+			value1 = "value",
 			index = 1,
 			key_fieldFieldLabel = "Text - ca_ES",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
-			value1 = "Text - ca_ES");
+			value2 = "Text - ca_ES");
 
 		AssertAttributeValue(
-			attribute1 = "value",
+			value1 = "value",
 			index = 1,
 			key_fieldFieldLabel = "Date - ca_ES",
 			locator1 = "WCEditWebContent#REPEATED_DATE_FIELD",
-			value1 = "24/02/2021");
+			value2 = "24/02/2021");
 
 		AssertAttributeValue(
-			attribute1 = "value",
+			value1 = "value",
 			index = 1,
 			key_fieldFieldLabel = "Number - ca_ES",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
-			value1 = "3,1");
+			value2 = "3,1");
 
 		AssertAttributeValue(
-			attribute1 = "value",
+			value1 = "value",
 			index = 2,
 			key_fieldFieldLabel = "Text - ca_ES",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
-			value1 = "REP Text - ca_ES");
+			value2 = "REP Text - ca_ES");
 
 		AssertAttributeValue(
-			attribute1 = "value",
+			value1 = "value",
 			index = 2,
 			key_fieldFieldLabel = "Date - ca_ES",
 			locator1 = "WCEditWebContent#REPEATED_DATE_FIELD",
-			value1 = "25/02/2021");
+			value2 = "25/02/2021");
 
 		AssertAttributeValue(
-			attribute1 = "value",
+			value1 = "value",
 			index = 2,
 			key_fieldFieldLabel = "Number - ca_ES",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
-			value1 = "3,2");
+			value2 = "3,2");
 	}
 
 }

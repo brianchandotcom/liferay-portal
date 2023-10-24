@@ -26,15 +26,15 @@ definition {
 
 	macro assertHighlightedSpecificObject {
 		AssertAttributeValue.assertAttributeNotPresent(
-			attribute1 = "fill-opacity",
+			value1 = "fill-opacity",
 			key_stepId = ${key_stepId},
 			locator1 = "Walkthrough#STEP_ID",
-			value1 = "0.8");
+			value2 = "0.8");
 
 		AssertAttributeValue(
-			attribute1 = "fill",
+			value1 = "fill",
 			locator1 = "Walkthrough#POPOVER_OVERLAY",
-			value1 = "#393a4a");
+			value2 = "#393a4a");
 	}
 
 	macro enablePopoverMode {

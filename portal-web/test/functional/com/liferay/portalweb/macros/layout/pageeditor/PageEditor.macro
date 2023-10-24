@@ -5921,29 +5921,29 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 
 		if (isSet(numberOfLines)) {
 			AssertAttributeValue(
-				attribute1 = "rows",
+				value1 = "rows",
 				index = ${position},
 				locator1 = "Fragment#TEXTAREA_FIELD",
 				type = ${type},
-				value1 = ${numberOfLines});
+				value2 = ${numberOfLines});
 		}
 
 		if (isSet(placeholder)) {
 			if (${type} == "textarea") {
 				AssertAttributeValue(
-					attribute1 = "placeholder",
+					value1 = "placeholder",
 					index = ${position},
 					locator1 = "Fragment#TEXTAREA_FIELD",
 					type = ${type},
-					value1 = ${placeholder});
+					value2 = ${placeholder});
 			}
 			else {
 				AssertAttributeValue(
-					attribute1 = "placeholder",
+					value1 = "placeholder",
 					index = ${position},
 					locator1 = "Fragment#INPUT_FIELD",
 					type = ${type},
-					value1 = ${placeholder});
+					value2 = ${placeholder});
 			}
 		}
 

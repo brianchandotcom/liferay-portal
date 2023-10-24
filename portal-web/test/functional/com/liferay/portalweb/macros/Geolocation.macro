@@ -5,15 +5,15 @@ definition {
 
 		if (IsElementPresent(locator1 = "//div[contains(@class,'ddm-geolocation')]")) {
 			AssertAttributeValue(
-				attribute1 = "value",
+				value1 = "value",
 				locator1 = "DDMField#GEOLOCATION_MAP_INPUT",
-				value1 = "{\"lat\":${lat},\"lng\":${lng}}");
+				value2 = "{\"lat\":${lat},\"lng\":${lng}}");
 		}
 		else if (IsElementPresent(locator1 = "//div[contains(@id,'Location')]")) {
 			AssertAttributeValue(
-				attribute1 = "value",
+				value1 = "value",
 				locator1 = "DDMField#GEOLOCATION_MAP_INPUT",
-				value1 = "{\"latitude\":${lat},\"longitude\":${lng}}");
+				value2 = "{\"latitude\":${lat},\"longitude\":${lng}}");
 		}
 	}
 

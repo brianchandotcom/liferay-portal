@@ -242,10 +242,10 @@ definition {
 	macro viewDefaultMappedField {
 		if (${portlet} == "Open Graph") {
 			AssertAttributeValue(
-				attribute1 = "value",
+				value1 = "value",
 				key_mappedField = "Title",
 				locator1 = "TextInput#SEO_MAPPED_FIELD",
-				value1 = ${title});
+				value2 = ${title});
 
 			AssertTextEquals(
 				key_mappedField = "Description",
@@ -253,10 +253,10 @@ definition {
 				value1 = ${description});
 
 			AssertAttributeValue(
-				attribute1 = "value",
+				value1 = "value",
 				key_mappedField = "Image",
 				locator1 = "TextInput#SEO_MAPPED_FIELD",
-				value1 = "-- Unmapped --");
+				value2 = "-- Unmapped --");
 
 			AssertTextEquals(
 				key_mappedField = "ImageAlt",
@@ -296,10 +296,10 @@ definition {
 		}
 		else {
 			AssertAttributeValue(
-				attribute1 = "value",
+				value1 = "value",
 				key_mappedField = ${mappedField},
 				locator1 = "TextInput#SEO_MAPPED_FIELD",
-				value1 = ${mappedFieldValue});
+				value2 = ${mappedFieldValue});
 		}
 	}
 

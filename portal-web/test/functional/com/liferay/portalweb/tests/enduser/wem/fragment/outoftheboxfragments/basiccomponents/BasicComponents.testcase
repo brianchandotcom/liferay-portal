@@ -154,10 +154,10 @@ definition {
 
 		task ("View the text placeholder is shown in Page field") {
 			AssertAttributeValue(
-				attribute1 = "placeholder",
+				value1 = "placeholder",
 				key_fieldLabel = "Page",
 				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
-				value1 = "No Page Selected");
+				value2 = "No Page Selected");
 		}
 
 		task ("Duplicate the Button") {
@@ -423,10 +423,10 @@ definition {
 
 		task ("View the text placeholder is shown in Image field") {
 			AssertAttributeValue(
-				attribute1 = "placeholder",
+				value1 = "placeholder",
 				key_fieldLabel = "Image",
 				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
-				value1 = "No Image Selected");
+				value2 = "No Image Selected");
 		}
 
 		task ("Duplicate the Image") {

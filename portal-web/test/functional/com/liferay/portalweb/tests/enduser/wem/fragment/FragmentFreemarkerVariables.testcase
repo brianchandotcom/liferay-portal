@@ -81,9 +81,9 @@ definition {
 			var fragmentElementId = selenium.getText("//div[@class='gf-1']/h1");
 
 			AssertAttributeValue(
-				attribute1 = "id",
+				value1 = "id",
 				locator1 = "//div[@class='gf-1']/parent::div",
-				value1 = ${fragmentElementId});
+				value2 = ${fragmentElementId});
 		}
 	}
 

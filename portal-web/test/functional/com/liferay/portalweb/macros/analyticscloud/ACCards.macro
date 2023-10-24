@@ -110,11 +110,11 @@ definition {
 
 	macro viewMetricBarStyle {
 		AssertAttributeValue(
-			attribute1 = "style",
+			value1 = "style",
 			entryName = ${entryName},
 			key_cardTitle = ${cardTitle},
 			locator1 = "ACCards#METRIC_BAR",
-			value1 = ${style});
+			value2 = ${style});
 
 		AssertCssValue(
 			entryName = ${entryName},

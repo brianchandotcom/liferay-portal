@@ -2691,9 +2691,9 @@ definition {
 		Navigator.openSpecificURL(url = ${latestVersionURL});
 
 		AssertAttributeValue(
-			attribute1 = "baseURI",
+			value1 = "baseURI",
 			locator1 = "//embed",
-			value1 = ${latestVersionURL});
+			value2 = ${latestVersionURL});
 
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "pdf_no_extension",
@@ -2705,9 +2705,9 @@ definition {
 		Navigator.openSpecificURL(url = ${latestVersionURL});
 
 		AssertAttributeValue(
-			attribute1 = "baseURI",
+			value1 = "baseURI",
 			locator1 = "//embed",
-			value1 = ${latestVersionURL});
+			value2 = ${latestVersionURL});
 	}
 
 	@description = "This test covers LPS-104957. It ensures that the PNG file can be previewed."

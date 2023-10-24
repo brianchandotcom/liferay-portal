@@ -223,10 +223,10 @@ definition {
 			value1 = ${tick});
 
 		AssertAttributeValue(
-			attribute1 = "fill",
+			value1= "fill",
 			index = ${index},
 			locator1 = "ACIndividualsDashboard#BREAKDOWN_RECHARTS_BAR_FILL_COLOR",
-			value1 = ${fillColor});
+			value2 = ${fillColor});
 	}
 
 	macro viewDistributionBarByAttribute {

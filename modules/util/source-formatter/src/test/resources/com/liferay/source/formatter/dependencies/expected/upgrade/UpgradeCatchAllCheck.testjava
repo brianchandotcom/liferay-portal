@@ -145,6 +145,10 @@ public class UpgradeCatchAllCheck {
 		_accountGroupLocalService.fetchCommerceAccountGroupByExternalReferenceCode(123, "test123");
 		_accountGroupLocalService.fetchAccountGroupByExternalReferenceCode(externalReferenceCode, companyId);
 
+		AssetVocabularyLocalServiceUtil.fetchAssetVocabularyByExternalReferenceCode(123, externalReferenceCode);
+		AssetVocabularyLocalServiceUtil.fetchAssetVocabularyByExternalReferenceCode(companyId, externalReferenceCode);
+		_assetVocabularyLocalService.fetchAssetVocabularyByExternalReferenceCode(companyId, externalReferenceCode);
+
 		CommercePriceListLocalServiceUtil.fetchByExternalReferenceCode(externalReferenceCode, companyId);
 		_commercePriceListLocalService.fetchByExternalReferenceCode(123, "test123");
 		_commercePriceListLocalService.fetchByExternalReferenceCode(externalReferenceCode, companyId);

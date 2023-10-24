@@ -86,6 +86,19 @@ public abstract class BaseObjectFieldBusinessType
 		}
 	}
 
+	protected void validateMaxLength(
+			int maxLength, String objectFieldSettingName,
+			String objectFieldSettingValue)
+		throws PortalException {
+
+		if ((objectFieldSettingValue != null) &&
+			(objectFieldSettingValue.length() > maxLength)) {
+
+			throw new ObjectFieldSettingValueException.ExceedsMaxLength(
+				maxLength, objectFieldSettingName);
+		}
+	}
+
 	protected void validateNotAllowedObjectFieldSettingNames(
 			Set<String> notAllowedObjectFieldSettingNames,
 			String objectFieldName,
@@ -179,10 +192,8 @@ public abstract class BaseObjectFieldBusinessType
 					objectFieldSettingName,
 					ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH)) {
 
-			if (objectFieldSettingValue.length() > 255) {
-				throw new ObjectFieldSettingValueException.
-					MustBeLessThan256Characters();
-			}
+			validateMaxLength(
+				255, objectFieldSettingName, objectFieldSettingValue);
 
 			for (String directoryName :
 					StringUtil.split(

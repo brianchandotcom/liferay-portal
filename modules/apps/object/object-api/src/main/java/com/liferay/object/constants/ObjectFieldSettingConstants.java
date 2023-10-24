@@ -21,6 +21,8 @@ public class ObjectFieldSettingConstants {
 
 	public static final String NAME_FILTERS = "filters";
 
+	public static final String NAME_INITIAL_VALUE = "initialValue";
+
 	public static final String NAME_MAX_FILE_SIZE = "maximumFileSize";
 
 	public static final String NAME_MAX_LENGTH = "maxLength";
@@ -31,6 +33,8 @@ public class ObjectFieldSettingConstants {
 	public static final String NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME =
 		"objectRelationshipERCObjectFieldName";
 
+	public static final String NAME_PREFIX = "prefix";
+
 	public static final String NAME_SHOW_COUNTER = "showCounter";
 
 	public static final String NAME_SHOW_FILES_IN_DOCS_AND_MEDIA =
@@ -40,6 +44,8 @@ public class ObjectFieldSettingConstants {
 
 	public static final String NAME_STORAGE_DL_FOLDER_PATH =
 		"storageDLFolderPath";
+
+	public static final String NAME_SUFFIX = "suffix";
 
 	public static final String NAME_TIME_STORAGE = "timeStorage";
 

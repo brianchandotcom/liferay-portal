@@ -292,6 +292,8 @@ definition {
 
 		var publicURL = selenium.getElementValue("PublicationsChanges#SHARE_LINK_URL");
 
+		takeScreenshot();
+
 		echo("shareLinkURL is ${publicURL}");
 
 		return ${publicURL};

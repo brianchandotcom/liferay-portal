@@ -216,8 +216,6 @@ definition {
 			SignOut.signOut();
 
 			Navigator.openSpecificURL(url = ${shareLinkURL});
-
-			echo("shareLinkURL is ${shareLinkURL}");
 		}
 
 		task ("Assert guest user can view Publication with link") {
@@ -333,8 +331,6 @@ definition {
 			SignOut.signOut();
 
 			Navigator.openSpecificURL(url = ${shareLinkURL});
-
-			echo("shareLinkURL is ${shareLinkURL}");
 		}
 
 		task ("Assert 404 page shows up indicating the link is expired") {
@@ -390,8 +386,6 @@ definition {
 			SignOut.signOut();
 
 			Navigator.openSpecificURL(url = ${shareLinkURL});
-
-			echo("shareLinkURL is ${shareLinkURL}");
 		}
 
 		task ("Assert 404 page shows up indicating the link is expired") {

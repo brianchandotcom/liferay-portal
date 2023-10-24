@@ -181,7 +181,7 @@
 </tr>
 <tr>
 	<td>SHARE_LINK_URL</td>
-	<td>//div[@class='input-group-item']//input[@class='form-control' and @type='text']</td>
+	<td>//input[@class='form-control' and @type='text']</td>
 	<td></td>
 </tr>
 </tbody>

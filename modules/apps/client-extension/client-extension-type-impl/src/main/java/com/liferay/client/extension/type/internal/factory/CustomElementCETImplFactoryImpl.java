@@ -71,7 +71,10 @@ public class CustomElementCETImplFactoryImpl
 			for (String cssURL : cssURLs.split(StringPool.NEW_LINE)) {
 				if (!Validator.isUrl(cssURL, true)) {
 					throw new ClientExtensionEntryTypeSettingsException(
-						"css-url-x-is-invalid", cssURL);
+						"Invalid CSS URL: " + cssURL,
+						"css-url-x-is-invalid",
+						cssURL
+					);
 				}
 			}
 		}
@@ -81,14 +84,18 @@ public class CustomElementCETImplFactoryImpl
 
 		if (!matcher.matches()) {
 			throw new ClientExtensionEntryTypeSettingsException(
-				"please-enter-a-valid-friendly-url-mapping");
+				"Invalid friendly URL mapping",
+				"please-enter-a-valid-friendly-url-mapping"
+			);
 		}
 
 		String htmlElementName = newCustomElementCET.getHTMLElementName();
 
 		if (Validator.isNull(htmlElementName)) {
 			throw new ClientExtensionEntryTypeSettingsException(
-				"html-element-name-is-empty");
+				"Custom element HTML element name is null",
+				"html-element-name-is-empty"
+			);
 		}
 
 		char[] htmlElementNameCharArray = htmlElementName.toCharArray();
@@ -97,7 +104,10 @@ public class CustomElementCETImplFactoryImpl
 			!Character.isLowerCase(htmlElementNameCharArray[0])) {
 
 			throw new ClientExtensionEntryTypeSettingsException(
-				"html-element-name-must-start-with-a-lowercase-letter");
+				"Custom element HTML element name must start with a " +
+				"lowercase letter",
+				"html-element-name-must-start-with-a-lowercase-letter"
+			);
 		}
 
 		boolean containsDash = false;
@@ -113,31 +123,43 @@ public class CustomElementCETImplFactoryImpl
 			}
 			else {
 				throw new ClientExtensionEntryTypeSettingsException(
-					"html-element-name-contains-invalid-character-x", c);
+					"Custom element HTML element name contains an" +
+					"invalid character: " + c,
+					"html-element-name-contains-invalid-character-x", c
+				);
 			}
 		}
 
 		if (!containsDash) {
 			throw new ClientExtensionEntryTypeSettingsException(
-				"html-element-name-must-contain-at-least-one-hyphen");
+				"Custom element HTML element name must contain at least one " +
+				"hyphen",
+				"html-element-name-must-contain-at-least-one-hyphen"
+			);
 		}
 
 		if (_reservedHTMLElementNames.contains(htmlElementName)) {
 			throw new ClientExtensionEntryTypeSettingsException(
-				"x-is-a-reserved-html-element-name", htmlElementName);
+				"Reserved custom element HTML element name: " + htmlElementName,
+				"x-is-a-reserved-html-element-name", htmlElementName
+			);
 		}
 
 		String urls = newCustomElementCET.getURLs();
 
 		if (Validator.isNull(urls)) {
 			throw new ClientExtensionEntryTypeSettingsException(
-				"please-enter-at-least-one-url");
+				"At least one URL is required",
+				"please-enter-at-least-one-url"
+			);
 		}
 
 		for (String url : urls.split(StringPool.NEW_LINE)) {
 			if (!Validator.isUrl(url, true)) {
 				throw new ClientExtensionEntryTypeSettingsException(
-					"url-x-is-invalid", url);
+					"Invalid URL: " + url,
+					"url-x-is-invalid", url
+				);
 			}
 		}
 
@@ -149,7 +171,9 @@ public class CustomElementCETImplFactoryImpl
 					oldCustomElementCET.isInstanceable()) {
 
 				throw new ClientExtensionEntryTypeSettingsException(
-					"the-instanceable-value-cannot-be-changed");
+					"The instanceable value cannot be changed",
+					"the-instanceable-value-cannot-be-changed"
+				);
 			}
 		}
 	}

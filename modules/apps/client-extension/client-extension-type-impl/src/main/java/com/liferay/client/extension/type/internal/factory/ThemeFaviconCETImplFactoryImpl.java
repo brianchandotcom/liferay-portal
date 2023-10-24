@@ -60,9 +60,13 @@ public class ThemeFaviconCETImplFactoryImpl
 		ThemeFaviconCET newThemeFaviconCET = new ThemeFaviconCETImpl(
 			StringPool.NEW_LINE, newTypeSettingsUnicodeProperties);
 
-		if (!Validator.isUrl(newThemeFaviconCET.getURL())) {
+		String url = newThemeFaviconCET.getURL();
+
+		if (!Validator.isUrl(url)) {
 			throw new ClientExtensionEntryTypeSettingsException(
-				"please-enter-a-valid-url");
+				"Invalid URL: " + url,
+				"url-x-is-invalid", url
+			);
 		}
 	}
 

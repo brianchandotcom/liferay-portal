@@ -61,17 +61,23 @@ public class IFrameCETImplFactoryImpl implements CETImplFactory<IFrameCET> {
 		IFrameCET newIFrameCET = new IFrameCETImpl(
 			StringPool.NEW_LINE, newTypeSettingsUnicodeProperties);
 
+		String url = newIFrameCET.getURL();
+
 		Matcher matcher = _friendlyURLMappingPattern.matcher(
 			newIFrameCET.getFriendlyURLMapping());
 
 		if (!matcher.matches()) {
 			throw new ClientExtensionEntryTypeSettingsException(
-				"please-enter-a-valid-friendly-url-mapping");
+				"Invalid friendly URL mapping",
+				"please-enter-a-valid-friendly-url-mapping"
+			);
 		}
 
-		if (!Validator.isUrl(newIFrameCET.getURL())) {
+		if (!Validator.isUrl(url)) {
 			throw new ClientExtensionEntryTypeSettingsException(
-				"please-enter-a-valid-url");
+				"Invalid URL: " + url,
+				"url-x-is-invalid", url
+			);
 		}
 
 		if (oldTypeSettingsUnicodeProperties != null) {
@@ -82,7 +88,9 @@ public class IFrameCETImplFactoryImpl implements CETImplFactory<IFrameCET> {
 					oldIFrameCET.isInstanceable()) {
 
 				throw new ClientExtensionEntryTypeSettingsException(
-					"the-instanceable-value-cannot-be-changed");
+					"The instanceable value cannot be changed",
+					"the-instanceable-value-cannot-be-changed"
+				);
 			}
 		}
 	}

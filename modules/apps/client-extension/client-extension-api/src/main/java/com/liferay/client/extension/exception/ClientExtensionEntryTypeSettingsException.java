@@ -13,7 +13,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class ClientExtensionEntryTypeSettingsException extends PortalException {
 
 	public ClientExtensionEntryTypeSettingsException(
-		String messageKey, Object... messageArguments) {
+		String msg, String messageKey, Object... messageArguments) {
+
+		super(msg);
 
 		_messageKey = messageKey;
 		_messageArguments = messageArguments;

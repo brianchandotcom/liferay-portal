@@ -62,14 +62,20 @@ public class JSImportMapsEntryCETImplFactoryImpl
 			new JSImportMapsEntryCETImpl(
 				StringPool.BLANK, newTypeSettingsUnicodeProperties);
 
+		String url = jsImportMapsEntryCET.getURL();
+
 		if (Validator.isNull(jsImportMapsEntryCET.getBareSpecifier())) {
 			throw new ClientExtensionEntryTypeSettingsException(
-				"please-enter-a-valid-bare-specifier");
+				"Invalid bare specifier",
+				"please-enter-a-valid-bare-specifier"
+			);
 		}
 
-		if (!Validator.isUrl(jsImportMapsEntryCET.getURL(), true)) {
+		if (!Validator.isUrl(url, true)) {
 			throw new ClientExtensionEntryTypeSettingsException(
-				"please-enter-a-valid-url");
+				"Invalid URL: " + url,
+				"url-x-is-invalid", url
+			);
 		}
 	}
 

@@ -60,9 +60,13 @@ public class ThemeSpritemapCETImplFactoryImpl
 		ThemeSpritemapCET newThemeSpritemapCET = new ThemeSpritemapCETImpl(
 			StringPool.NEW_LINE, newTypeSettingsUnicodeProperties);
 
-		if (!Validator.isUrl(newThemeSpritemapCET.getURL())) {
+		String url = newThemeSpritemapCET.getURL();
+
+		if (!Validator.isUrl(url)) {
 			throw new ClientExtensionEntryTypeSettingsException(
-				"please-enter-a-valid-url");
+				"Invalid URL: " + url,
+				"url-x-is-invalid", url
+			);
 		}
 	}
 

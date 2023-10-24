@@ -60,9 +60,13 @@ public class StaticContentCETImplFactoryImpl
 		StaticContentCET newStaticContentCET = new StaticContentCETImpl(
 			StringPool.NEW_LINE, newTypeSettingsUnicodeProperties);
 
-		if (!Validator.isUrl(newStaticContentCET.getURL())) {
+		String url = newStaticContentCET.getURL();
+
+		if (!Validator.isUrl(url)) {
 			throw new ClientExtensionEntryTypeSettingsException(
-				"please-enter-a-valid-url");
+				"Invalid URL: " + url,
+				"url-x-is-invalid", url
+			);
 		}
 	}
 

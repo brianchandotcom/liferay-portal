@@ -59,9 +59,13 @@ public class ThemeJSCETImplFactoryImpl implements CETImplFactory<ThemeJSCET> {
 		ThemeJSCET newThemeJSCET = new ThemeJSCETImpl(
 			StringPool.NEW_LINE, newTypeSettingsUnicodeProperties);
 
-		if (!Validator.isUrl(newThemeJSCET.getURL())) {
+		String url = newThemeJSCET.getURL();
+
+		if (!Validator.isUrl(url)) {
 			throw new ClientExtensionEntryTypeSettingsException(
-				"please-enter-a-valid-url");
+				"Invalid URL: " + url,
+				"url-x-is-invalid", url
+			);
 		}
 	}
 

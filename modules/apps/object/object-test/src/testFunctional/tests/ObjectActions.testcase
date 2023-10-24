@@ -950,16 +950,6 @@ definition {
 			AssertElementPresent(
 				key_value = "On Hold",
 				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
-
-			CommerceOrders.openOrdersAdmin();
-
-			Click.clickNoMouseOverNoWaitForVisible(locator1 = "CommerceNavigation#SELECT_ALL_CHECKBOX");
-
-			ClickNoError(locator1 = "Button#TRASH_ENABLED");
-
-			AssertConfirm.assertPartialConfirmation(value1 = "Are you sure you want to delete all selected orders?");
-
-			CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 		}
 	}
 

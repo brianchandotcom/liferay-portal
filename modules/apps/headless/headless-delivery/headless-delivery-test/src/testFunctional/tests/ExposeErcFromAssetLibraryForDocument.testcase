@@ -163,7 +163,7 @@ definition {
 		task ("Then I receive duplicate external reference code response") {
 			TestUtils.assertPartialEquals(
 				actual = ${response},
-				expected = "Duplicate file entry external reference code erc");
+				expected = "This external reference code is already in use.");
 		}
 
 		task ("And Then another document with same erc is not being created") {

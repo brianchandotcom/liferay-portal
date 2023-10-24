@@ -265,7 +265,7 @@ definition {
 		task ("Then I receive duplicate external reference code response") {
 			TestUtils.assertPartialEquals(
 				actual = ${actualMessage},
-				expected = "Duplicate document library folder with external reference code ${staticDoucmentFolderErc}");
+				expected = "This external reference code is already in use.");
 		}
 
 		task ("And Then another folder with same erc is not being created") {

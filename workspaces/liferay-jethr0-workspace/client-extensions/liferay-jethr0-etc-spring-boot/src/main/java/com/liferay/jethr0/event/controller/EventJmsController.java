@@ -8,7 +8,9 @@ package com.liferay.jethr0.event.controller;
 import com.liferay.jethr0.event.handler.EventHandler;
 import com.liferay.jethr0.event.handler.EventHandlerFactory;
 import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
-import com.liferay.jethr0.util.StringUtil;
+
+import javax.jms.JMSException;
+import javax.jms.Message;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -20,6 +22,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessagePostProcessor;
 
 /**
  * @author Michael Hashimoto
@@ -28,9 +31,33 @@ import org.springframework.jms.core.JmsTemplate;
 public class EventJmsController {
 
 	@JmsListener(
-		destination = "${jethr0-jms-jenkins-event-queue:jenkins-events}"
+		destination = "${jethr0-jms-queue-jenkins-to-jethr0:jenkins-to-jethr0}"
 	)
-	public void process(String message) {
+	public void processFromJenkins(String message) {
+		_process(message);
+	}
+
+	public void sendToJenkins(
+		JenkinsServerEntity jenkinsServerEntity, String message) {
+
+		_jmsTemplate.convertAndSend(
+			_jmsQueueJethr0ToJenkins, message,
+			new MessagePostProcessor() {
+
+				@Override
+				public Message postProcessMessage(Message message)
+					throws JMSException {
+
+					message.setStringProperty(
+						"jenkins-master-name", jenkinsServerEntity.getName());
+
+					return message;
+				}
+
+			});
+	}
+
+	private void _process(String message) {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Received " + message);
 		}
@@ -74,25 +101,13 @@ public class EventJmsController {
 		}
 	}
 
-	public void send(JenkinsServerEntity jenkinsServerEntity, String message) {
-		String queueName = StringUtil.combine(
-			"jenkins-builds[", jenkinsServerEntity.getName(), "]");
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				StringUtil.combine("[", queueName, "] Send message ", message));
-		}
-
-		_jmsTemplate.convertAndSend(queueName, message);
-	}
-
 	private static final Log _log = LogFactory.getLog(EventJmsController.class);
 
 	@Autowired
 	private EventHandlerFactory _eventHandlerFactory;
 
-	@Value("${jethr0-jms-jenkins-event-queue:jenkins-events}")
-	private String _jmsJenkinsEventQueue;
+	@Value("${jethr0-jms-queue-jethr0-to-jenkins:jethr0-to-jenkins}")
+	private String _jmsQueueJethr0ToJenkins;
 
 	@Autowired
 	private JmsTemplate _jmsTemplate;

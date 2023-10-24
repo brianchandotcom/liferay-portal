@@ -3,8 +3,9 @@ definition {
 	var password = "test";
 	var userEmailAddress = "test@liferay.com";
 
-	macro apiJsonwsUserView {
-		Open(value1 = "Home#API_JSON_URL");
+	@summary = "Default summary"
+	macro apiJsonwsUserView() {
+		Open(value1 = "/api/jsonws");
 
 		Click(locator1 = "JSONWS#USER_UPDATE_USER");
 
@@ -87,8 +88,9 @@ definition {
 			value1 = "Invoke");
 	}
 
-	macro getPAuth {
-		Open(value1 = "Home#API_JSON_URL");
+	@summary = "Default summary"
+	macro getPAuth() {
+		Open(value1 = "/api/jsonws");
 
 		Click(locator1 = "JSONWS#ADDRESS_ADD_ADDRESS");
 

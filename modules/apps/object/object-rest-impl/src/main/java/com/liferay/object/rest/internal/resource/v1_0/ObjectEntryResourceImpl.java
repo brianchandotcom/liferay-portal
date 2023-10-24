@@ -97,13 +97,13 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 			if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
 				objectEntryUnsafeFunction = objectEntry -> postScopeScopeKey(
-					(String)parameters.get("scopeKey"), objectEntry);
+					_getScopeKey(parameters), objectEntry);
 			}
 
 			if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
 				objectEntryUnsafeFunction =
 					objectEntry -> putScopeScopeKeyByExternalReferenceCode(
-						(String)parameters.get("scopeKey"),
+						_getScopeKey(parameters),
 						objectEntry.getExternalReferenceCode(), objectEntry);
 			}
 
@@ -503,7 +503,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 		if (objectScopeProvider.isGroupAware()) {
 			return getScopeScopeKeyPage(
-				(String)parameters.get("scopeKey"),
+				_getScopeKey(parameters),
 				Boolean.parseBoolean((String)parameters.get("flatten")), search,
 				null, filter, pagination, sorts);
 		}
@@ -630,6 +630,18 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 		}
 
 		return objectEntry;
+	}
+
+	private String _getScopeKey(Map<String, Serializable> parameters) {
+		if (parameters.containsKey("scopeKey")) {
+			return String.valueOf(parameters.get("scopeKey"));
+		}
+
+		if (parameters.containsKey("siteId")) {
+			return String.valueOf(parameters.get("siteId"));
+		}
+
+		return null;
 	}
 
 	private void _loadObjectDefinition(Map<String, Serializable> parameters)

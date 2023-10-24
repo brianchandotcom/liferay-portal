@@ -465,6 +465,36 @@ definition {
 		}
 	}
 
+	@description = "LPS-181575 - Verify if when the user opens the 3 dots option menu of a Data Set, the “view” action is now called “edit”."
+	@priority = 5
+	test CanGoToViewPage {
+		task ("When the user clicks on the data set entry 3 dots option button") {
+			Navigator.gotoBack();
+
+			Click(
+				key_entry = "Data Set Test",
+				locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
+		}
+
+		task ("Then there is an Edit option instead of View option in the dropdown") {
+			MenuItem.viewPresent(menuItem = "Edit");
+		}
+
+		task ("And there is a pencil icon next to the Edit option name") {
+			AssertElementPresent(locator1 = "Icon#EDIT_PENCIL");
+		}
+
+		task ("When the user clicks on the Edit option") {
+			MenuItem.clickNoError(menuItem = "Edit");
+		}
+
+		task ("Then the user is sent to the data set view admin page") {
+			AssertTextEquals(
+				locator1 = "Message#EMPTY_STATE_INFO",
+				value1 = "No Views Created");
+		}
+	}
+
 	@description = "LPS-172396. Confirm that the user can search a view by its description"
 	@priority = 4
 	test CanSearchViewByDescription {

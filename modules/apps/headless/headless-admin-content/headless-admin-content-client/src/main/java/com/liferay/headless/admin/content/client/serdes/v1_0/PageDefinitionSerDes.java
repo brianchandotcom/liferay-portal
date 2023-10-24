@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.content.client.serdes.v1_0;
 
 import com.liferay.headless.admin.content.client.dto.v1_0.PageDefinition;
+import com.liferay.headless.admin.content.client.dto.v1_0.PageRule;
 import com.liferay.headless.admin.content.client.json.BaseJSONParser;
 
 import java.util.Iterator;
@@ -56,6 +57,26 @@ public class PageDefinitionSerDes {
 			sb.append(pageDefinition.getPageElement());
 		}
 
+		if (pageDefinition.getPageRules() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"pageRules\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < pageDefinition.getPageRules().length; i++) {
+				sb.append(pageDefinition.getPageRules()[i]);
+
+				if ((i + 1) < pageDefinition.getPageRules().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (pageDefinition.getSettings() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -103,6 +124,13 @@ public class PageDefinitionSerDes {
 				"pageElement", String.valueOf(pageDefinition.getPageElement()));
 		}
 
+		if (pageDefinition.getPageRules() == null) {
+			map.put("pageRules", null);
+		}
+		else {
+			map.put("pageRules", String.valueOf(pageDefinition.getPageRules()));
+		}
+
 		if (pageDefinition.getSettings() == null) {
 			map.put("settings", null);
 		}
@@ -142,6 +170,22 @@ public class PageDefinitionSerDes {
 				if (jsonParserFieldValue != null) {
 					pageDefinition.setPageElement(
 						PageElementSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "pageRules")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					PageRule[] pageRulesArray =
+						new PageRule[jsonParserFieldValues.length];
+
+					for (int i = 0; i < pageRulesArray.length; i++) {
+						pageRulesArray[i] = PageRuleSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					pageDefinition.setPageRules(pageRulesArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "settings")) {

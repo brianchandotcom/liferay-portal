@@ -12,8 +12,9 @@ runGradleTest {
 
 		assert siteInitializerZipFile.exists()
 
-		FileTree siteInitializerZipTree = zipTree(siteInitializerZipFile)
-
-		assert !siteInitializerZipTree.isEmpty()
+		assert zipTree(siteInitializerZipFile).matching {
+			include "site-initializer/foo.txt"
+			include "site-initializer/sub-dir/bar.txt"
+		}.files.size() == 2
 	}
 }

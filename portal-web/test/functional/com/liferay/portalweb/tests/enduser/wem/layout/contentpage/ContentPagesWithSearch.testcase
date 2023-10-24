@@ -299,13 +299,15 @@ definition {
 		task ("Add a child widget page") {
 			JSONLayout.addPublicLayout(
 				groupName = ${randomSiteName},
-				layoutName = "Test Child Page Name");
+				layoutName = "Test Child Page Name",
+				parentLayoutName = "Test Parent Page Name");
 		}
 
 		task ("Add a grandchild widget page") {
 			JSONLayout.addPublicLayout(
 				groupName = ${randomSiteName},
-				layoutName = "Test Grand Child Page Name");
+				layoutName = "Test Grand Child Page Name",
+				parentLayoutName = "Test Child Page Name");
 		}
 
 		task ("Add a Banner Center fragment to page") {

@@ -1,0 +1,4 @@
+ext.expectedContentStrings = ['    ":configurator:policy" : "force"']
+ext.expectedFilePath = "site-initializer.client-extension-config.json"
+
+apply from: "./_baseFileContentTestCase.gradle"

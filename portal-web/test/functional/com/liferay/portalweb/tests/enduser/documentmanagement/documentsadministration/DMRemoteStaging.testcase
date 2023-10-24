@@ -1089,6 +1089,8 @@ definition {
 
 		DMNavigator.gotoEditDocumentPG(dmDocumentTitle = "Test YouTube Video");
 
+		WaitForPageLoad();
+
 		DMDocument.editFriendlyURL(friendlyURLEdit = "custom-url");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");

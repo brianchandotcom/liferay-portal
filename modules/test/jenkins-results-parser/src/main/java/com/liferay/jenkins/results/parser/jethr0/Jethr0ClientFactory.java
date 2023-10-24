@@ -9,8 +9,8 @@ import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
 import java.io.File;
-
 import java.io.IOException;
+
 import java.util.HashMap;
 import java.util.Map;
 

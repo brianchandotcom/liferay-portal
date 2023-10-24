@@ -19,8 +19,10 @@ public class LocalJethr0Client extends BaseJethr0Client {
 
 		_activeMQBrokerURL = getBuildPropertyString(
 			"jethr0.activemq.broker.url");
-		_activeMQQueueName = getBuildPropertyString(
-			"jethr0.activemq.queue.name");
+		_activeMQJethr0ToJRPQueueName = getBuildPropertyString(
+			"jethr0.activemq.jethr0.jrp.queue.name");
+		_activeMQJRPToJethr0QueueName = getBuildPropertyString(
+			"jethr0.activemq.jrp.jethr0.queue.name");
 		_activeMQURL = getBuildPropertyURL("jethr0.activemq.url");
 		_activeMQUserName = getBuildPropertyString("jethr0.activemq.user.name");
 		_activeMQUserPassword = getBuildPropertyString(
@@ -31,6 +33,8 @@ public class LocalJethr0Client extends BaseJethr0Client {
 		_oAuthExternalReferenceCode = getBuildPropertyString(
 			"jethr0.liferay.oauth.external.reference.code");
 		_springBootURL = getBuildPropertyURL("jethr0.spring.boot.url");
+
+		connect();
 	}
 
 	@Override
@@ -39,8 +43,13 @@ public class LocalJethr0Client extends BaseJethr0Client {
 	}
 
 	@Override
-	protected String getActiveMQQueueName() {
-		return _activeMQQueueName;
+	protected String getActiveMQJethr0ToJRPQueueName() {
+		return _activeMQJethr0ToJRPQueueName;
+	}
+
+	@Override
+	protected String getActiveMQJRPToJethr0QueueName() {
+		return _activeMQJRPToJethr0QueueName;
 	}
 
 	@Override
@@ -79,7 +88,8 @@ public class LocalJethr0Client extends BaseJethr0Client {
 	}
 
 	private final String _activeMQBrokerURL;
-	private final String _activeMQQueueName;
+	private final String _activeMQJethr0ToJRPQueueName;
+	private final String _activeMQJRPToJethr0QueueName;
 	private final URL _activeMQURL;
 	private final String _activeMQUserName;
 	private final String _activeMQUserPassword;

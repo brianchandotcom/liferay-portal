@@ -25,8 +25,11 @@ public class CIJethr0Client extends BaseJethr0Client {
 		super(jenkinsMaster);
 
 		_activeMQBrokerURL = _getSecretString("activemq.broker.url");
+		_activeMQJethr0ToJRPQueueName = _getSecretString(
+			"activemq.jethr0.jrp.queue.name");
+		_activeMQJRPToJethr0QueueName = _getSecretString(
+			"activemq.jrp.jethr0.queue.name");
 		_activeMQURL = _getSecretURL("activemq.url");
-		_activeMQQueueName = _getSecretString("activemq.queue.name");
 		_activeMQUserName = _getSecretString("activemq.user.name");
 		_activeMQUserPassword = _getSecretString("activemq.user.password");
 		_liferayDXPURL = _getSecretURL("liferay.dxp.url");
@@ -34,11 +37,18 @@ public class CIJethr0Client extends BaseJethr0Client {
 			"liferay.oauth.external.reference.code");
 		_oAuthClientSecret = _getSecretString("liferay.oauth.client.secret");
 		_springBootURL = _getSecretURL("jethr0.spring.boot.url");
+
+		connect();
 	}
 
 	@Override
-	protected String getActiveMQQueueName() {
-		return _activeMQQueueName;
+	protected String getActiveMQJethr0ToJRPQueueName() {
+		return _activeMQJethr0ToJRPQueueName;
+	}
+
+	@Override
+	protected String getActiveMQJRPToJethr0QueueName() {
+		return _activeMQJRPToJethr0QueueName;
 	}
 
 	@Override
@@ -118,7 +128,8 @@ public class CIJethr0Client extends BaseJethr0Client {
 	private String _1PasswordItemTitle;
 	private String _1PasswordVaultName;
 	private final String _activeMQBrokerURL;
-	private final String _activeMQQueueName;
+	private final String _activeMQJethr0ToJRPQueueName;
+	private final String _activeMQJRPToJethr0QueueName;
 	private final URL _activeMQURL;
 	private final String _activeMQUserName;
 	private final String _activeMQUserPassword;

@@ -123,7 +123,8 @@ const DLFolderSelector = ({
 			method: 'POST',
 		})
 			.then((response) => response.json())
-			.then(({errorMessages, errorSize}) => {
+			.then(({errorMessages, errorSize, successItems}) => {
+				console.log('successItems: ' + successItems);
 				if (errorSize > 10) {
 					showErrorMessage(
 						sub(

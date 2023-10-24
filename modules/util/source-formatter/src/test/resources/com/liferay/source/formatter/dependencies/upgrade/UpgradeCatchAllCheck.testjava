@@ -26,7 +26,7 @@ public class UpgradeCatchAllCheck {
 
 		FDSTableSchemaBuilder fDSTableSchemaBuilder = _fDSTableSchemaBuilderFactory.create();
 
-		fDSTableSchemaBuilder.addFDSTableSchemaField("purchaseOrderNumber", "purchase-order-number");
+		fDSTableSchemaBuilder.addFDSTableSchemaField("test123", "test123");
 
 		HtmlUtil.extractText(testEntry.getContent());
 
@@ -50,7 +50,7 @@ public class UpgradeCatchAllCheck {
 		long vocabularyId, String[] categoryProperties,
 		ServiceContext serviceContext) {
 
-		AssetCategoryLocalServiceUtil.addCategory(1234, groupId, parentCategoryId, titleMap, descriptionMap, vocabularyId, categoryProperties, serviceContext);
+		AssetCategoryLocalServiceUtil.addCategory(123, groupId, parentCategoryId, titleMap, descriptionMap, vocabularyId, categoryProperties, serviceContext);
 		AssetCategoryLocalServiceUtil.addCategory(userId, groupId, parentCategoryId, titleMap, descriptionMap, vocabularyId, categoryProperties, serviceContext);
 		_assetCategoryLocalService.addCategory(userId, groupId, parentCategoryId, titleMap, descriptionMap, vocabularyId, categoryProperties, serviceContext);
 	}
@@ -59,18 +59,18 @@ public class UpgradeCatchAllCheck {
 		long companyId, long groupId, String title, int start, int end) {
 
 		_assetVocabularyLocalService.searchVocabularies(companyId, groupId, title, start, end);
-		_assetVocabularyService.searchVocabularies(companyId, 551, "test", start, end);
+		_assetVocabularyService.searchVocabularies(companyId, 123, "test123", start, end);
 		_assetVocabularyService.searchVocabularies(companyId, groupId, title, start, end);
 	}
 
 	public void method(long companyId, String externalReferenceCode) {
 		CommercePriceListLocalServiceUtil.fetchByExternalReferenceCode(companyId, externalReferenceCode);
-		_commercePriceListLocalService.fetchByExternalReferenceCode(1234, "externalReferenceCode");
+		_commercePriceListLocalService.fetchByExternalReferenceCode(123, "test123");
 		_commercePriceListLocalService.fetchByExternalReferenceCode(companyId, externalReferenceCode);
 
-		CPInstanceLocalServiceUtil.fetchByExternalReferenceCode(1234, "1234");
+		CPInstanceLocalServiceUtil.fetchByExternalReferenceCode(123, "test123");
 		CPInstanceLocalServiceUtil.fetchByExternalReferenceCode(companyId, externalReferenceCode);
-		CPInstanceLocalServiceUtil.fetchCPInstanceByExternalReferenceCode(1234, "1234");
+		CPInstanceLocalServiceUtil.fetchCPInstanceByExternalReferenceCode(123, "test123");
 		CPInstanceLocalServiceUtil.fetchCPInstanceByExternalReferenceCode(companyId, externalReferenceCode);
 		CPInstanceServiceUtil.fetchByExternalReferenceCode(companyId, externalReferenceCode);
 		_cpInstanceLocalService.fetchByExternalReferenceCode(companyId, externalReferenceCode);

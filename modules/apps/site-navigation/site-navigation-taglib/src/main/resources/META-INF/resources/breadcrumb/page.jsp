@@ -14,8 +14,7 @@ List<BreadcrumbEntry> breadcrumbEntries = (List<BreadcrumbEntry>)request.getAttr
 <ol class="breadcrumb">
 
 	<%
-	for (int i = 0; i < breadcrumbEntries.size(); i++) {
-		BreadcrumbEntry breadcrumbEntry = breadcrumbEntries.get(i);
+	for (BreadcrumbEntry breadcrumbEntry : breadcrumbEntries) {
 	%>
 
 		<c:choose>

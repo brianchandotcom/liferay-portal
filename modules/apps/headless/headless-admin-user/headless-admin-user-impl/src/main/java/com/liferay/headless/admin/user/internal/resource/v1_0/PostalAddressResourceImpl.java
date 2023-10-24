@@ -208,8 +208,8 @@ public class PostalAddressResourceImpl extends BasePostalAddressResourceImpl {
 		ListType listType = _getListType(postalAddress);
 
 		Address address = _addressService.addAddress(
-			null, contextUser.getUserId(), AccountEntry.class.getName(),
-			accountId, postalAddress.getName(), null,
+			null, AccountEntry.class.getName(), accountId,
+			postalAddress.getName(), null,
 			postalAddress.getStreetAddressLine1(),
 			postalAddress.getStreetAddressLine2(),
 			postalAddress.getStreetAddressLine3(),

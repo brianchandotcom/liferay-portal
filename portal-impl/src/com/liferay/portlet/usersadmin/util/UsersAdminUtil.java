@@ -1399,6 +1399,9 @@ public class UsersAdminUtil {
 		for (Address address : addresses) {
 			long addressId = address.getAddressId();
 
+			String externalReferenceCode = address.getExternalReferenceCode();
+			String name = address.getName();
+			String description = address.getDescription();
 			String street1 = address.getStreet1();
 			String street2 = address.getStreet2();
 			String street3 = address.getStreet3();
@@ -1409,19 +1412,22 @@ public class UsersAdminUtil {
 			long listTypeId = address.getListTypeId();
 			boolean mailing = address.isMailing();
 			boolean primary = address.isPrimary();
+			String phoneNumber = address.getPhoneNumber();
 
 			if (addressId <= 0) {
 				address = AddressServiceUtil.addAddress(
-					className, classPK, street1, street2, street3, city, zip,
-					regionId, countryId, listTypeId, mailing, primary,
+					externalReferenceCode, className, classPK, name,
+					description, street1, street2, street3, city, zip, regionId,
+					countryId, listTypeId, mailing, primary, phoneNumber,
 					new ServiceContext());
 
 				addressId = address.getAddressId();
 			}
 			else {
 				AddressServiceUtil.updateAddress(
-					addressId, street1, street2, street3, city, zip, regionId,
-					countryId, listTypeId, mailing, primary);
+					addressId, name, description, street1, street2, street3,
+					city, zip, regionId, countryId, listTypeId, mailing,
+					primary, phoneNumber);
 			}
 
 			addressIds.add(addressId);

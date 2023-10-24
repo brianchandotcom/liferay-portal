@@ -577,10 +577,12 @@ See the id-type attribute's description for more information.
 >
 
 <!--
-The change-tracking-resolution-type value specifies how to resolve columns when
-a modification conflict is detected when publishing. This value is only used
-when change tracking is enabled for the entity. Some values are automatically
-determined by column. Otherwise, the default value is STRICT.
+The change-tracking-resolution-type value specifies how to resolve modification
+conflicts between columns when publishing. This value is only used when change
+tracking is enabled for the entity. When the changeTrackingResolutionType value
+is not defined in the service, it is determined automatically by each data
+column's type. Primary key columns are set to "pk" and modifiedDate columns
+are set to "ignore". Otherwise, the default value is "strict".
 
 See com.liferay.portal.kernel.change.tracking.CTColumnResolutionType for
 available options.
@@ -706,10 +708,12 @@ localization entity.
 >
 
 <!--
-The change-tracking-resolution-type value specifies how to resolve columns when
-a modification conflict is detected when publishing. This value is only used
-when change tracking is enabled for the entity. Some values are automatically
-determined by column. Otherwise, the default value is "strict".
+The change-tracking-resolution-type value specifies how to resolve modification
+conflicts between columns when publishing. This value is only used when change
+tracking is enabled for the entity. When the changeTrackingResolutionType value
+is not defined in the service, it is determined automatically by each data
+column's type. Primary key columns are set to "pk" and modifiedDate columns
+are set to "ignore". Otherwise, the default value is "strict".
 
 See com.liferay.portal.kernel.change.tracking.CTColumnResolutionType for
 available options.

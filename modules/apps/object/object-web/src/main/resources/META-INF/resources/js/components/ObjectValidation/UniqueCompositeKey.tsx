@@ -18,6 +18,8 @@ import {Alert} from '../ModalSelectObjectFields';
 import {ErrorMessage} from './ErrorMessage';
 import {ObjectValidationErrors} from './useObjectValidationForm';
 
+import './UniqueCompositeKey.scss';
+
 interface isMatchingObjectFieldObjectValidationRuleSettingProps {
 	objectField: ObjectField;
 	objectValidationRuleSetting: ObjectValidationRuleSetting;
@@ -384,6 +386,7 @@ export function UniqueCompositeKey({
 					setShowAlert: setShowUniqueCompositeKeyAlert,
 					showAlert: showUniqueCompositeKeyAlert,
 				}}
+				className="lfr-object__object-validation-unique-composite-key-builder-screen"
 				title={Liferay.Language.get('fields')}
 			>
 				<BuilderScreen

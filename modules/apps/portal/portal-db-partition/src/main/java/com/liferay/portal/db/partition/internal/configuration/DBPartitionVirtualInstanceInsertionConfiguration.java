@@ -14,13 +14,16 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "infrastructure", generateUI = false)
 @Meta.OCD(
-	id = "com.liferay.portal.db.partition.internal.configuration.DBPartitionCompanyDeactivationConfiguration",
+	id = "com.liferay.portal.db.partition.internal.configuration.DBPartitionVirtualInstanceInsertionConfiguration",
 	localization = "content/Language",
-	name = "db-partition-company-deactivation-configuration-name"
+	name = "db-partition-virtual-instance-insertion-configuration-name"
 )
-public interface DBPartitionCompanyDeactivationConfiguration {
+public interface DBPartitionVirtualInstanceInsertionConfiguration {
 
-	@Meta.AD(name = "web-id")
-	public String webId();
+	@Meta.AD(name = "old-web-id")
+	public String oldWebId();
+
+	@Meta.AD(name = "new-web-id")
+	public String newWebId();
 
 }

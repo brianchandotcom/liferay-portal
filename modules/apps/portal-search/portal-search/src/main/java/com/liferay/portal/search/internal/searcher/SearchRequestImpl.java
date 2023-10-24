@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
+import com.liferay.portal.search.collapse.Collapse;
 import com.liferay.portal.search.constants.SearchContextAttributes;
 import com.liferay.portal.search.filter.ComplexQueryPart;
 import com.liferay.portal.search.groupby.GroupByRequest;
@@ -50,6 +51,7 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 		_aggregationsMap.putAll(searchRequestImpl._aggregationsMap);
 		_basicFacetSelection = searchRequestImpl._basicFacetSelection;
 		_complexQueryParts.addAll(searchRequestImpl._complexQueryParts);
+		_collapse = searchRequestImpl._collapse;
 		_connectionId = searchRequestImpl._connectionId;
 		_emptySearchEnabled = searchRequestImpl._emptySearchEnabled;
 		_excludeContributors.addAll(searchRequestImpl._excludeContributors);
@@ -138,6 +140,11 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 	@Override
 	public Map<String, Aggregation> getAggregationsMap() {
 		return Collections.unmodifiableMap(_aggregationsMap);
+	}
+
+	@Override
+	public Collapse getCollapse() {
+		return _collapse;
 	}
 
 	@Override
@@ -320,6 +327,10 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 			Boolean.valueOf(basicFacetSelection));
 	}
 
+	public void setCollapse(Collapse collapse) {
+		_collapse = collapse;
+	}
+
 	public void setCompanyId(Long companyId) {
 		_searchContext.setCompanyId(GetterUtil.getLong(companyId));
 	}
@@ -457,6 +468,7 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 	private final Map<String, Aggregation> _aggregationsMap =
 		new LinkedHashMap<>();
 	private boolean _basicFacetSelection;
+	private Collapse _collapse;
 	private final List<ComplexQueryPart> _complexQueryParts = new ArrayList<>();
 	private String _connectionId;
 	private boolean _emptySearchEnabled;

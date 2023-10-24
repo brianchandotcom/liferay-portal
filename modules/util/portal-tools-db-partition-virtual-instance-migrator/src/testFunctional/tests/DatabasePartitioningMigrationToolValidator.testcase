@@ -3,8 +3,8 @@ definition {
 
 	property app.server.types = "tomcat";
 	property ci.retries.disabled = "true";
-	property database.partition.enabled = "true";
 	property database.types = "mysql";
+	property liferay.online.properties = "true";
 	property osgi.modules.includes = "portal-tools-db-partition-virtual-instance-migrator";
 	property portal.release = "true";
 	property portal.upstream = "true";
@@ -26,6 +26,7 @@ definition {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property database.partition.enabled = "false";
 		property ignore.errors = "true";
+		property liferay.online.properties = "false";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
@@ -119,7 +120,7 @@ definition {
 
 	@priority = 3
 	test ValidateMigrationToolReadmeInfo {
-		property database.partition.enabled = "false";
+		property liferay.online.properties = "false";
 
 		task ("When access the portal-tools-db-partition-virtual-instance-migrator util") {
 			var projectDir = PropsUtil.get("project.dir");
@@ -233,14 +234,14 @@ definition {
 	@priority = 4
 	test ValidateSuccessfulConnectionWhenNonPartitionedSourceDBHaveOnlyOneCompanyAdded {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
-		property database.partition.enabled = "false";
+		property liferay.online.properties = "false";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
 		task ("And the source and target database are set") {
 			Portlet.shutdownServer();
 
-			TestCase.updatePortalProperties(newProperty = "database.partition.enabled=true");
+			TestCase.updatePortalProperties(newProperty = "liferay.online.properties=true");
 
 			DBPartitionMigratorTool.generateTargetDatabase();
 		}

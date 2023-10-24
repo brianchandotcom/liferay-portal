@@ -70,6 +70,8 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 
 			String oldContent = content;
 
+			_newMessage = false;
+
 			if (fileName.endsWith(".java")) {
 				content = _formatJava(content, fileName, jsonObject);
 			}
@@ -78,6 +80,12 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 			}
 
 			if (_testMode && oldContent.equals(content)) {
+				String to = jsonObject.getString("to");
+
+				if (to.isEmpty() && _newMessage) {
+					continue;
+				}
+
 				throw new UpgradeCatchAllException(
 					"Unable to process pattern " +
 						jsonObject.getString("from") +
@@ -328,13 +336,16 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 			return newContent;
 		}
 
-		if (fileName.endsWith(".java") &&
-			!hasParameterTypes(
-				javaMethodContent, javaMethodContent,
-				ArrayUtil.toStringArray(parameterNames),
-				ArrayUtil.toStringArray(parameterTypes))) {
+		if ((fileName.endsWith(".java") &&
+			 !hasParameterTypes(
+				 javaMethodContent, javaMethodContent,
+				 ArrayUtil.toStringArray(parameterNames),
+				 ArrayUtil.toStringArray(parameterTypes))) ||
+			to.isEmpty()) {
 
 			addMessage(fileName, _getMessage(jsonObject));
+
+			_newMessage = true;
 
 			return newContent;
 		}
@@ -393,5 +404,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 	}
 
 	private static boolean _testMode;
+
+	private boolean _newMessage;
 
 }

@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutSetStagingHandler;
 import com.liferay.portal.kernel.model.LayoutStagingHandler;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * @author Raymond Augé
@@ -21,53 +21,69 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 public class LayoutStagingUtil {
 
 	public static LayoutRevision getLayoutRevision(Layout layout) {
-		return _layoutStaging.getLayoutRevision(layout);
+		LayoutStaging layoutStaging = _layoutStagingSnapshot.get();
+
+		return layoutStaging.getLayoutRevision(layout);
 	}
 
 	public static LayoutSetBranch getLayoutSetBranch(LayoutSet layoutSet) {
-		return _layoutStaging.getLayoutSetBranch(layoutSet);
+		LayoutStaging layoutStaging = _layoutStagingSnapshot.get();
+
+		return layoutStaging.getLayoutSetBranch(layoutSet);
 	}
 
 	public static LayoutSetStagingHandler getLayoutSetStagingHandler(
 		LayoutSet layoutSet) {
 
-		return _layoutStaging.getLayoutSetStagingHandler(layoutSet);
+		LayoutStaging layoutStaging = _layoutStagingSnapshot.get();
+
+		return layoutStaging.getLayoutSetStagingHandler(layoutSet);
 	}
 
 	public static LayoutStagingHandler getLayoutStagingHandler(Layout layout) {
-		return _layoutStaging.getLayoutStagingHandler(layout);
+		LayoutStaging layoutStaging = _layoutStagingSnapshot.get();
+
+		return layoutStaging.getLayoutStagingHandler(layout);
 	}
 
 	public static boolean isBranchingLayout(Layout layout) {
-		return _layoutStaging.isBranchingLayout(layout);
+		LayoutStaging layoutStaging = _layoutStagingSnapshot.get();
+
+		return layoutStaging.isBranchingLayout(layout);
 	}
 
 	public static boolean isBranchingLayoutSet(
 		Group group, boolean privateLayout) {
 
-		return _layoutStaging.isBranchingLayoutSet(group, privateLayout);
+		LayoutStaging layoutStaging = _layoutStagingSnapshot.get();
+
+		return layoutStaging.isBranchingLayoutSet(group, privateLayout);
 	}
 
 	public static Layout mergeLayoutRevisionIntoLayout(Layout layout) {
-		return _layoutStaging.mergeLayoutRevisionIntoLayout(layout);
+		LayoutStaging layoutStaging = _layoutStagingSnapshot.get();
+
+		return layoutStaging.mergeLayoutRevisionIntoLayout(layout);
 	}
 
 	public static LayoutSet mergeLayoutSetRevisionIntoLayoutSet(
 		LayoutSet layoutSet) {
 
-		return _layoutStaging.mergeLayoutSetRevisionIntoLayoutSet(layoutSet);
+		LayoutStaging layoutStaging = _layoutStagingSnapshot.get();
+
+		return layoutStaging.mergeLayoutSetRevisionIntoLayoutSet(layoutSet);
 	}
 
 	public static boolean prepareLayoutStagingHandler(
 		PortletDataContext portletDataContext, Layout layout) {
 
-		return _layoutStaging.prepareLayoutStagingHandler(
+		LayoutStaging layoutStaging = _layoutStagingSnapshot.get();
+
+		return layoutStaging.prepareLayoutStagingHandler(
 			portletDataContext, layout);
 	}
 
-	private static volatile LayoutStaging _layoutStaging =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			LayoutStaging.class, LayoutStagingUtil.class, "_layoutStaging",
-			false);
+	private static final Snapshot<LayoutStaging> _layoutStagingSnapshot =
+		new Snapshot<>(LayoutStagingUtil.class, LayoutStaging.class);
 
 }

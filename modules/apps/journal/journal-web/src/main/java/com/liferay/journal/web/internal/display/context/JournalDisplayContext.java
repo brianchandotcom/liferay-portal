@@ -275,15 +275,14 @@ public class JournalDisplayContext {
 
 		List<String> availableActions = new ArrayList<>();
 
+		PermissionChecker permissionChecker =
+			_themeDisplay.getPermissionChecker();
+
 		if (JournalArticlePermission.contains(
-				_themeDisplay.getPermissionChecker(), article,
-				ActionKeys.DELETE)) {
+				permissionChecker, article, ActionKeys.DELETE)) {
 
 			availableActions.add("deleteEntries");
 		}
-
-		PermissionChecker permissionChecker =
-			_themeDisplay.getPermissionChecker();
 
 		long scopeGroupId = _themeDisplay.getScopeGroupId();
 
@@ -311,23 +310,20 @@ public class JournalDisplayContext {
 		}
 
 		if (JournalArticlePermission.contains(
-				_themeDisplay.getPermissionChecker(), article,
-				ActionKeys.EXPIRE) &&
+				permissionChecker, article, ActionKeys.EXPIRE) &&
 			(article.getStatus() == WorkflowConstants.STATUS_APPROVED)) {
 
 			availableActions.add("expireEntries");
 		}
 
 		if (JournalArticlePermission.contains(
-				_themeDisplay.getPermissionChecker(), article,
-				ActionKeys.UPDATE)) {
+				permissionChecker, article, ActionKeys.UPDATE)) {
 
 			availableActions.add("moveEntries");
 		}
 
 		if (JournalArticlePermission.contains(
-				_themeDisplay.getPermissionChecker(), article,
-				ActionKeys.VIEW)) {
+				permissionChecker, article, ActionKeys.VIEW)) {
 
 			availableActions.add("exportTranslation");
 		}

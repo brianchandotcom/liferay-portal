@@ -69,8 +69,9 @@ public class ModelAdapterUtil {
 		T adapteeModel, Class<T> adapteeModelClass,
 		Class<V> adaptedModelClass) {
 
-		ModelAdapterBuilder<T, V> modelAdapterBuilder = _locate(
-			adapteeModelClass, adaptedModelClass);
+		ModelAdapterBuilder<T, V> modelAdapterBuilder =
+			(ModelAdapterBuilder<T, V>)_serviceTrackerMap.getService(
+				_getKey(adapteeModelClass, adaptedModelClass));
 
 		return modelAdapterBuilder.build(adapteeModel);
 	}
@@ -128,13 +129,6 @@ public class ModelAdapterUtil {
 		Class<T> adapteeModelClass, Class<V> adaptedModelClass) {
 
 		return adapteeModelClass.getName() + "->" + adaptedModelClass.getName();
-	}
-
-	private static <T, V> ModelAdapterBuilder<T, V> _locate(
-		Class<T> adapteeModelClass, Class<V> adaptedModelClass) {
-
-		return _serviceTrackerMap.getService(
-			_getKey(adapteeModelClass, adaptedModelClass));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

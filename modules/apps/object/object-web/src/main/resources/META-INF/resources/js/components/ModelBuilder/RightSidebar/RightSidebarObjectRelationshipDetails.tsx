@@ -177,14 +177,39 @@ export function RightSidebarObjectRelationshipDetails({
 					(element as Edge<ObjectRelationshipEdgeData>).data
 						?.objectRelationshipId === objectRelationship?.id
 				) {
+					const selfObjectRelationships = (element as Edge<
+						ObjectRelationshipEdgeData
+					>).data?.selfObjectRelationships;
+
+					const newSelfObjectRelationships = selfObjectRelationships?.map(
+						(selfObjectRelationship) => {
+							if (
+								objectRelationship?.id ===
+								selfObjectRelationship.id
+							) {
+								return {
+									...selfObjectRelationship,
+									label: objectRelationship.label,
+								};
+							}
+
+							return selfObjectRelationship;
+						}
+					);
+
 					newObjectRelationship = {
 						...element.data,
 						deletionType: objectRelationship.deletionType,
-						label: getLocalizableLabel(
-							defaultLanguageId,
-							objectRelationship.label,
-							objectRelationship.name
-						),
+						label:
+							selfObjectRelationships &&
+							selfObjectRelationships?.length > 1
+								? selfObjectRelationships.length.toString()
+								: getLocalizableLabel(
+										defaultLanguageId,
+										objectRelationship.label,
+										objectRelationship.name
+								  ),
+						selfObjectRelationships: newSelfObjectRelationships,
 					};
 
 					return {

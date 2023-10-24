@@ -5,7 +5,7 @@
 
 package com.liferay.portal.kernel.portletdisplaytemplate;
 
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 import java.util.Map;
@@ -25,16 +25,17 @@ public class PortletDisplayTemplateManagerUtil {
 			HttpServletResponse httpServletResponse, boolean useDefault)
 		throws Exception {
 
-		return _portletDisplayTemplateManager.renderDDMTemplate(
+		PortletDisplayTemplateManager portletDisplayTemplateManager =
+			_portletDisplayTemplateManagerSnapshot.get();
+
+		return portletDisplayTemplateManager.renderDDMTemplate(
 			classNameId, contextObjects, ddmTemplateKey, entries, groupId,
 			httpServletRequest, httpServletResponse, useDefault);
 	}
 
-	private static volatile PortletDisplayTemplateManager
-		_portletDisplayTemplateManager =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				PortletDisplayTemplateManager.class,
-				PortletDisplayTemplateManagerUtil.class,
-				"_portletDisplayTemplateManager", false);
+	private static final Snapshot<PortletDisplayTemplateManager>
+		_portletDisplayTemplateManagerSnapshot = new Snapshot<>(
+			PortletDisplayTemplateManagerUtil.class,
+			PortletDisplayTemplateManager.class);
 
 }

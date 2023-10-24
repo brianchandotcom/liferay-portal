@@ -210,17 +210,10 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			_objectEntryManagerRegistry.getObjectEntryManager(
 				_objectDefinition.getStorageType());
 
-		String filterString = null;
-
-		if (contextHttpServletRequest != null) {
-			filterString = ParamUtil.getString(
-				contextHttpServletRequest, "filter");
-		}
-
 		return objectEntryManager.getObjectEntries(
 			contextCompany.getCompanyId(), _objectDefinition, null, aggregation,
-			_getDTOConverterContext(null), filterString, pagination, search,
-			sorts);
+			_getDTOConverterContext(null), _getFilterString(), pagination,
+			search, sorts);
 	}
 
 	@Override
@@ -260,16 +253,9 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			_objectEntryManagerRegistry.getObjectEntryManager(
 				_objectDefinition.getStorageType());
 
-		String filterString = null;
-
-		if (contextHttpServletRequest != null) {
-			filterString = ParamUtil.getString(
-				contextHttpServletRequest, "filter");
-		}
-
 		return objectEntryManager.getObjectEntries(
 			contextCompany.getCompanyId(), _objectDefinition, scopeKey,
-			aggregation, _getDTOConverterContext(null), filterString,
+			aggregation, _getDTOConverterContext(null), _getFilterString(),
 			pagination, search, sorts);
 	}
 
@@ -575,6 +561,14 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			_dtoConverterRegistry, contextHttpServletRequest, objectEntryId,
 			contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 			contextUser);
+	}
+
+	private String _getFilterString() {
+		if (contextHttpServletRequest == null) {
+			return null;
+		}
+
+		return ParamUtil.getString(contextHttpServletRequest, "filter");
 	}
 
 	private long _getPrimaryKey(

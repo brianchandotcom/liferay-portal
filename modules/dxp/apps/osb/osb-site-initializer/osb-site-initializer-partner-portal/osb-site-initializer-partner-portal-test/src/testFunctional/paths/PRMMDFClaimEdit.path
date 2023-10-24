@@ -22,7 +22,7 @@
 </tr>
 <tr>
 	<td>ACTIVITY_NAME</td>
-	<td>//*[@route='mdf-claim-form']//*[contains(text(),'${key_activityName}')]//ancestor::div[contains(@class,'card-interactive')]</td>
+	<td>//*[@path='mdf-claim-form']//*[contains(text(),'${key_activityName}')]//ancestor::div[contains(@class,'card-interactive')]</td>
 	<td></td>
 </tr>
 </tbody>

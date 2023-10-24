@@ -97,9 +97,13 @@ export default function TabItem({displayStyle, item, onRemoveHighlighted}) {
 					parentItemId: parentId,
 					position,
 				})
-			).catch(() => {
-				setDisabled(false);
-			});
+			)
+				.then(() => {
+					setDisabled(false);
+				})
+				.catch(() => {
+					setDisabled(false);
+				});
 		}
 	);
 
@@ -113,7 +117,7 @@ export default function TabItem({displayStyle, item, onRemoveHighlighted}) {
 	) : (
 		<ListItem
 			disabled={disabled || isDraggingSource || item.disabled}
-			handlerRef={item.disabled ? null : sourceRef}
+			handlerRef={item.disabled || disabled ? null : sourceRef}
 			item={item}
 			onToggleHighlighted={onToggleHighlighted}
 		/>

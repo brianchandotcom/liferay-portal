@@ -5,7 +5,7 @@
 
 package com.liferay.portal.kernel.microsofttranslator;
 
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * @author Hugo Huijser
@@ -13,18 +13,19 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 public class MicrosoftTranslatorFactoryUtil {
 
 	public static MicrosoftTranslator getMicrosoftTranslator() {
-		return _microsoftTranslatorFactory.getMicrosoftTranslator();
+		MicrosoftTranslatorFactory microsoftTranslatorFactory =
+			_microsoftTranslatorFactorySnapshot.get();
+
+		return microsoftTranslatorFactory.getMicrosoftTranslator();
 	}
 
 	public static MicrosoftTranslatorFactory getMicrosoftTranslatorFactory() {
-		return _microsoftTranslatorFactory;
+		return _microsoftTranslatorFactorySnapshot.get();
 	}
 
-	private static volatile MicrosoftTranslatorFactory
-		_microsoftTranslatorFactory =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				MicrosoftTranslatorFactory.class,
-				MicrosoftTranslatorFactoryUtil.class,
-				"_microsoftTranslatorFactory", false);
+	private static final Snapshot<MicrosoftTranslatorFactory>
+		_microsoftTranslatorFactorySnapshot = new Snapshot<>(
+			MicrosoftTranslatorFactoryUtil.class,
+			MicrosoftTranslatorFactory.class);
 
 }

@@ -1201,7 +1201,7 @@ definition {
 	macro assertFragmentSidebarLoaded {
 		WaitForPageLoad();
 
-		AssertVisible(locator1 = "PageEditor#FRAGMENT_SIDEBAR_LOADED");
+		WaitForVisible(locator1 = "PageEditor#FRAGMENT_SIDEBAR_LOADED");
 	}
 
 	macro assertPaginationNumericTypeIsDisplayed {

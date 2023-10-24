@@ -23,10 +23,10 @@ public class ComponentEnabler {
 	protected void activate(ComponentContext componentContext) {
 		if (DBPartition.isPartitionEnabled()) {
 			componentContext.enableComponent(
-				DBPartitionVirtualInstanceInsertionConfigurationModelListener.
+				DBPartitionVirtualInstanceExtractionConfigurationModelListener.
 					class.getName());
 			componentContext.enableComponent(
-				DBPartitionVirtualInstanceExtractionConfigurationModelListener.
+				DBPartitionVirtualInstanceInsertionConfigurationModelListener.
 					class.getName());
 		}
 	}

@@ -53,6 +53,7 @@ const SearchResult = ({filteredItems, handleOnclickItem, keyword}) => {
 					>
 						<ClayLink
 							className="p-1"
+							decoration="none"
 							displayType="secondary"
 							href={handleOnclickItem ? '#' : item.href}
 							onClick={() => {

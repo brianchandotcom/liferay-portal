@@ -250,6 +250,10 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			long groupId, long layoutPageTemplateCollectionId, File file)
 		throws Exception {
 
+		if (_layoutsImporterResultEntries == null) {
+			_layoutsImporterResultEntries = new ArrayList<>();
+		}
+
 		try (ZipFile zipFile = new ZipFile(file)) {
 			boolean valid = _validateMasterLayoutPageTemplateEntries(
 				groupId, zipFile);

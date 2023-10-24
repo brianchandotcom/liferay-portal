@@ -21,6 +21,23 @@ import openDefaultFailureToast from '../../utils/openDefaultFailureToast';
 import openDefaultSuccessToast from '../../utils/openDefaultSuccessToast';
 import {IFDSAction} from '../Actions';
 
+const ACTION_METHOD = {
+	GET: 'GET',
+	DELETE: 'DELETE',
+	PATCH: 'PATCH',
+	POST: 'POST',
+};
+
+const ACTION_METHODS = () => {
+	const methods = [];
+
+	for (const method in ACTION_METHOD) {
+		methods.push({label: method, value: method});
+	}
+
+	return methods;
+};
+
 const ACTION_TYPE = {
 	ASYNC: 'async',
 	HEADLESS: 'headless',
@@ -142,6 +159,7 @@ const ActionForm = ({
 			initialValues?.confirmationMessageType ?? 'warning',
 		iconSymbol: initialValues?.icon ?? '',
 		label: initialValues?.label ?? '',
+		method: initialValues?.method ?? '',
 		modalSize: initialValues?.modalSize ?? '',
 		permissionKey: initialValues?.permissionKey ?? '',
 		title: initialValues?.title ?? '',
@@ -155,6 +173,7 @@ const ActionForm = ({
 		const {
 			confirmationMessageType,
 			iconSymbol,
+			method,
 			modalSize,
 			permissionKey,
 			type,
@@ -170,6 +189,7 @@ const ActionForm = ({
 			confirmationMessage_i18n: confirmationMessageTranslations,
 			icon: iconSymbol,
 			label_i18n: labelTranslations,
+			method,
 			modalSize,
 			permissionKey,
 			[relationShip]: fdsView.id,
@@ -230,7 +250,7 @@ const ActionForm = ({
 		let valid = true;
 
 		if (
-			!url ||
+			(!url && actionData.type !== ACTION_TYPE.HEADLESS) ||
 			!translationExists({
 				translations: labelTranslations,
 			}) ||
@@ -280,11 +300,12 @@ const ActionForm = ({
 	const confirmationMessageFormElementId = `${namespace}ConfirmationMessage`;
 	const confirmationMessageTypeFormElementId = `${namespace}ConfirmationMessageType`;
 	const labelFormElementId = `${namespace}Label`;
+	const methodFormElementId = `${namespace}Method`;
+	const modalSizeFormElementId = `${namespace}ModalSize`;
 	const permissionKeyFormElementId = `${namespace}PermissionKey`;
 	const titleFormElementId = `${namespace}Title`;
 	const typeFormElementId = `${namespace}Type`;
 	const urlFormElementId = `${namespace}URL`;
-	const modalSizeFormElementId = `${namespace}ModalSize`;
 
 	return (
 		<>
@@ -415,10 +436,37 @@ const ActionForm = ({
 							</ClayForm.Group>
 						</ClayLayout.Col>
 
+						{actionData.type === ACTION_TYPE.ASYNC && (
+							<ClayLayout.Col size={4}>
+								<ClayForm.Group>
+									<label htmlFor={methodFormElementId}>
+										{Liferay.Language.get('method')}
+
+										<RequiredMark />
+									</label>
+
+									<ClaySelectWithOption
+										id={methodFormElementId}
+										onChange={(event) =>
+											setActionData({
+												...actionData,
+												method: event.target.value,
+											})
+										}
+										options={ACTION_METHODS()}
+										placeholder={Liferay.Language.get(
+											'please-select-an-option'
+										)}
+										value={actionData.method}
+									/>
+								</ClayForm.Group>
+							</ClayLayout.Col>
+						)}
+
 						{actionData.type === ACTION_TYPE.MODAL && (
 							<ClayLayout.Col size={4}>
 								<ClayForm.Group>
-									<label htmlFor={typeFormElementId}>
+									<label htmlFor={modalSizeFormElementId}>
 										{Liferay.Language.get('variant')}
 
 										<RequiredMark />
@@ -566,7 +614,7 @@ const ActionForm = ({
 						</ClayLayout.Col>
 					</ClayLayout.Row>
 
-					{activeTab === 0 && actionData.type === ACTION_TYPE.LINK && (
+					{activeTab === 0 && (
 						<ClayLayout.Row>
 							<ClayLayout.Col size={8}>
 								<ClayForm.Group>

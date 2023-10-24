@@ -36,6 +36,7 @@ interface IFDSAction {
 	label_i18n: {
 		[key: string]: string;
 	};
+	method?: string;
 	modalSize?: string;
 	permissionKey: string;
 	title?: string;

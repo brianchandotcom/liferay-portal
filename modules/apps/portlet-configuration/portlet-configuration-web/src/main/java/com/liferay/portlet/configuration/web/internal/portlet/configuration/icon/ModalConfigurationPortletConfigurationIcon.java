@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(service = PortletConfigurationIcon.class)
-public class ConfigurationPortletConfigurationIcon
+public class ModalConfigurationPortletConfigurationIcon
 	extends BaseJSPPortletConfigurationIcon {
 
 	@Override
@@ -71,7 +71,9 @@ public class ConfigurationPortletConfigurationIcon
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (layout.isEmbeddedPersonalApplication()) {
+		if (layout.isEmbeddedPersonalApplication() ||
+			layout.isTypeControlPanel()) {
+
 			return false;
 		}
 

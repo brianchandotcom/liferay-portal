@@ -52,13 +52,13 @@ public class PublishArticlesMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String singlePublishArticleId = ParamUtil.getString(
-			actionRequest, "articleId");
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		String articleId = ParamUtil.getString(
+			actionRequest, "articleId");
 
-		if (Validator.isNotNull(singlePublishArticleId)) {
-			Changeset changeset = _createChangesetForArticles(
-				groupId, ListUtil.fromArray(singlePublishArticleId));
+		if (Validator.isNotNull(articleId)) {
+			Changeset changeset = _createChangeset(
+				groupId, ListUtil.fromArray(articleId));
 
 			_exportImportChangesetMVCActionCommandHelper.publish(
 				actionRequest, actionResponse, changeset);
@@ -69,16 +69,14 @@ public class PublishArticlesMVCActionCommand extends BaseMVCActionCommand {
 		String[] articleIds = ParamUtil.getStringValues(
 			actionRequest, "rowIdsJournalArticle");
 
-		Changeset changeset = _createChangesetForArticles(
+		Changeset changeset = _createChangeset(
 			groupId, ListUtil.fromArray(articleIds));
 
 		_exportImportChangesetMVCActionCommandHelper.publish(
 			actionRequest, actionResponse, changeset);
 	}
 
-	private Changeset _createChangesetForArticles(
-		long groupId, List<String> articleIds) {
-
+	private Changeset _createChangeset(long groupId, List<String> articleIds) {
 		Changeset.Builder builder = Changeset.create();
 
 		for (String articleId : articleIds) {
@@ -87,7 +85,7 @@ public class PublishArticlesMVCActionCommand extends BaseMVCActionCommand {
 			builder.addStagedModel(
 				() -> journalArticle
 			).addMultipleStagedModel(
-				() -> _getJournalArticleVersions(journalArticle)
+				() -> _getJournalArticleVersionStagedModels(journalArticle)
 			);
 		}
 
@@ -126,7 +124,7 @@ public class PublishArticlesMVCActionCommand extends BaseMVCActionCommand {
 		return null;
 	}
 
-	private List<StagedModel> _getJournalArticleVersions(
+	private List<StagedModel> _getJournalArticleVersionStagedModels(
 		JournalArticle journalArticle) {
 
 		boolean includeVersionHistory = JournalUtil.isIncludeVersionHistory();

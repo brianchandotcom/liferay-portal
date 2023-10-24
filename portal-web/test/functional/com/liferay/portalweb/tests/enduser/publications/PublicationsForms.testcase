@@ -72,8 +72,6 @@ definition {
 			dataProvider = "Liferay Countries",
 			dataProviderOutput = "Country Names");
 
-		Form.closeSidebar();
-
 		PortletEntry.publish();
 
 		JSONLayout.addPublicLayout(

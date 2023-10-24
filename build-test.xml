@@ -2969,9 +2969,7 @@ s3Region=&quot;us-east&quot;</echo>
 	<macrodef name="prepare-liferay-online-properties">
 		<sequential>
 			<echo append="true" file="portal-impl/src/portal-ext.properties">
-include-and-override=portal-liferay-online-config.properties
-include-and-override=portal-liferay-online-database-partition.properties
-include-and-override=portal-liferay-online-limit.properties</echo>
+include-and-override=portal-liferay-online.properties</echo>
 
 			<replace
 				file="portal-impl/src/portal-ext.properties"
@@ -12206,7 +12204,7 @@ dl.store.impl=com.liferay.portal.store.s3.IBMS3Store</echo>
 		<propertycopy from="liferay.online.properties[${env.CI_TEST_SUITE}]" name="liferay.online.properties" silent="true" />
 
 		<if>
-			<isset property="liferay.online.properties" />
+			<equals arg1="${liferay.online.properties}" arg2="true" />
 			<then>
 				<prepare-liferay-online-properties />
 			</then>

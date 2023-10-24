@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.aggregation.Aggregations;
+import com.liferay.portal.search.collapse.CollapseBuilderFactory;
+import com.liferay.portal.search.collapse.InnerHitBuilderFactory;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
 import com.liferay.portal.search.geolocation.GeoBuilders;
 import com.liferay.portal.search.highlight.FieldConfigBuilderFactory;
@@ -48,6 +50,7 @@ import com.liferay.search.experiences.internal.blueprint.search.request.body.con
 import com.liferay.search.experiences.internal.blueprint.search.request.body.contributor.SXPSearchRequestBodyContributor;
 import com.liferay.search.experiences.internal.blueprint.search.request.body.contributor.SortSXPSearchRequestBodyContributor;
 import com.liferay.search.experiences.internal.blueprint.search.request.body.contributor.SuggestSXPSearchRequestBodyContributor;
+import com.liferay.search.experiences.internal.blueprint.sort.SortConverter;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
 import com.liferay.search.experiences.rest.dto.v1_0.ElementDefinition;
 import com.liferay.search.experiences.rest.dto.v1_0.ElementInstance;
@@ -105,11 +108,18 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 	protected void activate() {
 		HighlightConverter highlightConverter = new HighlightConverter(
 			_fieldConfigBuilderFactory, _highlightBuilderFactory);
+
 		QueryConverter queryConverter = new QueryConverter(_queries);
+
 		ScriptConverter scriptConverter = new ScriptConverter(_scripts);
 
+		SortConverter sortConverter = new SortConverter(
+			_geoBuilders, queryConverter, scriptConverter, _sorts);
+
 		_sxpSearchRequestBodyContributors = Arrays.asList(
-			new AdvancedSXPSearchRequestBodyContributor(),
+			new AdvancedSXPSearchRequestBodyContributor(
+				_collapseBuilderFactory, _innerHitBuilderFactory,
+				sortConverter),
 			new AggsSXPSearchRequestBodyContributor(
 				_aggregations, _geoBuilders, highlightConverter, queryConverter,
 				scriptConverter, _significanceHeuristics, _sorts),
@@ -119,8 +129,7 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 				_complexQueryPartBuilderFactory, queryConverter,
 				_rescoreBuilderFactory),
 			new SuggestSXPSearchRequestBodyContributor(),
-			new SortSXPSearchRequestBodyContributor(
-				_geoBuilders, queryConverter, scriptConverter, _sorts));
+			new SortSXPSearchRequestBodyContributor(sortConverter));
 	}
 
 	private void _contributeSXPSearchRequestBodyContributors(
@@ -480,6 +489,9 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 	private Aggregations _aggregations;
 
 	@Reference
+	private CollapseBuilderFactory _collapseBuilderFactory;
+
+	@Reference
 	private ComplexQueryPartBuilderFactory _complexQueryPartBuilderFactory;
 
 	@Reference
@@ -493,6 +505,9 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 
 	@Reference
 	private HighlightBuilderFactory _highlightBuilderFactory;
+
+	@Reference
+	private InnerHitBuilderFactory _innerHitBuilderFactory;
 
 	@Reference
 	private JSONFactory _jsonFactory;

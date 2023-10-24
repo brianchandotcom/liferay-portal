@@ -45,14 +45,15 @@ public class SiteScopeResourceImpl extends BaseSiteScopeResourceImpl {
 			String internalClassNameKey, Boolean export)
 		throws Exception {
 
-		int index = internalClassNameKey.indexOf(StringPool.POUND);
+		if (internalClassNameKey.contains(StringPool.POUND)) {
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					contextCompany.getCompanyId(),
+					TaskItemUtil.getTaskItemDelegateName(internalClassNameKey));
 
-		if (index > 0) {
 			return Page.of(
 				_getSiteScopes(
-					_getObjectScope(
-						TaskItemUtil.getTaskItemDelegateName(
-							internalClassNameKey))));
+					Collections.singletonList(objectDefinition.getScope())));
 		}
 
 		List<String> entityScopes = null;
@@ -72,14 +73,6 @@ public class SiteScopeResourceImpl extends BaseSiteScopeResourceImpl {
 		}
 
 		return Page.of(_getSiteScopes(entityScopes));
-	}
-
-	private List<String> _getObjectScope(String name) throws Exception {
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				contextCompany.getCompanyId(), name);
-
-		return Collections.singletonList(objectDefinition.getScope());
 	}
 
 	private List<SiteScope> _getSiteScopes(List<String> entityScopes)

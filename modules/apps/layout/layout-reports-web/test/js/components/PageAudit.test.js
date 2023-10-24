@@ -96,8 +96,8 @@ describe('PageAudit', () => {
 
 	it('shows alerts according to the number of warnings', async () => {
 		const warnings = [
-			{description: 'Warning 1', title: ''},
-			{description: 'Warning 2', title: ''},
+			{description: 'Warning 1', title: 'Title 1'},
+			{description: 'Warning 2', title: 'Title 2'},
 		];
 
 		const selectedItem = {
@@ -110,10 +110,11 @@ describe('PageAudit', () => {
 
 		for (const warning of warnings) {
 			const element = screen.getByText(warning.description);
+			const elementTitle = screen.getByText(warning.title);
 
 			expect(element).toBeInTheDocument();
 
-			expect(element.closest('.alert-warning')).not.toBeNull();
+			expect(elementTitle.closest('.alert-warning')).not.toBeNull();
 		}
 	});
 });

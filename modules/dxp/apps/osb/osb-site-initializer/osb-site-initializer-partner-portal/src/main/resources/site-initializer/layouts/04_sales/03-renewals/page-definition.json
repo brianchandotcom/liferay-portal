@@ -26,7 +26,7 @@
 						"definition": {
 							"widgetInstance": {
 								"widgetConfig": {
-									"properties": "route=renewal-opportunities-list"
+									"properties": "path=renewal-opportunities-list"
 								},
 								"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$COMPANY_ID$]_LXC_liferay_partner_custom_element"
 							}

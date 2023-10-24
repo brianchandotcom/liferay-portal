@@ -370,6 +370,12 @@ public abstract class BaseDBProcess implements DBProcess {
 		return dbInspector.hasTable(tableName);
 	}
 
+	protected boolean hasView(String viewName) throws Exception {
+		DBInspector dbInspector = new DBInspector(connection);
+
+		return dbInspector.hasView(viewName);
+	}
+
 	protected void process(UnsafeConsumer<Long, Exception> unsafeConsumer)
 		throws Exception {
 

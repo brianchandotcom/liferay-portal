@@ -247,21 +247,17 @@ public class DBInspector {
 	public boolean hasTable(String tableName, boolean caseSensitive)
 		throws Exception {
 
-		DatabaseMetaData databaseMetaData = _connection.getMetaData();
+		return _hasTable(tableName, "TABLE", caseSensitive);
+	}
 
-		if (!caseSensitive) {
-			tableName = normalizeName(tableName, databaseMetaData);
-		}
+	public boolean hasView(String viewName) throws Exception {
+		return hasView(viewName, false);
+	}
 
-		try (ResultSet resultSet = databaseMetaData.getTables(
-				getCatalog(), getSchema(), tableName, new String[] {"TABLE"})) {
+	public boolean hasView(String viewName, boolean caseSensitive)
+		throws Exception {
 
-			while (resultSet.next()) {
-				return true;
-			}
-		}
-
-		return false;
+		return _hasTable(viewName, "VIEW", caseSensitive);
 	}
 
 	public boolean isControlTable(String tableName) {
@@ -404,6 +400,28 @@ public class DBInspector {
 		return databaseMetaData.getColumns(
 			getCatalog(), getSchema(),
 			normalizeName(tableName, databaseMetaData), columnName);
+	}
+
+	private boolean _hasTable(
+			String elementName, String elementType, boolean caseSensitive)
+		throws Exception {
+
+		DatabaseMetaData databaseMetaData = _connection.getMetaData();
+
+		if (!caseSensitive) {
+			elementName = normalizeName(elementName, databaseMetaData);
+		}
+
+		try (ResultSet resultSet = databaseMetaData.getTables(
+				getCatalog(), getSchema(), elementName,
+				new String[] {elementType})) {
+
+			if (resultSet.next()) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private boolean _isColumnNullable(String typeName) {

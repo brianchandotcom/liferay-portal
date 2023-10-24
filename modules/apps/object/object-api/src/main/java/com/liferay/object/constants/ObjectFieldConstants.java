@@ -14,6 +14,8 @@ public class ObjectFieldConstants {
 
 	public static final String BUSINESS_TYPE_ATTACHMENT = "Attachment";
 
+	public static final String BUSINESS_TYPE_AUTO_INCREMENT = "AutoIncrement";
+
 	public static final String BUSINESS_TYPE_BOOLEAN = "Boolean";
 
 	public static final String BUSINESS_TYPE_DATE = "Date";

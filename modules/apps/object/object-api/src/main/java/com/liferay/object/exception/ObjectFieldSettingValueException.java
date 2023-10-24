@@ -16,6 +16,18 @@ import java.util.Set;
  */
 public class ObjectFieldSettingValueException extends PortalException {
 
+	public static class ExceedsMaxLength
+		extends ObjectFieldSettingValueException {
+
+		public ExceedsMaxLength(int maxLength, String objectFieldSettingName) {
+			super(
+				String.format(
+					"The setting %s exceeds the maximum length of %s",
+					objectFieldSettingName, maxLength));
+		}
+
+	}
+
 	public static class InvalidValue extends ObjectFieldSettingValueException {
 
 		public InvalidValue(
@@ -55,15 +67,6 @@ public class ObjectFieldSettingValueException extends PortalException {
 					StringUtil.merge(
 						objectFieldSettingsNames, StringPool.COMMA_AND_SPACE),
 					objectFieldName));
-		}
-
-	}
-
-	public static class MustBeLessThan256Characters
-		extends ObjectFieldSettingValueException {
-
-		public MustBeLessThan256Characters() {
-			super("Storage folder path must be less than 256 characters");
 		}
 
 	}

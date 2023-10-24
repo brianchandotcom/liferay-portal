@@ -18,6 +18,8 @@ import hudson.model.labels.LabelAtom;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import jenkins.model.Jenkins;
 
@@ -28,6 +30,28 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public class JenkinsEventsUtil {
+
+	public static String getMasterHostname() {
+		Jenkins jenkins = Jenkins.getInstanceOrNull();
+
+		if (jenkins == null) {
+			return null;
+		}
+
+		String rootUrl = jenkins.getRootUrl();
+
+		if (rootUrl == null) {
+			return null;
+		}
+
+		Matcher matcher = _rootUrlPattern.matcher(rootUrl);
+
+		if (!matcher.find()) {
+			return null;
+		}
+
+		return matcher.group("masterHostname");
+	}
 
 	public static void publish(
 		JenkinsEventsDescriptor.EventTrigger eventTrigger, Object eventObject) {
@@ -288,5 +312,7 @@ public class JenkinsEventsUtil {
 	}
 
 	private static JenkinsEventsDescriptor _jenkinsEventsDescriptor;
+	private static final Pattern _rootUrlPattern = Pattern.compile(
+		"https://(?<masterHostname>test-\\d+-\\d+).liferay.com/");
 
 }

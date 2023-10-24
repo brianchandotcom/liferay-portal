@@ -104,16 +104,16 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		if (!errorMessages.isEmpty()) {
-			int size = errorMessages.size();
+			int failedItems = errorMessages.size();
 
-			if (size <= 10) {
+			if (failedItems <= 10) {
 				jsonObject.put(
 					"errorMessages",
 					JSONUtil.toJSONArray(
 						errorMessages, errorMessage -> errorMessage));
 			}
 
-			jsonObject.put("errorSize", size);
+			jsonObject.put("failedItems", failedItems);
 
 		}
 

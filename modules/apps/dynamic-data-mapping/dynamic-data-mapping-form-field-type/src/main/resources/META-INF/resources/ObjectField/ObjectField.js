@@ -58,6 +58,10 @@ const ObjectField = ({
 				system,
 				type,
 			}) => {
+				if (businessType === 'AutoIncrement') {
+					return false;
+				}
+
 				if (
 					!listTypeDefinitionExternalReferenceCode &&
 					(focusedFieldType === 'radio' ||

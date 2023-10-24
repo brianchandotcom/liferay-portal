@@ -17,6 +17,7 @@ import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
@@ -83,10 +84,12 @@ public class DDMStorageLinkTableReferenceDefinitionTest
 
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
+		DDMStructureVersion ddmStructureVersion =
+			_ddmStructure.getStructureVersion();
+
 		return _ddmStorageLinkLocalService.addStorageLink(
 			_portal.getClassNameId(DataRecord.class.getName()), _ddmStorageId,
-			_ddmStructure.getStructureVersion(
-			).getStructureVersionId(),
+			ddmStructureVersion.getStructureVersionId(),
 			ServiceContextTestUtil.getServiceContext());
 	}
 

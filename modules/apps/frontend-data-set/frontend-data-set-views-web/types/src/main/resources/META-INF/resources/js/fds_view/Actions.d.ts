@@ -30,6 +30,10 @@ interface IFDSAction {
 	confirmationMessage_i18n?: {
 		[key: string]: string;
 	};
+	errorMessage?: string;
+	errorMessage_i18n?: {
+		[key: string]: string;
+	};
 	icon: string;
 	id: number;
 	label: string;
@@ -39,6 +43,10 @@ interface IFDSAction {
 	method?: string;
 	modalSize?: string;
 	permissionKey: string;
+	successMessage?: string;
+	successMessage_i18n?: {
+		[key: string]: string;
+	};
 	title?: string;
 	title_i18n?: {
 		[key: string]: string;

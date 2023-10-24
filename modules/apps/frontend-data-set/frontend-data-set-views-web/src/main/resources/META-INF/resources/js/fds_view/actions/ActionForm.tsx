@@ -8,6 +8,7 @@ import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayPanel from '@clayui/panel';
+import ClayTabs from '@clayui/tabs';
 import classNames from 'classnames';
 import {InputLocalized} from 'frontend-js-components-web';
 import {fetch} from 'frontend-js-web';
@@ -22,8 +23,8 @@ import openDefaultSuccessToast from '../../utils/openDefaultSuccessToast';
 import {IFDSAction} from '../Actions';
 
 const ACTION_METHOD = {
-	GET: 'GET',
 	DELETE: 'DELETE',
+	GET: 'GET',
 	PATCH: 'PATCH',
 	POST: 'POST',
 };
@@ -135,6 +136,7 @@ const ActionForm = ({
 	onSave,
 	spritemap,
 }: IFDSActionFormProps) => {
+	const [activeMessageTab, setActiveMessageTab] = useState(0);
 	const [availableIconSymbols, setAvailableIconSymbols] = useState<
 		Array<{label: string; value: string}>
 	>([]);
@@ -142,11 +144,18 @@ const ActionForm = ({
 		confirmationMessageTranslations,
 		setConfirmationMessageTranslations,
 	] = useState(initialValues?.confirmationMessage_i18n ?? {});
+	const [errorMessageTranslations, setErrorMessageTranslations] = useState(
+		initialValues?.errorMessage_i18n ?? {}
+	);
 	const [labelTranslations, setLabelTranslations] = useState(
 		initialValues?.label_i18n ?? {}
 	);
 	const [labelValidationError, setLabelValidationError] = useState(false);
 	const [saveButtonDisabled, setSaveButtonDisabled] = useState(!editing);
+	const [
+		successMessageTranslations,
+		setSuccessMessageTranslations,
+	] = useState(initialValues?.successMessage_i18n ?? {});
 	const [titleTranslations, setTitleTranslations] = useState(
 		initialValues?.title_i18n ?? {}
 	);
@@ -200,6 +209,18 @@ const ActionForm = ({
 
 		if (Object.keys(confirmationMessageTranslations).length) {
 			body.confirmationMessageType = confirmationMessageType;
+		}
+
+		if (
+			actionData.type === ACTION_TYPE.ASYNC ||
+			actionData.type === ACTION_TYPE.HEADLESS
+		) {
+			body.errorMessage_i18n = errorMessageTranslations;
+			body.successMessage_i18n = successMessageTranslations;
+		}
+
+		if (actionData.type === ACTION_TYPE.ASYNC) {
+			body.method = method;
 		}
 
 		let fetchURL = API_URL.FDS_ACTIONS;
@@ -299,10 +320,12 @@ const ActionForm = ({
 	const iconFormElementId = `${namespace}Icon`;
 	const confirmationMessageFormElementId = `${namespace}ConfirmationMessage`;
 	const confirmationMessageTypeFormElementId = `${namespace}ConfirmationMessageType`;
+	const errorMessageFormElementId = `${namespace}ErrorMessage`;
 	const labelFormElementId = `${namespace}Label`;
 	const methodFormElementId = `${namespace}Method`;
 	const modalSizeFormElementId = `${namespace}ModalSize`;
 	const permissionKeyFormElementId = `${namespace}PermissionKey`;
+	const successMessageFormElementId = `${namespace}SuccessMessage`;
 	const titleFormElementId = `${namespace}Title`;
 	const typeFormElementId = `${namespace}Type`;
 	const urlFormElementId = `${namespace}URL`;
@@ -671,6 +694,88 @@ const ActionForm = ({
 					)}
 				</ClayPanel.Body>
 			</ClayPanel>
+
+			{(actionData.type === ACTION_TYPE.ASYNC ||
+				actionData.type === ACTION_TYPE.HEADLESS) && (
+				<ClayPanel
+					collapsable
+					defaultExpanded
+					displayTitle={Liferay.Language.get('status-messages')}
+					displayType="unstyled"
+				>
+					<ClayPanel.Body>
+						<p className="c-pb-2 c-pt-2 pane-help text-secondary">
+							{Liferay.Language.get(
+								'you-can-write-status-messages-related-to-this-action'
+							)}
+						</p>
+
+						<ClayTabs
+							activation="automatic"
+							active={activeMessageTab}
+							onActiveChange={(tab: number) => {
+								setActiveMessageTab(tab);
+							}}
+						>
+							<ClayTabs.Item>
+								{Liferay.Language.get('success')}
+							</ClayTabs.Item>
+
+							<ClayTabs.Item>
+								{Liferay.Language.get('error')}
+							</ClayTabs.Item>
+						</ClayTabs>
+
+						<ClayTabs.Content
+							active={activeMessageTab}
+							className="action-messages"
+							fade
+						>
+							<ClayTabs.TabPane
+								aria-labelledby={Liferay.Language.get(
+									'success'
+								)}
+							>
+								<ClayForm.Group>
+									<InputLocalized
+										id={successMessageFormElementId}
+										label={Liferay.Language.get('message')}
+										onChange={setSuccessMessageTranslations}
+										placeholder={Liferay.Language.get(
+											'add-a-message-here'
+										)}
+										tooltip={Liferay.Language.get(
+											'the-user-will-see-this-message-if-the-action-is-successful'
+										)}
+										translations={
+											successMessageTranslations
+										}
+									/>
+								</ClayForm.Group>
+							</ClayTabs.TabPane>
+
+							<ClayTabs.TabPane
+								aria-labelledby={Liferay.Language.get('error')}
+							>
+								<ClayForm.Group>
+									<InputLocalized
+										id={errorMessageFormElementId}
+										label={Liferay.Language.get('message')}
+										onChange={setErrorMessageTranslations}
+										placeholder={Liferay.Language.get(
+											'add-a-message-here'
+										)}
+										tooltip={Liferay.Language.get(
+											'the-user-will-see-this-message-if-the-action-fails'
+										)}
+										translations={errorMessageTranslations}
+									/>
+								</ClayForm.Group>
+							</ClayTabs.TabPane>
+						</ClayTabs.Content>
+					</ClayPanel.Body>
+				</ClayPanel>
+			)}
 
 			<ClayButton.Group className="pb-4 px-4" spaced>
 				<ClayButton

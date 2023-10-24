@@ -138,7 +138,16 @@ LiferayPortletResponse finalLiferayPortletResponse = liferayPortletResponse;
 				}
 			}
 
-			selectedScreenNavigationEntry.render(request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
+			request.setAttribute(ScreenNavigationConstants.SELECTED_CATEGORY_KEY, selectedScreenNavigationCategory.getCategoryKey());
+			request.setAttribute(ScreenNavigationConstants.SELECTED_ENTRY_KEY, selectedScreenNavigationEntry.getEntryKey());
+
+			try {
+				selectedScreenNavigationEntry.render(request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
+			}
+			finally {
+				request.removeAttribute(ScreenNavigationConstants.SELECTED_CATEGORY_KEY);
+				request.removeAttribute(ScreenNavigationConstants.SELECTED_ENTRY_KEY);
+			}
 			%>
 
 		</div>

@@ -5,7 +5,6 @@
 
 package com.liferay.portal.kernel.model.adapter;
 
-import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.log.Log;
@@ -21,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
 
 /**
  * @author Máté Thurzó
@@ -149,51 +147,42 @@ public class ModelAdapterUtil {
 	private static final ServiceTrackerMap<String, ModelAdapterBuilder>
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			_bundleContext, ModelAdapterBuilder.class, null,
-			new ServiceReferenceMapper<String, ModelAdapterBuilder>() {
+			(serviceReference, emitter) -> {
+				ModelAdapterBuilder modelAdapterBuilder =
+					_bundleContext.getService(serviceReference);
 
-				@Override
-				public void map(
-					ServiceReference<ModelAdapterBuilder> serviceReference,
-					Emitter<String> emitter) {
+				Type genericInterface = _getGenericInterface(
+					modelAdapterBuilder, ModelAdapterBuilder.class);
 
-					ModelAdapterBuilder modelAdapterBuilder =
-						_bundleContext.getService(serviceReference);
+				if ((genericInterface == null) ||
+					!(genericInterface instanceof ParameterizedType)) {
 
-					Type genericInterface = _getGenericInterface(
-						modelAdapterBuilder, ModelAdapterBuilder.class);
-
-					if ((genericInterface == null) ||
-						!(genericInterface instanceof ParameterizedType)) {
-
-						return;
-					}
-
-					ParameterizedType parameterizedType =
-						(ParameterizedType)genericInterface;
-
-					Type[] typeArguments =
-						parameterizedType.getActualTypeArguments();
-
-					if (ArrayUtil.isEmpty(typeArguments) ||
-						(typeArguments.length != 2)) {
-
-						return;
-					}
-
-					try {
-						Class<?> adapteeModelClass = (Class)typeArguments[0];
-						Class<?> adaptedModelClass = (Class)typeArguments[1];
-
-						emitter.emit(
-							_getKey(adapteeModelClass, adaptedModelClass));
-					}
-					catch (ClassCastException classCastException) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(classCastException);
-						}
-					}
+					return;
 				}
 
+				ParameterizedType parameterizedType =
+					(ParameterizedType)genericInterface;
+
+				Type[] typeArguments =
+					parameterizedType.getActualTypeArguments();
+
+				if (ArrayUtil.isEmpty(typeArguments) ||
+					(typeArguments.length != 2)) {
+
+					return;
+				}
+
+				try {
+					Class<?> adapteeModelClass = (Class)typeArguments[0];
+					Class<?> adaptedModelClass = (Class)typeArguments[1];
+
+					emitter.emit(_getKey(adapteeModelClass, adaptedModelClass));
+				}
+				catch (ClassCastException classCastException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(classCastException);
+					}
+				}
 			});
 
 }

@@ -1,0 +1,272 @@
+@component-name = "portal-batch-planner"
+definition {
+
+	property custom.properties = "feature.flag.COMMERCE-8087=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Import/Export";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given Student, Subject object definitions with text field 'name' created") {
+			ObjectDefinitionAPI.staticStudentObjectId();
+
+			ObjectDefinitionAPI.staticSubjectObjectId();
+		}
+
+		task ("And Given many-to-many studentsSubjects relationship created") {
+			ObjectDefinitionAPI.createRelationshipWithObjectDefinitionNames(
+				childObjectName = "Subject",
+				deletionType = "cascade",
+				name = "studentsSubjects",
+				parentObjectName = "Student",
+				type = "manyToMany");
+		}
+
+		task ("And Given one-to-many accountStudents relationship created") {
+			var accountId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = "AccountEntry");
+
+			ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "AccountStudents",
+				name = "accountStudents",
+				objectDefinitionId1 = ${accountId},
+				objectDefinitionId2 = ${staticStudentObjectId},
+				type = "oneToMany");
+		}
+
+		task ("And Given object entries of Student, Subject, Account created with related entries") {
+			var studentAccountId = AccountAPI.createAccount(name = "accountForStudent");
+
+			CustomObjectAPI.createStudentRelatedToAccount(
+				accountId = ${studentAccountId},
+				name = "Able");
+
+			ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "subjects",
+				name = "English");
+
+			ObjectDefinitionAPI.relateObjectEntriesByName(
+				child_plural_label = "subjects",
+				childEntryName = "English",
+				parent_plural_label = "students",
+				parentEntryName = "Able",
+				relationshipName = "studentsSubjects");
+		}
+
+		task ("And Given navigate to export in Data Migration Center") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoExport();
+		}
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		ObjectAdmin.deleteAllCustomObjectsViaAPI();
+
+		BatchPlanner.batchPlannerTearDown();
+
+		AccountAPI.tearDownAllAccounts();
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 4
+	test ActionsNodeAreAvailableInDonwloadedFile {
+		property portal.acceptance = "true";
+
+		task ("And Given 'C_Student (v1_0 - Liferay Object REST)' as Entity Type in Data Migration Center --> Export File") {
+			ImportExport.selectEntity(entityType = "C_Student (v1_0 - Liferay Object REST)");
+		}
+
+		task ("When exporting file in JSONL format with all fields selected") {
+			ImportExport.configureExport(
+				entityType = "C_Student (v1_0 - Liferay Object REST)",
+				exportFields = "Attribute Code",
+				exportFileFormat = "JSONL");
+
+			Button.click(button = "Export");
+
+			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
+		}
+
+		task ("Then 'actions' node is available in the dowloaded file") {
+			ImportExport.unzipDownloadedExportFile();
+
+			BatchEngine.assertExportedFileContainsCorrectObject(
+				expectedValue = "DELETE,GET,GET,PUT,PATCH",
+				fileName = "export.jsonl",
+				jsonObject = "$.actions..method");
+		}
+	}
+
+	@priority = 4
+	test AllSystemObjectFieldsAreAvailableToExport {
+		property custom.properties = "feature.flag.LPS-186620=true";
+		property portal.acceptance = "true";
+
+		task ("When 'Account (v1_0 - Liferay Headless Admin User)' as Entity Type in Data Migration Center --> Export File") {
+			ImportExport.selectEntity(entityType = "Account (v1_0 - Liferay Headless Admin User)");
+		}
+
+		task ("Then the list of fields to select contains all the fields available with GET request except the relationship nodes") {
+			var fieldList1 = "name,accountStudents,accountUserAccounts,actions,customFields,dateCreated,dateModified";
+			var fieldList2 = "defaultBillingAddressId,defaultShippingAddressId,description,domains,externalReferenceCode,id,logoId";
+			var fieldList3 = "logoURL,numberOfUsers,organizationIds,parentAccountId,postalAddresses,status,taxId,type";
+
+			var exportFields = "${fieldList1},${fieldList2},${fieldList3}";
+
+			ImportExport.mapExport(exportFields = ${exportFields});
+		}
+	}
+
+	@priority = 5
+	test CanDownloadFiledWithAllFieldsSelected {
+		property portal.acceptance = "true";
+
+		task ("And Given 'C_Student (v1_0 - Liferay Object REST)' as Entity Type in Data Migration Center --> Export File") {
+			ImportExport.selectEntity(entityType = "C_Student (v1_0 - Liferay Object REST)");
+		}
+
+		task ("When exporting file in JSON format with all fields selected") {
+			Button.click(button = "Export");
+
+			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
+		}
+
+		task ("Then all fields values available in the downloaded file") {
+			ImportExport.unzipDownloadedExportFile();
+
+			var response = ObjectDefinitionAPI.getObjectEntries(en_US_plural_label = "students");
+			var totalFieldsList = "id,dateCreated,dateModified,externalReferenceCode,r_accountStudents_accountEntryId,r_accountStudents_accountEntryERC";
+
+			for (var fieldName : list ${totalFieldsList}) {
+				var expectedValue = JSONPathUtil.getProperty(
+					property = "$.items..[0]${fieldName}",
+					response = ${response});
+
+				BatchEngine.assertExportedFileContainsCorrectObject(
+					expectedValue = ${expectedValue},
+					fileName = "export.json",
+					jsonObject = "$..[0]${fieldName}");
+			}
+
+			BatchEngine.assertExportedFileContainsCorrectObject(
+				expectedValue = "DELETE,GET,GET,PUT,PATCH",
+				fileName = "export.json",
+				jsonObject = "$..actions..method");
+		}
+	}
+
+	@priority = 4
+	test CanExportSpecificFieldsWithJSONTConfigurationNode {
+		property portal.acceptance = "true";
+
+		task ("And Given 'C_Student (v1_0 - Liferay Object REST)' as Entity Type in Data Migration Center --> Export File") {
+			ImportExport.selectEntity(entityType = "C_Student (v1_0 - Liferay Object REST)");
+		}
+
+		task ("When exporting file in JSONT format with field 'name' selected") {
+			ImportExport.configureExport(
+				entityType = "C_Student (v1_0 - Liferay Object REST)",
+				exportFields = "name",
+				exportFileFormat = "JSONT");
+
+			Button.click(button = "Export");
+
+			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
+		}
+
+		task ("Then 'name' value for created entry, actions node, configuration node available in the dowloaded file") {
+			ImportExport.unzipDownloadedExportFile();
+
+			BatchEngine.assertExportedFileContainsCorrectObject(
+				expectedValue = "Able",
+				fileName = "export.batch-engine-data.json",
+				jsonObject = "$.items..name");
+
+			BatchEngine.assertExportedFileContainsCorrectObject(
+				expectedValue = "POST,DELETE,PUT",
+				fileName = "export.batch-engine-data.json",
+				jsonObject = "$.actions..method");
+
+			BatchEngine.assertExportedFileContainsCorrectObject(
+				expectedValue = "com.liferay.object.rest.dto.v1_0.ObjectEntry",
+				fileName = "export.batch-engine-data.json",
+				jsonObject = "$.configuration.className");
+		}
+	}
+
+	@priority = 4
+	test CanExportSystemObjectItems {
+		property custom.properties = "feature.flag.LPS-186620=true";
+		property portal.acceptance = "true";
+
+		task ("And Given 'Account (v1_0 - Liferay Headless Admin User)' as Entity Type in Data Migration Center --> Export File") {
+			ImportExport.selectEntity(entityType = "Account (v1_0 - Liferay Headless Admin User)");
+		}
+
+		task ("When exporting file in JSONT format with all fields selected") {
+			ImportExport.configureExport(
+				entityType = "Account (v1_0 - Liferay Headless Admin User)",
+				exportFields = "Attribute Code",
+				exportFileFormat = "JSONT");
+
+			Button.click(button = "Export");
+
+			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
+		}
+
+		task ("Then all items fields values, actions node, configuration node available in the dowloaded file") {
+			ImportExport.unzipDownloadedExportFile();
+
+			var response = AccountAPI.getAccounts();
+			var totalFieldsList = "dateCreated,dateModified,externalReferenceCode,id,logoURL,name,type";
+
+			for (var fieldName : list ${totalFieldsList}) {
+				var expectedValue = JSONPathUtil.getProperty(
+					property = "$.items..${fieldName}",
+					response = ${response});
+
+				BatchEngine.assertExportedFileContainsCorrectObject(
+					expectedValue = ${expectedValue},
+					fileName = "export.batch-engine-data.json",
+					jsonObject = "$.items..${fieldName}");
+			}
+
+			BatchEngine.assertExportedFileContainsCorrectObject(
+				expectedValue = "POST,DELETE,PUT",
+				fileName = "export.batch-engine-data.json",
+				jsonObject = "$.actions..method");
+
+			BatchEngine.assertExportedFileContainsCorrectObject(
+				expectedValue = "com.liferay.headless.admin.user.dto.v1_0.Account",
+				fileName = "export.batch-engine-data.json",
+				jsonObject = "$.configuration.className");
+		}
+	}
+
+	@priority = 5
+	test CanSelectFromAllExistingFields {
+		property portal.acceptance = "true";
+
+		task ("When selecting 'C_Student (v1_0 - Liferay Object REST)' as Entity Type in Data Migration Center --> Export File") {
+			ImportExport.selectEntity(entityType = "C_Student (v1_0 - Liferay Object REST)");
+		}
+
+		task ("Then the list of fields to select contains all the fields available with GET request except the relationship nodes") {
+			var exportFieldsList1 = "name,actions,creator,dateCreated,dateModified,externalReferenceCode,id,keywords";
+			var exportFieldsList2 = "r_accountStudents_accountEntryERC,r_accountStudents_accountEntryId,scopeKey,status";
+
+			ImportExport.mapExport(exportFields = "${exportFieldsList1},${exportFieldsList2}");
+		}
+	}
+
+}

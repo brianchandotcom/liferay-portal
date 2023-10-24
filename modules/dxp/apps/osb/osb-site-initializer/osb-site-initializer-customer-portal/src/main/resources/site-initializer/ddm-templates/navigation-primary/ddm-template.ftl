@@ -1,23 +1,33 @@
 <ul class="adt-navigation">
 	<#if entries?has_content>
 		<#list entries as navPrimaryItem>
-			<div class="adt-nav-item dropdown dropdown-action w-100">
-				<button
-						class="adt-nav-text align-items-center d-flex menu-info py-1 pl-2"
-						data-toggle="liferay-dropdown"
-						id="main-menu-id"
-						aria-expanded="true"
-					  	tabindex="4"
-				>
-					<span class="adt-nav-title text-truncate">
-						${navPrimaryItem.getName()}
-					</span>
-					<span class="adt-nav-caret-bottom-icon align-self-center">
-						<svg class="lexicon-icon lexicon-icon-caret-bottom" role="presentation" viewBox="0 0 512 512"><use xlink:href="/o/admin-theme/images/clay/icons.svg#caret-bottom"></use></svg>
-					</span>
-				</button>
-				<@render_navigation_dropdown navPrimaryItem />
-			</div>
+			<#if navPrimaryItem.getChildren()?size > 0>
+				<div class="adt-nav-item dropdown dropdown-action w-100">
+					<button
+							class="adt-nav-text align-items-center d-flex menu-info"
+							data-toggle="liferay-dropdown"
+							id="main-menu-id"
+							aria-expanded="true"
+							tabindex="4"
+					>
+						<span class="adt-nav-title text-truncate">
+							${navPrimaryItem.getName()}
+						</span>
+						<span class="adt-nav-caret-bottom-icon align-self-center">
+							<svg class="lexicon-icon lexicon-icon-caret-bottom" role="presentation" viewBox="0 0 512 512"><use xlink:href="/o/admin-theme/images/clay/icons.svg#caret-bottom"></use></svg>
+						</span>
+					</button>
+					<@render_navigation_dropdown navPrimaryItem />
+				</div>
+			<#else>
+				<a class="adt-nav-item w-100" href="${navPrimaryItem.getURL()}">
+					<div class="adt-nav-text d-flex pr-3" tabindex="4">
+						<span class="adt-nav-title text-truncate">
+							${navPrimaryItem.getName()}
+						</span>
+					</div>
+				</a>
+			</#if>
 		</#list>
 	</#if>
 </ul>

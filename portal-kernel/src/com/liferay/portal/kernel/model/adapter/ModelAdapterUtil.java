@@ -56,16 +56,16 @@ public class ModelAdapterUtil {
 		T adapteeModel, Class<T> adapteeModelClass,
 		Class<V> adaptedModelClass) {
 
-		return doAdapt(adapteeModel, adapteeModelClass, adaptedModelClass);
+		return _adapt(adapteeModel, adapteeModelClass, adaptedModelClass);
 	}
 
 	public static <T, V> V adapt(T adapteeModel, Class<V> adaptedModelClass) {
 		Class<T> adapteeModelClass = (Class<T>)adapteeModel.getClass();
 
-		return doAdapt(adapteeModel, adapteeModelClass, adaptedModelClass);
+		return _adapt(adapteeModel, adapteeModelClass, adaptedModelClass);
 	}
 
-	protected static <T, V> V doAdapt(
+	private static <T, V> V _adapt(
 		T adapteeModel, Class<T> adapteeModelClass,
 		Class<V> adaptedModelClass) {
 

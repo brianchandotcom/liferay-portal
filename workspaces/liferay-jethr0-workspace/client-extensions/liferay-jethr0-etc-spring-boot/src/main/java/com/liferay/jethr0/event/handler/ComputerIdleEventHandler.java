@@ -13,6 +13,8 @@ import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.event.controller.EventJmsController;
 import com.liferay.jethr0.jenkins.JenkinsQueue;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
+import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import org.json.JSONObject;
 
@@ -62,9 +64,21 @@ public class ComputerIdleEventHandler extends ComputerUpdateEventHandler {
 		EventJmsController eventJmsController = getEventJmsController();
 
 		eventJmsController.sendToJenkins(
-			jenkinsNodeEntity.getJenkinsServerEntity(),
 			String.valueOf(
-				buildRunEntity.getInvokeJSONObject(jenkinsNodeEntity)));
+				buildRunEntity.getInvokeJSONObject(jenkinsNodeEntity)),
+			HashMapBuilder.put(
+				"jenkins-master-name",
+				() -> {
+					JenkinsServerEntity jenkinsServerEntity =
+						jenkinsNodeEntity.getJenkinsServerEntity();
+
+					if (jenkinsServerEntity == null) {
+						return null;
+					}
+
+					return jenkinsServerEntity.getName();
+				}
+			).build());
 
 		BuildEntityRepository buildEntityRepository = getBuildRepository();
 

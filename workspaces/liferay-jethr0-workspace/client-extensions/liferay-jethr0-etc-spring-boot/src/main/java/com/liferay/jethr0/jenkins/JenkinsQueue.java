@@ -14,6 +14,7 @@ import com.liferay.jethr0.event.controller.EventJmsController;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.jenkins.repository.JenkinsServerEntityRepository;
 import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -90,9 +91,11 @@ public class JenkinsQueue {
 						buildEntity, BuildRunEntity.State.QUEUED);
 
 				_eventJmsController.sendToJenkins(
-					jenkinsServerEntity,
 					String.valueOf(
-						buildRunEntity.getInvokeJSONObject(jenkinsNodeEntity)));
+						buildRunEntity.getInvokeJSONObject(jenkinsNodeEntity)),
+					HashMapBuilder.put(
+						"jenkins-master-name", jenkinsServerEntity.getName()
+					).build());
 
 				_buildEntityRepository.update(buildEntity);
 				_buildRunEntityRepository.update(buildRunEntity);

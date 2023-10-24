@@ -5,10 +5,10 @@
 
 package com.liferay.jethr0.event.controller;
 
-import com.liferay.jethr0.bui1d.run.BuildRunEntity;
 import com.liferay.jethr0.event.handler.EventHandler;
 import com.liferay.jethr0.event.handler.EventHandlerFactory;
-import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
+
+import java.util.Map;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -39,14 +39,14 @@ public class EventJmsController {
 	}
 
 	@JmsListener(
-			destination = "${jethr0-jms-queue-jrp-to-jethr0:jrp-to-jethr0}"
+		destination = "${jethr0-jms-queue-jrp-to-jethr0:jrp-to-jethr0}"
 	)
 	public void processFromJRP(String message) {
 		_process(message);
 	}
 
 	public void sendToJenkins(
-		JenkinsServerEntity jenkinsServerEntity, String message) {
+		String message, Map<String, String> messageProperties) {
 
 		_jmsTemplate.convertAndSend(
 			_jmsQueueJethr0ToJenkins, message,
@@ -56,8 +56,13 @@ public class EventJmsController {
 				public Message postProcessMessage(Message message)
 					throws JMSException {
 
-					message.setStringProperty(
-						"jenkins-master-name", jenkinsServerEntity.getName());
+					for (Map.Entry<String, String> messageProperty :
+							messageProperties.entrySet()) {
+
+						message.setStringProperty(
+							messageProperty.getKey(),
+							messageProperty.getValue());
+					}
 
 					return message;
 				}
@@ -66,7 +71,7 @@ public class EventJmsController {
 	}
 
 	public void sendToJRP(
-		JenkinsServerEntity jenkinsServerEntity, String message) {
+		String message, Map<String, String> messageProperties) {
 
 		_jmsTemplate.convertAndSend(
 			_jmsQueueJethr0ToJRP, message,
@@ -74,10 +79,15 @@ public class EventJmsController {
 
 				@Override
 				public Message postProcessMessage(Message message)
-						throws JMSException {
+					throws JMSException {
 
-					message.setStringProperty(
-						"jenkins-master-name", jenkinsServerEntity.getName());
+					for (Map.Entry<String, String> messageProperty :
+							messageProperties.entrySet()) {
+
+						message.setStringProperty(
+							messageProperty.getKey(),
+							messageProperty.getValue());
+					}
 
 					return message;
 				}

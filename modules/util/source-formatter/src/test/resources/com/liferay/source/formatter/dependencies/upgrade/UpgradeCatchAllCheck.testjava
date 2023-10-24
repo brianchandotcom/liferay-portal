@@ -97,6 +97,10 @@ public class UpgradeCatchAllCheck {
 	}
 
 	public void method(long companyId, String externalReferenceCode) {
+		AccountGroupLocalServiceUtil.fetchCommerceAccountGroupByExternalReferenceCode(companyId, externalReferenceCode);
+		_accountGroupLocalService.fetchCommerceAccountGroupByExternalReferenceCode(123, "test123");
+		_accountGroupLocalService.fetchCommerceAccountGroupByExternalReferenceCode(companyId, externalReferenceCode);
+
 		CommercePriceListLocalServiceUtil.fetchByExternalReferenceCode(companyId, externalReferenceCode);
 		_commercePriceListLocalService.fetchByExternalReferenceCode(123, "test123");
 		_commercePriceListLocalService.fetchByExternalReferenceCode(companyId, externalReferenceCode);
@@ -143,6 +147,9 @@ public class UpgradeCatchAllCheck {
 		_addressLocalService.addAddress(userId, className, classPK, street1, street2, street3, city, zip,regionId, countryId, typeId, mailing, primary, serviceContext);
 		_addressService.addAddress(userId, className, classPK, street1, street2, street3, city, zip,regionId, countryId, typeId, mailing, primary, serviceContext);
 	}
+
+	@Reference
+	private AccountGroupLocalService _accountGroupLocalService;
 
 	@Reference
 	private AddressLocalService _addressLocalService;

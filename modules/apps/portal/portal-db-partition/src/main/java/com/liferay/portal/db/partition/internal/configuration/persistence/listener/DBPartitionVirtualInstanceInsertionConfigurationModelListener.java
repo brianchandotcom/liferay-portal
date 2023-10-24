@@ -9,7 +9,6 @@ import com.liferay.portal.configuration.persistence.listener.ConfigurationModelL
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
@@ -39,10 +38,6 @@ public class DBPartitionVirtualInstanceInsertionConfigurationModelListener
 	public void onAfterSave(String pid, Dictionary<String, Object> properties)
 		throws ConfigurationModelListenerException {
 
-		if (_log.isInfoEnabled()) {
-			_log.info("Inserting virtual instance " + properties.get("webId"));
-		}
-
 		_deleteConfiguration(pid);
 	}
 
@@ -68,9 +63,6 @@ public class DBPartitionVirtualInstanceInsertionConfigurationModelListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DBPartitionVirtualInstanceInsertionConfigurationModelListener.class);
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;

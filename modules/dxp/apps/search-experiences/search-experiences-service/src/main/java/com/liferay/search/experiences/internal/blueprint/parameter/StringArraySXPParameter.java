@@ -5,11 +5,13 @@
 
 package com.liferay.search.experiences.internal.blueprint.parameter;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
-import java.util.Arrays;
 import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
 
 /**
  * @author Petteri Karttunen
@@ -43,7 +45,12 @@ public class StringArraySXPParameter extends BaseSXPParameter {
 
 	@Override
 	public String evaluateToString(Map<String, String> options) {
-		return Arrays.toString(_value);
+		if (ArrayUtil.isEmpty(_value)) {
+			return "[]";
+		}
+
+		return StringBundler.concat(
+			"[\"", StringUtils.join(_value, "\",\""), "\"]");
 	}
 
 	@Override

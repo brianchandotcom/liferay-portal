@@ -352,7 +352,7 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 			StringBuilder sb = new StringBuilder();
 
 			sb.append(jenkinsMaster.getURL());
-			sb.append("job/");
+			sb.append("/job/");
 			sb.append(build.getJobName());
 			sb.append("/buildWithParameters?token=");
 			sb.append(

@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -36,36 +36,63 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("AdvancedConfiguration")
+@GraphQLName("Collapse")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "AdvancedConfiguration")
-public class AdvancedConfiguration implements Serializable {
+@XmlRootElement(name = "Collapse")
+public class Collapse implements Serializable {
 
-	public static AdvancedConfiguration toDTO(String json) {
-		return ObjectMapperUtil.readValue(AdvancedConfiguration.class, json);
+	public static Collapse toDTO(String json) {
+		return ObjectMapperUtil.readValue(Collapse.class, json);
 	}
 
-	public static AdvancedConfiguration unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(
-			AdvancedConfiguration.class, json);
+	public static Collapse unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(Collapse.class, json);
 	}
+
+	@Schema
+	public String getField() {
+		return field;
+	}
+
+	public void setField(String field) {
+		this.field = field;
+	}
+
+	@JsonIgnore
+	public void setField(
+		UnsafeSupplier<String, Exception> fieldUnsafeSupplier) {
+
+		try {
+			field = fieldUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String field;
 
 	@Schema
 	@Valid
-	public Collapse getCollapse() {
-		return collapse;
+	public InnerHit[] getInnerHits() {
+		return innerHits;
 	}
 
-	public void setCollapse(Collapse collapse) {
-		this.collapse = collapse;
+	public void setInnerHits(InnerHit[] innerHits) {
+		this.innerHits = innerHits;
 	}
 
 	@JsonIgnore
-	public void setCollapse(
-		UnsafeSupplier<Collapse, Exception> collapseUnsafeSupplier) {
+	public void setInnerHits(
+		UnsafeSupplier<InnerHit[], Exception> innerHitsUnsafeSupplier) {
 
 		try {
-			collapse = collapseUnsafeSupplier.get();
+			innerHits = innerHitsUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -77,24 +104,27 @@ public class AdvancedConfiguration implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Collapse collapse;
+	protected InnerHit[] innerHits;
 
 	@Schema
-	@Valid
-	public Source getSource() {
-		return source;
+	public Integer getMaxConcurrentGroupRequests() {
+		return maxConcurrentGroupRequests;
 	}
 
-	public void setSource(Source source) {
-		this.source = source;
+	public void setMaxConcurrentGroupRequests(
+		Integer maxConcurrentGroupRequests) {
+
+		this.maxConcurrentGroupRequests = maxConcurrentGroupRequests;
 	}
 
 	@JsonIgnore
-	public void setSource(
-		UnsafeSupplier<Source, Exception> sourceUnsafeSupplier) {
+	public void setMaxConcurrentGroupRequests(
+		UnsafeSupplier<Integer, Exception>
+			maxConcurrentGroupRequestsUnsafeSupplier) {
 
 		try {
-			source = sourceUnsafeSupplier.get();
+			maxConcurrentGroupRequests =
+				maxConcurrentGroupRequestsUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -106,35 +136,7 @@ public class AdvancedConfiguration implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Source source;
-
-	@Schema
-	public String[] getStored_fields() {
-		return stored_fields;
-	}
-
-	public void setStored_fields(String[] stored_fields) {
-		this.stored_fields = stored_fields;
-	}
-
-	@JsonIgnore
-	public void setStored_fields(
-		UnsafeSupplier<String[], Exception> stored_fieldsUnsafeSupplier) {
-
-		try {
-			stored_fields = stored_fieldsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String[] stored_fields;
+	protected Integer maxConcurrentGroupRequests;
 
 	@Override
 	public boolean equals(Object object) {
@@ -142,14 +144,13 @@ public class AdvancedConfiguration implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof AdvancedConfiguration)) {
+		if (!(object instanceof Collapse)) {
 			return false;
 		}
 
-		AdvancedConfiguration advancedConfiguration =
-			(AdvancedConfiguration)object;
+		Collapse collapse = (Collapse)object;
 
-		return Objects.equals(toString(), advancedConfiguration.toString());
+		return Objects.equals(toString(), collapse.toString());
 	}
 
 	@Override
@@ -164,48 +165,48 @@ public class AdvancedConfiguration implements Serializable {
 
 		sb.append("{");
 
-		if (collapse != null) {
+		if (field != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"collapse\": ");
+			sb.append("\"field\": ");
 
-			sb.append(String.valueOf(collapse));
+			sb.append("\"");
+
+			sb.append(_escape(field));
+
+			sb.append("\"");
 		}
 
-		if (source != null) {
+		if (innerHits != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"source\": ");
-
-			sb.append(String.valueOf(source));
-		}
-
-		if (stored_fields != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"stored_fields\": ");
+			sb.append("\"innerHits\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < stored_fields.length; i++) {
-				sb.append("\"");
+			for (int i = 0; i < innerHits.length; i++) {
+				sb.append(String.valueOf(innerHits[i]));
 
-				sb.append(_escape(stored_fields[i]));
-
-				sb.append("\"");
-
-				if ((i + 1) < stored_fields.length) {
+				if ((i + 1) < innerHits.length) {
 					sb.append(", ");
 				}
 			}
 
 			sb.append("]");
+		}
+
+		if (maxConcurrentGroupRequests != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"maxConcurrentGroupRequests\": ");
+
+			sb.append(maxConcurrentGroupRequests);
 		}
 
 		sb.append("}");
@@ -215,7 +216,7 @@ public class AdvancedConfiguration implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.AdvancedConfiguration",
+		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.Collapse",
 		name = "x-class-name"
 	)
 	public String xClassName;

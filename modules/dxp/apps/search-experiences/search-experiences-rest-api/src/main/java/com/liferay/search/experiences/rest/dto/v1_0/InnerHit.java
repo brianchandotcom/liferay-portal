@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -36,36 +36,35 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("AdvancedConfiguration")
+@GraphQLName("InnerHit")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "AdvancedConfiguration")
-public class AdvancedConfiguration implements Serializable {
+@XmlRootElement(name = "InnerHit")
+public class InnerHit implements Serializable {
 
-	public static AdvancedConfiguration toDTO(String json) {
-		return ObjectMapperUtil.readValue(AdvancedConfiguration.class, json);
+	public static InnerHit toDTO(String json) {
+		return ObjectMapperUtil.readValue(InnerHit.class, json);
 	}
 
-	public static AdvancedConfiguration unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(
-			AdvancedConfiguration.class, json);
+	public static InnerHit unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(InnerHit.class, json);
 	}
 
 	@Schema
 	@Valid
-	public Collapse getCollapse() {
-		return collapse;
+	public InnerCollapse getInnerCollapse() {
+		return innerCollapse;
 	}
 
-	public void setCollapse(Collapse collapse) {
-		this.collapse = collapse;
+	public void setInnerCollapse(InnerCollapse innerCollapse) {
+		this.innerCollapse = innerCollapse;
 	}
 
 	@JsonIgnore
-	public void setCollapse(
-		UnsafeSupplier<Collapse, Exception> collapseUnsafeSupplier) {
+	public void setInnerCollapse(
+		UnsafeSupplier<InnerCollapse, Exception> innerCollapseUnsafeSupplier) {
 
 		try {
-			collapse = collapseUnsafeSupplier.get();
+			innerCollapse = innerCollapseUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -77,24 +76,76 @@ public class AdvancedConfiguration implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Collapse collapse;
+	protected InnerCollapse innerCollapse;
+
+	@Schema
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@JsonIgnore
+	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+		try {
+			name = nameUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String name;
+
+	@Schema
+	public Integer getSize() {
+		return size;
+	}
+
+	public void setSize(Integer size) {
+		this.size = size;
+	}
+
+	@JsonIgnore
+	public void setSize(UnsafeSupplier<Integer, Exception> sizeUnsafeSupplier) {
+		try {
+			size = sizeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Integer size;
 
 	@Schema
 	@Valid
-	public Source getSource() {
-		return source;
+	public Object[] getSorts() {
+		return sorts;
 	}
 
-	public void setSource(Source source) {
-		this.source = source;
+	public void setSorts(Object[] sorts) {
+		this.sorts = sorts;
 	}
 
 	@JsonIgnore
-	public void setSource(
-		UnsafeSupplier<Source, Exception> sourceUnsafeSupplier) {
+	public void setSorts(
+		UnsafeSupplier<Object[], Exception> sortsUnsafeSupplier) {
 
 		try {
-			source = sourceUnsafeSupplier.get();
+			sorts = sortsUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -106,35 +157,7 @@ public class AdvancedConfiguration implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Source source;
-
-	@Schema
-	public String[] getStored_fields() {
-		return stored_fields;
-	}
-
-	public void setStored_fields(String[] stored_fields) {
-		this.stored_fields = stored_fields;
-	}
-
-	@JsonIgnore
-	public void setStored_fields(
-		UnsafeSupplier<String[], Exception> stored_fieldsUnsafeSupplier) {
-
-		try {
-			stored_fields = stored_fieldsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String[] stored_fields;
+	protected Object[] sorts;
 
 	@Override
 	public boolean equals(Object object) {
@@ -142,14 +165,13 @@ public class AdvancedConfiguration implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof AdvancedConfiguration)) {
+		if (!(object instanceof InnerHit)) {
 			return false;
 		}
 
-		AdvancedConfiguration advancedConfiguration =
-			(AdvancedConfiguration)object;
+		InnerHit innerHit = (InnerHit)object;
 
-		return Objects.equals(toString(), advancedConfiguration.toString());
+		return Objects.equals(toString(), innerHit.toString());
 	}
 
 	@Override
@@ -164,43 +186,57 @@ public class AdvancedConfiguration implements Serializable {
 
 		sb.append("{");
 
-		if (collapse != null) {
+		if (innerCollapse != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"collapse\": ");
+			sb.append("\"innerCollapse\": ");
 
-			sb.append(String.valueOf(collapse));
+			sb.append(String.valueOf(innerCollapse));
 		}
 
-		if (source != null) {
+		if (name != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"source\": ");
+			sb.append("\"name\": ");
 
-			sb.append(String.valueOf(source));
+			sb.append("\"");
+
+			sb.append(_escape(name));
+
+			sb.append("\"");
 		}
 
-		if (stored_fields != null) {
+		if (size != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"stored_fields\": ");
+			sb.append("\"size\": ");
+
+			sb.append(size);
+		}
+
+		if (sorts != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"sorts\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < stored_fields.length; i++) {
+			for (int i = 0; i < sorts.length; i++) {
 				sb.append("\"");
 
-				sb.append(_escape(stored_fields[i]));
+				sb.append(_escape(sorts[i]));
 
 				sb.append("\"");
 
-				if ((i + 1) < stored_fields.length) {
+				if ((i + 1) < sorts.length) {
 					sb.append(", ");
 				}
 			}
@@ -215,7 +251,7 @@ public class AdvancedConfiguration implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.AdvancedConfiguration",
+		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.InnerHit",
 		name = "x-class-name"
 	)
 	public String xClassName;

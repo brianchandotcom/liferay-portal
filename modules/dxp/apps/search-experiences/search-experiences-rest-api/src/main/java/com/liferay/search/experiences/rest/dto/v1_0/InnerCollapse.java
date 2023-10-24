@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -27,8 +27,6 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
-import javax.validation.Valid;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -36,36 +34,34 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("AdvancedConfiguration")
+@GraphQLName("InnerCollapse")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "AdvancedConfiguration")
-public class AdvancedConfiguration implements Serializable {
+@XmlRootElement(name = "InnerCollapse")
+public class InnerCollapse implements Serializable {
 
-	public static AdvancedConfiguration toDTO(String json) {
-		return ObjectMapperUtil.readValue(AdvancedConfiguration.class, json);
+	public static InnerCollapse toDTO(String json) {
+		return ObjectMapperUtil.readValue(InnerCollapse.class, json);
 	}
 
-	public static AdvancedConfiguration unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(
-			AdvancedConfiguration.class, json);
+	public static InnerCollapse unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(InnerCollapse.class, json);
 	}
 
 	@Schema
-	@Valid
-	public Collapse getCollapse() {
-		return collapse;
+	public String getField() {
+		return field;
 	}
 
-	public void setCollapse(Collapse collapse) {
-		this.collapse = collapse;
+	public void setField(String field) {
+		this.field = field;
 	}
 
 	@JsonIgnore
-	public void setCollapse(
-		UnsafeSupplier<Collapse, Exception> collapseUnsafeSupplier) {
+	public void setField(
+		UnsafeSupplier<String, Exception> fieldUnsafeSupplier) {
 
 		try {
-			collapse = collapseUnsafeSupplier.get();
+			field = fieldUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -77,64 +73,7 @@ public class AdvancedConfiguration implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Collapse collapse;
-
-	@Schema
-	@Valid
-	public Source getSource() {
-		return source;
-	}
-
-	public void setSource(Source source) {
-		this.source = source;
-	}
-
-	@JsonIgnore
-	public void setSource(
-		UnsafeSupplier<Source, Exception> sourceUnsafeSupplier) {
-
-		try {
-			source = sourceUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Source source;
-
-	@Schema
-	public String[] getStored_fields() {
-		return stored_fields;
-	}
-
-	public void setStored_fields(String[] stored_fields) {
-		this.stored_fields = stored_fields;
-	}
-
-	@JsonIgnore
-	public void setStored_fields(
-		UnsafeSupplier<String[], Exception> stored_fieldsUnsafeSupplier) {
-
-		try {
-			stored_fields = stored_fieldsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String[] stored_fields;
+	protected String field;
 
 	@Override
 	public boolean equals(Object object) {
@@ -142,14 +81,13 @@ public class AdvancedConfiguration implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof AdvancedConfiguration)) {
+		if (!(object instanceof InnerCollapse)) {
 			return false;
 		}
 
-		AdvancedConfiguration advancedConfiguration =
-			(AdvancedConfiguration)object;
+		InnerCollapse innerCollapse = (InnerCollapse)object;
 
-		return Objects.equals(toString(), advancedConfiguration.toString());
+		return Objects.equals(toString(), innerCollapse.toString());
 	}
 
 	@Override
@@ -164,48 +102,18 @@ public class AdvancedConfiguration implements Serializable {
 
 		sb.append("{");
 
-		if (collapse != null) {
+		if (field != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"collapse\": ");
+			sb.append("\"field\": ");
 
-			sb.append(String.valueOf(collapse));
-		}
+			sb.append("\"");
 
-		if (source != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
+			sb.append(_escape(field));
 
-			sb.append("\"source\": ");
-
-			sb.append(String.valueOf(source));
-		}
-
-		if (stored_fields != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"stored_fields\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < stored_fields.length; i++) {
-				sb.append("\"");
-
-				sb.append(_escape(stored_fields[i]));
-
-				sb.append("\"");
-
-				if ((i + 1) < stored_fields.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -215,7 +123,7 @@ public class AdvancedConfiguration implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.AdvancedConfiguration",
+		defaultValue = "com.liferay.search.experiences.rest.dto.v1_0.InnerCollapse",
 		name = "x-class-name"
 	)
 	public String xClassName;

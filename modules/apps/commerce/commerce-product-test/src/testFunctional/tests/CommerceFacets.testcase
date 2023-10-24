@@ -454,6 +454,46 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-12603. As a admin, I want to filter products using Specification Facet widget and the URL updates accordingly"
+	@priority = 5
+	test CanFilterProductsBySpecificationFacetAndURLUpdatesAccordingly {
+		property portal.acceptance = "true";
+
+		task ("Given the admin sets as 'facetable' all the specifications created with minium") {
+			CommerceNavigator.goToSpecificationsAdmin();
+
+			Click(
+				key_entry = "Dimensions",
+				locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+
+			Check.checkNotVisible(
+				key_toggleSwitchLabel = "Use in Faceted Navigation",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			Button.clickSave();
+		}
+
+		task ("And the filter is set") {
+			ApplicationsMenu.gotoSite(site = "Minium");
+
+			Check.checkToggleSwitch(
+				key_fieldName = '''7" x 5.6" x 2"''',
+				locator1 = "FormFields#CHECKBOX");
+		}
+
+		task ("Then all of the products are correctly shown and the URL is updated with the filter") {
+			var portalURL = JSONCompany.getPortalURL();
+
+			for (var productName : list "U-Joint,Drive Shafts,Hub Bearing Assembly - Rear,ABS Sensor,Oil Pump,Lift Support,") {
+				AssertElementPresent(
+					key_productName = ${productName},
+					locator1 = "CommerceAccelerators#PRODUCT_CARD_NAME");
+			}
+
+			AssertLocation(value1 = "${portalURL}/web/minium/catalog?dimensions=7%22%20x%205.6%22%20x%202%22");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-11957. Admin cannot view the specification entry's key is set with dots"
 	@priority = 5
 	test CannotAddSpecificationKeyWithDots {

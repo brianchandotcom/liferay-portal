@@ -98,8 +98,7 @@ public class TemplateManagerUtilTest {
 	private static final TemplateResource _TEMPLATE_RESOURCE =
 		ProxyFactory.newDummyInstance(TemplateResource.class);
 
-	private static final String _TEST_TEMPLATE_MANAGER_NAME =
-		"TEST_TEMPLATE_MANAGER_NAME";
+	private static final String _TEST_TEMPLATE_MANAGER_NAME = "test";
 
 	private static ServiceRegistration<TemplateManager> _serviceRegistration;
 	private static TemplateManager _templateManager;

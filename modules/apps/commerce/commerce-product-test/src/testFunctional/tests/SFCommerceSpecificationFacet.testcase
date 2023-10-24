@@ -161,7 +161,9 @@ definition {
 			key_navItem = "Setup",
 			locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK");
 
-		AssertElementPresent(locator1 = "Select#DISPLAY_TEMPLATE");
+		AssertElementPresent(
+				key_fieldLabel = "Display Template",
+				locator1 = "CommerceEntry#COMMERCE_FACET_BUTTON");
 
 		AssertElementPresent(
 			key_fieldName = "maxTerms",
@@ -189,6 +191,12 @@ definition {
 			portletName = "Specification Facet");
 
 		IFrame.closeFrame();
+
+		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
+
+		WaitForElementPresent(
+			key_fieldName = "Spec Value 92",
+			locator1 = "FormFields#CHECKBOX");
 
 		CommerceWidget.assertSpecificationPanel2FacetsCount(
 			expectedLabels = 100,

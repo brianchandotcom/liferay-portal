@@ -99,11 +99,12 @@ public class DeletionSystemEventExporter {
 					continue;
 				}
 
-				portletDataContext.getManifestSummary(
-				).addAssetTitle(
+				ManifestSummary manifestSummary =
+					portletDataContext.getManifestSummary();
+
+				manifestSummary.addAssetTitle(
 					systemEvent.getClassName(),
-					String.valueOf(jsonObject.get(_ASSET_TITLE))
-				);
+					String.valueOf(jsonObject.get(_ASSET_TITLE)));
 			}
 		}
 

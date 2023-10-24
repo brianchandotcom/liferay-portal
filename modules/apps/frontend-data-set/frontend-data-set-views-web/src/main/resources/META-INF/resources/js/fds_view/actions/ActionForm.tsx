@@ -748,11 +748,11 @@ const ActionForm = ({
 					displayType="unstyled"
 				>
 					<ClayPanel.Body>
-						<p className="c-pb-2 c-pt-2 pane-help text-secondary">
+						<ClayForm.Text className="c-pb-3">
 							{Liferay.Language.get(
 								'you-can-write-status-messages-related-to-this-action'
 							)}
-						</p>
+						</ClayForm.Text>
 
 						<ClayTabs
 							activation="automatic"

@@ -24,6 +24,7 @@ import com.liferay.headless.delivery.dto.v1_0.DisplayPageTemplate;
 import com.liferay.headless.delivery.dto.v1_0.MasterPage;
 import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
+import com.liferay.headless.delivery.dto.v1_0.PageRule;
 import com.liferay.headless.delivery.dto.v1_0.PageTemplate;
 import com.liferay.headless.delivery.dto.v1_0.PageTemplateCollection;
 import com.liferay.headless.delivery.dto.v1_0.Settings;
@@ -39,6 +40,7 @@ import com.liferay.layout.importer.LayoutsImporter;
 import com.liferay.layout.importer.LayoutsImporterResultEntry;
 import com.liferay.layout.internal.importer.exception.DropzoneLayoutStructureItemException;
 import com.liferay.layout.internal.importer.structure.util.LayoutStructureItemImporter;
+import com.liferay.layout.internal.importer.structure.util.LayoutStructureRuleImporter;
 import com.liferay.layout.internal.importer.validator.DisplayPageTemplateValidator;
 import com.liferay.layout.internal.importer.validator.MasterPageValidator;
 import com.liferay.layout.internal.importer.validator.PageDefinitionValidator;
@@ -1543,6 +1545,13 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 						position++;
 					}
+				}
+			}
+
+			if (pageDefinition.getPageRules() != null) {
+				for (PageRule pageRule : pageDefinition.getPageRules()) {
+					LayoutStructureRuleImporter.addLayoutStructureRule(
+						layoutStructure, pageRule);
 				}
 			}
 

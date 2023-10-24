@@ -8,6 +8,7 @@ package com.liferay.object.rest.internal.odata.filter.expression;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
+import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
@@ -643,11 +644,13 @@ public class PredicateExpressionVisitorImpl
 				Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
 					pattern);
 
+				String value = right.toString();
+
 				DateFormat dateFormat =
 					DateFormatFactoryUtil.getSimpleDateFormat(
-						"yyyy-MM-dd'T'HH:mm:ss");
+						ObjectFieldUtil.getDateTimePattern(value));
 
-				Date date = dateFormat.parse(right.toString());
+				Date date = dateFormat.parse(value);
 
 				right = format.format(date);
 			}

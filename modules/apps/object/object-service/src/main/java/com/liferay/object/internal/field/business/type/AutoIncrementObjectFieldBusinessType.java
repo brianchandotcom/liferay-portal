@@ -7,8 +7,10 @@ package com.liferay.object.internal.field.business.type;
 
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
+import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
 import com.liferay.object.exception.ObjectFieldSettingValueException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
+import com.liferay.object.field.render.ObjectFieldRenderingContext;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -54,7 +56,7 @@ public class AutoIncrementObjectFieldBusinessType
 
 	@Override
 	public String getDDMFormFieldTypeName() {
-		return null;
+		return ObjectDDMFormFieldTypeConstants.AUTO_INCREMENT;
 	}
 
 	@Override
@@ -73,6 +75,14 @@ public class AutoIncrementObjectFieldBusinessType
 	@Override
 	public String getName() {
 		return ObjectFieldConstants.BUSINESS_TYPE_AUTO_INCREMENT;
+	}
+
+	@Override
+	public Map<String, Object> getProperties(
+		ObjectField objectField,
+		ObjectFieldRenderingContext objectFieldRenderingContext) {
+
+		return Collections.emptyMap();
 	}
 
 	@Override

@@ -140,9 +140,9 @@ export default function KeyboardMovementPreview() {
 
 	return (
 		<div className="cadmin">
-			<div className="page-editor__drag-preview">
+			<div className="page-editor__keyboard-movement-preview">
 				<div
-					className="page-editor__drag-preview__content"
+					className="page-editor__keyboard-movement-preview__content"
 					ref={previewRef}
 					style={style}
 				>

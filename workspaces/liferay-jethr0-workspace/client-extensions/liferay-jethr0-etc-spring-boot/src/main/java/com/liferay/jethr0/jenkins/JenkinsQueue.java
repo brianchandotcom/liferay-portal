@@ -89,7 +89,7 @@ public class JenkinsQueue {
 					_buildRunEntityRepository.create(
 						buildEntity, BuildRunEntity.State.QUEUED);
 
-				_eventJmsController.send(
+				_eventJmsController.sendToJenkins(
 					jenkinsServerEntity,
 					String.valueOf(
 						buildRunEntity.getInvokeJSONObject(jenkinsNodeEntity)));

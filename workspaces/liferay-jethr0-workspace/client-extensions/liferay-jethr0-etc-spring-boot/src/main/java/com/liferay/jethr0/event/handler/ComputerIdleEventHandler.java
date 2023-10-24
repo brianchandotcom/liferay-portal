@@ -61,7 +61,7 @@ public class ComputerIdleEventHandler extends ComputerUpdateEventHandler {
 
 		EventJmsController eventJmsController = getEventJmsController();
 
-		eventJmsController.send(
+		eventJmsController.sendToJenkins(
 			jenkinsNodeEntity.getJenkinsServerEntity(),
 			String.valueOf(
 				buildRunEntity.getInvokeJSONObject(jenkinsNodeEntity)));

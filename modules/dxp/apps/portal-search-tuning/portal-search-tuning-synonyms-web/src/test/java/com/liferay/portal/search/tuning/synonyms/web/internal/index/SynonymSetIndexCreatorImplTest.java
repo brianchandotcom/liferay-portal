@@ -58,7 +58,7 @@ public class SynonymSetIndexCreatorImplTest extends BaseSynonymsWebTestCase {
 	public void testDelete() {
 		setUpSearchEngineAdapter((DocumentResponse)null);
 
-		_synonymSetIndexCreatorImpl.delete(
+		_synonymSetIndexCreatorImpl.deleteIfExists(
 			Mockito.mock(SynonymSetIndexName.class));
 
 		Mockito.verify(

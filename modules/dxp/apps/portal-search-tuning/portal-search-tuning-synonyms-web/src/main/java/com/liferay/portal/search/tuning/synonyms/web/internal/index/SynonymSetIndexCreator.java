@@ -14,6 +14,6 @@ public interface SynonymSetIndexCreator {
 
 	public void create(SynonymSetIndexName synonymSetIndexName);
 
-	public void delete(SynonymSetIndexName synonymSetIndexName);
+	public void deleteIfExists(SynonymSetIndexName synonymSetIndexName);
 
 }

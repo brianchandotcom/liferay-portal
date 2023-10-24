@@ -59,7 +59,7 @@ public class SynonymSetIndexPortalInstanceLifecycleListener
 			return;
 		}
 
-		_synonymSetIndexCreator.delete(synonymSetIndexName);
+		_synonymSetIndexCreator.deleteIfExists(synonymSetIndexName);
 	}
 
 	@Reference

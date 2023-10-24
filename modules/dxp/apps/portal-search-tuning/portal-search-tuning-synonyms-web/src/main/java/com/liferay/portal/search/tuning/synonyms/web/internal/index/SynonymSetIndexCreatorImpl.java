@@ -41,7 +41,7 @@ public class SynonymSetIndexCreatorImpl implements SynonymSetIndexCreator {
 	}
 
 	@Override
-	public void delete(SynonymSetIndexName synonymSetIndexName) {
+	public void deleteIfExists(SynonymSetIndexName synonymSetIndexName) {
 		IndicesExistsIndexRequest indicesExistsIndexRequest =
 			new IndicesExistsIndexRequest(synonymSetIndexName.getIndexName());
 

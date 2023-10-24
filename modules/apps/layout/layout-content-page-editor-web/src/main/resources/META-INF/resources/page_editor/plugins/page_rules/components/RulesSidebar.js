@@ -11,7 +11,7 @@ import RulesEmptyState from './RulesEmptyState';
 import RulesList from './RulesList';
 
 export default function RulesSidebar() {
-	const rules = useSelector((state) => state.layoutData.rules || []);
+	const rules = useSelector((state) => state.layoutData.pageRules);
 
 	return (
 		<>

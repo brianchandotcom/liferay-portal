@@ -22,12 +22,10 @@ import {
 export default function RulesModal({editingRule, onCloseModal}) {
 	const {observer, onClose} = useModal({onClose: () => onCloseModal()});
 
-	const layoutData = useSelector((state) => state.layoutData);
+	const rules = useSelector((state) => state.layoutData.pageRules);
 
 	const dispatch = useDispatch();
 	const nameId = useId();
-
-	const {rules = []} = layoutData;
 
 	const [name, setName] = useState(
 		editingRule?.name || getDefaultName(rules)

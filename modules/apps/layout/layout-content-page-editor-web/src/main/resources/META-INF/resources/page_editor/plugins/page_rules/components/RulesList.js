@@ -19,10 +19,8 @@ export default function RulesList() {
 	const [modalVisible, setModalVisible] = useState(false);
 	const [editingRule, setEditingRule] = useState(null);
 
-	const layoutData = useSelector((state) => state.layoutData);
+	const rules = useSelector((state) => state.layoutData.pageRules);
 	const dispatch = useDispatch();
-
-	const {rules = []} = layoutData;
 
 	const onCreateRule = () => setModalVisible(true);
 

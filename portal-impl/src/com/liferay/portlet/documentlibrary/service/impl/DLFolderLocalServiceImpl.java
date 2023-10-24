@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WebDAVProps;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -75,7 +76,6 @@ import com.liferay.portal.kernel.tree.TreePathUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -1313,8 +1313,10 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			dlFolder.getGroupId(), dlFolder.getFolderId());
 
 		for (DLFolder curDLFolder : dlFolders) {
+			TrashHelper trashHelper = _trashHelperSnapshot.get();
+
 			if (includeTrashedEntries ||
-				!_trashHelper.isInTrashExplicitly(curDLFolder)) {
+				!trashHelper.isInTrashExplicitly(curDLFolder)) {
 
 				repositoryEventTrigger.trigger(
 					RepositoryEventType.Delete.class, Folder.class,
@@ -1448,10 +1450,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		}
 	}
 
-	private static volatile TrashHelper _trashHelper =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			TrashHelper.class, DLFolderLocalServiceImpl.class, "_trashHelper",
-			false);
+	private static final Snapshot<TrashHelper> _trashHelperSnapshot =
+		new Snapshot<>(DLFolderLocalServiceImpl.class, TrashHelper.class);
 
 	@BeanReference(type = AssetEntryLocalService.class)
 	private AssetEntryLocalService _assetEntryLocalService;

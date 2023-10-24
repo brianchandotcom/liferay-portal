@@ -314,7 +314,7 @@ export function UniqueCompositeKey({
 										contentLiferayFire: (
 											<span>
 												{Liferay.Language.get(
-													'fields-cannot-be-deleted-from-unique-composite-keys-after-definition-publication'
+													'fields-cannot-be-deleted-from-unique-composite-keys-after-the-definition-is-published'
 												)}
 											</span>
 										),

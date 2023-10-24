@@ -6,6 +6,7 @@
 package com.liferay.jenkins.results.parser.jethr0;
 
 import com.liferay.jenkins.results.parser.JenkinsMaster;
+import com.liferay.jenkins.results.parser.Jethr0BuildUpdater;
 
 import java.util.Map;
 
@@ -16,9 +17,7 @@ import org.json.JSONObject;
  */
 public interface Jethr0Client {
 
-	public void activeMQRequest(String message);
-
-	public void activeMQSendMessage(String message);
+	public void connect();
 
 	public void createBuild(
 		String jenkinsJobName, Map<String, String> jenkinsBuildParameters,
@@ -28,6 +27,10 @@ public interface Jethr0Client {
 		String jenkinsJobName, Map<String, String> jenkinsBuildParameters,
 		long jobId, String buildName);
 
+	public void disconnect();
+
+	public Environment getEnvironment();
+
 	public JenkinsMaster getJenkinsMaster();
 
 	public JSONObject getJobJSONObject(long jobId);
@@ -36,9 +39,15 @@ public interface Jethr0Client {
 
 	public String liferayDXPRequest(String urlPath, String message);
 
+	public void sendMessageToJethr0(String message);
+
 	public String springBootRequest(String urlPath);
 
 	public String springBootRequest(String urlPath, String message);
+
+	public void subscribe(Jethr0BuildUpdater jethr0BuildUpdater);
+
+	public void unsubscribe(Jethr0BuildUpdater jethr0BuildUpdater);
 
 	public enum Environment {
 

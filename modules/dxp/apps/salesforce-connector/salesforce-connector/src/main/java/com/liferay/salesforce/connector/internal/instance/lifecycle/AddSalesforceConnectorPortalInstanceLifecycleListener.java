@@ -12,6 +12,8 @@ import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.dispatch.talend.archive.TalendArchiveParserUtil;
 import com.liferay.portal.instance.lifecycle.InitialRequestPortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -42,14 +44,24 @@ public class AddSalesforceConnectorPortalInstanceLifecycleListener
 
 	@Override
 	protected void doPortalInstanceRegistered(long companyId) throws Exception {
-		_addDispatchTrigger(
-			companyId, "etl-salesforce-account-connector-0.4.zip");
-		_addDispatchTrigger(
-			companyId, "etl-salesforce-order-connector-0.7.zip");
-		_addDispatchTrigger(
-			companyId, "etl-salesforce-price-list-connector-0.7.zip");
-		_addDispatchTrigger(
-			companyId, "etl-salesforce-product-connector-0.4.zip");
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(null);
+
+		try {
+			_addDispatchTrigger(
+				companyId, "etl-salesforce-account-connector-0.4.zip");
+			_addDispatchTrigger(
+				companyId, "etl-salesforce-order-connector-0.7.zip");
+			_addDispatchTrigger(
+				companyId, "etl-salesforce-price-list-connector-0.7.zip");
+			_addDispatchTrigger(
+				companyId, "etl-salesforce-product-connector-0.4.zip");
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+		}
 	}
 
 	private void _addDispatchTrigger(long companyId, String name)

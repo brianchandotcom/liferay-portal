@@ -113,7 +113,7 @@ class PartnerPortalRemoteAppComponent extends HTMLElement {
 					liferayWebDAV={
 						super.getAttribute('liferaywebdavurl') as string
 					}
-					route={super.getAttribute('route') as AppRouteType}
+					route={super.getAttribute('path') as AppRouteType}
 				/>
 			);
 		}

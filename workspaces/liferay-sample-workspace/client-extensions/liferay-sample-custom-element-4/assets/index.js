@@ -17,11 +17,7 @@ const api = async (url, options = {}) => {
 };
 
 class CustomElement extends HTMLElement {
-	constructor() {
-		super();
-
-		const root = document.createElement('div');
-
+	connectedCallback() {
 		const Greeting = React.createElement(
 			'h1',
 			{className: 'greeting'},
@@ -30,9 +26,7 @@ class CustomElement extends HTMLElement {
 			'. Welcome!'
 		);
 
-		ReactDOM.render(Greeting, root);
-
-		this.appendChild(root);
+		ReactDOM.render(Greeting, this);
 
 		if (Liferay.ThemeDisplay.isSignedIn()) {
 			api('o/headless-admin-user/v1.0/my-user-account')
@@ -51,6 +45,10 @@ class CustomElement extends HTMLElement {
 					console.log(error);
 				});
 		}
+	}
+
+	disconnectedCallback() {
+		ReactDOM.unmountComponentAtNode(this);
 	}
 }
 

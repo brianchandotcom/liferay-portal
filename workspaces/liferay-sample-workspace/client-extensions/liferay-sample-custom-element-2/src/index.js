@@ -44,10 +44,9 @@ const App = ({route}) => {
 
 class WebComponent extends HTMLElement {
 	connectedCallback() {
-		createRoot(this).render(
-			<App route={this.getAttribute('route')} />,
-			this
-		);
+		this.root = createRoot(this);
+
+		this.root.render(<App route={this.getAttribute('route')} />, this);
 
 		if (Liferay.ThemeDisplay.isSignedIn()) {
 			api('o/headless-admin-user/v1.0/my-user-account')
@@ -68,6 +67,22 @@ class WebComponent extends HTMLElement {
 					console.log(error);
 				});
 		}
+	}
+
+	disconnectedCallback() {
+
+		//
+		// Unmount React tree to prevent memory leaks.
+		//
+		// See React documentation at
+		//
+		//     https://react.dev/reference/react-dom/client/createRoot#root-unmount
+		//
+		// for more information.
+		//
+
+		this.root.unmount();
+		delete this.root;
 	}
 }
 

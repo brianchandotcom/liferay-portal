@@ -9,6 +9,10 @@ export enum StepCreateLicense {
 }
 
 export type CreateLicenseForm = {
+	IP: string;
+	description: string;
+	hostName: string;
+	macAddresses: string;
 	subscription: string;
 };
 

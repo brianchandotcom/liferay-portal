@@ -11,6 +11,7 @@ import {useForm} from 'react-hook-form';
 
 import FooterButtons from '../../components/FooterButtons';
 import {Liferay} from '../../liferay/liferay';
+import zodSchema, {zodResolver} from '../../schema/zod';
 import ProductCard from '../GetAppPage/components/ProductCard/ProductCard';
 import StepWizard from '../GetAppPage/components/StepWizard/StepWizard';
 import AccountEmailInfo from './AccountInfo';
@@ -26,13 +27,33 @@ import {
 const CreateLicense = () => {
 	const [step, setStep] = useState<string>(StepCreateLicense.SUBSCRIPTION);
 
-	const {setValue, watch} = useForm<CreateLicenseForm>({
+	const {
+		formState: {errors},
+		register,
+		setValue,
+		watch,
+	} = useForm<CreateLicenseForm>({
 		defaultValues: {
+			IP: '',
+			description: '',
+			hostName: '',
+			macAddresses: '',
 			subscription: undefined,
 		},
+		mode: 'all',
+		resolver: zodResolver(zodSchema.generateLicenseKey),
 	});
 
-	const {subscription} = watch();
+	const {IP, hostName, macAddresses, subscription} = watch();
+
+	const disableGenerateButton =
+		IP === '' && hostName === '' && macAddresses === '';
+
+	const inputProps = {
+		errors,
+		register,
+		required: true,
+	};
 
 	const stepsInformation: StepsInformation = {
 		[StepCreateLicense.SUBSCRIPTION]: {
@@ -51,7 +72,7 @@ const CreateLicense = () => {
 		},
 		[StepCreateLicense.LICENSE_KEY_DETAILS]: {
 			backStep: StepCreateLicense.SUBSCRIPTION,
-			component: <LicenseDetails />,
+			component: <LicenseDetails inputProps={inputProps} />,
 			nextStep: StepCreateLicense.SUBSCRIPTION,
 			stepTitle: 'License Key Details',
 			title: 'License Key Details',
@@ -120,7 +141,10 @@ const CreateLicense = () => {
 		},
 		nextButton: {
 			className: 'ml-6',
-			disabled: !subscription,
+			disabled:
+				(!subscription && step === StepCreateLicense.SUBSCRIPTION) ||
+				(disableGenerateButton &&
+					step !== StepCreateLicense.SUBSCRIPTION),
 			displayType: 'primary',
 			show: true,
 			text: 'Generate Key',

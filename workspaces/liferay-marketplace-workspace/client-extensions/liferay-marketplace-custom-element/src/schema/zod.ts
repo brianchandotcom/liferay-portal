@@ -26,6 +26,14 @@ const zodSchema = {
 		phoneNumber: z.string().min(1, {message: 'This field is required'}),
 	}),
 
+	generateLicenseKey: z.object({
+		IP: z.string(),
+		description: z.string().max(100, {message: 'Invalid license name'}),
+		hostName: z.string(),
+		macAddresses: z.string(),
+		subscription: z.string(),
+	}),
+
 	invitedNewMember: z.object({
 		emailAddress: z
 			.string()

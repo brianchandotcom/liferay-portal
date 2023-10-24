@@ -3,79 +3,69 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useState} from 'react';
+import {FieldErrors, UseFormRegister} from 'react-hook-form';
 
 import {RequiredMask} from '../../../components/FieldBase';
-import {Input} from '../../../components/Input/Input';
+import FormInput from '../../../components/Input/formInput';
+import {CreateLicenseForm} from '../Types';
 
-interface LicenseDetailsType {
-	[key: string]: string;
-}
-
-const LicenseDetails = () => {
-	const formInformation = {
-		IP: '',
-		description: '',
-		hostName: '',
-		macAddresses: '',
+type InputPropsLicense = {
+	inputProps: {
+		errors: FieldErrors<CreateLicenseForm>;
+		register: UseFormRegister<CreateLicenseForm>;
+		required: boolean;
 	};
-
-	const [form, setForm] = useState<LicenseDetailsType>(formInformation);
-
+};
+const LicenseDetails = ({inputProps}: InputPropsLicense) => {
 	return (
 		<>
-			<h4>
+			<h5>
 				Environment Details <RequiredMask />
-			</h4>
-			<hr></hr>
-			<Input
+			</h5>
+			<hr className="mt-2"></hr>
+			<FormInput
+				{...inputProps}
+				boldLabel
+				className="custom-input"
 				helpMessage="Include a description to uniquely identify this environment. This cannot be edited later."
 				label="Description"
-				onChange={({target}) =>
-					setForm({
-						...form,
-						description: target.value,
-					})
-				}
+				name="description"
 			/>
 
-			<h4>
+			<h5 className="mt-7">
 				Activation Key Server Details <RequiredMask />
-			</h4>
+			</h5>
 
-			<hr></hr>
-			<Input
+			<hr className="mt-2"></hr>
+			<FormInput
+				{...inputProps}
+				boldLabel
+				className="custom-input"
 				helpMessage="Input one Host name per instance"
 				label="Host Name"
-				onChange={({target}) =>
-					setForm({
-						...form,
-						hostName: target.value,
-					})
-				}
+				name="hostName"
+				placeholder="Enter Host Name"
 			/>
-			<Input
+
+			<FormInput
+				{...inputProps}
+				boldLabel
+				className="custom-input"
 				component="textarea"
 				helpMessage="Add one IP addresses per line. IPv6 addresses are not supported."
 				label="IP Addresses"
-				onChange={({target}) =>
-					setForm({
-						...form,
-						IP: target.value,
-					})
-				}
+				name="IPAddress"
 				placeholder={`1.1.1.1` + '\n' + `2.2.2.2`}
 			/>
-			<Input
+
+			<FormInput
+				{...inputProps}
+				boldLabel
+				className="custom-input"
 				component="textarea"
 				helpMessage="Add one MAC addresses per line"
 				label="Mac Addresses"
-				onChange={({target}) =>
-					setForm({
-						...form,
-						macAddresses: target.value,
-					})
-				}
+				name="macAddress"
 				placeholder={`XX-XX-XX-XX-XX-XX` + '\n' + `XX-XX-XX-XX-XX-XX`}
 			/>
 		</>

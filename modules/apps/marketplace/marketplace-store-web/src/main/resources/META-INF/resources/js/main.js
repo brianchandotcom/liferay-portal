@@ -32,29 +32,6 @@ AUI.add(
 				}
 			},
 
-			postMessage(message) {
-				const instance = this;
-
-				if (NATIVE_MSG) {
-					A.postMessage(
-						message,
-						instance._targetURI,
-						instance._targetFrame
-					);
-				}
-				else {
-					instance._messages.push(message);
-
-					if (instance._messages.length === 1) {
-						A.postMessage(
-							message,
-							instance._targetURI,
-							instance._targetFrame
-						);
-					}
-				}
-			},
-
 			receiveMessage(callback, validator) {
 				const instance = this;
 

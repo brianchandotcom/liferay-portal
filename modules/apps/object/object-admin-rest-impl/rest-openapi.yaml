@@ -222,6 +222,9 @@ components:
                     deprecated: true
                     enum: [BigDecimal, Boolean, Clob, Date, DateTime, Double, Integer, Long, String]
                     type: string
+                unique:
+                    readOnly: true
+                    type: boolean
         ObjectFieldSetting:
             properties:
                 id:

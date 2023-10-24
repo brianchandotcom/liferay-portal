@@ -653,6 +653,28 @@ definition {
 		}
 	}
 
+	@description = "LPS-181575 - Verify if that the “Rename” option has no icon next to the option"
+	@priority = 3
+	test CanViewRenameOption {
+		task ("When the user clicks on the data set entry 3 dots option button") {
+			Navigator.gotoBack();
+
+			Click(
+				key_entry = "Data Set Test",
+				locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
+		}
+
+		task ("Then there is a Rename option ") {
+			MenuItem.viewPresent(menuItem = "Rename");
+		}
+
+		task ("And there is no icon next to the Rename option name") {
+			AssertElementNotPresent(
+				locator1 = "Icon#ANY",
+				value1 = "rename");
+		}
+	}
+
 	@description = "LPS-178860 Confirm that the user can view the rest information in the Details tab"
 	@priority = 5
 	test CanViewRestInformation {

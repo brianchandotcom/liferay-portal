@@ -46,6 +46,27 @@ public class PageDefinition implements Cloneable, Serializable {
 
 	protected PageElement pageElement;
 
+	public PageRule[] getPageRules() {
+		return pageRules;
+	}
+
+	public void setPageRules(PageRule[] pageRules) {
+		this.pageRules = pageRules;
+	}
+
+	public void setPageRules(
+		UnsafeSupplier<PageRule[], Exception> pageRulesUnsafeSupplier) {
+
+		try {
+			pageRules = pageRulesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected PageRule[] pageRules;
+
 	public Settings getSettings() {
 		return settings;
 	}

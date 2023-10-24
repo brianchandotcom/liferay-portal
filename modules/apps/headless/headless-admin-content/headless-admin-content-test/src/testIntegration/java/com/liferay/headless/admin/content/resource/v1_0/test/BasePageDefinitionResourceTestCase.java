@@ -266,6 +266,14 @@ public abstract class BasePageDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("pageRules", additionalAssertFieldName)) {
+				if (pageDefinition.getPageRules() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("settings", additionalAssertFieldName)) {
 				if (pageDefinition.getSettings() == null) {
 					valid = false;
@@ -412,6 +420,17 @@ public abstract class BasePageDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("pageRules", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						pageDefinition1.getPageRules(),
+						pageDefinition2.getPageRules())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("settings", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						pageDefinition1.getSettings(),
@@ -539,6 +558,11 @@ public abstract class BasePageDefinitionResourceTestCase {
 		sb.append(" ");
 
 		if (entityFieldName.equals("pageElement")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("pageRules")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.EventListener;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -70,6 +71,8 @@ import org.eclipse.equinox.http.servlet.internal.registration.ServletRegistratio
 import org.eclipse.equinox.http.servlet.internal.servlet.FilterConfigImpl;
 import org.eclipse.equinox.http.servlet.internal.servlet.HttpSessionAdaptor;
 import org.eclipse.equinox.http.servlet.internal.servlet.Match;
+import org.eclipse.equinox.http.servlet.internal.servlet.ResourceServlet;
+import org.eclipse.equinox.http.servlet.internal.servlet.ServletConfigImpl;
 import org.eclipse.equinox.http.servlet.internal.servlet.ServletContextAdaptor;
 import org.eclipse.equinox.http.servlet.internal.util.Const;
 import org.eclipse.equinox.http.servlet.internal.util.EventListeners;
@@ -86,6 +89,7 @@ import org.osgi.service.http.context.ServletContextHelper;
 import org.osgi.service.http.runtime.dto.DTOConstants;
 import org.osgi.service.http.runtime.dto.FilterDTO;
 import org.osgi.service.http.runtime.dto.ListenerDTO;
+import org.osgi.service.http.runtime.dto.ResourceDTO;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -369,7 +373,75 @@ public class LiferayContextController extends ContextController {
 	public ResourceRegistration addResourceRegistration(
 		ServiceReference<?> serviceReference) {
 
-		return _contextController.addResourceRegistration(serviceReference);
+		_checkShutdown();
+
+		String prefix = (String)serviceReference.getProperty(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PREFIX);
+
+		if (prefix == null) {
+			throw new IllegalArgumentException("Prefix can not be null");
+		}
+
+		if (prefix.endsWith(Const.SLASH) && !prefix.equals(Const.SLASH)) {
+			throw new IllegalArgumentException(
+				"Invalid prefix '" + prefix + "'");
+		}
+
+		String[] patterns = ArrayUtil.toStringArray(
+			StringPlus.asList(
+				serviceReference.getProperty(
+					HttpWhiteboardConstants.HTTP_WHITEBOARD_RESOURCE_PATTERN)));
+
+		if (patterns.length < 1) {
+			throw new IllegalArgumentException("Patterns must contain a value");
+		}
+
+		for (String pattern : patterns) {
+			ContextController.checkPattern(pattern);
+		}
+
+		Bundle bundle = serviceReference.getBundle();
+
+		ServletContextHelper servletContextHelper = _getServletContextHelper(
+			bundle);
+
+		long serviceId = (long)serviceReference.getProperty(
+			Constants.SERVICE_ID);
+
+		ResourceDTO resourceDTO = new ResourceDTO();
+
+		resourceDTO.patterns = _sort(patterns);
+		resourceDTO.prefix = prefix;
+		resourceDTO.serviceId = serviceId;
+		resourceDTO.servletContextId = _contextServiceId;
+
+		ResourceRegistration resourceRegistration = new ResourceRegistration(
+			new ContextController.ServiceHolder<>(
+				new ResourceServlet(
+					prefix, servletContextHelper,
+					AccessController.getContext()),
+				bundle, serviceId,
+				GetterUtil.getInteger(
+					serviceReference.getProperty(Constants.SERVICE_RANKING))),
+			resourceDTO, servletContextHelper, this, null);
+
+		try {
+			resourceRegistration.init(
+				new ServletConfigImpl(
+					resourceRegistration.getName(), new HashMap<>(),
+					_createServletContext(bundle, servletContextHelper)));
+		}
+		catch (ServletException servletException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(servletException);
+			}
+
+			return null;
+		}
+
+		_endpointRegistrations.add(resourceRegistration);
+
+		return resourceRegistration;
 	}
 
 	@Override

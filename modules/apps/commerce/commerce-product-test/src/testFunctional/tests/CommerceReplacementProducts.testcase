@@ -108,6 +108,82 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-12026 | When an admin need to add to cart a product with a discontinued SKU without inventory and allow back orders switched off, your replacement has to be added to the cart"
+	@priority = 5
+	test CanReplacementSKUAddedToCart {
+		property portal.acceptance = "true";
+
+		task ("Given U-Joint product set as Discontinued with a replacement product") {
+			CommerceProducts.openProductsAdmin();
+
+			Search.searchCP(searchTerm = "U-Joint");
+
+			CommerceNavigator.gotoTableListEntry(entryName = "U-Joint");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoTableListEntry(entryName = "MIN55861");
+
+			SelectFrame(locator1 = "IFrame#IFRAME");
+
+			CommerceProducts.discontinueSKU();
+
+			CommerceProducts.setReplacementSKU(replacementSKU = "MIN93015");
+		}
+
+		task ("And ABS Sensor product set as Discontinued with a replacement product") {
+			CommerceProducts.openProductsAdmin();
+
+			Search.searchCP(searchTerm = "ABS Sensor");
+
+			CommerceNavigator.gotoTableListEntry(entryName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceNavigator.gotoTableListEntry(entryName = "MIN93015");
+
+			SelectFrame(locator1 = "IFrame#IFRAME");
+
+			CommerceProducts.discontinueSKU();
+
+			CommerceProducts.setReplacementSKU(replacementSKU = "MIN93017");
+		}
+
+		task ("And the available quantity is set to 0 for the 2 products") {
+			var warehouseList = "0:Italy,0:United States - Southwest,0:United States - Northeast";
+
+			for (var productSKU : list "MIN93015,MIN55861") {
+				for (var warehouse : list ${warehouseList}) {
+					var warehouseName = StringUtil.extractLast(${warehouse}, ":");
+					var warehouseQuantity = StringUtil.extractFirst(${warehouse}, ":");
+
+					CommerceJSONWarehousesAndInventoriesAPI._patchWarehouseItem(
+						productSku = ${productSKU},
+						quantity = ${warehouseQuantity},
+						warehouseName = ${warehouseName});
+				}
+			}
+		}
+
+		task ("And Allow Back Orders is set to false for the 2 products") {
+			for (var productName : list "ABS Sensor,U-Joint") {
+				CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+					allowBackOrder = "false",
+					productName = ${productName});
+			}
+		}
+
+		task ("Then the first discontinued SKU is added to minicart using Quick Add to Cart") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium");
+
+			CommerceNavigator.gotoMiniCart();
+
+			FrontStore.quickAddToCartSearchAndSelectItem(orderItemSku = "MIN55861");
+
+			Click(locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_BUTTON");
+		}
+	}
+
 	@description = "COMMERCE-12548. As a buyer, I want to be able to see a SKU/UOM replace a discounted SKU"
 	@priority = 5
 	test CanSkuWithUOMReplaceDiscontinuedSku {

@@ -8,7 +8,7 @@ package com.liferay.frontend.taglib.servlet.taglib.constants;
 /**
  * @author Eudaldo Alonso
  */
-public class ScreenNavigationConstants {
+public class ScreenNavigationWebKeys {
 
 	public static final String SELECTED_CATEGORY_KEY =
 		"selectedScreenNavigationCategoryKey";

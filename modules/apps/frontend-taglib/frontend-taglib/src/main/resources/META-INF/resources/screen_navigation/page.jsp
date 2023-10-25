@@ -138,15 +138,15 @@ LiferayPortletResponse finalLiferayPortletResponse = liferayPortletResponse;
 				}
 			}
 
-			request.setAttribute(ScreenNavigationConstants.SELECTED_CATEGORY_KEY, selectedScreenNavigationCategory.getCategoryKey());
-			request.setAttribute(ScreenNavigationConstants.SELECTED_ENTRY_KEY, selectedScreenNavigationEntry.getEntryKey());
+			request.setAttribute(ScreenNavigationWebKeys.SELECTED_CATEGORY_KEY, selectedScreenNavigationCategory.getCategoryKey());
+			request.setAttribute(ScreenNavigationWebKeys.SELECTED_ENTRY_KEY, selectedScreenNavigationEntry.getEntryKey());
 
 			try {
 				selectedScreenNavigationEntry.render(request, PipingServletResponseFactory.createPipingServletResponse(pageContext));
 			}
 			finally {
-				request.removeAttribute(ScreenNavigationConstants.SELECTED_CATEGORY_KEY);
-				request.removeAttribute(ScreenNavigationConstants.SELECTED_ENTRY_KEY);
+				request.removeAttribute(ScreenNavigationWebKeys.SELECTED_CATEGORY_KEY);
+				request.removeAttribute(ScreenNavigationWebKeys.SELECTED_ENTRY_KEY);
 			}
 			%>
 

@@ -23,7 +23,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemListBuilder;
-import com.liferay.frontend.taglib.servlet.taglib.constants.ScreenNavigationConstants;
+import com.liferay.frontend.taglib.servlet.taglib.constants.ScreenNavigationWebKeys;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
@@ -1262,7 +1262,7 @@ public class LayoutsAdminDisplayContext {
 				LayoutScreenNavigationEntryConstants.ENTRY_KEY_DESIGN) &&
 			 !Objects.equals(
 				 httpServletRequest.getAttribute(
-					 ScreenNavigationConstants.SELECTED_ENTRY_KEY),
+					 ScreenNavigationWebKeys.SELECTED_ENTRY_KEY),
 				 LayoutScreenNavigationEntryConstants.ENTRY_KEY_DESIGN))) {
 
 			return _selPlid;

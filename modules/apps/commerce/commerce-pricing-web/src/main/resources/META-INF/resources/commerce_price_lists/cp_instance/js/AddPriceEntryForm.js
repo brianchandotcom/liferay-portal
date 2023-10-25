@@ -19,8 +19,8 @@ function AddPriceEntryForm({
 	cpInstanceId,
 	currency,
 	dataSetId,
+	maxFractionDigits,
 	namespace,
-	precision,
 	priceLists,
 	unitOfMeasures,
 }) {
@@ -249,7 +249,10 @@ function AddPriceEntryForm({
 												});
 											}}
 											required={true}
-											step={1 / Math.pow(10, precision)}
+											step={
+												1 /
+												Math.pow(10, maxFractionDigits)
+											}
 											type="number"
 											value={inputGroup.price}
 										/>
@@ -320,7 +323,7 @@ function AddPriceEntryForm({
 
 AddPriceEntryForm.defaultProps = {
 	basePrice: 0,
-	precision: 2,
+	maxFractionDigits: 2,
 };
 
 AddPriceEntryForm.propTypes = {
@@ -328,8 +331,8 @@ AddPriceEntryForm.propTypes = {
 	cpInstanceId: PropTypes.number.isRequired,
 	currency: PropTypes.string.isRequired,
 	dataSetId: PropTypes.string,
+	maxFractionDigits: PropTypes.number,
 	namespace: PropTypes.string.isRequired,
-	precision: PropTypes.number,
 	priceLists: PropTypes.arrayOf(
 		PropTypes.shape({
 			label: PropTypes.string.isRequired,

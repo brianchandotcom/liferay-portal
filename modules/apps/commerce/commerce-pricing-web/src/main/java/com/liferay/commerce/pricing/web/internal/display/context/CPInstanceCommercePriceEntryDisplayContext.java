@@ -302,11 +302,7 @@ public class CPInstanceCommercePriceEntryDisplayContext
 	}
 
 	public HashMap<String, Object> getModalJSContext() throws PortalException {
-		BigDecimal basePrice = BigDecimal.ZERO;
-		CPInstance cpInstance = getCPInstance();
 		String cpInstanceUnitOfMeasureKey = StringPool.BLANK;
-		String currencyCode = StringPool.BLANK;
-		int maxFractionDigits = 2;
 
 		List<CPInstanceUnitOfMeasure> cpInstanceUnitOfMeasures =
 			getCPInstanceUnitOfMeasures();
@@ -318,11 +314,17 @@ public class CPInstanceCommercePriceEntryDisplayContext
 			cpInstanceUnitOfMeasureKey = cpInstanceUnitOfMeasure.getKey();
 		}
 
+		CPInstance cpInstance = getCPInstance();
+
 		CommercePriceEntry commercePriceEntry =
 			_commercePriceEntryService.getInstanceBaseCommercePriceEntry(
 				cpInstance.getCPInstanceUuid(),
 				CommercePriceListConstants.TYPE_PRICE_LIST,
 				cpInstanceUnitOfMeasureKey);
+
+		BigDecimal basePrice = BigDecimal.ZERO;
+		String currencyCode = StringPool.BLANK;
+		int maxFractionDigits = 2;
 
 		if (commercePriceEntry != null) {
 			CommercePriceList commercePriceList =
@@ -345,9 +347,9 @@ public class CPInstanceCommercePriceEntryDisplayContext
 		).put(
 			"dataSetId", CommercePricingFDSNames.INSTANCE_PRICE_ENTRIES
 		).put(
-			"namespace", liferayPortletResponse.getNamespace()
+			"maxFractionDigits", maxFractionDigits
 		).put(
-			"precision", maxFractionDigits
+			"namespace", liferayPortletResponse.getNamespace()
 		).put(
 			"priceLists",
 			TransformUtil.transform(

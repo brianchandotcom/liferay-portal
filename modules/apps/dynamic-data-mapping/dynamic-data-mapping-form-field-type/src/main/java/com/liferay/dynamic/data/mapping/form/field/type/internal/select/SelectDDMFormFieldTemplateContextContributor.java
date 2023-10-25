@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.CollatorUtil;
@@ -115,22 +116,6 @@ public class SelectDDMFormFieldTemplateContextContributor
 		).build();
 	}
 
-	protected List<Map<String, String>> alphabeticalOrder(
-		List<Map<String, String>> options, Locale locale) {
-
-		Collator collator = CollatorUtil.getInstance(locale);
-
-		options.sort(
-			(map1, map2) -> {
-				String label1 = map1.get("label");
-				String label2 = map2.get("label");
-
-				return collator.compare(label1, label2);
-			});
-
-		return options;
-	}
-
 	protected boolean getMultiple(
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
@@ -162,14 +147,15 @@ public class SelectDDMFormFieldTemplateContextContributor
 			ddmFormField.getProperty("alphabeticalOrder"));
 
 		if (ListUtil.isNotEmpty(objectFieldOptions)) {
-			String language = ServiceContextThreadLocal.getServiceContext(
-			).getLanguageId();
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
 
-			Locale newLocale = LocaleUtil.fromLanguageId(language);
+			Locale serviceContextLocale = LocaleUtil.fromLanguageId(
+				serviceContext.getLanguageId());
 
-			if (alphabeticalOrder && (locale != newLocale)) {
-				objectFieldOptions = alphabeticalOrder(
-					objectFieldOptions, newLocale);
+			if (alphabeticalOrder && (locale != serviceContextLocale)) {
+				return _getSortedOptions(
+					serviceContextLocale, objectFieldOptions);
 			}
 
 			return objectFieldOptions;
@@ -200,7 +186,7 @@ public class SelectDDMFormFieldTemplateContextContributor
 		}
 
 		if (alphabeticalOrder) {
-			options = alphabeticalOrder(options, locale);
+			return _getSortedOptions(locale, options);
 		}
 
 		return options;
@@ -325,6 +311,22 @@ public class SelectDDMFormFieldTemplateContextContributor
 
 			return null;
 		}
+	}
+
+	private List<Map<String, String>> _getSortedOptions(
+		Locale locale, List<Map<String, String>> options) {
+
+		Collator collator = CollatorUtil.getInstance(locale);
+
+		options.sort(
+			(map1, map2) -> {
+				String label1 = map1.get("label");
+				String label2 = map2.get("label");
+
+				return collator.compare(label1, label2);
+			});
+
+		return options;
 	}
 
 	private Map<String, String> _getStrings(

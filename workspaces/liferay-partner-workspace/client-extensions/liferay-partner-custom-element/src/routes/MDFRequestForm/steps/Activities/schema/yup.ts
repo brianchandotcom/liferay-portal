@@ -101,7 +101,7 @@ const activitiesSchema = object({
 						'The end date cannot be before start date',
 						(endDate, testContext) => {
 							if (endDate && testContext.parent.startDate) {
-								return testContext.parent.startDate < endDate;
+								return testContext.parent.startDate <= endDate;
 							}
 
 							return false;

@@ -1,6 +1,7 @@
 definition {
 
-	macro configureDisplayStyleInSystemSettings {
+	@summary = "Default summary"
+	macro configureDisplayStyleInSystemSettings(displayStyle = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -35,7 +36,8 @@ definition {
 		SystemSettings.saveConfiguration();
 	}
 
-	macro enableReadingTime {
+	@summary = "Default summary"
+	macro enableReadingTime() {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -59,7 +61,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro enableSocialBookmarkSites {
+	@summary = "Default summary"
+	macro enableSocialBookmarkSites(enableSocialBookmarkSites = null) {
 		for (var socialBookmarkSite : list ${enableSocialBookmarkSites}) {
 			AddSelection(
 				locator1 = "SocialBookmarks#ENABLE_SOCIAL_BOOKMARK_AVAILABLE_SELECT",
@@ -73,45 +76,54 @@ definition {
 		}
 	}
 
-	macro gotoRSS {
+	@summary = "Default summary"
+	macro gotoRSS() {
 		AssertClick(
 			locator1 = "Configuration#NAVIGATION_RSS",
 			value1 = "RSS");
 	}
 
-	macro selectConfigurationIFrame {
+	@summary = "Default summary"
+	macro selectConfigurationIFrame() {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
-	macro selectDisplayTemplate {
+	@summary = "Default summary"
+	macro selectDisplayTemplate(displayTemplate = null) {
 		Click(locator1 = "Select#DISPLAY_TEMPLATE");
 
 		MenuItem.click(menuItem = ${displayTemplate});
 	}
 
-	macro selectMaximumItemstoDisplay {
+	@summary = "Default summary"
+	macro selectMaximumItemstoDisplay(maximumItemsToDisplay = null) {
 		Select(
 			locator1 = "Select#PAGE_DELTA",
 			value1 = ${maximumItemsToDisplay});
 	}
 
-	macro uncheckComments {
+	@summary = "Default summary"
+	macro uncheckComments() {
 		Uncheck(locator1 = "Checkbox#ENABLE_COMMENTS");
 	}
 
-	macro uncheckRatings {
+	@summary = "Default summary"
+	macro uncheckRatings() {
 		Uncheck(locator1 = "Checkbox#ENABLE_RATINGS");
 	}
 
-	macro uncheckRelatedAssets {
+	@summary = "Default summary"
+	macro uncheckRelatedAssets() {
 		Uncheck(locator1 = "Checkbox#SHOW_RELATED_ASSETS");
 	}
 
-	macro uncheckRSSSubscriptionCheckbox {
+	@summary = "Default summary"
+	macro uncheckRSSSubscriptionCheckbox() {
 		Uncheck.uncheckToggleSwitch(locator1 = "Checkbox#ENABLE_RSS_SUBSCRIPTION");
 	}
 
-	macro viewAsSiteMemberPG {
+	@summary = "Default summary"
+	macro viewAsSiteMemberPG() {
 		var key_portletName = "Blogs";
 
 		AssertElementPresent(locator1 = "Portlet#TITLE");
@@ -137,7 +149,8 @@ definition {
 			value1 = "RSS");
 	}
 
-	macro viewDefaultConfiguration {
+	@summary = "Default summary"
+	macro viewDefaultConfiguration() {
 		AssertTextEquals.assertValue(
 			locator1 = "Select#PAGE_DELTA",
 			value1 = 20);
@@ -171,7 +184,8 @@ definition {
 			value1 = "Facebook");
 	}
 
-	macro viewDefaultConfigurationRSS {
+	@summary = "Default summary"
+	macro viewDefaultConfigurationRSS() {
 		Check.checkToggleSwitch(locator1 = "Checkbox#ENABLE_RSS_SUBSCRIPTION");
 
 		AssertTextEquals.assertValue(
@@ -187,7 +201,8 @@ definition {
 			value1 = "atom_1.0");
 	}
 
-	macro viewNoPermissionCP {
+	@summary = "Default summary"
+	macro viewNoPermissionCP() {
 		var key_portletTitle = "Blogs";
 
 		AssertTextEquals(
@@ -201,7 +216,8 @@ definition {
 			value1 = "No entries were found.");
 	}
 
-	macro viewNoPermissionPG {
+	@summary = "Default summary"
+	macro viewNoPermissionPG() {
 		var key_text = "New Entry";
 
 		AssertElementNotPresent(locator1 = "Button#ANY");
@@ -229,11 +245,13 @@ definition {
 		}
 	}
 
-	macro viewNoSubscribePG {
+	@summary = "Default summary"
+	macro viewNoSubscribePG() {
 		AssertElementNotPresent(locator1 = "Blogs#SUBSCRIBE_LINK");
 	}
 
-	macro viewPermissionsPG {
+	@summary = "Default summary"
+	macro viewPermissionsPG() {
 		Click.mouseOverClick(locator1 = "Portlet#OPTIONS_ICON");
 
 		if (IsElementPresent(locator1 = "Portlet#OPTIONS_MENULIST_PERMISSIONS")) {
@@ -245,7 +263,8 @@ definition {
 		MenuItem.viewPresent(menuItem = "Permissions");
 	}
 
-	macro viewScopeDefaultNoEntryCP {
+	@summary = "Default summary"
+	macro viewScopeDefaultNoEntryCP(contentScopeName = null) {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -263,13 +282,15 @@ definition {
 			value1 = "No entries were found.");
 	}
 
-	macro viewScopeSelection {
+	@summary = "Default summary"
+	macro viewScopeSelection(scopeSelection = null) {
 		AssertSelectedLabel(
 			locator1 = "Select#SCOPE",
 			value1 = ${scopeSelection});
 	}
 
-	macro viewSubscribePG {
+	@summary = "Default summary"
+	macro viewSubscribePG() {
 		AssertTextEquals(
 			locator1 = "Blogs#SUBSCRIBE_LINK",
 			value1 = "Subscribe");

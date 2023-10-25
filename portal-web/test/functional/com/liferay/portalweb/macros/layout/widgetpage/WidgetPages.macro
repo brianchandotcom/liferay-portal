@@ -1,6 +1,7 @@
 definition {
 
-	macro addNewContent {
+	@summary = "Default summary"
+	macro addNewContent(assetType = null) {
 		Click(locator1 = "ControlMenu#ADD");
 
 		AssertElementPresent(locator1 = "ControlMenuAddPanel#SIDEBAR_HEADER");
@@ -16,7 +17,8 @@ definition {
 			locator1 = "ControlMenuAddPanel#ASSET_ITEM");
 	}
 
-	macro addRecentContent {
+	@summary = "Default summary"
+	macro addRecentContent(assetTitle = null) {
 		Click(locator1 = "ControlMenu#ADD");
 
 		AssertElementPresent(locator1 = "ControlMenuAddPanel#SIDEBAR_HEADER");
@@ -32,7 +34,8 @@ definition {
 			locator1 = "ControlMenuAddPanel#ADD_PORTLET_LINK");
 	}
 
-	macro addRecentContentWithoutSearch {
+	@summary = "Default summary"
+	macro addRecentContentWithoutSearch(assetTitle = null) {
 		Click(locator1 = "ControlMenu#ADD");
 
 		AssertElementPresent(locator1 = "ControlMenuAddPanel#SIDEBAR_HEADER");
@@ -44,13 +47,15 @@ definition {
 			locator1 = "ControlMenuAddPanel#ADD_PORTLET_LINK");
 	}
 
-	macro switchToggleControls {
+	@summary = "Default summary"
+	macro switchToggleControls(status = null) {
 		Click(
 			key_status = ${status},
 			locator1 = "ControlMenu#TOGGLE_CONTROLS");
 	}
 
-	macro viewContentPanel {
+	@summary = "Default summary"
+	macro viewContentPanel(entryTitleList = null) {
 		Click(locator1 = "ControlMenu#ADD");
 
 		AssertElementPresent(locator1 = "ControlMenuAddPanel#SIDEBAR_HEADER");
@@ -64,7 +69,8 @@ definition {
 		}
 	}
 
-	macro viewPageLayout {
+	@summary = "Default summary"
+	macro viewPageLayout(pageColumnNumberList = null,spanList = null) {
 		var list1 = ListUtil.newListFromString(${pageColumnNumberList});
 		var list2 = ListUtil.newListFromString(${spanList});
 		var size = ListUtil.size(${list1});
@@ -85,7 +91,8 @@ definition {
 		}
 	}
 
-	macro viewToggleControls {
+	@summary = "Default summary"
+	macro viewToggleControls(status = null) {
 		AssertVisible(
 			key_status = ${status},
 			locator1 = "ControlMenu#TOGGLE_CONTROLS");

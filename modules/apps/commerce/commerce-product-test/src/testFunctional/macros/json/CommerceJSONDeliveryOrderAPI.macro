@@ -1,6 +1,7 @@
 definition {
 
-	macro _getCommerceOrderItemShipments {
+	@summary = "Default summary"
+	macro _getCommerceOrderItemShipments(placedOrderItemId = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -20,7 +21,8 @@ definition {
 		return ${responseBody};
 	}
 
-	macro _getCommercePlacedOrderItemsByOrderId {
+	@summary = "Default summary"
+	macro _getCommercePlacedOrderItemsByOrderId(placedOrderId = null) {
 		Variables.assertDefined(parameterList = ${placedOrderId});
 
 		var baseURL = ${baseURL};
@@ -42,7 +44,8 @@ definition {
 		return ${responseBody};
 	}
 
-	macro getPlacedOrderItemsFieldByOrderId {
+	@summary = "Default summary"
+	macro getPlacedOrderItemsFieldByOrderId(placedOrderId = null,jsonPath = null) {
 		Variables.assertDefined(parameterList = "${jsonPath},${placedOrderId}");
 
 		var responseBody = CommerceJSONDeliveryOrderAPI._getCommercePlacedOrderItemsByOrderId(placedOrderId = ${placedOrderId});

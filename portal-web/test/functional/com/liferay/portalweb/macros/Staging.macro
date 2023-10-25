@@ -1,6 +1,7 @@
 definition {
 
-	macro activateStagingCP {
+	@summary = "Default summary"
+	macro activateStagingCP(pageVersioningEnabled = null,remotePort = null,siteName = null,siteId = null,uncheckContent = null,isNotEditable = null) {
 		ProductMenuHelper.openProductMenu();
 
 		AssertTextEquals.assertPartialText(
@@ -89,7 +90,8 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "javax.portlet.PortletException: java.lang.NullPointerException");
 	}
 
-	macro addCustomPublication {
+	@summary = "Default summary"
+	macro addCustomPublication(publishTemplateName = null,headerTitle = null) {
 		WaitForElementPresent(locator1 = "Button#PLUS");
 
 		LexiconEntry.gotoAdd();
@@ -107,7 +109,8 @@ definition {
 		}
 	}
 
-	macro addPageVariationPG {
+	@summary = "Default summary"
+	macro addPageVariationPG(pageVariationName = null) {
 		WaitForElementPresent(locator1 = "Icon#STAGING_BAR_VERTICAL_ELLIPSIS");
 
 		Click(locator1 = "Icon#STAGING_BAR_VERTICAL_ELLIPSIS");
@@ -135,7 +138,8 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
-	macro addPublishTemplate {
+	@summary = "Default summary"
+	macro addPublishTemplate(publishTemplateDescription = null,publishTemplateName = null) {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Publish Templates");
 
 		WaitForElementPresent(locator1 = "Button#PLUS");
@@ -149,7 +153,8 @@ definition {
 		PortletEntry.inputDescription(description = ${publishTemplateDescription});
 	}
 
-	macro addRepeatEvent {
+	@summary = "Default summary"
+	macro addRepeatEvent(scheduleTitleName = null,frequency = null) {
 		Click(locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
@@ -192,7 +197,8 @@ definition {
 		}
 	}
 
-	macro addSitePagesVariationPG {
+	@summary = "Default summary"
+	macro addSitePagesVariationPG(sitePagesVariationName = null,copySitePagesVariationName = null) {
 		Click.waitForMenuToggleJSClick(locator1 = "Icon#STAGING_BAR_VERTICAL_ELLIPSIS");
 
 		Click(locator1 = "Staging#MANAGE_VARIATIONS");
@@ -232,7 +238,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro addStagingAdminRole {
+	@summary = "Default summary"
+	macro addStagingAdminRole() {
 		JSONRole.addSiteRole(
 			roleKey = "Staging Admin",
 			roleTitle = "Staging Admin");
@@ -278,7 +285,8 @@ definition {
 		}
 	}
 
-	macro assignStagingAdminToSite {
+	@summary = "Default summary"
+	macro assignStagingAdminToSite(siteName = null) {
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -305,7 +313,8 @@ definition {
 			userLoginFullName = "userfn userln");
 	}
 
-	macro changePageVariationInHistory {
+	@summary = "Default summary"
+	macro changePageVariationInHistory(pageVariationNameMenulistName = null) {
 		Click(locator1 = "Icon#STAGING_BAR_VERTICAL_ELLIPSIS");
 
 		Click(locator1 = "Staging#HISTORY_BUTTON");
@@ -318,7 +327,8 @@ definition {
 			value1 = ${pageVariationNameMenulistName});
 	}
 
-	macro changePageVariationPG {
+	@summary = "Default summary"
+	macro changePageVariationPG(pageVariationNameMenulistName = null,pageVariationName = null) {
 		var key_pageVariationName = ${pageVariationName};
 
 		AssertClick(
@@ -332,7 +342,8 @@ definition {
 			value1 = ${pageVariationNameMenulistName});
 	}
 
-	macro changeSitePageVariationCP {
+	@summary = "Default summary"
+	macro changeSitePageVariationCP(sitePagesVariationName = null) {
 		var key_sitePagesVariationName = ${sitePagesVariationName};
 
 		Click(locator1 = "Staging#SITE_PAGES_VARIATION_MENULIST_NAME");
@@ -342,7 +353,8 @@ definition {
 			value1 = ${sitePagesVariationName});
 	}
 
-	macro changeSitePageVariationPG {
+	@summary = "Default summary"
+	macro changeSitePageVariationPG(sitePagesVariationName = null,sitePagesVariationMenulistName = null) {
 		var key_sitePagesVariationName = ${sitePagesVariationName};
 
 		Refresh();
@@ -358,7 +370,8 @@ definition {
 			value1 = ${sitePagesVariationMenulistName});
 	}
 
-	macro clickPublishToLiveButton {
+	@summary = "Default summary"
+	macro clickPublishToLiveButton(remoteStaging = null) {
 		if (${remoteStaging} == "true") {
 			ClickNoError(locator1 = "Staging#STAGING_PUBLISH_TO_REMOTE_LIVE_BUTTON");
 		}
@@ -370,7 +383,8 @@ definition {
 		}
 	}
 
-	macro configurePublishToLive {
+	@summary = "Default summary"
+	macro configurePublishToLive(contentDateRange = null,includeThumbnailsAndPreviewsDuringStaging = null,dateRangeStartDate = null,checkContentNameList = null,uncheckContentNameList = null,checkPageName = null,uncheckChildPagesNameList = null,uncheckLogo = null,checkSubSubContent = null,dateRangeEndDate = null,deleteMissingPages = null,checkPrivatePages = null,deleteApplicationData = null,contentName = null,uncheckSubSubContent = null,uncheckSubContent = null,contentDeletion = null,mainContent = null,checkPublicPages = null,subContent = null,pageDeletion = null) {
 		if (IsElementPresent.isElementPresentAfterWait(locator1 = "StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION")) {
 			AssertClick.assertPartialTextClickAt(
 				locator1 = "StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION",
@@ -510,7 +524,8 @@ definition {
 		}
 	}
 
-	macro configureScheduleTime {
+	@summary = "Default summary"
+	macro configureScheduleTime(endByDateDayLength = null,endByDateMonthLength = null,scheduleTitleName = null) {
 		Click(locator1 = "StagingPublishToLive#DATE_SCHEDULE_RADIO");
 
 		if (isSet(scheduleTitleName)) {
@@ -554,7 +569,8 @@ definition {
 		}
 	}
 
-	macro copyFromLive {
+	@summary = "Default summary"
+	macro copyFromLive(portletName = null,portletOption = null) {
 		Portlet.gotoPortletOptions(
 			portletName = ${portletName},
 			portletOption = ${portletOption});
@@ -580,7 +596,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro deactivateStagingCP {
+	@summary = "Default summary"
+	macro deactivateStagingCP(siteName = null) {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Staging Configuration");
 
 		if (IsVisible(key_fieldLabel = "Enabled", locator1 = "Checkbox#CHECKBOX_LABEL")) {
@@ -602,7 +619,8 @@ definition {
 			locator1 = "Checkbox#CHECKBOX_LABEL");
 	}
 
-	macro deleteHistory {
+	@summary = "Default summary"
+	macro deleteHistory() {
 		if (IsElementPresent(locator1 = "Icon#STAGING_BAR_VERTICAL_ELLIPSIS")) {
 			Staging.gotoHistory();
 		}
@@ -616,7 +634,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro deletePageVariationPG {
+	@summary = "Default summary"
+	macro deletePageVariationPG(pageVariationName = null) {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		Click(locator1 = "Icon#STAGING_BAR_VERTICAL_ELLIPSIS");
@@ -636,7 +655,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro deletePublishTask {
+	@summary = "Default summary"
+	macro deletePublishTask(publicationTitle = null) {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Clear",
 			rowEntry = ${publicationTitle});
@@ -648,7 +668,8 @@ definition {
 			value1 = ${publicationTitle});
 	}
 
-	macro deletePublishTemplate {
+	@summary = "Default summary"
+	macro deletePublishTemplate(publishTemplateName = null) {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Publish Templates");
 
 		LexiconEntry.gotoEntryMenuItemNoError(
@@ -662,7 +683,8 @@ definition {
 			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 	}
 
-	macro deleteSitePagesVariationPG {
+	@summary = "Default summary"
+	macro deleteSitePagesVariationPG(sitePagesVariationName = null) {
 		Staging.navigateToSitePageVariation();
 
 		LexiconEntry.gotoEntryMenuItemNoWaitNoError(
@@ -676,13 +698,15 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro disableStagingSite {
+	@summary = "Default summary"
+	macro disableStagingSite(siteName = null) {
 		Navigator.openSiteStagingConfiguration(siteName = ${siteName});
 
 		Staging.deactivateStagingCP(siteName = ${siteName});
 	}
 
-	macro editPublishTemplate {
+	@summary = "Default summary"
+	macro editPublishTemplate(publishTemplateNameEdit = null,publishTemplateName = null,publishTemplateDescriptionEdit = null) {
 		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
 		Navigator.gotoNavItem(navItem = "Publish Templates");
@@ -704,7 +728,8 @@ definition {
 		PortletEntry.inputDescription(description = ${publishTemplateDescriptionEdit});
 	}
 
-	macro editPublishTemplateRemoteSiteID {
+	@summary = "Default summary"
+	macro editPublishTemplateRemoteSiteID(groupName = null,remotePort = null) {
 		Panel.expandPanel(panel = "Remote Live Connection Settings");
 
 		var siteId = JSONGroupAPI._getGroupIdByName(
@@ -717,7 +742,8 @@ definition {
 			value1 = ${siteId});
 	}
 
-	macro editSitePageVariationPG {
+	@summary = "Default summary"
+	macro editSitePageVariationPG(sitePagesVariationName = null) {
 		Staging.navigateToSitePageVariation();
 
 		var key_sitePagesVariationName = ${sitePagesVariationName};
@@ -737,7 +763,8 @@ definition {
 		Staging.viewVariationSuccessMessage();
 	}
 
-	macro editStagingConfiguration {
+	@summary = "Default summary"
+	macro editStagingConfiguration(pageVersioningEnabled = null,isNotEditable = null) {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Staging Configuration");
 
 		if (${pageVersioningEnabled} == "true") {
@@ -757,7 +784,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro enablePageInSitePagesVariation {
+	@summary = "Default summary"
+	macro enablePageInSitePagesVariation(sitePagesVariationName = null,privacy = null,pageName = null) {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Staging#STAGING_BAR_PAGE_VARIATIONS_ALERT",
 			value1 = "The page ${pageName} is not enabled in ${sitePagesVariationName}, but is available for other pages variations.");
@@ -771,7 +799,8 @@ definition {
 			privacy = ${privacy});
 	}
 
-	macro gotoHistory {
+	@summary = "Default summary"
+	macro gotoHistory() {
 		if (IsElementNotPresent(locator1 = "Staging#HISTORY_BUTTON")) {
 			Click(locator1 = "Icon#STAGING_BAR_VERTICAL_ELLIPSIS");
 		}
@@ -781,7 +810,8 @@ definition {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 	}
 
-	macro gotoNavTab {
+	@summary = "Default summary"
+	macro gotoNavTab(tabName = null) {
 		var key_tabName = ${tabName};
 
 		if (IsElementNotPresent(locator1 = "StagingPublishToLive#ACTIVE_TAB_NAME")) {
@@ -791,7 +821,8 @@ definition {
 		AssertElementPresent(locator1 = "StagingPublishToLive#ACTIVE_TAB_NAME");
 	}
 
-	macro gotoPublishToLive {
+	@summary = "Default summary"
+	macro gotoPublishToLive() {
 		if ((IsElementNotPresent(locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON")) && (IsElementPresent(locator1 = "Icon#STAGING"))) {
 			Click(locator1 = "Icon#STAGING");
 
@@ -809,7 +840,8 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
-	macro markAsReadyForPublication {
+	@summary = "Default summary"
+	macro markAsReadyForPublication() {
 		if (IsElementPresent(locator1 = "Staging#STAGING_MENU_READY_FOR_PUBLICATION")) {
 			AssertNotChecked(locator1 = "Staging#STAGING_MENU_READY_FOR_PUBLICATION");
 
@@ -817,7 +849,8 @@ definition {
 		}
 	}
 
-	macro mergeSitePagesVariation {
+	@summary = "Default summary"
+	macro mergeSitePagesVariation(sitePagesVariationName = null,sitePagesVariationMergeName = null) {
 		Refresh();
 
 		Staging.navigateToSitePageVariation();
@@ -843,7 +876,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro modifyVariation {
+	@summary = "Default summary"
+	macro modifyVariation() {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Staging Configuration");
 
 		if (isSet(enableOnPublicPages)) {
@@ -863,7 +897,8 @@ definition {
 		}
 	}
 
-	macro moveToTheRecycleBinPublishTemplate {
+	@summary = "Default summary"
+	macro moveToTheRecycleBinPublishTemplate(publishTemplateName = null) {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Publish Templates");
 
 		LexiconEntry.gotoEntryMenuItem(
@@ -873,7 +908,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro navigateToSitePageVariation {
+	@summary = "Default summary"
+	macro navigateToSitePageVariation() {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		Click(locator1 = "Icon#STAGING_BAR_VERTICAL_ELLIPSIS");
@@ -883,11 +919,13 @@ definition {
 		SelectFrame(locator1 = "IFrame#SITE_VARIATION_IFRAME");
 	}
 
-	macro openStagingAdmin {
+	@summary = "Default summary"
+	macro openStagingAdmin(siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_staging_processes_web_portlet_StagingProcessesPortlet");
 	}
 
-	macro publishCustomPublication {
+	@summary = "Default summary"
+	macro publishCustomPublication(scheduleProcess = null,inProcess = null,checkContentNameList = null,validateErrorMessage = null,rangeAll = null,editPublishTemplateName = null,publishTemplateName = null,failureExpected = null,remoteStaging = null,headerTitle = null) {
 		Staging.addCustomPublication(
 			headerTitle = ${headerTitle},
 			publishTemplateName = ${publishTemplateName});
@@ -928,7 +966,8 @@ definition {
 			validateErrorMessage = ${validateErrorMessage});
 	}
 
-	macro publishToLive {
+	@summary = "Default summary"
+	macro publishToLive(scheduleProcess = null,validateErrorMessage = null,failureExpected = null,remoteStaging = null,publicationName = null) {
 		if (isSet(publicationName)) {
 			PortletEntry.inputName(name = ${publicationName});
 		}
@@ -951,7 +990,8 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
-	macro publishToLiveNowViaPortletCP {
+	@summary = "Default summary"
+	macro publishToLiveNowViaPortletCP(replicateIndividualDeletions = null) {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Staging");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
@@ -979,7 +1019,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro publishToLiveNowViaPortletPG {
+	@summary = "Default summary"
+	macro publishToLiveNowViaPortletPG(portletName = null) {
 		Portlet.gotoPortletOptions(
 			portletName = ${portletName},
 			portletOption = "Staging");
@@ -1001,7 +1042,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro publishToLivePublishTemplate {
+	@summary = "Default summary"
+	macro publishToLivePublishTemplate(siteName = null) {
 		if (IsElementPresent(locator1 = "StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION")) {
 			AssertClick.assertPartialTextClickAt(
 				locator1 = "StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION",
@@ -1060,7 +1102,8 @@ definition {
 		}
 	}
 
-	macro publishToRemoteUncheckContentViaCustomPublication {
+	@summary = "Default summary"
+	macro publishToRemoteUncheckContentViaCustomPublication(contentName = null) {
 		LexiconEntry.gotoAdd();
 
 		var key_contentName = ${contentName};
@@ -1078,7 +1121,8 @@ definition {
 			value1 = "SUCCESSFUL");
 	}
 
-	macro publishViaSAP {
+	@summary = "Default summary"
+	macro publishViaSAP(entry = null,confirmMessage = null) {
 		if (IsElementPresent(key_rowEntry = ${entry}, locator1 = "Icon#ROW_VERTICAL_ELLIPSIS")) {
 			Click(
 				key_rowEntry = ${entry},
@@ -1099,7 +1143,8 @@ definition {
 			value1 = "Successful");
 	}
 
-	macro redoStagingPageVersioningPG {
+	@summary = "Default summary"
+	macro redoStagingPageVersioningPG() {
 		while (IsElementNotPresent(locator1 = "Staging#STAGING_MENU_REDO_BUTTON")) {
 			Click(locator1 = "Icon#STAGING_BAR_VERTICAL_ELLIPSIS");
 		}
@@ -1109,7 +1154,8 @@ definition {
 		AssertConfirm(value1 = "Are you sure you want to redo your last changes?");
 	}
 
-	macro remoteStagingSetUp {
+	@summary = "Default summary"
+	macro remoteStagingSetUp(pageVersioningEnabled = null,siteName = null,uncheckContent = null,contentName = null) {
 		if (!(isSet(remotePort))) {
 			var remotePort = 8080;
 		}
@@ -1135,7 +1181,8 @@ definition {
 			uncheckContent = ${uncheckContent});
 	}
 
-	macro remoteStagingSetUpViaJson {
+	@summary = "Default summary"
+	macro remoteStagingSetUpViaJson(branchingPublic = null,groupName = null,branchingPrivate = null,parentGroupName = null) {
 		if (!(isSet(remotePort))) {
 			var remotePort = 8080;
 		}
@@ -1157,7 +1204,8 @@ definition {
 			remotePort = ${remotePort});
 	}
 
-	macro runGroovyScript {
+	@summary = "Default summary"
+	macro runGroovyScript() {
 		ServerAdministration.openServerAdmin();
 
 		var script = TestCase.getFileContent(fileName = "create-400-web-content-articles.groovy");
@@ -1184,7 +1232,8 @@ definition {
 		}
 	}
 
-	macro saveLocalStagingConfiguration {
+	@summary = "Default summary"
+	macro saveLocalStagingConfiguration(siteName = null) {
 		AssertClickNoError(
 			locator1 = "Button#SAVE",
 			value1 = "Save");
@@ -1203,7 +1252,8 @@ definition {
 			value1 = "SUCCESSFUL");
 	}
 
-	macro savePublishTemplate {
+	@summary = "Default summary"
+	macro savePublishTemplate(publishTemplateDescription = null,publishTemplateName = null) {
 		Button.clickSave();
 
 		var key_publishTemplateName = ${publishTemplateName};
@@ -1217,7 +1267,8 @@ definition {
 			value1 = ${publishTemplateDescription});
 	}
 
-	macro saveRemoteStagingConfiguration {
+	@summary = "Default summary"
+	macro saveRemoteStagingConfiguration(siteName = null) {
 		AssertClickNoError(
 			locator1 = "Button#SAVE",
 			value1 = "Save");
@@ -1236,7 +1287,8 @@ definition {
 		}
 	}
 
-	macro schedulePublishToLivePG {
+	@summary = "Default summary"
+	macro schedulePublishToLivePG(checkContentNameList = null,scheduleTitleName = null,frequency = null) {
 		if (IsElementPresent(locator1 = "Staging#STAGING_MENU_READY_FOR_PUBLICATION")) {
 			Check.toggleSwitch(locator1 = "Staging#STAGING_MENU_READY_FOR_PUBLICATION");
 		}
@@ -1285,7 +1337,8 @@ definition {
 		Pause(value1 = 5000);
 	}
 
-	macro searchPublishTemplate {
+	@summary = "Default summary"
+	macro searchPublishTemplate(searchTerm = null) {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Publish Templates");
 
 		Search.searchCP(searchTerm = ${searchTerm});
@@ -1297,7 +1350,8 @@ definition {
 			value1 = ${searchTerm});
 	}
 
-	macro setStartDateTomorrow {
+	@summary = "Default summary"
+	macro setStartDateTomorrow() {
 		Click(locator1 = "StagingPublishToLive#DATE_SCHEDULE_START_DATE");
 
 		var daySelected = selenium.getText("CalendarEditEvent#MINI_CALENDAR_DAY_SELECTED");
@@ -1318,7 +1372,8 @@ definition {
 		}
 	}
 
-	macro submitForWorkflowPageRevision {
+	@summary = "Default summary"
+	macro submitForWorkflowPageRevision() {
 		if (IsTextEqual(locator1 = "Message#WORKFLOW_STATUS", value1 = "Draft")) {
 			AssertClick(
 				locator1 = "Staging#STAGING_MENU_SUBMIT_FOR_WORKFLOW",
@@ -1339,7 +1394,8 @@ definition {
 		}
 	}
 
-	macro undoStagingPageVersioningPG {
+	@summary = "Default summary"
+	macro undoStagingPageVersioningPG() {
 		Click(locator1 = "Icon#STAGING_BAR_VERTICAL_ELLIPSIS");
 
 		ClickNoError(locator1 = "Staging#STAGING_MENU_UNDO_BUTTON");
@@ -1347,7 +1403,8 @@ definition {
 		AssertConfirm(value1 = "Are you sure you want to undo your last changes?");
 	}
 
-	macro validateFolderExist {
+	@summary = "Default summary"
+	macro validateFolderExist() {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
 		AntCommands.runCommand("build-test.xml", "check-folder-in-lar");
@@ -1359,7 +1416,8 @@ definition {
 		}
 	}
 
-	macro validateFolderNotExist {
+	@summary = "Default summary"
+	macro validateFolderNotExist() {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
 		AntCommands.runCommand("build-test.xml", "check-folder-in-lar");
@@ -1371,15 +1429,18 @@ definition {
 		}
 	}
 
-	macro viewAddButtonDoesNotExist {
+	@summary = "Default summary"
+	macro viewAddButtonDoesNotExist() {
 		IsElementNotPresent(locator1 = "Button#PLUS");
 	}
 
-	macro viewAddButtonExists {
+	@summary = "Default summary"
+	macro viewAddButtonExists() {
 		AssertVisible(locator1 = "Button#PLUS");
 	}
 
-	macro viewDateRange {
+	@summary = "Default summary"
+	macro viewDateRange(dateRangeStartDate = null,dateRangeEndDate = null) {
 		AssertElementPresent(
 			key_dateRangeStartDate = ${dateRangeStartDate},
 			locator1 = "Select#DATE_RANGE_START_DATE_VALUE");
@@ -1389,7 +1450,8 @@ definition {
 			locator1 = "Select#DATE_RANGE_END_DATE_VALUE");
 	}
 
-	macro viewDefaultConfiguration {
+	@summary = "Default summary"
+	macro viewDefaultConfiguration(configurationNameList = null) {
 		for (var configurationName : list ${configurationNameList}) {
 			var key_checkboxName = ${configurationName};
 
@@ -1397,7 +1459,8 @@ definition {
 		}
 	}
 
-	macro viewEditedSitePagesVariationPG {
+	@summary = "Default summary"
+	macro viewEditedSitePagesVariationPG(sitePagesVariationName = null) {
 		var key_sitePagesVariationName = ${sitePagesVariationName};
 
 		AssertTextEquals.assertPartialText(
@@ -1405,7 +1468,8 @@ definition {
 			value1 = ${sitePagesVariationName});
 	}
 
-	macro viewHistoryVersionPG {
+	@summary = "Default summary"
+	macro viewHistoryVersionPG(historyVersion = null,historyVersionName = null,modifiedVersion = null) {
 		if (IsElementPresent(locator1 = "Icon#STAGING_BAR_VERTICAL_ELLIPSIS")) {
 			Staging.gotoHistory();
 		}
@@ -1441,7 +1505,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro viewNoPublishContentCountViaPortletStagingCP {
+	@summary = "Default summary"
+	macro viewNoPublishContentCountViaPortletStagingCP() {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Staging");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
@@ -1453,7 +1518,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro viewNotStagedAssetMessageOnStaging {
+	@summary = "Default summary"
+	macro viewNotStagedAssetMessageOnStaging() {
 		MouseOver.javaScriptFocus(
 			key_text = "warning-full",
 			locator1 = "Icon#ANY");
@@ -1463,7 +1529,8 @@ definition {
 			locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
 	}
 
-	macro viewPageVariationPG {
+	@summary = "Default summary"
+	macro viewPageVariationPG(pageVariationName = null) {
 		var key_pageVariationName = ${pageVariationName};
 
 		AssertTextEquals(
@@ -1471,11 +1538,13 @@ definition {
 			value1 = ${pageVariationName});
 	}
 
-	macro viewPortletDefaultMessageInRemoteLive {
+	@summary = "Default summary"
+	macro viewPortletDefaultMessageInRemoteLive() {
 		Alert.viewInfoMessageSpecific(infoMessage = "This application is not visible to users yet");
 	}
 
-	macro viewProcessResult {
+	@summary = "Default summary"
+	macro viewProcessResult(validateErrorMessage = null) {
 		while (IsElementNotPresent(locator1 = "Staging#PROCESS_RESULT")) {
 
 			// This pause has been optimized. See details in LPS-135924.
@@ -1507,7 +1576,8 @@ definition {
 		}
 	}
 
-	macro viewPublicationSummary {
+	@summary = "Default summary"
+	macro viewPublicationSummary(lookAndFeelList = null,noContentList = null,pagesOption = null,pagesNotToPublish = null,pagesToPublish = null,dateRestrictionOption = null,publicationTitle = null,contentList = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Summary",
 			rowEntry = ${publicationTitle});
@@ -1599,7 +1669,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro viewPublishContentCountViaPortletStagingCP {
+	@summary = "Default summary"
+	macro viewPublishContentCountViaPortletStagingCP(contentInformation = null,contentCount = null) {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Staging");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
@@ -1615,13 +1686,15 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro viewPublishTask {
+	@summary = "Default summary"
+	macro viewPublishTask(publicationTitle = null) {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Staging#PROCESS_TITLE",
 			value1 = ${publicationTitle});
 	}
 
-	macro viewPublishTemplate {
+	@summary = "Default summary"
+	macro viewPublishTemplate(uncheckContentNameList = null,publishTemplateDescription = null,publishTemplateName = null) {
 		if (IsElementPresent(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS")) {
 			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 		}
@@ -1651,7 +1724,8 @@ definition {
 		}
 	}
 
-	macro viewRepeatingEventDetails {
+	@summary = "Default summary"
+	macro viewRepeatingEventDetails(endDate = null,siteName = null,scheduleTitleName = null) {
 		Staging.openStagingAdmin(siteURLKey = ${siteName});
 
 		Navigator.gotoNavItem(navItem = "Scheduled");
@@ -1667,7 +1741,8 @@ definition {
 			value1 = ${endDate});
 	}
 
-	macro viewSitePagesVariationActiveCP {
+	@summary = "Default summary"
+	macro viewSitePagesVariationActiveCP(sitePagesVariationName = null) {
 		var key_sitePagesVariationName = ${sitePagesVariationName};
 
 		AssertTextEquals.assertPartialText(
@@ -1675,7 +1750,8 @@ definition {
 			value1 = ${sitePagesVariationName});
 	}
 
-	macro viewSitePagesVariationPG {
+	@summary = "Default summary"
+	macro viewSitePagesVariationPG(sitePagesVariationName = null) {
 		var key_sitePagesVariationName = ${sitePagesVariationName};
 
 		AssertTextEquals.assertPartialText(
@@ -1683,11 +1759,13 @@ definition {
 			value1 = ${sitePagesVariationName});
 	}
 
-	macro viewStagingLocalLivePG {
+	@summary = "Default summary"
+	macro viewStagingLocalLivePG() {
 		AssertElementPresent(locator1 = "Staging#STAGING_VIEW");
 	}
 
-	macro viewStagingLocalLiveVariationMessagePG {
+	@summary = "Default summary"
+	macro viewStagingLocalLiveVariationMessagePG(sitePagesVariationName = null,pagesVariationName = null,pageName = null) {
 		if (IsElementNotPresent(locator1 = "Staging#LIVE_MENU_MESSAGE")) {
 			AssertClick(
 				locator1 = "Staging#LIVE_DROP_DOWN_BUTTON",
@@ -1705,13 +1783,15 @@ definition {
 		}
 	}
 
-	macro viewStagingWorkflowStatusPG {
+	@summary = "Default summary"
+	macro viewStagingWorkflowStatusPG(stagingWorkflowStatus = null) {
 		if (${stagingWorkflowStatus} == "Ready for Publication") {
 			AssertElementPresent(locator1 = "Staging#STAGING_MENU_READY_FOR_PUBLICATION");
 		}
 	}
 
-	macro viewSuccessResult {
+	@summary = "Default summary"
+	macro viewSuccessResult() {
 		if (IsElementPresent(locator1 = "ControlMenu#HEADING")) {
 			WaitForElementNotPresent(
 				key_title = "Current",
@@ -1728,7 +1808,8 @@ definition {
 		}
 	}
 
-	macro viewUncheckContentNameList {
+	@summary = "Default summary"
+	macro viewUncheckContentNameList(uncheckContentNameList = null) {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Staging Configuration");
 
 		for (var contentName : list ${uncheckContentNameList}) {
@@ -1738,7 +1819,8 @@ definition {
 		}
 	}
 
-	macro viewValidationError {
+	@summary = "Default summary"
+	macro viewValidationError(validateErrorMessage = null) {
 		Click.javaScriptClick(locator1 = "Message#SEE_MORE_DETAILS_LINK");
 
 		SelectFrameTop();
@@ -1748,7 +1830,8 @@ definition {
 			value1 = ${validateErrorMessage});
 	}
 
-	macro viewVariationSuccessMessage {
+	@summary = "Default summary"
+	macro viewVariationSuccessMessage() {
 		SelectFrameTop(value1 = "relative=top");
 
 		SelectFrame(locator1 = "IFrame#SITE_VARIATION_IFRAME");
@@ -1758,7 +1841,8 @@ definition {
 		SelectFrameTop(value1 = "relative=top");
 	}
 
-	macro viewVariationTooltipMessage {
+	@summary = "Default summary"
+	macro viewVariationTooltipMessage(title = null,pageName = null) {
 		var key_pageName = ${pageName};
 		var key_title = ${title};
 

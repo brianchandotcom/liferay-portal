@@ -1,6 +1,7 @@
 definition {
 
-	macro _addSiteNavigationMenu {
+	@summary = "Default summary"
+	macro _addSiteNavigationMenu(auto = null,siteNavigationMenuName = null,groupId = null) {
 		Variables.assertDefined(parameterList = "${auto},${groupId},${siteNavigationMenuName}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -18,7 +19,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _addSiteNavigationMenuItem {
+	@summary = "Default summary"
+	macro _addSiteNavigationMenuItem(siteNavigationMenuId = null,groupId = null,parentSiteNavigationMenuItemId = null,typeSettings = null,type = null) {
 		Variables.assertDefined(parameterList = "${groupId},${parentSiteNavigationMenuItemId},${siteNavigationMenuId},${type},${typeSettings}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -37,7 +39,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro _deleteSiteNavigationMenu {
+	@summary = "Default summary"
+	macro _deleteSiteNavigationMenu(siteNavigationMenuId = null) {
 		Variables.assertDefined(parameterList = ${siteNavigationMenuId});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -52,7 +55,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _getSiteNavigationMenuIdByName {
+	@summary = "Default summary"
+	macro _getSiteNavigationMenuIdByName(siteNavigationMenuName = null,groupId = null) {
 		Variables.assertDefined(parameterList = "${groupId},${siteNavigationMenuName}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -69,7 +73,8 @@ definition {
 		return ${siteNavigationMenuId};
 	}
 
-	macro _getSiteNavigationMenuItemIdByName {
+	@summary = "Default summary"
+	macro _getSiteNavigationMenuItemIdByName(siteNavigationMenuId = null,siteNavigationMenuItemName = null) {
 		Variables.assertDefined(parameterList = "${siteNavigationMenuId},${siteNavigationMenuItemName}");
 
 		var portalURL = JSONCompany.getPortalURL();

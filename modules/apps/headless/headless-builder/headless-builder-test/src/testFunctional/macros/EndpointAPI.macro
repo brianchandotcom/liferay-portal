@@ -1,6 +1,7 @@
 definition {
 
-	macro _curlAPIEndpoint {
+	@summary = "Default summary"
+	macro _curlAPIEndpoint(virtualHost = null) {
 		if (isSet(virtualHost)) {
 			if (!(isSet(port))) {
 				var port = 8080;
@@ -23,7 +24,8 @@ definition {
 		return ${curl};
 	}
 
-	macro createAPIEndpoint {
+	@summary = "Default summary"
+	macro createAPIEndpoint(requestSchemaId = null,path = null,responseSchemaId = null,name = null,virtualHost = null,externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = "${externalReferenceCode},${name},${path}");
 
 		var curl = EndpointAPI._curlAPIEndpoint(virtualHost = ${virtualHost});
@@ -54,7 +56,8 @@ definition {
 		return ${response};
 	}
 
-	macro createNAPIEndpoints {
+	@summary = "Default summary"
+	macro createNAPIEndpoints(path = null,numberOfEndpoints = null,name = null,externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = "${externalReferenceCode},${name},${numberOfEndpoints},${path}");
 
 		var i = 0;
@@ -69,7 +72,8 @@ definition {
 		}
 	}
 
-	macro getAPIEndpoints {
+	@summary = "Default summary"
+	macro getAPIEndpoints() {
 		var curl = EndpointAPI._curlAPIEndpoint();
 
 		var response = JSONCurlUtil.get(${curl});

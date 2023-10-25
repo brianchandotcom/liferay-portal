@@ -1,6 +1,7 @@
 definition {
 
-	macro addActionToTimer {
+	@summary = "Default summary"
+	macro addActionToTimer(scriptType = null,actionPriority = null,actionDescription = null,script = null,actionName = null) {
 		var javaScriptCountElement = '''
 			return document.querySelectorAll("select[id='action-type']").length.toString();
 		''';
@@ -22,7 +23,8 @@ definition {
 			scriptType = ${scriptType});
 	}
 
-	macro addConnector {
+	@summary = "Default summary"
+	macro addConnector(connectorOut = null,connectorLabel = null,connectorOutLabel = null,connectorInLabel = null,nodeType = null,connectorIn = null,direction = null) {
 		if (isSet(selectedNode)) {
 			MouseOver.mouseOverInvisible(
 				key_direction = ${direction},
@@ -97,7 +99,8 @@ definition {
 		}
 	}
 
-	macro addIncomingConnectorNotPossible {
+	@summary = "Default summary"
+	macro addIncomingConnectorNotPossible(connectorOut = null,connectorIn = null,direction = null) {
 		MouseOver.mouseOverInvisible(
 			key_direction = ${direction},
 			key_nodeType = ${connectorOut},
@@ -126,7 +129,8 @@ definition {
 			locator1 = "ProcessBuilderKaleoDesignerReact#CONNECTOR_SOURCE");
 	}
 
-	macro addLanguage {
+	@summary = "Default summary"
+	macro addLanguage(translationOptionSelected = null) {
 		Click(locator1 = "Button#PLUS");
 
 		Click(
@@ -134,7 +138,8 @@ definition {
 			locator1 = "ProcessBuilderKaleoDesignerReact#LANGUAGE_MANAGE_TRANSLATIONS_BUTTON");
 	}
 
-	macro addMultiplesActionsOnTimers {
+	@summary = "Default summary"
+	macro addMultiplesActionsOnTimers(priorityValue = null,sectionOptionList = null,newSection = null,actionDescription = null,actionsTemplateValue = null,actionName = null) {
 		Click(
 			key_buttonName = ${newSection},
 			locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_GENERIC");
@@ -182,7 +187,8 @@ definition {
 		}
 	}
 
-	macro addRoleTypeByPositionOnAssignments {
+	@summary = "Default summary"
+	macro addRoleTypeByPositionOnAssignments(sectionOptionList = null,roleTypeName = null,roleTypeRoleName = null,newSection = null,autoCreate = null,assignmentType = null) {
 		Click(
 			key_buttonName = ${newSection},
 			locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_GENERIC");
@@ -229,7 +235,8 @@ definition {
 		}
 	}
 
-	macro addRoleTypeInNotifications {
+	@summary = "Default summary"
+	macro addRoleTypeInNotifications(newSection = null,roleName = null,roleType = null) {
 		Click(
 			key_buttonName = ${newSection},
 			locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_GENERIC");
@@ -249,7 +256,8 @@ definition {
 			value1 = ${roleName});
 	}
 
-	macro addTimerWithSingleAction {
+	@summary = "Default summary"
+	macro addTimerWithSingleAction(timerDescription = null,durationScale = null,durationValue = null,actionDescription = null,script = null,recurrenceDurationScale = null,recurrence = null,actionType = null,reassignmentType = null,scriptType = null,timerName = null,actionPriority = null,recurrenceDurationValue = null,actionName = null) {
 		if (IsElementPresent(key_buttonName = "New Timer", locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_GENERIC")) {
 			var javaScriptCountElement = '''
 				return document.querySelectorAll("input[id='timerName']").length.toString();
@@ -296,15 +304,18 @@ definition {
 		}
 	}
 
-	macro backArrowOnSidebar {
+	@summary = "Default summary"
+	macro backArrowOnSidebar() {
 		Click(locator1 = "ProcessBuilderKaleoDesignerReact#BACK_TO_SIDEBAR_BUTTON");
 	}
 
-	macro clickButtonDone {
+	@summary = "Default summary"
+	macro clickButtonDone() {
 		Click(locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_DONE_MODAL");
 	}
 
-	macro clickDefaultToggle {
+	@summary = "Default summary"
+	macro clickDefaultToggle(defaultConnector = null) {
 		if (${defaultConnector} == "False") {
 			Uncheck.uncheckToggleSwitch(locator1 = "ProcessBuilderKaleoDesignerReact#DEFAULT_TOGGLE_SWITCH");
 		}
@@ -313,11 +324,13 @@ definition {
 		}
 	}
 
-	macro closeModal {
+	@summary = "Default summary"
+	macro closeModal() {
 		Click(locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_CLOSE_MODAL");
 	}
 
-	macro deleteAssignment {
+	@summary = "Default summary"
+	macro deleteAssignment(roleName = null) {
 		Click(locator1 = "ProcessBuilderKaleoDesignerReact#SELECTED_ASSIGNMENTS_VALUE");
 
 		Click(
@@ -325,13 +338,15 @@ definition {
 			locator1 = "ProcessBuilderKaleoDesignerReact#DELETE_ASSIGNMENT_BY_ROLE_NAME");
 	}
 
-	macro deleteByIconTrashSidebar {
+	@summary = "Default summary"
+	macro deleteByIconTrashSidebar(propertyValue = null) {
 		Click(
 			key_propertyValue = ${propertyValue},
 			locator1 = "ProcessBuilderKaleoDesignerReact#ICON_TRASH_SIDEBAR_PROPERTY_BY_VALUE");
 	}
 
-	macro deleteBySidebarCard {
+	@summary = "Default summary"
+	macro deleteBySidebarCard(sidebarCardName = null,propertyValue = null) {
 		Click(
 			key_propertyName = ${sidebarCardName},
 			key_propertyValue = ${propertyValue},
@@ -344,7 +359,8 @@ definition {
 		Click(locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_DELETE_MODAL");
 	}
 
-	macro deleteByTrashTopSidebar {
+	@summary = "Default summary"
+	macro deleteByTrashTopSidebar(sidebarPropertyName = null,modalMessage = null) {
 		Click(
 			key_propertyName = ${sidebarPropertyName},
 			locator1 = "ProcessBuilderKaleoDesignerReact#ICON_TRASH_TOP_RIGHT_SIDEBAR");
@@ -356,13 +372,15 @@ definition {
 		Click(locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_DELETE_MODAL");
 	}
 
-	macro deleteLanguage {
+	@summary = "Default summary"
+	macro deleteLanguage(translationOption = null) {
 		Click(
 			key_language = ${translationOption},
 			locator1 = "ManageTranslations#LIST_ITEM_DELETE_LANGUAGE_BUTTON");
 	}
 
-	macro deleteNodeByDeleteKey {
+	@summary = "Default summary"
+	macro deleteNodeByDeleteKey(nodeType = null,title = null) {
 		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(key_nodeType = ${nodeType});
 
 		KeyPress.keyPressNoError(
@@ -396,7 +414,8 @@ definition {
 		}
 	}
 
-	macro deleteNodeOrConnection {
+	@summary = "Default summary"
+	macro deleteNodeOrConnection(modalMessage = null,title = null) {
 		Click(locator1 = "WorkflowConfiguration#BLOGS_MOVE_TO_RECYCLE_BIN");
 
 		AssertElementPresent(
@@ -412,30 +431,35 @@ definition {
 		Click(locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_DELETE_MODAL");
 	}
 
-	macro deleteRoleTypeInNotifications {
+	@summary = "Default summary"
+	macro deleteRoleTypeInNotifications(index = null) {
 		Click.mouseOverClick(
 			key_index = ${index},
 			locator1 = "ProcessBuilderKaleoDesignerReact#ICON_TRASH_ROLE_TYPE_BY_POSITION");
 	}
 
-	macro deleteTimerAction {
+	@summary = "Default summary"
+	macro deleteTimerAction(actionName = null) {
 		ClickNoError(
 			actionName = ${actionName},
 			locator1 = "ProcessBuilderKaleoDesignerReact#ACTION_DELETE_ICON");
 	}
 
-	macro diagramSourceSwitchView {
+	@summary = "Default summary"
+	macro diagramSourceSwitchView() {
 		Click(locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_DIAGRAM_SOURCE_SWITCH");
 	}
 
-	macro dragAndDropDiagramNode {
+	@summary = "Default summary"
+	macro dragAndDropDiagramNode(nodePosition = null,nodeLabel = null) {
 		DragAndDrop.dragAndDrop(
 			key_nodeLabel = ${nodeLabel},
 			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE_LABEL",
 			value1 = ${nodePosition});
 	}
 
-	macro dragSidebarNodeAndMove {
+	@summary = "Default summary"
+	macro dragSidebarNodeAndMove(nodePosition = null,nodeLabel = null) {
 		var key_nodeLabel = ${nodeLabel};
 
 		AssertClick.pauseAssertTextClickAt(
@@ -455,7 +479,8 @@ definition {
 		}
 	}
 
-	macro editConnector {
+	@summary = "Default summary"
+	macro editConnector(connectorLabelEdit = null,nodeName = null,connectorLabel = null) {
 		ProcessBuilderKaleoDesignerReact.selectConnector(connectorLabel = ${connectorLabel});
 
 		if (isSet(connectorLabelEdit)) {
@@ -471,14 +496,16 @@ definition {
 		}
 	}
 
-	macro editNodeInformationField {
+	@summary = "Default summary"
+	macro editNodeInformationField(infoOption = null,infoValue = null) {
 		Type(
 			key_infoOption = ${infoOption},
 			locator1 = "ProcessBuilderKaleoDesignerReact#NODE_INFO_INPUT",
 			value1 = ${infoValue});
 	}
 
-	macro editNotification {
+	@summary = "Default summary"
+	macro editNotification(notificationTypeOption = null,notificationScript = null,recipientTypeOption = null,notificationsRoleType = null,notificationsRecipientTypeRoleName = null,newSection = null,description = null,autoCreate = null,templateLanguageOption = null,notificationsRoleTypeRoleName = null,executionTypeOption = null,name = null,notificationTemplateValue = null) {
 		if (isSet(name)) {
 			Type(
 				key_inputOption = "Name",
@@ -575,7 +602,8 @@ definition {
 		}
 	}
 
-	macro editSourceXML {
+	@summary = "Default summary"
+	macro editSourceXML(line = null,kdSourceXml = null) {
 		var key_line = ${line};
 
 		TripleClick(locator1 = "ProcessBuilderKaleoDesignerReact#XML_CODE_SPECIFIC_ELEMENT_LINE");
@@ -583,11 +611,13 @@ definition {
 		TypeScreen(locator1 = ${kdSourceXml});
 	}
 
-	macro editWorkflowTitle {
+	@summary = "Default summary"
+	macro editWorkflowTitle(title = null) {
 		PortletEntry.inputTitle(title = ${title});
 	}
 
-	macro fillTimerAction {
+	@summary = "Default summary"
+	macro fillTimerAction(scriptType = null,actionPriority = null,actionDescription = null,script = null,actionName = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -623,7 +653,8 @@ definition {
 		}
 	}
 
-	macro fillTimerDuration {
+	@summary = "Default summary"
+	macro fillTimerDuration(recurrence = null,durationScale = null,durationValue = null,recurrenceDurationValue = null,recurrenceDurationScale = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -661,7 +692,8 @@ definition {
 		}
 	}
 
-	macro fillTimerInformation {
+	@summary = "Default summary"
+	macro fillTimerInformation(timerDescription = null,timerName = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -682,7 +714,8 @@ definition {
 		}
 	}
 
-	macro fillTimerReassignment {
+	@summary = "Default summary"
+	macro fillTimerReassignment(reassignmentType = null) {
 		Select(
 			locator1 = "Select#ANY_ID",
 			selectId = "action-type",
@@ -696,15 +729,18 @@ definition {
 		}
 	}
 
-	macro gotoInfoWorkflowDefinition {
+	@summary = "Default summary"
+	macro gotoInfoWorkflowDefinition() {
 		Click(locator1 = "Icon#INFO");
 	}
 
-	macro gotoManageTranslations {
+	@summary = "Default summary"
+	macro gotoManageTranslations() {
 		Click(locator1 = "ProcessBuilderKaleoDesignerReact#MANAGE_TRANSLATIONS_BUTTON");
 	}
 
-	macro gotoNotification {
+	@summary = "Default summary"
+	macro gotoNotification(notificationName = null) {
 		ProcessBuilderKaleoDesignerReact.viewNotificationPresent(notificationName = ${notificationName});
 
 		Click(
@@ -712,7 +748,8 @@ definition {
 			locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATION_VALUE_NODE_SIDEBAR");
 	}
 
-	macro gotoSideBarProperty {
+	@summary = "Default summary"
+	macro gotoSideBarProperty(propertyName = null,propertyValue = null) {
 		Click(
 			key_propertyName = ${propertyName},
 			key_propertyValue = ${propertyValue},
@@ -720,49 +757,57 @@ definition {
 			value1 = ${propertyValue});
 	}
 
-	macro hideSidebarFields {
+	@summary = "Default summary"
+	macro hideSidebarFields(property = null) {
 		Click(
 			key_property = ${property},
 			locator1 = "ProcessBuilderKaleoDesignerReact#HIDE_ANGLE_ICON");
 	}
 
-	macro openTranslationLanguageDropdown {
+	@summary = "Default summary"
+	macro openTranslationLanguageDropdown() {
 		Click.javaScriptClick(
 			key_title = "select-translation-language",
 			locator1 = "Button#ANY_TITLE");
 	}
 
-	macro restorePreviousVersion {
+	@summary = "Default summary"
+	macro restorePreviousVersion(number = null) {
 		Click(
 			key_number = ${number},
 			locator1 = "ProcessBuilderKaleoDesignerReact#RESTORE_VERSION_ICON");
 	}
 
-	macro searchLanguage {
+	@summary = "Default summary"
+	macro searchLanguage(languageName = null) {
 		Type(
 			locator1 = "ProcessBuilderKaleoDesignerReact#SEARCH_BAR_INPUT",
 			value1 = ${languageName});
 	}
 
-	macro selectConnector {
+	@summary = "Default summary"
+	macro selectConnector(connectorLabel = null) {
 		Click(
 			key_connectorLabel = ${connectorLabel},
 			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_CONNECTOR_LABEL");
 	}
 
-	macro selectNode {
+	@summary = "Default summary"
+	macro selectNode(nodeType = null) {
 		Click(
 			key_nodeType = ${nodeType},
 			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE");
 	}
 
-	macro selectNodeByLabel {
+	@summary = "Default summary"
+	macro selectNodeByLabel(nodeLabel = null) {
 		Click(
 			key_nodeLabel = ${nodeLabel},
 			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE_LABEL");
 	}
 
-	macro selectTranslationLanguage {
+	@summary = "Default summary"
+	macro selectTranslationLanguage(key_locale = null) {
 		ProcessBuilderKaleoDesignerReact.openTranslationLanguageDropdown();
 
 		Click(
@@ -770,7 +815,8 @@ definition {
 			locator1 = "Translation#DROPDOWN_MENU_ITEM");
 	}
 
-	macro uploadDefinition {
+	@summary = "Default summary"
+	macro uploadDefinition(workflowDefinitionFile = null,errorMessage = null) {
 		if (IsElementNotPresent(locator1 = "ProcessBuilderKaleoDesignerReact#SOURCE_EDITOR")) {
 			ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
 		}
@@ -788,7 +834,8 @@ definition {
 		}
 	}
 
-	macro viewActionsInfo {
+	@summary = "Default summary"
+	macro viewActionsInfo(priorityValue = null,executionTypeOption = null,name = null,description = null,type = null,script = null) {
 		if (isSet(name)) {
 			AssertElementPresent(
 				key_inputOption = "Name",
@@ -832,7 +879,8 @@ definition {
 		}
 	}
 
-	macro viewActionsInsideTimersPresent {
+	@summary = "Default summary"
+	macro viewActionsInsideTimersPresent(actionTypeOption = null,actionName = null) {
 		if (isSet(actionName)) {
 			AssertElementPresent(
 				key_actionName = ${actionName},
@@ -847,13 +895,15 @@ definition {
 		}
 	}
 
-	macro viewActiveNodeHighlighted {
+	@summary = "Default summary"
+	macro viewActiveNodeHighlighted(nodeType = null) {
 		AssertElementPresent(
 			key_nodeType = ${nodeType},
 			locator1 = "ProcessBuilderKaleoDesignerReact#SELECTED_NODE");
 	}
 
-	macro viewAndDeleteBySidebarProperty {
+	@summary = "Default summary"
+	macro viewAndDeleteBySidebarProperty(sidebarPropertyName = null,propertyValue = null) {
 		AssertElementPresent(
 			key_propertyName = ${sidebarPropertyName},
 			key_propertyValue = ${propertyValue},
@@ -864,7 +914,8 @@ definition {
 			locator1 = "ProcessBuilderKaleoDesignerReact#ICON_TRASH_SIDEBAR_PROPERTY");
 	}
 
-	macro viewAndFillActions {
+	@summary = "Default summary"
+	macro viewAndFillActions(priorityValue = null,sectionOptionList = null,executionTypeOption = null,newSection = null,name = null,description = null,actionsTemplateValue = null,type = null,script = null) {
 		if (IsElementPresent(key_propertyName = "Actions", locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_NEW_BUTTON")) {
 			Click(
 				key_propertyName = "Actions",
@@ -997,7 +1048,8 @@ definition {
 		}
 	}
 
-	macro viewAndFillAssignments {
+	@summary = "Default summary"
+	macro viewAndFillAssignments(roleTypeName = null,roleTypeRoleName = null,groovyScript = null,userScreenName = null,roleName = null,autoCreate = null,assignmentType = null,resourceActionsText = null) {
 		Click(locator1 = "ProcessBuilderKaleoDesignerReact#SELECTED_ASSIGNMENTS_VALUE");
 
 		Select(
@@ -1076,7 +1128,8 @@ definition {
 		}
 	}
 
-	macro viewAndFillNotification {
+	@summary = "Default summary"
+	macro viewAndFillNotification(notificationTypeOption = null,notificationScript = null,recipientTypeOption = null,notificationsRoleType = null,notificationsRecipientTypeRoleName = null,newSection = null,description = null,autoCreate = null,templateLanguageOption = null,notificationsRoleTypeRoleName = null,sectionOptionList = null,executionTypeOption = null,name = null,notificationTemplateValue = null) {
 		if (isSet(newNotification)) {
 			Click(
 				key_propertyName = "Notification",
@@ -1311,7 +1364,8 @@ definition {
 		}
 	}
 
-	macro viewConnectorName {
+	@summary = "Default summary"
+	macro viewConnectorName(nodeName = null,connectorLabel = null) {
 		ProcessBuilderKaleoDesignerReact.selectConnector(connectorLabel = ${connectorLabel});
 
 		AssertTextEquals(
@@ -1319,26 +1373,30 @@ definition {
 			value1 = ${nodeName});
 	}
 
-	macro viewConnectorNotPresent {
+	@summary = "Default summary"
+	macro viewConnectorNotPresent(connectorLabel = null) {
 		AssertElementNotPresent(
 			key_connectorLabel = ${connectorLabel},
 			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_CONNECTOR_LABEL");
 	}
 
-	macro viewConnectorPresent {
+	@summary = "Default summary"
+	macro viewConnectorPresent(connectorLabel = null) {
 		AssertTextEquals(
 			key_connectorLabel = ${connectorLabel},
 			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_CONNECTOR_LABEL",
 			value1 = ${connectorLabel});
 	}
 
-	macro viewCurrentVersionAtRevisionHistoryTab {
+	@summary = "Default summary"
+	macro viewCurrentVersionAtRevisionHistoryTab(number = null) {
 		AssertVisible(
 			key_number = ${number},
 			locator1 = "ProcessBuilderKaleoDesignerReact#CURRENT_VERSION_FIELD");
 	}
 
-	macro viewDefaultToggleStatus {
+	@summary = "Default summary"
+	macro viewDefaultToggleStatus(defaultStatus = null,connectorLabel = null) {
 		ProcessBuilderKaleoDesignerReact.selectConnector(connectorLabel = ${connectorLabel});
 
 		AssertElementPresent(
@@ -1359,13 +1417,15 @@ definition {
 		}
 	}
 
-	macro viewDefinitionTitle {
+	@summary = "Default summary"
+	macro viewDefinitionTitle(definitionTitle = null) {
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
 			value1 = ${definitionTitle});
 	}
 
-	macro viewDetailsFieldsPresent {
+	@summary = "Default summary"
+	macro viewDetailsFieldsPresent() {
 		AssertVisible(
 			key_fieldOption = "CREATED",
 			locator1 = "ProcessBuilderKaleoDesignerReact#DETAILS_FIELDS");
@@ -1379,7 +1439,8 @@ definition {
 			locator1 = "ProcessBuilderKaleoDesignerReact#DETAILS_FIELDS");
 	}
 
-	macro viewDiagramEditor {
+	@summary = "Default summary"
+	macro viewDiagramEditor(joinLabelList = null,startLabelList = null,endLabelList = null,forkLabelList = null,taskLabelList = null) {
 		AssertElementPresent(locator1 = "ProcessBuilderKaleoDesignerReact#REACT_PANEL");
 
 		AssertElementPresent(
@@ -1455,78 +1516,91 @@ definition {
 		}
 	}
 
-	macro viewDuplicatedIdAlert {
+	@summary = "Default summary"
+	macro viewDuplicatedIdAlert() {
 		AssertVisible(
 			locator1 = "ProcessBuilderKaleoDesignerReact#ALERT_MESSAGE_FEEDBACK",
 			value1 = "You have the same ID in two nodes:Please rename this with another words.");
 	}
 
-	macro viewFieldNotPresentOnSideBar {
+	@summary = "Default summary"
+	macro viewFieldNotPresentOnSideBar(fieldName = null) {
 		AssertElementNotPresent(
 			key_fieldName = ${fieldName},
 			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_FIELD_LABEL");
 	}
 
-	macro viewFieldPresentOnSideBar {
+	@summary = "Default summary"
+	macro viewFieldPresentOnSideBar(fieldName = null) {
 		AssertElementPresent(
 			key_fieldName = ${fieldName},
 			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_FIELD_LABEL");
 	}
 
-	macro viewInactiveNodeNotHighlighted {
+	@summary = "Default summary"
+	macro viewInactiveNodeNotHighlighted(nodeType = null) {
 		AssertElementNotPresent(
 			key_nodeType = ${nodeType},
 			locator1 = "ProcessBuilderKaleoDesignerReact#SELECTED_NODE");
 	}
 
-	macro viewInformationDetailsPresent {
+	@summary = "Default summary"
+	macro viewInformationDetailsPresent(fieldOption = null,fieldInformation = null) {
 		AssertVisible(
 			key_fieldInformation = ${fieldInformation},
 			key_fieldOption = ${fieldOption},
 			locator1 = "ProcessBuilderKaleoDesignerReact#INFORMATION_DETAILS");
 	}
 
-	macro viewLanguageNotPresentAtManageTranslations {
+	@summary = "Default summary"
+	macro viewLanguageNotPresentAtManageTranslations(languageName = null) {
 		AssertElementNotPresent(
 			key_language = ${languageName},
 			locator1 = "ManageTranslations#LIST_ITEM_LANGUAGE");
 	}
 
-	macro viewLanguageOptionNotPresent {
+	@summary = "Default summary"
+	macro viewLanguageOptionNotPresent(languageOption = null) {
 		AssertElementNotPresent(
 			key_language = ${languageOption},
 			locator1 = "ProcessBuilderKaleoDesignerReact#LANGUAGE_OPTION");
 	}
 
-	macro viewLanguageOptionPresent {
+	@summary = "Default summary"
+	macro viewLanguageOptionPresent(languageOption = null) {
 		AssertElementPresent(
 			key_language = ${languageOption},
 			locator1 = "ProcessBuilderKaleoDesignerReact#LANGUAGE_OPTION");
 	}
 
-	macro viewLanguagePresentAtManageTranslations {
+	@summary = "Default summary"
+	macro viewLanguagePresentAtManageTranslations(languageName = null) {
 		AssertElementPresent(
 			key_language = ${languageName},
 			locator1 = "ManageTranslations#LIST_ITEM_LANGUAGE");
 	}
 
-	macro viewManageTranslationButton {
+	@summary = "Default summary"
+	macro viewManageTranslationButton() {
 		AssertElementPresent(locator1 = "ProcessBuilderKaleoDesignerReact#MANAGE_TRANSLATIONS_BUTTON");
 	}
 
-	macro viewModalNotPresent {
+	@summary = "Default summary"
+	macro viewModalNotPresent(modalTitle = null) {
 		AssertElementNotPresent(
 			key_modalTitle = ${modalTitle},
 			locator1 = "ProcessBuilderKaleoDesignerReact#MANAGE_TRANSLATIONS_MODAL");
 	}
 
-	macro viewModalPresent {
+	@summary = "Default summary"
+	macro viewModalPresent(modalTitle = null) {
 		AssertElementPresent(
 			key_modalTitle = ${modalTitle},
 			locator1 = "ProcessBuilderKaleoDesignerReact#MANAGE_TRANSLATIONS_MODAL");
 	}
 
-	macro viewMultipleActionPresent {
+	@summary = "Default summary"
+	macro viewMultipleActionPresent(priorityValue = null,sectionOptionList = null,executionTypeOption = null,name = null,description = null,actionsTemplateValue = null) {
 		for (var sectionOption : list ${sectionOptionList}) {
 			if (isSet(name)) {
 				AssertTextEquals(
@@ -1569,7 +1643,8 @@ definition {
 		}
 	}
 
-	macro viewMultipleNotificationPresent {
+	@summary = "Default summary"
+	macro viewMultipleNotificationPresent(notificationTypeOption = null,recipientTypeOption = null,sectionOptionList = null,executionTypeOption = null,name = null,description = null,notificationTemplateValue = null,templateLanguageOption = null) {
 		for (var sectionOption : list ${sectionOptionList}) {
 			if (isSet(name)) {
 				AssertTextEquals(
@@ -1630,7 +1705,8 @@ definition {
 		}
 	}
 
-	macro viewNodeInfo {
+	@summary = "Default summary"
+	macro viewNodeInfo(nameValue = null,descriptionValue = null,labelValue = null,scriptValue = null,nodeType = null) {
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = ${nodeType});
 
 		var nodeNameValue = selenium.getElementValue("ProcessBuilderKaleoDesignerReact#NODE_NAME_GETTER");
@@ -1676,7 +1752,8 @@ definition {
 		}
 	}
 
-	macro viewNodeInfoNotVisible {
+	@summary = "Default summary"
+	macro viewNodeInfoNotVisible(nameValue = null,descriptionValue = null,labelValue = null,scriptValue = null,nodeType = null) {
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = ${nodeType});
 
 		if (isSet(labelValue)) {
@@ -1708,13 +1785,15 @@ definition {
 		}
 	}
 
-	macro viewNodeLabel {
+	@summary = "Default summary"
+	macro viewNodeLabel(nodeLabel = null) {
 		AssertElementPresent(
 			key_nodeLabel = ${nodeLabel},
 			locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_NODE_LABEL");
 	}
 
-	macro viewNodePosition {
+	@summary = "Default summary"
+	macro viewNodePosition(nodeXPosition = null,firstNodeXPosition = null,nodeYPosition = null,firstNodeYPosition = null,nodeType = null,nodeLabel = null) {
 		var nodeXPositionChaged = selenium.getAttribute("//div[contains(@class,'node ${nodeType}-node selected')]@xpos");
 		var nodeYPositionChaged = selenium.getAttribute("//div[contains(@class,'node ${nodeType}-node selected')]@ypos");
 
@@ -1733,7 +1812,8 @@ definition {
 		}
 	}
 
-	macro viewNotificationInfo {
+	@summary = "Default summary"
+	macro viewNotificationInfo(notificationRecipientType = null,notificationDescription = null,notificationExecutionType = null,notificationTemplateValue = null,notificationTemplateLanguage = null,notificationTypeName = null,notificationName = null) {
 		if (isSet(notificationName)) {
 			AssertTextEquals(
 				key_inputOption = "Name",
@@ -1782,45 +1862,52 @@ definition {
 		}
 	}
 
-	macro viewNotificationNotPresent {
+	@summary = "Default summary"
+	macro viewNotificationNotPresent(notificationName = null) {
 		AssertElementNotPresent(
 			key_nodeNotificationName = ${notificationName},
 			locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATION_VALUE_NODE_SIDEBAR");
 	}
 
-	macro viewNotificationPresent {
+	@summary = "Default summary"
+	macro viewNotificationPresent(notificationName = null) {
 		AssertElementPresent(
 			key_nodeNotificationName = ${notificationName},
 			locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATION_VALUE_NODE_SIDEBAR");
 	}
 
-	macro viewPanelNodeNotPresent {
+	@summary = "Default summary"
+	macro viewPanelNodeNotPresent(nodeType = null) {
 		AssertElementNotPresent(
 			key_nodeType = ${nodeType},
 			locator1 = "ProcessBuilderKaleoDesignerReact#PANEL_NODE");
 	}
 
-	macro viewPanelNodePresent {
+	@summary = "Default summary"
+	macro viewPanelNodePresent(nodeType = null) {
 		AssertElementPresent(
 			key_nodeType = ${nodeType},
 			locator1 = "ProcessBuilderKaleoDesignerReact#PANEL_NODE");
 	}
 
-	macro viewPropertyNotPresentOnSideBar {
+	@summary = "Default summary"
+	macro viewPropertyNotPresentOnSideBar(propertyName = null,propertyValue = null) {
 		AssertElementNotPresent(
 			key_propertyName = ${propertyName},
 			key_propertyValue = ${propertyValue},
 			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_PROPERTY");
 	}
 
-	macro viewPropertyPresentOnSideBar {
+	@summary = "Default summary"
+	macro viewPropertyPresentOnSideBar(propertyName = null,propertyValue = null) {
 		AssertElementPresent(
 			key_propertyName = ${propertyName},
 			key_propertyValue = ${propertyValue},
 			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_PROPERTY");
 	}
 
-	macro viewPropertyValue {
+	@summary = "Default summary"
+	macro viewPropertyValue(propertyName = null,propertyValue = null) {
 		AssertElementPresent(
 			key_propertyName = ${propertyName},
 			key_propertyValue = ${propertyValue},
@@ -1828,17 +1915,20 @@ definition {
 			value1 = ${propertyValue});
 	}
 
-	macro viewPublishButtonNotPresent {
+	@summary = "Default summary"
+	macro viewPublishButtonNotPresent() {
 		Button.viewNotPresent(button = "Publish");
 	}
 
-	macro viewPublishButtonPresent {
+	@summary = "Default summary"
+	macro viewPublishButtonPresent() {
 		AssertElementPresent(
 			key_text = "Publish",
 			locator1 = "Button#ANY");
 	}
 
-	macro viewRequiredField {
+	@summary = "Default summary"
+	macro viewRequiredField(requiredField = null) {
 		AssertElementPresent(
 			key_requiredField = ${requiredField},
 			locator1 = "ProcessBuilderKaleoDesignerReact#REQUIRED_FIELD");
@@ -1854,57 +1944,67 @@ definition {
 		}
 	}
 
-	macro viewRevisionHistoryFieldsPresent {
+	@summary = "Default summary"
+	macro viewRevisionHistoryFieldsPresent() {
 		AssertVisible(
 			key_fieldOption = "Current Version",
 			locator1 = "ProcessBuilderKaleoDesignerReact#DETAILS_FIELDS");
 	}
 
-	macro viewRevisionHistoryVersion {
+	@summary = "Default summary"
+	macro viewRevisionHistoryVersion(number = null) {
 		AssertVisible(
 			key_number = ${number},
 			locator1 = "ProcessBuilderKaleoDesignerReact#REVISION_HISTORY_VERSION");
 	}
 
-	macro viewRoleIDDisabled {
+	@summary = "Default summary"
+	macro viewRoleIDDisabled() {
 		AssertElementPresent(locator1 = "ProcessBuilderKaleoDesignerReact#ROLE_ID_FIELD_DISABLED");
 	}
 
-	macro viewRoleNamePresentInSidebar {
+	@summary = "Default summary"
+	macro viewRoleNamePresentInSidebar(roleName = null) {
 		AssertVisible(
 			key_roleName = ${roleName},
 			locator1 = "ProcessBuilderKaleoDesignerReact#ROLE_NAME_FIELD");
 	}
 
-	macro viewRoleTypeNotPresentInSidebar {
+	@summary = "Default summary"
+	macro viewRoleTypeNotPresentInSidebar(roleType = null) {
 		AssertElementNotPresent(
 			key_roleType = ${roleType},
 			locator1 = "ProcessBuilderKaleoDesignerReact#ROLE_TYPE_NAME_FIELD");
 	}
 
-	macro viewSaveButtonPresent {
+	@summary = "Default summary"
+	macro viewSaveButtonPresent() {
 		AssertElementPresent(locator1 = "KaleoDesigner#SAVE_BUTTON");
 	}
 
-	macro viewSearchTranslationResultPresent {
+	@summary = "Default summary"
+	macro viewSearchTranslationResultPresent(result = null) {
 		AssertElementPresent(
 			key_result = ${result},
 			locator1 = "ProcessBuilderKaleoDesignerReact#LANGUAGE_NAME_RESULT");
 	}
 
-	macro viewSelectedAssignments {
+	@summary = "Default summary"
+	macro viewSelectedAssignments(selectedAssignments = null) {
 		AssertTextEquals(
 			locator1 = "ProcessBuilderKaleoDesignerReact#SELECTED_ASSIGNMENTS_VALUE",
 			value1 = ${selectedAssignments});
 	}
 
-	macro viewSelectedNode {
+	@summary = "Default summary"
+	macro viewSelectedNode(nodeType = null) {
 		AssertElementPresent(
 			key_nodeType = ${nodeType},
 			locator1 = "ProcessBuilderKaleoDesignerReact#SELECTED_NODE");
 	}
 
-	macro viewSelectedRoleAssignmentsByPosition {
+	@summary = "Default summary"
+	macro viewSelectedRoleAssignmentsByPosition(positonOption = null,inputOption = null,selectedRole = null) {
 		AssertElementPresent(
 			key_inputOption = ${inputOption},
 			key_positonOption = ${positonOption},
@@ -1912,19 +2012,22 @@ definition {
 			value1 = ${selectedRole});
 	}
 
-	macro viewSidebarFeedback {
+	@summary = "Default summary"
+	macro viewSidebarFeedback(sidebarMessage = null) {
 		AssertElementPresent(
 			key_sidebarMessage = ${sidebarMessage},
 			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_MESSAGE_FEEDBACK");
 	}
 
-	macro viewSidebarHeaderPresent {
+	@summary = "Default summary"
+	macro viewSidebarHeaderPresent(header = null) {
 		AssertElementPresent(
 			key_header = ${header},
 			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_HEADER");
 	}
 
-	macro viewSourceDiagramToolTipDisplayed {
+	@summary = "Default summary"
+	macro viewSourceDiagramToolTipDisplayed(content = null) {
 		MouseOver(
 			locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_DIAGRAM_SOURCE_SWITCH",
 			value1 = "");
@@ -1934,11 +2037,13 @@ definition {
 			locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
 	}
 
-	macro viewSourceEditor {
+	@summary = "Default summary"
+	macro viewSourceEditor() {
 		AssertElementPresent(locator1 = "ProcessBuilderKaleoDesignerReact#SOURCE_EDITOR");
 	}
 
-	macro viewSpecificNodeLabel {
+	@summary = "Default summary"
+	macro viewSpecificNodeLabel(nodeType = null,nodeLabel = null) {
 		AssertTextEquals(
 			key_nodeLabel = ${nodeLabel},
 			key_nodeType = ${nodeType},
@@ -1946,14 +2051,16 @@ definition {
 			value1 = ${nodeLabel});
 	}
 
-	macro viewTimerNotPresent {
+	@summary = "Default summary"
+	macro viewTimerNotPresent(propertyValue = null) {
 		AssertElementNotPresent(
 			key_propertyName = "Timers",
 			key_propertyValue = ${propertyValue},
 			locator1 = "ProcessBuilderKaleoDesignerReact#SIDEBAR_PROPERTY");
 	}
 
-	macro viewTimersInfo {
+	@summary = "Default summary"
+	macro viewTimersInfo(priorityValue = null,actionTypeOption = null,durationValue = null,name = null,scaleTypeOption = null,description = null,actionDescription = null,actionsTemplateValue = null,actionName = null) {
 		if (isSet(name)) {
 			AssertElementPresent(
 				key_inputOption = "Name",
@@ -2017,7 +2124,8 @@ definition {
 		}
 	}
 
-	macro viewToolTip {
+	@summary = "Default summary"
+	macro viewToolTip(tooltipMessage = null) {
 		MouseOver(
 			key_tooltipMessage = ${tooltipMessage},
 			locator1 = "ProcessBuilderKaleoDesignerReact#NODE_PROPERTY_TOOLTIP");
@@ -2027,7 +2135,8 @@ definition {
 			locator1 = "ProcessBuilderKaleoDesignerReact#NODE_PROPERTY_TOOLTIP");
 	}
 
-	macro viewTranslationDropdown {
+	@summary = "Default summary"
+	macro viewTranslationDropdown(translationOptionSelected = null) {
 		Click(
 			key_translationOptionSelected = ${translationOptionSelected},
 			locator1 = "ProcessBuilderKaleoDesignerReact#ICON_COUNTRY");
@@ -2035,7 +2144,8 @@ definition {
 		AssertElementPresent(locator1 = "ProcessBuilderKaleoDesignerReact#TRANSLATION_DROPDOWN");
 	}
 
-	macro viewTranslationLanguageOptionNotPresent {
+	@summary = "Default summary"
+	macro viewTranslationLanguageOptionNotPresent(currentTranslationOption = null,translationOption = null) {
 		Click(
 			key_translationOptionSelected = ${currentTranslationOption},
 			locator1 = "ProcessBuilderKaleoDesignerReact#ICON_COUNTRY");
@@ -2046,21 +2156,24 @@ definition {
 			locator1 = "ProcessBuilderKaleoDesignerReact#TRANSLATION_COUNTRY_LABEL");
 	}
 
-	macro viewTranslationLanguageOptionPresent {
+	@summary = "Default summary"
+	macro viewTranslationLanguageOptionPresent(translationOption = null,translationStatus = null) {
 		AssertElementPresent(
 			key_translationOption = ${translationOption},
 			key_translationStatus = ${translationStatus},
 			locator1 = "ProcessBuilderKaleoDesignerReact#TRANSLATION_COUNTRY_LABEL");
 	}
 
-	macro viewTranslationLanguageStatus {
+	@summary = "Default summary"
+	macro viewTranslationLanguageStatus(newTranslationOption = null,translationStatus = null) {
 		AssertElementPresent(
 			key_translationOption = ${newTranslationOption},
 			key_translationStatus = ${translationStatus},
 			locator1 = "ProcessBuilderKaleoDesignerReact#TRANSLATION_COUNTRY_LABEL");
 	}
 
-	macro viewXMLSourceCodeSnippet {
+	@summary = "Default summary"
+	macro viewXMLSourceCodeSnippet(codeSnippet = null,codeSnippetNotPresent = null) {
 		AssertTextEquals.assertPartialText(
 			key_codeSnippet = ${codeSnippet},
 			locator1 = "ProcessBuilderKaleoDesignerReact#XML_CODE_SNIPPET",
@@ -2073,7 +2186,8 @@ definition {
 		}
 	}
 
-	macro viewXMLSourceNodeCoordinate {
+	@summary = "Default summary"
+	macro viewXMLSourceNodeCoordinate(coordinateY = null,coordinateX = null,lineY = null,lineX = null,nodeLabel = null) {
 		ScrollWebElementIntoView(locator1 = "ProcessBuilderKaleoDesignerReact#SOURCE_EDITOR");
 
 		AssertTextEquals.assertPartialTextAceEditor(

@@ -1018,11 +1018,11 @@ definition {
 
 			for (var i : list "1,2,3,4") {
 				AssertAttributeValue(
-					value1 = "title",
 					category = "Brand Colors",
 					index = ${n},
 					locator1 = "PageEditor#COLOR_SWATCH_ITEM",
 					panel = "Color System",
+					value1 = "title",
 					value2 = "Brand Color ${i}");
 
 				var n = ${n} + 1;

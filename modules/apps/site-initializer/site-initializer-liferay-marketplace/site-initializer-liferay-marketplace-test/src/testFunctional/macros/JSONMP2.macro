@@ -1,6 +1,7 @@
 definition {
 
-	macro addCatalog {
+	@summary = "Default summary"
+	macro addCatalog() {
 		if (!(isSet(catalogName))) {
 			var catalogName = "MKT Catalog";
 		}
@@ -8,7 +9,8 @@ definition {
 		CommerceJSONCatalogsAPI._addCatalog(catalogName = ${catalogName});
 	}
 
-	macro updateAccount {
+	@summary = "Default summary"
+	macro updateAccount() {
 		if (!(isSet(accountName))) {
 			var accountName = "QA Development";
 		}

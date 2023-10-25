@@ -1,6 +1,7 @@
 definition {
 
-	macro addAccount {
+	@summary = "Default summary"
+	macro addAccount(accountTaxId = null,accountDescription = null,accountLogo = null,accountName = null,accountType = null) {
 		Click(locator1 = "Button#PLUS");
 
 		PortletEntry.inputName(name = ${accountName});

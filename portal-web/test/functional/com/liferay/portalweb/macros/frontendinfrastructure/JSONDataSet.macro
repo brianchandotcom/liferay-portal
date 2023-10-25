@@ -1,6 +1,7 @@
 definition {
 
-	macro _createDataSetEntry {
+	@summary = "Default summary"
+	macro _createDataSetEntry(restSchema = null,restApplication = null,dataSetName = null,restEndpoint = null) {
 		Variables.assertDefined(parameterList = "${dataSetName},${restApplication},${restEndpoint},${restSchema}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -35,7 +36,8 @@ definition {
 		}
 	}
 
-	macro _createFDSViewViaAPI {
+	@summary = "Default summary"
+	macro _createFDSViewViaAPI(defaultItemsPerPage = null,listOfItemsPerPage = null,dataSetViewName = null,dataSetName = null) {
 		Variables.assertDefined(parameterList = "${dataSetName},${dataSetViewName}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -77,7 +79,8 @@ definition {
 		}
 	}
 
-	macro _deleteFDSEntry {
+	@summary = "Default summary"
+	macro _deleteFDSEntry() {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
@@ -107,7 +110,8 @@ definition {
 		}
 	}
 
-	macro _deleteFDSViews {
+	@summary = "Default summary"
+	macro _deleteFDSViews() {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
@@ -137,7 +141,8 @@ definition {
 		}
 	}
 
-	macro _getDataSetEntryIdByName {
+	@summary = "Default summary"
+	macro _getDataSetEntryIdByName(dataSetName = null) {
 		Variables.assertDefined(parameterList = ${dataSetName});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -165,7 +170,8 @@ definition {
 		}
 	}
 
-	macro _getDataSetEntryIds {
+	@summary = "Default summary"
+	macro _getDataSetEntryIds() {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
@@ -193,7 +199,8 @@ definition {
 		}
 	}
 
-	macro _getDataSetViewIdByName {
+	@summary = "Default summary"
+	macro _getDataSetViewIdByName(dataSetViewsNameList = null) {
 		Variables.assertDefined(parameterList = ${dataSetViewsNameList});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -226,7 +233,8 @@ definition {
 		}
 	}
 
-	macro _getDataSetViewsIds {
+	@summary = "Default summary"
+	macro _getDataSetViewsIds() {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {

@@ -1,6 +1,7 @@
 definition {
 
-	macro _curlKnowledgeBaseFolder {
+	@summary = "Default summary"
+	macro _curlKnowledgeBaseFolder(parentKnowledgeBaseFolderId = null,name = null,knowledgeBaseFolderId = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(parentKnowledgeBaseFolderId)) {
@@ -35,7 +36,8 @@ definition {
 		return ${curl};
 	}
 
-	macro createKnowledgeBaseFolder {
+	@summary = "Default summary"
+	macro createKnowledgeBaseFolder(parentKnowledgeBaseFolderId = null,name = null,externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = ${name});
 
 		var curl = KnowledgeBaseFolderAPI._curlKnowledgeBaseFolder(
@@ -48,7 +50,8 @@ definition {
 		return ${response};
 	}
 
-	macro deleteKnowledgeBaseFolderById {
+	@summary = "Default summary"
+	macro deleteKnowledgeBaseFolderById(knowledgeBaseFolderId = null) {
 		Variables.assertDefined(parameterList = ${knowledgeBaseFolderId});
 
 		var curl = KnowledgeBaseFolderAPI._curlKnowledgeBaseFolder(knowledgeBaseFolderId = ${knowledgeBaseFolderId});
@@ -56,7 +59,8 @@ definition {
 		JSONCurlUtil.delete(${curl});
 	}
 
-	macro setUpGlobalKnowledgeBaseFolderId {
+	@summary = "Default summary"
+	macro setUpGlobalKnowledgeBaseFolderId(parentKnowledgeBaseFolderId = null,name = null,externalReferenceCode = null) {
 		var response = KnowledgeBaseFolderAPI.createKnowledgeBaseFolder(
 			externalReferenceCode = ${externalReferenceCode},
 			name = ${name},

@@ -1,6 +1,7 @@
 definition {
 
-	macro _deleteStructure {
+	@summary = "Default summary"
+	macro _deleteStructure(structureId = null) {
 		Variables.assertDefined(parameterList = ${structureId});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -15,7 +16,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro _getCustomStructureIds {
+	@summary = "Default summary"
+	macro _getCustomStructureIds() {
 		var companyId = JSONCompany.getCompanyId();
 		var classNameId = JSONClassname._getClassNameId(value = "com.liferay.dynamic.data.lists.model.DDLRecordSet");
 		var portalURL = JSONCompany.getPortalURL();
@@ -37,7 +39,8 @@ definition {
 		return ${dDLRecordSetList};
 	}
 
-	macro _getStructureId {
+	@summary = "Default summary"
+	macro _getStructureId(structureName = null,groupId = null,classNameId = null) {
 		Variables.assertDefined(parameterList = "${classNameId},${groupId},${structureName}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -64,7 +67,8 @@ definition {
 		return ${structureId};
 	}
 
-	macro _getStructureIds {
+	@summary = "Default summary"
+	macro _getStructureIds(groupId = null,classNameId = null) {
 		Variables.assertDefined(parameterList = "${classNameId},${groupId}");
 
 		var portalURL = JSONCompany.getPortalURL();

@@ -1,6 +1,7 @@
 definition {
 
-	macro setServiceContext {
+	@summary = "Default summary"
+	macro setServiceContext(assetCategoryIds = null,addGroupPermissions = null,addGuestPermissions = null,assetTagNames = null,workflowAction = null) {
 		if (!(isSet(serviceContext))) {
 			var serviceContext = JSONServiceContextUtil.setServiceContext(
 				addGroupPermissions = ${addGroupPermissions},

@@ -1,12 +1,14 @@
 definition {
 
-	macro click {
+	@summary = "Default summary"
+	macro click(button = null) {
 		Click.mouseDownMouseUp(
 			key_text = ${button},
 			locator1 = "Button#ANY");
 	}
 
-	macro clickAdd {
+	@summary = "Default summary"
+	macro clickAdd() {
 		Button.click(button = "Add");
 
 		SelectFrameTop();
@@ -16,85 +18,104 @@ definition {
 		}
 	}
 
-	macro clickAddRow {
+	@summary = "Default summary"
+	macro clickAddRow() {
 		Click(locator1 = "Button#ADD_ROW");
 	}
 
-	macro clickApply {
+	@summary = "Default summary"
+	macro clickApply() {
 		Button.click(button = "Apply");
 	}
 
-	macro clickAssign {
+	@summary = "Default summary"
+	macro clickAssign() {
 		Button.click(button = "Assign");
 	}
 
-	macro clickCancel {
+	@summary = "Default summary"
+	macro clickCancel() {
 		Button.click(button = "Cancel");
 
 		SelectFrameTop();
 	}
 
-	macro clickCheckOut {
+	@summary = "Default summary"
+	macro clickCheckOut() {
 		Click(locator1 = "Button#CHECKOUT");
 	}
 
-	macro clickCollapse {
+	@summary = "Default summary"
+	macro clickCollapse(label = null) {
 		Click(
 			key_label = ${label},
 			locator1 = "DDMEditStructure#FORM_COLLAPSE_BUTTON");
 	}
 
-	macro clickComment {
+	@summary = "Default summary"
+	macro clickComment() {
 		Click(locator1 = "Button#COMMENT");
 	}
 
-	macro clickConfirm {
+	@summary = "Default summary"
+	macro clickConfirm() {
 		Click(locator1 = "Button#CONFIRM");
 	}
 
-	macro clickCreate {
+	@summary = "Default summary"
+	macro clickCreate() {
 		Button.click(button = "Create");
 	}
 
-	macro clickDelete {
+	@summary = "Default summary"
+	macro clickDelete() {
 		Button.click(button = "Delete");
 	}
 
-	macro clickDone {
+	@summary = "Default summary"
+	macro clickDone() {
 		Button.click(button = "Done");
 	}
 
-	macro clickEdit {
+	@summary = "Default summary"
+	macro clickEdit() {
 		Button.click(button = "Edit");
 	}
 
-	macro clickImport {
+	@summary = "Default summary"
+	macro clickImport() {
 		Button.click(button = "Import");
 	}
 
-	macro clickInstall {
+	@summary = "Default summary"
+	macro clickInstall() {
 		Button.click(button = "Install");
 	}
 
-	macro clickMap {
+	@summary = "Default summary"
+	macro clickMap() {
 		Button.click(button = "Map");
 	}
 
-	macro clickMore {
+	@summary = "Default summary"
+	macro clickMore() {
 		Button.click(button = "More");
 	}
 
-	macro clickNext {
+	@summary = "Default summary"
+	macro clickNext() {
 		Button.click(button = "Next");
 	}
 
-	macro clickNoError {
+	@summary = "Default summary"
+	macro clickNoError(button = null) {
 		ClickNoError.mouseDownMouseUp(
 			key_text = ${button},
 			locator1 = "Button#ANY");
 	}
 
-	macro clickPublish {
+	@summary = "Default summary"
+	macro clickPublish() {
 		ScrollWebElementIntoView(
 			key_text = "Publish",
 			locator1 = "Button#ANY");
@@ -102,49 +123,58 @@ definition {
 		Button.click(button = "Publish");
 	}
 
-	macro clickRemove {
+	@summary = "Default summary"
+	macro clickRemove() {
 		Button.click(button = "Remove");
 	}
 
-	macro clickSave {
+	@summary = "Default summary"
+	macro clickSave() {
 		Button.click(button = "Save");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
-	macro clickSaveAsDraft {
+	@summary = "Default summary"
+	macro clickSaveAsDraft() {
 		Button.click(button = "Save as Draft");
 	}
 
-	macro clickSelect {
+	@summary = "Default summary"
+	macro clickSelect() {
 		Click.javaScriptClick(
 			key_text = "Select",
 			locator1 = "Button#ANY");
 	}
 
-	macro clickShare {
+	@summary = "Default summary"
+	macro clickShare() {
 		Button.click(button = "Share");
 	}
 
-	macro clickSubmitButton {
+	@summary = "Default summary"
+	macro clickSubmitButton() {
 		Click(locator1 = "Button#SUBMIT");
 
 		SelectFrameTop();
 	}
 
-	macro clickSubmitForWorkflow {
+	@summary = "Default summary"
+	macro clickSubmitForWorkflow() {
 		Button.click(button = "Submit for Workflow");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
-	macro clickTrash {
+	@summary = "Default summary"
+	macro clickTrash() {
 		ScrollWebElementIntoView(locator1 = "Button#TRASH_ENABLED");
 
 		Click(locator1 = "Button#TRASH_ENABLED");
 	}
 
-	macro clickUpdate {
+	@summary = "Default summary"
+	macro clickUpdate() {
 		ScrollWebElementIntoView(
 			key_text = "Update",
 			locator1 = "Button#ANY");
@@ -152,17 +182,20 @@ definition {
 		Button.click(button = "Update");
 	}
 
-	macro clickVerifyButton {
+	@summary = "Default summary"
+	macro clickVerifyButton() {
 		Click(locator1 = "Button#VERIFY");
 	}
 
-	macro viewNotPresent {
+	@summary = "Default summary"
+	macro viewNotPresent(button = null) {
 		AssertElementNotPresent(
 			key_text = ${button},
 			locator1 = "Button#ANY");
 	}
 
-	macro viewPresent {
+	@summary = "Default summary"
+	macro viewPresent(button = null) {
 		AssertElementPresent(
 			key_text = ${button},
 			locator1 = "Button#ANY");

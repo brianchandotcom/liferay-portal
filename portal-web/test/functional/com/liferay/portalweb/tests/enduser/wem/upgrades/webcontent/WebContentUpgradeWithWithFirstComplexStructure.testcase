@@ -410,17 +410,17 @@ definition {
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Complex Title 1");
 
 		AssertAttributeValue(
-			value1 = "value",
 			index = 1,
 			key_fieldFieldLabel = "PaginaOrigem",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
+			value1 = "value",
 			value2 = "text1");
 
 		AssertAttributeValue(
-			value1 = "value",
 			index = 1,
 			key_fieldFieldLabel = "Pagina Atual",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
+			value1 = "value",
 			value2 = "text2");
 
 		WebContent.viewWithStructureCP(

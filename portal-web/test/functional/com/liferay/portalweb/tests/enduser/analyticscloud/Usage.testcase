@@ -264,9 +264,9 @@ definition {
 				usageSince = "${percentage} since");
 
 			AssertAttributeValue(
-				value1 = "style",
 				key_metricName = "Individuals",
 				locator1 = "ACUsage#USAGE_BAR",
+				value1 = "style",
 				value2 = "width: ${percentage};");
 		}
 	}
@@ -436,9 +436,9 @@ definition {
 				usageSince = "${percentage} since");
 
 			AssertAttributeValue(
-				value1 = "style",
 				key_metricName = "Page Views",
 				locator1 = "ACUsage#USAGE_BAR",
+				value1 = "style",
 				value2 = "width: ${percentage};");
 		}
 	}

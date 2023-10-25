@@ -1,6 +1,7 @@
 definition {
 
-	macro deleteEntry {
+	@summary = "Default summary"
+	macro deleteEntry(wikiPageTitle = null) {
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		var key_wikiPageTitle = ${wikiPageTitle};
@@ -12,7 +13,8 @@ definition {
 		PortletEntry.clickMoveToRecycleBin();
 	}
 
-	macro viewEntry {
+	@summary = "Default summary"
+	macro viewEntry(entryStatus = null,wikiPageTitle = null,revision = null) {
 		var key_wikiPageTitle = ${wikiPageTitle};
 
 		AssertTextEquals(
@@ -33,7 +35,8 @@ definition {
 		}
 	}
 
-	macro viewNoEntry {
+	@summary = "Default summary"
+	macro viewNoEntry(wikiPageTitle = null) {
 		var key_wikiPageTitle = ${wikiPageTitle};
 
 		AssertElementNotPresent(locator1 = "WikiTable#ALL_PAGES_WIKI_PAGE_TITLE");

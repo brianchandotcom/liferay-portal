@@ -1,6 +1,7 @@
 definition {
 
-	macro addLinkToContent {
+	@summary = "Default summary"
+	macro addLinkToContent(externalLink = null) {
 		Click(locator1 = "CKEditor#TOOLBAR_LINK_BUTTON_BALLOON");
 
 		if (isSet(externalLink)) {
@@ -13,7 +14,8 @@ definition {
 		Click(locator1 = "CKEditor#OK_BUTTON");
 	}
 
-	macro addPageContent {
+	@summary = "Default summary"
+	macro addPageContent(wikiPageContent = null) {
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 		Type(
@@ -23,13 +25,15 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro addPageContentTable {
+	@summary = "Default summary"
+	macro addPageContentTable() {
 		Click(locator1 = "CKEditor#TABLE_ICON");
 
 		Click(locator1 = "CKEditor#OK_BUTTON");
 	}
 
-	macro addPageSummary {
+	@summary = "Default summary"
+	macro addPageSummary(wikiPageSummary = null) {
 		Panel.expandPanel(panel = "Configuration");
 
 		Type(
@@ -42,7 +46,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro addPageTitle {
+	@summary = "Default summary"
+	macro addPageTitle(wikiPageTitle = null,wikiChildPageTitle = null) {
 		if (isSet(wikiPageTitle)) {
 			var title = ${wikiPageTitle};
 		}
@@ -55,17 +60,20 @@ definition {
 			value1 = ${title});
 	}
 
-	macro cancel {
+	@summary = "Default summary"
+	macro cancel() {
 		AssertClick(
 			locator1 = "Button#CANCEL",
 			value1 = "Cancel");
 	}
 
-	macro confirmHTML {
+	@summary = "Default summary"
+	macro confirmHTML() {
 		AssertConfirm(value1 = "You may lose some formatting when switching from Creole to HTML. Do you want to continue?");
 	}
 
-	macro saveAsDraft {
+	@summary = "Default summary"
+	macro saveAsDraft() {
 		AssertClick(
 			locator1 = "Button#SAVE",
 			value1 = "Save as Draft");
@@ -73,7 +81,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro selectPageFormat {
+	@summary = "Default summary"
+	macro selectPageFormat(pageFormat = null) {
 		if (IsNotVisible(locator1 = "Wiki#ADD_PAGE_FORMAT_DROPDOWN")) {
 			Panel.expandPanel(panel = "Configuration");
 
@@ -88,7 +97,8 @@ definition {
 		}
 	}
 
-	macro viewPageContentBody {
+	@summary = "Default summary"
+	macro viewPageContentBody(wikiPageContent = null) {
 		AssertTextEquals(
 			locator1 = "WikiEntry#BODY",
 			value1 = ${wikiPageContent});

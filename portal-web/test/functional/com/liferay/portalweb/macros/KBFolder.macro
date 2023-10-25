@@ -1,6 +1,7 @@
 definition {
 
-	macro addCP {
+	@summary = "Default summary"
+	macro addCP(kbFolderName = null,kbFolderDescription = null,customField = null) {
 		if (isSet(centerPaneButton)) {
 			Button.click(button = "New");
 
@@ -36,7 +37,8 @@ definition {
 		}
 	}
 
-	macro deleteCP {
+	@summary = "Default summary"
+	macro deleteCP(kbFolderName = null) {
 		if (isSet(navigationPane)) {
 			KBFolder.gotoMenuItemViaNavigationPane(
 				kbFolderName = ${kbFolderName},
@@ -53,7 +55,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro editCP {
+	@summary = "Default summary"
+	macro editCP(kbFolderName = null,kbFolderEditedName = null,kbFolderDescription = null) {
 		if (isSet(navigationPane)) {
 			KBFolder.gotoMenuItemViaNavigationPane(
 				kbFolderName = ${kbFolderName},
@@ -72,7 +75,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro gotoCP {
+	@summary = "Default summary"
+	macro gotoCP(kbFolderName = null) {
 		var key_kbFolderName = ${kbFolderName};
 
 		if (isSet(pageTreePanel)) {
@@ -102,7 +106,8 @@ definition {
 			value1 = ${kbFolderName});
 	}
 
-	macro gotoMenuItemViaNavigationPane {
+	@summary = "Default summary"
+	macro gotoMenuItemViaNavigationPane(kbFolderName = null,menuItem = null) {
 		MouseOver(
 			key_itemName = ${kbFolderName},
 			locator1 = "KnowledgeBase#PAGE_TREE_ITEM_NAME");
@@ -121,7 +126,8 @@ definition {
 		}
 	}
 
-	macro gotoViaKBDisplayPG {
+	@summary = "Default summary"
+	macro gotoViaKBDisplayPG(kbFolderName = null) {
 		var key_kbFolderName = ${kbFolderName};
 
 		Select(
@@ -129,7 +135,8 @@ definition {
 			value1 = ${kbFolderName});
 	}
 
-	macro moveFolder {
+	@summary = "Default summary"
+	macro moveFolder(kbFolderName = null,destinationItem = null) {
 		if (isSet(navigationPane)) {
 			KBFolder.gotoMenuItemViaNavigationPane(
 				kbFolderName = ${kbFolderName},
@@ -154,7 +161,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro tearDownCP {
+	@summary = "Default summary"
+	macro tearDownCP() {
 		KBAdmin.openKBAdmin(siteURLKey = "guest");
 
 		while (IsElementPresent(locator1 = "KnowledgeBase#FOLDER_TABLE_HEADER")) {
@@ -168,7 +176,8 @@ definition {
 		}
 	}
 
-	macro viewFolderInfo {
+	@summary = "Default summary"
+	macro viewFolderInfo(kbFolderName = null,entryDefaultInfo = null,foldersQuantity = null,folderQuantity = null,articleQuantity = null) {
 		VerifyElementPresent(
 			key_entryTitle = ${kbFolderName},
 			key_infoText = ${entryDefaultInfo},
@@ -205,7 +214,8 @@ definition {
 		}
 	}
 
-	macro viewFolderNameCP {
+	@summary = "Default summary"
+	macro viewFolderNameCP(kbFolderName = null) {
 		var key_kbFolderName = ${kbFolderName};
 
 		AssertTextEquals(
@@ -213,7 +223,8 @@ definition {
 			value1 = ${kbFolderName});
 	}
 
-	macro viewFolderThroughPageTreePanel {
+	@summary = "Default summary"
+	macro viewFolderThroughPageTreePanel(kbFolderName = null) {
 		AssertVisible(
 			key_itemName = ${kbFolderName},
 			locator1 = "KnowledgeBase#PAGE_TREE_ITEM_NAME");

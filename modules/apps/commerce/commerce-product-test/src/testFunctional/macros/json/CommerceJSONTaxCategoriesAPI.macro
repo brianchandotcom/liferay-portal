@@ -1,6 +1,7 @@
 definition {
 
-	macro _deleteCommerceTaxCategories {
+	@summary = "Default summary"
+	macro _deleteCommerceTaxCategories() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -29,7 +30,8 @@ definition {
 		}
 	}
 
-	macro _getCommerceTaxCategories {
+	@summary = "Default summary"
+	macro _getCommerceTaxCategories() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -57,7 +59,8 @@ definition {
 		return ${commerceTaxCategories};
 	}
 
-	macro _getCommereTaxCategoriesCount {
+	@summary = "Default summary"
+	macro _getCommereTaxCategoriesCount() {
 		var taxCategoriesCount = 0;
 		var commerceTaxCategoriesIds = CommerceJSONTaxCategoriesAPI._getCommerceTaxCategories();
 

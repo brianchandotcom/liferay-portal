@@ -1,6 +1,7 @@
 definition {
 
-	macro assertDetailsUser {
+	@summary = "Default summary"
+	macro assertDetailsUser(detailsList = null) {
 		for (var details : list ${detailsList}) {
 			var key_text = ${details};
 
@@ -8,7 +9,8 @@ definition {
 		}
 	}
 
-	macro firstLoginMKT {
+	@summary = "Default summary"
+	macro firstLoginMKT(recipient = null,userEmailAddress = null,asset = null) {
 		var baseURL = PropsUtil.get("portal.url");
 
 		MockMock._gotoMailMessage(
@@ -34,7 +36,8 @@ definition {
 		User.answerPasswordReminder();
 	}
 
-	macro selectCheckbox {
+	@summary = "Default summary"
+	macro selectCheckbox(checkboxName = null) {
 		if (isSet(checkboxName)) {
 			Check.checkNotVisible(
 				checkboxName = ${checkboxName},
@@ -58,7 +61,8 @@ definition {
 		}
 	}
 
-	macro viewErrorMessage {
+	@summary = "Default summary"
+	macro viewErrorMessage() {
 		AssertElementPresent(locator1 = "MP2Utils#ALERT_NOTIFICATION");
 	}
 

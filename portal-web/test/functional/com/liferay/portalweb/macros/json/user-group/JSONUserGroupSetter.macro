@@ -1,6 +1,7 @@
 definition {
 
-	macro setUserGroupId {
+	@summary = "Default summary"
+	macro setUserGroupId(userGroupName = null) {
 		Variables.assertDefined(parameterList = ${userGroupName});
 
 		var userGroupId = JSONUserGroupAPI._getUserGroupIdByName(userGroupName = ${userGroupName});

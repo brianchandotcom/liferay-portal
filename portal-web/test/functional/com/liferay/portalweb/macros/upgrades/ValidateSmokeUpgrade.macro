@@ -1,6 +1,7 @@
 definition {
 
-	macro changeDisplayStyle {
+	@summary = "Default summary"
+	macro changeDisplayStyle(displayStyle = null) {
 		task ("Change document view type but account for flakiness seen in test execution history") {
 			WaitForPageLoad();
 
@@ -18,7 +19,8 @@ definition {
 		}
 	}
 
-	macro getBuildNumber {
+	@summary = "Default summary"
+	macro getBuildNumber() {
 		var mysqlStatement = "SELECT buildNumber FROM Release_ WHERE servletContextName='portal';";
 
 		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = ${mysqlStatement});
@@ -30,7 +32,8 @@ definition {
 		return ${portalBuildNumber};
 	}
 
-	macro getSchemaVersion {
+	@summary = "Default summary"
+	macro getSchemaVersion() {
 		var mysqlStatement = ${mysqlStatement};
 
 		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = ${mysqlStatement});
@@ -42,7 +45,8 @@ definition {
 		return ${portalSchemaVersion};
 	}
 
-	macro viewUpgrade {
+	@summary = "Default summary"
+	macro viewUpgrade() {
 		Navigator.gotoPage(pageName = "Web Content");
 
 		WebContentDisplayPortlet.viewContent(

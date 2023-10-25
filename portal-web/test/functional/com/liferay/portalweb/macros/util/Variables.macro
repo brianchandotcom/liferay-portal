@@ -1,6 +1,7 @@
 definition {
 
-	macro assertDefined {
+	@summary = "Default summary"
+	macro assertDefined(parameterList = null) {
 		if (!(isSet(parameterList))) {
 			fail("Please define a parameter list in 'parameterList'");
 		}

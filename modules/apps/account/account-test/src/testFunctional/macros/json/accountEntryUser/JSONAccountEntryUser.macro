@@ -1,6 +1,7 @@
 definition {
 
-	macro addAccountEntryUser {
+	@summary = "Default summary"
+	macro addAccountEntryUser(userLastName = null,userScreenName = null,userEmailAddress = null,userFirstName = null,accountEntryName = null) {
 		Variables.assertDefined(parameterList = "${accountEntryName},${userEmailAddress},${userFirstName},${userLastName},${userScreenName}");
 
 		if (!(isSet(creatorEmailAddress))) {
@@ -24,7 +25,8 @@ definition {
 			userScreenName = ${userScreenName});
 	}
 
-	macro addExistUsertoAccount {
+	@summary = "Default summary"
+	macro addExistUsertoAccount(userEmailAddress = null,accountEntryName = null) {
 		Variables.assertDefined(parameterList = "${accountEntryName},${userEmailAddress}");
 
 		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});

@@ -1,6 +1,7 @@
 definition {
 
-	macro addRun {
+	@summary = "Default summary"
+	macro addRun(categoryField = null,listOption = null,categoryField2 = null,listOption2 = null) {
 		LexiconEntry.gotoAdd();
 
 		Select(
@@ -20,7 +21,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro editRun {
+	@summary = "Default summary"
+	macro editRun(firstOption = null,liferayVersion = null,tableEntry = null,portalEdition = null,javaJDK = null,mobileOperatingSystem = null,operatingSystem = null,mobileBrowser = null,productEdition = null,database = null,secondOption = null,applicationServer = null,browser = null,mobileDevice = null) {
 		WaitForElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
 
 		TestrayManage.selectTableRowOption(

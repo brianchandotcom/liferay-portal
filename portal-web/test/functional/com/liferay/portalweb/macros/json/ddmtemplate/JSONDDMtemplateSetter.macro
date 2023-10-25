@@ -1,6 +1,7 @@
 definition {
 
-	macro setClassNameId {
+	@summary = "Default summary"
+	macro setClassNameId(itemType = null) {
 		Variables.assertDefined(parameterList = ${itemType});
 
 		if (${itemType} == "Web Content Article") {
@@ -33,7 +34,8 @@ definition {
 		return ${classNameId};
 	}
 
-	macro setDescriptionMap {
+	@summary = "Default summary"
+	macro setDescriptionMap(description = null) {
 		if (isSet(description)) {
 			var descriptionMap = '''{"en_US":"${description}"}''';
 		}
@@ -44,7 +46,8 @@ definition {
 		return ${descriptionMap};
 	}
 
-	macro setGroupId {
+	@summary = "Default summary"
+	macro setGroupId(groupName = null) {
 		Variables.assertDefined(parameterList = ${groupName});
 
 		if (!(isSet(site))) {
@@ -58,7 +61,8 @@ definition {
 		return ${groupId};
 	}
 
-	macro setNameMap {
+	@summary = "Default summary"
+	macro setNameMap(name = null) {
 		var nameMap = '''{"en_US":"${name}"}''';
 
 		return ${nameMap};

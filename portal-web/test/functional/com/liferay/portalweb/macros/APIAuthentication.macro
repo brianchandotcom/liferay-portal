@@ -1,6 +1,7 @@
 definition {
 
-	macro openToConfigInInstanceSettings {
+	@summary = "Default summary"
+	macro openToConfigInInstanceSettings(portlet = null) {
 		if (!(isSet(baseURL))) {
 			var baseURL = JSONCompany.getPortalURL();
 		}

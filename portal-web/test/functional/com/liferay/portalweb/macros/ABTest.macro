@@ -1,6 +1,7 @@
 definition {
 
-	macro checkAnalyticsCloudInfo {
+	@summary = "Default summary"
+	macro checkAnalyticsCloudInfo(abTestTitle = null) {
 		if (IsElementPresent(key_text = "Review and Run Test", locator1 = "Button#ANY")) {
 			ABTest.runTest();
 		}
@@ -23,7 +24,8 @@ definition {
 		Close(locator1 = "title=Tests - Analytics Cloud");
 	}
 
-	macro checkVariantAnalyticsCloud {
+	@summary = "Default summary"
+	macro checkVariantAnalyticsCloud() {
 		var index = 1;
 
 		if (IsElementPresent(key_text = "Review and Run Test", locator1 = "Button#ANY")) {
@@ -52,7 +54,8 @@ definition {
 		Close(locator1 = "title=Tests - Analytics Cloud");
 	}
 
-	macro createABTest {
+	@summary = "Default summary"
+	macro createABTest(goal = null,testTitle = null) {
 		while (IsElementNotPresent(key_text = "Create Test", locator1 = "Button#ANY")) {
 			Click(locator1 = "ABTest#AB_TEST_BUTTON");
 		}
@@ -68,7 +71,8 @@ definition {
 		Click(locator1 = "Modal#SAVE_BUTTON");
 	}
 
-	macro createVariant {
+	@summary = "Default summary"
+	macro createVariant(variantName = null) {
 		Button.click(button = "Create Variant");
 
 		ABTest.fillInput(
@@ -80,7 +84,8 @@ definition {
 			locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
 	}
 
-	macro deleteABTest {
+	@summary = "Default summary"
+	macro deleteABTest() {
 		Click(locator1 = "ABTest#KEBAB_AB_TEST");
 
 		MenuItem.clickNoError(menuItem = "Delete");
@@ -96,7 +101,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro deleteABTestInAC {
+	@summary = "Default summary"
+	macro deleteABTestInAC() {
 		Click(
 			key_text = "ellipsis-v",
 			locator1 = "Icon#ANY");
@@ -106,7 +112,8 @@ definition {
 		Button.clickDelete();
 	}
 
-	macro deleteVariant {
+	@summary = "Default summary"
+	macro deleteVariant() {
 		if (!(isSet(key_index))) {
 			var key_index = 1;
 		}
@@ -126,13 +133,15 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro editVariant {
+	@summary = "Default summary"
+	macro editVariant(variantName = null) {
 		Click(
 			key_variantName = ${variantName},
 			locator1 = "ABTest#EDIT_VARIANT_BUTTON");
 	}
 
-	macro editVariantName {
+	@summary = "Default summary"
+	macro editVariantName() {
 		if (!(isSet(key_index))) {
 			var key_index = 1;
 		}
@@ -142,7 +151,8 @@ definition {
 		MenuItem.clickNoError(menuItem = "Edit");
 	}
 
-	macro fillInput {
+	@summary = "Default summary"
+	macro fillInput(labelValue = null,key_testTitle = null) {
 		Click(
 			key_fieldLabel = ${labelValue},
 			locator1 = "Modal#INPUT_WITH_LABEL");
@@ -153,7 +163,8 @@ definition {
 			value1 = ${key_testTitle});
 	}
 
-	macro openABTestInAC {
+	@summary = "Default summary"
+	macro openABTestInAC() {
 		ABTest.viewDataInAnalyticsCloud();
 
 		SelectWindow(value1 = "name=undefined");
@@ -165,7 +176,8 @@ definition {
 		}
 	}
 
-	macro openABTestPanel {
+	@summary = "Default summary"
+	macro openABTestPanel() {
 		if (IsNotVisible(locator1 = "ABTest#AB_TEST_SIDE_BAR")) {
 			Click(locator1 = "ABTest#AB_TEST_BUTTON");
 		}
@@ -175,19 +187,22 @@ definition {
 		}
 	}
 
-	macro openEditABTest {
+	@summary = "Default summary"
+	macro openEditABTest() {
 		Click(locator1 = "ABTest#KEBAB_AB_TEST");
 
 		MenuItem.clickNoError(menuItem = "Edit");
 	}
 
-	macro openTab {
+	@summary = "Default summary"
+	macro openTab(tabValue = null) {
 		Click(
 			locator1 = "ABTest#TAB",
 			tabValue = ${tabValue});
 	}
 
-	macro runTest {
+	@summary = "Default summary"
+	macro runTest() {
 		Button.click(button = "Review and Run Test");
 
 		Click(
@@ -199,13 +214,15 @@ definition {
 			locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
 	}
 
-	macro saveVariant {
+	@summary = "Default summary"
+	macro saveVariant() {
 		Click(
 			key_text = "Save Variant",
 			locator1 = "Button#ANY");
 	}
 
-	macro selectElementID {
+	@summary = "Default summary"
+	macro selectElementID() {
 		if (!(isSet(key_index))) {
 			var key_index = 1;
 		}
@@ -225,20 +242,23 @@ definition {
 			value1 = "Target");
 	}
 
-	macro selectGoal {
+	@summary = "Default summary"
+	macro selectGoal(key_goal = null) {
 		Select(
 			locator1 = "Modal#SELECT_WITH_LABEL",
 			selectLabel = "Select Goal",
 			value1 = ${key_goal});
 	}
 
-	macro statusABTestInAC {
+	@summary = "Default summary"
+	macro statusABTestInAC(status = null) {
 		AssertTextEquals(
 			locator1 = "ACTests#SUMMARY_CARD_TEXT",
 			value1 = ${status});
 	}
 
-	macro switchVariant {
+	@summary = "Default summary"
+	macro switchVariant(variantName = null) {
 		ABTest.openABTestPanel();
 
 		Click(
@@ -246,7 +266,8 @@ definition {
 			locator1 = "ABTest#VARIANT_TITLE");
 	}
 
-	macro takeElementID {
+	@summary = "Default summary"
+	macro takeElementID() {
 		if (!(isSet(key_index))) {
 			var key_index = 1;
 		}
@@ -266,7 +287,8 @@ definition {
 		return ${idelement};
 	}
 
-	macro terminateTest {
+	@summary = "Default summary"
+	macro terminateTest() {
 		if (IsElementPresent(key_text = "Terminate Test", locator1 = "Button#ANY")) {
 			Button.clickNoError(button = "Terminate Test");
 		}
@@ -287,13 +309,15 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro viewDataInAnalyticsCloud {
+	@summary = "Default summary"
+	macro viewDataInAnalyticsCloud() {
 		AssertElementPresent(locator1 = "ABTest#VIEW_DATA_ANALYTICS_CLOUD_BUTTON");
 
 		Click(locator1 = "ABTest#VIEW_DATA_ANALYTICS_CLOUD_BUTTON");
 	}
 
-	macro viewInfoItems {
+	@summary = "Default summary"
+	macro viewInfoItems() {
 		var index = 0;
 
 		for (var values : list ${values}) {
@@ -307,7 +331,8 @@ definition {
 		}
 	}
 
-	macro writeId {
+	@summary = "Default summary"
+	macro writeId(elementId = null) {
 		Click(locator1 = "ABTest#ELEMENT_ID_INPUT");
 
 		Type(

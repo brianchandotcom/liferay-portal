@@ -1,6 +1,7 @@
 definition {
 
-	macro _writeAdjustedBoldItalicText {
+	@summary = "Default summary"
+	macro _writeAdjustedBoldItalicText() {
 		Click(locator1 = "PortalShowcase#WRITEABLE_FIELD");
 
 		RobotType.robotTypeShortcut(locator1 = "Ctrl + a");
@@ -26,7 +27,8 @@ definition {
 		PortalShowcase.submit();
 	}
 
-	macro _writeAdjustedBoldText {
+	@summary = "Default summary"
+	macro _writeAdjustedBoldText() {
 		Click(locator1 = "PortalShowcase#WRITEABLE_FIELD");
 
 		RobotType.robotTypeShortcut(locator1 = "Ctrl + a");
@@ -44,7 +46,8 @@ definition {
 		PortalShowcase.submit();
 	}
 
-	macro _writeText {
+	@summary = "Default summary"
+	macro _writeText(text = null) {
 		Click(locator1 = "PortalShowcase#WRITEABLE_FIELD");
 
 		RobotType(locator1 = ${text});
@@ -52,7 +55,8 @@ definition {
 		PortalShowcase.submit();
 	}
 
-	macro checkText {
+	@summary = "Default summary"
+	macro checkText() {
 		var boldOpen = ${boldOpen};
 		var boldClose = ${boldClose};
 		var italicOpen = ${italicOpen};
@@ -114,7 +118,8 @@ definition {
 		AssertElementNotPresent(locator1 = "PortalShowcase#REQUIRED_ERROR_MESSAGE");
 	}
 
-	macro submit {
+	@summary = "Default summary"
+	macro submit() {
 		if (IsElementPresent(locator1 = "PortalShowcase#SUBMIT_BUTTON")) {
 			Click(locator1 = "PortalShowcase#SUBMIT_BUTTON");
 		}
@@ -123,7 +128,8 @@ definition {
 		}
 	}
 
-	macro submitImmediate {
+	@summary = "Default summary"
+	macro submitImmediate(textResult = null,immediate = null,messageImmediate2 = null,messageImmediate1 = null,text = null) {
 		if (${immediate} == "true") {
 			Click(locator1 = "PortalShowcase#WRITEABLE_FIELD");
 

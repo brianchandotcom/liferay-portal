@@ -1,6 +1,7 @@
 definition {
 
-	macro viewQuickActionMenuNotPresent {
+	@summary = "Default summary"
+	macro viewQuickActionMenuNotPresent(title = null) {
 		AssertNotVisible(
 			key_title = ${title},
 			locator1 = "FrontendDataSet#VIEW_ACTION_BUTTON");
@@ -14,7 +15,8 @@ definition {
 			locator1 = "FrontendDataSet#DELETE_ACTION_BUTTON");
 	}
 
-	macro viewQuickActionMenuPresent {
+	@summary = "Default summary"
+	macro viewQuickActionMenuPresent(title = null) {
 		AssertElementPresent(
 			key_title = ${title},
 			locator1 = "FrontendDataSet#VIEW_ACTION_BUTTON");

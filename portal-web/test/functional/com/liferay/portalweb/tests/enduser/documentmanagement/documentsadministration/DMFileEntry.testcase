@@ -2691,8 +2691,8 @@ definition {
 		Navigator.openSpecificURL(url = ${latestVersionURL});
 
 		AssertAttributeValue(
-			value1 = "baseURI",
 			locator1 = "//embed",
+			value1 = "baseURI",
 			value2 = ${latestVersionURL});
 
 		DMNavigator.openToEntryInAdmin(
@@ -2705,8 +2705,8 @@ definition {
 		Navigator.openSpecificURL(url = ${latestVersionURL});
 
 		AssertAttributeValue(
-			value1 = "baseURI",
 			locator1 = "//embed",
+			value1 = "baseURI",
 			value2 = ${latestVersionURL});
 	}
 

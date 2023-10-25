@@ -1,6 +1,7 @@
 definition {
 
-	macro _addCommerceShipment {
+	@summary = "Default summary"
+	macro _addCommerceShipment(orderId = null) {
 		Variables.assertDefined(parameterList = ${orderId});
 
 		var baseURL = ${baseURL};
@@ -89,7 +90,8 @@ definition {
 		return ${shipmentId};
 	}
 
-	macro _deleteAllCommerceShipments {
+	@summary = "Default summary"
+	macro _deleteAllCommerceShipments() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -120,7 +122,8 @@ definition {
 		}
 	}
 
-	macro _getCommerceShipmentIds {
+	@summary = "Default summary"
+	macro _getCommerceShipmentIds(shipmentCount = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -147,7 +150,8 @@ definition {
 		return ${shipmentIds};
 	}
 
-	macro _getCommerceShipmentsCount {
+	@summary = "Default summary"
+	macro _getCommerceShipmentsCount() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -169,7 +173,8 @@ definition {
 		return ${shipmentsCount};
 	}
 
-	macro _updateCommerceShipmentStatus {
+	@summary = "Default summary"
+	macro _updateCommerceShipmentStatus(shipmentId = null) {
 		Variables.assertDefined(parameterList = "${shipmentId},${shipmentStatus}");
 
 		var baseURL = ${baseURL};

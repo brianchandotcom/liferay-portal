@@ -1,12 +1,14 @@
 definition {
 
-	macro clearSearchResult {
+	@summary = "Default summary"
+	macro clearSearchResult() {
 		Click(locator1 = "Link#CLEAR");
 
 		AssertElementNotPresent(locator1 = "Search#SEARCH_INFO");
 	}
 
-	macro searchCP {
+	@summary = "Default summary"
+	macro searchCP(searchTerm = null) {
 		WaitForElementPresent(locator1 = "TextInput#SEARCH");
 
 		AssertElementPresent(locator1 = "Icon#BASIC_SEARCH");
@@ -24,7 +26,8 @@ definition {
 		}
 	}
 
-	macro searchPG {
+	@summary = "Default summary"
+	macro searchPG(searchTerm = null,portletName = null) {
 		var key_portletName = ${portletName};
 
 		AssertElementPresent(locator1 = "Portlet#SEARCH_FIELD");
@@ -42,7 +45,8 @@ definition {
 		}
 	}
 
-	macro viewNotPresentInContentBody {
+	@summary = "Default summary"
+	macro viewNotPresentInContentBody(siteName = null,elementValue = null) {
 		AssertClick(
 			key_rowEntry = ${siteName},
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",

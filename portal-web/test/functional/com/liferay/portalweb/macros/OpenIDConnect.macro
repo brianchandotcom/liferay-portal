@@ -2,7 +2,8 @@ definition {
 
 	// Some attributes are hard coded like client secret, implement additional changes for other url's or realms
 
-	macro _getKeycloakUserAccessToken {
+	@summary = "Default summary"
+	macro _getKeycloakUserAccessToken(userEmail = null) {
 		var curl = '''
 			http://localhost:18080/auth/realms/master/protocol/openid-connect/token \
 				-H 'Content-Type: application/x-www-form-urlencoded'
@@ -18,7 +19,8 @@ definition {
 		return ${accessToken};
 	}
 
-	macro _getKeycloakUserInformations {
+	@summary = "Default summary"
+	macro _getKeycloakUserInformations(accessToken = null) {
 		var curl = '''
 			http://localhost:18080/auth/realms/master/protocol/openid-connect/userinfo \
 				-H 'Authorization: Bearer ${accessToken}'
@@ -31,7 +33,8 @@ definition {
 		return ${userInformation};
 	}
 
-	macro acceptConditions {
+	@summary = "Default summary"
+	macro acceptConditions() {
 		if (IsElementPresent.pauseIsElementPresent(locator1 = "GoogleLogin#ALLOW")) {
 			Click(locator1 = "GoogleLogin#ALLOW");
 		}
@@ -51,7 +54,8 @@ definition {
 		}
 	}
 
-	macro accountSignIn {
+	@summary = "Default summary"
+	macro accountSignIn(userPassword = null,specificURL = null,userEmailAddress = null) {
 		if (!(isSet(specificURL))) {
 			Navigator.openURL();
 		}
@@ -95,7 +99,8 @@ definition {
 		}
 	}
 
-	macro addProvider {
+	@summary = "Default summary"
+	macro addProvider(openIdConnectClientSecret = null,openIdConnectClientId = null,customTokenRequestParameters = null,customAuthorizationRequestParameters = null,discoveryEndpoint = null,providerName = null) {
 		Button.clickAdd();
 
 		FormFields.editTextMultiline(
@@ -140,7 +145,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro enableOpenIdConnect {
+	@summary = "Default summary"
+	macro enableOpenIdConnect() {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -160,7 +166,8 @@ definition {
 		WaitForElementPresent(locator1 = "Button#UPDATE");
 	}
 
-	macro enableOpenIDConnectCustomParametersDebugLogs {
+	@summary = "Default summary"
+	macro enableOpenIDConnectCustomParametersDebugLogs() {
 		ServerAdministration.addCategoryLogLevels(
 			categoryLevel = "DEBUG",
 			categoryName = "com.liferay.portal.security.sso.openid.connect.internal.OpenIdConnectAuthenticationHandlerImpl");
@@ -170,7 +177,8 @@ definition {
 			categoryName = "com.liferay.portal.security.sso.openid.connect.internal.util.OpenIdConnectTokenRequestUtil");
 	}
 
-	macro enableOpenIDConnectDebugLogs {
+	@summary = "Default summary"
+	macro enableOpenIDConnectDebugLogs() {
 		ServerAdministration.openServerAdmin();
 
 		ServerAdministration.addCategoryLogLevels(
@@ -178,7 +186,8 @@ definition {
 			categoryName = "com.liferay.login.authentication.openid.connect.web");
 	}
 
-	macro setTokenRefreshOffset {
+	@summary = "Default summary"
+	macro setTokenRefreshOffset(expirationTime = null) {
 		AssertElementPresent(locator1 = "OpenIDConnect#TOKEN_REFRESH_OFFSET");
 
 		AssertTextEquals(
@@ -198,7 +207,8 @@ definition {
 			value1 = ${expirationTime});
 	}
 
-	macro viewNoProvider {
+	@summary = "Default summary"
+	macro viewNoProvider() {
 		AssertClick(
 			locator1 = "UserBar#USER_SIGN_IN",
 			value1 = "Sign In");
@@ -206,7 +216,8 @@ definition {
 		AssertElementNotPresent(locator1 = "Icon#OPENID_CONNECT");
 	}
 
-	macro viewProvider {
+	@summary = "Default summary"
+	macro viewProvider() {
 		AssertClick(
 			locator1 = "UserBar#USER_SIGN_IN",
 			value1 = "Sign In");

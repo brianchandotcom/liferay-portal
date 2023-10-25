@@ -1,6 +1,7 @@
 definition {
 
-	macro goToCompareRuns {
+	@summary = "Default summary"
+	macro goToCompareRuns(button = null) {
 		Click(
 			key_button = "Compare Runs",
 			locator1 = "TestrayDropdown#SIDEBAR_CONTENT");

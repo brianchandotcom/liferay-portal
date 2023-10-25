@@ -1,6 +1,7 @@
 definition {
 
-	macro addNewNotificationTemplate {
+	@summary = "Default summary"
+	macro addNewNotificationTemplate(notificationType = null) {
 		Notifications.goToNotificationTemplateAdmin();
 
 		LexiconEntry.gotoAdd();
@@ -13,7 +14,8 @@ definition {
 		}
 	}
 
-	macro addNotificationTemplateAttachment {
+	@summary = "Default summary"
+	macro addNotificationTemplateAttachment(objectLabel = null) {
 		Click(
 			key_dataSource = "Select a Data Source",
 			locator1 = "ObjectNotifications#DATA_SOURCE_ATTACHMENTS");
@@ -27,7 +29,8 @@ definition {
 		Click(locator1 = "ObjectNotifications#FIELD_ATTACHMENTS_OBJECT_SELECT_FIELD");
 	}
 
-	macro addNotificationViaAPI {
+	@summary = "Default summary"
+	macro addNotificationViaAPI(cc = null,userPassword = null,bcc = null,subject = null,fromName = null,userEmailAddress = null,fromAddress = null,to = null,body = null,type = null) {
 		JSONNotifications.addEntryNotificationQueue(
 			bcc = ${bcc},
 			body = ${body},
@@ -41,7 +44,8 @@ definition {
 			userPassword = ${userPassword});
 	}
 
-	macro configureEmailNotificationTemplate {
+	@summary = "Default summary"
+	macro configureEmailNotificationTemplate(cc = null,bcc = null,emailBody = null,subject = null,name = null,fromName = null,description = null,fromAddress = null,entryTo = null) {
 		Type(
 			key_text = "Name",
 			locator1 = "TextInput#ANY",
@@ -93,7 +97,8 @@ definition {
 			value1 = ${emailBody});
 	}
 
-	macro configureUserNotificationTemplate {
+	@summary = "Default summary"
+	macro configureUserNotificationTemplate(recipientType = null,subject = null,name = null,description = null,userName = null) {
 		Type(
 			key_text = "Name",
 			locator1 = "TextInput#ANY",
@@ -132,13 +137,15 @@ definition {
 		}
 	}
 
-	macro deleteNotificationEntry {
+	@summary = "Default summary"
+	macro deleteNotificationEntry(triggerBy = null) {
 		Click(
 			key_text = ${triggerBy},
 			locator1 = "ObjectNotifications#DELETE_NOTIFICATION_IN_QUEUE");
 	}
 
-	macro deleteNotificationTemplate {
+	@summary = "Default summary"
+	macro deleteNotificationTemplate(templateName = null) {
 		Click(
 			key_objectLabel = ${templateName},
 			locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
@@ -148,7 +155,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro editNotificationTemplate {
+	@summary = "Default summary"
+	macro editNotificationTemplate(cc = null,notificationTemplateName = null,bcc = null,emailBody = null,subject = null,name = null,fromName = null,description = null,fromAddress = null,entryTo = null,externalReferenceCode = null) {
 		Click(
 			key_name = ${notificationTemplateName},
 			locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
@@ -220,7 +228,8 @@ definition {
 		}
 	}
 
-	macro resendNotificationInTheQueue {
+	@summary = "Default summary"
+	macro resendNotificationInTheQueue(triggerBy = null) {
 		Click(
 			key_text = ${triggerBy},
 			locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
@@ -228,7 +237,8 @@ definition {
 		MenuItem.clickNoError(menuItem = "Resend");
 	}
 
-	macro selectEntity {
+	@summary = "Default summary"
+	macro selectEntity(entityName = null) {
 		Click(locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE");
 
 		Click(
@@ -236,7 +246,8 @@ definition {
 			locator1 = "ObjectAdmin#LAYOUT_ADD_FIELD_OPTION");
 	}
 
-	macro viewEmailNotificationTemplateDetails {
+	@summary = "Default summary"
+	macro viewEmailNotificationTemplateDetails(cc = null,bcc = null,emailBody = null,subject = null,name = null,fromName = null,description = null,fromAddress = null,notificationType = null,entryTo = null,externalReferenceCode = null) {
 		Click(
 			key_name = ${name},
 			locator1 = "ObjectAdmin#TABLE_LIST_TITLE");
@@ -310,7 +321,8 @@ definition {
 		}
 	}
 
-	macro viewUserNotificationTemplateDetails {
+	@summary = "Default summary"
+	macro viewUserNotificationTemplateDetails(recipientType = null,subject = null,name = null,description = null,externalReferenceCode = null) {
 		Click(
 			key_name = ${name},
 			locator1 = "ObjectAdmin#TABLE_LIST_TITLE");

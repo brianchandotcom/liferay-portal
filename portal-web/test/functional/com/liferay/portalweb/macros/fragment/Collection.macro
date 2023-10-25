@@ -1,6 +1,7 @@
 definition {
 
-	macro deleteCollection {
+	@summary = "Default summary"
+	macro deleteCollection(collectionName = null) {
 		Navigator.gotoNavNested(navNested = ${collectionName});
 
 		Click.waitForMenuToggleJSClick(
@@ -18,7 +19,8 @@ definition {
 			locator1 = "Modal#MODAL_FOOTER_BUTTON");
 	}
 
-	macro editCollection {
+	@summary = "Default summary"
+	macro editCollection(collectionDescription = null,collectionName = null) {
 		PortletEntry.inputName(name = ${collectionName});
 
 		if (isSet(collectionDescription)) {
@@ -26,7 +28,8 @@ definition {
 		}
 	}
 
-	macro renameCollection {
+	@summary = "Default summary"
+	macro renameCollection(collectionDescription = null,collectionName = null,collectionNameEdit = null) {
 		Navigator.gotoNavNested(navNested = ${collectionName});
 
 		Click.waitForMenuToggleJSClick(
@@ -44,13 +47,15 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro viewNotPresent {
+	@summary = "Default summary"
+	macro viewNotPresent(collectionName = null) {
 		AssertElementNotPresent(
 			key_navNested = ${collectionName},
 			locator1 = "NavNested#NAV_NESTED_LINK");
 	}
 
-	macro viewPresent {
+	@summary = "Default summary"
+	macro viewPresent(collectionName = null) {
 		AssertElementPresent(
 			key_navNested = ${collectionName},
 			locator1 = "NavNested#NAV_NESTED_LINK");

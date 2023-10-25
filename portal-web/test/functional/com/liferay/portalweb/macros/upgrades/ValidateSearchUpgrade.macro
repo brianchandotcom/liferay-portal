@@ -1,6 +1,7 @@
 definition {
 
-	macro viewClassicSearchPortletConfiguration {
+	@summary = "Default summary"
+	macro viewClassicSearchPortletConfiguration() {
 		Navigator.gotoSitePage(
 			pageName = "Site Page",
 			siteName = "Site Name");
@@ -41,7 +42,8 @@ definition {
 			locator1 = "SearchPage#USER_FACET_TERM");
 	}
 
-	macro viewResultRankingsEntry {
+	@summary = "Default summary"
+	macro viewResultRankingsEntry() {
 		SearchTuning.openResultRankingsAdmin();
 
 		LexiconEntry.gotoEntryMenuItem(
@@ -57,7 +59,8 @@ definition {
 			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT");
 	}
 
-	macro viewSearchBarWidgetTemplate {
+	@summary = "Default summary"
+	macro viewSearchBarWidgetTemplate() {
 		Navigator.openURL();
 
 		AssertTextEquals.assertPartialText(
@@ -79,7 +82,8 @@ definition {
 			locator1 = "LexiconTable#TABLE_ENTRY_TITLE");
 	}
 
-	macro viewSearchPortletsConfiguration {
+	@summary = "Default summary"
+	macro viewSearchPortletsConfiguration() {
 		Navigator.gotoSitePage(
 			pageName = "Site Page",
 			siteName = "Site Name");
@@ -146,7 +150,8 @@ definition {
 			locator1 = "Search#FACET_TERM_FREQUENCIES");
 	}
 
-	macro viewSynonymsEntry {
+	@summary = "Default summary"
+	macro viewSynonymsEntry() {
 		SearchTuning.openSynonymsAdmin();
 
 		AssertElementPresent(

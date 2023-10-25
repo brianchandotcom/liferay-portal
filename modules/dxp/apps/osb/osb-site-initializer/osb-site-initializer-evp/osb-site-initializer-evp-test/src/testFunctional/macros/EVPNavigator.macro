@@ -1,12 +1,14 @@
 definition {
 
-	macro assertActiveBreadcrumb {
+	@summary = "Default summary"
+	macro assertActiveBreadcrumb(activeItem = null) {
 		AssertElementPresent(
 			locator1 = "Breadcrumb#BREADCRUMB_ENTRY_ACTIVE_ENTRY",
 			value1 = ${activeItem});
 	}
 
-	macro goToNavItem {
+	@summary = "Default summary"
+	macro goToNavItem(navItem = null) {
 		Click(
 			key_tab = ${navItem},
 			locator1 = "NavTab#TAB_LINK");
@@ -14,13 +16,15 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro navItemNotPresent {
+	@summary = "Default summary"
+	macro navItemNotPresent(navItem = null) {
 		AssertElementNotPresent(
 			key_navItem = ${navItem},
 			locator1 = "NavBar#NAV_ITEM_REDIRECTION");
 	}
 
-	macro selectNewsTitle {
+	@summary = "Default summary"
+	macro selectNewsTitle(title = null) {
 		Click(
 			key_title = ${title},
 			locator1 = "EVPHome#NEWS_TITLE");

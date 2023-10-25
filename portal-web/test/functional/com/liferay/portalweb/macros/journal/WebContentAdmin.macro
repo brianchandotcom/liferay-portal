@@ -1,24 +1,29 @@
 definition {
 
-	macro changeDisplayStyle {
+	@summary = "Default summary"
+	macro changeDisplayStyle(displayStyle = null) {
 		ManagementBar.changeDisplayStyle(displayStyle = ${displayStyle});
 	}
 
-	macro clickEntryEllipsis {
+	@summary = "Default summary"
+	macro clickEntryEllipsis(entry = null) {
 		LexiconList.clickEllipsis(listEntry = ${entry});
 	}
 
-	macro clickEntryEllipsisItem {
+	@summary = "Default summary"
+	macro clickEntryEllipsisItem(entry = null,item = null) {
 		LexiconList.clickEllipsisItem(
 			item = ${item},
 			listEntry = ${entry});
 	}
 
-	macro clickSelectAllCheckbox {
+	@summary = "Default summary"
+	macro clickSelectAllCheckbox() {
 		ManagementBar.clickSelectAllCheckbox();
 	}
 
-	macro configureEmailNotifications {
+	@summary = "Default summary"
+	macro configureEmailNotifications(navTab = null,fieldName = null,notificationsSubject = null,notificationsBody = null,enabled = null) {
 		Navigator.gotoNavTab(navTab = ${navTab});
 
 		if (${enabled} == "true") {
@@ -44,11 +49,13 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro gotoEntry {
+	@summary = "Default summary"
+	macro gotoEntry(entry = null) {
 		LexiconList.clickListEntryTitle(listEntry = ${entry});
 	}
 
-	macro moveEntryToRecycleBin {
+	@summary = "Default summary"
+	macro moveEntryToRecycleBin(entry = null) {
 		WebContentAdmin.clickEntryEllipsisItem(
 			entry = ${entry},
 			item = "Delete");
@@ -56,15 +63,18 @@ definition {
 		Confirm(value1 = "null");
 	}
 
-	macro viewEntryNotPresent {
+	@summary = "Default summary"
+	macro viewEntryNotPresent(entry = null) {
 		LexiconList.viewListEntryNotPresent(listEntry = ${entry});
 	}
 
-	macro viewEntryTitle {
+	@summary = "Default summary"
+	macro viewEntryTitle(entry = null) {
 		LexiconList.viewListEntryTitleLink(listEntry = ${entry});
 	}
 
-	macro viewEntryWorkflowStatus {
+	@summary = "Default summary"
+	macro viewEntryWorkflowStatus(entry = null,workflowStatus = null) {
 		LexiconList.viewListEntryLabel(
 			listEntry = ${entry},
 			listEntryLabel = ${workflowStatus});

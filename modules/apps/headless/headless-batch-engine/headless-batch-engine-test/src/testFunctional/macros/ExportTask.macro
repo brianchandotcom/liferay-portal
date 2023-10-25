@@ -1,6 +1,7 @@
 definition {
 
-	macro assertProcessedItemsCountWithCompletedStatus {
+	@summary = "Default summary"
+	macro assertProcessedItemsCountWithCompletedStatus(response = null,expectedCount = null) {
 		Variables.assertDefined(parameterList = "${expectedCount},${response}");
 
 		var actualCount = JSONUtil.getWithJSONPath(${response}, "$..[?(@['executeStatus'] == 'COMPLETED')]['processedItemsCount']");
@@ -10,7 +11,8 @@ definition {
 			expected = ${expectedCount});
 	}
 
-	macro getExportTaskById {
+	@summary = "Default summary"
+	macro getExportTaskById(exportTaskId = null) {
 		Variables.assertDefined(parameterList = ${exportTaskId});
 
 		var portalURL = JSONCompany.getPortalURL();

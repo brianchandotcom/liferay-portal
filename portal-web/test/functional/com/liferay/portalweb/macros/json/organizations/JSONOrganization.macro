@@ -1,6 +1,7 @@
 definition {
 
-	macro addOrganization {
+	@summary = "Default summary"
+	macro addOrganization(organizationType = null,organizationCountry = null,organizationName = null,organizationSite = null,organizationRegion = null,parentOrganizationName = null) {
 		Variables.assertDefined(parameterList = ${organizationName});
 
 		if (isSet(parentOrganizationName)) {
@@ -16,7 +17,8 @@ definition {
 			parentOrganizationId = ${parentOrganizationId});
 	}
 
-	macro addOrganizationToDepot {
+	@summary = "Default summary"
+	macro addOrganizationToDepot(depotName = null,organizationName = null) {
 		Variables.assertDefined(parameterList = "${organizationName},${depotName}");
 
 		var organizationId = JSONOrganization.getOrganizationIdByName(organizationName = ${organizationName});
@@ -29,7 +31,8 @@ definition {
 			organizationId = ${organizationId});
 	}
 
-	macro addOrganizationToSite {
+	@summary = "Default summary"
+	macro addOrganizationToSite(organizationName = null,siteName = null) {
 		Variables.assertDefined(parameterList = "${organizationName},${siteName}");
 
 		var organizationId = JSONOrganization.getOrganizationIdByName(organizationName = ${organizationName});
@@ -40,7 +43,8 @@ definition {
 			organizationId = ${organizationId});
 	}
 
-	macro assignPasswordPolicyToOrganization {
+	@summary = "Default summary"
+	macro assignPasswordPolicyToOrganization(passwordPolicyName = null,organizationName = null) {
 		Variables.assertDefined(parameterList = "${organizationName},${passwordPolicyName}");
 
 		var organizationId = JSONOrganization.getOrganizationIdByName(organizationName = ${organizationName});
@@ -51,7 +55,8 @@ definition {
 			passwordPolicyId = ${passwordPolicyId});
 	}
 
-	macro assignUserToOrganization {
+	@summary = "Default summary"
+	macro assignUserToOrganization(organizationName = null,userEmailAddress = null,parentOrganizationName = null) {
 		Variables.assertDefined(parameterList = "${organizationName},${userEmailAddress}");
 
 		if (isSet(parentOrganizationName)) {
@@ -68,7 +73,8 @@ definition {
 			userId = ${userId});
 	}
 
-	macro deleteOrganizationByName {
+	@summary = "Default summary"
+	macro deleteOrganizationByName(organizationName = null,parentOrganizationName = null) {
 		Variables.assertDefined(parameterList = ${organizationName});
 
 		if (isSet(parentOrganizationName)) {
@@ -85,7 +91,8 @@ definition {
 		JSONOrganizationAPI._deleteOrganization(organizationId = ${organizationId});
 	}
 
-	macro getOrganizationIdByName {
+	@summary = "Default summary"
+	macro getOrganizationIdByName(organizationName = null) {
 		Variables.assertDefined(parameterList = ${organizationName});
 
 		var companyId = JSONCompany.getCompanyId();
@@ -107,7 +114,8 @@ definition {
 		return ${organizationId};
 	}
 
-	macro getOrganizationName {
+	@summary = "Default summary"
+	macro getOrganizationName(organizationId = null) {
 		Variables.assertDefined(parameterList = ${organizationId});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -123,7 +131,8 @@ definition {
 		return ${organizationName};
 	}
 
-	macro tearDownOrganizations {
+	@summary = "Default summary"
+	macro tearDownOrganizations() {
 		var organizationsIds = ListUtil.newList();
 		var parentOrganizationIds = JSONOrganizationAPI._getOrganization(parentOrganizationId = 0);
 

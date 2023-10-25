@@ -1,6 +1,7 @@
 definition {
 
-	macro activateScheduleTrigger {
+	@summary = "Default summary"
+	macro activateScheduleTrigger(cronExpression = null,trigger = null) {
 		LexiconEntry.gotoEntry(rowEntry = ${trigger});
 
 		Navigator.gotoNavTab(navTab = "Job Scheduler Trigger");
@@ -19,7 +20,8 @@ definition {
 		Button.clickCancel();
 	}
 
-	macro addScheduleTrigger {
+	@summary = "Default summary"
+	macro addScheduleTrigger(triggerName = null,triggerProperties = null,taskExecutorType = null) {
 		Click(locator1 = "Button#NEW");
 
 		MenuItem.click(menuItem = ${taskExecutorType});
@@ -39,7 +41,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro deleteJobItem {
+	@summary = "Default summary"
+	macro deleteJobItem(jobItemName = null) {
 		Variables.assertDefined(parameterList = ${jobItemName});
 
 		Click(
@@ -59,13 +62,15 @@ definition {
 			locator1 = "JobScheduler#JOB_ITEM_NAME");
 	}
 
-	macro openJobSchedulerAdmin {
+	@summary = "Default summary"
+	macro openJobSchedulerAdmin(baseURL = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_dispatch_web_internal_portlet_DispatchPortlet");
 	}
 
-	macro setJobSchedulerTrigger {
+	@summary = "Default summary"
+	macro setJobSchedulerTrigger(key_name = null,selectFieldValue = null,selectFieldLabel = null) {
 		Variables.assertDefined(parameterList = "${key_name},${selectFieldLabel},${selectFieldValue}");
 
 		Click(

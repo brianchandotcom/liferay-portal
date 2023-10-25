@@ -1,6 +1,7 @@
 definition {
 
-	macro configure {
+	@summary = "Default summary"
+	macro configure(enableSpamModerationFor = null) {
 		if (${enableSpamModerationFor} == "Message Boards") {
 			Check(locator1 = "Akismet#ENABLED_FOR_MESSAGE_BOARDS_CHECKBOX");
 		}
@@ -18,7 +19,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro tearDownConfiguration {
+	@summary = "Default summary"
+	macro tearDownConfiguration() {
 		ApplicationsMenu.gotoPortlet(
 			category = "Apps",
 			panel = "Control Panel",

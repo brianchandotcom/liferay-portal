@@ -1,6 +1,7 @@
 definition {
 
-	macro addAccount {
+	@summary = "Default summary"
+	macro addAccount() {
 		if (!(isSet(accountName))) {
 			var accountName = "Company Name 1";
 		}
@@ -8,7 +9,8 @@ definition {
 		JSONPRMAPI.addAccountEntry(accountName = ${accountName});
 	}
 
-	macro changeClaimStatus {
+	@summary = "Default summary"
+	macro changeClaimStatus(userEmailAddress = null,claimId = null,claimStatus = null) {
 		var statusKey = StringUtil.lowerCaseFirstLetter(${claimStatus});
 
 		var statusKey = StringUtil.replace(${statusKey}, " ", "");
@@ -19,7 +21,8 @@ definition {
 			userEmailAddress = ${userEmailAddress});
 	}
 
-	macro changeMDFStatus {
+	@summary = "Default summary"
+	macro changeMDFStatus(mdfStatus = null,userEmailAddress = null,staticRequestId = null) {
 		var statusKey = StringUtil.replace(${mdfStatus}, " ", "");
 
 		var statusKey = StringUtil.lowerCaseFirstLetter(${statusKey});
@@ -38,7 +41,8 @@ definition {
 		}
 	}
 
-	macro createMDFRequest {
+	@summary = "Default summary"
+	macro createMDFRequest(secondBudgetValueList = null,secondActivityName = null) {
 		var totalCostOfExpense = 0;
 
 		if (!(isSet(userEmailAddress))) {
@@ -229,7 +233,8 @@ definition {
 		return ${requestId};
 	}
 
-	macro updateAccount {
+	@summary = "Default summary"
+	macro updateAccount() {
 		if (!(isSet(accountName))) {
 			var accountName = "Company Name 1";
 		}

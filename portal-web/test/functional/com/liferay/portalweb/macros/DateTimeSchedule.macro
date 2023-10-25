@@ -1,6 +1,7 @@
 definition {
 
-	macro getCurrentDisplayDate {
+	@summary = "Default summary"
+	macro getCurrentDisplayDate(field = null) {
 		var key_field = ${field};
 
 		var displayDate = selenium.getAttribute("//input[contains(@id,'${key_field}Date')]@value");
@@ -10,7 +11,8 @@ definition {
 		return ${displayDate};
 	}
 
-	macro getCurrentDisplayTime {
+	@summary = "Default summary"
+	macro getCurrentDisplayTime(field = null) {
 		var key_field = ${field};
 
 		var displayDateHour = selenium.getAttribute("//input[contains(@id,'${key_field}DateHour')]@value");
@@ -41,7 +43,8 @@ definition {
 		return ${currentTime};
 	}
 
-	macro increaseDisplayTime {
+	@summary = "Default summary"
+	macro increaseDisplayTime(field = null,minuteIncreaseValue = null) {
 		var key_field = ${field};
 
 		var displayDateHour = selenium.getAttribute("//input[contains(@id,'${key_field}DateHour')]@value");

@@ -1,6 +1,7 @@
 definition {
 
-	macro _deleteRemoteAppAPI {
+	@summary = "Default summary"
+	macro _deleteRemoteAppAPI() {
 		var currentURL = Navigator.getCurrentURL();
 
 		var findWhereIdBegins = StringUtil.extractLast(${currentURL}, "externalReferenceCode=");
@@ -10,7 +11,8 @@ definition {
 		JSONClientExtension.deleteIFrameRemoteAppEntry(externalReferenceCode = ${externalReferenceCodeValue});
 	}
 
-	macro addApp {
+	@summary = "Default summary"
+	macro addApp(entryName = null,entryURL = null,entryHTMLElementName = null,mainURL = null) {
 		ClientExtensionEntry.addEntry(
 			entryHTMLElementName = ${entryHTMLElementName},
 			entryName = ${entryName},
@@ -20,7 +22,8 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro addCustomElement {
+	@summary = "Default summary"
+	macro addCustomElement(entryName = null,entryURL = null,entryHtmlName = null) {
 		ClientExtensionGeneral.addType(type = "Custom Element");
 
 		ClientExtensionEntry.addCustomElement(
@@ -31,7 +34,8 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro addCustomElementAllFields {
+	@summary = "Default summary"
+	macro addCustomElementAllFields(entryProperties = null,entryName = null,entryURL = null,entryHtmlName = null,entryCssurl = null) {
 		ClientExtensionGeneral.addType(type = "Custom Element");
 
 		ClientExtensionEntry.addCustomElementAllFields(
@@ -48,7 +52,8 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro addCustomElementMultipleURLs {
+	@summary = "Default summary"
+	macro addCustomElementMultipleURLs() {
 		ClientExtensionGeneral.addType(type = "Custom Element");
 
 		ClientExtensionEntry.addCustomElementMultipleURLs(
@@ -62,7 +67,8 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro addEntryWithPortletCategory {
+	@summary = "Default summary"
+	macro addEntryWithPortletCategory() {
 		ClientExtensionGeneral.addType(type = "IFrame");
 
 		ClientExtensionEntry.addEntry(
@@ -74,7 +80,8 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro addFrontendDataSetFilter {
+	@summary = "Default summary"
+	macro addFrontendDataSetFilter(javaScriptURL = null,name = null,description = null) {
 		LexiconEntry.gotoAdd();
 
 		MenuItem.click(menuItem = "Add Frontend Data Set Filter");
@@ -98,7 +105,8 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro addThemeSvgSpritemap {
+	@summary = "Default summary"
+	macro addThemeSvgSpritemap(entryName = null,entryURL = null) {
 		ClientExtensionGeneral.addType(type = "Add Theme SVG Spritemap");
 
 		ClientExtensionGeneral.addThemeSvgSpritemapElement(
@@ -112,7 +120,8 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro addThemeSvgSpritemapElement {
+	@summary = "Default summary"
+	macro addThemeSvgSpritemapElement(entryName = null,entryURL = null) {
 		Type(
 			key_text = "Name",
 			locator1 = "TextInput#ANY",
@@ -124,7 +133,8 @@ definition {
 			value1 = ${entryURL});
 	}
 
-	macro addType {
+	@summary = "Default summary"
+	macro addType(type = null) {
 		LexiconEntry.gotoAdd();
 
 		Click(
@@ -132,14 +142,16 @@ definition {
 			locator1 = "FormFields#FIELD_DROPDOWN_ITEM");
 	}
 
-	macro assertContentField {
+	@summary = "Default summary"
+	macro assertContentField(entryInformation = null,entryField = null) {
 		AssertTextEquals(
 			key_text = ${entryField},
 			locator1 = "ClientExtension#REMOTE_APPS_FIELDS",
 			value1 = ${entryInformation});
 	}
 
-	macro assertCustomElementFields {
+	@summary = "Default summary"
+	macro assertCustomElementFields(entryProperties = null,entryName = null,entryURL = null,entryHtmlName = null,entryCssurl = null) {
 		AssertTextEquals(
 			custom_entryName = ${entryName},
 			key_text = "Name",
@@ -171,7 +183,8 @@ definition {
 			value1 = ${entryProperties});
 	}
 
-	macro assertCustomElementMultipleURLFields {
+	@summary = "Default summary"
+	macro assertCustomElementMultipleURLFields() {
 		AssertTextEquals(
 			custom_entryName = "Vanilla Counter",
 			key_text = "Name",
@@ -209,7 +222,8 @@ definition {
 			value1 = "https://liferay.github.io/liferay-frontend-projects/index2.css");
 	}
 
-	macro assertFieldDisable {
+	@summary = "Default summary"
+	macro assertFieldDisable(entryFieldList = null) {
 		for (var entryField : list ${entryFieldList}) {
 			AssertNotEditable(
 				key_text = ${entryField},
@@ -217,7 +231,8 @@ definition {
 		}
 	}
 
-	macro assertMultipleFields {
+	@summary = "Default summary"
+	macro assertMultipleFields(entryType = null,entryCSSURLs = null,entryFriendlyURLMapping = null,entrydescription = null,entrySourceCodeURL = null,entryName = null,entryproperties = null,entry_URLs = null,entryHTMLElementName = null,entryPortletCategoryName = null) {
 		ClientExtensionGeneral.assertContentField(
 			entryField = "Name",
 			entryInformation = ${entryName});
@@ -259,14 +274,16 @@ definition {
 			entryInformation = ${entryproperties});
 	}
 
-	macro assertTableEntryNameNotPresent {
+	@summary = "Default summary"
+	macro assertTableEntryNameNotPresent(entryName = null) {
 		AssertElementNotPresent(
 			key_tableEntryName = ${entryName},
 			locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE",
 			value1 = ${entryName});
 	}
 
-	macro changeSiteCurrentThemeSvgSpritemap {
+	@summary = "Default summary"
+	macro changeSiteCurrentThemeSvgSpritemap(entryName = null,privacy = null) {
 		WaitForPageLoad();
 
 		Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
@@ -299,7 +316,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro deleteRemoteApp {
+	@summary = "Default summary"
+	macro deleteRemoteApp(tableEntry = null) {
 		Click(locator1 = "ClientExtension#REMOTE_TABLE_ELLIPSIS");
 
 		ClickNoError(locator1 = "ClientExtension#REMOTE_TABLE_DELETE");
@@ -312,7 +330,8 @@ definition {
 		}
 	}
 
-	macro deleteRemoteAppAPI {
+	@summary = "Default summary"
+	macro deleteRemoteAppAPI() {
 		Click(locator1 = "xPath=(//div[@class='table-list-title']//a)");
 
 		var remoteAppNameToBeRemoved = ClientExtensionGeneral.getRemoteAppEntryName();
@@ -324,7 +343,8 @@ definition {
 		ClientExtensionGeneral.assertTableEntryNameNotPresent(entryName = ${remoteAppNameToBeRemoved});
 	}
 
-	macro editCustomElement {
+	@summary = "Default summary"
+	macro editCustomElement(entryProperties = null,entryName = null,entryHtmlName = null,entryCssurl = null) {
 		Type(
 			key_text = "Name",
 			locator1 = "TextInput#ANY",
@@ -348,7 +368,8 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro getExternalReferenceCodeValue {
+	@summary = "Default summary"
+	macro getExternalReferenceCodeValue() {
 		WaitForSPARefresh();
 
 		ClientExtensionGeneral.goToRemoteAppsPortlet();
@@ -368,14 +389,16 @@ definition {
 		return ${externalReferenceCodeValue};
 	}
 
-	macro getRemoteAppEntryId {
+	@summary = "Default summary"
+	macro getRemoteAppEntryId() {
 		var companyId = JSONCompany.getCompanyId();
 		var externalReferenceCodeValue = ClientExtensionGeneral.getExternalReferenceCodeValue();
 
 		return "${companyId}_${externalReferenceCodeValue}";
 	}
 
-	macro getRemoteAppEntryName {
+	@summary = "Default summary"
+	macro getRemoteAppEntryName() {
 		WaitForSPARefresh();
 
 		var remoteAppEntryValue = selenium.getAttribute("//input[contains(@id , '_com_liferay_client_extension_web_internal_portlet_ClientExtensionAdminPortlet_name')]@value");
@@ -383,7 +406,8 @@ definition {
 		return ${remoteAppEntryValue};
 	}
 
-	macro goToRemoteAppsPortlet {
+	@summary = "Default summary"
+	macro goToRemoteAppsPortlet() {
 		if (IsElementNotPresent(locator1 = "ClientExtension#REMOTE_APPS_HEADER")) {
 			ApplicationsMenu.gotoPortlet(
 				category = "Custom Apps",
@@ -392,7 +416,8 @@ definition {
 		}
 	}
 
-	macro openOrCloseCollapseField {
+	@summary = "Default summary"
+	macro openOrCloseCollapseField(key_status = null,key_fieldName = null) {
 		if (${key_status} == "Open") {
 			if (IsVisible(locator1 = "ClientExtension#COLLAPSE_ICON_CLOSED", value1 = ${key_fieldName})) {
 				Click(
@@ -410,7 +435,8 @@ definition {
 		}
 	}
 
-	macro tearDown {
+	@summary = "Default summary"
+	macro tearDown() {
 		ClientExtensionGeneral.goToRemoteAppsPortlet();
 
 		while (IsElementNotPresent(locator1 = "ClientExtension#EMPTY_REMOTE_TABLE_MESSAGE")) {
@@ -420,11 +446,13 @@ definition {
 		ClientExtensionGeneral.viewEmptyRemoteTable();
 	}
 
-	macro viewEmptyRemoteTable {
+	@summary = "Default summary"
+	macro viewEmptyRemoteTable() {
 		AssertElementPresent(locator1 = "ClientExtension#EMPTY_REMOTE_TABLE_MESSAGE");
 	}
 
-	macro viewTableEntries {
+	@summary = "Default summary"
+	macro viewTableEntries(entryType = null,entryName = null) {
 		AssertTextEquals(
 			key_tableEntryName = ${entryName},
 			locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE",
@@ -436,21 +464,24 @@ definition {
 			value1 = ${entryType});
 	}
 
-	macro viewTableEntryName {
+	@summary = "Default summary"
+	macro viewTableEntryName(entryName = null) {
 		AssertTextEquals(
 			key_tableEntryName = ${entryName},
 			locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE",
 			value1 = ${entryName});
 	}
 
-	macro viewTableEntryType {
+	@summary = "Default summary"
+	macro viewTableEntryType(entryType = null) {
 		AssertTextEquals(
 			key_tableEntryType = ${entryType},
 			locator1 = "ClientExtension#TABLE_ENTRY_TYPE_REMOTE_TABLE",
 			value1 = ${entryType});
 	}
 
-	macro viewTableEntryURL {
+	@summary = "Default summary"
+	macro viewTableEntryURL(entryURL = null) {
 		AssertTextEquals(
 			key_tableEntryURL = ${entryURL},
 			locator1 = "ClientExtension#TABLE_ENTRY_URL_REMOTE_TABLE",

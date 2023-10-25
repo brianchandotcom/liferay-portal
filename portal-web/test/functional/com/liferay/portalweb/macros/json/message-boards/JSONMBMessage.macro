@@ -1,6 +1,7 @@
 definition {
 
-	macro addAttachmentToMessage {
+	@summary = "Default summary"
+	macro addAttachmentToMessage(groupName = null,fileName = null,threadSubject = null,mimeType = null,categoryName = null) {
 		var messageId = JSONMBMessage.getMessageIdByName(
 			categoryName = ${categoryName},
 			groupName = ${groupName},
@@ -28,7 +29,8 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	macro addCategory {
+	@summary = "Default summary"
+	macro addCategory(userEmailAddress = null,workflowAction = null,categoryName = null,groupName = null,site = null,assetCategoryIds = null,assetTagNames = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = ${userEmailAddress});
 
@@ -78,7 +80,8 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	macro addMessage {
+	@summary = "Default summary"
+	macro addMessage(threadSubject = null,workflowAction = null,categoryName = null,groupName = null,assetCategoryIds = null,assetTagNames = null,threadBody = null) {
 		if (!(isSet(site))) {
 			var site = "true";
 		}
@@ -144,7 +147,8 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl}, "$['messageId']");
 	}
 
-	macro addMessageReply {
+	@summary = "Default summary"
+	macro addMessageReply(groupName = null,replyBody = null,threadSubject = null,threadBody = null,categoryName = null) {
 		if (isSet(groupName)) {
 			var messageId = JSONMBMessage.getMessageIdByName(
 				categoryName = ${categoryName},
@@ -197,7 +201,8 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl}, "$['messageId']");
 	}
 
-	macro deleteCategory {
+	@summary = "Default summary"
+	macro deleteCategory(groupName = null,categoryName = null) {
 		Variables.assertDefined(parameterList = "${categoryName},${groupName}");
 
 		var categoryId = JSONMBMessage.getCategoryIdByName(
@@ -217,7 +222,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro deleteMessage {
+	@summary = "Default summary"
+	macro deleteMessage(groupName = null,threadSubject = null,categoryName = null) {
 		var messageId = JSONMBMessage.getMessageIdByName(
 			categoryName = ${categoryName},
 			groupName = ${groupName},
@@ -234,7 +240,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro getCategoryId {
+	@summary = "Default summary"
+	macro getCategoryId() {
 		var messageBoardsCategoryURL = selenium.getLocation();
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -243,7 +250,8 @@ definition {
 		return ${categoryId};
 	}
 
-	macro getCategoryIdByName {
+	@summary = "Default summary"
+	macro getCategoryIdByName(groupName = null,categoryName = null) {
 		Variables.assertDefined(parameterList = "${categoryName},${groupName}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -265,7 +273,8 @@ definition {
 		return ${categoryId};
 	}
 
-	macro getmessageId {
+	@summary = "Default summary"
+	macro getmessageId() {
 		var messageBoardsThreadURL = selenium.getLocation();
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -274,7 +283,8 @@ definition {
 		return ${messageId};
 	}
 
-	macro getMessageIdByName {
+	@summary = "Default summary"
+	macro getMessageIdByName(groupName = null,threadSubject = null,categoryName = null) {
 		if (isSet(categoryName)) {
 			var categoryId = JSONMBMessage.getCategoryIdByName(
 				categoryName = ${categoryName},
@@ -307,7 +317,8 @@ definition {
 		return ${messageId};
 	}
 
-	macro getThreadIdByName {
+	@summary = "Default summary"
+	macro getThreadIdByName(groupName = null,threadSubject = null,categoryName = null) {
 		if (isSet(categoryName)) {
 			var categoryId = JSONMBMessage.getCategoryIdByName(
 				categoryName = ${categoryName},
@@ -340,7 +351,8 @@ definition {
 		return ${threadId};
 	}
 
-	macro moveCategoryToTrash {
+	@summary = "Default summary"
+	macro moveCategoryToTrash(groupName = null,categoryName = null) {
 		var categoryId = JSONMBMessage.getCategoryIdByName(
 			categoryName = ${categoryName},
 			groupName = ${groupName});
@@ -356,7 +368,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro moveThreadToTrash {
+	@summary = "Default summary"
+	macro moveThreadToTrash(groupName = null,threadSubject = null,categoryName = null) {
 		var threadId = JSONMBMessage.getThreadIdByName(
 			categoryName = ${categoryName},
 			groupName = ${groupName},
@@ -373,7 +386,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro splitThread {
+	@summary = "Default summary"
+	macro splitThread(groupName = null,threadSubject = null,threadSplitSubject = null,categoryName = null) {
 		var messageId = JSONMBMessage.getMessageIdByName(
 			categoryName = ${categoryName},
 			groupName = ${groupName},
@@ -391,7 +405,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro subscribeToMessage {
+	@summary = "Default summary"
+	macro subscribeToMessage(groupName = null,threadSubject = null,categoryName = null) {
 		Variables.assertDefined(parameterList = "${threadSubject},${groupName}");
 
 		var messageId = JSONMBMessage.getMessageIdByName(
@@ -417,7 +432,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro updateMessage {
+	@summary = "Default summary"
+	macro updateMessage(groupName = null,threadSubject = null,threadSubjectEdit = null,threadBodyEdit = null,categoryName = null) {
 		var messageId = JSONMBMessage.getMessageIdByName(
 			categoryName = ${categoryName},
 			groupName = ${groupName},

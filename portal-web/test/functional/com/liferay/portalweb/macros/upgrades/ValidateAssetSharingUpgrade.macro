@@ -1,6 +1,7 @@
 definition {
 
-	macro revokeAndUpdateSharedEntry {
+	@summary = "Default summary"
+	macro revokeAndUpdateSharedEntry(blogsEntryTitleUpdate = null,blogsEntryTitleView = null,dmDocumentTitleUpdate = null,dmDocumentTitleView = null) {
 		Asset.openTosharedContent(
 			navTab = "Shared by Me",
 			siteURLKey = "guest");
@@ -50,7 +51,8 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
-	macro viewNoShareOptionAfterDisabled {
+	@summary = "Default summary"
+	macro viewNoShareOptionAfterDisabled() {
 		User.firstLoginUI(
 			password = "test",
 			specificURL = "http://www.able.com:8080",
@@ -73,7 +75,8 @@ definition {
 			rowEntry = "Blogs Entry with sharing disabled");
 	}
 
-	macro viewSharedBlog {
+	@summary = "Default summary"
+	macro viewSharedBlog() {
 		User.logoutPG();
 
 		User.loginUserPG(
@@ -102,7 +105,8 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
-	macro viewSharedDocument {
+	@summary = "Default summary"
+	macro viewSharedDocument(dmDocumentTitle = null) {
 		User.logoutPG();
 
 		User.loginUserPG(

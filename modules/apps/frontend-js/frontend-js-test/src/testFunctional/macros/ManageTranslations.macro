@@ -1,6 +1,7 @@
 definition {
 
-	macro addLanguage {
+	@summary = "Default summary"
+	macro addLanguage(key_locale = null) {
 		Click(locator1 = "Modal#PLUS");
 
 		Click(
@@ -8,17 +9,20 @@ definition {
 			locator1 = "ManageTranslations#DROPDOWN_MENU_ITEM_LANGUAGE");
 	}
 
-	macro deleteAndSaveLanguage {
+	@summary = "Default summary"
+	macro deleteAndSaveLanguage() {
 		Click(locator1 = "ManageTranslations#LIST_ITEM_DELETE_LANGUAGE_BUTTON");
 
 		Click(locator1 = "Button#DONE");
 	}
 
-	macro deleteLanguage {
+	@summary = "Default summary"
+	macro deleteLanguage() {
 		Click(locator1 = "ManageTranslations#LIST_ITEM_DELETE_LANGUAGE_BUTTON");
 	}
 
-	macro searchLanguage {
+	@summary = "Default summary"
+	macro searchLanguage(key_language = null) {
 		Type.type(
 			locator1 = "ManageTranslations#SEARCH_FIELD",
 			value1 = ${key_language});

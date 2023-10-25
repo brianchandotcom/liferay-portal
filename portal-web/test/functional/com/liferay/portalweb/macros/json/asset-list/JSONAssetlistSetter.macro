@@ -1,6 +1,7 @@
 definition {
 
-	macro setGroupId {
+	@summary = "Default summary"
+	macro setGroupId(groupName = null) {
 		Variables.assertDefined(parameterList = ${groupName});
 
 		if (!(isSet(site))) {
@@ -14,7 +15,8 @@ definition {
 		return ${groupId};
 	}
 
-	macro setType {
+	@summary = "Default summary"
+	macro setType(selectionType = null) {
 		Variables.assertDefined(parameterList = ${selectionType});
 
 		if (${selectionType} == "manual") {
@@ -28,7 +30,8 @@ definition {
 		return ${type};
 	}
 
-	macro setTypeSettings {
+	@summary = "Default summary"
+	macro setTypeSettings(groupId = null,selectionType = null,itemSubtype = null) {
 		var globalGroupId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Global",
 			site = "true");

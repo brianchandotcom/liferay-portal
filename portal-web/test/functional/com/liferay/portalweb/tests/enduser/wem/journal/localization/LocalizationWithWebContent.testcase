@@ -222,17 +222,17 @@ definition {
 			AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
 			AssertAttributeValue(
-				value1 = "value",
 				key_fieldFieldLabel = "Text",
 				locator1 = "WCEditWebContent#TEXT_INPUT",
+				value1 = "value",
 				value2 = "This is a Text field");
 
 			PortletEntry.changeLocale(locale = "es-ES");
 
 			AssertAttributeValue(
-				value1 = "value",
 				key_fieldFieldLabel = "Text",
 				locator1 = "WCEditWebContent#TEXT_INPUT",
+				value1 = "value",
 				value2 = "Este es un campo de texto");
 		}
 	}
@@ -393,17 +393,17 @@ definition {
 			AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
 			AssertAttributeValue(
-				value1 = "value",
 				key_fieldFieldLabel = "Text1",
 				locator1 = "WCEditWebContent#TEXT_INPUT",
+				value1 = "value",
 				value2 = "This is a Text field");
 
 			PortletEntry.changeLocale(locale = "es-ES");
 
 			AssertAttributeValue(
-				value1 = "value",
 				key_fieldFieldLabel = "Text2",
 				locator1 = "WCEditWebContent#TEXT_INPUT",
+				value1 = "value",
 				value2 = "Este es un campo de texto");
 		}
 	}

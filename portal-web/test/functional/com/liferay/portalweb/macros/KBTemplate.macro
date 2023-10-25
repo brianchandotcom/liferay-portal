@@ -1,6 +1,7 @@
 definition {
 
-	macro addCP {
+	@summary = "Default summary"
+	macro addCP(navTab = null,uploadFileName = null,depotName = null,siteURLKey = null,kbTemplateTitle = null,imageFileName = null,kbTemplateContent = null,siteName = null,imageSourceURL = null) {
 		if (isSet(addByCenterButton)) {
 			Button.click(button = "New");
 		}
@@ -63,7 +64,8 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro deleteTemplate {
+	@summary = "Default summary"
+	macro deleteTemplate(kbTemplateTitle = null) {
 		if (isSet(pageTreePanel)) {
 			KBTemplate.gotoTemplateMenuItemThroughPageTreePanel(
 				kbTemplateTitle = ${kbTemplateTitle},
@@ -80,7 +82,8 @@ definition {
 		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 	}
 
-	macro editTemplate {
+	@summary = "Default summary"
+	macro editTemplate(kbTemplateTitle = null,kbTemplateTitleEdit = null,kbTemplateContentEdit = null) {
 		if (isSet(pageTreePanel)) {
 			KBTemplate.gotoTemplateMenuItemThroughPageTreePanel(
 				kbTemplateTitle = ${kbTemplateTitle},
@@ -116,7 +119,8 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro gotoTemplateMenuItemThroughPageTreePanel {
+	@summary = "Default summary"
+	macro gotoTemplateMenuItemThroughPageTreePanel(kbTemplateTitle = null,menuItem = null) {
 		MouseOver(
 			key_itemLinkName = ${kbTemplateTitle},
 			locator1 = "KnowledgeBase#PAGE_TREE_ITEM_LINK");
@@ -135,7 +139,8 @@ definition {
 		}
 	}
 
-	macro openToAddTemplate {
+	@summary = "Default summary"
+	macro openToAddTemplate(siteURLKey = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -145,7 +150,8 @@ definition {
 		Open(value1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_knowledge_base_web_portlet_AdminPortlet&_com_liferay_knowledge_base_web_portlet_AdminPortlet_mvcPath=%2Fadmin%2Fcommon%2Fedit_kb_template.jsp");
 	}
 
-	macro previewTemplate {
+	@summary = "Default summary"
+	macro previewTemplate(kbTemplateTitle = null,kbTemplateContent = null) {
 		if (isSet(pageTreePanel)) {
 			KBTemplate.gotoTemplateMenuItemThroughPageTreePanel(
 				kbTemplateTitle = ${kbTemplateTitle},
@@ -178,7 +184,8 @@ definition {
 		}
 	}
 
-	macro tearDownCP {
+	@summary = "Default summary"
+	macro tearDownCP() {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -200,7 +207,8 @@ definition {
 		}
 	}
 
-	macro viewActionsDetailsToolbar {
+	@summary = "Default summary"
+	macro viewActionsDetailsToolbar(kbTemplateTitle = null) {
 		Click(
 			key_rowEntry = ${kbTemplateTitle},
 			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
@@ -226,7 +234,8 @@ definition {
 		}
 	}
 
-	macro viewActiveActionsManagementToolbar {
+	@summary = "Default summary"
+	macro viewActiveActionsManagementToolbar() {
 		AssertElementNotPresent(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER_DISABLED");
 
 		AssertElementNotPresent(locator1 = "ManagementBar#FILTER_AND_ORDER_DISABLED");
@@ -244,7 +253,8 @@ definition {
 		AssertVisible(locator1 = "TextInput#SEARCH");
 	}
 
-	macro viewCPViaAddTemplate {
+	@summary = "Default summary"
+	macro viewCPViaAddTemplate(kbTemplateTitle = null,kbTemplateContent = null) {
 		LexiconEntry.gotoAddMenuItem(menuItem = ${kbTemplateTitle});
 
 		AssertTextEquals(
@@ -260,7 +270,8 @@ definition {
 			value1 = ${kbTemplateContent});
 	}
 
-	macro viewNoTemplates {
+	@summary = "Default summary"
+	macro viewNoTemplates() {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO_TAGLIB_TITLE",
 			value1 = "There are no article templates.");
@@ -270,7 +281,8 @@ definition {
 		}
 	}
 
-	macro viewTemplatesThroughPageTreePanel {
+	@summary = "Default summary"
+	macro viewTemplatesThroughPageTreePanel(kbTemplatesList = null) {
 		for (var kbTemplateTitle : list ${kbTemplatesList}) {
 			AssertVisible(
 				key_itemLinkName = ${kbTemplateTitle},

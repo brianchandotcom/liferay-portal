@@ -1,6 +1,7 @@
 definition {
 
-	macro getSegmentExperienceId {
+	@summary = "Default summary"
+	macro getSegmentExperienceId(groupName = null,experienceName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${experienceName}");
 
 		var portalURL = JSONCompany.getPortalURL();

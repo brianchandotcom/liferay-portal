@@ -1,6 +1,7 @@
 definition {
 
-	macro disableAutoTagging {
+	@summary = "Default summary"
+	macro disableAutoTagging(disableAutoTaggingFor = null,siteURLKey = null) {
 		if (${disableAutoTaggingFor} == "System Settings") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
@@ -38,7 +39,8 @@ definition {
 		}
 	}
 
-	macro enableAutoTagging {
+	@summary = "Default summary"
+	macro enableAutoTagging(maximumNumberOfTags = null,site = null,enableAutoTaggingFor = null,systemSettingsInstanceScope = null,validationError = null) {
 		if (${enableAutoTaggingFor} == "System Settings") {
 			AutoTagging.openToAssetAutoTagging(configurationScope = "System Settings");
 
@@ -102,7 +104,8 @@ definition {
 		}
 	}
 
-	macro enableOpenNLP {
+	@summary = "Default summary"
+	macro enableOpenNLP(confidenceThreshold = null,assetType = null) {
 		AutoTagging.openToOpenNLP();
 
 		if (isSet(confidenceThreshold)) {
@@ -123,7 +126,8 @@ definition {
 		}
 	}
 
-	macro enableTensorFlow {
+	@summary = "Default summary"
+	macro enableTensorFlow() {
 		AutoTagging.openToTensorFlow();
 
 		Alert.viewInfoMessageSpecific(infoMessage = "The TensorFlow model will be downloaded in the background. No tags will be created until the model is fully downloaded");
@@ -154,7 +158,8 @@ definition {
 			locator1 = "Message#INFO_SPECIFIC");
 	}
 
-	macro enableUpdateAutoTags {
+	@summary = "Default summary"
+	macro enableUpdateAutoTags(enableUpdateAutoTagsFor = null) {
 		if (${enableUpdateAutoTagsFor} == "System Settings") {
 			AutoTagging.openToAssetAutoTagging(configurationScope = "System Settings");
 
@@ -182,7 +187,8 @@ definition {
 		}
 	}
 
-	macro openToAssetAutoTagging {
+	@summary = "Default summary"
+	macro openToAssetAutoTagging(configurationScope = null) {
 		var baseURL = JSONCompany.getPortalURL();
 
 		if (${configurationScope} == "System Settings") {
@@ -201,7 +207,8 @@ definition {
 		Open(value1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_${portlet}&_com_liferay_configuration_admin_web_portlet_${portlet}_factoryPid=${pid}&_com_liferay_configuration_admin_web_portlet_${portlet}_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
 	}
 
-	macro openToAutoTaggingSiteSettings {
+	@summary = "Default summary"
+	macro openToAutoTaggingSiteSettings(siteURLKey = null,portlet = null) {
 		if (${portlet} == "Asset Auto Tagging") {
 			var configurationScreenKey = "site-configuration-asset-auto-tagger";
 		}
@@ -209,19 +216,22 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/site/settings?_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fview_configuration_screen&_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_configurationScreenKey=${configurationScreenKey}");
 	}
 
-	macro openToOpenNLP {
+	@summary = "Default summary"
+	macro openToOpenNLP() {
 		var baseURL = JSONCompany.getPortalURL();
 
 		Open(value1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.asset.auto.tagger.opennlp.internal.configuration.OpenNLPDocumentAssetAutoTaggerCompanyConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
 	}
 
-	macro openToTensorFlow {
+	@summary = "Default summary"
+	macro openToTensorFlow() {
 		var baseURL = JSONCompany.getPortalURL();
 
 		Open(value1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.document.library.asset.auto.tagger.tensorflow.internal.configuration.TensorFlowImageAssetAutoTagProviderCompanyConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
 	}
 
-	macro viewUpdateAutoTagsSetting {
+	@summary = "Default summary"
+	macro viewUpdateAutoTagsSetting(updateAutoTagsFor = null,updateAutoTags = null) {
 		if (${updateAutoTagsFor} == "System Settings") {
 			AutoTagging.openToAssetAutoTagging(configurationScope = "System Settings");
 

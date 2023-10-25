@@ -1,6 +1,7 @@
 definition {
 
-	macro changeStatusToAwaitingPaymentConfirmation {
+	@summary = "Default summary"
+	macro changeStatusToAwaitingPaymentConfirmation() {
 		for (var userApproval : list "Manager,Finance") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "${userApproval}@liferay.com",
@@ -20,7 +21,8 @@ definition {
 		}
 	}
 
-	macro confirmPayment {
+	@summary = "Default summary"
+	macro confirmPayment(paymentValue = null,cancelButton = null,dateRange = null,dateFormat = null,document = null,paymentDate = null) {
 		var currentDate = DateUtil.getFormattedDate(${dateRange}, ${dateFormat});
 
 		if (${paymentDate} == "true") {
@@ -51,7 +53,8 @@ definition {
 		EVPRequest.viewSuccessMessageRequest();
 	}
 
-	macro fillRequestForm {
+	@summary = "Default summary"
+	macro fillRequestForm(requestPurposes = null,phoneNumber = null,serviceStartDate = null,requestType = null,organization = null,requestBehalf = null,totalHoursRequested = null,grantRequestType = null,managerEmailAdress = null,grantAmount = null,requestDescription = null,serviceEndDate = null) {
 		WaitForPageLoad();
 
 		if (isSet(phoneNumber)) {
@@ -156,7 +159,8 @@ definition {
 		Button.clickSubmitButton();
 	}
 
-	macro goToCreateRequest {
+	@summary = "Default summary"
+	macro goToCreateRequest() {
 		EVPNavigator.goToNavItem(navItem = "Request");
 
 		WaitForPageLoad();
@@ -164,7 +168,8 @@ definition {
 		Button.click(button = "Create a Request");
 	}
 
-	macro goToRequestOption {
+	@summary = "Default summary"
+	macro goToRequestOption(organizationName = null,key_option = null) {
 		WaitForPageLoad();
 
 		Click(
@@ -174,13 +179,15 @@ definition {
 		MenuItem.click(menuItem = ${key_option});
 	}
 
-	macro verifyFieldsName {
+	@summary = "Default summary"
+	macro verifyFieldsName(key_field = null) {
 		AssertElementPresent(
 			key_name = ${key_field},
 			locator1 = "EVPRequest#FIELD_NAME");
 	}
 
-	macro viewRequestDetails {
+	@summary = "Default summary"
+	macro viewRequestDetails(serviceStart = null,organizationName = null,requestType = null,grantValue = null,serviceHours = null,grantType = null,paymentDate = null,requestDescription = null,serviceEndDate = null) {
 		if (isSet(organizationName)) {
 			AssertElementPresent(
 				key_name = ${organizationName},
@@ -246,7 +253,8 @@ definition {
 		}
 	}
 
-	macro viewSuccessMessageRequest {
+	@summary = "Default summary"
+	macro viewSuccessMessageRequest() {
 		while (IsElementPresent(locator1 = "Message#EMPTY_INFO")) {
 			AssertTextEquals(
 				locator1 = "Message#EMPTY_INFO",

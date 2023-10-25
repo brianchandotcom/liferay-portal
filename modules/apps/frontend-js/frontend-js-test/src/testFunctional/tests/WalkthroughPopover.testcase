@@ -154,8 +154,8 @@ definition {
 			AssertElementPresent(locator1 = "Walkthrough#POPOVER_OVERLAY");
 
 			AssertAttributeValue(
-				value1 = "fill",
 				locator1 = "Walkthrough#POPOVER_OVERLAY",
+				value1 = "fill",
 				value2 = "#393a4a");
 		}
 	}

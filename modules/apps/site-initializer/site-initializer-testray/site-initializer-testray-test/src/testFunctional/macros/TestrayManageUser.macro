@@ -1,6 +1,7 @@
 definition {
 
-	macro addUser {
+	@summary = "Default summary"
+	macro addUser(rolePermissionList = null,userPassword = null,userFirstNameEdit = null,userLastNameEdit = null,rePassword = null,userEmailAddressEdit = null,userScreenNameEdit = null) {
 		LexiconEntry.gotoAdd();
 
 		if (isSet(userFirstNameEdit)) {
@@ -48,13 +49,15 @@ definition {
 		Button.clickSave();
 	}
 
-	macro deleteUser {
+	@summary = "Default summary"
+	macro deleteUser() {
 		Button.clickNoError(button = "Delete User");
 
 		AssertConfirm(value1 = "Are you sure you want to delete this item?");
 	}
 
-	macro editUserInformation {
+	@summary = "Default summary"
+	macro editUserInformation(rolePermissionList = null,userFirstNameEdit = null,userLastNameEdit = null,userEmailAddressEdit = null,userScreenNameEdit = null) {
 		if (isSet(userFirstNameEdit)) {
 			Type(
 				locator1 = "TextInput#FIRST_NAME",
@@ -90,7 +93,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro selectRolesPermissions {
+	@summary = "Default summary"
+	macro selectRolesPermissions(rolePermissionList = null) {
 		for (var rolePermission : list ${rolePermissionList}) {
 			Click(
 				key_fieldLabel = ${rolePermission},
@@ -98,7 +102,8 @@ definition {
 		}
 	}
 
-	macro viewUserInfomation {
+	@summary = "Default summary"
+	macro viewUserInfomation(lastName = null,firstName = null,emailAddress = null,screenName = null) {
 		AssertTextEquals(
 			locator1 = "TextInput#ANY_WITH_NAME",
 			name = "familyName",

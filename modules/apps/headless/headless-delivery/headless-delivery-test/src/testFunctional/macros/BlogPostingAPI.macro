@@ -1,6 +1,7 @@
 definition {
 
-	macro _createBlogPosting {
+	@summary = "Default summary"
+	macro _createBlogPosting(articleBody = null,headline = null) {
 		Variables.assertDefined(parameterList = "${headline},${articleBody}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -28,7 +29,8 @@ definition {
 		return ${curl};
 	}
 
-	macro _createNBlogPostings {
+	@summary = "Default summary"
+	macro _createNBlogPostings(numberOfBlogPostings = null,createStrategy = null,importStrategy = null,testCase = null) {
 		Variables.assertDefined(parameterList = "${numberOfBlogPostings},${createStrategy}");
 
 		var body = BlogPostingAPI._createNBlogPostingsBody(
@@ -51,7 +53,8 @@ definition {
 		return ${curl};
 	}
 
-	macro _createNBlogPostingsBody {
+	@summary = "Default summary"
+	macro _createNBlogPostingsBody(numberOfBlogPostings = null,testCase = null) {
 		if (!(isSet(headline))) {
 			var headline = "headline";
 		}
@@ -171,7 +174,8 @@ definition {
 		return ${body};
 	}
 
-	macro _deleteBlogPostingsBatch {
+	@summary = "Default summary"
+	macro _deleteBlogPostingsBatch(body = null) {
 		Variables.assertDefined(parameterList = ${body});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -190,7 +194,8 @@ definition {
 		return ${curl};
 	}
 
-	macro _getFieldValueOfExistingBlogPosting {
+	@summary = "Default summary"
+	macro _getFieldValueOfExistingBlogPosting(fieldName = null,response = null) {
 		Variables.assertDefined(parameterList = "${response},${fieldName}");
 
 		var fieldValue = JSONUtil.getWithJSONPath(${response}, "$.items.[0].${fieldName}");
@@ -198,7 +203,8 @@ definition {
 		return ${fieldValue};
 	}
 
-	macro _updateBlogPosting {
+	@summary = "Default summary"
+	macro _updateBlogPosting(updateStrategy = null,numberOfBlogPostings = null,importStrategy = null,testCase = null) {
 		Variables.assertDefined(parameterList = "${numberOfBlogPostings},${updateStrategy}");
 
 		var body = BlogPostingAPI._createNBlogPostingsBody(
@@ -220,7 +226,8 @@ definition {
 		return ${curl};
 	}
 
-	macro _updateOneBlogPostingBodyParameter {
+	@summary = "Default summary"
+	macro _updateOneBlogPostingBodyParameter(updateStrategy = null,blogPostingId = null,bodyParameterValue = null,bodyParameterKey = null) {
 		Variables.assertDefined(parameterList = "${blogPostingId},${bodyParameterKey},${bodyParameterValue},${updateStrategy}");
 
 		var bodyKeyValuePair = '''"${bodyParameterKey}": "${bodyParameterValue}"''';
@@ -243,7 +250,8 @@ definition {
 		return ${response};
 	}
 
-	macro assertResponseHasIdFieldValueOnly {
+	@summary = "Default summary"
+	macro assertResponseHasIdFieldValueOnly(responseToParse = null,expectedValue = null) {
 		var actualValue = JSONUtil.getWithJSONPath(${responseToParse}, "$.items");
 
 		TestUtils.assertEquals(
@@ -251,7 +259,8 @@ definition {
 			expected = ${expectedValue});
 	}
 
-	macro deleteAllBlogPostings {
+	@summary = "Default summary"
+	macro deleteAllBlogPostings() {
 		var numberOfItems = BlogPostingAPI.getNumberOfBlogPostingsCreated();
 
 		if (${numberOfItems} != 0) {
@@ -274,7 +283,8 @@ definition {
 		}
 	}
 
-	macro getBlogPostingDataToString {
+	@summary = "Default summary"
+	macro getBlogPostingDataToString() {
 		if (!(isSet(response))) {
 			var response = BlogPostingAPI.getBlogPostings();
 		}
@@ -294,7 +304,8 @@ definition {
 		return ${blogPostingData};
 	}
 
-	macro getBlogPostings {
+	@summary = "Default summary"
+	macro getBlogPostings(restrictFieldsValue = null,parameter = null,token = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
 			groupName = "Guest",
@@ -320,7 +331,8 @@ definition {
 		return ${curl};
 	}
 
-	macro getBlogPostingsIdList {
+	@summary = "Default summary"
+	macro getBlogPostingsIdList() {
 		var response = BlogPostingAPI.getBlogPostings();
 
 		var idList = JSONUtil.getWithJSONPath(${response}, "$.items.[*].id");
@@ -328,7 +340,8 @@ definition {
 		return ${idList};
 	}
 
-	macro getIdOfCreatedBlogPosting {
+	@summary = "Default summary"
+	macro getIdOfCreatedBlogPosting(articleBody = null,headline = null,externalReferenceCode = null) {
 		var response = BlogPostingAPI._createBlogPosting(
 			articleBody = ${articleBody},
 			externalReferenceCode = ${externalReferenceCode},
@@ -339,7 +352,8 @@ definition {
 		return ${blogPostingId};
 	}
 
-	macro getIdOfCreateNBlogPostingBatchEngineImportTask {
+	@summary = "Default summary"
+	macro getIdOfCreateNBlogPostingBatchEngineImportTask(createStrategy = null,numberOfBlogPostings = null,testCase = null) {
 		if (!(isSet(importStrategy))) {
 			var importStrategy = "ON_ERROR_FAIL";
 		}
@@ -355,7 +369,8 @@ definition {
 		return ${importTaskId};
 	}
 
-	macro getIdOfSiteBlogPostingsExportBatch {
+	@summary = "Default summary"
+	macro getIdOfSiteBlogPostingsExportBatch() {
 		var portalURL = JSONCompany.getPortalURL();
 		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
 			groupName = "Guest",
@@ -372,7 +387,8 @@ definition {
 		return ${blogPostingsExportBatchId};
 	}
 
-	macro getIdOfUpdatedBlogPostingBatchEngineImportTask {
+	@summary = "Default summary"
+	macro getIdOfUpdatedBlogPostingBatchEngineImportTask(updateStrategy = null,numberOfBlogPostings = null,testCase = null) {
 		if (!(isSet(importStrategy))) {
 			var importStrategy = "ON_ERROR_FAIL";
 		}
@@ -388,7 +404,8 @@ definition {
 		return ${importTaskId};
 	}
 
-	macro getIdOfUpdateOneBlogPostingBodyParameter {
+	@summary = "Default summary"
+	macro getIdOfUpdateOneBlogPostingBodyParameter(updateStrategy = null,blogPostingId = null,bodyParameterValue = null,bodyParameterKey = null) {
 		var response = BlogPostingAPI._updateOneBlogPostingBodyParameter(
 			blogPostingId = ${blogPostingId},
 			bodyParameterKey = ${bodyParameterKey},
@@ -400,7 +417,8 @@ definition {
 		return ${importTaskId};
 	}
 
-	macro getNumberOfBlogPostingsCreated {
+	@summary = "Default summary"
+	macro getNumberOfBlogPostingsCreated() {
 		if (!(isSet(response))) {
 			var response = BlogPostingAPI.getBlogPostings();
 		}
@@ -410,7 +428,8 @@ definition {
 		return ${numberOfBlogPostingsCreated};
 	}
 
-	macro setUpGlobalIdOfCreatedBlogPosting {
+	@summary = "Default summary"
+	macro setUpGlobalIdOfCreatedBlogPosting(articleBody = null,headline = null) {
 		var blogPostingId = BlogPostingAPI.getIdOfCreatedBlogPosting(
 			articleBody = ${articleBody},
 			headline = ${headline});

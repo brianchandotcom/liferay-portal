@@ -457,9 +457,9 @@ definition {
 			fieldValue = "English (United States) Title");
 
 		AssertAttributeValue(
-			value1 = "value",
 			key_fieldFieldLabel = "Image",
 			locator1 = "TextInput#SELECTOR_INPUT",
+			value1 = "value",
 			value2 = "Document_3 (1).png");
 
 		FormFields.viewTextValueDescription(
@@ -473,9 +473,9 @@ definition {
 			fieldValue = "Spanish (Spain) Title");
 
 		AssertAttributeValue(
-			value1 = "value",
 			key_fieldFieldLabel = "Image",
 			locator1 = "TextInput#SELECTOR_INPUT",
+			value1 = "value",
 			value2 = "Document_3.png");
 
 		FormFields.viewTextValueDescription(
@@ -489,9 +489,9 @@ definition {
 			fieldValue = "Portuguese (Brazil) Title");
 
 		AssertAttributeValue(
-			value1 = "value",
 			key_fieldFieldLabel = "Image",
 			locator1 = "TextInput#SELECTOR_INPUT",
+			value1 = "value",
 			value2 = "Document_3 (2).png");
 
 		FormFields.viewTextValueDescription(

@@ -1,6 +1,7 @@
 definition {
 
-	macro publishCollectionsInRemoteStagingDepot {
+	@summary = "Default summary"
+	macro publishCollectionsInRemoteStagingDepot() {
 		DepotNavigator.openDepotAssetListsAdmin(depotName = "Test Depot Name");
 
 		AssetListsAdmin.selectAsset(
@@ -63,7 +64,8 @@ definition {
 		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "DM Document Title Without Publish");
 	}
 
-	macro publishCollectionsInStagingDepot {
+	@summary = "Default summary"
+	macro publishCollectionsInStagingDepot() {
 		DepotNavigator.openDepotAssetListsAdminStaging(depotName = "Test Depot Name Local Staging");
 
 		AssetListsAdmin.selectAsset(
@@ -140,7 +142,8 @@ definition {
 			locator1 = "AP#ASSET_ABSTRACT_TITLE");
 	}
 
-	macro publishDMsInRemoteStagingDepot {
+	@summary = "Default summary"
+	macro publishDMsInRemoteStagingDepot() {
 		DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 
 		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
@@ -240,7 +243,8 @@ definition {
 		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "Document_2.jpg");
 	}
 
-	macro publishDMsInStagingDepot {
+	@summary = "Default summary"
+	macro publishDMsInStagingDepot() {
 		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name Local Staging");
 
 		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
@@ -348,7 +352,8 @@ definition {
 			locator1 = "AP#ASSET_ABSTRACT_TITLE");
 	}
 
-	macro publishWCsInRemoteStagingDepot {
+	@summary = "Default summary"
+	macro publishWCsInRemoteStagingDepot() {
 		DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 
 		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
@@ -439,7 +444,8 @@ definition {
 		AssetPublisherPortlet.viewAssetNotPresentPG(assetTitle = "WC WebContent Title Edit");
 	}
 
-	macro publishWCsInStagingDepot {
+	@summary = "Default summary"
+	macro publishWCsInStagingDepot() {
 		DepotNavigator.openDepotWebContentAdminStaging(depotName = "Test Depot Name Local Staging");
 
 		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
@@ -541,7 +547,8 @@ definition {
 			locator1 = "AP#ASSET_ABSTRACT_TITLE");
 	}
 
-	macro validateCollections {
+	@summary = "Default summary"
+	macro validateCollections() {
 		Navigator.openSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
@@ -575,7 +582,8 @@ definition {
 		AssetListsAdmin.deleteEntry(assetListTitle = "Depot Dynamic Asset List");
 	}
 
-	macro validateDepotDMAndType {
+	@summary = "Default summary"
+	macro validateDepotDMAndType() {
 		Navigator.openSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");
@@ -666,7 +674,8 @@ definition {
 		DMDocumentType.delete(dmDocumentTypeName = "DM Document Type Name");
 	}
 
-	macro validateDepotEntries {
+	@summary = "Default summary"
+	macro validateDepotEntries() {
 		DepotNavigator.openDepotAdmin();
 
 		DepotNavigator.gotoDepot(depotName = "Test Depot Name");
@@ -693,7 +702,8 @@ definition {
 			locator1 = "Card#CARD_TITLE_LINK");
 	}
 
-	macro validateDepotSettings {
+	@summary = "Default summary"
+	macro validateDepotSettings() {
 		DepotNavigator.openDepotAdmin();
 
 		Depot.viewApplication(
@@ -744,7 +754,8 @@ definition {
 		}
 	}
 
-	macro validateDepotWCAndStructure {
+	@summary = "Default summary"
+	macro validateDepotWCAndStructure() {
 		Navigator.openSitePage(
 			pageName = "Test Page",
 			siteName = "Site Name");

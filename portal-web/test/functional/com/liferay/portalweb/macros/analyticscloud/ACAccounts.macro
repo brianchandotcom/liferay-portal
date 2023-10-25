@@ -1,12 +1,14 @@
 definition {
 
-	macro assertAccountActivitiesChart {
+	@summary = "Default summary"
+	macro assertAccountActivitiesChart(expectedBarCount = null) {
 		var key_expectedBarCount = ${expectedBarCount};
 
 		AssertElementPresent(locator1 = "ACAccounts#ACCOUNT_ACTIVITY_BAR_GRAPH");
 	}
 
-	macro assertAccountDetails {
+	@summary = "Default summary"
+	macro assertAccountDetails(propertyName = null,propertyValue = null) {
 		var key_propertyName = ${propertyName};
 		var key_propertyValue = ${propertyValue};
 
@@ -15,15 +17,18 @@ definition {
 			value1 = ${propertyValue});
 	}
 
-	macro assertAccountIndividuals {
+	@summary = "Default summary"
+	macro assertAccountIndividuals() {
 		echo("TODO");
 	}
 
-	macro assertAccountInterests {
+	@summary = "Default summary"
+	macro assertAccountInterests() {
 		echo("TODO");
 	}
 
-	macro assertAccountOverviewCards {
+	@summary = "Default summary"
+	macro assertAccountOverviewCards(cardTitleList = null) {
 		for (var title : list ${cardTitleList}) {
 			var key_cardTitle = ${title};
 
@@ -31,17 +36,20 @@ definition {
 		}
 	}
 
-	macro assertAccountSegments {
+	@summary = "Default summary"
+	macro assertAccountSegments() {
 		echo("TODO");
 	}
 
-	macro clickAccount {
+	@summary = "Default summary"
+	macro clickAccount(accountName = null) {
 		var key_accountName = ${accountName};
 
 		Click(locator1 = "ACAccounts#ACCOUNTS_TABLE_ROW");
 	}
 
-	macro clickAccountHeaderTab {
+	@summary = "Default summary"
+	macro clickAccountHeaderTab(tabName = null) {
 		var key_tabName = ${tabName};
 
 		Click(locator1 = "ACAccounts#ACCOUNTS_HEADER_TAB_BUTTON");

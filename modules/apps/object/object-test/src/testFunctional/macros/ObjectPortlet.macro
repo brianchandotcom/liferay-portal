@@ -1,6 +1,7 @@
 definition {
 
-	macro addCustomFieldEntryViaUI {
+	@summary = "Default summary"
+	macro addCustomFieldEntryViaUI(invalidEntry = null,entry = null,customField = null) {
 		LexiconEntry.gotoAdd();
 
 		Type.type(
@@ -16,7 +17,8 @@ definition {
 		}
 	}
 
-	macro addSingleFieldEntryViaUI {
+	@summary = "Default summary"
+	macro addSingleFieldEntryViaUI(invalidEntry = null,entry = null) {
 		LexiconEntry.gotoAdd();
 
 		Type.type(
@@ -31,7 +33,8 @@ definition {
 		}
 	}
 
-	macro assertAuthorColumnDisplaysUserName {
+	@summary = "Default summary"
+	macro assertAuthorColumnDisplaysUserName(authorName = null,column = null) {
 		AssertElementPresent(
 			key_column = ${column},
 			locator1 = "ObjectPortlet#ENTRY_COLUMN");
@@ -41,14 +44,16 @@ definition {
 			locator1 = "ObjectPortlet#ENTRY_VALUE");
 	}
 
-	macro assertColumnLabelEntries {
+	@summary = "Default summary"
+	macro assertColumnLabelEntries(columnLabelName = null) {
 		AssertElementPresent(
 			key_sortFieldName = ${columnLabelName},
 			locator1 = "ObjectPortlet#SORT_FIELD",
 			value1 = ${columnLabelName});
 	}
 
-	macro assertDeleteEntryButtonNotPresent {
+	@summary = "Default summary"
+	macro assertDeleteEntryButtonNotPresent(entry = null) {
 		if (IsElementPresent(key_entry = "", locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU")) {
 			Click(
 				key_entry = ${entry},
@@ -63,11 +68,13 @@ definition {
 		AssertElementNotPresent(locator1 = "ObjectPortlet#DELETE_ENTRY_BUTTON");
 	}
 
-	macro assertEntryDetailsCheckedPresent {
+	@summary = "Default summary"
+	macro assertEntryDetailsCheckedPresent() {
 		AssertChecked.assertCheckedNotVisible(locator1 = "//input[@type='checkbox']");
 	}
 
-	macro assertEntryDetailsNotPresent {
+	@summary = "Default summary"
+	macro assertEntryDetailsNotPresent(entryNotSelected = null) {
 		SelectFrameTop();
 
 		AssertElementNotPresent(
@@ -75,7 +82,8 @@ definition {
 			locator1 = "ObjectPortlet#OBJECT_FIELD_SELECTED");
 	}
 
-	macro assertEntryDetailsValueSelected {
+	@summary = "Default summary"
+	macro assertEntryDetailsValueSelected(entrySelected = null) {
 		SelectFrameTop();
 
 		AssertElementPresent(
@@ -83,27 +91,31 @@ definition {
 			locator1 = "ObjectPortlet#OBJECT_FIELD_SELECTED");
 	}
 
-	macro assertEntryNotPresent {
+	@summary = "Default summary"
+	macro assertEntryNotPresent(entry = null) {
 		AssertElementNotPresent(
 			key_entry = ${entry},
 			locator1 = "ObjectPortlet#ENTRY_VALUE");
 	}
 
-	macro assertFieldLabelName {
+	@summary = "Default summary"
+	macro assertFieldLabelName(key_fieldLabelName = null,fieldLabelName = null) {
 		AssertTextEquals(
 			key_fieldLabelName = ${fieldLabelName},
 			locator1 = "ObjectPortlet#FIELD_LABEL_NAME",
 			value1 = ${key_fieldLabelName});
 	}
 
-	macro assertFieldLabelNameNotPresent {
+	@summary = "Default summary"
+	macro assertFieldLabelNameNotPresent(key_fieldLabelName = null,fieldLabelName = null) {
 		AssertTextNotEquals(
 			key_fieldLabelName = ${fieldLabelName},
 			locator1 = "ObjectPortlet#FIELD_LABEL_NAME",
 			value1 = ${key_fieldLabelName});
 	}
 
-	macro assertFilterResultsSpecificOrder {
+	@summary = "Default summary"
+	macro assertFilterResultsSpecificOrder() {
 		var resultOrder = 0;
 
 		for (var entry : list ${entry}) {
@@ -116,7 +128,8 @@ definition {
 		}
 	}
 
-	macro assertIsDisplayedOnControlPanel {
+	@summary = "Default summary"
+	macro assertIsDisplayedOnControlPanel(itemMenu = null) {
 		ApplicationsMenuHelper.openApplicationsMenu();
 
 		ApplicationsMenu.gotoPanel(panel = "Control Panel");
@@ -126,7 +139,8 @@ definition {
 			locator1 = "ObjectPortlet#VIEW_FIELD_ON_MENU");
 	}
 
-	macro assertObjectIsDisplayedOnControlPanel {
+	@summary = "Default summary"
+	macro assertObjectIsDisplayedOnControlPanel() {
 		ApplicationsMenuHelper.openApplicationsMenu();
 
 		ApplicationsMenu.gotoPanel(panel = "Control Panel");
@@ -134,7 +148,8 @@ definition {
 		AssertElementPresent(locator1 = "ObjectPortlet#CUSTOM_OBJECT_ON_CONTROL_PANEL");
 	}
 
-	macro assertUserCanNotUpdateEntryWithoutPermission {
+	@summary = "Default summary"
+	macro assertUserCanNotUpdateEntryWithoutPermission() {
 		Click(locator1 = "ObjectPortlet#VIEW_ENTRY_EYE_BUTTON");
 
 		AssertNotEditable(locator1 = "ObjectPortlet#ADD_OBJECT_ENTRY");
@@ -146,19 +161,22 @@ definition {
 			value1 = "must have UPDATE permission for com.liferay.object.model.ObjectDefinition#");
 	}
 
-	macro changePagination {
+	@summary = "Default summary"
+	macro changePagination(itemsPerPage = null) {
 		Click(locator1 = "ObjectPortlet#PAGINATION_ITEMS_PER_PAGE_SELECT");
 
 		MenuItem.click(menuItem = ${itemsPerPage});
 	}
 
-	macro checkAnyPage {
+	@summary = "Default summary"
+	macro checkAnyPage(pageNumber = null) {
 		var key_pageNumber = ${pageNumber};
 
 		Click(locator1 = "ObjectPortlet#ANY_PAGE");
 	}
 
-	macro checkUncheckColumnsDisplayed {
+	@summary = "Default summary"
+	macro checkUncheckColumnsDisplayed(dropdownItem = null) {
 		Click(locator1 = "ObjectPortlet#ARROW_DOWN_ICON");
 
 		Click(
@@ -166,7 +184,8 @@ definition {
 			locator1 = "ObjectPortlet#CHECK_UNCHECK_DROPDOWN_ITEM");
 	}
 
-	macro chooseEntryOnRelationshipField {
+	@summary = "Default summary"
+	macro chooseEntryOnRelationshipField(entryOption = null) {
 		Click(locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY");
 
 		KeyPress(
@@ -184,7 +203,8 @@ definition {
 		}
 	}
 
-	macro chooseEntryOnRelationshipFieldSpecific {
+	@summary = "Default summary"
+	macro chooseEntryOnRelationshipFieldSpecific(entryOption = null,relationshipFieldLabel = null) {
 		Click(
 			key_relationshipFieldLabel = ${relationshipFieldLabel},
 			locator1 = "ObjectPortlet#SEARCH_ENTRY_ON_RELATIONSHIP_FIELD_LABEL_SPECIFIC");
@@ -209,7 +229,8 @@ definition {
 		Navigator.gotoBack();
 	}
 
-	macro deleteEntry {
+	@summary = "Default summary"
+	macro deleteEntry(entry = null) {
 		Click(
 			key_entry = ${entry},
 			locator1 = "ObjectPortlet#ENTRY_KEBAB_MENU");
@@ -219,17 +240,20 @@ definition {
 		Button.click(button = "Delete");
 	}
 
-	macro goToCustomObjectPortletOnControlPanel {
+	@summary = "Default summary"
+	macro goToCustomObjectPortletOnControlPanel() {
 		Click(locator1 = "ObjectPortlet#CUSTOM_OBJECT_ON_CONTROL_PANEL");
 	}
 
-	macro gotoRelationshipTab {
+	@summary = "Default summary"
+	macro gotoRelationshipTab() {
 		Click(
 			key_tabName = "Relationship Tab",
 			locator1 = "ObjectAdmin#ENTRY_RELATIONSHIP_TAB");
 	}
 
-	macro searchColumn {
+	@summary = "Default summary"
+	macro searchColumn(columnName = null) {
 		Click(locator1 = "ObjectPortlet#ARROW_DOWN_ICON");
 
 		AssertElementPresent(locator1 = "ObjectPortlet#COLUMN_SEARCH_FIELD");
@@ -241,7 +265,8 @@ definition {
 		Click(locator1 = "ObjectPortlet#COLUMN_ICON_SEARCH");
 	}
 
-	macro searchEntry {
+	@summary = "Default summary"
+	macro searchEntry(entryName = null) {
 		AssertElementPresent(locator1 = "ObjectPortlet#SEARCH_FIELD");
 
 		Type(
@@ -253,13 +278,15 @@ definition {
 			value1 = "\RETURN");
 	}
 
-	macro searchEntryRelationshipField {
+	@summary = "Default summary"
+	macro searchEntryRelationshipField(entryValue = null) {
 		Type.type(
 			locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY",
 			value1 = ${entryValue});
 	}
 
-	macro selectCustomObject {
+	@summary = "Default summary"
+	macro selectCustomObject(label = null) {
 		SelectFrame(locator1 = "ObjectPortlet#SELECT_FRAME_OBJECT");
 
 		WaitForVisible(
@@ -271,13 +298,15 @@ definition {
 			locator1 = "ObjectPortlet#SELECT_CUSTOM_OBJECT");
 	}
 
-	macro selectObject {
+	@summary = "Default summary"
+	macro selectObject(label = null) {
 		Click(
 			key_label = ${label},
 			locator1 = "ObjectPortlet#SELECT_OBJECT");
 	}
 
-	macro selectRelationshipFieldEntry {
+	@summary = "Default summary"
+	macro selectRelationshipFieldEntry(entry = null,newEntry = null) {
 		Click(
 			key_entry = ${entry},
 			locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY");
@@ -289,27 +318,31 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro selectSystemObject {
+	@summary = "Default summary"
+	macro selectSystemObject(label = null) {
 		Click(
 			key_label = ${label},
 			locator1 = "ObjectPortlet#SELECT_SYSTEM_OBJECT");
 	}
 
-	macro sortField {
+	@summary = "Default summary"
+	macro sortField(sortFieldName = null) {
 		Click(
 			key_sortFieldName = ${sortFieldName},
 			locator1 = "ObjectPortlet#SORT_FIELD",
 			value1 = ${sortFieldName});
 	}
 
-	macro typeCustomField {
+	@summary = "Default summary"
+	macro typeCustomField(entry = null,customField = null) {
 		Type.type(
 			key_customField = ${customField},
 			locator1 = "ObjectPortlet#ENTRY_FIELD_GENERIC",
 			value1 = ${entry});
 	}
 
-	macro updateBooleanEntry {
+	@summary = "Default summary"
+	macro updateBooleanEntry(entry = null) {
 		ObjectPortlet.viewEntryDetails(entry = ${entry});
 
 		Check.checkNotVisible(locator1 = "//input[@type='checkbox']");
@@ -317,7 +350,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro updateEntry {
+	@summary = "Default summary"
+	macro updateEntry(invalidEntry = null,entry = null,updateEntry = null) {
 		ObjectPortlet.viewEntryDetails(entry = ${entry});
 
 		Type.type(
@@ -332,7 +366,8 @@ definition {
 		}
 	}
 
-	macro viewClobEntryDetails {
+	@summary = "Default summary"
+	macro viewClobEntryDetails(clobEntry = null) {
 		var key_entry = ${clobEntry};
 
 		if (IsElementPresent(locator1 = "ObjectPortlet#ENTRY_CLOB_KEBAB_MENU")) {
@@ -347,11 +382,13 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro viewEmptyLabelInDateEntry {
+	@summary = "Default summary"
+	macro viewEmptyLabelInDateEntry() {
 		AssertElementPresent(locator1 = "ObjectPortlet#VIEW_EMPTY_LABEL_IN_DATE_ENTRY");
 	}
 
-	macro viewEntry {
+	@summary = "Default summary"
+	macro viewEntry(entry = null) {
 		WaitForSPARefresh();
 
 		SelectFrameTop();
@@ -361,7 +398,8 @@ definition {
 			locator1 = "ObjectPortlet#ENTRY_VALUE");
 	}
 
-	macro viewEntryDetails {
+	@summary = "Default summary"
+	macro viewEntryDetails(entry = null) {
 		var key_entry = ${entry};
 
 		Refresh();
@@ -380,13 +418,15 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro viewWarningMessage {
+	@summary = "Default summary"
+	macro viewWarningMessage(warningMessage = null) {
 		AssertElementPresent(
 			locator1 = "Message#ERROR_3_ALT",
 			value1 = ${warningMessage});
 	}
 
-	macro viewWidgetButton {
+	@summary = "Default summary"
+	macro viewWidgetButton() {
 		AssertElementPresent(locator1 = "ObjectPortlet#VIEW_WIDGET_IN_PAGE_BUILDER_TOGGLE");
 	}
 

@@ -1,6 +1,7 @@
 definition {
 
-	macro getFormInstanceId {
+	@summary = "Default summary"
+	macro getFormInstanceId(groupName = null,formName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${formName}");
 
 		var formInstanceId = JSONDDMFormAPI._getFormInstanceId(
@@ -10,7 +11,8 @@ definition {
 		return ${formInstanceId};
 	}
 
-	macro getFormInstanceRecordId {
+	@summary = "Default summary"
+	macro getFormInstanceRecordId(groupName = null,formName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${formName}");
 
 		var formInstanceId = JSONDDMFormAPI._getFormInstanceId(

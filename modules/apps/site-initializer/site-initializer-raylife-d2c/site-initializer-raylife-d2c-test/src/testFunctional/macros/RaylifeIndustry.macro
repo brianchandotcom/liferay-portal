@@ -1,6 +1,7 @@
 definition {
 
-	macro typeIndustry {
+	@summary = "Default summary"
+	macro typeIndustry() {
 		if (!(isSet(primaryIndustry))) {
 			var primaryIndustry = "pet";
 		}

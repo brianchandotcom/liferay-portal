@@ -1,6 +1,7 @@
 definition {
 
-	macro addSegment {
+	@summary = "Default summary"
+	macro addSegment(date = null,fieldName = null,description = null,workflowAction = null,selectedOption = null,segmentName = null,operator = null,groupName = null,site = null,assetCategoryIds = null,firstSegmentId = null,assetTagNames = null,conditionType = null,value = null,key = null,secondSegmentId = null) {
 		Variables.assertDefined(parameterList = "${groupName},${segmentName},${fieldName},${operator}");
 
 		var descriptionMap = JSONSegmentsentrySetter.setDescriptionMap(description = ${description});
@@ -60,7 +61,8 @@ definition {
 		return ${segmentId};
 	}
 
-	macro deleteSegment {
+	@summary = "Default summary"
+	macro deleteSegment(groupName = null,segmentName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${segmentName}");
 
 		var segmentId = JSONSegmentsentry.getSegmentId(
@@ -70,7 +72,8 @@ definition {
 		JSONSegmentsentryAPI._deleteSegment(segmentsId = ${segmentId});
 	}
 
-	macro getSegmentId {
+	@summary = "Default summary"
+	macro getSegmentId(segmentName = null) {
 		Variables.assertDefined(parameterList = ${segmentName});
 
 		if (!(isSet(groupName))) {

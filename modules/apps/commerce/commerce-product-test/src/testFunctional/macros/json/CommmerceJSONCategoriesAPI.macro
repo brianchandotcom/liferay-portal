@@ -1,6 +1,7 @@
 definition {
 
-	macro _getCategories {
+	@summary = "Default summary"
+	macro _getCategories(groupName = null,site = null,vocabularyName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${vocabularyName}");
 
 		var baseURL = ${baseURL};
@@ -32,7 +33,8 @@ definition {
 		return ${responseBody};
 	}
 
-	macro _getCategoryIdByName {
+	@summary = "Default summary"
+	macro _getCategoryIdByName(categoryNames = null,groupName = null,vocabularyName = null) {
 		if (!(isSet(responseBody))) {
 			var responseBody = CommmerceJSONCategoriesAPI._getCategories(
 				groupName = ${groupName},

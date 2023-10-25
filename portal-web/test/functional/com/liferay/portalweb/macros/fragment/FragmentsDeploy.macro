@@ -1,7 +1,8 @@
 definition {
 
 	@description = "Deploy the fragments zip into Liferay Portal"
-	macro deployZipOnLiferayPortal {
+	@summary = "Default summary"
+	macro deployZipOnLiferayPortal(fragmentsZip = null) {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = ${fragmentsZip});
 

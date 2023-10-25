@@ -1,6 +1,7 @@
 definition {
 
-	macro _addCommerceOrder {
+	@summary = "Default summary"
+	macro _addCommerceOrder(deliveryTermName = null,shippingAddressName = null,billingAddressName = null,orderItems = null,paymentTermName = null,accountEntryName = null) {
 		Variables.assertDefined(parameterList = "${accountEntryName},${orderStatus},${paymentStatus}");
 
 		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});
@@ -200,7 +201,8 @@ definition {
 		return ${orderId};
 	}
 
-	macro _addCommerceOrderItem {
+	@summary = "Default summary"
+	macro _addCommerceOrderItem(productSKU = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -234,7 +236,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _addCommerceOrderNote {
+	@summary = "Default summary"
+	macro _addCommerceOrderNote(content = null) {
 		Variables.assertDefined(parameterList = ${content});
 
 		var baseURL = ${baseURL};
@@ -271,7 +274,8 @@ definition {
 		return ${responseBody};
 	}
 
-	macro _addOrderRule {
+	@summary = "Default summary"
+	macro _addOrderRule(orderRuleName = null) {
 		Variables.assertDefined(parameterList = "${orderRuleName},${orderRuleType},${applyTo}");
 
 		var baseURL = ${baseURL};
@@ -322,7 +326,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro _addOrderType {
+	@summary = "Default summary"
+	macro _addOrderType(orderTypeName = null) {
 		Variables.assertDefined(parameterList = ${orderTypeName});
 
 		var baseURL = ${baseURL};
@@ -386,7 +391,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro _deleteAllCommerceOrders {
+	@summary = "Default summary"
+	macro _deleteAllCommerceOrders() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -417,7 +423,8 @@ definition {
 		}
 	}
 
-	macro _deleteAllCommerceOrdersAndCheck {
+	@summary = "Default summary"
+	macro _deleteAllCommerceOrdersAndCheck() {
 		CommerceJSONOrdersAPI._deleteAllCommerceOrders();
 
 		var orderCount = CommerceJSONOrdersAPI._getCommerceOrdersCount();
@@ -427,7 +434,8 @@ definition {
 			expected = 0);
 	}
 
-	macro _getCommerceOrder {
+	@summary = "Default summary"
+	macro _getCommerceOrder() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -449,7 +457,8 @@ definition {
 		return ${orderId};
 	}
 
-	macro _getCommerceOrderIds {
+	@summary = "Default summary"
+	macro _getCommerceOrderIds(orderCount = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -482,7 +491,8 @@ definition {
 		return ${orderIds};
 	}
 
-	macro _getCommerceOrderItemCustomFieldValue {
+	@summary = "Default summary"
+	macro _getCommerceOrderItemCustomFieldValue(sku = null,customFieldName = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -505,7 +515,8 @@ definition {
 		return ${orderItemCustomFieldValue};
 	}
 
-	macro _getCommerceOrderItems {
+	@summary = "Default summary"
+	macro _getCommerceOrderItems(orderItemCount = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -532,7 +543,8 @@ definition {
 		return ${responseBody};
 	}
 
-	macro _getCommerceOrderObjectActionIdByName {
+	@summary = "Default summary"
+	macro _getCommerceOrderObjectActionIdByName(objectDefinitionName = null,objectActionName = null) {
 		Variables.assertDefined(parameterList = "${objectActionName},${objectDefinitionName}");
 
 		var baseURL = ${baseURL};
@@ -555,7 +567,8 @@ definition {
 		return ${objectActionId};
 	}
 
-	macro _getCommerceOrdersCount {
+	@summary = "Default summary"
+	macro _getCommerceOrdersCount() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -583,7 +596,8 @@ definition {
 		return ${ordersCount};
 	}
 
-	macro _getOrderById {
+	@summary = "Default summary"
+	macro _getOrderById(orderId = null,parameterValue = null) {
 		Variables.assertDefined(parameterList = ${orderId});
 
 		var baseURL = ${baseURL};
@@ -618,7 +632,8 @@ definition {
 		return ${response};
 	}
 
-	macro _getOrderItemById {
+	@summary = "Default summary"
+	macro _getOrderItemById(orderId = null) {
 		Variables.assertDefined(parameterList = ${orderId});
 
 		var baseURL = ${baseURL};
@@ -646,7 +661,8 @@ definition {
 		return ${response};
 	}
 
-	macro _patchCommerceOrderNote {
+	@summary = "Default summary"
+	macro _patchCommerceOrderNote(orderNoteId = null) {
 		Variables.assertDefined(parameterList = ${orderNoteId});
 
 		var baseURL = ${baseURL};
@@ -693,7 +709,8 @@ definition {
 		return ${responseBody};
 	}
 
-	macro _patchCommerceOrderObjectAction {
+	@summary = "Default summary"
+	macro _patchCommerceOrderObjectAction(objectDefinitionName = null,objectActionName = null) {
 		Variables.assertDefined(parameterList = "${objectActionName},${objectDefinitionName}");
 
 		var baseURL = ${baseURL};
@@ -724,7 +741,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.patch(${curl});
 	}
 
-	macro _updateCommerceOrderERC {
+	@summary = "Default summary"
+	macro _updateCommerceOrderERC(externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = ${externalReferenceCode});
 
 		var baseURL = ${baseURL};
@@ -749,7 +767,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro getCommerceOrderItemFieldByJSONPath {
+	@summary = "Default summary"
+	macro getCommerceOrderItemFieldByJSONPath(jsonPath = null) {
 		Variables.assertDefined(parameterList = ${jsonPath});
 
 		if (!(isSet(responseBody))) {
@@ -761,7 +780,8 @@ definition {
 		return ${fieldValue};
 	}
 
-	macro getOrderField {
+	@summary = "Default summary"
+	macro getOrderField(password = null,orderId = null,parameter = null,jsonPath = null,parameterValue = null,email = null) {
 		Variables.assertDefined(parameterList = "${jsonPath},${orderId}");
 
 		var response = CommerceJSONOrdersAPI._getOrderById(
@@ -776,7 +796,8 @@ definition {
 		return ${fieldValue};
 	}
 
-	macro getOrderItemField {
+	@summary = "Default summary"
+	macro getOrderItemField(password = null,orderId = null,jsonPath = null,email = null) {
 		Variables.assertDefined(parameterList = "${jsonPath},${orderId}");
 
 		if (!(isSet(response))) {
@@ -791,7 +812,8 @@ definition {
 		return ${fieldValue};
 	}
 
-	macro getOrderNotePostRequestField {
+	@summary = "Default summary"
+	macro getOrderNotePostRequestField(field = null,orderId = null,restricted = null,userEmail = null,content = null) {
 		Variables.assertDefined(parameterList = "${content},${field}");
 
 		var responseBody = CommerceJSONOrdersAPI._addCommerceOrderNote(

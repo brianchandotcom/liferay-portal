@@ -1,6 +1,7 @@
 definition {
 
-	macro gotoSiteTemplatesPage {
+	@summary = "Default summary"
+	macro gotoSiteTemplatesPage(baseURL = null,pageName = null,siteTemplateName = null) {
 		var siteTemplateId = JSONSiteTemplate.getSiteTemplateIdByName(siteTemplateName = ${siteTemplateName});
 
 		Navigator.openWithAppendToBaseURL(
@@ -12,7 +13,8 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
-	macro gotoSiteTemplatesPageViaUI {
+	@summary = "Default summary"
+	macro gotoSiteTemplatesPageViaUI(siteName = null,pageName = null,siteTemplateName = null) {
 		var key_siteTemplateName = ${siteTemplateName};
 
 		SiteTemplatesNavigator.openSiteTemplatesAdmin();
@@ -28,7 +30,8 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
-	macro openPagesAdmin {
+	@summary = "Default summary"
+	macro openPagesAdmin(baseURL = null,siteTemplateName = null) {
 		var siteTemplateId = JSONSiteTemplate.getSiteTemplateIdByName(siteTemplateName = ${siteTemplateName});
 
 		Navigator.openWithAppendToBaseURL(
@@ -36,13 +39,15 @@ definition {
 			urlAppend = "group/${siteTemplateId}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet");
 	}
 
-	macro openSiteTemplatesAdmin {
+	@summary = "Default summary"
+	macro openSiteTemplatesAdmin(baseURL = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/control_panel/manage/-/site_templates/templates");
 	}
 
-	macro openToConfigurePage {
+	@summary = "Default summary"
+	macro openToConfigurePage(siteTemplateName = null,layoutName = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {

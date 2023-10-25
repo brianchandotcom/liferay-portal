@@ -1,6 +1,7 @@
 definition {
 
-	macro addTable {
+	@summary = "Default summary"
+	macro addTable() {
 		VerifyElementPresent(locator1 = "CKEditor#INSERT_BTN");
 
 		Click(locator1 = "CKEditor#INSERT_BTN");
@@ -10,7 +11,8 @@ definition {
 		Click(locator1 = "CKEditor#CHK_BTN_TABLE");
 	}
 
-	macro clearParagraphWithBackspace {
+	@summary = "Default summary"
+	macro clearParagraphWithBackspace(paragraph_number = null) {
 		BalloonEditor.highlightText(paragraph_number = ${paragraph_number});
 
 		KeyPress(
@@ -18,7 +20,8 @@ definition {
 			value1 = "\BACK_SPACE");
 	}
 
-	macro goToAddVideo {
+	@summary = "Default summary"
+	macro goToAddVideo() {
 		VerifyVisible(locator1 = "CKEditor#INSERT_BTN");
 
 		Click(locator1 = "CKEditor#INSERT_BTN");
@@ -26,13 +29,15 @@ definition {
 		Click(locator1 = "CKEditor#INSERT_VIDEO_BTN");
 	}
 
-	macro highlightText {
+	@summary = "Default summary"
+	macro highlightText(paragraph_number = null) {
 		TripleClick(
 			locator1 = "CKEditorBalloonEditorSample#BODY_TEXT",
 			paragraph_number = ${paragraph_number});
 	}
 
-	macro toggleBalloonEditorContentStyle {
+	@summary = "Default summary"
+	macro toggleBalloonEditorContentStyle(optionTool = null) {
 		ScrollWebElementIntoView(
 			key_titleName = ${optionTool},
 			locator1 = "CKEditor#TOOLBAR_ANY_ITEM_BUTTON");

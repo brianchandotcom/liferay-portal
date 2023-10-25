@@ -457,15 +457,15 @@ definition {
 
 		task ("Then the user should see an error message") {
 			AssertAttributeValue(
-				value1 = "required",
 				key_text = "Region",
 				locator1 = "TextInput#ANY",
+				value1 = "required",
 				value2 = "true");
 
 			AssertAttributeValue(
-				value1 = "validationMessage",
 				key_text = "Region",
 				locator1 = "TextInput#ANY",
+				value1 = "validationMessage",
 				value2 = "Please fill out this field.");
 		}
 	}

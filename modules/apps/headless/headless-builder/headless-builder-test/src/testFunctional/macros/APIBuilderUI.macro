@@ -1,6 +1,7 @@
 definition {
 
-	macro assertSortedStatusInOrder {
+	@summary = "Default summary"
+	macro assertSortedStatusInOrder(statusList = null) {
 		Variables.assertDefined(parameterList = ${statusList});
 
 		var key_index = 1;
@@ -15,7 +16,8 @@ definition {
 		}
 	}
 
-	macro changePublicationStatus {
+	@summary = "Default summary"
+	macro changePublicationStatus(key_title = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",
@@ -32,7 +34,8 @@ definition {
 		}
 	}
 
-	macro createAPIApplication {
+	@summary = "Default summary"
+	macro createAPIApplication(baseURL = null,description = null,title = null) {
 		Variables.assertDefined(parameterList = ${title});
 
 		ApplicationsMenu.gotoPortlet(
@@ -68,7 +71,8 @@ definition {
 		Click(locator1 = "APIBuilder#CREATE_BUTTON");
 	}
 
-	macro createAPIEndpoint {
+	@summary = "Default summary"
+	macro createAPIEndpoint(path = null,name = null,applicationId = null) {
 		Variables.assertDefined(parameterList = "${name},${path}");
 
 		Click(locator1 = "Button#PLUS");
@@ -97,7 +101,8 @@ definition {
 			value1 = "Save");
 	}
 
-	macro createAPISchema {
+	@summary = "Default summary"
+	macro createAPISchema(objectDefinitionName = null,name = null) {
 		Variables.assertDefined(parameterList = "${name},${objectDefinitionName}");
 
 		Click(locator1 = "APIBuilder#ADD_NEW_SCHEMA");
@@ -117,7 +122,8 @@ definition {
 		}
 	}
 
-	macro deleteAPIApplication {
+	@summary = "Default summary"
+	macro deleteAPIApplication(key_title = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",
@@ -130,7 +136,8 @@ definition {
 		Click(locator1 = "APIBuilder#DELETE_IN_DROPDOWN_MENU");
 	}
 
-	macro deleteAPIEndpoint {
+	@summary = "Default summary"
+	macro deleteAPIEndpoint(endpointPath = null,applicationTitle = null) {
 		APIBuilderUI.switchToRelatedEntryInEditApplication(
 			entity = "Endpoints",
 			title = ${applicationTitle});
@@ -146,7 +153,8 @@ definition {
 		}
 	}
 
-	macro deleteAPISchema {
+	@summary = "Default summary"
+	macro deleteAPISchema(applicationTitle = null,schemaName = null) {
 		APIBuilderUI.switchToRelatedEntryInEditApplication(
 			entity = "Schemas",
 			title = ${applicationTitle});
@@ -162,7 +170,8 @@ definition {
 		}
 	}
 
-	macro filterByLastUpdated {
+	@summary = "Default summary"
+	macro filterByLastUpdated(fromDate = null,toDate = null) {
 		Variables.assertDefined(parameterList = "${fromDate},${toDate}");
 
 		Click.pauseClickAt(locator1 = "Dropdown#FILTER");
@@ -182,7 +191,8 @@ definition {
 			locator1 = "Button#ANY");
 	}
 
-	macro filterByStatus {
+	@summary = "Default summary"
+	macro filterByStatus(labelName = null) {
 		Variables.assertDefined(parameterList = ${labelName});
 
 		Click.pauseClickAt(locator1 = "Dropdown#FILTER");
@@ -202,7 +212,8 @@ definition {
 			locator1 = "Button#ANY");
 	}
 
-	macro goToEditAPIApplicationPage {
+	@summary = "Default summary"
+	macro goToEditAPIApplicationPage(key_title = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",
@@ -215,13 +226,15 @@ definition {
 		Click(locator1 = "APIBuilder#EDIT_BUTTON");
 	}
 
-	macro publishApplication {
+	@summary = "Default summary"
+	macro publishApplication(key_title = null) {
 		APIBuilderUI.goToEditAPIApplicationPage(key_title = ${key_title});
 
 		Click.pauseClickAt(locator1 = "APIBuilder#PUBLISH_BUTTON");
 	}
 
-	macro searchItem {
+	@summary = "Default summary"
+	macro searchItem(value = null) {
 		Variables.assertDefined(parameterList = ${value});
 
 		Type(
@@ -233,7 +246,8 @@ definition {
 			value1 = "\RETURN");
 	}
 
-	macro setPanelCategoryKeyToObject {
+	@summary = "Default summary"
+	macro setPanelCategoryKeyToObject(objectDefinition = null) {
 		Variables.assertDefined(parameterList = ${objectDefinition});
 
 		ObjectAdmin.openObjectAdmin();
@@ -247,7 +261,8 @@ definition {
 		CreateObject.saveObject();
 	}
 
-	macro switchToRelatedEntryInEditApplication {
+	@summary = "Default summary"
+	macro switchToRelatedEntryInEditApplication(title = null,entity = null) {
 		Variables.assertDefined(parameterList = "${entity},${title}");
 
 		APIBuilderUI.goToEditAPIApplicationPage(key_title = ${title});
@@ -257,7 +272,8 @@ definition {
 			value = ${entity});
 	}
 
-	macro viewItemsInOrder {
+	@summary = "Default summary"
+	macro viewItemsInOrder(itemList = null) {
 		Variables.assertDefined(parameterList = ${itemList});
 
 		var key_index = 1;

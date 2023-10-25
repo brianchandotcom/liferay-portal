@@ -1,18 +1,21 @@
 definition {
 
-	macro addMyCalendarByManageCalendars {
+	@summary = "Default summary"
+	macro addMyCalendarByManageCalendars(calendarName = null) {
 		Click(locator1 = "CalendarManageCalendars#ADD_CALENDAR");
 
 		Calendar._editName(calendarName = ${calendarName});
 	}
 
-	macro checkboxOption {
+	@summary = "Default summary"
+	macro checkboxOption(checkboxName = null) {
 		Check(
 			checkboxName = ${checkboxName},
 			locator1 = "Checkbox#ANY_CHECKBOX");
 	}
 
-	macro gotoCalendarSettings {
+	@summary = "Default summary"
+	macro gotoCalendarSettings(calendarName = null) {
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		Click(
@@ -24,7 +27,8 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
-	macro gotoEditCalendarsManage {
+	@summary = "Default summary"
+	macro gotoEditCalendarsManage(calendarManage = null,editNameCalendarManage = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${calendarManage});
@@ -32,21 +36,24 @@ definition {
 		Calendar._editName(calendarName = ${editNameCalendarManage});
 	}
 
-	macro viewManageCalendarDefault {
+	@summary = "Default summary"
+	macro viewManageCalendarDefault(calendarName = null,calendarDefault = null) {
 		AssertElementPresent(
 			key_calendarDefault = ${calendarDefault},
 			key_calendarName = ${calendarName},
 			locator1 = "CalendarManageCalendars#CALENDAR_TABLE_NAME_AND_VIEW_DEFAULT");
 	}
 
-	macro viewManageCalendarsByPosition {
+	@summary = "Default summary"
+	macro viewManageCalendarsByPosition(calendarName = null,rowNumber = null) {
 		AssertElementPresent(
 			key_calendarName = ${calendarName},
 			key_rowNumber = ${rowNumber},
 			locator1 = "CalendarManageCalendars#VIEW_CALENDAR_TABLE_NAME_BY_POSITION");
 	}
 
-	macro viewNameMyCalendars {
+	@summary = "Default summary"
+	macro viewNameMyCalendars(userCalendarName = null) {
 		AssertElementPresent(
 			key_userCalendarName = ${userCalendarName},
 			locator1 = "Calendar#MY_CALENDARS_CALENDAR");

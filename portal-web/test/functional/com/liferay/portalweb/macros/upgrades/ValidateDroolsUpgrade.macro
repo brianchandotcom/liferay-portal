@@ -1,6 +1,7 @@
 definition {
 
-	macro viewDroolsAppManager {
+	@summary = "Default summary"
+	macro viewDroolsAppManager() {
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
 			panel = "Control Panel",

@@ -1,19 +1,22 @@
 definition {
 
-	macro assertGraphValue {
+	@summary = "Default summary"
+	macro assertGraphValue(number = null) {
 		AssertElementPresent(
 			locator1 = "RaylifeAPApplications#TOTAL_STATUS",
 			value1 = ${number});
 	}
 
-	macro getApplicationLegendValue {
+	@summary = "Default summary"
+	macro getApplicationLegendValue(legendItem = null) {
 		var key_legendItem = ${legendItem};
 		var getItem = selenium.getText("RaylifeAPApplications#STATUS_LEGEND");
 
 		return ${getItem};
 	}
 
-	macro getValue {
+	@summary = "Default summary"
+	macro getValue(legendItem = null) {
 		var number = 0;
 		var list = ListUtil.newList();
 

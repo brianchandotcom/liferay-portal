@@ -1,6 +1,7 @@
 definition {
 
-	macro selectSingleApprover {
+	@summary = "Default summary"
+	macro selectSingleApprover() {
 		Click.clickAt(locator1 = "Icon#INFO");
 
 		Click.waitForMenuToggleJSClick(

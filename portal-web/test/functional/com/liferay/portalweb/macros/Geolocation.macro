@@ -1,23 +1,25 @@
 definition {
 
-	macro assertMarkerPosition {
+	@summary = "Default summary"
+	macro assertMarkerPosition(lng = null,lat = null) {
 		WaitForVisible(locator1 = "DDMField#GEOLOCATION_MAP");
 
 		if (IsElementPresent(locator1 = "//div[contains(@class,'ddm-geolocation')]")) {
 			AssertAttributeValue(
-				value1 = "value",
 				locator1 = "DDMField#GEOLOCATION_MAP_INPUT",
+				value1 = "value",
 				value2 = "{\"lat\":${lat},\"lng\":${lng}}");
 		}
 		else if (IsElementPresent(locator1 = "//div[contains(@id,'Location')]")) {
 			AssertAttributeValue(
-				value1 = "value",
 				locator1 = "DDMField#GEOLOCATION_MAP_INPUT",
+				value1 = "value",
 				value2 = "{\"latitude\":${lat},\"longitude\":${lng}}");
 		}
 	}
 
-	macro setMarkerPosition {
+	@summary = "Default summary"
+	macro setMarkerPosition(lng = null,lat = null) {
 		WaitForVisible(locator1 = "DDMField#GEOLOCATION_MAP");
 
 		if (IsElementPresent(locator1 = "//div[contains(@class,'ddm-geolocation')]")) {

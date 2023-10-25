@@ -680,13 +680,13 @@ element.textContent = 'Fragment Example';''';
 
 		task ("View the color of fragment texts") {
 			AssertAttributeValue(
-				value1 = "style",
 				locator1 = "//div[contains(@class,'fragment-name')]//h1[contains(.,'This is the first header')]",
+				value1 = "style",
 				value2 = "color: var(--brand-color-1);");
 
 			AssertAttributeValue(
-				value1 = "style",
 				locator1 = "//div[contains(@class,'fragment-name')]//h1[contains(.,'This is the second header')]",
+				value1 = "style",
 				value2 = "color: var(--brand-color-2);");
 
 			PageEditor.publish();
@@ -698,13 +698,13 @@ element.textContent = 'Fragment Example';''';
 				siteName = "Test Site Name");
 
 			AssertAttributeValue(
-				value1 = "style",
 				locator1 = "//div[contains(@class,'fragment-name')]//h1[contains(.,'This is the first header')]",
+				value1 = "style",
 				value2 = "color: var(--brand-color-1);");
 
 			AssertAttributeValue(
-				value1 = "style",
 				locator1 = "//div[contains(@class,'fragment-name')]//h1[contains(.,'This is the second header')]",
+				value1 = "style",
 				value2 = "color: var(--brand-color-2);");
 		}
 	}
@@ -1082,9 +1082,9 @@ main();
 			PageEditor.gotoConfiguration(fragmentName = "Text Fragment Example");
 
 			AssertAttributeValue(
-				value1 = "placeholder",
 				key_fieldLabel = "Button Text",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "placeholder",
 				value2 = "Placeholder");
 		}
 
@@ -1161,9 +1161,9 @@ main();
 			PageEditor.gotoConfiguration(fragmentName = "Text Fragment Example");
 
 			AssertAttributeValue(
-				value1 = "placeholder",
 				key_fieldLabel = "Button Text",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "placeholder",
 				value2 = "Placeholder");
 		}
 
@@ -1233,9 +1233,9 @@ main();
 			PageEditor.gotoConfiguration(fragmentName = "Text Fragment Example");
 
 			AssertAttributeValue(
-				value1 = "placeholder",
 				key_fieldLabel = "Button Text",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "placeholder",
 				value2 = "Placeholder");
 		}
 
@@ -1760,9 +1760,9 @@ main();
 			PageEditor.gotoConfiguration(fragmentName = "Text Fragment Example");
 
 			AssertAttributeValue(
-				value1 = "placeholder",
 				key_fieldLabel = "Button Text",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "placeholder",
 				value2 = "Placeholder");
 		}
 	}

@@ -1,6 +1,7 @@
 definition {
 
-	macro _goToAssignUsers {
+	@summary = "Default summary"
+	macro _goToAssignUsers(accountName = null) {
 		Account.gotoAssigneeTab(assigneeTab = "Users");
 
 		LexiconEntry.gotoAdd();
@@ -12,7 +13,8 @@ definition {
 			locator1 = "IFrame#MODAL_ANY");
 	}
 
-	macro _goToInviteUsers {
+	@summary = "Default summary"
+	macro _goToInviteUsers(accountName = null) {
 		Account.gotoAssigneeTab(assigneeTab = "Users");
 
 		LexiconEntry.gotoAdd();
@@ -24,7 +26,8 @@ definition {
 			locator1 = "IFrame#MODAL_ANY");
 	}
 
-	macro _inputAddressDetails {
+	@summary = "Default summary"
+	macro _inputAddressDetails(addressCountry = null,addressPostalCode = null,addressDescription = null,phoneNumber = null,addressType = null,addressName = null,addressStreet1 = null,addressStreet2 = null,addressStreet3 = null,addressRegion = null,addressCity = null) {
 		PortletEntry.inputName(name = ${addressName});
 
 		if (isSet(addressDescription)) {
@@ -86,7 +89,8 @@ definition {
 		}
 	}
 
-	macro addAccountWithDomain {
+	@summary = "Default summary"
+	macro addAccountWithDomain(accountName = null,domainNames = null) {
 		LexiconEntry.gotoAdd();
 
 		AssertTextEquals(
@@ -122,7 +126,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro addAddress {
+	@summary = "Default summary"
+	macro addAddress(addressCountry = null,addressPostalCode = null,addressDescription = null,phoneNumber = null,addressType = null,addressName = null,addressStreet1 = null,addressStreet2 = null,addressRegion = null,addressStreet3 = null,addressCity = null) {
 		LexiconEntry.gotoAdd();
 
 		AssertTextEquals(
@@ -151,7 +156,8 @@ definition {
 			locator1 = "NavTab#ACTIVE_TAB_LINK");
 	}
 
-	macro addAddressViaSetDefaultAddress {
+	@summary = "Default summary"
+	macro addAddressViaSetDefaultAddress(addressCountry = null,addressPostalCode = null,addressDescription = null,phoneNumber = null,addressType = null,addressName = null,addressStreet1 = null,addressStreet2 = null,addressRegion = null,addressStreet3 = null,addressCity = null) {
 		LexiconEntry.gotoAdd();
 
 		/* AssertTextEquals(
@@ -176,7 +182,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro addAssigneeToRole {
+	@summary = "Default summary"
+	macro addAssigneeToRole(assigneeName = null,accountRoleTitle = null) {
 		Navigator.gotoNavTab(navTab = "Assignees");
 
 		AssertTextEquals.assertPartialText(
@@ -204,7 +211,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro addAssigneeToRoleViaRolesTab {
+	@summary = "Default summary"
+	macro addAssigneeToRoleViaRolesTab(assigneeName = null,accountRoleTitle = null) {
 		Navigator.gotoNavTab(navTab = "Roles");
 
 		LexiconEntry.gotoEntryMenuItemNoError(
@@ -232,7 +240,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro addAssigneeToRoleViaUsersTab {
+	@summary = "Default summary"
+	macro addAssigneeToRoleViaUsersTab(accountUserName = null,accountRoleTitle = null) {
 		Navigator.gotoNavTab(navTab = "Users");
 
 		Account.goToEntryMenuItem(
@@ -254,7 +263,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro addBusinessAccount {
+	@summary = "Default summary"
+	macro addBusinessAccount(accountTaxId = null,accountDescription = null,accountLogo = null,accountName = null,externalReferenceCode = null) {
 		LexiconEntry.gotoAdd();
 
 		PortletEntry.inputName(name = ${accountName});
@@ -284,7 +294,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro addBusinessAccountWithCategory {
+	@summary = "Default summary"
+	macro addBusinessAccountWithCategory(accountName = null,vocabularyName = null,categoryName = null) {
 		LexiconEntry.gotoAdd();
 
 		PortletEntry.inputName(name = ${accountName});
@@ -305,7 +316,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro addBusinessAccountWithTag {
+	@summary = "Default summary"
+	macro addBusinessAccountWithTag(addTagMethod = null,accountName = null,tagNameList = null) {
 		LexiconEntry.gotoAdd();
 
 		PortletEntry.inputName(name = ${accountName});
@@ -341,7 +353,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro addDefaultCommerceAddressEntry {
+	@summary = "Default summary"
+	macro addDefaultCommerceAddressEntry(addressEntry = null,addressType = null,channelEntry = null) {
 		AssertElementPresent(
 			key_addressType = ${addressType},
 			locator1 = "Account#DEFAULT_ACCOUNT_ADDRESS_HEADING");
@@ -377,7 +390,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro addNewUserToBusinessAccount {
+	@summary = "Default summary"
+	macro addNewUserToBusinessAccount(accountName = null,userLastName = null,userScreenName = null,userEmailAddress = null,userFirstName = null) {
 		Account._goToAssignUsers(accountName = ${accountName});
 
 		LexiconEntry.gotoAdd();
@@ -407,7 +421,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro addNewUserToPersonAccount {
+	@summary = "Default summary"
+	macro addNewUserToPersonAccount(userLastName = null,userScreenName = null,userEmailAddress = null,userFirstName = null) {
 		AssertElementPresent(locator1 = "Account#USER_SELECT_BUTTON");
 
 		if (!(IsElementPresent(locator1 = "Message#EMPTY_INFO_DEPOT_HIDE"))) {
@@ -457,7 +472,8 @@ definition {
 			locator1 = "Account#USER_TABLE_NAME");
 	}
 
-	macro addNewUserWithSameDomain {
+	@summary = "Default summary"
+	macro addNewUserWithSameDomain(emailDomainName = null,validDomainNames = null,accountName = null,userLastName = null,userScreenName = null,userEmailAddress = null,userFirstName = null) {
 		Account._goToAssignUsers(accountName = ${accountName});
 
 		LexiconEntry.gotoAdd();
@@ -491,7 +507,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro addOwnedAccountRole {
+	@summary = "Default summary"
+	macro addOwnedAccountRole(accountRoleTitle = null) {
 		Account.gotoAssigneeTab(assigneeTab = "Roles");
 
 		LexiconEntry.gotoAdd();
@@ -507,7 +524,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro addPersonAccount {
+	@summary = "Default summary"
+	macro addPersonAccount(accountTaxId = null,accountDescription = null,accountLogo = null,accountName = null) {
 		LexiconEntry.gotoAdd();
 
 		PortletEntry.inputName(name = ${accountName});
@@ -535,7 +553,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro assertDisabledCurrencyIsNotAvailable {
+	@summary = "Default summary"
+	macro assertDisabledCurrencyIsNotAvailable(disabledCurrency = null) {
 		Click.javaScriptClick(
 			key_title = "Add Default Currency",
 			locator1 = "Button#ANY_TITLE");
@@ -548,7 +567,8 @@ definition {
 			option = ${disabledCurrency});
 	}
 
-	macro assignExistingUserToPersonAccount {
+	@summary = "Default summary"
+	macro assignExistingUserToPersonAccount(accountUserName = null) {
 		AssertElementPresent(locator1 = "Account#USER_SELECT_BUTTON");
 
 		if (!(IsElementPresent(locator1 = "Message#EMPTY_INFO_DEPOT_HIDE"))) {
@@ -581,7 +601,8 @@ definition {
 			locator1 = "Account#USER_TABLE_NAME");
 	}
 
-	macro assignMultipleOrganizations {
+	@summary = "Default summary"
+	macro assignMultipleOrganizations(accountName = null) {
 		Account.gotoAssigneeTab(assigneeTab = "Organizations");
 
 		LexiconEntry.gotoAdd();
@@ -601,7 +622,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro assignOrganizations {
+	@summary = "Default summary"
+	macro assignOrganizations(accountName = null,assigneeName = null) {
 		Account.gotoAssigneeTab(assigneeTab = "Organizations");
 
 		LexiconEntry.gotoAdd();
@@ -622,7 +644,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro assignUsers {
+	@summary = "Default summary"
+	macro assignUsers(accountName = null,assigneeName = null) {
 		Account._goToAssignUsers(accountName = ${accountName});
 
 		Check(
@@ -636,7 +659,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro changeDefaultBillingAddress {
+	@summary = "Default summary"
+	macro changeDefaultBillingAddress(addressName = null) {
 		AssertClick(
 			locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_CHANGE_DEFAULT_BILLING",
 			value1 = "Change");
@@ -658,7 +682,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro changeDefaultShippingAddress {
+	@summary = "Default summary"
+	macro changeDefaultShippingAddress(addressName = null) {
 		AssertClick(
 			locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_CHANGE_DEFAULT_SHIPPING",
 			value1 = "Change");
@@ -680,7 +705,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro createAccount {
+	@summary = "Default summary"
+	macro createAccount(userEmailAddressMessage = null,newuserEmailAddress = null,userLastName = null,userScreenName = null,disablePassword = null,userEmailAddress = null,newPassword = null,userFirstName = null) {
 		AssertElementPresent(
 			key_title = "Create Account",
 			locator1 = "Header#H2_TITLE");
@@ -736,7 +762,8 @@ definition {
 		}
 	}
 
-	macro deactivateAccount {
+	@summary = "Default summary"
+	macro deactivateAccount(deactivateType = null,accountName = null) {
 		if (${deactivateType} == "Hide Icon") {
 			LexiconEntry.selectEntry(key_rowEntry = ${accountName});
 
@@ -770,7 +797,8 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = ${accountName});
 	}
 
-	macro deleteAccount {
+	@summary = "Default summary"
+	macro deleteAccount(accountName = null,deleteType = null) {
 		if (${deleteType} == "Delete Icon") {
 			LexiconEntry.selectEntry(key_rowEntry = ${accountName});
 
@@ -804,7 +832,8 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = ${accountName});
 	}
 
-	macro deleteDefaultSetting {
+	@summary = "Default summary"
+	macro deleteDefaultSetting(settingHeader = null,currentDefault = null) {
 		Click(
 			key_currentDefault = ${currentDefault},
 			key_settingHeader = ${settingHeader},
@@ -815,7 +844,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro deleteOwnedAccountRole {
+	@summary = "Default summary"
+	macro deleteOwnedAccountRole(accountRoleTitle = null) {
 		Account.gotoAssigneeTab(assigneeTab = "Roles");
 
 		LexiconEntry.delete(
@@ -823,7 +853,8 @@ definition {
 			rowEntry = ${accountRoleTitle});
 	}
 
-	macro editAddress {
+	@summary = "Default summary"
+	macro editAddress(addressCountry = null,addressPostalCode = null,addressDescription = null,phoneNumber = null,addressType = null,addressName = null,addressStreet1 = null,addressStreet2 = null,addressStreet3 = null,addressRegion = null,addressCity = null) {
 		LexiconEntry.gotoEntry(rowEntry = ${addressName});
 
 		AssertTextEquals(
@@ -899,7 +930,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro editCommerceDefaultSetting {
+	@summary = "Default summary"
+	macro editCommerceDefaultSetting(settingHeader = null,channelEntry = null,newDefault = null,currentDefault = null,override = null,settingLabel = null) {
 		Click(
 			key_currentDefault = ${currentDefault},
 			key_settingHeader = ${settingHeader},
@@ -930,7 +962,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro editCP {
+	@summary = "Default summary"
+	macro editCP(accountDescriptionEdit = null,accountName = null,customFieldText = null,accountNameEdit = null,accountLogoEdit = null) {
 		Account.gotoEdit(accountName = ${accountName});
 
 		PortletEntry.inputName(name = ${accountNameEdit});
@@ -958,7 +991,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro editPG {
+	@summary = "Default summary"
+	macro editPG(accountDescriptionEdit = null,accountName = null,customFieldText = null,accountNameEdit = null,domainNames = null,accountLogoEdit = null) {
 		Account.goToEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${accountName});
@@ -1011,11 +1045,13 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro gotoAssigneeTab {
+	@summary = "Default summary"
+	macro gotoAssigneeTab(assigneeTab = null) {
 		Navigator.gotoNavTab(navTab = ${assigneeTab});
 	}
 
-	macro gotoEdit {
+	@summary = "Default summary"
+	macro gotoEdit(accountName = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${accountName});
@@ -1025,7 +1061,8 @@ definition {
 			value1 = "Edit ${accountName}");
 	}
 
-	macro grantUserAccessToAccountAdmin {
+	@summary = "Default summary"
+	macro grantUserAccessToAccountAdmin(userEmailAddress = null) {
 		JSONRole.addRegularRole(roleTitle = "Access Account Permission");
 
 		Permissions.definePermissionViaJSONAPI(
@@ -1038,7 +1075,8 @@ definition {
 			userEmailAddress = ${userEmailAddress});
 	}
 
-	macro viewErrorWhenAddingUserWithBlockedDomain {
+	@summary = "Default summary"
+	macro viewErrorWhenAddingUserWithBlockedDomain(emailDomainName = null,accountName = null,userLastName = null,userScreenName = null,userEmailAddress = null,userFirstName = null) {
 		Account._goToAssignUsers(accountName = ${accountName});
 
 		LexiconEntry.gotoAdd();
@@ -1075,7 +1113,8 @@ definition {
 
 	// Add new macro to avoid failure addressed in LRQA-74074, and that's why we not using the exist macro in LexiconEntry.macro.
 
-	macro goToEntryMenuItem {
+	@summary = "Default summary"
+	macro goToEntryMenuItem(rowEntry = null,menuItem = null) {
 		Click(
 			key_rowEntry = ${rowEntry},
 			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
@@ -1083,7 +1122,8 @@ definition {
 		MenuItem.clickNoError(menuItem = ${menuItem});
 	}
 
-	macro inviteUser {
+	@summary = "Default summary"
+	macro inviteUser(accountName = null,userEmailAddress = null) {
 		Account._goToInviteUsers(accountName = ${accountName});
 
 		Type(
@@ -1101,11 +1141,13 @@ definition {
 		Button.click(button = "Invite");
 	}
 
-	macro openAccountsAdmin {
+	@summary = "Default summary"
+	macro openAccountsAdmin() {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_account_admin_web_internal_portlet_AccountEntriesAdminPortlet");
 	}
 
-	macro removeDefaultBillingAddress {
+	@summary = "Default summary"
+	macro removeDefaultBillingAddress() {
 		Click(locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_REMOVE_DEFAULT_BILLING");
 
 		PortletEntry.save();
@@ -1115,7 +1157,8 @@ definition {
 			value1 = "Not Set");
 	}
 
-	macro removeDefaultCommerceTerms {
+	@summary = "Default summary"
+	macro removeDefaultCommerceTerms(number = null,termType = null,entryDetails = null) {
 		Click(
 			key_entryDetails = ${entryDetails},
 			key_termType = ${termType},
@@ -1130,7 +1173,8 @@ definition {
 			locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_EMPTY_SEARCH_CONTAINER");
 	}
 
-	macro removeDefaultShippingAddress {
+	@summary = "Default summary"
+	macro removeDefaultShippingAddress() {
 		Click(locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_REMOVE_DEFAULT_SHIPPING");
 
 		PortletEntry.save();
@@ -1140,7 +1184,8 @@ definition {
 			value1 = "Not Set");
 	}
 
-	macro removeDomain {
+	@summary = "Default summary"
+	macro removeDomain(accountName = null,domainName = null) {
 		LexiconEntry.gotoEntry(rowEntry = ${accountName});
 
 		Click(
@@ -1154,7 +1199,8 @@ definition {
 			locator1 = "Account#VALID_DOMAINS_REMOVE_TOOLTIP");
 	}
 
-	macro removeOrganizationAsAssignee {
+	@summary = "Default summary"
+	macro removeOrganizationAsAssignee(assigneeName = null) {
 		ClickNoError(
 			key_entryName = ${assigneeName},
 			locator1 = "LexiconTable#TABLE_ENTRY_DELETE");
@@ -1164,7 +1210,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro removeUserAsAssignee {
+	@summary = "Default summary"
+	macro removeUserAsAssignee(assigneeName = null) {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Remove",
 			rowEntry = ${assigneeName});
@@ -1174,7 +1221,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro searchAccountsViaId {
+	@summary = "Default summary"
+	macro searchAccountsViaId(accountName = null) {
 		var key_tableEntry = ${accountName};
 		var key_columnName = "lfr-id";
 		var accountId = selenium.getText("LexiconTable#TABLE_ENTRY_INFO");
@@ -1188,7 +1236,8 @@ definition {
 			value1 = ${accountId});
 	}
 
-	macro setAddAccountEntryPermissions {
+	@summary = "Default summary"
+	macro setAddAccountEntryPermissions(roleTitle = null,userEmailAddress = null) {
 		JSONRole.addRegularRole(roleTitle = ${roleTitle});
 
 		Permissions.definePermissionViaJSONAPI(
@@ -1201,7 +1250,8 @@ definition {
 			userEmailAddress = ${userEmailAddress});
 	}
 
-	macro setAllowedAccountTypeInSiteSettings {
+	@summary = "Default summary"
+	macro setAllowedAccountTypeInSiteSettings(allowedType = null) {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			portlet = "Site Settings");
@@ -1240,7 +1290,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro setDefaultBillingAddress {
+	@summary = "Default summary"
+	macro setDefaultBillingAddress(addressName = null) {
 		AssertElementPresent(locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_HEADING");
 
 		AssertClick(
@@ -1264,7 +1315,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro setDefaultCommerceTermsEntry {
+	@summary = "Default summary"
+	macro setDefaultCommerceTermsEntry(channelEntry = null,assertInactive = null,termType = null,termEntry = null,override = null) {
 		AssertElementPresent(
 			key_termType = ${termType},
 			locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_HEADING");
@@ -1324,7 +1376,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro setDefaultCurrency {
+	@summary = "Default summary"
+	macro setDefaultCurrency(currencyName = null,channelEntry = null) {
 		WaitForElementPresent(
 			key_title = "Add Default Currency",
 			locator1 = "Button#ANY_TITLE");
@@ -1361,7 +1414,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro setDefaultDiscount {
+	@summary = "Default summary"
+	macro setDefaultDiscount(discountTitle = null,channelEntry = null,override = null) {
 		Click.javaScriptClick(
 			key_title = "Add Default Discount",
 			locator1 = "Button#ANY_TITLE");
@@ -1389,7 +1443,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro setDefaultShippingAddress {
+	@summary = "Default summary"
+	macro setDefaultShippingAddress(addressName = null) {
 		AssertElementPresent(locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_HEADING");
 
 		AssertClick(
@@ -1413,7 +1468,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro tearDownCP {
+	@summary = "Default summary"
+	macro tearDownCP() {
 		Account.openAccountsAdmin();
 
 		PortletEntry.selectAll();
@@ -1425,7 +1481,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro unassignMultipleOrganizations {
+	@summary = "Default summary"
+	macro unassignMultipleOrganizations() {
 		Account.gotoAssigneeTab(assigneeTab = "Organizations");
 
 		for (var organizationNumber : list ${organizationNumber}) {
@@ -1441,7 +1498,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro unassignUserRole {
+	@summary = "Default summary"
+	macro unassignUserRole(accountUserName = null,accountRoleTitle = null) {
 		Navigator.gotoNavTab(navTab = "Users");
 
 		Account.goToEntryMenuItem(
@@ -1463,7 +1521,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro updateOwnedAccountRole {
+	@summary = "Default summary"
+	macro updateOwnedAccountRole(accountRoleTitleEdit = null,accountRoleTitle = null) {
 		Account.gotoAssigneeTab(assigneeTab = "Roles");
 
 		LexiconEntry.openEntryMenu(rowEntry = ${accountRoleTitle});
@@ -1477,7 +1536,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro viewAccountDetails {
+	@summary = "Default summary"
+	macro viewAccountDetails(accountTaxId = null,accountDescription = null,accountName = null,accountType = null,domainName = null,customFieldText = null,parentAccount = null,externalReferenceCode = null) {
 		LexiconEntry.gotoEntry(rowEntry = ${accountName});
 
 		AssertTextEquals(
@@ -1535,20 +1595,23 @@ definition {
 		}
 	}
 
-	macro viewAssignee {
+	@summary = "Default summary"
+	macro viewAssignee(assigneeName = null) {
 		AssertTextEquals.assertPartialText(
 			key_tableEntry = ${assigneeName},
 			locator1 = "LexiconTable#TABLE_ENTRY",
 			value1 = ${assigneeName});
 	}
 
-	macro viewAssigneeTab {
+	@summary = "Default summary"
+	macro viewAssigneeTab(navTab = null) {
 		AssertElementPresent(
 			key_tab = ${navTab},
 			locator1 = "NavTab#TAB_LINK");
 	}
 
-	macro viewDefaultBillingAddress {
+	@summary = "Default summary"
+	macro viewDefaultBillingAddress(addressCountry = null,addressPostalCode = null,phoneNumber = null,addressName = null,addressStreet1 = null,addressStreet2 = null,addressRegion = null,addressStreet3 = null,addressCity = null) {
 		AssertElementPresent(locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_BILLING_TEXT");
 
 		AssertTextEquals.assertPartialText(
@@ -1596,7 +1659,8 @@ definition {
 		}
 	}
 
-	macro viewDefaultCommerceTermsListByPriority {
+	@summary = "Default summary"
+	macro viewDefaultCommerceTermsListByPriority() {
 		var count = 0;
 
 		for (var rowList : list ${rowList}) {
@@ -1614,7 +1678,8 @@ definition {
 		}
 	}
 
-	macro viewDefaultDeliveryCommerceTermsEntry {
+	@summary = "Default summary"
+	macro viewDefaultDeliveryCommerceTermsEntry(termType = null,termEntry = null,row = null) {
 		if (isSet(termEntry)) {
 			if (isSet(row) && (${row} != "")) {
 				for (var termEntryDetails : list ${termEntry}) {
@@ -1642,7 +1707,8 @@ definition {
 		}
 	}
 
-	macro viewDefaultShippingAddress {
+	@summary = "Default summary"
+	macro viewDefaultShippingAddress(addressCountry = null,addressPostalCode = null,phoneNumber = null,addressName = null,addressStreet1 = null,addressStreet2 = null,addressRegion = null,addressStreet3 = null,addressCity = null) {
 		AssertElementPresent(locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SHIPPING_TEXT");
 
 		AssertTextEquals.assertPartialText(
@@ -1690,7 +1756,8 @@ definition {
 		}
 	}
 
-	macro viewErrorWhenAddingUserWithInvalidDomain {
+	@summary = "Default summary"
+	macro viewErrorWhenAddingUserWithInvalidDomain(emailDomainName = null,accountName = null,userLastName = null,userScreenName = null,userEmailAddress = null,userFirstName = null) {
 		Account._goToAssignUsers(accountName = ${accountName});
 
 		LexiconEntry.gotoAdd();
@@ -1725,7 +1792,8 @@ definition {
 			value1 = "Your request failed to complete.");
 	}
 
-	macro viewInactiveAccount {
+	@summary = "Default summary"
+	macro viewInactiveAccount(accountName = null) {
 		ManagementBar.setFilterAndOrder(filterBy = "Inactive");
 
 		LexiconEntry.viewEntryStatus(
@@ -1733,7 +1801,8 @@ definition {
 			rowStatus = "Inactive");
 	}
 
-	macro viewNoAssignee {
+	@summary = "Default summary"
+	macro viewNoAssignee(accountName = null) {
 		LexiconEntry.gotoEntry(rowEntry = ${accountName});
 
 		Account.gotoAssigneeTab(assigneeTab = ${assigneeType});
@@ -1745,13 +1814,15 @@ definition {
 			value1 = "There are no ${assigneeType} associated with this account.");
 	}
 
-	macro viewNoAssigneeTab {
+	@summary = "Default summary"
+	macro viewNoAssigneeTab(navTab = null) {
 		AssertElementNotPresent(
 			key_tab = ${navTab},
 			locator1 = "NavTab#TAB_LINK");
 	}
 
-	macro viewSelectedAccount {
+	@summary = "Default summary"
+	macro viewSelectedAccount(entryName = null) {
 		AssertElementPresent(
 			key_entryName = ${entryName},
 			locator1 = "Account#SELECT_ACCOUNT_ENTRY_CHECKMARK");

@@ -1,6 +1,7 @@
 definition {
 
-	macro addFeed {
+	@summary = "Default summary"
+	macro addFeed(feedType = null,feedRowIndexNumber = null,feedURLLink = null,feedTitle = null,viewWarningMessage = null,buttonRowIndexNumber = null) {
 		Portlet.gotoPortletOptions(
 			portletName = "RSS Publisher",
 			portletOption = "Configuration");
@@ -54,7 +55,8 @@ definition {
 		}
 	}
 
-	macro changeFeedsOrder {
+	@summary = "Default summary"
+	macro changeFeedsOrder(toRowNumber = null,offset = null,fromRowNumber = null) {
 		var key_fromRowNumber = ${fromRowNumber};
 		var key_toRowNumber = ${toRowNumber};
 
@@ -64,7 +66,8 @@ definition {
 			position = ${offset});
 	}
 
-	macro configureDisplaySettings {
+	@summary = "Default summary"
+	macro configureDisplaySettings(feedDisplayStyle = null,numberOfEntriesPerFeed = null) {
 		Portlet.gotoPortletOptions(
 			portletName = "RSS Publisher",
 			portletOption = "Configuration");
@@ -91,7 +94,8 @@ definition {
 		}
 	}
 
-	macro deleteFeed {
+	@summary = "Default summary"
+	macro deleteFeed(buttonRowIndexNumberList = null) {
 		Portlet.gotoPortletOptions(
 			portletName = "RSS Publisher",
 			portletOption = "Configuration");
@@ -111,7 +115,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro disableShowFeedTitle {
+	@summary = "Default summary"
+	macro disableShowFeedTitle() {
 		Portlet.gotoPortletOptions(
 			portletName = "RSS Publisher",
 			portletOption = "Configuration");
@@ -131,7 +136,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro openFeed {
+	@summary = "Default summary"
+	macro openFeed(siteName = null,feedTitle = null) {
 		var key_feedTitle = ${feedTitle};
 
 		AssertClick.assertPartialTextClickAt(
@@ -141,7 +147,8 @@ definition {
 		SelectWindow(value1 = "title=Site Page Name 2 - Site Name - ${siteName}");
 	}
 
-	macro updateFeedTime {
+	@summary = "Default summary"
+	macro updateFeedTime(feedTime = null) {
 		Type(
 			locator1 = "RSSFeed#FEED_TIME",
 			value1 = ${feedTime});
@@ -149,13 +156,15 @@ definition {
 		SystemSettings.saveConfiguration();
 	}
 
-	macro viewCorruptScript {
+	@summary = "Default summary"
+	macro viewCorruptScript() {
 		AssertTextPresent(value1 = "An error occurred while processing the template.");
 
 		AssertTextPresent(value1 = "Unexpected end of file reached.");
 	}
 
-	macro viewCustomADT {
+	@summary = "Default summary"
+	macro viewCustomADT(feedContentTitle = null) {
 		var key_feedContentTitle = ${feedContentTitle};
 
 		AssertTextEquals.assertPartialText(
@@ -163,7 +172,8 @@ definition {
 			value1 = ${feedContentTitle});
 	}
 
-	macro viewDeleteFeed {
+	@summary = "Default summary"
+	macro viewDeleteFeed(feedTitle = null) {
 		var key_feedTitle = ${feedTitle};
 
 		AssertTextNotPresent(
@@ -171,7 +181,8 @@ definition {
 			value1 = ${feedTitle});
 	}
 
-	macro viewDisplayFeedTitle {
+	@summary = "Default summary"
+	macro viewDisplayFeedTitle(feedTitle = null) {
 		var key_feedTitle = ${feedTitle};
 
 		AssertTextEquals.assertPartialText(
@@ -179,7 +190,8 @@ definition {
 			value1 = ${feedTitle});
 	}
 
-	macro viewFeedContent {
+	@summary = "Default summary"
+	macro viewFeedContent(feedEntryContent = null,feedEntryTitle = null) {
 		Panel.expandPanel(panel = ${feedEntryTitle});
 
 		AssertTextEquals.assertPartialText(
@@ -187,7 +199,8 @@ definition {
 			value1 = ${feedEntryContent});
 	}
 
-	macro viewNavigationDisplayFeedTitle {
+	@summary = "Default summary"
+	macro viewNavigationDisplayFeedTitle(navigationNullAdt = null,feedTitle = null) {
 		var key_feedTitle = ${feedTitle};
 
 		AssertTextEquals(
@@ -199,13 +212,15 @@ definition {
 		}
 	}
 
-	macro viewNoFeedTitle {
+	@summary = "Default summary"
+	macro viewNoFeedTitle(feedTitle = null) {
 		var key_feedTitle = ${feedTitle};
 
 		AssertElementNotPresent(locator1 = "RSSFeed#FEEDS_TITLE");
 	}
 
-	macro viewPG {
+	@summary = "Default summary"
+	macro viewPG(feedRowIndexNumber = null,rowIndexNumber = null,feedTitle = null) {
 		var key_feedRowIndexNumber = ${feedRowIndexNumber};
 		var key_rowIndexNumber = ${rowIndexNumber};
 
@@ -220,13 +235,15 @@ definition {
 			value1 = ${feedTitle});
 	}
 
-	macro viewPortletConfigurationInfo {
+	@summary = "Default summary"
+	macro viewPortletConfigurationInfo() {
 		AssertTextEquals(
 			locator1 = "Message#INFO_MAIN_CONTENT",
 			value1 = "Info: This application is not visible to users yet. Select at least one valid rss feed to make it visible.");
 	}
 
-	macro viewUpdateFeedTitle {
+	@summary = "Default summary"
+	macro viewUpdateFeedTitle(feedHeading = null,pageName = null) {
 		var key_feedHeading = ${feedHeading};
 
 		if (isSet(updateFeed)) {
@@ -243,7 +260,8 @@ definition {
 			value1 = ${feedHeading});
 	}
 
-	macro waitForRSSLoad {
+	@summary = "Default summary"
+	macro waitForRSSLoad() {
 		AssertVisible(locator1 = "Portlet#H2_HEADER");
 
 		AssertTextEquals(

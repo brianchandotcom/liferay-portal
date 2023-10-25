@@ -1,6 +1,7 @@
 definition {
 
-	macro addOneDriveDocument {
+	@summary = "Default summary"
+	macro addOneDriveDocument(dmDocumentTypeName = null) {
 		Navigator.openURL();
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
@@ -29,7 +30,8 @@ definition {
 			value1 = "${dmDocumentTypeName} Title After Upgrade");
 	}
 
-	macro viewAndDeleteGoogleDriveDocuments {
+	@summary = "Default summary"
+	macro viewAndDeleteGoogleDriveDocuments() {
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
 		DMDocument.deletePG(dmDocumentTitle = "Edited Google Document");
@@ -43,7 +45,8 @@ definition {
 		DMDocument.deletePG(dmDocumentTitle = "Edited Google Slide");
 	}
 
-	macro viewAndDeleteOneDriveDocument {
+	@summary = "Default summary"
+	macro viewAndDeleteOneDriveDocument(dmDocumentTypeName = null) {
 		Navigator.openURL();
 
 		Navigator.gotoPage(pageName = "Documents and Media Page");
@@ -53,7 +56,8 @@ definition {
 		DMDocument.deletePG(dmDocumentTitle = "OneDrive ${dmDocumentTypeName} Title");
 	}
 
-	macro viewAndEditGoogleDriveDocuments {
+	@summary = "Default summary"
+	macro viewAndEditGoogleDriveDocuments() {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		var key_dmDocumentTitle = "Untitled (1)";

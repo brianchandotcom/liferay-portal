@@ -1,6 +1,7 @@
 definition {
 
-	macro addComment {
+	@summary = "Default summary"
+	macro addComment(commentValue = null) {
 		Type(
 			locator1 = "PublicationsChanges#COMMENT_BODY",
 			value1 = ${commentValue});
@@ -14,7 +15,8 @@ definition {
 			locator1 = "PublicationsChanges#COMMENT_ACTIONS");
 	}
 
-	macro assertPublicationsCommentsCRUDPermissions {
+	@summary = "Default summary"
+	macro assertPublicationsCommentsCRUDPermissions() {
 		PublicationsChanges.openCommentsSidebar();
 
 		PublicationsChanges.addComment(commentValue = "Good to Publish");
@@ -27,7 +29,8 @@ definition {
 		PublicationsChanges.deleteComment(commentValue = "It is not ready to Publish");
 	}
 
-	macro deleteComment {
+	@summary = "Default summary"
+	macro deleteComment(commentValue = null) {
 		Click.mouseOverClick(
 			key_commentValue = ${commentValue},
 			locator1 = "PublicationsChanges#COMMENT_ACTIONS");
@@ -44,7 +47,8 @@ definition {
 		AssertTextNotPresent(value1 = ${commentValue});
 	}
 
-	macro discardChanges {
+	@summary = "Default summary"
+	macro discardChanges(conflictingChanges = null,changeCategory = null,changeTitle = null) {
 		if (isSet(changeOrder)) {
 			var changeOrder = ${changeOrder};
 		}
@@ -91,7 +95,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro editComment {
+	@summary = "Default summary"
+	macro editComment(commentValueEdit = null,commentValue = null,userName = null) {
 		Click.mouseOverClick(
 			key_commentValue = ${commentValue},
 			locator1 = "PublicationsChanges#COMMENT_ACTIONS");
@@ -113,7 +118,8 @@ definition {
 			value1 = ${commentValueEdit});
 	}
 
-	macro filterChangesByItem {
+	@summary = "Default summary"
+	macro filterChangesByItem(checkboxName = null,menuItem = null) {
 		if (IsElementPresent(key_text = "Clear", locator1 = "Button#ANY")) {
 			Click(
 				key_text = "Clear",
@@ -131,7 +137,8 @@ definition {
 			locator1 = "MenuItem#ANY_CHECKBOX");
 	}
 
-	macro gotoEditChanges {
+	@summary = "Default summary"
+	macro gotoEditChanges(changeCategory = null,changeTitle = null,editInLocation = null) {
 		if (isSet(changeOrder)) {
 			var changeOrder = ${changeOrder};
 		}
@@ -147,7 +154,8 @@ definition {
 		MenuItem.click(menuItem = "Edit in ${editInLocation}");
 	}
 
-	macro moveChangeToAnotherPublication {
+	@summary = "Default summary"
+	macro moveChangeToAnotherPublication(moveFailed = null,changeCategory = null,targetPublicationName = null,changeTitle = null,changeOrder = null) {
 		Click.clickAtNotVisible(
 			changeOrder = ${changeOrder},
 			key_changeCategory = ${changeCategory},
@@ -183,11 +191,13 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro openCommentsSidebar {
+	@summary = "Default summary"
+	macro openCommentsSidebar() {
 		Click.javaScriptClick(locator1 = "PublicationsChanges#COMMENT_BUTTON");
 	}
 
-	macro sortChanges {
+	@summary = "Default summary"
+	macro sortChanges(sortName = null,sort = null) {
 		Click(
 			key_name = ${sortName},
 			locator1 = "PublicationsChanges#SORT_BUTTON");
@@ -205,7 +215,8 @@ definition {
 		}
 	}
 
-	macro viewChanges {
+	@summary = "Default summary"
+	macro viewChanges(changeCategory = null,changeUser = null,publishedPublication = null,changeType = null,changeSite = null,changeTitle = null,changeStatus = null,publicationName = null,showAllItems = null) {
 		if (${publishedPublication} == "true") {
 			Click(
 				key_publicationName = ${publicationName},
@@ -260,7 +271,8 @@ definition {
 			value1 = ${changeType});
 	}
 
-	macro viewChangesInRelationships {
+	@summary = "Default summary"
+	macro viewChangesInRelationships(changeTitle = null) {
 		PublicationsNavigator.gotoNavbar(navBarTitle = "Relationships");
 
 		AssertTextEquals.assertPartialText(
@@ -269,7 +281,8 @@ definition {
 			value1 = ${changeTitle});
 	}
 
-	macro viewChangesResultNotPresent {
+	@summary = "Default summary"
+	macro viewChangesResultNotPresent(changeCategory = null,changeTitle = null) {
 		var key_changeCategory = ${changeCategory};
 		var key_changeTitle = ${changeTitle};
 
@@ -285,7 +298,8 @@ definition {
 			value1 = ${changeTitle});
 	}
 
-	macro viewChangesResultsOrder {
+	@summary = "Default summary"
+	macro viewChangesResultsOrder(changeCategory = null,changesList = null) {
 		var changeOrder = 0;
 
 		for (var changeTitle : list ${changesList}) {

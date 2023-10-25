@@ -1,6 +1,7 @@
 definition {
 
-	macro assertFailingElementCount {
+	@summary = "Default summary"
+	macro assertFailingElementCount(expectedLabels = null) {
 		var javaScriptCountElement = '''
 		
 		return document.querySelectorAll('.failing-element').length.toString();
@@ -16,17 +17,20 @@ definition {
 		}
 	}
 
-	macro backToPageBackButton {
+	@summary = "Default summary"
+	macro backToPageBackButton() {
 		Click(locator1 = "Icon#BACK");
 	}
 
-	macro backToPageCancelButton {
+	@summary = "Default summary"
+	macro backToPageCancelButton() {
 		AssertClick(
 			locator1 = "Button#CANCEL",
 			value1 = "Cancel");
 	}
 
-	macro changeLocale {
+	@summary = "Default summary"
+	macro changeLocale(locale = null) {
 		Click(locator1 = "PageAudit#LOCALE_BUTTON");
 
 		Click(
@@ -34,7 +38,8 @@ definition {
 			locator1 = "Translation#DROPDOWN_MENU_ITEM");
 	}
 
-	macro configureLocalizedURL {
+	@summary = "Default summary"
+	macro configureLocalizedURL() {
 		PortalSettings.openInstanceSettingsAdmin();
 
 		SystemSettings.gotoConfiguration(
@@ -57,13 +62,15 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro connectToGooglePageAudit {
+	@summary = "Default summary"
+	macro connectToGooglePageAudit() {
 		ClickNoError(
 			key_text = "Configure",
 			locator1 = "Button#ANY");
 	}
 
-	macro disableGooglePageSpeedSettings {
+	@summary = "Default summary"
+	macro disableGooglePageSpeedSettings() {
 		if (IsChecked(checkboxName = "Enable", locator1 = "Checkbox#ANY_CHECKBOX")) {
 			Click.javaScriptClick(
 				checkboxName = "Enable",
@@ -84,7 +91,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro disableGooglePageSpeedViaInstanceSettings {
+	@summary = "Default summary"
+	macro disableGooglePageSpeedViaInstanceSettings(scope = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -106,7 +114,8 @@ definition {
 		PageAudit.disableGooglePageSpeedSettings();
 	}
 
-	macro disableGooglePageSpeedViaSiteSettings {
+	@summary = "Default summary"
+	macro disableGooglePageSpeedViaSiteSettings() {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			portlet = "Site Settings");
@@ -119,7 +128,8 @@ definition {
 		PageAudit.disableGooglePageSpeedSettings();
 	}
 
-	macro disableGooglePageSpeedViaSystemSettings {
+	@summary = "Default summary"
+	macro disableGooglePageSpeedViaSystemSettings(settingsScope = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -141,11 +151,13 @@ definition {
 		PageAudit.disableGooglePageSpeedSettings();
 	}
 
-	macro goToDetailView {
+	@summary = "Default summary"
+	macro goToDetailView() {
 		Click(locator1 = "PageAudit#FAILING_CHECK_NAME");
 	}
 
-	macro openPageAuditSidebar {
+	@summary = "Default summary"
+	macro openPageAuditSidebar() {
 		if (IsNotVisible(locator1 = "PageAudit#SIDEBAR")) {
 			Click(locator1 = "PageAudit#PAGE_AUDIT_BUTTON");
 		}
@@ -155,7 +167,8 @@ definition {
 		}
 	}
 
-	macro resetDefaultValues {
+	@summary = "Default summary"
+	macro resetDefaultValues() {
 		if (IsElementPresent(locator1 = "Icon#HISTORY_VERTICAL_ELLIPSIS")) {
 			Click(locator1 = "Icon#HISTORY_VERTICAL_ELLIPSIS");
 
@@ -163,7 +176,8 @@ definition {
 		}
 	}
 
-	macro runPageAudit {
+	@summary = "Default summary"
+	macro runPageAudit() {
 		PageAudit.openPageAuditSidebar();
 
 		Click.javaScriptClick(locator1 = "PageAudit#BUTTON_LAUNCH_ANY");
@@ -173,7 +187,8 @@ definition {
 		}
 	}
 
-	macro setAPISettings {
+	@summary = "Default summary"
+	macro setAPISettings(preferredStrategy = null) {
 		Click(locator1 = "PageAudit#API_FIELD");
 
 		if (!(isSet(key_apiKey))) {
@@ -198,7 +213,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro setAPIViaInstanceSettings {
+	@summary = "Default summary"
+	macro setAPIViaInstanceSettings(apiKey = null,preferredStrategy = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -214,7 +230,8 @@ definition {
 			preferredStrategy = ${preferredStrategy});
 	}
 
-	macro setAPIViaSiteSettings {
+	@summary = "Default summary"
+	macro setAPIViaSiteSettings(apiKey = null,preferredStrategy = null) {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			portlet = "Site Settings");
@@ -229,7 +246,8 @@ definition {
 			preferredStrategy = ${preferredStrategy});
 	}
 
-	macro setAPIViaSystemSettings {
+	@summary = "Default summary"
+	macro setAPIViaSystemSettings(apiKey = null,preferredStrategy = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -245,13 +263,15 @@ definition {
 			preferredStrategy = ${preferredStrategy});
 	}
 
-	macro setPreferredStrategy {
+	@summary = "Default summary"
+	macro setPreferredStrategy(key_preferredStrategy = null) {
 		Click(locator1 = "Dropdown#TRIGGER");
 
 		DropdownMenuItem.click(menuItem = ${key_preferredStrategy});
 	}
 
-	macro setSEOcanonicalURL {
+	@summary = "Default summary"
+	macro setSEOcanonicalURL(canonicalLocale = null,url = null) {
 		if (!(isSet(urlAppend))) {
 			var urlAppend = "web/test-site-name/content-page";
 		}
@@ -283,7 +303,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro tearDownInstanceSettingsConfigurations {
+	@summary = "Default summary"
+	macro tearDownInstanceSettingsConfigurations() {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -304,7 +325,8 @@ definition {
 		PageAudit.resetDefaultValues();
 	}
 
-	macro tearDownSystemSettingsConfigurations {
+	@summary = "Default summary"
+	macro tearDownSystemSettingsConfigurations() {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

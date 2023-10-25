@@ -1,6 +1,7 @@
 definition {
 
-	macro assertAssetTypeUnselectable {
+	@summary = "Default summary"
+	macro assertAssetTypeUnselectable() {
 		PageEditor.gotoTab(tabName = "Mapping");
 
 		AssertElementNotPresent(
@@ -9,7 +10,8 @@ definition {
 			locator1 = "Icon#ANY_ITEM_SELECTOR");
 	}
 
-	macro gotoEditableFieldMapping {
+	@summary = "Default summary"
+	macro gotoEditableFieldMapping(fragmentName = null,className = null,id = null,contributed = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -45,7 +47,8 @@ definition {
 		}
 	}
 
-	macro mapEditableFieldToAsset {
+	@summary = "Default summary"
+	macro mapEditableFieldToAsset(uploadFileName = null,navItem = null,contentItem = null,entryTitle = null,rowItem = null) {
 		if (IsTextEqual(key_fieldLabel = "Item", locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT", value1 = "")) {
 			Click(
 				key_fieldLabel = "Item",
@@ -122,7 +125,8 @@ definition {
 			value1 = ${entryTitle});
 	}
 
-	macro mapEditableFieldToCollectionItems {
+	@summary = "Default summary"
+	macro mapEditableFieldToCollectionItems(field = null,fragmentName = null,id = null) {
 		Click(locator1 = "PageEditor#CONTENT_PAGE_DISABLED_HEADER");
 
 		Click.clickNoWaitForVisible(
@@ -171,7 +175,8 @@ definition {
 			value1 = ${field});
 	}
 
-	macro mapEditableTextToField {
+	@summary = "Default summary"
+	macro mapEditableTextToField(field = null,fragmentName = null,index = null,className = null,id = null,source = null,contributed = null) {
 		PageEditorMapping.gotoEditableFieldMapping(
 			className = ${className},
 			contributed = ${contributed},

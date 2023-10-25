@@ -1,6 +1,7 @@
 definition {
 
-	macro configureSearchResults {
+	@summary = "Default summary"
+	macro configureSearchResults(disableHighlighting = null,displayDocumentForm = null,federatedSearchKey = null,fieldsToDisplay = null,customEmptyResultMessage = null,displayTemplate = null,paginationDelta = null,index = null,customPagination = null,disableDisplaySelectedResultInContext = null) {
 		if (isSet(index)) {
 			SearchResults.gotoWidgetOptionsSpecific(
 				index = ${index},
@@ -79,7 +80,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro gotoWidgetOptionsSpecific {
+	@summary = "Default summary"
+	macro gotoWidgetOptionsSpecific(index = null,portletOption = null) {
 		MouseOver.mouseOverNotVisible(
 			key_index = ${index},
 			locator1 = "SearchPage#RESULTS_PORTLET_WIDGET_ELLIPSIS_ICON_SPECIFIC");
@@ -95,7 +97,8 @@ definition {
 		}
 	}
 
-	macro paginateAndViewSearchResults {
+	@summary = "Default summary"
+	macro paginateAndViewSearchResults() {
 		var key_searchAssetTitle = ${searchAssetTitle};
 		var key_searchAssetType = ${searchAssetType};
 		var searchAssetTitle = ${searchAssetTitle};
@@ -112,7 +115,8 @@ definition {
 			searchTerm = ${searchTerm});
 	}
 
-	macro viewDocumentDetailValue {
+	@summary = "Default summary"
+	macro viewDocumentDetailValue(documentDetailKey = null,searchAssetTitle = null,documentDetailKeyValue = null) {
 		if (IsElementPresent(key_searchAssetTitle = ${searchAssetTitle}, locator1 = "SearchPage#RESULT_DOCUMENT_DETAILS_COLLAPSED")) {
 			Click(
 				key_searchAssetTitle = ${searchAssetTitle},
@@ -131,7 +135,8 @@ definition {
 			value1 = ${documentDetailKeyValue});
 	}
 
-	macro viewMultipleSearchResults {
+	@summary = "Default summary"
+	macro viewMultipleSearchResults(resultsList = null,searchTerm = null) {
 		if (contains(${resultsList}, "/")) {
 			for (var titleAndType : list ${resultsList}) {
 				var searchAssetTitle = StringUtil.extractFirst(${titleAndType}, "/");
@@ -152,7 +157,8 @@ definition {
 		}
 	}
 
-	macro viewMultipleSearchResultsNotPresent {
+	@summary = "Default summary"
+	macro viewMultipleSearchResultsNotPresent(resultsList = null,noResultsList = null) {
 		if (contains(${noResultsList}, "/")) {
 			for (var titleAndType : list ${noResultsList}) {
 				var searchAssetTitle = StringUtil.extractFirst(${titleAndType}, "/");
@@ -170,13 +176,15 @@ definition {
 		}
 	}
 
-	macro viewNoSearchResults {
+	@summary = "Default summary"
+	macro viewNoSearchResults(searchTerm = null) {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No results were found that matched the keywords: ${searchTerm}.");
 	}
 
-	macro viewSearchResultNotPresent {
+	@summary = "Default summary"
+	macro viewSearchResultNotPresent(searchAssetType = null,searchAssetTitle = null) {
 		if (isSet(searchAssetType)) {
 			AssertElementNotPresent(
 				key_searchAssetTitle = ${searchAssetTitle},
@@ -190,7 +198,8 @@ definition {
 		}
 	}
 
-	macro viewSearchResults {
+	@summary = "Default summary"
+	macro viewSearchResults(searchAssetType = null,searchTerm = null,entryDate = null,searchAssetTitle = null,searchAssetSummary = null) {
 		if (isSet(searchAssetType)) {
 			AssertTextEquals.assertPartialText(
 				key_searchAssetTitle = ${searchAssetTitle},
@@ -227,7 +236,8 @@ definition {
 		}
 	}
 
-	macro viewSearchResultsSpecificOrder {
+	@summary = "Default summary"
+	macro viewSearchResultsSpecificOrder(resultsList = null) {
 		var resultOrder = 0;
 
 		for (var searchAssetTitle : list ${resultsList}) {

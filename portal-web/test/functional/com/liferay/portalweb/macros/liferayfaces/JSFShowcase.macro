@@ -1,6 +1,7 @@
 definition {
 
-	macro clearHiddenValue {
+	@summary = "Default summary"
+	macro clearHiddenValue(invalid = null,messageinvalid1 = null,messageinvalid2 = null,message2 = null,message1 = null) {
 		if (isSet(message1)) {
 			Click(
 				key_text = "Clear",
@@ -38,7 +39,8 @@ definition {
 		}
 	}
 
-	macro clickButton {
+	@summary = "Default summary"
+	macro clickButton(link = null) {
 		if (${link} == "true") {
 			AssertElementPresent(locator1 = "JSFShowcase#GENERAL_IMAGE_LINK");
 
@@ -59,7 +61,8 @@ definition {
 		}
 	}
 
-	macro clickButtonLinkImmediate {
+	@summary = "Default summary"
+	macro clickButtonLinkImmediate(message2 = null,message1 = null) {
 		Click(locator1 = "JSFShowcase#GENERAL_BUTTON");
 
 		AssertElementPresent(
@@ -73,7 +76,8 @@ definition {
 			locator1 = "JSFShowcase#IMMEDIATE_MESSAGE");
 	}
 
-	macro clickButtonNavigationParam {
+	@summary = "Default summary"
+	macro clickButtonNavigationParam(commandButton = null,navigation2 = null,navigation1 = null,parameterValue1 = null,parameterValue2 = null,parameterValue3 = null) {
 		if (isSet(parameterValue1)) {
 			AssertElementPresent(
 				key_parameterValue = ${parameterValue1},
@@ -121,7 +125,8 @@ definition {
 		}
 	}
 
-	macro clickButtonValueAttribute {
+	@summary = "Default summary"
+	macro clickButtonValueAttribute(attribute = null) {
 		Click(
 			key_attribute = ${attribute},
 			locator1 = "JSFShowcase#ATTRIBUTE_BUTTON");
@@ -131,7 +136,8 @@ definition {
 			locator1 = "JSFShowcase#MODEL_VALUE");
 	}
 
-	macro select {
+	@summary = "Default summary"
+	macro select(oneMenuName = null,assertError = null) {
 		if (isSet(listboxNameList)) {
 			for (var listboxNameList : list ${listboxNameList}) {
 				Click(
@@ -162,7 +168,8 @@ definition {
 		}
 	}
 
-	macro selectCheckbox {
+	@summary = "Default summary"
+	macro selectCheckbox(checkboxName = null) {
 		if (isSet(checkboxName)) {
 			Check(
 				checkboxName = ${checkboxName},
@@ -203,7 +210,8 @@ definition {
 		AssertElementNotPresent(locator1 = "JSFShowcase#REQUIRED_ERROR_MESSAGE");
 	}
 
-	macro selectInstantAjax {
+	@summary = "Default summary"
+	macro selectInstantAjax(oneMenuName = null) {
 		if (isSet(listboxNameList)) {
 			for (var listboxNameList : list ${listboxNameList}) {
 				Click(
@@ -243,7 +251,8 @@ definition {
 		AssertElementNotPresent(locator1 = "JSFShowcase#REQUIRED_ERROR_MESSAGE");
 	}
 
-	macro submitHiddenValue {
+	@summary = "Default summary"
+	macro submitHiddenValue(key_text = null,immediate = null,messageImmediate2 = null,invalid = null,messageImmediate1 = null,message2 = null,message1 = null) {
 		if (isSet(message1)) {
 			if (${invalid} == "true") {
 				Click(
@@ -295,7 +304,8 @@ definition {
 		}
 	}
 
-	macro submitImmediate {
+	@summary = "Default summary"
+	macro submitImmediate(oneMenuName = null,textInput = null,immediate = null,messageImmediate2 = null,checkboxName = null,messageImmediate1 = null,textArea = null) {
 		if (${immediate} == "true") {
 			if (isSet(checkboxName)) {
 				Check(
@@ -429,7 +439,8 @@ definition {
 		}
 	}
 
-	macro submitMessage {
+	@summary = "Default summary"
+	macro submitMessage(textValue = null,message3 = null,text = null,message = null,message2 = null,textValue3 = null,textValue2 = null) {
 		Type(
 			key_text = ${text},
 			locator1 = "TextInput#ANY",
@@ -491,7 +502,8 @@ definition {
 		}
 	}
 
-	macro submitText {
+	@summary = "Default summary"
+	macro submitText(textValue = null,text = null,textArea = null) {
 		if (${textArea} == "true") {
 			Type(
 				key_text = ${text},
@@ -514,7 +526,8 @@ definition {
 		AssertElementNotPresent(locator1 = "JSFShowcase#REQUIRED_ERROR_MESSAGE");
 	}
 
-	macro uploadAndDeleteFile {
+	@summary = "Default summary"
+	macro uploadAndDeleteFile(fileName = null,instantAjax = null) {
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 			locator1 = "TextInput#FILE",
 			value1 = ${fileName});
@@ -537,13 +550,15 @@ definition {
 			locator1 = "JSFShowcase#FILE_NAME_TABLE");
 	}
 
-	macro validateRequired {
+	@summary = "Default summary"
+	macro validateRequired() {
 		Click(locator1 = "JSFShowcase#GENERAL_BUTTON");
 
 		AssertElementPresent(locator1 = "JSFShowcase#REQUIRED_ERROR_MESSAGE");
 	}
 
-	macro validateRequiredCheckbox {
+	@summary = "Default summary"
+	macro validateRequiredCheckbox(selectManyMenu = null,selectManyList = null,selectManyListbox = null) {
 		Click(locator1 = "BridgeDemos#SUBMIT_BUTTON");
 
 		AssertElementNotPresent(locator1 = "JSFShowcase#REQUIRED_ERROR_MESSAGE");
@@ -562,7 +577,8 @@ definition {
 		}
 	}
 
-	macro viewDataTable {
+	@summary = "Default summary"
+	macro viewDataTable() {
 		for (var item : list "Customers,First Name,Last Name,Date of Birth,Country,Elbridge,Braxton,Oct 19, 1737,United States,Footer") {
 			AssertElementPresent(
 				key_item = ${item},
@@ -570,7 +586,8 @@ definition {
 		}
 	}
 
-	macro viewFromButtonResult {
+	@summary = "Default summary"
+	macro viewFromButtonResult(message = null) {
 		Click(locator1 = "JSFShowcase#GENERAL_BUTTON");
 
 		AssertElementPresent(
@@ -578,7 +595,8 @@ definition {
 			locator1 = "JSFShowcase#RESULT_MESSAGE");
 	}
 
-	macro viewGridTable {
+	@summary = "Default summary"
+	macro viewGridTable() {
 		for (var column : list "1,2,3") {
 			AssertElementPresent(
 				key_column = ${column},
@@ -599,7 +617,8 @@ definition {
 			locator1 = "JSFShowcase#GRID_TABLE_ITEM");
 	}
 
-	macro viewImages {
+	@summary = "Default summary"
+	macro viewImages() {
 		for (var imageName : list "Context-relative,#{resource},name,usemap") {
 			AssertElementPresent(
 				key_imageName = ${imageName},
@@ -607,7 +626,8 @@ definition {
 		}
 	}
 
-	macro viewLink {
+	@summary = "Default summary"
+	macro viewLink(image = null,link = null,linkURL = null,newTab = null) {
 		if (${image} == "false") {
 			Click(
 				key_link = ${link},
@@ -628,7 +648,8 @@ definition {
 		}
 	}
 
-	macro viewStylesheet {
+	@summary = "Default summary"
+	macro viewStylesheet() {
 		AssertElementPresent(locator1 = "//button[normalize-space(text())='Button']");
 
 		AssertCssValue(
@@ -644,7 +665,8 @@ definition {
 			value1 = "block");
 	}
 
-	macro viewVariousStylesButton {
+	@summary = "Default summary"
+	macro viewVariousStylesButton() {
 		for (var buttonName : list "Primary,Large,Default,Small,Mini,Disabled,Block") {
 			AssertElementPresent(
 				key_buttonName = ${buttonName},

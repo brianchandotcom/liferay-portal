@@ -1,6 +1,7 @@
 definition {
 
-	macro typeRetrieveQuoteEmailFields {
+	@summary = "Default summary"
+	macro typeRetrieveQuoteEmailFields(value = null) {
 		Type(
 			locator1 = "RaylifeRetrieveQuote#EMAIL_ADDRESS_FIELD",
 			value1 = ${value});

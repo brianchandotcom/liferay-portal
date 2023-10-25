@@ -1,6 +1,7 @@
 definition {
 
-	macro _deleteCommerceSites {
+	@summary = "Default summary"
+	macro _deleteCommerceSites() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -29,7 +30,8 @@ definition {
 		}
 	}
 
-	macro _getCommerceSites {
+	@summary = "Default summary"
+	macro _getCommerceSites() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {

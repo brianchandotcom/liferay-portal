@@ -1,6 +1,7 @@
 definition {
 
-	macro configureDisplaySettingsPG {
+	@summary = "Default summary"
+	macro configureDisplaySettingsPG(enableDisplaySettingsRelatedAssets = null,currentDisplayStyleViews = null,entriesToDisplayCount = null,enableDisplaySettingsShowSearch = null,portletName = null) {
 		Portlet.gotoPortletOptions(
 			portletName = ${portletName},
 			portletOption = "Configuration");
@@ -71,7 +72,8 @@ definition {
 		}
 	}
 
-	macro configureRootFolderPG {
+	@summary = "Default summary"
+	macro configureRootFolderPG(dmFolderName = null) {
 		Portlet.gotoPortletOptions(
 			portletName = "Documents and Media",
 			portletOption = "Configuration");
@@ -109,7 +111,8 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro configureScopetoGlobalPG {
+	@summary = "Default summary"
+	macro configureScopetoGlobalPG() {
 		Portlet.gotoPortletOptions(
 			portletName = "Documents and Media",
 			portletOption = "Configuration");
@@ -131,7 +134,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro viewDefaultConfigurationDisplaySettingsPG {
+	@summary = "Default summary"
+	macro viewDefaultConfigurationDisplaySettingsPG(portletName = null) {
 		Portlet.gotoPortletOptions(
 			portletName = ${portletName},
 			portletOption = "Configuration");
@@ -155,7 +159,8 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro viewDefaultPG {
+	@summary = "Default summary"
+	macro viewDefaultPG() {
 		var key_portletName = "Documents and Media";
 
 		AssertTextEquals(
@@ -167,7 +172,8 @@ definition {
 			value1 = "There are no documents or media files in this folder.");
 	}
 
-	macro viewInvalidRootFolder {
+	@summary = "Default summary"
+	macro viewInvalidRootFolder() {
 		Alert.viewErrorMessage(errorMessage = "The folder could not be found");
 
 		Portlet.gotoPortletOptions(
@@ -184,7 +190,8 @@ definition {
 		SelectFrame.selectFrameTop();
 	}
 
-	macro viewNoPermissionCP {
+	@summary = "Default summary"
+	macro viewNoPermissionCP() {
 		var key_portletTitle = "Documents and Media";
 
 		AssertTextEquals(

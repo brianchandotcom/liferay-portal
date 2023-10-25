@@ -1,6 +1,7 @@
 definition {
 
-	macro _addWebContent {
+	@summary = "Default summary"
+	macro _addWebContent(groupId = null,contentMap = null,structureId = null,descriptionMap = null,title = null,titleMap = null,folderId = null) {
 		Variables.assertDefined(parameterList = "${content},${title}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -95,7 +96,8 @@ definition {
 		return ${articleId};
 	}
 
-	macro _allStructuredContent {
+	@summary = "Default summary"
+	macro _allStructuredContent() {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(siteId))) {
@@ -115,7 +117,8 @@ definition {
 		return ${curl};
 	}
 
-	macro _createStructuredContent {
+	@summary = "Default summary"
+	macro _createStructuredContent(depotName = null,data = null,ddmStructureId = null,label = null,title = null,structuredContentFolderId = null,name = null) {
 		Variables.assertDefined(parameterList = "${data},${label},${name},${ddmStructureId},${title}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -173,7 +176,8 @@ definition {
 		return ${curl};
 	}
 
-	macro _createStructuredContentDraft {
+	@summary = "Default summary"
+	macro _createStructuredContentDraft(data = null,ddmStructureId = null,name = null,label = null,priority = null,title = null) {
 		Variables.assertDefined(parameterList = "${data},${label},${name},${ddmStructureId},${priority},${title}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -207,7 +211,8 @@ definition {
 		return ${curl};
 	}
 
-	macro _deleteStructuredContent {
+	@summary = "Default summary"
+	macro _deleteStructuredContent(structuredContentId = null) {
 		Variables.assertDefined(parameterList = ${structuredContentId});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -223,7 +228,8 @@ definition {
 		return ${curl};
 	}
 
-	macro _deleteStructuredContentByExternalReferenceCode {
+	@summary = "Default summary"
+	macro _deleteStructuredContentByExternalReferenceCode(depotName = null,siteId = null,externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = ${externalReferenceCode});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -248,7 +254,8 @@ definition {
 		return ${curl};
 	}
 
-	macro _editStructuredContent {
+	@summary = "Default summary"
+	macro _editStructuredContent(structuredContentId = null,data = null,ddmStructureId = null,name = null,label = null,title = null,priority = null) {
 		Variables.assertDefined(parameterList = "${data},${label},${name},${ddmStructureId},${title},${priority},${structuredContentId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -282,7 +289,8 @@ definition {
 		return ${curl};
 	}
 
-	macro _filterAdminStructuredContent {
+	@summary = "Default summary"
+	macro _filterAdminStructuredContent(filtervalue = null) {
 		Variables.assertDefined(parameterList = ${filtervalue});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -301,7 +309,8 @@ definition {
 		return ${curl};
 	}
 
-	macro _filterAndSortAdminStructuredContent {
+	@summary = "Default summary"
+	macro _filterAndSortAdminStructuredContent(sortvalue = null,filtervalue = null) {
 		Variables.assertDefined(parameterList = "${filtervalue},${sortvalue}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -320,7 +329,8 @@ definition {
 		return ${curl};
 	}
 
-	macro _filterStructuredContent {
+	@summary = "Default summary"
+	macro _filterStructuredContent(filtervalue = null) {
 		Variables.assertDefined(parameterList = ${filtervalue});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -339,7 +349,8 @@ definition {
 		return ${curl};
 	}
 
-	macro _filterStructuredContentInAssetLibrary {
+	@summary = "Default summary"
+	macro _filterStructuredContentInAssetLibrary(depotName = null,filtervalue = null) {
 		Variables.assertDefined(parameterList = "${depotName},${filtervalue}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -356,7 +367,8 @@ definition {
 		return ${curl};
 	}
 
-	macro _getStructuredContentsByErcInAssetLibrary {
+	@summary = "Default summary"
+	macro _getStructuredContentsByErcInAssetLibrary(depotName = null,externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = ${externalReferenceCode});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -376,7 +388,8 @@ definition {
 		return ${curl};
 	}
 
-	macro _getStructuredContentsWithDifferentParameters {
+	@summary = "Default summary"
+	macro _getStructuredContentsWithDifferentParameters(structuredContentId = null,groupName = null,parameter = null,parameterValue = null,updatedValueInAPI = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(groupName)) {
@@ -410,7 +423,8 @@ definition {
 		return ${curl};
 	}
 
-	macro _sortStructureContent {
+	@summary = "Default summary"
+	macro _sortStructureContent(sortvalue = null) {
 		Variables.assertDefined(parameterList = ${sortvalue});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -429,7 +443,8 @@ definition {
 		return ${curl};
 	}
 
-	macro _updateStructuredContentByErcInAssetLibrary {
+	@summary = "Default summary"
+	macro _updateStructuredContentByErcInAssetLibrary(updateExternalReferenceCode = null,depotName = null,data = null,ddmStructureId = null,name = null,label = null,title = null,externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = "${depotName},${externalReferenceCode},${data},${label},${name},${ddmStructureId},${title},${updateExternalReferenceCode}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -458,7 +473,8 @@ definition {
 		return ${curl};
 	}
 
-	macro _versionStructureContent {
+	@summary = "Default summary"
+	macro _versionStructureContent(responseToParse = null,versionvalue = null,parameter = null,parameterValue = null) {
 		if (!(isSet(structuredContentId))) {
 			Variables.assertDefined(parameterList = "${responseToParse},${versionvalue}");
 
@@ -493,7 +509,8 @@ definition {
 		return ${curl};
 	}
 
-	macro assertExternalReferenceCodeWithCorrectValue {
+	@summary = "Default summary"
+	macro assertExternalReferenceCodeWithCorrectValue(responseToParse = null) {
 		if (!(isSet(expectedExternalReferenceCodeValue))) {
 			var expectedExternalReferenceCodeValue = JSONUtil.getWithJSONPath(${responseToParse}, "$.['uuid']");
 		}
@@ -503,7 +520,8 @@ definition {
 		StringUtil.assertEquals(${expectedExternalReferenceCodeValue}, ${actualExternalReferenceCodeValue});
 	}
 
-	macro assertInFacetsWithCorrectValue {
+	@summary = "Default summary"
+	macro assertInFacetsWithCorrectValue(structuredContentId = null,responseToParse = null,expectedValue = null) {
 		Variables.assertDefined(parameterList = "${expectedValue},${structuredContentId}");
 
 		var actualValue = JSONUtil.getWithJSONPath(${responseToParse}, "$.facets..facetValues[?(@.term=='${structuredContentId}' && @.numberOfOccurrences==${expectedValue})].numberOfOccurrences");
@@ -511,32 +529,37 @@ definition {
 		StringUtil.assertEquals(${expectedValue}, ${actualValue});
 	}
 
-	macro assertPriorityFieldWithCorrectValue {
+	@summary = "Default summary"
+	macro assertPriorityFieldWithCorrectValue(responseToParse = null,expectedPriorityValue = null) {
 		var actualPriorityValue = JSONUtil.getWithJSONPath(${responseToParse}, "$..priority");
 
 		StringUtil.assertEquals(${expectedPriorityValue}, ${actualPriorityValue});
 	}
 
-	macro assertProperNumberOfItems {
+	@summary = "Default summary"
+	macro assertProperNumberOfItems(responseToParse = null,expectedTotalElement = null) {
 		var actualTotalElement = JSONUtil.getWithJSONPath(${responseToParse}, "$..['totalCount']");
 
 		StringUtil.assertEquals(${expectedTotalElement}, ${actualTotalElement});
 	}
 
-	macro assertStructuredContentIdIsFilteredWithCorrectValue {
+	@summary = "Default summary"
+	macro assertStructuredContentIdIsFilteredWithCorrectValue(responseToParse = null) {
 		var editStructuredContentId = JSONUtil.getWithJSONPath(${editStructuredContentId}, "$.['id']");
 		var filterStructuredContentId = JSONUtil.getWithJSONPath(${responseToParse}, "$..['items'][0].id");
 
 		StringUtil.assertEquals(${editStructuredContentId}, ${filterStructuredContentId});
 	}
 
-	macro assertTitleFieldWithCorrectName {
+	@summary = "Default summary"
+	macro assertTitleFieldWithCorrectName(expectedTitleName = null,responseToParse = null) {
 		var actualTitleName = JSONUtil.getWithJSONPath(${responseToParse}, "$..title");
 
 		StringUtil.assertEquals(${expectedTitleName}, ${actualTitleName});
 	}
 
-	macro createStructuredContent {
+	@summary = "Default summary"
+	macro createStructuredContent(depotName = null,data = null,ddmStructureId = null,name = null,label = null,priority = null,structuredContentFolderId = null,title = null,externalReferenceCode = null) {
 		if (!(isSet(groupName))) {
 			var groupName = "Guest";
 		}
@@ -558,7 +581,8 @@ definition {
 		return ${response};
 	}
 
-	macro createStructuredContentDraft {
+	@summary = "Default summary"
+	macro createStructuredContentDraft(data = null,ddmStructureId = null,name = null,label = null,title = null) {
 		if (!(isSet(priority))) {
 			var priority = "";
 		}
@@ -574,7 +598,8 @@ definition {
 		return ${response};
 	}
 
-	macro deleteAllStructuredContent {
+	@summary = "Default summary"
+	macro deleteAllStructuredContent() {
 		var structuredContentId = ListUtil.newListFromString(${structuredContentId});
 
 		var size = ListUtil.size(${structuredContentId});
@@ -588,7 +613,8 @@ definition {
 		}
 	}
 
-	macro deleteStructuredContentInAssetLibrary {
+	@summary = "Default summary"
+	macro deleteStructuredContentInAssetLibrary(depotName = null,externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = "${depotName},${externalReferenceCode}");
 
 		HeadlessWebcontentAPI._deleteStructuredContentByExternalReferenceCode(
@@ -596,7 +622,8 @@ definition {
 			externalReferenceCode = ${externalReferenceCode});
 	}
 
-	macro editStructuredContent {
+	@summary = "Default summary"
+	macro editStructuredContent(data = null,responseToParse = null,ddmStructureId = null,name = null,label = null,title = null) {
 		Variables.assertDefined(parameterList = "${responseToParse},${data},${ddmStructureId},${label},${name},${priority},${title}");
 
 		var structuredContentId = JSONUtil.getWithJSONPath(${responseToParse}, "$.['id']");
@@ -617,13 +644,15 @@ definition {
 		return ${response};
 	}
 
-	macro filterAdminStructuredContent {
+	@summary = "Default summary"
+	macro filterAdminStructuredContent(filtervalue = null) {
 		var response = HeadlessWebcontentAPI._filterAdminStructuredContent(filtervalue = ${filtervalue});
 
 		return ${response};
 	}
 
-	macro filterAndSortAdminStructuredContent {
+	@summary = "Default summary"
+	macro filterAndSortAdminStructuredContent(sortvalue = null,filtervalue = null) {
 		var response = HeadlessWebcontentAPI._filterAndSortAdminStructuredContent(
 			filtervalue = ${filtervalue},
 			sortvalue = ${sortvalue});
@@ -631,13 +660,15 @@ definition {
 		return ${response};
 	}
 
-	macro filterStructuredContent {
+	@summary = "Default summary"
+	macro filterStructuredContent(filtervalue = null) {
 		var response = HeadlessWebcontentAPI._filterStructuredContent(filtervalue = ${filtervalue});
 
 		return ${response};
 	}
 
-	macro filterStructuredContentInAssetLibrary {
+	@summary = "Default summary"
+	macro filterStructuredContentInAssetLibrary(depotName = null,filtervalue = null) {
 		var response = HeadlessWebcontentAPI._filterStructuredContentInAssetLibrary(
 			depotName = ${depotName},
 			filtervalue = ${filtervalue});
@@ -645,7 +676,8 @@ definition {
 		return ${response};
 	}
 
-	macro getStructuredContentIdByTitle {
+	@summary = "Default summary"
+	macro getStructuredContentIdByTitle(groupName = null,title = null) {
 		Variables.assertDefined(parameterList = ${title});
 
 		if (isSet(groupName)) {
@@ -659,7 +691,8 @@ definition {
 		return ${structuredContentId};
 	}
 
-	macro getStructuredContentsByErcInAssetLibrary {
+	@summary = "Default summary"
+	macro getStructuredContentsByErcInAssetLibrary(depotName = null,assetLibraryId = null,externalReferenceCode = null) {
 		var response = HeadlessWebcontentAPI._getStructuredContentsByErcInAssetLibrary(
 			assetLibraryId = ${assetLibraryId},
 			depotName = ${depotName},
@@ -668,7 +701,8 @@ definition {
 		return ${response};
 	}
 
-	macro getStructuredContentsVersion {
+	@summary = "Default summary"
+	macro getStructuredContentsVersion(structuredContentId = null,groupName = null,parameter = null,parameterValue = null,updatedValueInAPI = null) {
 		var curl = HeadlessWebcontentAPI._getStructuredContentsWithDifferentParameters(
 			groupName = ${groupName},
 			parameter = ${parameter},
@@ -681,7 +715,8 @@ definition {
 		return ${response};
 	}
 
-	macro getStructuredContentsWithDifferentParameters {
+	@summary = "Default summary"
+	macro getStructuredContentsWithDifferentParameters(structuredContentId = null,groupName = null,parameter = null,headlessComponent = null,parameterValue = null) {
 		var curl = HeadlessWebcontentAPI._getStructuredContentsWithDifferentParameters(
 			groupName = ${groupName},
 			headlessComponent = ${headlessComponent},
@@ -694,7 +729,8 @@ definition {
 		return ${response};
 	}
 
-	macro getTitleOfStructuredContent {
+	@summary = "Default summary"
+	macro getTitleOfStructuredContent(responseToParse = null) {
 		Variables.assertDefined(parameterList = ${responseToParse});
 
 		var title = JSONUtil.getWithJSONPath(${responseToParse}, "$.['title']");
@@ -702,7 +738,8 @@ definition {
 		return ${title};
 	}
 
-	macro getUuidOfStructuredContent {
+	@summary = "Default summary"
+	macro getUuidOfStructuredContent(responseToParse = null) {
 		Variables.assertDefined(parameterList = ${responseToParse});
 
 		var uuid = JSONUtil.getWithJSONPath(${responseToParse}, "$.['uuid']");
@@ -710,7 +747,8 @@ definition {
 		return ${uuid};
 	}
 
-	macro getWebContentIdFromResponse {
+	@summary = "Default summary"
+	macro getWebContentIdFromResponse(responseToParse = null) {
 		Variables.assertDefined(parameterList = ${responseToParse});
 
 		var idFromResponse = JSONUtil.getWithJSONPath(${responseToParse}, "$.['id']");
@@ -718,7 +756,8 @@ definition {
 		return ${idFromResponse};
 	}
 
-	macro returnAllstructuredContentId {
+	@summary = "Default summary"
+	macro returnAllstructuredContentId() {
 		var response = HeadlessWebcontentAPI._allStructuredContent();
 
 		var structuredContentId = JSONUtil.getWithJSONPath(${response}, "$..['items'][?(@.creator)].id");
@@ -726,13 +765,15 @@ definition {
 		return ${structuredContentId};
 	}
 
-	macro sortStructureContent {
+	@summary = "Default summary"
+	macro sortStructureContent(sortvalue = null) {
 		var response = HeadlessWebcontentAPI._sortStructureContent(sortvalue = ${sortvalue});
 
 		return ${response};
 	}
 
-	macro updateStructuredContentByErcInAssetLibrary {
+	@summary = "Default summary"
+	macro updateStructuredContentByErcInAssetLibrary(depotName = null,data = null,ddmStructureId = null,name = null,label = null,title = null,externalReferenceCode = null) {
 		if (!(isSet(updateExternalReferenceCode))) {
 			var updateExternalReferenceCode = "";
 		}
@@ -750,7 +791,8 @@ definition {
 		return ${response};
 	}
 
-	macro versionStructureContent {
+	@summary = "Default summary"
+	macro versionStructureContent(structuredContentId = null,versionvalue = null,responseToParse = null,parameter = null,parameterValue = null) {
 		if (!(isSet(responseToParse))) {
 			Variables.assertDefined(parameterList = ${structuredContentId});
 

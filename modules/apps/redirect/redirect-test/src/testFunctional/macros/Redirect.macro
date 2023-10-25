@@ -1,6 +1,7 @@
 definition {
 
-	macro addEntry {
+	@summary = "Default summary"
+	macro addEntry(siteName = null,destinationURL = null,sourceURL = null,noUpdateReferences = null,groupName = null,portalName = null,redirectChain = null,redirectURLVariation = null,destinationURLVariation = null,noUpdateRedirect = null,destinationPageName = null,redirectType = null,expirationDate = null,sourceURLVariation = null,updateRedirect = null) {
 		var portalURL = PropsUtil.get("portal.url");
 
 		if (!(isSet(skipNavigation))) {
@@ -83,7 +84,8 @@ definition {
 		}
 	}
 
-	macro addEntryVia404URLs {
+	@summary = "Default summary"
+	macro addEntryVia404URLs(sourceURL = null,noUpdateReferences = null,activeIgnoreURL = null,siteName = null,destinationURL = null,redirectType = null,ignoredURL = null,expirationDate = null) {
 		var portalURL = PropsUtil.get("portal.url");
 
 		if (!(isSet(skipNavigation))) {
@@ -141,7 +143,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro addPattern {
+	@summary = "Default summary"
+	macro addPattern(destinationIndex = null,patternIndex = null,pattern = null,userAgent = null,destinationURL = null,userAgentIndex = null) {
 		if (${patternIndex} != 0) {
 			Click(
 				key_index = ${patternIndex},
@@ -188,7 +191,8 @@ definition {
 		}
 	}
 
-	macro configureCrawlerUserAgents {
+	@summary = "Default summary"
+	macro configureCrawlerUserAgents(removeCrawlerUserAgent = null,addCrawlerUserAgent = null) {
 		if (isSet(removeCrawlerUserAgent)) {
 			Click(
 				key_crawlerUserAgent = ${removeCrawlerUserAgent},
@@ -216,7 +220,8 @@ definition {
 		}
 	}
 
-	macro configureFriendlyURLRedirection {
+	@summary = "Default summary"
+	macro configureFriendlyURLRedirection(redirectionType = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -243,7 +248,8 @@ definition {
 		SystemSettings.saveConfiguration();
 	}
 
-	macro configureRedirectChain {
+	@summary = "Default summary"
+	macro configureRedirectChain(noUpdateReferences = null) {
 		if (isSet(updateRedirect)) {
 			AssertChecked.assertCheckedNotVisible(
 				checkboxName = "Update Redirect",
@@ -276,7 +282,8 @@ definition {
 		}
 	}
 
-	macro deleteEntry {
+	@summary = "Default summary"
+	macro deleteEntry(sourceURL = null) {
 		if (isSet(deletions)) {
 			ClickNoError(locator1 = "Icon#DELETE");
 		}
@@ -289,7 +296,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro editEntry {
+	@summary = "Default summary"
+	macro editEntry(sourceURL = null,noUpdateReferences = null,sourceURLEdit = null,noUpdateRedirect = null,redirectTypeEdit = null,destinationURLEdit = null,expirationDate = null,updateRedirect = null) {
 		if (!(isSet(skipNavigation))) {
 			Redirect.gotoEntryMenuItem(
 				item = "Edit",
@@ -349,7 +357,8 @@ definition {
 		}
 	}
 
-	macro gotoConfigureCrawlerUserAgents {
+	@summary = "Default summary"
+	macro gotoConfigureCrawlerUserAgents() {
 		var baseURL = PropsUtil.get("portal.url");
 
 		if (isSet(navigateFromJavaScriptSEODynamicRendering)) {
@@ -371,19 +380,22 @@ definition {
 			locator1 = "Header#H2_TITLE");
 	}
 
-	macro gotoEntryMenuItem {
+	@summary = "Default summary"
+	macro gotoEntryMenuItem(sourceURL = null,item = null) {
 		LexiconTable.clickEllipsisItem(
 			item = ${item},
 			tableEntry = ${sourceURL});
 	}
 
-	macro gotoPatternsTab {
+	@summary = "Default summary"
+	macro gotoPatternsTab() {
 		Click(
 			key_tab = "Patterns",
 			locator1 = "NavTab#TAB_LINK");
 	}
 
-	macro ignoreEntry {
+	@summary = "Default summary"
+	macro ignoreEntry(unignore = null,ignoreURL = null,unignoreAllEntries = null,ignoreAllEntries = null) {
 		if (!(isSet(skipNavigation))) {
 			AssertClick(
 				key_navItem = "404 URLs",
@@ -427,17 +439,20 @@ definition {
 		}
 	}
 
-	macro open404URLsAdmin {
+	@summary = "Default summary"
+	macro open404URLsAdmin(siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_redirect_web_internal_portlet_RedirectPortlet&_com_liferay_redirect_web_internal_portlet_RedirectPortlet_navigation=404-urls");
 	}
 
-	macro openRedirectAdmin {
+	@summary = "Default summary"
+	macro openRedirectAdmin(siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_redirect_web_internal_portlet_RedirectPortlet");
 	}
 
 	// You can use this navigation when you need to access the configuration quickly without checking the UI.
 
-	macro openToAddEntry {
+	@summary = "Default summary"
+	macro openToAddEntry(siteURLKey = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -447,13 +462,15 @@ definition {
 		Open(value1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_redirect_web_internal_portlet_RedirectPortlet&_com_liferay_redirect_web_internal_portlet_RedirectPortlet_mvcRenderCommandName=%2Fredirect%2Fedit_redirect_entry&_com_liferay_redirect_web_internal_portlet_RedirectPortlet_redirect=http%3A%2F%2F${baseURL}%3A8080%2Fgroup%2F${siteURLKey}%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_redirect_web_internal_portlet_RedirectPortlet");
 	}
 
-	macro openToConfigInSystemSettings {
+	@summary = "Default summary"
+	macro openToConfigInSystemSettings() {
 		var baseURL = PropsUtil.get("portal.url");
 
 		Open(value1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.redirect.internal.configuration.RedirectConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
 	}
 
-	macro openToEditEntry {
+	@summary = "Default summary"
+	macro openToEditEntry(groupName = null,siteURLKey = null,destinationURL = null) {
 		var redirectEntryId = JSONRedirect.getRedirectEntryId(
 			destinationURL = ${destinationURL},
 			groupName = ${groupName});
@@ -466,17 +483,20 @@ definition {
 		Open(value1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_redirect_web_internal_portlet_RedirectPortlet&_com_liferay_redirect_web_internal_portlet_RedirectPortlet_mvcRenderCommandName=%2Fredirect%2Fedit_redirect_entry&_com_liferay_redirect_web_internal_portlet_RedirectPortlet_redirect=http%3A%2F%2F${baseURL}%3A8080%2Fgroup%2F${siteURLKey}%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_redirect_web_internal_portlet_RedirectPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_p_mode%3Dview&_com_liferay_redirect_web_internal_portlet_RedirectPortlet_redirectEntryId=${redirectEntryId}");
 	}
 
-	macro openToPatterns {
+	@summary = "Default summary"
+	macro openToPatterns(siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_redirect_web_internal_portlet_RedirectPortlet&_com_liferay_redirect_web_internal_portlet_RedirectPortlet_navigation=patterns");
 	}
 
-	macro removePattern {
+	@summary = "Default summary"
+	macro removePattern(index = null) {
 		Click(
 			key_index = ${index},
 			locator1 = "Button#REMOVE_REPEATABLE");
 	}
 
-	macro view404URLs {
+	@summary = "Default summary"
+	macro view404URLs(requestNumber = null,ignoreURL = null,multipleUrLs = null) {
 		if (isSet(activeIgnoreURL)) {
 			AssertClick(
 				key_navItem = "404 URLs",
@@ -503,7 +523,8 @@ definition {
 		}
 	}
 
-	macro view404URLsDefault {
+	@summary = "Default summary"
+	macro view404URLsDefault() {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO_TAGLIB_TITLE",
 			value1 = "All is in order.");
@@ -513,7 +534,8 @@ definition {
 			value1 = "All your pages are connected or redirected.");
 	}
 
-	macro view404URLsTab {
+	@summary = "Default summary"
+	macro view404URLsTab() {
 		if (isSet(disabled404Tracking)) {
 			AssertElementNotPresent(
 				key_navItem = "404 URLs",
@@ -526,19 +548,22 @@ definition {
 		}
 	}
 
-	macro viewActiveTabInSystemSettings {
+	@summary = "Default summary"
+	macro viewActiveTabInSystemSettings() {
 		AssertVisible(
 			key_tab = "Redirection",
 			locator1 = "NavTab#ACTIVE_TAB_LINK");
 	}
 
-	macro viewDefault {
+	@summary = "Default summary"
+	macro viewDefault() {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO_TAGLIB",
 			value1 = "No redirects were found.");
 	}
 
-	macro viewEntry {
+	@summary = "Default summary"
+	macro viewEntry(sourceURL = null,destinationURL = null,redirectType = null,expirationDate = null) {
 		AssertTextEquals.assertPartialText(
 			key_rowEntry = ${sourceURL},
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
@@ -564,7 +589,8 @@ definition {
 		}
 	}
 
-	macro viewEntryFloatingURL {
+	@summary = "Default summary"
+	macro viewEntryFloatingURL(redirectURL = null) {
 		MouseOver(
 			key_rowEntry = ${redirectURL},
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
@@ -582,7 +608,8 @@ definition {
 		}
 	}
 
-	macro viewEntryInfo {
+	@summary = "Default summary"
+	macro viewEntryInfo(latestOccurrence = null,createdBy = null,type = null,createDate = null,expirationDate = null) {
 		var portalURL = PropsUtil.get("portal.url");
 
 		Check(
@@ -617,7 +644,8 @@ definition {
 			value1 = ${expirationDate});
 	}
 
-	macro viewOrderedURLs {
+	@summary = "Default summary"
+	macro viewOrderedURLs(entry1 = null,entry2 = null) {
 		AssertTextEquals(
 			key_rowNumber = 1,
 			locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD_3",
@@ -629,7 +657,8 @@ definition {
 			value1 = ${entry2});
 	}
 
-	macro viewResultEntryTitle {
+	@summary = "Default summary"
+	macro viewResultEntryTitle(searchTerm = null,searchEntryTitle = null) {
 		Search.searchCP(searchTerm = ${searchTerm});
 
 		AssertTextEquals(
@@ -638,7 +667,8 @@ definition {
 			value1 = ${searchEntryTitle});
 	}
 
-	macro viewURLRedirectionType {
+	@summary = "Default summary"
+	macro viewURLRedirectionType(temporary = null,permanent = null,url = null) {
 		var curl = '''
 			${url} \
 				-w %{http_code}

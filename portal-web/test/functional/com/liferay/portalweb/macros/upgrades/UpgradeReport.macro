@@ -1,6 +1,7 @@
 definition {
 
-	macro getAutoUpgradeReportFileContent {
+	@summary = "Default summary"
+	macro getAutoUpgradeReportFileContent() {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
 		var fileContentReport = FileUtil.read("${liferayHome}/reports/upgrade_report.info");
@@ -8,13 +9,15 @@ definition {
 		return ${fileContentReport};
 	}
 
-	macro getUpgradeExecutionTime {
+	@summary = "Default summary"
+	macro getUpgradeExecutionTime(reportFileContent = null) {
 		var upgradeRunTimeReport = RegexUtil.replace(${reportFileContent}, "Execution time: (.*[0-9])", 1);
 
 		return ${upgradeRunTimeReport};
 	}
 
-	macro getUpgradeReportFileContent {
+	@summary = "Default summary"
+	macro getUpgradeReportFileContent() {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
 		var fileContentReport = FileUtil.read("${liferayHome}/tools/portal-tools-db-upgrade-client/reports/upgrade_report.info");
@@ -22,7 +25,8 @@ definition {
 		return ${fileContentReport};
 	}
 
-	macro printUpgradeExecutionTime {
+	@summary = "Default summary"
+	macro printUpgradeExecutionTime(upgradeType = null) {
 		if (${upgradeType} == "auto") {
 			var reportFileContent = UpgradeReport.getAutoUpgradeReportFileContent();
 		}

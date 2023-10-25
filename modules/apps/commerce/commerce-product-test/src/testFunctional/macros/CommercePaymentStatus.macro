@@ -1,12 +1,14 @@
 definition {
 
-	macro assertPaymentStatus {
+	@summary = "Default summary"
+	macro assertPaymentStatus(statusValue = null) {
 		AssertElementPresent(
 			key_filterOption = ${statusValue},
 			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
 	}
 
-	macro editPaymentStatus {
+	@summary = "Default summary"
+	macro editPaymentStatus(statusValue = null) {
 		Click(
 			key_table = "Payment Status",
 			key_title = "Edit",

@@ -1,6 +1,7 @@
 definition {
 
-	macro gotoContactInfoByProperty {
+	@summary = "Default summary"
+	macro gotoContactInfoByProperty() {
 		Click(
 			field = "Do you own the building",
 			locator1 = "Raylife#BUTTON_YES_OPTION");
@@ -34,7 +35,8 @@ definition {
 			locator1 = "Raylife#BUTTON_YES_OPTION");
 	}
 
-	macro typeAllPropertyInfoFields {
+	@summary = "Default summary"
+	macro typeAllPropertyInfoFields() {
 		Click(
 			field = "Do you own the building at Address?",
 			locator1 = "Raylife#BUTTON_YES_OPTION");
@@ -60,13 +62,15 @@ definition {
 			locator1 = "Raylife#BUTTON_YES_OPTION");
 	}
 
-	macro typePropertyInfoFields {
+	@summary = "Default summary"
+	macro typePropertyInfoFields(value = null) {
 		Type(
 			locator1 = "Raylife#FORMS_FIELDS",
 			value1 = ${value});
 	}
 
-	macro viewPropertyInfo {
+	@summary = "Default summary"
+	macro viewPropertyInfo() {
 		AssertElementPresent(
 			field = "Do you own the building at Address?",
 			locator1 = "Raylife#BUTTON_YES_OPTION");

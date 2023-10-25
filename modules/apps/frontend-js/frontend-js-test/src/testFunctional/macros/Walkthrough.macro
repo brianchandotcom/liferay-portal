@@ -1,6 +1,7 @@
 definition {
 
-	macro _editWalkthroughJSON {
+	@summary = "Default summary"
+	macro _editWalkthroughJSON(fileName = null) {
 		var jsonSnippet = Walkthrough.getWalkthroughSteps(fileName = ${fileName});
 
 		SystemSettings.editTextAreaSetting(
@@ -8,13 +9,15 @@ definition {
 			settingValue = ${jsonSnippet});
 	}
 
-	macro _enableWalkthrough {
+	@summary = "Default summary"
+	macro _enableWalkthrough() {
 		SystemSettings.configureSystemSetting(
 			enableSetting = "true",
 			settingFieldName = "Enable Walkthrough");
 	}
 
-	macro addWalkthrough {
+	@summary = "Default summary"
+	macro addWalkthrough(fileName = null) {
 		Walkthrough.gotoSiteConfigWalkthrough();
 
 		Walkthrough._enableWalkthrough();
@@ -24,20 +27,22 @@ definition {
 		SystemSettings.saveConfiguration();
 	}
 
-	macro assertHighlightedSpecificObject {
+	@summary = "Default summary"
+	macro assertHighlightedSpecificObject(key_stepId = null) {
 		AssertAttributeValue.assertAttributeNotPresent(
-			value1 = "fill-opacity",
 			key_stepId = ${key_stepId},
 			locator1 = "Walkthrough#STEP_ID",
+			value1 = "fill-opacity",
 			value2 = "0.8");
 
 		AssertAttributeValue(
-			value1 = "fill",
 			locator1 = "Walkthrough#POPOVER_OVERLAY",
+			value1 = "fill",
 			value2 = "#393a4a");
 	}
 
-	macro enablePopoverMode {
+	@summary = "Default summary"
+	macro enablePopoverMode() {
 		if (IsElementNotPresent(locator1 = "Walkthrough#POPOVER")) {
 			if (IsElementPresent(key_portletName = "JS Walkthrough Sample", locator1 = "Portlet#TITLE")) {
 				Click(locator1 = "Walkthrough#HOTSPOT");
@@ -48,7 +53,8 @@ definition {
 		}
 	}
 
-	macro getWalkthroughSteps {
+	@summary = "Default summary"
+	macro getWalkthroughSteps(fileName = null) {
 		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = ${fileName});
 
 		var fileContent = FileUtil.read(${dependencyFilePath});
@@ -56,7 +62,8 @@ definition {
 		return ${fileContent};
 	}
 
-	macro goToNextStep {
+	@summary = "Default summary"
+	macro goToNextStep(key_step = null) {
 		Click(locator1 = "Button#OK");
 
 		VerifyElementPresent(
@@ -64,7 +71,8 @@ definition {
 			locator1 = "Walkthrough#POPOVER_TITLE");
 	}
 
-	macro goToPreviousStep {
+	@summary = "Default summary"
+	macro goToPreviousStep(key_step = null) {
 		Click(locator1 = "Button#PREVIOUS");
 
 		VerifyElementPresent(
@@ -72,7 +80,8 @@ definition {
 			locator1 = "Walkthrough#POPOVER_TITLE");
 	}
 
-	macro gotoSiteConfigWalkthrough {
+	@summary = "Default summary"
+	macro gotoSiteConfigWalkthrough() {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			portlet = "Site Settings");
@@ -83,13 +92,15 @@ definition {
 			configurationScope = "Site Scope");
 	}
 
-	macro goToSpecificStep {
+	@summary = "Default summary"
+	macro goToSpecificStep(key_step = null) {
 		while (IsElementNotPresent(key_title = "Step ${key_step}", locator1 = "Walkthrough#POPOVER_TITLE")) {
 			Click(locator1 = "Button#OK");
 		}
 	}
 
-	macro setupWalkthroughPage {
+	@summary = "Default summary"
+	macro setupWalkthroughPage(filename = null,siteName = null) {
 		task ("Given there is a site-level JSON defined for current site") {
 			Walkthrough.addWalkthrough(fileName = ${filename});
 

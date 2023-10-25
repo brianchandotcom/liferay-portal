@@ -1,6 +1,7 @@
 definition {
 
-	macro batchPlannerTearDown {
+	@summary = "Default summary"
+	macro batchPlannerTearDown() {
 		JSONBatchPlannerLogAPI._deleteBatchPlannerLogs();
 
 		JSONBatchPlannerPlansAPI._deleteBatchPlannerPlans();

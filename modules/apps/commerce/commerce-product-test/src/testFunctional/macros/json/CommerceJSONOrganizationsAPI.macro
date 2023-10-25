@@ -1,6 +1,7 @@
 definition {
 
-	macro _deleteAllOrganizations {
+	@summary = "Default summary"
+	macro _deleteAllOrganizations() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -78,7 +79,8 @@ definition {
 		return ${channelIds};
 	}
 
-	macro _getOrganizationsCount {
+	@summary = "Default summary"
+	macro _getOrganizationsCount() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {

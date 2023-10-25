@@ -92,9 +92,9 @@ definition {
 
 		task ("And top most treeview checkbox state is indeterminate") {
 			AssertAttributeValue(
-				value1 = "indeterminate",
 				key_label = "Liferay DXP",
 				locator1 = "ClaySamplePortlet#CHECKBOX_NESTED",
+				value1 = "indeterminate",
 				value2 = "true");
 		}
 
@@ -140,9 +140,9 @@ definition {
 
 		task ("Then parent checkbox is indeterminate state") {
 			AssertAttributeValue(
-				value1 = "indeterminate",
 				key_label = "Liferay DXP",
 				locator1 = "ClaySamplePortlet#CHECKBOX_NESTED",
+				value1 = "indeterminate",
 				value2 = "true");
 		}
 	}

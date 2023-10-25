@@ -1,12 +1,14 @@
 definition {
 
-	macro gotoEntryDetails {
+	@summary = "Default summary"
+	macro gotoEntryDetails(userName = null) {
 		Click(
 			key_userName = ${userName},
 			locator1 = "BlogsRecentBloggers#USER_NAME_LINK");
 	}
 
-	macro viewInfo {
+	@summary = "Default summary"
+	macro viewInfo(numberOfPost = null,numberOfRatings = null) {
 		AssertTextEquals(
 			locator1 = "BlogsRecentBloggers#NUMBER_OF_POST",
 			value1 = "Post: ${numberOfPost}");

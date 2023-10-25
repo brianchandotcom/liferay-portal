@@ -1,6 +1,7 @@
 definition {
 
-	macro _selectContent {
+	@summary = "Default summary"
+	macro _selectContent(navItem = null,entryTitle = null) {
 		if (IsTextEqual(key_fieldLabel = "Item", locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT", value1 = "")) {
 			Click(
 				key_fieldLabel = "Item",
@@ -44,7 +45,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro _selectField {
+	@summary = "Default summary"
+	macro _selectField(field = null) {
 		WaitForEditable(locator1 = "PageEditorEditableLink#FIELD");
 
 		Select(
@@ -52,7 +54,8 @@ definition {
 			value1 = ${field});
 	}
 
-	macro gotoEditableFieldLink {
+	@summary = "Default summary"
+	macro gotoEditableFieldLink(fragmentName = null,id = null,contributed = null) {
 		PageEditor.clickEditableField(
 			contributed = ${contributed},
 			fragmentName = ${fragmentName},
@@ -61,7 +64,8 @@ definition {
 		Navigator.gotoNavTab(navTab = "Link");
 	}
 
-	macro mapEditableFieldToPage {
+	@summary = "Default summary"
+	macro mapEditableFieldToPage(navItem = null,keywords = null,fragmentName = null,id = null,pageName = null) {
 		PageEditorEditableLink.gotoEditableFieldLink(
 			fragmentName = ${fragmentName},
 			id = ${id});
@@ -113,7 +117,8 @@ definition {
 		PageEditor.waitForAutoSave();
 	}
 
-	macro mapURLToAsset {
+	@summary = "Default summary"
+	macro mapURLToAsset(navItem = null,field = null,source = null,entryTitle = null) {
 		Select(
 			key_fieldLabel = "Link",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
@@ -139,7 +144,8 @@ definition {
 		PageEditorEditableLink._selectField(field = ${field});
 	}
 
-	macro updateURL {
+	@summary = "Default summary"
+	macro updateURL(url = null,target = null) {
 		Variables.assertDefined(parameterList = ${url});
 
 		Type(

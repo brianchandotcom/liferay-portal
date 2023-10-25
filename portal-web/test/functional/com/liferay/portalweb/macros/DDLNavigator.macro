@@ -3,13 +3,15 @@ definition {
 	var ddlDataDefinitionName = "Data Definition Name";
 	var ddlListName = "List Name";
 
-	macro gotoAddListRecord {
+	@summary = "Default summary"
+	macro gotoAddListRecord(ddlDataDefinitionName = null) {
 		Click.clickNoMouseOver(locator1 = "Button#PLUS");
 
 		SiteAdmin.viewPortletTitle(portletTitle = "New ${ddlDataDefinitionName}");
 	}
 
-	macro gotoDataDefinitionPermissions {
+	@summary = "Default summary"
+	macro gotoDataDefinitionPermissions(ddlDataDefinitionName = null) {
 		DDLNavigator.gotoManageDataDefinitions();
 
 		Search.searchCP(searchTerm = ${ddlDataDefinitionName});
@@ -19,7 +21,8 @@ definition {
 		MenuItem.click(menuItem = "Permissions");
 	}
 
-	macro gotoDDLRecordEditViaWorkflow {
+	@summary = "Default summary"
+	macro gotoDDLRecordEditViaWorkflow(workflowStatus = null,userName = null) {
 		Click(locator1 = "WorkflowSubmissionsTask#PREVIEW_EDIT");
 
 		DDLNavigator.viewDetails(
@@ -27,13 +30,15 @@ definition {
 			workflowStatus = ${workflowStatus});
 	}
 
-	macro gotoEdit {
+	@summary = "Default summary"
+	macro gotoEdit() {
 		Click(locator1 = "DDL#RECORD_TABLE_ELLIPSIS_1");
 
 		MenuItem.click(menuItem = "Edit");
 	}
 
-	macro gotoListRecords {
+	@summary = "Default summary"
+	macro gotoListRecords(ddlListName = null) {
 		var key_ddlListName = ${ddlListName};
 
 		AssertTextEquals(
@@ -47,7 +52,8 @@ definition {
 		SiteAdmin.viewPortletTitle(portletTitle = ${ddlListName});
 	}
 
-	macro gotoManageDataDefinitions {
+	@summary = "Default summary"
+	macro gotoManageDataDefinitions() {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Manage Data Definitions");
 
 		AssertTextEquals(
@@ -55,7 +61,8 @@ definition {
 			value1 = "Data Definitions");
 	}
 
-	macro gotoManageTemplates {
+	@summary = "Default summary"
+	macro gotoManageTemplates(ddlDataDefinitionName = null) {
 		DDLNavigator.gotoManageDataDefinitions();
 
 		var key_ddlDataDefinitionName = ${ddlDataDefinitionName};
@@ -65,7 +72,8 @@ definition {
 		MenuItem.click(menuItem = "Manage Templates");
 	}
 
-	macro gotoOptionalConfiguration {
+	@summary = "Default summary"
+	macro gotoOptionalConfiguration() {
 		SelectFrame(locator1 = "DDLConfiguration#CONFIGURATION_IFRAME");
 
 		AssertClick(
@@ -73,7 +81,8 @@ definition {
 			value1 = "Optional Configuration");
 	}
 
-	macro gotoSpreadsheetView {
+	@summary = "Default summary"
+	macro gotoSpreadsheetView(ddlListName = null) {
 		AssertTextEquals(
 			key_ddlListName = ${ddlListName},
 			locator1 = "DDL#LIST_TABLE_NAME",
@@ -84,13 +93,15 @@ definition {
 			rowEntry = ${ddlListName});
 	}
 
-	macro gotoView {
+	@summary = "Default summary"
+	macro gotoView() {
 		Click(locator1 = "DDL#RECORD_TABLE_ELLIPSIS_1");
 
 		MenuItem.click(menuItem = "View");
 	}
 
-	macro viewDetails {
+	@summary = "Default summary"
+	macro viewDetails(workflowStatus = null) {
 		Click(locator1 = "Icon#INFO");
 
 		AssertTextEquals(

@@ -3,7 +3,8 @@ definition {
 	static var clientExtension = "";
 	static var companyWebId = "";
 
-	macro addSite {
+	@summary = "Default summary"
+	macro addSite() {
 		var companyWebId = JSONCompany.getWebId();
 		var clientExtension = "liferay-partner-custom-element";
 
@@ -19,26 +20,30 @@ definition {
 			templateType = "Site Initializer");
 	}
 
-	macro assertMDFNotPresent {
+	@summary = "Default summary"
+	macro assertMDFNotPresent(requestID = null,mdfType = null) {
 		AssertElementNotPresent(
 			key_mdfType = ${mdfType},
 			key_requestID = ${requestID},
 			locator1 = "PRMMDFRequest#MDF_ID");
 	}
 
-	macro assertPageTitle {
+	@summary = "Default summary"
+	macro assertPageTitle(pageTitle = null) {
 		AssertElementPresent(
 			key_title = ${pageTitle},
 			locator1 = "Header#H1_TITLE");
 	}
 
-	macro checkDownloadedFile {
+	@summary = "Default summary"
+	macro checkDownloadedFile(fileName = null) {
 		var testDependenciesDir = PropsUtil.get("output.dir.name");
 
 		var fileExists = FileUtil.exists("${testDependenciesDir}/${fileName}");
 	}
 
-	macro connectWithSalesforce {
+	@summary = "Default summary"
+	macro connectWithSalesforce() {
 		var salesforceLoginURL = PropsUtil.get("site.initializer.partner.portal.login.url");
 		var salesforceConsumerKey = PropsUtil.get("site.initializer.partner.portal.consumer.key");
 		var salesforceConsumerSecret = PropsUtil.get("site.initializer.partner.portal.consumer.secret");
@@ -95,7 +100,8 @@ definition {
 		}
 	}
 
-	macro definePermission {
+	@summary = "Default summary"
+	macro definePermission(itemName = null,objectName = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",
@@ -114,13 +120,15 @@ definition {
 		Button.clickSave();
 	}
 
-	macro deleteMDF {
+	@summary = "Default summary"
+	macro deleteMDF() {
 		Button.click(button = "Delete");
 
 		Confirm(value1 = "null");
 	}
 
-	macro downloadFileViaCurl {
+	@summary = "Default summary"
+	macro downloadFileViaCurl(fileName = null) {
 		var currentURL = selenium.getCurrentUrl();
 		var testDependenciesDir = PropsUtil.get("output.dir.name");
 
@@ -131,7 +139,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.get(${curl});
 	}
 
-	macro gotoFolder {
+	@summary = "Default summary"
+	macro gotoFolder(folderName = null) {
 		var key_dmFolderName = ${folderName};
 
 		SelectFrame(locator1 = "DocumentsAndMedia#CARD_FOLDER");
@@ -141,7 +150,8 @@ definition {
 			value1 = ${folderName});
 	}
 
-	macro gotoPRM {
+	@summary = "Default summary"
+	macro gotoPRM() {
 		Navigator.openSiteURL(siteName = "Partner Portal");
 
 		while ((IsElementPresent(fragmentName = "paragraph", id = "element-text", index = 1, locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT")) && (maxIterations = "10")) {
@@ -155,7 +165,8 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro publishObject {
+	@summary = "Default summary"
+	macro publishObject(objectName = null) {
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = ${objectName});
@@ -165,7 +176,8 @@ definition {
 		CreateObject.saveObject();
 	}
 
-	macro tearDown {
+	@summary = "Default summary"
+	macro tearDown() {
 		var companyWebId = JSONCompany.getWebId();
 
 		if (isSet(clientExtension)) {

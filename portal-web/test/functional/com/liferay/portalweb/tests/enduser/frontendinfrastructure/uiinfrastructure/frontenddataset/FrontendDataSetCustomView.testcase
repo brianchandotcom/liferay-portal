@@ -328,9 +328,9 @@ definition {
 
 		task ("And Then Search help text is localized ") {
 			AssertAttributeValue(
-				value1 = "placeholder",
 				key_placeholder = "Buscar",
 				locator1 = "FrontendDataSet#PLACEHOLDER",
+				value1 = "placeholder",
 				value2 = "Buscar");
 		}
 

@@ -1,6 +1,7 @@
 definition {
 
-	macro addAndEditTranslations {
+	@summary = "Default summary"
+	macro addAndEditTranslations() {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		Translations.gotoTranslate(webContentTitle = "WC WebContent Title Side By Side");
@@ -37,7 +38,8 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro exportAndImportTranslations {
+	@summary = "Default summary"
+	macro exportAndImportTranslations() {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		Translations.gotoExportTranslation(webContentTitle = "WebContentTitle");
@@ -75,7 +77,8 @@ definition {
 			webContentTitle = "Webコンテンツのタイトル");
 	}
 
-	macro viewTranslations {
+	@summary = "Default summary"
+	macro viewTranslations() {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WebContentTitle");

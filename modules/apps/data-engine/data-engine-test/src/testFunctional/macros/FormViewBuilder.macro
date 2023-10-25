@@ -1,6 +1,7 @@
 definition {
 
-	macro addFieldByDoubleClick {
+	@summary = "Default summary"
+	macro addFieldByDoubleClick(fieldType = null) {
 		var key_fieldLabel = ${fieldType};
 		var iterator = 0;
 		var maxRetryNumber = 3;
@@ -18,7 +19,8 @@ definition {
 		AssertElementPresent(locator1 = "FormViewBuilder#SIDEBAR_BASIC_TAB");
 	}
 
-	macro addFieldByDoubleClickFromObjectSidebar {
+	@summary = "Default summary"
+	macro addFieldByDoubleClickFromObjectSidebar(fieldLabel = null) {
 		var key_fieldLabel = ${fieldLabel};
 
 		DoubleClick(locator1 = "FormViewBuilder#OBJECT_FIELD_LABEL");
@@ -26,7 +28,8 @@ definition {
 		FormViewBuilder.validateFieldLabel(fieldLabel = ${fieldLabel});
 	}
 
-	macro addFieldToObject {
+	@summary = "Default summary"
+	macro addFieldToObject(fieldName = null) {
 		Click(locator1 = "FormViewBuilder#OBJECT_FIELD_PLUS");
 
 		DoubleClick(
@@ -36,11 +39,13 @@ definition {
 		FormViewBuilder.validateFieldInObject(fieldLabel = ${fieldName});
 	}
 
-	macro addRule {
+	@summary = "Default summary"
+	macro addRule() {
 		Click(locator1 = "FormViewBuilder#RULE_ADD_BUTTON");
 	}
 
-	macro addSelectTypeFieldOptions {
+	@summary = "Default summary"
+	macro addSelectTypeFieldOptions(optionValue = null,rowNumber = null) {
 		var key_rowNumber = ${rowNumber};
 
 		Type(
@@ -48,149 +53,178 @@ definition {
 			value1 = ${optionValue});
 	}
 
-	macro assertFieldIsNotPresentInFormBuilder {
+	@summary = "Default summary"
+	macro assertFieldIsNotPresentInFormBuilder(key_fieldLabel = null) {
 		AssertElementNotPresent(
 			locator1 = "FormViewBuilder#FIELD_IN_FORM_BUILDER",
 			value1 = ${key_fieldLabel});
 	}
 
-	macro assertHelpTextPresent {
+	@summary = "Default summary"
+	macro assertHelpTextPresent(fieldName = null,fieldValue = null) {
 		AssertTextEquals(
 			key_fieldName = ${fieldName},
 			locator1 = "FormViewBuilder#HELP_TEXT_AT_APP_DEPLOYED",
 			value1 = ${fieldValue});
 	}
 
-	macro assertOptionIsPresentInFormBuilder {
+	@summary = "Default summary"
+	macro assertOptionIsPresentInFormBuilder(key_optionLabel = null) {
 		AssertElementPresent(
 			locator1 = "FormViewBuilder#OPTIONS_PLACED_IN_FORM_BUILDER",
 			value1 = ${key_optionLabel});
 	}
 
-	macro assertPlaceholderTextAtSidebar {
+	@summary = "Default summary"
+	macro assertPlaceholderTextAtSidebar(placeHolder = null) {
 		AssertTextEquals(
 			locator1 = "FormViewBuilder#SIDEBAR_BASIC_PLACEHOLDER",
 			value1 = ${placeHolder});
 	}
 
-	macro assertPlaceholderTextFormField {
+	@summary = "Default summary"
+	macro assertPlaceholderTextFormField(key_fieldLabel = null,placeHolder = null) {
 		AssertElementPresent(
 			key_fieldLabel = ${key_fieldLabel},
 			key_placeHolder = ${placeHolder},
 			locator1 = "FormViewBuilder#FIELD_PLACEHOLDER_TEXT");
 	}
 
-	macro assertPredefinedDateValuePresent {
+	@summary = "Default summary"
+	macro assertPredefinedDateValuePresent(fieldLabel = null,fieldValue = null) {
 		AssertElementPresent(
 			key_fieldName = ${fieldLabel},
 			key_fieldValue = ${fieldValue},
 			locator1 = "FormViewBuilder#PREDEFINED_VALUE_AT_FORM_DATE_FIELD");
 	}
 
-	macro assertPredefinedValueAtSidebar {
+	@summary = "Default summary"
+	macro assertPredefinedValueAtSidebar(predefinedValue = null) {
 		AssertTextEquals(
 			locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_PREDEFINED_DATE",
 			value1 = ${predefinedValue});
 	}
 
-	macro assertRuleSaveButtonIsDisabled {
+	@summary = "Default summary"
+	macro assertRuleSaveButtonIsDisabled() {
 		AssertElementPresent(locator1 = "FormViewBuilder#RULE_BUILDER_SAVE_BUTTON_DISABLED");
 	}
 
-	macro assertTextPresent {
+	@summary = "Default summary"
+	macro assertTextPresent(fieldName = null,fieldValue = null) {
 		AssertTextEquals(
 			key_fieldName = ${fieldName},
 			locator1 = "FormViewBuilder#TEXT_FIELD",
 			value1 = ${fieldValue});
 	}
 
-	macro cancelButtonInDeleteFromObject {
+	@summary = "Default summary"
+	macro cancelButtonInDeleteFromObject() {
 		Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_CANCEL_BUTTON");
 	}
 
-	macro cancelFieldSet {
+	@summary = "Default summary"
+	macro cancelFieldSet() {
 		Click(locator1 = "FormViewBuilder#RULE_OR_FIELD_SET_BUILDER_CANCEL_BUTTON");
 	}
 
-	macro cancelRule {
+	@summary = "Default summary"
+	macro cancelRule() {
 		Click(locator1 = "FormViewBuilder#RULE_OR_FIELD_SET_BUILDER_CANCEL_BUTTON");
 	}
 
-	macro changeAppLanguageTo {
+	@summary = "Default summary"
+	macro changeAppLanguageTo() {
 		Click(locator1 = "FormViewBuilder#SELECT_LANGUAGE_AT_APP_DEPLOYED");
 	}
 
-	macro checkSwitch {
+	@summary = "Default summary"
+	macro checkSwitch(propertyName = null) {
 		Check.checkToggleSwitch(
 			key_switchOption = ${propertyName},
 			locator1 = "FormViewBuilder#SWITCH_OPTION");
 	}
 
-	macro clickActionMenuFieldset {
+	@summary = "Default summary"
+	macro clickActionMenuFieldset() {
 		Click(locator1 = "FormViewBuilder#FIELD_ELLIPSIS");
 	}
 
-	macro clickActionMenuFieldsetEdit {
+	@summary = "Default summary"
+	macro clickActionMenuFieldsetEdit(selectAction = null) {
 		Click(
 			key_selectAction = ${selectAction},
 			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION_FIELDSET");
 	}
 
-	macro clickFieldLabel {
+	@summary = "Default summary"
+	macro clickFieldLabel(fieldLabel = null) {
 		Click(
 			locator1 = "FormViewBuilder#FIELD_LABEL",
 			value1 = ${fieldLabel});
 	}
 
-	macro clickFieldLabelActionMenu {
+	@summary = "Default summary"
+	macro clickFieldLabelActionMenu() {
 		Click.javaScriptClick(locator1 = "FormViewBuilder#FIELD_LABEL_ACTION_MENU");
 	}
 
-	macro clickFieldLabelFromFieldset {
+	@summary = "Default summary"
+	macro clickFieldLabelFromFieldset(key_fieldLabel = null) {
 		Click(
 			locator1 = "FormViewBuilder#FIELD_FROM_FIELDSET",
 			value1 = ${key_fieldLabel});
 	}
 
-	macro clickFieldLabelScope {
+	@summary = "Default summary"
+	macro clickFieldLabelScope(fieldLabelScope = null) {
 		var key_fieldLabelScope = ${fieldLabelScope};
 
 		Click(locator1 = "FormViewBuilder#FIELD_LABEL_SET_SCOPE");
 	}
 
-	macro clickInline {
+	@summary = "Default summary"
+	macro clickInline() {
 		Click(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_INLINE");
 	}
 
-	macro clickLocalizableAppButton {
+	@summary = "Default summary"
+	macro clickLocalizableAppButton() {
 		Click(locator1 = "FormViewBuilder#LOCALIZABLE_APP_BUTTON");
 	}
 
-	macro clickRequiredEllipses {
+	@summary = "Default summary"
+	macro clickRequiredEllipses() {
 		Click(locator1 = "FormViewBuilder#FORM_FIELD_REQUIRED_ELLIPSES");
 	}
 
-	macro clickRuleSidebar {
+	@summary = "Default summary"
+	macro clickRuleSidebar() {
 		Click(locator1 = "FormViewBuilder#EDIT_RULE_COLLAPSE");
 	}
 
-	macro clickShowAsSwitch {
+	@summary = "Default summary"
+	macro clickShowAsSwitch() {
 		Click(locator1 = "FormViewBuilder#SIDEBAR_BASIC_SHOW_AS_SWITCH");
 	}
 
-	macro clickShowLabel {
+	@summary = "Default summary"
+	macro clickShowLabel() {
 		Click.javaScriptClick(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_SHOW_LABEL");
 	}
 
-	macro clickSingleSelectionFieldWithoutLabel {
+	@summary = "Default summary"
+	macro clickSingleSelectionFieldWithoutLabel() {
 		Click(locator1 = "FormViewBuilder#SINGLE_SELECTION_FIELD_WITHOUT_LABEL");
 	}
 
-	macro closeSidebar {
+	@summary = "Default summary"
+	macro closeSidebar() {
 		Click(locator1 = "FormViewBuilder#CLOSE_SIDEBAR");
 	}
 
-	macro confirmDeleteFromObject {
+	@summary = "Default summary"
+	macro confirmDeleteFromObject(selectAction = null,key_fieldLabel = null) {
 		Click(
 			locator1 = "FormViewBuilder#FIELD_LABEL",
 			value1 = ${key_fieldLabel});
@@ -204,15 +238,18 @@ definition {
 		Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_DELETE_BUTTON");
 	}
 
-	macro createFirstRule {
+	@summary = "Default summary"
+	macro createFirstRule() {
 		Click(locator1 = "FormViewBuilder#CREATE_NEW_RULE_BUTTON");
 	}
 
-	macro deleteButtonInDeleteFromObject {
+	@summary = "Default summary"
+	macro deleteButtonInDeleteFromObject() {
 		Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_DELETE_BUTTON");
 	}
 
-	macro deleteDisabledFieldSetEntry {
+	@summary = "Default summary"
+	macro deleteDisabledFieldSetEntry(rowNumber = null,selectAction = null) {
 		var key_rowNumber = ${rowNumber};
 
 		Click(locator1 = "FormViewBuilder#FIELD_SET_DISABLED_ELLIPSIS_ACTION");
@@ -226,7 +263,8 @@ definition {
 		AssertElementNotPresent(locator1 = "FormViewBuilder#FIELD_SET_DISABLED_ELLIPSIS_ACTION");
 	}
 
-	macro deleteFieldSetEntry {
+	@summary = "Default summary"
+	macro deleteFieldSetEntry(rowNumber = null,selectAction = null) {
 		var key_rowNumber = ${rowNumber};
 
 		Click(locator1 = "FormViewBuilder#FIELD_SET_ELLIPSIS_ACTION");
@@ -240,7 +278,8 @@ definition {
 		AssertElementNotPresent(locator1 = "FormViewBuilder#FIELD_SET_ELLIPSIS_ACTION");
 	}
 
-	macro deleteFromObjectViaX {
+	@summary = "Default summary"
+	macro deleteFromObjectViaX(fieldName = null) {
 		MouseOver(
 			key_fieldLabel = ${fieldName},
 			locator1 = "FormViewBuilder#OBJECT_FIELD_LABEL");
@@ -250,7 +289,8 @@ definition {
 			locator1 = "FormViewBuilder#DELETE_FROM_OBJECT_X_BUTTON");
 	}
 
-	macro deleteObjectSidebarField {
+	@summary = "Default summary"
+	macro deleteObjectSidebarField(fieldLabel = null) {
 		FormViewBuilder.deleteFromObjectViaX(fieldName = ${fieldLabel});
 
 		while (IsElementPresent(locator1 = "FormViewBuilder#VALIDATE_DELETE_OBJECT_MESSAGE")) {
@@ -266,7 +306,8 @@ definition {
 		FormViewBuilder.validateNoObjectFieldName();
 	}
 
-	macro deselectSelectWithMultipleOptions {
+	@summary = "Default summary"
+	macro deselectSelectWithMultipleOptions(fieldName = null,selectOptionsList = null) {
 		for (var selectOption : list ${selectOptionsList}) {
 			FormViewBuilder.disableCheckbox(
 				fieldName = ${fieldName},
@@ -274,7 +315,8 @@ definition {
 		}
 	}
 
-	macro disableCheckbox {
+	@summary = "Default summary"
+	macro disableCheckbox(fieldName = null,fieldValue = null) {
 		var key_fieldName = ${fieldName};
 		var key_fieldValue = ${fieldValue};
 
@@ -287,20 +329,23 @@ definition {
 			fieldValue = ${fieldValue});
 	}
 
-	macro dragAndDropFieldSet {
+	@summary = "Default summary"
+	macro dragAndDropFieldSet(fieldLabel = null) {
 		DragAndDrop.javaScriptDragAndDropToObject(
 			locator1 = "FormViewBuilder#FIELD_LABEL",
 			locator2 = "FormViewBuilder#FORM_FIELD_FIRST_ROW",
 			value1 = ${fieldLabel});
 	}
 
-	macro duplicateField {
+	@summary = "Default summary"
+	macro duplicateField(selectAction = null) {
 		Click(
 			key_selectAction = ${selectAction},
 			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
 	}
 
-	macro editAutoComplete {
+	@summary = "Default summary"
+	macro editAutoComplete(key_optionValue = null) {
 		Form.gotoAutocompleteTab();
 
 		Form.enableAutocompleteConfiguration();
@@ -310,28 +355,32 @@ definition {
 			fieldValue = ${key_optionValue});
 	}
 
-	macro editClobText {
+	@summary = "Default summary"
+	macro editClobText(fieldLong = null) {
 		Type(
 			key_clobType = "",
 			locator1 = "ObjectAdmin#VIEW_CLOB_TYPE_TEXT_ENTRY",
 			value1 = ${fieldLong});
 	}
 
-	macro editColor {
+	@summary = "Default summary"
+	macro editColor(fieldName = null,fieldValue = null) {
 		Type(
 			key_fieldName = ${fieldName},
 			locator1 = "FormViewBuilder#COLOR_FIELD",
 			value1 = ${fieldValue});
 	}
 
-	macro editDate {
+	@summary = "Default summary"
+	macro editDate(fieldName = null,fieldValue = null) {
 		Type(
 			key_fieldName = ${fieldName},
 			locator1 = "FormViewBuilder#DATE_FIELD",
 			value1 = ${fieldValue});
 	}
 
-	macro editDisabledFieldSetEntry {
+	@summary = "Default summary"
+	macro editDisabledFieldSetEntry(rowNumber = null,selectAction = null) {
 		var key_rowNumber = ${rowNumber};
 
 		Click(locator1 = "FormViewBuilder#FIELD_SET_DISABLED_ELLIPSIS_ACTION");
@@ -341,7 +390,8 @@ definition {
 			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
 	}
 
-	macro editFieldInObject {
+	@summary = "Default summary"
+	macro editFieldInObject(fieldName = null,fieldLabel = null) {
 		Click(
 			key_fieldName = ${fieldName},
 			locator1 = "FormViewBuilder#OBJECT_FIELD_SEARCH_RESULT");
@@ -349,7 +399,8 @@ definition {
 		FormViewBuilder.setFieldLabel(fieldLabel = ${fieldLabel});
 	}
 
-	macro editFieldLabel {
+	@summary = "Default summary"
+	macro editFieldLabel(fieldLabel = null,label = null) {
 		Click(
 			locator1 = "FormViewBuilder#FIELD_LABEL",
 			value1 = ${fieldLabel});
@@ -359,7 +410,8 @@ definition {
 			value1 = ${label});
 	}
 
-	macro editFieldSetEntry {
+	@summary = "Default summary"
+	macro editFieldSetEntry(rowNumber = null,selectAction = null) {
 		var key_rowNumber = ${rowNumber};
 
 		Click(locator1 = "FormViewBuilder#FIELD_SET_ELLIPSIS_ACTION");
@@ -369,13 +421,15 @@ definition {
 			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
 	}
 
-	macro editFieldSetName {
+	@summary = "Default summary"
+	macro editFieldSetName(fieldSetName = null) {
 		Type(
 			locator1 = "FormViewBuilder#FIELD_SET_NAME",
 			value1 = ${fieldSetName});
 	}
 
-	macro editOptionsRow {
+	@summary = "Default summary"
+	macro editOptionsRow(optionValue = null,rowNumber = null) {
 		var key_rowNumber = ${rowNumber};
 
 		Type.typeNotVisibleNoMouseOver(
@@ -385,13 +439,15 @@ definition {
 		AssertElementPresent(locator1 = "FormViewBuilder#OPTIONS_OPTION_NAME_FIELD");
 	}
 
-	macro editRuleName {
+	@summary = "Default summary"
+	macro editRuleName(ruleName = null) {
 		Type(
 			locator1 = "FormViewBuilder#RULE_BUILDER_NAME",
 			value1 = ${ruleName});
 	}
 
-	macro editRules {
+	@summary = "Default summary"
+	macro editRules() {
 		Click(locator1 = "FormViewBuilder#EDIT_RULE_COLLAPSE");
 
 		AssertElementPresent(locator1 = "FormViewBuilder#EDIT_RULE_EXPANDED");
@@ -399,20 +455,23 @@ definition {
 		Click(locator1 = "FormViewBuilder#EDIT_RULE");
 	}
 
-	macro editRulesDefault {
+	@summary = "Default summary"
+	macro editRulesDefault() {
 		Click(locator1 = "FormViewBuilder#RULE_BUILDER_DEFAULT_EDIT");
 
 		Click(locator1 = "FormViewBuilder#RULE_BUILDER_EDIT");
 	}
 
-	macro editText {
+	@summary = "Default summary"
+	macro editText(fieldName = null,fieldValue = null) {
 		Type(
 			key_fieldName = ${fieldName},
 			locator1 = "FormViewBuilder#TEXT_FIELD",
 			value1 = ${fieldValue});
 	}
 
-	macro enableCheckbox {
+	@summary = "Default summary"
+	macro enableCheckbox(fieldName = null,fieldValue = null) {
 		var key_fieldName = ${fieldName};
 		var key_fieldValue = ${fieldValue};
 
@@ -425,7 +484,8 @@ definition {
 			fieldValue = ${fieldValue});
 	}
 
-	macro enableCheckboxPredefined {
+	@summary = "Default summary"
+	macro enableCheckboxPredefined(fieldName = null) {
 		var key_fieldName = ${fieldName};
 
 		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "FormViewBuilder#CHECKBOX_PREDEFINED")) {
@@ -435,7 +495,8 @@ definition {
 		FormViewBuilder.viewCheckboxCheckedAtPredefinedValue(fieldName = ${fieldName});
 	}
 
-	macro fieldEllipsisAction {
+	@summary = "Default summary"
+	macro fieldEllipsisAction(selectAction = null,key_fieldLabel = null) {
 		Click(
 			locator1 = "FormViewBuilder#FIELD_LABEL",
 			value1 = ${key_fieldLabel});
@@ -451,7 +512,8 @@ definition {
 			value1 = ${key_fieldLabel});
 	}
 
-	macro fieldEllipsisActionFieldset {
+	@summary = "Default summary"
+	macro fieldEllipsisActionFieldset(selectAction = null,key_fieldLabel = null) {
 		Click(
 			locator1 = "FormViewBuilder#FIELD_FROM_FIELDSET",
 			value1 = ${key_fieldLabel});
@@ -467,7 +529,8 @@ definition {
 			value1 = ${key_fieldLabel});
 	}
 
-	macro fieldEllipsisDelete {
+	@summary = "Default summary"
+	macro fieldEllipsisDelete(key_fieldLabel = null) {
 		Click(
 			locator1 = "FormViewBuilder#FIELD_LABEL",
 			value1 = ${key_fieldLabel});
@@ -479,19 +542,23 @@ definition {
 			locator1 = "FormViewBuilder#FIELD_ELLIPSIS_ACTION");
 	}
 
-	macro fieldLabelOptionsIsShown {
+	@summary = "Default summary"
+	macro fieldLabelOptionsIsShown() {
 		AssertElementPresent(locator1 = "FormViewBuilder#FIELD_LABEL_ACTION_MENU");
 	}
 
-	macro gotoFields {
+	@summary = "Default summary"
+	macro gotoFields() {
 		Click(locator1 = "FormViewBuilder#FIELDS_TAB");
 	}
 
-	macro goToFieldsetsTab {
+	@summary = "Default summary"
+	macro goToFieldsetsTab() {
 		Click(locator1 = "FormViewBuilder#FIELD_SETS_TAB");
 	}
 
-	macro gotoFirstFieldset {
+	@summary = "Default summary"
+	macro gotoFirstFieldset(fieldLabel = null) {
 		var key_fieldLabel = ${fieldLabel};
 
 		Click(
@@ -499,37 +566,45 @@ definition {
 			value1 = ${fieldLabel});
 	}
 
-	macro gotoRules {
+	@summary = "Default summary"
+	macro gotoRules() {
 		Click(locator1 = "FormViewBuilder#RULES_TAB");
 	}
 
-	macro openFormView {
+	@summary = "Default summary"
+	macro openFormView(formViewName = null) {
 		AppBuilderAdmin.openItem(itemName = ${formViewName});
 	}
 
-	macro openFormViewFromFormList {
+	@summary = "Default summary"
+	macro openFormViewFromFormList(formViewName = null) {
 		Click(
 			key_itemName = ${formViewName},
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
 	}
 
-	macro openSidebar {
+	@summary = "Default summary"
+	macro openSidebar() {
 		Click(locator1 = "FormViewBuilder#OPEN_SIDEBAR");
 	}
 
-	macro propagateChange {
+	@summary = "Default summary"
+	macro propagateChange() {
 		Click(locator1 = "FormViewBuilder#PROPAGATE_CHANGES");
 	}
 
-	macro ruleSave {
+	@summary = "Default summary"
+	macro ruleSave() {
 		Click(locator1 = "FormViewBuilder#RULE_BUILDER_SAVE_BUTTON");
 	}
 
-	macro saveButtonFieldset {
+	@summary = "Default summary"
+	macro saveButtonFieldset() {
 		Click(locator1 = "FormViewBuilder#FIELD_SET_SAVE_BUTTON");
 	}
 
-	macro searchObjectField {
+	@summary = "Default summary"
+	macro searchObjectField(fieldValue = null) {
 		Click(locator1 = "FormViewBuilder#OBJECT_FIELD_SEARCH_BUTTON");
 
 		Type(
@@ -537,20 +612,23 @@ definition {
 			value1 = ${fieldValue});
 	}
 
-	macro selectRadioOption {
+	@summary = "Default summary"
+	macro selectRadioOption(fieldName = null,radioOption = null) {
 		Click.clickNoMouseOverNoWaitForVisible(
 			key_fieldName = ${fieldName},
 			key_radioOption = ${radioOption},
 			locator1 = "FormViewBuilder#RADIO_OPTION_LABEL");
 	}
 
-	macro selectRequiredRadioOption {
+	@summary = "Default summary"
+	macro selectRequiredRadioOption(optionLabel = null) {
 		Click.clickNoMouseOverNoWaitForVisible(
 			key_optionLabel = ${optionLabel},
 			locator1 = "FormViewBuilder#OPTIONS_PLACED_IN_FORM_BUILDER_REQUIRED");
 	}
 
-	macro selectSelectOption {
+	@summary = "Default summary"
+	macro selectSelectOption(fieldName = null,selectOption = null) {
 		var key_fieldName = ${fieldName};
 		var key_selectOption = ${selectOption};
 
@@ -563,7 +641,8 @@ definition {
 			value1 = ${selectOption});
 	}
 
-	macro selectSelectOptionPredefined {
+	@summary = "Default summary"
+	macro selectSelectOptionPredefined(selectOption = null) {
 		var key_selectOption = ${selectOption};
 
 		Click(
@@ -575,7 +654,8 @@ definition {
 			value1 = ${selectOption});
 	}
 
-	macro selectSelectWithMultipleOptions {
+	@summary = "Default summary"
+	macro selectSelectWithMultipleOptions(fieldName = null,selectOptionsList = null) {
 		for (var selectOption : list ${selectOptionsList}) {
 			FormViewBuilder.enableCheckbox(
 				fieldName = ${fieldName},
@@ -583,7 +663,8 @@ definition {
 		}
 	}
 
-	macro selectSelectWithMultipleOptionsPredefined {
+	@summary = "Default summary"
+	macro selectSelectWithMultipleOptionsPredefined(fieldName = null,selectOptionsList = null) {
 		var key_fieldName = ${fieldName};
 
 		Click(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_PREDEFINED_SELECT_FROM_LIST");
@@ -593,7 +674,8 @@ definition {
 		}
 	}
 
-	macro setFieldHelpText {
+	@summary = "Default summary"
+	macro setFieldHelpText(fieldLabel = null) {
 		var key_fieldType = "tip";
 
 		Type(
@@ -605,7 +687,8 @@ definition {
 			value1 = ${fieldLabel});
 	}
 
-	macro setFieldLabel {
+	@summary = "Default summary"
+	macro setFieldLabel(fieldLabel = null) {
 		var key_fieldType = "label";
 
 		Type(
@@ -617,7 +700,8 @@ definition {
 			value1 = ${fieldLabel});
 	}
 
-	macro setFieldLabelWithNoAssertion {
+	@summary = "Default summary"
+	macro setFieldLabelWithNoAssertion(fieldLabel = null) {
 		var key_fieldType = "label";
 
 		Type(
@@ -625,43 +709,51 @@ definition {
 			value1 = ${fieldLabel});
 	}
 
-	macro setFieldPredefinedDate {
+	@summary = "Default summary"
+	macro setFieldPredefinedDate(fieldValue = null) {
 		Type(
 			locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_PREDEFINED_DATE",
 			value1 = ${fieldValue});
 	}
 
-	macro setFieldPredefinedText {
+	@summary = "Default summary"
+	macro setFieldPredefinedText(fieldValue = null) {
 		Type(
 			locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_PREDEFINED_TEXT",
 			value1 = ${fieldValue});
 	}
 
-	macro setFieldRepeatable {
+	@summary = "Default summary"
+	macro setFieldRepeatable() {
 		FormViewBuilder.checkSwitch(propertyName = "repeatable");
 	}
 
-	macro setFieldRequired {
+	@summary = "Default summary"
+	macro setFieldRequired() {
 		FormViewBuilder.checkSwitch(propertyName = "required");
 	}
 
-	macro setName {
+	@summary = "Default summary"
+	macro setName(formViewName = null) {
 		AppBuilderAdmin.setName(title = ${formViewName});
 	}
 
-	macro setPlaceholder {
+	@summary = "Default summary"
+	macro setPlaceholder(fieldValue = null) {
 		Type(
 			locator1 = "FormViewBuilder#SIDEBAR_BASIC_PLACEHOLDER",
 			value1 = ${fieldValue});
 	}
 
-	macro setRuleName {
+	@summary = "Default summary"
+	macro setRuleName(ruleName = null) {
 		Type(
 			locator1 = "FormViewBuilder#RULE_NAME_TEXT_FIELD",
 			value1 = ${ruleName});
 	}
 
-	macro switchLocalization {
+	@summary = "Default summary"
+	macro switchLocalization(localizationName = null,symbolName = null) {
 		Click(
 			key_symbolName = ${symbolName},
 			locator1 = "FormViewBuilder#BUTTON_LOCALIZATION");
@@ -671,7 +763,8 @@ definition {
 			locator1 = "FormViewBuilder#LOCALIZATION_LIST");
 	}
 
-	macro switchLocalizationForFieldSets {
+	@summary = "Default summary"
+	macro switchLocalizationForFieldSets(localizationName = null,statusName = null,symbolName = null) {
 		Click(
 			key_symbolName = ${symbolName},
 			locator1 = "FormViewBuilder#BUTTON_LOCALIZATION_FIELD_SET");
@@ -686,31 +779,38 @@ definition {
 			locator1 = "FormViewBuilder#LOCALIZATION_LIST_FIELD_SET");
 	}
 
-	macro switchToAdvancedTab {
+	@summary = "Default summary"
+	macro switchToAdvancedTab() {
 		Click(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_TAB");
 	}
 
-	macro switchToBacisTab {
+	@summary = "Default summary"
+	macro switchToBacisTab() {
 		Click(locator1 = "FormViewBuilder#SIDEBAR_BASIC_TAB");
 	}
 
-	macro switchToFormViewTab {
+	@summary = "Default summary"
+	macro switchToFormViewTab() {
 		AppBuilderAdmin.switchTab(tabName = "Form Views");
 	}
 
-	macro switchToRulesTab {
+	@summary = "Default summary"
+	macro switchToRulesTab() {
 		Click(locator1 = "FormViewBuilder#RULES_TAB");
 	}
 
-	macro validateDeleteObjectMessage {
+	@summary = "Default summary"
+	macro validateDeleteObjectMessage() {
 		AssertElementPresent(locator1 = "FormViewBuilder#VALIDATE_DELETE_OBJECT_MESSAGE");
 	}
 
-	macro validateDeleteUsedObjectMessage {
+	@summary = "Default summary"
+	macro validateDeleteUsedObjectMessage() {
 		AssertElementPresent(locator1 = "FormViewBuilder#VALIDATE_DELETE_USED_OBJECT_MESSAGE");
 	}
 
-	macro validateFieldInObject {
+	@summary = "Default summary"
+	macro validateFieldInObject(fieldLabel = null) {
 		var key_fieldLabel = ${fieldLabel};
 
 		AssertTextEquals(
@@ -718,29 +818,34 @@ definition {
 			value1 = ${fieldLabel});
 	}
 
-	macro validateFieldLabel {
+	@summary = "Default summary"
+	macro validateFieldLabel(fieldLabel = null) {
 		AssertTextEquals(
 			locator1 = "FormViewBuilder#FIELD_LABEL",
 			value1 = ${fieldLabel});
 	}
 
-	macro validateFieldLabelAtSidebar {
+	@summary = "Default summary"
+	macro validateFieldLabelAtSidebar(fieldLabel = null) {
 		AssertTextEquals(
 			locator1 = "FormViewBuilder#FIELD_LABEL_UPDATED_AT_SIDEBAR",
 			value1 = ${fieldLabel});
 	}
 
-	macro validateFieldLabelIsNotShown {
+	@summary = "Default summary"
+	macro validateFieldLabelIsNotShown() {
 		AssertElementNotPresent(locator1 = "FormViewBuilder#FIELD_LABEL");
 	}
 
-	macro validateFieldLabelRequired {
+	@summary = "Default summary"
+	macro validateFieldLabelRequired(fieldLabel = null) {
 		AssertElementPresent(
 			fieldLabel = ${fieldLabel},
 			locator1 = "FormViewBuilder#FIELD_LABEL_REQUIRED");
 	}
 
-	macro validateFormMultipleSelectionField {
+	@summary = "Default summary"
+	macro validateFormMultipleSelectionField(fieldName = null,fieldLabel = null) {
 		var key_fieldType = ${fieldLabel};
 
 		FormViewBuilder.validateFieldLabel(fieldLabel = ${fieldName});
@@ -750,43 +855,51 @@ definition {
 			value1 = ${fieldLabel});
 	}
 
-	macro validateInlineOptionIsSetOFF {
+	@summary = "Default summary"
+	macro validateInlineOptionIsSetOFF() {
 		IsNotChecked(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_INLINE");
 	}
 
-	macro validateInlineOptionIsSetOn {
+	@summary = "Default summary"
+	macro validateInlineOptionIsSetOn() {
 		IsChecked(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_INLINE");
 	}
 
-	macro validateLabelScopeOptionsIsShown {
+	@summary = "Default summary"
+	macro validateLabelScopeOptionsIsShown() {
 		AssertElementPresent(locator1 = "FormViewBuilder#FIELD_LABEL_OPTION");
 	}
 
-	macro validateLocalization {
+	@summary = "Default summary"
+	macro validateLocalization(symbolName = null) {
 		AssertElementPresent(
 			key_symbolName = ${symbolName},
 			locator1 = "FormViewBuilder#BUTTON_LOCALIZATION");
 	}
 
-	macro validateLocalizationForFieldSet {
+	@summary = "Default summary"
+	macro validateLocalizationForFieldSet(symbolName = null) {
 		AssertElementPresent(
 			key_symbolName = ${symbolName},
 			locator1 = "FormViewBuilder#BUTTON_LOCALIZATION_FIELD_SET");
 	}
 
-	macro validateNoFieldLabel {
+	@summary = "Default summary"
+	macro validateNoFieldLabel(fieldLabel = null) {
 		AssertElementNotPresent(
 			locator1 = "FormViewBuilder#FIELD_LABEL",
 			value1 = ${fieldLabel});
 	}
 
-	macro validateNoObjectFieldName {
+	@summary = "Default summary"
+	macro validateNoObjectFieldName(fieldName = null) {
 		AssertElementNotPresent(
 			locator1 = "FormViewBuilder#OBJECT_FIELD_LABEL",
 			value1 = ${fieldName});
 	}
 
-	macro validateObjectFieldName {
+	@summary = "Default summary"
+	macro validateObjectFieldName(fieldName = null) {
 		var key_fieldLabel = ${fieldName};
 
 		AssertTextEquals(
@@ -794,13 +907,15 @@ definition {
 			value1 = ${fieldName});
 	}
 
-	macro validateObjectLabelOptionTextIsShown {
+	@summary = "Default summary"
+	macro validateObjectLabelOptionTextIsShown(text = null) {
 		AssertTextEquals(
 			locator1 = "FormViewBuilder#OBJECT_FIELD_LABEL_TEXT",
 			value1 = ${text});
 	}
 
-	macro validatePredefinedDate {
+	@summary = "Default summary"
+	macro validatePredefinedDate(fieldName = null,fieldValue = null) {
 		var key_fieldName = ${fieldName};
 		var key_fieldValue = ${fieldValue};
 
@@ -809,7 +924,8 @@ definition {
 			value1 = ${fieldValue});
 	}
 
-	macro validatePredefinedMultipleSelection {
+	@summary = "Default summary"
+	macro validatePredefinedMultipleSelection(fieldName = null,selectOptionsList = null) {
 		for (var selectOption : list ${selectOptionsList}) {
 			FormViewBuilder.viewCheckboxChecked(
 				fieldName = ${fieldName},
@@ -817,7 +933,8 @@ definition {
 		}
 	}
 
-	macro validatePredefinedSelectFromList {
+	@summary = "Default summary"
+	macro validatePredefinedSelectFromList(fieldName = null,fieldValue = null) {
 		var key_fieldName = ${fieldName};
 		var key_fieldValue = ${fieldValue};
 
@@ -826,13 +943,15 @@ definition {
 			value1 = ${fieldValue});
 	}
 
-	macro validatePredefinedSingleSelection {
+	@summary = "Default summary"
+	macro validatePredefinedSingleSelection(fieldName = null,fieldValue = null) {
 		FormViewBuilder.viewSingleSelectionChecked(
 			fieldName = ${fieldName},
 			fieldValue = ${fieldValue});
 	}
 
-	macro validatePredefinedText {
+	@summary = "Default summary"
+	macro validatePredefinedText(fieldName = null,fieldValue = null) {
 		var key_fieldName = ${fieldName};
 		var key_fieldValue = ${fieldValue};
 
@@ -841,13 +960,15 @@ definition {
 			value1 = ${fieldValue});
 	}
 
-	macro validateRuleName {
+	@summary = "Default summary"
+	macro validateRuleName(ruleLabel = null) {
 		AssertTextEquals(
 			locator1 = "FormViewBuilder#RULE_LABEL",
 			value1 = ${ruleLabel});
 	}
 
-	macro validateRuleSummary {
+	@summary = "Default summary"
+	macro validateRuleSummary(condition = null,action = null,secondField = null,firstField = null) {
 		var key_firstField = ${firstField};
 		var key_secondField = ${secondField};
 		var key_condition = ${condition};
@@ -870,7 +991,8 @@ definition {
 			locator1 = "FormViewBuilder#RULE_BUILDER_ACTION");
 	}
 
-	macro validateSearchResult {
+	@summary = "Default summary"
+	macro validateSearchResult(fieldLabel = null) {
 		var key_fieldName = ${fieldLabel};
 
 		AssertTextEquals(
@@ -878,7 +1000,8 @@ definition {
 			value1 = ${fieldLabel});
 	}
 
-	macro validateSelectFromListField {
+	@summary = "Default summary"
+	macro validateSelectFromListField(optionValue = null,rowNumber = null) {
 		var key_rowNumber = ${rowNumber};
 
 		AssertTextEquals(
@@ -886,23 +1009,28 @@ definition {
 			value1 = ${optionValue});
 	}
 
-	macro validateShowAsSwitchIsOFF {
+	@summary = "Default summary"
+	macro validateShowAsSwitchIsOFF() {
 		IsNotChecked(locator1 = "FormViewBuilder#SIDEBAR_BASIC_SHOW_AS_SWITCH");
 	}
 
-	macro validateShowAsSwitchIsON {
+	@summary = "Default summary"
+	macro validateShowAsSwitchIsON() {
 		IsChecked(locator1 = "FormViewBuilder#SIDEBAR_BASIC_SHOW_AS_SWITCH");
 	}
 
-	macro validateShowLabelIsOff {
+	@summary = "Default summary"
+	macro validateShowLabelIsOff() {
 		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_SHOW_LABEL");
 	}
 
-	macro validateShowLabelIsOn {
+	@summary = "Default summary"
+	macro validateShowLabelIsOn() {
 		IsChecked(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_SHOW_LABEL");
 	}
 
-	macro validateTranslatedField {
+	@summary = "Default summary"
+	macro validateTranslatedField(fieldLabel = null) {
 		var key_fieldLabel = ${fieldLabel};
 
 		AssertTextEquals(
@@ -910,7 +1038,8 @@ definition {
 			value1 = ${fieldLabel});
 	}
 
-	macro validateTranslatedLocalization {
+	@summary = "Default summary"
+	macro validateTranslatedLocalization(localizationName = null,statusName = null,symbolName = null) {
 		Click(
 			key_symbolName = ${symbolName},
 			locator1 = "FormViewBuilder#BUTTON_LOCALIZATION_FIELD_SET");
@@ -921,41 +1050,48 @@ definition {
 			locator1 = "FormViewBuilder#TRANSLATED_LIST_FIELD_SET");
 	}
 
-	macro validateUsedFormView {
+	@summary = "Default summary"
+	macro validateUsedFormView() {
 		AssertElementPresent(locator1 = "FormViewBuilder#VALIDATE_USED_FORM_VIEW");
 	}
 
-	macro validateUsedTableView {
+	@summary = "Default summary"
+	macro validateUsedTableView() {
 		AssertElementPresent(locator1 = "FormViewBuilder#VALIDATE_USED_TABLE_VIEW");
 	}
 
-	macro viewCheckboxChecked {
+	@summary = "Default summary"
+	macro viewCheckboxChecked(fieldName = null,fieldValue = null) {
 		AssertChecked.assertCheckedNotVisible(
 			key_fieldName = ${fieldName},
 			key_fieldValue = ${fieldValue},
 			locator1 = "FormViewBuilder#CHECKBOX_AT_FORM_BODY");
 	}
 
-	macro viewCheckboxCheckedAtPredefinedValue {
+	@summary = "Default summary"
+	macro viewCheckboxCheckedAtPredefinedValue(fieldName = null) {
 		AssertChecked.assertCheckedNotVisible(
 			key_fieldName = ${fieldName},
 			locator1 = "FormViewBuilder#CHECKBOX_PREDEFINED");
 	}
 
-	macro viewCheckboxNotChecked {
+	@summary = "Default summary"
+	macro viewCheckboxNotChecked(fieldName = null,fieldValue = null) {
 		AssertNotChecked.assertNotCheckedNotVisible(
 			key_fieldName = ${fieldName},
 			key_fieldValue = ${fieldValue},
 			locator1 = "FormViewBuilder#CHECKBOX_AT_FORM_BODY");
 	}
 
-	macro viewEntriesTitle {
+	@summary = "Default summary"
+	macro viewEntriesTitle(key_entriesTitle = null) {
 		AssertElementPresent(
 			key_text = ${key_entriesTitle},
 			locator1 = "FormViewBuilder#ENTRIES_TITLE_CONTENT");
 	}
 
-	macro viewMultipleSelectionInline {
+	@summary = "Default summary"
+	macro viewMultipleSelectionInline(selectOptionsList = null) {
 		for (var selectOption : list ${selectOptionsList}) {
 			AssertElementPresent(
 				locator1 = "FormViewBuilder#OPTIONS_PLACED_INLINE",
@@ -963,7 +1099,8 @@ definition {
 		}
 	}
 
-	macro viewMultipleSelectionNotInline {
+	@summary = "Default summary"
+	macro viewMultipleSelectionNotInline(selectOptionsList = null) {
 		for (var selectOption : list ${selectOptionsList}) {
 			AssertElementNotPresent(
 				locator1 = "FormViewBuilder#OPTIONS_PLACED_INLINE",
@@ -971,21 +1108,24 @@ definition {
 		}
 	}
 
-	macro viewSelectChecked {
+	@summary = "Default summary"
+	macro viewSelectChecked(fieldName = null,fieldValue = null) {
 		AssertChecked.assertCheckedNotVisible(
 			key_fieldName = ${fieldName},
 			key_fieldValue = ${fieldValue},
 			locator1 = "FormViewBuilder#PREDEFINED_VALUE_AT_FORM");
 	}
 
-	macro viewSingleSelectionChecked {
+	@summary = "Default summary"
+	macro viewSingleSelectionChecked(fieldName = null,fieldValue = null) {
 		AssertChecked.assertCheckedNotVisible(
 			key_fieldName = ${fieldName},
 			key_fieldValue = ${fieldValue},
 			locator1 = "FormViewBuilder#PREDEFINED_VALUE_AT_FORM_SINGLE_SELECTION");
 	}
 
-	macro viewSummaryEntry {
+	@summary = "Default summary"
+	macro viewSummaryEntry(key_entryName = null,key_card = null,key_entryNumber = null) {
 		AssertElementPresent(
 			key_card = ${key_card},
 			locator1 = "Card#CARD_TITLE");
@@ -999,7 +1139,8 @@ definition {
 			locator1 = "FormViewBuilder#ENTRY_NAME");
 	}
 
-	macro viewSummaryEntryNumeric {
+	@summary = "Default summary"
+	macro viewSummaryEntryNumeric(key_averageValue = null,key_sumValue = null,key_minValue = null,key_maxValue = null) {
 		AssertElementPresent(
 			key_type = "Sum",
 			key_value = ${key_sumValue},
@@ -1021,7 +1162,8 @@ definition {
 			locator1 = "FormViewBuilder#ENTRY_NUMERIC");
 	}
 
-	macro viewTranslationLanguage {
+	@summary = "Default summary"
+	macro viewTranslationLanguage(symbolName = null) {
 		AssertElementPresent(
 			changeAppLanguageTo = ${symbolName},
 			locator1 = "FormViewBuilder#SELECT_LANGUAGE_AT_APP_DEPLOYED");

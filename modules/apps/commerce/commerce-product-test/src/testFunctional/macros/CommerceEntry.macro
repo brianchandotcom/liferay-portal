@@ -1,6 +1,7 @@
 definition {
 
-	macro activeProductPaymentSubscription {
+	@summary = "Default summary"
+	macro activeProductPaymentSubscription(productName = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Product Management",
 			panel = "Commerce",
@@ -21,7 +22,8 @@ definition {
 		AssertElementPresent(locator1 = "CommerceEntry#PAYMENT_SUBSCRIPTION_TOGGLE_ACTIVE");
 	}
 
-	macro addAccountEntryUser {
+	@summary = "Default summary"
+	macro addAccountEntryUser(existingUser = null,userSiteMembership = null,accountName = null,userLastName = null,userScreenName = null,accountType = null,userEmailAddress = null,agreeToTermsAndAnswerReminderQuery = null,userFirstName = null,createNewAccount = null,requireReset = null,userRole = null) {
 		Variables.assertDefined(parameterList = "${accountName},${userEmailAddress},${userFirstName},${userLastName},${userScreenName}");
 
 		if ((${createNewAccount} == "true") && isSet(accountType)) {
@@ -69,19 +71,22 @@ definition {
 		}
 	}
 
-	macro addFullDescriptionViaCKEditor {
+	@summary = "Default summary"
+	macro addFullDescriptionViaCKEditor(entryFullDescription = null) {
 		Type.typeEditor(
 			locator1 = "CKEditor#BODY_FIELD",
 			value1 = ${entryFullDescription});
 	}
 
-	macro addNewAccountGroupsEntry {
+	@summary = "Default summary"
+	macro addNewAccountGroupsEntry(entryName = null) {
 		Type(
 			locator1 = "CommerceEntry#NAME_FIELD",
 			value1 = ${entryName});
 	}
 
-	macro addNewAccountsEntry {
+	@summary = "Default summary"
+	macro addNewAccountsEntry(entryName = null,criteriaType = null,user = null) {
 		Type(
 			locator1 = "CommerceEntry#NAME_FIELD",
 			value1 = ${entryName});
@@ -103,13 +108,15 @@ definition {
 			value1 = "Add");
 	}
 
-	macro addNewAvailabilityEstimatesEntry {
+	@summary = "Default summary"
+	macro addNewAvailabilityEstimatesEntry(entryName = null) {
 		Type(
 			locator1 = "CommerceEntry#TITLE_FIELD",
 			value1 = ${entryName});
 	}
 
-	macro addNewCatalogsEntry {
+	@summary = "Default summary"
+	macro addNewCatalogsEntry(catalogName = null,supplierAccountName = null,catalogLanguage = null,catalogCurrency = null) {
 		WaitForElementPresent(locator1 = "IFrame#MODAL_BODY");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
@@ -139,7 +146,8 @@ definition {
 		}
 	}
 
-	macro addNewChannelsEntry {
+	@summary = "Default summary"
+	macro addNewChannelsEntry(channelCurrency = null,siteName = null,channelName = null,channelType = null) {
 		WaitForElementPresent(locator1 = "IFrame#MODAL_IFRAME");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
@@ -190,7 +198,8 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro addNewCountriesEntry {
+	@summary = "Default summary"
+	macro addNewCountriesEntry(entryName = null,entryIsoNumber = null,entryIsoTwoLetters = null,entryIsoThreeLetters = null) {
 		Type(
 			locator1 = "CommerceEntry#NAME_FIELD",
 			value1 = ${entryName});
@@ -218,7 +227,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro addNewCurrenciesEntry {
+	@summary = "Default summary"
+	macro addNewCurrenciesEntry(symbol = null,code = null,exchangeRate = null,formatPattern = null,isPrimary = null,entryName = null) {
 		Type(
 			locator1 = "CommerceEntry#NAME_FIELD",
 			value1 = ${entryName});
@@ -257,7 +267,8 @@ definition {
 		Check.checkToggleSwitch(locator1 = "CommerceEntry#ACTIVE_CHECKBOX");
 	}
 
-	macro addNewDimensionUnit {
+	@summary = "Default summary"
+	macro addNewDimensionUnit(entryName = null) {
 		Type(
 			locator1 = "CommerceEntry#NAME_FIELD",
 			value1 = ${entryName});
@@ -269,7 +280,8 @@ definition {
 		Check.checkToggleSwitch(locator1 = "CommerceEntry#PRIMARY_CHECKBOX");
 	}
 
-	macro addNewDiscountsEntry {
+	@summary = "Default summary"
+	macro addNewDiscountsEntry(maximumDiscountAmount = null,discountName = null,discountTarget = null,discountAmount = null,discountType = null) {
 		if (!(isSet(active))) {
 			var active = "true";
 		}
@@ -325,7 +337,8 @@ definition {
 		}
 	}
 
-	macro addNewFilters {
+	@summary = "Default summary"
+	macro addNewFilters(filterItem = null,filterCategory = null) {
 		Click(locator1 = "CommerceEntry#FILTER_DROPDOWN_MENU");
 
 		Click(
@@ -363,7 +376,8 @@ definition {
 		Click(locator1 = "CommerceEntry#FILTER_DROPDOWN_MENU");
 	}
 
-	macro addNewNotificationTemplate {
+	@summary = "Default summary"
+	macro addNewNotificationTemplate(entryName = null,fromName = null,fromAddress = null,notificationType = null,entryTo = null) {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 		Type(
@@ -398,7 +412,8 @@ definition {
 			value1 = ${fromName});
 	}
 
-	macro addNewPriceListsEntry {
+	@summary = "Default summary"
+	macro addNewPriceListsEntry(priceListCatalog = null,priceListCurrency = null,priceListName = null) {
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		Type(
@@ -416,7 +431,8 @@ definition {
 			value1 = ${priceListCurrency});
 	}
 
-	macro addNewRegionsEntry {
+	@summary = "Default summary"
+	macro addNewRegionsEntry(code = null,entryName = null) {
 		Type(
 			locator1 = "CommerceEntry#NAME_FIELD",
 			value1 = ${entryName});
@@ -430,7 +446,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro addNewWarehousesEntry {
+	@summary = "Default summary"
+	macro addNewWarehousesEntry(warehouseName = null) {
 		WaitForElementPresent(locator1 = "IFrame#MODAL_BODY");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
@@ -444,7 +461,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro addNewWeightUnit {
+	@summary = "Default summary"
+	macro addNewWeightUnit(entryName = null) {
 		Type(
 			locator1 = "CommerceEntry#NAME_FIELD",
 			value1 = ${entryName});
@@ -456,7 +474,8 @@ definition {
 		Check.checkToggleSwitch(locator1 = "CommerceEntry#PRIMARY_CHECKBOX");
 	}
 
-	macro addOptionsEntry {
+	@summary = "Default summary"
+	macro addOptionsEntry(optionFieldType = null,optionDescription = null,facetable = null,skuContributor = null,optionName = null,required = null) {
 		Type(
 			locator1 = "CommerceEntry#NAME_FIELD",
 			value1 = ${optionName});
@@ -488,7 +507,8 @@ definition {
 		}
 	}
 
-	macro addOptionValue {
+	@summary = "Default summary"
+	macro addOptionValue(valueName = null,valuePosition = null) {
 		Type(
 			locator1 = "CommerceEntry#NAME_FIELD",
 			value1 = ${valueName});
@@ -498,7 +518,8 @@ definition {
 			value1 = ${valuePosition});
 	}
 
-	macro addPriceListsFromProductSKU {
+	@summary = "Default summary"
+	macro addPriceListsFromProductSKU(skuName = null,priceListNames = null) {
 		CommerceNavigator.gotoEntry(entryName = ${skuName});
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
@@ -526,13 +547,15 @@ definition {
 			locator1 = "Button#ANY");
 	}
 
-	macro addPricingEntry {
+	@summary = "Default summary"
+	macro addPricingEntry(price = null) {
 		Type(
 			locator1 = "CommerceEntry#PRICE_FIELD",
 			value1 = ${price});
 	}
 
-	macro addProductDescription {
+	@summary = "Default summary"
+	macro addProductDescription(productShortDescription = null,publishProduct = null,productFullDescription = null) {
 		Type(
 			locator1 = "CommerceEntry#SHORT_DESCRIPTION_FIELD",
 			value1 = ${productShortDescription});
@@ -549,7 +572,8 @@ definition {
 		}
 	}
 
-	macro addProductsEntry {
+	@summary = "Default summary"
+	macro addProductsEntry(productShortDescription = null,publishProduct = null,compileDescription = null,productFullDescription = null,productName = null,productCatalog = null) {
 		WaitForElementPresent(locator1 = "IFrame#MODAL_BODY");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
@@ -592,7 +616,8 @@ definition {
 		}
 	}
 
-	macro addShippingOptionSettingsVariableRate {
+	@summary = "Default summary"
+	macro addShippingOptionSettingsVariableRate(zip = null,country = null,subtotal = null,warehouse = null,region = null,shippingOption = null) {
 		Variables.assertDefined(parameterList = ${shippingOption});
 
 		if (!(isSet(fixedPrice))) {
@@ -686,7 +711,8 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 	}
 
-	macro AddShippingOptionVariableRate {
+	@summary = "Default summary"
+	macro AddShippingOptionVariableRate(key_name = null,key_description = null,key_priority = null) {
 		Click(locator1 = "Button#PLUS");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
@@ -709,7 +735,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro addSKUsEntry {
+	@summary = "Default summary"
+	macro addSKUsEntry(productSku = null,noOption = null,optionValue = null) {
 		Type(
 			locator1 = "CommerceEntry#SKU_FIELD",
 			value1 = ${productSku});
@@ -719,7 +746,8 @@ definition {
 			optionValue = ${optionValue});
 	}
 
-	macro addTaxCategory {
+	@summary = "Default summary"
+	macro addTaxCategory(keyDescription = null,keyName = null,keyReferenceCode = null) {
 		Click(locator1 = "Button#PLUS");
 
 		if (isSet(keyReferenceCode)) {
@@ -744,7 +772,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro addUOMEntry {
+	@summary = "Default summary"
+	macro addUOMEntry(promoPrice = null,baseUnitQuantity = null,purchasable = null,unitOfMeasureKey = null,decimalAllowed = null,unitOfMeasureName = null,priority = null,conversionRate = null,basePrice = null) {
 		Click(locator1 = "Button#PLUS");
 
 		SelectFrameTop();
@@ -850,7 +879,8 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 	}
 
-	macro assertCheckedSpecificToggle {
+	@summary = "Default summary"
+	macro assertCheckedSpecificToggle(name = null) {
 		task ("Check if the Toggle is checked") {
 			AssertElementPresent(
 				key_name = ${name},
@@ -860,7 +890,8 @@ definition {
 		}
 	}
 
-	macro assertDefaultDisplayPage {
+	@summary = "Default summary"
+	macro assertDefaultDisplayPage(pageType = null,pageName = null) {
 		if (!(isSet(pageType))) {
 			AssertTextEquals(
 				locator1 = "CommerceEntry#DISPLAY_PAGE_ANY",
@@ -880,21 +911,24 @@ definition {
 		}
 	}
 
-	macro assertDisplayPageOverride {
+	@summary = "Default summary"
+	macro assertDisplayPageOverride(layout = null,entryName = null) {
 		AssertElementPresent(
 			key_entryName = ${entryName},
 			key_layout = ${layout},
 			locator1 = "CommerceEntry#OVERRIDE_DEFAULT_DISPLAY_PAGE");
 	}
 
-	macro assertNoDisplayPageOverride {
+	@summary = "Default summary"
+	macro assertNoDisplayPageOverride(layout = null,entryName = null) {
 		AssertElementNotPresent(
 			key_entryName = ${entryName},
 			key_layout = ${layout},
 			locator1 = "CommerceEntry#OVERRIDE_DEFAULT_DISPLAY_PAGE");
 	}
 
-	macro assertTableRowSpecificColumnValue {
+	@summary = "Default summary"
+	macro assertTableRowSpecificColumnValue(entryName = null,column = null,row = null,value = null) {
 		AssertTextEquals(
 			key_column = ${column},
 			key_entryName = ${entryName},
@@ -903,7 +937,8 @@ definition {
 			value1 = ${value});
 	}
 
-	macro assertUniqueTaxCategoryErc {
+	@summary = "Default summary"
+	macro assertUniqueTaxCategoryErc(keyName = null,keyReferenceCode = null) {
 		Click(
 			key_entry = ${keyName},
 			locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
@@ -928,7 +963,8 @@ definition {
 		Click(locator1 = "Icon#BACK");
 	}
 
-	macro changePagination {
+	@summary = "Default summary"
+	macro changePagination(key_id = null,itemsPerPage = null) {
 		Click(
 			key_id = ${key_id},
 			locator1 = "CommerceEntry#PAGINATION_ITEMS_PER_PAGE_SELECT");
@@ -943,13 +979,15 @@ definition {
 			value1 = ${itemsPerPage});
 	}
 
-	macro changePinColor {
+	@summary = "Default summary"
+	macro changePinColor(color = null) {
 		Type(
 			locator1 = "CommerceEntry#DEFAULT_DIAMETER_CUSTOM_COLOR_SELECTION",
 			value1 = ${color});
 	}
 
-	macro checkImageName {
+	@summary = "Default summary"
+	macro checkImageName(number = null,image = null,uploadFileName = null) {
 		if (isSet(number)) {
 			if (${number} != "") {
 				echo("number is: ${number} image is: ${image} uploadFileName is: ${uploadFileName}");
@@ -968,7 +1006,8 @@ definition {
 		}
 	}
 
-	macro checkProductsEntryFields {
+	@summary = "Default summary"
+	macro checkProductsEntryFields(productName = null,productCatalog = null) {
 		WaitForElementPresent(
 			key_title = ${productName},
 			locator1 = "Header#H3_TITLE");
@@ -987,14 +1026,16 @@ definition {
 			value1 = ${productName});
 	}
 
-	macro clickButtonWithName {
+	@summary = "Default summary"
+	macro clickButtonWithName(buttonName = null,text = null) {
 		Click.javaScriptClick(
 			key_buttonName = ${buttonName},
 			key_text = ${text},
 			locator1 = "CommerceEntry#BUTTON_WITH_NAME");
 	}
 
-	macro clickEntryDropdownMenuItem {
+	@summary = "Default summary"
+	macro clickEntryDropdownMenuItem(entryName = null,menuItem = null) {
 		Click(
 			key_value = ${entryName},
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
@@ -1002,13 +1043,15 @@ definition {
 		DropdownMenuItem.click(menuItem = ${menuItem});
 	}
 
-	macro clickNoError {
+	@summary = "Default summary"
+	macro clickNoError(menuItem = null) {
 		ClickNoError(
 			key_menuItem = ${menuItem},
 			locator1 = "CommerceEntry#ANY_MENU_ITEM");
 	}
 
-	macro clickTableEntryEditButton {
+	@summary = "Default summary"
+	macro clickTableEntryEditButton(entryName = null,table = null) {
 		WaitForPageLoad();
 
 		if (IsElementPresent(key_value = ${entryName}, locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS")) {
@@ -1024,7 +1067,8 @@ definition {
 		}
 	}
 
-	macro createAccountFromGuest {
+	@summary = "Default summary"
+	macro createAccountFromGuest(userEmailAddressMessage = null,newuserEmailAddress = null,userLastName = null,userScreenName = null,disablePassword = null,userEmailAddress = null,newPassword = null,userFirstName = null) {
 		Type(
 			locator1 = "TextInput#SCREEN_NAME",
 			value1 = ${userScreenName});
@@ -1076,7 +1120,8 @@ definition {
 		}
 	}
 
-	macro createNewAccountGroup {
+	@summary = "Default summary"
+	macro createNewAccountGroup(accountCriteriaType = null,accountsEntryName = null,user = null,accountGroupsEntryName = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
@@ -1113,7 +1158,8 @@ definition {
 			value1 = "Add");
 	}
 
-	macro createNewCurrenciesEntry {
+	@summary = "Default summary"
+	macro createNewCurrenciesEntry(code = null,entryName = null) {
 		CommerceNavigator.gotoPortlet(
 			category = "Store Management",
 			portlet = "Currencies");
@@ -1129,7 +1175,8 @@ definition {
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 	}
 
-	macro createNewSpecificationGroups {
+	@summary = "Default summary"
+	macro createNewSpecificationGroups(specificationTitle = null,specificationDescription = null) {
 		Click(locator1 = "Button#PLUS");
 
 		Type(
@@ -1145,7 +1192,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro createNewSpecificationLabels {
+	@summary = "Default summary"
+	macro createNewSpecificationLabels(specificationTitle = null,specificationDescription = null) {
 		Click(locator1 = "Button#PLUS");
 
 		Type(
@@ -1160,7 +1208,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro deleteCommerceEntry {
+	@summary = "Default summary"
+	macro deleteCommerceEntry(entryName = null) {
 		WaitForElementPresent(locator1 = "CommerceEntry#PAGINATION_RESULTS");
 
 		var paginationResults = selenium.getText("CommerceEntry#PAGINATION_RESULTS");
@@ -1195,7 +1244,8 @@ definition {
 		CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 	}
 
-	macro deleteTaxCategory {
+	@summary = "Default summary"
+	macro deleteTaxCategory(keyName = null) {
 		Click(
 			locator1 = "Icon#SVG_ELLIPSIS",
 			value1 = ${keyName});
@@ -1209,23 +1259,27 @@ definition {
 			locator1 = "CommerceEntry#ENTRY_CONTENT_ROW_BY_NAME");
 	}
 
-	macro editEntryFullDescription {
+	@summary = "Default summary"
+	macro editEntryFullDescription(newEntryFullDescription = null) {
 		CommerceEntry.addFullDescriptionViaCKEditor(entryFullDescription = ${newEntryFullDescription});
 	}
 
-	macro editEntryName {
+	@summary = "Default summary"
+	macro editEntryName(newEntryName = null) {
 		Type(
 			locator1 = "CommerceEntry#NAME_FIELD",
 			value1 = ${newEntryName});
 	}
 
-	macro editEntryShortDescription {
+	@summary = "Default summary"
+	macro editEntryShortDescription(newEntryShortDescription = null) {
 		Type(
 			locator1 = "CommerceEntry#SHORT_DESCRIPTION_FIELD",
 			value1 = ${newEntryShortDescription});
 	}
 
-	macro editPriceListsFromProductSKU {
+	@summary = "Default summary"
+	macro editPriceListsFromProductSKU(skuName = null,price = null,priceList = null) {
 		CommerceNavigator.gotoEntry(entryName = ${skuName});
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
@@ -1246,7 +1300,8 @@ definition {
 		Click(locator1 = "Icon#CLOSE");
 	}
 
-	macro editSkuPricingAndInventory {
+	@summary = "Default summary"
+	macro editSkuPricingAndInventory(priceOnApplication = null,promoPrice = null,northeastQuantity = null,cost = null,italyQuantity = null,southwestQuantity = null,basePrice = null) {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 		CommerceSKUs.setSkuPricing(
@@ -1277,7 +1332,8 @@ definition {
 		SelectFrame.selectFrameTop();
 	}
 
-	macro editTaxCategory {
+	@summary = "Default summary"
+	macro editTaxCategory(keyDescription = null,keyName = null,keyReferenceCode = null) {
 		if (isSet(keyReferenceCode)) {
 			Click(locator1 = "Icon#EDIT_PENCIL");
 
@@ -1313,7 +1369,8 @@ definition {
 			keyReferenceCode = ${keyReferenceCode});
 	}
 
-	macro editUOMEntry {
+	@summary = "Default summary"
+	macro editUOMEntry(localizedName = null,baseUnitQuantity = null,purchasable = null,entryName = null,unitOfMeasureKey = null,unitOfMeasureNewName = null,decimalAllowed = null,locale = null,priority = null,conversionRate = null) {
 		Click(
 			key_value = ${entryName},
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
@@ -1402,7 +1459,8 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 	}
 
-	macro editWarehousesQuantity {
+	@summary = "Default summary"
+	macro editWarehousesQuantity(northeastQuantity = null,productSku = null,italyQuantity = null,southwestQuantity = null,productName = null) {
 		Search.searchCP(searchTerm = ${productName});
 
 		CommerceNavigator.gotoTableListEntry(entryName = ${productName});
@@ -1421,7 +1479,8 @@ definition {
 			southwestQuantity = ${southwestQuantity});
 	}
 
-	macro getFileEntryIDFromProductMedia {
+	@summary = "Default summary"
+	macro getFileEntryIDFromProductMedia() {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 		var fileEntryId = selenium.getElementValue("CommerceEntry#FILE_ENTRY_ID_FROM_PRODUCT_MEDIA");
@@ -1433,28 +1492,32 @@ definition {
 		return ${fileEntryId};
 	}
 
-	macro gotoBreadcrumb {
+	@summary = "Default summary"
+	macro gotoBreadcrumb(breadcrumb = null) {
 		Click(
 			key_breadcrumb = ${breadcrumb},
 			locator1 = "CommerceEntry#BREADCRUMBS",
 			value1 = ${breadcrumb});
 	}
 
-	macro gotoMenuTab {
+	@summary = "Default summary"
+	macro gotoMenuTab(menuTab = null) {
 		AssertClick(
 			key_menuTab = ${menuTab},
 			locator1 = "CommerceEntry#MENU_TAB",
 			value1 = ${menuTab});
 	}
 
-	macro gotoNestedMenu {
+	@summary = "Default summary"
+	macro gotoNestedMenu(nestedMenu = null) {
 		AssertClick(
 			key_nestedMenu = ${nestedMenu},
 			locator1 = "CommerceEntry#NESTED_MENU",
 			value1 = ${nestedMenu});
 	}
 
-	macro publishEntry {
+	@summary = "Default summary"
+	macro publishEntry(status = null) {
 		Button.clickPublish();
 
 		AssertElementPresent(
@@ -1462,7 +1525,8 @@ definition {
 			locator1 = "CommerceEntry#WORKFLOW_STATUS");
 	}
 
-	macro publishProductImage {
+	@summary = "Default summary"
+	macro publishProductImage() {
 		Button.clickPublish();
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
@@ -1470,7 +1534,8 @@ definition {
 		WaitForElementNotPresent(locator1 = "Message#SUCCESS");
 	}
 
-	macro removeEntryEligibility {
+	@summary = "Default summary"
+	macro removeEntryEligibility(entryName = null,channelEligibility = null) {
 		CommerceNavigator.gotoEntry(entryName = ${entryName});
 
 		Navigator.gotoNavTab(navTab = "Eligibility");
@@ -1489,7 +1554,8 @@ definition {
 			locator1 = "CommerceEntry#TABLE_ELIGIBILITY_ENTRY");
 	}
 
-	macro saveEntry {
+	@summary = "Default summary"
+	macro saveEntry() {
 		Button.clickSave();
 
 		AssertElementPresent(locator1 = "Message#SUCCESS");
@@ -1497,7 +1563,8 @@ definition {
 		WaitForElementNotPresent(locator1 = "Message#SUCCESS");
 	}
 
-	macro saveEntryAsDraft {
+	@summary = "Default summary"
+	macro saveEntryAsDraft(status = null) {
 		Button.clickSaveAsDraft();
 
 		if (IsElementPresent(locator1 = "Message#SUCCESS")) {
@@ -1511,7 +1578,8 @@ definition {
 		}
 	}
 
-	macro selectAssociatedOptionsValue {
+	@summary = "Default summary"
+	macro selectAssociatedOptionsValue(noOption = null,optionValue = null) {
 		if (IsElementPresent(key_optionType = "radio", key_optionValue = ${optionValue}, locator1 = "CommerceEntry#OPTION_VALUE")) {
 			Click(
 				key_optionType = "radio",
@@ -1527,7 +1595,8 @@ definition {
 		}
 	}
 
-	macro selectAutoCompleteField {
+	@summary = "Default summary"
+	macro selectAutoCompleteField(entryName = null,label = null) {
 		Type(
 			key_label = ${label},
 			locator1 = "CommerceEntry#ANY_AUTOCOMPLETE_TEXT_FIELD",
@@ -1538,13 +1607,15 @@ definition {
 			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 	}
 
-	macro selectEntryEllipsis {
+	@summary = "Default summary"
+	macro selectEntryEllipsis(entryName = null) {
 		Click(
 			key_itemName = ${entryName},
 			locator1 = "CommerceEntry#SPECIFIC_MENU_ITEM");
 	}
 
-	macro setEntryEligibility {
+	@summary = "Default summary"
+	macro setEntryEligibility(channelsEligibility = null,shippingMethod = null,orderTypesEligibility = null,shippingOption = null,paymentMethod = null,accountGroupsEligibility = null,accountsEligibility = null) {
 		if (isSet(paymentMethod)) {
 			CommerceEntry.clickTableEntryEditButton(
 				entryName = ${paymentMethod},
@@ -1752,7 +1823,8 @@ definition {
 		}
 	}
 
-	macro setExpirationTime {
+	@summary = "Default summary"
+	macro setExpirationTime() {
 		var timeString = selenium.getElementValue("TextInput#DISPLAY_DATE_TIME");
 		var timeAMPM = selenium.getElementValue("TextInput#DISPLAY_DATE_MERIDIAN");
 		var hours = RegexUtil.replace(${timeString}, "([0-9]*):([0-9]*)", 1);
@@ -1806,7 +1878,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro setPublishTime {
+	@summary = "Default summary"
+	macro setPublishTime() {
 		var timeString = selenium.getElementValue("TextInput#DISPLAY_DATE_TIME");
 		var timeAMPM = selenium.getElementValue("TextInput#DISPLAY_DATE_MERIDIAN");
 		var hours = RegexUtil.replace(${timeString}, "([0-9]*):([0-9]*)", 1);
@@ -1850,7 +1923,8 @@ definition {
 			value1 = "${hours}${minutes}${ampm}");
 	}
 
-	macro uploadCatalogEntrySingleImage {
+	@summary = "Default summary"
+	macro uploadCatalogEntrySingleImage(uploadFileName = null,productType = null) {
 		AssertClick(
 			locator1 = "CommerceEntry#PRODUCT_IMAGE_SELECT_FILE",
 			value1 = "Select File");
@@ -1864,7 +1938,8 @@ definition {
 		CommerceItemSelector.uploadSingleFile(uploadFileName = ${uploadFileName});
 	}
 
-	macro verifyCostumRadiusWithCostumValue {
+	@summary = "Default summary"
+	macro verifyCostumRadiusWithCostumValue(key_list = null) {
 		for (var number : list ${key_list}) {
 			KeyPress(
 				locator1 = "CommerceEntry#DEFAULT_DIAMETER_CUSTOM_RADIUS",
@@ -1872,7 +1947,8 @@ definition {
 		}
 	}
 
-	macro verifyCostumRadiusWithDefaultValue {
+	@summary = "Default summary"
+	macro verifyCostumRadiusWithDefaultValue() {
 		for (var value : list "Small:10,Medium:20,Large:30") {
 			var dimension = StringUtil.extractFirst(${value}, ":");
 			var number = StringUtil.extractLast(${value}, ":");
@@ -1889,7 +1965,8 @@ definition {
 		}
 	}
 
-	macro viewAccountManagementAcccountEntry {
+	@summary = "Default summary"
+	macro viewAccountManagementAcccountEntry(accountOrganizationsList = null,accountTaxID = null,accountDefaultShipping = null,accountName = null,accountType = null,accountDefaultBilling = null) {
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
 			value1 = ${accountName});
@@ -1934,7 +2011,8 @@ definition {
 		}
 	}
 
-	macro viewAccountsEntry {
+	@summary = "Default summary"
+	macro viewAccountsEntry(accountEmail = null,accountTaxID = null,accountDefaultShipping = null,accountName = null,accountType = null,accountDefaultBilling = null) {
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
 			value1 = ${accountName});
@@ -1974,7 +2052,8 @@ definition {
 		}
 	}
 
-	macro viewCatalogsEntry {
+	@summary = "Default summary"
+	macro viewCatalogsEntry(catalogName = null,catalogBasePriceList = null,catalogBasePromotion = null,supplierAccountName = null,catalogLanguage = null,catalogCurrency = null) {
 		AssertTextEquals(
 			locator1 = "CommerceEntry#NAME_FIELD",
 			value1 = ${catalogName});
@@ -2011,7 +2090,8 @@ definition {
 		}
 	}
 
-	macro viewChannelsEntry {
+	@summary = "Default summary"
+	macro viewChannelsEntry(channelCurrency = null,channelSiteName = null,channelName = null,channelType = null,commerceSiteType = null) {
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
 			value1 = ${channelName});
@@ -2043,7 +2123,8 @@ definition {
 		}
 	}
 
-	macro viewCurrenciesEntry {
+	@summary = "Default summary"
+	macro viewCurrenciesEntry(currenciesList = null) {
 		for (var currencyName : list ${currenciesList}) {
 			AssertElementPresent(
 				key_entryName = ${currencyName},
@@ -2051,7 +2132,8 @@ definition {
 		}
 	}
 
-	macro viewDiscountsEntry {
+	@summary = "Default summary"
+	macro viewDiscountsEntry(maximumDiscountAmount = null,channelsEligibility = null,discountName = null,discountTarget = null,discountAmount = null,discountType = null,accountGroupsEligibility = null,accountsEligibility = null) {
 		AssertTextEquals(
 			locator1 = "TextInput#NAME",
 			value1 = ${discountName});
@@ -2084,7 +2166,8 @@ definition {
 			channelsEligibility = ${channelsEligibility});
 	}
 
-	macro viewEntryEligibility {
+	@summary = "Default summary"
+	macro viewEntryEligibility(channelsEligibility = null,accountGroupsEligibility = null,accountsEligibility = null) {
 		if (isSet(accountGroupsEligibility)) {
 			var title = "Add Account Groups";
 
@@ -2154,7 +2237,8 @@ definition {
 		}
 	}
 
-	macro viewOptionsEntry {
+	@summary = "Default summary"
+	macro viewOptionsEntry(optionDescription = null,optionName = null) {
 		AssertTextEquals(
 			locator1 = "CommerceEntry#NAME_FIELD",
 			value1 = ${optionName});
@@ -2166,13 +2250,15 @@ definition {
 		}
 	}
 
-	macro viewPaginationResults {
+	@summary = "Default summary"
+	macro viewPaginationResults(results = null) {
 		AssertTextEquals(
 			locator1 = "CommerceEntry#PAGINATION_RESULTS",
 			value1 = ${results});
 	}
 
-	macro viewProductOptions {
+	@summary = "Default summary"
+	macro viewProductOptions(optionName = null) {
 		Click(locator1 = "CommerceEntry#PRODUCT_DETAIL_VIEW_OPTION");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
@@ -2204,7 +2290,8 @@ definition {
 		Refresh();
 	}
 
-	macro viewProductsEntry {
+	@summary = "Default summary"
+	macro viewProductsEntry(productShortDescription = null,productName = null) {
 		AssertTextEquals(
 			locator1 = "CommerceEntry#NAME_FIELD",
 			value1 = ${productName});
@@ -2214,7 +2301,8 @@ definition {
 			value1 = ${productShortDescription});
 	}
 
-	macro viewProductSkus {
+	@summary = "Default summary"
+	macro viewProductSkus() {
 		for (var skusList : list ${skusList}) {
 			var sku = StringUtil.extractFirst(${skusList}, ":");
 			var price = StringUtil.extractLast(${skusList}, ":");
@@ -2243,7 +2331,8 @@ definition {
 		}
 	}
 
-	macro viewSpecificationGroups {
+	@summary = "Default summary"
+	macro viewSpecificationGroups(specificationTitle = null,specificationDescription = null) {
 		Click(
 			key_entry = ${specificationTitle},
 			locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
@@ -2264,7 +2353,8 @@ definition {
 			value1 = ${specificationTitle});
 	}
 
-	macro viewSpecificationGroupsEntries {
+	@summary = "Default summary"
+	macro viewSpecificationGroupsEntries(specificationGroupsEntries = null) {
 		for (var specificationGroupsEntry : list ${specificationGroupsEntries}) {
 			AssertElementPresent(
 				key_rowEntry = ${specificationGroupsEntry},
@@ -2272,7 +2362,8 @@ definition {
 		}
 	}
 
-	macro viewSpecificationLabels {
+	@summary = "Default summary"
+	macro viewSpecificationLabels(specificationTitle = null,specificationDescription = null) {
 		Click(
 			key_entry = ${specificationTitle},
 			locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
@@ -2292,7 +2383,8 @@ definition {
 			value1 = ${specificationTitle});
 	}
 
-	macro viewSpecificationLabelsEntries {
+	@summary = "Default summary"
+	macro viewSpecificationLabelsEntries(specificationLabelsEntries = null) {
 		for (var specificationLabelsEntry : list ${specificationLabelsEntries}) {
 			AssertElementPresent(
 				key_rowEntry = ${specificationLabelsEntry},
@@ -2300,7 +2392,8 @@ definition {
 		}
 	}
 
-	macro viewTaxCategory {
+	@summary = "Default summary"
+	macro viewTaxCategory(keyDescription = null,keyName = null,keyReferenceCode = null) {
 		Click(
 			key_entry = ${keyName},
 			locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
@@ -2327,7 +2420,8 @@ definition {
 		Click(locator1 = "Icon#BACK");
 	}
 
-	macro viewUOMEntry {
+	@summary = "Default summary"
+	macro viewUOMEntry(uomRowList = null) {
 		for (var rowValues : list ${uomRowList}) {
 			var firstRowValue = StringUtil.extractFirst(${rowValues}, ":");
 			var secondRowValue = StringUtil.extractLast(${rowValues}, ":");

@@ -1,6 +1,7 @@
 definition {
 
-	macro _curlMessageBoardMessage {
+	@summary = "Default summary"
+	macro _curlMessageBoardMessage(headline = null,messageBoardMessageId = null,messageBoardThreadId = null,parentMessageBoardMessageId = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(messageBoardThreadId)) {
@@ -33,7 +34,8 @@ definition {
 		return ${curl};
 	}
 
-	macro createChildMbMessageByMbMessageId {
+	@summary = "Default summary"
+	macro createChildMbMessageByMbMessageId(headline = null,parentMessageBoardMessageId = null) {
 		Variables.assertDefined(parameterList = "${headline},${parentMessageBoardMessageId}");
 
 		var curl = MessageBoardMessageAPI._curlMessageBoardMessage(
@@ -45,7 +47,8 @@ definition {
 		return ${response};
 	}
 
-	macro createMbMessageByMbThreadId {
+	@summary = "Default summary"
+	macro createMbMessageByMbThreadId(headline = null,messageBoardThreadId = null) {
 		Variables.assertDefined(parameterList = "${headline},${messageBoardThreadId}");
 
 		var curl = MessageBoardMessageAPI._curlMessageBoardMessage(
@@ -57,7 +60,8 @@ definition {
 		return ${response};
 	}
 
-	macro getIdOfCreatedMbMessageByMbThreadId {
+	@summary = "Default summary"
+	macro getIdOfCreatedMbMessageByMbThreadId(headline = null,messageBoardThreadId = null) {
 		var response = MessageBoardMessageAPI.createMbMessageByMbThreadId(
 			headline = ${headline},
 			messageBoardThreadId = ${messageBoardThreadId});
@@ -67,7 +71,8 @@ definition {
 		return ${messageboardMessageId};
 	}
 
-	macro getMbMessageByMbMessageId {
+	@summary = "Default summary"
+	macro getMbMessageByMbMessageId(messageBoardMessageId = null) {
 		Variables.assertDefined(parameterList = ${messageBoardMessageId});
 
 		var curl = MessageBoardMessageAPI._curlMessageBoardMessage(messageBoardMessageId = ${messageBoardMessageId});
@@ -77,7 +82,8 @@ definition {
 		return ${response};
 	}
 
-	macro getMbMessageErcByMbMessageId {
+	@summary = "Default summary"
+	macro getMbMessageErcByMbMessageId(messageBoardMessageId = null) {
 		var response = MessageBoardMessageAPI.getMbMessageByMbMessageId(messageBoardMessageId = ${messageBoardMessageId});
 
 		var messageBoardMessageErc = JSONUtil.getWithJSONPath(${response}, "$.externalReferenceCode");

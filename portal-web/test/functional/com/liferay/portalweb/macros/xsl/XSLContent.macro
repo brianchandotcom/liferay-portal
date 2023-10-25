@@ -1,6 +1,7 @@
 definition {
 
-	macro configureConfigurationAdminXSL {
+	@summary = "Default summary"
+	macro configureConfigurationAdminXSL() {
 		Type(
 			locator1 = "TextArea#URL",
 			value1 = "@portlet_context_url@,@JSONCompany.getPortalURL();@");
@@ -10,7 +11,8 @@ definition {
 		SystemSettings.saveConfiguration();
 	}
 
-	macro viewConfigurationXSLContent {
+	@summary = "Default summary"
+	macro viewConfigurationXSLContent() {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		AssertTextEquals(
@@ -24,17 +26,20 @@ definition {
 		SelectFrameTop(value1 = "relative=top");
 	}
 
-	macro viewConsoleError {
+	@summary = "Default summary"
+	macro viewConsoleError(consoleTextError = null) {
 		AssertConsoleTextPresent(value1 = ${consoleTextError});
 	}
 
-	macro viewErrorMessage {
+	@summary = "Default summary"
+	macro viewErrorMessage() {
 		AssertTextEquals(
 			locator1 = "Message#ERROR",
 			value1 = "An error occurred while processing your XML and XSL.");
 	}
 
-	macro viewXSLPortletHymnDisplay {
+	@summary = "Default summary"
+	macro viewXSLPortletHymnDisplay(tableCountryEntry = null,tableYearEntry = null,tableTitleEntry = null,tableArtistEntry = null) {
 		AssertTextEquals(
 			locator1 = "XSLContentPortlet#TITLE",
 			value1 = "My Hymn Collection");

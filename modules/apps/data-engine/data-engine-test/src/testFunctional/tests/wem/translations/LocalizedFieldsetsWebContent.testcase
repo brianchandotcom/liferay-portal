@@ -147,9 +147,9 @@ definition {
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC Title");
 
 		AssertAttributeValue(
-			value1 = "value",
 			key_fieldFieldLabel = "Text",
 			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "value",
 			value2 = "This is a Text");
 
 		PortletEntry.changeLocaleSummary(locale = "pt_BR");
@@ -157,9 +157,9 @@ definition {
 		PortletEntry.viewLocale(locale = "pt-BR");
 
 		AssertAttributeValue(
-			value1 = "value",
 			key_fieldFieldLabel = "Text pt-BR",
 			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "value",
 			value2 = "Este é um texto");
 	}
 

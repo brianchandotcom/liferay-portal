@@ -1,6 +1,7 @@
 definition {
 
-	macro _addCP {
+	@summary = "Default summary"
+	macro _addCP(subcategoryName = null,grandSubcategoryName = null,vocabularyName = null,categoryName = null,subcategoryDescription = null,grandSubcategoryDescription = null) {
 		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		if (isSet(grandSubcategoryName)) {
@@ -35,7 +36,8 @@ definition {
 		}
 	}
 
-	macro addCP {
+	@summary = "Default summary"
+	macro addCP(displayPageTemplateType = null,subcategoryName = null,grandSubcategoryName = null,displayPageName = null,vocabularyName = null,categoryName = null,subcategoryDescription = null,grandSubcategoryDescription = null) {
 		Subcategory._addCP(
 			categoryName = ${categoryName},
 			grandSubcategoryDescription = ${grandSubcategoryDescription},
@@ -102,7 +104,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro addDuplicateCP {
+	@summary = "Default summary"
+	macro addDuplicateCP(subcategoryName = null,vocabularyName = null,categoryName = null) {
 		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		LexiconEntry.gotoEntryMenuItem(
@@ -120,7 +123,8 @@ definition {
 			value1 = "Please enter a unique name.");
 	}
 
-	macro addPropertyCP {
+	@summary = "Default summary"
+	macro addPropertyCP(subcategoryName = null,propertiesValueField = null,propertiesKeyField = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${subcategoryName});
@@ -138,7 +142,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro deleteViaIconCP {
+	@summary = "Default summary"
+	macro deleteViaIconCP(subcategoryName = null,vocabularyName = null,categoryName = null) {
 		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		LexiconEntry.gotoEntry(rowEntry = ${categoryName});
@@ -164,7 +169,8 @@ definition {
 		AssertTextNotPresent(value1 = ${subcategoryName});
 	}
 
-	macro deleteViaMenuCP {
+	@summary = "Default summary"
+	macro deleteViaMenuCP(subcategoryName = null,vocabularyName = null,categoryName = null) {
 		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		LexiconEntry.gotoEntry(rowEntry = ${categoryName});
@@ -186,7 +192,8 @@ definition {
 		AssertTextNotPresent(value1 = ${subcategoryName});
 	}
 
-	macro editCP {
+	@summary = "Default summary"
+	macro editCP(subcategoryNameEdit = null,subcategoryName = null,vocabularyName = null,categoryName = null) {
 		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		LexiconEntry.gotoEntry(rowEntry = ${categoryName});
@@ -200,7 +207,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro moveCP {
+	@summary = "Default summary"
+	macro moveCP(subcategoryName = null,categoryNameMove = null,vocabularyName = null,categoryName = null) {
 		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		AssertClick(
@@ -215,7 +223,8 @@ definition {
 		AssetCategorization.selectCategory(categoryName = ${categoryNameMove});
 	}
 
-	macro searchCP {
+	@summary = "Default summary"
+	macro searchCP(subcategorySearchEntry = null,vocabularyName = null,categoryName = null) {
 		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		LexiconEntry.gotoEntry(rowEntry = ${categoryName});
@@ -223,7 +232,8 @@ definition {
 		Search.searchCP(searchTerm = ${subcategorySearchEntry});
 	}
 
-	macro viewCategoryPropertyCP {
+	@summary = "Default summary"
+	macro viewCategoryPropertyCP(subcategoryName = null,propertiesValueField = null,propertiesKeyField = null,vocabularyName = null,categoryName = null) {
 		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		var key_categoryName = ${categoryName};
@@ -245,7 +255,8 @@ definition {
 			value1 = ${propertiesValueField});
 	}
 
-	macro viewCP {
+	@summary = "Default summary"
+	macro viewCP(subcategoryName = null,vocabularyName = null,categoryName = null) {
 		var key_categoryName = ${categoryName};
 
 		Navigator.gotoNavNested(navNested = ${vocabularyName});
@@ -261,7 +272,8 @@ definition {
 			value1 = ${subcategoryName});
 	}
 
-	macro viewSearchResultsCP {
+	@summary = "Default summary"
+	macro viewSearchResultsCP(subcategoryName = null,nullResult = null,subcategoryDescriptionList = null,subCategoryNameList = null,subcategoryDescription = null) {
 		if (isSet(subCategoryNameList)) {
 			for (var subCategoryName : list ${subCategoryNameList}) {
 				var key_subCategoryName = ${subCategoryName};

@@ -1,12 +1,14 @@
 definition {
 
-	macro gotoNavbar {
+	@summary = "Default summary"
+	macro gotoNavbar(navBarTitle = null) {
 		Click(
 			key_navBarTitle = ${navBarTitle},
 			locator1 = "Publications#MANAGE_PUBLICATIONS_NAVBAR_TITLE");
 	}
 
-	macro gotoPublicationEllipsisItem {
+	@summary = "Default summary"
+	macro gotoPublicationEllipsisItem(publicationName = null,menuItem = null) {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		Click(
@@ -16,7 +18,8 @@ definition {
 		MenuItem.clickNoError(menuItem = ${menuItem});
 	}
 
-	macro gotoPublish {
+	@summary = "Default summary"
+	macro gotoPublish(gotoPublicationsAdmin = null,publicationName = null) {
 		if (${gotoPublicationsAdmin} == "true") {
 			PublicationsNavigator.openPublicationsAdmin();
 
@@ -33,7 +36,8 @@ definition {
 		}
 	}
 
-	macro gotoReviewChanges {
+	@summary = "Default summary"
+	macro gotoReviewChanges(gotoPublicationsAdmin = null,publicationName = null) {
 		if (${gotoPublicationsAdmin} == "true") {
 			PublicationsNavigator.openPublicationsAdmin();
 
@@ -48,7 +52,8 @@ definition {
 		}
 	}
 
-	macro gotoViewChangeDetails {
+	@summary = "Default summary"
+	macro gotoViewChangeDetails(changeCategory = null,changeTitle = null) {
 		var key_changeCategory = ${changeCategory};
 		var key_changeTitle = ${changeTitle};
 
@@ -68,7 +73,8 @@ definition {
 			value1 = ${changeTitle});
 	}
 
-	macro gotoViewConflictingChangeDetails {
+	@summary = "Default summary"
+	macro gotoViewConflictingChangeDetails(entryTitle = null) {
 		Click(
 			key_entryTitle = ${entryTitle},
 			locator1 = "PublicationsChanges#CONFLICTING_CHANGE_CONTENT_LINK");
@@ -80,25 +86,29 @@ definition {
 			locator1 = "PublicationsChanges#CONFLICTING_CHANGES_DETAILS_IFRAME_TITLE");
 	}
 
-	macro openPublicationsAdmin {
+	@summary = "Default summary"
+	macro openPublicationsAdmin(baseURL = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_change_tracking_web_portlet_PublicationsPortlet");
 	}
 
-	macro openPublicationsHistory {
+	@summary = "Default summary"
+	macro openPublicationsHistory(baseURL = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_change_tracking_web_portlet_PublicationsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_change_tracking_web_portlet_PublicationsPortlet_mvcRenderCommandName=%2Fchange_tracking%2Fview_history");
 	}
 
-	macro openPublicationsScheduled {
+	@summary = "Default summary"
+	macro openPublicationsScheduled(baseURL = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_change_tracking_web_portlet_PublicationsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_change_tracking_web_portlet_PublicationsPortlet_mvcRenderCommandName=%2Fchange_tracking%2Fview_scheduled");
 	}
 
-	macro openPublicationsSettings {
+	@summary = "Default summary"
+	macro openPublicationsSettings(baseURL = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_change_tracking_web_portlet_PublicationsPortlet&p_p_lifecycle=0&_com_liferay_change_tracking_web_portlet_PublicationsPortlet_mvcRenderCommandName=%2Fchange_tracking%2Fview_settings");

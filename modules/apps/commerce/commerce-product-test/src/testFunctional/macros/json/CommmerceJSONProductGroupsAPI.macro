@@ -1,6 +1,7 @@
 definition {
 
-	macro _getProductGroups {
+	@summary = "Default summary"
+	macro _getProductGroups() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -20,7 +21,8 @@ definition {
 		return ${responseBody};
 	}
 
-	macro _postProductGroups {
+	@summary = "Default summary"
+	macro _postProductGroups(productsJSON = null,productGroupName = null,productNames = null) {
 		Variables.assertDefined(parameterList = ${productGroupName});
 
 		var baseURL = ${baseURL};
@@ -73,7 +75,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro getProductGroupIdsByName {
+	@summary = "Default summary"
+	macro getProductGroupIdsByName(productGroupNames = null) {
 		Variables.assertDefined(parameterList = ${productGroupNames});
 
 		if (!(isSet(responseBody))) {

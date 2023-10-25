@@ -1,6 +1,7 @@
 definition {
 
-	macro setUpGlobalObjectEntryValues {
+	@summary = "Default summary"
+	macro setUpGlobalObjectEntryValues() {
 		var employeeId = CustomObjectAPI.getObjectEntryIdByName(
 			en_US_plural_label = "employees",
 			name = "John");

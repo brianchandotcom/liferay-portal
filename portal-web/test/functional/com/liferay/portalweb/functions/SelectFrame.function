@@ -3,7 +3,7 @@ definition {
 
 	function selectFrame(locator1) {
 		if (contains(${locator1}, "/iframe")) {
-			WaitForFrameLoad.WaitForFrameLoad();
+			WaitForFrameLoad();
 
 			selenium.waitForVisible(${locator1}, "false");
 
@@ -20,7 +20,7 @@ definition {
 		}
 
 		WaitForSPARefresh();
-	}
+}
 
 	function selectFrameNoLoading(locator1) {
 		if (contains(${locator1}, "/iframe")) {

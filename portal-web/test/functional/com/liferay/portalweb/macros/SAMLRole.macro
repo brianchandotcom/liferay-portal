@@ -1,6 +1,7 @@
 definition {
 
-	macro configure {
+	@summary = "Default summary"
+	macro configure(samlRoleType = null,samlEntityId = null) {
 		Select(
 			locator1 = "CPSAMLAdmin#SAML_ROLE_SELECT",
 			value1 = ${samlRoleType});
@@ -18,7 +19,8 @@ definition {
 			value1 = "Your request completed successfully.");
 	}
 
-	macro configureCertificateAndPrivateKey {
+	@summary = "Default summary"
+	macro configureCertificateAndPrivateKey(samlKeyPassword = null,certificateUsage = null) {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		if (isSet(keystoreEnabled)) {
@@ -52,7 +54,8 @@ definition {
 			locator1 = "CPSAMLAdmin#REPLACE_CERTIFICATE");
 	}
 
-	macro configureIdentityProvider {
+	@summary = "Default summary"
+	macro configureIdentityProvider(idpSessionMaximumAge = null,idpSessionIdleTimeout = null) {
 		if (isSet(idpSessionIdleTimeout)) {
 			Type(
 				locator1 = "CPSAMLAdmin#IDENTITY_PROVIDER_SESSION_IDLE_TIMEOUT",
@@ -70,15 +73,18 @@ definition {
 			value1 = "Save");
 	}
 
-	macro convertEncryptionCertificate {
+	@summary = "Default summary"
+	macro convertEncryptionCertificate() {
 		AntCommands.runCommand("build-test.xml", "prepare-encryption-PCKS12-certificate");
 	}
 
-	macro convertSingingCertificate {
+	@summary = "Default summary"
+	macro convertSingingCertificate() {
 		AntCommands.runCommand("build-test.xml", "prepare-signing-PCKS12-certificate");
 	}
 
-	macro createCertificate {
+	@summary = "Default summary"
+	macro createCertificate(certificateUsage = null) {
 		AssertClick(
 			key_certificateUsage = ${certificateUsage},
 			locator1 = "CPSAMLAdmin#CREATE_CERTIFICATE",
@@ -109,7 +115,8 @@ definition {
 			value1 = 2048);
 	}
 
-	macro deleteCertificate {
+	@summary = "Default summary"
+	macro deleteCertificate() {
 		ClickNoError(
 			locator1 = "CPSAMLAdmin#DELETE_CERTIFICATE",
 			value1 = "Delete Certificate");
@@ -119,7 +126,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro enable {
+	@summary = "Default summary"
+	macro enable(samlEntityId = null) {
 		AssertTextEquals(
 			locator1 = "CPSAMLAdmin#SAML_ENTITY_ID_FIELD",
 			value1 = ${samlEntityId});
@@ -135,7 +143,8 @@ definition {
 			value1 = "Your request completed successfully.");
 	}
 
-	macro importCertificateAndPrivateKey {
+	@summary = "Default summary"
+	macro importCertificateAndPrivateKey(keyStoreAlias = null,certificateUsage = null) {
 		if (${certificateUsage} == "SIGNING") {
 			AssertClick(
 				key_certificateUsage = "SIGNING",
@@ -198,7 +207,8 @@ definition {
 		}
 	}
 
-	macro viewGeneralConfigurations {
+	@summary = "Default summary"
+	macro viewGeneralConfigurations(samlRoleType = null,samlEntityId = null) {
 		AssertChecked(locator1 = "CPSAMLAdmin#SAML_ENABLED_CHECKBOX");
 
 		AssertElementPresent(

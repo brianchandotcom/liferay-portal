@@ -1,6 +1,7 @@
 definition {
 
-	macro gotoContactInfoByBusinessMobile {
+	@summary = "Default summary"
+	macro gotoContactInfoByBusinessMobile() {
 		RaylifeBusiness.typeBusinessInfoFields(
 			label = "business.yearsOfExperience",
 			value = 3);
@@ -36,7 +37,8 @@ definition {
 			value = "3%");
 	}
 
-	macro gotoContactInfoByEmployeesMobile {
+	@summary = "Default summary"
+	macro gotoContactInfoByEmployeesMobile() {
 		Click(
 			field = "Does your business have a Federal Employer Identification Number (FEIN)?",
 			locator1 = "RaylifeMobile#BUTTON_NO_FEIN_PHONE");
@@ -76,7 +78,8 @@ definition {
 			value = "$111.00");
 	}
 
-	macro typeAllPropertyInfoFieldsMobile {
+	@summary = "Default summary"
+	macro typeAllPropertyInfoFieldsMobile() {
 		Click(
 			field = "Do you own the building at Address?",
 			locator1 = "Raylife#BUTTON_YES_OPTION");

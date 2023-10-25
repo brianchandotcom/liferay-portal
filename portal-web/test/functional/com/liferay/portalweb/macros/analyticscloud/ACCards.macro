@@ -1,6 +1,7 @@
 definition {
 
-	macro assertAxisTick {
+	@summary = "Default summary"
+	macro assertAxisTick(cardName = null,tick = null,axis = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -21,7 +22,8 @@ definition {
 		}
 	}
 
-	macro getAxisTick {
+	@summary = "Default summary"
+	macro getAxisTick(cardName = null,axis = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -44,20 +46,23 @@ definition {
 		return ${tick};
 	}
 
-	macro noViewTopSitesCardByIndexes {
+	@summary = "Default summary"
+	macro noViewTopSitesCardByIndexes(key_index = null) {
 		AssertElementNotPresent(
 			key_indexNumber = ${key_index},
 			locator1 = "ACSites#TOP_PAGES_CARD_INDEXES");
 	}
 
-	macro noViewTopVisitedPages {
+	@summary = "Default summary"
+	macro noViewTopVisitedPages(key_entry = null,key_result = null) {
 		AssertElementNotPresent(
 			key_entryName = ${key_entry},
 			key_resultNumber = ${key_result},
 			locator1 = "ACSites#TOP_VISITED_PAGES");
 	}
 
-	macro selectInterval {
+	@summary = "Default summary"
+	macro selectInterval(cardName = null,interval = null) {
 		if (isSet(cardName)) {
 			Click(
 				interval = ${interval},
@@ -71,7 +76,8 @@ definition {
 		}
 	}
 
-	macro viewCardDataIsPresent {
+	@summary = "Default summary"
+	macro viewCardDataIsPresent(cardName = null) {
 		var key_cardName = ${cardName};
 
 		WaitForElementPresent(locator1 = "ACCards#CHART_DATA_PRESENT");
@@ -79,7 +85,8 @@ definition {
 		AssertElementPresent(locator1 = "ACCards#CHART_DATA_PRESENT");
 	}
 
-	macro viewCards {
+	@summary = "Default summary"
+	macro viewCards(cardTitle = null) {
 		var key_cardTitle = ${cardTitle};
 
 		AssertTextEquals(
@@ -87,14 +94,16 @@ definition {
 			value1 = ${cardTitle});
 	}
 
-	macro viewGeomapContainer {
+	@summary = "Default summary"
+	macro viewGeomapContainer(cardTitle = null) {
 		AssertVisible(
 			element = "",
 			key_cardTitle = ${cardTitle},
 			locator1 = "ACCards#GEOMAP_CONTAINER");
 	}
 
-	macro viewGeomapTableText {
+	@summary = "Default summary"
+	macro viewGeomapTableText(rightText = null,leftText = null,cardTitle = null) {
 		AssertTextEquals(
 			key_cardTitle = ${cardTitle},
 			locator1 = "ACCards#GEOMAP_TABLE_TEXT",
@@ -108,12 +117,13 @@ definition {
 			value1 = ${rightText});
 	}
 
-	macro viewMetricBarStyle {
+	@summary = "Default summary"
+	macro viewMetricBarStyle(backgroundColor = null,entryName = null,style = null,cardTitle = null) {
 		AssertAttributeValue(
-			value1 = "style",
 			entryName = ${entryName},
 			key_cardTitle = ${cardTitle},
 			locator1 = "ACCards#METRIC_BAR",
+			value1 = "style",
 			value2 = ${style});
 
 		AssertCssValue(
@@ -124,7 +134,8 @@ definition {
 			value1 = ${backgroundColor});
 	}
 
-	macro viewMetricValue {
+	@summary = "Default summary"
+	macro viewMetricValue(metricName = null,startMonth = null,startDay = null,endDay = null,metricValue = null,startYear = null,endMonth = null,cardTitle = null,endYear = null,timeFilter = null) {
 		var key_cardTitle = ${cardTitle};
 		var key_metricName = ${metricName};
 		var key_metricValue = ${metricValue};
@@ -184,7 +195,8 @@ definition {
 		AssertElementPresent(locator1 = "ACCards#METRIC_VALUE");
 	}
 
-	macro viewSelectedInterval {
+	@summary = "Default summary"
+	macro viewSelectedInterval(cardName = null,interval = null) {
 		if (isSet(cardName)) {
 			AssertElementPresent(
 				interval = ${interval},
@@ -198,7 +210,8 @@ definition {
 		}
 	}
 
-	macro viewTableEntryInfo {
+	@summary = "Default summary"
+	macro viewTableEntryInfo(entryName = null,column = null,entryInfo = null,cardTitle = null) {
 		AssertVisible(
 			column = ${column},
 			entryInfo = ${entryInfo},
@@ -207,27 +220,31 @@ definition {
 			locator1 = "ACCards#TABLE_ENTRY_INFO");
 	}
 
-	macro viewTopSitesByIndexes {
+	@summary = "Default summary"
+	macro viewTopSitesByIndexes(key_entry = null,key_index = null) {
 		AssertElementPresent(
 			key_entryName = ${key_entry},
 			key_indexNumber = ${key_index},
 			locator1 = "ACSites#TOP_PAGES_INDEXES");
 	}
 
-	macro viewTopSitesCardByIndexes {
+	@summary = "Default summary"
+	macro viewTopSitesCardByIndexes(key_index = null) {
 		AssertElementPresent(
 			key_indexNumber = ${key_index},
 			locator1 = "ACSites#TOP_PAGES_CARD_INDEXES");
 	}
 
-	macro viewTopVisitedPages {
+	@summary = "Default summary"
+	macro viewTopVisitedPages(key_entry = null,key_result = null) {
 		AssertElementPresent(
 			key_entryName = ${key_entry},
 			key_resultNumber = ${key_result},
 			locator1 = "ACSites#TOP_VISITED_PAGES");
 	}
 
-	macro viewTotalCount {
+	@summary = "Default summary"
+	macro viewTotalCount(cardName = null,count = null) {
 		AssertTextEquals(
 			key_cardTitle = ${cardName},
 			locator1 = "ACCards#TOTAL_COUNT",

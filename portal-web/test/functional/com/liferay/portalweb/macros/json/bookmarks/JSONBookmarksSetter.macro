@@ -1,6 +1,7 @@
 definition {
 
-	macro setFolderId {
+	@summary = "Default summary"
+	macro setFolderId(groupId = null,folderName = null) {
 		if (isSet(folderName)) {
 			Variables.assertDefined(parameterList = ${groupId});
 
@@ -15,7 +16,8 @@ definition {
 		return ${folderId};
 	}
 
-	macro setGroupId {
+	@summary = "Default summary"
+	macro setGroupId(groupName = null) {
 		Variables.assertDefined(parameterList = ${groupName});
 
 		if (!(isSet(site))) {
@@ -29,7 +31,8 @@ definition {
 		return ${groupId};
 	}
 
-	macro setServiceContext {
+	@summary = "Default summary"
+	macro setServiceContext(groupName = null,site = null,assetCategoryIds = null,assetTagNames = null,workflowAction = null) {
 		var serviceContext = JSONServiceContextUtil.setServiceContext(
 			addGuestPermissions = "true",
 			assetCategoryIds = ${assetCategoryIds},

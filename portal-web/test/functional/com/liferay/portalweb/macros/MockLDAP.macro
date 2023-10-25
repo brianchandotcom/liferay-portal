@@ -1,6 +1,7 @@
 definition {
 
-	macro selectJsonFile {
+	@summary = "Default summary"
+	macro selectJsonFile(tabName = null,fileName = null) {
 		Navigator.gotoNavTab(navTab = ${tabName});
 
 		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = ${fileName});

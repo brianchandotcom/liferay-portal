@@ -1,6 +1,7 @@
 definition {
 
-	macro viewSXPBlueprintAndElements {
+	@summary = "Default summary"
+	macro viewSXPBlueprintAndElements() {
 		Blueprints.openBlueprintsAdmin();
 
 		Navigator.gotoNavItem(navItem = "Elements");

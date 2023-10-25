@@ -1,6 +1,7 @@
 definition {
 
-	macro _getFolderIdByFolderName {
+	@summary = "Default summary"
+	macro _getFolderIdByFolderName(groupName = null,name = null) {
 		Variables.assertDefined(parameterList = ${name});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -33,7 +34,8 @@ definition {
 		}
 	}
 
-	macro _getTypeIdByTypeName {
+	@summary = "Default summary"
+	macro _getTypeIdByTypeName(groupName = null,documentTypeName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${documentTypeName}");
 
 		if (!(isSet(site))) {

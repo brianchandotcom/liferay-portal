@@ -1,6 +1,7 @@
 definition {
 
-	macro typeAllBasicsInfoFields {
+	@summary = "Default summary"
+	macro typeAllBasicsInfoFields() {
 		RaylifeContactInfo.typeBasicsInfoFields(
 			label = "basics.businessInformation.firstName",
 			value = "FirstName");
@@ -37,13 +38,15 @@ definition {
 			value = 12345);
 	}
 
-	macro typeBasicsInfoFields {
+	@summary = "Default summary"
+	macro typeBasicsInfoFields(value = null) {
 		Type(
 			locator1 = "Raylife#FORMS_FIELDS",
 			value1 = ${value});
 	}
 
-	macro viewBasicsInfo {
+	@summary = "Default summary"
+	macro viewBasicsInfo() {
 		AssertElementPresent(
 			label = "basics.businessInformation.firstName",
 			locator1 = "Raylife#FORMS_VALUE",

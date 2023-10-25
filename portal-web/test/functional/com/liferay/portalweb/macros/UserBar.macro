@@ -1,6 +1,7 @@
 definition {
 
-	macro gotoDropdown {
+	@summary = "Default summary"
+	macro gotoDropdown() {
 		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_PORTRAIT")) {
 			Click.waitForPersonalMenuJSClick(locator1 = "UserBar#USER_AVATAR_PORTRAIT");
 		}
@@ -15,7 +16,8 @@ definition {
 	}
 
 	@description = "Navigate to a dropdown item in the User Personal Bar."
-	macro gotoDropdownItem {
+	@summary = "Default summary"
+	macro gotoDropdownItem(dropdownItem = null) {
 		UserBar.gotoDropdown();
 
 		AssertClick(
@@ -24,13 +26,15 @@ definition {
 			value1 = ${dropdownItem});
 	}
 
-	macro openUserOrganizations {
+	@summary = "Default summary"
+	macro openUserOrganizations() {
 		UserBar.gotoDropdown();
 
 		Click(locator1 = "UserBar#USER_ORGANIZATIONS");
 	}
 
-	macro signOut {
+	@summary = "Default summary"
+	macro signOut(signOutLocalizationName = null) {
 		if (IsElementNotPresent(locator1 = "UserBar#USER_SIGN_IN")) {
 			UserBar.gotoDropdown();
 
@@ -44,23 +48,27 @@ definition {
 		}
 	}
 
-	macro viewFullName {
+	@summary = "Default summary"
+	macro viewFullName(userName = null) {
 		AssertTextEquals(
 			locator1 = "UserBar#USER_FULL_NAME",
 			value1 = ${userName});
 	}
 
-	macro viewNoDropdownItem {
+	@summary = "Default summary"
+	macro viewNoDropdownItem(dropdownItem = null) {
 		AssertElementNotPresent(
 			key_dropdownItem = ${dropdownItem},
 			locator1 = "UserBar#USER_AVATAR_DROPDOWN_ITEM");
 	}
 
-	macro viewUserDefaultIcon {
+	@summary = "Default summary"
+	macro viewUserDefaultIcon() {
 		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_ICON");
 	}
 
-	macro viewUserPortraitMatchConfiguration {
+	@summary = "Default summary"
+	macro viewUserPortraitMatchConfiguration() {
 		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_PORTRAIT");
 
 		AssertElementPresent(locator1 = "UsersAndOrganizationsEditUser#DETAILS_PORTRAIT");

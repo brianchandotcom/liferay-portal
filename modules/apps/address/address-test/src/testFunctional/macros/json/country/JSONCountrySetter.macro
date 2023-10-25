@@ -1,6 +1,7 @@
 definition {
 
-	macro setStatus {
+	@summary = "Default summary"
+	macro setStatus() {
 		if (!(isSet(countryStatus))) {
 			var countryStatus = "true";
 		}

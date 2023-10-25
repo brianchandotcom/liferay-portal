@@ -1,6 +1,7 @@
 definition {
 
-	macro _curlAPISort {
+	@summary = "Default summary"
+	macro _curlAPISort(virtualHost = null) {
 		if (isSet(virtualHost)) {
 			if (!(isSet(port))) {
 				var port = 8080;
@@ -23,7 +24,8 @@ definition {
 		return ${curl};
 	}
 
-	macro createAPISort {
+	@summary = "Default summary"
+	macro createAPISort(sortValue = null,endpointId = null,virtualHost = null) {
 		Variables.assertDefined(parameterList = "${sortValue},${endpointId}");
 
 		var curl = SortAPI._curlAPISort(virtualHost = ${virtualHost});

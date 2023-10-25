@@ -2,7 +2,8 @@ definition {
 
 	var dmDocumentTypeName = "File Upload";
 
-	macro gotoAddCategoriesPG {
+	@summary = "Default summary"
+	macro gotoAddCategoriesPG(dmDocumentTitleList = null) {
 		for (var key_dmDocumentTitle : list ${dmDocumentTitleList}) {
 			Check(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_CHECKBOX");
 		}
@@ -12,7 +13,8 @@ definition {
 		Click(locator1 = "Icon#EDIT_CATEGORIES");
 	}
 
-	macro gotoAddDocumentTypeCP {
+	@summary = "Default summary"
+	macro gotoAddDocumentTypeCP(dmDocumentTypeName = null) {
 		LexiconEntry.gotoAdd();
 
 		var key_dmDocumentTypeName = ${dmDocumentTypeName};
@@ -32,7 +34,8 @@ definition {
 		MenuItem.click(menuItem = ${dmDocumentTypeName});
 	}
 
-	macro gotoAddDocumentTypePG {
+	@summary = "Default summary"
+	macro gotoAddDocumentTypePG(dmDocumentTypeName = null) {
 		if (isSet(contentPage)) {
 			LexiconEntry.gotoAdd();
 		}
@@ -45,7 +48,8 @@ definition {
 		MenuItem.click(menuItem = ${dmDocumentTypeName});
 	}
 
-	macro gotoAddRepositoryCP {
+	@summary = "Default summary"
+	macro gotoAddRepositoryCP() {
 		AssertVisible(locator1 = "Button#PLUS");
 
 		LexiconEntry.gotoAdd();
@@ -53,13 +57,15 @@ definition {
 		MenuItem.click(menuItem = "Repository");
 	}
 
-	macro gotoAddRepositoryPG {
+	@summary = "Default summary"
+	macro gotoAddRepositoryPG() {
 		Portlet.clickPortletPlusIconPG(portletName = "Documents and Media");
 
 		MenuItem.click(menuItem = "Repository");
 	}
 
-	macro gotoCheckedOutDocument {
+	@summary = "Default summary"
+	macro gotoCheckedOutDocument(dmDocumentTitle = null,dmCheckedOutDocumentTitle = null) {
 		var key_dmDocumentTitle = ${dmDocumentTitle};
 
 		AssertClick(
@@ -67,11 +73,13 @@ definition {
 			value1 = ${dmCheckedOutDocumentTitle});
 	}
 
-	macro gotoDocumentCP {
+	@summary = "Default summary"
+	macro gotoDocumentCP(dmDocumentTitle = null) {
 		LexiconEntry.gotoEntry(rowEntry = ${dmDocumentTitle});
 	}
 
-	macro gotoDocumentDetails {
+	@summary = "Default summary"
+	macro gotoDocumentDetails() {
 		DMDocument.expandInfo();
 
 		AssertClick(
@@ -79,7 +87,8 @@ definition {
 			value1 = "Details");
 	}
 
-	macro gotoDocumentPermissionsCP {
+	@summary = "Default summary"
+	macro gotoDocumentPermissionsCP(dmDocumentTitle = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Permissions",
 			rowEntry = ${dmDocumentTitle});
@@ -87,7 +96,8 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
-	macro gotoDocumentPG {
+	@summary = "Default summary"
+	macro gotoDocumentPG(dmDocumentTitle = null) {
 		var key_dmDocumentTitle = ${dmDocumentTitle};
 
 		AssertClick(
@@ -95,15 +105,18 @@ definition {
 			value1 = ${dmDocumentTitle});
 	}
 
-	macro gotoDocumentsAndMedia {
+	@summary = "Default summary"
+	macro gotoDocumentsAndMedia() {
 		Navigator.gotoNavItem(navItem = "Documents and Media");
 	}
 
-	macro gotoDocumentType {
+	@summary = "Default summary"
+	macro gotoDocumentType() {
 		Navigator.gotoNavItem(navItem = "Document Types");
 	}
 
-	macro gotoDocumentVersion {
+	@summary = "Default summary"
+	macro gotoDocumentVersion() {
 		DMDocument.expandInfo();
 
 		var key_tab = "Versions";
@@ -113,7 +126,8 @@ definition {
 			value1 = "Versions");
 	}
 
-	macro gotoDocumentVersionsPage {
+	@summary = "Default summary"
+	macro gotoDocumentVersionsPage(dmDocumentTitle = null) {
 		if (isSet(navigateByViewHistory)) {
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "View History",
@@ -134,7 +148,8 @@ definition {
 			locator1 = "Button#ANY");
 	}
 
-	macro gotoEditDocumentPG {
+	@summary = "Default summary"
+	macro gotoEditDocumentPG(dmDocumentTitle = null) {
 		var key_dmDocumentTitle = ${dmDocumentTitle};
 
 		AssertClick(
@@ -144,7 +159,8 @@ definition {
 		DMNavigator.gotoVerticalEllipsisMenuItem(menuItem = "Edit");
 	}
 
-	macro gotoEditDocumentType {
+	@summary = "Default summary"
+	macro gotoEditDocumentType(dmDocumentTypeName = null) {
 		DMDocumentType.selectDocumentTypeFrame();
 
 		var key_dmDocumentTypeName = ${dmDocumentTypeName};
@@ -154,13 +170,15 @@ definition {
 		MenuItem.click(menuItem = "Edit");
 	}
 
-	macro gotoEditImage {
+	@summary = "Default summary"
+	macro gotoEditImage(dmDocumentTitle = null) {
 		LexiconEntry.openEntryMenu(rowEntry = ${dmDocumentTitle});
 
 		MenuItem.click(menuItem = "Edit Image");
 	}
 
-	macro gotoFolder {
+	@summary = "Default summary"
+	macro gotoFolder(dmFolderName = null) {
 		var key_dmFolderName = ${dmFolderName};
 
 		SelectFrame(locator1 = "DocumentsAndMedia#CARD_FOLDER");
@@ -177,7 +195,8 @@ definition {
 		}
 	}
 
-	macro gotoFolderPermissions {
+	@summary = "Default summary"
+	macro gotoFolderPermissions(dmFolderName = null) {
 		var key_dmFolderName = ${dmFolderName};
 
 		Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS");
@@ -187,19 +206,22 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
-	macro gotoFolderViaBreadcrumb {
+	@summary = "Default summary"
+	macro gotoFolderViaBreadcrumb(dmFolderName = null) {
 		var key_dmFolderName = ${dmFolderName};
 
 		AssertClick.assertTextClickAt(locator1 = "DocumentsAndMedia#BREADCRUMB_FOLDER_NAME");
 	}
 
-	macro gotoHomeCP {
+	@summary = "Default summary"
+	macro gotoHomeCP() {
 		AssertClick.assertTextClickAt(
 			locator1 = "DocumentsAndMedia#BREADCRUMB_HOME",
 			value1 = "Home");
 	}
 
-	macro gotoItemViaManagementBar {
+	@summary = "Default summary"
+	macro gotoItemViaManagementBar(item = null,menuItem = null) {
 		if (${item} == "Edit Tags") {
 			Click(locator1 = "Icon#EDIT_TAGS");
 		}
@@ -209,11 +231,13 @@ definition {
 		}
 	}
 
-	macro gotoMetadataSets {
+	@summary = "Default summary"
+	macro gotoMetadataSets() {
 		Navigator.gotoNavItem(navItem = "Metadata Sets");
 	}
 
-	macro gotoRelatedAssetPG {
+	@summary = "Default summary"
+	macro gotoRelatedAssetPG(dmDocumentTitle = null,assetTitle = null) {
 		var key_dmDocumentTitle = ${dmDocumentTitle};
 
 		AssertClick(
@@ -239,7 +263,8 @@ definition {
 			value1 = ${assetTitle});
 	}
 
-	macro gotoRepository {
+	@summary = "Default summary"
+	macro gotoRepository(dmRepositoryName = null) {
 		var key_dmFolderName = ${dmRepositoryName};
 
 		AssertClick(
@@ -254,7 +279,8 @@ definition {
 		}
 	}
 
-	macro gotoShare {
+	@summary = "Default summary"
+	macro gotoShare(dmDocumentTitle = null) {
 		var key_dmDocumentTitle = ${dmDocumentTitle};
 
 		AssertElementPresent(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE");
@@ -270,7 +296,8 @@ definition {
 		DMNavigator.gotoVerticalEllipsisMenuItem(menuItem = "Share");
 	}
 
-	macro gotoShareInfoPanel {
+	@summary = "Default summary"
+	macro gotoShareInfoPanel(dmDocumentTitle = null) {
 		var key_dmDocumentTitle = ${dmDocumentTitle};
 
 		AssertClick(
@@ -288,7 +315,8 @@ definition {
 		Click(locator1 = "Button#SHARE_SIDEBAR");
 	}
 
-	macro gotoShareViaSharedContent {
+	@summary = "Default summary"
+	macro gotoShareViaSharedContent(dmDocumentTitle = null,contentTitle = null) {
 		var key_contentTitle = ${dmDocumentTitle};
 
 		Click(
@@ -298,13 +326,15 @@ definition {
 		MenuItem.click(menuItem = "Share");
 	}
 
-	macro gotoURLDetail {
+	@summary = "Default summary"
+	macro gotoURLDetail() {
 		DMDocument.expandInfo();
 
 		Click(locator1 = "DocumentsAndMediaDocument#DETAILS_URL");
 	}
 
-	macro gotoVerticalEllipsisMenuItem {
+	@summary = "Default summary"
+	macro gotoVerticalEllipsisMenuItem(menuItem = null) {
 		WaitForVisible(locator1 = "Icon#TOOLBAR_ELLIPSIS");
 
 		Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
@@ -312,7 +342,8 @@ definition {
 		MenuItem.click(menuItem = ${menuItem});
 	}
 
-	macro openDocumentsAndMediaAdmin {
+	@summary = "Default summary"
+	macro openDocumentsAndMediaAdmin(baseURL = null,siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
@@ -320,7 +351,8 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro openDocumentTypesAdmin {
+	@summary = "Default summary"
+	macro openDocumentTypesAdmin(baseURL = null,siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet&_com_liferay_document_library_web_portlet_DLAdminPortlet_navigation=file_entry_types");
@@ -328,7 +360,8 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro openMetadataSetsAdmin {
+	@summary = "Default summary"
+	macro openMetadataSetsAdmin(baseURL = null,siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet&_com_liferay_document_library_web_portlet_DLAdminPortlet_navigation=file_entry_metadata_sets");
@@ -338,11 +371,13 @@ definition {
 
 	// You can use this navigation when you need to access the configuration quickly without checking the UI.
 
-	macro gotoFriendlyURLHistory {
+	@summary = "Default summary"
+	macro gotoFriendlyURLHistory() {
 		Click(locator1 = "Icon#FRIENDLY_URL_HISTORY");
 	}
 
-	macro openToAddDocumentType {
+	@summary = "Default summary"
+	macro openToAddDocumentType(groupName = null,baseURL = null,dmDocumentTypeName = null,siteURLKey = null,folderId = null) {
 		if (isSet(documentTypeName)) {
 			var fileEntryId = JSONDocument.getFileEntryTypeId(
 				dmDocumentTypeName = ${dmDocumentTypeName},
@@ -365,7 +400,8 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro openToAddEntry {
+	@summary = "Default summary"
+	macro openToAddEntry(groupName = null,siteURLKey = null,documentTypeName = null,folderName = null,layoutName = null) {
 		var groupId = JSONGroupAPI._getGroupIdByName(
 			groupName = ${groupName},
 			site = "true");
@@ -407,7 +443,8 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro openToConfigInInstanceSettings {
+	@summary = "Default summary"
+	macro openToConfigInInstanceSettings(portlet = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -438,7 +475,8 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro openToConfigInSiteSettings {
+	@summary = "Default summary"
+	macro openToConfigInSiteSettings(siteURLKey = null,portlet = null) {
 		var baseURL = JSONCompany.getPortalURL();
 
 		if (${portlet} == "Documents and Media Size Limits") {
@@ -462,7 +500,8 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro openToConfigInSystemSettings {
+	@summary = "Default summary"
+	macro openToConfigInSystemSettings(portlet = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -529,7 +568,8 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro openToEditEntryInSite {
+	@summary = "Default summary"
+	macro openToEditEntryInSite(dmDocumentTitle = null,groupName = null,site = null,siteURLKey = null,folderName = null) {
 		if (isSet(folderName)) {
 			Variables.assertDefined(parameterList = "${folderName},${groupName}");
 
@@ -549,7 +589,8 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro openToEntryInAdmin {
+	@summary = "Default summary"
+	macro openToEntryInAdmin(dmDocumentTitle = null,groupName = null,baseURL = null,site = null,siteURLKey = null,folderId = null) {
 		var fileEntryId = JSONDocument.getFileEntryId(
 			dmDocumentTitle = ${dmDocumentTitle},
 			folderId = ${folderId},
@@ -564,7 +605,8 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro openToFolderInAdmin {
+	@summary = "Default summary"
+	macro openToFolderInAdmin(parentFolderName = null,displayStyle = null,groupName = null,siteURLKey = null,dmFolderName = null) {
 		if (isSet(parentFolderName)) {
 			var parentFolderId = JSONDocumentAPI._getFolderIdByFolderName(
 				groupName = ${groupName},

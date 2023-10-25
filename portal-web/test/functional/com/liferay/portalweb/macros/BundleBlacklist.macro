@@ -1,6 +1,7 @@
 definition {
 
-	macro blacklistModuleAndComponentConfiguration {
+	@summary = "Default summary"
+	macro blacklistModuleAndComponentConfiguration(symbolicName = null,label = null) {
 		if (${label} == "Blacklist Component Names") {
 			var key_text = "ComponentNames";
 		}
@@ -18,7 +19,8 @@ definition {
 		SystemSettings.saveConfiguration();
 	}
 
-	macro viewProductMenuBlacklistedModule {
+	@summary = "Default summary"
+	macro viewProductMenuBlacklistedModule(consoleText = null,portlet = null,panel = null,category = null) {
 		WaitForConsoleTextPresent(value1 = ${consoleText});
 
 		ApplicationsMenuHelper.openApplicationsMenu();

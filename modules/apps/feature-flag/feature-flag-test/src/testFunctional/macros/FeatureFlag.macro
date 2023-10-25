@@ -1,20 +1,23 @@
 definition {
 
-	macro disableFeatureFlag {
+	@summary = "Default summary"
+	macro disableFeatureFlag(featureFlag = null,scope = null) {
 		FeatureFlag.toggleFeatureFlag(
 			featureFlag = ${featureFlag},
 			scope = ${scope},
 			toggleState = "Disabled");
 	}
 
-	macro enableFeatureFlag {
+	@summary = "Default summary"
+	macro enableFeatureFlag(featureFlag = null,scope = null) {
 		FeatureFlag.toggleFeatureFlag(
 			featureFlag = ${featureFlag},
 			scope = ${scope},
 			toggleState = "Enabled");
 	}
 
-	macro toggleFeatureFlag {
+	@summary = "Default summary"
+	macro toggleFeatureFlag(toggleState = null,featureFlag = null,scope = null) {
 		if (isSet(scope)) {
 			Click(
 				key_configurationName = ${scope},

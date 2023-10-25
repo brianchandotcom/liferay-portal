@@ -1,6 +1,7 @@
 definition {
 
-	macro _curlMessageBoardThread {
+	@summary = "Default summary"
+	macro _curlMessageBoardThread(messageBoardSectionId = null,headline = null,messageBoardThreadId = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(messageBoardSectionId)) {
@@ -37,7 +38,8 @@ definition {
 		return ${curl};
 	}
 
-	macro createMessageThreadInMessageBoardSection {
+	@summary = "Default summary"
+	macro createMessageThreadInMessageBoardSection(messageBoardSectionId = null,headline = null) {
 		Variables.assertDefined(parameterList = "${headline},${messageBoardSectionId}");
 
 		var curl = MessageBoardThreadAPI._curlMessageBoardThread(
@@ -49,7 +51,8 @@ definition {
 		return ${response};
 	}
 
-	macro deleteMessageBoardThreadByThreadId {
+	@summary = "Default summary"
+	macro deleteMessageBoardThreadByThreadId(messageBoardThreadId = null) {
 		Variables.assertDefined(parameterList = ${messageBoardThreadId});
 
 		var curl = MessageBoardThreadAPI._curlMessageBoardThread(messageBoardThreadId = ${messageBoardThreadId});
@@ -57,7 +60,8 @@ definition {
 		JSONCurlUtil.delete(${curl});
 	}
 
-	macro setUpGlobalMessageBoardThreadId {
+	@summary = "Default summary"
+	macro setUpGlobalMessageBoardThreadId(headline = null) {
 		Variables.assertDefined(parameterList = ${headline});
 
 		var curl = MessageBoardThreadAPI._curlMessageBoardThread(headline = ${headline});

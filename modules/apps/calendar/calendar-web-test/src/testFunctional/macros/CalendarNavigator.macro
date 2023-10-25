@@ -2,11 +2,13 @@ definition {
 
 	var siteName = "Liferay";
 
-	macro _selectCalendarSettingsIframe {
+	@summary = "Default summary"
+	macro _selectCalendarSettingsIframe() {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
-	macro _selectPermissionsIframe {
+	@summary = "Default summary"
+	macro _selectPermissionsIframe() {
 		AssertTextEquals(
 			locator1 = "CalendarPermissions#PERMISSIONS_TITLE",
 			value1 = "Permissions");
@@ -14,7 +16,8 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
-	macro closeModal {
+	@summary = "Default summary"
+	macro closeModal(modalTitle = null) {
 		SelectFrameTop();
 
 		var key_modalTitle = ${modalTitle};
@@ -22,7 +25,8 @@ definition {
 		Click(locator1 = "Button#CLOSE_MODAL");
 	}
 
-	macro gotoAddCurrentSiteCalendars {
+	@summary = "Default summary"
+	macro gotoAddCurrentSiteCalendars() {
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		Click(
@@ -36,7 +40,8 @@ definition {
 		CalendarNavigator._selectCalendarSettingsIframe();
 	}
 
-	macro gotoAddEvent {
+	@summary = "Default summary"
+	macro gotoAddEvent() {
 		CalendarNavigator.gotoView(viewType = "Week");
 
 		AssertClick(
@@ -48,13 +53,15 @@ definition {
 		CalendarEvent._viewNewEventIframe();
 	}
 
-	macro gotoAddEventToday {
+	@summary = "Default summary"
+	macro gotoAddEventToday(viewType = null) {
 		var viewTypeUppercase = StringUtil.upperCase(${viewType});
 
 		Click(locator1 = "Calendar#SCHEDULER_VIEW_${viewTypeUppercase}_CURRENT_DAY");
 	}
 
-	macro gotoAddEventViaCurrentSite {
+	@summary = "Default summary"
+	macro gotoAddEventViaCurrentSite(site = null) {
 		Click(
 			key_site = ${site},
 			locator1 = "Calendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW");
@@ -68,7 +75,8 @@ definition {
 		CalendarEvent._viewNewEventIframe();
 	}
 
-	macro gotoAddEventViaMyCalendars {
+	@summary = "Default summary"
+	macro gotoAddEventViaMyCalendars(user = null) {
 		Click(
 			key_user = ${user},
 			locator1 = "Calendar#MY_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW");
@@ -82,7 +90,8 @@ definition {
 		CalendarEvent._viewNewEventIframe();
 	}
 
-	macro gotoAddMyCalendars {
+	@summary = "Default summary"
+	macro gotoAddMyCalendars() {
 		Click(locator1 = "Calendar#MY_CALENDARS_MENULIST_ARROW");
 
 		AssertClick(
@@ -92,7 +101,8 @@ definition {
 		CalendarNavigator._selectCalendarSettingsIframe();
 	}
 
-	macro gotoAddResource {
+	@summary = "Default summary"
+	macro gotoAddResource() {
 		CalendarNavigator.gotoResources();
 
 		LexiconEntry.gotoAdd();
@@ -102,7 +112,8 @@ definition {
 			value1 = "New Resource");
 	}
 
-	macro gotoConfiguration {
+	@summary = "Default summary"
+	macro gotoConfiguration() {
 		Portlet.gotoPortletOptions(
 			portletName = "Calendar",
 			portletOption = "Configuration");
@@ -110,7 +121,8 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
-	macro gotoCurrentSiteCalendarsManage {
+	@summary = "Default summary"
+	macro gotoCurrentSiteCalendarsManage() {
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		Click(
@@ -122,7 +134,8 @@ definition {
 			value1 = "Manage Calendars");
 	}
 
-	macro gotoEditEvent {
+	@summary = "Default summary"
+	macro gotoEditEvent(eventTitle = null) {
 		CalendarNavigator.gotoView(viewType = "Week");
 
 		CalendarScheduler.selectSpecificEvent(eventTitle = ${eventTitle});
@@ -132,7 +145,8 @@ definition {
 		CalendarScheduler.gotoEditViaDialogBox();
 	}
 
-	macro gotoEditResourceCalendar {
+	@summary = "Default summary"
+	macro gotoEditResourceCalendar(calendarResourceName = null) {
 		var key_calendarResourceName = ${calendarResourceName};
 
 		AssertTextEquals(
@@ -148,7 +162,8 @@ definition {
 			value1 = ${calendarResourceName});
 	}
 
-	macro gotoEventDetails {
+	@summary = "Default summary"
+	macro gotoEventDetails(eventTitle = null) {
 		CalendarNavigator.gotoView(viewType = "Week");
 
 		CalendarScheduler.selectSpecificEvent(eventTitle = ${eventTitle});
@@ -156,7 +171,8 @@ definition {
 		CalendarScheduler.gotoDetailsViaDialogBox();
 	}
 
-	macro gotoMonthViaSmallCalendar {
+	@summary = "Default summary"
+	macro gotoMonthViaSmallCalendar(dateMonth = null) {
 		/*
 		To ensure the desired month will always be reached, click "Previous"
 		until it reaches our baseline of February 2016. Then click "Next" until
@@ -172,7 +188,8 @@ definition {
 		}
 	}
 
-	macro gotoMyCalendarsManage {
+	@summary = "Default summary"
+	macro gotoMyCalendarsManage() {
 		Click(locator1 = "Calendar#MY_CALENDARS_MENULIST_ARROW");
 
 		AssertClick(
@@ -180,19 +197,22 @@ definition {
 			value1 = "Manage Calendars");
 	}
 
-	macro gotoNextDay {
+	@summary = "Default summary"
+	macro gotoNextDay() {
 		CalendarNavigator.gotoView(viewType = "Day");
 
 		Click(locator1 = "Calendar#VIEW_NEXT_BUTTON");
 	}
 
-	macro gotoPreviousDay {
+	@summary = "Default summary"
+	macro gotoPreviousDay() {
 		CalendarNavigator.gotoView(viewType = "Day");
 
 		Click(locator1 = "Calendar#VIEW_PREVIOUS_BUTTON");
 	}
 
-	macro gotoResourceCalendars {
+	@summary = "Default summary"
+	macro gotoResourceCalendars(calendarResourceName = null) {
 		CalendarNavigator.gotoResources();
 
 		LexiconEntry.gotoEntryMenuItem(
@@ -200,11 +220,13 @@ definition {
 			rowEntry = ${calendarResourceName});
 	}
 
-	macro gotoResources {
+	@summary = "Default summary"
+	macro gotoResources() {
 		Navigator.gotoNavItem(navItem = "Resources");
 	}
 
-	macro gotoSpecificBusyDayViaSmallCalendar {
+	@summary = "Default summary"
+	macro gotoSpecificBusyDayViaSmallCalendar(dateNumber = null) {
 		var key_dateNumber = ${dateNumber};
 
 		AssertElementPresent(locator1 = "Calendar#SMALL_CALENDAR_SPECIFIC_BUSY_DAY");
@@ -212,13 +234,15 @@ definition {
 		Click(locator1 = "Calendar#SMALL_CALENDAR_SPECIFIC_BUSY_DAY");
 	}
 
-	macro gotoToday {
+	@summary = "Default summary"
+	macro gotoToday() {
 		AssertClick(
 			locator1 = "Calendar#VIEW_TODAY_BUTTON",
 			value1 = "Today");
 	}
 
-	macro gotoView {
+	@summary = "Default summary"
+	macro gotoView(viewType = null) {
 		if (${viewType} == "Day") {
 			if (IsElementNotPresent(locator1 = "Calendar#VIEW_DAY_BUTTON_ACTIVE")) {
 				AssertClick(

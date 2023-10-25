@@ -1,6 +1,7 @@
 definition {
 
-	macro createCases {
+	@summary = "Default summary"
+	macro createCases(duration = null,component = null,caseName = null,description = null,addAnotherCase = null,priority = null,steps = null,caseType = null) {
 		LexiconEntry.gotoAdd();
 
 		if (isSet(caseName)) {
@@ -65,7 +66,8 @@ definition {
 		}
 	}
 
-	macro editCases {
+	@summary = "Default summary"
+	macro editCases(duration = null,component = null,newName = null,description = null,priority = null,steps = null,caseType = null) {
 		if (isSet(newName)) {
 			PortletEntry.inputName(name = ${newName});
 		}
@@ -113,7 +115,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro selectExportCases {
+	@summary = "Default summary"
+	macro selectExportCases(exportedCases = null,caseList = null) {
 		Testray.selectCheckboxOptions(
 			buttonText = "Select Cases",
 			checkboxNameList = ${caseList},

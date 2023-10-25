@@ -1,6 +1,7 @@
 definition {
 
-	macro addBreakdown {
+	@summary = "Default summary"
+	macro addBreakdown(attributeNameList = null) {
 		for (var attributeName : list ${attributeNameList}) {
 			ACEventAnalysis.clickToAddBreakdownButton();
 
@@ -12,7 +13,8 @@ definition {
 		}
 	}
 
-	macro addEvent {
+	@summary = "Default summary"
+	macro addEvent(customEventName = null) {
 		var key_buttonName = ${customEventName};
 
 		if (!(isSet(tabName))) {
@@ -36,7 +38,8 @@ definition {
 		Click(locator1 = "ACUtils#GENERIC_BUTTON");
 	}
 
-	macro addFilter {
+	@summary = "Default summary"
+	macro addFilter(inputEndValue = null,dropdownIndex = null,month = null,year = null,dropdownData = null,optionValue = null,filterName = null,inputValue = null) {
 		ACEventAnalysis.clickToAddFilterButton();
 
 		ACEventAnalysis.searchEventAnalysis(searchItem = ${filterName});
@@ -97,7 +100,8 @@ definition {
 		Click(locator1 = "ACEventAnalysis#FILTER_DONE_BUTTON");
 	}
 
-	macro changeAttributeDataType {
+	@summary = "Default summary"
+	macro changeAttributeDataType(attributeName = null,editOption = null,newDataType = null) {
 		var key_buttonName = ${attributeName};
 		var key_attributeName = ${attributeName};
 
@@ -118,7 +122,8 @@ definition {
 		}
 	}
 
-	macro changeBreakdownPosition {
+	@summary = "Default summary"
+	macro changeBreakdownPosition(indexEnd = null,indexStart = null) {
 		DragAndDrop.javaScriptDragAndDropToObject(
 			indexEnd = ${indexEnd},
 			indexStart = ${indexStart},
@@ -126,7 +131,8 @@ definition {
 			locator2 = "ACEventAnalysis#BREAKDOWN_NEW_POSITION");
 	}
 
-	macro changeCustomEventDisplayName {
+	@summary = "Default summary"
+	macro changeCustomEventDisplayName(newDisplayName = null,editOption = null,elementName = null) {
 		var key_buttonName = ${elementName};
 
 		MouseOver(locator1 = "ACUtils#GENERIC_BUTTON");
@@ -146,13 +152,15 @@ definition {
 		}
 	}
 
-	macro clickToAddBreakdownButton {
+	@summary = "Default summary"
+	macro clickToAddBreakdownButton() {
 		var key_sectionType = "breakdown";
 
 		Click(locator1 = "ACEventAnalysis#ADD_ATTRIBUTE_BUTTON");
 	}
 
-	macro clickToAddEventButton {
+	@summary = "Default summary"
+	macro clickToAddEventButton() {
 		var key_definitionsOptions = "event-analysis/create";
 
 		if (IsElementPresent(locator1 = "ACSettings#DEFINITIONS_OPTIONS")) {
@@ -162,13 +170,15 @@ definition {
 		Click(locator1 = "ACEventAnalysis#ADD_EVENT_BUTTON");
 	}
 
-	macro clickToAddFilterButton {
+	@summary = "Default summary"
+	macro clickToAddFilterButton() {
 		var key_sectionType = "filter";
 
 		Click(locator1 = "ACEventAnalysis#ADD_ATTRIBUTE_BUTTON");
 	}
 
-	macro deleteAllEventAnalysis {
+	@summary = "Default summary"
+	macro deleteAllEventAnalysis() {
 		var key_actionButton = "Delete";
 
 		KeyPress(
@@ -180,26 +190,30 @@ definition {
 		ACUtils.clickAnyButton(button = ${key_actionButton});
 	}
 
-	macro getColumnBreakdownValue {
+	@summary = "Default summary"
+	macro getColumnBreakdownValue() {
 		var index = ${index};
 		var breakdownValue = selenium.getText("ACEventAnalysis#COLUMN_BREAKDOWN_VALUES");
 
 		return ${breakdownValue};
 	}
 
-	macro removeFromAnalysis {
+	@summary = "Default summary"
+	macro removeFromAnalysis(removeValue = null) {
 		var key_removeValue = ${removeValue};
 
 		Click(locator1 = "ACEventAnalysis#REMOVE_BUTTON");
 	}
 
-	macro searchEventAnalysis {
+	@summary = "Default summary"
+	macro searchEventAnalysis(searchItem = null) {
 		Type(
 			locator1 = "ACEventAnalysis#SEARCH_BAR_EVENT_ANALYSE",
 			value1 = ${searchItem});
 	}
 
-	macro selectAutocompleteOption {
+	@summary = "Default summary"
+	macro selectAutocompleteOption(dropdownIndex = null,dropdownData = null) {
 		Click(locator1 = "ACEventAnalysis#INPUT_CONDITION");
 
 		WaitForElementPresent(
@@ -211,13 +225,15 @@ definition {
 			value1 = ${dropdownData});
 	}
 
-	macro sortAnalysis {
+	@summary = "Default summary"
+	macro sortAnalysis(attributeName = null) {
 		var key_attributeName = ${attributeName};
 
 		Click(locator1 = "ACEventAnalysis#SORT_ANALYSIS");
 	}
 
-	macro viewAnalysisColumnInOrder {
+	@summary = "Default summary"
+	macro viewAnalysisColumnInOrder(columnName = null) {
 		var index = ${index};
 
 		AssertTextEquals(
@@ -225,7 +241,8 @@ definition {
 			value1 = ${columnName});
 	}
 
-	macro viewAnalysisDashboard {
+	@summary = "Default summary"
+	macro viewAnalysisDashboard(attributeNameList = null,eventName = null,filterNameList = null) {
 		if (isSet(eventName)) {
 			AssertElementPresent(
 				key_buttonName = ${eventName},
@@ -249,7 +266,8 @@ definition {
 		}
 	}
 
-	macro viewAnalysisInformation {
+	@summary = "Default summary"
+	macro viewAnalysisInformation(informationValueList = null) {
 		for (var informationValue : list ${informationValueList}) {
 			var key_informationValue = ${informationValue};
 
@@ -257,7 +275,8 @@ definition {
 		}
 	}
 
-	macro viewAnalysisInformationInOrder {
+	@summary = "Default summary"
+	macro viewAnalysisInformationInOrder(commonInformation = null,informationValue = null) {
 		var key_commonInformation = ${commonInformation};
 		var index = ${index};
 
@@ -266,7 +285,8 @@ definition {
 			value1 = ${informationValue});
 	}
 
-	macro viewAnalysisInformationNotPresent {
+	@summary = "Default summary"
+	macro viewAnalysisInformationNotPresent(informationValueList = null) {
 		for (var informationValue : list ${informationValueList}) {
 			var key_informationValue = ${informationValue};
 
@@ -274,7 +294,8 @@ definition {
 		}
 	}
 
-	macro viewChangedAttributeDataType {
+	@summary = "Default summary"
+	macro viewChangedAttributeDataType(attributeName = null) {
 		var key_buttonName = ${attributeName};
 		var key_attributeName = ${attributeName};
 		var newDataType = StringUtil.upperCase(${newDataType});
@@ -296,7 +317,8 @@ definition {
 		}
 	}
 
-	macro viewEventAnalysisList {
+	@summary = "Default summary"
+	macro viewEventAnalysisList(eventList = null) {
 		for (var name : list ${eventList}) {
 			var key_buttonName = ${name};
 
@@ -310,7 +332,8 @@ definition {
 		}
 	}
 
-	macro viewEventAnalysisListNotPresent {
+	@summary = "Default summary"
+	macro viewEventAnalysisListNotPresent(eventList = null) {
 		for (var name : list ${eventList}) {
 			var key_buttonName = ${name};
 
@@ -318,7 +341,8 @@ definition {
 		}
 	}
 
-	macro viewTotalNumberRelatedToColumnInformation {
+	@summary = "Default summary"
+	macro viewTotalNumberRelatedToColumnInformation(columnInformationValue = null,totalEventsValue = null) {
 		var key_columnInformationValue = ${columnInformationValue};
 		var key_totalEventsValue = ${totalEventsValue};
 

@@ -1,6 +1,7 @@
 definition {
 
-	macro _selectMappingTypes {
+	@summary = "Default summary"
+	macro _selectMappingTypes(subType = null,contentType = null) {
 		if (isSet(contentType)) {
 			Select(
 				locator1 = "//div[contains(.,'Content Type')]/select",
@@ -14,7 +15,8 @@ definition {
 		}
 	}
 
-	macro addDisplayPage {
+	@summary = "Default summary"
+	macro addDisplayPage(displayPageName = null,subType = null,contentType = null,masterLayoutName = null) {
 		LexiconEntry.gotoAdd();
 
 		if (isSet(masterLayoutName)) {
@@ -35,7 +37,8 @@ definition {
 		PageEditor.assertFragmentSidebarLoaded();
 	}
 
-	macro deleteDisplayPage {
+	@summary = "Default summary"
+	macro deleteDisplayPage(displayPageName = null,defaultDisplayPageTemplate = null) {
 		LexiconCard.clickEllipsisItem(
 			card = ${displayPageName},
 			item = "Delete");
@@ -56,13 +59,15 @@ definition {
 			locator1 = "Modal#MODAL_FOOTER_BUTTON");
 	}
 
-	macro gotoDisplayPage {
+	@summary = "Default summary"
+	macro gotoDisplayPage(displayPageName = null) {
 		LexiconCard.clickCardTitleLink(card = ${displayPageName});
 
 		PageEditor.assertFragmentSidebarLoaded();
 	}
 
-	macro gotoDisplayPageEllipsisItem {
+	@summary = "Default summary"
+	macro gotoDisplayPageEllipsisItem(item = null,displayPageName = null) {
 		WaitForPageLoad();
 
 		LexiconCard.clickEllipsisItem(
@@ -70,7 +75,8 @@ definition {
 			item = ${item});
 	}
 
-	macro importDisplayPageTemplateFromTempFolder {
+	@summary = "Default summary"
+	macro importDisplayPageTemplateFromTempFolder(importOption = null) {
 		Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Import");
@@ -102,7 +108,8 @@ definition {
 		Button.clickDone();
 	}
 
-	macro markDisplayPageAsDefault {
+	@summary = "Default summary"
+	macro markDisplayPageAsDefault(displayPageName = null) {
 		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 			displayPageName = ${displayPageName},
 			item = "Mark as Default");
@@ -112,11 +119,13 @@ definition {
 			icon = "check-circle");
 	}
 
-	macro openDisplayPagesAdmin {
+	@summary = "Default summary"
+	macro openDisplayPagesAdmin(siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet&_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_tabs1=display-page-templates");
 	}
 
-	macro renameDisplayPage {
+	@summary = "Default summary"
+	macro renameDisplayPage(newDisplayPageName = null,displayPageName = null) {
 		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 			displayPageName = ${displayPageName},
 			item = "Rename");
@@ -126,15 +135,18 @@ definition {
 		Modal.save();
 	}
 
-	macro viewDisplayPageNotPresent {
+	@summary = "Default summary"
+	macro viewDisplayPageNotPresent(displayPageName = null) {
 		LexiconCard.viewCardNotPresent(card = ${displayPageName});
 	}
 
-	macro viewDisplayPagePresent {
+	@summary = "Default summary"
+	macro viewDisplayPagePresent(displayPageName = null) {
 		LexiconCard.viewCardPresent(card = ${displayPageName});
 	}
 
-	macro viewPGViaAP {
+	@summary = "Default summary"
+	macro viewPGViaAP(webContentTitle = null,webContentContent = null,contentList = null) {
 		var key_assetContent = ${webContentContent};
 		var key_assetTitle = ${webContentTitle};
 

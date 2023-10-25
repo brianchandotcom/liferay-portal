@@ -1,6 +1,7 @@
 definition {
 
-	macro addCP {
+	@summary = "Default summary"
+	macro addCP(customBooleanDefaultValue = null,localization = null,baseURL = null,nameLocalization = null,modelResource = null,customInputDataType = null,resourceName = null,customFieldName = null,searchable = null,customFieldType = null,startingValue = null) {
 		var key_resourceName = ${resourceName};
 
 		if (isSet(modelResource)) {
@@ -104,7 +105,8 @@ definition {
 			value1 = ${customFieldName});
 	}
 
-	macro commerceAdminTearDown {
+	@summary = "Default summary"
+	macro commerceAdminTearDown() {
 		var emptyCount = 0;
 
 		Navigator.openURL();
@@ -250,7 +252,8 @@ definition {
 		CommerceConfiguration.commerceInitializersTearDown();
 	}
 
-	macro commerceInitializersTearDown {
+	@summary = "Default summary"
+	macro commerceInitializersTearDown() {
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",
@@ -259,7 +262,8 @@ definition {
 		CommerceJSONSitesAPI._deleteCommerceSites();
 	}
 
-	macro commerceSetUp {
+	@summary = "Default summary"
+	macro commerceSetUp(moneyOrder = null) {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
@@ -283,7 +287,8 @@ definition {
 		}
 	}
 
-	macro commerceStoreFrontSetUp {
+	@summary = "Default summary"
+	macro commerceStoreFrontSetUp() {
 		CommerceNavigator.gotoPortlet(
 			category = "Settings",
 			portlet = "Health Check");
@@ -332,7 +337,8 @@ definition {
 		}
 	}
 
-	macro commerceTearDown {
+	@summary = "Default summary"
+	macro commerceTearDown() {
 		CommerceJSONOrdersAPI._deleteAllCommerceOrdersAndCheck();
 
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
@@ -357,7 +363,8 @@ definition {
 		}
 	}
 
-	macro configureWorkflow {
+	@summary = "Default summary"
+	macro configureWorkflow(workflowDefinition = null,workflowResourceValue = null) {
 		var key_workflowResourceValue = ${workflowResourceValue};
 
 		if (!(IsElementPresent(locator1 = "Pagination#ICON_DISABLED", type = "angle-right")) && (IsElementPresent(locator1 = "Pagination#FIRST_LINK"))) {
@@ -387,7 +394,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro setupB2BGuestCheckout {
+	@summary = "Default summary"
+	macro setupB2BGuestCheckout(channelName = null) {
 		if (isSet(siteName)) {
 			var siteName = CommerceUtilities.convertStringToKey(string = ${siteName});
 
@@ -417,7 +425,8 @@ definition {
 		}
 	}
 
-	macro setupB2BGuestCheckoutPages {
+	@summary = "Default summary"
+	macro setupB2BGuestCheckoutPages(pageNameList = null,siteName = null) {
 		Variables.assertDefined(parameterList = "${pageNameList},${siteName}");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = ${siteName});
@@ -444,7 +453,8 @@ definition {
 	}
 
 	@description = "Create a Content Page to be used as Catalog page"
-	macro setUpCatalogPage {
+	@summary = "Default summary"
+	macro setUpCatalogPage(pageName = null,facets = null) {
 		var leftColumnWidgets = "Search Bar,Search Options";
 		var rightColumnWidgets = "Sort,Search Results";
 

@@ -1,6 +1,7 @@
 definition {
 
-	macro assertThatTheExtraFieldsAreVisible {
+	@summary = "Default summary"
+	macro assertThatTheExtraFieldsAreVisible(position = null,fieldsList = null) {
 		for (var field : list ${fieldsList}) {
 			AssertElementPresent(
 				key_index = ${position},
@@ -9,7 +10,8 @@ definition {
 		}
 	}
 
-	macro assertThatTheExtraFieldsIsNotVisible {
+	@summary = "Default summary"
+	macro assertThatTheExtraFieldsIsNotVisible(position = null,fieldsList = null) {
 		for (var field : list ${fieldsList}) {
 			AssertElementNotPresent(
 				key_index = ${position},
@@ -18,7 +20,8 @@ definition {
 		}
 	}
 
-	macro clearInfoSetupLXCFields {
+	@summary = "Default summary"
+	macro clearInfoSetupLXCFields() {
 		CP2Utils.typeSetupInfoFields(
 			label = "projectId",
 			value = "");
@@ -44,7 +47,8 @@ definition {
 			value = "");
 	}
 
-	macro typeAllSetupLXCInfoFields {
+	@summary = "Default summary"
+	macro typeAllSetupLXCInfoFields(github = null,incidentManagementEmail = null,fullName = null,region = null,incidentManagementFullName = null,projectId = null,email = null) {
 		CP2Utils.typeSetupInfoFields(
 			label = "projectId",
 			value = ${projectId});
@@ -74,7 +78,8 @@ definition {
 			value = ${incidentManagementEmail});
 	}
 
-	macro viewMessageErrorList {
+	@summary = "Default summary"
+	macro viewMessageErrorList(fieldsList = null) {
 		for (var value : list ${fieldsList}) {
 			AssertVisible(
 				key_errorMessage = "This field is required.",

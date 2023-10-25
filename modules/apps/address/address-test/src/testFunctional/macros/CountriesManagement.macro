@@ -1,6 +1,7 @@
 definition {
 
-	macro _inputCountryDetails {
+	@summary = "Default summary"
+	macro _inputCountryDetails(threeLetterISOCode = null,countryNumber = null,countryKey = null,countryCallingCode = null,countryPriority = null,countryName = null,twoLetterISOCode = null) {
 		if (isSet(countryName)) {
 			PortletEntry.inputName(name = ${countryName});
 		}
@@ -42,7 +43,8 @@ definition {
 		}
 	}
 
-	macro _inputRegionDetails {
+	@summary = "Default summary"
+	macro _inputRegionDetails(regionCode = null,regionKey = null,regionPriority = null,regionName = null) {
 		PortletEntry.inputName(name = ${regionName});
 
 		if (isSet(regionKey)) {
@@ -64,13 +66,15 @@ definition {
 		}
 	}
 
-	macro _selectMultipleCountries {
+	@summary = "Default summary"
+	macro _selectMultipleCountries(countryNames = null) {
 		for (var countryName : list ${countryNames}) {
 			LexiconEntry.selectEntry(rowEntry = ${countryName});
 		}
 	}
 
-	macro activateCountry {
+	@summary = "Default summary"
+	macro activateCountry(countryName = null) {
 		Search.searchCP(searchTerm = ${countryName});
 
 		LexiconEntry.gotoEntryMenuItemNoError(
@@ -80,7 +84,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro activateMultipleCountries {
+	@summary = "Default summary"
+	macro activateMultipleCountries(countryNames = null) {
 		CountriesManagement._selectMultipleCountries(countryNames = ${countryNames});
 
 		ClickNoError(locator1 = "Icon#UNDO");
@@ -88,7 +93,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro activateRegion {
+	@summary = "Default summary"
+	macro activateRegion(regionName = null) {
 		Search.searchCP(searchTerm = ${regionName});
 
 		LexiconEntry.gotoEntryMenuItemNoError(
@@ -98,7 +104,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro addCountry {
+	@summary = "Default summary"
+	macro addCountry(countryNumber = null,threeLetterISOCode = null,countryKey = null,countryCallingCode = null,countryPriority = null,countryName = null,countryStatus = null,twoLetterISOCode = null) {
 		LexiconEntry.gotoAdd();
 
 		CountriesManagement._inputCountryDetails(
@@ -139,7 +146,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro addRegion {
+	@summary = "Default summary"
+	macro addRegion(regionStatus = null,regionCode = null,regionKey = null,regionPriority = null,regionName = null,countryName = null) {
 		CountriesManagement.goToRegions(countryName = ${countryName});
 
 		LexiconEntry.gotoAdd();
@@ -166,7 +174,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro deactivateCountry {
+	@summary = "Default summary"
+	macro deactivateCountry(countryName = null) {
 		Search.searchCP(searchTerm = ${countryName});
 
 		LexiconEntry.gotoEntryMenuItemNoError(
@@ -178,7 +187,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro deactivateMultipleCountries {
+	@summary = "Default summary"
+	macro deactivateMultipleCountries(countryNames = null) {
 		CountriesManagement._selectMultipleCountries(countryNames = ${countryNames});
 
 		ClickNoError(locator1 = "Icon#DEACTIVATE");
@@ -188,7 +198,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro deactivateRegion {
+	@summary = "Default summary"
+	macro deactivateRegion(regionName = null) {
 		Search.searchCP(searchTerm = ${regionName});
 
 		LexiconEntry.gotoEntryMenuItemNoError(
@@ -200,7 +211,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro deleteCountry {
+	@summary = "Default summary"
+	macro deleteCountry(deleteType = null,countryName = null) {
 		Search.searchCP(searchTerm = ${countryName});
 
 		if (${deleteType} == "Delete Icon") {
@@ -236,7 +248,8 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = ${countryName});
 	}
 
-	macro deleteRegion {
+	@summary = "Default summary"
+	macro deleteRegion(regionName = null,deleteType = null) {
 		Search.searchCP(searchTerm = ${regionName});
 
 		if (${deleteType} == "Delete Icon") {
@@ -272,7 +285,8 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = ${regionName});
 	}
 
-	macro editRegion {
+	@summary = "Default summary"
+	macro editRegion(regionKeyEdit = null,regionName = null,regionCodeEdit = null,regionPriorityEdit = null,regionNameEdit = null,regionStatusEdit = null) {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Edit",
 			rowEntry = ${regionName});
@@ -317,7 +331,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro goToRegions {
+	@summary = "Default summary"
+	macro goToRegions(countryName = null) {
 		Search.searchCP(searchTerm = ${countryName});
 
 		LexiconEntry.gotoEntry(rowEntry = ${countryName});
@@ -325,12 +340,14 @@ definition {
 		Navigator.gotoNavTab(navTab = "Regions");
 	}
 
-	macro openCountriesManagementPortlet {
+	@summary = "Default summary"
+	macro openCountriesManagementPortlet() {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_address_web_internal_portlet_CountriesManagementAdminPortlet");
 	}
 
 	@description = "Assert values in country table. Need to set countryName, billingAllowed, shippingAllowed, twoLetterISOCode, countryStatus"
-	macro viewCountryInTable {
+	@summary = "Default summary"
+	macro viewCountryInTable(billingAllowed = null,countryPriority = null,countryName = null,countryStatus = null,twoLetterISOCode = null,shippingAllowed = null) {
 		LexiconTable.viewTableEntryTitle(tableEntry = ${countryName});
 
 		if (${billingAllowed} == "true") {
@@ -386,7 +403,8 @@ definition {
 	}
 
 	@description = "Assert values in region table. Need to set regionName, regionCode, and regionStatus"
-	macro viewRegionsInTable {
+	@summary = "Default summary"
+	macro viewRegionsInTable(regionStatus = null,regionCode = null,regionPriority = null,regionName = null) {
 		LexiconTable.viewTableEntryTitle(tableEntry = ${regionName});
 
 		LexiconTable.viewTableEntryInfo(

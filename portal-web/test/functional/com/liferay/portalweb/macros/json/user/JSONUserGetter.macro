@@ -1,6 +1,7 @@
 definition {
 
-	macro _getUserByIdCurl {
+	@summary = "Default summary"
+	macro _getUserByIdCurl(authenticationMethod = null,userId = null) {
 		Variables.assertDefined(parameterList = ${userId});
 
 		var companyId = JSONCompany.getCompanyId(authenticationMethod = ${authenticationMethod});
@@ -21,7 +22,8 @@ definition {
 		return ${curl};
 	}
 
-	macro _getUserByIdCurlNoSelenium {
+	@summary = "Default summary"
+	macro _getUserByIdCurlNoSelenium(userId = null) {
 		Variables.assertDefined(parameterList = ${userId});
 
 		var companyId = JSONCompany.getCompanyIdNoSelenium();
@@ -36,7 +38,8 @@ definition {
 		return ${curl};
 	}
 
-	macro getEmailAddress {
+	@summary = "Default summary"
+	macro getEmailAddress(authenticationMethod = null,userId = null) {
 		Variables.assertDefined(parameterList = ${userId});
 
 		var curl = JSONUserGetter._getUserByIdCurl(
@@ -48,7 +51,8 @@ definition {
 		return ${userEmailAddress};
 	}
 
-	macro getEmailAddressNoSelenium {
+	@summary = "Default summary"
+	macro getEmailAddressNoSelenium(userId = null) {
 		Variables.assertDefined(parameterList = ${userId});
 
 		var curl = JSONUserGetter._getUserByIdCurlNoSelenium(userId = ${userId});
@@ -58,7 +62,8 @@ definition {
 		return ${userEmailAddress};
 	}
 
-	macro getFirstName {
+	@summary = "Default summary"
+	macro getFirstName(userId = null) {
 		Variables.assertDefined(parameterList = ${userId});
 
 		var curl = JSONUserGetter._getUserByIdCurl(userId = ${userId});
@@ -66,7 +71,8 @@ definition {
 		var userFirstName = JSONCurlUtil.get(${curl}, "$['firstName']");
 	}
 
-	macro getUserIdByFirstName {
+	@summary = "Default summary"
+	macro getUserIdByFirstName(firstName = null) {
 		Variables.assertDefined(parameterList = ${firstName});
 
 		var companyId = JSONCompany.getCompanyId();

@@ -1,6 +1,7 @@
 definition {
 
-	macro configureBreadcrumb {
+	@summary = "Default summary"
+	macro configureBreadcrumb(selectAdtType = null,configureWithoutSave = null) {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		if (isSet(checkSetupName)) {
@@ -42,7 +43,8 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro displayTemplatePreview {
+	@summary = "Default summary"
+	macro displayTemplatePreview(displayStyle = null) {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		Click(locator1 = "Select#DISPLAY_TEMPLATE");
@@ -52,7 +54,8 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro saveDisplayPreview {
+	@summary = "Default summary"
+	macro saveDisplayPreview() {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		PortletEntry.save();
@@ -60,25 +63,29 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro seeFullNested {
+	@summary = "Default summary"
+	macro seeFullNested() {
 		Click(
 			ariaLabel = "See full nested",
 			locator1 = "Button#ANY_WITH_ARIA_LABEL");
 	}
 
-	macro viewActiveEntry {
+	@summary = "Default summary"
+	macro viewActiveEntry(breadcrumbName = null) {
 		AssertTextEquals(
 			locator1 = "Breadcrumb#BREADCRUMB_ENTRY_ACTIVE_ENTRY",
 			value1 = ${breadcrumbName});
 	}
 
-	macro viewADTApplied {
+	@summary = "Default summary"
+	macro viewADTApplied(breadcrumbAdtType = null) {
 		var key_breadcrumbAdtType = ${breadcrumbAdtType};
 
 		AssertElementPresent(locator1 = "BreadcrumbPortlet#BREADCRUMB_ADT");
 	}
 
-	macro viewBreadcrumbPath {
+	@summary = "Default summary"
+	macro viewBreadcrumbPath(breadcrumbNameList = null) {
 		var index = 1;
 
 		for (var breadcrumbName : list ${breadcrumbNameList}) {
@@ -91,7 +98,8 @@ definition {
 		}
 	}
 
-	macro viewConfigurationCheckboxes {
+	@summary = "Default summary"
+	macro viewConfigurationCheckboxes() {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		if (isSet(checkSetupName)) {
@@ -113,7 +121,8 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro viewConfigurationPreview {
+	@summary = "Default summary"
+	macro viewConfigurationPreview(breadcrumbListVisible = null,breadcrumbListNotVisible = null) {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		if (isSet(breadcrumbListVisible)) {
@@ -145,7 +154,8 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro viewDisplayTemplatePreview {
+	@summary = "Default summary"
+	macro viewDisplayTemplatePreview(displayStyle = null) {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		AssertTextEquals(
@@ -155,14 +165,16 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro viewEntry {
+	@summary = "Default summary"
+	macro viewEntry(breadcrumbName = null) {
 		AssertTextEquals(
 			key_breadcrumbName = ${breadcrumbName},
 			locator1 = "BreadcrumbPortlet#BREADCRUMB_SPECIFIC_ENTRY",
 			value1 = ${breadcrumbName});
 	}
 
-	macro viewPG {
+	@summary = "Default summary"
+	macro viewPG(breadcrumbListVisible = null,breadcrumbListNotVisible = null) {
 		if (isSet(breadcrumbListVisible)) {
 			for (var breadcrumbName : list ${breadcrumbListVisible}) {
 				var key_breadcrumbName = ${breadcrumbName};
@@ -182,7 +194,8 @@ definition {
 		}
 	}
 
-	macro viewSpecificPG {
+	@summary = "Default summary"
+	macro viewSpecificPG(breadcrumbListVisible = null,breadcrumbListNotVisible = null) {
 		if (isSet(breadcrumbListNotVisible)) {
 			for (var breadcrumbName : list ${breadcrumbListNotVisible}) {
 				AssertElementNotPresent(

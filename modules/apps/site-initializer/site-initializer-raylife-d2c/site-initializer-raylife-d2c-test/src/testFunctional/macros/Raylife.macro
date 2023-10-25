@@ -1,6 +1,7 @@
 definition {
 
-	macro assertAllObjectsForRaylifeD2c {
+	@summary = "Default summary"
+	macro assertAllObjectsForRaylifeD2c() {
 		ObjectAdmin.openObjectAdmin();
 
 		Raylife.waitForObject(key_object = "Raylife Application");
@@ -76,17 +77,20 @@ definition {
 			value1 = "Raylife Sales Goal");
 	}
 
-	macro clickAtButton {
+	@summary = "Default summary"
+	macro clickAtButton(text = null) {
 		var key_text = ${text};
 
 		Click(locator1 = "Raylife#ANY_BUTTON");
 	}
 
-	macro clickBackToEditInfo {
+	@summary = "Default summary"
+	macro clickBackToEditInfo() {
 		Click(locator1 = "Raylife#BACK_TO_EDIT_INFO");
 	}
 
-	macro commerceApisTearDowm {
+	@summary = "Default summary"
+	macro commerceApisTearDowm() {
 		CommerceJSONAccountsAPI._deleteAllCommerceAccounts();
 
 		CommerceJSONAccountGroupsAPI._deleteAllCommerceAccountGroups();
@@ -110,7 +114,8 @@ definition {
 		ObjectAdmin.deleteAllCustomObjectsViaAPI();
 	}
 
-	macro createRaylifeSite {
+	@summary = "Default summary"
+	macro createRaylifeSite(siteName = null) {
 		Site.openSitesAdmin();
 
 		Site.addSiteTemplateCP(
@@ -118,7 +123,8 @@ definition {
 			siteTemplateName = ${siteName});
 	}
 
-	macro dismissAlert {
+	@summary = "Default summary"
+	macro dismissAlert() {
 		ApplicationsMenuHelper.openApplicationsMenu();
 
 		var panel = "Control Panel";
@@ -133,7 +139,8 @@ definition {
 		AssertConfirm(value1 = "");
 	}
 
-	macro formsFlow {
+	@summary = "Default summary"
+	macro formsFlow() {
 		if (!(isSet(policy))) {
 			var policy = "standard";
 		}
@@ -163,13 +170,15 @@ definition {
 			policy = ${policy});
 	}
 
-	macro selectTheQuote {
+	@summary = "Default summary"
+	macro selectTheQuote(quoteOption = null) {
 		Click(
 			locator1 = "RaylifeCreateAccount#SELECT_QUOTE",
 			title = ${quoteOption});
 	}
 
-	macro tearDownCP {
+	@summary = "Default summary"
+	macro tearDownCP() {
 		Raylife.commerceApisTearDowm();
 
 		ApplicationsMenu.gotoPortlet(
@@ -190,7 +199,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro viewProductsList {
+	@summary = "Default summary"
+	macro viewProductsList(productsList = null,productList = null) {
 		for (var productsName : list ${productList}) {
 			AssertElementPresent(
 				key_productsName = ${productsList},
@@ -199,7 +209,8 @@ definition {
 		}
 	}
 
-	macro waitForObject {
+	@summary = "Default summary"
+	macro waitForObject(key_object = null) {
 		while (IsElementNotPresent(label = ${key_object}, locator1 = "ObjectPortlet#SELECT_CUSTOM_OBJECT")) {
 			Refresh();
 

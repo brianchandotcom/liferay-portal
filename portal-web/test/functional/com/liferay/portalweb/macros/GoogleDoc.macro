@@ -1,6 +1,7 @@
 definition {
 
-	macro addContent {
+	@summary = "Default summary"
+	macro addContent(linkAddress = null,linkText = null) {
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#GOOGLE_DOC");
 
 		if (IsElementPresent(locator1 = "GoogleDoc#DISMISS")) {
@@ -30,7 +31,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro discardChanges {
+	@summary = "Default summary"
+	macro discardChanges() {
 		var key_text = "Discard Changes";
 
 		AssertElementPresent(locator1 = "Button#ANY");
@@ -40,7 +42,8 @@ definition {
 			value1 = "Discard Changes");
 	}
 
-	macro editTitleInGoogleDoc {
+	@summary = "Default summary"
+	macro editTitleInGoogleDoc(dmDocumentTitle = null) {
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#GOOGLE_DOC");
 
 		Click(locator1 = "GoogleDoc#TITLE");
@@ -58,7 +61,8 @@ definition {
 		Refresh();
 	}
 
-	macro gotoEdit {
+	@summary = "Default summary"
+	macro gotoEdit(dmDocumentTitle = null,dmDocumentTypeName = null) {
 		var key_dmDocumentTitle = ${dmDocumentTitle};
 
 		Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");
@@ -86,7 +90,8 @@ definition {
 			locator1 = "Button#ANY");
 	}
 
-	macro saveAndExit {
+	@summary = "Default summary"
+	macro saveAndExit(depotName = null) {
 		if (isSet(depotName)) {
 			var key_text = "Save and Return to ${depotName}";
 

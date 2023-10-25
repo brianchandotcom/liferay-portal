@@ -1,6 +1,7 @@
 definition {
 
-	macro setParentSiteKey {
+	@summary = "Default summary"
+	macro setParentSiteKey(parentSiteName = null,portalURL = null,grandParentSiteName = null) {
 		var parentSiteKey = JSONGroupAPI._getGroupKeyByName(
 			groupName = ${parentSiteName},
 			parentGroupName = ${grandParentSiteName},
@@ -10,7 +11,8 @@ definition {
 		return ${parentSiteKey};
 	}
 
-	macro setTemplateKey {
+	@summary = "Default summary"
+	macro setTemplateKey(templateType = null,templateName = null) {
 		if (${templateType} == "Site Template") {
 			var templateKey = JSONSiteTemplateAPI._getSiteTemplateIdByName(siteTemplateName = ${templateName});
 		}

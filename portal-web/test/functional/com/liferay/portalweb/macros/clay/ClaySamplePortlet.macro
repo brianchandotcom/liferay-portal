@@ -1,6 +1,7 @@
 definition {
 
-	macro assertNavTabVisualContent {
+	@summary = "Default summary"
+	macro assertNavTabVisualContent(tab = null) {
 		var tabName = StringUtil.replace(${tab}, " ", "_");
 
 		var tabName = StringUtil.toLowerCase(${tabName});

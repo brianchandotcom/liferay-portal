@@ -1,10 +1,12 @@
 definition {
 
-	macro accessAddAnnouncements {
+	@summary = "Default summary"
+	macro accessAddAnnouncements() {
 		Click(locator1 = "Icon#PLUS");
 	}
 
-	macro addAnnouncement {
+	@summary = "Default summary"
+	macro addAnnouncement() {
 		Type(
 			locator1 = "TextInput#TITLE",
 			value1 = "Announcement Title");
@@ -16,7 +18,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro viewAnnouncementEntry {
+	@summary = "Default summary"
+	macro viewAnnouncementEntry(announcementTitle = null) {
 		AssertElementPresent(
 			key_entryTitle = ${announcementTitle},
 			locator1 = "Announcements#ANNOUNCEMENT_TITLE");

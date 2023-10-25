@@ -1,6 +1,7 @@
 definition {
 
-	macro checkFacetTerm {
+	@summary = "Default summary"
+	macro checkFacetTerm(facetTerm = null,facetName = null) {
 		if (IsNotChecked.isNotCheckedNotVisible(key_checkboxName = ${facetTerm}, key_facetName = ${facetName}, locator1 = "SearchPage#FACET_CHECKBOX_SPECIFIC")) {
 			Click(
 				key_checkboxName = ${facetTerm},
@@ -9,7 +10,8 @@ definition {
 		}
 	}
 
-	macro checkFacetTermAndViewURL {
+	@summary = "Default summary"
+	macro checkFacetTermAndViewURL(facetTerm = null,facetName = null,searchPage = null,searchTerm = null,termURLValue = null) {
 		SearchFacets.checkFacetTerm(
 			facetName = ${facetName},
 			facetTerm = ${facetTerm});
@@ -27,7 +29,8 @@ definition {
 		return ${searchURL};
 	}
 
-	macro clearAllFacetsAndViewURL {
+	@summary = "Default summary"
+	macro clearAllFacetsAndViewURL() {
 		while (IsElementPresent(locator1 = "SearchPage#FACET_CLEAR_GENERIC")) {
 			var facetNameBuilder = selenium.getText("SearchPage#FACET_WITH_CLEAR_BUTTON");
 
@@ -48,7 +51,8 @@ definition {
 		return ${searchURL};
 	}
 
-	macro clearFacet {
+	@summary = "Default summary"
+	macro clearFacet(facetName = null) {
 		if (isSet(facetName)) {
 			var facetIDName = StringUtil.replace(${facetName}, " ", "");
 
@@ -64,7 +68,8 @@ definition {
 		}
 	}
 
-	macro clearFacetAndViewURL {
+	@summary = "Default summary"
+	macro clearFacetAndViewURL(facetName = null) {
 		if (isSet(facetName)) {
 			SearchFacets.clearFacet(facetName = ${facetName});
 
@@ -81,7 +86,8 @@ definition {
 		}
 	}
 
-	macro configureCategoryFacet {
+	@summary = "Default summary"
+	macro configureCategoryFacet(index = null,vocabularyScope = null) {
 		if (isSet(index)) {
 			SearchFacets.gotoSearchFacetOptionsSpecific(
 				index = ${index},
@@ -130,7 +136,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro configureCustomFacet {
+	@summary = "Default summary"
+	macro configureCustomFacet(aggregationField = null,customHeading = null,customParameterName = null) {
 		Portlet.gotoPortletOptions(
 			portletName = "Custom Facet",
 			portletOption = "Configuration");
@@ -162,7 +169,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro generateFacetCheckedURL {
+	@summary = "Default summary"
+	macro generateFacetCheckedURL(facetTerm = null,facetName = null,searchPage = null,searchTerm = null) {
 		if (!(isSet(searchURL))) {
 			var searchURL = SearchPage.getSearchTermURL(
 				searchPage = ${searchPage},
@@ -212,7 +220,8 @@ definition {
 		return ${searchURL};
 	}
 
-	macro generateFacetClearedURL {
+	@summary = "Default summary"
+	macro generateFacetClearedURL(facetName = null) {
 		var facetURLName = StringUtil.replace(${facetName}, " Facet", "");
 
 		var facetURLName = StringUtil.toLowerCase(${facetURLName});
@@ -225,7 +234,8 @@ definition {
 		return ${searchURL};
 	}
 
-	macro generateFacetUncheckedURL {
+	@summary = "Default summary"
+	macro generateFacetUncheckedURL(facetTerm = null,facetName = null) {
 		if (${facetName} == "Type Facet") {
 			var termURLValue = SearchFacets.getTypeFacetTermURLValue(typeFacetTerm = ${facetTerm});
 		}
@@ -263,7 +273,8 @@ definition {
 		return ${searchURL};
 	}
 
-	macro getTypeFacetTermURLValue {
+	@summary = "Default summary"
+	macro getTypeFacetTermURLValue(typeFacetTerm = null) {
 		if (contains(${typeFacetTerm}, "Blogs")) {
 			var typeFacetTermURLValue = "com.liferay.blogs.model.BlogsEntry";
 			var termURLValueFound = "true";
@@ -291,7 +302,8 @@ definition {
 		return ${typeFacetTermURLValue};
 	}
 
-	macro getUserFacetTermURLValue {
+	@summary = "Default summary"
+	macro getUserFacetTermURLValue(userFacetTerm = null) {
 		var firstName = StringUtil.extractFirst(${userFacetTerm}, " ");
 
 		var userFacetTermURLValue = JSONUserGetter.getUserIdByFirstName(firstName = ${firstName});
@@ -299,7 +311,8 @@ definition {
 		return ${userFacetTermURLValue};
 	}
 
-	macro gotoSearchFacetOptionsSpecific {
+	@summary = "Default summary"
+	macro gotoSearchFacetOptionsSpecific(index = null,portletName = null,portletOption = null) {
 		MouseOver.mouseOverNotVisible(
 			key_index = ${index},
 			key_portletName = ${portletName},
@@ -317,7 +330,8 @@ definition {
 		}
 	}
 
-	macro moveAssetTypesToAvailable {
+	@summary = "Default summary"
+	macro moveAssetTypesToAvailable() {
 		Portlet.gotoPortletOptions(
 			portletName = "Type Facet",
 			portletOption = "Configuration");
@@ -341,7 +355,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro uncheckFacetTerm {
+	@summary = "Default summary"
+	macro uncheckFacetTerm(facetTerm = null,facetName = null) {
 		if (IsChecked(key_checkboxName = ${facetTerm}, key_facetName = ${facetName}, locator1 = "SearchPage#FACET_CHECKBOX_SPECIFIC")) {
 			Click(
 				key_checkboxName = ${facetTerm},
@@ -350,7 +365,8 @@ definition {
 		}
 	}
 
-	macro uncheckFacetTermAndViewURL {
+	@summary = "Default summary"
+	macro uncheckFacetTermAndViewURL(facetTerm = null,facetName = null,termURLValue = null) {
 		SearchFacets.uncheckFacetTerm(
 			facetName = ${facetName},
 			facetTerm = ${facetTerm});
@@ -366,7 +382,8 @@ definition {
 		return ${searchURL};
 	}
 
-	macro updateFacetConfiguration {
+	@summary = "Default summary"
+	macro updateFacetConfiguration(sortOption = null,displayTemplate = null,maxTerms = null,displayFrequencies = null,frequencyThreshold = null,parameterName = null,portletName = null) {
 		Portlet.gotoPortletOptions(
 			portletName = ${portletName},
 			portletOption = "Configuration");
@@ -420,7 +437,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro viewFacetTermsSpecificOrder {
+	@summary = "Default summary"
+	macro viewFacetTermsSpecificOrder(termList = null,facetName = null) {
 		var termOrder = 0;
 
 		for (var termItem : list ${termList}) {

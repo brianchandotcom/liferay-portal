@@ -1,6 +1,7 @@
 definition {
 
-	macro addReportDefinition {
+	@summary = "Default summary"
+	macro addReportDefinition(reportsDefinitionName = null,reportsDefinitionDescription = null,templateFile = null,dataSource = null) {
 		Click(locator1 = "Button#PLUS");
 
 		PortletEntry.inputName(name = ${reportsDefinitionName});
@@ -16,7 +17,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro addReportEntry {
+	@summary = "Default summary"
+	macro addReportEntry(reportName = null,reportsDefinitionName = null,reportFormat = null,emailRecipientAddress = null,emailNotificationsAddress = null) {
 		var key_reportsDefinitionName = ${reportsDefinitionName};
 
 		LexiconEntry.openEntryMenu(rowEntry = ${reportsDefinitionName});
@@ -48,7 +50,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro addScheduleEntry {
+	@summary = "Default summary"
+	macro addScheduleEntry(reportsDefinitionName = null,reportFormat = null,emailRecipientAddress = null,emailNotificationsAddress = null) {
 		var key_reportsDefinitionName = ${reportsDefinitionName};
 
 		LexiconEntry.openEntryMenu(rowEntry = ${reportsDefinitionName});
@@ -104,7 +107,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro addSource {
+	@summary = "Default summary"
+	macro addSource(reportsDataSourcePassword = null,reportsDataSourceURL = null,reportsDataSourceUser = null,reportsDataSourceName = null,reportsDataSourceClass = null) {
 		Click(locator1 = "Button#PLUS");
 
 		Type(
@@ -130,7 +134,8 @@ definition {
 		}
 	}
 
-	macro assertReportEntryPresent {
+	@summary = "Default summary"
+	macro assertReportEntryPresent(reportsDefinitionName = null) {
 		var key_reportsDefinitionName = ${reportsDefinitionName};
 
 		AssertElementPresent(
@@ -138,7 +143,8 @@ definition {
 			value1 = ${reportsDefinitionName});
 	}
 
-	macro configureDeliveryEmail {
+	@summary = "Default summary"
+	macro configureDeliveryEmail(deliverySubject = null,deliveryBody = null) {
 		AssertClick(
 			locator1 = "ReportsAdminConfiguration#NAVIGATION_DELIVERY_EMAIL",
 			value1 = "Delivery Email");
@@ -158,7 +164,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro configureEmailFrom {
+	@summary = "Default summary"
+	macro configureEmailFrom(emailFromName = null,emailFromAddress = null) {
 		Navigator.gotoNavTab(navTab = "Email From");
 
 		Type(
@@ -172,7 +179,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro configureNotificationsEmail {
+	@summary = "Default summary"
+	macro configureNotificationsEmail(notificationSubject = null,notificationBody = null) {
 		AssertClick(
 			locator1 = "ReportsAdminConfiguration#NAVIGATION_NOTIFICATIONS_EMAIL",
 			value1 = "Notifications Email");
@@ -192,7 +200,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro deleteReportEntryFile {
+	@summary = "Default summary"
+	macro deleteReportEntryFile(reportsFileName = null) {
 		var key_reportsFileName = ${reportsFileName};
 
 		AssertTextEquals(
@@ -210,7 +219,8 @@ definition {
 		AssertElementNotPresent(locator1 = "ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_FILE");
 	}
 
-	macro deliverReportEntryFile {
+	@summary = "Default summary"
+	macro deliverReportEntryFile(reportsFileName = null,emailRecipientAddress = null) {
 		var key_reportsFileName = ${reportsFileName};
 
 		AssertTextEquals(
@@ -238,7 +248,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro downloadReportEntryFile {
+	@summary = "Default summary"
+	macro downloadReportEntryFile(reportsFileName = null) {
 		var key_reportsFileName = ${reportsFileName};
 
 		AssertElementPresent(locator1 = "ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_FILE");
@@ -256,25 +267,29 @@ definition {
 		takeScreenshot();
 	}
 
-	macro gotoConfiguration {
+	@summary = "Default summary"
+	macro gotoConfiguration() {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 	}
 
-	macro gotoDefinitions {
+	@summary = "Default summary"
+	macro gotoDefinitions() {
 		AssertClick(
 			locator1 = "ReportsAdmin#NAVIGATION_DEFINITIONS",
 			value1 = "Definitions");
 	}
 
-	macro gotoSources {
+	@summary = "Default summary"
+	macro gotoSources() {
 		AssertClick(
 			locator1 = "ReportsAdmin#NAVIGATION_SOURCES",
 			value1 = "Sources");
 	}
 
-	macro tearDownConfiguration {
+	@summary = "Default summary"
+	macro tearDownConfiguration() {
 		ReportsAdmin.gotoConfiguration();
 
 		Navigator.gotoNavTab(navTab = "Email From");
@@ -356,7 +371,8 @@ Sincerely,<br />
 		PortletEntry.save();
 	}
 
-	macro tearDownDefinitions {
+	@summary = "Default summary"
+	macro tearDownDefinitions() {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -380,7 +396,8 @@ Sincerely,<br />
 			value1 = "There are no definitions.");
 	}
 
-	macro tearDownReports {
+	@summary = "Default summary"
+	macro tearDownReports() {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -405,7 +422,8 @@ Sincerely,<br />
 			value1 = "There are no reports.");
 	}
 
-	macro tearDownSources {
+	@summary = "Default summary"
+	macro tearDownSources() {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -429,7 +447,8 @@ Sincerely,<br />
 			value1 = "There are no sources.");
 	}
 
-	macro testDatabaseConnection {
+	@summary = "Default summary"
+	macro testDatabaseConnection() {
 		AssertClick(
 			locator1 = "ReportsAdminEditSource#TEST_DATABASE_CONNECTION_BUTTON",
 			value1 = "Test Database Connection");
@@ -443,7 +462,8 @@ Sincerely,<br />
 			value1 = "Close");
 	}
 
-	macro viewDefinitionParameterFields {
+	@summary = "Default summary"
+	macro viewDefinitionParameterFields() {
 		AssertElementPresent(locator1 = "ReportsAdminEditReportDefinition#REPORT_DEFINITION_PARAMETERS_KEY");
 
 		AssertElementPresent(locator1 = "ReportsAdminEditReportDefinition#REPORT_DEFINITION_PARAMETERS_VALUE");
@@ -451,13 +471,15 @@ Sincerely,<br />
 		AssertElementPresent(locator1 = "ReportsAdminEditReportDefinition#REPORT_DEFINITION_PARAMETERS_TYPE");
 	}
 
-	macro viewNoReportEntryFile {
+	@summary = "Default summary"
+	macro viewNoReportEntryFile(reportsFileName = null) {
 		var key_reportsFileName = ${reportsFileName};
 
 		AssertElementNotPresent(locator1 = "ReportsAdminViewReportEntry#ENTRY_FILE_TABLE_FILE");
 	}
 
-	macro viewReportEntry {
+	@summary = "Default summary"
+	macro viewReportEntry(reportsDefinitionName = null) {
 		var key_reportsDefinitionName = ${reportsDefinitionName};
 
 		AssertClick(
@@ -465,7 +487,8 @@ Sincerely,<br />
 			value1 = ${reportsDefinitionName});
 	}
 
-	macro viewReportEntryFields {
+	@summary = "Default summary"
+	macro viewReportEntryFields(scheduled = null,reportsDefinitionName = null,reportsFileName = null,reportsDefinitionDescription = null,reportParameterse = null,userName = null,dataSource = null) {
 		var key_reportsDefinitionName = ${reportsDefinitionName};
 
 		AssertTextEquals(

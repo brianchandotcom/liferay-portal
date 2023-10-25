@@ -1,6 +1,7 @@
 definition {
 
-	macro addNodesByDragging {
+	@summary = "Default summary"
+	macro addNodesByDragging(nodeTitleAndPositionList = null) {
 		AssertClick.pauseAssertTextClickAt(
 			locator1 = "KaleoDesignerEditWorkflow#NODES_TAB",
 			value1 = "Nodes");
@@ -21,7 +22,8 @@ definition {
 		}
 	}
 
-	macro assertDefaultNodesOnForm {
+	@summary = "Default summary"
+	macro assertDefaultNodesOnForm(nodesList = null) {
 		for (var current : list ${nodesList}) {
 			AssertElementPresent(
 				key_nodeType = ${current},
@@ -29,7 +31,8 @@ definition {
 		}
 	}
 
-	macro viewWorkflowStatus {
+	@summary = "Default summary"
+	macro viewWorkflowStatus(workflowDefinitionTitle = null,workflowStatus = null) {
 		AssertElementPresent(
 			key_workflowStatus = ${workflowStatus},
 			locator1 = "ProcessBuilderKaleoDesigner#WORKFLOW_STATUS");

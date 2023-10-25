@@ -1,6 +1,7 @@
 definition {
 
-	macro addIncomingQuantity {
+	@summary = "Default summary"
+	macro addIncomingQuantity(quantity = null,expectedDeliveryDate = null,destination = null) {
 		Variables.assertDefined(parameterList = "${expectedDeliveryDate},${quantity}");
 
 		Click(locator1 = "Button#PLUS");
@@ -28,7 +29,8 @@ definition {
 		Button.clickSubmitButton();
 	}
 
-	macro editInventoryByWarehouse {
+	@summary = "Default summary"
+	macro editInventoryByWarehouse(quantityOnHand = null,index = null,sku = null,safetyStockQuantity = null) {
 		CommerceInventory.openInventoryAdmin();
 
 		CommerceNavigator.searchEntry(entryName = ${sku});
@@ -64,13 +66,15 @@ definition {
 		}
 	}
 
-	macro openInventoryAdmin {
+	@summary = "Default summary"
+	macro openInventoryAdmin(baseURL = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_commerce_inventory_web_internal_portlet_CommerceInventoryPortlet");
 	}
 
-	macro viewInventoryByWarehouse {
+	@summary = "Default summary"
+	macro viewInventoryByWarehouse(index = null,inventory = null) {
 		for (var warehouse : list ${warehouse}) {
 			AssertElementPresent(
 				key_entryTitle = ${warehouse},

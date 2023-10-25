@@ -1,12 +1,14 @@
 definition {
 
-	macro click {
+	@summary = "Default summary"
+	macro click(menuItem = null) {
 		Click(
 			key_menuItem = ${menuItem},
 			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 	}
 
-	macro viewIcon {
+	@summary = "Default summary"
+	macro viewIcon(iconList = null) {
 		for (var icon : list ${iconList}) {
 			AssertVisible(
 				key_text = ${icon},

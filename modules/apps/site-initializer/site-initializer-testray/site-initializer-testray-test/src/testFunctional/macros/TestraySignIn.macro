@@ -1,18 +1,21 @@
 definition {
 
-	macro assertTitleFailed {
+	@summary = "Default summary"
+	macro assertTitleFailed(key_title = null) {
 		AssertElementPresent(
 			key_fieldName = ${key_title},
 			locator1 = "TestrayUser#TITLE_FAILED");
 	}
 
-	macro assertTitleSucess {
+	@summary = "Default summary"
+	macro assertTitleSucess(key_title = null) {
 		AssertElementPresent(
 			key_fieldName = ${key_title},
 			locator1 = "TestrayUser#TITLE_SUCCESS");
 	}
 
-	macro changePassword {
+	@summary = "Default summary"
+	macro changePassword(newPassword = null,confirmPassword = null,currentPassword = null) {
 		if (isSet(currentPassword)) {
 			Type(
 				locator1 = "TextInput#CURRENT_PASSWORD",
@@ -34,7 +37,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro loginUserTestrayPG {
+	@summary = "Default summary"
+	macro loginUserTestrayPG(emailAddress = null,password = null) {
 		if (isSet(emailAddress)) {
 			Type(
 				locator1 = "TextInput#TEXT",

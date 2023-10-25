@@ -1,6 +1,7 @@
 definition {
 
-	macro _setDefaultAccountShippingOption {
+	@summary = "Default summary"
+	macro _setDefaultAccountShippingOption(accountName = null,shippingMethod = null,channelName = null,shippingOption = null) {
 		Variables.assertDefined(parameterList = "${accountName},${channelName},${shippingOption}");
 
 		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountName});

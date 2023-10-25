@@ -1,12 +1,14 @@
 definition {
 
-	macro expandActivityDetails {
+	@summary = "Default summary"
+	macro expandActivityDetails(activityName = null) {
 		Click(
 			key_textButton = ${activityName},
 			locator1 = "PRMMDFRequest#TEXT_BUTTON");
 	}
 
-	macro viewBudgetNotPresent {
+	@summary = "Default summary"
+	macro viewBudgetNotPresent(budgetName = null,budgetIndex = null) {
 		AssertElementNotPresent(
 			key_budgetName = ${budgetName},
 			key_index = ${budgetIndex},

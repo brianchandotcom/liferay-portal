@@ -4,7 +4,8 @@ definition {
 	var userPassword = "test";
 	var userPasswordReminderAnswer = "test";
 
-	macro _signIn {
+	@summary = "Default summary"
+	macro _signIn(virtualHostsURL = null,userEmailAddress = null) {
 		var appServerType = PropsUtil.get("app.server.type");
 
 		if (${appServerType} == "weblogic") {
@@ -33,7 +34,8 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
-	macro agreeToTermsOfUse {
+	@summary = "Default summary"
+	macro agreeToTermsOfUse() {
 		AssertClick(
 			locator1 = "Button#I_AGREE",
 			value1 = "I Agree");
@@ -41,7 +43,8 @@ definition {
 		AssertElementNotPresent(locator1 = "Button#I_AGREE");
 	}
 
-	macro setPasswordReminder {
+	@summary = "Default summary"
+	macro setPasswordReminder(userPasswordReminderAnswer = null) {
 		Type(
 			locator1 = "TextInput#ANSWER",
 			value1 = ${userPasswordReminderAnswer});
@@ -49,13 +52,15 @@ definition {
 		Button.clickSave();
 	}
 
-	macro signIn {
+	@summary = "Default summary"
+	macro signIn(userPassword = null,userEmailAddress = null) {
 		SignIn._signIn(
 			userEmailAddress = ${userEmailAddress},
 			userPassword = ${userPassword});
 	}
 
-	macro signInPortalInstanceSetUp {
+	@summary = "Default summary"
+	macro signInPortalInstanceSetUp(authenticationMethod = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var portalURL = Regex.removeHTTP(url = ${portalURL});
@@ -79,14 +84,16 @@ definition {
 		}
 	}
 
-	macro signInSpecificURL {
+	@summary = "Default summary"
+	macro signInSpecificURL(userPassword = null,userEmailAddress = null,url = null) {
 		SignIn._signIn(
 			userEmailAddress = ${userEmailAddress},
 			userPassword = ${userPassword},
 			virtualHostsURL = ${url});
 	}
 
-	macro signInTestSetup {
+	@summary = "Default summary"
+	macro signInTestSetup(userPassword = null,licenseExpired = null) {
 		var userEmailAddress = JSONUtil2.getDefaultUserEmail();
 
 		JSONUser.agreeToTermsAndAnswerReminderQuery(userEmailAddress = ${userEmailAddress});

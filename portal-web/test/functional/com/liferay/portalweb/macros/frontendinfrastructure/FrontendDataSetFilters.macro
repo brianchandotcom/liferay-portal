@@ -1,6 +1,7 @@
 definition {
 
-	macro addDateRangeFilters {
+	@summary = "Default summary"
+	macro addDateRangeFilters() {
 		var key_fromDate = StringUtil.extractDigits(${key_fromDate});
 		var key_toDate = StringUtil.extractDigits(${key_toDate});
 
@@ -23,7 +24,8 @@ definition {
 		Click(locator1 = "FrontendDataSet#ADD_FILTER_BUTTON");
 	}
 
-	macro closeFilters {
+	@summary = "Default summary"
+	macro closeFilters() {
 		if (IsElementNotPresent(locator1 = "FrontendDataSet#FILTER_DROPDOWN")) {
 			ClickNoError(locator1 = "FrontendDataSet#FILTER_BACK_NAVIGATION");
 
@@ -34,7 +36,8 @@ definition {
 		}
 	}
 
-	macro disableStatusFilters {
+	@summary = "Default summary"
+	macro disableStatusFilters(key_status = null) {
 		if (IsElementPresent(key_filter = "Status", locator1 = "FrontendDataSet#FILTER_OPTION")) {
 			Click(
 				key_filter = "Status",
@@ -48,7 +51,8 @@ definition {
 		}
 	}
 
-	macro editFilters {
+	@summary = "Default summary"
+	macro editFilters(key_filter = null,key_enableFilters = null,key_disableFilters = null) {
 		FrontendDataSetFilters.openFilters();
 
 		FrontendDataSetFilters.searchFilter(searchTerm = ${key_filter});
@@ -66,7 +70,8 @@ definition {
 		FrontendDataSetFilters.closeFilters();
 	}
 
-	macro enableStatusFilters {
+	@summary = "Default summary"
+	macro enableStatusFilters(key_status = null) {
 		if (IsElementPresent(key_filter = "Status", locator1 = "FrontendDataSet#FILTER_OPTION")) {
 			Click(
 				key_filter = "Status",
@@ -80,25 +85,29 @@ definition {
 		}
 	}
 
-	macro openFilters {
+	@summary = "Default summary"
+	macro openFilters() {
 		if (IsElementNotPresent(locator1 = "FrontendDataSet#FILTER_DROPDOWN")) {
 			Click(locator1 = "FrontendDataSet#FILTER_BUTTON");
 		}
 	}
 
-	macro removeAllFilters {
+	@summary = "Default summary"
+	macro removeAllFilters() {
 		while (IsElementPresent(key_filter = "", locator1 = "FrontendDataSet#REMOVE_FILTER")) {
 			FrontendDataSetFilters.removeFilter(key_filter = "");
 		}
 	}
 
-	macro removeFilter {
+	@summary = "Default summary"
+	macro removeFilter(key_filter = null) {
 		Click.clickNoMouseOver(
 			locator1 = "FrontendDataSet#REMOVE_FILTER",
 			value1 = ${key_filter});
 	}
 
-	macro resetFilter {
+	@summary = "Default summary"
+	macro resetFilter(reset_filter = null) {
 		if (!(isSet(reset_filter))) {
 			ClickNoError(
 				locator1 = "FrontendDataSet#RESET_FILTERS",
@@ -111,7 +120,8 @@ definition {
 		}
 	}
 
-	macro searchFilter {
+	@summary = "Default summary"
+	macro searchFilter(searchTerm = null) {
 		VerifyElementPresent(locator1 = "ObjectPortlet#COLUMN_SEARCH_FIELD");
 
 		VerifyElementPresent(locator1 = "FrontendDataSet#FILTER_SEARCH_BUTTON");

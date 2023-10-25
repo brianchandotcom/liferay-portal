@@ -1,6 +1,7 @@
 definition {
 
-	macro _addChannel {
+	@summary = "Default summary"
+	macro _addChannel(channelName = null,channelType = null,currencyCode = null) {
 		Variables.assertDefined(parameterList = "${channelName},${channelType},${currencyCode}");
 
 		var baseURL = ${baseURL};
@@ -47,7 +48,8 @@ definition {
 		return ${addChannelResponse};
 	}
 
-	macro _deleteAllCommerceChannels {
+	@summary = "Default summary"
+	macro _deleteAllCommerceChannels() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -78,7 +80,8 @@ definition {
 		}
 	}
 
-	macro _getCommerceAccountIdByChannelId {
+	@summary = "Default summary"
+	macro _getCommerceAccountIdByChannelId(channelName = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -99,7 +102,8 @@ definition {
 		return ${accountId};
 	}
 
-	macro _getCommerceChannelIdByName {
+	@summary = "Default summary"
+	macro _getCommerceChannelIdByName(channelCount = null,channelName = null) {
 		Variables.assertDefined(parameterList = ${channelName});
 
 		var baseURL = ${baseURL};
@@ -128,7 +132,8 @@ definition {
 		return ${channelId};
 	}
 
-	macro _getCommerceChannelIds {
+	@summary = "Default summary"
+	macro _getCommerceChannelIds(channelCount = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -155,7 +160,8 @@ definition {
 		return ${channelIds};
 	}
 
-	macro _getCommerceChannelsCount {
+	@summary = "Default summary"
+	macro _getCommerceChannelsCount() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -177,7 +183,8 @@ definition {
 		return ${channelsCount};
 	}
 
-	macro _patchCommerceChannel {
+	@summary = "Default summary"
+	macro _patchCommerceChannel(accountIdByName = null,channelName = null) {
 		Variables.assertDefined(parameterList = ${channelName});
 
 		var baseURL = ${baseURL};

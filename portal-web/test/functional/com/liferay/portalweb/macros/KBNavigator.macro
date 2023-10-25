@@ -1,6 +1,7 @@
 definition {
 
-	macro openToConfigInSystemSettings {
+	@summary = "Default summary"
+	macro openToConfigInSystemSettings(portlet = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {

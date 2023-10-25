@@ -3,6 +3,7 @@ definition {
 	var userFirstName = "Test";
 	var userLastName = "Test";
 
+	@summary = "Default summary"
 	@summary-ignore = "true"
 	macro runSmoke {
 		task ("Ensure that the super admin can add a Blank Site") {
@@ -150,6 +151,7 @@ definition {
 		}
 	}
 
+	@summary = "Default summary"
 	macro viewWelcomeContentPage {
 		ContentPages.viewFragmentText(
 			fragmentName = "paragraph",

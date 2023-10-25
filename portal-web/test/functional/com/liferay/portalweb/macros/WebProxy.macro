@@ -1,6 +1,7 @@
 definition {
 
-	macro addCP {
+	@summary = "Default summary"
+	macro addCP(initialURL = null) {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		Type(

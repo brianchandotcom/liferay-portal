@@ -1,6 +1,7 @@
 definition {
 
-	macro _curlAPIApplication {
+	@summary = "Default summary"
+	macro _curlAPIApplication(aPIApplicationId = null,virtualHost = null) {
 		if (isSet(virtualHost)) {
 			if (!(isSet(port))) {
 				var port = 8080;
@@ -30,7 +31,8 @@ definition {
 		return ${curl};
 	}
 
-	macro createAPIApplication {
+	@summary = "Default summary"
+	macro createAPIApplication(objectFieldErc = null,mainObjectDefinitionErc = null,endpointName = null,virtualHost = null,retrieveType = null,schemaName = null,pathParameter = null,endpointPath = null,baseURL = null,status = null) {
 		Variables.assertDefined(parameterList = "${baseURL},${status},${title}");
 
 		var curl = ApplicationAPI._curlAPIApplication(virtualHost = ${virtualHost});
@@ -125,7 +127,8 @@ definition {
 		return ${response};
 	}
 
-	macro deleteAllAPIApplication {
+	@summary = "Default summary"
+	macro deleteAllAPIApplication() {
 		var getAPIApplicationList = ApplicationAPI.getAPIApplications();
 
 		var aPIApplicationIdList = JSONPathUtil.getProperty(
@@ -137,7 +140,8 @@ definition {
 		}
 	}
 
-	macro deleteAPIApplicationById {
+	@summary = "Default summary"
+	macro deleteAPIApplicationById(aPIApplicationId = null) {
 		Variables.assertDefined(parameterList = ${aPIApplicationId});
 
 		var curl = ApplicationAPI._curlAPIApplication(aPIApplicationId = ${aPIApplicationId});
@@ -145,7 +149,8 @@ definition {
 		JSONCurlUtil.delete(${curl});
 	}
 
-	macro getAPIApplications {
+	@summary = "Default summary"
+	macro getAPIApplications() {
 		var curl = ApplicationAPI._curlAPIApplication();
 
 		var response = JSONCurlUtil.get(${curl});
@@ -153,7 +158,8 @@ definition {
 		return ${response};
 	}
 
-	macro setUpGlobalAPIApplicationId {
+	@summary = "Default summary"
+	macro setUpGlobalAPIApplicationId() {
 		var response = ApplicationAPI.getAPIApplications();
 
 		var applicationId = JSONUtil.getWithJSONPath(${response}, "$.items[0].id");
@@ -163,7 +169,8 @@ definition {
 		return ${staticApplicationId};
 	}
 
-	macro updateAPIApplication {
+	@summary = "Default summary"
+	macro updateAPIApplication(parameter = null,aPIApplicationId = null,parameterValue = null) {
 		Variables.assertDefined(parameterList = "${aPIApplicationId},${parameter},${parameterValue}");
 
 		var curl = ApplicationAPI._curlAPIApplication(aPIApplicationId = ${aPIApplicationId});

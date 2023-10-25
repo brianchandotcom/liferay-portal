@@ -1,6 +1,7 @@
 definition {
 
-	macro collapsePanel {
+	@summary = "Default summary"
+	macro collapsePanel(panel = null) {
 		Portlet.waitForForm();
 
 		var key_panel = ${panel};
@@ -18,7 +19,8 @@ definition {
 		AssertElementPresent(locator1 = "Panel#PANEL_COLLAPSED");
 	}
 
-	macro expandPanel {
+	@summary = "Default summary"
+	macro expandPanel(panel = null) {
 		SetWindowSize(value1 = "1920,1540");
 
 		Portlet.waitForForm();

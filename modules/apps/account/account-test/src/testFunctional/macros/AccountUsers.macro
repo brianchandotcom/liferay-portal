@@ -1,6 +1,7 @@
 definition {
 
-	macro addUser {
+	@summary = "Default summary"
+	macro addUser(accountName = null,userLastName = null,userScreenName = null,userEmailAddress = null,userFirstName = null) {
 		LexiconEntry.gotoAdd();
 
 		SelectFrame(locator1 = "IFrame#SELECT_ACCOUNT");
@@ -39,7 +40,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro deactivateUser {
+	@summary = "Default summary"
+	macro deactivateUser(userFirstName = null) {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Deactivate",
 			rowEntry = ${userFirstName});
@@ -49,7 +51,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro editUser {
+	@summary = "Default summary"
+	macro editUser(password = null,editFirstName = null,accountUser = null,editScreenName = null,editEmailAddress = null,accountManagementWidget = null) {
 		if (${accountManagementWidget} == "true") {
 			LexiconEntry.gotoEntry(rowEntry = ${accountUser});
 		}
@@ -90,11 +93,13 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro openAccountUsersAdmin {
+	@summary = "Default summary"
+	macro openAccountUsersAdmin() {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_account_admin_web_internal_portlet_AccountUsersAdminPortlet");
 	}
 
-	macro removeAccount {
+	@summary = "Default summary"
+	macro removeAccount(accountName = null,accountUser = null) {
 		LexiconEntry.gotoEntry(rowEntry = ${accountUser});
 
 		Navigator.gotoNavUnderline(navUnderline = "General");
@@ -112,7 +117,8 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = ${accountName});
 	}
 
-	macro selectAccounts {
+	@summary = "Default summary"
+	macro selectAccounts(accountName = null) {
 		SelectFrame(locator1 = "IFrame#SELECT_ACCOUNTS");
 
 		Check(
@@ -126,7 +132,8 @@ definition {
 		AssertElementPresent(locator1 = "Search#SEARCH_INFO");
 	}
 
-	macro setUserPassword {
+	@summary = "Default summary"
+	macro setUserPassword(accountUser = null,accountUserPassword = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${accountUser});
@@ -150,7 +157,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro viewEntryAccounts {
+	@summary = "Default summary"
+	macro viewEntryAccounts(accountUserName = null,accountName = null) {
 		AssertElementPresent(
 			key_columnName = "lfr-accounts-column",
 			key_rowEntry = ${accountUserName},
@@ -158,7 +166,8 @@ definition {
 			value1 = ${accountName});
 	}
 
-	macro viewValidDomains {
+	@summary = "Default summary"
+	macro viewValidDomains(validDomainNames = null) {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		AssertClick(

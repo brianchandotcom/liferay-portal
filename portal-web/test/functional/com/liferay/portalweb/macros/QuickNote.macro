@@ -1,6 +1,7 @@
 definition {
 
-	macro addPG {
+	@summary = "Default summary"
+	macro addPG(noteContent = null) {
 		AssertTextEquals(
 			locator1 = "QuickNote#NOTE_CONTENT",
 			value1 = "Click to edit me...");

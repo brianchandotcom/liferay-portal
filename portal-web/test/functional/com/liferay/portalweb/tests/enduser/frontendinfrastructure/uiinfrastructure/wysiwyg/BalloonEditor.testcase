@@ -57,8 +57,8 @@ definition {
 			AssertElementPresent(locator1 = "CKEditorBalloonEditorSample#IMAGE");
 
 			AssertAttributeValue(
-				value1 = "style",
 				locator1 = "CKEditorBalloonEditorSample#IMAGE",
+				value1 = "style",
 				value2 = "float: right;");
 
 			takeScreenshot();
@@ -68,8 +68,8 @@ definition {
 			Click(locator1 = "CKEditor#ALIGN_IMG_LEFT_BUTTON");
 
 			AssertAttributeValue(
-				value1 = "style",
 				locator1 = "CKEditorBalloonEditorSample#IMAGE",
+				value1 = "style",
 				value2 = "float: left;");
 
 			takeScreenshot();
@@ -79,8 +79,8 @@ definition {
 			Click(locator1 = "CKEditor#ALIGN_IMG_CENTER_BUTTON");
 
 			AssertAttributeValue(
-				value1 = "style",
 				locator1 = "CKEditorBalloonEditorSample#IMAGE_PARAGRAPH",
+				value1 = "style",
 				value2 = "text-align: center;");
 
 			takeScreenshot();
@@ -107,8 +107,8 @@ definition {
 			Click(locator1 = "CKEditor#ALIGN_IMG_RIGHT_BUTTON");
 
 			AssertAttributeValue(
-				value1 = "style",
 				locator1 = "CKEditorBalloonEditorSample#VIDEO",
+				value1 = "style",
 				value2 = "width: 100%; float: right;");
 
 			takeScreenshot();
@@ -118,8 +118,8 @@ definition {
 			Click(locator1 = "CKEditor#ALIGN_IMG_LEFT_BUTTON");
 
 			AssertAttributeValue(
-				value1 = "style",
 				locator1 = "CKEditorBalloonEditorSample#VIDEO",
+				value1 = "style",
 				value2 = "width: 100%; float: left;");
 
 			takeScreenshot();
@@ -129,8 +129,8 @@ definition {
 			Click(locator1 = "CKEditor#ALIGN_IMG_CENTER_BUTTON");
 
 			AssertAttributeValue(
-				value1 = "style",
 				locator1 = "CKEditorBalloonEditorSample#VIDEO",
+				value1 = "style",
 				value2 = "width: 100%; display: block; margin-left: auto; margin-right: auto;");
 
 			takeScreenshot();
@@ -351,9 +351,9 @@ definition {
 			BalloonEditor.toggleBalloonEditorContentStyle(optionTool = "Center");
 
 			AssertAttributeValue(
-				value1 = "style",
 				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT",
 				paragraph_number = 1,
+				value1 = "style",
 				value2 = "text-align: center;");
 
 			takeScreenshot();
@@ -365,9 +365,9 @@ definition {
 			BalloonEditor.toggleBalloonEditorContentStyle(optionTool = "Align Right");
 
 			AssertAttributeValue(
-				value1 = "style",
 				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT",
 				paragraph_number = 1,
+				value1 = "style",
 				value2 = "text-align: right;");
 
 			takeScreenshot();
@@ -379,9 +379,9 @@ definition {
 			BalloonEditor.toggleBalloonEditorContentStyle(optionTool = "Justify");
 
 			AssertAttributeValue(
-				value1 = "style",
 				locator1 = "CKEditorBalloonEditorSample#BODY_TEXT",
 				paragraph_number = 1,
+				value1 = "style",
 				value2 = "text-align: justify;");
 
 			takeScreenshot();

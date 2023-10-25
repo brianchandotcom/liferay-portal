@@ -1,6 +1,7 @@
 definition {
 
-	macro _curlAPIFilter {
+	@summary = "Default summary"
+	macro _curlAPIFilter(virtualHost = null) {
 		if (isSet(virtualHost)) {
 			if (!(isSet(port))) {
 				var port = 8080;
@@ -23,7 +24,8 @@ definition {
 		return ${curl};
 	}
 
-	macro createAPIFilter {
+	@summary = "Default summary"
+	macro createAPIFilter(filterValue = null,endpointId = null,virtualHost = null) {
 		Variables.assertDefined(parameterList = "${filterValue},${endpointId}");
 
 		var curl = FilterAPI._curlAPIFilter(virtualHost = ${virtualHost});

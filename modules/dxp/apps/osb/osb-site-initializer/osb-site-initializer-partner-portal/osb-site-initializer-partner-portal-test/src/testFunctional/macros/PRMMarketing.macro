@@ -1,6 +1,7 @@
 definition {
 
-	macro gotoAddNewMDF {
+	@summary = "Default summary"
+	macro gotoAddNewMDF() {
 		Click(locator1 = "PRMMarketing#APPLY_FOR_FUNDS");
 	}
 

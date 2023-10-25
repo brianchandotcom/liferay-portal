@@ -1,6 +1,7 @@
 definition {
 
-	macro addPG {
+	@summary = "Default summary"
+	macro addPG(kbSuggestionBody = null) {
 		Click(locator1 = "KnowledgeBaseSuggestions#CONTENT_INPUT");
 
 		Type(
@@ -14,7 +15,8 @@ definition {
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 	}
 
-	macro deleteCP {
+	@summary = "Default summary"
+	macro deleteCP(kbSuggestionBody = null,kbArticleTitle = null) {
 		var key_kbArticleTitle = ${kbArticleTitle};
 		var key_kbSuggestionBody = ${kbSuggestionBody};
 		var key_rowEntry = ${kbSuggestionBody};
@@ -32,7 +34,8 @@ definition {
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 	}
 
-	macro gotoSuggestionStatusNew {
+	@summary = "Default summary"
+	macro gotoSuggestionStatusNew(suggestionCount = null,kbArticleTitle = null) {
 		var key_kbArticleTitle = ${kbArticleTitle};
 
 		AssertTextEquals.assertPartialText(
@@ -40,7 +43,8 @@ definition {
 			value1 = "NEW (${suggestionCount})");
 	}
 
-	macro moveToInProgressStatus {
+	@summary = "Default summary"
+	macro moveToInProgressStatus(kbSuggestionBody = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Move to In Progress",
 			rowEntry = ${kbSuggestionBody});
@@ -48,7 +52,8 @@ definition {
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 	}
 
-	macro moveToResolvedStatus {
+	@summary = "Default summary"
+	macro moveToResolvedStatus(kbSuggestionBody = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Resolve",
 			rowEntry = ${kbSuggestionBody});
@@ -56,7 +61,8 @@ definition {
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 	}
 
-	macro viewNoDuplicatePG {
+	@summary = "Default summary"
+	macro viewNoDuplicatePG(kbSuggestionUserName = null,kbThereAreSuggestionsLink = null,kbSuggestionBody = null,status = null) {
 		var key_kbSuggestionBody = ${kbSuggestionBody};
 
 		AssertTextEquals.assertPartialText(
@@ -78,11 +84,13 @@ definition {
 		AssertElementNotPresent(locator1 = "KnowledgeBaseSuggestions#CONTENT_DUPLICATE");
 	}
 
-	macro viewNoSuggestions {
+	@summary = "Default summary"
+	macro viewNoSuggestions() {
 		PortletEntry.viewEmptyMessage(entity = "Suggestions");
 	}
 
-	macro viewPG {
+	@summary = "Default summary"
+	macro viewPG(kbSuggestionUserName = null,kbSuggestionBody = null,status = null) {
 		var key_kbSuggestionBody = ${kbSuggestionBody};
 
 		AssertTextEquals.assertPartialText(
@@ -98,7 +106,8 @@ definition {
 			value1 = ${status});
 	}
 
-	macro viewSubmittedSuggestionCountNoPermissionPG {
+	@summary = "Default summary"
+	macro viewSubmittedSuggestionCountNoPermissionPG() {
 		var kbSuggestionCount = ${kbSuggestionCount};
 
 		AssertElementNotPresent(locator1 = "KnowledgeBaseSuggestions#NAVIGATION_BAR");
@@ -115,7 +124,8 @@ definition {
 		}
 	}
 
-	macro viewSuggestionStatus {
+	@summary = "Default summary"
+	macro viewSuggestionStatus(kbSuggestionBody = null,status = null) {
 		var key_kbSuggestionBody = ${kbSuggestionBody};
 
 		AssertTextEquals.assertPartialText(

@@ -1,6 +1,7 @@
 definition {
 
-	macro editAndDeleteRedirects {
+	@summary = "Default summary"
+	macro editAndDeleteRedirects() {
 		var portalURL = JSONCompany.getPortalURL();
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
@@ -14,7 +15,8 @@ definition {
 		Redirect.deleteEntry(sourceURL = "test-source-permanent-page");
 	}
 
-	macro ignore404URLs {
+	@summary = "Default summary"
+	macro ignore404URLs() {
 		var portalURL = JSONCompany.getPortalURL();
 
 		Redirect.open404URLsAdmin(siteURLKey = "test-site-name");
@@ -52,7 +54,8 @@ definition {
 		Redirect.view404URLsDefault();
 	}
 
-	macro viewAndAccessRedirects {
+	@summary = "Default summary"
+	macro viewAndAccessRedirects() {
 		var portalURL = JSONCompany.getPortalURL();
 
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");

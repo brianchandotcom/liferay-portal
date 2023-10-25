@@ -197,9 +197,9 @@ definition {
 
 		task ("View the Search is shown in Collection Filter") {
 			AssertAttributeValue(
-				value1 = "placeholder",
 				index = 1,
 				locator1 = "PageEditor#COLLECTION_FILTER_SEARCH_FIELD",
+				value1 = "placeholder",
 				value2 = "Search");
 		}
 

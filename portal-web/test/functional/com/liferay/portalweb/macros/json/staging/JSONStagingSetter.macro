@@ -1,6 +1,7 @@
 definition {
 
-	macro setAttributes {
+	@summary = "Default summary"
+	macro setAttributes(unCheckedContent = null) {
 		var list = ListUtil.newList();
 
 		ListUtil.add(${list}, "com_liferay_blogs_web_portlet_BlogsAdminPortlet");
@@ -58,7 +59,8 @@ definition {
 		return ${attributes};
 	}
 
-	macro setGroupId {
+	@summary = "Default summary"
+	macro setGroupId(groupKey = null) {
 		Variables.assertDefined(parameterList = ${groupKey});
 
 		if (!(isSet(site))) {

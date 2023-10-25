@@ -1,6 +1,7 @@
 definition {
 
-	macro openToConfigInInstanceSettings {
+	@summary = "Default summary"
+	macro openToConfigInInstanceSettings(portlet = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -26,7 +27,8 @@ definition {
 		takeScreenshot();
 	}
 
-	macro openToConfigInSystemSettings {
+	@summary = "Default summary"
+	macro openToConfigInSystemSettings(portlet = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {

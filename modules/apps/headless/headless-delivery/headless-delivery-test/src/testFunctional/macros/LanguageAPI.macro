@@ -1,6 +1,7 @@
 definition {
 
-	macro _getLanguages {
+	@summary = "Default summary"
+	macro _getLanguages(depotName = null,siteId = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(depotName)) {
@@ -23,13 +24,15 @@ definition {
 		return ${curl};
 	}
 
-	macro getAssetLibraryLanguages {
+	@summary = "Default summary"
+	macro getAssetLibraryLanguages(depotName = null) {
 		Variables.assertDefined(parameterList = ${depotName});
 
 		LanguageAPI._getLanguages(depotName = ${depotName});
 	}
 
-	macro getSiteLanguages {
+	@summary = "Default summary"
+	macro getSiteLanguages(groupName = null) {
 		Variables.assertDefined(parameterList = ${groupName});
 
 		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(

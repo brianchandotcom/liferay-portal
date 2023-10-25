@@ -1,6 +1,7 @@
 definition {
 
-	macro _openComments {
+	@summary = "Default summary"
+	macro _openComments() {
 		if (IsElementNotPresent.isNotVisible(locator1 = "CKEditor#BODY_FIELD_IFRAME")) {
 			AssertClick(
 				locator1 = "MyWorkflowTasksTask#COMMENTS",
@@ -8,7 +9,8 @@ definition {
 		}
 	}
 
-	macro _viewBody {
+	@summary = "Default summary"
+	macro _viewBody(workflowComment = null) {
 		var key_entryComment = ${workflowComment};
 
 		AssertTextEquals(
@@ -16,7 +18,8 @@ definition {
 			value1 = ${workflowComment});
 	}
 
-	macro add {
+	@summary = "Default summary"
+	macro add(workflowComment = null) {
 		WorkflowComment._openComments();
 
 		PageComment.reply(commentBody = ${workflowComment});
@@ -28,13 +31,15 @@ definition {
 		WorkflowComment._viewBody(workflowComment = ${workflowComment});
 	}
 
-	macro view {
+	@summary = "Default summary"
+	macro view(workflowComment = null) {
 		WorkflowComment._openComments();
 
 		WorkflowComment._viewBody(workflowComment = ${workflowComment});
 	}
 
-	macro viewCommentsNotPresent {
+	@summary = "Default summary"
+	macro viewCommentsNotPresent() {
 		WorkflowComment._openComments();
 
 		AssertElementNotPresent(locator1 = "Comments#COMMENT_BODY");

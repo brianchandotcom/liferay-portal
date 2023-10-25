@@ -79,7 +79,9 @@ module.exports = {
 						'highlight.js/lib/languages/javascript': '*',
 						'highlight.js/lib/languages/plaintext': '*',
 						'highlight.js/styles/monokai-sublime.css': '*',
+						'html-to-image': '*',
 						'image-promise': '*',
+						'jspdf': '*',
 						'liferay-ckeditor': '*',
 						'lodash.groupby': '*',
 						'lodash.isequal': '*',
@@ -366,6 +368,8 @@ module.exports = {
 			'@liferay/cookies-banner-web': [],
 			'@liferay/frontend-data-set-web': [],
 			'@liferay/frontend-js-dependencies-web': [
+				'html-to-image',
+				'jspdf',
 				'@liferay/js-api',
 				'@liferay/js-api/data-set',
 				'clipboard',

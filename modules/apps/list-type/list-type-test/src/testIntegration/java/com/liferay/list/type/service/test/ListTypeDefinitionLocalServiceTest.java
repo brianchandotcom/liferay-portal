@@ -110,17 +110,10 @@ public class ListTypeDefinitionLocalServiceTest {
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Collections.singletonList(objectField));
 
-		try {
-			_listTypeDefinitionLocalService.deleteListTypeDefinition(
-				listTypeDefinition.getListTypeDefinitionId());
-
-			Assert.fail();
-		}
-		catch (RequiredListTypeDefinitionException
-					requiredListTypeDefinitionException) {
-
-			Assert.assertNotNull(requiredListTypeDefinitionException);
-		}
+		AssertUtils.assertFailure(
+			RequiredListTypeDefinitionException.class, null,
+			() -> _listTypeDefinitionLocalService.deleteListTypeDefinition(
+				listTypeDefinition.getListTypeDefinitionId()));
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			objectDefinition.getObjectDefinitionId());

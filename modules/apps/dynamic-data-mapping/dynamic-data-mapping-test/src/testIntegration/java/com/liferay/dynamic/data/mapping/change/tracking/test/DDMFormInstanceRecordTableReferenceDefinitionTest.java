@@ -7,20 +7,13 @@ package com.liferay.dynamic.data.mapping.change.tracking.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.test.util.BaseTableReferenceDefinitionTestCase;
-import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
-import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormInstanceTestUtil;
-import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -51,43 +44,15 @@ public class DDMFormInstanceRecordTableReferenceDefinitionTest
 
 		_ddmFormInstance = DDMFormInstanceTestUtil.addDDMFormInstance(
 			group, TestPropsValues.getUserId());
-		_ddmStructure = DDMStructureTestUtil.addStructure(
-			group.getGroupId(), DDLRecordSet.class.getName());
-
-		_ddmFormValues = _createDDMFormValues();
 	}
 
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
 		return _ddmFormInstanceRecordLocalService.addFormInstanceRecord(
 			TestPropsValues.getUserId(), group.getGroupId(),
-			_ddmFormInstance.getFormInstanceId(), _ddmFormValues,
+			_ddmFormInstance.getFormInstanceId(),
+			DDMFormInstanceTestUtil.createSettingsDDMFormValues(),
 			ServiceContextTestUtil.getServiceContext());
-	}
-
-	private DDMFormField _createDDMFormField(
-		String dataType, String name, String type) {
-
-		DDMFormField ddmFormField = new DDMFormField(name, type);
-
-		ddmFormField.setDataType(dataType);
-		ddmFormField.setLocalizable(true);
-
-		return ddmFormField;
-	}
-
-	private DDMFormValues _createDDMFormValues() {
-		DDMFormField ddmFormField = _createDDMFormField(
-			null, "parent", "fieldset");
-
-		ddmFormField.addNestedDDMFormField(
-			_createDDMFormField("string", "child", "text"));
-
-		DDMForm ddmForm = _ddmStructure.getDDMForm();
-
-		ddmForm.setDDMFormFields(ListUtil.fromArray(ddmFormField));
-
-		return new DDMFormValues(ddmForm);
 	}
 
 	private DDMFormInstance _ddmFormInstance;
@@ -95,8 +60,5 @@ public class DDMFormInstanceRecordTableReferenceDefinitionTest
 	@Inject
 	private DDMFormInstanceRecordLocalService
 		_ddmFormInstanceRecordLocalService;
-
-	private DDMFormValues _ddmFormValues;
-	private DDMStructure _ddmStructure;
 
 }

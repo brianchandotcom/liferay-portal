@@ -4,6 +4,7 @@
  */
 
 import ClayLabel from '@clayui/label';
+import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import {ManagementToolbar} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
@@ -15,6 +16,7 @@ const ResultsBar = ({
 	itemsTotal,
 	searchContainerId,
 	searchValue,
+	title,
 }) => {
 	const resultsBarRef = useRef();
 
@@ -121,6 +123,12 @@ const ResultsBar = ({
 					</ClayLink>
 				</ManagementToolbar.ResultsBarItem>
 			</ManagementToolbar.ResultsBar>
+
+			{Liferay.FeatureFlags['LPS-198573'] && Boolean(title) && (
+				<ClayLayout.ContainerFluid className="c-mt-4" size="xl">
+					<h3>{title}</h3>
+				</ClayLayout.ContainerFluid>
+			)}
 		</>
 	);
 };

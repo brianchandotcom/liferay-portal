@@ -30,6 +30,10 @@ public class ManagementToolbarDefaults {
 		return DisplayTerms.KEYWORDS;
 	}
 
+	public static String getSearchResultsTitle() {
+		return "search-results";
+	}
+
 	public static Integer getSelectedItems() {
 		return 0;
 	}

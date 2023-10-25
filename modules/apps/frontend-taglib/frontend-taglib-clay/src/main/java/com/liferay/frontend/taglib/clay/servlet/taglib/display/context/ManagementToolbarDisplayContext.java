@@ -105,6 +105,10 @@ public interface ManagementToolbarDisplayContext {
 		return ManagementToolbarDefaults.getSearchInputName();
 	}
 
+	public default String getSearchResultsTitle() {
+		return ManagementToolbarDefaults.getSearchResultsTitle();
+	}
+
 	public default String getSearchValue() {
 		return null;
 	}

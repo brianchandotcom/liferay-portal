@@ -257,6 +257,26 @@ public class ManagementToolbarTag extends BaseContainerTag {
 		return _searchInputName;
 	}
 
+	public String getSearchResultsTitle() {
+		String searchResultsTitle = _searchResultsTitle;
+
+		if (searchResultsTitle == null) {
+			if (_managementToolbarDisplayContext != null) {
+				searchResultsTitle =
+					_managementToolbarDisplayContext.getSearchResultsTitle();
+			}
+
+			if (searchResultsTitle == null) {
+				searchResultsTitle =
+					ManagementToolbarDefaults.getSearchResultsTitle();
+			}
+		}
+
+		return LanguageUtil.get(
+			TagResourceBundleUtil.getResourceBundle(pageContext),
+			searchResultsTitle);
+	}
+
 	public String getSearchValue() {
 		if ((_searchValue == null) &&
 			(_managementToolbarDisplayContext != null)) {
@@ -510,6 +530,10 @@ public class ManagementToolbarTag extends BaseContainerTag {
 		_searchInputName = searchInputName;
 	}
 
+	public void setSearchResultsTitle(String searchResultsTitle) {
+		_searchResultsTitle = searchResultsTitle;
+	}
+
 	public void setSearchValue(String searchValue) {
 		_searchValue = searchValue;
 	}
@@ -611,6 +635,7 @@ public class ManagementToolbarTag extends BaseContainerTag {
 		_searchFormName = null;
 		_searchInputAutoFocus = null;
 		_searchInputName = null;
+		_searchResultsTitle = null;
 		_searchValue = null;
 		_selectable = null;
 		_selectAllURL = null;
@@ -673,6 +698,11 @@ public class ManagementToolbarTag extends BaseContainerTag {
 		props.put("searchInputAutoFocus", isSearchInputAutoFocus());
 		props.put(
 			"searchInputName", _namespace(namespace, getSearchInputName()));
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-198573")) {
+			props.put("searchResultsTitle", getSearchResultsTitle());
+		}
+
 		props.put("searchValue", getSearchValue());
 		props.put("selectAllURL", getSelectAllURL());
 		props.put("selectable", isSelectable());
@@ -1304,6 +1334,17 @@ public class ManagementToolbarTag extends BaseContainerTag {
 			jspWriter.write("</div></li></ul></div></nav>");
 		}
 
+		String searchResultsTitle = getSearchResultsTitle();
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-198573") &&
+			isShowResultsBar() && Validator.isNotNull(searchResultsTitle)) {
+
+			jspWriter.write("<div class=\"c-mt-4 container-fluid ");
+			jspWriter.write("container-fluid-max-xl\"><h3>");
+			jspWriter.write(searchResultsTitle);
+			jspWriter.write("<h3></div>");
+		}
+
 		return SKIP_BODY;
 	}
 
@@ -1421,6 +1462,7 @@ public class ManagementToolbarTag extends BaseContainerTag {
 	private String _searchFormName;
 	private Boolean _searchInputAutoFocus;
 	private String _searchInputName;
+	private String _searchResultsTitle;
 	private String _searchValue;
 	private Boolean _selectable;
 	private String _selectAllURL;

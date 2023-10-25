@@ -58,6 +58,7 @@ function ManagementToolbar({
 	searchFormName,
 	searchInputAutoFocus,
 	searchInputName,
+	searchResultsTitle,
 	searchValue,
 	selectAllURL,
 	selectable,
@@ -287,6 +288,7 @@ function ManagementToolbar({
 					itemsTotal={itemsTotal}
 					searchContainerId={searchContainerId}
 					searchValue={searchValue}
+					title={searchResultsTitle}
 				/>
 			)}
 		</FeatureFlagContext.Provider>
@@ -325,6 +327,7 @@ ManagementToolbar.propTypes = {
 	searchFormMethod: PropTypes.string,
 	searchFormName: PropTypes.string,
 	searchInputName: PropTypes.string,
+	searchResultsTitle: PropTypes.string,
 	searchValue: PropTypes.string,
 	selectAllURL: PropTypes.string,
 	selectable: PropTypes.bool,

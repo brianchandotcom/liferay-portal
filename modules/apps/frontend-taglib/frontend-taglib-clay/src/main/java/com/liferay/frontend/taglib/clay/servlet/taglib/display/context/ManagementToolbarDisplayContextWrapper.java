@@ -136,6 +136,11 @@ public class ManagementToolbarDisplayContextWrapper
 	}
 
 	@Override
+	public String getSearchResultsTitle() {
+		return _managementToolbarDisplayContext.getSearchResultsTitle();
+	}
+
+	@Override
 	public String getSearchValue() {
 		return _managementToolbarDisplayContext.getSearchValue();
 	}

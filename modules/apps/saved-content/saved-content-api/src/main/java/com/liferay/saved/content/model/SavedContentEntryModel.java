@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedAuditedModel;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
 import java.util.Date;
@@ -31,7 +32,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SavedContentEntryModel
 	extends AttachedModel, BaseModel<SavedContentEntry>,
-			CTModel<SavedContentEntry>, GroupedModel, MVCCModel, ShardedModel {
+			CTModel<SavedContentEntry>, GroupedModel, MVCCModel, ShardedModel,
+			StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -86,6 +88,23 @@ public interface SavedContentEntryModel
 	 */
 	@Override
 	public void setCtCollectionId(long ctCollectionId);
+
+	/**
+	 * Returns the uuid of this saved content entry.
+	 *
+	 * @return the uuid of this saved content entry
+	 */
+	@AutoEscape
+	@Override
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this saved content entry.
+	 *
+	 * @param uuid the uuid of this saved content entry
+	 */
+	@Override
+	public void setUuid(String uuid);
 
 	/**
 	 * Returns the saved content entry ID of this saved content entry.

@@ -7,9 +7,11 @@ package com.liferay.saved.content.model.impl;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
@@ -51,6 +53,7 @@ import java.util.function.Function;
  * @see SavedContentEntryImpl
  * @generated
  */
+@JSON(strict = true)
 public class SavedContentEntryModelImpl
 	extends BaseModelImpl<SavedContentEntry> implements SavedContentEntryModel {
 
@@ -63,11 +66,11 @@ public class SavedContentEntryModelImpl
 
 	public static final Object[][] TABLE_COLUMNS = {
 		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
-		{"savedContentEntryId", Types.BIGINT}, {"groupId", Types.BIGINT},
-		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
-		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
-		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}
+		{"uuid_", Types.VARCHAR}, {"savedContentEntryId", Types.BIGINT},
+		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
+		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -76,6 +79,7 @@ public class SavedContentEntryModelImpl
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ctCollectionId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("savedContentEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -88,7 +92,7 @@ public class SavedContentEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SavedContentEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,savedContentEntryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,primary key (savedContentEntryId, ctCollectionId))";
+		"create table SavedContentEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,savedContentEntryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,primary key (savedContentEntryId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table SavedContentEntry";
 
@@ -135,11 +139,17 @@ public class SavedContentEntryModelImpl
 	public static final long USERID_COLUMN_BITMASK = 16L;
 
 	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 32L;
+
+	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long SAVEDCONTENTENTRYID_COLUMN_BITMASK = 32L;
+	public static final long SAVEDCONTENTENTRYID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -255,6 +265,7 @@ public class SavedContentEntryModelImpl
 				"mvccVersion", SavedContentEntry::getMvccVersion);
 			attributeGetterFunctions.put(
 				"ctCollectionId", SavedContentEntry::getCtCollectionId);
+			attributeGetterFunctions.put("uuid", SavedContentEntry::getUuid);
 			attributeGetterFunctions.put(
 				"savedContentEntryId",
 				SavedContentEntry::getSavedContentEntryId);
@@ -301,6 +312,10 @@ public class SavedContentEntryModelImpl
 				(BiConsumer<SavedContentEntry, Long>)
 					SavedContentEntry::setCtCollectionId);
 			attributeSetterBiConsumers.put(
+				"uuid",
+				(BiConsumer<SavedContentEntry, String>)
+					SavedContentEntry::setUuid);
+			attributeSetterBiConsumers.put(
 				"savedContentEntryId",
 				(BiConsumer<SavedContentEntry, Long>)
 					SavedContentEntry::setSavedContentEntryId);
@@ -343,6 +358,7 @@ public class SavedContentEntryModelImpl
 
 	}
 
+	@JSON
 	@Override
 	public long getMvccVersion() {
 		return _mvccVersion;
@@ -357,6 +373,7 @@ public class SavedContentEntryModelImpl
 		_mvccVersion = mvccVersion;
 	}
 
+	@JSON
 	@Override
 	public long getCtCollectionId() {
 		return _ctCollectionId;
@@ -371,6 +388,36 @@ public class SavedContentEntryModelImpl
 		_ctCollectionId = ctCollectionId;
 	}
 
+	@JSON
+	@Override
+	public String getUuid() {
+		if (_uuid == null) {
+			return "";
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	@Override
+	public void setUuid(String uuid) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_uuid = uuid;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalUuid() {
+		return getColumnOriginalValue("uuid_");
+	}
+
+	@JSON
 	@Override
 	public long getSavedContentEntryId() {
 		return _savedContentEntryId;
@@ -385,6 +432,7 @@ public class SavedContentEntryModelImpl
 		_savedContentEntryId = savedContentEntryId;
 	}
 
+	@JSON
 	@Override
 	public long getGroupId() {
 		return _groupId;
@@ -408,6 +456,7 @@ public class SavedContentEntryModelImpl
 		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("groupId"));
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -432,6 +481,7 @@ public class SavedContentEntryModelImpl
 			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -471,6 +521,7 @@ public class SavedContentEntryModelImpl
 		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("userId"));
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -490,6 +541,7 @@ public class SavedContentEntryModelImpl
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -504,6 +556,7 @@ public class SavedContentEntryModelImpl
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -544,6 +597,7 @@ public class SavedContentEntryModelImpl
 		setClassNameId(classNameId);
 	}
 
+	@JSON
 	@Override
 	public long getClassNameId() {
 		return _classNameId;
@@ -568,6 +622,7 @@ public class SavedContentEntryModelImpl
 			this.<Long>getColumnOriginalValue("classNameId"));
 	}
 
+	@JSON
 	@Override
 	public long getClassPK() {
 		return _classPK;
@@ -589,6 +644,13 @@ public class SavedContentEntryModelImpl
 	@Deprecated
 	public long getOriginalClassPK() {
 		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("classPK"));
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(
+			PortalUtil.getClassNameId(SavedContentEntry.class.getName()),
+			getClassNameId());
 	}
 
 	public long getColumnBitmask() {
@@ -650,6 +712,7 @@ public class SavedContentEntryModelImpl
 
 		savedContentEntryImpl.setMvccVersion(getMvccVersion());
 		savedContentEntryImpl.setCtCollectionId(getCtCollectionId());
+		savedContentEntryImpl.setUuid(getUuid());
 		savedContentEntryImpl.setSavedContentEntryId(getSavedContentEntryId());
 		savedContentEntryImpl.setGroupId(getGroupId());
 		savedContentEntryImpl.setCompanyId(getCompanyId());
@@ -674,6 +737,8 @@ public class SavedContentEntryModelImpl
 			this.<Long>getColumnOriginalValue("mvccVersion"));
 		savedContentEntryImpl.setCtCollectionId(
 			this.<Long>getColumnOriginalValue("ctCollectionId"));
+		savedContentEntryImpl.setUuid(
+			this.<String>getColumnOriginalValue("uuid_"));
 		savedContentEntryImpl.setSavedContentEntryId(
 			this.<Long>getColumnOriginalValue("savedContentEntryId"));
 		savedContentEntryImpl.setGroupId(
@@ -773,6 +838,14 @@ public class SavedContentEntryModelImpl
 		savedContentEntryCacheModel.mvccVersion = getMvccVersion();
 
 		savedContentEntryCacheModel.ctCollectionId = getCtCollectionId();
+
+		savedContentEntryCacheModel.uuid = getUuid();
+
+		String uuid = savedContentEntryCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			savedContentEntryCacheModel.uuid = null;
+		}
 
 		savedContentEntryCacheModel.savedContentEntryId =
 			getSavedContentEntryId();
@@ -877,6 +950,7 @@ public class SavedContentEntryModelImpl
 
 	private long _mvccVersion;
 	private long _ctCollectionId;
+	private String _uuid;
 	private long _savedContentEntryId;
 	private long _groupId;
 	private long _companyId;
@@ -889,6 +963,8 @@ public class SavedContentEntryModelImpl
 	private long _classPK;
 
 	public <T> T getColumnValue(String columnName) {
+		columnName = _attributeNames.getOrDefault(columnName, columnName);
+
 		Function<SavedContentEntry, Object> function =
 			AttributeGetterFunctionsHolder._attributeGetterFunctions.get(
 				columnName);
@@ -918,6 +994,7 @@ public class SavedContentEntryModelImpl
 
 		_columnOriginalValues.put("mvccVersion", _mvccVersion);
 		_columnOriginalValues.put("ctCollectionId", _ctCollectionId);
+		_columnOriginalValues.put("uuid_", _uuid);
 		_columnOriginalValues.put("savedContentEntryId", _savedContentEntryId);
 		_columnOriginalValues.put("groupId", _groupId);
 		_columnOriginalValues.put("companyId", _companyId);
@@ -927,6 +1004,16 @@ public class SavedContentEntryModelImpl
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("classNameId", _classNameId);
 		_columnOriginalValues.put("classPK", _classPK);
+	}
+
+	private static final Map<String, String> _attributeNames;
+
+	static {
+		Map<String, String> attributeNames = new HashMap<>();
+
+		attributeNames.put("uuid_", "uuid");
+
+		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;
@@ -944,23 +1031,25 @@ public class SavedContentEntryModelImpl
 
 		columnBitmasks.put("ctCollectionId", 2L);
 
-		columnBitmasks.put("savedContentEntryId", 4L);
+		columnBitmasks.put("uuid_", 4L);
 
-		columnBitmasks.put("groupId", 8L);
+		columnBitmasks.put("savedContentEntryId", 8L);
 
-		columnBitmasks.put("companyId", 16L);
+		columnBitmasks.put("groupId", 16L);
 
-		columnBitmasks.put("userId", 32L);
+		columnBitmasks.put("companyId", 32L);
 
-		columnBitmasks.put("userName", 64L);
+		columnBitmasks.put("userId", 64L);
 
-		columnBitmasks.put("createDate", 128L);
+		columnBitmasks.put("userName", 128L);
 
-		columnBitmasks.put("modifiedDate", 256L);
+		columnBitmasks.put("createDate", 256L);
 
-		columnBitmasks.put("classNameId", 512L);
+		columnBitmasks.put("modifiedDate", 512L);
 
-		columnBitmasks.put("classPK", 1024L);
+		columnBitmasks.put("classNameId", 1024L);
+
+		columnBitmasks.put("classPK", 2048L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

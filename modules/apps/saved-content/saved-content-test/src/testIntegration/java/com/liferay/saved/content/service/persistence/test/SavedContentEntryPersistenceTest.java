@@ -120,6 +120,8 @@ public class SavedContentEntryPersistenceTest {
 
 		newSavedContentEntry.setCtCollectionId(RandomTestUtil.nextLong());
 
+		newSavedContentEntry.setUuid(RandomTestUtil.randomString());
+
 		newSavedContentEntry.setGroupId(RandomTestUtil.nextLong());
 
 		newSavedContentEntry.setCompanyId(RandomTestUtil.nextLong());
@@ -148,6 +150,9 @@ public class SavedContentEntryPersistenceTest {
 			existingSavedContentEntry.getCtCollectionId(),
 			newSavedContentEntry.getCtCollectionId());
 		Assert.assertEquals(
+			existingSavedContentEntry.getUuid(),
+			newSavedContentEntry.getUuid());
+		Assert.assertEquals(
 			existingSavedContentEntry.getSavedContentEntryId(),
 			newSavedContentEntry.getSavedContentEntryId());
 		Assert.assertEquals(
@@ -174,6 +179,33 @@ public class SavedContentEntryPersistenceTest {
 		Assert.assertEquals(
 			existingSavedContentEntry.getClassPK(),
 			newSavedContentEntry.getClassPK());
+	}
+
+	@Test
+	public void testCountByUuid() throws Exception {
+		_persistence.countByUuid("");
+
+		_persistence.countByUuid("null");
+
+		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUUID_G() throws Exception {
+		_persistence.countByUUID_G("", RandomTestUtil.nextLong());
+
+		_persistence.countByUUID_G("null", 0L);
+
+		_persistence.countByUUID_G((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C("", RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C("null", 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -255,12 +287,18 @@ public class SavedContentEntryPersistenceTest {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
 	}
 
+	@Test
+	public void testFilterFindByGroupId() throws Exception {
+		_persistence.filterFindByGroupId(
+			0, QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+	}
+
 	protected OrderByComparator<SavedContentEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"SavedContentEntry", "mvccVersion", true, "ctCollectionId", true,
-			"savedContentEntryId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "classNameId", true, "classPK", true);
+			"uuid", true, "savedContentEntryId", true, "groupId", true,
+			"companyId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "classNameId", true, "classPK", true);
 	}
 
 	@Test
@@ -537,6 +575,17 @@ public class SavedContentEntryPersistenceTest {
 
 	private void _assertOriginalValues(SavedContentEntry savedContentEntry) {
 		Assert.assertEquals(
+			savedContentEntry.getUuid(),
+			ReflectionTestUtil.invoke(
+				savedContentEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "uuid_"));
+		Assert.assertEquals(
+			Long.valueOf(savedContentEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				savedContentEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
+
+		Assert.assertEquals(
 			Long.valueOf(savedContentEntry.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(
 				savedContentEntry, "getColumnOriginalValue",
@@ -566,6 +615,8 @@ public class SavedContentEntryPersistenceTest {
 		savedContentEntry.setMvccVersion(RandomTestUtil.nextLong());
 
 		savedContentEntry.setCtCollectionId(RandomTestUtil.nextLong());
+
+		savedContentEntry.setUuid(RandomTestUtil.randomString());
 
 		savedContentEntry.setGroupId(RandomTestUtil.nextLong());
 

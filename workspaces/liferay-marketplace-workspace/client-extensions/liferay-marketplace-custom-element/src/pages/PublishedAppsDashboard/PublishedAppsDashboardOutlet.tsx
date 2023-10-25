@@ -13,7 +13,11 @@ import {Liferay} from '../../liferay/liferay';
 import HeadlessAdminUserImpl from '../../services/rest/HeadlessAdminUser';
 
 import './PublishedAppsDashboard.scss';
-import {getAccounts, getAccountInfoFromCommerce, getProducts} from '../../utils/api';
+import {
+	getAccountInfoFromCommerce,
+	getAccounts,
+	getProducts,
+} from '../../utils/api';
 import {
 	getProductVersionFromSpecifications,
 	showAccountImage,
@@ -78,7 +82,7 @@ const PublishedAppsDashboardOutlet = () => {
 
 		return accounts.items ?? [];
 	});
-	
+
 	const selectedAccount = useAccountCached(accounts ?? [], accountId);
 
 	const catalogId = useMemo(() => {

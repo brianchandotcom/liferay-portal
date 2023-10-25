@@ -101,7 +101,7 @@ export function MembersPage({
 		isCustomerDashboard,
 		isPublisherDashboard,
 		selectedAccount,
-	});	
+	});
 
 	return (
 		<>
@@ -115,14 +115,12 @@ export function MembersPage({
 			) : (
 				<DashboardPage
 					buttonMessage={
-							myUserAccount.isAdminAccount && (
-					
-								<>
-									<ClayIcon className="mr-1" symbol="plus" />
-									New Member
-								</>
-							
-								)
+						myUserAccount.isAdminAccount && (
+							<>
+								<ClayIcon className="mr-1" symbol="plus" />
+								New Member
+							</>
+						)
 					}
 					messages={memberMessages}
 					onButtonClick={() => setVisible(true)}

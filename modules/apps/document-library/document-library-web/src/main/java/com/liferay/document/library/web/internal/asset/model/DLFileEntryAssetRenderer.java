@@ -269,6 +269,20 @@ public class DLFileEntryAssetRenderer
 	}
 
 	@Override
+	public String getURLShare(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return _dlURLHelper.getPreviewURL(
+			_fileEntry, _fileVersion, themeDisplay, StringPool.BLANK, false,
+			true);
+	}
+
+	@Override
 	public String getURLView(
 			LiferayPortletResponse liferayPortletResponse,
 			WindowState windowState)

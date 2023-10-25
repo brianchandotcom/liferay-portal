@@ -135,6 +135,11 @@ public interface AssetRenderer<T> extends Renderer {
 	public String getURLImagePreview(PortletRequest portletRequest)
 		throws Exception;
 
+	public String getURLShare(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse)
+		throws Exception;
+
 	public String getUrlTitle();
 
 	public String getUrlTitle(Locale locale);

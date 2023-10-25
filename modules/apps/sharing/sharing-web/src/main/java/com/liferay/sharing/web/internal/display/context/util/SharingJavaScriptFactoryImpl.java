@@ -15,12 +15,16 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sharing.display.context.util.SharingJavaScriptFactory;
 import com.liferay.sharing.web.internal.util.SharingJavaScriptThreadLocal;
 
 import java.util.Locale;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,10 +39,12 @@ import org.osgi.service.component.annotations.Reference;
 public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 
 	@Override
-	public String createCopyLinkClickMethod(String className, long classPK) {
+	public String createCopyLinkClickMethod(
+		String className, long classPK, HttpServletRequest httpServletRequest) {
+
 		requestSharingJavascript();
 
-		String link = className + "_" + classPK;
+		String link = _getAssetURLShare(className, classPK, httpServletRequest);
 
 		return StringBundler.concat("Liferay.Sharing.copyLink('", link, "')");
 	}
@@ -75,20 +81,33 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 		SharingJavaScriptThreadLocal.setSharingJavaScriptNeeded(true);
 	}
 
+	private AssetRenderer<?> _getAssetRenderer(String className, long classPK)
+		throws PortalException {
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				className);
+
+		if (assetRendererFactory == null) {
+			return null;
+		}
+
+		AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(
+			classPK);
+
+		if (assetRenderer == null) {
+			return null;
+		}
+
+		return assetRenderer;
+	}
+
 	private String _getAssetTitle(
 		String className, long classPK, Locale locale) {
 
 		try {
-			AssetRendererFactory<?> assetRendererFactory =
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassName(className);
-
-			if (assetRendererFactory == null) {
-				return null;
-			}
-
-			AssetRenderer<?> assetRenderer =
-				assetRendererFactory.getAssetRenderer(classPK);
+			AssetRenderer<?> assetRenderer = _getAssetRenderer(
+				className, classPK);
 
 			if (assetRenderer == null) {
 				return null;
@@ -102,6 +121,37 @@ public class SharingJavaScriptFactoryImpl implements SharingJavaScriptFactory {
 					"Unable to get asset renderer with class primary key " +
 						classPK,
 					portalException);
+			}
+
+			return null;
+		}
+	}
+
+	private String _getAssetURLShare(
+		String className, long classPK, HttpServletRequest httpServletRequest) {
+
+		try {
+			AssetRenderer<?> assetRenderer = _getAssetRenderer(
+				className, classPK);
+
+			if (assetRenderer == null) {
+				return null;
+			}
+
+			return assetRenderer.getURLShare(
+				_portal.getLiferayPortletRequest(
+					(PortletRequest)httpServletRequest.getAttribute(
+						JavaConstants.JAVAX_PORTLET_REQUEST)),
+				_portal.getLiferayPortletResponse(
+					(PortletResponse)httpServletRequest.getAttribute(
+						JavaConstants.JAVAX_PORTLET_RESPONSE)));
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get asset renderer with class primary key " +
+						classPK,
+					exception);
 			}
 
 			return null;

@@ -220,6 +220,14 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 	}
 
 	@Override
+	public String getURLShare(
+		LiferayPortletRequest liferayPortletRequest,
+		LiferayPortletResponse liferayPortletResponse) {
+
+		return null;
+	}
+
+	@Override
 	public String getUrlTitle() {
 		return null;
 	}

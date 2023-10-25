@@ -17,30 +17,50 @@ portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 %>
 
-<clay:vertical-nav
-	verticalNavItems="<%= selectSiteInitializerDisplayContext.getVerticalNavItemList() %>"
-/>
-
-<aui:form cssClass="container-fluid container-fluid-max-xl" name="fm">
-	<liferay-ui:search-container
-		searchContainer="<%= selectSiteInitializerDisplayContext.getSearchContainer() %>"
-	>
-		<liferay-ui:search-container-row
-			className="com.liferay.site.admin.web.internal.util.SiteInitializerItem"
-			keyProperty="key"
-			modelVar="siteInitializerItem"
+<clay:container-fluid
+	cssClass="container-view"
+>
+	<clay:row>
+		<clay:col
+			lg="3"
 		>
-			<liferay-ui:search-container-column-text>
-				<clay:vertical-card
-					propsTransformer="js/SelectSiteInitializerVerticalCardPropsTransformer"
-					verticalCard="<%= new SelectSiteInitializerVerticalCard(siteInitializerItem, renderRequest, renderResponse) %>"
-				/>
-			</liferay-ui:search-container-column-text>
-		</liferay-ui:search-container-row>
+			<clay:vertical-nav
+				verticalNavItems="<%= selectSiteInitializerDisplayContext.getVerticalNavItemList() %>"
+			/>
+		</clay:col>
 
-		<liferay-ui:search-iterator
-			displayStyle="icon"
-			markupView="lexicon"
-		/>
-	</liferay-ui:search-container>
-</aui:form>
+		<clay:col
+			lg="9"
+		>
+			<clay:sheet
+				size="full"
+			>
+				<h2 class="sheet-title"><%= selectSiteInitializerDisplayContext.getTitle() %></h2>
+
+				<aui:form name="fm">
+					<liferay-ui:search-container
+						searchContainer="<%= selectSiteInitializerDisplayContext.getSearchContainer() %>"
+					>
+						<liferay-ui:search-container-row
+							className="com.liferay.site.admin.web.internal.util.SiteInitializerItem"
+							keyProperty="key"
+							modelVar="siteInitializerItem"
+						>
+							<liferay-ui:search-container-column-text>
+								<clay:vertical-card
+									propsTransformer="js/SelectSiteInitializerVerticalCardPropsTransformer"
+									verticalCard="<%= new SelectSiteInitializerVerticalCard(siteInitializerItem, renderRequest, renderResponse) %>"
+								/>
+							</liferay-ui:search-container-column-text>
+						</liferay-ui:search-container-row>
+
+						<liferay-ui:search-iterator
+							displayStyle="icon"
+							markupView="lexicon"
+						/>
+					</liferay-ui:search-container>
+				</aui:form>
+			</clay:sheet>
+		</clay:col>
+	</clay:row>
+</clay:container-fluid>

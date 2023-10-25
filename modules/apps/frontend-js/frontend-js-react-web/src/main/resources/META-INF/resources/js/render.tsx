@@ -95,9 +95,9 @@ export default function render(
 			if (children.length) {
 				renderData.children = children;
 			}
-
-			delete renderData.hasBodyContent;
 		}
+
+		delete renderData.hasBodyContent;
 
 		// eslint-disable-next-line @liferay/portal/no-react-dom-render
 		ReactDOM.render(

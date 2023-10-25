@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.model.ResourcePermissionConstants;
 import com.liferay.portal.kernel.model.ResourcePermissionTable;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -55,7 +56,6 @@ import com.liferay.portal.kernel.spring.aop.Retry;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.impl.ResourceImpl;
@@ -2032,7 +2032,7 @@ public class ResourcePermissionLocalServiceImpl
 
 		IndividualPortletResourcePermissionProvider
 			individualPortletResourcePermissionProvider =
-				_individualPortletResourcePermissionProvider;
+				_individualPortletResourcePermissionProviderSnapshot.get();
 
 		List<ResourcePermission> resourcePermissions = null;
 
@@ -2303,13 +2303,10 @@ public class ResourcePermissionLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		ResourcePermissionLocalServiceImpl.class);
 
-	private static volatile IndividualPortletResourcePermissionProvider
-		_individualPortletResourcePermissionProvider =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				IndividualPortletResourcePermissionProvider.class,
-				ResourcePermissionLocalServiceImpl.class,
-				"_individualPortletResourcePermissionProvider", null, false,
-				true);
+	private static final Snapshot<IndividualPortletResourcePermissionProvider>
+		_individualPortletResourcePermissionProviderSnapshot = new Snapshot<>(
+			ResourcePermissionLocalServiceImpl.class,
+			IndividualPortletResourcePermissionProvider.class);
 
 	@BeanReference(type = ResourceActionLocalService.class)
 	private ResourceActionLocalService _resourceActionLocalService;

@@ -19,3 +19,13 @@ so the correct message on **What** section should be
 modules/apps/frontend-taglib/frontend-taglib-chart/src/main/resources/META-INF/liferay-chart.tld
 
 ----
+
+# 87a3c8bf38374f1987debdcedaed7f9e7a0dfdbc
+
+On the message of the commit 87a3c8bf38374f1987debdcedaed7f9e7a0dfdbc the file path is not the complete path:
+
+so the correct message on **What** section should be
+
+modules/apps/frontend-taglib/frontend-taglib-clay/src/main/java/com/liferay/frontend/taglib/clay/servlet/taglib/base/BaseClayTag.java
+
+----

@@ -181,7 +181,9 @@ definition {
 
 		selenium.waitForElementPresent(${locator1}, "false");
 
-		selenium.pause(3000);
+		selenium.waitForEditable();
+
+		selenium.pause(1000);
 
 		Click();
 

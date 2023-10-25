@@ -3,12 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+const FULL = 'full';
 const LARGE = 'lg';
 const SMALL = 'sm';
 
 export const CLAY_MODAL_SIZES_MAP = {
 	DEFAULT: null,
-	FULL_SCREEN: 'full-screen',
+	[FULL]: 'full-screen',
 	[LARGE]: 'lg',
 	[SMALL]: 'sm',
 };

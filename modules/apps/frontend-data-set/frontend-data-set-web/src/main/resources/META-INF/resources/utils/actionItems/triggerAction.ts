@@ -3,9 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {OPEN_MODAL, OPEN_SIDE_PANEL} from '../eventsDefinitions';
-import {liferayNavigate} from '../index';
-import {resolveModalSize} from '../modals/index';
+import {navigate} from 'frontend-js-web';
+
+import {IFrontendDataSetContext} from '../../FrontendDataSetContext';
+import {ICreationActionItem} from '../../management_bar/components/CreationMenu';
+import {OPEN_MODAL, OPEN_SIDE_PANEL} from '../../utils/eventsDefinitions';
+import {resolveModalSize} from '../../utils/modals/resolveModalSize';
 import {ACTION_ITEM_TARGETS} from './constants';
 
 const {
@@ -18,7 +21,10 @@ const {
 	SIDE_PANEL,
 } = ACTION_ITEM_TARGETS;
 
-export function triggerAction(item, context) {
+export function triggerAction(
+	item: ICreationActionItem,
+	context: IFrontendDataSetContext
+) {
 	const {href: actionTargetURL, target: actionTarget} = item;
 	const {loadData, modalId, sidePanelId} = context;
 
@@ -50,7 +56,7 @@ export function triggerAction(item, context) {
 			Liferay.fire(actionTargetURL);
 			break;
 		default:
-			liferayNavigate(actionTargetURL);
+			navigate(actionTargetURL);
 			break;
 	}
 }

@@ -7,11 +7,32 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
-import {triggerAction} from '../../utils/actionItems/index';
+import {triggerAction} from '../../utils/actionItems/triggerAction';
+
+export interface ICreationActionItem {
+	data?: {
+		permissionKey?: string;
+		size?: string;
+		title?: string;
+		type?: string;
+	};
+	href: string;
+	icon?: string;
+	label: string;
+	onClick: Function;
+	target:
+		| 'event'
+		| 'link'
+		| 'modal'
+		| 'modal-full-screen'
+		| 'modal-lg'
+		| 'modal-sm'
+		| 'sidePanel';
+	type: string;
+}
 
 const EMPTY_STATE_BUTTON_PROPS = {
 	'aria-label': undefined,
@@ -20,7 +41,13 @@ const EMPTY_STATE_BUTTON_PROPS = {
 	'title': undefined,
 };
 
-const DropDown = ({inEmptyState, primaryItems}) => {
+const DropDown = ({
+	inEmptyState,
+	primaryItems,
+}: {
+	inEmptyState: any;
+	primaryItems: Array<ICreationActionItem>;
+}) => {
 	const frontendDataSetContext = useContext(FrontendDataSetContext);
 
 	const {loadData} = frontendDataSetContext;
@@ -36,7 +63,7 @@ const DropDown = ({inEmptyState, primaryItems}) => {
 					aria-label={Liferay.Language.get('new')}
 					className="nav-btn nav-btn-monospaced"
 					title={Liferay.Language.get('new')}
-					{...(inEmptyState ? EMPTY_STATE_BUTTON_PROPS : {})}
+					{...(inEmptyState && EMPTY_STATE_BUTTON_PROPS)}
 				>
 					{inEmptyState ? (
 						Liferay.Language.get('new')
@@ -78,7 +105,13 @@ const DropDown = ({inEmptyState, primaryItems}) => {
 	);
 };
 
-function CreationMenu({inEmptyState, primaryItems}) {
+function CreationMenu({
+	inEmptyState,
+	primaryItems,
+}: {
+	inEmptyState: any;
+	primaryItems: Array<ICreationActionItem>;
+}) {
 	const frontendDataSetContext = useContext(FrontendDataSetContext);
 
 	const {loadData} = frontendDataSetContext;
@@ -113,7 +146,7 @@ function CreationMenu({inEmptyState, primaryItems}) {
 								}
 							}}
 							title={primaryItems[0].label}
-							{...(inEmptyState ? EMPTY_STATE_BUTTON_PROPS : {})}
+							{...(inEmptyState && EMPTY_STATE_BUTTON_PROPS)}
 						>
 							{inEmptyState ? (
 								primaryItems[0].label
@@ -127,24 +160,5 @@ function CreationMenu({inEmptyState, primaryItems}) {
 		)
 	);
 }
-
-CreationMenu.propTypes = {
-	primaryItems: PropTypes.arrayOf(
-		PropTypes.shape({
-			href: PropTypes.string,
-			label: PropTypes.string,
-			onClick: PropTypes.func,
-			target: PropTypes.oneOf(['modal', 'sidePanel', 'event', 'link']),
-		})
-	).isRequired,
-	secondaryItems: PropTypes.arrayOf(
-		PropTypes.shape({
-			href: PropTypes.string,
-			label: PropTypes.string,
-			onClick: PropTypes.func,
-			target: PropTypes.oneOf(['modal', 'sidePanel', 'event', 'link']),
-		})
-	),
-};
 
 export default CreationMenu;

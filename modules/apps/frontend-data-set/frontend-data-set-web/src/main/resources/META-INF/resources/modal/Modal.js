@@ -5,6 +5,7 @@
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal, {useModal} from '@clayui/modal';
+import {navigate} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
@@ -14,9 +15,8 @@ import {
 	OPEN_MODAL,
 } from '../utils/eventsDefinitions';
 import {isPageInIframe} from '../utils/iframes';
-import {liferayNavigate} from '../utils/index';
 import {INITIAL_MODAL_SIZE} from '../utils/modals/constants';
-import {resolveModalHeight} from '../utils/modals/index';
+import {resolveModalHeight} from '../utils/modals/resolveModalHeight';
 
 function Modal({
 	id,
@@ -87,7 +87,7 @@ function Modal({
 			}
 
 			if (redirectURL) {
-				liferayNavigate(redirectURL);
+				navigate(redirectURL);
 			}
 			else if (willIframeRefresh) {
 				closeOnIframeRefresh(successNotification);

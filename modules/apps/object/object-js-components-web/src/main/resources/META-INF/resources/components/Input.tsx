@@ -5,61 +5,10 @@
 
 import {ClayInput} from '@clayui/form';
 import {FieldBase} from 'frontend-js-components-web';
-import React from 'react';
+import React, {InputHTMLAttributes, Ref} from 'react';
 
-export const Input = React.forwardRef<HTMLInputElement, IProps>(
-	(
-		{
-			className,
-			component,
-			disabled,
-			error,
-			feedbackMessage,
-			id,
-			label,
-			name,
-			onBlur,
-			onChange,
-			onInput,
-			readOnly,
-			required,
-			type,
-			value,
-			...otherProps
-		},
-		ref
-	) => {
-		return (
-			<FieldBase
-				className={className}
-				disabled={disabled}
-				errorMessage={error}
-				helpMessage={feedbackMessage}
-				id={id}
-				label={label}
-				required={required}
-			>
-				<ClayInput
-					{...otherProps}
-					component={component}
-					disabled={disabled}
-					id={id}
-					name={name}
-					onBlur={onBlur}
-					onChange={onChange}
-					onInput={onInput}
-					readOnly={readOnly}
-					ref={ref}
-					type={type}
-					value={value}
-				/>
-			</FieldBase>
-		);
-	}
-);
-
-interface IProps
-	extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
+interface InputProps
+	extends InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
 	component?: 'input' | 'textarea' | React.ForwardRefExoticComponent<any>;
 	disabled?: boolean;
 	error?: string;
@@ -68,7 +17,60 @@ interface IProps
 	label?: string;
 	name?: string;
 	placeholder?: string;
+	ref?: Ref<HTMLInputElement>;
 	required?: boolean;
+	tooltip?: string;
 	type?: 'number' | 'textarea' | 'text' | 'date';
 	value?: string | number | string[];
+}
+
+export function Input({
+	className,
+	component,
+	disabled,
+	error,
+	feedbackMessage,
+	id,
+	label,
+	min,
+	name,
+	onBlur,
+	onChange,
+	onInput,
+	readOnly,
+	ref,
+	required,
+	tooltip,
+	type,
+	value,
+	...otherProps
+}: InputProps) {
+	return (
+		<FieldBase
+			className={className}
+			disabled={disabled}
+			errorMessage={error}
+			helpMessage={feedbackMessage}
+			id={id}
+			label={label}
+			required={required}
+			tooltip={tooltip}
+		>
+			<ClayInput
+				{...otherProps}
+				component={component}
+				disabled={disabled}
+				id={id}
+				min={min}
+				name={name}
+				onBlur={onBlur}
+				onChange={onChange}
+				onInput={onInput}
+				readOnly={readOnly}
+				ref={ref}
+				type={type}
+				value={value}
+			/>
+		</FieldBase>
+	);
 }

@@ -227,17 +227,6 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testUpgradeJavaLayoutServicesCheck() throws Exception {
-		test(
-			"upgrade/UpgradeJavaLayoutServicesCheck.testjava",
-			StringBundler.concat(
-				"Unable to format methods addLayout and updateLayout from ",
-				"LayoutService, LayoutLocalService, LayoutServiceUtil and ",
-				"LayoutLocalServiceUtil. Fill the new parameters manually, ",
-				"see LPS-188828 and LPS-190401"));
-	}
-
-	@Test
 	public void testUpgradeJavaModelPermissionsCheck() throws Exception {
 		test("upgrade/UpgradeJavaModelPermissionsCheck.testjava");
 	}

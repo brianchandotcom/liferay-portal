@@ -52,8 +52,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8327 | Test Summary: Assert Sites Cohort Analysis sort Anonymous Visitors"
+	@ignore = "true"
 	@priority = 3
 	test AssertSitesCohortAnalysisSortAnonymousVisitors {
+
+		// AC Refactor: Data doesn't appear on time (Need to wait for the session to close)
+
 		task ("Logout from DXP") {
 			User.logoutPG();
 		}

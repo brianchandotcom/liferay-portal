@@ -54,6 +54,12 @@ public interface DLConfiguration {
 	public String displayTemplatesConfig();
 
 	@Meta.AD(
+		deflt = "false", description = "file-entry-expire-all-versions",
+		name = "expire-all-file-entry-versions-enabled", required = false
+	)
+	public boolean expireAllVersionsEnabled();
+
+	@Meta.AD(
 		deflt = "*", description = "file-extensions-help",
 		name = "file-extensions", required = false
 	)

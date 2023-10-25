@@ -87,6 +87,10 @@ public class SelectSiteInitializerDisplayContext {
 		return siteInitializerItemSearchContainer;
 	}
 
+	public String getTitle() {
+		return LanguageUtil.get(_httpServletRequest, _getTabs1());
+	}
+
 	public VerticalNavItemList getVerticalNavItemList() {
 		return VerticalNavItemListBuilder.add(
 			verticalNavItem -> {

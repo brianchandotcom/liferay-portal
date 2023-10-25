@@ -856,6 +856,10 @@ definition {
 				password = "test");
 		}
 
+		task ("Open the URL again") {
+			Open.openNoError(locator1 = ${workspaceURL});
+		}
+
 		task ("Assert Page Title") {
 			ACUtils.assertPageTitle(pageTitle = "Sites");
 		}

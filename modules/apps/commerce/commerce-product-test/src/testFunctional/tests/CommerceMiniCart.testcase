@@ -392,6 +392,62 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-12621.Can view that product image cotains img tag and has the alt attribute "
+	@priority = 5
+	test CanAssertProductImagesAltAttribute {
+		property portal.acceptance = "true";
+
+		task ("Given a commerce account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("When the buyer adds the product to the cart and opens the mini-cart") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			FrontStore.addInitializerProductToCart(
+				productName = "U-Joint",
+				productQuantity = 1);
+
+			CommerceNavigator.gotoMiniCart();
+		}
+
+		task ("Then the buyer can check the alt attribute is present on the mini-cart and in the checkout") {
+			AssertElementPresent(
+				key_productSku = "MIN55861",
+				locator1 = "CommerceFrontStore#PRODUCT_IMAGE_MINI_CART_WITH_ALT_ATTRIBUTE");
+
+			CommerceCheckout.gotoCheckoutViaMiniCart();
+
+			CommerceCheckout.initializersCheckout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				productImage = "U-Joint",
+				productName = "U-Joint",
+				productQuantity = 1,
+				productUnitPrice = 24,
+				shippingMethod = "Standard");
+		}
+	}
+
 	@description = "Verify products with long names are truncated in the mini-cart."
 	@priority = 3
 	test CanSeeProductNameTruncated {

@@ -284,8 +284,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WEBDAV_PASSWORD_FIELD</td>
+	<td>//*[@id='_com_liferay_my_account_web_portlet_MyAccountPortlet_webDAVPassword']</td>
 	<td></td>
-	<td></td>
+</tr>
+<tr>
+	<td>WEBDAV_PASSWORD_FIELD_VALUE</td>
+	<td>//*[@id='_com_liferay_my_account_web_portlet_MyAccountPortlet_webDAVPassword']@value</td>
 	<td></td>
 </tr>
 </tbody>

@@ -15,9 +15,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.internal.minifier.MinifierThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.ServletContext;
@@ -129,7 +129,8 @@ public class MinifierUtil {
 	private static String _minifyJavaScript(
 		String resourceName, String content) {
 
-		JavaScriptMinifier javaScriptMinifier = _javaScriptMinifier;
+		JavaScriptMinifier javaScriptMinifier =
+			_javaScriptMinifierSnapshot.get();
 
 		if ((javaScriptMinifier == null) || _isLiferayResource(resourceName)) {
 			return content;
@@ -166,10 +167,9 @@ public class MinifierUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(MinifierUtil.class);
 
-	private static volatile JavaScriptMinifier _javaScriptMinifier =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			JavaScriptMinifier.class, MinifierUtil.class, "_javaScriptMinifier",
-			false, true);
+	private static final Snapshot<JavaScriptMinifier>
+		_javaScriptMinifierSnapshot = new Snapshot<>(
+			MinifierUtil.class, JavaScriptMinifier.class);
 	private static final ServiceTrackerMap<String, ServletContext>
 		_liferayServletContextsMap;
 

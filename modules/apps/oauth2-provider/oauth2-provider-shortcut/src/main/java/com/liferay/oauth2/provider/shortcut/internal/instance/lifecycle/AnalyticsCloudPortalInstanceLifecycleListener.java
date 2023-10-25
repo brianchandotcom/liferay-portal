@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyService;
 import com.liferay.portal.kernel.service.ContactService;
 import com.liferay.portal.kernel.service.GroupService;
@@ -113,9 +115,20 @@ public class AnalyticsCloudPortalInstanceLifecycleListener
 
 	@Override
 	protected void doPortalInstanceRegistered(long companyId) throws Exception {
-		OAuth2Application oAuth2Application = _addOAuth2Application(companyId);
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 
-		_addResourcePermissions(oAuth2Application);
+		PermissionThreadLocal.setPermissionChecker(null);
+
+		try {
+			OAuth2Application oAuth2Application = _addOAuth2Application(
+				companyId);
+
+			_addResourcePermissions(oAuth2Application);
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+		}
 	}
 
 	private OAuth2Application _addOAuth2Application(long companyId)

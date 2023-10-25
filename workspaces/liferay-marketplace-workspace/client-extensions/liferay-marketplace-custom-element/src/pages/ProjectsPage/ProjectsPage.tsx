@@ -63,11 +63,11 @@ export function ProjectsPage({
 			setLoading(true);
 
 			const {items} = await getPlacedOrders(
-				selectedAccount.id,
+				selectedAccount?.id,
 				channel.id
 			);
 
-			const filteredOrders = items.filter(
+			const filteredOrders = items?.filter(
 				({orderTypeExternalReferenceCode}) =>
 					orderTypeExternalReferenceCode === 'PROJECT60'
 			);
@@ -138,7 +138,7 @@ export function ProjectsPage({
 						title: 'No projects yet',
 					}}
 					icon={icon}
-					items={projectOrders}
+					items={projectOrders || []}
 					tableHeaders={projectsTableHeaders}
 				>
 					{(projectOrder) => {

@@ -74,9 +74,11 @@ export function MembersPage({
 	const [searchParams] = useSearchParams();
 	const accountId = searchParams.get('accountId');
 
-	const currentUserAccountBriefs = marketplaceContext.myUserAccount?.accountBriefs?.find(
-		(accountBrief: {id: number}) => accountBrief.id === selectedAccount.id
-	);
+	const currentUserAccountBriefs =
+		marketplaceContext.myUserAccount?.accountBriefs?.find(
+			(accountBrief: {id: number}) =>
+				accountBrief.id === selectedAccount?.id
+		);
 
 	const myUserAccount = useMemo(
 		() => ({

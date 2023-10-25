@@ -320,9 +320,13 @@ paths:
                     content:
                         application/scim+json:
                             schema:
-                                $ref: "#/components/schemas/QueryResponse"
+                                oneOf:
+                                    - format: binary
+                                      type: string
+                                    - $ref: "#/components/schemas/QueryResponse"
                     description:
                         The list of users.
+            tags: ["User"]
         post:
             description:
                 Creates a user.
@@ -337,9 +341,13 @@ paths:
                     content:
                         application/scim+json:
                             schema:
-                                $ref: "#/components/schemas/User"
+                                oneOf:
+                                    - format: binary
+                                      type: string
+                                    - $ref: "#/components/schemas/User"
                     description:
                         The User was successfully created.
+            tags: ["User"]
     "/v2/Users/.search":
         post:
             description:
@@ -355,13 +363,18 @@ paths:
                     content:
                         application/scim+json:
                             schema:
-                                $ref: "#/components/schemas/QueryResponse"
+                                oneOf:
+                                    - format: binary
+                                      type: string
+                                    - $ref: "#/components/schemas/QueryResponse"
                     description:
                         List of found users based on query
+            tags: ["User"]
     "/v2/Users/{id}":
         delete:
             description:
                 Deletes a user.
+            operationId: deleteV2User
             parameters:
                 - in: path
                   name: id
@@ -373,10 +386,10 @@ paths:
                     description:
                         In response to a successful DELETE, the server SHALL return a successful HTTP status code 204
                         (No Content).
+            tags: ["User"]
         get:
             description:
                 Retrieves a user.
-            operationId: getV2User
             parameters:
                 - in: path
                   name: id
@@ -388,10 +401,14 @@ paths:
                     content:
                         application/scim+json:
                             schema:
-                                $ref: "#/components/schemas/User"
+                                oneOf:
+                                    - format: binary
+                                      type: string
+                                    - $ref: "#/components/schemas/User"
                     description:
                         If the resource exists, the server responds with HTTP status code 200 (OK) and includes the
                         result in the body of the response.
+            tags: ["User"]
         put:
             description:
                 Updates a user.
@@ -412,6 +429,10 @@ paths:
                     content:
                         application/scim+json:
                             schema:
-                                $ref: "#/components/schemas/User"
+                                oneOf:
+                                    - format: binary
+                                      type: string
+                                    - $ref: "#/components/schemas/User"
                     description:
                         The User was successfully updated.
+            tags: ["User"]

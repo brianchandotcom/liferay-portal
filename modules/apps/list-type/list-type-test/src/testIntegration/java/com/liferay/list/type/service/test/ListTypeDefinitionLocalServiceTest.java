@@ -68,21 +68,13 @@ public class ListTypeDefinitionLocalServiceTest {
 			_listTypeEntryLocalService.getListTypeEntriesCount(
 				listTypeDefinition.getListTypeDefinitionId()));
 
-		try {
-			_listTypeDefinitionLocalService.addListTypeDefinition(
+		AssertUtils.assertFailure(
+			ListTypeDefinitionNameException.class,
+			"Name is null for locale " + LocaleUtil.US.getDisplayName(),
+			() -> _listTypeDefinitionLocalService.addListTypeDefinition(
 				null, TestPropsValues.getUserId(),
 				Collections.singletonMap(LocaleUtil.US, ""), false,
-				Collections.emptyList());
-
-			Assert.fail();
-		}
-		catch (ListTypeDefinitionNameException
-					listTypeDefinitionNameException) {
-
-			Assert.assertEquals(
-				"Name is null for locale " + LocaleUtil.US.getDisplayName(),
-				listTypeDefinitionNameException.getMessage());
-		}
+				Collections.emptyList()));
 
 		AssertUtils.assertFailure(
 			ListTypeDefinitionSystemException.class, false,
@@ -110,17 +102,10 @@ public class ListTypeDefinitionLocalServiceTest {
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
 				Collections.singletonList(objectField));
 
-		try {
-			_listTypeDefinitionLocalService.deleteListTypeDefinition(
-				listTypeDefinition.getListTypeDefinitionId());
-
-			Assert.fail();
-		}
-		catch (RequiredListTypeDefinitionException
-					requiredListTypeDefinitionException) {
-
-			Assert.assertNotNull(requiredListTypeDefinitionException);
-		}
+		AssertUtils.assertFailure(
+			RequiredListTypeDefinitionException.class, null,
+			() -> _listTypeDefinitionLocalService.deleteListTypeDefinition(
+				listTypeDefinition.getListTypeDefinitionId()));
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			objectDefinition.getObjectDefinitionId());

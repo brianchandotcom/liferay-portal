@@ -60,6 +60,42 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-10421. As admin, I can search a currency."
+	@priority = 5
+	test CanSearchCurrency {
+		property portal.acceptance = "true";
+
+		task ("Given a admin goes to the currency admin page") {
+			CommerceNavigator.goToCurrenciesAdmin();
+		}
+
+		task ("And the user search for a currency") {
+			CommerceNavigator.searchEntry(entryName = "Euro");
+		}
+
+		task ("When can verify that only the correct currency is shown") {
+			AssertElementPresent(
+				key_entryName = "Euro",
+				locator1 = "CommerceNavigation#ENTRY_NAME");
+
+			AssertElementNotPresent(
+				key_entryName = "US Dollar",
+				locator1 = "CommerceNavigation#ENTRY_NAME");
+		}
+
+		task ("Then the user goes and clear the results") {
+			Search.clearSearchResult();
+		}
+
+		task ("And all of the currencies are displayed") {
+			for (var currencies : list "US Dollar,Australian Dollar,British Pound,Canadian Dollar,Chinese Yuan Renminbi,Euro,Hong Kong Dollar,Japanese Yen,Indian Rupee,Brazilian Real") {
+				AssertElementPresent(
+					key_entryName = ${currencies},
+					locator1 = "CommerceNavigation#ENTRY_NAME");
+			}
+		}
+	}
+
 	@description = "This is a test for COMMERCE-11393. Can update currency format for Indian Rupee"
 	@priority = 3
 	test CanUpdateCurrencyFormatForINR {

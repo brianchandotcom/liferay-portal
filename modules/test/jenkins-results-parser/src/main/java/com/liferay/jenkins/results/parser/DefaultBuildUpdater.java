@@ -380,8 +380,7 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 			return new Build.Invocation(build, jenkinsMaster);
 		}
 		catch (IOException ioException) {
-			System.out.println(
-				"WARNING: Unable to invoke Jenkins using curl");
+			System.out.println("WARNING: Unable to invoke Jenkins using curl");
 
 			try {
 				JSONObject jsonObject =

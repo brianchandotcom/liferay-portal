@@ -46,20 +46,6 @@ import org.osgi.service.component.annotations.Reference;
 public class OpenNLPDocumentAssetAutoTagger {
 
 	public Collection<String> getTagNames(
-			long companyId, String content, Locale locale, String mimeType)
-		throws Exception {
-
-		return getTagNames(companyId, () -> content, locale, mimeType);
-	}
-
-	public Collection<String> getTagNames(
-			long companyId, String content, String mimeType)
-		throws Exception {
-
-		return getTagNames(companyId, content, null, mimeType);
-	}
-
-	public Collection<String> getTagNames(
 			long companyId, Supplier<String> textSupplier, Locale locale,
 			String mimeType)
 		throws Exception {

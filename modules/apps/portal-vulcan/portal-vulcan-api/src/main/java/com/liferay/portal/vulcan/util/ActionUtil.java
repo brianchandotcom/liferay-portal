@@ -408,7 +408,9 @@ public class ActionUtil {
 
 			parameterMap.put(firstParameterName, siteId);
 		}
-		else {
+		else if (Objects.equals(firstParameterName, "id") ||
+				 firstParameterName.endsWith("Id")) {
+
 			parameterMap.put(firstParameterName, id);
 		}
 

@@ -97,6 +97,15 @@
 	},
 	{
 		"classNames": [
+			"DLAppLocalService",
+			"DLAppLocalServiceUtil"
+		],
+		"from": "addFileEntry(long, long, long, String, String, String, String, String, byte[], ServiceContext)",
+		"issueKey": "LPS-194818",
+		"to": "addFileEntry(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, null, param#6#, param#7#, param#8#, null, null, param#9#)"
+	},
+	{
+		"classNames": [
 			"CommercePriceListLocalService",
 			"CommercePriceListLocalServiceUtil"
 		],
@@ -242,14 +251,5 @@
 		"from": "addCPDefinitionLinkByCProductId(long, long, double, String, ServiceContext)",
 		"issueKey": "LPS-198610",
 		"to": "addCPDefinitionLinkByCProductId(param#0#, param#1#, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true, param#2#, param#3#, param#4#)"
-	},
-	{
-		"classNames": [
-			"DLAppLocalService",
-			"DLAppLocalServiceUtil"
-		],
-		"from": "addFileEntry(long, long, long, String, String, String, String, String, byte[], ServiceContext)",
-		"issueKey": "LPS-199367",
-		"to": "addFileEntry(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, null, param#6#, param#7#, param#8#, null, null, param#9#)"
 	}
 ]

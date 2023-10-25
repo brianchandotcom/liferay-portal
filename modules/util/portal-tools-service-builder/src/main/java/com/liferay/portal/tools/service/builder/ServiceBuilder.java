@@ -4190,9 +4190,27 @@ public class ServiceBuilder {
 					dbNames.add("ctCollectionId");
 				}
 
+				boolean unique = entityFinder.isUnique();
+
+				for (String highCardinalityColumnName :
+						_highCardinalityColumnNames) {
+
+					if (dbNames.contains(highCardinalityColumnName) &&
+						(dbNames.size() > 1)) {
+
+						dbNames.clear();
+
+						dbNames.add(highCardinalityColumnName);
+
+						unique = false;
+
+						break;
+					}
+				}
+
 				IndexMetadata indexMetadata =
 					IndexMetadataFactoryUtil.createIndexMetadata(
-						entityFinder.isUnique(), entity.getTable(),
+						unique, entity.getTable(),
 						dbNames.toArray(new String[0]));
 
 				_addIndexMetadata(
@@ -8108,6 +8126,8 @@ public class ServiceBuilder {
 		StringBundler.concat(
 			"public .* get.*", Pattern.quote("("), "|public boolean is.*",
 			Pattern.quote("(")));
+	private static final List<String> _highCardinalityColumnNames =
+		Arrays.asList("externalReferenceCode", "uuid_");
 	private static final Pattern _setterPattern = Pattern.compile(
 		"public void set.*" + Pattern.quote("("));
 

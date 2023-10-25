@@ -2333,8 +2333,6 @@ definition {
 					collectionName = "Basic Components",
 					entryTitle = "",
 					fragmentName = "Heading");
-
-				PageEditor.publish();
 			}
 
 			task ("Map the Text field to Heading fragment") {

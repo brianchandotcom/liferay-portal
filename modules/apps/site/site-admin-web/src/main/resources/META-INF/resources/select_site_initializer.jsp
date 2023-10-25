@@ -17,8 +17,8 @@ portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 %>
 
-<clay:navigation-bar
-	navigationItems="<%= selectSiteInitializerDisplayContext.getNavigationItems() %>"
+<clay:vertical-nav
+	verticalNavItems="<%= selectSiteInitializerDisplayContext.getVerticalNavItemList() %>"
 />
 
 <aui:form cssClass="container-fluid container-fluid-max-xl" name="fm">

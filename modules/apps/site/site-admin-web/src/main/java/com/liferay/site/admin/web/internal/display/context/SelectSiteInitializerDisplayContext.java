@@ -5,8 +5,8 @@
 
 package com.liferay.site.admin.web.internal.display.context;
 
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemListBuilder;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -62,30 +62,6 @@ public class SelectSiteInitializerDisplayContext {
 		return _backURL;
 	}
 
-	public List<NavigationItem> getNavigationItems() {
-		return NavigationItemListBuilder.add(
-			navigationItem -> {
-				navigationItem.setActive(
-					Objects.equals(_getTabs1(), "provided-by-liferay"));
-				navigationItem.setHref(
-					_getPortletURL(), "tabs1", "provided-by-liferay");
-				navigationItem.setLabel(
-					LanguageUtil.get(
-						_httpServletRequest, "provided-by-liferay"));
-			}
-		).add(
-			navigationItem -> {
-				navigationItem.setActive(
-					Objects.equals(_getTabs1(), "custom-site-templates"));
-				navigationItem.setHref(
-					_getPortletURL(), "tabs1", "custom-site-templates");
-				navigationItem.setLabel(
-					LanguageUtil.get(
-						_httpServletRequest, "custom-site-templates"));
-			}
-		).build();
-	}
-
 	public long getParentGroupId() {
 		if (_parentGroupId != null) {
 			return _parentGroupId;
@@ -109,6 +85,36 @@ public class SelectSiteInitializerDisplayContext {
 			_getSiteInitializerItems());
 
 		return siteInitializerItemSearchContainer;
+	}
+
+	public VerticalNavItemList getVerticalNavItemList() {
+		return VerticalNavItemListBuilder.add(
+			verticalNavItem -> {
+				verticalNavItem.setActive(
+					Objects.equals(_getTabs1(), "provided-by-liferay"));
+				verticalNavItem.setHref(
+					_getPortletURL(), "tabs1", "provided-by-liferay");
+
+				String name = LanguageUtil.get(
+					_httpServletRequest, "provided-by-liferay");
+
+				verticalNavItem.setId(name);
+				verticalNavItem.setLabel(name);
+			}
+		).add(
+			verticalNavItem -> {
+				verticalNavItem.setActive(
+					Objects.equals(_getTabs1(), "custom-site-templates"));
+				verticalNavItem.setHref(
+					_getPortletURL(), "tabs1", "custom-site-templates");
+
+				String name = LanguageUtil.get(
+					_httpServletRequest, "custom-site-templates");
+
+				verticalNavItem.setId(name);
+				verticalNavItem.setLabel(name);
+			}
+		).build();
 	}
 
 	private PortletURL _getPortletURL() {

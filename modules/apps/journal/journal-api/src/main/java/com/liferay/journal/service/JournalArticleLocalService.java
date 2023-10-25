@@ -1305,6 +1305,9 @@ public interface JournalArticleLocalService
 		long resourcePrimKey);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getArticlesByResourcePrimKeyCount(long resourcePrimKey);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<JournalArticle> getArticlesByReviewDate(
 		Date previousCheckDate, Date reviewDate);
 

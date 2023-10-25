@@ -30,6 +30,38 @@ definition {
 				objectName = "CustomObject187390",
 				pluralLabelName = "Custom Objects 187390");
 
+			Picklist.addPicklistViaAPI(picklistName = "Status");
+
+			for (var statusName : list "open,review,closed") {
+				Picklist.addPicklistItemViaAPI(
+					itemKey = ${statusName},
+					itemName = ${statusName},
+					picklistName = "Status");
+			}
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object 187390");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Picklist",
+				fieldPicklist = "Status",
+				fieldType = "Picklist");
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Picklist State Manager",
+				fieldPicklist = "Status",
+				fieldType = "Picklist",
+				itemName = "open",
+				markAsState = "true");
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Multiselect Picklist",
+				fieldPicklist = "Status",
+				fieldType = "Multiselect Picklist");
+
 			for (var textIndex : list "Simple,A,B,C,D,E,F,G,H,I") {
 				ObjectAdmin.addObjectFieldViaAPI(
 					fieldBusinessType = "Text",
@@ -131,61 +163,19 @@ definition {
 					objectName = "CustomObject187390");
 			}
 
-			Picklist.addPicklistViaAPI(picklistName = "Status");
-
-			for (var statusName : list "open,review,closed") {
-				Picklist.addPicklistItemViaAPI(
-					itemKey = ${statusName},
-					itemName = ${statusName},
-					picklistName = "Status");
-			}
-
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 187390");
-
-			ObjectAdmin.goToFieldsTab();
-
-			ObjectAdmin.addObjectFieldViaUI(
-				fieldLabel = "Picklist",
-				fieldPicklist = "Status",
-				fieldType = "Picklist");
-
-			ObjectAdmin.addObjectFieldViaUI(
-				fieldLabel = "Picklist State Manager",
-				fieldPicklist = "Status",
-				fieldType = "Picklist",
-				itemName = "open",
-				markAsState = "true");
-
-			ObjectAdmin.addObjectFieldViaUI(
-				fieldLabel = "Multiselect Picklist",
-				fieldPicklist = "Status",
-				fieldType = "Multiselect Picklist");
-
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject187390");
 		}
 
-		task ("And given the object definition is exported") {
+		task ("and Given the object definition is imported after be exported and deleted") {
 			ObjectAdmin.openObjectAdmin();
 
 			ObjectExportImport.exportObject(
 				objectLabel = "Custom Object 187390",
 				objectName = "CustomObject187390");
-		}
 
-		task ("And given the object definition is deleted in portal") {
 			ObjectAdmin.deleteObjectViaAPI(objectName = "CustomObject187390");
-		}
 
-		task ("And given the object definition is imported") {
-			ObjectExportImport.importObject(
-				objectFileName = "ImportedObjectWith100Fields",
-				objectName = "CustomObject187390");
-
-			ObjectPortlet.selectCustomObject(label = "Custom Object 187390");
-
-			ObjectAdmin.publishObjectViaUI();
+			ObjectExportImport.importObject(objectFileName = "ImportedObjectWith100Fields", objectName = "CustomObject187390");
 		}
 
 		task ("When the user creates an object entry with each field type filled") {

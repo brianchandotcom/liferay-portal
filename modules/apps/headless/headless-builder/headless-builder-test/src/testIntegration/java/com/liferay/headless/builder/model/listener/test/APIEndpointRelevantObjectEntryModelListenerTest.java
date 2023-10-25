@@ -431,7 +431,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 					APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT.
 						getValue()
 				).put(
-					"scope", APIApplication.Endpoint.Scope.GROUP.getValue()
+					"scope", APIApplication.Endpoint.Scope.SITE.getValue()
 				).toString(),
 				"headless-builder/endpoints", Http.Method.POST
 			).toString(),

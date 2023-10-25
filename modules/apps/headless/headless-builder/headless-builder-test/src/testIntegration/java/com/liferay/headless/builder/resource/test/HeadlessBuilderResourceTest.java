@@ -1322,7 +1322,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			_siteScopedObjectRelationship1.getName(),
 			_siteScopedObjectRelationship2.getName(), _API_APPLICATION_PATH_1,
 			null, APIApplication.Endpoint.RetrieveType.COLLECTION.getValue(),
-			APIApplication.Endpoint.Scope.GROUP);
+			APIApplication.Endpoint.Scope.SITE);
 
 		String endpointPath = "c/" + _BASE_URL_1 + _API_APPLICATION_PATH_1;
 
@@ -1428,7 +1428,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			_siteScopedObjectRelationship2.getName(), _API_APPLICATION_PATH_1,
 			HeadlessBuilderConstants.PATH_PARAMETER_ERC,
 			APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT.getValue(),
-			APIApplication.Endpoint.Scope.GROUP);
+			APIApplication.Endpoint.Scope.SITE);
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 
@@ -1462,7 +1462,7 @@ public class HeadlessBuilderResourceTest extends BaseTestCase {
 			_siteScopedObjectRelationship2.getName(), _API_APPLICATION_PATH_1,
 			"textUniqueField",
 			APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT.getValue(),
-			APIApplication.Endpoint.Scope.GROUP);
+			APIApplication.Endpoint.Scope.SITE);
 
 		_publishAPIApplication(_API_APPLICATION_ERC_1);
 

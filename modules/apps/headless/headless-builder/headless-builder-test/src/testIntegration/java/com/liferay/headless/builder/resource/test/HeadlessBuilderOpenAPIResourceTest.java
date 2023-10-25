@@ -448,7 +448,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 						APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT.
 							getValue()
 					).put(
-						"scope", APIApplication.Endpoint.Scope.GROUP.getValue()
+						"scope", APIApplication.Endpoint.Scope.SITE.getValue()
 					),
 					JSONUtil.put(
 						"description", "description"
@@ -483,7 +483,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 						APIApplication.Endpoint.RetrieveType.COLLECTION.
 							getValue()
 					).put(
-						"scope", APIApplication.Endpoint.Scope.GROUP.getValue()
+						"scope", APIApplication.Endpoint.Scope.SITE.getValue()
 					),
 					JSONUtil.put(
 						"description", "site scoped no schema description"
@@ -497,7 +497,7 @@ public class HeadlessBuilderOpenAPIResourceTest extends BaseTestCase {
 					).put(
 						"path", "/no-schema"
 					).put(
-						"scope", APIApplication.Endpoint.Scope.GROUP.getValue()
+						"scope", APIApplication.Endpoint.Scope.SITE.getValue()
 					))
 			).put(
 				"apiApplicationToAPISchemas",

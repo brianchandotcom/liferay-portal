@@ -53,8 +53,7 @@ public class PublishArticlesMVCActionCommand extends BaseMVCActionCommand {
 		throws Exception {
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-		String articleId = ParamUtil.getString(
-			actionRequest, "articleId");
+		String articleId = ParamUtil.getString(actionRequest, "articleId");
 
 		if (Validator.isNotNull(articleId)) {
 			Changeset changeset = _createChangeset(

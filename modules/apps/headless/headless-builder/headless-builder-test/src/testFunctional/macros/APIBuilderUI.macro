@@ -238,6 +238,8 @@ definition {
 
 		ObjectAdmin.openObjectAdmin();
 
+		WaitForPageLoad();
+
 		ObjectPortlet.selectCustomObject(label = ${objectDefinition});
 
 		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");

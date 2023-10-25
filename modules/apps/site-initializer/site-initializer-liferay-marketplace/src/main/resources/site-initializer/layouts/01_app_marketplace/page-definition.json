@@ -36,7 +36,7 @@
 								"marginBottom": "",
 								"marginLeft": "",
 								"marginRight": "",
-								"paddingBottom": "6",
+								"paddingBottom": "4",
 								"paddingTop": "6",
 								"shadow": "",
 								"textColor": "#54555F"
@@ -52,8 +52,8 @@
 								{
 									"fragmentViewportStyle": {
 										"marginTop": "0",
-										"paddingBottom": "5",
-										"paddingTop": "5"
+										"paddingBottom": "4",
+										"paddingTop": "0"
 									},
 									"id": "portraitMobile"
 								},
@@ -68,7 +68,7 @@
 							],
 							"indexed": true,
 							"layout": {
-								"paddingBottom": 6,
+								"paddingBottom": 2,
 								"paddingTop": 6
 							}
 						},
@@ -101,7 +101,8 @@
 										{
 											"fragmentViewportStyle": {
 												"paddingLeft": "4",
-												"paddingRight": "4"
+												"paddingRight": "4",
+												"width": ""
 											},
 											"id": "portraitMobile"
 										},
@@ -136,6 +137,16 @@
 											"fragmentStyle": {
 												"paddingBottom": "7"
 											},
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"hidden": false,
+														"paddingBottom": "0",
+														"shadow": "none"
+													},
+													"id": "portraitMobile"
+												}
+											],
 											"indexed": true
 										},
 										"type": "Fragment"
@@ -145,6 +156,7 @@
 											"fragmentStyle": {
 												"borderRadius": "",
 												"borderWidth": "0",
+												"fontFamily": "fontFamilySansSerif",
 												"marginBottom": "",
 												"marginLeft": "",
 												"marginRight": "",
@@ -152,7 +164,6 @@
 												"maxWidth": "1270px",
 												"paddingBottom": "",
 												"paddingLeft": "7",
-												"paddingRight": "7",
 												"paddingTop": "",
 												"shadow": "",
 												"textAlign": ""
@@ -181,6 +192,7 @@
 												{
 													"id": "portraitMobile",
 													"rowViewportDefinition": {
+														"verticalAlignment": "middle"
 													}
 												},
 												{
@@ -215,7 +227,7 @@
 															"id": "tablet"
 														}
 													],
-													"size": 8
+													"size": 9
 												},
 												"pageElements": [
 													{
@@ -226,7 +238,7 @@
 																"siteKey": "[$GROUP_KEY$]"
 															},
 															"fragmentConfig": {
-																"fontSize": "font-size-heading-f1",
+																"fontSize": "font-size-paragraph-base",
 																"smallCaps": false,
 																"tabletScreenCenter": false
 															},
@@ -238,7 +250,7 @@
 																		},
 																		"text": {
 																			"value_i18n": {
-																				"en_US": "App Marketplace"
+																				"en_US": "<p>App Marketplace</p>\n"
 																			}
 																		}
 																	}
@@ -246,18 +258,25 @@
 															],
 															"fragmentStyle": {
 																"borderColor": "#ffffff",
-																"fontSize": "60px",
+																"fontFamily": "fontFamilyBase",
+																"fontSize": "42px",
 																"fontWeight": "600",
-																"paddingBottom": "3",
 																"textColor": "whiteColor"
 															},
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"fontSize": "30px"
+																	},
+																	"id": "portraitMobile"
+																}
+															],
 															"indexed": true
 														},
 														"type": "Fragment"
 													},
 													{
 														"definition": {
-															"customCSS": ".component-paragraph {\nline-height: 36px;\n}",
 															"fragment": {
 																"key": "BASIC_COMPONENT-paragraph"
 															},
@@ -278,9 +297,18 @@
 																}
 															],
 															"fragmentStyle": {
-																"fontSize": "28px",
+																"fontFamily": "fontFamilyBase",
+																"fontSize": "26px",
 																"textColor": "whiteColor"
 															},
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"fontSize": "16px"
+																	},
+																	"id": "portraitMobile"
+																}
+															],
 															"indexed": true
 														},
 														"type": "Fragment"
@@ -309,7 +337,7 @@
 															"id": "tablet"
 														}
 													],
-													"size": 4
+													"size": 3
 												},
 												"type": "Column"
 											}
@@ -322,13 +350,21 @@
 												"key": "BASIC_COMPONENT-spacer"
 											},
 											"fragmentConfig": {
-												"height": "py-3"
+												"height": "py-4"
 											},
 											"fragmentFields": [
 											],
 											"fragmentStyle": {
-												"paddingBottom": "7"
+												"paddingBottom": "6"
 											},
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"paddingBottom": "0"
+													},
+													"id": "portraitMobile"
+												}
+											],
 											"indexed": true
 										},
 										"type": "Fragment"
@@ -336,8 +372,19 @@
 									{
 										"definition": {
 											"fragmentStyle": {
-												"borderWidth": "0"
+												"height": "40px",
+												"marginLeft": "10",
+												"marginRight": "10",
+												"width": "600px"
 											},
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"width": "300px"
+													},
+													"id": "portraitMobile"
+												}
+											],
 											"indexed": true,
 											"layout": {
 											}
@@ -348,14 +395,13 @@
 													"fragmentStyle": {
 														"marginLeft": "10",
 														"marginRight": "10",
-														"textAlign": "center",
-														"width": "600px"
+														"textAlign": "center"
 													},
 													"widgetInstance": {
 														"widgetConfig": {
 															"destination": "",
 															"displayStyle": "default",
-															"displayStyleGroupId": "[$GROUP_ID$]",
+															"displayStyleGroupId": "32688",
 															"federatedSearchKey": "",
 															"invisible": "false",
 															"keywordsParameterName": "q",
@@ -364,7 +410,7 @@
 															"showStagedResults": "false",
 															"suggestionsContributorConfigurations": "{\"contributorName\":\"basic\",\"displayGroupName\":\"suggestions\",\"size\":5}",
 															"suggestionsDisplayThreshold": "2",
-															"suggestionsEnabled": "true",
+															"suggestionsEnabled": "false",
 															"useAdvancedSearchSyntax": "false"
 														},
 														"widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
@@ -399,6 +445,15 @@
 										"paddingLeft": "8",
 										"paddingRight": "8"
 									},
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"paddingLeft": "4",
+												"paddingRight": "4"
+											},
+											"id": "portraitMobile"
+										}
+									],
 									"indexed": true,
 									"layout": {
 										"paddingLeft": 10,

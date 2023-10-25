@@ -1741,28 +1741,6 @@ Liferay decided to not support these API methods to simplify the message bus inf
 
 ---------------------------------------
 
-## Removed support to disable a scheduler job by setting interval to 0 or cron expression to empty string
-- **Date:** 2023-Sep-11
-- **JIRA Ticket:** [LPS-190994](https://liferay.atlassian.net/browse/LPS-190994)
-
-### What changed?
-
-Interval `0` or empty cron expression are no longer accepted by the scheduler framework to create a disabled job. When these values are used, an error message will be displayed.
-
-### Who is affected?
-
-This affects anyone setting these values to disable scheduler jobs.
-
-### How should I update my code?
-
-Use Component Blacklist to disable certain scheduler components. The error messages contains the class names.
-
-### Why was this change made?
-
-Now Scheduler jobs are bootstrapped by `SchedulerJobConfiguration` objects registered as OSGi services. If a job should not be bootstrapped, the configuration object should not be registered at all. Thus, Liferay decided to no longer support this feature.
-
----------------------------------------
-
 ## Portal property `discussion.subscribe` moved to instance settings
 - **Date:** 2023-September-4
 - **JIRA Ticket:** [LPS-194379](https://liferay.atlassian.net/browse/LPS-194379)
@@ -1848,3 +1826,25 @@ The property `database.max.parameters`, specific to each database, should be use
 ### Why was this change made?
 
 Database total parameter limitation varies in each database. New property allows database specific configuration.
+
+---------------------------------------
+
+## Removed support to disable a scheduler job by setting interval to 0 or cron expression to empty string
+- **Date:** 2023-Sep-11
+- **JIRA Ticket:** [LPS-190994](https://liferay.atlassian.net/browse/LPS-190994)
+
+### What changed?
+
+Interval `0` or empty cron expression are no longer accepted by the scheduler framework to create a disabled job. When these values are used, an error message will be displayed.
+
+### Who is affected?
+
+This affects anyone setting these values to disable scheduler jobs.
+
+### How should I update my code?
+
+Use Component Blacklist to disable certain scheduler components. The error messages contains the class names.
+
+### Why was this change made?
+
+Now Scheduler jobs are bootstrapped by `SchedulerJobConfiguration` objects registered as OSGi services. If a job should not be bootstrapped, the configuration object should not be registered at all. Thus, Liferay decided to no longer support this feature.

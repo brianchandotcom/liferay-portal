@@ -830,18 +830,6 @@ public class DefaultObjectEntryManagerImpl
 			UriInfo uriInfo)
 		throws Exception {
 
-		Map<String, String> map = ActionUtil.addAction(
-			actionName, ObjectEntryResourceImpl.class,
-			serviceBuilderObjectEntry.getObjectEntryId(), methodName, null,
-			serviceBuilderObjectEntry.getUserId(),
-			_getObjectEntryPermissionName(
-				serviceBuilderObjectEntry.getObjectDefinitionId()),
-			serviceBuilderObjectEntry.getGroupId(), uriInfo);
-
-		if (map != null) {
-			return map;
-		}
-
 		return ActionUtil.addAction(
 			actionName, ObjectEntryResourceImpl.class,
 			serviceBuilderObjectEntry.getObjectEntryId(), methodName, null,

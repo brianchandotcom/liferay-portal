@@ -209,6 +209,9 @@ export function ModalMoveObjectDefinition({
 								</ClayButton>
 
 								<ClayButton
+									disabled={
+										!selectedObjectFolderExternalReferenceCode
+									}
 									displayType="primary"
 									onClick={() => handleMoveObject()}
 									type="submit"

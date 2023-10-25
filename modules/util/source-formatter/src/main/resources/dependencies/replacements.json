@@ -99,6 +99,26 @@
 	},
 	{
 		"classNames": [
+			"LayoutLocalService",
+			"LayoutLocalServiceUtil"
+		],
+		"from": "addLayout(long, long, boolean, long, long, long, Map<java.util.Locale, String>, Map<java.util.Locale, String>, Map<java.util.Locale, String>, Map<java.util.Locale, String>, Map<java.util.Locale, String>, String, String, boolean, boolean, Map<java.util.Locale, String>, ServiceContext)",
+		"issueKey": "LPS-190401",
+		"to": "addLayout(param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, param#8#, param#9#, param#10#, param#11#, param#12#, param#13#, param#14#, param#15#, 0, param#16#)"
+	},
+	{
+		"classNames": [
+			"LayoutLocalService",
+			"LayoutLocalServiceUtil",
+			"LayoutService",
+			"LayoutServiceUtil"
+		],
+		"from": "updateLayout(long, boolean, long, long, Map<java.util.Locale, String>, Map<java.util.Locale, String>, Map<java.util.Locale, String>, Map<java.util.Locale, String>, Map<java.util.Locale, String>, String, boolean, Map<java.util.Locale, String>, boolean, byte[], ServiceContext)",
+		"issueKey": "LPS-190401",
+		"to": "updateLayout(param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, param#8#, param#9#, param#10#, param#11#, param#12#, param#13#, 0, 0, 0, param#14#)"
+	},
+	{
+		"classNames": [
 			"CPDefinitionLocalService",
 			"CPDefinitionService"
 		],

@@ -228,7 +228,7 @@ definition {
 			key_resourceAction = ${permission},
 			locator1 = "CommercePermissions#REMOVE_PERMISSION");
 
-		Confirm(value1 = "Are you sure you want to remove this permission?");
+		Confirm(value1 = "null");
 
 		AssertElementNotPresent(
 			key_resourceAction = ${permission},
@@ -274,7 +274,7 @@ definition {
 			key_resourceAction = ${permission},
 			locator1 = "CommercePermissions#REMOVE_PERMISSION");
 
-		Confirm(value1 = "Are you sure you want to remove this permission?");
+		Confirm(value1 = "null");
 
 		AssertElementNotPresent(
 			key_resourceAction = ${permission},

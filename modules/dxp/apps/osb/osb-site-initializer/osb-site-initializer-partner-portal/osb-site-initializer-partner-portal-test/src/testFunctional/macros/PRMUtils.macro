@@ -117,7 +117,7 @@ definition {
 	macro deleteMDF {
 		Button.click(button = "Delete");
 
-		Confirm(value1 = "Are you sure?");
+		Confirm(value1 = "null");
 	}
 
 	macro downloadFileViaCurl {

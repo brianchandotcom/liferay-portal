@@ -17,6 +17,7 @@ import com.liferay.document.library.kernel.exception.InvalidFileVersionException
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
+import com.liferay.document.library.kernel.expiration.ExpireAllVersions;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
@@ -2565,26 +2566,28 @@ public class DLFileEntryLocalServiceImpl
 				continue;
 			}
 
+			ExpireAllVersions expireAllVersions =
+				_expireAllVersionsSnapshot.get();
+
 			DLFileVersion latestFileVersion =
 				_dlFileVersionLocalService.fetchLatestFileVersion(
 					fileEntry.getFileEntryId(), false);
 
-			if (latestFileVersion.isExpired()) {
-				continue;
-			}
+			if (expireAllVersions.isEnabled()) {
+				List<DLFileVersion> fileVersions = fileEntry.getFileVersions(
+					WorkflowConstants.STATUS_ANY);
 
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"Expiring file entry ", fileEntry.getFileEntryId(),
-						" with expiration date ",
-						fileEntry.getExpirationDate()));
+				for (DLFileVersion fileVersion : fileVersions) {
+					_expireFileVersion(
+						fileEntry, fileVersion, userId, workflowContext,
+						serviceContext);
+				}
 			}
-
-			updateStatus(
-				userId, fileEntry, latestFileVersion,
-				WorkflowConstants.STATUS_EXPIRED, serviceContext,
-				workflowContext);
+			else {
+				_expireFileVersion(
+					fileEntry, latestFileVersion, userId, workflowContext,
+					serviceContext);
+			}
 
 			_notifySubscribers(
 				userId, _EMAIL_TYPE_EXPIRED, _buildEntryURL(latestFileVersion),
@@ -2594,6 +2597,28 @@ public class DLFileEntryLocalServiceImpl
 				userId, _EMAIL_TYPE_EXPIRED, _buildEntryURL(latestFileVersion),
 				latestFileVersion, new ServiceContext());
 		}
+	}
+
+	private void _expireFileVersion(
+			DLFileEntry fileEntry, DLFileVersion fileVersion, long userId,
+			Map<String, Serializable> workflowContext,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		if (fileVersion.isExpired()) {
+			return;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"Expiring file entry ", fileEntry.getFileEntryId(),
+					" with expiration date ", fileEntry.getExpirationDate()));
+		}
+
+		updateStatus(
+			userId, fileEntry, fileVersion, WorkflowConstants.STATUS_EXPIRED,
+			serviceContext, workflowContext);
 	}
 
 	private long _getActiveCompanyAdminUserId(long companyId)
@@ -3668,6 +3693,9 @@ public class DLFileEntryLocalServiceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryLocalServiceImpl.class);
 
+	private static final Snapshot<ExpireAllVersions>
+		_expireAllVersionsSnapshot = new Snapshot<>(
+			DLFileEntryLocalServiceImpl.class, ExpireAllVersions.class);
 	private static final Pattern _fileVersionPattern = Pattern.compile(
 		"\\d+\\.\\d+");
 	private static final Snapshot<TrashHelper> _trashHelperSnapshot =

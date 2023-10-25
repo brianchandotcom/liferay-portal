@@ -5,14 +5,20 @@
 
 package com.liferay.portal.osgi.web.http.servlet.internal.context;
 
+import com.liferay.osgi.util.StringPlus;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.security.AccessController;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.EventListener;
 import java.util.HashSet;
@@ -28,6 +34,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
@@ -52,13 +59,16 @@ import org.eclipse.equinox.http.servlet.internal.customizer.ContextResourceTrack
 import org.eclipse.equinox.http.servlet.internal.customizer.ContextServletTrackerCustomizer;
 import org.eclipse.equinox.http.servlet.internal.error.IllegalContextNameException;
 import org.eclipse.equinox.http.servlet.internal.error.IllegalContextPathException;
+import org.eclipse.equinox.http.servlet.internal.error.RegisteredFilterException;
 import org.eclipse.equinox.http.servlet.internal.registration.EndpointRegistration;
 import org.eclipse.equinox.http.servlet.internal.registration.FilterRegistration;
 import org.eclipse.equinox.http.servlet.internal.registration.ListenerRegistration;
 import org.eclipse.equinox.http.servlet.internal.registration.ResourceRegistration;
 import org.eclipse.equinox.http.servlet.internal.registration.ServletRegistration;
+import org.eclipse.equinox.http.servlet.internal.servlet.FilterConfigImpl;
 import org.eclipse.equinox.http.servlet.internal.servlet.HttpSessionAdaptor;
 import org.eclipse.equinox.http.servlet.internal.servlet.Match;
+import org.eclipse.equinox.http.servlet.internal.servlet.ServletContextAdaptor;
 import org.eclipse.equinox.http.servlet.internal.util.Const;
 import org.eclipse.equinox.http.servlet.internal.util.EventListeners;
 import org.eclipse.equinox.http.servlet.internal.util.Path;
@@ -72,6 +82,7 @@ import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.http.context.ServletContextHelper;
 import org.osgi.service.http.runtime.dto.DTOConstants;
+import org.osgi.service.http.runtime.dto.FilterDTO;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -212,12 +223,48 @@ public class LiferayContextController extends ContextController {
 		_resourceServiceTracker.open();
 	}
 
-	@Override
 	public FilterRegistration addFilterRegistration(
 			ServiceReference<Filter> serviceReference)
 		throws ServletException {
 
-		return _contextController.addFilterRegistration(serviceReference);
+		_checkShutdown();
+
+		ContextController.ServiceHolder<Filter> filterServiceHolder =
+			new ContextController.ServiceHolder<>(
+				_bundleContext.getServiceObjects(serviceReference));
+
+		Filter filter = filterServiceHolder.get();
+
+		FilterRegistration filterRegistration = null;
+
+		boolean addedRegisteredObject = false;
+
+		Set<Object> registeredObjects =
+			_httpServletEndpointController.getRegisteredObjects();
+
+		try {
+			if (filter == null) {
+				throw new IllegalArgumentException("Filter cannot be null");
+			}
+
+			addedRegisteredObject = registeredObjects.add(filter);
+
+			if (addedRegisteredObject) {
+				filterRegistration = _addFilterRegistration(
+					filterServiceHolder, serviceReference);
+			}
+		}
+		finally {
+			if (filterRegistration == null) {
+				filterServiceHolder.release();
+
+				if (addedRegisteredObject) {
+					registeredObjects.remove(filter);
+				}
+			}
+		}
+
+		return filterRegistration;
 	}
 
 	@Override
@@ -538,10 +585,150 @@ public class LiferayContextController extends ContextController {
 		}
 	}
 
+	private FilterRegistration _addFilterRegistration(
+			ContextController.ServiceHolder<Filter> filterHolder,
+			ServiceReference<Filter> filterServiceReference)
+		throws ServletException {
+
+		Filter filter = filterHolder.get();
+
+		if (filter == null) {
+			throw new IllegalArgumentException("Filter cannot be null");
+		}
+
+		for (FilterRegistration filterRegistration : _filterRegistrations) {
+			if (Objects.equals(filterRegistration.getT(), filter)) {
+				throw new RegisteredFilterException(filter);
+			}
+		}
+
+		String[] patterns = ArrayUtil.toStringArray(
+			StringPlus.asList(
+				filterServiceReference.getProperty(
+					HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN)));
+
+		String[] regexes = ArrayUtil.toStringArray(
+			StringPlus.asList(
+				filterServiceReference.getProperty(
+					HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_REGEX)));
+
+		String[] servletNames = ArrayUtil.toStringArray(
+			StringPlus.asList(
+				filterServiceReference.getProperty(
+					HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_SERVLET)));
+
+		if ((patterns.length == 0) && (regexes.length == 0) &&
+			(servletNames.length == 0)) {
+
+			throw new IllegalArgumentException(
+				"Patterns, regex or servletNames must contain a value");
+		}
+
+		for (String pattern : patterns) {
+			ContextController.checkPattern(pattern);
+		}
+
+		ClassLoader legacyTCCL =
+			(ClassLoader)filterServiceReference.getProperty(
+				Const.EQUINOX_LEGACY_TCCL_PROP);
+
+		long serviceId = (long)filterServiceReference.getProperty(
+			Constants.SERVICE_ID);
+
+		if (legacyTCCL != null) {
+
+			// this is a legacy registration; use a negative id for the DTO
+
+			serviceId = -serviceId;
+		}
+
+		Map<String, String> filterInitParams =
+			ServiceProperties.parseInitParams(
+				filterServiceReference,
+				HttpWhiteboardConstants.
+					HTTP_WHITEBOARD_FILTER_INIT_PARAM_PREFIX);
+
+		Class<?> clazz = filter.getClass();
+
+		String filterName = GetterUtil.getString(
+			ServiceProperties.parseName(
+				filterServiceReference.getProperty(
+					HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME),
+				filterHolder.get()),
+			clazz.getName());
+
+		FilterDTO filterDTO = new FilterDTO();
+
+		filterDTO.asyncSupported = ServiceProperties.parseBoolean(
+			filterServiceReference,
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_ASYNC_SUPPORTED);
+		filterDTO.dispatcher = _sort(
+			_checkDispatchers(
+				ArrayUtil.toStringArray(
+					StringPlus.asList(
+						filterServiceReference.getProperty(
+							HttpWhiteboardConstants.
+								HTTP_WHITEBOARD_FILTER_DISPATCHER)))));
+		filterDTO.initParams = filterInitParams;
+		filterDTO.name = filterName;
+		filterDTO.patterns = _sort(patterns);
+		filterDTO.regexs = regexes;
+		filterDTO.serviceId = serviceId;
+		filterDTO.servletContextId = _contextServiceId;
+		filterDTO.servletNames = _sort(servletNames);
+
+		FilterRegistration filterRegistration = new FilterRegistration(
+			filterHolder, filterDTO,
+			GetterUtil.getInteger(
+				filterServiceReference.getProperty(Constants.SERVICE_RANKING)),
+			this, legacyTCCL);
+
+		filterRegistration.init(
+			new FilterConfigImpl(
+				filterName, filterInitParams,
+				_createServletContext(
+					filterHolder.getBundle(),
+					_getServletContextHelper(filterHolder.getBundle()))));
+
+		_filterRegistrations.add(filterRegistration);
+
+		return filterRegistration;
+	}
+
+	private String[] _checkDispatchers(String[] dispatchers) {
+		if ((dispatchers == null) || (dispatchers.length == 0)) {
+			return _DEFAULT_DISPATCHERS;
+		}
+
+		for (String dispatcher : dispatchers) {
+			try {
+				DispatcherType.valueOf(dispatcher);
+			}
+			catch (IllegalArgumentException illegalArgumentException) {
+				throw new IllegalArgumentException(
+					"Invalid dispatcher '" + dispatcher + "'",
+					illegalArgumentException);
+			}
+		}
+
+		return dispatchers;
+	}
+
 	private void _checkShutdown() {
 		if (_shutdown) {
 			throw new IllegalStateException("Context is shutdown");
 		}
+	}
+
+	private ServletContext _createServletContext(
+		Bundle bundle, ServletContextHelper servletContextHelper) {
+
+		ServletContextAdaptor servletContextAdaptor = new ServletContextAdaptor(
+			this, bundle, servletContextHelper,
+			_servletContextHelperDataContext, _eventListeners,
+			AccessController.getContext());
+
+		return servletContextAdaptor.createServletContext();
 	}
 
 	private DispatchTargets _getDispatchTargets(
@@ -587,9 +774,29 @@ public class LiferayContextController extends ContextController {
 		return null;
 	}
 
+	private ServletContextHelper _getServletContextHelper(Bundle bundle) {
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		return bundleContext.getService(_serviceReference);
+	}
+
+	private String[] _sort(String[] values) {
+		if (values == null) {
+			return null;
+		}
+
+		Arrays.sort(values);
+
+		return values;
+	}
+
 	private static final String _DEFAULT_CONTEXT_SELECT = StringBundler.concat(
 		"(", HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME, "=",
 		HttpWhiteboardConstants.HTTP_WHITEBOARD_DEFAULT_CONTEXT_NAME, ")");
+
+	private static final String[] _DEFAULT_DISPATCHERS = {
+		DispatcherType.REQUEST.toString()
+	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayContextController.class.getName());

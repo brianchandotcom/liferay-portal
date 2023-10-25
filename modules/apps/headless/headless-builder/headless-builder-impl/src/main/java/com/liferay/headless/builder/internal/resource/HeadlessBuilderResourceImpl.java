@@ -68,7 +68,7 @@ public class HeadlessBuilderResourceImpl {
 		throws Exception {
 
 		return _executeEndpoint(
-			path, APIApplication.Endpoint.Scope.GROUP,
+			path, APIApplication.Endpoint.Scope.SITE,
 			endpoint -> _endpointHelper.getResponseEntityMapsPage(
 				_acceptLanguage, _company.getCompanyId(), endpoint,
 				filterString, pagination, scopeKey, sortString));
@@ -103,8 +103,7 @@ public class HeadlessBuilderResourceImpl {
 		throws Exception {
 
 		return _executeEndpoint(
-			path + "/" + pathParameterValue,
-			APIApplication.Endpoint.Scope.GROUP,
+			path + "/" + pathParameterValue, APIApplication.Endpoint.Scope.SITE,
 			endpoint -> _endpointHelper.getResponseEntityMap(
 				_company.getCompanyId(), endpoint.getPathParameter(),
 				pathParameterValue, endpoint.getResponseSchema(), scopeKey));

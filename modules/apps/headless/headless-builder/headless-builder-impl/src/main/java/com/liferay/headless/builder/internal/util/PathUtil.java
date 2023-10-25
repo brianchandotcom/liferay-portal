@@ -15,7 +15,7 @@ import com.liferay.petra.string.StringPool;
 public class PathUtil {
 
 	public static String getPathPrefix(APIApplication.Endpoint.Scope scope) {
-		if (scope == APIApplication.Endpoint.Scope.GROUP) {
+		if (scope == APIApplication.Endpoint.Scope.SITE) {
 			return HeadlessBuilderConstants.BASE_PATH_SCOPES_SUFFIX;
 		}
 

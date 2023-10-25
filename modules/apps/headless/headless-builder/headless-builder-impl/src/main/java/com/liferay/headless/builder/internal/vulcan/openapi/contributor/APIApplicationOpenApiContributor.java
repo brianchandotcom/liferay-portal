@@ -227,7 +227,7 @@ public class APIApplicationOpenApiContributor implements OpenAPIContributor {
 			List<Parameter> parameters = new ArrayList<>();
 
 			if (Objects.equals(
-					endpoint.getScope(), APIApplication.Endpoint.Scope.GROUP)) {
+					endpoint.getScope(), APIApplication.Endpoint.Scope.SITE)) {
 
 				parameters.add(
 					new Parameter() {

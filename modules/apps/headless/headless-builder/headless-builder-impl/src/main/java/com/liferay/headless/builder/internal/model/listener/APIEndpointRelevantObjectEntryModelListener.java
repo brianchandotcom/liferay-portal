@@ -323,7 +323,7 @@ public class APIEndpointRelevantObjectEntryModelListener
 		if (Objects.equals(
 				APIApplication.Endpoint.Scope.parse(
 					(String)values.get("scope")),
-				APIApplication.Endpoint.Scope.GROUP) &&
+				APIApplication.Endpoint.Scope.SITE) &&
 			Objects.equals(
 				pathParameter, HeadlessBuilderConstants.PATH_PARAMETER_ID)) {
 

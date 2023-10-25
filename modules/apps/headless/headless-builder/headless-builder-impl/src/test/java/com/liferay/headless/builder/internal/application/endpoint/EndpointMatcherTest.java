@@ -39,7 +39,7 @@ public class EndpointMatcherTest {
 		Assert.assertNull(endpointMatcher.getEndpoint("/path", null));
 		Assert.assertNull(
 			endpointMatcher.getEndpoint(
-				"/path-name", APIApplication.Endpoint.Scope.GROUP));
+				"/path-name", APIApplication.Endpoint.Scope.SITE));
 		Assert.assertEquals(
 			endpoints.get(0), endpointMatcher.getEndpoint("/path-name", null));
 		Assert.assertEquals(

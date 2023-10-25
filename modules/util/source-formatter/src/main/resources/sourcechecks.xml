@@ -1661,7 +1661,7 @@
 			<description name="Replaces the old methods of class `CommerceCountry` with the new equivalents in the `Country` class." />
 			<weight>1</weight>
 		</check>
-<check name="UpgradeJavaCommerceCountryServiceCheck">
+		<check name="UpgradeJavaCommerceCountryServiceCheck">
 			<category name="Upgrade" />
 			<description name="Replaces the old methods of class `CommerceCountryService` with the new equivalents in the `CountryService` class." />
 			<weight>1</weight>

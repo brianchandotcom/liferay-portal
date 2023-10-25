@@ -6,6 +6,7 @@
 package com.liferay.portal.osgi.web.http.servlet.internal.context;
 
 import com.liferay.osgi.util.StringPlus;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -39,6 +40,7 @@ import javax.servlet.Filter;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextAttributeListener;
+import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequestAttributeListener;
@@ -83,6 +85,7 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.service.http.context.ServletContextHelper;
 import org.osgi.service.http.runtime.dto.DTOConstants;
 import org.osgi.service.http.runtime.dto.FilterDTO;
+import org.osgi.service.http.runtime.dto.ListenerDTO;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -295,10 +298,71 @@ public class LiferayContextController extends ContextController {
 
 	@Override
 	public ListenerRegistration addListenerRegistration(
-			ServiceReference<EventListener> serviceReference)
-		throws ServletException {
+		ServiceReference<EventListener> serviceReference) {
 
-		return _contextController.addListenerRegistration(serviceReference);
+		_checkShutdown();
+
+		ContextController.ServiceHolder<EventListener>
+			eventListenerServiceHolder = new ContextController.ServiceHolder<>(
+				_bundleContext.getServiceObjects(serviceReference));
+
+		EventListener eventListener = eventListenerServiceHolder.get();
+
+		ListenerRegistration listenerRegistration = null;
+
+		try {
+			if (eventListener == null) {
+				throw new IllegalArgumentException(
+					"EventListener can not be null");
+			}
+
+			List<Class<? extends EventListener>> listenerClasses =
+				_getListenerClasses(serviceReference);
+
+			if (listenerClasses.isEmpty()) {
+				throw new IllegalArgumentException(
+					"EventListener does not implement a supported type");
+			}
+
+			for (ListenerRegistration curListenerRegistration :
+					_listenerRegistrations) {
+
+				if (Objects.equals(
+						curListenerRegistration.getT(), eventListener)) {
+
+					return null;
+				}
+			}
+
+			ServletContext servletContext = _createServletContext(
+				eventListenerServiceHolder.getBundle(),
+				_getServletContextHelper(
+					eventListenerServiceHolder.getBundle()));
+
+			listenerRegistration = new ListenerRegistration(
+				eventListenerServiceHolder, listenerClasses,
+				_createListenerDTO(serviceReference, listenerClasses),
+				servletContext, this);
+
+			if (listenerClasses.contains(ServletContextListener.class)) {
+				ServletContextListener servletContextListener =
+					(ServletContextListener)listenerRegistration.getT();
+
+				servletContextListener.contextInitialized(
+					new ServletContextEvent(servletContext));
+			}
+
+			_listenerRegistrations.add(listenerRegistration);
+
+			_eventListeners.put(listenerClasses, listenerRegistration);
+		}
+		finally {
+			if (listenerRegistration == null) {
+				eventListenerServiceHolder.release();
+			}
+		}
+
+		return listenerRegistration;
 	}
 
 	@Override
@@ -694,6 +758,21 @@ public class LiferayContextController extends ContextController {
 		return filterDTO;
 	}
 
+	private ListenerDTO _createListenerDTO(
+		ServiceReference<EventListener> serviceReference,
+		List<Class<? extends EventListener>> listenerClasses) {
+
+		ListenerDTO listenerDTO = new ListenerDTO();
+
+		listenerDTO.serviceId = (long)serviceReference.getProperty(
+			Constants.SERVICE_ID);
+		listenerDTO.servletContextId = _contextServiceId;
+		listenerDTO.types = TransformUtil.transformToArray(
+			listenerClasses, Class::getName, String.class);
+
+		return listenerDTO;
+	}
+
 	private ServletContext _createServletContext(
 		Bundle bundle, ServletContextHelper servletContextHelper) {
 
@@ -746,6 +825,57 @@ public class LiferayContextController extends ContextController {
 		}
 
 		return null;
+	}
+
+	private List<Class<? extends EventListener>> _getListenerClasses(
+		ServiceReference<EventListener> serviceReference) {
+
+		List<String> objectClassList = StringPlus.asList(
+			serviceReference.getProperty(Constants.OBJECTCLASS));
+
+		List<Class<? extends EventListener>> classes = new ArrayList<>();
+
+		if (objectClassList.contains(ServletContextListener.class.getName())) {
+			classes.add(ServletContextListener.class);
+		}
+
+		if (objectClassList.contains(
+				ServletContextAttributeListener.class.getName())) {
+
+			classes.add(ServletContextAttributeListener.class);
+		}
+
+		if (objectClassList.contains(ServletRequestListener.class.getName())) {
+			classes.add(ServletRequestListener.class);
+		}
+
+		if (objectClassList.contains(
+				ServletRequestAttributeListener.class.getName())) {
+
+			classes.add(ServletRequestAttributeListener.class);
+		}
+
+		if (objectClassList.contains(HttpSessionListener.class.getName())) {
+			classes.add(HttpSessionListener.class);
+		}
+
+		if (objectClassList.contains(
+				HttpSessionAttributeListener.class.getName())) {
+
+			classes.add(HttpSessionAttributeListener.class);
+		}
+
+		ServletContext servletContext =
+			_servletContextHelperDataContext.getServletContext();
+
+		if ((servletContext.getMajorVersion() >= 3) &&
+			(servletContext.getMinorVersion() > 0) &&
+			objectClassList.contains(HttpSessionIdListener.class.getName())) {
+
+			classes.add(HttpSessionIdListener.class);
+		}
+
+		return classes;
 	}
 
 	private ServletContextHelper _getServletContextHelper(Bundle bundle) {

@@ -55,6 +55,15 @@
 	},
 	{
 		"classNames": [
+			"CPDefinitionLocalService",
+			"CPDefinitionService"
+		],
+		"from": "fetchCPDefinitionByCProductExternalReferenceCode(long, String)",
+		"issueKey": "LPS-190521",
+		"to": "fetchCPDefinitionByCProductExternalReferenceCode(param#1#, param#0#)"
+	},
+	{
+		"classNames": [
 			"AssetCategoryLocalService",
 			"AssetCategoryLocalServiceUtil"
 		],

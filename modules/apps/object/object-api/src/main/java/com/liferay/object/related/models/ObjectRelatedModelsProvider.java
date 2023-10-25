@@ -59,9 +59,12 @@ public interface ObjectRelatedModelsProvider<T extends BaseModel<T>> {
 		return new ArrayList<>();
 	}
 
-	public int getUnrelatedModelsCount(
+	public default int getUnrelatedModelsCount(
 			long companyId, long groupId, ObjectDefinition objectDefinition,
 			long objectEntryId, long objectRelationshipId)
-		throws PortalException;
+		throws PortalException {
+
+		return 0;
+	}
 
 }

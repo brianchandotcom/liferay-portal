@@ -6,6 +6,7 @@
 package com.liferay.headless.builder.internal.model.listener;
 
 import com.liferay.headless.builder.internal.helper.ObjectEntryHelper;
+import com.liferay.headless.builder.internal.helper.ValidationHelper;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -105,7 +106,7 @@ public class APIPropertyRelevantObjectEntryModelListener
 			long apiSchemaId = GetterUtil.getLong(
 				values.get("r_apiSchemaToAPIProperties_c_apiSchemaId"));
 
-			if (!_objectEntryHelper.isValidObjectEntry(
+			if (!_validationHelper.isValidObjectEntry(
 					apiSchemaId, "L_API_SCHEMA")) {
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
@@ -141,5 +142,8 @@ public class APIPropertyRelevantObjectEntryModelListener
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
+	private ValidationHelper _validationHelper;
 
 }

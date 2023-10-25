@@ -64,6 +64,12 @@ const DropDown = ({inEmptyState, primaryItems}) => {
 							}
 						}}
 					>
+						{item.icon && (
+							<span className="pr-2">
+								<ClayIcon symbol={item.icon} />
+							</span>
+						)}
+
 						{item.label}
 					</ClayDropDown.Item>
 				))}

@@ -6,7 +6,6 @@
 package com.liferay.portal.kernel.security.auth.tunnel;
 
 import com.liferay.portal.kernel.security.auth.AuthException;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.net.HttpURLConnection;
 
@@ -30,14 +29,12 @@ public class TunnelAuthenticationManagerUtil {
 		_tunnelAuthenticationManager.setCredentials(login, httpURLConnection);
 	}
 
-	private TunnelAuthenticationManagerUtil() {
+	public void setTunnelAuthenticationManager(
+		TunnelAuthenticationManager tunnelAuthenticationManager) {
+
+		_tunnelAuthenticationManager = tunnelAuthenticationManager;
 	}
 
-	private static volatile TunnelAuthenticationManager
-		_tunnelAuthenticationManager =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				TunnelAuthenticationManager.class,
-				TunnelAuthenticationManagerUtil.class,
-				"_tunnelAuthenticationManager", false, true);
+	private static TunnelAuthenticationManager _tunnelAuthenticationManager;
 
 }

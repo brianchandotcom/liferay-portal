@@ -11,6 +11,7 @@ import Screen from './Screen';
 const INVALID_STATUS = 'Invalid status code';
 
 const FAILED_TO_FETCH_MSG = 'Failed to fetch';
+const LOAD_FAILED_MSG = 'Load failed';
 const NETWORK_ERROR_MSG = 'NetworkError when attempting to fetch resource.';
 const PREFLIGHT_ERROR_MSG = 'Preflight response is not successful';
 const REQUEST_ERROR_MSG = 'Request error';
@@ -283,6 +284,9 @@ class RequestScreen extends Screen {
 			}),
 		]).catch((reason) => {
 			switch (reason.message) {
+				case LOAD_FAILED_MSG:
+					window.location.href = url;
+					break;
 				case REQUEST_TIMEOUT_MSG:
 					reason.timeout = true;
 					break;

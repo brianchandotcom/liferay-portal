@@ -31,7 +31,7 @@ import org.junit.Test;
 /**
  * @author Cristina González
  */
-public class GCloudNaturalLanguageDocumentAssetAutoTaggerTest {
+public class GCloudNaturalLanguageDocumentAssetAutoTagProviderTest {
 
 	@ClassRule
 	public static LiferayUnitTestRule liferayUnitTestRule =
@@ -39,11 +39,11 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		_gCloudNaturalLanguageDocumentAssetAutoTagger =
-			new GCloudNaturalLanguageDocumentAssetAutoTagger();
+		_gCloudNaturalLanguageDocumentAssetAutoTagProvider =
+			new GCloudNaturalLanguageDocumentAssetAutoTagProvider();
 
 		ReflectionTestUtil.setFieldValue(
-			_gCloudNaturalLanguageDocumentAssetAutoTagger, "_jsonFactory",
+			_gCloudNaturalLanguageDocumentAssetAutoTagProvider, "_jsonFactory",
 			new JSONFactoryImpl());
 	}
 
@@ -86,7 +86,7 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerTest {
 				};
 
 		Set<String> tagNames = ReflectionTestUtil.invoke(
-			_gCloudNaturalLanguageDocumentAssetAutoTagger,
+			_gCloudNaturalLanguageDocumentAssetAutoTagProvider,
 			"_getClassificationTagNames",
 			new Class<?>[] {
 				GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration.class,
@@ -138,7 +138,7 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerTest {
 				};
 
 		Set<String> tagNames = ReflectionTestUtil.invoke(
-			_gCloudNaturalLanguageDocumentAssetAutoTagger,
+			_gCloudNaturalLanguageDocumentAssetAutoTagProvider,
 			"_getClassificationTagNames",
 			new Class<?>[] {
 				GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration.class,
@@ -190,7 +190,7 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerTest {
 				};
 
 		Set<String> tagNames = ReflectionTestUtil.invoke(
-			_gCloudNaturalLanguageDocumentAssetAutoTagger,
+			_gCloudNaturalLanguageDocumentAssetAutoTagProvider,
 			"_getEntitiesTagNames",
 			new Class<?>[] {
 				GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration.class,
@@ -242,7 +242,7 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerTest {
 				};
 
 		Set<String> tagNames = ReflectionTestUtil.invoke(
-			_gCloudNaturalLanguageDocumentAssetAutoTagger,
+			_gCloudNaturalLanguageDocumentAssetAutoTagProvider,
 			"_getEntitiesTagNames",
 			new Class<?>[] {
 				GCloudNaturalLanguageAssetAutoTaggerCompanyConfiguration.class,
@@ -268,7 +268,7 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerTest {
 				"Society", "Books", "Kids", "Childrens Interests"));
 
 		Set<String> actualTagNames = ReflectionTestUtil.invoke(
-			_gCloudNaturalLanguageDocumentAssetAutoTagger, "_toTagNames",
+			_gCloudNaturalLanguageDocumentAssetAutoTagProvider, "_toTagNames",
 			new Class<?>[] {JSONArray.class, Predicate.class},
 			responseJSONObject.getJSONArray("categories"),
 			(Predicate<JSONObject>)jsonObject -> true);
@@ -437,7 +437,7 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerTest {
 				"round"));
 
 		Set<String> actualTagNames = ReflectionTestUtil.invoke(
-			_gCloudNaturalLanguageDocumentAssetAutoTagger, "_toTagNames",
+			_gCloudNaturalLanguageDocumentAssetAutoTagProvider, "_toTagNames",
 			new Class<?>[] {JSONArray.class, Predicate.class},
 			responseJSONObject.getJSONArray("entities"),
 			(Predicate<JSONObject>)jsonObject -> true);
@@ -447,7 +447,7 @@ public class GCloudNaturalLanguageDocumentAssetAutoTaggerTest {
 			actualTagNames.containsAll(expectedTagNames));
 	}
 
-	private static GCloudNaturalLanguageDocumentAssetAutoTagger
-		_gCloudNaturalLanguageDocumentAssetAutoTagger;
+	private static GCloudNaturalLanguageDocumentAssetAutoTagProvider
+		_gCloudNaturalLanguageDocumentAssetAutoTagProvider;
 
 }

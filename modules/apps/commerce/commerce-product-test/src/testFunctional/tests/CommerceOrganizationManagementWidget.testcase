@@ -422,6 +422,14 @@ definition {
 						accountEntryName = ${accountsList},
 						userEmailAddress = "buyer@liferay.com");
 				}
+				else {
+					JSONAccountEntryUser.addAccountEntryUser(
+						accountEntryName = "Account B_1",
+						userEmailAddress = "admin@liferay.com",
+						userFirstName = "admin",
+						userLastName = "admin",
+						userScreenName = "admin");
+				}
 			}
 
 			JSONAccountEntry.addAccountEntrySubOrganization(
@@ -447,12 +455,21 @@ definition {
 				locator1 = "CommerceOrganizationManagementWidget#SEARCH_FIELD",
 				value1 = "buyer@liferay.com");
 
+			var first_position = selenium.getAttribute("//div[contains(@class,'org-chart-container')]//*[name()='svg']//*[name()='g']@transform");
+
+			var first_zoom_level = StringUtil.extractLast(${first_position}, "scale");
+
 			Click(
 				key_columnOption = "Buyer User",
 				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
 		}
 
 		task ("Then the Organization widget expands and opens the graph to show the entries highlighted with the black color") {
+			AssertElementNotPresent(
+				key_entry = "admin admin",
+				key_row = 1,
+				locator1 = "CommerceOrganizationManagementWidget#CHART_DISCOVERED_ENTRY");
+
 			AssertElementPresent(
 				key_entry = "Buyer User",
 				key_row = 1,
@@ -467,6 +484,28 @@ definition {
 				AssertElementPresent(
 					key_searchResults = "2 Result for Buyer User",
 					locator1 = "CommerceOrganizationManagementWidget#CHART_SEARCH_RESULTS");
+			}
+
+			// Pausing 5 seconds need it for giving the time to actually change the position COMMERCE-12430
+
+			Pause(locator1 = 5000);
+
+			var second_position = selenium.getAttribute("//div[contains(@class,'org-chart-container')]//*[name()='svg']//*[name()='g']@transform");
+
+			var second_zoom_level = StringUtil.extractLast(${second_position}, "scale");
+
+			if (${first_position} != ${second_position}) {
+				echo("The position is changed (expected behaviour)");
+			}
+			else {
+				fail("The position is not changed the expected position it must be different from ${first_position}");
+			}
+
+			if (${first_zoom_level} != ${second_zoom_level}) {
+				echo("The zoom is changed (expected behaviour)");
+			}
+			else {
+				fail("The expected zoom must be the different from ${first_zoom_level}");
 			}
 		}
 
@@ -485,6 +524,11 @@ definition {
 		}
 
 		task ("Then again the Organization widget expands and opens the graph to show the entries highlighted with the black color") {
+			AssertElementNotPresent(
+				key_entry = "admin admin",
+				key_row = 1,
+				locator1 = "CommerceOrganizationManagementWidget#CHART_DISCOVERED_ENTRY");
+
 			AssertElementPresent(
 				key_entry = "Buyer User",
 				key_row = 1,
@@ -662,6 +706,8 @@ definition {
 		task ("Then the Organization widget expands and opens the graph to show the entry highlighted with the black color") {
 			var first_position = selenium.getAttribute("//div[contains(@class,'org-chart-container')]//*[name()='svg']//*[name()='g']@transform");
 
+			var first_zoom_level = StringUtil.extractLast(${first_position}, "scale");
+
 			Click(
 				key_columnOption = "admin",
 				locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE_OPTION");
@@ -671,12 +717,20 @@ definition {
 			Pause(locator1 = 5000);
 
 			var second_position = selenium.getAttribute("//div[contains(@class,'org-chart-container')]//*[name()='svg']//*[name()='g']@transform");
+			var second_zoom_level = StringUtil.extractLast(${first_position}, "scale");
 
 			if (${first_position} != ${second_position}) {
-				echo("The position is changed");
+				echo("The position is changed (expected behaviour)");
 			}
 			else {
 				fail("The position is not changed the expected position it must be different from ${first_position}");
+			}
+
+			if (${first_zoom_level} == ${second_zoom_level}) {
+				echo("The zoom is still the same (expected behaviour)");
+			}
+			else {
+				fail("The expected zoom must be the same from ${first_zoom_level}");
 			}
 
 			AssertElementPresent(
@@ -942,6 +996,38 @@ definition {
 			}
 		}
 
+		task ("When the admin use the exact search") {
+			var searchTerm = '''"Or"''';
+
+			Type(
+				locator1 = "CommerceOrganizationManagementWidget#SEARCH_FIELD",
+				value1 = ${searchTerm});
+
+			task ("Then in case the admin search 'Or' no results will be present") {
+				AssertElementPresent(locator1 = "CommerceOrganizationManagementWidget#SELECT_AUTO_DISABLED");
+			}
+
+			task ("But in case the admin search for 'Account B_1'") {
+				var searchTerm = '''"Account B_1"''';
+
+				Type(
+					locator1 = "CommerceOrganizationManagementWidget#SEARCH_FIELD",
+					value1 = ${searchTerm});
+
+				task ("Then only one results will be present") {
+					AssertElementPresent(
+						key_columnOption = "Account",
+						key_row = 1,
+						locator1 = "CommerceOrganizationManagementWidget#SELECT_AUTO_COMPLETE_OPTION_ROW");
+
+					AssertElementNotPresent(
+						key_columnOption = "Account",
+						key_row = 2,
+						locator1 = "CommerceOrganizationManagementWidget#SELECT_AUTO_COMPLETE_OPTION_ROW");
+				}
+			}
+		}
+
 		task ("When the search for the Commerce Account (this one is not present in any organization and is not present in the graph)") {
 			Type(
 				locator1 = "CommerceOrganizationManagementWidget#SEARCH_FIELD",
@@ -966,6 +1052,16 @@ definition {
 			AssertElementPresent(
 				key_searchResults = "0 Result for Commerce Account",
 				locator1 = "CommerceOrganizationManagementWidget#CHART_SEARCH_RESULTS");
+		}
+
+		task ("When the admin search for something that doesn't exist") {
+			Type(
+				locator1 = "CommerceOrganizationManagementWidget#SEARCH_FIELD",
+				value1 = "Commp");
+		}
+
+		task ("Then the message 'No items were be found' is present") {
+			AssertElementPresent(locator1 = "CommerceOrganizationManagementWidget#SELECT_AUTO_DISABLED");
 		}
 
 		task ("But if the admin searched for 'SubOrg 2'") {

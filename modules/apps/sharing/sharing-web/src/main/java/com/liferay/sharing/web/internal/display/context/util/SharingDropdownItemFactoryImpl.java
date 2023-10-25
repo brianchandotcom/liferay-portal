@@ -96,7 +96,7 @@ public class SharingDropdownItemFactoryImpl
 			() -> {
 				String copyLinkOnClickMethod =
 					_sharingJavaScriptFactory.createCopyLinkClickMethod(
-						className, classPK);
+						className, classPK, httpServletRequest);
 
 				return "javascript:" + copyLinkOnClickMethod;
 			}

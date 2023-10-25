@@ -102,10 +102,8 @@ public class EditServerMVCActionCommandTest {
 			TestPropsValues.getUserId(), 0,
 			layoutRevision.getLayoutRevisionId(), portletId);
 
-		Layout layout = _layoutLocalService.getLayout(layoutRevision.getPlid());
-
 		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
+			(LayoutTypePortlet)_layout.getLayoutType();
 
 		List<String> portletIds = layoutTypePortlet.getPortletIds();
 

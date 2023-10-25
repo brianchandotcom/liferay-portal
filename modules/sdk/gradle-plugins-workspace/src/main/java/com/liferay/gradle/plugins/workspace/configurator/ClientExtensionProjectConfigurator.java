@@ -53,6 +53,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -445,6 +446,28 @@ public class ClientExtensionProjectConfigurator
 			project, LifecycleBasePlugin.CLEAN_TASK_NAME);
 
 		cleanTask.dependsOn(dockerRemoveImage);
+	}
+
+	@SafeVarargs
+	private final void _addInputFile(
+		File inputFile, Supplier<Boolean> supplier,
+		TaskProvider<? extends Task>... taskProviders) {
+
+		for (TaskProvider<? extends Task> taskProvider : taskProviders) {
+			taskProvider.configure(
+				new Action<Task>() {
+
+					@Override
+					public void execute(Task task) {
+						if (supplier.get()) {
+							TaskInputs inputs = task.getInputs();
+
+							inputs.file(inputFile);
+						}
+					}
+
+				});
+		}
 	}
 
 	private TaskProvider<Zip> _baseConfigureClientExtensionProject(

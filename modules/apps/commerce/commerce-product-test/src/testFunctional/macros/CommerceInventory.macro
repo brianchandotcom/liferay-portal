@@ -29,6 +29,112 @@ definition {
 		Button.clickSubmitButton();
 	}
 
+	macro addInventoryByWarehouse {
+		Click(locator1 = "Button#PLUS");
+
+		Click(
+			key_fieldName = "Add Inventory",
+			locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Type(
+			key_fieldLabel = "Quantity",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = ${quantity});
+
+		Select(
+			key_fieldLabel = "Warehouse",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = ${warehouseName});
+
+		Button.click(button = "Submit");
+
+		SelectFrameTop();
+	}
+
+	macro addInventoryEntry {
+		Click(locator1 = "Button#PLUS");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Type(
+			key_fieldLabel = "SKU",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = ${sku});
+
+		Select(
+			key_fieldLabel = "Warehouse",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = ${warehouse});
+
+		Type(
+			key_fieldLabel = "Quantity",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = ${quantity});
+
+		Button.click(button = "Submit");
+
+		SelectFrameTop();
+	}
+
+	macro createTransfer {
+		Click(locator1 = "Button#PLUS");
+
+		Click(
+			key_fieldName = "Create a Transfer",
+			locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+		Type(
+			key_fieldLabel = "Quantity",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = ${quantity});
+
+		Select(
+			key_selectFieldLabel = "Source",
+			locator1 = "CommerceEntry#ANY_SELECT",
+			value1 = ${source});
+
+		Select(
+			key_selectFieldLabel = "Destination",
+			locator1 = "CommerceEntry#ANY_SELECT",
+			value1 = ${destination});
+
+		Button.click(button = "Submit");
+
+		SelectFrameTop();
+	}
+
+	macro editIncomingQuantity {
+		CommerceNavigator.gotoEntry(entryName = ${warehouse});
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		if (isSet(quantity)) {
+			Type(
+				key_text = "Quantity",
+				locator1 = "TextInput#ANY",
+				value1 = ${quantity});
+		}
+
+		if (isSet(expectedDeliveryDate)) {
+			Type(
+				inputFieldId = "date",
+				locator1 = "TextInput#INPUT_ID",
+				value1 = ${expectedDeliveryDate});
+		}
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+
+		Click(locator1 = "Icon#CLOSE");
+
+		SelectFrameTop();
+	}
+
 	@summary = "Default summary"
 	macro editInventoryByWarehouse(quantityOnHand = null, index = null, sku = null, safetyStockQuantity = null) {
 		CommerceInventory.openInventoryAdmin();
@@ -40,30 +146,37 @@ definition {
 			index = ${index});
 
 		for (var warehouse : list ${warehouse}) {
-			CommerceNavigator.gotoTableListEntry(entryName = ${warehouse});
-
-			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
-
-			if (isSet(quantityOnHand)) {
-				Type(
-					key_text = "Quantity on Hand",
-					locator1 = "TextInput#ANY",
-					value1 = ${quantityOnHand});
-			}
-
-			if (isSet(safetyStockQuantity)) {
-				Type(
-					key_text = "Safety Stock Quantity",
-					locator1 = "TextInput#ANY",
-					value1 = ${safetyStockQuantity});
-			}
-
-			Button.clickSave();
-
-			Click(locator1 = "Icon#CLOSE");
-
-			SelectFrameTop();
+			CommerceInventory.editWarehouseInventory(
+				quantityOnHand = ${quantityOnHand},
+				safetyStockQuantity = ${safetyStockQuantity},
+				warehouse = ${warehouse});
 		}
+	}
+
+	macro editWarehouseInventory {
+		CommerceNavigator.gotoTableListEntry(entryName = ${warehouse});
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		if (isSet(quantityOnHand)) {
+			Type(
+				key_text = "Quantity on Hand",
+				locator1 = "TextInput#ANY",
+				value1 = ${quantityOnHand});
+		}
+
+		if (isSet(safetyStockQuantity)) {
+			Type(
+				key_text = "Safety Stock Quantity",
+				locator1 = "TextInput#ANY",
+				value1 = ${safetyStockQuantity});
+		}
+
+		Button.clickSave();
+
+		Click(locator1 = "Icon#CLOSE");
+
+		SelectFrameTop();
 	}
 
 	@summary = "Default summary"
@@ -71,6 +184,20 @@ definition {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_commerce_inventory_web_internal_portlet_CommerceInventoryPortlet");
+	}
+
+	macro viewIncomingQuantityByWarehouse {
+		AssertElementPresent(
+			key_entryTitle = ${warehouse},
+			key_index = 2,
+			key_value = ${expectedDeliveryDate},
+			locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+
+		AssertElementPresent(
+			key_entryTitle = ${warehouse},
+			key_index = 3,
+			key_value = ${quantity},
+			locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
 	}
 
 	@summary = "Default summary"
@@ -81,6 +208,70 @@ definition {
 				key_index = ${index},
 				key_value = ${inventory},
 				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+		}
+	}
+
+	macro viewInventoryByWarehouseEntry {
+		if (isSet(onHand)) {
+			AssertElementPresent(
+				key_entryTitle = ${warehouse},
+				key_index = 2,
+				key_value = ${onHand},
+				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+		}
+
+		if (isSet(safetyStock)) {
+			AssertElementPresent(
+				key_entryTitle = ${warehouse},
+				key_index = 3,
+				key_value = ${safetyStock},
+				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+		}
+
+		if (isSet(available)) {
+			AssertElementPresent(
+				key_entryTitle = ${warehouse},
+				key_index = 4,
+				key_value = ${available},
+				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+		}
+
+		if (isSet(incoming)) {
+			AssertElementPresent(
+				key_entryTitle = ${warehouse},
+				key_index = 5,
+				key_value = ${incoming},
+				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+		}
+	}
+
+	macro viewInventoryEntryQuantity {
+		if (isSet(onHand)) {
+			AssertElementPresent(
+				key_quantity = ${onHand},
+				key_sku = ${sku},
+				locator1 = "CommerceInventory#INVENTORY_SKU_ON_HAND_QUANTITY");
+		}
+
+		if (isSet(available)) {
+			AssertElementPresent(
+				key_quantity = ${onHand},
+				key_sku = ${sku},
+				locator1 = "CommerceInventory#INVENTORY_SKU_AVAILABLE_QUANTITY");
+		}
+
+		if (isSet(onOrder)) {
+			AssertElementPresent(
+				key_quantity = ${onOrder},
+				key_sku = ${sku},
+				locator1 = "CommerceInventory#INVENTORY_SKU_ON_ORDER_QUANTITY");
+		}
+
+		if (isSet(incoming)) {
+			AssertElementPresent(
+				key_quantity = ${incoming},
+				key_sku = ${sku},
+				locator1 = "CommerceInventory#INVENTORY_SKU_INCOMING_QUANTITY");
 		}
 	}
 

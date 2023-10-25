@@ -1,5 +1,47 @@
 definition {
 
+	macro _addIncomingQuantity {
+		Variables.assertDefined(parameterList = "${quantity},${sku},${warehouseName}");
+
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = JSONCompany.getPortalURL();
+		}
+
+		if (!(isSet(availabilityDate))) {
+			var availabilityDate = DateUtil.getFormattedCurrentDate("yyyy-MM-dd");
+		}
+
+		if (!(isSet(externalReferenceCode))) {
+			var externalReferenceCode = "";
+		}
+
+		if (!(isSet(uomKey))) {
+			var uomKey = "";
+		}
+
+		var warehouseId = CommerceJSONWarehousesAndInventoriesAPI._getWarehouseId(warehouseName = ${warehouseName});
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-inventory/v1.0/warehouses/${warehouseId}/skus/by-sku/${sku}/replenishment-items \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '{
+					"availabilityDate" : "${availabilityDate}",
+					"externalReferenceCode": "${externalReferenceCode}",
+					"quantity": ${quantity},
+					"unitOfMeasureKey": "${uomKey}"
+				}'
+		''';
+
+		var responseBody = JSONCurlUtil.post(${curl});
+
+		return ${responseBody};
+	}
+
 	@summary = "Default summary"
 	macro _addWarehouse(latitude = null, warehouseName = null, longitude = null) {
 		Variables.assertDefined(parameterList = "${latitude},${longitude},${warehouseName}");

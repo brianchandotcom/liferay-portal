@@ -9,7 +9,13 @@ import ClayList from '@clayui/list';
 import {ClayModalProvider, Context as ClayModalContext} from '@clayui/modal';
 import ClayProgressBar from '@clayui/progress-bar';
 import {fetch, localStorage, openToast} from 'frontend-js-web';
-import React, {useContext, useRef, useState} from 'react';
+import React, {
+	useCallback,
+	useContext,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
 
 import {
 	EXECUTION_MODES,
@@ -114,12 +120,72 @@ function IndexActions({
 	};
 
 	/*
+	 * Appends sync icon to the control menu, if not already there.
+	 * Called after the reindex fetch.
+	 */
+	const _handleSyncIconAppend = useCallback(() => {
+		const currentControlMenu = document.getElementById(
+			`${portletNamespace}controlMenu`
+		);
+
+		const currentControlMenuCategory = currentControlMenu.querySelector(
+			`.${controlMenuCategoryKey}-control-group .control-menu-nav`
+		);
+
+		if (
+			!currentControlMenuCategory?.querySelector(
+				`.control-menu-nav-item .lexicon-icon-reload`
+			)
+		) {
+			const controlMenuNavItem = document.createElement('div');
+
+			controlMenuNavItem.className = 'control-menu-nav-item';
+
+			const syncIcon = document.createElement('span');
+			syncIcon.className = PORTAL_TOOLTIP_TRIGGER_CLASS;
+			syncIcon.innerHTML = `
+			<svg class="lexicon-icon lexicon-icon-reload" focusable="false">
+				<use href="${Liferay.Icons.spritemap}#reload" />
+			</svg>`;
+
+			syncIcon.setAttribute(
+				'data-title',
+				Liferay.Language.get('the-portal-is-currently-reindexing')
+			);
+
+			controlMenuNavItem.appendChild(syncIcon);
+
+			currentControlMenuCategory.appendChild(controlMenuNavItem);
+		}
+	}, [controlMenuCategoryKey, portletNamespace]);
+
+	/*
+	 * Removes sync icon to the control menu, if not already removed.
+	 * Called after the background tasks complete.
+	 */
+	const _handleSyncIconRemove = useCallback(() => {
+		const currentControlMenu = document.getElementById(
+			`${portletNamespace}controlMenu`
+		);
+
+		const syncIcon = currentControlMenu.querySelector(
+			`.${controlMenuCategoryKey}-control-group .control-menu-nav-item .lexicon-icon-reload`
+		);
+
+		const controlMenuNavItem = syncIcon?.closest('.control-menu-nav-item');
+
+		if (controlMenuNavItem?.parentNode) {
+			controlMenuNavItem.parentNode.removeChild(controlMenuNavItem);
+		}
+	}, [controlMenuCategoryKey, portletNamespace]);
+
+	/*
 	 * Executed after performing the reindex call. Continuously fetches the
 	 * view of the current URL to get status of the background task.
 	 * Calls `_handleBackgroundTaskStop` within when there are no more
 	 * background tasks running.
 	 */
-	const _handleBackgroundTaskStart = () => {
+	const _handleBackgroundTaskStart = useCallback(() => {
 		const fetchRedirectURL = new URL(redirectURL);
 
 		if (!intervalRef.current) {
@@ -171,7 +237,7 @@ function IndexActions({
 					});
 			}, INTERVAL_RENDER_IN_PROGRESS);
 		}
-	};
+	}, [_handleSyncIconRemove, portletNamespace, redirectURL]);
 
 	/*
 	 * Clears the interval involved with continuously fetching the background task
@@ -383,60 +449,6 @@ function IndexActions({
 	};
 
 	/*
-	 * Appends sync icon to the control menu, if not already there.
-	 * Called after the reindex fetch.
-	 */
-	const _handleSyncIconAppend = () => {
-		const currentControlMenu = document.getElementById(
-			`${portletNamespace}controlMenu`
-		);
-
-		const currentControlMenuCategory = currentControlMenu.querySelector(
-			`.${controlMenuCategoryKey}-control-group .control-menu-nav`
-		);
-
-		if (
-			!currentControlMenuCategory.querySelector(
-				`#${portletNamespace}syncIcon`
-			)
-		) {
-			const syncIcon = document.createElement('div');
-
-			syncIcon.className = PORTAL_TOOLTIP_TRIGGER_CLASS;
-			syncIcon.id = `${portletNamespace}syncIcon`;
-			syncIcon.innerHTML = `
-			<svg class="lexicon-icon" focusable="false">
-				<use href="${Liferay.Icons.spritemap}#reload" />
-			</svg>`;
-
-			syncIcon.setAttribute(
-				'data-title',
-				Liferay.Language.get('the-portal-is-currently-reindexing')
-			);
-
-			currentControlMenuCategory.appendChild(syncIcon);
-		}
-	};
-
-	/*
-	 * Removes sync icon to the control menu, if not already removed.
-	 * Called after the background tasks complete.
-	 */
-	const _handleSyncIconRemove = () => {
-		const currentControlMenu = document.getElementById(
-			`${portletNamespace}controlMenu`
-		);
-
-		const syncIcon = currentControlMenu.querySelector(
-			`.${controlMenuCategoryKey}-control-group .control-menu-nav #${portletNamespace}syncIcon`
-		);
-
-		if (syncIcon?.parentNode) {
-			syncIcon.parentNode.removeChild(syncIcon);
-		}
-	};
-
-	/*
 	 * Returns true if any background task is running for the list of indexers.
 	 * If no list is provided, returns true if there are any background tasks
 	 * running.
@@ -450,6 +462,22 @@ function IndexActions({
 
 		return !!Object.keys(backgroundTaskMap).length;
 	};
+
+	useEffect(() => {
+		const backgroundTaskMapString = document
+			.querySelector(`#${portletNamespace}classNameToBackgroundTaskMap`)
+			?.innerHTML?.trim();
+
+		const newBackgroundTaskMap = JSON.parse(backgroundTaskMapString) || {};
+
+		if (Object.keys(newBackgroundTaskMap).length) {
+			_handleSyncIconAppend();
+
+			setBackgroundTaskMap(newBackgroundTaskMap);
+
+			_handleBackgroundTaskStart();
+		}
+	}, [_handleBackgroundTaskStart, _handleSyncIconAppend, portletNamespace]);
 
 	return (
 		<ClayLayout.Container

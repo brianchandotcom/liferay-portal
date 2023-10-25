@@ -7,6 +7,7 @@ package com.liferay.headless.builder.model.listener.test;
 
 import com.liferay.headless.builder.test.BaseTestCase;
 import com.liferay.headless.builder.util.ObjectDefinitionTestUtil;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -40,7 +41,8 @@ public class APISchemaRelevantObjectEntryModelListenerTest
 				ObjectFieldUtil.createObjectField(
 					"Text", "String", true, true, null,
 					RandomTestUtil.randomString(),
-					"x" + RandomTestUtil.randomString(), false)));
+					"x" + RandomTestUtil.randomString(), false)),
+			ObjectDefinitionConstants.SCOPE_COMPANY);
 	}
 
 	@Test

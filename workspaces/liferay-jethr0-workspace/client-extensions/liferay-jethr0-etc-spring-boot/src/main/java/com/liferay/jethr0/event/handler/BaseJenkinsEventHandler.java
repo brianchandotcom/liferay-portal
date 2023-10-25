@@ -120,7 +120,8 @@ public abstract class BaseJenkinsEventHandler extends BaseEventHandler {
 	protected URL getJenkinsBuildURL() throws Exception {
 		return StringUtil.toURL(
 			StringUtil.combine(
-				getJenkinsURL(), "job/", getJobName(), "/", getBuildNumber()));
+				getJenkinsURL(), "job/", getJobName(), "/", getBuildNumber(),
+				"/"));
 	}
 
 	protected JSONObject getJenkinsJSONObject() throws Exception {

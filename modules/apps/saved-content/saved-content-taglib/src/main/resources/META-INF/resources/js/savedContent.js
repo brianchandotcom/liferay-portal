@@ -4,7 +4,7 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import {fetch, openToast, sub} from 'frontend-js-web';
+import {fetch, objectToFormData, openToast, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -16,8 +16,11 @@ function showNotification(message, error = false) {
 }
 
 export default function SavedContent({
+	className,
+	classPK,
 	contentTitle,
 	mySavedContentURL,
+	portletNamespace = '',
 	saved: initialSaved = false,
 	savedContentURL,
 }) {
@@ -30,7 +33,13 @@ export default function SavedContent({
 		setLoading(true);
 		setSaved((saved) => !saved);
 
-		fetch(savedContentURL)
+		fetch(savedContentURL, {
+			body: objectToFormData({
+				[`${portletNamespace}className`]: className,
+				[`${portletNamespace}classPK`]: classPK,
+			}),
+			method: 'POST',
+		})
 			.then((response) => response.json())
 			.then(({errorMessage}) => {
 				if (errorMessage) {
@@ -94,8 +103,11 @@ export default function SavedContent({
 }
 
 SavedContent.propTypes = {
+	className: PropTypes.string.isRequired,
+	classPK: PropTypes.string.isRequired,
 	contentTitle: PropTypes.string.isRequired,
 	mySavedContentURL: PropTypes.string.isRequired,
+	portletNamespace: PropTypes.string,
 	saved: PropTypes.bool,
 	savedContentURL: PropTypes.string.isRequired,
 };

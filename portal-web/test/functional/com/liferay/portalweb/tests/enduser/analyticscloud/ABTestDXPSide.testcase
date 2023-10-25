@@ -123,6 +123,10 @@ definition {
 		}
 
 		task ("Go to Tests") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
+
 			ACNavigation.goToTests();
 		}
 
@@ -237,9 +241,7 @@ definition {
 		}
 
 		task ("Click to terminate the test") {
-			Button.click(button = "Terminate Test");
-
-			ABTest.assertTerminateTest();
+			ABTest.terminateTest();
 		}
 
 		task ("Click to publish the control") {
@@ -307,7 +309,7 @@ definition {
 		}
 
 		task ("Terminate the test") {
-			ACTests.terminateABTest(testName = ${nameABTest});
+			ABTest.terminateTest();
 		}
 
 		task ("Click to publish the variant") {

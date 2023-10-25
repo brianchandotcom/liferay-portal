@@ -79,8 +79,8 @@ public class ActionUtil {
 		try {
 			return _addAction(
 				actionName, clazz, id, methodName, modelResourcePermission,
-				null, null, parameterId, null, null,
-				() -> UriInfoUtil.getBaseUriBuilder(uriInfo), uriInfo);
+				null, null, parameterId, null, null, null, uriInfo,
+				() -> UriInfoUtil.getBaseUriBuilder(uriInfo));
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
@@ -95,7 +95,7 @@ public class ActionUtil {
 		try {
 			return _addAction(
 				actionName, clazz, id, methodName, null, object, ownerId, id,
-				permissionName, siteId, uriBuilderSupplier, uriInfo);
+				permissionName, siteId, null, uriInfo, uriBuilderSupplier);
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
@@ -127,13 +127,29 @@ public class ActionUtil {
 	public static Map<String, String> addAction(
 		String actionName, Class<?> clazz, Long id, String methodName,
 		Object object, ModelResourcePermission<?> modelResourcePermission,
+		Map<String, String> templateParameterMap, UriInfo uriInfo) {
+
+		try {
+			return _addAction(
+				actionName, clazz, id, methodName, modelResourcePermission,
+				object, null, id, null, null, templateParameterMap, uriInfo,
+				() -> UriInfoUtil.getBaseUriBuilder(uriInfo));
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
+	}
+
+	public static Map<String, String> addAction(
+		String actionName, Class<?> clazz, Long id, String methodName,
+		Object object, ModelResourcePermission<?> modelResourcePermission,
 		UriInfo uriInfo) {
 
 		try {
 			return _addAction(
 				actionName, clazz, id, methodName, modelResourcePermission,
-				object, null, id, null, null,
-				() -> UriInfoUtil.getBaseUriBuilder(uriInfo), uriInfo);
+				object, null, id, null, null, null, uriInfo,
+				() -> UriInfoUtil.getBaseUriBuilder(uriInfo));
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
@@ -174,7 +190,8 @@ public class ActionUtil {
 			String actionName, Class<?> clazz, Long id, String methodName,
 			ModelResourcePermission<?> modelResourcePermission, Object object,
 			Long ownerId, Long parameterId, String permissionName, Long siteId,
-			Supplier<UriBuilder> uriBuilderSupplier, UriInfo uriInfo)
+			Map<String, String> templateParameterMap, UriInfo uriInfo,
+			Supplier<UriBuilder> uriBuilderSupplier)
 		throws Exception {
 
 		if (uriInfo == null) {
@@ -278,7 +295,8 @@ public class ActionUtil {
 				if (parameterId != null) {
 					uriBuilder = uriBuilder.resolveTemplates(
 						_getParameterMap(
-							clazz, parameterId, methodName, siteId, uriInfo),
+							clazz, parameterId, methodName, siteId,
+							templateParameterMap, uriInfo),
 						false);
 				}
 
@@ -354,7 +372,7 @@ public class ActionUtil {
 
 	private static Map<String, Object> _getParameterMap(
 			Class<?> clazz, Long id, String methodName, Long siteId,
-			UriInfo uriInfo)
+			Map<String, String> templateParameterMap, UriInfo uriInfo)
 		throws PortalException {
 
 		Map<String, Object> parameterMap = new HashMap<>();
@@ -392,6 +410,10 @@ public class ActionUtil {
 		}
 		else {
 			parameterMap.put(firstParameterName, id);
+		}
+
+		if (templateParameterMap != null) {
+			parameterMap.putAll(templateParameterMap);
 		}
 
 		return parameterMap;

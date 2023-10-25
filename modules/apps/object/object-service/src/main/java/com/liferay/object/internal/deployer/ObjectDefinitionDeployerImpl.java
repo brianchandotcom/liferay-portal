@@ -200,13 +200,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		ObjectEntryModelSummaryContributor objectEntryModelSummaryContributor =
 			new ObjectEntryModelSummaryContributor();
 
-		PortletResourcePermission portletResourcePermission =
-			PortletResourcePermissionFactory.create(
-				objectDefinition.getResourceName(),
-				new ObjectEntryPortletResourcePermissionLogic(
-					_accountEntryLocalService, _groupLocalService,
-					_objectDefinitionLocalService, _organizationLocalService));
-
 		List<ServiceRegistration<?>> serviceRegistrations = ListUtil.fromArray(
 			_bundleContext.registerService(
 				KeywordQueryContributor.class,
@@ -270,13 +263,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				PersistedModelLocalService.class, _objectEntryLocalService,
 				MapUtil.singletonDictionary(
 					"model.class.name", objectDefinition.getClassName())),
-			_bundleContext.registerService(
-				PortletResourcePermission.class, portletResourcePermission,
-				HashMapDictionaryBuilder.<String, Object>put(
-					"com.liferay.object", "true"
-				).put(
-					"resource.name", objectDefinition.getResourceName()
-				).build()),
 			_bundleContext.registerService(
 				RESTContextPathResolver.class,
 				new RESTContextPathResolverImpl(
@@ -355,6 +341,14 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					_objectRelationshipLocalService)));
 
 		if (!objectDefinition.isRootDescendantNode()) {
+			PortletResourcePermission portletResourcePermission =
+				PortletResourcePermissionFactory.create(
+					objectDefinition.getResourceName(),
+					new ObjectEntryPortletResourcePermissionLogic(
+						_accountEntryLocalService, _groupLocalService,
+						_objectDefinitionLocalService,
+						_organizationLocalService));
+
 			serviceRegistrations.add(
 				_bundleContext.registerService(
 					ModelResourcePermission.class,
@@ -372,6 +366,15 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						"com.liferay.object", "true"
 					).put(
 						"model.class.name", objectDefinition.getClassName()
+					).build()));
+
+			serviceRegistrations.add(
+				_bundleContext.registerService(
+					PortletResourcePermission.class, portletResourcePermission,
+					HashMapDictionaryBuilder.<String, Object>put(
+						"com.liferay.object", "true"
+					).put(
+						"resource.name", objectDefinition.getResourceName()
 					).build()));
 		}
 

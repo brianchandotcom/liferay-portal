@@ -5,6 +5,7 @@
 
 package com.liferay.saved.content.model;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 
@@ -37,6 +38,7 @@ public class SavedContentEntryWrapper
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("ctCollectionId", getCtCollectionId());
+		attributes.put("uuid", getUuid());
 		attributes.put("savedContentEntryId", getSavedContentEntryId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -62,6 +64,12 @@ public class SavedContentEntryWrapper
 
 		if (ctCollectionId != null) {
 			setCtCollectionId(ctCollectionId);
+		}
+
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
 		}
 
 		Long savedContentEntryId = (Long)attributes.get("savedContentEntryId");
@@ -264,6 +272,16 @@ public class SavedContentEntryWrapper
 		return model.getUserUuid();
 	}
 
+	/**
+	 * Returns the uuid of this saved content entry.
+	 *
+	 * @return the uuid of this saved content entry
+	 */
+	@Override
+	public String getUuid() {
+		return model.getUuid();
+	}
+
 	@Override
 	public void persist() {
 		model.persist();
@@ -404,6 +422,16 @@ public class SavedContentEntryWrapper
 		model.setUserUuid(userUuid);
 	}
 
+	/**
+	 * Sets the uuid of this saved content entry.
+	 *
+	 * @param uuid the uuid of this saved content entry
+	 */
+	@Override
+	public void setUuid(String uuid) {
+		model.setUuid(uuid);
+	}
+
 	@Override
 	public String toXmlString() {
 		return model.toXmlString();
@@ -421,6 +449,11 @@ public class SavedContentEntryWrapper
 		getAttributeSetterBiConsumers() {
 
 		return model.getAttributeSetterBiConsumers();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return model.getStagedModelType();
 	}
 
 	@Override

@@ -69,12 +69,14 @@ public class SavedContentEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
 		sb.append(", ctCollectionId=");
 		sb.append(ctCollectionId);
+		sb.append(", uuid=");
+		sb.append(uuid);
 		sb.append(", savedContentEntryId=");
 		sb.append(savedContentEntryId);
 		sb.append(", groupId=");
@@ -105,6 +107,14 @@ public class SavedContentEntryCacheModel
 
 		savedContentEntryImpl.setMvccVersion(mvccVersion);
 		savedContentEntryImpl.setCtCollectionId(ctCollectionId);
+
+		if (uuid == null) {
+			savedContentEntryImpl.setUuid("");
+		}
+		else {
+			savedContentEntryImpl.setUuid(uuid);
+		}
+
 		savedContentEntryImpl.setSavedContentEntryId(savedContentEntryId);
 		savedContentEntryImpl.setGroupId(groupId);
 		savedContentEntryImpl.setCompanyId(companyId);
@@ -144,6 +154,7 @@ public class SavedContentEntryCacheModel
 		mvccVersion = objectInput.readLong();
 
 		ctCollectionId = objectInput.readLong();
+		uuid = objectInput.readUTF();
 
 		savedContentEntryId = objectInput.readLong();
 
@@ -166,6 +177,13 @@ public class SavedContentEntryCacheModel
 		objectOutput.writeLong(mvccVersion);
 
 		objectOutput.writeLong(ctCollectionId);
+
+		if (uuid == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
 
 		objectOutput.writeLong(savedContentEntryId);
 
@@ -192,6 +210,7 @@ public class SavedContentEntryCacheModel
 
 	public long mvccVersion;
 	public long ctCollectionId;
+	public String uuid;
 	public long savedContentEntryId;
 	public long groupId;
 	public long companyId;

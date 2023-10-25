@@ -30,6 +30,8 @@ public class SavedContentEntryTable extends BaseTable<SavedContentEntryTable> {
 	public final Column<SavedContentEntryTable, Long> ctCollectionId =
 		createColumn(
 			"ctCollectionId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
+	public final Column<SavedContentEntryTable, String> uuid = createColumn(
+		"uuid_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<SavedContentEntryTable, Long> savedContentEntryId =
 		createColumn(
 			"savedContentEntryId", Long.class, Types.BIGINT,

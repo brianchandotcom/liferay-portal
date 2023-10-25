@@ -5,11 +5,13 @@
 
 package com.liferay.saved.content.service;
 
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -199,8 +201,23 @@ public interface SavedContentEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SavedContentEntry fetchSavedContentEntry(long savedContentEntryId);
 
+	/**
+	 * Returns the saved content entry matching the UUID and group.
+	 *
+	 * @param uuid the saved content entry's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching saved content entry, or <code>null</code> if a matching saved content entry could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SavedContentEntry fetchSavedContentEntryByUuidAndGroupId(
+		String uuid, long groupId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -235,6 +252,32 @@ public interface SavedContentEntryLocalService
 	public List<SavedContentEntry> getSavedContentEntries(int start, int end);
 
 	/**
+	 * Returns all the saved content entries matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the saved content entries
+	 * @param companyId the primary key of the company
+	 * @return the matching saved content entries, or an empty list if no matches were found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SavedContentEntry> getSavedContentEntriesByUuidAndCompanyId(
+		String uuid, long companyId);
+
+	/**
+	 * Returns a range of saved content entries matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the saved content entries
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching saved content entries, or an empty list if no matches were found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<SavedContentEntry> getSavedContentEntriesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<SavedContentEntry> orderByComparator);
+
+	/**
 	 * Returns the number of saved content entries.
 	 *
 	 * @return the number of saved content entries
@@ -251,6 +294,19 @@ public interface SavedContentEntryLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SavedContentEntry getSavedContentEntry(long savedContentEntryId)
+		throws PortalException;
+
+	/**
+	 * Returns the saved content entry matching the UUID and group.
+	 *
+	 * @param uuid the saved content entry's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching saved content entry
+	 * @throws PortalException if a matching saved content entry could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SavedContentEntry getSavedContentEntryByUuidAndGroupId(
+			String uuid, long groupId)
 		throws PortalException;
 
 	/**

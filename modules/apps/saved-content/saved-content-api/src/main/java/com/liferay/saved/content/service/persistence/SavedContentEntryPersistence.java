@@ -35,6 +35,354 @@ public interface SavedContentEntryPersistence
 	 */
 
 	/**
+	 * Returns all the saved content entries where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching saved content entries
+	 */
+	public java.util.List<SavedContentEntry> findByUuid(String uuid);
+
+	/**
+	 * Returns a range of all the saved content entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SavedContentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @return the range of matching saved content entries
+	 */
+	public java.util.List<SavedContentEntry> findByUuid(
+		String uuid, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the saved content entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SavedContentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching saved content entries
+	 */
+	public java.util.List<SavedContentEntry> findByUuid(
+		String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the saved content entries where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SavedContentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching saved content entries
+	 */
+	public java.util.List<SavedContentEntry> findByUuid(
+		String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first saved content entry in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching saved content entry
+	 * @throws NoSuchSavedContentEntryException if a matching saved content entry could not be found
+	 */
+	public SavedContentEntry findByUuid_First(
+			String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
+				orderByComparator)
+		throws NoSuchSavedContentEntryException;
+
+	/**
+	 * Returns the first saved content entry in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching saved content entry, or <code>null</code> if a matching saved content entry could not be found
+	 */
+	public SavedContentEntry fetchByUuid_First(
+		String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the last saved content entry in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching saved content entry
+	 * @throws NoSuchSavedContentEntryException if a matching saved content entry could not be found
+	 */
+	public SavedContentEntry findByUuid_Last(
+			String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
+				orderByComparator)
+		throws NoSuchSavedContentEntryException;
+
+	/**
+	 * Returns the last saved content entry in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching saved content entry, or <code>null</code> if a matching saved content entry could not be found
+	 */
+	public SavedContentEntry fetchByUuid_Last(
+		String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the saved content entries before and after the current saved content entry in the ordered set where uuid = &#63;.
+	 *
+	 * @param savedContentEntryId the primary key of the current saved content entry
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next saved content entry
+	 * @throws NoSuchSavedContentEntryException if a saved content entry with the primary key could not be found
+	 */
+	public SavedContentEntry[] findByUuid_PrevAndNext(
+			long savedContentEntryId, String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
+				orderByComparator)
+		throws NoSuchSavedContentEntryException;
+
+	/**
+	 * Removes all the saved content entries where uuid = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 */
+	public void removeByUuid(String uuid);
+
+	/**
+	 * Returns the number of saved content entries where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the number of matching saved content entries
+	 */
+	public int countByUuid(String uuid);
+
+	/**
+	 * Returns the saved content entry where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchSavedContentEntryException</code> if it could not be found.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching saved content entry
+	 * @throws NoSuchSavedContentEntryException if a matching saved content entry could not be found
+	 */
+	public SavedContentEntry findByUUID_G(String uuid, long groupId)
+		throws NoSuchSavedContentEntryException;
+
+	/**
+	 * Returns the saved content entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching saved content entry, or <code>null</code> if a matching saved content entry could not be found
+	 */
+	public SavedContentEntry fetchByUUID_G(String uuid, long groupId);
+
+	/**
+	 * Returns the saved content entry where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching saved content entry, or <code>null</code> if a matching saved content entry could not be found
+	 */
+	public SavedContentEntry fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache);
+
+	/**
+	 * Removes the saved content entry where uuid = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the saved content entry that was removed
+	 */
+	public SavedContentEntry removeByUUID_G(String uuid, long groupId)
+		throws NoSuchSavedContentEntryException;
+
+	/**
+	 * Returns the number of saved content entries where uuid = &#63; and groupId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the number of matching saved content entries
+	 */
+	public int countByUUID_G(String uuid, long groupId);
+
+	/**
+	 * Returns all the saved content entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching saved content entries
+	 */
+	public java.util.List<SavedContentEntry> findByUuid_C(
+		String uuid, long companyId);
+
+	/**
+	 * Returns a range of all the saved content entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SavedContentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @return the range of matching saved content entries
+	 */
+	public java.util.List<SavedContentEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the saved content entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SavedContentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching saved content entries
+	 */
+	public java.util.List<SavedContentEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the saved content entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SavedContentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching saved content entries
+	 */
+	public java.util.List<SavedContentEntry> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first saved content entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching saved content entry
+	 * @throws NoSuchSavedContentEntryException if a matching saved content entry could not be found
+	 */
+	public SavedContentEntry findByUuid_C_First(
+			String uuid, long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
+				orderByComparator)
+		throws NoSuchSavedContentEntryException;
+
+	/**
+	 * Returns the first saved content entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching saved content entry, or <code>null</code> if a matching saved content entry could not be found
+	 */
+	public SavedContentEntry fetchByUuid_C_First(
+		String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the last saved content entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching saved content entry
+	 * @throws NoSuchSavedContentEntryException if a matching saved content entry could not be found
+	 */
+	public SavedContentEntry findByUuid_C_Last(
+			String uuid, long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
+				orderByComparator)
+		throws NoSuchSavedContentEntryException;
+
+	/**
+	 * Returns the last saved content entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching saved content entry, or <code>null</code> if a matching saved content entry could not be found
+	 */
+	public SavedContentEntry fetchByUuid_C_Last(
+		String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the saved content entries before and after the current saved content entry in the ordered set where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param savedContentEntryId the primary key of the current saved content entry
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next saved content entry
+	 * @throws NoSuchSavedContentEntryException if a saved content entry with the primary key could not be found
+	 */
+	public SavedContentEntry[] findByUuid_C_PrevAndNext(
+			long savedContentEntryId, String uuid, long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
+				orderByComparator)
+		throws NoSuchSavedContentEntryException;
+
+	/**
+	 * Removes all the saved content entries where uuid = &#63; and companyId = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 */
+	public void removeByUuid_C(String uuid, long companyId);
+
+	/**
+	 * Returns the number of saved content entries where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the number of matching saved content entries
+	 */
+	public int countByUuid_C(String uuid, long companyId);
+
+	/**
 	 * Returns all the saved content entries where groupId = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -163,6 +511,62 @@ public interface SavedContentEntryPersistence
 		throws NoSuchSavedContentEntryException;
 
 	/**
+	 * Returns all the saved content entries that the user has permission to view where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the matching saved content entries that the user has permission to view
+	 */
+	public java.util.List<SavedContentEntry> filterFindByGroupId(long groupId);
+
+	/**
+	 * Returns a range of all the saved content entries that the user has permission to view where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SavedContentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @return the range of matching saved content entries that the user has permission to view
+	 */
+	public java.util.List<SavedContentEntry> filterFindByGroupId(
+		long groupId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the saved content entries that the user has permissions to view where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SavedContentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching saved content entries that the user has permission to view
+	 */
+	public java.util.List<SavedContentEntry> filterFindByGroupId(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the saved content entries before and after the current saved content entry in the ordered set of saved content entries that the user has permission to view where groupId = &#63;.
+	 *
+	 * @param savedContentEntryId the primary key of the current saved content entry
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next saved content entry
+	 * @throws NoSuchSavedContentEntryException if a saved content entry with the primary key could not be found
+	 */
+	public SavedContentEntry[] filterFindByGroupId_PrevAndNext(
+			long savedContentEntryId, long groupId,
+			com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
+				orderByComparator)
+		throws NoSuchSavedContentEntryException;
+
+	/**
 	 * Removes all the saved content entries where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -176,6 +580,14 @@ public interface SavedContentEntryPersistence
 	 * @return the number of matching saved content entries
 	 */
 	public int countByGroupId(long groupId);
+
+	/**
+	 * Returns the number of saved content entries that the user has permission to view where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @return the number of matching saved content entries that the user has permission to view
+	 */
+	public int filterCountByGroupId(long groupId);
 
 	/**
 	 * Returns all the saved content entries where userId = &#63;.
@@ -459,6 +871,67 @@ public interface SavedContentEntryPersistence
 		throws NoSuchSavedContentEntryException;
 
 	/**
+	 * Returns all the saved content entries that the user has permission to view where groupId = &#63; and userId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @return the matching saved content entries that the user has permission to view
+	 */
+	public java.util.List<SavedContentEntry> filterFindByG_U(
+		long groupId, long userId);
+
+	/**
+	 * Returns a range of all the saved content entries that the user has permission to view where groupId = &#63; and userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SavedContentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @return the range of matching saved content entries that the user has permission to view
+	 */
+	public java.util.List<SavedContentEntry> filterFindByG_U(
+		long groupId, long userId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the saved content entries that the user has permissions to view where groupId = &#63; and userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>SavedContentEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching saved content entries that the user has permission to view
+	 */
+	public java.util.List<SavedContentEntry> filterFindByG_U(
+		long groupId, long userId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the saved content entries before and after the current saved content entry in the ordered set of saved content entries that the user has permission to view where groupId = &#63; and userId = &#63;.
+	 *
+	 * @param savedContentEntryId the primary key of the current saved content entry
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next saved content entry
+	 * @throws NoSuchSavedContentEntryException if a saved content entry with the primary key could not be found
+	 */
+	public SavedContentEntry[] filterFindByG_U_PrevAndNext(
+			long savedContentEntryId, long groupId, long userId,
+			com.liferay.portal.kernel.util.OrderByComparator<SavedContentEntry>
+				orderByComparator)
+		throws NoSuchSavedContentEntryException;
+
+	/**
 	 * Removes all the saved content entries where groupId = &#63; and userId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -474,6 +947,15 @@ public interface SavedContentEntryPersistence
 	 * @return the number of matching saved content entries
 	 */
 	public int countByG_U(long groupId, long userId);
+
+	/**
+	 * Returns the number of saved content entries that the user has permission to view where groupId = &#63; and userId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param userId the user ID
+	 * @return the number of matching saved content entries that the user has permission to view
+	 */
+	public int filterCountByG_U(long groupId, long userId);
 
 	/**
 	 * Returns all the saved content entries where userId = &#63; and classNameId = &#63;.

@@ -5,6 +5,11 @@
 
 package com.liferay.saved.content.service.base;
 
+import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
+import com.liferay.exportimport.kernel.lar.ManifestSummary;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.aop.AopService;
@@ -16,8 +21,11 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -245,6 +253,20 @@ public abstract class SavedContentEntryLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the saved content entry matching the UUID and group.
+	 *
+	 * @param uuid the saved content entry's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching saved content entry, or <code>null</code> if a matching saved content entry could not be found
+	 */
+	@Override
+	public SavedContentEntry fetchSavedContentEntryByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return savedContentEntryPersistence.fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns the saved content entry with the primary key.
 	 *
 	 * @param savedContentEntryId the primary key of the saved content entry
@@ -303,6 +325,98 @@ public abstract class SavedContentEntryLocalServiceBaseImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("savedContentEntryId");
 	}
 
+	@Override
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		final PortletDataContext portletDataContext) {
+
+		final ExportActionableDynamicQuery exportActionableDynamicQuery =
+			new ExportActionableDynamicQuery() {
+
+				@Override
+				public long performCount() throws PortalException {
+					ManifestSummary manifestSummary =
+						portletDataContext.getManifestSummary();
+
+					StagedModelType stagedModelType = getStagedModelType();
+
+					long modelAdditionCount = super.performCount();
+
+					manifestSummary.addModelAdditionCount(
+						stagedModelType, modelAdditionCount);
+
+					long modelDeletionCount =
+						ExportImportHelperUtil.getModelDeletionCount(
+							portletDataContext, stagedModelType);
+
+					manifestSummary.addModelDeletionCount(
+						stagedModelType, modelDeletionCount);
+
+					return modelAdditionCount;
+				}
+
+			};
+
+		initActionableDynamicQuery(exportActionableDynamicQuery);
+
+		exportActionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					portletDataContext.addDateRangeCriteria(
+						dynamicQuery, "modifiedDate");
+
+					StagedModelType stagedModelType =
+						exportActionableDynamicQuery.getStagedModelType();
+
+					long referrerClassNameId =
+						stagedModelType.getReferrerClassNameId();
+
+					Property classNameIdProperty = PropertyFactoryUtil.forName(
+						"classNameId");
+
+					if ((referrerClassNameId !=
+							StagedModelType.REFERRER_CLASS_NAME_ID_ALL) &&
+						(referrerClassNameId !=
+							StagedModelType.REFERRER_CLASS_NAME_ID_ANY)) {
+
+						dynamicQuery.add(
+							classNameIdProperty.eq(
+								stagedModelType.getReferrerClassNameId()));
+					}
+					else if (referrerClassNameId ==
+								StagedModelType.REFERRER_CLASS_NAME_ID_ANY) {
+
+						dynamicQuery.add(classNameIdProperty.isNotNull());
+					}
+				}
+
+			});
+
+		exportActionableDynamicQuery.setCompanyId(
+			portletDataContext.getCompanyId());
+
+		exportActionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod
+				<SavedContentEntry>() {
+
+				@Override
+				public void performAction(SavedContentEntry savedContentEntry)
+					throws PortalException {
+
+					StagedModelDataHandlerUtil.exportStagedModel(
+						portletDataContext, savedContentEntry);
+				}
+
+			});
+		exportActionableDynamicQuery.setStagedModelType(
+			new StagedModelType(
+				PortalUtil.getClassNameId(SavedContentEntry.class.getName()),
+				StagedModelType.REFERRER_CLASS_NAME_ID_ALL));
+
+		return exportActionableDynamicQuery;
+	}
+
 	/**
 	 * @throws PortalException
 	 */
@@ -343,6 +457,55 @@ public abstract class SavedContentEntryLocalServiceBaseImpl
 		throws PortalException {
 
 		return savedContentEntryPersistence.findByPrimaryKey(primaryKeyObj);
+	}
+
+	/**
+	 * Returns all the saved content entries matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the saved content entries
+	 * @param companyId the primary key of the company
+	 * @return the matching saved content entries, or an empty list if no matches were found
+	 */
+	@Override
+	public List<SavedContentEntry> getSavedContentEntriesByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return savedContentEntryPersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of saved content entries matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the saved content entries
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching saved content entries, or an empty list if no matches were found
+	 */
+	@Override
+	public List<SavedContentEntry> getSavedContentEntriesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<SavedContentEntry> orderByComparator) {
+
+		return savedContentEntryPersistence.findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the saved content entry matching the UUID and group.
+	 *
+	 * @param uuid the saved content entry's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching saved content entry
+	 * @throws PortalException if a matching saved content entry could not be found
+	 */
+	@Override
+	public SavedContentEntry getSavedContentEntryByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException {
+
+		return savedContentEntryPersistence.findByUUID_G(uuid, groupId);
 	}
 
 	/**

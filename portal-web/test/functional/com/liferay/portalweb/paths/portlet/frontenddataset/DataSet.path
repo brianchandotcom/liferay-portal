@@ -146,6 +146,21 @@
 	<td>//tr//th[contains(.,'${key_type}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>NEW_FIELD_OPTION</td>
+	<td>//span[@class="custom-control-label-text" and contains(text(),'${key_columnName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACCOUNT_ORDER_NAME</td>
+	<td>xpath=(//div[contains(@class,'dnd-td') and contains(text(),'${accountName}')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_COLUMN_NAME</td>
+	<td>//div[contains(@class,'dnd-th')]//*[contains(text(),'${key_column}')]</td>
+	<td></td>
+</tr>
 
 <!-- DATA SET PAGINATION -->
 

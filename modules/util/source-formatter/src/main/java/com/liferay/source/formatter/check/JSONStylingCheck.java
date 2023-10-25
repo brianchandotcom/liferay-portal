@@ -61,6 +61,10 @@ public class JSONStylingCheck extends BaseFileCheck {
 	private String _fixIndentation(String content, String indent) {
 		String[] lines = content.split("\n");
 
+		if (lines.length < 3) {
+			return content;
+		}
+
 		StringBundler sb = new StringBundler(lines.length * 2);
 
 		for (String line : lines) {

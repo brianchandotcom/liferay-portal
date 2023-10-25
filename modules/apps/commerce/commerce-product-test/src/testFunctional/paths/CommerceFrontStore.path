@@ -51,18 +51,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FS_IMAGE_GALLERY_MAIN_IMAGE</td>
-	<td>//div[@class='product-gallery']/div/img[contains(@alt, '${key_fsProductImage}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>FS_IMAGE_GALLERY_OVERLAY</td>
-	<td>//div[@class='gallery-overlay']//img[contains(@alt, '${key_fsProductImage}')]</td>
+	<td>//div[@class='gallery-overlay']//source[contains(@srcset,'${key_fsProductImage}')]/..//img</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FS_IMAGE_GALLERY_THUMBNAIL</td>
-	<td>//div[@class= 'gallery-thumbnails']//img[contains(@alt,'${key_fsProductImage}')]</td>
+	<td>//div[@class= 'gallery-thumbnails']//source[contains(@srcset,'${key_fsProductImage}')]/..//img</td>
 	<td></td>
 </tr>
 <tr>
@@ -157,7 +152,7 @@
 </tr>
 <tr>
 	<td>FS_PRODUCT_IMAGE</td>
-	<td>//div[@class='product-gallery']//img[contains(@src, '${key_fsProductImage}') or contains(@alt,'${key_fsProductImage}')]</td>
+	<td>//div[@class='product-gallery']//source[contains(@srcset,'${key_fsProductImage}')]/..//img</td>
 	<td></td>
 </tr>
 <tr>

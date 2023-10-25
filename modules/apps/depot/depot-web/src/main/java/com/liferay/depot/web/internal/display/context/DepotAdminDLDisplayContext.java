@@ -45,6 +45,11 @@ public class DepotAdminDLDisplayContext {
 		return _depotEntry;
 	}
 
+	public long getFileMaxSize() {
+		return _dlSizeLimitConfigurationProvider.getGroupFileMaxSize(
+			_depotEntry.getGroupId());
+	}
+
 	public Map<String, Object> getFileSizePerMimeTypeData() {
 		List<Map<String, Object>> sizeList = new ArrayList<>();
 

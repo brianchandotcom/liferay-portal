@@ -93,6 +93,13 @@ export function useObjectFieldForm({
 		if (!field.businessType) {
 			errors.businessType = REQUIRED_MSG;
 		}
+		else if (
+			Liferay.FeatureFlags['LPS-196724'] &&
+			field.businessType === 'AutoIncrement' &&
+			!settings.initialValue
+		) {
+			errors.initialValue = REQUIRED_MSG;
+		}
 		else if (field.businessType === 'Aggregation') {
 			if (!settings.function) {
 				errors.function = REQUIRED_MSG;

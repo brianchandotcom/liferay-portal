@@ -1,0 +1,13 @@
+.lfr-objects__auto-increment-form-base {
+	&-prefix-suffix-model-builder-wrapper {
+		display: flex;
+		flex-direction: column;
+		margin-top: 1rem;
+	}
+
+	&-prefix-suffix-wrapper {
+		display: grid;
+		gap: 1rem;
+		grid-template-columns: 1fr 2fr 1fr;
+	}
+}

@@ -7,6 +7,7 @@ import {API, Input, SidebarCategory} from '@liferay/object-js-components-web';
 import classNames from 'classnames';
 import React, {ElementType, useEffect, useState} from 'react';
 
+import {AutoIncrementFormBase} from '../../AutoIncrementFormBase';
 import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
 import {AggregationFilterContainer} from './AggregationFilterContainer';
 import {BasicInfoContainer} from './BasicInfoContainer';
@@ -127,6 +128,28 @@ export function BasicInfoTab({
 					values={values}
 				/>
 			</ContainerWrapper>
+
+			{Liferay.FeatureFlags['LPS-196724'] &&
+				values.businessType === 'AutoIncrement' && (
+					<ContainerWrapper
+						collapsable
+						defaultExpanded
+						displayTitle={Liferay.Language.get(
+							'increment-configuration'
+						)}
+						displayType="unstyled"
+						title={Liferay.Language.get('increment-configuration')}
+					>
+						<AutoIncrementFormBase
+							disabled={isApproved}
+							errors={errors}
+							modelBuilder={modelBuilder}
+							onSubmit={onSubmit}
+							setValues={setValues}
+							values={values}
+						/>
+					</ContainerWrapper>
+				)}
 
 			{values.businessType === 'Aggregation' &&
 				objectDefinitionExternalReferenceCode !==

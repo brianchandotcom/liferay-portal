@@ -60,6 +60,15 @@ export declare function normalizeFieldSettings(
 		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
 		| undefined;
+	initialValue?:
+		| string
+		| number
+		| boolean
+		| Partial<Liferay.Language.FullyLocalizedValue<string>>
+		| ObjectFieldPicklistSetting
+		| NameValueObject[]
+		| ObjectFieldFilterSetting[]
+		| undefined;
 	maxLength?:
 		| string
 		| number
@@ -114,6 +123,15 @@ export declare function normalizeFieldSettings(
 		| NameValueObject[]
 		| ObjectFieldFilterSetting[]
 		| undefined;
+	prefix?:
+		| string
+		| number
+		| boolean
+		| Partial<Liferay.Language.FullyLocalizedValue<string>>
+		| ObjectFieldPicklistSetting
+		| NameValueObject[]
+		| ObjectFieldFilterSetting[]
+		| undefined;
 	script?:
 		| string
 		| number
@@ -151,6 +169,15 @@ export declare function normalizeFieldSettings(
 		| ObjectFieldFilterSetting[]
 		| undefined;
 	storageDLFolderPath?:
+		| string
+		| number
+		| boolean
+		| Partial<Liferay.Language.FullyLocalizedValue<string>>
+		| ObjectFieldPicklistSetting
+		| NameValueObject[]
+		| ObjectFieldFilterSetting[]
+		| undefined;
+	suffix?:
 		| string
 		| number
 		| boolean

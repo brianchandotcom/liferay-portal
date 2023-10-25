@@ -329,8 +329,8 @@ public class APIEndpointRelevantObjectEntryModelListener
 
 			throw new ObjectEntryValuesException.InvalidObjectField(
 				Arrays.asList(objectField.getLabel(user.getLocale())),
-				"Single element ID endpoint cannot be scoped by group",
-				"single-element-id-endpoint-cannot-be-scoped-by-group");
+				"Single element ID endpoint cannot be scoped by site",
+				"single-element-id-endpoint-cannot-be-scoped-by-site");
 		}
 
 		Matcher singleElementPathMatcher = _singleElementPathPattern.matcher(

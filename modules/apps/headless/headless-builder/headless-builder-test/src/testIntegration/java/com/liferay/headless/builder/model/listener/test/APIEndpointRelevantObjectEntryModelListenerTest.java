@@ -400,7 +400,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			JSONUtil.put(
 				"status", "BAD_REQUEST"
 			).put(
-				"title", "Single element ID endpoint cannot be scoped by group."
+				"title", "Single element ID endpoint cannot be scoped by site."
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(

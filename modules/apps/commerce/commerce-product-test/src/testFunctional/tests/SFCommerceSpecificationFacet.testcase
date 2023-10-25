@@ -194,10 +194,6 @@ definition {
 
 		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
 
-		WaitForElementPresent(
-			key_fieldName = "Spec Value 92",
-			locator1 = "FormFields#CHECKBOX");
-
 		CommerceWidget.assertSpecificationPanel2FacetsCount(
 			expectedLabels = 100,
 			specificationGroup = "Material");

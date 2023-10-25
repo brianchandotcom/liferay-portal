@@ -1,62 +1,62 @@
 @default = "keyPress"
 definition {
 
-	function keyDown {
+	function keyDown(locator1,value1) {
 		WaitForSPARefresh();
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		selenium.keyDown();
+		selenium.keyDown(${locator1}, ${value1});
 
 		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function keyPress {
+	function keyPress(locator1,value1) {
 		WaitForSPARefresh();
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		selenium.keyPress();
+		selenium.keyPress(${locator1}, ${value1});
 
 		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function keyPressCKEditorWaitForCKEditor {
+	function keyPressCKEditorWaitForCKEditor(locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.pause(1000);
 
-		selenium.waitForEditable();
+		selenium.waitForEditable(${locator1});
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		selenium.keyPress();
+		selenium.keyPress(${locator1}, ${value1});
 
 		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function keyPressNoError {
+	function keyPressNoError(locator1,value1) {
 		WaitForSPARefresh();
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		selenium.keyPress();
+		selenium.keyPress(${locator1}, ${value1});
 	}
 
-	function keyUp {
+	function keyUp(locator1,value1) {
 		WaitForSPARefresh();
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		selenium.keyUp();
+		selenium.keyUp(${locator1}, ${value1});
 
 		selenium.assertJavaScriptErrors("true");
 

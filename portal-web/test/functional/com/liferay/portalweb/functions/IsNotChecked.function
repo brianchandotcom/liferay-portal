@@ -1,22 +1,22 @@
 @default = "isNotChecked"
 definition {
 
-	function isNotChecked {
+	function isNotChecked(locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.waitForVisible(${locator1}, "false");
 
-		selenium.isNotChecked();
+		selenium.isNotChecked(${locator1});
 	}
 
-	function isNotCheckedNotVisible {
+	function isNotCheckedNotVisible(locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");
 
-		selenium.isNotChecked();
+		selenium.isNotChecked(${locator1});
 	}
 
 }

@@ -2,8 +2,8 @@
 @summary = "Assert that the text within the confirmation window equals the value '${value1}' and execute the confirmation"
 definition {
 
-	function assertConfirmation {
-		selenium.assertAlertText();
+	function assertConfirmation(value1) {
+		selenium.assertAlertText(${value1});
 
 		selenium.acceptAlert();
 
@@ -14,14 +14,14 @@ definition {
 		WaitForSPARefresh();
 	}
 
-	function assertConfirmationNoError {
-		selenium.assertAlertText();
+	function assertConfirmationNoError(value1) {
+		selenium.assertAlertText(${value1});
 
 		selenium.acceptAlert();
 	}
 
-	function assertConfirmationNoWait {
-		selenium.assertAlertText();
+	function assertConfirmationNoWait(value1) {
+		selenium.assertAlertText(${value1});
 
 		selenium.acceptAlert();
 
@@ -30,8 +30,8 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function assertPartialConfirmation {
-		selenium.assertPartialConfirmation();
+	function assertPartialConfirmation(value1) {
+		selenium.assertPartialConfirmation(${value1});
 
 		selenium.assertJavaScriptErrors("true");
 
@@ -40,8 +40,8 @@ definition {
 		WaitForSPARefresh();
 	}
 
-	function waitForConfirmation {
-		selenium.waitForConfirmation();
+	function waitForConfirmation(value1) {
+		selenium.waitForConfirmation(${value1});
 
 		selenium.assertJavaScriptErrors("true");
 

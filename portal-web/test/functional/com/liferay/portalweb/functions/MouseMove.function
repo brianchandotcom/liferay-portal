@@ -1,7 +1,7 @@
 @default = "mouseMoveAt"
 definition {
 
-	function mouseMoveAt {
+	function mouseMoveAt(locator1,value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");

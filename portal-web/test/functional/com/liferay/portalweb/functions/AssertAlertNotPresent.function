@@ -1,7 +1,7 @@
 @default = "assertAlertNotPresent"
 definition {
 
-	function assertAlertNotPresent {
+	function assertAlertNotPresent() {
 		WaitForSPARefresh();
 
 		selenium.assertAlertNotPresent();

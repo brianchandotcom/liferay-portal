@@ -1,7 +1,7 @@
 @default = "goBack"
 definition {
 
-	function goBack {
+	function goBack() {
 		WaitForSPARefresh();
 
 		selenium.goBack();

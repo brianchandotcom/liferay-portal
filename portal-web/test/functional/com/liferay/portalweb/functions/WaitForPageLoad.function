@@ -1,7 +1,7 @@
 @default = "waitForPageLoad"
 definition {
 
-	function waitForPageLoad {
+	function waitForPageLoad() {
 		if (!(isSet(locator1))) {
 			var locator1 = 0;
 		}

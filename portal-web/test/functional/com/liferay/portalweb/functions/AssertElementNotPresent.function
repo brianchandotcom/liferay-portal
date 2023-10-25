@@ -7,7 +7,7 @@ definition {
 
 		selenium.waitForElementNotPresent(${locator1}, "false");
 
-		selenium.assertElementNotPresent();
+		selenium.assertElementNotPresent(${locator1});
 
 		selenium.assertJavaScriptErrors("true");
 
@@ -17,7 +17,7 @@ definition {
 	function assertElementNotPresentNoWaitForSPAReFresh(locator1) {
 		selenium.waitForElementNotPresent(${locator1}, "false");
 
-		selenium.assertElementNotPresent();
+		selenium.assertElementNotPresent(${locator1});
 
 		selenium.assertLiferayErrors();
 	}

@@ -1,10 +1,10 @@
 @default = "sikuliAssertElementPresent"
 definition {
 
-	function sikuliAssertElementPresent {
+	function sikuliAssertElementPresent(locator1) {
 		WaitForSPARefresh();
 
-		selenium.sikuliAssertElementPresent();
+		selenium.sikuliAssertElementPresent(${locator1});
 
 		selenium.assertJavaScriptErrors("true");
 

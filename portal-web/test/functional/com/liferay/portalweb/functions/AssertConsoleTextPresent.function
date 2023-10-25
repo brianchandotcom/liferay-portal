@@ -1,10 +1,10 @@
 @default = "assertConsoleTextPresent"
 definition {
 
-	function assertConsoleTextPresent {
+	function assertConsoleTextPresent(value1) {
 		WaitForSPARefresh();
 
-		selenium.assertConsoleTextPresent();
+		selenium.assertConsoleTextPresent(${value1});
 
 		selenium.assertJavaScriptErrors("true");
 

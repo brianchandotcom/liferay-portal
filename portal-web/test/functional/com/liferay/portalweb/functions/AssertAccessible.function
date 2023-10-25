@@ -1,7 +1,7 @@
 @default = "assertAccessible"
 definition {
 
-	function assertAccessible {
+	function assertAccessible(value1) {
 		WaitForSPARefresh();
 
 		if (isSet(value1)) {

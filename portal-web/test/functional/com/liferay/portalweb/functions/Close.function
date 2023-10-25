@@ -1,7 +1,7 @@
 @default = "close"
 definition {
 
-	function close {
+	function close() {
 		WaitForSPARefresh();
 
 		selenium.selectWindow("null");
@@ -13,7 +13,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function closeAndSelectWindow {
+	function closeAndSelectWindow(value1) {
 		WaitForSPARefresh();
 
 		selenium.pause(1000);
@@ -22,14 +22,14 @@ definition {
 
 		selenium.pause(5000);
 
-		selenium.selectWindow();
+		selenium.selectWindow(${value1});
 
 		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function closeWindow {
+	function closeWindow() {
 		WaitForSPARefresh();
 
 		selenium.pause(1000);

@@ -5,7 +5,7 @@ definition {
 		selenium.waitForElementPresent(${locator1}, "false");
 	}
 
-	function waitForElementPresentNoException {
+	function waitForElementPresentNoException(locator1) {
 		selenium.waitForElementPresent(${locator1}, "false");
 	}
 

@@ -1,7 +1,7 @@
 @default = "assertCssValue"
 definition {
 
-	function assertCssValue {
+	function assertCssValue(locator2,locator1,value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");

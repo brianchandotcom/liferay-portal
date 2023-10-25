@@ -1,10 +1,10 @@
 @default = "isVisible"
 definition {
 
-	function isVisible {
+	function isVisible(locator1) {
 		WaitForSPARefresh();
 
-		selenium.isVisible();
+		selenium.isVisible(${locator1});
 	}
 
 }

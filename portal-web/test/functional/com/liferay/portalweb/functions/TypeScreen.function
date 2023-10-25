@@ -1,10 +1,10 @@
 @default = "typeScreen"
 definition {
 
-	function typeScreen {
+	function typeScreen(value1) {
 		WaitForSPARefresh();
 
-		selenium.typeScreen();
+		selenium.typeScreen(${value1});
 	}
 
 }

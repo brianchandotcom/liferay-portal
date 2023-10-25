@@ -1,14 +1,14 @@
 @default = "isNotEditable"
 definition {
 
-	function isNotEditable {
+	function isNotEditable(locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.waitForVisible(${locator1}, "false");
 
-		selenium.isNotEditable();
+		selenium.isNotEditable(${locator1});
 	}
 
 }

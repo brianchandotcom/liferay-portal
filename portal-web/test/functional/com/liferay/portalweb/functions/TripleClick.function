@@ -1,14 +1,14 @@
 @default = "tripleClick"
 definition {
 
-	function tripleClick {
+	function tripleClick(locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		selenium.tripleClick();
+		selenium.tripleClick(${locator1});
 
 		selenium.assertJavaScriptErrors("true");
 

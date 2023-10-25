@@ -2,49 +2,49 @@
 @summary = "Assert that '${locator1}' does not equal the value '${value1}'"
 definition {
 
-	function assertNotPartialText {
+	function assertNotPartialText(locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");
 
-		selenium.waitForNotPartialText();
+		selenium.waitForNotPartialText(${locator1}, ${value1});
 
-		selenium.assertNotPartialText();
+		selenium.assertNotPartialText(${locator1}, ${value1});
 
 		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function assertNotText {
+	function assertNotText(locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");
 
-		selenium.waitForNotText();
+		selenium.waitForNotText(${locator1}, ${value1});
 
-		selenium.assertNotText();
+		selenium.assertNotText(${locator1}, ${value1});
 
 		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function assertNotValue {
+	function assertNotValue(locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");
 
-		selenium.waitForNotValue();
+		selenium.waitForNotValue(${locator1}, ${value1});
 
-		selenium.assertNotValue();
+		selenium.assertNotValue(${locator1}, ${value1});
 
 		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function assertTextNotEquals {
+	function assertTextNotEquals(locator1) {
 		WaitForSPARefresh();
 
 		if (contains(${locator1}, "/input")) {

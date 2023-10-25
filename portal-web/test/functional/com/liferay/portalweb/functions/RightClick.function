@@ -1,14 +1,14 @@
 @default = "rightClick"
 definition {
 
-	function rightClick {
+	function rightClick(locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		selenium.rightClick();
+		selenium.rightClick(${locator1});
 
 		selenium.assertJavaScriptErrors("true");
 

@@ -6,7 +6,7 @@ definition {
 
 		selenium.waitForNotVisible(${locator1}, "false");
 
-		selenium.assertNotVisible();
+		selenium.assertNotVisible(${locator1});
 
 		selenium.assertJavaScriptErrors("true");
 

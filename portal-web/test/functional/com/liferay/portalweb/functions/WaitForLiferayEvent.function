@@ -1,7 +1,7 @@
 @default = "waitForLiferayEvent"
 definition {
 
-	function initializeLiferayEventLog {
+	function initializeLiferayEventLog() {
 		var javascript = '''
 			if (typeof Liferay != "undefined") {
 				const TRACKED_EVENTS = [
@@ -80,7 +80,7 @@ definition {
 		ExecuteJavaScript(value1 = ${javascript});
 	}
 
-	function waitForLiferayEvent {
+	function waitForLiferayEvent(attributeValue,eventName,attributeName) {
 		var javascript = '''
 			try {
 				var eventValue = LFR_JS_EVENTS_LOG.getLastEvent("${eventName}").${attributeName};

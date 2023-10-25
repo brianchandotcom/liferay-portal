@@ -1,17 +1,17 @@
 @default = "mouseUp"
 definition {
 
-	function mouseUp {
+	function mouseUp(locator1) {
 		WaitForSPARefresh();
 
-		selenium.mouseUp();
+		selenium.mouseUp(${locator1});
 
 		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function mouseUpAt {
+	function mouseUpAt(locator1,value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");

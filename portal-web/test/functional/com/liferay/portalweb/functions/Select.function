@@ -1,26 +1,26 @@
 @default = "select"
 definition {
 
-	function pauseSelect {
+	function pauseSelect(locator1,value1) {
 		WaitForSPARefresh();
 
 		selenium.pause(5000);
 
-		selenium.select();
+		selenium.select(${locator1}, ${value1});
 
 		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function select {
+	function select(locator1,value1) {
 		WaitForSPARefresh();
 
-		selenium.waitForEditable();
+		selenium.waitForEditable(${locator1});
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		selenium.select();
+		selenium.select(${locator1}, ${value1});
 
 		selenium.assertJavaScriptErrors("true");
 

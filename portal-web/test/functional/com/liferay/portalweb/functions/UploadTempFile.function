@@ -1,26 +1,26 @@
 @default = "uploadTempFile"
 definition {
 
-	function uploadTempFile {
+	function uploadTempFile(locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		selenium.uploadTempFile();
+		selenium.uploadTempFile(${locator1}, ${value1});
 
 		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function uploadTempFileHiddenNoMouseOver {
+	function uploadTempFileHiddenNoMouseOver(locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");
 
-		selenium.uploadTempFile();
+		selenium.uploadTempFile(${locator1}, ${value1});
 
 		selenium.assertJavaScriptErrors("true");
 

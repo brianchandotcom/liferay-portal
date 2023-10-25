@@ -1,11 +1,11 @@
 @default = "setWindowSize"
 definition {
 
-	function maximizeWindow {
+	function maximizeWindow() {
 		selenium.maximizeWindow();
 	}
 
-	function setWindowSize {
+	function setWindowSize(value1) {
 		selenium.setWindowSize(${value1});
 	}
 

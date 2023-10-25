@@ -1,7 +1,7 @@
 @default = "dragOver"
 definition {
 
-	function dragOver {
+	function dragOver(locator2,locator1) {
 		WaitForSPARefresh();
 
 		if (contains(${ratio}, "ratio")) {
@@ -50,7 +50,7 @@ Simulate.dragOver(arguments[0], arguments[1], ${ratio});
 		selenium.assertLiferayErrors();
 	}
 
-	function dragOverAtBottom {
+	function dragOverAtBottom(locator2,locator1) {
 		WaitForSPARefresh();
 
 		var javaScript = '''

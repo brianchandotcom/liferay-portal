@@ -2,26 +2,26 @@
 @summary = "Click on '${locator1}'"
 definition {
 
-	function click {
+	function click(locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		selenium.click();
+		selenium.click(${locator1});
 
 		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function clickAt {
+	function clickAt(locator1,value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
 		selenium.clickAt(${locator1}, ${value1});
 
@@ -30,28 +30,28 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function clickAtNotVisible {
+	function clickAtNotVisible(locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		selenium.clickAt();
+		selenium.clickAt(${locator1}, ${value1});
 
 		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function clickAtSidebarClickAtWaitForScript {
+	function clickAtSidebarClickAtWaitForScript(locator1) {
 		WaitForSPARefresh();
 
 		selenium.pause(1000);
 
 		selenium.waitForElementPresent(${locator1}, "false");
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
 		selenium.waitForElementPresent(${locator1}, "false");
 
@@ -62,22 +62,22 @@ definition {
 		selenium.waitForElementPresent(${locator1}, "false");
 	}
 
-	function clickNoMouseOver {
+	function clickNoMouseOver(locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");
 
-		selenium.click();
+		selenium.click(${locator1});
 
 		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function clickNoMouseOverNoWaitForVisible {
+	function clickNoMouseOverNoWaitForVisible(locator1) {
 		WaitForSPARefresh();
 
-		selenium.click();
+		selenium.click(${locator1});
 
 		selenium.assertJavaScriptErrors("true");
 
@@ -87,67 +87,67 @@ definition {
 	function clickNoSPARefresh(locator1,value1) {
 		selenium.waitForVisible(${locator1}, "false");
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		selenium.click();
-
-		selenium.assertJavaScriptErrors("true");
-
-		selenium.assertLiferayErrors();
-	}
-
-	function clickNoWaitForVisible {
-		WaitForSPARefresh();
-
-		selenium.mouseOver();
-
-		selenium.click();
+		selenium.click(${locator1});
 
 		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function javaScriptClick {
+	function clickNoWaitForVisible(locator1) {
 		WaitForSPARefresh();
 
-		selenium.javaScriptClick();
+		selenium.mouseOver(${locator1});
+
+		selenium.click(${locator1});
+
+		selenium.assertJavaScriptErrors("true");
+
+		selenium.assertLiferayErrors();
 	}
 
-	function mouseDownMouseUp {
+	function javaScriptClick(locator1) {
+		WaitForSPARefresh();
+
+		selenium.javaScriptClick(${locator1});
+	}
+
+	function mouseDownMouseUp(locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.waitForVisible(${locator1}, "false");
 
-		selenium.mouseDown();
+		selenium.mouseDown(${locator1});
 
-		selenium.mouseUp();
+		selenium.mouseUp(${locator1});
 	}
 
-	function mouseOverClick {
+	function mouseOverClick(locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
 		selenium.waitForVisible(${locator1}, "false");
 
-		selenium.click();
+		selenium.click(${locator1});
 
 		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function pauseClickAt {
+	function pauseClickAt(locator1) {
 		WaitForSPARefresh();
 
 		selenium.pause(1000);
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
 		Click.clickAt();
 
@@ -156,7 +156,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function waitForMenuToggleJSClick {
+	function waitForMenuToggleJSClick(locator1) {
 		WaitForSPARefresh();
 
 		selenium.selectFrame("relative=top");
@@ -165,7 +165,7 @@ definition {
 			selenium.selectFrame("//*[contains(@class,'modal-body')]/iframe[not(contains(@class,'hidden'))]");
 		}
 
-		selenium.waitForEditable();
+		selenium.waitForEditable(${locator1});
 
 		selenium.pause(1000);
 
@@ -176,7 +176,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function waitForPersonalMenuJSClick {
+	function waitForPersonalMenuJSClick(locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");

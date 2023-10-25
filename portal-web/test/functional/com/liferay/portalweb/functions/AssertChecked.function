@@ -1,19 +1,19 @@
 @default = "assertChecked"
 definition {
 
-	function assertChecked {
+	function assertChecked(locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");
 
-		selenium.assertChecked();
+		selenium.assertChecked(${locator1});
 
 		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function assertCheckedHiddenToggleSwitch {
+	function assertCheckedHiddenToggleSwitch(locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");
@@ -25,12 +25,12 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function assertCheckedNotVisible {
+	function assertCheckedNotVisible(locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");
 
-		selenium.assertChecked();
+		selenium.assertChecked(${locator1});
 
 		selenium.assertJavaScriptErrors("true");
 

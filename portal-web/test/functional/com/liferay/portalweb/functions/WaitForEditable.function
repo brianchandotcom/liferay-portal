@@ -1,12 +1,12 @@
 @default = "waitForEditable"
 definition {
 
-	function waitForEditable {
+	function waitForEditable(locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");
 
-		selenium.waitForEditable();
+		selenium.waitForEditable(${locator1});
 
 		selenium.assertJavaScriptErrors("true");
 

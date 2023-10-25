@@ -2,28 +2,28 @@
 @summary = "Assert that '${locator1}' equals the value '${value1}'"
 definition {
 
-	function assertPartialText {
+	function assertPartialText(locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");
 
-		selenium.waitForPartialTextCaseInsensitive();
+		selenium.waitForPartialTextCaseInsensitive(${locator1}, ${value1});
 
-		selenium.assertPartialTextCaseInsensitive();
+		selenium.assertPartialTextCaseInsensitive(${locator1}, ${value1});
 
 		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function assertPartialTextAceEditor {
+	function assertPartialTextAceEditor(locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");
 
-		selenium.waitForPartialTextAceEditor();
+		selenium.waitForPartialTextAceEditor(${locator1}, ${value1});
 
-		selenium.assertPartialTextAceEditor();
+		selenium.assertPartialTextAceEditor(${locator1}, ${value1});
 
 		selenium.assertJavaScriptErrors("true");
 
@@ -33,40 +33,40 @@ definition {
 	function assertPartialTextCaseSensitive(locator1,value1) {
 		selenium.waitForVisible(${locator1}, "false");
 
-		selenium.waitForPartialText();
+		selenium.waitForPartialText(${locator1}, ${value1});
 
-		selenium.assertPartialText();
+		selenium.assertPartialText(${locator1}, ${value1});
 	}
 
-	function assertText {
+	function assertText(locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");
 
-		selenium.waitForTextCaseInsensitive();
+		selenium.waitForTextCaseInsensitive(${locator1}, ${value1});
 
-		selenium.assertTextCaseInsensitive();
+		selenium.assertTextCaseInsensitive(${locator1}, ${value1});
 
 		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function assertTextCaseSensitive {
+	function assertTextCaseSensitive(locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");
 
-		selenium.waitForText();
+		selenium.waitForText(${locator1}, ${value1});
 
-		selenium.assertText();
+		selenium.assertText(${locator1}, ${value1});
 
 		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function assertTextEquals {
+	function assertTextEquals(locator1) {
 		WaitForSPARefresh();
 
 		if (contains(${locator1}, "/input")) {
@@ -77,14 +77,14 @@ definition {
 		}
 	}
 
-	function assertValue {
+	function assertValue(locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");
 
-		selenium.waitForValue();
+		selenium.waitForValue(${locator1}, ${value1});
 
-		selenium.assertValue();
+		selenium.assertValue(${locator1}, ${value1});
 
 		selenium.assertJavaScriptErrors("true");
 

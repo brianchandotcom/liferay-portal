@@ -1,7 +1,7 @@
 @default = "sikuliLeftMouseUp"
 definition {
 
-	function sikuliLeftMouseUp {
+	function sikuliLeftMouseUp() {
 		WaitForSPARefresh();
 
 		selenium.pause(1000);

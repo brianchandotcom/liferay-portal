@@ -1,17 +1,17 @@
 @default = "mouseDown"
 definition {
 
-	function mouseDown {
+	function mouseDown(locator1) {
 		WaitForSPARefresh();
 
-		selenium.mouseDown();
+		selenium.mouseDown(${locator1});
 
 		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function mouseDownAt {
+	function mouseDownAt(locator1,value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");

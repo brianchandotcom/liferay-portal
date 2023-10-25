@@ -2,7 +2,7 @@
 @summary = "Selecting all text at '${locator1}'"
 definition {
 
-	function selectFieldText {
+	function selectFieldText(locator1) {
 		WaitForSPARefresh();
 
 		var input = "keys=CONTROL,a";

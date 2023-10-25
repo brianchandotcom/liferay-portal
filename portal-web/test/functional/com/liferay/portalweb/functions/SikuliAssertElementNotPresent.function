@@ -1,10 +1,10 @@
 @default = "sikuliAssertElementNotPresent"
 definition {
 
-	function sikuliAssertElementNotPresent {
+	function sikuliAssertElementNotPresent(locator1) {
 		WaitForSPARefresh();
 
-		selenium.sikuliAssertElementNotPresent();
+		selenium.sikuliAssertElementNotPresent(${locator1});
 
 		selenium.assertJavaScriptErrors("true");
 

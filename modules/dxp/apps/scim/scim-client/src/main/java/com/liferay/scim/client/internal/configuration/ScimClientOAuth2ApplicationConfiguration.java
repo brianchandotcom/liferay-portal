@@ -15,9 +15,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 @ExtendedObjectClassDefinition(generateUI = false)
 @Meta.OCD(
 	factory = true,
-	id = "com.liferay.scim.client.internal.configuration.SCIMClientOAuth2ApplicationConfiguration"
+	id = "com.liferay.scim.client.internal.configuration.ScimClientOAuth2ApplicationConfiguration"
 )
-public interface SCIMClientOAuth2ApplicationConfiguration {
+public interface ScimClientOAuth2ApplicationConfiguration {
 
 	@Meta.AD(type = Meta.Type.String)
 	public String applicationName();

@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Olivér Kecskeméty
  */
-public class SCIMClientBearerTokenProvider implements BearerTokenProvider {
+public class ScimClientBearerTokenProvider implements BearerTokenProvider {
 
 	@Override
 	public boolean isValid(AccessToken accessToken) {

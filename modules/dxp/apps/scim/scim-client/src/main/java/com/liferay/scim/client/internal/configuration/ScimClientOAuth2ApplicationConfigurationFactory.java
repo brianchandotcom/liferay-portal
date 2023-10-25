@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.scim.client.internal.spi.bearer.token.provider.SCIMClientBearerTokenProvider;
+import com.liferay.scim.client.internal.spi.bearer.token.provider.ScimClientBearerTokenProvider;
 
 import java.util.Collections;
 import java.util.Map;
@@ -48,10 +48,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Olivér Kecskeméty
  */
 @Component(
-	configurationPid = "com.liferay.scim.client.internal.configuration.SCIMClientOAuth2ApplicationConfiguration",
+	configurationPid = "com.liferay.scim.client.internal.configuration.ScimClientOAuth2ApplicationConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, service = {}
 )
-public class SCIMClientOAuth2ApplicationConfigurationFactory {
+public class ScimClientOAuth2ApplicationConfigurationFactory {
 
 	@Activate
 	protected void activate(
@@ -65,10 +65,10 @@ public class SCIMClientOAuth2ApplicationConfigurationFactory {
 		ConfigurationFactoryUtil.executeAsCompany(
 			_companyLocalService, properties,
 			companyId -> {
-				SCIMClientOAuth2ApplicationConfiguration
+				ScimClientOAuth2ApplicationConfiguration
 					scimClientOAuth2ApplicationConfiguration =
 						ConfigurableUtil.createConfigurable(
-							SCIMClientOAuth2ApplicationConfiguration.class,
+							ScimClientOAuth2ApplicationConfiguration.class,
 							properties);
 
 				_oAuth2Application = _getOrAddOAuth2Application(
@@ -76,7 +76,7 @@ public class SCIMClientOAuth2ApplicationConfigurationFactory {
 
 				_serviceRegistration = bundleContext.registerService(
 					BearerTokenProvider.class,
-					new SCIMClientBearerTokenProvider(),
+					new ScimClientBearerTokenProvider(),
 					HashMapDictionaryBuilder.<String, Object>put(
 						"clientId", _oAuth2Application.getClientId()
 					).put(
@@ -137,7 +137,7 @@ public class SCIMClientOAuth2ApplicationConfigurationFactory {
 
 	private OAuth2Application _getOrAddOAuth2Application(
 			long companyId,
-			SCIMClientOAuth2ApplicationConfiguration
+			ScimClientOAuth2ApplicationConfiguration
 				scimClientOAuth2ApplicationConfiguration)
 		throws Exception {
 
@@ -180,7 +180,7 @@ public class SCIMClientOAuth2ApplicationConfigurationFactory {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SCIMClientOAuth2ApplicationConfigurationFactory.class);
+		ScimClientOAuth2ApplicationConfigurationFactory.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

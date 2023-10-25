@@ -168,7 +168,7 @@ definition {
 				relatedEndpoint = "true",
 				relatedSchema = "true",
 				schemaName = "testSchema",
-				scopeKey = "group",
+				scopeKey = "site",
 				status = "published",
 				title = "My-app");
 
@@ -407,7 +407,7 @@ definition {
 				endpointName = "testendpoint",
 				endpointPath = "/testendpoint",
 				relatedEndpoint = "true",
-				scopeKey = "group",
+				scopeKey = "site",
 				status = "published",
 				title = "My-app");
 		}

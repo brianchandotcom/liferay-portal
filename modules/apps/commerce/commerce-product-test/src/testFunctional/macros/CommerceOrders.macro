@@ -1198,6 +1198,15 @@ definition {
 				locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_DISCOUNT");
 		}
 
+		if (isSet(productOptions)) {
+			for (var productOption : list ${productOptions}) {
+				AssertTextEquals.assertPartialText(
+					key_productItemValue = ${productOption},
+					locator1 = "CommerceOrders#ORDER_DETAILS_PRODUCT_ITEM_VALUE",
+					value1 = ${productOption});
+			}
+		}
+
 		if (isSet(productQuantity)) {
 			AssertElementPresent(
 				key_productQuantity = ${productQuantity},

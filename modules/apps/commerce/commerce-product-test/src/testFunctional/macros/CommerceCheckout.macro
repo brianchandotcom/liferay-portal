@@ -507,6 +507,15 @@ definition {
 				value1 = ${productName});
 		}
 
+		if (isSet(productOptions)) {
+			for (var productOption : list ${productOptions}) {
+				AssertTextEquals.assertPartialText(
+					key_productName = ${productOption},
+					locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_PRODUCT_TABLE_PRODUCT",
+					value1 = ${productOption});
+			}
+		}
+
 		if (isSet(productQuantity)) {
 			AssertTextEquals(
 				key_productQuantity = ${productQuantity},

@@ -4,7 +4,7 @@
  */
 
 import {ClayToggle} from '@clayui/form';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 
 interface IProps {
 	ariaLabel: string;
@@ -26,6 +26,7 @@ const FeatureFlagToggle = ({
 	onItemsChange,
 }: IProps) => {
 	const [isLoading, setIsLoading] = useState(false);
+	const toggleRef = useRef<any>(null);
 
 	const updateToggled = async (newToggled: boolean) => {
 		setIsLoading(true);
@@ -56,12 +57,10 @@ const FeatureFlagToggle = ({
 						: []),
 				]);
 
-				const toggleButton = document.querySelector(
-					`#${featureFlagKey}`
-				) as HTMLElement;
+				// Rethink the setTimeout implementation and find the lost of focus root problem.
 
 				setTimeout(() => {
-					toggleButton?.focus();
+					toggleRef.current.focus();
 				}, 10);
 			}
 			else {
@@ -89,6 +88,7 @@ const FeatureFlagToggle = ({
 					: Liferay.Language.get('disabled')
 			}
 			onToggle={updateToggled}
+			ref={toggleRef}
 			toggled={enabled}
 			type="checkbox"
 		/>

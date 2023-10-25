@@ -577,11 +577,8 @@ public class CPDefinitionAssetDisplayPageFriendlyURLResolver
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
-	@Reference(
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	private volatile CommerceContextFactory _commerceContextFactory;
+	@Reference
+	private CommerceContextFactory _commerceContextFactory;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

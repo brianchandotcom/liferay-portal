@@ -123,6 +123,10 @@ public class UpgradeCatchAllCheck {
 		_commercePriceListLocalService.fetchByExternalReferenceCode(123, "test123");
 		_commercePriceListLocalService.fetchByExternalReferenceCode(companyId, externalReferenceCode);
 
+		_cpDefinitionLocalService.fetchCPDefinitionByCProductExternalReferenceCode(companyId, externalReferenceCode);
+		_cpDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode(123, "test123");
+		_cpDefinitionService.fetchCPDefinitionByCProductExternalReferenceCode(companyId, externalReferenceCode);
+
 		CPInstanceLocalServiceUtil.fetchByExternalReferenceCode(123, "test123");
 		CPInstanceLocalServiceUtil.fetchByExternalReferenceCode(companyId, externalReferenceCode);
 		CPInstanceLocalServiceUtil.fetchCPInstanceByExternalReferenceCode(123, "test123");
@@ -195,6 +199,12 @@ public class UpgradeCatchAllCheck {
 
 	@Reference
 	private CPDefinitionLinkLocalService _cpDefinitionLinkLocalService;
+
+	@Reference
+	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Reference
+	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;

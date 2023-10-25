@@ -628,20 +628,6 @@ public class LiferayContextController extends ContextController {
 			ContextController.checkPattern(pattern);
 		}
 
-		ClassLoader legacyTCCL =
-			(ClassLoader)filterServiceReference.getProperty(
-				Const.EQUINOX_LEGACY_TCCL_PROP);
-
-		long serviceId = (long)filterServiceReference.getProperty(
-			Constants.SERVICE_ID);
-
-		if (legacyTCCL != null) {
-
-			// this is a legacy registration; use a negative id for the DTO
-
-			serviceId = -serviceId;
-		}
-
 		Map<String, String> filterInitParams =
 			ServiceProperties.parseInitParams(
 				filterServiceReference,
@@ -673,7 +659,8 @@ public class LiferayContextController extends ContextController {
 		filterDTO.name = filterName;
 		filterDTO.patterns = _sort(patterns);
 		filterDTO.regexs = regexes;
-		filterDTO.serviceId = serviceId;
+		filterDTO.serviceId = (long)filterServiceReference.getProperty(
+			Constants.SERVICE_ID);
 		filterDTO.servletContextId = _contextServiceId;
 		filterDTO.servletNames = _sort(servletNames);
 
@@ -681,7 +668,7 @@ public class LiferayContextController extends ContextController {
 			filterHolder, filterDTO,
 			GetterUtil.getInteger(
 				filterServiceReference.getProperty(Constants.SERVICE_RANKING)),
-			this, legacyTCCL);
+			this, null);
 
 		filterRegistration.init(
 			new FilterConfigImpl(

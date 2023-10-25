@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.osgi.web.http.servlet.internal.context.LiferayContextController;
 import com.liferay.portal.osgi.web.http.servlet.internal.context.ServletContextHelperDataContextImpl;
 
 import java.io.File;
@@ -338,8 +339,8 @@ public class HttpServletEndpointControllerImpl
 						DTOConstants.FAILURE_REASON_VALIDATION_FAILED);
 				}
 
-				return new ContextController(
-					_bundleContext, _bundleContext, serviceReference,
+				return new LiferayContextController(
+					_bundleContext, serviceReference,
 					new ServletContextHelperDataContextImpl(
 						contextName, _parentServletContext,
 						_parentServletContextTempDir),

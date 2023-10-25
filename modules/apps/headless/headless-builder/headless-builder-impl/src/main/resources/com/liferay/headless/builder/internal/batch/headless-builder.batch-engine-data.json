@@ -279,18 +279,18 @@
 							"value": {
 								"objectStates": [
 									{
-										"key": "group",
+										"key": "company",
 										"objectStateTransitions": [
 											{
-												"key": "company"
+												"key": "site"
 											}
 										]
 									},
 									{
-										"key": "company",
+										"key": "site",
 										"objectStateTransitions": [
 											{
-												"key": "group"
+												"key": "company"
 											}
 										]
 									}

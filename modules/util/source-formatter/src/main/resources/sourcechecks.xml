@@ -1665,7 +1665,7 @@
 			<description name="Replaces the old methods of class `CommerceCountry` with the new equivalents in the `Country` class." />
 			<weight>1</weight>
 		</check>
-		<check name="UpgradeJavaCommerceCountryServiceCheck">
+<check name="UpgradeJavaCommerceCountryServiceCheck">
 			<category name="Upgrade" />
 			<description name="Replaces the old methods of class `CommerceCountryService` with the new equivalents in the `CountryService` class." />
 			<weight>1</weight>
@@ -1685,10 +1685,6 @@
 		<check name="UpgradeJavaCookieUtilCheck">
 			<category name="Upgrade" />
 			<description name="Replace CookieUtilCheck.get by CookiesManagerUtil.getCookieValue and reorder parameters" />
-		</check>
-		<check name="UpgradeJavaDLFolderMethodCheck">
-			<category name="Upgrade" />
-			<description name="Fill the new parameter of the method addFolder of DLFolderLocalService, DLFolderLocalServiceUtil, DLFolderService and DLFolderServiceUtil" />
 		</check>
 		<check name="UpgradeJavaFacetedSearcherCheck">
 			<category name="Upgrade" />

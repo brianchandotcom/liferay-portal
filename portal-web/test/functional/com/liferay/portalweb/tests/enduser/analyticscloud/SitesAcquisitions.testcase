@@ -52,7 +52,7 @@ definition {
 	@priority = 5
 	test AssertShowsChannelsIndividualsComingFrom {
 
-		// AC Refactor: data doesn't appear on time
+		// AC Refactor: Data doesn't appear on time (Need to wait for the session to close)
 		// AC Refactor ticket: LRAC-9016
 
 		task ("Sign out then sign in as Test Test") {
@@ -209,10 +209,11 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8346 | Test Summary: Assert Sites Acquisition card Channels highest session"
+	@ignore = "true"
 	@priority = 3
 	test AssertSitesAcquisitionCardChannelsHighestSession {
 
-		// AC Refactor: Data doesn't appear on time
+		// AC Refactor: Data doesn't appear on time (Need to wait for the session to close)
 		// AC Refactor ticket: LRAC-13994
 
 		task ("View the site page") {
@@ -269,10 +270,11 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8347 | Test Summary: Assert Sites Acquisition card Referrers highest session"
+	@ignore = "true"
 	@priority = 3
 	test AssertSitesAcquisitionCardReferrersHighestSession {
 
-		// AC Refactor: Data doesn't appear on time
+		// AC Refactor: Data doesn't appear on time (Need to wait for the session to close)
 		// AC Refactor ticket: LRAC-13994
 
 		task ("Get the portal URL") {
@@ -353,7 +355,7 @@ definition {
 	@priority = 3
 	test AssertSitesAcquisitionCardSourceAndMediumHighestSession {
 
-		// AC Refactor: Data doesn't appear on time
+		// AC Refactor: Data doesn't appear on time (Need to wait for the session to close)
 		// AC Refactor ticket: LRAC-13994
 
 		task ("Get the portal URL") {

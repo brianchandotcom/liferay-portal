@@ -6,6 +6,8 @@
 module.exports = {
 	build: {
 		exports: [
+			'html-to-image',
+			'jspdf',
 			'@liferay/js-api',
 			'@liferay/js-api/data-set',
 			'cropperjs/dist/cropper.css',

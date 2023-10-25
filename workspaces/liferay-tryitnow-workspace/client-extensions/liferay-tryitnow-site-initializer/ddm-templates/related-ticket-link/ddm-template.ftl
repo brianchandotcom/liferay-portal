@@ -14,6 +14,7 @@
 		<#if (ObjectEntry_displayPageURL.getData())??>
 
 			<#assign dptLink = ObjectEntry_displayPageURL.getData() />
+
 			<#assign firstPart =(dptLink?split("/l/"))[0] />
 
 			${firstPart}/l/${relatedTicketId}

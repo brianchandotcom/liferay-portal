@@ -26,7 +26,7 @@ dependencies {
 	compileOnly group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
 	compileOnly group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.14"
 	compileOnly group: "org.apache.httpcomponents", name: "httpmime", version: "4.5.13"
-	compileOnly group: "org.apache.santuario", name: "xmlsec", version: "2.1.7"
+	compileOnly group: "org.apache.santuario", name: "xmlsec", version: "3.0.3"
 	compileOnly group: "org.joda", name: "joda-convert", version: "2.2.1"
 	compileOnly group: "org.opensaml", name: "opensaml-core", version: "3.3.0"
 	compileOnly group: "org.opensaml", name: "opensaml-messaging-api", version: "3.3.0"

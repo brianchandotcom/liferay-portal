@@ -1,7 +1,7 @@
 <ul class="adt-navigation">
 	<#if entries?has_content>
 		<#list entries as navPrimaryItem>
-			<#if navPrimaryItem.getChildren()?size > 0>
+			<#if (navPrimaryItem.getChildren()?size > 0)>
 				<div class="adt-nav-item dropdown dropdown-action w-100">
 					<button
 							class="adt-nav-text align-items-center d-flex menu-info"

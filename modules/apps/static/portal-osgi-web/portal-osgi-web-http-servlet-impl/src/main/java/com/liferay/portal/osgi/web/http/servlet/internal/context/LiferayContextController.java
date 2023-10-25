@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -25,6 +26,7 @@ import java.util.EventListener;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -87,9 +89,11 @@ import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.http.context.ServletContextHelper;
 import org.osgi.service.http.runtime.dto.DTOConstants;
+import org.osgi.service.http.runtime.dto.ErrorPageDTO;
 import org.osgi.service.http.runtime.dto.FilterDTO;
 import org.osgi.service.http.runtime.dto.ListenerDTO;
 import org.osgi.service.http.runtime.dto.ResourceDTO;
+import org.osgi.service.http.runtime.dto.ServletDTO;
 import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -449,7 +453,63 @@ public class LiferayContextController extends ContextController {
 			ServiceReference<Servlet> serviceReference)
 		throws ServletException {
 
-		return _contextController.addServletRegistration(serviceReference);
+		_checkShutdown();
+
+		ContextController.ServiceHolder<Servlet> servletServiceHolder =
+			new ContextController.ServiceHolder<>(
+				_bundleContext.getServiceObjects(serviceReference));
+
+		Servlet servlet = servletServiceHolder.get();
+
+		ServletRegistration servletRegistration = null;
+
+		boolean addedRegisteredObject = false;
+
+		Set<Object> registeredObjects =
+			_httpServletEndpointController.getRegisteredObjects();
+
+		try {
+			if (servlet == null) {
+				throw new IllegalArgumentException("Servlet cannot be null");
+			}
+
+			addedRegisteredObject = registeredObjects.add(servlet);
+
+			if (addedRegisteredObject) {
+				ObjectValuePair<ServletDTO, ErrorPageDTO> objectValuePair =
+					_createServletDTOs(serviceReference, servlet);
+
+				ServletDTO servletDTO = objectValuePair.getKey();
+
+				ServletContextHelper curServletContextHelper =
+					_getServletContextHelper(servletServiceHolder.getBundle());
+
+				servletRegistration = new ServletRegistration(
+					servletServiceHolder, servletDTO,
+					objectValuePair.getValue(), curServletContextHelper, this,
+					null);
+
+				servletRegistration.init(
+					new ServletConfigImpl(
+						servletDTO.name, servletDTO.initParams,
+						_createServletContext(
+							servletServiceHolder.getBundle(),
+							curServletContextHelper)));
+
+				_endpointRegistrations.add(servletRegistration);
+			}
+		}
+		finally {
+			if (servletRegistration == null) {
+				servletServiceHolder.release();
+
+				if (addedRegisteredObject) {
+					registeredObjects.remove(servlet);
+				}
+			}
+		}
+
+		return servletRegistration;
 	}
 
 	@Override
@@ -856,6 +916,106 @@ public class LiferayContextController extends ContextController {
 		return servletContextAdaptor.createServletContext();
 	}
 
+	private ObjectValuePair<ServletDTO, ErrorPageDTO> _createServletDTOs(
+		ServiceReference<Servlet> serviceReference, Servlet servlet) {
+
+		String[] patterns = ArrayUtil.toStringArray(
+			StringPlus.asList(
+				serviceReference.getProperty(
+					HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN)));
+
+		String[] errorPages = ArrayUtil.toStringArray(
+			StringPlus.asList(
+				serviceReference.getProperty(
+					HttpWhiteboardConstants.
+						HTTP_WHITEBOARD_SERVLET_ERROR_PAGE)));
+
+		String servletName = (String)serviceReference.getProperty(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME);
+
+		if ((patterns.length == 0) && (errorPages.length == 0) &&
+			(servletName == null)) {
+
+			throw new IllegalArgumentException(
+				StringBundler.concat(
+					"One of the service properties ",
+					HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_ERROR_PAGE,
+					", ", HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_NAME,
+					", ",
+					HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_PATTERN,
+					" must contain a value."));
+		}
+
+		for (String pattern : patterns) {
+			ContextController.checkPattern(pattern);
+		}
+
+		ServletDTO servletDTO = new ServletDTO();
+
+		servletDTO.asyncSupported = ServiceProperties.parseBoolean(
+			serviceReference,
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_ASYNC_SUPPORTED);
+		servletDTO.initParams = ServiceProperties.parseInitParams(
+			serviceReference,
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_INIT_PARAM_PREFIX);
+		servletDTO.name = ServiceProperties.parseName(servletName, servlet);
+		servletDTO.patterns = _sort(patterns);
+		servletDTO.serviceId = (long)serviceReference.getProperty(
+			Constants.SERVICE_ID);
+		servletDTO.servletContextId = _contextServiceId;
+		servletDTO.servletInfo = servlet.getServletInfo();
+
+		ErrorPageDTO errorPageDTO = null;
+
+		if (errorPages.length > 0) {
+			errorPageDTO = new ErrorPageDTO();
+
+			errorPageDTO.asyncSupported = servletDTO.asyncSupported;
+
+			Set<Long> errorCodes = new LinkedHashSet<>();
+
+			List<String> exceptions = new ArrayList<>();
+
+			for (String errorPage : errorPages) {
+				try {
+					if (Objects.equals(errorPage, "4xx")) {
+						for (long code = 400; code < 500; code++) {
+							errorCodes.add(code);
+						}
+					}
+					else if (Objects.equals(errorPage, "5xx")) {
+						for (long code = 500; code < 600; code++) {
+							errorCodes.add(code);
+						}
+					}
+					else {
+						long code = Long.parseLong(errorPage);
+
+						errorCodes.add(code);
+					}
+				}
+				catch (NumberFormatException numberFormatException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(numberFormatException);
+					}
+
+					exceptions.add(errorPage);
+				}
+			}
+
+			errorPageDTO.errorCodes = TransformUtil.transformToLongArray(
+				errorCodes, errorCode -> errorCode);
+			errorPageDTO.exceptions = exceptions.toArray(new String[0]);
+			errorPageDTO.initParams = servletDTO.initParams;
+			errorPageDTO.name = servletDTO.name;
+			errorPageDTO.serviceId = servletDTO.serviceId;
+			errorPageDTO.servletContextId = _contextServiceId;
+			errorPageDTO.servletInfo = servlet.getServletInfo();
+		}
+
+		return new ObjectValuePair<>(servletDTO, errorPageDTO);
+	}
+
 	private DispatchTargets _getDispatchTargets(
 		String requestURI, String extension, String queryString, Match match) {
 
@@ -983,7 +1143,6 @@ public class LiferayContextController extends ContextController {
 	private final ConcurrentMap<String, HttpSessionAdaptor> _activeSessions =
 		new ConcurrentHashMap<>();
 	private final BundleContext _bundleContext;
-	private final ContextController _contextController;
 	private final String _contextName;
 	private final String _contextPath;
 	private final long _contextServiceId;

@@ -246,10 +246,6 @@ definition {
 			ABTest.publishVariant(variantName = "Control");
 		}
 
-		task ("Assert the alert is shown") {
-			Alert.viewSuccessMessageText(successMessage = "Success:Control was published successfully.");
-		}
-
 		task ("Assert the control is published") {
 			AssertElementNotPresent(
 				locator1 = "Experience#FRAGMENT_HEADING",

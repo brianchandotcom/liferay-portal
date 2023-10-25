@@ -235,7 +235,7 @@ definition {
 			key_text = "Publish",
 			locator1 = "Button#ANY");
 
-		Alert.viewSuccessMessageText(successMessage = "Success:Variant name was published successfully.");
+		Alert.viewSuccessMessageText(successMessage = "Success:${variantName} was published successfully.");
 	}
 
 	@summary = "Default summary"

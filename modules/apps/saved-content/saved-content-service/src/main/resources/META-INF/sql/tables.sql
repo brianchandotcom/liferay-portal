@@ -1,6 +1,7 @@
 create table SavedContentEntry (
 	mvccVersion LONG default 0 not null,
 	ctCollectionId LONG default 0 not null,
+	uuid_ VARCHAR(75) null,
 	savedContentEntryId LONG not null,
 	groupId LONG,
 	companyId LONG,

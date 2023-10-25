@@ -209,10 +209,32 @@ public class SavedContentEntryLocalServiceUtil {
 		return getService().fetchSavedContentEntry(savedContentEntryId);
 	}
 
+	/**
+	 * Returns the saved content entry matching the UUID and group.
+	 *
+	 * @param uuid the saved content entry's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching saved content entry, or <code>null</code> if a matching saved content entry could not be found
+	 */
+	public static SavedContentEntry fetchSavedContentEntryByUuidAndGroupId(
+		String uuid, long groupId) {
+
+		return getService().fetchSavedContentEntryByUuidAndGroupId(
+			uuid, groupId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
 		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static
@@ -258,6 +280,39 @@ public class SavedContentEntryLocalServiceUtil {
 	}
 
 	/**
+	 * Returns all the saved content entries matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the saved content entries
+	 * @param companyId the primary key of the company
+	 * @return the matching saved content entries, or an empty list if no matches were found
+	 */
+	public static List<SavedContentEntry>
+		getSavedContentEntriesByUuidAndCompanyId(String uuid, long companyId) {
+
+		return getService().getSavedContentEntriesByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of saved content entries matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the saved content entries
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of saved content entries
+	 * @param end the upper bound of the range of saved content entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching saved content entries, or an empty list if no matches were found
+	 */
+	public static List<SavedContentEntry>
+		getSavedContentEntriesByUuidAndCompanyId(
+			String uuid, long companyId, int start, int end,
+			OrderByComparator<SavedContentEntry> orderByComparator) {
+
+		return getService().getSavedContentEntriesByUuidAndCompanyId(
+			uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
 	 * Returns the number of saved content entries.
 	 *
 	 * @return the number of saved content entries
@@ -278,6 +333,21 @@ public class SavedContentEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getSavedContentEntry(savedContentEntryId);
+	}
+
+	/**
+	 * Returns the saved content entry matching the UUID and group.
+	 *
+	 * @param uuid the saved content entry's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching saved content entry
+	 * @throws PortalException if a matching saved content entry could not be found
+	 */
+	public static SavedContentEntry getSavedContentEntryByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException {
+
+		return getService().getSavedContentEntryByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**

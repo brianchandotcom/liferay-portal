@@ -211,6 +211,68 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-12627 Verify that the product details is using the adaptive media"
+	@priority = 5
+	test CanProductDetailsUseAdaptiveMedia {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+		}
+
+		task ("And a business account with a buyer user is created") {
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And the product image is changed for U-Joint") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "U-Joint");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Media");
+
+			Click(
+				key_value = "Minium_ProductImage_64.png",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+			MenuItem.click(menuItem = "Delete");
+
+			CommerceProductImages.addProductImages(
+				imageTitles = "Black",
+				validationImage = "true");
+		}
+
+		task ("And the buyer logs on Minium") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("When the buyer open the details page for U-Joint") {
+			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
+		}
+
+		task ("Then the product details is using the Adaptive Media") {
+			AssertElementPresent(
+				key_fsProductImage = "Black",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_IMAGE");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-11447. The admin can post an attachment with a custom field to a product via API"
 	@priority = 3
 	test CanUploadProductAttachmentWithCustomFieldViaAPI {
@@ -432,65 +494,4 @@ definition {
 			locator1 = "CommerceEntry#TABLE_ENTRY_NAME");
 	}
 
-	@description = "COMMERCE-12627 Verify that the product details is using the adaptive media"
-	@priority = 5
-	test CanProductDetailsUseAdaptiveMedia {
-		property portal.acceptance = "true";
-
-		task ("Given a Minium site is created") {
-			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-		}
-
-		task ("And a business account with a buyer user is created") {
-			CommerceEntry.addAccountEntryUser(
-				accountName = "Commerce Account",
-				accountType = "Business",
-				agreeToTermsAndAnswerReminderQuery = "true",
-				createNewAccount = "true",
-				requireReset = "false",
-				userEmailAddress = "buyer@liferay.com",
-				userFirstName = "Buyer",
-				userLastName = "User",
-				userRole = "Buyer",
-				userScreenName = "buyeruser",
-				userSiteMembership = "Minium");
-		}
-
-		task ("And the product image is changed for U-Joint") {
-			CommerceProducts.openProductsAdmin();
-
-			CommerceProducts.searchAndGoToProductEntry(entryProductName = "U-Joint");
-
-			CommerceEntry.gotoMenuTab(menuTab = "Media");
-
-			Click(
-				key_value = "Minium_ProductImage_64.png",
-				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
-
-			MenuItem.click(menuItem = "Delete");
-
-			CommerceProductImages.addProductImages(
-				imageTitles = "Black",
-				validationImage = "true");
-		}
-
-		task ("And the buyer logs on Minium") {
-			User.logoutPG();
-
-			CommerceLogin.miniumLogin(
-				password = "test",
-				urlAppend = "web/minium",
-				userEmailAddress = "buyer@liferay.com");
-		}
-
-		task ("When the buyer open the details page for U-Joint") {
-			CommerceAcceleratorsInitializer.gotoMiniumProductDetailsPage(productName = "U-Joint");
-		}
-
-		task ("Then the product details is using the Adaptive Media") {
-			AssertElementPresent(
-				key_fsProductImage = "Black",
-				locator1 = "CommerceFrontStore#FS_PRODUCT_IMAGE");
-		}
-	}
 }

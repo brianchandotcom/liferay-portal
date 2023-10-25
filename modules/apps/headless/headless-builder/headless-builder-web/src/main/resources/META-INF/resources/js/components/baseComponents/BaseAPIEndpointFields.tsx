@@ -45,7 +45,7 @@ export default function BaseAPIEndpointFields({
 			const options = response.listTypeEntries
 				? response.listTypeEntries.map((entry) => ({
 						label:
-							entry.key === 'group'
+							entry.key === 'site'
 								? Liferay.Language.get('site')
 								: Liferay.Language.get('company'),
 						value: entry.key,
@@ -80,8 +80,8 @@ export default function BaseAPIEndpointFields({
 	);
 
 	const endpointPathHostTextPreview =
-		selectedScope?.value === 'group'
-			? `${window.location.origin}${basePath}${apiApplicationBaseURL}/scopes/${selectedScope.value}`
+		selectedScope?.value === 'site'
+			? `${window.location.origin}${basePath}${apiApplicationBaseURL}/scopes/{scopeKey}`
 			: `${window.location.origin}${basePath}${apiApplicationBaseURL}`;
 	const endpointPathLabel = Liferay.Language.get('enter-path');
 

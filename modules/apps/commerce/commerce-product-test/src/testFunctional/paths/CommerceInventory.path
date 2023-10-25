@@ -16,8 +16,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INVENTORY_SKU_INCOMING_QUANTITY</td>
+	<td>//*[contains(@class, 'table-list-title')]/a[text()='${key_sku}']/../../../div[5][text()='${key_quantity}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INVENTORY_SKU_ON_HAND_QUANTITY</td>
 	<td>//*[contains(@class, 'table-list-title')]/a[text()='${key_sku}']/../../../div[2][text()='${key_quantity}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVENTORY_SKU_ON_ORDER_QUANTITY</td>
+	<td>//*[contains(@class, 'table-list-title')]/a[text()='${key_sku}']/../../../div[4][text()='${key_quantity}']</td>
 	<td></td>
 </tr>
 </tbody>

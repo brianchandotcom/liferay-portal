@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Localization;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -143,7 +144,8 @@ public class EditDepotEntryMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		_dlSizeLimitConfigurationProvider.updateGroupSizeLimit(
-			groupId, 0L, 0L, mimeTypeSizeLimits);
+			groupId, MapUtil.getLong(parameterMap, "fileMaxSize", 0L), 0L,
+			mimeTypeSizeLimits);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -50,6 +50,15 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 					RandomTestUtil.randomString(),
 					"x" + RandomTestUtil.randomString(), false)),
 			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_siteScopedObjectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						"Text", "String", true, true, null,
+						RandomTestUtil.randomString(),
+						"x" + RandomTestUtil.randomString(), false)),
+				ObjectDefinitionConstants.SCOPE_SITE);
 	}
 
 	@Test
@@ -398,6 +407,19 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				"headless-builder/endpoints", Http.Method.POST
 			).toString(),
 			JSONCompareMode.STRICT);
+
+		JSONObject apiSchemaJSONObject2 = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"mainObjectDefinitionERC",
+				_siteScopedObjectDefinition.getExternalReferenceCode()
+			).put(
+				"name", RandomTestUtil.randomString()
+			).put(
+				"r_apiApplicationToAPISchemas_c_apiApplicationId",
+				apiApplicationJSONObject1.getLong("id")
+			).toString(),
+			"headless-builder/schemas", Http.Method.POST);
+
 		JSONAssert.assertEquals(
 			JSONUtil.put(
 				"status", "BAD_REQUEST"
@@ -424,10 +446,10 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 					apiApplicationJSONObject1.getLong("id")
 				).put(
 					"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId",
-					apiSchemaJSONObject1.getLong("id")
+					apiSchemaJSONObject2.getLong("id")
 				).put(
 					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId",
-					apiSchemaJSONObject1.getLong("id")
+					apiSchemaJSONObject2.getLong("id")
 				).put(
 					"retrieveType",
 					APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT.
@@ -581,7 +603,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 			).toString(),
 			"headless-builder/applications", Http.Method.POST);
 
-		JSONObject apiSchemaJSONObject2 = HTTPTestUtil.invokeToJSONObject(
+		JSONObject apiSchemaJSONObject3 = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"mainObjectDefinitionERC",
 				_objectDefinition.getExternalReferenceCode()
@@ -605,7 +627,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				null,
 				StringBundler.concat(
 					"headless-builder/schemas/",
-					apiSchemaJSONObject2.getLong("id"),
+					apiSchemaJSONObject3.getLong("id"),
 					"/responseAPISchemaToAPIEndpoints/",
 					apiEndpointJSONObject.getLong("id")),
 				Http.Method.PUT
@@ -634,6 +656,36 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 					apiApplicationJSONObject1.getLong("id")
 				).put(
 					"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId",
+					apiSchemaJSONObject3.getLong("id")
+				).put(
+					"retrieveType",
+					APIApplication.Endpoint.RetrieveType.COLLECTION.getValue()
+				).put(
+					"scope", APIApplication.Endpoint.Scope.COMPANY.getValue()
+				).toString(),
+				"headless-builder/endpoints", Http.Method.POST
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"status", "BAD_REQUEST"
+			).put(
+				"title",
+				"The API endpoint and the API schema must have the same scope."
+			).toString(),
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"httpMethod", "get"
+				).put(
+					"name", RandomTestUtil.randomString()
+				).put(
+					"path", path
+				).put(
+					"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
+					apiApplicationJSONObject1.getLong("id")
+				).put(
+					"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId",
 					apiSchemaJSONObject2.getLong("id")
 				).put(
 					"retrieveType",
@@ -648,5 +700,8 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition;
+
+	@DeleteAfterTestRun
+	private ObjectDefinition _siteScopedObjectDefinition;
 
 }

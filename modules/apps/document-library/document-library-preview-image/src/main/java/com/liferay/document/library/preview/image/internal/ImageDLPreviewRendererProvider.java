@@ -27,7 +27,6 @@ import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Alejandro Tardín
@@ -102,10 +101,7 @@ public class ImageDLPreviewRendererProvider
 	@Reference
 	private DLFileVersionPreviewLocalService _dlFileVersionPreviewLocalService;
 
-	@Reference(
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(type=" + DLProcessorConstants.IMAGE_PROCESSOR + ")"
-	)
+	@Reference(target = "(type=" + DLProcessorConstants.IMAGE_PROCESSOR + ")")
 	private DLProcessor _dlProcessor;
 
 	@Reference(

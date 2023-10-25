@@ -30,7 +30,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Alejandro Tardín
@@ -98,10 +97,7 @@ public class EmbedVideoStatusMVCResourceCommand extends BaseMVCResourceCommand {
 	@Reference
 	private DLFileVersionPreviewLocalService _dlFileVersionPreviewLocalService;
 
-	@Reference(
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(type=" + DLProcessorConstants.VIDEO_PROCESSOR + ")"
-	)
+	@Reference(target = "(type=" + DLProcessorConstants.VIDEO_PROCESSOR + ")")
 	private DLProcessor _dlProcessor;
 
 }

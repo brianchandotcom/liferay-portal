@@ -28,15 +28,6 @@ export function getSchemaString(object, path) {
 	}
 }
 
-export function liferayNavigate(url) {
-	if (Liferay.SPA) {
-		Liferay.SPA.app.navigate(url);
-	}
-	else {
-		window.location.href = url;
-	}
-}
-
 export function isValuesArrayChanged(prevValue = [], newValue = []) {
 	if (prevValue.length !== newValue.length) {
 		return true;

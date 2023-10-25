@@ -11,7 +11,7 @@ import React, {useContext} from 'react';
 
 import FrontendDataSetContext from '../FrontendDataSetContext';
 import {formatActionURL} from '../utils/index';
-import {openPermissionsModal} from '../utils/modals/index';
+import {openPermissionsModal} from '../utils/modals/openPermissionsModal';
 import DefaultContent from './DefaultRenderer';
 
 function ActionLinkRenderer({actions, itemData, itemId, options, value}) {

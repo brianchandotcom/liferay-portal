@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegateAdaptorFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -434,9 +433,5 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 
 	@Reference
 	private UserLocalService _userLocalService;
-
-	@Reference
-	private VulcanBatchEngineTaskItemDelegateAdaptorFactory
-		_vulcanBatchEngineTaskItemDelegateAdaptorFactory;
 
 }

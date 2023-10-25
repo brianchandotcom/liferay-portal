@@ -43,6 +43,7 @@ import {setIn} from '../utils/setIn';
 export const INITIAL_STATE: LayoutData = {
 	deletedItems: [],
 	items: {},
+	pageRules: [],
 	rootItems: {dropZone: '', main: ''},
 	version: '0',
 };

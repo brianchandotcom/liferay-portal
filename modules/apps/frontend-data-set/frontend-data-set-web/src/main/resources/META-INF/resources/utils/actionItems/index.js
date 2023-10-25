@@ -33,7 +33,8 @@ export function triggerAction(item, context) {
 			Liferay.fire(OPEN_MODAL, {
 				id: modalId,
 				onClose: loadData,
-				size: resolveModalSize(actionTarget),
+				size: item.data?.size || resolveModalSize(actionTarget),
+				title: item.data?.title,
 				url: actionTargetURL,
 			});
 			break;
@@ -41,6 +42,7 @@ export function triggerAction(item, context) {
 			Liferay.fire(OPEN_SIDE_PANEL, {
 				id: sidePanelId,
 				onAfterSubmit: loadData,
+				title: item.data?.title,
 				url: actionTargetURL,
 			});
 			break;

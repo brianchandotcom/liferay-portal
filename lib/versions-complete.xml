@@ -5287,6 +5287,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.shared.dependencies.xmlsec.jar!xmlsec.jar</file-name>
+				<version>3.0.3</version>
+				<project-name>Apache XML Security for Java</project-name>
+				<project-url>https://www.apache.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache-2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.shared.dependencies.xmpcore.jar!xmpcore.jar</file-name>
 				<version>6.1.11</version>
 				<project-name>Adobe XMPCore</project-name>

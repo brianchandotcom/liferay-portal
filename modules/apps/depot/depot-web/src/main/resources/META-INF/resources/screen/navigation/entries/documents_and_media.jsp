@@ -18,6 +18,8 @@ DepotAdminDLDisplayContext depotAdminDLDisplayContext = (DepotAdminDLDisplayCont
 >
 	<aui:input helpMessage='<%= LanguageUtil.format(request, "can-user-with-view-permission-browse-the-asset-library-document-library-files-and-folders", new Object[] {depotAdminDLDisplayContext.getGroupName(), depotAdminDLDisplayContext.getGroupDLFriendlyURL()}, false) %>' inlineLabel="right" label="enable-directory-indexing" labelCssClass="simple-toggle-switch" name="TypeSettingsProperties--directoryIndexingEnabled--" type="toggle-switch" value="<%= depotAdminDLDisplayContext.isDirectoryIndexingEnabled() %>" />
 
+	<aui:input helpMessage="file-max-size-help" label="file-max-size" name="fileMaxSize" type="number" value="<%= depotAdminDLDisplayContext.getFileMaxSize() %>" />
+
 	<c:if test="<%= depotAdminDLDisplayContext.isShowFileSizePerMimeType() %>">
 		<liferay-frontend:fieldset
 			collapsible="<%= true %>"

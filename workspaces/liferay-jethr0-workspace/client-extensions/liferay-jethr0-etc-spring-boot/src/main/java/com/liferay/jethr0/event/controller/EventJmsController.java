@@ -147,7 +147,7 @@ public class EventJmsController {
 	@Value("${jethr0-jms-queue-jethr0-to-jenkins:jethr0-to-jenkins}")
 	private String _jmsQueueJethr0ToJenkins;
 
-	@Value("${jethr0-jms-queue-jethr0-to-jenkins:jethr0-to-jrp}")
+	@Value("${jethr0-jms-queue-jethr0-to-jrp:jethr0-to-jrp}")
 	private String _jmsQueueJethr0ToJRP;
 
 	@Autowired

@@ -5,7 +5,7 @@
 
 package com.liferay.layout.seo.kernel;
 
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * @author     Cristina González
@@ -15,12 +15,11 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 public class LayoutSEOLinkManagerUtil {
 
 	public static LayoutSEOLinkManager getLayoutSEOLinkManager() {
-		return _layoutSEOLinkManager;
+		return _layoutSEOLinkManagerSnapshot.get();
 	}
 
-	private static volatile LayoutSEOLinkManager _layoutSEOLinkManager =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			LayoutSEOLinkManager.class, LayoutSEOLinkManagerUtil.class,
-			"_layoutSEOLinkManager", false);
+	private static final Snapshot<LayoutSEOLinkManager>
+		_layoutSEOLinkManagerSnapshot = new Snapshot<>(
+			LayoutSEOLinkManagerUtil.class, LayoutSEOLinkManager.class);
 
 }

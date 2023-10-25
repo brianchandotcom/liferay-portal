@@ -218,8 +218,15 @@ public class ClientExtensionProjectConfigurator
 
 						validateClientExtensionTaskProvider.configure(
 							task -> task.doLast(
-								task1 -> _validateClientExtension(
-									clientExtension, project)));
+								new Action<Task>() {
+
+									@Override
+									public void execute(Task task1) {
+										_validateClientExtension(
+											clientExtension, project);
+									}
+
+								}));
 
 						_clientExtensionIds.compute(
 							clientExtension.id,
@@ -701,43 +708,51 @@ public class ClientExtensionProjectConfigurator
 					LifecycleBasePlugin.VERIFICATION_GROUP);
 
 				validateClientExtensionIdsTask.doFirst(
-					validateClientExtensionIdsTask1 -> {
-						StringBundler sb = new StringBundler();
+					new Action<Task>() {
 
-						File rootDir = project.getRootDir();
+						@Override
+						public void execute(
+							Task validateClientExtensionIdsTask1) {
 
-						Path rootDirPath = rootDir.toPath();
+							StringBundler sb = new StringBundler();
 
-						for (Map.Entry<String, Set<Project>> entry :
-								_clientExtensionIds.entrySet()) {
+							File rootDir = project.getRootDir();
 
-							Set<Project> projects = entry.getValue();
+							Path rootDirPath = rootDir.toPath();
 
-							if ((projects.size() > 1) &&
-								projects.contains(project)) {
+							for (Map.Entry<String, Set<Project>> entry :
+									_clientExtensionIds.entrySet()) {
 
-								sb.append("Duplicate client extension ID \"");
-								sb.append(entry.getKey());
-								sb.append("\" found in these projects:\n");
+								Set<Project> projects = entry.getValue();
 
-								for (Project curProject : projects) {
-									File projectDir =
-										curProject.getProjectDir();
+								if ((projects.size() > 1) &&
+									projects.contains(project)) {
 
 									sb.append(
-										rootDirPath.relativize(
-											projectDir.toPath()));
+										"Duplicate client extension ID \"");
+									sb.append(entry.getKey());
+									sb.append("\" found in these projects:\n");
+
+									for (Project curProject : projects) {
+										File projectDir =
+											curProject.getProjectDir();
+
+										sb.append(
+											rootDirPath.relativize(
+												projectDir.toPath()));
+
+										sb.append(StringPool.NEW_LINE);
+									}
 
 									sb.append(StringPool.NEW_LINE);
 								}
+							}
 
-								sb.append(StringPool.NEW_LINE);
+							if (sb.length() > 0) {
+								throw new GradleException(sb.toString());
 							}
 						}
 
-						if (sb.length() > 0) {
-							throw new GradleException(sb.toString());
-						}
 					});
 			});
 

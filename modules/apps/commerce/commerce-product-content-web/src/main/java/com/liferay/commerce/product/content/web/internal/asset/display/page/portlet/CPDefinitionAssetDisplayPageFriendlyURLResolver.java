@@ -16,6 +16,11 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.util.LinkedAssetEntryIdsUtil;
+import com.liferay.commerce.constants.CommerceWebKeys;
+import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.context.CommerceContextFactory;
+import com.liferay.commerce.context.CommerceContextThreadLocal;
+import com.liferay.commerce.context.CommerceGroupThreadLocal;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.configuration.CPDisplayLayoutConfiguration;
 import com.liferay.commerce.product.constants.CPConstants;
@@ -77,6 +82,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Marco Leo
@@ -382,6 +389,25 @@ public class CPDefinitionAssetDisplayPageFriendlyURLResolver
 			long groupId, HttpServletRequest httpServletRequest)
 		throws PortalException {
 
+		CommerceContext commerceContext = _commerceContextFactory.create(
+			httpServletRequest);
+
+		httpServletRequest.setAttribute(
+			CommerceWebKeys.COMMERCE_CONTEXT, commerceContext);
+
+		try {
+			CommerceContextThreadLocal.set(commerceContext);
+
+			CommerceGroupThreadLocal.set(
+				_groupLocalService.fetchGroup(
+					commerceContext.getCommerceChannelGroupId()));
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
 		long commerceAccountId = AccountConstants.ACCOUNT_ENTRY_ID_GUEST;
 
 		AccountEntry accountEntry =
@@ -550,6 +576,12 @@ public class CPDefinitionAssetDisplayPageFriendlyURLResolver
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	private volatile CommerceContextFactory _commerceContextFactory;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

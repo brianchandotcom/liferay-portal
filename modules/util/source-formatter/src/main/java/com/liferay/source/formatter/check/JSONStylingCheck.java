@@ -143,9 +143,7 @@ public class JSONStylingCheck extends BaseFileCheck {
 		return sb.toString();
 	}
 
-	private String _formatQuotedJSON(String content, String key)
-		throws JSONException {
-
+	private String _formatQuotedJSON(String content, String key) {
 		key = StringUtil.quote(key, StringPool.QUOTE) + ": [";
 
 		int x = -1;

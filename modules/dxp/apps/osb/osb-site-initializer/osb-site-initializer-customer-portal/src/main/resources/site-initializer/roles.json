@@ -3,7 +3,15 @@
 		"actions": [
 		],
 		"description": "",
-		"name": "Requester",
+		"name": "Critical Incident Contact",
+		"subtype": "",
+		"type": 6
+	},
+	{
+		"actions": [
+		],
+		"description": "",
+		"name": "Data Breach Contact",
 		"subtype": "",
 		"type": 6
 	},
@@ -43,15 +51,7 @@
 		"actions": [
 		],
 		"description": "",
-		"name": "Critical Incident Contact",
-		"subtype": "",
-		"type": 6
-	},
-	{
-		"actions": [
-		],
-		"description": "",
-		"name": "Data Breach Contact",
+		"name": "Requester",
 		"subtype": "",
 		"type": 6
 	},
@@ -62,5 +62,23 @@
 		"name": "Security Incident Contact",
 		"subtype": "",
 		"type": 6
+	},
+	{
+		"actions": [
+			{
+				"actionId": "VIEW",
+				"resource": "com.liferay.notification.model.NotificationTemplate",
+				"scope": 1
+			},
+			{
+				"actionId": "ADD_NOTIFICATION_QUEUE_ENTRY",
+				"resource": "com.liferay.notification.queue",
+				"scope": 1
+			}
+		],
+		"description": "",
+		"name": "User",
+		"subtype": "",
+		"type": 1
 	}
 ]

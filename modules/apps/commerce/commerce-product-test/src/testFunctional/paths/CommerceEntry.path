@@ -446,6 +446,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RADIO_BUTTON_WITH_VALUE</td>
+	<td>//span[contains(.,'${key_fieldValue}')]/../input[contains(@type,'radio')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REQUIRED_CHECKBOX</td>
 	<td>//input[contains(@id,'required') and (@type='checkbox')]</td>
 	<td></td>

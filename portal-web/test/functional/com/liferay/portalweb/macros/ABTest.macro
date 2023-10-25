@@ -131,19 +131,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteABTestACSide() {
-		Button.clickDelete();
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "Modal#MODAL_CONTENT",
-			value1 = "Are you sure you want to delete this test? You will permanently lose all test data and results collected from this test. You will not be able to run this test. You will not be able to undo this operation.");
-
-		Click(locator1 = "ACSettings#CONFIRMATION_BUTTON");
-
-		Alert.viewSuccessMessageText(successMessage = "Success:The test has been deleted.");
-	}
-
-	@summary = "Default summary"
 	macro deleteVariant(key_index = null) {
 		if (!(isSet(key_index))) {
 			var key_index = 1;

@@ -183,7 +183,7 @@ public class BatchEngineBrokerTest {
 
 		ObjectEntry objectEntry1 = _addObjectEntry(
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
-			_objectDefinition1.getObjectDefinitionId(),
+			_objectDefinition1,
 			TestPropsValues.getUserId());
 
 		long companyId = _counterLocalService.increment();
@@ -199,7 +199,7 @@ public class BatchEngineBrokerTest {
 
 			_addObjectEntry(
 				_company2.getCompanyId(), _company2.getGroupId(),
-				_objectDefinition2.getObjectDefinitionId(), user.getUserId());
+				_objectDefinition2, user.getUserId());
 
 			BatchPlannerPlan batchPlannerPlan =
 				_batchPlannerPlanLocalService.addBatchPlannerPlan(
@@ -381,14 +381,14 @@ public class BatchEngineBrokerTest {
 
 		ObjectEntry objectEntry1 = _addObjectEntry(
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
-			_objectDefinition1.getObjectDefinitionId(),
+			_objectDefinition1,
 			TestPropsValues.getUserId());
 
 		Group group = GroupTestUtil.addGroup();
 
 		_addObjectEntry(
 			TestPropsValues.getCompanyId(), group.getGroupId(),
-			_objectDefinition1.getObjectDefinitionId(),
+			_objectDefinition1,
 			TestPropsValues.getUserId());
 
 		BatchPlannerPlan batchPlannerPlan =
@@ -589,7 +589,8 @@ public class BatchEngineBrokerTest {
 	}
 
 	private ObjectEntry _addObjectEntry(
-			long companyId, long groupId, long objectDefinitionId, long userId)
+			long companyId, long groupId, ObjectDefinition objectDefinition,
+			long userId)
 		throws Exception {
 
 		String originalName = PrincipalThreadLocal.getName();
@@ -608,7 +609,8 @@ public class BatchEngineBrokerTest {
 			DLFileEntry dlFileEntry = _addDLFileEntry(groupId, userId);
 
 			return _objectEntryLocalService.addObjectEntry(
-				userId, groupId, objectDefinitionId,
+				userId, _getGroupId(groupId, objectDefinition),
+				objectDefinition.getObjectDefinitionId(),
 				HashMapBuilder.<String, Serializable>put(
 					"testAttachmentField", dlFileEntry.getFileEntryId()
 				).put(
@@ -649,6 +651,16 @@ public class BatchEngineBrokerTest {
 				originalPermissionChecker);
 			PrincipalThreadLocal.setName(originalName);
 		}
+	}
+
+	private long _getGroupId(long groupId, ObjectDefinition objectDefinition) {
+		if (!Objects.equals(
+			objectDefinition.getScope(), ObjectDefinitionConstants.SCOPE_SITE)) {
+
+			return 0;
+		}
+
+		return groupId;
 	}
 
 	private void _assertActions(JsonNode fieldJsonNode, String fieldName) {

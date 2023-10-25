@@ -93,7 +93,7 @@ public abstract class BaseEventHandler implements EventHandler {
 		EventJmsController eventJmsController = getEventJmsController();
 
 		Map<String, String> messageProperties = HashMapBuilder.put(
-			"jenkins-build-id",
+			"jenkinsBuildId",
 			() -> {
 				if (buildEntity == null) {
 					return null;
@@ -109,7 +109,7 @@ public abstract class BaseEventHandler implements EventHandler {
 				return buildParameterEntity.getValue();
 			}
 		).put(
-			"jethr0-job-id",
+			"jethr0JobId",
 			() -> {
 				if (jobEntity == null) {
 					return null;

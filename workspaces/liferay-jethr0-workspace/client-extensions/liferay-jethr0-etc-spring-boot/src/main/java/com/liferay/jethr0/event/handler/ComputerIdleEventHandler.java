@@ -67,7 +67,7 @@ public class ComputerIdleEventHandler extends ComputerUpdateEventHandler {
 			String.valueOf(
 				buildRunEntity.getInvokeJSONObject(jenkinsNodeEntity)),
 			HashMapBuilder.put(
-				"jenkins-master-name",
+				"jenkinsMasterName",
 				() -> {
 					JenkinsServerEntity jenkinsServerEntity =
 						jenkinsNodeEntity.getJenkinsServerEntity();

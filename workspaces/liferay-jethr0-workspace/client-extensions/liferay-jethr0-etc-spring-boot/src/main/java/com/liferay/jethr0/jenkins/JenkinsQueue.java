@@ -94,7 +94,7 @@ public class JenkinsQueue {
 					String.valueOf(
 						buildRunEntity.getInvokeJSONObject(jenkinsNodeEntity)),
 					HashMapBuilder.put(
-						"jenkins-master-name", jenkinsServerEntity.getName()
+						"jenkinsMasterName", jenkinsServerEntity.getName()
 					).build());
 
 				_buildEntityRepository.update(buildEntity);

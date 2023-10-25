@@ -58,6 +58,8 @@ patch {
 	fileNames "org/eclipse/equinox/http/servlet/internal/registration/EndpointRegistration.java"
 	fileNames "org/eclipse/equinox/http/servlet/internal/registration/FilterRegistration.java"
 	fileNames "org/eclipse/equinox/http/servlet/internal/registration/ListenerRegistration.java"
+	fileNames "org/eclipse/equinox/http/servlet/internal/servlet/HttpServletRequestWrapperImpl.java"
+	fileNames "org/eclipse/equinox/http/servlet/internal/servlet/ResponseStateHandler.java"
 	fileNames "org/eclipse/equinox/http/servlet/internal/servlet/ServletContextAdaptor.java"
 
 	originalLibModuleName = "org.eclipse.equinox.http.servlet"

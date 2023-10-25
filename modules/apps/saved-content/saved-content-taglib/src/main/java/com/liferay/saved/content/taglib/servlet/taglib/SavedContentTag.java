@@ -7,6 +7,7 @@ package com.liferay.saved.content.taglib.servlet.taglib;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -136,6 +137,8 @@ public class SavedContentTag extends IncludeTag {
 			"contentTitle", _contentTitle
 		).put(
 			"enabled", _isEnabled(themeDisplay)
+		).put(
+			"mySavedContentURL", StringPool.BLANK
 		).put(
 			"saved", _isSaved(themeDisplay.getUserId())
 		).put(

@@ -391,8 +391,12 @@ function IndexActions({
 	const _handleReindex = (data) => {
 		const fetchReindexURL = new URL(reindexURL);
 
+		const {className, cmd, id} = data;
+
+		const submissionData = className ? {className, cmd} : {cmd};
+
 		Object.entries({
-			...data,
+			...submissionData,
 			companyIds: _getCompanyIds(),
 			executionMode,
 		}).forEach(([property, value]) => {
@@ -406,7 +410,7 @@ function IndexActions({
 
 		setBackgroundTaskMap({
 			...backgroundTaskMap,
-			[data.id]: 0,
+			[id]: 0,
 		});
 
 		_handleSyncIconAppend();
@@ -414,7 +418,7 @@ function IndexActions({
 		fetch(fetchReindexURL, {method: 'POST'})
 			.then((response) => response.text())
 			.then(() => {
-				if (data.id !== 'spellCheckDictionaries') {
+				if (id !== 'spellCheckDictionaries') {
 					_handleBackgroundTaskStart();
 				}
 				else {

@@ -37,6 +37,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 			>
 				<h2 class="sheet-title"><%= selectSiteInitializerDisplayContext.getTitle() %></h2>
 
+				<div class="sheet-text">
+					<liferay-ui:message key="select-the-template-to-create-your-site" />
+				</div>
+
 				<aui:form name="fm">
 					<liferay-ui:search-container
 						searchContainer="<%= selectSiteInitializerDisplayContext.getSearchContainer() %>"

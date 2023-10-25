@@ -140,11 +140,12 @@ public class SiteInitializerExtender
 				_ddmStructureLocalService, _ddmTemplateLocalService,
 				_defaultDDMStructureHelper, _dependencyManager, _dlURLHelper,
 				_documentFolderResourceFactory, _documentResourceFactory,
-				_expandoValueLocalService, _fragmentsImporter,
-				_groupLocalService, _journalArticleLocalService, _jsonFactory,
+				_expandoColumnLocalService, _expandoValueLocalService,
+				_fragmentsImporter, _groupLocalService,
+				_journalArticleLocalService, _jsonFactory,
 				_knowledgeBaseArticleResourceFactory,
 				_knowledgeBaseFolderResourceFactory, _layoutCopyHelper,
-				_layoutLocalService, _layoutPageTemplateEntryLocalService, _expandoColumnLocalService,
+				_layoutLocalService, _layoutPageTemplateEntryLocalService,
 				_layoutPageTemplateStructureLocalService,
 				_layoutPageTemplateStructureRelLocalService,
 				_layoutSetLocalService, _layoutsImporter,
@@ -261,11 +262,12 @@ public class SiteInitializerExtender
 				_ddmStructureLocalService, _ddmTemplateLocalService,
 				_defaultDDMStructureHelper, _dependencyManager, _dlURLHelper,
 				_documentFolderResourceFactory, _documentResourceFactory,
-				_expandoValueLocalService, _fragmentsImporter,
-				_groupLocalService, _journalArticleLocalService, _jsonFactory,
+				_expandoColumnLocalService, _expandoValueLocalService,
+				_fragmentsImporter, _groupLocalService,
+				_journalArticleLocalService, _jsonFactory,
 				_knowledgeBaseArticleResourceFactory,
 				_knowledgeBaseFolderResourceFactory, _layoutCopyHelper,
-				_layoutLocalService, _layoutPageTemplateEntryLocalService, _expandoColumnLocalService,
+				_layoutLocalService, _layoutPageTemplateEntryLocalService,
 				_layoutPageTemplateStructureLocalService,
 				_layoutPageTemplateStructureRelLocalService,
 				_layoutSetLocalService, _layoutsImporter,
@@ -366,6 +368,9 @@ public class SiteInitializerExtender
 	private DocumentResource.Factory _documentResourceFactory;
 
 	@Reference
+	private ExpandoColumnLocalService _expandoColumnLocalService;
+
+	@Reference
 	private ExpandoValueLocalService _expandoValueLocalService;
 
 	private final Map<String, File> _files = new HashMap<>();
@@ -401,9 +406,6 @@ public class SiteInitializerExtender
 	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
-
-	@Reference
-	private ExpandoColumnLocalService _expandoColumnLocalService;
 
 	@Reference
 	private LayoutPageTemplateStructureLocalService

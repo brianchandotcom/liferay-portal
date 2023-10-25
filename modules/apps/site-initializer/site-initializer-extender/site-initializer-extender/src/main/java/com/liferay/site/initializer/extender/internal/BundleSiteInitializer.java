@@ -253,6 +253,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		DLURLHelper dlURLHelper,
 		DocumentFolderResource.Factory documentFolderResourceFactory,
 		DocumentResource.Factory documentResourceFactory,
+		ExpandoColumnLocalService expandoColumnLocalService,
 		ExpandoValueLocalService expandoValueLocalService,
 		FragmentsImporter fragmentsImporter,
 		GroupLocalService groupLocalService,
@@ -264,7 +265,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		LayoutCopyHelper layoutCopyHelper,
 		LayoutLocalService layoutLocalService,
 		LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService,
-		ExpandoColumnLocalService expandoColumnLocalService,
 		LayoutsImporter layoutsImporter,
 		LayoutPageTemplateStructureLocalService
 			layoutPageTemplateStructureLocalService,
@@ -335,6 +335,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_dlURLHelper = dlURLHelper;
 		_documentFolderResourceFactory = documentFolderResourceFactory;
 		_documentResourceFactory = documentResourceFactory;
+		_expandoColumnLocalService = expandoColumnLocalService;
 		_expandoValueLocalService = expandoValueLocalService;
 		_fragmentsImporter = fragmentsImporter;
 		_groupLocalService = groupLocalService;
@@ -348,7 +349,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_layoutLocalService = layoutLocalService;
 		_layoutPageTemplateEntryLocalService =
 			layoutPageTemplateEntryLocalService;
-		_expandoColumnLocalService = expandoColumnLocalService;
 		_layoutsImporter = layoutsImporter;
 		_layoutPageTemplateStructureLocalService =
 			layoutPageTemplateStructureLocalService;
@@ -509,7 +509,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 				() -> _addFragmentEntries(
 					serviceContext, stringUtilReplaceValues));
 
-			_invoke(() -> _addOrUpdateExpandoColumns(serviceContext));
+			_invoke(
+				() -> _addOrUpdateExpandoColumns(
+					serviceContext, stringUtilReplaceValues));
 			_invoke(() -> _addOrUpdateKnowledgeBaseArticles(serviceContext));
 			_invoke(() -> _addOrUpdateOrganizations(serviceContext));
 
@@ -528,7 +530,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			_invoke(() -> _addSiteConfiguration(serviceContext));
 			_invoke(() -> _addSiteSettings(serviceContext));
 			_invoke(() -> _addStyleBookEntries(serviceContext));
-			_invoke(() -> _addOrUpdateSXPBlueprint(serviceContext));
+			_invoke(
+				() -> _addOrUpdateSXPBlueprint(
+					serviceContext, stringUtilReplaceValues));
 			_invoke(() -> _addOrUpdateUserGroups(serviceContext));
 
 			_invoke(
@@ -1959,7 +1963,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			siteNavigationMenuItemSettingsBuilder, stringUtilReplaceValues);
 	}
 
-	private void _addOrUpdateExpandoColumns(ServiceContext serviceContext)
+	private void _addOrUpdateExpandoColumns(
+			ServiceContext serviceContext,
+			Map<String, String> stringUtilReplaceValues)
 		throws Exception {
 
 		String json = SiteInitializerUtil.read(
@@ -2014,6 +2020,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 				expandoBridge.setAttributeProperties(
 					jsonObject.getString("name"), unicodeProperties);
 			}
+		}
+
+		List<ExpandoColumn> expandoColumns =
+			_expandoColumnLocalService.getExpandoColumns(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (ExpandoColumn expandoColumn : expandoColumns) {
+			stringUtilReplaceValues.put(
+				"EXPANDO_COLUMN_ID:" + expandoColumn.getName(),
+				String.valueOf(expandoColumn.getColumnId()));
 		}
 	}
 
@@ -3166,19 +3181,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 					layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
 		}
 
-		List<ExpandoColumn> expandoColumns =
-			_expandoColumnLocalService.getExpandoColumns(-1, -1);
-
-		for (ExpandoColumn expandoColumn :
-			expandoColumns) {
-
-			stringUtilReplaceValues.put(
-				"EXPANDO_COLUMN_ID:" +
-				expandoColumn.getName(),
-				String.valueOf(
-					expandoColumn.getColumnId()));
-		}
-
 		JSONArray jsonArray = _jsonFactory.createJSONArray(
 			_replace(json, stringUtilReplaceValues));
 
@@ -3655,7 +3657,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return structuredContentFolder.getId();
 	}
 
-	private void _addOrUpdateSXPBlueprint(ServiceContext serviceContext)
+	private void _addOrUpdateSXPBlueprint(
+			ServiceContext serviceContext,
+			Map<String, String> stringUtilReplaceValues)
 		throws Exception {
 
 		OSBSiteInitializer osbSiteInitializer =
@@ -3666,7 +3670,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		osbSiteInitializer.addOrUpdateSXPBlueprint(
-			serviceContext, _servletContext);
+			serviceContext, _servletContext, stringUtilReplaceValues);
 	}
 
 	private TaxonomyCategory _addOrUpdateTaxonomyCategoryTaxonomyCategory(
@@ -5054,6 +5058,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final DLURLHelper _dlURLHelper;
 	private final DocumentFolderResource.Factory _documentFolderResourceFactory;
 	private final DocumentResource.Factory _documentResourceFactory;
+	private final ExpandoColumnLocalService _expandoColumnLocalService;
 	private final ExpandoValueLocalService _expandoValueLocalService;
 	private final FragmentsImporter _fragmentsImporter;
 	private final GroupLocalService _groupLocalService;
@@ -5067,7 +5072,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final LayoutLocalService _layoutLocalService;
 	private final LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
-	private final ExpandoColumnLocalService _expandoColumnLocalService;
 	private final LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
 	private final LayoutPageTemplateStructureRelLocalService

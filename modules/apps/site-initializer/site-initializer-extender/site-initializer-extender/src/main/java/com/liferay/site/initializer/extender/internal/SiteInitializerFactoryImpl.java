@@ -127,11 +127,11 @@ public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 			_ddmStructureLocalService, _ddmTemplateLocalService,
 			_defaultDDMStructureHelper, _dlURLHelper,
 			_documentFolderResourceFactory, _documentResourceFactory,
-			_expandoValueLocalService, _fragmentsImporter, _groupLocalService,
-			_journalArticleLocalService, _jsonFactory,
-			_knowledgeBaseArticleResourceFactory,
+			_expandoColumnLocalService, _expandoValueLocalService,
+			_fragmentsImporter, _groupLocalService, _journalArticleLocalService,
+			_jsonFactory, _knowledgeBaseArticleResourceFactory,
 			_knowledgeBaseFolderResourceFactory, _layoutCopyHelper,
-			_layoutLocalService, _layoutPageTemplateEntryLocalService, _expandoColumnLocalService,
+			_layoutLocalService, _layoutPageTemplateEntryLocalService,
 			_layoutsImporter, _layoutPageTemplateStructureLocalService,
 			_layoutPageTemplateStructureRelLocalService, _layoutSetLocalService,
 			_layoutUtilityPageEntryLocalService, _listTypeDefinitionResource,
@@ -231,6 +231,9 @@ public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 	private DocumentResource.Factory _documentResourceFactory;
 
 	@Reference
+	private ExpandoColumnLocalService _expandoColumnLocalService;
+
+	@Reference
 	private ExpandoValueLocalService _expandoValueLocalService;
 
 	@Reference
@@ -263,9 +266,6 @@ public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
 
-	@Reference
-	private ExpandoColumnLocalService
-		_expandoColumnLocalService;
 	@Reference
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;

@@ -11,6 +11,8 @@ import javax.servlet.ServletContext;
 
 import org.osgi.annotation.versioning.ProviderType;
 
+import java.util.Map;
+
 /**
  * @author Nilton Vieira
  */
@@ -18,7 +20,7 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface OSBSiteInitializer {
 
 	public void addOrUpdateSXPBlueprint(
-			ServiceContext serviceContext, ServletContext servletContext)
+			ServiceContext serviceContext, ServletContext servletContext, Map<String, String> stringUtilReplaceValues)
 		throws Exception;
 
 }

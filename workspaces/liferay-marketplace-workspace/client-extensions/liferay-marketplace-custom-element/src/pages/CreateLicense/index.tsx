@@ -8,10 +8,12 @@ import {useState} from 'react';
 import './index.scss';
 
 import {useForm} from 'react-hook-form';
+import {useNavigate} from 'react-router-dom';
 
 import FooterButtons from '../../components/FooterButtons';
 import {Liferay} from '../../liferay/liferay';
 import zodSchema, {zodResolver} from '../../schema/zod';
+import ProvisioningKoroneikiOAuth2 from '../../services/oauth/ProvisioningKoroneikiOAuth2';
 import ProductCard from '../GetAppPage/components/ProductCard/ProductCard';
 import StepWizard from '../GetAppPage/components/StepWizard/StepWizard';
 import AccountEmailInfo from './AccountInfo';
@@ -28,7 +30,9 @@ const CreateLicense = () => {
 	const [step, setStep] = useState<string>(StepCreateLicense.SUBSCRIPTION);
 
 	const {
-		formState: {errors},
+		formState: {errors, isSubmitting},
+
+		handleSubmit,
 		register,
 		setValue,
 		watch,
@@ -43,6 +47,8 @@ const CreateLicense = () => {
 		mode: 'all',
 		resolver: zodResolver(zodSchema.generateLicenseKey),
 	});
+
+	const navigate = useNavigate();
 
 	const {IP, hostName, macAddresses, subscription} = watch();
 
@@ -142,6 +148,7 @@ const CreateLicense = () => {
 		nextButton: {
 			className: 'ml-6',
 			disabled:
+				isSubmitting ||
 				(!subscription && step === StepCreateLicense.SUBSCRIPTION) ||
 				(disableGenerateButton &&
 					step !== StepCreateLicense.SUBSCRIPTION),
@@ -149,6 +156,31 @@ const CreateLicense = () => {
 			show: true,
 			text: 'Generate Key',
 		},
+	};
+
+	const handleNextButton = async (form: any) => {
+		if (step === StepCreateLicense.SUBSCRIPTION) {
+			setStep(StepCreateLicense.LICENSE_KEY_DETAILS);
+		}
+
+		if (step === StepCreateLicense.LICENSE_KEY_DETAILS) {
+			const licenseKey = await ProvisioningKoroneikiOAuth2.createLicenseKey(
+				form
+			);
+
+			licenseKey.id = 12345;
+
+			const downloadedKey = await ProvisioningKoroneikiOAuth2.downloadLicenseKey(
+				licenseKey.id
+			);
+
+			navigate('/');
+
+			Liferay.Util.openToast({
+				message: `License Key created successfully: ${downloadedKey}`,
+				type: 'success',
+			});
+		}
 	};
 
 	return (
@@ -205,9 +237,7 @@ const CreateLicense = () => {
 					onClickCustomizedButton={() =>
 						setStep(StepCreateLicense.SUBSCRIPTION)
 					}
-					onClickNext={() =>
-						setStep(StepCreateLicense.LICENSE_KEY_DETAILS)
-					}
+					onClickNext={handleSubmit(handleNextButton)}
 				/>
 			</div>
 		</div>

@@ -19,6 +19,11 @@
 			"claimPercent": 0.5,
 			"externalReferenceCode": "PLATINUM-PRTLVL",
 			"partnerLevelType": "platinum"
+		},
+		{
+			"claimPercent": 0.5,
+			"externalReferenceCode": "GLOBAL-PRTLVL",
+			"partnerLevelType": "global"
 		}
 	],
 	"objectDefinitionName": "PartnerLevel"

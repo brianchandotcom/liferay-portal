@@ -30,5 +30,13 @@
 			"en-US": "Platinum"
 		},
 		"type": "string"
+	},
+	{
+		"key": "global",
+		"name": "Global",
+		"name_i18n": {
+			"en-US": "Global"
+		},
+		"type": "string"
 	}
 ]

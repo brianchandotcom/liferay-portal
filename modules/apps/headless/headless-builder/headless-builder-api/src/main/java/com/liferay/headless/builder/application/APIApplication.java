@@ -77,7 +77,7 @@ public interface APIApplication {
 
 		public enum Scope {
 
-			COMPANY("company"), GROUP("group");
+			COMPANY("company"), SITE("site");
 
 			public static Scope parse(String value) {
 				for (Scope scope : Scope.values()) {

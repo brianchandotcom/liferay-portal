@@ -3308,6 +3308,14 @@ public class ObjectEntryLocalServiceImpl
 			}
 
 			if (objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_AUTO_INCREMENT)) {
+
+				_validateAutoIncrementValue(
+					objectField,
+					GetterUtil.getString(values.get(objectField.getName())));
+			}
+
+			if (objectField.compareBusinessType(
 					ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) ||
 				objectField.compareBusinessType(
 					ObjectFieldConstants.BUSINESS_TYPE_FORMULA) ||
@@ -3908,6 +3916,58 @@ public class ObjectEntryLocalServiceImpl
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
+		}
+	}
+
+	private void _validateAutoIncrementValue(
+			ObjectField objectField, String value)
+		throws PortalException {
+
+		if (Validator.isNull(value)) {
+			return;
+		}
+
+		String prefix = ObjectFieldSettingUtil.getValue(
+			ObjectFieldSettingConstants.NAME_PREFIX, objectField);
+		String suffix = ObjectFieldSettingUtil.getValue(
+			ObjectFieldSettingConstants.NAME_SUFFIX, objectField);
+
+		if ((Validator.isNotNull(prefix) &&
+			 !StringUtil.startsWith(value, prefix)) ||
+			(Validator.isNotNull(suffix) &&
+			 !StringUtil.endsWith(value, suffix))) {
+
+			throw new ObjectEntryValuesException.InvalidValue(
+				objectField.getName());
+		}
+
+		String initialValue = ObjectFieldSettingUtil.getValue(
+			ObjectFieldSettingConstants.NAME_INITIAL_VALUE, objectField);
+		String sortableValue = StringUtil.removeLast(
+			StringUtil.removeFirst(value, prefix), suffix);
+
+		if ((initialValue.length() > sortableValue.length()) ||
+			((initialValue.length() < sortableValue.length()) &&
+			 StringUtil.startsWith(sortableValue, CharPool.NUMBER_0))) {
+
+			throw new ObjectEntryValuesException.InvalidValue(
+				objectField.getName());
+		}
+
+		long parsedValue = 0;
+
+		try {
+			parsedValue = Long.parseUnsignedLong(sortableValue);
+		}
+		catch (NumberFormatException numberFormatException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(numberFormatException);
+			}
+		}
+
+		if (parsedValue < GetterUtil.getLong(initialValue)) {
+			throw new ObjectEntryValuesException.InvalidValue(
+				objectField.getName());
 		}
 	}
 

@@ -22,4 +22,4 @@ export {default as updateEditableValues} from './updateEditableValues';
 export {default as updateFragmentEntryLinkContent} from './updateFragmentEntryLinkContent';
 export {default as updateLanguageId} from './updateLanguageId';
 export {default as updateNetwork} from './updateNetwork';
-export {default as updateRUle} from './updateRule';
+export {default as updateRule} from './updateRule';

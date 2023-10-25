@@ -37,7 +37,7 @@ export function DashboardNavigationList({
 							isActive || (path === '/' && isAppRoute),
 					})
 				}
-				to={`${path}${accountId ? `?account=${accountId}` : ''}`}
+				to={`${path}${accountId ? `?accountId=${accountId}` : ''}`}
 			>
 				{({isActive}) => (
 					<>
@@ -46,7 +46,8 @@ export function DashboardNavigationList({
 							className={classNames(
 								'dashboard-navigation-body-list-icon',
 								{
-									'dashboard-navigation-body-list-icon-selected': isActive,
+									'dashboard-navigation-body-list-icon-selected':
+										isActive,
 								}
 							)}
 							src={itemIcon}
@@ -56,7 +57,8 @@ export function DashboardNavigationList({
 							className={classNames(
 								'dashboard-navigation-body-list-text',
 								{
-									'dashboard-navigation-body-list-text-selected': isActive,
+									'dashboard-navigation-body-list-text-selected':
+										isActive,
 								}
 							)}
 						>

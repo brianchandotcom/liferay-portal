@@ -259,7 +259,7 @@ export function InviteMemberModal({
 		});
 
 		Liferay.Util.openToast({
-			message: 'Invitetd successfully',
+			message: 'Invited successfully',
 			title: `${user.givenName} ${user.familyName}`,
 			type: 'success',
 		});

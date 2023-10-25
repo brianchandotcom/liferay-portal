@@ -20,6 +20,7 @@ import {removeProtocolURL, showAccountImage} from '../../../utils/util';
 
 import './Accounts.scss';
 import useMembers from '../../../components/MembersPage/useMembers';
+import EmptyState from '../../../components/EmptyState';
 
 type AccountDetailsPageProps = {
 	commerceAccount?: CommerceAccount;
@@ -76,16 +77,18 @@ function AccountDetailsPage({
 	totalMembers,
 }: AccountDetailsPageProps) {
 	const navigate = useNavigate();
-	const [selectedAccountAddress, setSelectedAccountAddress] = useState<
-		AccountPostalAddresses[]
-	>();
+	const [selectedAccountAddress, setSelectedAccountAddress] =
+		useState<AccountPostalAddresses[]>();
 
-	const {type} = selectedAccount;
+	let accountType = '';
+	if (selectedAccount) {
+		const {type} = selectedAccount;
 
-	const accountType =
-		type === 'person'
-			? 'Individual'
-			: type.charAt(0).toUpperCase() + type.slice(1);
+		accountType =
+			type === 'person'
+				? 'Individual'
+				: type.charAt(0).toUpperCase() + type.slice(1);
+	}
 
 	useEffect(() => {
 		const makeFetch = async () => {
@@ -100,258 +103,272 @@ function AccountDetailsPage({
 	}, [selectedAccount]);
 
 	return (
-		<div className="account-details-container">
-			<div className="account-details-header-container">
-				<div className="account-details-header-left-content-container">
-					<img
-						alt="Account Image"
-						className="account-details-header-left-content-image"
-						src={showAccountImage(commerceAccount?.logoURL)}
-					/>
+		<>
+			{selectedAccount && accountType && (
+				<div className="account-details-container">
+					<div className="account-details-header-container">
+						<div className="account-details-header-left-content-container">
+							<img
+								alt="Account Image"
+								className="account-details-header-left-content-image"
+								src={showAccountImage(commerceAccount?.logoURL)}
+							/>
 
-					<div className="account-details-header-left-content-text-container">
-						<span className="account-details-header-left-content-title">
-							{selectedAccount.name}
-						</span>
+							<div className="account-details-header-left-content-text-container">
+								<span className="account-details-header-left-content-title">
+									{selectedAccount.name}
+								</span>
 
-						<span className="account-details-header-left-content-description">
-							{accountType} Account
-						</span>
+								<span className="account-details-header-left-content-description">
+									{accountType} Account
+								</span>
+							</div>
+						</div>
+
+						<div className="account-details-header-right-container">
+							<AccountHeaderButton
+								count={totalApps as unknown as string}
+								name="apps"
+								onClick={() => navigate('/')}
+								text="Apps"
+								title="Apps"
+							/>
+							<AccountHeaderButton
+								count={totalMembers as unknown as string}
+								name="members"
+								onClick={() => navigate('/members')}
+								text="Items"
+								title="Members"
+							/>
+							<AccountHeaderButton
+								count="0"
+								name="solutions"
+								text="Items"
+								title="Solutions"
+							/>
+						</div>
 					</div>
-				</div>
 
-				<div className="account-details-header-right-container">
-					<AccountHeaderButton
-						count={(totalApps as unknown) as string}
-						name="apps"
-						onClick={() => navigate('/')}
-						text="Apps"
-						title="Apps"
-					/>
-					<AccountHeaderButton
-						count={(totalMembers as unknown) as string}
-						name="members"
-						onClick={() => navigate('/members')}
-						text="Items"
-						title="Members"
-					/>
-					<AccountHeaderButton
-						count="0"
-						name="solutions"
-						text="Items"
-						title="Solutions"
-					/>
-				</div>
-			</div>
+					<div className="account-details-body-container">
+						<DetailedCard
+							cardIcon={userIcon}
+							cardIconAltText="Profile Icon"
+							cardTitle="Profile"
+						>
+							<table className="account-details-body-table">
+								<tr className="account-details-body-table-row">
+									<th>Entity Type</th>
 
-			<div className="account-details-body-container">
-				<DetailedCard
-					cardIcon={userIcon}
-					cardIconAltText="Profile Icon"
-					cardTitle="Profile"
-				>
-					<table className="account-details-body-table">
-						<tr className="account-details-body-table-row">
-							<th>Entity Type</th>
+									<td className="account-details-body-table-description">
+										{selectedAccount.type}
+									</td>
+								</tr>
 
-							<td className="account-details-body-table-description">
-								{selectedAccount.type}
-							</td>
-						</tr>
+								<tr className="account-details-body-table-row">
+									<th>Publisher Name</th>
 
-						<tr className="account-details-body-table-row">
-							<th>Publisher Name</th>
+									<td className="account-details-body-table-description">
+										{selectedAccount.name}
+									</td>
+								</tr>
 
-							<td className="account-details-body-table-description">
-								{selectedAccount.name}
-							</td>
-						</tr>
+								<tr className="account-details-body-table-row">
+									<th>Publisher ID</th>
 
-						<tr className="account-details-body-table-row">
-							<th>Publisher ID</th>
+									<td className="account-details-body-table-description">
+										{selectedAccount.id}
+									</td>
+								</tr>
 
-							<td className="account-details-body-table-description">
-								{selectedAccount.id}
-							</td>
-						</tr>
+								<tr className="account-details-body-table-row">
+									<th>Github Username</th>
 
-						<tr className="account-details-body-table-row">
-							<th>Github Username</th>
+									<td className="account-details-body-table-description">
+										{getCustomFieldValue(
+											selectedAccount?.customFields ?? [],
+											'Github Username'
+										)}
+									</td>
+								</tr>
 
-							<td className="account-details-body-table-description">
-								{getCustomFieldValue(
-									selectedAccount?.customFields ?? [],
-									'Github Username'
-								)}
-							</td>
-						</tr>
+								<tr className="account-details-body-table-row">
+									<th>Description</th>
 
-						<tr className="account-details-body-table-row">
-							<th>Description</th>
+									<td className="account-details-body-table-description">
+										{selectedAccount.description}
+									</td>
+								</tr>
+							</table>
+						</DetailedCard>
 
-							<td className="account-details-body-table-description">
-								{selectedAccount.description}
-							</td>
-						</tr>
-					</table>
-				</DetailedCard>
+						<DetailedCard
+							cardIcon={phoneIcon}
+							cardIconAltText="Contact Icon"
+							cardTitle="Contact"
+						>
+							<table className="account-details-body-table">
+								<tr className="account-details-body-table-row">
+									<th>Phone</th>
 
-				<DetailedCard
-					cardIcon={phoneIcon}
-					cardIconAltText="Contact Icon"
-					cardTitle="Contact"
-				>
-					<table className="account-details-body-table">
-						<tr className="account-details-body-table-row">
-							<th>Phone</th>
+									<td className="account-details-body-table-description">
+										{getCustomFieldValue(
+											selectedAccount.customFields ?? [],
+											'Contact Phone'
+										)}
+									</td>
+								</tr>
 
-							<td className="account-details-body-table-description">
-								{getCustomFieldValue(
-									selectedAccount.customFields ?? [],
-									'Contact Phone'
-								)}
-							</td>
-						</tr>
+								<tr className="account-details-body-table-row">
+									<th>Email</th>
 
-						<tr className="account-details-body-table-row">
-							<th>Email</th>
+									<td className="account-details-body-table-description">
+										{getCustomFieldValue(
+											selectedAccount.customFields ?? [],
+											'Contact Email'
+										)}
+									</td>
+								</tr>
 
-							<td className="account-details-body-table-description">
-								{getCustomFieldValue(
-									selectedAccount.customFields ?? [],
-									'Contact Email'
-								)}
-							</td>
-						</tr>
+								<tr className="account-details-body-table-row">
+									<th>Website</th>
 
-						<tr className="account-details-body-table-row">
-							<th>Website</th>
-
-							<td className="account-details-body-table-description">
-								<a
-									href={
-										`https://` +
-										removeProtocolURL(
-											getCustomFieldValue(
+									<td className="account-details-body-table-description">
+										<a
+											href={
+												`https://` +
+												removeProtocolURL(
+													getCustomFieldValue(
+														selectedAccount.customFields ??
+															[],
+														'Homepage URL'
+													)
+												)
+											}
+											target="_blank"
+										>
+											{getCustomFieldValue(
 												selectedAccount.customFields ??
 													[],
 												'Homepage URL'
-											)
-										)
-									}
-									target="_blank"
-								>
-									{getCustomFieldValue(
-										selectedAccount.customFields ?? [],
-										'Homepage URL'
-									)}
-								</a>
-							</td>
-						</tr>
-					</table>
-				</DetailedCard>
+											)}
+										</a>
+									</td>
+								</tr>
+							</table>
+						</DetailedCard>
 
-				<DetailedCard
-					cardIcon={locationIcon}
-					cardIconAltText="Address Icon"
-					cardTitle="Address"
-				>
-					<table className="account-details-body-table">
-						{selectedAccountAddress?.map((address, i) => (
-							<tr
-								className="account-details-body-table-row"
-								key={i}
-							>
-								<th>Business Address</th>
+						<DetailedCard
+							cardIcon={locationIcon}
+							cardIconAltText="Address Icon"
+							cardTitle="Address"
+						>
+							<table className="account-details-body-table">
+								{selectedAccountAddress?.map((address, i) => (
+									<tr
+										className="account-details-body-table-row"
+										key={i}
+									>
+										<th>Business Address</th>
 
-								<td className="account-details-body-table-description">
-									{address.streetAddressLine1}
-									{', '}
-									{address.addressLocality}
-									{', '}
-									{address.addressRegion} {address.postalCode}
-									{', '}
-									{address.addressCountry}
-								</td>
-							</tr>
-						))}
-					</table>
-				</DetailedCard>
+										<td className="account-details-body-table-description">
+											{address.streetAddressLine1}
+											{', '}
+											{address.addressLocality}
+											{', '}
+											{address.addressRegion}{' '}
+											{address.postalCode}
+											{', '}
+											{address.addressCountry}
+										</td>
+									</tr>
+								))}
+							</table>
+						</DetailedCard>
 
-				<DetailedCard
-					cardIconAltText="Agreements Icon"
-					cardTitle="Agreements"
-					clayIcon="info-book"
-				>
-					<table className="account-details-body-table">
-						<tr>
-							<th>Liferay Publisher Program License agreement</th>
+						<DetailedCard
+							cardIconAltText="Agreements Icon"
+							cardTitle="Agreements"
+							clayIcon="info-book"
+						>
+							<table className="account-details-body-table">
+								<tr>
+									<th>
+										Liferay Publisher Program License
+										agreement
+									</th>
 
-							<td className="account-details-body-table-description">
-								<img src={downloadIcon} />
-							</td>
-						</tr>
+									<td className="account-details-body-table-description">
+										<img src={downloadIcon} />
+									</td>
+								</tr>
 
-						<tr>
-							<th>Liferay Publisher agreement</th>
+								<tr>
+									<th>Liferay Publisher agreement</th>
 
-							<td className="account-details-body-table-description">
-								<img src={downloadIcon} />
-							</td>
-						</tr>
-					</table>
-				</DetailedCard>
+									<td className="account-details-body-table-description">
+										<img src={downloadIcon} />
+									</td>
+								</tr>
+							</table>
+						</DetailedCard>
 
-				<DetailedCard
-					cardIcon={creditCartIcon}
-					cardIconAltText="Payment Icon"
-					cardTitle="Payment "
-				>
-					{getCustomFieldValue(
-						selectedAccount.customFields ?? [],
-						'Paypal Email Address'
-					) ? (
-						<table className="account-details-body-table">
-							<tr className="account-details-body-table-row">
-								<th>Paypal Account</th>
+						<DetailedCard
+							cardIcon={creditCartIcon}
+							cardIconAltText="Payment Icon"
+							cardTitle="Payment "
+						>
+							{getCustomFieldValue(
+								selectedAccount.customFields ?? [],
+								'Paypal Email Address'
+							) ? (
+								<table className="account-details-body-table">
+									<tr className="account-details-body-table-row">
+										<th>Paypal Account</th>
 
-								<td className="account-details-body-table-description">
-									{maskDigits(
-										getCustomFieldValue(
-											selectedAccount.customFields ?? [],
-											'Paypal Email Address'
-										)
-									)}
-								</td>
-							</tr>
+										<td className="account-details-body-table-description">
+											{maskDigits(
+												getCustomFieldValue(
+													selectedAccount.customFields ??
+														[],
+													'Paypal Email Address'
+												)
+											)}
+										</td>
+									</tr>
 
-							<tr className="account-details-body-table-row">
-								<th>Tax ID</th>
+									<tr className="account-details-body-table-row">
+										<th>Tax ID</th>
 
-								<td className="account-details-body-table-description">
-									{maskDigits(commerceAccount?.taxId ?? '')}
-								</td>
-							</tr>
-						</table>
-					) : (
-						<div className="account-details-body-empty-payment">
-							Edit your publisher account to provide payment
-							information for sales in the Marketplace
-						</div>
-					)}
-				</DetailedCard>
-			</div>
-		</div>
+										<td className="account-details-body-table-description">
+											{maskDigits(
+												commerceAccount?.taxId ?? ''
+											)}
+										</td>
+									</tr>
+								</table>
+							) : (
+								<div className="account-details-body-empty-payment">
+									Edit your publisher account to provide
+									payment information for sales in the
+									Marketplace
+								</div>
+							)}
+						</DetailedCard>
+					</div>
+				</div>
+			)}
+			{!selectedAccount && (
+				<div className="pl-5">
+					<EmptyState type="BLANK" />
+				</div>
+			)}
+		</>
 	);
 }
 
 const Accounts = () => {
-	const {
-		accountId,
-		appsTotalCount,
-		commerceAccount,
-		selectedAccount,
-	} = useOutletContext<any>();
+	const {accountId, appsTotalCount, commerceAccount, selectedAccount} =
+		useOutletContext<any>();
 
 	const members = useMembers({
 		accountId,

@@ -105,6 +105,9 @@ public class ContextController {
 		}
 	}
 
+	public ContextController() {
+	}
+
 	public ContextController(
 		BundleContext trackingContextParam, BundleContext consumingContext,
 		ServiceReference<ServletContextHelper> servletContextHelperRef,
@@ -113,6 +116,12 @@ public class ContextController {
 		String contextName, String contextPath) {
 
 		validate(contextName, contextPath);
+
+		listenerRegistrations = new HashSet<>();
+		endpointRegistrations = new ConcurrentSkipListSet<>();
+		eventListeners = new EventListeners();
+		filterRegistrations = new ConcurrentSkipListSet<>();
+		activeSessions = new ConcurrentHashMap<>();
 
 		this.servletContextHelperRef = servletContextHelperRef;
 
@@ -1118,33 +1127,33 @@ public class ContextController {
 
 	private static final Pattern contextNamePattern = Pattern.compile("^([a-zA-Z_0-9\\-]+\\.)*[a-zA-Z_0-9\\-]+$"); //$NON-NLS-1$
 
-	private final Map<String, String> initParams;
-	private final BundleContext trackingContext;
-	private final BundleContext consumingContext;
-	private final String contextName;
-	private final String contextPath;
-	private final long contextServiceId;
-	private final Set<EndpointRegistration<?>> endpointRegistrations = new ConcurrentSkipListSet<EndpointRegistration<?>>();
-	private final EventListeners eventListeners = new EventListeners();
-	private final Set<FilterRegistration> filterRegistrations = new ConcurrentSkipListSet<FilterRegistration>();
-	private final ConcurrentMap<String, HttpSessionAdaptor> activeSessions = new ConcurrentHashMap<String, HttpSessionAdaptor>();
+	private Map<String, String> initParams;
+	private BundleContext trackingContext;
+	private BundleContext consumingContext;
+	private String contextName;
+	private String contextPath;
+	private long contextServiceId;
+	private Set<EndpointRegistration<?>> endpointRegistrations;
+	private EventListeners eventListeners;
+	private Set<FilterRegistration> filterRegistrations;
+	private ConcurrentMap<String, HttpSessionAdaptor> activeSessions;
 
-	private final HttpServletEndpointController httpServletEndpointController;
-	private final Set<ListenerRegistration> listenerRegistrations = new HashSet<ListenerRegistration>();
-	private final ServletContextHelperDataContext servletContextHelperDataContext;
-	private final ServiceReference<ServletContextHelper> servletContextHelperRef;
+	private HttpServletEndpointController httpServletEndpointController;
+	private Set<ListenerRegistration> listenerRegistrations;
+	private ServletContextHelperDataContext servletContextHelperDataContext;
+	private ServiceReference<ServletContextHelper> servletContextHelperRef;
 	private boolean shutdown;
 	private String string;
 
-	private final ServiceTracker<Filter, AtomicReference<FilterRegistration>> filterServiceTracker;
-	private final ServiceTracker<EventListener, AtomicReference<ListenerRegistration>> servletContextListenerServiceTracker;
-	private final ServiceTracker<EventListener, AtomicReference<ListenerRegistration>> servletContextAttributeListenerServiceTracker;
-	private final ServiceTracker<EventListener, AtomicReference<ListenerRegistration>> servletRequestListenerServiceTracker;
-	private final ServiceTracker<EventListener, AtomicReference<ListenerRegistration>> servletRequestAttributeListenerServiceTracker;
-	private final ServiceTracker<EventListener, AtomicReference<ListenerRegistration>> httpSessionListenerServiceTracker;
-	private final ServiceTracker<EventListener, AtomicReference<ListenerRegistration>> httpSessionAttributeListenerServiceTracker;
-	private final ServiceTracker<EventListener, AtomicReference<ListenerRegistration>> httpSessionIdListenerServiceTracker;
-	private final ServiceTracker<Servlet, AtomicReference<ServletRegistration>> servletServiceTracker;
-	private final ServiceTracker<Object, AtomicReference<ResourceRegistration>> resourceServiceTracker;
+	private ServiceTracker<Filter, AtomicReference<FilterRegistration>> filterServiceTracker;
+	private ServiceTracker<EventListener, AtomicReference<ListenerRegistration>> servletContextListenerServiceTracker;
+	private ServiceTracker<EventListener, AtomicReference<ListenerRegistration>> servletContextAttributeListenerServiceTracker;
+	private ServiceTracker<EventListener, AtomicReference<ListenerRegistration>> servletRequestListenerServiceTracker;
+	private ServiceTracker<EventListener, AtomicReference<ListenerRegistration>> servletRequestAttributeListenerServiceTracker;
+	private ServiceTracker<EventListener, AtomicReference<ListenerRegistration>> httpSessionListenerServiceTracker;
+	private ServiceTracker<EventListener, AtomicReference<ListenerRegistration>> httpSessionAttributeListenerServiceTracker;
+	private ServiceTracker<EventListener, AtomicReference<ListenerRegistration>> httpSessionIdListenerServiceTracker;
+	private ServiceTracker<Servlet, AtomicReference<ServletRegistration>> servletServiceTracker;
+	private ServiceTracker<Object, AtomicReference<ResourceRegistration>> resourceServiceTracker;
 }
 /* @generated */

@@ -94,17 +94,23 @@ public class JournalArticleAssetRendererFactory
 			return assetEntry;
 		}
 
-		AssetRenderer<?> assetRenderer = getAssetRenderer(
-			journalArticle.getResourcePrimKey());
+		JournalArticle latestJournalArticle =
+			_journalArticleLocalService.fetchLatestArticle(
+				journalArticle.getResourcePrimKey(),
+				new int[] {
+					WorkflowConstants.STATUS_APPROVED,
+					WorkflowConstants.STATUS_IN_TRASH
+				});
 
-		if ((assetRenderer == null) ||
-			!Objects.equals(journalArticle, assetRenderer.getAssetObject())) {
+		if ((latestJournalArticle == null) ||
+			Objects.equals(
+				journalArticle.getId(), latestJournalArticle.getId())) {
 
-			return null;
+			return _assetEntryLocalService.fetchEntry(
+				getClassName(), journalArticle.getResourcePrimKey());
 		}
 
-		return _assetEntryLocalService.fetchEntry(
-			getClassName(), assetRenderer.getClassPK());
+		return null;
 	}
 
 	@Override

@@ -142,8 +142,13 @@ public class APIEndpointRelevantObjectEntryModelListener
 			long responseAPISchemaId = GetterUtil.getLong(
 				values.get("r_responseAPISchemaToAPIEndpoints_c_apiSchemaId"));
 
+			APIApplication.Endpoint.Scope scope =
+				APIApplication.Endpoint.Scope.parse(
+					(String)values.get("scope"));
+
 			if (responseAPISchemaId != 0) {
-				_validateAPISchema(apiApplicationId, responseAPISchemaId);
+				_validateAPISchema(
+					apiApplicationId, responseAPISchemaId, scope);
 			}
 
 			if (Objects.equals(
@@ -240,7 +245,7 @@ public class APIEndpointRelevantObjectEntryModelListener
 				values.get("r_requestAPISchemaToAPIEndpoints_c_apiSchemaId"));
 
 			if (requestAPISchemaId != 0) {
-				_validateAPISchema(apiApplicationId, requestAPISchemaId);
+				_validateAPISchema(apiApplicationId, requestAPISchemaId, scope);
 			}
 		}
 		catch (Exception exception) {
@@ -248,7 +253,9 @@ public class APIEndpointRelevantObjectEntryModelListener
 		}
 	}
 
-	private void _validateAPISchema(long apiApplicationId, long apiSchemaId)
+	private void _validateAPISchema(
+			long apiApplicationId, long apiSchemaId,
+			APIApplication.Endpoint.Scope scope)
 		throws Exception {
 
 		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
@@ -285,6 +292,23 @@ public class APIEndpointRelevantObjectEntryModelListener
 					"same API Application",
 				"the-api-endpoint-and-the-api-schema-must-be-related-to-the-" +
 					"same-api-application");
+		}
+
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		ObjectDefinition mainObjectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					(String)values.get("mainObjectDefinitionERC"),
+					objectEntry.getCompanyId());
+
+		if (!Objects.equals(
+				mainObjectDefinition.getScope(), scope.getValue())) {
+
+			throw new ObjectEntryValuesException.InvalidObjectField(
+				null,
+				"The API endpoint and the API schema must have the same scope",
+				"the-api-endpoint-and-the-api-schema-must-have-the-same-scope");
 		}
 	}
 

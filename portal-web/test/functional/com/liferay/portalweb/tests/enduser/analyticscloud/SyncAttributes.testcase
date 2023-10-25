@@ -232,8 +232,8 @@ definition {
 	@description = "Story: LRAC-10866 | Automation ID: LRAC-12904 | Test Summary: Check that it is possible to make pagination in the Attribute for Product list"
 	@priority = 3
 	test CanPaginateInProductAttributeList {
-		var firstPageList = "catalogId,categoryIds,createDate,currencyCode,customFields";
-		var lastPageList = "tags,type,urls,vocabulary";
+		var firstPageList = "catalogId,categoryIds,cost,createDate,currencyCode";
+		var lastPageList = "value,values,vocabulary";
 
 		task ("Click to select attribute for products") {
 			ACDXPSettings.clickToSelectAttributes(attributeCategory = "Products");

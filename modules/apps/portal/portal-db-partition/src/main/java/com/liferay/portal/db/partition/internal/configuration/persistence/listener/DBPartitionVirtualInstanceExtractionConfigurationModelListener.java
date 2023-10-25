@@ -6,22 +6,11 @@
 package com.liferay.portal.db.partition.internal.configuration.persistence.listener;
 
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
-import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.util.PropsValues;
-
-import java.io.IOException;
-
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import com.liferay.portal.db.partition.internal.configuration.DBPartitionVirtualInstanceExtractionConfiguration;
 
 import java.util.Dictionary;
 
-import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mariano Álvaro Sáiz
@@ -32,39 +21,23 @@ import org.osgi.service.component.annotations.Reference;
 	service = ConfigurationModelListener.class
 )
 public class DBPartitionVirtualInstanceExtractionConfigurationModelListener
-	implements ConfigurationModelListener {
+	extends BaseDBPartitionVirtualInstanceConfigurationModelListener {
+
+	public DBPartitionVirtualInstanceExtractionConfigurationModelListener() {
+		super(_PID);
+	}
 
 	@Override
-	public void onAfterSave(String pid, Dictionary<String, Object> properties)
-		throws ConfigurationModelListenerException {
-
-		_deleteConfiguration(pid);
+	public void doPerformActions(Dictionary<String, Object> properties) {
 	}
 
-	private void _deleteConfiguration(String pid) {
-		try {
-			Configuration configuration = _configurationAdmin.getConfiguration(
-				pid, "?");
-
-			if (configuration != null) {
-				Files.deleteIfExists(
-					Paths.get(
-						PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR, _FILE_NAME));
-			}
-		}
-		catch (IOException ioException) {
-			_log.error(ioException);
-		}
+	@Override
+	public Class<?> getConfigurationClass() {
+		return DBPartitionVirtualInstanceExtractionConfiguration.class;
 	}
 
-	private static final String _FILE_NAME =
+	private static final String _PID =
 		"com.liferay.portal.db.partition.internal.configuration." +
-			"DBPartitionVirtualInstanceExtractionConfiguration.config";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DBPartitionVirtualInstanceExtractionConfigurationModelListener.class);
-
-	@Reference
-	private ConfigurationAdmin _configurationAdmin;
+			"DBPartitionVirtualInstanceExtractionConfiguration";
 
 }

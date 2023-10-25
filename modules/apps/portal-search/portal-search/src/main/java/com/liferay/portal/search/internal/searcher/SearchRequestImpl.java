@@ -50,8 +50,8 @@ public class SearchRequestImpl implements SearchRequest, Serializable {
 	public SearchRequestImpl(SearchRequestImpl searchRequestImpl) {
 		_aggregationsMap.putAll(searchRequestImpl._aggregationsMap);
 		_basicFacetSelection = searchRequestImpl._basicFacetSelection;
-		_complexQueryParts.addAll(searchRequestImpl._complexQueryParts);
 		_collapse = searchRequestImpl._collapse;
+		_complexQueryParts.addAll(searchRequestImpl._complexQueryParts);
 		_connectionId = searchRequestImpl._connectionId;
 		_emptySearchEnabled = searchRequestImpl._emptySearchEnabled;
 		_excludeContributors.addAll(searchRequestImpl._excludeContributors);

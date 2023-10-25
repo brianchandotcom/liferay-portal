@@ -81,6 +81,7 @@ import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.Delete;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskInputs;
+import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.TaskProvider;
 import org.gradle.api.tasks.TaskState;
 import org.gradle.api.tasks.bundling.Zip;
@@ -1102,6 +1103,25 @@ public class ClientExtensionProjectConfigurator
 			}
 
 			baseObjectNode.replace(fieldName, fieldNameOverrideJsonNode);
+		}
+	}
+
+	@SafeVarargs
+	private final void _setOutputsUpToDateAlways(
+		TaskProvider<? extends Task>... taskProviders) {
+
+		for (TaskProvider<? extends Task> taskProvider : taskProviders) {
+			taskProvider.configure(
+				new Action<Task>() {
+
+					@Override
+					public void execute(Task task) {
+						TaskOutputs outputs = task.getOutputs();
+
+						outputs.upToDateWhen(task1 -> true);
+					}
+
+				});
 		}
 	}
 

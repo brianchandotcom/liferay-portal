@@ -19,7 +19,6 @@ import com.liferay.portal.osgi.web.http.servlet.internal.context.ServletContextH
 import java.io.File;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -111,11 +110,6 @@ public class HttpServletEndpointControllerImpl
 		_serviceRegistration.unregister();
 
 		_contextControllers.close();
-	}
-
-	@Override
-	public Collection<ContextController> getContextControllers() {
-		return _contextControllers.toList();
 	}
 
 	@Override
@@ -257,7 +251,7 @@ public class HttpServletEndpointControllerImpl
 				DispatchTargets dispatchTargets =
 					contextController.getDispatchTargets(
 						null, requestURI, servletPath, pathInfo, extension,
-						queryString, match, null);
+						queryString, match);
 
 				if (dispatchTargets != null) {
 					return dispatchTargets;

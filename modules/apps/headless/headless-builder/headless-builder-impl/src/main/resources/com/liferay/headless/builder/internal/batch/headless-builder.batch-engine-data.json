@@ -206,6 +206,21 @@
 				},
 				{
 					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "PATH_PARAMETER_DESCRIPTION",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Path Parameter Description"
+					},
+					"name": "pathParameterDescription",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
 					"businessType": "Picklist",
 					"defaultValue": "collection",
 					"externalReferenceCode": "RETRIEVE_TYPE",

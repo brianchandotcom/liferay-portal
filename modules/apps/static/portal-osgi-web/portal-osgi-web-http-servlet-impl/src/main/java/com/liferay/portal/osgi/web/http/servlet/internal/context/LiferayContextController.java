@@ -223,6 +223,7 @@ public class LiferayContextController extends ContextController {
 		_resourceServiceTracker.open();
 	}
 
+	@Override
 	public FilterRegistration addFilterRegistration(
 			ServiceReference<Filter> serviceReference)
 		throws ServletException {
@@ -244,14 +245,39 @@ public class LiferayContextController extends ContextController {
 
 		try {
 			if (filter == null) {
-				throw new IllegalArgumentException("Filter cannot be null");
+				throw new IllegalArgumentException("Filter can not be null");
 			}
 
 			addedRegisteredObject = registeredObjects.add(filter);
 
 			if (addedRegisteredObject) {
-				filterRegistration = _addFilterRegistration(
-					filterServiceHolder, serviceReference);
+				for (FilterRegistration curFilterRegistration :
+						_filterRegistrations) {
+
+					if (Objects.equals(curFilterRegistration.getT(), filter)) {
+						throw new RegisteredFilterException(filter);
+					}
+				}
+
+				FilterDTO filterDTO = _createFilterDTO(
+					serviceReference, filter);
+
+				filterRegistration = new FilterRegistration(
+					filterServiceHolder, filterDTO,
+					GetterUtil.getInteger(
+						serviceReference.getProperty(
+							Constants.SERVICE_RANKING)),
+					this, null);
+
+				filterRegistration.init(
+					new FilterConfigImpl(
+						filterDTO.name, filterDTO.initParams,
+						_createServletContext(
+							filterServiceHolder.getBundle(),
+							_getServletContextHelper(
+								filterServiceHolder.getBundle()))));
+
+				_filterRegistrations.add(filterRegistration);
 			}
 		}
 		finally {
@@ -585,22 +611,14 @@ public class LiferayContextController extends ContextController {
 		}
 	}
 
-	private FilterRegistration _addFilterRegistration(
-			ContextController.ServiceHolder<Filter> filterHolder,
-			ServiceReference<Filter> filterServiceReference)
-		throws ServletException {
-
-		Filter filter = filterHolder.get();
-
-		if (filter == null) {
-			throw new IllegalArgumentException("Filter cannot be null");
+	private void _checkShutdown() {
+		if (_shutdown) {
+			throw new IllegalStateException("Context is shutdown");
 		}
+	}
 
-		for (FilterRegistration filterRegistration : _filterRegistrations) {
-			if (Objects.equals(filterRegistration.getT(), filter)) {
-				throw new RegisteredFilterException(filter);
-			}
-		}
+	private FilterDTO _createFilterDTO(
+		ServiceReference<Filter> filterServiceReference, Filter filter) {
 
 		String[] patterns = ArrayUtil.toStringArray(
 			StringPlus.asList(
@@ -628,63 +646,14 @@ public class LiferayContextController extends ContextController {
 			ContextController.checkPattern(pattern);
 		}
 
-		Map<String, String> filterInitParams =
-			ServiceProperties.parseInitParams(
-				filterServiceReference,
-				HttpWhiteboardConstants.
-					HTTP_WHITEBOARD_FILTER_INIT_PARAM_PREFIX);
-
-		Class<?> clazz = filter.getClass();
-
-		String filterName = GetterUtil.getString(
-			ServiceProperties.parseName(
+		String[] dispatchers = ArrayUtil.toStringArray(
+			StringPlus.asList(
 				filterServiceReference.getProperty(
-					HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME),
-				filterHolder.get()),
-			clazz.getName());
+					HttpWhiteboardConstants.
+						HTTP_WHITEBOARD_FILTER_DISPATCHER)));
 
-		FilterDTO filterDTO = new FilterDTO();
-
-		filterDTO.asyncSupported = ServiceProperties.parseBoolean(
-			filterServiceReference,
-			HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_ASYNC_SUPPORTED);
-		filterDTO.dispatcher = _sort(
-			_checkDispatchers(
-				ArrayUtil.toStringArray(
-					StringPlus.asList(
-						filterServiceReference.getProperty(
-							HttpWhiteboardConstants.
-								HTTP_WHITEBOARD_FILTER_DISPATCHER)))));
-		filterDTO.initParams = filterInitParams;
-		filterDTO.name = filterName;
-		filterDTO.patterns = _sort(patterns);
-		filterDTO.regexs = regexes;
-		filterDTO.serviceId = (long)filterServiceReference.getProperty(
-			Constants.SERVICE_ID);
-		filterDTO.servletContextId = _contextServiceId;
-		filterDTO.servletNames = _sort(servletNames);
-
-		FilterRegistration filterRegistration = new FilterRegistration(
-			filterHolder, filterDTO,
-			GetterUtil.getInteger(
-				filterServiceReference.getProperty(Constants.SERVICE_RANKING)),
-			this, null);
-
-		filterRegistration.init(
-			new FilterConfigImpl(
-				filterName, filterInitParams,
-				_createServletContext(
-					filterHolder.getBundle(),
-					_getServletContextHelper(filterHolder.getBundle()))));
-
-		_filterRegistrations.add(filterRegistration);
-
-		return filterRegistration;
-	}
-
-	private String[] _checkDispatchers(String[] dispatchers) {
-		if ((dispatchers == null) || (dispatchers.length == 0)) {
-			return _DEFAULT_DISPATCHERS;
+		if (dispatchers.length == 0) {
+			dispatchers = _DEFAULT_DISPATCHERS;
 		}
 
 		for (String dispatcher : dispatchers) {
@@ -698,13 +667,31 @@ public class LiferayContextController extends ContextController {
 			}
 		}
 
-		return dispatchers;
-	}
+		Class<?> clazz = filter.getClass();
 
-	private void _checkShutdown() {
-		if (_shutdown) {
-			throw new IllegalStateException("Context is shutdown");
-		}
+		FilterDTO filterDTO = new FilterDTO();
+
+		filterDTO.asyncSupported = ServiceProperties.parseBoolean(
+			filterServiceReference,
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_ASYNC_SUPPORTED);
+		filterDTO.dispatcher = _sort(dispatchers);
+		filterDTO.initParams = ServiceProperties.parseInitParams(
+			filterServiceReference,
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_INIT_PARAM_PREFIX);
+		filterDTO.name = GetterUtil.getString(
+			ServiceProperties.parseName(
+				filterServiceReference.getProperty(
+					HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_NAME),
+				filter),
+			clazz.getName());
+		filterDTO.patterns = _sort(patterns);
+		filterDTO.regexs = regexes;
+		filterDTO.serviceId = (long)filterServiceReference.getProperty(
+			Constants.SERVICE_ID);
+		filterDTO.servletContextId = _contextServiceId;
+		filterDTO.servletNames = _sort(servletNames);
+
+		return filterDTO;
 	}
 
 	private ServletContext _createServletContext(

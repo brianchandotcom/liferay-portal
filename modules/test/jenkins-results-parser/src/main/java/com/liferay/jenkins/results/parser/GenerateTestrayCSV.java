@@ -5,6 +5,11 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.File;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -14,7 +19,7 @@ import org.json.JSONObject;
  */
 public class GenerateTestrayCSV {
 
-	public void generate() {
+	public void generate(String projectBuildDir, String projectTestrayBuildId) {
 		StringBuilder sb = new StringBuilder();
 		StringBuilder uniqueFailuresStringBuilder = new StringBuilder();
 		StringBuilder upstreamFailuresStringBuilder = new StringBuilder();
@@ -23,7 +28,9 @@ public class GenerateTestrayCSV {
 
 		sb.append("Recent Failures Count,Case History URL\n");
 
-		for (JSONObject resultJSONObject : getResultJSONObjects()) {
+		for (JSONObject resultJSONObject :
+				getResultJSONObjects(projectTestrayBuildId)) {
+
 			int status = resultJSONObject.optInt("status");
 
 			if (status != 3) {
@@ -40,12 +47,12 @@ public class GenerateTestrayCSV {
 
 			if (recentFailures2 == 5) {
 				recentFailuresMessage.append("Failed ");
-				recentFailuresMessage.append(recentFailures2.toString());
+				recentFailuresMessage.append(recentFailures2);
 				recentFailuresMessage.append(" of last 5");
 			}
 			else {
 				recentFailuresMessage.append("Failed ");
-				recentFailuresMessage.append(recentFailures1.toString());
+				recentFailuresMessage.append(recentFailures1);
 				recentFailuresMessage.append(" of last 25");
 			}
 
@@ -93,97 +100,116 @@ public class GenerateTestrayCSV {
 		sb.append("Upstream failures\n");
 		sb.append(upstreamFailuresStringBuilder.toString());
 
-		JenkinsResultsParserUtil.write(
-			new File(project.getProperty("build.dir"), "testray-results.csv"),
-			sb.toString());
+		try {
+			JenkinsResultsParserUtil.write(
+				new File(projectBuildDir, "testray-results.csv"),
+				sb.toString());
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 	}
 
 	public int getRecentFailures(
 		JSONObject resultJSONObject, int casesChecked) {
 
-		JSONObject historyJSONObject = JenkinsResultsParserUtil.toJSONObject(
-			resultJSONObject.getString("htmlURL") + "/history.json");
+		try {
+			JSONObject historyJSONObject =
+				JenkinsResultsParserUtil.toJSONObject(
+					resultJSONObject.getString("htmlURL") + "/history.json");
 
-		JSONArray resultsJSONArray = historyJSONObject.optJSONArray("data");
+			JSONArray resultsJSONArray = historyJSONObject.optJSONArray("data");
 
-		if ((resultsJSONArray == null) || (resultsJSONArray.length() == 0)) {
-			return "No results found";
+			if ((resultsJSONArray == null) ||
+				(resultsJSONArray.length() == 0)) {
+
+				System.out.println("No results found");
+
+				return 0;
+			}
+
+			int failures = 0;
+			int count = 0;
+
+			for (int i = 0; i < resultsJSONArray.length(); i++) {
+				JSONObject jsonObject = resultsJSONArray.optJSONObject(i);
+
+				if (jsonObject == null) {
+					continue;
+				}
+
+				int status = jsonObject.optInt("status");
+
+				if (status == 0) {
+					continue;
+				}
+
+				count++;
+
+				if (status == 3) {
+					failures++;
+				}
+
+				if (count >= casesChecked) {
+					break;
+				}
+			}
+
+			return failures;
 		}
-
-		int failures = 0;
-		int count = 0;
-
-		for (int i = 0; i < resultsJSONArray.length(); i++) {
-			JSONObject jsonObject = resultsJSONArray.optJSONObject(i);
-
-			if (jsonObject == null) {
-				continue;
-			}
-
-			int status = jsonObject.optInt("status");
-
-			if (status == 0) {
-				continue;
-			}
-
-			count++;
-
-			if (status == 3) {
-				failures++;
-			}
-
-			if (count >= casesChecked) {
-				break;
-			}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
-
-		return failures;
 	}
 
-	public List getResultJSONObjects() {
-		List resultJSONObjects = new ArrayList();
+	public List<JSONObject> getResultJSONObjects(String projectTestrayBuildId) {
+		List<JSONObject> resultJSONObjects = new ArrayList<>();
 
 		int currentPage = 1;
 		long previousTestrayCaseResultId = 0;
 
 		while (true) {
-			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-				"https://testray.liferay.com/home/-/testray" +
-					"/case_results.json?cur=" + currentPage +
-						"&testrayBuildId=" +
-							project.getProperty("env.TESTRAY_BUILD_ID") +
+			try {
+				JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+					"https://testray.liferay.com/home/-/testray" +
+						"/case_results.json?cur=" + currentPage +
+							"&testrayBuildId=" + projectTestrayBuildId +
 								"&statuses=3");
 
-			JSONArray resultsJSONArray = jsonObject.optJSONArray("data");
+				JSONArray resultsJSONArray = jsonObject.optJSONArray("data");
 
-			if ((resultsJSONArray == null) ||
-				(resultsJSONArray.length() == 0)) {
+				if ((resultsJSONArray == null) ||
+					(resultsJSONArray.length() == 0)) {
 
-				break;
-			}
-
-			JSONObject resultJSONObject = resultsJSONArray.getJSONObject(0);
-
-			long currentTestrayCaseResultId = Long.valueOf(
-				resultJSONObject.getString("testrayCaseResultId"));
-
-			if (currentTestrayCaseResultId == previousTestrayCaseResultId) {
-				break;
-			}
-
-			for (int i = 0; i < resultsJSONArray.length(); i++) {
-				JSONObject resultJSONObject = resultsJSONArray.optJSONObject(i);
-
-				if (resultJSONObject == null) {
-					continue;
+					break;
 				}
 
-				resultJSONObjects.add(resultJSONObject);
+				JSONObject resultJSONObject = resultsJSONArray.getJSONObject(0);
+
+				long currentTestrayCaseResultId = Long.valueOf(
+					resultJSONObject.getString("testrayCaseResultId"));
+
+				if (currentTestrayCaseResultId == previousTestrayCaseResultId) {
+					break;
+				}
+
+				for (int i = 0; i < resultsJSONArray.length(); i++) {
+					resultJSONObject = resultsJSONArray.optJSONObject(i);
+
+					if (resultJSONObject == null) {
+						continue;
+					}
+
+					resultJSONObjects.add(resultJSONObject);
+				}
+
+				currentPage++;
+
+				previousTestrayCaseResultId = currentTestrayCaseResultId;
 			}
-
-			currentPage++;
-
-			previousTestrayCaseResultId = currentTestrayCaseResultId;
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
 		}
 
 		return resultJSONObjects;
@@ -192,44 +218,52 @@ public class GenerateTestrayCSV {
 	public boolean isPassingFailureThreshold(
 		JSONObject resultJSONObject, int maxFailures, int casesChecked) {
 
-		JSONObject historyJSONObject = JenkinsResultsParserUtil.toJSONObject(
-			resultJSONObject.getString("htmlURL") + "/history.json");
+		try {
+			JSONObject historyJSONObject =
+				JenkinsResultsParserUtil.toJSONObject(
+					resultJSONObject.getString("htmlURL") + "/history.json");
 
-		JSONArray resultsJSONArray = historyJSONObject.optJSONArray("data");
+			JSONArray resultsJSONArray = historyJSONObject.optJSONArray("data");
 
-		if ((resultsJSONArray == null) || (resultsJSONArray.length() == 0)) {
-			break;
+			if ((resultsJSONArray == null) ||
+				(resultsJSONArray.length() == 0)) {
+
+				return false;
+			}
+
+			int failures = 0;
+			int count = 0;
+
+			for (int i = 0; i < resultsJSONArray.length(); i++) {
+				JSONObject jsonObject = resultsJSONArray.optJSONObject(i);
+
+				if (jsonObject == null) {
+					continue;
+				}
+
+				int status = jsonObject.optInt("status");
+
+				if (status == 0) {
+					continue;
+				}
+
+				count++;
+
+				if (status == 3) {
+					failures++;
+				}
+
+				if (count >= casesChecked) {
+					break;
+				}
+			}
+
+			if (failures >= maxFailures) {
+				return true;
+			}
 		}
-
-		int failures = 0;
-		int count = 0;
-
-		for (int i = 0; i < resultsJSONArray.length(); i++) {
-			JSONObject jsonObject = resultsJSONArray.optJSONObject(i);
-
-			if (jsonObject == null) {
-				continue;
-			}
-
-			int status = jsonObject.optInt("status");
-
-			if (status == 0) {
-				continue;
-			}
-
-			count++;
-
-			if (status == 3) {
-				failures++;
-			}
-
-			if (count >= casesChecked) {
-				break;
-			}
-		}
-
-		if (failures >= maxFailures) {
-			return true;
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 
 		return false;

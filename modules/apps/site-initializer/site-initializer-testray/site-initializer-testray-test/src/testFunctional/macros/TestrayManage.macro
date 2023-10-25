@@ -1,6 +1,7 @@
 definition {
 
-	macro addProductVersionInBuild {
+	@summary = "Default summary"
+	macro addProductVersionInBuild(key_name = null) {
 		Click(locator1 = "Button#PLUS");
 
 		Type(
@@ -10,7 +11,8 @@ definition {
 		Click(locator1 = "Modal#SAVE_BUTTON");
 	}
 
-	macro changeTeamToComponent {
+	@summary = "Default summary"
+	macro changeTeamToComponent(tableEntry = null,newTeamName = null) {
 		TestrayManage.selectTableRowOption(
 			rowOption = "Edit",
 			tableEntry = ${tableEntry});
@@ -23,13 +25,15 @@ definition {
 		Button.clickSave();
 	}
 
-	macro clickOptionSidebar {
+	@summary = "Default summary"
+	macro clickOptionSidebar(optionSidebar = null) {
 		Click(
 			key_button = ${optionSidebar},
 			locator1 = "TestrayDropdown#SIDEBAR_CONTENT");
 	}
 
-	macro createCaseTypes {
+	@summary = "Default summary"
+	macro createCaseTypes(caseTypeName = null) {
 		Click(locator1 = "Testray#MODAL_PLUS");
 
 		if (isSet(caseTypeName)) {
@@ -39,7 +43,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro createComponent {
+	@summary = "Default summary"
+	macro createComponent(teamName = null,componentName = null) {
 		SelectFrame(locator1 = "Testray#MODAL_BODY");
 
 		Click(locator1 = "Testray#MODAL_PLUS");
@@ -58,7 +63,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro createNewCategory {
+	@summary = "Default summary"
+	macro createNewCategory(category = null) {
 		Click(locator1 = "Testray#MODAL_PLUS");
 
 		if (isSet(category)) {
@@ -68,7 +74,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro createNewOption {
+	@summary = "Default summary"
+	macro createNewOption(category = null,option = null) {
 		Click(locator1 = "Testray#MODAL_PLUS");
 
 		PortletEntry.inputName(name = ${option});
@@ -83,7 +90,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro createProductVersion {
+	@summary = "Default summary"
+	macro createProductVersion(productVersion = null) {
 		Click(locator1 = "Testray#MODAL_PLUS");
 
 		if (isSet(productVersion)) {
@@ -93,7 +101,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro createTeam {
+	@summary = "Default summary"
+	macro createTeam(teamName = null,component = null) {
 		Click(locator1 = "Testray#MODAL_PLUS");
 
 		if (isSet(teamName)) {
@@ -115,7 +124,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro deleteAllCasesTypes {
+	@summary = "Default summary"
+	macro deleteAllCasesTypes() {
 		Refresh();
 
 		TestrayDropdown.selectOptionSidebar(
@@ -139,7 +149,8 @@ definition {
 		}
 	}
 
-	macro deleteAllCategories {
+	@summary = "Default summary"
+	macro deleteAllCategories() {
 		Refresh();
 
 		TestrayDropdown.selectOptionSidebar(
@@ -159,7 +170,8 @@ definition {
 		}
 	}
 
-	macro deleteCasesTypes {
+	@summary = "Default summary"
+	macro deleteCasesTypes(tableEntry = null) {
 		TestrayManage.selectTableRowOption(
 			rowOption = "Delete",
 			tableEntry = ${tableEntry});
@@ -171,7 +183,8 @@ definition {
 		Testray.checkSuccessAlertAppearsAndDisappears();
 	}
 
-	macro deleteCategory {
+	@summary = "Default summary"
+	macro deleteCategory(categoryName = null) {
 		TestrayDropdown.selectOptionSidebar(
 			buttonOption = "Manage",
 			menuItem = "Categories");
@@ -187,7 +200,8 @@ definition {
 		Testray.checkSuccessAlertAppearsAndDisappears();
 	}
 
-	macro editCaseType {
+	@summary = "Default summary"
+	macro editCaseType(newName = null,tableEntry = null) {
 		TestrayManage.selectTableRowOption(
 			rowOption = "Edit",
 			tableEntry = ${tableEntry});
@@ -201,7 +215,8 @@ definition {
 		Testray.checkSuccessAlertAppearsAndDisappears();
 	}
 
-	macro editCategory {
+	@summary = "Default summary"
+	macro editCategory(newName = null,tableEntry = null) {
 		TestrayManage.selectTableRowOption(
 			rowOption = "Edit",
 			tableEntry = ${tableEntry});
@@ -211,7 +226,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro editComponent {
+	@summary = "Default summary"
+	macro editComponent(newComponentName = null,tableEntry = null,newTeamName = null) {
 		TestrayManage.selectTableRowOption(
 			rowOption = "Edit",
 			tableEntry = ${tableEntry});
@@ -230,7 +246,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro editOption {
+	@summary = "Default summary"
+	macro editOption(newName = null,tableEntry = null,category = null) {
 		TestrayManage.selectTableRowOption(
 			rowOption = "Edit",
 			tableEntry = ${tableEntry});
@@ -249,7 +266,8 @@ definition {
 		Testray.checkSuccessAlertAppearsAndDisappears();
 	}
 
-	macro editProductVersion {
+	@summary = "Default summary"
+	macro editProductVersion(newName = null,tableEntry = null) {
 		TestrayManage.selectTableRowOption(
 			rowOption = "Edit",
 			tableEntry = ${tableEntry});
@@ -259,7 +277,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro editTeam {
+	@summary = "Default summary"
+	macro editTeam(newName = null,tableEntry = null) {
 		TestrayManage.selectTableRowOption(
 			rowOption = "Edit",
 			tableEntry = ${tableEntry});
@@ -271,7 +290,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro selectTableRowOption {
+	@summary = "Default summary"
+	macro selectTableRowOption(tableEntry = null,rowOption = null) {
 		WaitForElementPresent(
 			key_tableEntry = ${tableEntry},
 			locator1 = "Testray#TABLE_ENTRY");

@@ -1,18 +1,21 @@
 definition {
 
-	macro assertBreadcrumbTitle {
+	@summary = "Default summary"
+	macro assertBreadcrumbTitle(text = null) {
 		AssertElementPresent(
 			key_text = ${text},
 			locator1 = "Testray#BREADCRUMB_ENTRY");
 	}
 
-	macro goToResultSidebar {
+	@summary = "Default summary"
+	macro goToResultSidebar() {
 		Click(
 			key_button = "Results",
 			locator1 = "TestrayDropdown#SIDEBAR_CONTENT");
 	}
 
-	macro selectOptionSidebar {
+	@summary = "Default summary"
+	macro selectOptionSidebar(buttonOption = null,menuItem = null) {
 		Click(
 			key_button = ${buttonOption},
 			locator1 = "TestrayDropdown#SIDEBAR_CONTENT");
@@ -22,7 +25,8 @@ definition {
 			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 	}
 
-	macro selectProjectDirectory {
+	@summary = "Default summary"
+	macro selectProjectDirectory(projectName = null) {
 		Click(locator1 = "TestrayDropdown#DROPDOWN_PROJECT_DIRECTORY");
 
 		Click(

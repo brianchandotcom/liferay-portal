@@ -1,6 +1,7 @@
 definition {
 
-	macro _getPortalInstances {
+	@summary = "Default summary"
+	macro _getPortalInstances(authenticationMethod = null) {
 		var portalURL = JSONCompany.getDefaultPortalURL();
 
 		if (${authenticationMethod} == "By Screen Name") {
@@ -21,7 +22,8 @@ definition {
 		return ${json};
 	}
 
-	macro addPortalInstance {
+	@summary = "Default summary"
+	macro addPortalInstance(authenticationMethod = null,domain = null,portalInstanceId = null,virtualHost = null,token = null) {
 		Variables.assertDefined(parameterList = "${domain},${virtualHost},${portalInstanceId}");
 
 		var portalURL = JSONCompany.getDefaultPortalURL();
@@ -61,7 +63,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro addPortalInstanceWithVirtualInstanceInitializer {
+	@summary = "Default summary"
+	macro addPortalInstanceWithVirtualInstanceInitializer(siteInitializerKey = null,authenticationMethod = null,domain = null,portalInstanceId = null,virtualHost = null) {
 		Variables.assertDefined(parameterList = "${domain},${virtualHost},${portalInstanceId},${siteInitializerKey}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -102,7 +105,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro cleanAllPortalInstances {
+	@summary = "Default summary"
+	macro cleanAllPortalInstances(authenticationMethod = null) {
 		var portalInstanceJson = HeadlessPortalInstanceAPI._getPortalInstances(authenticationMethod = ${authenticationMethod});
 
 		var portalInstanceIds = JSONUtil.getWithJSONPath(${portalInstanceJson}, "$.items..portalInstanceId");
@@ -137,7 +141,8 @@ definition {
 		}
 	}
 
-	macro deletePortalInstance {
+	@summary = "Default summary"
+	macro deletePortalInstance(authenticationMethod = null) {
 		Variables.assertDefined(parameterList = ${portalInstanceId});
 
 		var portalURL = JSONCompany.getDefaultPortalURL();

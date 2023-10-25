@@ -575,9 +575,9 @@ definition {
 			PageEditor.waitForAutoSave();
 
 			AssertAttributeValue(
-				value1 = "placeholder",
 				key_fieldLabel = "Item",
 				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
+				value1 = "placeholder",
 				value2 = "No Item Selected");
 		}
 
@@ -795,9 +795,9 @@ definition {
 			PageEditor.waitForAutoSave();
 
 			AssertAttributeValue(
-				value1 = "placeholder",
 				key_fieldLabel = "Collection",
 				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
+				value1 = "placeholder",
 				value2 = "No Collection Selected");
 		}
 
@@ -952,9 +952,9 @@ definition {
 			PageEditor.waitForAutoSave();
 
 			AssertAttributeValue(
-				value1 = "placeholder",
 				key_fieldLabel = "Item",
 				locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT",
+				value1 = "placeholder",
 				value2 = "No Item Selected");
 		}
 

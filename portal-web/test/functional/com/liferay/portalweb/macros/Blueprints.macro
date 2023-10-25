@@ -1,6 +1,7 @@
 definition {
 
-	macro addElement {
+	@summary = "Default summary"
+	macro addElement(element = null) {
 		AssertVisible(locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_HEADER");
 
 		Blueprints.searchAddElementsSidebar(element = ${element});
@@ -14,7 +15,8 @@ definition {
 			locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_ELEMENT_ADD_BUTTON");
 	}
 
-	macro addElementViaDescription {
+	@summary = "Default summary"
+	macro addElementViaDescription(searchTerm = null,element = null) {
 		AssertVisible(locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_HEADER");
 
 		Blueprints.searchAddElementsSidebar(element = ${searchTerm});
@@ -28,7 +30,8 @@ definition {
 			locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_ELEMENT_ADD_BUTTON");
 	}
 
-	macro applyBlueprintViaOptionsWidget {
+	@summary = "Default summary"
+	macro applyBlueprintViaOptionsWidget(blueprintTitle = null) {
 		if (!(IsElementPresent(key_portletName = "Blueprints Options", locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON"))) {
 			SearchPage.addWidgets(searchPortletList = "Blueprints Options");
 
@@ -66,7 +69,8 @@ definition {
 			portletName = "Blueprints Options");
 	}
 
-	macro configureElementDropdown {
+	@summary = "Default summary"
+	macro configureElementDropdown(dropdownName = null,option = null) {
 		Click(
 			key_dropdownName = ${dropdownName},
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_GENERIC_DROPDOWN");
@@ -77,7 +81,8 @@ definition {
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_GENERIC_DROPDOWN_OPTION");
 	}
 
-	macro configureFederatedSearchKeyForOptionsWidget {
+	@summary = "Default summary"
+	macro configureFederatedSearchKeyForOptionsWidget(federatedSearchKey = null) {
 		Portlet.gotoPortletOptions(
 			portletName = "Blueprints Options",
 			portletOption = "Configuration");
@@ -96,7 +101,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro createBlueprint {
+	@summary = "Default summary"
+	macro createBlueprint(description = null,title = null) {
 		Click(locator1 = "Button#PLUS");
 
 		PortletEntry.inputTitle(title = ${title});
@@ -108,7 +114,8 @@ definition {
 		PortletEntry.create();
 	}
 
-	macro createElement {
+	@summary = "Default summary"
+	macro createElement(title = null,elementSourceJson = null) {
 		Navigator.gotoNavItem(navItem = "Elements");
 
 		Click(locator1 = "Button#PLUS");
@@ -126,7 +133,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro deleteEntry {
+	@summary = "Default summary"
+	macro deleteEntry(title = null) {
 		Blueprints.gotoEntryMenuItem(
 			menuItem = "Delete",
 			title = ${title});
@@ -136,7 +144,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro getBlueprintID {
+	@summary = "Default summary"
+	macro getBlueprintID(title = null) {
 		Variables.assertDefined(parameterList = ${title});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -154,7 +163,8 @@ definition {
 		return ${blueprintId};
 	}
 
-	macro getElementID {
+	@summary = "Default summary"
+	macro getElementID(title = null) {
 		Variables.assertDefined(parameterList = ${title});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -172,11 +182,13 @@ definition {
 		return ${elementId};
 	}
 
-	macro gotoBlueprint {
+	@summary = "Default summary"
+	macro gotoBlueprint(title = null) {
 		Blueprints.gotoEntry(title = ${title});
 	}
 
-	macro gotoElement {
+	@summary = "Default summary"
+	macro gotoElement(searchForElement = null,element = null) {
 		Navigator.gotoNavItem(navItem = "Elements");
 
 		if (${searchForElement} == "true") {
@@ -186,13 +198,15 @@ definition {
 		Blueprints.gotoEntry(title = ${element});
 	}
 
-	macro gotoEntry {
+	@summary = "Default summary"
+	macro gotoEntry(title = null) {
 		Click(
 			key_entryTitle = ${title},
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_TITLE");
 	}
 
-	macro gotoEntryMenuItem {
+	@summary = "Default summary"
+	macro gotoEntryMenuItem(title = null,menuItem = null) {
 		if (IsElementNotPresent(locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_DROPDOWN_MENU_OPEN")) {
 			Blueprints.openEntryMenu(title = ${title});
 		}
@@ -200,7 +214,8 @@ definition {
 		MenuItem.clickNoError(menuItem = ${menuItem});
 	}
 
-	macro openBlueprintsAdmin {
+	@summary = "Default summary"
+	macro openBlueprintsAdmin(locale = null) {
 		if (!(isSet(siteURLKey))) {
 			var siteURLKey = "guest";
 		}
@@ -213,13 +228,15 @@ definition {
 		}
 	}
 
-	macro openEntryMenu {
+	@summary = "Default summary"
+	macro openEntryMenu(title = null) {
 		Click.waitForMenuToggleJSClick(
 			key_entryTitle = ${title},
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_VERTICAL_ELLIPSIS");
 	}
 
-	macro searchAddElementsSidebar {
+	@summary = "Default summary"
+	macro searchAddElementsSidebar(element = null) {
 		if (IsElementPresent(locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_SEARCH_CLEAR")) {
 			Click.clickNoMouseOver(locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_SEARCH_CLEAR");
 		}
@@ -229,7 +246,8 @@ definition {
 			value1 = ${element});
 	}
 
-	macro searchBlueprintsPreview {
+	@summary = "Default summary"
+	macro searchBlueprintsPreview(searchTerm = null,attributesKey = null,attributesValue = null) {
 		if (IsNotVisible(locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_BAR")) {
 			Click(locator1 = "Button#PREVIEW");
 		}
@@ -269,7 +287,8 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
-	macro selectAddedElementMenuItem {
+	@summary = "Default summary"
+	macro selectAddedElementMenuItem(menuItem = null,element = null) {
 		Click(
 			key_element = ${element},
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_VERTICAL_ELLIPSIS");
@@ -277,7 +296,8 @@ definition {
 		MenuItem.clickNoError(menuItem = ${menuItem});
 	}
 
-	macro setTitleAndDescriptionLocalization {
+	@summary = "Default summary"
+	macro setTitleAndDescriptionLocalization(currentLocale = null,description = null,locale = null,title = null) {
 		Click(
 			key_currentLocale = StringUtil.lowerCase(${currentLocale}),
 			locator1 = "Button#TRANSLATIONS_LOCALIZATION");
@@ -295,7 +315,8 @@ definition {
 		PortletEntry.inputDescription(description = ${description});
 	}
 
-	macro viewDownloadedContent {
+	@summary = "Default summary"
+	macro viewDownloadedContent(fileName = null,text = null) {
 		var tempDir = PropsUtil.get("output.dir.name");
 
 		var fileContent = FileUtil.read("${tempDir}/${fileName}");
@@ -308,7 +329,8 @@ definition {
 		}
 	}
 
-	macro viewEntriesSpecificOrder {
+	@summary = "Default summary"
+	macro viewEntriesSpecificOrder(entryList = null) {
 		var entryOrder = 0;
 
 		for (var entryTitle : list ${entryList}) {
@@ -321,26 +343,30 @@ definition {
 		}
 	}
 
-	macro viewEntryDescription {
+	@summary = "Default summary"
+	macro viewEntryDescription(description = null,title = null) {
 		AssertTextEquals.assertPartialText(
 			key_entryTitle = ${title},
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_DESCRIPTION",
 			value1 = ${description});
 	}
 
-	macro viewEntryTitle {
+	@summary = "Default summary"
+	macro viewEntryTitle(title = null) {
 		AssertElementPresent(
 			key_entryTitle = ${title},
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_TITLE");
 	}
 
-	macro viewNoEntry {
+	@summary = "Default summary"
+	macro viewNoEntry(title = null) {
 		AssertElementNotPresent(
 			key_entryTitle = ${title},
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_TITLE");
 	}
 
-	macro viewTitleAndDescriptionLocalization {
+	@summary = "Default summary"
+	macro viewTitleAndDescriptionLocalization(currentLocale = null,description = null,locale = null,title = null) {
 		Click(
 			key_currentLocale = StringUtil.lowerCase(${currentLocale}),
 			locator1 = "Button#TRANSLATIONS_LOCALIZATION");

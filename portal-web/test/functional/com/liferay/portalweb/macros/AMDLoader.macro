@@ -1,6 +1,7 @@
 definition {
 
-	macro confirmLogLevelOptionSetCorrectly {
+	@summary = "Default summary"
+	macro confirmLogLevelOptionSetCorrectly() {
 		var logLevel = AMDLoader.getAMDLoaderLogLevel();
 		var selectOption = StringUtil.lowerCase(${selectOption});
 
@@ -11,7 +12,8 @@ definition {
 		}
 	}
 
-	macro getAMDLoaderLogLevel {
+	@summary = "Default summary"
+	macro getAMDLoaderLogLevel() {
 		WaitForSPARefresh();
 
 		var javaScript = '''
@@ -25,7 +27,8 @@ definition {
 		return ${logLevel};
 	}
 
-	macro setLogLevelOption {
+	@summary = "Default summary"
+	macro setLogLevelOption(selectOption = null) {
 		SystemSettings.selectOptionSetting(
 			fieldName = "Log Level",
 			selectOption = ${selectOption});

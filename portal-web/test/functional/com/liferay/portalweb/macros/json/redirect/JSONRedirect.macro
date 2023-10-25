@@ -1,6 +1,7 @@
 definition {
 
-	macro addRedirect {
+	@summary = "Default summary"
+	macro addRedirect(sourceURL = null,groupName = null) {
 		Variables.assertDefined(parameterList = "${sourceURL},${destinationURL}");
 
 		if (!(isSet(site))) {
@@ -48,7 +49,8 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	macro deleteEntry {
+	@summary = "Default summary"
+	macro deleteEntry(groupName = null,destinationURL = null) {
 		var redirectEntryId = JSONRedirect.getRedirectEntryId(
 			destinationURL = ${destinationURL},
 			groupName = ${groupName});
@@ -71,7 +73,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro getRedirectEntryId {
+	@summary = "Default summary"
+	macro getRedirectEntryId(groupName = null,destinationURL = null) {
 		Variables.assertDefined(parameterList = "${destinationURL},${groupName}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -96,7 +99,8 @@ definition {
 		return ${redirectEntryId};
 	}
 
-	macro updateEntry {
+	@summary = "Default summary"
+	macro updateEntry(sourceURL = null,groupName = null) {
 		var redirectEntryId = JSONRedirect.getRedirectEntryId(
 			destinationURL = ${destinationURL},
 			groupName = ${groupName});

@@ -1,6 +1,7 @@
 definition {
 
-	macro changePagination {
+	@summary = "Default summary"
+	macro changePagination(itemsPerPage = null) {
 		Click(locator1 = "Pagination#ITEMS_PER_PAGE_SELECT");
 
 		var key_itemsPerPage = ${itemsPerPage};
@@ -12,7 +13,8 @@ definition {
 			value1 = ${itemsPerPage});
 	}
 
-	macro changePaginationViaKeyboard {
+	@summary = "Default summary"
+	macro changePaginationViaKeyboard(itemsPerPage = null) {
 		KeyPress(
 			locator1 = "Pagination#ITEMS_PER_PAGE_SELECT",
 			value1 = "\ENTER");
@@ -29,7 +31,8 @@ definition {
 			value1 = ${itemsPerPage});
 	}
 
-	macro viewResults {
+	@summary = "Default summary"
+	macro viewResults(results = null) {
 		AssertTextEquals(
 			locator1 = "Pagination#RESULTS",
 			value1 = ${results});

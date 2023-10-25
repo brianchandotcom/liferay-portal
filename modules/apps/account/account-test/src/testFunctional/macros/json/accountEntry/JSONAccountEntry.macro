@@ -1,6 +1,7 @@
 definition {
 
-	macro addAccountEntry {
+	@summary = "Default summary"
+	macro addAccountEntry(accountEntryName = null,externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = "${accountEntryName},${accountEntryType}");
 
 		if (!(isSet(creatorEmailAddress))) {
@@ -33,7 +34,8 @@ definition {
 		}
 	}
 
-	macro addAccountEntryOrganization {
+	@summary = "Default summary"
+	macro addAccountEntryOrganization(organizationName = null,accountEntryName = null) {
 		Variables.assertDefined(parameterList = "${accountEntryName},${organizationName}");
 
 		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});

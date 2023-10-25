@@ -1,6 +1,7 @@
 definition {
 
-	macro _addFolder {
+	@summary = "Default summary"
+	macro _addFolder(folderDescription = null,parentFolderId = null,groupId = null,folderName = null) {
 		Variables.assertDefined(parameterList = "${groupId},${parentFolderId},${folderName}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -33,7 +34,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _addWebContent {
+	@summary = "Default summary"
+	macro _addWebContent(groupId = null,descriptionMap = null,serviceContext = null,titleMap = null,folderId = null,contentXml = null) {
 		Variables.assertDefined(parameterList = "${groupId},${folderId},${titleMap},${descriptionMap},${contentXml},${serviceContext}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -72,7 +74,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _deleteWebContent {
+	@summary = "Default summary"
+	macro _deleteWebContent(groupId = null,articleId = null) {
 		Variables.assertDefined(parameterList = "${articleId},${groupId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -89,7 +92,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _getArticleIdByURLTitle {
+	@summary = "Default summary"
+	macro _getArticleIdByURLTitle(groupName = null,site = null,urlTitle = null) {
 		Variables.assertDefined(parameterList = "${groupName},${urlTitle}");
 
 		var groupId = JSONCategorySetter.setGroupId(
@@ -110,7 +114,8 @@ definition {
 		return ${articleId};
 	}
 
-	macro _getFolderIdByFolderName {
+	@summary = "Default summary"
+	macro _getFolderIdByFolderName(groupId = null,folderName = null) {
 		Variables.assertDefined(parameterList = "${groupId},${folderName}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -132,7 +137,8 @@ definition {
 		}
 	}
 
-	macro _getFolderUuidByFolderName {
+	@summary = "Default summary"
+	macro _getFolderUuidByFolderName(groupId = null,folderName = null) {
 		Variables.assertDefined(parameterList = "${groupId},${folderName}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -154,7 +160,8 @@ definition {
 		}
 	}
 
-	macro _getResourcePrimKeyByURLTitle {
+	@summary = "Default summary"
+	macro _getResourcePrimKeyByURLTitle(groupName = null,urlTitle = null) {
 		Variables.assertDefined(parameterList = "${groupName},${urlTitle}");
 
 		var groupId = JSONCategorySetter.setGroupId(groupName = ${groupName});
@@ -173,7 +180,8 @@ definition {
 		return ${resourcePrimKey};
 	}
 
-	macro _moveWebContentToTrash {
+	@summary = "Default summary"
+	macro _moveWebContentToTrash(groupId = null,articleId = null) {
 		Variables.assertDefined(parameterList = "${articleId},${groupId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -189,7 +197,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _updateStatus {
+	@summary = "Default summary"
+	macro _updateStatus(groupId = null,articleId = null,version = null,status = null) {
 		Variables.assertDefined(parameterList = "${articleId},${groupId},${status},${version}");
 
 		var portalURL = JSONCompany.getPortalURL();

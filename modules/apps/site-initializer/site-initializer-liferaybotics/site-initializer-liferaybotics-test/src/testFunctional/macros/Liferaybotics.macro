@@ -1,6 +1,7 @@
 definition {
 
-	macro addLiferayboticsSite {
+	@summary = "Default summary"
+	macro addLiferayboticsSite(siteName = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",

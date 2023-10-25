@@ -1,6 +1,7 @@
 definition {
 
-	macro assertEndpointsInResponse {
+	@summary = "Default summary"
+	macro assertEndpointsInResponse(responseToParse = null,attributesList = null) {
 		Variables.assertDefined(parameterList = "${responseToParse},${attributesList}");
 
 		for (var attribute : list ${attributesList}) {
@@ -10,7 +11,8 @@ definition {
 		}
 	}
 
-	macro getOpenApiProfile {
+	@summary = "Default summary"
+	macro getOpenApiProfile() {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''

@@ -1,6 +1,7 @@
 definition {
 
-	macro addColorOption {
+	@summary = "Default summary"
+	macro addColorOption() {
 		Type(
 			key_title = "Add Options",
 			locator1 = "CommerceEntry#ADD_RELATION_FIELD",
@@ -9,7 +10,8 @@ definition {
 		Button.click(button = "Select");
 	}
 
-	macro addEntry {
+	@summary = "Default summary"
+	macro addEntry(optionFieldType = null,optionDescription = null,facetable = null,skuContributor = null,optionName = null,required = null) {
 		WaitForElementPresent(locator1 = "CommerceEntry#NAME_FIELD");
 
 		AssertElementPresent(locator1 = "CommerceEntry#NAME_FIELD");
@@ -23,7 +25,8 @@ definition {
 			skuContributor = ${skuContributor});
 	}
 
-	macro addNewOptionValue {
+	@summary = "Default summary"
+	macro addNewOptionValue(valueName = null,valuePosition = null) {
 		Click(locator1 = "Button#PLUS");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
@@ -39,7 +42,8 @@ definition {
 		Button.click(button = "Submit");
 	}
 
-	macro addOptionValueEntry {
+	@summary = "Default summary"
+	macro addOptionValueEntry(optionValuePriority = null,optionValueName = null) {
 		if (IsElementPresent(locator1 = "Button#DELETE")) {
 			Click(locator1 = "CommerceEntry#ADD_BUTTON");
 		}
@@ -51,37 +55,43 @@ definition {
 		CommerceEntry.saveEntry();
 	}
 
-	macro deleteOptionsEntries {
+	@summary = "Default summary"
+	macro deleteOptionsEntries() {
 		while (IsElementPresent(locator1 = "CommerceEntry#DELETE_OPTION_BUTTON")) {
 			CommerceOptions.deleteOptionsEntry();
 		}
 	}
 
-	macro deleteOptionsEntry {
+	@summary = "Default summary"
+	macro deleteOptionsEntry() {
 		ClickNoError.clickNoMouseOver(locator1 = "CommerceEntry#DELETE_OPTION_BUTTON");
 
 		AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to delete the selected option?");
 	}
 
-	macro enableRequired {
+	@summary = "Default summary"
+	macro enableRequired() {
 		Check.checkToggleSwitch(
 			key_toggleSwitchLabel = "Required",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 	}
 
-	macro enableSKUContributor {
+	@summary = "Default summary"
+	macro enableSKUContributor() {
 		Check.checkToggleSwitch(
 			key_toggleSwitchLabel = "SKU Contributor",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 	}
 
-	macro enableUseInFacetedNavigation {
+	@summary = "Default summary"
+	macro enableUseInFacetedNavigation() {
 		Check.checkToggleSwitch(
 			key_toggleSwitchLabel = "Use in Faceted Navigation",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 	}
 
-	macro setDeltaPrice {
+	@summary = "Default summary"
+	macro setDeltaPrice(productSKU = null,quantity = null,deltaPrice = null,key_optionIndex = null,key_index = null,multipleValuesLeft = null) {
 		Click(
 			key_index = ${key_index},
 			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");
@@ -120,7 +130,8 @@ definition {
 		}
 	}
 
-	macro setPriceType {
+	@summary = "Default summary"
+	macro setPriceType(priceType = null) {
 		Select(
 			key_fieldLabel = "Price Type",
 			locator1 = "Select#GENERIC_SELECT_FIELD",

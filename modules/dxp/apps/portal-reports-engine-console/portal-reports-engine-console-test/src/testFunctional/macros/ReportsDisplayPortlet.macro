@@ -1,6 +1,7 @@
 definition {
 
-	macro downloadReportEntryFile {
+	@summary = "Default summary"
+	macro downloadReportEntryFile(reportsFileName = null) {
 		var key_reportsFileName = ${reportsFileName};
 
 		AssertTextEquals(
@@ -14,7 +15,8 @@ definition {
 			value1 = "Download");
 	}
 
-	macro viewReportEntry {
+	@summary = "Default summary"
+	macro viewReportEntry(reportsDefinitionName = null) {
 		var key_reportsDefinitionName = ${reportsDefinitionName};
 
 		AssertClick(
@@ -22,7 +24,8 @@ definition {
 			value1 = ${reportsDefinitionName});
 	}
 
-	macro viewReportEntryFields {
+	@summary = "Default summary"
+	macro viewReportEntryFields(reportsDefinitionName = null,reportsFileName = null,reportsDefinitionDescription = null,reportParameterse = null,userName = null,dataSource = null) {
 		var key_reportsDefinitionName = ${reportsDefinitionName};
 
 		AssertTextEquals(

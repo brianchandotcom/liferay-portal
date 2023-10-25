@@ -1,6 +1,7 @@
 definition {
 
-	macro addTeam {
+	@summary = "Default summary"
+	macro addTeam(teamName = null,siteName = null,teamDescription = null) {
 		if (!(isSet(portalURL))) {
 			var portalURL = JSONCompany.getPortalURL();
 		}
@@ -25,7 +26,8 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	macro addUserToTeam {
+	@summary = "Default summary"
+	macro addUserToTeam(teamName = null,userEmailAddress = null,siteName = null) {
 		Variables.assertDefined(parameterList = "${teamName},${userEmailAddress}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -45,7 +47,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro getTeamId {
+	@summary = "Default summary"
+	macro getTeamId(teamName = null,siteName = null) {
 		Variables.assertDefined(parameterList = ${teamName});
 
 		var portalURL = JSONCompany.getPortalURL();

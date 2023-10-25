@@ -1,6 +1,7 @@
 definition {
 
-	macro smoke {
+	@summary = "Default summary"
+	macro smoke() {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

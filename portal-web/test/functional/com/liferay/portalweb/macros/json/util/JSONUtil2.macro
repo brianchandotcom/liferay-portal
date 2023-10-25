@@ -1,6 +1,7 @@
 definition {
 
-	macro _addJSONArray {
+	@summary = "Default summary"
+	macro _addJSONArray(key = null) {
 		if (!(isSet(json)) || !(isSet(key))) {
 			fail("Error, 'JSON' and 'key' must all be set");
 		}
@@ -26,7 +27,8 @@ definition {
 		return ${json};
 	}
 
-	macro _addJSONArrayValues {
+	@summary = "Default summary"
+	macro _addJSONArrayValues(values = null,key = null) {
 		if (!(isSet(json)) || !(isSet(key)) || !(isSet(values))) {
 			fail("Error, 'JSON', 'key', and 'values' must all be set");
 		}
@@ -60,7 +62,8 @@ definition {
 		return ${json};
 	}
 
-	macro _addJSONObject {
+	@summary = "Default summary"
+	macro _addJSONObject(value = null,key = null) {
 		if (!(isSet(json)) || !(isSet(key)) || !(isSet(value))) {
 			fail("Error, 'JSON', 'key', and 'value' must all be set");
 		}
@@ -83,7 +86,8 @@ definition {
 		return ${json};
 	}
 
-	macro _convertLocalizedListToMap {
+	@summary = "Default summary"
+	macro _convertLocalizedListToMap(listMap = null) {
 
 		// Create list using '${listMap'
 
@@ -105,13 +109,15 @@ definition {
 		return ${localizedMap};
 	}
 
-	macro _exclusiveOrCheck {
+	@summary = "Default summary"
+	macro _exclusiveOrCheck(failMessage = null) {
 		if ((isSet(a) && isSet(b)) || (!(isSet(b)) && !(isSet(a)))) {
 			fail(${failMessage});
 		}
 	}
 
-	macro _isJSONArrayPresent {
+	@summary = "Default summary"
+	macro _isJSONArrayPresent(json = null,key = null) {
 		var temp = RegexUtil.replace(${json}, "\"(${key})\"\s*:\s*\[.*?\]", 1);
 
 		if (${temp} == ${key}) {
@@ -122,7 +128,8 @@ definition {
 		}
 	}
 
-	macro _isJSONObjectPresent {
+	@summary = "Default summary"
+	macro _isJSONObjectPresent(json = null,key = null) {
 		var temp = RegexUtil.replace(${json}, "\"(${key})\"\s*:\s*", 1);
 
 		if (${temp} == ${key}) {
@@ -133,21 +140,24 @@ definition {
 		}
 	}
 
-	macro formatJSONSuperAdminUser {
+	@summary = "Default summary"
+	macro formatJSONSuperAdminUser() {
 		var superAdminUserEmail = JSONUtil2.getSuperAdminUserEmail();
 		var superAdminUserPassword = JSONUtil2.getSuperAdminUserPassword();
 
 		return "${superAdminUserEmail}:${superAdminUserPassword}";
 	}
 
-	macro formatJSONUser {
+	@summary = "Default summary"
+	macro formatJSONUser(domain = null) {
 		var defaultUserEmail = JSONUtil2.getDefaultUserEmail(domain = ${domain});
 		var defaultUserPassword = JSONUtil2.getDefaultUserPassword();
 
 		return "${defaultUserEmail}:${defaultUserPassword}";
 	}
 
-	macro getDefaultUserEmail {
+	@summary = "Default summary"
+	macro getDefaultUserEmail(domain = null) {
 		if (isSet(domain)) {
 			var portalInstanceName = JSONCompany.parsePortalInstanceURL(portalURL = ${domain});
 
@@ -164,7 +174,8 @@ definition {
 		return ${customDefaultUserEmail};
 	}
 
-	macro getDefaultUserFirstPassword {
+	@summary = "Default summary"
+	macro getDefaultUserFirstPassword() {
 		var customDefaultUserFirstPassword = PropsUtil.get("custom.default.user.first.password");
 
 		if (!(isSet(customDefaultUserFirstPassword))) {
@@ -174,7 +185,8 @@ definition {
 		return ${customDefaultUserFirstPassword};
 	}
 
-	macro getDefaultUserPassword {
+	@summary = "Default summary"
+	macro getDefaultUserPassword() {
 		var customDefaultUserPassword = PropsUtil.get("custom.default.user.password");
 
 		if (!(isSet(customDefaultUserPassword))) {
@@ -184,7 +196,8 @@ definition {
 		return ${customDefaultUserPassword};
 	}
 
-	macro getLXCEnvironment {
+	@summary = "Default summary"
+	macro getLXCEnvironment() {
 		var lxcEnvironment = PropsUtil.get("lxc.environment");
 
 		if (!(isSet(lxcEnvironment))) {
@@ -194,7 +207,8 @@ definition {
 		return ${lxcEnvironment};
 	}
 
-	macro getSuperAdminUserEmail {
+	@summary = "Default summary"
+	macro getSuperAdminUserEmail() {
 		var customSuperAdminUserEmail = PropsUtil.get("custom.super.admin.user.email");
 
 		if (!(isSet(customSuperAdminUserEmail))) {
@@ -204,7 +218,8 @@ definition {
 		return ${customSuperAdminUserEmail};
 	}
 
-	macro getSuperAdminUserPassword {
+	@summary = "Default summary"
+	macro getSuperAdminUserPassword() {
 		var customSuperAdminUserPassword = PropsUtil.get("custom.super.admin.user.password");
 
 		if (!(isSet(customSuperAdminUserPassword))) {

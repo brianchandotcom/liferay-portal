@@ -1,24 +1,29 @@
 definition {
 
-	macro assertGuideVideosButton {
+	@summary = "Default summary"
+	macro assertGuideVideosButton() {
 		AssertElementPresent(locator1 = "CP2HomePage#GUIDE_VIDEOS_BUTTON");
 	}
 
-	macro assertLanguageChange {
+	@summary = "Default summary"
+	macro assertLanguageChange(siteTitle = null) {
 		var key_title = ${siteTitle};
 
 		AssertVisible(locator1 = "CP2HomePage#WELCOME_PAGE");
 	}
 
-	macro assertModalNotPresent {
+	@summary = "Default summary"
+	macro assertModalNotPresent() {
 		AssertElementNotPresent(locator1 = "CP2HomePage#ONBOARDING_MODAL");
 	}
 
-	macro clickAtCookiePoliceLink {
+	@summary = "Default summary"
+	macro clickAtCookiePoliceLink() {
 		Click(locator1 = "CP2HomePage#COOKIE_LINK");
 	}
 
-	macro clickAtLanguageButton {
+	@summary = "Default summary"
+	macro clickAtLanguageButton(language = null) {
 		var key_option = ${language};
 
 		Click(locator1 = "CP2HomePage#LANGUAGE_BUTTON");

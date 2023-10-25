@@ -1,6 +1,7 @@
 definition {
 
-	macro setContentMap {
+	@summary = "Default summary"
+	macro setContentMap() {
 		if (isSet(contentMap)) {
 			var localizedMap = "{";
 
@@ -24,7 +25,8 @@ definition {
 		return ${contentMap};
 	}
 
-	macro setDescriptionMap {
+	@summary = "Default summary"
+	macro setDescriptionMap() {
 		if (isSet(descriptionMap)) {
 			var descriptionMap = JSONUtil2._convertLocalizedListToMap(listMap = ${descriptionMap});
 		}
@@ -35,7 +37,8 @@ definition {
 		return ${descriptionMap};
 	}
 
-	macro setTitleMap {
+	@summary = "Default summary"
+	macro setTitleMap() {
 		if (isSet(titleMap)) {
 			var titleMap = JSONUtil2._convertLocalizedListToMap(listMap = ${titleMap});
 		}

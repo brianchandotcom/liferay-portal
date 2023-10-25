@@ -1,6 +1,7 @@
 definition {
 
-	macro acceptConditions {
+	@summary = "Default summary"
+	macro acceptConditions() {
 		WaitForElementPresent.waitForLastScript();
 
 		if (IsElementPresent(locator1 = "GoogleLogin#ALLOW")) {
@@ -20,7 +21,8 @@ definition {
 		}
 	}
 
-	macro accountSignIn {
+	@summary = "Default summary"
+	macro accountSignIn(userPassword = null,userEmailAddress = null) {
 		Navigator.openURL();
 
 		AssertClick(

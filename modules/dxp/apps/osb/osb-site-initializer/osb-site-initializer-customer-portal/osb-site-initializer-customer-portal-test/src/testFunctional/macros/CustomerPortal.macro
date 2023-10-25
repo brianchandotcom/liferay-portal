@@ -1,10 +1,12 @@
 definition {
 
-	macro accountTableProject {
+	@summary = "Default summary"
+	macro accountTableProject() {
 		Click(locator1 = "CustomerPortalSite#ACCOUNTS_PROJECTS");
 	}
 
-	macro activeAccountRestriction {
+	@summary = "Default summary"
+	macro activeAccountRestriction() {
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectObject(label = "Koroneiki Account");
@@ -16,7 +18,8 @@ definition {
 		CreateObject.saveObject();
 	}
 
-	macro activeContactRole {
+	@summary = "Default summary"
+	macro activeContactRole() {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",
@@ -31,7 +34,8 @@ definition {
 		Click(locator1 = "Button#SAVE");
 	}
 
-	macro activeStatus {
+	@summary = "Default summary"
+	macro activeStatus(index = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",
@@ -48,7 +52,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro activeStatusViaDropdown {
+	@summary = "Default summary"
+	macro activeStatusViaDropdown(dropdownItem = null,value = null) {
 		Click(locator1 = "CustomerPortalSite#DROPDOWN_STATUS");
 
 		CP2ActivationKeys.clickAtDropdownItem(dropdownItem = ${dropdownItem});
@@ -65,7 +70,8 @@ definition {
 		}
 	}
 
-	macro addCPObject {
+	@summary = "Default summary"
+	macro addCPObject(title = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",
@@ -82,14 +88,16 @@ definition {
 		CreateObject.saveObject();
 	}
 
-	macro addCustomerPortalSite {
+	@summary = "Default summary"
+	macro addCustomerPortalSite(siteName = null) {
 		HeadlessSite.addSite(
 			siteName = ${siteName},
 			templateName = "Liferay OSB Site Initializer Customer Portal",
 			templateType = "Site Initializer");
 	}
 
-	macro addIdPCForCustomerPortal {
+	@summary = "Default summary"
+	macro addIdPCForCustomerPortal(idpMetadataURL = null,nameIdentifierFormat = null,idpAttributeMapping = null,idpAttributeMappingText = null,idpNameId = null,idpEntityId = null) {
 		AssertClick(
 			locator1 = "CPSAMLAdminIdentityProviderConnection#ADD_IDENTITY_PROVIDER_BUTTON",
 			value1 = "Add Identity Provider");
@@ -131,13 +139,15 @@ definition {
 		}
 	}
 
-	macro addUserToAllAccounts {
+	@summary = "Default summary"
+	macro addUserToAllAccounts() {
 		var accountsList = "Test Account LXC - SM,Test Account DXP,Test Account Analytics Cloud,Test Account Commerce,Test Account Enterprise Search,Test Account Portal,Test Account Partnership,Test Account Others,Test Account QA 7.4,Test Account QA 7.3,Test Account QA 7.2,Test Account QA 7.1,Test Account QA 7.0";
 
 		CustomerPortal.addUserToOneOrMoreAccounts(accountsList = ${accountsList});
 	}
 
-	macro addUserToOneOrMoreAccounts {
+	@summary = "Default summary"
+	macro addUserToOneOrMoreAccounts(accountsList = null) {
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
 		}
@@ -149,77 +159,90 @@ definition {
 		}
 	}
 
-	macro assertAlertInfoMessage {
+	@summary = "Default summary"
+	macro assertAlertInfoMessage(messageText = null) {
 		AssertTextEquals(
 			locator1 = "CustomerPortalSite#ALERT_INFO_MESSAGE",
 			value1 = ${messageText});
 	}
 
-	macro assertButtonIsActive {
+	@summary = "Default summary"
+	macro assertButtonIsActive(text = null) {
 		var key_text = ${text};
 
 		AssertElementPresent(locator1 = "CustomerPortalSite#ANY_ACTIVE_BUTTON");
 	}
 
-	macro assertButtonIsDisabled {
+	@summary = "Default summary"
+	macro assertButtonIsDisabled(text = null) {
 		var key_text = ${text};
 
 		AssertElementPresent(locator1 = "CustomerPortalSite#ANY_DISABLED_BUTTON");
 	}
 
-	macro assertButtonIsVisible {
+	@summary = "Default summary"
+	macro assertButtonIsVisible(text = null) {
 		var key_text = ${text};
 
 		AssertVisible(locator1 = "CustomerPortalSite#BUTTON");
 	}
 
-	macro assertButtonNotPresent {
+	@summary = "Default summary"
+	macro assertButtonNotPresent(text = null) {
 		var key_text = ${text};
 
 		AssertElementNotPresent(locator1 = "CustomerPortalSite#ANY_BUTTON");
 	}
 
-	macro assertErrorMessageIsNotVisible {
+	@summary = "Default summary"
+	macro assertErrorMessageIsNotVisible(errorMessage = null) {
 		var key_errorMessage = ${errorMessage};
 
 		AssertElementNotPresent(locator1 = "CustomerPortalSite#ERROR_MESSAGE");
 	}
 
-	macro assertErrorMessageIsVisible {
+	@summary = "Default summary"
+	macro assertErrorMessageIsVisible(errorMessage = null) {
 		var key_errorMessage = ${errorMessage};
 
 		AssertVisible(locator1 = "CustomerPortalSite#ERROR_MESSAGE");
 	}
 
-	macro assertPageTitle {
+	@summary = "Default summary"
+	macro assertPageTitle(title = null) {
 		AssertElementPresent(
 			key_title = ${title},
 			locator1 = "CustomerPortalSite#PAGE_TITLE");
 	}
 
-	macro assertQuickLinksPanelInfo {
+	@summary = "Default summary"
+	macro assertQuickLinksPanelInfo(title = null) {
 		AssertElementPresent(
 			locator1 = "CP2NavigationMenu#QUICK_LINKS",
 			title = ${title});
 	}
 
-	macro assertQuickLinksPanelIsHidden {
+	@summary = "Default summary"
+	macro assertQuickLinksPanelIsHidden() {
 		AssertElementPresent(locator1 = "CP2NavigationMenu#QUICK_LINKS_COLLAPSED");
 	}
 
-	macro assertSlaCard {
+	@summary = "Default summary"
+	macro assertSlaCard(type = null) {
 		AssertElementPresent(
 			locator1 = "CustomerPortalSite#SLA_CARD",
 			type = ${type});
 	}
 
-	macro assertSlaCardNotAppears {
+	@summary = "Default summary"
+	macro assertSlaCardNotAppears(typeCard = null) {
 		AssertElementNotPresent(
 			locator1 = "CustomerPortalSite#SLA_CARD",
 			typeCard = ${typeCard});
 	}
 
-	macro assertTextAtObjectTable {
+	@summary = "Default summary"
+	macro assertTextAtObjectTable(text = null) {
 		var key_text = ${text};
 
 		AssertTextEquals(
@@ -227,13 +250,15 @@ definition {
 			value1 = ${text});
 	}
 
-	macro assertThatLinkIsVisible {
+	@summary = "Default summary"
+	macro assertThatLinkIsVisible(text = null) {
 		var key_text = ${text};
 
 		AssertVisible(locator1 = "CustomerPortalSite#ANY_LINK");
 	}
 
-	macro assertThatTheProjectListIsNotPresent {
+	@summary = "Default summary"
+	macro assertThatTheProjectListIsNotPresent(projectList = null) {
 		for (var project : list ${projectList}) {
 			AssertElementNotPresent(
 				key_project = ${project},
@@ -242,7 +267,8 @@ definition {
 		}
 	}
 
-	macro assignUserToOrganization {
+	@summary = "Default summary"
+	macro assignUserToOrganization() {
 		if (!(isSet(organizationName))) {
 			var organizationName = "Liferay Staff";
 		}
@@ -256,13 +282,15 @@ definition {
 			userEmailAddress = ${userEmailAddress});
 	}
 
-	macro cannotAppearsQuickLinksPanelInfo {
+	@summary = "Default summary"
+	macro cannotAppearsQuickLinksPanelInfo(title = null) {
 		AssertElementNotPresent(
 			locator1 = "CP2NavigationMenu#QUICK_LINKS",
 			title = ${title});
 	}
 
-	macro changeUserRole {
+	@summary = "Default summary"
+	macro changeUserRole(accountName = null,accountUserName = null,accountRoleTitle = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
@@ -293,11 +321,13 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro checkToggleHideWidget {
+	@summary = "Default summary"
+	macro checkToggleHideWidget() {
 		Check.checkToggleSwitch(locator1 = "CP2LiferayContact#HIDE_WIDGET");
 	}
 
-	macro clearStatus {
+	@summary = "Default summary"
+	macro clearStatus() {
 		if (!(isSet(status))) {
 			var status = "Active";
 		}
@@ -336,61 +366,72 @@ definition {
 		}
 	}
 
-	macro clickAtButton {
+	@summary = "Default summary"
+	macro clickAtButton(text = null) {
 		var key_text = ${text};
 
 		Click(locator1 = "CustomerPortalSite#ANY_BUTTON");
 	}
 
-	macro clickAtLink {
+	@summary = "Default summary"
+	macro clickAtLink(text = null) {
 		var key_text = ${text};
 
 		Click(locator1 = "CustomerPortalSite#ANY_LINK");
 	}
 
-	macro clickOnCancelButton {
+	@summary = "Default summary"
+	macro clickOnCancelButton() {
 		var key_text = "Cancel";
 
 		Click(locator1 = "CustomerPortalSite#ANY_BUTTON");
 	}
 
-	macro clickOnFinishActivationButton {
+	@summary = "Default summary"
+	macro clickOnFinishActivationButton() {
 		Click(locator1 = "CustomerPortalSite#FINISH_ACTIVATION");
 	}
 
-	macro clickOnModal {
+	@summary = "Default summary"
+	macro clickOnModal(text = null) {
 		var key_text = ${text};
 
 		Click(locator1 = "CustomerPortalSite#MODAL_INFO");
 	}
 
-	macro clickOnModalPage {
+	@summary = "Default summary"
+	macro clickOnModalPage(text = null) {
 		var key_text = ${text};
 
 		Click(locator1 = "CustomerPortalSite#PAGE_INFO");
 	}
 
-	macro clickOnSkipForNowButton {
+	@summary = "Default summary"
+	macro clickOnSkipForNowButton() {
 		Click(locator1 = "CustomerPortalSite#SKIP_FOR_NOW_BUTTON");
 	}
 
-	macro clickOnStartProjectSetup {
+	@summary = "Default summary"
+	macro clickOnStartProjectSetup() {
 		Click(locator1 = "CustomerPortalSite#START_PROJECT_SETUP_BUTTON");
 	}
 
-	macro clickOnTheCloseButton {
+	@summary = "Default summary"
+	macro clickOnTheCloseButton(modalTitle = null) {
 		var key_modalTitle = ${modalTitle};
 
 		Click(locator1 = "CustomerPortalSite#CLOSE_MODAL");
 	}
 
-	macro createCPSiteObjects {
+	@summary = "Default summary"
+	macro createCPSiteObjects() {
 		CustomerPortal.showCPObject(title = "Account Flag");
 
 		CustomerPortal.showCPObject(title = "Koroneiki Account");
 	}
 
-	macro createUserForCP {
+	@summary = "Default summary"
+	macro createUserForCP(accountName = null,userLastName = null,userScreenName = null,userFirstName = null,userName = null) {
 		JSONUser.addUser(
 			userEmailAddress = "test.user@liferay.com",
 			userFirstName = ${userFirstName},
@@ -411,7 +452,8 @@ definition {
 			assigneeName = ${userName});
 	}
 
-	macro customerPortalApisTearDown {
+	@summary = "Default summary"
+	macro customerPortalApisTearDown() {
 		CommerceJSONAccountsAPI._deleteAllCommerceAccounts();
 
 		CommerceJSONChannelsAPI._deleteAllCommerceChannels();
@@ -421,7 +463,8 @@ definition {
 		ClientExtensionGeneral.deleteRemoteApp(tableEntry = "Customer Portal");
 	}
 
-	macro customerPortalTearDown {
+	@summary = "Default summary"
+	macro customerPortalTearDown() {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",
@@ -454,7 +497,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro deactivateKoroneikiAccount {
+	@summary = "Default summary"
+	macro deactivateKoroneikiAccount() {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",
@@ -469,7 +513,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro deleteCPObject {
+	@summary = "Default summary"
+	macro deleteCPObject(title = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",
@@ -484,7 +529,8 @@ definition {
 		CreateObject.saveObject();
 	}
 
-	macro deleteEntryAccountFlag {
+	@summary = "Default summary"
+	macro deleteEntryAccountFlag(entry = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",
@@ -499,7 +545,8 @@ definition {
 		AssertElementPresent(locator1 = "CP2Utils#MODAL_DELETE_ENTRY");
 	}
 
-	macro enterOnProject {
+	@summary = "Default summary"
+	macro enterOnProject(title = null) {
 		if (!(isSet(status))) {
 			var status = "";
 		}
@@ -509,7 +556,8 @@ definition {
 			title = ${title});
 	}
 
-	macro enterOnSubscription {
+	@summary = "Default summary"
+	macro enterOnSubscription() {
 		Click(
 			cardName = "Non-Production",
 			locator1 = "CustomerPortalSite#CARD_NAME");
@@ -517,7 +565,8 @@ definition {
 		CustomerPortal.clickOnTheCloseButton(modalTitle = "LXC - SM Non-Production");
 	}
 
-	macro getValueFieldKoroneikiByAccountName {
+	@summary = "Default summary"
+	macro getValueFieldKoroneikiByAccountName(field = null,accountName = null) {
 		var key_label = ${field};
 
 		ApplicationsMenu.gotoPortlet(
@@ -534,7 +583,8 @@ definition {
 		return ${value};
 	}
 
-	macro loginOktaToUpdateCP {
+	@summary = "Default summary"
+	macro loginOktaToUpdateCP() {
 		var userEmailAddress = "dbace26d5dadb9eed597@uat.com.broken";
 		var oktaUserPassword = "q4F63ZEH3njnnA34S761";
 
@@ -555,7 +605,8 @@ definition {
 		Navigator.closeWindow();
 	}
 
-	macro notViewProduct {
+	@summary = "Default summary"
+	macro notViewProduct(productTab = null) {
 		for (var product : list ${productTab}) {
 			AssertElementNotPresent(
 				key_product = ${productTab},
@@ -564,7 +615,8 @@ definition {
 		}
 	}
 
-	macro onboardingFlow {
+	@summary = "Default summary"
+	macro onboardingFlow() {
 		CustomerPortal.clickOnStartProjectSetup();
 
 		CustomerPortal.clickOnSkipForNowButton();
@@ -579,7 +631,8 @@ definition {
 		}
 	}
 
-	macro openAccountsAdminForCP {
+	@summary = "Default summary"
+	macro openAccountsAdminForCP() {
 		Account.openAccountsAdmin();
 
 		CustomerPortal.accountTableProject(title = "Test Account LXC - SM");
@@ -591,13 +644,15 @@ definition {
 			rowEntry = "Test Test");
 	}
 
-	macro putMouseOverButton {
+	@summary = "Default summary"
+	macro putMouseOverButton(text = null) {
 		var key_text = ${text};
 
 		MouseOver(locator1 = "CustomerPortalSite#ANY_BUTTON");
 	}
 
-	macro replaceCertificateAndPrivateKey {
+	@summary = "Default summary"
+	macro replaceCertificateAndPrivateKey(samlKeyPassword = null,certificateUsage = null) {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		AssertClick(
@@ -650,7 +705,8 @@ definition {
 			locator1 = "CPSAMLAdmin#REPLACE_CERTIFICATE");
 	}
 
-	macro search {
+	@summary = "Default summary"
+	macro search(searchItem = null) {
 		if (IsElementPresent(locator1 = "CustomerPortalSite#SEARCH")) {
 			Type(
 				locator1 = "CustomerPortalSite#SEARCH",
@@ -663,7 +719,8 @@ definition {
 		SelectWindow(value1 = "title=${navigatorWidow}");
 	}
 
-	macro setUpForCP20 {
+	@summary = "Default summary"
+	macro setUpForCP20() {
 		task ("Configure SAML Admin general info") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Security",
@@ -731,7 +788,8 @@ definition {
 		}
 	}
 
-	macro showCPObject {
+	@summary = "Default summary"
+	macro showCPObject(title = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",
@@ -748,7 +806,8 @@ definition {
 		CreateObject.saveObject();
 	}
 
-	macro tableListInAccountsAdmin {
+	@summary = "Default summary"
+	macro tableListInAccountsAdmin(projectsList = null) {
 		for (var tableEntry : list ${projectsList}) {
 			AssertElementPresent(
 				key_tableEntry = ${tableEntry},
@@ -757,7 +816,8 @@ definition {
 		}
 	}
 
-	macro tableListInHomepage {
+	@summary = "Default summary"
+	macro tableListInHomepage(projectList = null) {
 		for (var project : list ${projectList}) {
 			AssertElementPresent(
 				key_project = ${project},
@@ -766,7 +826,8 @@ definition {
 		}
 	}
 
-	macro tearDownForOktaAndSAML {
+	@summary = "Default summary"
+	macro tearDownForOktaAndSAML() {
 		task ("Teardown") {
 			var entityId = "http://www.okta.com/exk158id544C4j3KK0h8";
 
@@ -796,11 +857,13 @@ definition {
 		}
 	}
 
-	macro uncheckToggleHideInactiveWidget {
+	@summary = "Default summary"
+	macro uncheckToggleHideInactiveWidget() {
 		Uncheck.uncheckToggleSwitch(locator1 = "CP2LiferayContact#HIDE_WIDGET");
 	}
 
-	macro viewActivationStatusCardChange {
+	@summary = "Default summary"
+	macro viewActivationStatusCardChange(status = null) {
 		if (!(isSet(subtitle))) {
 			var subtitle = "";
 		}
@@ -814,7 +877,8 @@ definition {
 			locator1 = "CustomerPortalSite#STATUS_CARD");
 	}
 
-	macro viewActivationStatusCardValue {
+	@summary = "Default summary"
+	macro viewActivationStatusCardValue(subtitle = null,project = null,productIcon = null,dates = null,status = null) {
 		AssertElementPresent(
 			key_text = ${subtitle},
 			locator1 = "CustomerPortalSite#CARD_SUBSCRIPTION");
@@ -836,29 +900,34 @@ definition {
 			locator1 = "CustomerPortalSite#STATUS_CARD");
 	}
 
-	macro viewAlert {
+	@summary = "Default summary"
+	macro viewAlert(alertText = null) {
 		var key_alertText = ${alertText};
 
 		AssertVisible(locator1 = "CustomerPortalSite#ALERT_NOTIFICATIONS");
 	}
 
-	macro viewAlertInfo {
+	@summary = "Default summary"
+	macro viewAlertInfo(alertText = null) {
 		var key_alertText = ${alertText};
 
 		AssertElementPresent(locator1 = "CustomerPortalSite#ALERT_INFO");
 	}
 
-	macro viewAllProjectsTitlePage {
+	@summary = "Default summary"
+	macro viewAllProjectsTitlePage() {
 		AssertElementPresent(locator1 = "CustomerPortalSite#PROJECT_TITLE_MAIN_PAGE");
 	}
 
-	macro viewButton {
+	@summary = "Default summary"
+	macro viewButton(text = null) {
 		var key_text = ${text};
 
 		AssertVisible(locator1 = "CustomerPortalSite#ANY_BUTTON");
 	}
 
-	macro viewCardValue {
+	@summary = "Default summary"
+	macro viewCardValue(date = null,instanceSize = null,cardName = null,position = null,status = null) {
 		AssertElementPresent(locator1 = "CustomerPortalSite#PROJECT_LOGO");
 
 		AssertElementPresent(
@@ -876,13 +945,15 @@ definition {
 			locator1 = "CustomerPortalSite#CARD_DATE");
 	}
 
-	macro viewConfirmationModal {
+	@summary = "Default summary"
+	macro viewConfirmationModal(modalText = null) {
 		var key_text = ${modalText};
 
 		AssertVisible(locator1 = "CustomerPortalSite#MODAL_INFO");
 	}
 
-	macro viewConfirmationTextInTheModalPage {
+	@summary = "Default summary"
+	macro viewConfirmationTextInTheModalPage(pageText = null) {
 		var key_text = ${pageText};
 
 		AssertVisible(locator1 = "CustomerPortalSite#PAGE_INFO");
@@ -890,7 +961,8 @@ definition {
 		CustomerPortal.clickAtButton(text = "Done");
 	}
 
-	macro viewCPObjectCustomInfo {
+	@summary = "Default summary"
+	macro viewCPObjectCustomInfo() {
 		if (!(isSet(position))) {
 			var position = 1;
 		}
@@ -904,7 +976,8 @@ definition {
 		MenuItem.click(menuItem = "View");
 	}
 
-	macro viewCPObjectCustomInfoByAccountName {
+	@summary = "Default summary"
+	macro viewCPObjectCustomInfoByAccountName(accountName = null) {
 		Click(
 			key_accountName = ${accountName},
 			locator1 = "CustomerPortalSite#KORONEIKI_ACCOUNT_ELLIPSIS_BUTTON");
@@ -912,7 +985,8 @@ definition {
 		MenuItem.click(menuItem = "View");
 	}
 
-	macro viewCPObjectInfo {
+	@summary = "Default summary"
+	macro viewCPObjectInfo() {
 		Click(
 			key_text = "",
 			locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
@@ -920,15 +994,18 @@ definition {
 		MenuItem.click(menuItem = "View");
 	}
 
-	macro viewGetStartedModal {
+	@summary = "Default summary"
+	macro viewGetStartedModal() {
 		AssertElementPresent(locator1 = "CustomerPortalSite#GETTING_STARTED_MODAL");
 	}
 
-	macro viewInviteTeamMembersModalPage {
+	@summary = "Default summary"
+	macro viewInviteTeamMembersModalPage() {
 		AssertElementPresent(locator1 = "CustomerPortalSite#INVITE_TEAM_MEMBERS_TITLE");
 	}
 
-	macro viewObjectInfo {
+	@summary = "Default summary"
+	macro viewObjectInfo(index = null) {
 		Click(
 			key_index = ${index},
 			key_text = "",
@@ -937,15 +1014,18 @@ definition {
 		MenuItem.click(menuItem = "View");
 	}
 
-	macro viewStartProjectSetupButton {
+	@summary = "Default summary"
+	macro viewStartProjectSetupButton() {
 		AssertElementPresent(locator1 = "CustomerPortalSite#START_PROJECT_SETUP_BUTTON");
 	}
 
-	macro viewSubcriptionsPage {
+	@summary = "Default summary"
+	macro viewSubcriptionsPage() {
 		AssertElementPresent(locator1 = "CustomerPortalSite#SUBCRIPTIONS_PROJECT_INSIDE_PAGE");
 	}
 
-	macro viewSubscriptionManagementList {
+	@summary = "Default summary"
+	macro viewSubscriptionManagementList(dropDownItems = null,dropDownLabel = null) {
 		Click(
 			key_dropdownLabel = ${dropDownLabel},
 			locator1 = "CustomerPortalSite#SUBSCRIPTION_DROPDOWN");
@@ -957,7 +1037,8 @@ definition {
 		}
 	}
 
-	macro viewSubscriptionManagementTab {
+	@summary = "Default summary"
+	macro viewSubscriptionManagementTab(productTab = null) {
 		for (var product : list ${productTab}) {
 			AssertElementPresent(
 				key_product = ${productTab},
@@ -966,7 +1047,8 @@ definition {
 		}
 	}
 
-	macro viewTableValue {
+	@summary = "Default summary"
+	macro viewTableValue() {
 		AssertTextEquals(
 			locator1 = "CustomerPortalSite#TABLE_VALUE",
 			value = "11/30/2022 - 03/30/2025",
@@ -988,7 +1070,8 @@ definition {
 			value1 = "Future");
 	}
 
-	macro viewValueFieldKoroneiki {
+	@summary = "Default summary"
+	macro viewValueFieldKoroneiki(field = null,index = null,value = null) {
 		var key_label = ${field};
 		var key_value = ${value};
 
@@ -1002,7 +1085,8 @@ definition {
 		AssertElementPresent(locator1 = "CustomerPortalSite#FIELDS_KORONEIKI");
 	}
 
-	macro viewVersions {
+	@summary = "Default summary"
+	macro viewVersions(dropDownItems = null,dropDownLabel = null) {
 		Click(
 			key_dropdownLabel = ${dropDownLabel},
 			locator1 = "CustomerPortalSite#VERSION_DROPDOWN");
@@ -1014,7 +1098,8 @@ definition {
 		}
 	}
 
-	macro waitCP20PageToLoad {
+	@summary = "Default summary"
+	macro waitCP20PageToLoad(userFirstName = null) {
 		WaitForVisible(
 			key_userFirstName = ${userFirstName},
 			locator1 = "CustomerPortalSite#WELCOME_PAGE_USER_NAME");
@@ -1022,7 +1107,8 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro waitToLiferayPage {
+	@summary = "Default summary"
+	macro waitToLiferayPage() {
 		WaitForElementPresent(locator1 = "CustomerPortalSite#LIFERAY_SITE");
 	}
 

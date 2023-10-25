@@ -1,6 +1,7 @@
 definition {
 
-	macro getBuildId {
+	@summary = "Default summary"
+	macro getBuildId(buildName = null) {
 		var buildId = JSONTestrayAPI._getObjectId(
 			object = "builds",
 			objectName = ${buildName});
@@ -8,7 +9,8 @@ definition {
 		return ${buildId};
 	}
 
-	macro getCaseId {
+	@summary = "Default summary"
+	macro getCaseId(caseName = null) {
 		var caseId = JSONTestrayAPI._getObjectId(
 			object = "cases",
 			objectName = ${caseName});
@@ -16,7 +18,8 @@ definition {
 		return ${caseId};
 	}
 
-	macro getCaseResultId {
+	@summary = "Default summary"
+	macro getCaseResultId(caseResultName = null) {
 		var caseResultId = JSONTestrayAPI._getObjectId(
 			object = "caseresults",
 			objectName = ${caseResultName});
@@ -24,7 +27,8 @@ definition {
 		return ${caseResultId};
 	}
 
-	macro getCaseTypeId {
+	@summary = "Default summary"
+	macro getCaseTypeId(caseType = null) {
 		var caseTypeId = JSONTestrayAPI._getObjectId(
 			object = "casetypes",
 			objectName = ${caseType});
@@ -32,7 +36,8 @@ definition {
 		return ${caseTypeId};
 	}
 
-	macro getComponentId {
+	@summary = "Default summary"
+	macro getComponentId(componentName = null) {
 		var componentId = JSONTestrayAPI._getObjectId(
 			object = "components",
 			objectName = ${componentName});
@@ -40,7 +45,8 @@ definition {
 		return ${componentId};
 	}
 
-	macro getFactorCategoryId {
+	@summary = "Default summary"
+	macro getFactorCategoryId(categoryName = null) {
 		var factorCategoryId = JSONTestrayAPI._getObjectId(
 			object = "factorcategories",
 			objectName = ${categoryName});
@@ -48,13 +54,15 @@ definition {
 		return ${factorCategoryId};
 	}
 
-	macro getFactorOptionsId {
+	@summary = "Default summary"
+	macro getFactorOptionsId(optionsName = null) {
 		var factorOptionsId = JSONTestrayAPI._getOptionsId(optionsName = ${optionsName});
 
 		return ${factorOptionsId};
 	}
 
-	macro getProductVersionId {
+	@summary = "Default summary"
+	macro getProductVersionId(productVersion = null) {
 		var productVersionId = JSONTestrayAPI._getObjectId(
 			object = "productversions",
 			objectName = ${productVersion});
@@ -62,7 +70,8 @@ definition {
 		return ${productVersionId};
 	}
 
-	macro getProjectId {
+	@summary = "Default summary"
+	macro getProjectId(projectName = null) {
 		Variables.assertDefined(parameterList = ${projectName});
 
 		var projectId = JSONTestrayAPI._getProjectId(projectName = ${projectName});
@@ -70,7 +79,8 @@ definition {
 		return ${projectId};
 	}
 
-	macro getRequirementId {
+	@summary = "Default summary"
+	macro getRequirementId(requirementName = null) {
 		var requirementId = JSONTestrayAPI._getObjectId(
 			object = "requirements",
 			objectName = ${requirementName});
@@ -78,7 +88,8 @@ definition {
 		return ${requirementId};
 	}
 
-	macro getRoutineId {
+	@summary = "Default summary"
+	macro getRoutineId(routineName = null) {
 		var routineId = JSONTestrayAPI._getObjectId(
 			object = "routines",
 			objectName = ${routineName});
@@ -86,7 +97,8 @@ definition {
 		return ${routineId};
 	}
 
-	macro getRunId {
+	@summary = "Default summary"
+	macro getRunId(runName = null) {
 		var runId = JSONTestrayAPI._getObjectId(
 			object = "runs",
 			objectName = ${runName});
@@ -94,7 +106,8 @@ definition {
 		return ${runId};
 	}
 
-	macro getSubtaskId {
+	@summary = "Default summary"
+	macro getSubtaskId(subtaskName = null) {
 		var subtaskId = JSONTestrayAPI._getObjectId(
 			object = "subtasks",
 			objectName = ${subtaskName});
@@ -102,7 +115,8 @@ definition {
 		return ${subtaskId};
 	}
 
-	macro getSuiteId {
+	@summary = "Default summary"
+	macro getSuiteId(suiteName = null) {
 		var suiteId = JSONTestrayAPI._getObjectId(
 			object = "suites",
 			objectName = ${suiteName});
@@ -110,7 +124,8 @@ definition {
 		return ${suiteId};
 	}
 
-	macro getTaskId {
+	@summary = "Default summary"
+	macro getTaskId(taskName = null) {
 		var taskId = JSONTestrayAPI._getObjectId(
 			object = "tasks",
 			objectName = ${taskName});
@@ -118,7 +133,8 @@ definition {
 		return ${taskId};
 	}
 
-	macro getTeamId {
+	@summary = "Default summary"
+	macro getTeamId(teamName = null) {
 		var teamId = JSONTestrayAPI._getTeamId(teamName = ${teamName});
 
 		return ${teamId};

@@ -1,6 +1,7 @@
 definition {
 
-	macro addMultipleFields {
+	@summary = "Default summary"
+	macro addMultipleFields() {
 		DMMetadataSet.gotoFieldsTab();
 
 		for (var fieldType : list ${fieldType}) {
@@ -18,7 +19,8 @@ definition {
 		DDLDataDefinition.save();
 	}
 
-	macro addTitle {
+	@summary = "Default summary"
+	macro addTitle(metadataSetName = null) {
 		LexiconEntry.gotoAdd();
 
 		var key_headerTitle = "New Metadata Set";
@@ -30,7 +32,8 @@ definition {
 		PortletEntry.inputName(name = ${metadataSetName});
 	}
 
-	macro delete {
+	@summary = "Default summary"
+	macro delete(metadataSetName = null,metadataSetHasReference = null,deleteViaManagementBar = null) {
 		if (isSet(searchMetadataSet)) {
 			Search.searchCP(searchTerm = ${metadataSetName});
 		}
@@ -75,7 +78,8 @@ definition {
 		}
 	}
 
-	macro editFieldLabel {
+	@summary = "Default summary"
+	macro editFieldLabel(fieldType = null) {
 		Type(
 			key_fieldName = "label",
 			locator1 = "FormFields#TEXT_FIELD",
@@ -98,25 +102,30 @@ definition {
 			value1 = ${fieldType});
 	}
 
-	macro gotoAdvancedTab {
+	@summary = "Default summary"
+	macro gotoAdvancedTab() {
 		Click(locator1 = "DocumentsAndMediaMetadataSets#SIDEBAR_ADVANCED_TAB");
 	}
 
-	macro gotoBack {
+	@summary = "Default summary"
+	macro gotoBack() {
 		WaitForVisible(locator1 = "DocumentsAndMediaMetadataSets#SIDEBAR_BACK");
 
 		Click(locator1 = "DocumentsAndMediaMetadataSets#SIDEBAR_BACK");
 	}
 
-	macro gotoBasicTab {
+	@summary = "Default summary"
+	macro gotoBasicTab() {
 		Click(locator1 = "DocumentsAndMediaMetadataSets#SIDEBAR_BASIC_TAB");
 	}
 
-	macro gotoFieldsTab {
+	@summary = "Default summary"
+	macro gotoFieldsTab() {
 		Click(locator1 = "DocumentsAndMediaMetadataSets#SIDEBAR_FIELDS_TAB");
 	}
 
-	macro selectMetadataSetsFrame {
+	@summary = "Default summary"
+	macro selectMetadataSetsFrame() {
 		if (IsElementPresent(locator1 = "IFrame#MODAL_BODY")) {
 			SelectFrameTop();
 
@@ -124,7 +133,8 @@ definition {
 		}
 	}
 
-	macro tearDownCP {
+	@summary = "Default summary"
+	macro tearDownCP() {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -150,7 +160,8 @@ definition {
 		}
 	}
 
-	macro validateCantInFieldset {
+	@summary = "Default summary"
+	macro validateCantInFieldset() {
 		var key_fieldLabel = ${key_fieldLabel};
 
 		Click(locator1 = "FormFields#LABEL");
@@ -158,7 +169,8 @@ definition {
 		AssertElementNotPresent(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_TAB");
 	}
 
-	macro viewDefaultCP {
+	@summary = "Default summary"
+	macro viewDefaultCP() {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "There are no results.");
@@ -172,13 +184,15 @@ definition {
 			locator1 = "DocumentsAndMediaMetadataSets#METADATA_SETS_NAME");
 	}
 
-	macro viewMetadataSetNotFoundCP {
+	@summary = "Default summary"
+	macro viewMetadataSetNotFoundCP() {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No results were found.");
 	}
 
-	macro viewMetadataSetTitle {
+	@summary = "Default summary"
+	macro viewMetadataSetTitle(metadataSetTitle = null) {
 		AssertElementPresent(
 			key_metadataSetName = ${metadataSetTitle},
 			locator1 = "DocumentsAndMediaMetadataSets#METADATA_SETS_NAME");

@@ -1,6 +1,7 @@
 definition {
 
-	macro addEmailNotificationTemplateViaAPI {
+	@summary = "Default summary"
+	macro addEmailNotificationTemplateViaAPI(cc = null,bcc = null,templateName = null,subject = null,fromName = null,bodyContent = null,fromAddress = null,toAddress = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
@@ -49,7 +50,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro addObject {
+	@summary = "Default summary"
+	macro addObject(objectName = null,labelName = null,pluralLabelName = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
@@ -94,7 +96,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro addObjectEntry {
+	@summary = "Default summary"
+	macro addObjectEntry(fieldNameList = null,valueList = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
@@ -138,7 +141,8 @@ definition {
 		return ${objectEntryId};
 	}
 
-	macro addObjectEntryViaJSONAPI {
+	@summary = "Default summary"
+	macro addObjectEntryViaJSONAPI(scope = null) {
 		Variables.assertDefined(parameterList = ${objectName});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -210,7 +214,8 @@ definition {
 		return ${objectEntryId};
 	}
 
-	macro addObjectField {
+	@summary = "Default summary"
+	macro addObjectField(fieldName = null,picklistName = null,fieldLabelName = null,timeStorageOption = null,isRequired = null,outputOption = null,fileSource = null,fieldBusinessType = null,formulaScript = null,objectName = null,fieldType = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var objectId = JSONObject.getObjectId(
 			objectName = ${objectName},
@@ -496,7 +501,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro addObjectLayout {
+	@summary = "Default summary"
+	macro addObjectLayout(objectName = null,layoutName = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var objectId = JSONObject.getObjectId(
 			objectName = ${objectName},
@@ -527,7 +533,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro addObjectRelationship {
+	@summary = "Default summary"
+	macro addObjectRelationship(relationshipName = null,relationshipType = null,objectName_1 = null,objectName_2 = null,relationshipLabel = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var objectID_1 = JSONObject.getObjectId(
 			objectName = ${objectName_1},
@@ -570,7 +577,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro addObjectSingleFieldEntry {
+	@summary = "Default summary"
+	macro addObjectSingleFieldEntry(fieldName = null,value = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
@@ -598,7 +606,8 @@ definition {
 		return ${objectEntryId};
 	}
 
-	macro addObjectValidation {
+	@summary = "Default summary"
+	macro addObjectValidation(validationType = null,objectName = null,labelName = null) {
 		Variables.assertDefined(parameterList = "${objectName},${labelName},${script},${validationType}");
 
 		var portalURL = JSONCompany.getDefaultPortalURL();
@@ -647,7 +656,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro addPicklist {
+	@summary = "Default summary"
+	macro addPicklist(picklistName = null) {
 		Variables.assertDefined(parameterList = ${picklistName});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -680,7 +690,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro addPicklistItem {
+	@summary = "Default summary"
+	macro addPicklistItem(picklistName = null,itemName = null,itemKey = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var picklistId = JSONObject.getPicklistId(
 			picklistName = ${picklistName},
@@ -711,7 +722,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro deleteAllCustomObjects {
+	@summary = "Default summary"
+	macro deleteAllCustomObjects(pageSize = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
@@ -748,7 +760,8 @@ definition {
 		}
 	}
 
-	macro deleteAllPicklists {
+	@summary = "Default summary"
+	macro deleteAllPicklists() {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
@@ -778,7 +791,8 @@ definition {
 		}
 	}
 
-	macro deleteObject {
+	@summary = "Default summary"
+	macro deleteObject(objectName = null,virtualHost = null,token = null) {
 		if (isSet(virtualHost)) {
 			if (!(isSet(port))) {
 				var port = 8080;
@@ -817,7 +831,8 @@ definition {
 		JSONCurlUtil.delete(${curl});
 	}
 
-	macro deleteObjectEntry {
+	@summary = "Default summary"
+	macro deleteObjectEntry(fieldName = null,value = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var entryId = JSONObject.getObjectEntryId(
 			entryValue = ${value},
@@ -844,7 +859,8 @@ definition {
 		JSONCurlUtil.delete(${curl});
 	}
 
-	macro deletePicklist {
+	@summary = "Default summary"
+	macro deletePicklist(picklistName = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var picklistId = JSONObject.getPicklistId(
 			picklistName = ${picklistName},
@@ -867,7 +883,8 @@ definition {
 		JSONCurlUtil.delete(${curl});
 	}
 
-	macro deleteRelationship {
+	@summary = "Default summary"
+	macro deleteRelationship(objectRelationshipId = null) {
 		Variables.assertDefined(parameterList = ${objectRelationshipId});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -888,7 +905,8 @@ definition {
 		JSONCurlUtil.delete(${curl});
 	}
 
-	macro filterObjectEntry {
+	@summary = "Default summary"
+	macro filterObjectEntry(fieldName = null,value = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var entryId = JSONObject.getObjectEntryId(
 			entryValue = ${value},
@@ -913,7 +931,8 @@ definition {
 		''';
 	}
 
-	macro getAllObjectDefinitionsId {
+	@summary = "Default summary"
+	macro getAllObjectDefinitionsId() {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
@@ -934,7 +953,8 @@ definition {
 		return ${objectDefinitionIdList};
 	}
 
-	macro getObjectDefinition {
+	@summary = "Default summary"
+	macro getObjectDefinition(objectName = null) {
 		Variables.assertDefined(parameterList = ${objectName});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -950,7 +970,8 @@ definition {
 		return ${objectDefinition};
 	}
 
-	macro getObjectDefinitionId {
+	@summary = "Default summary"
+	macro getObjectDefinitionId(name = null) {
 		Variables.assertDefined(parameterList = ${name});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -971,7 +992,8 @@ definition {
 		return ${objectDefinitionId};
 	}
 
-	macro getObjectEntryFieldValue {
+	@summary = "Default summary"
+	macro getObjectEntryFieldValue(fieldName = null,attributeValue = null,attribute = null,type = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
@@ -999,7 +1021,8 @@ definition {
 		return ${fieldValue};
 	}
 
-	macro getObjectEntryId {
+	@summary = "Default summary"
+	macro getObjectEntryId(fieldName = null,entryValue = null,virtualHost = null) {
 		if (isSet(virtualHost)) {
 			if (!(isSet(port))) {
 				var port = 8080;
@@ -1031,7 +1054,8 @@ definition {
 		return ${entryId};
 	}
 
-	macro getObjectFieldId {
+	@summary = "Default summary"
+	macro getObjectFieldId(fieldName = null,virtualHost = null,objectId = null,token = null) {
 		if (isSet(virtualHost)) {
 			if (!(isSet(port))) {
 				var port = 8080;
@@ -1065,7 +1089,8 @@ definition {
 		return ${objectFieldId};
 	}
 
-	macro getObjectId {
+	@summary = "Default summary"
+	macro getObjectId(objectName = null,virtualHost = null,token = null) {
 		if (isSet(virtualHost)) {
 			if (!(isSet(port))) {
 				var port = 8080;
@@ -1099,7 +1124,8 @@ definition {
 		return ${objectId};
 	}
 
-	macro getObjectRelationships {
+	@summary = "Default summary"
+	macro getObjectRelationships(objectName = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
@@ -1124,7 +1150,8 @@ definition {
 		return ${relationshipIdList};
 	}
 
-	macro getObjectSearchEntry {
+	@summary = "Default summary"
+	macro getObjectSearchEntry(searchString = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
@@ -1147,7 +1174,8 @@ definition {
 		return ${searchEntryId};
 	}
 
-	macro getObjectSortedEntry {
+	@summary = "Default summary"
+	macro getObjectSortedEntry(sortString = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
@@ -1170,7 +1198,8 @@ definition {
 		return ${sortEntry};
 	}
 
-	macro getPicklistId {
+	@summary = "Default summary"
+	macro getPicklistId(picklistName = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
@@ -1191,7 +1220,8 @@ definition {
 		return ${picklistId};
 	}
 
-	macro publishObject {
+	@summary = "Default summary"
+	macro publishObject(objectName = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var objectId = JSONObject.getObjectId(
 			objectName = ${objectName},
@@ -1215,7 +1245,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro setAccountRestriction {
+	@summary = "Default summary"
+	macro setAccountRestriction(objectName = null) {
 		Variables.assertDefined(parameterList = ${objectName});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -1241,7 +1272,8 @@ definition {
 		JSONCurlUtil.patch(${curl});
 	}
 
-	macro updateObject {
+	@summary = "Default summary"
+	macro updateObject(configKey = null,objectName = null,configValue = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var objectId = JSONObject.getObjectId(objectName = ${objectName});
 
@@ -1265,7 +1297,8 @@ definition {
 		JSONCurlUtil.patch(${curl});
 	}
 
-	macro updateObjectField {
+	@summary = "Default summary"
+	macro updateObjectField(configKey = null,fieldName = null,objectName = null,configValue = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var objectId = JSONObject.getObjectId(objectName = ${objectName});
 

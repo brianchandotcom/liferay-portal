@@ -439,9 +439,9 @@ definition {
 
 		task ("Then the user should see an error message") {
 			AssertAttributeValue(
-				value1 = "validationMessage",
 				key_text = "Ticket Number",
 				locator1 = "TextInput#ANY",
+				value1 = "validationMessage",
 				value2 = "Value must be less than or equal to 2147483647.");
 		}
 
@@ -460,9 +460,9 @@ definition {
 
 		task ("Then the user should see an error message") {
 			AssertAttributeValue(
-				value1 = "validationMessage",
 				key_text = "Ticket Number",
 				locator1 = "TextInput#ANY",
+				value1 = "validationMessage",
 				value2 = "Value must be greater than or equal to -2147483648.");
 		}
 	}

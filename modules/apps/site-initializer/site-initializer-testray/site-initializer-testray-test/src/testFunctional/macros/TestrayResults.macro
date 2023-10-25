@@ -1,12 +1,14 @@
 definition {
 
-	macro assertGraphValue {
+	@summary = "Default summary"
+	macro assertGraphValue(number = null) {
 		AssertElementPresent(
 			locator1 = "TestrayResults#TOTAL_TEST",
 			value1 = ${number});
 	}
 
-	macro assertIssue {
+	@summary = "Default summary"
+	macro assertIssue(issue = null,label = null) {
 		AssertElementPresent(
 			key_issue = ${issue},
 			key_label = ${label},

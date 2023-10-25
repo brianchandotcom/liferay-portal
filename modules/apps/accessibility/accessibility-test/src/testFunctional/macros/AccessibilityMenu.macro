@@ -1,6 +1,7 @@
 definition {
 
-	macro activateAccessibilityMenu {
+	@summary = "Default summary"
+	macro activateAccessibilityMenu(portlet = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -19,7 +20,8 @@ definition {
 		}
 	}
 
-	macro activateAccessibilityMenuBySiteSettings {
+	@summary = "Default summary"
+	macro activateAccessibilityMenuBySiteSettings(siteURLKey = null) {
 		Site.openSiteSettingsAdmin(siteURLKey = ${siteURLKey});
 
 		Click(
@@ -35,7 +37,8 @@ definition {
 		SystemSettings.saveConfiguration();
 	}
 
-	macro assertCanAccessAccessibilityMenuModal {
+	@summary = "Default summary"
+	macro assertCanAccessAccessibilityMenuModal() {
 		KeyPress(
 			locator1 = "//body",
 			value1 = "\TAB");
@@ -55,7 +58,8 @@ definition {
 			locator1 = "AccessibilityMenu#MODAL_TITLE");
 	}
 
-	macro assertCannotAccessAccessibilityMenuModal {
+	@summary = "Default summary"
+	macro assertCannotAccessAccessibilityMenuModal() {
 		KeyPress(
 			locator1 = "//body",
 			value1 = "\TAB");
@@ -70,7 +74,8 @@ definition {
 			locator1 = "AccessibilityMenu#QUICK_LINK");
 	}
 
-	macro deactivateAccessibilityMenu {
+	@summary = "Default summary"
+	macro deactivateAccessibilityMenu(portlet = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -89,7 +94,8 @@ definition {
 		}
 	}
 
-	macro deactivateAccessibilityMenuBySiteSettings {
+	@summary = "Default summary"
+	macro deactivateAccessibilityMenuBySiteSettings() {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			portlet = "Site Settings");
@@ -105,7 +111,8 @@ definition {
 		SystemSettings.saveConfiguration();
 	}
 
-	macro disableSpecificOption {
+	@summary = "Default summary"
+	macro disableSpecificOption(key_toggleSwitchLabel = null) {
 		AccessibilityMenu.openAccessibilityMenu();
 
 		Uncheck.uncheckToggleSwitch(
@@ -113,7 +120,8 @@ definition {
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 	}
 
-	macro enableSpecificOption {
+	@summary = "Default summary"
+	macro enableSpecificOption(key_toggleSwitchLabel = null) {
 		AccessibilityMenu.openAccessibilityMenu();
 
 		Check.checkToggleSwitch(
@@ -121,7 +129,8 @@ definition {
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 	}
 
-	macro goToAccessibilityMenuQuickLink {
+	@summary = "Default summary"
+	macro goToAccessibilityMenuQuickLink() {
 		KeyPress(
 			locator1 = "//body",
 			value1 = "\TAB");
@@ -132,7 +141,8 @@ definition {
 			value1 = "\TAB");
 	}
 
-	macro openAccessibilityMenu {
+	@summary = "Default summary"
+	macro openAccessibilityMenu() {
 		KeyPress(
 			locator1 = "//body",
 			value1 = "\TAB");
@@ -148,7 +158,8 @@ definition {
 			value1 = "\ENTER");
 	}
 
-	macro resetDefaultValues {
+	@summary = "Default summary"
+	macro resetDefaultValues(portlet = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

@@ -1,6 +1,7 @@
 definition {
 
-	macro formsFlowPhone {
+	@summary = "Default summary"
+	macro formsFlowPhone() {
 		RaylifeMobile.typeAllBasicsInfoFieldsPhone();
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
@@ -18,7 +19,8 @@ definition {
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 	}
 
-	macro typeAllBasicsInfoFieldsPhone {
+	@summary = "Default summary"
+	macro typeAllBasicsInfoFieldsPhone() {
 		RaylifeContactInfo.typeBasicsInfoFields(
 			label = "basics.businessInformation.firstName",
 			value = "FirstName");
@@ -56,7 +58,8 @@ definition {
 			value = 12345);
 	}
 
-	macro typeAllBusinessInfoFieldsPhone {
+	@summary = "Default summary"
+	macro typeAllBusinessInfoFieldsPhone() {
 		RaylifeBusiness.typeBusinessInfoFields(
 			label = "business.yearsOfExperience",
 			value = 3);
@@ -94,7 +97,8 @@ definition {
 			value = "3%");
 	}
 
-	macro typeAllEmployeesInfoFieldsPhone {
+	@summary = "Default summary"
+	macro typeAllEmployeesInfoFieldsPhone() {
 		Click(
 			field = "Does your business have a Federal Employer Identification Number (FEIN)?",
 			locator1 = "RaylifeMobile#BUTTON_YES_FEIN_PHONE");
@@ -138,7 +142,8 @@ definition {
 			value = "$111.00");
 	}
 
-	macro typeAllPropertyInfoFieldsPhone {
+	@summary = "Default summary"
+	macro typeAllPropertyInfoFieldsPhone() {
 		Click(
 			field = "Do you own the building at Address?",
 			locator1 = "Raylife#BUTTON_YES_OPTION");

@@ -1,7 +1,8 @@
 definition {
 
 	@description = "Go to Instance settings"
-	macro gotoInstanceSettings {
+	@summary = "Default summary"
+	macro gotoInstanceSettings(portlet = null) {
 		Variables.assertDefined(parameterList = ${portlet});
 
 		var baseURL = ${baseURL};
@@ -29,7 +30,8 @@ definition {
 	}
 
 	@description = "Go to Site settings"
-	macro gotoSiteSettings {
+	@summary = "Default summary"
+	macro gotoSiteSettings(portlet = null) {
 		Variables.assertDefined(parameterList = ${portlet});
 
 		takeScreenshot();
@@ -63,7 +65,8 @@ definition {
 	}
 
 	@description = "Go to System settings"
-	macro gotoSystemSettings {
+	@summary = "Default summary"
+	macro gotoSystemSettings(portlet = null) {
 		Variables.assertDefined(parameterList = ${portlet});
 
 		var baseURL = ${baseURL};

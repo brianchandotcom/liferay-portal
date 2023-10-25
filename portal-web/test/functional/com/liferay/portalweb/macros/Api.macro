@@ -16,7 +16,8 @@ definition {
 		AssertElementPresent(locator1 = "Button#INVOKE");
 	}
 
-	macro editJsonwsUserView {
+	@summary = "Default summary"
+	macro editJsonwsUserView(userSuffixId = null,userBirthdayYear = null,userEmailAddress = null,userFirstName = null,userId = null,userFacebookId = null,userBirthdayMonth = null,userPrefixId = null,userLastName = null,userScreenName = null,userBirthdayDay = null,userRoleTitles = null) {
 		AssertTextEquals(
 			locator1 = "JSONWSUser#API_METHOD",
 			value1 = "/user/update-user");
@@ -103,7 +104,8 @@ definition {
 		return ${pAuth};
 	}
 
-	macro gotoPAuthURL {
+	@summary = "Default summary"
+	macro gotoPAuthURL(url = null) {
 		var pAuth = Api.getPAuth();
 
 		Navigator.openSpecificURL(url = "${url}${pAuth}");

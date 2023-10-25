@@ -1,6 +1,7 @@
 definition {
 
-	macro changeLocale {
+	@summary = "Default summary"
+	macro changeLocale(locale = null) {
 		Click(locator1 = "ContentPerformance#LOCALE_BUTTON");
 
 		Click(
@@ -8,7 +9,8 @@ definition {
 			locator1 = "Translation#DROPDOWN_MENU_ITEM");
 	}
 
-	macro checkLanguagesOrder {
+	@summary = "Default summary"
+	macro checkLanguagesOrder() {
 		Click(locator1 = "ContentPerformance#LANGUAGE_DROPDOWN_BUTTON");
 
 		var list1 = ListUtil.newListFromString("1,2,3,4,5,6,7,8,9,10,11,12,13");
@@ -31,13 +33,15 @@ definition {
 		}
 	}
 
-	macro clickDoNotShowMeThisAgain {
+	@summary = "Default summary"
+	macro clickDoNotShowMeThisAgain() {
 		Click(
 			key_textValue = "Do not show me this again",
 			locator1 = "Sidebar#LINK");
 	}
 
-	macro openContentPerformance {
+	@summary = "Default summary"
+	macro openContentPerformance() {
 		if (!(IsVisible(locator1 = "ContentPerformance#SIDEBAR"))) {
 			Click(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_BUTTON");
 		}
@@ -47,7 +51,8 @@ definition {
 		}
 	}
 
-	macro viewTotalViews {
+	@summary = "Default summary"
+	macro viewTotalViews(numberViews = null) {
 		ContentPerformance.openContentPerformance();
 
 		while (IsElementPresent(locator1 = "ContentPerformance#TOTAL_VIEWS_EMPTY")) {
@@ -59,7 +64,8 @@ definition {
 			locator1 = "ContentPerformance#TOTAL_VIEWS_NUMBER");
 	}
 
-	macro viewTrafficViews {
+	@summary = "Default summary"
+	macro viewTrafficViews(trafficChannel = null,numberViews = null) {
 		ContentPerformance.openContentPerformance();
 
 		while (IsElementPresent(locator1 = "ContentPerformance#TOTAL_VIEWS_EMPTY")) {

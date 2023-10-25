@@ -1,6 +1,7 @@
 definition {
 
-	macro chooseMenu {
+	@summary = "Default summary"
+	macro chooseMenu(menuName = null) {
 		Click(
 			locator1 = "Radio#ANY",
 			radioLabel = "Choose Menu");
@@ -30,7 +31,8 @@ definition {
 			value1 = ${menuName});
 	}
 
-	macro gotoEditNavigationMenuEntry {
+	@summary = "Default summary"
+	macro gotoEditNavigationMenuEntry() {
 		MouseOver.mouseOverNotVisible(locator1 = "Icon#EDIT_PENCIL");
 
 		Click.waitForMenuToggleJSClick(locator1 = "Icon#EDIT_PENCIL");
@@ -38,7 +40,8 @@ definition {
 		MenuItem.click(menuItem = "Edit");
 	}
 
-	macro gotoNavigationMenuWidgetConfig {
+	@summary = "Default summary"
+	macro gotoNavigationMenuWidgetConfig() {
 		WaitForElementPresent(locator1 = "//script[contains(@src,'/o/frontend-js-loader-modules-extender/loader.js')]");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
@@ -50,7 +53,8 @@ definition {
 		IFrame.selectModalFrame();
 	}
 
-	macro gotoSublevel {
+	@summary = "Default summary"
+	macro gotoSublevel(itemName = null,type = null,pageName = null) {
 		if (${type} == "Drop Down") {
 			WaitForElementPresent(locator1 = "//script[contains(@src,'/o/frontend-js-loader-modules-extender/loader.js')]");
 
@@ -69,26 +73,30 @@ definition {
 		}
 	}
 
-	macro selectDisplayTemplate {
+	@summary = "Default summary"
+	macro selectDisplayTemplate(templateName = null) {
 		Click(locator1 = "Select#DISPLAY_TEMPLATE");
 
 		MenuItem.click(menuItem = ${templateName});
 	}
 
-	macro selectLevelsToDisplay {
+	@summary = "Default summary"
+	macro selectLevelsToDisplay(levels = null) {
 		Select(
 			key_selectFieldLabel = "Levels to Display",
 			locator1 = "Select#ANY",
 			value1 = ${levels});
 	}
 
-	macro selectNavigation {
+	@summary = "Default summary"
+	macro selectNavigation(menuType = null) {
 		Select(
 			locator1 = "NavigationMenusWidget#SELECT_NAVIGATION",
 			value1 = ${menuType});
 	}
 
-	macro viewMenuItemsOrder {
+	@summary = "Default summary"
+	macro viewMenuItemsOrder(menuItemList = null) {
 		var index = 1;
 
 		for (var menuItem : list ${menuItemList}) {

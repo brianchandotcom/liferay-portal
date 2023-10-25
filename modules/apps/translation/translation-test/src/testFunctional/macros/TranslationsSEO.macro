@@ -1,6 +1,7 @@
 definition {
 
-	macro disableOnlyTranslatedHreflangs {
+	@summary = "Default summary"
+	macro disableOnlyTranslatedHreflangs(configurationScope = null,siteURLKey = null) {
 		TranslationsSEO.openToConfiguration(
 			configurationScope = ${configurationScope},
 			siteURLKey = ${siteURLKey});
@@ -15,7 +16,8 @@ definition {
 		}
 	}
 
-	macro enableOnlyTranslatedHreflangs {
+	@summary = "Default summary"
+	macro enableOnlyTranslatedHreflangs(configurationScope = null,siteURLKey = null) {
 		TranslationsSEO.openToConfiguration(
 			configurationScope = ${configurationScope},
 			siteURLKey = ${siteURLKey});
@@ -30,7 +32,8 @@ definition {
 		}
 	}
 
-	macro openToConfiguration {
+	@summary = "Default summary"
+	macro openToConfiguration(configurationScope = null,siteURLKey = null) {
 
 		// You can use this navigation when you need to access the configuration quickly without checking the UI.
 
@@ -47,7 +50,8 @@ definition {
 		}
 	}
 
-	macro viewHreflangTags {
+	@summary = "Default summary"
+	macro viewHreflangTags(localeList = null) {
 		for (var locale : list ${localeList}) {
 			var hreflangTag = '''<meta property="og:locale:alternate" content="${locale}">''';
 
@@ -55,7 +59,8 @@ definition {
 		}
 	}
 
-	macro viewNoHreflangTags {
+	@summary = "Default summary"
+	macro viewNoHreflangTags(localeList = null) {
 		for (var locale : list ${localeList}) {
 			var hreflangTag = '''<meta property="og:locale:alternate" content="${locale}">''';
 

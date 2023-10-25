@@ -1,6 +1,7 @@
 definition {
 
-	macro _addWebcontentFolder {
+	@summary = "Default summary"
+	macro _addWebcontentFolder(depotName = null,name = null,siteId = null) {
 		Variables.assertDefined(parameterList = ${name});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -42,7 +43,8 @@ definition {
 		return ${response};
 	}
 
-	macro _subscribeStructuredContentFolder {
+	@summary = "Default summary"
+	macro _subscribeStructuredContentFolder(structuredContentFolderId = null,userName = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
@@ -56,7 +58,8 @@ definition {
 		return ${curl};
 	}
 
-	macro createStructuredContentFolder {
+	@summary = "Default summary"
+	macro createStructuredContentFolder(groupName = null,userPassword = null,viewableBy = null,name = null,description = null,userEmailAddress = null,externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = "${groupName},${name}");
 
 		var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = ${groupName});
@@ -73,7 +76,8 @@ definition {
 		return ${response};
 	}
 
-	macro getElementOfCreatedStructuredContentFolder {
+	@summary = "Default summary"
+	macro getElementOfCreatedStructuredContentFolder(responseToParse = null,element = null) {
 		Variables.assertDefined(parameterList = "${responseToParse},${element}");
 
 		var elementValue = JSONUtil.getWithJSONPath(${responseToParse}, ${element});
@@ -81,7 +85,8 @@ definition {
 		return ${elementValue};
 	}
 
-	macro structuredContentFolderSubscribeByUserName {
+	@summary = "Default summary"
+	macro structuredContentFolderSubscribeByUserName(structuredContentFolderId = null,userName = null) {
 		Variables.assertDefined(parameterList = "${structuredContentFolderId},${userName}");
 
 		var response = HeadlessWebcontentFolderAPI._subscribeStructuredContentFolder(

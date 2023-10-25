@@ -1,6 +1,7 @@
 definition {
 
-	macro deleteLayoutUtilityPage {
+	@summary = "Default summary"
+	macro deleteLayoutUtilityPage(groupName = null,site = null,portalInstanceName = null,portalURL = null,layoutUtilityPageName = null) {
 		Variables.assertDefined(parameterList = ${layoutUtilityPageName});
 
 		if (!(isSet(groupId))) {

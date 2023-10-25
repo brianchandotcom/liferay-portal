@@ -1,6 +1,7 @@
 definition {
 
-	macro viewCardWithThreeColumnsInMobileBreakpoint {
+	@summary = "Default summary"
+	macro viewCardWithThreeColumnsInMobileBreakpoint() {
 		task ("Select Mobile Device in simulation menu") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Content Page Name",
@@ -19,7 +20,8 @@ definition {
 		}
 	}
 
-	macro viewDefinedGridLayout {
+	@summary = "Default summary"
+	macro viewDefinedGridLayout() {
 		task ("Navigate to page in edit mode") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",
@@ -93,7 +95,8 @@ definition {
 		}
 	}
 
-	macro viewEditableCardFragment {
+	@summary = "Default summary"
+	macro viewEditableCardFragment() {
 		task ("View the inline text of the card fragment at view mode after Upgrade") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name",

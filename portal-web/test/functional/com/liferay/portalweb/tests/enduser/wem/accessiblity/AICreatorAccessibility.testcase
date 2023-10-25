@@ -48,8 +48,8 @@ definition {
 
 		task ("Then the screen reader should announce the popover message") {
 			AssertAttributeValue(
-				value1 = "role",
 				locator1 = "//div[contains(@class,'popover-top')]",
+				value1 = "role",
 				value2 = "alert");
 
 			AssertElementFocused(locator1 = "//div[contains(@class,'popover-top')]");

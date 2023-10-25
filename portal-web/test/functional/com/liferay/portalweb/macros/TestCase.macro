@@ -1,6 +1,7 @@
 definition {
 
-	macro enableMetal {
+	@summary = "Default summary"
+	macro enableMetal() {
 		SystemSettings.openSystemSettingsAdmin();
 
 		SystemSettings.gotoConfiguration(
@@ -17,7 +18,8 @@ definition {
 		SystemSettings.saveConfiguration();
 	}
 
-	macro getDependenciesDirPath {
+	@summary = "Default summary"
+	macro getDependenciesDirPath(fileName = null,filePath = null) {
 		var projectDir = PropsUtil.get("project.dir");
 		var testBaseDir = PropsUtil.get("test.base.dir.name");
 		var testDependenciesDir = PropsUtil.get("test.dependencies.dir.name");
@@ -79,7 +81,8 @@ definition {
 		return ${dependencyFilePath};
 	}
 
-	macro getDownloadedTempFileName {
+	@summary = "Default summary"
+	macro getDownloadedTempFileName(fileNamePattern = null) {
 		var tempDir = PropsUtil.get("output.dir.name");
 		var pattern = StringUtil.split("**/${fileNamePattern}");
 
@@ -96,7 +99,8 @@ definition {
 		return ${fileName};
 	}
 
-	macro getFileContent {
+	@summary = "Default summary"
+	macro getFileContent(fileName = null) {
 		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = ${fileName});
 
 		var fileContent = FileUtil.read(${dependencyFilePath});
@@ -104,7 +108,8 @@ definition {
 		return ${fileContent};
 	}
 
-	macro getSiteName {
+	@summary = "Default summary"
+	macro getSiteName(siteName = null) {
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		if ((${siteName} == "Liferay") || !(isSet(siteName))) {
@@ -133,7 +138,8 @@ definition {
 		}
 	}
 
-	macro getTempFileContent {
+	@summary = "Default summary"
+	macro getTempFileContent(fileName = null) {
 		var tempDir = PropsUtil.get("output.dir.name");
 
 		var tempFile = "${tempDir}/${fileName}";
@@ -152,7 +158,8 @@ definition {
 		return ${fileContent};
 	}
 
-	macro getTestName {
+	@summary = "Default summary"
+	macro getTestName() {
 		var testName = PropsUtil.get("test.name");
 
 		var testName = RegexUtil.replace(${testName}, "[^\.]*\.(.*)", 1);
@@ -160,7 +167,8 @@ definition {
 		return ${testName};
 	}
 
-	macro setUpCustomPortalInstance {
+	@summary = "Default summary"
+	macro setUpCustomPortalInstance() {
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		if (${testLiferayVirtualInstance} == "true") {
@@ -176,7 +184,8 @@ definition {
 		}
 	}
 
-	macro setUpPortalInstance {
+	@summary = "Default summary"
+	macro setUpPortalInstance(authenticationMethod = null) {
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		if (${testLiferayVirtualInstance} == "true") {
@@ -186,7 +195,8 @@ definition {
 		}
 	}
 
-	macro setUpPortalInstanceNoSelenium {
+	@summary = "Default summary"
+	macro setUpPortalInstanceNoSelenium(authenticationMethod = null) {
 		HeadlessPortalInstanceAPI.cleanAllPortalInstances(authenticationMethod = ${authenticationMethod});
 
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
@@ -196,7 +206,8 @@ definition {
 		}
 	}
 
-	macro updatePortalProperties {
+	@summary = "Default summary"
+	macro updatePortalProperties(newProperty = null,oldProperty = null) {
 		if (isSet(oldProperty)) {
 			AntCommands.runCommand("build-test.xml", "portal-ext-properties-update -Dupdate.properties=${newProperty} -Dupdate.properties.original=${oldProperty}");
 		}

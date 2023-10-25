@@ -1,6 +1,7 @@
 definition {
 
-	macro addCP {
+	@summary = "Default summary"
+	macro addCP(videoShortcutTitle = null,localizedPublish = null,vocabularyName = null,tagNameList = null,categoryName = null,localizedDocumentTypeName = null,localizedVideoURL = null,videoURL = null,extractedVideoShortcutTitle = null,videoShortcutPreview = null,videoShortcutDescription = null) {
 		if (!(isSet(skipNavigation))) {
 			if (isSet(localizedDocumentTypeName)) {
 				DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = ${localizedDocumentTypeName});
@@ -94,7 +95,8 @@ definition {
 		}
 	}
 
-	macro addPG {
+	@summary = "Default summary"
+	macro addPG(videoShortcutTitle = null,contentPage = null,videoURL = null,extractedVideoShortcutTitle = null,videoShortcutPreview = null,videoShortcutDescription = null) {
 		DMNavigator.gotoAddDocumentTypePG(
 			contentPage = ${contentPage},
 			dmDocumentTypeName = "External Video Shortcut");
@@ -139,7 +141,8 @@ definition {
 			value1 = "Publish");
 	}
 
-	macro editCP {
+	@summary = "Default summary"
+	macro editCP(videoShortcutTitle = null,videoShortcutPreviousDescription = null,videoShortcutDescriptionEdit = null,videoShortcutPreviousTitle = null,videoShortcutTitleEdit = null,videoShortcutPreview = null,videoURLEdit = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${videoShortcutTitle});
@@ -183,7 +186,8 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro validateURL {
+	@summary = "Default summary"
+	macro validateURL(invalidURL = null) {
 		Type(
 			key_text = "Video URL",
 			locator1 = "TextInput#ANY",
@@ -224,7 +228,8 @@ definition {
 		}
 	}
 
-	macro viewCP {
+	@summary = "Default summary"
+	macro viewCP(videoShortcutTitle = null) {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		LexiconEntry.gotoEntry(rowEntry = ${videoShortcutTitle});
@@ -235,7 +240,8 @@ definition {
 			value1 = ${videoShortcutTitle});
 	}
 
-	macro viewPG {
+	@summary = "Default summary"
+	macro viewPG(videoShortcutTitle = null,videoShortcutDescription = null) {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		AssertClick(
@@ -258,7 +264,8 @@ definition {
 		}
 	}
 
-	macro viewPlayedVideo {
+	@summary = "Default summary"
+	macro viewPlayedVideo() {
 		WaitForElementPresent(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#EXTERNAL_VIDEO_IFRAME");

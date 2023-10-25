@@ -1,6 +1,7 @@
 definition {
 
-	macro tearDown {
+	@summary = "Default summary"
+	macro tearDown() {
 		var dDMstructureList = JSONDDMstructureAPI._getCustomStructureIds();
 
 		for (var dDMstructure : list ${dDMstructureList}) {

@@ -1,6 +1,7 @@
 definition {
 
-	macro assertTheDatesAndStatusOfTheCard {
+	@summary = "Default summary"
+	macro assertTheDatesAndStatusOfTheCard(dates = null,status = null) {
 		WaitForPageLoad();
 
 		AssertElementPresent(
@@ -9,7 +10,8 @@ definition {
 			locator1 = "CustomerPortalSite#CARD_DATE");
 	}
 
-	macro changeTheStatusToDisplayCards {
+	@summary = "Default summary"
+	macro changeTheStatusToDisplayCards(status = null) {
 		var key_status = ${status};
 
 		Click(locator1 = "CP2Subscription#SUBSCRIPTION_STATUS");

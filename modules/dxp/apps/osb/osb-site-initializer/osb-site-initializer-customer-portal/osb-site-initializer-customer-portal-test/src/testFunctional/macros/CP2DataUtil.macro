@@ -1,6 +1,7 @@
 definition {
 
-	macro convertDay {
+	@summary = "Default summary"
+	macro convertDay(days = null) {
 		var day = DateUtil.getDate(${days});
 
 		var length = StringUtil.length(${day});
@@ -12,7 +13,8 @@ definition {
 		return ${day};
 	}
 
-	macro convertMonth {
+	@summary = "Default summary"
+	macro convertMonth(days = null) {
 		var month = DateUtil.getMonth(${days});
 
 		if (${month} == 1) {
@@ -55,7 +57,8 @@ definition {
 		return ${month};
 	}
 
-	macro generateStaticFullStartAndEndDate {
+	@summary = "Default summary"
+	macro generateStaticFullStartAndEndDate() {
 		var startDay = CP2DataUtil.convertDay(days = 0);
 		var startMonth = CP2DataUtil.convertMonth(days = 0);
 		var startYear = DateUtil.getYear(0);

@@ -808,8 +808,8 @@ definition {
 			}
 
 			AssertAttributeValue(
-				value1 = "style",
 				locator1 = "PageEditor#APPLIED_FILTERS_FILTER_LIST",
+				value1 = "style",
 				value2 = "max-height: 4em;");
 
 			var n = 1;
@@ -829,8 +829,8 @@ definition {
 				locator1 = "PageEditor#APPLIED_FILTERS_INNER_BUTTON");
 
 			AssertAttributeValue(
-				value1 = "style",
 				locator1 = "PageEditor#APPLIED_FILTERS_FILTER_LIST",
+				value1 = "style",
 				value2 = "");
 
 			for (var filterName : list "Levis,Female,Yellow,White,Red,Green,Brown") {
@@ -844,8 +844,8 @@ definition {
 				locator1 = "PageEditor#APPLIED_FILTERS_INNER_BUTTON");
 
 			AssertAttributeValue(
-				value1 = "style",
 				locator1 = "PageEditor#APPLIED_FILTERS_FILTER_LIST",
+				value1 = "style",
 				value2 = "max-height: 4em;");
 
 			for (var filterName : list "Levis,Female") {
@@ -923,8 +923,8 @@ definition {
 			}
 
 			AssertAttributeValue(
-				value1 = "style",
 				locator1 = "PageEditor#APPLIED_FILTERS_FILTER_LIST",
+				value1 = "style",
 				value2 = "max-height: 4em;");
 
 			var n = 1;
@@ -944,8 +944,8 @@ definition {
 				locator1 = "PageEditor#APPLIED_FILTERS_INNER_BUTTON");
 
 			AssertAttributeValue(
-				value1 = "style",
 				locator1 = "PageEditor#APPLIED_FILTERS_FILTER_LIST",
+				value1 = "style",
 				value2 = "");
 
 			for (var filterName : list "Levis,Female,Yellow,White,Red,Green,Brown") {
@@ -959,8 +959,8 @@ definition {
 				locator1 = "PageEditor#APPLIED_FILTERS_INNER_BUTTON");
 
 			AssertAttributeValue(
-				value1 = "style",
 				locator1 = "PageEditor#APPLIED_FILTERS_FILTER_LIST",
+				value1 = "style",
 				value2 = "max-height: 4em;");
 
 			for (var filterName : list "Levis,Female,Yellow,White") {

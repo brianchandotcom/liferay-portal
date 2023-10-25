@@ -1,6 +1,7 @@
 definition {
 
-	macro _addAccountEntry {
+	@summary = "Default summary"
+	macro _addAccountEntry(countryNumber = null,threeLetterISOCode = null,subjectToVAT = null,creatorEmailAddress = null,twoLetterISOCode = null,shippingAllowed = null,creatorPassword = null,billingAllowed = null,countryPriority = null,countryName = null,countryStatus = null) {
 		Variables.assertDefined(parameterList = "${countryName},${countryNumber},${threeLetterISOCode},${twoLetterISOCode}");
 
 		var companyId = JSONCompany.getCompanyId();
@@ -25,7 +26,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _getCountryAbbreviation {
+	@summary = "Default summary"
+	macro _getCountryAbbreviation() {
 		Variables.assertDefined(parameterList = ${countryName});
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -44,7 +46,8 @@ definition {
 		return ${countryAbbreviation};
 	}
 
-	macro _getCountryByName {
+	@summary = "Default summary"
+	macro _getCountryByName(countryName = null) {
 		Variables.assertDefined(parameterList = ${countryName});
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -60,7 +63,8 @@ definition {
 		return ${country};
 	}
 
-	macro _getCountryRegions {
+	@summary = "Default summary"
+	macro _getCountryRegions(countryAbbreviation = null) {
 		Variables.assertDefined(parameterList = ${countryAbbreviation});
 
 		var companyId = JSONCompany.getCompanyId();

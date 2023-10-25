@@ -65,10 +65,10 @@ definition {
 
 		task ("Then the screen reader should announce relevant info") {
 			AssertAttributeValue(
-				value1 = "title",
 				key_itemName = "Web Content Title",
 				key_relationship = "before",
 				locator1 = "SiteNavigationMenu#ITEM_ENTRY_ADD_ICON",
+				value1 = "title",
 				value2 = "Add item before Web Content Title.");
 		}
 
@@ -81,10 +81,10 @@ definition {
 
 		task ("Then the screen reader should announce relevant info") {
 			AssertAttributeValue(
-				value1 = "title",
 				key_itemName = "Web Content Title",
 				key_relationship = "after",
 				locator1 = "SiteNavigationMenu#ITEM_ENTRY_ADD_ICON",
+				value1 = "title",
 				value2 = "Add item after Web Content Title.");
 		}
 

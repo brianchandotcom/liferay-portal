@@ -1,6 +1,7 @@
 definition {
 
-	macro addContentPage {
+	@summary = "Default summary"
+	macro addContentPage() {
 		task ("Add a content page in Test Site Name site") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -131,7 +132,8 @@ definition {
 		}
 	}
 
-	macro viewAndEditContentPageReview {
+	@summary = "Default summary"
+	macro viewAndEditContentPageReview() {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/test-content-page-name");
 
 		ContentPages.gotoPageEditor();
@@ -175,7 +177,8 @@ definition {
 			user = "Test Test");
 	}
 
-	macro viewMSBUpgrade {
+	@summary = "Default summary"
+	macro viewMSBUpgrade() {
 		task ("Assert the fragments survived") {
 			ApplicationsMenu.gotoSite(site = "Test Site Name");
 

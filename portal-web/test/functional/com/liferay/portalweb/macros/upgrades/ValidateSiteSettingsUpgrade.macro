@@ -1,6 +1,7 @@
 definition {
 
-	macro viewCustomSiteSetting {
+	@summary = "Default summary"
+	macro viewCustomSiteSetting() {
 		task ("Get the default site name") {
 			Navigator.openURL();
 

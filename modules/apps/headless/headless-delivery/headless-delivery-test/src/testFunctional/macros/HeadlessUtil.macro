@@ -1,6 +1,7 @@
 definition {
 
-	macro executeGraphQLQuery {
+	@summary = "Default summary"
+	macro executeGraphQLQuery(query = null,token = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''

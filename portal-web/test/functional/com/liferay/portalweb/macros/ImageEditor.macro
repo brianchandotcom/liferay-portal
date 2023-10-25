@@ -1,18 +1,21 @@
 definition {
 
-	macro resizeImage {
+	@summary = "Default summary"
+	macro resizeImage(dimension = null) {
 		Select(
 			locator1 = "Select#IMAGE_RATIO",
 			value1 = ${dimension});
 	}
 
-	macro rotateImage {
+	@summary = "Default summary"
+	macro rotateImage() {
 		Click(
 			key_text = "rotate",
 			locator1 = "Icon#ANY");
 	}
 
-	macro saveChanges {
+	@summary = "Default summary"
+	macro saveChanges() {
 		Button.clickSave();
 
 		SelectFrameTop();

@@ -1,6 +1,7 @@
 definition {
 
-	macro approveBlogsWorkflow {
+	@summary = "Default summary"
+	macro approveBlogsWorkflow() {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -87,7 +88,8 @@ definition {
 		BlogsEntry.viewStatus(entryStatus = "Approved");
 	}
 
-	macro approveWebContentWorkflow {
+	@summary = "Default summary"
+	macro approveWebContentWorkflow() {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -168,7 +170,8 @@ definition {
 			webContentTitle = "WC Workflow Title");
 	}
 
-	macro publishWorkflowDefinition {
+	@summary = "Default summary"
+	macro publishWorkflowDefinition() {
 		var testRunEnvironment = PropsUtil.get("test.run.environment");
 
 		if (${testRunEnvironment} == "EE") {
@@ -187,7 +190,8 @@ definition {
 		}
 	}
 
-	macro submitNewWorkflow {
+	@summary = "Default summary"
+	macro submitNewWorkflow() {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

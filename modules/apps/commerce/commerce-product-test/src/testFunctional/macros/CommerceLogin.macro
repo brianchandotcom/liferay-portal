@@ -1,6 +1,7 @@
 definition {
 
-	macro createAccount {
+	@summary = "Default summary"
+	macro createAccount(userLastName = null,userScreenName = null,userEmailAddress = null,newPassword = null,userFirstName = null) {
 		Type(
 			locator1 = "TextInput#FIRST_NAME",
 			value1 = ${userFirstName});
@@ -29,7 +30,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro editPasswordCP {
+	@summary = "Default summary"
+	macro editPasswordCP(userScreenName = null,requirePasswordReset = null) {
 		UserNavigator.gotoUser(userScreenName = ${userScreenName});
 
 		if (!(isSet(newPassword))) {
@@ -55,7 +57,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro loginPG {
+	@summary = "Default summary"
+	macro loginPG(localization = null,password = null,authenticationMethod = null,userScreenName = null,userEmailAddress = null,rememberMeChecked = null,newPassword = null,samlEnabled = null) {
 		if (${samlEnabled} != "true") {
 			User._clickSignInLink(localization = ${localization});
 		}
@@ -113,7 +116,8 @@ definition {
 		User.answerPasswordReminder();
 	}
 
-	macro miniumLogin {
+	@summary = "Default summary"
+	macro miniumLogin(password = null,userEmailAddress = null,urlAppend = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -133,7 +137,8 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro miniumLogoutPG {
+	@summary = "Default summary"
+	macro miniumLogoutPG() {
 		ScrollBy(value1 = "0, -1000");
 
 		Click(locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_USER_AVATAR");
@@ -143,7 +148,8 @@ definition {
 			locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_MENU_ITEM");
 	}
 
-	macro speedwellLogin {
+	@summary = "Default summary"
+	macro speedwellLogin(password = null,userEmailAddress = null,urlAppend = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -162,7 +168,8 @@ definition {
 			userEmailAddress = ${userEmailAddress});
 	}
 
-	macro speedwellLogout {
+	@summary = "Default summary"
+	macro speedwellLogout() {
 		Click(locator1 = "CommerceAccelerators#SPEEDWELL_ACCOUNT_DROPDOWN");
 
 		Click(

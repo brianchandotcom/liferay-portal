@@ -1,6 +1,7 @@
 definition {
 
-	macro deselectAllowedFragments {
+	@summary = "Default summary"
+	macro deselectAllowedFragments(fragmentNameList = null) {
 		SelectFrame(value1 = "relative=top");
 
 		for (var fragmentName : list ${fragmentNameList}) {
@@ -14,25 +15,29 @@ definition {
 		Button.clickSave();
 	}
 
-	macro propagateChange {
+	@summary = "Default summary"
+	macro propagateChange() {
 		Button.clickNoError(button = "Publish Master");
 
 		AssertConfirm(value1 = "Changes made to this master are going to be propagated to all page templates, display page templates, and pages using it. Are you sure you want to proceed?");
 	}
 
-	macro publishMaster {
+	@summary = "Default summary"
+	macro publishMaster() {
 		Button.click(button = "Publish Master");
 
 		Alert.viewSuccessMessage();
 	}
 
-	macro searchAllowedFragments {
+	@summary = "Default summary"
+	macro searchAllowedFragments(searchValue = null) {
 		Type(
 			locator1 = "TextInput#FRAGMENTS_SEARCH",
 			value1 = ${searchValue});
 	}
 
-	macro selectAllowedFragments {
+	@summary = "Default summary"
+	macro selectAllowedFragments(fragmentNameList = null) {
 		SelectFrame(value1 = "relative=top");
 
 		Uncheck.uncheckToggleSwitch(locator1 = "Checkbox#ALL_FRAGMENTS");
@@ -52,7 +57,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro selectMaster {
+	@summary = "Default summary"
+	macro selectMaster(masterLayoutName = null) {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		LexiconCard.clickCardTitle(card = ${masterLayoutName});
@@ -60,7 +66,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro selectMasterViaPageDesignOptions {
+	@summary = "Default summary"
+	macro selectMasterViaPageDesignOptions(masterLayoutName = null) {
 		Navigator.gotoNavTab(navTab = "Master");
 
 		Click.waitForMenuToggleJSClick(

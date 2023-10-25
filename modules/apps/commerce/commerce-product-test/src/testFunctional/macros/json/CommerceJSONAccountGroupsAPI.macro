@@ -1,6 +1,7 @@
 definition {
 
-	macro _deleteAllCommerceAccountGroups {
+	@summary = "Default summary"
+	macro _deleteAllCommerceAccountGroups() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -31,7 +32,8 @@ definition {
 		}
 	}
 
-	macro _getAccountGroupId {
+	@summary = "Default summary"
+	macro _getAccountGroupId(accountGroupName = null) {
 		Variables.assertDefined(parameterList = ${accountGroupName});
 
 		var baseURL = ${baseURL};
@@ -60,7 +62,8 @@ definition {
 		return ${accountGroupId};
 	}
 
-	macro _getCommerceAccountGroupIds {
+	@summary = "Default summary"
+	macro _getCommerceAccountGroupIds(accountGroupCount = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -87,7 +90,8 @@ definition {
 		return ${accountGroupIds};
 	}
 
-	macro _getCommerceAccountGroupsCount {
+	@summary = "Default summary"
+	macro _getCommerceAccountGroupsCount() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {

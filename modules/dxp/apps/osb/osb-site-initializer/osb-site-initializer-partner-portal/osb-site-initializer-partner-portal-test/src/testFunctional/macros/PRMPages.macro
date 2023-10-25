@@ -1,22 +1,26 @@
 definition {
 
-	macro assertPageTitle {
+	@summary = "Default summary"
+	macro assertPageTitle(pageTitle = null) {
 		AssertElementPresent(
 			key_title = ${pageTitle},
 			locator1 = "Header#H1_TITLE");
 	}
 
-	macro clickBannerButton {
+	@summary = "Default summary"
+	macro clickBannerButton() {
 		Click(locator1 = "PRMPages#VIDEO_BUTTON");
 	}
 
-	macro clickBannerLink {
+	@summary = "Default summary"
+	macro clickBannerLink(linkText = null) {
 		Click(
 			key_linkText = ${linkText},
 			locator1 = "PRMPages#BANNER_LINK");
 	}
 
-	macro dismissBanner {
+	@summary = "Default summary"
+	macro dismissBanner() {
 		Click(
 			key_text = "Dismiss",
 			locator1 = "Button#ANY");

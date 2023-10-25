@@ -1,6 +1,7 @@
 definition {
 
-	macro addClassificationRuleCP {
+	@summary = "Default summary"
+	macro addClassificationRuleCP(deviceType = null,ruleOsScope = null,classificationName = null,classificationDescription = null) {
 
 		// Workaround for LPS-92682
 
@@ -31,7 +32,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro addDeviceFamilyCP {
+	@summary = "Default summary"
+	macro addDeviceFamilyCP(deviceDescription = null,deviceFamilyName = null) {
 		Click(locator1 = "Button#PLUS");
 
 		AssertTextEquals.assertPartialText(
@@ -49,7 +51,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro assertRedirectActionPG {
+	@summary = "Default summary"
+	macro assertRedirectActionPG(redirectPageName = null,pageName = null) {
 		var key_pageName = ${pageName};
 
 		AssertClick(
@@ -61,7 +64,8 @@ definition {
 		AssertVisible(locator1 = "Home#PAGE_ACTIVE");
 	}
 
-	macro previewBy {
+	@summary = "Default summary"
+	macro previewBy(previewBy = null,segment = null,experience = null) {
 		if (isSet(previewBy)) {
 			Click.waitForMenuToggleJSClick(
 				key_fieldLabel = "Preview By",
@@ -87,7 +91,8 @@ definition {
 		}
 	}
 
-	macro previewPG {
+	@summary = "Default summary"
+	macro previewPG(deviceType = null,applyCustomSize = null,width = null,height = null) {
 		Click.waitForMenuToggleJSClick(locator1 = "ControlMenu#SIMULATION");
 
 		AssertElementNotPresent(locator1 = "IFrame#LOADING_MESSAGE");

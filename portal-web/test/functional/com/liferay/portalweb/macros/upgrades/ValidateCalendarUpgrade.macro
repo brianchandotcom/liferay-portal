@@ -1,6 +1,7 @@
 definition {
 
-	macro viewCalendar {
+	@summary = "Default summary"
+	macro viewCalendar() {
 		Navigator.gotoPage(pageName = "Calendar");
 
 		ProductMenuHelper.closeProductMenu();
@@ -35,7 +36,8 @@ definition {
 		CalendarEvent.view(eventTitle = "Post Upgrade Calendar Event");
 	}
 
-	macro viewMatchingCalendarIndexesInPartitionedDatabase {
+	@summary = "Default summary"
+	macro viewMatchingCalendarIndexesInPartitionedDatabase() {
 		var baseSchemaIndex = SQL.executeMySQLStatement(mysqlStatement = "SHOW INDEX FROM lportal.Calendar;");
 		var partitionSchemaIndex = SQL.executeMySQLStatement(mysqlStatement = "SHOW INDEX FROM lpartition_42638.Calendar;");
 

@@ -1,6 +1,7 @@
 definition {
 
-	macro addPageAndPortlet {
+	@summary = "Default summary"
+	macro addPageAndPortlet(pageURL = null,portletName = null) {
 		JSONLayout.addPublicLayout(
 			groupName = "Bridge Issues",
 			layoutName = ${portletName});
@@ -19,7 +20,8 @@ definition {
 		Portlet.addPG(portletName = ${portletName});
 	}
 
-	macro navigateToDo {
+	@summary = "Default summary"
+	macro navigateToDo(urlAppend = null,pageLink = null) {
 		var key_urlAppend = ${urlAppend};
 
 		Navigator.openWithAppendToBaseURL(urlAppend = ${key_urlAppend});
@@ -29,7 +31,8 @@ definition {
 		Click(locator1 = "BridgeIssues#NAVIGATE_TO_VIEW");
 	}
 
-	macro select {
+	@summary = "Default summary"
+	macro select(textValue = null) {
 		Click(locator1 = "BridgeIssues#SELECT_ONE_MENU");
 
 		Click(
@@ -41,7 +44,8 @@ definition {
 			locator1 = "BridgeIssues#SELECT_MENU_VALUE");
 	}
 
-	macro upload3250File {
+	@summary = "Default summary"
+	macro upload3250File(mode = null,fileName = null,instantAjax = null) {
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 			key_mode = ${mode},
 			locator1 = "BridgeIssues#CHOOSE_FILE_BUTTON",
@@ -54,7 +58,8 @@ definition {
 		}
 	}
 
-	macro urlParameters {
+	@summary = "Default summary"
+	macro urlParameters(buttonName = null,urlEnd = null,alpha = null,beta = null,gamma = null) {
 		Click(
 			key_buttonName = ${buttonName},
 			locator1 = "BridgeIssues#URL_BUTTON");
@@ -74,7 +79,8 @@ definition {
 			value1 = ${gamma});
 	}
 
-	macro verifyParam {
+	@summary = "Default summary"
+	macro verifyParam(liIndex = null,paramLink = null,ulIndex = null,paramValue = null) {
 		var key_liIndex = ${liIndex};
 		var key_ulIndex = ${ulIndex};
 
@@ -91,7 +97,8 @@ definition {
 		}
 	}
 
-	macro verifyValue {
+	@summary = "Default summary"
+	macro verifyValue(toPageLink = null,inValidURL = null,restoreState = null,textValue = null,statusValue = null,detailValue = null,link = null,validURL = null) {
 		if (${restoreState} == "true") {
 			Click(
 				key_pageLink = ${link},

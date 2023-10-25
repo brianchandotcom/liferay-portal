@@ -1,6 +1,7 @@
 definition {
 
-	macro changePaginationPermissions {
+	@summary = "Default summary"
+	macro changePaginationPermissions(itemsPerPage = null) {
 		Click(locator1 = "CalendarPermissions#PERMISSIONS_ITEMS_PER_PAGE_SELECT");
 
 		var key_itemsPerPage = ${itemsPerPage};
@@ -12,7 +13,8 @@ definition {
 			value1 = "${itemsPerPage} Entries");
 	}
 
-	macro gotoPermissions {
+	@summary = "Default summary"
+	macro gotoPermissions() {
 		Portlet.gotoPortletOptions(
 			portletName = "Calendar",
 			portletOption = "Permissions");
@@ -20,7 +22,8 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
-	macro searchRoleName {
+	@summary = "Default summary"
+	macro searchRoleName(searchTerm = null) {
 		Click(locator1 = "CalendarPermissions#PERMISSIONS_FIELD_SEARCH");
 
 		Type(
@@ -30,20 +33,23 @@ definition {
 		Click(locator1 = "CalendarPermissions#PERMISSIONS_SEARCH_ICON");
 	}
 
-	macro viewPermissionsRoleName {
+	@summary = "Default summary"
+	macro viewPermissionsRoleName(roleName = null,key_roleName = null) {
 		AssertTextEquals(
 			key_roleName = ${roleName},
 			locator1 = "CalendarPermissions#PERMISSIONS_ROLE_NAME",
 			value1 = ${key_roleName});
 	}
 
-	macro viewResultsEntries {
+	@summary = "Default summary"
+	macro viewResultsEntries(results = null) {
 		AssertTextEquals(
 			locator1 = "CalendarPermissions#RESULTS_ENTRIES",
 			value1 = ${results});
 	}
 
-	macro viewSearchResult {
+	@summary = "Default summary"
+	macro viewSearchResult(searchResults = null) {
 		AssertTextEquals(
 			locator1 = "CalendarPermissions#PERMISSIONS_RESULTS_BAR",
 			value1 = ${searchResults});

@@ -1,6 +1,7 @@
 definition {
 
-	macro addBasicWebContent {
+	@summary = "Default summary"
+	macro addBasicWebContent(userPassword = null,description = null,relatedContents = null,userEmailAddress = null,source = null,title = null,groupName = null,site = null,assetCategoryIds = null,viewableBy = null,assetTagNames = null,folderName = null) {
 		Variables.assertDefined(parameterList = "${content},${title}");
 
 		if (!(isSet(groupId))) {

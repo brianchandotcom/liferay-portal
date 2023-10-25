@@ -1,6 +1,7 @@
 definition {
 
-	macro validateSchemas {
+	@summary = "Default summary"
+	macro validateSchemas(schemaNamePrefix = null) {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
 		AntCommands.runCommand("build-test.xml", "validate-db-partition-schemas -Dschema.name.prefix=${schemaNamePrefix}");

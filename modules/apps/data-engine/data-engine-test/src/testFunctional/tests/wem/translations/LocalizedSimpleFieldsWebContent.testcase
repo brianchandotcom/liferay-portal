@@ -816,15 +816,15 @@ definition {
 		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
 
 		AssertAttributeValue(
-			value1 = "value",
 			locator1 = "TextInput#TITLE",
+			value1 = "value",
 			value2 = "Test");
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
 		AssertAttributeValue(
-			value1 = "value",
 			locator1 = "TextInput#TITLE",
+			value1 = "value",
 			value2 = "测试");
 	}
 

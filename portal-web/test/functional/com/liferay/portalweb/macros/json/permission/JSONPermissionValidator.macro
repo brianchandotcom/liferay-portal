@@ -1,6 +1,7 @@
 definition {
 
-	macro validateRoleType {
+	@summary = "Default summary"
+	macro validateRoleType(roleType = null) {
 		Variables.assertDefined(parameterList = ${roleType});
 
 		if (!(contains("account,asset library,regular,site,organization", ${roleType}))) {

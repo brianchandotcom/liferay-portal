@@ -1,6 +1,7 @@
 definition {
 
-	macro changeLocale {
+	@summary = "Default summary"
+	macro changeLocale(fieldName = null,locale = null) {
 		Click.clickNoMouseOver(
 			key_fieldName = ${fieldName},
 			locator1 = "Button#LOCALIZATION_OPEN_GRAPH");
@@ -10,13 +11,15 @@ definition {
 			locator1 = "Translation#LOCALIZATION_NAME");
 	}
 
-	macro clearImage {
+	@summary = "Default summary"
+	macro clearImage() {
 		Click(
 			key_fieldLabel = "Image",
 			locator1 = "Button#IMAGE_CLEAR");
 	}
 
-	macro configureOpenGraph {
+	@summary = "Default summary"
+	macro configureOpenGraph(depotName = null,customDescription = null,customImage = null,customTitle = null,altDescription = null) {
 		if (isSet(customTitle)) {
 			var checkboxName = "Use Custom Title";
 
@@ -101,7 +104,8 @@ definition {
 		}
 	}
 
-	macro disableOpenGraphAtSiteLevel {
+	@summary = "Default summary"
+	macro disableOpenGraphAtSiteLevel(siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/site/settings?_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fview_configuration_screen&_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_configurationScreenKey=site-configuration-open-graph");
 
 		if (IsChecked(checkboxName = "Enable Open Graph", locator1 = "Checkbox#ANY_CHECKBOX")) {
@@ -115,7 +119,8 @@ definition {
 		Button.click(button = "Save");
 	}
 
-	macro disableOpenGraphCustomSettings {
+	@summary = "Default summary"
+	macro disableOpenGraphCustomSettings() {
 		if (isSet(customTitle)) {
 			var checkboxName = "Use Custom Title";
 
@@ -133,7 +138,8 @@ definition {
 		}
 	}
 
-	macro mapEditableTextToField {
+	@summary = "Default summary"
+	macro mapEditableTextToField(mappedFieldText = null,mappedFieldName = null,textType = null,mappedField = null) {
 		if (${textType} == "TextInput") {
 			Type(
 				key_text = ${mappedField},
@@ -184,7 +190,8 @@ definition {
 		}
 	}
 
-	macro openToConfigInSystemSettings {
+	@summary = "Default summary"
+	macro openToConfigInSystemSettings(portlet = null) {
 		var baseURL = PropsUtil.get("portal.url");
 
 		if (${portlet} == "SEO") {
@@ -194,7 +201,8 @@ definition {
 		Open(value1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=${portletId}&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
 	}
 
-	macro viewDefaultConfiguration {
+	@summary = "Default summary"
+	macro viewDefaultConfiguration() {
 		task ("Assert open graph title") {
 			AssertTextEquals(
 				key_title = "Open Graph",
@@ -239,12 +247,13 @@ definition {
 		}
 	}
 
-	macro viewDefaultMappedField {
+	@summary = "Default summary"
+	macro viewDefaultMappedField(description = null,portlet = null,title = null) {
 		if (${portlet} == "Open Graph") {
 			AssertAttributeValue(
-				value1 = "value",
 				key_mappedField = "Title",
 				locator1 = "TextInput#SEO_MAPPED_FIELD",
+				value1 = "value",
 				value2 = ${title});
 
 			AssertTextEquals(
@@ -253,9 +262,9 @@ definition {
 				value1 = ${description});
 
 			AssertAttributeValue(
-				value1 = "value",
 				key_mappedField = "Image",
 				locator1 = "TextInput#SEO_MAPPED_FIELD",
+				value1 = "value",
 				value2 = "-- Unmapped --");
 
 			AssertTextEquals(
@@ -277,17 +286,20 @@ definition {
 		}
 	}
 
-	macro viewImageAltDescriptionDefault {
+	@summary = "Default summary"
+	macro viewImageAltDescriptionDefault() {
 		AssertElementPresent(
 			key_text = "openGraphImageAlt",
 			locator1 = "TextInput#OPEN_GRAPH_IMAGE_ALT_DESCRIPTION_DISABLED");
 	}
 
-	macro viewImageFieldDefault {
+	@summary = "Default summary"
+	macro viewImageFieldDefault() {
 		AssertElementPresent(locator1 = "TextInput#OPEN_GRAPH_CUSTOM_IMAGE_DEFAULT_VALUE");
 	}
 
-	macro viewMappedField {
+	@summary = "Default summary"
+	macro viewMappedField(mappedFieldValue = null,mappedField = null) {
 		if (isSet(textType)) {
 			AssertTextEquals(
 				key_mappedField = ${mappedField},
@@ -296,44 +308,50 @@ definition {
 		}
 		else {
 			AssertAttributeValue(
-				value1 = "value",
 				key_mappedField = ${mappedField},
 				locator1 = "TextInput#SEO_MAPPED_FIELD",
+				value1 = "value",
 				value2 = ${mappedFieldValue});
 		}
 	}
 
-	macro viewNoOpenGraphProperties {
+	@summary = "Default summary"
+	macro viewNoOpenGraphProperties(ogPropertyList = null) {
 		for (var ogProperty : list ${ogPropertyList}) {
 			AssertHTMLSourceTextNotPresent(value1 = ${ogProperty});
 		}
 	}
 
-	macro viewNoPreviewDescription {
+	@summary = "Default summary"
+	macro viewNoPreviewDescription() {
 		AssertTextEquals(
 			locator1 = "PagesAdmin#PREVIEW_DESCRIPTION",
 			value1 = "");
 	}
 
-	macro viewNoPreviewImage {
+	@summary = "Default summary"
+	macro viewNoPreviewImage(imageName = null) {
 		AssertElementNotPresent(
 			key_imageName = ${imageName},
 			locator1 = "PagesAdmin#PREVIEW_IMAGE");
 	}
 
-	macro viewNoTab {
+	@summary = "Default summary"
+	macro viewNoTab() {
 		AssertElementNotPresent(
 			key_panel = "Open Graph",
 			locator1 = "NavTab#TAB_LINK");
 	}
 
-	macro viewOpenGraphProperties {
+	@summary = "Default summary"
+	macro viewOpenGraphProperties(ogPropertyList = null) {
 		for (var ogProperty : list ${ogPropertyList}) {
 			AssertHTMLSourceTextPresent(value1 = ${ogProperty});
 		}
 	}
 
-	macro viewPreviewImage {
+	@summary = "Default summary"
+	macro viewPreviewImage(imageName = null) {
 		AssertVisible(
 			key_imageName = ${imageName},
 			locator1 = "PagesAdmin#PREVIEW_IMAGE");

@@ -1,7 +1,8 @@
 definition {
 
 	@description = "Add a user attribute to attribute mapping that is invalid for user matching and then select it for user resolution"
-	macro addAndSelectInvalidAttributeForUserMatching {
+	@summary = "Default summary"
+	macro addAndSelectInvalidAttributeForUserMatching(idpAttributeMapping = null) {
 		Click(locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_USER_RESOLUTION_ATTRIBUTE");
 
 		SAMLPortlet.addIdentityProviderConnectionAttributeMapping(idpAttributeMapping = ${idpAttributeMapping});
@@ -13,7 +14,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro addIdentityProviderConnection {
+	@summary = "Default summary"
+	macro addIdentityProviderConnection(idpUserMembershipsAttributeMappingText = null,idpCustomFieldAttributeMappingText = null,idpUserMembershipsAttributeMapping = null,idpAttributeMappingText = null,userResolution = null,idpEntityId = null,idpMetadataURL = null,idpCustomFieldAttributeMapping = null,idpKeepAliveURL = null,uploadMetadataXML = null,nameIdentifierFormat = null,idpAttributeMapping = null,idpMetadataURLRaw = null,userMatchingAttributeIndex = null,idpNameId = null) {
 		AssertClick(
 			locator1 = "CPSAMLAdminIdentityProviderConnection#ADD_IDENTITY_PROVIDER_BUTTON",
 			value1 = "Add Identity Provider");
@@ -120,7 +122,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro addIdentityProviderConnectionAttributeMapping {
+	@summary = "Default summary"
+	macro addIdentityProviderConnectionAttributeMapping(idpAttributeMapping = null) {
 		var attributeRowId = 0;
 
 		for (var userfieldExpressionName : list ${idpAttributeMapping}) {
@@ -141,7 +144,8 @@ definition {
 	}
 
 	@description = "This macro should be used when the values of the User Field Expression and SAML Attribute are different inside the Attribute Mapping"
-	macro addIdentityProviderConnectionAttributeMappingWithCustomAttributes {
+	@summary = "Default summary"
+	macro addIdentityProviderConnectionAttributeMappingWithCustomAttributes(idpAttributeMapping = null,idpAttributeMappingText = null) {
 		var attributeRowId = 0;
 		var attributeRowId2 = 0;
 
@@ -166,7 +170,8 @@ definition {
 		}
 	}
 
-	macro addIdentityProviderConnectionCustomFieldAttributeMapping {
+	@summary = "Default summary"
+	macro addIdentityProviderConnectionCustomFieldAttributeMapping(idpCustomFieldAttributeMapping = null) {
 		var attributeRowId = 0;
 
 		for (var userfieldExpressionName : list ${idpCustomFieldAttributeMapping}) {
@@ -187,7 +192,8 @@ definition {
 	}
 
 	@description = "This macro should be used when the values of the Custom field User Field Expression and SAML Attribute are different inside the Attribute Mapping"
-	macro addIdentityProviderConnectionCustomFieldAttributeMappingWithCustomAttributes {
+	@summary = "Default summary"
+	macro addIdentityProviderConnectionCustomFieldAttributeMappingWithCustomAttributes(idpCustomFieldAttributeMapping = null,idpCustomFieldAttributeMappingText = null) {
 		var attributeRowId = 0;
 		var attributeRowId2 = 0;
 
@@ -213,7 +219,8 @@ definition {
 	}
 
 	@description = "Adding User Group related Attribute mapping for Service provider at Identity Provider Connection configuration"
-	macro addIdentityProviderConnectionUserMembershipsAttributeMappingWithUserMemberships {
+	@summary = "Default summary"
+	macro addIdentityProviderConnectionUserMembershipsAttributeMappingWithUserMemberships(idpUserMembershipsAttributeMappingText = null,idpUserMembershipsAttributeMapping = null) {
 		Select(
 			key_index = 0,
 			locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_USER_MEMBERSHIPS_EXPRESSION_DROPDOWN",
@@ -226,7 +233,8 @@ definition {
 	}
 
 	@description = "Add Identity Provider Connection with only the Name and Entity ID filled out"
-	macro addIdentityProviderConnectionWithBasicSetup {
+	@summary = "Default summary"
+	macro addIdentityProviderConnectionWithBasicSetup(idpEntityId = null) {
 		AssertClick(
 			locator1 = "CPSAMLAdminIdentityProviderConnection#ADD_IDENTITY_PROVIDER_BUTTON",
 			value1 = "Add Identity Provider");
@@ -241,7 +249,8 @@ definition {
 	}
 
 	@description = "Add Identity Provider Connection with only the Name and Entity ID filled out and user mapping is selected but empty"
-	macro addIdentityProviderConnectionWithBasicSetupWithEmptyUserMapping {
+	@summary = "Default summary"
+	macro addIdentityProviderConnectionWithBasicSetupWithEmptyUserMapping(idpEntityId = null) {
 		AssertClick(
 			locator1 = "CPSAMLAdminIdentityProviderConnection#ADD_IDENTITY_PROVIDER_BUTTON",
 			value1 = "Add Identity Provider");
@@ -263,7 +272,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro addServiceProviderConnection {
+	@summary = "Default summary"
+	macro addServiceProviderConnection(uploadMetadataXML = null,spMetadataURL = null,nameIdentifierFormat = null,spNameId = null,spEntityId = null,spKeepAliveURL = null,spAttributes = null) {
 		AssertClick(
 			locator1 = "CPSAMLAdminServiceProviderConnections#ADD_SERVICE_PROVIDER_BUTTON",
 			value1 = "Add Service Provider");
@@ -326,7 +336,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro configureIdentityProvider {
+	@summary = "Default summary"
+	macro configureIdentityProvider(authnRequestSignatureRequired = null,authnrequestsigningallowsdynamicacsurl = null,signMetadata = null) {
 		if (${signMetadata} == "disable") {
 			Uncheck(locator1 = "CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_SIGN_METADATA_CHECKBOX");
 		}
@@ -351,7 +362,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro configureIdentityProviderConnection {
+	@summary = "Default summary"
+	macro configureIdentityProviderConnection(forceAuthn = null,samlEntityId = null) {
 		Click.waitForMenuToggleJSClick(
 			key_samlEntityId = ${samlEntityId},
 			locator1 = "CPSAMLAdmin#SAML_CONNECTION_ACTION_BUTTON");
@@ -365,7 +377,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro configureServiceProvider {
+	@summary = "Default summary"
+	macro configureServiceProvider(ldapImport = null,signAuthnRequests = null,allowShowingTheLoginPortlet = null) {
 		if (${ldapImport} == "enable") {
 			Check(locator1 = "CPSAMLAdminServiceProvider#SERVICE_PROVIDER_LDAP_IMPORT_ENABLED_CHECKBOX");
 		}
@@ -381,7 +394,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro configureServiceProviderConnection {
+	@summary = "Default summary"
+	macro configureServiceProviderConnection(forceEncryption = null,samlEntityId = null) {
 		Click.waitForMenuToggleJSClick(
 			key_samlEntityId = ${samlEntityId},
 			locator1 = "CPSAMLAdmin#SAML_CONNECTION_ACTION_BUTTON");
@@ -395,7 +409,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro deleteSAMLConnection {
+	@summary = "Default summary"
+	macro deleteSAMLConnection(samlEntityId = null) {
 		Click.waitForMenuToggleJSClick(
 			key_samlEntityId = ${samlEntityId},
 			locator1 = "CPSAMLAdmin#SAML_CONNECTION_ACTION_BUTTON");
@@ -410,7 +425,8 @@ definition {
 	}
 
 	@description = "Edit attribute mapping of SP, in Identity Provider Configurations"
-	macro editAttributeMappingOfSP {
+	@summary = "Default summary"
+	macro editAttributeMappingOfSP(idpAttributeMappingOld = null,idpAttributeMappingNew = null,idpAttributeMappingText = null,idpEntityId = null) {
 		AssertClick(
 			idpEntityId = ${idpEntityId},
 			locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_NAME",
@@ -446,7 +462,8 @@ definition {
 	}
 
 	@description = "Edit the list of attributes sent by IdP, in Service Provider Configurations"
-	macro editAttributesSentByIdP {
+	@summary = "Default summary"
+	macro editAttributesSentByIdP(spEntityId = null,spAttributes = null) {
 		AssertClick(
 			locator1 = "CPSAMLAdminServiceProviderConnections#SERVICE_PROVIDER_CONNECTION_NAME",
 			spEntityId = ${spEntityId},
@@ -464,7 +481,8 @@ definition {
 	}
 
 	@description = "Edit metadata configurations of SP, in Identity Provider Configurations"
-	macro editMetadataConfigurationsOfSP {
+	@summary = "Default summary"
+	macro editMetadataConfigurationsOfSP(idpMetadataURL = null,uploadMetadataXML = null,idpEntityId = null) {
 		AssertClick(
 			idpEntityId = ${idpEntityId},
 			locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_NAME",
@@ -495,7 +513,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro viewIdentityProviderConfigurations {
+	@summary = "Default summary"
+	macro viewIdentityProviderConfigurations(sessionMaximum = null) {
 		AssertValue(
 			locator1 = "CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_SESSION_MAXIMUM_AGE_INPUT",
 			value1 = ${sessionMaximum});
@@ -504,7 +523,8 @@ definition {
 	}
 
 	@description = "View metadata configurations of SP, in Identity Provider Configurations"
-	macro viewMetadataConfigurationsOfSP {
+	@summary = "Default summary"
+	macro viewMetadataConfigurationsOfSP(idpEntityId = null) {
 		AssertClick(
 			idpEntityId = ${idpEntityId},
 			locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_NAME",
@@ -527,7 +547,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro viewServiceProviderConfigurations {
+	@summary = "Default summary"
+	macro viewServiceProviderConfigurations(clockSkew = null) {
 		AssertValue(
 			locator1 = "CPSAMLAdminServiceProvider#SERVICE_PROVIDER_CLOCK_SKEW_INPUT",
 			value1 = ${clockSkew});

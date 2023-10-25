@@ -1,6 +1,7 @@
 definition {
 
-	macro viewAsGuestPG {
+	@summary = "Default summary"
+	macro viewAsGuestPG() {
 		Navigator.openSpecificURL(url = "http://localhost:8080/o/portal-search-elasticsearch-monitoring/monitoring-proxy/app/monitoring");
 
 		AssertTextPresent(
@@ -12,7 +13,8 @@ definition {
 			value1 = "Please sign in to access this application.");
 	}
 
-	macro viewPG {
+	@summary = "Default summary"
+	macro viewPG() {
 		var serverVersion = SearchAdministration.getServerVersion();
 
 		Navigator.gotoPage(pageName = "Elasticsearch Monitoring Page");

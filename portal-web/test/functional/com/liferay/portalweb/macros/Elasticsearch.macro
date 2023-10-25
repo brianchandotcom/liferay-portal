@@ -1,6 +1,7 @@
 definition {
 
-	macro assertElasticsearchIsReady {
+	@summary = "Default summary"
+	macro assertElasticsearchIsReady() {
 		var port = Elasticsearch.getServerPort();
 		var portalHostname = PropsUtil.get("portal.hostname");
 
@@ -23,7 +24,8 @@ definition {
 		}
 	}
 
-	macro getClientVersion {
+	@summary = "Default summary"
+	macro getClientVersion() {
 		var projectDir = PropsUtil.get("project.dir");
 
 		var fileContent = FileUtil.read("${projectDir}/modules/apps/portal-search-elasticsearch7/portal-search-elasticsearch7-impl/build.gradle");
@@ -35,7 +37,8 @@ definition {
 		return ${clientVersion};
 	}
 
-	macro getServerPort {
+	@summary = "Default summary"
+	macro getServerPort() {
 		var remoteEnabled = Elasticsearch.isRemoteMode();
 
 		if (${remoteEnabled} == "true") {
@@ -46,7 +49,8 @@ definition {
 		}
 	}
 
-	macro getServerVersion {
+	@summary = "Default summary"
+	macro getServerVersion() {
 		if (!(isSet(port))) {
 			var port = Elasticsearch.getServerPort();
 		}
@@ -64,7 +68,8 @@ definition {
 		return ${serverVersion};
 	}
 
-	macro isRemoteMode {
+	@summary = "Default summary"
+	macro isRemoteMode() {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
 		var fileLocation = "${liferayHome}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config";
@@ -89,14 +94,16 @@ definition {
 		}
 	}
 
-	macro viewClusterStatus {
+	@summary = "Default summary"
+	macro viewClusterStatus(clusterStatus = null) {
 		AssertTextPresent(
 			locator1 = "//pre",
 			value1 = ${clusterStatus});
 	}
 
 	@description = "Elasticsearch provides a Cluster Health API (http://localhost:${nodePort}/_cluster/health?pretty=true) to easily view the current status of the cluster."
-	macro viewClusterStatusViaClusterHealthAPI {
+	@summary = "Default summary"
+	macro viewClusterStatusViaClusterHealthAPI(numberOfNodes = null,nodePort = null) {
 		var portalHostname = PropsUtil.get("portal.hostname");
 
 		Navigator.openSpecificURL(url = "http://${portalHostname}:${nodePort}/_cluster/health?level=indices&pretty");

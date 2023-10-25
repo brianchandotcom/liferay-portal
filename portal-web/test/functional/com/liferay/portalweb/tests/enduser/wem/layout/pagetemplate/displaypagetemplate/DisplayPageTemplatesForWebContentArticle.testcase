@@ -887,9 +887,9 @@ definition {
 				locator1 = "TextInput#ANY");
 
 			AssertAttributeValue(
-				value1 = "disabled",
 				key_text = "Preview",
 				locator1 = "Button#ANY",
+				value1 = "disabled",
 				value2 = "true");
 		}
 
@@ -1031,9 +1031,9 @@ definition {
 				locator1 = "TextInput#ANY");
 
 			AssertAttributeValue(
-				value1 = "disabled",
 				key_text = "Preview",
 				locator1 = "Button#ANY",
+				value1 = "disabled",
 				value2 = "true");
 		}
 

@@ -1,6 +1,7 @@
 definition {
 
-	macro addCollection {
+	@summary = "Default summary"
+	macro addCollection(collectionDescription = null,collectionName = null) {
 		FragmentsAdminNavigator.gotoAddCollection();
 
 		Collection.editCollection(
@@ -10,7 +11,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro addFolder {
+	@summary = "Default summary"
+	macro addFolder(folderName = null) {
 		LexiconEntry.gotoAdd();
 
 		MenuItem.click(menuItem = "Folder");
@@ -24,7 +26,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro addFragment {
+	@summary = "Default summary"
+	macro addFragment(fragmentName = null,supportedFieldTypes = null) {
 		LexiconEntry.gotoAdd();
 
 		AssertTextEquals(
@@ -72,7 +75,8 @@ definition {
 		}
 	}
 
-	macro addResource {
+	@summary = "Default summary"
+	macro addResource(resourceFile = null) {
 		LexiconEntry.gotoAdd();
 
 		IFrame.selectConfigurationFrame();
@@ -88,7 +92,8 @@ definition {
 		Button.clickAdd();
 	}
 
-	macro addResourceToFolder {
+	@summary = "Default summary"
+	macro addResourceToFolder(resourceFile = null,folderName = null) {
 		LexiconCard.clickCardTitleLink(card = ${folderName});
 
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
@@ -96,7 +101,8 @@ definition {
 			value1 = ${resourceFile});
 	}
 
-	macro addSubfolder {
+	@summary = "Default summary"
+	macro addSubfolder(subfolderName = null,folderName = null) {
 		LexiconCard.clickCardTitleLink(card = ${folderName});
 
 		LexiconEntry.gotoAdd();
@@ -112,7 +118,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro deleteEntry {
+	@summary = "Default summary"
+	macro deleteEntry(entry = null) {
 		LexiconCard.clickEllipsisItem(
 			card = ${entry},
 			item = "Delete");
@@ -126,7 +133,8 @@ definition {
 			locator1 = "Modal#MODAL_FOOTER_BUTTON");
 	}
 
-	macro deleteResource {
+	@summary = "Default summary"
+	macro deleteResource(entry = null) {
 		LexiconCard.clickEllipsisItem(
 			card = ${entry},
 			item = "Delete");
@@ -140,7 +148,8 @@ definition {
 			locator1 = "Modal#MODAL_FOOTER_BUTTON");
 	}
 
-	macro exportCollection {
+	@summary = "Default summary"
+	macro exportCollection(collectionName = null) {
 		Navigator.gotoNavNested(navNested = ${collectionName});
 
 		Click.waitForMenuToggleJSClick(
@@ -150,7 +159,8 @@ definition {
 		MenuItem.click(menuItem = "Export");
 	}
 
-	macro exportFragment {
+	@summary = "Default summary"
+	macro exportFragment(fragmentName = null,collectionName = null) {
 		FragmentsAdminNavigator.gotoCollection(collectionName = ${collectionName});
 
 		FragmentsAdminNavigator.gotoEntryEllipsisItem(
@@ -158,7 +168,8 @@ definition {
 			item = "Export");
 	}
 
-	macro exportMultipleCollections {
+	@summary = "Default summary"
+	macro exportMultipleCollections(collectionNameList = null) {
 		for (var collectionName : list ${collectionNameList}) {
 			Check(
 				key_tableEntry = ${collectionName},
@@ -172,7 +183,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro importCollectionFromDependenciesFolder {
+	@summary = "Default summary"
+	macro importCollectionFromDependenciesFolder(collectionZipFile = null,importOption = null) {
 		FragmentsAdminNavigator.gotoImportCollection();
 
 		WaitForPageLoad();
@@ -198,7 +210,8 @@ definition {
 		Button.clickDone();
 	}
 
-	macro importCollectionFromTempFolder {
+	@summary = "Default summary"
+	macro importCollectionFromTempFolder(importOption = null) {
 		FragmentsAdminNavigator.gotoImportCollection();
 
 		WaitForPageLoad();
@@ -228,7 +241,8 @@ definition {
 		Button.clickDone();
 	}
 
-	macro importFragmentFromTempFolder {
+	@summary = "Default summary"
+	macro importFragmentFromTempFolder(importOption = null,collectionName = null) {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		Click.waitForMenuToggleJSClick(
@@ -264,11 +278,13 @@ definition {
 		Button.clickDone();
 	}
 
-	macro openFragmentsAdmin {
+	@summary = "Default summary"
+	macro openFragmentsAdmin(siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/fragments");
 	}
 
-	macro propagateChanges {
+	@summary = "Default summary"
+	macro propagateChanges(itemNameList = null) {
 		if (isSet(itemNameList)) {
 			for (var itemName : list ${itemNameList}) {
 				Check(
@@ -287,7 +303,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro selectCollection {
+	@summary = "Default summary"
+	macro selectCollection(collectionName = null) {
 		Select(
 			key_fieldLabel = "Fragment Sets",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
@@ -296,27 +313,32 @@ definition {
 		Modal.save();
 	}
 
-	macro viewEntryNotPresent {
+	@summary = "Default summary"
+	macro viewEntryNotPresent(entry = null) {
 		LexiconCard.viewCardNotPresent(card = ${entry});
 	}
 
-	macro viewEntryPresent {
+	@summary = "Default summary"
+	macro viewEntryPresent(entry = null) {
 		LexiconCard.viewCardPresent(card = ${entry});
 	}
 
-	macro viewEntryWorkflowStatus {
+	@summary = "Default summary"
+	macro viewEntryWorkflowStatus(entry = null,workflowStatus = null) {
 		LexiconCard.viewCardLabel(
 			card = ${entry},
 			cardLabel = ${workflowStatus});
 	}
 
-	macro viewFormFragementForEachFieldType {
+	@summary = "Default summary"
+	macro viewFormFragementForEachFieldType(formFragmentName = null,fieldType = null) {
 		LexiconTable.viewTableEntryFormFragment(
 			fieldType = ${fieldType},
 			tableEntryInfo = ${formFragmentName});
 	}
 
-	macro viewSiteUsages {
+	@summary = "Default summary"
+	macro viewSiteUsages(siteName = null,usages = null) {
 		LexiconTable.viewTableEntryInfo(
 			columnName = "usages",
 			tableEntry = ${siteName},

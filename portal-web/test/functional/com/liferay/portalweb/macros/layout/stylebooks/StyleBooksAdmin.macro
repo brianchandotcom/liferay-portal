@@ -1,6 +1,7 @@
 definition {
 
-	macro addStyleBooks {
+	@summary = "Default summary"
+	macro addStyleBooks(styleBookName = null) {
 		LexiconEntry.gotoAdd();
 
 		PortletEntry.inputName(name = ${styleBookName});
@@ -8,7 +9,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro deleteStyleBook {
+	@summary = "Default summary"
+	macro deleteStyleBook(styleBookName = null) {
 		StyleBooksAdmin.gotoStyleBookEllipsisItem(
 			item = "Delete",
 			styleBookName = ${styleBookName});
@@ -22,17 +24,20 @@ definition {
 			locator1 = "Modal#MODAL_FOOTER_BUTTON");
 	}
 
-	macro gotoStyleBook {
+	@summary = "Default summary"
+	macro gotoStyleBook(styleBookName = null) {
 		LexiconCard.clickCardTitle(card = ${styleBookName});
 	}
 
-	macro gotoStyleBookEllipsisItem {
+	@summary = "Default summary"
+	macro gotoStyleBookEllipsisItem(item = null,styleBookName = null) {
 		LexiconCard.clickEllipsisItem(
 			card = ${styleBookName},
 			item = ${item});
 	}
 
-	macro importStyleBookFromTempFolder {
+	@summary = "Default summary"
+	macro importStyleBookFromTempFolder() {
 		Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Import");
@@ -52,7 +57,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro markStyleBookAsDefault {
+	@summary = "Default summary"
+	macro markStyleBookAsDefault(confirmMessage = null,styleBookName = null) {
 		StyleBooksAdmin.gotoStyleBookEllipsisItem(
 			item = "Mark as Default",
 			styleBookName = ${styleBookName});
@@ -64,11 +70,13 @@ definition {
 			icon = "check-circle");
 	}
 
-	macro openStyleBooksAdmin {
+	@summary = "Default summary"
+	macro openStyleBooksAdmin(siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_style_book_web_internal_portlet_StyleBookPortlet");
 	}
 
-	macro viewStyleBooksPresent {
+	@summary = "Default summary"
+	macro viewStyleBooksPresent(styleBookName = null) {
 		LexiconCard.viewCardPresent(card = ${styleBookName});
 	}
 

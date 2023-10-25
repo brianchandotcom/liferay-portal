@@ -1,6 +1,7 @@
 definition {
 
-	macro addAndViewAccountGroup {
+	@summary = "Default summary"
+	macro addAndViewAccountGroup(accountGroupDescription = null,accountGroupName = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
@@ -15,7 +16,8 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = ${accountGroupName});
 	}
 
-	macro addAndViewBusinessAccount {
+	@summary = "Default summary"
+	macro addAndViewBusinessAccount(accountTaxId = null,accountDescription = null,accountName = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
@@ -31,7 +33,8 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = ${accountName});
 	}
 
-	macro addUserToBusinessAccount {
+	@summary = "Default summary"
+	macro addUserToBusinessAccount(accountName = null,userLastName = null,userScreenName = null,userEmailAddress = null,userFirstName = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
@@ -49,7 +52,8 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = "${userFirstName} ${userLastName}");
 	}
 
-	macro resetTestUserPassword {
+	@summary = "Default summary"
+	macro resetTestUserPassword(administratorEmail = null) {
 		Type(
 			locator1 = "TextInput#EMAIL",
 			value1 = ${administratorEmail});
@@ -85,7 +89,8 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
-	macro viewAccountUserRoleNoPermissions {
+	@summary = "Default summary"
+	macro viewAccountUserRoleNoPermissions(permissionDefinitionValue = null,permissionNavigationValue = null,accountRoleTitle = null) {
 		Role.openRolesAdmin();
 
 		RoleNavigator.gotoRoleType(roleType = "Account");
@@ -99,7 +104,8 @@ definition {
 			permissionNavigationValue = ${permissionNavigationValue});
 	}
 
-	macro viewAndEditUser {
+	@summary = "Default summary"
+	macro viewAndEditUser() {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

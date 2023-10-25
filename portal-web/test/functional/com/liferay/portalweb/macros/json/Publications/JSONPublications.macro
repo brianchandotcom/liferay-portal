@@ -1,6 +1,7 @@
 definition {
 
-	macro addPublication {
+	@summary = "Default summary"
+	macro addPublication() {
 		Variables.assertDefined(parameterList = ${publicationName});
 
 		var publicationDescription = JSONPublicationsSetter.setPublicationDescription(publicationDescription = ${publicationDescription});
@@ -11,17 +12,20 @@ definition {
 			publicationName = ${publicationName});
 	}
 
-	macro enablePublications {
+	@summary = "Default summary"
+	macro enablePublications() {
 		JSONPublicationsAPI._enablePublications();
 	}
 
-	macro publishPublication {
+	@summary = "Default summary"
+	macro publishPublication(publicationName = null) {
 		var ctCollectionId = JSONPublicationsSetter.setCTCollectionId(publicationName = ${publicationName});
 
 		JSONPublicationsAPI._publishPublication(ctCollectionId = ${ctCollectionId});
 	}
 
-	macro selectPublication {
+	@summary = "Default summary"
+	macro selectPublication(publicationName = null) {
 		var ctCollectionId = JSONPublicationsSetter.setCTCollectionId(publicationName = ${publicationName});
 
 		JSONPublicationsAPI._selectPublication(ctCollectionId = ${ctCollectionId});

@@ -1,6 +1,7 @@
 definition {
 
-	macro addVirtualInstanceWithInitializer {
+	@summary = "Default summary"
+	macro addVirtualInstanceWithInitializer(maxUserNumber = null,maxUsers = null,portalInstanceActive = null,webId = null,mailDomain = null,virtualHost = null,initializerName = null) {
 		LexiconEntry.gotoAdd();
 
 		Type(

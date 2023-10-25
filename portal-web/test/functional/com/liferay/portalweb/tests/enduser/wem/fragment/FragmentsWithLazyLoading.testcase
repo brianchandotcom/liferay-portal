@@ -51,11 +51,11 @@ definition {
 				fragmentName = "Image");
 
 			AssertAttributeValue(
-				value1 = "loading",
 				fragmentName = "image",
 				id = "image",
 				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+				value1 = "loading",
 				value2 = "auto");
 		}
 
@@ -71,11 +71,11 @@ definition {
 			PageEditor.configureFragment(enableLazyLoading = "true");
 
 			AssertAttributeValue(
-				value1 = "loading",
 				fragmentName = "image",
 				id = "image",
 				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+				value1 = "loading",
 				value2 = "lazy");
 		}
 
@@ -85,11 +85,11 @@ definition {
 
 		task ("Then the value of loading is back to auto") {
 			AssertAttributeValue(
-				value1 = "loading",
 				fragmentName = "image",
 				id = "image",
 				index = 1,
 				locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT",
+				value1 = "loading",
 				value2 = "auto");
 		}
 	}

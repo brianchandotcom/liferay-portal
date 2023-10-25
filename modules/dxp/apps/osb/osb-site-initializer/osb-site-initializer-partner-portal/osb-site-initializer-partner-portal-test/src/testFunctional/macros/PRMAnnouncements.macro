@@ -1,6 +1,7 @@
 definition {
 
-	macro addAndPublishAnnouncement {
+	@summary = "Default summary"
+	macro addAndPublishAnnouncement(announcementTitle = null,announcementBody = null) {
 		LexiconEntry.gotoAddMenuItem(menuItem = "Announcement");
 
 		PortletEntry.inputTitle(title = ${announcementTitle});

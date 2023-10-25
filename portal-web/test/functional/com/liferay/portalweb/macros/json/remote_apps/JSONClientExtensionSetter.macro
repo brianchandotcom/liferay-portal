@@ -1,6 +1,7 @@
 definition {
 
-	macro setNameMap {
+	@summary = "Default summary"
+	macro setNameMap(name = null) {
 		Variables.assertDefined(parameterList = ${name});
 
 		var nameMap = '''{"en_US":"${name}"}''';
@@ -8,7 +9,8 @@ definition {
 		return ${nameMap};
 	}
 
-	macro setTypeSettings {
+	@summary = "Default summary"
+	macro setTypeSettings(mainURL = null,url = null) {
 		if (isSet(mainURL)) {
 			var typeSettings = "mainURL=${mainURL}%0A";
 		}

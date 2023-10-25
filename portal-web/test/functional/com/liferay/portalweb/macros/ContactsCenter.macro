@@ -1,6 +1,7 @@
 definition {
 
-	macro addPG {
+	@summary = "Default summary"
+	macro addPG(emailAddress = null,contactName = null) {
 		Button.click(button = "Add Contact");
 
 		AssertElementPresent(locator1 = "TextInput#NAME");
@@ -18,7 +19,8 @@ definition {
 			value1 = "You have successfully added a new contact.");
 	}
 
-	macro editPG {
+	@summary = "Default summary"
+	macro editPG(contactName = null,contactNameEdit = null,emailAddressEdit = null) {
 		AssertClick(
 			key_contact = ${contactName},
 			locator1 = "ContactsCenter#CONTACT_LIST",
@@ -47,7 +49,8 @@ definition {
 			value1 = "You have successfully updated the contact.");
 	}
 
-	macro enableEmailAddressOnPortlet {
+	@summary = "Default summary"
+	macro enableEmailAddressOnPortlet() {
 		Portlet.gotoPortletOptions(
 			portletName = "Contacts Center",
 			portletOption = "Configuration");
@@ -63,7 +66,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro viewContactCenterContainerPG {
+	@summary = "Default summary"
+	macro viewContactCenterContainerPG(myContact = null,contactFollower = null,contactConnection = null,contactFollowing = null,allUser = null) {
 		if (${contactConnection} != 1) {
 			AssertTextEquals(
 				locator1 = "ContactsCenter#CONTACT_CONNECTIONS_COUNT",
@@ -113,7 +117,8 @@ definition {
 		}
 	}
 
-	macro viewContactPG {
+	@summary = "Default summary"
+	macro viewContactPG(emailAddress = null,contactName = null,interactButton = null) {
 		AssertClick.assertPartialTextClickAt(
 			key_contact = ${contactName},
 			locator1 = "ContactsCenter#CONTACT_LIST",

@@ -1,6 +1,7 @@
 definition {
 
-	macro configureSetupPG {
+	@summary = "Default summary"
+	macro configureSetupPG(wikiNodeName = null,wikiPageName = null) {
 		Portlet.gotoPortletOptions(
 			portletName = "Wiki Display",
 			portletOption = "Configuration");

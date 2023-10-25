@@ -1,36 +1,42 @@
 definition {
 
-	macro assertColumnNotPresent {
+	@summary = "Default summary"
+	macro assertColumnNotPresent(key_field = null) {
 		AssertElementNotPresent(
 			key_field = ${key_field},
 			locator1 = "FrontendDataSet#TABLE_ITEM_COLUMN");
 	}
 
-	macro assertColumnPresent {
+	@summary = "Default summary"
+	macro assertColumnPresent(key_field = null) {
 		AssertElementPresent(
 			key_field = ${key_field},
 			locator1 = "FrontendDataSet#TABLE_ITEM_COLUMN");
 	}
 
-	macro assertCustomViewName {
+	@summary = "Default summary"
+	macro assertCustomViewName(key_nameCustomView = null) {
 		AssertElementPresent(
 			locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW",
 			value1 = ${key_nameCustomView});
 	}
 
-	macro assertFilterSummaryLabel {
+	@summary = "Default summary"
+	macro assertFilterSummaryLabel(key_filter = null) {
 		AssertElementPresent(
 			locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL",
 			value1 = ${key_filter});
 	}
 
-	macro assertMenuItem {
+	@summary = "Default summary"
+	macro assertMenuItem(key_menuItem = null) {
 		AssertElementPresent(
 			key_itemName = ${key_menuItem},
 			locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
 	}
 
-	macro changeCustomView {
+	@summary = "Default summary"
+	macro changeCustomView(key_itemName = null) {
 		Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
 
 		Click(
@@ -38,7 +44,8 @@ definition {
 			locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
 	}
 
-	macro compareValue {
+	@summary = "Default summary"
+	macro compareValue(key_columnIndex = null,key_valueIndex2 = null,key_valueIndex1 = null) {
 		var dataSetValue1 = FrontendDataSetCustomView.getValueByPosition(
 			columnIndex = ${key_columnIndex},
 			valueIndex = ${key_valueIndex1});
@@ -51,7 +58,8 @@ definition {
 			expected = ${dataSetValue2});
 	}
 
-	macro createNewView {
+	@summary = "Default summary"
+	macro createNewView(entryName = null) {
 		Click(locator1 = "FrontendDataSet#SELECT_OPTION_HEADER");
 
 		Click(
@@ -67,7 +75,8 @@ definition {
 			locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
 	}
 
-	macro deleteView {
+	@summary = "Default summary"
+	macro deleteView() {
 		Click(locator1 = "FrontendDataSet#SELECT_OPTION_HEADER");
 
 		Click(
@@ -83,7 +92,8 @@ definition {
 			locator1 = "Modal#MODAL_FOOTER_BUTTON");
 	}
 
-	macro editCurrentViewName {
+	@summary = "Default summary"
+	macro editCurrentViewName(entryName = null) {
 		Click(locator1 = "FrontendDataSet#SELECT_OPTION_HEADER");
 
 		Click(
@@ -99,7 +109,8 @@ definition {
 			locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
 	}
 
-	macro getValueByPosition {
+	@summary = "Default summary"
+	macro getValueByPosition(valueIndex = null,columnIndex = null) {
 		var key_columnIndex = ${columnIndex};
 		var key_valueIndex = ${valueIndex};
 		var dataSetValue = selenium.getText("FrontendDataSet#TABLE_CELL");
@@ -107,7 +118,8 @@ definition {
 		return ${dataSetValue};
 	}
 
-	macro saveCustomView {
+	@summary = "Default summary"
+	macro saveCustomView() {
 		Click(locator1 = "FrontendDataSet#SELECT_OPTION_HEADER");
 
 		Click(
@@ -115,7 +127,8 @@ definition {
 			locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
 	}
 
-	macro saveViewAs {
+	@summary = "Default summary"
+	macro saveViewAs(entryName = null) {
 		Click(locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW");
 
 		Click(
@@ -131,7 +144,8 @@ definition {
 			locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
 	}
 
-	macro selectColumn {
+	@summary = "Default summary"
+	macro selectColumn(key_itemName = null) {
 		Click(
 			ariaLabel = "Open Fields Menu",
 			locator1 = "Button#ANY_WITH_ARIA_LABEL");
@@ -141,25 +155,29 @@ definition {
 			locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW");
 	}
 
-	macro selectView {
+	@summary = "Default summary"
+	macro selectView(key_itemName = null) {
 		Click(
 			locator1 = "FrontendDataSet#SELECT_OPTION_CUSTOM_VIEW",
 			value1 = ${key_itemName});
 	}
 
-	macro verifyCustomView {
+	@summary = "Default summary"
+	macro verifyCustomView(key_nameCustomView = null) {
 		VerifyElementPresent(
 			locator1 = "FrontendDataSet#SELECT_CUSTOM_VIEW",
 			value1 = ${key_nameCustomView});
 	}
 
-	macro verifyFilterSummaryLabel {
+	@summary = "Default summary"
+	macro verifyFilterSummaryLabel(key_filter = null) {
 		VerifyElementPresent(
 			locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL",
 			value1 = ${key_filter});
 	}
 
-	macro viewNoColumn {
+	@summary = "Default summary"
+	macro viewNoColumn(key_field = null) {
 		AssertElementNotPresent(
 			key_field = ${key_field},
 			locator1 = "FrontendDataSet#TABLE_ITEM_COLUMN");

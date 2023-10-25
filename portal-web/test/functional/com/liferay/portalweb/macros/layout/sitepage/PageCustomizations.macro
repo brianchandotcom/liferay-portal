@@ -1,6 +1,7 @@
 definition {
 
-	macro configureCustomization {
+	@summary = "Default summary"
+	macro configureCustomization(menuItem = null) {
 		Click(locator1 = "Icon#STAGING_BAR_VERTICAL_ELLIPSIS");
 
 		if (${menuItem} == "Reset My Customizations") {
@@ -24,7 +25,8 @@ definition {
 		}
 	}
 
-	macro enableSectionCustomizableCP {
+	@summary = "Default summary"
+	macro enableSectionCustomizableCP(columnIdList = null,pageName = null) {
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
 			pageName = ${pageName});
@@ -49,7 +51,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro viewCustomizablePagePG {
+	@summary = "Default summary"
+	macro viewCustomizablePagePG() {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Home#PAGE_CUSTOMIZATION_MESSAGE_INFO",
 			value1 = "You can customize this page.");

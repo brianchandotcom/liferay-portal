@@ -1,6 +1,7 @@
 definition {
 
-	macro _addCommerceProductsWithSpecifications {
+	@summary = "Default summary"
+	macro _addCommerceProductsWithSpecifications(catalogName = null,specificationKey = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -66,7 +67,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro _addCommerceSpecification {
+	@summary = "Default summary"
+	macro _addCommerceSpecification() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -111,7 +113,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro _deleteAllCommerceSpecifications {
+	@summary = "Default summary"
+	macro _deleteAllCommerceSpecifications() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -142,7 +145,8 @@ definition {
 		}
 	}
 
-	macro _getCommerceSpecificationIdBySpecKey {
+	@summary = "Default summary"
+	macro _getCommerceSpecificationIdBySpecKey(specificationKey = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -162,7 +166,8 @@ definition {
 		return ${optionCategoryId};
 	}
 
-	macro _getCommerceSpecificationIds {
+	@summary = "Default summary"
+	macro _getCommerceSpecificationIds(specificationCount = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -189,7 +194,8 @@ definition {
 		return ${specificationIds};
 	}
 
-	macro _getCommerceSpecificationsCount {
+	@summary = "Default summary"
+	macro _getCommerceSpecificationsCount() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {

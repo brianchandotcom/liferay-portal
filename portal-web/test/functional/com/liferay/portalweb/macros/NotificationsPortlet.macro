@@ -1,6 +1,7 @@
 definition {
 
-	macro configureNotificationPG {
+	@summary = "Default summary"
+	macro configureNotificationPG(menuItem = null) {
 		MouseOver.mouseOverNotVisible(locator1 = "Notifications#NOTIFICATIONS_PORTLET_VERTICAL_ELLIPSIS");
 
 		Click(locator1 = "Notifications#NOTIFICATIONS_PORTLET_VERTICAL_ELLIPSIS");
@@ -8,7 +9,8 @@ definition {
 		MenuItem.click(menuItem = ${menuItem});
 	}
 
-	macro disableUserDeliveries {
+	@summary = "Default summary"
+	macro disableUserDeliveries(actionType = null,notificationType = null,contentType = null) {
 		var key_contentType = ${contentType};
 		var key_panel = ${contentType};
 
@@ -34,7 +36,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro gotoNotificationDelivery {
+	@summary = "Default summary"
+	macro gotoNotificationDelivery(notificationPg = null) {
 		Navigator.gotoNotifications();
 
 		if (${notificationPg} == "true") {
@@ -45,7 +48,8 @@ definition {
 		}
 	}
 
-	macro tearDownUserDeliveries {
+	@summary = "Default summary"
+	macro tearDownUserDeliveries() {
 		var actionList = "adds,updates";
 		var contentList = "Wiki,Message Boards,Comments,Documents and Media,Bookmarks,Web Content,Blogs";
 		var notificationList = "Email,Website";

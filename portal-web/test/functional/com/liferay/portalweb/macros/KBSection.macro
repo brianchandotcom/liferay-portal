@@ -1,6 +1,7 @@
 definition {
 
-	macro configureSectionOnWidget {
+	@summary = "Default summary"
+	macro configureSectionOnWidget(sectionValue = null) {
 		Portlet.gotoPortletOptions(
 			portletName = "Knowledge Base Section",
 			portletOption = "Configuration");
@@ -16,7 +17,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro enableSectionInSystemSettings {
+	@summary = "Default summary"
+	macro enableSectionInSystemSettings(sectionValue = null) {
 		var baseURL = JSONCompany.getPortalURL();
 
 		Open(value1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.knowledge.base.web.internal.configuration.KBSectionPortletInstanceConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
@@ -36,7 +38,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro viewPG {
+	@summary = "Default summary"
+	macro viewPG(kbDescription = null,description = null,kbArticleTitle = null) {
 		AssertClick(
 			key_text = ${kbArticleTitle},
 			locator1 = "Link#ANY",

@@ -1,6 +1,7 @@
 definition {
 
-	macro loginAs {
+	@summary = "Default summary"
+	macro loginAs(emailAddress = null) {
 		WaitForPageLoad();
 
 		if (!(isSet(password))) {

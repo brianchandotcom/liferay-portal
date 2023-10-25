@@ -1,6 +1,7 @@
 definition {
 
-	macro addOfflinePaymentMethod {
+	@summary = "Default summary"
+	macro addOfflinePaymentMethod(key = null) {
 		if (!(IsElementPresent(key_title = "Offline Payment Method Keys", locator1 = "Header#H2_TITLE"))) {
 			SystemSettings.openSystemSettingsAdmin();
 

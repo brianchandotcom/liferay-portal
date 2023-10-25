@@ -1,6 +1,7 @@
 definition {
 
-	macro addProducts {
+	@summary = "Default summary"
+	macro addProducts() {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",
@@ -38,7 +39,8 @@ definition {
 		Click(locator1 = "CP2NavigationMenu#BUTTON_SAVE");
 	}
 
-	macro assertStatusOptions {
+	@summary = "Default summary"
+	macro assertStatusOptions(statusList = null) {
 		Click(
 			locator1 = "CP2NavigationMenu#STATUS_BUTTON",
 			title = "Active");
@@ -50,25 +52,30 @@ definition {
 		}
 	}
 
-	macro cancelTeamMembersInvitation {
+	@summary = "Default summary"
+	macro cancelTeamMembersInvitation() {
 		Click(locator1 = "CP2NavigationMenu#INVITE_MEMBERS_CANCEL_BUTTON");
 	}
 
-	macro clickOnHideButton {
+	@summary = "Default summary"
+	macro clickOnHideButton() {
 		Click(locator1 = "CP2NavigationMenu#HIDE_BUTTON");
 	}
 
-	macro clickOnProductButton {
+	@summary = "Default summary"
+	macro clickOnProductButton(product = null) {
 		Click(
 			locator1 = "CP2NavigationMenu#PRODUCT",
 			product = ${product});
 	}
 
-	macro clickOnShowButton {
+	@summary = "Default summary"
+	macro clickOnShowButton() {
 		Click(locator1 = "CP2NavigationMenu#SHOW_BUTTON");
 	}
 
-	macro goToCP2 {
+	@summary = "Default summary"
+	macro goToCP2(site = null) {
 		Refresh();
 
 		Click(locator1 = "CP2NavigationMenu#APPLICATIONS_MENU_ACCOUNTS");
@@ -78,15 +85,18 @@ definition {
 			locator1 = "ApplicationsMenu#SITE_LINK");
 	}
 
-	macro goToProductActivation {
+	@summary = "Default summary"
+	macro goToProductActivation() {
 		Click(locator1 = "CP2NavigationMenu#PRODUCT_ACTIVATION");
 	}
 
-	macro goToTeamMembers {
+	@summary = "Default summary"
+	macro goToTeamMembers() {
 		Click(locator1 = "CP2NavigationMenu#TEAM_MEMBERS");
 	}
 
-	macro openLastIdCreated {
+	@summary = "Default summary"
+	macro openLastIdCreated() {
 		var idCreated = selenium.getText("RaylifeRetrieveEmail#ID_CREATED");
 
 		Click(

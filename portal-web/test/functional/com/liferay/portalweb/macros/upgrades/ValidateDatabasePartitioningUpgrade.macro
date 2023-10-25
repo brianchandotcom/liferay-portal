@@ -1,6 +1,7 @@
 definition {
 
-	macro viewUpgradeDBPartition {
+	@summary = "Default summary"
+	macro viewUpgradeDBPartition() {
 		SignOut.signOut();
 
 		User.firstLoginUI(

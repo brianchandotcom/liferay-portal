@@ -1,6 +1,7 @@
 definition {
 
-	macro addMessageBoards {
+	@summary = "Default summary"
+	macro addMessageBoards() {
 		Navigator.gotoPage(pageName = "Message Boards");
 
 		MessageboardsThread.addPG(
@@ -8,7 +9,8 @@ definition {
 			threadSubject = "Message Boards Subject 3");
 	}
 
-	macro editAndDeleteMessageBoard {
+	@summary = "Default summary"
+	macro editAndDeleteMessageBoard() {
 		Navigator.gotoPage(pageName = "Message Boards");
 
 		MessageboardsThread.gotoPG(
@@ -58,7 +60,8 @@ definition {
 		MessageboardsThread.deletePG(threadSubject = "Message Boards Subject Edit");
 	}
 
-	macro viewAndAddMessageBoard {
+	@summary = "Default summary"
+	macro viewAndAddMessageBoard() {
 		Navigator.gotoPage(pageName = "Message Boards");
 
 		MessageboardsThread.gotoPG(
@@ -86,7 +89,8 @@ definition {
 			threadSubject = "Message Boards Subject After Upgrade");
 	}
 
-	macro viewMessageBoards {
+	@summary = "Default summary"
+	macro viewMessageBoards() {
 		Navigator.gotoPage(pageName = "Message Boards");
 
 		MessageboardsThread.viewLockedPG(threadSubject = "Message Boards Subject 2");

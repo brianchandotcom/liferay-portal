@@ -1,12 +1,14 @@
 definition {
 
-	macro closeToastAlert {
+	@summary = "Default summary"
+	macro closeToastAlert(key_type = null) {
 		Click(
 			key_type = ${key_type},
 			locator1 = "ClayAlertToast#ALERT_TOAST_CLOSE_BUTTON");
 	}
 
-	macro getElementRectanglePositionX {
+	@summary = "Default summary"
+	macro getElementRectanglePositionX(code = null,index = null) {
 		WaitForSPARefresh();
 
 		var javascript = '''
@@ -24,7 +26,8 @@ definition {
 		return ${position_x};
 	}
 
-	macro getElementRectanglePositionY {
+	@summary = "Default summary"
+	macro getElementRectanglePositionY(code = null,index = null) {
 		WaitForSPARefresh();
 
 		var javascript = '''
@@ -42,7 +45,8 @@ definition {
 		return ${position_y};
 	}
 
-	macro openToastAlert {
+	@summary = "Default summary"
+	macro openToastAlert(key_text = null) {
 		Click(
 			key_text = ${key_text},
 			locator1 = "Button#ANY");

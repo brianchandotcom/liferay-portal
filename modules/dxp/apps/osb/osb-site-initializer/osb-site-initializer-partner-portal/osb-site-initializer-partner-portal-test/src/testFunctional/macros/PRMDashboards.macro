@@ -1,6 +1,7 @@
 definition {
 
-	macro getLegendValue {
+	@summary = "Default summary"
+	macro getLegendValue(legendName = null) {
 		Refresh();
 
 		var chartName = StringUtil.lowerCase(${chartName});

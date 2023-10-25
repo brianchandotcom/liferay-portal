@@ -1,12 +1,14 @@
 definition {
 
-	macro addPriceToSKU {
+	@summary = "Default summary"
+	macro addPriceToSKU(price = null) {
 		Type(
 			locator1 = "CommerceEntry#PRICE_FIELD",
 			value1 = ${price});
 	}
 
-	macro addSKU {
+	@summary = "Default summary"
+	macro addSKU(noOption = null,key_menuItem = null,optionValuesList = null) {
 		for (var optionValues : list ${optionValuesList}) {
 			var optionValue = StringUtil.extractFirst(${optionValues}, ":");
 			var price = StringUtil.extractLast(${optionValues}, ":");
@@ -48,7 +50,8 @@ definition {
 		Refresh();
 	}
 
-	macro editSkuERC {
+	@summary = "Default summary"
+	macro editSkuERC(skuERC = null) {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 		Type(
@@ -66,7 +69,8 @@ definition {
 		}
 	}
 
-	macro editSkuPricing {
+	@summary = "Default summary"
+	macro editSkuPricing(priceOnApplication = null,promoPrice = null,cost = null,basePrice = null) {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 		CommerceSKUs.setSkuPricing(
@@ -87,7 +91,8 @@ definition {
 		SelectFrame.selectFrameTop();
 	}
 
-	macro generateAllSkuCombinations {
+	@summary = "Default summary"
+	macro generateAllSkuCombinations() {
 		Click(locator1 = "Button#PLUS");
 
 		Click(
@@ -95,7 +100,8 @@ definition {
 			locator1 = "FormViewBuilder#OBJECT_FIELD_BUTTON_DROPDOWN");
 	}
 
-	macro setSkuInventory {
+	@summary = "Default summary"
+	macro setSkuInventory(northeastQuantity = null,italyQuantity = null,southwestQuantity = null) {
 		if (isSet(italyQuantity)) {
 			Type(
 				key_value1 = 0,
@@ -130,7 +136,8 @@ definition {
 		}
 	}
 
-	macro setSkuPricing {
+	@summary = "Default summary"
+	macro setSkuPricing(priceOnApplication = null,promoPrice = null,cost = null,basePrice = null) {
 		if (isSet(priceOnApplication)) {
 			if (${priceOnApplication} == "true") {
 				Check.checkToggleSwitch(
@@ -166,7 +173,8 @@ definition {
 		}
 	}
 
-	macro setSkuUomInventory {
+	@summary = "Default summary"
+	macro setSkuUomInventory(uomQuantityLists = null) {
 		for (var uomQuantityList : list ${uomQuantityLists}) {
 			var warehouseItemList = StringUtil.extractFirst(${uomQuantityList}, ":");
 			var warehouseItemQuantity = StringUtil.extractLast(${uomQuantityList}, ":");
@@ -182,7 +190,8 @@ definition {
 		}
 	}
 
-	macro viewSkuUomInventory {
+	@summary = "Default summary"
+	macro viewSkuUomInventory(uomQuantityLists = null) {
 		for (var uomQuantityList : list ${uomQuantityLists}) {
 			var warehouseItemList = StringUtil.extractFirst(${uomQuantityList}, ":");
 			var warehouseItemQuantity = StringUtil.extractLast(${uomQuantityList}, ":");
@@ -194,7 +203,8 @@ definition {
 		}
 	}
 
-	macro viewSkuUomWarehouse {
+	@summary = "Default summary"
+	macro viewSkuUomWarehouse(uomKey = null,uomLists = null) {
 		for (var uomList : list ${uomLists}) {
 			var index = StringUtil.extractFirst(${uomList}, ":");
 			var warehouseName = StringUtil.extractLast(${uomList}, ":");

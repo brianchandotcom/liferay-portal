@@ -1,6 +1,7 @@
 definition {
 
-	macro assignGroupRoleToUser {
+	@summary = "Default summary"
+	macro assignGroupRoleToUser(groupName = null,roleTitle = null,userEmailAddress = null,parentGroupName = null) {
 		Variables.assertDefined(parameterList = "${roleTitle},${userEmailAddress}");
 
 		if (!(isSet(groupId))) {
@@ -18,7 +19,8 @@ definition {
 			userId = ${userId});
 	}
 
-	macro assignGroupRoleToUserGroup {
+	@summary = "Default summary"
+	macro assignGroupRoleToUserGroup(groupName = null,roleTitle = null,userGroupName = null,parentGroupName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${roleTitle},${userGroupName}");
 
 		var groupId = JSONGroupSetter.setGroupId(
@@ -33,7 +35,8 @@ definition {
 			userGroupId = ${userGroupId});
 	}
 
-	macro assignOrganizationToGroup {
+	@summary = "Default summary"
+	macro assignOrganizationToGroup(groupName = null,organizationName = null,parentGroupName = null) {
 		Variables.assertDefined(parameterList = ${organizationName});
 
 		if (!(isSet(groupId))) {
@@ -49,7 +52,8 @@ definition {
 			organizationId = ${organizationId});
 	}
 
-	macro assignUserGroupToGroup {
+	@summary = "Default summary"
+	macro assignUserGroupToGroup(groupName = null,userGroupName = null) {
 		Variables.assertDefined(parameterList = ${userGroupName});
 
 		if (!(isSet(groupId))) {
@@ -63,7 +67,8 @@ definition {
 			userGroupId = ${userGroupId});
 	}
 
-	macro assignUserToGroup {
+	@summary = "Default summary"
+	macro assignUserToGroup(groupName = null,userEmailAddress = null,parentGroupName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${userEmailAddress}");
 
 		var groupId = JSONGroupSetter.setGroupId(
@@ -76,7 +81,8 @@ definition {
 			userId = ${userId});
 	}
 
-	macro deleteGroupByName {
+	@summary = "Default summary"
+	macro deleteGroupByName(groupName = null,portalURL = null) {
 		Variables.assertDefined(parameterList = ${groupName});
 
 		var groupId = JSONGroupSetter.setGroupId(
@@ -88,7 +94,8 @@ definition {
 			portalURL = ${portalURL});
 	}
 
-	macro tearDownNonDefaultGroups {
+	@summary = "Default summary"
+	macro tearDownNonDefaultGroups() {
 		var nameCurrentValues = JSONGroupAPI._getNameCurrentValues();
 
 		for (var nameCurrentValue : list ${nameCurrentValues}) {

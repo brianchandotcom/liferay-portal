@@ -1,6 +1,7 @@
 definition {
 
-	macro addAccountGroup {
+	@summary = "Default summary"
+	macro addAccountGroup(accountGroupName = null) {
 		Variables.assertDefined(parameterList = ${accountGroupName});
 
 		if (!(isSet(creatorEmailAddress))) {

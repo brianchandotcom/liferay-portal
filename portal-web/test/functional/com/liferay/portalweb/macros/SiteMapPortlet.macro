@@ -1,6 +1,7 @@
 definition {
 
-	macro viewPageItem {
+	@summary = "Default summary"
+	macro viewPageItem(pageNameList = null) {
 		for (var pageName : list ${pageNameList}) {
 			AssertTextEquals(
 				key_pageName = ${pageName},

@@ -1,6 +1,7 @@
 definition {
 
-	macro _addCP {
+	@summary = "Default summary"
+	macro _addCP(tagName = null) {
 		LexiconEntry.gotoAdd();
 
 		AssertElementPresent(locator1 = "TextInput#NAME");
@@ -8,7 +9,8 @@ definition {
 		PortletEntry.inputName(name = ${tagName});
 	}
 
-	macro addAutoAssertionTagViaBlogsPG {
+	@summary = "Default summary"
+	macro addAutoAssertionTagViaBlogsPG(tagName = null,entryTitle = null,entryContent = null) {
 		BlogsNavigator.gotoAddEntry();
 
 		BlogsEntry.addEntryContent(
@@ -29,13 +31,15 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro addCP {
+	@summary = "Default summary"
+	macro addCP(tagName = null) {
 		Tag._addCP(tagName = ${tagName});
 
 		PortletEntry.save();
 	}
 
-	macro addViaSiteCP {
+	@summary = "Default summary"
+	macro addViaSiteCP(tagNameList = null) {
 		Click(
 			key_itemName = "Assets",
 			locator1 = "ListGroupItem#ITEM_TEXT");
@@ -51,7 +55,8 @@ definition {
 		Navigator.gotoBack();
 	}
 
-	macro addWithNullTitleCP {
+	@summary = "Default summary"
+	macro addWithNullTitleCP(tagName = null) {
 		Tag._addCP(tagName = ${tagName});
 
 		Button.clickSave();
@@ -63,7 +68,8 @@ definition {
 			value1 = "The Name field is required.");
 	}
 
-	macro cancelEditCP {
+	@summary = "Default summary"
+	macro cancelEditCP(tagNameEdit = null,tagMenuName = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${tagMenuName});
@@ -73,7 +79,8 @@ definition {
 		Button.clickCancel();
 	}
 
-	macro deleteByIconCP {
+	@summary = "Default summary"
+	macro deleteByIconCP(tagNameList = null) {
 		for (var tagName : list ${tagNameList}) {
 			LexiconEntry.selectEntry(key_rowEntry = ${tagName});
 		}
@@ -91,7 +98,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro deleteCP {
+	@summary = "Default summary"
+	macro deleteCP(tagNameList = null) {
 		for (var tagName : list ${tagNameList}) {
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Delete",
@@ -109,7 +117,8 @@ definition {
 		}
 	}
 
-	macro editCP {
+	@summary = "Default summary"
+	macro editCP(tagNameEdit = null,tagMenuName = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${tagMenuName});
@@ -119,7 +128,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro gotoMerge {
+	@summary = "Default summary"
+	macro gotoMerge(mergeMethod = null,tagNameList = null) {
 		if (${mergeMethod} == "menuItem") {
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Merge",
@@ -136,7 +146,8 @@ definition {
 		}
 	}
 
-	macro mergeSingleTagWarning {
+	@summary = "Default summary"
+	macro mergeSingleTagWarning() {
 		AssertClickNoError(
 			locator1 = "Button#SAVE",
 			value1 = "Save");
@@ -144,7 +155,8 @@ definition {
 		AssertConfirm(value1 = "Please choose at least 2 tags.");
 	}
 
-	macro mergeTags {
+	@summary = "Default summary"
+	macro mergeTags(tagNameList = null,mergedTag = null) {
 		Select(
 			key_fieldLabel = "Into This Tag:",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
@@ -159,7 +171,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro mergeTagsSelectAdditionalTags {
+	@summary = "Default summary"
+	macro mergeTagsSelectAdditionalTags(tagNameList = null) {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		Click(locator1 = "Button#SELECT");
@@ -177,13 +190,15 @@ definition {
 		Button.clickDone();
 	}
 
-	macro openTagsAdmin {
+	@summary = "Default summary"
+	macro openTagsAdmin(baseURL = null,siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/tags_admin/");
 	}
 
-	macro tearDownCP {
+	@summary = "Default summary"
+	macro tearDownCP(stagingSite = null,site = null) {
 		if (${stagingSite} == "true") {
 			ProductMenu.gotoStagingSite(site = ${site});
 		}
@@ -216,13 +231,15 @@ definition {
 			value1 = "There are no tags.");
 	}
 
-	macro viewCP {
+	@summary = "Default summary"
+	macro viewCP(tagNameList = null) {
 		for (var tagName : list ${tagNameList}) {
 			LexiconEntry.viewEntryName(rowEntry = ${tagName});
 		}
 	}
 
-	macro viewNotPresentCP {
+	@summary = "Default summary"
+	macro viewNotPresentCP(tagNameList = null) {
 		for (var tagName : list ${tagNameList}) {
 			LexiconEntry.viewNoEntry(rowEntry = ${tagName});
 		}

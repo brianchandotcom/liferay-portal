@@ -1,6 +1,7 @@
 definition {
 
-	macro archiveAndDeleteOriginalFile {
+	@summary = "Default summary"
+	macro archiveAndDeleteOriginalFile(sourceFilePath = null,fileNameWithExtension = null) {
 		Variables.assertDefined(parameterList = "${sourceFilePath},${fileNameWithExtension}");
 
 		if (!(isSet(destinationPath))) {
@@ -16,7 +17,8 @@ definition {
 		return ${archivedFilePath};
 	}
 
-	macro assertExportedFileContainsCorrectObject {
+	@summary = "Default summary"
+	macro assertExportedFileContainsCorrectObject(fileName = null,expectedValue = null,jsonObject = null) {
 		Variables.assertDefined(parameterList = "${fileName},${jsonObject},${expectedValue}");
 
 		var fileContent = TestCase.getTempFileContent(fileName = ${fileName});
@@ -28,7 +30,8 @@ definition {
 			expected = ${expectedValue});
 	}
 
-	macro copyDependenciesDirToFolder {
+	@summary = "Default summary"
+	macro copyDependenciesDirToFolder(file = null) {
 		Variables.assertDefined(parameterList = ${file});
 
 		var filePath = TestCase.getDependenciesDirPath(fileName = ${file});
@@ -44,7 +47,8 @@ definition {
 		return ${destinationFilePath};
 	}
 
-	macro deleteFileInModulesFolder {
+	@summary = "Default summary"
+	macro deleteFileInModulesFolder(file = null) {
 		Variables.assertDefined(parameterList = ${file});
 
 		var homeDir = PropsUtil.get("liferay.home.dir.name");
@@ -59,7 +63,8 @@ definition {
 		}
 	}
 
-	macro moveFileToDeployFolder {
+	@summary = "Default summary"
+	macro moveFileToDeployFolder(fileName = null,sourceFilePath = null) {
 		Variables.assertDefined(parameterList = "${sourceFilePath},${fileName}");
 
 		if (!(isSet(destinationPath))) {
@@ -73,7 +78,8 @@ definition {
 		WaitForConsoleTextPresent(value1 = "Processing ${fileName}");
 	}
 
-	macro moveFileToOSGIModulesFolder {
+	@summary = "Default summary"
+	macro moveFileToOSGIModulesFolder(fileName = null,appName = null,sourceFilePath = null) {
 		Variables.assertDefined(parameterList = "${sourceFilePath},${fileName},${appName}");
 
 		if (!(isSet(destinationPath))) {
@@ -87,7 +93,8 @@ definition {
 		WaitForConsoleTextPresent(value1 = "STARTED ${appName}");
 	}
 
-	macro setUpGlobalIds {
+	@summary = "Default summary"
+	macro setUpGlobalIds(portalURL = null) {
 		var companyId = JSONCompany.getCompanyId(portalURL = ${portalURL});
 		var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = "Guest");
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = "test@liferay.com");
@@ -102,7 +109,8 @@ definition {
 		return ${staticUserId};
 	}
 
-	macro waitUntilBlogsVisibleInUI {
+	@summary = "Default summary"
+	macro waitUntilBlogsVisibleInUI() {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			panel = "Site Administration",
@@ -115,7 +123,8 @@ definition {
 		}
 	}
 
-	macro waitUntilObjectPresentInUI {
+	@summary = "Default summary"
+	macro waitUntilObjectPresentInUI(labelName = null) {
 		ObjectPortlet.assertIsDisplayedOnControlPanel(itemMenu = "Objects");
 
 		ObjectAdmin.openObjectAdmin();
@@ -131,7 +140,8 @@ definition {
 			locator1 = "CreateObject#OBJECT_NAME");
 	}
 
-	macro waitUntilWebContentPresentInUI {
+	@summary = "Default summary"
+	macro waitUntilWebContentPresentInUI() {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Web Content");

@@ -1,6 +1,7 @@
 definition {
 
-	macro addExportProcessCP {
+	@summary = "Default summary"
+	macro addExportProcessCP(userLastName = null,userFirstName = null,applications = null) {
 		var key_application = ${application};
 
 		LexiconEntry.gotoAdd();
@@ -59,7 +60,8 @@ definition {
 		}
 	}
 
-	macro anonymizeAllEntriesinApplicationCP {
+	@summary = "Default summary"
+	macro anonymizeAllEntriesinApplicationCP(totalItemsCount = null,applicationItemsCount = null,applications = null) {
 		GDPR.filterByApplications(
 			applicationItemsCount = ${applicationItemsCount},
 			applications = ${applications},
@@ -76,7 +78,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro anonymizeDataViaReviewData {
+	@summary = "Default summary"
+	macro anonymizeDataViaReviewData(application = null) {
 		var key_application = ${application};
 
 		if (isSet(application)) {
@@ -112,7 +115,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro anonymizeMultipleEntriesCP {
+	@summary = "Default summary"
+	macro anonymizeMultipleEntriesCP() {
 		for (var rowEntry : list ${rowEntry}) {
 			LexiconEntry.selectEntry(rowEntry = ${rowEntry});
 		}
@@ -126,7 +130,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro anonymizeSingleEntryCP {
+	@summary = "Default summary"
+	macro anonymizeSingleEntryCP(rowEntry = null) {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Anonymize",
 			rowEntry = ${rowEntry});
@@ -136,7 +141,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro anonymizeSingleEntryViaInfoPanel {
+	@summary = "Default summary"
+	macro anonymizeSingleEntryViaInfoPanel(rowEntry = null) {
 		LexiconEntry.selectEntry(rowEntry = ${rowEntry});
 
 		Click.clickAt(locator1 = "Icon#INFO");
@@ -150,7 +156,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro anonymizeTheSpecificEntry {
+	@summary = "Default summary"
+	macro anonymizeTheSpecificEntry() {
 		for (var rowIndexNumber : list ${rowIndexNumber}) {
 			Click(
 				key_rowIndexNumber = ${rowIndexNumber},
@@ -164,7 +171,8 @@ definition {
 		}
 	}
 
-	macro deleteAllEntriesCP {
+	@summary = "Default summary"
+	macro deleteAllEntriesCP() {
 		PortletEntry.selectAll();
 
 		Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
@@ -176,7 +184,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro deleteAndAnonymizeAllEntriesCP {
+	@summary = "Default summary"
+	macro deleteAndAnonymizeAllEntriesCP(totalItemsCount = null,applicationItemsCount = null,userName = null) {
 		GDPR.filterByApplications(
 			applicationItemsCount = ${applicationItemsCount},
 			applications = "All Applications",
@@ -205,7 +214,8 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = ${userName});
 	}
 
-	macro deleteExportedPersonalData {
+	@summary = "Default summary"
+	macro deleteExportedPersonalData(applications = null) {
 		for (var application : list ${applications}) {
 			var key_rowEntry = ${application};
 
@@ -219,7 +229,8 @@ definition {
 		}
 	}
 
-	macro deleteMultipleEntriesCP {
+	@summary = "Default summary"
+	macro deleteMultipleEntriesCP() {
 		for (var rowEntry : list ${rowEntry}) {
 			LexiconEntry.selectEntry(rowEntry = ${rowEntry});
 		}
@@ -233,7 +244,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro deleteSingleEntryCP {
+	@summary = "Default summary"
+	macro deleteSingleEntryCP(rowEntry = null) {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Delete",
 			rowEntry = ${rowEntry});
@@ -243,7 +255,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro deleteTheSpecificEntry {
+	@summary = "Default summary"
+	macro deleteTheSpecificEntry() {
 		for (var rowIndexNumber : list ${rowIndexNumber}) {
 			Click(
 				key_rowIndexNumber = ${rowIndexNumber},
@@ -257,7 +270,8 @@ definition {
 		}
 	}
 
-	macro downloadExportedPersonalData {
+	@summary = "Default summary"
+	macro downloadExportedPersonalData(applications = null) {
 		for (var application : list ${applications}) {
 			var key_rowEntry = ${application};
 
@@ -269,7 +283,8 @@ definition {
 		}
 	}
 
-	macro editEntryCP {
+	@summary = "Default summary"
+	macro editEntryCP(rowEntry = null,applicationsTitle = null) {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Edit",
 			rowEntry = ${rowEntry});
@@ -279,7 +294,8 @@ definition {
 			value1 = ${applicationsTitle});
 	}
 
-	macro filterByApplications {
+	@summary = "Default summary"
+	macro filterByApplications(totalItemsCount = null,webContent = null,applicationItemsCount = null,applications = null) {
 		Click.clickNoWaitForVisible(
 			key_selectData = ${applications},
 			locator1 = "DataErasure#REVIEW_DATA_SELECT");
@@ -305,7 +321,8 @@ definition {
 			value1 = "Remaining Items: ${totalItemsCount}");
 	}
 
-	macro filterByScope {
+	@summary = "Default summary"
+	macro filterByScope(scope = null) {
 		Click.clickNoWaitForVisible(
 			key_selectData = ${scope},
 			locator1 = "DataErasure#REVIEW_DATA_SELECT");
@@ -315,7 +332,8 @@ definition {
 			locator1 = "DataErasure#REVIEW_DATA_SELECTED");
 	}
 
-	macro viewEntryRowInApplicationCP {
+	@summary = "Default summary"
+	macro viewEntryRowInApplicationCP(tableEntry = null,tableEntryPartialTextList = null) {
 		for (var tableEntryPartialText : list ${tableEntryPartialTextList}) {
 			LexiconTable.viewTableEntryPartialText(
 				tableEntry = ${tableEntry},
@@ -323,7 +341,8 @@ definition {
 		}
 	}
 
-	macro viewNoEntryInApplicationCP {
+	@summary = "Default summary"
+	macro viewNoEntryInApplicationCP(applications = null) {
 		if (IsElementNotPresent(key_tab = "Review Data", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
 			Navigator.gotoNavTab(navTab = "Review Data");
 		}

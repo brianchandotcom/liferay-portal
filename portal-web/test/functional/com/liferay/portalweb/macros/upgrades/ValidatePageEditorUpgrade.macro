@@ -1,6 +1,7 @@
 definition {
 
-	macro configurePageEditor {
+	@summary = "Default summary"
+	macro configurePageEditor() {
 		task ("View fragment persists and could add another fragment in page editor") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
 
@@ -150,7 +151,8 @@ definition {
 		}
 	}
 
-	macro viewConfigurationChecked {
+	@summary = "Default summary"
+	macro viewConfigurationChecked() {
 		ContentPagesNavigator.openEditContentPage(
 			pageName = "Content Page Name",
 			siteName = "Test Site Name");
@@ -162,7 +164,8 @@ definition {
 			locator1 = "Checkbox#ANY_CHECKBOX");
 	}
 
-	macro viewContributedFragmentStyle {
+	@summary = "Default summary"
+	macro viewContributedFragmentStyle() {
 		task ("Navigate to page in view mode") {
 			ApplicationsMenu.gotoSite(site = "Test Site Name");
 
@@ -434,7 +437,8 @@ definition {
 		}
 	}
 
-	macro viewDefaultPage {
+	@summary = "Default summary"
+	macro viewDefaultPage() {
 		Navigator.openURL();
 
 		// Assert the Home/Welcome page is a widget page in the default site when upgrade from 7.2/7.1/7.0
@@ -444,7 +448,8 @@ definition {
 		AssertVisible(locator1 = "ControlMenu#ADD");
 	}
 
-	macro viewNoSearchResults {
+	@summary = "Default summary"
+	macro viewNoSearchResults() {
 		ApplicationsMenu.gotoSite(site = "Test Site Name");
 
 		AssertClick(

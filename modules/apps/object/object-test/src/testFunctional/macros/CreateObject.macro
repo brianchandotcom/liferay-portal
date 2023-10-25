@@ -1,6 +1,7 @@
 definition {
 
-	macro activeCustomObject {
+	@summary = "Default summary"
+	macro activeCustomObject(objectLabel = null) {
 		ObjectPortlet.selectCustomObject(label = ${objectLabel});
 
 		CreateObject.checkToggleActive();
@@ -8,11 +9,13 @@ definition {
 		CreateObject.saveObject();
 	}
 
-	macro activeToogleAccountRestriction {
+	@summary = "Default summary"
+	macro activeToogleAccountRestriction() {
 		Check.checkToggleSwitch(locator1 = "CreateObject#TOGGLE_ACCOUNT_RESTRICTION");
 	}
 
-	macro addRelationshipAndSelectEntry {
+	@summary = "Default summary"
+	macro addRelationshipAndSelectEntry(titleFieldName = null) {
 		LexiconEntry.gotoAdd();
 
 		var menuItem = "Select Existing One";
@@ -34,7 +37,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro assertAddedEntryRelationshipIsDisplayed {
+	@summary = "Default summary"
+	macro assertAddedEntryRelationshipIsDisplayed(entry = null) {
 		LexiconEntry.gotoAdd();
 
 		Click(locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY");
@@ -46,7 +50,8 @@ definition {
 			locator1 = "CreateObject#ENTRY_RELATIONSHIP_FIELD_OPTION");
 	}
 
-	macro assertDisabledAllFields {
+	@summary = "Default summary"
+	macro assertDisabledAllFields() {
 		for (var fieldsDisabled : list "Name,Label,Scope,Panel Link") {
 			AssertElementPresent(
 				key_nameDisabled = ${fieldsDisabled},
@@ -56,7 +61,8 @@ definition {
 		AssertElementPresent(locator1 = "CreateObject#SAVE_BUTTON_DISABLED");
 	}
 
-	macro assertLabelBasicInfo {
+	@summary = "Default summary"
+	macro assertLabelBasicInfo(fieldLabel = null) {
 		var key_fieldType = "value";
 
 		WaitForSPARefresh();
@@ -72,7 +78,8 @@ definition {
 			locator1 = "CreateObject#FIELD_VALUE");
 	}
 
-	macro assertLabelBasicInfoNotPresent {
+	@summary = "Default summary"
+	macro assertLabelBasicInfoNotPresent(fieldLabel = null) {
 		var key_fieldType = "value";
 
 		WaitForSPARefresh();
@@ -88,7 +95,8 @@ definition {
 			locator1 = "CreateObject#FIELD_VALUE");
 	}
 
-	macro assertObjectFieldNameIsAutofilled {
+	@summary = "Default summary"
+	macro assertObjectFieldNameIsAutofilled(fieldName = null,fieldLabel = null) {
 		LexiconEntry.gotoAdd();
 
 		Type(
@@ -100,13 +108,15 @@ definition {
 			locator1 = "CreateObject#VIEW_OBJECT_FIELD_NAME");
 	}
 
-	macro assertOneColumnOnFieldEntry {
+	@summary = "Default summary"
+	macro assertOneColumnOnFieldEntry() {
 		AssertElementPresent(locator1 = "CreateObject#ASSERT_ONE_COLUMN_FIELD_ENTRY");
 
 		AssertElementNotPresent(locator1 = "CreateObject#ASSERT_TWO_COLUMN_FIELD_ENTRY");
 	}
 
-	macro assertRelationshipNotPresent {
+	@summary = "Default summary"
+	macro assertRelationshipNotPresent() {
 		LexiconEntry.gotoAdd();
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
@@ -116,7 +126,8 @@ definition {
 			value1 = "No entries were found.");
 	}
 
-	macro assertSelectedValueInDeletionType {
+	@summary = "Default summary"
+	macro assertSelectedValueInDeletionType(deletionType = null) {
 		WaitForSPARefresh();
 
 		AssertElementPresent(
@@ -125,7 +136,8 @@ definition {
 			locator1 = "CreateObject#ASSERT_DELETION_TYPE_VALUE");
 	}
 
-	macro assertValuesOnObjectData {
+	@summary = "Default summary"
+	macro assertValuesOnObjectData(fieldLabel = null) {
 		var key_fieldType = "form-control";
 
 		AssertElementPresent(
@@ -133,7 +145,8 @@ definition {
 			locator1 = "CreateObject#FIELD_VALUE");
 	}
 
-	macro assertValuesOnScope {
+	@summary = "Default summary"
+	macro assertValuesOnScope(valuePanelCategory = null,valueScope = null) {
 		AssertTextEquals(
 			locator1 = "CreateObject#VIEW_OBJECT_SCOPE",
 			value1 = ${valueScope});
@@ -143,7 +156,8 @@ definition {
 			value1 = ${valuePanelCategory});
 	}
 
-	macro checkToggleActive {
+	@summary = "Default summary"
+	macro checkToggleActive() {
 		Check.checkToggleSwitch(locator1 = "CreateObject#ACTIVE_TOGGLE");
 
 		WaitForSPARefresh();
@@ -151,7 +165,8 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro checkToggleInactive {
+	@summary = "Default summary"
+	macro checkToggleInactive() {
 		Uncheck.uncheckToggleSwitch(locator1 = "CreateObject#ACTIVE_TOGGLE");
 
 		WaitForSPARefresh();
@@ -159,7 +174,8 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro deleteEntryInRelationshipTab {
+	@summary = "Default summary"
+	macro deleteEntryInRelationshipTab(entryName = null,labelName = null) {
 		ObjectAdmin.gotoRelationshipsTab();
 
 		if (isSet(entryName)) {
@@ -180,13 +196,15 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro deleteFieldOnBlock {
+	@summary = "Default summary"
+	macro deleteFieldOnBlock() {
 		Click(locator1 = "CreateObject#KEBAB_MENU_BLOCK_FIELD");
 
 		Click(locator1 = "CreateObject#KEBAB_MENU_BLOCK_FIELD_OPTION_DELETE");
 	}
 
-	macro deleteObjectViaUI {
+	@summary = "Default summary"
+	macro deleteObjectViaUI(objectLabel = null) {
 		Click(
 			key_objectLabel = ${objectLabel},
 			locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
@@ -194,23 +212,27 @@ definition {
 		MenuItem.clickNoError(menuItem = "Delete");
 	}
 
-	macro desactiveToogleAccountRestriction {
+	@summary = "Default summary"
+	macro desactiveToogleAccountRestriction() {
 		Uncheck.uncheckToggleSwitch(locator1 = "CreateObject#TOGGLE_ACCOUNT_RESTRICTION");
 	}
 
-	macro editLabel {
+	@summary = "Default summary"
+	macro editLabel(labelName = null) {
 		Type(
 			locator1 = "CreateObject#OBJECT_LABEL",
 			value1 = ${labelName});
 	}
 
-	macro editPluralLabel {
+	@summary = "Default summary"
+	macro editPluralLabel(pluralLabelName = null) {
 		Type(
 			locator1 = "CreateObject#OBJECT_PLURAL_LABEL",
 			value1 = ${pluralLabelName});
 	}
 
-	macro inactiveCustomObject {
+	@summary = "Default summary"
+	macro inactiveCustomObject(objectLabel = null) {
 		ObjectPortlet.selectCustomObject(label = ${objectLabel});
 
 		CreateObject.checkToggleInactive();
@@ -218,7 +240,8 @@ definition {
 		CreateObject.saveObject();
 	}
 
-	macro saveObject {
+	@summary = "Default summary"
+	macro saveObject() {
 		Button.clickSave();
 
 		Alert.viewSuccessMessage();
@@ -228,7 +251,8 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro selectAccountRestrictedField {
+	@summary = "Default summary"
+	macro selectAccountRestrictedField(accountRestrictedField = null) {
 		Click(locator1 = "CreateObject#ACCOUNT_RESTRICTED_FIELD");
 
 		Click(
@@ -236,7 +260,8 @@ definition {
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
-	macro selectDeletionType {
+	@summary = "Default summary"
+	macro selectDeletionType(fieldName = null,deletionType = null) {
 		ObjectAdmin.gotoRelationshipsTab();
 
 		ObjectAdmin.goToRelationshipsDetails(fieldName = ${fieldName});
@@ -252,7 +277,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro selectPanelCategoryKey {
+	@summary = "Default summary"
+	macro selectPanelCategoryKey(panelCategoryKey = null) {
 		Click(locator1 = "CreateObject#PANEL_LINK");
 
 		Click(
@@ -260,7 +286,8 @@ definition {
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
-	macro selectScope {
+	@summary = "Default summary"
+	macro selectScope(fieldLabel = null) {
 		Click(locator1 = "CreateObject#SCOPE");
 
 		Click(
@@ -268,7 +295,8 @@ definition {
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
-	macro selectTitleField {
+	@summary = "Default summary"
+	macro selectTitleField(fieldLabel = null) {
 		Click(locator1 = "CreateObject#TITLE_FIELD");
 
 		Click(
@@ -276,7 +304,8 @@ definition {
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
-	macro viewAccountRestrictedFieldIsRequiredOnEntries {
+	@summary = "Default summary"
+	macro viewAccountRestrictedFieldIsRequiredOnEntries(relationshipName = null) {
 		AssertElementPresent(
 			key_fieldName = ${relationshipName},
 			locator1 = "FormFields#TEXT_FIELD");
@@ -286,7 +315,8 @@ definition {
 		Alert.viewRequiredField();
 	}
 
-	macro withdrawObjectTask {
+	@summary = "Default summary"
+	macro withdrawObjectTask(objectLabel = null) {
 		Click(
 			key_taskName = ${objectLabel},
 			locator1 = "WorkflowSubmissions#SUBMISSIONS_TASK_NAME");

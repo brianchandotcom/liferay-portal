@@ -1,6 +1,7 @@
 definition {
 
-	macro _assignGroupRoleToUser {
+	@summary = "Default summary"
+	macro _assignGroupRoleToUser(roleId = null,groupId = null,userId = null) {
 		Variables.assertDefined(parameterList = "${groupId},${roleId},${userId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -17,7 +18,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _assignGroupRoleToUserGroup {
+	@summary = "Default summary"
+	macro _assignGroupRoleToUserGroup(userGroupId = null,roleId = null,groupId = null) {
 		Variables.assertDefined(parameterList = "${groupId},${roleId},${userGroupId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -34,7 +36,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _assignOrganizationToGroup {
+	@summary = "Default summary"
+	macro _assignOrganizationToGroup(organizationId = null,groupId = null) {
 		Variables.assertDefined(parameterList = "${groupId},${organizationId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -50,7 +53,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _assignUserGroupToGroup {
+	@summary = "Default summary"
+	macro _assignUserGroupToGroup(userGroupId = null,groupId = null) {
 		Variables.assertDefined(parameterList = "${groupId},${userGroupId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -64,7 +68,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _assignUserToGroup {
+	@summary = "Default summary"
+	macro _assignUserToGroup(groupId = null,userId = null) {
 		Variables.assertDefined(parameterList = "${groupId},${userId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -80,7 +85,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _deleteGroup {
+	@summary = "Default summary"
+	macro _deleteGroup(groupId = null) {
 		Variables.assertDefined(parameterList = ${groupId});
 
 		if (!(isSet(portalURL))) {
@@ -98,7 +104,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _getDepotEntryGroupRelIdByGroupName {
+	@summary = "Default summary"
+	macro _getDepotEntryGroupRelIdByGroupName(groupName = null,site = null) {
 		Variables.assertDefined(parameterList = ${groupName});
 
 		var companyId = JSONCompany.getCompanyId();
@@ -125,7 +132,8 @@ definition {
 		return ${depotEntryGroupRelId};
 	}
 
-	macro _getDepotIdByName {
+	@summary = "Default summary"
+	macro _getDepotIdByName(noSelenium = null,depotName = null) {
 		Variables.assertDefined(parameterList = ${depotName});
 
 		if (!(isSet(portalURL))) {
@@ -163,7 +171,8 @@ definition {
 		return ${depotId};
 	}
 
-	macro _getGrandParentGroupIdByName {
+	@summary = "Default summary"
+	macro _getGrandParentGroupIdByName(groupName = null) {
 		Variables.assertDefined(parameterList = ${groupName});
 
 		var companyId = JSONCompany.getCompanyId();
@@ -192,7 +201,8 @@ definition {
 		return ${groupId};
 	}
 
-	macro _getGroupIdByGroupKey {
+	@summary = "Default summary"
+	macro _getGroupIdByGroupKey(site = null,grandParentGroupName = null,parentGroupName = null,groupKey = null) {
 		Variables.assertDefined(parameterList = "${groupKey},${site}");
 
 		var companyId = JSONCompany.getCompanyId();
@@ -216,7 +226,8 @@ definition {
 		return ${groupId};
 	}
 
-	macro _getGroupIdByName {
+	@summary = "Default summary"
+	macro _getGroupIdByName(groupName = null,site = null,grandParentGroupName = null,specificURL = null,parentGroupName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${site}");
 
 		if (isSet(specificURL)) {
@@ -257,7 +268,8 @@ definition {
 		return ${groupId};
 	}
 
-	macro _getGroupIdByNameNoError {
+	@summary = "Default summary"
+	macro _getGroupIdByNameNoError(groupName = null,site = null,grandParentGroupName = null,parentGroupName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${site}");
 
 		if (!(isSet(portalURL))) {
@@ -280,7 +292,8 @@ definition {
 		return ${groupId};
 	}
 
-	macro _getGroupIdByNameNoSelenium {
+	@summary = "Default summary"
+	macro _getGroupIdByNameNoSelenium(groupName = null,site = null,grandParentGroupName = null,parentGroupName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${site}");
 
 		if (!(isSet(portalURL))) {
@@ -309,7 +322,8 @@ definition {
 		return ${groupId};
 	}
 
-	macro _getGroupIdByNameViaOtherUser {
+	@summary = "Default summary"
+	macro _getGroupIdByNameViaOtherUser(grandParentGroupName = null,parentGroupName = null,groupName = null,site = null,portalInstanceName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${site}");
 
 		if (isSet(portalInstanceName)) {
@@ -358,7 +372,8 @@ definition {
 		return ${groupId};
 	}
 
-	macro _getGroupKeyByName {
+	@summary = "Default summary"
+	macro _getGroupKeyByName(groupName = null,site = null,grandParentGroupName = null,parentGroupName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${site}");
 
 		if (!(isSet(portalURL))) {
@@ -387,7 +402,8 @@ definition {
 		return ${groupKey};
 	}
 
-	macro _getGroupName {
+	@summary = "Default summary"
+	macro _getGroupName(groupNam = null,groupId = null) {
 		Variables.assertDefined(parameterList = ${groupId});
 
 		var companyId = JSONCompany.getCompanyId();
@@ -404,7 +420,8 @@ definition {
 		return ${groupNam};
 	}
 
-	macro _getNameCurrentValues {
+	@summary = "Default summary"
+	macro _getNameCurrentValues() {
 		var companyId = JSONCompany.getCompanyId();
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -427,7 +444,8 @@ definition {
 		return ${nameCurrentValues};
 	}
 
-	macro _getParentGroupIdByName {
+	@summary = "Default summary"
+	macro _getParentGroupIdByName(groupName = null,portalInstanceName = null,grandParentGroupName = null) {
 		Variables.assertDefined(parameterList = ${groupName});
 
 		if (!(isSet(portalURL))) {
@@ -457,7 +475,8 @@ definition {
 		return ${groupId};
 	}
 
-	macro _getSiteIdByGroupKey {
+	@summary = "Default summary"
+	macro _getSiteIdByGroupKey(groupName = null) {
 		Variables.assertDefined(parameterList = ${groupName});
 
 		if (!(isSet(portalURL))) {
@@ -483,7 +502,8 @@ definition {
 		return ${groupId};
 	}
 
-	macro _getSiteIdByGroupKeyNoSelenium {
+	@summary = "Default summary"
+	macro _getSiteIdByGroupKeyNoSelenium(groupName = null,token = null) {
 		Variables.assertDefined(parameterList = ${groupName});
 
 		if (!(isSet(portalURL))) {

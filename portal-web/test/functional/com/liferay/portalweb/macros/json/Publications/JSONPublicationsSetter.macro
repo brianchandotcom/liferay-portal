@@ -1,6 +1,7 @@
 definition {
 
-	macro setCTCollectionId {
+	@summary = "Default summary"
+	macro setCTCollectionId(publicationName = null) {
 		Variables.assertDefined(parameterList = ${publicationName});
 
 		var ctCollectionId = JSONPublicationsAPI._getCTCollectionId(publicationName = ${publicationName});
@@ -8,7 +9,8 @@ definition {
 		return ${ctCollectionId};
 	}
 
-	macro setPublicationDescription {
+	@summary = "Default summary"
+	macro setPublicationDescription() {
 		if (!(isSet(publicationDescription))) {
 			var publicationDescription = "";
 		}
@@ -16,7 +18,8 @@ definition {
 		return ${publicationDescription};
 	}
 
-	macro setPublicationName {
+	@summary = "Default summary"
+	macro setPublicationName() {
 		Variables.assertDefined(parameterList = ${publicationName});
 
 		var publicationName = URLUtil.encodeUTF8(${publicationName});

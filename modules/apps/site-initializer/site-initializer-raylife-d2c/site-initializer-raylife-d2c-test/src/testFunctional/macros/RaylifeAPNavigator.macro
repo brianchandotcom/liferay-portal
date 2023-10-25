@@ -1,6 +1,7 @@
 definition {
 
-	macro gotoSidebarItem {
+	@summary = "Default summary"
+	macro gotoSidebarItem(itemName = null) {
 		MouseOver(locator1 = "RaylifeAP#SIDEBAR");
 
 		Click.clickNoMouseOver(

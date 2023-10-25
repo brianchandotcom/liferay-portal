@@ -1,6 +1,7 @@
 definition {
 
-	macro runSmoke {
+	@summary = "Default summary"
+	macro runSmoke(groupName = null) {
 		Variables.assertDefined(parameterList = ${groupName});
 
 		// Layout

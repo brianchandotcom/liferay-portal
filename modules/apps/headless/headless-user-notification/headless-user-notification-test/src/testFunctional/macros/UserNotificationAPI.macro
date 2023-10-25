@@ -1,6 +1,7 @@
 definition {
 
-	macro _curlNotificationTemplates {
+	@summary = "Default summary"
+	macro _curlNotificationTemplates(notificationTemplateId = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(notificationTemplateId)) {
@@ -20,7 +21,8 @@ definition {
 		return ${curl};
 	}
 
-	macro _curlUserNotifications {
+	@summary = "Default summary"
+	macro _curlUserNotifications(parameter = null,userAccountId = null,userNotificationId = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(userNotificationId)) {
@@ -47,13 +49,15 @@ definition {
 		return ${curl};
 	}
 
-	macro deleteNotificationTemplate {
+	@summary = "Default summary"
+	macro deleteNotificationTemplate(staticNotificationTemplateId = null) {
 		var curl = UserNotificationAPI._curlNotificationTemplates(notificationTemplateId = ${staticNotificationTemplateId});
 
 		JSONCurlUtil.delete(${curl});
 	}
 
-	macro getUserAccountUserNotifications {
+	@summary = "Default summary"
+	macro getUserAccountUserNotifications(userAccountId = null) {
 		Variables.assertDefined(parameterList = ${userAccountId});
 
 		var curl = UserNotificationAPI._curlUserNotifications(userAccountId = ${userAccountId});
@@ -63,7 +67,8 @@ definition {
 		return ${response};
 	}
 
-	macro getUserNotifications {
+	@summary = "Default summary"
+	macro getUserNotifications() {
 		var curl = UserNotificationAPI._curlUserNotifications();
 
 		var response = JSONCurlUtil.get(${curl});
@@ -71,7 +76,8 @@ definition {
 		return ${response};
 	}
 
-	macro postNotificationTemplate {
+	@summary = "Default summary"
+	macro postNotificationTemplate(recipientType = null,en_US = null,userScreenName = null,name = null,term = null,type = null,externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = "${name},${recipientType},${en_US},${type}");
 
 		if (${recipientType} == "term") {
@@ -126,7 +132,8 @@ definition {
 		return ${staticNotificationTemplateId};
 	}
 
-	macro putUserNotificationReadOrUnread {
+	@summary = "Default summary"
+	macro putUserNotificationReadOrUnread(parameter = null) {
 		Variables.assertDefined(parameterList = ${parameter});
 
 		var response = UserNotificationAPI.getUserNotifications();

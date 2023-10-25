@@ -1,6 +1,7 @@
 definition {
 
-	macro editAndDeleteKBArticle {
+	@summary = "Default summary"
+	macro editAndDeleteKBArticle() {
 		Navigator.gotoPage(pageName = "Knowledge Base");
 
 		Ratings.rateThumb(
@@ -39,7 +40,8 @@ definition {
 		KBArticle.viewNoPGViaKBDisplay(kbArticleTitle = "Knowledge Base Article Title Edit");
 	}
 
-	macro viewAndAddKBArticle {
+	@summary = "Default summary"
+	macro viewAndAddKBArticle(portalVersion = null) {
 		Navigator.gotoPage(pageName = "Knowledge Base");
 
 		if (${portalVersion} == "7.1.10.5") {

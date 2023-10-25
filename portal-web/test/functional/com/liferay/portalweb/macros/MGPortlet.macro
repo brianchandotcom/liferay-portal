@@ -1,6 +1,7 @@
 definition {
 
-	macro configureShowAllPG {
+	@summary = "Default summary"
+	macro configureShowAllPG() {
 		Portlet.gotoPortletOptions(
 			portletName = "Media Gallery",
 			portletOption = "Configuration");
@@ -16,7 +17,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro setRootFolder {
+	@summary = "Default summary"
+	macro setRootFolder(selectHomeFolder = null,breadcrumbName = null,depotName = null,dmRootFolderName = null,dmFolderName = null,selectSubfolder = null) {
 		Portlet.gotoPortletOptions(
 			portletName = "Media Gallery",
 			portletOption = "Configuration");
@@ -110,7 +112,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro viewCustomADTCarouselPG {
+	@summary = "Default summary"
+	macro viewCustomADTCarouselPG() {
 		AssertElementPresent(locator1 = "MediaGallery#ADT_CAROUSEL_ITEM");
 
 		AssertElementPresent(locator1 = "MediaGallery#ADT_CAROUSEL_ITEM_ICON");
@@ -122,13 +125,15 @@ definition {
 		AssertElementPresent(locator1 = "MediaGallery#ADT_CAROUSEL_MENU_INDEX");
 	}
 
-	macro viewDefault {
+	@summary = "Default summary"
+	macro viewDefault() {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "There are no media files in this folder.");
 	}
 
-	macro viewFolderItemsPG {
+	@summary = "Default summary"
+	macro viewFolderItemsPG(mgFolderName = null) {
 		LexiconEntry.openEntryMenu(rowEntry = ${mgFolderName});
 
 		for (var menuItem : list "Permissions,Multiple Media,Add Shortcut,Access from Desktop") {

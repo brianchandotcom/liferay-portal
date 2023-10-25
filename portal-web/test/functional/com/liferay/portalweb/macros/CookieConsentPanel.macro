@@ -1,17 +1,20 @@
 definition {
 
 	@description = "Select the control frame of the Cookie Consent popup."
-	macro _selectPanelOuterFrame {
+	@summary = "Default summary"
+	macro _selectPanelOuterFrame() {
 		SelectFrame.selectFrameNoLoading(locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL");
 	}
 
 	@description = "Verify if Cookie Consent Panel is not visible"
-	macro checkCookieConsentPanelIsNotVisible {
+	@summary = "Default summary"
+	macro checkCookieConsentPanelIsNotVisible() {
 		WaitForElementNotPresent(locator1 = "COOKIES_CONSENT_PANEL_IFRAME");
 	}
 
 	@description = "Click on Policy link shown on the Cookie Consent Panel"
-	macro clickOnPolicyLink {
+	@summary = "Default summary"
+	macro clickOnPolicyLink(cookiePolicyLink = null) {
 		SelectFrame.selectFrameTop();
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL_IFRAME");
@@ -22,12 +25,14 @@ definition {
 	}
 
 	@description = "Accept all cookies on Cookie Consent Panel"
-	macro cookiesAcceptAll {
+	@summary = "Default summary"
+	macro cookiesAcceptAll() {
 		Click(locator1 = "CookieConsentPanel#ACCEPT_ALL_BUTTON");
 	}
 
 	@description = "Select all cookies on Cookie Consent Panel"
-	macro cookiesCheckAll {
+	@summary = "Default summary"
+	macro cookiesCheckAll() {
 		Check.checkToggleSwitch(locator1 = "CookieConsentPanel#PERFORMANCE_COOKIES_TOGGLE");
 
 		Check.checkToggleSwitch(locator1 = "CookieConsentPanel#FUNCTIONAL_COOKIES_TOGGLE");
@@ -40,21 +45,24 @@ definition {
 	}
 
 	@description = "Confirm selected cookies on Cookie Consent Panel"
-	macro cookiesConfirmSelected {
+	@summary = "Default summary"
+	macro cookiesConfirmSelected() {
 		CookieConsentPanel._selectPanelOuterFrame();
 
 		Click(locator1 = "CookieConsentPanel#CONFIRM_BUTTON");
 	}
 
 	@description = "Decline all cookies on Cookie Consent Panel"
-	macro cookiesDeclineAll {
+	@summary = "Default summary"
+	macro cookiesDeclineAll() {
 		CookieConsentPanel._selectPanelOuterFrame();
 
 		Click(locator1 = "CookieConsentPanel#DECLINE_ALL_BUTTON");
 	}
 
 	@description = "Customized select of cookie consents"
-	macro editCookieConsentConsent {
+	@summary = "Default summary"
+	macro editCookieConsentConsent() {
 		if (isSet(performanceCookies)) {
 			Check.checkToggleSwitch(
 				key_toggleSwitchLabel = "Performance Cookies",
@@ -75,7 +83,8 @@ definition {
 	}
 
 	@description = "Select all cookie categories on the Cookie Consent panel"
-	macro selectAllCookiesOnConsentPanel {
+	@summary = "Default summary"
+	macro selectAllCookiesOnConsentPanel() {
 		Check.checkToggleSwitch(locator1 = "CookieConsentPanel#PERFORMANCE_COOKIES_TOGGLE");
 
 		Check.checkToggleSwitch(locator1 = "CookieConsentPanel#FUNCTIONAL_COOKIES_TOGGLE");
@@ -88,7 +97,8 @@ definition {
 	}
 
 	@description = "Verify that all Cookie Consent portlet elements are present on the Cookie Consent Popup"
-	macro verifyAllElementsArePresent {
+	@summary = "Default summary"
+	macro verifyAllElementsArePresent() {
 		WaitForElementPresent(locator1 = "CookieConsentPanel#PERFORMANCE_COOKIES_TOGGLE");
 
 		WaitForElementPresent(locator1 = "CookieConsentPanel#FUNCTIONAL_COOKIES_TOGGLE");
@@ -107,7 +117,8 @@ definition {
 	}
 
 	@description = "Verify that all Cookie Consent portlet elements are present"
-	macro verifyAllElementsArePresentOnCookieConsentPortlet {
+	@summary = "Default summary"
+	macro verifyAllElementsArePresentOnCookieConsentPortlet() {
 		WaitForElementPresent(locator1 = "CookieConsentPanel#PERFORMANCE_COOKIES_TOGGLE");
 
 		WaitForElementPresent(locator1 = "CookieConsentPanel#FUNCTIONAL_COOKIES_TOGGLE");
@@ -122,7 +133,8 @@ definition {
 	}
 
 	@description = "Verify that cookies are not present with true as value"
-	macro verifyCookiesAreNotPresent {
+	@summary = "Default summary"
+	macro verifyCookiesAreNotPresent() {
 		CookieHelper.checkSelectedCookieIsNotPresent(
 			cookieName = "CONSENT_TYPE_PERFORMANCE",
 			expectedCookieValue = "true");
@@ -141,7 +153,8 @@ definition {
 	}
 
 	@description = "Verify that cookies for cookie categories are not exist"
-	macro verifyCookiesForCookieCategoriesAreNotPresent {
+	@summary = "Default summary"
+	macro verifyCookiesForCookieCategoriesAreNotPresent() {
 		CookieHelper.checkSelectedCookieIsNotExist(cookieName = "CONSENT_TYPE_PERFORMANCE");
 
 		CookieHelper.checkSelectedCookieIsNotExist(cookieName = "CONSENT_TYPE_FUNCTIONAL");
@@ -150,7 +163,8 @@ definition {
 	}
 
 	@description = "Verify that customized texts are present"
-	macro verifyCustomTextsArePresent {
+	@summary = "Default summary"
+	macro verifyCustomTextsArePresent(key_text = null) {
 		Variables.assertDefined(parameterList = ${key_text});
 
 		SelectFrame.selectFrameTop();
@@ -183,7 +197,8 @@ definition {
 	}
 
 	@description = "Verify that customized texts are present in portlet"
-	macro verifyCustomTextsArePresentInPortlet {
+	@summary = "Default summary"
+	macro verifyCustomTextsArePresentInPortlet(key_text = null,siteName = null,pageName = null) {
 		Variables.assertDefined(parameterList = ${key_text});
 
 		var siteNameURL = StringUtil.replace(${siteName}, " ", "-");

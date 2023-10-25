@@ -1,6 +1,7 @@
 definition {
 
-	macro createAccount {
+	@summary = "Default summary"
+	macro createAccount(firstName = null,lastName = null,emailAddress = null,password = null,screenName = null) {
 		AssertClick(
 			locator1 = "Link#CREATE_ACCOUNT",
 			value1 = "Create Account");
@@ -38,15 +39,18 @@ definition {
 		Click(locator1 = "Button#SUBMIT");
 	}
 
-	macro goBackUsingBrowserButton {
+	@summary = "Default summary"
+	macro goBackUsingBrowserButton() {
 		GoBack();
 	}
 
-	macro goBackUsingBrowserHistory {
+	@summary = "Default summary"
+	macro goBackUsingBrowserHistory() {
 		ExecuteJavaScript(value1 = "window.history.go(-1)");
 	}
 
-	macro goToLink {
+	@summary = "Default summary"
+	macro goToLink(key_href = null,key_description = null,key_buttonName = null,key_title = null) {
 		Click(
 			key_buttonName = ${key_buttonName},
 			key_href = ${key_href},
@@ -67,7 +71,8 @@ definition {
 		}
 	}
 
-	macro gotoNavItem {
+	@summary = "Default summary"
+	macro gotoNavItem(navItem = null) {
 		var key_navItem = ${navItem};
 
 		Click(locator1 = "Masterclass#NAV_TAB");
@@ -75,7 +80,8 @@ definition {
 		Click(locator1 = "Masterclass#NAV_ITEM");
 	}
 
-	macro previewPageandAssertFragment {
+	@summary = "Default summary"
+	macro previewPageandAssertFragment(fragmentName = null) {
 		PageEditor.previewInANewTab();
 
 		AssertElementPresent(
@@ -83,7 +89,8 @@ definition {
 			locator1 = "Masterclass#FRAGMENT_NAME");
 	}
 
-	macro signIn {
+	@summary = "Default summary"
+	macro signIn(emailAddress = null,password = null) {
 		if (isSet(emailAddress)) {
 			Type(
 				labelTitle = "Email Address",
@@ -117,7 +124,8 @@ definition {
 		Click(locator1 = "Button#SIGN_IN");
 	}
 
-	macro simulateAndViewPageElements {
+	@summary = "Default summary"
+	macro simulateAndViewPageElements(deviceType = null,elementsList = null) {
 		MobileDevice.previewPG(deviceType = ${deviceType});
 
 		for (var element : list ${elementsList}) {
@@ -127,7 +135,8 @@ definition {
 		}
 	}
 
-	macro verifySignInForm {
+	@summary = "Default summary"
+	macro verifySignInForm() {
 		AssertElementPresent(
 			labelTitle = "Email Address",
 			locator1 = "Masterclass#SIGN_IN_FORM");
@@ -137,7 +146,8 @@ definition {
 			locator1 = "Masterclass#SIGN_IN_FORM");
 	}
 
-	macro viewCoursesInPage {
+	@summary = "Default summary"
+	macro viewCoursesInPage(key_href = null,key_description = null,key_title = null,key_buttonName = null) {
 		if (isSet(title)) {
 			AssertElementPresent(
 				key_title = ${key_title},

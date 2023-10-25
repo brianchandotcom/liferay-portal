@@ -1,6 +1,7 @@
 definition {
 
-	macro addMimeType {
+	@summary = "Default summary"
+	macro addMimeType(typeName = null) {
 		Click(
 			ariaLabel = "Add Duplicate Field Code File MIME types",
 			locator1 = "Button#ANY_WITH_ARIA_LABEL");
@@ -16,7 +17,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro applySelectedFilter {
+	@summary = "Default summary"
+	macro applySelectedFilter() {
 		SelectFrame(value1 = "relative=top");
 
 		AssertClickNoError(
@@ -28,7 +30,8 @@ definition {
 		WaitForElementPresent(locator1 = "ContentDashboard#ROW_PANEL");
 	}
 
-	macro cancelSelectFilterTreeview {
+	@summary = "Default summary"
+	macro cancelSelectFilterTreeview(optionsList = null) {
 		Portlet.expandTree();
 
 		for (var optionName : list ${optionsList}) {
@@ -50,7 +53,8 @@ definition {
 		Button.clickCancel();
 	}
 
-	macro checkMimeExtensionDisplayed {
+	@summary = "Default summary"
+	macro checkMimeExtensionDisplayed(typeNameList = null) {
 		if (isSet(typeName)) {
 			AssertVisible(
 				key_nodeName = ${typeName},
@@ -69,13 +73,15 @@ definition {
 		Button.clickCancel();
 	}
 
-	macro clearFilters {
+	@summary = "Default summary"
+	macro clearFilters() {
 		Click(
 			key_text = "Clear",
 			locator1 = "Link#ANY");
 	}
 
-	macro clickMenuOfVersion {
+	@summary = "Default summary"
+	macro clickMenuOfVersion(versionName = null,menuItem = null) {
 		Click.waitForMenuToggleJSClick(
 			key_version = ${versionName},
 			locator1 = "ContentDashboard#VERSION_ELLIPSIS");
@@ -90,7 +96,8 @@ definition {
 		}
 	}
 
-	macro clickOnFirstBar {
+	@summary = "Default summary"
+	macro clickOnFirstBar() {
 		if (!(isSet(fillColor))) {
 			var fillColor = "4B9FFF";
 		}
@@ -100,7 +107,8 @@ definition {
 			locator1 = "ContentDashboard#BAR_FROM_NO_VOCABULARY_SPECIFIED");
 	}
 
-	macro clickQuickActionIcon {
+	@summary = "Default summary"
+	macro clickQuickActionIcon(iconName = null,assetName = null) {
 		if (isSet(assetName)) {
 			Click.clickNoMouseOver(
 				key_assetName = ${assetName},
@@ -115,11 +123,13 @@ definition {
 			title = ${iconName});
 	}
 
-	macro clickViewMore {
+	@summary = "Default summary"
+	macro clickViewMore() {
 		Button.click(button = "View More");
 	}
 
-	macro createVersionsForDocument {
+	@summary = "Default summary"
+	macro createVersionsForDocument(dmDocumentTitle = null,groupName = null,versionsCreated = null) {
 		var count = 0;
 
 		while (${count} != ${versionsCreated}) {
@@ -135,11 +145,13 @@ definition {
 		}
 	}
 
-	macro deleteSecondCategoryFilter {
+	@summary = "Default summary"
+	macro deleteSecondCategoryFilter() {
 		Click(locator1 = "ContentDashboard#DELETE_SECOND_FILTER_SELECTED");
 	}
 
-	macro downloadVersion {
+	@summary = "Default summary"
+	macro downloadVersion(version = null) {
 		Click.waitForMenuToggleJSClick(
 			key_tableEntry = ${version},
 			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
@@ -149,7 +161,8 @@ definition {
 			locator1 = "MenuItem#ANY_ICON");
 	}
 
-	macro editAsset {
+	@summary = "Default summary"
+	macro editAsset(assetNewTitle = null,assetTitle = null) {
 		LexiconTable.clickEllipsisItem(
 			item = "Edit",
 			tableEntry = ${assetTitle});
@@ -175,7 +188,8 @@ definition {
 		}
 	}
 
-	macro filterByAuthor {
+	@summary = "Default summary"
+	macro filterByAuthor(viewOption = null) {
 		ContentDashboard.openFilterModal(filterOption = "Author");
 
 		if (!(isSet(authorNameList))) {
@@ -207,19 +221,22 @@ definition {
 		ContentDashboard.applySelectedFilter();
 	}
 
-	macro filterByAuthorAll {
+	@summary = "Default summary"
+	macro filterByAuthorAll() {
 		ContentDashboard.openFilterAndOrder();
 
 		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 	}
 
-	macro filterByAuthorMe {
+	@summary = "Default summary"
+	macro filterByAuthorMe() {
 		ContentDashboard.openFilterAndOrder();
 
 		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 	}
 
-	macro filterByCategory {
+	@summary = "Default summary"
+	macro filterByCategory(categoryNameList = null) {
 		ContentDashboard.openFilterModal(filterOption = "Categories");
 
 		ContentDashboard.useTreeviewFilter(optionsList = ${categoryNameList});
@@ -227,7 +244,8 @@ definition {
 		ContentDashboard.applySelectedFilter();
 	}
 
-	macro filterByExtension {
+	@summary = "Default summary"
+	macro filterByExtension(extensionName = null) {
 		ContentDashboard.openFilterModal(filterOption = "Extension");
 
 		if (!(isSet(extensionNameList))) {
@@ -239,7 +257,8 @@ definition {
 		ContentDashboard.applySelectedFilter();
 	}
 
-	macro filterByMimeParent {
+	@summary = "Default summary"
+	macro filterByMimeParent(parentExtension = null) {
 		ContentDashboard.openFilterModal(filterOption = "Extension");
 
 		ContentDashboard.useTreeviewFilter(optionsList = ${parentExtension});
@@ -247,7 +266,8 @@ definition {
 		ContentDashboard.applySelectedFilter();
 	}
 
-	macro filterBySite {
+	@summary = "Default summary"
+	macro filterBySite(siteName = null) {
 		ContentDashboard.openFilterModal(filterOption = "Site or Asset Library");
 
 		AssertClick(
@@ -259,13 +279,15 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro filterByStatus {
+	@summary = "Default summary"
+	macro filterByStatus() {
 		ContentDashboard.openFilterAndOrder();
 
 		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 	}
 
-	macro filterByTag {
+	@summary = "Default summary"
+	macro filterByTag(tagName = null) {
 		ContentDashboard.openFilterModal(filterOption = "Tag");
 
 		if (!(isSet(tagNameList))) {
@@ -279,13 +301,15 @@ definition {
 		ContentDashboard.applySelectedFilter();
 	}
 
-	macro filterByToBeReviewed {
+	@summary = "Default summary"
+	macro filterByToBeReviewed() {
 		ContentDashboard.openFilterAndOrder();
 
 		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 	}
 
-	macro filterByType {
+	@summary = "Default summary"
+	macro filterByType(typeName = null) {
 		ContentDashboard.openFilterModal(filterOption = "Type");
 
 		if (!(isSet(typeNameList))) {
@@ -297,13 +321,15 @@ definition {
 		ContentDashboard.applySelectedFilter();
 	}
 
-	macro flipGraphAxes {
+	@summary = "Default summary"
+	macro flipGraphAxes() {
 		Click(
 			key_text = "change",
 			locator1 = "Icon#ANY");
 	}
 
-	macro goToContentDashboard {
+	@summary = "Default summary"
+	macro goToContentDashboard() {
 		ApplicationsMenu.gotoPortlet(
 			category = "Content",
 			panel = "Applications",
@@ -314,7 +340,8 @@ definition {
 		WaitForElementPresent(locator1 = "ContentDashboard#CONTENT_CHART_SVG");
 	}
 
-	macro goToVersionHistoryPage {
+	@summary = "Default summary"
+	macro goToVersionHistoryPage(assetName = null) {
 		ContentDashboard.goToContentDashboard();
 
 		LexiconTable.clickEllipsisItem(
@@ -326,11 +353,13 @@ definition {
 		ContentDashboard.clickViewMore();
 	}
 
-	macro moveToPage {
+	@summary = "Default summary"
+	macro moveToPage() {
 		Click(locator1 = "ContentDashboard#PAGINATION_MOVE_TO_PAGE");
 	}
 
-	macro moveVocabularyDisplayConfiguration {
+	@summary = "Default summary"
+	macro moveVocabularyDisplayConfiguration(warningMessage = null,vocabularyName = null) {
 		ContentDashboard.openAuditGraphConfiguration();
 
 		for (var key_vocabularyName : list ${vocabularyName}) {
@@ -364,7 +393,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro navigateToDocumentVersionHistoryPage {
+	@summary = "Default summary"
+	macro navigateToDocumentVersionHistoryPage(dmDocumentTitle = null,groupName = null,siteURLKey = null) {
 		var fileEntryId = JSONDocument.getFileEntryId(
 			dmDocumentTitle = ${dmDocumentTitle},
 			groupName = ${groupName});
@@ -372,7 +402,8 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet&_com_liferay_document_library_web_portlet_DLAdminPortlet_mvcRenderCommandName=%2Fdocument_library%2Fview_file_entry_history&_com_liferay_document_library_web_portlet_DLAdminPortlet_fileEntryId=${fileEntryId}");
 	}
 
-	macro openAuditGraphConfiguration {
+	@summary = "Default summary"
+	macro openAuditGraphConfiguration() {
 		Click(
 			key_text = "cog",
 			locator1 = "Icon#ANY");
@@ -380,7 +411,8 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
-	macro openFilterAndOrder {
+	@summary = "Default summary"
+	macro openFilterAndOrder() {
 		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
 			AssertClickNoError(
 				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
@@ -388,7 +420,8 @@ definition {
 		}
 	}
 
-	macro openFilterModal {
+	@summary = "Default summary"
+	macro openFilterModal() {
 		ContentDashboard.openFilterAndOrder();
 
 		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
@@ -398,36 +431,42 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
-	macro openInfoPanel {
+	@summary = "Default summary"
+	macro openInfoPanel(assetName = null) {
 		Click.javaScriptClick(
 			key_tableEntry = ${assetName},
 			key_text = "info-circle",
 			locator1 = "LexiconTable#TABLE_ENTRY_ICON");
 	}
 
-	macro openVersionsTab {
+	@summary = "Default summary"
+	macro openVersionsTab() {
 		Click(locator1 = "ContentDashboard#INFO_PANEL_VERSIONS_TAB");
 	}
 
-	macro orderByModificationDate {
+	@summary = "Default summary"
+	macro orderByModificationDate() {
 		ContentDashboard.openFilterAndOrder();
 
 		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 	}
 
-	macro orderByReviewDate {
+	@summary = "Default summary"
+	macro orderByReviewDate() {
 		ContentDashboard.openFilterAndOrder();
 
 		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 	}
 
-	macro orderByTitle {
+	@summary = "Default summary"
+	macro orderByTitle() {
 		ContentDashboard.openFilterAndOrder();
 
 		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 	}
 
-	macro searchValue {
+	@summary = "Default summary"
+	macro searchValue(webContentTitle = null) {
 		Click(locator1 = "ContentDashboard#SEARCH_FIELD");
 
 		Type(
@@ -439,7 +478,8 @@ definition {
 			value1 = "\ENTER");
 	}
 
-	macro setUpGlobalCategories {
+	@summary = "Default summary"
+	macro setUpGlobalCategories() {
 		var audienceCategory = JSONCategory.addCategory(
 			groupName = "Global",
 			title = "Audience 1",
@@ -456,7 +496,8 @@ definition {
 		return ${stageId1};
 	}
 
-	macro setVocabularyInUseSecondPosition {
+	@summary = "Default summary"
+	macro setVocabularyInUseSecondPosition(key_vocabularyName = null) {
 		ContentDashboard.openAuditGraphConfiguration();
 
 		var secondVocabulary = selenium.getText("ContentDashboard#AUDIT_GRAPH_CONFIGURATION_SECOND_VOCABULARY_IN_USE");
@@ -476,7 +517,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro setVocabularyInUseTopPosition {
+	@summary = "Default summary"
+	macro setVocabularyInUseTopPosition(key_vocabularyName = null) {
 		ContentDashboard.openAuditGraphConfiguration();
 
 		var firstVocabulary = selenium.getText("ContentDashboard#AUDIT_GRAPH_CONFIGURATION_FIRST_VOCABULARY_IN_USE");
@@ -496,11 +538,13 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro swapVocabularies {
+	@summary = "Default summary"
+	macro swapVocabularies() {
 		Click(locator1 = "ContentDashboard#SWAP_VOCABULARIES_BUTTON");
 	}
 
-	macro useTreeviewFilter {
+	@summary = "Default summary"
+	macro useTreeviewFilter(optionsList = null) {
 		Portlet.expandTree();
 
 		for (var optionName : list ${optionsList}) {
@@ -510,7 +554,8 @@ definition {
 		}
 	}
 
-	macro viewAppliedFilters {
+	@summary = "Default summary"
+	macro viewAppliedFilters(filterLabelList = null) {
 		for (var filterLabel : list ${filterLabelList}) {
 			AssertElementPresent(
 				filterLabel = ${filterLabel},
@@ -518,7 +563,8 @@ definition {
 		}
 	}
 
-	macro viewAssetsTranslatedVersion {
+	@summary = "Default summary"
+	macro viewAssetsTranslatedVersion(language = null) {
 		Panel.expandPanel(panel = "Properties");
 
 		ClickNoError(
@@ -526,7 +572,8 @@ definition {
 			locator1 = "ContentDashboard#VIEW_TRANSLATED_ASSET_ICON");
 	}
 
-	macro viewHistoryVersionOrder {
+	@summary = "Default summary"
+	macro viewHistoryVersionOrder(assetVersionList = null) {
 		var count = 1;
 		var list1 = ListUtil.newListFromString(${assetVersionList});
 

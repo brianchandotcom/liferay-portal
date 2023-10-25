@@ -1,6 +1,7 @@
 definition {
 
-	macro configureSalesforce {
+	@summary = "Default summary"
+	macro configureSalesforce() {
 		var salesforceLoginURL = PropsUtil.get("object.storage.salesforce.login.url");
 		var salesforceConsumerKey = PropsUtil.get("object.storage.salesforce.consumer.key");
 		var salesforceConsumerSecret = PropsUtil.get("object.storage.salesforce.consumer.secret");

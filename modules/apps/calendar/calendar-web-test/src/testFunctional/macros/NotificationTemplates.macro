@@ -1,6 +1,7 @@
 definition {
 
-	macro gotoCalendarMenuOption {
+	@summary = "Default summary"
+	macro gotoCalendarMenuOption(calendarName = null,menuListOption = null) {
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		Click(
@@ -12,25 +13,29 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
-	macro gotoNotificationTemplatesTab {
+	@summary = "Default summary"
+	macro gotoNotificationTemplatesTab() {
 		AssertClick(
 			locator1 = "CalendarEditCalendar#NAVIGATION_NOTIFICATION_TEMPLATES_TAB",
 			value1 = "Notification Templates");
 	}
 
-	macro gotoReminderEmailTab {
+	@summary = "Default summary"
+	macro gotoReminderEmailTab() {
 		AssertClick(
 			locator1 = "CalendarEditCalendar#NOTIFICATION_TEMPLATES_REMINDER_EMAIL_TAB_INACTIVE",
 			value1 = "Reminder Email");
 	}
 
-	macro viewUserEmailDisplayedFromAdressField {
+	@summary = "Default summary"
+	macro viewUserEmailDisplayedFromAdressField(userEmail = null) {
 		AssertTextEquals(
 			locator1 = "CalendarEditCalendar#NOTIFICATION_TEMPLATES_FROM_ADDRESS_FIELD",
 			value1 = ${userEmail});
 	}
 
-	macro viewUserNameDisplayedFromNameField {
+	@summary = "Default summary"
+	macro viewUserNameDisplayedFromNameField(userName = null) {
 		AssertTextEquals(
 			locator1 = "CalendarEditCalendar#NOTIFICATION_TEMPLATES_FROM_NAME_FIELD",
 			value1 = ${userName});

@@ -1,6 +1,7 @@
 definition {
 
-	macro validateSchemas {
+	@summary = "Default summary"
+	macro validateSchemas(freshDBSchemaName = null,upgradedDBSchemaName = null) {
 		var tempDir = PropsUtil.get("output.dir.name");
 
 		AntCommands.runCommand("build-test.xml", "validate-db-upgrade-schemas -Dfresh.db.schema=${freshDBSchemaName} -Dupgraded.db.schema=${upgradedDBSchemaName}");

@@ -1,6 +1,7 @@
 definition {
 
-	macro activeStatus {
+	@summary = "Default summary"
+	macro activeStatus() {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",
@@ -17,7 +18,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro analyticsCloudFlow {
+	@summary = "Default summary"
+	macro analyticsCloudFlow() {
 		CustomerPortal.clickOnFinishActivationButton();
 
 		CP2AnalyticsCloudSetup.typeAllSetupAnalyticsCloudInfoFields();
@@ -27,7 +29,8 @@ definition {
 		CustomerPortal.clickAtButton(text = "Done");
 	}
 
-	macro assertFieldExtraIsNotVisible {
+	@summary = "Default summary"
+	macro assertFieldExtraIsNotVisible(field = null,position = null) {
 		var key_index = ${position};
 
 		AssertElementNotPresent(
@@ -35,7 +38,8 @@ definition {
 			locator1 = "CustomerPortalSite#SETUP_FIELDS");
 	}
 
-	macro assertFieldExtraIsVisible {
+	@summary = "Default summary"
+	macro assertFieldExtraIsVisible(field = null,position = null) {
 		var key_index = ${position};
 
 		AssertVisible(
@@ -43,18 +47,21 @@ definition {
 			locator1 = "CustomerPortalSite#SETUP_FIELDS");
 	}
 
-	macro clickOnWorkspaceLink {
+	@summary = "Default summary"
+	macro clickOnWorkspaceLink() {
 		Click(locator1 = "CP2AnalyticsCloudSetup#WORKSPACE");
 	}
 
-	macro typeAllSetupAnalyticsCloudExtraInfo {
+	@summary = "Default summary"
+	macro typeAllSetupAnalyticsCloudExtraInfo() {
 		CP2AnalyticsCloudSetup.typeSetupAnalyticsCloudInfoFields(
 			label = "email",
 			position = 2,
 			value = "test.user1@liferay.com");
 	}
 
-	macro typeAllSetupAnalyticsCloudInfoFields {
+	@summary = "Default summary"
+	macro typeAllSetupAnalyticsCloudInfoFields() {
 		CP2AnalyticsCloudSetup.typeSetupAnalyticsCloudInfoFields(
 			label = "Address",
 			value = "test@liferay.com");
@@ -86,7 +93,8 @@ definition {
 		CustomerPortal.assertButtonIsActive(text = "Submit");
 	}
 
-	macro typeSetupAnalyticsCloudInfoFields {
+	@summary = "Default summary"
+	macro typeSetupAnalyticsCloudInfoFields(value = null) {
 		if (!(isSet(position))) {
 			var position = 1;
 		}

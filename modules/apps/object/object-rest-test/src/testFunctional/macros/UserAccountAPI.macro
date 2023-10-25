@@ -1,6 +1,7 @@
 definition {
 
-	macro _curlUserAccount {
+	@summary = "Default summary"
+	macro _curlUserAccount(customObjectEntryId = null,nestedFieldsDepth = null,fieldsValue = null,virtualHost = null,parameterValue = null,relationshipName = null,longParameterValue = null,userAccountId = null,parameter = null) {
 		if (isSet(virtualHost)) {
 			if (!(isSet(port))) {
 				var port = 8080;
@@ -48,7 +49,8 @@ definition {
 		return ${curl};
 	}
 
-	macro _nUsersBodyAsNestedFieldToCreate {
+	@summary = "Default summary"
+	macro _nUsersBodyAsNestedFieldToCreate(emailDomain = null,givenName = null,nestedField = null,alternateName = null,familyName = null,numberOfRelatedUsers = null,oneToManyChild = null) {
 		Variables.assertDefined(parameterList = "${body},${nestedField},${numberOfRelatedUsers},${alternateName},${emailDomain},${familyName},${givenName}");
 
 		var size = ${numberOfRelatedUsers};
@@ -92,7 +94,8 @@ definition {
 		return ${body};
 	}
 
-	macro _nUsersBodyAsNestedFieldToUpdate {
+	@summary = "Default summary"
+	macro _nUsersBodyAsNestedFieldToUpdate(emailDomain = null,givenName = null,nestedField = null,alternateName = null,familyName = null,oneToManyChild = null) {
 		Variables.assertDefined(parameterList = "${body},${nestedField},${alternateName},${emailDomain},${familyName},${givenName},${userExternalReferenceCodes}");
 
 		if (${oneToManyChild} == "true") {
@@ -138,7 +141,8 @@ definition {
 		return ${body};
 	}
 
-	macro assertCorrectUserAlternateNameInResponse {
+	@summary = "Default summary"
+	macro assertCorrectUserAlternateNameInResponse(expectedNames = null) {
 		Variables.assertDefined(parameterList = ${expectedNames});
 
 		var actualAlternateNames = UserAccountAPI.getUserFieldWithFilter(
@@ -150,7 +154,8 @@ definition {
 			expected = ${expectedNames});
 	}
 
-	macro assertResponseHasCorrectRelatedEntryName {
+	@summary = "Default summary"
+	macro assertResponseHasCorrectRelatedEntryName(relationshipName = null,customObjectEntryId = null,userAccountId = null,expectedValue = null) {
 		Variables.assertDefined(parameterList = "${userAccountId},${relationshipName},${expectedValue}");
 
 		var response = UserAccountAPI.getRelationshipByUserAccountId(
@@ -164,7 +169,8 @@ definition {
 			expected = ${expectedValue});
 	}
 
-	macro assertResponseNotIncludeDetailsOfDeletedObjectEntry {
+	@summary = "Default summary"
+	macro assertResponseNotIncludeDetailsOfDeletedObjectEntry(relationshipName = null,userAccountId = null,expectedValue = null) {
 		Variables.assertDefined(parameterList = "${userAccountId},${relationshipName},${expectedValue}");
 
 		var response = UserAccountAPI.getRelationshipByUserAccountId(
@@ -178,7 +184,8 @@ definition {
 			expected = ${expectedValue});
 	}
 
-	macro createUserAccount {
+	@summary = "Default summary"
+	macro createUserAccount(emailAddress = null,fieldName = null,familyName = null,givenName = null,dbType = null,alternateName = null,virtualHost = null,fieldValue = null) {
 		Variables.assertDefined(parameterList = "${alternateName},${emailAddress},${familyName},${givenName}");
 
 		var curl = UserAccountAPI._curlUserAccount(virtualHost = ${virtualHost});
@@ -200,7 +207,8 @@ definition {
 		return ${response};
 	}
 
-	macro createUserAccountAndRelatedObjects {
+	@summary = "Default summary"
+	macro createUserAccountAndRelatedObjects(fieldName = null,givenName = null,nestedField = null,alternateName = null,virtualHost = null,relatedEntryExternalReferenceCode = null,relatedEntryFieldName = null,fieldValue = null,numberOfRelatedObjectEntries = null,emailAddress = null,familyName = null,oneToManyChild = null) {
 		Variables.assertDefined(parameterList = "${alternateName},${emailAddress},${familyName},${givenName},${nestedField},${numberOfRelatedObjectEntries},${relatedEntryFieldName}");
 
 		var curl = UserAccountAPI._curlUserAccount(virtualHost = ${virtualHost});
@@ -227,7 +235,8 @@ definition {
 		return ${response};
 	}
 
-	macro createUserRoleByUserAccountId {
+	@summary = "Default summary"
+	macro createUserRoleByUserAccountId(streetNumber = null,userAccountId = null,roleName = null) {
 		Variables.assertDefined(parameterList = "${roleName},${streetNumber},${userAccountId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -246,7 +255,8 @@ definition {
 		return ${response};
 	}
 
-	macro deleteObjectEntryRelatedToUserAccount {
+	@summary = "Default summary"
+	macro deleteObjectEntryRelatedToUserAccount(relationshipName = null,customObjectEntryId = null,userAccountId = null) {
 		Variables.assertDefined(parameterList = "${userAccountId},${relationshipName},${customObjectEntryId}");
 
 		var curl = UserAccountAPI._curlUserAccount(
@@ -257,7 +267,8 @@ definition {
 		JSONCurlUtil.delete(${curl});
 	}
 
-	macro getRelationshipByUserAccountId {
+	@summary = "Default summary"
+	macro getRelationshipByUserAccountId(relationshipName = null,userAccountId = null) {
 		Variables.assertDefined(parameterList = "${userAccountId},${relationshipName}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -274,7 +285,8 @@ definition {
 		return ${response};
 	}
 
-	macro getRoleId {
+	@summary = "Default summary"
+	macro getRoleId(streetNumber = null,roleName = null) {
 		Variables.assertDefined(parameterList = "${roleName},${streetNumber}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -297,7 +309,8 @@ definition {
 		}
 	}
 
-	macro getSystemObjectsWithNestedField {
+	@summary = "Default summary"
+	macro getSystemObjectsWithNestedField(parameter = null,userAccountId = null,parameterValue = null) {
 		var curl = UserAccountAPI._curlUserAccount(
 			parameter = ${parameter},
 			parameterValue = ${parameterValue},
@@ -308,7 +321,8 @@ definition {
 		return ${response};
 	}
 
-	macro getSystemObjectsWithNestedFieldAndNestedFieldsDepth {
+	@summary = "Default summary"
+	macro getSystemObjectsWithNestedFieldAndNestedFieldsDepth(longParameterValue = null,nestedFieldsDepth = null,fieldsValue = null) {
 		var curl = UserAccountAPI._curlUserAccount(
 			fieldsValue = ${fieldsValue},
 			longParameterValue = ${longParameterValue},
@@ -319,7 +333,8 @@ definition {
 		return ${response};
 	}
 
-	macro getUpdatedFieldOfUserAccountWithPatchRequest {
+	@summary = "Default summary"
+	macro getUpdatedFieldOfUserAccountWithPatchRequest(fieldName = null,UserAccountId = null,updatedFieldValue = null) {
 		Variables.assertDefined(parameterList = "${fieldName},${updatedFieldValue}");
 
 		if (!(isSet(userAccountId))) {
@@ -336,7 +351,8 @@ definition {
 		return ${valueOfField};
 	}
 
-	macro getUpdatedFieldOfUserAccountWithPutRequest {
+	@summary = "Default summary"
+	macro getUpdatedFieldOfUserAccountWithPutRequest(emailAddress = null,fieldName = null,UserAccountId = null,familyName = null,givenName = null,alternateName = null,updatedFieldValue = null) {
 		Variables.assertDefined(parameterList = "${alternateName},${emailAddress},${familyName},${givenName},${fieldName},${updatedFieldValue}");
 
 		if (!(isSet(userAccountId))) {
@@ -362,7 +378,8 @@ definition {
 		return ${valueOfField};
 	}
 
-	macro getUserFieldWithFilter {
+	@summary = "Default summary"
+	macro getUserFieldWithFilter(filter = null,jsonPath = null) {
 		Variables.assertDefined(parameterList = "${filter},${jsonPath}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -379,7 +396,8 @@ definition {
 		return ${fieldValue};
 	}
 
-	macro partialUpdateUserAccountAndRelatedObjects {
+	@summary = "Default summary"
+	macro partialUpdateUserAccountAndRelatedObjects(fieldName = null,nestedField = null,virtualHost = null,relatedEntryExternalReferenceCode = null,relatedEntryFieldName = null,fieldValue = null,numberOfRelatedObjectEntries = null,emailAddress = null,userAccountId = null,oneToManyChild = null) {
 		Variables.assertDefined(parameterList = "${emailAddress},${nestedField},${numberOfRelatedObjectEntries},${relatedEntryFieldName},${userAccountId}");
 
 		var curl = UserAccountAPI._curlUserAccount(
@@ -409,7 +427,8 @@ definition {
 		return ${response};
 	}
 
-	macro relateObjectEntries {
+	@summary = "Default summary"
+	macro relateObjectEntries(relationshipName = null,customObjectId = null,userAccountId = null) {
 		Variables.assertDefined(parameterList = "${userAccountId},${customObjectId},${relationshipName}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -426,7 +445,8 @@ definition {
 		return ${response};
 	}
 
-	macro setUpGlobalUserAccountId {
+	@summary = "Default summary"
+	macro setUpGlobalUserAccountId(emailAddress = null,fieldName = null,familyName = null,givenName = null,dbType = null,alternateName = null,fieldValue = null) {
 		var response = UserAccountAPI.createUserAccount(
 			alternateName = ${alternateName},
 			dbType = ${dbType},
@@ -445,7 +465,8 @@ definition {
 		return ${staticUserAccountId};
 	}
 
-	macro setUpGlobalUserAccountIds {
+	@summary = "Default summary"
+	macro setUpGlobalUserAccountIds(familyName1 = null,givenName1 = null,familyName2 = null,givenName2 = null,emailAddress1 = null,emailAddress2 = null,virtualHost = null,alternateName1 = null,alternateName2 = null) {
 		var response1 = UserAccountAPI.createUserAccount(
 			alternateName = ${alternateName1},
 			emailAddress = ${emailAddress1},
@@ -479,7 +500,8 @@ definition {
 		}
 	}
 
-	macro updateUserAccountAndRelatedObjects {
+	@summary = "Default summary"
+	macro updateUserAccountAndRelatedObjects(fieldName = null,givenName = null,nestedField = null,alternateName = null,virtualHost = null,relatedEntryExternalReferenceCode = null,relatedEntryFieldName = null,fieldValue = null,numberOfRelatedObjectEntries = null,emailAddress = null,familyName = null,userAccountId = null,oneToManyChild = null) {
 		Variables.assertDefined(parameterList = "${alternateName},${emailAddress},${familyName},${givenName},${nestedField},${numberOfRelatedObjectEntries},${relatedEntryFieldName},${userAccountId}");
 
 		var curl = UserAccountAPI._curlUserAccount(

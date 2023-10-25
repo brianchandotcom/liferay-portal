@@ -82,9 +82,9 @@ definition {
 			Navigator.gotoNavTab(navTab = "Design");
 
 			AssertAttributeValue(
-				value1 = "placeholder",
 				key_text = "Theme CSS",
 				locator1 = "TextInput#ANY",
+				value1 = "placeholder",
 				value2 = "No theme CSS client extension was loaded.");
 		}
 
@@ -132,9 +132,9 @@ definition {
 			WaitForPageLoad();
 
 			AssertAttributeValue(
-				value1 = "placeholder",
 				key_text = "Theme CSS",
 				locator1 = "TextInput#ANY",
+				value1 = "placeholder",
 				value2 = "No theme CSS client extension was loaded.");
 		}
 
@@ -172,9 +172,9 @@ definition {
 			Navigator.gotoNavTab(navTab = "Design");
 
 			AssertAttributeValue(
-				value1 = "placeholder",
 				key_text = "Theme CSS",
 				locator1 = "TextInput#ANY",
+				value1 = "placeholder",
 				value2 = "No theme CSS client extension was loaded.");
 		}
 
@@ -342,9 +342,9 @@ definition {
 			WaitForPageLoad();
 
 			AssertAttributeValue(
-				value1 = "placeholder",
 				key_text = "Theme CSS",
 				locator1 = "TextInput#ANY",
+				value1 = "placeholder",
 				value2 = "Theme CSS is inherited from master.");
 
 			PagesAdmin.addThemeCSSExtension(extensionName = ${randomEntryName2});
@@ -397,9 +397,9 @@ definition {
 			Navigator.gotoNavTab(navTab = "Design");
 
 			AssertAttributeValue(
-				value1 = "placeholder",
 				key_text = "Theme CSS",
 				locator1 = "TextInput#ANY",
+				value1 = "placeholder",
 				value2 = "Theme CSS is inherited from Pages.");
 
 			PagesAdmin.addThemeCSSExtension(extensionName = ${randomEntryName2});
@@ -504,9 +504,9 @@ definition {
 				value1 = "");
 
 			AssertAttributeValue(
-				value1 = "placeholder",
 				key_text = "Theme CSS",
 				locator1 = "TextInput#ANY",
+				value1 = "placeholder",
 				value2 = "No theme CSS client extension was loaded.");
 
 			PortletEntry.save();
@@ -575,9 +575,9 @@ definition {
 				value1 = "");
 
 			AssertAttributeValue(
-				value1 = "placeholder",
 				key_text = "Theme CSS",
 				locator1 = "TextInput#ANY",
+				value1 = "placeholder",
 				value2 = "No theme CSS client extension was loaded.");
 
 			PortletEntry.save();

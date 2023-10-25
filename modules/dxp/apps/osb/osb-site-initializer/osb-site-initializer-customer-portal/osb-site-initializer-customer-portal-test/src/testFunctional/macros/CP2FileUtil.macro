@@ -1,6 +1,7 @@
 definition {
 
-	macro assertDownloadedFileIsNotPresent {
+	@summary = "Default summary"
+	macro assertDownloadedFileIsNotPresent(downloadedFileName = null) {
 		var tempDir = PropsUtil.get("output.dir.name");
 
 		var downloadedFilePath = "${tempDir}/${downloadedFileName}";
@@ -15,7 +16,8 @@ definition {
 		}
 	}
 
-	macro assertDownloadedFileIsPresent {
+	@summary = "Default summary"
+	macro assertDownloadedFileIsPresent(downloadedFileName = null) {
 		var tempDir = PropsUtil.get("output.dir.name");
 
 		var downloadedFilePath = "${tempDir}/${downloadedFileName}";

@@ -1,6 +1,7 @@
 definition {
 
-	macro _addPriceList {
+	@summary = "Default summary"
+	macro _addPriceList(catalogName = null,priceListName = null,currencyCode = null) {
 		Variables.assertDefined(parameterList = "${catalogName},${priceListName},${currencyCode}");
 
 		var catalogId = CommerceJSONCatalogsAPI._getCommerceCatalogIdByName(catalogName = ${catalogName});
@@ -36,7 +37,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _addPriceListEntry {
+	@summary = "Default summary"
+	macro _addPriceListEntry(entryPrice = null,productSKU = null,unitOfMeasureKey = null,priceListName = null) {
 		Variables.assertDefined(parameterList = "${productSKU},${priceListName},${entryPrice}");
 
 		var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = ${productSKU});
@@ -85,7 +87,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _addPriceModifier {
+	@summary = "Default summary"
+	macro _addPriceModifier(priceModifierTitle = null,priceListName = null,modifierType = null,modifierAmount = null,target = null) {
 		Variables.assertDefined(parameterList = "${modifierAmount},${modifierType},${priceListName},${priceModifierTitle},${target}");
 
 		var priceListId = CommerceJSONPriceListsAndPromotionsAPI._getCommercePriceListsAndPromotionsIdByName(priceListAndPromotionName = ${priceListName});
@@ -123,7 +126,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _addPriceModifierCategory {
+	@summary = "Default summary"
+	macro _addPriceModifierCategory(priceModifierTitle = null,priceListName = null,productName = null) {
 		Variables.assertDefined(parameterList = "${priceListName},${priceModifierTitle},${productName}");
 
 		var baseURL = ${baseURL};
@@ -154,7 +158,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _addPriceModifierProduct {
+	@summary = "Default summary"
+	macro _addPriceModifierProduct(priceModifierTitle = null,priceListName = null,productName = null) {
 		Variables.assertDefined(parameterList = "${priceListName},${priceModifierTitle},${productName}");
 
 		var baseURL = ${baseURL};
@@ -183,7 +188,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _addPriceModifierProductGroup {
+	@summary = "Default summary"
+	macro _addPriceModifierProductGroup(priceModifierTitle = null,productGroupNames = null,priceListName = null) {
 		Variables.assertDefined(parameterList = "${priceListName},${priceModifierTitle},${productGroupNames}");
 
 		var baseURL = ${baseURL};
@@ -218,7 +224,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _addPromotion {
+	@summary = "Default summary"
+	macro _addPromotion(catalogName = null,promotionName = null,currencyCode = null) {
 		Variables.assertDefined(parameterList = "${catalogName},${promotionName},${currencyCode}");
 
 		var catalogId = CommerceJSONCatalogsAPI._getCommerceCatalogIdByName(catalogName = ${catalogName});
@@ -254,7 +261,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _addPromotionEntry {
+	@summary = "Default summary"
+	macro _addPromotionEntry(entryPrice = null,productSKU = null,promotionName = null) {
 		Variables.assertDefined(parameterList = "${productSKU},${promotionName},${entryPrice}");
 
 		var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = ${productSKU});
@@ -283,7 +291,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _addTierPriceEntry {
+	@summary = "Default summary"
+	macro _addTierPriceEntry(productSKU = null,price = null,priceListName = null) {
 		Variables.assertDefined(parameterList = "${price},${priceListName},${productSKU}");
 
 		var baseURL = ${baseURL};
@@ -328,7 +337,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _deleteAllNoMasterPriceListsAndPromotions {
+	@summary = "Default summary"
+	macro _deleteAllNoMasterPriceListsAndPromotions() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -355,7 +365,8 @@ definition {
 		}
 	}
 
-	macro _deleteCommercePriceList {
+	@summary = "Default summary"
+	macro _deleteCommercePriceList(priceListName = null) {
 		Variables.assertDefined(parameterList = ${priceListName});
 
 		var baseURL = ${baseURL};
@@ -376,7 +387,8 @@ definition {
 		JSONCurlUtil.delete(${curl});
 	}
 
-	macro _getCommerceNoMasterPriceListsAndPromotions {
+	@summary = "Default summary"
+	macro _getCommerceNoMasterPriceListsAndPromotions(priceListAndPromotionCount = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -403,7 +415,8 @@ definition {
 		return ${priceListAndPromotionIds};
 	}
 
-	macro _getCommercePriceListsAndPromotionsIdByName {
+	@summary = "Default summary"
+	macro _getCommercePriceListsAndPromotionsIdByName(priceListAndPromotionCount = null,priceListAndPromotionName = null) {
 		Variables.assertDefined(parameterList = ${priceListAndPromotionName});
 
 		var baseURL = ${baseURL};
@@ -432,7 +445,8 @@ definition {
 		return ${priceListAndPromotionId};
 	}
 
-	macro _getPriceEntryId {
+	@summary = "Default summary"
+	macro _getPriceEntryId(productSKU = null,priceListName = null) {
 		Variables.assertDefined(parameterList = "${priceListName},${productSKU}");
 
 		var baseURL = ${baseURL};
@@ -469,7 +483,8 @@ definition {
 		return ${priceEntryId};
 	}
 
-	macro _getPriceModifierIdByTitle {
+	@summary = "Default summary"
+	macro _getPriceModifierIdByTitle(priceModifierTitle = null,priceListName = null) {
 		Variables.assertDefined(parameterList = "${priceListName},${priceModifierTitle}");
 
 		var priceListId = CommerceJSONPriceListsAndPromotionsAPI._getCommercePriceListsAndPromotionsIdByName(priceListAndPromotionName = ${priceListName});
@@ -499,7 +514,8 @@ definition {
 		return ${priceModifierId};
 	}
 
-	macro _patchPriceModifier {
+	@summary = "Default summary"
+	macro _patchPriceModifier(priceListName = null) {
 		Variables.assertDefined(parameterList = "${priceListName},${priceModifierTitle}");
 
 		var baseURL = ${baseURL};

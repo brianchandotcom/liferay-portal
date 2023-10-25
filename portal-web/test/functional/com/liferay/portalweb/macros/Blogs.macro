@@ -1,6 +1,7 @@
 definition {
 
-	macro addBlogsEntryLoginUserPG {
+	@summary = "Default summary"
+	macro addBlogsEntryLoginUserPG(entryInvalidContent = null,viewableBySelection = null,siteName = null,vocabularyName = null,entryAddRelatedAsset = null,tagName = null,userLoginEmailAddress = null,pageName = null,categoryName = null,assetType = null,entryAddCategory = null,viewableBy = null,entryAddTag = null,siteURLTemp = null,entryValidTitleLength = null,entryInvalidTitleLength = null,assetTitle = null,entryInvalidTitle = null,userLoginFullName = null,entryTitle = null,entryContent = null,entryAddPermissions = null) {
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
@@ -38,7 +39,8 @@ definition {
 			userLoginFullName = ${userLoginFullName});
 	}
 
-	macro addDraft {
+	@summary = "Default summary"
+	macro addDraft(entrySubtitle = null,siteURLKey = null,entryTitle = null,entryContent = null,layoutName = null) {
 		if (isSet(siteURLKey)) {
 			BlogsNavigator.openToAddEntry(
 				layoutName = ${layoutName},
@@ -56,7 +58,8 @@ definition {
 		BlogsEntry.saveAsDraft();
 	}
 
-	macro addDraftViaAutoSave {
+	@summary = "Default summary"
+	macro addDraftViaAutoSave(entrySubtitle = null,entryTitle = null,entryContent = null) {
 		BlogsNavigator.gotoAddEntry();
 
 		BlogsEntry.addEntryContent(
@@ -67,7 +70,8 @@ definition {
 		BlogsEntry.autoSaveDraft();
 	}
 
-	macro addEntry {
+	@summary = "Default summary"
+	macro addEntry(videoShortcutTitle = null,depotName = null,videoService = null,viewInternalVideoPreview = null,navTab = null,readingTime = null,entrySubtitle = null,extractedVideoShortcutTitle = null,videoURL = null,embedVideo = null,videoName = null,videoShortcutDescription = null,videoShortcutPreview = null,entryTitle = null,entryContent = null) {
 		BlogsNavigator.gotoAddEntry();
 
 		BlogsEntry.addEntryContent(
@@ -109,7 +113,8 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro addEntryWithCategory {
+	@summary = "Default summary"
+	macro addEntryWithCategory(entrySubtitle = null,vocabularyName = null,entryTitle = null,categoryName = null,entryContent = null) {
 		BlogsNavigator.gotoAddEntry();
 
 		BlogsEntry.addEntryContent(
@@ -126,7 +131,8 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro addEntryWithCoverImageFromDepot {
+	@summary = "Default summary"
+	macro addEntryWithCoverImageFromDepot(depotName = null,entrySubtitle = null,siteURLKey = null,imageFileName = null,entryTitle = null,entryContent = null) {
 		BlogsNavigator.openToAddEntry(siteURLKey = ${siteURLKey});
 
 		BlogsEntry.addTitle(entryTitle = ${entryTitle});
@@ -146,7 +152,8 @@ definition {
 		Button.clickPublish();
 	}
 
-	macro addEntryWithCustomURL {
+	@summary = "Default summary"
+	macro addEntryWithCustomURL(customURL = null,entrySubtitle = null,siteURLKey = null,entryTitle = null,entryContent = null) {
 		if (isSet(siteURLKey)) {
 			BlogsNavigator.openToAddEntry(siteURLKey = ${siteURLKey});
 		}
@@ -166,7 +173,8 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro addEntryWithHTML {
+	@summary = "Default summary"
+	macro addEntryWithHTML(entrySubtitle = null,entryTitle = null,entryContent = null) {
 		if (!(isSet(skipNavigation))) {
 			BlogsNavigator.gotoAddEntry();
 		}
@@ -180,7 +188,8 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro addEntryWithPermissions {
+	@summary = "Default summary"
+	macro addEntryWithPermissions(viewableBy = null,entrySubtitle = null,entryTitle = null,entryContent = null) {
 		BlogsNavigator.gotoAddEntry();
 
 		BlogsEntry.addEntryContent(
@@ -195,7 +204,8 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro addEntryWithTag {
+	@summary = "Default summary"
+	macro addEntryWithTag(entrySubtitle = null,tagName = null,entryTitle = null,entryContent = null) {
 		BlogsNavigator.gotoAddEntry();
 
 		BlogsEntry.addEntryContent(
@@ -212,7 +222,8 @@ definition {
 		Button.clickPublish();
 	}
 
-	macro addEntryWithTags {
+	@summary = "Default summary"
+	macro addEntryWithTags(entrySubtitle = null,tagNameList = null,entryTitle = null,entryContent = null) {
 		BlogsNavigator.gotoAddEntry();
 
 		BlogsEntry.addEntryContent(
@@ -231,7 +242,8 @@ definition {
 		Button.clickPublish();
 	}
 
-	macro addEntryWithUploadedCoverImage {
+	@summary = "Default summary"
+	macro addEntryWithUploadedCoverImage(navTab = null,depotName = null,uploadFileName = null,coverImageName = null,uploadedFileName = null,entrySubtitle = null,imageFileName = null,captionField = null,invalidFileValidation = null,entryTitle = null,captionFieldLink = null,entryContent = null) {
 		BlogsNavigator.gotoAddEntry();
 
 		BlogsNavigator.gotoSelectFile();
@@ -294,7 +306,8 @@ definition {
 		}
 	}
 
-	macro addImageToBlogImages {
+	@summary = "Default summary"
+	macro addImageToBlogImages(uploadFileNames = null,siteURLKey = null) {
 		BlogsNavigator.openToAddEntry(siteURLKey = ${siteURLKey});
 
 		for (var uploadFileName : list ${uploadFileNames}) {
@@ -311,7 +324,8 @@ definition {
 		}
 	}
 
-	macro addViaAP {
+	@summary = "Default summary"
+	macro addViaAP(entryTitle = null,entryContent = null) {
 		AssetPublisherPortlet.addAsset(assetType = "Blogs Entry");
 
 		BlogsEntry.addTitle(entryTitle = ${entryTitle});
@@ -337,7 +351,8 @@ definition {
 			value1 = ${entryContent});
 	}
 
-	macro addViaAPSelectScope {
+	@summary = "Default summary"
+	macro addViaAPSelectScope(siteScope = null,entryTitle = null,entryContent = null) {
 		AssetPublisherPortlet.addAsset(
 			assetType = "Blogs Entry",
 			siteScope = ${siteScope});
@@ -365,7 +380,8 @@ definition {
 			value1 = ${entryContent});
 	}
 
-	macro addWithCustomAbstract {
+	@summary = "Default summary"
+	macro addWithCustomAbstract(entrySubtitle = null,entryAbstractDescription = null,entryTitle = null,entryContent = null) {
 		BlogsNavigator.gotoAddEntry();
 
 		BlogsEntry.addEntryContent(
@@ -380,7 +396,8 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro addWithCustomAbstractViaAP {
+	@summary = "Default summary"
+	macro addWithCustomAbstractViaAP(entryAbstractDescription = null,entryTitle = null,entryContent = null) {
 		AssetPublisherPortlet.addAsset(assetType = "Blogs Entry");
 
 		BlogsEntry.addEntryContent(
@@ -394,7 +411,8 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro addWithDefaultAbstract {
+	@summary = "Default summary"
+	macro addWithDefaultAbstract(entrySubtitle = null,entryTitle = null,entryContent = null) {
 		BlogsNavigator.gotoAddEntry();
 
 		BlogsEntry.addEntryContent(
@@ -411,7 +429,8 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro addWithInvalidContent {
+	@summary = "Default summary"
+	macro addWithInvalidContent(entrySubtitle = null,entryInvalidContent = null,entryTitle = null) {
 		BlogsNavigator.gotoAddEntry();
 
 		BlogsEntry.addEntryContent(
@@ -422,7 +441,8 @@ definition {
 		BlogsEntry.publishWithInvalidContent();
 	}
 
-	macro addWithInvalidTitle {
+	@summary = "Default summary"
+	macro addWithInvalidTitle(entrySubtitle = null,entryInvalidTitle = null,entryContent = null) {
 		BlogsNavigator.gotoAddEntry();
 
 		BlogsEntry.addEntryContent(
@@ -433,7 +453,8 @@ definition {
 		BlogsEntry.publishWithInvalidTitle();
 	}
 
-	macro addWithInvalidTitleLength {
+	@summary = "Default summary"
+	macro addWithInvalidTitleLength(entrySubtitle = null,entryInvalidTitleLength = null,entryContent = null) {
 		BlogsNavigator.gotoAddEntry();
 
 		BlogsEntry.addEntryContent(
@@ -444,7 +465,8 @@ definition {
 		BlogsEntry.publishWithInvalidTitleLength();
 	}
 
-	macro addWithWorkflow {
+	@summary = "Default summary"
+	macro addWithWorkflow(entrySubtitle = null,entryTitle = null,entryContent = null) {
 		BlogsNavigator.gotoAddEntry();
 
 		BlogsEntry.addEntryContent(
@@ -455,7 +477,8 @@ definition {
 		BlogsEntry.publishWithWorkflow();
 	}
 
-	macro addWithWorkflowViaAP {
+	@summary = "Default summary"
+	macro addWithWorkflowViaAP(entryTitle = null,entryContent = null) {
 		AssetPublisherPortlet.addAsset(assetType = "Blogs Entry");
 
 		BlogsEntry.addTitle(entryTitle = ${entryTitle});
@@ -469,7 +492,8 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro assertNoPublishOption {
+	@summary = "Default summary"
+	macro assertNoPublishOption(entryTitle = null) {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		Blogs.viewEntryTitle(entryTitle = ${entryTitle});
@@ -481,13 +505,15 @@ definition {
 		MenuItem.viewNotPresent(menuItem = "Publish to Live");
 	}
 
-	macro clickEllipsisItemCP {
+	@summary = "Default summary"
+	macro clickEllipsisItemCP(item = null,entryTitle = null) {
 		LexiconCard.clickEllipsisItem(
 			card = ${entryTitle},
 			item = ${item});
 	}
 
-	macro clickEllipsisItemPG {
+	@summary = "Default summary"
+	macro clickEllipsisItemPG(item = null,entryTitle = null) {
 		if (isSet(entryContent)) {
 			Click(
 				key_entryContent = "Blogs Entry Content",
@@ -501,7 +527,8 @@ definition {
 		MenuItem.clickNoError(menuItem = ${item});
 	}
 
-	macro disableSocialBookmarkSites {
+	@summary = "Default summary"
+	macro disableSocialBookmarkSites(disableSocialBookmarkSites = null) {
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		Portlet.gotoPortletOptions(
@@ -525,7 +552,8 @@ definition {
 		IFrame.saveConfiguration();
 	}
 
-	macro editDraftPG {
+	@summary = "Default summary"
+	macro editDraftPG(entrySubtitleEdit = null,entrySubtitle = null,embedVideo = null,entryContentEdit = null,entryTitleEdit = null,entryTitle = null,entryContent = null) {
 		BlogsNavigator.gotoEditPG(entryTitle = ${entryTitle});
 
 		BlogsEntry.editEntryContent(
@@ -544,7 +572,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro editEntryPG {
+	@summary = "Default summary"
+	macro editEntryPG(navTab = null,sendEmailEntryUpdated = null,groupName = null,uploadFileName = null,entrySubtitleEdit = null,entrySubtitle = null,entryContentEdit = null,siteURLKey = null,entryTitleEdit = null,entryTitle = null,entryContent = null) {
 		if (isSet(siteURLKey)) {
 			BlogsNavigator.openToEditEntryInSite(
 				entryTitle = ${entryTitle},
@@ -582,7 +611,8 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro editEntryViaSearchResultDetails {
+	@summary = "Default summary"
+	macro editEntryViaSearchResultDetails(entrySubtitleEdit = null,entrySubtitle = null,entryContentEdit = null,searchAssetTitle = null,entryTitleEdit = null,entryTitle = null,entryContent = null) {
 		MouseOver(
 			locator1 = "SearchPage#ASSET_DETAILS_TITLE",
 			value1 = ${searchAssetTitle});
@@ -600,7 +630,8 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro enableSocialBookmarkSites {
+	@summary = "Default summary"
+	macro enableSocialBookmarkSites(enableSocialBookmarkSites = null,socialBookmarkSites = null) {
 		Navigator.gotoPage(pageName = "Blogs Page");
 
 		Portlet.gotoPortletOptions(
@@ -618,7 +649,8 @@ definition {
 		IFrame.saveConfiguration();
 	}
 
-	macro publishDraftCP {
+	@summary = "Default summary"
+	macro publishDraftCP(entrySubtitle = null,entryTitle = null,entryContent = null) {
 		BlogsNavigator.gotoEditCP(entryTitle = ${entryTitle});
 
 		BlogsEntry.viewEntryCP(
@@ -629,7 +661,8 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro publishViaSAP {
+	@summary = "Default summary"
+	macro publishViaSAP(confirmMessage = null,entryTitle = null) {
 		if (IsElementPresent(key_portletTitleName = "Blogs", locator1 = "Portlet#SPECIFIC_TITLE")) {
 			Blogs.clickEllipsisItemPG(
 				entryTitle = ${entryTitle},
@@ -652,7 +685,8 @@ definition {
 		}
 	}
 
-	macro subscribePG {
+	@summary = "Default summary"
+	macro subscribePG() {
 		AssertClick(
 			locator1 = "Blogs#SUBSCRIBE_LINK",
 			value1 = "Subscribe");
@@ -660,7 +694,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro tearDownConfigurationDisplaySettingsPG {
+	@summary = "Default summary"
+	macro tearDownConfigurationDisplaySettingsPG(pageName = null) {
 		Navigator.gotoPage(pageName = ${pageName});
 
 		BlogsNavigator.gotoConfigurationSetupPG();
@@ -670,7 +705,8 @@ definition {
 		IFrame.saveConfiguration();
 	}
 
-	macro tearDownConfigurationScopePG {
+	@summary = "Default summary"
+	macro tearDownConfigurationScopePG(pageName = null) {
 		Navigator.gotoPage(pageName = ${pageName});
 
 		BlogsNavigator.gotoConfigurationSetupPG();
@@ -682,7 +718,8 @@ definition {
 			scope = "Liferay");
 	}
 
-	macro tearDownCP {
+	@summary = "Default summary"
+	macro tearDownCP() {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -702,7 +739,8 @@ definition {
 		JSONRecycleBin.emptyRecycleBin();
 	}
 
-	macro tearDownSubscribePG {
+	@summary = "Default summary"
+	macro tearDownSubscribePG(pageName = null) {
 		Navigator.gotoPage(pageName = ${pageName});
 
 		AssertClick(
@@ -712,7 +750,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro viewContentAbstractDescription {
+	@summary = "Default summary"
+	macro viewContentAbstractDescription(descriptionValue = null) {
 		var key_entryAbstractDescription = ${descriptionValue};
 
 		AssertTextEquals.assertPartialText(
@@ -720,15 +759,18 @@ definition {
 			value1 = ${key_entryAbstractDescription});
 	}
 
-	macro viewEntryNotPresent {
+	@summary = "Default summary"
+	macro viewEntryNotPresent(entryTitle = null) {
 		LexiconList.viewListEntryNotPresent(listEntry = ${entryTitle});
 	}
 
-	macro viewEntryPresent {
+	@summary = "Default summary"
+	macro viewEntryPresent(entryTitle = null) {
 		LexiconCard.viewCardPresent(card = ${entryTitle});
 	}
 
-	macro viewEntryTitle {
+	@summary = "Default summary"
+	macro viewEntryTitle(position = null,entryTitle = null) {
 		var key_entryTitle = ${entryTitle};
 		var key_position = ${position};
 
@@ -742,7 +784,8 @@ definition {
 		}
 	}
 
-	macro viewNoEntryCP {
+	@summary = "Default summary"
+	macro viewNoEntryCP() {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No entries were found.");

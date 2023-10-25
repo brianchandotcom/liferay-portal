@@ -1,6 +1,7 @@
 definition {
 
-	macro checkReplyToMessageForGuestPG {
+	@summary = "Default summary"
+	macro checkReplyToMessageForGuestPG() {
 		Click(locator1 = "MessageBoards#CONTAINER_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Permissions");

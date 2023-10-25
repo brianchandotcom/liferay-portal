@@ -1,6 +1,7 @@
 definition {
 
-	macro viewInstanceSettings {
+	@summary = "Default summary"
+	macro viewInstanceSettings() {
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Instance Configuration",
 			configurationName = "General",
@@ -120,7 +121,8 @@ definition {
 			value1 = "(UTC +03:00) Eastern European Time");
 	}
 
-	macro viewSystemSettings {
+	@summary = "Default summary"
+	macro viewSystemSettings() {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

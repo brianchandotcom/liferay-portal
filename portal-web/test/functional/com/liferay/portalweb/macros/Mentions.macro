@@ -1,6 +1,7 @@
 definition {
 
-	macro addMentionViaBlogsEntry {
+	@summary = "Default summary"
+	macro addMentionViaBlogsEntry(mentionsUserScreenName = null,siteURLKey = null,entryTitle = null,entryContent = null,layoutName = null) {
 		var key_entryContent = ${entryContent};
 		var key_mentionsUserScreenName = ${mentionsUserScreenName};
 
@@ -25,7 +26,8 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro addMentionViaComments {
+	@summary = "Default summary"
+	macro addMentionViaComments(entryComment = null,mentionsUserScreenName = null,userLastName = null,parentComment = null,userEmailAddress = null,userFirstName = null) {
 		if (isSet(parentComment)) {
 			AssertClick(
 				key_entryComment = ${parentComment},
@@ -121,7 +123,8 @@ definition {
 		}
 	}
 
-	macro addMentionViaMessageBoardsReply {
+	@summary = "Default summary"
+	macro addMentionViaMessageBoardsReply(groupName = null,threadSubject = null,mentionsUserScreenName = null,siteURLKey = null,threadBody = null,layoutName = null) {
 		var key_mentionsUserScreenName = ${mentionsUserScreenName};
 		var key_threadSubject = ${threadSubject};
 
@@ -157,7 +160,8 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro addMentionViaMessageBoardThread {
+	@summary = "Default summary"
+	macro addMentionViaMessageBoardThread(threadSubject = null,siteURLKey = null,mentionsUserScreenNameList = null) {
 		if (isSet(siteURLKey)) {
 			MessageboardsThread.openToAddThread(siteURLKey = ${siteURLKey});
 		}
@@ -203,7 +207,8 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro addMentionViaMessageBoardThreadEdit {
+	@summary = "Default summary"
+	macro addMentionViaMessageBoardThreadEdit(groupName = null,threadSubject = null,mentionsUserScreenName = null,siteURLKey = null,threadBody = null) {
 		if (isSet(siteURLKey)) {
 			MessageboardsThread.openToEditThread(
 				groupName = ${groupName},
@@ -231,7 +236,8 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro viewCommentMentionTagLink {
+	@summary = "Default summary"
+	macro viewCommentMentionTagLink(mentionsUserScreenName = null,mentionsUserFullName = null) {
 		var key_mentionsUserFullName = ${mentionsUserFullName};
 		var key_mentionsUserScreenName = ${mentionsUserScreenName};
 		var key_siteName = ${mentionsUserFullName};
@@ -251,7 +257,8 @@ definition {
 		}
 	}
 
-	macro viewMentionTagLink {
+	@summary = "Default summary"
+	macro viewMentionTagLink(mentionsUserScreenName = null,mentionsUserFullName = null) {
 		var key_mentionsUserScreenName = ${mentionsUserScreenName};
 		var key_siteName = ${mentionsUserFullName};
 

@@ -1,6 +1,7 @@
 definition {
 
-	macro addMasters {
+	@summary = "Default summary"
+	macro addMasters(masterLayoutName = null) {
 		LexiconEntry.gotoAdd();
 
 		PortletEntry.inputName(name = ${masterLayoutName});
@@ -10,7 +11,8 @@ definition {
 		PageEditor.assertFragmentSidebarLoaded();
 	}
 
-	macro deleteMasters {
+	@summary = "Default summary"
+	macro deleteMasters(masterLayoutName = null) {
 		MastersPageTemplatesAdmin.gotoMastersEllipsisItem(
 			item = "Delete",
 			masterLayoutName = ${masterLayoutName});
@@ -26,13 +28,15 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro gotoMasters {
+	@summary = "Default summary"
+	macro gotoMasters(masterLayoutName = null) {
 		LexiconCard.clickCardTitleLink(card = ${masterLayoutName});
 
 		PageEditor.assertFragmentSidebarLoaded();
 	}
 
-	macro gotoMastersEllipsisItem {
+	@summary = "Default summary"
+	macro gotoMastersEllipsisItem(item = null,masterLayoutName = null) {
 		Click.waitForMenuToggleJSClick(
 			key_card = ${masterLayoutName},
 			locator1 = "Card#CARD_ELLIPSIS");
@@ -40,7 +44,8 @@ definition {
 		MenuItem.click(menuItem = ${item});
 	}
 
-	macro importMastersFromTempFolder {
+	@summary = "Default summary"
+	macro importMastersFromTempFolder(importOption = null) {
 		Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Import");
@@ -72,11 +77,13 @@ definition {
 		Button.clickDone();
 	}
 
-	macro openMastersAdmin {
+	@summary = "Default summary"
+	macro openMastersAdmin(siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet&_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_tabs1=master-layouts");
 	}
 
-	macro selectMasters {
+	@summary = "Default summary"
+	macro selectMasters(masterLayoutName = null) {
 		LexiconCard.viewCardTitle(card = ${masterLayoutName});
 
 		Check.checkNotVisible(
@@ -84,7 +91,8 @@ definition {
 			locator1 = "Card#CARD_CHECKBOX");
 	}
 
-	macro viewMastersPresent {
+	@summary = "Default summary"
+	macro viewMastersPresent(masterLayoutName = null) {
 		LexiconCard.viewCardPresent(card = ${masterLayoutName});
 	}
 

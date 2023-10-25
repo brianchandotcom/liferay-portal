@@ -1,6 +1,7 @@
 definition {
 
-	macro _curlAccount {
+	@summary = "Default summary"
+	macro _curlAccount() {
 		var portalURL = JSONCompany.getPortalURL();
 		var api = "accounts";
 
@@ -18,7 +19,8 @@ definition {
 		return ${curl};
 	}
 
-	macro createAccounts {
+	@summary = "Default summary"
+	macro createAccounts(objectField = null,accountName = null,numberOfAccounts = null,nestedField = null,fieldValue = null,name = null) {
 		Variables.assertDefined(parameterList = "${accountName},${numberOfAccounts},");
 
 		var curl = CommerceAdminAccountAPI._curlAccount(batch = "true");
@@ -68,7 +70,8 @@ definition {
 		return ${taskId};
 	}
 
-	macro getAccounts {
+	@summary = "Default summary"
+	macro getAccounts() {
 		var curl = CommerceAdminAccountAPI._curlAccount();
 
 		var response = JSONCurlUtil.get(${curl});

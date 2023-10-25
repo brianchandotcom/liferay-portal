@@ -1,6 +1,7 @@
 definition {
 
-	macro configureCSP {
+	@summary = "Default summary"
+	macro configureCSP(csp = null,enableCSP = null,excludedPaths = null) {
 		if (${enableCSP} == "true") {
 			FormFields.enableCheckbox(fieldName = "enabled");
 		}
@@ -28,13 +29,15 @@ definition {
 		}
 	}
 
-	macro deployInstanceConfigFile {
+	@summary = "Default summary"
+	macro deployInstanceConfigFile(portalInstanceName = null,osgiConfigFileName = null) {
 		var companyId = JSONCompany.getCompanyId(portalInstanceName = ${portalInstanceName});
 
 		AntCommands.runCommand("build-test-content-security-policy.xml", "prepare-content-security-policy-osgi-configuration -DcompanyId=${companyId} -Dosgi.config.file.name=${osgiConfigFileName}");
 	}
 
-	macro deploySiteConfigFile {
+	@summary = "Default summary"
+	macro deploySiteConfigFile(osgiConfigFileName = null) {
 		if (!(isSet(groupName))) {
 			var groupName = "Guest";
 		}
@@ -46,7 +49,8 @@ definition {
 		AntCommands.runCommand("build-test-content-security-policy.xml", "prepare-content-security-policy-osgi-site-configuration -DgroupId=${groupId} -Dosgi.config.file.name=${osgiConfigFileName}");
 	}
 
-	macro goToContentSecurityPolicyInstanceSettings {
+	@summary = "Default summary"
+	macro goToContentSecurityPolicyInstanceSettings() {
 		if (!(isSet(baseURL))) {
 			var baseURL = JSONCompany.getPortalURL();
 		}
@@ -54,7 +58,8 @@ definition {
 		Open(value1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet&_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_factoryPid=com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfiguration&_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
 	}
 
-	macro goToContentSecurityPolicySiteSettings {
+	@summary = "Default summary"
+	macro goToContentSecurityPolicySiteSettings() {
 		if (!(isSet(baseURL))) {
 			var baseURL = JSONCompany.getPortalURL();
 		}
@@ -66,7 +71,8 @@ definition {
 		Open(value1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage/-/site/settings?_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_factoryPid=com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfiguration&_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
 	}
 
-	macro resetConfigureCSP {
+	@summary = "Default summary"
+	macro resetConfigureCSP() {
 		if (isSet(reset)) {
 			Click(locator1 = "Icon#HISTORY_VERTICAL_ELLIPSIS");
 

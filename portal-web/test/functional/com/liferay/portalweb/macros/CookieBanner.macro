@@ -1,12 +1,14 @@
 definition {
 
 	@description = "Check if Cookie Consent panel is not visible"
-	macro checkCookieConsentPanelIsNotVisible {
+	@summary = "Default summary"
+	macro checkCookieConsentPanelIsNotVisible() {
 		WaitForElementNotPresent(locator1 = "COOKIES_CONSENT_PANEL_IFRAME");
 	}
 
 	@description = "Check if Cookies has 6 months as expiration date"
-	macro checkIfCookiesHasSixMonthsAsExpirationDate {
+	@summary = "Default summary"
+	macro checkIfCookiesHasSixMonthsAsExpirationDate() {
 		CookieHelper.checkSelectedCookieExpirationDate(cookieName = "CONSENT_TYPE_PERFORMANCE");
 
 		CookieHelper.checkSelectedCookieExpirationDate(cookieName = "CONSENT_TYPE_FUNCTIONAL");
@@ -17,7 +19,8 @@ definition {
 	}
 
 	@description = "Click on Policy link shown on the Cookie Consent Panel"
-	macro clickOnPrivacyPolicyLink {
+	@summary = "Default summary"
+	macro clickOnPrivacyPolicyLink(privacyPolicyLink = null) {
 		SelectFrame.selectFrameTop();
 
 		Click(
@@ -26,17 +29,20 @@ definition {
 	}
 
 	@description = "Press Accept All button"
-	macro cookiesBannerAcceptAll {
+	@summary = "Default summary"
+	macro cookiesBannerAcceptAll() {
 		Click(locator1 = "CookieBanner#ACCEPT_ALL_BUTTON");
 	}
 
 	@description = "Press Decline All button"
-	macro cookiesBannerDeclineAll {
+	@summary = "Default summary"
+	macro cookiesBannerDeclineAll() {
 		Click(locator1 = "CookieBanner#DECLINE_ALL_BUTTON");
 	}
 
 	@description = "Open Cookie Consent panel"
-	macro openCookieConsentPanel {
+	@summary = "Default summary"
+	macro openCookieConsentPanel() {
 		Click(locator1 = "CookieBanner#CONFIGURATION_LINK");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CookieConsentPanel#COOKIES_CONSENT_PANEL_IFRAME");
@@ -45,7 +51,8 @@ definition {
 	}
 
 	@description = "Verify all Cookie Consent panel elements are present"
-	macro verifyAllElementsArePresent {
+	@summary = "Default summary"
+	macro verifyAllElementsArePresent() {
 		WaitForElementPresent(locator1 = "CookieBanner#COOKIES_BANNER");
 
 		WaitForElementPresent(locator1 = "CookieBanner#DESCRIPTION");
@@ -63,16 +70,19 @@ definition {
 		CookieConsentPanel.verifyAllElementsArePresent();
 	}
 
-	macro verifyCookieBannerIsNotPresent {
+	@summary = "Default summary"
+	macro verifyCookieBannerIsNotPresent() {
 		WaitForElementNotPresent(locator1 = "CookieBanner#COOKIES_BANNER");
 	}
 
-	macro verifyCookieBannerIsPresent {
+	@summary = "Default summary"
+	macro verifyCookieBannerIsPresent() {
 		WaitForElementPresent(locator1 = "CookieBanner#COOKIES_BANNER");
 	}
 
 	@description = "Verify that customized texts are present"
-	macro verifyCustomTextsArePresent {
+	@summary = "Default summary"
+	macro verifyCustomTextsArePresent(key_text = null) {
 		Variables.assertDefined(parameterList = ${key_text});
 
 		var actualLink = selenium.getAttribute("CookieBanner#COOKIES_BANNER_LOCALIZED_LINK");
@@ -88,7 +98,8 @@ definition {
 		}
 	}
 
-	macro verifyDeclineAllButtonIsPresent {
+	@summary = "Default summary"
+	macro verifyDeclineAllButtonIsPresent() {
 		AssertElementPresent(locator1 = "CookieBanner#DECLINE_ALL_BUTTON");
 	}
 

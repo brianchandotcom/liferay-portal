@@ -1,6 +1,7 @@
 definition {
 
-	macro editUsers {
+	@summary = "Default summary"
+	macro editUsers(lastName = null,firstName = null,emailAddress = null) {
 		Type(
 			key_name = "lastName",
 			locator1 = "JSFSignInAndPrimeFacesUsers#DETAIL_PAGE_INPUT_FIELD",
@@ -34,7 +35,8 @@ definition {
 			value1 = ${emailAddress});
 	}
 
-	macro filterUsers {
+	@summary = "Default summary"
+	macro filterUsers(sortName = null,name = null,filterName = null,screenName3 = null,sort = null,screenName1 = null,screenName2 = null) {
 		Click(
 			key_name = ${sortName},
 			locator1 = "JSFSignInAndPrimeFacesUsers#SORT_BUTTON");
@@ -73,7 +75,8 @@ definition {
 		}
 	}
 
-	macro goToEditUsers {
+	@summary = "Default summary"
+	macro goToEditUsers(screenName = null) {
 		AssertClick.assertPartialTextClickAt(
 			key_row = 1,
 			locator1 = "JSFSignInAndPrimeFacesUsers#SCREEN_NAME",
@@ -84,7 +87,8 @@ definition {
 			locator1 = "JSFSignInAndPrimeFacesUsers#DETAIL_PAGE_INPUT_FIELD");
 	}
 
-	macro setRowsPerPage {
+	@summary = "Default summary"
+	macro setRowsPerPage() {
 		Click(locator1 = "JSFSignInAndPrimeFacesUsers#PREFERENCE_LINK");
 
 		Type(
@@ -94,7 +98,8 @@ definition {
 		Click(locator1 = "JSFShowcase#GENERAL_BUTTON");
 	}
 
-	macro sortUsers {
+	@summary = "Default summary"
+	macro sortUsers(screenName3 = null,sort = null,screenName4 = null,screenName1 = null,screenName2 = null) {
 		Click(
 			key_name = "screenName",
 			locator1 = "JSFSignInAndPrimeFacesUsers#SORT_BUTTON");
@@ -131,7 +136,8 @@ definition {
 			value1 = ${screenName4});
 	}
 
-	macro uploadPortrait {
+	@summary = "Default summary"
+	macro uploadPortrait(fileName = null,sortName = null,filterName = null,screenName1 = null) {
 		var imageSrc = selenium.getAttribute("//img[contains(@id,'portrait')]@src");
 
 		AssertElementPresent(locator1 = "//img[contains(@src,'${imageSrc}')]");
@@ -158,7 +164,8 @@ definition {
 		AssertElementNotPresent(locator1 = "//img[contains(@src,'${imageSrc}')]");
 	}
 
-	macro validateUserField {
+	@summary = "Default summary"
+	macro validateUserField(emailAddress = null,name = null) {
 		Type(
 			key_name = "emailAddress",
 			locator1 = "JSFSignInAndPrimeFacesUsers#DETAIL_PAGE_INPUT_FIELD",
@@ -186,7 +193,8 @@ definition {
 		}
 	}
 
-	macro viewPaginator {
+	@summary = "Default summary"
+	macro viewPaginator() {
 		var screenName1 = selenium.getAttribute("//tbody//span[contains(@id,'users:0:screenNameCell')]@textContent");
 
 		Click(

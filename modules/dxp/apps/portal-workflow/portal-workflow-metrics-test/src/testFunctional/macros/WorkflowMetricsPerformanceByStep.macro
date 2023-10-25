@@ -1,6 +1,7 @@
 definition {
 
-	macro assertStepNameByProcessVersion {
+	@summary = "Default summary"
+	macro assertStepNameByProcessVersion(rowName = null,rowNumber = null,version = null) {
 		var key_dateRange = ${version};
 		var key_rowName = ${rowName};
 		var key_rowNumber = ${rowNumber};
@@ -17,18 +18,21 @@ definition {
 			locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_ROW_ORDER_CHECK");
 	}
 
-	macro clickViewAllSteps {
+	@summary = "Default summary"
+	macro clickViewAllSteps(stepsNumber = null,valueSteps = null) {
 		Click(
 			key_stepsNumber = ${stepsNumber},
 			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_CARD_VIEW_ALL_STEPS",
 			value1 = ${valueSteps});
 	}
 
-	macro goToPerformanceTab {
+	@summary = "Default summary"
+	macro goToPerformanceTab() {
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
 	}
 
-	macro searchForStep {
+	@summary = "Default summary"
+	macro searchForStep(stepName = null) {
 		var key_stepName = ${stepName};
 
 		Click(
@@ -44,7 +48,8 @@ definition {
 			value1 = "\RETURN");
 	}
 
-	macro selectDateRangeFilter {
+	@summary = "Default summary"
+	macro selectDateRangeFilter(dateRange = null) {
 		var key_dateRange = ${dateRange};
 
 		Click(locator1 = "WorkflowMetricsPerformanceByStep#DATE_RANGE_DROPDOWN");
@@ -52,7 +57,8 @@ definition {
 		Click(locator1 = "WorkflowMetricsPerformanceByStep#DATE_RANGE_DROPDOWN_OPTION");
 	}
 
-	macro selectProcessVersion {
+	@summary = "Default summary"
+	macro selectProcessVersion(versionOption = null) {
 		Click(locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PROCESS_VERSION");
 
 		Click(
@@ -60,13 +66,15 @@ definition {
 			locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PROCESS_VERSION_DROPDOWN_OPTION");
 	}
 
-	macro viewPerformanceByStepTooltip {
+	@summary = "Default summary"
+	macro viewPerformanceByStepTooltip() {
 		Click(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_TAB");
 
 		AssertElementPresent(locator1 = "WorkflowMetrics#METRICS_PERFORMANCE_BY_STEP_TOOLTIP");
 	}
 
-	macro viewPerformanceByStepValues {
+	@summary = "Default summary"
+	macro viewPerformanceByStepValues(avgCompletionTimeValue = null,stepName = null,isNotPresent = null,slaBreachedValue = null) {
 		var key_stepName = ${stepName};
 
 		AssertElementPresent(locator1 = "WorkflowMetricsPerformanceByStep#METRICS_PERFORMANCE_BY_STEP_PAGE_TABLE_STEP_NAME");

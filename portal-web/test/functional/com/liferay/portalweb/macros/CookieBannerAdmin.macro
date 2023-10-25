@@ -1,14 +1,16 @@
 definition {
 
 	@description = "Configure Cookie Banner to be visible"
-	macro configuredToShowBanner {
+	@summary = "Default summary"
+	macro configuredToShowBanner() {
 		CookieNavigator.gotoInstanceSettings(portlet = "Banner");
 
 		CookieBannerAdmin.saveSettings();
 	}
 
 	@description = "Disable Decline All button for Cookie Banner"
-	macro disableDeclineAllButton {
+	@summary = "Default summary"
+	macro disableDeclineAllButton() {
 		AssertClick(
 			locator1 = "CookieBannerAdmin#INCLUDE_DECLINE_ALL_BUTTON",
 			value1 = "Include \\"Decline All\\" Button");
@@ -16,7 +18,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro saveConfiguration {
+	@summary = "Default summary"
+	macro saveConfiguration() {
 		if (IsElementPresent(locator1 = "Button#UPDATE")) {
 			AssertClick.assertTextClickNoMouseOver(
 				locator1 = "Button#UPDATE",
@@ -30,7 +33,8 @@ definition {
 	}
 
 	@description = "Save Cookie Banner settings"
-	macro saveSettings {
+	@summary = "Default summary"
+	macro saveSettings(linkDisplayText = null,content = null,privacyPolicyLink = null) {
 		WaitForElementPresent(locator1 = "CookieBannerAdmin#MENU_TITLE");
 
 		if (isSet(content)) {
@@ -65,7 +69,8 @@ definition {
 	}
 
 	@description = "Set custom texts for Cookie Banner at Instance Level"
-	macro setCustomTextForAllFields {
+	@summary = "Default summary"
+	macro setCustomTextForAllFields(text = null) {
 		Variables.assertDefined(parameterList = ${text});
 
 		CookieNavigator.gotoInstanceSettings(portlet = "Banner");
@@ -97,7 +102,8 @@ definition {
 	}
 
 	@description = "Set custom texts for Cookie Banner at Site Level"
-	macro setCustomTextForAllFieldsAtSiteLevel {
+	@summary = "Default summary"
+	macro setCustomTextForAllFieldsAtSiteLevel(baseURL = null,siteURLKey = null,text = null) {
 		Variables.assertDefined(parameterList = ${text});
 
 		CookieNavigator.gotoSiteSettings(
@@ -132,7 +138,8 @@ definition {
 	}
 
 	@description = "Verify all elements are present and configured at Cookie Banner"
-	macro verifyAllConfigurationElementsAreConfigured {
+	@summary = "Default summary"
+	macro verifyAllConfigurationElementsAreConfigured(text = null) {
 		WaitForElementPresent(locator1 = "CookieBannerAdmin#MENU_TITLE");
 
 		while ((IsTextNotEqual(locator1 = "CookieBannerAdmin#CONTENT", value1 = ${text})) && (maxIterations = "10")) {

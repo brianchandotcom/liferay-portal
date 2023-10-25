@@ -1,6 +1,7 @@
 definition {
 
-	macro _getChildKBResourcePrimKey {
+	@summary = "Default summary"
+	macro _getChildKBResourcePrimKey(groupName = null,kbChildArticleTitle = null,folderName = null,kbArticleTitle = null) {
 		if (!(isSet(site))) {
 			var site = "true";
 		}
@@ -45,7 +46,8 @@ definition {
 		}
 	}
 
-	macro _getKBResourcePrimKey {
+	@summary = "Default summary"
+	macro _getKBResourcePrimKey(groupName = null,folderName = null,kbArticleTitle = null) {
 		if (!(isSet(site))) {
 			var site = "true";
 		}
@@ -86,7 +88,8 @@ definition {
 		}
 	}
 
-	macro addkBArticle {
+	@summary = "Default summary"
+	macro addkBArticle(kbArticleContent = null,parentFolderName = null,groupName = null,assetCategoryIds = null,addGuestPermissions = null,assetTagNames = null,folderName = null,kbArticleTitle = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(folderName)) {
@@ -167,7 +170,8 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	macro addkBChildArticle {
+	@summary = "Default summary"
+	macro addkBChildArticle(kbChildArticleContent = null,groupName = null,kbChildArticleTitle = null,folderName = null,kbArticleTitle = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var parentResourceClassNameId = JSONClassname._getClassNameId(value = "com.liferay.knowledge.base.model.KBArticle");
 
@@ -222,7 +226,8 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	macro addkBFolder {
+	@summary = "Default summary"
+	macro addkBFolder(parentFolderName = null,kbFolderName = null,groupName = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(parentFolderName)) {
@@ -269,7 +274,8 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	macro addkBGrandchildArticle {
+	@summary = "Default summary"
+	macro addkBGrandchildArticle(kbGrandchildArticleContent = null,kbGrandchildArticleTitle = null,groupName = null,kbChildArticleTitle = null,folderName = null,kbArticleTitle = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var parentResourceClassNameId = JSONClassname._getClassNameId(value = "com.liferay.knowledge.base.model.KBArticle");
 
@@ -326,7 +332,8 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	macro addkBTemplate {
+	@summary = "Default summary"
+	macro addkBTemplate(kbTemplateTitle = null,kbTemplateContent = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var userLoginInfo = JSONUtil2.formatJSONUser();
 
@@ -347,7 +354,8 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	macro getFolderIdByFolderName {
+	@summary = "Default summary"
+	macro getFolderIdByFolderName(groupName = null,folderName = null) {
 		if (!(isSet(site))) {
 			var site = "true";
 		}
@@ -381,7 +389,8 @@ definition {
 		}
 	}
 
-	macro removeKBArticle {
+	@summary = "Default summary"
+	macro removeKBArticle(groupName = null,folderName = null,kbArticleTitle = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var userLoginInfo = JSONUtil2.formatJSONUser();
 
@@ -406,7 +415,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro updateKBArticle {
+	@summary = "Default summary"
+	macro updateKBArticle(newKbArticleContent = null,newKbArticleTitle = null,groupName = null,assetCategoryIds = null,addGuestPermissions = null,assetTagNames = null,folderName = null,kbArticleTitle = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(folderName)) {
@@ -466,7 +476,8 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	macro uploadAttachmentToArticle {
+	@summary = "Default summary"
+	macro uploadAttachmentToArticle(groupName = null,sourceFileName = null,kbArticleTitle = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var resourcePrimKey = JSONKnowledgeBase._getKBResourcePrimKey(
 			groupName = ${groupName},

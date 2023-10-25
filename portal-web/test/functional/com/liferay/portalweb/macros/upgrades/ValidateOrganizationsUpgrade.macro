@@ -1,6 +1,7 @@
 definition {
 
-	macro addOrganization {
+	@summary = "Default summary"
+	macro addOrganization() {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -11,7 +12,8 @@ definition {
 		Organization.addCP(orgName = "Organization Name");
 	}
 
-	macro addUserAndSuborganization {
+	@summary = "Default summary"
+	macro addUserAndSuborganization() {
 		JSONOrganization.addOrganization(organizationName = "Organization2");
 
 		JSONOrganization.addOrganization(

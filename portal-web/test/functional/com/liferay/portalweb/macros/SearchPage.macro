@@ -1,6 +1,7 @@
 definition {
 
-	macro addSortOption {
+	@summary = "Default summary"
+	macro addSortOption(displayLabel = null,indexedField = null,order = null) {
 		Click(
 			key_text = "Add Option",
 			locator1 = "Button#ANY");
@@ -19,7 +20,8 @@ definition {
 			value1 = ${order});
 	}
 
-	macro addWidgets {
+	@summary = "Default summary"
+	macro addWidgets(searchPortletList = null) {
 		if (!(isSet(column))) {
 			var column = 1;
 		}
@@ -41,7 +43,8 @@ definition {
 		}
 	}
 
-	macro addWidgetsOnContentPageViaUI {
+	@summary = "Default summary"
+	macro addWidgetsOnContentPageViaUI(searchPortletList = null) {
 		PageEditor.assertFragmentSidebarLoaded();
 
 		PageEditor.gotoTab(tabName = "Fragments and Widgets");
@@ -78,7 +81,8 @@ definition {
 		}
 	}
 
-	macro addWidgetsOnWidgetPageViaUI {
+	@summary = "Default summary"
+	macro addWidgetsOnWidgetPageViaUI(searchPortletList = null) {
 		if (IsNotVisible(locator1 = "ControlMenuAddPanel#CLOSE_ADD_PANEL")) {
 			Click.clickAt(locator1 = "ControlMenu#ADD");
 		}
@@ -106,7 +110,8 @@ definition {
 		}
 	}
 
-	macro chooseEmbeddedScope {
+	@summary = "Default summary"
+	macro chooseEmbeddedScope(searchScope = null) {
 		if ((${searchScope} == "Everything") || (${searchScope} == "This Site")) {
 			Select(
 				locator1 = "Search#EMBEDDED_SEARCH_BAR_SCOPE_SELECT",
@@ -117,7 +122,8 @@ definition {
 		}
 	}
 
-	macro chooseSortOption {
+	@summary = "Default summary"
+	macro chooseSortOption(sortOption = null) {
 		Click(locator1 = "Search#SORT_WIDGET_DROPDOWN");
 
 		Click.clickNoMouseOver(
@@ -125,7 +131,8 @@ definition {
 			sortOption = ${sortOption});
 	}
 
-	macro chooseWidgetScope {
+	@summary = "Default summary"
+	macro chooseWidgetScope(searchScope = null) {
 		if ((${searchScope} == "Everything") || (${searchScope} == "This Site")) {
 			Click.clickNoMouseOver(
 				locator1 = "Search#SEARCH_BAR_WIDGET_SCOPE_SELECT",
@@ -136,7 +143,8 @@ definition {
 		}
 	}
 
-	macro configureCustomFilter {
+	@summary = "Default summary"
+	macro configureCustomFilter(federatedSearchKey = null,filterQueryType = null,filterValue = null,occur = null,parentQueryName = null,queryName = null,customParameterName = null,filterField = null,portletIndex = null) {
 		Portlet.gotoPortletOptions(
 			portletIndex = ${portletIndex},
 			portletName = "Custom Filter",
@@ -205,7 +213,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro configureEmbeddedSearchBar {
+	@summary = "Default summary"
+	macro configureEmbeddedSearchBar(federatedSearchKey = null,searchScope = null,invisible = null) {
 		SearchPage.gotoEmbeddedOptions(portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
@@ -262,7 +271,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro configureLowLevelSearchOptions {
+	@summary = "Default summary"
+	macro configureLowLevelSearchOptions(federatedSearchKey = null,indexes = null,attributesKey = null,connectionId = null,attributesValue = null) {
 		Portlet.gotoPortletOptions(
 			portletName = "Low Level Search Options",
 			portletOption = "Configuration");
@@ -306,7 +316,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro configureSearchBarWidget {
+	@summary = "Default summary"
+	macro configureSearchBarWidget(federatedSearchKey = null,scopeParameterName = null,searchScope = null,keywordsParameterName = null,index = null) {
 		if (isSet(index)) {
 			SearchPage.gotoSearchBarWidgetOptionsSpecific(
 				index = ${index},
@@ -365,7 +376,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro configureSearchOptions {
+	@summary = "Default summary"
+	macro configureSearchOptions(federatedSearchKey = null,allowEmptySearches = null,basicFacetSelection = null) {
 		Portlet.gotoPortletOptions(
 			portletName = "Search Options",
 			portletOption = "Configuration");
@@ -400,7 +412,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro configureSimilarResults {
+	@summary = "Default summary"
+	macro configureSimilarResults(displayTemplate = null,maximumItemDisplay = null,searchScope = null,minimumDocumentFrequency = null,minimumTermFrequency = null,maximumDocumentFrequency = null,minimumShouldMatch = null,maximumQueryTerms = null,stopWords = null,minimumWordLength = null,analyzer = null,fields = null,linkBehavior = null,maximumWordLength = null) {
 		Portlet.gotoPortletOptions(
 			portletName = "Similar Results",
 			portletOption = "Configuration");
@@ -508,7 +521,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro configureWidgetScope {
+	@summary = "Default summary"
+	macro configureWidgetScope(searchScope = null) {
 		SearchPage.gotoSearchBarWidgetOptions(portletOption = "Configuration");
 
 		if ((${searchScope} == "Everything") || (${searchScope} == "Let the User Choose") || (${searchScope} == "This Site")) {
@@ -527,7 +541,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro getSearchTermURL {
+	@summary = "Default summary"
+	macro getSearchTermURL(searchTerm = null) {
 		if (contains(${searchPage}, " ")) {
 			var searchPage = StringUtil.replace(${searchPage}, " ", "-");
 		}
@@ -542,7 +557,8 @@ definition {
 		return ${searchURL};
 	}
 
-	macro gotoConfigureSuggestionsOptions {
+	@summary = "Default summary"
+	macro gotoConfigureSuggestionsOptions(portletOption = null) {
 		MouseOver.mouseOverNotVisible(locator1 = "Search#SUGGESTION_WIDGET_ELLIPSIS_ICON");
 
 		Click(locator1 = "Search#SUGGESTION_WIDGET_ELLIPSIS_ICON");
@@ -554,7 +570,8 @@ definition {
 		}
 	}
 
-	macro gotoEmbeddedOptions {
+	@summary = "Default summary"
+	macro gotoEmbeddedOptions(portletOption = null) {
 		MouseOver.mouseOverNotVisible(locator1 = "Search#EMBEDDED_SEARCH_BAR_ELLIPSIS_ICON");
 
 		Click(locator1 = "Search#EMBEDDED_SEARCH_BAR_ELLIPSIS_ICON");
@@ -566,7 +583,8 @@ definition {
 		}
 	}
 
-	macro gotoResultDetails {
+	@summary = "Default summary"
+	macro gotoResultDetails(searchAssetTitle = null) {
 		var key_searchAssetTitle = ${searchAssetTitle};
 
 		AssertClick(
@@ -574,7 +592,8 @@ definition {
 			value1 = ${searchAssetTitle});
 	}
 
-	macro gotoSearchBarWidgetOptions {
+	@summary = "Default summary"
+	macro gotoSearchBarWidgetOptions(portletOption = null) {
 		MouseOver.mouseOverNotVisible(
 			key_portletName = "Search Bar",
 			locator1 = "Search#SEARCH_WIDGET_ELLIPSIS_ICON");
@@ -590,7 +609,8 @@ definition {
 		}
 	}
 
-	macro gotoSearchBarWidgetOptionsSpecific {
+	@summary = "Default summary"
+	macro gotoSearchBarWidgetOptionsSpecific(index = null,portletOption = null) {
 		MouseOver.mouseOverNotVisible(
 			key_index = ${index},
 			key_portletName = "Search Bar",
@@ -608,7 +628,8 @@ definition {
 		}
 	}
 
-	macro openSearchPage {
+	@summary = "Default summary"
+	macro openSearchPage(searchTerm = null,locale = null) {
 		if (!(isSet(siteURLKey))) {
 			var siteURLKey = "guest";
 		}
@@ -624,7 +645,8 @@ definition {
 		}
 	}
 
-	macro searchEmbedded {
+	@summary = "Default summary"
+	macro searchEmbedded(searchTerm = null,clickMagnifyingGlassIcon = null) {
 		AssertElementPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
 
 		Type(
@@ -645,7 +667,8 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
-	macro searchWidget {
+	@summary = "Default summary"
+	macro searchWidget(searchTerm = null,clickMagnifyingGlassIcon = null) {
 		Type(
 			locator1 = "Search#SEARCH_BAR_WIDGET",
 			value1 = ${searchTerm});
@@ -662,7 +685,8 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
-	macro setupSimilarResultsPage {
+	@summary = "Default summary"
+	macro setupSimilarResultsPage() {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = "Similar Results Page");
@@ -682,13 +706,15 @@ definition {
 		Navigator.gotoPage(pageName = "Similar Results Page");
 	}
 
-	macro viewResultDetails {
+	@summary = "Default summary"
+	macro viewResultDetails(searchAssetTitle = null) {
 		AssertTextEquals(
 			locator1 = "SearchPage#ASSET_DETAILS_TITLE",
 			value1 = ${searchAssetTitle});
 	}
 
-	macro viewUserResultDetails {
+	@summary = "Default summary"
+	macro viewUserResultDetails(userName = null,pageName = null) {
 		AssertTextEquals(
 			locator1 = "Home#SITE_NAME",
 			value1 = ${userName});

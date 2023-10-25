@@ -1,6 +1,7 @@
 definition {
 
-	macro changeDefaultLanguage {
+	@summary = "Default summary"
+	macro changeDefaultLanguage(defaultPortalLanguage = null) {
 		ProductMenu.gotoPortlet(
 			category = "Configuration",
 			portlet = "Site Settings");
@@ -20,13 +21,15 @@ definition {
 		Button.clickSave();
 	}
 
-	macro gotoHomePage {
+	@summary = "Default summary"
+	macro gotoHomePage() {
 		ProductMenuHelper.openProductMenu();
 
 		Click(locator1 = "ProductMenu#HOME_PAGE_LINK");
 	}
 
-	macro gotoLiveSite {
+	@summary = "Default summary"
+	macro gotoLiveSite(site = null) {
 		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
 			ApplicationsMenu.gotoSite(site = ${site});
 		}
@@ -45,7 +48,8 @@ definition {
 		}
 	}
 
-	macro gotoLocalizedSite {
+	@summary = "Default summary"
+	macro gotoLocalizedSite(displayStyle = null,site = null,navItem = null) {
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
@@ -77,7 +81,8 @@ definition {
 			value1 = ${site});
 	}
 
-	macro gotoPortlet {
+	@summary = "Default summary"
+	macro gotoPortlet(site = null,portlet = null,category = null) {
 		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
 			ApplicationsMenu.gotoSite(site = ${site});
 		}
@@ -89,7 +94,8 @@ definition {
 		ProductMenuHelper.gotoPortlet(portlet = ${portlet});
 	}
 
-	macro gotoPortletWhenDisableApplicationsMenu {
+	@summary = "Default summary"
+	macro gotoPortletWhenDisableApplicationsMenu(portlet = null,panel = null,category = null) {
 		ProductMenuHelper.expandPanel(panel = ${panel});
 
 		ProductMenuHelper.expandCategory(category = ${category});
@@ -97,7 +103,8 @@ definition {
 		ProductMenuHelper.gotoPortlet(portlet = ${portlet});
 	}
 
-	macro gotoScopedPortlet {
+	@summary = "Default summary"
+	macro gotoScopedPortlet(scope = null,portlet = null,category = null) {
 		ProductMenuHelper.openProductMenu();
 
 		ProductMenuHelper.expandCategory(category = ${category});
@@ -107,7 +114,8 @@ definition {
 		ProductMenuHelper.gotoPortlet(portlet = ${portlet});
 	}
 
-	macro gotoSite {
+	@summary = "Default summary"
+	macro gotoSite(site = null) {
 		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
 			ApplicationsMenu.gotoSite(site = ${site});
 		}
@@ -129,7 +137,8 @@ definition {
 			value1 = ${site});
 	}
 
-	macro gotoStagingSite {
+	@summary = "Default summary"
+	macro gotoStagingSite(site = null) {
 		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
 			ApplicationsMenu.gotoSite(site = ${site});
 		}
@@ -157,7 +166,8 @@ definition {
 		AssertVisible(locator1 = "ProductMenu#STAGING_SELECTED");
 	}
 
-	macro viewNoSite {
+	@summary = "Default summary"
+	macro viewNoSite(site = null) {
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {

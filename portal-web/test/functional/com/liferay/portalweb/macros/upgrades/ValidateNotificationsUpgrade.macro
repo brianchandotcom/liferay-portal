@@ -1,6 +1,7 @@
 definition {
 
-	macro viewNotifications {
+	@summary = "Default summary"
+	macro viewNotifications() {
 		Navigator.openURL();
 
 		Notifications.gotoNotifications();

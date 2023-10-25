@@ -1,36 +1,42 @@
 definition {
 
-	macro checkToggleFontStyleBold {
+	@summary = "Default summary"
+	macro checkToggleFontStyleBold() {
 		Click(
 			key_labelName = "Bold",
 			locator1 = "CalendarLookAndFeelConfiguration#TOGGLE_SWITCH_LABEL");
 	}
 
-	macro checkToggleFontStyleItalic {
+	@summary = "Default summary"
+	macro checkToggleFontStyleItalic() {
 		Click(
 			key_labelName = "Italic",
 			locator1 = "CalendarLookAndFeelConfiguration#TOGGLE_SWITCH_LABEL");
 	}
 
-	macro checkToggleSwitch {
+	@summary = "Default summary"
+	macro checkToggleSwitch(labelName = null) {
 		Click(
 			key_labelName = ${labelName},
 			locator1 = "CalendarLookAndFeelConfiguration#TOGGLE_SWITCH_LABEL");
 	}
 
-	macro chooseBackgroundColor {
+	@summary = "Default summary"
+	macro chooseBackgroundColor(colorValue = null) {
 		Type(
 			locator1 = "CalendarLookAndFeelConfiguration#FIELD_BACKGROUND_COLOR",
 			value1 = ${colorValue});
 	}
 
-	macro chooseFontColor {
+	@summary = "Default summary"
+	macro chooseFontColor(colorValue = null) {
 		Type(
 			locator1 = "CalendarLookAndFeelConfiguration#COLOR_FONT_STYLE",
 			value1 = ${colorValue});
 	}
 
-	macro fillBorderColorColumn {
+	@summary = "Default summary"
+	macro fillBorderColorColumn(colorValueRight = null,colorValueBottom = null,colorValueLeft = null,colorValueTop = null) {
 		if (isSet(colorValueTop)) {
 			Type(
 				key_fieldName = "Top",
@@ -60,7 +66,8 @@ definition {
 		}
 	}
 
-	macro fillBorderWidthColumn {
+	@summary = "Default summary"
+	macro fillBorderWidthColumn(optionBottom = null,optionRight = null,fieldTextTop = null,optionLeft = null,fieldTextLeft = null,fieldTextBottom = null,optionTop = null,fieldTextRight = null) {
 		if (isSet(fieldTextTop)) {
 			Type(
 				key_fieldName = "Top",
@@ -110,7 +117,8 @@ definition {
 		}
 	}
 
-	macro fillCustomTitleCalendar {
+	@summary = "Default summary"
+	macro fillCustomTitleCalendar(customTitle = null) {
 		CalendarLookAndFeelConfiguration.checkToggleSwitch(labelName = "Use Custom Title");
 
 		Type(
@@ -118,7 +126,8 @@ definition {
 			value1 = ${customTitle});
 	}
 
-	macro fillMarginColumn {
+	@summary = "Default summary"
+	macro fillMarginColumn(optionBottom = null,optionRight = null,fieldTextTop = null,optionLeft = null,fieldTextLeft = null,fieldTextBottom = null,optionTop = null,fieldTextRight = null) {
 		if (isSet(fieldTextTop)) {
 			Type(
 				key_fieldName = "Top",
@@ -168,7 +177,8 @@ definition {
 		}
 	}
 
-	macro fillPaddingColumn {
+	@summary = "Default summary"
+	macro fillPaddingColumn(optionBottom = null,optionRight = null,fieldTextTop = null,optionLeft = null,fieldTextLeft = null,fieldTextBottom = null,optionTop = null,fieldTextRight = null) {
 		if (isSet(fieldTextTop)) {
 			Type(
 				key_fieldName = "Top",
@@ -218,7 +228,8 @@ definition {
 		}
 	}
 
-	macro gotoLookAndFeelConfiguration {
+	@summary = "Default summary"
+	macro gotoLookAndFeelConfiguration() {
 		Portlet.gotoPortletOptions(
 			portletName = "Calendar",
 			portletOption = "Look and Feel Configuration");
@@ -226,19 +237,22 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
-	macro selectApplicationDecorators {
+	@summary = "Default summary"
+	macro selectApplicationDecorators(optionName = null) {
 		Select(
 			locator1 = "CalendarLookAndFeelConfiguration#APPLICATION_DECORATORS_OPTIONS",
 			value1 = ${optionName});
 	}
 
-	macro selectFontStyle {
+	@summary = "Default summary"
+	macro selectFontStyle(fontOption = null) {
 		Select(
 			locator1 = "CalendarLookAndFeelConfiguration#SELECT_FONT_STYLE",
 			value1 = ${fontOption});
 	}
 
-	macro selectSameForAllInBorderStyles {
+	@summary = "Default summary"
+	macro selectSameForAllInBorderStyles(borderWidthOption = null,borderColorOption = null,borderStyleOption = null) {
 		if (isSet(borderWidthOption)) {
 			Click.javaScriptClick(
 				key_nameColumn = ${borderWidthOption},
@@ -258,13 +272,15 @@ definition {
 		}
 	}
 
-	macro selectTab {
+	@summary = "Default summary"
+	macro selectTab(tabName = null) {
 		Click(
 			key_tabName = ${tabName},
 			locator1 = "CalendarLookAndFeelConfiguration#TAB_NAVIGATOR");
 	}
 
-	macro viewBorderArroundCalendarWidget {
+	@summary = "Default summary"
+	macro viewBorderArroundCalendarWidget(borderName = null) {
 		if (${borderName} == "Barebone") {
 			AssertElementPresent(
 				key_borderName = "portlet-barebone",
@@ -287,7 +303,8 @@ definition {
 		}
 	}
 
-	macro viewCssValues {
+	@summary = "Default summary"
+	macro viewCssValues(cssValue = null,cssElement = null) {
 		var idElement = selenium.getAttribute("//div[contains(@class, 'portlet-column-only')]//..//div[contains(@class, 'portlet-borderless')]@id");
 
 		AssertElementPresent(
@@ -297,7 +314,8 @@ definition {
 			locator1 = "CalendarLookAndFeelConfiguration#CSS_ELEMENTS");
 	}
 
-	macro viewNotPresentCssValues {
+	@summary = "Default summary"
+	macro viewNotPresentCssValues(cssValue = null,cssElement = null) {
 		var idElement = selenium.getAttribute("//div[contains(@class, 'portlet-column-only')]//..//div[contains(@class, 'portlet-borderless')]@id");
 
 		AssertElementNotPresent(
@@ -307,19 +325,22 @@ definition {
 			locator1 = "CalendarLookAndFeelConfiguration#CSS_ELEMENTS");
 	}
 
-	macro viewOptionDefault {
+	@summary = "Default summary"
+	macro viewOptionDefault(optionName = null) {
 		AssertSelectedLabel(
 			locator1 = "CalendarLookAndFeelConfiguration#APPLICATION_DECORATORS_OPTIONS",
 			value1 = ${optionName});
 	}
 
-	macro viewPortletNameDefault {
+	@summary = "Default summary"
+	macro viewPortletNameDefault(portletTitle = null) {
 		AssertElementPresent(
 			key_portletTitle = ${portletTitle},
 			locator1 = "Calendar#PORTLET_TITLE");
 	}
 
-	macro viewPortletNameNotPresent {
+	@summary = "Default summary"
+	macro viewPortletNameNotPresent() {
 		AssertElementNotPresent(locator1 = "Calendar#PORTLET_TITLE");
 	}
 

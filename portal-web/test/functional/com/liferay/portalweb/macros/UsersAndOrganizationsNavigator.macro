@@ -1,14 +1,17 @@
 definition {
 
-	macro gotoMenuBarInformation {
+	@summary = "Default summary"
+	macro gotoMenuBarInformation() {
 		MenuBar.gotoInformation();
 	}
 
-	macro gotoMenuBarOrganizationSite {
+	@summary = "Default summary"
+	macro gotoMenuBarOrganizationSite() {
 		MenuBar.gotoOrganizationSite();
 	}
 
-	macro gotoOrganizations {
+	@summary = "Default summary"
+	macro gotoOrganizations() {
 		if (IsElementPresent(locator1 = "NavBar#ORGANIZATIONS")) {
 			AssertClick(
 				locator1 = "NavBar#ORGANIZATIONS",

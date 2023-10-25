@@ -1,6 +1,7 @@
 definition {
 
-	macro assignUserToStagingGroup {
+	@summary = "Default summary"
+	macro assignUserToStagingGroup(site = null,userEmailAddress = null,groupKey = null) {
 		Variables.assertDefined(parameterList = "${groupKey},${userEmailAddress}");
 
 		var groupId = JSONStagingSetter.setGroupId(
@@ -13,7 +14,8 @@ definition {
 			userId = ${userId});
 	}
 
-	macro enableLocalStaging {
+	@summary = "Default summary"
+	macro enableLocalStaging(groupName = null,grandParentGroupName = null,unCheckedContent = null,parentGroupName = null) {
 		Variables.assertDefined(parameterList = ${groupName});
 
 		if (!(isSet(site))) {
@@ -55,7 +57,8 @@ definition {
 		}
 	}
 
-	macro enableRemoteStaging {
+	@summary = "Default summary"
+	macro enableRemoteStaging(groupName = null,remoteGroupId = null,grandParentGroupName = null,remotePort = null,parentGroupName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${remoteGroupId}");
 
 		if (!(isSet(site))) {

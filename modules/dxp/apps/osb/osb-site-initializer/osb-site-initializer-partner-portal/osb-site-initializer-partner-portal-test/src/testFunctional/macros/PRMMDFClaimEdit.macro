@@ -1,14 +1,17 @@
 definition {
 
-	macro buttonIsNotVisible {
+	@summary = "Default summary"
+	macro buttonIsNotVisible() {
 		AssertElementNotPresent(locator1 = "PRMMDFClaim#EDIT_BUTTON");
 	}
 
-	macro buttonIsVisible {
+	@summary = "Default summary"
+	macro buttonIsVisible() {
 		AssertElementPresent(locator1 = "PRMMDFClaim#EDIT_BUTTON");
 	}
 
-	macro editActivity {
+	@summary = "Default summary"
+	macro editActivity(newInvoiceAmount = null,activityName = null,newAttachment = null) {
 		if (!(isSet(activityIndex))) {
 			var activityIndex = 0;
 		}
@@ -38,7 +41,8 @@ definition {
 		}
 	}
 
-	macro editClaim {
+	@summary = "Default summary"
+	macro editClaim(newInvoiceAmount = null,newBudgetIndex = null,newListLeads = null,newThirdInvoice = null,activityName = null,newAttachment = null,newActivityIndex = null) {
 		if (!(isSet(activityIndex))) {
 			var activityIndex = 0;
 		}
@@ -69,7 +73,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro gotoClaimViaUI {
+	@summary = "Default summary"
+	macro gotoClaimViaUI(claimId = null) {
 		Click(
 			key_claimId = ${claimId},
 			locator1 = "PRMMDFClaim#VIEW_CLAIM_BUTTON");

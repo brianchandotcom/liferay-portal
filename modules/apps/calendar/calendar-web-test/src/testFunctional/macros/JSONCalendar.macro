@@ -1,6 +1,7 @@
 definition {
 
-	macro setCalendarColor {
+	@summary = "Default summary"
+	macro setCalendarColor(calendarName = null) {
 		var calendarId = JSONCalendarAPI.getCalendarId(calendarName = ${calendarName});
 
 		if (!(isSet(color))) {
@@ -12,7 +13,8 @@ definition {
 			color = ${color});
 	}
 
-	macro tearDown {
+	@summary = "Default summary"
+	macro tearDown() {
 		JSONCalendar.tearDownBookings();
 
 		var calendarIdList = JSONCalendarAPI.getNotDefaultCalendars();
@@ -30,7 +32,8 @@ definition {
 		}
 	}
 
-	macro tearDownBookings {
+	@summary = "Default summary"
+	macro tearDownBookings() {
 		var calendarIdList = JSONCalendarAPI.searchAllCalendars();
 
 		for (var calendarId : list ${calendarIdList}) {
@@ -42,7 +45,8 @@ definition {
 		}
 	}
 
-	macro tearDownCalendarResources {
+	@summary = "Default summary"
+	macro tearDownCalendarResources() {
 		for (var active : list "true,false") {
 			var calendarResourceIdList = JSONCalendarAPI.getCalendarResources(active = ${active});
 

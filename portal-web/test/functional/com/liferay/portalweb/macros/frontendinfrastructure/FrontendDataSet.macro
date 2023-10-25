@@ -1,6 +1,7 @@
 definition {
 
-	macro chooseOptionNewFilterDropdown {
+	@summary = "Default summary"
+	macro chooseOptionNewFilterDropdown() {
 		var key_option = ${key_option};
 
 		Type(
@@ -8,7 +9,8 @@ definition {
 			value1 = ${key_option});
 	}
 
-	macro dateFilterSaveDates {
+	@summary = "Default summary"
+	macro dateFilterSaveDates() {
 		var key_dateNumber1 = ${key_dateNumber1};
 		var key_dateNumber2 = ${key_dateNumber2};
 
@@ -39,7 +41,8 @@ definition {
 		Click(locator1 = "DataSet#MODAL_SAVE_BUTTON");
 	}
 
-	macro selectFromFieldDates {
+	@summary = "Default summary"
+	macro selectFromFieldDates(key_dateNumber = null) {
 		Click(
 			key_dateField = "From",
 			locator1 = "DataSet#DATEPICKER_BUTTON");
@@ -53,7 +56,8 @@ definition {
 			locator1 = "DataSet#DATEPICKER_BUTTON");
 	}
 
-	macro selectItemActionDropdownMenuList {
+	@summary = "Default summary"
+	macro selectItemActionDropdownMenuList(key_viewMode = null,key_title = null) {
 		Click(
 			key_title = ${key_title},
 			locator1 = "FrontendDataSet#ENTRY_VERTICAL_ELLIPSIS");
@@ -63,7 +67,8 @@ definition {
 			locator1 = "FrontendDataSet#ITEMS_VIEW_TYPE_DROPDOWN");
 	}
 
-	macro selectToFieldDates {
+	@summary = "Default summary"
+	macro selectToFieldDates(key_dateNumber = null) {
 		Click(
 			key_dateField = "To",
 			locator1 = "DataSet#DATEPICKER_BUTTON");

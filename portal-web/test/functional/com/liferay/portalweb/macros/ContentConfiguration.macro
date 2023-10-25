@@ -1,6 +1,7 @@
 definition {
 
-	macro checkContentNameList {
+	@summary = "Default summary"
+	macro checkContentNameList(checkContentNameList = null) {
 		for (var contentName : list ${checkContentNameList}) {
 			var key_contentName = ${contentName};
 
@@ -10,7 +11,8 @@ definition {
 		}
 	}
 
-	macro checkPageName {
+	@summary = "Default summary"
+	macro checkPageName(checkPageName = null) {
 		SetWindowSize.maximizeWindow();
 
 		ContentConfiguration.uncheckPages();
@@ -22,7 +24,8 @@ definition {
 		}
 	}
 
-	macro checkPrivatePages {
+	@summary = "Default summary"
+	macro checkPrivatePages(checkPrivatePages = null) {
 		if (IsElementPresent(locator1 = "PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX")) {
 			Click(locator1 = "PagesConfiguration#CHANGE_TO_PRIVATE_PAGES");
 		}
@@ -36,7 +39,8 @@ definition {
 		}
 	}
 
-	macro checkPublicPages {
+	@summary = "Default summary"
+	macro checkPublicPages(checkPublicPages = null) {
 		if (IsElementPresent(locator1 = "PagesConfiguration#PAGES_ALL_PRIVATE_PAGES_CHECKBOX")) {
 			Click(locator1 = "PagesConfiguration#CHANGE_TO_PUBLIC_PAGES");
 		}
@@ -50,7 +54,8 @@ definition {
 		}
 	}
 
-	macro checkSubSubContent {
+	@summary = "Default summary"
+	macro checkSubSubContent(checkSubSubContent = null,subContent = null,contentName = null) {
 		var key_contentName = ${contentName};
 
 		Check.checkNotVisible(locator1 = "PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX");
@@ -69,7 +74,8 @@ definition {
 			value1 = "OK");
 	}
 
-	macro contentDateRange {
+	@summary = "Default summary"
+	macro contentDateRange(contentDateRange = null,dateRangeStartDate = null,dateRangeEndDate = null) {
 		if (IsElementPresent(locator1 = "Button#PUBLISH")) {
 			ScrollWebElementIntoView(locator1 = "Button#PUBLISH");
 		}
@@ -109,21 +115,25 @@ definition {
 		}
 	}
 
-	macro contentDeletion {
+	@summary = "Default summary"
+	macro contentDeletion() {
 		Click(locator1 = "StagingPublishToLive#CONTENT_CHOOSE_CONTENT_DELETION_CHECKBOX");
 	}
 
-	macro deleteMissingPages {
+	@summary = "Default summary"
+	macro deleteMissingPages() {
 		Check.checkNotVisibleNoErrors(locator1 = "PagesConfiguration#PAGES_DELETE_MISSING_PAGES_CHECKBOX");
 	}
 
-	macro exportPermissions {
+	@summary = "Default summary"
+	macro exportPermissions() {
 		Panel.expandPanel(panel = "Permissions");
 
 		Click(locator1 = "Checkbox#PERMISSIONS");
 	}
 
-	macro pageDeletion {
+	@summary = "Default summary"
+	macro pageDeletion() {
 		Check.checkNotVisibleNoErrors(locator1 = "StagingPublishToLive#CONTENT_CHOOSE_CONTENT_DELETION_CHECKBOX");
 
 		AssertElementPresent(locator1 = "StagingPublishToLive#PAGES_CHOOSE_PAGE_DELETION_CHECKBOX");
@@ -131,13 +141,15 @@ definition {
 		Check.checkNotVisibleNoErrors(locator1 = "StagingPublishToLive#PAGES_CHOOSE_PAGE_DELETION_CHECKBOX");
 	}
 
-	macro setTitle {
+	@summary = "Default summary"
+	macro setTitle(publicationTitle = null) {
 		Type(
 			locator1 = "StagingPublishToLive#PUBLICATION_TITLE",
 			value1 = ${publicationTitle});
 	}
 
-	macro uncheckAllPages {
+	@summary = "Default summary"
+	macro uncheckAllPages() {
 		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "PagesConfiguration#PAGES_ALL_PAGES_CHECKBOX")) {
 			Click.clickAtNotVisible(locator1 = "PagesConfiguration#PAGES_ALL_PAGES_CHECKBOX");
 
@@ -148,7 +160,8 @@ definition {
 		}
 	}
 
-	macro uncheckAllPrivatePages {
+	@summary = "Default summary"
+	macro uncheckAllPrivatePages() {
 		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "PagesConfiguration#PAGES_ALL_PRIVATE_PAGES_CHECKBOX")) {
 			Click.clickAtNotVisible(locator1 = "PagesConfiguration#PAGES_ALL_PRIVATE_PAGES_CHECKBOX");
 
@@ -159,7 +172,8 @@ definition {
 		}
 	}
 
-	macro uncheckAllPublicPages {
+	@summary = "Default summary"
+	macro uncheckAllPublicPages() {
 		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX")) {
 			Click.clickAtNotVisible(locator1 = "PagesConfiguration#PAGES_ALL_PUBLIC_PAGES_CHECKBOX");
 
@@ -170,7 +184,8 @@ definition {
 		}
 	}
 
-	macro uncheckChildPagesNameList {
+	@summary = "Default summary"
+	macro uncheckChildPagesNameList(uncheckChildPagesNameList = null) {
 		for (var childPagesName : list ${uncheckChildPagesNameList}) {
 			Uncheck.uncheckNotVisible(
 				key_pageName = ${childPagesName},
@@ -178,7 +193,8 @@ definition {
 		}
 	}
 
-	macro uncheckContentNameList {
+	@summary = "Default summary"
+	macro uncheckContentNameList(uncheckContentNameList = null) {
 		for (var contentName : list ${uncheckContentNameList}) {
 			Uncheck.uncheckNotVisible(
 				key_contentName = ${contentName},
@@ -186,11 +202,13 @@ definition {
 		}
 	}
 
-	macro uncheckLogo {
+	@summary = "Default summary"
+	macro uncheckLogo() {
 		Click(locator1 = "PagesConfiguration#PAGES_LOGO_CHECKBOX");
 	}
 
-	macro uncheckPages {
+	@summary = "Default summary"
+	macro uncheckPages() {
 		if (IsElementPresent(locator1 = "PagesConfiguration#PAGES_ALL_PAGES_CHECKBOX")) {
 			ContentConfiguration.uncheckAllPages();
 		}
@@ -202,15 +220,18 @@ definition {
 		}
 	}
 
-	macro uncheckSitePagesSettings {
+	@summary = "Default summary"
+	macro uncheckSitePagesSettings() {
 		Click(locator1 = "PagesConfiguration#PAGES_SITE_PAGES_SETTINGS_CHECKBOX");
 	}
 
-	macro uncheckSiteTemplateSettings {
+	@summary = "Default summary"
+	macro uncheckSiteTemplateSettings() {
 		Click(locator1 = "PagesConfiguration#PAGES_SITE_TEMPLATE_SETTINGS_CHECKBOX");
 	}
 
-	macro uncheckSubContent {
+	@summary = "Default summary"
+	macro uncheckSubContent(uncheckSubContent = null,mainContent = null) {
 		var key_contentName = ${mainContent};
 		var key_subContent = ${uncheckSubContent};
 
@@ -229,7 +250,8 @@ definition {
 			value1 = "OK");
 	}
 
-	macro uncheckSubSubContent {
+	@summary = "Default summary"
+	macro uncheckSubSubContent(subContent = null,contentName = null,uncheckSubSubContent = null) {
 		var key_contentName = ${contentName};
 
 		Check.checkNotVisible(locator1 = "PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX");

@@ -1,6 +1,7 @@
 definition {
 
-	macro deleteCalendar {
+	@summary = "Default summary"
+	macro deleteCalendar(calendarId = null) {
 		Variables.assertDefined(parameterList = ${calendarId});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -14,7 +15,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro deleteCalendarBooking {
+	@summary = "Default summary"
+	macro deleteCalendarBooking(calendarBookingId = null) {
 		Variables.assertDefined(parameterList = ${calendarBookingId});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -28,7 +30,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro deleteCalendarResource {
+	@summary = "Default summary"
+	macro deleteCalendarResource(calendarResourceId = null) {
 		Variables.assertDefined(parameterList = ${calendarResourceId});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -42,7 +45,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro getCalendarBookings {
+	@summary = "Default summary"
+	macro getCalendarBookings(calendarId = null) {
 		Variables.assertDefined(parameterList = ${calendarId});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -60,7 +64,8 @@ definition {
 		return ${calendarBookingIdList};
 	}
 
-	macro getCalendarId {
+	@summary = "Default summary"
+	macro getCalendarId(calendarName = null) {
 		Variables.assertDefined(parameterList = ${calendarName});
 
 		var companyId = JSONCompany.getCompanyId();
@@ -86,7 +91,8 @@ definition {
 		return ${calendarId};
 	}
 
-	macro getCalendarResources {
+	@summary = "Default summary"
+	macro getCalendarResources() {
 		var companyId = JSONCompany.getCompanyId();
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -115,7 +121,8 @@ definition {
 		return ${calendarResourceIdList};
 	}
 
-	macro getNotDefaultCalendars {
+	@summary = "Default summary"
+	macro getNotDefaultCalendars() {
 		var companyId = JSONCompany.getCompanyId();
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -138,7 +145,8 @@ definition {
 		return ${calendarIdList};
 	}
 
-	macro searchAllCalendars {
+	@summary = "Default summary"
+	macro searchAllCalendars() {
 		var companyId = JSONCompany.getCompanyId();
 		var portalURL = JSONCompany.getPortalURL();
 
@@ -161,7 +169,8 @@ definition {
 		return ${calendarIdList};
 	}
 
-	macro updateColor {
+	@summary = "Default summary"
+	macro updateColor(calendarId = null,color = null) {
 		Variables.assertDefined(parameterList = "${calendarId},${color}");
 
 		var portalURL = JSONCompany.getPortalURL();

@@ -1,6 +1,7 @@
 definition {
 
-	macro enableGoogleDrive {
+	@summary = "Default summary"
+	macro enableGoogleDrive() {
 		if (isSet(instanceSettings)) {
 			DMNavigator.openToConfigInInstanceSettings(portlet = "Google Drive");
 		}
@@ -34,7 +35,8 @@ definition {
 		}
 	}
 
-	macro signIn {
+	@summary = "Default summary"
+	macro signIn(userPassword = null,depotName = null,userEmailAddress = null) {
 		if (isSet(windowTitle)) {
 			SelectWindow(value1 = "GoogleLogin#PAGE_TITLE");
 

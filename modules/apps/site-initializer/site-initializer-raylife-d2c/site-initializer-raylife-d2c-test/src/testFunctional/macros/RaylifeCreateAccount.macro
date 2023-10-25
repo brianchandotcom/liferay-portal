@@ -1,10 +1,12 @@
 definition {
 
-	macro assertTheButtonIsEnabled {
+	@summary = "Default summary"
+	macro assertTheButtonIsEnabled() {
 		AssertElementPresent(locator1 = "RaylifeCreateAccount#CREATE_ACCOUNT");
 	}
 
-	macro createAccount {
+	@summary = "Default summary"
+	macro createAccount() {
 		Click(
 			key_text = "CREATE NEW ACCOUNT",
 			locator1 = "Button#ANY");

@@ -1,6 +1,7 @@
 definition {
 
-	macro assertMergedSubtasks {
+	@summary = "Default summary"
+	macro assertMergedSubtasks(listSubtaskName = null) {
 		for (var subtaskName : list ${listSubtaskName}) {
 			AssertElementPresent(
 				key_subtaskName = ${subtaskName},
@@ -8,13 +9,15 @@ definition {
 		}
 	}
 
-	macro assertNotMergedSubtasks {
+	@summary = "Default summary"
+	macro assertNotMergedSubtasks(subtaskName = null) {
 		AssertElementNotPresent(
 			key_subtaskName = ${subtaskName},
 			locator1 = "TestraySubtask#SUBTASK_MERGED");
 	}
 
-	macro mergeSubtasks {
+	@summary = "Default summary"
+	macro mergeSubtasks(listSubtaskName = null) {
 		for (var subtaskName : list ${listSubtaskName}) {
 			Check.checkToggleSwitch(
 				key_checkboxOption = ${subtaskName},
@@ -31,7 +34,8 @@ definition {
 		Button.click(button = "Merge Subtasks");
 	}
 
-	macro verifySubtaskDetails {
+	@summary = "Default summary"
+	macro verifySubtaskDetails(score = null,comment = null,userName = null,issues = null,updated = null,status = null) {
 		AssertElementPresent(
 			key_comment = ${comment},
 			key_issues = ${issues},
@@ -42,7 +46,8 @@ definition {
 			locator1 = "TestraySubtask#SUBTASK_DETAILS");
 	}
 
-	macro viewSubtaskSidebar {
+	@summary = "Default summary"
+	macro viewSubtaskSidebar(listsubtaskName = null) {
 		for (var subtaskName : list ${listsubtaskName}) {
 			AssertElementPresent(
 				key_subtaskName = ${subtaskName},

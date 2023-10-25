@@ -1,12 +1,14 @@
 definition {
 
-	macro assertActiveBreadcrumb {
+	@summary = "Default summary"
+	macro assertActiveBreadcrumb(activeItem = null) {
 		AssertElementPresent(
 			locator1 = "Breadcrumb#BREADCRUMB_ENTRY_ACTIVE_ENTRY",
 			value1 = ${activeItem});
 	}
 
-	macro gotoClaim {
+	@summary = "Default summary"
+	macro gotoClaim(claimId = null) {
 		if (!(isSet(siteName))) {
 			var siteName = "Partner Portal";
 		}
@@ -28,7 +30,8 @@ definition {
 			locator1 = "Header#H1_TITLE");
 	}
 
-	macro gotoMDF {
+	@summary = "Default summary"
+	macro gotoMDF(requestId = null) {
 		if (!(isSet(siteName))) {
 			var siteName = "Partner Portal";
 		}
@@ -50,7 +53,8 @@ definition {
 			locator1 = "Header#H1_TITLE");
 	}
 
-	macro goToNavItem {
+	@summary = "Default summary"
+	macro goToNavItem(navItem = null) {
 		Click(
 			key_navItem = ${navItem},
 			locator1 = "PRMNavigation#NAV_LINK");
@@ -58,7 +62,8 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro openSitePage {
+	@summary = "Default summary"
+	macro openSitePage(pageName = null) {
 		if (!(isSet(siteName))) {
 			var siteName = "Partner Portal";
 		}

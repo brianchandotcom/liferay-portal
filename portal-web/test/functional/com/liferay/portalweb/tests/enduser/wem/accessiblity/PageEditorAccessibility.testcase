@@ -148,13 +148,13 @@ definition {
 
 		task ("Then the page creator cannot access to the disabled area via keyboard") {
 			AssertAttributeValue(
-				value1 = "inert",
 				locator1 = "//header[contains(@class,'disabled-area')]//div[contains(@class,'navbar-top')]",
+				value1 = "inert",
 				value2 = "");
 
 			AssertAttributeValue(
-				value1 = "inert",
 				locator1 = "//header[contains(@class,'disabled-area')]//div[contains(@class,'navbar-expand')]",
+				value1 = "inert",
 				value2 = "");
 		}
 	}
@@ -475,13 +475,13 @@ definition {
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_SECTION_NAME");
 
 			AssertAttributeValue(
-				value1 = "aria-label",
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_BACK",
+				value1 = "aria-label",
 				value2 = "Back");
 
 			AssertAttributeValue(
-				value1 = "aria-label",
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENTS",
+				value1 = "aria-label",
 				value2 = "Add Comment");
 		}
 	}
@@ -506,8 +506,8 @@ definition {
 
 		task ("Then the page creator sees the Name field with required attribute on modal") {
 			AssertAttributeValue(
-				value1 = "required",
 				locator1 = "TextInput#NAME",
+				value1 = "required",
 				value2 = "true");
 
 			IFrame.closeFrame();
@@ -523,9 +523,9 @@ definition {
 
 		task ("Then the page creator sees the Page Template Set field with required attribute on modal") {
 			AssertAttributeValue(
-				value1 = "required",
 				key_fieldLabel = "Page Template Set",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "required",
 				value2 = "true");
 		}
 	}
@@ -548,8 +548,8 @@ definition {
 
 		task ("Then the edit mode selector should have correct aria-label") {
 			AssertAttributeValue(
-				value1 = "aria-label",
 				locator1 = "PageEditor#EDIT_MODE_SELECTOR",
+				value1 = "aria-label",
 				value2 = "Page Edition Mode");
 		}
 	}
@@ -572,13 +572,13 @@ definition {
 
 		task ("Then the Experience selector should have correct accessibility") {
 			AssertAttributeValue(
-				value1 = "aria-expanded",
 				locator1 = "PageEditor#EXPERIENCE_SELECTOR",
+				value1 = "aria-expanded",
 				value2 = "false");
 
 			AssertAttributeValue(
-				value1 = "aria-haspopup",
 				locator1 = "PageEditor#EXPERIENCE_SELECTOR",
+				value1 = "aria-haspopup",
 				value2 = "true");
 
 			KeyPress(
@@ -590,8 +590,8 @@ definition {
 				value1 = "\ENTER");
 
 			AssertAttributeValue(
-				value1 = "aria-expanded",
 				locator1 = "PageEditor#EXPERIENCE_SELECTOR",
+				value1 = "aria-expanded",
 				value2 = "true");
 
 			AssertElementFocused(locator1 = "//button[@aria-label='New Experience']");
@@ -602,8 +602,8 @@ definition {
 				value1 = "keys=SHIFT,TAB");
 
 			AssertAttributeValue(
-				value1 = "aria-expanded",
 				locator1 = "PageEditor#EXPERIENCE_SELECTOR",
+				value1 = "aria-expanded",
 				value2 = "false");
 
 			AssertElementFocused(locator1 = "//div[contains(@class,'page-editor__toolbar-experience')]//button");
@@ -750,8 +750,8 @@ definition {
 
 			for (var pageName : list "Home Child Page 1,Home Child Page 1 Child Page,Home Child Page 2") {
 				AssertAttributeValue.assertAttributeNotPresent(
-					value1 = "role",
 					locator1 = "//div[contains(@class,'layout-content')]//a[contains(@class, 'dropdown-item')][contains(text(), '${pageName}')]",
+					value1 = "role",
 					value2 = "menuitem");
 			}
 		}
@@ -779,8 +779,8 @@ definition {
 			AssertElementPresent(locator1 = "//h2[normalize-space(text())='Page Design Options']");
 
 			AssertAttributeValue(
-				value1 = "title",
 				locator1 = "PageEditor#MORE_LINK",
+				value1 = "title",
 				value2 = "More Page Design Options");
 		}
 	}
@@ -873,9 +873,9 @@ definition {
 				locator1 = "NavTab#ACTIVE_TAB_LINK");
 
 			AssertAttributeValue(
-				value1 = "aria-selected",
 				key_tab = "Widgets",
 				locator1 = "NavTab#TAB_LINK",
+				value1 = "aria-selected",
 				value2 = "false");
 		}
 	}

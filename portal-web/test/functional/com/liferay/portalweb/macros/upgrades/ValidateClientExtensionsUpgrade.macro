@@ -1,6 +1,7 @@
 definition {
 
-	macro assertCustomRemoteAppEntryFields {
+	@summary = "Default summary"
+	macro assertCustomRemoteAppEntryFields(upgradeCssurl = null,upgradeURL = null,upgradeHtmlName = null,upgradeName = null) {
 		Click(
 			key_tableEntryName = ${upgradeName},
 			locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE");
@@ -30,7 +31,8 @@ definition {
 			value1 = ${upgradeCssurl});
 	}
 
-	macro assertRemoteAppEntry {
+	@summary = "Default summary"
+	macro assertRemoteAppEntry(upgradeType = null,upgradeName = null) {
 		ClientExtensionGeneral.goToRemoteAppsPortlet();
 
 		ClientExtensionGeneral.viewTableEntries(
@@ -38,7 +40,8 @@ definition {
 			entryType = ${upgradeType});
 	}
 
-	macro assertRemoteAppEntryFields {
+	@summary = "Default summary"
+	macro assertRemoteAppEntryFields(upgradeURL = null,upgradeName = null) {
 		Click(
 			key_tableEntryName = ${upgradeName},
 			locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE");

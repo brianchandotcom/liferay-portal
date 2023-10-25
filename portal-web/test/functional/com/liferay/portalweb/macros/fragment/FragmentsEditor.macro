@@ -1,6 +1,7 @@
 definition {
 
-	macro assertFragmentPreview {
+	@summary = "Default summary"
+	macro assertFragmentPreview(fragmentLocator = null,text = null) {
 		SelectFrame.selectFrameNoLoading(locator1 = "FragmentEditor#PREVIEW_IFRAME");
 
 		if (isSet(text)) {
@@ -15,7 +16,8 @@ definition {
 		SelectFrame.selectFrameTop();
 	}
 
-	macro autocompleteFragmentHTML {
+	@summary = "Default summary"
+	macro autocompleteFragmentHTML(fragmentHtml = null,htmlSnippet = null,autocompleteField = null) {
 		FragmentsEditor.typeHtmlEditor(content = "");
 
 		Type.sendKeysAceEditor(
@@ -31,19 +33,23 @@ definition {
 			value1 = ${fragmentHtml});
 	}
 
-	macro gotoCodeTab {
+	@summary = "Default summary"
+	macro gotoCodeTab() {
 		Button.click(button = "Code");
 	}
 
-	macro gotoConfigurationTab {
+	@summary = "Default summary"
+	macro gotoConfigurationTab() {
 		Button.click(button = "Configuration");
 	}
 
-	macro publish {
+	@summary = "Default summary"
+	macro publish() {
 		PortletEntry.publish();
 	}
 
-	macro typeConfigurationEditor {
+	@summary = "Default summary"
+	macro typeConfigurationEditor(content = null) {
 		Click(
 			locator1 = "FragmentEditor#CONFIGURATION_EDITOR",
 			value1 = "keys=CONTROL,m");
@@ -57,7 +63,8 @@ definition {
 			value1 = ${content});
 	}
 
-	macro typeCssEditor {
+	@summary = "Default summary"
+	macro typeCssEditor(content = null) {
 		Click(locator1 = "FragmentEditor#CSS_EDITOR");
 
 		Type.sendKeys(
@@ -69,7 +76,8 @@ definition {
 			value1 = ${content});
 	}
 
-	macro typeFileContent {
+	@summary = "Default summary"
+	macro typeFileContent(fileName = null) {
 		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = ${fileName});
 
 		var content = FileUtil.read(${dependencyFilePath});
@@ -92,7 +100,8 @@ definition {
 		}
 	}
 
-	macro typeHtmlEditor {
+	@summary = "Default summary"
+	macro typeHtmlEditor(content = null) {
 		Click(locator1 = "FragmentEditor#HTML_EDITOR");
 
 		Type.sendKeys(
@@ -104,7 +113,8 @@ definition {
 			value1 = ${content});
 	}
 
-	macro typeJsEditor {
+	@summary = "Default summary"
+	macro typeJsEditor(content = null) {
 		Click(locator1 = "FragmentEditor#JS_EDITOR");
 
 		Type.sendKeys(
@@ -116,7 +126,8 @@ definition {
 			value1 = ${content});
 	}
 
-	macro waitForAutoSave {
+	@summary = "Default summary"
+	macro waitForAutoSave() {
 		WaitForElementNotPresent(locator1 = "FragmentEditor#SAVING_CHANGES_MESSAGE");
 
 		WaitForVisible(locator1 = "FragmentEditor#CHANGES_SAVED_MESSAGE");

@@ -1,6 +1,7 @@
 definition {
 
-	macro changeLocale {
+	@summary = "Default summary"
+	macro changeLocale(fieldName = null,locale = null) {
 		Portlet.waitForForm();
 
 		if (isSet(fieldName)) {
@@ -33,7 +34,8 @@ definition {
 		}
 	}
 
-	macro changeLocaleSummary {
+	@summary = "Default summary"
+	macro changeLocaleSummary(locale = null) {
 		Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_SUMMARY");
 
 		Click(
@@ -41,29 +43,34 @@ definition {
 			locator1 = "Translation#LOCALIZATION_NAME");
 	}
 
-	macro checkOut {
+	@summary = "Default summary"
+	macro checkOut() {
 		Button.clickCheckOut();
 
 		Alert.viewSuccessMessage();
 	}
 
-	macro clickEditFromEllipsis {
+	@summary = "Default summary"
+	macro clickEditFromEllipsis() {
 		Click.waitForMenuToggleJSClick(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "Edit");
 	}
 
-	macro clickMoveToRecycleBin {
+	@summary = "Default summary"
+	macro clickMoveToRecycleBin() {
 		MenuItem.click(menuItem = "Delete");
 	}
 
-	macro create {
+	@summary = "Default summary"
+	macro create() {
 		Button.clickCreate();
 
 		Alert.viewSuccessMessage();
 	}
 
-	macro deleteViaMenuItem {
+	@summary = "Default summary"
+	macro deleteViaMenuItem(rowEntry = null) {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Delete",
 			rowEntry = ${rowEntry});
@@ -71,7 +78,8 @@ definition {
 		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 	}
 
-	macro deleteViaToolbar {
+	@summary = "Default summary"
+	macro deleteViaToolbar(rowEntries = null) {
 		for (var rowEntry : list ${rowEntries}) {
 			LexiconEntry.selectEntry(key_rowEntry = ${rowEntry});
 		}
@@ -81,7 +89,8 @@ definition {
 		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 	}
 
-	macro deselectAll {
+	@summary = "Default summary"
+	macro deselectAll() {
 		if (IsChecked(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT")) {
 			Click(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER");
 		}
@@ -89,19 +98,22 @@ definition {
 		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT");
 	}
 
-	macro inputDescription {
+	@summary = "Default summary"
+	macro inputDescription(description = null) {
 		Type(
 			locator1 = "TextArea#DESCRIPTION",
 			value1 = ${description});
 	}
 
-	macro inputDescriptionTextInput {
+	@summary = "Default summary"
+	macro inputDescriptionTextInput(description = null) {
 		Type(
 			locator1 = "TextInput#DESCRIPTION",
 			value1 = ${description});
 	}
 
-	macro inputLocalizedName {
+	@summary = "Default summary"
+	macro inputLocalizedName(localizedName = null,language = null) {
 		PortletEntry.changeLocale(
 			fieldName = "Name",
 			locale = ${language});
@@ -109,46 +121,53 @@ definition {
 		PortletEntry.inputName(name = ${localizedName});
 	}
 
-	macro inputName {
+	@summary = "Default summary"
+	macro inputName(name = null) {
 		Type(
 			locator1 = "TextInput#NAME",
 			value1 = ${name});
 	}
 
-	macro inputNumber {
+	@summary = "Default summary"
+	macro inputNumber(number = null,fieldLabel = null) {
 		Type(
 			key_fieldLabel = ${fieldLabel},
 			locator1 = "TextInput#GENERIC_NUMBER_INPUT",
 			value1 = ${number});
 	}
 
-	macro inputStructureKeyTextInput {
+	@summary = "Default summary"
+	macro inputStructureKeyTextInput(structureKey = null) {
 		Type(
 			locator1 = "TextInput#STRUCTURE_KEY_FIELD",
 			value1 = ${structureKey});
 	}
 
-	macro inputText {
+	@summary = "Default summary"
+	macro inputText(fieldLabel = null,text = null) {
 		Type(
 			key_fieldLabel = ${fieldLabel},
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = ${text});
 	}
 
-	macro inputTextArea {
+	@summary = "Default summary"
+	macro inputTextArea(text = null,fieldId = null) {
 		Type(
 			key_text = ${fieldId},
 			locator1 = "TextArea#ANY",
 			value1 = ${text});
 	}
 
-	macro inputTitle {
+	@summary = "Default summary"
+	macro inputTitle(title = null) {
 		Type(
 			locator1 = "TextInput#TITLE",
 			value1 = ${title});
 	}
 
-	macro publish {
+	@summary = "Default summary"
+	macro publish() {
 		Button.clickPublish();
 
 		WaitForElementPresent.waitForElementPresentNoException(locator1 = "Message#ALERT_DISMISSIBLE");
@@ -161,7 +180,8 @@ definition {
 		}
 	}
 
-	macro save {
+	@summary = "Default summary"
+	macro save() {
 		Click(
 			key_text = "Save",
 			locator1 = "Button#ANY");
@@ -171,13 +191,15 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
-	macro saveAsDraft {
+	@summary = "Default summary"
+	macro saveAsDraft() {
 		Button.clickSaveAsDraft();
 
 		Alert.viewSuccessMessage();
 	}
 
-	macro selectAll {
+	@summary = "Default summary"
+	macro selectAll() {
 		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT")) {
 			Click(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER");
 		}
@@ -188,7 +210,8 @@ definition {
 		AssertChecked.assertCheckedNotVisible(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT");
 	}
 
-	macro SelectAllOnSpecificWidget {
+	@summary = "Default summary"
+	macro SelectAllOnSpecificWidget(widgetPosition = null) {
 		if (IsNotChecked.isNotCheckedNotVisible(key_position = ${widgetPosition}, locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT_SPECIFIC")) {
 			Click(
 				key_position = ${widgetPosition},
@@ -200,19 +223,22 @@ definition {
 			locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT_SPECIFIC");
 	}
 
-	macro submitForWorkflow {
+	@summary = "Default summary"
+	macro submitForWorkflow() {
 		Button.clickSubmitForWorkflow();
 
 		Alert.viewSuccessMessage();
 	}
 
-	macro update {
+	@summary = "Default summary"
+	macro update() {
 		Button.clickUpdate();
 
 		Alert.viewSuccessMessage();
 	}
 
-	macro viewEmptyMessage {
+	@summary = "Default summary"
+	macro viewEmptyMessage() {
 		var entity = StringUtil.toLowerCase(${entity});
 
 		AssertTextEquals.assertPartialText(
@@ -220,7 +246,8 @@ definition {
 			value1 = "There are no ${entity}.");
 	}
 
-	macro viewLocale {
+	@summary = "Default summary"
+	macro viewLocale(locale = null,portletName = null) {
 		if (${portletName} == "Web Content") {
 			AssertElementPresent(
 				key_locale = ${locale},
@@ -241,7 +268,8 @@ definition {
 		}
 	}
 
-	macro viewNoNavItemLink {
+	@summary = "Default summary"
+	macro viewNoNavItemLink() {
 		AssertElementNotPresent(locator1 = "NavBar#NAV_ITEM_LINK");
 	}
 

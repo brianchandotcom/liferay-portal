@@ -73,9 +73,9 @@ definition {
 
 		task ("Then the page creator cannot type text verification and reload simple captcha") {
 			AssertAttributeValue(
-				value1 = "disabled",
 				index = 1,
 				locator1 = "Fragment#INPUT_CAPTCHA_BODY",
+				value1 = "disabled",
 				value2 = "true");
 		}
 	}

@@ -13,9 +13,11 @@
 		<#assign relatedTicketId = myTicket.r_relatedTicket_c_ticketId />
 		<#if (ObjectEntry_displayPageURL.getData())??>
 
-			<#assign dptLink = ObjectEntry_displayPageURL.getData() />
+			<#assign
+				dptLink = ObjectEntry_displayPageURL.getData()
 
-			<#assign firstPart =(dptLink?split("/l/"))[0] />
+				firstPart =(dptLink?split("/l/"))[0]
+			/>
 
 			${firstPart}/l/${relatedTicketId}
 		</#if>

@@ -113,6 +113,8 @@ const DocumentLibrary = ({
 							id={`${name}inputFile`}
 							lang={editingLanguageId}
 							onClick={onSelectButtonClicked}
+							readonly="true"
+							tabindex="-1"
 							value={transformedFileEntryTitle || ''}
 						/>
 					</ClayInput.GroupItem>
@@ -122,6 +124,7 @@ const DocumentLibrary = ({
 							className="select-button"
 							disabled={readOnly}
 							displayType="secondary"
+							id={name}
 							onClick={onSelectButtonClicked}
 						>
 							<span className="lfr-btn-label">
@@ -188,6 +191,7 @@ const GuestUploadFile = ({
 					<ClayInput
 						className="bg-light"
 						disabled={readOnly}
+						id={name}
 						onClick={onUploadSelectButtonClicked}
 						type="text"
 						value={transformedFileEntryTitle || ''}

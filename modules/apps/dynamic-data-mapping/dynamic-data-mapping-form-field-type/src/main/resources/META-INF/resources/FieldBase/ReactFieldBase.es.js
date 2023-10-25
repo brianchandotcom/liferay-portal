@@ -235,13 +235,15 @@ export function FieldBase({
 		type === 'radio';
 	const showPopover = fieldName === 'inputMaskFormat';
 	const showFor =
+		type === 'date' ||
+		type === 'document_library' ||
 		type === 'text' ||
 		type === 'numeric' ||
 		type === 'image' ||
 		type === 'rich_text' ||
 		type === 'search_location' ||
 		type === 'select';
-	const readFieldDetails = !showFor || type === 'select';
+	const readFieldDetails = !showFor;
 	const hasFieldDetails = accessible && fieldDetails && readFieldDetails;
 
 	const accessiblePropsGroup = {
@@ -252,7 +254,7 @@ export function FieldBase({
 	const accessiblePropsFields = {
 		...(hasFieldDetails && {'aria-labelledby': fieldDetailsId}),
 		...(showFor && {htmlFor: id ?? name}),
-		...(readFieldDetails && {tabIndex: 0}),
+		...readFieldDetails,
 	};
 
 	const defaultRows = nestedFields?.map((field) => ({

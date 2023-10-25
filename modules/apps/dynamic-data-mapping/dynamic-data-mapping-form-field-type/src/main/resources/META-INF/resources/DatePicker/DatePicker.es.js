@@ -170,6 +170,7 @@ export default function DatePicker({
 			localizedValue={localizedValue}
 			name={name}
 			readOnly={readOnly}
+			type="date"
 			{...otherProps}
 		>
 			<ClayTooltipProvider autoAlign>
@@ -193,13 +194,13 @@ export default function DatePicker({
 								'select-previous-month'
 							)}`,
 							dialog: `${Liferay.Language.get('select-date')}`,
-							input: `${Liferay.Language.get('input-a-value')}`,
 						}}
 						dateFormat={clayFormat}
 						dir={dir}
 						disabled={readOnly}
 						expanded={expanded}
 						firstDayOfWeek={firstDayOfWeek}
+						id={name}
 						months={months}
 						onBlur={onBlur}
 						onChange={handleValueChange}

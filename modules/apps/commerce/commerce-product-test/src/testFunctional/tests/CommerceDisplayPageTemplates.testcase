@@ -1819,13 +1819,13 @@ definition {
 		task ("Then the Image Gallery fragment is present") {
 			WaitForElementPresent(
 				key_fsProductImage = "Black",
-				locator1 = "CommerceFrontStore#FS_IMAGE_GALLERY_MAIN_IMAGE");
+				locator1 = "CommerceFrontStore#FS_PRODUCT_IMAGE");
 		}
 
 		task ("And it is possible to use its functionalities(previous arrow, next arrow, select from the list of images, image overlay)") {
 			Click(
 				key_fsProductImage = "Black",
-				locator1 = "CommerceFrontStore#FS_IMAGE_GALLERY_MAIN_IMAGE");
+				locator1 = "CommerceFrontStore#FS_PRODUCT_IMAGE");
 
 			AssertElementPresent(
 				key_fsProductImage = "Black",
@@ -1837,19 +1837,19 @@ definition {
 
 			AssertElementPresent(
 				key_fsProductImage = "Black",
-				locator1 = "CommerceFrontStore#FS_IMAGE_GALLERY_MAIN_IMAGE");
+				locator1 = "CommerceFrontStore#FS_PRODUCT_IMAGE");
 
 			Click(locator1 = "CommerceFrontStore#FS_IMAGE_GALLERY_ARROW_NEXT");
 
 			AssertElementPresent(
 				key_fsProductImage = "Minium_ProductImage",
-				locator1 = "CommerceFrontStore#FS_IMAGE_GALLERY_MAIN_IMAGE");
+				locator1 = "CommerceFrontStore#FS_PRODUCT_IMAGE");
 
 			Click(locator1 = "CommerceFrontStore#FS_IMAGE_GALLERY_ARROW_PREV");
 
 			AssertElementPresent(
 				key_fsProductImage = "Black",
-				locator1 = "CommerceFrontStore#FS_IMAGE_GALLERY_MAIN_IMAGE");
+				locator1 = "CommerceFrontStore#FS_PRODUCT_IMAGE");
 
 			Click(
 				key_fsProductImage = "Minium_ProductImage",
@@ -1857,7 +1857,7 @@ definition {
 
 			AssertElementPresent(
 				key_fsProductImage = "Minium_ProductImage",
-				locator1 = "CommerceFrontStore#FS_IMAGE_GALLERY_MAIN_IMAGE");
+				locator1 = "CommerceFrontStore#FS_PRODUCT_IMAGE");
 
 			Click(
 				key_fsProductImage = "Black",
@@ -1865,7 +1865,7 @@ definition {
 
 			AssertElementPresent(
 				key_fsProductImage = "Black",
-				locator1 = "CommerceFrontStore#FS_IMAGE_GALLERY_MAIN_IMAGE");
+				locator1 = "CommerceFrontStore#FS_PRODUCT_IMAGE");
 		}
 	}
 

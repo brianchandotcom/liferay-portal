@@ -30,17 +30,11 @@ public class JournalArticleModelListener
 	public void onAfterRemove(JournalArticle journalArticle) {
 		clearCache(journalArticle);
 
-		boolean areThereOtherVersions = false;
-
-		int versionsCount =
+		int count =
 			_journalArticleLocalService.getArticlesByResourcePrimKeyCount(
 				journalArticle.getResourcePrimKey());
 
-		if (versionsCount > 0) {
-			areThereOtherVersions = true;
-		}
-
-		if (!areThereOtherVersions) {
+		if (count <= 0) {
 			_layoutClassedModelUsageLocalService.deleteLayoutClassedModelUsages(
 				_portal.getClassNameId(JournalArticle.class),
 				journalArticle.getResourcePrimKey());

@@ -14,23 +14,21 @@ PortletURL portletURL = commerceInventoryWarehousesDisplayContext.getPortletURL(
 %>
 
 <c:if test="<%= commerceInventoryWarehousesDisplayContext.hasManageCommerceInventoryWarehousePermission() %>">
-	<div class="pt-4">
-		<aui:form action="<%= portletURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
-			<aui:input name="<%= Constants.CMD %>" type="hidden" />
-			<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+	<aui:form action="<%= portletURL %>" method="post" name="fm">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" />
+		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 
-			<frontend-data-set:headless-display
-				apiURL="/o/headless-commerce-admin-inventory/v1.0/warehouses?sort=name:asc"
-				creationMenu="<%= commerceInventoryWarehousesDisplayContext.getWarehouseCreationMenu() %>"
-				fdsActionDropdownItems="<%= commerceInventoryWarehousesDisplayContext.getWarehouseFDSActionDropdownItems() %>"
-				formName="fm"
-				id="<%= CommerceInventoryWarehouseFDSNames.WAREHOUSES %>"
-				itemsPerPage="<%= 10 %>"
-				namespace="<%= liferayPortletResponse.getNamespace() %>"
-				pageNumber="<%= 1 %>"
-				portletURL="<%= portletURL %>"
-				style="stacked"
-			/>
-		</aui:form>
-	</div>
+		<frontend-data-set:headless-display
+			apiURL="/o/headless-commerce-admin-inventory/v1.0/warehouses?sort=name:asc"
+			creationMenu="<%= commerceInventoryWarehousesDisplayContext.getWarehouseCreationMenu() %>"
+			fdsActionDropdownItems="<%= commerceInventoryWarehousesDisplayContext.getWarehouseFDSActionDropdownItems() %>"
+			formName="fm"
+			id="<%= CommerceInventoryWarehouseFDSNames.WAREHOUSES %>"
+			itemsPerPage="<%= 10 %>"
+			namespace="<%= liferayPortletResponse.getNamespace() %>"
+			pageNumber="<%= 1 %>"
+			portletURL="<%= portletURL %>"
+			style="fluid"
+		/>
+	</aui:form>
 </c:if>

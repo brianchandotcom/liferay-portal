@@ -13,20 +13,18 @@ CommerceDiscountDisplayContext commerceDiscountDisplayContext = (CommerceDiscoun
 PortletURL portletURL = commerceDiscountDisplayContext.getPortletURL();
 %>
 
-<div class="pt-4">
-	<aui:form action="<%= portletURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" />
-		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-		<aui:input name="deleteDiscounts" type="hidden" />
+<aui:form action="<%= portletURL %>" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" />
+	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+	<aui:input name="deleteDiscounts" type="hidden" />
 
-		<frontend-data-set:headless-display
-			apiURL="/o/headless-commerce-admin-pricing/v2.0/discounts?sort=modifiedDate:desc"
-			creationMenu="<%= commerceDiscountDisplayContext.getDiscountCreationMenu() %>"
-			fdsActionDropdownItems="<%= commerceDiscountDisplayContext.getDiscountFDSActionDropdownItems() %>"
-			formName="fm"
-			id="<%= CommercePricingFDSNames.DISCOUNTS %>"
-			itemsPerPage="<%= 10 %>"
-			style="stacked"
-		/>
-	</aui:form>
-</div>
+	<frontend-data-set:headless-display
+		apiURL="/o/headless-commerce-admin-pricing/v2.0/discounts?sort=modifiedDate:desc"
+		creationMenu="<%= commerceDiscountDisplayContext.getDiscountCreationMenu() %>"
+		fdsActionDropdownItems="<%= commerceDiscountDisplayContext.getDiscountFDSActionDropdownItems() %>"
+		formName="fm"
+		id="<%= CommercePricingFDSNames.DISCOUNTS %>"
+		itemsPerPage="<%= 10 %>"
+		style="fluid"
+	/>
+</aui:form>

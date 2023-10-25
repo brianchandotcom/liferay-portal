@@ -11,14 +11,10 @@
 CommercePricingClassDisplayContext commercePricingClassDisplayContext = (CommercePricingClassDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
-<div class="row">
-	<div class="col-12">
-		<frontend-data-set:classic-display
-			creationMenu="<%= commercePricingClassDisplayContext.getCreationMenu() %>"
-			dataProviderKey="<%= CommercePricingFDSNames.PRICING_CLASSES %>"
-			id="<%= CommercePricingFDSNames.PRICING_CLASSES %>"
-			itemsPerPage="<%= 10 %>"
-			style="fluid"
-		/>
-	</div>
-</div>
+<frontend-data-set:classic-display
+	creationMenu="<%= commercePricingClassDisplayContext.getCreationMenu() %>"
+	dataProviderKey="<%= CommercePricingFDSNames.PRICING_CLASSES %>"
+	id="<%= CommercePricingFDSNames.PRICING_CLASSES %>"
+	itemsPerPage="<%= 10 %>"
+	style="fluid"
+/>

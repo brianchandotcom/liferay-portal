@@ -36,7 +36,6 @@ import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Keven Leone
@@ -122,10 +121,7 @@ public class GetDSEnvelopeMVCResourceCommand extends BaseMVCResourceCommand {
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
 
-	@Reference(
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(type=" + DLProcessorConstants.IMAGE_PROCESSOR + ")"
-	)
+	@Reference(target = "(type=" + DLProcessorConstants.IMAGE_PROCESSOR + ")")
 	private DLProcessor _dlProcessor;
 
 	@Reference

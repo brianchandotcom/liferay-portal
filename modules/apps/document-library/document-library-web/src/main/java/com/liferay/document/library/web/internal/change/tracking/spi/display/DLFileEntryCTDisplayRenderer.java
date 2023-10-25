@@ -38,7 +38,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Samuel Trong Tran
@@ -128,10 +127,7 @@ public class DLFileEntryCTDisplayRenderer
 			dlFileEntry.getFileVersion(), displayContext.getLocale());
 	}
 
-	@Reference(
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(type=" + DLProcessorConstants.AUDIO_PROCESSOR + ")"
-	)
+	@Reference(target = "(type=" + DLProcessorConstants.AUDIO_PROCESSOR + ")")
 	private DLProcessor _audioDLProcessor;
 
 	@Reference
@@ -140,16 +136,10 @@ public class DLFileEntryCTDisplayRenderer
 	@Reference
 	private GroupLocalService _groupLocalService;
 
-	@Reference(
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(type=" + DLProcessorConstants.IMAGE_PROCESSOR + ")"
-	)
+	@Reference(target = "(type=" + DLProcessorConstants.IMAGE_PROCESSOR + ")")
 	private DLProcessor _imageDLProcessor;
 
-	@Reference(
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(type=" + DLProcessorConstants.PDF_PROCESSOR + ")"
-	)
+	@Reference(target = "(type=" + DLProcessorConstants.PDF_PROCESSOR + ")")
 	private DLProcessor _pdfDLProcessor;
 
 	@Reference
@@ -161,10 +151,7 @@ public class DLFileEntryCTDisplayRenderer
 	@Reference
 	private TrashHelper _trashHelper;
 
-	@Reference(
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(type=" + DLProcessorConstants.VIDEO_PROCESSOR + ")"
-	)
+	@Reference(target = "(type=" + DLProcessorConstants.VIDEO_PROCESSOR + ")")
 	private DLProcessor _videoDLProcessor;
 
 }

@@ -42,7 +42,6 @@ import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Samuel Trong Tran
@@ -334,10 +333,7 @@ public class DLFileVersionCTDisplayRenderer
 
 	private static final String _VIDEO_PREVIEW = "VIDEO_PREVIEW";
 
-	@Reference(
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(type=" + DLProcessorConstants.AUDIO_PROCESSOR + ")"
-	)
+	@Reference(target = "(type=" + DLProcessorConstants.AUDIO_PROCESSOR + ")")
 	private DLProcessor _audioDLProcessor;
 
 	@Reference
@@ -354,28 +350,19 @@ public class DLFileVersionCTDisplayRenderer
 	)
 	private DLPreviewRendererProvider _dlPreviewRendererProvider;
 
-	@Reference(
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(type=" + DLProcessorConstants.IMAGE_PROCESSOR + ")"
-	)
+	@Reference(target = "(type=" + DLProcessorConstants.IMAGE_PROCESSOR + ")")
 	private DLProcessor _imageDLProcessor;
 
 	@Reference
 	private Language _language;
 
-	@Reference(
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(type=" + DLProcessorConstants.PDF_PROCESSOR + ")"
-	)
+	@Reference(target = "(type=" + DLProcessorConstants.PDF_PROCESSOR + ")")
 	private DLProcessor _pdfDLProcessor;
 
 	@Reference(target = "(default=true)")
 	private Store _store;
 
-	@Reference(
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(type=" + DLProcessorConstants.VIDEO_PROCESSOR + ")"
-	)
+	@Reference(target = "(type=" + DLProcessorConstants.VIDEO_PROCESSOR + ")")
 	private DLProcessor _videoDLProcessor;
 
 }

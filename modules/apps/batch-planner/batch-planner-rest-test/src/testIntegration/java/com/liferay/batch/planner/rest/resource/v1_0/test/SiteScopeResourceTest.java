@@ -8,6 +8,7 @@ package com.liferay.batch.planner.rest.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.batch.planner.batch.engine.task.TaskItemUtil;
 import com.liferay.batch.planner.rest.client.dto.v1_0.SiteScope;
+import com.liferay.batch.planner.rest.client.http.HttpInvoker;
 import com.liferay.batch.planner.rest.client.pagination.Page;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
@@ -39,6 +40,29 @@ public class SiteScopeResourceTest extends BaseSiteScopeResourceTestCase {
 	public void testGetPlanInternalClassNameKeySiteScopesPage()
 		throws Exception {
 
+		// Internal class name key not found
+
+		String internalClassNameKey = RandomTestUtil.randomString();
+
+		_testGetPlanInternalClassNameKeySiteScopesPageNotFound(
+			null, internalClassNameKey);
+		_testGetPlanInternalClassNameKeySiteScopesPageNotFound(
+			false, internalClassNameKey);
+		_testGetPlanInternalClassNameKeySiteScopesPageNotFound(
+			true, internalClassNameKey);
+
+		internalClassNameKey = URLCodec.encodeURL(
+			TaskItemUtil.getInternalClassNameKey(
+				"com.liferay.object.rest.dto.v1_0.ObjectEntry",
+				RandomTestUtil.randomString()));
+
+		_testGetPlanInternalClassNameKeySiteScopesPageNotFound(
+			null, internalClassNameKey);
+		_testGetPlanInternalClassNameKeySiteScopesPageNotFound(
+			false, internalClassNameKey);
+		_testGetPlanInternalClassNameKeySiteScopesPageNotFound(
+			true, internalClassNameKey);
+
 		Group group = GroupTestUtil.addGroupToCompany(
 			testCompany.getCompanyId());
 
@@ -53,8 +77,7 @@ public class SiteScopeResourceTest extends BaseSiteScopeResourceTestCase {
 						"a" + RandomTestUtil.randomString(), false)),
 				ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		String internalClassNameKey = _getInternalClassNameKey(
-			objectDefinition1);
+		internalClassNameKey = _getInternalClassNameKey(objectDefinition1);
 
 		_testGetPlanInternalClassNameKeySiteScopesPage(
 			Collections.emptyList(), null, internalClassNameKey);
@@ -158,6 +181,18 @@ public class SiteScopeResourceTest extends BaseSiteScopeResourceTestCase {
 			assertEquals(
 				_toSiteScope(group), _getSiteScope(group.getGroupKey(), page));
 		}
+	}
+
+	private void _testGetPlanInternalClassNameKeySiteScopesPageNotFound(
+			Boolean export, String internalClassNameKey)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			siteScopeResource.
+				getPlanInternalClassNameKeySiteScopesPageHttpResponse(
+					internalClassNameKey, export);
+
+		Assert.assertEquals(404, httpResponse.getStatusCode());
 	}
 
 	private SiteScope _toSiteScope(Group group) {

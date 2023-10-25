@@ -13,6 +13,7 @@ import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
 
 import java.util.Collections;
 
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
@@ -32,6 +33,10 @@ public class OpenAPIYAMLProvider {
 			_vulcanBatchEngineTaskItemDelegateRegistry.
 				getVulcanBatchEngineTaskItemDelegate(
 					companyId, internalClassNameKey);
+
+		if (vulcanBatchEngineTaskItemDelegate == null) {
+			throw new NotFoundException();
+		}
 
 		Response response = _openAPIResource.getOpenAPI(
 			Collections.singleton(

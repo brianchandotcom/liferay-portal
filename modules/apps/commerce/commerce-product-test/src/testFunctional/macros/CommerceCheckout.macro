@@ -331,6 +331,7 @@ definition {
 			paymentTerm = ${paymentTerm},
 			productDiscountedTotalPrice = ${productDiscountedTotalPrice},
 			productDiscountValue = ${productDiscountValue},
+			productImage = ${productImage},
 			productName = ${productName},
 			productPrice = ${productUnitPrice},
 			productQuantity = ${productQuantity},
@@ -603,6 +604,12 @@ definition {
 				key_totalValue = ${totalValue},
 				locator1 = "CommerceAccelerators#CHECKOUT_SUMMARY_TOTAL",
 				value1 = ${totalValue});
+		}
+
+		if (isSet(productImage)) {
+			AssertElementPresent(
+				key_productName = ${productImage},
+				locator1 = "CommerceFrontStore#PRODUCT_IMAGE_CHECKOUT_WITH_ALT_ATTRIBUTE");
 		}
 	}
 

@@ -6,6 +6,7 @@
 package com.liferay.headless.builder.internal.model.listener;
 
 import com.liferay.headless.builder.internal.helper.ObjectEntryHelper;
+import com.liferay.headless.builder.internal.helper.ValidationHelper;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -55,7 +56,7 @@ public class APISchemaRelevantObjectEntryModelListener
 		try {
 			Map<String, Serializable> values = objectEntry.getValues();
 
-			if (!_objectEntryHelper.isValidObjectEntry(
+			if (!_validationHelper.isValidObjectEntry(
 					(long)values.get(
 						"r_apiApplicationToAPISchemas_c_apiApplicationId"),
 					"L_API_APPLICATION")) {
@@ -111,5 +112,8 @@ public class APISchemaRelevantObjectEntryModelListener
 
 	@Reference
 	private ObjectEntryHelper _objectEntryHelper;
+
+	@Reference
+	private ValidationHelper _validationHelper;
 
 }

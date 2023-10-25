@@ -5,22 +5,11 @@
 
 package com.liferay.headless.builder.internal.model.listener;
 
-import com.liferay.headless.builder.application.APIApplication;
-import com.liferay.headless.builder.internal.helper.ObjectEntryHelper;
-import com.liferay.object.exception.ObjectEntryValuesException;
+import com.liferay.headless.builder.internal.helper.ValidationHelper;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.listener.RelevantObjectEntryModelListener;
-import com.liferay.object.rest.dto.v1_0.ListEntry;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
-import com.liferay.portal.kernel.util.Validator;
-
-import java.io.Serializable;
-
-import java.util.Collections;
-import java.util.Map;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -42,7 +31,8 @@ public class APISortRelevantObjectEntryModelListener
 	public void onBeforeCreate(ObjectEntry objectEntry)
 		throws ModelListenerException {
 
-		_validate(objectEntry);
+		_validationHelper.validateAPIEndpointRelationship(
+			objectEntry, "apiEndpointToAPISorts", "API sort");
 	}
 
 	@Override
@@ -50,66 +40,11 @@ public class APISortRelevantObjectEntryModelListener
 			ObjectEntry originalObjectEntry, ObjectEntry objectEntry)
 		throws ModelListenerException {
 
-		_validate(objectEntry);
-	}
-
-	private void _validate(ObjectEntry objectEntry) {
-		try {
-			Map<String, Serializable> values = objectEntry.getValues();
-
-			long apiEndpointId = (long)values.get(
-				"r_apiEndpointToAPISorts_c_apiEndpointId");
-
-			if (!_objectEntryHelper.isValidObjectEntry(
-					apiEndpointId, "L_API_ENDPOINT")) {
-
-				throw new ObjectEntryValuesException.InvalidObjectField(
-					null, "An API sort must be related to an API endpoint",
-					"an-api-sort-must-be-related-to-an-api-endpoint");
-			}
-
-			com.liferay.object.rest.dto.v1_0.ObjectEntry
-				apiEndpointObjectEntry = _objectEntryHelper.getObjectEntry(
-					objectEntry.getCompanyId(), Collections.emptyList(),
-					apiEndpointId, "L_API_ENDPOINT");
-
-			ListEntry listEntry =
-				(ListEntry)apiEndpointObjectEntry.getPropertyValue(
-					"retrieveType");
-
-			if (!Objects.equals(
-					listEntry.getKey(),
-					APIApplication.Endpoint.RetrieveType.COLLECTION.
-						getValue())) {
-
-				throw new ObjectEntryValuesException.InvalidObjectField(
-					null,
-					"An API sort can only be associated to API endpoints " +
-						"with a \"collection\" retrieve type",
-					"an-api-sort-can-only-be-associated-to-api-endpoints-" +
-						"with-a-\"collection\"-retrieve-type");
-			}
-
-			if (Validator.isNotNull(
-					_objectEntryHelper.getObjectEntry(
-						objectEntry.getCompanyId(),
-						StringBundler.concat(
-							"id ne '", objectEntry.getObjectEntryId(),
-							"' and r_apiEndpointToAPISorts_c_apiEndpointId eq ",
-							"'", apiEndpointId, "'"),
-						getObjectDefinitionExternalReferenceCode()))) {
-
-				throw new ObjectEntryValuesException.InvalidObjectField(
-					null, "The API endpoint already has an associated API sort",
-					"the-api-endpoint-already-has-an-associated-api-sort");
-			}
-		}
-		catch (Exception exception) {
-			throw new ModelListenerException(exception);
-		}
+		_validationHelper.validateAPIEndpointRelationship(
+			objectEntry, "apiEndpointToAPISorts", "API sort");
 	}
 
 	@Reference
-	private ObjectEntryHelper _objectEntryHelper;
+	private ValidationHelper _validationHelper;
 
 }

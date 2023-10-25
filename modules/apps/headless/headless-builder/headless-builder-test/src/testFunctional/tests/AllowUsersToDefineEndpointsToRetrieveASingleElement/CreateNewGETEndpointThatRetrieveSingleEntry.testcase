@@ -1,0 +1,93 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-178642=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless Builder";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		ApplicationAPI.deleteAllAPIApplication();
+
+		JSONObject.deleteAllCustomObjects();
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 4
+	test CanSeeGetEndpointPathWithIdParameterInAPIExplorer {
+		property portal.acceptance = "true";
+
+		task ("Given a custom object Student with name field published") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "Student",
+				en_US_plural_label = "Students",
+				name = "Student",
+				objectDefinitionExternalReferenceCode = "student",
+				requiredStringFieldName = "name",
+				requiredStringFieldNameExternalReferenceCode = "studentName");
+		}
+
+		task ("And Given Student entry created") {
+			ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "Students",
+				name = "Test");
+		}
+
+		task ("And Given a unpublished API Application with singleElement and ID and '/getTest/{entryId}' path Endpoint with Student as main object Schema") {
+			var response = ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				endpointName = "testendpoint",
+				endpointPath = "/gettest/{entryId}",
+				mainObjectDefinitionErc = "student",
+				pathParameter = "id",
+				relatedEndpoint = "true",
+				relatedSchema = "true",
+				retrieveType = "singleElement",
+				schemaName = "testSchema",
+				status = "published",
+				title = "My-app");
+
+			SchemaAPI.relateRequestSchemaToEndpointByErc(
+				endpointErc = "testendpoint",
+				requestSchemaErc = "testSchema");
+
+			SchemaAPI.relateResponseSchemaToEndpointByErc(
+				endpointErc = "testendpoint",
+				responseSchemaErc = "testSchema");
+		}
+
+		task ("And Given I create schema a property with erc of name field") {
+			var schemaId = JSONUtil.getWithJSONPath(${response}, "$.apiApplicationToAPISchemas[*].id");
+
+			PropertyAPI.createAPIProperty(
+				name = "entryName",
+				objectFieldERC = "studentName",
+				schemaId = ${schemaId});
+		}
+
+		task ("When I navigate to API application in API Explorer") {
+			APIExplorer.navigateToOpenAPI(customObjectPlural = "my-app");
+		}
+
+		task ("Then get{EndpointPath} with {entryId} is present") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#API_METHOD",
+				method = "getGettestEntry",
+				service = "testSchema",
+				value1 = "/gettest/{entryId}");
+		}
+	}
+
+}

@@ -158,6 +158,17 @@ public class ClientExtensionProjectConfigurator
 				project, VALIDATE_CLIENT_EXTENSIONS_TASK_NAME,
 				DefaultTask.class);
 
+		_addInputFile(
+			project.file(_CLIENT_EXTENSION_YAML), () -> true,
+			assembleClientExtensionTaskProvider,
+			createClientExtensionConfigTaskProvider,
+			validateClientExtensionIdsTaskProvider,
+			validateClientExtensionTaskProvider);
+
+		_setOutputsUpToDateAlways(
+			validateClientExtensionIdsTaskProvider,
+			validateClientExtensionTaskProvider);
+
 		_baseConfigureClientExtensionProject(
 			project, assembleClientExtensionTaskProvider,
 			buildClientExtensionZipTaskProvider,
@@ -549,10 +560,6 @@ public class ClientExtensionProjectConfigurator
 					return;
 				}
 
-				TaskInputs taskInputs = assembleClientExtensionCopy.getInputs();
-
-				taskInputs.file(_CLIENT_EXTENSION_YAML);
-
 				assembleArrayNode.forEach(
 					copyJsonNode -> {
 						JsonNode fromJsonNode = copyJsonNode.get("from");
@@ -679,11 +686,6 @@ public class ClientExtensionProjectConfigurator
 					ASSEMBLE_CLIENT_EXTENSION_TASK_NAME,
 					VALIDATE_CLIENT_EXTENSION_IDS_TASK_NAME,
 					VALIDATE_CLIENT_EXTENSIONS_TASK_NAME);
-
-				TaskInputs taskInputs =
-					createClientExtensionConfigTask.getInputs();
-
-				taskInputs.file(project.file(_CLIENT_EXTENSION_YAML));
 
 				createClientExtensionConfigTask.addClientExtensionProperties(
 					_getClientExtensionProperties());

@@ -243,35 +243,6 @@ public class ObjectEntryHelper {
 			this::_getUniqueFieldName);
 	}
 
-	public boolean isValidObjectEntry(
-			long objectEntryId, String externalReferenceCode)
-		throws Exception {
-
-		if (objectEntryId == 0) {
-			return false;
-		}
-
-		com.liferay.object.model.ObjectEntry objectEntry =
-			_objectEntryLocalService.fetchObjectEntry(objectEntryId);
-
-		if (objectEntry == null) {
-			return false;
-		}
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectEntry.getObjectDefinitionId());
-
-		if (!Objects.equals(
-				objectDefinition.getExternalReferenceCode(),
-				externalReferenceCode)) {
-
-			return false;
-		}
-
-		return true;
-	}
-
 	private DTOConverterContext _getDefaultDTOConverterContext(
 			ObjectDefinition objectDefinition)
 		throws Exception {

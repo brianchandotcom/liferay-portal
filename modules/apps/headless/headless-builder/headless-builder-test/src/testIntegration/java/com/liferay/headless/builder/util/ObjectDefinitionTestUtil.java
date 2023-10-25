@@ -21,7 +21,7 @@ import java.util.List;
 public class ObjectDefinitionTestUtil {
 
 	public static ObjectDefinition publishObjectDefinition(
-			List<ObjectField> objectFields)
+			List<ObjectField> objectFields, String scope)
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
@@ -30,8 +30,8 @@ public class ObjectDefinitionTestUtil {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"A" + RandomTestUtil.randomString(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				true, ObjectDefinitionConstants.SCOPE_COMPANY,
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT, objectFields);
+				true, scope, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				objectFields);
 
 		return ObjectDefinitionLocalServiceUtil.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),

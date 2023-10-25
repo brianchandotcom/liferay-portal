@@ -273,6 +273,19 @@
 			"name": "currency",
 			"required": false,
 			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "Subscription_ARR__c",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Subscription ARR"
+			},
+			"name": "subscriptionArr",
+			"required": false,
+			"type": "String"
 		}
 	],
 	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:OpportunitySF$]"

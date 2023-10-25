@@ -11,6 +11,7 @@ import {LiferayAPIs} from '../../../common/services/liferay/common/enums/apis';
 import LiferayItems from '../../../common/services/liferay/common/interfaces/liferayItems';
 import {ResourceName} from '../../../common/services/liferay/object/enum/resourceName';
 import useGet from '../../../common/services/liferay/object/useGet';
+import getIntlNumberFormat from '../../../common/utils/getIntlNumberFormat';
 import getOpportunityAmount from '../utils/getOpportunityAmount';
 import getOpportunityDates from '../utils/getOpportunityDates';
 
@@ -67,6 +68,12 @@ export default function useGetListItemsFromPartnerOpportunities(
 				[PartnerOpportunitiesColumnKey.CURRENCY]: item.currency.name
 					? item.currency.name
 					: '- ',
+				[PartnerOpportunitiesColumnKey.SUBSCRIPTION_ARR]:
+					item.subscriptionArr && item.currency.key
+						? getIntlNumberFormat(item.currency).format(
+								item.subscriptionArr
+						  )
+						: '- ',
 			})),
 		[swrResponse.data?.items]
 	);

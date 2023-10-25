@@ -661,9 +661,10 @@ definition {
 	}
 
 	macro viewDisplayTemplate {
-		AssertSelectedLabel(
-			key_fieldLabel = "Display Template",
-			locator1 = "Select#GENERIC_SELECT_FIELD",
+		AssertElementPresent(
+			key_class = "display-template-selector",
+			key_index = 1,
+			locator1 = "Button#ANY_WITH_CLASS_AND_INDEX",
 			value1 = ${displayTemplate});
 	}
 

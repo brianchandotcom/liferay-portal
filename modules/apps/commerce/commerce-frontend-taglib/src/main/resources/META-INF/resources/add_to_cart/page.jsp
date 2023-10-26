@@ -57,7 +57,6 @@ if (alignment.equals("full-width")) {
 
 	const props = {
 		accountId: <%= commerceAccountId %>,
-
 		cartId: <%= commerceOrderId %>,
 		channel: {
 			currencyCode: '<%= commerceCurrencyCode %>',
@@ -102,7 +101,6 @@ if (alignment.equals("full-width")) {
 	};
 
 	<c:if test="<%= productSettingsModel != null %>">
-
 		props.settings.productConfiguration = {
 			allowBackOrder: productConfiguration.backOrders,
 			allowedOrderQuantities: productConfiguration.allowedQuantities,

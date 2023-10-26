@@ -49,6 +49,38 @@ public class FileEntry implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(FileEntry.class, json);
 	}
 
+	@Schema(
+		description = "optional field with the content of the document in Base64, can be embedded with nestedFields (the format of the nested field must be `<attachment field name>.fieldBase64`)"
+	)
+	public String getFileBase64() {
+		return fileBase64;
+	}
+
+	public void setFileBase64(String fileBase64) {
+		this.fileBase64 = fileBase64;
+	}
+
+	@JsonIgnore
+	public void setFileBase64(
+		UnsafeSupplier<String, Exception> fileBase64UnsafeSupplier) {
+
+		try {
+			fileBase64 = fileBase64UnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "optional field with the content of the document in Base64, can be embedded with nestedFields (the format of the nested field must be `<attachment field name>.fieldBase64`)"
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String fileBase64;
+
 	@Schema
 	public Long getId() {
 		return id;
@@ -154,6 +186,20 @@ public class FileEntry implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		if (fileBase64 != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"fileBase64\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(fileBase64));
+
+			sb.append("\"");
+		}
 
 		if (id != null) {
 			if (sb.length() > 1) {

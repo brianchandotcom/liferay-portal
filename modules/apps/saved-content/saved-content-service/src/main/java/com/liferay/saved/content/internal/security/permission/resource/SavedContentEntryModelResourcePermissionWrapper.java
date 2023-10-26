@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.saved.content.constants.MySavedContentPortletKeys;
 import com.liferay.saved.content.constants.SavedContentConstants;
 import com.liferay.saved.content.model.SavedContentEntry;
@@ -38,17 +37,12 @@ public class SavedContentEntryModelResourcePermissionWrapper
 			SavedContentEntry.class, SavedContentEntry::getSavedContentEntryId,
 			_savedContentEntryLocalService::getSavedContentEntry,
 			_portletResourcePermission,
-			(modelResourcePermission, consumer) -> {
-				consumer.accept(
-					new StagedModelPermissionLogic<>(
-						_stagingPermission,
-						MySavedContentPortletKeys.MY_SAVED_CONTENT,
-						SavedContentEntry::getSavedContentEntryId));
-			});
+			(modelResourcePermission, consumer) -> consumer.accept(
+				new StagedModelPermissionLogic<>(
+					_stagingPermission,
+					MySavedContentPortletKeys.MY_SAVED_CONTENT,
+					SavedContentEntry::getSavedContentEntryId)));
 	}
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference(
 		target = "(resource.name=" + SavedContentConstants.RESOURCE_NAME + ")"

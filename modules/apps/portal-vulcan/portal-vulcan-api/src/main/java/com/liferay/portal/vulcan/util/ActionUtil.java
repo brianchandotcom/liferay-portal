@@ -388,6 +388,10 @@ public class ActionUtil {
 			parameterMap.put(entry.getKey(), value.get(0));
 		}
 
+		if (templateParameterMap != null) {
+			parameterMap.putAll(templateParameterMap);
+		}
+
 		String firstParameterName = _getFirstParameterNameFromPath(
 			clazz.getSuperclass(), methodName);
 
@@ -412,10 +416,6 @@ public class ActionUtil {
 				 firstParameterName.endsWith("Id")) {
 
 			parameterMap.put(firstParameterName, id);
-		}
-
-		if (templateParameterMap != null) {
-			parameterMap.putAll(templateParameterMap);
 		}
 
 		return parameterMap;

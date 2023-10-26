@@ -211,7 +211,7 @@ deployReleng {
 
 portalArtifactsJar {
 	ext {
-		relengPropertiesFiles = null
+		relengProjectDirs = null
 	}
 
 	baseName = "portal"
@@ -222,11 +222,11 @@ portalArtifactsJar {
 	zip64 = true
 
 	doFirst {
-		relengPropertiesFiles = _getRelengPropertiesFiles()
+		relengProjectDirs = _getRelengProjectDirs()
 
 		ConfigurationContainer configurationContainer = project.getConfigurations()
 
-		Configuration detachedConfiguration = configurationContainer.detachedConfiguration(_getPortalArtifactsDependencies(relengPropertiesFiles) as Dependency[])
+		Configuration detachedConfiguration = configurationContainer.detachedConfiguration(_getPortalArtifactsDependencies(relengProjectDirs) as Dependency[])
 
 		detachedConfiguration.resolve()
 
@@ -328,7 +328,7 @@ portalSourcesJar {
 	doFirst {
 		ConfigurationContainer configurationContainer = project.getConfigurations()
 
-		Configuration detachedConfiguration = configurationContainer.detachedConfiguration(_getPortalSourcesDependencies(portalArtifactsJar.relengPropertiesFiles) as Dependency[])
+		Configuration detachedConfiguration = configurationContainer.detachedConfiguration(_getPortalSourcesDependencies(portalArtifactsJar.relengProjectDirs) as Dependency[])
 
 		detachedConfiguration.resolve()
 
@@ -1202,19 +1202,63 @@ private String _getModuleTaskPrefix(File moduleDir) {
 	":" + moduleTaskPrefix.replace(File.separatorChar, ':' as char) + ":"
 }
 
-private List<Dependency> _getPortalArtifactsDependencies(List<File> relengPropertiesFiles) {
+private List<Dependency> _getPortalArtifactsDependencies(List<File> relengProjectDirs) {
 	File cacheDir = new File(buildDir, "releng/portalCache")
 	File portalArtifactsDir = new File(buildDir, "releng/portalArtifacts")
 
 	delete portalArtifactsDir
 
-	List<String> artifactURLs = new ArrayList<>()
+	List<Dependency> dependencies = new ArrayList<>()
 
-	for (File artifactPropertiesFile : relengPropertiesFiles) {
-		Properties artifactProperties = GUtil.loadProperties(artifactPropertiesFile)
+	for (File relengProjectDir : relengProjectDirs) {
+		Properties properties = GUtil.loadProperties(new File(relengProjectDir, "bnd.bnd"))
 
-		artifactURLs.add(artifactProperties.getProperty("artifact.url"))
+		File jarFile = file("../tools/sdk/dist/" + properties.getProperty("Bundle-SymbolicName") + "-" + properties.getProperty("Bundle-Version") + ".jar")
+
+		File dir = new File(portalArtifactsDir, jarFile.name[0 .. -5])
+
+		copy {
+			from zipTree(jarFile).matching {
+				exclude _getExcludes(jarFile)
+				include _getIncludes(jarFile)
+			}
+
+			into dir
+		}
+
+		DependencyHandler dependencyHandler = project.getDependencies()
+
+		dependencies.add(dependencyHandler.create(files(dir)))
+
+		logger.lifecycle "Added {}", jarFile.name
 	}
+
+	["portal-impl", "portal-kernel", "support-tomcat", "util-bridges", "util-java", "util-slf4j", "util-taglib"].each {
+		File jarFile = file("../" + it + "/" + it + ".jar")
+
+		if (!jarFile.exists()) {
+			throw new GradleException("Unable to find ${jarFile}")
+		}
+
+		File dir = new File(portalArtifactsDir, jarFile.name[0 .. -5])
+
+		copy {
+			from zipTree(jarFile).matching {
+				exclude _getExcludes(jarFile)
+				include _getIncludes(jarFile)
+			}
+
+			into dir
+		}
+
+		DependencyHandler dependencyHandler = project.getDependencies()
+
+		dependencies.add(dependencyHandler.create(files(dir)))
+
+		logger.lifecycle "Added {}", jarFile.name
+	}
+
+	List<String> artifactURLs = new ArrayList<>()
 
 	File sourceFormatterPropertiesFile = new File(projectDir, "../source-formatter.properties")
 
@@ -1263,9 +1307,6 @@ private List<Dependency> _getPortalArtifactsDependencies(List<File> relengProper
 		}
 	}
 
-	List<Dependency> dependencies = new ArrayList<>()
-	Set<String> dependencyNotations = new TreeSet<>()
-
 	for (String artifactURL : artifactURLs) {
 		File jarFile = new File(cacheDir, artifactURL.substring(artifactURL.lastIndexOf("/") + 1))
 
@@ -1285,36 +1326,7 @@ private List<Dependency> _getPortalArtifactsDependencies(List<File> relengProper
 		dependencies.add(dependencyHandler.create(files(dir)))
 
 		logger.lifecycle "Added {}", jarFile.name
-
-		int x = artifactURL.lastIndexOf("/")
-
-		int y = artifactURL.lastIndexOf("/", x - 1)
-
-		int z = artifactURL.lastIndexOf("/", y - 1)
-
-		String dependencyName = artifactURL.substring(z + 1, y)
-		String dependencyVersion = artifactURL.substring(y + 1, x)
-
-		String baseURL = artifactURL.substring(0, z)
-
-		x = baseURL.indexOf("/content/")
-
-		y = baseURL.indexOf("/", x + 9)
-
-		z = baseURL.indexOf("/", y + 1)
-
-		String dependencyGroupPath = baseURL.substring(z + 1)
-
-		dependencyNotations.add dependencyGroupPath.replace('/' as char, '.' as char) + ":" + dependencyName + ":" + dependencyVersion
 	}
-
-	File versionsTxtFile = new File(portalArtifactsDir, "versions.txt")
-
-	versionsTxtFile.text = StringUtil.merge(dependencyNotations as String[], "\n")
-
-	DependencyHandler dependencyHandler = project.getDependencies()
-
-	dependencies.add(dependencyHandler.create(files(versionsTxtFile)))
 
 	portalArtifactsDir.eachFile {
 		File portalArtifactDir ->
@@ -1389,7 +1401,7 @@ private List<Dependency> _getPortalJavadocDependencies() {
 	return dependencies
 }
 
-private List<File> _getPortalSourcesDependencies(List<File> relengPropertiesFiles) {
+private List<File> _getPortalSourcesDependencies(List<File> relengProjectDirs) {
 	File cacheDir = new File(buildDir, "releng/portalCache")
 	File portalSourcesDir = new File(buildDir, "releng/portalSources")
 
@@ -1397,35 +1409,61 @@ private List<File> _getPortalSourcesDependencies(List<File> relengPropertiesFile
 
 	List<Dependency> dependencies = new ArrayList<>()
 
-	for (File artifactPropertiesFile : relengPropertiesFiles) {
-		Properties artifactProperties = GUtil.loadProperties(artifactPropertiesFile)
+	List<String> relativePaths = []
 
-		String artifactSourcesURL = artifactProperties.getProperty("artifact.sources.url")
+	for (File relengProjectDir : relengProjectDirs) {
+		logger.lifecycle "Building {}", FileUtil.relativize(relengProjectDir, projectDir)
 
-		if (!artifactSourcesURL && !artifactPropertiesFile.name.equals("artifact.properties")) {
-			String artifactURL = artifactProperties.getProperty("artifact.url")
+		relativePaths.add FileUtil.relativize(relengProjectDir, projectDir)
+	}
 
-			artifactSourcesURL = artifactURL[0 .. -5] + "-sources.jar"
+	StartParameter startParameter = gradle.startParameter.newBuild()
+
+	startParameter.setParallelProjectExecutionEnabled(true)
+	startParameter.taskNames = relativePaths.collect {
+		":" + it.replace(File.separatorChar, ':' as char) + ":jarSources"
+	}
+
+	_executeGradle(startParameter, true)
+
+	for (File relengProjectDir : relengProjectDirs) {
+		Properties properties = GUtil.loadProperties(new File(relengProjectDir, "bnd.bnd"))
+
+		File jarFile = file("../tools/sdk/dist/" + properties.getProperty("Bundle-SymbolicName") + "-" + properties.getProperty("Bundle-Version") + "-sources.jar")
+
+		File dir = new File(portalSourcesDir, jarFile.name[0 .. -5])
+
+		copy {
+			from zipTree(jarFile)
+			into dir
 		}
 
-		if (artifactSourcesURL && artifactSourcesURL.endsWith(".jar")) {
-			_downloadFile(cacheDir, artifactSourcesURL)
+		DependencyHandler dependencyHandler = project.getDependencies()
 
-			File jarFile = new File(cacheDir, artifactSourcesURL.substring(artifactSourcesURL.lastIndexOf("/") + 1))
+		dependencies.add(dependencyHandler.create(files(dir)))
 
-			File dir = new File(portalSourcesDir, jarFile.name[0 .. -5])
+		logger.lifecycle "Added {}", jarFile.name
+	}
 
-			copy {
-				from zipTree(jarFile)
-				into dir
-			}
+	["portal-impl", "portal-kernel", "support-tomcat", "util-bridges", "util-java", "util-slf4j", "util-taglib"].each {
+		File jarFile = file("../" + it + "/" + it + "-sources.jar")
 
-			DependencyHandler dependencyHandler = project.getDependencies()
-
-			dependencies.add(dependencyHandler.create(files(dir)))
-
-			logger.lifecycle "Added {}", jarFile.name
+		if (!jarFile.exists()) {
+			throw new GradleException("Unable to find ${jarFile}")
 		}
+
+		File dir = new File(portalSourcesDir, jarFile.name[0 .. -5])
+
+		copy {
+			from zipTree(jarFile)
+			into dir
+		}
+
+		DependencyHandler dependencyHandler = project.getDependencies()
+
+		dependencies.add(dependencyHandler.create(files(dir)))
+
+		logger.lifecycle "Added {}", jarFile.name
 	}
 
 	File sourceFormatterPropertiesFile = new File(projectDir, "../source-formatter.properties")
@@ -1506,14 +1544,14 @@ private String _getReleaseInfoVersion() {
 	return version
 }
 
-private List<File> _getRelengPropertiesFiles() {
+private List<File> _getRelengProjectDirs() {
 	File cacheDir = new File(buildDir, "releng/portalCache")
 
 	if (!cacheDir.exists()) {
 		cacheDir.mkdirs()
 	}
 
-	List<File> artifactPropertiesFiles = new ArrayList<>()
+	List<String> relativePaths = new ArrayList<>()
 
 	List<String> excludes = ["/sdk/**", "**/test/**", "/third-party/**", "/util/**"]
 
@@ -1527,6 +1565,10 @@ private List<File> _getRelengPropertiesFiles() {
 		File relengFile ->
 
 		String relativePath = FileUtil.relativize(relengFile.parentFile, file(".releng"))
+
+		if (Validator.isNull(relativePath)) {
+			return
+		}
 
 		if (Validator.isNotNull(relativePath)) {
 			File relengIgnoreMarkerDir = GradleUtil.getRootDir(file(relativePath), ".lfrbuild-releng-ignore")
@@ -1544,16 +1586,43 @@ private List<File> _getRelengPropertiesFiles() {
 			return
 		}
 
-		_downloadFile(cacheDir, artifactURL)
+		File bndBndFile = new File(file(relativePath), "bnd.bnd")
 
-		File jarFile = new File(cacheDir, artifactURL.substring(artifactURL.lastIndexOf("/") + 1))
+		if (!bndBndFile.exists()) {
+			return
+		}
+
+		logger.lifecycle "Building {}", relativePath
+
+		relativePaths.add(relativePath)
+	}
+
+	StartParameter startParameter = gradle.startParameter.newBuild()
+
+	startParameter.setParallelProjectExecutionEnabled(true)
+	startParameter.taskNames = relativePaths.collect {
+		":" + it.replace(File.separatorChar, ':' as char) + ":jar"
+	}
+
+	_executeGradle(startParameter, true)
+
+	List<File> relengProjectDirs = []
+
+	for (String relativePath : relativePaths) {
+		Properties properties = GUtil.loadProperties(new File(file(relativePath), "bnd.bnd"))
+
+		File jarFile = file("../tools/sdk/dist/" + properties.getProperty("Bundle-SymbolicName") + "-" + properties.getProperty("Bundle-Version") + ".jar")
+
+		if (!jarFile.exists()) {
+			throw new GradleException("Unable to find ${jarFile}")
+		}
 
 		aQute.bnd.osgi.Jar jar = new aQute.bnd.osgi.Jar(jarFile)
 
 		Resource resource = jar.getResource("META-INF/MANIFEST.MF")
 
 		if (resource == null) {
-			return
+			continue
 		}
 
 		Manifest manifest = new Manifest(resource.openInputStream())
@@ -1563,15 +1632,18 @@ private List<File> _getRelengPropertiesFiles() {
 		String exportPackageValue = attributes.getValue(Constants.EXPORT_PACKAGE)
 
 		if (exportPackageValue == null) {
-			return
+			continue
 		}
 
-		artifactPropertiesFiles.add(relengFile)
+		copy {
+			from jarFile
+			into cacheDir
+		}
 
-		logger.lifecycle relengFile.path
+		relengProjectDirs.add(file(relativePath))
 	}
 
-	return artifactPropertiesFiles
+	return relengProjectDirs
 }
 
 private RevCommit _getRevCommit(String commitId) {

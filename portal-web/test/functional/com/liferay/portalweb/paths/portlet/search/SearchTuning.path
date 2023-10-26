@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RESULT_RANKINGS_ADD_RESULT_RESULTS</td>
+	<td>//li[contains(@class,'list-group-item')][${resultOrder}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RESULT_RANKINGS_ALIAS_FIELD</td>
 	<td>//div[contains(@class,'form-group') and contains(.,'Alias')]//input[contains(@class,'form-control-inset')]</td>
 	<td></td>

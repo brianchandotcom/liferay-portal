@@ -181,6 +181,7 @@ Gallery.propTypes = {
 	images: PropTypes.arrayOf(
 		PropTypes.shape({
 			URL: PropTypes.string.isRequired,
+			adaptiveMediaImageHTMLTag: PropTypes.string,
 			thumbnailURL: PropTypes.string.isRequired,
 			title: PropTypes.string.isRequired,
 		})

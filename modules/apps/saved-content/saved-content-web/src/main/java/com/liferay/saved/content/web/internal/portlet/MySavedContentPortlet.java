@@ -19,6 +19,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
+		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=saved-content-portlet",
 		"com.liferay.portlet.display-category=category.collaboration",
 		"com.liferay.portlet.preferences-owned-by-group=true",

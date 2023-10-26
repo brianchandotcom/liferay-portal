@@ -108,6 +108,18 @@
 	},
 	{
 		"classNames": [
+			"Indexer"
+		],
+		"from": "getClassNames",
+		"issueKey": "LPS-191962",
+		"to": "getSearchClassNames",
+		"validExtensions": [
+			"java",
+			"jspf"
+		]
+	},
+	{
+		"classNames": [
 			"AssetCategoryLocalService",
 			"AssetCategoryLocalServiceUtil"
 		],

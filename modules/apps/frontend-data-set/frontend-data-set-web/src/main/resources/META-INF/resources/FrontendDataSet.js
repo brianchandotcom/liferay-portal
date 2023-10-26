@@ -244,13 +244,6 @@ const FrontendDataSet = ({
 					collectionActions
 				);
 			}
-
-			if (creationMenu.secondaryItems) {
-				filteredCreationMenu.secondaryItems = filterCreationActions(
-					creationMenu.secondaryItems,
-					collectionActions
-				);
-			}
 		}
 
 		setCreationMenuItems(filteredCreationMenu);

@@ -17,7 +17,6 @@ export interface ICreationActionItem {
 		permissionKey?: string;
 		size?: string;
 		title?: string;
-		type?: string;
 	};
 	href: string;
 	icon?: string;
@@ -31,7 +30,6 @@ export interface ICreationActionItem {
 		| 'modal-lg'
 		| 'modal-sm'
 		| 'sidePanel';
-	type: string;
 }
 
 const EMPTY_STATE_BUTTON_PROPS = {

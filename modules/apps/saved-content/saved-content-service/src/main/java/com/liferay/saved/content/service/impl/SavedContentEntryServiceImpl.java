@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.saved.content.constants.SavedContentConstants;
 import com.liferay.saved.content.model.SavedContentEntry;
 import com.liferay.saved.content.service.base.SavedContentEntryServiceBaseImpl;
@@ -34,14 +35,15 @@ public class SavedContentEntryServiceImpl
 
 	@Override
 	public SavedContentEntry addSavedContentEntry(
-			long groupId, String className, long classPK)
+			long groupId, String className, long classPK,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_portletResourcePermission.check(
 			getPermissionChecker(), groupId, ActionKeys.ADD_ENTRY);
 
 		return savedContentEntryLocalService.addSavedContentEntry(
-			groupId, getUserId(), className, classPK);
+			groupId, getUserId(), className, classPK, serviceContext);
 	}
 
 	@Override

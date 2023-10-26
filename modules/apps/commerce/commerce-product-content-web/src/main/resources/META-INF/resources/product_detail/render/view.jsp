@@ -235,7 +235,7 @@ String description = cpCatalogEntry.getDescription();
 boolean hasCPDefinitionSpecificationOptionValues = cpContentHelper.hasCPDefinitionSpecificationOptionValues(cpDefinitionId);
 boolean hasCPMedia = !cpMedias.isEmpty();
 boolean hasDescription = !Validator.isBlank(description);
-boolean hasDirectReplacement = cpContentHelper.hasDirectReplacement(cpSku);
+boolean directReplacement = cpContentHelper.isDirectReplacement(cpSku);
 
 String navCPMediaId = liferayPortletResponse.getNamespace() + "navCPMedia";
 String navDescriptionId = liferayPortletResponse.getNamespace() + "navDescription";
@@ -248,13 +248,13 @@ String navSpecificationsId = liferayPortletResponse.getNamespace() + "navSpecifi
 		module="product_detail/render/js/Tabs"
 		props='<%=
 			HashMapBuilder.<String, Object>put(
+				"directReplacement", directReplacement
+			).put(
 				"hasCPDefinitionSpecificationOptionValues", hasCPDefinitionSpecificationOptionValues
 			).put(
 				"hasCPMedia", hasCPMedia
 			).put(
 				"hasDescription", hasDescription
-			).put(
-				"hasReplacements", hasDirectReplacement
 			).put(
 				"namespace", liferayPortletResponse.getNamespace()
 			).put(
@@ -386,7 +386,7 @@ String navSpecificationsId = liferayPortletResponse.getNamespace() + "navSpecifi
 		</div>
 	</c:if>
 
-	<c:if test="<%= hasDirectReplacement %>">
+	<c:if test="<%= directReplacement %>">
 		<div aria-labelledby="navUnderlineReplacementsTab" class="fade <portlet:namespace />tab-element tab-pane" id="<%= navReplacementsId %>" role="tabpanel" style="display: block; height: 0px; visibility: hidden;">
 			<frontend-data-set:classic-display
 				contextParams='<%=

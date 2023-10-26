@@ -9,10 +9,10 @@ import React, {useEffect, useState} from 'react';
 let tabs = [];
 
 export default function ({
+	directReplacement,
 	hasCPDefinitionSpecificationOptionValues,
 	hasCPMedia,
 	hasDescription,
-	hasReplacements,
 	namespace,
 	navCPMediaId,
 	navDescriptionId,
@@ -55,17 +55,17 @@ export default function ({
 			display(navCPMediaId);
 			setActiveTabKeyValue(2);
 		}
-		else if (hasReplacements) {
+		else if (directReplacement) {
 			display(navReplacementsId);
 			setActiveTabKeyValue(3);
 		}
 		setFirstRender(false);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [
+		directReplacement,
 		hasCPDefinitionSpecificationOptionValues,
 		hasCPMedia,
 		hasDescription,
-		hasReplacements,
 		navCPMediaId,
 		navDescriptionId,
 		navReplacementsId,
@@ -127,7 +127,7 @@ export default function ({
 					<></>
 				)}
 
-				{hasReplacements ? (
+				{directReplacement ? (
 					<ClayTabs.Item
 						active={activeTabKeyValue === 3}
 						innerProps={{

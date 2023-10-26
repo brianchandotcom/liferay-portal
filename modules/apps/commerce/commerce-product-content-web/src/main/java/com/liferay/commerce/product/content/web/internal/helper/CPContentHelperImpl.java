@@ -630,31 +630,6 @@ public class CPContentHelperImpl implements CPContentHelper {
 	}
 
 	@Override
-	public boolean hasDirectReplacement(CPSku cpSku) throws Exception {
-		if (cpSku == null) {
-			return false;
-		}
-
-		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
-			cpSku.getCPInstanceId());
-
-		if ((cpInstance == null) || !cpInstance.isDiscontinued()) {
-			return false;
-		}
-
-		CPInstance replacementCPInstance =
-			_cpInstanceHelper.fetchReplacementCPInstance(
-				cpInstance.getReplacementCProductId(),
-				cpInstance.getReplacementCPInstanceUuid());
-
-		if (replacementCPInstance != null) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
 	public boolean hasMultipleCPSkus(CPCatalogEntry cpCatalogEntry) {
 		List<CPInstance> cpDefinitionInstances =
 			_cpInstanceLocalService.getCPDefinitionInstances(
@@ -699,6 +674,32 @@ public class CPContentHelperImpl implements CPContentHelper {
 				cpSku.getCPInstanceId());
 
 		if (firstAvailableReplacementCPInstance != null) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isDirectReplacement(CPSku cpSku) throws Exception {
+		if ((cpSku == null) || cpSku.isDiscontinued()) {
+			return false;
+		}
+
+		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
+			cpSku.getCPInstanceId());
+
+		if ((cpInstance == null) || cpInstance.isDiscontinued()) {
+			return false;
+		}
+
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+		List<CPInstance> cpInstances = _cpInstanceLocalService.getCPInstances(
+			cpInstance.getCPInstanceUuid(), cpDefinition.getCProductId(),
+			WorkflowConstants.STATUS_APPROVED);
+
+		if (!cpInstances.isEmpty()) {
 			return true;
 		}
 

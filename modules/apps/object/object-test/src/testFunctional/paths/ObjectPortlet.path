@@ -146,6 +146,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>SELECT_OBJECT_FOLDER</td>
+		<td>//li[contains(@class,'object-folder-list-item') and (.='${key_label}')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>SELECT_OBJECT</td>
 		<td>//div[(@class='table-list-title')]//a[text()= '${label}']</td>
 		<td></td>

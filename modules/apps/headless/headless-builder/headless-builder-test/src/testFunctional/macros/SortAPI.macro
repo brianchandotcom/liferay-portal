@@ -24,12 +24,12 @@ definition {
 	}
 
 	macro createAPISort {
-		Variables.assertDefined(parameterList = "${sortValue},${endpointId}");
+		Variables.assertDefined(parameterList = "${sortValue},${endpointERC}");
 
 		var curl = SortAPI._curlAPISort(virtualHost = ${virtualHost});
 		var body = '''
 			"oDataSort": "${sortValue}",
-			"r_apiEndpointToAPISorts_c_apiEndpointId": ${endpointId}
+			"r_apiEndpointToAPISorts_c_apiEndpointERC": ${endpointERC}
 		''';
 
 		var curl = StringUtil.add(${curl}, " -d { ${body} }", "");

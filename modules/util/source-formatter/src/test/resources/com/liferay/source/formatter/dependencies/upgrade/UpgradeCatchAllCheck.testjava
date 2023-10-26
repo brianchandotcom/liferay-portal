@@ -82,6 +82,10 @@ public class UpgradeCatchAllCheck {
 		_dlFolderService.addFolder(groupId, repositoryId, mountPoint, parentFolderId, name, description, serviceContext);
 	}
 
+	public void method(Indexer<?> indexer) {
+		indexer.getClassNames();
+	}
+
 	public void method(
 		long userId, long groupId, long billingAddressId,
 		long commerceAccountId, long commerceCurrencyId,

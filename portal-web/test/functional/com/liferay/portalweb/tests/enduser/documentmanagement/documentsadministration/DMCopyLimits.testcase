@@ -54,7 +54,7 @@ definition {
 			dmDocumentTitle = "large_file.pdf",
 			homeFolder = "true",
 			limitingHierarchy = "site",
-			siteName = "Guest");
+			siteName = "Liferay DXP");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
@@ -93,8 +93,9 @@ definition {
 			copyExceedsSizeLimit = "1 MB",
 			dmDocumentTitle = "large_file.pdf",
 			homeFolder = "true",
+			immediateFailure = "true",
 			limitingHierarchy = "site",
-			siteName = "Guest");
+			siteName = "Liferay DXP");
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-1");
 

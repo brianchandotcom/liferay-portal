@@ -1077,7 +1077,7 @@ definition {
 
 		DMNavigator.gotoVerticalEllipsisMenuItem(menuItem = "Checkin");
 
-		if (IsElementPresent.pauseIsElementPresent(locator1 = "DocumentsAndMedia#CHECKIN_DIALOG_TITLE")) {
+		if (IsElementPresent.isElementPresentAfterWait(locator1 = "DocumentsAndMedia#CHECKIN_DIALOG_TITLE")) {
 			if (${revision} == "Major") {
 				Click(locator1 = "Radio#MAJOR_VERSION");
 			}
@@ -1313,84 +1313,89 @@ definition {
 			menuItem = "Copy To",
 			rowEntry = ${dmDocumentTitle});
 
-		if (isSet(viewInfo)) {
-			Alert.viewWarningSpecific(warningMessage = "The copying process may take some time. Only categories, tags, ratings, and document types in the global scope or asset libraries connected to both sites will be copied. Document type fields will be displayed empty.");
+		if (isSet(immediateFailure)) {
+			Alert.viewErrorMessage(errorMessage = " Item cannot be copied because it exceeds the limit defined in ${limitingHierarchy} settings. The total size of all items to copy must not exceed ${copyExceedsSizeLimit}.");
 		}
+		else {
+			if (isSet(viewInfo)) {
+				Alert.viewWarningSpecific(warningMessage = "The copying process may take some time. Only categories, tags, ratings, and document types in the global scope or asset libraries connected to both sites will be copied. Document type fields will be displayed empty.");
+			}
 
-		AssertElementPresent(
-			key_fieldLabel = "Copy From",
-			locator1 = "FormFields#FIELD_DISABLED");
+			AssertElementPresent(
+				key_fieldLabel = "Copy From",
+				locator1 = "FormFields#FIELD_DISABLED");
 
-		AssertElementPresent(
-			key_fieldLabel = "Copy To",
-			locator1 = "FormFields#FIELD_DISABLED");
+			AssertElementPresent(
+				key_fieldLabel = "Copy To",
+				locator1 = "FormFields#FIELD_DISABLED");
 
-		AssertVisible(
-			key_text = "Copy",
-			locator1 = "Button#ANY_DISABLED");
+			AssertVisible(
+				key_text = "Copy",
+				locator1 = "Button#ANY_DISABLED");
 
-		Button.clickSelect();
+			Button.clickSelect();
 
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		WaitForVisible(
-			key_breadcrumbName = "Sites and Libraries",
-			locator1 = "Breadcrumb#BREADCRUMB_ENTRY");
-
-		if (isSet(siteName) || isSet(depotName)) {
-			AssertClick(
+			WaitForVisible(
 				key_breadcrumbName = "Sites and Libraries",
-				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-				value1 = "Sites and Libraries");
-		}
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY");
 
-		if (isSet(siteName)) {
-			LexiconCard.clickCard(card = ${siteName});
-		}
+			if (isSet(siteName) || isSet(depotName)) {
+				AssertClick(
+					key_breadcrumbName = "Sites and Libraries",
+					locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+					value1 = "Sites and Libraries");
+			}
 
-		if (isSet(depotName)) {
-			AssertClick(
-				key_groupTab = "Asset Library",
-				locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
-				value1 = "Asset Library");
+			if (isSet(siteName)) {
+				LexiconCard.clickCard(card = ${siteName});
+			}
 
-			LexiconCard.clickCard(card = ${depotName});
-		}
+			if (isSet(depotName)) {
+				AssertClick(
+					key_groupTab = "Asset Library",
+					locator1 = "ItemSelector#NAVIGATION_GROUP_TAB",
+					value1 = "Asset Library");
 
-		if (isSet(homeFolder)) {
-			AssertClick(
-				key_text = "Select This Folder",
-				locator1 = "Button#ANY",
-				value1 = "Select This Folder");
-		}
-		else {
-			AssertClick(
-				key_dmFolderName = ${targetFolderName},
-				locator1 = "DocumentsAndMedia#SELECT_FOLDER_BUTTON",
-				value1 = "Select");
-		}
+				LexiconCard.clickCard(card = ${depotName});
+			}
 
-		SelectFrame(locator1 = "relative=top");
+			if (isSet(homeFolder)) {
+				AssertClick(
+					key_text = "Select This Folder",
+					locator1 = "Button#ANY",
+					value1 = "Select This Folder");
+			}
+			else {
+				AssertClick(
+					key_dmFolderName = ${targetFolderName},
+					locator1 = "DocumentsAndMedia#SELECT_FOLDER_BUTTON",
+					value1 = "Select");
+			}
 
-		Button.click(button = "Copy");
+			SelectFrame(locator1 = "relative=top");
 
-		if (isSet(copyDuplicatedDocument)) {
-			Alert.viewErrorMessage(errorMessage = "A file entry already exists with title ${dmDocumentTitle}");
-		}
-		else if (isSet(copyToUnconnectedSite)) {
-			Alert.viewErrorMessage(errorMessage = "The item is not copied because the site and asset library are not connected.");
-		}
-		else if (isSet(copyToStagingSite)) {
-			Alert.viewErrorMessage(errorMessage = "Cannot copy to the live version of a site. Make your changes in staging and publish them to Live afterwards to make them public.");
-		}
-		else if (isSet(copyWithRequiredField)) {
-			Alert.viewErrorMessage(errorMessage = "No value defined for field name");
-		}
-		else if (isSet(copyExceedsSizeLimit)) {
-			Alert.viewErrorMessage(errorMessage = "No value defined for field name");
-		}
-		else {
-			Alert.viewSuccessMessage();
+			Button.click(button = "Copy");
+
+			if (isSet(copyDuplicatedDocument)) {
+				Alert.viewErrorMessage(errorMessage = "A file entry already exists with title ${dmDocumentTitle}");
+			}
+			else if (isSet(copyToUnconnectedSite)) {
+				Alert.viewErrorMessage(errorMessage = "The item is not copied because the site and asset library are not connected.");
+			}
+			else if (isSet(copyToStagingSite)) {
+				Alert.viewErrorMessage(errorMessage = "Cannot copy file entries to the live version of a site. Make your changes in staging and publish them to Live afterwards to make them public.");
+			}
+			else if (isSet(copyWithRequiredField)) {
+				Alert.viewErrorMessage(errorMessage = "No value defined for field name");
+			}
+			else if (isSet(copyExceedsSizeLimit)) {
+				Alert.viewErrorMessage(errorMessage = " Item cannot be copied because it exceeds the limit defined in ${limitingHierarchy} settings. The total size of all items to copy must not exceed ${copyExceedsSizeLimit}.");
+			}
+			else {
+				Alert.viewSuccessMessage();
+			}
 		}
 	}
 
@@ -2989,8 +2994,8 @@ definition {
 		}
 
 		Type(
-			key_text = "Maximum File Upload Size",
-			locator1 = "TextInput#ANY",
+			key_fieldLabel = "File Max Size",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = ${fieldValue});
 
 		SystemSettings.saveConfiguration();
@@ -3025,9 +3030,9 @@ definition {
 
 		if (isSet(checkPortletTitle)) {
 			AssertTextEquals(
-				key_portletTitle = "File Size Limits",
+				key_portletTitle = "File Upload Limits",
 				locator1 = "DocumentsAndMedia#PORTLET_TITLE",
-				value1 = "File Size Limits");
+				value1 = "File Upload Limits");
 		}
 
 		if (${indexNumber} == 2) {

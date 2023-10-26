@@ -5,7 +5,7 @@
 
 package com.liferay.portal.kernel.search;
 
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 import java.util.Map;
@@ -18,44 +18,61 @@ public class IndexSearcherHelperUtil {
 	public static String getQueryString(
 		SearchContext searchContext, Query query) {
 
-		return _indexSearcherHelper.getQueryString(searchContext, query);
+		IndexSearcherHelper indexSearcherHelper =
+			_indexSearcherHelperSnapshot.get();
+
+		return indexSearcherHelper.getQueryString(searchContext, query);
 	}
 
 	public static Hits search(SearchContext searchContext, Query query)
 		throws SearchException {
 
-		return _indexSearcherHelper.search(searchContext, query);
+		IndexSearcherHelper indexSearcherHelper =
+			_indexSearcherHelperSnapshot.get();
+
+		return indexSearcherHelper.search(searchContext, query);
 	}
 
 	public static long searchCount(SearchContext searchContext, Query query)
 		throws SearchException {
 
-		return _indexSearcherHelper.searchCount(searchContext, query);
+		IndexSearcherHelper indexSearcherHelper =
+			_indexSearcherHelperSnapshot.get();
+
+		return indexSearcherHelper.searchCount(searchContext, query);
 	}
 
 	public static String spellCheckKeywords(SearchContext searchContext)
 		throws SearchException {
 
-		return _indexSearcherHelper.spellCheckKeywords(searchContext);
+		IndexSearcherHelper indexSearcherHelper =
+			_indexSearcherHelperSnapshot.get();
+
+		return indexSearcherHelper.spellCheckKeywords(searchContext);
 	}
 
 	public static Map<String, List<String>> spellCheckKeywords(
 			SearchContext searchContext, int max)
 		throws SearchException {
 
-		return _indexSearcherHelper.spellCheckKeywords(searchContext, max);
+		IndexSearcherHelper indexSearcherHelper =
+			_indexSearcherHelperSnapshot.get();
+
+		return indexSearcherHelper.spellCheckKeywords(searchContext, max);
 	}
 
 	public static String[] suggestKeywordQueries(
 			SearchContext searchContext, int max)
 		throws SearchException {
 
-		return _indexSearcherHelper.suggestKeywordQueries(searchContext, max);
+		IndexSearcherHelper indexSearcherHelper =
+			_indexSearcherHelperSnapshot.get();
+
+		return indexSearcherHelper.suggestKeywordQueries(searchContext, max);
 	}
 
-	private static volatile IndexSearcherHelper _indexSearcherHelper =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			IndexSearcherHelper.class, IndexSearcherHelperUtil.class,
-			"_indexSearcherHelper", false);
+	private static final Snapshot<IndexSearcherHelper>
+		_indexSearcherHelperSnapshot = new Snapshot<>(
+			IndexSearcherHelperUtil.class, IndexSearcherHelper.class);
 
 }

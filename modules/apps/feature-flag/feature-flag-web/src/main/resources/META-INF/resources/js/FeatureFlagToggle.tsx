@@ -25,7 +25,7 @@ const FeatureFlagToggle = ({
 	inputName,
 	onItemsChange,
 }: IProps) => {
-	const [isLoading, setIsLoading] = useState(false);
+	const [isLoading, setIsLoading] = useState<boolean | undefined>();
 	const toggleRef = useRef<any>(null);
 
 	const updateToggled = async (newToggled: boolean) => {
@@ -72,7 +72,7 @@ const FeatureFlagToggle = ({
 	};
 
 	useEffect(() => {
-		if (!disabled && !isLoading) {
+		if (isLoading !== undefined && !disabled && !isLoading) {
 			toggleRef.current.focus();
 		}
 	}, [disabled, isLoading]);

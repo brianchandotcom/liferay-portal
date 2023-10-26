@@ -34,6 +34,7 @@ Bundle-Version: 1.0.4
 	org.apache.http.impl.nio.reactor,\
 	org.apache.http.message,\
 	org.apache.http.nio,\
+	org.apache.http.nio.client,\
 	org.apache.http.nio.client.methods,\
 	org.apache.http.nio.conn,\
 	org.apache.http.nio.conn.ssl,\

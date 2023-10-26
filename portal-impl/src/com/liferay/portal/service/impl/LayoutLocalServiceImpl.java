@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.impl.VirtualLayout;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -104,7 +105,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -3649,7 +3649,9 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				layoutPrototypeUuid, layout.getCompanyId());
 
 		try {
-			_sites.applyLayoutPrototype(
+			Sites sites = _sitesSnapshot.get();
+
+			sites.applyLayoutPrototype(
 				layoutPrototype, layout, layoutPrototypeLinkEnabled);
 		}
 		catch (PortalException portalException) {
@@ -4015,10 +4017,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		try {
 			WorkflowThreadLocal.setEnabled(false);
 
-			_sites.mergeLayoutPrototypeLayout(group, layout);
+			Sites sites = _sitesSnapshot.get();
+
+			sites.mergeLayoutPrototypeLayout(group, layout);
 
 			if (Validator.isNotNull(layout.getSourcePrototypeLayoutUuid())) {
-				_sites.mergeLayoutSetPrototypeLayouts(group, layoutSet);
+				sites.mergeLayoutSetPrototypeLayouts(group, layoutSet);
 			}
 		}
 		catch (CTTransactionException | PortalException exception) {
@@ -4050,10 +4054,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
 
 		try {
-			if (_sites.isLayoutSetMergeable(group, layoutSet)) {
+			Sites sites = _sitesSnapshot.get();
+
+			if (sites.isLayoutSetMergeable(group, layoutSet)) {
 				WorkflowThreadLocal.setEnabled(false);
 
-				_sites.mergeLayoutSetPrototypeLayouts(group, layoutSet);
+				sites.mergeLayoutSetPrototypeLayouts(group, layoutSet);
 			}
 		}
 		catch (Exception exception) {
@@ -4115,9 +4121,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutLocalServiceImpl.class);
 
-	private static volatile Sites _sites =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			Sites.class, LayoutLocalServiceImpl.class, "_sites", false);
+	private static final Snapshot<Sites> _sitesSnapshot = new Snapshot<>(
+		LayoutLocalServiceImpl.class, Sites.class);
 	private static final ThreadLocal<Long> _virtualLayoutTargetGroupId =
 		new CentralizedThreadLocal<>(
 			LayoutLocalServiceImpl.class + "._virtualLayoutTargetGroupId",

@@ -113,7 +113,7 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 		String externalReferenceCode = RandomTestUtil.randomString();
 
 		ShipmentItem shipmentItem = _addShipmentItem(
-			externalReferenceCode, randomShipmentItem());
+			externalReferenceCode, randomShipmentItem(), BigDecimal.ZERO);
 
 		BigDecimal quantity = shipmentItem.getQuantity();
 
@@ -128,11 +128,6 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 		Assert.assertEquals(
 			String.valueOf(quantity),
 			String.valueOf(newShipmentItem.getQuantity()));
-	}
-
-	@Override
-	@Test
-	public void testPutShipmentByExternalReferenceCodeItem() throws Exception {
 	}
 
 	@Override
@@ -237,7 +232,22 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 	protected ShipmentItem testPatchShipmentItem_addShipmentItem()
 		throws Exception {
 
-		return _addShipmentItem();
+		CommerceOrderItem commerceOrderItem =
+			CommerceTestUtil.addCommerceOrderItem(
+				_commerceOrder.getCommerceOrderId(),
+				_cpInstance.getCPInstanceId(), BigDecimal.valueOf(5));
+
+		CommerceShipmentItem commerceShipmentItem =
+			CommerceShipmentItemLocalServiceUtil.addCommerceShipmentItem(
+				RandomTestUtil.randomString(),
+				_commerceShipment.getCommerceShipmentId(),
+				commerceOrderItem.getCommerceOrderItemId(),
+				_commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
+				BigDecimal.ZERO, null, true, _serviceContext);
+
+		_commerceShipmentItems.add(commerceShipmentItem);
+
+		return _toShipmentItem(commerceShipmentItem);
 	}
 
 	@Override
@@ -254,7 +264,12 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 			testPutShipmentByExternalReferenceCodeItem_addShipmentItem()
 		throws Exception {
 
-		return _addShipmentItem();
+		ShipmentItem shipmentItem = _addShipmentItem();
+
+		shipmentItem.setExternalReferenceCode(
+			_commerceShipment.getExternalReferenceCode());
+
+		return shipmentItem;
 	}
 
 	private ShipmentItem _addShipmentItem() throws Exception {
@@ -292,6 +307,23 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 		return _addShipmentItem(
 			externalReferenceCode, shipmentItem.getShipmentId(),
 			shipmentItem.getOrderItemId());
+	}
+
+	private ShipmentItem _addShipmentItem(
+			String externalReferenceCode, ShipmentItem shipmentItem,
+			BigDecimal quantity)
+		throws Exception {
+
+		_commerceShipmentItem =
+			CommerceShipmentItemLocalServiceUtil.addCommerceShipmentItem(
+				externalReferenceCode, shipmentItem.getShipmentId(),
+				shipmentItem.getOrderItemId(),
+				_commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
+				quantity, null, true, _serviceContext);
+
+		_commerceShipmentItems.add(_commerceShipmentItem);
+
+		return _toShipmentItem(_commerceShipmentItem);
 	}
 
 	private ShipmentItem _toShipmentItem(

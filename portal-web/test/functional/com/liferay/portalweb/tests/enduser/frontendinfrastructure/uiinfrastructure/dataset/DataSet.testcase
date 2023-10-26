@@ -330,6 +330,106 @@ definition {
 		}
 	}
 
+	@description = "LPS-185990 Confirm that when creating a filter and selecting a picklist item, the item's checkbox remains selected when you click elsewhere and return to dropdown items"
+	@priority = 5
+	test CanAssertTheCheckBoxItemIsChecked {
+		task ("Given the creation of a new data set") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Data Set Test",
+				restApplication = "/data-set-manager/fields",
+				restEndpoint = "/",
+				restSchema = "FDSField");
+
+			DataSetAdmin.createFDSViewViaAPI(
+				dataSetName = "Data Set Test",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Test");
+
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Data Set Test",
+				key_viewName = "View Test");
+		}
+
+		task ("And creating a picklist and Items bike,car,bus") {
+			Picklist.addPicklistViaAPI(picklistName = "Transport");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "bike",
+				itemName = "bike",
+				picklistName = "Transport");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "car",
+				itemName = "car",
+				picklistName = "Transport");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "bus",
+				itemName = "bus",
+				picklistName = "Transport");
+		}
+
+		task ("When the user creates a new filter //Name: Filter test //Filter by: creator //Source option: Transport the selection is multiple") {
+			DataSetAdmin.goToTab(tabName = "Filters");
+
+			LexiconEntry.gotoAdd();
+
+			Click(
+				key_menuItem = "Selection",
+				locator1 = "MenuItem#ANY_MENU_ITEM");
+
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Filter test");
+
+			Click(
+				key_class = "btn-secondary",
+				key_index = 3,
+				locator1 = "Button#ANY_WITH_CLASS_AND_INDEX");
+
+			SelectFrameTop();
+
+			Click.javaScriptClick(
+				key_sortOption = "creator",
+				locator1 = "DataSet#SELECT_SORT_OPTION");
+
+			Select(
+				locator1 = "DataSet#SOURCE_OPTIONS_SELECT",
+				value1 = "Transport");
+
+			Click.clickAtNotVisible(
+				locator1 = "Radio#ANY",
+				radioLabel = "Multiple");
+		}
+
+		task ("And chooses one of the values displayed in the dropdown of Preselected Values field//car") {
+			Click(
+				key_fieldName = "Select a default value for your filter",
+				locator1 = "DataSet#PRESELECT_VALUE_INPUT");
+
+			Click(
+				key_sortOption = "car",
+				locator1 = "DataSet#SELECT_SORT_OPTION");
+		}
+
+		task ("Then the value already chosen is not present in the dropdown, the checkbox is checked") {
+			Click(
+				locator1 = "Portlet#MODAL_TITLE",
+				value1 = "New Selection Filter");
+
+			Click(
+				key_label = "Preselected Values",
+				locator1 = "DataSet#SELECT_VALUE");
+
+			AssertChecked.assertCheckedNotVisible(
+				key_name = "car",
+				locator1 = "DataSet#SPECIFIC_CHECKBOX_CHECKED");
+		}
+	}
+
 	@description = "LPS-178858 Confirm the empty message in the Data Set View admin page"
 	@priority = 5
 	test CanAssertTheEmptyMessageInDataSetView {
@@ -500,6 +600,264 @@ definition {
 		}
 	}
 
+	@description = "LPS-185990 Confirm that when creating a filter, items added to the picklist appear in preselect value selecting Multiple radio button"
+	@priority = 5
+	test CanAssertTheItemsInPreselectValueMultiple {
+		task ("Given the creation of a new data set") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Data Set Test",
+				restApplication = "/data-set-manager/fields",
+				restEndpoint = "/",
+				restSchema = "FDSField");
+
+			DataSetAdmin.createFDSViewViaAPI(
+				dataSetName = "Data Set Test",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Test");
+
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Data Set Test",
+				key_viewName = "View Test");
+		}
+
+		task ("And creating a picklist and Items bike,car,bus") {
+			Picklist.addPicklistViaAPI(picklistName = "Transport");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "bike",
+				itemName = "bike",
+				picklistName = "Transport");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "car",
+				itemName = "car",
+				picklistName = "Transport");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "bus",
+				itemName = "bus",
+				picklistName = "Transport");
+		}
+
+		task ("When the user creates a new filter //Name: Filter test //Filter by: creator //Source option: Transport the selection is multiple") {
+			DataSetAdmin.goToTab(tabName = "Filters");
+
+			LexiconEntry.gotoAdd();
+
+			Click(
+				key_menuItem = "Selection",
+				locator1 = "MenuItem#ANY_MENU_ITEM");
+
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Filter test");
+
+			Click(
+				key_class = "btn-secondary",
+				key_index = 3,
+				locator1 = "Button#ANY_WITH_CLASS_AND_INDEX");
+
+			SelectFrameTop();
+
+			Click.javaScriptClick(
+				key_sortOption = "creator",
+				locator1 = "DataSet#SELECT_SORT_OPTION");
+
+			Select(
+				locator1 = "DataSet#SOURCE_OPTIONS_SELECT",
+				value1 = "Transport");
+
+			Click.clickAtNotVisible(
+				locator1 = "Radio#ANY",
+				radioLabel = "Multiple");
+
+			Click(
+				key_fieldName = "Select a default value for your filter",
+				locator1 = "DataSet#PRESELECT_VALUE_INPUT");
+		}
+
+		task ("Then a dropdown is shown displaying the available values of the selected picklist//displaying bus, car and bike") {
+			for (var asserttransport : list "car,bike,bus") {
+				AssertElementPresent(
+					key_sortOption = ${asserttransport},
+					locator1 = "DataSet#SELECT_SORT_OPTION");
+			}
+		}
+	}
+
+	@description = "LPS-185990 Confirm that when creating a filter, items added to the picklist appear in preselect value selecting Single radio button"
+	@priority = 5
+	test CanAssertTheItemsInPreselectValueSingle {
+		task ("Given the creation of a new data set") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Data Set Test",
+				restApplication = "/data-set-manager/fields",
+				restEndpoint = "/",
+				restSchema = "FDSField");
+
+			DataSetAdmin.createFDSViewViaAPI(
+				dataSetName = "Data Set Test",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Test");
+
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Data Set Test",
+				key_viewName = "View Test");
+		}
+
+		task ("And creating a picklist and Items bike,car,bus") {
+			Picklist.addPicklistViaAPI(picklistName = "Transport");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "bike",
+				itemName = "bike",
+				picklistName = "Transport");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "car",
+				itemName = "car",
+				picklistName = "Transport");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "bus",
+				itemName = "bus",
+				picklistName = "Transport");
+		}
+
+		task ("When the user creates a new filter //Name: Filter test //Filter by: creator //Source option: Transport the selection is multiple") {
+			DataSetAdmin.goToTab(tabName = "Filters");
+
+			LexiconEntry.gotoAdd();
+
+			Click(
+				key_menuItem = "Selection",
+				locator1 = "MenuItem#ANY_MENU_ITEM");
+
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Filter test");
+
+			Click(
+				key_class = "btn-secondary",
+				key_index = 3,
+				locator1 = "Button#ANY_WITH_CLASS_AND_INDEX");
+
+			SelectFrameTop();
+
+			Click.javaScriptClick(
+				key_sortOption = "creator",
+				locator1 = "DataSet#SELECT_SORT_OPTION");
+
+			Select(
+				locator1 = "DataSet#SOURCE_OPTIONS_SELECT",
+				value1 = "Transport");
+
+			Click.clickAtNotVisible(
+				locator1 = "Radio#ANY",
+				radioLabel = "Multiple");
+
+			Click(
+				key_fieldName = "Select a default value for your filter",
+				locator1 = "DataSet#PRESELECT_VALUE_INPUT");
+		}
+
+		task ("Then a dropdown is shown displaying the available values of the selected picklist//displaying bus, car and bike") {
+			for (var asserttransport : list "car,bike,bus") {
+				AssertElementPresent(
+					key_sortOption = ${asserttransport},
+					locator1 = "DataSet#SELECT_SORT_OPTION");
+			}
+		}
+	}
+
+	@description = "LPS-185990 Confirm that when going to the filter creation page, the option "Select default value for your filter" is present"
+	@priority = 3
+	test CanAssertThePreselectedValueArePresent {
+		task ("Given the creation of a new data set") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Data Set Test",
+				restApplication = "/data-set-manager/fields",
+				restEndpoint = "/",
+				restSchema = "FDSField");
+
+			DataSetAdmin.createFDSViewViaAPI(
+				dataSetName = "Data Set Test",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Test");
+
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Data Set Test",
+				key_viewName = "View Test");
+		}
+
+		task ("And creating a picklist and Items bike,car,bus") {
+			Picklist.addPicklistViaAPI(picklistName = "Transport");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "bike",
+				itemName = "bike",
+				picklistName = "Transport");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "car",
+				itemName = "car",
+				picklistName = "Transport");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "bus",
+				itemName = "bus",
+				picklistName = "Transport");
+		}
+
+		task ("When the user creates a new filter //Name: Filter test //Filter by: creator //Source option: Transport the selection is multiple") {
+			DataSetAdmin.goToTab(tabName = "Filters");
+
+			LexiconEntry.gotoAdd();
+
+			Click(
+				key_menuItem = "Selection",
+				locator1 = "MenuItem#ANY_MENU_ITEM");
+
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Filter test");
+
+			Click(
+				key_class = "btn-secondary",
+				key_index = 3,
+				locator1 = "Button#ANY_WITH_CLASS_AND_INDEX");
+
+			SelectFrameTop();
+
+			Click.javaScriptClick(
+				key_sortOption = "creator",
+				locator1 = "DataSet#SELECT_SORT_OPTION");
+
+			Select(
+				locator1 = "DataSet#SOURCE_OPTIONS_SELECT",
+				value1 = "Transport");
+
+			Click.clickAtNotVisible(
+				locator1 = "Radio#ANY",
+				radioLabel = "Multiple");
+		}
+
+		task ("Then the Selection and Preselected Values option are displayed") {
+			AssertElementPresent(
+				key_fieldName = "Select a default value for your filter",
+				locator1 = "DataSet#PRESELECT_VALUE_INPUT");
+		}
+	}
+
 	@description = "LPS-181546 Confirm that the /v1.0/sites/{siteId}/blog-postings endpoint is displayed correctly when creating the data set"
 	@priority = 5
 	test CanAssertTheRestEndpointIsCorrect {
@@ -517,6 +875,88 @@ definition {
 			AssertElementPresent(
 				key_text = "/v1.0/sites/{siteId}/blog-postings",
 				locator1 = "CP2Utils#ANY_TEXT");
+		}
+	}
+
+	@description = "LPS-185990 Confirm that when creating a filter within the view, there is a search bar field to preselect values"
+	@priority = 5
+	test CanAssertTheSearchBarField {
+		task ("Given the creation of a new data set") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Data Set Test",
+				restApplication = "/data-set-manager/fields",
+				restEndpoint = "/",
+				restSchema = "FDSField");
+
+			DataSetAdmin.createFDSViewViaAPI(
+				dataSetName = "Data Set Test",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Test");
+
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Data Set Test",
+				key_viewName = "View Test");
+		}
+
+		task ("And creating a picklist and Items bike,car,bus") {
+			Picklist.addPicklistViaAPI(picklistName = "Transport");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "bike",
+				itemName = "bike",
+				picklistName = "Transport");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "car",
+				itemName = "car",
+				picklistName = "Transport");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "bus",
+				itemName = "bus",
+				picklistName = "Transport");
+		}
+
+		task ("When the user creates a new filter //Name: Filter test //Filter by: creator //Source option: Transport the selection is multiple") {
+			DataSetAdmin.goToTab(tabName = "Filters");
+
+			LexiconEntry.gotoAdd();
+
+			Click(
+				key_menuItem = "Selection",
+				locator1 = "MenuItem#ANY_MENU_ITEM");
+
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Filter test");
+
+			Click(
+				key_class = "btn-secondary",
+				key_index = 3,
+				locator1 = "Button#ANY_WITH_CLASS_AND_INDEX");
+
+			SelectFrameTop();
+
+			Click.javaScriptClick(
+				key_sortOption = "creator",
+				locator1 = "DataSet#SELECT_SORT_OPTION");
+
+			Select(
+				locator1 = "DataSet#SOURCE_OPTIONS_SELECT",
+				value1 = "Transport");
+
+			Click.clickAtNotVisible(
+				locator1 = "Radio#ANY",
+				radioLabel = "Single");
+		}
+
+		task ("Then there is a search in the Preselected Values dropdown") {
+			AssertElementPresent(
+				key_fieldName = "Select a default value for your filter",
+				locator1 = "DataSet#PRESELECT_VALUE_INPUT");
 		}
 	}
 
@@ -688,6 +1128,184 @@ definition {
 
 		task ("Then suggested list contains 0 results") {
 			AssertElementNotPresent(locator1 = "FrontendDataSet#DROPDOWN_LIST");
+		}
+	}
+
+	@description = "LPS-185990 Confirm that when searching for a valid item value, it is displayed in the drop-down menu"
+	@priority = 5
+	test CanSearchASpecificItemCreated {
+		task ("Given the creation of a new data set") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Data Set Test",
+				restApplication = "/data-set-manager/fields",
+				restEndpoint = "/",
+				restSchema = "FDSField");
+
+			DataSetAdmin.createFDSViewViaAPI(
+				dataSetName = "Data Set Test",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Test");
+
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Data Set Test",
+				key_viewName = "View Test");
+		}
+
+		task ("And creating a picklist and Items bike,car,bus") {
+			Picklist.addPicklistViaAPI(picklistName = "Transport");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "bike",
+				itemName = "bike",
+				picklistName = "Transport");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "car",
+				itemName = "car",
+				picklistName = "Transport");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "bus",
+				itemName = "bus",
+				picklistName = "Transport");
+		}
+
+		task ("When the user creates a new filter //Name: Filter test //Filter by: creator //Source option: Transport the selection is multiple") {
+			DataSetAdmin.goToTab(tabName = "Filters");
+
+			LexiconEntry.gotoAdd();
+
+			Click(
+				key_menuItem = "Selection",
+				locator1 = "MenuItem#ANY_MENU_ITEM");
+
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Filter test");
+
+			Click(
+				key_class = "btn-secondary",
+				key_index = 3,
+				locator1 = "Button#ANY_WITH_CLASS_AND_INDEX");
+
+			SelectFrameTop();
+
+			Click.javaScriptClick(
+				key_sortOption = "creator",
+				locator1 = "DataSet#SELECT_SORT_OPTION");
+
+			Select(
+				locator1 = "DataSet#SOURCE_OPTIONS_SELECT",
+				value1 = "Transport");
+
+			Click.clickAtNotVisible(
+				locator1 = "Radio#ANY",
+				radioLabel = "Single");
+		}
+
+		task ("And types an existing value in Preselected Values dropdown search") {
+			Type(
+				key_fieldName = "Select a default value for your filter",
+				locator1 = "DataSet#PRESELECT_VALUE_INPUT",
+				value1 = "bike");
+		}
+
+		task ("Then only the existing value is displayed in the dropdown") {
+			AssertElementPresent(
+				key_sortOption = "bike",
+				locator1 = "DataSet#SELECT_SORT_OPTION");
+		}
+	}
+
+	@description = "LPS-185990 Confirm that when searching for a invalid item value, it is not displayed in the drop-down menu"
+	@priority = 4
+	test CanSearchASpecificItemNotCreated {
+		task ("Given the creation of a new data set") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Data Set Test",
+				restApplication = "/data-set-manager/fields",
+				restEndpoint = "/",
+				restSchema = "FDSField");
+
+			DataSetAdmin.createFDSViewViaAPI(
+				dataSetName = "Data Set Test",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Test");
+
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Data Set Test",
+				key_viewName = "View Test");
+		}
+
+		task ("And creating a picklist and Items bike,car,bus") {
+			Picklist.addPicklistViaAPI(picklistName = "Transport");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "bike",
+				itemName = "bike",
+				picklistName = "Transport");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "car",
+				itemName = "car",
+				picklistName = "Transport");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "bus",
+				itemName = "bus",
+				picklistName = "Transport");
+		}
+
+		task ("When the user creates a new filter //Name: Filter test //Filter by: creator //Source option: Transport the selection is multiple") {
+			DataSetAdmin.goToTab(tabName = "Filters");
+
+			LexiconEntry.gotoAdd();
+
+			Click(
+				key_menuItem = "Selection",
+				locator1 = "MenuItem#ANY_MENU_ITEM");
+
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Filter test");
+
+			Click(
+				key_class = "btn-secondary",
+				key_index = 3,
+				locator1 = "Button#ANY_WITH_CLASS_AND_INDEX");
+
+			SelectFrameTop();
+
+			Click.javaScriptClick(
+				key_sortOption = "creator",
+				locator1 = "DataSet#SELECT_SORT_OPTION");
+
+			Select(
+				locator1 = "DataSet#SOURCE_OPTIONS_SELECT",
+				value1 = "Transport");
+
+			Click.clickAtNotVisible(
+				locator1 = "Radio#ANY",
+				radioLabel = "Single");
+		}
+
+		task ("And types a non existing value in Preselected Values dropdown search") {
+			Type(
+				key_fieldName = "Select a default value for your filter",
+				locator1 = "DataSet#PRESELECT_VALUE_INPUT",
+				value1 = "plane");
+		}
+
+		task ("Then the Preselected Values dropdown doesn't display any value") {
+			AssertElementNotPresent(
+				key_sortOption = "plane",
+				locator1 = "DataSet#SELECT_SORT_OPTION");
 		}
 	}
 
@@ -1149,6 +1767,102 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#WARNING_FEEDBACK",
 				value1 = "This field is required.");
+		}
+	}
+
+	@description = "LPS-185990 Confirm that when selecting the single option in the created filter, it is possible to preselect an item value"
+	@priority = 3
+	test IsOnlyPossibleToSelectOneItem {
+		task ("Given the creation of a new data set") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Data Set Test",
+				restApplication = "/data-set-manager/fields",
+				restEndpoint = "/",
+				restSchema = "FDSField");
+
+			DataSetAdmin.createFDSViewViaAPI(
+				dataSetName = "Data Set Test",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Test");
+
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Data Set Test",
+				key_viewName = "View Test");
+		}
+
+		task ("And creating a picklist and Items bike,car,bus") {
+			Picklist.addPicklistViaAPI(picklistName = "Transport");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "bike",
+				itemName = "bike",
+				picklistName = "Transport");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "car",
+				itemName = "car",
+				picklistName = "Transport");
+
+			Picklist.addPicklistItemViaAPI(
+				itemKey = "bus",
+				itemName = "bus",
+				picklistName = "Transport");
+		}
+
+		task ("When the user creates a new filter //Name: Filter test //Filter by: creator //Source option: Transport the selection is multiple") {
+			DataSetAdmin.goToTab(tabName = "Filters");
+
+			LexiconEntry.gotoAdd();
+
+			Click(
+				key_menuItem = "Selection",
+				locator1 = "MenuItem#ANY_MENU_ITEM");
+
+			Type(
+				key_text = "Name",
+				locator1 = "TextInput#ANY",
+				value1 = "Filter test");
+
+			Click(
+				key_class = "btn-secondary",
+				key_index = 3,
+				locator1 = "Button#ANY_WITH_CLASS_AND_INDEX");
+
+			SelectFrameTop();
+
+			Click.javaScriptClick(
+				key_sortOption = "creator",
+				locator1 = "DataSet#SELECT_SORT_OPTION");
+
+			Select(
+				locator1 = "DataSet#SOURCE_OPTIONS_SELECT",
+				value1 = "Transport");
+
+			Click.clickAtNotVisible(
+				key_radioOption = "Single",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Click(
+				key_fieldName = "Select a default value for your filter",
+				locator1 = "DataSet#PRESELECT_VALUE_INPUT");
+		}
+
+		task ("Then the text “Select a value“ is present in the Preselected Values field, It is only possible to add one item") {
+			for (var asserttransport : list "car,bike") {
+				Click(
+					key_sortOption = ${asserttransport},
+					locator1 = "DataSet#SELECT_SORT_OPTION");
+			}
+
+			Click(
+				key_modal_title = "New Selection Filter",
+				locator1 = "AccessibilityMenu#MODAL_TITLE");
+
+			AssertElementPresent(
+				key_helpText = "Only one value is allowed in",
+				locator1 = "ObjectField#HELP_TEXT");
 		}
 	}
 

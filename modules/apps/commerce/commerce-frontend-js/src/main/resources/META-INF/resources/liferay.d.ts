@@ -16,6 +16,7 @@ declare module Liferay {
 		currency?: CommerceCurrency;
 		order?: CommerceOrder;
 		showSeparateOrderItems: boolean;
+		showUnselectableOptions: boolean;
 	};
 }
 

@@ -12,6 +12,7 @@ import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.product.configuration.CPDefinitionOptionRelConfiguration;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.petra.string.StringBundler;
@@ -166,6 +167,18 @@ public class CommerceFrontendJsDynamicInclude extends BaseDynamicInclude {
 
 					return commerceOrderCheckoutConfiguration.
 						showSeparateOrderItems();
+				}
+			).put(
+				"showUnselectableOptions",
+				() -> {
+					CPDefinitionOptionRelConfiguration
+						cpDefinitionOptionRelConfiguration =
+							_configurationProvider.getCompanyConfiguration(
+								CPDefinitionOptionRelConfiguration.class,
+								_portal.getCompanyId(httpServletRequest));
+
+					return cpDefinitionOptionRelConfiguration.
+						showUnselectableOptions();
 				}
 			),
 			";</script><link href=\"",

@@ -1,5 +1,24 @@
 definition {
 
+	macro addAndPublishFiltersAndSortingInEndpointConfiguration {
+		Variables.assertDefined(parameterList = "${name},${entity},${fieldName},${title},${editValue}");
+
+		APIBuilderUI.goToEditRelatedEntryInEditApplication(
+			entity = ${entity},
+			name = ${name},
+			tabEntity = "Configuration",
+			title = ${title});
+
+		Type(
+			fieldName = ${fieldName},
+			locator1 = "APIBuilder#ODATA_TEXTAREA",
+			value1 = ${editValue});
+
+		Click(locator1 = "APIBuilder#PUBLISH_BUTTON");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro assertSortedStatusInOrder {
 		Variables.assertDefined(parameterList = ${statusList});
 
@@ -213,6 +232,22 @@ definition {
 			locator1 = "APIBuilder#DROPDOWN_MENU");
 
 		Click(locator1 = "APIBuilder#EDIT_BUTTON");
+	}
+
+	macro goToEditRelatedEntryInEditApplication {
+		Variables.assertDefined(parameterList = "${name},${entity},${title},${tabEntity}");
+
+		APIBuilderUI.switchToRelatedEntryInEditApplication(
+			entity = ${entity},
+			title = ${title});
+
+		Click(
+			locator1 = "Button#BUTTON_WITH_VALUE",
+			value = "/${name}/");
+
+		Click(
+			locator1 = "Button#BUTTON_WITH_VALUE",
+			value = ${tabEntity});
 	}
 
 	macro publishApplication {

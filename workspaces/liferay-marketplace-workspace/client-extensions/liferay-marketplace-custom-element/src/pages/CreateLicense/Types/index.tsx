@@ -13,7 +13,6 @@ export type CreateLicenseForm = {
 	description: string;
 	hostName: string;
 	macAddresses: string;
-	product: Product;
 	subscription: string;
 };
 

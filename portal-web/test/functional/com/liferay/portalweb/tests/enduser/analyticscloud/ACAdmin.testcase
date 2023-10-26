@@ -186,6 +186,10 @@ definition {
 			ACUtils.closeAllSessionsAndWait();
 		}
 
+		task ("Launch AC") {
+			ACUtils.launchAC();
+		}
+
 		task ("Navigate to the AC Admin page") {
 			ACAdmin.goToACAdmin(userScreenNameToResetPassword = "test");
 		}

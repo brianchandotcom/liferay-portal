@@ -1,9 +1,9 @@
 {
 	"dependencies": {
-		"@clayui/alert": "3.93.0",
-		"@clayui/drop-down": "3.105.0",
-		"@clayui/icon": "3.56.0",
-		"@clayui/tooltip": "3.104.0",
+		"@clayui/alert": "3.106.1",
+		"@clayui/drop-down": "3.106.1",
+		"@clayui/icon": "3.106.1",
+		"@clayui/tooltip": "3.106.1",
 		"classnames": "2.3.1",
 		"dagre": "0.8.2",
 		"frontend-js-web": "*",

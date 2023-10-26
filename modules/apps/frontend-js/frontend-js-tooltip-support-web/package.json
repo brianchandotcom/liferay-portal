@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/tooltip": "3.104.0",
+		"@clayui/tooltip": "3.106.1",
 		"@liferay/frontend-js-react-web": "*"
 	},
 	"main": "index.js",

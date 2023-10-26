@@ -5,7 +5,7 @@
 
 package com.liferay.portal.kernel.search;
 
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * @author Michael C. Han
@@ -13,28 +13,39 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 public class SearchEngineHelperUtil {
 
 	public static String[] getEntryClassNames() {
-		return _searchEngineHelper.getEntryClassNames();
+		SearchEngineHelper searchEngineHelper =
+			_searchEngineHelperSnapshot.get();
+
+		return searchEngineHelper.getEntryClassNames();
 	}
 
 	public static SearchEngine getSearchEngine() {
-		return _searchEngineHelper.getSearchEngine();
+		SearchEngineHelper searchEngineHelper =
+			_searchEngineHelperSnapshot.get();
+
+		return searchEngineHelper.getSearchEngine();
 	}
 
 	public static SearchEngineHelper getSearchEngineHelper() {
-		return _searchEngineHelper;
+		return _searchEngineHelperSnapshot.get();
 	}
 
 	public static void initialize(long companyId) {
-		_searchEngineHelper.initialize(companyId);
+		SearchEngineHelper searchEngineHelper =
+			_searchEngineHelperSnapshot.get();
+
+		searchEngineHelper.initialize(companyId);
 	}
 
 	public static void removeCompany(long companyId) {
-		_searchEngineHelper.removeCompany(companyId);
+		SearchEngineHelper searchEngineHelper =
+			_searchEngineHelperSnapshot.get();
+
+		searchEngineHelper.removeCompany(companyId);
 	}
 
-	private static volatile SearchEngineHelper _searchEngineHelper =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			SearchEngineHelper.class, SearchEngineHelperUtil.class,
-			"_searchEngineHelper", false);
+	private static final Snapshot<SearchEngineHelper>
+		_searchEngineHelperSnapshot = new Snapshot<>(
+			SearchEngineHelperUtil.class, SearchEngineHelper.class);
 
 }

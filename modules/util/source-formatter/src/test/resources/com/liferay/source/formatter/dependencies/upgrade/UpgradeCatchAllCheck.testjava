@@ -42,8 +42,8 @@ public class UpgradeCatchAllCheck {
 		assetCategory.getLeftCategoryId;
 	}
 
-	public void method(CommerceAddress commerceAddress) {
-		Country country = commerceAddress.getCountry();
+	public void method(
+		CommerceAddress commerceAddress, Country country, Region region) {
 
 		commerceAddress.getCountry().getTwoLettersISOCode();
 		country.getTwoLettersISOCode();
@@ -51,12 +51,8 @@ public class UpgradeCatchAllCheck {
 		country.getThreeLettersISOCode();
 		country.setThreeLettersISOCode();
 
-		Region region = commerceAddress.getCountry();
-
+		commerceAddress.getRegion().getCode();
 		region.getCode();
-
-		commerceAddress.getRegion(
-		).getCode();
 	}
 
 	public void method(HttpServletRequest httpServletRequest) {

@@ -353,7 +353,7 @@ definition {
 		}
 
 		task ("Go to admin page") {
-			ACAdmin.goToACAdmin();
+			ACAdmin.goToACAdmin(userScreenNameToResetPassword = "test");
 		}
 
 		task ("Go to Server Administration > Change SMTP Server Port") {

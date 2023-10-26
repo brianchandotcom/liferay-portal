@@ -75,6 +75,23 @@ definition {
 	}
 
 	macro goToACAdmin {
+		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
+
+		Navigator.openSpecificURL(url = "${analyticsCloudURL}/admin");
+
+		if (IsElementPresent(locator1 = "TextInput#PASSWORD_1")) {
+			User.resetPassword(newPassword = "test1");
+
+			if (IsElementPresent(locator1 = "Modal#HEADER")) {
+				Click(locator1 = "Button#DONE");
+			}
+
+			if (isSet(userScreenNameToResetPassword)) {
+				ACAdmin.changeACUserPassword(userScreenName = ${userScreenNameToResetPassword});
+			}
+		}
+	}
+
 	macro changeACUserPassword {
 		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 

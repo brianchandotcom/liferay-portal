@@ -44,7 +44,7 @@ definition {
 		var userEmailAddress = "ac@liferay.com";
 
 		task ("Navigate to the AC Admin page") {
-			ACAdmin.goToACAdmin();
+			ACAdmin.goToACAdmin(userScreenNameToResetPassword = "test");
 		}
 
 		task ("Navigate to users page") {
@@ -105,7 +105,7 @@ definition {
 		var userEmailAddress = "acnonadmin@liferay.com";
 
 		task ("Navigate to the AC Admin page") {
-			ACAdmin.goToACAdmin();
+			ACAdmin.goToACAdmin(userScreenNameToResetPassword = "test");
 		}
 
 		task ("Go to control panel > Users > Users and Organizations") {
@@ -211,9 +211,7 @@ definition {
 		}
 
 		task ("Navigate to the AC Admin page") {
-			Open(value1 = ${analyticsCloudURL});
-
-			ACAdmin.goToACAdmin();
+			ACAdmin.goToACAdmin(userScreenNameToResetPassword = "test");
 		}
 
 		task ("Go to control panel > Users > Users and Organizations") {

@@ -45,8 +45,19 @@ if (alignment.equals("full-width")) {
 </div>
 
 <aui:script require="commerce-frontend-js/components/add_to_cart/entry as AddToCart">
+	<c:if test="<%= productSettingsModel != null %>">
+
+		<%
+		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
+		%>
+
+		const productConfiguration = <%= jsonSerializer.serializeDeep(productSettingsModel) %>;
+
+	</c:if>
+
 	const props = {
 		accountId: <%= commerceAccountId %>,
+
 		cartId: <%= commerceOrderId %>,
 		channel: {
 			currencyCode: '<%= commerceCurrencyCode %>',
@@ -54,6 +65,12 @@ if (alignment.equals("full-width")) {
 			id: <%= commerceChannelId %>,
 		},
 		cpInstance: {
+			availability: {
+				stockQuantity: <%= stockQuantity %>,
+			},
+			backOrderAllowed: productConfiguration
+				? productConfiguration.backOrders
+				: null,
 			inCart: <%= inCart %>,
 			skuId: <%= cpInstanceId %>,
 			skuOptions: <%= skuOptions %> || [],
@@ -85,12 +102,6 @@ if (alignment.equals("full-width")) {
 	};
 
 	<c:if test="<%= productSettingsModel != null %>">
-
-		<%
-		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
-		%>
-
-		const productConfiguration = <%= jsonSerializer.serializeDeep(productSettingsModel) %>;
 
 		props.settings.productConfiguration = {
 			allowBackOrder: productConfiguration.backOrders,

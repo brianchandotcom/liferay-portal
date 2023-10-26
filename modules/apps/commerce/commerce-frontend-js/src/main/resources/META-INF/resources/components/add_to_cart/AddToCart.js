@@ -71,17 +71,19 @@ function AddToCart({
 
 	const buttonDisabled = useMemo(() => {
 		if (
-			initialDisabled ||
 			!account?.id ||
 			cpInstance.disabled ||
 			cpInstance.purchasable === false ||
+			(cpInstance.availability?.stockQuantity !== undefined &&
+				cpInstance.backOrderAllowed === false &&
+				cpInstance.availability?.stockQuantity <= 0) ||
 			!cpInstance.quantity
 		) {
 			return true;
 		}
 
 		return false;
-	}, [account, cpInstance, initialDisabled]);
+	}, [account, cpInstance]);
 
 	useEffect(() => {
 		setCpInstance({
@@ -96,6 +98,7 @@ function AddToCart({
 			function updateInCartState(inCart) {
 				setCpInstance((cpInstance) => ({
 					...cpInstance,
+					availability: incomingCpInstance.availability,
 					backOrderAllowed: incomingCpInstance.backOrderAllowed,
 					disabled: incomingCpInstance.disabled,
 					inCart,

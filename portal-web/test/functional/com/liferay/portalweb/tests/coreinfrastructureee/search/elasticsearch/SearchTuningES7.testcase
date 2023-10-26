@@ -175,6 +175,39 @@ definition {
 		SearchResults.viewSearchResultsSpecificOrder(resultsList = "Article 1,Article 2,Article 3");
 	}
 
+	@description = "This is a use case for LPS-197744."
+	@priority = 3
+	test AssertResultRankingsDoesNotAffectResultRankingsEditScreen {
+		task ("Add Result Ranking with pinned result") {
+			SearchTuning.openResultRankingsAdmin();
+
+			SearchTuning.addResultRanking(searchQuery = "test");
+
+			SearchTuning.pinResult(assetTitle = "tree.png");
+
+			Button.clickSave();
+		}
+
+		task ("Add second Result Ranking and assert the pinned result from the first Result Ranking is not the top result") {
+			SearchTuning.addResultRanking(searchQuery = "test2");
+
+			Button.click(button = "Add Result");
+
+			Type(
+				locator1 = "SearchTuning#RESULT_RANKINGS_ADD_RESULT_SEARCH_BAR",
+				value1 = "test");
+
+			KeyPress(
+				locator1 = "SearchTuning#RESULT_RANKINGS_ADD_RESULT_SEARCH_BAR",
+				value1 = "\RETURN");
+
+			AssertTextNotEquals.assertNotPartialText(
+				locator1 = "SearchTuning#RESULT_RANKINGS_ADD_RESULT_RESULTS",
+				resultOrder = 1,
+				value1 = "tree.png");
+		}
+	}
+
 	@priority = 3
 	test AssertResultRankingsMiscUI {
 		SearchTuning.openResultRankingsAdmin();

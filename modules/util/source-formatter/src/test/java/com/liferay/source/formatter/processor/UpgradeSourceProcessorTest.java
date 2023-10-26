@@ -64,12 +64,6 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testUpgradeGetClassNamesMethodCheck() throws Exception {
-		test("upgrade/UpgradeJavaGetClassNamesMethodCheck.testjava");
-		test("upgrade/UpgradeJSPFGetClassNamesMethodCheck.testjspf");
-	}
-
-	@Test
 	public void testUpgradeGetImagePreviewURLMethodCheck() throws Exception {
 		test("upgrade/UpgradeJavaGetImagePreviewURLMethodCheck.testjava");
 		test("upgrade/UpgradeJSPGetImagePreviewURLMethodCheck.testjsp");

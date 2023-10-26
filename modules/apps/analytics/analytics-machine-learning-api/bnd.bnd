@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Analytics Machine Learning API
+Bundle-SymbolicName: com.liferay.analytics.machine.learning.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.analytics.machine.learning.content

@@ -50,7 +50,7 @@ public class AssetTagsSearchFacetDisplayContextBuilder {
 			new AssetTagsSearchFacetDisplayContext();
 
 		assetTagsSearchFacetDisplayContext.setBucketDisplayContexts(
-			buildBucketDisplayContexts());
+			_buildBucketDisplayContexts());
 		assetTagsSearchFacetDisplayContext.setCloudWithCount(
 			_isCloudWithCount());
 		assetTagsSearchFacetDisplayContext.setDisplayStyleGroupId(
@@ -159,7 +159,7 @@ public class AssetTagsSearchFacetDisplayContextBuilder {
 		return bucketDisplayContext;
 	}
 
-	protected List<BucketDisplayContext> buildBucketDisplayContexts() {
+	private List<BucketDisplayContext> _buildBucketDisplayContexts() {
 		List<TermCollector> termCollectors = getTermCollectors();
 
 		if (termCollectors.isEmpty()) {

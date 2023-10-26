@@ -55,7 +55,7 @@ public class ScopeSearchFacetDisplayContextBuilder {
 			new ScopeSearchFacetDisplayContext();
 
 		scopeSearchFacetDisplayContext.setBucketDisplayContexts(
-			buildBucketDisplayContexts(getTermCollectors()));
+			_buildBucketDisplayContexts(getTermCollectors()));
 		scopeSearchFacetDisplayContext.setDisplayStyleGroupId(
 			getDisplayStyleGroupId());
 		scopeSearchFacetDisplayContext.setNothingSelected(isNothingSelected());
@@ -175,7 +175,7 @@ public class ScopeSearchFacetDisplayContextBuilder {
 		return buildBucketDisplayContext(groupId, count, isSelected(groupId));
 	}
 
-	protected List<BucketDisplayContext> buildBucketDisplayContexts(
+	private List<BucketDisplayContext> _buildBucketDisplayContexts(
 		List<TermCollector> termCollectors) {
 
 		if (termCollectors.isEmpty()) {

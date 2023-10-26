@@ -60,15 +60,16 @@ public class AssetEntriesSearchFacetDisplayContextBuilder
 	public AssetEntriesSearchFacetDisplayContext build() {
 		setTypeNames(getTypeNames());
 
-		List<BucketDisplayContext> bucketDisplayContexts =
-			buildBucketDisplayContexts();
-
 		AssetEntriesSearchFacetDisplayContext
 			assetEntriesSearchFacetDisplayContext =
 				new AssetEntriesSearchFacetDisplayContext();
 
+		List<BucketDisplayContext> bucketDisplayContexts =
+			_buildBucketDisplayContexts();
+
 		assetEntriesSearchFacetDisplayContext.setBucketDisplayContexts(
 			bucketDisplayContexts);
+
 		assetEntriesSearchFacetDisplayContext.setDisplayStyleGroupId(
 			getDisplayStyleGroupId());
 		assetEntriesSearchFacetDisplayContext.setNothingSelected(
@@ -103,7 +104,7 @@ public class AssetEntriesSearchFacetDisplayContextBuilder
 		return bucketDisplayContext;
 	}
 
-	public List<BucketDisplayContext> buildBucketDisplayContexts() {
+	private List<BucketDisplayContext> _buildBucketDisplayContexts() {
 		if (_facet == null) {
 			return Collections.emptyList();
 		}

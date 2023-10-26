@@ -56,6 +56,8 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 			assetCategoriesSearchFacetDisplayContext =
 				_createAssetCategoriesSearchFacetDisplayContext();
 
+		_setBucketDisplayContexts(assetCategoriesSearchFacetDisplayContext);
+
 		assetCategoriesSearchFacetDisplayContext.setCloud(_isCloud());
 		assetCategoriesSearchFacetDisplayContext.setNothingSelected(
 			isNothingSelected());
@@ -69,8 +71,6 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 			getParameterValueStrings());
 		assetCategoriesSearchFacetDisplayContext.setRenderNothing(
 			isRenderNothing());
-
-		setTermDisplayContexts(assetCategoriesSearchFacetDisplayContext);
 
 		return assetCategoriesSearchFacetDisplayContext;
 	}
@@ -227,7 +227,7 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 		return false;
 	}
 
-	protected void setTermDisplayContexts(
+	private void _setBucketDisplayContexts(
 		AssetCategoriesSearchFacetDisplayContext
 			assetCategoriesSearchFacetDisplayContext) {
 

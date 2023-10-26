@@ -1,7 +1,20 @@
 definition {
 
 	@summary = "Default summary"
-	macro configureMailSettings(incomingPOPServer = null, userPassword = null, outgoingSMTPServer = null, userName = null, incomingPort = null, outgoingPort = null) {
+	macro changeACUserPassword(userScreenName) {
+		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
+
+		User.openUsersAdmin(baseURL = ${analyticsCloudURL});
+
+		UserNavigator.gotoUser(userScreenName = ${userScreenName});
+
+		UserNavigator.gotoPassword();
+
+		User.resetPassword();
+	}
+
+	@summary = "Default summary"
+	macro configureMailSettings(incomingPOPServer = null, userPassword = null, outgoingSMTPServer = null, userName = null, incomingPort = null, outgoingPort = null,) {
 		ACAdmin.goToServerAdministration();
 
 		Navigator.gotoNavItem(navItem = "Mail");
@@ -74,7 +87,8 @@ definition {
 		return ${userID};
 	}
 
-	macro goToACAdmin {
+	@summary = "Default summary"
+	macro goToACAdmin(userScreenNameToResetPassword = null,) {
 		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 
 		Navigator.openSpecificURL(url = "${analyticsCloudURL}/admin");
@@ -90,18 +104,6 @@ definition {
 				ACAdmin.changeACUserPassword(userScreenName = ${userScreenNameToResetPassword});
 			}
 		}
-	}
-
-	macro changeACUserPassword {
-		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
-
-		User.openUsersAdmin(baseURL = ${analyticsCloudURL});
-
-		UserNavigator.gotoUser(userScreenName = ${userScreenName});
-
-		UserNavigator.gotoPassword();
-
-		User.resetPassword();
 	}
 
 	@summary = "Default summary"

@@ -10,6 +10,7 @@
 					"fragmentConfig": {
 						"darkNav": true,
 						"navigationDDMTemplateKey": "NAVIGATION_BASIC",
+						"searchBlueprintId": "[$SXP_BLUEPRINT_ID:blueprint$]",
 						"showAccountMenu": true,
 						"showCta": false,
 						"showLanguageMenu": true,

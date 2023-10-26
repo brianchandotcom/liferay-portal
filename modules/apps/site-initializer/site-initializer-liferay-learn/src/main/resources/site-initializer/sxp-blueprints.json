@@ -1,18 +1,13 @@
 [
 	{
-		"schemaVersion": "1.0",
-		"title_i18n": {
-			"en_US": "Learn Articles"
-		},
 		"configuration": {
-			"highlightConfiguration": {},
-			"parameterConfiguration": {},
-			"aggregationConfiguration": {},
+			"advancedConfiguration": {
+			},
+			"aggregationConfiguration": {
+			},
 			"generalConfiguration": {
-				"searchableAssetTypes": [
-					"com.liferay.journal.model.JournalArticle"
+				"clauseContributorsExcludes": [
 				],
-				"clauseContributorsExcludes": [],
 				"clauseContributorsIncludes": [
 					"com.liferay.account.internal.search.spi.model.query.contributor.AccountEntryKeywordQueryContributor",
 					"com.liferay.account.internal.search.spi.model.query.contributor.AccountGroupKeywordQueryContributor",
@@ -215,16 +210,29 @@
 					"com.liferay.portal.search.internal.spi.model.query.contributor.GroupIdQueryPreFilterContributor",
 					"com.liferay.portal.search.internal.spi.model.query.contributor.LayoutQueryPreFilterContributor",
 					"com.liferay.portal.search.internal.spi.model.query.contributor.UserIdQueryPreFilterContributor"
+				],
+				"searchableAssetTypes": [
+					"com.liferay.journal.model.JournalArticle"
 				]
 			},
-			"advancedConfiguration": {},
-			"sortConfiguration": {},
+			"highlightConfiguration": {
+			},
+			"parameterConfiguration": {
+			},
 			"queryConfiguration": {
 				"applyIndexerClauses": true
+			},
+			"sortConfiguration": {
 			}
 		},
-		"description_i18n": {},
-		"elementInstances": [],
-		"externalReferenceCode": "3ddf9c7a-4b02-6fb1-5226-52cc0dc966ec"
+		"description_i18n": {
+		},
+		"elementInstances": [
+		],
+		"externalReferenceCode": "blueprint",
+		"schemaVersion": "1.0",
+		"title_i18n": {
+			"en_US": "Learn Articles"
+		}
 	}
 ]

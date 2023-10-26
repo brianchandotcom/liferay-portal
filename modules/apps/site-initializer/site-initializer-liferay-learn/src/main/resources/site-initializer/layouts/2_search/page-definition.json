@@ -119,7 +119,7 @@
 													"scopeParameterName": "scope",
 													"searchScope": "this-site",
 													"showStagedResults": "false",
-													"suggestionsContributorConfigurations": "{\"contributorName\":\"sxpBlueprint\",\"displayGroupName\":\"suggestions\",\"size\":5,\"attributes\":{\"characterThreshold\":\"\",\"fields\":[],\"includeAssetSearchSummary\":true,\"includeAssetURL\":true,\"sxpBlueprintId\":2494710}}",
+													"suggestionsContributorConfigurations": "{\"contributorName\":\"sxpBlueprint\",\"displayGroupName\":\"suggestions\",\"size\":5,\"attributes\":{\"characterThreshold\":\"\",\"fields\":[],\"includeAssetSearchSummary\":true,\"includeAssetURL\":true,\"sxpBlueprintId\":2494710,\"sxpBlueprintExternalReferenceCode\":\"3ddf9c7a-4b02-6fb1-5226-52cc0dc966ec\"}}",
 													"suggestionsDisplayThreshold": "2",
 													"suggestionsEnabled": "true",
 													"useAdvancedSearchSyntax": "false"

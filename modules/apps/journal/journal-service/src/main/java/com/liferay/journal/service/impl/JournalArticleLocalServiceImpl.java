@@ -2821,12 +2821,6 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	@Override
-	public int getArticlesCountByResourcePrimKey(long resourcePrimKey) {
-		return journalArticlePersistence.countByResourcePrimKey(
-			resourcePrimKey);
-	}
-
-	@Override
 	public List<JournalArticle> getArticlesByReviewDate(
 		Date previousCheckDate, Date reviewDate) {
 
@@ -3040,6 +3034,12 @@ public class JournalArticleLocalServiceImpl
 	@Override
 	public int getArticlesCount(long groupId, String articleId) {
 		return journalArticlePersistence.countByG_A(groupId, articleId);
+	}
+
+	@Override
+	public int getArticlesCountByResourcePrimKey(long resourcePrimKey) {
+		return journalArticlePersistence.countByResourcePrimKey(
+			resourcePrimKey);
 	}
 
 	@Override

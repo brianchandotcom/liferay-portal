@@ -674,6 +674,7 @@ public class ObjectFieldLocalServiceImpl
 		_validateName(0, objectDefinition, name, system);
 		_validateReadOnlyAndReadOnlyConditionExpression(
 			businessType, readOnly, readOnlyConditionExpression);
+		_validateRequired(0, businessType, required);
 		_validateState(required, state);
 
 		ObjectField objectField = objectFieldPersistence.create(
@@ -1478,6 +1479,14 @@ public class ObjectFieldLocalServiceImpl
 			return;
 		}
 
+		if (Objects.equals(
+				businessType,
+				ObjectFieldConstants.BUSINESS_TYPE_AUTO_INCREMENT) &&
+			!Objects.equals(readOnly, ObjectFieldConstants.READ_ONLY_FALSE)) {
+
+			throw new ObjectFieldReadOnlyException();
+		}
+
 		if (!(Objects.equals(
 				readOnly, ObjectFieldConstants.READ_ONLY_CONDITIONAL) ||
 			  Objects.equals(readOnly, ObjectFieldConstants.READ_ONLY_FALSE) ||
@@ -1516,6 +1525,14 @@ public class ObjectFieldLocalServiceImpl
 			long objectFieldId, String businessType, boolean required)
 		throws PortalException {
 
+		if (Objects.equals(
+				businessType,
+				ObjectFieldConstants.BUSINESS_TYPE_AUTO_INCREMENT) &&
+			required) {
+
+			throw new ObjectFieldRequiredException();
+		}
+
 		if (!StringUtil.equals(
 				businessType,
 				ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
@@ -1524,9 +1541,11 @@ public class ObjectFieldLocalServiceImpl
 		}
 
 		ObjectRelationship objectRelationship =
-			_objectRelationshipPersistence.findByObjectFieldId2(objectFieldId);
+			_objectRelationshipPersistence.fetchByObjectFieldId2(objectFieldId);
 
-		if (objectRelationship.isEdge() && !required) {
+		if ((objectRelationship != null) && objectRelationship.isEdge() &&
+			!required) {
+
 			throw new ObjectFieldRequiredException();
 		}
 	}

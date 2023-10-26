@@ -107,10 +107,10 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 				ActionKeys.UPDATE);
 		}
 
-		long currentCompanyId = CompanyThreadLocal.getCompanyId();
-		PermissionChecker currentPermissionChecker =
+		long companyId = CompanyThreadLocal.getCompanyId();
+		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
-		String currentPrincipalThreadLocalName = PrincipalThreadLocal.getName();
+		String name = PrincipalThreadLocal.getName();
 
 		File tempFile = FileUtil.createTempFile(
 			multipartBody.getBinaryFileAsBytes("file"));
@@ -125,6 +125,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 			PermissionThreadLocal.setPermissionChecker(
 				PermissionCheckerFactoryUtil.create(contextUser));
 			PrincipalThreadLocal.setName(contextUser.getUserId());
+
 			ServiceContextThreadLocal.pushServiceContext(
 				_getServiceContext(group));
 
@@ -140,11 +141,12 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 			throw exception;
 		}
 		finally {
-			CompanyThreadLocal.setCompanyId(currentCompanyId);
-			PermissionThreadLocal.setPermissionChecker(
-				currentPermissionChecker);
-			PrincipalThreadLocal.setName(currentPrincipalThreadLocalName);
+			CompanyThreadLocal.setCompanyId(companyId);
+			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+			PrincipalThreadLocal.setName(name);
+
 			ServiceContextThreadLocal.popServiceContext();
+
 			tempFolder.delete();
 		}
 
@@ -307,28 +309,14 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 	}
 
 	private ServiceContext _getServiceContext(Group group) throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if (serviceContext == null) {
-			serviceContext = new ServiceContext();
-		}
+		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setCompanyId(contextCompany.getCompanyId());
 		serviceContext.setRequest(contextHttpServletRequest);
 		serviceContext.setScopeGroupId(group.getGroupId());
 		serviceContext.setUserId(contextUser.getUserId());
 
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-		if (themeDisplay == null) {
-			_initThemeDisplay();
-
-			themeDisplay = (ThemeDisplay)contextHttpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-		}
-
-		themeDisplay.setResponse(new DummyHttpServletResponse());
+		_initThemeDisplay();
 
 		return serviceContext;
 	}
@@ -352,6 +340,11 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 		themeServicePreAction.run(
 			contextHttpServletRequest, contextHttpServletResponse);
+
+		themeDisplay = (ThemeDisplay)contextHttpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		themeDisplay.setResponse(new DummyHttpServletResponse());
 	}
 
 	@Reference

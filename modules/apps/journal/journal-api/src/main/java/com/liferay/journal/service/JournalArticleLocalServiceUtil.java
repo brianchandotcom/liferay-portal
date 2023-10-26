@@ -1536,10 +1536,6 @@ public class JournalArticleLocalServiceUtil {
 		return getService().getArticlesByResourcePrimKey(resourcePrimKey);
 	}
 
-	public static int getArticlesCountByResourcePrimKey(long resourcePrimKey) {
-		return getService().getArticlesCountByResourcePrimKey(resourcePrimKey);
-	}
-
 	public static List<JournalArticle> getArticlesByReviewDate(
 		java.util.Date previousCheckDate, java.util.Date reviewDate) {
 
@@ -1653,6 +1649,10 @@ public class JournalArticleLocalServiceUtil {
 
 	public static int getArticlesCount(long groupId, String articleId) {
 		return getService().getArticlesCount(groupId, articleId);
+	}
+
+	public static int getArticlesCountByResourcePrimKey(long resourcePrimKey) {
+		return getService().getArticlesCountByResourcePrimKey(resourcePrimKey);
 	}
 
 	public static String getArticleTitle(

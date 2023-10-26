@@ -1633,12 +1633,6 @@ public class JournalArticleLocalServiceWrapper
 	}
 
 	@Override
-	public int getArticlesCountByResourcePrimKey(long resourcePrimKey) {
-		return _journalArticleLocalService.getArticlesCountByResourcePrimKey(
-			resourcePrimKey);
-	}
-
-	@Override
 	public java.util.List<JournalArticle> getArticlesByReviewDate(
 		java.util.Date previousCheckDate, java.util.Date reviewDate) {
 
@@ -1768,6 +1762,12 @@ public class JournalArticleLocalServiceWrapper
 	@Override
 	public int getArticlesCount(long groupId, String articleId) {
 		return _journalArticleLocalService.getArticlesCount(groupId, articleId);
+	}
+
+	@Override
+	public int getArticlesCountByResourcePrimKey(long resourcePrimKey) {
+		return _journalArticleLocalService.getArticlesCountByResourcePrimKey(
+			resourcePrimKey);
 	}
 
 	@Override

@@ -5,7 +5,7 @@
 
 package com.liferay.portal.kernel.search;
 
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 
@@ -15,26 +15,33 @@ import java.util.List;
 public class RelatedEntryIndexerRegistryUtil {
 
 	public static List<RelatedEntryIndexer> getRelatedEntryIndexers() {
-		return _relatedEntryIndexerRegistry.getRelatedEntryIndexers();
+		RelatedEntryIndexerRegistry relatedEntryIndexerRegistry =
+			_relatedEntryIndexerRegistrySnapshot.get();
+
+		return relatedEntryIndexerRegistry.getRelatedEntryIndexers();
 	}
 
 	public static List<RelatedEntryIndexer> getRelatedEntryIndexers(
 		Class<?> clazz) {
 
-		return _relatedEntryIndexerRegistry.getRelatedEntryIndexers(clazz);
+		RelatedEntryIndexerRegistry relatedEntryIndexerRegistry =
+			_relatedEntryIndexerRegistrySnapshot.get();
+
+		return relatedEntryIndexerRegistry.getRelatedEntryIndexers(clazz);
 	}
 
 	public static List<RelatedEntryIndexer> getRelatedEntryIndexers(
 		String className) {
 
-		return _relatedEntryIndexerRegistry.getRelatedEntryIndexers(className);
+		RelatedEntryIndexerRegistry relatedEntryIndexerRegistry =
+			_relatedEntryIndexerRegistrySnapshot.get();
+
+		return relatedEntryIndexerRegistry.getRelatedEntryIndexers(className);
 	}
 
-	private static volatile RelatedEntryIndexerRegistry
-		_relatedEntryIndexerRegistry =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				RelatedEntryIndexerRegistry.class,
-				RelatedEntryIndexerRegistryUtil.class,
-				"_relatedEntryIndexerRegistry", false);
+	private static final Snapshot<RelatedEntryIndexerRegistry>
+		_relatedEntryIndexerRegistrySnapshot = new Snapshot<>(
+			RelatedEntryIndexerRegistryUtil.class,
+			RelatedEntryIndexerRegistry.class);
 
 }

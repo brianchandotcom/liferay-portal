@@ -30,7 +30,7 @@ definition {
 				resourceAction = "MANAGE_INVENTORY",
 				resourceName = "com.liferay.commerce.inventory",
 				roleTitle = "Operations Manager");
-			
+
 			Permissions.removePermissionViaAPI(
 				resourceAction = "VIEW",
 				resourceName = "com.liferay.commerce.inventory.model.CommerceInventoryWarehouse",
@@ -199,6 +199,690 @@ definition {
 				expectedDeliveryDate = ${expectedDeliveryDate},
 				quantity = 20,
 				warehouse = "TestWH");
+		}
+	}
+
+	@description = "COMMERCE-12646. As a user with specific View and Delete Warehouse permissions, I want to be able to view and delete only the specific inventory entries and warehouses"
+	@priority = 5
+	test CanDeleteWarehouseAndInventoryEntriesWithViewAndDeleteSpecificWarehousePermissions {
+		property portal.acceptance = "true";
+
+		task ("Given the Operations Manager has view specific warehouse permission for Italy") {
+			CommerceNavigator.goToWarehousesAdmin();
+
+			CommerceEntry.clickEntryDropdownMenuItem(
+				entryName = "Italy",
+				menuItem = "Permissions");
+
+			IFrame.selectPermissionsFrame();
+
+			for (var permissions : list "view,delete") {
+				CommercePermissions.defineSingleRolePermissionsPG(
+					permissions = ${permissions},
+					roleTitle = "Operations Manager");
+			}
+		}
+
+		task ("And the incoming inventory quantity is set to 20 for MIN93015") {
+			CommerceJSONWarehousesAndInventoriesAPI._addIncomingQuantity(
+				quantity = 20,
+				sku = "MIN93015",
+				warehouseName = "Italy");
+		}
+
+		task ("When the Operations Manager navigates to Warehouses page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "om@liferay.com",
+				userLoginFullName = "Operations Manager");
+
+			CommerceNavigator.goToWarehousesAdmin();
+		}
+
+		task ("Then can see the only warehouse for Italy with Edit and Delete operations") {
+			for (var warehouseName : list "United States - Northeast,United States - Southwest") {
+				AssertElementNotPresent(
+					key_entryName = ${warehouseName},
+					locator1 = "CommerceNavigation#ENTRY_NAME");
+			}
+
+			AssertElementPresent(
+				key_entryName = "Italy",
+				locator1 = "CommerceNavigation#ENTRY_NAME");
+
+			Click(
+				key_value = "Italy",
+				locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+			for (var menuItem : list "Edit,Delete") {
+				AssertElementPresent(
+					key_menuItem = ${menuItem},
+					locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+			}
+		}
+
+		task ("And can see warehouse details fields disabled and cannot see the Eligibility tab in Italy warehouse's details page") {
+			CommerceNavigator.gotoEntry(entryName = "Italy");
+
+			for (var menuTab : list "Details,Eligibility") {
+				AssertElementNotPresent(
+					key_menuTab = ${menuTab},
+					locator1 = "CommerceEntry#MENU_TAB");
+			}
+
+			CommerceWarehouses.assertWarehouseDetails(
+				active = "true",
+				city = "Borgorose",
+				country = "Italy",
+				description = "",
+				latitude = "42.214601",
+				longitude = "12.796434",
+				name = "Italy",
+				postalCode = 2021,
+				region = "Rieti",
+				street1 = "Via delle Coste 24",
+				warehouseEditable = "false");
+		}
+
+		task ("When the Operations Manager navigates to Inventory page") {
+			CommerceInventory.openInventoryAdmin();
+		}
+
+		task ("Then can see all existing inventory entries") {
+			Pagination.changePagination(itemsPerPage = "60 Items");
+
+			Pagination.viewResults(results = "Showing 1 to 51 of 51 entries.");
+
+			AssertElementPresent(
+				key_rowNumber = 51,
+				locator1 = "CommerceNavigation#ENTRY_NAME_N");
+		}
+
+		task ("When going to MIN93015's details") {
+			CommerceNavigator.gotoTableListEntry(entryName = "MIN93015");
+		}
+
+		task ("Then cannot see On Order and Changelog tabs") {
+			for (var menuTab : list "On Order,Changelog") {
+				AssertElementNotPresent(
+					key_menuTab = ${menuTab},
+					locator1 = "CommerceEntry#MENU_TAB");
+			}
+		}
+
+		task ("And can only see the warehouse's delete action under Overview and Incoming tabs") {
+			for (var page : list "Overview,Incoming") {
+				CommerceEntry.gotoMenuTab(menuTab = ${page});
+
+				AssertElementNotPresent(locator1 = "CommerceEntry#ADD_BUTTON");
+
+				for (var warehouseName : list "United States - Northeast,United States - Southwest") {
+					AssertElementNotPresent(
+						key_entryName = ${warehouseName},
+						locator1 = "CommerceNavigation#ENTRY_NAME");
+				}
+
+				AssertElementPresent(
+					key_entryName = "Italy",
+					locator1 = "CommerceNavigation#ENTRY_NAME");
+
+				AssertElementPresent(
+					key_actionName = "Delete",
+					key_entryName = "Italy",
+					locator1 = "CommerceEntry#TABLE_ENTRY_ACTION");
+			}
+		}
+
+		task ("And can delete warehouse entry under both Overview and Incoming tabs") {
+			for (var page : list "Overview,Incoming") {
+				CommerceEntry.gotoMenuTab(menuTab = ${page});
+
+				Click.clickNoMouseOver(
+					key_actionName = "Delete",
+					key_entryName = "Italy",
+					locator1 = "CommerceEntry#TABLE_ENTRY_ACTION");
+
+				Alert.viewSuccessMessage();
+
+				AssertTextEquals(
+					locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER",
+					value1 = "Sorry, no results were found.");
+			}
+		}
+
+		task ("When the Operations Manager navigates to Warehouses page again") {
+			CommerceNavigator.goToWarehousesAdmin();
+		}
+
+		task ("Then can delete the existing warehouses") {
+			CommerceEntry.clickEntryDropdownMenuItem(
+				entryName = "Italy",
+				menuItem = "Delete");
+
+			Alert.viewSuccessMessage();
+
+			AssertTextEquals(
+				locator1 = "CommerceNavigation#EMPTY_SEARCH_CONTAINER",
+				value1 = "Sorry, no results were found.");
+		}
+	}
+
+	@description = "COMMERCE-12642. As a user with View and Delete Warehouse permissions, I want to be able to view and delete all existing inventory entries and warehouses"
+	@priority = 5
+	test CanDeleteWarehousesAndInventoryEntriesWithGeneralViewAndDeletePermissions {
+		property portal.acceptance = "true";
+
+		task ("Given the Operations Manager has view warehouse permission") {
+			for (var permissions : list "VIEW,DELETE") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = ${permissions},
+					resourceName = "com.liferay.commerce.inventory.model.CommerceInventoryWarehouse",
+					roleTitle = "Operations Manager");
+			}
+		}
+
+		task ("And the incoming inventory quantity is set to 20 for MIN93015") {
+			for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
+				CommerceJSONWarehousesAndInventoriesAPI._addIncomingQuantity(
+					quantity = 20,
+					sku = "MIN93015",
+					warehouseName = ${warehouseName});
+			}
+		}
+
+		task ("When the Operations Manager navigates to Warehouses page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "om@liferay.com",
+				userLoginFullName = "Operations Manager");
+
+			CommerceNavigator.goToWarehousesAdmin();
+		}
+
+		task ("Then can see all existing warehouses with Edit and Delete operations") {
+			for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
+				AssertElementPresent(
+					key_entryName = ${warehouseName},
+					locator1 = "CommerceNavigation#ENTRY_NAME");
+
+				Click(
+					key_value = ${warehouseName},
+					locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+				for (var menuItem : list "Edit,Delete") {
+					AssertElementPresent(
+						key_menuItem = ${menuItem},
+						locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
+				}
+
+				Click(
+					key_value = ${warehouseName},
+					locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+			}
+		}
+
+		task ("And can see warehouse details fields disabled and cannot see the Eligibility tab in one warehouse's details page") {
+			CommerceNavigator.gotoEntry(entryName = "Italy");
+
+			for (var menuTab : list "Details,Eligibility") {
+				AssertElementNotPresent(
+					key_menuTab = ${menuTab},
+					locator1 = "CommerceEntry#MENU_TAB");
+			}
+
+			CommerceWarehouses.assertWarehouseDetails(
+				active = "true",
+				city = "Borgorose",
+				country = "Italy",
+				description = "",
+				latitude = "42.214601",
+				longitude = "12.796434",
+				name = "Italy",
+				postalCode = 2021,
+				region = "Rieti",
+				street1 = "Via delle Coste 24",
+				warehouseEditable = "false");
+		}
+
+		task ("When the Operations Manager navigates to Inventory page") {
+			CommerceInventory.openInventoryAdmin();
+		}
+
+		task ("Then can see all existing inventory entries") {
+			Pagination.changePagination(itemsPerPage = "60 Items");
+
+			Pagination.viewResults(results = "Showing 1 to 52 of 52 entries.");
+
+			AssertElementPresent(
+				key_rowNumber = 52,
+				locator1 = "CommerceNavigation#ENTRY_NAME_N");
+		}
+
+		task ("When going to MIN93015's details") {
+			CommerceNavigator.gotoTableListEntry(entryName = "MIN93015");
+		}
+
+		task ("Then cannot see On Order and Changelog tabs") {
+			for (var menuTab : list "On Order,Changelog") {
+				AssertElementNotPresent(
+					key_menuTab = ${menuTab},
+					locator1 = "CommerceEntry#MENU_TAB");
+			}
+		}
+
+		task ("And can only see the warehouse's delete action under Overview and Incoming tabs") {
+			for (var page : list "Overview,Incoming") {
+				CommerceEntry.gotoMenuTab(menuTab = ${page});
+
+				AssertElementNotPresent(locator1 = "CommerceEntry#ADD_BUTTON");
+
+				for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
+					AssertElementPresent(
+						key_entryName = ${warehouseName},
+						locator1 = "CommerceNavigation#ENTRY_NAME");
+
+					AssertElementPresent(
+						key_actionName = "Delete",
+						key_entryName = ${warehouseName},
+						locator1 = "CommerceEntry#TABLE_ENTRY_ACTION");
+				}
+			}
+		}
+
+		task ("And can delete inventory entries by clicking the delete action or clicking on the warehouse name under Overview/Incoming tabs") {
+			for (var page : list "Overview,Incoming") {
+				CommerceEntry.gotoMenuTab(menuTab = ${page});
+
+				Click.clickNoMouseOver(
+					key_actionName = "Delete",
+					key_entryName = "United States - Southwest",
+					locator1 = "CommerceEntry#TABLE_ENTRY_ACTION");
+
+				Alert.viewSuccessMessage();
+
+				AssertElementNotPresent(
+					key_entryName = "United States - Southwest",
+					locator1 = "CommerceNavigation#ENTRY_NAME");
+
+				Click(
+					key_entryName = "Italy",
+					locator1 = "CommerceNavigation#ENTRY_NAME");
+
+				Alert.viewSuccessMessage();
+
+				AssertElementNotPresent(
+					key_entryName = "Italy",
+					locator1 = "CommerceNavigation#ENTRY_NAME");
+			}
+		}
+
+		task ("When the Operations Manager navigates to Warehouses page again") {
+			CommerceNavigator.goToWarehousesAdmin();
+		}
+
+		task ("Then can delete the existing warehouses") {
+			CommerceEntry.clickEntryDropdownMenuItem(
+				entryName = "Italy",
+				menuItem = "Delete");
+
+			Alert.viewSuccessMessage();
+
+			AssertElementNotPresent(
+				key_entryName = "Italy",
+				locator1 = "CommerceNavigation#ENTRY_NAME");
+
+			for (var warehouseName : list "United States - Northeast,United States - Southwest") {
+				AssertElementPresent(
+					key_entryName = ${warehouseName},
+					locator1 = "CommerceNavigation#ENTRY_NAME");
+			}
+		}
+	}
+
+	@description = "COMMERCE-12645. As a user with View and Update Warehouse permissions, I want to be able to view and update only the specific inventory entries and warehouses"
+	@priority = 5
+	test CanEditWarehouseAndInventoryEntriesWithViewAndUpdateSpecificWarehousePermissions {
+		property portal.acceptance = "true";
+
+		task ("Given the Operations Manager has view and update specific warehouse permissions for Italy") {
+			CommerceNavigator.goToWarehousesAdmin();
+
+			CommerceEntry.clickEntryDropdownMenuItem(
+				entryName = "Italy",
+				menuItem = "Permissions");
+
+			IFrame.selectPermissionsFrame();
+
+			CommercePermissions.defineSingleRolePermissionsPG(
+				permissions = "view,update",
+				roleTitle = "Operations Manager");
+		}
+
+		task ("And the incoming inventory quantity is set to 20 for MIN93015") {
+			CommerceJSONWarehousesAndInventoriesAPI._addIncomingQuantity(
+				quantity = 20,
+				sku = "MIN93015",
+				warehouseName = "Italy");
+		}
+
+		task ("When the Operations Manager navigates to Warehouses page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "om@liferay.com",
+				userLoginFullName = "Operations Manager");
+
+			CommerceNavigator.goToWarehousesAdmin();
+		}
+
+		task ("Then can see the only warehouse for Italy") {
+			for (var warehouseName : list "United States - Northeast,United States - Southwest") {
+				AssertElementNotPresent(
+					key_entryName = ${warehouseName},
+					locator1 = "CommerceNavigation#ENTRY_NAME");
+			}
+
+			AssertElementPresent(
+				key_entryName = "Italy",
+				locator1 = "CommerceNavigation#ENTRY_NAME");
+		}
+
+		task ("And can see and update the warehouse fields in Italy warehouse's details page") {
+			CommerceNavigator.gotoEntry(entryName = "Italy");
+
+			CommerceWarehouses.assertWarehouseDetails(
+				active = "true",
+				city = "Borgorose",
+				country = "Italy",
+				description = "",
+				latitude = "42.214601",
+				longitude = "12.796434",
+				name = "Italy",
+				postalCode = 2021,
+				region = "Rieti",
+				street1 = "Via delle Coste 24");
+
+			CommerceWarehouses.editWarehouseDetails(
+				active = "false",
+				city = "Roma",
+				description = "Description",
+				latitude = "45.0",
+				longitude = "34.0",
+				name = "Italy 2",
+				postalCode = 02022,
+				region = "Roma",
+				street1 = "Via delle Coste 25");
+
+			CommerceWarehouses.assertWarehouseDetails(
+				active = "false",
+				city = "Roma",
+				description = "Description",
+				latitude = "45.0",
+				longitude = "34.0",
+				name = "Italy 2",
+				postalCode = 02022,
+				region = "Roma",
+				street1 = "Via delle Coste 25");
+		}
+
+		// The assertion under Eligibility tab needs to be added in the future
+
+		task ("When the Operations Manager navigates to Inventory page") {
+			CommerceInventory.openInventoryAdmin();
+		}
+
+		task ("Then can see all existing inventory entries") {
+			Pagination.changePagination(itemsPerPage = "60 Items");
+
+			Pagination.viewResults(results = "Showing 1 to 51 of 51 entries.");
+
+			AssertElementPresent(
+				key_rowNumber = 51,
+				locator1 = "CommerceNavigation#ENTRY_NAME_N");
+		}
+
+		task ("When going to MIN93015's details") {
+			CommerceNavigator.gotoTableListEntry(entryName = "MIN93015");
+		}
+
+		task ("Then cannot see On Order and Changelog tabs") {
+			for (var menuTab : list "On Order,Changelog") {
+				AssertElementNotPresent(
+					key_menuTab = ${menuTab},
+					locator1 = "CommerceEntry#MENU_TAB");
+			}
+		}
+
+		task ("And cannot see Add button/warehouse's ellipsis under Overview tab") {
+			AssertElementNotPresent(locator1 = "CommerceEntry#ADD_BUTTON");
+
+			AssertElementNotPresent(
+				key_index = 1,
+				key_text = "",
+				locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
+
+			for (var warehouseName : list "United States - Northeast,United States - Southwest") {
+				AssertElementNotPresent(
+					key_text = ${warehouseName},
+					locator1 = "Link#ANY");
+			}
+		}
+
+		task ("But can edit the warehouse's inventory") {
+			CommerceInventory.viewInventoryByWarehouseEntry(
+				available = 20,
+				incoming = 20,
+				onHand = 20,
+				safetyStock = 0,
+				warehouse = "Italy 2");
+
+			CommerceInventory.editWarehouseInventory(
+				quantityOnHand = 50,
+				safetyStockQuantity = 20,
+				warehouse = "Italy 2");
+
+			CommerceInventory.viewInventoryByWarehouseEntry(
+				available = 30,
+				incoming = 20,
+				onHand = 50,
+				safetyStock = 20,
+				warehouse = "Italy 2");
+		}
+
+		task ("When the user navigates to Incoming tab") {
+			CommerceEntry.gotoMenuTab(menuTab = "Incoming");
+		}
+
+		task ("Then cannot see Add button/warehouse's ellipsis") {
+			AssertElementNotPresent(locator1 = "CommerceEntry#ADD_BUTTON");
+
+			AssertElementNotPresent(
+				key_index = 1,
+				key_text = "",
+				locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
+		}
+
+		task ("But can edit the incoming quantity entry") {
+			var expectedDeliveryDate = DateUtil.getFormattedCurrentDate("MMM d, yyyy");
+
+			CommerceInventory.viewIncomingQuantityByWarehouse(
+				expectedDeliveryDate = ${expectedDeliveryDate},
+				quantity = 20,
+				warehouse = "Italy 2",
+				warehouseWithLink = "false");
+
+			CommerceInventory.editIncomingQuantity(
+				quantity = 30,
+				warehouse = "Italy 2");
+
+			CommerceInventory.viewIncomingQuantityByWarehouse(
+				expectedDeliveryDate = ${expectedDeliveryDate},
+				quantity = 30,
+				warehouse = "Italy 2");
+		}
+	}
+
+	@description = "COMMERCE-12641. As a user with View and Update Warehouse permissions, I want to be able to view and update all existing inventory entries and warehouses"
+	@priority = 5
+	test CanEditWarehousesAndInventoryEntriesWithGeneralViewAndUpdatePermissions {
+		property portal.acceptance = "true";
+
+		task ("Given the Operations Manager has view and update warehouse permissions") {
+			for (var permissions : list "VIEW,UPDATE") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = ${permissions},
+					resourceName = "com.liferay.commerce.inventory.model.CommerceInventoryWarehouse",
+					roleTitle = "Operations Manager");
+			}
+		}
+
+		task ("And the incoming inventory quantity is set to 20 for MIN93015") {
+			CommerceJSONWarehousesAndInventoriesAPI._addIncomingQuantity(
+				quantity = 20,
+				sku = "MIN93015",
+				warehouseName = "Italy");
+		}
+
+		task ("When the Operations Manager navigates to Warehouses page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "om@liferay.com",
+				userLoginFullName = "Operations Manager");
+
+			CommerceNavigator.goToWarehousesAdmin();
+		}
+
+		task ("Then can see all existing warehouses") {
+			for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
+				AssertElementPresent(
+					key_entryName = ${warehouseName},
+					locator1 = "CommerceNavigation#ENTRY_NAME");
+			}
+		}
+
+		task ("And can see and update the warehouse fields in one warehouse's details page") {
+			CommerceNavigator.gotoEntry(entryName = "Italy");
+
+			CommerceWarehouses.assertWarehouseDetails(
+				active = "true",
+				city = "Borgorose",
+				country = "Italy",
+				description = "",
+				latitude = "42.214601",
+				longitude = "12.796434",
+				name = "Italy",
+				postalCode = 2021,
+				region = "Rieti",
+				street1 = "Via delle Coste 24");
+
+			CommerceWarehouses.editWarehouseDetails(
+				active = "false",
+				city = "Roma",
+				description = "Description",
+				latitude = "45.0",
+				longitude = "34.0",
+				name = "Italy 2",
+				postalCode = 02022,
+				region = "Roma",
+				street1 = "Via delle Coste 25");
+
+			CommerceWarehouses.assertWarehouseDetails(
+				active = "false",
+				city = "Roma",
+				description = "Description",
+				latitude = "45.0",
+				longitude = "34.0",
+				name = "Italy 2",
+				postalCode = 02022,
+				region = "Roma",
+				street1 = "Via delle Coste 25");
+		}
+
+		// The assertion under Eligibility tab needs to be added in the future
+
+		task ("When the Operations Manager navigates to Inventory page") {
+			CommerceInventory.openInventoryAdmin();
+		}
+
+		task ("Then can see all existing inventory entries") {
+			Pagination.changePagination(itemsPerPage = "60 Items");
+
+			Pagination.viewResults(results = "Showing 1 to 52 of 52 entries.");
+
+			AssertElementPresent(
+				key_rowNumber = 52,
+				locator1 = "CommerceNavigation#ENTRY_NAME_N");
+		}
+
+		task ("When going to MIN93015's details") {
+			CommerceNavigator.gotoTableListEntry(entryName = "MIN93015");
+		}
+
+		task ("Then cannot see On Order and Changelog tabs") {
+			for (var menuTab : list "On Order,Changelog") {
+				AssertElementNotPresent(
+					key_menuTab = ${menuTab},
+					locator1 = "CommerceEntry#MENU_TAB");
+			}
+		}
+
+		task ("And cannot see Add button/warehouse's ellipsis under Overview tab") {
+			AssertElementNotPresent(locator1 = "CommerceEntry#ADD_BUTTON");
+
+			for (var index : list "1,2,3") {
+				AssertElementNotPresent(
+					key_index = ${index},
+					key_text = "",
+					locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
+			}
+		}
+
+		task ("But can edit the warehouse's inventory") {
+			CommerceInventory.viewInventoryByWarehouseEntry(
+				available = 20,
+				incoming = 20,
+				onHand = 20,
+				safetyStock = 0,
+				warehouse = "Italy 2");
+
+			CommerceInventory.editWarehouseInventory(
+				quantityOnHand = 50,
+				safetyStockQuantity = 20,
+				warehouse = "Italy 2");
+
+			CommerceInventory.viewInventoryByWarehouseEntry(
+				available = 30,
+				incoming = 20,
+				onHand = 50,
+				safetyStock = 20,
+				warehouse = "Italy 2");
+		}
+
+		task ("When the user navigates to Incoming tab") {
+			CommerceEntry.gotoMenuTab(menuTab = "Incoming");
+		}
+
+		task ("Then cannot see Add button/warehouse's ellipsis") {
+			AssertElementNotPresent(locator1 = "CommerceEntry#ADD_BUTTON");
+
+			AssertElementNotPresent(
+				key_index = 1,
+				key_text = "",
+				locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
+		}
+
+		task ("But can edit the incoming quantity entry") {
+			var expectedDeliveryDate = DateUtil.getFormattedCurrentDate("MMM d, yyyy");
+
+			CommerceInventory.viewIncomingQuantityByWarehouse(
+				expectedDeliveryDate = ${expectedDeliveryDate},
+				quantity = 20,
+				warehouse = "Italy 2",
+				warehouseWithLink = "false");
+
+			CommerceInventory.editIncomingQuantity(
+				quantity = 30,
+				warehouse = "Italy 2");
+
+			CommerceInventory.viewIncomingQuantityByWarehouse(
+				expectedDeliveryDate = ${expectedDeliveryDate},
+				quantity = 30,
+				warehouse = "Italy 2");
 		}
 	}
 
@@ -587,6 +1271,283 @@ definition {
 			Click(locator1 = "Icon#CLOSE");
 
 			SelectFrameTop();
+		}
+	}
+
+	@description = "COMMERCE-12644. As a user with View specific warehouse permission, I want to be able to view only the specific inventory entries and warehouses"
+	@priority = 5
+	test CannotEditWarehouseAndInventoryEntriesWithViewSpecificWarehousePermission {
+		property portal.acceptance = "true";
+
+		task ("Given the Operations Manager has view specific warehouse permission for Italy") {
+			CommerceNavigator.goToWarehousesAdmin();
+
+			CommerceEntry.clickEntryDropdownMenuItem(
+				entryName = "Italy",
+				menuItem = "Permissions");
+
+			IFrame.selectPermissionsFrame();
+
+			CommercePermissions.defineSingleRolePermissionsPG(
+				permissions = "view",
+				roleTitle = "Operations Manager");
+		}
+
+		task ("And the incoming inventory quantity is set to 20 for MIN93015") {
+			CommerceJSONWarehousesAndInventoriesAPI._addIncomingQuantity(
+				quantity = 20,
+				sku = "MIN93015",
+				warehouseName = "Italy");
+		}
+
+		task ("When the Operations Manager navigates to Warehouses page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "om@liferay.com",
+				userLoginFullName = "Operations Manager");
+
+			CommerceNavigator.goToWarehousesAdmin();
+		}
+
+		task ("Then can see the only warehouse for Italy") {
+			for (var warehouseName : list "United States - Northeast,United States - Southwest") {
+				AssertElementNotPresent(
+					key_entryName = ${warehouseName},
+					locator1 = "CommerceNavigation#ENTRY_NAME");
+			}
+
+			AssertElementPresent(
+				key_entryName = "Italy",
+				locator1 = "CommerceNavigation#ENTRY_NAME");
+		}
+
+		task ("And can see warehouse details fields disabled and cannot see the Eligibility tab in Italy warehouse's details page") {
+			CommerceNavigator.gotoEntry(entryName = "Italy");
+
+			for (var menuTab : list "Details,Eligibility") {
+				AssertElementNotPresent(
+					key_menuTab = ${menuTab},
+					locator1 = "CommerceEntry#MENU_TAB");
+			}
+
+			CommerceWarehouses.assertWarehouseDetails(
+				active = "true",
+				city = "Borgorose",
+				country = "Italy",
+				description = "",
+				latitude = "42.214601",
+				longitude = "12.796434",
+				name = "Italy",
+				postalCode = 2021,
+				region = "Rieti",
+				street1 = "Via delle Coste 24",
+				warehouseEditable = "false");
+		}
+
+		task ("When the Operations Manager navigates to Inventory page") {
+			CommerceInventory.openInventoryAdmin();
+		}
+
+		task ("Then can see all existing inventory entries") {
+			Pagination.changePagination(itemsPerPage = "60 Items");
+
+			Pagination.viewResults(results = "Showing 1 to 51 of 51 entries.");
+
+			AssertElementPresent(
+				key_rowNumber = 51,
+				locator1 = "CommerceNavigation#ENTRY_NAME_N");
+		}
+
+		task ("When going to MIN93015's details") {
+			CommerceNavigator.gotoTableListEntry(entryName = "MIN93015");
+		}
+
+		task ("Then cannot see On Order and Changelog tabs") {
+			for (var menuTab : list "On Order,Changelog") {
+				AssertElementNotPresent(
+					key_menuTab = ${menuTab},
+					locator1 = "CommerceEntry#MENU_TAB");
+			}
+		}
+
+		task ("And cannot see Add button/Italy's warehouse with link/warehouse's ellipsis under Overview tab") {
+			AssertElementNotPresent(locator1 = "CommerceEntry#ADD_BUTTON");
+
+			for (var warehouseName : list "United States - Northeast,United States - Southwest") {
+				AssertElementNotPresent(
+					key_entryName = ${warehouseName},
+					locator1 = "CommerceEntry#TABLE_ELIGIBILITY_ACCOUNT_GROUPS");
+			}
+
+			AssertElementNotPresent(
+				key_text = "Italy",
+				locator1 = "Link#ANY");
+
+			AssertElementNotPresent(
+				key_index = 1,
+				key_text = "",
+				locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
+
+			CommerceInventory.viewInventoryByWarehouseEntry(
+				available = 20,
+				incoming = 20,
+				onHand = 20,
+				warehouse = "Italy",
+				warehouseWithLink = "false");
+		}
+
+		task ("And cannot see Add button/Italy's warehouse with link/warehouse's ellipsis under Incoming tab") {
+			Navigator.gotoNavTab(navTab = "Incoming");
+
+			AssertElementNotPresent(locator1 = "CommerceEntry#ADD_BUTTON");
+
+			AssertElementNotPresent(
+				key_text = "Italy",
+				locator1 = "Link#ANY");
+
+			AssertElementNotPresent(
+				key_index = 1,
+				key_text = "",
+				locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
+
+			var expectedDeliveryDate = DateUtil.getFormattedCurrentDate("MMM d, yyyy");
+
+			CommerceInventory.viewIncomingQuantityByWarehouse(
+				expectedDeliveryDate = ${expectedDeliveryDate},
+				quantity = 20,
+				warehouse = "Italy",
+				warehouseWithLink = "false");
+		}
+	}
+
+	@description = "COMMERCE-12640. As a user with View Warehouse permission, I want to be able to view only all existing inventory entries and warehouses"
+	@priority = 5
+	test CannotEditWarehousesAndInventoryEntriesWithGeneralViewWarehousePermission {
+		property portal.acceptance = "true";
+
+		task ("Given the Operations Manager has view warehouse permission") {
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.commerce.inventory.model.CommerceInventoryWarehouse",
+				roleTitle = "Operations Manager");
+		}
+
+		task ("And the incoming inventory quantity is set to 20 for MIN93015") {
+			CommerceJSONWarehousesAndInventoriesAPI._addIncomingQuantity(
+				quantity = 20,
+				sku = "MIN93015",
+				warehouseName = "Italy");
+		}
+
+		task ("When the Operations Manager navigates to Warehouses page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "om@liferay.com",
+				userLoginFullName = "Operations Manager");
+
+			CommerceNavigator.goToWarehousesAdmin();
+		}
+
+		task ("Then can see all existing warehouses") {
+			for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
+				AssertElementPresent(
+					key_entryName = ${warehouseName},
+					locator1 = "CommerceNavigation#ENTRY_NAME");
+			}
+		}
+
+		task ("And can see warehouse details fields disabled and cannot see the Eligibility tab in one warehouse's details page") {
+			CommerceNavigator.gotoEntry(entryName = "Italy");
+
+			for (var menuTab : list "Details,Eligibility") {
+				AssertElementNotPresent(
+					key_menuTab = ${menuTab},
+					locator1 = "CommerceEntry#MENU_TAB");
+			}
+
+			CommerceWarehouses.assertWarehouseDetails(
+				active = "true",
+				city = "Borgorose",
+				country = "Italy",
+				description = "",
+				latitude = "42.214601",
+				longitude = "12.796434",
+				name = "Italy",
+				postalCode = 2021,
+				region = "Rieti",
+				street1 = "Via delle Coste 24",
+				warehouseEditable = "false");
+		}
+
+		task ("When the Operations Manager navigates to Inventory page") {
+			CommerceInventory.openInventoryAdmin();
+		}
+
+		task ("Then can see all existing inventory entries") {
+			Pagination.changePagination(itemsPerPage = "60 Items");
+
+			Pagination.viewResults(results = "Showing 1 to 52 of 52 entries.");
+
+			AssertElementPresent(
+				key_rowNumber = 52,
+				locator1 = "CommerceNavigation#ENTRY_NAME_N");
+		}
+
+		task ("When going to MIN93015's details") {
+			CommerceNavigator.gotoTableListEntry(entryName = "MIN93015");
+		}
+
+		task ("Then cannot see On Order and Changelog tabs") {
+			for (var menuTab : list "On Order,Changelog") {
+				AssertElementNotPresent(
+					key_menuTab = ${menuTab},
+					locator1 = "CommerceEntry#MENU_TAB");
+			}
+		}
+
+		task ("And cannot see Add button/warehouses with link/warehouse's ellipsis under Overview tab") {
+			AssertElementNotPresent(locator1 = "CommerceEntry#ADD_BUTTON");
+
+			for (var warehouseName : list "Italy,United States - Northeast,United States - Southwest") {
+				AssertElementNotPresent(
+					key_text = ${warehouseName},
+					locator1 = "Link#ANY");
+			}
+
+			for (var index : list "1,2,3") {
+				AssertElementNotPresent(
+					key_index = ${index},
+					key_text = "",
+					locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
+			}
+
+			CommerceInventory.viewInventoryByWarehouseEntry(
+				available = 20,
+				incoming = 20,
+				onHand = 20,
+				warehouse = "Italy",
+				warehouseWithLink = "false");
+		}
+
+		task ("And cannot see Add button/warehouses with link/warehouse's ellipsis under Incoming tab") {
+			Navigator.gotoNavTab(navTab = "Incoming");
+
+			AssertElementNotPresent(locator1 = "CommerceEntry#ADD_BUTTON");
+
+			AssertElementNotPresent(
+				key_text = "Italy",
+				locator1 = "Link#ANY");
+
+			AssertElementNotPresent(
+				key_index = 1,
+				key_text = "",
+				locator1 = "Icon#VERTICAL_ELLIPSIS_INDEXED");
+
+			var expectedDeliveryDate = DateUtil.getFormattedCurrentDate("MMM d, yyyy");
+
+			CommerceInventory.viewIncomingQuantityByWarehouse(
+				expectedDeliveryDate = ${expectedDeliveryDate},
+				quantity = 20,
+				warehouse = "Italy",
+				warehouseWithLink = "false");
 		}
 	}
 

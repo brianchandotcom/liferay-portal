@@ -183,8 +183,7 @@ public class BatchEngineBrokerTest {
 
 		ObjectEntry objectEntry1 = _addObjectEntry(
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
-			_objectDefinition1,
-			TestPropsValues.getUserId());
+			_objectDefinition1, TestPropsValues.getUserId());
 
 		long companyId = _counterLocalService.increment();
 
@@ -381,15 +380,13 @@ public class BatchEngineBrokerTest {
 
 		ObjectEntry objectEntry1 = _addObjectEntry(
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
-			_objectDefinition1,
-			TestPropsValues.getUserId());
+			_objectDefinition1, TestPropsValues.getUserId());
 
 		Group group = GroupTestUtil.addGroup();
 
 		_addObjectEntry(
 			TestPropsValues.getCompanyId(), group.getGroupId(),
-			_objectDefinition1,
-			TestPropsValues.getUserId());
+			_objectDefinition1, TestPropsValues.getUserId());
 
 		BatchPlannerPlan batchPlannerPlan =
 			_batchPlannerPlanLocalService.addBatchPlannerPlan(
@@ -653,16 +650,6 @@ public class BatchEngineBrokerTest {
 		}
 	}
 
-	private long _getGroupId(long groupId, ObjectDefinition objectDefinition) {
-		if (!Objects.equals(
-			objectDefinition.getScope(), ObjectDefinitionConstants.SCOPE_SITE)) {
-
-			return 0;
-		}
-
-		return groupId;
-	}
-
 	private void _assertActions(JsonNode fieldJsonNode, String fieldName) {
 		JsonNode jsonNode = fieldJsonNode.get(fieldName);
 
@@ -916,6 +903,17 @@ public class BatchEngineBrokerTest {
 
 			Thread.sleep(1000);
 		}
+	}
+
+	private long _getGroupId(long groupId, ObjectDefinition objectDefinition) {
+		if (!Objects.equals(
+				objectDefinition.getScope(),
+				ObjectDefinitionConstants.SCOPE_SITE)) {
+
+			return 0;
+		}
+
+		return groupId;
 	}
 
 	private ZipInputStream _getZipInputStream(InputStream inputStream)

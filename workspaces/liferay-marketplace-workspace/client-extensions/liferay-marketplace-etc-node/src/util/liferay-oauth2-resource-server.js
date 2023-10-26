@@ -11,21 +11,26 @@ import fetch from 'node-fetch';
 import config from './configTreePath.js';
 import log from './log.js';
 
+const clientExtensionOauthJwksRoute =
+	config[
+		'liferay-marketplace-etc-node-oauth-application-user-agent.oauth2.jwks.uri'
+	];
 const domains = config['com.liferay.lxc.dxp.domains'];
 const externalReferenceCode = config[
 	'liferay.oauth.application.external.reference.codes'
-].split(',')[0];
-const lxcDXPMainDomain = config['com.liferay.lxc.dxp.mainDomain'];
-
+]?.split(',')[0];
 const lxcDXPServerProtocol = config['com.liferay.lxc.dxp.server.protocol'];
-const oauth2JWKSURI =
-	lxcDXPServerProtocol +
-	'://' +
-	lxcDXPMainDomain +
-	(config[externalReferenceCode + '.oauth2.jwks.uri'] || '/o/oauth2/jwks');
+const routesDXPConfig = config['com.liferay.lxc.dxp.mainDomain'];
+const lxcDXPMainDomain = routesDXPConfig.split('\n')[0];
+
+const oauth2JWKSURI = `${lxcDXPServerProtocol}://${lxcDXPMainDomain}${
+	config[`${externalReferenceCode}.oauth2.jwks.uri`] ||
+	clientExtensionOauthJwksRoute
+}`;
+
 const allowList = domains
 	.split(',')
-	.map((domain) => lxcDXPServerProtocol + '://' + domain);
+	.map((domain) => `${lxcDXPServerProtocol}://${domain}`);
 
 const corsOptions = {
 	origin(origin, callback) {
@@ -63,6 +68,7 @@ export async function liferayJWT(req, res, next) {
 
 	try {
 		const jwksResponse = await fetch(oauth2JWKSURI);
+
 		if (jwksResponse.status === 200) {
 			const jwks = await jwksResponse.json();
 			const jwksPublicKey = jwktopem(jwks.keys[0]);
@@ -71,13 +77,10 @@ export async function liferayJWT(req, res, next) {
 				ignoreExpiration: true, // TODO we need to use refresh token
 			});
 			const applicationResponse = await fetch(
-				lxcDXPServerProtocol +
-					'://' +
-					lxcDXPMainDomain +
-					'/o/oauth2/application?externalReferenceCode=' +
-					externalReferenceCode
+				`${lxcDXPServerProtocol}://${lxcDXPMainDomain}/o/oauth2/application?externalReferenceCode=${externalReferenceCode}`
 			);
 			const {client_id} = await applicationResponse.json();
+
 			if (decoded.client_id === client_id) {
 				req.jwt = decoded;
 				next();

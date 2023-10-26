@@ -13,25 +13,12 @@ export type CreateLicenseForm = {
 	description: string;
 	hostName: string;
 	macAddresses: string;
+	product: Product;
 	subscription: string;
 };
 
-export type ProductCardProps = {
+export type LicenseKeyProps = {
 	licenseKeyData: {[key: string]: string};
-	product: {
-		attachments: [];
-		name: {
-			en_US: string;
-		};
-		productSpecifications: [];
-		skus: {
-			price: number;
-			sku: string;
-			skuOptions: [];
-		}[];
-	};
-	productCreatorAccount: {logoURL: undefined; name: string};
-	userAccount: {[key: string]: string};
 };
 
 export type StepsInformationProps = {

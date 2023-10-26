@@ -65,6 +65,8 @@ public class GetObjectDefinitionDeleteInfoMVCResourceCommand
 					objectScopeProvider.getGroupId(
 						_portal.getHttpServletRequest(resourceRequest)),
 					objectDefinitionId)
+			).put(
+				"status", objectDefinition.getStatus()
 			));
 	}
 

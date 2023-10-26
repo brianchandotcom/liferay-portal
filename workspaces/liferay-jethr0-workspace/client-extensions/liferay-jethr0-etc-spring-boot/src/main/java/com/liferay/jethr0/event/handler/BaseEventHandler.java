@@ -130,6 +130,12 @@ public abstract class BaseEventHandler implements EventHandler {
 			jsonObject.put(
 				"jenkinsBuildURL",
 				String.valueOf(buildRunEntity.getJenkinsBuildURL()));
+
+			BuildRunEntity.Result buildRunResult = buildRunEntity.getResult();
+
+			if (buildRunResult != null) {
+				jsonObject.put("result", buildRunResult.getKey());
+			}
 		}
 
 		jsonObject.put("status", status);

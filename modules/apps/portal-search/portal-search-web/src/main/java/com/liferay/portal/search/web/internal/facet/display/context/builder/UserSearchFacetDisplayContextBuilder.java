@@ -61,7 +61,7 @@ public class UserSearchFacetDisplayContextBuilder {
 			new UserSearchFacetDisplayContext();
 
 		userSearchFacetDisplayContext.setBucketDisplayContexts(
-			buildBucketDisplayContexts(termCollectors));
+			_buildBucketDisplayContexts(termCollectors));
 		userSearchFacetDisplayContext.setDisplayStyleGroupId(
 			getDisplayStyleGroupId());
 		userSearchFacetDisplayContext.setNothingSelected(nothingSelected);
@@ -142,7 +142,7 @@ public class UserSearchFacetDisplayContextBuilder {
 		return bucketDisplayContext;
 	}
 
-	protected List<BucketDisplayContext> buildBucketDisplayContexts(
+	private List<BucketDisplayContext> _buildBucketDisplayContexts(
 		List<TermCollector> termCollectors) {
 
 		if (termCollectors.isEmpty()) {

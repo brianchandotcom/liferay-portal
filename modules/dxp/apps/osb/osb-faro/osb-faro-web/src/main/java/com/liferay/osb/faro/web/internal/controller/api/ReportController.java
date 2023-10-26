@@ -41,9 +41,12 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 import javax.ws.rs.core.UriInfo;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Marcellus Tavares
  */
+@Component(service = ReportController.class)
 @Path("/reports")
 @Produces(MediaType.APPLICATION_JSON)
 @RequiresNoScope

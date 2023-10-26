@@ -36,7 +36,7 @@ exports[`EnvelopeForm renders 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#asterisk"
+                    href="#asterisk"
                   />
                 </svg>
               </span>
@@ -93,7 +93,7 @@ exports[`EnvelopeForm renders 1`] = `
                         role="presentation"
                       >
                         <use
-                          xlink:href="#asterisk"
+                          href="#asterisk"
                         />
                       </svg>
                     </span>
@@ -132,7 +132,7 @@ exports[`EnvelopeForm renders 1`] = `
                         role="presentation"
                       >
                         <use
-                          xlink:href="#asterisk"
+                          href="#asterisk"
                         />
                       </svg>
                     </span>
@@ -165,7 +165,7 @@ exports[`EnvelopeForm renders 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#trash"
+                      href="#trash"
                     />
                   </svg>
                 </button>
@@ -184,7 +184,7 @@ exports[`EnvelopeForm renders 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#plus"
+                  href="#plus"
                 />
               </svg>
             </span>
@@ -208,7 +208,7 @@ exports[`EnvelopeForm renders 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#asterisk"
+                    href="#asterisk"
                   />
                 </svg>
               </span>

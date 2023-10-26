@@ -19,7 +19,7 @@ exports[`ReactFieldBase does not render the add button when repeatable is true a
           role="presentation"
         >
           <use
-            xlink:href="#plus"
+            href="#plus"
           />
         </svg>
       </button>
@@ -176,7 +176,7 @@ exports[`ReactFieldBase renders the FieldBase with required 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#asterisk"
+            href="#asterisk"
           />
         </svg>
       </span>
@@ -215,7 +215,7 @@ exports[`ReactFieldBase renders the add button when repeatable is true 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#plus"
+            href="#plus"
           />
         </svg>
       </button>

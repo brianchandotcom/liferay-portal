@@ -38,7 +38,7 @@ exports[`SidebarPanelInfoView renders 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#bell-on"
+                  href="#bell-on"
                 />
               </svg>
             </button>
@@ -58,7 +58,7 @@ exports[`SidebarPanelInfoView renders 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#times"
+                  href="#times"
                 />
               </svg>
             </button>
@@ -136,7 +136,7 @@ exports[`SidebarPanelInfoView renders 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#user"
+                      href="#user"
                     />
                   </svg>
                 </span>
@@ -211,7 +211,7 @@ exports[`SidebarPanelInfoView renders 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#caret-bottom"
+                    href="#caret-bottom"
                   />
                 </svg>
               </button>
@@ -270,7 +270,7 @@ exports[`SidebarPanelInfoView renders 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#angle-right"
+                        href="#angle-right"
                       />
                     </svg>
                   </span>
@@ -282,7 +282,7 @@ exports[`SidebarPanelInfoView renders 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#angle-down"
+                        href="#angle-down"
                       />
                     </svg>
                   </span>
@@ -395,7 +395,7 @@ exports[`SidebarPanelInfoView renders 1`] = `
                             role="presentation"
                           >
                             <use
-                              xlink:href="#en-us"
+                              href="#en-us"
                             />
                           </svg>
                         </div>
@@ -439,7 +439,7 @@ exports[`SidebarPanelInfoView renders 1`] = `
                               role="presentation"
                             >
                               <use
-                                xlink:href="#view"
+                                href="#view"
                               />
                             </svg>
                           </a>
@@ -456,7 +456,7 @@ exports[`SidebarPanelInfoView renders 1`] = `
                             role="presentation"
                           >
                             <use
-                              xlink:href="#es-es"
+                              href="#es-es"
                             />
                           </svg>
                         </div>
@@ -490,7 +490,7 @@ exports[`SidebarPanelInfoView renders 1`] = `
                               role="presentation"
                             >
                               <use
-                                xlink:href="#view"
+                                href="#view"
                               />
                             </svg>
                           </a>
@@ -507,7 +507,7 @@ exports[`SidebarPanelInfoView renders 1`] = `
                             role="presentation"
                           >
                             <use
-                              xlink:href="#fr-fr"
+                              href="#fr-fr"
                             />
                           </svg>
                         </div>
@@ -541,7 +541,7 @@ exports[`SidebarPanelInfoView renders 1`] = `
                               role="presentation"
                             >
                               <use
-                                xlink:href="#view"
+                                href="#view"
                               />
                             </svg>
                           </a>
@@ -558,7 +558,7 @@ exports[`SidebarPanelInfoView renders 1`] = `
                             role="presentation"
                           >
                             <use
-                              xlink:href="#pt-br"
+                              href="#pt-br"
                             />
                           </svg>
                         </div>
@@ -592,7 +592,7 @@ exports[`SidebarPanelInfoView renders 1`] = `
                               role="presentation"
                             >
                               <use
-                                xlink:href="#view"
+                                href="#view"
                               />
                             </svg>
                           </a>

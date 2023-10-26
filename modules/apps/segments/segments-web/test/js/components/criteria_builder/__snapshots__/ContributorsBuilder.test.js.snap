@@ -51,7 +51,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                     role="presentation"
                   >
                     <use
-                      xlink:href="#search"
+                      href="#search"
                     />
                   </svg>
                 </button>
@@ -95,7 +95,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                     role="presentation"
                   >
                     <use
-                      xlink:href="#angle-right"
+                      href="#angle-right"
                     />
                   </svg>
                 </span>
@@ -107,7 +107,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                     role="presentation"
                   >
                     <use
-                      xlink:href="#angle-down"
+                      href="#angle-down"
                     />
                   </svg>
                 </span>
@@ -140,7 +140,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -155,7 +155,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -175,7 +175,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -190,7 +190,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -210,7 +210,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -225,7 +225,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -245,7 +245,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -260,7 +260,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             role="presentation"
                           >
                             <use
-                              xlink:href="#date"
+                              href="#date"
                             />
                           </svg>
                         </span>
@@ -280,7 +280,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -295,7 +295,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -315,7 +315,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -330,7 +330,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -350,7 +350,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -365,7 +365,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -385,7 +385,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -400,7 +400,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -420,7 +420,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -435,7 +435,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -455,7 +455,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -470,7 +470,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -490,7 +490,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -505,7 +505,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -525,7 +525,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -540,7 +540,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -560,7 +560,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -575,7 +575,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -595,7 +595,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -610,7 +610,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -630,7 +630,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -645,7 +645,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -665,7 +665,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -680,7 +680,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -700,7 +700,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -715,7 +715,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -735,7 +735,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -750,7 +750,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -789,7 +789,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                     role="presentation"
                   >
                     <use
-                      xlink:href="#angle-right"
+                      href="#angle-right"
                     />
                   </svg>
                 </span>
@@ -801,7 +801,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                     role="presentation"
                   >
                     <use
-                      xlink:href="#angle-down"
+                      href="#angle-down"
                     />
                   </svg>
                 </span>
@@ -834,7 +834,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -849,7 +849,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -869,7 +869,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -884,7 +884,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -904,7 +904,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -919,7 +919,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             role="presentation"
                           >
                             <use
-                              xlink:href="#date"
+                              href="#date"
                             />
                           </svg>
                         </span>
@@ -939,7 +939,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -954,7 +954,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -974,7 +974,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -989,7 +989,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -1009,7 +1009,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -1024,7 +1024,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -1044,7 +1044,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -1059,7 +1059,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -1079,7 +1079,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -1094,7 +1094,7 @@ exports[`ContributorsBuilder renders builder with sidebar: initialRenderEditing 
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -1221,7 +1221,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                     role="presentation"
                   >
                     <use
-                      xlink:href="#search"
+                      href="#search"
                     />
                   </svg>
                 </button>
@@ -1265,7 +1265,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                     role="presentation"
                   >
                     <use
-                      xlink:href="#angle-right"
+                      href="#angle-right"
                     />
                   </svg>
                 </span>
@@ -1277,7 +1277,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                     role="presentation"
                   >
                     <use
-                      xlink:href="#angle-down"
+                      href="#angle-down"
                     />
                   </svg>
                 </span>
@@ -1310,7 +1310,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -1325,7 +1325,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -1345,7 +1345,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -1360,7 +1360,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -1380,7 +1380,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -1395,7 +1395,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -1415,7 +1415,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -1430,7 +1430,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             role="presentation"
                           >
                             <use
-                              xlink:href="#date"
+                              href="#date"
                             />
                           </svg>
                         </span>
@@ -1450,7 +1450,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -1465,7 +1465,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -1485,7 +1485,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -1500,7 +1500,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -1520,7 +1520,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -1535,7 +1535,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -1555,7 +1555,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -1570,7 +1570,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -1590,7 +1590,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -1605,7 +1605,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -1625,7 +1625,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -1640,7 +1640,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -1660,7 +1660,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -1675,7 +1675,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -1695,7 +1695,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -1710,7 +1710,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -1730,7 +1730,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -1745,7 +1745,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -1765,7 +1765,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -1780,7 +1780,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -1800,7 +1800,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -1815,7 +1815,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -1835,7 +1835,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -1850,7 +1850,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -1870,7 +1870,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -1885,7 +1885,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -1905,7 +1905,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -1920,7 +1920,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -1959,7 +1959,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                     role="presentation"
                   >
                     <use
-                      xlink:href="#angle-right"
+                      href="#angle-right"
                     />
                   </svg>
                 </span>
@@ -1971,7 +1971,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                     role="presentation"
                   >
                     <use
-                      xlink:href="#angle-down"
+                      href="#angle-down"
                     />
                   </svg>
                 </span>
@@ -2004,7 +2004,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -2019,7 +2019,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -2039,7 +2039,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -2054,7 +2054,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -2074,7 +2074,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -2089,7 +2089,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             role="presentation"
                           >
                             <use
-                              xlink:href="#date"
+                              href="#date"
                             />
                           </svg>
                         </span>
@@ -2109,7 +2109,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -2124,7 +2124,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -2144,7 +2144,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -2159,7 +2159,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -2179,7 +2179,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -2194,7 +2194,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -2214,7 +2214,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -2229,7 +2229,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>
@@ -2249,7 +2249,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                           role="presentation"
                         >
                           <use
-                            xlink:href="#drag"
+                            href="#drag"
                           />
                         </svg>
                       </span>
@@ -2264,7 +2264,7 @@ exports[`ContributorsBuilder renders builder without sidebar: initialRenderNotEd
                             role="presentation"
                           >
                             <use
-                              xlink:href="#text"
+                              href="#text"
                             />
                           </svg>
                         </span>

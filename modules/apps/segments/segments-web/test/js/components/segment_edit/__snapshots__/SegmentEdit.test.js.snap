@@ -56,7 +56,7 @@ exports[`SegmentEdit renders 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#en-us"
+                    href="#en-us"
                   />
                 </svg>
                 <span
@@ -146,7 +146,7 @@ exports[`SegmentEdit renders with edit buttons if the user has update permission
                   role="presentation"
                 >
                   <use
-                    xlink:href="#en-us"
+                    href="#en-us"
                   />
                 </svg>
                 <span
@@ -213,7 +213,7 @@ exports[`SegmentEdit renders with edit buttons if the user has update permission
                   role="presentation"
                 >
                   <use
-                    xlink:href="#cog"
+                    href="#cog"
                   />
                 </svg>
               </button>
@@ -285,7 +285,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#en-us"
+                    href="#en-us"
                   />
                 </svg>
                 <span
@@ -350,7 +350,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#cog"
+                    href="#cog"
                   />
                 </svg>
               </button>
@@ -386,7 +386,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#warning-full"
+                      href="#warning-full"
                     />
                   </svg>
                 </span>
@@ -417,7 +417,7 @@ exports[`SegmentEdit renders with given values 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#times"
+                href="#times"
               />
             </svg>
           </button>
@@ -472,7 +472,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                         role="presentation"
                       >
                         <use
-                          xlink:href="#search"
+                          href="#search"
                         />
                       </svg>
                     </button>
@@ -516,7 +516,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                         role="presentation"
                       >
                         <use
-                          xlink:href="#angle-right"
+                          href="#angle-right"
                         />
                       </svg>
                     </span>
@@ -528,7 +528,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                         role="presentation"
                       >
                         <use
-                          xlink:href="#angle-down"
+                          href="#angle-down"
                         />
                       </svg>
                     </span>
@@ -561,7 +561,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                               role="presentation"
                             >
                               <use
-                                xlink:href="#drag"
+                                href="#drag"
                               />
                             </svg>
                           </span>
@@ -576,7 +576,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                                 role="presentation"
                               >
                                 <use
-                                  xlink:href="#text"
+                                  href="#text"
                                 />
                               </svg>
                             </span>
@@ -679,7 +679,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                                 role="presentation"
                               >
                                 <use
-                                  xlink:href="#drag"
+                                  href="#drag"
                                 />
                               </svg>
                             </div>
@@ -735,7 +735,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                                 role="presentation"
                               >
                                 <use
-                                  xlink:href="#paste"
+                                  href="#paste"
                                 />
                               </svg>
                             </button>
@@ -750,7 +750,7 @@ exports[`SegmentEdit renders with given values 1`] = `
                                 role="presentation"
                               >
                                 <use
-                                  xlink:href="#times-circle"
+                                  href="#times-circle"
                                 />
                               </svg>
                             </button>
@@ -849,7 +849,7 @@ exports[`SegmentEdit renders without edit buttons if the user does not have upda
                   role="presentation"
                 >
                   <use
-                    xlink:href="#en-us"
+                    href="#en-us"
                   />
                 </svg>
                 <span

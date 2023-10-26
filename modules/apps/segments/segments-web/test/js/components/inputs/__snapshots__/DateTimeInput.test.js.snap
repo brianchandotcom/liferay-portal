@@ -42,7 +42,7 @@ exports[`DateTimeInput renders date with no change in the input 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#calendar"
+                  href="#calendar"
                 />
               </svg>
             </button>
@@ -96,7 +96,7 @@ exports[`DateTimeInput renders date-time with no change in the input 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#calendar"
+                  href="#calendar"
                 />
               </svg>
             </button>
@@ -150,7 +150,7 @@ exports[`DateTimeInput renders previous date with wrong date 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#calendar"
+                  href="#calendar"
                 />
               </svg>
             </button>
@@ -204,7 +204,7 @@ exports[`DateTimeInput renders previous date with wrong date-time 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#calendar"
+                  href="#calendar"
                 />
               </svg>
             </button>
@@ -258,7 +258,7 @@ exports[`DateTimeInput renders type date 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#calendar"
+                  href="#calendar"
                 />
               </svg>
             </button>
@@ -312,7 +312,7 @@ exports[`DateTimeInput renders type date-time 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#calendar"
+                  href="#calendar"
                 />
               </svg>
             </button>

@@ -36,7 +36,7 @@ exports[`DigitalSignatureForm Validates required fields 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#asterisk"
+                    href="#asterisk"
                   />
                 </svg>
               </span>
@@ -104,7 +104,7 @@ exports[`DigitalSignatureForm Validates required fields 1`] = `
                         role="presentation"
                       >
                         <use
-                          xlink:href="#asterisk"
+                          href="#asterisk"
                         />
                       </svg>
                     </span>
@@ -154,7 +154,7 @@ exports[`DigitalSignatureForm Validates required fields 1`] = `
                         role="presentation"
                       >
                         <use
-                          xlink:href="#asterisk"
+                          href="#asterisk"
                         />
                       </svg>
                     </span>
@@ -198,7 +198,7 @@ exports[`DigitalSignatureForm Validates required fields 1`] = `
                     role="presentation"
                   >
                     <use
-                      xlink:href="#trash"
+                      href="#trash"
                     />
                   </svg>
                 </button>
@@ -217,7 +217,7 @@ exports[`DigitalSignatureForm Validates required fields 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#plus"
+                  href="#plus"
                 />
               </svg>
             </span>
@@ -241,7 +241,7 @@ exports[`DigitalSignatureForm Validates required fields 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#asterisk"
+                    href="#asterisk"
                   />
                 </svg>
               </span>

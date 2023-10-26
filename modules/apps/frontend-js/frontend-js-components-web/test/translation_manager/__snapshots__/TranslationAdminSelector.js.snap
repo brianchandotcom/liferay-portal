@@ -33,7 +33,7 @@ exports[`TranslationAdminSelector is used as a controlled component 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#en-us"
+                  href="#en-us"
                 />
               </svg>
               en-US
@@ -81,7 +81,7 @@ exports[`TranslationAdminSelector is used as a controlled component 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#ar-sa"
+                  href="#ar-sa"
                 />
               </svg>
               ar-SA
@@ -129,7 +129,7 @@ exports[`TranslationAdminSelector is used as a controlled component 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#nl-nl"
+                  href="#nl-nl"
                 />
               </svg>
               nl-NL
@@ -180,7 +180,7 @@ exports[`TranslationAdminSelector renders a dropdown trigger with the selected l
           role="presentation"
         >
           <use
-            xlink:href="#en-us"
+            href="#en-us"
           />
         </svg>
       </span>
@@ -239,7 +239,7 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
                 role="presentation"
               >
                 <use
-                  xlink:href="#en-us"
+                  href="#en-us"
                 />
               </svg>
               en-US
@@ -287,7 +287,7 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
                 role="presentation"
               >
                 <use
-                  xlink:href="#ca-es"
+                  href="#ca-es"
                 />
               </svg>
               ca-ES
@@ -350,7 +350,7 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
                 role="presentation"
               >
                 <use
-                  xlink:href="#en-us"
+                  href="#en-us"
                 />
               </svg>
               en-US
@@ -398,7 +398,7 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
                 role="presentation"
               >
                 <use
-                  xlink:href="#ca-es"
+                  href="#ca-es"
                 />
               </svg>
               ca-ES
@@ -451,7 +451,7 @@ exports[`TranslationAdminSelector renders an open dropdown with the list of acti
                 role="presentation"
               >
                 <use
-                  xlink:href="#automatic-translate"
+                  href="#automatic-translate"
                 />
               </svg>
               manage-translations
@@ -498,7 +498,7 @@ exports[`TranslationAdminSelector renders an open dropdown with updated active l
                 role="presentation"
               >
                 <use
-                  xlink:href="#en-us"
+                  href="#en-us"
                 />
               </svg>
               en-US
@@ -546,7 +546,7 @@ exports[`TranslationAdminSelector renders an open dropdown with updated active l
                 role="presentation"
               >
                 <use
-                  xlink:href="#ar-sa"
+                  href="#ar-sa"
                 />
               </svg>
               ar-SA
@@ -594,7 +594,7 @@ exports[`TranslationAdminSelector renders an open dropdown with updated active l
                 role="presentation"
               >
                 <use
-                  xlink:href="#nl-nl"
+                  href="#nl-nl"
                 />
               </svg>
               nl-NL
@@ -647,7 +647,7 @@ exports[`TranslationAdminSelector renders an open dropdown with updated active l
                 role="presentation"
               >
                 <use
-                  xlink:href="#automatic-translate"
+                  href="#automatic-translate"
                 />
               </svg>
               manage-translations
@@ -682,7 +682,7 @@ exports[`TranslationAdminSelector selects the default locale if the current sele
           role="presentation"
         >
           <use
-            xlink:href="#en-us"
+            href="#en-us"
           />
         </svg>
       </span>

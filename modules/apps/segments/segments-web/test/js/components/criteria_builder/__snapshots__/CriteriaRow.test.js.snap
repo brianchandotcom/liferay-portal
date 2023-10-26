@@ -16,7 +16,7 @@ exports[`CriteriaRow renders 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#drag"
+            href="#drag"
           />
         </svg>
       </div>
@@ -72,7 +72,7 @@ exports[`CriteriaRow renders 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#paste"
+            href="#paste"
           />
         </svg>
       </button>
@@ -87,7 +87,7 @@ exports[`CriteriaRow renders 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#times-circle"
+            href="#times-circle"
           />
         </svg>
       </button>
@@ -112,7 +112,7 @@ exports[`CriteriaRow renders and inform there is an unknown property 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#drag"
+            href="#drag"
           />
         </svg>
       </div>
@@ -188,7 +188,7 @@ exports[`CriteriaRow renders and inform there is an unknown property 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#exclamation-full"
+                href="#exclamation-full"
               />
             </svg>
           </span>

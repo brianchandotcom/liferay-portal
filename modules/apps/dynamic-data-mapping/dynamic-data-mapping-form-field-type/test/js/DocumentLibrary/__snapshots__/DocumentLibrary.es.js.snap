@@ -69,7 +69,7 @@ exports[`Field DocumentLibrary has a helptext 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#exclamation-full"
+              href="#exclamation-full"
             />
           </svg>
         </span>
@@ -168,7 +168,7 @@ exports[`Field DocumentLibrary has a label 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#exclamation-full"
+              href="#exclamation-full"
             />
           </svg>
         </span>
@@ -257,7 +257,7 @@ exports[`Field DocumentLibrary has a placeholder 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#exclamation-full"
+              href="#exclamation-full"
             />
           </svg>
         </span>
@@ -343,7 +343,7 @@ exports[`Field DocumentLibrary has a spritemap 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#exclamation-full"
+              href="#exclamation-full"
             />
           </svg>
         </span>
@@ -429,7 +429,7 @@ exports[`Field DocumentLibrary has a value 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#exclamation-full"
+              href="#exclamation-full"
             />
           </svg>
         </span>
@@ -516,7 +516,7 @@ exports[`Field DocumentLibrary has an id 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#exclamation-full"
+              href="#exclamation-full"
             />
           </svg>
         </span>
@@ -657,7 +657,7 @@ exports[`Field DocumentLibrary is not required 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#exclamation-full"
+              href="#exclamation-full"
             />
           </svg>
         </span>
@@ -749,7 +749,7 @@ exports[`Field DocumentLibrary renders Label if showLabel is true 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#exclamation-full"
+              href="#exclamation-full"
             />
           </svg>
         </span>

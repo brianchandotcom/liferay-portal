@@ -21,7 +21,7 @@ exports[`LocalizedInput rendering with pre-existing value renders 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#en-us"
+            href="#en-us"
           />
         </svg>
         <span
@@ -68,7 +68,7 @@ exports[`LocalizedInput with minimal configuration renders 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#en-us"
+            href="#en-us"
           />
         </svg>
         <span

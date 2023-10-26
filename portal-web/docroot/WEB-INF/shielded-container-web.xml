@@ -365,6 +365,10 @@
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>I18n Servlet</servlet-name>
+		<url-pattern>/en-CA/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>I18n Servlet</servlet-name>
 		<url-pattern>/en-GB/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
@@ -374,6 +378,10 @@
 	<servlet-mapping>
 		<servlet-name>I18n Servlet</servlet-name>
 		<url-pattern>/en_AU/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>I18n Servlet</servlet-name>
+		<url-pattern>/en_CA/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>I18n Servlet</servlet-name>

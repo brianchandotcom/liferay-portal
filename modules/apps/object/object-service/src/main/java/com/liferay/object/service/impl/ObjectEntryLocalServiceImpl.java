@@ -4202,11 +4202,7 @@ public class ObjectEntryLocalServiceImpl
 		throws PortalException {
 
 		for (ObjectField objectField : objectFields) {
-			if (!GetterUtil.getBoolean(
-					ObjectFieldSettingUtil.getValue(
-						ObjectFieldSettingConstants.NAME_UNIQUE_VALUES,
-						objectField))) {
-
+			if (!objectField.hasUniqueValues()) {
 				continue;
 			}
 

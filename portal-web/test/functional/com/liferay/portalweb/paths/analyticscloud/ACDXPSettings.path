@@ -189,7 +189,7 @@
 
 <tr>
 	<td>AC_GENERIC_CANCEL_BUTTON</td>
-	<td>//*[contains(@class, 'btn-secondary')]</td>
+	<td>//*[contains(@class, 'btn-secondary') and text()='Cancel']</td>
 	<td></td>
 </tr>
 

@@ -2020,6 +2020,23 @@ definition {
 		}
 	}
 
+	macro viewCategorizationCategoriesOrderCP {
+		Panel.expandPanel(panel = "Categorization");
+
+		var index = 1;
+
+		for (var categoryName : list ${categoryNameList}) {
+			AssertTextEquals(
+				key_categoryName = ${categoryName},
+				key_index = ${index},
+				key_vocabularyName = ${vocabularyName},
+				locator1 = "AssetCategorization#CATEGORY_BY_INDEX",
+				value1 = ${categoryName});
+
+			var index = ${index} + 1;
+		}
+	}
+
 	macro viewCategorizationCategoryCP {
 		Panel.expandPanel(panel = "Categorization");
 

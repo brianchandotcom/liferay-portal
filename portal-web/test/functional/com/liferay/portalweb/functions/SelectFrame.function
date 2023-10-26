@@ -20,7 +20,7 @@ definition {
 		}
 
 		WaitForSPARefresh();
-}
+	}
 
 	function selectFrameNoLoading(locator1) {
 		if (contains(${locator1}, "/iframe")) {

@@ -8,10 +8,14 @@ package com.liferay.saved.content.service.impl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
+import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.saved.content.exception.DuplicateSavedContentEntryException;
 import com.liferay.saved.content.model.SavedContentEntry;
 import com.liferay.saved.content.service.base.SavedContentEntryLocalServiceBaseImpl;
@@ -32,8 +36,32 @@ public class SavedContentEntryLocalServiceImpl
 	extends SavedContentEntryLocalServiceBaseImpl {
 
 	@Override
+	public void addEntryResources(
+			SavedContentEntry entry, boolean addGroupPermissions,
+			boolean addGuestPermissions)
+		throws PortalException {
+
+		_resourceLocalService.addResources(
+			entry.getCompanyId(), entry.getGroupId(), entry.getUserId(),
+			SavedContentEntry.class.getName(), entry.getSavedContentEntryId(),
+			false, addGroupPermissions, addGuestPermissions);
+	}
+
+	public void addEntryResources(
+			SavedContentEntry entry, ModelPermissions modelPermissions)
+		throws PortalException {
+
+		_resourceLocalService.addModelResources(
+			entry.getCompanyId(), entry.getGroupId(), entry.getUserId(),
+			SavedContentEntry.class.getName(), entry.getSavedContentEntryId(),
+			modelPermissions);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public SavedContentEntry addSavedContentEntry(
-			long groupId, long userId, String className, long classPK)
+			long groupId, long userId, String className, long classPK,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_validate(groupId, userId, className, classPK);
@@ -57,7 +85,24 @@ public class SavedContentEntryLocalServiceImpl
 			_classNameLocalService.getClassNameId(className));
 		savedContentEntry.setClassPK(classPK);
 
-		return savedContentEntryPersistence.update(savedContentEntry);
+		savedContentEntry = savedContentEntryPersistence.update(
+			savedContentEntry);
+
+		// Resources
+
+		if (serviceContext.isAddGroupPermissions() ||
+			serviceContext.isAddGuestPermissions()) {
+
+			addEntryResources(
+				savedContentEntry, serviceContext.isAddGroupPermissions(),
+				serviceContext.isAddGuestPermissions());
+		}
+		else {
+			addEntryResources(
+				savedContentEntry, serviceContext.getModelPermissions());
+		}
+
+		return savedContentEntry;
 	}
 
 	@Override
@@ -85,6 +130,9 @@ public class SavedContentEntryLocalServiceImpl
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

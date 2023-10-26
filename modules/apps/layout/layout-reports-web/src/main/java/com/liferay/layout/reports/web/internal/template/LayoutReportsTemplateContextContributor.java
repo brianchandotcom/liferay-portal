@@ -58,7 +58,8 @@ public class LayoutReportsTemplateContextContributor
 
 			contextObjects.put(
 				"bodyCssClass",
-				cssClass + " lfr-has-layout-reports-panel open-admin-panel");
+				cssClass +
+					" lfr-has-layout-reports-panel open-admin-panel open");
 		}
 	}
 

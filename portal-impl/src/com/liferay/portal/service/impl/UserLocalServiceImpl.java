@@ -6283,9 +6283,22 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				}
 			}
 
+			PasswordPolicy passwordPolicy = user.getPasswordPolicy();
+
+			Date expirationDate = null;
+
+			if ((passwordPolicy != null) &&
+				(passwordPolicy.getResetTicketMaxAge() > 0)) {
+
+				expirationDate = new Date(
+					System.currentTimeMillis() +
+						(passwordPolicy.getResetTicketMaxAge() * 1000));
+			}
+
 			Ticket ticket = _ticketLocalService.addDistinctTicket(
 				user.getCompanyId(), User.class.getName(), user.getUserId(),
-				TicketConstants.TYPE_PASSWORD, null, null, serviceContext);
+				TicketConstants.TYPE_PASSWORD, null, expirationDate,
+				serviceContext);
 
 			passwordResetURL = StringBundler.concat(
 				serviceContext.getPortalURL(), serviceContext.getPathMain(),

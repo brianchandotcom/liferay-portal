@@ -1325,7 +1325,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro configureMaxCopySize {
+	@summary = "Default summary"
+	macro configureMaxCopySize(existingLimit = null, copyLimit = null,) {
 		if (isSet(existingLimit)) {
 			AssertTextEquals(
 				key_text = "Size Limit for Copying Files",
@@ -1343,7 +1344,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro copy {
+	@summary = "Default summary"
+	macro copy(dmDocumentTitle = null, depotName = null, targetFolderName = null, siteName = null, copyExceedsSizeLimit = null, limitingHierarchy = null,) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Copy To",
 			rowEntry = ${dmDocumentTitle});

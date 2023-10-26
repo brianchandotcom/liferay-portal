@@ -683,7 +683,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro viewDisplayTemplate {
+	@summary = "Default summary"
+	macro viewDisplayTemplate(displayTemplate = null,) {
 		AssertElementPresent(
 			key_class = "display-template-selector",
 			key_index = 1,

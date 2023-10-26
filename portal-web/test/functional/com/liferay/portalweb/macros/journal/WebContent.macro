@@ -2094,7 +2094,8 @@ definition {
 		}
 	}
 
-	macro viewCategorizationCategoriesOrderCP {
+	@summary = "Default summary"
+	macro viewCategorizationCategoriesOrderCP(vocabularyName = null, categoryNameList = null,) {
 		Panel.expandPanel(panel = "Categorization");
 
 		var index = 1;
@@ -2111,7 +2112,8 @@ definition {
 		}
 	}
 
-	macro viewCategorizationCategoryCP {
+	@summary = "Default summary"
+	macro viewCategorizationCategoryCP(categoryNameList = null,) {
 		Panel.expandPanel(panel = "Categorization");
 
 		for (var categoryName : list ${categoryNameList}) {

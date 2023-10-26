@@ -32,7 +32,8 @@ definition {
 		}
 	}
 
-	macro _deleteOrganizationById {
+	@summary = "Default summary"
+	macro _deleteOrganizationById(organizationId = null,) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -52,7 +53,8 @@ definition {
 		JSONCurlUtil.delete(${curl});
 	}
 
-	macro _getOrganizationIds {
+	@summary = "Default summary"
+	macro _getOrganizationIds() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {

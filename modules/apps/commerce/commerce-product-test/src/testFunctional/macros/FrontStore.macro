@@ -471,7 +471,8 @@ definition {
 		}
 	}
 
-	macro editMiniCartItemBundledProduct {
+	@summary = "Default summary"
+	macro editMiniCartItemBundledProduct(date = null, boolean = null, multipleSelectionValuesChecked = null, cartItemOptionName = null, multipleSelectionValuesNotChecked = null, numeric = null, cartItemOptionValue = null, text = null, singleSelectionValueNotChecked = null, singleSelectionValueChecked = null,) {
 		Select(
 			key_optionName = ${cartItemOptionName},
 			locator1 = "CommerceAccelerators#MINI_CART_PRODUCT_OPTIONS_SELECT",
@@ -499,7 +500,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro editUOMAndQuantityInMiniCart {
+	@summary = "Default summary"
+	macro editUOMAndQuantityInMiniCart(quantity = null, uomKey = null, uomName = null,) {
 		Click(
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS_WITH_UOM",
 			uomKey = ${uomKey});
@@ -542,7 +544,8 @@ definition {
 		return ${newItemCount};
 	}
 
-	macro gotoEditMiniCartItemBundledProduct {
+	@summary = "Default summary"
+	macro gotoEditMiniCartItemBundledProduct(cartItemSku = null,) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -555,7 +558,8 @@ definition {
 		MenuItem.click(menuItem = "Edit");
 	}
 
-	macro quickAddToCartSearchAndSelectItem {
+	@summary = "Default summary"
+	macro quickAddToCartSearchAndSelectItem(orderItemSku = null,) {
 		Type(
 			locator1 = "Publications#KEYWORD_TEXTFIELD",
 			value1 = ${orderItemSku});
@@ -573,7 +577,8 @@ definition {
 			value1 = ${fsOptionValue});
 	}
 
-	macro setAssociatedFSOptionsValue {
+	@summary = "Default summary"
+	macro setAssociatedFSOptionsValue(date = null, boolean = null, multipleSelectionValuesChecked = null, multipleSelectionValuesNotChecked = null, numeric = null, text = null, singleSelectionValueChecked = null,) {
 		if (${boolean} == "enabled") {
 			Check.checkNotVisible(
 				checkboxName = "",
@@ -628,7 +633,8 @@ definition {
 		}
 	}
 
-	macro setMaxComparisonItems {
+	@summary = "Default summary"
+	macro setMaxComparisonItems(maxItems = null,) {
 		Portlet.gotoPortletOptions(
 			portletName = "Product Comparison",
 			portletOption = "Configuration");
@@ -673,7 +679,8 @@ definition {
 		return ${quantityConfigurationText};
 	}
 
-	macro viewAssociatedFSOptionsValue {
+	@summary = "Default summary"
+	macro viewAssociatedFSOptionsValue(boolean = null, multipleSelectionValuesChecked = null, multipleSelectionValuesNotChecked = null, numeric = null, text = null, singleSelectionValueChecked = null,) {
 		if (${boolean} == "enabled") {
 			AssertChecked.assertCheckedNotVisible(
 				checkboxName = "",
@@ -737,7 +744,8 @@ definition {
 		}
 	}
 
-	macro viewGroupedProductEntries {
+	@summary = "Default summary"
+	macro viewGroupedProductEntries(productNames = null,) {
 		Variables.assertDefined(parameterList = ${productNames});
 
 		for (var productName : list ${productNames}) {
@@ -800,7 +808,8 @@ definition {
 		}
 	}
 
-	macro viewMiniCartEditBundledProduct {
+	@summary = "Default summary"
+	macro viewMiniCartEditBundledProduct(date = null, multipleSelectionValuesChecked = null, cartItemPromoPriceValue = null, cartItemPriceAsConfiguredValue = null, numeric = null, cartItemPriceValue = null, singleSelectionValueNotChecked = null, boolean = null, cartItemPriceInactiveValue = null, cartItemDiscountValue = null, cartItemOptionName = null, multipleSelectionValuesNotChecked = null, cartItemOptionValue = null, text = null, singleSelectionValueChecked = null,) {
 		AssertVisible(
 			key_productName = "Bundled Product",
 			locator1 = "CommerceAccelerators#MINI_CART_EDIT_ITEM_PANEL");
@@ -854,7 +863,8 @@ definition {
 			text = ${text});
 	}
 
-	macro viewMiniCartItem {
+	@summary = "Default summary"
+	macro viewMiniCartItem(cartItemPriceInactiveValue = null, cartItemName = null, cartItemPromoPriceValue = null, cartItemQuantity = null, bundledItems = null, cartItemSku = null, cartItemPriceValue = null, cartItemUOMKey = null,) {
 		if (!(isSet(cartItemPriceOnApplication))) {
 			var cartItemPriceOnApplication = "false";
 		}

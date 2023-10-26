@@ -18,10 +18,8 @@ public class DBPartitionVirtualInstanceInsertionConfigurationModelListenerTest
 	extends BaseConfigurationModelListenerTestCase {
 
 	@Test
-	public void testDeployedInsertionConfigurationFileIsDeleted()
-		throws Exception {
-
-		testDeployedConfigurationFileIsDeleted(
+	public void testConfigurationIsDeletedAfterDeploy() throws Exception {
+		testConfigurationIsDeletedAfterDeploy(
 			_PID, "newWebId=T\"testNewWebId\"\nwebId=T\"testWebId\"\n");
 	}
 

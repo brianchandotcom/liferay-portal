@@ -18,10 +18,8 @@ public class DBPartitionVirtualInstanceExtractionConfigurationModelListenerTest
 	extends BaseConfigurationModelListenerTestCase {
 
 	@Test
-	public void testDeployedExtractionConfigurationFileIsDeleted()
-		throws Exception {
-
-		testDeployedConfigurationFileIsDeleted(_PID, "webId=T\"testWebId\"\n");
+	public void testConfigurationIsDeletedAfterDeploy() throws Exception {
+		testConfigurationIsDeletedAfterDeploy(_PID, "webId=T\"testWebId\"\n");
 	}
 
 	private static final String _PID =

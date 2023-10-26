@@ -55,7 +55,7 @@ public abstract class BaseConfigurationModelListenerTestCase
 		_deleteConfiguration();
 	}
 
-	protected void testDeployedConfigurationFileIsDeleted(
+	protected void testConfigurationIsDeletedAfterDeploy(
 			String pid, String content)
 		throws Exception {
 
@@ -66,8 +66,8 @@ public abstract class BaseConfigurationModelListenerTestCase
 		_configurationPath = Paths.get(
 			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR, pid.concat(".config"));
 
-		try (AutoCloseable autoCloseable = _registerDeleteConfigurationListener(
-				pid)) {
+		try (AutoCloseable autoCloseable =
+				_registerOnAfterDeleteConfigurationModelListener(pid)) {
 
 			_createConfiguration(pid, content);
 
@@ -107,7 +107,9 @@ public abstract class BaseConfigurationModelListenerTestCase
 		}
 	}
 
-	private AutoCloseable _registerDeleteConfigurationListener(String pid) {
+	private AutoCloseable _registerOnAfterDeleteConfigurationModelListener(
+		String pid) {
+
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		_countDownLatch = new CountDownLatch(1);

@@ -40,6 +40,11 @@
 		<td>//span[text()='Changes Saved']</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>SELECT_OBJECT_IN_LEFT_SIDEBAR</td>
+		<td>//div[contains(@class,'left-sidebar-current-object-folder-group')]//span[contains(@class,'c-inner') and contains(.,'${key_label}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

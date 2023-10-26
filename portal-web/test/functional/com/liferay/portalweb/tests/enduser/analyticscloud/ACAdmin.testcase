@@ -114,8 +114,6 @@ definition {
 				locator1 = "Button#SUBMIT",
 				value1 = "Save");
 
-			UserNavigator.gotoUser(userScreenName = ${userScreenName});
-
 			UserNavigator.gotoPassword();
 
 			User.resetPassword();
@@ -142,13 +140,7 @@ definition {
 				emailAddress = ${userEmailAddress},
 				password = "test");
 
-			Open(value1 = ${analyticsCloudURL});
-
 			ACAdmin.goToACAdmin();
-		}
-
-		task ("Redefine the password of the new user") {
-			User.resetPassword(newPassword = "test1");
 		}
 
 		task ("Assert that the user does not have permission to access the admin page") {
@@ -171,7 +163,6 @@ definition {
 		var userLastName = "ac";
 		var userScreenName = "acworkspace";
 		var userEmailAddress = "acworkspace@liferay.com";
-		var currentURL = Navigator.getCurrentURL();
 
 		task ("Connect AC and DXP and generate some events") {
 			ACUtils.launchAC();
@@ -215,8 +206,6 @@ definition {
 			AssertClick(
 				locator1 = "Button#SUBMIT",
 				value1 = "Save");
-
-			UserNavigator.gotoUser(userScreenName = ${userScreenName});
 
 			UserNavigator.gotoPassword();
 

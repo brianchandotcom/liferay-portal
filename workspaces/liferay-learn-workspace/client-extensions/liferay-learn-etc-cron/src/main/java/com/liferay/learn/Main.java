@@ -272,7 +272,7 @@ public class Main {
 					_structuredContentResource.
 						putStructuredContentPermissionsPage(
 							importedStructuredContent.getId(),
-							_setPermissions(
+							_getPermissions(
 								fileName, importedStructuredContent.getId()));
 
 					updatedStructuredContentCount++;
@@ -301,7 +301,7 @@ public class Main {
 							structuredContent.getFriendlyUrlPath());
 
 					structuredContent.setPermissions(
-						_setPermissions(fileName, structuredContent.getId()));
+						_getPermissions(fileName, structuredContent.getId()));
 
 					importedStructuredContent =
 						_structuredContentResource.
@@ -1560,7 +1560,7 @@ public class Main {
 		return line;
 	}
 
-	private Permission[] _setPermissions(
+	private Permission[] _getPermissions(
 			String fileName, Long structuredContentId)
 		throws Exception {
 

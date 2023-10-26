@@ -315,6 +315,13 @@
 	},
 	{
 		"classNames": [
+			"CommerceOrderItem"
+		],
+		"from": "getQuantity()",
+		"issueKey": "LPS-197931"
+	},
+	{
+		"classNames": [
 			"CPInstanceLocalService",
 			"CPInstanceLocalServiceUtil",
 			"CPInstanceService",

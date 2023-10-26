@@ -12,7 +12,6 @@ declare type DeleteObjectDefinitionProps = {
 	objectDefinitionId: number;
 	objectDefinitionName: string;
 	setDeletedObjectDefinition: (value: DeletedObjectDefinition) => void;
-	status: string;
 };
 declare type ObjectDefinitionNodeActionsProps = {
 	baseResourceURL: string;
@@ -55,7 +54,6 @@ export declare function deleteObjectDefinition({
 	objectDefinitionId,
 	objectDefinitionName,
 	setDeletedObjectDefinition,
-	status,
 }: DeleteObjectDefinitionProps): Promise<void>;
 export declare function deleteRelationship(id: number): Promise<void>;
 export declare function getObjectDefinitionNodeActions({
@@ -69,7 +67,6 @@ export declare function getObjectDefinitionNodeActions({
 	objectDefinitionName,
 	objectDefinitionPermissionsURL,
 	setDeletedObjectDefinition,
-	status,
 }: ObjectDefinitionNodeActionsProps): DropDownItems[];
 export declare function getObjectFolderActions(
 	id: number,

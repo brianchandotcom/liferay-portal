@@ -8,6 +8,7 @@ package com.liferay.saved.content.web.internal.portlet.action;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -63,7 +64,9 @@ public class EditSavedContentMVCActionCommand extends BaseMVCActionCommand {
 
 		if (savedContentEntry == null) {
 			_savedContentEntryService.addSavedContentEntry(
-				themeDisplay.getScopeGroupId(), className, classPK);
+				themeDisplay.getScopeGroupId(), className, classPK,
+				ServiceContextFactory.getInstance(
+					SavedContentEntry.class.getName(), actionRequest));
 
 			return Boolean.TRUE.toString();
 		}

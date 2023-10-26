@@ -94,7 +94,7 @@ if (portletTitleBasedNavigation) {
 							type="button"
 						/>
 
-						<h3 class="mb-1 text-secondary"><%= dlViewFileEntryDisplayContext.getDocumentTitle() %></h3>
+						<h3 class="mb-1 text-secondary"><%= HtmlUtil.escape(dlViewFileEntryDisplayContext.getDocumentTitle()) %></h3>
 					</li>
 					<li class="nav-item">
 						<liferay-frontend:sidebar-toggler-button

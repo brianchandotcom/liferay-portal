@@ -19,8 +19,8 @@ import {getCustomFieldValue} from '../../../utils/customFieldUtil';
 import {removeProtocolURL, showAccountImage} from '../../../utils/util';
 
 import './Accounts.scss';
-import useMembers from '../../../components/MembersPage/useMembers';
 import EmptyState from '../../../components/EmptyState';
+import useMembers from '../../../components/MembersPage/useMembers';
 
 type AccountDetailsPageProps = {
 	commerceAccount?: CommerceAccount;
@@ -77,8 +77,9 @@ function AccountDetailsPage({
 	totalMembers,
 }: AccountDetailsPageProps) {
 	const navigate = useNavigate();
-	const [selectedAccountAddress, setSelectedAccountAddress] =
-		useState<AccountPostalAddresses[]>();
+	const [selectedAccountAddress, setSelectedAccountAddress] = useState<
+		AccountPostalAddresses[]
+	>();
 
 	let accountType = '';
 	if (selectedAccount) {
@@ -127,14 +128,14 @@ function AccountDetailsPage({
 
 						<div className="account-details-header-right-container">
 							<AccountHeaderButton
-								count={totalApps as unknown as string}
+								count={(totalApps as unknown) as string}
 								name="apps"
 								onClick={() => navigate('/')}
 								text="Apps"
 								title="Apps"
 							/>
 							<AccountHeaderButton
-								count={totalMembers as unknown as string}
+								count={(totalMembers as unknown) as string}
 								name="members"
 								onClick={() => navigate('/members')}
 								text="Items"
@@ -367,8 +368,12 @@ function AccountDetailsPage({
 }
 
 const Accounts = () => {
-	const {accountId, appsTotalCount, commerceAccount, selectedAccount} =
-		useOutletContext<any>();
+	const {
+		accountId,
+		appsTotalCount,
+		commerceAccount,
+		selectedAccount,
+	} = useOutletContext<any>();
 
 	const members = useMembers({
 		accountId,

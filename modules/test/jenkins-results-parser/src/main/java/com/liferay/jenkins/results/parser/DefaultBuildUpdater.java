@@ -86,16 +86,16 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 		JSONObject buildJSONObject = build.getBuildJSONObject("result");
 
 		if (buildJSONObject == null) {
-			return false;
+			return true;
 		}
 
 		String result = buildJSONObject.optString("result");
 
 		if (!Objects.equals(result, "SUCCESS")) {
-			return false;
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	@Override

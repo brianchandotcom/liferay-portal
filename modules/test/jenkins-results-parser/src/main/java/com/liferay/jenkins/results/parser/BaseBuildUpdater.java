@@ -98,7 +98,7 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 	protected void runReporting() {
 		_build.setStatus("reporting");
 
-		if (isBuildCompleted()) {
+		if (isBuildFailing()) {
 			_isApplySlaveOfflineRules();
 
 			if (_isApplyReinvokeRules()) {
@@ -145,9 +145,8 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 			return false;
 		}
 
-		if ((build.isCompleted() && !build.isFailing()) ||
-			!build.isCompleted() || build.isFromArchive() ||
-			build.hasMaximumInvocationCount()) {
+		if ((isBuildCompleted() && !isBuildFailing()) || !isBuildCompleted() ||
+			build.isFromArchive() || build.hasMaximumInvocationCount()) {
 
 			return false;
 		}
@@ -172,8 +171,8 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 			return false;
 		}
 
-		if ((build.isCompleted() && !build.isFailing()) ||
-			!build.isCompleted() || build.isFromArchive()) {
+		if ((isBuildCompleted() && !isBuildFailing()) || !isBuildCompleted() ||
+			build.isFromArchive()) {
 
 			return false;
 		}

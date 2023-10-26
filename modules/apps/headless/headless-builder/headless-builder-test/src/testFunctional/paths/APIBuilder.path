@@ -126,6 +126,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ODATA_TEXTAREA</td>
+	<td>//textarea[@placeholder='Add a ${fieldName} using OData.']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PUBLISH_BUTTON</td>
 	<td>//button[contains(text(),'Publish')]</td>
 	<td></td>

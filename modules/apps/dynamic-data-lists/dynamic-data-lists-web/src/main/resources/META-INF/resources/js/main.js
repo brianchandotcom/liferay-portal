@@ -109,8 +109,8 @@ AUI.add(
 					dataType: 'JSON',
 					method: 'POST',
 					on: {
-						success() {
-							callback();
+						success(data) {
+							callback(JSON.parse(data.details[1].response));
 						},
 					},
 				});

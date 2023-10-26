@@ -6,6 +6,7 @@
 package com.liferay.portal.repository.external;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.repository.BaseRepository;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.RepositoryConfiguration;
@@ -17,7 +18,6 @@ import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.repository.util.ExternalRepositoryFactoryUtil;
 
 /**
@@ -87,9 +87,12 @@ public class LegacyExternalRepositoryDefiner extends BaseRepositoryDefiner {
 	public void registerCapabilities(
 		CapabilityRegistry<DocumentRepository> capabilityRegistry) {
 
+		PortalCapabilityLocator portalCapabilityLocator =
+			_portalCapabilityLocatorSnapshot.get();
+
 		capabilityRegistry.addSupportedCapability(
 			ProcessorCapability.class,
-			_portalCapabilityLocator.getProcessorCapability(
+			portalCapabilityLocator.getProcessorCapability(
 				capabilityRegistry.getTarget(),
 				ProcessorCapability.ResourceGenerationStrategy.
 					ALWAYS_GENERATE));
@@ -102,11 +105,10 @@ public class LegacyExternalRepositoryDefiner extends BaseRepositoryDefiner {
 		repositoryFactoryRegistry.setRepositoryFactory(_repositoryFactory);
 	}
 
-	private static volatile PortalCapabilityLocator _portalCapabilityLocator =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			PortalCapabilityLocator.class,
-			LegacyExternalRepositoryDefiner.class, "_portalCapabilityLocator",
-			false, true);
+	private static final Snapshot<PortalCapabilityLocator>
+		_portalCapabilityLocatorSnapshot = new Snapshot<>(
+			LegacyExternalRepositoryDefiner.class,
+			PortalCapabilityLocator.class);
 
 	private final String _className;
 	private RepositoryConfiguration _repositoryConfiguration;

@@ -140,6 +140,10 @@ public class SavedContentTag extends IncludeTag {
 		).put(
 			"mySavedContentURL", StringPool.BLANK
 		).put(
+			"portletNamespace",
+			PortalUtil.getPortletNamespace(
+				MySavedContentPortletKeys.MY_SAVED_CONTENT)
+		).put(
 			"saved", _isSaved(themeDisplay.getUserId())
 		).put(
 			"savedContentURL", _getURL(httpServletRequest)

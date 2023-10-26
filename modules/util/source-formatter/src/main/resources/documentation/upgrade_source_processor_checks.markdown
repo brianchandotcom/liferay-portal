@@ -29,7 +29,6 @@ UpgradeJavaGetLayoutDisplayPageObjectProviderCheck | [Upgrade](upgrade_checks.ma
 UpgradeJavaGetLayoutDisplayPageProviderCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace getLayoutDisplayPageProvider by getLayoutDisplayPageProviderByClassName |
 UpgradeJavaIndexerCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace Indexer by Indexer<?> |
 UpgradeJavaLanguageUtilCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace `ListUtil.fromArray` by `new ArrayList' when the parameter is to 'LanguageUtil.getAvailableLocales' |
-UpgradeJavaLayoutServicesCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Fill the new parameters of the method `addLayout` and `updateLayout` of `LayoutServiceUtil`, `LayoutService`, `LayoutLocalService` and `LayoutLocalServiceUtil` classes |
 UpgradeJavaMultiVMPoolUtilCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replaces the references of the MultiVMPoolUtil class and also its methods usages. |
 UpgradeJavaPortletIdMethodCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace the 'document.get(Field.PORTLET_ID)' by the new interface 'PortletProviderUtil.getPortletId' |
 UpgradeJavaPortletSharedSearchSettingsCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replaces the Optional return type of the methods `getParameterValues` and `getPortletPreferences` of `PortletSharedSearchSettings` class |

@@ -1424,7 +1424,14 @@ private List<File> _getPortalSourcesDependencies(List<File> relengProjectDirs) {
 		":" + it.replace(File.separatorChar, ':' as char) + ":jarSources"
 	}
 
-	_executeGradle(startParameter, true)
+	String buildExcludeDirs = _setSystemProperty("build.exclude.dirs", "apps/site-initializer/site-initializer-extender/site-initializer-extender-test,dxp/apps/osb/osb-faro")
+
+	try {
+		_executeGradle(startParameter, true)
+	}
+	finally {
+		_setSystemProperty "build.exclude.dirs", buildExcludeDirs
+	}
 
 	for (File relengProjectDir : relengProjectDirs) {
 		Properties properties = GUtil.loadProperties(new File(relengProjectDir, "bnd.bnd"))
@@ -1604,7 +1611,14 @@ private List<File> _getRelengProjectDirs() {
 		":" + it.replace(File.separatorChar, ':' as char) + ":jar"
 	}
 
-	_executeGradle(startParameter, true)
+	String buildExcludeDirs = _setSystemProperty("build.exclude.dirs", "apps/site-initializer/site-initializer-extender/site-initializer-extender-test,dxp/apps/osb/osb-faro")
+
+	try {
+		_executeGradle(startParameter, true)
+	}
+	finally {
+		_setSystemProperty "build.exclude.dirs", buildExcludeDirs
+	}
 
 	List<File> relengProjectDirs = []
 

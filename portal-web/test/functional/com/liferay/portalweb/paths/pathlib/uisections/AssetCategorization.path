@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CATEGORY_BY_INDEX</td>
+	<td>xpath=(//label[normalize-space()='${key_vocabularyName}']//following-sibling::div//span[contains(@class,'label') and contains(@role,'row')])[${index}][normalize-space()='${key_categoryName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CATEGORY_SELECT</td>
 	<td>//div[@class='field-content'][contains(.,'${key_vocabularyName}')]//button[contains(.,'Select')]</td>
 	<td></td>

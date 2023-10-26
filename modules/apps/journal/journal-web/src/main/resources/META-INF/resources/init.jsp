@@ -109,6 +109,7 @@ page import="com.liferay.journal.web.internal.dao.search.JournalResultRowSplitte
 page import="com.liferay.journal.web.internal.display.context.EditJournalFeedDisplayContext" %><%@
 page import="com.liferay.journal.web.internal.display.context.JournalArticleCommentsManagementToolbarDisplayContext" %><%@
 page import="com.liferay.journal.web.internal.display.context.JournalArticleVersionsManagementToolbarDisplayContext" %><%@
+page import="com.liferay.journal.web.internal.display.context.JournalConfigurationDisplayContext" %><%@
 page import="com.liferay.journal.web.internal.display.context.JournalDDMStructuresDisplayContext" %><%@
 page import="com.liferay.journal.web.internal.display.context.JournalDDMStructuresManagementToolbarDisplayContext" %><%@
 page import="com.liferay.journal.web.internal.display.context.JournalDDMTemplateDisplayContext" %><%@

@@ -809,7 +809,12 @@ public class ResourceOpenAPIParser {
 				throw new RuntimeException(
 					"application/x-www-form-urlencoded is not supported");
 			}
-			else if (!requestBodyMediaTypes.contains("multipart/form-data")) {
+			else if (requestBodyMediaTypes.contains("multipart/form-data")) {
+				javaMethodParameters.add(
+					new JavaMethodParameter(
+						"multipartBody", MultipartBody.class.getName()));
+			}
+			else {
 				if (schema == null) {
 					return javaMethodParameters;
 				}
@@ -836,11 +841,6 @@ public class ResourceOpenAPIParser {
 
 				javaMethodParameters.add(
 					new JavaMethodParameter(parameterName, parameterType));
-			}
-			else {
-				javaMethodParameters.add(
-					new JavaMethodParameter(
-						"multipartBody", MultipartBody.class.getName()));
 			}
 		}
 

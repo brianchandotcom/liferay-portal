@@ -10,7 +10,6 @@ import com.liferay.dynamic.data.mapping.expression.CreateExpressionRequest;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
-import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.exception.DuplicateObjectFieldExternalReferenceCodeException;
@@ -31,7 +30,6 @@ import com.liferay.object.exception.ObjectFieldSystemException;
 import com.liferay.object.exception.RequiredObjectFieldException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
-import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.internal.dao.db.ObjectDBManagerUtil;
 import com.liferay.object.internal.field.setting.contributor.ObjectFieldSettingContributor;
@@ -755,11 +753,7 @@ public class ObjectFieldLocalServiceImpl
 				dbTableName, objectField.getDBColumnName(),
 				objectField.getDBType()));
 
-		if (GetterUtil.getBoolean(
-				ObjectFieldSettingUtil.getValue(
-					ObjectFieldSettingConstants.NAME_UNIQUE_VALUES,
-					objectField))) {
-
+		if (objectField.hasUniqueValues()) {
 			ObjectDBManagerUtil.createIndexMetadata(
 				_currentConnection.getConnection(
 					objectFieldPersistence.getDataSource()),

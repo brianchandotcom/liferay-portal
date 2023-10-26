@@ -17,6 +17,11 @@ import org.junit.runner.RunWith;
 public class DBPartitionVirtualInstanceInsertionConfigurationModelListenerTest
 	extends BaseConfigurationModelListenerTestCase {
 
+	@Override
+	public String getListenerName() {
+		return "DBPartitionVirtualInstanceInsertionConfigurationModelListener";
+	}
+
 	@Test
 	public void testConfigurationIsDeletedAfterDeploy() throws Exception {
 		testConfigurationIsDeletedAfterDeploy(

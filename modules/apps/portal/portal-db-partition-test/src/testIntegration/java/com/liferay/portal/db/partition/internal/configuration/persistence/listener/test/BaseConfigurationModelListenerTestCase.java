@@ -5,6 +5,7 @@
 
 package com.liferay.portal.db.partition.internal.configuration.persistence.listener.test;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
@@ -33,6 +34,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Mariano Álvaro Sáiz
@@ -55,9 +57,13 @@ public abstract class BaseConfigurationModelListenerTestCase
 		_deleteConfiguration();
 	}
 
+	protected abstract String getListenerName();
+
 	protected void testConfigurationIsDeletedAfterDeploy(
 			String pid, String content)
 		throws Exception {
+
+		_waitForConfigurationModelListenerEnabled();
 
 		Assert.assertNull(
 			_configurationAdmin.listConfigurations(
@@ -130,6 +136,16 @@ public abstract class BaseConfigurationModelListenerTestCase
 				).build());
 
 		return serviceRegistration::unregister;
+	}
+
+	private void _waitForConfigurationModelListenerEnabled() throws Exception {
+		ServiceTracker<?, ?> serviceTracker = ServiceTrackerFactory.open(
+			SystemBundleUtil.getBundleContext(),
+			"(component.name=*." + getListenerName() + ")");
+
+		serviceTracker.waitForService(10000);
+
+		serviceTracker.close();
 	}
 
 	@Inject

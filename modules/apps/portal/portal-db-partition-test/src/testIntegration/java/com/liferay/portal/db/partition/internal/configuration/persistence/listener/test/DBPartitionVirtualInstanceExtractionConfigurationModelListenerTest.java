@@ -17,6 +17,11 @@ import org.junit.runner.RunWith;
 public class DBPartitionVirtualInstanceExtractionConfigurationModelListenerTest
 	extends BaseConfigurationModelListenerTestCase {
 
+	@Override
+	public String getListenerName() {
+		return "DBPartitionVirtualInstanceExtractionConfigurationModelListener";
+	}
+
 	@Test
 	public void testConfigurationIsDeletedAfterDeploy() throws Exception {
 		testConfigurationIsDeletedAfterDeploy(_PID, "webId=T\"testWebId\"\n");

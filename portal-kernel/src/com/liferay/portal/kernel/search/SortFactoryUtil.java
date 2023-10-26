@@ -5,7 +5,7 @@
 
 package com.liferay.portal.kernel.search;
 
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.List;
 
@@ -16,43 +16,56 @@ import java.util.List;
 public class SortFactoryUtil {
 
 	public static Sort create(String fieldName, boolean reverse) {
-		return _sortFactory.create(fieldName, reverse);
+		SortFactory sortFactory = _sortFactorySnapshot.get();
+
+		return sortFactory.create(fieldName, reverse);
 	}
 
 	public static Sort create(String fieldName, int type, boolean reverse) {
-		return _sortFactory.create(fieldName, type, reverse);
+		SortFactory sortFactory = _sortFactorySnapshot.get();
+
+		return sortFactory.create(fieldName, type, reverse);
 	}
 
 	public static Sort[] getDefaultSorts() {
-		return _sortFactory.getDefaultSorts();
+		SortFactory sortFactory = _sortFactorySnapshot.get();
+
+		return sortFactory.getDefaultSorts();
 	}
 
 	public static Sort getSort(
 		Class<?> clazz, int type, String orderByCol, boolean inferSortField,
 		String orderByType) {
 
-		return _sortFactory.getSort(
+		SortFactory sortFactory = _sortFactorySnapshot.get();
+
+		return sortFactory.getSort(
 			clazz, type, orderByCol, inferSortField, orderByType);
 	}
 
 	public static Sort getSort(
 		Class<?> clazz, int type, String orderByCol, String orderByType) {
 
-		return _sortFactory.getSort(clazz, type, orderByCol, orderByType);
+		SortFactory sortFactory = _sortFactorySnapshot.get();
+
+		return sortFactory.getSort(clazz, type, orderByCol, orderByType);
 	}
 
 	public static Sort getSort(
 		Class<?> clazz, String orderByCol, String orderByType) {
 
-		return _sortFactory.getSort(clazz, orderByCol, orderByType);
+		SortFactory sortFactory = _sortFactorySnapshot.get();
+
+		return sortFactory.getSort(clazz, orderByCol, orderByType);
 	}
 
 	public static Sort[] toArray(List<Sort> sorts) {
-		return _sortFactory.toArray(sorts);
+		SortFactory sortFactory = _sortFactorySnapshot.get();
+
+		return sortFactory.toArray(sorts);
 	}
 
-	private static volatile SortFactory _sortFactory =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			SortFactory.class, SortFactoryUtil.class, "_sortFactory", false);
+	private static final Snapshot<SortFactory> _sortFactorySnapshot =
+		new Snapshot<>(SortFactoryUtil.class, SortFactory.class);
 
 }

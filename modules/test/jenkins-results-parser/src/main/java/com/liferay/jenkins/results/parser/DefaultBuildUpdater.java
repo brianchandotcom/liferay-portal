@@ -52,6 +52,8 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 		build.setJenkinsMaster(jenkinsMaster);
 
 		build.addInvocation(_invoke(jenkinsMaster));
+
+		build.reset();
 	}
 
 	protected DefaultBuildUpdater(Build build) {

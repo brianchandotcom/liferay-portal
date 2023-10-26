@@ -73,6 +73,8 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 		if (!_build.hasMaximumInvocationCount()) {
 			_build.setStatus("starting");
 
+			_build.reset();
+
 			return;
 		}
 
@@ -123,8 +125,6 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 
 	protected void runStarting() {
 		_build.setStatus("starting");
-
-		_build.reset();
 
 		Build.Invocation previousInvocation = _build.getPreviousInvocation();
 

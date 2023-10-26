@@ -17,6 +17,8 @@ String displayStyle = ddlDisplayContext.getDisplayStyle();
 
 <liferay-util:include page="/management_bar.jsp" servletContext="<%= application %>" />
 
+<%@ include file="/deprecated_warning.jspf" %>
+
 <clay:container-fluid
 	id='<%= liferayPortletResponse.getNamespace() + "formContainer" %>'
 >

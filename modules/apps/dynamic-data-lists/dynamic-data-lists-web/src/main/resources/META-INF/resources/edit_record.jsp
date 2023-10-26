@@ -101,6 +101,8 @@ else {
 	/>
 </c:if>
 
+<%@ include file="/deprecated_warning.jspf" %>
+
 <div class="closed sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 	<c:if test="<%= recordVersion != null %>">
 		<div class="sidenav-menu-slider">

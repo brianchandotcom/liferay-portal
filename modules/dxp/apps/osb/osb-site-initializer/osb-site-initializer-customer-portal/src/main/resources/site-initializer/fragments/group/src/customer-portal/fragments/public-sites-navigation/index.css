@@ -250,12 +250,12 @@ nav.public-sites-navigation
 }
 
 nav.public-sites-navigation .language-selector-container .language-selector[aria-expanded=false] .language-caret-icon svg {
-	transition: transform 0.5s;
 	transform: rotate(360deg);
+	transition: transform 0.5s;
 }
 nav.public-sites-navigation .language-selector-container .language-selector[aria-expanded=true] .language-caret-icon svg {
-	transition: transform 0.5s;
 	transform: rotate(180deg);
+	transition: transform 0.5s;
 }
 
 nav.public-sites-navigation .language-selector-container .utility-nav-link {

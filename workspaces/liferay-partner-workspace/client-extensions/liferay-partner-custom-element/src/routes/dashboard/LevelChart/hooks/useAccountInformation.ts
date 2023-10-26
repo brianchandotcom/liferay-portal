@@ -26,6 +26,7 @@ export default function useAccountInformation() {
 		aRRAmountTotal: 0,
 		growthArrTotal: 0,
 		renewalArrTotal: 0,
+		targetArr: 0,
 	});
 	const [checkedProperties, setCheckedProperties] = useState({
 		arr: false,
@@ -91,7 +92,8 @@ export default function useAccountInformation() {
 
 	useEffect(() => {
 		const getARRValues = (
-			opportunitiesData: LiferayItems<Opportunity[]>
+			opportunitiesData: LiferayItems<Opportunity[]>,
+			accountData: AccountEntry
 		) => {
 			const aRRResults = opportunitiesData.items.reduce(
 				(aRRAccumulator, data: Opportunity) => ({
@@ -103,11 +105,13 @@ export default function useAccountInformation() {
 						aRRAccumulator.growthArrTotal + data.growthArr,
 					renewalArrTotal:
 						aRRAccumulator.renewalArrTotal + data.renewalArr,
+					targetArr: accountData.targetArr,
 				}),
 				{
 					aRRAmountTotal: 0,
 					growthArrTotal: 0,
 					renewalArrTotal: 0,
+					targetArr: 0,
 				}
 			);
 
@@ -231,7 +235,7 @@ export default function useAccountInformation() {
 			accountUserAccounts &&
 			partnerLevel
 		) {
-			const aRRResults = getARRValues(opportunities);
+			const aRRResults = getARRValues(opportunities, account);
 
 			const {headcount, properties} = formatCheckedProperties(
 				aRRResults,

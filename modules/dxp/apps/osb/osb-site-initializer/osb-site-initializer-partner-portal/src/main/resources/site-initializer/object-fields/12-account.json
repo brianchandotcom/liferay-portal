@@ -89,6 +89,19 @@
 			"name": "marketingPerformance",
 			"required": false,
 			"type": "BigDecimal"
+		},
+		{
+			"DBType": "BigDecimal",
+			"businessType": "PrecisionDecimal",
+			"externalReferenceCode": "ec368f82-ba2d-4add-a5b9-69569d7c03f9",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Target ARR"
+			},
+			"name": "targetArr",
+			"required": false,
+			"type": "BigDecimal"
 		}
 	],
 	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:AccountEntry$]"

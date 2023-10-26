@@ -16,4 +16,5 @@ export default interface AccountEntry extends Partial<LiferayObject> {
 	partnerCountry: string;
 	r_prtLvlToAcc_c_partnerLevelERC: string;
 	solutionDeliveryCertification: boolean;
+	targetArr: number;
 }

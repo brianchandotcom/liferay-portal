@@ -60,12 +60,12 @@ const PartnershipLevel = ({
 	partnerLevel,
 }: IPropsPartnershipLevel) => {
 	const getTotalARR = () => {
-		if (partnerLevel.partnerLevelType.key === PartnershipLevels.GOLD) {
-			return partnerLevelProperties[partnerLevel.partnerLevelType.key]
-				.goalARR;
+		if (partnerLevel.partnerLevelType.key === PartnershipLevels.PLATINUM) {
+			return aRRResults.targetArr;
 		}
 
-		return aRRResults.aRRAmountTotal;
+		return partnerLevelProperties[partnerLevel.partnerLevelType.key]
+			.goalARR;
 	};
 
 	const getHeadcount = (partnerLevelKey: PartnershipLevels) => {

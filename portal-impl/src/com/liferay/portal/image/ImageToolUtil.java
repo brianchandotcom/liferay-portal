@@ -15,11 +15,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.ImageConstants;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.impl.ImageImpl;
 import com.liferay.portal.module.framework.ModuleFrameworkUtil;
@@ -93,7 +93,10 @@ public class ImageToolUtil {
 	public static Future<RenderedImage> convertCMYKtoRGB(
 		byte[] bytes, String type) {
 
-		return CMYKImageToolHolder._cmykImageTool.convertCMYKtoRGB(bytes, type);
+		CMYKImageTool cmykImageTool =
+			CMYKImageToolHolder._cmykImageToolSnapshot.get();
+
+		return cmykImageTool.convertCMYKtoRGB(bytes, type);
 	}
 
 	/**
@@ -974,10 +977,8 @@ public class ImageToolUtil {
 
 	private static class CMYKImageToolHolder {
 
-		private static volatile CMYKImageTool _cmykImageTool =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				CMYKImageTool.class, CMYKImageToolHolder.class,
-				"_cmykImageTool", false);
+		private static final Snapshot<CMYKImageTool> _cmykImageToolSnapshot =
+			new Snapshot<>(CMYKImageToolHolder.class, CMYKImageTool.class);
 
 	}
 

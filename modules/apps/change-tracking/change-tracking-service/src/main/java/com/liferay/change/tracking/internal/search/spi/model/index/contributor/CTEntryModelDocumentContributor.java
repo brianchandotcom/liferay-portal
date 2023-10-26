@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Localization;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import java.util.HashMap;
@@ -184,8 +186,15 @@ public class CTEntryModelDocumentContributor
 		Map<String, Object> modelAttributes = model.getModelAttributes();
 
 		if (modelAttributes.containsKey("status")) {
-			document.addKeyword(
-				Field.STATUS, (Integer)modelAttributes.get("status"));
+			int status = (int)modelAttributes.get("status");
+
+			document.addKeyword(Field.STATUS, status);
+			document.addLocalizedKeyword(
+				"statusLabel",
+				_localization.getLocalizationMap(
+					_language.getAvailableLocales(), LocaleUtil.getDefault(),
+					WorkflowConstants.getStatusLabel(status)),
+				true, true);
 		}
 	}
 
@@ -200,6 +209,9 @@ public class CTEntryModelDocumentContributor
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Localization _localization;
 
 	@Reference
 	private UserLocalService _userLocalService;

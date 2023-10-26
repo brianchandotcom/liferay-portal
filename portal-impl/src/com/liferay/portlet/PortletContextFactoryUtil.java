@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portlet.internal;
+package com.liferay.portlet;
 
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.portlet.LiferayPortletContext;
-import com.liferay.portal.kernel.portlet.PortletContextFactory;
+import com.liferay.portlet.internal.PortletContextImpl;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -18,12 +18,11 @@ import javax.portlet.PortletContext;
 import javax.servlet.ServletContext;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Michael C. Han
  */
-public class PortletContextFactoryImpl implements PortletContextFactory {
+public class PortletContextFactoryUtil {
 
-	@Override
-	public PortletContext create(
+	public static PortletContext create(
 		Portlet portlet, ServletContext servletContext) {
 
 		Map<String, PortletContext> portletContexts = _pool.get(
@@ -57,12 +56,11 @@ public class PortletContextFactoryImpl implements PortletContextFactory {
 		return portletContext;
 	}
 
-	@Override
-	public void destroy(Portlet portlet) {
+	public static void destroy(Portlet portlet) {
 		_pool.remove(portlet.getRootPortletId());
 	}
 
-	private boolean _isSamePortletDeployedStatus(
+	private static boolean _isSamePortletDeployedStatus(
 		Portlet portlet, PortletContext portletContext) {
 
 		LiferayPortletContext liferayPortletContext =
@@ -80,7 +78,7 @@ public class PortletContextFactoryImpl implements PortletContextFactory {
 		return false;
 	}
 
-	private final Map<String, Map<String, PortletContext>> _pool =
+	private static final Map<String, Map<String, PortletContext>> _pool =
 		new ConcurrentHashMap<>();
 
 }

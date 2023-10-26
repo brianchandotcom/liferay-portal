@@ -7,6 +7,7 @@ package com.liferay.portal.repository.registry;
 
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.repository.InitializedLocalRepository;
 import com.liferay.portal.repository.InitializedRepository;
 import com.liferay.portal.repository.capabilities.CapabilityLocalRepository;
@@ -195,18 +195,24 @@ public class RepositoryClassDefinition
 		if (!capabilityRegistry.isCapabilityProvided(
 				ConfigurationCapability.class)) {
 
+			PortalCapabilityLocator portalCapabilityLocator =
+				_portalCapabilityLocatorSnapshot.get();
+
 			capabilityRegistry.addExportedCapability(
 				ConfigurationCapability.class,
-				_portalCapabilityLocator.getConfigurationCapability(
+				portalCapabilityLocator.getConfigurationCapability(
 					documentRepository));
 		}
 
 		if (!capabilityRegistry.isCapabilityProvided(
 				RepositoryEventTriggerCapability.class)) {
 
+			PortalCapabilityLocator portalCapabilityLocator =
+				_portalCapabilityLocatorSnapshot.get();
+
 			capabilityRegistry.addExportedCapability(
 				RepositoryEventTriggerCapability.class,
-				_portalCapabilityLocator.getRepositoryEventTriggerCapability(
+				portalCapabilityLocator.getRepositoryEventTriggerCapability(
 					documentRepository, repositoryEventTrigger));
 		}
 
@@ -214,10 +220,9 @@ public class RepositoryClassDefinition
 			CacheCapability.class, new CacheCapability());
 	}
 
-	private static volatile PortalCapabilityLocator _portalCapabilityLocator =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			PortalCapabilityLocator.class, RepositoryClassDefinition.class,
-			"_portalCapabilityLocator", false);
+	private static final Snapshot<PortalCapabilityLocator>
+		_portalCapabilityLocatorSnapshot = new Snapshot<>(
+			RepositoryClassDefinition.class, PortalCapabilityLocator.class);
 
 	private final Map<Long, LocalRepository> _localRepositories =
 		new ConcurrentHashMap<>();

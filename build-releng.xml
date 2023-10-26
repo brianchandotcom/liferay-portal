@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<project default="fat-jar" name="portal-releng" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-common.xml" />
+
+	<target name="fat-jar">
+		<remake-dir dir="tools/sdk/dist" />
+
+		<ant antfile="build.xml" inheritAll="false" target="compile" />
+
+		<ant antfile="build.xml" inheritAll="false" target="install-portal-snapshots" />
+
+		<ant antfile="build-maven.xml" inheritAll="false" target="jar-sources" />
+
+		<gradle-execute dir="${project.dir}/modules" setupbinariescache="false" task="portalSourcesJar">
+			<arg value="--build-file=${project.dir}/modules/releng.gradle" />
+		</gradle-execute>
+	</target>
+</project>

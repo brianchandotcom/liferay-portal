@@ -1,0 +1,279 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-178642=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless Builder";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		task ("Given objects definiton Student with Integer field 'age'") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				businessType = "Integer",
+				en_US_label = "student",
+				en_US_plural_label = "students",
+				name = "Student",
+				objectDefinitionExternalReferenceCode = "student",
+				requiredStringFieldName = "age",
+				requiredStringFieldNameExternalReferenceCode = "studentAge");
+		}
+
+		task ("And Given Student entries with age '0', '25', '101', '-1' created") {
+			for (var fieldValueList : list "0,25,101,-1") {
+				CustomObjectAPI.createObjectEntryWithFields(
+					en_US_plural_label = "students",
+					fieldName = "age",
+					fieldValue = ${fieldValueList});
+			}
+		}
+
+		task ("And Given ApiApplication with an endpoint of scope Company created and published") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				endpointName = "testendpoint",
+				endpointPath = "/testendpoint",
+				relatedEndpoint = "true",
+				status = "published",
+				title = "My-app");
+		}
+
+		task ("And Given a schema based on Student object definition with student age as schema property student_age") {
+			SchemaAPI.createAPISchema(
+				externalReferenceCode = "My-app",
+				mainObjectDefinitionERC = "student",
+				name = "testSchema");
+
+			SchemaAPI.relateRequestSchemaToEndpointByErc(
+				endpointErc = "testendpoint",
+				requestSchemaErc = "testSchema");
+
+			SchemaAPI.relateResponseSchemaToEndpointByErc(
+				endpointErc = "testendpoint",
+				responseSchemaErc = "testSchema");
+
+			PropertyAPI.createAPIProperty(
+				name = "student_age",
+				objectFieldERC = "studentAge",
+				schemaERC = "testSchema");
+		}
+	}
+
+	tearDown {
+		ApplicationAPI.deleteAllAPIApplication();
+
+		JSONObject.deleteAllCustomObjects();
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 4
+	test CanApplySortingAndSortParameter {
+		property portal.acceptance = "true";
+
+		task ("And Given setting the Sorting to 'age:asc'") {
+			APIBuilderUI.addAndPublishFiltersAndSortingInEndpointConfiguration(
+				editValue = "age:asc",
+				entity = "Endpoints",
+				fieldName = "sort",
+				name = "testendpoint",
+				title = "My-app");
+		}
+
+		task ("When I call endpoint with '?sort=age:desc' in API Explorer") {
+			APIExplorer.navigateToOpenAPI(customObjectPlural = "my-app");
+
+			APIExplorer.executeAPIMethod(
+				method = "getTestendpointPage",
+				parameter = "sort",
+				service = "testSchema",
+				value = "student_age:desc");
+		}
+
+		task ("Then endpoint returns student in descemding order of student_age values") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "getTestendpointPage",
+				value1 = "\"items\": [     {       \"student_age\": 101     },     {       \"student_age\": 25     },     {       \"student_age\": 0     },     {       \"student_age\": -1     }   ]");
+		}
+	}
+
+	@priority = 4
+	test CanResetSorting {
+		property portal.acceptance = "true";
+
+		task ("And Given setting the Sorting to 'age:desc'") {
+			APIBuilderUI.addAndPublishFiltersAndSortingInEndpointConfiguration(
+				editValue = "age:desc",
+				entity = "Endpoints",
+				fieldName = "sort",
+				name = "testendpoint",
+				title = "My-app");
+		}
+
+		task ("And Given students appear in descending order of student_age values in the endpoint response") {
+			var response = APIApplicationEndpoint.getEndpoint(
+				baseURL = "my-app",
+				path = "/testendpoint");
+
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.items..student_age");
+
+			TestUtils.assertEquals(
+				actual = ${actualValue},
+				expected = "101,25,0,-1");
+		}
+
+		task ("When I empty the Sorting box in endpoint configuration") {
+			APIBuilderUI.addAndPublishFiltersAndSortingInEndpointConfiguration(
+				editValue = "",
+				entity = "Endpoints",
+				fieldName = "sort",
+				name = "testendpoint",
+				title = "My-app");
+		}
+
+		task ("Then Student entries appear in the default order") {
+			var response = APIApplicationEndpoint.getEndpoint(
+				baseURL = "my-app",
+				path = "/testendpoint");
+
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.items..student_age");
+
+			TestUtils.assertEquals(
+				actual = ${actualValue},
+				expected = "0,25,101,-1");
+		}
+	}
+
+	@priority = 5
+	test SortingAndSortParameterReturnTheSameData {
+		property portal.acceptance = "true";
+
+		task ("And Given setting the Sorting to 'age:asc'") {
+			APIBuilderUI.addAndPublishFiltersAndSortingInEndpointConfiguration(
+				editValue = "age:asc",
+				entity = "Endpoints",
+				fieldName = "sort",
+				name = "testendpoint",
+				title = "My-app");
+		}
+
+		task ("And Given endpoint returning student in ascending order of age") {
+			var response = APIApplicationEndpoint.getEndpoint(
+				baseURL = "my-app",
+				path = "/testendpoint");
+
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.items..student_age");
+
+			TestUtils.assertEquals(
+				actual = ${actualValue},
+				expected = "-1,0,25,101");
+		}
+
+		task ("When I empty the Sorting") {
+			APIBuilderUI.addAndPublishFiltersAndSortingInEndpointConfiguration(
+				editValue = "",
+				entity = "Endpoints",
+				fieldName = "sort",
+				name = "testendpoint",
+				title = "My-app");
+		}
+
+		task ("And When I call endpoint with '?sort=student_age:asc' in API Explorer") {
+			APIExplorer.navigateToOpenAPI(customObjectPlural = "my-app");
+
+			APIExplorer.executeAPIMethod(
+				method = "getTestendpointPage",
+				parameter = "sort",
+				service = "testSchema",
+				value = "student_age:asc");
+		}
+
+		task ("Then endpoint returns student in ascending order of age") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "getTestendpointPage",
+				value1 = "\"items\": [     {       \"student_age\": -1     },     {       \"student_age\": 0     },     {       \"student_age\": 25     },     {       \"student_age\": 101     }   ]");
+		}
+	}
+
+	@priority = 5
+	test SortingIsPresentInEndpointConfiguration {
+		property portal.acceptance = "true";
+
+		task ("When navigating to the endpoint Configuration tab") {
+			APIBuilderUI.goToEditRelatedEntryInEditApplication(
+				entity = "Endpoints",
+				name = "testendpoint",
+				tabEntity = "Configuration",
+				title = "My-app");
+		}
+
+		task ("Then Sorting box to add a sort using OData is present") {
+			WaitForElementPresent(
+				fieldName = "sort",
+				locator1 = "APIBuilder#ODATA_TEXTAREA");
+		}
+	}
+
+	@priority = 4
+	test SortingWorksWithMainObjectFieldsThatAreNotPartOfSchemaProperties {
+		property portal.acceptance = "true";
+
+		task ("When setting the Sorting to 'dateCreated:asc'") {
+			APIBuilderUI.addAndPublishFiltersAndSortingInEndpointConfiguration(
+				editValue = "dateCreated:asc",
+				entity = "Endpoints",
+				fieldName = "sort",
+				name = "testendpoint",
+				title = "My-app");
+		}
+
+		task ("Then endpoint returns students in order of creation listed as student_age: '0', '25', '101', '-1'") {
+			var response = APIApplicationEndpoint.getEndpoint(
+				baseURL = "my-app",
+				path = "/testendpoint");
+
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.items..student_age");
+
+			TestUtils.assertEquals(
+				actual = ${actualValue},
+				expected = "0,25,101,-1");
+		}
+	}
+
+	@priority = 4
+	test SortingWorksWithSchemaPropertiesMadeOfMainObjectFields {
+		property portal.acceptance = "true";
+
+		task ("When setting the Sorting to 'age:asc'") {
+			APIBuilderUI.addAndPublishFiltersAndSortingInEndpointConfiguration(
+				editValue = "age:asc",
+				entity = "Endpoints",
+				fieldName = "sort",
+				name = "testendpoint",
+				title = "My-app");
+		}
+
+		task ("Then students appear in ascending order in the endpoint response") {
+			var response = APIApplicationEndpoint.getEndpoint(
+				baseURL = "my-app",
+				path = "/testendpoint");
+
+			var actualValue = JSONUtil.getWithJSONPath(${response}, "$.items..student_age");
+
+			TestUtils.assertEquals(
+				actual = ${actualValue},
+				expected = "-1,0,25,101");
+		}
+	}
+
+}

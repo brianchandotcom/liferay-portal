@@ -147,7 +147,7 @@ definition {
 
 			ACSettings.clickGenericAddOrConfirmationButton();
 
-			Click(locator1 = "AnalyticsCloudConnection#LIFERAY_DXP_SOURCE");
+			Click(locator1 = "ACSettings#DXP_DATA_SOURCE_OPTION");
 
 			ACNavigation.clickCancelButton();
 		}

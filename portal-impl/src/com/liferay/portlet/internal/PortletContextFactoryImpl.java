@@ -58,13 +58,6 @@ public class PortletContextFactoryImpl implements PortletContextFactory {
 	}
 
 	@Override
-	public PortletContext createUntrackedInstance(
-		Portlet portlet, ServletContext servletContext) {
-
-		return new PortletContextImpl(portlet, servletContext);
-	}
-
-	@Override
 	public void destroy(Portlet portlet) {
 		_pool.remove(portlet.getRootPortletId());
 	}

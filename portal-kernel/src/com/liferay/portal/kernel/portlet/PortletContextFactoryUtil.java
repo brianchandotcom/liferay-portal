@@ -22,13 +22,6 @@ public class PortletContextFactoryUtil {
 		return _portletContextFactory.create(portlet, servletContext);
 	}
 
-	public static PortletContext createUntrackedInstance(
-		Portlet portlet, ServletContext servletContext) {
-
-		return _portletContextFactory.createUntrackedInstance(
-			portlet, servletContext);
-	}
-
 	public static void destroy(Portlet portlet) {
 		_portletContextFactory.destroy(portlet);
 	}

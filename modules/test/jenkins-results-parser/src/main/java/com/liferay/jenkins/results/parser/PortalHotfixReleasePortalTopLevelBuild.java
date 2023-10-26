@@ -366,7 +366,8 @@ public class PortalHotfixReleasePortalTopLevelBuild
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalBranchName) &&
 			!JenkinsResultsParserUtil.isNullOrEmpty(portalBranchUsername) &&
-			PortalRelease.isQuarterlyRelease(patcherPortalVersion)) {
+			(PortalRelease.isQuarterlyRelease(patcherPortalVersion) ||
+			 patcherPortalVersion.matches(_PATCHER_PORTAL_VERSION_74_REGEX))) {
 
 			portalRepositoryName = "liferay-portal-ee";
 		}
@@ -382,6 +383,10 @@ public class PortalHotfixReleasePortalTopLevelBuild
 
 		return sb.toString();
 	}
+
+	private static final String _PATCHER_PORTAL_VERSION_74_REGEX =
+		"(?<majorVersion>7)\\.(?<minorVersion>4)\\." +
+			"(?<fixVersion>\\d{2})(?<updateVersion>-(ep|u)\\d+)?";
 
 	private static final MultiPattern _hotfixZipURLPattern = new MultiPattern(
 		"https?://.*(?<majorVersion>\\d)(?<minorVersion>\\d)" +

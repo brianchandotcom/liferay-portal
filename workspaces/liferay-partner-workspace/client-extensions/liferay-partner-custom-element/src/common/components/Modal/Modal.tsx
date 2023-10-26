@@ -4,7 +4,7 @@
  */
 
 import ClayModal from '@clayui/modal';
-import {Observer, Size} from '@clayui/modal/src/types';
+import {Observer, Size} from '@clayui/modal/lib/types';
 import {ReactNode} from 'react';
 
 interface ModalProps {

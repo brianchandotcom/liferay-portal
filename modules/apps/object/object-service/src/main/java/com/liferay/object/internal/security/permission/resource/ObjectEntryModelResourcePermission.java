@@ -13,6 +13,17 @@ import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.constants.ObjectActionTriggerConstants;
+import com.liferay.object.definition.tree.Edge;
+import com.liferay.object.definition.tree.Node;
+import com.liferay.object.definition.tree.Tree;
+import com.liferay.object.definition.tree.TreeFactory;
+import com.liferay.object.model.ObjectAction;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -57,6 +68,7 @@ public class ObjectEntryModelResourcePermission
 		AccountEntryOrganizationRelLocalService
 			accountEntryOrganizationRelLocalService,
 		GroupLocalService groupLocalService, String modelName,
+		ObjectActionLocalService objectActionLocalService,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectFieldLocalService objectFieldLocalService,
@@ -71,6 +83,7 @@ public class ObjectEntryModelResourcePermission
 			accountEntryOrganizationRelLocalService;
 		_groupLocalService = groupLocalService;
 		_modelName = modelName;
+		_objectActionLocalService = objectActionLocalService;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectFieldLocalService = objectFieldLocalService;
@@ -123,7 +136,10 @@ public class ObjectEntryModelResourcePermission
 			String actionId)
 		throws PortalException {
 
-		if (objectEntry.getRootObjectEntryId() != 0) {
+		if (objectEntry.getRootObjectEntryId() != 0 &&
+			!_isObjectActionName(
+				objectEntry.getObjectDefinitionId(), actionId)) {
+
 			ObjectEntry rootObjectEntry =
 				_objectEntryLocalService.fetchObjectEntry(
 					objectEntry.getRootObjectEntryId());
@@ -262,6 +278,22 @@ public class ObjectEntryModelResourcePermission
 		return _portletResourcePermission;
 	}
 
+	private boolean _isObjectActionName(
+		long objectDefinitionId, String actionId) {
+
+		for (ObjectAction objectAction :
+				_objectActionLocalService.getObjectActions(
+					objectDefinitionId,
+					ObjectActionTriggerConstants.KEY_STANDALONE)) {
+
+			if (Objects.equals(objectAction.getName(), actionId)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private void _throwPrincipalException(
 			String actionId, ObjectEntry objectEntry,
 			PermissionChecker permissionChecker)
@@ -282,6 +314,7 @@ public class ObjectEntryModelResourcePermission
 		_accountEntryOrganizationRelLocalService;
 	private final GroupLocalService _groupLocalService;
 	private final String _modelName;
+	private final ObjectActionLocalService _objectActionLocalService;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectFieldLocalService _objectFieldLocalService;

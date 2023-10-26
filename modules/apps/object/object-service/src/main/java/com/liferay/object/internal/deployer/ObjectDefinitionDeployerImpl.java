@@ -356,6 +356,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						_accountEntryLocalService,
 						_accountEntryOrganizationRelLocalService,
 						_groupLocalService, objectDefinition.getClassName(),
+						_objectActionLocalService,
 						_objectDefinitionLocalService, _objectEntryLocalService,
 						_objectFieldLocalService,
 						_objectRelationshipLocalService,

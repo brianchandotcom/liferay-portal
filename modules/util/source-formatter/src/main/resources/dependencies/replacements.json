@@ -236,6 +236,17 @@
 		"to": "fetchAccountGroupByExternalReferenceCode(param#1#, param#0#)"
 	},
 	{
+		"classNames": [
+			"CPDefinitionLocalService",
+			"CPDefinitionLocalServiceUtil",
+			"CPDefinitionService",
+			"CPDefinitionServiceUtil"
+		],
+		"from": "upsertCPDefinition(long, long, Map<Locale, String>, Map<Locale, String>, Map<Locale, String>, Map<Locale, String>, Map<Locale, String>, Map<Locale, String>, Map<Locale, String>, String, boolean, boolean, boolean, boolean, double, double, double, double, double, long, boolean, boolean, String, boolean, int, int, int, int, int, int, int, int, int, int, boolean, String, boolean, int, String, UnicodeProperties, long, String, ServiceContext)",
+		"issueKey": "LPS-197613",
+		"to": "upsertCPDefinition(param#41#, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, param#8#, param#9#, param#10#, param#11#, param#12#, param#13#, param#14#, param#15#, param#16#, param#17#, param#18#, param#19#, param#20#, param#21#, param#22#, param#23#, param#24#, param#25#, param#26#, param#27#, param#28#, param#29#, param#30#, param#31#, param#32#, param#33#, param#34#, param#35#, param#36#, param#37#, param#38#, param#39#, param#40#, 0, param#42#)"
+	},
+	{
 		"from": "CommerceOrderConstants.PAYMENT_STATUS_AUTHORIZED",
 		"issueKey": "LPS-197623",
 		"newImports": [

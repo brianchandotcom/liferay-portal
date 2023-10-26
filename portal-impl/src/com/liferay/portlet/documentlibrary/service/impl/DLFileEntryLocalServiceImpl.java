@@ -3278,9 +3278,13 @@ public class DLFileEntryLocalServiceImpl
 
 		// File
 
+		DLFileVersion previousDLFileVersion =
+			_dlFileVersionLocalService.getLatestFileVersion(
+				dlFileEntry.getFileEntryId(), true);
+
 		_deleteFile(
 			user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-			dlFileEntry.getName(), lastDLFileVersion.getStoreFileName());
+			dlFileEntry.getName(), previousDLFileVersion.getStoreFileName());
 
 		DLStoreUtil.copyFileVersion(
 			user.getCompanyId(), dlFileEntry.getDataRepositoryId(),

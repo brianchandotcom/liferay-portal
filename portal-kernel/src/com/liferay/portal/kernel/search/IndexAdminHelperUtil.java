@@ -5,7 +5,7 @@
 
 package com.liferay.portal.kernel.search;
 
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * @author Michael C. Han
@@ -15,36 +15,46 @@ public class IndexAdminHelperUtil {
 	public static String backup(long companyId, String backupName)
 		throws SearchException {
 
-		return _indexAdminHelper.backup(companyId, backupName);
+		IndexAdminHelper indexAdminHelper = _indexAdminHelperSnapshot.get();
+
+		return indexAdminHelper.backup(companyId, backupName);
 	}
 
 	public static void backup(String backupName) throws SearchException {
-		_indexAdminHelper.backup(backupName);
+		IndexAdminHelper indexAdminHelper = _indexAdminHelperSnapshot.get();
+
+		indexAdminHelper.backup(backupName);
 	}
 
 	public static void removeBackup(long companyId, String backupName)
 		throws SearchException {
 
-		_indexAdminHelper.removeBackup(companyId, backupName);
+		IndexAdminHelper indexAdminHelper = _indexAdminHelperSnapshot.get();
+
+		indexAdminHelper.removeBackup(companyId, backupName);
 	}
 
 	public static void removeBackup(String backupName) throws SearchException {
-		_indexAdminHelper.removeBackup(backupName);
+		IndexAdminHelper indexAdminHelper = _indexAdminHelperSnapshot.get();
+
+		indexAdminHelper.removeBackup(backupName);
 	}
 
 	public static void restore(long companyId, String backupName)
 		throws SearchException {
 
-		_indexAdminHelper.restore(companyId, backupName);
+		IndexAdminHelper indexAdminHelper = _indexAdminHelperSnapshot.get();
+
+		indexAdminHelper.restore(companyId, backupName);
 	}
 
 	public static void restore(String backupName) throws SearchException {
-		_indexAdminHelper.restore(backupName);
+		IndexAdminHelper indexAdminHelper = _indexAdminHelperSnapshot.get();
+
+		indexAdminHelper.restore(backupName);
 	}
 
-	private static volatile IndexAdminHelper _indexAdminHelper =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			IndexAdminHelper.class, IndexAdminHelperUtil.class,
-			"_indexAdminHelper", false);
+	private static final Snapshot<IndexAdminHelper> _indexAdminHelperSnapshot =
+		new Snapshot<>(IndexAdminHelperUtil.class, IndexAdminHelper.class);
 
 }

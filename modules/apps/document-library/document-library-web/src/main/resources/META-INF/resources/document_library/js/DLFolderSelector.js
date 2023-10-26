@@ -101,6 +101,7 @@ const DLFolderSelector = ({
 
 	const showErrorMessage = (message) => {
 		openToast({
+			autoClose: false,
 			message,
 			title: Liferay.Language.get('error'),
 			type: 'danger',

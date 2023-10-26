@@ -76,7 +76,8 @@ export default function getMDFListColumns(
 
 				if (
 					currentValue === PermissionActionType.DELETE &&
-					currentMDFRequestHasValidStatusToDelete
+					currentMDFRequestHasValidStatusToDelete &&
+					row.STATUS === 'Approved'
 				) {
 					previousValue.push({
 						icon: 'trash',
@@ -84,7 +85,8 @@ export default function getMDFListColumns(
 						label: ' Delete',
 						onClick: () => {
 							Liferay.Util.openConfirmModal({
-								message: 'Are you sure?',
+								message:
+									'Are you sure you want to delete this MDF record?',
 								onConfirm: async (isConfirmed: boolean) => {
 									if (isConfirmed) {
 										try {

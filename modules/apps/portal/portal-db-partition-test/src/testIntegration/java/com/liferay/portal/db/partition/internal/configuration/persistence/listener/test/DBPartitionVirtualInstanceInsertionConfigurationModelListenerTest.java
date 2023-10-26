@@ -15,7 +15,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class DBPartitionVirtualInstanceInsertionConfigurationModelListenerTest
-	extends BaseDBPartitionVirtualInstanceConfigurationModelListenerTestCase {
+	extends BaseConfigurationModelListenerTestCase {
 
 	@Test
 	public void testDeployedInsertionConfigurationFileIsDeleted()

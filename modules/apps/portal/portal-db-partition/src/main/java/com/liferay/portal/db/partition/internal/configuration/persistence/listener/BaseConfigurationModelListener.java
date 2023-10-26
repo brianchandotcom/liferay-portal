@@ -25,12 +25,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mariano Álvaro Sáiz
  */
-public abstract class BaseDBPartitionVirtualInstanceConfigurationModelListener
+public abstract class BaseConfigurationModelListener
 	implements ConfigurationModelListener {
 
-	public BaseDBPartitionVirtualInstanceConfigurationModelListener(
-		String pid) {
-
+	public BaseConfigurationModelListener(String pid) {
 		_pid = pid;
 	}
 
@@ -77,7 +75,7 @@ public abstract class BaseDBPartitionVirtualInstanceConfigurationModelListener
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseDBPartitionVirtualInstanceConfigurationModelListener.class);
+		BaseConfigurationModelListener.class);
 
 	private final String _pid;
 

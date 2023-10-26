@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Component;
 	service = ConfigurationModelListener.class
 )
 public class DBPartitionVirtualInstanceExtractionConfigurationModelListener
-	extends BaseDBPartitionVirtualInstanceConfigurationModelListener {
+	extends BaseConfigurationModelListener {
 
 	public DBPartitionVirtualInstanceExtractionConfigurationModelListener() {
 		super(_PID);

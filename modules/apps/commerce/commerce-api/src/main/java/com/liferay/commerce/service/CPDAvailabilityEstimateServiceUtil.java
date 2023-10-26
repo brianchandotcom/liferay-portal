@@ -46,13 +46,12 @@ public class CPDAvailabilityEstimateServiceUtil {
 
 	public static CPDAvailabilityEstimate updateCPDAvailabilityEstimate(
 			long cpdAvailabilityEstimateId, long cpDefinitionId,
-			long commerceAvailabilityEstimateId,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+			long commerceAvailabilityEstimateId)
 		throws PortalException {
 
 		return getService().updateCPDAvailabilityEstimate(
 			cpdAvailabilityEstimateId, cpDefinitionId,
-			commerceAvailabilityEstimateId, serviceContext);
+			commerceAvailabilityEstimateId);
 	}
 
 	public static CPDAvailabilityEstimateService getService() {

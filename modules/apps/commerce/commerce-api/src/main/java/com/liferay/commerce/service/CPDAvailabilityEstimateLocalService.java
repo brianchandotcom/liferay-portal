@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -119,13 +118,6 @@ public interface CPDAvailabilityEstimateLocalService
 			long CPDAvailabilityEstimateId)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	public void deleteCPDAvailabilityEstimateByCPDefinitionId(
-		long cpDefinitionId);
-
 	public void deleteCPDAvailabilityEstimateByCProductId(long cProductId);
 
 	public void deleteCPDAvailabilityEstimates(
@@ -213,14 +205,6 @@ public interface CPDAvailabilityEstimateLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDAvailabilityEstimate fetchCPDAvailabilityEstimate(
 		long CPDAvailabilityEstimateId);
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDAvailabilityEstimate fetchCPDAvailabilityEstimateByCPDefinitionId(
-		long cpDefinitionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPDAvailabilityEstimate fetchCPDAvailabilityEstimateByCProductId(
@@ -325,18 +309,9 @@ public interface CPDAvailabilityEstimateLocalService
 	public CPDAvailabilityEstimate updateCPDAvailabilityEstimate(
 		CPDAvailabilityEstimate cpdAvailabilityEstimate);
 
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	public CPDAvailabilityEstimate updateCPDAvailabilityEstimate(
-			long cpdAvailabilityEstimateId, long cpDefinitionId,
-			long commerceAvailabilityEstimateId, ServiceContext serviceContext)
-		throws PortalException;
-
 	public CPDAvailabilityEstimate updateCPDAvailabilityEstimateByCProductId(
-			long cpdAvailabilityEstimateId, long cProductId,
-			long commerceAvailabilityEstimateId, ServiceContext serviceContext)
+			long userId, long cpdAvailabilityEstimateId, long cProductId,
+			long commerceAvailabilityEstimateId)
 		throws PortalException;
 
 }

@@ -87,8 +87,7 @@ public class CPDAvailabilityEstimateServiceHttp {
 	public static com.liferay.commerce.model.CPDAvailabilityEstimate
 			updateCPDAvailabilityEstimate(
 				HttpPrincipal httpPrincipal, long cpdAvailabilityEstimateId,
-				long cpDefinitionId, long commerceAvailabilityEstimateId,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+				long cpDefinitionId, long commerceAvailabilityEstimateId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -99,7 +98,7 @@ public class CPDAvailabilityEstimateServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, cpdAvailabilityEstimateId, cpDefinitionId,
-				commerceAvailabilityEstimateId, serviceContext);
+				commerceAvailabilityEstimateId);
 
 			Object returnObj = null;
 
@@ -138,8 +137,7 @@ public class CPDAvailabilityEstimateServiceHttp {
 			new Class[] {long.class};
 	private static final Class<?>[]
 		_updateCPDAvailabilityEstimateParameterTypes1 = new Class[] {
-			long.class, long.class, long.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			long.class, long.class, long.class
 		};
 
 }

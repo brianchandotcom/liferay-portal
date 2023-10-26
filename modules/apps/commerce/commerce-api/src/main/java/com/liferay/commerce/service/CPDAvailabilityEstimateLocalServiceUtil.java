@@ -111,17 +111,6 @@ public class CPDAvailabilityEstimateLocalServiceUtil {
 			CPDAvailabilityEstimateId);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	public static void deleteCPDAvailabilityEstimateByCPDefinitionId(
-		long cpDefinitionId) {
-
-		getService().deleteCPDAvailabilityEstimateByCPDefinitionId(
-			cpDefinitionId);
-	}
-
 	public static void deleteCPDAvailabilityEstimateByCProductId(
 		long cProductId) {
 
@@ -235,17 +224,6 @@ public class CPDAvailabilityEstimateLocalServiceUtil {
 
 		return getService().fetchCPDAvailabilityEstimate(
 			CPDAvailabilityEstimateId);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	public static CPDAvailabilityEstimate
-		fetchCPDAvailabilityEstimateByCPDefinitionId(long cpDefinitionId) {
-
-		return getService().fetchCPDAvailabilityEstimateByCPDefinitionId(
-			cpDefinitionId);
 	}
 
 	public static CPDAvailabilityEstimate
@@ -384,31 +362,15 @@ public class CPDAvailabilityEstimateLocalServiceUtil {
 			cpdAvailabilityEstimate);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	public static CPDAvailabilityEstimate updateCPDAvailabilityEstimate(
-			long cpdAvailabilityEstimateId, long cpDefinitionId,
-			long commerceAvailabilityEstimateId,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().updateCPDAvailabilityEstimate(
-			cpdAvailabilityEstimateId, cpDefinitionId,
-			commerceAvailabilityEstimateId, serviceContext);
-	}
-
 	public static CPDAvailabilityEstimate
 			updateCPDAvailabilityEstimateByCProductId(
-				long cpdAvailabilityEstimateId, long cProductId,
-				long commerceAvailabilityEstimateId,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+				long userId, long cpdAvailabilityEstimateId, long cProductId,
+				long commerceAvailabilityEstimateId)
 		throws PortalException {
 
 		return getService().updateCPDAvailabilityEstimateByCProductId(
-			cpdAvailabilityEstimateId, cProductId,
-			commerceAvailabilityEstimateId, serviceContext);
+			userId, cpdAvailabilityEstimateId, cProductId,
+			commerceAvailabilityEstimateId);
 	}
 
 	public static CPDAvailabilityEstimateLocalService getService() {

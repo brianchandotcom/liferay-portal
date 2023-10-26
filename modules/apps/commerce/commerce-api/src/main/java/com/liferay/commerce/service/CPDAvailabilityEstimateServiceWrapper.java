@@ -51,13 +51,12 @@ public class CPDAvailabilityEstimateServiceWrapper
 	public com.liferay.commerce.model.CPDAvailabilityEstimate
 			updateCPDAvailabilityEstimate(
 				long cpdAvailabilityEstimateId, long cpDefinitionId,
-				long commerceAvailabilityEstimateId,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+				long commerceAvailabilityEstimateId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpdAvailabilityEstimateService.updateCPDAvailabilityEstimate(
 			cpdAvailabilityEstimateId, cpDefinitionId,
-			commerceAvailabilityEstimateId, serviceContext);
+			commerceAvailabilityEstimateId);
 	}
 
 	@Override

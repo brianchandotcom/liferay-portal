@@ -117,18 +117,6 @@ public class CPDAvailabilityEstimateLocalServiceWrapper
 			deleteCPDAvailabilityEstimate(CPDAvailabilityEstimateId);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Override
-	public void deleteCPDAvailabilityEstimateByCPDefinitionId(
-		long cpDefinitionId) {
-
-		_cpdAvailabilityEstimateLocalService.
-			deleteCPDAvailabilityEstimateByCPDefinitionId(cpDefinitionId);
-	}
-
 	@Override
 	public void deleteCPDAvailabilityEstimateByCProductId(long cProductId) {
 		_cpdAvailabilityEstimateLocalService.
@@ -265,18 +253,6 @@ public class CPDAvailabilityEstimateLocalServiceWrapper
 
 		return _cpdAvailabilityEstimateLocalService.
 			fetchCPDAvailabilityEstimate(CPDAvailabilityEstimateId);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.commerce.model.CPDAvailabilityEstimate
-		fetchCPDAvailabilityEstimateByCPDefinitionId(long cpDefinitionId) {
-
-		return _cpdAvailabilityEstimateLocalService.
-			fetchCPDAvailabilityEstimateByCPDefinitionId(cpDefinitionId);
 	}
 
 	@Override
@@ -434,36 +410,17 @@ public class CPDAvailabilityEstimateLocalServiceWrapper
 			updateCPDAvailabilityEstimate(cpdAvailabilityEstimate);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	@Override
-	public com.liferay.commerce.model.CPDAvailabilityEstimate
-			updateCPDAvailabilityEstimate(
-				long cpdAvailabilityEstimateId, long cpDefinitionId,
-				long commerceAvailabilityEstimateId,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _cpdAvailabilityEstimateLocalService.
-			updateCPDAvailabilityEstimate(
-				cpdAvailabilityEstimateId, cpDefinitionId,
-				commerceAvailabilityEstimateId, serviceContext);
-	}
-
 	@Override
 	public com.liferay.commerce.model.CPDAvailabilityEstimate
 			updateCPDAvailabilityEstimateByCProductId(
-				long cpdAvailabilityEstimateId, long cProductId,
-				long commerceAvailabilityEstimateId,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+				long userId, long cpdAvailabilityEstimateId, long cProductId,
+				long commerceAvailabilityEstimateId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpdAvailabilityEstimateLocalService.
 			updateCPDAvailabilityEstimateByCProductId(
-				cpdAvailabilityEstimateId, cProductId,
-				commerceAvailabilityEstimateId, serviceContext);
+				userId, cpdAvailabilityEstimateId, cProductId,
+				commerceAvailabilityEstimateId);
 	}
 
 	@Override

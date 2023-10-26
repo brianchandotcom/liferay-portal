@@ -88,18 +88,31 @@ import ${import};
 			},
 			service = ${entity.name}${sessionTypeName}Service.class
 		)
-	<#elseif stringUtil.equals(sessionTypeName, "Local") && entity.hasEntityColumns() && entity.hasPersistence()>
-		@OSGiBeanProperties(
-			property = {
-				"model.class.name=${apiPackagePath}.model.${entity.name}"
+	<#elseif stringUtil.equals(sessionTypeName, "Local")>
+		<#if serviceBuilder.isVersionGTE_7_4_0()>
+			<#if entity.hasEntityColumns() && entity.hasPersistence()>
+				@OSGiBeanProperties(
+					property = {
+						"model.class.name=${apiPackagePath}.model.${entity.name}"
 
-				<#if entity.versionEntity??>
-					<#assign versionEntity = entity.versionEntity />
+						<#if entity.versionEntity??>
+							<#assign versionEntity = entity.versionEntity />
 
-					, "version.model.class.name=${apiPackagePath}.model.${versionEntity.name}"
-				</#if>
-			}
-		)
+							, "version.model.class.name=${apiPackagePath}.model.${versionEntity.name}"
+						</#if>
+					}
+				)
+			</#if>
+		<#elseif entity.versionEntity??>
+			<#assign versionEntity = entity.versionEntity />
+
+			@OSGiBeanProperties(
+				property = {
+					"model.class.name=${apiPackagePath}.model.${entity.name}",
+					"version.model.class.name=${apiPackagePath}.model.${versionEntity.name}"
+				}
+			)
+		</#if>
 	</#if>
 </#if>
 

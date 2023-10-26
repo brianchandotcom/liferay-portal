@@ -768,7 +768,10 @@ public class ObjectActionLocalServiceImpl
 			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
 				objectDefinitionId, name);
 
-			if (objectField == null) {
+			if ((objectField == null) ||
+				objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_AUTO_INCREMENT)) {
+
 				predefinedValuesErrorMessageKeys.put(name, "invalid");
 
 				continue;

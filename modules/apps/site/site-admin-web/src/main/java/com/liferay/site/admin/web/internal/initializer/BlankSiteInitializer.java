@@ -150,6 +150,10 @@ public class BlankSiteInitializer implements SiteInitializer {
 
 		Layout layout = _layoutLocalService.getLayout(layoutPlid);
 
+		layout.setStatus(WorkflowConstants.STATUS_APPROVED);
+
+		layout = _layoutLocalService.updateLayout(layout);
+
 		_layoutLocalService.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			new Date());

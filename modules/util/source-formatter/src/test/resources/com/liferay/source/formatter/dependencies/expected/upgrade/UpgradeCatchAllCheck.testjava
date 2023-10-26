@@ -225,7 +225,7 @@ public class UpgradeCatchAllCheck {
 	private AssetVocabularyService _assetVocabularyService;
 
 	@Reference
-    private CommerceAccountHelper _commerceAccountHelper;
+	private CommerceAccountHelper _commerceAccountHelper;
 
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;

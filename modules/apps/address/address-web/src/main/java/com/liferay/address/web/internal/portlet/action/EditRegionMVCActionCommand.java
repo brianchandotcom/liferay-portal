@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.HashMap;
@@ -74,7 +75,8 @@ public class EditRegionMVCActionCommand
 				actionRequest.setAttribute(
 					WebKeys.REDIRECT,
 					HttpComponentsUtil.setParameter(
-						ParamUtil.getString(actionRequest, "redirect"),
+						_portal.escapeRedirect(
+							ParamUtil.getString(actionRequest, "redirect")),
 						actionResponse.getNamespace() + "regionId",
 						region.getRegionId()));
 			}
@@ -125,6 +127,9 @@ public class EditRegionMVCActionCommand
 
 	@Reference
 	private Localization _localization;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private RegionLocalService _regionLocalService;

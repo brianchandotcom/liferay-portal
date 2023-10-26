@@ -801,6 +801,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TABLE_ENTRY_ACTION</td>
+	<td>//*[contains(@class,'table-list-title')]/a[text()='${key_entryName}']/../../..//a[@title = '${key_actionName}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ELIGIBILITY_CARD_TITLE</td>
 	<td>//div/h4[contains(.,'${key_eligibilityCardTitle}')]</td>
 	<td></td>

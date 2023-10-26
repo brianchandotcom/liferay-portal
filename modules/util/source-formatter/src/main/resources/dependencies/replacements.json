@@ -209,6 +209,17 @@
 	},
 	{
 		"classNames": [
+			"CaptchaUtil"
+		],
+		"from": "serveImage(ResourceRequest, ResourceResponse)",
+		"issueKey": "LPS-196215",
+		"newImports": [
+			"com.liferay.portal.kernel.util.PortalUtil"
+		],
+		"to": "serveImage(PortalUtil.getHttpServletRequest(param#0#), PortalUtil.getHttpServletResponse(param#1#))"
+	},
+	{
+		"classNames": [
 			"CommercePriceListLocalService",
 			"CommercePriceListLocalServiceUtil"
 		],

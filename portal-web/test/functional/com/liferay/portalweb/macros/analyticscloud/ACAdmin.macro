@@ -74,11 +74,17 @@ definition {
 		return ${userID};
 	}
 
-	@summary = "Default summary"
-	macro goToACAdmin() {
-		var currentURL = Navigator.getCurrentURL();
+	macro goToACAdmin {
+	macro changeACUserPassword {
+		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 
-		Navigator.openSpecificURL(url = "${currentURL}admin");
+		User.openUsersAdmin(baseURL = ${analyticsCloudURL});
+
+		UserNavigator.gotoUser(userScreenName = ${userScreenName});
+
+		UserNavigator.gotoPassword();
+
+		User.resetPassword();
 	}
 
 	@summary = "Default summary"

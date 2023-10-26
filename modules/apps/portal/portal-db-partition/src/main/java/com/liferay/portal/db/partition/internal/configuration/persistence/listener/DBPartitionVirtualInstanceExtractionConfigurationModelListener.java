@@ -28,7 +28,7 @@ public class DBPartitionVirtualInstanceExtractionConfigurationModelListener
 	}
 
 	@Override
-	public void doPerformActions(Dictionary<String, Object> properties) {
+	public void doOnAfterSave(Dictionary<String, Object> properties) {
 	}
 
 	@Override

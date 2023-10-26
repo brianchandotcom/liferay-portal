@@ -37,7 +37,7 @@ public abstract class BaseConfigurationModelListener
 		throws ConfigurationModelListenerException {
 
 		try {
-			doPerformActions(properties);
+			doOnAfterSave(properties);
 		}
 		catch (Exception exception) {
 			throw new ConfigurationModelListenerException(
@@ -48,8 +48,7 @@ public abstract class BaseConfigurationModelListener
 		}
 	}
 
-	protected abstract void doPerformActions(
-			Dictionary<String, Object> properties)
+	protected abstract void doOnAfterSave(Dictionary<String, Object> properties)
 		throws Exception;
 
 	protected abstract Class<?> getConfigurationClass();

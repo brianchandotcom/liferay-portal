@@ -185,7 +185,7 @@ public class CTEntryModelDocumentContributor
 
 		if (modelAttributes.containsKey("status")) {
 			document.addKeyword(
-				"workflowStatus", (Integer)modelAttributes.get("status"));
+				Field.STATUS, (Integer)modelAttributes.get("status"));
 		}
 	}
 

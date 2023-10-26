@@ -340,6 +340,7 @@ definition {
 
 		property test.run.type = "single";
 
+		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 		var reportDetailsNameList = "Workspace,Property";
 		var reportDetailsValueList = "FARO-DEV-liferay,${assignedPropertyName}";
 		var activitiesNameList = "Unique Visitors,Sessions / Visitor,Session Duration,Bounce Rate";
@@ -363,11 +364,7 @@ definition {
 		}
 
 		task ("Navigate to users page") {
-			ProductMenuHelper.expandPanel(panel = "control panel");
-
-			ProductMenuHelper.expandCategory(category = "Users");
-
-			ProductMenuHelper.gotoPortlet(portlet = "Users and Organizations");
+			User.openUsersAdmin(baseURL = ${analyticsCloudURL});
 		}
 
 		task ("Go to user data page") {

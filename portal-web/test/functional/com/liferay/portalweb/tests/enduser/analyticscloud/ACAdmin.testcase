@@ -38,6 +38,7 @@ definition {
 	@description = "Bug: LRAC-10001 | Automation ID: LRAC-10738 | Test Summary: Make sure the AC user account name is correct after creation in the admin part of the AC"
 	@priority = 3
 	test CheckUserAccountNameWithSpecialChars {
+		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 		var userFirstName = "acção";
 		var userLastName = "acé";
 		var userScreenName = "ac.ac";
@@ -48,11 +49,7 @@ definition {
 		}
 
 		task ("Navigate to users page") {
-			ProductMenuHelper.expandPanel(panel = "control panel");
-
-			ProductMenuHelper.expandCategory(category = "Users");
-
-			ProductMenuHelper.gotoPortlet(portlet = "Users and Organizations");
+			User.openUsersAdmin(baseURL = ${analyticsCloudURL});
 		}
 
 		task ("Create a new user with special chars") {
@@ -80,6 +77,8 @@ definition {
 		}
 
 		task ("Go to user data page") {
+			User.openUsersAdmin(baseURL = ${analyticsCloudURL});
+
 			UserNavigator.gotoUser(userScreenName = ${userScreenName});
 		}
 
@@ -108,12 +107,8 @@ definition {
 			ACAdmin.goToACAdmin(userScreenNameToResetPassword = "test");
 		}
 
-		task ("Go to control panel > Users > Users and Organizations") {
-			ProductMenuHelper.expandPanel(panel = "control panel");
-
-			ProductMenuHelper.expandCategory(category = "Users");
-
-			ProductMenuHelper.gotoPortlet(portlet = "Users and Organizations");
+		task ("Navigate to users page") {
+			User.openUsersAdmin(baseURL = ${analyticsCloudURL});
 		}
 
 		task ("Create a new user") {
@@ -214,12 +209,8 @@ definition {
 			ACAdmin.goToACAdmin(userScreenNameToResetPassword = "test");
 		}
 
-		task ("Go to control panel > Users > Users and Organizations") {
-			ProductMenuHelper.expandPanel(panel = "control panel");
-
-			ProductMenuHelper.expandCategory(category = "Users");
-
-			ProductMenuHelper.gotoPortlet(portlet = "Users and Organizations");
+		task ("Navigate to users page") {
+			User.openUsersAdmin(baseURL = ${analyticsCloudURL});
 		}
 
 		task ("Create a new user") {
@@ -293,13 +284,7 @@ definition {
 				emailAddress = "test@liferay.com",
 				password = "test");
 
-			ACAdmin.goToACAdmin();
-
-			ProductMenuHelper.expandPanel(panel = "control panel");
-
-			ProductMenuHelper.expandCategory(category = "Users");
-
-			ProductMenuHelper.gotoPortlet(portlet = "Users and Organizations");
+			User.openUsersAdmin(baseURL = ${analyticsCloudURL});
 
 			User.assignRegularRoleCP(
 				roleTitle = "Administrator",

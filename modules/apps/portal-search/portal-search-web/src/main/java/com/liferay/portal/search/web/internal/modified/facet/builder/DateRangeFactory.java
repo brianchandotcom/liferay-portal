@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.search.web.internal.util;
+package com.liferay.portal.search.web.internal.modified.facet.builder;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.DateFormatFactory;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -28,19 +28,23 @@ import java.util.Map;
  * @author Adam Brandizzi
  * @author André de Oliveira
  */
-public class DateRangeFactoryUtil {
+public class DateRangeFactory {
 
-	public static String getRangeString(String label, Calendar calendar) {
+	public DateRangeFactory(DateFormatFactory dateFormatFactory) {
+		_dateFormatFactory = dateFormatFactory;
+	}
+
+	public String getRangeString(String label, Calendar calendar) {
 		return replaceAliases(_rangeMap.get(label), calendar);
 	}
 
-	public static String getRangeString(String from, String to) {
+	public String getRangeString(String from, String to) {
 		return StringBundler.concat(
 			"[", _normalizeRangeBoundary(from, "000000"), " TO ",
 			_normalizeRangeBoundary(to, "235959"), "]");
 	}
 
-	public static Map<String, String> getRangeStrings(Calendar calendar) {
+	public Map<String, String> getRangeStrings(Calendar calendar) {
 		Map<String, String> map = new LinkedHashMap<>();
 
 		for (String label : _rangeMap.keySet()) {
@@ -50,7 +54,7 @@ public class DateRangeFactoryUtil {
 		return map;
 	}
 
-	public static JSONArray replaceAliases(
+	public JSONArray replaceAliases(
 		JSONArray rangesJSONArray, Calendar calendar, JSONFactory jsonFactory) {
 
 		JSONArray normalizedRangesJSONArray = jsonFactory.createJSONArray();
@@ -73,7 +77,7 @@ public class DateRangeFactoryUtil {
 		return normalizedRangesJSONArray;
 	}
 
-	public static String replaceAliases(String rangeString, Calendar calendar) {
+	public String replaceAliases(String rangeString, Calendar calendar) {
 		Calendar now = (Calendar)calendar.clone();
 
 		Calendar pastHour = (Calendar)now.clone();
@@ -97,7 +101,7 @@ public class DateRangeFactoryUtil {
 
 		pastYear.set(Calendar.YEAR, now.get(Calendar.YEAR) - 1);
 
-		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+		DateFormat dateFormat = _dateFormatFactory.getSimpleDateFormat(
 			"yyyyMMddHHmmss");
 
 		return StringUtil.replace(
@@ -112,7 +116,7 @@ public class DateRangeFactoryUtil {
 			});
 	}
 
-	public static void validateRange(String ranges)
+	public void validateRange(String ranges)
 		throws JSONException, ParseException {
 
 		JSONArray rangesJSONArray = JSONFactoryUtil.createJSONArray(ranges);
@@ -138,17 +142,15 @@ public class DateRangeFactoryUtil {
 		}
 	}
 
-	private static String _normalizeRangeBoundary(
-		String dateString, String pad) {
-
+	private String _normalizeRangeBoundary(String dateString, String pad) {
 		dateString = StringUtil.replace(dateString, '-', "");
 
 		return dateString + pad;
 	}
 
-	private static void _validateDateFormat(String date) throws ParseException {
+	private void _validateDateFormat(String date) throws ParseException {
 		if (!ArrayUtil.contains(_ALIASES, date)) {
-			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			DateFormat dateFormat = _dateFormatFactory.getSimpleDateFormat(
 				"yyyyMMddHHmmss");
 
 			dateFormat.parse(date);
@@ -172,5 +174,7 @@ public class DateRangeFactoryUtil {
 		).put(
 			"past-year", "[past-year TO *]"
 		).build();
+
+	private final DateFormatFactory _dateFormatFactory;
 
 }

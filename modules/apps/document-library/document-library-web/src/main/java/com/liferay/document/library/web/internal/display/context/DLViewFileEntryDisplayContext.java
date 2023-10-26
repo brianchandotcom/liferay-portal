@@ -107,7 +107,7 @@ public class DLViewFileEntryDisplayContext {
 
 	public String getDocumentTitle() throws PortalException {
 		if (_documentTitle != null) {
-			return HtmlUtil.escape(_documentTitle);
+			return _documentTitle;
 		}
 
 		FileVersion fileVersion = getFileVersion();
@@ -123,7 +123,7 @@ public class DLViewFileEntryDisplayContext {
 				fileVersion.getVersion(), StringPool.CLOSE_PARENTHESIS);
 		}
 
-		return HtmlUtil.escape(_documentTitle);
+		return _documentTitle;
 	}
 
 	public FileEntry getFileEntry() {

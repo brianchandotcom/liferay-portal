@@ -135,6 +135,34 @@ public class UpgradeCatchAllCheck {
 	}
 
 	public void method(
+		long groupId, long userId, Map<Locale, String> nameMap,
+		Map<Locale, String> shortDescriptionMap,
+		Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
+		Map<Locale, String> metaTitleMap,
+		Map<Locale, String> metaDescriptionMap,
+		Map<Locale, String> metaKeywordsMap, String productTypeName,
+		boolean ignoreSKUCombinations, boolean shippable, boolean freeShipping,
+		boolean shipSeparately, double shippingExtraPrice, double width,
+		double height, double depth, double weight, long cpTaxCategoryId,
+		boolean taxExempt, boolean telcoOrElectronics, String ddmStructureKey,
+		boolean published, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		String defaultSku, boolean subscriptionEnabled, int subscriptionLength,
+		String subscriptionType,
+		UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
+		long maxSubscriptionCycles, String externalReferenceCode,
+		ServiceContext serviceContext) {
+
+		CPDefinitionLocalServiceUtil.upsertCPDefinition(groupId, userId, nameMap, shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap, metaDescriptionMap, metaKeywordsMap, productTypeName, ignoreSKUCombinations, shippable, freeShipping, shipSeparately, shippingExtraPrice, width, height, depth, weight, cpTaxCategoryId, taxExempt, telcoOrElectronics, ddmStructureKey, published, displayDateMonth, displayDateDay, displayDateYear, displayDateHour, displayDateMinute, expirationDateMonth, expirationDateDay, expirationDateYear, expirationDateHour, expirationDateMinute, neverExpire, defaultSku, subscriptionEnabled, subscriptionLength, subscriptionType, subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles, externalReferenceCode, serviceContext);
+		CPDefinitionServiceUtil.upsertCPDefinition(123, userId, nameMap, shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap, metaDescriptionMap, metaKeywordsMap, productTypeName, ignoreSKUCombinations, shippable, freeShipping, shipSeparately, shippingExtraPrice, width, height, depth, weight, cpTaxCategoryId, taxExempt, telcoOrElectronics, ddmStructureKey, published, displayDateMonth, displayDateDay, displayDateYear, displayDateHour, displayDateMinute, expirationDateMonth, expirationDateDay, expirationDateYear, expirationDateHour, expirationDateMinute, neverExpire, defaultSku, subscriptionEnabled, subscriptionLength, subscriptionType, subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles, externalReferenceCode, serviceContext);
+		CPDefinitionServiceUtil.upsertCPDefinition(groupId, userId, nameMap, shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap, metaDescriptionMap, metaKeywordsMap, productTypeName, ignoreSKUCombinations, shippable, freeShipping, shipSeparately, shippingExtraPrice, width, height, depth, weight, cpTaxCategoryId, taxExempt, telcoOrElectronics, ddmStructureKey, published, displayDateMonth, displayDateDay, displayDateYear, displayDateHour, displayDateMinute, expirationDateMonth, expirationDateDay, expirationDateYear, expirationDateHour, expirationDateMinute, neverExpire, defaultSku, subscriptionEnabled, subscriptionLength, subscriptionType, subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles, externalReferenceCode, serviceContext);
+		_cpDefinitionLocalService.upsertCPDefinition(groupId, userId, nameMap, shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap, metaDescriptionMap, metaKeywordsMap, productTypeName, ignoreSKUCombinations, shippable, freeShipping, shipSeparately, shippingExtraPrice, width, height, depth, weight, cpTaxCategoryId, taxExempt, telcoOrElectronics, ddmStructureKey, published, displayDateMonth, displayDateDay, displayDateYear, displayDateHour, displayDateMinute, expirationDateMonth, expirationDateDay, expirationDateYear, expirationDateHour, expirationDateMinute, neverExpire, defaultSku, subscriptionEnabled, subscriptionLength, subscriptionType, subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles, externalReferenceCode, serviceContext);
+		_cpDefinitionService.upsertCPDefinition(groupId, userId, nameMap, shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap, metaDescriptionMap, metaKeywordsMap, productTypeName, ignoreSKUCombinations, shippable, freeShipping, shipSeparately, shippingExtraPrice, width, height, depth, weight, cpTaxCategoryId, taxExempt, telcoOrElectronics, ddmStructureKey, published, displayDateMonth, displayDateDay, displayDateYear, displayDateHour, displayDateMinute, expirationDateMonth, expirationDateDay, expirationDateYear, expirationDateHour, expirationDateMinute, neverExpire, defaultSku, subscriptionEnabled, subscriptionLength, subscriptionType, subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles, externalReferenceCode, serviceContext);
+	}
+
+	public void method(
 		long companyId, long groupId, String title, int start, int end) {
 
 		_assetVocabularyLocalService.searchVocabularies(companyId, groupId, title, start, end);
@@ -210,7 +238,7 @@ public class UpgradeCatchAllCheck {
 		CommercePriceEntryLocalServiceUtil.addCommercePriceEntry(externalReferenceCode, cProductId, cpInstanceUuid, commercePriceListId, price, promoPrice, serviceContext);
 		_commercePriceEntryLocalService.addCommercePriceEntry("test123", cProductId, cpInstanceUuid, commercePriceListId, price, promoPrice, serviceContext);
 		_commercePriceEntryLocalService.addCommercePriceEntry(externalReferenceCode, cProductId, cpInstanceUuid,commercePriceListId, price, promoPrice, serviceContext);
-	 }
+	}
 
 	@Reference
 	private AccountGroupLocalService _accountGroupLocalService;

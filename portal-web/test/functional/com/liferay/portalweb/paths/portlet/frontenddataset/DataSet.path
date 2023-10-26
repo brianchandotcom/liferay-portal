@@ -355,6 +355,21 @@
 	<td>//div[@class="form-group"]//input[contains(@aria-label,'${key_label}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SPECIFIC_CHECKBOX_CHECKED</td>
+	<td>//button[contains(@class,'dropdown-item') and contains(.,'${key_name}')]//input[@type='checkbox' and @checked]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRESELECT_VALUE_INPUT</td>
+	<td>//div[contains(@class,'form-group')]//input[contains(@placeholder,'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_SORT_OPTION</td>
+	<td>//button[contains(@class,'dropdown-item') and contains(.,'${key_sortOption}')]</td>
+	<td></td>
+</tr>
 
 <!-- DATA SET PAGINATION -->
 

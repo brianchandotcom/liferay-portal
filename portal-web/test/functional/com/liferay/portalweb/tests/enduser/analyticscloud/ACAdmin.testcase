@@ -121,6 +121,20 @@ definition {
 			User.resetPassword();
 		}
 
+		task ("Create a new user") {
+			PortalSettings.openInstanceSettingsAdmin(baseURL = ${analyticsCloudURL});
+
+			Click(
+				key_itemName = "User Authentication",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+
+			Uncheck(
+				checkboxName = "Require strangers to verify their email address?",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			Button.clickSave();
+		}
+
 		task ("Log out the current user and login with the new user") {
 			ProductMenuHelper.expandPanel(panel = "user");
 

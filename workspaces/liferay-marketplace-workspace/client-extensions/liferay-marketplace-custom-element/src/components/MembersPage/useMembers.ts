@@ -77,6 +77,8 @@ const useMembers = ({
 				_member.isPublisherAccount =
 					isPublisherDashboard &&
 					roles.some((role) => publisherRoles.includes(role));
+
+				return _member;
 			})
 			.filter(
 				(member: MemberProps) =>

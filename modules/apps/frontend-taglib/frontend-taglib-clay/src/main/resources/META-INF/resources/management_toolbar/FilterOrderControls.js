@@ -33,31 +33,38 @@ const FilterOrderControls = ({
 			{filterDropdownItems && (
 				<ManagementToolbar.Item>
 					<ClayDropDownWithItems
-						items={filterDropdownItems.map((item) =>
-							item.items
-								? {
-										...item,
-										items: item.items.map((childItem) => {
-											return {
-												...childItem,
-												onClick(event) {
-													onFilterDropdownItemClick(
-														event,
-														{
-															item: childItem,
-														}
-													);
-												},
-											};
-										}),
-								  }
-								: {
-										...item,
-										onClick: (event) =>
-											onFilterDropdownItemClick(event, {
-												item,
-											}),
-								  }
+						items={addActiveIcons(
+							filterDropdownItems.map((item) =>
+								item.items
+									? {
+											...item,
+											items: item.items.map(
+												(childItem) => {
+													return {
+														...childItem,
+														onClick(event) {
+															onFilterDropdownItemClick(
+																event,
+																{
+																	item: childItem,
+																}
+															);
+														},
+													};
+												}
+											),
+									  }
+									: {
+											...item,
+											onClick: (event) =>
+												onFilterDropdownItemClick(
+													event,
+													{
+														item,
+													}
+												),
+									  }
+							)
 						)}
 						trigger={
 							<ClayButton
@@ -112,7 +119,7 @@ const FilterOrderControls = ({
 			{showDesignImprovements && !showOrderToggle && (
 				<ManagementToolbar.Item>
 					<ClayDropDownWithItems
-						items={[
+						items={addActiveIcons([
 							...orderDropdownItems.map((item) => {
 								return {
 									...item,
@@ -138,7 +145,7 @@ const FilterOrderControls = ({
 								label: Liferay.Language.get('descending'),
 								type: 'item',
 							},
-						]}
+						])}
 						trigger={
 							<ClayButton
 								className="ml-2 mr-2 nav-link"
@@ -225,5 +232,17 @@ const FilterOrderControls = ({
 		</>
 	);
 };
+
+function addActiveIcons(itemList) {
+	if (!Liferay.FeatureFlags['LPS-198573']) {
+		return itemList;
+	}
+
+	return itemList.map((item) => ({
+		...item,
+		items: item.items ? addActiveIcons(item.items) : undefined,
+		symbolLeft: item.active ? 'check' : item.symbolLeft,
+	}));
+}
 
 export default FilterOrderControls;

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.ResourcedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.MultiValueFacet;
@@ -49,7 +50,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -747,7 +747,10 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			String keywords)
 		throws Exception {
 
-		_expandoQueryContributor.contribute(
+		ExpandoQueryContributor expandoQueryContributor =
+			_expandoQueryContributorSnapshot.get();
+
+		expandoQueryContributor.contribute(
 			keywords, searchQuery, getSearchClassNames(), searchContext);
 
 		return new HashMap<>();
@@ -777,7 +780,10 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			BooleanQuery searchQuery, SearchContext searchContext)
 		throws Exception {
 
-		_addSearchKeywordsQueryContributor.contribute(
+		AddSearchKeywordsQueryContributor addSearchKeywordsQueryContributor =
+			_addSearchKeywordsQueryContributorSnapshot.get();
+
+		addSearchKeywordsQueryContributor.contribute(
 			searchQuery, searchContext);
 
 		return addSearchExpando(
@@ -1200,7 +1206,8 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 	}
 
 	protected List<ExpandoQueryContributor> getExpandoQueryContributors() {
-		return Collections.singletonList(_expandoQueryContributor);
+		return Collections.singletonList(
+			_expandoQueryContributorSnapshot.get());
 	}
 
 	protected Locale getLocale(PortletRequest portletRequest) {
@@ -1428,7 +1435,10 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			SearchContext searchContext)
 		throws Exception {
 
-		_preFilterContributor.contribute(
+		PreFilterContributor preFilterContributor =
+			_preFilterContributorSnapshot.get();
+
+		preFilterContributor.contribute(
 			queryBooleanFilter, entryClassNameIndexerMap, searchContext);
 	}
 
@@ -1467,7 +1477,11 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			searchContext.setUserId(permissionChecker.getUserId());
 		}
 
-		return _searchResultPermissionFilterFactory.create(
+		SearchResultPermissionFilterFactory
+			searchResultPermissionFilterFactory =
+				_searchResultPermissionFilterFactorySnapshot.get();
+
+		return searchResultPermissionFilterFactory.create(
 			searchResultPermissionFilterSearcher, permissionChecker);
 	}
 
@@ -1476,7 +1490,10 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			Collection<Indexer<?>> indexers, SearchContext searchContext)
 		throws Exception {
 
-		_postProcessSearchQueryContributor.contribute(
+		PostProcessSearchQueryContributor postProcessSearchQueryContributor =
+			_postProcessSearchQueryContributorSnapshot.get();
+
+		postProcessSearchQueryContributor.contribute(
 			booleanQuery, booleanFilter, indexers, searchContext);
 	}
 
@@ -1497,29 +1514,21 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 
 	private static final Log _log = LogFactoryUtil.getLog(BaseIndexer.class);
 
-	private static volatile AddSearchKeywordsQueryContributor
-		_addSearchKeywordsQueryContributor =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				AddSearchKeywordsQueryContributor.class, BaseIndexer.class,
-				"_addSearchKeywordsQueryContributor", false);
-	private static volatile ExpandoQueryContributor _expandoQueryContributor =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			ExpandoQueryContributor.class, BaseIndexer.class,
-			"_expandoQueryContributor", false);
-	private static volatile PostProcessSearchQueryContributor
-		_postProcessSearchQueryContributor =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				PostProcessSearchQueryContributor.class, BaseIndexer.class,
-				"_postProcessSearchQueryContributor", false);
-	private static volatile PreFilterContributor _preFilterContributor =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			PreFilterContributor.class, BaseIndexer.class,
-			"_preFilterContributor", false);
-	private static volatile SearchResultPermissionFilterFactory
-		_searchResultPermissionFilterFactory =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				SearchResultPermissionFilterFactory.class, BaseIndexer.class,
-				"_searchResultPermissionFilterFactory", false);
+	private static final Snapshot<AddSearchKeywordsQueryContributor>
+		_addSearchKeywordsQueryContributorSnapshot = new Snapshot<>(
+			BaseIndexer.class, AddSearchKeywordsQueryContributor.class);
+	private static final Snapshot<ExpandoQueryContributor>
+		_expandoQueryContributorSnapshot = new Snapshot<>(
+			BaseIndexer.class, ExpandoQueryContributor.class);
+	private static final Snapshot<PostProcessSearchQueryContributor>
+		_postProcessSearchQueryContributorSnapshot = new Snapshot<>(
+			BaseIndexer.class, PostProcessSearchQueryContributor.class);
+	private static final Snapshot<PreFilterContributor>
+		_preFilterContributorSnapshot = new Snapshot<>(
+			BaseIndexer.class, PreFilterContributor.class);
+	private static final Snapshot<SearchResultPermissionFilterFactory>
+		_searchResultPermissionFilterFactorySnapshot = new Snapshot<>(
+			BaseIndexer.class, SearchResultPermissionFilterFactory.class);
 
 	private boolean _commitImmediately;
 	private String[] _defaultSelectedFieldNames;

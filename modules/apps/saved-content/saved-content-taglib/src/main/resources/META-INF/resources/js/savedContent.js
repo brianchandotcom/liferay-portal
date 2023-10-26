@@ -20,7 +20,7 @@ export default function SavedContent({
 	classPK,
 	contentTitle,
 	mySavedContentURL,
-	portletNamespace = '',
+	portletNamespace,
 	saved: initialSaved = false,
 	savedContentURL,
 }) {

@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -97,6 +98,8 @@ public class RegularRoleSegmentsFieldCustomizer
 
 			regularRoleItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 				Collections.singletonList(new UUIDItemSelectorReturnType()));
+			regularRoleItemSelectorCriterion.setExcludedRoleNames(
+				new String[] {RoleConstants.GUEST});
 
 			return new Field.SelectEntity(
 				"selectEntity",

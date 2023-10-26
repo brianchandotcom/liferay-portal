@@ -68,6 +68,10 @@ public class UpgradeCatchAllCheck {
 		_commerceAccountHelper.getCurrentCommerceAccount(null);
 	}
 
+	public void method(Indexer<?> indexer) {
+		indexer.getSearchClassNames();
+	}
+
 	public void method(
 		long cpDefinitionId, long cProductId, double priority, String type,
 		ServiceContext serviceContext) {
@@ -88,10 +92,6 @@ public class UpgradeCatchAllCheck {
 		DLFolderServiceUtil.addFolder(null, groupId, repositoryId, mountPoint, parentFolderId, name, description, serviceContext);
 		_dlFolderLocalService.addFolder(null, userId, groupId, repositoryId, mountPoint, parentFolderId, name, description, hidden, serviceContext);
 		_dlFolderService.addFolder(null, groupId, repositoryId, mountPoint, parentFolderId, name, description, serviceContext);
-	}
-
-	public void method(Indexer<?> indexer) {
-		indexer.getSearchClassNames();
 	}
 
 	public void method(

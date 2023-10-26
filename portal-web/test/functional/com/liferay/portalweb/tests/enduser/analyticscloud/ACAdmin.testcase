@@ -231,13 +231,9 @@ definition {
 		task ("Go to AC with the new user and assert that the user can see the data") {
 			ACWorkspace.signOut();
 
-			ACLogin.loginAs(
-				emailAddress = ${userEmailAddress},
-				password = "test");
+			ACLogin.loginAs(emailAddress = ${userEmailAddress});
 
-			Navigator.openSpecificURL(url = ${currentURL});
-
-			ACWorkspace.openWorkspace();
+			ACUtils.launchAC();
 
 			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 
@@ -255,9 +251,7 @@ definition {
 		task ("Go to admin with Test Test and give administrator permission to the new user") {
 			ACWorkspace.signOut();
 
-			ACLogin.loginAs(
-				emailAddress = "test@liferay.com",
-				password = "test");
+			ACLogin.loginAs(emailAddress = "test@liferay.com");
 
 			User.openUsersAdmin(baseURL = ${analyticsCloudURL});
 
@@ -273,9 +267,7 @@ definition {
 				emailAddress = ${userEmailAddress},
 				password = "test");
 
-			Navigator.openSpecificURL(url = ${currentURL});
-
-			ACWorkspace.openWorkspace();
+			ACUtils.launchAC();
 
 			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 

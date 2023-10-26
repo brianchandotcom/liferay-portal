@@ -265,11 +265,15 @@ public class Main {
 						"Updating structured content " +
 							structuredContent.getFriendlyUrlPath());
 
-					_setPermissions(fileName, structuredContent);
-
 					importedStructuredContent =
 						_structuredContentResource.putStructuredContent(
 							siteStructuredContent.getId(), structuredContent);
+
+					_structuredContentResource.
+						putStructuredContentPermissionsPage(
+							importedStructuredContent.getId(),
+							_setPermissions(
+								fileName, importedStructuredContent.getId()));
 
 					updatedStructuredContentCount++;
 				}
@@ -296,7 +300,8 @@ public class Main {
 						"Adding structured content " +
 							structuredContent.getFriendlyUrlPath());
 
-					_setPermissions(fileName, structuredContent);
+					structuredContent.setPermissions(
+						_setPermissions(fileName, structuredContent.getId()));
 
 					importedStructuredContent =
 						_structuredContentResource.
@@ -387,6 +392,34 @@ public class Main {
 		}
 
 		_fileNames.add(fileName);
+	}
+
+	private List<Permission> _clearCurrentPermissions(Long structuredContentId)
+		throws Exception {
+
+		List<Permission> permissions = new ArrayList<>();
+
+		if (structuredContentId == null) {
+			return permissions;
+		}
+
+		Page<Permission> structuredContentPermissionsPage =
+			_structuredContentResource.getStructuredContentPermissionsPage(
+				structuredContentId, null);
+
+		for (Permission permission :
+				structuredContentPermissionsPage.getItems()) {
+
+			if (Objects.equals(permission.getRoleName(), "Owner")) {
+				continue;
+			}
+
+			permission.setActionIds(new String[0]);
+
+			permissions.add(permission);
+		}
+
+		return permissions;
 	}
 
 	private String _dedent(int dedent, String line) {
@@ -1527,8 +1560,8 @@ public class Main {
 		return line;
 	}
 
-	private void _setPermissions(
-			String fileName, StructuredContent structuredContent)
+	private Permission[] _setPermissions(
+			String fileName, Long structuredContentId)
 		throws Exception {
 
 		SnakeYamlFrontMatterVisitor snakeYamlFrontMatterVisitor =
@@ -1543,28 +1576,26 @@ public class Main {
 					file)));
 
 		Map<String, Object> data = snakeYamlFrontMatterVisitor.getData();
+		List<Permission> permissions = _clearCurrentPermissions(
+			structuredContentId);
 
 		if ((data == null) || !data.containsKey("visibility")) {
-			structuredContent.setPermissions(
-				new Permission[] {
-					new Permission() {
-						{
-							actionIds = new String[] {"VIEW"};
-							roleName = "Guest";
-						}
+			permissions.add(
+				new Permission() {
+					{
+						actionIds = new String[] {"VIEW"};
+						roleName = "Guest";
 					}
 				});
 
-			return;
+			return permissions.toArray(new Permission[0]);
 		}
 
 		Object roleNames = data.get("visibility");
 
 		if (!(roleNames instanceof ArrayList)) {
-			return;
+			return null;
 		}
-
-		List<Permission> permissions = new ArrayList<>();
 
 		for (Object roleNamesObject : (ArrayList)roleNames) {
 			if (!(roleNamesObject instanceof String)) {
@@ -1581,7 +1612,7 @@ public class Main {
 		}
 
 		if (permissions.isEmpty()) {
-			return;
+			return null;
 		}
 
 		permissions.add(
@@ -1592,8 +1623,7 @@ public class Main {
 				}
 			});
 
-		structuredContent.setPermissions(
-			permissions.toArray(new Permission[0]));
+		return permissions.toArray(new Permission[0]);
 	}
 
 	private String _toFriendlyURLPath(File file) {

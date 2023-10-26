@@ -19,12 +19,14 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
+		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=saved-content-portlet",
 		"com.liferay.portlet.display-category=category.collaboration",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=0",
+		"javax.portlet.display-name=My Saved Content",
 		"javax.portlet.display-name=My Saved Content",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.copy-request-parameters=true",

@@ -60,6 +60,8 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.File;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -660,6 +662,12 @@ public class ObjectEntryDTOConverter
 					_dLFileEntryLocalService.fetchDLFileEntry(fileEntryId);
 
 				if (dlFileEntry != null) {
+					fileEntry.setFileBase64(
+						(String)NestedFieldsSupplier.supply(
+							objectFieldName + ".fileBase64",
+							fieldName -> Base64.encode(
+								_file.getBytes(
+									dlFileEntry.getContentStream()))));
 					fileEntry.setId(dlFileEntry.getFileEntryId());
 					fileEntry.setLink(
 						LinkUtil.toLink(
@@ -799,6 +807,9 @@ public class ObjectEntryDTOConverter
 
 	@Reference
 	private ExtensionProviderRegistry _extensionProviderRegistry;
+
+	@Reference
+	private File _file;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

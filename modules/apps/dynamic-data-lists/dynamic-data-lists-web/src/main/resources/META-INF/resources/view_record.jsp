@@ -41,6 +41,8 @@ else {
 }
 %>
 
+<%@ include file="/deprecated_warning.jspf" %>
+
 <clay:container-fluid>
 	<c:if test="<%= recordVersion != null %>">
 		<aui:model-context bean="<%= recordVersion %>" model="<%= DDLRecordVersion.class %>" />

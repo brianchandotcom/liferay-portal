@@ -2231,7 +2231,7 @@ public class ObjectEntryLocalServiceTest {
 
 		Calendar calendar = new GregorianCalendar();
 
-		calendar.set(6, Calendar.DECEMBER, 27);
+		calendar.set(6, Calendar.DECEMBER, 28);
 		calendar.setTimeInMillis(0);
 
 		Date birthdayDate = calendar.getTime();

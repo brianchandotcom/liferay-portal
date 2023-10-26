@@ -148,11 +148,6 @@ definition {
 
 			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Object",
-				panel = "Control Panel",
-				portlet = "Purchase Orders");
-
 			var objectEntryId = ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 				fieldName = "epicName",
 				objectName = "PurchaseOrder",
@@ -293,11 +288,6 @@ definition {
 
 			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Object",
-				panel = "Control Panel",
-				portlet = "Purchase Orders");
-
 			var objectEntryId = ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 				fieldName = "epicName",
 				objectName = "PurchaseOrder",
@@ -318,11 +308,6 @@ definition {
 				objectName = "Customer");
 
 			ObjectAdmin.publishObjectViaAPI(objectName = "Customer");
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Object",
-				panel = "Control Panel",
-				portlet = "Customers");
 
 			ObjectAdmin.addObjectRelationshipViaAPI(
 				objectName_1 = "PurchaseOrder",
@@ -906,11 +891,6 @@ definition {
 
 			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Object",
-				panel = "Control Panel",
-				portlet = "Purchase Orders");
-
 			var objectEntryId = ObjectAdmin.addObjectEntryViaAPI(
 				fieldNameList = "region,address",
 				objectName = "PurchaseOrder",
@@ -1029,11 +1009,6 @@ definition {
 				objectName = "PurchaseOrder");
 
 			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
-
-			ApplicationsMenu.gotoPortlet(
-				category = "Object",
-				panel = "Control Panel",
-				portlet = "Purchase Orders");
 
 			var objectEntryId = ObjectAdmin.addObjectEntryViaAPI(
 				fieldNameList = "region,address",

@@ -220,11 +220,6 @@ definition {
 
 			ObjectAdmin.publishObjectViaAPI(objectName = "PurchaseOrder");
 
-			ApplicationsMenu.gotoPortlet(
-				category = "Object",
-				panel = "Control Panel",
-				portlet = "Purchase Orders");
-
 			var objectEntryId = ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 				fieldName = "description",
 				objectName = "PurchaseOrder",

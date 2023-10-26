@@ -5,8 +5,8 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.result.SearchResultTranslator;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.List;
 import java.util.Locale;
@@ -29,13 +29,15 @@ public class SearchResultUtil {
 		Hits hits, Locale locale, PortletRequest portletRequest,
 		PortletResponse portletResponse) {
 
-		return _searchResultTranslator.translate(
+		SearchResultTranslator searchResultTranslator =
+			_searchResultTranslatorSnapshot.get();
+
+		return searchResultTranslator.translate(
 			hits, locale, portletRequest, portletResponse);
 	}
 
-	private static volatile SearchResultTranslator _searchResultTranslator =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			SearchResultTranslator.class, SearchResultUtil.class,
-			"_searchResultTranslator", false);
+	private static final Snapshot<SearchResultTranslator>
+		_searchResultTranslatorSnapshot = new Snapshot<>(
+			SearchResultUtil.class, SearchResultTranslator.class);
 
 }

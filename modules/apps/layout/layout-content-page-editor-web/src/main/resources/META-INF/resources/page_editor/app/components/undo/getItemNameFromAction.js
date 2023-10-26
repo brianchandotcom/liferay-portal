@@ -16,6 +16,18 @@ import getFragmentItem from '../../utils/getFragmentItem';
  * @return {string|null}
  */
 export function getItemNameFromAction({action, state}) {
+	if (action.ruleId) {
+		const rule =
+			action.layoutData.pageRules.find(
+				(rule) => rule.id === action.ruleId
+			) ||
+			state.layoutData.pageRules.find(
+				(rule) => rule.id === action.ruleId
+			);
+
+		return rule.name;
+	}
+
 	const fragmentEntryLinks = action.fragmentEntryLinks
 		? Object.values(action.fragmentEntryLinks).reduce(
 				(acc, fragmentEntryLink) => {

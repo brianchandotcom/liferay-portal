@@ -7,8 +7,10 @@ import {SELECT_SEGMENTS_EXPERIENCE} from '../../../plugins/experience/actions';
 import {
 	ADD_FRAGMENT_ENTRY_LINKS,
 	ADD_ITEM,
+	ADD_RULE,
 	CHANGE_MASTER_LAYOUT,
 	DELETE_ITEM,
+	DELETE_RULE,
 	DUPLICATE_ITEM,
 	MOVE_ITEM,
 	SWITCH_VIEWPORT_SIZE,
@@ -23,12 +25,15 @@ import {
 	UPDATE_ITEM_LOCAL_CONFIG,
 	UPDATE_LANGUAGE_ID,
 	UPDATE_ROW_COLUMNS,
+	UPDATE_RULE,
 } from '../../actions/types';
 import {getItemNameFromAction} from './getItemNameFromAction';
 import * as undoAddFragmentEntryLinks from './undoAddFragmentEntryLinks';
 import * as undoAddItem from './undoAddItem';
+import * as undoAddRule from './undoAddRule';
 import * as undoChangeMasterLayout from './undoChangeMasterLayout';
 import * as undoDeleteItem from './undoDeleteItem';
+import * as undoDeleteRule from './undoDeleteRule';
 import * as undoDuplicateItem from './undoDuplicateItem';
 import * as undoMoveItem from './undoMoveItem';
 import * as undoSelectExperience from './undoSelectExperience';
@@ -44,12 +49,15 @@ import * as undoUpdateItemConfig from './undoUpdateItemConfig';
 import * as undoUpdateItemLocalConfig from './undoUpdateItemLocalConfig';
 import * as undoUpdateLanguage from './undoUpdateLanguage';
 import * as undoUpdateRowColumns from './undoUpdateRowColumns';
+import * as undoUpdateRule from './undoUpdateRule';
 
 const UNDO_ACTIONS = {
 	[ADD_FRAGMENT_ENTRY_LINKS]: undoAddFragmentEntryLinks,
 	[ADD_ITEM]: undoAddItem,
+	[ADD_RULE]: undoAddRule,
 	[CHANGE_MASTER_LAYOUT]: undoChangeMasterLayout,
 	[DELETE_ITEM]: undoDeleteItem,
+	[DELETE_RULE]: undoDeleteRule,
 	[DUPLICATE_ITEM]: undoDuplicateItem,
 	[MOVE_ITEM]: undoMoveItem,
 	[SELECT_SEGMENTS_EXPERIENCE]: undoSelectExperience,
@@ -65,6 +73,7 @@ const UNDO_ACTIONS = {
 	[UPDATE_ITEM_LOCAL_CONFIG]: undoUpdateItemLocalConfig,
 	[UPDATE_LANGUAGE_ID]: undoUpdateLanguage,
 	[UPDATE_ROW_COLUMNS]: undoUpdateRowColumns,
+	[UPDATE_RULE]: undoUpdateRule,
 };
 
 export function canUndoAction(action) {

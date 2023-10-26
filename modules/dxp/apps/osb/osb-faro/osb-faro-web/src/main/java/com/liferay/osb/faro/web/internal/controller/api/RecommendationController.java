@@ -25,9 +25,12 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Marcellus Tavares
  */
+@Component(service = RecommendationController.class)
 @Path("/recommendations")
 @Produces(MediaType.APPLICATION_JSON)
 @RequiresNoScope

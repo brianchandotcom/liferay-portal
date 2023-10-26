@@ -8,15 +8,17 @@ package com.liferay.portal.search.web.internal.modified.facet.portlet.shared.sea
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.DateFormatFactory;
 import com.liferay.portal.search.facet.modified.ModifiedFacetFactory;
+import com.liferay.portal.search.web.internal.modified.facet.builder.DateRangeFactory;
 import com.liferay.portal.search.web.internal.modified.facet.builder.ModifiedFacetBuilder;
 import com.liferay.portal.search.web.internal.modified.facet.constants.ModifiedFacetPortletKeys;
 import com.liferay.portal.search.web.internal.modified.facet.portlet.ModifiedFacetPortletPreferences;
 import com.liferay.portal.search.web.internal.modified.facet.portlet.ModifiedFacetPortletPreferencesImpl;
-import com.liferay.portal.search.web.internal.util.DateRangeFactoryUtil;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchContributor;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSettings;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -45,17 +47,22 @@ public class ModifiedFacetPortletSharedSearchContributor
 				modifiedFacetPortletPreferences, portletSharedSearchSettings));
 	}
 
+	@Activate
+	protected void activate() {
+		_dateRangeFactory = new DateRangeFactory(_dateFormatFactory);
+	}
+
 	private Facet _buildFacet(
 		ModifiedFacetPortletPreferences modifiedFacetPortletPreferences,
 		PortletSharedSearchSettings portletSharedSearchSettings) {
 
 		ModifiedFacetBuilder modifiedFacetBuilder = new ModifiedFacetBuilder(
-			_modifiedFacetFactory, _jsonFactory);
+			_modifiedFacetFactory, _dateFormatFactory, _jsonFactory);
 
 		modifiedFacetBuilder.setOrder(
 			modifiedFacetPortletPreferences.getOrder());
 		modifiedFacetBuilder.setRangesJSONArray(
-			DateRangeFactoryUtil.replaceAliases(
+			_dateRangeFactory.replaceAliases(
 				modifiedFacetPortletPreferences.getRangesJSONArray(),
 				CalendarFactoryUtil.getCalendar(), _jsonFactory));
 		modifiedFacetBuilder.setSearchContext(
@@ -73,6 +80,11 @@ public class ModifiedFacetPortletSharedSearchContributor
 
 		return modifiedFacetBuilder.build();
 	}
+
+	@Reference
+	private DateFormatFactory _dateFormatFactory;
+
+	private volatile DateRangeFactory _dateRangeFactory;
 
 	@Reference
 	private JSONFactory _jsonFactory;

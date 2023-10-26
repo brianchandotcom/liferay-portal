@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.facet.util.RangeParserUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.DateFormatFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.facet.Facet;
 import com.liferay.portal.search.facet.modified.ModifiedFacetFactory;
@@ -21,6 +22,7 @@ import com.liferay.portal.search.filter.FilterBuilders;
 import com.liferay.portal.search.internal.facet.modified.ModifiedFacetFactoryImpl;
 import com.liferay.portal.search.internal.filter.FilterBuildersImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.util.DateFormatFactoryImpl;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -61,6 +63,7 @@ public class ModifiedFacetBuilderTest {
 
 	@Before
 	public void setUp() {
+		dateFormatFactory = new DateFormatFactoryImpl();
 		filterBuilders = new FilterBuildersImpl();
 		jsonFactory = new JSONFactoryImpl();
 		searchContext = new SearchContext();
@@ -133,6 +136,7 @@ public class ModifiedFacetBuilderTest {
 		_assertRangesJSONArray(rangesJSONArray, modifiedFacetBuilder.build());
 	}
 
+	protected DateFormatFactory dateFormatFactory;
 	protected FilterBuilders filterBuilders;
 	protected JSONFactory jsonFactory;
 	protected SearchContext searchContext;
@@ -202,7 +206,7 @@ public class ModifiedFacetBuilderTest {
 			_createModifiedFacetFactory();
 
 		ModifiedFacetBuilder modifiedFacetBuilder = new ModifiedFacetBuilder(
-			modifiedFacetFactory, jsonFactory);
+			modifiedFacetFactory, dateFormatFactory, jsonFactory);
 
 		modifiedFacetBuilder.setSearchContext(searchContext);
 

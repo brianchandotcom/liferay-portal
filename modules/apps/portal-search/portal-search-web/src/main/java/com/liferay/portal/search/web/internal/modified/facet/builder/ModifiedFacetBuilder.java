@@ -12,10 +12,10 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.DateFormatFactory;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.facet.Facet;
 import com.liferay.portal.search.facet.modified.ModifiedFacetFactory;
-import com.liferay.portal.search.web.internal.util.DateRangeFactoryUtil;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -27,10 +27,13 @@ import java.util.Map;
 public class ModifiedFacetBuilder {
 
 	public ModifiedFacetBuilder(
-		ModifiedFacetFactory modifiedFacetFactory, JSONFactory jsonFactory) {
+		ModifiedFacetFactory modifiedFacetFactory,
+		DateFormatFactory dateFormatFactory, JSONFactory jsonFactory) {
 
 		_modifiedFacetFactory = modifiedFacetFactory;
 		_jsonFactory = jsonFactory;
+
+		_dateRangeFactory = new DateRangeFactory(dateFormatFactory);
 	}
 
 	public Facet build() {
@@ -99,8 +102,7 @@ public class ModifiedFacetBuilder {
 	private JSONArray _getDefaultRangesJSONArray(Calendar calendar) {
 		JSONArray rangesJSONArray = _jsonFactory.createJSONArray();
 
-		Map<String, String> map = DateRangeFactoryUtil.getRangeStrings(
-			calendar);
+		Map<String, String> map = _dateRangeFactory.getRangeStrings(calendar);
 
 		map.forEach(
 			(key, value) -> {
@@ -136,7 +138,7 @@ public class ModifiedFacetBuilder {
 		if (!Validator.isBlank(_customRangeFrom) &&
 			!Validator.isBlank(_customRangeTo)) {
 
-			String rangeString = DateRangeFactoryUtil.getRangeString(
+			String rangeString = _dateRangeFactory.getRangeString(
 				_customRangeFrom, _customRangeTo);
 
 			_searchContext.setAttribute(facet.getFieldId(), rangeString);
@@ -153,7 +155,7 @@ public class ModifiedFacetBuilder {
 				return rangesMap.get(selectedRange);
 			}
 
-			return DateRangeFactoryUtil.getRangeString(
+			return _dateRangeFactory.getRangeString(
 				selectedRange, CalendarFactoryUtil.getCalendar());
 		}
 
@@ -162,6 +164,7 @@ public class ModifiedFacetBuilder {
 
 	private String _customRangeFrom;
 	private String _customRangeTo;
+	private final DateRangeFactory _dateRangeFactory;
 	private final JSONFactory _jsonFactory;
 	private final ModifiedFacetFactory _modifiedFacetFactory;
 	private String _order;

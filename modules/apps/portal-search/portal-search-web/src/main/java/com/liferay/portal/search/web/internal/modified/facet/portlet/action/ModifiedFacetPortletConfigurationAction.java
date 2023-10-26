@@ -13,13 +13,14 @@ import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.web.internal.modified.facet.builder.DateRangeFactory;
 import com.liferay.portal.search.web.internal.modified.facet.constants.ModifiedFacetPortletKeys;
 import com.liferay.portal.search.web.internal.modified.facet.display.context.builder.ModifiedFacetDisplayContextBuilder;
-import com.liferay.portal.search.web.internal.util.DateRangeFactoryUtil;
 
 import java.text.ParseException;
 
@@ -80,7 +81,10 @@ public class ModifiedFacetPortletConfigurationAction
 		String ranges = unicodeProperties.getProperty("ranges");
 
 		try {
-			DateRangeFactoryUtil.validateRange(ranges);
+			DateRangeFactory dateRangeFactory = new DateRangeFactory(
+				DateFormatFactoryUtil.getDateFormatFactory());
+
+			dateRangeFactory.validateRange(ranges);
 		}
 		catch (JSONException | ParseException exception) {
 			SessionErrors.add(actionRequest, "unparsableDate");
@@ -99,7 +103,7 @@ public class ModifiedFacetPortletConfigurationAction
 		try {
 			ModifiedFacetDisplayContextBuilder
 				modifiedFacetDisplayContextBuilder =
-					new ModifiedFacetDisplayContextBuilder(renderRequest);
+					new ModifiedFacetDisplayContextBuilder(null, renderRequest);
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);

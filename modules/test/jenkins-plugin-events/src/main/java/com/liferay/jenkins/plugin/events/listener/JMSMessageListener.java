@@ -162,9 +162,7 @@ public class JMSMessageListener implements MessageListener {
 				parameterValues.add(
 					new LabelParameterValue(parameterName, parameterValue));
 			}
-			else if (parameterDefinition instanceof
-						StringParameterDefinition) {
-
+			else if (parameterDefinition instanceof StringParameterDefinition) {
 				parameterValues.add(
 					new StringParameterValue(parameterName, parameterValue));
 			}

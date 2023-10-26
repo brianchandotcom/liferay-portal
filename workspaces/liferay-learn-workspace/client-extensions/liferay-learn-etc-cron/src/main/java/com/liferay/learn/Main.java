@@ -703,6 +703,72 @@ public class Main {
 		return parentMarkdownFile;
 	}
 
+	private Permission[] _getPermissions(
+			String fileName, Long structuredContentId)
+		throws Exception {
+
+		SnakeYamlFrontMatterVisitor snakeYamlFrontMatterVisitor =
+			new SnakeYamlFrontMatterVisitor();
+
+		File file = new File(fileName);
+
+		snakeYamlFrontMatterVisitor.visit(
+			_parser.parse(
+				_processMarkdown(
+					FileUtils.readFileToString(file, StandardCharsets.UTF_8),
+					file)));
+
+		Map<String, Object> data = snakeYamlFrontMatterVisitor.getData();
+		List<Permission> permissions = _clearCurrentPermissions(
+			structuredContentId);
+
+		if ((data == null) || !data.containsKey("visibility")) {
+			permissions.add(
+				new Permission() {
+					{
+						actionIds = new String[] {"VIEW"};
+						roleName = "Guest";
+					}
+				});
+
+			return permissions.toArray(new Permission[0]);
+		}
+
+		Object roleNames = data.get("visibility");
+
+		if (!(roleNames instanceof ArrayList)) {
+			return null;
+		}
+
+		for (Object roleNamesObject : (ArrayList)roleNames) {
+			if (!(roleNamesObject instanceof String)) {
+				continue;
+			}
+
+			permissions.add(
+				new Permission() {
+					{
+						actionIds = new String[] {"ADD_DISCUSSION", "VIEW"};
+						roleName = (String)roleNamesObject;
+					}
+				});
+		}
+
+		if (permissions.isEmpty()) {
+			return null;
+		}
+
+		permissions.add(
+			new Permission() {
+				{
+					actionIds = new String[0];
+					roleName = "Guest";
+				}
+			});
+
+		return permissions.toArray(new Permission[0]);
+	}
+
 	private String _getProduct(File file) {
 		String filePathString = file.getPath();
 
@@ -1558,72 +1624,6 @@ public class Main {
 		}
 
 		return line;
-	}
-
-	private Permission[] _getPermissions(
-			String fileName, Long structuredContentId)
-		throws Exception {
-
-		SnakeYamlFrontMatterVisitor snakeYamlFrontMatterVisitor =
-			new SnakeYamlFrontMatterVisitor();
-
-		File file = new File(fileName);
-
-		snakeYamlFrontMatterVisitor.visit(
-			_parser.parse(
-				_processMarkdown(
-					FileUtils.readFileToString(file, StandardCharsets.UTF_8),
-					file)));
-
-		Map<String, Object> data = snakeYamlFrontMatterVisitor.getData();
-		List<Permission> permissions = _clearCurrentPermissions(
-			structuredContentId);
-
-		if ((data == null) || !data.containsKey("visibility")) {
-			permissions.add(
-				new Permission() {
-					{
-						actionIds = new String[] {"VIEW"};
-						roleName = "Guest";
-					}
-				});
-
-			return permissions.toArray(new Permission[0]);
-		}
-
-		Object roleNames = data.get("visibility");
-
-		if (!(roleNames instanceof ArrayList)) {
-			return null;
-		}
-
-		for (Object roleNamesObject : (ArrayList)roleNames) {
-			if (!(roleNamesObject instanceof String)) {
-				continue;
-			}
-
-			permissions.add(
-				new Permission() {
-					{
-						actionIds = new String[] {"ADD_DISCUSSION", "VIEW"};
-						roleName = (String)roleNamesObject;
-					}
-				});
-		}
-
-		if (permissions.isEmpty()) {
-			return null;
-		}
-
-		permissions.add(
-			new Permission() {
-				{
-					actionIds = new String[0];
-					roleName = "Guest";
-				}
-			});
-
-		return permissions.toArray(new Permission[0]);
 	}
 
 	private String _toFriendlyURLPath(File file) {

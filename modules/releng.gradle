@@ -18,6 +18,7 @@ import groovy.json.JsonSlurper
 import java.nio.charset.StandardCharsets
 import java.nio.file.Path
 
+import java.util.function.Function;
 import java.util.jar.Attributes
 import java.util.jar.Manifest
 import java.util.regex.Matcher
@@ -41,13 +42,13 @@ import org.eclipse.jgit.treewalk.TreeWalk
 import org.eclipse.jgit.treewalk.filter.PathFilter
 
 import org.gradle.StartParameter
-import org.gradle.api.Transformer
 import org.gradle.api.internal.BuildDefinition
-import org.gradle.composite.internal.RootOfNestedBuildTree
 import org.gradle.internal.build.BuildState
 import org.gradle.internal.build.BuildStateRegistry
 import org.gradle.internal.build.PublicBuildPath
-import org.gradle.tooling.BuildController
+import org.gradle.internal.buildtree.BuildTreeLifecycleController
+import org.gradle.internal.buildtree.DefaultBuildTreeLifecycleController
+import org.gradle.internal.buildtree.NestedBuildTree
 import org.gradle.util.GUtil
 import org.gradle.util.VersionNumber
 
@@ -1055,13 +1056,13 @@ private boolean _executeGradle(StartParameter startParameter, boolean rethrowExc
 	BuildDefinition buildDefinition = BuildDefinition.fromStartParameter(startParameter, gradle.services.get(PublicBuildPath))
 	BuildStateRegistry buildStateRegistry = gradle.services.get(BuildStateRegistry)
 
-	RootOfNestedBuildTree rootOfNestedBuildTree = buildStateRegistry.addNestedBuildTree(buildDefinition, gradle.services.get(BuildState), null)
+	NestedBuildTree nestedBuildTree = buildStateRegistry.addNestedBuildTree(buildDefinition, gradle.services.get(BuildState), String.valueOf(System.currentTimeMillis()))
 
-	Transformer<Void, BuildController> transformer = new Transformer<Void, BuildController>() {
+	Function<BuildTreeLifecycleController, Void> function = new Function<BuildTreeLifecycleController, Void>() {
 
 		@Override
-		public Void transform(BuildController buildController) {
-			buildController.run()
+		public Void apply(BuildTreeLifecycleController buildTreeLifecycleController) {
+			buildTreeLifecycleController.scheduleAndRunTasks()
 
 			return null
 		}
@@ -1069,7 +1070,7 @@ private boolean _executeGradle(StartParameter startParameter, boolean rethrowExc
 	}
 
 	try {
-		rootOfNestedBuildTree.run(transformer)
+		nestedBuildTree.run(function)
 
 		return true
 	}

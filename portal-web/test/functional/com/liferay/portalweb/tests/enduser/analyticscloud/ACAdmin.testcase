@@ -136,11 +136,7 @@ definition {
 		}
 
 		task ("Log out the current user and login with the new user") {
-			ProductMenuHelper.expandPanel(panel = "user");
-
-			Click(locator1 = "ProductMenu#USER_SIGNOUT");
-
-			ACAdmin.goToACAdmin();
+			UserBar.signOut();
 
 			ACLogin.loginAs(
 				emailAddress = ${userEmailAddress},
@@ -276,9 +272,7 @@ definition {
 		}
 
 		task ("Go to AC with the new user and assert that user can see the data") {
-			ProductMenuHelper.expandPanel(panel = "user");
-
-			Click(locator1 = "ProductMenu#USER_SIGNOUT");
+			UserBar.signOut();
 
 			ACLogin.loginAs(
 				emailAddress = ${userEmailAddress},

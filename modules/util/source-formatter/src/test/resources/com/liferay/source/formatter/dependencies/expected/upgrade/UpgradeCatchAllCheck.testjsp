@@ -11,4 +11,8 @@
 CommerceOrderPaymentConstants.STATUS_AUTHORIZED;
 CommerceOrderPaymentConstants.STATUS_COMPLETED;
 CommerceOrderPaymentConstants.STATUS_PENDING;
+
+for (CommerceOrderItem commerceOrderItem : commerceOrder.getCommerceOrderItems()) {
+	commerceOrderItem.getQuantity();
+}
 %>

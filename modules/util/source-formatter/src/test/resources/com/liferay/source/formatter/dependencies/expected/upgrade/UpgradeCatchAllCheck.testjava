@@ -25,6 +25,10 @@ public class UpgradeCatchAllCheck {
 		CommerceOrderPaymentConstants.STATUS_COMPLETED;
 		CommerceOrderPaymentConstants.STATUS_PENDING;
 
+		for (CommerceOrderItem commerceOrderItem : commerceOrder.getCommerceOrderItems()) {
+			commerceOrderItem.getQuantity();
+		}
+
 		_countryService.fetchCountryByA2(123, "test123");
 
 		DestinationNames.COMMERCE_BASE_PRICE_LIST;

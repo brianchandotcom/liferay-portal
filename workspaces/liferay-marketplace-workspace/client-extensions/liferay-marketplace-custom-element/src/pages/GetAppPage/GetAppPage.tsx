@@ -335,10 +335,7 @@ const GetAppFlow = () => {
 				Account Selected
 			</strong>
 
-			<AccountEmailInfo
-				productCreatorAccount={productCreatorAccount}
-				userAccount={myUserAccount}
-			/>
+			<AccountEmailInfo userAccount={myUserAccount} />
 		</div>
 	);
 

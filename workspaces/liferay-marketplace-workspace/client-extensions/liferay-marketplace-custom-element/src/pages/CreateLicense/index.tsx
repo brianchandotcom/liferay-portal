@@ -60,7 +60,6 @@ const CreateLicense = () => {
 			description: '',
 			hostName: '',
 			macAddresses: '',
-			product: undefined,
 			subscription: undefined,
 		},
 		mode: 'all',

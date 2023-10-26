@@ -124,9 +124,9 @@ export function getValueFromSpecifications(
 	valueKey: string
 ) {
 	let value = '';
-	specifications.forEach((specification) => {
-		if (specification.specificationKey === valueKey) {
-			value = specification.value.en_US;
+	specifications?.forEach((specification) => {
+		if (specification?.specificationKey === valueKey) {
+			value = specification?.value?.en_US;
 		}
 	});
 

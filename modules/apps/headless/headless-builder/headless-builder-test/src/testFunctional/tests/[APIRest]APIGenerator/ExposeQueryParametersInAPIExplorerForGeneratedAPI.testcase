@@ -54,7 +54,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And Given an published API application with endpoint with related schema with Student as the main object") {
-			var response = ApplicationAPI.createAPIApplication(
+			ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
 				endpointName = "testendpoint",
 				endpointPath = "/testendpoint",
@@ -75,12 +75,10 @@ definition {
 		}
 
 		task ("And Given I create schema a property with erc of name field") {
-			var schemaId = JSONUtil.getWithJSONPath(${response}, "$.apiApplicationToAPISchemas[*].id");
-
 			PropertyAPI.createAPIProperty(
 				name = "entryName",
 				objectFieldERC = "studentName",
-				schemaId = ${schemaId});
+				schemaERC = "testSchema");
 		}
 
 		task ("When execute get{Endpoint}Page with filter={property} eq 'Able' in API Explorer") {
@@ -106,7 +104,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And Given an published API application with endpoint with related schema with Student as the main object") {
-			var response = ApplicationAPI.createAPIApplication(
+			ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
 				endpointName = "testendpoint",
 				endpointPath = "/testendpoint",
@@ -127,19 +125,15 @@ definition {
 		}
 
 		task ("And Given I create schema a property with erc of name field") {
-			var schemaId = JSONUtil.getWithJSONPath(${response}, "$.apiApplicationToAPISchemas[*].id");
-
 			PropertyAPI.createAPIProperty(
 				name = "entryName",
 				objectFieldERC = "studentName",
-				schemaId = ${schemaId});
+				schemaERC = "testSchema");
 		}
 
 		task ("And Given I create endpoint a filter with name ne 'Test'") {
-			var endpointId = JSONUtil.getWithJSONPath(${response}, "$.apiApplicationToAPIEndpoints[*].id");
-
 			FilterAPI.createAPIFilter(
-				endpointId = ${endpointId},
+				endpointERC = "testendpoint",
 				filterValue = "name ne '\''Test'\''");
 		}
 
@@ -166,7 +160,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And Given an published API application with site scoped endpoint with related schema with Student as the main object") {
-			var response = ApplicationAPI.createAPIApplication(
+			ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
 				endpointName = "testendpoint",
 				endpointPath = "/testendpoint",
@@ -188,19 +182,15 @@ definition {
 		}
 
 		task ("And Given I create schema a property with erc of name field") {
-			var schemaId = JSONUtil.getWithJSONPath(${response}, "$.apiApplicationToAPISchemas[*].id");
-
 			PropertyAPI.createAPIProperty(
 				name = "entryName",
 				objectFieldERC = "studentName",
-				schemaId = ${schemaId});
+				schemaERC = "testSchema");
 		}
 
 		task ("And Given I create endpoint a filter with name ne 'Test'") {
-			var endpointId = JSONUtil.getWithJSONPath(${response}, "$.apiApplicationToAPIEndpoints[*].id");
-
 			FilterAPI.createAPIFilter(
-				endpointId = ${endpointId},
+				endpointERC = "testendpoint",
 				filterValue = "name ne '\''Test'\''");
 		}
 
@@ -234,7 +224,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And Given an published API application with endpoint with related schema with Student as the main object") {
-			var response = ApplicationAPI.createAPIApplication(
+			ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
 				endpointName = "testendpoint",
 				endpointPath = "/testendpoint",
@@ -255,12 +245,10 @@ definition {
 		}
 
 		task ("And Given I create schema a property with erc of name field") {
-			var schemaId = JSONUtil.getWithJSONPath(${response}, "$.apiApplicationToAPISchemas[*].id");
-
 			PropertyAPI.createAPIProperty(
 				name = "entryName",
 				objectFieldERC = "studentName",
-				schemaId = ${schemaId});
+				schemaERC = "testSchema");
 		}
 
 		task ("When execute get{Endpoint}Page with sort={property}:desc in API Explorer") {
@@ -286,7 +274,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And Given an published API application with endpoint with related schema with Student as the main object") {
-			var response = ApplicationAPI.createAPIApplication(
+			ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
 				endpointName = "testendpoint",
 				endpointPath = "/testendpoint",
@@ -307,19 +295,15 @@ definition {
 		}
 
 		task ("And Given I create schema a property with erc of name field") {
-			var schemaId = JSONUtil.getWithJSONPath(${response}, "$.apiApplicationToAPISchemas[*].id");
-
 			PropertyAPI.createAPIProperty(
 				name = "entryName",
 				objectFieldERC = "studentName",
-				schemaId = ${schemaId});
+				schemaERC = "testSchema");
 		}
 
 		task ("And Given I create endpoint a sort with name:asc") {
-			var endpointId = JSONUtil.getWithJSONPath(${response}, "$.apiApplicationToAPIEndpoints[*].id");
-
 			SortAPI.createAPISort(
-				endpointId = ${endpointId},
+				endpointERC = "testendpoint",
 				sortValue = "name:asc");
 		}
 

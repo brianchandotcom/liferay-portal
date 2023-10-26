@@ -6,11 +6,14 @@
 import {LayoutData} from '../../types/layout_data/LayoutData';
 declare type Props = {
 	layoutData: LayoutData;
+	ruleId: string;
 };
 export default function deleteRule({
 	layoutData,
+	ruleId,
 }: Props): {
 	readonly layoutData: LayoutData;
+	readonly ruleId: string;
 	readonly type: 'DELETE_RULE';
 };
 export {};

@@ -11,6 +11,8 @@ export const CART_PRODUCT_QUANTITY_CHANGED = 'quantity-changed-from-cart';
 export const CLOSE_MODAL = 'close-modal';
 export const CLOSE_SIDE_PANEL = 'close-side-panel';
 export const CP_INSTANCE_CHANGED = 'product-instance-changed';
+
+export const CP_OPTION_CHANGED = 'product-option-changed';
 export const CP_QUANTITY_SELECTOR_CHANGED =
 	'quantity-changed-from-quantity-selector';
 export const CP_UNIT_OF_MEASURE_SELECTOR_CHANGED =

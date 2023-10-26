@@ -78,5 +78,30 @@ export default function ProductOptionValue(basePath) {
 				),
 				...params
 			),
+		postChannelProductProductOptionProductOptionValues: (
+			channelId,
+			productId,
+			productOptionId,
+			accountId,
+			productOptionValueId,
+			skuId,
+			page,
+			pageSize,
+			...params
+		) =>
+			AJAX.POST(
+				resolveProductOptionValuesPath(
+					basePath,
+					channelId,
+					productId,
+					productOptionId,
+					accountId,
+					productOptionValueId,
+					skuId,
+					page,
+					pageSize
+				),
+				...params
+			),
 	};
 }

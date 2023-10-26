@@ -7,8 +7,8 @@ package com.liferay.portal.kernel.security.auth;
 
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,7 +23,7 @@ public class AuthTokenUtil {
 		HttpServletRequest httpServletRequest,
 		LiferayPortletURL liferayPortletURL) {
 
-		AuthToken authToken = _authToken;
+		AuthToken authToken = _authTokenSnapshot.get();
 
 		if (authToken != null) {
 			authToken.addCSRFToken(httpServletRequest, liferayPortletURL);
@@ -34,7 +34,7 @@ public class AuthTokenUtil {
 		HttpServletRequest httpServletRequest,
 		LiferayPortletURL liferayPortletURL) {
 
-		AuthToken authToken = _authToken;
+		AuthToken authToken = _authTokenSnapshot.get();
 
 		if (authToken != null) {
 			authToken.addPortletInvocationToken(
@@ -46,7 +46,7 @@ public class AuthTokenUtil {
 			HttpServletRequest httpServletRequest, String origin)
 		throws PrincipalException {
 
-		AuthToken authToken = _authToken;
+		AuthToken authToken = _authTokenSnapshot.get();
 
 		if (authToken != null) {
 			authToken.checkCSRFToken(httpServletRequest, origin);
@@ -54,7 +54,7 @@ public class AuthTokenUtil {
 	}
 
 	public static String getToken(HttpServletRequest httpServletRequest) {
-		AuthToken authToken = _authToken;
+		AuthToken authToken = _authTokenSnapshot.get();
 
 		if (authToken == null) {
 			return null;
@@ -66,7 +66,7 @@ public class AuthTokenUtil {
 	public static String getToken(
 		HttpServletRequest httpServletRequest, long plid, String portletId) {
 
-		AuthToken authToken = _authToken;
+		AuthToken authToken = _authTokenSnapshot.get();
 
 		if (authToken == null) {
 			return null;
@@ -78,7 +78,7 @@ public class AuthTokenUtil {
 	public static boolean isValidPortletInvocationToken(
 		HttpServletRequest httpServletRequest, Layout layout, Portlet portlet) {
 
-		AuthToken authToken = _authToken;
+		AuthToken authToken = _authTokenSnapshot.get();
 
 		if (authToken == null) {
 			return false;
@@ -88,8 +88,7 @@ public class AuthTokenUtil {
 			httpServletRequest, layout, portlet);
 	}
 
-	private static volatile AuthToken _authToken =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			AuthToken.class, AuthTokenUtil.class, "_authToken", false);
+	private static final Snapshot<AuthToken> _authTokenSnapshot =
+		new Snapshot<>(AuthTokenUtil.class, AuthToken.class, null, true);
 
 }

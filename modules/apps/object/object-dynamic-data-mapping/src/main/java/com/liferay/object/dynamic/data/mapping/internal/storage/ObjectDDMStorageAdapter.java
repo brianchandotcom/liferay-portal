@@ -12,6 +12,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -27,18 +28,24 @@ import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
+import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -51,6 +58,7 @@ import java.math.BigDecimal;
 
 import java.text.NumberFormat;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -83,7 +91,53 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 			DDMStorageAdapterGetRequest ddmStorageAdapterGetRequest)
 		throws StorageException {
 
-		throw new UnsupportedOperationException();
+		try {
+			DDMForm ddmForm = ddmStorageAdapterGetRequest.getDDMForm();
+
+			DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
+
+			ddmFormValues.addAvailableLocale(ddmForm.getDefaultLocale());
+
+			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+				_objectEntryService.getObjectEntry(
+					ddmStorageAdapterGetRequest.getPrimaryKey());
+
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					serviceBuilderObjectEntry.getObjectDefinitionId());
+
+			DefaultObjectEntryManager defaultObjectEntryManager =
+				DefaultObjectEntryManagerProvider.provide(
+					_objectEntryManagerRegistry.getObjectEntryManager(
+						objectDefinition.getStorageType()));
+
+			ObjectEntry objectEntry =
+				defaultObjectEntryManager.fetchObjectEntry(
+					new DefaultDTOConverterContext(
+						true,
+						Collections.singletonMap(
+							"delete", Collections.singletonMap("delete", "")),
+						null, null, ddmStorageAdapterGetRequest.getPrimaryKey(),
+						ddmForm.getDefaultLocale(), null,
+						_userLocalService.fetchUser(
+							PrincipalThreadLocal.getUserId())),
+					objectDefinition,
+					ddmStorageAdapterGetRequest.getPrimaryKey());
+
+			ddmFormValues.setDDMFormFieldValues(
+				_getDDMFormFieldValues(
+					ddmForm.getDDMFormFields(), ddmForm.getDefaultLocale(),
+					objectEntry.getProperties()));
+
+			ddmFormValues.setDefaultLocale(ddmForm.getDefaultLocale());
+
+			return DDMStorageAdapterGetResponse.Builder.newBuilder(
+				ddmFormValues
+			).build();
+		}
+		catch (Exception exception) {
+			throw new StorageException(exception);
+		}
 	}
 
 	@Override
@@ -141,6 +195,72 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 		catch (Exception exception) {
 			throw new StorageException(exception.getMessage(), exception);
 		}
+	}
+
+	private List<DDMFormFieldValue> _getDDMFormFieldValues(
+		List<DDMFormField> ddmFormFields, Locale locale,
+		Map<String, Object> properties) {
+
+		List<DDMFormFieldValue> ddmFormFieldValues = new ArrayList<>();
+
+		for (DDMFormField ddmFormField : ddmFormFields) {
+			DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+
+			ddmFormFieldValue.setFieldReference(
+				ddmFormField.getFieldReference());
+			ddmFormFieldValue.setName(ddmFormField.getName());
+
+			if (StringUtil.equals(
+					ddmFormField.getType(),
+					DDMFormFieldTypeConstants.FIELDSET)) {
+
+				ddmFormFieldValue.setNestedDDMFormFields(
+					_getDDMFormFieldValues(
+						ddmFormField.getNestedDDMFormFields(), locale,
+						properties));
+
+				ddmFormFieldValues.add(ddmFormFieldValue);
+
+				continue;
+			}
+
+			Value value = new LocalizedValue(locale);
+
+			String objectFieldName = StringPool.BLANK;
+
+			try {
+				JSONArray jsonArray = _jsonFactory.createJSONArray(
+					GetterUtil.getString(
+						ddmFormField.getProperty("objectFieldName")));
+
+				objectFieldName = jsonArray.getString(0);
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
+			}
+
+			Object objectFieldValue = properties.get(objectFieldName);
+
+			if (objectFieldValue instanceof Double) {
+				NumberFormat numberFormat = NumberFormat.getInstance(locale);
+
+				value.addString(locale, numberFormat.format(objectFieldValue));
+			}
+			else if (objectFieldValue instanceof byte[]) {
+				value.addString(locale, new String((byte[])objectFieldValue));
+			}
+			else {
+				value.addString(locale, String.valueOf(objectFieldValue));
+			}
+
+			ddmFormFieldValue.setValue(value);
+
+			ddmFormFieldValues.add(ddmFormFieldValue);
+		}
+
+		return ddmFormFieldValues;
 	}
 
 	private String _getOptionReference(
@@ -323,6 +443,9 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 		return sb;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectDDMStorageAdapter.class);
+
 	@Reference
 	private GroupLocalService _groupLocalService;
 
@@ -334,6 +457,9 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 
 	@Reference
 	private ObjectEntryManagerRegistry _objectEntryManagerRegistry;
+
+	@Reference
+	private ObjectEntryService _objectEntryService;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

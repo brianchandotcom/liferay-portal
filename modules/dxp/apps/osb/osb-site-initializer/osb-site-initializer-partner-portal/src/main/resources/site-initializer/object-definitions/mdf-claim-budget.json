@@ -1,4 +1,6 @@
 {
+	"accountEntryRestricted": true,
+	"accountEntryRestrictedObjectFieldName": "r_accToMDFClmBgts_accountEntryId",
 	"externalReferenceCode": "ee2c4088-1d12-922f-e326-288dfbb4f943",
 	"label": {
 		"en_US": "MDF Claim Budget"

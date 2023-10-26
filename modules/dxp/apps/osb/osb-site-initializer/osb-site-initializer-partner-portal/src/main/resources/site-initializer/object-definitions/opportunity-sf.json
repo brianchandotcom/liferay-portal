@@ -1,4 +1,6 @@
 {
+	"accountEntryRestricted": true,
+	"accountEntryRestrictedObjectFieldName": "accountExternalReferenceCode",
 	"externalReferenceCode": "Opportunity",
 	"label": {
 		"en_US": "Opportunity SF"

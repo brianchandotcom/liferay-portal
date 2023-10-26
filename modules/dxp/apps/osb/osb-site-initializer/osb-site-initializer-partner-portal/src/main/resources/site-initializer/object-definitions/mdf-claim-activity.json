@@ -1,4 +1,6 @@
 {
+	"accountEntryRestricted": true,
+	"accountEntryRestrictedObjectFieldName": "r_accToMDFClmActs_accountEntryId",
 	"externalReferenceCode": "8435a153-5aa0-2a8c-1aa7-e7b91726241f",
 	"label": {
 		"en_US": "MDF Claim Activity"

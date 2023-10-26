@@ -1,4 +1,6 @@
 {
+	"accountEntryRestricted": true,
+	"accountEntryRestrictedObjectFieldName": "r_accToMDFClms_accountEntryId",
 	"enableComments": true,
 	"externalReferenceCode": "17caad70-13d2-75f1-2bb0-772610ac23c5",
 	"label": {

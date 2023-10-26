@@ -1,4 +1,6 @@
 {
+	"accountEntryRestricted": true,
+	"accountEntryRestrictedObjectFieldName": "r_accToActs_accountEntryId",
 	"externalReferenceCode": "38b6bb77-e5a1-495b-28d7-a251258c4897",
 	"label": {
 		"en_US": "Activity"

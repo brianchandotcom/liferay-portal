@@ -1,4 +1,6 @@
 {
+	"accountEntryRestricted": true,
+	"accountEntryRestrictedObjectFieldName": "accountExternalReferenceCode",
 	"externalReferenceCode": "MDF_Request__c",
 	"label": {
 		"en_US": "MDF Request SF"

@@ -1,4 +1,6 @@
 {
+	"accountEntryRestricted": true,
+	"accountEntryRestrictedObjectFieldName": "accountExternalReferenceCode",
 	"externalReferenceCode": "Lead",
 	"label": {
 		"en_US": "Lead SF"

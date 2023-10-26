@@ -45,11 +45,18 @@ public class PortalHotfixReleasePortalTopLevelBuild
 				"Please set 'TEST_BUILD_HOTFIX_ZIP_URL'");
 		}
 
-		Matcher matcher = _hotfixZipURLPattern.matcher(testBuildHotfixZipURL);
+		Matcher matcher = _hotfixZipURLPattern.find(testBuildHotfixZipURL);
 
-		if (!matcher.find()) {
+		if (matcher == null) {
 			throw new RuntimeException(
 				"Please set a valid 'TEST_BUILD_HOTFIX_ZIP_URL'");
+		}
+
+		String portalVersion = getParameterValue(
+			"PATCHER_BUILD_PATCHER_PORTAL_VERSION");
+
+		if (PortalRelease.isQuarterlyRelease(portalVersion)) {
+			return "master";
 		}
 
 		String majorVersion = matcher.group("majorVersion");
@@ -225,23 +232,27 @@ public class PortalHotfixReleasePortalTopLevelBuild
 				return _portalRelease;
 			}
 
-			Matcher patcherPortalVersion74Matcher =
-				_patcherPortalVersion74Pattern.matcher(patcherPortalVersion);
+			Matcher patcherPortalVersionMatcher =
+				_patcherPortalVersionPattern.find(patcherPortalVersion);
 
-			if (patcherPortalVersion74Matcher.find()) {
+			if (patcherPortalVersionMatcher != null) {
 				StringBuilder sb = new StringBuilder();
 
-				sb.append(patcherPortalVersion74Matcher.group("majorVersion"));
+				sb.append(patcherPortalVersionMatcher.group("majorVersion"));
 				sb.append(".");
-				sb.append(patcherPortalVersion74Matcher.group("minorVersion"));
+				sb.append(patcherPortalVersionMatcher.group("minorVersion"));
 				sb.append(".");
-				sb.append(patcherPortalVersion74Matcher.group("fixVersion"));
+				sb.append(patcherPortalVersionMatcher.group("fixVersion"));
 
-				String updateVersion = patcherPortalVersion74Matcher.group(
-					"updateVersion");
+				if (!PortalRelease.isQuarterlyRelease(patcherPortalVersion)) {
+					String updateVersion = patcherPortalVersionMatcher.group(
+						"updateVersion");
 
-				if (!JenkinsResultsParserUtil.isNullOrEmpty(updateVersion)) {
-					sb.append(updateVersion);
+					if (!JenkinsResultsParserUtil.isNullOrEmpty(
+							updateVersion)) {
+
+						sb.append(updateVersion);
+					}
 				}
 
 				_portalRelease = new PortalRelease(sb.toString());
@@ -250,10 +261,10 @@ public class PortalHotfixReleasePortalTopLevelBuild
 			}
 		}
 
-		Matcher hotfixZipURLMatcher = _hotfixZipURLPattern.matcher(
+		Matcher hotfixZipURLMatcher = _hotfixZipURLPattern.find(
 			getParameterValue("TEST_BUILD_HOTFIX_ZIP_URL"));
 
-		if (!hotfixZipURLMatcher.find()) {
+		if (hotfixZipURLMatcher == null) {
 			return null;
 		}
 
@@ -314,40 +325,49 @@ public class PortalHotfixReleasePortalTopLevelBuild
 			portalRepositoryName = "liferay-portal-ee";
 		}
 
+		String patcherPortalVersion = getParameterValue(
+			"PATCHER_BUILD_PATCHER_PORTAL_VERSION");
+
 		if (JenkinsResultsParserUtil.isNullOrEmpty(portalBranchName) ||
 			JenkinsResultsParserUtil.isNullOrEmpty(portalBranchUsername)) {
-
-			String patcherPortalVersion = getParameterValue(
-				"PATCHER_BUILD_PATCHER_PORTAL_VERSION");
 
 			if (JenkinsResultsParserUtil.isNullOrEmpty(patcherPortalVersion)) {
 				return null;
 			}
 
-			Matcher patcherPortalVersion74Matcher =
-				_patcherPortalVersion74Pattern.matcher(patcherPortalVersion);
+			Matcher patcherPortalVersionMatcher =
+				_patcherPortalVersionPattern.find(patcherPortalVersion);
 
-			if (!patcherPortalVersion74Matcher.find()) {
+			if (patcherPortalVersionMatcher == null) {
 				return null;
 			}
 
 			StringBuilder sb = new StringBuilder();
 
-			sb.append(patcherPortalVersion74Matcher.group("majorVersion"));
+			sb.append(patcherPortalVersionMatcher.group("majorVersion"));
 			sb.append(".");
-			sb.append(patcherPortalVersion74Matcher.group("minorVersion"));
+			sb.append(patcherPortalVersionMatcher.group("minorVersion"));
 			sb.append(".");
-			sb.append(patcherPortalVersion74Matcher.group("fixVersion"));
+			sb.append(patcherPortalVersionMatcher.group("fixVersion"));
 
-			String updateVersion = patcherPortalVersion74Matcher.group(
-				"updateVersion");
+			if (!PortalRelease.isQuarterlyRelease(patcherPortalVersion)) {
+				String updateVersion = patcherPortalVersionMatcher.group(
+					"updateVersion");
 
-			if (!JenkinsResultsParserUtil.isNullOrEmpty(updateVersion)) {
-				sb.append(updateVersion);
+				if (!JenkinsResultsParserUtil.isNullOrEmpty(updateVersion)) {
+					sb.append(updateVersion);
+				}
 			}
 
 			portalBranchUsername = "liferay";
 			portalBranchName = sb.toString();
+			portalRepositoryName = "liferay-portal-ee";
+		}
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalBranchName) &&
+			!JenkinsResultsParserUtil.isNullOrEmpty(portalBranchUsername) &&
+			PortalRelease.isQuarterlyRelease(patcherPortalVersion)) {
+
 			portalRepositoryName = "liferay-portal-ee";
 		}
 
@@ -363,24 +383,29 @@ public class PortalHotfixReleasePortalTopLevelBuild
 		return sb.toString();
 	}
 
-	private static final Pattern _hotfixZipURLPattern = Pattern.compile(
+	private static final MultiPattern _hotfixZipURLPattern = new MultiPattern(
 		"https?://.*(?<majorVersion>\\d)(?<minorVersion>\\d)" +
-			"(?<fixVersion>\\d{2})\\.(lpkg|zip)");
+			"(?<fixVersion>\\d{2})\\.(lpkg|zip)",
+		"https?://.*liferay-dxp-(?<majorVersion>\\d{4})." +
+			"(?<minorVersion>q\\d+).(?<fixVersion>\\d+)-hotfix-\\d+.(zip|tar." +
+				"gz|lpkg)");
 	private static final Pattern _patcherPortalVersion62Pattern =
 		Pattern.compile(
 			"(?<majorVersion>6)\\.(?<minorVersion>2)\\." +
 				"(?<fixVersion>\\d{2})( SP(?<servicePackVersion>\\d+))?");
 	private static final Pattern _patcherPortalVersion73Pattern =
 		Pattern.compile("fix-pack-dxp-(?<fixpackVersion>\\d+)-7310");
-	private static final Pattern _patcherPortalVersion74Pattern =
-		Pattern.compile(
-			"(?<majorVersion>7)\\.(?<minorVersion>4)\\." +
-				"(?<fixVersion>\\d{2})(?<updateVersion>-(ep|u)\\d+)?");
 	private static final Pattern _patcherPortalVersionDXPPattern =
 		Pattern.compile(
 			"fix-pack-(?<fixpackType>de|dxp)-(?<fixpackVersion>\\d+)-" +
 				"(?<majorVersion>\\d)(?<minorVersion>\\d)" +
 					"(?<fixVersion>\\d{2})");
+	private static final MultiPattern _patcherPortalVersionPattern =
+		new MultiPattern(
+			"(?<majorVersion>7)\\.(?<minorVersion>4)\\." +
+				"(?<fixVersion>\\d{2})(?<updateVersion>-(ep|u)\\d+)?",
+			"(?<majorVersion>\\d{4}).(?<minorVersion>q\\d+)." +
+				"(?<fixVersion>\\d+)");
 
 	private PortalFixpackRelease _portalFixpackRelease;
 	private PortalHotfixRelease _portalHotfixRelease;

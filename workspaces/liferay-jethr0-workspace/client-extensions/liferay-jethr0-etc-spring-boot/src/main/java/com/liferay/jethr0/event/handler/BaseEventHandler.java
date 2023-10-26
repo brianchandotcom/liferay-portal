@@ -90,24 +90,21 @@ public abstract class BaseEventHandler implements EventHandler {
 		BuildRunEntity buildRunEntity, BuildEntity buildEntity,
 		JobEntity jobEntity, String status) {
 
+		if (buildEntity == null) {
+			return;
+		}
+
+		BuildParameterEntity buildParameterEntity =
+			buildEntity.getBuildParameterEntity("JENKINS_BUILD_ID");
+
+		if (buildParameterEntity == null) {
+			return;
+		}
+
 		EventJmsController eventJmsController = getEventJmsController();
 
 		Map<String, String> messageProperties = HashMapBuilder.put(
-			"jenkinsBuildId",
-			() -> {
-				if (buildEntity == null) {
-					return null;
-				}
-
-				BuildParameterEntity buildParameterEntity =
-					buildEntity.getBuildParameterEntity("JENKINS_BUILD_ID");
-
-				if (buildParameterEntity == null) {
-					return null;
-				}
-
-				return buildParameterEntity.getValue();
-			}
+			"jenkinsBuildId", buildParameterEntity.getValue()
 		).put(
 			"jethr0JobId",
 			() -> {

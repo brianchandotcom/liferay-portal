@@ -19,7 +19,7 @@ import org.json.JSONObject;
  */
 public class GenerateTestrayCsvUtil {
 
-	public void generate(String projectBuildDir, String projectTestrayBuildId) {
+	public static void generate(String projectBuildDir, String projectTestrayBuildId) {
 		StringBuilder sb = new StringBuilder();
 		StringBuilder uniqueFailuresStringBuilder = new StringBuilder();
 		StringBuilder upstreamFailuresStringBuilder = new StringBuilder();
@@ -110,7 +110,7 @@ public class GenerateTestrayCsvUtil {
 		}
 	}
 
-	public int getRecentFailures(
+	public static int getRecentFailures(
 		JSONObject resultJSONObject, int casesChecked) {
 
 		try {
@@ -162,7 +162,7 @@ public class GenerateTestrayCsvUtil {
 		}
 	}
 
-	public List<JSONObject> getResultJSONObjects(String projectTestrayBuildId) {
+	public static List<JSONObject> getResultJSONObjects(String projectTestrayBuildId) {
 		List<JSONObject> resultJSONObjects = new ArrayList<>();
 
 		int currentPage = 1;
@@ -215,7 +215,7 @@ public class GenerateTestrayCsvUtil {
 		return resultJSONObjects;
 	}
 
-	public boolean isPassingFailureThreshold(
+	public static boolean isPassingFailureThreshold(
 		JSONObject resultJSONObject, int maxFailures, int casesChecked) {
 
 		try {
@@ -269,7 +269,7 @@ public class GenerateTestrayCsvUtil {
 		return false;
 	}
 
-	public boolean isUniqueFailure(JSONObject resultJSONObject) {
+	public static boolean isUniqueFailure(JSONObject resultJSONObject) {
 		if (isPassingFailureThreshold(resultJSONObject, 5, 5) ||
 			isPassingFailureThreshold(resultJSONObject, 8, 25)) {
 

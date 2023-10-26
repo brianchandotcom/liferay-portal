@@ -317,19 +317,30 @@ public class ObjectEntryDisplayContextImpl
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId2());
 
+		ObjectScopeProvider objectScopeProvider =
+			_objectScopeProviderRegistry.getObjectScopeProvider(
+				objectDefinition2.getScope());
+
 		if ((getObjectLayoutTab() == null) && objectRelationship.isEdge()) {
-			creationMenu.addDropdownItem(
-				_getCreateNewRelatedModelDropdownItem(
-					objectDefinition2, objectRelationship));
+			ObjectDefinition rootObjectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectDefinition2.getRootObjectDefinitionId());
+
+			if (ObjectEntryServiceUtil.hasPortletResourcePermission(
+					objectScopeProvider.getGroupId(
+						_objectRequestHelper.getRequest()),
+					rootObjectDefinition.getObjectDefinitionId(),
+					ObjectActionKeys.ADD_OBJECT_ENTRY)) {
+
+				creationMenu.addDropdownItem(
+					_getCreateNewRelatedModelDropdownItem(
+						objectDefinition2, objectRelationship));
+			}
 
 			return creationMenu;
 		}
 
 		ObjectDefinition objectDefinition1 = getObjectDefinition1();
-
-		ObjectScopeProvider objectScopeProvider =
-			_objectScopeProviderRegistry.getObjectScopeProvider(
-				objectDefinition2.getScope());
 
 		if (!objectDefinition1.isUnmodifiableSystemObject() &&
 			!objectDefinition2.isUnmodifiableSystemObject() &&

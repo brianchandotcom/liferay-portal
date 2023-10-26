@@ -21,7 +21,6 @@ type DeleteObjectDefinitionProps = {
 	objectDefinitionId: number;
 	objectDefinitionName: string;
 	setDeletedObjectDefinition: (value: DeletedObjectDefinition) => void;
-	status: string;
 };
 
 type ObjectDefinitionNodeActionsProps = {
@@ -87,7 +86,6 @@ export async function deleteObjectDefinition({
 	objectDefinitionId,
 	objectDefinitionName,
 	setDeletedObjectDefinition,
-	status,
 }: DeleteObjectDefinitionProps) {
 	const url = createResourceURL(baseResourceURL, {
 		objectDefinitionId,
@@ -95,12 +93,17 @@ export async function deleteObjectDefinition({
 			'/object_definitions/get_object_definition_delete_info',
 	}).href;
 
-	const {hasObjectRelationship, objectEntriesCount} = await API.fetchJSON<{
+	const {
+		hasObjectRelationship,
+		objectEntriesCount,
+		status,
+	} = await API.fetchJSON<{
 		hasObjectRelationship: boolean;
 		objectEntriesCount: number;
+		status: number;
 	}>(url);
 
-	if (status !== 'approved') {
+	if (status !== 0) {
 		await deleteObjectDefinitionToast(
 			objectDefinitionId,
 			objectDefinitionName
@@ -148,7 +151,6 @@ export function getObjectDefinitionNodeActions({
 	objectDefinitionName,
 	objectDefinitionPermissionsURL,
 	setDeletedObjectDefinition,
-	status,
 }: ObjectDefinitionNodeActionsProps) {
 	const PermissionUrl = formatActionURL(
 		objectDefinitionPermissionsURL,
@@ -163,7 +165,6 @@ export function getObjectDefinitionNodeActions({
 			objectDefinitionId,
 			objectDefinitionName,
 			setDeletedObjectDefinition,
-			status: status.label,
 		});
 	};
 

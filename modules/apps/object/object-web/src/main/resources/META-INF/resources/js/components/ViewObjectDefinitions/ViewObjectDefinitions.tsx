@@ -213,7 +213,6 @@ export default function ViewObjectDefinitions({
 					objectDefinitionId: itemData.id,
 					objectDefinitionName: itemData.name,
 					setDeletedObjectDefinition,
-					status: itemData.status.label,
 				});
 			}
 

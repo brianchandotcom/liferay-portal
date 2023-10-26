@@ -2626,16 +2626,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 							liferayExtension.getLiferayHome(), "osgi/static");
 					}
 
-					String archivesBaseName = GradleUtil.getArchivesBaseName(
-						project);
-
-					if (archivesBaseName.startsWith("com.liferay.portal.")) {
-						return new File(
-							liferayExtension.getLiferayHome(), "osgi/portal");
-					}
-
 					return new File(
-						liferayExtension.getLiferayHome(), "osgi/modules");
+						liferayExtension.getLiferayHome(), "osgi/portal");
 				}
 
 			});

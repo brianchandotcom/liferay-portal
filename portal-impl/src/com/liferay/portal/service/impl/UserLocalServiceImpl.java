@@ -76,6 +76,7 @@ import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.module.util.ServiceLatch;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -160,7 +161,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -5098,11 +5098,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
+		UserFileUploadsSettings userFileUploadsSettings =
+			_userFileUploadsSettingsSnapshot.get();
+
 		PortalUtil.updateImageId(
 			user, true, bytes, "portraitId",
-			_userFileUploadsSettings.getImageMaxSize(),
-			_userFileUploadsSettings.getImageMaxHeight(),
-			_userFileUploadsSettings.getImageMaxWidth());
+			userFileUploadsSettings.getImageMaxSize(),
+			userFileUploadsSettings.getImageMaxHeight(),
+			userFileUploadsSettings.getImageMaxWidth());
 
 		return userPersistence.update(user);
 	}
@@ -5369,11 +5372,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user.setLdapServerId(ldapServerId);
 		}
 
+		UserFileUploadsSettings userFileUploadsSettings =
+			_userFileUploadsSettingsSnapshot.get();
+
 		PortalUtil.updateImageId(
 			user, hasPortrait, portraitBytes, "portraitId",
-			_userFileUploadsSettings.getImageMaxSize(),
-			_userFileUploadsSettings.getImageMaxHeight(),
-			_userFileUploadsSettings.getImageMaxWidth());
+			userFileUploadsSettings.getImageMaxSize(),
+			userFileUploadsSettings.getImageMaxHeight(),
+			userFileUploadsSettings.getImageMaxWidth());
 
 		user.setLanguageId(languageId);
 		user.setTimeZoneId(timeZoneId);
@@ -7203,10 +7209,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserLocalServiceImpl.class);
 
-	private static volatile UserFileUploadsSettings _userFileUploadsSettings =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			UserFileUploadsSettings.class, UserLocalServiceImpl.class,
-			"_userFileUploadsSettings", false);
+	private static final Snapshot<UserFileUploadsSettings>
+		_userFileUploadsSettingsSnapshot = new Snapshot<>(
+			UserLocalServiceImpl.class, UserFileUploadsSettings.class);
 
 	@BeanReference(type = AnnouncementsDeliveryLocalService.class)
 	private AnnouncementsDeliveryLocalService

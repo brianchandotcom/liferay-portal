@@ -34,64 +34,92 @@ definition {
 			value1 = "Publication Name");
 	}
 
-	@ignore = "true"
 	@priority = 5
 	test CanMoveChangeBetweenPublications {
 		property custom.properties = "feature.flag.LPS-171364=true";
 
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content",
-			groupName = "Guest",
-			title = "WC WebContent Title");
+		task ("Add 1 web content and 2 different publications") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Guest",
+				title = "WC WebContent Title");
 
-		JSONPublications.addPublication(publicationName = "Publication 1 Name");
+			JSONPublications.addPublication(publicationName = "Publication 1 Name");
 
-		JSONPublications.addPublication(publicationName = "Publication 2 Name");
+			JSONPublications.addPublication(publicationName = "Publication 2 Name");
+		}
 
-		JSONPublications.selectPublication(publicationName = "Publication 2 Name");
+		task ("Select Publication 2 and edit the title of the web content") {
+			JSONPublications.selectPublication(publicationName = "Publication 2 Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+			WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
-		WebContent.editCP(
-			webContentContentEdit = "Edited in Publication 2 Name",
-			webContentTitle = "Test Web Content",
-			webContentTitleEdit = "Edited in Publication 2 Name");
+			WebContent.editCP(
+				webContentContentEdit = "Edited in Publication 2 Name",
+				webContentTitle = "Test Web Content",
+				webContentTitleEdit = "Edited in Publication 2 Name");
+		}
 
-		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication 2 Name");
+		task ("Review the changes in Publication 2") {
+			PublicationsNavigator.gotoReviewChanges(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication 2 Name");
+		}
 
-		PublicationsChanges.moveChangeToAnotherPublication(
-			changeCategory = "Web Content Article",
-			changeOrder = 1,
-			changeTitle = "Edited in Publication 2 Name",
-			targetPublicationName = "Publication 1 Name");
-		
-		Click(
-			key_text = "Move Changes",
-			locator1 = "Button#ANY");
+		task ("Assert the changes are listed when moving the change to Publication 1 Name") {
+			PublicationsChanges.gotoMoveChangeToAnotherPublication(
+				changeCategory = "Web Content Article",
+				changeOrder = 1,
+				changeTitle = "Edited in Publication 2 Name",
+				submit = "false",
+				targetPublicationName = "Publication 1 Name");
 
-		Refresh();
+			AssertElementPresent(
+				key_changeCategory = "Asset",
+				key_changeOrder = 1,
+				key_changeTitle = "Edited in Publication 2 Name",
+				locator1 = "PublicationsChanges#REVIEW_CHANGE_LISTING");
 
-		AssertElementPresent(locator1 = "PublicationsChanges#MESSAGE_NO_CHANGES");
+			AssertElementPresent(
+				key_changeCategory = "Web Content Article",
+				key_changeOrder = 1,
+				key_changeTitle = "Edited in Publication 2 Name",
+				locator1 = "PublicationsChanges#REVIEW_CHANGE_LISTING");
 
-		PublicationsNavigator.gotoReviewChanges(
-			gotoPublicationsAdmin = "true",
-			publicationName = "Publication 1 Name");
+			AssertElementPresent(
+				key_changeCategory = "Web Content Translation",
+				key_changeOrder = 1,
+				key_changeTitle = "Edited in Publication 2 Name",
+				locator1 = "PublicationsChanges#REVIEW_CHANGE_LISTING");
 
-		PublicationsChanges.viewChanges(
-			changeCategory = "Web Content Article",
-			changeSite = "Guest",
-			changeTitle = "Edited in Publication 2 Name",
-			changeType = "Added",
-			changeUser = "Test Test");
+			PublicationsChanges.moveChangeToAnotherPublication();
+		}
 
-		PublicationsChanges.viewChanges(
-			changeCategory = "Web Content Translation",
-			changeSite = "Guest",
-			changeTitle = "Edited in Publication 2 Name",
-			changeType = "Added",
-			changeUser = "Test Test");
+		task ("Assert that there are no changes remaining in Publication 2 Name") {
+			AssertElementPresent(locator1 = "PublicationsChanges#MESSAGE_NO_CHANGES");
+		}
+
+		task ("Assert that the changes are now present when reviewing Publication 1 Name's changes") {
+			PublicationsNavigator.gotoReviewChanges(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication 1 Name");
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Web Content Article",
+				changeSite = "Guest",
+				changeTitle = "Edited in Publication 2 Name",
+				changeType = "Added",
+				changeUser = "Test Test");
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Web Content Translation",
+				changeSite = "Guest",
+				changeTitle = "Edited in Publication 2 Name",
+				changeType = "Added",
+				changeUser = "Test Test");
+		}
 	}
 
 	@ignore = "true"

@@ -15,8 +15,11 @@ import com.liferay.document.library.kernel.exception.DuplicateFolderNameExceptio
 import com.liferay.document.library.kernel.exception.FileEntryLockException;
 import com.liferay.document.library.kernel.exception.InvalidFolderException;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
+import com.liferay.document.library.kernel.model.DLFileShortcut;
+import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppHelperLocalService;
@@ -41,6 +44,7 @@ import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryException;
@@ -61,6 +65,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.persistence.RepositoryPersistence;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -751,9 +756,16 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		FileShortcut fileShortcut = getFileShortcut(fileShortcutId);
 
-		return destinationRepository.addFileShortcut(
+		FileShortcut targetFileShortcut = destinationRepository.addFileShortcut(
 			getUserId(), destinationFolderId, fileShortcut.getToFileEntryId(),
 			serviceContext);
+
+		_copyResourcePermissions(
+			fileShortcut.getCompanyId(), DLFileShortcut.class.getName(),
+			fileShortcut.getFileShortcutId(),
+			targetFileShortcut.getFileShortcutId());
+
+		return targetFileShortcut;
 	}
 
 	@Override
@@ -3205,6 +3217,10 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			}
 		}
 
+		_copyResourcePermissions(
+			fileEntry.getCompanyId(), DLFileEntry.class.getName(),
+			fileEntry.getFileEntryId(), targetFileEntry.getFileEntryId());
+
 		return targetFileEntry;
 	}
 
@@ -3318,6 +3334,10 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			curSourceFolder = next[0];
 			curTargetFolder = next[1];
 		}
+
+		_copyResourcePermissions(
+			sourceFolder.getCompanyId(), DLFolder.class.getName(),
+			sourceFolder.getFolderId(), targetFolder.getFolderId());
 
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {
@@ -3506,6 +3526,20 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	@BeanReference(type = RepositoryProvider.class)
 	protected RepositoryProvider repositoryProvider;
 
+	private void _copyResourcePermissions(
+			long companyId, String className, long sourceResourcePrimKey,
+			long targetResourcePrimKey)
+		throws PortalException {
+
+		for (int scope : ResourceConstants.SCOPES) {
+			_resourcePermissionLocalService.deleteResourcePermissions(
+				companyId, className, scope, targetResourcePrimKey);
+		}
+
+		_resourcePermissionLocalService.copyModelResourcePermissions(
+			companyId, className, sourceResourcePrimKey, targetResourcePrimKey);
+	}
+
 	private long[] _getAssetCategoryIds(
 		String className, long classPK, long[] groupIds, long repositoryId) {
 
@@ -3679,5 +3713,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 	@BeanReference(type = RepositoryPersistence.class)
 	private RepositoryPersistence _repositoryPersistence;
+
+	@BeanReference(type = ResourcePermissionLocalService.class)
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 }

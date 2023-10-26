@@ -55,7 +55,7 @@ exports[`Modal renders markup based on given configuration 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#times"
+                  href="#times"
                 />
               </svg>
             </button>

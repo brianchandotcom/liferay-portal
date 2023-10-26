@@ -39,7 +39,7 @@ exports[`ValidationDate shows date range validation 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#caret-double"
+                  href="#caret-double"
                 />
               </svg>
             </a>
@@ -72,7 +72,7 @@ exports[`ValidationDate shows date range validation 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#question-circle-full"
+            href="#question-circle-full"
           />
         </svg>
       </div>
@@ -102,7 +102,7 @@ exports[`ValidationDate shows date range validation 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#caret-double"
+                href="#caret-double"
               />
             </svg>
           </a>
@@ -145,7 +145,7 @@ exports[`ValidationDate shows date range validation 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#caret-double"
+                href="#caret-double"
               />
             </svg>
           </a>
@@ -190,7 +190,7 @@ exports[`ValidationDate shows date range validation 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#caret-double"
+                  href="#caret-double"
                 />
               </svg>
             </a>
@@ -243,7 +243,7 @@ exports[`ValidationDate shows date range validation 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#caret-double"
+                  href="#caret-double"
                 />
               </svg>
             </a>
@@ -276,7 +276,7 @@ exports[`ValidationDate shows date range validation 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#question-circle-full"
+            href="#question-circle-full"
           />
         </svg>
       </div>
@@ -306,7 +306,7 @@ exports[`ValidationDate shows date range validation 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#caret-double"
+                href="#caret-double"
               />
             </svg>
           </a>
@@ -349,7 +349,7 @@ exports[`ValidationDate shows date range validation 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#caret-double"
+                href="#caret-double"
               />
             </svg>
           </a>
@@ -394,7 +394,7 @@ exports[`ValidationDate shows date range validation 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#caret-double"
+                  href="#caret-double"
                 />
               </svg>
             </a>
@@ -447,7 +447,7 @@ exports[`ValidationDate shows date range validation 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#caret-double"
+                  href="#caret-double"
                 />
               </svg>
             </a>
@@ -512,7 +512,7 @@ exports[`ValidationDate shows future dates validation 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#caret-double"
+                  href="#caret-double"
                 />
               </svg>
             </a>
@@ -539,7 +539,7 @@ exports[`ValidationDate shows future dates validation 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#question-circle-full"
+            href="#question-circle-full"
           />
         </svg>
       </div>
@@ -569,7 +569,7 @@ exports[`ValidationDate shows future dates validation 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#caret-double"
+                href="#caret-double"
               />
             </svg>
           </a>
@@ -612,7 +612,7 @@ exports[`ValidationDate shows future dates validation 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#caret-double"
+                href="#caret-double"
               />
             </svg>
           </a>
@@ -657,7 +657,7 @@ exports[`ValidationDate shows future dates validation 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#caret-double"
+                  href="#caret-double"
                 />
               </svg>
             </a>
@@ -710,7 +710,7 @@ exports[`ValidationDate shows future dates validation 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#caret-double"
+                  href="#caret-double"
                 />
               </svg>
             </a>
@@ -775,7 +775,7 @@ exports[`ValidationDate shows past dates validation 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#caret-double"
+                  href="#caret-double"
                 />
               </svg>
             </a>
@@ -802,7 +802,7 @@ exports[`ValidationDate shows past dates validation 1`] = `
           role="presentation"
         >
           <use
-            xlink:href="#question-circle-full"
+            href="#question-circle-full"
           />
         </svg>
       </div>
@@ -832,7 +832,7 @@ exports[`ValidationDate shows past dates validation 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#caret-double"
+                href="#caret-double"
               />
             </svg>
           </a>
@@ -875,7 +875,7 @@ exports[`ValidationDate shows past dates validation 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#caret-double"
+                href="#caret-double"
               />
             </svg>
           </a>
@@ -920,7 +920,7 @@ exports[`ValidationDate shows past dates validation 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#caret-double"
+                  href="#caret-double"
                 />
               </svg>
             </a>
@@ -973,7 +973,7 @@ exports[`ValidationDate shows past dates validation 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#caret-double"
+                  href="#caret-double"
                 />
               </svg>
             </a>

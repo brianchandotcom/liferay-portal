@@ -25,7 +25,7 @@ exports[`Options shows the options 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#drag"
+              href="#drag"
             />
           </svg>
         </span>
@@ -72,7 +72,7 @@ exports[`Options shows the options 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#times"
+                  href="#times"
                 />
               </svg>
             </button>
@@ -131,7 +131,7 @@ exports[`Options shows the options 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#drag"
+              href="#drag"
             />
           </svg>
         </span>
@@ -178,7 +178,7 @@ exports[`Options shows the options 1`] = `
                 role="presentation"
               >
                 <use
-                  xlink:href="#times"
+                  href="#times"
                 />
               </svg>
             </button>
@@ -237,7 +237,7 @@ exports[`Options shows the options 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#drag"
+              href="#drag"
             />
           </svg>
         </span>

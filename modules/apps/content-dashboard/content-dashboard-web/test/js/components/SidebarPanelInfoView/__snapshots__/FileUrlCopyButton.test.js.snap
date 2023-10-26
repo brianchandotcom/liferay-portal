@@ -34,7 +34,7 @@ exports[`FileUrlCopyButton matches the snapshot 1`] = `
               role="presentation"
             >
               <use
-                xlink:href="#copy"
+                href="#copy"
               />
             </svg>
           </button>

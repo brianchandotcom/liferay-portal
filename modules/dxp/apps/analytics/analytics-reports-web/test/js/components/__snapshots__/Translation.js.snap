@@ -23,7 +23,7 @@ exports[`Translation renders 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#en-us"
+              href="#en-us"
             />
           </svg>
           <span

@@ -33,7 +33,7 @@ exports[`document-library-preview-image renders an image previewer 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#hr"
+              href="#hr"
             />
           </svg>
         </button>
@@ -60,7 +60,7 @@ exports[`document-library-preview-image renders an image previewer 1`] = `
             role="presentation"
           >
             <use
-              xlink:href="#plus"
+              href="#plus"
             />
           </svg>
         </button>

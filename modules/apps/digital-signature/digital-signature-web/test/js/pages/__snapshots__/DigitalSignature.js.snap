@@ -41,7 +41,7 @@ exports[`DigitalSignature renders 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#caret-bottom"
+                        href="#caret-bottom"
                       />
                     </svg>
                   </span>
@@ -53,7 +53,7 @@ exports[`DigitalSignature renders 1`] = `
                       role="presentation"
                     >
                       <use
-                        xlink:href="#filter"
+                        href="#filter"
                       />
                     </svg>
                   </span>
@@ -74,7 +74,7 @@ exports[`DigitalSignature renders 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#order-arrow"
+                    href="#order-arrow"
                   />
                 </svg>
               </button>
@@ -116,7 +116,7 @@ exports[`DigitalSignature renders 1`] = `
                           role="presentation"
                         >
                           <use
-                            xlink:href="#times"
+                            href="#times"
                           />
                         </svg>
                       </button>
@@ -130,7 +130,7 @@ exports[`DigitalSignature renders 1`] = `
                           role="presentation"
                         >
                           <use
-                            xlink:href="#search"
+                            href="#search"
                           />
                         </svg>
                       </button>
@@ -155,7 +155,7 @@ exports[`DigitalSignature renders 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#search"
+                    href="#search"
                   />
                 </svg>
               </button>
@@ -172,7 +172,7 @@ exports[`DigitalSignature renders 1`] = `
                   role="presentation"
                 >
                   <use
-                    xlink:href="#plus"
+                    href="#plus"
                   />
                 </svg>
               </button>

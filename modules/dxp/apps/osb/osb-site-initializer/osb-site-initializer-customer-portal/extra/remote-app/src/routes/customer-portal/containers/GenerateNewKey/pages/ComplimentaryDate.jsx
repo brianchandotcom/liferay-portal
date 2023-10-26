@@ -38,7 +38,7 @@ const ComplimentaryDate = ({
 		const startDateFormatted = new Date(timestamp + timezoneOffset);
 		const startDate = new Date(timestamp + timezoneOffset);
 		const endDate = new Date(
-			startDateFormatted.setDate(startDateFormatted.getDate() + 30)
+			startDateFormatted.setDate(startDateFormatted.getDate() + 60)
 		);
 
 		return {
@@ -59,7 +59,7 @@ const ComplimentaryDate = ({
 	}, [selectedSubscription, endDate, startDate]);
 
 	const hasDateLimitExceeded = useMemo(() => {
-		const daysLimit = 29;
+		const daysLimit = 59;
 		const StartDateLimit = new Date();
 		StartDateLimit.setDate(StartDateLimit.getDate() - daysLimit);
 		const dateLimitExceeded = startDate < StartDateLimit;
@@ -134,7 +134,7 @@ const ComplimentaryDate = ({
 
 					<p>
 						{i18n.translate(
-							'you-can-use-this-option-to-generate-complimentary-activation-keys-with-a-duration-of-30-days'
+							'you-can-use-this-option-to-generate-complimentary-activation-keys-with-a-duration-of-60-days'
 						)}
 					</p>
 
@@ -163,7 +163,9 @@ const ComplimentaryDate = ({
 
 					{hasDateLimitExceeded && (
 						<p className="text-danger">
-							{i18n.translate('the-start-date-must-be-less-than')}
+							{i18n.translate(
+								'the-start-date-must-be-less-than-60-days-ago'
+							)}
 						</p>
 					)}
 

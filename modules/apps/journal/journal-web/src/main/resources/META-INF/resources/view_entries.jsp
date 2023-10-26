@@ -485,7 +485,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 	<liferay-ui:search-iterator
 		displayStyle="<%= journalDisplayContext.getDisplayStyle() %>"
 		markupView="lexicon"
-		resultRowSplitter="<%= journalDisplayContext.isSearch() ? null : new JournalResultRowSplitter() %>"
+		resultRowSplitter="<%= new JournalResultRowSplitter() %>"
 		searchContainer="<%= searchContainer %>"
 	/>
 </liferay-ui:search-container>

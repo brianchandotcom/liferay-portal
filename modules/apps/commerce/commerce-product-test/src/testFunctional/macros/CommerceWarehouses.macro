@@ -1,93 +1,190 @@
 definition {
 
 	macro assertWarehouseDetails {
-		if (isSet(name)) {
-			AssertTextEquals(
-				key_fieldLabel = "Name",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = ${name});
+		if (!(isSet(warehouseEditable))) {
+			var warehouseEditable = "true";
 		}
 
-		if (isSet(description)) {
-			AssertTextEquals(
-				locator1 = "TextArea#DESCRIPTION",
-				value1 = ${description});
-		}
-
-		if (isSet(active)) {
-			if (${active} == "true") {
-				AssertChecked.assertCheckedNotVisible(
-					key_toggleSwitchLabel = "Active",
-					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		if (${warehouseEditable} == "false") {
+			if (isSet(name)) {
+				AssertTextEquals(
+					key_text = "name",
+					locator1 = "TextInput#OPEN_GRAPH_IMAGE_ALT_DESCRIPTION_DISABLED",
+					value1 = ${name});
 			}
-			else if (${active} == "false") {
-				AssertNotChecked.assertNotCheckedNotVisible(
-					key_toggleSwitchLabel = "Active",
-					locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+
+			if (isSet(description)) {
+				AssertTextEquals(
+					key_text = "description",
+					locator1 = "TextArea#ANY_DISABLED",
+					value1 = ${description});
+			}
+
+			if (isSet(active)) {
+				if (${active} == "true") {
+					AssertChecked.assertCheckedNotVisible(
+						key_toggleSwitchLabel = "Active",
+						locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH_DISABLED");
+				}
+				else if (${active} == "false") {
+					AssertNotChecked.assertNotCheckedNotVisible(
+						key_toggleSwitchLabel = "Active",
+						locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH_DISABLED");
+				}
+			}
+
+			if (isSet(latitude)) {
+				AssertTextEquals(
+					key_text = "latitude",
+					locator1 = "TextInput#OPEN_GRAPH_IMAGE_ALT_DESCRIPTION_DISABLED",
+					value1 = ${latitude});
+			}
+
+			if (isSet(longitude)) {
+				AssertTextEquals(
+					key_text = "longitude",
+					locator1 = "TextInput#OPEN_GRAPH_IMAGE_ALT_DESCRIPTION_DISABLED",
+					value1 = ${longitude});
+			}
+
+			if (isSet(street1)) {
+				AssertTextEquals(
+					key_text = "street1",
+					locator1 = "TextInput#OPEN_GRAPH_IMAGE_ALT_DESCRIPTION_DISABLED",
+					value1 = ${street1});
+			}
+
+			if (isSet(street2)) {
+				AssertTextEquals(
+					key_text = "street2",
+					locator1 = "TextInput#OPEN_GRAPH_IMAGE_ALT_DESCRIPTION_DISABLED",
+					value1 = ${street2});
+			}
+
+			if (isSet(street3)) {
+				AssertTextEquals(
+					key_text = "street3",
+					locator1 = "TextInput#OPEN_GRAPH_IMAGE_ALT_DESCRIPTION_DISABLED",
+					value1 = ${street3});
+			}
+
+			if (isSet(country)) {
+				AssertSelectedLabel(
+					key_selectFieldLabel = "Country",
+					locator1 = "Select#ANY_DISABLED",
+					value1 = ${country});
+			}
+
+			if (isSet(region)) {
+				AssertSelectedLabel(
+					key_selectFieldLabel = "Region",
+					locator1 = "Select#ANY_DISABLED",
+					value1 = ${region});
+			}
+
+			if (isSet(postalCode)) {
+				AssertTextEquals(
+					key_text = "zip",
+					locator1 = "TextInput#OPEN_GRAPH_IMAGE_ALT_DESCRIPTION_DISABLED",
+					value1 = ${postalCode});
+			}
+
+			if (isSet(city)) {
+				AssertTextEquals(
+					key_text = "city",
+					locator1 = "TextInput#OPEN_GRAPH_IMAGE_ALT_DESCRIPTION_DISABLED",
+					value1 = ${city});
 			}
 		}
+		else {
+			if (isSet(name)) {
+				AssertTextEquals(
+					key_fieldLabel = "Name",
+					locator1 = "TextInput#GENERIC_TEXT_INPUT",
+					value1 = ${name});
+			}
 
-		if (isSet(latitude)) {
-			AssertTextEquals(
-				key_fieldLabel = "Latitude",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = ${latitude});
-		}
+			if (isSet(description)) {
+				AssertTextEquals(
+					locator1 = "TextArea#DESCRIPTION",
+					value1 = ${description});
+			}
 
-		if (isSet(longitude)) {
-			AssertTextEquals(
-				key_fieldLabel = "Longitude",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = ${longitude});
-		}
+			if (isSet(active)) {
+				if (${active} == "true") {
+					AssertChecked.assertCheckedNotVisible(
+						key_toggleSwitchLabel = "Active",
+						locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+				}
+				else if (${active} == "false") {
+					AssertNotChecked.assertNotCheckedNotVisible(
+						key_toggleSwitchLabel = "Active",
+						locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+				}
+			}
 
-		if (isSet(street1)) {
-			AssertTextEquals(
-				key_fieldLabel = "Street 1",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = ${street1});
-		}
+			if (isSet(latitude)) {
+				AssertTextEquals(
+					key_fieldLabel = "Latitude",
+					locator1 = "TextInput#GENERIC_TEXT_INPUT",
+					value1 = ${latitude});
+			}
 
-		if (isSet(street2)) {
-			AssertTextEquals(
-				key_fieldLabel = "Street 2",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = ${street2});
-		}
+			if (isSet(longitude)) {
+				AssertTextEquals(
+					key_fieldLabel = "Longitude",
+					locator1 = "TextInput#GENERIC_TEXT_INPUT",
+					value1 = ${longitude});
+			}
 
-		if (isSet(street3)) {
-			AssertTextEquals(
-				key_fieldLabel = "Street 3",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = ${street3});
-		}
+			if (isSet(street1)) {
+				AssertTextEquals(
+					key_fieldLabel = "Street 1",
+					locator1 = "TextInput#GENERIC_TEXT_INPUT",
+					value1 = ${street1});
+			}
 
-		if (isSet(country)) {
-			AssertSelectedLabel(
-				key_fieldLabel = "Country",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = ${country});
-		}
+			if (isSet(street2)) {
+				AssertTextEquals(
+					key_fieldLabel = "Street 2",
+					locator1 = "TextInput#GENERIC_TEXT_INPUT",
+					value1 = ${street2});
+			}
 
-		if (isSet(region)) {
-			AssertSelectedLabel(
-				key_fieldLabel = "Region",
-				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = ${region});
-		}
+			if (isSet(street3)) {
+				AssertTextEquals(
+					key_fieldLabel = "Street 3",
+					locator1 = "TextInput#GENERIC_TEXT_INPUT",
+					value1 = ${street3});
+			}
 
-		if (isSet(postalCode)) {
-			AssertTextEquals(
-				key_fieldLabel = "Postal Code",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = ${postalCode});
-		}
+			if (isSet(country)) {
+				AssertSelectedLabel(
+					key_fieldLabel = "Country",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = ${country});
+			}
 
-		if (isSet(city)) {
-			AssertTextEquals(
-				key_fieldLabel = "City",
-				locator1 = "TextInput#GENERIC_TEXT_INPUT",
-				value1 = ${city});
+			if (isSet(region)) {
+				AssertSelectedLabel(
+					key_fieldLabel = "Region",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = ${region});
+			}
+
+			if (isSet(postalCode)) {
+				AssertTextEquals(
+					key_fieldLabel = "Postal Code",
+					locator1 = "TextInput#GENERIC_TEXT_INPUT",
+					value1 = ${postalCode});
+			}
+
+			if (isSet(city)) {
+				AssertTextEquals(
+					key_fieldLabel = "City",
+					locator1 = "TextInput#GENERIC_TEXT_INPUT",
+					value1 = ${city});
+			}
 		}
 	}
 

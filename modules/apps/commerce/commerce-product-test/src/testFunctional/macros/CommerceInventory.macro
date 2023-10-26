@@ -187,17 +187,36 @@ definition {
 	}
 
 	macro viewIncomingQuantityByWarehouse {
-		AssertElementPresent(
-			key_entryTitle = ${warehouse},
-			key_index = 2,
-			key_value = ${expectedDeliveryDate},
-			locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+		if (!(isSet(warehouseWithLink))) {
+			var warehouseWithLink = "true";
+		}
 
-		AssertElementPresent(
-			key_entryTitle = ${warehouse},
-			key_index = 3,
-			key_value = ${quantity},
-			locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+		if (${warehouseWithLink} == "false") {
+			AssertElementPresent(
+				key_columnNumber = 1,
+				key_productName = ${warehouse},
+				key_value = ${expectedDeliveryDate},
+				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
+
+			AssertElementPresent(
+				key_columnNumber = 2,
+				key_productName = ${warehouse},
+				key_value = ${quantity},
+				locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
+		}
+		else {
+			AssertElementPresent(
+				key_entryTitle = ${warehouse},
+				key_index = 2,
+				key_value = ${expectedDeliveryDate},
+				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+
+			AssertElementPresent(
+				key_entryTitle = ${warehouse},
+				key_index = 3,
+				key_value = ${quantity},
+				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+		}
 	}
 
 	@summary = "Default summary"
@@ -212,36 +231,75 @@ definition {
 	}
 
 	macro viewInventoryByWarehouseEntry {
-		if (isSet(onHand)) {
-			AssertElementPresent(
-				key_entryTitle = ${warehouse},
-				key_index = 2,
-				key_value = ${onHand},
-				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+		if (!(isSet(warehouseWithLink))) {
+			var warehouseWithLink = "true";
 		}
 
-		if (isSet(safetyStock)) {
-			AssertElementPresent(
-				key_entryTitle = ${warehouse},
-				key_index = 3,
-				key_value = ${safetyStock},
-				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
-		}
+		if (${warehouseWithLink} == "false") {
+			if (isSet(onHand)) {
+				AssertElementPresent(
+					key_columnNumber = 1,
+					key_productName = ${warehouse},
+					key_value = ${onHand},
+					locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
+			}
 
-		if (isSet(available)) {
-			AssertElementPresent(
-				key_entryTitle = ${warehouse},
-				key_index = 4,
-				key_value = ${available},
-				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
-		}
+			if (isSet(safetyStock)) {
+				AssertElementPresent(
+					key_columnNumber = 2,
+					key_productName = ${warehouse},
+					key_value = ${safetyStock},
+					locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
+			}
 
-		if (isSet(incoming)) {
-			AssertElementPresent(
-				key_entryTitle = ${warehouse},
-				key_index = 5,
-				key_value = ${incoming},
-				locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+			if (isSet(available)) {
+				AssertElementPresent(
+					key_columnNumber = 3,
+					key_productName = ${warehouse},
+					key_value = ${available},
+					locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
+			}
+
+			if (isSet(incoming)) {
+				AssertElementPresent(
+					key_columnNumber = 4,
+					key_productName = ${warehouse},
+					key_value = ${incoming},
+					locator1 = "CommerceEntry#TABLE_SEARCH_BY_NAME_AND_COLUMN_CONTENT");
+			}
+		}
+		else {
+			if (isSet(onHand)) {
+				AssertElementPresent(
+					key_entryTitle = ${warehouse},
+					key_index = 2,
+					key_value = ${onHand},
+					locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+			}
+
+			if (isSet(safetyStock)) {
+				AssertElementPresent(
+					key_entryTitle = ${warehouse},
+					key_index = 3,
+					key_value = ${safetyStock},
+					locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+			}
+
+			if (isSet(available)) {
+				AssertElementPresent(
+					key_entryTitle = ${warehouse},
+					key_index = 4,
+					key_value = ${available},
+					locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+			}
+
+			if (isSet(incoming)) {
+				AssertElementPresent(
+					key_entryTitle = ${warehouse},
+					key_index = 5,
+					key_value = ${incoming},
+					locator1 = "CommerceEntry#TABLE_ENTRY_FIELD_VALUE");
+			}
 		}
 	}
 

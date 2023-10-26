@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.graphql.util.GraphQLNamingUtil;
 
@@ -407,14 +408,15 @@ public class ActionUtil {
 
 			parameterMap.put(firstParameterName, depotEntry.getDepotEntryId());
 		}
+		else if (Objects.equals(firstParameterName, "id")) {
+			parameterMap.put(firstParameterName, id);
+		}
 		else if ((siteId != null) &&
 				 Objects.equals(firstParameterName, "siteId")) {
 
 			parameterMap.put(firstParameterName, siteId);
 		}
-		else if (Objects.equals(firstParameterName, "id") ||
-				 firstParameterName.endsWith("Id")) {
-
+		else if (StringUtil.endsWith(firstParameterName, "Id")) {
 			parameterMap.put(firstParameterName, id);
 		}
 

@@ -485,4 +485,103 @@ definition {
 		SelectFrameTop();
 	}
 
+	macro updateProductPublisherConfigurationInDPT {
+		Click.javaScriptClick(
+			key_portletName = ${portletName},
+			locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
+
+		MenuItem.click(menuItem = "Configuration");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		SelectFrameTop();
+
+		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#CONFIGURATION");
+
+		if (isSet(productSelection)) {
+			var key_content = ${productSelection};
+
+			Navigator.gotoNavTab(navTab = "Product Selection");
+
+			if (${productSelection} == "Dynamic") {
+				AssertChecked(
+					locator1 = "Radio#ANY",
+					radioLabel = ${productSelection});
+
+				AssertElementPresent(
+					key_entry = "Filter",
+					locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+
+				if (isSet(filterType)) {
+					CommerceWidget.productPublisherAddFilter(
+						filterEntries = ${filterEntries},
+						filterType = ${filterType});
+				}
+			}
+			else if (${productSelection} == "Manual") {
+				Click(
+					locator1 = "Radio#ANY",
+					radioLabel = "Manual");
+
+				AssertElementPresent(
+					key_entry = "Product Entries",
+					locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+			}
+			else if (${productSelection} == "Data Source") {
+				Click(
+					locator1 = "Radio#ANY",
+					radioLabel = "Data Source");
+
+				Click(
+					key_entry = "Data Source",
+					locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+
+				WaitForElementPresent(
+					key_fieldLabel = "Data Source",
+					locator1 = "CommerceEntry#LABEL_GENERIC_SELECT");
+
+				Select(
+					key_fieldLabel = "Data Source",
+					locator1 = "CommerceEntry#LABEL_GENERIC_SELECT",
+					value1 = ${dataSourceValue});
+			}
+		}
+
+		if (isSet(renderSelection)) {
+			var key_content = ${renderSelection};
+
+			Navigator.gotoNavTab(navTab = "Render Selection");
+
+			AssertChecked(
+				locator1 = "Radio#ANY",
+				radioLabel = ${renderSelection});
+
+			if (${renderSelection} == "Use Application Display Template") {
+				AssertElementPresent(
+					key_entry = "Display Template",
+					locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+			}
+			else if (${renderSelection} == "Use Custom Renderer") {
+				AssertElementPresent(
+					key_entry = "Product List Renderer",
+					locator1 = "CommerceNavigation#ANY_ENTRY_NAME");
+			}
+		}
+
+		if (isSet(itemsPerPage)) {
+			Navigator.gotoNavTab(navTab = "Pagination");
+
+			Type(
+				key_text = "Number of Items to Display",
+				locator1 = "TextInput#ANY",
+				value1 = ${itemsPerPage});
+
+			PortletEntry.save();
+
+			IFrame.closeFrame();
+		}
+
+		SelectFrameTop();
+	}
+
 }

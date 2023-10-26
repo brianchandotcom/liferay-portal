@@ -93,8 +93,7 @@ public class ImageToolUtil {
 	public static Future<RenderedImage> convertCMYKtoRGB(
 		byte[] bytes, String type) {
 
-		CMYKImageTool cmykImageTool =
-			CMYKImageToolHolder._cmykImageToolSnapshot.get();
+		CMYKImageTool cmykImageTool = _cmykImageToolSnapshot.get();
 
 		return cmykImageTool.convertCMYKtoRGB(bytes, type);
 	}
@@ -963,6 +962,8 @@ public class ImageToolUtil {
 
 	private static final Log _log = LogFactoryUtil.getLog(ImageToolUtil.class);
 
+	private static final Snapshot<CMYKImageTool> _cmykImageToolSnapshot =
+		new Snapshot<>(ImageToolUtil.class, CMYKImageTool.class);
 	private static Image _defaultCompanyLogo;
 	private static Image _defaultOrganizationLogo;
 	private static Image _defaultSpacer;
@@ -973,13 +974,6 @@ public class ImageToolUtil {
 
 	static {
 		ImageIO.setUseCache(PropsValues.IMAGE_IO_USE_DISK_CACHE);
-	}
-
-	private static class CMYKImageToolHolder {
-
-		private static final Snapshot<CMYKImageTool> _cmykImageToolSnapshot =
-			new Snapshot<>(CMYKImageToolHolder.class, CMYKImageTool.class);
-
 	}
 
 }

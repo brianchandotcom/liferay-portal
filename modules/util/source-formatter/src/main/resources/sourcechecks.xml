@@ -1613,10 +1613,6 @@
 			<category name="Upgrade" />
 			<description name="Replace the getGroupIds method of class `DLUtil` by getCurrentAndAncestorSiteGroupIds of class `PortalUtil`." />
 		</check>
-		<check name="UpgradeGetClassNamesMethodCheck">
-			<category name="Upgrade" />
-			<description name="Run code migration of method from 'getClassNames' to 'getSearchClassNames'" />
-		</check>
 		<check name="UpgradeGetImagePreviewURLMethodCheck">
 			<category name="Upgrade" />
 			<description name="Replaces the references of the method 'DLUtil.getImagePreviewURL' with the method 'getImagePreviewURL' of 'DLURLHelper' class" />

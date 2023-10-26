@@ -136,6 +136,9 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 			siteInitializer.initialize(group.getGroupId());
 		}
 		catch (Exception exception) {
+
+			// LPS-169057
+
 			PermissionCacheUtil.clearCache(contextUser.getUserId());
 
 			throw exception;

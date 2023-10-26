@@ -76,7 +76,8 @@ public class DDMStructureModelListener extends BaseModelListener<DDMStructure> {
 					ddmStructureIdProperty.eq(
 						originalDDMStructure.getStructureId()));
 			});
-		actionableDynamicQuery.setGroupId(originalDDMStructure.getGroupId());
+		actionableDynamicQuery.setCompanyId(
+			originalDDMStructure.getCompanyId());
 
 		ActionableDynamicQuery.PerformActionMethod<?> performActionMethod =
 			null;

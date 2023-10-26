@@ -37,9 +37,8 @@ import org.osgi.service.cm.ConfigurationAdmin;
 /**
  * @author Mariano Álvaro Sáiz
  */
-public abstract class
-	BaseDBPartitionVirtualInstanceConfigurationModelListenerTestCase
-		extends BaseDBPartitionTestCase {
+public abstract class BaseConfigurationModelListenerTestCase
+	extends BaseDBPartitionTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {

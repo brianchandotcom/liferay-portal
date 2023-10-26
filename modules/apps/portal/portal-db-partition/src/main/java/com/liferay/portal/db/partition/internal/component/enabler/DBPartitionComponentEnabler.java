@@ -17,7 +17,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Mariano Álvaro Sáiz
  */
 @Component(service = {})
-public class ComponentEnabler {
+public class DBPartitionComponentEnabler {
 
 	@Activate
 	protected void activate(ComponentContext componentContext) {

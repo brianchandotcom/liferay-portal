@@ -1,5 +1,31 @@
 # Poshi Runner Change Log
 
+## 1.0.476
+
+### Core
+
+* [POSHI-561](https://liferay.atlassian.net/browse/POSHI-561) - Clean up usage of "value" and "locator" to specific methods for more clear usage.
+
+### Other
+
+* [LPS-181508](https://liferay.atlassian.net/browse/LPS-181508) - In order to use supported JDK versions, we need to upgrade to Gradle 7 to use newer JDK
+* [LPS-187460](https://liferay.atlassian.net/browse/LPS-187460) - Use of library with known vulnerability: JSON-java 20220320 (liferay-partner-workspace)
+* [LPS-199147](https://liferay.atlassian.net/browse/LPS-199147) - Adding a method to get headers from HTTP response
+* [LPS-199200](https://liferay.atlassian.net/browse/LPS-199200) - Use of library with known vulnerability: JSON-java 20230618
+
+### Reports
+
+* [POSHI-650](https://liferay.atlassian.net/browse/POSHI-650) - Add PoshiContext.readFiles into the CSV file generator
+
+### Script
+
+* [POSHI-577](https://liferay.atlassian.net/browse/POSHI-577) - Begin migration to utilize macro and function signatures
+
+### Utils
+
+* [POSHI-574](https://liferay.atlassian.net/browse/POSHI-574) - Simplify HttpRequestUtil method usages
+* [POSHI-618](https://liferay.atlassian.net/browse/POSHI-618) - Evaluate API testing for content, status code, and response time assertions
+
 ## 1.0.471
 
 ### Core

@@ -1536,8 +1536,8 @@ public class JournalArticleLocalServiceUtil {
 		return getService().getArticlesByResourcePrimKey(resourcePrimKey);
 	}
 
-	public static int getArticlesByResourcePrimKeyCount(long resourcePrimKey) {
-		return getService().getArticlesByResourcePrimKeyCount(resourcePrimKey);
+	public static int getArticlesCountByResourcePrimKey(long resourcePrimKey) {
+		return getService().getArticlesCountByResourcePrimKey(resourcePrimKey);
 	}
 
 	public static List<JournalArticle> getArticlesByReviewDate(

@@ -31,7 +31,7 @@ public class JournalArticleModelListener
 		clearCache(journalArticle);
 
 		int count =
-			_journalArticleLocalService.getArticlesByResourcePrimKeyCount(
+			_journalArticleLocalService.getArticlesCountByResourcePrimKey(
 				journalArticle.getResourcePrimKey());
 
 		if (count <= 0) {

@@ -1633,8 +1633,8 @@ public class JournalArticleLocalServiceWrapper
 	}
 
 	@Override
-	public int getArticlesByResourcePrimKeyCount(long resourcePrimKey) {
-		return _journalArticleLocalService.getArticlesByResourcePrimKeyCount(
+	public int getArticlesCountByResourcePrimKey(long resourcePrimKey) {
+		return _journalArticleLocalService.getArticlesCountByResourcePrimKey(
 			resourcePrimKey);
 	}
 

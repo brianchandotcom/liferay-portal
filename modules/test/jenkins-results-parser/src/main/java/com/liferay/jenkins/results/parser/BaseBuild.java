@@ -1961,6 +1961,10 @@ public abstract class BaseBuild implements Build {
 	protected boolean archiveFileExists(String urlSuffix) {
 		File archiveFile = getArchiveFile(urlSuffix);
 
+		if (archiveFile == null) {
+			return false;
+		}
+
 		return archiveFile.exists();
 	}
 

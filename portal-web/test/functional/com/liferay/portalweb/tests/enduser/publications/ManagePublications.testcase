@@ -122,90 +122,96 @@ definition {
 		}
 	}
 
-	@ignore = "true"
 	@priority = 4
 	test CannotMoveChangesBetweenPublicationsIfConflictsArePresent {
 		property custom.properties = "feature.flag.LPS-171364=true";
 
-		JSONWebcontent.addWebContent(
-			content = "WC WebContent Content",
-			groupName = "Guest",
-			title = "WC WebContent Title");
+		task ("Add 1 web content and 2 different publications") {
+			JSONWebcontent.addWebContent(
+				content = "WC WebContent Content",
+				groupName = "Guest",
+				title = "WC WebContent Title");
 
-		JSONPublications.addPublication(publicationName = "Publication 1 Name");
+			JSONPublications.addPublication(publicationName = "Publication 1 Name");
 
-		JSONPublications.addPublication(publicationName = "Publication 2 Name");
+			JSONPublications.addPublication(publicationName = "Publication 2 Name");
+		}
 
-		JSONPublications.selectPublication(publicationName = "Publication 1 Name");
+		task ("Make an edit to the web content title in each publication") {
+			JSONPublications.selectPublication(publicationName = "Publication 1 Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+			WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
-		WebContent.editCP(
-			webContentTitle = "WC WebContent Title",
-			webContentTitleEdit = "WC WebContent Title 1 Edit");
+			WebContent.editCP(
+				webContentTitle = "WC WebContent Title",
+				webContentTitleEdit = "WC WebContent Title 1 Edit");
 
-		JSONPublications.selectPublication(publicationName = "Publication 2 Name");
+			JSONPublications.selectPublication(publicationName = "Publication 2 Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
-		WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+			WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
-		WebContent.editCP(
-			webContentTitle = "WC WebContent Title",
-			webContentTitleEdit = "WC WebContent Title 2 Edit");
+			WebContent.editCP(
+				webContentTitle = "WC WebContent Title",
+				webContentTitleEdit = "WC WebContent Title 2 Edit");
+		}
 
-		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication 2 Name");
+		task ("Review the changes made to Publication 2 Name") {
+			PublicationsNavigator.gotoReviewChanges(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication 2 Name");
+		}
 
-		PublicationsChanges.moveChangeToAnotherPublication(
-			changeCategory = "Web Content Article",
-			changeOrder = 1,
-			changeTitle = "WC WebContent Title 2 Edit",
-			targetPublicationName = "Publication 1 Name");
+		task ("Attempt to move the change to Publication 1 Name and assert an alert is shown for conflicting changes") {
+			PublicationsChanges.gotoMoveChangeToAnotherPublication(
+				changeCategory = "Web Content Article",
+				changeOrder = 1,
+				changeTitle = "WC WebContent Title 2 Edit",
+				targetPublicationName = "Publication 1 Name");
 
-		Click(
-			key_text = "Move Changes",
-			locator1 = "Button#ANY");
+			PublicationsChanges.moveChangeToAnotherPublication(moveFailed = "true");
+		}
 
-		AssertElementPresent(
-			key_alertBold = "One or more changes conflict with existing changes in the destination publication.",
-			key_alertType = "inline alert-danger",
-			locator1 = "ClayAlert#ALERT_STATIC_BOLD");
+		task ("Assert that both publications retain their original edits") {
+			PublicationsNavigator.gotoReviewChanges(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication 2 Name");
 
-		Refresh();
+			PublicationsChanges.viewChanges(
+				changeCategory = "Web Content Article",
+				changeSite = "Guest",
+				changeTitle = "WC WebContent Title 2 Edit",
+				changeType = "Added",
+				changeUser = "Test Test");
 
-		PublicationsChanges.viewChanges(
-			changeCategory = "Web Content Article",
-			changeSite = "Guest",
-			changeTitle = "WC WebContent Title 2 Edit",
-			changeType = "Added",
-			changeUser = "Test Test");
+			PublicationsChanges.viewChanges(
+				changeCategory = "Web Content Translation",
+				changeSite = "Guest",
+				changeTitle = "WC WebContent Title 2 Edit",
+				changeType = "Added",
+				changeUser = "Test Test");
 
-		PublicationsChanges.viewChanges(
-			changeCategory = "Web Content Translation",
-			changeSite = "Guest",
-			changeTitle = "WC WebContent Title 2 Edit",
-			changeType = "Added",
-			changeUser = "Test Test");
+			PublicationsNavigator.gotoReviewChanges(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication 1 Name");
 
-		PublicationsNavigator.gotoReviewChanges(
-			gotoPublicationsAdmin = "true",
-			publicationName = "Publication 1 Name");
+			PublicationsChanges.viewChanges(
+				changeCategory = "Web Content Article",
+				changeSite = "Guest",
+				changeTitle = "WC WebContent Title 1 Edit",
+				changeType = "Added",
+				changeUser = "Test Test");
 
-		PublicationsChanges.viewChanges(
-			changeCategory = "Web Content Article",
-			changeSite = "Guest",
-			changeTitle = "WC WebContent Title 1 Edit",
-			changeType = "Added",
-			changeUser = "Test Test");
-
-		PublicationsChanges.viewChanges(
-			changeCategory = "Web Content Translation",
-			changeSite = "Guest",
-			changeTitle = "WC WebContent Title 1 Edit",
-			changeType = "Added",
-			changeUser = "Test Test");
+			PublicationsChanges.viewChanges(
+				changeCategory = "Web Content Translation",
+				changeSite = "Guest",
+				changeTitle = "WC WebContent Title 1 Edit",
+				changeType = "Added",
+				changeUser = "Test Test");
+		}
 	}
 
 	@description = "This is a use case for LPS-184911 - Saving Publications settings when it is disabled causes PrincipalException."

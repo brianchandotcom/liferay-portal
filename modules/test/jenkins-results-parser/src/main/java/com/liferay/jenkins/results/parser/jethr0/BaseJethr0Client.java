@@ -193,7 +193,7 @@ public abstract class BaseJethr0Client implements Jethr0Client {
 			TextMessage textMessage = session.createTextMessage(message);
 
 			textMessage.setStringProperty(
-				"jenkins-master-name", _jenkinsMaster.getName());
+				"jenkinsMasterName", _jenkinsMaster.getName());
 
 			messageProducer.send(textMessage);
 		}
@@ -216,9 +216,9 @@ public abstract class BaseJethr0Client implements Jethr0Client {
 
 	@Override
 	public void subscribe(Jethr0BuildUpdater jethr0BuildUpdater) {
-		long jenkinsBuildID = jethr0BuildUpdater.getJenkinsBuildID();
+		String jenkinsBuildID = jethr0BuildUpdater.getJenkinsBuildID();
 
-		if ((jenkinsBuildID <= 0) ||
+		if (JenkinsResultsParserUtil.isNullOrEmpty(jenkinsBuildID) ||
 			_messageConsumers.containsKey(jenkinsBuildID)) {
 
 			return;
@@ -252,9 +252,9 @@ public abstract class BaseJethr0Client implements Jethr0Client {
 
 	@Override
 	public void unsubscribe(Jethr0BuildUpdater jethr0BuildUpdater) {
-		long jenkinsBuildID = jethr0BuildUpdater.getJenkinsBuildID();
+		String jenkinsBuildID = jethr0BuildUpdater.getJenkinsBuildID();
 
-		if ((jenkinsBuildID <= 0) ||
+		if (JenkinsResultsParserUtil.isNullOrEmpty(jenkinsBuildID) ||
 			!_messageConsumers.containsKey(jenkinsBuildID)) {
 
 			return;
@@ -438,7 +438,7 @@ public abstract class BaseJethr0Client implements Jethr0Client {
 	private Connection _connection;
 	private final Environment _environment;
 	private final JenkinsMaster _jenkinsMaster;
-	private final Map<Long, MessageConsumer> _messageConsumers =
+	private final Map<String, MessageConsumer> _messageConsumers =
 		new HashMap<>();
 	private String _oAuthAccessToken;
 	private String _oAuthClientId;

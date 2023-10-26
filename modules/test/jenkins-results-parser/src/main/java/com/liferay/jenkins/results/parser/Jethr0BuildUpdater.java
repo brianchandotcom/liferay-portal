@@ -28,14 +28,14 @@ import org.json.JSONObject;
 public class Jethr0BuildUpdater
 	extends BaseBuildUpdater implements MessageListener {
 
-	public long getJenkinsBuildID() {
+	public String getJenkinsBuildID() {
 		return _jenkinsBuildID;
 	}
 
 	public String getMessageSelector() {
 		return JenkinsResultsParserUtil.combine(
-			"(jenkins-build-id = ", String.valueOf(_jenkinsBuildID),
-			") AND (jethr0-job-id = ", String.valueOf(_jethr0JobId), ")");
+			"(jenkinsBuildId = '", String.valueOf(_jenkinsBuildID),
+			"') AND (jethr0JobId = '", String.valueOf(_jethr0JobId), "')");
 	}
 
 	@Override
@@ -81,14 +81,11 @@ public class Jethr0BuildUpdater
 
 		_jethr0JobId = jethr0JobId;
 
-		_jenkinsBuildID = Long.parseLong(
-			JenkinsResultsParserUtil.getDistinctTimeStamp());
+		_jenkinsBuildID = jethr0JobId + "__" + build.getBuildName();
 
 		try {
 			_jethr0Client = Jethr0ClientFactory.newJethr0Client(
 				build.getJenkinsMaster());
-
-			_jethr0Client.subscribe(this);
 		}
 		catch (Exception exception) {
 			exception.printStackTrace();
@@ -108,21 +105,11 @@ public class Jethr0BuildUpdater
 
 	@Override
 	protected boolean isBuildFailing() {
-		Build build = getBuild();
-
-		JSONObject buildJSONObject = build.getBuildJSONObject("result");
-
-		if (buildJSONObject == null) {
-			return false;
+		if (!Objects.equals(_jethr0Result, "passed")) {
+			return true;
 		}
 
-		String result = buildJSONObject.optString("result");
-
-		if (!Objects.equals(result, "SUCCESS")) {
-			return false;
-		}
-
-		return true;
+		return false;
 	}
 
 	@Override
@@ -140,6 +127,23 @@ public class Jethr0BuildUpdater
 		}
 
 		return false;
+	}
+
+	@Override
+	protected void runCompleted() {
+		super.runCompleted();
+
+		_jethr0Client.unsubscribe(this);
+	}
+
+	@Override
+	protected void runStarting() {
+		_jethr0Client.subscribe(this);
+
+		_jethr0Result = null;
+		_jethr0Status = null;
+
+		super.runStarting();
 	}
 
 	private JenkinsMaster _getJenkinsMaster(String buildURL) {
@@ -162,8 +166,7 @@ public class Jethr0BuildUpdater
 		Map<String, String> buildParameters = new HashMap<>(
 			build.getParameters());
 
-		buildParameters.put(
-			"JENKINS_BUILD_ID", String.valueOf(_jenkinsBuildID));
+		buildParameters.put("JENKINS_BUILD_ID", getJenkinsBuildID());
 		buildParameters.put(
 			"MAX_NODE_COUNT", String.valueOf(maximumSlavesPerHost));
 		buildParameters.put("MIN_NODE_RAM", String.valueOf(minimumSlaveRAM));
@@ -190,9 +193,8 @@ public class Jethr0BuildUpdater
 		build.setBuildURL(jenkinsBuildURL);
 		build.setJenkinsMaster(jenkinsMaster);
 
+		_jethr0Result = jsonObject.getString("result");
 		_jethr0Status = "completed";
-
-		_jethr0Client.unsubscribe(this);
 	}
 
 	private void _processQueuedBuild(JSONObject jsonObject) {
@@ -228,9 +230,10 @@ public class Jethr0BuildUpdater
 	private static final Pattern _jenkinsBuildURLPattern = Pattern.compile(
 		"https?://(?<masterHostname>test-\\d+-\\d+)(.liferay.com)?/.+");
 
-	private final long _jenkinsBuildID;
+	private final String _jenkinsBuildID;
 	private final Jethr0Client _jethr0Client;
 	private final long _jethr0JobId;
+	private String _jethr0Result;
 	private String _jethr0Status;
 
 }

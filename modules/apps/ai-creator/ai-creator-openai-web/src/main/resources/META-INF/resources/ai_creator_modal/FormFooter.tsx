@@ -54,7 +54,7 @@ export function FormFooter({
 		children.push(
 			<ClayButton displayType="primary" key="create" type="submit">
 				<span className="inline-item inline-item-before">
-					<ClayIcon symbol="bolt" />
+					<ClayIcon symbol="stars" />
 				</span>
 
 				{Liferay.Language.get('create')}

@@ -4,7 +4,7 @@
  */
 
 import {ClayToggle} from '@clayui/form';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 interface IProps {
 	ariaLabel: string;
@@ -56,12 +56,6 @@ const FeatureFlagToggle = ({
 						? data.dependentFeatureFlags
 						: []),
 				]);
-
-				// Rethink the setTimeout implementation and find the lost of focus root problem.
-
-				setTimeout(() => {
-					toggleRef.current.focus();
-				}, 10);
 			}
 			else {
 				Liferay.Util.openToast({
@@ -76,6 +70,12 @@ const FeatureFlagToggle = ({
 			setIsLoading(false);
 		}
 	};
+
+	useEffect(() => {
+		if (!disabled && !isLoading) {
+			toggleRef.current.focus();
+		}
+	}, [disabled, isLoading]);
 
 	return (
 		<ClayToggle

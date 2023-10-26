@@ -110,7 +110,7 @@ public class UpdateObjectEntryObjectActionExecutorImpl
 					_objectEntryManagerRegistry.getObjectEntryManager(
 						objectDefinition.getStorageType()));
 
-			defaultObjectEntryManager.updateObjectEntry(
+			defaultObjectEntryManager.partialUpdateObjectEntry(
 				new DefaultDTOConverterContext(
 					false, Collections.emptyMap(), _dtoConverterRegistry, null,
 					user.getLocale(), null, user),

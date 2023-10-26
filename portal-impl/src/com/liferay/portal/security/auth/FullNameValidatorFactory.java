@@ -5,8 +5,8 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.security.auth.FullNameValidator;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Amos Fong
@@ -16,15 +16,15 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 public class FullNameValidatorFactory {
 
 	public static FullNameValidator getInstance() {
-		return _fullNameValidator;
+		return _fullNameValidatorSnapshot.get();
 	}
 
 	private FullNameValidatorFactory() {
 	}
 
-	private static volatile FullNameValidator _fullNameValidator =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			FullNameValidator.class, FullNameValidatorFactory.class,
-			"_fullNameValidator", false, true);
+	private static final Snapshot<FullNameValidator>
+		_fullNameValidatorSnapshot = new Snapshot<>(
+			FullNameValidatorFactory.class, FullNameValidator.class, null,
+			true);
 
 }

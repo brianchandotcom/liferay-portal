@@ -19,7 +19,9 @@ import org.json.JSONObject;
  */
 public class GenerateTestrayCsvUtil {
 
-	public static void generate(String projectBuildDir, String projectTestrayBuildId) {
+	public static void generate(
+		String projectBuildDir, String projectTestrayBuildId) {
+
 		StringBuilder sb = new StringBuilder();
 		StringBuilder uniqueFailuresStringBuilder = new StringBuilder();
 		StringBuilder upstreamFailuresStringBuilder = new StringBuilder();
@@ -29,7 +31,7 @@ public class GenerateTestrayCsvUtil {
 		sb.append("Recent Failures Count,Case History URL\n");
 
 		for (JSONObject resultJSONObject :
-				getResultJSONObjects(projectTestrayBuildId)) {
+				_getResultJSONObjects(projectTestrayBuildId)) {
 
 			int status = resultJSONObject.optInt("status");
 
@@ -40,8 +42,8 @@ public class GenerateTestrayCsvUtil {
 			String testyCaseHistoryURL =
 				resultJSONObject.getString("htmlURL") + "/history";
 
-			int recentFailures1 = getRecentFailures(resultJSONObject, 25);
-			int recentFailures2 = getRecentFailures(resultJSONObject, 5);
+			int recentFailures1 = _getRecentFailures(resultJSONObject, 25);
+			int recentFailures2 = _getRecentFailures(resultJSONObject, 5);
 
 			StringBuilder recentFailuresMessage = new StringBuilder();
 
@@ -56,7 +58,7 @@ public class GenerateTestrayCsvUtil {
 				recentFailuresMessage.append(" of last 25");
 			}
 
-			if (isUniqueFailure(resultJSONObject)) {
+			if (_isUniqueFailure(resultJSONObject)) {
 				uniqueFailuresStringBuilder.append(
 					resultJSONObject.getString("testrayCaseName"));
 				uniqueFailuresStringBuilder.append(",");
@@ -110,7 +112,7 @@ public class GenerateTestrayCsvUtil {
 		}
 	}
 
-	public static int getRecentFailures(
+	private static int _getRecentFailures(
 		JSONObject resultJSONObject, int casesChecked) {
 
 		try {
@@ -162,7 +164,9 @@ public class GenerateTestrayCsvUtil {
 		}
 	}
 
-	public static List<JSONObject> getResultJSONObjects(String projectTestrayBuildId) {
+	private static List<JSONObject> _getResultJSONObjects(
+		String projectTestrayBuildId) {
+
 		List<JSONObject> resultJSONObjects = new ArrayList<>();
 
 		int currentPage = 1;
@@ -215,7 +219,7 @@ public class GenerateTestrayCsvUtil {
 		return resultJSONObjects;
 	}
 
-	public static boolean isPassingFailureThreshold(
+	private static boolean _isPassingFailureThreshold(
 		JSONObject resultJSONObject, int maxFailures, int casesChecked) {
 
 		try {
@@ -269,9 +273,9 @@ public class GenerateTestrayCsvUtil {
 		return false;
 	}
 
-	public static boolean isUniqueFailure(JSONObject resultJSONObject) {
-		if (isPassingFailureThreshold(resultJSONObject, 5, 5) ||
-			isPassingFailureThreshold(resultJSONObject, 8, 25)) {
+	private static boolean _isUniqueFailure(JSONObject resultJSONObject) {
+		if (_isPassingFailureThreshold(resultJSONObject, 5, 5) ||
+			_isPassingFailureThreshold(resultJSONObject, 8, 25)) {
 
 			return false;
 		}

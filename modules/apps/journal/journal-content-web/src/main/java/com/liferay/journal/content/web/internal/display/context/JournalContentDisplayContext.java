@@ -417,11 +417,17 @@ public class JournalContentDisplayContext {
 			new JournalArticleItemSelectorReturnType());
 		itemSelectorCriterion.setStatus(WorkflowConstants.STATUS_ANY);
 
-		return _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, _getGroup(),
-			_themeDisplay.getScopeGroupId(),
-			liferayRenderResponse.getNamespace() + "selectedItem",
-			itemSelectorCriterion);
+		return PortletURLBuilder.create(
+			_itemSelector.getItemSelectorURL(
+				requestBackedPortletURLFactory, _getGroup(),
+				_themeDisplay.getScopeGroupId(),
+				liferayRenderResponse.getNamespace() + "selectedItem",
+				itemSelectorCriterion)
+		).setParameter(
+			"groupType", "site"
+		).setParameter(
+			"scopeGroupType", true
+		).buildPortletURL();
 	}
 
 	public Map<String, Object> getJournalTemplateContext() {

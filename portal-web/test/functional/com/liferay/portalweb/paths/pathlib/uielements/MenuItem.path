@@ -61,6 +61,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GROUPED_DROPDOWN_MENU_ITEM_BY_INDEX</td>
+	<td>xpath=(//div[contains(@class,'show') and contains(@class,'dropdown')]//li[contains(@class,'dropdown-subheader')][normalize-space()='${key_subheader}']//following-sibling::li//button)[${index}][normalize-space()='${key_menuItem}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MENU_ITEM_BY_INDEX</td>
 	<td>xpath=(//div[contains(@class,'dropdown-menu')][contains(@class,'show')]//li)[${index}]</td>
 	<td></td>

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
-import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -664,9 +663,6 @@ public class XLIFFTranslationSnapshotProvider
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private SAXReader _saxReader;
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

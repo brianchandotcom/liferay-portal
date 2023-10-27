@@ -86,11 +86,12 @@ export function UniqueCompositeKey({
 	>();
 
 	const allowedObjectFieldBusinessTypes = [
+		'AutoIncrement',
 		'Integer',
 		'Picklist',
 		'Relationship',
 		'Text',
-	];
+	] as ObjectFieldBusinessType[];
 
 	const filteredCustomObjectFields = customObjectFields.filter(
 		(customObjectField) =>

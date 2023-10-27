@@ -25,6 +25,71 @@ definition {
 		}
 	}
 
+	@priority = 4
+	test AssertDependenciesMovePublicationsWithParentChange {
+		property custom.properties = "feature.flag.LPS-171364=true";
+
+		task ("Add 2 different publications") {
+			JSONPublications.addPublication(publicationName = "Publication 1 Name");
+
+			JSONPublications.addPublication(publicationName = "Publication 2 Name");
+		}
+
+		task ("Select Publication 2 and add a new site with a new page containing an Asset Publisher widget") {
+			JSONPublications.selectPublication(publicationName = "Publication 2 Name");
+
+			HeadlessSite.addSite(siteName = "Test Site Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("Move the site addition change from Publication 2 to Publication 1") {
+			PublicationsNavigator.gotoReviewChanges(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication 2 Name");
+
+			PublicationsChanges.gotoMoveChangeToAnotherPublication(
+				changeCategory = "Site",
+				changeOrder = 1,
+				changeTitle = "Test Site Name",
+				targetPublicationName = "Publication 1 Name");
+
+			PublicationsChanges.moveChangeToAnotherPublication();
+		}
+
+		task ("Select Publication 1 and assert that the page addition change is present in its change list") {
+			JSONPublications.selectPublication(publicationName = "Publication 1 Name");
+
+			PublicationsNavigator.gotoReviewChanges(
+				gotoPublicationsAdmin = "true",
+				publicationName = "Publication 1 Name");
+
+			PublicationsChanges.viewChanges(
+				changeCategory = "Page",
+				changeSite = "Test Site Name",
+				changeTitle = "Test Page",
+				changeType = "Added",
+				changeUser = "Test Test");
+		}
+
+		task ("Open Test Site Name in Publication 1 and assert the Asset Publisher widget is present") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page",
+				siteName = "Test Site Name");
+
+			AssertTextEquals(
+				locator1 = "AppBuilder#WIDGET_DEPLOYED",
+				value1 = "Asset Publisher");
+		}
+	}
+
 	@priority = 3
 	test CancelPublicationCreation {
 		Publications.cancelPublicationCreation(publicationName = "Publication Name");

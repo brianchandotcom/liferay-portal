@@ -132,7 +132,7 @@ public class APIEndpointRelevantObjectEntryModelListener
 					"r_apiApplicationToAPIEndpoints_c_apiApplicationId"));
 
 			if (!_validationHelper.isValidObjectEntry(
-					apiApplicationId, "L_API_APPLICATION")) {
+					"L_API_APPLICATION", apiApplicationId)) {
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
 					null,

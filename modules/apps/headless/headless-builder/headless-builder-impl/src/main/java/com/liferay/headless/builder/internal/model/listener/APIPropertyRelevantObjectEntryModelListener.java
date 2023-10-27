@@ -107,7 +107,7 @@ public class APIPropertyRelevantObjectEntryModelListener
 				values.get("r_apiSchemaToAPIProperties_c_apiSchemaId"));
 
 			if (!_validationHelper.isValidObjectEntry(
-					apiSchemaId, "L_API_SCHEMA")) {
+					"L_API_SCHEMA", apiSchemaId)) {
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
 					null, "An API property must be related to an API schema",

@@ -32,7 +32,7 @@ public class APISortRelevantObjectEntryModelListener
 		throws ModelListenerException {
 
 		_validationHelper.validateAPIEndpointRelationship(
-			objectEntry, "apiEndpointToAPISorts", "API sort");
+			"API sort", objectEntry, "apiEndpointToAPISorts");
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public class APISortRelevantObjectEntryModelListener
 		throws ModelListenerException {
 
 		_validationHelper.validateAPIEndpointRelationship(
-			objectEntry, "apiEndpointToAPISorts", "API sort");
+			"API sort", objectEntry, "apiEndpointToAPISorts");
 	}
 
 	@Reference

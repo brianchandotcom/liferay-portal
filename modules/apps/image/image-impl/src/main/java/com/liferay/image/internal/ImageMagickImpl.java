@@ -77,9 +77,9 @@ public class ImageMagickImpl implements ImageMagick {
 
 	@Override
 	public String getGlobalSearchPath() throws Exception {
-		PortletPreferences preferences = _prefsProps.getPreferences();
+		PortletPreferences portletPreferences = _prefsProps.getPreferences();
 
-		String globalSearchPath = preferences.getValue(
+		String globalSearchPath = portletPreferences.getValue(
 			PropsKeys.IMAGEMAGICK_GLOBAL_SEARCH_PATH, null);
 
 		if (Validator.isNotNull(globalSearchPath)) {

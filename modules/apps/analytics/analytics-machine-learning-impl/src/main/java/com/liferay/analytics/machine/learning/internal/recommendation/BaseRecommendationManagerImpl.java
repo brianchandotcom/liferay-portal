@@ -68,16 +68,17 @@ public abstract class BaseRecommendationManagerImpl<T extends Recommendation> {
 		return model;
 	}
 
-	protected Document getDocument(T reommendation) {
+	protected Document getDocument(T recommendation) {
 		Document document = new DocumentImpl();
 
-		document.addDate(Field.CREATE_DATE, reommendation.getCreateDate());
-		document.addNumber(Field.COMPANY_ID, reommendation.getCompanyId());
+		document.addDate(Field.CREATE_DATE, recommendation.getCreateDate());
+		document.addNumber(Field.COMPANY_ID, recommendation.getCompanyId());
 		document.addNumber(
 			RecommendationField.RECOMMENDED_ENTRY_CLASS_PK,
-			reommendation.getRecommendedEntryClassPK());
-		document.addNumber(RecommendationField.SCORE, reommendation.getScore());
-		document.addText(RecommendationField.JOB_ID, reommendation.getJobId());
+			recommendation.getRecommendedEntryClassPK());
+		document.addNumber(
+			RecommendationField.SCORE, recommendation.getScore());
+		document.addText(RecommendationField.JOB_ID, recommendation.getJobId());
 
 		return document;
 	}

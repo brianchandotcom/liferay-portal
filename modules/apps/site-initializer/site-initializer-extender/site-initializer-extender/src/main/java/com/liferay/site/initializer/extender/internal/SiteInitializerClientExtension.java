@@ -83,19 +83,23 @@ public class SiteInitializerClientExtension
 			return null;
 		}
 
-		PermissionChecker permissionChecker =
+		PermissionChecker currentPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
-		String name = PrincipalThreadLocal.getName();
+		String currentPrincipalThreadLocalName = PrincipalThreadLocal.getName();
+		ServiceContext currentServiceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
 		try {
 			_initialize(bundle, headers);
 		}
-		catch (Throwable throwable) {
-			throw new RuntimeException(throwable);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 		finally {
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-			PrincipalThreadLocal.setName(name);
+			PermissionThreadLocal.setPermissionChecker(
+				currentPermissionChecker);
+			PrincipalThreadLocal.setName(currentPrincipalThreadLocalName);
+			ServiceContextThreadLocal.pushServiceContext(currentServiceContext);
 		}
 
 		return bundle;
@@ -140,14 +144,9 @@ public class SiteInitializerClientExtension
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		// LayoutServiceContextHelper#getServiceContextAutoCloseable ensures
-		// the wrapped HTTP servlet request has an attribute for WebKeys#LAYOUT.
-		// However, fragments are processed with
-		// com.liferay.taglib.portletext.RuntimeTag which grabs the original
-		// HTTP servlet request.
-
 		httpServletRequest.setAttribute(
 			WebKeys.LAYOUT, themeDisplay.getLayout());
+		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
 		SiteResource.Builder builder = _siteResourceFactory.create();
 
@@ -162,14 +161,13 @@ public class SiteInitializerClientExtension
 	}
 
 	private void _initialize(Bundle bundle, Dictionary<String, String> headers)
-		throws Throwable {
+		throws Exception {
 
-		Map<String, BinaryFile> binaryFiles = new HashMap<>();
-		Site site = null;
-
+		Map<String, BinaryFile> binaryFileMap = new HashMap<>();
 		Enumeration<URL> enumeration = bundle.findEntries(
 			headers.get("Liferay-Client-Extension-Site-Initializer"), "*",
 			true);
+		Site site = null;
 
 		while (enumeration.hasMoreElements()) {
 			URL url = enumeration.nextElement();
@@ -190,7 +188,7 @@ public class SiteInitializerClientExtension
 
 				URLConnection urlConnection = url.openConnection();
 
-				binaryFiles.put(
+				binaryFileMap.put(
 					"file",
 					new BinaryFile(
 						".zip", "site-initializer",
@@ -211,34 +209,40 @@ public class SiteInitializerClientExtension
 				_transactionConfig,
 				new SiteCallable(
 					company,
-					MultipartBody.of(
-						binaryFiles, __ -> _objectMapper,
-						Collections.singletonMap("site", site.toString())),
-					site,
 					_userLocalService.getUserByScreenName(
 						companyId,
-						PropsUtil.get(PropsKeys.DEFAULT_ADMIN_SCREEN_NAME))));
+						PropsUtil.get(PropsKeys.DEFAULT_ADMIN_SCREEN_NAME)),
+					MultipartBody.of(
+						binaryFileMap, __ -> _objectMapper,
+						Collections.singletonMap("site", site.toString())),
+					site));
+		}
+		catch (Throwable throwable) {
+			throw new Exception(throwable);
 		}
 	}
 
 	private boolean _isAlreadyProcessed(Bundle bundle) {
 		String lastModifiedString = String.valueOf(bundle.getLastModified());
 
-		File file = bundle.getDataFile(
+		File siteInitializerMarkerFile = bundle.getDataFile(
 			".liferay-client-extension-site-initializer");
 
 		try {
-			if ((file != null) && file.exists() &&
-				Objects.equals(FileUtil.read(file), lastModifiedString)) {
+			if ((siteInitializerMarkerFile != null) &&
+				siteInitializerMarkerFile.exists() &&
+				Objects.equals(
+					FileUtil.read(siteInitializerMarkerFile),
+					lastModifiedString)) {
 
 				return true;
 			}
 
-			if (!file.exists()) {
-				file.createNewFile();
+			if (!siteInitializerMarkerFile.exists()) {
+				siteInitializerMarkerFile.createNewFile();
 			}
 
-			FileUtil.write(file, lastModifiedString, true);
+			FileUtil.write(siteInitializerMarkerFile, lastModifiedString, true);
 		}
 		catch (IOException ioException) {
 			ReflectionUtil.throwException(ioException);
@@ -285,13 +289,13 @@ public class SiteInitializerClientExtension
 		}
 
 		private SiteCallable(
-			Company company, MultipartBody multipartBody, Site site,
-			User user) {
+			Company company, User user, MultipartBody multipartBody,
+			Site site) {
 
 			_company = company;
+			_user = user;
 			_multipartBody = multipartBody;
 			_site = site;
-			_user = user;
 		}
 
 		private final Company _company;

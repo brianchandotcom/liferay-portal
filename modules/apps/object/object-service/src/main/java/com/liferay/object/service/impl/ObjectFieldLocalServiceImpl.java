@@ -67,6 +67,7 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -649,6 +650,14 @@ public class ObjectFieldLocalServiceImpl
 			String readOnlyConditionExpression, boolean required, boolean state,
 			boolean system, List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-196724") &&
+			Objects.equals(
+				businessType,
+				ObjectFieldConstants.BUSINESS_TYPE_AUTO_INCREMENT)) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);

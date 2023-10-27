@@ -85,7 +85,7 @@ public class PortletDisplayTemplateImportCapability implements Capability {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		PortletPreferences processedPreferences = portletPreferences;
+		PortletPreferences processedPortletPreferences = portletPreferences;
 
 		String displayStyle =
 			_portletDisplayTemplateImportRegister.getDisplayStyle(
@@ -95,7 +95,7 @@ public class PortletDisplayTemplateImportCapability implements Capability {
 			!displayStyle.startsWith(
 				PortletDisplayTemplateConstants.DISPLAY_STYLE_PREFIX)) {
 
-			return processedPreferences;
+			return processedPortletPreferences;
 		}
 
 		StagedModelDataHandlerUtil.importReferenceStagedModels(
@@ -127,7 +127,7 @@ public class PortletDisplayTemplateImportCapability implements Capability {
 				"displayStyleGroupId", StringPool.BLANK);
 		}
 
-		return processedPreferences;
+		return processedPortletPreferences;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

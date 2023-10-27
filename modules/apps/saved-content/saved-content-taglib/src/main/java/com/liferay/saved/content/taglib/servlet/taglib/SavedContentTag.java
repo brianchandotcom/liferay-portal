@@ -117,8 +117,14 @@ public class SavedContentTag extends IncludeTag {
 					WebKeys.THEME_DISPLAY);
 
 			httpServletRequest.setAttribute(
+				"liferay-saved-content:saved-content:contentTitle",
+				_contentTitle);
+			httpServletRequest.setAttribute(
 				"liferay-saved-content:saved-content:data",
 				_getData(httpServletRequest, themeDisplay));
+			httpServletRequest.setAttribute(
+				"liferay-saved-content:saved-content:enabled",
+				_isEnabled(themeDisplay));
 		}
 		catch (Exception exception) {
 			_log.error(exception);

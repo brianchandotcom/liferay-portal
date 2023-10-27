@@ -209,7 +209,7 @@ public class SiteInitializerClientExtension
 		try {
 			TransactionInvokerUtil.invoke(
 				_transactionConfig,
-				new SiteCallable(
+				new SiteCallabe(
 					company,
 					_userLocalService.getUserByScreenName(
 						company.getCompanyId(),
@@ -278,7 +278,7 @@ public class SiteInitializerClientExtension
 	@Reference
 	private UserLocalService _userLocalService;
 
-	private class SiteCallable implements Callable<Site> {
+	private class SiteCallabe implements Callable<Site> {
 
 		@Override
 		public Site call() throws Exception {
@@ -296,7 +296,7 @@ public class SiteInitializerClientExtension
 			}
 		}
 
-		private SiteCallable(
+		private SiteCallabe(
 			Company company, User user, MultipartBody multipartBody,
 			Site site) {
 

@@ -108,6 +108,10 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "user1@liferay.com");
 
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		User.openUsersAdmin();

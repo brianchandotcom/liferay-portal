@@ -714,6 +714,10 @@ definition {
 			userEmailAddress = "userea@liferay.com",
 			userScreenName = "usersn");
 
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -1495,6 +1499,10 @@ definition {
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		task ("Assgin Default Site to new user") {
+			Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+			Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 			ApplicationsMenu.gotoPortlet(
 				category = "Users",
 				panel = "Control Panel",

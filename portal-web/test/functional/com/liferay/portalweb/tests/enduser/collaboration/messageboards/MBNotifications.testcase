@@ -480,6 +480,10 @@ definition {
 			requireReset = "false",
 			userEmailAddress = PropsUtil.get("email.address.3"));
 
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",

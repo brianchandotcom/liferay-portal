@@ -67,6 +67,10 @@ definition {
 				userLastName = "userln",
 				userScreenName = "usersn");
 
+			Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+			Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
 			Site.assignUserAsMemberCP(
@@ -102,6 +106,10 @@ definition {
 		}
 
 		task ("Assign organization to site in memeberships") {
+			Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+			Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
 			Site.assignOrganizationAsMemberCP(orgName = "Organization Name");
@@ -170,6 +178,10 @@ definition {
 		}
 
 		task ("Assign user group to default site in memberships") {
+			Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+			Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
 			Site.assignUserGroupAsMemberCP(userGroupName = "User Group Name");
@@ -195,6 +207,10 @@ definition {
 		}
 
 		task ("Assign user group to default site in memberships") {
+			Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+			Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
 			Site.assignUserGroupAsMemberCP(userGroupName = "User Group Name");
@@ -690,6 +706,10 @@ definition {
 		}
 
 		task ("Assign the first organization to site in memeberships") {
+			Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+			Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
 			Site.assignOrganizationAsMemberCP(orgName = "Organization Name 1");
@@ -724,6 +744,10 @@ definition {
 		}
 
 		task ("Assign the first user group to site in memeberships") {
+			Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+			Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
 			Site.assignUserGroupAsMemberCP(userGroupName = "User Group Name 1");
@@ -880,6 +904,10 @@ definition {
 		}
 
 		task ("Assign 3 users to the default site") {
+			Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+			Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
 			Site.addAllMembersCP();

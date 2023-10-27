@@ -650,7 +650,7 @@ definition {
 		}
 
 		task ("Assert that there is only 1 Portal instance index after a concurrent reindex completes") {
-			WaitForConsoleTextPresent(value1 = "Finished reindexing company ${companyId}");
+			WaitForConsoleTextPresent(value1 = "Finished reindexing company ${companyId} with execution mode concurrent");
 
 			Refresh();
 

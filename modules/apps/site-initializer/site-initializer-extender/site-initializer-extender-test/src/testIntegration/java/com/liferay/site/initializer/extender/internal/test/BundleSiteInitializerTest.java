@@ -1456,6 +1456,62 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals("Test Journal Folder 2", journalFolder2.getName());
 	}
 
+	private void _assertJournalArticles2() throws Exception {
+		JournalArticle journalArticle1 =
+			_journalArticleLocalService.fetchArticle(
+				_group.getGroupId(), "test-journal-article-1");
+
+		Assert.assertNotNull(journalArticle1);
+		Assert.assertEquals(
+			"TEST DDM TEMPLATE KEY 1", journalArticle1.getDDMTemplateKey());
+		Assert.assertEquals(
+			"Test Journal Article 1", journalArticle1.getTitle());
+
+		JournalArticle journalArticle2 =
+			_journalArticleLocalService.fetchArticle(
+				_group.getGroupId(), "test-journal-article-2");
+
+		Assert.assertNotNull(journalArticle2);
+		Assert.assertEquals(
+			"TEST DDM TEMPLATE KEY 1", journalArticle2.getDDMTemplateKey());
+		Assert.assertEquals(
+			"Test Journal Article 2 Update", journalArticle2.getTitle());
+
+		JournalArticle journalArticle3 =
+			_journalArticleLocalService.fetchArticle(
+				_group.getGroupId(), "test-journal-article-3");
+
+		Assert.assertNotNull(journalArticle3);
+		Assert.assertTrue(Validator.isNull(journalArticle3.getDDMTemplateKey()));
+		Assert.assertEquals(
+			"Test Journal Article 3", journalArticle3.getTitle());
+
+		List<JournalFolder> journalFolders = _journalFolderService.getFolders(
+			_group.getGroupId());
+
+		Assert.assertEquals(
+			journalFolders.toString(), 3, journalFolders.size());
+
+		JournalFolder journalFolder1 = journalFolders.get(0);
+
+		Assert.assertEquals(
+			"TESTJOURNALFOLDER1", journalFolder1.getExternalReferenceCode());
+		Assert.assertEquals("Test Journal Folder 1", journalFolder1.getName());
+
+		JournalFolder journalFolder2 = journalFolders.get(1);
+
+		Assert.assertEquals(
+			"TESTJOURNALFOLDER2", journalFolder2.getExternalReferenceCode());
+		Assert.assertEquals("Test Journal Folder 2 Update",
+			journalFolder2.getName());
+
+		JournalFolder journalFolder3 = journalFolders.get(2);
+
+		Assert.assertEquals(
+			"TESTJOURNALFOLDER3", journalFolder3.getExternalReferenceCode());
+		Assert.assertEquals("Test Journal Folder 3", journalFolder3.getName());
+	}
+
 	private void _assertKBArticles() throws Exception {
 		KBFolder kbFolder = _kbFolderLocalService.getKBFolderByUrlTitle(
 			_group.getGroupId(), KBFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -3732,6 +3788,7 @@ public class BundleSiteInitializerTest {
 		_assertDDMTemplate2();
 		_assertExpandoColumns2();
 		_assertExpandoValues2();
+		_assertJournalArticles2();
 		_assertLayouts2();
 		_assertListTypeDefinitions2();
 		_assertNotificationTemplate2();

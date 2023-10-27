@@ -333,6 +333,75 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/CTCollection"
             tags: ["CTCollection"]
+    "/ct-collections/by-external-reference-code/{externalReferenceCode}/publish":
+        post:
+            operationId: postCTCollectionByExternalReferenceCodePublish
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["CTCollection"]
+    "/ct-collections/by-external-reference-code/{externalReferenceCode}/schedule-publish":
+        post:
+            operationId: postCTCollectionByExternalReferenceCodeSchedulePublish
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: publishDate
+                  required: false
+                  schema:
+                      format: date-time
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["CTCollection"]
+    "/ct-collections/by-external-reference-code/{externalReferenceCode}/share-link":
+        get:
+            operationId: getCTCollectionByExternalReferenceCodeShareLink
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+            tags: ["CTCollection"]
+    "/ct-collections/b{ctCollectionId}/share-link":
+        get:
+            operationId: getCTCollectionShareLink
+            parameters:
+                - in: path
+                  name: ctCollectionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        text/plain:
+                            schema:
+                                type: string
+            tags: ["CTCollection"]
     "/ct-collections/{ctCollectionId}":
         delete:
             operationId: deleteCTCollection

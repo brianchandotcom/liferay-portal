@@ -194,7 +194,7 @@ export default function ModalAddObjectLayoutField({
 						required
 						value={selectedObjectField?.label[defaultLanguageId]}
 					>
-						{({label, readOnly, required}) => (
+						{({businessType, label, readOnly, required}) => (
 							<div className="d-flex justify-content-between">
 								<div className="lfr__object-web-layout-modal-add-field-label">
 									{label[defaultLanguageId]}
@@ -212,7 +212,8 @@ export default function ModalAddObjectLayoutField({
 											: Liferay.Language.get('optional')}
 									</ClayLabel>
 
-									{(readOnly === 'conditional' ||
+									{(businessType === 'AutoIncrement' ||
+										readOnly === 'conditional' ||
 										readOnly === 'true') && (
 										<ClayLabel
 											className="label-inside-custom-select"

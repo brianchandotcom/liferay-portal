@@ -83,7 +83,8 @@ export function ObjectLayoutField({
 							: Liferay.Language.get('optional')}
 					</ClayLabel>
 
-					{(objectField.readOnly === 'true' ||
+					{(objectField.businessType === 'AutoIncrement' ||
+						objectField.readOnly === 'true' ||
 						objectField.readOnly === 'conditional') && (
 						<ClayLabel
 							className="label-inside-custom-select"

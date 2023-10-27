@@ -1784,6 +1784,68 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-195257. View widget templates order when configuring an asset publisher without new widget templates in new site."
+	@priority = 3
+	test ViewDefaultDisplayTemplatesOrder {
+		task ("Given a user accesses to a page with an Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = ${randomSiteName});
+		}
+
+		task ("When the user opens the dropdown menu of Display Template selector in Asset Publisher") {
+			Portlet.gotoPortletOptions(
+				portletName = "Asset Publisher",
+				portletOption = "Configuration");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			Navigator.gotoNavTab(navTab = "Display Settings");
+
+			Click(
+				key_class = "display-template-selector",
+				key_index = 1,
+				locator1 = "Button#ANY_WITH_CLASS_AND_INDEX");
+		}
+
+		task ("The the user could see the display templates are ordered by alphabetical") {
+			var index = 1;
+
+			for (var subHeader : list "Default,Global") {
+				AssertVisible(
+					index = ${index},
+					locator1 = "Dropdown#DROPDOWN_SUBHEADER_BY_INDEX",
+					subHeader = ${subHeader});
+
+				var index = ${index} + 1;
+			}
+
+			var index = 1;
+
+			for (var menuItem : list "Abstracts,Full Content,Table,Title List") {
+				AssertVisible(
+					index = ${index},
+					key_menuItem = ${menuItem},
+					key_subheader = "Default",
+					locator1 = "MenuItem#GROUPED_DROPDOWN_MENU_ITEM_BY_INDEX");
+
+				var index = ${index} + 1;
+			}
+
+			var index = 1;
+
+			for (var menuItem : list "Map,Rich Summary") {
+				AssertVisible(
+					index = ${index},
+					key_menuItem = ${menuItem},
+					key_subheader = "Global",
+					locator1 = "MenuItem#GROUPED_DROPDOWN_MENU_ITEM_BY_INDEX");
+
+				var index = ${index} + 1;
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-142468. The View link shouldn't be shown in details page."
 	@priority = 3
 	test ViewDetailsLinkNotShownInDetailsPage {

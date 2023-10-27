@@ -662,17 +662,17 @@
 
 					instance.addHTML({
 						data: A.mix(params, data, true),
-						onComplete(portlet, portletId) {
-							portlet.refreshURL = url;
+						onComplete(newPortlet, portletId) {
+							newPortlet.refreshURL = portlet.refreshURL;
 
-							if (portlet) {
-								portlet.attr('data-qa-id', 'app-refreshed');
+							if (newPortlet) {
+								newPortlet.attr('data-qa-id', 'app-refreshed');
 							}
 
 							Liferay.fire(
-								portlet.portletId + ':portletRefreshed',
+								newPortlet.portletId + ':portletRefreshed',
 								{
-									portlet,
+									portlet: newPortlet,
 									portletId,
 								}
 							);

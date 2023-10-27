@@ -13,23 +13,36 @@ import com.liferay.adaptive.media.image.media.query.MediaQueryProvider;
 import com.liferay.adaptive.media.image.model.AMImageEntry;
 import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
 import com.liferay.adaptive.media.image.url.AMImageURLFactory;
+import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
+import com.liferay.document.library.kernel.util.RawMetadataProcessor;
+import com.liferay.dynamic.data.mapping.model.DDMField;
+import com.liferay.dynamic.data.mapping.model.DDMFieldAttribute;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
+import com.liferay.dynamic.data.mapping.util.comparator.StructureStructureKeyComparator;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
-import com.liferay.portal.image.ImageToolUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.model.Image;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -77,13 +90,7 @@ public class GetAvailableImageConfigurationsMVCResourceCommand
 			).put(
 				"value", "auto"
 			).put(
-				"width",
-				() -> {
-					Image image = ImageToolUtil.getImage(
-						fileEntry.getContentStream());
-
-					return image.getWidth();
-				}
+				"width", _getFileEntryWidth(fileEntry)
 			));
 
 		Map<String, String> mediaQueriesMap = new HashMap<>();
@@ -156,6 +163,75 @@ public class GetAvailableImageConfigurationsMVCResourceCommand
 			resourceRequest, resourceResponse, jsonArray);
 	}
 
+	private int _getFileEntryWidth(FileEntry fileEntry) throws Exception {
+		FileVersion fileVersion = fileEntry.getLatestFileVersion(true);
+
+		List<DDMStructure> ddmStructures =
+			_ddmStructureLocalService.getClassStructures(
+				fileVersion.getCompanyId(),
+				_portal.getClassNameId(RawMetadataProcessor.class),
+				StructureStructureKeyComparator.INSTANCE_DESCENDING);
+
+		for (DDMStructure ddmStructure : ddmStructures) {
+			DLFileEntryMetadata fileEntryMetadata =
+				_dlFileEntryMetadataLocalService.fetchFileEntryMetadata(
+					ddmStructure.getStructureId(),
+					fileVersion.getFileVersionId());
+
+			if (fileEntryMetadata == null) {
+				continue;
+			}
+
+			try {
+				DDMFormValues ddmFormValues =
+					_ddmStorageEngineManager.getDDMFormValues(
+						fileEntryMetadata.getDDMStorageId());
+
+				if (ddmFormValues == null) {
+					continue;
+				}
+
+				List<DDMField> ddmFields = _ddmFieldLocalService.getDDMFields(
+					fileEntryMetadata.getDDMStorageId(), "TIFF_IMAGE_WIDTH");
+
+				if (ListUtil.isEmpty(ddmFields)) {
+					return 0;
+				}
+
+				DDMField ddmField = ddmFields.get(0);
+
+				DDMFieldAttribute ddmFieldAttribute =
+					_ddmFieldLocalService.fetchDDMFieldAttribute(
+						ddmField.getFieldId(), StringPool.BLANK,
+						StringPool.BLANK);
+
+				if (ddmFieldAttribute == null) {
+					return 0;
+				}
+
+				return Integer.valueOf(ddmFieldAttribute.getAttributeValue());
+			}
+			catch (PortalException portalException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Unable to find dynamic data mapping form values ",
+							"for ", fileVersion.getFileVersionId(),
+							" in structure ", ddmStructure.getStructureKey()));
+				}
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException);
+				}
+			}
+		}
+
+		return 0;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		GetAvailableImageConfigurationsMVCResourceCommand.class);
+
 	@Reference
 	private AMImageConfigurationHelper _amImageConfigurationHelper;
 
@@ -166,7 +242,19 @@ public class GetAvailableImageConfigurationsMVCResourceCommand
 	private AMImageURLFactory _amImageURLFactory;
 
 	@Reference
+	private DDMFieldLocalService _ddmFieldLocalService;
+
+	@Reference
+	private DDMStorageEngineManager _ddmStorageEngineManager;
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
+
+	@Reference
 	private DLAppService _dlAppService;
+
+	@Reference
+	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;
 
 	@Reference
 	private Language _language;

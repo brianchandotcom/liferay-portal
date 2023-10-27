@@ -2093,24 +2093,50 @@ public class DDMStructureLocalServiceImpl
 			_ddmStructureVersionLocalService.getLatestStructureVersion(
 				structure.getStructureId());
 
+		boolean updateVersion = false;
+
+		if (latestStructureVersion.getStatus() ==
+				WorkflowConstants.STATUS_DRAFT) {
+
+			updateVersion = true;
+		}
+
 		boolean majorVersion = GetterUtil.getBoolean(
 			serviceContext.getAttribute("majorVersion"));
 
 		String version = _getNextVersion(
 			latestStructureVersion.getVersion(), majorVersion);
 
-		structure.setVersion(version);
+		if (!updateVersion) {
+			structure.setVersionUserId(user.getUserId());
+			structure.setVersionUserName(user.getFullName());
+			structure.setVersion(version);
+		}
 
 		structure.setNameMap(nameMap, ddmForm.getDefaultLocale());
-		structure.setVersionUserId(user.getUserId());
-		structure.setVersionUserName(user.getFullName());
 		structure.setDescriptionMap(descriptionMap, ddmForm.getDefaultLocale());
 		structure.setDefinition(_serializeJSONDDMForm(ddmForm));
 
 		// Structure version
 
-		DDMStructureVersion structureVersion = _addStructureVersion(
-			user, structure, version, serviceContext);
+		DDMStructureVersion structureVersion;
+
+		if (updateVersion) {
+			latestStructureVersion.setStatus(
+				GetterUtil.getInteger(
+					serviceContext.getAttribute("status"),
+					WorkflowConstants.STATUS_APPROVED));
+			latestStructureVersion.setStatusByUserId(user.getUserId());
+			latestStructureVersion.setStatusByUserName(user.getFullName());
+			latestStructureVersion.setStatusDate(structure.getModifiedDate());
+
+			structureVersion = _ddmStructureVersionPersistence.update(
+				latestStructureVersion);
+		}
+		else {
+			structureVersion = _addStructureVersion(
+				user, structure, version, serviceContext);
+		}
 
 		// Structure layout
 

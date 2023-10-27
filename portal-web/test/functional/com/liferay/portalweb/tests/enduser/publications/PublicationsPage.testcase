@@ -371,6 +371,8 @@ definition {
 				collectionName = "Page Template Collection",
 				pageName = "Test Page Name",
 				pageTemplateName = "Content Page Template Name");
+
+			PageEditor.publish();
 		}
 
 		task ("View the fragments are shown in content page") {

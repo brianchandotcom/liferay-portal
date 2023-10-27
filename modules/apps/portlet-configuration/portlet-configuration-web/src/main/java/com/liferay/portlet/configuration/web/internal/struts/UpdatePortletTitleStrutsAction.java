@@ -55,28 +55,28 @@ public class UpdatePortletTitleStrutsAction implements StrutsAction {
 		String languageId = _language.getLanguageId(httpServletRequest);
 		String title = ParamUtil.getString(httpServletRequest, "title");
 
-		PortletPreferences portletSetup =
+		PortletPreferences portletPreferences =
 			themeDisplay.getStrictLayoutPortletSetup(layout, portletId);
 
-		portletSetup.setValue("portletSetupTitle_" + languageId, title);
-		portletSetup.setValue("portletSetupUseCustomTitle", "true");
+		portletPreferences.setValue("portletSetupTitle_" + languageId, title);
+		portletPreferences.setValue("portletSetupUseCustomTitle", "true");
 
-		portletSetup.store();
+		portletPreferences.store();
 
 		if (layout.isTypeContent()) {
 			Layout draftLayout = layout.fetchDraftLayout();
 
 			if (draftLayout != null) {
-				PortletPreferences draftLayoutPortletSetup =
+				PortletPreferences draftLayoutPortletPreferences =
 					themeDisplay.getStrictLayoutPortletSetup(
 						draftLayout, portletId);
 
-				draftLayoutPortletSetup.setValue(
+				draftLayoutPortletPreferences.setValue(
 					"portletSetupTitle_" + languageId, title);
-				draftLayoutPortletSetup.setValue(
+				draftLayoutPortletPreferences.setValue(
 					"portletSetupUseCustomTitle", "true");
 
-				draftLayoutPortletSetup.store();
+				draftLayoutPortletPreferences.store();
 			}
 		}
 

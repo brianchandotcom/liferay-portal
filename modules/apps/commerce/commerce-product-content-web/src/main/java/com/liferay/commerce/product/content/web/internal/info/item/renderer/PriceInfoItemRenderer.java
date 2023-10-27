@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Alessio Antonio Rendina
  */
-@Component(service = {InfoItemRenderer.class, PriceInfoItemRenderer.class})
+@Component(service = InfoItemRenderer.class)
 public class PriceInfoItemRenderer implements InfoItemRenderer<CPDefinition> {
 
 	@Override

@@ -24,9 +24,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Stefano Motta
  * @author Alessio Antonio Rendina
  */
-@Component(
-	service = {CPDefinitionLinkInfoItemRenderer.class, InfoItemRenderer.class}
-)
+@Component(service = InfoItemRenderer.class)
 public class CPDefinitionLinkInfoItemRenderer
 	implements InfoItemRenderer<CPDefinition> {
 

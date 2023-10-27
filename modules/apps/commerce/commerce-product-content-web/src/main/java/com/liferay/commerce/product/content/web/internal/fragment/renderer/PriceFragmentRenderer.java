@@ -5,11 +5,11 @@
 
 package com.liferay.commerce.product.content.web.internal.fragment.renderer;
 
-import com.liferay.commerce.product.content.web.internal.info.item.renderer.PriceInfoItemRenderer;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.info.item.renderer.InfoItemRenderer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -127,7 +127,9 @@ public class PriceFragmentRenderer implements FragmentRenderer {
 	@Reference
 	private Portal _portal;
 
-	@Reference
-	private PriceInfoItemRenderer _priceInfoItemRenderer;
+	@Reference(
+		target = "(component.name=com.liferay.commerce.product.content.web.internal.info.item.renderer.PriceInfoItemRenderer)"
+	)
+	private InfoItemRenderer<CPDefinition> _priceInfoItemRenderer;
 
 }

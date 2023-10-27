@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 public class ValidationHelper {
 
 	public boolean isValidObjectEntry(
-			long objectEntryId, String externalReferenceCode)
+			String externalReferenceCode, long objectEntryId)
 		throws Exception {
 
 		if (objectEntryId == 0) {
@@ -61,8 +61,8 @@ public class ValidationHelper {
 	}
 
 	public void validateAPIEndpointRelationship(
-		ObjectEntry objectEntry, String relationshipName,
-		String objectDefinitionName) {
+		String objectDefinitionName, ObjectEntry objectEntry,
+		String relationshipName) {
 
 		try {
 			Map<String, Serializable> values = objectEntry.getValues();
@@ -70,7 +70,7 @@ public class ValidationHelper {
 			long apiEndpointId = (long)values.get(
 				"r_" + relationshipName + "_c_apiEndpointId");
 
-			if (!isValidObjectEntry(apiEndpointId, "L_API_ENDPOINT")) {
+			if (!isValidObjectEntry("L_API_ENDPOINT", apiEndpointId)) {
 				throw new ObjectEntryValuesException.InvalidObjectField(
 					Collections.singletonList(objectDefinitionName),
 					String.format(

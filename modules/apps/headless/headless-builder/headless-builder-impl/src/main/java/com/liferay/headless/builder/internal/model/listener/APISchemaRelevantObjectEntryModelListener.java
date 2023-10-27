@@ -57,9 +57,9 @@ public class APISchemaRelevantObjectEntryModelListener
 			Map<String, Serializable> values = objectEntry.getValues();
 
 			if (!_validationHelper.isValidObjectEntry(
+					"L_API_APPLICATION",
 					(long)values.get(
-						"r_apiApplicationToAPISchemas_c_apiApplicationId"),
-					"L_API_APPLICATION")) {
+						"r_apiApplicationToAPISchemas_c_apiApplicationId"))) {
 
 				throw new ObjectEntryValuesException.InvalidObjectField(
 					null, "An API schema must be related to an API application",

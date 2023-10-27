@@ -32,7 +32,7 @@ public class APIFilterRelevantObjectEntryModelListener
 		throws ModelListenerException {
 
 		_validationHelper.validateAPIEndpointRelationship(
-			objectEntry, "apiEndpointToAPIFilters", "API filter");
+			"API filter", objectEntry, "apiEndpointToAPIFilters");
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public class APIFilterRelevantObjectEntryModelListener
 		throws ModelListenerException {
 
 		_validationHelper.validateAPIEndpointRelationship(
-			objectEntry, "apiEndpointToAPIFilters", "API filter");
+			"API filter", objectEntry, "apiEndpointToAPIFilters");
 	}
 
 	@Reference

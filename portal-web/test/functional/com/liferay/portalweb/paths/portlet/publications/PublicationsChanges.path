@@ -184,6 +184,24 @@
 	<td>//input[@class='form-control' and @type='text']</td>
 	<td></td>
 </tr>
+
+<!--REVIEW CHANGES-->
+
+<tr>
+	<td>REVIEW_CHANGE_DROPDOWN</td>
+	<td>//div[contains(@class, 'publications-changes-content')]//div[@class='dropdown']//button[contains(@aria-label, 'more-actions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REVIEW_CHANGE_DROPDOWN_ITEM</td>
+	<td>//button[@class='dropdown-item'][contains(., '${key_menuItem}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REVIEW_CHANGE_LISTING</td>
+	<td>//tr[@class='table-divider'][contains(.,'${key_changeCategory}')]/following-sibling::tr[@class='cursor-pointer'][contains(., '${key_changeTitle}')][${key_changeOrder}]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

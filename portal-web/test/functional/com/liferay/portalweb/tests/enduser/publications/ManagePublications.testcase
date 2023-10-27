@@ -66,6 +66,10 @@ definition {
 			changeOrder = 1,
 			changeTitle = "Edited in Publication 2 Name",
 			targetPublicationName = "Publication 1 Name");
+		
+		Click(
+			key_text = "Move Changes",
+			locator1 = "Button#ANY");
 
 		Refresh();
 
@@ -130,8 +134,16 @@ definition {
 			changeCategory = "Web Content Article",
 			changeOrder = 1,
 			changeTitle = "WC WebContent Title 2 Edit",
-			moveFailed = "true",
 			targetPublicationName = "Publication 1 Name");
+
+		Click(
+			key_text = "Move Changes",
+			locator1 = "Button#ANY");
+
+		AssertElementPresent(
+			key_alertBold = "One or more changes conflict with existing changes in the destination publication.",
+			key_alertType = "inline alert-danger",
+			locator1 = "ClayAlert#ALERT_STATIC_BOLD");
 
 		Refresh();
 

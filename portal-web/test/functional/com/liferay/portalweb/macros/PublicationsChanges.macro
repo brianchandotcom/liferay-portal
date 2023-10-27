@@ -155,40 +155,44 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro moveChangeToAnotherPublication(moveFailed = null,changeCategory = null,targetPublicationName = null,changeTitle = null,changeOrder = null) {
-		Click.clickAtNotVisible(
-			changeOrder = ${changeOrder},
-			key_changeCategory = ${changeCategory},
-			key_changeTitle = ${changeTitle},
-			locator1 = "PublicationsChanges#CHANGES_CHECK_BOX");
+	macro gotoMoveChangeToAnotherPublication {
+		Search.searchCP(searchTerm = ${changeTitle});
 
 		Click(
-			ariaLabel = "Show Move Changes Modal",
-			locator1 = "Button#ANY_WITH_ARIA_LABEL");
+			key_changeCategory = ${changeCategory},
+			key_changeOrder = ${changeOrder},
+			key_changeTitle = ${changeTitle},
+			locator1 = "PublicationsChanges#REVIEW_CHANGE_LISTING");
+
+		Click(locator1 = "PublicationsChanges#REVIEW_CHANGE_DROPDOWN");
+
+		Click(
+			key_menuItem = "Move Changes",
+			locator1 = "PublicationsChanges#REVIEW_CHANGE_DROPDOWN_ITEM");
 
 		Select(
-			ariaLabel = "Select the publication you would like to move your changes to.",
+			ariaLabel = "Publication",
 			locator1 = "Select#ANY_ARIA_LABEL",
 			value1 = ${targetPublicationName});
+	}
 
+	@summary = "Default summary"
+	macro moveChangeToAnotherPublication {
 		Click(
-			key_text = "Move",
+			key_text = "Move Changes",
 			locator1 = "Button#ANY");
 
 		if (${moveFailed} == "true") {
-			AssertElementPresent(
-				key_alertBold = "One or more changes conflict with existing changes in the destination publication.",
-				key_alertType = "inline alert-danger",
-				locator1 = "ClayAlert#ALERT_STATIC_BOLD");
+			AssertTextEquals.assertPartialText(
+				key_alertType = "danger",
+				locator1 = "ClayAlert#ALERT_STATIC",
+				value1 = "One or more changes conflict with existing changes in the destination publication.");
 		}
 		else {
 			AssertElementPresent(
-				key_alertBold = "The changes were moved successfully.",
-				key_alertType = "inline alert-success",
-				locator1 = "ClayAlert#ALERT_STATIC_BOLD");
+				key_uniqueSuccess = "Your request completed successfully.",
+				locator1 = "Message#UNIQUE_SUCCESS");
 		}
-
-		IFrame.closeFrame();
 	}
 
 	@summary = "Default summary"

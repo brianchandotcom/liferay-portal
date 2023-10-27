@@ -2239,6 +2239,13 @@ public class ObjectEntryLocalServiceImpl
 		return joinStep.where(predicate);
 	}
 
+	private String _getAutoIncrementSortableValue(
+		String prefix, String suffix, Object value) {
+
+		return StringUtil.removeLast(
+			StringUtil.removeFirst(String.valueOf(value), prefix), suffix);
+	}
+
 	private Map<String, Object> _getColumns(ObjectDefinition objectDefinition) {
 		Map<String, Object> columns = new HashMap<>();
 
@@ -3303,7 +3310,7 @@ public class ObjectEntryLocalServiceImpl
 			dynamicObjectDefinitionTable.getObjectFields();
 
 		for (ObjectField objectField : objectFields) {
-			if (objectField.isLocalized()) {
+			if (!objectField.hasInsertValues() || objectField.isLocalized()) {
 				continue;
 			}
 
@@ -3313,14 +3320,18 @@ public class ObjectEntryLocalServiceImpl
 				_validateAutoIncrementValue(
 					objectField,
 					GetterUtil.getString(values.get(objectField.getName())));
+
+				sb.append(", ");
+				sb.append(objectField.getDBColumnName());
+				sb.append(", ");
+				sb.append(objectField.getSortableDBColumnName());
+
+				count += 2;
+
+				continue;
 			}
 
-			if (objectField.compareBusinessType(
-					ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) ||
-				objectField.compareBusinessType(
-					ObjectFieldConstants.BUSINESS_TYPE_FORMULA) ||
-				!values.containsKey(objectField.getName())) {
-
+			if (!values.containsKey(objectField.getName())) {
 				if (objectField.isRequired() &&
 					(workflowAction != WorkflowConstants.ACTION_SAVE_DRAFT)) {
 
@@ -3378,13 +3389,38 @@ public class ObjectEntryLocalServiceImpl
 			_setColumn(preparedStatement, index++, Types.BIGINT, objectEntryId);
 
 			for (ObjectField objectField : objectFields) {
-				if (objectField.compareBusinessType(
-						ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) ||
-					objectField.compareBusinessType(
-						ObjectFieldConstants.BUSINESS_TYPE_FORMULA) ||
-					!values.containsKey(objectField.getName()) ||
+				if (!objectField.hasInsertValues() ||
 					objectField.isLocalized()) {
 
+					continue;
+				}
+
+				if (objectField.compareBusinessType(
+						ObjectFieldConstants.BUSINESS_TYPE_AUTO_INCREMENT)) {
+
+					_setColumn(
+						dynamicObjectDefinitionTable, index++, objectField,
+						preparedStatement, values);
+
+					Column<?, ?> column =
+						dynamicObjectDefinitionTable.getColumn(
+							objectField.getSortableDBColumnName());
+
+					_setColumn(
+						preparedStatement, index++, column.getSQLType(),
+						_getAutoIncrementSortableValue(
+							ObjectFieldSettingUtil.getValue(
+								ObjectFieldSettingConstants.NAME_PREFIX,
+								objectField),
+							ObjectFieldSettingUtil.getValue(
+								ObjectFieldSettingConstants.NAME_SUFFIX,
+								objectField),
+							values.get(objectField.getName())));
+
+					continue;
+				}
+
+				if (!values.containsKey(objectField.getName())) {
 					continue;
 				}
 
@@ -3943,8 +3979,8 @@ public class ObjectEntryLocalServiceImpl
 
 		String initialValue = ObjectFieldSettingUtil.getValue(
 			ObjectFieldSettingConstants.NAME_INITIAL_VALUE, objectField);
-		String sortableValue = StringUtil.removeLast(
-			StringUtil.removeFirst(value, prefix), suffix);
+		String sortableValue = _getAutoIncrementSortableValue(
+			prefix, suffix, value);
 
 		if ((initialValue.length() > sortableValue.length()) ||
 			((initialValue.length() < sortableValue.length()) &&

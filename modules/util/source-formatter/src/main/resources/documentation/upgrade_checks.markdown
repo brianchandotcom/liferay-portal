@@ -48,7 +48,6 @@ UpgradePortletDisplayCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .sc
 UpgradePortletFTLCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Include the CSS classes 'cadmin' and include for impression of 'right cadmin' in 'portlet.ftl' file |
 UpgradeRejectedExecutionHandlerCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replace Liferay's RejectedExecutionHandler with Java's RejectedExecutionHandler |
 UpgradeRemovedAPICheck | .java | Finds cases where calls are made to removed API after an upgrade. |
-UpgradeSCSSImportsCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replace compat/mixins by clay/cadmin-variables |
 UpgradeSCSSMixinsCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replace outdated mixins (e.g. media-query, respond-to, etc.) |
 UpgradeSCSSNodeSassPatternsCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Run code migration of Dart Sass deprecated patterns (e.g., the division operation using the '/' character, the interpolation syntax, etc.) |
 UpgradeSetResultsSetTotalMethodCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Run code migration of method searchContainer.setResults to the searchContainer.setResultsAndTotal and delete searchContainer.setTotal |

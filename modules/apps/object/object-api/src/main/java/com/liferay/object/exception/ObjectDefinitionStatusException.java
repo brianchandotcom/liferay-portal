@@ -25,14 +25,6 @@ public class ObjectDefinitionStatusException extends PortalException {
 		_messageKey = messageKey;
 	}
 
-	public ObjectDefinitionStatusException(String msg, Throwable throwable) {
-		super(msg, throwable);
-	}
-
-	public ObjectDefinitionStatusException(Throwable throwable) {
-		super(throwable);
-	}
-
 	public String getMessageKey() {
 		return _messageKey;
 	}

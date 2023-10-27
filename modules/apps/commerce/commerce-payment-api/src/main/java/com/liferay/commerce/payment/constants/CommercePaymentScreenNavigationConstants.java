@@ -25,6 +25,10 @@ public class CommercePaymentScreenNavigationConstants {
 	public static final String SCREEN_NAVIGATION_KEY_COMMERCE_CHANNEL_GENERAL =
 		"commerce.channel.general";
 
+	public static final String
+		SCREEN_NAVIGATION_KEY_COMMERCE_PAYMENT_INTEGRATION =
+			"commerce.payment.integration";
+
 	public static final String SCREEN_NAVIGATION_KEY_COMMERCE_PAYMENT_METHOD =
 		"commerce.payment.method";
 

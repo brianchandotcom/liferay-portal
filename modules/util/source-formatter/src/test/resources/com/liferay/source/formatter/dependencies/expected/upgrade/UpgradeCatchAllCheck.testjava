@@ -15,6 +15,8 @@ import com.liferay.portal.kernel.util.HtmlParser;
 
 import com.liferay.portal.kernel.search.Sort;
 
+import com.liferay.document.library.util.DLURLHelperUtil;
+
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -39,6 +41,8 @@ public class UpgradeCatchAllCheck {
 		DestinationNames.COMMERCE_SHIPMENT_STATUS;
 		DestinationNames.COMMERCE_STOCK_QUANTITY;
 		DestinationNames.COMMERCE_SUBSCRIPTION_STATUS;
+
+		DLURLHelperUtil.getImagePreviewURL(testEntry, testEntry.getTestVersion(), null);
 
 		FDSTableSchemaBuilder fDSTableSchemaBuilder = _fDSTableSchemaBuilderFactory.create();
 

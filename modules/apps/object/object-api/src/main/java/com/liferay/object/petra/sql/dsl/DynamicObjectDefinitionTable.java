@@ -42,22 +42,20 @@ public class DynamicObjectDefinitionTable
 			Column.FLAG_PRIMARY);
 
 		for (ObjectField objectField : objectFields) {
-			if (objectField.compareBusinessType(
-					ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) ||
-				objectField.compareBusinessType(
-					ObjectFieldConstants.BUSINESS_TYPE_FORMULA) ||
-				objectField.isLocalized()) {
-
+			if (!objectField.hasInsertValues() || objectField.isLocalized()) {
 				continue;
 			}
 
-			createColumn(
-				objectField.getDBColumnName(),
-				DynamicObjectDefinitionTableUtil.getJavaClass(
-					objectField.getDBType()),
-				DynamicObjectDefinitionTableUtil.getSQLType(
-					objectField.getDBType()),
-				Column.FLAG_DEFAULT);
+			_createColumn(
+				objectField.getDBColumnName(), objectField.getDBType());
+
+			if (objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_AUTO_INCREMENT)) {
+
+				_createColumn(
+					objectField.getSortableDBColumnName(),
+					ObjectFieldConstants.DB_TYPE_LONG);
+			}
 		}
 	}
 
@@ -86,24 +84,19 @@ public class DynamicObjectDefinitionTable
 		sb.append(" LONG not null primary key");
 
 		for (ObjectField objectField : _objectFields) {
-			if (objectField.compareBusinessType(
-					ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) ||
-				objectField.compareBusinessType(
-					ObjectFieldConstants.BUSINESS_TYPE_FORMULA) ||
-				objectField.isLocalized()) {
-
+			if (!objectField.hasInsertValues() || objectField.isLocalized()) {
 				continue;
 			}
 
-			sb.append(", ");
-			sb.append(objectField.getDBColumnName());
-			sb.append(" ");
-			sb.append(
-				DynamicObjectDefinitionTableUtil.getDataType(
-					objectField.getDBType()));
-			sb.append(
-				DynamicObjectDefinitionTableUtil.getSQLColumnNull(
-					objectField.getDBType()));
+			_append(sb, objectField.getDBColumnName(), objectField.getDBType());
+
+			if (objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_AUTO_INCREMENT)) {
+
+				_append(
+					sb, objectField.getSortableDBColumnName(),
+					ObjectFieldConstants.DB_TYPE_LONG);
+			}
 		}
 
 		sb.append(")");
@@ -139,6 +132,21 @@ public class DynamicObjectDefinitionTable
 		String name, Class<C> javaClass, int sqlType, int flags) {
 
 		return super.createColumn(name, javaClass, sqlType, flags);
+	}
+
+	private void _append(StringBundler sb, String dbColumnName, String dbType) {
+		sb.append(", ");
+		sb.append(dbColumnName);
+		sb.append(" ");
+		sb.append(DynamicObjectDefinitionTableUtil.getDataType(dbType));
+		sb.append(DynamicObjectDefinitionTableUtil.getSQLColumnNull(dbType));
+	}
+
+	private void _createColumn(String dbColumnName, String dbType) {
+		createColumn(
+			dbColumnName, DynamicObjectDefinitionTableUtil.getJavaClass(dbType),
+			DynamicObjectDefinitionTableUtil.getSQLType(dbType),
+			Column.FLAG_DEFAULT);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

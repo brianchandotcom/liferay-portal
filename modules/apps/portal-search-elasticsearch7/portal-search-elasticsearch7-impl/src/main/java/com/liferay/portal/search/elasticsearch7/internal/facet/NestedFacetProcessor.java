@@ -45,14 +45,12 @@ public class NestedFacetProcessor
 
 		NestedFacet nestedFacet = (NestedFacet)facet;
 
-		TermsAggregationBuilder termsAggregationBuilder =
-			_getTermsAggregationBuilder(nestedFacet);
-
-		AggregationBuilders.terms(FacetUtil.getAggregationName(facet));
-
 		NestedAggregationBuilder nestedAggregationBuilder =
 			AggregationBuilders.nested(
 				FacetUtil.getAggregationName(facet), nestedFacet.getPath());
+
+		TermsAggregationBuilder termsAggregationBuilder =
+			_getTermsAggregationBuilder(nestedFacet);
 
 		if ((nestedFacet.getChildAggregation() != null) ||
 			Validator.isNotNull(nestedFacet.getFilterField())) {

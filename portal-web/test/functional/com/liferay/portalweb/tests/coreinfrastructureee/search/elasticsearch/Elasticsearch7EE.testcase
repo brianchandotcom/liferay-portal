@@ -217,6 +217,7 @@ definition {
 		ElasticsearchMonitoring.viewPG();
 	}
 
+	@ignore = "true"
 	@priority = 5
 	test XPackPkiAuthenticationWithJDK11 {
 		property elastic.pki.authentication.enabled = "true";

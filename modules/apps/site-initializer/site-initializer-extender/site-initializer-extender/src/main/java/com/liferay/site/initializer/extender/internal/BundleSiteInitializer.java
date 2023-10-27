@@ -2072,12 +2072,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 				_portal.getClassNameId(JournalArticle.class), ddmStructureKey,
 				true);
 
-			String ddmTemplateKey = jsonObject.getString("ddmTemplateKey");
-
-			_ddmTemplateLocalService.getTemplate(
-				serviceContext.getScopeGroupId(),
-				_portal.getClassNameId(DDMStructure.class), ddmTemplateKey);
-
 			Calendar calendar = CalendarFactoryUtil.getCalendar(
 				serviceContext.getTimeZone());
 
@@ -2107,7 +2101,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 							_replace(resourcePath, ".json", ".xml"),
 							_servletContext),
 						stringUtilReplaceValues),
-					ddmStructure.getStructureId(), ddmTemplateKey, null,
+					ddmStructure.getStructureId(),
+					jsonObject.getString("ddmTemplateKey"), null,
 					calendar.get(Calendar.MONTH),
 					calendar.get(Calendar.DAY_OF_MONTH),
 					calendar.get(Calendar.YEAR),
@@ -2127,7 +2122,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 							_replace(resourcePath, ".json", ".xml"),
 							_servletContext),
 						stringUtilReplaceValues),
-					ddmTemplateKey, null, calendar.get(Calendar.MONTH),
+					jsonObject.getString("ddmTemplateKey"), null,
+					calendar.get(Calendar.MONTH),
 					calendar.get(Calendar.DAY_OF_MONTH),
 					calendar.get(Calendar.YEAR),
 					calendar.get(Calendar.HOUR_OF_DAY),

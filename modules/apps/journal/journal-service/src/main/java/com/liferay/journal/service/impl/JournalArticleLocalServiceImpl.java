@@ -7821,7 +7821,7 @@ public class JournalArticleLocalServiceImpl
 	private String _getUniqueUrlTitle(
 		long groupId, String articleId, String urlTitle) {
 
-		String copy = _language.get(LocaleUtil.getMostRelevantLocale(), "copy");
+		String copy = _language.get(LocaleUtil.getSiteDefault(), "copy");
 		String prefix = urlTitle;
 		String title = urlTitle;
 

@@ -51,12 +51,12 @@ public abstract class BaseConfigurationFormNavigatorEntry
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		PortletPreferences portletSetup =
+		PortletPreferences portletPreferences =
 			themeDisplay.getStrictLayoutPortletSetup(
 				themeDisplay.getLayout(), portletDisplay.getPortletResource());
 
 		return GetterUtil.getString(
-			portletSetup.getValue("selectionStyle", null),
+			portletPreferences.getValue("selectionStyle", null),
 			AssetPublisherSelectionStyleConfigurationUtil.
 				defaultSelectionStyle());
 	}

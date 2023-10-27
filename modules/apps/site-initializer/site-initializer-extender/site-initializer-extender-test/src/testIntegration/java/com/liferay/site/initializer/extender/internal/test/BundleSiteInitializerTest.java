@@ -1482,7 +1482,8 @@ public class BundleSiteInitializerTest {
 				_group.getGroupId(), "test-journal-article-3");
 
 		Assert.assertNotNull(journalArticle3);
-		Assert.assertTrue(Validator.isNull(journalArticle3.getDDMTemplateKey()));
+		Assert.assertTrue(
+			Validator.isNull(journalArticle3.getDDMTemplateKey()));
 		Assert.assertEquals(
 			"Test Journal Article 3", journalArticle3.getTitle());
 
@@ -1502,8 +1503,8 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertEquals(
 			"TESTJOURNALFOLDER2", journalFolder2.getExternalReferenceCode());
-		Assert.assertEquals("Test Journal Folder 2 Update",
-			journalFolder2.getName());
+		Assert.assertEquals(
+			"Test Journal Folder 2 Update", journalFolder2.getName());
 
 		JournalFolder journalFolder3 = journalFolders.get(2);
 

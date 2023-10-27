@@ -166,17 +166,19 @@ public class PortletSettingsImporter {
 			}
 		}
 
-		PortletPreferences portletSetup = null;
+		PortletPreferences portletPreferences = null;
 
 		if (layout != null) {
-			portletSetup = PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-				layout, portletId);
+			portletPreferences =
+				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+					layout, portletId);
 		}
 		else {
-			portletSetup = PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-				serviceContext.getCompanyId(), groupId,
-				PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-				LayoutConstants.DEFAULT_PLID, portletId, StringPool.BLANK);
+			portletPreferences =
+				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+					serviceContext.getCompanyId(), groupId,
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+					LayoutConstants.DEFAULT_PLID, portletId, StringPool.BLANK);
 		}
 
 		Iterator<String> iterator = portletPreferencesJSONObject.keys();
@@ -281,10 +283,10 @@ public class PortletSettingsImporter {
 				value = portletPreferencesJSONObject.getString(key);
 			}
 
-			portletSetup.setValue(key, value);
+			portletPreferences.setValue(key, value);
 		}
 
-		portletSetup.store();
+		portletPreferences.store();
 	}
 
 	@Reference

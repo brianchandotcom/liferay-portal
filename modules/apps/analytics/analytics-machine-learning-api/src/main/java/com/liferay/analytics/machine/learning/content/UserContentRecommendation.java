@@ -5,13 +5,39 @@
 
 package com.liferay.analytics.machine.learning.content;
 
+import java.util.Date;
+
 /**
  * @author Riccardo Ferrari
  */
-public interface UserContentRecommendation extends Recommendation {
+public interface UserContentRecommendation {
+
+	public long[] getAssetCategoryIds();
+
+	public long getCompanyId();
+
+	public Date getCreateDate();
 
 	public long getEntryClassPK();
 
+	public String getJobId();
+
+	public long getRecommendedEntryClassPK();
+
+	public float getScore();
+
+	public void setAssetCategoryIds(long[] assetCategoryIds);
+
+	public void setCompanyId(long companyId);
+
+	public void setCreateDate(Date createDate);
+
 	public void setEntryClassPK(long entryClassPK);
+
+	public void setJobId(String jobId);
+
+	public void setRecommendedEntryClassPK(long recommendedEntryClassPK);
+
+	public void setScore(float score);
 
 }

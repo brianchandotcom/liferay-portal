@@ -64,8 +64,12 @@ const PartnershipLevel = ({
 			return aRRResults.targetArr;
 		}
 
-		return partnerLevelProperties[partnerLevel.partnerLevelType.key]
-			.goalARR;
+		if (partnerLevel.partnerLevelType.key === PartnershipLevels.GOLD) {
+			return partnerLevelProperties[partnerLevel.partnerLevelType.key]
+				.goalARR;
+		}
+
+		return aRRResults.aRRAmountTotal;
 	};
 
 	const getHeadcount = (partnerLevelKey: PartnershipLevels) => {

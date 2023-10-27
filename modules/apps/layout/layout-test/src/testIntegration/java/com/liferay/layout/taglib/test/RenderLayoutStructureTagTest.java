@@ -42,6 +42,9 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.InfoFormException;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -69,6 +72,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -84,6 +88,8 @@ import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -436,7 +442,7 @@ public class RenderLayoutStructureTagTest {
 
 	@Test
 	public void testRenderFormWithInfoFormException() throws Exception {
-		InfoField<TextInfoFieldType> infoField = _getInfoField();
+		InfoField<TextInfoFieldType> infoField = _getInfoField(false);
 
 		try (MockInfoServiceRegistrationHolder
 				mockInfoServiceRegistrationHolder =
@@ -491,7 +497,7 @@ public class RenderLayoutStructureTagTest {
 	public void testRenderFormWithInfoFormValidationException()
 		throws Exception {
 
-		InfoField<TextInfoFieldType> infoField = _getInfoField();
+		InfoField<TextInfoFieldType> infoField = _getInfoField(false);
 
 		try (MockInfoServiceRegistrationHolder
 				mockInfoServiceRegistrationHolder =
@@ -552,16 +558,18 @@ public class RenderLayoutStructureTagTest {
 		}
 	}
 
+	@FeatureFlags("LPS-183727")
 	@Test
 	public void testRenderFormWithoutErrors() throws Exception {
-		InfoField<TextInfoFieldType> infoField = _getInfoField();
+		InfoField<TextInfoFieldType> infoField = _getInfoField(false);
+		InfoField<TextInfoFieldType> readOnlyInfoField = _getInfoField(true);
 
 		try (MockInfoServiceRegistrationHolder
 				mockInfoServiceRegistrationHolder =
 					new MockInfoServiceRegistrationHolder(
 						InfoFieldSet.builder(
 						).infoFieldSetEntries(
-							ListUtil.fromArray(infoField)
+							ListUtil.fromArray(infoField, readOnlyInfoField)
 						).build(),
 						_editPageInfoItemCapability)) {
 
@@ -571,7 +579,8 @@ public class RenderLayoutStructureTagTest {
 				false,
 				String.valueOf(
 					_portal.getClassNameId(MockObject.class.getName())),
-				"0", layout, _layoutStructureProvider, infoField);
+				"0", layout, _layoutStructureProvider, infoField,
+				readOnlyInfoField);
 
 			MockHttpServletRequest mockHttpServletRequest =
 				_getMockHttpServletRequest(layout);
@@ -593,12 +602,27 @@ public class RenderLayoutStructureTagTest {
 			Assert.assertFalse(content.contains(errorHTML));
 
 			_assertInfoFieldInput(infoField, content);
+			_assertInfoFieldInput(readOnlyInfoField, content);
+
+			Matcher matcher = _inputJSONObjectPattern.matcher(content);
+
+			Assert.assertTrue(matcher.find());
+
+			Locale locale = _portal.getSiteDefaultLocale(_group);
+
+			_assertInfoFieldInputJSONObject(
+				infoField, matcher.group(1), locale);
+
+			Assert.assertTrue(matcher.find());
+
+			_assertInfoFieldInputJSONObject(
+				readOnlyInfoField, matcher.group(1), locale);
 		}
 	}
 
 	@Test
 	public void testRenderFormWithSuccessMessage() throws Exception {
-		InfoField<TextInfoFieldType> infoField = _getInfoField();
+		InfoField<TextInfoFieldType> infoField = _getInfoField(false);
 
 		try (MockInfoServiceRegistrationHolder
 				mockInfoServiceRegistrationHolder =
@@ -709,6 +733,20 @@ public class RenderLayoutStructureTagTest {
 		Assert.assertTrue(content.contains(expectedInfoFieldInput));
 	}
 
+	private void _assertInfoFieldInputJSONObject(
+			InfoField<TextInfoFieldType> infoField, String jsonString,
+			Locale locale)
+		throws JSONException {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(jsonString);
+
+		Assert.assertEquals(
+			infoField.getLabel(locale), jsonObject.getString("label"));
+		Assert.assertEquals(
+			infoField.isReadOnly(), jsonObject.getBoolean("readOnly"));
+		Assert.assertEquals("text", jsonObject.getString("type"));
+	}
+
 	private void _createLayoutStructure(
 			long assetListEntryId, Layout layout, long segmentsExperienceId)
 		throws Exception {
@@ -759,7 +797,7 @@ public class RenderLayoutStructureTagTest {
 		return layoutStructure;
 	}
 
-	private InfoField<TextInfoFieldType> _getInfoField() {
+	private InfoField<TextInfoFieldType> _getInfoField(boolean readOnly) {
 		return InfoField.builder(
 		).infoFieldType(
 			TextInfoFieldType.INSTANCE
@@ -771,6 +809,8 @@ public class RenderLayoutStructureTagTest {
 			InfoLocalizedValue.singleValue(RandomTestUtil.randomString())
 		).localizable(
 			true
+		).readOnly(
+			readOnly
 		).build();
 	}
 
@@ -824,6 +864,9 @@ public class RenderLayoutStructureTagTest {
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				layout.getPlid()));
 	}
+
+	private static final Pattern _inputJSONObjectPattern = Pattern.compile(
+		"<p>InputJSONObject:(.*?)<\\/p>");
 
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;

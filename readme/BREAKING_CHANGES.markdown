@@ -1436,15 +1436,15 @@ Liferay no longer supports these scripting language types.
 
 ### What changed?
 
-`ScriptingExecutorExtender` class and `ScriptBundleProvider` interface were removed.
+The `ScriptingExecutorExtender` class and the `ScriptBundleProvider` interface were removed.
 
 ### Who is affected?
 
-This affects anyone implementing this interface: `ScriptBundleProvider`, and having some script files in this path: `/META-INF/resources/scripts/` in the same module.
+This affects anyone implementing `ScriptBundleProvider` with script files in this path in the same module: `/META-INF/resources/scripts/`.
 
 ### How should I update my code?
 
-Delete implementations of `ScriptBundleProvider`, remove script files in `/META-INF/resources/scripts/` and rewrite the logic in the script files in an immediate component.
+Delete all implementations of `ScriptBundleProvider`, remove script files from `/META-INF/resources/scripts/`, and rewrite the logic in the script files using an immediate component.
 
 ### Why was this change made?
 
@@ -1458,7 +1458,7 @@ This change was made to address security vulnerabilities.
 
 ### What changed?
 
-`IndexStatusManagerInternalConfiguration` is being removed.
+`IndexStatusManagerInternalConfiguration` was removed.
 
 ### Who is affected?
 
@@ -1466,11 +1466,11 @@ This affects anyone using this configuration.
 
 ### How should I update my code?
 
-This removal of the configuration has no replacement.
+This configuration has no replacement, as it was meant for testing purposes only. Setting the index to read only should be accomplished using `IndexStatusManagerConfiguration`.
 
 ### Why was this change made?
 
-Liferay decided to not support this configuration.
+The configuration was no longer required for internal testing, and the functionality is still available in `IndexStatusManagerConfiguration`.
 
 ---------------------------------------
 
@@ -1480,60 +1480,60 @@ Liferay decided to not support this configuration.
 
 ### What changed?
 
-Custom `SoapDescriptorBuilder` is no longer supported.
+Implementing a custom `SoapDescriptorBuilder` is no longer supported.
 
 ### Who is affected?
 
-This affects anyone implementing interfaces `SoapDescriptorBuilder`.
+This affects anyone implementing the interface `SoapDescriptorBuilder`.
 
 ### How should I update my code?
 
-The removal of this extension point has no direct replacement.
+This removed extension point has no direct replacement.
 
 ### Why was this change made?
 
-`SOAP` is deprecated in 7.3, and Liferay decided to not support this extension point.
+`SOAP` was deprecated in 7.3, and Liferay decided to not support this extension point.
 
 ---------------------------------------
 
-## Removed AMImageConfiguration imageMaxSize property and AMImageConfigurationProvider
+## Removed `AMImageConfigurationProvider` and the `AMImageConfiguration` property `imageMaxSize`
 - **Date:** 2023-June-29
 - **JIRA Ticket:** [LPS-185768](https://issues.liferay.com/browse/LPS-185768)
 
 ### What changed?
 
-`AMImageConfiguration imageMaxSize` and its provider `AMImageConfigurationProvider` are removed.
+The `AMImageConfiguration` property `imageMaxSize` and its provider `AMImageConfigurationProvider` were removed.
 
 ### Who is affected?
 
-This affects anyone using this configuration right now.
+This affects anyone using this configuration.
 
 ### How should I update my code?
 
-Replace configuration usage with `DLFileEntryConfiguration` `previewableProcessorMaxSize`
+Replace the configuration with the `DLFileEntryConfiguration` property called `previewableProcessorMaxSize`.
 
 ### Why was this change made?
 
-`AMImageConfiguration` `imageMaxSize` property has been deprecated since 7.2.x in favor of using `DLFileEntryConfiguration` `previewableProcessorMaxSize`.
+The `AMImageConfiguration` property `imageMaxSize` has been deprecated since 7.2.x in favor of using `DLFileEntryConfiguration.previewableProcessorMaxSize()`.
 
 ---------------------------------------
 
-## Changed default value of virtual.hosts.valid.hosts from '*' to 'localhost,127.0.0.1,[::1],[0:0:0:0:0:0:0:1]'
+## Changed default value of `virtual.hosts.valid.hosts` portal property
 
 - **Date:** 2023-June-2
 - **JIRA Ticket:** [LPS-184385](https://issues.liferay.com/browse/LPS-184385)
 
 ### What changed?
 
-Default value of virtual.hosts.valid.hosts is no longer '*'
+The default value of the `virtual.hosts.valid.hosts` changed from `*` to `localhost,127.0.0.1,[::1],[0:0:0:0:0:0:0:1]` in `portal.properties`.
 
 ### Who is affected?
 
-Anyone setting virtual.hosts.valid.hosts besides localhost, 127.0.0.1, [::1], [0:0:0:0:0:0:0:1]
+Anyone setting `virtual.hosts.valid.hosts` besides `localhost`, `127.0.0.1`, `[::1]`, or `[0:0:0:0:0:0:0:1]`.
 
 ### How should I update my code?
 
-Upgrade the default value of virtual.hosts.valid.hosts in portal-impl/src/portal.properties to match the value being used in your current configuration
+Upgrade the default value of `virtual.hosts.valid.hosts` in `portal-impl/src/portal.properties` to match the value used in your current configuration.
 
 ### Why was this change made?
 
@@ -1541,21 +1541,21 @@ This change was made to address security vulnerabilities.
 
 ---------------------------------------
 
-## Removed extension points in SolrClientManager
+## Removed extension points in `SolrClientManager`
 - **Date:** 2023-July-4
 - **JIRA Ticket:** [LPS-180691](https://liferay.atlassian.net/browse/LPS-180691)
 
 ### What changed?
 
-These extension points in `SolrClientManager` for the `SolrClientFactory` with type `CLOUD` or `REPLICATED` and `HttpClientFactory` with type `BASIC` or `CERT` are being removed.
+Extension points in `SolrClientManager` were removed. For the `SolrClientFactory`, extension points for the types `CLOUD` and `REPLICATED` were removed. For `HttpClientFactory`, extension points for the types `BASIC` and `CERT` were removed.
 
 ### Who is affected?
 
-This affects anyone who is overriding the `SolrClientFactory` and `HttpClientFactory` with the types liferay provided.
+This affects anyone overriding the `SolrClientFactory` and `HttpClientFactory` with the types Liferay provided.
 
 ### How should I update my code?
 
-The removal of this extension point has no direct replacement.
+This removed extension point has no direct replacement.
 
 ### Why was this change made?
 
@@ -1563,12 +1563,14 @@ Liferay decided to not support these extension points.
 
 ---------------------------------------
 
-## Deprecate methods from the interface `com.liferay.portal.kernel.search.Document` under portal-kernel.
+## Deprecated methods from the portal-kernel interface `com.liferay.portal.kernel.search.Document`
 - **Date:** 2023-July-7
 - **JIRA Ticket:** [LPS-188914](https://liferay.atlassian.net/browse/LPS-188914)
 
 ### What changed?
-These API methods in `com.liferay.portal.kernel.search.Document` and their implementations in `com.liferay.portal.kernel.search.DocumentImpl` are deprecated
+
+These API methods in `com.liferay.portal.kernel.search.Document` and their implementations in `com.liferay.portal.kernel.search.DocumentImpl` are deprecated:
+
 - `addFile(String name, byte[] bytes, String fileExt)`
 - `addFile(String name, File file, String fileExt)`
 - `addFile(String name, InputStream inputStream, String fileExt)`
@@ -1580,20 +1582,33 @@ This affects anyone using these API methods.
 
 ### How should I update my code?
 
-- Method `addFile(String name, byte[] bytes, String fileExt)` can be replaced by calling these:
-  - First, get an InputStream from the `bytes`;
-  - Secondly, call `com.liferay.portal.kernel.util.TextExtractor.extractText(InputStream inputStream, int maxStringLength)` with the inputStream and -1 and store its return value;
-  - Finally, call `com.liferay.portal.kernel.search.Document.addText(String name, String value)` with `name` and the previous return value.
-- Method `addFile(String name, File file, String fileExt)` can be replaced by calling these:
-  - First, get an InputStream from the `file`;
-  - Secondly, call `com.liferay.portal.kernel.util.TextExtractor.extractText(InputStream inputStream, int maxStringLength)` with the inputStream and -1 and store its return value;
-  - Finally, call `com.liferay.portal.kernel.search.Document.addText(String name, String value)` with `name` and the previous return value.
-- Method `addFile(String name, InputStream inputStream, String fileExt)` can be replaced by calling these:
-  - First, call `com.liferay.portal.kernel.util.TextExtractor.extractText(InputStream inputStream, int maxStringLength)` with `inputStream` and -1 and store its return value;
-  - And then call `com.liferay.portal.kernel.search.Document.addText(String name, String value)` with `name` and the previous return value.
-- Method `addFile(String name, InputStream inputStream, String fileExt,int maxStringLength)` can be replaced by calling these:
-  - First, call `com.liferay.portal.kernel.util.TextExtractor.extractText(InputStream inputStream, int maxStringLength)` with `inputStream` and `maxStringLength` and store its return value;
-  - And then call `com.liferay.portal.kernel.search.Document.addText(String name, String value)` with `name` and the previous return value.
+Instead of using `addFile(String name, byte[] bytes, String fileExt)`,
+
+1. Get an `InputStream` from the `bytes`.
+
+1. Call `com.liferay.portal.kernel.util.TextExtractor.extractText(InputStream inputStream, int maxStringLength)` with the `inputStream` and `-1` and store its return value.
+
+1. Call `com.liferay.portal.kernel.search.Document.addText(String name, String value)` with `name` and the previous return value.
+
+Instead of using `addFile(String name, File file, String fileExt)`,
+
+1. Get an InputStream from the `file`.
+
+1. Call `com.liferay.portal.kernel.util.TextExtractor.extractText(InputStream inputStream, int maxStringLength)` with the `inputStream` and `-1` and store its return value.
+
+1. Call `com.liferay.portal.kernel.search.Document.addText(String name, String value)` with `name` and the previous return value.
+
+Instead of using `addFile(String name, InputStream inputStream, String fileExt)`,
+
+1. Call `com.liferay.portal.kernel.util.TextExtractor.extractText(InputStream inputStream, int maxStringLength)` with `inputStream` and `-1` and store its return value.
+
+1. Call `com.liferay.portal.kernel.search.Document.addText(String name, String value)` with `name` and the previous return value.
+
+Instead of using `addFile(String name, InputStream inputStream, String fileExt,int maxStringLength)`,
+
+1. Call `com.liferay.portal.kernel.util.TextExtractor.extractText(InputStream inputStream, int maxStringLength)` with `inputStream` and `maxStringLength` and store its return value.
+
+1. Call `com.liferay.portal.kernel.search.Document.addText(String name, String value)` with `name` and the previous return value.
 
 ### Why was this change made?
 
@@ -1601,12 +1616,12 @@ These methods are no longer called by Liferay internally.
 
 ---------------------------------------
 
-## Remove interface `com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker` under portal-kernel.
+## Remove interface `com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker` under portal-kernel
 - **Date:** 2023-August-11
 - **JIRA Ticket:** [LPS-182671](https://liferay.atlassian.net/browse/LPS-182671)
 
 ### What changed?
-Interface `com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker` and related support logic is removed.
+The interface `com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker` and related support logic was removed.
 
 ### Who is affected?
 
@@ -1618,27 +1633,25 @@ Implement `com.liferay.portal.kernel.security.permission.resource.ModelResourceP
 
 ### Why was this change made?
 
-Interface `com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker` was deprecated since 7.1 and no longer used by Liferay internally.
+The interface `com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker` was deprecated in 7.1 and is no longer used by Liferay internally.
 
 ---------------------------------------
 
-## Removed destination liferay/hot_deploy
+## Removed destination `liferay/hot_deploy`
 - **Date:** 2023-August-4
 - **JIRA Ticket:** [LPS-192680](https://liferay.atlassian.net/browse/LPS-192680)
 
 ### What changed?
 
-Message bus destination `liferay/hot_deploy` and test rule `DestinationAwaitClassTestRule` are removed.
+The Message bus destination `liferay/hot_deploy` and test rule `DestinationAwaitClassTestRule` are removed.
 
 ### Who is affected?
 
-- Anyone who is registering `com.liferay.portal.kernel.messaging.MessageListener` to the destination to listener to hot deploy events;
-- Anyone who is using custom instance of `DestinationAwaitClassTestRule`.
+Anyone who is listening to hot deploy events by registering a `com.liferay.portal.kernel.messaging.MessageListener`, and anyone who is using a custom instance of `DestinationAwaitClassTestRule`.
 
 ### How should I update my code?
 
-- Register `HotDeployListener` to listen to hot deploy events;
-- Manually implement the logic to sync with any destination
+Register a `HotDeployListener` to listen to hot deploy events. Manually implement the logic to sync with any destination.
 
 ### Why was this change made?
 
@@ -1646,57 +1659,57 @@ This destination is no longer used in Liferay.
 
 ---------------------------------------
 
-## Removed unschedule API from scheduler engine platform
+## Removed the `unschedule` API from the scheduler engine platform
 - **Date:** 2023-August-24
 - **JIRA Ticket:** [LPS-194314](https://liferay.atlassian.net/browse/LPS-194314)
 
 ### What changed?
 
-The method `unschedule` is removed from `com.liferay.portal.kernel.scheduler.SchedulerEngine`, `com.liferay.portal.kernel.scheduler.SchedulerEngineHelper` and `com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil`.
+The `unschedule` method was removed from the classes `com.liferay.portal.kernel.scheduler.SchedulerEngine`, `com.liferay.portal.kernel.scheduler.SchedulerEngineHelper` and `com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil`.
 
 ### Who is affected?
 
-- Anyone who is using the removed API method.
+Anyone who is using the removed `unschedule` API method.
 
 ### How should I update my code?
 
-- Use `delete` method from same class instead.
+Use the `delete` method from the same class.
 
 ### Why was this change made?
 
-`unschedule` method is not needed in Liferay because Liferay will always add a new job and trigger together rather than reuse an unscheduled job which means unscheduled jobs will not be needed any more and should be deleted.
+The `unschedule` method is not needed. Liferay always adds a new job and trigger together. Unscheduled jobs are no longer needed and should be deleted.
 
 ---------------------------------------
 
-## Removal of `com.liferay.document.library.kernel.util.DLProcessor` registration support from the `com.liferay.portal.deploy.hot.HookHotDeployListener`.
+## Removal of `com.liferay.document.library.kernel.util.DLProcessor` registration support from `com.liferay.portal.deploy.hot.HookHotDeployListener`
 - **Date:** 2023-August-17
 - **JIRA Ticket:** [LPS-193926](https://liferay.atlassian.net/browse/LPS-193926)
 
 ### What changed?
 
-The support for deploying a `com.liferay.document.library.kernel.util.DLProcessor` via hook has been removed from the `com.liferay.portal.deploy.hot.HookHotDeployListener`.
+Support for deploying a `com.liferay.document.library.kernel.util.DLProcessor` via hook was removed from `com.liferay.portal.deploy.hot.HookHotDeployListener`.
 
 ### Who is affected?
 
-This affects anyone providing its own `DLProcessor` implementation via hook.
+This affects anyone providing a `DLProcessor` implementation via hook.
 
 ### How should I update my code?
 
-If you are providing your own `DLProcessor` implementation via a hook, convert it to an OSGi service.
+If you are providing your own `DLProcessor` implementation via hook, convert it to an OSGi service.
 
 ### Why was this change made?
 
-There were some `DLProcessor` registration logic duplicated between the `DLProcessorRegistryImpl` and `HookHotDeployListener`.
+This change was made to remove duplicated `DLProcessor` registration logic between `DLProcessorRegistryImpl` and `HookHotDeployListener`.
 
 ---------------------------------------
 
-## Removed support for DestinationEventListener and MessageBusEventListener
+## Removed support for `DestinationEventListener` and `MessageBusEventListener`
 - **Date:** 2023-Sep-1
 - **JIRA Ticket:** [LPS-195116](https://liferay.atlassian.net/browse/LPS-195116)
 
 ### What changed?
 
-The interfaces `DestinationEventListener` and `MessageBusEventListener` and the support to register any listener to listen to `MessageListener` and `Destination` registration and unregistration are removed.
+The interfaces `DestinationEventListener` and `MessageBusEventListener` are removed, along with the support to register a listener for `MessageListener` and `Destination` registration and unregistration events.
 
 ### Who is affected?
 
@@ -1718,36 +1731,36 @@ These listeners are not used in Liferay. Liferay decided to not support these ex
 
 ### What changed?
 
-The following API methods related to `MessageListener` registration have been removed from interface `Destination`:
+The following API methods related to `MessageListener` registration have been removed from the `Destination` interface:
 - `copyMessageListeners`
 - `getMessageListenerCount`
 - `isRegistered`
 - `register`
 - `unregister`
 
-A new interface `MessageListenerRegistry` is added with an API to get message listeners associated with provided destination name.
+A new interface, `MessageListenerRegistry`, was added with an API to get message listeners associated with the provided destination name.
 
 ### Who is affected?
 
-This affects anyone registering/unregistering such listeners directly on `Destination` interface.
+This affects anyone registering/unregistering such listeners directly on the `Destination` interface.
 
 ### How should I update my code?
 
-Register `MessageListener` as OSGi service, with the property `destination.name` mapped to the corresponding destination name.
+Register a `MessageListener` as an OSGi service, with the property `destination.name` mapped to the corresponding destination name.
 
 ### Why was this change made?
 
-Liferay decided to not support these API methods to simplify the message bus infrastructure and usage.
+This change simplifies the message bus infrastructure and usage.
 
 ---------------------------------------
 
-## Portal property `discussion.subscribe` moved to instance settings
+## Moved portal property `discussion.subscribe` to instance settings
 - **Date:** 2023-September-4
 - **JIRA Ticket:** [LPS-194379](https://liferay.atlassian.net/browse/LPS-194379)
 
 ### What changed?
 
-The portal property `discussion.subscribe` can no longer be set from the `portal.properties` file.
+The portal property `discussion.subscribe` was moved to instance settings and removed from the `portal.properties` file.
 
 ### Who is affected?
 
@@ -1755,43 +1768,43 @@ This affects anyone using `discussion.subscribe` with a value different than the
 
 ### How should I update my code?
 
-There's no need to update the code. Further changes to the property must be made through instance settings.
+No code updates are required. Set the property in the instance settings UI.
 
 ### Why was this change made?
 
-Configuration options in portal properties are global. Product needs required it to be customizable at instance level.
+Portal properties are global and require a server restart, while instance settings can differ between instances and are made in the running portal. Moving to instance settings provides more flexibility in the system.
 
 ---------------------------------------
 
-## Removal of repository registration support from the `com.liferay.portal.deploy.hot.HookHotDeployListener`.
+## Removed repository registration support from `com.liferay.portal.deploy.hot.HookHotDeployListener`
 - **Date:** 2023-September-4
 - **JIRA Ticket:** [LPS-194350](https://liferay.atlassian.net/browse/LPS-194350)
 
 ### What changed?
 
-The support for deploying a external repository via hook has been removed from the `com.liferay.portal.deploy.hot.HookHotDeployListener`.
+The support for deploying an external repository via hook was removed from the `com.liferay.portal.deploy.hot.HookHotDeployListener` class.
 
 ### Who is affected?
 
-This affects anyone providing its own repository implementation via hook.
+This affects anyone providing a repository implementation via hook.
 
 ### How should I update my code?
 
-If you are providing your own repository implementation via a hook, convert it to an OSGi service.
+If you are providing your own repository implementation hook, convert it to an OSGi service.
 
 ### Why was this change made?
 
-External repositories deployed via hook don't support the same feature set as OSGi ones.
+External repositories deployed via hook don't support the same feature set as those implemented as OSGi serivces.
 
 ---------------------------------------
 
-## Portal property `discussion.comments.always.editable.by.owner` moved to instance settings
+## Moved portal property `discussion.comments.always.editable.by.owner` to instance settings
 - **Date:** 2023-September-13
 - **JIRA Ticket:** [LPS-195006](https://liferay.atlassian.net/browse/LPS-195006)
 
 ### What changed?
 
-The portal property `discussion.comments.always.editable.by.owner` can no longer be set from the `portal.properties` file.
+The portal property `discussion.comments.always.editable.by.owner` was moved to instance settings and removed from the `portal.properties` file.
 
 ### Who is affected?
 
@@ -1799,33 +1812,33 @@ This affects anyone using `discussion.comments.always.editable.by.owner` with a 
 
 ### How should I update my code?
 
-There's no need to update the code. Further changes to the property must be made through instance settings.
+No code updates are required. Set the property in the instance settings UI.
 
 ### Why was this change made?
 
-Configuration options in portal properties are global. Product needs required it to be customizable at instance level.
+Portal properties are global and require a server restart, while instance settings can differ between instances and are made in the running portal. Moving to instance settings provides more flexibility in the system.
 
 --------------------------------------
 
-## Portal property `sql.data.max.parameters` removed
+## Removed portal property `sql.data.max.parameters`
 - **Date:** 2023-October-2
 - **JIRA Ticket:** [LPS-189621](https://liferay.atlassian.net/browse/LPS-189621)
 
 ### What changed?
 
-The portal property `sql.data.max.parameters` has been removed.
+The property `sql.data.max.parameters` was removed from `portal.properties`.
 
 ### Who is affected?
 
-This affects anyone using `sql.data.max.parameters` property.
+This affects anyone using the `sql.data.max.parameters` property.
 
 ### How should I update my code?
 
-The property `database.max.parameters`, specific to each database, should be used instead.
+Use the database-specific property `database.max.parameters[databse]` instead.
 
 ### Why was this change made?
 
-Database total parameter limitation varies in each database. New property allows database specific configuration.
+The total parameters limit varies for each database. The new portal property allows for database-specific configuration.
 
 ---------------------------------------
 
@@ -1835,16 +1848,16 @@ Database total parameter limitation varies in each database. New property allows
 
 ### What changed?
 
-Interval `0` or empty cron expression are no longer accepted by the scheduler framework to create a disabled job. When these values are used, an error message will be displayed.
+Setting an interval of `0` or an empty cron expression are no longer accepted by the scheduler framework. When these values are used, an error message will be displayed.
 
 ### Who is affected?
 
-This affects anyone setting these values to disable scheduler jobs.
+This affects anyone using the interval `0` or empty cron expression.
 
 ### How should I update my code?
 
-Use Component Blacklist to disable certain scheduler components. The error messages contains the class names.
+Instead use the Component Blacklist to disable certain scheduler components. The required class names are shown in the error messages thrown when setting the interval to `0` or an empty cron expression.
 
 ### Why was this change made?
 
-Now Scheduler jobs are bootstrapped by `SchedulerJobConfiguration` objects registered as OSGi services. If a job should not be bootstrapped, the configuration object should not be registered at all. Thus, Liferay decided to no longer support this feature.
+Now Scheduler jobs are bootstrapped by `SchedulerJobConfiguration` objects registered as OSGi services. If a job should not be bootstrapped, the configuration object must not be registered at all.

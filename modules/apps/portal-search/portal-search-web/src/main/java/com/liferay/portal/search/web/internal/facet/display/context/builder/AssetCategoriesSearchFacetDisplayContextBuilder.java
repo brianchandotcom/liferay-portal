@@ -227,6 +227,111 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 		return false;
 	}
 
+	private List<Tuple> _collectBuckets(Facet facet) {
+		if (facet == null) {
+			return Collections.emptyList();
+		}
+
+		FacetCollector facetCollector = facet.getFacetCollector();
+
+		List<TermCollector> termCollectors = facetCollector.getTermCollectors();
+
+		List<Tuple> buckets = new ArrayList<>(termCollectors.size());
+
+		for (TermCollector termCollector : termCollectors) {
+			long assetCategoryId = 0;
+
+			String fieldName = facet.getFieldName();
+
+			if ((fieldName != null) &&
+				fieldName.equals("assetVocabularyCategoryIds")) {
+
+				String[] parts = StringUtil.split(
+					termCollector.getTerm(), StringPool.DASH);
+
+				assetCategoryId = GetterUtil.getLong(parts[1]);
+			}
+			else {
+				assetCategoryId = GetterUtil.getLong(termCollector.getTerm());
+			}
+
+			if (assetCategoryId > 0) {
+				AssetCategory assetCategory = _fetchAssetCategory(
+					assetCategoryId);
+
+				if (assetCategory != null) {
+					buckets.add(
+						new Tuple(assetCategory, termCollector.getFrequency()));
+				}
+			}
+		}
+
+		return buckets;
+	}
+
+	private AssetCategoriesSearchFacetDisplayContext
+		_createAssetCategoriesSearchFacetDisplayContext() {
+
+		try {
+			return new AssetCategoriesSearchFacetDisplayContext(
+				_portal.getHttpServletRequest(_renderRequest));
+		}
+		catch (ConfigurationException configurationException) {
+			throw new RuntimeException(configurationException);
+		}
+	}
+
+	private AssetCategory _fetchAssetCategory(long assetCategoryId) {
+		AssetCategory assetCategory =
+			_assetCategoryLocalService.fetchAssetCategory(assetCategoryId);
+
+		if ((assetCategory != null) &&
+			_assetCategoryPermissionChecker.hasPermission(assetCategory)) {
+
+			return assetCategory;
+		}
+
+		return null;
+	}
+
+	private BucketDisplayContext _getEmptyBucketDisplayContext(
+		long assetCategoryId) {
+
+		AssetCategory assetCategory = _fetchAssetCategory(assetCategoryId);
+
+		if (assetCategory == null) {
+			return null;
+		}
+
+		return buildBucketDisplayContext(assetCategory, 0, true, 1);
+	}
+
+	private boolean _isCloud() {
+		if (_frequenciesVisible && _displayStyle.equals("cloud")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private void _removeExcludedGroup() {
+		_buckets = ListUtil.filter(
+			_buckets,
+			tuple -> {
+				if (_excludedGroupId == 0) {
+					return true;
+				}
+
+				AssetCategory assetCategory = (AssetCategory)tuple.getObject(0);
+
+				if (assetCategory.getGroupId() == _excludedGroupId) {
+					return false;
+				}
+
+				return true;
+			});
+	}
+
 	private void _setBucketDisplayContexts(
 		AssetCategoriesSearchFacetDisplayContext
 			assetCategoriesSearchFacetDisplayContext) {
@@ -348,111 +453,6 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 			bucketDisplayContextsMap);
 		assetCategoriesSearchFacetDisplayContext.setVocabularyNames(
 			_sortVocabularyNames(vocabularyNames));
-	}
-
-	private List<Tuple> _collectBuckets(Facet facet) {
-		if (facet == null) {
-			return Collections.emptyList();
-		}
-
-		FacetCollector facetCollector = facet.getFacetCollector();
-
-		List<TermCollector> termCollectors = facetCollector.getTermCollectors();
-
-		List<Tuple> buckets = new ArrayList<>(termCollectors.size());
-
-		for (TermCollector termCollector : termCollectors) {
-			long assetCategoryId = 0;
-
-			String fieldName = facet.getFieldName();
-
-			if ((fieldName != null) &&
-				fieldName.equals("assetVocabularyCategoryIds")) {
-
-				String[] parts = StringUtil.split(
-					termCollector.getTerm(), StringPool.DASH);
-
-				assetCategoryId = GetterUtil.getLong(parts[1]);
-			}
-			else {
-				assetCategoryId = GetterUtil.getLong(termCollector.getTerm());
-			}
-
-			if (assetCategoryId > 0) {
-				AssetCategory assetCategory = _fetchAssetCategory(
-					assetCategoryId);
-
-				if (assetCategory != null) {
-					buckets.add(
-						new Tuple(assetCategory, termCollector.getFrequency()));
-				}
-			}
-		}
-
-		return buckets;
-	}
-
-	private AssetCategoriesSearchFacetDisplayContext
-		_createAssetCategoriesSearchFacetDisplayContext() {
-
-		try {
-			return new AssetCategoriesSearchFacetDisplayContext(
-				_portal.getHttpServletRequest(_renderRequest));
-		}
-		catch (ConfigurationException configurationException) {
-			throw new RuntimeException(configurationException);
-		}
-	}
-
-	private AssetCategory _fetchAssetCategory(long assetCategoryId) {
-		AssetCategory assetCategory =
-			_assetCategoryLocalService.fetchAssetCategory(assetCategoryId);
-
-		if ((assetCategory != null) &&
-			_assetCategoryPermissionChecker.hasPermission(assetCategory)) {
-
-			return assetCategory;
-		}
-
-		return null;
-	}
-
-	private BucketDisplayContext _getEmptyBucketDisplayContext(
-		long assetCategoryId) {
-
-		AssetCategory assetCategory = _fetchAssetCategory(assetCategoryId);
-
-		if (assetCategory == null) {
-			return null;
-		}
-
-		return buildBucketDisplayContext(assetCategory, 0, true, 1);
-	}
-
-	private boolean _isCloud() {
-		if (_frequenciesVisible && _displayStyle.equals("cloud")) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private void _removeExcludedGroup() {
-		_buckets = ListUtil.filter(
-			_buckets,
-			tuple -> {
-				if (_excludedGroupId == 0) {
-					return true;
-				}
-
-				AssetCategory assetCategory = (AssetCategory)tuple.getObject(0);
-
-				if (assetCategory.getGroupId() == _excludedGroupId) {
-					return false;
-				}
-
-				return true;
-			});
 	}
 
 	private List<String> _sortVocabularyNames(Set<String> vocabularyNamesSet) {

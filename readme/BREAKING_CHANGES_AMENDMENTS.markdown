@@ -65,3 +65,28 @@ We are merging portal-kernel into portal-impl.
 Make sure to have portal-impl in build dependency and change import statement to use the same classes in portal-impl.
 ----
 ```
+
+----
+
+# ab4a450c1d7ffe215a8d56379c787fb34c1ea41b
+
+Incorrect format on multiple file breaking change
+
+Correct message should be:
+```
+LPS-198859 Remove ThreadLocalDistributor, no usage
+    
+# breaking_change_report
+## What portal-kernel/src/com/liferay/portal/kernel/util/ThreadLocalDistributor.java
+ThreadLocalDistributor is being removed.
+## Why
+ThreadLocalDistributor has no current usage.
+----
+
+# breaking_change_report
+## What portal-kernel/src/com/liferay/portal/kernel/util/ThreadLocalDistributorRegistry.java
+ThreadLocalDistributorRegistry is being removed.
+## Why
+ThreadLocalDistributor has no current usage.
+----
+```

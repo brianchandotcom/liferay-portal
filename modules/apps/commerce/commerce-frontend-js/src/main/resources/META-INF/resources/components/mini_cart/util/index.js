@@ -209,6 +209,17 @@ export function hasErrors(cartItems) {
 	return cartItems.some(({errorMessages}) => Boolean(errorMessages?.length));
 }
 
+export function hasOptions(jsonString) {
+	let options = [];
+
+	try {
+		options = JSON.parse(jsonString) || [];
+	}
+	catch (ignore) {}
+
+	return options.length;
+}
+
 export function hasPriceOnApplication(cartItems) {
 	return cartItems.some(({price}) => price.priceOnApplication);
 }

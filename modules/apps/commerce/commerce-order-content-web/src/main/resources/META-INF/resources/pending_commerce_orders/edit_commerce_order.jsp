@@ -464,6 +464,7 @@ if (backURL != null) {
 			itemsPerPage="<%= 10 %>"
 			nestedItemsKey="orderItemId"
 			nestedItemsReferenceKey="orderItems"
+			propsTransformer="js/PendingOrderItemActionDropdownPropsTransformer"
 			style="stacked"
 		/>
 	</div>

@@ -16,6 +16,7 @@ import {CHANNEL_RESOURCE_ENDPOINT, FIELD_TYPE} from '../../utilities/constants';
 import {
 	CP_INSTANCE_CHANGED,
 	CURRENT_ORDER_UPDATED,
+	FDS_UPDATE_DISPLAY,
 } from '../../utilities/eventsDefinitions';
 import {formatCartItem} from '../add_to_cart/data';
 import {adaptLegacyPriceModel, isNonnull} from '../price/util/index';
@@ -56,6 +57,7 @@ function EditItem() {
 			channel: {channel},
 		},
 		cartState,
+		closeCart,
 		editedItem,
 		setEditedItem,
 	} = useContext(MiniCartContext);
@@ -77,6 +79,16 @@ function EditItem() {
 			skuId: selectedItem.skuId,
 		});
 	}, [selectedItem]);
+
+	const handleBack = () => {
+		const dataSetId = editedItem.dataSetId;
+
+		setEditedItem(null);
+
+		if (dataSetId) {
+			closeCart();
+		}
+	};
 
 	const handleSave = () => {
 		if (disabled) {
@@ -110,6 +122,8 @@ function EditItem() {
 			.then((updatedCart) => {
 				Liferay.fire(CURRENT_ORDER_UPDATED, {order: updatedCart});
 
+				const dataSetId = editedItem.dataSetId;
+
 				setEditedItem(null);
 				setSkuOptionsAtomState({
 					...skuOptionsAtomState,
@@ -117,6 +131,14 @@ function EditItem() {
 					miniCartSkuOptions: [],
 					updating: false,
 				});
+
+				if (dataSetId) {
+					Liferay.fire(FDS_UPDATE_DISPLAY, {
+						id: dataSetId,
+					});
+
+					closeCart();
+				}
 			})
 			.catch((error) => {
 				console.error(error);
@@ -168,7 +190,7 @@ function EditItem() {
 					<ClayButtonWithIcon
 						aria-label={backLabel}
 						displayType="unstyled"
-						onClick={() => setEditedItem(null)}
+						onClick={handleBack}
 						symbol="angle-left"
 						title={backLabel}
 					/>
@@ -246,7 +268,7 @@ function EditItem() {
 						<ClayButton
 							className="mr-3"
 							displayType="secondary"
-							onClick={() => setEditedItem(null)}
+							onClick={handleBack}
 						>
 							{Liferay.Language.get('cancel')}
 						</ClayButton>

@@ -9,6 +9,7 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.content.web.internal.constants.CommerceOrderFDSNames;
 import com.liferay.commerce.order.content.web.internal.model.OrderItem;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.service.CommerceOrderService;
@@ -17,11 +18,13 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
@@ -55,15 +58,14 @@ public class PendingCommerceOrderItemFDSActionProvider
 
 		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
 			orderItem.getOrderId());
+		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
+			orderItem.getCPInstanceId());
 
 		return DropdownItemListBuilder.add(
 			() -> _modelResourcePermission.contains(
 				PermissionThreadLocal.getPermissionChecker(), commerceOrder,
 				ActionKeys.VIEW),
 			dropdownItem -> {
-				CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
-					orderItem.getCPInstanceId());
-
 				if (cpInstance == null) {
 					dropdownItem.setHref(StringPool.BLANK);
 				}
@@ -79,6 +81,35 @@ public class PendingCommerceOrderItemFDSActionProvider
 
 				dropdownItem.setLabel(
 					_language.get(httpServletRequest, "view"));
+			}
+		).add(
+			() -> {
+				if ((cpInstance == null) ||
+					!FeatureFlagManagerUtil.isEnabled("COMMERCE-9599")) {
+
+					return false;
+				}
+
+				int cpDefinitionOptionRelsCount =
+					_cpDefinitionOptionRelLocalService.
+						getCPDefinitionOptionRelsCount(
+							cpInstance.getCPDefinitionId());
+
+				return _modelResourcePermission.contains(
+					PermissionThreadLocal.getPermissionChecker(), commerceOrder,
+					ActionKeys.UPDATE) &&
+					   (cpDefinitionOptionRelsCount > 0);
+			},
+			dropdownItem -> {
+				dropdownItem.setData(
+					HashMapBuilder.<String, Object>put(
+						"action", "edit"
+					).put(
+						"dataSetId", CommerceOrderFDSNames.PENDING_ORDER_ITEMS
+					).build());
+				dropdownItem.setHref(StringPool.BLANK);
+				dropdownItem.setLabel(
+					_language.get(httpServletRequest, "edit"));
 			}
 		).add(
 			() ->
@@ -107,6 +138,10 @@ public class PendingCommerceOrderItemFDSActionProvider
 
 	@Reference
 	private CPDefinitionHelper _cpDefinitionHelper;
+
+	@Reference
+	private CPDefinitionOptionRelLocalService
+		_cpDefinitionOptionRelLocalService;
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;

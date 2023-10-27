@@ -1346,9 +1346,11 @@ definition {
 
 	@summary = "Default summary"
 	macro copy(dmDocumentTitle = null, depotName = null, targetFolderName = null, siteName = null, copyExceedsSizeLimit = null, limitingHierarchy = null,) {
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Copy To",
-			rowEntry = ${dmDocumentTitle});
+		if (!(isSet(bulkCopy))) {
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Copy To",
+				rowEntry = ${dmDocumentTitle});
+		}
 
 		if (isSet(immediateFailure)) {
 			Alert.viewErrorMessage(errorMessage = " Item cannot be copied because it exceeds the limit defined in ${limitingHierarchy} settings. The total size of all items to copy must not exceed ${copyExceedsSizeLimit}.");

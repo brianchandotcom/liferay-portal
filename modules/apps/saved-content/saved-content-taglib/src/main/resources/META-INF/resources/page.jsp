@@ -6,19 +6,21 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
 <%
-	boolean enabled = GetterUtil.getBoolean(request.getAttribute("liferay-saved-content:saved-content:enabled"));
-	String contentTitle = GetterUtil.getString((String)request.getAttribute("liferay-saved-content:saved-content:contentTitle"));
+Boolean saved = GetterUtil.getBoolean(request.getAttribute("liferay-saved-content:saved-content:saved"));
 %>
+
 <div>
 	<clay:button
+		aria-label="<%= GetterUtil.getString((String)request.getAttribute("liferay-saved-content:saved-content:ariaLabel")) %>"
 		disabled="<%= true %>"
 		displayType="secondary"
 		monospaced="<%= true %>"
 		small="<%= true %>"
 	>
 		<clay:icon
-			symbol="bookmarks"
+			symbol='<%= saved ? "bookmarks-full" : "bookmarks" %>'
 		/>
 	</clay:button>
 

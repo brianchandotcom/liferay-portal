@@ -339,10 +339,11 @@ public class PortalImplAlternateURLTest {
 
 	private String _generateAssetDisplayPageEntryURL(
 		Locale defaultLocale, String friendlyURL, String groupFriendlyURL,
-		Locale locale, String portalURL, PortletPreferences preferences) {
+		Locale locale, String portalURL,
+		PortletPreferences portletPreferences) {
 
 		return StringBundler.concat(
-			portalURL, _getI18nPath(defaultLocale, locale, preferences),
+			portalURL, _getI18nPath(defaultLocale, locale, portletPreferences),
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
 			groupFriendlyURL,
 			FriendlyURLResolverConstants.URL_SEPARATOR_JOURNAL_ARTICLE,
@@ -361,10 +362,11 @@ public class PortalImplAlternateURLTest {
 
 	private String _generateLayoutURL(
 		Locale defaultLocale, String friendlyURL, String groupFriendlyURL,
-		Locale locale, String portalURL, PortletPreferences preferences) {
+		Locale locale, String portalURL,
+		PortletPreferences portletPreferences) {
 
 		return StringBundler.concat(
-			portalURL, _getI18nPath(defaultLocale, locale, preferences),
+			portalURL, _getI18nPath(defaultLocale, locale, portletPreferences),
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
 			groupFriendlyURL, friendlyURL);
 	}
@@ -408,12 +410,13 @@ public class PortalImplAlternateURLTest {
 	}
 
 	private String _getI18nPath(
-		Locale defaultLocale, Locale locale, PortletPreferences preferences) {
+		Locale defaultLocale, Locale locale,
+		PortletPreferences portletPreferences) {
 
 		String i18nPath = StringPool.BLANK;
 
 		int localePrependFriendlyURLStyle = PrefsPropsUtil.getInteger(
-			preferences, PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
+			portletPreferences, PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
 
 		if ((localePrependFriendlyURLStyle == 2) ||
 			((localePrependFriendlyURLStyle != 0) &&
@@ -593,21 +596,21 @@ public class PortalImplAlternateURLTest {
 			long resourcePrimKey, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		PortletPreferences preferences = PrefsPropsUtil.getPreferences(
+		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
 			themeDisplay.getCompanyId());
 
 		try {
-			preferences.setValue(
+			portletPreferences.setValue(
 				PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE,
 				String.valueOf(prependFriendlyURLStyle));
 
-			preferences.store();
+			portletPreferences.store();
 
 			for (Locale alternateLocale : availableLocales) {
 				String expectedAlternateURL = _generateAssetDisplayPageEntryURL(
 					defaultLocale, friendlyURLMap.get(alternateLocale),
 					_group.getFriendlyURL(), alternateLocale,
-					themeDisplay.getPortalURL(), preferences);
+					themeDisplay.getPortalURL(), portletPreferences);
 
 				String canonicalURL =
 					_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
@@ -624,7 +627,8 @@ public class PortalImplAlternateURLTest {
 			}
 		}
 		finally {
-			preferences.reset(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
+			portletPreferences.reset(
+				PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
 		}
 	}
 
@@ -704,26 +708,26 @@ public class PortalImplAlternateURLTest {
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		PortletPreferences preferences = PrefsPropsUtil.getPreferences(
+		PortletPreferences portletPreferences = PrefsPropsUtil.getPreferences(
 			themeDisplay.getCompanyId());
 
 		try {
-			preferences.setValue(
+			portletPreferences.setValue(
 				PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE,
 				String.valueOf(prependFriendlyURLStyle));
 
-			preferences.store();
+			portletPreferences.store();
 
 			String canonicalURL = _generateLayoutURL(
 				defaultLocale, friendlyURLMap.get(defaultLocale),
 				_group.getFriendlyURL(), defaultLocale,
-				themeDisplay.getPortalURL(), preferences);
+				themeDisplay.getPortalURL(), portletPreferences);
 
 			for (Locale alternateLocale : availableLocales) {
 				String expectedAlternateURL = _generateLayoutURL(
 					defaultLocale, friendlyURLMap.get(alternateLocale),
 					_group.getFriendlyURL(), alternateLocale,
-					themeDisplay.getPortalURL(), preferences);
+					themeDisplay.getPortalURL(), portletPreferences);
 
 				Assert.assertEquals(
 					expectedAlternateURL,
@@ -733,7 +737,8 @@ public class PortalImplAlternateURLTest {
 			}
 		}
 		finally {
-			preferences.reset(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
+			portletPreferences.reset(
+				PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
 		}
 	}
 

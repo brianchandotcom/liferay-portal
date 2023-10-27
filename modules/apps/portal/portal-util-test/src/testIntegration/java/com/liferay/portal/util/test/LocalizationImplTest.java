@@ -192,13 +192,13 @@ public class LocalizationImplTest {
 
 	@Test
 	public void testGetLocalizationXmlFromPreferences() throws Exception {
-		PortletPreferences preferences = new PortletPreferencesImpl();
+		PortletPreferences portletPreferences = new PortletPreferencesImpl();
 
 		LocalizationUtil.setPreferencesValue(
-			preferences, "test", _ENGLISH_LANGUAGE_ID, "changedValue");
+			portletPreferences, "test", _ENGLISH_LANGUAGE_ID, "changedValue");
 
 		String xml = LocalizationUtil.getLocalizationXmlFromPreferences(
-			preferences, new MockPortletRequest(), "test", "testValue");
+			portletPreferences, new MockPortletRequest(), "test", "testValue");
 
 		Assert.assertTrue(
 			"Portlet preferences were not properly applied to XML: " + xml,
@@ -228,25 +228,25 @@ public class LocalizationImplTest {
 			LocaleUtil.US.getLanguage(), LocaleUtil.US.getCountry(),
 			LocaleUtil.US.getVariant());
 
-		PortletPreferences preferences = new PortletPreferencesImpl();
+		PortletPreferences portletPreferences = new PortletPreferencesImpl();
 
 		LocalizationUtil.setPreferencesValue(
-			preferences, key, _ENGLISH_LANGUAGE_ID, "A");
+			portletPreferences, key, _ENGLISH_LANGUAGE_ID, "A");
 		LocalizationUtil.setPreferencesValue(
-			preferences, key, _GERMAN_LANGUAGE_ID, "B");
+			portletPreferences, key, _GERMAN_LANGUAGE_ID, "B");
 
 		Assert.assertEquals(
 			"A",
 			LocalizationUtil.getPreferencesValue(
-				preferences, key, _ENGLISH_LANGUAGE_ID));
+				portletPreferences, key, _ENGLISH_LANGUAGE_ID));
 		Assert.assertEquals(
 			"B",
 			LocalizationUtil.getPreferencesValue(
-				preferences, key, _GERMAN_LANGUAGE_ID));
+				portletPreferences, key, _GERMAN_LANGUAGE_ID));
 		Assert.assertEquals(
 			"A",
 			LocalizationUtil.getPreferencesValue(
-				preferences, key, _SPANISH_LANGUAGE_ID));
+				portletPreferences, key, _SPANISH_LANGUAGE_ID));
 
 		LocaleUtil.setDefault(
 			LocaleUtil.GERMANY.getLanguage(), LocaleUtil.GERMANY.getCountry(),
@@ -255,15 +255,15 @@ public class LocalizationImplTest {
 		Assert.assertEquals(
 			"A",
 			LocalizationUtil.getPreferencesValue(
-				preferences, key, _ENGLISH_LANGUAGE_ID));
+				portletPreferences, key, _ENGLISH_LANGUAGE_ID));
 		Assert.assertEquals(
 			"B",
 			LocalizationUtil.getPreferencesValue(
-				preferences, key, _GERMAN_LANGUAGE_ID));
+				portletPreferences, key, _GERMAN_LANGUAGE_ID));
 		Assert.assertEquals(
 			"B",
 			LocalizationUtil.getPreferencesValue(
-				preferences, key, _SPANISH_LANGUAGE_ID));
+				portletPreferences, key, _SPANISH_LANGUAGE_ID));
 	}
 
 	@Test
@@ -326,21 +326,22 @@ public class LocalizationImplTest {
 
 	@Test
 	public void testPreferencesLocalization() throws Exception {
-		PortletPreferences preferences = new PortletPreferencesImpl();
+		PortletPreferences portletPreferences = new PortletPreferencesImpl();
 
 		LocalizationUtil.setPreferencesValue(
-			preferences, "greeting", _ENGLISH_LANGUAGE_ID, _ENGLISH_HELLO);
+			portletPreferences, "greeting", _ENGLISH_LANGUAGE_ID,
+			_ENGLISH_HELLO);
 		LocalizationUtil.setPreferencesValue(
-			preferences, "greeting", _GERMAN_LANGUAGE_ID, _GERMAN_HELLO);
+			portletPreferences, "greeting", _GERMAN_LANGUAGE_ID, _GERMAN_HELLO);
 
 		Assert.assertEquals(
 			_ENGLISH_HELLO,
 			LocalizationUtil.getPreferencesValue(
-				preferences, "greeting", _ENGLISH_LANGUAGE_ID));
+				portletPreferences, "greeting", _ENGLISH_LANGUAGE_ID));
 		Assert.assertEquals(
 			_GERMAN_HELLO,
 			LocalizationUtil.getPreferencesValue(
-				preferences, "greeting", _GERMAN_LANGUAGE_ID));
+				portletPreferences, "greeting", _GERMAN_LANGUAGE_ID));
 	}
 
 	@Test
@@ -351,19 +352,19 @@ public class LocalizationImplTest {
 			"greeting_" + _ENGLISH_LANGUAGE_ID, _ENGLISH_HELLO);
 		request.setParameter("greeting_" + _GERMAN_LANGUAGE_ID, _GERMAN_HELLO);
 
-		PortletPreferences preferences = new PortletPreferencesImpl();
+		PortletPreferences portletPreferences = new PortletPreferencesImpl();
 
 		LocalizationUtil.setLocalizedPreferencesValues(
-			request, preferences, "greeting");
+			request, portletPreferences, "greeting");
 
 		Assert.assertEquals(
 			_ENGLISH_HELLO,
 			LocalizationUtil.getPreferencesValue(
-				preferences, "greeting", _ENGLISH_LANGUAGE_ID));
+				portletPreferences, "greeting", _ENGLISH_LANGUAGE_ID));
 		Assert.assertEquals(
 			_GERMAN_HELLO,
 			LocalizationUtil.getPreferencesValue(
-				preferences, "greeting", _GERMAN_LANGUAGE_ID));
+				portletPreferences, "greeting", _GERMAN_LANGUAGE_ID));
 	}
 
 	@Test

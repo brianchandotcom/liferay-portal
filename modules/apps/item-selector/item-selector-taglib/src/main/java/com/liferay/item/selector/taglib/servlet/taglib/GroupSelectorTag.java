@@ -57,6 +57,8 @@ public class GroupSelectorTag extends IncludeTag {
 
 		_groups = null;
 		_groupsCount = -1;
+		_groupType = null;
+		_keywords = null;
 		_scopeGroupType = null;
 	}
 
@@ -120,11 +122,9 @@ public class GroupSelectorTag extends IncludeTag {
 			return _groups;
 		}
 
-		String keywords = ParamUtil.getString(httpServletRequest, "keywords");
-
 		List<Group> groups = groupItemSelectorProvider.getGroups(
-			group.getCompanyId(), group.getGroupId(), keywords, startAndEnd[0],
-			startAndEnd[1]);
+			group.getCompanyId(), group.getGroupId(),
+			_getKeywords(httpServletRequest), startAndEnd[0], startAndEnd[1]);
 
 		if (groups == null) {
 			_groups = Collections.emptyList();
@@ -160,16 +160,31 @@ public class GroupSelectorTag extends IncludeTag {
 
 		Group group = _getGroup(themeDisplay);
 
-		String keywords = ParamUtil.getString(httpServletRequest, "keywords");
-
 		_groupsCount = groupSelectorProvider.getGroupsCount(
-			group.getCompanyId(), group.getGroupId(), keywords);
+			group.getCompanyId(), group.getGroupId(),
+			_getKeywords(httpServletRequest));
 
 		return _groupsCount;
 	}
 
 	private String _getGroupType(HttpServletRequest httpServletRequest) {
-		return ParamUtil.getString(httpServletRequest, "groupType");
+		if (_groupType != null) {
+			return _groupType;
+		}
+
+		_groupType = ParamUtil.getString(httpServletRequest, "groupType");
+
+		return _groupType;
+	}
+
+	private String _getKeywords(HttpServletRequest httpServletRequest) {
+		if (_keywords != null) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(httpServletRequest, "keywords");
+
+		return _keywords;
 	}
 
 	private boolean _isScopeGroupType(HttpServletRequest httpServletRequest) {
@@ -185,6 +200,8 @@ public class GroupSelectorTag extends IncludeTag {
 
 	private List<Group> _groups;
 	private int _groupsCount = -1;
+	private String _groupType;
+	private String _keywords;
 	private Boolean _scopeGroupType;
 
 }

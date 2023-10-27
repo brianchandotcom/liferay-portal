@@ -56,6 +56,6 @@ export const CONTRIBUTOR_TYPES_DEFAULT_ATTRIBUTES = {
 	},
 	[CONTRIBUTOR_TYPES.ASAH_RECENT_ASSETS]: {
 		characterThreshold: '0',
-		contentType: [],
+		contentType: '',
 	},
 };

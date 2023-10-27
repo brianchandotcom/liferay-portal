@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.payment.web.internal.frontend.taglib.servlet.taglib;
 
+import com.liferay.commerce.payment.integration.CommercePaymentIntegrationRegistry;
 import com.liferay.commerce.payment.method.CommercePaymentMethodRegistry;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService;
 import com.liferay.commerce.payment.web.internal.display.context.CommercePaymentMethodGroupRelsDisplayContext;
@@ -51,7 +52,8 @@ public class CommerceChannelPaymentRestrictionsScreenNavigationEntry
 				new CommercePaymentMethodGroupRelsDisplayContext(
 					_commerceChannelLocalService,
 					_commercePaymentMethodGroupRelService,
-					_commercePaymentMethodRegistry, _countryService,
+					_commercePaymentMethodRegistry,
+					_commercePaymentIntegrationRegistry, _countryService,
 					httpServletRequest);
 
 		httpServletRequest.setAttribute(
@@ -65,6 +67,10 @@ public class CommerceChannelPaymentRestrictionsScreenNavigationEntry
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
+
+	@Reference
+	private CommercePaymentIntegrationRegistry
+		_commercePaymentIntegrationRegistry;
 
 	@Reference
 	private CommercePaymentMethodGroupRelService

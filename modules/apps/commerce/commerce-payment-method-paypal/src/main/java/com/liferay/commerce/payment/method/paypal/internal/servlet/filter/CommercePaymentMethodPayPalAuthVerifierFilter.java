@@ -17,9 +17,9 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"filter.init.auth.verifier.PortalSessionAuthVerifier.urls.includes=/" + PayPalCommercePaymentMethodConstants.SERVLET_PATH + "/*",
+		"filter.init.auth.verifier.PortalSessionAuthVerifier.urls.includes=/" + PayPalCommercePaymentMethodConstants.PAYMENT_METHOD_SERVLET_PATH + "/*",
 		"osgi.http.whiteboard.filter.name=com.liferay.commerce.payment.method.paypal.internal.servlet.filter.CommercePaymentMethodPayPalAuthVerifierFilter",
-		"osgi.http.whiteboard.servlet.pattern=/" + PayPalCommercePaymentMethodConstants.SERVLET_PATH + "/*"
+		"osgi.http.whiteboard.servlet.pattern=/" + PayPalCommercePaymentMethodConstants.PAYMENT_METHOD_SERVLET_PATH + "/*"
 	},
 	service = Filter.class
 )

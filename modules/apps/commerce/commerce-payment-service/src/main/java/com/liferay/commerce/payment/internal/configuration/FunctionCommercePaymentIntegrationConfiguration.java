@@ -22,26 +22,29 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface FunctionCommercePaymentIntegrationConfiguration {
 
-	@Meta.AD(type = Meta.Type.String)
+	@Meta.AD(required = false, type = Meta.Type.String)
 	public String authorizePath();
 
-	@Meta.AD(type = Meta.Type.String)
+	@Meta.AD(required = false, type = Meta.Type.String)
 	public String cancelPath();
 
-	@Meta.AD(type = Meta.Type.String)
+	@Meta.AD(required = false, type = Meta.Type.String)
 	public String capturePath();
 
-	@Meta.AD(name = "key")
+	@Meta.AD(name = "key", required = false)
 	public String key();
 
-	@Meta.AD(type = Meta.Type.String)
+	@Meta.AD(name = "name", required = false)
+	public String paymentIntegrationName();
+
+	@Meta.AD(required = false, type = Meta.Type.String)
 	public String oAuth2ApplicationExternalReferenceCode();
 
-	@Meta.AD(type = Meta.Type.String)
+	@Meta.AD(required = false, type = Meta.Type.String)
 	public String refundPath();
 
-	@Meta.AD(type = Meta.Type.Integer)
-	public int type();
+	@Meta.AD(required = false, type = Meta.Type.Integer)
+	public int paymentIntegrationType();
 
 	@Meta.AD(required = false, type = Meta.Type.String)
 	public String typeSettings();

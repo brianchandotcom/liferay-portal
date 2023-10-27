@@ -506,15 +506,11 @@ AUI.add(
 					}
 				},
 
-				_normalizeFieldData(item, record, normalized) {
+				_normalizeFieldData(item, record, normalized, field) {
 					const instance = this;
 
 					const type = item.type;
 					let value = record.get(item.name);
-
-					if (!record.changed[item.id] && value && !!value.length) {
-						return;
-					}
 
 					if (type === 'ddm-link-to-page') {
 						value = FormBuilder.Util.parseJSON(value);
@@ -547,14 +543,21 @@ AUI.add(
 
 					normalized['fieldValues'].push(fieldValue);
 
-					if (isArray(item.fields)) {
-						item.fields.forEach((item) => {
+					if (isArray(item.fields) && !!item.fields.length) {
+						fieldValue['nestedFieldValues'] = [];
+
+						item.fields.forEach((nestedItem) => {
 							instance._normalizeFieldData(
-								item,
+								nestedItem,
 								record,
-								normalized
+								normalized,
+								fieldValue
 							);
 						});
+					}
+
+					if (field) {
+						field['nestedFieldValues'].push(fieldValue);
 					}
 				},
 

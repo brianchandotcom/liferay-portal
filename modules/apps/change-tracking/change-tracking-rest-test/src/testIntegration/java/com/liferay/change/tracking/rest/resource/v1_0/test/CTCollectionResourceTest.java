@@ -13,6 +13,7 @@ import com.liferay.change.tracking.rest.client.dto.v1_0.Status;
 import com.liferay.change.tracking.rest.client.http.HttpInvoker;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.rule.DataGuard;
@@ -35,6 +36,128 @@ import org.junit.runner.RunWith;
 @DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
+
+	@Override
+	@Test
+	public void testGetCTCollectionByExternalReferenceCodeShareLink()
+		throws Exception {
+
+		CTCollection ctCollection = ctCollectionResource.postCTCollection(
+			randomCTCollection());
+
+		Assert.assertEquals(
+			StringPool.BLANK,
+			ctCollectionResource.
+				getCTCollectionByExternalReferenceCodeShareLink(
+					ctCollection.getExternalReferenceCode()));
+
+		com.liferay.change.tracking.model.CTCollection
+			serviceBuilderCTCollection =
+				_ctCollectionLocalService.getCTCollection(ctCollection.getId());
+
+		serviceBuilderCTCollection.setShareable(true);
+
+		_ctCollectionLocalService.updateCTCollection(
+			serviceBuilderCTCollection);
+
+		Assert.assertNotEquals(
+			StringPool.BLANK,
+			ctCollectionResource.
+				getCTCollectionByExternalReferenceCodeShareLink(
+					ctCollection.getExternalReferenceCode()));
+	}
+
+	@Override
+	@Test
+	public void testGetCTCollectionShareLink() throws Exception {
+		CTCollection ctCollection = ctCollectionResource.postCTCollection(
+			randomCTCollection());
+
+		Assert.assertEquals(
+			StringPool.BLANK,
+			ctCollectionResource.getCTCollectionShareLink(
+				ctCollection.getId()));
+
+		com.liferay.change.tracking.model.CTCollection
+			serviceBuilderCTCollection =
+				_ctCollectionLocalService.getCTCollection(ctCollection.getId());
+
+		serviceBuilderCTCollection.setShareable(true);
+
+		_ctCollectionLocalService.updateCTCollection(
+			serviceBuilderCTCollection);
+
+		Assert.assertNotEquals(
+			StringPool.BLANK,
+			ctCollectionResource.getCTCollectionShareLink(
+				ctCollection.getId()));
+	}
+
+	@Override
+	@Test
+	public void testPostCTCollectionByExternalReferenceCodePublish()
+		throws Exception {
+
+		CTCollection ctCollection =
+			testPostCTCollectionByExternalReferenceCodePublish_addCTCollection();
+
+		assertHttpResponseStatusCode(
+			Response.Status.NO_CONTENT.getStatusCode(),
+			ctCollectionResource.
+				postCTCollectionByExternalReferenceCodePublishHttpResponse(
+					ctCollection.getExternalReferenceCode()));
+
+		ctCollection =
+			ctCollectionResource.getCTCollectionByExternalReferenceCode(
+				ctCollection.getExternalReferenceCode());
+
+		Status status = ctCollection.getStatus();
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, (int)status.getCode());
+
+		_assertHttpResponseProblem(
+			CTCollectionStatusException.class,
+			ctCollectionResource.
+				postCTCollectionByExternalReferenceCodePublishHttpResponse(
+					ctCollection.getExternalReferenceCode()));
+	}
+
+	@Override
+	@Test
+	public void testPostCTCollectionByExternalReferenceCodeSchedulePublish()
+		throws Exception {
+
+		CTCollection ctCollection =
+			testPostCTCollectionByExternalReferenceCodeSchedulePublish_addCTCollection();
+
+		_assertHttpResponseProblem(
+			IllegalArgumentException.class,
+			ctCollectionResource.
+				postCTCollectionByExternalReferenceCodeSchedulePublishHttpResponse(
+					ctCollection.getExternalReferenceCode(),
+					new Date(
+						System.currentTimeMillis() -
+							RandomTestUtil.randomInt())));
+
+		assertHttpResponseStatusCode(
+			Response.Status.NO_CONTENT.getStatusCode(),
+			ctCollectionResource.
+				postCTCollectionByExternalReferenceCodeSchedulePublishHttpResponse(
+					ctCollection.getExternalReferenceCode(),
+					new Date(
+						System.currentTimeMillis() +
+							RandomTestUtil.randomInt())));
+
+		ctCollection =
+			ctCollectionResource.getCTCollectionByExternalReferenceCode(
+				ctCollection.getExternalReferenceCode());
+
+		Status status = ctCollection.getStatus();
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_SCHEDULED, (int)status.getCode());
+	}
 
 	@Override
 	@Test
@@ -167,6 +290,7 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 		serviceBuilderCTCollection.setCreateDate(ctCollection.getDateCreated());
 		serviceBuilderCTCollection.setModifiedDate(
 			ctCollection.getDateModified());
+		serviceBuilderCTCollection.setShareable(true);
 
 		serviceBuilderCTCollection =
 			_ctCollectionLocalService.updateCTCollection(
@@ -204,6 +328,22 @@ public class CTCollectionResourceTest extends BaseCTCollectionResourceTestCase {
 		throws Exception {
 
 		return ctCollectionResource.postCTCollection(ctCollection);
+	}
+
+	@Override
+	protected CTCollection
+			testPostCTCollectionByExternalReferenceCodePublish_addCTCollection()
+		throws Exception {
+
+		return ctCollectionResource.postCTCollection(randomCTCollection());
+	}
+
+	@Override
+	protected CTCollection
+			testPostCTCollectionByExternalReferenceCodeSchedulePublish_addCTCollection()
+		throws Exception {
+
+		return ctCollectionResource.postCTCollection(randomCTCollection());
 	}
 
 	@Override

@@ -127,6 +127,11 @@
 		"to": "fetchCPDefinitionByCProductExternalReferenceCode(param#1#, param#0#)"
 	},
 	{
+		"from": "Indexer",
+		"issueKey": "LPS-191840",
+		"to": "Indexer<?>"
+	},
+	{
 		"classNames": [
 			"Indexer"
 		],

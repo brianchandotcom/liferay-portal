@@ -1,12 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.commerce.payment.method.paypal.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.commerce.payment.constants.CommercePaymentScreenNavigationConstants;
-import com.liferay.commerce.payment.method.paypal.internal.PayPalCommercePaymentMethod;
+import com.liferay.commerce.payment.method.paypal.internal.PayPalCommercePaymentIntegration;
 import com.liferay.commerce.payment.method.paypal.internal.configuration.PayPalGroupServiceConfiguration;
 import com.liferay.commerce.payment.method.paypal.internal.constants.PayPalCommercePaymentMethodConstants;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "screen.navigation.entry.order:Integer=20",
 	service = ScreenNavigationEntry.class
 )
-public class PayPalCommercePaymentMethodConfigurationScreenNavigationEntry
+public class PayPalCommercePaymentIntegrationConfigurationScreenNavigationEntry
 	implements ScreenNavigationEntry<CommercePaymentMethodGroupRel> {
 
 	public static final String
@@ -79,7 +79,7 @@ public class PayPalCommercePaymentMethodConfigurationScreenNavigationEntry
 			return false;
 		}
 
-		if (PayPalCommercePaymentMethod.KEY.equals(
+		if (PayPalCommercePaymentIntegration.KEY.equals(
 				commercePaymentMethod.getPaymentIntegrationKey())) {
 
 			return true;
@@ -109,7 +109,7 @@ public class PayPalCommercePaymentMethodConfigurationScreenNavigationEntry
 						new GroupServiceSettingsLocator(
 							commerceChannel.getGroupId(),
 							PayPalCommercePaymentMethodConstants.
-								COMMERCE_PAYMENT_ENGINE_SERVICE_NAME)));
+								COMMERCE_PAYMENT_INTEGRATION_SERVICE_NAME)));
 
 			httpServletRequest.setAttribute(
 				PayPalGroupServiceConfiguration.class.getName(),
@@ -121,7 +121,7 @@ public class PayPalCommercePaymentMethodConfigurationScreenNavigationEntry
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
-			"/configuration.jsp");
+			"/payment-integration/configuration.jsp");
 	}
 
 	@Reference

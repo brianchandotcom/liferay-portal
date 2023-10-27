@@ -1,6 +1,7 @@
 definition {
 
-	macro activatePaymentMethod {
+	@summary = "Default summary"
+	macro activatePaymentMethod(paymentMethod = null) {
 		CommerceEntry.clickTableEntryEditButton(
 			entryName = ${paymentMethod},
 			table = "Payment Methods");
@@ -24,7 +25,8 @@ definition {
 		SelectFrame.selectFrameTop();
 	}
 
-	macro addCategory {
+	@summary = "Default summary"
+	macro addCategory(edit = null,key_card = null,multipleVocabularies = null) {
 		if (${edit} != "true") {
 			Click(locator1 = "Button#PLUS");
 		}
@@ -54,7 +56,8 @@ definition {
 		Button.click(button = "Done");
 	}
 
-	macro addCategoryDiplayPage {
+	@summary = "Default summary"
+	macro addCategoryDiplayPage(key_card = null) {
 		SelectFrame.selectFrameTop();
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
@@ -78,7 +81,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro addFixedTaxRateTaxConfiguration {
+	@summary = "Default summary"
+	macro addFixedTaxRateTaxConfiguration(quantity = null,fieldLabel = null,taxCategory = null) {
 		CommerceEntry.gotoMenuTab(menuTab = "Tax Rates");
 
 		Click(locator1 = "Button#PLUS");
@@ -100,7 +104,8 @@ definition {
 		Button.clickSubmitButton();
 	}
 
-	macro addOverrideDefaultProductDisplayPageTemplate {
+	@summary = "Default summary"
+	macro addOverrideDefaultProductDisplayPageTemplate(product = null,displayPageTemplateName = null) {
 		Click(locator1 = "Button#PLUS");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
@@ -142,7 +147,8 @@ definition {
 		Click(locator1 = "Icon#CLOSE");
 	}
 
-	macro addProduct {
+	@summary = "Default summary"
+	macro addProduct(product = null,edit = null) {
 		if (${edit} != "true") {
 			Click(locator1 = "Button#PLUS");
 		}
@@ -166,14 +172,16 @@ definition {
 		SelectFrame.selectFrameTop();
 	}
 
-	macro addShippingMethodTrackingURL {
+	@summary = "Default summary"
+	macro addShippingMethodTrackingURL(trackingURL = null) {
 		Type(
 			key_fieldLabel = "Tracking URL",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
 			value1 = ${trackingURL});
 	}
 
-	macro addShippingOption {
+	@summary = "Default summary"
+	macro addShippingOption(amount = null,name = null,description = null,priority = null,key = null) {
 		Variables.assertDefined(parameterList = ${name});
 
 		Click(locator1 = "Button#PLUS");
@@ -221,7 +229,8 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 	}
 
-	macro addShippingOptions {
+	@summary = "Default summary"
+	macro addShippingOptions(shippingMethod = null,shippingOptions = null) {
 		for (var shippingOption : list ${shippingOptions}) {
 			if (${shippingMethod} == "Flat Rate") {
 				var shippingOptionName = StringUtil.extractFirst(${shippingOption}, ":");
@@ -240,7 +249,8 @@ definition {
 		}
 	}
 
-	macro assertDefaultAccountShippingOption {
+	@summary = "Default summary"
+	macro assertDefaultAccountShippingOption(shippingMethod = null,active = null,channelName = null,shippingOption = null) {
 		AssertElementPresent(
 			key_columnNumber = 1,
 			key_productName = ${channelName},
@@ -263,7 +273,8 @@ definition {
 		}
 	}
 
-	macro assertMercanetConfigurationEnvironment {
+	@summary = "Default summary"
+	macro assertMercanetConfigurationEnvironment(paymentMethod = null,key_value = null) {
 		CommerceEntry.clickTableEntryEditButton(
 			entryName = ${paymentMethod},
 			table = "Payment Methods");
@@ -291,7 +302,8 @@ definition {
 		Click(locator1 = "Icon#CLOSE");
 	}
 
-	macro avalaraConnection {
+	@summary = "Default summary"
+	macro avalaraConnection() {
 		AssertTextEquals(
 			locator1 = "CommerceEntry#COMMERCE_OBJECT_NAME_ON_HEADER",
 			value1 = "Avalara Connector");
@@ -324,7 +336,8 @@ definition {
 		CommerceUtilities.checkSuccessAlertAppearsAndDisappears();
 	}
 
-	macro chooseDefaultDisplayPage {
+	@summary = "Default summary"
+	macro chooseDefaultDisplayPage(pageType = null,pageName = null) {
 		Button.click(button = "Choose");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
@@ -357,7 +370,8 @@ definition {
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 	}
 
-	macro chooseDisplayPageFromSidePanel {
+	@summary = "Default summary"
+	macro chooseDisplayPageFromSidePanel(pageType = null,pageName = null) {
 		SelectFrame.selectFrameTop();
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
@@ -400,7 +414,8 @@ definition {
 		}
 	}
 
-	macro configurationPaypal {
+	@summary = "Default summary"
+	macro configurationPaypal(mode = null) {
 		CommerceEntry.clickTableEntryEditButton(
 			entryName = "PayPal",
 			table = "Payment Methods");
@@ -431,13 +446,15 @@ definition {
 		Click(locator1 = "Icon#CLOSE");
 	}
 
-	macro createCategoryDisplayPage {
+	@summary = "Default summary"
+	macro createCategoryDisplayPage(vocabulary = null,page = null) {
 		CommerceChannels.addCategory(key_card = ${vocabulary});
 
 		CommerceChannels.addCategoryDiplayPage(key_card = ${page});
 	}
 
-	macro disablePaymentMethod {
+	@summary = "Default summary"
+	macro disablePaymentMethod(paymentMethod = null) {
 		CommerceEntry.clickTableEntryEditButton(
 			entryName = ${paymentMethod},
 			table = "Payment Methods");
@@ -453,7 +470,8 @@ definition {
 		SelectFrame.selectFrameTop();
 	}
 
-	macro editCategoryDisplayPage {
+	@summary = "Default summary"
+	macro editCategoryDisplayPage(tabName = null,key_card = null,name = null) {
 		Click(
 			key_value = ${name},
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
@@ -495,7 +513,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro editOverrideCategoryDisplayPage {
+	@summary = "Default summary"
+	macro editOverrideCategoryDisplayPage(newCategory = null,newPageName = null,newPageType = null,category = null) {
 		Click(
 			key_value = ${category},
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
@@ -525,7 +544,8 @@ definition {
 		SelectFrame.selectFrameTop();
 	}
 
-	macro editOverrideProductDisplayPage {
+	@summary = "Default summary"
+	macro editOverrideProductDisplayPage(product = null,newPageName = null,newPageType = null,newProduct = null) {
 		Click(
 			key_value = ${product},
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
@@ -555,7 +575,8 @@ definition {
 		SelectFrame.selectFrameTop();
 	}
 
-	macro editPaymentMethod {
+	@summary = "Default summary"
+	macro editPaymentMethod(name = null,paymentMethod = null,description = null,active = null,priority = null) {
 		CommerceEntry.clickTableEntryEditButton(
 			entryName = ${paymentMethod},
 			table = "Payment Methods");
@@ -597,7 +618,8 @@ definition {
 		SelectFrame.selectFrameTop();
 	}
 
-	macro editShippingMethod {
+	@summary = "Default summary"
+	macro editShippingMethod(shippingOptionSettingsWarehouse = null,shippingOptionSettingsPriceUnitWeight = null,shippingOptionSettingsRegion = null,shippingOptionSettingsWeightFrom = null,trackingURL = null,shippingMethod = null,configureShippingOption = null,description = null,active = null,priority = null,shippingOptionSettingsZip = null,shippingOptionSettingsCountry = null,shippingOptionSettingsWeightTo = null,name = null,shippingOptionSettingsFixedPrice = null,shippingOptions = null,shippingOptionSettingsSubtotal = null) {
 		CommerceEntry.clickTableEntryEditButton(
 			entryName = ${shippingMethod},
 			table = "Shipping Methods");
@@ -671,7 +693,8 @@ definition {
 		SelectFrame.selectFrameTop();
 	}
 
-	macro editShippingOption {
+	@summary = "Default summary"
+	macro editShippingOption(amount = null,name = null,description = null,priority = null,key = null,shippingOption = null) {
 		CommerceNavigator.gotoEntry(entryName = ${shippingOption});
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
@@ -719,7 +742,8 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 	}
 
-	macro editTaxCalculation {
+	@summary = "Default summary"
+	macro editTaxCalculation(taxCalculationName = null,quantity = null,percentage = null,fieldLabel = null,active = null,taxCategory = null) {
 		Click(
 			key_entryName = ${taxCalculationName},
 			locator1 = "CommerceEntry#CHANNELS_GENERAL_TAB_EDITS");
@@ -762,7 +786,8 @@ definition {
 		}
 	}
 
-	macro gotoShippingMethodShippingOptions {
+	@summary = "Default summary"
+	macro gotoShippingMethodShippingOptions(shippingMethod = null) {
 		CommerceEntry.clickTableEntryEditButton(
 			entryName = ${shippingMethod},
 			table = "Shipping Methods");
@@ -772,19 +797,22 @@ definition {
 		CommerceEntry.gotoMenuTab(menuTab = "Shipping Options");
 	}
 
-	macro openChannelsAdmin {
+	@summary = "Default summary"
+	macro openChannelsAdmin(baseURL = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_channel_web_internal_portlet_CommerceChannelsPortlet");
 	}
 
-	macro openMercanetConfigurationFrame {
+	@summary = "Default summary"
+	macro openMercanetConfigurationFrame(baseURL = null,channelId = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_payment_web_internal_portlet_CommercePaymentMethodPortlet&p_p_lifecycle=0&p_p_state=pop_up&p_p_mode=view&_com_liferay_commerce_payment_web_internal_portlet_CommercePaymentMethodPortlet_screenNavigationCategoryKey=configuration&_com_liferay_commerce_payment_web_internal_portlet_CommercePaymentMethodPortlet_commerceChannelId=${channelId}&_com_liferay_commerce_payment_web_internal_portlet_CommercePaymentMethodPortlet_commercePaymentMethodEngineKey=mercanet&p_p_auth=wSmJjGYh");
 	}
 
-	macro overrideCategoryDisplayPage {
+	@summary = "Default summary"
+	macro overrideCategoryDisplayPage(pageType = null,category = null,pageName = null) {
 		CommerceChannels.addCategory(key_card = ${category});
 
 		CommerceChannels.chooseDisplayPageFromSidePanel(
@@ -802,7 +830,8 @@ definition {
 		SelectFrame.selectFrameTop();
 	}
 
-	macro overrideProductDisplayPage {
+	@summary = "Default summary"
+	macro overrideProductDisplayPage(product = null,pageType = null,pageName = null) {
 		CommerceChannels.addProduct(product = ${product});
 
 		CommerceChannels.chooseDisplayPageFromSidePanel(
@@ -820,7 +849,8 @@ definition {
 		SelectFrame.selectFrameTop();
 	}
 
-	macro removeDefaultDisplayPage {
+	@summary = "Default summary"
+	macro removeDefaultDisplayPage() {
 		Click(locator1 = "CommerceEntry#DISPLAY_PAGE_ITEM_REMOVE");
 
 		Button.clickSave();
@@ -828,7 +858,8 @@ definition {
 		AssertElementPresent(locator1 = "Message#SUCCESS");
 	}
 
-	macro uploadPrintOrderTemplate {
+	@summary = "Default summary"
+	macro uploadPrintOrderTemplate(uploadFileName = null) {
 		Click(locator1 = "CommerceOrders#PRINT_ORDER_TEMPLATE");
 
 		SelectFrame(

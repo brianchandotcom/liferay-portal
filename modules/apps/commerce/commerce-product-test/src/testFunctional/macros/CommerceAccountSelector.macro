@@ -1,6 +1,7 @@
 definition {
 
-	macro gotoAccountSelectorOrdersList {
+	@summary = "Default summary"
+	macro gotoAccountSelectorOrdersList() {
 		Click.clickNoMouseOver(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
 
 		var currentListHead = selenium.getText("CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN_MENU_SELECTED_ACCOUNT");
@@ -10,7 +11,8 @@ definition {
 		}
 	}
 
-	macro selectOrderFromOrdersList {
+	@summary = "Default summary"
+	macro selectOrderFromOrdersList(orderId = null) {
 		CommerceAccountSelector.gotoAccountSelectorOrdersList();
 
 		Click(
@@ -18,7 +20,8 @@ definition {
 			locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_ORDERS_LIST_ITEM");
 	}
 
-	macro viewAccountSelectorAccountsList {
+	@summary = "Default summary"
+	macro viewAccountSelectorAccountsList(accounts = null) {
 		CommerceAcceleratorsInitializer.gotoAccountSelectorAccountsList();
 
 		for (var account : list ${accounts}) {

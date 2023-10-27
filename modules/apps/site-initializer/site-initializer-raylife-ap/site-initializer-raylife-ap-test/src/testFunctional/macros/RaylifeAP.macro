@@ -1,6 +1,7 @@
 definition {
 
-	macro addRaylifeAPSite {
+	@summary = "Default summary"
+	macro addRaylifeAPSite(siteName = null) {
 		Site.openSitesAdmin();
 
 		Site.addSiteTemplateCP(
@@ -8,23 +9,27 @@ definition {
 			siteTemplateName = "Raylife AP");
 	}
 
-	macro assertApplicationNumber {
+	@summary = "Default summary"
+	macro assertApplicationNumber() {
 		var applicationvalue = selenium.getText("RaylifeAP#APPLICATIONS_NUMBER");
 
 		AssertElementNotPresent(locator1 = ${applicationvalue});
 	}
 
-	macro assertClaimNumberVisible {
+	@summary = "Default summary"
+	macro assertClaimNumberVisible() {
 		AssertVisible(locator1 = "RaylifeAP#CLAIM_NUMBER");
 	}
 
-	macro assertFieldRequiredMessage {
+	@summary = "Default summary"
+	macro assertFieldRequiredMessage(field = null) {
 		AssertElementPresent(
 			key_field = ${field},
 			locator1 = "RaylifeAP#FIELD_REQUIRED_MESSAGE");
 	}
 
-	macro assertNotViewFilterOptions {
+	@summary = "Default summary"
+	macro assertNotViewFilterOptions(options = null) {
 		for (var optionList : list ${options}) {
 			AssertNotVisible(
 				key_option = ${optionList},
@@ -32,27 +37,32 @@ definition {
 		}
 	}
 
-	macro assertPageHeader {
+	@summary = "Default summary"
+	macro assertPageHeader(key_header = null) {
 		AssertElementPresent(
 			key_header = ${key_header},
 			locator1 = "RaylifeAP#COMPONENT_HEADER");
 	}
 
-	macro assertPolicyDetailPage {
+	@summary = "Default summary"
+	macro assertPolicyDetailPage() {
 		AssertVisible(locator1 = "RaylifeAP#POLICY_DETAIL_TITLE");
 	}
 
-	macro assertQuantity {
+	@summary = "Default summary"
+	macro assertQuantity(text = null) {
 		var key_quantity = ${text};
 
 		AssertVisible(locator1 = "RaylifeAP#ASSERT_QUANTITY");
 	}
 
-	macro assertSettledStatus {
+	@summary = "Default summary"
+	macro assertSettledStatus() {
 		AssertVisible(locator1 = "RaylifeAP#SETTLED_STATUS");
 	}
 
-	macro assertTableElement {
+	@summary = "Default summary"
+	macro assertTableElement(line = null,column = null,text = null) {
 		AssertElementPresent(
 			key_colunmPosition = ${column},
 			key_linePosition = ${line},
@@ -60,14 +70,16 @@ definition {
 			locator1 = "RaylifeAP#TABLE_ELEMENT_BY_POSITION");
 	}
 
-	macro assertTableValue {
+	@summary = "Default summary"
+	macro assertTableValue(product = null,status = null) {
 		AssertElementPresent(
 			key_product = ${product},
 			key_status = ${status},
 			locator1 = "RaylifeAP#APPLICATIONS_TABLE_KEBAB");
 	}
 
-	macro assertTextAtTable {
+	@summary = "Default summary"
+	macro assertTextAtTable(linePosition = null,text = null,lineColunm = null) {
 		var key_linePosition = ${linePosition};
 		var key_colunmPosition = ${lineColunm};
 		var key_text = ${text};
@@ -77,7 +89,8 @@ definition {
 			value1 = ${text});
 	}
 
-	macro assertViewFilterOptions {
+	@summary = "Default summary"
+	macro assertViewFilterOptions(options = null) {
 		for (var optionList : list ${options}) {
 			AssertVisible(
 				key_option = ${optionList},
@@ -85,13 +98,15 @@ definition {
 		}
 	}
 
-	macro assertVisibleSidebar {
+	@summary = "Default summary"
+	macro assertVisibleSidebar(key_menuSidebar = null) {
 		AssertVisible(
 			key_menuSidebar = ${key_menuSidebar},
 			locator1 = "RaylifeAP#MENU_SIDEBAR");
 	}
 
-	macro clickInApplicationKebabOption {
+	@summary = "Default summary"
+	macro clickInApplicationKebabOption(product = null,status = null,option = null) {
 		Click(
 			key_product = ${product},
 			key_status = ${status},
@@ -102,40 +117,48 @@ definition {
 			locator1 = "RaylifeAP#KEBAB_OPTION");
 	}
 
-	macro clickInApplicationNumber {
+	@summary = "Default summary"
+	macro clickInApplicationNumber(product = null,status = null) {
 		Click(
 			key_product = ${product},
 			key_status = ${status},
 			locator1 = "RaylifeAP#APPLICATIONS_NUMBER_WITH_STATUS");
 	}
 
-	macro clickOnAllAplications {
+	@summary = "Default summary"
+	macro clickOnAllAplications() {
 		Button.click(button = "All Applications");
 	}
 
-	macro clickOnBackToClaimsPage {
+	@summary = "Default summary"
+	macro clickOnBackToClaimsPage() {
 		Click(locator1 = "RaylifeAP#CLAIM_BACK_BUTTON");
 	}
 
-	macro clickOnClaimNumber {
+	@summary = "Default summary"
+	macro clickOnClaimNumber() {
 		Click(locator1 = "RaylifeAP#CLAIM_NUMBER");
 	}
 
-	macro clickOnFilter {
+	@summary = "Default summary"
+	macro clickOnFilter() {
 		Click(locator1 = "RaylifeAP#ICON_FILTER");
 	}
 
-	macro clickOnPolicyNumberOnClaimDetais {
+	@summary = "Default summary"
+	macro clickOnPolicyNumberOnClaimDetais() {
 		Click(locator1 = "RaylifeAP#POLICY_NUMBER");
 	}
 
-	macro clickOnSubsectionTasks {
+	@summary = "Default summary"
+	macro clickOnSubsectionTasks(key_subsection = null) {
 		Click(
 			key_subsection = ${key_subsection},
 			locator1 = "RaylifeAP#TASKS_SECTION");
 	}
 
-	macro deleteAllCreatedEntries {
+	@summary = "Default summary"
+	macro deleteAllCreatedEntries(searchTerm = null) {
 		var entry = ${searchTerm};
 
 		ObjectAdmin.editObjectDeletionType(
@@ -155,25 +178,29 @@ definition {
 		}
 	}
 
-	macro expandedSidebar {
+	@summary = "Default summary"
+	macro expandedSidebar(key_menuSidebar = null) {
 		MouseOver(
 			key_menuSidebar = ${key_menuSidebar},
 			locator1 = "RaylifeAP#MENU_SIDEBAR");
 	}
 
-	macro gotoEllipsisMenuItem {
+	@summary = "Default summary"
+	macro gotoEllipsisMenuItem(menuItem = null) {
 		Click.waitForMenuToggleJSClick(locator1 = "RaylifeAP#ANY_VERTICAL_ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = ${menuItem});
 	}
 
-	macro goToRaylifeAPSiteWithRefresh {
+	@summary = "Default summary"
+	macro goToRaylifeAPSiteWithRefresh() {
 		Navigator.openSiteURL(siteName = "Raylife AP");
 
 		Refresh();
 	}
 
-	macro goToRaylifeUserProfileMenu {
+	@summary = "Default summary"
+	macro goToRaylifeUserProfileMenu(raylifeSite = null) {
 		Click(locator1 = "UserBar#USER_AVATAR_ICON");
 
 		ScrollWebElementIntoView(
@@ -193,13 +220,15 @@ definition {
 		Refresh();
 	}
 
-	macro mouseOverSidebar {
+	@summary = "Default summary"
+	macro mouseOverSidebar(menu = null) {
 		var key_menu = ${menu};
 
 		MouseOver(locator1 = "RaylifeAP#MENU_SIDEBAR");
 	}
 
-	macro search {
+	@summary = "Default summary"
+	macro search(searchTerm = null) {
 		WaitForElementPresent(locator1 = "RaylifeAP#SEARCH");
 
 		AssertElementPresent(locator1 = "RaylifeAP#SEARCH");
@@ -217,7 +246,8 @@ definition {
 		}
 	}
 
-	macro signIn {
+	@summary = "Default summary"
+	macro signIn(emailAddress = null,password = null) {
 		if (isSet(emailAddress)) {
 			Type(
 				labelTitle = "Email Address",
@@ -235,7 +265,8 @@ definition {
 		Click(locator1 = "Button#SIGN_IN");
 	}
 
-	macro tearDownCP {
+	@summary = "Default summary"
+	macro tearDownCP() {
 		Site.openSitesAdmin();
 
 		PortletEntry.selectAll();
@@ -247,7 +278,8 @@ definition {
 		Click(locator1 = "Button#MODAL_DELETE");
 	}
 
-	macro userAvatarFunctionality {
+	@summary = "Default summary"
+	macro userAvatarFunctionality(option = null) {
 		Click(locator1 = "RaylifeAP#USER_AVATAR");
 
 		Click(
@@ -255,7 +287,8 @@ definition {
 			locator1 = "RaylifeAP#USER_AVATAR_OPTION");
 	}
 
-	macro userLoginInRaylife {
+	@summary = "Default summary"
+	macro userLoginInRaylife() {
 		var passwordRaylife = "portal4all";
 		var email = "${email}@mailinator.com";
 

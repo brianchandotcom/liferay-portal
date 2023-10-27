@@ -1,6 +1,7 @@
 definition {
 
-	macro addFragment {
+	@summary = "Default summary"
+	macro addFragment(fragmentName = null,siteURLKey = null,displayPageName = null,publish = null,collectionName = null) {
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
 
 		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = ${displayPageName});
@@ -14,19 +15,22 @@ definition {
 		}
 	}
 
-	macro clickPencil {
+	@summary = "Default summary"
+	macro clickPencil() {
 		WaitForPageLoad();
 
 		Click.waitForMenuToggleJSClick(locator1 = "Button#PENCIL");
 	}
 
-	macro clickPencilItem {
+	@summary = "Default summary"
+	macro clickPencilItem(item = null) {
 		DisplayPageTemplate.clickPencil();
 
 		MenuItem.clickNoError(menuItem = ${item});
 	}
 
-	macro selectDisplayPageTemplateForAsset {
+	@summary = "Default summary"
+	macro selectDisplayPageTemplateForAsset(groupName = null,siteURLKey = null,kbChildArticleTitle = null,entryTitle = null,pageName = null,assetType = null) {
 		if (${assetType} == "Blogs Entry") {
 			BlogsNavigator.openToEditEntryInSite(
 				entryTitle = ${entryTitle},
@@ -58,7 +62,8 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro selectPreviewItem {
+	@summary = "Default summary"
+	macro selectPreviewItem(item = null,searchTerm = null,assetTitle = null,assetType = null) {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		Click(locator1 = "ControlMenu#DISPLAY_PAGE_PREVIEW_ITEM_SELECTOR");

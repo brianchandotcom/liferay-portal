@@ -2691,9 +2691,9 @@ definition {
 		Navigator.openSpecificURL(url = ${latestVersionURL});
 
 		AssertAttributeValue(
-			attribute1 = "baseURI",
 			locator1 = "//embed",
-			value1 = ${latestVersionURL});
+			value1 = "baseURI",
+			value2 = ${latestVersionURL});
 
 		DMNavigator.openToEntryInAdmin(
 			dmDocumentTitle = "pdf_no_extension",
@@ -2705,9 +2705,9 @@ definition {
 		Navigator.openSpecificURL(url = ${latestVersionURL});
 
 		AssertAttributeValue(
-			attribute1 = "baseURI",
 			locator1 = "//embed",
-			value1 = ${latestVersionURL});
+			value1 = "baseURI",
+			value2 = ${latestVersionURL});
 	}
 
 	@description = "This test covers LPS-104957. It ensures that the PNG file can be previewed."
@@ -3541,7 +3541,7 @@ definition {
 
 		// We need to wait for the system time to pass by 2 minutes in order to verify the document is expired. There is currently no easy way to manipulate the system time in CI for automation. 2 minutes is the shortest value we can set while ensuring the stability of the test. See LPS-157957.
 
-		Pause(locator1 = 120000);
+		Pause(value1 = 120000);
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",

@@ -1,12 +1,12 @@
 @default = "sikuliDragAndDrop"
 definition {
 
-	function sikuliDragAndDrop {
+	function sikuliDragAndDrop(locator1,value1) {
 		WaitForSPARefresh();
 
-		selenium.sikuliDragAndDrop();
+		selenium.sikuliDragAndDrop(${locator1}, ${value1});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

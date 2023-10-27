@@ -1,6 +1,7 @@
 definition {
 
-	macro _addOrganization {
+	@summary = "Default summary"
+	macro _addOrganization(organizationName = null,organizationRegion = null,organizationCountry = null) {
 		Variables.assertDefined(parameterList = ${organizationName});
 
 		var organizationNameEncoded = URLUtil.encodeUTF8(${organizationName});
@@ -60,7 +61,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _addOrganizationToSite {
+	@summary = "Default summary"
+	macro _addOrganizationToSite(organizationId = null,groupId = null) {
 		Variables.assertDefined(parameterList = "${groupId},${organizationId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -74,7 +76,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _assignPasswordPolicyToOrganization {
+	@summary = "Default summary"
+	macro _assignPasswordPolicyToOrganization(organizationId = null,passwordPolicyId = null) {
 		Variables.assertDefined(parameterList = "${organizationId},${passwordPolicyId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -90,7 +93,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro _assignUserToOrganization {
+	@summary = "Default summary"
+	macro _assignUserToOrganization(organizationId = null,userId = null) {
 		Variables.assertDefined(parameterList = "${organizationId},${userId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -106,7 +110,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _deleteOrganization {
+	@summary = "Default summary"
+	macro _deleteOrganization(organizationId = null) {
 		Variables.assertDefined(parameterList = ${organizationId});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -121,7 +126,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _getChildOrganizationCount {
+	@summary = "Default summary"
+	macro _getChildOrganizationCount(parentOrganizationId = null) {
 		Variables.assertDefined(parameterList = ${parentOrganizationId});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -142,7 +148,8 @@ definition {
 		return ${numberOfChildren};
 	}
 
-	macro _getOrganization {
+	@summary = "Default summary"
+	macro _getOrganization(parentOrganizationId = null) {
 		Variables.assertDefined(parameterList = ${parentOrganizationId});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -161,7 +168,8 @@ definition {
 		return ${organizationIds};
 	}
 
-	macro _getOrganizationStatusListTypeId {
+	@summary = "Default summary"
+	macro _getOrganizationStatusListTypeId() {
 		var portalURL = JSONCompany.getPortalURL();
 		var companyId = JSONCompany.getCompanyId();
 		var userLoginInfo = JSONUtil2.formatJSONUser();

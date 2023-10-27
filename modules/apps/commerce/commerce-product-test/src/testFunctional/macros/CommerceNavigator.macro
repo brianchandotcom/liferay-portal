@@ -1,6 +1,7 @@
 definition {
 
-	macro changeVocabulary {
+	@summary = "Default summary"
+	macro changeVocabulary(newVocabularyName = null) {
 		SelectFrame(
 			key_title = "Commerce Categories Navigation",
 			locator1 = "IFrame#MODAL_ANY");
@@ -17,7 +18,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro clearSearchBar {
+	@summary = "Default summary"
+	macro clearSearchBar() {
 		DoubleClick(locator1 = "CommerceEntry#SEARCH_PRODUCT_RELATIONS");
 
 		KeyPress(
@@ -27,33 +29,39 @@ definition {
 		Click(locator1 = "AppBuilder#SEARCH_BUTTON");
 	}
 
-	macro editMiniCartItemQuantity {
+	@summary = "Default summary"
+	macro editMiniCartItemQuantity(productQuantity = null,cartItemSku = null) {
 		Type(
 			key_cartItemSku = ${cartItemSku},
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
 			value1 = ${productQuantity});
 	}
 
-	macro goToAvailabilityEstimatesAdmin {
+	@summary = "Default summary"
+	macro goToAvailabilityEstimatesAdmin() {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_availability_estimate_web_internal_portlet_CommerceAvailabilityEstimatePortlet");
 	}
 
-	macro gotoCommercePortletNavItem {
+	@summary = "Default summary"
+	macro gotoCommercePortletNavItem(navItem = null) {
 		AssertClick(
 			key_navItem = ${navItem},
 			locator1 = "NavBar#NAV_ITEM_LINK",
 			value1 = ${navItem});
 	}
 
-	macro goToCurrenciesAdmin {
+	@summary = "Default summary"
+	macro goToCurrenciesAdmin() {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_currency_web_internal_portlet_CommerceCurrencyPortlet");
 	}
 
-	macro goToDiscountAdmin {
+	@summary = "Default summary"
+	macro goToDiscountAdmin() {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_pricing_web_internal_portlet_CommerceDiscountPortlet");
 	}
 
-	macro gotoEntry {
+	@summary = "Default summary"
+	macro gotoEntry(entryName = null) {
 		AssertClickNoError(
 			key_entryName = ${entryName},
 			locator1 = "CommerceNavigation#ENTRY_NAME",
@@ -62,7 +70,8 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro gotoFrontStoreProductPage {
+	@summary = "Default summary"
+	macro gotoFrontStoreProductPage() {
 		var baseURL = JSONCompany.getPortalURL();
 		var productName = StringUtil.replace(${productName}, " ", "-");
 
@@ -71,24 +80,28 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/p/${productName}");
 	}
 
-	macro goToHealthCheckAdmin {
+	@summary = "Default summary"
+	macro goToHealthCheckAdmin() {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_health_status_web_internal_portlet_CommerceHealthCheckPortlet");
 	}
 
-	macro gotoMiniCart {
+	@summary = "Default summary"
+	macro gotoMiniCart() {
 		Click.clickNoMouseOver(locator1 = "CommerceAccelerators#MINI_CART_BUTTON");
 
 		WaitForElementPresent(locator1 = "CommerceAccelerators#MINI_CART_OPENED");
 	}
 
-	macro gotoMiniCartEntry {
+	@summary = "Default summary"
+	macro gotoMiniCartEntry(entryName = null,cartItemSku = null) {
 		AssertClickNoError(
 			key_cartItemSku = ${cartItemSku},
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_USING_SKU",
 			value1 = ${entryName});
 	}
 
-	macro gotoMiniumAccountOrderDefaults {
+	@summary = "Default summary"
+	macro gotoMiniumAccountOrderDefaults(accountName = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/account-management");
 
 		CommerceNavigator.gotoEntry(entryName = ${accountName});
@@ -96,7 +109,8 @@ definition {
 		CommerceEntry.gotoMenuTab(menuTab = "Channel Defaults");
 	}
 
-	macro gotoMiniumSidebarItem {
+	@summary = "Default summary"
+	macro gotoMiniumSidebarItem(menuItem = null) {
 		ScrollBy(value1 = "0, -1000");
 
 		Click(
@@ -106,7 +120,8 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro gotoOptionValues {
+	@summary = "Default summary"
+	macro gotoOptionValues(optionEntryName = null) {
 		Click(
 			key_optionEntryName = ${optionEntryName},
 			locator1 = "CommerceNavigation#OPTION_VALUES_LINK",
@@ -117,7 +132,8 @@ definition {
 		AssertElementPresent(locator1 = "CommerceEntry#NAME_FIELD");
 	}
 
-	macro gotoOrderEntryViaAdmin {
+	@summary = "Default summary"
+	macro gotoOrderEntryViaAdmin(status = null) {
 		ClickNoError(
 			key_value = ${status},
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
@@ -125,7 +141,8 @@ definition {
 		CommerceEntry.clickNoError(menuItem = "View");
 	}
 
-	macro goToPlacedOrderDetailPageViaURL {
+	@summary = "Default summary"
+	macro goToPlacedOrderDetailPageViaURL(orderId = null) {
 		Variables.assertDefined(parameterList = ${orderId});
 
 		if (!(isSet(site))) {
@@ -139,7 +156,8 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro gotoPortlet {
+	@summary = "Default summary"
+	macro gotoPortlet(portlet = null,category = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = ${category},
 			panel = "Commerce",
@@ -148,11 +166,13 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro goToPriceListAdmin {
+	@summary = "Default summary"
+	macro goToPriceListAdmin() {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_pricing_web_internal_portlet_CommercePriceListPortlet");
 	}
 
-	macro gotoProductDetails {
+	@summary = "Default summary"
+	macro gotoProductDetails() {
 		var productName = CommerceUtilities.convertStringToKey(string = ${productName});
 
 		Click(
@@ -160,15 +180,18 @@ definition {
 			locator1 = "CommerceFrontStore#PRODUCT_CARD_CATALOG_IMAGE");
 	}
 
-	macro goToProductOptionsAdminViaURL {
+	@summary = "Default summary"
+	macro goToProductOptionsAdminViaURL() {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_product_options_web_internal_portlet_CPOptionsPortlet");
 	}
 
-	macro goToSpecificationsAdmin {
+	@summary = "Default summary"
+	macro goToSpecificationsAdmin() {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_product_options_web_internal_portlet_CPSpecificationOptionsPortlet");
 	}
 
-	macro gotoSpeedwellAccountDropdownItem {
+	@summary = "Default summary"
+	macro gotoSpeedwellAccountDropdownItem(dropdownItem = null) {
 		Click(locator1 = "CommerceAccelerators#SPEEDWELL_ACCOUNT_DROPDOWN");
 
 		Click(
@@ -176,13 +199,15 @@ definition {
 			locator1 = "CommerceAccelerators#SPEEDWELL_ACCOUNT_DROPDOWN_ITEM");
 	}
 
-	macro gotoSpeedwellDashboardItem {
+	@summary = "Default summary"
+	macro gotoSpeedwellDashboardItem(dashboardItem = null) {
 		Click(
 			key_dashboardItem = ${dashboardItem},
 			locator1 = "CommerceAccelerators#SPEEDWELL_ACCOUNT_DASHBOARD_ITEM");
 	}
 
-	macro gotoSpeedwellTopbarItem {
+	@summary = "Default summary"
+	macro gotoSpeedwellTopbarItem(menuItem = null) {
 		Click(locator1 = "CommerceAccelerators#SPEEDWELL_TOPBAR_BUTTON");
 
 		Click(
@@ -190,7 +215,8 @@ definition {
 			locator1 = "CommerceAccelerators#SPEEDWELL_TOPBAR_MENU_ITEM");
 	}
 
-	macro gotoTableListEntry {
+	@summary = "Default summary"
+	macro gotoTableListEntry(entryName = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -201,27 +227,33 @@ definition {
 			locator1 = "CommerceEntry#TABLE_LIST_TITLE_AND_POSITION");
 	}
 
-	macro goToTaxCategoriesAdmin {
+	@summary = "Default summary"
+	macro goToTaxCategoriesAdmin() {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_product_tax_category_web_internal_portlet_CPTaxCategoryPortlet");
 	}
 
-	macro goToWarehousesAdmin {
+	@summary = "Default summary"
+	macro goToWarehousesAdmin() {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_warehouse_web_internal_portlet_CommerceInventoryWarehousePortlet");
 	}
 
-	macro goToWishLists {
+	@summary = "Default summary"
+	macro goToWishLists() {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/lists");
 	}
 
-	macro openCommerceCatalogueAdmin {
+	@summary = "Default summary"
+	macro openCommerceCatalogueAdmin() {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_catalog_web_internal_portlet_CommerceCatalogsPortlet");
 	}
 
-	macro openCommerceCountriesAdmin {
+	@summary = "Default summary"
+	macro openCommerceCountriesAdmin() {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_address_web_internal_portlet_CommerceCountryPortlet");
 	}
 
-	macro searchCatalog {
+	@summary = "Default summary"
+	macro searchCatalog(productName = null) {
 		Type(
 			locator1 = "AppBuilder#SEARCH_BAR_INPUT",
 			value1 = ${productName});
@@ -229,7 +261,8 @@ definition {
 		Click(locator1 = "Button#SUBMIT");
 	}
 
-	macro searchEntry {
+	@summary = "Default summary"
+	macro searchEntry(entryName = null) {
 		AssertElementPresent(locator1 = "CommerceNavigation#SEARCH_FIELD");
 
 		Type(
@@ -241,33 +274,38 @@ definition {
 			value1 = "\RETURN");
 	}
 
-	macro selectItemFromTreeNode {
+	@summary = "Default summary"
+	macro selectItemFromTreeNode(itemName = null) {
 		var key_itemName = ${itemName};
 
 		Click(locator1 = "Treeview#NODE_LIST_ITEM");
 	}
 
-	macro sortField {
+	@summary = "Default summary"
+	macro sortField(sortFieldName = null) {
 		Click(
 			key_sortFieldName = ${sortFieldName},
 			locator1 = "CommerceNavigation#SORT_FIELD",
 			value1 = ${sortFieldName});
 	}
 
-	macro validateMiniCartItemQuantity {
+	@summary = "Default summary"
+	macro validateMiniCartItemQuantity(productQuantity = null,cartItemSku = null) {
 		AssertTextEquals(
 			key_cartItemSku = ${cartItemSku},
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
 			value1 = ${productQuantity});
 	}
 
-	macro viewCartPortletEntry {
+	@summary = "Default summary"
+	macro viewCartPortletEntry(productName = null) {
 		Click(
 			key_productName = ${productName},
 			locator1 = "CommerceAccelerators#CART_PORTLET_ORDER_DESCRIPTION");
 	}
 
-	macro viewFilterResultsSpecificOrder {
+	@summary = "Default summary"
+	macro viewFilterResultsSpecificOrder(resultsList = null) {
 		var resultOrder = 0;
 
 		for (var searchAssetTitle : list ${resultsList}) {

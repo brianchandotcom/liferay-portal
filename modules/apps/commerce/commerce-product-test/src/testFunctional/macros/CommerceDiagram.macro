@@ -1,6 +1,7 @@
 definition {
 
-	macro addAccountGroups {
+	@summary = "Default summary"
+	macro addAccountGroups(accountGroupNames = null,productName = null) {
 		Click(
 			key_name = "Account Groups",
 			locator1 = "ToggleSwitch#ENABLE_SPECIFIC_TOGGLE_SWITCH");
@@ -35,7 +36,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro addPin {
+	@summary = "Default summary"
+	macro addPin(diagram = null,quantity = null,pinNumber = null,selectType = null,label = null,position = null,sku = null) {
 		var key_pinNumber = ${pinNumber};
 
 		Click(locator1 = "CommerceDiagrams#DIAGRAM_IMAGE");
@@ -103,13 +105,15 @@ definition {
 			locator1 = "CommerceDiagrams#DIAGRAM_PIN");
 	}
 
-	macro assertDiagramSettingsType {
+	@summary = "Default summary"
+	macro assertDiagramSettingsType(settingsType = null) {
 		AssertElementPresent(
 			key_selectedType = ${settingsType},
 			locator1 = "CommerceDiagrams#DIAGRAM_SETTINGS_SELECTED_TYPE");
 	}
 
-	macro assertPinSize {
+	@summary = "Default summary"
+	macro assertPinSize(pinSize = null,value = null) {
 		AssertElementPresent(
 			key_text = ${pinSize},
 			locator1 = "CommerceDiagrams#DIAGRAM_PIN_SIZE_BUTTON_TEXT");
@@ -132,7 +136,8 @@ definition {
 		}
 	}
 
-	macro assertPinToolTipInfo {
+	@summary = "Default summary"
+	macro assertPinToolTipInfo(diagram = null,pinType = null,quantity = null,pinNumber = null,label = null,sku = null) {
 		AssertElementPresent(
 			key_positionValue = ${pinNumber},
 			locator1 = "CommerceDiagrams#DIAGRAM_ADMIN_TOOLTIP_POSITION");
@@ -162,7 +167,8 @@ definition {
 		}
 	}
 
-	macro assertPinToolTipInfoInProduct {
+	@summary = "Default summary"
+	macro assertPinToolTipInfoInProduct(replaceText = null,selectedType = null,sku = null,productName = null) {
 		if (${selectedType} == "Linked to a SKU") {
 			AssertElementPresent(
 				key_sku = ${sku},
@@ -194,11 +200,13 @@ definition {
 		}
 	}
 
-	macro assertPinToolTipNotOpen {
+	@summary = "Default summary"
+	macro assertPinToolTipNotOpen() {
 		AssertElementNotPresent(locator1 = "CommerceDiagrams#DIAGRAM_ADMIN_TOOLTIP");
 	}
 
-	macro assertPinToolTipOpens {
+	@summary = "Default summary"
+	macro assertPinToolTipOpens() {
 		Click(locator1 = "CommerceDiagrams#DIAGRAM_IMAGE");
 
 		WaitForElementPresent(locator1 = "CommerceDiagrams#DIAGRAM_ADMIN_TOOLTIP");
@@ -208,7 +216,8 @@ definition {
 			locator1 = "Button#ANY_SECONDARY");
 	}
 
-	macro changePinInfo {
+	@summary = "Default summary"
+	macro changePinInfo(diagram = null,newPinNumber = null,quantity = null,pinNumber = null,selectType = null,label = null,sku = null) {
 		CommerceDiagram.viewPin(pinNumber = ${pinNumber});
 
 		Type(
@@ -267,7 +276,8 @@ definition {
 			locator1 = "CommerceDiagrams#DIAGRAM_PIN");
 	}
 
-	macro changeSettingsType {
+	@summary = "Default summary"
+	macro changeSettingsType(settingsType = null) {
 		SelectField.select(
 			selectFieldLabel = "Type",
 			selectFieldValue = ${settingsType});
@@ -277,11 +287,13 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro clickExpand {
+	@summary = "Default summary"
+	macro clickExpand() {
 		Click(locator1 = "CommerceDiagrams#DIAGRAM_EXPAND");
 	}
 
-	macro selectPinSize {
+	@summary = "Default summary"
+	macro selectPinSize(pinSize = null) {
 		Click(locator1 = "CommerceDiagrams#DIAGRAM_PIN_SIZE_BUTTON");
 
 		AssertClick(
@@ -290,7 +302,8 @@ definition {
 			value1 = ${pinSize});
 	}
 
-	macro setVisibility {
+	@summary = "Default summary"
+	macro setVisibility(webContentTitle = null,name = null,checkboxName = null) {
 		CommerceEntry.gotoMenuTab(menuTab = "Visibility");
 
 		Click(
@@ -319,7 +332,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro useDragOnBackground {
+	@summary = "Default summary"
+	macro useDragOnBackground(image_name = null,position = null) {
 
 		// Verify the postion after mouse drag
 
@@ -343,7 +357,8 @@ definition {
 		}
 	}
 
-	macro useDragOnPin {
+	@summary = "Default summary"
+	macro useDragOnPin(image_name = null,position = null) {
 
 		// Verify the postion after mouse drag on pin
 
@@ -365,7 +380,8 @@ definition {
 		}
 	}
 
-	macro usePreDefinedZoom {
+	@summary = "Default summary"
+	macro usePreDefinedZoom(key_list = null) {
 
 		// Use Pre-defined zoom values
 
@@ -374,7 +390,8 @@ definition {
 		CommerceDiagram.usePreDefinedZoomValues(key_list = ${key_list});
 	}
 
-	macro usePreDefinedZoomValues {
+	@summary = "Default summary"
+	macro usePreDefinedZoomValues(key_list = null) {
 		for (var zoom : list ${key_list}) {
 			var first_position = selenium.getAttribute("//div[contains(@class,'diagram-pins-container')]//*[name()='svg']//*[name()='g']@transform");
 
@@ -393,7 +410,8 @@ definition {
 		}
 	}
 
-	macro useResetZoom {
+	@summary = "Default summary"
+	macro useResetZoom() {
 		var i = 0;
 
 		Click(
@@ -410,14 +428,16 @@ definition {
 		}
 	}
 
-	macro viewMappedProducts {
+	@summary = "Default summary"
+	macro viewMappedProducts(pinNumber = null,productName = null) {
 		AssertElementPresent(
 			key_pinNumber = ${pinNumber},
 			key_productName = ${productName},
 			locator1 = "CommerceDiagrams#DIAGRAM_MAPPED_PRODUCTS_CONTENT_SPECIFIC");
 	}
 
-	macro viewPin {
+	@summary = "Default summary"
+	macro viewPin(pinNumber = null) {
 		Click(
 			key_pinNumber = ${pinNumber},
 			locator1 = "CommerceDiagrams#DIAGRAM_PIN");
@@ -425,7 +445,8 @@ definition {
 		WaitForElementPresent(locator1 = "CommerceDiagrams#DIAGRAM_ADMIN_TOOLTIP");
 	}
 
-	macro viewPinInProduct {
+	@summary = "Default summary"
+	macro viewPinInProduct(pinNumber = null) {
 		Click(
 			key_pinNumber = ${pinNumber},
 			locator1 = "CommerceDiagrams#DIAGRAM_PIN");

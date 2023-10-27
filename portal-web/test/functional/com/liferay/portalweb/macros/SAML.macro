@@ -1,6 +1,7 @@
 definition {
 
-	macro accountSignInOkta {
+	@summary = "Default summary"
+	macro accountSignInOkta(userPassword = null,specificURL = null,userEmailAddress = null) {
 		if (!(isSet(specificURL))) {
 			Navigator.openURL();
 		}
@@ -30,7 +31,8 @@ definition {
 	}
 
 	@description = "Creating new user on the IdP portal and syncing his data by logging in on the SP portal then verify the user data on the My Account page"
-	macro addAndSyncNewUser {
+	@summary = "Default summary"
+	macro addAndSyncNewUser(newUserFirstName = null,idpName = null,newUserPortalURL = null,newUserScreenName = null,newUserMiddleName = null,samlMultiIdPs = null,newUserEmailAddress = null,creatorEmailAddress = null,creatorPassword = null,newUserJobTitle = null,portalInstanceName = null,newUserLastName = null,spURL = null) {
 		JSONUser.addUser(
 			creatorEmailAddress = ${creatorEmailAddress},
 			creatorPassword = ${creatorPassword},
@@ -70,7 +72,8 @@ definition {
 	}
 
 	@description = "Creating new user on the IdP portal and syncing his data by logging in on the SP portal then do not verify user data"
-	macro addAndSyncNewUserWithoutValidation {
+	@summary = "Default summary"
+	macro addAndSyncNewUserWithoutValidation(newUserFirstName = null,idpName = null,newUserPortalURL = null,newUserScreenName = null,newUserMiddleName = null,samlMultiIdPs = null,newUserEmailAddress = null,creatorEmailAddress = null,creatorPassword = null,newUserJobTitle = null,portalInstanceName = null,newUserLastName = null,spURL = null) {
 		JSONUser.addUser(
 			creatorEmailAddress = ${creatorEmailAddress},
 			creatorPassword = ${creatorPassword},
@@ -101,7 +104,8 @@ definition {
 	}
 
 	@description = "Add Identity Provider Configurations to Service Provider"
-	macro addIDPConfigurationsToServiceProvider {
+	@summary = "Default summary"
+	macro addIDPConfigurationsToServiceProvider(idpUserMembershipsAttributeMappingText = null,idpCustomFieldAttributeMappingText = null,userEmailAddress = null,idpUserMembershipsAttributeMapping = null,idpAttributeMappingText = null,userResolution = null,idpEntityId = null,idpCustomFieldAttributeMapping = null,idpKeepAliveURL = null,uploadMetadataXML = null,idpAttributeMapping = null,nameIdentifierFormat = null,idpMetadataURLRaw = null,userMatchingAttributeIndex = null,idpURL = null,spURL = null) {
 		if (isSet(userEmailAddress)) {
 			User.firstLoginUI(
 				password = "test",
@@ -146,7 +150,8 @@ definition {
 	}
 
 	@description = "Add Service Provider Configurations to Identity Provider"
-	macro addSPConfigurationsToIdentityProvider {
+	@summary = "Default summary"
+	macro addSPConfigurationsToIdentityProvider(uploadMetadataXML = null,nameIdentifierFormat = null,spEntityId = null,idpURL = null,spKeepAliveURL = null,userEmailAddress = null,spURL = null,nameIdentifierAttributeName = null,spAttributes = null) {
 
 		// Add a configured SP connection to an IdP
 
@@ -185,7 +190,8 @@ definition {
 	}
 
 	@description = "Add virtual instances"
-	macro addVirtualInstances {
+	@summary = "Default summary"
+	macro addVirtualInstances(instanceAdminLastName = null,virtualHosts = null,instanceAdminFirstName = null,instanceScreenName = null,instancePassword = null,instanceAdminEmail = null) {
 
 		// Add new virtual instance to be the SP site
 
@@ -215,19 +221,22 @@ definition {
 		User.viewLoggedOutPG();
 	}
 
-	macro assertSAMLAdminInfoMessage {
+	@summary = "Default summary"
+	macro assertSAMLAdminInfoMessage() {
 		AssertTextEquals(
 			locator1 = "CPSAMLAdmin#INFO_MESSAGE",
 			value1 = "You must configure at least one identity provider connection for SAML to function.");
 	}
 
-	macro assertSAMLMetadataAlertMessage {
+	@summary = "Default summary"
+	macro assertSAMLMetadataAlertMessage() {
 		AssertTextEquals(
 			locator1 = "CPSAMLAdmin#METADATA_ALERT_MESSAGE",
 			value1 = "The connected provider is configured through an uploaded metadata file.");
 	}
 
-	macro assertSAMLRequestNotValid {
+	@summary = "Default summary"
+	macro assertSAMLRequestNotValid() {
 		AssertClick(
 			locator1 = "UserBar#USER_SIGN_IN",
 			value1 = "Sign In");
@@ -239,11 +248,13 @@ definition {
 		AssertConsoleTextPresent(value1 = "Validation of protocol message signature failed");
 	}
 
-	macro assertSignInNotPresent {
+	@summary = "Default summary"
+	macro assertSignInNotPresent() {
 		AssertElementNotPresent(locator1 = "UserBar#USER_SIGN_IN");
 	}
 
-	macro assertTextCountFromHtml {
+	@summary = "Default summary"
+	macro assertTextCountFromHtml(value = null) {
 		var count = Page.getTextCountFromHtmlSource(text = "document.write");
 
 		if (${count} != ${value}) {
@@ -251,13 +262,15 @@ definition {
 		}
 	}
 
-	macro clickAtSignIn {
+	@summary = "Default summary"
+	macro clickAtSignIn() {
 		AssertClick(
 			locator1 = "UserBar#USER_SIGN_IN",
 			value1 = "Sign In");
 	}
 
-	macro clickAtWarningEmailLink {
+	@summary = "Default summary"
+	macro clickAtWarningEmailLink() {
 		AssertClick(
 			locator1 = "UserBar#USER_SIGN_IN",
 			value1 = "Sign In");
@@ -268,7 +281,8 @@ definition {
 	}
 
 	@description = "Configures Liferay SAML as the IdP"
-	macro configureLiferaySAMLAsIdP {
+	@summary = "Default summary"
+	macro configureLiferaySAMLAsIdP(idpSessionMaximumAge = null,idpSessionIdleTimeout = null,idpURL = null,userEmailAddress = null,samlEntityId = null,keystoreEnabled = null) {
 
 		// Configure IdP (Identity Provider) on specific Portal URL or default to current URL
 
@@ -316,7 +330,8 @@ definition {
 	}
 
 	@description = "Configures Liferay SAML as the SP."
-	macro configureLiferaySAMLAsSP {
+	@summary = "Default summary"
+	macro configureLiferaySAMLAsSP(idpCustomFieldAttributeMappingText = null,spKeepAliveURL = null,userEmailAddress = null,samlEntityId = null,idpAttributeMappingText = null,nameIdentifierAttributeName = null,userResolution = null,spAttributes = null,idpCustomFieldAttributeMapping = null,idpKeepAliveURL = null,idpAttributeMapping = null,nameIdentifierFormat = null,userMatchingAttributeIndex = null,spURL = null,encryptionCertificate = null) {
 		Navigator.openSpecificURL(url = ${spURL});
 
 		takeScreenshot();
@@ -377,7 +392,8 @@ definition {
 	}
 
 	@description = "Connect SP and IdP."
-	macro connectSPAndIdP {
+	@summary = "Default summary"
+	macro connectSPAndIdP(idpCustomFieldAttributeMappingText = null,spEntityId = null,spKeepAliveURL = null,idpAttributeMappingText = null,sPUserEmailAddress = null,userResolution = null,nameIdentifierAttributeName = null,idpEntityId = null,spAttributes = null,idpCustomFieldAttributeMapping = null,idpKeepAliveURL = null,idpAttributeMapping = null,nameIdentifierFormat = null,customFieldUserMatching = null,userMatchingAttributeIndex = null,idpURL = null,keepSPLogin = null,spURL = null) {
 
 		// Add a configured IdP connection to an SP
 
@@ -453,7 +469,8 @@ definition {
 	}
 
 	@description = "Delete SAML certificate from a Service Provider's settings"
-	macro deleteSPCertificate {
+	@summary = "Default summary"
+	macro deleteSPCertificate(specificURL = null,userEmailAddress = null) {
 		User.firstLoginUI(
 			specificURL = ${specificURL},
 			userEmailAddress = ${userEmailAddress});
@@ -470,14 +487,16 @@ definition {
 		User.viewLoggedOutPG();
 	}
 
-	macro downloadCertificate {
+	@summary = "Default summary"
+	macro downloadCertificate(certificate = null) {
 		Click(
 			key_certificateUsage = ${certificate},
 			locator1 = "CPSAMLAdmin#DOWNLOAD_CERTIFICATE");
 	}
 
 	@description = "Edit Identity Provider Configurations of SP"
-	macro editIdentityProviderConnection {
+	@summary = "Default summary"
+	macro editIdentityProviderConnection(idpMetadataURL = null,idpAttributeMappingOld = null,changeToURL = null,uploadMetadataXML = null,userEmailAddress = null,changeToXML = null,idpAttributeMappingNew = null,spURL = null,idpAttributeMappingText = null,idpEntityId = null) {
 		User.firstLoginUI(
 			password = "test",
 			specificURL = "${spURL}/?p_p_id=com_liferay_login_web_portlet_LoginPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_login_web_portlet_LoginPortlet_mvcRenderCommandName=%2Flogin%2Flogin&saveLastPath=false",
@@ -505,7 +524,8 @@ definition {
 	}
 
 	@description = "Edit Service Provider Configurations of IdP"
-	macro editServiceProviderConnection {
+	@summary = "Default summary"
+	macro editServiceProviderConnection(spEntityId = null,idpURL = null,spAttributes = null) {
 		User.firstLoginUI(
 			password = "test",
 			specificURL = ${idpURL},
@@ -523,7 +543,8 @@ definition {
 	}
 
 	@description = "Enable encryption on Service Provider connection"
-	macro enableEncryptionOnSPConnection {
+	@summary = "Default summary"
+	macro enableEncryptionOnSPConnection(idpURL = null,userEmailAddress = null,samlEntityId = null) {
 		if (isSet(userEmailAddress)) {
 			User.firstLoginUI(
 				password = "test",
@@ -549,7 +570,8 @@ definition {
 	}
 
 	@description = "Enable SAML debug logs at localhost"
-	macro enableSAMLDebugLogs {
+	@summary = "Default summary"
+	macro enableSAMLDebugLogs() {
 
 		// Enable SAML debug logs
 
@@ -565,7 +587,8 @@ definition {
 	}
 
 	@description = "7.4-SAML-S2: Configure Portal Instance to act as a SAML Service Provider"
-	macro enableSPRoles {
+	@summary = "Default summary"
+	macro enableSPRoles(userEmailAddress = null,spURL = null,samlEntityId = null) {
 		if (isSet(userEmailAddress)) {
 			User.firstLoginUI(
 				password = "test",
@@ -591,9 +614,10 @@ definition {
 	}
 
 	@description = "Sign into portal by executing a IdP initiated SSO login. The IdP will redirect to the SP. If the same users with the same email address are present on both instances, it will authenticate and show the SP. SAML can authenticate across major portal versions, that is, the IdP can be Portal 6.1 EE GA3 and the SP can be Portal 6.2. EE GA1. For testing purposes, it is obvious if the authentication succeeds or fails if the IdP and SP are different portal versions."
-	macro executeIdPInitiatedSSO {
+	@summary = "Default summary"
+	macro executeIdPInitiatedSSO(password = null,idpInitiatedSsourl = null,userEmailAddress = null,spURL = null,autoLogin = null) {
 		if (${autoLogin} == "true") {
-			Open.openNoError(locator1 = ${idpInitiatedSsourl});
+			Open.openNoError(value1 = ${idpInitiatedSsourl});
 
 			AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
 		}
@@ -610,7 +634,8 @@ definition {
 	}
 
 	@description = "Sign into portal by executing a SP initiated SSO login. In the SP, click on the Sign In button to."
-	macro executeSPInitiatedSSO {
+	@summary = "Default summary"
+	macro executeSPInitiatedSSO(idpName = null,samlMultiIdPs = null,userEmailAddress = null,spURL = null,autoLogin = null) {
 		if (${autoLogin} == "true") {
 			Navigator.openSpecificURL(url = ${spURL});
 
@@ -639,19 +664,22 @@ definition {
 	}
 
 	@description = "Go to SAML Admin Portlet"
-	macro goToSAMLAdmin {
+	@summary = "Default summary"
+	macro goToSAMLAdmin(baseURL = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_saml_web_internal_portlet_SamlAdminPortlet");
 	}
 
-	macro loginIfProductMenuNotOpened {
+	@summary = "Default summary"
+	macro loginIfProductMenuNotOpened() {
 		if (IsElementNotPresent(locator1 = "ProductMenu#PRODUCT_MENU_OPENED")) {
 			Navigator.gotoLoginPage();
 		}
 	}
 
-	macro loginIfUSerAvatarNotPresent {
+	@summary = "Default summary"
+	macro loginIfUSerAvatarNotPresent() {
 		if (IsElementNotPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
 			User.firstLoginUI(
 				password = "test",
@@ -660,7 +688,8 @@ definition {
 		}
 	}
 
-	macro removeEntryFromTable {
+	@summary = "Default summary"
+	macro removeEntryFromTable(rowNumber = null) {
 		if (isSet(rowNumber)) {
 			Click(
 				key_rowIndexNumber = ${rowNumber},
@@ -673,7 +702,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro resetPasswordOfUserAtSpecificHost {
+	@summary = "Default summary"
+	macro resetPasswordOfUserAtSpecificHost(newUserEmailAddress = null) {
 		Variables.assertDefined(parameterList = "${specificURL},${portalInstanceName},${userEmailAddress},${creatorEmailAddress},${creatorPassword}");
 
 		// Transfer variables from test case level to macro level
@@ -795,7 +825,8 @@ definition {
 	}
 
 	@description = "7.4-SAML-S1: Configure Portal Instance to act as a SAML Identity Provider"
-	macro setupIDP {
+	@summary = "Default summary"
+	macro setupIDP(idpSessionMaximumAge = null,idpSessionIdleTimeout = null,idpURL = null,userEmailAddress = null,samlEntityId = null,keystoreEnabled = null) {
 		SAML.configureLiferaySAMLAsIdP(
 			idpSessionIdleTimeout = ${idpSessionIdleTimeout},
 			idpSessionMaximumAge = ${idpSessionMaximumAge},
@@ -812,7 +843,8 @@ definition {
 	}
 
 	@description = "7.4-SAML-S2: Configure Portal Instance to act as a SAML Service Provider"
-	macro setupSP {
+	@summary = "Default summary"
+	macro setupSP(userEmailAddress = null,spURL = null,samlEntityId = null,keystoreEnabled = null,encryptionCertificate = null) {
 		Navigator.openSpecificURL(url = ${spURL});
 
 		if (IsElementNotPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
@@ -857,29 +889,34 @@ definition {
 		User.viewLoggedOutPG();
 	}
 
-	macro viewAllAttributeMappingsMustSpecifyASAMLAttributeErrorMessage {
+	@summary = "Default summary"
+	macro viewAllAttributeMappingsMustSpecifyASAMLAttributeErrorMessage() {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_DISMISSIBLE",
 			value1 = "Basic User Fields: All attribute mappings must specify a SAML attribute.");
 	}
 
-	macro viewAuthenticationFailedErrorMessage {
+	@summary = "Default summary"
+	macro viewAuthenticationFailedErrorMessage() {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_DISMISSIBLE",
 			value1 = "Authentication failed. Please try again.");
 	}
 
-	macro viewEachUserFieldCanOnlyBeMappedToOneSAMLAttributeErrorMessage {
+	@summary = "Default summary"
+	macro viewEachUserFieldCanOnlyBeMappedToOneSAMLAttributeErrorMessage() {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_DISMISSIBLE",
 			value1 = "Basic User Fields: Each user field can only be mapped to one SAML attribute.");
 	}
 
-	macro viewEmailInputPresent {
+	@summary = "Default summary"
+	macro viewEmailInputPresent() {
 		AssertElementPresent(locator1 = "TextInput#EMAIL_ADDRESS");
 	}
 
-	macro viewIdPIconTooltip {
+	@summary = "Default summary"
+	macro viewIdPIconTooltip() {
 		MouseOver(locator1 = "Icon#TOOLTIP");
 
 		AssertTextEquals.assertPartialText(
@@ -887,34 +924,39 @@ definition {
 			value1 = "The identity provider role has been disabled. It can be re-enabled in System Settings.");
 	}
 
-	macro viewNoAttributeMappingSelectedForUserMatching {
+	@summary = "Default summary"
+	macro viewNoAttributeMappingSelectedForUserMatching() {
 		AssertConsoleTextPresent(value1 = "No attribute mapping selected for user matching");
 
 		AssertElementPresent(locator1 = "CPSAMLAdminIdentityProviderConnection#IDENTITY_PROVIDER_CONNECTION_ERROR_NO_MAPPING_SELECTED");
 	}
 
-	macro viewNoDuplicateUser {
+	@summary = "Default summary"
+	macro viewNoDuplicateUser(user = null) {
 		AssertElementNotPresent(locator1 = "xpath=(//tr[contains(.,'${user}')][2]/td[2]/a)");
 	}
 
-	macro viewNoIdentityProviderAvailableMessage {
+	@summary = "Default summary"
+	macro viewNoIdentityProviderAvailableMessage() {
 		AssertTextEquals(
 			locator1 = "Portlet#PORTLET_CONTENT",
 			value1 = "No identity provider is available to sign you in.");
 	}
 
-	macro viewSessionExpired {
+	@summary = "Default summary"
+	macro viewSessionExpired(timer = null) {
 
 		// This pause is required to allow the test to wait for the session to expire.
 
-		Pause(locator1 = ${timer});
+		Pause(value1 = ${timer});
 
 		AssertTextEquals(
 			locator1 = "Home#ERROR_MESSAGE_EXPIRED_SESSION",
 			value1 = "Danger:Due to inactivity, your session has expired. Before you continue, make sure your entered data is saved locally.");
 	}
 
-	macro viewTesterRequestResults {
+	@summary = "Default summary"
+	macro viewTesterRequestResults(entry1 = null,entry = null) {
 		AssertTextEquals.assertPartialText(
 			locator1 = "OAuth2#OAUTH2_TESTER_REQUEST_RESULTS",
 			value1 = ${entry1},
@@ -923,13 +965,15 @@ definition {
 			value4 = ${entry});
 	}
 
-	macro viewUnableToProcessSAMLRequest {
+	@summary = "Default summary"
+	macro viewUnableToProcessSAMLRequest() {
 		AssertTextEquals(
 			locator1 = "Portlet#PORTLET_CONTENT",
 			value1 = "Unable to process SAML request.");
 	}
 
-	macro waitForSLO {
+	@summary = "Default summary"
+	macro waitForSLO() {
 		var key_title = "Signing Out from Services";
 
 		WaitForElementPresent(locator1 = "Header#H3_TITLE");

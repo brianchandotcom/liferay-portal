@@ -1,6 +1,7 @@
 definition {
 
-	macro addAccountEntry {
+	@summary = "Default summary"
+	macro addAccountEntry(accountName = null) {
 		Variables.assertDefined(parameterList = ${accountName});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -40,7 +41,8 @@ definition {
 		echo(${response});
 	}
 
-	macro addActivity {
+	@summary = "Default summary"
+	macro addActivity(endDate = null,activityName = null,totalMDFRequestAmount = null,mdfExternalReferenceCode = null,activityExternalReferenceCode = null,budgetValue = null,requestId = null,activityDescription = null,startDate = null,expenseOption = null) {
 		Variables.assertDefined(parameterList = ${requestId});
 
 		if (!(isSet(accountEntryName))) {
@@ -157,7 +159,8 @@ definition {
 		return ${activityId};
 	}
 
-	macro addActivitySf {
+	@summary = "Default summary"
+	macro addActivitySf(endDate = null,activityName = null,totalMDFRequestAmount = null,mdfExternalReferenceCode = null,budgetValue = null,requestId = null,activityDescription = null,startDate = null,expenseOption = null) {
 		Variables.assertDefined(parameterList = ${requestId});
 
 		if (!(isSet(accountEntryName))) {
@@ -273,7 +276,8 @@ definition {
 		return ${activityExternalReferenceCode};
 	}
 
-	macro addBudget {
+	@summary = "Default summary"
+	macro addBudget(activityId = null,activityExternalReferenceCode = null,budgetValue = null) {
 		Variables.assertDefined(parameterList = ${activityId});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -316,7 +320,8 @@ definition {
 		echo(${response});
 	}
 
-	macro addMDF {
+	@summary = "Default summary"
+	macro addMDF(goalsOptions = null,mdfRequestStatusKey = null,endDate = null,mdfExternalReferenceCode = null,totalMDFRequestAmount = null,targetRolesOptions = null,totalCostOfExpense = null,campaignDescription = null,targetMarketOptions = null,campaignName = null,startDate = null,mdfRequestStatus = null) {
 		Variables.assertDefined(parameterList = ${campaignName});
 
 		if (!(isSet(emailAddress))) {
@@ -388,7 +393,8 @@ definition {
 		return ${response};
 	}
 
-	macro addMDFSf {
+	@summary = "Default summary"
+	macro addMDFSf(goalsOptions = null,mdfRequestStatusKey = null,endDate = null,totalMDFRequestAmount = null,targetRolesOptions = null,totalCostOfExpense = null,campaignDescription = null,targetMarketOptions = null,campaignName = null,startDate = null) {
 		Variables.assertDefined(parameterList = ${campaignName});
 
 		if (!(isSet(emailAddress))) {
@@ -460,7 +466,8 @@ definition {
 		return ${mdfExternalReferenceCode};
 	}
 
-	macro approveActivity {
+	@summary = "Default summary"
+	macro approveActivity(activityId = null) {
 		Variables.assertDefined(parameterList = ${activityId});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -486,7 +493,8 @@ definition {
 		var response = JSONCurlUtil.patch(${curl});
 	}
 
-	macro changeClaimStatus {
+	@summary = "Default summary"
+	macro changeClaimStatus(statusKey = null,claimId = null) {
 		Variables.assertDefined(parameterList = ${claimId});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -514,7 +522,8 @@ definition {
 		echo(${response});
 	}
 
-	macro changeMDFStatus {
+	@summary = "Default summary"
+	macro changeMDFStatus(requestId = null,statusKey = null) {
 		Variables.assertDefined(parameterList = ${requestId});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -543,7 +552,8 @@ definition {
 		echo(${response});
 	}
 
-	macro getAccountExternalReferenceCode {
+	@summary = "Default summary"
+	macro getAccountExternalReferenceCode(accountEntryName = null,externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = ${accountEntryName});
 
 		if (!(isSet(emailAddress))) {
@@ -579,7 +589,8 @@ definition {
 		}
 	}
 
-	macro getMDFRequestActivityId {
+	@summary = "Default summary"
+	macro getMDFRequestActivityId(requestId = null) {
 		Variables.assertDefined(parameterList = ${requestId});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -606,7 +617,8 @@ definition {
 		return ${activityListId};
 	}
 
-	macro updateAccount {
+	@summary = "Default summary"
+	macro updateAccount(accountName = null) {
 		Variables.assertDefined(parameterList = ${accountName});
 
 		var portalURL = JSONCompany.getPortalURL();

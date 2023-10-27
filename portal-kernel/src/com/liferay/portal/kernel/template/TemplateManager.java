@@ -11,15 +11,11 @@ package com.liferay.portal.kernel.template;
  */
 public interface TemplateManager {
 
-	public void destroy();
-
 	public String getName();
 
 	public String[] getRestrictedVariables();
 
 	public Template getTemplate(
 		TemplateResource templateResource, boolean restricted);
-
-	public void init() throws TemplateException;
 
 }

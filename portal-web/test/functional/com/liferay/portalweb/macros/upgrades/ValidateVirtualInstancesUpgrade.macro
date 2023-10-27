@@ -1,6 +1,7 @@
 definition {
 
-	macro viewCustomObjectsUpgrade {
+	@summary = "Default summary"
+	macro viewCustomObjectsUpgrade() {
 		task ("Assert custom object on default instance") {
 			Navigator.openURL();
 
@@ -101,7 +102,8 @@ definition {
 		}
 	}
 
-	macro viewVirtualInstancesUpgrade {
+	@summary = "Default summary"
+	macro viewVirtualInstancesUpgrade() {
 		task ("Assert user on default instance") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Users",

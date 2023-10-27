@@ -1,6 +1,7 @@
 definition {
 
-	macro _gotoPage {
+	@summary = "Default summary"
+	macro _gotoPage(pageName = null) {
 		var key_pageName = ${pageName};
 		var count = 0;
 
@@ -15,7 +16,8 @@ definition {
 		AssertVisible(locator1 = "Home#PAGE_ACTIVE");
 	}
 
-	macro _isLocalizedURL {
+	@summary = "Default summary"
+	macro _isLocalizedURL(locale = null) {
 		var currentURL = Navigator.getCurrentURL();
 		var portalURL = JSONCompany.getPortalURL();
 		var isLocalizedURL = "false";
@@ -27,17 +29,20 @@ definition {
 		return ${isLocalizedURL};
 	}
 
-	macro closeSpecificWindow {
+	@summary = "Default summary"
+	macro closeSpecificWindow(closeWindowTitle = null,selectWindowTitle = null) {
 		Navigator.selectSpecificWindow(windowTitle = ${closeWindowTitle});
 
-		Close.closeAndSelectWindow(locator1 = "title=${selectWindowTitle}");
+		Close.closeAndSelectWindow(value1 = "title=${selectWindowTitle}");
 	}
 
-	macro closeWindow {
+	@summary = "Default summary"
+	macro closeWindow() {
 		Close.closeWindow();
 	}
 
-	macro ensureLocaleURL {
+	@summary = "Default summary"
+	macro ensureLocaleURL(locale = null) {
 		var isLocalizedURL = Navigator._isLocalizedURL(locale = ${locale});
 
 		if (${isLocalizedURL} == "false") {
@@ -48,21 +53,25 @@ definition {
 		}
 	}
 
-	macro getCurrentURL {
+	@summary = "Default summary"
+	macro getCurrentURL() {
 		var currentURL = selenium.getLocation();
 
 		return ${currentURL};
 	}
 
-	macro gotoAccountSettings {
+	@summary = "Default summary"
+	macro gotoAccountSettings() {
 		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
 	}
 
-	macro gotoBack {
+	@summary = "Default summary"
+	macro gotoBack() {
 		Click(locator1 = "Icon#BACK");
 	}
 
-	macro gotoEditPageViaControlMenu {
+	@summary = "Default summary"
+	macro gotoEditPageViaControlMenu(pageName = null) {
 		Click(locator1 = "ControlMenu#EDIT_COG");
 
 		AssertTextEquals(
@@ -70,7 +79,8 @@ definition {
 			value1 = ${pageName});
 	}
 
-	macro gotoLiveView {
+	@summary = "Default summary"
+	macro gotoLiveView() {
 		if (isSet(remoteStaging)) {
 			Click(
 				key_navItem = "Go to Remote Live",
@@ -83,13 +93,15 @@ definition {
 		}
 	}
 
-	macro gotoLoginPage {
+	@summary = "Default summary"
+	macro gotoLoginPage() {
 		AssertClick(
 			locator1 = "UserBar#USER_SIGN_IN",
 			value1 = "Sign In");
 	}
 
-	macro gotoNavItem {
+	@summary = "Default summary"
+	macro gotoNavItem(navItem = null) {
 		var key_navItem = ${navItem};
 
 		AssertClick(
@@ -99,7 +111,8 @@ definition {
 		AssertElementPresent(locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK");
 	}
 
-	macro gotoNavNested {
+	@summary = "Default summary"
+	macro gotoNavNested(navNested = null) {
 		var key_navNested = ${navNested};
 
 		AssertClick.assertPartialTextClickAt(
@@ -109,7 +122,8 @@ definition {
 		AssertElementPresent(locator1 = "NavNested#ACTIVE_NAV_NESTED_LINK");
 	}
 
-	macro gotoNavTab {
+	@summary = "Default summary"
+	macro gotoNavTab(navTab = null) {
 		var key_tab = ${navTab};
 
 		if (IsElementNotPresent(locator1 = "NavTab#ACTIVE_TAB_LINK")) {
@@ -123,7 +137,8 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
-	macro gotoNavUnderline {
+	@summary = "Default summary"
+	macro gotoNavUnderline(navUnderline = null) {
 		var key_navUnderline = ${navUnderline};
 
 		if (IsElementNotPresent(locator1 = "NavUnderline#ACTIVE_NAV_UNDERLINE_LINK")) {
@@ -135,23 +150,27 @@ definition {
 		AssertElementPresent(locator1 = "NavUnderline#ACTIVE_NAV_UNDERLINE_LINK");
 	}
 
-	macro gotoNotifications {
+	@summary = "Default summary"
+	macro gotoNotifications() {
 		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
 	}
 
-	macro gotoPage {
+	@summary = "Default summary"
+	macro gotoPage(baseURL = null,pageName = null) {
 		Navigator.openURL(baseURL = ${baseURL});
 
-		Pause(locator1 = 3000);
+		Pause(value1 = 3000);
 
 		Navigator._gotoPage(pageName = ${pageName});
 	}
 
-	macro gotoPersonalSite {
+	@summary = "Default summary"
+	macro gotoPersonalSite() {
 		UserBar.gotoDropdownItem(dropdownItem = "My Profile");
 	}
 
-	macro gotoPrivateSitePage {
+	@summary = "Default summary"
+	macro gotoPrivateSitePage(baseURL = null,siteName = null,pageName = null) {
 		Navigator.openPrivateSiteURL(
 			baseURL = ${baseURL},
 			siteName = ${siteName});
@@ -159,7 +178,8 @@ definition {
 		Navigator._gotoPage(pageName = ${pageName});
 	}
 
-	macro gotoPrivateStagedSitePage {
+	@summary = "Default summary"
+	macro gotoPrivateStagedSitePage(baseURL = null,siteName = null,pageName = null) {
 		Navigator.openPrivateStagedSiteURL(
 			baseURL = ${baseURL},
 			siteNameURL = ${siteName});
@@ -167,7 +187,8 @@ definition {
 		Navigator._gotoPage(pageName = ${pageName});
 	}
 
-	macro gotoSidebarTab {
+	@summary = "Default summary"
+	macro gotoSidebarTab(tabName = null) {
 		var key_tabName = ${tabName};
 
 		if (IsElementNotPresent(locator1 = "Sidebar#ACTIVE_TAB")) {
@@ -179,7 +200,8 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
-	macro gotoSitePage {
+	@summary = "Default summary"
+	macro gotoSitePage(baseURL = null,siteName = null,pageName = null) {
 		Navigator.openSiteURL(
 			baseURL = ${baseURL},
 			siteName = ${siteName});
@@ -187,13 +209,15 @@ definition {
 		Navigator._gotoPage(pageName = ${pageName});
 	}
 
-	macro gotoSpecificURLPage {
+	@summary = "Default summary"
+	macro gotoSpecificURLPage(pageName = null,url = null) {
 		Navigator.openSpecificURL(url = ${url});
 
 		Navigator._gotoPage(pageName = ${pageName});
 	}
 
-	macro gotoStagedSitePage {
+	@summary = "Default summary"
+	macro gotoStagedSitePage(baseURL = null,siteName = null,defaultSite = null,pageName = null) {
 		Navigator.openStagingSiteURL(
 			baseURL = ${baseURL},
 			defaultSite = ${defaultSite},
@@ -202,7 +226,8 @@ definition {
 		Navigator._gotoPage(pageName = ${pageName});
 	}
 
-	macro gotoStagedView {
+	@summary = "Default summary"
+	macro gotoStagedView() {
 		ProductMenuHelper.openProductMenu();
 
 		Click(locator1 = "Link#STAGING");
@@ -210,11 +235,13 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
-	macro openNodePort {
-		Open(locator1 = "http://localhost:${nodePort}");
+	@summary = "Default summary"
+	macro openNodePort(nodePort = null) {
+		Open(value1 = "http://localhost:${nodePort}");
 	}
 
-	macro openPrivateSitePageURL {
+	@summary = "Default summary"
+	macro openPrivateSitePageURL(siteName = null,pageName = null) {
 		var siteNameURL = StringUtil.replace(${siteName}, " ", "-");
 
 		var siteNameURL = StringUtil.lowerCase(${siteNameURL});
@@ -227,10 +254,11 @@ definition {
 			var baseURL = JSONCompany.getPortalURL();
 		}
 
-		Open(locator1 = "${baseURL}/group/${siteNameURL}/${pageNameURL}");
+		Open(value1 = "${baseURL}/group/${siteNameURL}/${pageNameURL}");
 	}
 
-	macro openPrivateSiteURL {
+	@summary = "Default summary"
+	macro openPrivateSiteURL(siteName = null) {
 		var siteNameURL = StringUtil.replace(${siteName}, " ", "-");
 
 		var siteNameURL = StringUtil.lowerCase(${siteNameURL});
@@ -240,10 +268,11 @@ definition {
 			var baseURL = JSONCompany.getPortalURL();
 		}
 
-		Open(locator1 = "${baseURL}/group/${siteNameURL}");
+		Open(value1 = "${baseURL}/group/${siteNameURL}");
 	}
 
-	macro openPrivateStagedSiteURL {
+	@summary = "Default summary"
+	macro openPrivateStagedSiteURL() {
 		var siteNameURL = StringUtil.replace(${siteNameURL}, " ", "-");
 
 		var siteNameURL = StringUtil.lowerCase(${siteNameURL});
@@ -253,20 +282,22 @@ definition {
 			var baseURL = JSONCompany.getPortalURL();
 		}
 
-		Open(locator1 = "${baseURL}/group/${siteNameURL}-staging");
+		Open(value1 = "${baseURL}/group/${siteNameURL}-staging");
 	}
 
-	macro openPrivateURL {
+	@summary = "Default summary"
+	macro openPrivateURL() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = JSONCompany.getPortalURL();
 		}
 
-		Open(locator1 = "${baseURL}/group/guest");
+		Open(value1 = "${baseURL}/group/guest");
 	}
 
-	macro openSitePage {
+	@summary = "Default summary"
+	macro openSitePage(siteName = null,pageName = null) {
 		var siteNameURL = StringUtil.replace(${siteName}, " ", "-");
 
 		var siteNameURL = StringUtil.lowerCase(${siteNameURL});
@@ -280,10 +311,11 @@ definition {
 
 		var pageNameURL = StringUtil.lowerCase(${pageNameURL});
 
-		Open(locator1 = "${baseURL}/web/${siteNameURL}/${pageNameURL}");
+		Open(value1 = "${baseURL}/web/${siteNameURL}/${pageNameURL}");
 	}
 
-	macro openSiteStagingConfiguration {
+	@summary = "Default summary"
+	macro openSiteStagingConfiguration(siteName = null) {
 		var siteNameURL = StringUtil.replace(${siteName}, " ", "-");
 
 		var siteNameURL = StringUtil.lowerCase(${siteNameURL});
@@ -296,7 +328,8 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteNameURL}-staging/~/control_panel/manage?p_p_id=com_liferay_staging_processes_web_portlet_StagingProcessesPortlet");
 	}
 
-	macro openSiteURL {
+	@summary = "Default summary"
+	macro openSiteURL(siteName = null) {
 		var siteNameURL = StringUtil.replace(${siteName}, " ", "-");
 
 		var siteNameURL = StringUtil.lowerCase(${siteNameURL});
@@ -306,16 +339,18 @@ definition {
 			var baseURL = JSONCompany.getPortalURL();
 		}
 
-		Open(locator1 = "${baseURL}/web/${siteNameURL}");
+		Open(value1 = "${baseURL}/web/${siteNameURL}");
 	}
 
-	macro openSpecificURL {
-		Open(locator1 = ${url});
+	@summary = "Default summary"
+	macro openSpecificURL(domain = null,url = null) {
+		Open(value1 = ${url});
 
 		Alert.confirmSecurity(domain = ${domain});
 	}
 
-	macro openStagingSiteURL {
+	@summary = "Default summary"
+	macro openStagingSiteURL(siteName = null) {
 		var siteNameURL = StringUtil.replace(${siteName}, " ", "-");
 
 		var siteNameURL = StringUtil.lowerCase(${siteNameURL});
@@ -326,18 +361,20 @@ definition {
 		}
 
 		if (isSet(defaultSite)) {
-			Open(locator1 = "${baseURL}/web/guest-staging");
+			Open(value1 = "${baseURL}/web/guest-staging");
 		}
 		else {
-			Open(locator1 = "${baseURL}/web/${siteNameURL}-staging");
+			Open(value1 = "${baseURL}/web/${siteNameURL}-staging");
 		}
 	}
 
-	macro openStoreURL {
+	@summary = "Default summary"
+	macro openStoreURL() {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_marketplace_store_web_portlet_MarketplaceStorePortlet");
 	}
 
-	macro openToGroupPagesPortlet {
+	@summary = "Default summary"
+	macro openToGroupPagesPortlet(groupName = null,site = null,portalURL = null,siteURLKey = null,portlet = null,layoutName = null) {
 		var plid = JSONLayout.getPlid(
 			groupName = ${groupName},
 			layoutName = ${layoutName},
@@ -362,10 +399,11 @@ definition {
 			var baseURL = JSONCompany.getPortalURL();
 		}
 
-		Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_tabs1=pages&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_privateLayout=false&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_displayStyle=miller-columns&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_mvcRenderCommandName=%2Flayout_admin%2Fedit_layout&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_portletResource=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&p_r_p_selPlid=${plid}&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_screenNavigationEntryKey=${screenNavigationEntryKey}");
+		Open(value1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_tabs1=pages&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_privateLayout=false&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_displayStyle=miller-columns&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_mvcRenderCommandName=%2Flayout_admin%2Fedit_layout&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_portletResource=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&p_r_p_selPlid=${plid}&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_screenNavigationEntryKey=${screenNavigationEntryKey}");
 	}
 
-	macro openURL {
+	@summary = "Default summary"
+	macro openURL() {
 		WaitForSPARefresh();
 
 		var baseURL = ${baseURL};
@@ -374,34 +412,39 @@ definition {
 			var baseURL = JSONCompany.getPortalURL();
 		}
 
-		Open(locator1 = "${baseURL}/web/guest/home");
+		Open(value1 = "${baseURL}/web/guest/home");
 	}
 
-	macro openWithAppendToBaseURL {
+	@summary = "Default summary"
+	macro openWithAppendToBaseURL(urlAppend = null) {
 		if (!(isSet(baseURL))) {
 			var baseURL = JSONCompany.getPortalURL();
 		}
 
-		Open(locator1 = "${baseURL}/${urlAppend}");
+		Open(value1 = "${baseURL}/${urlAppend}");
 	}
 
-	macro selectSpecificWindow {
-		SelectWindow(locator1 = "title=${windowTitle}");
+	@summary = "Default summary"
+	macro selectSpecificWindow(windowTitle = null) {
+		SelectWindow(value1 = "title=${windowTitle}");
 	}
 
-	macro viewActivatedNavTab {
+	@summary = "Default summary"
+	macro viewActivatedNavTab(navTab = null) {
 		AssertElementPresent(
 			key_tab = ${navTab},
 			locator1 = "NavTab#ACTIVE_TAB_LINK");
 	}
 
-	macro viewNavTab {
+	@summary = "Default summary"
+	macro viewNavTab(navTab = null) {
 		AssertVisible(
 			key_tab = ${navTab},
 			locator1 = "NavTab#TAB_LINK");
 	}
 
-	macro viewNoNavTab {
+	@summary = "Default summary"
+	macro viewNoNavTab(navTab = null) {
 		AssertElementNotPresent(
 			key_tab = ${navTab},
 			locator1 = "NavTab#TAB_LINK");

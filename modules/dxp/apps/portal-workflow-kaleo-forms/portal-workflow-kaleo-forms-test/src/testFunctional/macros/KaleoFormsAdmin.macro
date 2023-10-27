@@ -1,6 +1,7 @@
 definition {
 
-	macro addFieldSet {
+	@summary = "Default summary"
+	macro addFieldSet(kfFieldSetName = null) {
 		if (IsElementPresent(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS")) {
 			KaleoFormsNavigator.gotoManageFieldSets();
 
@@ -23,7 +24,8 @@ definition {
 		}
 	}
 
-	macro addForm {
+	@summary = "Default summary"
+	macro addForm(kfFormName = null) {
 		SelectFrame(locator1 = "DDMEditStructure#IFRAME");
 
 		LexiconEntry.gotoAddNoSelectFrame();
@@ -37,7 +39,8 @@ definition {
 		}
 	}
 
-	macro addProcess {
+	@summary = "Default summary"
+	macro addProcess() {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Kaleo Forms Admin");
@@ -49,7 +52,8 @@ definition {
 		LexiconEntry.gotoAdd();
 	}
 
-	macro addProcessDetails {
+	@summary = "Default summary"
+	macro addProcessDetails(kfProcessName = null,kfProcessDescription = null) {
 		KaleoFormsAdmin.viewNewProcessProgressBar(
 			kfProgressName = "Details",
 			kfProgressStep = 1);
@@ -69,7 +73,8 @@ definition {
 			fieldValue = ${kfProcessDescription});
 	}
 
-	macro addWorkflow {
+	@summary = "Default summary"
+	macro addWorkflow(workflowDefinitionTitle = null) {
 		SetWindowSize.maximizeWindow();
 
 		KaleoFormsAdmin.viewNewProcessProgressBar(
@@ -85,15 +90,18 @@ definition {
 		PortletEntry.inputTitle(title = ${workflowDefinitionTitle});
 	}
 
-	macro assertPaginationBarNotPresent {
+	@summary = "Default summary"
+	macro assertPaginationBarNotPresent() {
 		AssertElementNotPresent(locator1 = "Pagination#PAGINATION_BAR");
 	}
 
-	macro assertPaginationBarPresent {
+	@summary = "Default summary"
+	macro assertPaginationBarPresent() {
 		AssertElementPresent(locator1 = "Pagination#PAGINATION_BAR");
 	}
 
-	macro assignForm {
+	@summary = "Default summary"
+	macro assignForm(workflowTask = null,kfPendingForm = null) {
 		KaleoFormsAdmin.viewNewProcessProgressBar(
 			kfProgressName = "Forms",
 			kfProgressStep = 4);
@@ -111,7 +119,8 @@ definition {
 			rowEntry = ${workflowTask});
 	}
 
-	macro assignNewForm {
+	@summary = "Default summary"
+	macro assignNewForm(workflowTask = null,kfFormNameNew = null,kfProcessName = null) {
 		KaleoFormsAdmin.editProcess(kfProcessName = ${kfProcessName});
 
 		KaleoFormsAdmin.gotoProgressStep(kfProgressName = "Forms");
@@ -129,19 +138,22 @@ definition {
 		KaleoFormsAdmin.saveProcess();
 	}
 
-	macro cancelProcessRecordDetailsView {
+	@summary = "Default summary"
+	macro cancelProcessRecordDetailsView() {
 		AssertClick(
 			locator1 = "Button#CANCEL",
 			value1 = "Cancel");
 	}
 
-	macro checkboxesInProcessTable {
+	@summary = "Default summary"
+	macro checkboxesInProcessTable(checkProcessName = null) {
 		Check(
 			key_checkboxOption = ${checkProcessName},
 			locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
 	}
 
-	macro chooseFieldSet {
+	@summary = "Default summary"
+	macro chooseFieldSet(kfFieldSetName = null,kfPendingForm = null) {
 		KaleoFormsAdmin.viewNewProcessProgressBar(
 			kfProgressName = "Fields",
 			kfProgressStep = 2);
@@ -163,7 +175,8 @@ definition {
 			value1 = ${kfFieldSetName});
 	}
 
-	macro chooseForm {
+	@summary = "Default summary"
+	macro chooseForm(kfFormName = null) {
 		DynamicDataMapping.selectDynamicDataMappingFrame();
 
 		var key_kfFormName = ${kfFormName};
@@ -177,7 +190,8 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
-	macro chooseWorkflow {
+	@summary = "Default summary"
+	macro chooseWorkflow(workflowDefinitionTitleEdit = null,workflowDefinitionTitle = null,edit = null,kfPendingForm = null) {
 		KaleoFormsAdmin.viewNewProcessProgressBar(
 			kfProgressName = "Workflow",
 			kfProgressStep = 3);
@@ -214,7 +228,8 @@ definition {
 			workflowDefinitionTitle = ${workflowDefinitionTitle});
 	}
 
-	macro closeWorkflowModal {
+	@summary = "Default summary"
+	macro closeWorkflowModal() {
 		SelectFrame(value1 = "relative=top");
 
 		if (IsElementPresent(locator1 = "IFrame#MODAL_BODY")) {
@@ -224,7 +239,8 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
-	macro createKaleoFormsProcess {
+	@summary = "Default summary"
+	macro createKaleoFormsProcess(kfFieldSetName = null,workflowDefinitionTitle = null,kfFormName = null,workflowTask = null,kfProcessName = null,kfProcessDescription = null) {
 		KaleoFormsAdmin.addProcessDetails(
 			kfProcessDescription = ${kfProcessDescription},
 			kfProcessName = ${kfProcessName});
@@ -256,7 +272,8 @@ definition {
 		KaleoFormsAdmin.saveProcess(kfProcessName = ${kfProcessName});
 	}
 
-	macro deactivateWorkflow {
+	@summary = "Default summary"
+	macro deactivateWorkflow(workflowDefinitionTitle = null) {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Unpublish",
 			rowEntry = ${workflowDefinitionTitle});
@@ -264,7 +281,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro deleteForm {
+	@summary = "Default summary"
+	macro deleteForm(kfFieldSetName = null,kfFormName = null) {
 		KaleoFormsNavigator.gotoManageForms(kfFieldSetName = ${kfFieldSetName});
 
 		Search.searchCP(searchTerm = ${kfFormName});
@@ -278,7 +296,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro deleteProcess {
+	@summary = "Default summary"
+	macro deleteProcess(kfProcessName = null) {
 		if (isSet(kfProcessName)) {
 			var key_rowEntry = ${kfProcessName};
 
@@ -302,7 +321,8 @@ definition {
 		}
 	}
 
-	macro deleteProcessRecord {
+	@summary = "Default summary"
+	macro deleteProcessRecord(kfProcessFieldData = null) {
 		var key_rowEntry = ${kfProcessFieldData};
 
 		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
@@ -316,7 +336,8 @@ definition {
 		KaleoFormsAdmin.viewProcessRecordTableRecordNotPresent(kfProcessFieldData = ${kfProcessFieldData});
 	}
 
-	macro deleteViaDeleteIcon {
+	@summary = "Default summary"
+	macro deleteViaDeleteIcon() {
 		ClickNoError(locator1 = "Icon#DELETE");
 
 		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
@@ -324,7 +345,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro deleteWorkflowDraft {
+	@summary = "Default summary"
+	macro deleteWorkflowDraft(workflowDefinitionTitle = null) {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Delete",
 			rowEntry = ${workflowDefinitionTitle});
@@ -334,7 +356,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro editDescription {
+	@summary = "Default summary"
+	macro editDescription(fieldName = null,fieldValue = null) {
 		WaitForPageLoad();
 
 		Type(
@@ -343,7 +366,8 @@ definition {
 			value1 = ${fieldValue});
 	}
 
-	macro editFieldSet {
+	@summary = "Default summary"
+	macro editFieldSet(kfFieldSetName = null,kfFieldSetNameEdit = null) {
 		KaleoFormsAdmin.viewNewProcessProgressBar(
 			kfFieldSetName = ${kfFieldSetName},
 			kfProgressName = "Fields",
@@ -358,7 +382,8 @@ definition {
 		PortletEntry.inputName(name = ${kfFieldSetNameEdit});
 	}
 
-	macro editFieldSetPagination {
+	@summary = "Default summary"
+	macro editFieldSetPagination(paginationNumber = null) {
 		Click(locator1 = "KaleoFormsAdminEditProcess#FIELD_SET_PAGINATION_SELECTOR_BUTTON");
 
 		var key_paginationNumber = ${paginationNumber};
@@ -370,7 +395,8 @@ definition {
 			value1 = "${paginationNumber} Entries");
 	}
 
-	macro editForm {
+	@summary = "Default summary"
+	macro editForm(kfFormNameEdit = null,kfFormName = null) {
 		var key_kfFormName = ${kfFormName};
 
 		AssertClick(
@@ -390,13 +416,15 @@ definition {
 		}
 	}
 
-	macro editProcess {
+	@summary = "Default summary"
+	macro editProcess(kfProcessName = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${kfProcessName});
 	}
 
-	macro editProcessDetails {
+	@summary = "Default summary"
+	macro editProcessDetails(kfProcessDescriptionEdit = null,kfPendingForm = null,kfProcessNameEdit = null) {
 		KaleoFormsAdmin.viewNewProcessProgressBar(
 			kfProgressName = "Details",
 			kfProgressStep = 1);
@@ -422,7 +450,8 @@ definition {
 		}
 	}
 
-	macro editWorkflow {
+	@summary = "Default summary"
+	macro editWorkflow(workflowDefinitionTitleEdit = null,workflowDefinitionTitle = null) {
 		KaleoFormsAdmin.viewNewProcessProgressBar(
 			kfProgressName = "Workflow",
 			kfProgressStep = 3);
@@ -436,7 +465,8 @@ definition {
 		PortletEntry.inputTitle(title = ${workflowDefinitionTitleEdit});
 	}
 
-	macro editWorkflowDraft {
+	@summary = "Default summary"
+	macro editWorkflowDraft(workflowDefinitionTitle = null) {
 		var key_workflowDefinitionTitle = ${workflowDefinitionTitle};
 
 		AssertTextEquals(
@@ -450,7 +480,8 @@ definition {
 			rowEntry = ${workflowDefinitionTitle});
 	}
 
-	macro exportRecords {
+	@summary = "Default summary"
+	macro exportRecords(fileExtension = null,approvedOnly = null,kfProcessName = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Export",
 			rowEntry = ${kfProcessName});
@@ -470,13 +501,15 @@ definition {
 		DownloadTempFile();
 	}
 
-	macro gotoProgressStep {
+	@summary = "Default summary"
+	macro gotoProgressStep(kfProgressName = null) {
 		var key_kfProgressName = ${kfProgressName};
 
 		Click(locator1 = "KaleoFormsAdminEditProcess#FORM_NAVIGATOR_PROGRESS_BAR_NAME");
 	}
 
-	macro next {
+	@summary = "Default summary"
+	macro next() {
 		AssertElementNotPresent(locator1 = "KaleoFormsAdminEditProcess#NEXT_BUTTON_INACTIVE");
 
 		AssertClick(
@@ -484,13 +517,15 @@ definition {
 			value1 = "Next");
 	}
 
-	macro noProcessesWereFound {
+	@summary = "Default summary"
+	macro noProcessesWereFound() {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No processes were found.");
 	}
 
-	macro populateFieldDate {
+	@summary = "Default summary"
+	macro populateFieldDate(fieldName = null,kfProcessFieldData = null) {
 		var key_fieldName = ${fieldName};
 
 		Type(
@@ -500,7 +535,8 @@ definition {
 		Click(locator1 = "TextInput#DDM");
 	}
 
-	macro populateFieldSelect {
+	@summary = "Default summary"
+	macro populateFieldSelect(fieldName = null,kfProcessFieldData = null) {
 		var key_fieldName = ${fieldName};
 
 		Select(
@@ -508,7 +544,8 @@ definition {
 			value1 = ${kfProcessFieldData});
 	}
 
-	macro populateFieldText {
+	@summary = "Default summary"
+	macro populateFieldText(fieldName = null,kfProcessFieldData = null) {
 		var key_fieldName = ${fieldName};
 
 		Type(
@@ -516,7 +553,8 @@ definition {
 			value1 = ${kfProcessFieldData});
 	}
 
-	macro populateFieldTextBox {
+	@summary = "Default summary"
+	macro populateFieldTextBox(kfProcessFieldData = null) {
 		var fieldName = StringUtil.replace(${fieldName}, " ", "_");
 
 		var key_fieldName = ${fieldName};
@@ -526,7 +564,8 @@ definition {
 			value1 = ${kfProcessFieldData});
 	}
 
-	macro publishWorkflow {
+	@summary = "Default summary"
+	macro publishWorkflow() {
 		Click(locator1 = "Button#PUBLISH");
 
 		Alert.viewSuccessMessage();
@@ -540,7 +579,8 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
-	macro reactivateInactiveWorkflowDefinition {
+	@summary = "Default summary"
+	macro reactivateInactiveWorkflowDefinition(workflowDefinitionTitle = null) {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		LexiconEntry.gotoEntryMenuItemNoError(
@@ -552,7 +592,8 @@ definition {
 		KaleoFormsAdmin.publishWorkflow();
 	}
 
-	macro saveAndContinueForm {
+	@summary = "Default summary"
+	macro saveAndContinueForm() {
 		DynamicDataMapping.selectDynamicDataMappingFrame();
 
 		AssertClick(
@@ -562,7 +603,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro saveFieldSet {
+	@summary = "Default summary"
+	macro saveFieldSet() {
 		DDLDataDefinition.save();
 
 		SelectFrame(value1 = "relative=top");
@@ -574,13 +616,15 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
-	macro saveForm {
+	@summary = "Default summary"
+	macro saveForm() {
 		DynamicDataMapping.selectDynamicDataMappingFrame();
 
 		Workflow.saveDefinition();
 	}
 
-	macro saveFormEdit {
+	@summary = "Default summary"
+	macro saveFormEdit(kfFormName = null) {
 		DynamicDataMapping.selectDynamicDataMappingFrame();
 
 		PortletEntry.save();
@@ -596,7 +640,8 @@ definition {
 			value1 = ${kfFormName});
 	}
 
-	macro saveProcess {
+	@summary = "Default summary"
+	macro saveProcess() {
 		KaleoFormsAdmin.viewNewProcessProgressBar(
 			kfProgressName = "Forms",
 			kfProgressStep = 4);
@@ -608,17 +653,20 @@ definition {
 		Button.clickSave();
 	}
 
-	macro saveProcessRecord {
+	@summary = "Default summary"
+	macro saveProcessRecord() {
 		PortletEntry.save();
 	}
 
-	macro submitNewProcess {
+	@summary = "Default summary"
+	macro submitNewProcess(kfProcessName = null) {
 		KaleoFormsAdmin.viewProcessRecord(kfProcessName = ${kfProcessName});
 
 		LexiconEntry.gotoAdd();
 	}
 
-	macro tearDownProcess {
+	@summary = "Default summary"
+	macro tearDownProcess() {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -632,7 +680,8 @@ definition {
 		KaleoFormsAdmin.noProcessesWereFound();
 	}
 
-	macro unassignForm {
+	@summary = "Default summary"
+	macro unassignForm(workflowTask = null) {
 		KaleoFormsAdmin.gotoProgressStep(kfProgressName = "Forms");
 
 		LexiconEntry.gotoEntryMenuItem(
@@ -640,7 +689,8 @@ definition {
 			rowEntry = ${workflowTask});
 	}
 
-	macro updateWorkflow {
+	@summary = "Default summary"
+	macro updateWorkflow() {
 		Click.mouseDownMouseUp(
 			key_text = "Update",
 			locator1 = "Button#ANY");
@@ -650,7 +700,8 @@ definition {
 		Click(locator1 = "Icon#CLOSE");
 	}
 
-	macro viewExportRecords {
+	@summary = "Default summary"
+	macro viewExportRecords(kfProcessName = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Export",
 			rowEntry = ${kfProcessName});
@@ -660,7 +711,8 @@ definition {
 		AssertElementPresent(locator1 = "KaleoFormsAdminViewProcessRecords#EXPORT_DIALOG_BOX_FILE_EXTENSION_SELECT");
 	}
 
-	macro viewFieldRequired {
+	@summary = "Default summary"
+	macro viewFieldRequired(kfFieldSetName = null,workflowDefinitionTitle = null,kfFormName = null,progressTitle = null,workflowTask = null,kfProcessName = null) {
 		if (${progressTitle} == "Details") {
 			KaleoFormsAdmin.viewNewProcessProgressBar(
 				kfProgressName = ${progressTitle},
@@ -728,7 +780,8 @@ definition {
 		}
 	}
 
-	macro viewFormEdit {
+	@summary = "Default summary"
+	macro viewFormEdit(kfFormNameEdit = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit Form",
 			rowEntry = ${kfFormNameEdit});
@@ -740,7 +793,8 @@ definition {
 			value1 = ${kfFormNameEdit});
 	}
 
-	macro viewFormsNotPresent {
+	@summary = "Default summary"
+	macro viewFormsNotPresent(workflowTask = null) {
 		DynamicDataMapping.selectDynamicDataMappingFrame();
 
 		var key_workflowTask = ${workflowTask};
@@ -752,7 +806,8 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro viewInvalidDefinitionMessage {
+	@summary = "Default summary"
+	macro viewInvalidDefinitionMessage() {
 		Alert.viewRequestFailedToComplete();
 
 		AssertTextEquals.assertPartialText(
@@ -760,7 +815,8 @@ definition {
 			value1 = "Please add at least one field.");
 	}
 
-	macro viewNewProcessProgressBar {
+	@summary = "Default summary"
+	macro viewNewProcessProgressBar(kfProgressName = null,kfProgressStep = null) {
 		var key_kfProgressName = ${kfProgressName};
 
 		AssertTextEquals(
@@ -774,11 +830,13 @@ definition {
 			value1 = ${kfProgressStep});
 	}
 
-	macro viewNextFieldSetPage {
+	@summary = "Default summary"
+	macro viewNextFieldSetPage() {
 		Click(locator1 = "Pagination#NEXT_LINK");
 	}
 
-	macro viewNoDuplicateForms {
+	@summary = "Default summary"
+	macro viewNoDuplicateForms(kfFormName = null) {
 		var key_kfFormName = ${kfFormName};
 
 		AssertTextEquals(
@@ -788,30 +846,35 @@ definition {
 		AssertElementNotPresent(locator1 = "KaleoFormsAdminEditProcessForm#FORM_TABLE_NAME_2");
 	}
 
-	macro viewNoPublishedWorkflowDefinitions {
+	@summary = "Default summary"
+	macro viewNoPublishedWorkflowDefinitions() {
 		AssertVisible(locator1 = "KaleoFormsAdmin#KALEO_WORKFLOW_PUBLISHED_EMPTY_MESSAGE");
 	}
 
-	macro viewNotSelectedFieldSet {
+	@summary = "Default summary"
+	macro viewNotSelectedFieldSet(kfFieldSetName = null,key_kfFieldSetName = null) {
 		AssertElementNotPresent(
 			key_kfFieldSetName = ${kfFieldSetName},
 			locator1 = "KaleoFormsAdminEditProcess#SELECTED_FIELD_SET",
 			value1 = ${key_kfFieldSetName});
 	}
 
-	macro viewNotSelectedWorkflow {
+	@summary = "Default summary"
+	macro viewNotSelectedWorkflow(workflowDefinitionTitle = null) {
 		AssertTextNotEquals(
 			locator1 = "KaleoFormsAdminEditProcess#SELECTED_WORKFLOW",
 			value1 = ${workflowDefinitionTitle});
 	}
 
-	macro viewNoUnpublishedWorkflowDefinitions {
+	@summary = "Default summary"
+	macro viewNoUnpublishedWorkflowDefinitions() {
 		KaleoFormsAdmin.viewUnpublishedWorkflowDefinitions();
 
 		AssertVisible(locator1 = "KaleoFormsAdmin#KALEO_WORKFLOW_UNPUBLISHED_EMPTY_MESSAGE");
 	}
 
-	macro viewPermissionsAndAssertModal {
+	@summary = "Default summary"
+	macro viewPermissionsAndAssertModal() {
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Permissions");
 
 		AssertElementPresent(
@@ -827,11 +890,13 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro viewPreviousFieldSetPage {
+	@summary = "Default summary"
+	macro viewPreviousFieldSetPage() {
 		Click(locator1 = "Pagination#FIRST_LINK");
 	}
 
-	macro viewProcess {
+	@summary = "Default summary"
+	macro viewProcess(kfProcessName = null) {
 		var key_kfProcessName = ${kfProcessName};
 
 		AssertTextEquals(
@@ -843,14 +908,16 @@ definition {
 		AssertElementPresent(locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
 	}
 
-	macro viewProcessByPosition {
+	@summary = "Default summary"
+	macro viewProcessByPosition(title = null,order = null) {
 		AssertElementPresent(
 			key_order = ${order},
 			key_title = ${title},
 			locator1 = "AssetWorkflow#DETAILS_WORKFLOW_TITLE_ORDER");
 	}
 
-	macro viewProcessDetails {
+	@summary = "Default summary"
+	macro viewProcessDetails(kfProcessName = null,kfProcessDescription = null) {
 		KaleoFormsAdmin.editProcess(kfProcessName = ${kfProcessName});
 
 		KaleoFormsAdmin.viewNewProcessProgressBar(
@@ -872,7 +939,8 @@ definition {
 		KaleoFormsAdmin.next();
 	}
 
-	macro viewProcessFieldSet {
+	@summary = "Default summary"
+	macro viewProcessFieldSet(kfFieldSetName = null) {
 		KaleoFormsAdmin.viewNewProcessProgressBar(
 			kfProgressName = "Fields",
 			kfProgressStep = 2);
@@ -886,7 +954,8 @@ definition {
 		KaleoFormsAdmin.next();
 	}
 
-	macro viewProcessForms {
+	@summary = "Default summary"
+	macro viewProcessForms(kfFormName = null) {
 		KaleoFormsAdmin.viewNewProcessProgressBar(
 			kfProgressName = "Forms",
 			kfProgressStep = 4);
@@ -902,7 +971,8 @@ definition {
 		AssertElementPresent(locator1 = "Button#SAVE");
 	}
 
-	macro viewProcessFormsDeleted {
+	@summary = "Default summary"
+	macro viewProcessFormsDeleted(kfFormName = null,workflowTask = null,kfPendingForm = null,kfProcessName = null) {
 		KaleoFormsAdmin.viewNewProcessProgressBar(
 			kfProgressName = "Forms",
 			kfProgressStep = 4);
@@ -917,7 +987,8 @@ definition {
 			locator1 = "KaleoFormsAdminEditProcessForm#FORM_TABLE_NAME_LINK");
 	}
 
-	macro viewProcessNameByColumns {
+	@summary = "Default summary"
+	macro viewProcessNameByColumns(kfInstantMessenger = null,kfStatus = null,kfFirstName = null,kfEmailName = null,kfCompanyName = null,kfInstantMessengerService = null,kfAuthor = null) {
 		if (isSet(kfCompanyName)) {
 			AssertElementPresent(
 				key_itemPosition = 2,
@@ -968,19 +1039,22 @@ definition {
 		}
 	}
 
-	macro viewProcessNoRecords {
+	@summary = "Default summary"
+	macro viewProcessNoRecords(kfProcessName = null) {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No ${kfProcessName} records were found");
 	}
 
-	macro viewProcessRecord {
+	@summary = "Default summary"
+	macro viewProcessRecord(kfProcessName = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "View",
 			rowEntry = ${kfProcessName});
 	}
 
-	macro viewProcessRecordDetails {
+	@summary = "Default summary"
+	macro viewProcessRecordDetails(kfStatus = null,kfProcessFieldData = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "View",
 			rowEntry = ${kfProcessFieldData});
@@ -990,7 +1064,8 @@ definition {
 			value1 = ${kfStatus});
 	}
 
-	macro viewProcessRecordDetailsField {
+	@summary = "Default summary"
+	macro viewProcessRecordDetailsField(fieldName = null,kfProcessFieldData = null) {
 		var key_fieldName = ${fieldName};
 		var key_kfProcessFieldData = ${kfProcessFieldData};
 
@@ -999,7 +1074,8 @@ definition {
 			value1 = ${kfProcessFieldData});
 	}
 
-	macro viewProcessRecordTable {
+	@summary = "Default summary"
+	macro viewProcessRecordTable(kfStatus = null,kfAuthor = null,kfProcessFieldData = null) {
 		var key_kfAuthor = ${kfAuthor};
 
 		AssertTextEquals(
@@ -1019,13 +1095,15 @@ definition {
 			value1 = ${kfStatus});
 	}
 
-	macro viewProcessRecordTableRecordNotPresent {
+	@summary = "Default summary"
+	macro viewProcessRecordTableRecordNotPresent(kfProcessFieldData = null) {
 		var key_kfProcessFieldData = ${kfProcessFieldData};
 
 		AssertElementNotPresent(locator1 = "KaleoFormsAdminViewProcessRecords#RECORD_TABLE_RECORD");
 	}
 
-	macro viewProcessWorkflow {
+	@summary = "Default summary"
+	macro viewProcessWorkflow(workflowDefinitionTitle = null) {
 		KaleoFormsAdmin.viewNewProcessProgressBar(
 			kfProgressName = "Workflow",
 			kfProgressStep = 3);
@@ -1037,21 +1115,24 @@ definition {
 		KaleoFormsAdmin.next();
 	}
 
-	macro viewProgressBarIsShownCorrectly {
+	@summary = "Default summary"
+	macro viewProgressBarIsShownCorrectly(iconType = null,stepProcess = null) {
 		AssertElementPresent(
 			key_iconType = ${iconType},
 			key_stepProcess = ${stepProcess},
 			locator1 = "KaleoFormsAdminEditProcess#FORM_NAVIGATOR_MULTI_STEP_PROGRESS_BAR");
 	}
 
-	macro viewPublishedWorkflowDefinitions {
+	@summary = "Default summary"
+	macro viewPublishedWorkflowDefinitions() {
 		AssertClick(
 			key_assetTitle = "Published",
 			locator1 = "NavBar#ASSET_TITLE",
 			value1 = "Published");
 	}
 
-	macro viewSelectedFieldSet {
+	@summary = "Default summary"
+	macro viewSelectedFieldSet(kfFieldSetName = null) {
 		var key_kfFieldSetName = ${kfFieldSetName};
 
 		AssertTextEquals(
@@ -1059,7 +1140,8 @@ definition {
 			value1 = ${kfFieldSetName});
 	}
 
-	macro viewSelectedLanguage {
+	@summary = "Default summary"
+	macro viewSelectedLanguage(defaultLanguage = null,infoLaguage = null,dropdownTagLanguage = null) {
 		Click(
 			key_locale = ${defaultLanguage},
 			locator1 = "Translation#CURRENT_LOCALE_NAME");
@@ -1079,7 +1161,8 @@ definition {
 			locator1 = "KaleoFormsAdminEditProcess#DROPDOWN_LANGUAGE");
 	}
 
-	macro viewSelectedWorkflow {
+	@summary = "Default summary"
+	macro viewSelectedWorkflow(workflowDefinitionTitle = null,edit = null) {
 		if (${edit} == "true") {
 			AssertTextEquals(
 				locator1 = "KaleoFormsAdminEditProcess#SELECTED_WORKFLOW",
@@ -1092,7 +1175,8 @@ definition {
 		}
 	}
 
-	macro viewTableDisplaysColumns {
+	@summary = "Default summary"
+	macro viewTableDisplaysColumns() {
 		for (var tableHeader : list "ID,Name,Description,Modified Date") {
 			AssertElementPresent(
 				key_tableHeader = ${tableHeader},
@@ -1100,26 +1184,30 @@ definition {
 		}
 	}
 
-	macro viewTaskNotPresent {
+	@summary = "Default summary"
+	macro viewTaskNotPresent(workflowTask = null) {
 		var key_workflowTask = ${workflowTask};
 
 		AssertElementNotPresent(locator1 = "KaleoFormsAdminEditProcess#FORMS_TABLE_TASK");
 	}
 
-	macro viewTaskPresent {
+	@summary = "Default summary"
+	macro viewTaskPresent(workflowTask = null) {
 		var key_workflowTask = ${workflowTask};
 
 		AssertElementPresent(locator1 = "KaleoFormsAdminEditProcess#FORMS_TABLE_TASK");
 	}
 
-	macro viewUnpublishedWorkflowDefinitions {
+	@summary = "Default summary"
+	macro viewUnpublishedWorkflowDefinitions() {
 		AssertClick(
 			key_assetTitle = "Unpublished",
 			locator1 = "NavBar#ASSET_TITLE",
 			value1 = "Unpublished");
 	}
 
-	macro viewWorkflowCannotBeUnpublish {
+	@summary = "Default summary"
+	macro viewWorkflowCannotBeUnpublish(workflowDefinitionTitle = null) {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Unpublish",
 			rowEntry = ${workflowDefinitionTitle});

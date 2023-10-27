@@ -1,6 +1,7 @@
 definition {
 
-	macro setGroupId {
+	@summary = "Default summary"
+	macro setGroupId(groupName = null,parentGroupName = null) {
 		Variables.assertDefined(parameterList = ${groupName});
 
 		if (!(isSet(site))) {
@@ -15,7 +16,8 @@ definition {
 		return ${groupId};
 	}
 
-	macro setLocale {
+	@summary = "Default summary"
+	macro setLocale() {
 		if (!(isSet(locale))) {
 			var locale = "";
 		}
@@ -26,7 +28,8 @@ definition {
 		return ${locale};
 	}
 
-	macro setNewPassword {
+	@summary = "Default summary"
+	macro setNewPassword() {
 		if (!(isSet(newPassword))) {
 			var newPassword = "test";
 		}
@@ -34,7 +37,8 @@ definition {
 		return ${newPassword};
 	}
 
-	macro setPortalInstanceName {
+	@summary = "Default summary"
+	macro setPortalInstanceName(portalURL = null) {
 		if (isSet(portalURL)) {
 			var portalInstanceName = JSONCompany.parsePortalInstanceURL(portalURL = ${portalURL});
 		}
@@ -42,7 +46,8 @@ definition {
 		return ${portalInstanceName};
 	}
 
-	macro setRequireReset {
+	@summary = "Default summary"
+	macro setRequireReset() {
 		if (!(isSet(requireReset))) {
 			var requireReset = "true";
 		}
@@ -50,7 +55,8 @@ definition {
 		return ${requireReset};
 	}
 
-	macro setServiceContext {
+	@summary = "Default summary"
+	macro setServiceContext(assetCategoryIds = null,assetTagNames = null,workflowAction = null) {
 		if (!(isSet(serviceContext))) {
 			var serviceContext = JSONServiceContextUtil.setServiceContext(
 				addGroupPermissions = "true",
@@ -63,7 +69,8 @@ definition {
 		return ${serviceContext};
 	}
 
-	macro setStatus {
+	@summary = "Default summary"
+	macro setStatus() {
 		if (!(isSet(userStatus))) {
 			var userStatus = "Active";
 		}
@@ -81,7 +88,8 @@ definition {
 		return ${status};
 	}
 
-	macro setUserFirstName {
+	@summary = "Default summary"
+	macro setUserFirstName() {
 		Variables.assertDefined(parameterList = ${userFirstName});
 
 		var userFirstName = URLUtil.encodeUTF8(${userFirstName});
@@ -89,7 +97,8 @@ definition {
 		return ${userFirstName};
 	}
 
-	macro setUserId {
+	@summary = "Default summary"
+	macro setUserId(creatorPassword = null,portalInstanceName = null,userEmailAddress = null,specificURL = null,creatorEmailAddress = null) {
 		Variables.assertDefined(parameterList = ${userEmailAddress});
 
 		var userId = JSONUserAPI._getUserIdByEmailAddress(
@@ -102,7 +111,8 @@ definition {
 		return ${userId};
 	}
 
-	macro setUserIdByScreenName {
+	@summary = "Default summary"
+	macro setUserIdByScreenName(creatorPassword = null,userScreenName = null,portalInstanceName = null) {
 		Variables.assertDefined(parameterList = ${userScreenName});
 
 		var userId = JSONUserAPI._getUserIdByScreenName(
@@ -113,7 +123,8 @@ definition {
 		return ${userId};
 	}
 
-	macro setUserLastName {
+	@summary = "Default summary"
+	macro setUserLastName() {
 		Variables.assertDefined(parameterList = ${userLastName});
 
 		var userLastName = URLUtil.encodeUTF8(${userLastName});

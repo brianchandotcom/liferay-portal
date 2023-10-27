@@ -1,6 +1,7 @@
 definition {
 
-	macro configureMailSettings {
+	@summary = "Default summary"
+	macro configureMailSettings(incomingPOPServer = null,userPassword = null,outgoingSMTPServer = null,userName = null,incomingPort = null,outgoingPort = null) {
 		ACAdmin.goToServerAdministration();
 
 		Navigator.gotoNavItem(navItem = "Mail");
@@ -66,19 +67,22 @@ definition {
 			value1 = "Your request completed successfully.");
 	}
 
-	macro getUserID {
+	@summary = "Default summary"
+	macro getUserID() {
 		var userID = selenium.getElementValue("UsersAndOrganizationsEditUser#DETAILS_USER_ID_FIELD");
 
 		return ${userID};
 	}
 
-	macro goToACAdmin {
+	@summary = "Default summary"
+	macro goToACAdmin() {
 		var currentURL = Navigator.getCurrentURL();
 
 		Navigator.openSpecificURL(url = "${currentURL}admin");
 	}
 
-	macro goToServerAdministration {
+	@summary = "Default summary"
+	macro goToServerAdministration() {
 		ProductMenuHelper.expandPanel(panel = "control panel");
 
 		ProductMenuHelper.expandCategory(category = "Configuration");

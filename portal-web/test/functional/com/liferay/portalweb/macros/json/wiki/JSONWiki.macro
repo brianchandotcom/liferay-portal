@@ -1,6 +1,7 @@
 definition {
 
-	macro addAttachmentToWikiPage {
+	@summary = "Default summary"
+	macro addAttachmentToWikiPage(wikiNodeName = null,groupName = null,fileName = null,site = null,mimeType = null,wikiPageName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${wikiNodeName},${wikiPageName},${fileName},${mimeType}");
 
 		var nodeId = JSONWikiSetter.setNodeId(
@@ -15,7 +16,8 @@ definition {
 			title = ${wikiPageName});
 	}
 
-	macro addWikiChildPage {
+	@summary = "Default summary"
+	macro addWikiChildPage(wikiNodeName = null,groupName = null,site = null,assetCategoryIds = null,viewableBy = null,wikiChildPageName = null,encodingFormat = null,wikiParentPageName = null,tagName = null,wikiChildPageContent = null) {
 		Variables.assertDefined(parameterList = "${wikiParentPageName},${wikiChildPageName},${wikiNodeName}");
 
 		var parentResourcePrimKey = JSONWikiSetter.setResourcePrimKey(
@@ -34,7 +36,8 @@ definition {
 			viewableBy = ${viewableBy});
 	}
 
-	macro addWikiNode {
+	@summary = "Default summary"
+	macro addWikiNode(wikiNodeName = null,groupName = null,wikiNodeDescription = null) {
 		Variables.assertDefined(parameterList = "${groupName},${wikiNodeName}");
 
 		var serviceContext = JSONWikiSetter.setServiceContext(groupName = ${groupName});
@@ -45,7 +48,8 @@ definition {
 			serviceContext = ${serviceContext});
 	}
 
-	macro addWikiPage {
+	@summary = "Default summary"
+	macro addWikiPage(wikiNodeName = null,noSelenium = null,groupName = null,site = null,assetCategoryIds = null,viewableBy = null,encodingFormat = null,wikiPageContent = null,wikiPageName = null,tagName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${wikiNodeName},${wikiPageName}");
 
 		var nodeId = JSONWikiSetter.setNodeId(
@@ -66,7 +70,8 @@ definition {
 		return ${response};
 	}
 
-	macro deleteWikiPageById {
+	@summary = "Default summary"
+	macro deleteWikiPageById(wikiPageId = null) {
 		Variables.assertDefined(parameterList = ${wikiPageId});
 
 		var response = JSONWikiAPI._deleteWikiPageById(wikiPageId = ${wikiPageId});
@@ -74,7 +79,8 @@ definition {
 		return ${response};
 	}
 
-	macro getWikiPageExternalReferenceCodeByWikiPageId {
+	@summary = "Default summary"
+	macro getWikiPageExternalReferenceCodeByWikiPageId(wikiPageId = null) {
 		Variables.assertDefined(parameterList = ${wikiPageId});
 
 		var response = JSONWikiAPI._getWikiPageById(wikiPageId = ${wikiPageId});
@@ -84,7 +90,8 @@ definition {
 		return ${wikiPageExternalReferenceCode};
 	}
 
-	macro movePageToTrash {
+	@summary = "Default summary"
+	macro movePageToTrash(wikiNodeName = null,groupName = null,site = null,wikiPageName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${wikiNodeName},${wikiPageName}");
 
 		var nodeId = JSONWikiSetter.setNodeId(
@@ -97,7 +104,8 @@ definition {
 			title = ${wikiPageName});
 	}
 
-	macro updateWikiPage {
+	@summary = "Default summary"
+	macro updateWikiPage(wikiNodeName = null,groupName = null,site = null,assetCategoryIds = null,viewableBy = null,encodingFormat = null,wikiPageContent = null,wikiPageName = null,tagName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${wikiNodeName},${wikiPageName}");
 
 		var resourcePrimKey = JSONWikiSetter.setResourcePrimKey(

@@ -1,6 +1,7 @@
 definition {
 
-	macro subscribeViaInfoPanelPG {
+	@summary = "Default summary"
+	macro subscribeViaInfoPanelPG() {
 		Click(locator1 = "Icon#INFO_DM");
 
 		Click(locator1 = "Icon#SUBSCRIBE_BELL");
@@ -8,7 +9,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro unsubscribeViaMySubscriptions {
+	@summary = "Default summary"
+	macro unsubscribeViaMySubscriptions(rowNumber = null) {
 		var key_rowNumber = ${rowNumber};
 
 		Check(locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_CHECKBOX");
@@ -20,13 +22,15 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro viewDefaultPG {
+	@summary = "Default summary"
+	macro viewDefaultPG() {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No subscriptions were found.");
 	}
 
-	macro viewSubscription {
+	@summary = "Default summary"
+	macro viewSubscription(assetTitle = null) {
 		var key_assetTitle = ${assetTitle};
 		var key_assetType = ${assetType};
 
@@ -41,7 +45,8 @@ definition {
 			value1 = ${assetType});
 	}
 
-	macro viewUnsubscribedViaInfoPanel {
+	@summary = "Default summary"
+	macro viewUnsubscribedViaInfoPanel() {
 		Click(locator1 = "Icon#INFO_DM");
 
 		AssertVisible(locator1 = "Icon#SUBSCRIBE_BELL");

@@ -1,6 +1,7 @@
 definition {
 
-	macro _deleteBatchPlannerPlans {
+	@summary = "Default summary"
+	macro _deleteBatchPlannerPlans() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -27,7 +28,8 @@ definition {
 		}
 	}
 
-	macro _getBatchPlannerPlanIds {
+	@summary = "Default summary"
+	macro _getBatchPlannerPlanIds() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {

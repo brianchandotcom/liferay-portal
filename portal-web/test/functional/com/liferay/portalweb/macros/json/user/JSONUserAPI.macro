@@ -1,6 +1,7 @@
 definition {
 
-	macro _addUser {
+	@summary = "Default summary"
+	macro _addUser(jobTitle = null,userEmailAddress = null,userFirstName = null,locale = null,serviceContext = null,creatorEmailAddress = null,birthdayMonth = null,creatorPassword = null,userLastName = null,birthdayDay = null,userScreenName = null,portalInstanceName = null,specificURL = null,birthdayYear = null) {
 		Variables.assertDefined(parameterList = "${locale},${userEmailAddress},${userFirstName},${userLastName},${userScreenName}");
 
 		if (isSet(specificURL)) {
@@ -49,7 +50,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _addUserToSite {
+	@summary = "Default summary"
+	macro _addUserToSite(groupId = null,specificURL = null,userId = null) {
 		Variables.assertDefined(parameterList = "${groupId},${userId}");
 
 		if (isSet(specificURL)) {
@@ -69,7 +71,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _addUserToUserGroup {
+	@summary = "Default summary"
+	macro _addUserToUserGroup(userGroupId = null,specificURL = null,userId = null) {
 		Variables.assertDefined(parameterList = "${userGroupId},${userId}");
 
 		if (isSet(specificURL)) {
@@ -89,7 +92,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _agreeToTermsAndAnswerReminderQuery {
+	@summary = "Default summary"
+	macro _agreeToTermsAndAnswerReminderQuery(specificURL = null,userEmailAddress = null,userId = null) {
 		Variables.assertDefined(parameterList = ${userId});
 
 		if (isSet(specificURL)) {
@@ -127,7 +131,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _agreeToTermsAndAnswerReminderQueryByScreenName {
+	@summary = "Default summary"
+	macro _agreeToTermsAndAnswerReminderQueryByScreenName(specificURL = null,userId = null) {
 		Variables.assertDefined(parameterList = ${userId});
 
 		if (isSet(specificURL)) {
@@ -152,7 +157,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _deleteUser {
+	@summary = "Default summary"
+	macro _deleteUser(authenticationMethod = null,specificURL = null,userId = null) {
 		Variables.assertDefined(parameterList = ${userId});
 
 		if (isSet(specificURL)) {
@@ -178,7 +184,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _disablePasswordChangeRequired {
+	@summary = "Default summary"
+	macro _disablePasswordChangeRequired(specificURL = null) {
 		if (isSet(specificURL)) {
 			var portalURL = ${specificURL};
 		}
@@ -223,7 +230,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _getUserIdByEmailAddress {
+	@summary = "Default summary"
+	macro _getUserIdByEmailAddress(portalInstanceName = null,userEmailAddress = null,specificURL = null) {
 		Variables.assertDefined(parameterList = ${userEmailAddress});
 
 		var companyId = JSONCompany.getCompanyIdNoSelenium(
@@ -261,7 +269,8 @@ definition {
 		return ${userId};
 	}
 
-	macro _getUserIdByScreenName {
+	@summary = "Default summary"
+	macro _getUserIdByScreenName(portalInstanceName = null,specificURL = null) {
 		Variables.assertDefined(parameterList = ${userScreenName});
 
 		var companyId = JSONCompany.getCompanyId(
@@ -295,7 +304,8 @@ definition {
 		return ${userId};
 	}
 
-	macro _getUserIds {
+	@summary = "Default summary"
+	macro _getUserIds(authenticationMethod = null,specificURL = null) {
 		var companyId = JSONCompany.getCompanyId(authenticationMethod = ${authenticationMethod});
 
 		if (isSet(specificURL)) {
@@ -325,7 +335,8 @@ definition {
 		return ${userIds};
 	}
 
-	macro _getUserIdsNoSelenium {
+	@summary = "Default summary"
+	macro _getUserIdsNoSelenium(specificURL = null) {
 		var companyId = JSONCompany.getCompanyIdNoSelenium();
 
 		if (isSet(specificURL)) {
@@ -350,7 +361,8 @@ definition {
 		return ${userIds};
 	}
 
-	macro _removeUserFromUserGroup {
+	@summary = "Default summary"
+	macro _removeUserFromUserGroup(userGroupId = null,specificURL = null,userId = null) {
 		Variables.assertDefined(parameterList = "${userGroupId},${userId}");
 
 		if (isSet(specificURL)) {
@@ -370,7 +382,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _updatePassword {
+	@summary = "Default summary"
+	macro _updatePassword(newPassword = null,specificURL = null,requireReset = null,userId = null) {
 		Variables.assertDefined(parameterList = "${userId},${newPassword},${requireReset}");
 
 		if (isSet(specificURL)) {
@@ -394,7 +407,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _updateStatus {
+	@summary = "Default summary"
+	macro _updateStatus(specificURL = null,userId = null,status = null) {
 		Variables.assertDefined(parameterList = "${userId},${status}");
 
 		if (isSet(specificURL)) {
@@ -416,7 +430,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _updateUser {
+	@summary = "Default summary"
+	macro _updateUser(userFirstName = null,userId = null,creatorEmailAddress = null,birthdayMonth = null,creatorPassword = null,userLastName = null,birthdayDay = null,userEmailAddressUpdate = null,specificURL = null,screenNameUpdate = null,birthdayYear = null) {
 		Variables.assertDefined(parameterList = "${screenNameUpdate},${userId},${userEmailAddressUpdate},${userFirstName},${userLastName}");
 
 		if (isSet(specificURL)) {

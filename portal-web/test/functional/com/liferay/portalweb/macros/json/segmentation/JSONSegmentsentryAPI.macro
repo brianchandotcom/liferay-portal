@@ -1,6 +1,7 @@
 definition {
 
-	macro _addSegment {
+	@summary = "Default summary"
+	macro _addSegment(nameMap = null,criteria = null,descriptionMap = null,serviceContext = null) {
 		Variables.assertDefined(parameterList = "${criteria},${descriptionMap},${nameMap},${serviceContext}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -23,7 +24,8 @@ definition {
 		return ${segmentId};
 	}
 
-	macro _deleteSegment {
+	@summary = "Default summary"
+	macro _deleteSegment(segmentsId = null) {
 		Variables.assertDefined(parameterList = ${segmentsId});
 
 		var portalURL = JSONCompany.getPortalURL();

@@ -924,11 +924,11 @@ definition {
 		}
 
 		task ("Open the BBC home page in a new tab") {
-			Open.openInTheNewTab(locator1 = "https://www.bbc.com");
+			Open.openInTheNewTab(value1 = "https://www.bbc.com");
 		}
 
 		task ("Switch to the previous tab") {
-			SelectWindow(locator1 = "title=AC Page - Site Name - ${dataSource}");
+			SelectWindow(value1 = "title=AC Page - Site Name - ${dataSource}");
 		}
 
 		task ("Hard refresh the page to clear the network") {
@@ -936,7 +936,7 @@ definition {
 		}
 
 		task ("Switch to the BCC tab") {
-			SelectWindow(locator1 = "title=BBC - Homepage");
+			SelectWindow(value1 = "title=BBC - Homepage");
 		}
 
 		task ("Start Har recording") {
@@ -944,7 +944,7 @@ definition {
 		}
 
 		task ("Switch to the previous tab") {
-			SelectWindow(locator1 = "title=AC Page - Site Name - ${dataSource}");
+			SelectWindow(value1 = "title=AC Page - Site Name - ${dataSource}");
 		}
 
 		task ("Wait for sending requests") {
@@ -1001,11 +1001,11 @@ definition {
 		}
 
 		task ("Open the BBC home page in a new tab") {
-			Open.openInTheNewTab(locator1 = "https://www.bbc.com");
+			Open.openInTheNewTab(value1 = "https://www.bbc.com");
 		}
 
 		task ("Switch to the DXP tab") {
-			SelectWindow(locator1 = "title=AC Page - Site Name - ${dataSource}");
+			SelectWindow(value1 = "title=AC Page - Site Name - ${dataSource}");
 		}
 
 		task ("Hard refresh the page to clear the network") {
@@ -1013,7 +1013,7 @@ definition {
 		}
 
 		task ("Switch to the BCC tab") {
-			SelectWindow(locator1 = "title=BBC - Homepage");
+			SelectWindow(value1 = "title=BBC - Homepage");
 		}
 
 		task ("Start Har recording") {
@@ -1021,7 +1021,7 @@ definition {
 		}
 
 		task ("Switch to the previous tab") {
-			SelectWindow(locator1 = "title=AC Page - Site Name - ${dataSource}");
+			SelectWindow(value1 = "title=AC Page - Site Name - ${dataSource}");
 		}
 
 		task ("Wait for sending requests") {

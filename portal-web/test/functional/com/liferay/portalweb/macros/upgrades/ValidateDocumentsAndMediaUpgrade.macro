@@ -1,6 +1,7 @@
 definition {
 
-	macro addDMWithDocumentTypesAndMetadataSets {
+	@summary = "Default summary"
+	macro addDMWithDocumentTypesAndMetadataSets() {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMDocument.addCP(
@@ -22,7 +23,8 @@ definition {
 		DMDocument.viewCP(dmDocumentTitle = "DM Document Type Title After Upgrade");
 	}
 
-	macro deleteDocumentTypesAndMetadataSets {
+	@summary = "Default summary"
+	macro deleteDocumentTypesAndMetadataSets() {
 		JSONRecycleBin.emptyRecycleBin();
 
 		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
@@ -34,7 +36,8 @@ definition {
 		DMMetadataSet.delete(metadataSetName = "Document Metadata Set Name Edit");
 	}
 
-	macro editAndDeleteDocuments {
+	@summary = "Default summary"
+	macro editAndDeleteDocuments() {
 		Navigator.gotoPage(pageName = "Documents");
 
 		DMDocument.editCmdPG(
@@ -70,7 +73,8 @@ definition {
 		DMDocument.viewDefault();
 	}
 
-	macro editDocumentTypesAndMetadataSets {
+	@summary = "Default summary"
+	macro editDocumentTypesAndMetadataSets() {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
 		DMNavigator.gotoMetadataSets();
@@ -105,7 +109,8 @@ definition {
 			locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_LABEL");
 	}
 
-	macro viewDocument {
+	@summary = "Default summary"
+	macro viewDocument() {
 		Navigator.gotoPage(pageName = "Document");
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
@@ -129,7 +134,8 @@ definition {
 			metadataLabel = "Creator");
 	}
 
-	macro viewDocuments {
+	@summary = "Default summary"
+	macro viewDocuments() {
 		var portalURL = JSONCompany.getPortalURL();
 		var siteId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Guest",
@@ -225,7 +231,8 @@ definition {
 			dmDocumentTitle = "DM Document DOC With A Long Title DM Document DOC With A Long Title DM Document DOC With A Long Title DM Document DOC With A Long Title");
 	}
 
-	macro viewDocumentTypesAndMetadataSets {
+	@summary = "Default summary"
+	macro viewDocumentTypesAndMetadataSets(fieldName = null) {
 		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.viewCP(dmDocumentTypeName = "DM Document Type Name");

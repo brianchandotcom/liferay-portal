@@ -384,7 +384,7 @@ definition {
 
 		// Pausing 210 seconds due to LRQA-75909
 
-		Pause(locator1 = 210000);
+		Pause(value1 = 210000);
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "Guest");
 
@@ -698,7 +698,7 @@ definition {
 
 			// Pausing 210 seconds due to LRQA-75909
 
-			Pause(locator1 = 210000);
+			Pause(value1 = 210000);
 
 			ProductMenu.gotoPortlet(
 				category = "Content & Data",
@@ -715,7 +715,7 @@ definition {
 
 			// Pausing 150 seconds due to LRQA-75909
 
-			Pause(locator1 = 150000);
+			Pause(value1 = 150000);
 
 			ProductMenu.gotoPortlet(
 				category = "Content & Data",

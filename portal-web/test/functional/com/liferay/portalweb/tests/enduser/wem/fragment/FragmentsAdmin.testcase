@@ -1237,7 +1237,7 @@ definition {
 			}
 
 			task ("View the configuration page of form fragments shown in a new tab") {
-				SelectWindow.selectPopUp(locator1 = "null");
+				SelectWindow.selectPopUp(value1 = "null");
 
 				ControlMenu.viewHeaderTitle(headerTitle = "Fragment Configuration");
 

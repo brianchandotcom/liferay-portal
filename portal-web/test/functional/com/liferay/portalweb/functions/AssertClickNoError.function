@@ -2,7 +2,7 @@
 @summary = "Click on '${locator1}' that should have a value of '${value1}'"
 definition {
 
-	function assertClickNoError {
+	function assertClickNoError(locator1) {
 		WaitForSPARefresh();
 
 		if (contains(${locator1}, "/input")) {
@@ -13,42 +13,42 @@ definition {
 		}
 	}
 
-	function assertPartialTextClickAt {
+	function assertPartialTextClickAt(locator1,value1) {
 		WaitForSPARefresh();
 
 		AssertTextEquals.assertPartialText();
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		selenium.clickAt();
+		selenium.clickAt(${locator1}, ${value1});
 	}
 
-	function assertTextClick {
+	function assertTextClick(locator1) {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
-		selenium.waitForTextCaseInsensitive();
+		selenium.waitForTextCaseInsensitive(${locator1}, ${value1});
 
-		selenium.assertTextCaseInsensitive();
+		selenium.assertTextCaseInsensitive(${locator1}, ${value1});
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		selenium.click();
+		selenium.click(${locator1});
 	}
 
-	function assertValueClick {
+	function assertValueClick(locator1) {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
-		selenium.waitForValue();
+		selenium.waitForValue(${locator1}, ${value1});
 
-		selenium.assertValue();
+		selenium.assertValue(${locator1}, ${value1});
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		selenium.click();
+		selenium.click(${locator1});
 	}
 
 }

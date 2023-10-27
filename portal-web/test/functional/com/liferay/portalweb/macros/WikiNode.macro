@@ -2,7 +2,8 @@ definition {
 
 	var assetType = "Wiki Node";
 
-	macro addCP {
+	@summary = "Default summary"
+	macro addCP(wikiNodeName = null) {
 		LexiconEntry.gotoAdd();
 
 		PortletEntry.inputName(name = ${wikiNodeName});
@@ -14,7 +15,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro addImage {
+	@summary = "Default summary"
+	macro addImage(navTab = null,contentImageName = null,imageSourceURL = null) {
 		ItemSelector.gotoItemSelectorViaCKEditor();
 
 		ItemSelector.addImageFromURL(
@@ -25,7 +27,8 @@ definition {
 		Click(locator1 = "Button#PUBLISH_LOCALIZED");
 	}
 
-	macro addMainCP {
+	@summary = "Default summary"
+	macro addMainCP() {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -37,7 +40,8 @@ definition {
 		}
 	}
 
-	macro addWikiPage {
+	@summary = "Default summary"
+	macro addWikiPage(wikiPageTitle = null,wikiPageContent = null) {
 		var key_wikiPageTitle = ${wikiPageTitle};
 		var key_wikiPageContent = ${wikiPageContent};
 
@@ -56,7 +60,8 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "TextArea#ANY_LABELED");
 	}
 
-	macro deleteCP {
+	@summary = "Default summary"
+	macro deleteCP(wikiNodeName = null) {
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		var key_wikiNodeName = ${wikiNodeName};
@@ -74,7 +79,8 @@ definition {
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 	}
 
-	macro editCP {
+	@summary = "Default summary"
+	macro editCP(wikiNodeName = null,wikiNodeNameEdit = null,wikiNodeDescriptionEdit = null) {
 		var key_wikiNodeName = ${wikiNodeName};
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
@@ -100,7 +106,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro importWikiPage {
+	@summary = "Default summary"
+	macro importWikiPage(wikiNodeName = null,fileName = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Import Pages",
 			rowEntry = ${wikiNodeName});
@@ -119,7 +126,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro tearDownCP {
+	@summary = "Default summary"
+	macro tearDownCP() {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -135,7 +143,8 @@ definition {
 		JSONRecycleBin.emptyRecycleBin();
 	}
 
-	macro viewCP {
+	@summary = "Default summary"
+	macro viewCP(wikiNodeName = null,numberOfWikiPages = null) {
 		var key_wikiNodeName = ${wikiNodeName};
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
@@ -155,7 +164,8 @@ definition {
 		SiteAdmin.viewPortletTitle(portletTitle = "Wiki");
 	}
 
-	macro viewImageIsPresent {
+	@summary = "Default summary"
+	macro viewImageIsPresent(wikiPageTitle = null,contentImageName = null) {
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		Click(
@@ -167,7 +177,8 @@ definition {
 			locator1 = "Wiki#CONTENT_IMAGE_NAME");
 	}
 
-	macro viewNoCP {
+	@summary = "Default summary"
+	macro viewNoCP(wikiNodeName = null) {
 		AssertElementNotPresent(
 			key_wikiNodeName = ${wikiNodeName},
 			locator1 = "Wiki#NODE_TABLE_WIKI_NAME");

@@ -53,6 +53,7 @@ if ((layoutRevision != null) && StagingUtil.isIncomplete(selLayout, layoutRevisi
 if (Validator.isNotNull(backURL)) {
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(backURL);
+	portletDisplay.setURLBackTitle(ParamUtil.getString(request, "backURLTitle"));
 }
 
 renderResponse.setTitle(layoutsAdminDisplayContext.getConfigurationTitle(selLayout, locale));

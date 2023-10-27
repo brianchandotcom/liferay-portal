@@ -1,6 +1,7 @@
 definition {
 
-	macro checkCardCheckbox {
+	@summary = "Default summary"
+	macro checkCardCheckbox(card = null) {
 		Click.clickNoWaitForVisible(
 			key_card = ${card},
 			locator1 = "Card#CARD_CHECKBOX");
@@ -10,7 +11,8 @@ definition {
 			locator1 = "Card#CARD_CHECKBOX");
 	}
 
-	macro clickCard {
+	@summary = "Default summary"
+	macro clickCard(card = null) {
 		if (IsElementNotPresent(locator1 = "//body[contains(@class,'dialog-iframe-popup')]")) {
 			WaitForLiferayEvent.initializeLiferayEventLog();
 
@@ -22,27 +24,31 @@ definition {
 			locator1 = "Card#CARD");
 	}
 
-	macro clickCardTitle {
+	@summary = "Default summary"
+	macro clickCardTitle(card = null) {
 		Click.waitForMenuToggleJSClick(
 			key_card = ${card},
 			locator1 = "Card#CARD_TITLE");
 	}
 
-	macro clickCardTitleLink {
+	@summary = "Default summary"
+	macro clickCardTitleLink(card = null) {
 		Click.waitForMenuToggleJSClick(
 			key_card = ${card},
 			locator1 = "Card#CARD_TITLE_LINK");
 	}
 
-	macro clickCardWithConfirmation {
+	@summary = "Default summary"
+	macro clickCardWithConfirmation(card = null) {
 		ClickNoError(
 			key_card = ${card},
 			locator1 = "Card#CARD");
 
-		Confirm();
+		Confirm(value1 = "null");
 	}
 
-	macro clickEllipsisItem {
+	@summary = "Default summary"
+	macro clickEllipsisItem(item = null,card = null) {
 		if (!(isSet(specificFormFragment))) {
 			Click.waitForMenuToggleJSClick(
 				key_card = ${card},
@@ -57,15 +63,17 @@ definition {
 		MenuItem.clickNoError(menuItem = ${item});
 	}
 
-	macro delete {
+	@summary = "Default summary"
+	macro delete(card = null) {
 		LexiconCard.clickEllipsisItem(
 			card = ${card},
 			item = "Delete");
 
-		Confirm();
+		Confirm(value1 = "null");
 	}
 
-	macro viewCardLabel {
+	@summary = "Default summary"
+	macro viewCardLabel(cardLabel = null,card = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -77,53 +85,61 @@ definition {
 			value1 = ${cardLabel});
 	}
 
-	macro viewCardNotPresent {
+	@summary = "Default summary"
+	macro viewCardNotPresent(card = null) {
 		AssertElementNotPresent(
 			key_card = ${card},
 			locator1 = "Card#CARD");
 	}
 
-	macro viewCardOrder {
+	@summary = "Default summary"
+	macro viewCardOrder(index = null,card = null) {
 		AssertElementPresent(
 			key_card = ${card},
 			key_index = ${index},
 			locator1 = "Card#CARD_PAGE_ITEM");
 	}
 
-	macro viewCardPresent {
+	@summary = "Default summary"
+	macro viewCardPresent(card = null) {
 		AssertVisible(
 			key_card = ${card},
 			locator1 = "Card#CARD");
 	}
 
-	macro viewCardSticker {
+	@summary = "Default summary"
+	macro viewCardSticker(icon = null,card = null) {
 		AssertVisible(
 			key_card = ${card},
 			key_icon = ${icon},
 			locator1 = "Card#CARD_STICKER");
 	}
 
-	macro viewCardSubtitle {
+	@summary = "Default summary"
+	macro viewCardSubtitle(cardSubtitle = null,card = null) {
 		AssertTextEquals(
 			key_card = ${card},
 			locator1 = "Card#CARD_SUBTITLE",
 			value1 = ${cardSubtitle});
 	}
 
-	macro viewCardThumbnail {
+	@summary = "Default summary"
+	macro viewCardThumbnail(card = null) {
 		AssertVisible(
 			key_card = ${card},
 			locator1 = "Card#CARD_THUMBNAIL");
 	}
 
-	macro viewCardTitle {
+	@summary = "Default summary"
+	macro viewCardTitle(card = null) {
 		AssertTextEquals(
 			key_card = ${card},
 			locator1 = "Card#CARD_TITLE",
 			value1 = ${card});
 	}
 
-	macro viewMenuItemDisabled {
+	@summary = "Default summary"
+	macro viewMenuItemDisabled(item = null,card = null) {
 		Click(
 			key_card = ${card},
 			locator1 = "Card#CARD_ELLIPSIS");
@@ -133,7 +149,8 @@ definition {
 			locator1 = "MenuItem#DISABLED_MENU_ITEM");
 	}
 
-	macro viewMenuItemNotPresent {
+	@summary = "Default summary"
+	macro viewMenuItemNotPresent(item = null,card = null) {
 		Click(
 			key_card = ${card},
 			locator1 = "Card#CARD_ELLIPSIS");
@@ -143,13 +160,15 @@ definition {
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
-	macro viewNoCardThumbnail {
+	@summary = "Default summary"
+	macro viewNoCardThumbnail(card = null) {
 		AssertElementNotPresent(
 			key_card = ${card},
 			locator1 = "Card#CARD_THUMBNAIL");
 	}
 
-	macro viewSpecificCardThumbnail {
+	@summary = "Default summary"
+	macro viewSpecificCardThumbnail(imageFileName = null,card = null) {
 		AssertVisible(
 			key_card = ${card},
 			key_imageFileName = ${imageFileName},

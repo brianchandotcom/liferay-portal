@@ -1,6 +1,7 @@
 definition {
 
-	macro saveAndContinue {
+	@summary = "Default summary"
+	macro saveAndContinue() {
 		Button.clickSave();
 
 		Click(

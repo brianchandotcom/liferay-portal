@@ -1,6 +1,7 @@
 definition {
 
-	macro addCountry {
+	@summary = "Default summary"
+	macro addCountry(countryNumber = null,threeLetterISOCode = null,billingAllowed = null,countryPriority = null,subjectToVAT = null,countryName = null,twoLetterISOCode = null,shippingAllowed = null) {
 		Variables.assertDefined(parameterList = "${countryName},${countryNumber},${threeLetterISOCode},${twoLetterISOCode}");
 
 		if (!(isSet(creatorEmailAddress))) {
@@ -27,7 +28,8 @@ definition {
 			twoLetterISOCode = ${twoLetterISOCode});
 	}
 
-	macro getCountryAbbreviation {
+	@summary = "Default summary"
+	macro getCountryAbbreviation(countryName = null) {
 		Variables.assertDefined(parameterList = ${countryName});
 
 		var countryAbbreviation = JSONCountryAPI._getCountryAbbreviation(countryName = ${countryName});
@@ -35,7 +37,8 @@ definition {
 		return ${countryAbbreviation};
 	}
 
-	macro getCountryId {
+	@summary = "Default summary"
+	macro getCountryId(countryName = null) {
 		Variables.assertDefined(parameterList = ${countryName});
 
 		var key_countryName = StringUtil.replace(${countryName}, " ", "-");
@@ -47,7 +50,8 @@ definition {
 		return ${countryId};
 	}
 
-	macro getRegionId {
+	@summary = "Default summary"
+	macro getRegionId(regionName = null,countryName = null) {
 		Variables.assertDefined(parameterList = "${regionName},${countryName}");
 
 		var key_countryName = StringUtil.replace(${countryName}, " ", "-");

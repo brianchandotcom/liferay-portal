@@ -1,16 +1,16 @@
 @default = "assertNotAttributeValue"
 definition {
 
-	function assertNotAttributeValue {
+	function assertNotAttributeValue(locator1,value1,attribute1) {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.assertNotAttributeValue(${attribute1}, ${locator1}, ${value1});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

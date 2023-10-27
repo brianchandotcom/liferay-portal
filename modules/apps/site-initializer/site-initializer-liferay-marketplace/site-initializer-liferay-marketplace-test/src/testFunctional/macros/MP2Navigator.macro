@@ -1,6 +1,7 @@
 definition {
 
-	macro gotoMP2 {
+	@summary = "Default summary"
+	macro gotoMP2() {
 		Navigator.openSiteURL(siteName = "Marketplace Site");
 
 		while ((IsElementPresent(fragmentName = "paragraph", id = "element-text", index = 1, locator1 = "Fragment#CONTRIBUTED_FRAGMENT_TEXT")) && (maxIterations = "1")) {
@@ -10,7 +11,8 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro gotoNavItem {
+	@summary = "Default summary"
+	macro gotoNavItem(navItem = null) {
 		Click(
 			key_navItem = ${navItem},
 			locator1 = "MP2Navigation#NAV_ITEM");
@@ -18,7 +20,8 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro openSitePage {
+	@summary = "Default summary"
+	macro openSitePage(pageName = null) {
 		if (!(isSet(siteName))) {
 			var siteName = "Marketplace Site";
 		}
@@ -37,7 +40,7 @@ definition {
 		var pageNameURL = StringUtil.lowerCase(${pageNameURL});
 
 		if ((${pageName} == "Customer Dashboard") || (${pageName} == "Publisher Dashboard")) {
-			Open(locator1 = "${baseURL}/web/${siteNameURL}/${pageNameURL}");
+			Open(value1 = "${baseURL}/web/${siteNameURL}/${pageNameURL}");
 		}
 	}
 

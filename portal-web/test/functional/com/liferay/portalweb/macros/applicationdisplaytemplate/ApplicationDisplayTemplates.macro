@@ -1,6 +1,7 @@
 definition {
 
-	macro addADTWithFieldEntryCP {
+	@summary = "Default summary"
+	macro addADTWithFieldEntryCP(fieldName = null,portletName = null) {
 		AssertVisible(locator1 = "Button#PLUS");
 
 		LexiconEntry.gotoAdd();
@@ -20,7 +21,8 @@ definition {
 		Refresh();
 	}
 
-	macro addCP {
+	@summary = "Default summary"
+	macro addCP(adtType = null,templateScript = null,adtFile = null,fieldNameList = null) {
 		var key_adtType = ${adtType};
 
 		Portlet.viewEmptyMessage(message = "There are no templates.");
@@ -82,7 +84,8 @@ definition {
 			locator1 = "LexiconTable#TABLE_ENTRY_TITLE");
 	}
 
-	macro deleteCP {
+	@summary = "Default summary"
+	macro deleteCP(widgetTemplateName = null) {
 		ApplicationDisplayTemplates.gotoWidgetTemplatesEllipsisItem(
 			item = "Delete",
 			widgetTemplateName = ${widgetTemplateName});
@@ -98,7 +101,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro editADTScript {
+	@summary = "Default summary"
+	macro editADTScript(adtScript = null) {
 		Type.sendKeys(
 			locator1 = "DDMEditTemplate#CODE_MIRROR_EDITOR_CONTENT",
 			value1 = "keys=CONTROL,m");
@@ -110,7 +114,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro editWidgetTemplate {
+	@summary = "Default summary"
+	macro editWidgetTemplate(oldWidgetTemplateName = null,adtFile = null,newWidgetTemplateName = null) {
 		SiteAdmin.viewPortletTitle(portletTitle = "Edit ${oldWidgetTemplateName}");
 
 		if (isSet(newWidgetTemplateName)) {
@@ -131,7 +136,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro getWidgetTemplateKey {
+	@summary = "Default summary"
+	macro getWidgetTemplateKey(templateID = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var userLoginInfo = JSONUtil2.formatJSONUser();
 
@@ -146,7 +152,8 @@ definition {
 		return ${templateKey};
 	}
 
-	macro gotoWidgetTemplatesEllipsisItem {
+	@summary = "Default summary"
+	macro gotoWidgetTemplatesEllipsisItem(item = null,widgetTemplateName = null) {
 		Click.waitForMenuToggleJSClick(
 			key_tableEntry = ${widgetTemplateName},
 			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
@@ -154,11 +161,13 @@ definition {
 		MenuItem.click(menuItem = ${item});
 	}
 
-	macro openWidgetTemplatesAdmin {
+	@summary = "Default summary"
+	macro openWidgetTemplatesAdmin(siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_template_web_internal_portlet_TemplatePortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_template_web_internal_portlet_TemplatePortlet_tabs1=widget-templates");
 	}
 
-	macro searchGlobalADT {
+	@summary = "Default summary"
+	macro searchGlobalADT(templateName = null) {
 		Search.searchCP(searchTerm = ${templateName});
 
 		AssertVisible(
@@ -166,7 +175,8 @@ definition {
 			locator1 = "LexiconTable#TABLE_ENTRY_TITLE");
 	}
 
-	macro selectPortletADT {
+	@summary = "Default summary"
+	macro selectPortletADT(templateName = null,portletName = null) {
 		Portlet.gotoPortletOptions(
 			portletName = ${portletName},
 			portletOption = "Configuration");
@@ -191,13 +201,15 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro viewTemplate {
+	@summary = "Default summary"
+	macro viewTemplate(adtType = null) {
 		AssertVisible(
 			key_tableEntry = "${adtType} Test ADT",
 			locator1 = "LexiconTable#TABLE_ENTRY_TITLE");
 	}
 
-	macro viewUsage {
+	@summary = "Default summary"
+	macro viewUsage(usageAmount = null,tableEntry = null) {
 		AssertTextEquals(
 			key_columnName = "usages",
 			key_tableEntry = ${tableEntry},

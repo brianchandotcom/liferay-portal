@@ -1,7 +1,7 @@
 @default = "executeCDPCommand"
 definition {
 
-	function executeCDPCommand {
+	function executeCDPCommand(value2,value1) {
 		selenium.executeCDPCommand(${value1}, ${value2});
 	}
 

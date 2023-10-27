@@ -1,6 +1,7 @@
 definition {
 
-	macro editRelationshipsParameter {
+	@summary = "Default summary"
+	macro editRelationshipsParameter(parameterOption = null) {
 		Click(locator1 = "ObjectRelationships#SELECT_PARAMETER_FORM");
 
 		ClickNoError.clickNoMouseOver(

@@ -86,6 +86,29 @@ public class BaseGraphQLServlet {
 
 	}
 
+	public static class TestDTOPage {
+
+		public TestDTOPage(int page, int pageSize) {
+			this.page = page;
+			this.pageSize = pageSize;
+		}
+
+		public int getPage() {
+			return page;
+		}
+
+		public int getPageSize() {
+			return pageSize;
+		}
+
+		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+		protected int page;
+
+		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+		protected int pageSize;
+
+	}
+
 	public static class TestMutation {
 
 		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
@@ -112,6 +135,15 @@ public class BaseGraphQLServlet {
 			return _testDTO;
 		}
 
+		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+		public BaseGraphQLServlet.TestDTOPage testDTOPage(
+				@GraphQLName("page") int page,
+				@GraphQLName("pageSize") int pageSize)
+			throws Exception {
+
+			return new TestDTOPage(page, pageSize);
+		}
+
 		@GraphQLTypeExtension(TestDTO.class)
 		public class TestGraphQLTypeExtension {
 
@@ -129,6 +161,7 @@ public class BaseGraphQLServlet {
 		}
 
 		private static TestDTO _testDTO;
+		private static TestDTOPage _testDTOPage;
 
 	}
 

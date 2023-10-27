@@ -1,14 +1,14 @@
 @default = "sikuliLeftMouseUp"
 definition {
 
-	function sikuliLeftMouseUp {
+	function sikuliLeftMouseUp() {
 		WaitForSPARefresh();
 
 		selenium.pause(1000);
 
 		selenium.sikuliLeftMouseUp();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

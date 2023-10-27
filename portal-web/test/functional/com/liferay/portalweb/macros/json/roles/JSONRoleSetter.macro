@@ -1,6 +1,7 @@
 definition {
 
-	macro setDescriptionMap {
+	@summary = "Default summary"
+	macro setDescriptionMap(description = null) {
 		if (isSet(description)) {
 			var descriptionEncoded = URLUtil.encodeUTF8(${description});
 
@@ -13,7 +14,8 @@ definition {
 		return ${descriptionMap};
 	}
 
-	macro setName {
+	@summary = "Default summary"
+	macro setName() {
 		Variables.assertDefined(parameterList = ${name});
 
 		var name = URLUtil.encodeUTF8(${name});
@@ -21,7 +23,8 @@ definition {
 		return ${name};
 	}
 
-	macro setRoleId {
+	@summary = "Default summary"
+	macro setRoleId(name = null) {
 		Variables.assertDefined(parameterList = ${name});
 
 		var roleId = JSONRoleAPI._getRoleIdByName(name = ${name});
@@ -29,7 +32,8 @@ definition {
 		return ${roleId};
 	}
 
-	macro setTitleMap {
+	@summary = "Default summary"
+	macro setTitleMap(title = null) {
 		if (isSet(title)) {
 			var titleMap = URLUtil.encodeUTF8(${title});
 
@@ -42,7 +46,8 @@ definition {
 		return ${titleMap};
 	}
 
-	macro setType {
+	@summary = "Default summary"
+	macro setType(roleType = null) {
 		Variables.assertDefined(parameterList = ${roleType});
 
 		if (${roleType} == "regular") {
@@ -67,7 +72,8 @@ definition {
 		return ${type};
 	}
 
-	macro setUserId {
+	@summary = "Default summary"
+	macro setUserId(userEmailAddress = null) {
 		Variables.assertDefined(parameterList = ${userEmailAddress});
 
 		var userId = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = ${userEmailAddress});

@@ -1,6 +1,7 @@
 definition {
 
-	macro _addChannelDefaultsBillingAddress {
+	@summary = "Default summary"
+	macro _addChannelDefaultsBillingAddress(billingAddressName = null,channelName = null,accountEntryName = null) {
 		Variables.assertDefined(parameterList = "${accountEntryName},${channelName},${billingAddressName}");
 
 		var baseURL = ${baseURL};
@@ -41,7 +42,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro _addChannelDefaultsChannelAccountManager {
+	@summary = "Default summary"
+	macro _addChannelDefaultsChannelAccountManager(userEmailAddress = null,channelName = null,accountEntryName = null) {
 		Variables.assertDefined(parameterList = "${accountEntryName},${channelName},${userEmailAddress}");
 
 		var baseURL = ${baseURL};
@@ -80,7 +82,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro _addChannelDefaultsCurrency {
+	@summary = "Default summary"
+	macro _addChannelDefaultsCurrency(channelName = null,accountEntryName = null,currencyCode = null) {
 		Variables.assertDefined(parameterList = "${accountEntryName},${channelName},${currencyCode}");
 
 		var baseURL = ${baseURL};
@@ -119,7 +122,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro _addChannelDefaultsDeliveryTerm {
+	@summary = "Default summary"
+	macro _addChannelDefaultsDeliveryTerm(termsAndConditionsName = null,channelName = null,accountEntryName = null) {
 		Variables.assertDefined(parameterList = "${accountEntryName},${channelName},${termsAndConditionsName}");
 
 		var baseURL = ${baseURL};
@@ -158,7 +162,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro _addChannelDefaultsDiscount {
+	@summary = "Default summary"
+	macro _addChannelDefaultsDiscount(discountTitle = null,channelName = null,accountEntryName = null) {
 		Variables.assertDefined(parameterList = "${accountEntryName},${channelName},${discountTitle}");
 
 		var baseURL = ${baseURL};
@@ -197,7 +202,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro _addChannelDefaultsPaymentTerm {
+	@summary = "Default summary"
+	macro _addChannelDefaultsPaymentTerm(termsAndConditionsName = null,channelName = null,accountEntryName = null) {
 		Variables.assertDefined(parameterList = "${accountEntryName},${channelName},${termsAndConditionsName}");
 
 		var baseURL = ${baseURL};
@@ -236,7 +242,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro _addChannelDefaultsPriceList {
+	@summary = "Default summary"
+	macro _addChannelDefaultsPriceList(channelName = null,priceListName = null,accountEntryName = null) {
 		Variables.assertDefined(parameterList = "${accountEntryName},${channelName},${priceListName}");
 
 		var baseURL = ${baseURL};
@@ -275,7 +282,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro _addChannelDefaultsShippingAddress {
+	@summary = "Default summary"
+	macro _addChannelDefaultsShippingAddress(shippingAddressName = null,channelName = null,accountEntryName = null) {
 		Variables.assertDefined(parameterList = "${accountEntryName},${channelName},${shippingAddressName}");
 
 		var baseURL = ${baseURL};
@@ -316,7 +324,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro _addCommerceAccount {
+	@summary = "Default summary"
+	macro _addCommerceAccount(accountName = null) {
 		Variables.assertDefined(parameterList = ${accountName});
 
 		var baseURL = ${baseURL};
@@ -350,7 +359,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro _addCommerceAccountAddress {
+	@summary = "Default summary"
+	macro _addCommerceAccountAddress(zip = null,city = null,countryISOCode = null,name = null,street1 = null,accountEntryName = null) {
 		Variables.assertDefined(parameterList = "${accountEntryName},${countryISOCode},${name},${street1},${city},${zip}");
 
 		var baseURL = ${baseURL};
@@ -429,7 +439,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro _deleteAllCommerceAccounts {
+	@summary = "Default summary"
+	macro _deleteAllCommerceAccounts() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -460,7 +471,8 @@ definition {
 		}
 	}
 
-	macro _getAccountAddressCityByAddressName {
+	@summary = "Default summary"
+	macro _getAccountAddressCityByAddressName(addressName = null,accountEntryName = null) {
 		Variables.assertDefined(parameterList = ${addressName});
 
 		if (isSet(accountEntryName) && !(isSet(accountEntryId))) {
@@ -486,7 +498,8 @@ definition {
 		return ${accountAddressCity};
 	}
 
-	macro _getAccountAddressCountryByAddressName {
+	@summary = "Default summary"
+	macro _getAccountAddressCountryByAddressName(addressName = null,accountEntryName = null) {
 		Variables.assertDefined(parameterList = ${addressName});
 
 		if (isSet(accountEntryName) && !(isSet(accountEntryId))) {
@@ -512,7 +525,8 @@ definition {
 		return ${accountAddressCountry};
 	}
 
-	macro _getAccountAddressIdByAddressName {
+	@summary = "Default summary"
+	macro _getAccountAddressIdByAddressName(addressName = null,accountEntryName = null) {
 		Variables.assertDefined(parameterList = ${addressName});
 
 		if (isSet(accountEntryName) && !(isSet(accountEntryId))) {
@@ -538,7 +552,8 @@ definition {
 		return ${accountAddressId};
 	}
 
-	macro _getAccountAddressStreetByAddressName {
+	@summary = "Default summary"
+	macro _getAccountAddressStreetByAddressName(streetNumber = null,addressName = null,accountEntryName = null) {
 		Variables.assertDefined(parameterList = "${addressName},${streetNumber}");
 
 		if (isSet(accountEntryName) && !(isSet(accountEntryId))) {
@@ -564,7 +579,8 @@ definition {
 		return ${accountAddressStreet};
 	}
 
-	macro _getAccounts {
+	@summary = "Default summary"
+	macro _getAccounts(accountCount = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -591,7 +607,8 @@ definition {
 		return ${responseBody};
 	}
 
-	macro _getCommerceAccountEmail {
+	@summary = "Default summary"
+	macro _getCommerceAccountEmail(accountType = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -625,7 +642,8 @@ definition {
 		return ${accountEmail};
 	}
 
-	macro _getCommerceAccountIds {
+	@summary = "Default summary"
+	macro _getCommerceAccountIds(accountCount = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -652,7 +670,8 @@ definition {
 		return ${accountIds};
 	}
 
-	macro _getCommerceAccountsCount {
+	@summary = "Default summary"
+	macro _getCommerceAccountsCount() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -674,7 +693,8 @@ definition {
 		return ${accountsCount};
 	}
 
-	macro getAccountFieldByAccountName {
+	@summary = "Default summary"
+	macro getAccountFieldByAccountName(field = null,accountName = null) {
 		Variables.assertDefined(parameterList = ${accountName});
 
 		var responseBody = CommerceJSONAccountsAPI._getAccounts();

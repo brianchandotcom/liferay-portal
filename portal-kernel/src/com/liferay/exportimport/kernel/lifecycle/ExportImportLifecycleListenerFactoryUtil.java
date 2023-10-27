@@ -5,7 +5,7 @@
 
 package com.liferay.exportimport.kernel.lifecycle;
 
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * @author Daniel Kocsis
@@ -16,7 +16,11 @@ public class ExportImportLifecycleListenerFactoryUtil {
 		EventAwareExportImportLifecycleListener
 			processAwareExportImportLifecycleListener) {
 
-		return _exportImportLifecycleListenerFactory.create(
+		ExportImportLifecycleListenerFactory
+			exportImportLifecycleListenerFactory =
+				_exportImportLifecycleListenerFactorySnapshot.get();
+
+		return exportImportLifecycleListenerFactory.create(
 			processAwareExportImportLifecycleListener);
 	}
 
@@ -24,15 +28,17 @@ public class ExportImportLifecycleListenerFactoryUtil {
 		ProcessAwareExportImportLifecycleListener
 			processAwareExportImportLifecycleListener) {
 
-		return _exportImportLifecycleListenerFactory.create(
+		ExportImportLifecycleListenerFactory
+			exportImportLifecycleListenerFactory =
+				_exportImportLifecycleListenerFactorySnapshot.get();
+
+		return exportImportLifecycleListenerFactory.create(
 			processAwareExportImportLifecycleListener);
 	}
 
-	private static volatile ExportImportLifecycleListenerFactory
-		_exportImportLifecycleListenerFactory =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				ExportImportLifecycleListenerFactory.class,
-				ExportImportLifecycleListenerFactoryUtil.class,
-				"_exportImportLifecycleListenerFactory", false);
+	private static final Snapshot<ExportImportLifecycleListenerFactory>
+		_exportImportLifecycleListenerFactorySnapshot = new Snapshot<>(
+			ExportImportLifecycleListenerFactoryUtil.class,
+			ExportImportLifecycleListenerFactory.class);
 
 }

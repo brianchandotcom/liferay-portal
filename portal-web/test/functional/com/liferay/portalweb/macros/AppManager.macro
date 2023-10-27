@@ -1,12 +1,14 @@
 definition {
 
-	macro activateApp {
+	@summary = "Default summary"
+	macro activateApp(appName = null) {
 		LexiconEntry.openEntryMenu(rowEntry = ${appName});
 
 		MenuItem.clickNoError(menuItem = "Activate");
 	}
 
-	macro deactivateApp {
+	@summary = "Default summary"
+	macro deactivateApp(appName = null) {
 		LexiconEntry.openEntryMenu(rowEntry = ${appName});
 
 		MenuItem.clickNoError(menuItem = "Deactivate");
@@ -14,7 +16,8 @@ definition {
 		AssertConfirm(value1 = "Are you sure you want to deactivate this?");
 	}
 
-	macro filtersApp {
+	@summary = "Default summary"
+	macro filtersApp(filterName = null,filterBy = null) {
 		var key_filterName = ${filterName};
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MARKETPLACE_STORE_PORTLET_IFRAME");
@@ -32,7 +35,8 @@ definition {
 		Click(locator1 = "AppManager#SEARCH_BUTTON");
 	}
 
-	macro loginMarketplaceStore {
+	@summary = "Default summary"
+	macro loginMarketplaceStore() {
 		AssertElementPresent(
 			locator1 = "AppManager#MARKETPLACE_DESCRIPTION",
 			value1 = "Liferay Marketplace is an integral part of the Liferay platform experience for all users. Enterprise subscribers also have exclusive access to Liferay Subscription Apps through the Liferay Marketplace. Log in with your Liferay account to browse hundreds of apps to help you build your business or technical solution.");
@@ -74,7 +78,8 @@ definition {
 		AssertElementPresent(locator1 = "AppManager#APP_RESULT_BOX");
 	}
 
-	macro purchaseApp {
+	@summary = "Default summary"
+	macro purchaseApp(searchName = null,type = null) {
 		var key_searchName = ${searchName};
 
 		AssertElementPresent(
@@ -104,7 +109,8 @@ definition {
 		AssertElementPresent(locator1 = "AppManager#APP_PURCHASE_INFO");
 	}
 
-	macro searchApp {
+	@summary = "Default summary"
+	macro searchApp(searchName = null) {
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MARKETPLACE_STORE_PORTLET_IFRAME");
 
 		Type(
@@ -118,7 +124,8 @@ definition {
 			locator1 = "AppManager#APP_TITLE_TYPE");
 	}
 
-	macro uninstallApp {
+	@summary = "Default summary"
+	macro uninstallApp(appName = null) {
 		LexiconEntry.openEntryMenu(rowEntry = ${appName});
 
 		MenuItem.clickNoError(menuItem = "Uninstall");
@@ -126,7 +133,8 @@ definition {
 		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 	}
 
-	macro uploadApp {
+	@summary = "Default summary"
+	macro uploadApp(warFileName = null,appName = null) {
 		var key_appName = ${appName};
 
 		Click(locator1 = "Portlet#OPTIONS_ICON");
@@ -158,7 +166,8 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "HotDeployException: Error registering portlets for ${appName}");
 	}
 
-	macro viewApp {
+	@summary = "Default summary"
+	macro viewApp(searchTerm = null,appName = null,appStatus = null) {
 		var key_appName = ${appName};
 
 		if (isSet(searchTerm)) {
@@ -181,7 +190,8 @@ definition {
 		}
 	}
 
-	macro viewLogoutMarketplace {
+	@summary = "Default summary"
+	macro viewLogoutMarketplace() {
 		AssertElementPresent(
 			locator1 = "AppManager#USER_SIGN_IN",
 			value1 = "Sign In");

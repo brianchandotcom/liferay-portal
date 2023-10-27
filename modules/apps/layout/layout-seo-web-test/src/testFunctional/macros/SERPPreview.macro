@@ -1,6 +1,7 @@
 definition {
 
-	macro addGeneralSettings {
+	@summary = "Default summary"
+	macro addGeneralSettings(htmlTitle = null,description = null) {
 		if (isSet(htmlTitle)) {
 			PortletEntry.inputText(
 				fieldLabel = "HTML Title",
@@ -14,7 +15,8 @@ definition {
 		}
 	}
 
-	macro viewPreviewDefault {
+	@summary = "Default summary"
+	macro viewPreviewDefault() {
 		AssertVisible(locator1 = "PagesAdmin#PREVIEW_SERP");
 	}
 

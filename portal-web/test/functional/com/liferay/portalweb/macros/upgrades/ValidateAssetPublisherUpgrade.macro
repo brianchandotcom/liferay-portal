@@ -1,6 +1,7 @@
 definition {
 
-	macro viewAssetPublisher {
+	@summary = "Default summary"
+	macro viewAssetPublisher(categoryName = null) {
 		task ("Configure the Asset Publisher to show full content") {
 			Navigator.gotoPage(pageName = "Asset Publisher");
 

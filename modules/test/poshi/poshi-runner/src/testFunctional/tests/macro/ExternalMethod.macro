@@ -1,6 +1,7 @@
 definition {
 
-	macro executeMethodInMacro {
+	@summary = "Default summary"
+	macro executeMethodInMacro() {
 		var expected = "test,string,";
 		var actual = ExternalMethod.stringUtilAdd();
 
@@ -16,19 +17,22 @@ definition {
 			expected = ${expected});
 	}
 
-	macro stringUtilAdd {
+	@summary = "Default summary"
+	macro stringUtilAdd() {
 		var stringUtilReturn = StringUtil.add("test", "string");
 
 		return ${stringUtilReturn};
 	}
 
-	macro stringUtilExtractChars {
+	@summary = "Default summary"
+	macro stringUtilExtractChars() {
 		var stringUtilReturn = StringUtil.extractChars("Test String");
 
 		return ${stringUtilReturn};
 	}
 
-	macro validateMatch {
+	@summary = "Default summary"
+	macro validateMatch(actual = null,expected = null) {
 		if (${actual} == ${expected}) {
 			echo("The actual value matched the expected value.");
 

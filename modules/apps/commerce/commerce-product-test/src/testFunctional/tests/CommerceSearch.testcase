@@ -1209,10 +1209,17 @@ definition {
 				locator1 = "Link#ANY");
 		}
 
-		Select(
-			key_selectFieldLabel = "Display Template",
-			locator1 = "Select#ANY",
-			value1 = "Search Results Test ADT");
+		WaitForElementPresent(
+			key_fieldLabel = "Display Template",
+			locator1 = "CommerceEntry#COMMERCE_FACET_BUTTON");
+
+		Click(
+			key_fieldLabel = "Display Template",
+			locator1 = "CommerceEntry#COMMERCE_FACET_BUTTON");
+
+		Click(
+			key_entry = "Search Results Test ADT",
+			locator1 = "CommerceEntry#COMMERCE_FACET_DROPDOWN");
 
 		Navigator.gotoNavTab(navTab = "Pagination");
 

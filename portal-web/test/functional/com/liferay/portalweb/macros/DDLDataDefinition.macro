@@ -4,7 +4,8 @@ definition {
 	var ddlDataDefinitionName = "Data Definition Name";
 	var ddlListName = "List Name";
 
-	macro _add {
+	@summary = "Default summary"
+	macro _add(ddlDataDefinitionName = null,ddlDataDefinitionDescription = null) {
 		if (IsTextNotEqual(locator1 = "Portlet#HEADER", value1 = "Data Definitions")) {
 			AssertTextEquals(
 				locator1 = "DataEngineModal#MODAL_TITLE",
@@ -40,7 +41,8 @@ definition {
 		}
 	}
 
-	macro _closeDetails {
+	@summary = "Default summary"
+	macro _closeDetails() {
 		if (IsElementPresent.isVisible(locator1 = "TextInput#DESCRIPTION")) {
 			Click(locator1 = "DDMEditStructure#DETAILS_TOGGLE");
 		}
@@ -48,7 +50,8 @@ definition {
 		AssertNotVisible(locator1 = "TextInput#DESCRIPTION");
 	}
 
-	macro _select {
+	@summary = "Default summary"
+	macro _select(ddlDataDefinitionName = null) {
 		SelectFrame(
 			key_title = "Data Definitions",
 			locator1 = "IFrame#MODAL_ANY");
@@ -60,7 +63,8 @@ definition {
 			value1 = ${ddlDataDefinitionName});
 	}
 
-	macro _showDetails {
+	@summary = "Default summary"
+	macro _showDetails() {
 		if (IsElementNotPresent.isNotVisible(locator1 = "TextInput#DESCRIPTION")) {
 			Click(locator1 = "DDMEditStructure#DETAILS_TOGGLE");
 
@@ -72,7 +76,8 @@ definition {
 		AssertVisible(locator1 = "TextInput#DESCRIPTION");
 	}
 
-	macro addCP {
+	@summary = "Default summary"
+	macro addCP(ddlDataDefinitionName = null,ddlDataDefinitionDescription = null) {
 		DDLNavigator.gotoManageDataDefinitions();
 
 		DDLDataDefinition._add(
@@ -80,7 +85,8 @@ definition {
 			ddlDataDefinitionName = ${ddlDataDefinitionName});
 	}
 
-	macro addViaDDLDisplayPG {
+	@summary = "Default summary"
+	macro addViaDDLDisplayPG(ddlDataDefinitionName = null,ddlDataDefinitionDescription = null) {
 		DDLDataDefinition._add(
 			ddlDataDefinitionDescription = ${ddlDataDefinitionDescription},
 			ddlDataDefinitionName = ${ddlDataDefinitionName});
@@ -90,13 +96,15 @@ definition {
 		DynamicDataMapping.selectDynamicDataMappingFrame();
 	}
 
-	macro clickSave {
+	@summary = "Default summary"
+	macro clickSave() {
 		AssertClick(
 			locator1 = "DDMEditStructure#SAVE_BUTTON",
 			value1 = "Save");
 	}
 
-	macro copyCP {
+	@summary = "Default summary"
+	macro copyCP(ddlDataDefinitionName = null,ddlDataDefinitionCopyName = null,copyDisplayTemplates = null,copyFormTemplates = null) {
 		DDLNavigator.gotoManageDataDefinitions();
 
 		var key_ddlDataDefinitionName = ${ddlDataDefinitionName};
@@ -124,7 +132,8 @@ definition {
 		DDLDataDefinition.viewName(ddlDataDefinitionName = ${ddlDataDefinitionCopyName});
 	}
 
-	macro deleteCP {
+	@summary = "Default summary"
+	macro deleteCP(ddlDataDefinitionName = null) {
 		DDLNavigator.gotoManageDataDefinitions();
 
 		var key_ddlDataDefinitionName = ${ddlDataDefinitionName};
@@ -150,7 +159,8 @@ definition {
 			locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS");
 	}
 
-	macro deleteNoCP {
+	@summary = "Default summary"
+	macro deleteNoCP(ddlDataDefinitionName = null) {
 		DDLNavigator.gotoManageDataDefinitions();
 
 		Search.searchCP(searchTerm = ${ddlDataDefinitionName});
@@ -166,7 +176,8 @@ definition {
 			value1 = "The structure cannot be deleted because it is required by one or more structure links.");
 	}
 
-	macro editCP {
+	@summary = "Default summary"
+	macro editCP(ddlDataDefinitionName = null,ddlDataDefinitionNameEdit = null,ddlDataDefinitionDescriptionEdit = null) {
 		DDLNavigator.gotoManageDataDefinitions();
 
 		Search.searchCP(searchTerm = ${ddlDataDefinitionName});
@@ -186,13 +197,15 @@ definition {
 			value1 = ${ddlDataDefinitionDescriptionEdit});
 	}
 
-	macro editName {
+	@summary = "Default summary"
+	macro editName(ddlDataDefinitionName = null) {
 		Type.clickAtType(
 			locator1 = "DDMEditStructure#NAME_FIELD",
 			value1 = ${ddlDataDefinitionName});
 	}
 
-	macro editPermissionsCP {
+	@summary = "Default summary"
+	macro editPermissionsCP(addOrRemoveViewPermission = null,roleList = null) {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
@@ -200,13 +213,15 @@ definition {
 			roleList = ${roleList});
 	}
 
-	macro save {
+	@summary = "Default summary"
+	macro save() {
 		Click.mouseDownMouseUp(locator1 = "//span[contains(@class,'btn')][normalize-space(text())='Save']/..");
 
 		Alert.viewSuccessMessage();
 	}
 
-	macro saveViaDDLDisplayPG {
+	@summary = "Default summary"
+	macro saveViaDDLDisplayPG() {
 		DDLDataDefinition.clickSave();
 
 		Alert.viewSuccessMessage();
@@ -214,7 +229,8 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro selectCP {
+	@summary = "Default summary"
+	macro selectCP(ddlDataDefinitionName = null) {
 		DDLDataDefinition._select(ddlDataDefinitionName = ${ddlDataDefinitionName});
 
 		SelectFrameTop();
@@ -224,7 +240,8 @@ definition {
 			value1 = ${ddlDataDefinitionName});
 	}
 
-	macro selectViaDDLDisplayPG {
+	@summary = "Default summary"
+	macro selectViaDDLDisplayPG(ddlDataDefinitionName = null) {
 		DDLDataDefinition._select(ddlDataDefinitionName = ${ddlDataDefinitionName});
 
 		SelectFrameTop();
@@ -240,7 +257,8 @@ definition {
 			value1 = ${ddlDataDefinitionName});
 	}
 
-	macro setInputFieldLocalization {
+	@summary = "Default summary"
+	macro setInputFieldLocalization(languageValue = null) {
 		var key_languageValue = ${languageValue};
 
 		PortletEntry.changeLocale(
@@ -248,7 +266,8 @@ definition {
 			locale = ${languageValue});
 	}
 
-	macro tearDownCP {
+	@summary = "Default summary"
+	macro tearDownCP(kfProcessExists = null) {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -294,7 +313,8 @@ definition {
 		}
 	}
 
-	macro viewCP {
+	@summary = "Default summary"
+	macro viewCP(ddlDataDefinitionName = null,fieldFieldLabel = null,ddlDataDefinitionDescription = null) {
 		DDLNavigator.gotoManageDataDefinitions();
 
 		var key_ddlDataDefinitionName = ${ddlDataDefinitionName};
@@ -326,7 +346,8 @@ definition {
 		}
 	}
 
-	macro viewName {
+	@summary = "Default summary"
+	macro viewName(ddlDataDefinitionName = null) {
 		var key_ddlDataDefinitionName = ${ddlDataDefinitionName};
 
 		AssertTextEquals(
@@ -334,7 +355,8 @@ definition {
 			value1 = ${ddlDataDefinitionName});
 	}
 
-	macro viewParentStructureHeader {
+	@summary = "Default summary"
+	macro viewParentStructureHeader(assetTitle = null) {
 		Click(locator1 = "DDMEditStructure#DETAILS_TOGGLE");
 
 		AssertClick(

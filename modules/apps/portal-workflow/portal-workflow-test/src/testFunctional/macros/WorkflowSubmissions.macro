@@ -1,6 +1,7 @@
 definition {
 
-	macro searchSubmissions {
+	@summary = "Default summary"
+	macro searchSubmissions(searchValue = null) {
 		Type(
 			locator1 = "WorkflowSubmissions#SUBMISSION_SEARCH_BAR",
 			value1 = ${searchValue});
@@ -8,7 +9,8 @@ definition {
 		Click(locator1 = "WorkflowSubmissions#SUBMISSION_SEARCH_BUTTON");
 	}
 
-	macro viewSubmissionStatus {
+	@summary = "Default summary"
+	macro viewSubmissionStatus(submissionStatus = null,submissionTitle = null) {
 		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 
 		MenuItem.click(menuItem = ${submissionStatus});

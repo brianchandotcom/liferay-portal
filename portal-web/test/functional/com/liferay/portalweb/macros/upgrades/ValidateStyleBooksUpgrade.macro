@@ -1,6 +1,7 @@
 definition {
 
-	macro addStyleBook {
+	@summary = "Default summary"
+	macro addStyleBook() {
 		task ("Add a style book") {
 			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
 

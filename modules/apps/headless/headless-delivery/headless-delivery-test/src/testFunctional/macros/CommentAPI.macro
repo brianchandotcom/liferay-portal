@@ -1,6 +1,7 @@
 definition {
 
-	macro _createNCommentsInBlogPosting {
+	@summary = "Default summary"
+	macro _createNCommentsInBlogPosting(numberOfCommentsToCreate = null,createStrategy = null,blogPostingId = null) {
 		Variables.assertDefined(parameterList = "${blogPostingId},${numberOfCommentsToCreate},${createStrategy}");
 
 		var size = ${numberOfCommentsToCreate} + 1;
@@ -43,7 +44,8 @@ definition {
 		return ${curl};
 	}
 
-	macro _curlBlogPostingComments {
+	@summary = "Default summary"
+	macro _curlBlogPostingComments(blogPostingId = null,commentId = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(commentId)) {
@@ -62,7 +64,8 @@ definition {
 		return ${curl};
 	}
 
-	macro _curlBlogPostingCommentsByExternalReferenceCode {
+	@summary = "Default summary"
+	macro _curlBlogPostingCommentsByExternalReferenceCode(blogPostingChildCommentErc = null,blogPostingErc = null,blogPostingCommentErc = null) {
 		Variables.assertDefined(parameterList = ${blogPostingCommentErc});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -86,7 +89,8 @@ definition {
 		return ${curl};
 	}
 
-	macro createCommentInBlogPosting {
+	@summary = "Default summary"
+	macro createCommentInBlogPosting(blogPostingId = null,commentId = null,commentText = null) {
 		Variables.assertDefined(parameterList = ${commentText});
 
 		if (!(isSet(externalReferenceCode))) {
@@ -120,7 +124,8 @@ definition {
 		return ${response};
 	}
 
-	macro getFieldValueOfBlogPostingComments {
+	@summary = "Default summary"
+	macro getFieldValueOfBlogPostingComments(blogPostingChildCommentErc = null,fieldName = null,blogPostingId = null,commentId = null,blogPostingErc = null,blogPostingCommentErc = null) {
 		Variables.assertDefined(parameterList = ${fieldName});
 
 		if (!(isSet(responseToParse))) {
@@ -144,7 +149,8 @@ definition {
 		return ${fieldValue};
 	}
 
-	macro getIdOfCreateNCommentsInBlogPostingBatchEngineImportTask {
+	@summary = "Default summary"
+	macro getIdOfCreateNCommentsInBlogPostingBatchEngineImportTask(numberOfCommentsToCreate = null,createStrategy = null,blogPostingId = null) {
 		var response = CommentAPI._createNCommentsInBlogPosting(
 			blogPostingId = ${blogPostingId},
 			createStrategy = ${createStrategy},

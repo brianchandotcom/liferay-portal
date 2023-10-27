@@ -1,6 +1,7 @@
 definition {
 
-	macro returnInMacro {
+	@summary = "Default summary"
+	macro returnInMacro() {
 		var actual = Return.returnValue();
 		var expected = "Return Value";
 
@@ -22,7 +23,8 @@ definition {
 		}
 	}
 
-	macro returnValue {
+	@summary = "Default summary"
+	macro returnValue() {
 		return "Return Value";
 	}
 

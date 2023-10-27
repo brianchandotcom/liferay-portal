@@ -1,10 +1,12 @@
 definition {
 
-	macro add {
+	@summary = "Default summary"
+	macro add() {
 		Click(locator1 = "AppBuilder#BUTTON_ADD");
 	}
 
-	macro addAllPermissionsFromRoles {
+	@summary = "Default summary"
+	macro addAllPermissionsFromRoles(roleList = null) {
 		for (var roleTitle : list ${roleList}) {
 			var key_roleTitle = ${roleTitle};
 
@@ -20,7 +22,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro addOrRemovePermissionFromRoles {
+	@summary = "Default summary"
+	macro addOrRemovePermissionFromRoles(addOrRemovePermission = null,permission = null,roleList = null) {
 		for (var roleTitle : list ${roleList}) {
 			var key_roleTitle = ${roleTitle};
 
@@ -61,23 +64,27 @@ definition {
 		Button.clickSave();
 	}
 
-	macro assertCheckboxPresent {
+	@summary = "Default summary"
+	macro assertCheckboxPresent(checkboxOption = null) {
 		AssertElementPresent(
 			key_checkboxOption = ${checkboxOption},
 			locator1 = "AppBuilder#CHECKBOX_OPTION_LABEL");
 	}
 
-	macro assertNewButtonIsVisible {
+	@summary = "Default summary"
+	macro assertNewButtonIsVisible(buttonValue = null) {
 		AssertTextEquals(
 			locator1 = "AppBuilder#BUTTON_ADD_NEW_ITEM",
 			value1 = ${buttonValue});
 	}
 
-	macro cancel {
+	@summary = "Default summary"
+	macro cancel() {
 		Click(locator1 = "AppBuilder#BUTTON_CANCEL");
 	}
 
-	macro chooseAppSearchFilterByOption {
+	@summary = "Default summary"
+	macro chooseAppSearchFilterByOption(filterOption = null) {
 		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
 
 		Click(
@@ -87,7 +94,8 @@ definition {
 		Button.clickDone();
 	}
 
-	macro chooseMultipleFilter {
+	@summary = "Default summary"
+	macro chooseMultipleFilter(deploymentFilterOption = null,statusFilterOption = null) {
 		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
 
 		Click.clickAtNotVisible(
@@ -105,7 +113,8 @@ definition {
 		Button.clickDone();
 	}
 
-	macro chooseSearchFilterByOption {
+	@summary = "Default summary"
+	macro chooseSearchFilterByOption(filterOption = null) {
 		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
 
 		Click(
@@ -113,19 +122,23 @@ definition {
 			locator1 = "AppBuilder#CHOOSE_SEARCH_FILTER_BY_OPTION");
 	}
 
-	macro clearFilter {
+	@summary = "Default summary"
+	macro clearFilter() {
 		Click(locator1 = "AppBuilder#CLEAR_FILTER");
 	}
 
-	macro clearSearch {
+	@summary = "Default summary"
+	macro clearSearch() {
 		Click(locator1 = "AppBuilder#CLEAR_SEARCH");
 	}
 
-	macro continueNewCustomObject {
+	@summary = "Default summary"
+	macro continueNewCustomObject() {
 		Click(locator1 = "AppBuilder#BUTTON_CONTINUE");
 	}
 
-	macro deleteApp {
+	@summary = "Default summary"
+	macro deleteApp(itemName = null,key_itemName = null) {
 		Click(
 			key_itemName = ${itemName},
 			locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
@@ -139,7 +152,8 @@ definition {
 			value1 = ${key_itemName});
 	}
 
-	macro deleteEntry {
+	@summary = "Default summary"
+	macro deleteEntry(itemName = null,key_itemName = null) {
 		Click(
 			key_itemName = ${itemName},
 			locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
@@ -155,7 +169,8 @@ definition {
 			value1 = ${key_itemName});
 	}
 
-	macro deployApp {
+	@summary = "Default summary"
+	macro deployApp(itemName = null) {
 		AssertTextEquals(
 			deployStatus = "Undeployed",
 			locator1 = "AppBuilder#DEPLOY_APP_STATUS",
@@ -173,19 +188,22 @@ definition {
 			value1 = "Deployed");
 	}
 
-	macro editCustomObjectNameAtPopover {
+	@summary = "Default summary"
+	macro editCustomObjectNameAtPopover(customObjectName = null) {
 		Type(
 			locator1 = "AppBuilder#INPUT_OBJECT_NAME",
 			value1 = ${customObjectName});
 	}
 
-	macro editItem {
+	@summary = "Default summary"
+	macro editItem(itemName = null) {
 		AppBuilderAdmin.openActionMenu(itemName = ${itemName});
 
 		MenuItem.clickNoError(menuItem = "Edit");
 	}
 
-	macro filterByDeploymentType {
+	@summary = "Default summary"
+	macro filterByDeploymentType(itemName = null) {
 		var key_itemName = ${itemName};
 
 		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
@@ -195,21 +213,25 @@ definition {
 		Button.clickDone();
 	}
 
-	macro filterListAscendAndDescend {
+	@summary = "Default summary"
+	macro filterListAscendAndDescend() {
 		Click(locator1 = "AppBuilder#FILTER_LIST_ASCEND_AND_DESCEND_BUTTON");
 	}
 
-	macro gotoAddCustomObject {
+	@summary = "Default summary"
+	macro gotoAddCustomObject() {
 		AppBuilderAdmin.add();
 	}
 
-	macro gotoAddItemViaNewButton {
+	@summary = "Default summary"
+	macro gotoAddItemViaNewButton() {
 		AssertClick(
 			locator1 = "AppBuilder#BUTTON_ADD_NEW_ITEM",
 			value1 = "New Custom Object");
 	}
 
-	macro gotoBack {
+	@summary = "Default summary"
+	macro gotoBack() {
 		Navigator.gotoBack();
 
 		if (IsElementPresent(locator1 = "Button#LEAVE")) {
@@ -217,7 +239,8 @@ definition {
 		}
 	}
 
-	macro gotoCustomAppApplicationsMenuApplications {
+	@summary = "Default summary"
+	macro gotoCustomAppApplicationsMenuApplications(portlet = null) {
 		Navigator.openURL();
 
 		ProductMenuHelper.closeProductMenu();
@@ -228,25 +251,29 @@ definition {
 			portlet = ${portlet});
 	}
 
-	macro openActionMenu {
+	@summary = "Default summary"
+	macro openActionMenu(itemName = null) {
 		Click(
 			key_itemName = ${itemName},
 			locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
 	}
 
-	macro openItem {
+	@summary = "Default summary"
+	macro openItem(itemName = null) {
 		Click(
 			key_itemName = ${itemName},
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE_CLICK");
 	}
 
-	macro openStandAloneApp {
+	@summary = "Default summary"
+	macro openStandAloneApp(itemName = null) {
 		AppBuilderAdmin.openActionMenu(itemName = ${itemName});
 
 		MenuItem.clickNoError(menuItem = "Open Standalone App");
 	}
 
-	macro removeAllPermissionsFromRoles {
+	@summary = "Default summary"
+	macro removeAllPermissionsFromRoles(roleList = null) {
 		for (var roleTitle : list ${roleList}) {
 			var key_roleTitle = ${roleTitle};
 
@@ -262,13 +289,15 @@ definition {
 		Button.clickSave();
 	}
 
-	macro renameObject {
+	@summary = "Default summary"
+	macro renameObject(newName = null) {
 		Type(
 			locator1 = "AppBuilder#INPUT_OBJECT_RENAME",
 			value1 = ${newName});
 	}
 
-	macro searchByItem {
+	@summary = "Default summary"
+	macro searchByItem(itemName = null) {
 		Type(
 			locator1 = "AppBuilder#SEARCH_BAR_INPUT",
 			value1 = ${itemName});
@@ -276,23 +305,27 @@ definition {
 		Click(locator1 = "AppBuilder#SEARCH_BUTTON");
 	}
 
-	macro setName {
+	@summary = "Default summary"
+	macro setName(title = null) {
 		Type(
 			locator1 = "FormViewBuilder#FORM_VIEW_NAME",
 			value1 = ${title});
 	}
 
-	macro switchTab {
+	@summary = "Default summary"
+	macro switchTab(tabName = null) {
 		Navigator.gotoNavItem(navItem = ${tabName});
 	}
 
-	macro uncheckCheckbox {
+	@summary = "Default summary"
+	macro uncheckCheckbox(checkboxOption = null) {
 		Click(
 			key_checkboxOption = ${checkboxOption},
 			locator1 = "AppBuilder#CHECKBOX_OPTION_LABEL");
 	}
 
-	macro undeployApp {
+	@summary = "Default summary"
+	macro undeployApp(itemName = null) {
 		Click(
 			key_itemName = ${itemName},
 			locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
@@ -306,7 +339,8 @@ definition {
 			value1 = "UNDEPLOYED");
 	}
 
-	macro validateAppIsNotPresentOnApplicationsMenuApplications {
+	@summary = "Default summary"
+	macro validateAppIsNotPresentOnApplicationsMenuApplications(portlet = null) {
 		Navigator.openURL();
 
 		ProductMenuHelper.closeProductMenu();
@@ -320,7 +354,8 @@ definition {
 			locator1 = "ApplicationsMenu#CATEGORY");
 	}
 
-	macro validateAppIsNotPresentOnSite {
+	@summary = "Default summary"
+	macro validateAppIsNotPresentOnSite(portlet = null) {
 		ProductMenuHelper.openProductMenu();
 
 		ProductMenuHelper.expandCategory(category = "Content & Data");
@@ -330,13 +365,15 @@ definition {
 			locator1 = "ProductMenu#PORTLET");
 	}
 
-	macro validateCustomObjectNameOnHeader {
+	@summary = "Default summary"
+	macro validateCustomObjectNameOnHeader(customObjectName = null) {
 		AssertTextEquals(
 			locator1 = "AppBuilder#CUSTOM_OBJECT_NAME_ON_HEADER",
 			value1 = ${customObjectName});
 	}
 
-	macro validateEmptyListMessage {
+	@summary = "Default summary"
+	macro validateEmptyListMessage(description = null,title = null) {
 		AssertTextEquals(
 			locator1 = "AppBuilder#MESSAGE_TITLE_EMPTY_LIST",
 			value1 = ${title});
@@ -346,13 +383,15 @@ definition {
 			value1 = ${description});
 	}
 
-	macro validateFieldIsOnTable {
+	@summary = "Default summary"
+	macro validateFieldIsOnTable(fieldLabel = null) {
 		AssertElementPresent(
 			key_fieldLabel = ${fieldLabel},
 			locator1 = "AppBuilder#FIELD_LABEL_IN_TABLE");
 	}
 
-	macro validateFilterAndOrder {
+	@summary = "Default summary"
+	macro validateFilterAndOrder() {
 		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
 
 		AssertElementPresent(locator1 = "AppBuilder#VALIDATE_FILTER_BY_DEPLOYMENT_TYPE");
@@ -368,13 +407,15 @@ definition {
 		Button.clickDone();
 	}
 
-	macro validateIfSearchItemIsFound {
+	@summary = "Default summary"
+	macro validateIfSearchItemIsFound(itemName = null) {
 		AssertTextEquals(
 			locator1 = "AppBuilder#VALIDATE_SEARCH_RESULTS_BAR",
 			value1 = "1 Result for ${itemName}");
 	}
 
-	macro validateIfSearchItemIsNotFound {
+	@summary = "Default summary"
+	macro validateIfSearchItemIsNotFound(itemName = null) {
 		AssertTextEquals(
 			locator1 = "AppBuilder#VALIDATE_SEARCH_RESULTS_BAR",
 			value1 = "0 Results for ${itemName}");
@@ -384,36 +425,42 @@ definition {
 			value1 = "No results were found.");
 	}
 
-	macro validateItemNameOnTable {
+	@summary = "Default summary"
+	macro validateItemNameOnTable(itemName = null) {
 		AssertTextEquals(
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE",
 			value1 = ${itemName});
 	}
 
-	macro validateItemNameOnTableNotPresent {
+	@summary = "Default summary"
+	macro validateItemNameOnTableNotPresent(itemName = null) {
 		AssertElementNotPresent(
 			locator1 = "AppBuilder#ITEM_ON_THE_TABLE",
 			value1 = ${itemName});
 	}
 
-	macro validateListTitleAtRow {
+	@summary = "Default summary"
+	macro validateListTitleAtRow(rowNumber = null,title = null) {
 		AssertTextEquals(
 			key_rowNumber = ${rowNumber},
 			locator1 = "AppBuilder#VALIDATE_LIST_TITLE_NAME_AT_ROW",
 			value1 = ${title});
 	}
 
-	macro validateNewButtonIconIsNotPresent {
+	@summary = "Default summary"
+	macro validateNewButtonIconIsNotPresent() {
 		AssertElementNotPresent(locator1 = "AppBuilder#BUTTON_ADD");
 	}
 
-	macro validateNewButtonIsNotPresent {
+	@summary = "Default summary"
+	macro validateNewButtonIsNotPresent(buttonValue = null) {
 		AssertElementNotPresent(
 			locator1 = "AppBuilder#BUTTON_ADD_NEW_ITEM",
 			value1 = ${buttonValue});
 	}
 
-	macro validatePermissionsFromRolesAreChecked {
+	@summary = "Default summary"
+	macro validatePermissionsFromRolesAreChecked(roleList = null) {
 		for (var roleTitle : list ${roleList}) {
 			var key_roleTitle = ${roleTitle};
 
@@ -427,7 +474,8 @@ definition {
 		}
 	}
 
-	macro validatePermissionsFromRolesAreNotChecked {
+	@summary = "Default summary"
+	macro validatePermissionsFromRolesAreNotChecked(roleList = null) {
 		for (var roleTitle : list ${roleList}) {
 			var key_roleTitle = ${roleTitle};
 
@@ -441,29 +489,34 @@ definition {
 		}
 	}
 
-	macro validateProductMenuApp {
+	@summary = "Default summary"
+	macro validateProductMenuApp(appName = null) {
 		AssertTextEquals(
 			locator1 = "AppBuilder#PRODUCT_MENU_DEPLOYED",
 			value1 = ${appName});
 	}
 
-	macro validateRequiredValidNameMessage {
+	@summary = "Default summary"
+	macro validateRequiredValidNameMessage() {
 		AssertTextEquals(
 			locator1 = "AppBuilder#MESSAGE_EXCLAMATION_REQUIRED_FIELD",
 			value1 = "This field is required.");
 	}
 
-	macro validateRequiredValidNameMessageStandAloneApp {
+	@summary = "Default summary"
+	macro validateRequiredValidNameMessageStandAloneApp() {
 		AssertTextEquals(
 			locator1 = "AppBuilder#MESSAGE_EXCLAMATION_REQUIRED_FIELD_FOR_STANDALONE_APP",
 			value1 = "This field is required.");
 	}
 
-	macro validateStandAloneApp {
+	@summary = "Default summary"
+	macro validateStandAloneApp() {
 		AssertElementPresent(locator1 = "AppBuilder#STANDALONE_DEPLOYED");
 	}
 
-	macro validateStandAloneOptionNotPresent {
+	@summary = "Default summary"
+	macro validateStandAloneOptionNotPresent(itemName = null) {
 		AppBuilderAdmin.openActionMenu(itemName = ${itemName});
 
 		MenuItem.viewNotPresent(menuItem = "Open Standalone App");
@@ -471,37 +524,44 @@ definition {
 		AppBuilderAdmin.openActionMenu(itemName = ${itemName});
 	}
 
-	macro validateSuccessMessage {
+	@summary = "Default summary"
+	macro validateSuccessMessage() {
 		AssertElementPresent(locator1 = "AppBuilder#ENTRY_SUCCESS_MESSAGE");
 	}
 
-	macro validateTextBox {
+	@summary = "Default summary"
+	macro validateTextBox(fieldName = null) {
 		AssertElementPresent(
 			key_fieldName = ${fieldName},
 			locator1 = "FormViewBuilder#TEXT_BOX_FIELD");
 	}
 
-	macro validateUndeployedApp {
+	@summary = "Default summary"
+	macro validateUndeployedApp() {
 		AssertTextEquals(
 			locator1 = "AppBuilder#PORTLET_UNDEPLOYED",
 			value1 = "This portlet could not be found. Please redeploy it or remove it from the page.");
 	}
 
-	macro validateWidgetApp {
+	@summary = "Default summary"
+	macro validateWidgetApp(appName = null) {
 		AssertTextEquals(
 			locator1 = "AppBuilder#WIDGET_DEPLOYED",
 			value1 = ${appName});
 	}
 
-	macro viewCheckboxChecked {
+	@summary = "Default summary"
+	macro viewCheckboxChecked() {
 		AssertChecked.assertCheckedNotVisible(locator1 = "AppBuilder#CHECKBOX");
 	}
 
-	macro viewInactiveSaveButton {
+	@summary = "Default summary"
+	macro viewInactiveSaveButton() {
 		AssertElementPresent(locator1 = "AppBuilder#SAVE_BUTTON_DISABLED");
 	}
 
-	macro viewItem {
+	@summary = "Default summary"
+	macro viewItem(itemName = null) {
 		AppBuilderAdmin.openActionMenu(itemName = ${itemName});
 
 		MenuItem.clickNoError(menuItem = "View");

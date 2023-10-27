@@ -126,6 +126,396 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-12610. As an Operations Manager, I can assert the bundled product shown with option values in the orders admin"
+	@priority = 5
+	test CanAssertAllTypesOfOptionsShownInOrdersAdmin {
+		property custom.properties = "feature.flag.COMMERCE-9599=true${line.separator}jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site with a buyer user is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a user with the Operations Manager role") {
+			JSONUser.addUserWithRole(
+				roleTitle = "Operations Manager",
+				userEmailAddress = "om@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("And a new bundled product with all types of options is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Bundled Product",
+				productType = "Simple");
+
+			CommerceJSONOptionsAPI._addCommerceOption(
+				fieldType = "select",
+				optionKey = "color",
+				optionName = "Color",
+				optionValues = "blue:Blue:1,white:White:2");
+
+			for (var fieldType : list "checkbox,date,numeric,text") {
+				CommerceJSONOptionsAPI._addCommerceOption(
+					fieldType = ${fieldType},
+					optionKey = "option-${fieldType}-key",
+					optionName = ${fieldType},
+					skuContributor = "false");
+			}
+
+			for (var fieldType : list "checkbox_multiple,radio") {
+				CommerceJSONOptionsAPI._addCommerceOption(
+					fieldType = ${fieldType},
+					optionKey = "option-${fieldType}-key",
+					optionName = ${fieldType},
+					optionValues = "value1:value1:1,value2:value2:2",
+					skuContributor = "false");
+			}
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = '''"Bundled Product"''');
+
+			CommerceNavigator.gotoEntry(entryName = "Bundled Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			for (var optionName : list "Color,checkbox,checkbox_multiple,date,numeric,radio,text") {
+				CommerceRelations.assignSingleRelationToProductsEntry(
+					entryName = ${optionName},
+					title = "Add Option");
+			}
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceProductOptions.editProductOption(
+				key_option = "Color",
+				key_priceType = "Static",
+				productOptionPriceType = "true",
+				productOptionRequired = "true",
+				productOptionSkuContributor = "true");
+		}
+
+		task ("And the admin sets the linked product with a delta price for each option value of Color") {
+			for (var optionValueList : list "Blue:MIN93015:20,White:MIN93020:30") {
+				var optionValueName = StringUtil.extractFirst(${optionValueList}, ":");
+
+				var optionValueList = StringUtil.replaceFirst(${optionValueList}, "${optionValueName}:", "");
+
+				var sku = StringUtil.extractFirst(${optionValueList}, ":");
+				var deltaPrice = StringUtil.extractLast(${optionValueList}, ":");
+
+				CommerceOptions.setDeltaPrice(
+					deltaPrice = ${deltaPrice},
+					key_index = ${optionValueName},
+					key_optionIndex = "Color",
+					multipleValuesLeft = "true",
+					productSKU = ${sku});
+			}
+
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrameTop();
+		}
+
+		task ("And all SKUs are generated") {
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceSKUs.generateAllSkuCombinations();
+		}
+
+		task ("When the buyer adds BLUE to the cart with filled all types of option values") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/bundled-product");
+
+			FrontStore.addToCartFromProductDetails(
+				boolean = "enabled",
+				date = "10/23/2023",
+				multipleSelectionValuesChecked = "value1,value2",
+				numeric = 10,
+				optionNamesAndValues = "Color:Blue",
+				productName = "Bundled Product",
+				productSku = "BLUE",
+				singleSelectionValueChecked = "value2",
+				text = "Text Content");
+
+			var productOptions = '''Blue,option-checkbox-key,2023-10-23,10,Text Content,value1,value2,value2''';
+		}
+
+		task ("And completes the checkout") {
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.checkout(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code",
+				shippingMethod = "Standard");
+		}
+
+		task ("Then the Operations Manager can view the bundled product shown with the correct option values on the order admin page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "om@liferay.com",
+				userLoginFullName = "Operations Manager");
+
+			CommerceOrders.openOrdersAdmin();
+
+			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
+
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "20.00",
+				productName = "ABS Sensor",
+				productPrice = "20.00",
+				productQuantity = 1,
+				productSku = "MIN93015",
+				productTotalPrice = "20.00");
+
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "20.00",
+				productName = "Bundled Product",
+				productOptions = ${productOptions},
+				productPrice = "20.00",
+				productQuantity = 1,
+				productSku = "BLUE",
+				productTotalPrice = "20.00");
+
+			CommerceOrders.viewOrderSummary(
+				deliveryValue = "$ 15.00",
+				subtotalValue = "$ 20.00",
+				totalValue = "$ 35.00");
+		}
+	}
+
+	@description = "COMMERCE-12610. As a buyer, I can assert the bundled product shown with option values in the placed order"
+	@priority = 5
+	test CanAssertAllTypesOfOptionsShownInPlacedOrders {
+		property custom.properties = "feature.flag.COMMERCE-9599=true${line.separator}jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site with a buyer user is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And a new bundled product with all types of options is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Bundled Product",
+				productType = "Simple");
+
+			CommerceJSONOptionsAPI._addCommerceOption(
+				fieldType = "select",
+				optionKey = "color",
+				optionName = "Color",
+				optionValues = "blue:Blue:1,white:White:2");
+
+			for (var fieldType : list "checkbox,date,numeric,text") {
+				CommerceJSONOptionsAPI._addCommerceOption(
+					fieldType = ${fieldType},
+					optionKey = "option-${fieldType}-key",
+					optionName = ${fieldType},
+					skuContributor = "false");
+			}
+
+			for (var fieldType : list "checkbox_multiple,radio") {
+				CommerceJSONOptionsAPI._addCommerceOption(
+					fieldType = ${fieldType},
+					optionKey = "option-${fieldType}-key",
+					optionName = ${fieldType},
+					optionValues = "value1:value1:1,value2:value2:2",
+					skuContributor = "false");
+			}
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = '''"Bundled Product"''');
+
+			CommerceNavigator.gotoEntry(entryName = "Bundled Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			for (var optionName : list "Color,checkbox,checkbox_multiple,date,numeric,radio,text") {
+				CommerceRelations.assignSingleRelationToProductsEntry(
+					entryName = ${optionName},
+					title = "Add Option");
+			}
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceProductOptions.editProductOption(
+				key_option = "Color",
+				key_priceType = "Static",
+				productOptionPriceType = "true",
+				productOptionRequired = "true",
+				productOptionSkuContributor = "true");
+		}
+
+		task ("And the admin sets the linked product with a delta price for each option value of Color") {
+			for (var optionValueList : list "Blue:MIN93015:20,White:MIN93020:30") {
+				var optionValueName = StringUtil.extractFirst(${optionValueList}, ":");
+
+				var optionValueList = StringUtil.replaceFirst(${optionValueList}, "${optionValueName}:", "");
+
+				var sku = StringUtil.extractFirst(${optionValueList}, ":");
+				var deltaPrice = StringUtil.extractLast(${optionValueList}, ":");
+
+				CommerceOptions.setDeltaPrice(
+					deltaPrice = ${deltaPrice},
+					key_index = ${optionValueName},
+					key_optionIndex = "Color",
+					multipleValuesLeft = "true",
+					productSKU = ${sku});
+			}
+
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrameTop();
+		}
+
+		task ("And all SKUs are generated") {
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceSKUs.generateAllSkuCombinations();
+		}
+
+		task ("And the buyer adds BLUE to the cart with filled all types of option values") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/bundled-product");
+
+			FrontStore.addToCartFromProductDetails(
+				boolean = "enabled",
+				date = "10/23/2023",
+				multipleSelectionValuesChecked = "value1,value2",
+				numeric = 10,
+				optionNamesAndValues = "Color:Blue",
+				productName = "Bundled Product",
+				productSku = "BLUE",
+				singleSelectionValueChecked = "value2",
+				text = "Text Content");
+		}
+
+		task ("When the buyer checkout the order") {
+			CommerceCheckout.gotoCheckout();
+
+			CommerceCheckout.setAddress(
+				newAddressAddress = "Test Address",
+				newAddressCity = "Test City",
+				newAddressCountry = "United States",
+				newAddressName = "Address Name",
+				newAddressZipCode = "Test Zip Code");
+
+			Click(locator1 = "Button#CONTINUE");
+
+			Click(
+				key_radioOption = "Standard",
+				locator1 = "CommerceEntry#RADIO_BUTTON");
+
+			Click(locator1 = "Button#CONTINUE");
+		}
+
+		task ("Then can view the bundled product shown with the correct option values in the checkout") {
+			var productOptions = '''Blue,option-checkbox-key,2023-10-23,10,Text Content,value1,value2,value2''';
+
+			CommerceCheckout.viewCheckoutOrderSummary(
+				addressAddress = "Test Address",
+				addressCity = "Test City",
+				addressCountry = "United States",
+				addressName = "Address Name",
+				productName = "ABS Sensor",
+				productPrice = 20,
+				productQuantity = 1);
+
+			CommerceCheckout.viewCheckoutOrderSummary(
+				addressAddress = "Test Address",
+				addressCity = "Test City",
+				addressCountry = "United States",
+				addressName = "Address Name",
+				deliveryValue = 15,
+				productName = "Bundled Product",
+				productOptions = ${productOptions},
+				productPrice = 20,
+				productQuantity = 1,
+				subtotalValue = 20,
+				totalValue = 35);
+
+			Click(locator1 = "Button#CONTINUE");
+		}
+
+		task ("When the buyer views the order in the Placed Orders page") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/placed-orders");
+
+			Button.click(button = "View");
+		}
+
+		task ("Then can view the bundled product shown with the correct option values in the placed order") {
+			var productOptions = '''Blue,option-checkbox-key,2023-10-23,10,Text Content,value1,value2,value2''';
+
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "20.00",
+				productName = "ABS Sensor",
+				productOptions = "Blue",
+				productPrice = "20.00",
+				productQuantity = 1,
+				productSku = "MIN93015",
+				productTotalPrice = "20.00");
+
+			CommerceOrders.viewOrdersDetails(
+				productListPrice = "20.00",
+				productName = "Bundled Product",
+				productOptions = ${productOptions},
+				productPrice = "20.00",
+				productQuantity = 1,
+				productSku = "BLUE",
+				productTotalPrice = "20.00");
+
+			CommerceOrders.viewOrderPrices(
+				deliveryPrice = "15.00",
+				subTotalPrice = "20.00",
+				taxPrice = "0.00",
+				totalPrice = "35.00");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-9824. CanAssertChangesNotSavedOnCorrespondingOptions"
 	@priority = 3
 	test CanAssertChangesNotSavedOnCorrespondingOptions {

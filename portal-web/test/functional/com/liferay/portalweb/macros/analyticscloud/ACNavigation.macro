@@ -1,32 +1,38 @@
 definition {
 
-	macro assertPageHeader {
+	@summary = "Default summary"
+	macro assertPageHeader(headerTitle = null) {
 		AssertTextEquals(
 			locator1 = "ACHeader#HEADER_TITLE",
 			value1 = ${headerTitle});
 	}
 
-	macro backNavigation {
+	@summary = "Default summary"
+	macro backNavigation(pageName = null) {
 		var key_pageName = ${pageName};
 
 		Click(locator1 = "ACNavigation#BACK_NAVIGATION");
 	}
 
-	macro clickCancelButton {
+	@summary = "Default summary"
+	macro clickCancelButton() {
 		Click(locator1 = "ACDXPSettings#AC_GENERIC_CANCEL_BUTTON");
 	}
 
-	macro clickHeaderTab {
+	@summary = "Default summary"
+	macro clickHeaderTab(tabName = null) {
 		Click(
 			key_tabName = ${tabName},
 			locator1 = "ACHeader#GENERIC_HEADER_TAB");
 	}
 
-	macro collapseSidebar {
+	@summary = "Default summary"
+	macro collapseSidebar() {
 		Click(locator1 = "ACNavigation#COLLAPSE_SIDEBAR_ARROW");
 	}
 
-	macro exitSettings {
+	@summary = "Default summary"
+	macro exitSettings() {
 		WaitForVisible(
 			key_title = "Settings",
 			locator1 = "Header#H2_TITLE");
@@ -34,49 +40,60 @@ definition {
 		Click(locator1 = "ACSettings#EXIT_SETTINGS_BUTTON");
 	}
 
-	macro expandSidebar {
+	@summary = "Default summary"
+	macro expandSidebar() {
 		Click(locator1 = "ACNavigation#EXPAND_SIDEBAR_ARROW");
 	}
 
-	macro goToAccounts {
+	@summary = "Default summary"
+	macro goToAccounts() {
 		ACNavigation.goToSidebarOption(sidebarOption = "accounts");
 	}
 
-	macro goToAssets {
+	@summary = "Default summary"
+	macro goToAssets() {
 		ACNavigation.goToSidebarOption(sidebarOption = "assets");
 	}
 
-	macro goToEventAnalysis {
+	@summary = "Default summary"
+	macro goToEventAnalysis() {
 		ACNavigation.goToSidebarOption(sidebarOption = "event-analysis");
 	}
 
-	macro goToIndividuals {
+	@summary = "Default summary"
+	macro goToIndividuals() {
 		ACNavigation.goToSidebarOption(sidebarOption = "individuals");
 	}
 
-	macro goToSegments {
+	@summary = "Default summary"
+	macro goToSegments() {
 		ACNavigation.goToSidebarOption(sidebarOption = "segments");
 	}
 
-	macro goToSettings {
+	@summary = "Default summary"
+	macro goToSettings() {
 		ACNavigation.goToSidebarOption(sidebarOption = "settings");
 	}
 
-	macro goToSidebarOption {
+	@summary = "Default summary"
+	macro goToSidebarOption(sidebarOption = null) {
 		var key_sidebarOption = ${sidebarOption};
 
 		Click(locator1 = "ACNavigation#GENERIC_SIDEBAR_OPTION");
 	}
 
-	macro goToSites {
+	@summary = "Default summary"
+	macro goToSites() {
 		ACNavigation.goToSidebarOption(sidebarOption = "sites");
 	}
 
-	macro goToTests {
+	@summary = "Default summary"
+	macro goToTests() {
 		ACNavigation.goToSidebarOption(sidebarOption = "tests");
 	}
 
-	macro openItem {
+	@summary = "Default summary"
+	macro openItem(itemName = null) {
 		var key_itemName = ${itemName};
 
 		while ((IsElementNotPresent(locator1 = "ACNavigation#OPEN_ITEM")) && (maxIterations = "50")) {
@@ -86,25 +103,29 @@ definition {
 		Click(locator1 = "ACNavigation#OPEN_ITEM");
 	}
 
-	macro switchTab {
+	@summary = "Default summary"
+	macro switchTab(tabName = null) {
 		var key_tabName = ${tabName};
 
 		Click(locator1 = "ACNavigation#TAB_NAME");
 	}
 
-	macro switchTabInCard {
+	@summary = "Default summary"
+	macro switchTabInCard(tabName = null) {
 		var key_tabName = ${tabName};
 
 		Click(locator1 = "ACNavigation#CARD_TAB_NAME");
 	}
 
-	macro viewActiveSwitchTab {
+	@summary = "Default summary"
+	macro viewActiveSwitchTab(tabName = null) {
 		AssertTextEquals(
 			locator1 = "ACNavigation#ACTIVE_TAB_NAME",
 			value1 = ${tabName});
 	}
 
-	macro viewActiveSwitchTabInCard {
+	@summary = "Default summary"
+	macro viewActiveSwitchTabInCard(tabName = null) {
 		AssertTextEquals(
 			key_tabName = ${tabName},
 			locator1 = "ACNavigation#ACTIVE_CARD_TAB_NAME",

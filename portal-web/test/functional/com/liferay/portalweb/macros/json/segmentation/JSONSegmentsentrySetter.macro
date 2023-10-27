@@ -1,6 +1,7 @@
 definition {
 
-	macro setCriteria {
+	@summary = "Default summary"
+	macro setCriteria(date = null,field = null,text = null,operator = null) {
 		Variables.assertDefined(parameterList = "${field},${operator}");
 
 		if (${operator} == "equals") {
@@ -43,7 +44,8 @@ definition {
 		return ${criteria};
 	}
 
-	macro setDescriptionMap {
+	@summary = "Default summary"
+	macro setDescriptionMap(description = null) {
 		if (isSet(description)) {
 			var descriptionMap = '''{"en_US":"${description}"}''';
 		}
@@ -54,7 +56,8 @@ definition {
 		return ${descriptionMap};
 	}
 
-	macro setField {
+	@summary = "Default summary"
+	macro setField(fieldName = null) {
 		Variables.assertDefined(parameterList = ${fieldName});
 
 		if (${fieldName} == "Browser") {
@@ -175,7 +178,8 @@ definition {
 		return ${field};
 	}
 
-	macro setNameMap {
+	@summary = "Default summary"
+	macro setNameMap(name = null) {
 		Variables.assertDefined(parameterList = ${name});
 
 		var nameMap = '''{"en_US":"${name}"}''';
@@ -183,7 +187,8 @@ definition {
 		return ${nameMap};
 	}
 
-	macro setOrganizationCriteria {
+	@summary = "Default summary"
+	macro setOrganizationCriteria(date = null,field = null,text = null,operator = null) {
 		Variables.assertDefined(parameterList = "${field},${operator}");
 
 		if (${operator} == "equals") {
@@ -209,7 +214,8 @@ definition {
 		return ${criteria};
 	}
 
-	macro setSegmentCriteria {
+	@summary = "Default summary"
+	macro setSegmentCriteria(firstSegmentId = null,secondSegmentId = null) {
 		Variables.assertDefined(parameterList = "${conjunctionOperator},${firstSegmentId},${secondSegmentId}");
 
 		var conjunctionOperator = StringUtil.toLowerCase(${conjunctionOperator});
@@ -219,7 +225,8 @@ definition {
 		return ${criteria};
 	}
 
-	macro setSelectedOptionId {
+	@summary = "Default summary"
+	macro setSelectedOptionId(groupName = null,fieldName = null,selectedOption = null) {
 		Variables.assertDefined(parameterList = "${fieldName},${selectedOption}");
 
 		if (${fieldName} == "roleIds") {
@@ -261,7 +268,8 @@ definition {
 		return ${text};
 	}
 
-	macro setServiceContext {
+	@summary = "Default summary"
+	macro setServiceContext(groupName = null,site = null,assetCategoryIds = null,assetTagNames = null,workflowAction = null) {
 		if (isSet(groupName)) {
 			var serviceContext = JSONServiceContextUtil.setServiceContext(
 				addGroupPermissions = "true",
@@ -285,7 +293,8 @@ definition {
 		return ${serviceContext};
 	}
 
-	macro setSessionCriteria {
+	@summary = "Default summary"
+	macro setSessionCriteria(date = null,field = null,text = null,value = null,operator = null,key = null) {
 		Variables.assertDefined(parameterList = "${field},${operator}");
 
 		if (${operator} == "equals") {

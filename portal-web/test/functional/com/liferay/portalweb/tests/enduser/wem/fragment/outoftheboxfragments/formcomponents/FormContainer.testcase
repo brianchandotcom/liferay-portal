@@ -1902,18 +1902,18 @@ definition {
 
 		task ("Then the user should only see one error message") {
 			AssertAttributeValue(
-				attribute1 = "required",
 				index = 1,
 				locator1 = "Fragment#INPUT_FIELD",
 				type = "checkbox",
-				value1 = "true");
+				value1 = "required",
+				value2 = "true");
 
 			AssertAttributeValue(
-				attribute1 = "validationMessage",
 				index = 1,
 				locator1 = "Fragment#INPUT_FIELD",
 				type = "checkbox",
-				value1 = "Please check this box if you want to proceed.");
+				value1 = "validationMessage",
+				value2 = "Please check this box if you want to proceed.");
 
 			AssertElementNotPresent(locator1 = "Message#ERROR");
 		}
@@ -1929,17 +1929,17 @@ definition {
 
 		task ("Then the user should only see one error message") {
 			AssertAttributeValue(
-				attribute1 = "validationMessage",
 				index = 1,
 				locator1 = "Fragment#INPUT_FIELD",
 				type = "checkbox",
-				value1 = "");
+				value1 = "validationMessage",
+				value2 = "");
 
 			AssertAttributeValue(
-				attribute1 = "validationMessage",
 				key_text = "Purchase Date",
 				locator1 = "TextInput#ANY",
-				value1 = "Please enter a valid value. The field is incomplete or has an invalid date.");
+				value1 = "validationMessage",
+				value2 = "Please enter a valid value. The field is incomplete or has an invalid date.");
 
 			AssertElementNotPresent(locator1 = "Message#ERROR");
 		}
@@ -1957,17 +1957,17 @@ definition {
 			Alert.viewErrorMessage(errorMessage = "Value exceeds maximum length of 20 for field Region.");
 
 			AssertAttributeValue(
-				attribute1 = "validationMessage",
 				index = 1,
 				locator1 = "Fragment#INPUT_FIELD",
 				type = "checkbox",
-				value1 = "");
+				value1 = "validationMessage",
+				value2 = "");
 
 			AssertAttributeValue(
-				attribute1 = "validationMessage",
 				key_text = "Purchase Date",
 				locator1 = "TextInput#ANY",
-				value1 = "");
+				value1 = "validationMessage",
+				value2 = "");
 		}
 	}
 

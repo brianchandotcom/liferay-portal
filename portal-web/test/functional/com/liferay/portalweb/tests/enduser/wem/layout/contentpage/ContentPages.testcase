@@ -646,7 +646,7 @@ definition {
 					item = "Go to Pages",
 					tableEntry = ${siteName});
 
-				SelectWindow.selectPopUp(locator1 = "null");
+				SelectWindow.selectPopUp(value1 = "null");
 
 				ContentPages.gotoPageEditor();
 

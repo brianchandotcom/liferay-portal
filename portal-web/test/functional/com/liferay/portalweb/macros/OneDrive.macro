@@ -1,6 +1,7 @@
 definition {
 
-	macro AddDocument {
+	@summary = "Default summary"
+	macro AddDocument(dmDocumentTitle = null,dmDocumentTypeName = null,dmDocumentContent = null) {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		Alert.viewInfoMessageSpecific(infoMessage = "The document has been checked out. Please check in the document after edits are made to save the changes into the document library.");
@@ -12,8 +13,8 @@ definition {
 		Click(locator1 = "Button#SAVE");
 
 		SelectWindow.waitForSelectPopUp(
-			locator1 = "null",
-			value1 = 60000);
+			value1 = "null",
+			value2 = 60000);
 
 		if (IsElementNotPresent(locator1 = "IFrame#WEB_APPLICATION")) {
 			Close.closeWindow(locator1 = "null");
@@ -33,8 +34,8 @@ definition {
 			Click(locator1 = "Button#SAVE");
 
 			SelectWindow.waitForSelectPopUp(
-				locator1 = "null",
-				value1 = 60000);
+				value1 = "null",
+				value2 = 60000);
 		}
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#WEB_APPLICATION");
@@ -58,7 +59,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro deleteDocument {
+	@summary = "Default summary"
+	macro deleteDocument(dmDocumentTitle = null) {
 		if (isSet(dmDocumentTitle)) {
 			var key_documentTitle = ${dmDocumentTitle};
 
@@ -138,12 +140,13 @@ definition {
 		}
 	}
 
-	macro editTitle {
+	@summary = "Default summary"
+	macro editTitle(dmDocumentTitle = null) {
 		WaitForPageLoad();
 
 		SelectWindow.waitForSelectPopUp(
-			locator1 = "null",
-			value1 = 60000);
+			value1 = "null",
+			value2 = 60000);
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#WEB_APPLICATION");
 
@@ -176,7 +179,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro enableOneDrive {
+	@summary = "Default summary"
+	macro enableOneDrive() {
 		DMNavigator.openToConfigInSystemSettings(portlet = "One Drive");
 
 		var oneDriveClientId = PropsUtil.get("onedrive.client.id");
@@ -210,7 +214,8 @@ definition {
 		}
 	}
 
-	macro gotoEdit {
+	@summary = "Default summary"
+	macro gotoEdit(dmDocumentTitle = null) {
 		var key_dmDocumentTitle = ${dmDocumentTitle};
 
 		if (isSet(editInPreviewPage)) {
@@ -223,7 +228,8 @@ definition {
 		MenuItem.clickNoError(menuItem = "Edit in Office 365");
 	}
 
-	macro goToOneDrive {
+	@summary = "Default summary"
+	macro goToOneDrive(userPassword = null,userName = null) {
 		Navigator.openSpecificURL(url = "https://liferaycolab-my.sharepoint.com/personal/sharepoint_liferaycolab_onmicrosoft_com/_layouts/15/onedrive.aspx?view=0");
 
 		WaitForPageLoad();
@@ -237,7 +243,7 @@ definition {
 
 		WaitForPageLoad();
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.selectPopUp(value1 = "null");
 	}
 
 }

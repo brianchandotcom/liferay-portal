@@ -1,6 +1,7 @@
 definition {
 
-	macro configureSetupPG {
+	@summary = "Default summary"
+	macro configureSetupPG(directorySites = null,directoryDisplayStyle = null,portletName = null) {
 		Portlet.gotoPortletOptions(
 			portletName = ${portletName},
 			portletOption = "Configuration");
@@ -22,7 +23,8 @@ definition {
 		Portlet.saveAndCloseConfig();
 	}
 
-	macro viewDefaultConfigurationPG {
+	@summary = "Default summary"
+	macro viewDefaultConfigurationPG(portletName = null) {
 		Portlet.gotoPortletOptions(
 			portletName = ${portletName},
 			portletOption = "Configuration");
@@ -64,7 +66,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro viewDescriptivePG {
+	@summary = "Default summary"
+	macro viewDescriptivePG(siteName = null) {
 		var key_siteName = ${siteName};
 
 		AssertTextEquals.assertPartialText(
@@ -72,7 +75,8 @@ definition {
 			value1 = ${siteName});
 	}
 
-	macro viewListHierarchyPG {
+	@summary = "Default summary"
+	macro viewListHierarchyPG(availableSiteName = null,currentSiteName = null,childSiteName1 = null,childSiteName2 = null,childSiteName3 = null) {
 		var key_siteName = ${availableSiteName};
 
 		AssertTextEquals(

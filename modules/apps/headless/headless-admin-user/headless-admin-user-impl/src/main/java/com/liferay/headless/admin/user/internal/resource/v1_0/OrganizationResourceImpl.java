@@ -73,6 +73,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.util.DTOConverterUtil;
 import com.liferay.portal.vulcan.fields.NestedField;
+import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
@@ -261,8 +262,8 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 	@NestedField(parentClass = Organization.class, value = "childOrganizations")
 	@Override
 	public Page<Organization> getOrganizationChildOrganizationsPage(
-			String organizationId, Boolean flatten, String search,
-			Filter filter, Pagination pagination, Sort[] sorts)
+			@NestedFieldId(value = "id") String organizationId, Boolean flatten,
+			String search, Filter filter, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return _getOrganizationsPage(

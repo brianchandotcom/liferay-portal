@@ -82,7 +82,7 @@ definition {
 				item = "Preview",
 				pageTemplateName = "Page Template Name");
 
-			SelectWindow.selectPopUp(locator1 = "null");
+			SelectWindow.selectPopUp(value1 = "null");
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",

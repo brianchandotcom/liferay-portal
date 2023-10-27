@@ -1,13 +1,15 @@
 definition {
 
-	macro gotoQuickLinksOption {
+	@summary = "Default summary"
+	macro gotoQuickLinksOption(buttonText = null,buttonLink = null) {
 		Click(
 			key_buttonLink = ${buttonLink},
 			key_buttonText = ${buttonText},
 			locator1 = "PRMHomePage#QUICK_OPTIONS");
 	}
 
-	macro viewAnnouncementOnList {
+	@summary = "Default summary"
+	macro viewAnnouncementOnList(announcementBody = null,announcementTitle = null) {
 		AssertElementPresent(
 			key_announcementContent = ${announcementBody},
 			key_announcementTitle = ${announcementTitle},

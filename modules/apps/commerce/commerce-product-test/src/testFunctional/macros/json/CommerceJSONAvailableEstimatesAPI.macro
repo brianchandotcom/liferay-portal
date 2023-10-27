@@ -1,6 +1,7 @@
 definition {
 
-	macro _deleteCommerceAvailableEstimates {
+	@summary = "Default summary"
+	macro _deleteCommerceAvailableEstimates() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -29,7 +30,8 @@ definition {
 		}
 	}
 
-	macro _getAvailableEstimatesCount {
+	@summary = "Default summary"
+	macro _getAvailableEstimatesCount() {
 		var availableEstimatesCount = 0;
 		var commerceAvailabilityEstimateIds = CommerceJSONAvailableEstimatesAPI._getCommerceAvailableEstimates();
 
@@ -44,7 +46,8 @@ definition {
 		return ${availableEstimatesCount};
 	}
 
-	macro _getCommerceAvailableEstimates {
+	@summary = "Default summary"
+	macro _getCommerceAvailableEstimates() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {

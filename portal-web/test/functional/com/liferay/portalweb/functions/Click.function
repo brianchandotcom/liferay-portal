@@ -2,161 +2,161 @@
 @summary = "Click on '${locator1}'"
 definition {
 
-	function click {
+	function click(locator1) {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		selenium.click();
+		selenium.click(${locator1});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function clickAt {
+	function clickAt(locator1,value1) {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
 		selenium.clickAt(${locator1}, ${value1});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function clickAtNotVisible {
+	function clickAtNotVisible(locator1) {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		selenium.clickAt();
+		selenium.clickAt(${locator1}, ${value1});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function clickAtSidebarClickAtWaitForScript {
+	function clickAtSidebarClickAtWaitForScript(locator1) {
 		WaitForSPARefresh();
 
 		selenium.pause(1000);
 
-		selenium.waitForElementPresent("//*[@data-qa-id='controlMenu']//*[@data-qa-id='add']");
+		selenium.waitForElementPresent(${locator1}, "false");
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		selenium.waitForElementPresent("//script[contains(@src,'/liferay/node.js')] | //script[contains(@src,'/js/control_menu.js')]");
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.pause(1000);
 
 		Click.clickAt();
 
-		selenium.waitForElementPresent("//script[contains(@src,'/liferay/dockbar_add_application.js')] | //script[contains( @src,'/js/product_navigation_control_menu_add_content.js')] | //script[contains(@src,'js/product_navigation_control_menu_add_application.js')]");
+		selenium.waitForElementPresent(${locator1}, "false");
 	}
 
-	function clickNoMouseOver {
+	function clickNoMouseOver(locator1) {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
-		selenium.click();
+		selenium.click(${locator1});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function clickNoMouseOverNoWaitForVisible {
+	function clickNoMouseOverNoWaitForVisible(locator1) {
 		WaitForSPARefresh();
 
-		selenium.click();
+		selenium.click(${locator1});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function clickNoSPARefresh {
-		selenium.waitForVisible();
+	function clickNoSPARefresh(locator1,value1) {
+		selenium.waitForVisible(${locator1}, "false");
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		selenium.click();
+		selenium.click(${locator1});
 
-		selenium.assertJavaScriptErrors();
-
-		selenium.assertLiferayErrors();
-	}
-
-	function clickNoWaitForVisible {
-		WaitForSPARefresh();
-
-		selenium.mouseOver();
-
-		selenium.click();
-
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function javaScriptClick {
+	function clickNoWaitForVisible(locator1) {
 		WaitForSPARefresh();
 
-		selenium.javaScriptClick();
-	}
+		selenium.mouseOver(${locator1});
 
-	function mouseDownMouseUp {
-		WaitForSPARefresh();
+		selenium.click(${locator1});
 
-		selenium.waitForElementPresent();
-
-		selenium.waitForVisible();
-
-		selenium.mouseDown();
-
-		selenium.mouseUp();
-	}
-
-	function mouseOverClick {
-		WaitForSPARefresh();
-
-		selenium.waitForElementPresent();
-
-		selenium.mouseOver();
-
-		selenium.waitForVisible();
-
-		selenium.click();
-
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function pauseClickAt {
+	function javaScriptClick(locator1) {
+		WaitForSPARefresh();
+
+		selenium.javaScriptClick(${locator1});
+	}
+
+	function mouseDownMouseUp(locator1) {
+		WaitForSPARefresh();
+
+		selenium.waitForElementPresent(${locator1}, "false");
+
+		selenium.waitForVisible(${locator1}, "false");
+
+		selenium.mouseDown(${locator1});
+
+		selenium.mouseUp(${locator1});
+	}
+
+	function mouseOverClick(locator1) {
+		WaitForSPARefresh();
+
+		selenium.waitForElementPresent(${locator1}, "false");
+
+		selenium.mouseOver(${locator1});
+
+		selenium.waitForVisible(${locator1}, "false");
+
+		selenium.click(${locator1});
+
+		selenium.assertJavaScriptErrors("true");
+
+		selenium.assertLiferayErrors();
+	}
+
+	function pauseClickAt(locator1) {
 		WaitForSPARefresh();
 
 		selenium.pause(1000);
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
 		Click.clickAt();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function waitForMenuToggleJSClick {
+	function waitForMenuToggleJSClick(locator1) {
 		WaitForSPARefresh();
 
 		selenium.selectFrame("relative=top");
@@ -165,27 +165,27 @@ definition {
 			selenium.selectFrame("//*[contains(@class,'modal-body')]/iframe[not(contains(@class,'hidden'))]");
 		}
 
-		selenium.waitForEditable();
+		selenium.waitForEditable(${locator1});
 
 		selenium.pause(1000);
 
 		Click();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function waitForPersonalMenuJSClick {
+	function waitForPersonalMenuJSClick(locator1) {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent("//script[contains(@src,'personal_menu/js/PersonalMenu.es.js')]");
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.pause(3000);
 
 		Click();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

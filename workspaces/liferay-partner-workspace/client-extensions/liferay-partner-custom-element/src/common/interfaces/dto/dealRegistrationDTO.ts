@@ -63,5 +63,6 @@ export default interface DealRegistrationDTO
 	r_actToDealRegs_c_activity?: MDFRequestActivity;
 	r_actToDealRegs_c_activityId?: number;
 	stage?: string;
+	subscriptionArr?: number;
 	type?: string;
 }

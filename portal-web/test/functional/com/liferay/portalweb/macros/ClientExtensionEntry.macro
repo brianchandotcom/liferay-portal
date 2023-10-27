@@ -1,12 +1,14 @@
 definition {
 
-	macro addCSSURLRow {
+	@summary = "Default summary"
+	macro addCSSURLRow() {
 		Click(
 			key_id = "cssURLs",
 			locator1 = "ClientExtensionEntry#ADD_URL_ROW");
 	}
 
-	macro addCustomElement {
+	@summary = "Default summary"
+	macro addCustomElement(entryName = null,entryURL = null,entryHtmlName = null) {
 		Type(
 			key_text = "Name",
 			locator1 = "TextInput#ANY",
@@ -23,7 +25,8 @@ definition {
 			value1 = ${entryURL});
 	}
 
-	macro addCustomElementAllFields {
+	@summary = "Default summary"
+	macro addCustomElementAllFields(entryProperties = null,entryName = null,entryURL = null,entryHtmlName = null,entryCssurl = null) {
 		Type(
 			key_text = "Name",
 			locator1 = "TextInput#ANY",
@@ -49,7 +52,8 @@ definition {
 			value1 = ${entryProperties});
 	}
 
-	macro addCustomElementMultipleURLs {
+	@summary = "Default summary"
+	macro addCustomElementMultipleURLs(entryCssurl2 = null,entryName = null,entryCssurl1 = null,entryUrl2 = null,entryUrl1 = null,entryHtmlName = null) {
 		Type(
 			key_text = "Name",
 			locator1 = "TextInput#ANY",
@@ -89,7 +93,8 @@ definition {
 			value1 = ${entryCssurl2});
 	}
 
-	macro addEntry {
+	@summary = "Default summary"
+	macro addEntry(entryName = null,entryURL = null,mainURL = null,entryHTMLElementName = null) {
 		Type(
 			key_text = "Name",
 			locator1 = "TextInput#ANY",
@@ -116,19 +121,22 @@ definition {
 		}
 	}
 
-	macro addPortletCategory {
+	@summary = "Default summary"
+	macro addPortletCategory(categoryName = null) {
 		Select(
 			locator1 = "ClientExtensionEntry#REMOTE_APPS_PORTLET_CATEGORY_NAME",
 			value1 = ${categoryName});
 	}
 
-	macro addURLRow {
+	@summary = "Default summary"
+	macro addURLRow() {
 		Click(
 			key_id = "ClientExtensionAdminPortlet__urls",
 			locator1 = "ClientExtensionEntry#ADD_URL_ROW");
 	}
 
-	macro removeURLRow {
+	@summary = "Default summary"
+	macro removeURLRow(key_id = null) {
 		Click(
 			key_id = ${key_id},
 			locator1 = "ClientExtensionEntry#REMOVE_URL_ROW");

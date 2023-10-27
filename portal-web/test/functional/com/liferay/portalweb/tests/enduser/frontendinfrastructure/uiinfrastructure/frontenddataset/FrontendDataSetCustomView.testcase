@@ -328,10 +328,10 @@ definition {
 
 		task ("And Then Search help text is localized ") {
 			AssertAttributeValue(
-				attribute1 = "placeholder",
 				key_placeholder = "Buscar",
 				locator1 = "FrontendDataSet#PLACEHOLDER",
-				value1 = "Buscar");
+				value1 = "placeholder",
+				value2 = "Buscar");
 		}
 
 		task ("And Then Change Display dropdown items are localized") {

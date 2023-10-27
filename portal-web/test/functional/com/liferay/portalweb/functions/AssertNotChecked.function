@@ -1,38 +1,38 @@
 @default = "assertNotChecked"
 definition {
 
-	function assertNotChecked {
+	function assertNotChecked(locator1) {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible();
+		selenium.waitForVisible(${locator1}, "false");
 
-		selenium.assertNotChecked();
+		selenium.assertNotChecked(${locator1});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function assertNotCheckedHiddenToggleSwitch {
+	function assertNotCheckedHiddenToggleSwitch(locator1) {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.assertNotChecked("xpath=(${locator1})/../../input");
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function assertNotCheckedNotVisible {
+	function assertNotCheckedNotVisible(locator1) {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
 
-		selenium.assertNotChecked();
+		selenium.assertNotChecked(${locator1});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

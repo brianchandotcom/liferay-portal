@@ -49,7 +49,7 @@ definition {
 		}
 
 		task ("Then the site administrater should see the OpenAI API page opened in a new tab") {
-			SelectWindow.selectPopUp(locator1 = "null");
+			SelectWindow.selectPopUp(value1 = "null");
 
 			AssertLocation.assertPartialLocation(value1 = "https://platform.openai.com/docs/api-reference/authentication");
 		}
@@ -87,7 +87,7 @@ definition {
 		}
 
 		task ("Then the site administrater should see the OpenAI API page opened in a new tab") {
-			SelectWindow.selectPopUp(locator1 = "null");
+			SelectWindow.selectPopUp(value1 = "null");
 
 			AssertLocation.assertPartialLocation(value1 = "https://platform.openai.com/docs/api-reference/authentication");
 		}
@@ -204,10 +204,10 @@ definition {
 
 		task ("Then the content creator sees the default values on modal") {
 			AssertAttributeValue(
-				attribute1 = "placeholder",
 				key_text = "Description",
 				locator1 = "TextInput#ANY",
-				value1 = "Write something...");
+				value1 = "placeholder",
+				value2 = "Write something...");
 
 			AssertSelectedLabel(
 				key_fieldLabel = "Tone",

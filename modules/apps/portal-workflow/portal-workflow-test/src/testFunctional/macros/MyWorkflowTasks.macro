@@ -1,10 +1,12 @@
 definition {
 
-	macro clearSearchResultMyWorkflowTasks {
+	@summary = "Default summary"
+	macro clearSearchResultMyWorkflowTasks() {
 		Click(locator1 = "Link#CLEAR");
 	}
 
-	macro searchMyWorkflowTasks {
+	@summary = "Default summary"
+	macro searchMyWorkflowTasks(searchTerm = null) {
 		Type(
 			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASKS_SEARCH_INPUT_FIELD",
 			value1 = ${searchTerm});
@@ -14,7 +16,8 @@ definition {
 			locator1 = "Button#ANY_WITH_ARIA_LABEL");
 	}
 
-	macro updateDueDateAtMyWorkflowTasks {
+	@summary = "Default summary"
+	macro updateDueDateAtMyWorkflowTasks(dueDateTime = null,workflowTask = null,dueDate = null,workflowDueDateTime = null,workflowAssetTitle = null) {
 		Workflow.viewTaskAssignedToMyRoles(
 			ddlDataDefinitionName = "Data Definition Name",
 			workflowAssetTitle = "Blogs Entry Title 1",
@@ -49,7 +52,8 @@ definition {
 		Workflow.confirmWorkflowAction();
 	}
 
-	macro updateDueDateMyWorkflowTasksFutureDate {
+	@summary = "Default summary"
+	macro updateDueDateMyWorkflowTasksFutureDate(ddlDataDefinitionName = null,workflowAssetType = null,workflowDueDateTime = null,displayDateYear = null,key_timePeriod = null) {
 		var key_workflowAssetTitle = ${key_workflowAssetTitle};
 		var key_workflowTask = ${key_workflowTask};
 		var displayDateDay = DateUtil.getCurrentDate();
@@ -105,7 +109,8 @@ definition {
 		Workflow.confirmWorkflowAction();
 	}
 
-	macro viewDueDateValue {
+	@summary = "Default summary"
+	macro viewDueDateValue(dueDateValue = null,workflowTask = null,workflowAssetTitle = null) {
 		AssertTextEquals.assertPartialText(
 			key_workflowAssetTitle = ${workflowAssetTitle},
 			key_workflowTask = ${workflowTask},
@@ -113,19 +118,22 @@ definition {
 			value1 = ${dueDateValue});
 	}
 
-	macro viewErrorRequestFailed {
+	@summary = "Default summary"
+	macro viewErrorRequestFailed() {
 		AssertTextPresent(
 			locator1 = "Message#ERROR",
 			value1 = "Your request failed to complete.");
 	}
 
-	macro viewErrorValidDueDate {
+	@summary = "Default summary"
+	macro viewErrorValidDueDate() {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_DISMISSIBLE",
 			value1 = "Please enter a valid due date.");
 	}
 
-	macro viewMyWorkflowTaskItemPosition {
+	@summary = "Default summary"
+	macro viewMyWorkflowTaskItemPosition(title = null,rowPosition = null) {
 		var key_rowPosition = ${rowPosition};
 		var key_title = ${title};
 
@@ -135,7 +143,8 @@ definition {
 			locator1 = "MyWorkflowTasks#MY_WORKFLOW_TASK_ITEM_POSITION");
 	}
 
-	macro viewTaskAssignedAndAssertTextsPresent {
+	@summary = "Default summary"
+	macro viewTaskAssignedAndAssertTextsPresent(nameAuthor = null,titleMessageBoard = null) {
 		var elements = "Assigned to,Task Name,Create Date,Due Date";
 
 		for (var list : list ${elements}) {

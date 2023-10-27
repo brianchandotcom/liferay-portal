@@ -1,6 +1,7 @@
 definition {
 
-	macro _addDiscount {
+	@summary = "Default summary"
+	macro _addDiscount(usePercentage = null,vocabularyName = null,title = null,categoryNames = null,productSKUs = null,productGroupNames = null,unitOfMeasureKey = null,productNames = null,level = null,active = null,target = null,groupName = null,productsJSON = null) {
 		Variables.assertDefined(parameterList = "${active},${level},${target},${title},${usePercentage}");
 
 		var baseURL = ${baseURL};
@@ -152,7 +153,8 @@ definition {
 		}
 	}
 
-	macro _addDiscountAccount {
+	@summary = "Default summary"
+	macro _addDiscountAccount(discountTitle = null,accountEntryName = null) {
 		Variables.assertDefined(parameterList = "${discountTitle},${accountEntryName}");
 
 		var baseURL = ${baseURL};
@@ -178,7 +180,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _addDiscountAccountGroup {
+	@summary = "Default summary"
+	macro _addDiscountAccountGroup(discountTitle = null,accountGroupName = null) {
 		Variables.assertDefined(parameterList = "${accountGroupName},${discountTitle}");
 
 		var baseURL = ${baseURL};
@@ -204,7 +207,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _addDiscountProduct {
+	@summary = "Default summary"
+	macro _addDiscountProduct(discountTitle = null,productName = null) {
 		Variables.assertDefined(parameterList = "${discountTitle},${productName}");
 
 		var baseURL = ${baseURL};
@@ -230,7 +234,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _addDiscountSku {
+	@summary = "Default summary"
+	macro _addDiscountSku(productSKU = null,discountTitle = null,unitOfMeasureKey = null) {
 		Variables.assertDefined(parameterList = "${discountTitle},${productSKU}");
 
 		var baseURL = ${baseURL};
@@ -276,7 +281,8 @@ definition {
 		return ${discountId};
 	}
 
-	macro _deleteAllCommerceDiscounts {
+	@summary = "Default summary"
+	macro _deleteAllCommerceDiscounts() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -307,7 +313,8 @@ definition {
 		}
 	}
 
-	macro _deleteDiscountSkuUom {
+	@summary = "Default summary"
+	macro _deleteDiscountSkuUom(productSKU = null,discountTitle = null,uomKey = null) {
 		Variables.assertDefined(parameterList = ${uomKey});
 
 		var baseURL = ${baseURL};
@@ -331,7 +338,8 @@ definition {
 		JSONCurlUtil.delete(${curl});
 	}
 
-	macro _getCommerceDiscountById {
+	@summary = "Default summary"
+	macro _getCommerceDiscountById(discountTitle = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -355,7 +363,8 @@ definition {
 		return ${responseBody};
 	}
 
-	macro _getCommerceDiscountIds {
+	@summary = "Default summary"
+	macro _getCommerceDiscountIds(discountCount = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -382,7 +391,8 @@ definition {
 		return ${discountIds};
 	}
 
-	macro _getCommerceDiscounts {
+	@summary = "Default summary"
+	macro _getCommerceDiscounts(discountCount = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -409,7 +419,8 @@ definition {
 		return ${responseBody};
 	}
 
-	macro _getCommerceDiscountsCount {
+	@summary = "Default summary"
+	macro _getCommerceDiscountsCount() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -431,7 +442,8 @@ definition {
 		return ${discountsCount};
 	}
 
-	macro _getCommerceDiscountSkuById {
+	@summary = "Default summary"
+	macro _getCommerceDiscountSkuById(discountTitle = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -455,7 +467,8 @@ definition {
 		return ${responseBody};
 	}
 
-	macro _getDiscountId {
+	@summary = "Default summary"
+	macro _getDiscountId(discountTitle = null) {
 		Variables.assertDefined(parameterList = ${discountTitle});
 
 		var baseURL = ${baseURL};
@@ -484,7 +497,8 @@ definition {
 		return ${discountId};
 	}
 
-	macro _patchCommerceDiscount {
+	@summary = "Default summary"
+	macro _patchCommerceDiscount(newTitle = null,discountTitle = null,percentageLevel4 = null,percentageLevel2 = null,percentageLevel3 = null) {
 		Variables.assertDefined(parameterList = ${discountTitle});
 
 		var discountId = CommerceJSONDiscountsAPI._getDiscountId(discountTitle = ${discountTitle});
@@ -598,7 +612,8 @@ definition {
 		return ${responseBody};
 	}
 
-	macro getCommerceDiscountFieldById {
+	@summary = "Default summary"
+	macro getCommerceDiscountFieldById(discountTitle = null,jsonPath = null,discountId = null) {
 		Variables.assertDefined(parameterList = ${jsonPath});
 
 		if (!(isSet(responseBody))) {
@@ -614,7 +629,8 @@ definition {
 		return ${fieldValue};
 	}
 
-	macro getCommerceDiscountsFieldValuesList {
+	@summary = "Default summary"
+	macro getCommerceDiscountsFieldValuesList(discountCount = null,jsonPath = null) {
 		Variables.assertDefined(parameterList = ${jsonPath});
 
 		if (!(isSet(responseBody))) {

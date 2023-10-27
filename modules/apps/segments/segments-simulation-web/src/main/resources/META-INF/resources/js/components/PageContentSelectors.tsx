@@ -170,7 +170,8 @@ function PageContentSelectors({
 
 			Liferay.SideNavigation.destroy(simulationToggle);
 		};
-	}, [fetchDeactivateSimulation, simulateSegmentsEntries]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [fetchDeactivateSimulation]);
 
 	useEffect(() => {
 		if (!firstRenderRef.current) {

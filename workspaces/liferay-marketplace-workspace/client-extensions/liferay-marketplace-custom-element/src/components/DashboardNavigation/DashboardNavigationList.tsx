@@ -37,7 +37,7 @@ export function DashboardNavigationList({
 							isActive || (path === '/' && isAppRoute),
 					})
 				}
-				to={`${path}${accountId ? `?account=${accountId}` : ''}`}
+				to={`${path}${accountId ? `?accountId=${accountId}` : ''}`}
 			>
 				{({isActive}) => (
 					<>

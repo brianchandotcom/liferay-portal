@@ -1,6 +1,7 @@
 definition {
 
-	macro addEVPSite {
+	@summary = "Default summary"
+	macro addEVPSite() {
 		Site.openSitesAdmin();
 
 		TeamExtranet.addSiteTemplateCP(
@@ -8,7 +9,8 @@ definition {
 			siteTemplateName = "EVP");
 	}
 
-	macro addLiferayManagerUserRole {
+	@summary = "Default summary"
+	macro addLiferayManagerUserRole() {
 		for (var userScreenName : list "manager,finance") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Users",
@@ -21,7 +23,8 @@ definition {
 		}
 	}
 
-	macro addUserPhoneNumber {
+	@summary = "Default summary"
+	macro addUserPhoneNumber(key_number = null,assertNumber = null) {
 		Type(
 			locator1 = "TextInput#NUMBER",
 			value1 = ${key_number});
@@ -31,7 +34,8 @@ definition {
 			locator1 = "TextInput#NUMBER");
 	}
 
-	macro assertCardsTitle {
+	@summary = "Default summary"
+	macro assertCardsTitle(listcardTitle = null) {
 		for (var cardTitle : list ${listcardTitle}) {
 			AssertElementPresent(
 				key_card = ${cardTitle},
@@ -39,7 +43,8 @@ definition {
 		}
 	}
 
-	macro assertColumnsPage {
+	@summary = "Default summary"
+	macro assertColumnsPage(columnsList = null) {
 		for (var columnsPage : list ${columnsList}) {
 			AssertElementPresent(
 				key_columns = ${columnsPage},
@@ -47,13 +52,15 @@ definition {
 		}
 	}
 
-	macro assertContactInformation {
+	@summary = "Default summary"
+	macro assertContactInformation(inforMessage = null) {
 		AssertElementPresent(
 			key_message = ${inforMessage},
 			locator1 = "EVPUtils#VALIDATE_SECONDARY_TEXT");
 	}
 
-	macro assertDataOnEVPValue {
+	@summary = "Default summary"
+	macro assertDataOnEVPValue(grantMoneyDistributed = null,employeesParticipated = null,yearsEVP = null,serviceHoursCompleted = null,numberOfNonprofitsServed = null) {
 		AssertVisible(
 			key_text = "Years EVP has been active",
 			key_value = ${yearsEVP},
@@ -80,7 +87,8 @@ definition {
 			locator1 = "EVPUtils#DATA_ON_EVP_VALUE");
 	}
 
-	macro assertHeadersTitle {
+	@summary = "Default summary"
+	macro assertHeadersTitle(listHeaderTitle = null) {
 		for (var headerTitle : list ${listHeaderTitle}) {
 			AssertElementPresent(
 				key_title = ${headerTitle},
@@ -88,13 +96,15 @@ definition {
 		}
 	}
 
-	macro assertNotAllowed {
+	@summary = "Default summary"
+	macro assertNotAllowed(notAllowed = null) {
 		AssertElementPresent(
 			field_disabled = ${notAllowed},
 			locator1 = "EVPUtils#NOT_ALLOWED");
 	}
 
-	macro assertTitlePage {
+	@summary = "Default summary"
+	macro assertTitlePage(listTitlePage = null) {
 		for (var titlePage : list ${listTitlePage}) {
 			AssertElementPresent(
 				key_title = ${titlePage},
@@ -102,7 +112,8 @@ definition {
 		}
 	}
 
-	macro changeStatus {
+	@summary = "Default summary"
+	macro changeStatus(button = null,typeMessage = null) {
 		Type(
 			key_fieldId = "messageDescribed",
 			locator1 = "TextArea#ANY_ID",
@@ -113,7 +124,8 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro downloadFileViaCurl {
+	@summary = "Default summary"
+	macro downloadFileViaCurl(fileName = null) {
 		var currentURL = selenium.getCurrentUrl();
 		var testDependenciesDir = PropsUtil.get("output.dir.name");
 
@@ -124,7 +136,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.get(${curl});
 	}
 
-	macro editObjectEVP {
+	@summary = "Default summary"
+	macro editObjectEVP(grantMoneyDistributed = null,employeesParticipated = null,numberOfNonprofitsServed = null,serviceHoursCompleted = null,yearsEVP = null) {
 		Type(
 			key_fieldLabel = "Employees Participated EVP",
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
@@ -155,7 +168,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro generateFinancialReport {
+	@summary = "Default summary"
+	macro generateFinancialReport(dateRange = null,endDateLabel = null,initialDateLabel = null,cardTitle = null) {
 		Click(
 			key_card = ${cardTitle},
 			locator1 = "Card#CARD_TITLE");
@@ -168,7 +182,8 @@ definition {
 		Button.click(button = "Generate");
 	}
 
-	macro generateRequestsListing {
+	@summary = "Default summary"
+	macro generateRequestsListing(finalCompanyId = null,dateRange = null,listCheckbox = null,companyName = null,endDateLabel = null,initialDateLabel = null,fullName = null,initialCompanyId = null,cardTitle = null) {
 		Click(
 			key_card = ${cardTitle},
 			locator1 = "Card#CARD_TITLE");
@@ -215,7 +230,8 @@ definition {
 		Button.click(button = "Generate");
 	}
 
-	macro gotoContactInformation {
+	@summary = "Default summary"
+	macro gotoContactInformation(inforUser = null,portlet = null,contactUser = null,category = null,panel = null,enterUser = null) {
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test ");
@@ -238,7 +254,8 @@ definition {
 			locator1 = "PRMNavigation#NAV_LINK");
 	}
 
-	macro gotoEVP {
+	@summary = "Default summary"
+	macro gotoEVP() {
 		Navigator.openSiteURL(siteName = "EVP Portal");
 
 		if (IsElementPresent(locator1 = "EVPUtils#SIGN_IN")) {
@@ -246,7 +263,8 @@ definition {
 		}
 	}
 
-	macro insertDate {
+	@summary = "Default summary"
+	macro insertDate(dateRange = null,initialDateLabel = null,endDateLabel = null) {
 		var currentDate = DateUtil.getFormattedDate(${dateRange}, "yyyy-MM-dd");
 		var nextDayDate = DateUtil.getFormattedDate("+2", "yyyy-MM-dd");
 
@@ -261,7 +279,8 @@ definition {
 			value1 = ${nextDayDate});
 	}
 
-	macro managerApproval {
+	@summary = "Default summary"
+	macro managerApproval(listingPage = null) {
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "manager@liferay.com",
 			userLoginFullName = "Manager User");
@@ -279,21 +298,24 @@ definition {
 			typeMessage = "Your organization has been approved!");
 	}
 
-	macro viewNotPresentStatus {
+	@summary = "Default summary"
+	macro viewNotPresentStatus(organizationName = null,status = null) {
 		AssertElementNotPresent(
 			key_organizationName = ${organizationName},
 			key_status = ${status},
 			locator1 = "EVPUtils#STATUS_LISTING");
 	}
 
-	macro viewStatus {
+	@summary = "Default summary"
+	macro viewStatus(organizationName = null,status = null) {
 		AssertElementPresent(
 			key_organizationName = ${organizationName},
 			key_status = ${status},
 			locator1 = "EVPUtils#STATUS_LISTING");
 	}
 
-	macro viewSuccessMessage {
+	@summary = "Default summary"
+	macro viewSuccessMessage() {
 		while (IsElementPresent(locator1 = "Message#EMPTY_INFO")) {
 			AssertTextEquals(
 				locator1 = "Message#EMPTY_INFO",

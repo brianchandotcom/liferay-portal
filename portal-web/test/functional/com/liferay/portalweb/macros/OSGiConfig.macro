@@ -1,6 +1,7 @@
 definition {
 
-	macro assertOSGiConfigDoesNotExist {
+	@summary = "Default summary"
+	macro assertOSGiConfigDoesNotExist(osgiConfigFileName = null) {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
 		var osgiConfigExists = FileUtil.exists("${liferayHome}/osgi/configs/${osgiConfigFileName}");
@@ -10,7 +11,8 @@ definition {
 		}
 	}
 
-	macro assertTextInOSGiConfig {
+	@summary = "Default summary"
+	macro assertTextInOSGiConfig(osgiConfigFileName = null,text = null) {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
 		var fileContent = FileUtil.read("${liferayHome}/osgi/configs/${osgiConfigFileName}");
@@ -23,7 +25,8 @@ definition {
 		}
 	}
 
-	macro assertTextNotInOSGiConfig {
+	@summary = "Default summary"
+	macro assertTextNotInOSGiConfig(osgiConfigFileName = null,text = null) {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
 		var fileContent = FileUtil.read("${liferayHome}/osgi/configs/${osgiConfigFileName}");
@@ -36,7 +39,8 @@ definition {
 		}
 	}
 
-	macro copyOSGiConfigFile {
+	@summary = "Default summary"
+	macro copyOSGiConfigFile(osgiConfigFileBaseDir = null,osgiConfigFileName = null) {
 		Variables.assertDefined(parameterList = "${osgiConfigFileBaseDir},${osgiConfigFileName}");
 
 		var configs = FileUtil.read("${osgiConfigFileBaseDir}/${osgiConfigFileName}");
@@ -45,7 +49,8 @@ definition {
 		FileUtil.write("${liferayHome}/osgi/configs/${osgiConfigFileName}", ${configs});
 	}
 
-	macro deleteOSGiConfigFile {
+	@summary = "Default summary"
+	macro deleteOSGiConfigFile(osgiConfigFileName = null) {
 		Variables.assertDefined(parameterList = ${osgiConfigFileName});
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
@@ -53,7 +58,8 @@ definition {
 		FileUtil.delete("${liferayHome}/osgi/configs/${osgiConfigFileName}");
 	}
 
-	macro deployOSGiConfigFile {
+	@summary = "Default summary"
+	macro deployOSGiConfigFile(osgiConfigFileName = null,osgiConfigs = null) {
 		Variables.assertDefined(parameterList = "${osgiConfigs},${osgiConfigFileName}");
 
 		var configList = "";
@@ -68,7 +74,8 @@ ${configList}''';
 		FileUtil.write("${liferayHome}/osgi/configs/${osgiConfigFileName}", ${configList});
 	}
 
-	macro editOSGiConfigFileFromTempFolder {
+	@summary = "Default summary"
+	macro editOSGiConfigFileFromTempFolder(newValue = null,osgiConfigFileName = null,oldValue = null) {
 		var tempDir = PropsUtil.get("output.dir.name");
 
 		Variables.assertDefined(parameterList = "${tempDir},${osgiConfigFileName}");
@@ -81,11 +88,12 @@ ${configList}''';
 	}
 
 	@description = "Wait for OSGi Configuration to update in the Database"
-	macro waitForOSGiConfig {
+	@summary = "Default summary"
+	macro waitForOSGiConfig() {
 
 		// LRQA-78134 Current workaround to wait for OSGi configurations until we get a reliable way of waiting for them to update in the database
 
-		Pause(locator1 = 8000);
+		Pause(value1 = 8000);
 	}
 
 }

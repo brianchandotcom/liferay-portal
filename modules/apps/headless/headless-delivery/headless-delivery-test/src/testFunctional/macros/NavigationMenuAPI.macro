@@ -1,6 +1,7 @@
 definition {
 
-	macro _assertResponseIncludeCorrectElement {
+	@summary = "Default summary"
+	macro _assertResponseIncludeCorrectElement(responseToParse = null,expectedElement = null,element = null) {
 		Variables.assertDefined(parameterList = "${element},${expectedElement}");
 
 		if (isSet(responseFromSite)) {
@@ -13,7 +14,8 @@ definition {
 		StringUtil.assertEquals(${expectedElement}, ${actual});
 	}
 
-	macro assertResponseHasCorrectInformations {
+	@summary = "Default summary"
+	macro assertResponseHasCorrectInformations(expectedURL = null,responseToParse = null,expectedType = null,expectedUseCustomName = null,responseFromSite = null) {
 		Variables.assertDefined(parameterList = "${expectedURL},${expectedType},${expectedUseCustomName},${responseToParse}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -39,7 +41,8 @@ definition {
 			responseToParse = ${responseToParse});
 	}
 
-	macro getNavigationMenu {
+	@summary = "Default summary"
+	macro getNavigationMenu(groupName = null,navigationMenuId = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(navigationMenuId)) {

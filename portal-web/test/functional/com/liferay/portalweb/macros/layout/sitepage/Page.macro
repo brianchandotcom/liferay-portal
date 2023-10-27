@@ -1,6 +1,7 @@
 definition {
 
-	macro assertAlternateURL {
+	@summary = "Default summary"
+	macro assertAlternateURL(portalURL = null,locale = null) {
 		var html = '''<link data-senna-track="temporary" href="''';
 
 		if (${locale} == "zh") {
@@ -17,7 +18,8 @@ definition {
 		AssertHTMLSourceTextPresent(value1 = ${pageSource});
 	}
 
-	macro assertCanonicalURL {
+	@summary = "Default summary"
+	macro assertCanonicalURL(customCanonicalURL = null,locale = null) {
 		var html = '''<link data-senna-track="temporary" href="''';
 		var html2 = '''" rel="canonical">''';
 
@@ -45,7 +47,8 @@ definition {
 		AssertHTMLSourceTextPresent(value1 = ${pageSource});
 	}
 
-	macro assertDefaultAlternateURL {
+	@summary = "Default summary"
+	macro assertDefaultAlternateURL(portalURL = null) {
 		var html = '''<link data-senna-track="temporary" href="''';
 		var html2 = '''" hreflang="x-default" rel="alternate">''';
 
@@ -54,7 +57,8 @@ definition {
 		AssertHTMLSourceTextPresent(value1 = ${pageSource});
 	}
 
-	macro assertNodePortPG {
+	@summary = "Default summary"
+	macro assertNodePortPG(nodePort = null) {
 		var key_nodePort = ${nodePort};
 
 		AssertTextEquals.assertPartialText(
@@ -62,7 +66,8 @@ definition {
 			value1 = ${nodePort});
 	}
 
-	macro changeSinglePageTheme {
+	@summary = "Default summary"
+	macro changeSinglePageTheme(themeName = null) {
 		ContentPages.gotoPageEditor();
 
 		PageEditor.gotoTab(tabName = "Page Design Options");
@@ -86,7 +91,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro clearFiltersInAppliedFilters {
+	@summary = "Default summary"
+	macro clearFiltersInAppliedFilters() {
 		Click(
 			button = "Clear Filters",
 			locator1 = "PageEditor#APPLIED_FILTERS_INNER_BUTTON");
@@ -94,7 +100,8 @@ definition {
 		AssertElementNotPresent(locator1 = "PageEditor#APPLIED_FILTERS_FILTER_LIST_PLACEHOLDER");
 	}
 
-	macro getAuthTokenFromHtmlSource {
+	@summary = "Default summary"
+	macro getAuthTokenFromHtmlSource() {
 		var javaScript = '''
 		var authToken = Liferay.authToken;
 
@@ -108,7 +115,8 @@ definition {
 		return ${authToken};
 	}
 
-	macro getPlidFromHtmlSource {
+	@summary = "Default summary"
+	macro getPlidFromHtmlSource() {
 		var javaScript = '''
 		var plid = Liferay.ThemeDisplay.getPlid();
 
@@ -122,7 +130,8 @@ definition {
 		return ${plid};
 	}
 
-	macro getTextCountFromHtmlSource {
+	@summary = "Default summary"
+	macro getTextCountFromHtmlSource(text = null) {
 		var pageSource = selenium.getHtmlSource();
 
 		echo("## * Page Source: ${pageSource}");
@@ -136,7 +145,8 @@ definition {
 		return ${count};
 	}
 
-	macro gotoChildPagePG {
+	@summary = "Default summary"
+	macro gotoChildPagePG(childPageName = null,pageName = null) {
 		MouseOver.javaScriptMouseOver(
 			key_pageName = ${pageName},
 			locator1 = "NavigationMenusWidget#CHILD_TOGGLE");
@@ -146,7 +156,8 @@ definition {
 			locator1 = "Home#PAGE_CHILD_PAGE");
 	}
 
-	macro gotoCollectionEntryEllipsisItem {
+	@summary = "Default summary"
+	macro gotoCollectionEntryEllipsisItem(item = null,tableEntry = null) {
 		LexiconTable.clickEllipsisItem(
 			item = ${item},
 			tableEntry = ${tableEntry});
@@ -154,7 +165,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro gotoPagePanelPortlet {
+	@summary = "Default summary"
+	macro gotoPagePanelPortlet(portletName = null) {
 		var key_portletName = ${portletName};
 
 		AssertClick(
@@ -162,19 +174,22 @@ definition {
 			value1 = ${portletName});
 	}
 
-	macro localizedPG {
+	@summary = "Default summary"
+	macro localizedPG(pageLocale = null) {
 		Click(
 			key_pageLocale = ${pageLocale},
 			locator1 = "Home#PORTAL_LOCALIZATION_DEFAULT_LANGUAGE_MESSAGE");
 	}
 
-	macro openURLLocale {
+	@summary = "Default summary"
+	macro openURLLocale(localizationPageURL = null) {
 		Navigator.openSpecificURL(url = ${localizationPageURL});
 
 		AssertLocation(value1 = ${localizationPageURL});
 	}
 
-	macro searchInCollectionFilter {
+	@summary = "Default summary"
+	macro searchInCollectionFilter(searchTerm = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -190,7 +205,8 @@ definition {
 			value1 = "\RETURN");
 	}
 
-	macro selectFilterInCollectionFilter {
+	@summary = "Default summary"
+	macro selectFilterInCollectionFilter(searchTerm = null,columnNumber = null,filterName = null,title = null,selectedName = null,categoryNameList = null) {
 		if (isSet(columnNumber)) {
 			Click.clickNoWaitForVisible(
 				key_columnNumber = ${columnNumber},
@@ -241,7 +257,8 @@ definition {
 		}
 	}
 
-	macro selectTagInCollectionFilter {
+	@summary = "Default summary"
+	macro selectTagInCollectionFilter(tagName = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -257,7 +274,8 @@ definition {
 			value1 = "\RETURN");
 	}
 
-	macro viewChildPageDropdown {
+	@summary = "Default summary"
+	macro viewChildPageDropdown(viewChildPageDropdown = null,childPageName = null,javaScriptPage = null) {
 		ClickNoError(locator1 = "Home#${viewChildPageDropdown}");
 
 		if (isSet(javaScriptPage)) {
@@ -277,7 +295,8 @@ definition {
 			value1 = ${childPageName});
 	}
 
-	macro viewCollectionItem {
+	@summary = "Default summary"
+	macro viewCollectionItem(itemName = null) {
 		if (isSet(key_rowNumber)) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
@@ -290,25 +309,29 @@ definition {
 		}
 	}
 
-	macro viewCurrentPage {
+	@summary = "Default summary"
+	macro viewCurrentPage(pageName = null) {
 		AssertVisible(
 			key_pageName = ${pageName},
 			locator1 = "Home#PAGE_ACTIVE");
 	}
 
-	macro viewCustomLogoPG {
+	@summary = "Default summary"
+	macro viewCustomLogoPG() {
 		AssertElementPresent(locator1 = "Home#CUSTOM_LOGO");
 
 		AssertElementNotPresent(locator1 = "Home#DEFAULT_LOGO");
 	}
 
-	macro viewDefaultLogoPG {
+	@summary = "Default summary"
+	macro viewDefaultLogoPG() {
 		AssertElementPresent(locator1 = "Home#DEFAULT_LOGO");
 
 		AssertElementNotPresent(locator1 = "Home#CUSTOM_LOGO");
 	}
 
-	macro viewDefaultSiteTemplatePagesPG {
+	@summary = "Default summary"
+	macro viewDefaultSiteTemplatePagesPG(siteName = null,pageName = null) {
 		Click(locator1 = "Home#PAGE_NAVIGATION_BAR");
 
 		var key_pageName = ${pageName};
@@ -322,14 +345,16 @@ definition {
 			locator1 = "NavBar#GO_TO_HOME_PAGE_LINK");
 	}
 
-	macro viewInactiveRequestMessage {
+	@summary = "Default summary"
+	macro viewInactiveRequestMessage(resource = null) {
 		AssertTextEquals(
 			key_resource = ${resource},
 			locator1 = "Home#STATUS_MESSAGE",
 			value1 = "This ${resource} is inactive. Please contact the administrator.");
 	}
 
-	macro viewLayoutLogoPG {
+	@summary = "Default summary"
+	macro viewLayoutLogoPG(assertLayoutLogoPresent = null) {
 		if (${assertLayoutLogoPresent} == "true") {
 			AssertElementPresent(locator1 = "Home#LAYOUT_LOGO");
 		}
@@ -338,13 +363,15 @@ definition {
 		}
 	}
 
-	macro viewNoPG {
+	@summary = "Default summary"
+	macro viewNoPG(pageName = null) {
 		var key_pageName = ${pageName};
 
 		AssertElementNotPresent(locator1 = "Home#PAGE");
 	}
 
-	macro viewPageLockCheck {
+	@summary = "Default summary"
+	macro viewPageLockCheck() {
 		Click(locator1 = "ControlMenu#INFO");
 
 		AssertTextEquals.assertPartialText(
@@ -352,7 +379,8 @@ definition {
 			value1 = "This page is linked to a site template which does not allow modifications to it.");
 	}
 
-	macro viewPanelPortletListPG {
+	@summary = "Default summary"
+	macro viewPanelPortletListPG(portletNameList = null,componentName = null,pageName = null) {
 		var key_componentName = ${componentName};
 
 		AssertTextEquals(
@@ -378,7 +406,8 @@ definition {
 		}
 	}
 
-	macro viewPreview {
+	@summary = "Default summary"
+	macro viewPreview(htmlTitle = null,description = null,locale = null,pageName = null,siteNameURL = null) {
 		if (isSet(key_imageName)) {
 			AssertVisible(locator1 = "PagesAdmin#PREVIEW_IMAGE");
 		}
@@ -464,7 +493,8 @@ definition {
 		}
 	}
 
-	macro viewRTLLayout {
+	@summary = "Default summary"
+	macro viewRTLLayout() {
 		AssertCssValue(
 			locator1 = "Home#SITE_NAME",
 			locator2 = "direction",
@@ -490,7 +520,8 @@ definition {
 			value1 = ${sideNavWidth});
 	}
 
-	macro viewSiteNameTranslationsPG {
+	@summary = "Default summary"
+	macro viewSiteNameTranslationsPG(textIconList = null,siteNameList = null,localeList = null) {
 		var list1 = ListUtil.newListFromString(${localeList});
 		var list2 = ListUtil.newListFromString(${siteNameList});
 		var list3 = ListUtil.newListFromString(${textIconList});
@@ -516,7 +547,8 @@ definition {
 		}
 	}
 
-	macro viewSpecificPG {
+	@summary = "Default summary"
+	macro viewSpecificPG(pageNameList = null) {
 		for (var pageName : list ${pageNameList}) {
 			var key_pageName = ${pageName};
 
@@ -526,7 +558,8 @@ definition {
 		}
 	}
 
-	macro viewTranslationsPG {
+	@summary = "Default summary"
+	macro viewTranslationsPG(defaultLanguageLocalizationMessage = null,translationLanguageLocalizationMessage = null,sitePageURL = null,preferredLanguageLocalizationMessage = null) {
 		Navigator.openSpecificURL(url = ${sitePageURL});
 
 		AssertLocation(value1 = ${sitePageURL});
@@ -538,7 +571,8 @@ definition {
 			translationLanguageLocalizationMessage = ${translationLanguageLocalizationMessage});
 	}
 
-	macro viewURLLocale {
+	@summary = "Default summary"
+	macro viewURLLocale(localizationPageURL = null,localizationOption = null) {
 		if (isSet(localizationOption)) {
 			AssertClick(
 				key_pageLocale = ${localizationOption},
@@ -549,7 +583,8 @@ definition {
 		AssertLocation(value1 = ${localizationPageURL});
 	}
 
-	macro viewWithWorkflowPG {
+	@summary = "Default summary"
+	macro viewWithWorkflowPG(livePage = null,workflowStatus = null,pageName = null) {
 		if (${workflowStatus} == "Ready for Publication") {
 			AssertElementPresent(locator1 = "Staging#STAGING_MENU_READY_FOR_PUBLICATION");
 		}

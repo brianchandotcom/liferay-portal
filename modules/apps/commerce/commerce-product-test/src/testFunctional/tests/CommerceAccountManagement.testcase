@@ -233,7 +233,7 @@ definition {
 		task ("And impersonates the user Administrator") {
 			User.impersonateCP(userName = "Administrator");
 
-			SelectWindow(locator1 = "title=Home - ${siteName}");
+			SelectWindow(value1 = "title=Home - ${siteName}");
 		}
 
 		task ("And navigates on Minium") {

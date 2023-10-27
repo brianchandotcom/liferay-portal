@@ -1,10 +1,12 @@
 definition {
 
-	macro clickManagementBar {
+	@summary = "Default summary"
+	macro clickManagementBar() {
 		Click(locator1 = "StyleBookEditor#MANAGEMENT_BAR");
 	}
 
-	macro clickPublish {
+	@summary = "Default summary"
+	macro clickPublish(publishing = null) {
 		Button.click(button = "Publish");
 
 		if (IsTextEqual(locator1 = "Modal#HEADER", value1 = "Style Errors Detected")) {
@@ -44,7 +46,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro configureUnit {
+	@summary = "Default summary"
+	macro configureUnit(unit = null,fieldLabel = null) {
 		Click(
 			key_fieldLabel = ${fieldLabel},
 			locator1 = "Dropdown#DROPDOWN_TOGGLE_BUTTON_WITH_LABEL");
@@ -52,7 +55,8 @@ definition {
 		MenuItem.click(menuItem = ${unit});
 	}
 
-	macro expandSection {
+	@summary = "Default summary"
+	macro expandSection(sectionName = null) {
 		WaitForVisible(
 			key_panel = ${sectionName},
 			locator1 = "Panel#PANEL");
@@ -69,7 +73,8 @@ definition {
 			locator1 = "StyleBookEditor#STYLE_BOOK_EDITOR_SIDEBAR_EXPANDED");
 	}
 
-	macro linkValueFromStyleBook {
+	@summary = "Default summary"
+	macro linkValueFromStyleBook(fieldLabel = null,colorSwatchItem = null) {
 		Click.clickNoWaitForVisible(
 			key_fieldLabel = ${fieldLabel},
 			key_text = "theme",
@@ -87,13 +92,15 @@ definition {
 			locator1 = "Icon#ANY_ITEM_SELECTOR");
 	}
 
-	macro selectForm {
+	@summary = "Default summary"
+	macro selectForm(formName = null) {
 		Click.waitForMenuToggleJSClick(locator1 = "StyleBookEditor#FORM_CONTROL_SELECT_BUTTON");
 
 		MenuItem.click(menuItem = ${formName});
 	}
 
-	macro selectPreviewItem {
+	@summary = "Default summary"
+	macro selectPreviewItem(scope = null,caption = null,previewType = null,previewItem = null) {
 		Click(
 			index = 2,
 			locator1 = "StyleBookEditor#PREVIEW_SELECTOR");
@@ -133,7 +140,8 @@ definition {
 		}
 	}
 
-	macro selectPreviewType {
+	@summary = "Default summary"
+	macro selectPreviewType(previewType = null) {
 		Click(
 			index = 1,
 			locator1 = "StyleBookEditor#PREVIEW_SELECTOR");
@@ -141,7 +149,8 @@ definition {
 		MenuItem.click(menuItem = ${previewType});
 	}
 
-	macro selectStyleBook {
+	@summary = "Default summary"
+	macro selectStyleBook(styleBookName = null) {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		LexiconCard.clickCardTitle(card = ${styleBookName});
@@ -149,7 +158,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro selectStyleBookViaPageDesignOptions {
+	@summary = "Default summary"
+	macro selectStyleBookViaPageDesignOptions(styleBookName = null) {
 		Navigator.gotoNavTab(navTab = "Style Book");
 
 		Click.waitForMenuToggleJSClick(
@@ -161,21 +171,24 @@ definition {
 			locator1 = "Card#CARD_SELECTED");
 	}
 
-	macro viewCurrentPreviewItem {
+	@summary = "Default summary"
+	macro viewCurrentPreviewItem(previewItem = null) {
 		AssertTextEquals(
 			index = 2,
 			locator1 = "StyleBookEditor#PREVIEW_SELECTOR",
 			value1 = ${previewItem});
 	}
 
-	macro viewCurrentPreviewType {
+	@summary = "Default summary"
+	macro viewCurrentPreviewType(previewType = null) {
 		AssertTextEquals(
 			index = 1,
 			locator1 = "StyleBookEditor#PREVIEW_SELECTOR",
 			value1 = ${previewType});
 	}
 
-	macro waitForAutoSave {
+	@summary = "Default summary"
+	macro waitForAutoSave() {
 		WaitForElementNotPresent(locator1 = "StyleBookEditor#DRAFT_SAVING_MESSAGE");
 
 		AssertVisible(locator1 = "StyleBookEditor#DRAFT_SAVED_MESSAGE");

@@ -1,16 +1,19 @@
 definition {
 
-	macro activeValidation {
+	@summary = "Default summary"
+	macro activeValidation() {
 		Check.checkToggleSwitch(locator1 = "ObjectCustomValidation#ACTIVE_VALIDATION_TOGGLE");
 	}
 
-	macro addErrorMessage {
+	@summary = "Default summary"
+	macro addErrorMessage(errorMessage = null) {
 		Type.type(
 			locator1 = "ObjectCustomValidation#ADD_ERROR_MESSAGE_VALIDATION",
 			value1 = ${errorMessage});
 	}
 
-	macro addObjectValidation {
+	@summary = "Default summary"
+	macro addObjectValidation(validationName = null,validationType = null) {
 		LexiconEntry.gotoAdd();
 
 		Type(
@@ -26,7 +29,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro assertValidationPresent {
+	@summary = "Default summary"
+	macro assertValidationPresent(validationName = null,validationType = null,validationActive = null) {
 		AssertElementPresent(
 			key_validationName = ${validationName},
 			locator1 = "ObjectCustomValidation#VIEW_LABEL_VALIDATION");
@@ -40,17 +44,20 @@ definition {
 			locator1 = "ObjectCustomValidation#VIEW_INFO_VALIDATION");
 	}
 
-	macro desactiveValidation {
+	@summary = "Default summary"
+	macro desactiveValidation() {
 		Uncheck.uncheckToggleSwitch(locator1 = "ObjectCustomValidation#ACTIVE_VALIDATION_TOGGLE");
 	}
 
-	macro editLabelOnCustomValidation {
+	@summary = "Default summary"
+	macro editLabelOnCustomValidation(editValidationName = null) {
 		Type(
 			locator1 = "ObjectCustomValidation#LABEL_EDIT_VALIDATION",
 			value1 = ${editValidationName});
 	}
 
-	macro gotoCustomValidation {
+	@summary = "Default summary"
+	macro gotoCustomValidation(validationName = null) {
 		Click(
 			key_validationName = ${validationName},
 			locator1 = "ObjectCustomValidation#VIEW_LABEL_VALIDATION");
@@ -58,13 +65,15 @@ definition {
 		SelectFrame(locator1 = "IFrame#IFRAME");
 	}
 
-	macro gotoTab {
+	@summary = "Default summary"
+	macro gotoTab(tabName = null) {
 		Click(
 			key_tab = ${tabName},
 			locator1 = "NavTab#TAB_LINK");
 	}
 
-	macro insertScriptOnValidation {
+	@summary = "Default summary"
+	macro insertScriptOnValidation(scriptValidation = null) {
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "ObjectCustomValidation#INSERT_SCRIPT_ON_VALIDATION",
 			value1 = ${scriptValidation});

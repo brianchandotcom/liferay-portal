@@ -72,31 +72,38 @@ definition {
 		}
 	}
 
-	@description = "This test asserts that an account name will automatically truncate and will stop adding more characters as you type after it reaches the character limit of 100."
+	@description = "This is a test for LPS-195988. This test asserts that an account name will automatically truncate and will stop adding more characters as you type after it reaches the character limit of 250."
 	@priority = 4
-	test AccountNameCannotExceed100Characters {
-		task ("When a user types an account name with more than 100 characters") {
+	test AccountNameCannotExceed250Characters {
+		task ("When a user types an account name with more than 250 characters") {
 			Account.openAccountsAdmin();
 
 			LexiconEntry.gotoAdd();
 
-			PortletEntry.inputName(name = "Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet");
+			Type.sendKeys(
+				locator1 = "TextInput#NAME",
+				value1 = "Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet");
 		}
 
-		task ("Then only the first 100 characters are typed in. No more than 100 characters can be added") {
+		task ("Then only the first 250 characters are typed in. No more than 250 characters can be added") {
 			AssertTextEquals(
 				locator1 = "TextInput#NAME",
-				value1 = "Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor s");
+				value1 = "Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem i");
 
 			AssertTextNotEquals(
 				locator1 = "TextInput#NAME",
-				value1 = "Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet");
+				value1 = "Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet");
 
 			Button.clickSave();
 
 			Account.openAccountsAdmin();
 
-			LexiconEntry.viewNoEntry(rowEntry = "Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet");
+			AssertTextEquals(
+				key_rowEntry = "Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem i",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
+				value1 = "Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem i");
+
+			LexiconEntry.viewNoEntry(rowEntry = "Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet");
 		}
 	}
 

@@ -1,6 +1,7 @@
 definition {
 
-	macro _addBlogEntry {
+	@summary = "Default summary"
+	macro _addBlogEntry(groupId = null,title = null) {
 		Variables.assertDefined(parameterList = "${content},${groupId},${title}");
 
 		var portalURL = JSONCompany.getPortalURL();

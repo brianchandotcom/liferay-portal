@@ -1,6 +1,7 @@
 definition {
 
-	macro fillOrganizationForm {
+	@summary = "Default summary"
+	macro fillOrganizationForm(country = null,zipCode = null,bankingInfo = null,organizationName = null,city = null,contactEmail = null,createRequest = null,organizationSite = null,smallDescription = null,contactName = null,done = null,street = null,taxId = null,state = null,contactPhone = null) {
 		WaitForPageLoad();
 
 		if (isSet(organizationName)) {
@@ -107,13 +108,15 @@ definition {
 		}
 	}
 
-	macro goToCreateOrganization {
+	@summary = "Default summary"
+	macro goToCreateOrganization() {
 		EVPNavigator.goToNavItem(navItem = "Organization");
 
 		Button.click(button = "Create an Organization");
 	}
 
-	macro kebabMenuOrganization {
+	@summary = "Default summary"
+	macro kebabMenuOrganization(organizationName = null) {
 		Click(
 			key_name = ${organizationName},
 			locator1 = "EVPUtils#KEBAB_MENU_OPTION_ORGANIZATION");

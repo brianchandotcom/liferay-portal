@@ -1,6 +1,7 @@
 definition {
 
-	macro _addCatalog {
+	@summary = "Default summary"
+	macro _addCatalog(catalogName = null) {
 		Variables.assertDefined(parameterList = ${catalogName});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -37,7 +38,8 @@ definition {
 		echo(${response});
 	}
 
-	macro addAccount {
+	@summary = "Default summary"
+	macro addAccount(accountName = null) {
 		Variables.assertDefined(parameterList = ${accountName});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -71,7 +73,8 @@ definition {
 		echo(${response});
 	}
 
-	macro updateAccount {
+	@summary = "Default summary"
+	macro updateAccount(accountName = null) {
 		Variables.assertDefined(parameterList = "${accountName},${catalogName}");
 
 		if (${accountName} == "QA Development") {

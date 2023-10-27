@@ -1,54 +1,63 @@
 definition {
 
-	macro click {
+	@summary = "Default summary"
+	macro click(menuItem = null) {
 		Click(
 			key_menuItem = ${menuItem},
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
-	macro clickNoError {
+	@summary = "Default summary"
+	macro clickNoError(menuItem = null) {
 		ClickNoError(
 			key_menuItem = ${menuItem},
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
-	macro verifyNotPresent {
+	@summary = "Default summary"
+	macro verifyNotPresent(menuItem = null) {
 		VerifyElementNotPresent(
 			key_menuItem = ${menuItem},
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
-	macro verifyPresent {
+	@summary = "Default summary"
+	macro verifyPresent(menuItem = null) {
 		VerifyElementPresent(
 			key_menuItem = ${menuItem},
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
-	macro verifyVisible {
+	@summary = "Default summary"
+	macro verifyVisible(menuItem = null) {
 		VerifyVisible(
 			key_menuItem = ${menuItem},
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
-	macro viewDisabled {
+	@summary = "Default summary"
+	macro viewDisabled(menuItem = null) {
 		AssertElementPresent(
 			key_menuItem = ${menuItem},
 			locator1 = "MenuItem#DISABLED_MENU_ITEM");
 	}
 
-	macro viewNotPresent {
+	@summary = "Default summary"
+	macro viewNotPresent(menuItem = null) {
 		AssertElementNotPresent(
 			key_menuItem = ${menuItem},
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
-	macro viewNotVisible {
+	@summary = "Default summary"
+	macro viewNotVisible(menuItem = null) {
 		AssertNotVisible(
 			key_menuItem = ${menuItem},
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
-	macro viewOrder {
+	@summary = "Default summary"
+	macro viewOrder(menuItemList = null) {
 		var key_index = 1;
 
 		for (var menuItem : list ${menuItemList}) {
@@ -61,13 +70,15 @@ definition {
 		}
 	}
 
-	macro viewPresent {
+	@summary = "Default summary"
+	macro viewPresent(menuItem = null) {
 		AssertElementPresent(
 			key_menuItem = ${menuItem},
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
-	macro viewVisible {
+	@summary = "Default summary"
+	macro viewVisible(menuItem = null) {
 		AssertVisible(
 			key_menuItem = ${menuItem},
 			locator1 = "MenuItem#ANY_MENU_ITEM");

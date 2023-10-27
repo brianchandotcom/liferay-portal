@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 
@@ -102,6 +103,12 @@ public class LayoutCTDisplayRenderer extends BaseCTDisplayRenderer<Layout> {
 
 	@Override
 	public boolean isHideable(Layout layout) {
+		if (layout.isDraftLayout() &&
+			(layout.getStatus() == WorkflowConstants.STATUS_DRAFT)) {
+
+			return false;
+		}
+
 		return layout.isSystem();
 	}
 

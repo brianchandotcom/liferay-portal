@@ -1,6 +1,7 @@
 definition {
 
-	macro _addCommerceUOM {
+	@summary = "Default summary"
+	macro _addCommerceUOM(productSKU = null,uomName = null,uomKey = null,basePrice = null) {
 		Variables.assertDefined(parameterList = "${basePrice},${uomName},${uomKey},${productSKU}");
 
 		var baseURL = ${baseURL};
@@ -64,7 +65,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro _deleteAllCommerceUOMs {
+	@summary = "Default summary"
+	macro _deleteAllCommerceUOMs(productSKU = null) {
 		Variables.assertDefined(parameterList = ${productSKU});
 
 		var baseURL = ${baseURL};
@@ -97,7 +99,8 @@ definition {
 		}
 	}
 
-	macro _deleteCommerceSkuUom {
+	@summary = "Default summary"
+	macro _deleteCommerceSkuUom(productSKU = null,uomKey = null) {
 		Variables.assertDefined(parameterList = "${productSKU},${uomKey}");
 
 		var baseURL = ${baseURL};
@@ -120,7 +123,8 @@ definition {
 		JSONCurlUtil.delete(${curl});
 	}
 
-	macro _getCommerceSkuUomIdByKey {
+	@summary = "Default summary"
+	macro _getCommerceSkuUomIdByKey(productSKU = null,uomKey = null) {
 		Variables.assertDefined(parameterList = "${productSKU},${uomKey}");
 
 		var responseBody = CommerceJSONSKUsAPI._getCommerceSkuUomsBySKU(productSKU = ${productSKU});
@@ -130,7 +134,8 @@ definition {
 		return ${skuUomId};
 	}
 
-	macro _getCommerceSkuUomsBySKU {
+	@summary = "Default summary"
+	macro _getCommerceSkuUomsBySKU(productSKU = null) {
 		Variables.assertDefined(parameterList = ${productSKU});
 
 		var baseURL = ${baseURL};
@@ -153,7 +158,8 @@ definition {
 		return ${responseBody};
 	}
 
-	macro _getCommerceUOMCountBySKUId {
+	@summary = "Default summary"
+	macro _getCommerceUOMCountBySKUId(productSKU = null) {
 		Variables.assertDefined(parameterList = ${productSKU});
 
 		var baseURL = ${baseURL};
@@ -178,7 +184,8 @@ definition {
 		return ${uomCount};
 	}
 
-	macro _getCommerceUOMIdBySKUId {
+	@summary = "Default summary"
+	macro _getCommerceUOMIdBySKUId(productSKU = null) {
 		Variables.assertDefined(parameterList = ${productSKU});
 
 		var baseURL = ${baseURL};

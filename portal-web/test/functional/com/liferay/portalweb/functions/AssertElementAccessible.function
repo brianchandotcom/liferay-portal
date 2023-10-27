@@ -1,7 +1,7 @@
 @default = "assertElementAccessible"
 definition {
 
-	function assertElementAccessible {
+	function assertElementAccessible(locator1,value1) {
 		WaitForSPARefresh();
 
 		if (isSet(value1)) {
@@ -13,7 +13,7 @@ definition {
 
 		selenium.assertElementAccessible(${locator1}, ${ignorableImpacts});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

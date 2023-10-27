@@ -11,7 +11,8 @@ definition {
 	var title4 = "Lightweight";
 	var title5 = "Open Source";
 
-	macro clickAndVerifyRowDeselection {
+	@summary = "Default summary"
+	macro clickAndVerifyRowDeselection(firstName = null,lastName = null,num = null) {
 		KeyPress.keyDown(
 			key_num = ${num},
 			locator1 = "AlloyShowcase#SELECTION_CHECKBOX",
@@ -36,7 +37,8 @@ definition {
 			locator1 = "AlloyShowcase#SELECTED_ROW");
 	}
 
-	macro clickButton {
+	@summary = "Default summary"
+	macro clickButton(buttonRow = null) {
 		if (${buttonRow} == "true") {
 			AssertElementPresent(locator1 = "Button#SAVE");
 
@@ -55,7 +57,8 @@ definition {
 		}
 	}
 
-	macro clickRadioAndVerifyRowSelection {
+	@summary = "Default summary"
+	macro clickRadioAndVerifyRowSelection(firstName = null,lastName = null,num = null,feedBackResult = null,modalDialogResult = null) {
 		Click(
 			key_num = ${num},
 			locator1 = "AlloyShowcase#SELECTION_CHECKBOX");
@@ -84,7 +87,8 @@ definition {
 		Button.clickCancel();
 	}
 
-	macro selectAndVerifySelection {
+	@summary = "Default summary"
+	macro selectAndVerifySelection(num = null,feedBackResult = null,modalDialogResult = null) {
 		if (isSet(checkAll)) {
 			Check(locator1 = "AlloyShowcase#SELECTION_CHECKBOX_ALL");
 		}
@@ -116,7 +120,8 @@ definition {
 		Button.clickCancel();
 	}
 
-	macro selectDataTable {
+	@summary = "Default summary"
+	macro selectDataTable() {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/alloy-showcase/-/alloy-tag/alloy/datatable/selection");
 
 		AssertElementPresent(
@@ -196,7 +201,8 @@ definition {
 			locator1 = "AlloyShowcase#SELECTED_ROW");
 	}
 
-	macro selectRowsPerPage {
+	@summary = "Default summary"
+	macro selectRowsPerPage() {
 		Select(
 			locator1 = "AlloyShowcase#PAGINATOR_DROP_DOWN_LIST",
 			value1 = 100);
@@ -206,7 +212,8 @@ definition {
 			locator1 = "AlloyShowcase#PAGINATOR_DROP_DOWN_SELECTED");
 	}
 
-	macro testMenu {
+	@summary = "Default summary"
+	macro testMenu(command = null) {
 		AssertClick(
 			locator1 = "AlloyShowcase#MENU_BUTTON",
 			value1 = "User");
@@ -284,7 +291,8 @@ definition {
 		}
 	}
 
-	macro verifyDataTableSort {
+	@summary = "Default summary"
+	macro verifyDataTableSort(firstNameDesc2 = null,columnName2 = null,firstNameAsc = null,firstNameAsc2 = null,firstNameDesc = null,columnName = null) {
 		Click(
 			key_columnName = ${columnName},
 			locator1 = "AlloyShowcase#TABLE_COLUMN_NAME");
@@ -370,7 +378,8 @@ definition {
 		}
 	}
 
-	macro viewDataList {
+	@summary = "Default summary"
+	macro viewDataList(description4 = null,description5 = null,description2 = null,description3 = null,description1 = null) {
 		var dataListItem1 = ${description1};
 		var dataListItem2 = ${description2};
 		var dataListItem3 = ${description3};
@@ -453,7 +462,8 @@ definition {
 			value1 = ${dataListItem5});
 	}
 
-	macro viewDataSelection {
+	@summary = "Default summary"
+	macro viewDataSelection(description4 = null,description5 = null,title1 = null,title2 = null,title3 = null,title4 = null,description2 = null,title5 = null,description3 = null,description1 = null) {
 		var dataListItem1 = ${title1};
 		var dataListItem2 = ${title2};
 		var dataListItem3 = ${title3};
@@ -555,7 +565,8 @@ definition {
 			value1 = ${dataModal5});
 	}
 
-	macro viewDataTable {
+	@summary = "Default summary"
+	macro viewDataTable(description4 = null,description5 = null,title1 = null,title2 = null,title3 = null,title4 = null,description2 = null,title5 = null,description3 = null,description1 = null) {
 		var dataListItemTitle1 = ${title1};
 		var dataListItemTitle2 = ${title2};
 		var dataListItemTitle3 = ${title3};
@@ -646,7 +657,8 @@ definition {
 			locator1 = "AlloyShowcase#ALLOY_DATA_LIST_ITEM_DESCRIPTION");
 	}
 
-	macro viewMultipleColumnSort {
+	@summary = "Default summary"
+	macro viewMultipleColumnSort(screenName3 = null,screenName4 = null,screenName1 = null,screenName2 = null) {
 		AlloyShowcase.viewPaginator(
 			screenName1 = ${screenName1},
 			screenName2 = ${screenName2},
@@ -666,7 +678,8 @@ definition {
 			firstNameDesc2 = "Benjamin");
 	}
 
-	macro viewPaginator {
+	@summary = "Default summary"
+	macro viewPaginator(useCase = null,screenName3 = null,screenName4 = null,screenName1 = null,screenName2 = null) {
 		Click(
 			key_buttonLabel = "nextPage",
 			locator1 = "AlloyShowcase#PAGINATOR_BUTTON");
@@ -771,7 +784,8 @@ definition {
 		}
 	}
 
-	macro viewServerEvents {
+	@summary = "Default summary"
+	macro viewServerEvents(useCase = null,screenName3 = null,screenName4 = null,screenName1 = null,screenName2 = null) {
 		AlloyShowcase.viewPaginator(
 			screenName1 = ${screenName1},
 			screenName2 = ${screenName2},
@@ -847,7 +861,8 @@ definition {
 			num = 0);
 	}
 
-	macro viewSingleColumnSort {
+	@summary = "Default summary"
+	macro viewSingleColumnSort(screenName3 = null,screenName4 = null,screenName1 = null,screenName2 = null) {
 		AlloyShowcase.viewPaginator(
 			screenName1 = ${screenName1},
 			screenName2 = ${screenName2},

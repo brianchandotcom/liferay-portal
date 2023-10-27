@@ -1,6 +1,7 @@
 definition {
 
-	macro waitForPortletReady {
+	@summary = "Default summary"
+	macro waitForPortletReady() {
 		WaitForLiferayEvent(
 			attributeName = "type",
 			attributeValue = "portletReady",

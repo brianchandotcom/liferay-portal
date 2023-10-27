@@ -109,10 +109,10 @@ definition {
 		task ("View displayed contents in Content Flags, Content Ratings and Content Display in page editor") {
 			for (var i : list "1,2,3") {
 				AssertAttributeValue(
-					attribute1 = "aria-expanded",
 					index = ${i},
 					locator1 = "Fragment#CONTENT_RATINGS_YOUR_RATING_STAR",
-					value1 = "false");
+					value1 = "aria-expanded",
+					value2 = "false");
 
 				AssertVisible(
 					index = ${i},
@@ -147,10 +147,10 @@ definition {
 
 			for (var i : list "1,2,3") {
 				AssertAttributeValue(
-					attribute1 = "aria-expanded",
 					index = ${i},
 					locator1 = "Fragment#CONTENT_RATINGS_YOUR_RATING_STAR",
-					value1 = "false");
+					value1 = "aria-expanded",
+					value2 = "false");
 
 				AssertVisible(
 					index = ${i},

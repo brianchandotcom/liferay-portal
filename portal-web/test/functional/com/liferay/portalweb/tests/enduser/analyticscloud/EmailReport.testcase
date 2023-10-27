@@ -346,7 +346,7 @@ definition {
 		task ("Launch AC") {
 			var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 
-			Open(locator1 = ${analyticsCloudURL});
+			Open(value1 = ${analyticsCloudURL});
 		}
 
 		task ("Go to admin page") {
@@ -407,7 +407,7 @@ definition {
 		task ("Check that the Full Report link is redirected to the AC page in the correct property") {
 			ACUtils.clickGenericHyperlink(hyperlinkText = "SEE FULL REPORT");
 
-			SelectWindow(locator1 = "title=Analytics Cloud");
+			SelectWindow(value1 = "title=Analytics Cloud");
 
 			if (IsElementPresent(locator1 = "ACLogin#EMAIL_LOGIN_FIELD")) {
 				ACLogin.loginAs(emailAddress = ${emailAddress});
@@ -421,7 +421,7 @@ definition {
 		task ("Check Liferay.com page link") {
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Liferay, Inc.");
 
-			SelectWindow(locator1 = "title=Digital Experience Software Tailored to Your Needs | Liferay");
+			SelectWindow(value1 = "title=Digital Experience Software Tailored to Your Needs | Liferay");
 
 			ACUtils.viewGenericText(textValueList = "Introducing Liferay Experience Cloud");
 
@@ -431,7 +431,7 @@ definition {
 		task ("Check the Contact Support page link") {
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Contact Support");
 
-			SelectWindow(locator1 = "title=Liferay Help Center");
+			SelectWindow(value1 = "title=Liferay Help Center");
 
 			ACUtils.viewGenericText(textValueList = "Help Center,How can we help?");
 
@@ -441,7 +441,7 @@ definition {
 		task ("Check the Learn Liferay page link") {
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn Liferay");
 
-			SelectWindow(locator1 = "title=Liferay Learn - Liferay Learn");
+			SelectWindow(value1 = "title=Liferay Learn - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Welcome to Liferay Docs");
 

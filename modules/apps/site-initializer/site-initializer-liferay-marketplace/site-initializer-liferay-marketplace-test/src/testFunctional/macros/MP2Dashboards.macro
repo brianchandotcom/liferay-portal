@@ -1,14 +1,17 @@
 definition {
 
-	macro assertNoResendInvitationButton {
+	@summary = "Default summary"
+	macro assertNoResendInvitationButton() {
 		AssertElementNotPresent(locator1 = "MP2Dashboards#RESEND_INVITATION");
 	}
 
-	macro assertResendInvitationButton {
+	@summary = "Default summary"
+	macro assertResendInvitationButton() {
 		AssertElementPresent(locator1 = "MP2Dashboards#RESEND_INVITATION");
 	}
 
-	macro clickBreadcrumb {
+	@summary = "Default summary"
+	macro clickBreadcrumb(accountTitle = null) {
 		var key_accountTitle = ${accountTitle};
 
 		Click(locator1 = "MP2Dashboards#SVG_DROPDOWN");
@@ -18,26 +21,30 @@ definition {
 			locator1 = "MP2Dashboards#SVG_DROPDOWN_LIST");
 	}
 
-	macro clickNewMemberButton {
+	@summary = "Default summary"
+	macro clickNewMemberButton(buttonName = null) {
 		Click(
 			key_buttonName = ${buttonName},
 			locator1 = "MP2Dashboards#ANY_DASHBOARD_BUTTON");
 	}
 
-	macro clickOnTheInvitedUser {
+	@summary = "Default summary"
+	macro clickOnTheInvitedUser(label = null,value = null) {
 		Click(
 			key_label = ${label},
 			key_text = ${value},
 			locator1 = "MP2Dashboards#DASHBOARD_TABLE");
 	}
 
-	macro clickOnTheResendInvitationButton {
+	@summary = "Default summary"
+	macro clickOnTheResendInvitationButton() {
 		Click(locator1 = "MP2Dashboards#RESEND_INVITATION");
 
 		Alert.viewSuccessMessage();
 	}
 
-	macro inviteNewMember {
+	@summary = "Default summary"
+	macro inviteNewMember(firstName = null,lastName = null,emailAddress = null,checkboxName = null) {
 		MP2Dashboards.clickNewMemberButton(buttonName = "New Member");
 
 		WaitForPageLoad();
@@ -63,14 +70,16 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro typeNewMemberInfoFields {
+	@summary = "Default summary"
+	macro typeNewMemberInfoFields(field = null,fieldInput = null) {
 		Type(
 			key_field = ${field},
 			locator1 = "MP2Dashboards#SETUP_FIELDS",
 			value1 = ${fieldInput});
 	}
 
-	macro viewNewMemberButtonNotPresent {
+	@summary = "Default summary"
+	macro viewNewMemberButtonNotPresent() {
 		AssertElementNotPresent(locator1 = "MP2Dashboards#ANY_DASHBOARD_BUTTON");
 	}
 

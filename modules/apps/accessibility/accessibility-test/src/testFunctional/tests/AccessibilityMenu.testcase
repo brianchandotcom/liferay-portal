@@ -325,7 +325,7 @@ definition {
 		task ("And open a new browser tab") {
 			var portalURL = PropsUtil.get("portal.url");
 
-			Open.openInTheNewTab(locator1 = ${portalURL});
+			Open.openInTheNewTab(value1 = ${portalURL});
 		}
 
 		task ("And open accessibility menu") {

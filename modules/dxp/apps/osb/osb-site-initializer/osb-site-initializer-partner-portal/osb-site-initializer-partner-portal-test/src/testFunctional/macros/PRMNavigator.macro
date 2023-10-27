@@ -1,12 +1,14 @@
 definition {
 
-	macro assertActiveBreadcrumb {
+	@summary = "Default summary"
+	macro assertActiveBreadcrumb(activeItem = null) {
 		AssertElementPresent(
 			locator1 = "Breadcrumb#BREADCRUMB_ENTRY_ACTIVE_ENTRY",
 			value1 = ${activeItem});
 	}
 
-	macro gotoClaim {
+	@summary = "Default summary"
+	macro gotoClaim(claimId = null) {
 		if (!(isSet(siteName))) {
 			var siteName = "Partner Portal";
 		}
@@ -19,7 +21,7 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		Open(locator1 = "${baseURL}/web/${siteNameURL}/l/${claimId}");
+		Open(value1 = "${baseURL}/web/${siteNameURL}/l/${claimId}");
 
 		echo("${baseURL}/web/${siteNameURL}/l/${claimId}");
 
@@ -28,7 +30,8 @@ definition {
 			locator1 = "Header#H1_TITLE");
 	}
 
-	macro gotoMDF {
+	@summary = "Default summary"
+	macro gotoMDF(requestId = null) {
 		if (!(isSet(siteName))) {
 			var siteName = "Partner Portal";
 		}
@@ -41,7 +44,7 @@ definition {
 			var baseURL = PropsUtil.get("portal.url");
 		}
 
-		Open(locator1 = "${baseURL}/web/${siteNameURL}/l/${requestId}");
+		Open(value1 = "${baseURL}/web/${siteNameURL}/l/${requestId}");
 
 		echo("${baseURL}/web/${siteNameURL}/l/${requestId}");
 
@@ -50,7 +53,8 @@ definition {
 			locator1 = "Header#H1_TITLE");
 	}
 
-	macro goToNavItem {
+	@summary = "Default summary"
+	macro goToNavItem(navItem = null) {
 		Click(
 			key_navItem = ${navItem},
 			locator1 = "PRMNavigation#NAV_LINK");
@@ -58,7 +62,8 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro openSitePage {
+	@summary = "Default summary"
+	macro openSitePage(pageName = null) {
 		if (!(isSet(siteName))) {
 			var siteName = "Partner Portal";
 		}
@@ -77,13 +82,13 @@ definition {
 		var pageNameURL = StringUtil.lowerCase(${pageNameURL});
 
 		if ((${pageName} == "MDF Requests") || (${pageName} == "MDF Claims")) {
-			Open(locator1 = "${baseURL}/web/${siteNameURL}/marketing/${pageNameURL}");
+			Open(value1 = "${baseURL}/web/${siteNameURL}/marketing/${pageNameURL}");
 		}
 		else if (${pageName} == "Deal Registrations") {
 			Open(locator1 = "${baseURL}/web/${siteNameURL}/sales/${pageNameURL}");
 		}
 		else {
-			Open(locator1 = "${baseURL}/web/${siteNameURL}/${pageNameURL}");
+			Open(value1 = "${baseURL}/web/${siteNameURL}/${pageNameURL}");
 		}
 	}
 

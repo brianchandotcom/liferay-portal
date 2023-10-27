@@ -1,6 +1,7 @@
 definition {
 
-	macro add {
+	@summary = "Default summary"
+	macro add(metadataSetName = null,dmDocumentTypeName = null,dmDocumentTypeDescription = null,dmDocumentTypeFieldNames = null,skipNavigation = null) {
 		DMDocumentType.addWithoutSave(
 			dmDocumentTypeDescription = ${dmDocumentTypeDescription},
 			dmDocumentTypeFieldNames = ${dmDocumentTypeFieldNames},
@@ -11,7 +12,8 @@ definition {
 		DDLDataDefinition.save();
 	}
 
-	macro addWithoutSave {
+	@summary = "Default summary"
+	macro addWithoutSave(metadataSetName = null,dmDocumentTypeName = null,dmDocumentTypeDescription = null,dmDocumentTypeFieldNames = null) {
 		if (!(isSet(skipNavigation))) {
 			LexiconEntry.gotoAdd();
 		}
@@ -61,7 +63,8 @@ definition {
 		}
 	}
 
-	macro delete {
+	@summary = "Default summary"
+	macro delete(dmDocumentTypeName = null,documentTypeHasReference = null) {
 		DMDocumentType.selectDocumentTypeFrame();
 
 		var key_dmDocumentTypeName = ${dmDocumentTypeName};
@@ -88,7 +91,8 @@ definition {
 		}
 	}
 
-	macro deleteFields {
+	@summary = "Default summary"
+	macro deleteFields(dmDocumentTypeName = null) {
 		DMDocumentType.selectDocumentTypeFrame();
 
 		var key_dmDocumentTypeName = ${dmDocumentTypeName};
@@ -104,7 +108,8 @@ definition {
 		DDLDataDefinition.save();
 	}
 
-	macro edit {
+	@summary = "Default summary"
+	macro edit(metadataSetName = null,dmDocumentTypeFieldRequiredEdit = null,dmDocumentTypeName = null,fieldFieldLabel = null,dmDocumentTypeFieldNames = null,locale = null,fieldFieldLabelEdit = null,removeMetadataSet = null,dmDocumentTypeDescriptionEdit = null,dmDocumentTypeNameEdit = null) {
 		DMDocumentType.selectDocumentTypeFrame();
 
 		var key_dmDocumentTypeName = ${dmDocumentTypeName};
@@ -236,7 +241,8 @@ definition {
 		}
 	}
 
-	macro gotoEditField {
+	@summary = "Default summary"
+	macro gotoEditField(fieldName = null) {
 		Click(
 			key_fieldName = ${fieldName},
 			locator1 = "DocumentsAndMediaDocumentTypes#FIELD_NAME");
@@ -244,7 +250,8 @@ definition {
 		AssertElementPresent(locator1 = "DocumentsAndMediaDocumentTypes#SIDEBAR_ACTIVE_BASIC_TAB");
 	}
 
-	macro gotoTab {
+	@summary = "Default summary"
+	macro gotoTab(tabName = null) {
 		if (IsElementNotPresent(key_sidebarTitle = ${tabName}, locator1 = "DocumentsAndMediaDocumentTypes#SIDEBAR_TITLE")) {
 			Click.clickNoMouseOver(
 				key_sidebarButton = ${tabName},
@@ -252,13 +259,15 @@ definition {
 		}
 	}
 
-	macro selectDocumentTypeFrame {
+	@summary = "Default summary"
+	macro selectDocumentTypeFrame() {
 		if (IsElementPresent(locator1 = "IFrame#DOCUMENT_TYPES")) {
 			SelectFrame(locator1 = "IFrame#DOCUMENT_TYPES");
 		}
 	}
 
-	macro selectPGMetadataSet {
+	@summary = "Default summary"
+	macro selectPGMetadataSet(metadataSetName = null) {
 		AssertClick(
 			locator1 = "DocumentsAndMediaEditDocumentType#SELECT_BUTTON",
 			value1 = "Select");
@@ -274,7 +283,8 @@ definition {
 		SelectFrameTop(value1 = "relative=top");
 	}
 
-	macro tearDownCP {
+	@summary = "Default summary"
+	macro tearDownCP() {
 		DMNavigator.openDocumentTypesAdmin(siteURLKey = "guest");
 
 		DMDocumentType.selectDocumentTypeFrame();
@@ -292,7 +302,8 @@ definition {
 		}
 	}
 
-	macro viewCP {
+	@summary = "Default summary"
+	macro viewCP(dmDocumentTypeScope = null,dmDocumentTypeName = null) {
 		var key_dmDocumentTypeName = ${dmDocumentTypeName};
 
 		if (isSet(dmDocumentTypeScope)) {
@@ -308,7 +319,8 @@ definition {
 			value1 = ${dmDocumentTypeName});
 	}
 
-	macro viewDefaultCP {
+	@summary = "Default summary"
+	macro viewDefaultCP() {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "There are no results.");
@@ -322,7 +334,8 @@ definition {
 			locator1 = "DocumentsAndMediaDocumentTypes#DOCUMENT_TYPES_TABLE_NAME");
 	}
 
-	macro viewMenulistOption {
+	@summary = "Default summary"
+	macro viewMenulistOption(dmDocumentTypeName = null) {
 		var key_dmDocumentTypeName = ${dmDocumentTypeName};
 
 		LexiconEntry.gotoAdd();
@@ -333,7 +346,8 @@ definition {
 			value1 = ${dmDocumentTypeName});
 	}
 
-	macro viewNoAvailableActionsViaDocumentTypesPG {
+	@summary = "Default summary"
+	macro viewNoAvailableActionsViaDocumentTypesPG() {
 		DMNavigator.gotoDocumentType();
 
 		AssertElementNotPresent(locator1 = "DocumentsAndMediaDocumentTypes#DOCUMENT_TYPES_TABLE_ACTIONS_1");

@@ -235,8 +235,10 @@ public class LayoutPrototypeActionDropdownItemsProvider {
 		String layoutFullURL = layoutPrototypeGroup.getDisplayURL(
 			_themeDisplay, true);
 
-		return HttpComponentsUtil.setParameter(
-			layoutFullURL, "p_l_back_url", _themeDisplay.getURLCurrent());
+		return HttpComponentsUtil.addParameters(
+			layoutFullURL, "p_l_back_url", _themeDisplay.getURLCurrent(),
+			"p_l_back_url_title",
+			LanguageUtil.get(_httpServletRequest, "widget-page-templates"));
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>

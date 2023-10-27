@@ -1,26 +1,32 @@
 definition {
 
-	macro gotoGeneral {
+	@summary = "Default summary"
+	macro gotoGeneral() {
 		Navigator.gotoNavTab(navTab = "General");
 	}
 
-	macro gotoIdentityProvider {
+	@summary = "Default summary"
+	macro gotoIdentityProvider() {
 		Navigator.gotoNavTab(navTab = "Identity Provider");
 	}
 
-	macro gotoIdentityProviderConnections {
+	@summary = "Default summary"
+	macro gotoIdentityProviderConnections() {
 		Navigator.gotoNavTab(navTab = "Identity Provider Connections");
 	}
 
-	macro gotoServiceProvider {
+	@summary = "Default summary"
+	macro gotoServiceProvider() {
 		Navigator.gotoNavTab(navTab = "Service Provider");
 	}
 
-	macro gotoServiceProviderConnection {
+	@summary = "Default summary"
+	macro gotoServiceProviderConnection() {
 		Navigator.gotoNavTab(navTab = "Service Provider Connections");
 	}
 
-	macro viewConsoleValue {
+	@summary = "Default summary"
+	macro viewConsoleValue(consoleValue = null) {
 		WaitForConsoleTextPresent(value1 = ${consoleValue});
 	}
 

@@ -1,6 +1,7 @@
 definition {
 
-	macro viewBudgetNotPresent {
+	@summary = "Default summary"
+	macro viewBudgetNotPresent(budgetIndex = null) {
 		AssertElementNotPresent(
 			key_index = ${budgetIndex},
 			locator1 = "PRMMDFRequestEdit#BUDGET_BY_INDEX");

@@ -199,6 +199,8 @@ public class LayoutActionsDisplayContext {
 		).setBackURL(
 			currentURL
 		).setParameter(
+			"backURLTitle", layout.getName()
+		).setParameter(
 			"groupId", layout.getGroupId()
 		).setParameter(
 			"privateLayout", layout.isPrivateLayout()

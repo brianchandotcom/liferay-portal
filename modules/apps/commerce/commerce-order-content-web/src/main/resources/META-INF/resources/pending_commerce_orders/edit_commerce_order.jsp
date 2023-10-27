@@ -155,7 +155,7 @@ if (backURL != null) {
 		<div class="commerce-panel__content">
 			<div class="align-items-center row">
 				<div class="col-md-3">
-					<div class="commerce-order-title">
+					<div class="autofit-col-expand commerce-order-title">
 						<%= HtmlUtil.escape(accountEntry.getName()) %>
 					</div>
 				</div>

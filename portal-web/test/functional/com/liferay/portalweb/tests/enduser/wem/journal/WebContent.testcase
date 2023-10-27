@@ -108,6 +108,58 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-195345. Verify that the order of the categories remains as previously selected after publishing a web content."
+	@priority = 4
+	test AddWebContentWithCategoryHiearchy {
+		task ("Given the user has a category hiearchy") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary Name");
+
+			JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category Name 1",
+				vocabularyName = "Vocabulary Name");
+
+			var parentCategoryNumber = 1;
+
+			for (var subCategoryNumber : list "2,3,4,5,6") {
+				JSONCategory.addSubcategory(
+					groupName = "Test Site Name",
+					parentCategoryName = "Category Name ${parentCategoryNumber}",
+					title = "Category Name ${subCategoryNumber}",
+					vocabularyName = "Vocabulary Name");
+
+				var parentCategoryNumber = ${parentCategoryNumber} + 1;
+			}
+		}
+
+		task ("When the user adds a web content with the category hiearchy") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			WebContent.addWithMultipleCategories(
+				categoryNameList = "Category Name 1,Category Name 2,Category Name 3,Category Name 4,Category Name 5,Category Name 6",
+				vocabularyName = "Vocabulary Name",
+				webContentContent = "Web Content Content",
+				webContentTitle = "Web Content Title");
+		}
+
+		task ("Then the added categories should keep the same order with hiearchy") {
+			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
+
+			WebContent.viewCategorizationCategoriesOrderCP(
+				categoryNameList = "Category Name 1,Category Name 2,Category Name 3,Category Name 4,Category Name 5,Category Name 6",
+				vocabularyName = "Vocabulary Name");
+		}
+	}
+
 	@description = "This is a test for LPS-192836. Assert can select feature image from Document and Media in web content creation."
 	@priority = 5
 	test AddWebContentWithFeaturedImageFromDocumentsAndMedia {
@@ -387,7 +439,7 @@ definition {
 		task ("Open a second tab and select it") {
 			var baseURL = PropsUtil.get("portal.url");
 
-			Open.openInTheNewTab(locator1 = "${baseURL}/group/test-site-name/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet");
+			Open.openInTheNewTab(value1 = "${baseURL}/group/test-site-name/~/control_panel/manage?p_p_id=com_liferay_journal_web_portlet_JournalPortlet");
 		}
 
 		task ("Edit Web Content article in the second tab") {
@@ -400,7 +452,7 @@ definition {
 		}
 
 		task ("Select the first tab and edit Web Content Title") {
-			SelectWindow.selectPopUp(locator1 = "null");
+			SelectWindow.selectPopUp(value1 = "null");
 
 			WebContent.addCP(webContentTitle = "WC WebContent Title Edit");
 		}
@@ -1037,7 +1089,7 @@ definition {
 		}
 
 		task ("Assert the user is taken to the Web Content Display Page and the draft version of the Web Content article displays in the Web Content Display widget") {
-			SelectWindow.selectPopUp(locator1 = "null");
+			SelectWindow.selectPopUp(value1 = "null");
 
 			WebContentDisplayPortlet.viewContent(
 				webContentContent = "Web Content Content Edit",
@@ -1109,7 +1161,7 @@ definition {
 		}
 
 		task ("Assert the user is taken to the Web Content Display Page and the pending version of the Web Content article displays in the Web Content Display widget") {
-			SelectWindow.selectPopUp(locator1 = "null");
+			SelectWindow.selectPopUp(value1 = "null");
 
 			WebContentDisplayPortlet.viewContent(
 				webContentContent = "Web Content Content Edit",
@@ -1184,7 +1236,7 @@ definition {
 		}
 
 		task ("Assert the user is taken to the Web Content Display Page and the scheduled Web Content article displays in the Web Content Display widget") {
-			SelectWindow.selectPopUp(locator1 = "null");
+			SelectWindow.selectPopUp(value1 = "null");
 
 			WebContentDisplayPortlet.viewContent(
 				webContentContent = "Web Content Content",
@@ -2245,7 +2297,7 @@ definition {
 		}
 
 		task ("Then there's warning message inside Friendly URL section") {
-			Pause(locator1 = 60000);
+			Pause(value1 = 60000);
 
 			AssertTextEquals(
 				locator1 = "Message#ERROR_3",

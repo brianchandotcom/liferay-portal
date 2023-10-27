@@ -1,6 +1,7 @@
 definition {
 
-	macro _manageCollaborators {
+	@summary = "Default summary"
+	macro _manageCollaborators() {
 		DMDocument.expandInfo();
 
 		var key_text = "Manage Collaborators";
@@ -10,7 +11,8 @@ definition {
 			value1 = "Manage Collaborators");
 	}
 
-	macro changePermission {
+	@summary = "Default summary"
+	macro changePermission(dmDocumentTitle = null,dmDocumentDescription = null,userName = null,selectPermission = null) {
 		if (isSet(depotName)) {
 			DMDocument.viewCP(dmDocumentTitle = ${dmDocumentTitle});
 		}
@@ -45,7 +47,8 @@ definition {
 		Alert.viewSuccessMessageText(successMessage = "Permissions Changed");
 	}
 
-	macro editViaSharedwithMe {
+	@summary = "Default summary"
+	macro editViaSharedwithMe(dmDocumentTitle = null,entryTitleEdit = null,entryTitle = null) {
 		Asset.openTosharedContent(
 			navTab = "Shared with Me",
 			siteURLKey = "guest");
@@ -70,7 +73,8 @@ definition {
 		LexiconEntry.viewEntryName(rowEntry = ${entryTitleEdit});
 	}
 
-	macro removeCollaborator {
+	@summary = "Default summary"
+	macro removeCollaborator(collaboratorList = null) {
 		if (!(isSet(sharedByMe))) {
 			DMDocumentSharing._manageCollaborators();
 		}
@@ -94,7 +98,8 @@ definition {
 		Alert.viewSuccessMessageText(successMessage = "Permissions Changed");
 	}
 
-	macro viewCollaborators {
+	@summary = "Default summary"
+	macro viewCollaborators(collaboratorList = null) {
 		DMDocument.expandInfo();
 
 		for (var collaborator : list ${collaboratorList}) {
@@ -106,7 +111,8 @@ definition {
 		}
 	}
 
-	macro viewDocumentViaSharedContent {
+	@summary = "Default summary"
+	macro viewDocumentViaSharedContent(dmDocumentTitle = null,contentSharingPermission = null) {
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
 			value1 = "Shared Content");
@@ -148,7 +154,8 @@ definition {
 			value1 = ${dmDocumentTitle});
 	}
 
-	macro viewNoDuplicateDocument {
+	@summary = "Default summary"
+	macro viewNoDuplicateDocument(dmDocumentTitle = null) {
 		UserBar.gotoDropdownItem(dropdownItem = "Shared Content");
 
 		AssertTextEquals(
@@ -161,7 +168,8 @@ definition {
 			locator1 = "Sharing#SHARED_CONTENT_CONTENT_TITLE_2");
 	}
 
-	macro viewSharedFlag {
+	@summary = "Default summary"
+	macro viewSharedFlag(displayStyle = null,dmDocumentTitle = null) {
 		if (isSet(detailsView)) {
 			if (${displayStyle} == "table") {
 				AssertVisible(
@@ -181,7 +189,8 @@ definition {
 		}
 	}
 
-	macro viewSharingOption {
+	@summary = "Default summary"
+	macro viewSharingOption(dmDocumentTitle = null,sharing = null) {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		Click(

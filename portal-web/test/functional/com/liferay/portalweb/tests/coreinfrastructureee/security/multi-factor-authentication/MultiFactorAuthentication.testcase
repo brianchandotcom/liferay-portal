@@ -776,7 +776,7 @@ definition {
 
 		task ("Assert user can login portal after retry time out") {
 			while (IsElementPresent(locator1 = "MultiFactorAuthentication#EMAIL_OTP_VERIFY_SUBMIT_EMAIL_BUTTON_DISABLED")) {
-				Pause(locator1 = 800);
+				Pause(value1 = 800);
 
 				Refresh();
 			}

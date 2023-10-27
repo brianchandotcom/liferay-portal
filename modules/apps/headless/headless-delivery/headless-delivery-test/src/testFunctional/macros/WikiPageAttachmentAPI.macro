@@ -1,6 +1,7 @@
 definition {
 
-	macro _curlDeleteByErc {
+	@summary = "Default summary"
+	macro _curlDeleteByErc(wikiPageErc = null,groupName = null,wikiPageAttachmentErc = null) {
 		Variables.assertDefined(parameterList = "${groupName},${wikiPageAttachmentErc},${wikiPageErc}");
 
 		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
@@ -18,7 +19,8 @@ definition {
 		return ${curl};
 	}
 
-	macro _curlWikiPageAttachments {
+	@summary = "Default summary"
+	macro _curlWikiPageAttachments(wikiPageErc = null,wikiPageAttachementErc = null,groupName = null,wikiPageId = null,wikiPageAttachementId = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(wikiPageId)) {
@@ -46,7 +48,8 @@ definition {
 		return ${curl};
 	}
 
-	macro _getAttachmentById {
+	@summary = "Default summary"
+	macro _getAttachmentById(wikiPageAttachmentId = null) {
 		Variables.assertDefined(parameterList = ${wikiPageAttachmentId});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -63,7 +66,8 @@ definition {
 		return ${curl};
 	}
 
-	macro AssertCorrectErcInResponse {
+	@summary = "Default summary"
+	macro AssertCorrectErcInResponse(responseToParse = null,expectedErc = null) {
 		Variables.assertDefined(parameterList = "${responseToParse},${expectedErc}");
 
 		var actualErc = JSONUtil.getWithJSONPath(${responseToParse}, "$..externalReferenceCode");
@@ -73,7 +77,8 @@ definition {
 			expected = ${expectedErc});
 	}
 
-	macro createWikiPageAttachment {
+	@summary = "Default summary"
+	macro createWikiPageAttachment(wikiPageId = null,filePath = null) {
 		Variables.assertDefined(parameterList = "${filePath},${wikiPageId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -90,7 +95,8 @@ definition {
 		return ${curl};
 	}
 
-	macro deleteByErc {
+	@summary = "Default summary"
+	macro deleteByErc(wikiPageErc = null,groupName = null,wikiPageAttachmentErc = null) {
 		Variables.assertDefined(parameterList = "${groupName},${wikiPageAttachmentErc},${wikiPageErc}");
 
 		var curl = WikiPageAttachmentAPI._curlDeleteByErc(
@@ -103,7 +109,8 @@ definition {
 		return ${curl};
 	}
 
-	macro getAttachmentById {
+	@summary = "Default summary"
+	macro getAttachmentById(wikiPageAttachmentId = null) {
 		Variables.assertDefined(parameterList = ${wikiPageAttachmentId});
 
 		var response = WikiPageAttachmentAPI._getAttachmentById(wikiPageAttachmentId = ${wikiPageAttachmentId});
@@ -111,7 +118,8 @@ definition {
 		return ${response};
 	}
 
-	macro getWikiPageAttachments {
+	@summary = "Default summary"
+	macro getWikiPageAttachments(wikiPageAttachementErc = null,wikiPageErc = null,groupName = null,wikiPageAttachementId = null,wikiPageId = null) {
 		var curl = WikiPageAttachmentAPI._curlWikiPageAttachments(
 			groupName = ${groupName},
 			wikiPageAttachementErc = ${wikiPageAttachementErc},
@@ -124,7 +132,8 @@ definition {
 		return ${response};
 	}
 
-	macro setupGlobalWikiPageWithAttachment {
+	@summary = "Default summary"
+	macro setupGlobalWikiPageWithAttachment() {
 		var wikiPage = JSONWiki.addWikiPage(
 			groupName = "Guest",
 			noSelenium = "true",

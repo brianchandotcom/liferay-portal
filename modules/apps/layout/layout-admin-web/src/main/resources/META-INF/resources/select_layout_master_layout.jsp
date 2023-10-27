@@ -20,6 +20,7 @@ if (Validator.isNull(backURL)) {
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
+portletDisplay.setURLBackTitle("select-collection");
 
 renderResponse.setTitle(LanguageUtil.get(request, "select-master-page"));
 %>

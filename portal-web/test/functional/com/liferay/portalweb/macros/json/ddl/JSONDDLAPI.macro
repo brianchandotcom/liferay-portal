@@ -1,6 +1,7 @@
 definition {
 
-	macro _getRecordId {
+	@summary = "Default summary"
+	macro _getRecordId(recordSetId = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var userLoginInfo = JSONUtil2.formatJSONUser();
 
@@ -19,7 +20,8 @@ definition {
 		return ${recordId};
 	}
 
-	macro _getRecordSetId {
+	@summary = "Default summary"
+	macro _getRecordSetId(groupName = null,ddlListName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${ddlListName}");
 
 		var portalURL = JSONCompany.getPortalURL();

@@ -1,6 +1,7 @@
 definition {
 
-	macro addNewPriceModifier {
+	@summary = "Default summary"
+	macro addNewPriceModifier(modifier = null,name = null,target = null) {
 		Click(locator1 = "Button#PLUS");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
@@ -23,7 +24,8 @@ definition {
 		Button.clickSubmitButton();
 	}
 
-	macro assertDeleteButtonNotPresent {
+	@summary = "Default summary"
+	macro assertDeleteButtonNotPresent(baseEntryName = null) {
 		Click(
 			key_value = ${baseEntryName},
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
@@ -33,7 +35,8 @@ definition {
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
-	macro createPriceListPriceTiers {
+	@summary = "Default summary"
+	macro createPriceListPriceTiers(key_quantity = null,key_value = null,key_pricingType = null) {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 		Click(
@@ -119,7 +122,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro createTierPriceEntryDirectlyInsideProductSKU {
+	@summary = "Default summary"
+	macro createTierPriceEntryDirectlyInsideProductSKU(quantity = null,price = null,tierPriceSetting = null) {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 		if (isSet(tierPriceSetting)) {
@@ -146,7 +150,8 @@ definition {
 		Button.clickSubmitButton();
 	}
 
-	macro deletePriceModifier {
+	@summary = "Default summary"
+	macro deletePriceModifier(priceModifierName = null) {
 		Click(
 			key_value = ${priceModifierName},
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
@@ -156,7 +161,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro editPriceListDetails {
+	@summary = "Default summary"
+	macro editPriceListDetails(parentPriceList = null,name = null,priceType = null,currency = null,priority = null) {
 		if (isSet(name)) {
 			Type(
 				key_text = "Name",
@@ -199,7 +205,8 @@ definition {
 		Button.clickPublish();
 	}
 
-	macro editPriceListEntryPrice {
+	@summary = "Default summary"
+	macro editPriceListEntryPrice(priceListEntryPrice = null) {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 		Type(
@@ -210,7 +217,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro editPriceModifier {
+	@summary = "Default summary"
+	macro editPriceModifier(amountValue = null,modifier = null,entryName = null,priceModifierName = null,modifierTarget = null,target = null,relation = null) {
 		if (!(isSet(active))) {
 			var active = "true";
 		}
@@ -261,7 +269,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro editTierPriceEntryDirectlyInsideProductSKU {
+	@summary = "Default summary"
+	macro editTierPriceEntryDirectlyInsideProductSKU(quantity = null,price = null,entryName = null) {
 		SelectFrame.selectFrame(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 		CommerceEntry.clickEntryDropdownMenuItem(
@@ -282,13 +291,15 @@ definition {
 		Button.clickSubmitButton();
 	}
 
-	macro openPriceListsAdmin {
+	@summary = "Default summary"
+	macro openPriceListsAdmin(baseURL = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_pricing_web_internal_portlet_CommercePriceListPortlet");
 	}
 
-	macro setOverrideDiscount {
+	@summary = "Default summary"
+	macro setOverrideDiscount(overrideDiscounts = null) {
 		Check.checkToggleSwitch(
 			key_toggleSwitchLabel = "Override Discount",
 			locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
@@ -305,7 +316,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro viewPriceListEntry {
+	@summary = "Default summary"
+	macro viewPriceListEntry(priceListCatalog = null,priceListType = null,priceListCurrency = null,priceListPriority = null,priceListParent = null,priceListName = null) {
 		if (isSet(priceListName)) {
 			AssertTextEquals(
 				locator1 = "CommerceEntry#NAME_FIELD",

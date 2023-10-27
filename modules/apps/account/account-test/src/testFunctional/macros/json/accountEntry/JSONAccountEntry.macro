@@ -1,6 +1,7 @@
 definition {
 
-	macro addAccountEntry {
+	@summary = "Default summary"
+	macro addAccountEntry(accountEntryName = null,externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = "${accountEntryName},${accountEntryType}");
 
 		if (!(isSet(creatorEmailAddress))) {
@@ -33,11 +34,28 @@ definition {
 		}
 	}
 
-	macro addAccountEntryOrganization {
+	@summary = "Default summary"
+	macro addAccountEntryOrganization(organizationName = null,accountEntryName = null) {
 		Variables.assertDefined(parameterList = "${accountEntryName},${organizationName}");
 
 		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});
 		var organizationId = JSONOrganization.getOrganizationIdByName(organizationName = ${organizationName});
+
+		JSONAccountEntryAPI._addAccountEntryOrganization(
+			accountEntryId = ${accountEntryId},
+			organizationId = ${organizationId});
+	}
+
+	@summary = "Default summary"
+	macro addAccountEntrySubOrganization(subOrganizationName = null, accountEntryName = null, parentOrganizationName = null,) {
+		Variables.assertDefined(parameterList = "${accountEntryName},${subOrganizationName},${parentOrganizationName}");
+
+		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});
+		var parentOrganizationId = JSONOrganization.getOrganizationIdByName(organizationName = ${parentOrganizationName});
+
+		var organizationId = JSONOrganization.getOrganizationIdByName(
+			organizationName = ${subOrganizationName},
+			parentOrganizationId = ${parentOrganizationId});
 
 		JSONAccountEntryAPI._addAccountEntryOrganization(
 			accountEntryId = ${accountEntryId},

@@ -17,6 +17,7 @@ Layout selLayout = orphanPortletsDisplayContext.getSelLayout();
 portletDisplay.setDescription(LanguageUtil.get(request, "orphan-widgets-description"));
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(orphanPortletsDisplayContext.getBackURL());
+portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 renderResponse.setTitle(LanguageUtil.get(request, "orphan-widgets"));
 %>

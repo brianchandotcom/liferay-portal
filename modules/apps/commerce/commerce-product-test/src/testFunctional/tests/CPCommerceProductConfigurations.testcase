@@ -875,7 +875,7 @@ definition {
 				site = "true");
 			var basePortalURL = PropsUtil.get("portal.url");
 
-			Open.openNoError(locator1 = "${basePortalURL}/sitemap.xml?groupId=${groupId}");
+			Open.openNoError(value1 = "${basePortalURL}/sitemap.xml?groupId=${groupId}");
 
 			var responseToParse = CommerceJSONProductsAPI._getCommerceFieldValue(
 				field = "uuid",
@@ -888,7 +888,7 @@ definition {
 
 			var link = selenium.getHtmlNodeText("//*[contains(text(),'${uuid}')][1]");
 
-			Open.openNoErrorNoSPARefresh(locator1 = ${link});
+			Open.openNoErrorNoSPARefresh(value1 = ${link});
 		}
 
 		task ("Then the default and translated product's friendly URL are shown with the Locale language") {
@@ -959,7 +959,7 @@ definition {
 				}
 			}
 
-			Open.openNoErrorNoSPARefresh(locator1 = ${basePortalURL});
+			Open.openNoErrorNoSPARefresh(value1 = ${basePortalURL});
 		}
 
 		task ("When the Uuid of the widget is acquired") {
@@ -968,7 +968,7 @@ definition {
 				site = "true");
 			var basePortalURL = PropsUtil.get("portal.url");
 
-			Open.openNoError(locator1 = "${basePortalURL}/sitemap.xml?groupId=${groupId}");
+			Open.openNoError(value1 = "${basePortalURL}/sitemap.xml?groupId=${groupId}");
 
 			var responseToParse = CommerceJSONProductsAPI._getCommerceFieldValue(
 				field = "uuid",
@@ -981,7 +981,7 @@ definition {
 
 			var link = selenium.getHtmlNodeText("//*[contains(text(),'${uuid}')][1]");
 
-			Open.openNoErrorNoSPARefresh(locator1 = ${link});
+			Open.openNoErrorNoSPARefresh(value1 = ${link});
 		}
 
 		task ("Then the category friendly URL are shown with the Locale language") {
@@ -1052,7 +1052,7 @@ definition {
 				}
 			}
 
-			Open.openNoErrorNoSPARefresh(locator1 = ${basePortalURL});
+			Open.openNoErrorNoSPARefresh(value1 = ${basePortalURL});
 		}
 	}
 
@@ -1149,7 +1149,7 @@ definition {
 				groupName = "Minium",
 				site = "true");
 
-			Open.openNoError(locator1 = "http://www.able.com:8080/sitemap.xml?groupId=${groupId}");
+			Open.openNoError(value1 = "http://www.able.com:8080/sitemap.xml?groupId=${groupId}");
 
 			var responseToParse = CommerceJSONProductsAPI._getCommerceFieldValue(
 				field = "uuid",
@@ -1162,7 +1162,7 @@ definition {
 
 			var link = selenium.getHtmlNodeText("//*[contains(text(),'${uuid}')][1]");
 
-			Open.openNoErrorNoSPARefresh(locator1 = ${link});
+			Open.openNoErrorNoSPARefresh(value1 = ${link});
 		}
 
 		task ("Then the URLs are shown with only one /") {
@@ -1174,7 +1174,7 @@ definition {
 		task ("And the admin goes back to portal") {
 			var basePortalURL = PropsUtil.get("portal.url");
 
-			Open.openNoErrorNoSPARefresh(locator1 = ${basePortalURL});
+			Open.openNoErrorNoSPARefresh(value1 = ${basePortalURL});
 		}
 	}
 
@@ -2068,7 +2068,7 @@ definition {
 				groupName = "Minium",
 				site = "true");
 
-			Open.openNoError(locator1 = "${basePortalURL}/sitemap.xml?groupId=${groupId}");
+			Open.openNoError(value1 = "${basePortalURL}/sitemap.xml?groupId=${groupId}");
 
 			var responseToParse = CommerceJSONProductsAPI._getCommerceFieldValue(
 				field = "uuid",
@@ -2081,7 +2081,7 @@ definition {
 
 			var link = selenium.getHtmlNodeText("//*[contains(text(),'${uuid}')][1]");
 
-			Open.openNoErrorNoSPARefresh(locator1 = ${link});
+			Open.openNoErrorNoSPARefresh(value1 = ${link});
 		}
 
 		task ("Then the product translated with the Catalan is not present") {
@@ -2101,7 +2101,7 @@ definition {
 				locator1 = "CommerceEntry#PRODUCT_LANGUAGE_DETAIL_SITEMAP_URL_HREF_HREFLANG");
 		}
 
-		Open.openNoErrorNoSPARefresh(locator1 = ${basePortalURL});
+		Open.openNoErrorNoSPARefresh(value1 = ${basePortalURL});
 	}
 
 	@description = "This is a test for COMMERCE-10639. Sitemaps display the language tags properly"
@@ -2149,7 +2149,7 @@ definition {
 				site = "true");
 			var basePortalURL = PropsUtil.get("portal.url");
 
-			Open.openNoError(locator1 = "${basePortalURL}/sitemap.xml?groupId=${groupId}");
+			Open.openNoError(value1 = "${basePortalURL}/sitemap.xml?groupId=${groupId}");
 
 			var responseToParse = CommerceJSONProductsAPI._getCommerceFieldValue(
 				field = "uuid",
@@ -2162,7 +2162,7 @@ definition {
 
 			var link = selenium.getHtmlNodeText("//*[contains(text(),'${uuid}')][1]");
 
-			Open.openNoErrorNoSPARefresh(locator1 = ${link});
+			Open.openNoErrorNoSPARefresh(value1 = ${link});
 		}
 
 		task ("Then the default and translated product's friendly URL are shown") {
@@ -2239,7 +2239,7 @@ definition {
 				}
 			}
 
-			Open.openNoErrorNoSPARefresh(locator1 = ${basePortalURL});
+			Open.openNoErrorNoSPARefresh(value1 = ${basePortalURL});
 		}
 	}
 

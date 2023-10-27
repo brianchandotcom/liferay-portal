@@ -1,6 +1,7 @@
 definition {
 
-	macro addDepot {
+	@summary = "Default summary"
+	macro addDepot(depotName = null,depotDescription = null) {
 		if (!(isSet(portalURL))) {
 			var portalURL = JSONCompany.getPortalURL();
 		}
@@ -23,7 +24,8 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	macro connectSite {
+	@summary = "Default summary"
+	macro connectSite(depotName = null,groupName = null) {
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
 
 		if (!(isSet(site))) {
@@ -52,7 +54,8 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	macro deleteDepot {
+	@summary = "Default summary"
+	macro deleteDepot(noSelenium = null,depotName = null) {
 		var depotId = JSONGroupAPI._getDepotIdByName(
 			depotName = ${depotName},
 			noSelenium = ${noSelenium});
@@ -72,7 +75,8 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	macro disconnectSite {
+	@summary = "Default summary"
+	macro disconnectSite(groupName = null,groupId = null) {
 		if (!(isSet(site))) {
 			var site = "true";
 		}
@@ -96,7 +100,8 @@ definition {
 		var messageId = JSONCurlUtil.post(${curl});
 	}
 
-	macro remoteStagingSetUp {
+	@summary = "Default summary"
+	macro remoteStagingSetUp(site = null,branchingPublic = null,groupName = null,branchingPrivate = null) {
 		if (!(isSet(remotePort))) {
 			var remotePort = 8080;
 		}
@@ -120,7 +125,8 @@ definition {
 			site = ${site});
 	}
 
-	macro updateStructureState {
+	@summary = "Default summary"
+	macro updateStructureState(groupName = null,structureState = null) {
 		Variables.assertDefined(parameterList = "${groupName},${structureState}");
 
 		if (!(isSet(site))) {

@@ -88,7 +88,6 @@ export function Item({index, item, numberOfItems, onDropItem}: ItemProps) {
 								{Liferay.FeatureFlags['LPS-196420'] ? (
 									<ClayButton
 										aria-labelledby={`${dragButtonDescriptionId} ${itemDescriptionId}`}
-										aria-pressed={isKeyboardDragging}
 										data-item-id={item.id}
 										displayType="unstyled"
 										monospaced

@@ -1,6 +1,7 @@
 definition {
 
-	macro addAnswer {
+	@summary = "Default summary"
+	macro addAnswer(groupName = null,replyBody = null,threadSubject = null,titleField = null,categoryName = null) {
 		Variables.assertDefined(parameterList = "${categoryName},${groupName},${titleField}");
 
 		var messageId = JSONQuestions.getQuestionIdByName(
@@ -41,7 +42,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro addQuestion {
+	@summary = "Default summary"
+	macro addQuestion(groupName = null,bodyField = null,userPassword = null,titleField = null,userEmailAddress = null,categoryName = null) {
 		Variables.assertDefined(parameterList = "${categoryName},${groupName}");
 
 		var categoryId = JSONMBMessage.getCategoryIdByName(
@@ -56,7 +58,8 @@ definition {
 			userPassword = ${userPassword});
 	}
 
-	macro addQuestionWithTag {
+	@summary = "Default summary"
+	macro addQuestionWithTag(groupName = null,bodyField = null,userPassword = null,tagField = null,titleField = null,userEmailAddress = null,categoryName = null) {
 		Variables.assertDefined(parameterList = "${categoryName},${groupName}");
 
 		var categoryId = JSONMBMessage.getCategoryIdByName(
@@ -72,7 +75,8 @@ definition {
 			userPassword = ${userPassword});
 	}
 
-	macro getAnswerTitle {
+	@summary = "Default summary"
+	macro getAnswerTitle(groupName = null,titleField = null,replyTitle = null,categoryName = null) {
 		var categoryId = JSONMBMessage.getCategoryIdByName(
 			categoryName = ${categoryName},
 			groupName = ${groupName});
@@ -107,7 +111,8 @@ definition {
 		}
 	}
 
-	macro getApprovedStatus {
+	@summary = "Default summary"
+	macro getApprovedStatus(groupName = null,titleField = null,categoryName = null) {
 		var questionId = JSONQuestions.getQuestionIdViaThreadId(
 			categoryName = ${categoryName},
 			groupName = ${groupName},
@@ -132,7 +137,8 @@ definition {
 		}
 	}
 
-	macro getPendingStatus {
+	@summary = "Default summary"
+	macro getPendingStatus(groupName = null,titleField = null,categoryName = null) {
 		var questionId = JSONQuestions.getQuestionIdViaThreadId(
 			categoryName = ${categoryName},
 			groupName = ${groupName},
@@ -158,7 +164,8 @@ definition {
 		}
 	}
 
-	macro getQuestionIdByName {
+	@summary = "Default summary"
+	macro getQuestionIdByName(groupName = null,titleField = null,categoryName = null) {
 		Variables.assertDefined(parameterList = "${categoryName},${groupName},${titleField}");
 
 		var categoryId = JSONMBMessage.getCategoryIdByName(
@@ -187,7 +194,8 @@ definition {
 		return ${questionId};
 	}
 
-	macro getQuestionIdViaThreadId {
+	@summary = "Default summary"
+	macro getQuestionIdViaThreadId(groupName = null,titleField = null,categoryName = null) {
 		Variables.assertDefined(parameterList = "${categoryName},${groupName},${titleField}");
 
 		var categoryId = JSONMBMessage.getCategoryIdByName(

@@ -1,6 +1,7 @@
 definition {
 
-	macro assertApiResponse {
+	@summary = "Default summary"
+	macro assertApiResponse(apiDataResponse = null,expectedList = null) {
 		for (var expected : list ${expectedList}) {
 			if (contains(${apiDataResponse}, ${expected})) {
 				echo("${expected} - PASSED");
@@ -13,7 +14,8 @@ definition {
 		}
 	}
 
-	macro assertApiResponseNotContain {
+	@summary = "Default summary"
+	macro assertApiResponseNotContain(apiDataResponse = null,expectedList = null) {
 		for (var expected : list ${expectedList}) {
 			if (!(contains(${apiDataResponse}, ${expected}))) {
 				echo("${expected} - Not found - PASSED");
@@ -26,7 +28,8 @@ definition {
 		}
 	}
 
-	macro assertGenericJSONPathResponse {
+	@summary = "Default summary"
+	macro assertGenericJSONPathResponse(apiResponse = null,apiPath = null,expected = null) {
 		var actual = JSONUtil.getWithJSONPath(${apiResponse}, "$..${apiPath}");
 
 		TestUtils.assertEquals(
@@ -34,7 +37,8 @@ definition {
 			expected = ${expected});
 	}
 
-	macro assertSearchKeywordNotPresent {
+	@summary = "Default summary"
+	macro assertSearchKeywordNotPresent(apiResponse = null,expected = null) {
 		if (!(isSet(keywordPosition))) {
 			var keywordPosition = 0;
 		}
@@ -46,7 +50,8 @@ definition {
 			expected = ${expected});
 	}
 
-	macro assertSearchResponse {
+	@summary = "Default summary"
+	macro assertSearchResponse(apiResponse = null,expected = null) {
 		if (!(isSet(keywordPosition))) {
 			var keywordPosition = 0;
 		}
@@ -58,13 +63,15 @@ definition {
 			expected = ${expected});
 	}
 
-	macro configureExpirationDate {
+	@summary = "Default summary"
+	macro configureExpirationDate(expirationDate = null) {
 		Select(
 			locator1 = "ACSettings#EXPIRATION_DATE",
 			value1 = ${expirationDate});
 	}
 
-	macro createDataReport {
+	@summary = "Default summary"
+	macro createDataReport(filter = null,filterValue = null,type = null,token = null) {
 		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 
 		if (isSet(type)) {
@@ -89,7 +96,8 @@ definition {
 		return ${apiResponse};
 	}
 
-	macro createIndividualOrAssetDataReport {
+	@summary = "Default summary"
+	macro createIndividualOrAssetDataReport(id = null,type = null,token = null) {
 		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 
 		if (isSet(type) && isSet(id)) {
@@ -106,7 +114,8 @@ definition {
 		}
 	}
 
-	macro createNewExportSchedule {
+	@summary = "Default summary"
+	macro createNewExportSchedule(endDate = null,startTime = null,endTime = null,type = null,startDate = null,token = null) {
 		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 
 		var curl = '''
@@ -119,7 +128,8 @@ definition {
 		return ${apiResponse};
 	}
 
-	macro getAnalyticsConfiguration {
+	@summary = "Default summary"
+	macro getAnalyticsConfiguration(scriptValue = null) {
 		ServerAdministration.openServerAdmin();
 
 		ACApi.getSearchHeaderValues(header = "liferayAnalyticsFaroBackendURL");
@@ -135,7 +145,8 @@ definition {
 		static var osbAsahProjectId = ${scriptValue};
 	}
 
-	macro getSearchHeaderValues {
+	@summary = "Default summary"
+	macro getSearchHeaderValues(header = null) {
 		var script = '''
 			    import com.liferay.analytics.settings.configuration.AnalyticsConfiguration; 
 				import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil; 
@@ -153,11 +164,12 @@ definition {
 		static var scriptValue = selenium.getText("ServerAdministrationScript#OUTPUT_FIELD");
 	}
 
-	macro getSearchKeywords {
+	@summary = "Default summary"
+	macro getSearchKeywords(faroBackendURL = null,osbAsahFaroBackendSS = null,parameters = null,osbAsahProjectId = null) {
 
 		// The pause is necessary because it takes some time for the keywords to appear during curl see LRAC-12141
 
-		Pause(locator1 = 10000);
+		Pause(value1 = 10000);
 
 		if (isSet(parameters)) {
 			var curl = '''
@@ -179,7 +191,8 @@ definition {
 		return ${apiResponse};
 	}
 
-	macro getTokenValue {
+	@summary = "Default summary"
+	macro getTokenValue() {
 		if (IsElementNotPresent(locator1 = "ACSettings#COPY_TOKEN_BUTTON")) {
 			ACUtils.clickAnyButton(button = "Generate Token");
 		}
@@ -193,7 +206,8 @@ definition {
 		return ${token};
 	}
 
-	macro searchApiResponse {
+	@summary = "Default summary"
+	macro searchApiResponse(apiDataResponse = null,jsonQuery = null,resultPosition = null) {
 		if (!(isSet(resultPosition))) {
 			var searchedValue = JSONUtil.getWithJSONPath(${apiDataResponse}, "$..${jsonQuery}");
 		}
@@ -204,7 +218,8 @@ definition {
 		return ${searchedValue};
 	}
 
-	macro sendEmailReport {
+	@summary = "Default summary"
+	macro sendEmailReport(groupId = null,userID = null,channelId = null,frequency = null) {
 		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 
 		var curl = '''
@@ -218,7 +233,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro viewApiResponseForError {
+	@summary = "Default summary"
+	macro viewApiResponseForError(apiResponse = null,message = null) {
 
 		// Checks if the API response message explains the reason for the error
 
@@ -239,7 +255,8 @@ definition {
 		}
 	}
 
-	macro viewApiResponseForExportProcess {
+	@summary = "Default summary"
+	macro viewApiResponseForExportProcess(endDate = null,apiResponse = null,upperCaseType = null,startTime = null,endTime = null,message = null,startDate = null,status = null) {
 
 		// Checks if the API response message is correct
 
@@ -287,7 +304,8 @@ definition {
 		}
 	}
 
-	macro viewApiResponseForRootEndpoint {
+	@summary = "Default summary"
+	macro viewApiResponseForRootEndpoint(typeList = null,apiResponse = null) {
 		for (var type : list ${typeList}) {
 			if (contains(${apiResponse}, "http://osbasahbackend:8080/api/reports/${type}")) {
 				echo("${type} - PASSED");

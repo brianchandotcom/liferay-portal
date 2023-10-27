@@ -7,7 +7,7 @@ package com.liferay.portal.kernel.metadata;
 
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.io.InputStream;
 
@@ -20,23 +20,28 @@ import java.util.Set;
 public class RawMetadataProcessorUtil {
 
 	public static Set<String> getFieldNames() {
-		return _rawMetadataProcessor.getFieldNames();
+		RawMetadataProcessor rawMetadataProcessor =
+			_rawMetadataProcessorSnapshot.get();
+
+		return rawMetadataProcessor.getFieldNames();
 	}
 
 	public static Map<String, DDMFormValues> getRawMetadataMap(
 			String mimeType, InputStream inputStream)
 		throws PortalException {
 
-		return _rawMetadataProcessor.getRawMetadataMap(mimeType, inputStream);
+		RawMetadataProcessor rawMetadataProcessor =
+			_rawMetadataProcessorSnapshot.get();
+
+		return rawMetadataProcessor.getRawMetadataMap(mimeType, inputStream);
 	}
 
 	public static RawMetadataProcessor getRawMetadataProcessor() {
-		return _rawMetadataProcessor;
+		return _rawMetadataProcessorSnapshot.get();
 	}
 
-	private static volatile RawMetadataProcessor _rawMetadataProcessor =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			RawMetadataProcessor.class, RawMetadataProcessorUtil.class,
-			"_rawMetadataProcessor", false);
+	private static final Snapshot<RawMetadataProcessor>
+		_rawMetadataProcessorSnapshot = new Snapshot<>(
+			RawMetadataProcessorUtil.class, RawMetadataProcessor.class);
 
 }

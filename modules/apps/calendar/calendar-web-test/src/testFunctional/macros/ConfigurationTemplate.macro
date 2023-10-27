@@ -1,6 +1,7 @@
 definition {
 
-	macro applyConfigurationsTemplate {
+	@summary = "Default summary"
+	macro applyConfigurationsTemplate(templateName = null) {
 		LexiconTable.clickEllipsisItem(
 			item = "Apply",
 			tableEntry = ${templateName});
@@ -8,7 +9,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro deleteConfigurationsTemplate {
+	@summary = "Default summary"
+	macro deleteConfigurationsTemplate(templateName = null) {
 		LexiconTable.clickEllipsisItem(
 			item = "Delete",
 			tableEntry = ${templateName});
@@ -18,13 +20,15 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro notViewCurrentConfigurationsTemplate {
+	@summary = "Default summary"
+	macro notViewCurrentConfigurationsTemplate(templateName = null) {
 		AssertElementNotPresent(
 			key_configurationName = ${templateName},
 			locator1 = "Configuration#CONFIGURATION_TEMPLATE_TABLE_NAME");
 	}
 
-	macro saveCurrentConfigurationsTemplate {
+	@summary = "Default summary"
+	macro saveCurrentConfigurationsTemplate(templateName = null) {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		AssertClick(
@@ -38,13 +42,15 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro viewCurrentConfigurationsTemplate {
+	@summary = "Default summary"
+	macro viewCurrentConfigurationsTemplate(templateName = null) {
 		AssertElementPresent(
 			key_configurationName = ${templateName},
 			locator1 = "Configuration#CONFIGURATION_TEMPLATE_TABLE_NAME");
 	}
 
-	macro viewOrderConfigurationsTemplate {
+	@summary = "Default summary"
+	macro viewOrderConfigurationsTemplate(tableOrder = null) {
 		var rowNumber = 1;
 
 		for (var configurationName : list ${tableOrder}) {

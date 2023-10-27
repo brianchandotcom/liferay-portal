@@ -24,6 +24,7 @@ if (selGroup.isLayoutSetPrototype()) {
 if (Validator.isNotNull(backURL)) {
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(backURL);
+	portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 }
 
 renderResponse.setTitle(selGroup.getLayoutRootNodeName(privateLayout, locale));

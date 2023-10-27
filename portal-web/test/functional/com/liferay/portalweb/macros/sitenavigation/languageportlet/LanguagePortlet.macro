@@ -1,6 +1,7 @@
 definition {
 
-	macro configureDisplaySettings {
+	@summary = "Default summary"
+	macro configureDisplaySettings(displayTemplate = null,displayCurrentLocale = null) {
 		Panel.expandPanel(panel = "Display Settings");
 
 		if (isSet(displayTemplate)) {
@@ -27,7 +28,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro configureLanguages {
+	@summary = "Default summary"
+	macro configureLanguages(currentLanguageList = null) {
 		Panel.expandPanel(panel = "Languages");
 
 		while (IsElementPresent(locator1 = "LanguageConfiguration#LANGUAGES_CURRENT_SELECT")) {
@@ -53,7 +55,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro selectLanguagePG {
+	@summary = "Default summary"
+	macro selectLanguagePG(locale = null,textIcon = null) {
 		var portletName = ${portletName};
 
 		if (!(isSet(portletName))) {
@@ -76,20 +79,23 @@ definition {
 		}
 	}
 
-	macro tearDownLanguagePG {
+	@summary = "Default summary"
+	macro tearDownLanguagePG() {
 		LanguagePortlet.selectLanguagePG(
 			locale = "en_US",
 			textIcon = "english-United States");
 	}
 
-	macro viewCurrentLanguage {
+	@summary = "Default summary"
+	macro viewCurrentLanguage(locale = null) {
 		AssertElementPresent(
 			key_locale = ${locale},
 			key_portletName = "LanguagePortlet",
 			locator1 = "Language#DROPDOWN_CURRENT_LANGUAGE");
 	}
 
-	macro viewLanguages {
+	@summary = "Default summary"
+	macro viewLanguages(displayTemplate = null,availableLanguageList = null,unavailableLanguageList = null,unavailableIconList = null,availableIconList = null) {
 		if (${displayTemplate} == "Icon") {
 			for (var availableIcon : list ${availableIconList}) {
 				AssertElementPresent(
@@ -161,7 +167,8 @@ definition {
 		}
 	}
 
-	macro viewLanguagesSettings {
+	@summary = "Default summary"
+	macro viewLanguagesSettings(currentLanguageList = null) {
 		Panel.expandPanel(panel = "Languages");
 
 		for (var currentLanguage : list ${currentLanguageList}) {

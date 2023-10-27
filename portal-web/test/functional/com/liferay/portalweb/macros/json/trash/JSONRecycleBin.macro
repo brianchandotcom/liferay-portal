@@ -1,6 +1,7 @@
 definition {
 
-	macro emptyRecycleBin {
+	@summary = "Default summary"
+	macro emptyRecycleBin(grandParentGroupName = null,parentGroupName = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(groupName))) {

@@ -6,8 +6,8 @@
 package com.liferay.portal.kernel.comment;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 import java.util.function.Function;
 
@@ -22,7 +22,9 @@ public class CommentManagerUtil {
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
-		return _commentManager.addComment(
+		CommentManager commentManager = _commentManagerSnapshot.get();
+
+		return commentManager.addComment(
 			userId, groupId, className, classPK, body, serviceContextFunction);
 	}
 
@@ -32,7 +34,9 @@ public class CommentManagerUtil {
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
-		return _commentManager.addComment(
+		CommentManager commentManager = _commentManagerSnapshot.get();
+
+		return commentManager.addComment(
 			null, userId, groupId, className, classPK, userName, subject, body,
 			serviceContextFunction);
 	}
@@ -43,7 +47,9 @@ public class CommentManagerUtil {
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
-		return _commentManager.addComment(
+		CommentManager commentManager = _commentManagerSnapshot.get();
+
+		return commentManager.addComment(
 			null, userId, className, classPK, userName, parentCommentId,
 			subject, body, serviceContextFunction);
 	}
@@ -53,32 +59,44 @@ public class CommentManagerUtil {
 			String userName)
 		throws PortalException {
 
-		_commentManager.addDiscussion(
+		CommentManager commentManager = _commentManagerSnapshot.get();
+
+		commentManager.addDiscussion(
 			userId, groupId, className, classPK, userName);
 	}
 
 	public static void deleteComment(long commentId) throws PortalException {
-		_commentManager.deleteComment(commentId);
+		CommentManager commentManager = _commentManagerSnapshot.get();
+
+		commentManager.deleteComment(commentId);
 	}
 
 	public static void deleteDiscussion(String className, long classPK)
 		throws PortalException {
 
-		_commentManager.deleteDiscussion(className, classPK);
+		CommentManager commentManager = _commentManagerSnapshot.get();
+
+		commentManager.deleteDiscussion(className, classPK);
 	}
 
 	public static void deleteGroupComments(long groupId)
 		throws PortalException {
 
-		_commentManager.deleteGroupComments(groupId);
+		CommentManager commentManager = _commentManagerSnapshot.get();
+
+		commentManager.deleteGroupComments(groupId);
 	}
 
 	public static Comment fetchComment(long commentId) {
-		return _commentManager.fetchComment(commentId);
+		CommentManager commentManager = _commentManagerSnapshot.get();
+
+		return commentManager.fetchComment(commentId);
 	}
 
 	public static int getCommentsCount(String className, long classPK) {
-		return _commentManager.getCommentsCount(className, classPK);
+		CommentManager commentManager = _commentManagerSnapshot.get();
+
+		return commentManager.getCommentsCount(className, classPK);
 	}
 
 	public static Discussion getDiscussion(
@@ -86,43 +104,56 @@ public class CommentManagerUtil {
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
-		return _commentManager.getDiscussion(
+		CommentManager commentManager = _commentManagerSnapshot.get();
+
+		return commentManager.getDiscussion(
 			userId, groupId, className, classPK, serviceContextFunction);
 	}
 
 	public static DiscussionStagingHandler getDiscussionStagingHandler() {
-		return _commentManager.getDiscussionStagingHandler();
+		CommentManager commentManager = _commentManagerSnapshot.get();
+
+		return commentManager.getDiscussionStagingHandler();
 	}
 
 	public static boolean hasDiscussion(String className, long classPK)
 		throws PortalException {
 
-		return _commentManager.hasDiscussion(className, classPK);
+		CommentManager commentManager = _commentManagerSnapshot.get();
+
+		return commentManager.hasDiscussion(className, classPK);
 	}
 
 	public static void moveDiscussionToTrash(String className, long classPK) {
-		_commentManager.moveDiscussionToTrash(className, classPK);
+		CommentManager commentManager = _commentManagerSnapshot.get();
+
+		commentManager.moveDiscussionToTrash(className, classPK);
 	}
 
 	public static void restoreDiscussionFromTrash(
 		String className, long classPK) {
 
-		_commentManager.restoreDiscussionFromTrash(className, classPK);
+		CommentManager commentManager = _commentManagerSnapshot.get();
+
+		commentManager.restoreDiscussionFromTrash(className, classPK);
 	}
 
 	public static void subscribeDiscussion(
 			long userId, long groupId, String className, long classPK)
 		throws PortalException {
 
-		_commentManager.subscribeDiscussion(
-			userId, groupId, className, classPK);
+		CommentManager commentManager = _commentManagerSnapshot.get();
+
+		commentManager.subscribeDiscussion(userId, groupId, className, classPK);
 	}
 
 	public static void unsubscribeDiscussion(
 			long userId, String className, long classPK)
 		throws PortalException {
 
-		_commentManager.unsubscribeDiscussion(userId, className, classPK);
+		CommentManager commentManager = _commentManagerSnapshot.get();
+
+		commentManager.unsubscribeDiscussion(userId, className, classPK);
 	}
 
 	public static long updateComment(
@@ -131,14 +162,14 @@ public class CommentManagerUtil {
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
-		return _commentManager.updateComment(
+		CommentManager commentManager = _commentManagerSnapshot.get();
+
+		return commentManager.updateComment(
 			userId, className, classPK, commentId, subject, body,
 			serviceContextFunction);
 	}
 
-	private static volatile CommentManager _commentManager =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			CommentManager.class, CommentManagerUtil.class, "_commentManager",
-			false);
+	private static final Snapshot<CommentManager> _commentManagerSnapshot =
+		new Snapshot<>(CommentManagerUtil.class, CommentManager.class);
 
 }

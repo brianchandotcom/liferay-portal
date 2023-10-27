@@ -1,12 +1,14 @@
 definition {
 
-	macro exitWidgetModal {
+	@summary = "Default summary"
+	macro exitWidgetModal() {
 		SelectFrameTop();
 
 		Click(locator1 = "FormPortlet#WIDGET_MODAL_CLOSE_BUTTON");
 	}
 
-	macro gotoSelectForm {
+	@summary = "Default summary"
+	macro gotoSelectForm() {
 		AssertClick(
 			locator1 = "FormPortlet#SELECT_FORM",
 			value1 = "Select Form");

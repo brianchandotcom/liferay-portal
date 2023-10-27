@@ -1,6 +1,7 @@
 definition {
 
-	macro _addCommerceOption {
+	@summary = "Default summary"
+	macro _addCommerceOption(optionKey = null,optionName = null,fieldType = null,optionValues = null) {
 		Variables.assertDefined(parameterList = "${fieldType},${optionKey},${optionName}");
 
 		if (!(isSet(baseURL))) {
@@ -83,7 +84,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro _addCommerceProductsWithOptionValues {
+	@summary = "Default summary"
+	macro _addCommerceProductsWithOptionValues(catalogName = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -165,7 +167,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro _assignOptionToCommerceProduct {
+	@summary = "Default summary"
+	macro _assignOptionToCommerceProduct(optionKey = null,optionName = null,fieldType = null,productName = null) {
 		if (!(isSet(baseURL))) {
 			var baseURL = JSONCompany.getPortalURL();
 		}
@@ -194,7 +197,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro _deleteAllCommerceOptions {
+	@summary = "Default summary"
+	macro _deleteAllCommerceOptions() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -225,7 +229,8 @@ definition {
 		}
 	}
 
-	macro _getCommerceOptionIdByKey {
+	@summary = "Default summary"
+	macro _getCommerceOptionIdByKey(optionKey = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -249,7 +254,8 @@ definition {
 		return ${optionId};
 	}
 
-	macro _getCommerceOptionIds {
+	@summary = "Default summary"
+	macro _getCommerceOptionIds(optionCount = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -276,7 +282,8 @@ definition {
 		return ${optionIds};
 	}
 
-	macro _getCommerceOptionsCount {
+	@summary = "Default summary"
+	macro _getCommerceOptionsCount() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -298,7 +305,8 @@ definition {
 		return ${optionsCount};
 	}
 
-	macro _getCommerceOptionValues {
+	@summary = "Default summary"
+	macro _getCommerceOptionValues(optionKey = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {

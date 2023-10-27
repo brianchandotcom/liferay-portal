@@ -1,6 +1,7 @@
 definition {
 
-	macro _formatCamelCase {
+	@summary = "Default summary"
+	macro _formatCamelCase() {
 		var camelCase = StringUtil.replace(${camelCase}, " ", "");
 
 		var camelCase = StringUtil.lowerCaseFirstLetter(${camelCase});
@@ -8,31 +9,36 @@ definition {
 		return ${camelCase};
 	}
 
-	macro assertDropdownItemIsDisabled {
+	@summary = "Default summary"
+	macro assertDropdownItemIsDisabled(dropdownItem = null) {
 		var key_dropdownItem = ${dropdownItem};
 
 		AssertElementPresent(locator1 = "CP2ActivationKeys#DISABLED_DROPDOWN_ITEM_BUTTON");
 	}
 
-	macro assertDropdownItemIsEnabled {
+	@summary = "Default summary"
+	macro assertDropdownItemIsEnabled(dropdownItem = null) {
 		var key_dropdownItem = ${dropdownItem};
 
 		AssertElementPresent(locator1 = "CP2ActivationKeys#ENABLED_DROPDOWN_ITEM_BUTTON");
 	}
 
-	macro assertDropdownItemIsVisible {
+	@summary = "Default summary"
+	macro assertDropdownItemIsVisible(dropdownItem = null) {
 		var key_dropdownItem = ${dropdownItem};
 
 		AssertVisible(locator1 = "CP2ActivationKeys#DROPDOWN_ITEM_BUTTON");
 	}
 
-	macro assertDropdownSelection {
+	@summary = "Default summary"
+	macro assertDropdownSelection(option = null) {
 		var key_option = ${option};
 
 		AssertVisible(locator1 = "CP2ActivationKeys#DROPDOWN");
 	}
 
-	macro assertInfoNewKeyCard {
+	@summary = "Default summary"
+	macro assertInfoNewKeyCard(licenseType = null,instanceSize = null,product = null,activationsAvailable = null,subscription = null,version = null) {
 		if (isSet(product)) {
 			var key_label = "Product";
 			var key_value = ${product};
@@ -76,7 +82,8 @@ definition {
 		}
 	}
 
-	macro assertInstructionsTable {
+	@summary = "Default summary"
+	macro assertInstructionsTable(textList = null) {
 		for (var text : list ${textList}) {
 			var key_text = ${text};
 
@@ -84,7 +91,8 @@ definition {
 		}
 	}
 
-	macro assertKeyDetailsEnvironmentElements {
+	@summary = "Default summary"
+	macro assertKeyDetailsEnvironmentElements(instanceSize = null,product = null,subscriptionType = null,environmentType = null,version = null) {
 		var key_group = "Environment";
 
 		if (isSet(product)) {
@@ -123,7 +131,8 @@ definition {
 		}
 	}
 
-	macro assertKeyDetailsServerElements {
+	@summary = "Default summary"
+	macro assertKeyDetailsServerElements(hostName = null,macAddress = null,clusterNodes = null,ipAddress = null,keyType = null) {
 		var key_group = "Server";
 
 		if (isSet(keyType)) {
@@ -162,7 +171,8 @@ definition {
 		}
 	}
 
-	macro assertKeyDetailsStatusElements {
+	@summary = "Default summary"
+	macro assertKeyDetailsStatusElements(expiratonDate = null,startDate = null,status = null) {
 		var key_group = "Activation Status";
 
 		if (isSet(status)) {
@@ -187,14 +197,16 @@ definition {
 		}
 	}
 
-	macro assertLicenseQuantity {
+	@summary = "Default summary"
+	macro assertLicenseQuantity(numberOfLicenses = null,licenseTab = null) {
 		var key_licenseTab = CP2ActivationKeys._formatCamelCase(camelCase = ${licenseTab});
 		var key_numberOfLicenses = ${numberOfLicenses};
 
 		AssertElementPresent(locator1 = "CP2ActivationKeys#LICENSE_TAB_BUTTON_NUMBER");
 	}
 
-	macro assertSelectedFieldText {
+	@summary = "Default summary"
+	macro assertSelectedFieldText(field = null,option = null) {
 		var key_label = ${field};
 
 		AssertTextEquals.assertPartialText(
@@ -202,15 +214,18 @@ definition {
 			value1 = ${option});
 	}
 
-	macro assertSignatureWithNoKeysIsVisible {
+	@summary = "Default summary"
+	macro assertSignatureWithNoKeysIsVisible() {
 		AssertVisible(locator1 = "CP2ActivationKeys#SUBSCRIPTION_KEY_DISABLED");
 	}
 
-	macro assertTableIsNotVisible {
+	@summary = "Default summary"
+	macro assertTableIsNotVisible() {
 		AssertElementNotPresent(locator1 = "CP2ActivationKeys#TABLE");
 	}
 
-	macro assertTextAtTable {
+	@summary = "Default summary"
+	macro assertTextAtTable(linePosition = null,text = null,lineColunm = null) {
 		var key_linePosition = ${linePosition};
 		var key_colunmPosition = ${lineColunm};
 		var key_text = ${text};
@@ -220,23 +235,27 @@ definition {
 			value1 = ${text});
 	}
 
-	macro assertTextButton {
+	@summary = "Default summary"
+	macro assertTextButton(text = null) {
 		var key_text = ${text};
 
 		AssertVisible(locator1 = "CustomerPortalSite#BUTTON");
 	}
 
-	macro assertThatPaginationDoesNotAppear {
+	@summary = "Default summary"
+	macro assertThatPaginationDoesNotAppear() {
 		AssertElementNotPresent(locator1 = "CP2ActivationKeys#PAGINATION_BUTTON");
 	}
 
-	macro assertTooltipIsVisible {
+	@summary = "Default summary"
+	macro assertTooltipIsVisible(text = null) {
 		var key_text = ${text};
 
 		AssertVisible(locator1 = "CP2ActivationKeys#TOOLTIPS_TEXT");
 	}
 
-	macro clickAtDownloadButton {
+	@summary = "Default summary"
+	macro clickAtDownloadButton(entitlementName = null) {
 		var key_entitlementName = ${entitlementName};
 
 		Click(locator1 = "CP2ActivationKeys#TABLES_DOWNLOAD_BUTTON");
@@ -244,13 +263,15 @@ definition {
 		DownloadTempFile();
 	}
 
-	macro clickAtDropdownItem {
+	@summary = "Default summary"
+	macro clickAtDropdownItem(dropdownItem = null) {
 		var key_dropdownItem = ${dropdownItem};
 
 		Click(locator1 = "CP2ActivationKeys#DROPDOWN_ITEM_BUTTON");
 	}
 
-	macro countTableRows {
+	@summary = "Default summary"
+	macro countTableRows() {
 		var key_rowCount = 1;
 		var rowCount = 0;
 		var hasPagesToCount = "true";
@@ -274,7 +295,8 @@ definition {
 		return ${rowCount};
 	}
 
-	macro deactivateExistingKey {
+	@summary = "Default summary"
+	macro deactivateExistingKey(environmentName = null) {
 		Search.searchCP(searchTerm = ${environmentName});
 
 		CP2ActivationKeys.selectKeyCheckboxByEnvironmentName(key_environmentName = ${environmentName});
@@ -292,7 +314,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro environmentDetails {
+	@summary = "Default summary"
+	macro environmentDetails(environmentDetails = null,value = null) {
 		var key_environmentDetails = ${environmentDetails};
 
 		Type(
@@ -300,7 +323,8 @@ definition {
 			value1 = ${value});
 	}
 
-	macro exportAllKeyDetails {
+	@summary = "Default summary"
+	macro exportAllKeyDetails(fileName = null) {
 		Click(
 			key_text = "Actions",
 			locator1 = "Button#ANY");
@@ -314,7 +338,8 @@ definition {
 		CP2FileUtil.assertDownloadedFileIsPresent(downloadedFileName = ${fileName});
 	}
 
-	macro filterKeyTable {
+	@summary = "Default summary"
+	macro filterKeyTable(filterOption = null,filterType = null) {
 		var key_filterOption = ${filterOption};
 
 		CustomerPortal.clickAtButton(text = "Filter");
@@ -326,7 +351,8 @@ definition {
 		CustomerPortal.clickAtButton(text = "Apply");
 	}
 
-	macro formatLicenseFileName {
+	@summary = "Default summary"
+	macro formatLicenseFileName(fileType = null) {
 		if (!(isSet(licenseType))) {
 			var licenseType = "";
 		}
@@ -372,7 +398,8 @@ definition {
 		return ${downloadedFileName};
 	}
 
-	macro fulfillActivationKey {
+	@summary = "Default summary"
+	macro fulfillActivationKey() {
 		var key_text = "Add Activation Key";
 
 		if (!(isSet(hostName))) {
@@ -423,7 +450,8 @@ definition {
 		return ${count};
 	}
 
-	macro fulfillGenerateActivationKeyTextField {
+	@summary = "Default summary"
+	macro fulfillGenerateActivationKeyTextField(field = null,index = null,content = null) {
 		var key_index = 1;
 
 		if (isSet(index)) {
@@ -437,7 +465,8 @@ definition {
 			value1 = ${content});
 	}
 
-	macro generateKeyFlow {
+	@summary = "Default summary"
+	macro generateKeyFlow(product = null,project = null) {
 		CustomerPortal.search(searchItem = ${project});
 
 		CustomerPortal.enterOnProject(title = ${project});
@@ -449,7 +478,8 @@ definition {
 		CP2ActivationKeys.generateNewKey();
 	}
 
-	macro generateNewKey {
+	@summary = "Default summary"
+	macro generateNewKey() {
 		CustomerPortal.clickAtButton(text = "Actions");
 
 		CP2ActivationKeys.clickAtDropdownItem(dropdownItem = "Generate New");
@@ -457,7 +487,8 @@ definition {
 		AssertElementPresent(locator1 = "CP2ActivationKeys#GENERATE_KEY_FORM");
 	}
 
-	macro getStartDateTextFromSignature {
+	@summary = "Default summary"
+	macro getStartDateTextFromSignature(index = null) {
 		var key_index = 1;
 
 		if (isSet(index)) {
@@ -479,7 +510,8 @@ definition {
 		return ${startDate};
 	}
 
-	macro gotoKeyDeactivation {
+	@summary = "Default summary"
+	macro gotoKeyDeactivation() {
 		CustomerPortal.clickAtButton(text = "Actions");
 
 		CP2ActivationKeys.clickAtDropdownItem(dropdownItem = "Deactivate");
@@ -487,46 +519,54 @@ definition {
 		AssertElementPresent(locator1 = "CP2ActivationKeys#DEACTIVATE_KEY_PAGE");
 	}
 
-	macro goToKeyTab {
+	@summary = "Default summary"
+	macro goToKeyTab(licenseTab = null) {
 		var key_licenseTab = CP2ActivationKeys._formatCamelCase(camelCase = ${licenseTab});
 
 		Click(locator1 = "CP2ActivationKeys#LICENSE_TAB_BUTTON");
 	}
 
-	macro goToNextTablePage {
+	@summary = "Default summary"
+	macro goToNextTablePage() {
 		ScrollWebElementIntoView(locator1 = "CP2ActivationKeys#NEXT_PAGE_BUTTON");
 
 		Click(locator1 = "CP2ActivationKeys#NEXT_PAGE_BUTTON");
 	}
 
-	macro putMouseOverElementAtTable {
+	@summary = "Default summary"
+	macro putMouseOverElementAtTable(text = null) {
 		var key_text = ${text};
 
 		MouseOver(locator1 = "CP2ActivationKeys#TABLE_ELEMENT_BY_TEXT");
 	}
 
-	macro putMouseOverStatusElementAtTable {
+	@summary = "Default summary"
+	macro putMouseOverStatusElementAtTable(linePosition = null,status = null) {
 		var key_linePosition = ${linePosition};
 		var key_status = ${status};
 
 		MouseOver(locator1 = "CP2ActivationKeys#TABLE_ELEMENT_BY_STATUS");
 	}
 
-	macro selectAllKeysOnPage {
+	@summary = "Default summary"
+	macro selectAllKeysOnPage() {
 		Check(locator1 = "CP2ActivationKeys#KEY_CHECKBOX_ALL");
 	}
 
-	macro selectClusterNodes {
+	@summary = "Default summary"
+	macro selectClusterNodes(key_option = null) {
 		Select(
 			locator1 = "CP2ActivationKeys#CLUSTER_NODES",
 			value1 = ${key_option});
 	}
 
-	macro selectComplimentarySubscriptionTerm {
+	@summary = "Default summary"
+	macro selectComplimentarySubscriptionTerm() {
 		Click(locator1 = "CP2ActivationKeys#COMPLIMENTARY_KEY");
 	}
 
-	macro selectFistActiveSubscriptionInput {
+	@summary = "Default summary"
+	macro selectFistActiveSubscriptionInput(index = null) {
 		if (isSet(index)) {
 			var key_position = ${index};
 
@@ -539,7 +579,8 @@ definition {
 		}
 	}
 
-	macro selectGenerateActivationKeyOptionByField {
+	@summary = "Default summary"
+	macro selectGenerateActivationKeyOptionByField(field = null,option = null) {
 		var key_label = ${field};
 
 		Select(
@@ -547,20 +588,23 @@ definition {
 			value1 = ${option});
 	}
 
-	macro selectKeyCheckboxByEnvironmentName {
+	@summary = "Default summary"
+	macro selectKeyCheckboxByEnvironmentName(environmentName = null) {
 		var key_environmentName = ${environmentName};
 
 		Check(locator1 = "CP2ActivationKeys#KEY_CHECKBOX");
 	}
 
-	macro selectKeyCheckboxByExpirationDate {
+	@summary = "Default summary"
+	macro selectKeyCheckboxByExpirationDate(date = null,position = null) {
 		var key_position = ${position};
 		var key_date = ${date};
 
 		Check(locator1 = "CP2ActivationKeys#KEY_CHECKBOX_BY_EXPIRATION_DATE");
 	}
 
-	macro selectPaginationQuantity {
+	@summary = "Default summary"
+	macro selectPaginationQuantity(quantity = null) {
 		if (IsElementPresent(locator1 = "CP2ActivationKeys#PAGINATION_BUTTON")) {
 			Click(locator1 = "CP2ActivationKeys#PAGINATION_BUTTON");
 
@@ -574,13 +618,15 @@ definition {
 		}
 	}
 
-	macro selectSubscription {
+	@summary = "Default summary"
+	macro selectSubscription(position = null) {
 		Click(
 			key_position = ${position},
 			locator1 = "CP2ActivationKeys#SUBSCRIPTION_CHOICE");
 	}
 
-	macro typeEnvironmentDetailsFields {
+	@summary = "Default summary"
+	macro typeEnvironmentDetailsFields() {
 		CP2ActivationKeys.environmentDetails(
 			environmentDetails = "name",
 			value = "Liferay Test");
@@ -602,7 +648,8 @@ definition {
 			value = "20-20-20-20-20-20");
 	}
 
-	macro viewActivationKeyDetails {
+	@summary = "Default summary"
+	macro viewActivationKeyDetails(key_environmentName = null) {
 		Search.searchCP(searchTerm = ${key_environmentName});
 
 		Click(

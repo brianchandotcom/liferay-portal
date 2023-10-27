@@ -827,7 +827,7 @@ definition {
 			userPassword = PropsUtil.get("email.password.3"),
 			windowTitle = "Documents and Media Page - Liferay");
 
-		Open.openInTheNewTab(locator1 = "http://localhost:8080");
+		Open.openInTheNewTab(value1 = "http://localhost:8080");
 
 		UserBar.signOut();
 

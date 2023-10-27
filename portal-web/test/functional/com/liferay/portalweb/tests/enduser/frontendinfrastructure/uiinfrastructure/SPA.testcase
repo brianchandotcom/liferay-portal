@@ -235,7 +235,7 @@ definition {
 
 			// We need this pause to wait for notification timeout. See LRQA-29748
 
-			Pause(locator1 = 1000);
+			Pause(value1 = 1000);
 		}
 
 		task ("Then: notification timeout pop up immediately appears") {

@@ -1154,9 +1154,6 @@ public class SourceFormatter {
 
 	private boolean _isFrontendPackageChanges(String recentChangesFileName) {
 		if (recentChangesFileName.endsWith(
-				"/modules/apps/frontend-js/frontend-js-metal-web" +
-					"/package.json") ||
-			recentChangesFileName.endsWith(
 				"/modules/apps/frontend-js/frontend-js-react-web" +
 					"/package.json") ||
 			recentChangesFileName.endsWith(

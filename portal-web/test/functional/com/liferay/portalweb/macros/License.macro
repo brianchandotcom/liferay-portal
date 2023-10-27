@@ -1,12 +1,14 @@
 definition {
 
-	macro deleteLicenseFile {
+	@summary = "Default summary"
+	macro deleteLicenseFile(licenseFileName = null) {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
 		AntCommands.runCommand("build-test.xml", "delete-license-file -Dlicense.xml.file=${licenseFileName} -Dliferay.home=${liferayHome}");
 	}
 
-	macro deployLicenseFile {
+	@summary = "Default summary"
+	macro deployLicenseFile() {
 		AntCommands.runCommand("build-test.xml", "deploy-license-xml");
 	}
 

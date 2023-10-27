@@ -1,28 +1,33 @@
 definition {
 
-	macro assertNoResultsFound {
+	@summary = "Default summary"
+	macro assertNoResultsFound() {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_STATE_INFO",
 			value1 = "No Results Found");
 	}
 
-	macro clearFilterResults {
+	@summary = "Default summary"
+	macro clearFilterResults() {
 		Click(locator1 = "ManagementBar#CLEAR_FILTER");
 
 		AssertElementNotPresent(locator1 = "ManagementBar#CLEAR_FILTER");
 	}
 
-	macro clickFilter {
+	@summary = "Default summary"
+	macro clickFilter() {
 		Click(locator1 = "TestrayFilter#FILTER_ICON");
 	}
 
-	macro clickMultiSelect {
+	@summary = "Default summary"
+	macro clickMultiSelect(fieldLabel = null) {
 		Click(
 			key_label = ${fieldLabel},
 			locator1 = "TestrayFilter#CLICK_MULTI_SELECT");
 	}
 
-	macro filterResults {
+	@summary = "Default summary"
+	macro filterResults(multiSelectValue = null,checkboxFieldLabel = null,selectValue = null,textAreaFieldLabel = null,checkboxValue = null,inputValue = null,inputFieldLabel = null,selectFieldLabel = null,textAreaValue = null,multiSelectFieldLabel = null) {
 		TestrayFilter.clickFilter();
 
 		ScrollWebElementIntoView(locator1 = "Pagination#ITEMS_PER_PAGE_SELECT_2");
@@ -68,7 +73,8 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro multiSelectFilter {
+	@summary = "Default summary"
+	macro multiSelectFilter(multiSelectList = null,fieldLabel = null) {
 		TestrayFilter.clickMultiSelect(fieldLabel = ${fieldLabel});
 
 		for (var option : list ${multiSelectList}) {
@@ -79,7 +85,8 @@ definition {
 		}
 	}
 
-	macro pinResult {
+	@summary = "Default summary"
+	macro pinResult() {
 		Click.javaScriptClick(
 			key_title = "pin",
 			locator1 = "Button#ANY_TITLE");
@@ -87,13 +94,15 @@ definition {
 		Alert.viewSuccessMessageText(successMessage = "Filters pinned successfully.");
 	}
 
-	macro searchFilter {
+	@summary = "Default summary"
+	macro searchFilter(filterName = null) {
 		Type(
 			locator1 = "TestrayFilter#SEARCH_FILTERS",
 			value1 = ${filterName});
 	}
 
-	macro selectColumns {
+	@summary = "Default summary"
+	macro selectColumns(listColumn = null) {
 		Click(locator1 = "TestrayFilter#COLUMN_BUTTON");
 
 		for (var column : list ${listColumn}) {
@@ -105,7 +114,8 @@ definition {
 		Button.click(button = "Apply");
 	}
 
-	macro unpinResult {
+	@summary = "Default summary"
+	macro unpinResult() {
 		Click.javaScriptClick(
 			key_title = "unpin",
 			locator1 = "Button#ANY_TITLE");

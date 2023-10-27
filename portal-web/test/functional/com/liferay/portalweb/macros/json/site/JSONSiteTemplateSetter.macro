@@ -1,6 +1,7 @@
 definition {
 
-	macro setPrivateLayout {
+	@summary = "Default summary"
+	macro setPrivateLayout() {
 		if (!(isSet(privateLayout))) {
 			var privateLayout = "false";
 		}
@@ -8,7 +9,8 @@ definition {
 		return ${privateLayout};
 	}
 
-	macro setTemplateDescription {
+	@summary = "Default summary"
+	macro setTemplateDescription() {
 		if (isSet(description)) {
 			var description = URLUtil.encodeUTF8(${description});
 		}
@@ -19,7 +21,8 @@ definition {
 		return ${description};
 	}
 
-	macro setTemplateIsUpdateable {
+	@summary = "Default summary"
+	macro setTemplateIsUpdateable() {
 		if (!(isSet(layoutsUpdateable))) {
 			var layoutsUpdateable = "true";
 		}
@@ -27,7 +30,8 @@ definition {
 		return ${layoutsUpdateable};
 	}
 
-	macro setTemplatePropagation {
+	@summary = "Default summary"
+	macro setTemplatePropagation() {
 		if (!(isSet(readyForPropagation))) {
 			var readyForPropagation = "true";
 		}
@@ -35,7 +39,8 @@ definition {
 		return ${readyForPropagation};
 	}
 
-	macro setTemplateStatus {
+	@summary = "Default summary"
+	macro setTemplateStatus() {
 		if (!(isSet(active))) {
 			var active = "true";
 		}

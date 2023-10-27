@@ -249,8 +249,9 @@ public class CollectionPageLayoutTypeController
 			"p_l_back_url");
 
 		if (Validator.isNotNull(backURL)) {
-			layoutFullURL = HttpComponentsUtil.addParameter(
-				layoutFullURL, "p_l_back_url", backURL);
+			layoutFullURL = HttpComponentsUtil.addParameters(
+				layoutFullURL, "p_l_back_url", backURL, "p_l_back_url_title",
+				draftLayout.getName(themeDisplay.getLocale()));
 		}
 
 		return HttpComponentsUtil.addParameter(

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
@@ -45,6 +46,8 @@ import com.liferay.portal.vulcan.internal.jaxrs.validation.ValidationUtil;
 import com.liferay.portal.vulcan.internal.multipart.MultipartUtil;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
+import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.pagination.provider.PaginationProvider;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.portal.vulcan.util.SortUtil;
@@ -106,6 +109,11 @@ public class LiferayMethodDataFetchingProcessor {
 			Object source)
 		throws Exception {
 
+		Pagination pagination = _paginationProvider.getPagination(
+			_portal.getCompanyId(httpServletRequest),
+			_getIntegerValue(arguments, "page"),
+			_getIntegerValue(arguments, "pageSize"));
+
 		Parameter[] parameters = method.getParameters();
 
 		Object[] argumentArray = new Object[parameters.length];
@@ -129,16 +137,10 @@ public class LiferayMethodDataFetchingProcessor {
 
 			Object argument = arguments.get(parameterName);
 
-			if (argument == null) {
-				if (parameter.isAnnotationPresent(NotNull.class)) {
-					throw new ValidationException(parameterName + " is null");
-				}
-				else if (parameterName.equals("page")) {
-					argument = 1;
-				}
-				else if (parameterName.equals("pageSize")) {
-					argument = 20;
-				}
+			if ((argument == null) &&
+				parameter.isAnnotationPresent(NotNull.class)) {
+
+				throw new ValidationException(parameterName + " is null");
 			}
 
 			if (parameterName.equals("assetLibraryId") && (argument != null)) {
@@ -157,6 +159,14 @@ public class LiferayMethodDataFetchingProcessor {
 							"\" to group ID",
 						exception);
 				}
+			}
+
+			if (parameterName.equals("page")) {
+				argument = pagination.getPage();
+			}
+
+			if (parameterName.equals("pageSize")) {
+				argument = pagination.getPageSize();
 			}
 
 			if (parameterName.equals("siteKey") && (argument != null)) {
@@ -622,6 +632,18 @@ public class LiferayMethodDataFetchingProcessor {
 			acceptLanguage, entityModel, filterString);
 	}
 
+	private Integer _getIntegerValue(
+		Map<String, Object> arguments, String key) {
+
+		Object value = arguments.get(key);
+
+		if (Validator.isNotNull(value)) {
+			return GetterUtil.getInteger(value);
+		}
+
+		return null;
+	}
+
 	private Object _getScopeChecker() {
 		ServiceReference<?> serviceReference =
 			_bundleContext.getServiceReference(
@@ -686,6 +708,9 @@ public class LiferayMethodDataFetchingProcessor {
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private PaginationProvider _paginationProvider;
 
 	@Reference
 	private Portal _portal;

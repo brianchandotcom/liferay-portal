@@ -1,14 +1,16 @@
 definition {
 
-	macro _backtoInbox {
+	@summary = "Default summary"
+	macro _backtoInbox() {
 		AssertClick.assertPartialTextClickAt(
 			locator1 = "MockMock#MOCKMOCK_HOME_LINK",
 			value1 = "Home");
 	}
 
-	macro _gotoMail {
+	@summary = "Default summary"
+	macro _gotoMail(newTab = null) {
 		if (${newTab} == "true") {
-			Open.openInTheNewTab(locator1 = "http://localhost:8282");
+			Open.openInTheNewTab(value1 = "http://localhost:8282");
 		}
 		else {
 			Navigator.openSpecificURL(url = "http://localhost:8282");
@@ -19,7 +21,8 @@ definition {
 			value1 = "MockMock");
 	}
 
-	macro _gotoMailMessage {
+	@summary = "Default summary"
+	macro _gotoMailMessage(recipient = null,asset = null) {
 		var key_columnEntry = ${asset};
 
 		if (isSet(recipient)) {
@@ -48,7 +51,8 @@ definition {
 		}
 	}
 
-	macro _viewMailFromInbox {
+	@summary = "Default summary"
+	macro _viewMailFromInbox(sender = null,recipient = null,asset = null) {
 		var key_columnEntry = ${asset};
 		var key_recipient = ${recipient};
 		var key_sender = ${sender};
@@ -70,7 +74,8 @@ definition {
 			value1 = ${asset});
 	}
 
-	macro _viewMailMessage {
+	@summary = "Default summary"
+	macro _viewMailMessage(toName = null,subject = null,fromAddress = null,content = null) {
 		var key_asset = ${subject};
 
 		AssertTextEquals.assertPartialText(
@@ -94,7 +99,8 @@ definition {
 		}
 	}
 
-	macro clickBodyLink {
+	@summary = "Default summary"
+	macro clickBodyLink(bodyLink = null,recipient = null,asset = null) {
 		MockMock._gotoMailMessage(
 			asset = ${asset},
 			recipient = ${recipient});
@@ -106,7 +112,8 @@ definition {
 			value1 = ${bodyLink});
 	}
 
-	macro deleteMail {
+	@summary = "Default summary"
+	macro deleteMail(asset = null,newTab = null) {
 		var key_columnEntry = ${asset};
 
 		MockMock._gotoMail(newTab = ${newTab});
@@ -129,7 +136,8 @@ definition {
 		}
 	}
 
-	macro getBodySpecificText {
+	@summary = "Default summary"
+	macro getBodySpecificText(specificText = null,subject = null,extractFirstText = null,asset = null,content = null) {
 		var key_asset = ${asset};
 		var key_columnEntry = ${asset};
 
@@ -167,7 +175,8 @@ definition {
 		}
 	}
 
-	macro getHTMLBodyFormattedText {
+	@summary = "Default summary"
+	macro getHTMLBodyFormattedText(sender = null,subject = null,recipient = null,newTab = null) {
 		MockMock._gotoMail(newTab = ${newTab});
 
 		AssertVisible(
@@ -191,7 +200,8 @@ definition {
 		return ${text};
 	}
 
-	macro openBodyLink {
+	@summary = "Default summary"
+	macro openBodyLink(subject = null,asset = null,content = null) {
 		var key_asset = ${asset};
 
 		MockMock._gotoMail();
@@ -211,7 +221,8 @@ definition {
 		Navigator.openSpecificURL(url = ${bodyURL});
 	}
 
-	macro openCalendarBodyLink {
+	@summary = "Default summary"
+	macro openCalendarBodyLink(subject = null,asset = null,content = null) {
 		var key_asset = ${asset};
 
 		MockMock._gotoMail();
@@ -231,11 +242,13 @@ definition {
 		Navigator.openSpecificURL(url = ${bodyURL});
 	}
 
-	macro openMockMock {
+	@summary = "Default summary"
+	macro openMockMock() {
 		MockMock._gotoMail();
 	}
 
-	macro viewFormattedHTMLTextDiffs {
+	@summary = "Default summary"
+	macro viewFormattedHTMLTextDiffs(newContent = null,sender = null,recipient = null,asset = null,oldContent = null) {
 		MockMock._gotoMail();
 
 		MockMock._viewMailFromInbox(
@@ -256,7 +269,8 @@ definition {
 			value1 = ${oldContent});
 	}
 
-	macro viewMail {
+	@summary = "Default summary"
+	macro viewMail(sender = null,toName = null,subject = null,recipient = null,fromAddress = null,asset = null,content = null) {
 		MockMock._gotoMail();
 
 		MockMock._viewMailFromInbox(
@@ -277,7 +291,8 @@ definition {
 		MockMock._backtoInbox();
 	}
 
-	macro viewMailForOTP {
+	@summary = "Default summary"
+	macro viewMailForOTP(sender = null,subject = null,content = null) {
 		MockMock._gotoMail();
 
 		var key_columnEntry = ${subject};
@@ -300,13 +315,15 @@ definition {
 			value1 = ${content});
 	}
 
-	macro viewNoMail {
+	@summary = "Default summary"
+	macro viewNoMail() {
 		MockMock._gotoMail();
 
 		AssertElementPresent(locator1 = "MockMock#MOCKMOCK_NO_EMAIL_IN_QUEUE");
 	}
 
-	macro viewUnformattedHTMLText {
+	@summary = "Default summary"
+	macro viewUnformattedHTMLText(sender = null,subject = null,recipient = null,asset = null,unFormattedContent = null) {
 		MockMock._gotoMail();
 
 		MockMock._viewMailFromInbox(

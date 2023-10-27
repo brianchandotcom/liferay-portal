@@ -74,13 +74,13 @@ definition {
 		task ("Click on 'click here' and check if a new tab with connection documentation appears") {
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Click here");
 
-			SelectWindow(locator1 = "title=Connecting Liferay DXP to Analytics Cloud - Liferay Learn");
+			SelectWindow(value1 = "title=Connecting Liferay DXP to Analytics Cloud - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Connecting Liferay DXP to Analytics Cloud");
 		}
 
 		task ("Switch to the AC tab") {
-			SelectWindow(locator1 = "title=No Properties Available - Analytics Cloud");
+			SelectWindow(value1 = "title=No Properties Available - Analytics Cloud");
 		}
 
 		task ("Copy the token from AC") {
@@ -134,7 +134,7 @@ definition {
 		task ("Click on 'click here' and check if a new tab with connection documentation appears") {
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Click here");
 
-			SelectWindow(locator1 = "title=Connecting Liferay DXP to Analytics Cloud - Liferay Learn");
+			SelectWindow(value1 = "title=Connecting Liferay DXP to Analytics Cloud - Liferay Learn");
 
 			ACUtils.viewGenericText(textValueList = "Connecting Liferay DXP to Analytics Cloud");
 		}

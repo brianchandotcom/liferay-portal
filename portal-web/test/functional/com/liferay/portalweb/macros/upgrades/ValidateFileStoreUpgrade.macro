@@ -1,6 +1,7 @@
 definition {
 
-	macro viewAFSStoreUpgrade {
+	@summary = "Default summary"
+	macro viewAFSStoreUpgrade() {
 		task ("Assert no errors are thrown during upgrade") {
 			AssertConsoleTextNotPresent(value1 = "No errors thrown during upgrade");
 		}
@@ -98,7 +99,8 @@ definition {
 		}
 	}
 
-	macro viewDBStoreUpgrade {
+	@summary = "Default summary"
+	macro viewDBStoreUpgrade() {
 		task ("Assert no errors are thrown during upgrade") {
 			AssertConsoleTextNotPresent(value1 = "No errors thrown during upgrade");
 		}

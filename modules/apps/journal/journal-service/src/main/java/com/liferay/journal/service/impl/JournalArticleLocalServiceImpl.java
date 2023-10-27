@@ -3037,6 +3037,12 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	@Override
+	public int getArticlesCountByResourcePrimKey(long resourcePrimKey) {
+		return journalArticlePersistence.countByResourcePrimKey(
+			resourcePrimKey);
+	}
+
+	@Override
 	public String getArticleTitle(long articlePK, Locale locale) {
 		String languageId = LocaleUtil.toLanguageId(locale);
 

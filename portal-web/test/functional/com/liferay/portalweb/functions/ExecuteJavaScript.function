@@ -1,12 +1,12 @@
 @default = "executeJavaScript"
 definition {
 
-	function executeJavaScript {
+	function executeJavaScript(value2,value1,value3) {
 		WaitForSPARefresh();
 
-		selenium.executeJavaScript();
+		selenium.executeJavaScript(${value1}, ${value2}, ${value3});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

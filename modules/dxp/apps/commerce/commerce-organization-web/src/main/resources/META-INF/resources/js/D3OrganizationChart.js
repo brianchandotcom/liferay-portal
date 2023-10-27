@@ -8,6 +8,7 @@ import {openConfirmModal, openToast, sub} from 'frontend-js-web';
 
 import {getAccount} from './data/accounts';
 import {getOrganization} from './data/organizations';
+import {getUser} from './data/users';
 import DndHandler from './utils/DndHandler';
 import HighlightHandler from './utils/HighlightHandler';
 import MultiSelectHandler from './utils/MultiSelectHandler';
@@ -42,30 +43,41 @@ import {
 } from './utils/paint';
 
 class D3OrganizationChart {
-	constructor(rootData, refs, spritemap, modalActions, nodeMenuActions) {
-		this._spritemap = spritemap;
-		this._refs = refs;
-		this._handleZoomInClick = this._handleZoomInClick.bind(this);
-		this._handleZoom = this._handleZoom.bind(this);
-		this._handleZoomOutClick = this._handleZoomOutClick.bind(this);
-		this._handleNodeClick = this._handleNodeClick.bind(this);
-		this._handleNodeMouseDown = this._handleNodeMouseDown.bind(this);
+	constructor(
+		rootData,
+		refs,
+		spritemap,
+		modalActions,
+		nodeMenuActions,
+		setSearchDataCountHandler
+	) {
+		this._currentScale = 1;
+		this._dataTree = {};
+		this._discoveredNodes = [];
+		this._dndHandler = new DndHandler();
 		this._handleKeyDown = this._handleKeyDown.bind(this);
 		this._handleKeyUp = this._handleKeyUp.bind(this);
+		this._handleNodeClick = this._handleNodeClick.bind(this);
+		this._handleNodeMouseDown = this._handleNodeMouseDown.bind(this);
+		this._handleZoom = this._handleZoom.bind(this);
+		this._handleZoomInClick = this._handleZoomInClick.bind(this);
+		this._handleZoomOutClick = this._handleZoomOutClick.bind(this);
 		this._hideChildrenAndUpdate = this._hideChildrenAndUpdate.bind(this);
-		this._currentScale = 1;
-		this._nodeMenuActions = nodeMenuActions;
-		this._modalActions = modalActions;
-		this._selectedNodes = new Map();
-		this._multiSelectHandler = new MultiSelectHandler();
-		this._dndHandler = new DndHandler();
 		this._highlightHandler = new HighlightHandler();
+		this._modalActions = modalActions;
+		this._multiSelectHandler = new MultiSelectHandler();
+		this._nodeMenuActions = nodeMenuActions;
+		this._selectedNodes = new Map();
+		this._setSearchDataCountHandler = setSearchDataCountHandler;
+		this._spritemap = spritemap;
+		this._refs = refs;
+		this._rootVisible = false;
+
+		this._addListeners();
 		this._initialiseZoomListeners(this._refs);
 		this._createChart();
-		this._rootVisible = !Array.isArray(rootData);
 		this._initializeData(formatRootData(rootData));
 		this._update(this._root);
-		this._addListeners();
 	}
 
 	_handleKeyDown(event) {
@@ -321,7 +333,12 @@ class D3OrganizationChart {
 
 			return getData(d.data.id)
 				.then((rawData) => formatItem(rawData, d.data.type))
-				.then((data) => insertChildrenIntoNode(data.children, d))
+				.then((data) => {
+					const {children} =
+						insertChildrenIntoNode(data.children, d) || {};
+
+					this._storeDataTreeInfo(children);
+				})
 				.then(() => {
 					d.data.fetched = true;
 
@@ -378,11 +395,21 @@ class D3OrganizationChart {
 		this._root = d3.hierarchy(initialData, (d) => d.children);
 		this._root.x0 = DY / 2;
 		this._root.y0 = 0;
+
+		if (this._root.children?.length > 1) {
+			this.collapseAllNodes();
+		}
+
+		if (this._root.children) {
+			this._storeDataTreeInfo(this._root.children, true);
+		}
 	}
 
 	_handleNodeMouseDown(d) {
 		d3.event.stopPropagation();
 		this._nodeMenuActions.close();
+
+		this._clearDiscoveredNodes(this._discoveredNodes, this._nodesGroup);
 
 		if (d.data.type === 'user') {
 			this._createTransition();
@@ -480,7 +507,13 @@ class D3OrganizationChart {
 					this.deleteNodes(fulfilledNodesData, false, false, false);
 
 					if (target.data.fetched) {
-						insertChildrenIntoNode(fulfilledNodesData, target);
+						const {children} =
+							insertChildrenIntoNode(
+								fulfilledNodesData,
+								target
+							) || {};
+
+						this._storeDataTreeInfo(children);
 					}
 
 					this._update(target);
@@ -667,6 +700,239 @@ class D3OrganizationChart {
 
 				return `translate(${target.y},${target.x})`;
 			});
+	}
+
+	_clearDiscoveredNodes() {
+		this._nodesGroup
+			.selectAll('.chart-item.discovered')
+			.classed('discovered', false);
+		this._discoveredNodes = [];
+	}
+
+	_getNodeById(id, type, forceLoad = false) {
+		const storedNode = this._dataTree[String(id)];
+		if (
+			storedNode &&
+			(!forceLoad || storedNode.find((element) => element.root))
+		) {
+			return new Promise((resolve) => {
+				resolve(storedNode.map((element) => element.node));
+			});
+		}
+
+		const getData =
+			type === 'organization'
+				? getOrganization
+				: type === 'account'
+				? getAccount
+				: getUser;
+
+		return getData(id)
+			.then((rawData) => formatItem(rawData, type))
+			.then((data) => {
+				data = JSON.parse(JSON.stringify(data));
+
+				if (type === 'organization') {
+					const parentIds = [data.parentOrganization?.id] || [];
+
+					return Promise.all(
+						parentIds.map((parentId) => {
+							if (parentId) {
+								return this._getParentNodeById(
+									id,
+									data,
+									parentId,
+									'organization'
+								);
+							}
+						})
+					);
+				}
+
+				if (type === 'account') {
+					const parentIds = data.organizationIds || [];
+
+					return Promise.all(
+						parentIds.map((parentId) => {
+							if (parentId) {
+								return this._getParentNodeById(
+									id,
+									data,
+									parentId,
+									'organization'
+								);
+							}
+						})
+					);
+				}
+
+				if (type === 'user') {
+					const organizations = data.organizationBriefs || [];
+					const accounts = data.accountBriefs || [];
+
+					const parents = organizations
+						.map((organization) => {
+							return {id: organization.id, type: 'organization'};
+						})
+						.concat(
+							accounts.map((account) => {
+								return {id: account.id, type: 'account'};
+							})
+						);
+
+					return Promise.all(
+						parents.map((parent) => {
+							if (parent) {
+								return this._getParentNodeById(
+									id,
+									data,
+									parent.id,
+									parent.type
+								);
+							}
+						})
+					);
+				}
+			});
+	}
+
+	_getParentNodeById(id, data, parentId, type) {
+		return this._getNodeById(parentId, type, type === 'account').then(
+			(parentNodes) => {
+				parentNodes = parentNodes.filter(Boolean);
+
+				if (!parentNodes) {
+					return;
+				}
+
+				let currentNode;
+
+				parentNodes.forEach((parentNode) => {
+					showChildren(parentNode);
+
+					const node = (parentNode.children || []).find(
+						(child) => String(child.data.id) === String(id)
+					);
+
+					if (
+						parentNode.children &&
+						parentNode.children.length &&
+						node
+					) {
+						currentNode = node;
+						this._storeDataTreeInfo(parentNode.children);
+					}
+					else {
+						const {children} =
+							insertChildrenIntoNode([data], parentNode) || {};
+						currentNode = children.find(
+							(child) => String(child.data.id) === String(id)
+						);
+						this._storeDataTreeInfo(children);
+					}
+
+					if (currentNode) {
+						if (!currentNode.children && !currentNode._children) {
+							insertChildrenIntoNode(data.children, currentNode);
+						}
+
+						currentNode.data.fetched = true;
+					}
+
+					parentNode.data.fetched = true;
+				});
+
+				return currentNode;
+			}
+		);
+	}
+
+	_expandParentNode(node) {
+		if (node && node.parent) {
+			showChildren(node.parent);
+
+			return this._expandParentNode(node.parent);
+		}
+	}
+
+	search(id, type) {
+		if (!id) {
+			this._clearDiscoveredNodes(this._discoveredNodes, this._nodesGroup);
+
+			return;
+		}
+
+		if (!type) {
+			return;
+		}
+
+		this._clearDiscoveredNodes(this._discoveredNodes, this._nodesGroup);
+
+		this._getNodeById(id, type, true).then((nodes = []) => {
+			nodes = nodes.filter(Boolean);
+
+			nodes.forEach((node) => {
+				if (node) {
+					this._expandParentNode(node.parent);
+
+					this._discoveredNodes.push(node.data.chartNodeId);
+
+					this._update(node, false);
+				}
+			});
+
+			const count = this._showDiscoveredNodes(
+				this._discoveredNodes,
+				this._nodesGroup
+			);
+
+			if (count >= 1) {
+				this._currentScale = count === 1 ? 2 : 1;
+				this._handleZoomOutClick();
+
+				this._update(nodes[0], true);
+			}
+
+			if (this._setSearchDataCountHandler) {
+				this._setSearchDataCountHandler(count);
+			}
+		});
+	}
+
+	_showDiscoveredNodes() {
+		return this._nodesGroup
+			.selectAll('.chart-item')
+			.filter((d) => {
+				return this._discoveredNodes.indexOf(d.data.chartNodeId) >= 0;
+			})
+			.classed('discovered', true)
+			.size();
+	}
+
+	_storeDataTreeInfo(children, root = false) {
+		for (const child of children || []) {
+			if (!child.data || !child.data.id || child.data.type === 'add') {
+				continue;
+			}
+
+			if (!this._dataTree[String(child.data.id)]) {
+				this._dataTree[String(child.data.id)] = [];
+			}
+
+			if (
+				!this._dataTree[String(child.data.id)].find((element) => {
+					return (
+						String(element.node.parent?.data?.id) ===
+						String(child.parent?.data?.id)
+					);
+				})
+			) {
+				this._dataTree[String(child.data.id)].push({
+					node: child,
+					root,
+				});
+			}
+		}
 	}
 }
 

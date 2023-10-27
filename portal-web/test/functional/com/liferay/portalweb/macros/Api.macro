@@ -3,8 +3,9 @@ definition {
 	var password = "test";
 	var userEmailAddress = "test@liferay.com";
 
-	macro apiJsonwsUserView {
-		Open(locator1 = "Home#API_JSON_URL");
+	@summary = "Default summary"
+	macro apiJsonwsUserView() {
+		Open(value1 = "/api/jsonws");
 
 		Click(locator1 = "JSONWS#USER_UPDATE_USER");
 
@@ -15,7 +16,8 @@ definition {
 		AssertElementPresent(locator1 = "Button#INVOKE");
 	}
 
-	macro editJsonwsUserView {
+	@summary = "Default summary"
+	macro editJsonwsUserView(userSuffixId = null,userBirthdayYear = null,userEmailAddress = null,userFirstName = null,userId = null,userFacebookId = null,userBirthdayMonth = null,userPrefixId = null,userLastName = null,userScreenName = null,userBirthdayDay = null,userRoleTitles = null) {
 		AssertTextEquals(
 			locator1 = "JSONWSUser#API_METHOD",
 			value1 = "/user/update-user");
@@ -87,8 +89,9 @@ definition {
 			value1 = "Invoke");
 	}
 
-	macro getPAuth {
-		Open(locator1 = "Home#API_JSON_URL");
+	@summary = "Default summary"
+	macro getPAuth() {
+		Open(value1 = "/api/jsonws");
 
 		Click(locator1 = "JSONWS#ADDRESS_ADD_ADDRESS");
 
@@ -101,7 +104,8 @@ definition {
 		return ${pAuth};
 	}
 
-	macro gotoPAuthURL {
+	@summary = "Default summary"
+	macro gotoPAuthURL(url = null) {
 		var pAuth = Api.getPAuth();
 
 		Navigator.openSpecificURL(url = "${url}${pAuth}");

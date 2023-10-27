@@ -1,6 +1,7 @@
 definition {
 
-	macro convertPG {
+	@summary = "Default summary"
+	macro convertPG(currencyValue = null,currencyDataFrom = null,currencyTo = null,currencyFrom = null,currencyDataTo = null) {
 		Type(
 			locator1 = "CurrencyConverter#NUMBER_FIELD",
 			value1 = ${currencyValue});

@@ -5,7 +5,7 @@
 
 package com.liferay.portal.kernel.scheduler;
 
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.util.Date;
 import java.util.TimeZone;
@@ -19,27 +19,31 @@ public class TriggerFactoryUtil {
 		String jobName, String groupName, Date startDate, Date endDate,
 		String cronExpression, TimeZone timeZone) {
 
-		return _triggerFactory.createTrigger(
+		TriggerFactory triggerFactory = _triggerFactorySnapshot.get();
+
+		return triggerFactory.createTrigger(
 			jobName, groupName, startDate, endDate, cronExpression, timeZone);
 	}
 
 	public static Trigger createTrigger(
 		String jobName, String groupName, int interval, TimeUnit timeUnit) {
 
-		return _triggerFactory.createTrigger(
+		TriggerFactory triggerFactory = _triggerFactorySnapshot.get();
+
+		return triggerFactory.createTrigger(
 			jobName, groupName, null, null, interval, timeUnit);
 	}
 
 	public static Trigger createTrigger(
 		String jobName, String groupName, String cronExpression) {
 
-		return _triggerFactory.createTrigger(
+		TriggerFactory triggerFactory = _triggerFactorySnapshot.get();
+
+		return triggerFactory.createTrigger(
 			jobName, groupName, null, null, cronExpression);
 	}
 
-	private static volatile TriggerFactory _triggerFactory =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			TriggerFactory.class, TriggerFactoryUtil.class, "_triggerFactory",
-			false);
+	private static final Snapshot<TriggerFactory> _triggerFactorySnapshot =
+		new Snapshot<>(TriggerFactoryUtil.class, TriggerFactory.class);
 
 }

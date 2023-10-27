@@ -1,6 +1,7 @@
 definition {
 
-	macro hasPortlet {
+	@summary = "Default summary"
+	macro hasPortlet(portletId = null) {
 		Variables.assertDefined(parameterList = ${portletId});
 
 		var result = JSONPortletAPI._hasPortlet(portletId = ${portletId});

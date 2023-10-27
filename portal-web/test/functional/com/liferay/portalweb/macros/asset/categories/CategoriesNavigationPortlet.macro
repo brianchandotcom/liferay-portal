@@ -1,6 +1,7 @@
 definition {
 
-	macro selectCategoryPG {
+	@summary = "Default summary"
+	macro selectCategoryPG(categoryName = null) {
 		Portlet.expandTree();
 
 		AssertClick(
@@ -9,7 +10,8 @@ definition {
 			value1 = ${categoryName});
 	}
 
-	macro viewCustomADTMultiColumnPG {
+	@summary = "Default summary"
+	macro viewCustomADTMultiColumnPG(vocabularyNameList = null,columnList = null,categoryNameList = null) {
 		for (var column : list ${columnList}) {
 			var key_column = ${column};
 
@@ -47,7 +49,8 @@ definition {
 		}
 	}
 
-	macro viewDefaultPG {
+	@summary = "Default summary"
+	macro viewDefaultPG(vocabularyName = null,categoryName = null) {
 		var key_nodeListName = ${vocabularyName};
 
 		Portlet.expandTree();
@@ -57,7 +60,8 @@ definition {
 		AssertElementPresent(locator1 = "Treeview#NODE_UNSELECTED");
 	}
 
-	macro viewNoCategory {
+	@summary = "Default summary"
+	macro viewNoCategory() {
 		AssertTextEquals.assertPartialText(
 			key_infoMessage = "There are no categories.",
 			locator1 = "Message#INFO_SPECIFIC",

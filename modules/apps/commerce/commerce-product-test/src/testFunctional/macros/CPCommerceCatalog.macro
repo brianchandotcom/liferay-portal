@@ -1,6 +1,7 @@
 definition {
 
-	macro addOptionValues {
+	@summary = "Default summary"
+	macro addOptionValues() {
 		var optionValuesList = ${optionValuesList};
 
 		for (var optionValues : list ${optionValuesList}) {
@@ -23,7 +24,8 @@ definition {
 		}
 	}
 
-	macro newOptionsEntry {
+	@summary = "Default summary"
+	macro newOptionsEntry(optionFieldType = null,optionDescription = null,facetable = null,skuContributor = null,optionName = null,required = null) {
 		Click(locator1 = "CommerceEntry#ADD_BUTTON");
 
 		WaitForElementPresent(locator1 = "IFrame#MODAL_BODY");
@@ -39,7 +41,8 @@ definition {
 			skuContributor = ${skuContributor});
 	}
 
-	macro newProductsEntry {
+	@summary = "Default summary"
+	macro newProductsEntry(publishProduct = null,compileDescription = null,productName = null,productType = null,productCatalog = null) {
 		CommerceProducts.addEntry(
 			compileDescription = ${compileDescription},
 			productCatalog = ${productCatalog},

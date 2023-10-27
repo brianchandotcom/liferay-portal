@@ -108,10 +108,10 @@ definition {
 
 		task ("Then the required field message appears") {
 			AssertAttributeValue(
-				attribute1 = "required",
 				key_text = "Organization Name",
 				locator1 = "TextInput#ANY",
-				value1 = "true");
+				value1 = "required",
+				value2 = "true");
 		}
 	}
 

@@ -1,6 +1,7 @@
 definition {
 
-	macro _deleteJobSchedulerTrigger {
+	@summary = "Default summary"
+	macro _deleteJobSchedulerTrigger(triggerName = null) {
 		Variables.assertDefined(parameterList = ${triggerName});
 
 		var baseURL = ${baseURL};
@@ -20,7 +21,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro _deleteJobSchedulerTriggers {
+	@summary = "Default summary"
+	macro _deleteJobSchedulerTriggers() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -47,7 +49,8 @@ definition {
 		}
 	}
 
-	macro _deleteJobSchedulerTriggersByType {
+	@summary = "Default summary"
+	macro _deleteJobSchedulerTriggersByType(taskExecutorType = null) {
 		Variables.assertDefined(parameterList = ${taskExecutorType});
 
 		var baseURL = ${baseURL};
@@ -90,7 +93,8 @@ definition {
 		}
 	}
 
-	macro _getJobSchedulerTriggerIdByName {
+	@summary = "Default summary"
+	macro _getJobSchedulerTriggerIdByName(triggerName = null) {
 		Variables.assertDefined(parameterList = ${triggerName});
 
 		var baseURL = ${baseURL};
@@ -118,7 +122,8 @@ definition {
 		return ${triggerId};
 	}
 
-	macro _getJobSchedulerTriggerIds {
+	@summary = "Default summary"
+	macro _getJobSchedulerTriggerIds() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {

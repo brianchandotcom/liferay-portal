@@ -1,6 +1,7 @@
 definition {
 
-	macro viewOnList {
+	@summary = "Default summary"
+	macro viewOnList(mdfID = null,partnerName = null,mdfStatus = null,totalClaimAmount = null,requestedValue = null,submittedDate = null,key_rowNumber = null,approved = null,lastModification = null,paidValue = null,campaignName = null,totalCost = null,activityPeriod = null) {
 		var key_rowName = ${key_rowNumber};
 
 		if (isSet(mdfID)) {

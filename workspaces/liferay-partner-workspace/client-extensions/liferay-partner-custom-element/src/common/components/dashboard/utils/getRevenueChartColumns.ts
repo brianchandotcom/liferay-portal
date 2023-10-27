@@ -36,7 +36,12 @@ export default function getRevenueChartColumns(
 
 	chartColumns.push(['Renewal Revenue', totalRenewalRevenue]);
 
-	const totalRevenueAmount = totalGrowthRevenue + totalRenewalRevenue;
+	const totalRevenueAmount = growthRevenueData?.reduce(
+		(accumulator: number, currentValue: any) => {
+			return accumulator + currentValue.subscriptionArr;
+		},
+		0
+	);
 
 	setValueChart(totalRevenueAmount);
 	setTitleChart(`Total Revenue `);

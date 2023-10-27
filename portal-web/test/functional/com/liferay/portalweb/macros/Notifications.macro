@@ -1,6 +1,7 @@
 definition {
 
-	macro acceptRequest {
+	@summary = "Default summary"
+	macro acceptRequest(requestsTitle = null) {
 		var key_requestsTitle = ${requestsTitle};
 
 		AssertTextEquals(
@@ -12,13 +13,15 @@ definition {
 			value1 = "Confirm");
 	}
 
-	macro clickOnTheNotificationTitle {
+	@summary = "Default summary"
+	macro clickOnTheNotificationTitle(key_notificationsTitle = null) {
 		AssertClick(
 			locator1 = "Notifications#NOTIFICATIONS_TITLE_TEXT",
 			value1 = ${key_notificationsTitle});
 	}
 
-	macro deleteAllNotifications {
+	@summary = "Default summary"
+	macro deleteAllNotifications() {
 		Refresh();
 
 		if (IsElementPresent(locator1 = "Notifications#PROFILE_BADGE_COUNT")) {
@@ -32,7 +35,8 @@ definition {
 		}
 	}
 
-	macro deleteNotification {
+	@summary = "Default summary"
+	macro deleteNotification(contentBody = null) {
 		var key_contentBody = ${contentBody};
 
 		Click(locator1 = "Notifications#NOTIFICATIONS_VERTICAL_ELLIPSIS");
@@ -44,17 +48,20 @@ definition {
 		AssertElementNotPresent(locator1 = "Notifications#NOTIFICATIONS_CONTENT");
 	}
 
-	macro goToFilterValues {
+	@summary = "Default summary"
+	macro goToFilterValues(filterValues = null) {
 		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 
 		MenuItem.click(menuItem = ${filterValues});
 	}
 
-	macro goToNotificationQueueAdmin {
+	@summary = "Default summary"
+	macro goToNotificationQueueAdmin() {
 		Navigator.openSpecificURL(url = "/group/guest/~/control_panel/manage?p_p_id=com_liferay_notification_web_internal_portlet_NotificationQueueEntriesPortlet");
 	}
 
-	macro gotoNotifications {
+	@summary = "Default summary"
+	macro gotoNotifications() {
 		if (IsElementPresent(locator1 = "Notifications#USER_BAR_BADGE_COUNT")) {
 			Click(locator1 = "Notifications#USER_BAR_BADGE_COUNT");
 		}
@@ -76,11 +83,13 @@ definition {
 		}
 	}
 
-	macro goToNotificationTemplateAdmin {
+	@summary = "Default summary"
+	macro goToNotificationTemplateAdmin() {
 		Navigator.openSpecificURL(url = "/group/guest/~/control_panel/manage?p_p_id=com_liferay_notification_web_internal_portlet_NotificationTemplatesPortlet");
 	}
 
-	macro markAsReadViaManagementBar {
+	@summary = "Default summary"
+	macro markAsReadViaManagementBar(notificationsTitle = null) {
 		if (isSet(selectAll)) {
 			PortletEntry.selectAll();
 		}
@@ -93,7 +102,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro markAsUnreadViaManagementBar {
+	@summary = "Default summary"
+	macro markAsUnreadViaManagementBar(notificationsTitle = null) {
 		if (isSet(selectAll)) {
 			PortletEntry.selectAll();
 		}
@@ -106,7 +116,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro navigateToContent {
+	@summary = "Default summary"
+	macro navigateToContent(contentBody = null) {
 		var key_contentBody = ${contentBody};
 
 		AssertClick.assertPartialTextClickAt(
@@ -114,7 +125,8 @@ definition {
 			value1 = ${contentBody});
 	}
 
-	macro removeNotificationsViaManagementBar {
+	@summary = "Default summary"
+	macro removeNotificationsViaManagementBar(notificationsTitle = null) {
 		if (isSet(selectAll)) {
 			PortletEntry.selectAll();
 		}
@@ -127,7 +139,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro tearDownUnreadNotifications {
+	@summary = "Default summary"
+	macro tearDownUnreadNotifications(contentBody = null) {
 		Navigator.gotoNotifications();
 
 		var key_contentBody = ${contentBody};
@@ -139,7 +152,8 @@ definition {
 		}
 	}
 
-	macro viewBadgeCount {
+	@summary = "Default summary"
+	macro viewBadgeCount(notificationCount = null) {
 		if (IsElementPresent(locator1 = "Notifications#USER_BAR_BADGE_COUNT")) {
 			AssertTextEquals(
 				locator1 = "Notifications#USER_BAR_BADGE_COUNT",
@@ -175,13 +189,15 @@ definition {
 		}
 	}
 
-	macro viewDefaultContent {
+	@summary = "Default summary"
+	macro viewDefaultContent() {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "You do not have any notifications.");
 	}
 
-	macro viewDeletedContent {
+	@summary = "Default summary"
+	macro viewDeletedContent(contentBody = null) {
 		AssertTextEquals(
 			locator1 = "Notifications#NOTIFICATIONS_TITLE",
 			value1 = "Notification no longer applies.");
@@ -198,7 +214,8 @@ definition {
 		}
 	}
 
-	macro viewExpiredContent {
+	@summary = "Default summary"
+	macro viewExpiredContent(contentBody = null) {
 		AssertTextEquals(
 			locator1 = "Notifications#NOTIFICATIONS_TITLE",
 			value1 = "A Document has expired.");
@@ -209,7 +226,8 @@ definition {
 			value1 = ${contentBody});
 	}
 
-	macro viewNewComment {
+	@summary = "Default summary"
+	macro viewNewComment(fragmentName = null,user = null,contentBody = null,content = null) {
 		var assetType = StringUtil.lowerCase(${assetType});
 		var key_contentBody = ${contentBody};
 
@@ -242,7 +260,8 @@ definition {
 		}
 	}
 
-	macro viewNewContent {
+	@summary = "Default summary"
+	macro viewNewContent(user = null,contentBody = null) {
 		var assetType = StringUtil.lowerCase(${assetType});
 		var key_contentBody = ${contentBody};
 
@@ -255,7 +274,8 @@ definition {
 			value1 = ${contentBody});
 	}
 
-	macro viewNewSharedContent {
+	@summary = "Default summary"
+	macro viewNewSharedContent(ownerName = null,contentSharingPermission = null,contentTitle = null) {
 		var key_contentSharingPermission = ${contentSharingPermission};
 		var key_contentTitle = ${contentTitle};
 		var key_ownerName = ${ownerName};
@@ -278,7 +298,8 @@ definition {
 		}
 	}
 
-	macro viewNoNotificationEntry {
+	@summary = "Default summary"
+	macro viewNoNotificationEntry() {
 		AssertElementNotPresent(locator1 = "Notifications#USER_BAR_BADGE_COUNT");
 
 		AssertElementNotPresent(locator1 = "Notifications#NOTIFICATIONS_CONTENT_GENERIC");
@@ -286,7 +307,8 @@ definition {
 		AssertElementNotPresent(locator1 = "Notifications#NOTIFICATIONS_TITLE");
 	}
 
-	macro viewNoNotifications {
+	@summary = "Default summary"
+	macro viewNoNotifications(activePanel = null) {
 		if (${activePanel} == "Profile") {
 			AssertElementNotPresent(locator1 = "Notifications#PROFILE_BADGE_COUNT");
 		}
@@ -300,7 +322,8 @@ definition {
 		}
 	}
 
-	macro viewNoPermissions {
+	@summary = "Default summary"
+	macro viewNoPermissions(notificationCount = null,contentBody = null) {
 		Notifications.viewBadgeCount(notificationCount = ${notificationCount});
 
 		Notifications.gotoNotifications();
@@ -310,13 +333,15 @@ definition {
 		AssertTextPresent(value1 = "You do not have permission to access the requested resource.");
 	}
 
-	macro viewNoRequest {
+	@summary = "Default summary"
+	macro viewNoRequest() {
 		AssertElementNotPresent(locator1 = "Button#CONFIRM");
 
 		AssertElementNotPresent(locator1 = "Button#IGNORE");
 	}
 
-	macro viewRequest {
+	@summary = "Default summary"
+	macro viewRequest(requestsTitle = null) {
 		var key_navLinkOption = "Requests List";
 
 		Click(locator1 = "Notifications#REQUESTS_LIST_TAB");
@@ -326,7 +351,8 @@ definition {
 			value1 = ${requestsTitle});
 	}
 
-	macro viewReviewContent {
+	@summary = "Default summary"
+	macro viewReviewContent(contentBody = null) {
 		AssertTextEquals(
 			locator1 = "Notifications#NOTIFICATIONS_TITLE",
 			value1 = "A Document needs review.");
@@ -337,7 +363,8 @@ definition {
 			value1 = ${contentBody});
 	}
 
-	macro viewSpecificNotificationDetails {
+	@summary = "Default summary"
+	macro viewSpecificNotificationDetails(notificationsTitle = null,contentBody = null) {
 		AssertTextEquals(
 			key_notificationsTitle = ${notificationsTitle},
 			locator1 = "Notifications#NOTIFICATIONS_TITLE_SPECIFIC",
@@ -349,7 +376,8 @@ definition {
 			value1 = ${contentBody});
 	}
 
-	macro viewSuccessfulPublication {
+	@summary = "Default summary"
+	macro viewSuccessfulPublication(publicationType = null,contentBody = null,portletName = null) {
 		var key_contentBody = ${contentBody};
 		var key_portletName = ${portletName};
 		var key_publicationType = ${publicationType};
@@ -359,7 +387,8 @@ definition {
 			value1 = "${portletName} ${publicationType} ${contentBody}");
 	}
 
-	macro viewUpdatedContent {
+	@summary = "Default summary"
+	macro viewUpdatedContent(user = null,contentBody = null) {
 		var assetType = StringUtil.lowerCase(${assetType});
 		var key_contentBody = ${contentBody};
 
@@ -372,7 +401,8 @@ definition {
 			value1 = ${contentBody});
 	}
 
-	macro waitForNotificationFlexibly {
+	@summary = "Default summary"
+	macro waitForNotificationFlexibly(flexibleRefreshingTime = null) {
 		var i = 0;
 
 		while ((IsElementNotPresent(locator1 = "Notifications#PROFILE_BADGE_COUNT")) && (${i} != 5)) {
@@ -380,7 +410,7 @@ definition {
 
 			// We need to wait for the system time to pass by some time in order to verify the user is notified. There is currently no easy way to manipulate the system time in CI for automation. See LPS-157957.
 
-			Pause(locator1 = ${flexibleRefreshingTime});
+			Pause(value1 = ${flexibleRefreshingTime});
 
 			Refresh();
 		}

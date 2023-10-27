@@ -1,6 +1,7 @@
 definition {
 
-	macro setStatus {
+	@summary = "Default summary"
+	macro setStatus() {
 		if (!(isSet(accountEntryStatus))) {
 			var accountEntryStatus = "Active";
 		}
@@ -18,7 +19,8 @@ definition {
 		return ${status};
 	}
 
-	macro setType {
+	@summary = "Default summary"
+	macro setType() {
 		if (!(isSet(accountEntryType))) {
 			var accountEntryType = "Business";
 		}

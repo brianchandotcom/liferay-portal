@@ -1,6 +1,7 @@
 definition {
 
-	macro _hasPortlet {
+	@summary = "Default summary"
+	macro _hasPortlet(portletId = null) {
 		Variables.assertDefined(parameterList = ${portletId});
 
 		var portalURL = JSONCompany.getPortalURL();

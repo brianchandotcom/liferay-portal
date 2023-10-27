@@ -1,6 +1,7 @@
 definition {
 
-	macro addNewContacts {
+	@summary = "Default summary"
+	macro addNewContacts(ddlRecordFieldData = null,ddlPhoneOffice = null,ddlLastName = null,ddlnotes = null,ddlPhoneMobile = null,ddlUserName = null,ddlCompany = null,ddlFirstName = null,ddlJobTitle = null,ddlEmail = null) {
 		if (isSet(ddlCompany)) {
 			Type(
 				key_field = "company",
@@ -71,11 +72,13 @@ definition {
 		}
 	}
 
-	macro clearSearchResults {
+	@summary = "Default summary"
+	macro clearSearchResults() {
 		Click(locator1 = "WorkflowConfiguration#CLEAR_BUTTON");
 	}
 
-	macro deleteAllSubmissions {
+	@summary = "Default summary"
+	macro deleteAllSubmissions() {
 		Click.clickAtNotVisible(locator1 = "WorkflowAllItems#CHECKBOX_CUSTOM_CONTROL");
 
 		ClickNoError(locator1 = "Icon#DELETE");
@@ -89,7 +92,8 @@ definition {
 			locator1 = "WorkflowSubmissions#EMPTY_MESSAGE");
 	}
 
-	macro editDLLRecordContacts {
+	@summary = "Default summary"
+	macro editDLLRecordContacts(ddlCompanyEdit = null,ddlListName = null,ddlFirstNameEdit = null) {
 		DDLRecord.editPG(ddlListName = ${ddlListName});
 
 		if (isSet(ddlCompanyEdit)) {
@@ -107,7 +111,8 @@ definition {
 		}
 	}
 
-	macro gotoStatusLabel {
+	@summary = "Default summary"
+	macro gotoStatusLabel(status = null) {
 		MouseOver(
 			key_status = ${status},
 			locator1 = "KaleoFormsNewSubmissions#SUBMISSION_STATUS_LABEL");
@@ -117,7 +122,8 @@ definition {
 			locator1 = "KaleoFormsNewSubmissions#SUBMISSION_STATUS_LABEL");
 	}
 
-	macro viewColumnsOnDetails {
+	@summary = "Default summary"
+	macro viewColumnsOnDetails(ddlimService = null,ddlPhoneOffice = null,ddlLastName = null,ddlnotes = null,ddlPhoneMobile = null,ddlUserName = null,ddlCompany = null,ddlFirstName = null,ddlJobTitle = null,ddlEmail = null) {
 		if (isSet(ddlCompany)) {
 			AssertTextEquals.assertPartialText(
 				key_ddlRecordFieldData = "Company",
@@ -189,11 +195,13 @@ definition {
 		}
 	}
 
-	macro viewEllipsisMenu {
+	@summary = "Default summary"
+	macro viewEllipsisMenu(menuItem = null) {
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = ${menuItem});
 	}
 
-	macro viewOrderTable {
+	@summary = "Default summary"
+	macro viewOrderTable(fieldNameList = null) {
 		var rowNumber = 1;
 
 		for (var fieldName : list ${fieldNameList}) {
@@ -206,7 +214,8 @@ definition {
 		}
 	}
 
-	macro viewPaginationNumber {
+	@summary = "Default summary"
+	macro viewPaginationNumber(pageNumberList = null) {
 		for (var pageNumber : list ${pageNumberList}) {
 			var key_pageNumber = ${pageNumber};
 
@@ -214,19 +223,22 @@ definition {
 		}
 	}
 
-	macro viewStatusDDL {
+	@summary = "Default summary"
+	macro viewStatusDDL(status = null) {
 		AssertElementPresent(
 			key_status = ${status},
 			locator1 = "KaleoFormsNewSubmissions#LIST_TABLE_NAME_STATUS");
 	}
 
-	macro viewStatusLabel {
+	@summary = "Default summary"
+	macro viewStatusLabel(lbstatus = null) {
 		AssertElementPresent(
 			key_status = ${lbstatus},
 			locator1 = "KaleoFormsNewSubmissions#SUBMISSION_STATUS_LABEL");
 	}
 
-	macro viewTrackWorkflowStructure {
+	@summary = "Default summary"
+	macro viewTrackWorkflowStructure() {
 		if (isSet(throughKebab)) {
 			SelectFrame(
 				key_title = "Track Workflow",
@@ -246,13 +258,15 @@ definition {
 		AssertElementPresent(locator1 = "WorkflowAllItems#TRACK_APPROVAL_REACT_CONTROLS");
 	}
 
-	macro viewVersionOnDetails {
+	@summary = "Default summary"
+	macro viewVersionOnDetails(workflowVersion = null) {
 		AssertElementPresent(
 			locator1 = "KaleoFormsAdmin#WORKFLOW_VERSION",
 			value1 = ${workflowVersion});
 	}
 
-	macro viewWorkflowInProcessMessage {
+	@summary = "Default summary"
+	macro viewWorkflowInProcessMessage(errorMessage = null) {
 		AssertTextEquals(
 			key_errorMessage = ${errorMessage},
 			locator1 = "KaleoFormsNewSubmissions#ERROR_MESSAGE",

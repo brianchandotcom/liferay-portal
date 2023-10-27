@@ -1,6 +1,7 @@
 definition {
 
-	macro addBuildViaUI {
+	@summary = "Default summary"
+	macro addBuildViaUI(routine = null,productVersionOption = null,gitHash = null,description = null,dropdownItem = null,buildFieldName = null,caseList = null) {
 		if (!(isSet(addVersion))) {
 			var addVersion = "1.3";
 		}
@@ -53,7 +54,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro addBuildWithMultipleOptions {
+	@summary = "Default summary"
+	macro addBuildWithMultipleOptions(labelStack = null,productVersion = null,fieldName = null,routine = null,gitHash = null,addVersion = null,stackName = null,description = null,dropdownItem = null,optionName = null,categoryName = null,caseList = null) {
 		Click(locator1 = "Button#PLUS");
 
 		if (isSet(dropdownItem)) {
@@ -112,7 +114,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro addNewOptionInBuild {
+	@summary = "Default summary"
+	macro addNewOptionInBuild(category = null,option = null) {
 		Button.click(button = "Add Option");
 
 		SelectFrame(locator1 = "Testray#MODAL_BODY");
@@ -133,7 +136,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro addSelectStacksInBuild {
+	@summary = "Default summary"
+	macro addSelectStacksInBuild(parameterLabel = null,stackOptions = null) {
 		Button.click(button = "Select Stacks");
 
 		Click(
@@ -146,14 +150,16 @@ definition {
 		Button.click(button = "Add");
 	}
 
-	macro addSuitesInBuild {
+	@summary = "Default summary"
+	macro addSuitesInBuild(suiteList = null) {
 		Testray.selectCheckboxOptions(
 			buttonText = "Select Suites",
 			checkboxNameList = ${suiteList},
 			linkText = "Add Suites");
 	}
 
-	macro deleteBuild {
+	@summary = "Default summary"
+	macro deleteBuild(itemName = null) {
 		TestrayDropdown.goToResultSidebar();
 
 		Testray.changePagination(quantity = 150);
@@ -169,7 +175,8 @@ definition {
 		}
 	}
 
-	macro editBuild {
+	@summary = "Default summary"
+	macro editBuild(productVersion = null,newName = null,routine = null,gitHash = null,addVersion = null,description = null,caseList = null) {
 		if (isSet(newName)) {
 			PortletEntry.inputName(name = ${newName});
 		}
@@ -214,7 +221,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro verifyPromotedBuild {
+	@summary = "Default summary"
+	macro verifyPromotedBuild() {
 		Alert.viewSuccessMessage();
 
 		Refresh();

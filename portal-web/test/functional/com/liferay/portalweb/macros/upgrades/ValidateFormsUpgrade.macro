@@ -1,6 +1,7 @@
 definition {
 
-	macro addForm {
+	@summary = "Default summary"
+	macro addForm(site = null) {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -66,7 +67,8 @@ definition {
 			fieldName = ${fieldName});
 	}
 
-	macro submitFormEntry {
+	@summary = "Default summary"
+	macro submitFormEntry() {
 		Navigator.openURL();
 
 		Navigator.gotoPage(pageName = "Form Page");
@@ -131,7 +133,8 @@ definition {
 			fieldValue = 1000);
 	}
 
-	macro submitFormEntry7010 {
+	@summary = "Default summary"
+	macro submitFormEntry7010() {
 		Navigator.openURL();
 
 		Navigator.gotoPage(pageName = "Form Page");
@@ -177,7 +180,8 @@ definition {
 			fieldValue = "Approved");
 	}
 
-	macro submitFormEntry7310 {
+	@summary = "Default summary"
+	macro submitFormEntry7310() {
 		Navigator.openURL();
 
 		Navigator.gotoPage(pageName = "Form Page");
@@ -245,7 +249,8 @@ definition {
 			fieldValue = 1000);
 	}
 
-	macro viewAndDeleteFormEntry {
+	@summary = "Default summary"
+	macro viewAndDeleteFormEntry() {
 		Navigator.openURL();
 
 		Navigator.gotoPage(pageName = "Form Page");
@@ -325,7 +330,8 @@ definition {
 		FormsAdmin.viewNoFormEntries();
 	}
 
-	macro viewFormEntry {
+	@summary = "Default summary"
+	macro viewFormEntry() {
 		Navigator.openURL();
 
 		Navigator.gotoPage(pageName = "Form Page");
@@ -430,7 +436,8 @@ definition {
 			uploadFileName = "Document_1.jpg");
 	}
 
-	macro viewFormEntry7010 {
+	@summary = "Default summary"
+	macro viewFormEntry7010() {
 		Navigator.openURL();
 
 		Navigator.gotoPage(pageName = "Form Page");
@@ -509,7 +516,8 @@ definition {
 			fieldValue = "05/02/2022");
 	}
 
-	macro viewFormEntry7310 {
+	@summary = "Default summary"
+	macro viewFormEntry7310() {
 		Navigator.openURL();
 
 		Navigator.gotoPage(pageName = "Form Page");
@@ -658,7 +666,8 @@ definition {
 			fieldName = "Separator");
 	}
 
-	macro viewUpdateFieldNameToFieldReference {
+	@summary = "Default summary"
+	macro viewUpdateFieldNameToFieldReference() {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -708,7 +717,8 @@ definition {
 			key_fieldReferenceValue = "Upload");
 	}
 
-	macro viewUpdateFieldNameToFieldReference7010 {
+	@summary = "Default summary"
+	macro viewUpdateFieldNameToFieldReference7010() {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -746,7 +756,8 @@ definition {
 			key_fieldReferenceValue = "MultipleSelection");
 	}
 
-	macro viewUploadFormEntry {
+	@summary = "Default summary"
+	macro viewUploadFormEntry() {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

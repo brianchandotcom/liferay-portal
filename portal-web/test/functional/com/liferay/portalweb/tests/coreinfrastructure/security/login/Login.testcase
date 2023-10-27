@@ -283,7 +283,7 @@ definition {
 
 				// Wait for OpenAM configuration to finish. See LRQA-28959 for more details.
 
-				Pause(locator1 = 30000);
+				Pause(value1 = 30000);
 
 				var pauseCount = ${pauseCount} + 1;
 
@@ -394,7 +394,7 @@ definition {
 
 			// The pause is necessary because it takes a while to load new configuration
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 
 		task ("Run and command") {
@@ -433,7 +433,7 @@ definition {
 
 			// The pause is necessary because it takes a while to load new configuration
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 		}
 
 		task ("Run ant command") {

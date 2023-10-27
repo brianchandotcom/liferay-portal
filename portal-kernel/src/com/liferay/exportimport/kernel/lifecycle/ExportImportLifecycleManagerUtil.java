@@ -5,7 +5,7 @@
 
 package com.liferay.exportimport.kernel.lifecycle;
 
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import java.io.Serializable;
 
@@ -18,15 +18,16 @@ public class ExportImportLifecycleManagerUtil {
 		int code, int processFlag, String processId,
 		Serializable... arguments) {
 
-		_exportImportLifecycleManager.fireExportImportLifecycleEvent(
+		ExportImportLifecycleManager exportImportLifecycleManager =
+			_exportImportLifecycleManagerSnapshot.get();
+
+		exportImportLifecycleManager.fireExportImportLifecycleEvent(
 			code, processFlag, processId, arguments);
 	}
 
-	private static volatile ExportImportLifecycleManager
-		_exportImportLifecycleManager =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				ExportImportLifecycleManager.class,
-				ExportImportLifecycleManagerUtil.class,
-				"_exportImportLifecycleManager", false);
+	private static final Snapshot<ExportImportLifecycleManager>
+		_exportImportLifecycleManagerSnapshot = new Snapshot<>(
+			ExportImportLifecycleManagerUtil.class,
+			ExportImportLifecycleManager.class);
 
 }

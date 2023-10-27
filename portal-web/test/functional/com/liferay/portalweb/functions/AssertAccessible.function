@@ -1,7 +1,7 @@
 @default = "assertAccessible"
 definition {
 
-	function assertAccessible {
+	function assertAccessible(value1) {
 		WaitForSPARefresh();
 
 		if (isSet(value1)) {
@@ -13,7 +13,7 @@ definition {
 
 		selenium.assertAccessible(${ignorableImpacts});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

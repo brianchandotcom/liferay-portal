@@ -1,6 +1,7 @@
 definition {
 
-	macro viewPortletsPermissions {
+	@summary = "Default summary"
+	macro viewPortletsPermissions() {
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea1@liferay.com",
 			userLoginFullName = "userfn1 userln1");

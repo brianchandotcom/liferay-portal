@@ -178,7 +178,7 @@ export function fillEntityNode(nodeEnter, spritemap, openMenu) {
 			'transform',
 			(d) => `translate(0, ${RECT_SIZES[d.data.type].height * -0.5})`
 		)
-		.attr('rx', (d) => RECT_SIZES[d.data.type].height / 2)
+		.attr('rx', (d) => RECT_SIZES[d.data.type].height / 2 - 16)
 		.attr('class', 'chart-rect');
 
 	const iconWrapper = nodeEnter.append('g').attr('class', 'icon-wrapper');

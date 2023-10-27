@@ -1759,7 +1759,7 @@ definition {
 
 		Close.closeWindow(locator1 = "title=Welcome - ${siteName}");
 
-		SelectWindow(locator1 = "title=Users and Organizations - ${siteName}");
+		SelectWindow(value1 = "title=Users and Organizations - ${siteName}");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -1804,7 +1804,7 @@ definition {
 
 		Close.closeWindow(locator1 = "title=Welcome - ${siteName}");
 
-		SelectWindow(locator1 = "title=Users and Organizations - ${siteName}");
+		SelectWindow(value1 = "title=Users and Organizations - ${siteName}");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -1817,7 +1817,7 @@ definition {
 
 		Close.closeWindow(locator1 = "title=Welcome - ${siteName}");
 
-		SelectWindow(locator1 = "title=Users and Organizations - ${siteName}");
+		SelectWindow(value1 = "title=Users and Organizations - ${siteName}");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
@@ -1830,7 +1830,7 @@ definition {
 
 		Close.closeWindow(locator1 = "title=Welcome - ${siteName}");
 
-		SelectWindow(locator1 = "title=Users and Organizations - ${siteName}");
+		SelectWindow(value1 = "title=Users and Organizations - ${siteName}");
 	}
 
 	@description = "This is a use case for LPS-145025. No redirect and language is changed when change the language in password reset page."

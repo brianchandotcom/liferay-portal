@@ -79,5 +79,23 @@
 			"en-US": "Indian Rupee"
 		},
 		"type": "string"
+	},
+	{
+		"externalReferenceCode": "NZD",
+		"key": "NZD",
+		"name": "New Zealand Dollar",
+		"name_i18n": {
+			"en-US": "New Zealand Dollar"
+		},
+		"type": "string"
+	},
+	{
+		"externalReferenceCode": "CNY",
+		"key": "CNY",
+		"name": "Chinese Yuan",
+		"name_i18n": {
+			"en-US": "Chinese Yuan"
+		},
+		"type": "string"
 	}
 ]

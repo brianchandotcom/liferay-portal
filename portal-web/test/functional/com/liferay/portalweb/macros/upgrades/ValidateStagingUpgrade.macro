@@ -1,6 +1,7 @@
 definition {
 
-	macro publishStagedSite {
+	@summary = "Default summary"
+	macro publishStagedSite() {
 		Navigator.openSiteURL(siteName = "Staging Site Staging");
 
 		AssertElementNotPresent(locator1 = "Home#PORTLET");
@@ -26,7 +27,8 @@ definition {
 			webContentTitle = "Web Content Title");
 	}
 
-	macro viewStagingConfiguration {
+	@summary = "Default summary"
+	macro viewStagingConfiguration() {
 		SystemSettings.openSystemSettingsAdmin();
 
 		SystemSettings.gotoConfiguration(
@@ -52,7 +54,8 @@ definition {
 			configurationScope = "Virtual Instance Scope");
 	}
 
-	macro viewStagingNestedPortlets {
+	@summary = "Default summary"
+	macro viewStagingNestedPortlets() {
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging Test Page",
 			siteName = "Staging Site");

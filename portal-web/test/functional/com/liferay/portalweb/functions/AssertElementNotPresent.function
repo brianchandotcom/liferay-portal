@@ -2,22 +2,22 @@
 @summary = "Assert that '${locator1}' is not available"
 definition {
 
-	function assertElementNotPresent {
+	function assertElementNotPresent(locator1) {
 		WaitForSPARefresh();
 
-		selenium.waitForElementNotPresent();
+		selenium.waitForElementNotPresent(${locator1}, "false");
 
-		selenium.assertElementNotPresent();
+		selenium.assertElementNotPresent(${locator1});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function assertElementNotPresentNoWaitForSPAReFresh {
-		selenium.waitForElementNotPresent();
+	function assertElementNotPresentNoWaitForSPAReFresh(locator1) {
+		selenium.waitForElementNotPresent(${locator1}, "false");
 
-		selenium.assertElementNotPresent();
+		selenium.assertElementNotPresent(${locator1});
 
 		selenium.assertLiferayErrors();
 	}

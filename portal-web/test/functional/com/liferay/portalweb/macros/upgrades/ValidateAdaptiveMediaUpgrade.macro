@@ -1,6 +1,7 @@
 definition {
 
-	macro deleteImageResolution {
+	@summary = "Default summary"
+	macro deleteImageResolution() {
 		AdaptiveMedia.openAdaptiveMediaAdmin();
 
 		AdaptiveMedia.disableImageResolution(
@@ -11,7 +12,8 @@ definition {
 		AdaptiveMedia.deleteImageResolution(imageName = "Low Resolution");
 	}
 
-	macro editImageResolution {
+	@summary = "Default summary"
+	macro editImageResolution() {
 		AdaptiveMedia.openAdaptiveMediaAdmin();
 
 		AdaptiveMedia.editImageResolution(
@@ -25,7 +27,8 @@ definition {
 		AdaptiveMedia.viewNumberOfAdaptedImages(numberOfAdaptedImages = "0/1");
 	}
 
-	macro viewAndAddImageResolution {
+	@summary = "Default summary"
+	macro viewAndAddImageResolution() {
 		AdaptiveMedia.openAdaptiveMediaAdmin();
 
 		AdaptiveMedia.viewImageResolutionTableEntry(

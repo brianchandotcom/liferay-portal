@@ -395,7 +395,7 @@ definition {
 				field = "ID",
 				fieldLabel = "Custom Aggregation",
 				fieldType = "Aggregation",
-				function = "Max",
+				functionType = "Max",
 				relationship = "Relationship");
 		}
 

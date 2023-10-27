@@ -1,6 +1,7 @@
 definition {
 
-	macro addTask {
+	@summary = "Default summary"
+	macro addTask(userGroups = null,selectProject = null,userList = null,caseTypeList = null,taskName = null,selectBuild = null,selectRoutine = null) {
 		LexiconEntry.gotoAdd();
 
 		TestrayTestflow.editBreadcrumb(
@@ -58,14 +59,16 @@ definition {
 		}
 	}
 
-	macro assertStatus {
+	@summary = "Default summary"
+	macro assertStatus(label = null,status = null) {
 		AssertElementPresent(
 			key_label = ${label},
 			key_status = ${status},
 			locator1 = "TestrayTestflow#TESTFLOW_STATUS");
 	}
 
-	macro assertTaskDetails {
+	@summary = "Default summary"
+	macro assertTaskDetails(routine = null,build = null,project = null,taskName = null,status = null) {
 		AssertElementPresent(
 			key_build = ${build},
 			key_project = ${project},
@@ -75,7 +78,8 @@ definition {
 			locator1 = "TestrayTestflow#TASK_DETAILS");
 	}
 
-	macro assignUsers {
+	@summary = "Default summary"
+	macro assignUsers(tableEntry = null,assignButton = null,userName = null,rowOption = null) {
 		if (isSet(assignButton)) {
 			Button.click(button = ${assignButton});
 
@@ -98,7 +102,8 @@ definition {
 		}
 	}
 
-	macro editBreadcrumb {
+	@summary = "Default summary"
+	macro editBreadcrumb(routine = null,build = null,project = null) {
 		Click(locator1 = "TestrayTestflow#BREADCRUMB_INPUT_NAME");
 
 		for (var text : list "${project},${routine},${build}") {
@@ -110,7 +115,8 @@ definition {
 		}
 	}
 
-	macro editStatus {
+	@summary = "Default summary"
+	macro editStatus(button = null,selectStatus = null,comment = null,issues = null) {
 		WaitForElementPresent(
 			key_text = ${button},
 			locator1 = "Button#ANY");
@@ -140,7 +146,8 @@ definition {
 		Button.click(button = "Save");
 	}
 
-	macro editStatusByRightClick {
+	@summary = "Default summary"
+	macro editStatusByRightClick(selectStatus = null,tableEntry = null,comment = null,issues = null) {
 		TestrayManage.selectTableRowOption(
 			rowOption = "Complete",
 			tableEntry = ${tableEntry});
@@ -168,7 +175,8 @@ definition {
 		Button.click(button = "Save");
 	}
 
-	macro editTask {
+	@summary = "Default summary"
+	macro editTask(taskName = null,userNameList = null) {
 		Button.click(button = "Edit Task");
 
 		if (isSet(taskName)) {
@@ -185,7 +193,8 @@ definition {
 		Button.click(button = "Save");
 	}
 
-	macro goToTaskByBuild {
+	@summary = "Default summary"
+	macro goToTaskByBuild(buildName = null,routineName = null,projectName = null) {
 		TestrayDropdown.goToResultSidebar();
 
 		Testray.changePagination(quantity = 150);
@@ -199,7 +208,8 @@ definition {
 		Button.click(button = "View Task");
 	}
 
-	macro goToTestflow {
+	@summary = "Default summary"
+	macro goToTestflow() {
 		Click(
 			key_button = "TestFlow",
 			locator1 = "TestrayDropdown#SIDEBAR_CONTENT");
@@ -207,17 +217,20 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro reanalyzeTask {
+	@summary = "Default summary"
+	macro reanalyzeTask() {
 		Button.click(button = "Abandon");
 
 		Button.click(button = "Reanalyze");
 	}
 
-	macro userAvatarNotPresent {
+	@summary = "Default summary"
+	macro userAvatarNotPresent() {
 		AssertElementNotPresent(locator1 = "TestrayTestflow#USER_AVATAR_IMAGE");
 	}
 
-	macro userAvatarPresent {
+	@summary = "Default summary"
+	macro userAvatarPresent() {
 		AssertElementPresent(locator1 = "TestrayTestflow#USER_AVATAR_IMAGE");
 	}
 

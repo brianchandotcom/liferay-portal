@@ -5,7 +5,8 @@ definition {
 			-H Content-Type: application/json \
 		''';
 
-	macro _curlObjectEntries {
+	@summary = "Default summary"
+	macro _curlObjectEntries(emailDomain = null,fieldName = null,keywords = null,nestedField = null,relatedUserAccount = null,virtualHost = null,relatedEntryExternalReferenceCode = null,fieldValue = null,relatedEntryFieldName = null,numberOfRelatedObjectEntries = null,externalReferenceCode = null,taxonomyCategoryIds = null,familyName = null,oneToManyChild = null,en_US_plural_label = null,givenName = null,secondFieldValue = null,userEmailAddress = null,alternateName = null,token = null,userExternalReferenceCodes = null,objectEntryId = null) {
 		Variables.assertDefined(parameterList = ${en_US_plural_label});
 
 		var en_US_plural_label_lowercase = StringUtil.lowerCase(${en_US_plural_label});
@@ -79,7 +80,8 @@ definition {
 		return ${curl};
 	}
 
-	macro _curlObjectPermissions {
+	@summary = "Default summary"
+	macro _curlObjectPermissions(headers = null,objectEntryId = null,roleNames = null,en_US_plural_label = null) {
 		Variables.assertDefined(parameterList = "${en_US_plural_label},${objectEntryId}");
 
 		var en_US_plural_label_lowercase = StringUtil.lowerCase(${en_US_plural_label});
@@ -96,7 +98,8 @@ definition {
 		return ${curl};
 	}
 
-	macro _setNObjectEntriesBody {
+	@summary = "Default summary"
+	macro _setNObjectEntriesBody(emailDomain = null,fieldName = null,keywords = null,givenName = null,secondFieldValue = null,nestedField = null,alternateName = null,relatedUserAccount = null,relatedEntryExternalReferenceCode = null,fieldValue = null,relatedEntryFieldName = null,numberOfRelatedObjectEntries = null,externalReferenceCode = null,taxonomyCategoryIds = null,familyName = null,userExternalReferenceCodes = null,objectEntryId = null,oneToManyChild = null) {
 		Variables.assertDefined(parameterList = "${fieldName},${fieldValue}");
 
 		var body = '''"${fieldName}": "${fieldValue}"''';
@@ -162,7 +165,8 @@ definition {
 		return ${body};
 	}
 
-	macro assertCorrectObjectEntryValuesInResponse {
+	@summary = "Default summary"
+	macro assertCorrectObjectEntryValuesInResponse(objectJsonPath = null,expectedValues = null,en_US_plural_label = null) {
 		Variables.assertDefined(parameterList = "${objectJsonPath},${expectedValues}");
 
 		if (!(isSet(response))) {
@@ -176,7 +180,8 @@ definition {
 			expected = ${expectedValues});
 	}
 
-	macro createObjectEntryAndRelatedObjects {
+	@summary = "Default summary"
+	macro createObjectEntryAndRelatedObjects(emailDomain = null,fieldName = null,givenName = null,nestedField = null,alternateName = null,relatedUserAccount = null,relatedEntryExternalReferenceCode = null,fieldValue = null,relatedEntryFieldName = null,numberOfRelatedObjectEntries = null,externalReferenceCode = null,familyName = null,oneToManyChild = null,en_US_plural_label = null) {
 		Variables.assertDefined(parameterList = "${en_US_plural_label},${fieldName},${fieldValue},${nestedField},${numberOfRelatedObjectEntries}");
 
 		var curl = CustomObjectAPI._curlObjectEntries(
@@ -200,7 +205,8 @@ definition {
 		return ${response};
 	}
 
-	macro createObjectEntryWithAllFields {
+	@summary = "Default summary"
+	macro createObjectEntryWithAllFields(customBooleanValue = null,requiredFieldLabel = null,requiredFieldValue = null,customLongTextValue = null,customPrecisionDecimalValue = null,en_US_plural_label = null,customPicklistValue = null) {
 		Variables.assertDefined(parameterList = "${en_US_plural_label},${customBooleanValue},${customLongTextValue},${customPicklistValue},${customPrecisionDecimalValue},${requiredFieldLabel},${requiredFieldValue}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -225,7 +231,8 @@ definition {
 		return ${objectId};
 	}
 
-	macro createObjectEntryWithFields {
+	@summary = "Default summary"
+	macro createObjectEntryWithFields(fieldName = null,keywords = null,secondFieldValue = null,virtualHost = null,fieldValue = null,externalReferenceCode = null,token = null,groupName = null,taxonomyCategoryIds = null,scopeKey = null,en_US_plural_label = null) {
 		Variables.assertDefined(parameterList = "${en_US_plural_label},${fieldName},${fieldValue}");
 
 		var curl = CustomObjectAPI._curlObjectEntries(
@@ -246,7 +253,8 @@ definition {
 		return ${response};
 	}
 
-	macro createStudentRelatedToAccount {
+	@summary = "Default summary"
+	macro createStudentRelatedToAccount(accountId = null,name = null) {
 		Variables.assertDefined(parameterList = "${name},${accountId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -266,7 +274,8 @@ definition {
 		return ${studentId};
 	}
 
-	macro createSubjectRelatedToStudentAndAccount {
+	@summary = "Default summary"
+	macro createSubjectRelatedToStudentAndAccount(studentId = null,accountId = null,name = null) {
 		Variables.assertDefined(parameterList = "${name},${accountId},${studentId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -287,7 +296,8 @@ definition {
 		return ${subjectId};
 	}
 
-	macro getObjectEntries {
+	@summary = "Default summary"
+	macro getObjectEntries(scopeKey = null,en_US_plural_label = null,token = null) {
 		Variables.assertDefined(parameterList = ${en_US_plural_label});
 
 		var en_US_plural_label_lowercase = StringUtil.lowerCase(${en_US_plural_label});
@@ -302,7 +312,8 @@ definition {
 		return ${response};
 	}
 
-	macro getObjectEntryById {
+	@summary = "Default summary"
+	macro getObjectEntryById(objectEntryId = null,virtualHost = null,en_US_plural_label = null,token = null) {
 		Variables.assertDefined(parameterList = "${en_US_plural_label},${objectEntryId}");
 
 		var en_US_plural_label_lowercase = StringUtil.lowerCase(${en_US_plural_label});
@@ -332,7 +343,8 @@ definition {
 		return ${response};
 	}
 
-	macro getObjectEntryErcByName {
+	@summary = "Default summary"
+	macro getObjectEntryErcByName(name = null,virtualHost = null,en_US_plural_label = null) {
 		Variables.assertDefined(parameterList = "${name},${en_US_plural_label}");
 
 		if (isSet(virtualHost)) {
@@ -357,7 +369,8 @@ definition {
 		return ${objectEntryErc};
 	}
 
-	macro getObjectEntryIdByName {
+	@summary = "Default summary"
+	macro getObjectEntryIdByName(name = null,virtualHost = null,en_US_plural_label = null) {
 		Variables.assertDefined(parameterList = "${name},${en_US_plural_label}");
 
 		if (isSet(virtualHost)) {
@@ -382,7 +395,8 @@ definition {
 		return ${objectEntryId};
 	}
 
-	macro getObjectPermissions {
+	@summary = "Default summary"
+	macro getObjectPermissions(objectEntryId = null,en_US_plural_label = null) {
 		Variables.assertDefined(parameterList = "${en_US_plural_label},${objectEntryId}");
 
 		var curl = CustomObjectAPI._curlObjectPermissions(
@@ -394,7 +408,8 @@ definition {
 		return ${response};
 	}
 
-	macro nObjectEntryBodyAsNestedField {
+	@summary = "Default summary"
+	macro nObjectEntryBodyAsNestedField(nestedField = null,oneToManyChild = null,relatedEntryExternalReferenceCode = null,relatedEntryFieldName = null,numberOfRelatedObjectEntries = null) {
 		Variables.assertDefined(parameterList = "${body},${nestedField},${numberOfRelatedObjectEntries},${relatedEntryFieldName}");
 
 		var size = ${numberOfRelatedObjectEntries};
@@ -453,7 +468,8 @@ definition {
 		return ${body};
 	}
 
-	macro patchObjectEntryNameById {
+	@summary = "Default summary"
+	macro patchObjectEntryNameById(objectEntryId = null,userEmailAddress = null,fieldValue = null,en_US_plural_label = null) {
 		Variables.assertDefined(parameterList = "${en_US_plural_label},${fieldValue},${objectEntryId}");
 
 		var curl = CustomObjectAPI._curlObjectEntries(
@@ -468,7 +484,8 @@ definition {
 		return ${response};
 	}
 
-	macro putObjectEntryById {
+	@summary = "Default summary"
+	macro putObjectEntryById(keywords = null,taxonomyCategoryIds = null,objectEntryId = null,fieldValue = null,en_US_plural_label = null) {
 		Variables.assertDefined(parameterList = "${en_US_plural_label},${fieldValue},${objectEntryId}");
 
 		var curl = CustomObjectAPI._curlObjectEntries(
@@ -484,7 +501,8 @@ definition {
 		return ${response};
 	}
 
-	macro staticObjectDefinitionId {
+	@summary = "Default summary"
+	macro staticObjectDefinitionId(objectDefinitionId = null) {
 		Variables.assertDefined(parameterList = ${objectDefinitionId});
 
 		static var staticObjectDefinitionId = ${objectDefinitionId};
@@ -492,7 +510,8 @@ definition {
 		return ${staticObjectDefinitionId};
 	}
 
-	macro staticObjectEntryId {
+	@summary = "Default summary"
+	macro staticObjectEntryId(objectEntryId = null) {
 		Variables.assertDefined(parameterList = ${objectEntryId});
 
 		static var staticObjectId = ${objectEntryId};
@@ -500,7 +519,8 @@ definition {
 		return ${staticObjectId};
 	}
 
-	macro updateObjectEntryAndRelatedObjectsByPatch {
+	@summary = "Default summary"
+	macro updateObjectEntryAndRelatedObjectsByPatch(emailDomain = null,fieldName = null,givenName = null,nestedField = null,alternateName = null,relatedUserAccount = null,relatedEntryExternalReferenceCode = null,fieldValue = null,relatedEntryFieldName = null,numberOfRelatedObjectEntries = null,familyName = null,userExternalReferenceCodes = null,objectEntryId = null,oneToManyChild = null,en_US_plural_label = null) {
 		Variables.assertDefined(parameterList = "${en_US_plural_label},${objectEntryId},${fieldName},${fieldValue},${nestedField},${objectEntryId}");
 
 		var curl = CustomObjectAPI._curlObjectEntries(
@@ -525,7 +545,8 @@ definition {
 		return ${response};
 	}
 
-	macro updateObjectEntryAndRelatedObjectsByPut {
+	@summary = "Default summary"
+	macro updateObjectEntryAndRelatedObjectsByPut(emailDomain = null,fieldName = null,givenName = null,nestedField = null,alternateName = null,relatedUserAccount = null,relatedEntryExternalReferenceCode = null,fieldValue = null,relatedEntryFieldName = null,numberOfRelatedObjectEntries = null,externalReferenceCode = null,familyName = null,userExternalReferenceCodes = null,objectEntryId = null,oneToManyChild = null,en_US_plural_label = null) {
 		Variables.assertDefined(parameterList = "${en_US_plural_label},${objectEntryId},${fieldName},${fieldValue},${nestedField},${objectEntryId}");
 
 		var curl = CustomObjectAPI._curlObjectEntries(
@@ -551,7 +572,8 @@ definition {
 		return ${response};
 	}
 
-	macro updateObjectPermissions {
+	@summary = "Default summary"
+	macro updateObjectPermissions(actionIds = null,roleName = null,objectEntryId = null,en_US_plural_label = null) {
 		Variables.assertDefined(parameterList = "${en_US_plural_label},${objectEntryId},${actionIds},${roleName}");
 
 		var curl = CustomObjectAPI._curlObjectPermissions(

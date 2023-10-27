@@ -1,18 +1,21 @@
 definition {
 
-	macro addAction {
+	@summary = "Default summary"
+	macro addAction() {
 		WaitForElementPresent(locator1 = "FormRules#RULE_BUILDER_ADD_ACTION");
 
 		Click(locator1 = "FormRules#RULE_BUILDER_ADD_ACTION");
 	}
 
-	macro addCondition {
+	@summary = "Default summary"
+	macro addCondition() {
 		WaitForElementPresent(locator1 = "FormRules#RULE_BUILDER_ADD_CONDITION");
 
 		Click(locator1 = "FormRules#RULE_BUILDER_ADD_CONDITION");
 	}
 
-	macro addRule {
+	@summary = "Default summary"
+	macro addRule() {
 		WaitForElementPresent(locator1 = "FormRules#RULE_BUILDER_ADD_RULE_BUTTON");
 
 		Click(locator1 = "FormRules#RULE_BUILDER_ADD_RULE_BUTTON");
@@ -22,13 +25,15 @@ definition {
 		AssertNotVisible(locator1 = "FormRules#RULE_BUILDER_ADD_RULE_BUTTON");
 	}
 
-	macro cancel {
+	@summary = "Default summary"
+	macro cancel() {
 		AssertClick(
 			locator1 = "FormRules#RULE_BUILDER_CANCEL_BUTTON",
 			value1 = "Cancel");
 	}
 
-	macro chooseCalculateOperator {
+	@summary = "Default summary"
+	macro chooseCalculateOperator(calculateOperator = null) {
 		var key_calculateOperator = ${calculateOperator};
 
 		AssertClick(
@@ -36,17 +41,20 @@ definition {
 			value1 = ${calculateOperator});
 	}
 
-	macro clickOnCalculatorBackspace {
+	@summary = "Default summary"
+	macro clickOnCalculatorBackspace() {
 		Click.javaScriptClick(locator1 = "FormRules#RULE_BUILDER_CALCULATE_BACKSPACE");
 	}
 
-	macro clickOnCalculatorNumbersKeyboard {
+	@summary = "Default summary"
+	macro clickOnCalculatorNumbersKeyboard(buttonName = null) {
 		Click(
 			key_buttonName = ${buttonName},
 			locator1 = "FormRules#RULE_BUILDER_CALCULATE_NUMBERS_KEYBOARD");
 	}
 
-	macro configureActionOptions {
+	@summary = "Default summary"
+	macro configureActionOptions(actionRowNumber = null,action = null,actionTarget = null) {
 		FormRules.selectAction(
 			action = ${action},
 			actionRowNumber = ${actionRowNumber});
@@ -57,7 +65,8 @@ definition {
 			actionTarget = ${actionTarget});
 	}
 
-	macro configureConditionOptions {
+	@summary = "Default summary"
+	macro configureConditionOptions(conditionFieldValue = null,conditionOperator = null,conditionRowNumber = null,conditionField = null,conditionValueType = null,conditionValueField = null) {
 		FormRules.selectConditionField(
 			conditionField = ${conditionField},
 			conditionRowNumber = ${conditionRowNumber});
@@ -77,7 +86,8 @@ definition {
 			conditionValueType = ${conditionValueType});
 	}
 
-	macro defineConditionValue {
+	@summary = "Default summary"
+	macro defineConditionValue(conditionFieldValue = null,conditionRowNumber = null,conditionValueField = null) {
 		if (isSet(conditionFieldValue)) {
 			var key_conditionRowNumber = ${conditionRowNumber};
 			var key_fieldColumnNumber = 4;
@@ -100,7 +110,8 @@ definition {
 		}
 	}
 
-	macro deleteActions {
+	@summary = "Default summary"
+	macro deleteActions(rowNumber = null) {
 		var key_actionRowNumber = ${rowNumber};
 
 		MouseOver(
@@ -114,7 +125,8 @@ definition {
 		Click(locator1 = "FormViewBuilder#DELETE_OBJECT_LABEL_DELETE_BUTTON");
 	}
 
-	macro deleteCondition {
+	@summary = "Default summary"
+	macro deleteCondition(conditionRowNumber = null) {
 		MouseOver(
 			key_conditionRowNumber = ${conditionRowNumber},
 			key_fieldColumnNumber = 1,
@@ -127,7 +139,8 @@ definition {
 		Click(locator1 = "FormRules#RULE_BUILDER_DELETE_MODAL_CONFIRMATION");
 	}
 
-	macro gotoDelete {
+	@summary = "Default summary"
+	macro gotoDelete(ruleNumber = null) {
 		var key_ruleNumber = ${ruleNumber};
 
 		Click.waitForMenuToggleJSClick(locator1 = "FormRules#RULE_BUILDER_ROW_VERTICAL_ELLIPSIS");
@@ -135,7 +148,8 @@ definition {
 		MenuItem.click(menuItem = "Delete");
 	}
 
-	macro gotoEdit {
+	@summary = "Default summary"
+	macro gotoEdit(ruleNumber = null) {
 		var key_ruleNumber = ${ruleNumber};
 
 		Click.waitForMenuToggleJSClick(locator1 = "FormRules#RULE_BUILDER_ROW_VERTICAL_ELLIPSIS");
@@ -143,13 +157,15 @@ definition {
 		MenuItem.click(menuItem = "Edit");
 	}
 
-	macro save {
+	@summary = "Default summary"
+	macro save() {
 		AssertClick(
 			locator1 = "FormRules#RULE_BUILDER_SAVE_BUTTON",
 			value1 = "Save");
 	}
 
-	macro selectAction {
+	@summary = "Default summary"
+	macro selectAction(actionRowNumber = null,action = null) {
 		var key_selectValue = ${action};
 		var key_actionRowNumber = ${actionRowNumber};
 		var key_fieldColumnNumber = 1;
@@ -161,7 +177,8 @@ definition {
 			value1 = ${action});
 	}
 
-	macro selectActionTarget {
+	@summary = "Default summary"
+	macro selectActionTarget(actionRowNumber = null,actionTarget = null) {
 		var key_actionRowNumber = ${actionRowNumber};
 		var key_selectValue = ${actionTarget};
 		var key_fieldColumnNumber = 2;
@@ -173,7 +190,8 @@ definition {
 			value1 = ${actionTarget});
 	}
 
-	macro selectAutofillFromDataProvider {
+	@summary = "Default summary"
+	macro selectAutofillFromDataProvider(dataProviderOption = null,dataProviderParameterName = null) {
 		var key_dataProviderOption = ${dataProviderOption};
 		var key_dataProviderParameterName = ${dataProviderParameterName};
 
@@ -184,7 +202,8 @@ definition {
 			value1 = ${dataProviderOption});
 	}
 
-	macro selectCalculateField {
+	@summary = "Default summary"
+	macro selectCalculateField(calculateFieldOption = null) {
 		AssertClick(
 			locator1 = "FormRules#RULE_BUILDER_CALCULATE_ADD_FIELD_BUTTON",
 			value1 = "Add Field");
@@ -196,7 +215,8 @@ definition {
 		Click(locator1 = "FormRules#RULE_BUILDER_CALCULATE_ADD_FIELD_LIST");
 	}
 
-	macro selectCalculateFieldByFieldReference {
+	@summary = "Default summary"
+	macro selectCalculateFieldByFieldReference(calculateFieldOption = null) {
 		AssertClick(
 			locator1 = "FormRules#RULE_BUILDER_CALCULATE_ADD_FIELD_BUTTON",
 			value1 = "Add Field");
@@ -208,7 +228,8 @@ definition {
 		Click(locator1 = "FormRules#RULE_BUILDER_CALCULATE_ADD_FIELD_LIST");
 	}
 
-	macro selectConditionField {
+	@summary = "Default summary"
+	macro selectConditionField(conditionRowNumber = null,conditionField = null) {
 		var key_selectValue = ${conditionField};
 		var key_conditionRowNumber = ${conditionRowNumber};
 		var key_fieldColumnNumber = 1;
@@ -222,7 +243,8 @@ definition {
 			value1 = ${conditionField});
 	}
 
-	macro selectConditionOperator {
+	@summary = "Default summary"
+	macro selectConditionOperator(conditionOperator = null,conditionRowNumber = null) {
 		var key_selectValue = ${conditionOperator};
 		var key_conditionRowNumber = ${conditionRowNumber};
 		var key_fieldColumnNumber = 2;
@@ -234,7 +256,8 @@ definition {
 			value1 = ${conditionOperator});
 	}
 
-	macro selectConditionValue {
+	@summary = "Default summary"
+	macro selectConditionValue(conditionRowNumber = null,conditionValueType = null) {
 		var key_conditionRowNumber = ${conditionRowNumber};
 		var key_fieldColumnNumber = 3;
 
@@ -249,7 +272,8 @@ definition {
 		}
 	}
 
-	macro selectRuleCondition {
+	@summary = "Default summary"
+	macro selectRuleCondition() {
 		var key_condition = ${condition};
 		var condition = StringUtil.upperCase(${condition});
 
@@ -258,7 +282,8 @@ definition {
 		MenuItem.click(menuItem = ${condition});
 	}
 
-	macro viewAction {
+	@summary = "Default summary"
+	macro viewAction(actionRowNumber = null,action = null,actionTarget = null) {
 		var key_selectActionValue = ${action};
 		var key_actionRowNumber = ${actionRowNumber};
 		var key_selectActionTargetValue = ${actionTarget};
@@ -274,7 +299,8 @@ definition {
 			locator1 = "FormRules#RULE_ACTION_TARGET_FIELD_VALUE");
 	}
 
-	macro viewActionNotPresent {
+	@summary = "Default summary"
+	macro viewActionNotPresent(actionRowNumber = null,action = null,actionTarget = null) {
 		var key_selectActionValue = ${action};
 		var key_actionRowNumber = ${actionRowNumber};
 		var key_selectActionTargetValue = ${actionTarget};
@@ -290,7 +316,8 @@ definition {
 			locator1 = "FormRules#RULE_ACTION_TARGET_FIELD_VALUE");
 	}
 
-	macro viewActionSummary {
+	@summary = "Default summary"
+	macro viewActionSummary(ruleNumber = null,action = null) {
 		AssertTextEquals.assertPartialText(
 			key_action = ${action},
 			key_ruleNumber = ${ruleNumber},
@@ -298,7 +325,8 @@ definition {
 			value1 = ${action});
 	}
 
-	macro viewActionTargetSummary {
+	@summary = "Default summary"
+	macro viewActionTargetSummary(ruleNumber = null,action = null,actionTarget = null) {
 		AssertTextEquals(
 			key_action = ${action},
 			key_actionTarget = ${actionTarget},
@@ -307,20 +335,23 @@ definition {
 			value1 = ${actionTarget});
 	}
 
-	macro viewBrokenRule {
+	@summary = "Default summary"
+	macro viewBrokenRule(ruleNumber = null) {
 		AssertElementPresent(
 			key_ruleNumber = ${ruleNumber},
 			locator1 = "FormRules#RULE_BUILDER_BROKEN");
 	}
 
-	macro viewCalculatorExpression {
+	@summary = "Default summary"
+	macro viewCalculatorExpression(calculatorExpression = null) {
 		AssertTextEquals(
 			key_calculatorExpression = ${calculatorExpression},
 			locator1 = "FormRules#RULE_BUILDER_CALCULATE_RESULT_EXPRESSION",
 			value1 = ${calculatorExpression});
 	}
 
-	macro viewConditionFieldConstantSummary {
+	@summary = "Default summary"
+	macro viewConditionFieldConstantSummary(ruleNumber = null,conditionFieldConstant = null) {
 		AssertTextEquals(
 			key_conditionFieldConstant = ${conditionFieldConstant},
 			key_ruleNumber = ${ruleNumber},
@@ -328,7 +359,8 @@ definition {
 			value1 = ${conditionFieldConstant});
 	}
 
-	macro viewConditionFieldSummary {
+	@summary = "Default summary"
+	macro viewConditionFieldSummary(ruleNumber = null,conditionField = null) {
 		AssertTextEquals(
 			key_conditionField = ${conditionField},
 			key_ruleNumber = ${ruleNumber},
@@ -336,7 +368,8 @@ definition {
 			value1 = ${conditionField});
 	}
 
-	macro viewConditionNotPresent {
+	@summary = "Default summary"
+	macro viewConditionNotPresent(conditionFieldValue = null,conditionOperator = null,conditionRowNumber = null,conditionField = null,conditionValueType = null) {
 		var key_conditionField = ${conditionField};
 		var key_conditionOperator = ${conditionOperator};
 		var key_conditionRowNumber = ${conditionRowNumber};
@@ -352,7 +385,8 @@ definition {
 		}
 	}
 
-	macro viewConditionOperatorOptionsIsPresent {
+	@summary = "Default summary"
+	macro viewConditionOperatorOptionsIsPresent(conditionRowNumber = null) {
 		Click(
 			key_conditionRowNumber = ${conditionRowNumber},
 			key_fieldColumnNumber = 2,
@@ -365,7 +399,8 @@ definition {
 		}
 	}
 
-	macro viewConditionOperatorOptionsNotPresent {
+	@summary = "Default summary"
+	macro viewConditionOperatorOptionsNotPresent(conditionRowNumber = null) {
 		Click(
 			key_conditionRowNumber = ${conditionRowNumber},
 			key_fieldColumnNumber = 2,
@@ -378,7 +413,8 @@ definition {
 		}
 	}
 
-	macro viewConditionOperatorSummary {
+	@summary = "Default summary"
+	macro viewConditionOperatorSummary(conditionOperator = null,ruleNumber = null) {
 		var conditionOperatorLowerCase = StringUtil.lowerCase(${conditionOperator});
 
 		AssertTextEquals.assertPartialText(
@@ -388,7 +424,8 @@ definition {
 			value1 = ${conditionOperatorLowerCase});
 	}
 
-	macro viewConditionPresent {
+	@summary = "Default summary"
+	macro viewConditionPresent(conditionFieldValue = null,conditionOperator = null,conditionRowNumber = null,conditionField = null,conditionValueType = null) {
 		var key_conditionField = ${conditionField};
 		var key_conditionOperator = ${conditionOperator};
 		var key_conditionRowNumber = ${conditionRowNumber};
@@ -404,7 +441,8 @@ definition {
 		}
 	}
 
-	macro viewConditionSummaryNotPresent {
+	@summary = "Default summary"
+	macro viewConditionSummaryNotPresent(conditionOperator = null,ruleNumber = null,conditionField = null) {
 		var key_conditionField = ${conditionField};
 		var key_conditionOperator = ${conditionOperator};
 		var key_ruleNumber = ${ruleNumber};
@@ -412,7 +450,8 @@ definition {
 		AssertElementNotPresent(locator1 = "FormRules#RULE_BUILDER_SUMMARY_CONDITION");
 	}
 
-	macro viewFieldNotPresentAtActions {
+	@summary = "Default summary"
+	macro viewFieldNotPresentAtActions(actionRowNumber = null,action = null,actionTarget = null) {
 		var key_actionRowNumber = ${actionRowNumber};
 		var key_selectValue = ${actionTarget};
 		var key_fieldColumnNumber = 2;
@@ -428,7 +467,8 @@ definition {
 			value1 = ${actionTarget});
 	}
 
-	macro viewFieldPresentAtActions {
+	@summary = "Default summary"
+	macro viewFieldPresentAtActions(actionRowNumber = null,action = null,actionTarget = null) {
 		var key_actionRowNumber = ${actionRowNumber};
 		var key_selectValue = ${actionTarget};
 		var key_fieldColumnNumber = 2;
@@ -444,31 +484,36 @@ definition {
 			value1 = ${actionTarget});
 	}
 
-	macro viewInactiveSaveButton {
+	@summary = "Default summary"
+	macro viewInactiveSaveButton() {
 		AssertElementPresent(locator1 = "FormRules#RULE_BUILDER_SAVE_BUTTON_DISABLED");
 	}
 
-	macro viewNoRules {
+	@summary = "Default summary"
+	macro viewNoRules() {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_STATE_TEXT",
 			value1 = "There are no rules yet. Click on plus icon below to add the first.");
 	}
 
-	macro viewRuleBuilderAction {
+	@summary = "Default summary"
+	macro viewRuleBuilderAction(positionNumber = null,value = null) {
 		AssertElementPresent(
 			key_positionNumber = ${positionNumber},
 			key_value = ${value},
 			locator1 = "FormRules#VIEW_RULE_BUILDER_ACTION_CONDITION");
 	}
 
-	macro viewRuleBuilderCondition {
+	@summary = "Default summary"
+	macro viewRuleBuilderCondition(positionNumber = null,value = null) {
 		AssertElementPresent(
 			key_positionNumber = ${positionNumber},
 			key_value = ${value},
 			locator1 = "FormRules#VIEW_RULE_BUILDER_ACTION_CONDITION");
 	}
 
-	macro viewRuleCondition {
+	@summary = "Default summary"
+	macro viewRuleCondition(condition = null,conditonRowNumber = null) {
 		AssertTextEquals(
 			key_condition = ${condition},
 			key_conditonRowNumber = ${conditonRowNumber},
@@ -476,15 +521,18 @@ definition {
 			value1 = ${condition});
 	}
 
-	macro viewRuleConditionDropdownDisabled {
+	@summary = "Default summary"
+	macro viewRuleConditionDropdownDisabled() {
 		AssertNotEditable(locator1 = "FormRules#RULE_BUILDER_RULE_CONDITION_DROPDOWN");
 	}
 
-	macro viewRuleConditionDropdownEnabled {
+	@summary = "Default summary"
+	macro viewRuleConditionDropdownEnabled() {
 		AssertEditable(locator1 = "FormRules#RULE_BUILDER_RULE_CONDITION_DROPDOWN");
 	}
 
-	macro viewSummary {
+	@summary = "Default summary"
+	macro viewSummary(conditionOperator = null,ruleNumber = null,action = null,conditionFieldConstant = null,actionTarget = null,conditionField = null) {
 		FormRules.viewConditionFieldSummary(
 			conditionField = ${conditionField},
 			ruleNumber = ${ruleNumber});

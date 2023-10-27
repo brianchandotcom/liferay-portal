@@ -1,6 +1,7 @@
 definition {
 
-	macro _deleteAllOrganizations {
+	@summary = "Default summary"
+	macro _deleteAllOrganizations() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -31,7 +32,29 @@ definition {
 		}
 	}
 
-	macro _getOrganizationIds {
+	@summary = "Default summary"
+	macro _deleteOrganizationById(organizationId = null,) {
+		var baseURL = ${baseURL};
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		echo("Deleting organization with id: ${organizationId}");
+
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${baseURL}/o/headless-admin-user/v1.0/organizations/${organizationId} \
+				-u ${userLoginInfo} \
+				-H 'accept: application/json' \
+		''';
+
+		JSONCurlUtil.delete(${curl});
+	}
+
+	@summary = "Default summary"
+	macro _getOrganizationIds() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -58,7 +81,8 @@ definition {
 		return ${channelIds};
 	}
 
-	macro _getOrganizationsCount {
+	@summary = "Default summary"
+	macro _getOrganizationsCount() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {

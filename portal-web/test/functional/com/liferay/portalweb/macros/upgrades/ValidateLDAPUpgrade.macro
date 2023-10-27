@@ -1,6 +1,7 @@
 definition {
 
-	macro viewLDAPConfiguration {
+	@summary = "Default summary"
+	macro viewLDAPConfiguration() {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",

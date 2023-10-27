@@ -1,10 +1,12 @@
 definition {
 
-	macro accessEmailReportSettings {
+	@summary = "Default summary"
+	macro accessEmailReportSettings() {
 		Click(locator1 = "ACEmailReport#EMAIL_REPORT_WIDGET_ICON");
 	}
 
-	macro disableEmailReport {
+	@summary = "Default summary"
+	macro disableEmailReport() {
 		ACEmailReport.accessEmailReportSettings();
 
 		ACEmailReport.disableEmailReportToggle();
@@ -12,11 +14,13 @@ definition {
 		Button.clickSave();
 	}
 
-	macro disableEmailReportToggle {
+	@summary = "Default summary"
+	macro disableEmailReportToggle() {
 		Uncheck.uncheckToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
 	}
 
-	macro enableEmailReport {
+	@summary = "Default summary"
+	macro enableEmailReport(frequency = null) {
 		ACEmailReport.accessEmailReportSettings();
 
 		ACEmailReport.enableEmailReportToggle();
@@ -26,11 +30,13 @@ definition {
 		Button.clickSave();
 	}
 
-	macro enableEmailReportToggle {
+	@summary = "Default summary"
+	macro enableEmailReportToggle() {
 		Check.checkToggleSwitch(locator1 = "ACUtils#TOGGLE_ICON");
 	}
 
-	macro viewEmailReportDetails {
+	@summary = "Default summary"
+	macro viewEmailReportDetails(metricNameList = null,metricValueList = null) {
 		var list1 = ListUtil.newListFromString(${metricNameList});
 		var list2 = ListUtil.newListFromString(${metricValueList});
 		var size = ListUtil.size(${list1});

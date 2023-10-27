@@ -1,6 +1,7 @@
 definition {
 
-	macro assertModalOption {
+	@summary = "Default summary"
+	macro assertModalOption(description = null,option = null) {
 		if (isSet(option)) {
 			AssertElementPresent(
 				key_text = ${option},
@@ -14,14 +15,16 @@ definition {
 		}
 	}
 
-	macro birthDate {
+	@summary = "Default summary"
+	macro birthDate(nextDayDate = null) {
 		Type(
 			key_placeHolder = "__/__/____",
 			locator1 = "TextInput#ANY_PLACEHOLDER",
 			value1 = ${nextDayDate});
 	}
 
-	macro openNewApplicationFlow {
+	@summary = "Default summary"
+	macro openNewApplicationFlow(insurance = null,button = null,product = null) {
 		Button.click(button = "Application");
 
 		RaylifeApplicationModal.selectModalOption(key_text = ${insurance});
@@ -39,13 +42,15 @@ definition {
 		}
 	}
 
-	macro selectModalOption {
+	@summary = "Default summary"
+	macro selectModalOption(option = null) {
 		Click(
 			key_text = ${option},
 			locator1 = "RaylifeApplicationModal#MODAL_OPTION");
 	}
 
-	macro selectOptionInDropdownByName {
+	@summary = "Default summary"
+	macro selectOptionInDropdownByName(text = null) {
 		Click(locator1 = "RaylifeApplicationModal#OPEN_DROPDOWN");
 
 		Click(
@@ -53,13 +58,15 @@ definition {
 			locator1 = "RaylifeApplicationModal#SELECT_DROPDOWN_OPTION");
 	}
 
-	macro selectOptionInModalByID {
+	@summary = "Default summary"
+	macro selectOptionInModalByID(value = null) {
 		Select(
 			locator1 = "RaylifeApplicationModal#SELECT_OPTION",
 			value1 = ${value});
 	}
 
-	macro typeAllNewApplicationContactInfoFields {
+	@summary = "Default summary"
+	macro typeAllNewApplicationContactInfoFields(firstName = null,lastName = null,zipCode = null,emailAddress = null,phoneNumber = null,apt = null,streetAddress = null,city = null,state = null) {
 		var nextDayDate = DateUtil.getFormattedDate("+1", "MM/dd/yyyy");
 
 		RaylifeApplicationModal.typeNewApplicationInfoFields(
@@ -107,7 +114,8 @@ definition {
 		Button.click(button = "Next");
 	}
 
-	macro typeAllNewApplicationCoverageInfoFields {
+	@summary = "Default summary"
+	macro typeAllNewApplicationCoverageInfoFields(uninsuredOrUnderinsuredMPD = null,propertyDamage = null,collisionAmount = null,uninsuredOrUnderinsuredMBI = null,medicalAmount = null,bodilyInjury = null,comprehensiveAmount = null) {
 		RaylifeApplicationModal.selectOptionInModalByID(
 			label = "mySelectId",
 			value = ${bodilyInjury});
@@ -139,7 +147,8 @@ definition {
 		Button.click(button = "Review quote");
 	}
 
-	macro typeAllNewApplicationDriverInfoFields {
+	@summary = "Default summary"
+	macro typeAllNewApplicationDriverInfoFields(militaryAffiliation = null,firstName = null,lastName = null,occupation = null,gender = null,highestEducation = null,ageFirstLicenced = null,maritalStatus = null,relationToContact = null) {
 		RaylifeApplicationModal.typeNewApplicationInfoFields(
 			label = "firstName",
 			value = ${firstName});
@@ -196,7 +205,8 @@ definition {
 		}
 	}
 
-	macro typeAllNewApplicationVehicleInfoFields {
+	@summary = "Default summary"
+	macro typeAllNewApplicationVehicleInfoFields(annualMileage = null,ownership = null,year = null,primaryUse = null,model = null,make = null) {
 		RaylifeApplicationModal.selectOptionInDropdownByName(
 			field = "years",
 			text = ${year});
@@ -224,7 +234,8 @@ definition {
 		Button.click(button = "Next");
 	}
 
-	macro typeNewApplicationInfoFields {
+	@summary = "Default summary"
+	macro typeNewApplicationInfoFields(value = null) {
 		Type(
 			locator1 = "Raylife#FORMS_FIELDS",
 			value1 = ${value});

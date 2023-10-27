@@ -49,17 +49,6 @@ import org.osgi.service.component.annotations.Reference;
 public class VelocityManager extends BaseTemplateManager {
 
 	@Override
-	public void destroy() {
-		if (_velocityEngine == null) {
-			return;
-		}
-
-		_velocityEngine = null;
-
-		_templateContextHelper.removeAllHelperUtilities();
-	}
-
-	@Override
 	public String getName() {
 		return TemplateConstants.LANG_TYPE_VM;
 	}
@@ -69,8 +58,154 @@ public class VelocityManager extends BaseTemplateManager {
 		return _velocityEngineConfiguration.restrictedVariables();
 	}
 
+	public class VelocityTemplateResourceCache
+		extends BaseTemplateResourceCache {
+
+		public VelocityTemplateResourceCache(
+			VelocityEngineConfiguration velocityEngineConfiguration) {
+
+			init(
+				velocityEngineConfiguration.resourceModificationCheckInterval(),
+				_portalCacheName,
+				StringBundler.concat(
+					TemplateResource.class.getName(), StringPool.POUND,
+					TemplateConstants.LANG_TYPE_VM));
+		}
+
+		public void destroy() {
+			super.destroy();
+		}
+
+		public void setModificationCheckInterval(
+			VelocityEngineConfiguration velocityEngineConfiguration) {
+
+			setModificationCheckInterval(
+				velocityEngineConfiguration.
+					resourceModificationCheckInterval());
+		}
+
+		private final String _portalCacheName =
+			VelocityManager.VelocityTemplateResourceCache.class.getName();
+
+	}
+
+	public class VelocityTemplateResourceLoader
+		extends BaseTemplateResourceLoader {
+
+		public VelocityTemplateResourceLoader(
+			BundleContext bundleContext,
+			TemplateResourceCache templateResourceCache) {
+
+			init(
+				bundleContext, TemplateConstants.LANG_TYPE_VM,
+				templateResourceCache);
+		}
+
+		public void destroy() {
+			super.destroy();
+		}
+
+	}
+
+	@Activate
+	protected void activate(
+			BundleContext bundleContext, Map<String, Object> properties)
+		throws TemplateException {
+
+		_velocityEngineConfiguration = ConfigurableUtil.createConfigurable(
+			VelocityEngineConfiguration.class, properties);
+
+		_velocityTemplateResourceCache = new VelocityTemplateResourceCache(
+			_velocityEngineConfiguration);
+
+		_velocityTemplateResourceLoader = new VelocityTemplateResourceLoader(
+			bundleContext, _velocityTemplateResourceCache);
+
+		_templateResourceLoaderServiceRegistration =
+			bundleContext.registerService(
+				TemplateResourceLoader.class, _velocityTemplateResourceLoader,
+				null);
+
+		_init();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_destroy();
+
+		_templateResourceLoaderServiceRegistration.unregister();
+
+		_velocityTemplateResourceCache.destroy();
+
+		_velocityTemplateResourceLoader.destroy();
+	}
+
 	@Override
-	public void init() throws TemplateException {
+	protected Template doGetTemplate(
+		TemplateResource templateResource, boolean restricted,
+		Map<String, Object> helperUtilities) {
+
+		return new VelocityTemplate(
+			templateResource, helperUtilities, _velocityEngine,
+			_templateContextHelper, _velocityTemplateResourceCache, restricted);
+	}
+
+	@Override
+	protected TemplateContextHelper getTemplateContextHelper() {
+		return _templateContextHelper;
+	}
+
+	@Modified
+	protected void modified(Map<String, Object> properties)
+		throws TemplateException {
+
+		_velocityEngineConfiguration = ConfigurableUtil.createConfigurable(
+			VelocityEngineConfiguration.class, properties);
+
+		_velocityTemplateResourceCache.setModificationCheckInterval(
+			_velocityEngineConfiguration);
+
+		_destroy();
+
+		_init();
+	}
+
+	private void _destroy() {
+		if (_velocityEngine == null) {
+			return;
+		}
+
+		_velocityEngine = null;
+
+		_templateContextHelper.removeAllHelperUtilities();
+	}
+
+	private String _getVelocimacroLibrary(Class<?> clazz) {
+		String contextName = ClassLoaderPool.getContextName(
+			clazz.getClassLoader());
+
+		contextName = contextName.concat(
+			TemplateConstants.CLASS_LOADER_SEPARATOR);
+
+		String[] velocimacroLibrary =
+			_velocityEngineConfiguration.velocimacroLibrary();
+
+		StringBundler sb = new StringBundler(3 * velocimacroLibrary.length);
+
+		for (String library : velocimacroLibrary) {
+			sb.append(contextName);
+			sb.append(library);
+			sb.append(StringPool.COMMA);
+		}
+
+		if (velocimacroLibrary.length > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		return sb.toString();
+	}
+
+	private void _init() throws TemplateException {
 		if (_velocityEngine != null) {
 			return;
 		}
@@ -180,132 +315,6 @@ public class VelocityManager extends BaseTemplateManager {
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);
 		}
-	}
-
-	public class VelocityTemplateResourceCache
-		extends BaseTemplateResourceCache {
-
-		public VelocityTemplateResourceCache(
-			VelocityEngineConfiguration velocityEngineConfiguration) {
-
-			init(
-				velocityEngineConfiguration.resourceModificationCheckInterval(),
-				_portalCacheName,
-				StringBundler.concat(
-					TemplateResource.class.getName(), StringPool.POUND,
-					TemplateConstants.LANG_TYPE_VM));
-		}
-
-		public void destroy() {
-			super.destroy();
-		}
-
-		public void setModificationCheckInterval(
-			VelocityEngineConfiguration velocityEngineConfiguration) {
-
-			setModificationCheckInterval(
-				velocityEngineConfiguration.
-					resourceModificationCheckInterval());
-		}
-
-		private final String _portalCacheName =
-			VelocityManager.VelocityTemplateResourceCache.class.getName();
-
-	}
-
-	public class VelocityTemplateResourceLoader
-		extends BaseTemplateResourceLoader {
-
-		public VelocityTemplateResourceLoader(
-			BundleContext bundleContext,
-			TemplateResourceCache templateResourceCache) {
-
-			init(
-				bundleContext, TemplateConstants.LANG_TYPE_VM,
-				templateResourceCache);
-		}
-
-		public void destroy() {
-			super.destroy();
-		}
-
-	}
-
-	@Activate
-	protected void activate(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
-		_velocityEngineConfiguration = ConfigurableUtil.createConfigurable(
-			VelocityEngineConfiguration.class, properties);
-
-		_velocityTemplateResourceCache = new VelocityTemplateResourceCache(
-			_velocityEngineConfiguration);
-
-		_velocityTemplateResourceLoader = new VelocityTemplateResourceLoader(
-			bundleContext, _velocityTemplateResourceCache);
-
-		_templateResourceLoaderServiceRegistration =
-			bundleContext.registerService(
-				TemplateResourceLoader.class, _velocityTemplateResourceLoader,
-				null);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_templateResourceLoaderServiceRegistration.unregister();
-
-		_velocityTemplateResourceCache.destroy();
-
-		_velocityTemplateResourceLoader.destroy();
-	}
-
-	@Override
-	protected Template doGetTemplate(
-		TemplateResource templateResource, boolean restricted,
-		Map<String, Object> helperUtilities) {
-
-		return new VelocityTemplate(
-			templateResource, helperUtilities, _velocityEngine,
-			_templateContextHelper, _velocityTemplateResourceCache, restricted);
-	}
-
-	@Override
-	protected TemplateContextHelper getTemplateContextHelper() {
-		return _templateContextHelper;
-	}
-
-	@Modified
-	protected void modified(Map<String, Object> properties) {
-		_velocityEngineConfiguration = ConfigurableUtil.createConfigurable(
-			VelocityEngineConfiguration.class, properties);
-
-		_velocityTemplateResourceCache.setModificationCheckInterval(
-			_velocityEngineConfiguration);
-	}
-
-	private String _getVelocimacroLibrary(Class<?> clazz) {
-		String contextName = ClassLoaderPool.getContextName(
-			clazz.getClassLoader());
-
-		contextName = contextName.concat(
-			TemplateConstants.CLASS_LOADER_SEPARATOR);
-
-		String[] velocimacroLibrary =
-			_velocityEngineConfiguration.velocimacroLibrary();
-
-		StringBundler sb = new StringBundler(3 * velocimacroLibrary.length);
-
-		for (String library : velocimacroLibrary) {
-			sb.append(contextName);
-			sb.append(library);
-			sb.append(StringPool.COMMA);
-		}
-
-		if (velocimacroLibrary.length > 0) {
-			sb.setIndex(sb.index() - 1);
-		}
-
-		return sb.toString();
 	}
 
 	private static volatile VelocityEngineConfiguration

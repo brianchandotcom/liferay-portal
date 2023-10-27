@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -86,16 +85,6 @@ public class TemplateManagerUtilTest {
 	}
 
 	@Test
-	public void testGetTemplateManagers() {
-		Map<String, TemplateManager> templateManagers =
-			TemplateManagerUtil.getTemplateManagers();
-
-		Assert.assertSame(
-			_templateManager,
-			templateManagers.get(_TEST_TEMPLATE_MANAGER_NAME));
-	}
-
-	@Test
 	public void testHasTemplateManager() {
 		Assert.assertTrue(
 			_TEST_TEMPLATE_MANAGER_NAME + " not found",
@@ -109,8 +98,7 @@ public class TemplateManagerUtilTest {
 	private static final TemplateResource _TEMPLATE_RESOURCE =
 		ProxyFactory.newDummyInstance(TemplateResource.class);
 
-	private static final String _TEST_TEMPLATE_MANAGER_NAME =
-		"TEST_TEMPLATE_MANAGER_NAME";
+	private static final String _TEST_TEMPLATE_MANAGER_NAME = "test";
 
 	private static ServiceRegistration<TemplateManager> _serviceRegistration;
 	private static TemplateManager _templateManager;

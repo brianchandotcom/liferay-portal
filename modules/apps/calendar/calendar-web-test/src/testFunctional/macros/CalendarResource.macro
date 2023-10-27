@@ -1,6 +1,7 @@
 definition {
 
-	macro _expandDetailsPanel {
+	@summary = "Default summary"
+	macro _expandDetailsPanel() {
 		if (IsElementPresent(locator1 = "CalendarEditResource#DETAILS_PANEL_COLLAPSED")) {
 			Click(locator1 = "CalendarEditResource#DETAILS_PANEL_COLLAPSED");
 
@@ -8,7 +9,8 @@ definition {
 		}
 	}
 
-	macro add {
+	@summary = "Default summary"
+	macro add(calendarResourceName = null) {
 		CalendarNavigator.gotoAddResource();
 
 		CalendarResource.editResourceName(calendarResourceName = ${calendarResourceName});
@@ -18,7 +20,8 @@ definition {
 		CalendarResource.view(calendarResourceName = ${calendarResourceName});
 	}
 
-	macro addCalendarByResource {
+	@summary = "Default summary"
+	macro addCalendarByResource(calendarName = null) {
 		Click(locator1 = "CalendarManageCalendars#ADD_CALENDAR");
 
 		Calendar._editName(calendarName = ${calendarName});
@@ -28,17 +31,20 @@ definition {
 		Navigator.gotoBack();
 	}
 
-	macro clearSearchResults {
+	@summary = "Default summary"
+	macro clearSearchResults() {
 		Click(locator1 = "WorkflowConfiguration#CLEAR_BUTTON");
 	}
 
-	macro deactivate {
+	@summary = "Default summary"
+	macro deactivate() {
 		CalendarResource._expandDetailsPanel();
 
 		Uncheck(locator1 = "CalendarEditResource#DETAILS_PANEL_ACTIVE_CHECKBOX");
 	}
 
-	macro delete {
+	@summary = "Default summary"
+	macro delete(calendarResourceName = null) {
 		CalendarNavigator.gotoResources();
 
 		var key_calendarResourceName = ${calendarResourceName};
@@ -60,7 +66,8 @@ definition {
 		AssertTextNotPresent(value1 = ${calendarResourceName});
 	}
 
-	macro edit {
+	@summary = "Default summary"
+	macro edit(calendarResourceName = null,calendarResourceNameEdit = null) {
 		CalendarNavigator.gotoResources();
 
 		var key_calendarResourceName = ${calendarResourceName};
@@ -84,31 +91,37 @@ definition {
 		CalendarResource.view(calendarResourceName = ${calendarResourceNameEdit});
 	}
 
-	macro editResourceDescription {
+	@summary = "Default summary"
+	macro editResourceDescription(calendarResourceDescription = null) {
 		CalendarResource._expandDetailsPanel();
 
 		PortletEntry.inputDescription(description = ${calendarResourceDescription});
 	}
 
-	macro editResourceName {
+	@summary = "Default summary"
+	macro editResourceName(calendarResourceName = null) {
 		PortletEntry.inputName(name = ${calendarResourceName});
 	}
 
-	macro gotoPermissions {
+	@summary = "Default summary"
+	macro gotoPermissions() {
 		Click(locator1 = "CalendarResources#VERTICAL_ELLIPSIS_BY_RESOURCE_NAME");
 
 		MenuItem.clickNoError(menuItem = "Permissions");
 	}
 
-	macro notDisplayResultBar {
+	@summary = "Default summary"
+	macro notDisplayResultBar() {
 		AssertElementNotPresent(locator1 = "CalendarResources#VIEW_RESOURCE_RESULT_BAR");
 	}
 
-	macro resourceSetFilterAndOrder {
+	@summary = "Default summary"
+	macro resourceSetFilterAndOrder(filterBy = null) {
 		ManagementBar.setFilterAndOrder(filterBy = ${filterBy});
 	}
 
-	macro save {
+	@summary = "Default summary"
+	macro save(calendarResourceName = null) {
 		Click(locator1 = "Button#SAVE");
 
 		var key_calendarResourceName = ${calendarResourceName};
@@ -116,13 +129,15 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro search {
+	@summary = "Default summary"
+	macro search(searchTerm = null) {
 		Search.searchPG(
 			portletName = "Calendar",
 			searchTerm = ${searchTerm});
 	}
 
-	macro tearDown {
+	@summary = "Default summary"
+	macro tearDown() {
 		CalendarNavigator.gotoResources();
 
 		while (IsElementPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS")) {
@@ -140,7 +155,8 @@ definition {
 		AssertElementNotPresent(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 	}
 
-	macro view {
+	@summary = "Default summary"
+	macro view(calendarResourceName = null) {
 		CalendarNavigator.gotoResources();
 
 		var key_calendarResourceName = ${calendarResourceName};
@@ -160,11 +176,13 @@ definition {
 		AssertElementPresent(locator1 = "CalendarResources#RESOURCE_TABLE_ACTIONS");
 	}
 
-	macro viewCalendarNameByResourceOntable {
+	@summary = "Default summary"
+	macro viewCalendarNameByResourceOntable() {
 		AssertElementPresent(locator1 = "CalendarManageCalendars#CALENDAR_TABLE_NAME");
 	}
 
-	macro viewDefault {
+	@summary = "Default summary"
+	macro viewDefault(calendarResourceName = null) {
 		CalendarNavigator.gotoResources();
 
 		var key_calendarResourceName = ${calendarResourceName};
@@ -176,11 +194,13 @@ definition {
 		AssertElementNotPresent(locator1 = "CalendarResources#RESOURCE_TABLE_NAME");
 	}
 
-	macro viewMenuPermissionsModal {
+	@summary = "Default summary"
+	macro viewMenuPermissionsModal() {
 		AssertElementPresent(locator1 = "CalendarResources#RESOURCE_PERMISSIONS_MODAL");
 	}
 
-	macro viewResourceCalendars {
+	@summary = "Default summary"
+	macro viewResourceCalendars(calendarResourceName = null) {
 		var key_calendarResourceName = ${calendarResourceName};
 
 		AssertTextEquals(
@@ -192,7 +212,8 @@ definition {
 			value1 = "${calendarResourceName}'s Calendars");
 	}
 
-	macro viewResourceName {
+	@summary = "Default summary"
+	macro viewResourceName(calendarResourceName = null) {
 		var key_calendarResourceName = ${calendarResourceName};
 
 		AssertTextEquals(
@@ -200,7 +221,8 @@ definition {
 			value1 = ${calendarResourceName});
 	}
 
-	macro viewResourceNameNotPresent {
+	@summary = "Default summary"
+	macro viewResourceNameNotPresent(calendarResourceName = null) {
 		var key_calendarResourceName = ${calendarResourceName};
 
 		AssertElementNotPresent(locator1 = "CalendarResources#RESOURCE_TABLE_NAME");
@@ -208,13 +230,15 @@ definition {
 		AssertTextNotPresent(value1 = ${calendarResourceName});
 	}
 
-	macro viewSearchSummaryResults {
+	@summary = "Default summary"
+	macro viewSearchSummaryResults(searchResults = null) {
 		AssertTextEquals(
 			locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",
 			value1 = ${searchResults});
 	}
 
-	macro viewTableEmpty {
+	@summary = "Default summary"
+	macro viewTableEmpty() {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No resources were found.");

@@ -1,6 +1,7 @@
 definition {
 
-	macro uploadDocuments {
+	@summary = "Default summary"
+	macro uploadDocuments(dmDocumentFileList = null) {
 		if (isSet(dmDocumentFileList)) {
 			for (var fileName : list ${dmDocumentFileList}) {
 				AssertElementPresent(locator1 = "RaylifeUploadDocuments#BROWSE_FILES");

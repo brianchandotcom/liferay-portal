@@ -3,7 +3,8 @@ definition {
 	static var clientExtension = "";
 	static var companyWebId = "";
 
-	macro commerceTearDown {
+	@summary = "Default summary"
+	macro commerceTearDown() {
 		JSONUser.tearDownNonAdminUsers();
 
 		CommerceJSONAccountsAPI._deleteAllCommerceAccounts();
@@ -23,7 +24,8 @@ definition {
 		CommerceConfiguration.commerceInitializersTearDown();
 	}
 
-	macro marketplaceInitializersTearDown {
+	@summary = "Default summary"
+	macro marketplaceInitializersTearDown() {
 		var companyWebId = JSONCompany.getWebId();
 
 		if (isSet(clientExtension)) {
@@ -74,7 +76,8 @@ definition {
 		}
 	}
 
-	macro marketplaceSetUp {
+	@summary = "Default summary"
+	macro marketplaceSetUp(clientExtensionDeploy = null) {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();

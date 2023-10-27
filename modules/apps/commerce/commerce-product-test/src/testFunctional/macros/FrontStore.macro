@@ -1,6 +1,7 @@
 definition {
 
-	macro addInitializerProductToCart {
+	@summary = "Default summary"
+	macro addInitializerProductToCart(orderType = null,productQuantity = null,allowedQuantities = null,productName = null) {
 		var newItemCount = FrontStore.getCurrentCartItemCount(productName = ${productName});
 
 		Refresh();
@@ -39,7 +40,8 @@ definition {
 			locator1 = "CommerceAccelerators#MINI_CART_BUTTON_DATA_BADGE_COUNT");
 	}
 
-	macro addInitializerProductToCartFromProductDetails {
+	@summary = "Default summary"
+	macro addInitializerProductToCartFromProductDetails(productQuantity = null,uomName = null,productName = null) {
 		var newItemCount = FrontStore.getCurrentCartItemCount(productName = ${productName});
 
 		Refresh();
@@ -61,7 +63,8 @@ definition {
 			locator1 = "CommerceAccelerators#MINI_CART_BUTTON_DATA_BADGE_COUNT");
 	}
 
-	macro addToCartFromProductDetails {
+	@summary = "Default summary"
+	macro addToCartFromProductDetails(productSku = null,optionNamesAndValues = null,productName = null) {
 		var newItemCount = FrontStore.getCurrentCartItemCount(productName = ${productName});
 
 		Refresh();
@@ -81,6 +84,15 @@ definition {
 			key_productSku = ${productSku},
 			locator1 = "CommerceFrontStore#FS_PRODUCT_SKU");
 
+		FrontStore.setAssociatedFSOptionsValue(
+			boolean = ${boolean},
+			date = ${date},
+			multipleSelectionValuesChecked = ${multipleSelectionValuesChecked},
+			multipleSelectionValuesNotChecked = ${multipleSelectionValuesNotChecked},
+			numeric = ${numeric},
+			singleSelectionValueChecked = ${singleSelectionValueChecked},
+			text = ${text});
+
 		Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
 
 		WaitForElementPresent(
@@ -88,7 +100,8 @@ definition {
 			locator1 = "CommerceAccelerators#MINI_CART_BUTTON_DATA_BADGE_COUNT");
 	}
 
-	macro addToCartProductWithInvalidQuantityValue {
+	@summary = "Default summary"
+	macro addToCartProductWithInvalidQuantityValue(productQuantity = null,productName = null) {
 		var currentCartItemCount = FrontStore.getCurrentCartDataBadgeCount();
 
 		Type(
@@ -109,7 +122,8 @@ definition {
 			locator1 = "CommerceAccelerators#MINI_CART_BUTTON_DATA_BADGE_COUNT");
 	}
 
-	macro applyCouponCode {
+	@summary = "Default summary"
+	macro applyCouponCode(errorMessage = null,discountCouponCode = null) {
 		AssertElementPresent(locator1 = "TextInput#DISCOUNT");
 
 		Type(
@@ -130,7 +144,8 @@ definition {
 		}
 	}
 
-	macro assertMiniCartItemAllowedQuantities {
+	@summary = "Default summary"
+	macro assertMiniCartItemAllowedQuantities(allowedQuantities = null,cartItemSku = null) {
 		for (var number : list ${allowedQuantities}) {
 			AssertElementPresent(
 				key_cartItemSku = ${cartItemSku},
@@ -139,7 +154,8 @@ definition {
 		}
 	}
 
-	macro assertMiniCompareItems {
+	@summary = "Default summary"
+	macro assertMiniCompareItems(products = null) {
 		for (var product : list ${products}) {
 			var productImageId = CommerceJSONProductsAPI._getCommerceProductImageIds(productName = ${product});
 
@@ -149,7 +165,8 @@ definition {
 		}
 	}
 
-	macro assertProductComparisonTable {
+	@summary = "Default summary"
+	macro assertProductComparisonTable(products = null) {
 		AssertLocation.assertPartialLocation(value1 = "web/minium/compare");
 
 		var columNumber = 1;
@@ -200,7 +217,8 @@ definition {
 		}
 	}
 
-	macro assertProductDetails {
+	@summary = "Default summary"
+	macro assertProductDetails(productAvailability = null,productMPN = null,sampleFileName = null,deliverySubscriptionPeriod = null,productName = null,productGTIN = null,discountPercentage = null,productSKU = null,minQuantity = null,productNetPrice = null,groupedProductEntryNames = null,productStockQuantity = null,paymentSubscriptionPeriod = null,productSpecifications = null,endOfLifeDate = null,productListPrice = null,productSalePriceInactive = null,productSalePrice = null,productImages = null,productShortDescription = null,productListPriceInactive = null,productFullDescription = null) {
 		if (isSet(productName)) {
 			AssertElementPresent(
 				locator1 = "CommerceFrontStore#FS_PRODUCT_NAME",
@@ -355,7 +373,8 @@ definition {
 		}
 	}
 
-	macro assertPromoPrice {
+	@summary = "Default summary"
+	macro assertPromoPrice(promoPrice = null,productName = null,basePrice = null) {
 		AssertTextEquals.assertPartialText(
 			key_productName = ${productName},
 			locator1 = "CommerceFrontStore#FS_PRODUCT_VALUE_PROMO_PRICE",
@@ -367,7 +386,8 @@ definition {
 			value1 = ${basePrice});
 	}
 
-	macro changeQuantityByUsingKeyArrows {
+	@summary = "Default summary"
+	macro changeQuantityByUsingKeyArrows(quantitySelectorType = null,productSKU = null,productName = null,arrowAction = null) {
 		if (${quantitySelectorType} == "Product Card") {
 			Click(
 				key_productName = ${productName},
@@ -411,7 +431,8 @@ definition {
 		}
 	}
 
-	macro clickEllipsisItemInMiniCart {
+	@summary = "Default summary"
+	macro clickEllipsisItemInMiniCart(uomKey = null,menuItem = null) {
 		Click(
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS_WITH_UOM",
 			uomKey = ${uomKey});
@@ -419,7 +440,8 @@ definition {
 		DropdownMenuItem.click(menuItem = ${menuItem});
 	}
 
-	macro compareProducts {
+	@summary = "Default summary"
+	macro compareProducts(products = null,clickCompare = null) {
 		var comparisonItems = 0;
 
 		for (var product : list ${products}) {
@@ -449,7 +471,37 @@ definition {
 		}
 	}
 
-	macro editUOMAndQuantityInMiniCart {
+	@summary = "Default summary"
+	macro editMiniCartItemBundledProduct(date = null, boolean = null, multipleSelectionValuesChecked = null, cartItemOptionName = null, multipleSelectionValuesNotChecked = null, numeric = null, cartItemOptionValue = null, text = null, singleSelectionValueNotChecked = null, singleSelectionValueChecked = null,) {
+		Select(
+			key_optionName = ${cartItemOptionName},
+			locator1 = "CommerceAccelerators#MINI_CART_PRODUCT_OPTIONS_SELECT",
+			value1 = ${cartItemOptionValue});
+
+		FrontStore.setAssociatedFSOptionsValue(
+			boolean = ${boolean},
+			date = ${date},
+			multipleSelectionValuesChecked = ${multipleSelectionValuesChecked},
+			multipleSelectionValuesNotChecked = ${multipleSelectionValuesNotChecked},
+			numeric = ${numeric},
+			singleSelectionValueChecked = ${singleSelectionValueChecked},
+			text = ${text});
+
+		FrontStore.viewAssociatedFSOptionsValue(
+			boolean = ${boolean},
+			date = ${date},
+			multipleSelectionValuesChecked = ${multipleSelectionValuesChecked},
+			multipleSelectionValuesNotChecked = ${multipleSelectionValuesNotChecked},
+			numeric = ${numeric},
+			singleSelectionValueChecked = ${singleSelectionValueChecked},
+			singleSelectionValueNotChecked = ${singleSelectionValueNotChecked},
+			text = ${text});
+
+		Button.clickSave();
+	}
+
+	@summary = "Default summary"
+	macro editUOMAndQuantityInMiniCart(quantity = null, uomKey = null, uomName = null,) {
 		Click(
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS_WITH_UOM",
 			uomKey = ${uomKey});
@@ -469,13 +521,15 @@ definition {
 		Button.clickSave();
 	}
 
-	macro getCurrentCartDataBadgeCount {
+	@summary = "Default summary"
+	macro getCurrentCartDataBadgeCount() {
 		var dataBadgeCount = selenium.getAttribute("//div[contains(@class,'mini-cart')]/button[contains(@class,'mini-cart-opener') and @data-badge-count]@data-badge-count");
 
 		return ${dataBadgeCount};
 	}
 
-	macro getCurrentCartItemCount {
+	@summary = "Default summary"
+	macro getCurrentCartItemCount(productName = null) {
 		CommerceNavigator.gotoMiniCart();
 
 		var currentItemCount = FrontStore.getCurrentCartDataBadgeCount();
@@ -490,7 +544,22 @@ definition {
 		return ${newItemCount};
 	}
 
-	macro quickAddToCartSearchAndSelectItem {
+	@summary = "Default summary"
+	macro gotoEditMiniCartItemBundledProduct(cartItemSku = null,) {
+		if (!(isSet(index))) {
+			var index = 1;
+		}
+
+		Click(
+			key_cartItemSku = ${cartItemSku},
+			key_index = ${index},
+			locator1 = "CommerceAccelerators#MINI_CART_SPECIFIC_ITEM_BUNDLED_ITEM_BODY_VERTICAL_ELLIPSIS");
+
+		MenuItem.click(menuItem = "Edit");
+	}
+
+	@summary = "Default summary"
+	macro quickAddToCartSearchAndSelectItem(orderItemSku = null,) {
 		Type(
 			locator1 = "Publications#KEYWORD_TEXTFIELD",
 			value1 = ${orderItemSku});
@@ -500,14 +569,72 @@ definition {
 			locator1 = "CommerceAccelerators#QUICK_ADD_TO_CART_SEARCH_RESULT");
 	}
 
-	macro selectAssociatedFSOptionsValue {
+	@summary = "Default summary"
+	macro selectAssociatedFSOptionsValue(fsOptionValue = null,fsOptionName = null) {
 		Select(
 			key_optionName = ${fsOptionName},
 			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT",
 			value1 = ${fsOptionValue});
 	}
 
-	macro setMaxComparisonItems {
+	@summary = "Default summary"
+	macro setAssociatedFSOptionsValue(date = null, boolean = null, multipleSelectionValuesChecked = null, multipleSelectionValuesNotChecked = null, numeric = null, text = null, singleSelectionValueChecked = null,) {
+		if (${boolean} == "enabled") {
+			Check.checkNotVisible(
+				checkboxName = "",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+		else if (${boolean} == "disabled") {
+			Uncheck.uncheckNotVisible(
+				checkboxName = "",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		if (isSet(date)) {
+			Type.sendKeys(
+				key_text = "date",
+				locator1 = "TextInput#ANY",
+				value1 = ${date});
+		}
+
+		if (isSet(multipleSelectionValuesChecked)) {
+			for (var multipleSelectionValueChecked : list ${multipleSelectionValuesChecked}) {
+				Check.checkNotVisible(
+					checkboxName = ${multipleSelectionValueChecked},
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+		}
+		else if (isSet(multipleSelectionValuesNotChecked)) {
+			for (var multipleSelectionValueNotChecked : list ${multipleSelectionValuesNotChecked}) {
+				Uncheck.uncheckNotVisible(
+					checkboxName = ${multipleSelectionValueNotChecked},
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+		}
+
+		if (isSet(numeric)) {
+			Type(
+				key_text = "numeric",
+				locator1 = "TextInput#ANY",
+				value1 = ${numeric});
+		}
+
+		if (isSet(singleSelectionValueChecked)) {
+			Click.clickAtNotVisible(
+				key_fieldValue = ${singleSelectionValueChecked},
+				locator1 = "CommerceEntry#RADIO_BUTTON_WITH_VALUE");
+		}
+
+		if (isSet(text)) {
+			Type(
+				key_text = "text",
+				locator1 = "TextInput#ANY",
+				value1 = ${text});
+		}
+	}
+
+	@summary = "Default summary"
+	macro setMaxComparisonItems(maxItems = null,) {
 		Portlet.gotoPortletOptions(
 			portletName = "Product Comparison",
 			portletOption = "Configuration");
@@ -526,7 +653,8 @@ definition {
 		Button.clickCancel();
 	}
 
-	macro setQuantitySelectorPopoverListItemText {
+	@summary = "Default summary"
+	macro setQuantitySelectorPopoverListItemText(quantityConfiguration = null) {
 		if (${quantityConfiguration} == "min") {
 			var quantityConfigurationText = "Min quantity per order is ";
 		}
@@ -551,7 +679,73 @@ definition {
 		return ${quantityConfigurationText};
 	}
 
-	macro viewGroupedProductEntries {
+	@summary = "Default summary"
+	macro viewAssociatedFSOptionsValue(boolean = null, multipleSelectionValuesChecked = null, multipleSelectionValuesNotChecked = null, numeric = null, text = null, singleSelectionValueChecked = null,) {
+		if (${boolean} == "enabled") {
+			AssertChecked.assertCheckedNotVisible(
+				checkboxName = "",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+		else if (${boolean} == "disabled") {
+			AssertNotChecked.assertNotCheckedNotVisible(
+				checkboxName = "",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		if (isSet(date)) {
+			var date = DateUtil.format(${date}, "MM/dd/yyyy", "yyyy-MM-dd");
+
+			AssertTextEquals(
+				key_text = "date",
+				locator1 = "TextInput#ANY",
+				value1 = ${date});
+		}
+
+		if (isSet(multipleSelectionValuesChecked)) {
+			for (var multipleSelectionValueChecked : list ${multipleSelectionValuesChecked}) {
+				AssertChecked.assertCheckedNotVisible(
+					checkboxName = ${multipleSelectionValueChecked},
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+		}
+		else if (isSet(multipleSelectionValuesNotChecked)) {
+			for (var multipleSelectionValueNotChecked : list ${multipleSelectionValuesNotChecked}) {
+				AssertNotChecked.assertNotCheckedNotVisible(
+					checkboxName = ${multipleSelectionValueNotChecked},
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+		}
+
+		if (isSet(numeric)) {
+			AssertTextEquals(
+				key_text = "numeric",
+				locator1 = "TextInput#ANY",
+				value1 = ${numeric});
+		}
+
+		if (isSet(singleSelectionValueChecked)) {
+			AssertChecked.assertCheckedNotVisible(
+				key_fieldValue = ${singleSelectionValueChecked},
+				locator1 = "CommerceEntry#RADIO_BUTTON_WITH_VALUE");
+		}
+		else if (isSet(singleSelectionValueNotChecked)) {
+			for (var singleSelectionValueNotChecked : list ${singleSelectionValueNotChecked}) {
+				AssertNotChecked.assertNotCheckedNotVisible(
+					key_fieldValue = ${singleSelectionValueNotChecked},
+					locator1 = "CommerceEntry#RADIO_BUTTON_WITH_VALUE");
+			}
+		}
+
+		if (isSet(text)) {
+			AssertTextEquals(
+				key_text = "text",
+				locator1 = "TextInput#ANY",
+				value1 = ${text});
+		}
+	}
+
+	@summary = "Default summary"
+	macro viewGroupedProductEntries(productNames = null,) {
 		Variables.assertDefined(parameterList = ${productNames});
 
 		for (var productName : list ${productNames}) {
@@ -577,7 +771,8 @@ definition {
 		}
 	}
 
-	macro viewMiniCart {
+	@summary = "Default summary"
+	macro viewMiniCart(cartItemNames = null,cartSummaryTotal = null,cartItemOptions = null,cartItemQuantities = null,cartItemSkUs = null,cartItemPriceValues = null,cartSummaryOrderDiscount = null,cartSummaryQuantity = null,cartSummarySubtotal = null) {
 		FrontStore.viewMiniCartItems(
 			cartItemNames = ${cartItemNames},
 			cartItemOption = ${cartItemOptions},
@@ -613,7 +808,63 @@ definition {
 		}
 	}
 
-	macro viewMiniCartItem {
+	@summary = "Default summary"
+	macro viewMiniCartEditBundledProduct(date = null, multipleSelectionValuesChecked = null, cartItemPromoPriceValue = null, cartItemPriceAsConfiguredValue = null, numeric = null, cartItemPriceValue = null, singleSelectionValueNotChecked = null, boolean = null, cartItemPriceInactiveValue = null, cartItemDiscountValue = null, cartItemOptionName = null, multipleSelectionValuesNotChecked = null, cartItemOptionValue = null, text = null, singleSelectionValueChecked = null,) {
+		AssertVisible(
+			key_productName = "Bundled Product",
+			locator1 = "CommerceAccelerators#MINI_CART_EDIT_ITEM_PANEL");
+
+		AssertSelectedLabel(
+			key_optionName = ${cartItemOptionName},
+			locator1 = "CommerceAccelerators#MINI_CART_PRODUCT_OPTIONS_SELECT",
+			value1 = ${cartItemOptionValue});
+
+		if (isSet(cartItemDiscountValue)) {
+			AssertTextEquals(
+				key_priceField = "Discount",
+				locator1 = "CommerceAccelerators#MINI_CART_EDIT_BUNDLED_PRODUCT_PRICE_VALUE",
+				value1 = ${cartItemDiscountValue});
+		}
+
+		if (isSet(cartItemPriceAsConfiguredValue)) {
+			AssertTextEquals(
+				key_priceField = "Price as Configured",
+				locator1 = "CommerceAccelerators#MINI_CART_EDIT_BUNDLED_PRODUCT_PRICE_VALUE",
+				value1 = ${cartItemPriceAsConfiguredValue});
+		}
+
+		if (isSet(cartItemPriceValue)) {
+			AssertTextEquals(
+				key_priceField = "List Price",
+				locator1 = "CommerceAccelerators#MINI_CART_EDIT_BUNDLED_PRODUCT_PRICE_VALUE",
+				value1 = ${cartItemPriceValue});
+		}
+		else if (isSet(cartItemPriceInactiveValue)) {
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#MINI_CART_EDIT_BUNDLED_PRODUCT_LIST_PRICE_INACTIVE",
+				value1 = ${cartItemPriceInactiveValue});
+		}
+
+		if (isSet(cartItemPromoPriceValue)) {
+			AssertTextEquals(
+				key_priceField = "Promo Price",
+				locator1 = "CommerceAccelerators#MINI_CART_EDIT_BUNDLED_PRODUCT_PRICE_VALUE",
+				value1 = ${cartItemPromoPriceValue});
+		}
+
+		FrontStore.viewAssociatedFSOptionsValue(
+			boolean = ${boolean},
+			date = ${date},
+			multipleSelectionValuesChecked = ${multipleSelectionValuesChecked},
+			multipleSelectionValuesNotChecked = ${multipleSelectionValuesNotChecked},
+			numeric = ${numeric},
+			singleSelectionValueChecked = ${singleSelectionValueChecked},
+			singleSelectionValueNotChecked = ${singleSelectionValueNotChecked},
+			text = ${text});
+	}
+
+	@summary = "Default summary"
+	macro viewMiniCartItem(cartItemPriceInactiveValue = null, cartItemName = null, cartItemPromoPriceValue = null, cartItemQuantity = null, bundledItems = null, cartItemSku = null, cartItemPriceValue = null, cartItemUOMKey = null,) {
 		if (!(isSet(cartItemPriceOnApplication))) {
 			var cartItemPriceOnApplication = "false";
 		}
@@ -639,10 +890,21 @@ definition {
 			value1 = ${cartItemQuantity});
 
 		if (isSet(bundledItems)) {
+			var key_cartItemSku = ${cartItemSku};
+			var key_index = ${index};
+
+			if ((IsElementPresent(locator1 = "CommerceAccelerators#MINI_CART_SPECIFIC_ITEM_BUNDLED_ITEM_SHOW_OPTIONS_PANEL_COLLAPSED")) && (IsVisible(locator1 = "CommerceAccelerators#MINI_CART_SPECIFIC_ITEM_BUNDLED_ITEM_SHOW_OPTIONS_PANEL_COLLAPSED"))) {
+				Click(
+					key_cartItemSku = ${cartItemSku},
+					key_index = ${index},
+					locator1 = "CommerceAccelerators#MINI_CART_SPECIFIC_ITEM_BUNDLED_ITEM_SHOW_OPTIONS_PANEL_COLLAPSED");
+			}
+
 			for (var bundledItem : list ${bundledItems}) {
 				AssertTextEquals.assertPartialText(
 					key_cartItemSku = ${cartItemSku},
-					locator1 = "CommerceAccelerators#MINI_CART_SPECIFIC_ITEM_BUNDLED_ITEMS",
+					key_index = ${index},
+					locator1 = "CommerceAccelerators#MINI_CART_SPECIFIC_ITEM_BUNDLED_ITEMS_N",
 					value1 = ${bundledItem});
 			}
 		}
@@ -660,6 +922,11 @@ definition {
 				key_cartItemSku = ${cartItemSku},
 				locator1 = "CommerceAccelerators#MINI_CART_ITEM_PRICE_VALUE",
 				value1 = "$ ${cartItemPriceValue}");
+		}
+		else if (isSet(cartItemPriceInactiveValue)) {
+			AssertTextEquals(
+				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_INACTIVE",
+				value1 = "$ ${cartItemPriceInactiveValue}");
 		}
 
 		if (isSet(cartItemPromoPriceValue)) {
@@ -680,14 +947,18 @@ definition {
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_THUMBNAIL");
 
 		if (isSet(cartItemOption)) {
-			AssertTextEquals(
-				key_cartItemSku = ${cartItemSku},
-				locator1 = "CommerceAccelerators#MINI_CART_ITEM_INFO_EXTRA",
-				value1 = ${cartItemOption});
+			for (var cartItemOption : list ${cartItemOption}) {
+				AssertTextEquals.assertPartialText(
+					key_cartItemSku = ${cartItemSku},
+					key_index = ${index},
+					locator1 = "CommerceAccelerators#MINI_CART_ITEM_INFO_EXTRA_N",
+					value1 = ${cartItemOption});
+			}
 		}
 	}
 
-	macro viewMiniCartItems {
+	@summary = "Default summary"
+	macro viewMiniCartItems() {
 		var count = StringUtil.count(${cartItemSkUs}, ",");
 
 		while (${count} != 0) {
@@ -710,7 +981,8 @@ definition {
 		}
 	}
 
-	macro viewProductAttachment {
+	@summary = "Default summary"
+	macro viewProductAttachment(attachmentName = null) {
 		Variables.assertDefined(parameterList = ${attachmentName});
 
 		Click(
@@ -731,7 +1003,8 @@ definition {
 			locator1 = "CommerceFrontStore#PRODUCT_DETAILS_ATTACHMENTS_BUTTON");
 	}
 
-	macro viewProductCard {
+	@summary = "Default summary"
+	macro viewProductCard(salePrice = null,description = null,netPrice = null,availability = null,productName = null,listPriceInactive = null,sku = null,listPrice = null) {
 		Variables.assertDefined(parameterList = ${productName});
 
 		var key_element = "";
@@ -913,7 +1186,8 @@ definition {
 		}
 	}
 
-	macro viewProductDetail {
+	@summary = "Default summary"
+	macro viewProductDetail(fsProductName = null,fsOptionValuesList = null,fsOptionName = null) {
 		AssertTextEquals(
 			locator1 = "CommerceFrontStore#FS_PRODUCT_NAME",
 			value1 = ${fsProductName});
@@ -950,7 +1224,8 @@ definition {
 		}
 	}
 
-	macro viewQuantitySelectorPopoverListItem {
+	@summary = "Default summary"
+	macro viewQuantitySelectorPopoverListItem(quantityConfiguration = null,quantity = null) {
 		Variables.assertDefined(parameterList = "${quantityConfiguration},${quantity}");
 
 		if (!(isSet(conditionNotSatisfied))) {

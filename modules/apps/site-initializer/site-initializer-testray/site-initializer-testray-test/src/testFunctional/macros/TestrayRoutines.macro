@@ -1,6 +1,7 @@
 definition {
 
-	macro createRoutine {
+	@summary = "Default summary"
+	macro createRoutine(routineName = null) {
 		Click(locator1 = "Button#PLUS");
 
 		if (isSet(routineName)) {
@@ -10,7 +11,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro editRoutine {
+	@summary = "Default summary"
+	macro editRoutine(newName = null) {
 		if (isSet(newName)) {
 			PortletEntry.inputName(name = ${newName});
 		}

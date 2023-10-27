@@ -1,6 +1,7 @@
 definition {
 
-	macro addWCStructureAndTemplate {
+	@summary = "Default summary"
+	macro addWCStructureAndTemplate() {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -57,7 +58,8 @@ definition {
 			webContentTitle = "WC WebContent Title");
 	}
 
-	macro EditWCStructureAndTemplateAndViewInWCDandAssetPublisher {
+	@summary = "Default summary"
+	macro EditWCStructureAndTemplateAndViewInWCDandAssetPublisher(webContentColor = null) {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		Navigator.gotoNavItem(navItem = "Structures");
@@ -107,7 +109,8 @@ definition {
 			webContentTitle = "Web Content Title");
 	}
 
-	macro EditWebContentAndViewInWCDandAssetPublisher {
+	@summary = "Default summary"
+	macro EditWebContentAndViewInWCDandAssetPublisher() {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
@@ -143,7 +146,8 @@ definition {
 			assetTitle = "Web Content Title Edit");
 	}
 
-	macro publishWCDraft {
+	@summary = "Default summary"
+	macro publishWCDraft() {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -174,7 +178,8 @@ definition {
 			webContentTitle = "Web Content Title");
 	}
 
-	macro viewNestedPortlets {
+	@summary = "Default summary"
+	macro viewNestedPortlets() {
 		Navigator.gotoPage(pageName = "Nested Portlets");
 
 		AssertTextEquals(
@@ -191,7 +196,8 @@ definition {
 			portletName = "Web Content Display");
 	}
 
-	macro viewSpecificDisplayPageTemplateViaAssetPublisher {
+	@summary = "Default summary"
+	macro viewSpecificDisplayPageTemplateViaAssetPublisher() {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/Document Display Page");
 
 		AssetPublisherPortlet.clickAssetTitle(assetTitle = "DM Document Title");
@@ -201,7 +207,8 @@ definition {
 			locator1 = "Fragment#EDITABLE_FIELD_CONTENT");
 	}
 
-	macro ViewWebContentWCStructureWCTemplateWCDandAssetPublisher {
+	@summary = "Default summary"
+	macro ViewWebContentWCStructureWCTemplateWCDandAssetPublisher(webContentColor = null) {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		if (${webContentColor} == "false") {
@@ -282,7 +289,8 @@ definition {
 			assetTitle = "Web Content Title");
 	}
 
-	macro viewWebContentWithAllFields {
+	@summary = "Default summary"
+	macro viewWebContentWithAllFields() {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		for (var fieldName : list "Boolean,Date,Decimal,Documents and Media,HTML,Image,Integer,Link to Page,Number,Radio,Select,Separator,Text,Text Box") {
@@ -407,7 +415,8 @@ definition {
 			locator1 = "WCEditWebContent#IMAGE_PICKER_PREVIEW");
 	}
 
-	macro viewWebContentWithNoDisplayPageTemplate {
+	@summary = "Default summary"
+	macro viewWebContentWithNoDisplayPageTemplate() {
 		task ("View the View Content action not shown in dropdown list and the None is selected in Display Page Template field") {
 			for (var n : list "1,2") {
 				WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -425,7 +434,8 @@ definition {
 		}
 	}
 
-	macro viewWebContentWithPredefinedValueInWebContentField {
+	@summary = "Default summary"
+	macro viewWebContentWithPredefinedValueInWebContentField() {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -443,7 +453,8 @@ definition {
 			webContentWebContent = "Web Content Title");
 	}
 
-	macro viewWithStructureCP {
+	@summary = "Default summary"
+	macro viewWithStructureCP(webContentTitle = null,webContentTitleEscapeCharacter = null,webContentImage = null,description = null) {
 		if (!(isSet(predefinedValue))) {
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 

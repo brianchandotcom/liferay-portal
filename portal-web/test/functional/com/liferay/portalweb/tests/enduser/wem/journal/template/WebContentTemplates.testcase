@@ -291,7 +291,7 @@ definition {
 		}
 
 		task ("Disable Template Creation") {
-			Open.openInTheNewTab(locator1 = "http://localhost:8080");
+			Open.openInTheNewTab(value1 = "http://localhost:8080");
 
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",

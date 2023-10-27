@@ -1,12 +1,14 @@
 definition {
 
-	macro closeFrame {
+	@summary = "Default summary"
+	macro closeFrame() {
 		SelectFrame(value1 = "relative=top");
 
 		Click.mouseDownMouseUp(locator1 = "Modal#CLOSE_BUTTON");
 	}
 
-	macro exportAndDownloadACalendarFile {
+	@summary = "Default summary"
+	macro exportAndDownloadACalendarFile() {
 		var calendarSelected = selenium.getText("CalendarExportImport#CALENDAR_TO_BE_EXPORTED");
 
 		CalendarExportImport.exportCalendarFile();
@@ -16,11 +18,13 @@ definition {
 			value1 = ${calendarSelected});
 	}
 
-	macro exportCalendarFile {
+	@summary = "Default summary"
+	macro exportCalendarFile() {
 		Button.click(button = "Export");
 	}
 
-	macro gotoExportTab {
+	@summary = "Default summary"
+	macro gotoExportTab(subTab = null) {
 		if (isSet(subTab)) {
 			Navigator.gotoNavTab(navTab = "Export");
 
@@ -31,7 +35,8 @@ definition {
 		}
 	}
 
-	macro gotoImportTab {
+	@summary = "Default summary"
+	macro gotoImportTab(subTab = null) {
 		if (isSet(subTab)) {
 			Navigator.gotoNavTab(navTab = "Import");
 
@@ -42,13 +47,15 @@ definition {
 		}
 	}
 
-	macro gotoPortletExportImport {
+	@summary = "Default summary"
+	macro gotoPortletExportImport() {
 		Portlet.gotoPortletOptions(
 			portletName = "Calendar",
 			portletOption = "Export / Import");
 	}
 
-	macro importCalendarFile {
+	@summary = "Default summary"
+	macro importCalendarFile(importValidationErrorMessage = null,calendarFile = null) {
 		UploadDependencyFile.uploadArchiveFile(fileName = ${calendarFile});
 
 		if (isSet(importValidationErrorMessage)) {
@@ -64,7 +71,8 @@ definition {
 		}
 	}
 
-	macro removeWidgetCalendar {
+	@summary = "Default summary"
+	macro removeWidgetCalendar() {
 		Portlet.gotoPortletOptions(portletName = "Calendar");
 
 		MenuItem.clickNoError(menuItem = "Remove");
@@ -72,11 +80,13 @@ definition {
 		AssertConfirm(value1 = "Are you sure you want to remove this component?");
 	}
 
-	macro selectConfigurationIFrame {
+	@summary = "Default summary"
+	macro selectConfigurationIFrame() {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
-	macro viewExportedCalendarFileName {
+	@summary = "Default summary"
+	macro viewExportedCalendarFileName() {
 		var calendarSelected = selenium.getText("CalendarExportImport#CALENDAR_TO_BE_EXPORTED");
 
 		CalendarExportImport.gotoExportTab(subTab = "Current and Previous");
@@ -86,13 +96,15 @@ definition {
 			value1 = ${calendarSelected});
 	}
 
-	macro viewNoProcessesOnCurrentAndPreviousTab {
+	@summary = "Default summary"
+	macro viewNoProcessesOnCurrentAndPreviousTab() {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "processes were found.");
 	}
 
-	macro viewSuccessStatusOnCurrentAndPreviousTab {
+	@summary = "Default summary"
+	macro viewSuccessStatusOnCurrentAndPreviousTab(key_larFileName = null) {
 		AssertTextEquals(
 			key_larFileName = "Successful",
 			locator1 = "ExportImport#CURRENT_AND_PREVIOUS_STATUS",

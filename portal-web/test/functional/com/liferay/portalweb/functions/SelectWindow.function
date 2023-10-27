@@ -1,58 +1,58 @@
 @default = "selectWindow"
 definition {
 
-	function selectPopUp {
+	function selectPopUp(value1) {
 		WaitForSPARefresh();
 
 		selenium.pause(5000);
 
-		selenium.selectPopUp();
+		selenium.selectPopUp(${value1});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function selectWindow {
+	function selectWindow(value1) {
 		WaitForSPARefresh();
 
 		selenium.pause(5000);
 
-		selenium.selectWindow();
+		selenium.selectWindow(${value1});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function selectWindowNoSPARefresh {
+	function selectWindowNoSPARefresh(value1) {
 		selenium.pause(5000);
 
-		selenium.selectWindow();
+		selenium.selectWindow(${value1});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function selectWindowTopNoSPARefresh {
+	function selectWindowTopNoSPARefresh() {
 		selenium.pause(5000);
 
 		selenium.selectWindow("null");
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function waitForSelectPopUp {
+	function waitForSelectPopUp(value1, value2) {
 		WaitForSPARefresh();
 
-		selenium.waitForPopUp(${locator1}, ${value1});
+		selenium.waitForPopUp(${value1}, "");
 
-		selenium.selectPopUp();
+		selenium.selectPopUp(${value1});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

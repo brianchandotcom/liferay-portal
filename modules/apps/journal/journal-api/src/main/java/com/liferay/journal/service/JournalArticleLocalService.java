@@ -1386,6 +1386,9 @@ public interface JournalArticleLocalService
 	public int getArticlesCount(long groupId, String articleId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getArticlesCountByResourcePrimKey(long resourcePrimKey);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public String getArticleTitle(long articlePK, Locale locale);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

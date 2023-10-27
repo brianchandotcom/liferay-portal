@@ -1,6 +1,7 @@
 definition {
 
-	macro addDataDefinitionWithDB2 {
+	@summary = "Default summary"
+	macro addDataDefinitionWithDB2(site = null) {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		ProductMenu.gotoPortlet(
@@ -50,7 +51,8 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "SQLCODE=-727");
 	}
 
-	macro createNewStructureUsingAnUpgradedStructureAsFieldset {
+	@summary = "Default summary"
+	macro createNewStructureUsingAnUpgradedStructureAsFieldset() {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		NavItem.gotoStructures();
@@ -90,7 +92,8 @@ definition {
 		}
 	}
 
-	macro createNewWebContentUsingAnUpgradedStructure {
+	@summary = "Default summary"
+	macro createNewWebContentUsingAnUpgradedStructure() {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "My Structure with nested fields");
@@ -164,7 +167,8 @@ definition {
 			webContentTitleTranslated = "My Web Content based on My Structure with nested fields - ca_ES");
 	}
 
-	macro createNewWebContentUsingAnUpgradedStructureWithFieldset {
+	@summary = "Default summary"
+	macro createNewWebContentUsingAnUpgradedStructureWithFieldset() {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "My Structure with Fieldsets level 2");
@@ -238,7 +242,8 @@ definition {
 			webContentTitleTranslated = "My Web Content based on My Structure with Fieldsets level 2 - ca_ES");
 	}
 
-	macro editAnUpgradedStructureWithFieldGroup {
+	@summary = "Default summary"
+	macro editAnUpgradedStructureWithFieldGroup() {
 		var fieldList = "Text,Date,Number";
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
@@ -314,7 +319,8 @@ definition {
 			fieldName = "Numeric");
 	}
 
-	macro editAnUpgradedStructureWithFieldset {
+	@summary = "Default summary"
+	macro editAnUpgradedStructureWithFieldset() {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		NavItem.gotoStructures();
@@ -492,7 +498,8 @@ definition {
 			fieldName = "Numeric");
 	}
 
-	macro editAnUpgradedWebContentWithTranslations {
+	@summary = "Default summary"
+	macro editAnUpgradedWebContentWithTranslations() {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "My Web Content based on My Structure with repeated fields");
@@ -546,7 +553,8 @@ definition {
 		}
 	}
 
-	macro validateFieldLabelsTranslatedInStructure {
+	@summary = "Default summary"
+	macro validateFieldLabelsTranslatedInStructure(allFields = null) {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		NavItem.gotoStructures();
@@ -584,7 +592,8 @@ definition {
 		}
 	}
 
-	macro validateFieldLabelsTranslatedInStructureWithFieldGroup {
+	@summary = "Default summary"
+	macro validateFieldLabelsTranslatedInStructureWithFieldGroup() {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
@@ -623,7 +632,8 @@ definition {
 		}
 	}
 
-	macro validateFieldLabelsTranslatedInStructureWithFieldSet {
+	@summary = "Default summary"
+	macro validateFieldLabelsTranslatedInStructureWithFieldSet() {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		NavItem.gotoStructures();
@@ -682,7 +692,8 @@ definition {
 			value1 = "Number - pt-BR");
 	}
 
-	macro validateNStructure {
+	@summary = "Default summary"
+	macro validateNStructure() {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
@@ -695,7 +706,8 @@ definition {
 		}
 	}
 
-	macro validateNWebContent {
+	@summary = "Default summary"
+	macro validateNWebContent() {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		var wcList = "My Web Content based on My Structure with Fieldsets level 2,My Web Content based on My Structure with all fields,My Web Content based on My Structure with nested fields,My Web Content based on My Structure with repeated fields";
@@ -708,7 +720,8 @@ definition {
 		}
 	}
 
-	macro validateWebContentWithAllFieldsTranslated {
+	@summary = "Default summary"
+	macro validateWebContentWithAllFieldsTranslated(fieldList = null) {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "My Web Content based on My Structure with all fields");
@@ -736,7 +749,8 @@ definition {
 		}
 	}
 
-	macro validateWebContentWithFieldGroupLevel2AndTranslations {
+	@summary = "Default summary"
+	macro validateWebContentWithFieldGroupLevel2AndTranslations() {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContent.viewWithStructureCP(
@@ -775,7 +789,8 @@ definition {
 			webContentTitleTranslated = "My Web Content based on My Structure with nested fields - ca_ES");
 	}
 
-	macro validateWebContentWithFieldsetLevel2AndTranslations {
+	@summary = "Default summary"
+	macro validateWebContentWithFieldsetLevel2AndTranslations() {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContent.viewWithStructureCP(
@@ -814,52 +829,53 @@ definition {
 			webContentTitleTranslated = "My Web Content based on My Structure with Fieldsets level 2 - ca_ES");
 	}
 
-	macro validateWebContentWithRepeatableFieldGroupAndTranslations {
+	@summary = "Default summary"
+	macro validateWebContentWithRepeatableFieldGroupAndTranslations() {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "My Web Content based on My Structure with repeated fields");
 
 		AssertAttributeValue(
-			attribute1 = "value",
 			index = 1,
 			key_fieldFieldLabel = "Text",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
-			value1 = "Text - en_US");
+			value1 = "value",
+			value2 = "Text - en_US");
 
 		AssertAttributeValue(
-			attribute1 = "value",
 			index = 1,
 			key_fieldFieldLabel = "Date",
 			locator1 = "WCEditWebContent#REPEATED_DATE_FIELD",
-			value1 = "02/22/2021");
+			value1 = "value",
+			value2 = "02/22/2021");
 
 		AssertAttributeValue(
-			attribute1 = "value",
 			index = 1,
 			key_fieldFieldLabel = "Number",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
-			value1 = "1.1");
+			value1 = "value",
+			value2 = "1.1");
 
 		AssertAttributeValue(
-			attribute1 = "value",
 			index = 2,
 			key_fieldFieldLabel = "Text",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
-			value1 = "REP Text - en_US");
+			value1 = "value",
+			value2 = "REP Text - en_US");
 
 		AssertAttributeValue(
-			attribute1 = "value",
 			index = 2,
 			key_fieldFieldLabel = "Date",
 			locator1 = "WCEditWebContent#REPEATED_DATE_FIELD",
-			value1 = "02/23/2021");
+			value1 = "value",
+			value2 = "02/23/2021");
 
 		AssertAttributeValue(
-			attribute1 = "value",
 			index = 2,
 			key_fieldFieldLabel = "Number",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
-			value1 = "1.2");
+			value1 = "value",
+			value2 = "1.2");
 
 		PortletEntry.changeLocale(locale = "pt-BR");
 
@@ -868,46 +884,46 @@ definition {
 			value1 = "My Web Content based on My Structure with repeated fields - pt_BR");
 
 		AssertAttributeValue(
-			attribute1 = "value",
 			index = 1,
 			key_fieldFieldLabel = "Text - pt_BR",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
-			value1 = "Text - pt_BR");
+			value1 = "value",
+			value2 = "Text - pt_BR");
 
 		AssertAttributeValue(
-			attribute1 = "value",
 			index = 1,
 			key_fieldFieldLabel = "Date - pt_BR",
 			locator1 = "WCEditWebContent#REPEATED_DATE_FIELD",
-			value1 = "23/02/2021");
+			value1 = "value",
+			value2 = "23/02/2021");
 
 		AssertAttributeValue(
-			attribute1 = "value",
 			index = 1,
 			key_fieldFieldLabel = "Number - pt_BR",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
-			value1 = "2,1");
+			value1 = "value",
+			value2 = "2,1");
 
 		AssertAttributeValue(
-			attribute1 = "value",
 			index = 2,
 			key_fieldFieldLabel = "Text - pt_BR",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
-			value1 = "REP Text - pt_BR");
+			value1 = "value",
+			value2 = "REP Text - pt_BR");
 
 		AssertAttributeValue(
-			attribute1 = "value",
 			index = 2,
 			key_fieldFieldLabel = "Date - pt_BR",
 			locator1 = "WCEditWebContent#REPEATED_DATE_FIELD",
-			value1 = "24/02/2021");
+			value1 = "value",
+			value2 = "24/02/2021");
 
 		AssertAttributeValue(
-			attribute1 = "value",
 			index = 2,
 			key_fieldFieldLabel = "Number - pt_BR",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
-			value1 = "2,2");
+			value1 = "value",
+			value2 = "2,2");
 
 		PortletEntry.changeLocale(locale = "ca-ES");
 
@@ -916,46 +932,46 @@ definition {
 			value1 = "My Web Content based on My Structure with repeated fields - ca_ES");
 
 		AssertAttributeValue(
-			attribute1 = "value",
 			index = 1,
 			key_fieldFieldLabel = "Text - ca_ES",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
-			value1 = "Text - ca_ES");
+			value1 = "value",
+			value2 = "Text - ca_ES");
 
 		AssertAttributeValue(
-			attribute1 = "value",
 			index = 1,
 			key_fieldFieldLabel = "Date - ca_ES",
 			locator1 = "WCEditWebContent#REPEATED_DATE_FIELD",
-			value1 = "24/02/2021");
+			value1 = "value",
+			value2 = "24/02/2021");
 
 		AssertAttributeValue(
-			attribute1 = "value",
 			index = 1,
 			key_fieldFieldLabel = "Number - ca_ES",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
-			value1 = "3,1");
+			value1 = "value",
+			value2 = "3,1");
 
 		AssertAttributeValue(
-			attribute1 = "value",
 			index = 2,
 			key_fieldFieldLabel = "Text - ca_ES",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
-			value1 = "REP Text - ca_ES");
+			value1 = "value",
+			value2 = "REP Text - ca_ES");
 
 		AssertAttributeValue(
-			attribute1 = "value",
 			index = 2,
 			key_fieldFieldLabel = "Date - ca_ES",
 			locator1 = "WCEditWebContent#REPEATED_DATE_FIELD",
-			value1 = "25/02/2021");
+			value1 = "value",
+			value2 = "25/02/2021");
 
 		AssertAttributeValue(
-			attribute1 = "value",
 			index = 2,
 			key_fieldFieldLabel = "Number - ca_ES",
 			locator1 = "WCEditWebContent#ANY_TEXT_INPUT",
-			value1 = "3,2");
+			value1 = "value",
+			value2 = "3,2");
 	}
 
 }

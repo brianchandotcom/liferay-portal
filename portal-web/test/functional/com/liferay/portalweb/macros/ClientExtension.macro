@@ -1,6 +1,7 @@
 definition {
 
-	macro addPortletToWidgetPage {
+	@summary = "Default summary"
+	macro addPortletToWidgetPage(widgetPageName = null,portletName = null) {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = ${widgetPageName});
@@ -18,7 +19,8 @@ definition {
 		WaitForElementPresent(locator1 = "Message#SUCCESS");
 	}
 
-	macro checkConfigFileCreatedProperly {
+	@summary = "Default summary"
+	macro checkConfigFileCreatedProperly() {
 		var configFileIsCreated = ClientExtension.configFileCreated();
 
 		if (${configFileIsCreated} == "true") {
@@ -29,7 +31,8 @@ definition {
 		}
 	}
 
-	macro configFileCreated {
+	@summary = "Default summary"
+	macro configFileCreated(staticExtensionType = null) {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
 		var booleanValue = FileUtil.exists("${liferayHome}/osgi/configs/com.liferay.client.extension.type.configuration.CETConfiguration~${staticExtensionType}.config");
@@ -37,13 +40,15 @@ definition {
 		return ${booleanValue};
 	}
 
-	macro createGlobalVariableClientExtensionType {
+	@summary = "Default summary"
+	macro createGlobalVariableClientExtensionType(type = null) {
 		static var staticExtensionType = ${type};
 
 		return ${staticExtensionType};
 	}
 
-	macro tearDownConfig {
+	@summary = "Default summary"
+	macro tearDownConfig(staticExtensionType = null) {
 		Variables.assertDefined(parameterList = ${staticExtensionType});
 
 		ClientExtensionGeneral.goToRemoteAppsPortlet();

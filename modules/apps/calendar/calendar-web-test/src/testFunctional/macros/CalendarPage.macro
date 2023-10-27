@@ -1,12 +1,14 @@
 definition {
 
-	macro clickOnTheCaretLeftIcon {
+	@summary = "Default summary"
+	macro clickOnTheCaretLeftIcon() {
 		var key_text = "caret-left";
 
 		Click(locator1 = "Icon#ANY");
 	}
 
-	macro viewCurrentDayForCalendarAgenda {
+	@summary = "Default summary"
+	macro viewCurrentDayForCalendarAgenda() {
 		CalendarNavigator.gotoView(viewType = "Agenda");
 
 		CalendarNavigator.gotoToday();
@@ -14,7 +16,8 @@ definition {
 		AssertElementPresent(locator1 = "CalendarPage#VIEW_AGENDA_CURRENT_DAY");
 	}
 
-	macro viewCurrentDayForCalendarDay {
+	@summary = "Default summary"
+	macro viewCurrentDayForCalendarDay() {
 		CalendarNavigator.gotoView(viewType = "Day");
 
 		CalendarNavigator.gotoToday();
@@ -22,7 +25,8 @@ definition {
 		AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_DAY_CURRENT_DAY");
 	}
 
-	macro viewCurrentDayForCalendarMonth {
+	@summary = "Default summary"
+	macro viewCurrentDayForCalendarMonth() {
 		CalendarNavigator.gotoView(viewType = "Month");
 
 		CalendarNavigator.gotoToday();
@@ -30,7 +34,8 @@ definition {
 		AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_MONTH_CURRENT_DAY");
 	}
 
-	macro viewCurrentDayForCalendarWeek {
+	@summary = "Default summary"
+	macro viewCurrentDayForCalendarWeek() {
 		CalendarNavigator.gotoView(viewType = "Week");
 
 		CalendarNavigator.gotoToday();
@@ -38,7 +43,8 @@ definition {
 		AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_WEEK_CURRENT_DAY");
 	}
 
-	macro viewCurrentMonthByMiniCalendar {
+	@summary = "Default summary"
+	macro viewCurrentMonthByMiniCalendar() {
 		var currentMonth = selenium.getText("CalendarPage#CURRENT_MONTH_BY_MINI_CALENDAR");
 
 		AssertTextEquals.assertPartialText(
@@ -46,15 +52,18 @@ definition {
 			value1 = ${currentMonth});
 	}
 
-	macro viewMiniCalendarOnSideBar {
+	@summary = "Default summary"
+	macro viewMiniCalendarOnSideBar() {
 		AssertElementPresent(locator1 = "CalendarPage#MINI_CALENDAR_SIDE_BAR");
 	}
 
-	macro viewNoMiniCalendarOnSideBar {
+	@summary = "Default summary"
+	macro viewNoMiniCalendarOnSideBar() {
 		AssertElementPresent(locator1 = "CalendarPage#MINI_CALENDAR_SIDE_BAR_HIDE");
 	}
 
-	macro viewTypeOfTableView {
+	@summary = "Default summary"
+	macro viewTypeOfTableView(tableType = null) {
 		if (${tableType} == "Day") {
 			AssertElementPresent(locator1 = "Calendar#SCHEDULER_VIEW_DAY");
 		}

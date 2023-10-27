@@ -1,6 +1,7 @@
 definition {
 
-	macro addColumnsViaUI {
+	@summary = "Default summary"
+	macro addColumnsViaUI(addColumns = null) {
 		LexiconEntry.gotoAdd();
 
 		SelectFrame(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
@@ -16,7 +17,8 @@ definition {
 		SelectFrame(locator1 = "IFrame#IFRAME");
 	}
 
-	macro addDefaultSort {
+	@summary = "Default summary"
+	macro addDefaultSort(columnOption = null,sortOption = null) {
 		if (IsElementPresent(key_text = "No default sort was created yet", locator1 = "ObjectCustomViews#VIEW_BUILDER_EMPTY_STATE_TEXT")) {
 			ObjectCustomViews.addNewDefaultSort();
 		}
@@ -41,7 +43,8 @@ definition {
 			locator1 = "Button#TAB_SUBMIT_BTN");
 	}
 
-	macro addNewAggregationFilterViaUI {
+	@summary = "Default summary"
+	macro addNewAggregationFilterViaUI(dateValueList = null,filterValue = null,filterBy = null,filterType = null) {
 		Click(locator1 = "ObjectCustomViews#ADD_BUTTON_FILTERS");
 
 		Click(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
@@ -80,11 +83,13 @@ definition {
 		ObjectCustomViews.clickSaveOnModal();
 	}
 
-	macro addNewDefaultSort {
+	@summary = "Default summary"
+	macro addNewDefaultSort() {
 		Click(locator1 = "ObjectCustomViews#ADD_NEW_DEFAULT_SORT");
 	}
 
-	macro addNewFilterViaUI {
+	@summary = "Default summary"
+	macro addNewFilterViaUI(filterValue = null,filterBy = null,filterType = null) {
 		Click(locator1 = "ObjectCustomViews#ADD_BUTTON_FILTERS");
 
 		Click(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
@@ -116,7 +121,8 @@ definition {
 		ObjectCustomViews.clickSaveOnModal();
 	}
 
-	macro addObjectViewViaUI {
+	@summary = "Default summary"
+	macro addObjectViewViaUI(viewName = null) {
 		LexiconEntry.gotoAdd();
 
 		Type(
@@ -126,7 +132,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro assertColumnPresentOnDefaultSort {
+	@summary = "Default summary"
+	macro assertColumnPresentOnDefaultSort(sortingLabel = null,columnName = null) {
 		AssertElementPresent(
 			key_columnName = ${columnName},
 			locator1 = "ObjectCustomViews#DEFAULT_SORT_SEARCH_RESULT");
@@ -137,7 +144,8 @@ definition {
 			value1 = ${sortingLabel});
 	}
 
-	macro assertColumnVisibleOnAddColumnModal {
+	@summary = "Default summary"
+	macro assertColumnVisibleOnAddColumnModal(columnOption = null) {
 		SelectFrame(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
 
 		AssertVisible(
@@ -145,7 +153,8 @@ definition {
 			locator1 = "ObjectCustomViews#ADD_COLUMNS_COLUMN_LABEL");
 	}
 
-	macro assertFilterPresent {
+	@summary = "Default summary"
+	macro assertFilterPresent(filterBy = null) {
 		Click(locator1 = "ObjectCustomViews#ADD_BUTTON_FILTERS");
 
 		Click(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
@@ -155,7 +164,8 @@ definition {
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
-	macro assertNoColumnPresentInDefaultSort {
+	@summary = "Default summary"
+	macro assertNoColumnPresentInDefaultSort() {
 		ObjectCustomViews.addNewDefaultSort();
 
 		Click(locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE");
@@ -163,13 +173,15 @@ definition {
 		AssertElementPresent(locator1 = "ObjectCustomViews#DEFAULT_SORT_NO_COLUMN_OPTION");
 	}
 
-	macro assertObjectView {
+	@summary = "Default summary"
+	macro assertObjectView(viewLabel = null) {
 		var key_viewLabel = ${viewLabel};
 
 		AssertElementPresent(locator1 = "ObjectCustomViews#OBJECT_VIEW_LABEL");
 	}
 
-	macro assertPresentEntriesOnFilters {
+	@summary = "Default summary"
+	macro assertPresentEntriesOnFilters(filterValue = null,filterBy = null) {
 		AssertElementPresent(
 			key_columnName = ${filterBy},
 			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT");
@@ -183,7 +195,8 @@ definition {
 		}
 	}
 
-	macro clickOnFilterOnEntries {
+	@summary = "Default summary"
+	macro clickOnFilterOnEntries() {
 		Click(
 			key_buttonName = "Filter",
 			locator1 = "ObjectCustomViews#DROPDOWN_BUTTON_ON_OBJECT_VIEW");
@@ -191,13 +204,15 @@ definition {
 		SelectFrame(locator1 = "ObjectCustomViews#VIEW_DROPDOWN_MENU_ON_MODAL_DEFAULT_SORT");
 	}
 
-	macro clickSaveOnModal {
+	@summary = "Default summary"
+	macro clickSaveOnModal() {
 		Click(
 			key_name = "Save",
 			locator1 = "Button#GENERAL_BUTTON_MODAL_FOOTER");
 	}
 
-	macro defineDateOnFilter {
+	@summary = "Default summary"
+	macro defineDateOnFilter(filterName = null,displayDateMonth = null,displayDateYear = null,displayDateDay = null) {
 		var displayDate = "${displayDateMonth}/${displayDateDay}/${displayDateYear}";
 
 		Type(
@@ -218,7 +233,8 @@ definition {
 			locator1 = "Button#ANY");
 	}
 
-	macro deleteObjectCustomViewViaUI {
+	@summary = "Default summary"
+	macro deleteObjectCustomViewViaUI(viewLabel = null) {
 		Click(
 			key_objectCustomViewLabel = ${viewLabel},
 			locator1 = "ObjectCustomViews#OBJECT_VIEW_KEBAB_MENU");
@@ -226,7 +242,8 @@ definition {
 		MenuItem.clickNoError(menuItem = "Delete");
 	}
 
-	macro deleteSpecificColumn {
+	@summary = "Default summary"
+	macro deleteSpecificColumn(columnName = null) {
 		Click(
 			key_columnName = ${columnName},
 			locator1 = "ObjectCustomViews#VIEW_BUILDER_DROPDOWN_SPECIFIC_COLUMN");
@@ -234,7 +251,8 @@ definition {
 		DropdownMenuItem.click(menuItem = "Delete");
 	}
 
-	macro duplicateObjectCustomView {
+	@summary = "Default summary"
+	macro duplicateObjectCustomView(viewLabel = null) {
 		Click(
 			key_objectCustomViewLabel = ${viewLabel},
 			locator1 = "ObjectCustomViews#OBJECT_VIEW_KEBAB_MENU");
@@ -242,13 +260,15 @@ definition {
 		MenuItem.clickNoError(menuItem = "Duplicate");
 	}
 
-	macro editName {
+	@summary = "Default summary"
+	macro editName(name = null) {
 		Type(
 			locator1 = "ObjectCustomViews#OBJECT_VIEWS_NAME",
 			value1 = ${name});
 	}
 
-	macro editSortingType {
+	@summary = "Default summary"
+	macro editSortingType(newSortOption = null,actualSort = null) {
 		Click(
 			key_cardName = "Default Sort",
 			locator1 = "ObjectCustomViews#SELECT_DROPDOWN_ON_LABEL");
@@ -268,7 +288,8 @@ definition {
 			locator1 = "Button#TAB_SUBMIT_BTN");
 	}
 
-	macro editSpecificColumn {
+	@summary = "Default summary"
+	macro editSpecificColumn(columnName = null) {
 		Click(
 			key_columnName = ${columnName},
 			locator1 = "ObjectCustomViews#VIEW_BUILDER_DROPDOWN_SPECIFIC_COLUMN");
@@ -276,15 +297,18 @@ definition {
 		DropdownMenuItem.click(menuItem = "Edit");
 	}
 
-	macro goToDefaultSortTab {
+	@summary = "Default summary"
+	macro goToDefaultSortTab() {
 		Click(locator1 = "ObjectCustomViews#DEFAULT_SORT_TAB");
 	}
 
-	macro goToFiltersTab {
+	@summary = "Default summary"
+	macro goToFiltersTab() {
 		Click(locator1 = "ObjectCustomViews#FILTERS_TAB");
 	}
 
-	macro gotoPermissions {
+	@summary = "Default summary"
+	macro gotoPermissions(entryName = null) {
 		Click(
 			key_objectLabel = ${entryName},
 			locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
@@ -294,13 +318,15 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
-	macro goToViewsBuilderTab {
+	@summary = "Default summary"
+	macro goToViewsBuilderTab() {
 		if (IsElementPresent(locator1 = "ObjectCustomViews#VIEW_BUILDER_TAB")) {
 			Click(locator1 = "ObjectCustomViews#VIEW_BUILDER_TAB");
 		}
 	}
 
-	macro goToViewsDetails {
+	@summary = "Default summary"
+	macro goToViewsDetails(label = null) {
 		Click(
 			key_label = ${label},
 			locator1 = "ObjectCustomViews#SELECT_OBJECT_VIEWS");
@@ -308,23 +334,27 @@ definition {
 		SelectFrame(locator1 = "IFrame#IFRAME");
 	}
 
-	macro goToViewsTab {
+	@summary = "Default summary"
+	macro goToViewsTab() {
 		Click(locator1 = "ObjectCustomViews#OBJECT_VIEWS_TAB");
 	}
 
-	macro markViewAsDefault {
+	@summary = "Default summary"
+	macro markViewAsDefault() {
 		Click(locator1 = "ObjectAdmin#LAYOUT_INFO_TAB");
 
 		Click.clickAtNotVisible(locator1 = "ObjectCustomViews#MARK_AS_DEFAULT");
 	}
 
-	macro saveColumnsModal {
+	@summary = "Default summary"
+	macro saveColumnsModal() {
 		Click(
 			key_tab = "Save",
 			locator1 = "Button#TAB_SUBMIT_BTN");
 	}
 
-	macro searchColumnsOnModalDefaultSort {
+	@summary = "Default summary"
+	macro searchColumnsOnModalDefaultSort(columnName = null) {
 		Click(locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE");
 
 		Type(
@@ -338,7 +368,8 @@ definition {
 			locator1 = "ObjectCustomViews#VIEW_FIELDS_ON_DROPDOWN_ITEM");
 	}
 
-	macro searchOnAddColumnModal {
+	@summary = "Default summary"
+	macro searchOnAddColumnModal(columnName = null) {
 		SelectFrame(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
 
 		Click(locator1 = "ObjectCustomViews#ADD_COLUMNS_SEARCH_BAR");
@@ -348,7 +379,8 @@ definition {
 			value1 = ${columnName});
 	}
 
-	macro searchOnDefaultSort {
+	@summary = "Default summary"
+	macro searchOnDefaultSort(columnName = null) {
 		Click(locator1 = "ObjectCustomViews#DEFAULT_SORT_SEARCH_BAR");
 
 		Type(
@@ -356,7 +388,8 @@ definition {
 			value1 = ${columnName});
 	}
 
-	macro searchOnViewBuilder {
+	@summary = "Default summary"
+	macro searchOnViewBuilder(columnName = null) {
 		Click(locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_BAR");
 
 		Type(
@@ -364,7 +397,8 @@ definition {
 			value1 = ${columnName});
 	}
 
-	macro selectAnyPermissions {
+	@summary = "Default summary"
+	macro selectAnyPermissions(permissionsList = null) {
 		for (var permissionsName : list ${permissionsList}) {
 			if (isSet(analyticsAdministrator)) {
 				Click(
@@ -431,7 +465,8 @@ definition {
 		}
 	}
 
-	macro selectPermissionToRegularRole {
+	@summary = "Default summary"
+	macro selectPermissionToRegularRole(permissionsList = null) {
 		for (var permissionsName : list ${permissionsList}) {
 			Click.clickAtNotVisible(
 				key_permissionName = ${permissionsName},
@@ -439,7 +474,8 @@ definition {
 		}
 	}
 
-	macro viewOptionNotPresentInKebabMenu {
+	@summary = "Default summary"
+	macro viewOptionNotPresentInKebabMenu(entryName = null,menuItem = null) {
 		if (IsElementPresent(key_objectLabel = ${entryName}, locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU")) {
 			Click(
 				key_objectLabel = ${entryName},
@@ -456,7 +492,8 @@ definition {
 		}
 	}
 
-	macro viewOrdersOfTheColumns {
+	@summary = "Default summary"
+	macro viewOrdersOfTheColumns(position = null,columnName = null) {
 		AssertVisible(
 			key_columnName1 = ${columnName},
 			key_position = ${position},

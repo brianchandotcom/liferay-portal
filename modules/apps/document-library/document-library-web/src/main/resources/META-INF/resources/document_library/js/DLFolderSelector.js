@@ -123,18 +123,33 @@ const DLFolderSelector = ({
 			method: 'POST',
 		})
 			.then((response) => response.json())
-			.then(({errorMessages, errorSize}) => {
-				if (errorSize > 10) {
+			.then(({errorMessages, failedItems, successItems}) => {
+				if (successItems) {
+					openToast({
+						message: sub(
+							successItems > 1
+								? Liferay.Language.get(
+										'x-items-were-copied-successfully'
+								  )
+								: Liferay.Language.get(
+										'x-item-was-copied-successfully'
+								  ),
+							successItems
+						),
+					});
+				}
+
+				if (failedItems > 10) {
 					showErrorMessage(
 						sub(
 							Liferay.Language.get('x-items-could-not-be-copied'),
-							errorSize
+							failedItems
 						)
 					);
 				}
 				else if (errorMessages) {
 					showErrorMessage(
-						formatErrorMessages(errorMessages, errorSize)
+						formatErrorMessages(errorMessages, failedItems)
 					);
 				}
 				else {

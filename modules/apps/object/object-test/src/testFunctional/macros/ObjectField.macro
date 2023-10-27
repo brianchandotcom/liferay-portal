@@ -1,6 +1,7 @@
 definition {
 
-	macro addAnyFolder {
+	@summary = "Default summary"
+	macro addAnyFolder(folderName = null) {
 		IFrame.selectModalFrame();
 
 		LexiconEntry.gotoAdd();
@@ -22,7 +23,8 @@ definition {
 			value1 = ${folderName});
 	}
 
-	macro assertOptionAndDescriptionOnRequestFiles {
+	@summary = "Default summary"
+	macro assertOptionAndDescriptionOnRequestFiles(description = null,option = null) {
 		Click(locator1 = "ObjectField#REQUEST_FILES_INPUT");
 
 		AssertElementPresent(
@@ -35,21 +37,25 @@ definition {
 			value1 = ${description});
 	}
 
-	macro checkLimitCharacters {
+	@summary = "Default summary"
+	macro checkLimitCharacters() {
 		Click(
 			key_labelName = "Limit Characters",
 			locator1 = "ObjectField#DEFAULT_TOGGLE_SWITCH");
 	}
 
-	macro checkToggleMandatory {
+	@summary = "Default summary"
+	macro checkToggleMandatory() {
 		Check.checkToggleSwitch(locator1 = "ObjectField#MANDATORY_TOGGLE");
 	}
 
-	macro closeModal {
+	@summary = "Default summary"
+	macro closeModal() {
 		Click(locator1 = "ObjectField#MODAL_CLOSE_BUTTON");
 	}
 
-	macro editFormulaField {
+	@summary = "Default summary"
+	macro editFormulaField(newContent = null,formulaScript = null,newTypeFormula = null) {
 		ObjectField.typeLabel(content = ${newContent});
 
 		Click(
@@ -66,13 +72,15 @@ definition {
 			value1 = ${formulaScript});
 	}
 
-	macro save {
+	@summary = "Default summary"
+	macro save() {
 		Click(locator1 = "ObjectField#SAVE_BUTTON");
 
 		Refresh();
 	}
 
-	macro selectOptionOnRequestFiles {
+	@summary = "Default summary"
+	macro selectOptionOnRequestFiles(option = null) {
 		Click(locator1 = "ObjectField#REQUEST_FILES_INPUT");
 
 		Click(
@@ -80,7 +88,8 @@ definition {
 			locator1 = "ObjectField#TYPE_OPTION");
 	}
 
-	macro selectPicklist {
+	@summary = "Default summary"
+	macro selectPicklist(picklistName = null) {
 		if (!(isSet(dropdownLabel))) {
 			var dropdownLabel = "Picklist";
 		}
@@ -92,7 +101,8 @@ definition {
 		MenuItem.click(menuItem = ${picklistName});
 	}
 
-	macro selectType {
+	@summary = "Default summary"
+	macro selectType(fieldType = null) {
 		Click(locator1 = "ObjectField#TYPE_FIELD");
 
 		Click(
@@ -100,35 +110,41 @@ definition {
 			locator1 = "ObjectField#TYPE_OPTION");
 	}
 
-	macro toggleMandatory {
+	@summary = "Default summary"
+	macro toggleMandatory() {
 		Check.toggleSwitch(locator1 = "ObjectField#MANDATORY_TOGGLE");
 	}
 
-	macro typeLabel {
+	@summary = "Default summary"
+	macro typeLabel(content = null) {
 		Type(
 			locator1 = "ObjectField#LABEL_LOCALIZED",
 			value1 = ${content});
 	}
 
-	macro typeName {
+	@summary = "Default summary"
+	macro typeName(fieldName = null) {
 		Type(
 			locator1 = "ObjectField#NAME_FIELD",
 			value1 = ${fieldName});
 	}
 
-	macro typeStorageFolder {
+	@summary = "Default summary"
+	macro typeStorageFolder(content = null) {
 		Type(
 			locator1 = "ObjectField#STORAGE_FOLDER_INPUT",
 			value1 = ${content});
 	}
 
-	macro typeValueOnLimitCharacters {
+	@summary = "Default summary"
+	macro typeValueOnLimitCharacters(newValue = null) {
 		Type(
 			locator1 = "ObjectField#TYPE_MAXIMUM_NUMBER_CHARACTERS",
 			value1 = ${newValue});
 	}
 
-	macro viewToogleOnSidePanelShowFilesInDM {
+	@summary = "Default summary"
+	macro viewToogleOnSidePanelShowFilesInDM(isDisabled = null) {
 		if (${isDisabled} == "Yes") {
 			AssertElementPresent(locator1 = "ObjectField#SHOW_FILES_IN_DM_SIDE_PANEL_DISABLED");
 		}

@@ -1,6 +1,7 @@
 definition {
 
-	macro addSuite {
+	@summary = "Default summary"
+	macro addSuite(teamName = null,requirementName = null,mainComponent = null,priorityNumber = null,subComponent = null,suiteDescription = null,suiteName = null,caseType = null,caseList = null) {
 		LexiconEntry.gotoAdd();
 
 		TestraySuites.createSuite(
@@ -114,7 +115,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro createSuite {
+	@summary = "Default summary"
+	macro createSuite(suiteDescription = null,suiteName = null) {
 		if (isSet(suiteName)) {
 			PortletEntry.inputName(name = ${suiteName});
 		}
@@ -127,7 +129,8 @@ definition {
 		}
 	}
 
-	macro editSmartSuite {
+	@summary = "Default summary"
+	macro editSmartSuite(teamName = null,requirementName = null,mainComponent = null,tableEntry = null,priorityNumber = null,subComponent = null,caseType = null,caseList = null) {
 		TestrayManage.selectTableRowOption(
 			rowOption = "Edit",
 			tableEntry = ${tableEntry});
@@ -235,7 +238,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro editSuite {
+	@summary = "Default summary"
+	macro editSuite(newName = null,newDescription = null) {
 		TestraySuites.createSuite(
 			suiteDescription = ${newDescription},
 			suiteName = ${newName});
@@ -243,7 +247,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro verifyCaseParametersInSuite {
+	@summary = "Default summary"
+	macro verifyCaseParametersInSuite(components = null,requirements = null,subComponents = null,priority = null,caseType = null) {
 		AssertElementPresent(
 			key_caseType = ${caseType},
 			key_components = ${components},

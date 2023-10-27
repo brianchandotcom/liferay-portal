@@ -1104,7 +1104,7 @@ definition {
 		}
 
 		task ("Assert user is taken to the the Liferay Learn page") {
-			SelectWindow.selectPopUp(locator1 = "null");
+			SelectWindow.selectPopUp(value1 = "null");
 
 			AssertLocation.assertPartialLocation(value1 = "tags-and-categories/defining-categories-and-vocabularies-for-content");
 		}

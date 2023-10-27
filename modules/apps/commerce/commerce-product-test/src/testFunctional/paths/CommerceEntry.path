@@ -446,6 +446,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RADIO_BUTTON_WITH_VALUE</td>
+	<td>//span[contains(.,'${key_fieldValue}')]/../input[contains(@type,'radio')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REQUIRED_CHECKBOX</td>
 	<td>//input[contains(@id,'required') and (@type='checkbox')]</td>
 	<td></td>
@@ -1576,6 +1581,21 @@
 <tr>
 	<td>COMMERCE_CATEGORY_AUTOCOMPLETE_SPECIFIC</td>
 	<td>//div[contains(@class,'dropdown')]//ul/li//button[.='${key_categoryName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMERCE_FACET_BUTTON</td>
+	<td>//div[label[normalize-space(text())='${key_fieldLabel}']]/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMERCE_FACET_BUTTON_ASSERT_TEXT</td>
+	<td>//div[label[normalize-space(text())='${key_fieldLabel}']]/button[(text()='${key_entry}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMERCE_FACET_DROPDOWN</td>
+	<td>//div[contains(@class,' dropdown-menu-select show')]//button[contains(.,'${key_entry}')]</td>
 	<td></td>
 </tr>
 </tbody>

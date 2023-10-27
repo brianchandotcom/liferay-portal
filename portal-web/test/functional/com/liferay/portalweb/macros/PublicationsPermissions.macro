@@ -1,6 +1,7 @@
 definition {
 
-	macro assertAdminPermissions {
+	@summary = "Default summary"
+	macro assertAdminPermissions(publicationName = null) {
 		PublicationsNavigator.gotoPublicationEllipsisItem(
 			menuItem = "Edit",
 			publicationName = ${publicationName});
@@ -31,7 +32,8 @@ definition {
 			publicationName = "New ${publicationName}");
 	}
 
-	macro assertEditorPermissions {
+	@summary = "Default summary"
+	macro assertEditorPermissions(publicationName = null) {
 		Click(
 			key_publicationName = ${publicationName},
 			locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
@@ -65,7 +67,8 @@ definition {
 		PublicationsChanges.assertPublicationsCommentsCRUDPermissions();
 	}
 
-	macro assertNoPermissionToCreatePublication {
+	@summary = "Default summary"
+	macro assertNoPermissionToCreatePublication() {
 		Click(locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON");
 
 		AssertElementNotPresent(
@@ -80,7 +83,8 @@ definition {
 		AssertElementNotPresent(locator1 = "Button#PLUS");
 	}
 
-	macro assertNoPermissionToPublishPublication {
+	@summary = "Default summary"
+	macro assertNoPermissionToPublishPublication(publicationName = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",
 			panel = "Applications",
@@ -105,7 +109,8 @@ definition {
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
-	macro assertPublisherPermissions {
+	@summary = "Default summary"
+	macro assertPublisherPermissions(publicationName = null) {
 		PublicationsNavigator.gotoPublicationEllipsisItem(
 			menuItem = "Edit",
 			publicationName = ${publicationName});
@@ -131,7 +136,8 @@ definition {
 			publicationName = "New ${publicationName}");
 	}
 
-	macro assertViewerPermissions {
+	@summary = "Default summary"
+	macro assertViewerPermissions(publicationName = null) {
 		Click(
 			key_publicationName = ${publicationName},
 			locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
@@ -155,7 +161,8 @@ definition {
 		PublicationsChanges.assertPublicationsCommentsCRUDPermissions();
 	}
 
-	macro viewPublicationRoleHelpText {
+	@summary = "Default summary"
+	macro viewPublicationRoleHelpText(publicationRoleHelpText = null,publicationRole = null) {
 		var key_publicationRole = ${publicationRole};
 		var key_publicationRoleHelpText = ${publicationRoleHelpText};
 

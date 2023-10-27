@@ -1,6 +1,7 @@
 definition {
 
-	macro addCustomAssetReport {
+	@summary = "Default summary"
+	macro addCustomAssetReport(reportName = null,metric = null,assetName = null) {
 		ACNavigation.openItem(itemName = ${assetName});
 
 		Button.click(button = "Add Report");
@@ -22,14 +23,16 @@ definition {
 		Button.clickSave();
 	}
 
-	macro goToTechnologyTabInactive {
+	@summary = "Default summary"
+	macro goToTechnologyTabInactive(tabName = null,cardTitle = null) {
 		Click(
 			key_cardTitle = ${cardTitle},
 			key_tabName = ${tabName},
 			locator1 = "ACAssets#TECHNOLOGY_TAB_INACTIVE");
 	}
 
-	macro interactWithCustomAssets {
+	@summary = "Default summary"
+	macro interactWithCustomAssets(submissionNumber = null,downloadNumber = null,formOptionNameList = null,viewPageNumber = null,siteName = null,pageName = null) {
 		if (isSet(formOptionNameList)) {
 			for (var formOptionName : list ${formOptionNameList}) {
 				Click(
@@ -67,13 +70,15 @@ definition {
 		}
 	}
 
-	macro removeCustomAssetReport {
+	@summary = "Default summary"
+	macro removeCustomAssetReport(reportName = null) {
 		Click(
 			key_cardTitle = ${reportName},
 			locator1 = "ACCards#TRASH_ICON");
 	}
 
-	macro viewAssetAppearsOnMetric {
+	@summary = "Default summary"
+	macro viewAssetAppearsOnMetric(canonicalURLSuffix = null,canonicalURL = null,cardTitle = null,pageName = null) {
 		var key_cardTitle = ${cardTitle};
 
 		ScrollWebElementIntoView(locator1 = "ACCards#CARD_TITLE");
@@ -95,7 +100,8 @@ definition {
 		}
 	}
 
-	macro viewAssetsInfo {
+	@summary = "Default summary"
+	macro viewAssetsInfo(index = null,assetName = null,value = null) {
 		AssertTextEquals(
 			index = ${index},
 			key_assetName = ${assetName},
@@ -103,7 +109,8 @@ definition {
 			value1 = ${value});
 	}
 
-	macro viewTechnologyBrowsersMetric {
+	@summary = "Default summary"
+	macro viewTechnologyBrowsersMetric(percentageMetricValue = null,browserMetricValue = null,cssValue = null,cardTitle = null) {
 		var key_cardTitle = ${cardTitle};
 
 		AssertTextEquals(
@@ -120,7 +127,8 @@ definition {
 			value1 = ${cssValue});
 	}
 
-	macro viewTechnologyDeviceViewsAndPercentage {
+	@summary = "Default summary"
+	macro viewTechnologyDeviceViewsAndPercentage(actionValue = null,percentageValue = null,cardTitle = null,deviceName = null) {
 		var key_cardTitle = ${cardTitle};
 
 		ScrollWebElementIntoView(locator1 = "ACAssets#TECHNOLOGY_BAR_CHART");
@@ -142,14 +150,16 @@ definition {
 			value1 = ${percentageValue});
 	}
 
-	macro viewViewsByTechnologyTabActive {
+	@summary = "Default summary"
+	macro viewViewsByTechnologyTabActive(tabName = null,cardTitle = null) {
 		AssertVisible(
 			key_cardTitle = ${cardTitle},
 			key_tabName = ${tabName},
 			locator1 = "ACAssets#TECHNOLOGY_TAB_ACTIVE");
 	}
 
-	macro viewVisitorsBehaviorMetric {
+	@summary = "Default summary"
+	macro viewVisitorsBehaviorMetric(startMonth = null,startDay = null,endDay = null,metricValue = null,startYear = null,metricTitle = null,endMonth = null,endYear = null,timeFilter = null) {
 		var key_metricTitle = ${metricTitle};
 		var key_metricValue = ${metricValue};
 

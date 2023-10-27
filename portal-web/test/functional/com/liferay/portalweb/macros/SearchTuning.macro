@@ -1,6 +1,7 @@
 definition {
 
-	macro _clickResultEllipsisItem {
+	@summary = "Default summary"
+	macro _clickResultEllipsisItem(assetTitle = null,menuItem = null) {
 		Click(
 			key_assetTitle = ${assetTitle},
 			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT_ELLIPSIS");
@@ -8,7 +9,8 @@ definition {
 		MenuItem.clickNoError(menuItem = ${menuItem});
 	}
 
-	macro addResult {
+	@summary = "Default summary"
+	macro addResult(searchTerm = null,assetTitle = null) {
 		Button.click(button = "Add Result");
 
 		Type(
@@ -30,7 +32,8 @@ definition {
 			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT_PINNED");
 	}
 
-	macro addResultRanking {
+	@summary = "Default summary"
+	macro addResultRanking(searchQuery = null) {
 		LexiconEntry.gotoAdd();
 
 		PortletEntry.inputText(
@@ -42,7 +45,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro addSynonymSet {
+	@summary = "Default summary"
+	macro addSynonymSet(synonyms = null) {
 		LexiconEntry.gotoAdd();
 
 		Type.sendKeys(
@@ -62,7 +66,8 @@ definition {
 		Button.clickPublish();
 	}
 
-	macro configureAliases {
+	@summary = "Default summary"
+	macro configureAliases(deleteAlias = null,addAlias = null) {
 		if (isSet(deleteAlias)) {
 			Click(
 				key_alias = ${deleteAlias},
@@ -88,7 +93,8 @@ definition {
 		}
 	}
 
-	macro deleteSynonymSet {
+	@summary = "Default summary"
+	macro deleteSynonymSet(synonymSet = null) {
 		LexiconEntry.delete(rowEntry = ${synonymSet});
 
 		AssertElementNotPresent(
@@ -96,7 +102,8 @@ definition {
 			locator1 = "SearchTuning#SYNONYMS_ENTRY");
 	}
 
-	macro editSynonymSet {
+	@summary = "Default summary"
+	macro editSynonymSet(addSynonyms = null,deleteSynonym = null,synonymSet = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${synonymSet});
@@ -124,7 +131,8 @@ definition {
 		Button.clickPublish();
 	}
 
-	macro hideResult {
+	@summary = "Default summary"
+	macro hideResult(assetTitle = null) {
 		SearchTuning._clickResultEllipsisItem(
 			assetTitle = ${assetTitle},
 			menuItem = "Hide Result");
@@ -134,15 +142,18 @@ definition {
 			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT");
 	}
 
-	macro openResultRankingsAdmin {
+	@summary = "Default summary"
+	macro openResultRankingsAdmin() {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_portal_search_tuning_rankings_web_internal_portlet_ResultRankingsPortlet");
 	}
 
-	macro openSynonymsAdmin {
+	@summary = "Default summary"
+	macro openSynonymsAdmin() {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_portal_search_tuning_synonyms_web_internal_portlet_SynonymsPortlet");
 	}
 
-	macro pinResult {
+	@summary = "Default summary"
+	macro pinResult(assetTitle = null) {
 		SearchTuning._clickResultEllipsisItem(
 			assetTitle = ${assetTitle},
 			menuItem = "Pin Result");
@@ -152,7 +163,8 @@ definition {
 			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT_PINNED");
 	}
 
-	macro unhideResult {
+	@summary = "Default summary"
+	macro unhideResult(assetTitle = null,pinResult = null) {
 		if (IsElementNotPresent(key_tab = "Hidden", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
 			Navigator.gotoNavTab(navTab = "Hidden");
 		}
@@ -173,7 +185,8 @@ definition {
 			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT");
 	}
 
-	macro unpinResult {
+	@summary = "Default summary"
+	macro unpinResult(assetTitle = null) {
 		SearchTuning._clickResultEllipsisItem(
 			assetTitle = ${assetTitle},
 			menuItem = "Unpin Result");

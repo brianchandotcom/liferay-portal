@@ -1,6 +1,7 @@
 definition {
 
-	macro assertCompanyLogContent {
+	@summary = "Default summary"
+	macro assertCompanyLogContent(logContent = null,portalInstanceName = null) {
 		var groupId = JSONCompany.getCompanyGroupIdByGroupKey(
 			groupKey = "Guest",
 			portalInstanceName = ${portalInstanceName});
@@ -14,7 +15,8 @@ definition {
 			value1 = "for group ${groupId}");
 	}
 
-	macro assertCompanyLogIsolated {
+	@summary = "Default summary"
+	macro assertCompanyLogIsolated(portalInstanceName = null) {
 		var logContent = CompanyLogging.downloadCompanyLog(portalInstanceName = ${portalInstanceName});
 
 		CompanyLogging.assertCompanyLogContent(
@@ -38,13 +40,15 @@ definition {
 		}
 	}
 
-	macro assertNoLogDownloaded {
+	@summary = "Default summary"
+	macro assertNoLogDownloaded(logName = null) {
 		DownloadTempFile();
 
 		DMDocument.assertNoFileNameFromTempFolder(fileName = ${logName});
 	}
 
-	macro downloadCompanyLog {
+	@summary = "Default summary"
+	macro downloadCompanyLog(portalInstanceName = null) {
 		var logName = CompanyLogging.getCompanyLogName(portalInstanceName = ${portalInstanceName});
 
 		Click(
@@ -64,7 +68,8 @@ definition {
 		return ${logContent};
 	}
 
-	macro getCompanyLogDirPath {
+	@summary = "Default summary"
+	macro getCompanyLogDirPath(portalInstanceName = null) {
 		var companyId = JSONCompany.getCompanyId(portalInstanceName = ${portalInstanceName});
 		var homeDir = PropsUtil.get("liferay.home.dir.name");
 
@@ -82,7 +87,8 @@ definition {
 		return ${filePath};
 	}
 
-	macro getCompanyLogName {
+	@summary = "Default summary"
+	macro getCompanyLogName(portalInstanceName = null) {
 		var companyLogDirPath = CompanyLogging.getCompanyLogDirPath(portalInstanceName = ${portalInstanceName});
 
 		var logName = FileUtil.getFileName(${companyLogDirPath});
@@ -90,7 +96,8 @@ definition {
 		return ${logName};
 	}
 
-	macro openServerLogsAdmin {
+	@summary = "Default summary"
+	macro openServerLogsAdmin(baseURL = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_portal_company_log_web_internal_portlet_PortalCompanyLogPortlet");

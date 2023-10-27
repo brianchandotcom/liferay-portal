@@ -16,5 +16,6 @@ export enum PartnerOpportunitiesColumnKey {
 	PARTNER_REP_NAME = 'PARTNER-REP-NAME',
 	STAGE = 'STAGE',
 	START_DATE = 'START-DATE',
+	SUBSCRIPTION_ARR = 'SUBSCRIPTION-ARR',
 	TYPE = 'TYPE',
 }

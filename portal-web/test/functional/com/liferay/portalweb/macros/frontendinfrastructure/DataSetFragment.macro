@@ -1,6 +1,7 @@
 definition {
 
-	macro addDataSetView {
+	@summary = "Default summary"
+	macro addDataSetView(dataSetViewName = null) {
 		PageEditor.gotoConfiguration(fragmentName = "Data Set");
 
 		Click.javaScriptClick(locator1 = "DataSet#SELECT_DATA_SET_VIEW");
@@ -16,7 +17,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro setUpDataSetPage {
+	@summary = "Default summary"
+	macro setUpDataSetPage(dataSetViewName = null,pageName = null) {
 		Navigator.openURL();
 
 		ContentPages.addPage(pageName = ${pageName});
@@ -36,7 +38,8 @@ definition {
 		Navigator.gotoPage(pageName = ${pageName});
 	}
 
-	macro viewColumnTitle {
+	@summary = "Default summary"
+	macro viewColumnTitle(key_colunmTitleList = null) {
 		for (var key_colunmTitle : list ${key_colunmTitleList}) {
 			AssertElementPresent(
 				key_field = ${key_colunmTitle},

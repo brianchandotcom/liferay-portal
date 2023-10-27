@@ -1,6 +1,7 @@
 definition {
 
-	macro configurationPaypal {
+	@summary = "Default summary"
+	macro configurationPaypal() {
 		ApplicationsMenu.gotoPortlet(
 			category = "Store Management",
 			panel = "Commerce",
@@ -53,7 +54,8 @@ definition {
 		Refresh();
 	}
 
-	macro enablePayPalPayment {
+	@summary = "Default summary"
+	macro enablePayPalPayment() {
 		ApplicationsMenu.gotoPortlet(
 			category = "Store Management",
 			panel = "Commerce",
@@ -76,7 +78,8 @@ definition {
 		Refresh();
 	}
 
-	macro enablePricingPaypal {
+	@summary = "Default summary"
+	macro enablePricingPaypal() {
 		ApplicationsMenu.gotoPortlet(
 			category = "Product Management",
 			panel = "Commerce",
@@ -141,7 +144,8 @@ definition {
 		Button.clickPublish();
 	}
 
-	macro payPalFlow {
+	@summary = "Default summary"
+	macro payPalFlow() {
 		Click(locator1 = "RaylifePaymentMethod#PAYMENT_METHOD_PAYPAL");
 
 		Click(locator1 = "RaylifePaymentMethod#TERMS_CONDITIONS_CHECKBOX");
@@ -149,7 +153,8 @@ definition {
 		Click(locator1 = "RaylifePaymentMethod#PAY_NOW");
 	}
 
-	macro paypalPaymentFlow {
+	@summary = "Default summary"
+	macro paypalPaymentFlow() {
 		var raylifePaypalEmail = PropsUtil.get("site.initializer.raylife.d2c.paypal.email");
 		var raylifePaypalPassword = PropsUtil.get("site.initializer.raylife.d2c.paypal.password");
 

@@ -1,6 +1,7 @@
 definition {
 
-	macro _getFormInstanceId {
+	@summary = "Default summary"
+	macro _getFormInstanceId(groupName = null,formName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${formName}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -26,7 +27,8 @@ definition {
 		return ${formInstanceId};
 	}
 
-	macro _getFormInstanceRecordId {
+	@summary = "Default summary"
+	macro _getFormInstanceRecordId(formInstanceId = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var userLoginInfo = JSONUtil2.formatJSONUser();
 

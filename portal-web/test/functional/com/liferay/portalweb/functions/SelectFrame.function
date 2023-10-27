@@ -1,17 +1,17 @@
 @default = "selectFrame"
 definition {
 
-	function selectFrame {
+	function selectFrame(locator1) {
 		if (contains(${locator1}, "/iframe")) {
 			WaitForFrameLoad();
 
-			selenium.waitForVisible();
+			selenium.waitForVisible(${locator1}, "false");
 
-			selenium.mouseOver();
+			selenium.mouseOver(${locator1});
 
-			selenium.selectFrame();
+			selenium.selectFrame(${locator1});
 
-			selenium.assertJavaScriptErrors();
+			selenium.assertJavaScriptErrors("true");
 
 			selenium.assertLiferayErrors();
 		}
@@ -22,15 +22,15 @@ definition {
 		WaitForSPARefresh();
 	}
 
-	function selectFrameNoLoading {
+	function selectFrameNoLoading(locator1) {
 		if (contains(${locator1}, "/iframe")) {
-			selenium.waitForVisible();
+			selenium.waitForVisible(${locator1}, "false");
 
-			selenium.mouseOver();
+			selenium.mouseOver(${locator1});
 
-			selenium.selectFrame();
+			selenium.selectFrame(${locator1});
 
-			selenium.assertJavaScriptErrors();
+			selenium.assertJavaScriptErrors("true");
 
 			selenium.assertLiferayErrors();
 		}
@@ -41,25 +41,25 @@ definition {
 		WaitForSPARefresh();
 	}
 
-	function selectFrameTop {
+	function selectFrameTop() {
 		selenium.selectFrame("relative=top");
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 
 		WaitForSPARefresh();
 	}
 
-	function selectSecondFrame {
+	function selectSecondFrame(locator1) {
 		if (contains(${locator1}, "/iframe")) {
-			selenium.waitForVisible();
+			selenium.waitForVisible(${locator1}, "false");
 
-			selenium.mouseOver();
+			selenium.mouseOver(${locator1});
 
-			selenium.selectFrame();
+			selenium.selectFrame(${locator1});
 
-			selenium.assertJavaScriptErrors();
+			selenium.assertJavaScriptErrors("true");
 
 			selenium.assertLiferayErrors();
 		}

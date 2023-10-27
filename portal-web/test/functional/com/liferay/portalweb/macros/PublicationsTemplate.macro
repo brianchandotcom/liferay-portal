@@ -1,6 +1,7 @@
 definition {
 
-	macro addPublicationTemplate {
+	@summary = "Default summary"
+	macro addPublicationTemplate(publicationDescription = null,defaultTemplate = null,userInvite1 = null,publicationRole1 = null,userInvite2 = null,userMissingPublicationsRole = null,titleRole1 = null,templateName = null,publicationRole2 = null,userInvite = null,templateDescription = null,titleRole2 = null,defaultSandboxTemplate = null,publicationName = null) {
 		Click(locator1 = "Button#PLUS");
 
 		if (isSet(templateName)) {
@@ -70,7 +71,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro deletePublicationTemplate {
+	@summary = "Default summary"
+	macro deletePublicationTemplate(templateName = null) {
 		Click(
 			key_templateName = ${templateName},
 			locator1 = "PublicationsTemplate#TEMPLATE_DROPDOWN_MENU");
@@ -78,7 +80,8 @@ definition {
 		MenuItem.click(menuItem = "Delete");
 	}
 
-	macro editPublicationTemplate {
+	@summary = "Default summary"
+	macro editPublicationTemplate(publicationNameEdit = null,templateName = null,publicationDescriptionEdit = null,templateDescriptionEdit = null,templateNameEdit = null) {
 		Click(
 			key_templateName = ${templateName},
 			locator1 = "PublicationsTemplate#TEMPLATE_DROPDOWN_MENU");
@@ -114,7 +117,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro expandPublicationCollaborators {
+	@summary = "Default summary"
+	macro expandPublicationCollaborators() {
 		if (IsElementPresent(locator1 = "PublicationsTemplate#PUBLICATION_COLLABORATORS_COLLAPSED")) {
 			Click(locator1 = "PublicationsTemplate#PUBLICATION_COLLABORATORS_COLLAPSED");
 
@@ -122,7 +126,8 @@ definition {
 		}
 	}
 
-	macro expandPublicationInformation {
+	@summary = "Default summary"
+	macro expandPublicationInformation() {
 		if (IsElementPresent(locator1 = "PublicationsTemplate#PUBLICATION_INFORMATION_COLLAPSED")) {
 			Click(locator1 = "PublicationsTemplate#PUBLICATION_INFORMATION_COLLAPSED");
 
@@ -130,7 +135,8 @@ definition {
 		}
 	}
 
-	macro gotoPublicationTemplate {
+	@summary = "Default summary"
+	macro gotoPublicationTemplate() {
 		ApplicationsMenu.gotoPortlet(
 			category = "Publications",
 			panel = "Applications",
@@ -141,7 +147,8 @@ definition {
 		MenuItem.click(menuItem = "Templates");
 	}
 
-	macro inviteUser {
+	@summary = "Default summary"
+	macro inviteUser(userInvite = null,titleRole = null,publicationRole = null) {
 		Click(
 			key_title = ${titleRole},
 			locator1 = "Button#ANY_TITLE");
@@ -159,7 +166,8 @@ definition {
 			locator1 = "PublicationsTemplate#INVITE_USERS_DROPDOWN_ITEM");
 	}
 
-	macro viewPublicationTemplate {
+	@summary = "Default summary"
+	macro viewPublicationTemplate(templateName = null) {
 		PublicationsTemplate.gotoPublicationTemplate();
 
 		AssertTextEquals.assertPartialText(
@@ -168,7 +176,8 @@ definition {
 			value1 = ${templateName});
 	}
 
-	macro viewPublicationTemplateNotPresent {
+	@summary = "Default summary"
+	macro viewPublicationTemplateNotPresent(templateName = null) {
 		PublicationsTemplate.gotoPublicationTemplate();
 
 		AssertElementNotPresent(
@@ -176,7 +185,8 @@ definition {
 			locator1 = "PublicationsTemplate#TEMPLATE_NAME_IN_PUBLICATION_TEMPLATE");
 	}
 
-	macro viewTemplateInvitedUser {
+	@summary = "Default summary"
+	macro viewTemplateInvitedUser(templateName = null,usersAndRoles = null) {
 		Click(
 			key_templateName = ${templateName},
 			locator1 = "PublicationsTemplate#TEMPLATE_DROPDOWN_MENU");

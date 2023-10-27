@@ -1,6 +1,7 @@
 definition {
 
-	macro createNewDeal {
+	@summary = "Default summary"
+	macro createNewDeal(country = null,lastName = null,partnerAccountName = null,address = null,businessUnit = null,accountName = null,city = null,mdfActivityAssociated = null,postalCode = null,industry = null,projectTimeline = null,firstName = null,emailAddress = null,phone = null,projectSolutionCategoriesOptions = null,projectNeedOptions = null,jobRole = null,state = null,department = null) {
 		WaitForPageLoad();
 
 		PRMDealRegistration.fillGeneralDealRegistrationForm(
@@ -33,7 +34,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro fillGeneralDealRegistrationForm {
+	@summary = "Default summary"
+	macro fillGeneralDealRegistrationForm(country = null,lastName = null,partnerAccountName = null,address = null,businessUnit = null,mdfActivityAssociated = null,accountName = null,city = null,postalCode = null,industry = null,projectTimeline = null,firstName = null,emailAddress = null,phone = null,projectSolutionCategoriesOptions = null,projectNeedOptions = null,jobRole = null,state = null,department = null) {
 		if (isSet(partnerAccountName)) {
 			Select(
 				key_fieldName = "partnerAccount",
@@ -172,7 +174,8 @@ definition {
 		}
 	}
 
-	macro viewDealRegistrationByAccountName {
+	@summary = "Default summary"
+	macro viewDealRegistrationByAccountName(dealAccountName = null) {
 		AssertElementPresent(
 			key_accountName = ${dealAccountName},
 			locator1 = "PRMDealRegistration#DEAL_ACCOUNT_NAME");

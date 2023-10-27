@@ -1,6 +1,7 @@
 definition {
 
-	macro _addCommerceCart {
+	@summary = "Default summary"
+	macro _addCommerceCart(shippingAddressName = null,billingAddressName = null,cartItems = null,accountEntryName = null) {
 		Variables.assertDefined(parameterList = ${accountEntryName});
 
 		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});
@@ -128,7 +129,8 @@ definition {
 		return ${responseBody};
 	}
 
-	macro _postCommerceCartCheckout {
+	@summary = "Default summary"
+	macro _postCommerceCartCheckout(cartId = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -146,7 +148,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro getOrderItemPostRequestStatus {
+	@summary = "Default summary"
+	macro getOrderItemPostRequestStatus(cartItems = null,accountEntryName = null) {
 		var responseBody = CommerceJSONDeliveryCart._addCommerceCart(
 			accountEntryName = ${accountEntryName},
 			cartItems = ${cartItems});

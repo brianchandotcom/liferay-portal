@@ -1,6 +1,7 @@
 definition {
 
-	macro gotoAdd {
+	@summary = "Default summary"
+	macro gotoAdd(portletNameScoped = null,portletNameTranslation = null) {
 		var portletName = "Web Content Display";
 
 		if (isSet(portletNameScoped)) {
@@ -29,7 +30,8 @@ definition {
 		WaitForVisible(locator1 = "WCEditWebContent#SIDEBAR");
 	}
 
-	macro gotoArticleEllipsisMenu {
+	@summary = "Default summary"
+	macro gotoArticleEllipsisMenu(webContentTitle = null) {
 		if (IsElementPresent(index = 1, locator1 = "WCD#WEB_CONTENT_CONTENT")) {
 			MouseOver(
 				index = 1,
@@ -56,7 +58,8 @@ definition {
 		}
 	}
 
-	macro gotoEdit {
+	@summary = "Default summary"
+	macro gotoEdit(webContentTitle = null,menuItem = null) {
 		WebContentDisplayPortletNavigator.gotoArticleEllipsisMenu(webContentTitle = ${webContentTitle});
 
 		MenuItem.click(menuItem = ${menuItem});

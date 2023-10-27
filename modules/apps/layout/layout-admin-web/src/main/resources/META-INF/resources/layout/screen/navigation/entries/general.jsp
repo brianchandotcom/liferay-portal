@@ -25,6 +25,8 @@ Group group = layoutsAdminDisplayContext.getGroup();
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
 LayoutType selLayoutType = selLayout.getLayoutType();
+
+portletDisplay.setURLBackTitle(ParamUtil.getString(request, "backURLTitle"));
 %>
 
 <portlet:actionURL name="/layout_admin/edit_layout" var="editLayoutURL">

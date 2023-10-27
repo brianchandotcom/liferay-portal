@@ -69,37 +69,43 @@ public abstract class BaseAddLayoutMVCActionCommand
 		LiferayPortletResponse liferayPortletResponse =
 			portal.getLiferayPortletResponse(actionResponse);
 
-		PortletURL configureLayoutURL = PortletURLBuilder.createRenderURL(
+		return PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
 		).setMVCRenderCommandName(
 			"/layout_admin/edit_layout"
-		).buildPortletURL();
+		).setRedirect(
+			() -> {
+				String backURL = ParamUtil.getString(actionRequest, "backURL");
 
-		String backURL = ParamUtil.getString(actionRequest, "backURL");
+				if (Validator.isNull(backURL)) {
+					PortletURL redirectURL =
+						liferayPortletResponse.createRenderURL();
 
-		if (Validator.isNull(backURL)) {
-			PortletURL redirectURL = liferayPortletResponse.createRenderURL();
+					backURL = HttpComponentsUtil.setParameter(
+						redirectURL.toString(), "p_p_state",
+						WindowState.NORMAL.toString());
+				}
 
-			backURL = HttpComponentsUtil.setParameter(
-				redirectURL.toString(), "p_p_state",
-				WindowState.NORMAL.toString());
-		}
+				return backURL;
+			}
+		).setPortletResource(
+			ParamUtil.getString(actionRequest, "portletResource")
+		).setParameter(
+			"backURLTitle",
+			() -> {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)actionRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
 
-		configureLayoutURL.setParameter("redirect", backURL);
-
-		String portletResource = ParamUtil.getString(
-			actionRequest, "portletResource");
-
-		configureLayoutURL.setParameter("portletResource", portletResource);
-
-		configureLayoutURL.setParameter(
-			"groupId", String.valueOf(layout.getGroupId()));
-		configureLayoutURL.setParameter(
-			"selPlid", String.valueOf(layout.getPlid()));
-		configureLayoutURL.setParameter(
-			"privateLayout", String.valueOf(layout.isPrivateLayout()));
-
-		return configureLayoutURL.toString();
+				return language.get(themeDisplay.getLocale(), "pages");
+			}
+		).setParameter(
+			"groupId", layout.getGroupId()
+		).setParameter(
+			"privateLayout", layout.isPrivateLayout()
+		).setParameter(
+			"selPlid", layout.getPlid()
+		).buildString();
 	}
 
 	@Reference

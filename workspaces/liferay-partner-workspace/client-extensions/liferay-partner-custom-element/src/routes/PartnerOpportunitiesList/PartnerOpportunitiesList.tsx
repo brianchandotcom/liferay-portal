@@ -86,8 +86,8 @@ const PartnerOpportunitiesList = ({
 		},
 		...columnsDates,
 		{
-			columnKey: PartnerOpportunitiesColumnKey.DEAL_AMOUNT,
-			label: 'Deal Amount',
+			columnKey: PartnerOpportunitiesColumnKey.SUBSCRIPTION_ARR,
+			label: 'Subscription ARR',
 		},
 		{
 			columnKey: PartnerOpportunitiesColumnKey.PARTNER_REP_NAME,

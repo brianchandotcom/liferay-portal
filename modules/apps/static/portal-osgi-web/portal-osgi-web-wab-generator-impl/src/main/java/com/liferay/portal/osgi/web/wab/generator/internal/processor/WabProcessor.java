@@ -286,6 +286,15 @@ public class WabProcessor {
 			frontendPathString += "/";
 		}
 
+		boolean siteInitializerDetected = false;
+
+		String siteInitializerPathString = pluginPackageProperties.getProperty(
+			_LIFERAY_CLIENT_EXTENSION_SITE_INITIALIZER, "site-initializer/");
+
+		if (!siteInitializerPathString.endsWith("/")) {
+			siteInitializerPathString += "/";
+		}
+
 		try (ZipFile zipFile = new ZipFile(_file)) {
 			clientExtensionBundlePath = Files.createTempDirectory(
 				"clientextension");
@@ -296,6 +305,8 @@ public class WabProcessor {
 				clientExtensionBundlePath, "META-INF/resources");
 			Path osgiInfConfiguratorPath = _createPath(
 				clientExtensionBundlePath, "OSGI-INF/configurator");
+			Path siteInitializerResourcesPath = _createPath(
+				clientExtensionBundlePath, "site-initializer");
 
 			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
 
@@ -319,6 +330,14 @@ public class WabProcessor {
 									"^" + frontendPathString, "")));
 
 						frontendDetected = true;
+					}
+					else if (name.startsWith(siteInitializerPathString)) {
+						Files.createDirectories(
+							siteInitializerResourcesPath.resolve(
+								name.replaceFirst(
+									"^" + siteInitializerPathString, "")));
+
+						siteInitializerDetected = true;
 					}
 
 					continue;
@@ -347,6 +366,15 @@ public class WabProcessor {
 
 					frontendDetected = true;
 				}
+				else if (name.startsWith(siteInitializerPathString)) {
+					Files.copy(
+						zipFile.getInputStream(zipEntry),
+						siteInitializerResourcesPath.resolve(
+							name.replaceFirst(
+								"^" + siteInitializerPathString, "")));
+
+					siteInitializerDetected = true;
+				}
 			}
 
 			if (batchDetected) {
@@ -364,6 +392,16 @@ public class WabProcessor {
 			else {
 				pluginPackageProperties.remove(
 					_LIFERAY_CLIENT_EXTENSION_FRONTEND);
+			}
+
+			if (siteInitializerDetected) {
+				pluginPackageProperties.setProperty(
+					_LIFERAY_CLIENT_EXTENSION_SITE_INITIALIZER,
+					"site-initializer");
+			}
+			else {
+				pluginPackageProperties.remove(
+					_LIFERAY_CLIENT_EXTENSION_SITE_INITIALIZER);
 			}
 		}
 		catch (Exception exception) {
@@ -1628,6 +1666,9 @@ public class WabProcessor {
 
 	private static final String _LIFERAY_CLIENT_EXTENSION_FRONTEND =
 		"Liferay-Client-Extension-Frontend";
+
+	private static final String _LIFERAY_CLIENT_EXTENSION_SITE_INITIALIZER =
+		"Liferay-Client-Extension-Site-Initializer";
 
 	private static final String _REQUIRE_CAPABILITY_CDI = StringBundler.concat(
 		"osgi.cdi.extension;filter:='(osgi.cdi.extension=aries.cdi.http)',",

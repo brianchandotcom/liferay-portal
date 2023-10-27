@@ -129,10 +129,6 @@ public class JSONPackageJSONDependencyVersionCheck extends BaseFileCheck {
 
 		_expectedDependencyVersionsMap = HashMapBuilder.putAll(
 			_getDependencyVersionsMap(
-				"modules/apps/frontend-js/frontend-js-metal-web/package.json",
-				absolutePath, "metal(-.*)?")
-		).putAll(
-			_getDependencyVersionsMap(
 				"modules/apps/frontend-js/frontend-js-react-web/package.json",
 				absolutePath, ".*")
 		).putAll(

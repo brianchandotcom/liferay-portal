@@ -54,7 +54,7 @@ definition {
 
 		// Pausing 300 seconds due to LRQA-64640
 
-		Pause(locator1 = 300000);
+		Pause(value1 = 300000);
 
 		Navigator.openURL();
 
@@ -85,7 +85,7 @@ definition {
 
 		// Pausing 5 seconds due to LRQA-81519
 
-		Pause(locator1 = 5000);
+		Pause(value1 = 5000);
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",

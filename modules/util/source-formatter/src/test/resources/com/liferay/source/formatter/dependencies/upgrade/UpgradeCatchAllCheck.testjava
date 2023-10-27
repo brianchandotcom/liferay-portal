@@ -17,6 +17,12 @@ public class UpgradeCatchAllCheck {
 		CommerceOrderConstants.PAYMENT_STATUS_PAID;
 		CommerceOrderConstants.PAYMENT_STATUS_PENDING;
 
+		for (CommerceOrderItem commerceOrderItem : commerceOrder.getCommerceOrderItems()) {
+			commerceOrderItem.getQuantity();
+		}
+
+		_countryService.fetchCommerceCountry(123, "test123");
+
 		DestinationNames.BASE_PRICE_LIST;
 		DestinationNames.ORDER_STATUS;
 		DestinationNames.PAYMENT_STATUS;
@@ -40,18 +46,65 @@ public class UpgradeCatchAllCheck {
 		assetCategory.getLeftCategoryId;
 	}
 
-	public void method(CommerceAddress commerceAddress) {
-		Region region = commerceAddress.getCountry();
+	public void method(
+		CommerceAddress commerceAddress, Country country, Region region) {
 
+		commerceAddress.getCountry().getTwoLettersISOCode();
+		country.getTwoLettersISOCode();
+		country.setTwoLettersISOCode();
+		country.getThreeLettersISOCode();
+		country.setThreeLettersISOCode();
+
+		commerceAddress.getRegion().getCode();
 		region.getCode();
-
-		commerceAddress.getRegion(
-		).getCode();
 	}
 
 	public void method(HttpServletRequest httpServletRequest) {
 		_commerceAccountHelper.getCurrentCommerceAccount(httpServletRequest);
 		_commerceAccountHelper.getCurrentCommerceAccount(null);
+	}
+
+	public void method(Indexer<?> indexer) {
+		indexer.getClassNames();
+	}
+
+	public void method(
+		long groupId, boolean privateLayout, long layoutId, long parentLayoutId,
+		Map<java.util.Locale, String> nameMap,
+		Map<java.util.Locale, String> titleMap,
+		Map<java.util.Locale, String> descriptionMap,
+		Map<java.util.Locale, String> keywordsMap,
+		Map<java.util.Locale, String> robotsMap, String type, boolean hidden,
+		Map<java.util.Locale, String> friendlyURLMap, boolean hasIconImage,
+		byte[] iconBytes, ServiceContext serviceContext) {
+
+		LayoutLocalServiceUtil.updateLayout(groupId, privateLayout, layoutId, parentLayoutId, nameMap, titleMap, descriptionMap, keywordsMap, robotsMap, type, hidden, friendlyURLMap, hasIconImage, iconBytes, serviceContext);
+		LayoutServiceUtil.updateLayout(groupId, privateLayout, 123, parentLayoutId, nameMap, titleMap, descriptionMap, keywordsMap, robotsMap, test, hidden, friendlyURLMap, hasIconImage, iconBytes, serviceContext);
+		LayoutServiceUtil.updateLayout(groupId, privateLayout, layoutId, parentLayoutId, nameMap, titleMap, descriptionMap, keywordsMap, robotsMap, type, hidden, friendlyURLMap, hasIconImage, iconBytes, serviceContext);
+		_layoutLocalService.updateLayout(groupId, privateLayout, layoutId, parentLayoutId, nameMap, titleMap, descriptionMap, keywordsMap, robotsMap, type, hidden, friendlyURLMap, hasIconImage, iconBytes, serviceContext);
+		_layoutService.updateLayout(groupId, privateLayout, layoutId, parentLayoutId, nameMap, titleMap, descriptionMap, keywordsMap, robotsMap, type, hidden, friendlyURLMap, hasIconImage, iconBytes, serviceContext);
+	}
+
+	public void method(
+		long userId, long groupId, boolean privateLayout, long parentLayoutId,
+		long classNameId, long classPK, Map<java.util.Locale, String> nameMap,
+		Map<java.util.Locale, String> titleMap,
+		Map<java.util.Locale, String> descriptionMap,
+		Map<java.util.Locale, String> keywordsMap,
+		Map<java.util.Locale, String> robotsMap, String type,
+		String typeSettings, boolean hidden, boolean system,
+		Map<java.util.Locale, String> friendlyURLMap,
+		ServiceContext serviceContext) {
+
+		LayoutLocalServiceUtil.addLayout(userId, groupId, privateLayout, parentLayoutId, classNameId, classPK, nameMap, titleMap, descriptionMap, keywordsMap, robotsMap, type, typeSettings, hidden, system, friendlyURLMap, serviceContext);
+		_layoutLocalService.addLayout(userId, groupId, 123, parentLayoutId, classNameId, classPK, nameMap, titleMap, descriptionMap, keywordsMap, robotsMap, type, typeSettings, hidden, system, friendlyURLMap, serviceContext);
+		_layoutLocalService.addLayout(userId, groupId, privateLayout, parentLayoutId, classNameId, classPK, nameMap, titleMap, descriptionMap, keywordsMap, robotsMap, type, typeSettings, hidden, system, friendlyURLMap, serviceContext);
+	}
+
+	public void method(
+		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
+
+		CaptchaUtil.serveImage(resourceRequest, resourceResponse);
 	}
 
 	public void method(
@@ -125,6 +178,34 @@ public class UpgradeCatchAllCheck {
 	}
 
 	public void method(
+		long groupId, long userId, Map<Locale, String> nameMap,
+		Map<Locale, String> shortDescriptionMap,
+		Map<Locale, String> descriptionMap, Map<Locale, String> urlTitleMap,
+		Map<Locale, String> metaTitleMap,
+		Map<Locale, String> metaDescriptionMap,
+		Map<Locale, String> metaKeywordsMap, String productTypeName,
+		boolean ignoreSKUCombinations, boolean shippable, boolean freeShipping,
+		boolean shipSeparately, double shippingExtraPrice, double width,
+		double height, double depth, double weight, long cpTaxCategoryId,
+		boolean taxExempt, boolean telcoOrElectronics, String ddmStructureKey,
+		boolean published, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
+		String defaultSku, boolean subscriptionEnabled, int subscriptionLength,
+		String subscriptionType,
+		UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
+		long maxSubscriptionCycles, String externalReferenceCode,
+		ServiceContext serviceContext) {
+
+		CPDefinitionLocalServiceUtil.upsertCPDefinition(groupId, userId, nameMap, shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap, metaDescriptionMap, metaKeywordsMap, productTypeName, ignoreSKUCombinations, shippable, freeShipping, shipSeparately, shippingExtraPrice, width, height, depth, weight, cpTaxCategoryId, taxExempt, telcoOrElectronics, ddmStructureKey, published, displayDateMonth, displayDateDay, displayDateYear, displayDateHour, displayDateMinute, expirationDateMonth, expirationDateDay, expirationDateYear, expirationDateHour, expirationDateMinute, neverExpire, defaultSku, subscriptionEnabled, subscriptionLength, subscriptionType, subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles, externalReferenceCode, serviceContext);
+		CPDefinitionServiceUtil.upsertCPDefinition(123, userId, nameMap, shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap, metaDescriptionMap, metaKeywordsMap, productTypeName, ignoreSKUCombinations, shippable, freeShipping, shipSeparately, shippingExtraPrice, width, height, depth, weight, cpTaxCategoryId, taxExempt, telcoOrElectronics, ddmStructureKey, published, displayDateMonth, displayDateDay, displayDateYear, displayDateHour, displayDateMinute, expirationDateMonth, expirationDateDay, expirationDateYear, expirationDateHour, expirationDateMinute, neverExpire, defaultSku, subscriptionEnabled, subscriptionLength, subscriptionType, subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles, externalReferenceCode, serviceContext);
+		CPDefinitionServiceUtil.upsertCPDefinition(groupId, userId, nameMap, shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap, metaDescriptionMap, metaKeywordsMap, productTypeName, ignoreSKUCombinations, shippable, freeShipping, shipSeparately, shippingExtraPrice, width, height, depth, weight, cpTaxCategoryId, taxExempt, telcoOrElectronics, ddmStructureKey, published, displayDateMonth, displayDateDay, displayDateYear, displayDateHour, displayDateMinute, expirationDateMonth, expirationDateDay, expirationDateYear, expirationDateHour, expirationDateMinute, neverExpire, defaultSku, subscriptionEnabled, subscriptionLength, subscriptionType, subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles, externalReferenceCode, serviceContext);
+		_cpDefinitionLocalService.upsertCPDefinition(groupId, userId, nameMap, shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap, metaDescriptionMap, metaKeywordsMap, productTypeName, ignoreSKUCombinations, shippable, freeShipping, shipSeparately, shippingExtraPrice, width, height, depth, weight, cpTaxCategoryId, taxExempt, telcoOrElectronics, ddmStructureKey, published, displayDateMonth, displayDateDay, displayDateYear, displayDateHour, displayDateMinute, expirationDateMonth, expirationDateDay, expirationDateYear, expirationDateHour, expirationDateMinute, neverExpire, defaultSku, subscriptionEnabled, subscriptionLength, subscriptionType, subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles, externalReferenceCode, serviceContext);
+		_cpDefinitionService.upsertCPDefinition(groupId, userId, nameMap, shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap, metaDescriptionMap, metaKeywordsMap, productTypeName, ignoreSKUCombinations, shippable, freeShipping, shipSeparately, shippingExtraPrice, width, height, depth, weight, cpTaxCategoryId, taxExempt, telcoOrElectronics, ddmStructureKey, published, displayDateMonth, displayDateDay, displayDateYear, displayDateHour, displayDateMinute, expirationDateMonth, expirationDateDay, expirationDateYear, expirationDateHour, expirationDateMinute, neverExpire, defaultSku, subscriptionEnabled, subscriptionLength, subscriptionType, subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles, externalReferenceCode, serviceContext);
+	}
+
+	public void method(
 		long companyId, long groupId, String title, int start, int end) {
 
 		_assetVocabularyLocalService.searchVocabularies(companyId, groupId, title, start, end);
@@ -136,6 +217,10 @@ public class UpgradeCatchAllCheck {
 		AccountGroupLocalServiceUtil.fetchCommerceAccountGroupByExternalReferenceCode(companyId, externalReferenceCode);
 		_accountGroupLocalService.fetchCommerceAccountGroupByExternalReferenceCode(123, "test123");
 		_accountGroupLocalService.fetchCommerceAccountGroupByExternalReferenceCode(companyId, externalReferenceCode);
+
+		AssetVocabularyLocalServiceUtil.fetchAssetVocabularyByExternalReferenceCode(123, externalReferenceCode);
+		AssetVocabularyLocalServiceUtil.fetchAssetVocabularyByExternalReferenceCode(companyId, externalReferenceCode);
+		_assetVocabularyLocalService.fetchAssetVocabularyByExternalReferenceCode(companyId, externalReferenceCode);
 
 		CommercePriceListLocalServiceUtil.fetchByExternalReferenceCode(companyId, externalReferenceCode);
 		_commercePriceListLocalService.fetchByExternalReferenceCode(123, "test123");
@@ -189,17 +274,33 @@ public class UpgradeCatchAllCheck {
 	}
 
 	public void method(
-		String externalReferenceCode, long cProductId,
-		String cpInstanceUuid, long commercePriceListId, BigDecimal price,
-		BigDecimal promoPrice, ServiceContext serviceContext) {
+		String className, long classPK, long accountGroupId,
+		ServiceContext serviceContext) {
 
-		CommercePriceEntryLocalServiceUtil.addCommercePriceEntry(externalReferenceCode, cProductId, cpInstanceUuid,commercePriceListId, price, promoPrice, serviceContext);
-		_commercePriceEntryLocalService.addCommercePriceEntry("test123", cProductId, cpInstanceUuid,commercePriceListId, price, promoPrice, serviceContext);
-		_commercePriceEntryLocalService.addCommercePriceEntry(externalReferenceCode, cProductId, cpInstanceUuid,commercePriceListId, price, promoPrice, serviceContext);
-	 }
+		AccountGroupRelLocalServiceUtil.addCommerceAccountGroupRel(className, classPK, accountGroupId, serviceContext);
+		AccountGroupRelServiceUtil.addCommerceAccountGroupRel("test123", classPK, 123, serviceContext);
+		_accountGroupRelLocalService.addCommerceAccountGroupRel(className, classPK, accountGroupId, serviceContext);
+		_accountGroupRelService.addCommerceAccountGroupRel(className, classPK, accountGroupId, serviceContext);
+	}
+
+	public void method(
+		String externalReferenceCode, long cProductId, String cpInstanceUuid,
+		long commercePriceListId, BigDecimal price, BigDecimal promoPrice,
+		ServiceContext serviceContext) {
+
+		CommercePriceEntryLocalServiceUtil.addCommercePriceEntry(externalReferenceCode, cProductId, cpInstanceUuid, commercePriceListId, price, promoPrice, serviceContext);
+		_commercePriceEntryLocalService.addCommercePriceEntry("test123", cProductId, cpInstanceUuid, commercePriceListId, price, promoPrice, serviceContext);
+		_commercePriceEntryLocalService.addCommercePriceEntry(externalReferenceCode, cProductId, cpInstanceUuid, commercePriceListId, price, promoPrice, serviceContext);
+	}
 
 	@Reference
 	private AccountGroupLocalService _accountGroupLocalService;
+
+	@Reference
+	private AccountGroupRelLocalService _accountGroupRelLocalService;
+
+	@Reference
+	private AccountGroupRelService _accountGroupRelService;
 
 	@Reference
 	private AddressLocalService _addressLocalService;
@@ -217,7 +318,7 @@ public class UpgradeCatchAllCheck {
 	private AssetVocabularyService _assetVocabularyService;
 
 	@Reference
-    private CommerceAccountHelper _commerceAccountHelper;
+	private CommerceAccountHelper _commerceAccountHelper;
 
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;
@@ -227,6 +328,9 @@ public class UpgradeCatchAllCheck {
 
 	@Reference
 	private CommercePriceListLocalService _commercePriceListLocalService;
+
+	@Reference
+	private CountryService _countryService;
 
 	@Reference
 	private CPDefinitionLinkLocalService _cpDefinitionLinkLocalService;
@@ -257,5 +361,11 @@ public class UpgradeCatchAllCheck {
 
 	@Reference
 	private JournalFolderLocalService _journalFolderLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutService _layoutService;
 
 }

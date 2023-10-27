@@ -1,6 +1,7 @@
 definition {
 
-	macro _gotoChildArticle {
+	@summary = "Default summary"
+	macro _gotoChildArticle(kbChildArticleContent = null,kbChildArticleTitle = null) {
 		var key_kbChildArticleContent = ${kbChildArticleContent};
 		var key_kbChildArticleTitle = ${kbChildArticleTitle};
 
@@ -21,7 +22,8 @@ definition {
 			value1 = ${kbChildArticleTitle});
 	}
 
-	macro addChildArticleViaKBAdmin {
+	@summary = "Default summary"
+	macro addChildArticleViaKBAdmin(kbChildArticleContent = null,kbChildArticleTitle = null,kbArticleTitle = null) {
 		if (isSet(navigationPane)) {
 			KBArticle.gotoMenuItemViaNavigationPane(
 				kbArticleTitle = ${kbArticleTitle},
@@ -51,7 +53,8 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro addCP {
+	@summary = "Default summary"
+	macro addCP(videoShortcutTitle = null,kbDescription = null,enableExpirationDate = null,kbArticleContentSource = null,kbArticleAddViaTemplate = null,saveAsDraft = null,kbTemplateTitle = null,viewExpirationTime = null,kbArticleAttachment = null,vocabularyName = null,kbArticleFriendlyURL = null,categoryName = null,uncheckNeverReview = null,embedVideo = null,configureReviewDate = null,kbMissingRequiredCategory = null,videoName = null,kbArticleAddViaSource = null,assetTitle = null,increaseMinutes = null,videoShortcutPreview = null,kbArticleDuplicateFriendlyURL = null,depotName = null,kbArticleContent = null,kbArticleSourceURL = null,assetType = null,navTab = null,kbArticleInvalidContent = null,kbArticleSection = null,kbWorkflowAction = null,kbArticleTitle = null,extendedMinutes = null,notificationDate = null) {
 		WaitForVisible(locator1 = "Button#PLUS");
 
 		if (isSet(kbTemplateTitle)) {
@@ -272,7 +275,8 @@ definition {
 		}
 	}
 
-	macro addCPWithInvalidAttachmentSize {
+	@summary = "Default summary"
+	macro addCPWithInvalidAttachmentSize(kbArticleAttachment = null,maxFileSize = null,kbArticleContent = null,kbArticleTitle = null) {
 		LexiconEntry.gotoAdd();
 
 		MenuItem.click(menuItem = "Basic Article");
@@ -294,7 +298,8 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro addCPWithInvalidTitle {
+	@summary = "Default summary"
+	macro addCPWithInvalidTitle(kbArticleContent = null,kbArticleTitle = null) {
 		LexiconEntry.gotoAdd();
 
 		MenuItem.click(menuItem = "Basic Article");
@@ -314,7 +319,8 @@ definition {
 		AssertElementPresent(locator1 = "TextInput#REQUIRED_ALERT");
 	}
 
-	macro addCPWithTextFieldCustomField {
+	@summary = "Default summary"
+	macro addCPWithTextFieldCustomField(customFieldText = null,kbArticleContent = null,kbArticleTitle = null) {
 		LexiconEntry.gotoAdd();
 
 		MenuItem.click(menuItem = "Basic Article");
@@ -336,7 +342,8 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro addPGViaAP {
+	@summary = "Default summary"
+	macro addPGViaAP(kbArticleContent = null,kbArticleTitle = null) {
 		AssetPublisherPortlet.addAsset(assetType = "Knowledge Base Article");
 
 		AssertElementPresent(locator1 = "TextInput#TITLE");
@@ -350,7 +357,8 @@ definition {
 		Button.click(button = "Publish");
 	}
 
-	macro cancelAddKBArticle {
+	@summary = "Default summary"
+	macro cancelAddKBArticle(kbArticleContent = null,kbArticleTitle = null) {
 		LexiconEntry.gotoAddMenuItem(menuItem = "Basic Article");
 
 		AssertElementPresent(locator1 = "TextInput#TITLE");
@@ -364,7 +372,8 @@ definition {
 		Button.clickCancel();
 	}
 
-	macro closePageTreePanel {
+	@summary = "Default summary"
+	macro closePageTreePanel(section = null) {
 		if (${section} == "Folders and Articles") {
 			if (IsElementPresent(key_header = ${section}, locator1 = "KnowledgeBase#PAGE_TREE_PANEL_HEADER")) {
 				Click.javaScriptClick(locator1 = "KnowledgeBase#PAGE_TREE_FOLDERS_AND_ARTICLES");
@@ -386,7 +395,8 @@ definition {
 		WaitForVisible(locator1 = "KnowledgeBase#PAGE_TREE_PANEL_COLLAPSED");
 	}
 
-	macro configureEmailCP {
+	@summary = "Default summary"
+	macro configureEmailCP(userEmailAddress = null,userName = null) {
 		Click(locator1 = "Portlet#OPTIONS_ICON");
 
 		MenuItem.click(menuItem = "Configuration");
@@ -466,7 +476,8 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro deleteCP {
+	@summary = "Default summary"
+	macro deleteCP(kbArticleTitle = null) {
 		if (isSet(navigationPane)) {
 			KBArticle.gotoMenuItemViaNavigationPane(
 				kbArticleTitle = ${kbArticleTitle},
@@ -500,7 +511,8 @@ definition {
 			value1 = "An unexpected error occurred while importing articles: File name is null.");
 	}
 
-	macro deletePG {
+	@summary = "Default summary"
+	macro deletePG() {
 		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Delete");
 
 		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
@@ -515,7 +527,8 @@ definition {
 		}
 	}
 
-	macro disableSocialBookmarkSites {
+	@summary = "Default summary"
+	macro disableSocialBookmarkSites(disableSocialBookmarkSites = null) {
 		for (var socialBookmarkSite : list ${disableSocialBookmarkSites}) {
 			AddSelection(
 				locator1 = "SocialBookmarks#ENABLE_SOCIAL_BOOKMARK_CURRENT_SELECT",
@@ -529,7 +542,8 @@ definition {
 		}
 	}
 
-	macro editCP {
+	@summary = "Default summary"
+	macro editCP(videoShortcutTitle = null,cancel = null,kbArticleTitleEdit = null,enableExpirationDate = null,depotName = null,saveAsDraft = null,kbArticleAttachment = null,customFieldTextEdit = null,navTab = null,uploadFileName = null,kbArticleContentEdit = null,dmImage = null,kbArticleTitle = null,extendedMinutes = null,notificationDate = null) {
 		if (!(isSet(skipNavigation))) {
 			if (isSet(navigationPane)) {
 				KBArticle.gotoMenuItemViaNavigationPane(
@@ -652,7 +666,8 @@ definition {
 		}
 	}
 
-	macro enableDescriptionOnPortlet {
+	@summary = "Default summary"
+	macro enableDescriptionOnPortlet(portletName = null) {
 		Portlet.gotoPortletOptions(
 			portletName = ${portletName},
 			portletOption = "Configuration");
@@ -672,7 +687,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro enableSocialBookmarkSites {
+	@summary = "Default summary"
+	macro enableSocialBookmarkSites(enableSocialBookmarkSites = null) {
 		for (var socialBookmarkSite : list ${enableSocialBookmarkSites}) {
 			AddSelection(
 				locator1 = "SocialBookmarks#ENABLE_SOCIAL_BOOKMARK_AVAILABLE_SELECT",
@@ -686,14 +702,16 @@ definition {
 		}
 	}
 
-	macro gotoChildArticleDescriptiveDetails {
+	@summary = "Default summary"
+	macro gotoChildArticleDescriptiveDetails(kbArticleTitle = null) {
 		AssertClick.assertPartialTextClickAt(
 			key_kbArticleTitle = ${kbArticleTitle},
 			locator1 = "KnowledgeBase#DESCRIPTIVE_VIEW_CHILD_ARTICLE_LINK",
 			value1 = "Child Article");
 	}
 
-	macro goToEntryPermissions {
+	@summary = "Default summary"
+	macro goToEntryPermissions(kbArticleTitle = null) {
 		Click(
 			key_rowEntry = ${kbArticleTitle},
 			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
@@ -703,14 +721,16 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
-	macro gotoKBArticleViaKBDisplayHierarchyNavigationPG {
+	@summary = "Default summary"
+	macro gotoKBArticleViaKBDisplayHierarchyNavigationPG(kbArticleTitle = null) {
 		AssertClick(
 			key_kbArticleTitle = ${kbArticleTitle},
 			locator1 = "KnowledgeBase#HIERARCHY_NAVIGATION_PARENT",
 			value1 = ${kbArticleTitle});
 	}
 
-	macro gotoKBChildArticleViaKBDisplayHierarchyNavigationPG {
+	@summary = "Default summary"
+	macro gotoKBChildArticleViaKBDisplayHierarchyNavigationPG(kbChildArticleTitle = null,kbArticleTitle = null) {
 		var key_kbArticleTitle = ${kbArticleTitle};
 		var key_kbChildArticleTitle = ${kbChildArticleTitle};
 
@@ -723,7 +743,8 @@ definition {
 			value1 = ${kbChildArticleTitle});
 	}
 
-	macro gotoMenuItemViaNavigationPane {
+	@summary = "Default summary"
+	macro gotoMenuItemViaNavigationPane(menuItem = null,kbArticleTitle = null) {
 		MouseOver(
 			key_itemName = ${kbArticleTitle},
 			locator1 = "KnowledgeBase#PAGE_TREE_ITEM_NAME");
@@ -742,19 +763,22 @@ definition {
 		}
 	}
 
-	macro gotoNextArticlePG {
+	@summary = "Default summary"
+	macro gotoNextArticlePG(kbDisplayNextArticle = null) {
 		AssertClick(
 			locator1 = "KnowledgeBaseArticle#NEXT",
 			value1 = ${kbDisplayNextArticle});
 	}
 
-	macro gotoPreviousArticle {
+	@summary = "Default summary"
+	macro gotoPreviousArticle(kbDisplayPreviousArticle = null) {
 		AssertClick(
 			locator1 = "KnowledgeBaseArticle#PREVIOUS",
 			value1 = ${kbDisplayPreviousArticle});
 	}
 
-	macro gotoViaKBAdminCP {
+	@summary = "Default summary"
+	macro gotoViaKBAdminCP(kbArticleTitle = null) {
 		var key_kbArticleTitle = ${kbArticleTitle};
 
 		if (isSet(hasChildArticle)) {
@@ -771,7 +795,8 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro importCP {
+	@summary = "Default summary"
+	macro importCP(kbFolderName = null,kbZipFile = null,applyNumericalPrefix = null) {
 		if (isSet(centerPaneButton)) {
 			Button.click(button = "New");
 
@@ -800,7 +825,8 @@ definition {
 		Alert.viewSuccessMessageText(successMessage = "Your request completed successfully.");
 	}
 
-	macro moveArticleCP {
+	@summary = "Default summary"
+	macro moveArticleCP(destinationItem = null,kbArticleTitle = null) {
 		var key_rowEntry = ${kbArticleTitle};
 		var key_nodeName = ${destinationItem};
 
@@ -824,7 +850,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro openPageTreePanel {
+	@summary = "Default summary"
+	macro openPageTreePanel(section = null) {
 		if (${section} == "Folders and Articles") {
 			WaitForVisible(locator1 = "KnowledgeBase#PAGE_TREE_FOLDERS_AND_ARTICLES");
 
@@ -856,7 +883,8 @@ definition {
 		}
 	}
 
-	macro openToAddKBArticle {
+	@summary = "Default summary"
+	macro openToAddKBArticle(groupName = null,site = null,siteURLKey = null) {
 
 		// You can use this navigation when you need to access the configuration quickly without checking the UI.
 
@@ -877,10 +905,11 @@ definition {
 
 		// Articles accessed in admin will stay in admin after publishing.
 
-		Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_knowledge_base_web_portlet_AdminPortlet&_com_liferay_knowledge_base_web_portlet_AdminPortlet_mvcPath=%2Fadmin%2Fcommon%2Fedit_kb_article.jsp&_com_liferay_knowledge_base_web_portlet_AdminPortlet_redirect=%2Fgroup%2F${siteURLKey}%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_knowledge_base_web_portlet_AdminPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_v_l_s_g_id%3D${groupId}%26p_p_auth%3D6eOinWLB&_com_liferay_knowledge_base_web_portlet_AdminPortlet_parentResourceClassNameId=${parentResourceClassNameId}&_com_liferay_knowledge_base_web_portlet_AdminPortlet_parentResourcePrimKey=${parentResourcePrimKey}");
+		Open(value1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_knowledge_base_web_portlet_AdminPortlet&_com_liferay_knowledge_base_web_portlet_AdminPortlet_mvcPath=%2Fadmin%2Fcommon%2Fedit_kb_article.jsp&_com_liferay_knowledge_base_web_portlet_AdminPortlet_redirect=%2Fgroup%2F${siteURLKey}%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_knowledge_base_web_portlet_AdminPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_v_l_s_g_id%3D${groupId}%26p_p_auth%3D6eOinWLB&_com_liferay_knowledge_base_web_portlet_AdminPortlet_parentResourceClassNameId=${parentResourceClassNameId}&_com_liferay_knowledge_base_web_portlet_AdminPortlet_parentResourcePrimKey=${parentResourcePrimKey}");
 	}
 
-	macro openToEditKBArticleInSite {
+	@summary = "Default summary"
+	macro openToEditKBArticleInSite(groupName = null,site = null,kbChildArticleTitle = null,siteURLKey = null,kbArticleTitle = null) {
 
 		// You can use this navigation when you need to access the configuration quickly without checking the UI.
 
@@ -905,10 +934,11 @@ definition {
 				site = ${site});
 		}
 
-		Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_knowledge_base_web_portlet_AdminPortlet&_com_liferay_knowledge_base_web_portlet_AdminPortlet_redirect=http%3A%2F%2F${portalInstanceName}%3A8080%2Fgroup%2F${siteURLKey}%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_knowledge_base_web_portlet_AdminPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_p_mode%3Dview%26p_p_auth%3DkhoaN4dO&_com_liferay_knowledge_base_web_portlet_AdminPortlet_mvcPath=%2Fadmin%2Fcommon%2Fedit_kb_article.jsp&_com_liferay_knowledge_base_web_portlet_AdminPortlet_resourcePrimKey=${resourcePrimKey}");
+		Open(value1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_knowledge_base_web_portlet_AdminPortlet&_com_liferay_knowledge_base_web_portlet_AdminPortlet_redirect=http%3A%2F%2F${portalInstanceName}%3A8080%2Fgroup%2F${siteURLKey}%2F~%2Fcontrol_panel%2Fmanage%3Fp_p_id%3Dcom_liferay_knowledge_base_web_portlet_AdminPortlet%26p_p_lifecycle%3D0%26p_p_state%3Dmaximized%26p_p_mode%3Dview%26p_p_auth%3DkhoaN4dO&_com_liferay_knowledge_base_web_portlet_AdminPortlet_mvcPath=%2Fadmin%2Fcommon%2Fedit_kb_article.jsp&_com_liferay_knowledge_base_web_portlet_AdminPortlet_resourcePrimKey=${resourcePrimKey}");
 	}
 
-	macro openToKBArticleInSite {
+	@summary = "Default summary"
+	macro openToKBArticleInSite(groupName = null,site = null,siteURLKey = null,folderName = null,kbArticleTitle = null) {
 
 		// You can use this navigation when you need to access the configuration quickly without checking the UI.
 
@@ -934,10 +964,11 @@ definition {
 
 		var resourceClassNameId = JSONClassname._getClassNameId(value = "com.liferay.knowledge.base.model.KBArticle");
 
-		Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_knowledge_base_web_portlet_AdminPortlet&_com_liferay_knowledge_base_web_portlet_AdminPortlet_mvcRenderCommandName=%2Fknowledge_base%2Fview_kb_article&_com_liferay_knowledge_base_web_portlet_AdminPortlet_resourceClassNameId=${resourceClassNameId}&_com_liferay_knowledge_base_web_portlet_AdminPortlet_resourcePrimKey=${resourcePrimKey}&_com_liferay_knowledge_base_web_portlet_AdminPortlet_redirect=com_liferay_knowledge_base_web_portlet_AdminPortlet");
+		Open(value1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_knowledge_base_web_portlet_AdminPortlet&_com_liferay_knowledge_base_web_portlet_AdminPortlet_mvcRenderCommandName=%2Fknowledge_base%2Fview_kb_article&_com_liferay_knowledge_base_web_portlet_AdminPortlet_resourceClassNameId=${resourceClassNameId}&_com_liferay_knowledge_base_web_portlet_AdminPortlet_resourcePrimKey=${resourcePrimKey}&_com_liferay_knowledge_base_web_portlet_AdminPortlet_redirect=com_liferay_knowledge_base_web_portlet_AdminPortlet");
 	}
 
-	macro removeAttachment {
+	@summary = "Default summary"
+	macro removeAttachment(attachmentName = null) {
 		ClickNoError(
 			key_attachmentName = ${attachmentName},
 			locator1 = "KnowledgeBaseArticle#ATTACHMENTS_REMOVE");
@@ -945,7 +976,8 @@ definition {
 		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
 	}
 
-	macro searchArticleInMoveModal {
+	@summary = "Default summary"
+	macro searchArticleInMoveModal(searchItem = null,kbArticleTitle = null) {
 		var key_rowEntry = ${kbArticleTitle};
 
 		Click(locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
@@ -959,7 +991,8 @@ definition {
 			value1 = ${searchItem});
 	}
 
-	macro searchForKB {
+	@summary = "Default summary"
+	macro searchForKB(knowledgeBaseName = null) {
 		var key_knowledgeBaseName = ${knowledgeBaseName};
 
 		if (isSet(searchFromCenterPanel)) {
@@ -982,13 +1015,15 @@ definition {
 		}
 	}
 
-	macro selectAllCP {
+	@summary = "Default summary"
+	macro selectAllCP() {
 		PortletEntry.selectAll();
 
 		AssertElementPresent(locator1 = "Icon#DELETE");
 	}
 
-	macro selectArticleCP {
+	@summary = "Default summary"
+	macro selectArticleCP(kbArticleTitle = null) {
 		Check(
 			key_kbArticleTitle = ${kbArticleTitle},
 			locator1 = "KnowledgeBase#ARTICLE_DESCRIPTIVE_ARTICLE_CHECKBOX");
@@ -996,7 +1031,8 @@ definition {
 		AssertVisible(locator1 = "Icon#DELETE");
 	}
 
-	macro selectArticlesToDisplayOnWidget {
+	@summary = "Default summary"
+	macro selectArticlesToDisplayOnWidget(kbFolderName = null,kbArticleTitle = null,portletName = null,childArticles = null) {
 		Portlet.gotoPortletOptions(
 			portletName = ${portletName},
 			portletOption = "Configuration");
@@ -1057,7 +1093,8 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro selectAttachmentCP {
+	@summary = "Default summary"
+	macro selectAttachmentCP(kbArticleAttachment = null) {
 		if (IsElementNotPresent(locator1 = "KnowledgeBaseArticle#ATTACHMENTS_HEADER_EXPANDED")) {
 			Click(locator1 = "KnowledgeBaseArticle#ATTACHMENTS_HEADER_COLLAPSED");
 		}
@@ -1069,7 +1106,8 @@ definition {
 			value1 = ${kbArticleAttachment});
 	}
 
-	macro selectFolderThroughPageTreePanel {
+	@summary = "Default summary"
+	macro selectFolderThroughPageTreePanel(kbFolderName = null,kbChildFolderName = null) {
 		if (isSet(kbChildFolderName)) {
 			Click(locator1 = "KnowledgeBase#PAGE_TREE_CHEVRON_ICON_RIGHT");
 
@@ -1084,7 +1122,8 @@ definition {
 		}
 	}
 
-	macro setReviewDate {
+	@summary = "Default summary"
+	macro setReviewDate(increaseMinutes = null) {
 		Panel.expandPanel(panel = "Expiration Date");
 
 		if (isSet(uncheckNeverReview)) {
@@ -1116,7 +1155,8 @@ definition {
 			value1 = ${reviewDateTime});
 	}
 
-	macro subscribeCP {
+	@summary = "Default summary"
+	macro subscribeCP(kbArticleTitle = null) {
 		if (isSet(subscribeActionToolbar)) {
 			Click(
 				key_kbArticleTitle = ${kbArticleTitle},
@@ -1140,7 +1180,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro tearDownCP {
+	@summary = "Default summary"
+	macro tearDownCP() {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1158,7 +1199,8 @@ definition {
 		}
 	}
 
-	macro updateCheckInterval {
+	@summary = "Default summary"
+	macro updateCheckInterval(fieldValue = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fview_configuration_screen&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_configurationScreenKey=knowledge-base-service");
 
 		Type(
@@ -1169,7 +1211,8 @@ definition {
 		SystemSettings.saveConfiguration();
 	}
 
-	macro viewActionsDetailsToolbar {
+	@summary = "Default summary"
+	macro viewActionsDetailsToolbar() {
 		AssertVisible(
 			key_text = "pencil",
 			locator1 = "Icon#ANY");
@@ -1203,7 +1246,8 @@ definition {
 		}
 	}
 
-	macro viewActiveActionsManagementToolbar {
+	@summary = "Default summary"
+	macro viewActiveActionsManagementToolbar(title = null) {
 		AssertElementNotPresent(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER_DISABLED");
 
 		AssertElementNotPresent(locator1 = "ManagementBar#FILTER_AND_ORDER_DISABLED");
@@ -1227,7 +1271,8 @@ definition {
 			locator1 = "Header#H4_TITLE");
 	}
 
-	macro viewArticleHistoryCP {
+	@summary = "Default summary"
+	macro viewArticleHistoryCP(kbArticleContentRemovedDiff = null,kbArticleContentAddedDiff = null,kbArticleVersionOld = null,kbArticleVersionNew = null,kbArticleTitle = null) {
 		Click(
 			key_rowEntry = ${kbArticleTitle},
 			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
@@ -1262,7 +1307,8 @@ definition {
 		}
 	}
 
-	macro viewArticleHistoryPG {
+	@summary = "Default summary"
+	macro viewArticleHistoryPG(kbArticleContentRemovedDiff = null,kbArticleContentAddedDiff = null,kbArticleVersionOld = null,viewNoXmlInTitle = null,kbArticleVersionNew = null) {
 		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "History");
 
 		Check(
@@ -1299,7 +1345,8 @@ definition {
 		}
 	}
 
-	macro viewArticleThroughPageTreePanel {
+	@summary = "Default summary"
+	macro viewArticleThroughPageTreePanel(kbFolderName = null,kbChildArticleTitle = null,kbArticleTitle = null) {
 		if (isSet(kbChildArticleTitle)) {
 			Click(locator1 = "KnowledgeBase#PAGE_TREE_CHEVRON_ICON_RIGHT");
 
@@ -1325,7 +1372,8 @@ definition {
 		}
 	}
 
-	macro viewAttachmentCP {
+	@summary = "Default summary"
+	macro viewAttachmentCP(kbArticleTitle = null) {
 		Click(
 			key_rowEntry = ${kbArticleTitle},
 			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
@@ -1339,7 +1387,8 @@ definition {
 		AssertElementPresent(locator1 = "KnowledgeBaseArticle#ATTACHMENTS_SAVED_ATTACHMENTS_CONTAINER");
 	}
 
-	macro viewBlogsEntryRelatedAsset {
+	@summary = "Default summary"
+	macro viewBlogsEntryRelatedAsset(kbArticleRelatedAssetTitle = null) {
 		var key_kbArticleRelatedAssetTitle = ${kbArticleRelatedAssetTitle};
 
 		AssertClick.assertTextClickAt(
@@ -1357,7 +1406,8 @@ definition {
 			value1 = "Blogs Entry Title");
 	}
 
-	macro viewChildArticleCP {
+	@summary = "Default summary"
+	macro viewChildArticleCP(kbChildArticleContent = null,kbChildArticleTitle = null) {
 		if (isSet(pageTreePanel)) {
 			Click(
 				key_itemName = ${kbChildArticleTitle},
@@ -1378,7 +1428,8 @@ definition {
 			value1 = ${kbChildArticleContent});
 	}
 
-	macro viewChildArticlePG {
+	@summary = "Default summary"
+	macro viewChildArticlePG(kbChildArticleContent = null,kbChildArticleTitle = null,kbArticleTitle = null) {
 		AssertClick.assertTextClickNoMouseOver(
 			key_kbArticleTitle = ${kbArticleTitle},
 			key_kbChildArticleTitle = ${kbChildArticleTitle},
@@ -1394,7 +1445,8 @@ definition {
 			value1 = ${kbChildArticleContent});
 	}
 
-	macro viewCP {
+	@summary = "Default summary"
+	macro viewCP(kbDescription = null,kbChildArticleContent = null,internalVideo = null,vocabularyName = null,indexNumber = null,kbArticleContent = null,categoryName = null,versionNumber = null,kbArticleRelatedAssetTitle = null,service = null,videoName = null,kbChildArticleTitle = null,kbStatus = null,kbArticleTitle = null) {
 		var key_kbArticleTitle = ${kbArticleTitle};
 
 		if (isSet(pageTreePanel)) {
@@ -1533,7 +1585,8 @@ definition {
 		}
 	}
 
-	macro viewCPWithHTML {
+	@summary = "Default summary"
+	macro viewCPWithHTML(kbArticleContent = null,kbArticleTitle = null) {
 		AssertClick(
 			key_kbArticleTitle = ${kbArticleTitle},
 			locator1 = "KnowledgeBase#DESCRIPTIVE_VIEW_ARTICLE_TITLE",
@@ -1548,7 +1601,8 @@ definition {
 			value1 = ${kbArticleContent});
 	}
 
-	macro viewDefaultCP {
+	@summary = "Default summary"
+	macro viewDefaultCP() {
 		if (isSet(newFolder)) {
 			AssertTextEquals(
 				locator1 = "Message#EMPTY_INFO_TAGLIB_TITLE",
@@ -1572,7 +1626,8 @@ definition {
 		AssertElementNotPresent(locator1 = "KnowledgeBase#ARTICLE_TABLE_KB_GENERIC");
 	}
 
-	macro viewExpirationStatus {
+	@summary = "Default summary"
+	macro viewExpirationStatus(kbExpirationStatus = null,kbArticleTitle = null) {
 		AssertTextEquals(
 			key_kbArticleTitle = ${kbArticleTitle},
 			locator1 = "KnowledgeBase#ARTICLE_TABLE_EXPIRATION_STATUS",
@@ -1585,7 +1640,8 @@ definition {
 		}
 	}
 
-	macro viewFieldRequiredAsterisk {
+	@summary = "Default summary"
+	macro viewFieldRequiredAsterisk(fieldLabel = null) {
 		LexiconEntry.gotoAddMenuItem(menuItem = "Basic Article");
 
 		for (var fieldFieldLabel : list ${fieldLabel}) {
@@ -1593,7 +1649,8 @@ definition {
 		}
 	}
 
-	macro viewFriendlyURLCP {
+	@summary = "Default summary"
+	macro viewFriendlyURLCP(kbArticleFriendlyURL = null,kbArticleTitle = null) {
 		if (!(isSet(skipNavigation))) {
 			Click(
 				key_rowEntry = ${kbArticleTitle},
@@ -1615,7 +1672,8 @@ definition {
 		}
 	}
 
-	macro viewImageIsPresent {
+	@summary = "Default summary"
+	macro viewImageIsPresent(contentImageName = null,kbArticleTitle = null) {
 		Click(
 			key_kbArticleTitle = ${kbArticleTitle},
 			locator1 = "KnowledgeBase#ARTICLE_DESCRIPTIVE_ARTICLE_TITLE");
@@ -1625,11 +1683,13 @@ definition {
 			locator1 = "KnowledgeBase#CONTENT_IMAGE_NAME");
 	}
 
-	macro viewImageViaContentCmd {
+	@summary = "Default summary"
+	macro viewImageViaContentCmd() {
 		AssertElementPresent(locator1 = "KnowledgeBaseArticle#CONTENT_IMAGE");
 	}
 
-	macro viewInfoPanel {
+	@summary = "Default summary"
+	macro viewInfoPanel(workflowStatus = null,childArticlesQuantity = null,viewQuantity = null,kbArticleTitle = null,versionNumber = null) {
 		Click(locator1 = "Button#OPEN");
 
 		AssertTextEquals(
@@ -1664,7 +1724,8 @@ definition {
 		}
 	}
 
-	macro viewInfoPanelVersions {
+	@summary = "Default summary"
+	macro viewInfoPanelVersions(entryVersion = null,userName = null) {
 		Navigator.gotoNavTab(navTab = "Versions");
 
 		AssertTextEquals(
@@ -1681,7 +1742,8 @@ definition {
 			value1 = "By ${userName}, on ${modifiedDate}");
 	}
 
-	macro viewKBArticlePriorityCP {
+	@summary = "Default summary"
+	macro viewKBArticlePriorityCP(kbPriority = null,kbArticleTitle = null) {
 		var key_kbArticleTitle = ${kbArticleTitle};
 
 		AssertTextEquals(
@@ -1693,7 +1755,8 @@ definition {
 			value1 = "Priority ${kbPriority}");
 	}
 
-	macro viewKBArticleWithAttachmentCP {
+	@summary = "Default summary"
+	macro viewKBArticleWithAttachmentCP(kbArticleAttachment = null,kbArticleContent = null,kbArticleTitle = null) {
 		Click(
 			key_rowEntry = ${kbArticleTitle},
 			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
@@ -1725,7 +1788,8 @@ definition {
 			value1 = ${kbArticleAttachment});
 	}
 
-	macro viewNavigationLinksPG {
+	@summary = "Default summary"
+	macro viewNavigationLinksPG(next = null,previous = null) {
 		if (${previous} == "true") {
 			AssertElementPresent(locator1 = "KnowledgeBaseArticle#PREVIOUS");
 		}
@@ -1741,13 +1805,15 @@ definition {
 		}
 	}
 
-	macro viewNoExpirationStatus {
+	@summary = "Default summary"
+	macro viewNoExpirationStatus(kbArticleTitle = null) {
 		AssertElementNotPresent(
 			key_kbArticleTitle = ${kbArticleTitle},
 			locator1 = "KnowledgeBase#ARTICLE_TABLE_EXPIRATION_STATUS");
 	}
 
-	macro viewNoHierarchyPG {
+	@summary = "Default summary"
+	macro viewNoHierarchyPG(kbArticleTitle = null) {
 		AssertElementNotPresent(
 			key_kbArticleTitle = ${kbArticleTitle},
 			locator1 = "KnowledgeBase#HIERARCHY_NAVIGATION_PARENT");
@@ -1755,11 +1821,13 @@ definition {
 		AssertElementPresent(locator1 = "KnowledgeBase#FOLDER_NAVIGATION_MENULIST");
 	}
 
-	macro viewNoPGViaKBDisplay {
+	@summary = "Default summary"
+	macro viewNoPGViaKBDisplay(kbArticleTitle = null) {
 		AssertTextNotPresent(value1 = ${kbArticleTitle});
 	}
 
-	macro viewPG {
+	@summary = "Default summary"
+	macro viewPG(kbDescription = null,description = null,customFieldValue = null,kbArticleContent = null,customFieldName = null,kbArticleTitle = null) {
 		AssertTextEquals.assertPartialText(
 			locator1 = "KnowledgeBase#DISPLAY_TITLE",
 			value1 = ${kbArticleTitle});
@@ -1809,7 +1877,8 @@ definition {
 		}
 	}
 
-	macro viewPGViaAP {
+	@summary = "Default summary"
+	macro viewPGViaAP(kbArticleContent = null,kbArticleTitle = null) {
 		var key_assetContent = ${kbArticleContent};
 		var key_assetTitle = ${kbArticleTitle};
 
@@ -1822,7 +1891,8 @@ definition {
 			value1 = ${kbArticleContent});
 	}
 
-	macro viewPrintContent {
+	@summary = "Default summary"
+	macro viewPrintContent(kbArticleContent = null,kbArticleTitle = null) {
 		Click(
 			key_rowEntry = ${kbArticleTitle},
 			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
@@ -1840,19 +1910,22 @@ definition {
 			value1 = ${kbArticleContent});
 	}
 
-	macro viewSearchResultNotPresent {
+	@summary = "Default summary"
+	macro viewSearchResultNotPresent(kbArticleTitle = null) {
 		AssertElementNotPresent(
 			key_kbArticleTitle = ${kbArticleTitle},
 			locator1 = "KnowledgeBase#DESCRIPTIVE_VIEW_ARTICLE_TITLE");
 	}
 
-	macro viewSearchResults {
+	@summary = "Default summary"
+	macro viewSearchResults(kbArticleTitle = null) {
 		AssertVisible(
 			key_kbArticleTitle = ${kbArticleTitle},
 			locator1 = "KnowledgeBase#DESCRIPTIVE_VIEW_ARTICLE_TITLE");
 	}
 
-	macro viewSourceURLCP {
+	@summary = "Default summary"
+	macro viewSourceURLCP(kbArticleTitle = null,kbArticleSourceURL = null) {
 		if (isSet(kbChildArticleTitle)) {
 			Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
 		}
@@ -1871,7 +1944,8 @@ definition {
 			value1 = ${kbArticleSourceURL});
 	}
 
-	macro viewSourceURLPG {
+	@summary = "Default summary"
+	macro viewSourceURLPG(kbArticleSourceURL = null) {
 		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Edit");
 
 		Panel.expandPanel(panel = "Configuration");
@@ -1881,7 +1955,8 @@ definition {
 			value1 = ${kbArticleSourceURL});
 	}
 
-	macro viewUploadFailed {
+	@summary = "Default summary"
+	macro viewUploadFailed(kbImportFailed = null) {
 		if (${kbImportFailed} == "true") {
 			Alert.viewRequestFailedToComplete();
 		}
@@ -1890,7 +1965,8 @@ definition {
 		}
 	}
 
-	macro viewViaNextLinkPG {
+	@summary = "Default summary"
+	macro viewViaNextLinkPG(kbArticleContent = null,kbArticleTitle = null) {
 		AssertClick(
 			locator1 = "KnowledgeBaseArticle#NEXT",
 			value1 = ${kbArticleTitle});

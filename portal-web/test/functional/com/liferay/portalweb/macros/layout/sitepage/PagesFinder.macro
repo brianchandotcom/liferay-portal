@@ -1,6 +1,7 @@
 definition {
 
-	macro _addPage {
+	@summary = "Default summary"
+	macro _addPage(assertCheckboxMissing = null,inheritChanges = null,sitePageType = null,pageTypeURL = null,customDescription = null,pageTemplateName = null,vocabularyName = null,customTitle = null,navigationMenus = null,pageName = null,categoryName = null,collectionName = null) {
 		PagesAdmin._selectPageType(
 			collectionName = ${collectionName},
 			pageTemplateName = ${pageTemplateName},
@@ -55,7 +56,8 @@ definition {
 		WaitForSPARefresh();
 	}
 
-	macro addChildPage {
+	@summary = "Default summary"
+	macro addChildPage(assertCheckboxMissing = null,parentPageName = null,sitePageType = null,childPageName = null,pageTemplateName = null,navigationMenus = null) {
 		PagesFinder.selectPageType(optionValue = "Pages Hierarchy");
 
 		MouseOver(
@@ -76,7 +78,8 @@ definition {
 			sitePageType = ${sitePageType});
 	}
 
-	macro addCollectionPage {
+	@summary = "Default summary"
+	macro addCollectionPage(tabName = null,vocabularyName = null,menuItem = null,pageName = null,categoryName = null,masterLayoutName = null,collectionName = null,selectedAsset = null,categoryNameList = null) {
 		PagesFinder.selectPageType(optionValue = "Pages Hierarchy");
 
 		Click(locator1 = "PagesFinder#PAGE_TYPE_SELECTOR_ELLIPSIS_ICON");
@@ -126,7 +129,8 @@ definition {
 		PageEditor.assertFragmentSidebarLoaded();
 	}
 
-	macro addContentPage {
+	@summary = "Default summary"
+	macro addContentPage(pageTemplateName = null,vocabularyName = null,pageName = null,categoryName = null,collectionName = null) {
 		PagesFinder.selectPageType(optionValue = "Pages Hierarchy");
 
 		Click(locator1 = "PagesFinder#PAGE_TYPE_SELECTOR_ELLIPSIS_ICON");
@@ -154,7 +158,8 @@ definition {
 		PageEditor.assertFragmentSidebarLoaded();
 	}
 
-	macro addPage {
+	@summary = "Default summary"
+	macro addPage(pageTypeURL = null,sitePageType = null,customTitle = null,pageTemplateName = null,vocabularyName = null,categoryName = null,pageName = null,collectionName = null,assertCheckboxMissing = null,inheritChanges = null,customDescription = null,openGraph = null,navigationMenus = null) {
 		PagesFinder.selectPageType(optionValue = "Pages Hierarchy");
 
 		Click(locator1 = "PagesFinder#PAGE_TYPE_SELECTOR_ELLIPSIS_ICON");
@@ -177,7 +182,8 @@ definition {
 			vocabularyName = ${vocabularyName});
 	}
 
-	macro addPrivatePage {
+	@summary = "Default summary"
+	macro addPrivatePage(pageTypeURL = null,sitePageType = null,customTitle = null,pageTemplateName = null,vocabularyName = null,categoryName = null,pageName = null,collectionName = null,assertCheckboxMissing = null,inheritChanges = null,customDescription = null,openGraph = null,navigationMenus = null) {
 		PagesFinder.selectPageType(optionValue = "Private Pages");
 
 		Click(locator1 = "PagesFinder#PAGE_TYPE_SELECTOR_ELLIPSIS_ICON");
@@ -200,7 +206,8 @@ definition {
 			vocabularyName = ${vocabularyName});
 	}
 
-	macro addPublicChildPage {
+	@summary = "Default summary"
+	macro addPublicChildPage(assertCheckboxMissing = null,parentPageName = null,sitePageType = null,childPageName = null,pageTemplateName = null,navigationMenus = null) {
 		PagesFinder.selectPageType(optionValue = "Public Pages");
 
 		MouseOver(
@@ -221,7 +228,8 @@ definition {
 			sitePageType = ${sitePageType});
 	}
 
-	macro addPublicCollectionPage {
+	@summary = "Default summary"
+	macro addPublicCollectionPage(tabName = null,vocabularyName = null,menuItem = null,pageName = null,categoryName = null,masterLayoutName = null,collectionName = null,selectedAsset = null,categoryNameList = null) {
 		PagesFinder.selectPageType(optionValue = "Public Pages");
 
 		Click(locator1 = "PagesFinder#PAGE_TYPE_SELECTOR_ELLIPSIS_ICON");
@@ -271,7 +279,8 @@ definition {
 		PageEditor.assertFragmentSidebarLoaded();
 	}
 
-	macro addPublicContentPage {
+	@summary = "Default summary"
+	macro addPublicContentPage(pageTemplateName = null,vocabularyName = null,pageName = null,categoryName = null,collectionName = null) {
 		PagesFinder.selectPageType(optionValue = "Public Pages");
 
 		Click(locator1 = "PagesFinder#PAGE_TYPE_SELECTOR_ELLIPSIS_ICON");
@@ -299,7 +308,8 @@ definition {
 		PageEditor.assertFragmentSidebarLoaded();
 	}
 
-	macro addPublicPage {
+	@summary = "Default summary"
+	macro addPublicPage(pageTypeURL = null,sitePageType = null,customTitle = null,pageTemplateName = null,vocabularyName = null,categoryName = null,pageName = null,collectionName = null,assertCheckboxMissing = null,inheritChanges = null,customDescription = null,openGraph = null,navigationMenus = null) {
 		PagesFinder.selectPageType(optionValue = "Public Pages");
 
 		Click(locator1 = "PagesFinder#PAGE_TYPE_SELECTOR_ELLIPSIS_ICON");
@@ -322,7 +332,8 @@ definition {
 			vocabularyName = ${vocabularyName});
 	}
 
-	macro gotoPageEllipsisItem {
+	@summary = "Default summary"
+	macro gotoPageEllipsisItem(item = null,pageName = null) {
 		MouseOver(
 			key_pageName = ${pageName},
 			locator1 = "PagesFinder#PAGE_NAME");
@@ -334,7 +345,8 @@ definition {
 		MenuItem.clickNoError(menuItem = ${item});
 	}
 
-	macro goToPagesFinder {
+	@summary = "Default summary"
+	macro goToPagesFinder() {
 		ProductMenuHelper.openProductMenu();
 
 		if (IsElementPresent(key_text = "Page Tree", locator1 = "Button#ANY_DISABLED")) {
@@ -350,13 +362,15 @@ definition {
 		}
 	}
 
-	macro inputPageSearch {
+	@summary = "Default summary"
+	macro inputPageSearch(keyword = null) {
 		Type(
 			locator1 = "PagesFinder#INPUT_FIELD",
 			value1 = ${keyword});
 	}
 
-	macro navigateToChildPage {
+	@summary = "Default summary"
+	macro navigateToChildPage(parentPageName = null,childPageName = null) {
 		AssertClick(
 			key_childPageName = ${childPageName},
 			key_parentPageName = ${parentPageName},
@@ -368,7 +382,8 @@ definition {
 			value1 = ${childPageName});
 	}
 
-	macro navigateToPage {
+	@summary = "Default summary"
+	macro navigateToPage(pageName = null) {
 		Click(
 			key_pageName = ${pageName},
 			locator1 = "PagesFinder#PAGE_NAME",
@@ -379,24 +394,28 @@ definition {
 			value1 = ${pageName});
 	}
 
-	macro selectPageType {
+	@summary = "Default summary"
+	macro selectPageType(optionValue = null) {
 		Click(locator1 = "PagesFinder#PAGE_TYPE_SELECTOR");
 
 		DropdownMenuItem.click(menuItem = ${optionValue});
 	}
 
-	macro viewInPagesAdministration {
+	@summary = "Default summary"
+	macro viewInPagesAdministration() {
 		Click(locator1 = "PagesFinder#VIEW_IN_PAGE_ADMINISTRATION");
 	}
 
-	macro viewPageIconInPagesFinder {
+	@summary = "Default summary"
+	macro viewPageIconInPagesFinder(icon = null,pageName = null) {
 		AssertElementPresent(
 			key_pageName = ${pageName},
 			key_text = ${icon},
 			locator1 = "PagesFinder#PAGE_ICON");
 	}
 
-	macro viewPageNameInPagesFinder {
+	@summary = "Default summary"
+	macro viewPageNameInPagesFinder(pageName = null) {
 		AssertElementPresent(
 			key_pageName = ${pageName},
 			locator1 = "PagesFinder#PAGE_NAME");

@@ -15,7 +15,6 @@
 
 			<#assign
 				dptLink = ObjectEntry_displayPageURL.getData()
-
 				firstPart =(dptLink?split("/l/"))[0]
 			/>
 

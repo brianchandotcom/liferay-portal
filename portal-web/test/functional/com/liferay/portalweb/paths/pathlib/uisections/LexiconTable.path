@@ -62,7 +62,7 @@
 </tr>
 <tr>
 	<td>TABLE_ENTRY_ICON</td>
-	<td>//tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')]//td[contains(@class,'name-column') or contains(@class,'action-column')]//*[name()='svg'][contains(@class,'lexicon-icon-${key_text}')]</td>
+	<td>//tr[@data-qa-id='row'][contains(.,'${key_tableEntry}')]//td[contains(@class,'name-column') or contains(@class,'action-column') or contains(@class,'title-column')]//*[name()='svg'][contains(@class,'lexicon-icon-${key_text}')]</td>
 	<td></td>
 </tr>
 <tr>

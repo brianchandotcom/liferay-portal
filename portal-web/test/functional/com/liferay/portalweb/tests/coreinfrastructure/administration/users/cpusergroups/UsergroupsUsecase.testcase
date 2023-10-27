@@ -76,7 +76,7 @@ definition {
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
-		SelectWindow(locator1 = "title=UG Public Page - UG User Group - ${siteName}");
+		SelectWindow(value1 = "title=UG Public Page - UG User Group - ${siteName}");
 
 		Page.viewCurrentPage(pageName = "UG Public Page");
 
@@ -90,7 +90,7 @@ definition {
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
-		SelectWindow(locator1 = "title=UG Private Page - UG User Group - ${siteName}");
+		SelectWindow(value1 = "title=UG Private Page - UG User Group - ${siteName}");
 
 		Page.viewCurrentPage(pageName = "UG Private Page");
 	}

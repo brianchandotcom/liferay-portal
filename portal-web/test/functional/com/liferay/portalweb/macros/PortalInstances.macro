@@ -1,6 +1,7 @@
 definition {
 
-	macro addCP {
+	@summary = "Default summary"
+	macro addCP(maxUserNumber = null,instanceAdminLastName = null,maxUsers = null,portalInstanceActive = null,instanceAdminFirstName = null,webId = null,mailDomain = null,instanceScreenName = null,instancePassword = null,virtualHost = null,instanceAdminEmail = null) {
 		LexiconEntry.gotoAdd();
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
@@ -60,7 +61,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro deactivatePortalInstance {
+	@summary = "Default summary"
+	macro deactivatePortalInstance(virtualHost = null) {
 		var key_virtualHost = ${virtualHost};
 
 		LexiconEntry.openEntryMenu(rowEntry = ${virtualHost});
@@ -78,7 +80,8 @@ definition {
 			value1 = "No");
 	}
 
-	macro deleteCP {
+	@summary = "Default summary"
+	macro deleteCP(virtualHost = null) {
 		var key_virtualHost = ${virtualHost};
 
 		LexiconTable.clickEllipsisItem(
@@ -100,7 +103,8 @@ definition {
 			value1 = ${virtualHost});
 	}
 
-	macro editCP {
+	@summary = "Default summary"
+	macro editCP(mailDomain = null,virtualHost = null) {
 		var key_virtualHost = ${virtualHost};
 
 		AssertTextEquals(
@@ -120,7 +124,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro openOnDemandAdminPortlet {
+	@summary = "Default summary"
+	macro openOnDemandAdminPortlet() {
 		if (isSet(baseURL)) {
 			var baseURL = ${baseURL};
 
@@ -135,7 +140,8 @@ definition {
 		}
 	}
 
-	macro openVirtualInstancesAdmin {
+	@summary = "Default summary"
+	macro openVirtualInstancesAdmin() {
 		if (isSet(baseURL)) {
 			var baseURL = ${baseURL};
 
@@ -148,7 +154,8 @@ definition {
 		}
 	}
 
-	macro requestOnDemandAdminOnInstance {
+	@summary = "Default summary"
+	macro requestOnDemandAdminOnInstance(virtualHost = null) {
 		WaitForElementPresent(
 			locator1 = "PortalInstances#INSTANCE_TABLE_VIRTUAL_HOST",
 			value1 = ${virtualHost});
@@ -159,7 +166,7 @@ definition {
 
 		Button.clickSubmitButton();
 
-		SelectWindow(locator1 = "Home - ${virtualHost}");
+		SelectWindow(value1 = "Home - ${virtualHost}");
 
 		WaitForElementPresent(locator1 = "Button#I_AGREE");
 
@@ -168,19 +175,22 @@ definition {
 		User.answerPasswordReminder();
 	}
 
-	macro tearDownCP {
+	@summary = "Default summary"
+	macro tearDownCP(authenticationMethod = null) {
 		JSONUser.tearDownNonAdminUsers(authenticationMethod = ${authenticationMethod});
 
 		HeadlessPortalInstanceAPI.cleanAllPortalInstances(authenticationMethod = ${authenticationMethod});
 	}
 
-	macro tearDownCPNoSelenium {
+	@summary = "Default summary"
+	macro tearDownCPNoSelenium(authenticationMethod = null) {
 		JSONUser.tearDownNonAdminUsersNoSelenium(authenticationMethod = ${authenticationMethod});
 
 		HeadlessPortalInstanceAPI.cleanAllPortalInstances(authenticationMethod = ${authenticationMethod});
 	}
 
-	macro tearDownCustomPortal {
+	@summary = "Default summary"
+	macro tearDownCustomPortal(authenticationMethod = null) {
 		JSONUser.tearDownNonAdminUsers(authenticationMethod = ${authenticationMethod});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -192,7 +202,8 @@ definition {
 		HeadlessPortalInstanceAPI.deletePortalInstance(portalInstanceId = ${portalInstanceId});
 	}
 
-	macro viewCP {
+	@summary = "Default summary"
+	macro viewCP(virtualHost = null) {
 		var key_virtualHost = ${virtualHost};
 
 		AssertTextEquals.assertText(

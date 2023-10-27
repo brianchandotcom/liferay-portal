@@ -1,6 +1,7 @@
 definition {
 
-	macro _gotoWidgetConfiguration {
+	@summary = "Default summary"
+	macro _gotoWidgetConfiguration() {
 		Portlet.gotoPortletOptions(
 			portletName = "Knowledge Base Display",
 			portletOption = "Configuration");
@@ -8,7 +9,8 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
-	macro addChildPGViaKBDisplay {
+	@summary = "Default summary"
+	macro addChildPGViaKBDisplay(cancel = null,saveAsDraft = null,kbArticleContent = null,kbArticleFriendlyURL = null,kbArticleTitle = null) {
 		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Add Child Article");
 
 		AssertElementPresent(locator1 = "TextInput#TITLE");
@@ -53,7 +55,8 @@ definition {
 		}
 	}
 
-	macro configureKBArticleDisplayPG {
+	@summary = "Default summary"
+	macro configureKBArticleDisplayPG(kbFolderName = null,kbArticleTitle = null) {
 		KBDisplayWidget._gotoWidgetConfiguration();
 
 		AssertClick(
@@ -85,7 +88,8 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro configureKBDisplaySettingsPG {
+	@summary = "Default summary"
+	macro configureKBDisplaySettingsPG(print = null,subscribe = null,history = null) {
 		KBDisplayWidget._gotoWidgetConfiguration();
 
 		// Added additional assertions for LPS-159901
@@ -128,7 +132,8 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro configureKBFolderDisplay {
+	@summary = "Default summary"
+	macro configureKBFolderDisplay(kbFolderName = null) {
 		KBDisplayWidget._gotoWidgetConfiguration();
 
 		AssertClick(
@@ -149,7 +154,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro configureKBSocialBookmarkSites {
+	@summary = "Default summary"
+	macro configureKBSocialBookmarkSites(enableSocialBookmarkSites = null,socialBookmarkSite = null,disableSocialBookmarkSites = null) {
 		KBDisplayWidget._gotoWidgetConfiguration();
 
 		if (isSet(enableSocialBookmarkSites)) {
@@ -167,7 +173,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro editPGViaKBDisplay {
+	@summary = "Default summary"
+	macro editPGViaKBDisplay(cancel = null,kbArticleTitleEdit = null,saveAsDraft = null) {
 		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Edit");
 
 		AssertTextEquals(
@@ -195,7 +202,8 @@ definition {
 		}
 	}
 
-	macro editPGViaLocalizedKBDisplay {
+	@summary = "Default summary"
+	macro editPGViaLocalizedKBDisplay(kbArticleTitleEdit = null,kbArticleTitle = null) {
 		var key_editLocalized = "Editar";
 		var key_kbArticleTitle = ${kbArticleTitle};
 		var key_localizedText = "Editor de texto enriquecido";
@@ -227,7 +235,8 @@ definition {
 		VerifyElementPresent(locator1 = "Message#SUCCESS");
 	}
 
-	macro gotoKBGrandchildArticleViaKBDisplayHierarchyNavigationPG {
+	@summary = "Default summary"
+	macro gotoKBGrandchildArticleViaKBDisplayHierarchyNavigationPG(kbGrandchildArticleTitle = null,kbChildArticleTitle = null,kbArticleTitle = null) {
 		var key_kbArticleTitle = ${kbArticleTitle};
 		var key_kbChildArticleTitle = ${kbChildArticleTitle};
 
@@ -245,7 +254,8 @@ definition {
 			value1 = ${kbGrandchildArticleTitle});
 	}
 
-	macro gotoViaKBDisplayPG {
+	@summary = "Default summary"
+	macro gotoViaKBDisplayPG(kbArticleTitle = null) {
 		AssertClick(
 			key_kbArticleTitle = ${kbArticleTitle},
 			locator1 = "KnowledgeBase#HIERARCHY_NAVIGATION_PARENT",
@@ -254,7 +264,8 @@ definition {
 		WaitForElementPresent.waitForLastScript();
 	}
 
-	macro moveArticleViaKBDisplayPG {
+	@summary = "Default summary"
+	macro moveArticleViaKBDisplayPG(destinationItem = null) {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Move");
@@ -270,7 +281,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro selectParentViaKBDisplayPG {
+	@summary = "Default summary"
+	macro selectParentViaKBDisplayPG(kbArticleTitle = null) {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Click(
@@ -291,7 +303,8 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	macro viewChildArticleHierarchyViaKBDisplayPG {
+	@summary = "Default summary"
+	macro viewChildArticleHierarchyViaKBDisplayPG(kbArticleTitle = null) {
 		var key_kbArticleTitle = ${kbArticleTitle};
 
 		AssertClick(
@@ -317,7 +330,8 @@ definition {
 		}
 	}
 
-	macro viewDefaultKBDisplaySettingsPG {
+	@summary = "Default summary"
+	macro viewDefaultKBDisplaySettingsPG() {
 		Click.waitForMenuToggleJSClick(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
 
 		MenuItem.viewVisible(menuItem = "Subscribe");
@@ -327,7 +341,8 @@ definition {
 		MenuItem.viewVisible(menuItem = "Print");
 	}
 
-	macro viewDefaultViaKBDisplayPG {
+	@summary = "Default summary"
+	macro viewDefaultViaKBDisplayPG() {
 		AssertTextEquals(
 			locator1 = "Message#INFO",
 			value1 = "Please configure this portlet to make it visible to all users.");
@@ -335,7 +350,8 @@ definition {
 		AssertElementNotPresent(locator1 = "KnowledgeBase#DISPLAY_TITLE");
 	}
 
-	macro viewKBDisplayPG {
+	@summary = "Default summary"
+	macro viewKBDisplayPG(sourceURL = null,print = null,subscribe = null,history = null) {
 		if (${sourceURL} == "true") {
 			AssertClick(
 				locator1 = "KnowledgeBaseArticle#EDIT_ON_GITHUB",
@@ -383,7 +399,8 @@ definition {
 		}
 	}
 
-	macro viewParentArticleHierarchyViaKBDisplayPG {
+	@summary = "Default summary"
+	macro viewParentArticleHierarchyViaKBDisplayPG(kbArticleTitle = null) {
 		var count = 0;
 
 		while (IsElementPresent(locator1 = "KnowledgeBase#HIERARCHY_NAVIGATION_GENERIC")) {
@@ -400,7 +417,8 @@ definition {
 		}
 	}
 
-	macro viewViaKBDisplayPG {
+	@summary = "Default summary"
+	macro viewViaKBDisplayPG(kbArticleRelatedAssetTitle = null,kbArticleContent = null,kbArticleTitle = null) {
 		AssertTextEquals.assertPartialText(
 			locator1 = "KnowledgeBase#DISPLAY_TITLE",
 			value1 = ${kbArticleTitle});

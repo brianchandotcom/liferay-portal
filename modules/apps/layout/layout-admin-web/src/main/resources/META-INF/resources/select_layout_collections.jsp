@@ -14,6 +14,7 @@ SelectCollectionManagementToolbarDisplayContext selectCollectionManagementToolba
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(layoutsAdminDisplayContext.getBackURL());
+portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 renderResponse.setTitle(LanguageUtil.get(request, "select-collection"));
 %>

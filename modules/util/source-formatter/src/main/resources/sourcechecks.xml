@@ -1613,10 +1613,6 @@
 			<category name="Upgrade" />
 			<description name="Replace the getGroupIds method of class `DLUtil` by getCurrentAndAncestorSiteGroupIds of class `PortalUtil`." />
 		</check>
-		<check name="UpgradeGetClassNamesMethodCheck">
-			<category name="Upgrade" />
-			<description name="Run code migration of method from 'getClassNames' to 'getSearchClassNames'" />
-		</check>
 		<check name="UpgradeGetImagePreviewURLMethodCheck">
 			<category name="Upgrade" />
 			<description name="Replaces the references of the method 'DLUtil.getImagePreviewURL' with the method 'getImagePreviewURL' of 'DLURLHelper' class" />
@@ -1647,24 +1643,10 @@
 			<category name="Upgrade" />
 			<description name="Replace the setPortlet method with getPortlet" />
 		</check>
-		<check name="UpgradeJavaCaptchaUtilCheck">
-			<category name="Upgrade" />
-			<description name="Replaces the usages of `CaptchaUti.serveImage(resourceRequest, resourceResponse)` with `CaptchaUti.serveImage(httpServletRequest, httpServletResponse)`" />
-		</check>
 		<check name="UpgradeJavaCheck">
 			<category name="Upgrade" />
 			<description name="Performs upgrade checks for `java` files" />
 			<weight>3</weight>
-		</check>
-		<check name="UpgradeJavaCommerceCountryCheck">
-			<category name="Upgrade" />
-			<description name="Replaces the old methods of class `CommerceCountry` with the new equivalents in the `Country` class." />
-			<weight>1</weight>
-		</check>
-		<check name="UpgradeJavaCommerceCountryServiceCheck">
-			<category name="Upgrade" />
-			<description name="Replaces the old methods of class `CommerceCountryService` with the new equivalents in the `CountryService` class." />
-			<weight>1</weight>
 		</check>
 		<check name="UpgradeJavaCommerceOrderItemServicesCheck">
 			<category name="Upgrade" />
@@ -1726,10 +1708,6 @@
 		<check name="UpgradeJavaLanguageUtilCheck">
 			<category name="Upgrade" />
 			<description name="Replace `ListUtil.fromArray` by `new ArrayList' when the parameter is to 'LanguageUtil.getAvailableLocales'" />
-		</check>
-		<check name="UpgradeJavaLayoutServicesCheck">
-			<category name="Upgrade" />
-			<description name="Fill the new parameters of the method `addLayout` and `updateLayout` of `LayoutServiceUtil`, `LayoutService`, `LayoutLocalService` and `LayoutLocalServiceUtil` classes" />
 		</check>
 		<check name="UpgradeJavaMultiVMPoolUtilCheck">
 			<category name="Upgrade" />

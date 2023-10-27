@@ -1,6 +1,7 @@
 definition {
 
-	macro _curlTaxonomyKeywords {
+	@summary = "Default summary"
+	macro _curlTaxonomyKeywords(noSelenium = null,keywordId = null,depotName = null,groupName = null,parameter = null,parameterValue = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(depotName)) {
@@ -38,7 +39,8 @@ definition {
 		return ${curl};
 	}
 
-	macro _curlTaxonomyVocabulary {
+	@summary = "Default summary"
+	macro _curlTaxonomyVocabulary(depotName = null,groupName = null,filterValue = null,parameter = null,parameterValue = null,externalReferenceCode = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(depotName)) {
@@ -79,7 +81,8 @@ definition {
 		return ${curl};
 	}
 
-	macro createAssetLibraryWithKeyWords {
+	@summary = "Default summary"
+	macro createAssetLibraryWithKeyWords(noSelenium = null,depotName = null,exportBatch = null,name = null) {
 		Variables.assertDefined(parameterList = "${depotName},${name}");
 
 		var curl = TaxonomyVocabularyAPI._curlTaxonomyKeywords(
@@ -95,7 +98,8 @@ definition {
 		return ${response};
 	}
 
-	macro createTaxonomyVocabulary {
+	@summary = "Default summary"
+	macro createTaxonomyVocabulary(depotName = null,groupName = null,name = null) {
 		Variables.assertDefined(parameterList = ${name});
 
 		if (!(isSet(externalReferenceCode))) {
@@ -117,7 +121,8 @@ definition {
 		return ${response};
 	}
 
-	macro deleteAllKeywords {
+	@summary = "Default summary"
+	macro deleteAllKeywords(groupNameList = null,tagNameList = null) {
 		Variables.assertDefined(parameterList = "${groupNameList},${tagNameList}");
 
 		for (var groupName : list ${groupNameList}) {
@@ -135,7 +140,8 @@ definition {
 		}
 	}
 
-	macro deleteAllTaxonomyVocabulary {
+	@summary = "Default summary"
+	macro deleteAllTaxonomyVocabulary(groupName = null,depotName = null) {
 		Variables.assertDefined(parameterList = ${groupName});
 
 		var response = TaxonomyVocabularyAPI.getTaxonomyVocabularyWithDifferentParameters(groupName = ${groupName});
@@ -152,7 +158,8 @@ definition {
 		}
 	}
 
-	macro deleteTaxonomyVocabularyByErc {
+	@summary = "Default summary"
+	macro deleteTaxonomyVocabularyByErc(depotName = null,groupName = null,externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = ${externalReferenceCode});
 
 		var curl = TaxonomyVocabularyAPI._curlTaxonomyVocabulary(
@@ -163,7 +170,8 @@ definition {
 		JSONCurlUtil.delete(${curl});
 	}
 
-	macro getKeywordsByGroupName {
+	@summary = "Default summary"
+	macro getKeywordsByGroupName(groupName = null) {
 		var curl = TaxonomyVocabularyAPI._curlTaxonomyKeywords(groupName = ${groupName});
 
 		var response = JSONCurlUtil.get(${curl});
@@ -171,7 +179,8 @@ definition {
 		return ${response};
 	}
 
-	macro getTaxonomyVocabularyWithDifferentParameters {
+	@summary = "Default summary"
+	macro getTaxonomyVocabularyWithDifferentParameters(depotName = null,groupName = null,parameter = null,parameterValue = null) {
 		var curl = TaxonomyVocabularyAPI._curlTaxonomyVocabulary(
 			depotName = ${depotName},
 			groupName = ${groupName},

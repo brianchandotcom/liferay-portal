@@ -1,10 +1,10 @@
 @default = "assertElementFocused"
 definition {
 
-	function assertElementFocused {
-		selenium.assertElementFocused();
+	function assertElementFocused(locator1) {
+		selenium.assertElementFocused(${locator1});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

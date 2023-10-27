@@ -1,6 +1,7 @@
 definition {
 
-	macro assertSingleRolePermissionsPG {
+	@summary = "Default summary"
+	macro assertSingleRolePermissionsPG(roleTitle = null,permissions = null) {
 		SelectFrameTop(value1 = "relative=top");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
@@ -16,7 +17,8 @@ definition {
 		}
 	}
 
-	macro defineCatalogPermissionsViaJSONAPI {
+	@summary = "Default summary"
+	macro defineCatalogPermissionsViaJSONAPI(view = null,roleTitle = null,permissions = null,update = null,delete = null) {
 		if (${view} == "true") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
@@ -61,7 +63,8 @@ definition {
 		}
 	}
 
-	macro defineChannelPermissionsViaJSONAPI {
+	@summary = "Default summary"
+	macro defineChannelPermissionsViaJSONAPI(view = null,roleTitle = null,permissions = null,update = null,tax = null,currency = null,delete = null) {
 		if (${view} == "true") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
@@ -120,7 +123,8 @@ definition {
 		}
 	}
 
-	macro definePermissionsPG {
+	@summary = "Default summary"
+	macro definePermissionsPG(permissionDefinitionKey = null,roleTitles = null) {
 		SelectFrameTop(value1 = "relative=top");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
@@ -148,7 +152,8 @@ definition {
 		}
 	}
 
-	macro defineProductPermissionsViaJSONAPI {
+	@summary = "Default summary"
+	macro defineProductPermissionsViaJSONAPI(view = null,roleTitle = null,update = null) {
 		if (${view} == "true") {
 			Permissions.definePermissionViaJSONAPI(
 				resourceAction = "VIEW_CONTROL_PANEL",
@@ -189,7 +194,8 @@ definition {
 		}
 	}
 
-	macro defineSingleRolePermissionsPG {
+	@summary = "Default summary"
+	macro defineSingleRolePermissionsPG(roleTitle = null,permissions = null) {
 		SelectFrameTop(value1 = "relative=top");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
@@ -217,7 +223,8 @@ definition {
 		}
 	}
 
-	macro removeAccountRolePermission {
+	@summary = "Default summary"
+	macro removeAccountRolePermission(roleTitle = null,permission = null) {
 		Navigator.gotoNavTab(navTab = "Account Roles");
 
 		CommerceNavigator.gotoEntry(entryName = ${roleTitle});
@@ -228,7 +235,7 @@ definition {
 			key_resourceAction = ${permission},
 			locator1 = "CommercePermissions#REMOVE_PERMISSION");
 
-		Confirm(value1 = "Are you sure you want to remove this permission?");
+		AssertConfirm(value1 = "Are you sure you want to remove this permission?");
 
 		AssertElementNotPresent(
 			key_resourceAction = ${permission},
@@ -237,7 +244,8 @@ definition {
 		Click(locator1 = "CommerceNavigation#BACK");
 	}
 
-	macro removePermissionsPG {
+	@summary = "Default summary"
+	macro removePermissionsPG(permissionDefinitionKey = null,roleTitles = null) {
 		SelectFrameTop(value1 = "relative=top");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
@@ -265,7 +273,8 @@ definition {
 		}
 	}
 
-	macro removeRegularRolePermission {
+	@summary = "Default summary"
+	macro removeRegularRolePermission(roleTitle = null,permission = null) {
 		CommerceNavigator.gotoEntry(entryName = ${roleTitle});
 
 		Navigator.gotoNavTab(navTab = "Define Permissions");
@@ -274,7 +283,7 @@ definition {
 			key_resourceAction = ${permission},
 			locator1 = "CommercePermissions#REMOVE_PERMISSION");
 
-		Confirm(value1 = "Are you sure you want to remove this permission?");
+		AssertConfirm(value1 = "Are you sure you want to remove this permission?");
 
 		AssertElementNotPresent(
 			key_resourceAction = ${permission},

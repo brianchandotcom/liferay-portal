@@ -23,6 +23,7 @@ masterLayoutPageTemplateEntries.addAll(LayoutPageTemplateEntryServiceUtil.getLay
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 renderResponse.setTitle(LanguageUtil.get(request, "select-master-page"));
 %>

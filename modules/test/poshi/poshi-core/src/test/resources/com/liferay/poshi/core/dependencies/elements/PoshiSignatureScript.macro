@@ -1,0 +1,22 @@
+definition {
+
+	@summary = "Default summary"
+	macro noParams() {
+		echo("this macro contains no params");
+	}
+
+	@summary = "Default summary"
+	macro nullParams(varOne = null, varTwo = null) {
+		echo(${varOne});
+
+		echo(${varTwo});
+	}
+
+	@summary = "Default summary"
+	macro requiredParams(varOne, varTwo) {
+		echo(${varOne});
+
+		echo(${varTwo});
+	}
+
+}

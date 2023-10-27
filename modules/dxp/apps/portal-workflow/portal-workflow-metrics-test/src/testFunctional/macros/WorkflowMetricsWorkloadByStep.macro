@@ -1,6 +1,7 @@
 definition {
 
-	macro viewWorkloadByStepOntimeValue {
+	@summary = "Default summary"
+	macro viewWorkloadByStepOntimeValue(stepName = null,ontimeValue = null) {
 		var key_stepName = ${stepName};
 
 		AssertElementPresent(locator1 = "WorkflowMetricsWorkloadByStep#METRICS_WORKLOAD_BY_STEP_PAGE_TABLE_STEP_NAME");
@@ -10,7 +11,8 @@ definition {
 			value1 = ${ontimeValue});
 	}
 
-	macro viewWorkloadByStepOverdueValue {
+	@summary = "Default summary"
+	macro viewWorkloadByStepOverdueValue(overdueValue = null,stepName = null) {
 		var key_stepName = ${stepName};
 
 		AssertElementPresent(locator1 = "WorkflowMetricsWorkloadByStep#METRICS_WORKLOAD_BY_STEP_PAGE_TABLE_STEP_NAME");
@@ -20,7 +22,8 @@ definition {
 			value1 = ${overdueValue});
 	}
 
-	macro viewWorkloadByStepTotalPendingValue {
+	@summary = "Default summary"
+	macro viewWorkloadByStepTotalPendingValue(stepName = null,totalPendingValue = null) {
 		var key_stepName = ${stepName};
 
 		AssertElementPresent(locator1 = "WorkflowMetricsWorkloadByStep#METRICS_WORKLOAD_BY_STEP_PAGE_TABLE_STEP_NAME");

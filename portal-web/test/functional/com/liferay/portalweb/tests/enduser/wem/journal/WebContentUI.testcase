@@ -14,17 +14,6 @@ definition {
 		HeadlessSite.addSite(siteName = "Test Site Name");
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-		}
-	}
-
 	@description = "Test that the UI for adding a WC folder works."
 	@priority = 5
 	test AddFolder {
@@ -231,7 +220,7 @@ definition {
 
 			// We need this pause to view if kebab icon of the web content exists to test LPS-155805
 
-			Pause(locator1 = 3000);
+			Pause(value1 = 3000);
 
 			AssertCssValue(
 				locator1 = "//dd//button[contains(@class, 'dropdown-toggle')]",
@@ -353,6 +342,41 @@ definition {
 			for (var filterName : list "Draft,Denied,Pending,With Scheduled Versions,With Approved Versions,With Expired Versions") {
 				MenuItem.viewVisible(menuItem = ${filterName});
 			}
+		}
+	}
+
+	@description = "This is a test for LPS-197978. Check the web-content-icon on the web content in table, list and card views."
+	@priority = 3
+	test ViewWebContentIconInWebContentAdmin {
+		task ("Given a site administrator has a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("When the site administrator accesses to the Web Content admin") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+		}
+
+		task ("Then the site administrator could see web content icon on web content") {
+			AssertVisible(
+				key_listEntry = "Web Content Title",
+				key_text = "web-content",
+				locator1 = "LexiconList#ANY_ICON");
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+			LexiconCard.viewCardSticker(
+				card = "Web Content Title",
+				icon = "web-content");
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "table");
+
+			AssertVisible(
+				key_tableEntry = "Web Content Title",
+				key_text = "web-content",
+				locator1 = "LexiconTable#TABLE_ENTRY_ICON");
 		}
 	}
 

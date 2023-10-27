@@ -39,7 +39,7 @@ public class CISystemStatusReportUtil {
 	public static void writeJenkinsDataJavaScriptFile(String filePath)
 		throws IOException {
 
-		JenkinsCohort jenkinsCohort = new JenkinsCohort(
+		JenkinsCohort jenkinsCohort = JenkinsCohort.getInstance(
 			JenkinsResultsParserUtil.getBuildProperty(
 				"ci.system.status.report.jenkins.cohort"));
 

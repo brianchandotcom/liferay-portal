@@ -1,6 +1,7 @@
 definition {
 
-	macro addCategoriesFilter {
+	@summary = "Default summary"
+	macro addCategoriesFilter(queryContains = null,queryAndOperator = null,categoryNameList = null) {
 		Panel.expandPanel(panel = "Filter");
 
 		if (isSet(queryAndOperator)) {
@@ -36,7 +37,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro addDynamicSelection {
+	@summary = "Default summary"
+	macro addDynamicSelection(assetListTitle = null) {
 		if (isSet(depotName)) {
 			LexiconEntry.gotoAddMenuItem(menuItem = "Dynamic Collection");
 		}
@@ -58,7 +60,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro addKeywordsFilter {
+	@summary = "Default summary"
+	macro addKeywordsFilter(keyWords = null,queryContains = null,queryAndOperator = null) {
 		Panel.expandPanel(panel = "Source");
 
 		if (!(IsSelectedLabel(locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT", value1 = "All Types"))) {
@@ -94,7 +97,8 @@ definition {
 			value1 = ${keyWords});
 	}
 
-	macro addManualSelection {
+	@summary = "Default summary"
+	macro addManualSelection(assetListTitle = null) {
 		if (isSet(depotName)) {
 			LexiconEntry.gotoAddMenuItem(menuItem = "Manual Collection");
 		}
@@ -116,7 +120,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro addPersonalizedVariation {
+	@summary = "Default summary"
+	macro addPersonalizedVariation(segmentName = null) {
 		if (IsElementPresent(locator1 = "AssetLists#ADD_VARIATION_ICON")) {
 			Click(locator1 = "AssetLists#ADD_VARIATION_ICON");
 		}
@@ -138,7 +143,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro addSelection {
+	@summary = "Default summary"
+	macro addSelection(menuItem = null,collectionName = null,selectedAsset = null) {
 		Click(locator1 = "Button#NEW");
 
 		MenuItem.click(menuItem = ${menuItem});
@@ -160,7 +166,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro addTagsFilter {
+	@summary = "Default summary"
+	macro addTagsFilter(queryContains = null,queryAndOperator = null,tagNameList = null) {
 		Panel.expandPanel(panel = "Filter");
 
 		if (isSet(queryAndOperator)) {
@@ -201,25 +208,29 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro clickDeleteDisabled {
+	@summary = "Default summary"
+	macro clickDeleteDisabled(variationTitle = null) {
 		Click(
 			key_variation = ${variationTitle},
 			locator1 = "AssetLists#VARIATION_ELLIPSIS");
 	}
 
-	macro clickDepriotirizeDisabled {
+	@summary = "Default summary"
+	macro clickDepriotirizeDisabled(variationTitle = null) {
 		Click(
 			key_variation = ${variationTitle},
 			locator1 = "AssetLists#VARIATION_ELLIPSIS");
 	}
 
-	macro clickPriotirizeDisabled {
+	@summary = "Default summary"
+	macro clickPriotirizeDisabled(variationTitle = null) {
 		Click(
 			key_variation = ${variationTitle},
 			locator1 = "AssetLists#VARIATION_ELLIPSIS");
 	}
 
-	macro configureFilterByField {
+	@summary = "Default summary"
+	macro configureFilterByField(fieldName = null) {
 		Check.checkToggleSwitch(locator1 = "APConfiguration#SOURCE_SCOPE_FILTER_BY_FIELD_CHECKBOX");
 
 		WaitForElementPresent(locator1 = "APConfiguration#SOURCE_SCOPE_FILTER_BY_FIELD_SELECT_BUTTON_ENABLED");
@@ -234,7 +245,8 @@ definition {
 			value1 = ${fieldName});
 	}
 
-	macro configureItemTypeInDynamicCollection {
+	@summary = "Default summary"
+	macro configureItemTypeInDynamicCollection(itemType = null,itemSubtype = null) {
 		WaitForPageLoad();
 
 		Panel.expandPanel(panel = "Source");
@@ -258,7 +270,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro configureItemTypeInManualCollection {
+	@summary = "Default summary"
+	macro configureItemTypeInManualCollection(itemType = null,variationName = null,itemSubtype = null) {
 		WaitForPageLoad();
 
 		if (isSet(variationName)) {
@@ -284,7 +297,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro configureScope {
+	@summary = "Default summary"
+	macro configureScope(otherSite = null,assetListTitle = null,defaultSite = null,selectedAsset = null) {
 		Click(
 			key_title = ${assetListTitle},
 			locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
@@ -333,7 +347,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro deleteEntry {
+	@summary = "Default summary"
+	macro deleteEntry(assetListTitle = null) {
 		LexiconList.clickEllipsisItem(
 			item = "Delete",
 			listEntry = ${assetListTitle});
@@ -349,7 +364,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro deleteManualSelectionAssets {
+	@summary = "Default summary"
+	macro deleteManualSelectionAssets(assetsList = null) {
 		for (var assetName : list ${assetsList}) {
 			Click(
 				key_entryName = ${assetName},
@@ -357,7 +373,8 @@ definition {
 		}
 	}
 
-	macro deleteVariation {
+	@summary = "Default summary"
+	macro deleteVariation(variationTitle = null) {
 		Click(
 			key_variation = ${variationTitle},
 			locator1 = "AssetLists#VARIATION_ELLIPSIS");
@@ -371,7 +388,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro deprioritizeVariation {
+	@summary = "Default summary"
+	macro deprioritizeVariation(variationTitle = null) {
 		if (IsElementNotPresent(key_menuItem = "Deprioritize", locator1 = "MenuItem#ANY_MENU_ITEM")) {
 			Click(
 				key_variation = ${variationTitle},
@@ -383,7 +401,8 @@ definition {
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
-	macro editAssetList {
+	@summary = "Default summary"
+	macro editAssetList(assetListTitle = null) {
 		AssetListsAdmin.gotoEntryMenuItem(
 			assetListTitle = ${assetListTitle},
 			item = "Edit");
@@ -391,7 +410,8 @@ definition {
 		WaitForPageLoad();
 	}
 
-	macro enableCollectionsToCombineAssetsFromSegments {
+	@summary = "Default summary"
+	macro enableCollectionsToCombineAssetsFromSegments(collectionType = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -416,7 +436,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro gotoEllipsisMenuItemInItemSelector {
+	@summary = "Default summary"
+	macro gotoEllipsisMenuItemInItemSelector() {
 		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "View Items");
@@ -424,23 +445,27 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
-	macro gotoEntry {
+	@summary = "Default summary"
+	macro gotoEntry(assetListName = null) {
 		Click(
 			key_title = ${assetListName},
 			locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
 	}
 
-	macro gotoEntryMenuItem {
+	@summary = "Default summary"
+	macro gotoEntryMenuItem(item = null,assetListTitle = null) {
 		LexiconList.clickEllipsisItem(
 			item = ${item},
 			listEntry = ${assetListTitle});
 	}
 
-	macro openAssetListsAdmin {
+	@summary = "Default summary"
+	macro openAssetListsAdmin(siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_asset_list_web_portlet_AssetListPortlet");
 	}
 
-	macro openPersonalizedVariation {
+	@summary = "Default summary"
+	macro openPersonalizedVariation() {
 		if (IsElementPresent(key_text = "New Personalized Variation", locator1 = "Button#ANY")) {
 			Button.click(button = "New Personalized Variation");
 		}
@@ -451,7 +476,8 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
-	macro openViewItems {
+	@summary = "Default summary"
+	macro openViewItems(personalizedVariation = null,assetListTitle = null) {
 		if (isSet(assetListTitle)) {
 			LexiconEntry.gotoEntry(rowEntry = ${assetListTitle});
 		}
@@ -467,7 +493,8 @@ definition {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 	}
 
-	macro prioritizeVariation {
+	@summary = "Default summary"
+	macro prioritizeVariation(variationTitle = null) {
 		if (IsElementNotPresent(key_menuItem = "Prioritize", locator1 = "MenuItem#ANY_MENU_ITEM")) {
 			Click(
 				key_variation = ${variationTitle},
@@ -479,7 +506,8 @@ definition {
 			locator1 = "MenuItem#ANY_MENU_ITEM");
 	}
 
-	macro removeScope {
+	@summary = "Default summary"
+	macro removeScope(scopeName = null,assetListTitle = null) {
 		Click(
 			key_title = ${assetListTitle},
 			locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
@@ -500,7 +528,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro renameAssetList {
+	@summary = "Default summary"
+	macro renameAssetList(newAssetListTitle = null,oldAssetListTitle = null) {
 		AssetListsAdmin.gotoEntryMenuItem(
 			assetListTitle = ${oldAssetListTitle},
 			item = "Rename");
@@ -512,7 +541,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro resetCollectionsToCombineAssetsFromSegments {
+	@summary = "Default summary"
+	macro resetCollectionsToCombineAssetsFromSegments() {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -532,7 +562,8 @@ definition {
 		}
 	}
 
-	macro selectAsset {
+	@summary = "Default summary"
+	macro selectAsset(itemType = null,depotName = null,entryList = null,itemSubtype = null,assetListName = null,assetType = null) {
 		if (isSet(assetListName)) {
 			Click(
 				key_title = ${assetListName},
@@ -587,7 +618,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro viewAssetList {
+	@summary = "Default summary"
+	macro viewAssetList(assetListTitle = null,type = null) {
 		var key_title = ${assetListTitle};
 		var key_type = ${type};
 
@@ -601,7 +633,8 @@ definition {
 			value1 = ${type});
 	}
 
-	macro viewAssetTypeList {
+	@summary = "Default summary"
+	macro viewAssetTypeList(itemType = null,assetTypeList = null,itemSubtype = null,assetListName = null) {
 		var key_title = ${assetListName};
 
 		Click(locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
@@ -645,7 +678,8 @@ definition {
 		}
 	}
 
-	macro viewContent {
+	@summary = "Default summary"
+	macro viewContent(assetTitleList = null,personalizedVariation = null,assetListTitle = null,assetType = null) {
 		AssetListsAdmin.openViewItems(
 			assetListTitle = ${assetListTitle},
 			personalizedVariation = ${personalizedVariation});
@@ -673,7 +707,8 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro viewNoAssetType {
+	@summary = "Default summary"
+	macro viewNoAssetType(assetListName = null) {
 		var key_title = ${assetListName};
 
 		Click(locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
@@ -708,7 +743,8 @@ definition {
 		}
 	}
 
-	macro viewNoContent {
+	@summary = "Default summary"
+	macro viewNoContent(personalizedVariation = null,assetTitle = null,assetListTitle = null) {
 		AssetListsAdmin.openViewItems(
 			assetListTitle = ${assetListTitle},
 			personalizedVariation = ${personalizedVariation});

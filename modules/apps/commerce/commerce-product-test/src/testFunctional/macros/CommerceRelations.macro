@@ -1,6 +1,7 @@
 definition {
 
-	macro addAnyProductRelation {
+	@summary = "Default summary"
+	macro addAnyProductRelation(key_relation = null,key_product = null) {
 		Click(locator1 = "Button#PLUS");
 
 		Click(
@@ -28,7 +29,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro assignAllRelationsToProductsEntry {
+	@summary = "Default summary"
+	macro assignAllRelationsToProductsEntry() {
 		Click(locator1 = "CommerceEntry#ADD_BUTTON");
 
 		WaitForSPARefresh();
@@ -40,7 +42,8 @@ definition {
 			value1 = "Add");
 	}
 
-	macro assignMultipleRelationToProductsEntry {
+	@summary = "Default summary"
+	macro assignMultipleRelationToProductsEntry(entriesList = null) {
 		Click(locator1 = "CommerceEntry#ADD_BUTTON");
 
 		WaitForSPARefresh();
@@ -54,7 +57,8 @@ definition {
 			value1 = "Add");
 	}
 
-	macro assignSingleRelationToEligibility {
+	@summary = "Default summary"
+	macro assignSingleRelationToEligibility(entryName = null,title = null,key_eligibilityCardTitle = null) {
 		var searchTerm = '''"${entryName}"''';
 
 		Type(
@@ -86,7 +90,8 @@ definition {
 			locator1 = "CommerceEntry#ADD_RELATION_FIELD_SELECT");
 	}
 
-	macro assignSingleRelationToProductsEntry {
+	@summary = "Default summary"
+	macro assignSingleRelationToProductsEntry(entryName = null,title = null) {
 		var searchTerm = '''"${entryName}"''';
 
 		Type(
@@ -127,7 +132,8 @@ definition {
 			locator1 = "CommerceEntry#ADD_RELATION_FIELD_SELECT");
 	}
 
-	macro productRelationSetPriority {
+	@summary = "Default summary"
+	macro productRelationSetPriority(priorityValue = null,productNameRelation = null) {
 		Click(
 			key_value = ${productNameRelation},
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");

@@ -12,7 +12,7 @@ definition {
 		task ("Launch AC") {
 			var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 
-			Open(locator1 = ${analyticsCloudURL});
+			Open(value1 = ${analyticsCloudURL});
 
 			ACLogin.loginAs(emailAddress = "test@liferay.com");
 
@@ -157,7 +157,7 @@ definition {
 				emailAddress = ${userEmailAddress},
 				password = "test");
 
-			Open(locator1 = ${analyticsCloudURL});
+			Open(value1 = ${analyticsCloudURL});
 
 			ACAdmin.goToACAdmin();
 		}
@@ -211,7 +211,7 @@ definition {
 		}
 
 		task ("Navigate to the AC Admin page") {
-			Open(locator1 = ${analyticsCloudURL});
+			Open(value1 = ${analyticsCloudURL});
 
 			ACAdmin.goToACAdmin();
 		}

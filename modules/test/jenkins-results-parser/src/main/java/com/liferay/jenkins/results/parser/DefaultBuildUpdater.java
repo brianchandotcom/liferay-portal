@@ -52,6 +52,8 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 		build.setJenkinsMaster(jenkinsMaster);
 
 		build.addInvocation(_invoke(jenkinsMaster));
+
+		build.reset();
 	}
 
 	protected DefaultBuildUpdater(Build build) {
@@ -86,16 +88,16 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 		JSONObject buildJSONObject = build.getBuildJSONObject("result");
 
 		if (buildJSONObject == null) {
-			return false;
+			return true;
 		}
 
 		String result = buildJSONObject.optString("result");
 
 		if (!Objects.equals(result, "SUCCESS")) {
-			return false;
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	@Override

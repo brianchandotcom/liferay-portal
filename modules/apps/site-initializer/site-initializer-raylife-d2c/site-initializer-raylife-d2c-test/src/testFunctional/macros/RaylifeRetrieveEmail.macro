@@ -1,6 +1,7 @@
 definition {
 
-	macro openLastIdCreated {
+	@summary = "Default summary"
+	macro openLastIdCreated() {
 		var idCreated = selenium.getText("RaylifeRetrieveEmail#ID_CREATED");
 
 		Click(

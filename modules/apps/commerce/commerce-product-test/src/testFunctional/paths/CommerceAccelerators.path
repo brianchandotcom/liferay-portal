@@ -700,13 +700,53 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MINI_CART_SPECIFIC_ITEM_BUNDLED_ITEMS</td>
-	<td>//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]//../..//div[@class='child-item']//span</td>
+	<td>MINI_CART_ITEM_INFO_EXTRA_N</td>
+	<td>xpath=(//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]/../../div[@class='item-info-extra mt-3']/*)[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CART_SPECIFIC_ITEM_BUNDLED_ITEM_BODY_VERTICAL_ELLIPSIS</td>
+	<td>xpath=(//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]/../../../..//*[name()='svg'][contains(@class,'icon-ellipsis')])[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CART_SPECIFIC_ITEM_BUNDLED_ITEM_HIDE_OPTIONS_PANEL_EXPANDED</td>
+	<td>xpath=(//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]//../..//*[contains(@class,'panel')]//*[normalize-space()='Hide Product Options'][@aria-expanded='true'])[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CART_SPECIFIC_ITEM_BUNDLED_ITEM_SHOW_OPTIONS_PANEL_COLLAPSED</td>
+	<td>xpath=(//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]//../..//*[contains(@class,'panel')]//*[normalize-space()='Show Product Options'][@aria-expanded='false'])[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CART_SPECIFIC_ITEM_BUNDLED_ITEMS_N</td>
+	<td>xpath=(//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]//../..//div[@class='child-item']//span)[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MINI_CART_RESUME</td>
 	<td>//div[@class='mini-cart-header-resume']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CART_PRODUCT_OPTIONS_SELECT</td>
+	<td>//div[contains(@class,'mini-cart-edit-item')]//div/label[text()='${key_optionName}']/..//select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CART_EDIT_BUNDLED_PRODUCT_LIST_PRICE_INACTIVE</td>
+	<td>//div[contains(@class,'mini-cart-prices')]//span[text()='List Price']/following::span[contains(@class,'price-line-through')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CART_EDIT_BUNDLED_PRODUCT_PRICE_VALUE</td>
+	<td>//div[contains(@class,'mini-cart-prices')]//span[text()='${key_priceField}']/following::span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CART_EDIT_ITEM_PANEL</td>
+	<td>//*[normalize-space()='Edit ${key_productName}']/../..//div[contains(@class,'mini-cart-edit-item')]</td>
 	<td></td>
 </tr>
 <tr>

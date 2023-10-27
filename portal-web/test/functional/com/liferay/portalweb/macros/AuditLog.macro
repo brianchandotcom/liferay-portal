@@ -1,6 +1,7 @@
 definition {
 
-	macro viewLogFileContent {
+	@summary = "Default summary"
+	macro viewLogFileContent(logString = null) {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
 		var fileContent = FileUtil.read("${liferayHome}/liferay.audit.log");

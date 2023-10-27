@@ -1,6 +1,7 @@
 definition {
 
-	macro addOAuth2Application {
+	@summary = "Default summary"
+	macro addOAuth2Application() {
 		OAuth2.addApplication(
 			applicationName = "OAuth Application",
 			checkboxUncheckList = "Authorization Code");
@@ -10,7 +11,8 @@ definition {
 			clientSecret = "mySecret");
 	}
 
-	macro createTokenWithOAuth2Scopes {
+	@summary = "Default summary"
+	macro createTokenWithOAuth2Scopes(resourcePanels = null,resourceCheckList = null) {
 		Variables.assertDefined(parameterList = ${resourceCheckList});
 
 		if (!(isSet(baseURL))) {

@@ -1,6 +1,7 @@
 definition {
 
-	macro addAnnouncement {
+	@summary = "Default summary"
+	macro addAnnouncement(announcementTitle = null,announcementContent = null) {
 		Variables.assertDefined(parameterList = "${announcementTitle},${announcementContent}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -61,7 +62,8 @@ definition {
 			userPassword = ${userPassword});
 	}
 
-	macro deleteAnnouncement {
+	@summary = "Default summary"
+	macro deleteAnnouncement(groupName = null,siteURLKey = null) {
 		var entryId = JSONAnnouncementAPI._getEntryId(
 			groupName = ${groupName},
 			siteURLKey = ${siteURLKey});

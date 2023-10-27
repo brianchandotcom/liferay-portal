@@ -1,6 +1,7 @@
 definition {
 
-	macro exportAuditEvents {
+	@summary = "Default summary"
+	macro exportAuditEvents() {
 		MouseOver.mouseOverNotVisible(locator1 = "Portlet#OPTIONS_ICON");
 
 		Click.waitForMenuToggleJSClick(locator1 = "Portlet#OPTIONS_ICON");
@@ -11,7 +12,8 @@ definition {
 	}
 
 	@description = "Go to System settings"
-	macro gotoSystemSettings {
+	@summary = "Default summary"
+	macro gotoSystemSettings(portlet = null) {
 		Variables.assertDefined(parameterList = ${portlet});
 
 		var baseURL = ${baseURL};
@@ -29,18 +31,20 @@ definition {
 			var portletId = "com.liferay.portal.security.audit.wiring.internal.configuration.AuditLogContextConfiguration";
 		}
 
-		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=${portletId}&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
+		Open(value1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=${portletId}&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration");
 	}
 
-	macro openAuditAdmin {
+	@summary = "Default summary"
+	macro openAuditAdmin() {
 		if (!(isSet(baseURL))) {
 			var baseURL = JSONCompany.getPortalURL();
 		}
 
-		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_portal_security_audit_web_portlet_AuditPortlet");
+		Open(value1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_portal_security_audit_web_portlet_AuditPortlet");
 	}
 
-	macro searchCP {
+	@summary = "Default summary"
+	macro searchCP(resourceAction = null,resourceId = null,searchTerm = null,groupId = null,match = null,resourceName = null,userName = null,userId = null) {
 		if (${searchTerm} == ${resourceAction}) {
 			var reportFieldKey = "RESOURCE_ACTION";
 		}
@@ -100,7 +104,8 @@ definition {
 		}
 	}
 
-	macro searchViaKeywords {
+	@summary = "Default summary"
+	macro searchViaKeywords(searchTerm = null,resourceName = null) {
 		WaitForElementPresent(locator1 = "TextInput#SITE_SEARCH_KEYWORDS");
 
 		Type(
@@ -115,7 +120,8 @@ definition {
 			locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_NAME");
 	}
 
-	macro verifyConfigurationElementIsConfigured {
+	@summary = "Default summary"
+	macro verifyConfigurationElementIsConfigured(portlet = null,text = null,element = null) {
 		Audit.gotoSystemSettings(portlet = ${portlet});
 
 		while ((IsTextNotEqual(locator1 = ${element}, value1 = ${text})) && (maxIterations = "10")) {
@@ -123,7 +129,8 @@ definition {
 		}
 	}
 
-	macro viewAuditDetails {
+	@summary = "Default summary"
+	macro viewAuditDetails(resourceAction = null,additionalInformation = null,clientIp = null,groupId = null,resourceName = null,userName = null) {
 		var key_resourceAction = ${resourceAction};
 		var key_resourceName = ${resourceName};
 
@@ -168,7 +175,8 @@ definition {
 		}
 	}
 
-	macro viewAuditDetailsByPosition {
+	@summary = "Default summary"
+	macro viewAuditDetailsByPosition(resourceAction = null,additionalInformation = null,clientIp = null,resourceName = null,userName = null,nameByPosition = null) {
 		var key_resourceAction = ${resourceAction};
 		var key_resourceName = ${resourceName};
 
@@ -202,7 +210,8 @@ definition {
 		}
 	}
 
-	macro viewAuditEntries {
+	@summary = "Default summary"
+	macro viewAuditEntries(resourceAction = null,resourceID = null,clientIP = null,resourceName = null,id = null,position = null,userName = null,createDate = null) {
 		AssertElementPresent(
 			key_clientIP = ${clientIP},
 			key_createDate = ${createDate},

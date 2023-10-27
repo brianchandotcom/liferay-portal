@@ -1,6 +1,7 @@
 definition {
 
-	macro addAutoTaggedBlogsEntry {
+	@summary = "Default summary"
+	macro addAutoTaggedBlogsEntry(tagName = null,entryTitle = null,entryContent = null) {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 
 		Blogs.addEntry(
@@ -19,7 +20,8 @@ definition {
 			tagName = ${tagName});
 	}
 
-	macro addAutoTaggedDM {
+	@summary = "Default summary"
+	macro addAutoTaggedDM(dmDocumentTitle = null,dmDocumentFile = null,tagName = null) {
 		if (isSet(depotName)) {
 			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 		}
@@ -46,7 +48,8 @@ definition {
 		DMDocument.viewTagInfo(tagName = ${tagName});
 	}
 
-	macro addAutoTaggedWebContent {
+	@summary = "Default summary"
+	macro addAutoTaggedWebContent(webContentTitle = null,webContentContent = null,tagName = null) {
 		if (isSet(depotName)) {
 			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 		}
@@ -81,7 +84,8 @@ definition {
 			value1 = ${tagName});
 	}
 
-	macro addAutoTagViaGogoShell {
+	@summary = "Default summary"
+	macro addAutoTagViaGogoShell(blogTagNum = null,dmDocumentTitle = null,dmTagName = null,webContentTitle = null,wcTagNum = null,webContentTitleXml = null,blogTagName = null,wcTagName = null,blogEntryTitle = null,dmTagNum = null) {
 		var companyId = JSONCompany.getCompanyId();
 
 		GogoShell.openGogoShellAdmin();
@@ -143,7 +147,8 @@ definition {
 		}
 	}
 
-	macro editTagsAndDeleteAutoTaggedBlogsEntry {
+	@summary = "Default summary"
+	macro editTagsAndDeleteAutoTaggedBlogsEntry(entryTitleKey = null,tagName = null,entryTitle = null,entryContent = null) {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = ${entryTitleKey},
 			layoutName = "test-page",
@@ -190,7 +195,8 @@ definition {
 			entryTitle = ${entryTitle});
 	}
 
-	macro editTagsAndDeleteAutoTaggedDM {
+	@summary = "Default summary"
+	macro editTagsAndDeleteAutoTaggedDM(dmDocumentTitle = null,tagName = null) {
 		if (isSet(depotName)) {
 			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 		}
@@ -242,7 +248,8 @@ definition {
 		DMDocument.deleteCP(dmDocumentTitle = ${dmDocumentTitle});
 	}
 
-	macro editTagsAndDeleteAutoTaggedWebContent {
+	@summary = "Default summary"
+	macro editTagsAndDeleteAutoTaggedWebContent(webContentTitle = null,tagName = null) {
 		if (isSet(depotName)) {
 			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 		}

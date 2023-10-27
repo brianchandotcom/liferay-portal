@@ -1,18 +1,21 @@
 definition {
 
-	macro activityCheckbox {
+	@summary = "Default summary"
+	macro activityCheckbox(activityIndex = null) {
 		Click.javaScriptClick(
 			key_fieldName = "activities[${activityIndex}].selected",
 			locator1 = "Checkbox#CHECKBOX_NAME");
 	}
 
-	macro activityCollapse {
+	@summary = "Default summary"
+	macro activityCollapse(activityName = null) {
 		Click(
 			key_activityName = ${activityName},
 			locator1 = "PRMMDFClaim#ACTIVITY_NAME");
 	}
 
-	macro changeClaimStatus {
+	@summary = "Default summary"
+	macro changeClaimStatus(checkNumber = null,statusButton = null,amountReceived = null) {
 		var key_statusButton = ${statusButton};
 
 		if (${statusButton} == "Cancel") {
@@ -64,11 +67,13 @@ definition {
 		}
 	}
 
-	macro clickOnStateManager {
+	@summary = "Default summary"
+	macro clickOnStateManager() {
 		ClickNoError(locator1 = "PRMMDFClaim#STATUS_DROPDOWN");
 	}
 
-	macro createNewClaim {
+	@summary = "Default summary"
+	macro createNewClaim(selectedFile = null,thirdInvoice = null,typeOfActivity = null,reimbursementInvoice = null,allContents = null,mestricsDescription = null,metrics = null,telemarketingMetrics = null,listLeads = null,telemarketingScript = null) {
 		if (!(isSet(activityIndex))) {
 			var activityIndex = 0;
 		}
@@ -123,11 +128,13 @@ definition {
 			locator1 = "Header#H1_TITLE");
 	}
 
-	macro editButton {
+	@summary = "Default summary"
+	macro editButton() {
 		Click(locator1 = "PRMMDFClaim#EDIT_BUTTON");
 	}
 
-	macro fillActivityFields {
+	@summary = "Default summary"
+	macro fillActivityFields(thirdInvoice = null,listLeads = null) {
 		if (!(isSet(activityIndex))) {
 			var activityIndex = 0;
 		}
@@ -218,7 +225,8 @@ definition {
 		}
 	}
 
-	macro filterClaimID {
+	@summary = "Default summary"
+	macro filterClaimID(optionDropdown = null,checkboxName = null) {
 		Click(
 			key_filterOption = "Filter",
 			locator1 = "AppBuilder#CHOOSE_SEARCH_FILTER_BY_OPTION");
@@ -234,7 +242,8 @@ definition {
 		Click.clickAtNotVisible(locator1 = "PRMMDFClaim#APPLY_BUTTON");
 	}
 
-	macro getClaimID {
+	@summary = "Default summary"
+	macro getClaimID(claimIndex = null) {
 		var key_index = ${claimIndex};
 		var orderID = selenium.getText("PRMMDFClaim#CLAIM_ID_INDEX");
 
@@ -243,7 +252,8 @@ definition {
 		return ${orderID};
 	}
 
-	macro getClaimIdOnDetailPage {
+	@summary = "Default summary"
+	macro getClaimIdOnDetailPage(index = null) {
 		var key_index = ${index};
 
 		if (${index} == 1) {
@@ -267,7 +277,8 @@ definition {
 		}
 	}
 
-	macro searchClaim {
+	@summary = "Default summary"
+	macro searchClaim(claimID = null) {
 		Type(
 			key_placeHolder = "Search",
 			locator1 = "TextInput#ANY_PLACEHOLDER",
@@ -279,31 +290,36 @@ definition {
 			value1 = "\RETURN");
 	}
 
-	macro viewActivityNotPresent {
+	@summary = "Default summary"
+	macro viewActivityNotPresent(activityName = null) {
 		AssertElementNotPresent(
 			key_activityName = ${activityName},
 			locator1 = "PRMMDFClaim#ACTIVITY_NAME");
 	}
 
-	macro viewActivityPresent {
+	@summary = "Default summary"
+	macro viewActivityPresent(activityName = null) {
 		AssertElementPresent(
 			key_activityName = ${activityName},
 			locator1 = "PRMMDFClaim#ACTIVITY_NAME");
 	}
 
-	macro viewAttachmentNotPresent {
+	@summary = "Default summary"
+	macro viewAttachmentNotPresent(attachmentName = null) {
 		AssertElementNotPresent(
 			key_attachmentName = ${attachmentName},
 			locator1 = "PRMMDFClaim#ATTACHMENT_NAME");
 	}
 
-	macro viewAttachmentPresent {
+	@summary = "Default summary"
+	macro viewAttachmentPresent(attachmentName = null) {
 		AssertElementPresent(
 			key_attachmentName = ${attachmentName},
 			locator1 = "PRMMDFClaim#ATTACHMENT_NAME");
 	}
 
-	macro viewClaimSummary {
+	@summary = "Default summary"
+	macro viewClaimSummary(claimType = null,amountClaimed = null,paymentReceived = null,checkId = null) {
 		if (isSet(claimType)) {
 			AssertElementPresent(
 				key_itemValue = ${claimType},
@@ -337,19 +353,22 @@ definition {
 		}
 	}
 
-	macro viewClaimType {
+	@summary = "Default summary"
+	macro viewClaimType(claimType = null) {
 		AssertElementPresent(
 			key_claimType = ${claimType},
 			locator1 = "PRMMDFClaim#CLAIM_TYPE");
 	}
 
-	macro viewStatusOptionNotVisible {
+	@summary = "Default summary"
+	macro viewStatusOptionNotVisible(statusButton = null) {
 		AssertElementNotPresent(
 			key_statusButton = ${statusButton},
 			locator1 = "PRMMDFClaim#STATUS_OPTION_DROPDOWN");
 	}
 
-	macro viewStatusOptionVisible {
+	@summary = "Default summary"
+	macro viewStatusOptionVisible(statusButton = null) {
 		AssertElementPresent(
 			key_statusButton = ${statusButton},
 			locator1 = "PRMMDFClaim#STATUS_OPTION_DROPDOWN");

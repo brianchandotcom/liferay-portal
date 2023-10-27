@@ -1765,6 +1765,12 @@ public class JournalArticleLocalServiceWrapper
 	}
 
 	@Override
+	public int getArticlesCountByResourcePrimKey(long resourcePrimKey) {
+		return _journalArticleLocalService.getArticlesCountByResourcePrimKey(
+			resourcePrimKey);
+	}
+
+	@Override
 	public String getArticleTitle(long articlePK, java.util.Locale locale) {
 		return _journalArticleLocalService.getArticleTitle(articlePK, locale);
 	}

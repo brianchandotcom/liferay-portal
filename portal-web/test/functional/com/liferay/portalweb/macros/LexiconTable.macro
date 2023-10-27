@@ -1,12 +1,14 @@
 definition {
 
-	macro checkTableCheckbox {
+	@summary = "Default summary"
+	macro checkTableCheckbox(tableEntry = null) {
 		Check(
 			key_tableEntry = ${tableEntry},
 			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
 	}
 
-	macro clickEllipsisItem {
+	@summary = "Default summary"
+	macro clickEllipsisItem(item = null,tableEntry = null) {
 		Click.waitForMenuToggleJSClick(
 			key_tableEntry = ${tableEntry},
 			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
@@ -14,35 +16,40 @@ definition {
 		MenuItem.clickNoError(menuItem = ${item});
 	}
 
-	macro clickTableEntryColumnLink {
+	@summary = "Default summary"
+	macro clickTableEntryColumnLink(tableEntry = null,columnName = null) {
 		Click(
 			key_columnName = ${columnName},
 			key_tableEntry = ${tableEntry},
 			locator1 = "LexiconTable#TABLE_ENTRY_COLUMN_LINK");
 	}
 
-	macro clickTableEntryTitle {
+	@summary = "Default summary"
+	macro clickTableEntryTitle(tableEntry = null) {
 		Click(
 			key_tableEntry = ${tableEntry},
 			locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK");
 	}
 
-	macro delete {
+	@summary = "Default summary"
+	macro delete(tableEntry = null) {
 		LexiconTable.clickEllipsisItem(
 			item = "Delete",
 			tableEntry = ${tableEntry});
 
-		Confirm();
+		Confirm(value1 = "null");
 	}
 
-	macro viewTableEntryFormFragment {
+	@summary = "Default summary"
+	macro viewTableEntryFormFragment(tableEntryInfo = null,fieldType = null) {
 		AssertTextEquals.assertValue(
 			key_tableEntry = ${fieldType},
 			locator1 = "TextInput#FRAGMENT_CONFIGURATION_FORM_FRAGMENT",
 			value1 = ${tableEntryInfo});
 	}
 
-	macro viewTableEntryInfo {
+	@summary = "Default summary"
+	macro viewTableEntryInfo(tableEntry = null,tableEntryInfo = null,index = null,columnName = null) {
 		if (isSet(index)) {
 			AssertTextEquals(
 				index = ${index},
@@ -59,13 +66,15 @@ definition {
 		}
 	}
 
-	macro viewTableEntryNotPresent {
+	@summary = "Default summary"
+	macro viewTableEntryNotPresent(tableEntry = null) {
 		AssertElementNotPresent(
 			key_tableEntry = ${tableEntry},
 			locator1 = "LexiconTable#TABLE_ENTRY");
 	}
 
-	macro viewTableEntryPartialText {
+	@summary = "Default summary"
+	macro viewTableEntryPartialText(tableEntryPartialText = null,tableEntry = null) {
 		AssertTextEquals.assertPartialText(
 			key_tableEntry = ${tableEntry},
 			key_tableEntryPartialText = ${tableEntryPartialText},
@@ -73,7 +82,8 @@ definition {
 			value1 = ${tableEntryPartialText});
 	}
 
-	macro viewTableEntryText {
+	@summary = "Default summary"
+	macro viewTableEntryText(tableEntry = null,tableEntryText = null) {
 		AssertTextEquals(
 			key_tableEntry = ${tableEntry},
 			key_tableEntryText = ${tableEntryText},
@@ -81,14 +91,16 @@ definition {
 			value1 = ${tableEntryText});
 	}
 
-	macro viewTableEntryTitle {
+	@summary = "Default summary"
+	macro viewTableEntryTitle(tableEntry = null) {
 		AssertTextEquals(
 			key_tableEntry = ${tableEntry},
 			locator1 = "LexiconTable#TABLE_ENTRY_TITLE",
 			value1 = ${tableEntry});
 	}
 
-	macro viewTableEntryTitleLink {
+	@summary = "Default summary"
+	macro viewTableEntryTitleLink(tableEntry = null) {
 		AssertTextEquals(
 			key_tableEntry = ${tableEntry},
 			locator1 = "LexiconTable#TABLE_ENTRY_TITLE_LINK",

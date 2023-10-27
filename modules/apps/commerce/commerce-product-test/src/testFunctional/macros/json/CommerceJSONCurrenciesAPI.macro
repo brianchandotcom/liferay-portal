@@ -1,6 +1,7 @@
 definition {
 
-	macro _deleteCommerceCurrencies {
+	@summary = "Default summary"
+	macro _deleteCommerceCurrencies() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -29,7 +30,8 @@ definition {
 		}
 	}
 
-	macro _getCommerceCurrencies {
+	@summary = "Default summary"
+	macro _getCommerceCurrencies() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -57,7 +59,8 @@ definition {
 		return ${commerceCurrencies};
 	}
 
-	macro _getCommerceCurrencyIdByCode {
+	@summary = "Default summary"
+	macro _getCommerceCurrencyIdByCode(code = null) {
 		Variables.assertDefined(parameterList = ${code});
 
 		var baseURL = ${baseURL};

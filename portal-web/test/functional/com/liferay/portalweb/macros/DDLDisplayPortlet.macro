@@ -1,12 +1,14 @@
 definition {
 
-	macro assertCannotEditSpreadsheet {
+	@summary = "Default summary"
+	macro assertCannotEditSpreadsheet() {
 		AssertElementNotPresent(locator1 = "DDLSpreadsheet#SPREADSHEET_EDIT_CONTROLS_ADD_ROWS_BUTTON");
 
 		AssertElementNotPresent(locator1 = "DDLSpreadsheet#SPREADSHEET_EDIT_CONTROLS_ADD_ROWS_SELECT_MENULIST");
 	}
 
-	macro configureListViewPG {
+	@summary = "Default summary"
+	macro configureListViewPG(configureChecked = null,configureCheckBoxName = null) {
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
 		DDLNavigator.gotoOptionalConfiguration();
@@ -21,13 +23,15 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro viewAddToolbar {
+	@summary = "Default summary"
+	macro viewAddToolbar(ddlDataDefinitionName = null) {
 		var key_ddlDataDefinitionName = ${ddlDataDefinitionName};
 
 		AssertElementPresent(locator1 = "DDL#TOOLBAR_ADD");
 	}
 
-	macro viewDDLTemplateRecordFieldData {
+	@summary = "Default summary"
+	macro viewDDLTemplateRecordFieldData(ddlRecordFieldData = null) {
 		var key_ddlRecordFieldData = ${ddlRecordFieldData};
 
 		AssertTextEquals(
@@ -35,7 +39,8 @@ definition {
 			value1 = ${ddlRecordFieldData});
 	}
 
-	macro viewFieldSelectViaSpreadsheetView {
+	@summary = "Default summary"
+	macro viewFieldSelectViaSpreadsheetView(ddlRecordFieldData = null,fieldName = null,ddlRecordRow = null) {
 		var key_ddlRecordRow = ${ddlRecordRow};
 		var key_fieldName = ${fieldName};
 
@@ -44,7 +49,8 @@ definition {
 			value1 = ${ddlRecordFieldData});
 	}
 
-	macro viewSpreadsheetContainer {
+	@summary = "Default summary"
+	macro viewSpreadsheetContainer() {
 		AssertElementPresent(locator1 = "DDLSpreadsheet#SPREADSHEET_CONTAINER");
 	}
 

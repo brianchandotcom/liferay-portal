@@ -131,7 +131,7 @@ definition {
 
 		// Pausing 10 seconds due to LRQA-75909
 
-		Pause(locator1 = 10000);
+		Pause(value1 = 10000);
 
 		Clustering.viewTextNotPresentOnSpecificNode(
 			exceptionText = "Run job at ",
@@ -149,7 +149,7 @@ definition {
 
 		// Pausing 10 seconds due to LRQA-75909
 
-		Pause(locator1 = 10000);
+		Pause(value1 = 10000);
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Run job at ",
@@ -164,7 +164,7 @@ definition {
 
 		// Pausing 10 seconds due to LRQA-75909
 
-		Pause(locator1 = 10000);
+		Pause(value1 = 10000);
 
 		Clustering.viewTextPresentOnSpecificNode(
 			expectedText = "Run job at ",
@@ -203,7 +203,7 @@ definition {
 
 		// Pausing 10 seconds due to LRQA-75909
 
-		Pause(locator1 = 10000);
+		Pause(value1 = 10000);
 
 		Clustering.viewTextNotPresentOnSpecificNode(
 			exceptionText = "Run job at ",

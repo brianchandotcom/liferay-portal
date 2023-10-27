@@ -1,6 +1,7 @@
 definition {
 
-	macro definePermissionsViaJSONAPI {
+	@summary = "Default summary"
+	macro definePermissionsViaJSONAPI(roleTitle = null,resourceNameActionList = null,groupName = null,portalInstanceName = null,specificURL = null) {
 		var groupId = JSONPermissionSetter.setGroupId(
 			groupName = ${groupName},
 			noSelenium = "true",
@@ -56,7 +57,8 @@ definition {
 		}
 	}
 
-	macro definePermissionViaJSONAPI {
+	@summary = "Default summary"
+	macro definePermissionViaJSONAPI(resourceAction = null,groupName = null,roleTitle = null,specificURL = null,resourceName = null,roleType = null) {
 		JSONPermission.addPermission(
 			actionId = ${resourceAction},
 			groupName = ${groupName},
@@ -66,7 +68,8 @@ definition {
 			specificURL = ${specificURL});
 	}
 
-	macro removePermissionViaAPI {
+	@summary = "Default summary"
+	macro removePermissionViaAPI(resourceAction = null,groupName = null,roleTitle = null,resourceName = null,roleType = null) {
 		JSONPermission.removePermission(
 			actionId = ${resourceAction},
 			groupName = ${groupName},
@@ -75,7 +78,8 @@ definition {
 			roleType = ${roleType});
 	}
 
-	macro setUpOrgRoleCP {
+	@summary = "Default summary"
+	macro setUpOrgRoleCP(orgName = null,roleTitle = null,userLastName = null,userScreenName = null,userEmailAddress = null,newPassword = null,userFirstName = null,pageName = null,currentPassword = null) {
 		JSONUser.addUser(
 			userEmailAddress = ${userEmailAddress},
 			userFirstName = ${userFirstName},
@@ -117,7 +121,8 @@ definition {
 			userEmailAddress = ${userEmailAddress});
 	}
 
-	macro setUpOrgRoleLoginUserPG {
+	@summary = "Default summary"
+	macro setUpOrgRoleLoginUserPG(orgName = null,roleTitle = null,userEmailAddress = null,newPassword = null,i = null,userFirstName = null,userLoginEmailAddress = null,pageName = null,currentPassword = null,portletName = null,userLastName = null,userScreenName = null,userLoginFullName = null) {
 		JSONUser.addUser(
 			userEmailAddress = ${userEmailAddress},
 			userFirstName = ${userFirstName},
@@ -170,7 +175,8 @@ definition {
 			userLoginFullName = ${userLoginFullName});
 	}
 
-	macro setUpRegRoleLoginUserCP {
+	@summary = "Default summary"
+	macro setUpRegRoleLoginUserCP(roleTitle = null,userLastName = null,userScreenName = null,userEmailAddress = null,userFirstName = null) {
 		JSONUser.addUser(
 			userEmailAddress = ${userEmailAddress},
 			userFirstName = ${userFirstName},
@@ -189,7 +195,8 @@ definition {
 			userEmailAddress = ${userEmailAddress});
 	}
 
-	macro setUpRegRoleLoginUserPG {
+	@summary = "Default summary"
+	macro setUpRegRoleLoginUserPG(roleTitle = null,userLastName = null,userScreenName = null,siteName = null,userEmailAddress = null,userFirstName = null,userLoginFullName = null,userLoginEmailAddress = null,pageName = null,portletName = null) {
 		Permissions.setUpRegRolePG(
 			pageName = ${pageName},
 			portletName = ${portletName},
@@ -205,7 +212,8 @@ definition {
 			userLoginFullName = ${userLoginFullName});
 	}
 
-	macro setUpRegRolePG {
+	@summary = "Default summary"
+	macro setUpRegRolePG(roleTitle = null,userLastName = null,userScreenName = null,userEmailAddress = null,newPassword = null,userFirstName = null,pageName = null,portletName = null,currentPassword = null) {
 		JSONUserAPI._disablePasswordChangeRequired();
 
 		if (isSet(siteName)) {
@@ -252,7 +260,8 @@ definition {
 			userEmailAddress = ${userEmailAddress});
 	}
 
-	macro setUpSiteMemberRoleLoginUserPG {
+	@summary = "Default summary"
+	macro setUpSiteMemberRoleLoginUserPG(userLastName = null,userScreenName = null,userEmailAddress = null,siteName = null,userFirstName = null,userLoginFullName = null,userLoginEmailAddress = null,pageName = null,portletName = null) {
 		JSONUser.addUser(
 			userEmailAddress = ${userEmailAddress},
 			userFirstName = ${userFirstName},
@@ -284,7 +293,8 @@ definition {
 			userLoginFullName = ${userLoginFullName});
 	}
 
-	macro setUpSiteRoleCP {
+	@summary = "Default summary"
+	macro setUpSiteRoleCP(roleTitle = null,userLastName = null,userScreenName = null,userEmailAddress = null,newPassword = null,siteName = null,userFirstName = null,userLoginFullName = null,userLoginEmailAddress = null,pageName = null,currentPassword = null) {
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Users",
 			configurationName = "Default User Associations",
@@ -331,7 +341,8 @@ definition {
 			userLoginFullName = ${userLoginFullName});
 	}
 
-	macro setUpSiteRoleLoginUserCP {
+	@summary = "Default summary"
+	macro setUpSiteRoleLoginUserCP(roleTitle = null,userLastName = null,userScreenName = null,newPassword = null,siteName = null,userEmailAddress = null,userFirstName = null,userLoginFullName = null,userLoginEmailAddress = null,pageName = null) {
 		Permissions.setUpSiteRoleCP(
 			newPassword = ${newPassword},
 			pageName = ${pageName},
@@ -347,7 +358,8 @@ definition {
 			userLoginFullName = ${userLoginFullName});
 	}
 
-	macro setUpSiteRoleLoginUserPG {
+	@summary = "Default summary"
+	macro setUpSiteRoleLoginUserPG(roleTitle = null,userLastName = null,userScreenName = null,roleKey = null,userEmailAddress = null,siteName = null,userFirstName = null,userLoginFullName = null,userLoginEmailAddress = null,pageName = null,roleDescription = null,portletName = null) {
 		JSONUser.addUser(
 			userEmailAddress = ${userEmailAddress},
 			userFirstName = ${userFirstName},
@@ -389,7 +401,8 @@ definition {
 			userLoginFullName = ${userLoginFullName});
 	}
 
-	macro setUpSiteTeamRoleLoginUserPG {
+	@summary = "Default summary"
+	macro setUpSiteTeamRoleLoginUserPG(userEmailAddressVariation = null,teamName = null,userEmailAddress = null,siteName = null,userFirstName = null,teamDescription = null,userLoginEmailAddress = null,userLastName = null,userScreenName = null,userMiddleName = null,userGender = null,userLoginFullName = null,userNameIsNotFound = null,userBirthday = null) {
 		JSONUser.addUser(
 			userBirthday = ${userBirthday},
 			userEmailAddress = ${userEmailAddress},

@@ -1,6 +1,7 @@
 definition {
 
-	macro _assertEmployeeFirstnameCorrect {
+	@summary = "Default summary"
+	macro _assertEmployeeFirstnameCorrect(responseToParse = null,entryId = null,expectedEmployeeFirstname = null) {
 		var actualEmployeeFirstname = JSONUtil.getWithJSONPath(${responseToParse}, "$.items[?(@.id==${entryId})].firstname");
 
 		TestUtils.assertEquals(
@@ -8,7 +9,8 @@ definition {
 			expected = ${expectedEmployeeFirstname});
 	}
 
-	macro _assertManagerFirstnameCorrect {
+	@summary = "Default summary"
+	macro _assertManagerFirstnameCorrect(expectedManagerFirstname = null,responseToParse = null,entryId = null) {
 		var actualManagerFirstname = JSONUtil.getWithJSONPath(${responseToParse}, "$.items[?(@.id==${entryId})].r_supervisor_c_manager.firstname");
 
 		TestUtils.assertEquals(
@@ -16,7 +18,8 @@ definition {
 			expected = ${expectedManagerFirstname});
 	}
 
-	macro _assertManagerIdCorrect {
+	@summary = "Default summary"
+	macro _assertManagerIdCorrect(responseToParse = null,nestedObjectParameterName = null,expectedManagerId = null,entryId = null) {
 		var actualManagerId = JSONUtil.getWithJSONPath(${responseToParse}, "$.items[?(@.id==${entryId})].${nestedObjectParameterName}.id");
 
 		TestUtils.assertEquals(
@@ -24,7 +27,8 @@ definition {
 			expected = ${expectedManagerId});
 	}
 
-	macro _createEmployee {
+	@summary = "Default summary"
+	macro _createEmployee(firstname = null,managerId = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
@@ -42,7 +46,8 @@ definition {
 		return ${employeeId};
 	}
 
-	macro _createManager {
+	@summary = "Default summary"
+	macro _createManager(firstname = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
@@ -59,7 +64,8 @@ definition {
 		return ${managerId};
 	}
 
-	macro _createObjectEntryWithName {
+	@summary = "Default summary"
+	macro _createObjectEntryWithName(keywords = null,taxonomyCategoryIds = null,name = null,virtualHost = null,en_US_plural_label = null,token = null) {
 		Variables.assertDefined(parameterList = ${name});
 
 		var response = CustomObjectAPI.createObjectEntryWithFields(
@@ -76,7 +82,8 @@ definition {
 		return ${objectId};
 	}
 
-	macro _createRelationship {
+	@summary = "Default summary"
+	macro _createRelationship(name = null,deletionType = null,en_US_label = null,objectDefinitionId2 = null,type = null,virtualHost = null,objectDefinitionId1 = null,token = null) {
 		Variables.assertDefined(parameterList = "${deletionType},${en_US_label},${name},${objectDefinitionId1},${objectDefinitionId2},${type}");
 
 		if (isSet(virtualHost)) {
@@ -114,7 +121,8 @@ definition {
 		return ${relationshipId};
 	}
 
-	macro _curlObjectEntriesRelationship {
+	@summary = "Default summary"
+	macro _curlObjectEntriesRelationship(relationshipName = null,objectEntry2 = null,objectEntry1 = null,virtualHost = null,en_US_plural_label = null) {
 		Variables.assertDefined(parameterList = "${en_US_plural_label},${objectEntry1},${objectEntry2},${relationshipName}");
 
 		if (isSet(virtualHost)) {
@@ -138,7 +146,8 @@ definition {
 		return ${curl};
 	}
 
-	macro _deleteObjectEntry {
+	@summary = "Default summary"
+	macro _deleteObjectEntry(objectEntryId = null,en_US_plural_label = null) {
 		Variables.assertDefined(parameterList = "${en_US_plural_label},${objectEntryId}");
 
 		var en_US_plural_label_lowercase = StringUtil.lowerCase(${en_US_plural_label});
@@ -155,7 +164,8 @@ definition {
 		return ${response};
 	}
 
-	macro _deleteRelationship {
+	@summary = "Default summary"
+	macro _deleteRelationship(relationshipId = null) {
 		Variables.assertDefined(parameterList = ${relationshipId});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -171,7 +181,8 @@ definition {
 		return ${response};
 	}
 
-	macro _getEmployeeFirstnameById {
+	@summary = "Default summary"
+	macro _getEmployeeFirstnameById(employeeId = null) {
 		Variables.assertDefined(parameterList = ${employeeId});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -186,7 +197,8 @@ definition {
 		return ${employeeFirstname};
 	}
 
-	macro _getManagerFirstnameById {
+	@summary = "Default summary"
+	macro _getManagerFirstnameById(managerId = null) {
 		Variables.assertDefined(parameterList = ${managerId});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -201,7 +213,8 @@ definition {
 		return ${managerFirstname};
 	}
 
-	macro _getObjectDefinitionStatusById {
+	@summary = "Default summary"
+	macro _getObjectDefinitionStatusById(objectDefinitionId = null,virtualHost = null,token = null) {
 		Variables.assertDefined(parameterList = ${objectDefinitionId});
 
 		if (isSet(virtualHost)) {
@@ -229,7 +242,8 @@ definition {
 		return ${objectDefinitionStatus};
 	}
 
-	macro _getObjectsWithAggregationTerms {
+	@summary = "Default summary"
+	macro _getObjectsWithAggregationTerms(objects = null,aggregationTermsValue = null) {
 		Variables.assertDefined(parameterList = ${aggregationTermsValue});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -244,7 +258,8 @@ definition {
 		return ${json};
 	}
 
-	macro _getObjectsWithNestedField {
+	@summary = "Default summary"
+	macro _getObjectsWithNestedField(objects = null,nestedField = null) {
 		Variables.assertDefined(parameterList = "${nestedField}, ${objects}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -259,7 +274,8 @@ definition {
 		return ${json};
 	}
 
-	macro _getRelationshipId {
+	@summary = "Default summary"
+	macro _getRelationshipId(objectDefinitionId = null) {
 		Variables.assertDefined(parameterList = ${objectDefinitionId});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -279,7 +295,8 @@ definition {
 		return ${relationshipId};
 	}
 
-	macro _getRelationshipNameById {
+	@summary = "Default summary"
+	macro _getRelationshipNameById(relationshipId = null,virtualHost = null) {
 		Variables.assertDefined(parameterList = ${relationshipId});
 
 		if (isSet(virtualHost)) {
@@ -303,7 +320,8 @@ definition {
 		return ${relationshipName};
 	}
 
-	macro _modifyRelationship {
+	@summary = "Default summary"
+	macro _modifyRelationship(deletionType = null,relationshipId = null) {
 		Variables.assertDefined(parameterList = "${deletionType},${relationshipId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -323,7 +341,8 @@ definition {
 		return ${relationshipDeletionType};
 	}
 
-	macro _publishObjectDefinition {
+	@summary = "Default summary"
+	macro _publishObjectDefinition(objectDefinitionId = null,virtualHost = null,token = null) {
 		Variables.assertDefined(parameterList = ${objectDefinitionId});
 
 		if (isSet(virtualHost)) {
@@ -351,7 +370,8 @@ definition {
 		return ${json};
 	}
 
-	macro _updateEmployee {
+	@summary = "Default summary"
+	macro _updateEmployee(firstname = null,employeeId = null,managerId = null) {
 		Variables.assertDefined(parameterList = "${employeeId},${firstname},${managerId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -371,7 +391,8 @@ definition {
 		return ${response};
 	}
 
-	macro _updateObjectDefinition {
+	@summary = "Default summary"
+	macro _updateObjectDefinition(objectDefinitionId = null,parameter = null,parameterValue = null) {
 		Variables.assertDefined(parameterList = "${objectDefinitionId},${parameter},${parameterValue}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -390,7 +411,8 @@ definition {
 		return ${response};
 	}
 
-	macro assertBatchActionsInResponse {
+	@summary = "Default summary"
+	macro assertBatchActionsInResponse(objectDefinitionId = null,responseToParse = null,batchActions = null,objectSchema = null,en_US_plural_label = null) {
 		Variables.assertDefined(parameterList = "${responseToParse},${batchActions}");
 
 		for (var batchAction : list ${batchActions}) {
@@ -426,7 +448,8 @@ definition {
 		}
 	}
 
-	macro assertBatchActionsWithGetObjectSchemas {
+	@summary = "Default summary"
+	macro assertBatchActionsWithGetObjectSchemas(objectDefinitionId = null,objectSchemas = null,batchActions = null) {
 		Variables.assertDefined(parameterList = "${objectDefinitionId},${objectSchemas},${batchActions}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -448,7 +471,8 @@ definition {
 		}
 	}
 
-	macro assertEmployeeHasNestedFieldManager {
+	@summary = "Default summary"
+	macro assertEmployeeHasNestedFieldManager(expectedManagerFirstname = null,responseToParse = null,nestedField = null,objectId = null,expectedManagerId = null,expectedEmployeeFirstname = null) {
 		var nestedObjectParameterName = StringUtil.replace(${nestedField}, "Id", "");
 
 		ObjectDefinitionAPI._assertEmployeeFirstnameCorrect(
@@ -470,7 +494,8 @@ definition {
 			responseToParse = ${responseToParse});
 	}
 
-	macro assertInFacetsWithCorrectValue {
+	@summary = "Default summary"
+	macro assertInFacetsWithCorrectValue(responseToParse = null,expectedValue = null,managerId = null) {
 		var actualValue = JSONUtil.getWithJSONPath(${responseToParse}, "$..facetValues[?(@.term=='${managerId}' && @.numberOfOccurrences==${expectedValue})].numberOfOccurrences");
 
 		TestUtils.assertEquals(
@@ -478,7 +503,8 @@ definition {
 			expected = ${expectedValue});
 	}
 
-	macro assertNestedFieldDetail {
+	@summary = "Default summary"
+	macro assertNestedFieldDetail(getObjectsWithNestedFieldReponse = null,objectField = null,expectedValue = null,nestedField = null,objectEntryId = null) {
 		Variables.assertDefined(parameterList = "${getObjectsWithNestedFieldReponse},${nestedField},${objectField},${objectEntryId}, ${expectedValue}");
 
 		var actualValue = JSONUtil.getWithJSONPath(${getObjectsWithNestedFieldReponse}, "$.items[?(@.id==${objectEntryId})].${nestedField}[*].${objectField}");
@@ -488,7 +514,8 @@ definition {
 			expected = ${expectedValue});
 	}
 
-	macro assertNoItemsInResponse {
+	@summary = "Default summary"
+	macro assertNoItemsInResponse(responseToParse = null) {
 		Variables.assertDefined(parameterList = ${responseToParse});
 
 		var actual = JSONUtil.getWithJSONPath(${responseToParse}, "$.items");
@@ -498,7 +525,8 @@ definition {
 			expected = "");
 	}
 
-	macro assertResponseHasCorrectObjectEntryName {
+	@summary = "Default summary"
+	macro assertResponseHasCorrectObjectEntryName(responseToParse = null,expectedValue = null,objectEntryId = null) {
 		var actual = JSONUtil.getWithJSONPath(${responseToParse}, "$.items[?(@.id==${objectEntryId})].name");
 
 		TestUtils.assertEquals(
@@ -506,7 +534,8 @@ definition {
 			expected = ${expectedValue});
 	}
 
-	macro assertResponseIncludeCorrectDetailsOfNotDeletedObject {
+	@summary = "Default summary"
+	macro assertResponseIncludeCorrectDetailsOfNotDeletedObject(responseToParse = null,expectedValue = null,objectEntryId = null) {
 		var actual = JSONUtil.getWithJSONPath(${responseToParse}, "$..universitiesSubjects[?(@.id==${objectEntryId})].name");
 
 		TestUtils.assertEquals(
@@ -514,7 +543,8 @@ definition {
 			expected = ${expectedValue});
 	}
 
-	macro assertResponseIncludesDetailsOfNotDeletedEmployee {
+	@summary = "Default summary"
+	macro assertResponseIncludesDetailsOfNotDeletedEmployee(employeeId2 = null,managerId2 = null,responseToParse = null) {
 		var actual = JSONUtil.getWithJSONPath(${responseToParse}, "$..items[?(@.id==${employeeId2})].r_supervisor_c_manager.id");
 
 		TestUtils.assertEquals(
@@ -522,7 +552,8 @@ definition {
 			expected = ${managerId2});
 	}
 
-	macro assertResponseNotIncludeDetailsOfDeletedObject {
+	@summary = "Default summary"
+	macro assertResponseNotIncludeDetailsOfDeletedObject(responseToParse = null,expectedValue = null) {
 		var actual = JSONUtil.getWithJSONPath(${responseToParse}, "$..universitiesSubjects");
 
 		TestUtils.assertEquals(
@@ -530,7 +561,8 @@ definition {
 			expected = ${expectedValue});
 	}
 
-	macro assertResponseNotIncludesDetailsOfDeletedEmployee {
+	@summary = "Default summary"
+	macro assertResponseNotIncludesDetailsOfDeletedEmployee(employeeId1 = null,responseToParse = null) {
 		var actual = JSONUtil.getWithJSONPath(${responseToParse}, "$..items[?(@.id==${employeeId1})].r_supervisor_c_manager.id");
 
 		TestUtils.assertEquals(
@@ -538,7 +570,8 @@ definition {
 			expected = "");
 	}
 
-	macro assertResponseOnlyIncludesDetailsOfNotDeletedEmployee {
+	@summary = "Default summary"
+	macro assertResponseOnlyIncludesDetailsOfNotDeletedEmployee(managerId1 = null,employeeId2 = null,managerId2 = null,employeeId1 = null,responseToParse = null) {
 		ObjectDefinitionAPI.assertResponseNotIncludesDetailsOfDeletedEmployee(
 			employeeId1 = ${employeeId1},
 			managerId1 = ${managerId1},
@@ -550,7 +583,8 @@ definition {
 			responseToParse = ${responseToParse});
 	}
 
-	macro assertStatusInResponse {
+	@summary = "Default summary"
+	macro assertStatusInResponse(responseToParse = null,expectedValue = null) {
 		var actual = JSONUtil.getWithJSONPath(${responseToParse}, "$.status");
 
 		TestUtils.assertEquals(
@@ -558,7 +592,8 @@ definition {
 			expected = ${expectedValue});
 	}
 
-	macro breakRelationshipBetweenEntries {
+	@summary = "Default summary"
+	macro breakRelationshipBetweenEntries(relationshipName = null,objectEntry2 = null,objectEntry1 = null,virtualHost = null,en_US_plural_label = null) {
 		var curl = ObjectDefinitionAPI._curlObjectEntriesRelationship(
 			en_US_plural_label = ${en_US_plural_label},
 			objectEntry1 = ${objectEntry1},
@@ -569,7 +604,8 @@ definition {
 		JSONCurlUtil.delete(${curl});
 	}
 
-	macro createAndPublishObjectDefinition {
+	@summary = "Default summary"
+	macro createAndPublishObjectDefinition(objectDefinitionExternalReferenceCode = null,requiredStringFieldNameExternalReferenceCode = null,scope = null,name = null,en_US_label = null,requiredStringFieldName = null,virtualHost = null,en_US_plural_label = null,token = null) {
 		var objectDefinitionId = ObjectDefinitionAPI.createObjectDefinition(
 			en_US_label = ${en_US_label},
 			en_US_plural_label = ${en_US_plural_label},
@@ -598,7 +634,8 @@ definition {
 		return ${objectDefinitionId};
 	}
 
-	macro createEmployee {
+	@summary = "Default summary"
+	macro createEmployee(employeeFirstname = null,managerId = null) {
 		var employeeId = ObjectDefinitionAPI._createEmployee(
 			firstname = ${employeeFirstname},
 			managerId = ${managerId});
@@ -612,7 +649,8 @@ definition {
 		return ${employeeId};
 	}
 
-	macro createManager {
+	@summary = "Default summary"
+	macro createManager(managerFirstname = null) {
 		var managerId = ObjectDefinitionAPI._createManager(firstname = ${managerFirstname});
 
 		var firstname = ObjectDefinitionAPI._getManagerFirstnameById(managerId = ${managerId});
@@ -624,7 +662,8 @@ definition {
 		return ${managerId};
 	}
 
-	macro createNUnpublishedObjectDefinitions {
+	@summary = "Default summary"
+	macro createNUnpublishedObjectDefinitions(numberOfEndpoints = null,objectDefinitionName = null,requiredStringFieldName = null) {
 		Variables.assertDefined(parameterList = "${numberOfEndpoints},${objectDefinitionName},${requiredStringFieldName}");
 
 		var i = 0;
@@ -640,7 +679,8 @@ definition {
 		}
 	}
 
-	macro createObjectDefinition {
+	@summary = "Default summary"
+	macro createObjectDefinition(virtualHost = null,token = null,objectDefinitionExternalReferenceCode = null,requiredStringFieldNameExternalReferenceCode = null,name = null,en_US_plural_label = null) {
 		Variables.assertDefined(parameterList = "${name},${en_US_plural_label}");
 
 		if (isSet(virtualHost)) {
@@ -738,7 +778,8 @@ definition {
 		return ${objectDefinitionId};
 	}
 
-	macro createObjectDefinitionWithAllKindsOfFieldTypes {
+	@summary = "Default summary"
+	macro createObjectDefinitionWithAllKindsOfFieldTypes(picklistId = null,objectDefinitionName = null,en_US_label = null,requiredStringFieldName = null,en_US_plural_label = null) {
 		var objectDefinitionId = ObjectDefinitionAPI.createAndPublishObjectDefinition(
 			en_US_label = ${en_US_label},
 			en_US_plural_label = ${en_US_plural_label},
@@ -779,7 +820,8 @@ definition {
 			objectDefinitionId = ${objectDefinitionId});
 	}
 
-	macro createObjectEntryWithName {
+	@summary = "Default summary"
+	macro createObjectEntryWithName(keywords = null,taxonomyCategoryIds = null,name = null,secondFieldValue = null,virtualHost = null,en_US_plural_label = null,token = null) {
 		var objectId = ObjectDefinitionAPI._createObjectEntryWithName(
 			en_US_plural_label = ${en_US_plural_label},
 			keywords = ${keywords},
@@ -804,7 +846,8 @@ definition {
 		return ${objectId};
 	}
 
-	macro createRelationship {
+	@summary = "Default summary"
+	macro createRelationship(name = null,deletionType = null,en_US_label = null,objectDefinitionId2 = null,type = null,virtualHost = null,objectDefinitionId1 = null) {
 		var relationshipId = ObjectDefinitionAPI._createRelationship(
 			deletionType = ${deletionType},
 			en_US_label = ${en_US_label},
@@ -825,7 +868,8 @@ definition {
 		return ${relationshipName};
 	}
 
-	macro createRelationshipWithObjectDefinitionNames {
+	@summary = "Default summary"
+	macro createRelationshipWithObjectDefinitionNames(parentObjectName = null,childObjectName = null,name = null,type = null,virtualHost = null) {
 		Variables.assertDefined(parameterList = "${childObjectName},${name},${parentObjectName},${type}");
 
 		if (!(isSet(en_US_label))) {
@@ -851,13 +895,15 @@ definition {
 		return ${relationshipName};
 	}
 
-	macro deleteObjectEntry {
+	@summary = "Default summary"
+	macro deleteObjectEntry(objectEntryId = null,en_US_plural_label = null) {
 		ObjectDefinitionAPI._deleteObjectEntry(
 			en_US_plural_label = ${en_US_plural_label},
 			objectEntryId = ${objectEntryId});
 	}
 
-	macro deleteRelationship {
+	@summary = "Default summary"
+	macro deleteRelationship(name = null) {
 		if (isSet(relationshipName)) {
 			var relationshipName = ${relationshipName};
 			var objectDefinitionId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = ${name});
@@ -875,7 +921,8 @@ definition {
 		ObjectDefinitionAPI._deleteRelationship(relationshipId = ${relationshipId});
 	}
 
-	macro enableAccountRestrictedAndShowWidget {
+	@summary = "Default summary"
+	macro enableAccountRestrictedAndShowWidget(objectDefinitionId = null,accountRestrictedField = null) {
 		Variables.assertDefined(parameterList = "${objectDefinitionId},${accountRestrictedField}");
 
 		ObjectDefinitionAPI.updateObjectDefinitionById(
@@ -894,7 +941,8 @@ definition {
 			parameterValue = "true");
 	}
 
-	macro getIdOfObjectDefinitionExportBatch {
+	@summary = "Default summary"
+	macro getIdOfObjectDefinitionExportBatch() {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
@@ -908,7 +956,8 @@ definition {
 		return ${objectDefinitionsExportBatchId};
 	}
 
-	macro getObjectDefinitionIdByName {
+	@summary = "Default summary"
+	macro getObjectDefinitionIdByName(name = null,virtualHost = null) {
 		Variables.assertDefined(parameterList = ${name});
 
 		if (isSet(virtualHost)) {
@@ -933,7 +982,8 @@ definition {
 		return ${objectDefinitionId};
 	}
 
-	macro getObjectDefinitions {
+	@summary = "Default summary"
+	macro getObjectDefinitions() {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
@@ -947,7 +997,8 @@ definition {
 		return ${response};
 	}
 
-	macro getObjectDefinitionStatusByName {
+	@summary = "Default summary"
+	macro getObjectDefinitionStatusByName(name = null) {
 		var objectDefinitionId = ObjectDefinitionAPI.getObjectDefinitionIdByName(name = ${name});
 
 		var objectDefinitionStatus = ObjectDefinitionAPI._getObjectDefinitionStatusById(objectDefinitionId = ${objectDefinitionId});
@@ -955,7 +1006,8 @@ definition {
 		return ${objectDefinitionStatus};
 	}
 
-	macro getObjectEntries {
+	@summary = "Default summary"
+	macro getObjectEntries(parameter = null,virtualHost = null,en_US_plural_label = null,token = null) {
 		Variables.assertDefined(parameterList = ${en_US_plural_label});
 
 		var en_US_plural_label_lowercase = StringUtil.lowerCase(${en_US_plural_label});
@@ -993,7 +1045,8 @@ definition {
 		return ${response};
 	}
 
-	macro getObjectEntryRelationship {
+	@summary = "Default summary"
+	macro getObjectEntryRelationship(relationshipName = null,virtualHost = null,objectId = null,en_US_plural_label = null) {
 		Variables.assertDefined(parameterList = "${en_US_plural_label},${objectId},${relationshipName}");
 
 		if (isSet(virtualHost)) {
@@ -1020,7 +1073,8 @@ definition {
 		return ${json};
 	}
 
-	macro getObjectsWithAggregationTerms {
+	@summary = "Default summary"
+	macro getObjectsWithAggregationTerms(objects = null,aggregationTermsValue = null) {
 		var getObjectsWithAggregationTermsJSON = ObjectDefinitionAPI._getObjectsWithAggregationTerms(
 			aggregationTermsValue = ${aggregationTermsValue},
 			objects = ${objects});
@@ -1028,7 +1082,8 @@ definition {
 		return ${getObjectsWithAggregationTermsJSON};
 	}
 
-	macro getObjectsWithNestedField {
+	@summary = "Default summary"
+	macro getObjectsWithNestedField(objects = null,nestedField = null) {
 		var getObjectsWithNestedFieldJSON = ObjectDefinitionAPI._getObjectsWithNestedField(
 			nestedField = ${nestedField},
 			objects = ${objects});
@@ -1036,7 +1091,8 @@ definition {
 		return ${getObjectsWithNestedFieldJSON};
 	}
 
-	macro graphQL {
+	@summary = "Default summary"
+	macro graphQL() {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
@@ -1051,7 +1107,8 @@ definition {
 		return ${request};
 	}
 
-	macro modifyRelationship {
+	@summary = "Default summary"
+	macro modifyRelationship(objectName = null,deletionType = null) {
 		var objectDefinitionId = JSONObject.getObjectId(objectName = ${objectName});
 
 		var relationshipId = ObjectDefinitionAPI._getRelationshipId(objectDefinitionId = ${objectDefinitionId});
@@ -1061,7 +1118,8 @@ definition {
 			relationshipId = ${relationshipId});
 	}
 
-	macro postObjectDefinitionObjectField {
+	@summary = "Default summary"
+	macro postObjectDefinitionObjectField(listTypeDefinitionId = null,dBType = null,objectDefinitionName = null,name = null,businessType = null,virtualHost = null) {
 		Variables.assertDefined(parameterList = "${dBType},${businessType},${name},${objectDefinitionName}");
 
 		if (isSet(virtualHost)) {
@@ -1124,7 +1182,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro relateObjectEntries {
+	@summary = "Default summary"
+	macro relateObjectEntries(relationshipName = null,objectEntry2 = null,objectEntry1 = null,virtualHost = null,en_US_plural_label = null) {
 		var curl = ObjectDefinitionAPI._curlObjectEntriesRelationship(
 			en_US_plural_label = ${en_US_plural_label},
 			objectEntry1 = ${objectEntry1},
@@ -1137,7 +1196,8 @@ definition {
 		return ${response};
 	}
 
-	macro relateObjectEntriesByName {
+	@summary = "Default summary"
+	macro relateObjectEntriesByName(relationshipName = null,childEntryName = null,parent_plural_label = null,child_plural_label = null,parentEntryName = null,virtualHost = null) {
 		var childEntryId = CustomObjectAPI.getObjectEntryIdByName(
 			en_US_plural_label = ${child_plural_label},
 			name = ${childEntryName});
@@ -1153,7 +1213,8 @@ definition {
 			virtualHost = ${virtualHost});
 	}
 
-	macro setUpGlobalObjectDefinitionIdWithName {
+	@summary = "Default summary"
+	macro setUpGlobalObjectDefinitionIdWithName(objectName = null,virtualHost = null) {
 		Variables.assertDefined(parameterList = ${objectName});
 
 		var objectId = ObjectDefinitionAPI.getObjectDefinitionIdByName(
@@ -1165,7 +1226,8 @@ definition {
 		return ${staticObjectId};
 	}
 
-	macro setUpGlobalObjectEntryId {
+	@summary = "Default summary"
+	macro setUpGlobalObjectEntryId(virtualHost = null) {
 		var objectEntryId1 = ObjectDefinitionAPI.createObjectEntryWithName(
 			en_US_plural_label = "foundations",
 			name = "Foundation First",
@@ -1213,7 +1275,8 @@ definition {
 		}
 	}
 
-	macro setUpGlobalUniversityId {
+	@summary = "Default summary"
+	macro setUpGlobalUniversityId() {
 		var universityId = ObjectDefinitionAPI.createObjectEntryWithName(
 			en_US_plural_label = "universities",
 			name = "University Name");
@@ -1223,7 +1286,8 @@ definition {
 		return ${staticUniversityId};
 	}
 
-	macro staticStudentObjectId {
+	@summary = "Default summary"
+	macro staticStudentObjectId() {
 		var objectId = ObjectDefinitionAPI.createAndPublishObjectDefinition(
 			en_US_label = "student",
 			en_US_plural_label = "students",
@@ -1235,7 +1299,8 @@ definition {
 		return ${staticStudentObjectId};
 	}
 
-	macro staticSubjectObjectId {
+	@summary = "Default summary"
+	macro staticSubjectObjectId() {
 		var objectId = ObjectDefinitionAPI.createAndPublishObjectDefinition(
 			en_US_label = "subject",
 			en_US_plural_label = "subjects",
@@ -1247,7 +1312,8 @@ definition {
 		return ${staticSubjectObjectId};
 	}
 
-	macro staticUniversityObjectId {
+	@summary = "Default summary"
+	macro staticUniversityObjectId() {
 		var objectId = ObjectDefinitionAPI.createAndPublishObjectDefinition(
 			en_US_label = "university",
 			en_US_plural_label = "universities",
@@ -1259,7 +1325,8 @@ definition {
 		return ${staticUniversityObjectId};
 	}
 
-	macro updateEmployee {
+	@summary = "Default summary"
+	macro updateEmployee(employeeId = null,employeeFirstname = null,managerId = null) {
 		ObjectDefinitionAPI._updateEmployee(
 			employeeId = ${employeeId},
 			firstname = ${employeeFirstname},
@@ -1274,7 +1341,8 @@ definition {
 		return ${employeeId};
 	}
 
-	macro updateObjectDefinitionById {
+	@summary = "Default summary"
+	macro updateObjectDefinitionById(objectDefinitionId = null,parameter = null,parameterValue = null) {
 		ObjectDefinitionAPI._updateObjectDefinition(
 			objectDefinitionId = ${objectDefinitionId},
 			parameter = ${parameter},

@@ -1,6 +1,7 @@
 definition {
 
-	macro activeFieldDisasterRecoveryDataCenter {
+	@summary = "Default summary"
+	macro activeFieldDisasterRecoveryDataCenter(accountKey = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",
@@ -23,25 +24,30 @@ definition {
 		}
 	}
 
-	macro assertCardStatusChanged {
+	@summary = "Default summary"
+	macro assertCardStatusChanged(status = null) {
 		AssertElementPresent(
 			key_status = ${status},
 			locator1 = "CustomerPortalSite#STATUS_CARD");
 	}
 
-	macro clickOnAddAnotherAdminButton {
+	@summary = "Default summary"
+	macro clickOnAddAnotherAdminButton() {
 		Click(locator1 = "CP2DXPCloudSetup#ADD_ANOTHER_ADMIN");
 	}
 
-	macro clickOnProductConsoleLink {
+	@summary = "Default summary"
+	macro clickOnProductConsoleLink() {
 		Click(locator1 = "CustomerPortalSite#PRODUCT_CONSOLE");
 	}
 
-	macro clickOnRemoveThisAdminButton {
+	@summary = "Default summary"
+	macro clickOnRemoveThisAdminButton() {
 		Click(locator1 = "CP2DXPCloudSetup#REMOVE_THIS_ADMIN_DXP_CLOUD");
 	}
 
-	macro deactivateFieldDisasterRecoveryDataCenter {
+	@summary = "Default summary"
+	macro deactivateFieldDisasterRecoveryDataCenter(accountKey = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",
@@ -64,7 +70,8 @@ definition {
 		}
 	}
 
-	macro deleteDXPCloudEnvironments {
+	@summary = "Default summary"
+	macro deleteDXPCloudEnvironments() {
 		ApplicationsMenu.gotoPortlet(
 			category = "Object",
 			panel = "Control Panel",
@@ -81,7 +88,8 @@ definition {
 		CreateObject.saveObject();
 	}
 
-	macro notViewSetupDXPCloufEXtraInfo {
+	@summary = "Default summary"
+	macro notViewSetupDXPCloufEXtraInfo() {
 		AssertElementNotPresent(
 			key_index = 2,
 			label = "email",
@@ -103,7 +111,8 @@ definition {
 			locator1 = "CustomerPortalSite#SETUP_FIELDS");
 	}
 
-	macro typeAllSetupDXPCloudInfoFields {
+	@summary = "Default summary"
+	macro typeAllSetupDXPCloudInfoFields(firstName = null,lastName = null,github = null,dataCenterRegion = null,projectId = null,email = null) {
 		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
 			label = "projectId",
 			value = ${projectId});
@@ -129,7 +138,8 @@ definition {
 			value = ${github});
 	}
 
-	macro typeAllSetupDXPCloufEXtraInfo {
+	@summary = "Default summary"
+	macro typeAllSetupDXPCloufEXtraInfo() {
 		CP2DXPCloudSetup.typeSetupDXPCloudInfoFields(
 			label = "email",
 			position = 2,
@@ -151,7 +161,8 @@ definition {
 			value = "GitHubUser");
 	}
 
-	macro typeSetupDXPCloudInfoFields {
+	@summary = "Default summary"
+	macro typeSetupDXPCloudInfoFields(value = null) {
 		if (!(isSet(position))) {
 			var position = 1;
 		}
@@ -163,7 +174,8 @@ definition {
 			value1 = ${value});
 	}
 
-	macro viewDisasterRegionList {
+	@summary = "Default summary"
+	macro viewDisasterRegionList(regionRow = null) {
 		Click(locator1 = "CP2DXPCloudSetup#SELECT_DISASTER_REGION");
 
 		for (var region : list ${regionRow}) {
@@ -174,7 +186,8 @@ definition {
 		}
 	}
 
-	macro viewRegionList {
+	@summary = "Default summary"
+	macro viewRegionList(regionList = null) {
 		Click(locator1 = "CP2DXPCloudSetup#SELECT_DATA_CENTER_REGION");
 
 		for (var regionName : list ${regionList}) {
@@ -185,7 +198,8 @@ definition {
 		}
 	}
 
-	macro viewSetupDXPCloudExtraFields {
+	@summary = "Default summary"
+	macro viewSetupDXPCloudExtraFields() {
 		AssertElementPresent(
 			key_index = 2,
 			label = "email",
@@ -207,7 +221,8 @@ definition {
 			locator1 = "CustomerPortalSite#SETUP_FIELDS");
 	}
 
-	macro viewSetupDXPCloudExtraInfo {
+	@summary = "Default summary"
+	macro viewSetupDXPCloudExtraInfo() {
 		AssertElementPresent(
 			key_index = 2,
 			label = "email",
@@ -233,7 +248,8 @@ definition {
 			value = "GitHubUser");
 	}
 
-	macro viewSetupDXPCloufInfo {
+	@summary = "Default summary"
+	macro viewSetupDXPCloufInfo() {
 		AssertElementPresent(
 			label = "projectId",
 			locator1 = "CustomerPortalSite#SETUP_VALUE",

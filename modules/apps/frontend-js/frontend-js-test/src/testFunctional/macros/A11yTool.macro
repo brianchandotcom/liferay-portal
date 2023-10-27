@@ -1,6 +1,7 @@
 definition {
 
-	macro assertAllImpactViolationsPresentInSidePanel {
+	@summary = "Default summary"
+	macro assertAllImpactViolationsPresentInSidePanel() {
 		AssertElementPresent(
 			key_impact = "critical",
 			locator1 = "A11yTool#VIOLATION_PANEL_ITEM_IMPACT");
@@ -18,7 +19,8 @@ definition {
 			locator1 = "A11yTool#VIOLATION_PANEL_ITEM_IMPACT");
 	}
 
-	macro assertAllImpactViolationsPresentOnPage {
+	@summary = "Default summary"
+	macro assertAllImpactViolationsPresentOnPage() {
 		A11yTool.clickOnAllViolations();
 
 		AssertElementPresent(
@@ -38,13 +40,15 @@ definition {
 			locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_POPOVER_IMPACT");
 	}
 
-	macro checkFilter {
+	@summary = "Default summary"
+	macro checkFilter(filterType = null) {
 		Check.checkNotVisible(
 			key_filter = ${filterType},
 			locator1 = "A11yTool#FILTER_CHECKBOX");
 	}
 
-	macro clickOnAllViolations {
+	@summary = "Default summary"
+	macro clickOnAllViolations() {
 		var count = 1;
 
 		while (IsElementPresent(key_index = ${count}, locator1 = "A11yTool#HIGHLIGHTED_ELEMENT_INDEX")) {
@@ -56,25 +60,29 @@ definition {
 		}
 	}
 
-	macro closeFilterPanel {
+	@summary = "Default summary"
+	macro closeFilterPanel() {
 		if (IsElementPresent(locator1 = "A11yTool#FILTER_DROPDOWN")) {
 			Click(locator1 = "A11yTool#FILTER_ELEMENT_ICON");
 		}
 	}
 
-	macro openFilterPanel {
+	@summary = "Default summary"
+	macro openFilterPanel() {
 		if (IsElementNotPresent(locator1 = "A11yTool#FILTER_DROPDOWN")) {
 			Click(locator1 = "A11yTool#FILTER_ELEMENT_ICON");
 		}
 	}
 
-	macro uncheckFilter {
+	@summary = "Default summary"
+	macro uncheckFilter(filterType = null) {
 		Uncheck.uncheckNotVisible(
 			key_filter = ${filterType},
 			locator1 = "A11yTool#FILTER_CHECKBOX");
 	}
 
-	macro waitForAllImpactViolationsPresentInSidePanel {
+	@summary = "Default summary"
+	macro waitForAllImpactViolationsPresentInSidePanel() {
 		WaitForElementPresent(
 			key_impact = "critical",
 			locator1 = "A11yTool#VIOLATION_PANEL_ITEM_IMPACT");
@@ -92,7 +100,8 @@ definition {
 			locator1 = "A11yTool#VIOLATION_PANEL_ITEM_IMPACT");
 	}
 
-	macro waitForAllImpactViolationsPresentOnPage {
+	@summary = "Default summary"
+	macro waitForAllImpactViolationsPresentOnPage() {
 		A11yTool.clickOnAllViolations();
 
 		WaitForElementPresent(

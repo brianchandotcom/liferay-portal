@@ -1,6 +1,7 @@
 definition {
 
-	macro gotoNavTab {
+	@summary = "Default summary"
+	macro gotoNavTab(navTab = null) {
 		var key_tab = ${navTab};
 
 		if (IsElementNotPresent(locator1 = "Modal#ACTIVE_TAB_LINK")) {
@@ -10,7 +11,8 @@ definition {
 		AssertElementPresent(locator1 = "Modal#ACTIVE_TAB_LINK");
 	}
 
-	macro publish {
+	@summary = "Default summary"
+	macro publish(warningMessage = null,action = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -41,7 +43,8 @@ definition {
 		}
 	}
 
-	macro save {
+	@summary = "Default summary"
+	macro save() {
 		Click(
 			key_text = "Save",
 			locator1 = "Modal#MODAL_FOOTER_BUTTON");

@@ -6,7 +6,7 @@
 package com.liferay.portal.kernel.cluster;
 
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 /**
  * @author Shuyang Zhou
@@ -21,7 +21,9 @@ public class ClusterLinkUtil {
 	public static void sendMulticastMessage(
 		Message message, Priority priority) {
 
-		_clusterLink.sendMulticastMessage(message, priority);
+		ClusterLink clusterLink = _clusterLinkSnapshot.get();
+
+		clusterLink.sendMulticastMessage(message, priority);
 	}
 
 	public static void sendMulticastMessage(Object payload, Priority priority) {
@@ -35,7 +37,9 @@ public class ClusterLinkUtil {
 	public static void sendUnicastMessage(
 		Address address, Message message, Priority priority) {
 
-		_clusterLink.sendUnicastMessage(address, message, priority);
+		ClusterLink clusterLink = _clusterLinkSnapshot.get();
+
+		clusterLink.sendUnicastMessage(address, message, priority);
 	}
 
 	public static Message setAddress(Message message, Address address) {
@@ -46,8 +50,7 @@ public class ClusterLinkUtil {
 
 	private static final String _ADDRESS = "CLUSTER_ADDRESS";
 
-	private static volatile ClusterLink _clusterLink =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			ClusterLink.class, ClusterLinkUtil.class, "_clusterLink", false);
+	private static final Snapshot<ClusterLink> _clusterLinkSnapshot =
+		new Snapshot<>(ClusterLinkUtil.class, ClusterLink.class);
 
 }

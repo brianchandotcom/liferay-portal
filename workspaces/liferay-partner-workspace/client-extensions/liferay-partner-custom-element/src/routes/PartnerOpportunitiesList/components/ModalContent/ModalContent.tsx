@@ -118,15 +118,18 @@ export default function ModalContent({content, onClose}: IProps) {
 						/>
 					)}
 
-					{content?.[PartnerOpportunitiesColumnKey.DEAL_AMOUNT] && (
+					{content?.[
+						PartnerOpportunitiesColumnKey.SUBSCRIPTION_ARR
+					] && (
 						<ModalFormatedInformation
 							className="col mb-2"
 							information={
 								content?.[
-									PartnerOpportunitiesColumnKey.DEAL_AMOUNT
+									PartnerOpportunitiesColumnKey
+										.SUBSCRIPTION_ARR
 								]
 							}
-							label="Deal Amount"
+							label="Subscription ARR"
 						/>
 					)}
 				</div>

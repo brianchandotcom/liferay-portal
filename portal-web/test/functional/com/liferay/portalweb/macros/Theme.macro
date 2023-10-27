@@ -1,6 +1,7 @@
 definition {
 
-	macro changeCurrentTheme {
+	@summary = "Default summary"
+	macro changeCurrentTheme(themeName = null) {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		Click(
@@ -16,14 +17,16 @@ definition {
 		SelectFrameTop(value1 = "relative=top");
 	}
 
-	macro configureLookAndFeelCustomCSS {
+	@summary = "Default summary"
+	macro configureLookAndFeelCustomCSS(cssText = null) {
 		Type(
 			key_text = "regularCss",
 			locator1 = "TextArea#ANY",
 			value1 = ${cssText});
 	}
 
-	macro configureLookAndFeelShowFooter {
+	@summary = "Default summary"
+	macro configureLookAndFeelShowFooter(showFooter = null) {
 		if (${showFooter} == "true") {
 			Check.checkToggleSwitch(
 				key_toggleSwitchLabel = "Show Footer",
@@ -36,7 +39,8 @@ definition {
 		}
 	}
 
-	macro configureLookAndFeelShowHeader {
+	@summary = "Default summary"
+	macro configureLookAndFeelShowHeader(showHeader = null) {
 		if (${showHeader} == "true") {
 			Check.checkToggleSwitch(
 				key_toggleSwitchLabel = "Show Header",
@@ -49,7 +53,8 @@ definition {
 		}
 	}
 
-	macro configureLookAndFeelShowHeaderSearch {
+	@summary = "Default summary"
+	macro configureLookAndFeelShowHeaderSearch(showHeaderSearch = null) {
 		if (${showHeaderSearch} == "true") {
 			Check.checkToggleSwitch(
 				key_toggleSwitchLabel = "Show Header Search",
@@ -62,7 +67,8 @@ definition {
 		}
 	}
 
-	macro configureLookAndFeelShowMaxMinAppLinks {
+	@summary = "Default summary"
+	macro configureLookAndFeelShowMaxMinAppLinks(showMaxMinAppLinks = null) {
 		if (${showMaxMinAppLinks} == "true") {
 			Check.checkToggleSwitch(
 				key_toggleSwitchLabel = "Show Maximize/Minimize Application Links",
@@ -75,11 +81,13 @@ definition {
 		}
 	}
 
-	macro configureLookAndFeelSpecificLook {
+	@summary = "Default summary"
+	macro configureLookAndFeelSpecificLook() {
 		Check.checkNotVisible(locator1 = "Radio#SPECIFIC_LOOK");
 	}
 
-	macro configureLookAndFeelWrapWidgetPageContent {
+	@summary = "Default summary"
+	macro configureLookAndFeelWrapWidgetPageContent(wrapWidgetPageContent = null) {
 		if (${wrapWidgetPageContent} == "true") {
 			Check.checkToggleSwitch(
 				key_toggleSwitchLabel = "Wrap Widget Page Content",
@@ -92,7 +100,8 @@ definition {
 		}
 	}
 
-	macro viewClassicThemeBackgroundColor {
+	@summary = "Default summary"
+	macro viewClassicThemeBackgroundColor() {
 		AssertCssValue(
 			locator1 = "//body",
 			locator2 = "background-color",
@@ -101,21 +110,24 @@ definition {
 		takeScreenshot();
 	}
 
-	macro viewMaxPortletOption {
+	@summary = "Default summary"
+	macro viewMaxPortletOption() {
 		AssertTextEquals(
 			key_menuItem = "Maximize",
 			locator1 = "MenuItem#ANY_MENU_ITEM",
 			value1 = "Maximize");
 	}
 
-	macro viewMinPortlet {
+	@summary = "Default summary"
+	macro viewMinPortlet() {
 		AssertClick(
 			key_menuItem = "Minimize",
 			locator1 = "MenuItem#ANY_MENU_ITEM",
 			value1 = "Minimize");
 	}
 
-	macro viewRestorePortlet {
+	@summary = "Default summary"
+	macro viewRestorePortlet() {
 		Click(
 			key_menuItem = "Restore",
 			locator1 = "MenuItem#ANY_MENU_ITEM",
@@ -126,7 +138,8 @@ definition {
 			value1 = "Embedded alerts are thought to be used inside context as forms");
 	}
 
-	macro viewTestThemeBackgroundColor {
+	@summary = "Default summary"
+	macro viewTestThemeBackgroundColor() {
 		AssertCssValue(
 			locator1 = "//body",
 			locator2 = "background-color",

@@ -1,24 +1,28 @@
 definition {
 
-	macro assertCustomRangeNotApplied {
+	@summary = "Default summary"
+	macro assertCustomRangeNotApplied(timeRange = null) {
 		var key_timeRange = ${timeRange};
 
 		AssertElementNotPresent(locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_TIME_RANGE");
 	}
 
-	macro assertIndividualAttribute {
+	@summary = "Default summary"
+	macro assertIndividualAttribute(individualAttribute = null) {
 		var key_individualAttribute = ${individualAttribute};
 
 		AssertElementPresent(locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_ATTRIBUTE");
 	}
 
-	macro assertIndividualAttributeNotPresent {
+	@summary = "Default summary"
+	macro assertIndividualAttributeNotPresent(individualAttribute = null) {
 		var key_individualAttribute = ${individualAttribute};
 
 		AssertElementNotPresent(locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_ATTRIBUTE");
 	}
 
-	macro assertIndividualAttributeValue {
+	@summary = "Default summary"
+	macro assertIndividualAttributeValue(individualAttribute = null,individualAttributeValue = null) {
 		var key_individualAttribute = ${individualAttribute};
 
 		AssertTextEquals(
@@ -26,43 +30,50 @@ definition {
 			value1 = ${individualAttributeValue});
 	}
 
-	macro assertIndividualsActivitiesTimeRange {
+	@summary = "Default summary"
+	macro assertIndividualsActivitiesTimeRange(timeRange = null) {
 		var key_timeRange = ${timeRange};
 
 		AssertElementPresent(locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_TIME_RANGE");
 	}
 
-	macro assertNoIndividualAttribute {
+	@summary = "Default summary"
+	macro assertNoIndividualAttribute(individualAttribute = null) {
 		var key_individualAttribute = ${individualAttribute};
 
 		AssertElementNotPresent(locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_ATTRIBUTE");
 	}
 
-	macro assertSegmentInAssociatedSegmentsCard {
+	@summary = "Default summary"
+	macro assertSegmentInAssociatedSegmentsCard(itemName = null) {
 		AssertElementPresent(
 			key_itemName = ${itemName},
 			locator1 = "ACIndividualsDashboard#ASSOCIATED_SEGMENT_ITEM");
 	}
 
-	macro clickBreakdownTab {
+	@summary = "Default summary"
+	macro clickBreakdownTab(breakdownName = null) {
 		Click(
 			breakdownName = ${breakdownName},
 			locator1 = "ACIndividualsDashboard#BREAKDOWN_TAB");
 	}
 
-	macro deleteBreakdown {
+	@summary = "Default summary"
+	macro deleteBreakdown() {
 		while (IsElementPresent(locator1 = "ACIndividualsDashboard#DELETE_BREAKDOWN_BUTTON")) {
 			Click(locator1 = "ACIndividualsDashboard#DELETE_BREAKDOWN_BUTTON");
 		}
 	}
 
-	macro expandActivity {
+	@summary = "Default summary"
+	macro expandActivity(eventName = null) {
 		Click(
 			key_pageTitle = ${eventName},
 			locator1 = "ACUtils#PAGE_TITLE");
 	}
 
-	macro filterKnownIndividualList {
+	@summary = "Default summary"
+	macro filterKnownIndividualList(rowName = null) {
 		Click(
 			key_rowName = ${rowName},
 			locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_ATTRIBUTES_FILTER");
@@ -75,7 +86,8 @@ definition {
 		}
 	}
 
-	macro getChartPopoverDate {
+	@summary = "Default summary"
+	macro getChartPopoverDate() {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -91,7 +103,8 @@ definition {
 		return ${formattedDate};
 	}
 
-	macro getChartPopoverDateWithoutBar {
+	@summary = "Default summary"
+	macro getChartPopoverDateWithoutBar() {
 		Click(locator1 = "ACIndividualsDashboard#CHARTS_WRAPPER");
 
 		SelectFrame.selectFrame(locator1 = "ACIndividualsDashboard#CHARTS_WRAPPER");
@@ -101,15 +114,18 @@ definition {
 		return ${formattedDate};
 	}
 
-	macro goToDistributionTab {
+	@summary = "Default summary"
+	macro goToDistributionTab() {
 		ACNavigation.switchTab(tabName = "Distribution");
 	}
 
-	macro goToInterestsTab {
+	@summary = "Default summary"
+	macro goToInterestsTab() {
 		ACNavigation.switchTab(tabName = "Interests");
 	}
 
-	macro goToKnownIndividualDetails {
+	@summary = "Default summary"
+	macro goToKnownIndividualDetails(individualName = null) {
 		var key_individualName = ${individualName};
 
 		while ((IsElementNotPresent(locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUALS_LIST_ITEMS")) && (maxIterations = "50")) {
@@ -119,21 +135,25 @@ definition {
 		Click(locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUALS_LIST_ITEMS");
 	}
 
-	macro goToKnownIndividualsTab {
+	@summary = "Default summary"
+	macro goToKnownIndividualsTab() {
 		ACNavigation.switchTab(tabName = "Known Individuals");
 	}
 
-	macro goToOverviewTab {
+	@summary = "Default summary"
+	macro goToOverviewTab() {
 		ACNavigation.switchTab(tabName = "Overview");
 	}
 
-	macro goToTabName {
+	@summary = "Default summary"
+	macro goToTabName(tabName = null) {
 		var key_tabName = ${tabName};
 
 		Click(locator1 = "ACIndividualsDashboard#INDIVIDUALS_TAB");
 	}
 
-	macro selectDataOnIndividualsActivitiesChart {
+	@summary = "Default summary"
+	macro selectDataOnIndividualsActivitiesChart() {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -143,13 +163,15 @@ definition {
 			locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR");
 	}
 
-	macro viewActivitiesNumberInPeriod {
+	@summary = "Default summary"
+	macro viewActivitiesNumberInPeriod(activitiesNumber = null) {
 		AssertTextEquals(
 			locator1 = "ACIndividualsDashboard#ACTIVITIES_NUMBER",
 			value1 = ${activitiesNumber});
 	}
 
-	macro viewActivitiesOnGraph {
+	@summary = "Default summary"
+	macro viewActivitiesOnGraph(typeList = null,valueList = null,notEquals = null) {
 		while ((IsElementNotPresent(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART")) && (maxIterations = "50")) {
 			TestUtils.hardRefresh();
 
@@ -206,13 +228,15 @@ definition {
 		}
 	}
 
-	macro viewBreakdownNotPresent {
+	@summary = "Default summary"
+	macro viewBreakdownNotPresent(breakdownName = null) {
 		AssertElementNotPresent(
 			breakdownName = ${breakdownName},
 			locator1 = "ACIndividualsDashboard#BREAKDOWN_TAB");
 	}
 
-	macro viewBreakdownRecharts {
+	@summary = "Default summary"
+	macro viewBreakdownRecharts(fillColor = null,tick = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -223,13 +247,14 @@ definition {
 			value1 = ${tick});
 
 		AssertAttributeValue(
-			attribute1 = "fill",
 			index = ${index},
 			locator1 = "ACIndividualsDashboard#BREAKDOWN_RECHARTS_BAR_FILL_COLOR",
-			value1 = ${fillColor});
+			value1 = "fill",
+			value2 = ${fillColor});
 	}
 
-	macro viewDistributionBarByAttribute {
+	@summary = "Default summary"
+	macro viewDistributionBarByAttribute(type = null,value = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -250,7 +275,8 @@ definition {
 			locator1 = "ACSites#TOOLTIP_UNIQUE_VISITORS");
 	}
 
-	macro viewIndividualDetailsCard {
+	@summary = "Default summary"
+	macro viewIndividualDetailsCard(fullName = null,userEmailAddress = null) {
 		AssertVisible(locator1 = "ACIndividualsDashboard#INDIVIDUAL_DETAILS_CARD_AVATAR");
 
 		AssertVisible(
@@ -262,7 +288,8 @@ definition {
 			userEmailAddress = ${userEmailAddress});
 	}
 
-	macro viewKnownIndividualDetailsSpecificOrder {
+	@summary = "Default summary"
+	macro viewKnownIndividualDetailsSpecificOrder() {
 		var resultOrder = 0;
 
 		for (var itemName : list ${itemName}) {
@@ -275,7 +302,8 @@ definition {
 		}
 	}
 
-	macro viewKnownIndividualSpecificOrder {
+	@summary = "Default summary"
+	macro viewKnownIndividualSpecificOrder() {
 		var resultOrder = 0;
 
 		for (var itemName : list ${itemName}) {
@@ -288,7 +316,8 @@ definition {
 		}
 	}
 
-	macro viewRechartsBarOnIndividualsActivitiesChart {
+	@summary = "Default summary"
+	macro viewRechartsBarOnIndividualsActivitiesChart() {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -302,7 +331,7 @@ definition {
 
 			// The pause is necessary because the bar takes a while to load into the chart. For more information about pause see LRAC-9517
 
-			Pause(locator1 = 2000);
+			Pause(value1 = 2000);
 		}
 
 		AssertVisible(
@@ -310,7 +339,8 @@ definition {
 			locator1 = "ACIndividualsDashboard#INDIVIDUALS_ACTIVITIES_CHART_RECHARTS_BAR");
 	}
 
-	macro viewTimelineItem {
+	@summary = "Default summary"
+	macro viewTimelineItem(positionList = null,activityNameList = null) {
 		var list1 = ListUtil.newListFromString(${activityNameList});
 		var list2 = ListUtil.newListFromString(${positionList});
 		var size = ListUtil.size(${list1});
@@ -331,7 +361,8 @@ definition {
 		}
 	}
 
-	macro viewTimelineItemNotPresent {
+	@summary = "Default summary"
+	macro viewTimelineItemNotPresent(positionList = null,activityNameList = null) {
 		var list1 = ListUtil.newListFromString(${activityNameList});
 		var list2 = ListUtil.newListFromString(${positionList});
 		var size = ListUtil.size(${list1});

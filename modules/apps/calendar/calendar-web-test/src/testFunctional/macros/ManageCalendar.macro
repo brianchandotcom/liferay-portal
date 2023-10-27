@@ -1,6 +1,7 @@
 definition {
 
-	macro addCalendar {
+	@summary = "Default summary"
+	macro addCalendar(enableCommentsOption = null,calendarName = null,color = null,description = null,timeZone = null,enableRatingsOption = null,defaultCalendarOption = null) {
 		Click(locator1 = "ManageCalendar#ADD_CALENDAR");
 
 		Calendar._editName(calendarName = ${calendarName});
@@ -36,7 +37,8 @@ definition {
 		Navigator.gotoBack();
 	}
 
-	macro editCalendar {
+	@summary = "Default summary"
+	macro editCalendar(newTimeZone = null,enableCommentsOption = null,newColor = null,newCalendarName = null,enableRatingsOption = null,newDescription = null,defaultCalendarOption = null,calendarCurrentName = null) {
 		Click(
 			key_calendarName = ${calendarCurrentName},
 			locator1 = "ManageCalendar#VERTICAL_ELLIPSIS_BY_NAME");
@@ -78,7 +80,8 @@ definition {
 		Navigator.gotoBack();
 	}
 
-	macro viewCalendarNameByColumn {
+	@summary = "Default summary"
+	macro viewCalendarNameByColumn(nameList = null) {
 		if (isSet(nameList)) {
 			var rowNumber = 1;
 
@@ -99,7 +102,8 @@ definition {
 		}
 	}
 
-	macro viewColorByColumn {
+	@summary = "Default summary"
+	macro viewColorByColumn(colorList = null) {
 		if (isSet(colorList)) {
 			var rowNumber = 1;
 
@@ -120,14 +124,16 @@ definition {
 		}
 	}
 
-	macro viewDefaultOptionOfCalendar {
+	@summary = "Default summary"
+	macro viewDefaultOptionOfCalendar(calendarName = null,defaultOption = null) {
 		AssertElementPresent(
 			key_calendarName = ${calendarName},
 			key_optionDefault = ${defaultOption},
 			locator1 = "ManageCalendar#DEFAULT_OPTION_BY_NAME");
 	}
 
-	macro viewMenuItemNotPresent {
+	@summary = "Default summary"
+	macro viewMenuItemNotPresent(calendarName = null,menuItem = null) {
 		Click(
 			key_calendarName = ${calendarName},
 			locator1 = "ManageCalendar#VERTICAL_ELLIPSIS_BY_NAME");
@@ -139,7 +145,8 @@ definition {
 		Refresh();
 	}
 
-	macro viewMenuItemPresent {
+	@summary = "Default summary"
+	macro viewMenuItemPresent(calendarName = null,menuItem = null) {
 		Click(
 			key_calendarName = ${calendarName},
 			locator1 = "ManageCalendar#VERTICAL_ELLIPSIS_BY_NAME");
@@ -151,7 +158,8 @@ definition {
 		Refresh();
 	}
 
-	macro viewTableDisplaysColumns {
+	@summary = "Default summary"
+	macro viewTableDisplaysColumns() {
 		for (var tableHeader : list "Name,Description,Color,Default") {
 			AssertElementPresent(
 				key_tableHeader = ${tableHeader},

@@ -1,6 +1,7 @@
 definition {
 
-	macro addCP {
+	@summary = "Default summary"
+	macro addCP(selectSiteTemplate = null,userGroupName = null,userGroupNameVariation = null,siteTemplateName = null) {
 		var key_userGroupName = ${userGroupName};
 
 		LexiconEntry.gotoAdd();
@@ -47,7 +48,8 @@ definition {
 		}
 	}
 
-	macro assignAllMembersCP {
+	@summary = "Default summary"
+	macro assignAllMembersCP(userGroupName = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Assign Members",
 			rowEntry = ${userGroupName});
@@ -65,7 +67,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro assignMemberCP {
+	@summary = "Default summary"
+	macro assignMemberCP(userGroupName = null,userScreenName = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Assign Members",
 			rowEntry = ${userGroupName});
@@ -99,7 +102,8 @@ definition {
 			value1 = ${userScreenName});
 	}
 
-	macro deleteCP {
+	@summary = "Default summary"
+	macro deleteCP(userGroupName = null) {
 		AssertTextEquals(
 			key_userGroupName = ${userGroupName},
 			locator1 = "UserGroups#USER_GROUP_TABLE_NAME",
@@ -130,7 +134,8 @@ definition {
 		}
 	}
 
-	macro editCP {
+	@summary = "Default summary"
+	macro editCP(userGroupSite = null,checkEnablePropagationCheckbox = null,userGroupDescriptionEdit = null,userGroupName = null,userGroupNameEdit = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${userGroupName});
@@ -157,7 +162,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro gotoAddPageCP {
+	@summary = "Default summary"
+	macro gotoAddPageCP(userGroupName = null) {
 		Search.searchCP(searchTerm = ${userGroupName});
 
 		Click.waitForMenuToggleJSClick(
@@ -169,7 +175,8 @@ definition {
 		MenuItem.click(menuItem = "Manage Pages");
 	}
 
-	macro gotoProfilePages {
+	@summary = "Default summary"
+	macro gotoProfilePages(userGroupName = null,siteName = null) {
 		Search.searchCP(searchTerm = ${userGroupName});
 
 		Click.waitForMenuToggleJSClick(
@@ -180,14 +187,16 @@ definition {
 
 		MenuItem.click(menuItem = "Go to Profile Pages");
 
-		SelectWindow(locator1 = "Home - ${userGroupName} - ${siteName}");
+		SelectWindow(value1 = "Home - ${userGroupName} - ${siteName}");
 	}
 
-	macro openUserGroupsAdmin {
+	@summary = "Default summary"
+	macro openUserGroupsAdmin() {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/control_panel/manage?p_p_id=com_liferay_user_groups_admin_web_portlet_UserGroupsAdminPortlet");
 	}
 
-	macro removeMemberCP {
+	@summary = "Default summary"
+	macro removeMemberCP(userGroupName = null,userScreenName = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Assign Members",
 			rowEntry = ${userGroupName});
@@ -201,7 +210,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro searchCP {
+	@summary = "Default summary"
+	macro searchCP(userGroupName = null) {
 		Search.searchCP(searchTerm = ${userGroupName});
 
 		LexiconEntry.viewEntryName(rowEntry = ${userGroupName});
@@ -211,7 +221,8 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = ${userGroupName});
 	}
 
-	macro tearDownCP {
+	@summary = "Default summary"
+	macro tearDownCP() {
 		UserGroup.openUserGroupsAdmin();
 
 		if (IsElementNotPresent(locator1 = "Message#EMPTY_INFO")) {
@@ -229,7 +240,8 @@ definition {
 		}
 	}
 
-	macro viewAssignMemberCP {
+	@summary = "Default summary"
+	macro viewAssignMemberCP(userGroupName = null,userScreenName = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Assign Members",
 			rowEntry = ${userGroupName});
@@ -240,7 +252,8 @@ definition {
 			value1 = ${userScreenName});
 	}
 
-	macro viewCP {
+	@summary = "Default summary"
+	macro viewCP(userGroupName = null) {
 		LexiconEntry.viewEntryName(rowEntry = ${userGroupName});
 
 		LexiconEntry.viewEntryMenu(rowEntry = ${userGroupName});
@@ -252,13 +265,15 @@ definition {
 			locator1 = "UserGroups#USER_GROUP_TABLE_CHECKBOX");
 	}
 
-	macro viewDefault {
+	@summary = "Default summary"
+	macro viewDefault() {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#EMPTY_INFO",
 			value1 = "No user groups were found.");
 	}
 
-	macro viewPortletCP {
+	@summary = "Default summary"
+	macro viewPortletCP() {
 		AssertElementPresent(locator1 = "Button#PLUS");
 
 		AssertElementPresent(locator1 = "TextInput#SEARCH");
@@ -268,7 +283,8 @@ definition {
 		AssertElementPresent(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 	}
 
-	macro viewRemoveMemberCP {
+	@summary = "Default summary"
+	macro viewRemoveMemberCP(userGroupName = null,userFirstName = null) {
 		LexiconEntry.viewEntryName(rowEntry = ${userGroupName});
 
 		LexiconEntry.gotoEntry(rowEntry = ${userGroupName});

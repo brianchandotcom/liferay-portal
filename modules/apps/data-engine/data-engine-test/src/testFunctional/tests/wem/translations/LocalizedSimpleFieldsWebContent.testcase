@@ -816,16 +816,16 @@ definition {
 		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
 
 		AssertAttributeValue(
-			attribute1 = "value",
 			locator1 = "TextInput#TITLE",
-			value1 = "Test");
+			value1 = "value",
+			value2 = "Test");
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
 		AssertAttributeValue(
-			attribute1 = "value",
 			locator1 = "TextInput#TITLE",
-			value1 = "测试");
+			value1 = "value",
+			value2 = "测试");
 	}
 
 	@description = "This is a test for LPS-122317. As Content Creator, I want to leverage the structures' translations without nested fields or fieldsets when creating a new Web Content"

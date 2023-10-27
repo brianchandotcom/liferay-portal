@@ -174,7 +174,7 @@ definition {
 				menuItem = "Mark as Default",
 				pageName = "First 404 Error Utility Page");
 
-			Confirm();
+			Confirm(value1 = "null");
 
 			Alert.viewSuccessMessage();
 		}
@@ -506,7 +506,7 @@ definition {
 				menuItem = "Preview",
 				pageName = 500);
 
-			SelectWindow.selectPopUp(locator1 = "null");
+			SelectWindow.selectPopUp(value1 = "null");
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
@@ -551,7 +551,7 @@ definition {
 				menuItem = "Mark as Default",
 				pageName = "404 Error Utility Page");
 
-			Confirm();
+			Confirm(value1 = "null");
 
 			Alert.viewSuccessMessage();
 		}
@@ -651,7 +651,7 @@ definition {
 				menuItem = "Mark as Default",
 				pageName = "500 Error Utility Page");
 
-			Confirm();
+			Confirm(value1 = "null");
 
 			Alert.viewSuccessMessage();
 		}
@@ -696,7 +696,7 @@ definition {
 				menuItem = "Preview",
 				pageName = "404 Error Utility Page");
 
-			SelectWindow.selectPopUp(locator1 = "null");
+			SelectWindow.selectPopUp(value1 = "null");
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
@@ -723,7 +723,7 @@ definition {
 				menuItem = "Preview",
 				pageName = "404 Error Utility Page");
 
-			SelectWindow.selectPopUp(locator1 = "null");
+			SelectWindow.selectPopUp(value1 = "null");
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
@@ -762,7 +762,7 @@ definition {
 				menuItem = "Preview",
 				pageName = "404 Error Utility Page");
 
-			SelectWindow.selectPopUp(locator1 = "null");
+			SelectWindow.selectPopUp(value1 = "null");
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
@@ -838,7 +838,7 @@ definition {
 				menuItem = "Mark as Default",
 				pageName = "404 Error Utility Page");
 
-			Confirm();
+			Confirm(value1 = "null");
 
 			Alert.viewSuccessMessage();
 
@@ -852,7 +852,7 @@ definition {
 				menuItem = "Unmark as Default",
 				pageName = "404 Error Utility Page");
 
-			Confirm();
+			Confirm(value1 = "null");
 
 			Alert.viewSuccessMessage();
 		}

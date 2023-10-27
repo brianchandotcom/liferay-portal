@@ -1,6 +1,7 @@
 definition {
 
-	macro gotoContactInfoByEmployees {
+	@summary = "Default summary"
+	macro gotoContactInfoByEmployees() {
 		Click(
 			field = "Does your business have a Federal Employer Identification Number (FEIN)?",
 			locator1 = "Raylife#BUTTON_NO_OPTION");
@@ -30,7 +31,8 @@ definition {
 			value = "$111.00");
 	}
 
-	macro typeAllEmployeesInfoFields {
+	@summary = "Default summary"
+	macro typeAllEmployeesInfoFields() {
 		Click(
 			field = "Does your business have a Federal Employer Identification Number (FEIN)?",
 			locator1 = "Raylife#BUTTON_YES_OPTION");
@@ -64,13 +66,15 @@ definition {
 			value = "$111.00");
 	}
 
-	macro typeEmployeesInfoFields {
+	@summary = "Default summary"
+	macro typeEmployeesInfoFields(value = null) {
 		Type(
 			locator1 = "Raylife#FORMS_FIELDS",
 			value1 = ${value});
 	}
 
-	macro viewEmployeesInfo {
+	@summary = "Default summary"
+	macro viewEmployeesInfo() {
 		AssertElementPresent(
 			field = "Does your business have a Federal Employer Identification Number (FEIN)?",
 			locator1 = "Raylife#BUTTON_YES_OPTION");

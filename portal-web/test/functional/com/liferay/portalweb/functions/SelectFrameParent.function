@@ -1,10 +1,10 @@
 @default = "selectFrameParent"
 definition {
 
-	function selectFrameParent {
+	function selectFrameParent() {
 		selenium.selectFrame("relative=parent");
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 

@@ -1651,6 +1651,10 @@ public class JournalArticleLocalServiceUtil {
 		return getService().getArticlesCount(groupId, articleId);
 	}
 
+	public static int getArticlesCountByResourcePrimKey(long resourcePrimKey) {
+		return getService().getArticlesCountByResourcePrimKey(resourcePrimKey);
+	}
+
 	public static String getArticleTitle(
 		long articlePK, java.util.Locale locale) {
 

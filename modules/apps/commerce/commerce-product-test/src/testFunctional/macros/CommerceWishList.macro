@@ -1,6 +1,7 @@
 definition {
 
-	macro addProductToWishList {
+	@summary = "Default summary"
+	macro addProductToWishList(productName = null) {
 		for (var productList : list ${productName}) {
 			CommerceProducts.searchProduct(search = ${productList});
 
@@ -14,7 +15,8 @@ definition {
 		}
 	}
 
-	macro addWishList {
+	@summary = "Default summary"
+	macro addWishList(wishListName = null) {
 		Click(locator1 = "Button#PLUS");
 
 		Click(locator1 = "Button#EDIT");
@@ -27,7 +29,8 @@ definition {
 		Button.clickSave();
 	}
 
-	macro assertWishListProduct {
+	@summary = "Default summary"
+	macro assertWishListProduct(wishListName = null,productName = null) {
 		AssertElementPresent(
 			locator1 = "CommerceEntry#WISH_LIST_NAME",
 			wishListName = ${wishListName});

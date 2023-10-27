@@ -197,7 +197,9 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 				editPageURL, "mvcRenderCommandName",
 				"/layout_admin/edit_layout", "redirect",
 				_themeDisplay.getURLCurrent(), "backURL",
-				_themeDisplay.getURLCurrent(), "portletResource",
+				_themeDisplay.getURLCurrent(), "backURLTitle",
+				LanguageUtil.get(_httpServletRequest, "page-templates"),
+				"portletResource",
 				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
 				"selPlid", _layoutPageTemplateEntry.getPlid());
 			dropdownItem.setIcon("cog");

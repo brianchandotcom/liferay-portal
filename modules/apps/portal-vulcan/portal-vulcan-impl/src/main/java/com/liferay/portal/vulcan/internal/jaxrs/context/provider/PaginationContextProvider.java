@@ -5,17 +5,13 @@
 
 package com.liferay.portal.vulcan.internal.jaxrs.context.provider;
 
-import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.pagination.provider.PaginationProvider;
 
 import javax.servlet.http.HttpServletRequest;
 
-import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.ext.Provider;
 
 import org.apache.cxf.jaxrs.ext.ContextProvider;
@@ -28,9 +24,9 @@ import org.apache.cxf.message.Message;
 public class PaginationContextProvider implements ContextProvider<Pagination> {
 
 	public PaginationContextProvider(
-		ConfigurationProvider configurationProvider, Portal portal) {
+		PaginationProvider paginationProvider, Portal portal) {
 
-		_configurationProvider = configurationProvider;
+		_paginationProvider = paginationProvider;
 		_portal = portal;
 	}
 
@@ -39,52 +35,25 @@ public class PaginationContextProvider implements ContextProvider<Pagination> {
 		HttpServletRequest httpServletRequest =
 			ContextProviderUtil.getHttpServletRequest(message);
 
-		int requestPage = GetterUtil.getInteger(
-			httpServletRequest.getParameter("page"), 1);
-		int requestPageSize = GetterUtil.getInteger(
-			httpServletRequest.getParameter("pageSize"), 20);
-		int pageSizeLimit = _getPageSizeLimit(
-			_portal.getCompanyId(httpServletRequest));
-
-		if (_isUnlimited(requestPage) || _isUnlimited(requestPageSize)) {
-			if (_isUnlimited(pageSizeLimit)) {
-				return Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-			}
-
-			return Pagination.of(1, pageSizeLimit);
-		}
-
-		if (_isUnlimited(pageSizeLimit)) {
-			return Pagination.of(requestPage, requestPageSize);
-		}
-
-		return Pagination.of(
-			requestPage, Math.min(requestPageSize, pageSizeLimit));
+		return _paginationProvider.getPagination(
+			_portal.getCompanyId(httpServletRequest),
+			_getIntegerValue(httpServletRequest, "page"),
+			_getIntegerValue(httpServletRequest, "pageSize"));
 	}
 
-	private int _getPageSizeLimit(long companyId) {
-		try {
-			HeadlessAPICompanyConfiguration headlessAPICompanyConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					HeadlessAPICompanyConfiguration.class, companyId);
+	private Integer _getIntegerValue(
+		HttpServletRequest httpServletRequest, String key) {
 
-			return headlessAPICompanyConfiguration.pageSizeLimit();
+		String value = httpServletRequest.getParameter(key);
+
+		if (Validator.isNotNull(value)) {
+			return Integer.valueOf(value);
 		}
-		catch (ConfigurationException configurationException) {
-			throw new InternalServerErrorException(
-				configurationException.getMessage());
-		}
+
+		return null;
 	}
 
-	private boolean _isUnlimited(int value) {
-		if (value <= 0) {
-			return true;
-		}
-
-		return false;
-	}
-
-	private final ConfigurationProvider _configurationProvider;
+	private final PaginationProvider _paginationProvider;
 	private final Portal _portal;
 
 }

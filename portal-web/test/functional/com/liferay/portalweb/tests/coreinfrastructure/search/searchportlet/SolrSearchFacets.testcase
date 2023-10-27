@@ -769,11 +769,11 @@ definition {
 
 		var testSearchURL = SearchFacets.checkFacetTermAndViewURL(
 			facetName = "User Facet",
-			facetTerm = "test test",
+			facetTerm = "Test Test",
 			searchURL = ${testSearchURL});
 
 		SearchResults.viewSearchResults(
-			searchAssetTitle = "apple/Web Content Article",
+			searchAssetTitle = "apple",
 			searchAssetType = "Web Content Article",
 			searchTerm = "organic");
 	}

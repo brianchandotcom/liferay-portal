@@ -1,13 +1,15 @@
 definition {
 
-	macro addFieldForCollectionDisplay {
+	@summary = "Default summary"
+	macro addFieldForCollectionDisplay(fragmentName = null) {
 		DragAndDrop.javaScriptDragAndDropToUp(
 			key_fragment = ${fragmentName},
 			locator1 = "VisualizeObjectCollectionDisplay#FRAGMENT_SIDEBAR",
 			locator2 = "VisualizeObjectCollectionDisplay#FRAGMENT_COLLECTION");
 	}
 
-	macro addFieldInsideCollectionDisplay {
+	@summary = "Default summary"
+	macro addFieldInsideCollectionDisplay() {
 		Click(locator1 = "VisualizeObjectCollectionDisplay#EXPAND_BUTTON");
 
 		DragAndDrop.javaScriptDragAndDropToObject(
@@ -15,23 +17,27 @@ definition {
 			locator2 = "VisualizeObjectCollectionDisplay#SELECT_COLLECTION_ITEM");
 	}
 
-	macro mapFragment {
+	@summary = "Default summary"
+	macro mapFragment(fieldLabel = null) {
 		Select(
 			locator1 = "VisualizeObjectCollectionDisplay#MAP_FRAGMENT",
 			value1 = ${fieldLabel});
 	}
 
-	macro openHeading {
+	@summary = "Default summary"
+	macro openHeading() {
 		DoubleClick(locator1 = "VisualizeObjectCollectionDisplay#HEADING_COLLECTION_DISPLAY");
 
 		WaitForPageLoad();
 	}
 
-	macro openObjectCollectionProvider {
+	@summary = "Default summary"
+	macro openObjectCollectionProvider() {
 		Navigator.openSpecificURL(url = "/group/guest/~/control_panel/manage?p_p_id=com_liferay_asset_list_web_portlet_AssetListPortlet&_com_liferay_asset_list_web_portlet_AssetListPortlet_mvcPath=%2Fview_info_collection_providers.jsp");
 	}
 
-	macro viewEntryPreviewOnPageTemplate {
+	@summary = "Default summary"
+	macro viewEntryPreviewOnPageTemplate(entryTitle = null) {
 		Click(locator1 = "ControlMenu#DISPLAY_PAGE_PREVIEW_ITEM_SELECTOR");
 
 		DropdownMenuItem.click(menuItem = "Select Other Item");
@@ -41,7 +47,8 @@ definition {
 		LexiconList.viewListEntryTitle(listEntry = ${entryTitle});
 	}
 
-	macro viewMappedFragment {
+	@summary = "Default summary"
+	macro viewMappedFragment(fieldLabel = null) {
 		AssertSelectedLabel(
 			locator1 = "VisualizeObjectCollectionDisplay#MAP_FRAGMENT",
 			value1 = ${fieldLabel});

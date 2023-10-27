@@ -1,18 +1,20 @@
 definition {
 
-	macro gotoFeed {
+	@summary = "Default summary"
+	macro gotoFeed(rssURL = null) {
 		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
 		MenuItem.click(menuItem = "RSS");
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.selectPopUp(value1 = "null");
 
 		WaitForPageLoad();
 
 		AssertLocation.assertPartialLocation(value1 = "${rssURL}/rss");
 	}
 
-	macro viewFeed {
+	@summary = "Default summary"
+	macro viewFeed(feedSubtitle = null,feedTitle = null,entryTitle = null,entryContent = null,rssURL = null) {
 		RSS.gotoFeed(rssURL = ${rssURL});
 
 		RSS.viewFeedTitle(
@@ -26,7 +28,8 @@ definition {
 		Close.closeWindow(locator1 = "null");
 	}
 
-	macro viewFeedEntry {
+	@summary = "Default summary"
+	macro viewFeedEntry() {
 		for (var entryTitle : list ${entryTitle}) {
 			AssertTextEquals(
 				key_entryTitle = ${entryTitle},
@@ -42,7 +45,8 @@ definition {
 		}
 	}
 
-	macro viewFeedTitle {
+	@summary = "Default summary"
+	macro viewFeedTitle(feedSubtitle = null,feedTitle = null) {
 		AssertTextEquals(
 			locator1 = "RSS#FEED_TITLE",
 			value1 = ${feedTitle});

@@ -1,6 +1,7 @@
 definition {
 
-	macro addApp {
+	@summary = "Default summary"
+	macro addApp(entryName = null,entryURL = null) {
 		ClientExtensionGeneral.addType(type = "IFrame");
 
 		ClientExtensionEntry.addEntry(
@@ -12,7 +13,8 @@ definition {
 			value1 = "Submit for Workflow");
 	}
 
-	macro addUserPermissions {
+	@summary = "Default summary"
+	macro addUserPermissions() {
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "VIEW_CONTROL_PANEL",
 			resourceName = 90,
@@ -29,7 +31,8 @@ definition {
 			roleTitle = "New Regular Role");
 	}
 
-	macro applyWorkflow {
+	@summary = "Default summary"
+	macro applyWorkflow() {
 		ApplicationsMenu.gotoPortlet(
 			category = "Workflow",
 			panel = "Applications",
@@ -42,7 +45,8 @@ definition {
 			workflowResourceValue = "Client Extension Entry");
 	}
 
-	macro assertTableStatus {
+	@summary = "Default summary"
+	macro assertTableStatus(entryStatus = null,entryName = null) {
 		AssertElementPresent(
 			key_tableEntryName = ${entryName},
 			locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE");

@@ -1,14 +1,14 @@
 @default = "goBack"
 definition {
 
-	function goBack {
+	function goBack() {
 		WaitForSPARefresh();
 
 		selenium.goBack();
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

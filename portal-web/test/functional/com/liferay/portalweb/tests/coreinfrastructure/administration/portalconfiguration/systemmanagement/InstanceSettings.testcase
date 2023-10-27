@@ -1056,7 +1056,7 @@ definition {
 
 			// Pausing due to LRQA-75772, wait for the config file deploy.
 
-			Pause(locator1 = 1000);
+			Pause(value1 = 1000);
 
 			Refresh();
 

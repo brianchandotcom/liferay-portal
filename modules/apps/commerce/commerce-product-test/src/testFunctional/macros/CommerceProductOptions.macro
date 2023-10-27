@@ -1,6 +1,7 @@
 definition {
 
-	macro createProductOption {
+	@summary = "Default summary"
+	macro createProductOption(key_optionName = null) {
 		Type(
 			key_title = "Add Options",
 			locator1 = "CommerceEntry#ADD_RELATION_FIELD",
@@ -9,7 +10,8 @@ definition {
 		Button.click(button = "Create New");
 	}
 
-	macro createProductOptionValue {
+	@summary = "Default summary"
+	macro createProductOptionValue(key_name = null,key_position = null) {
 		Click(locator1 = "Button#PLUS");
 
 		SelectFrame.selectFrameTop();
@@ -29,7 +31,8 @@ definition {
 		Button.click(button = "Submit");
 	}
 
-	macro deleteProductOptionValue {
+	@summary = "Default summary"
+	macro deleteProductOptionValue(key_value = null) {
 		Click(
 			key_value = ${key_value},
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
@@ -43,7 +46,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro editOptionValue {
+	@summary = "Default summary"
+	macro editOptionValue(optionValue = null,priceType = null,sku = null) {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 		if (isSet(priceType)) {
@@ -69,7 +73,8 @@ definition {
 		SelectFrame.selectFrameTop();
 	}
 
-	macro editProductOption {
+	@summary = "Default summary"
+	macro editProductOption(key_position = null,key_fieldType = null,productAddOptionCategoriesList = null,productOptionDefineExternally = null,collectionProvider = null,key_option = null,productOptionRequired = null,key_optionName = null,productOptionFacetable = null,productOptionSkuContributor = null,key_description = null,key_priceType = null,categoryNameList = null) {
 		Click(
 			key_index = ${key_option},
 			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");

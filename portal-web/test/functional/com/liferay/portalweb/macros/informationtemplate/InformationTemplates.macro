@@ -1,6 +1,7 @@
 definition {
 
-	macro addCP {
+	@summary = "Default summary"
+	macro addCP(informationTemplateName = null,itemType = null,itemSubtype = null) {
 		LexiconEntry.gotoAdd();
 
 		PortletEntry.inputName(name = ${informationTemplateName});
@@ -22,7 +23,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro addDescription {
+	@summary = "Default summary"
+	macro addDescription(informationTemplateDescription = null) {
 		WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
 
 		Navigator.gotoSidebarTab(tabName = "Properties");
@@ -30,7 +32,8 @@ definition {
 		PortletEntry.inputDescription(description = ${informationTemplateDescription});
 	}
 
-	macro addField {
+	@summary = "Default summary"
+	macro addField(fieldName = null,panelTitle = null) {
 		WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
 
 		Navigator.gotoSidebarTab(tabName = "Elements");
@@ -41,7 +44,8 @@ definition {
 			locator1 = "DDMEditTemplate#WEB_CONTENT_SCRIPT_VARIABLE");
 	}
 
-	macro copyCP {
+	@summary = "Default summary"
+	macro copyCP(informationTemplateName = null,description = null,informationTemplateCopyName = null) {
 		InformationTemplates.gotoInformationTemplateEllipsisItem(
 			informationTemplateName = ${informationTemplateName},
 			item = "Make a Copy");
@@ -59,7 +63,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro deleteCP {
+	@summary = "Default summary"
+	macro deleteCP(informationTemplateName = null) {
 		InformationTemplates.gotoInformationTemplateEllipsisItem(
 			informationTemplateName = ${informationTemplateName},
 			item = "Delete");
@@ -75,11 +80,13 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro editName {
+	@summary = "Default summary"
+	macro editName(informationTemplateName = null) {
 		PortletEntry.inputName(name = ${informationTemplateName});
 	}
 
-	macro gotoInformationTemplateEllipsisItem {
+	@summary = "Default summary"
+	macro gotoInformationTemplateEllipsisItem(informationTemplateName = null,item = null) {
 		Click(
 			key_tableEntry = ${informationTemplateName},
 			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
@@ -87,7 +94,8 @@ definition {
 		MenuItem.click(menuItem = ${item});
 	}
 
-	macro importScript {
+	@summary = "Default summary"
+	macro importScript(scriptFile = null) {
 		WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
 
 		Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
@@ -100,17 +108,20 @@ definition {
 			value1 = ${filePath});
 	}
 
-	macro inputScript {
+	@summary = "Default summary"
+	macro inputScript(scriptContent = null) {
 		Type.typeCodeMirrorEditorNoError(
 			locator1 = "DDMEditTemplate#CODE_MIRROR_EDITOR",
 			value1 = ${scriptContent});
 	}
 
-	macro openInformationTemplatesAdmin {
+	@summary = "Default summary"
+	macro openInformationTemplatesAdmin(siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_template_web_internal_portlet_TemplatePortlet&p_p_lifecycle=0&p_p_state=maximized");
 	}
 
-	macro viewDescription {
+	@summary = "Default summary"
+	macro viewDescription(informationTemplateDescription = null) {
 		WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
 
 		Navigator.gotoSidebarTab(tabName = "Properties");
@@ -120,13 +131,15 @@ definition {
 			value1 = ${informationTemplateDescription});
 	}
 
-	macro viewScriptContent {
+	@summary = "Default summary"
+	macro viewScriptContent(scriptContent = null) {
 		AssertTextEquals.assertPartialText(
 			locator1 = "DDMEditTemplate#CODE_MIRROR_EDITOR_CONTENT",
 			value1 = ${scriptContent});
 	}
 
-	macro viewTemplate {
+	@summary = "Default summary"
+	macro viewTemplate(informationTemplateName = null,itemType = null,itemSubtype = null) {
 		AssertTextEquals(
 			key_columnName = "name",
 			key_tableEntry = ${informationTemplateName},
@@ -150,7 +163,8 @@ definition {
 		}
 	}
 
-	macro viewTemplateNotPresent {
+	@summary = "Default summary"
+	macro viewTemplateNotPresent(informationTemplateName = null) {
 		AssertElementNotPresent(
 			key_tableEntry = ${informationTemplateName},
 			locator1 = "LexiconTable#TABLE_ENTRY");

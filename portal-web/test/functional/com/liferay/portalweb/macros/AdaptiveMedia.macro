@@ -1,12 +1,14 @@
 definition {
 
-	macro adaptAllImages {
+	@summary = "Default summary"
+	macro adaptAllImages() {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Adapt All Images");
 
 		Alert.viewSuccessMessage();
 	}
 
-	macro adaptRemainingImages {
+	@summary = "Default summary"
+	macro adaptRemainingImages(imageName = null) {
 		var key_imageName = ${imageName};
 
 		if (IsElementNotPresent(locator1 = "AdaptiveMediaTable#PROGRESS_SUCCESS")) {
@@ -20,7 +22,8 @@ definition {
 		AssertElementPresent(locator1 = "AdaptiveMediaTable#PROGRESS_SUCCESS");
 	}
 
-	macro addImageResolution {
+	@summary = "Default summary"
+	macro addImageResolution(imageName = null,maxHeight = null,description = null,customId = null,maxWidth = null) {
 		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "New Image Resolution")) {
 			LexiconEntry.gotoAdd();
 		}
@@ -77,7 +80,8 @@ definition {
 		}
 	}
 
-	macro addNonNumericImageResolution {
+	@summary = "Default summary"
+	macro addNonNumericImageResolution(imageName = null,maxHeight = null,maxWidth = null) {
 		LexiconEntry.gotoAdd();
 
 		PortletEntry.inputName(name = ${imageName});
@@ -101,7 +105,8 @@ definition {
 			value1 = "At least one value is required.");
 	}
 
-	macro deleteImageResolution {
+	@summary = "Default summary"
+	macro deleteImageResolution(imageName = null) {
 		var key_imageName = ${imageName};
 
 		Click(locator1 = "AdaptiveMediaTable#IMAGE_RESOLUTION_OPTIONS");
@@ -115,7 +120,8 @@ definition {
 		AssertElementNotPresent(locator1 = "AdaptiveMediaTable#NAME");
 	}
 
-	macro disableImageResolution {
+	@summary = "Default summary"
+	macro disableImageResolution(imageState = null,imageName = null) {
 		var key_imageName = ${imageName};
 
 		Click(locator1 = "AdaptiveMediaTable#IMAGE_RESOLUTION_OPTIONS");
@@ -131,7 +137,8 @@ definition {
 		AssertElementPresent(locator1 = "AdaptiveMediaTable#PROGRESS_DISABLED");
 	}
 
-	macro editImageResolution {
+	@summary = "Default summary"
+	macro editImageResolution(imageIdEdit = null,imageName = null,maxHeightEdit = null,imageNameEdit = null,maxWidthEdit = null) {
 		var key_imageName = ${imageName};
 
 		Click(locator1 = "AdaptiveMediaTable#IMAGE_RESOLUTION_OPTIONS");
@@ -200,7 +207,8 @@ definition {
 		}
 	}
 
-	macro enableImageResolution {
+	@summary = "Default summary"
+	macro enableImageResolution(imageState = null,imageName = null) {
 		var key_imageName = ${imageName};
 
 		Click(locator1 = "AdaptiveMediaTable#IMAGE_RESOLUTION_OPTIONS");
@@ -214,7 +222,8 @@ definition {
 			value1 = "Enabled");
 	}
 
-	macro gotoImageVariantEntry {
+	@summary = "Default summary"
+	macro gotoImageVariantEntry(imageName = null) {
 		var key_imageName = ${imageName};
 
 		AssertClick(
@@ -222,29 +231,33 @@ definition {
 			value1 = ${imageName});
 	}
 
-	macro openAdaptiveMediaAdmin {
+	@summary = "Default summary"
+	macro openAdaptiveMediaAdmin(baseURL = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_adaptive_media_web_portlet_AMPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view");
 	}
 
-	macro openToAddImageResolution {
+	@summary = "Default summary"
+	macro openToAddImageResolution() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
 			var baseURL = JSONCompany.getPortalURL();
 		}
 
-		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_adaptive_media_web_portlet_AMPortlet&_com_liferay_adaptive_media_web_portlet_AMPortlet_mvcRenderCommandName=%2Fadaptive_media%2Fedit_image_configuration_entry&_com_liferay_adaptive_media_web_portlet_AMPortlet_redirect=${baseURL}/group/control_panel/manage?p_p_id=com_liferay_adaptive_media_web_portlet_AMPortlet&_com_liferay_adaptive_media_web_portlet_AMPortlet_mvcRenderCommandName=%2Fadaptive_media%2Fedit_image_configuration_entry");
+		Open(value1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_adaptive_media_web_portlet_AMPortlet&_com_liferay_adaptive_media_web_portlet_AMPortlet_mvcRenderCommandName=%2Fadaptive_media%2Fedit_image_configuration_entry&_com_liferay_adaptive_media_web_portlet_AMPortlet_redirect=${baseURL}/group/control_panel/manage?p_p_id=com_liferay_adaptive_media_web_portlet_AMPortlet&_com_liferay_adaptive_media_web_portlet_AMPortlet_mvcRenderCommandName=%2Fadaptive_media%2Fedit_image_configuration_entry");
 	}
 
-	macro selectAdaptiveMediaImage {
+	@summary = "Default summary"
+	macro selectAdaptiveMediaImage(imageName = null) {
 		var key_imageName = ${imageName};
 
 		Check(locator1 = "Checkbox#ADAPTIVE_MEDIA_IMAGE");
 	}
 
-	macro viewImageResolutionTableEntry {
+	@summary = "Default summary"
+	macro viewImageResolutionTableEntry(imageState = null,imageName = null,maxHeight = null,percentAdapted = null,maxWidth = null) {
 		var key_imageName = ${imageName};
 
 		AssertTextEquals.assertPartialText(
@@ -274,31 +287,36 @@ definition {
 			value1 = ${maxHeight});
 	}
 
-	macro viewImageVariantDescription {
+	@summary = "Default summary"
+	macro viewImageVariantDescription(description = null) {
 		AssertTextEquals(
 			locator1 = "TextArea#DESCRIPTION",
 			value1 = ${description});
 	}
 
-	macro viewImageVariantID {
+	@summary = "Default summary"
+	macro viewImageVariantID(imageVariantId = null) {
 		AssertTextEquals(
 			locator1 = "TextInput#IMAGE_ID",
 			value1 = ${imageVariantId});
 	}
 
-	macro viewImageVariantURL {
+	@summary = "Default summary"
+	macro viewImageVariantURL(imageName = null) {
 		var key_imageName = ${imageName};
 
 		AssertElementPresent(locator1 = "AdaptiveMedia#IMAGE_VARIANT_SOURCE_URL");
 	}
 
-	macro viewNoImageResolution {
+	@summary = "Default summary"
+	macro viewNoImageResolution(imageName = null) {
 		var key_imageName = ${imageName};
 
 		AssertElementNotPresent(locator1 = "AdaptiveMediaTable#NAME");
 	}
 
-	macro viewNumberOfAdaptedImages {
+	@summary = "Default summary"
+	macro viewNumberOfAdaptedImages(numberOfAdaptedImages = null) {
 		AssertElementPresent(locator1 = "AdaptiveMediaTable#INFO_ICON");
 
 		Click(locator1 = "AdaptiveMediaTable#INFO_ICON");

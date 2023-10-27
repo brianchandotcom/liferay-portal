@@ -311,7 +311,7 @@ definition {
 
 		// Pausing 60 seconds to check no autosave due to changing the default autosave interval. See LPS-159468
 
-		Pause(locator1 = 60000);
+		Pause(value1 = 60000);
 
 		FormsAdminNavigator.gotoBack();
 
@@ -329,7 +329,7 @@ definition {
 
 		// Pausing 120 seconds due to autosave interval set to two minutes. LPS-159468
 
-		Pause(locator1 = 120000);
+		Pause(value1 = 120000);
 
 		FormsAdminNavigator.gotoBack();
 
@@ -2447,7 +2447,7 @@ definition {
 
 		// Pausing 60 seconds due to autosave interval set to one minute. See LPS-159468
 
-		Pause(locator1 = 60000);
+		Pause(value1 = 60000);
 
 		FormsAdminNavigator.gotoBack();
 

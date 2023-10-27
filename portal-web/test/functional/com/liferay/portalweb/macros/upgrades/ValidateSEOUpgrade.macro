@@ -1,6 +1,7 @@
 definition {
 
-	macro viewAndEditCustomMetaTag {
+	@summary = "Default summary"
+	macro viewAndEditCustomMetaTag() {
 		var portalURL = JSONCompany.getPortalURL();
 
 		User.logoutPG();
@@ -38,7 +39,8 @@ definition {
 		CustomMetaTags.viewTags(customMetaTagsList = '''property="custom Tag 1 property edit" content="custom Tag 1 content edit",property="custom Tag 3 property" content="custom Tag 3 content"''');
 	}
 
-	macro viewAndEditOpenGraph {
+	@summary = "Default summary"
+	macro viewAndEditOpenGraph() {
 		var portalURL = JSONCompany.getPortalURL();
 		var siteId = JSONGroupSetter.setGroupId(groupName = "Test Site Name");
 
@@ -128,7 +130,8 @@ definition {
 		OpenGraph.viewOpenGraphProperties(ogPropertyList = '''"og:image" content="${portalURL}/documents/${siteId}/0/Document_3.jpg''');
 	}
 
-	macro viewAndEditSERPPreview {
+	@summary = "Default summary"
+	macro viewAndEditSERPPreview() {
 		var portalURL = JSONCompany.getPortalURL();
 
 		Navigator.gotoPage(pageName = "Test Page");

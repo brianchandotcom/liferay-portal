@@ -267,9 +267,21 @@ export default function EditObjectDetails({
 						<ClayPanel
 							collapsable
 							defaultExpanded
-							displayTitle={Liferay.Language.get(
-								'external-data-source'
-							)}
+							displayTitle={
+								<div className="lfr__object-web-edit-object-details-external-data-source-panel">
+									<span className="panel-title">
+										{Liferay.Language.get(
+											'external-data-source'
+										)}
+									</span>
+
+									{values.storageType === 'salesforce' && (
+										<div className="lfr__object-web-edit-object-details-external-data-source-panel-container-beta">
+											<BetaButton />
+										</div>
+									)}
+								</div>
+							}
 							displayType="unstyled"
 						>
 							<ClayPanel.Body>
@@ -280,11 +292,6 @@ export default function EditObjectDetails({
 										storageTypes={storageTypes}
 										values={values}
 									/>
-
-									<div className="lfr__object-web-edit-object-details-external-data-source-container-beta">
-										{values.storageType ===
-											'salesforce' && <BetaButton />}
-									</div>
 								</div>
 							</ClayPanel.Body>
 						</ClayPanel>

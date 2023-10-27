@@ -27,7 +27,7 @@
 		</field>
 		<field name="logoId" type="long" />
 		<field name="name" type="String">
-			<hint name="max-length">100</hint>
+			<hint name="max-length">250</hint>
 			<validator name="required" />
 		</field>
 		<field name="restrictMembership" type="boolean" />

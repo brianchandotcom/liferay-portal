@@ -112,6 +112,8 @@ export function insertChildrenIntoNode(children, parentNode) {
 
 		newNode.each((node) => {
 			node.depth = node.depth + parentNode.depth + 1;
+			node.data = {...node.data};
+			node.data.chartNodeNumber = ++chartNodesCounter;
 		});
 
 		parentNode.children.push(newNode);
@@ -211,9 +213,18 @@ export function getChartNodeId(data) {
 }
 
 export function formatRootData(rootData) {
+	if (!Array.isArray(rootData)) {
+		rootData = [rootData];
+	}
+
 	if (Array.isArray(rootData)) {
 		const fakeRoot = {
-			[ORGANIZATIONS_PROPERTY_NAME]: rootData,
+			[ORGANIZATIONS_PROPERTY_NAME]: rootData.map((data) => {
+				const item = formatItem(data, 'organization');
+				item.fetched = true;
+
+				return item;
+			}),
 			id: 0,
 		};
 
@@ -222,11 +233,6 @@ export function formatRootData(rootData) {
 
 		return fakeRoot;
 	}
-
-	formatItem(rootData, 'organization');
-	rootData.fetched = true;
-
-	return rootData;
 }
 
 export function formatAccountDescription(d) {

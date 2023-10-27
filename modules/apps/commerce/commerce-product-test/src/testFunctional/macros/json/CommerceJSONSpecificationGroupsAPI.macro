@@ -1,6 +1,7 @@
 definition {
 
-	macro _addCommerceSpecificationGroup {
+	@summary = "Default summary"
+	macro _addCommerceSpecificationGroup() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -45,7 +46,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro _deleteAllCommerceSpecificationGroups {
+	@summary = "Default summary"
+	macro _deleteAllCommerceSpecificationGroups() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -76,7 +78,8 @@ definition {
 		}
 	}
 
-	macro _getCommerceSpecificationGroupIds {
+	@summary = "Default summary"
+	macro _getCommerceSpecificationGroupIds(specificationGroupCount = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -103,7 +106,8 @@ definition {
 		return ${specificationGroupIds};
 	}
 
-	macro _getCommerceSpecificationGroupsCount {
+	@summary = "Default summary"
+	macro _getCommerceSpecificationGroupsCount() {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {

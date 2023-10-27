@@ -1230,7 +1230,10 @@ public class JournalEditArticleDisplayContext {
 
 		_showSelectFolder = false;
 
-		if (_article == null) {
+		if ((_article == null) &&
+			(getClassNameId() ==
+				JournalArticleConstants.CLASS_NAME_ID_DEFAULT)) {
+
 			_showSelectFolder = ParamUtil.getBoolean(
 				_httpServletRequest, "showSelectFolder", true);
 		}

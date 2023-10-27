@@ -2,7 +2,7 @@
 @summary = "Mouse over '${locator1}'"
 definition {
 
-	function javaScriptFocus {
+	function javaScriptFocus(locator1) {
 		WaitForSPARefresh();
 
 		var javascript = '''
@@ -13,71 +13,74 @@ event.initEvent('focus', true, false);
 arguments[0].dispatchEvent(event);
 		''';
 
-		selenium.executeJavaScript(${javascript}, ${locator1});
+		ExecuteJavaScript(
+			value1 = ${javascript},
+			value2 = ${locator1},
+			value3 = "null");
 
-		selenium.assertJavaScriptErrors();
-
-		selenium.assertLiferayErrors();
-	}
-
-	function javaScriptMouseOver {
-		WaitForSPARefresh();
-
-		selenium.javaScriptMouseOver();
-
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function mouseOver {
+	function javaScriptMouseOver(locator1) {
 		WaitForSPARefresh();
 
-		selenium.waitForVisible();
+		selenium.javaScriptMouseOver(${locator1});
 
-		selenium.mouseOver();
-
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function mouseOverInvisible {
+	function mouseOver(locator1) {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForVisible(${locator1}, "false");
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function mouseOverNotVisible {
+	function mouseOverInvisible(locator1) {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		selenium.waitForVisible();
-
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}
 
-	function waitForMenuToggleJSMouseOver {
+	function mouseOverNotVisible(locator1) {
 		WaitForSPARefresh();
 
-		selenium.waitForElementPresent();
+		selenium.waitForElementPresent(${locator1}, "false");
+
+		selenium.mouseOver(${locator1});
+
+		selenium.waitForVisible(${locator1}, "false");
+
+		selenium.assertJavaScriptErrors("true");
+
+		selenium.assertLiferayErrors();
+	}
+
+	function waitForMenuToggleJSMouseOver(locator1) {
+		WaitForSPARefresh();
+
+		selenium.waitForElementPresent(${locator1}, "false");
 
 		selenium.pause(1000);
 
-		selenium.mouseOver();
+		selenium.mouseOver(${locator1});
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

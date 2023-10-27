@@ -1,6 +1,7 @@
 definition {
 
-	macro viewAccessedURL {
+	@summary = "Default summary"
+	macro viewAccessedURL(friendlyURL = null) {
 		var key_friendlyURL = ${friendlyURL};
 
 		Click(locator1 = "LexiconTable#TABLE_HITS_COUNT");

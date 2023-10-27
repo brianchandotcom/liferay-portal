@@ -1,12 +1,12 @@
 @default = "downloadTempFile"
 definition {
 
-	function downloadTempFile {
+	function downloadTempFile() {
 		WaitForSPARefresh();
 
 		selenium.pause(5000);
 
-		selenium.assertJavaScriptErrors();
+		selenium.assertJavaScriptErrors("true");
 
 		selenium.assertLiferayErrors();
 	}

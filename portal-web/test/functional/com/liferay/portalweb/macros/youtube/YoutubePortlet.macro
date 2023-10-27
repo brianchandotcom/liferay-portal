@@ -1,6 +1,7 @@
 definition {
 
-	macro addVideoId {
+	@summary = "Default summary"
+	macro addVideoId(videoId = null) {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		Type(
@@ -8,7 +9,8 @@ definition {
 			value1 = ${videoId});
 	}
 
-	macro assertVideoTitle {
+	@summary = "Default summary"
+	macro assertVideoTitle(videoTitle = null) {
 		SelectFrame(locator1 = "YoutubePortlet#VIDEO_IFRAME");
 
 		AssertTextEquals.assertPartialText(
@@ -18,7 +20,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro playEmbeddedVideo {
+	@summary = "Default summary"
+	macro playEmbeddedVideo(videoPlayNode = null,videoDuration = null,progressBarInitialization = null) {
 		SelectFrame(locator1 = "IFrame#EMBEDDED_VIDEO_IFRAME");
 
 		WaitForElementPresent(
@@ -36,7 +39,8 @@ definition {
 			locator1 = "YoutubePortlet#VIDEO_PROGRESS_BAR");
 	}
 
-	macro viewPortletConfiguration {
+	@summary = "Default summary"
+	macro viewPortletConfiguration(videoId = null) {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		AssertTextEquals(

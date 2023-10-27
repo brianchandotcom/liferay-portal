@@ -1,0 +1,17 @@
+<definition default="open" summary="Open a URL">
+	<command name="assertCSSValue">
+		<execute selenium="assertCSSValue"/>
+	</command>
+	<command name="executeJavaScript" arguments="value2,value1,value3">
+		<execute selenium="executeJavaScript" argument1="${value1}" argument2="${value2}" argument3="${value3}"/>
+	</command>
+	<command name="open" arguments="value1">
+		<execute selenium="open" argument1="${value1}"/>
+	</command>
+	<command name="selectPopUp" arguments="value1">
+		<execute selenium="selectPopUp" argument1="${value1}"/>
+	</command>
+	<command name="waitForVisible" arguments="locator1,value1">
+    		<execute selenium="waitForVisible" argument1="${locator1}" argument2="${value1}"/>
+    </command>
+</definition>

@@ -1,6 +1,7 @@
 definition {
 
-	macro _addLayout {
+	@summary = "Default summary"
+	macro _addLayout(groupId = null,parentLayoutId = null,friendlyURL = null,privateLayout = null,serviceContext = null,type = null,layoutName = null) {
 		Variables.assertDefined(parameterList = "${friendlyURL},${groupId},${privateLayout},${parentLayoutId},${layoutName},${serviceContext}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -26,7 +27,8 @@ definition {
 		return ${plid};
 	}
 
-	macro _deleteLayout {
+	@summary = "Default summary"
+	macro _deleteLayout(groupId = null,privateLayout = null,serviceContext = null,layoutId = null) {
 		Variables.assertDefined(parameterList = "${groupId},${layoutId},${privateLayout},${serviceContext}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -44,7 +46,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _getDefaultPlidByGroupId {
+	@summary = "Default summary"
+	macro _getDefaultPlidByGroupId(groupId = null,privateLayout = null) {
 		Variables.assertDefined(parameterList = "${groupId},${privateLayout}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -68,7 +71,8 @@ definition {
 		return ${defaultPlid};
 	}
 
-	macro _getLayoutIdByName {
+	@summary = "Default summary"
+	macro _getLayoutIdByName(groupId = null,privateLayout = null,layoutName = null) {
 		Variables.assertDefined(parameterList = "${groupId},${layoutName},${privateLayout}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -90,7 +94,8 @@ definition {
 		return ${layoutId};
 	}
 
-	macro _getPlidByName {
+	@summary = "Default summary"
+	macro _getPlidByName(groupId = null,privateLayout = null,layoutName = null) {
 		Variables.assertDefined(parameterList = "${groupId},${layoutName},${privateLayout}");
 
 		if (!(isSet(portalURL))) {
@@ -115,7 +120,8 @@ definition {
 		return ${plid};
 	}
 
-	macro _getTypeSettingsByName {
+	@summary = "Default summary"
+	macro _getTypeSettingsByName(groupId = null,privateLayout = null,layoutName = null) {
 		Variables.assertDefined(parameterList = "${groupId},${layoutName},${privateLayout}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -133,7 +139,8 @@ definition {
 		return ${typeSettings};
 	}
 
-	macro _getUuidByName {
+	@summary = "Default summary"
+	macro _getUuidByName(groupId = null,privateLayout = null,layoutName = null) {
 		Variables.assertDefined(parameterList = "${groupId},${layoutName},${privateLayout}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -155,7 +162,8 @@ definition {
 		return ${uuid};
 	}
 
-	macro _publishLayoutByPlid {
+	@summary = "Default summary"
+	macro _publishLayoutByPlid(plid = null) {
 		Variables.assertDefined(parameterList = ${plid});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -170,7 +178,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _updateTypeSettings {
+	@summary = "Default summary"
+	macro _updateTypeSettings(groupId = null,typeSettings = null,privateLayout = null,layoutId = null) {
 		Variables.assertDefined(parameterList = "${groupId},${privateLayout},${layoutId},${typeSettings}");
 
 		var portalURL = JSONCompany.getPortalURL();

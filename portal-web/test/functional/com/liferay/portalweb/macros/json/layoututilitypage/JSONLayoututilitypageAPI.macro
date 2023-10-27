@@ -1,6 +1,7 @@
 definition {
 
-	macro _deleteLayoutUtilityPage {
+	@summary = "Default summary"
+	macro _deleteLayoutUtilityPage(layoutUtilityPageEntryId = null) {
 		Variables.assertDefined(parameterList = ${layoutUtilityPageEntryId});
 
 		if (!(isSet(portalURL))) {
@@ -18,7 +19,8 @@ definition {
 		JSONCurlUtil.post(${curl});
 	}
 
-	macro _getLayoutUtilityPageEntryId {
+	@summary = "Default summary"
+	macro _getLayoutUtilityPageEntryId(groupId = null,layoutUtilityPageName = null) {
 		Variables.assertDefined(parameterList = "${groupId},${layoutUtilityPageName}");
 
 		if (!(isSet(portalURL))) {

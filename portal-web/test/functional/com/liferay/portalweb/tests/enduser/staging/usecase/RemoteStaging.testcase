@@ -717,7 +717,7 @@ definition {
 
 		ClickNoError(locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON");
 
-		Confirm(value1 = "Are you sure you want to publish to live and update the existing application data?");
+		Confirm(value1 = "null");
 
 		WaitForElementPresent(locator1 = "Staging#STAGING_STATUS_PORTLET");
 

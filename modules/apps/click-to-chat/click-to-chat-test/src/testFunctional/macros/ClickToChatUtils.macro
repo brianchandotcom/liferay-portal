@@ -1,6 +1,7 @@
 definition {
 
-	macro fillGoalsChat {
+	@summary = "Default summary"
+	macro fillGoalsChat(chatProviderId = null,siteSettingsStrategy = null) {
 		if (isSet(siteSettingsStrategy)) {
 			Select(
 				locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -14,7 +15,8 @@ definition {
 		}
 	}
 
-	macro getPassword {
+	@summary = "Default summary"
+	macro getPassword(chatProviderChoosen = null) {
 		var clickToChatPassword = PropsUtil.get("click.to.chat.${chatProviderChoosen}.password");
 
 		Type(
@@ -30,7 +32,8 @@ definition {
 		return ${clickToChatPassword};
 	}
 
-	macro navigateToComponent {
+	@summary = "Default summary"
+	macro navigateToComponent(nameComponent = null) {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -42,7 +45,8 @@ definition {
 			locator1 = "ListGroupItem#ITEM_TEXT");
 	}
 
-	macro typePassword {
+	@summary = "Default summary"
+	macro typePassword(key_password = null) {
 		Type(
 			locator1 = "ClickToChatConfiguration#CHAT_PROVIDER_ACCOUNT_ID",
 			value1 = ${key_password});
@@ -52,7 +56,8 @@ definition {
 		Refresh();
 	}
 
-	macro viewTheFieldsPresent {
+	@summary = "Default summary"
+	macro viewTheFieldsPresent(chatProviderOption = null,chatProviderId = null,siteSettingsStrategy = null) {
 		if (isSet(siteSettingsStrategy)) {
 			AssertElementPresent(
 				locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY_CHOOSEN",

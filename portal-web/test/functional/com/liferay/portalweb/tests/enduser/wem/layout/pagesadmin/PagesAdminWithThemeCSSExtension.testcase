@@ -82,10 +82,10 @@ definition {
 			Navigator.gotoNavTab(navTab = "Design");
 
 			AssertAttributeValue(
-				attribute1 = "placeholder",
 				key_text = "Theme CSS",
 				locator1 = "TextInput#ANY",
-				value1 = "No theme CSS client extension was loaded.");
+				value1 = "placeholder",
+				value2 = "No theme CSS client extension was loaded.");
 		}
 
 		task ("Then the site designer could add a theme CSS Extension to widget page") {
@@ -132,10 +132,10 @@ definition {
 			WaitForPageLoad();
 
 			AssertAttributeValue(
-				attribute1 = "placeholder",
 				key_text = "Theme CSS",
 				locator1 = "TextInput#ANY",
-				value1 = "No theme CSS client extension was loaded.");
+				value1 = "placeholder",
+				value2 = "No theme CSS client extension was loaded.");
 		}
 
 		task ("Then the site designer could add a theme CSS Extension to widget page") {
@@ -172,10 +172,10 @@ definition {
 			Navigator.gotoNavTab(navTab = "Design");
 
 			AssertAttributeValue(
-				attribute1 = "placeholder",
 				key_text = "Theme CSS",
 				locator1 = "TextInput#ANY",
-				value1 = "No theme CSS client extension was loaded.");
+				value1 = "placeholder",
+				value2 = "No theme CSS client extension was loaded.");
 		}
 
 		task ("Then the site designer could add a theme CSS Extension to Pages") {
@@ -342,10 +342,10 @@ definition {
 			WaitForPageLoad();
 
 			AssertAttributeValue(
-				attribute1 = "placeholder",
 				key_text = "Theme CSS",
 				locator1 = "TextInput#ANY",
-				value1 = "Theme CSS is inherited from master.");
+				value1 = "placeholder",
+				value2 = "Theme CSS is inherited from master.");
 
 			PagesAdmin.addThemeCSSExtension(extensionName = ${randomEntryName2});
 
@@ -397,10 +397,10 @@ definition {
 			Navigator.gotoNavTab(navTab = "Design");
 
 			AssertAttributeValue(
-				attribute1 = "placeholder",
 				key_text = "Theme CSS",
 				locator1 = "TextInput#ANY",
-				value1 = "Theme CSS is inherited from Pages.");
+				value1 = "placeholder",
+				value2 = "Theme CSS is inherited from Pages.");
 
 			PagesAdmin.addThemeCSSExtension(extensionName = ${randomEntryName2});
 
@@ -504,10 +504,10 @@ definition {
 				value1 = "");
 
 			AssertAttributeValue(
-				attribute1 = "placeholder",
 				key_text = "Theme CSS",
 				locator1 = "TextInput#ANY",
-				value1 = "No theme CSS client extension was loaded.");
+				value1 = "placeholder",
+				value2 = "No theme CSS client extension was loaded.");
 
 			PortletEntry.save();
 
@@ -575,10 +575,10 @@ definition {
 				value1 = "");
 
 			AssertAttributeValue(
-				attribute1 = "placeholder",
 				key_text = "Theme CSS",
 				locator1 = "TextInput#ANY",
-				value1 = "No theme CSS client extension was loaded.");
+				value1 = "placeholder",
+				value2 = "No theme CSS client extension was loaded.");
 
 			PortletEntry.save();
 

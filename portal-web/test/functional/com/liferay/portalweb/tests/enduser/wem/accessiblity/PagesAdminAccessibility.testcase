@@ -42,9 +42,9 @@ definition {
 		task ("Then the page creator sees the role of page template cards is button") {
 			for (var pageTemplateName : list "Full Page Application,Link to a Page of This Site,Link to URL,Page Set,Widget Page,Panel,Embedded") {
 				AssertAttributeValue(
-					attribute1 = "role",
 					locator1 = "//div[contains(@class,'template-card-horizontal')][normalize-space()='${pageTemplateName}']",
-					value1 = "button");
+					value1 = "role",
+					value2 = "button");
 			}
 		}
 	}

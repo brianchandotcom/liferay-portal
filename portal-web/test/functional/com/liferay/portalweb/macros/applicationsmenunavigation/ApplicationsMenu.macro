@@ -1,10 +1,12 @@
 definition {
 
-	macro assertMenuButtonIsNotPresent {
+	@summary = "Default summary"
+	macro assertMenuButtonIsNotPresent() {
 		AssertElementNotPresent(locator1 = "ApplicationsMenu#TOGGLE");
 	}
 
-	macro gotoLocalizedSite {
+	@summary = "Default summary"
+	macro gotoLocalizedSite(site = null) {
 		ApplicationsMenuHelper.openApplicationsMenu();
 
 		Click(
@@ -12,7 +14,8 @@ definition {
 			locator1 = "ApplicationsMenu#SITE_LINK");
 	}
 
-	macro gotoPanel {
+	@summary = "Default summary"
+	macro gotoPanel(panel = null) {
 		var key_panel = ${panel};
 
 		Click(locator1 = "ApplicationsMenu#PANEL");
@@ -22,7 +25,8 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
-	macro gotoPortlet {
+	@summary = "Default summary"
+	macro gotoPortlet(portlet = null,panel = null,category = null) {
 		ApplicationsMenuHelper.openApplicationsMenu();
 
 		ApplicationsMenu.gotoPanel(panel = ${panel});
@@ -32,7 +36,8 @@ definition {
 			portlet = ${portlet});
 	}
 
-	macro gotoSite {
+	@summary = "Default summary"
+	macro gotoSite(site = null) {
 		ApplicationsMenuHelper.openApplicationsMenu();
 
 		if (IsElementPresent(locator1 = "ApplicationsMenu#VIEW_ALL_LINK")) {
@@ -51,7 +56,8 @@ definition {
 		}
 	}
 
-	macro gotoSiteViaViewAll {
+	@summary = "Default summary"
+	macro gotoSiteViaViewAll(depotName = null,site = null) {
 		ApplicationsMenuHelper.openApplicationsMenu();
 
 		ApplicationsMenuHelper.openWorkspace();

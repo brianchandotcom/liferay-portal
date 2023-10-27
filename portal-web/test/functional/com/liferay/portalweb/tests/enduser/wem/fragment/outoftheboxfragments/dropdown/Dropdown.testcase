@@ -84,9 +84,9 @@ definition {
 
 		task ("Assert the dropdown panel is collapsed") {
 			AssertAttributeValue(
-				attribute1 = "aria-expanded",
 				locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE",
-				value1 = "false");
+				value1 = "aria-expanded",
+				value2 = "false");
 
 			AssertNotVisible(
 				key_element = "//div[contains(@class,'alert-info')][normalize-space(text())='There are no menu items to display.']",
@@ -109,9 +109,9 @@ definition {
 				siteName = "Test Site Name");
 
 			AssertAttributeValue(
-				attribute1 = "aria-expanded",
 				locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE",
-				value1 = "false");
+				value1 = "aria-expanded",
+				value2 = "false");
 
 			AssertNotVisible(
 				key_element = "//li[contains(@class,'nav-item')]//a[normalize-space()='Test Content Page']",
@@ -157,9 +157,9 @@ definition {
 			Click.javaScriptClick(locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE");
 
 			AssertAttributeValue(
-				attribute1 = "aria-expanded",
 				locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE",
-				value1 = "true");
+				value1 = "aria-expanded",
+				value2 = "true");
 
 			AssertVisible(
 				key_content = "Place fragments or widgets here.",
@@ -170,9 +170,9 @@ definition {
 			Click.javaScriptClick(locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE");
 
 			AssertAttributeValue(
-				attribute1 = "aria-expanded",
 				locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE",
-				value1 = "false");
+				value1 = "aria-expanded",
+				value2 = "false");
 
 			AssertNotVisible(
 				key_content = "Place fragments or widgets here.",
@@ -195,9 +195,9 @@ definition {
 			Click(locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE");
 
 			AssertAttributeValue(
-				attribute1 = "aria-expanded",
 				locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE",
-				value1 = "false");
+				value1 = "aria-expanded",
+				value2 = "false");
 		}
 
 		task ("Define the Display on Hover as displayed behavior") {
@@ -216,9 +216,9 @@ definition {
 			MouseOver(locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE");
 
 			AssertAttributeValue(
-				attribute1 = "aria-expanded",
 				locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE",
-				value1 = "true");
+				value1 = "aria-expanded",
+				value2 = "true");
 
 			AssertVisible(
 				key_content = "Place fragments or widgets here.",
@@ -231,9 +231,9 @@ definition {
 				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
 
 			AssertAttributeValue(
-				attribute1 = "aria-expanded",
 				locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE",
-				value1 = "false");
+				value1 = "aria-expanded",
+				value2 = "false");
 
 			AssertNotVisible(
 				key_content = "Place fragments or widgets here.",
@@ -262,9 +262,9 @@ definition {
 
 		task ("Assert the drop zone is always shown in dropdown panel") {
 			AssertAttributeValue(
-				attribute1 = "aria-expanded",
 				locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE",
-				value1 = "true");
+				value1 = "aria-expanded",
+				value2 = "true");
 
 			AssertVisible(
 				key_content = "Place fragments or widgets here.",
@@ -277,9 +277,9 @@ definition {
 			PageEditor.viewFragmentHeaderNotVisible(fragmentName = "Dropdown");
 
 			AssertAttributeValue(
-				attribute1 = "aria-expanded",
 				locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE",
-				value1 = "true");
+				value1 = "aria-expanded",
+				value2 = "true");
 
 			AssertVisible(
 				key_content = "Place fragments or widgets here.",
@@ -296,9 +296,9 @@ definition {
 
 		task ("Assert the drop zone is always shown in dropdown panel") {
 			AssertAttributeValue(
-				attribute1 = "aria-expanded",
 				locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE",
-				value1 = "true");
+				value1 = "aria-expanded",
+				value2 = "true");
 
 			AssertVisible(
 				key_content = "Place fragments or widgets here.",
@@ -311,9 +311,9 @@ definition {
 			PageEditor.viewFragmentHeaderNotVisible(fragmentName = "Dropdown");
 
 			AssertAttributeValue(
-				attribute1 = "aria-expanded",
 				locator1 = "Fragment#DROPDOWN_FRAGMENT_TOGGLE",
-				value1 = "true");
+				value1 = "aria-expanded",
+				value2 = "true");
 
 			AssertVisible(
 				key_content = "Place fragments or widgets here.",

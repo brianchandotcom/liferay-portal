@@ -1,6 +1,7 @@
 definition {
 
-	macro _curlAPIEndpoint {
+	@summary = "Default summary"
+	macro _curlAPIEndpoint(path = null,baseURL = null,virtualHost = null) {
 		Variables.assertDefined(parameterList = "${baseURL},${path}");
 
 		if (isSet(virtualHost)) {
@@ -27,7 +28,8 @@ definition {
 		return ${curl};
 	}
 
-	macro getEndpoint {
+	@summary = "Default summary"
+	macro getEndpoint(path = null,baseURL = null,portalURL = null) {
 		Variables.assertDefined(parameterList = "${baseURL},${path}");
 
 		var curl = APIApplicationEndpoint._curlAPIEndpoint(

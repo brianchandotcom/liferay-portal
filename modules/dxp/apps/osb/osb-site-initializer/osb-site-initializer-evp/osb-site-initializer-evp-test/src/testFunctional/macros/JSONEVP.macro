@@ -1,6 +1,7 @@
 definition {
 
-	macro createOrganization {
+	@summary = "Default summary"
+	macro createOrganization(country = null,zipCode = null,bankingInfo = null,organizationName = null,city = null,contactEmail = null,contactName = null,organizationSite = null,smallDescription = null,key_status = null,organizationId = null,street = null,taxId = null,state = null,accountOwnerName = null,contactPhone = null,status = null) {
 		if (!(isSet(messageEVPManager))) {
 			var messageEVPManager = "";
 		}
@@ -27,7 +28,8 @@ definition {
 			zipCode = ${zipCode});
 	}
 
-	macro createRequest {
+	@summary = "Default summary"
+	macro createRequest(requestType = null,requestPurposesKey = null,requestBehalfKey = null,fullName = null,requestBehalf = null,managerEmailAddress = null,requestStatusKey = null,totalHoursRequested = null,grantAmount = null,requestDescription = null,organizationId = null,requestPurposes = null,emailAddress = null,phoneNumber = null,grantRequestTypeKey = null,grantRequestType = null,requestStatus = null) {
 		if (!(isSet(messageEVPManager))) {
 			var messageEVPManager = "";
 		}

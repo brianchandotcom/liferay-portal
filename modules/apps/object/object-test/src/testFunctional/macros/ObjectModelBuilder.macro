@@ -1,6 +1,7 @@
 definition {
 
-	macro openObjectFolderInModelBuilder {
+	@summary = "Default summary"
+	macro openObjectFolderInModelBuilder(baseURL = null) {
 		if (!(isSet(objectFolderName))) {
 			var objectFolderName = "Uncategorized";
 		}
@@ -10,7 +11,8 @@ definition {
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&p_p_auth=dShgR6Fp&_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_mvcRenderCommandName=%2Fobject_definitions%2Fview_model_builder&objectFolderName=${objectFolderName}");
 	}
 
-	macro publishObjectDefinitions {
+	@summary = "Default summary"
+	macro publishObjectDefinitions(objectDefinitionsList = null) {
 		Button.clickPublish();
 
 		for (var objectDefinitionName : list ${objectDefinitionsList}) {

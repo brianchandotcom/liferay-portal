@@ -959,7 +959,7 @@ definition {
 		}
 
 		task ("View alert in Arenas page") {
-			Open.openNoError(locator1 = "${portalURL}/web/russia2018/Arenas");
+			Open.openNoError(value1 = "${portalURL}/web/russia2018/Arenas");
 
 			AssertConfirm(value1 = "Welcome to Russia.");
 		}
@@ -969,7 +969,7 @@ definition {
 		}
 
 		task ("View alert in Arenas page") {
-			Open.openNoError(locator1 = "${portalURL}/web/russia2018/Arenas");
+			Open.openNoError(value1 = "${portalURL}/web/russia2018/Arenas");
 
 			AssertConfirm(value1 = "Welcome to Russia.");
 		}
@@ -981,7 +981,7 @@ definition {
 		}
 
 		task ("View logo is changed") {
-			Open.openNoError(locator1 = "${portalURL}/web/russia2018");
+			Open.openNoError(value1 = "${portalURL}/web/russia2018");
 
 			Page.viewCustomLogoPG();
 		}
@@ -997,7 +997,7 @@ definition {
 		}
 
 		task ("Add blank js to Arenaspage") {
-			Open.openNoError(locator1 = "${portalURL}/web/russia2018");
+			Open.openNoError(value1 = "${portalURL}/web/russia2018");
 
 			ProductMenu.gotoPortlet(
 				category = "Site Builder",

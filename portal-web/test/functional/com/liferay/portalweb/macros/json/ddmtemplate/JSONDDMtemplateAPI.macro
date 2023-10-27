@@ -1,6 +1,7 @@
 definition {
 
-	macro _addInformationTemplate {
+	@summary = "Default summary"
+	macro _addInformationTemplate(classPK = null,nameMap = null,groupId = null,descriptionMap = null,classNameId = null) {
 		Variables.assertDefined(parameterList = "${classNameId},${classPK},${groupId},${nameMap}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -32,7 +33,8 @@ definition {
 		return ${templateKey};
 	}
 
-	macro _addWidgetTemplate {
+	@summary = "Default summary"
+	macro _addWidgetTemplate(nameMap = null,groupId = null,descriptionMap = null,classNameId = null) {
 		Variables.assertDefined(parameterList = "${classNameId},${groupId},${nameMap}");
 
 		var portalURL = JSONCompany.getPortalURL();

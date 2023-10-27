@@ -1,6 +1,7 @@
 definition {
 
-	macro addSourceContent {
+	@summary = "Default summary"
+	macro addSourceContent(content = null) {
 		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
 
 		Type.typeCodeMirrorEditorNoError(
@@ -10,7 +11,8 @@ definition {
 		Click(locator1 = "CKEditor#TOOLBAR_SOURCE_BUTTON");
 	}
 
-	macro configureURLPattern {
+	@summary = "Default summary"
+	macro configureURLPattern(errorMessage = null,multipleURL = null,urlPattern = null) {
 		Type(
 			locator1 = "ExportImport#URL_PATTERN",
 			value1 = ${urlPattern});
@@ -43,13 +45,15 @@ definition {
 		}
 	}
 
-	macro deployInstanceConfigFile {
+	@summary = "Default summary"
+	macro deployInstanceConfigFile(portalInstanceName = null,osgiConfigFileName = null) {
 		var companyId = JSONCompany.getCompanyId(portalInstanceName = ${portalInstanceName});
 
 		AntCommands.runCommand("build-test-export-import.xml", "prepare-export-import-osgi-configuration -DcompanyId=${companyId} -Dosgi.config.file.name=${osgiConfigFileName}");
 	}
 
-	macro getBackgroundTaskStatus {
+	@summary = "Default summary"
+	macro getBackgroundTaskStatus(type = null) {
 		if (${type} == "Export") {
 			var mysqlStatement = "SELECT backgroundTaskId FROM BackgroundTask WHERE taskExecutorClassName in ('com.liferay.exportimport.internal.background.task.LayoutExportBackgroundTaskExecutor', 'com.liferay.exportimport.internal.background.task.PortletExportBackgroundTaskExecutor') AND STATUS IN (3, 5);";
 
@@ -73,7 +77,8 @@ definition {
 		}
 	}
 
-	macro getLARFileStatus {
+	@summary = "Default summary"
+	macro getLARFileStatus() {
 		var mysqlStatement = "SELECT title FROM DLFileEntry WHERE title LIKE '%.lar';";
 
 		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = ${mysqlStatement});
@@ -88,7 +93,8 @@ definition {
 		}
 	}
 
-	macro updateLayoutBackgroundTaskModifiedDateToPast {
+	@summary = "Default summary"
+	macro updateLayoutBackgroundTaskModifiedDateToPast(type = null) {
 		if (${type} == "Export") {
 			var mysqlStatement = "SELECT backgroundTaskId FROM BackgroundTask WHERE taskExecutorClassName in ('com.liferay.exportimport.internal.background.task.LayoutExportBackgroundTaskExecutor') AND STATUS IN (3, 5);";
 
@@ -119,7 +125,8 @@ definition {
 		}
 	}
 
-	macro updatePortletBackgroundTaskModifiedDateToPast {
+	@summary = "Default summary"
+	macro updatePortletBackgroundTaskModifiedDateToPast(type = null) {
 		if (${type} == "Export") {
 			var mysqlStatement = "SELECT backgroundTaskId FROM BackgroundTask WHERE taskExecutorClassName in ('com.liferay.exportimport.internal.background.task.PortletExportBackgroundTaskExecutor') AND STATUS IN (3, 5);";
 
@@ -150,7 +157,8 @@ definition {
 		}
 	}
 
-	macro viewValidationMessage {
+	@summary = "Default summary"
+	macro viewValidationMessage(urlPattern = null,url = null) {
 		AssertTextPresent(
 			locator1 = "Message#ERROR",
 			value1 = "Your request failed to complete.");

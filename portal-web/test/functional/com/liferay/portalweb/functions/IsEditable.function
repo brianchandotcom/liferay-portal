@@ -1,10 +1,10 @@
 @default = "isEditable"
 definition {
 
-	function isEditable {
+	function isEditable(locator1) {
 		WaitForSPARefresh();
 
-		selenium.isEditable();
+		selenium.isEditable(${locator1});
 	}
 
 }

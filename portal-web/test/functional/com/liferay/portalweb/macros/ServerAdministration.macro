@@ -1,6 +1,7 @@
 definition {
 
-	macro addCategoryLogLevels {
+	@summary = "Default summary"
+	macro addCategoryLogLevels(categoryLevel = null,categoryName = null) {
 		Navigator.gotoNavItem(navItem = "Log Levels");
 
 		LexiconEntry.gotoAdd();
@@ -16,7 +17,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro configureFileUploadOverallMaximumFileSize {
+	@summary = "Default summary"
+	macro configureFileUploadOverallMaximumFileSize(maxFileSize = null) {
 		Type(
 			locator1 = "ServerAdministrationFileUploads#GENERAL_OVERALL_MAX_FILE_SIZE_FIELD",
 			value1 = ${maxFileSize});
@@ -30,7 +32,8 @@ definition {
 			value1 = "Your request completed successfully.");
 	}
 
-	macro configureMailServerSettings {
+	@summary = "Default summary"
+	macro configureMailServerSettings(userPassword = null,needsReply = null,userName = null) {
 		if (IsElementPresent(key_navItem = "Mail", locator1 = "NavBar#NAV_ITEM_LINK")) {
 			Navigator.gotoNavItem(navItem = "Mail");
 		}
@@ -94,7 +97,8 @@ definition {
 			value1 = "Your request completed successfully.");
 	}
 
-	macro executeScript {
+	@summary = "Default summary"
+	macro executeScript(htmlOutput = null,language = null,script = null) {
 		Navigator.gotoNavItem(navItem = "Script");
 
 		Select(
@@ -119,7 +123,8 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro executeServerResourcesActions {
+	@summary = "Default summary"
+	macro executeServerResourcesActions(actionsDescription = null) {
 		Navigator.gotoNavItem(navItem = "Resources");
 
 		Panel.expandPanel(panel = "Clean Up Actions");
@@ -137,13 +142,15 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro openServerAdmin {
+	@summary = "Default summary"
+	macro openServerAdmin(baseURL = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_server_admin_web_portlet_ServerAdminPortlet");
 	}
 
-	macro tearDownDMFileUploadSettings {
+	@summary = "Default summary"
+	macro tearDownDMFileUploadSettings() {
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
 			panel = "Control Panel",
@@ -160,7 +167,8 @@ definition {
 			value1 = "Save");
 	}
 
-	macro tearDownMailServerSettings {
+	@summary = "Default summary"
+	macro tearDownMailServerSettings() {
 		ApplicationsMenu.gotoPortlet(
 			category = "System",
 			panel = "Control Panel",
@@ -213,7 +221,8 @@ definition {
 			value1 = "Your request completed successfully.");
 	}
 
-	macro viewCategoryLogLevels {
+	@summary = "Default summary"
+	macro viewCategoryLogLevels(categoryName = null) {
 		Navigator.gotoNavItem(navItem = "Log Levels");
 
 		Search.searchCP(searchTerm = ${categoryName});
@@ -228,23 +237,27 @@ definition {
 			value1 = "DEBUG");
 	}
 
-	macro viewForbiddenErrorMessageAlert {
+	@summary = "Default summary"
+	macro viewForbiddenErrorMessageAlert() {
 		AssertTextEquals(
 			locator1 = "Home#ERROR_MESSAGE_ALERT_ERROR",
 			value1 = "Error:Forbidden");
 	}
 
-	macro viewJSONWSSecurityEmptyPage {
+	@summary = "Default summary"
+	macro viewJSONWSSecurityEmptyPage() {
 		AssertElementPresent(locator1 = "JSONWS#SECURITY_EMPTY_PAGE");
 	}
 
-	macro viewOutputField {
+	@summary = "Default summary"
+	macro viewOutputField(valueName = null) {
 		AssertTextEquals.assertPartialText(
 			locator1 = "ServerAdministrationScript#OUTPUT_FIELD",
 			value1 = ${valueName});
 	}
 
-	macro viewProperties {
+	@summary = "Default summary"
+	macro viewProperties(propertyName = null,propertyTitle = null) {
 		Navigator.gotoNavItem(navItem = "Properties");
 
 		var key_propertyName = ${propertyName};

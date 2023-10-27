@@ -1,6 +1,7 @@
 definition {
 
-	macro addDocumentum {
+	@summary = "Default summary"
+	macro addDocumentum(dmCabinetName = null,dmRepositoryFieldName = null) {
 		Panel.expandPanel(panel = "Repository Configuration");
 
 		Select(
@@ -16,7 +17,8 @@ definition {
 			value1 = ${dmRepositoryFieldName});
 	}
 
-	macro addSharepoint {
+	@summary = "Default summary"
+	macro addSharepoint(permissionDefinitionKey = null,dmRepositorySiteURL = null,dmRepositoryLibraryPath = null,roleTitle = null,dmServerVersion = null,dmRepositoryName = null,dmRepositorySiteAbsoluteURL = null,dmRepositoryLibraryName = null) {
 		Panel.expandPanel(panel = "Repository Configuration");
 
 		Select(
@@ -74,7 +76,8 @@ definition {
 		}
 	}
 
-	macro cleanRepository {
+	@summary = "Default summary"
+	macro cleanRepository(dmDocumentTitle = null,dmFolderName = null) {
 		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
 
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");
@@ -97,11 +100,13 @@ definition {
 		}
 	}
 
-	macro edit {
+	@summary = "Default summary"
+	macro edit(dmRepositoryName = null) {
 		PortletEntry.inputName(name = ${dmRepositoryName});
 	}
 
-	macro gotoCP {
+	@summary = "Default summary"
+	macro gotoCP(dmRepositoryName = null) {
 		var key_dmRepositoryName = ${dmRepositoryName};
 
 		AssertElementPresent.assertVisible(locator1 = "DocumentsAndMedia#REPOSITORY_FOLDER_NAME_DESCRIPTIVE_VIEW");
@@ -119,7 +124,8 @@ definition {
 			value1 = "Documents and Media");
 	}
 
-	macro tearDownCP {
+	@summary = "Default summary"
+	macro tearDownCP() {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -153,7 +159,8 @@ definition {
 		}
 	}
 
-	macro viewBreadcrumb {
+	@summary = "Default summary"
+	macro viewBreadcrumb(dmRepositoryName = null) {
 		var key_dmFolderName = ${dmRepositoryName};
 
 		AssertTextEquals(
@@ -161,7 +168,8 @@ definition {
 			value1 = ${dmRepositoryName});
 	}
 
-	macro viewNoDownloadItem {
+	@summary = "Default summary"
+	macro viewNoDownloadItem(dmRepositoryName = null) {
 		Click(
 			key_dmFolderName = ${dmRepositoryName},
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS");

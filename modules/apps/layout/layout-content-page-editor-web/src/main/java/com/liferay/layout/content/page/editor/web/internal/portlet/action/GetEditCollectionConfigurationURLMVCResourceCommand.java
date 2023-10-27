@@ -14,6 +14,7 @@ import com.liferay.layout.content.page.editor.web.internal.util.InfoFormUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
@@ -123,6 +124,13 @@ public class GetEditCollectionConfigurationURLMVCResourceCommand
 					redirect
 				).setBackURL(
 					redirect
+				).setParameter(
+					"backURLTitle",
+					() -> {
+						Layout previousLayout = themeDisplay.getLayout();
+
+						return previousLayout.getName(themeDisplay.getLocale());
+					}
 				).setParameter(
 					"collectionKey", collectionKey
 				).setParameter(

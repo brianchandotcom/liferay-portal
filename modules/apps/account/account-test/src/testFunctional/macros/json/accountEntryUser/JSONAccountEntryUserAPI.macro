@@ -1,6 +1,7 @@
 definition {
 
-	macro _addAccountEntryUser {
+	@summary = "Default summary"
+	macro _addAccountEntryUser(creatorPassword = null,userLastName = null,userScreenName = null,userEmailAddress = null,userFirstName = null,accountEntryName = null,creatorEmailAddress = null,accountEntryId = null) {
 		Variables.assertDefined(parameterList = ${accountEntryName});
 
 		var companyId = JSONCompany.getCompanyId();
@@ -26,7 +27,8 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post(${curl});
 	}
 
-	macro _addExistUsertoAccount {
+	@summary = "Default summary"
+	macro _addExistUsertoAccount(accountEntryId = null,userId = null) {
 		Variables.assertDefined(parameterList = "${accountEntryId},${userId}");
 
 		if (!(isSet(creatorEmailAddress))) {

@@ -1,6 +1,7 @@
 definition {
 
-	macro gotoEditableFieldAction {
+	@summary = "Default summary"
+	macro gotoEditableFieldAction(fragmentName = null,className = null,id = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}

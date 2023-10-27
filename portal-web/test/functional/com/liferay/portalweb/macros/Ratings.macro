@@ -1,16 +1,18 @@
 definition {
 
-	macro _openToConfigInSiteSettings {
+	@summary = "Default summary"
+	macro _openToConfigInSiteSettings(siteURLKey = null,portlet = null) {
 		var baseURL = JSONCompany.getPortalURL();
 
 		if (${portlet} == "Ratings") {
 			var portletKey = "site-configuration-ratings";
 		}
 
-		Open(locator1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage/-/site/settings?_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fview_configuration_screen&_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_configurationScreenKey=${portletKey}");
+		Open(value1 = "${baseURL}/group/${siteURLKey}/~/control_panel/manage/-/site/settings?_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fview_configuration_screen&_com_liferay_site_admin_web_portlet_SiteSettingsPortlet_configurationScreenKey=${portletKey}");
 	}
 
-	macro configureRatingType {
+	@summary = "Default summary"
+	macro configureRatingType(ratingType = null,siteURLKey = null,siteName = null,portlet = null,applications = null) {
 		if (isSet(siteURLKey)) {
 			Ratings._openToConfigInSiteSettings(
 				portlet = ${portlet},
@@ -48,23 +50,26 @@ definition {
 			value1 = ${ratingType});
 	}
 
-	macro openToConfigInInstanceSettings {
+	@summary = "Default summary"
+	macro openToConfigInInstanceSettings(portlet = null) {
 		var baseURL = JSONCompany.getPortalURL();
 
 		if (${portlet} == "Ratings") {
 			var portletKey = "social-ratings";
 		}
 
-		Open(locator1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet&_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fview_configuration_screen&_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_configurationScreenKey=${portletKey}");
+		Open(value1 = "${baseURL}/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet&_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fview_configuration_screen&_com_liferay_configuration_admin_web_portlet_InstanceSettingsPortlet_configurationScreenKey=${portletKey}");
 	}
 
-	macro rateLike {
+	@summary = "Default summary"
+	macro rateLike() {
 		Click.clickNoMouseOver(locator1 = "Ratings#LIKE");
 
 		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_LIKE_RESULT");
 	}
 
-	macro rateStackedStars {
+	@summary = "Default summary"
+	macro rateStackedStars(ratingStarCount = null) {
 		Click(
 			key_ratingStarCount = ${ratingStarCount},
 			locator1 = "Ratings#YOUR_RATING_STACKED_STAR_COUNT");
@@ -82,7 +87,8 @@ definition {
 		}
 	}
 
-	macro rateStar {
+	@summary = "Default summary"
+	macro rateStar(ratingStarCount = null) {
 		Click(locator1 = "Ratings#YOUR_RATING_STAR");
 
 		if (isSet(checkDeleteButton)) {
@@ -100,7 +106,8 @@ definition {
 			locator1 = "Ratings#YOUR_RATING_STAR_RESULT");
 	}
 
-	macro rateStarCollectionItem {
+	@summary = "Default summary"
+	macro rateStarCollectionItem(ratingStarCount = null) {
 		if (!(isSet(position))) {
 			var position = 1;
 		}
@@ -121,7 +128,8 @@ definition {
 			value1 = ${ratingStarCount});
 	}
 
-	macro rateStarSpecificAsset {
+	@summary = "Default summary"
+	macro rateStarSpecificAsset(assetTitle = null,ratingStarCount = null) {
 		Click(
 			key_assetTitle = ${assetTitle},
 			locator1 = "Ratings#YOUR_RATING_STAR_SPECIFIC_ASSET");
@@ -147,7 +155,8 @@ definition {
 			locator1 = "Ratings#YOUR_RATING_STAR_RESULT_SPECIFIC_ASSET");
 	}
 
-	macro rateThumb {
+	@summary = "Default summary"
+	macro rateThumb(threadSubject = null,ratingResult = null) {
 		if (isSet(blogCommentRating)) {
 			Click.javaScriptClick(
 				key_ratingResult = ${ratingResult},
@@ -176,7 +185,8 @@ definition {
 		}
 	}
 
-	macro revokeStackedStarsRating {
+	@summary = "Default summary"
+	macro revokeStackedStarsRating() {
 		Click(locator1 = "Icon#DELETE");
 
 		AssertElementNotPresent(
@@ -184,7 +194,8 @@ definition {
 			locator1 = "Icon#ANY");
 	}
 
-	macro revokeStarsRating {
+	@summary = "Default summary"
+	macro revokeStarsRating() {
 		Click(locator1 = "Ratings#YOUR_RATING_STAR");
 
 		Click.clickNoMouseOver(locator1 = "Ratings#YOUR_RATING_STAR_DELETE");
@@ -192,7 +203,8 @@ definition {
 		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_EMPTY");
 	}
 
-	macro viewDefault {
+	@summary = "Default summary"
+	macro viewDefault() {
 		AssertTextEquals(
 			locator1 = "Ratings#AVERAGE_STAR_RESULT",
 			value1 = "0.0");
@@ -200,7 +212,8 @@ definition {
 		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_EMPTY");
 	}
 
-	macro viewDisabledRatings {
+	@summary = "Default summary"
+	macro viewDisabledRatings(ratingTypes = null) {
 		for (var text : list ${ratingTypes}) {
 			AssertElementPresent(
 				key_text = ${text},
@@ -208,7 +221,8 @@ definition {
 		}
 	}
 
-	macro viewNoRateStackedStar {
+	@summary = "Default summary"
+	macro viewNoRateStackedStar(averageStarCount = null) {
 		for (var ratingStarCount : list "1,2,3,4,5") {
 			AssertElementNotPresent(
 				key_ratingStarCount = ${ratingStarCount},
@@ -220,7 +234,8 @@ definition {
 			locator1 = "Ratings#AVERAGE_STACKED_STAR_RESULT");
 	}
 
-	macro viewRateLike {
+	@summary = "Default summary"
+	macro viewRateLike(ratingLikeCount = null) {
 		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_LIKE_RESULT");
 
 		AssertTextEquals(
@@ -228,7 +243,8 @@ definition {
 			value1 = ${ratingLikeCount});
 	}
 
-	macro viewRateStackedStar {
+	@summary = "Default summary"
+	macro viewRateStackedStar(averageStarCount = null,ratingStarCount = null) {
 		var count = 0;
 
 		while (${count} != ${ratingStarCount}) {
@@ -246,7 +262,8 @@ definition {
 			locator1 = "Ratings#AVERAGE_STACKED_STAR_RESULT");
 	}
 
-	macro viewRateStar {
+	@summary = "Default summary"
+	macro viewRateStar(averageRatingStarCount = null,ratingStarCount = null) {
 		AssertElementPresent(
 			key_ratingStarCount = ${ratingStarCount},
 			locator1 = "Ratings#YOUR_RATING_STAR_RESULT");
@@ -261,7 +278,8 @@ definition {
 			value1 = ${averageRatingStarCount});
 	}
 
-	macro viewRateStarReadOnly {
+	@summary = "Default summary"
+	macro viewRateStarReadOnly() {
 		AssertElementNotPresent(locator1 = "Ratings#YOUR_RATING_STAR_EMPTY");
 
 		AssertElementPresent(locator1 = "Ratings#YOUR_RATING_STAR_DISABLE");
@@ -269,7 +287,8 @@ definition {
 		AssertElementPresent(locator1 = "Ratings#AVERAGE_STAR");
 	}
 
-	macro viewRateThumb {
+	@summary = "Default summary"
+	macro viewRateThumb(ratingResult = null,voteCount = null) {
 		if (isSet(ratingResult)) {
 			if (isSet(commentRating)) {
 				AssertTextEquals(

@@ -997,7 +997,7 @@ definition {
 
 		// LRCI-2401
 
-		Pause(locator1 = 30000);
+		Pause(value1 = 30000);
 
 		var portalHostname = PropsUtil.get("portal.hostname");
 

@@ -1,6 +1,7 @@
 definition {
 
-	macro gotoAddCollection {
+	@summary = "Default summary"
+	macro gotoAddCollection() {
 		if (IsElementPresent(locator1 = "NavNested#NAV_NESTED_PLUS")) {
 			Click(locator1 = "NavNested#NAV_NESTED_PLUS");
 		}
@@ -11,22 +12,26 @@ definition {
 		}
 	}
 
-	macro gotoCollection {
+	@summary = "Default summary"
+	macro gotoCollection(collectionName = null) {
 		MenuBar.click(menuBar = ${collectionName});
 	}
 
-	macro gotoEntry {
+	@summary = "Default summary"
+	macro gotoEntry(entry = null) {
 		LexiconCard.clickCardTitleLink(card = ${entry});
 	}
 
-	macro gotoEntryEllipsisItem {
+	@summary = "Default summary"
+	macro gotoEntryEllipsisItem(entry = null,item = null,specificFormFragment = null) {
 		LexiconCard.clickEllipsisItem(
 			card = ${entry},
 			item = ${item},
 			specificFormFragment = ${specificFormFragment});
 	}
 
-	macro gotoExportCollection {
+	@summary = "Default summary"
+	macro gotoExportCollection() {
 		Click.waitForMenuToggleJSClick(locator1 = "NavNested#NAV_NESTED_ELLIPSIS");
 
 		DropdownMenuItem.click(menuItem = "Export");
@@ -34,7 +39,8 @@ definition {
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
 	}
 
-	macro gotoImportCollection {
+	@summary = "Default summary"
+	macro gotoImportCollection() {
 		if (IsElementPresent(locator1 = "NavNested#NAV_NESTED_ELLIPSIS")) {
 			Click.waitForMenuToggleJSClick(locator1 = "NavNested#NAV_NESTED_ELLIPSIS");
 		}
@@ -45,13 +51,15 @@ definition {
 		DropdownMenuItem.click(menuItem = "Import");
 	}
 
-	macro gotoSpecificScopeCollection {
+	@summary = "Default summary"
+	macro gotoSpecificScopeCollection(scope = null,collectionName = null) {
 		MenuBar.clickInStack(
 			menuBar = ${collectionName},
 			stackName = ${scope});
 	}
 
-	macro openFragmentsAdmin {
+	@summary = "Default summary"
+	macro openFragmentsAdmin(baseURL = null,siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/fragments");

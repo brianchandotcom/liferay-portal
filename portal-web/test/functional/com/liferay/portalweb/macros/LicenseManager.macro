@@ -1,6 +1,7 @@
 definition {
 
-	macro viewDefaultCP {
+	@summary = "Default summary"
+	macro viewDefaultCP(tableTexts = null) {
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
 			value1 = "License Manager");

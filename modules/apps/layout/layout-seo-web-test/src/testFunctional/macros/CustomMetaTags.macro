@@ -1,6 +1,7 @@
 definition {
 
-	macro addMultipleTags {
+	@summary = "Default summary"
+	macro addMultipleTags(customTagsList = null) {
 		for (var customTag : list ${customTagsList}) {
 			Click(locator1 = "Icon#PLUS_LAST");
 
@@ -16,7 +17,8 @@ definition {
 		Button.click(button = "Save");
 	}
 
-	macro addTag {
+	@summary = "Default summary"
+	macro addTag(customContent = null,customProperty = null) {
 		Type(
 			locator1 = "TextInput#CUSTOM_META_TAGS_PROPERTY",
 			value1 = ${customProperty});
@@ -28,7 +30,8 @@ definition {
 		Button.click(button = "Save");
 	}
 
-	macro changeLocale {
+	@summary = "Default summary"
+	macro changeLocale(locale = null) {
 		Click.clickNoMouseOver(locator1 = "Button#LOCALIZATION_GENERIC");
 
 		Click(
@@ -36,7 +39,8 @@ definition {
 			locator1 = "Translation#LOCALIZATION_NAME_METATAGS");
 	}
 
-	macro editMultipleTags {
+	@summary = "Default summary"
+	macro editMultipleTags(newCustomProperty = null,customContentsList = null,newCustomContent = null,customPropertiesList = null) {
 		if (isSet(newCustomProperty)) {
 			for (var customProperty : list ${customPropertiesList}) {
 				Type(
@@ -60,7 +64,8 @@ definition {
 		}
 	}
 
-	macro editTag {
+	@summary = "Default summary"
+	macro editTag(newCustomProperty = null,customContent = null,newCustomContent = null,customProperty = null) {
 		if (isSet(newCustomProperty)) {
 			Type(
 				key_customProperty = ${customProperty},
@@ -78,7 +83,8 @@ definition {
 		Button.click(button = "Save");
 	}
 
-	macro openToCustomMetaTags {
+	@summary = "Default summary"
+	macro openToCustomMetaTags(groupName = null,siteURLKey = null,layoutName = null) {
 		var plid = JSONLayout.getPlid(
 			groupName = ${groupName},
 			layoutName = ${layoutName});
@@ -86,7 +92,8 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_tabs1=pages&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_privateLayout=false&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_displayStyle=miller-columns&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_mvcRenderCommandName=%2Flayout_admin%2Fedit_layout&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_portletResource=com_liferay_layout_admin_web_portlet_GroupPagesPortlet&p_r_p_selPlid=${plid}&_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_screenNavigationEntryKey=custom-meta-tags");
 	}
 
-	macro removeTag {
+	@summary = "Default summary"
+	macro removeTag(tagNum = null) {
 		Click(
 			key_tagNum = ${tagNum},
 			locator1 = "Icon#DELETE_CUSTOM_META_TAG");
@@ -98,7 +105,8 @@ definition {
 		Alert.viewSuccessMessageText(successMessage = "The page was updated successfully.");
 	}
 
-	macro viewDisabledProperty {
+	@summary = "Default summary"
+	macro viewDisabledProperty(customContent = null) {
 		AssertElementPresent(locator1 = "TextInput#CUSTOM_META_TAGS_PROPERTY_DISABLED");
 
 		AssertElementPresent(
@@ -106,13 +114,15 @@ definition {
 			locator1 = "TextInput#CUSTOM_META_TAGS_CONTENT_EDITOR");
 	}
 
-	macro viewNoTags {
+	@summary = "Default summary"
+	macro viewNoTags(customMetaTagsList = null) {
 		for (var customMetaTag : list ${customMetaTagsList}) {
 			AssertHTMLSourceTextNotPresent(value1 = ${customMetaTag});
 		}
 	}
 
-	macro viewTags {
+	@summary = "Default summary"
+	macro viewTags(customMetaTagsList = null) {
 		for (var customMetaTag : list ${customMetaTagsList}) {
 			AssertHTMLSourceTextPresent(value1 = ${customMetaTag});
 		}

@@ -1,6 +1,7 @@
 definition {
 
-	macro addFullDescriptionUsingSource {
+	@summary = "Default summary"
+	macro addFullDescriptionUsingSource(sourceFullDescription = null) {
 		FormFields.toggleCKEditorContentStyle(optionTool = "Source");
 
 		SelectFrameTop();
@@ -12,7 +13,8 @@ definition {
 			locator1 = "FormFields#TOOLBAR_ANY_ITEM_BUTTON");
 	}
 
-	macro assertDownloadedFile {
+	@summary = "Default summary"
+	macro assertDownloadedFile(downloadedFileName = null) {
 		var tempDir = PropsUtil.get("output.dir.name");
 
 		var downloadedFilePath = "${tempDir}/${downloadedFileName}";
@@ -29,7 +31,8 @@ definition {
 		return ${fileExists};
 	}
 
-	macro checkSuccessAlertAppearsAndDisappears {
+	@summary = "Default summary"
+	macro checkSuccessAlertAppearsAndDisappears() {
 		WaitForElementPresent(locator1 = "Message#SUCCESS");
 
 		Alert.closeMessage(messageType = "SUCCESS");
@@ -38,7 +41,8 @@ definition {
 	}
 
 	@description = "Compare two dates, if the first is greater than the second it returns the string"
-	macro compareDates {
+	@summary = "Default summary"
+	macro compareDates(date2 = null,date1 = null) {
 		var javaScript = '''
 			CompareDates = {
 				compareDates: function (dateString1, dateString2) {
@@ -67,7 +71,8 @@ definition {
 		return ${compareDatesResult};
 	}
 
-	macro convertStringToKey {
+	@summary = "Default summary"
+	macro convertStringToKey() {
 		var string = StringUtil.lowerCase(${string});
 
 		var string = StringUtil.replace(${string}, " ", "-");
@@ -75,7 +80,8 @@ definition {
 		return ${string};
 	}
 
-	macro convertWholeNumberToDecimal {
+	@summary = "Default summary"
+	macro convertWholeNumberToDecimal(number = null) {
 		Variables.assertDefined(parameterList = ${number});
 
 		var isDecimal = StringUtil.contains(${number}, ".");
@@ -90,7 +96,8 @@ definition {
 		}
 	}
 
-	macro expandField {
+	@summary = "Default summary"
+	macro expandField(accordionTitle = null) {
 		if (IsElementPresent(key_accordionTitle = ${accordionTitle}, locator1 = "CommerceEntry#ACCORDION_COLLAPSED")) {
 			Click(
 				key_accordionTitle = ${accordionTitle},
@@ -98,7 +105,8 @@ definition {
 		}
 	}
 
-	macro getConvertedBase64File {
+	@summary = "Default summary"
+	macro getConvertedBase64File(file = null) {
 		Variables.assertDefined(parameterList = ${file});
 
 		var projectDir = PropsUtil.get("project.dir");
@@ -111,7 +119,8 @@ definition {
 		return ${fileBase64};
 	}
 
-	macro getFutureDate {
+	@summary = "Default summary"
+	macro getFutureDate(increaseYears = null,monthFormat = null,dayFormat = null,yearFormat = null,increaseDays = null,increaseMonths = null) {
 		if (isSet(monthFormat)) {
 			var dateMonth = DateUtil.getFormattedCurrentDate(${monthFormat});
 		}
@@ -150,7 +159,8 @@ definition {
 		return ${futureDate};
 	}
 
-	macro getLocaleDate {
+	@summary = "Default summary"
+	macro getLocaleDate(date = null) {
 		Variables.assertDefined(parameterList = ${date});
 
 		var javaScript = '''
@@ -166,7 +176,8 @@ definition {
 		return ${localeDate};
 	}
 
-	macro getLocaleDateLocalized {
+	@summary = "Default summary"
+	macro getLocaleDateLocalized(date = null,options = null,lang = null) {
 		Variables.assertDefined(parameterList = ${date});
 
 		var javaScript = '''
@@ -189,7 +200,8 @@ definition {
 	}
 
 	@description = "Create ${payload} from a list of fields passed for an API call and returns it"
-	macro getPayloadFromFieldsList {
+	@summary = "Default summary"
+	macro getPayloadFromFieldsList(fieldsList = null) {
 		Variables.assertDefined(parameterList = ${fieldsList});
 
 		var count = 0;
@@ -227,7 +239,8 @@ definition {
 		return ${payload};
 	}
 
-	macro uploadSingleFile {
+	@summary = "Default summary"
+	macro uploadSingleFile(uploadFileName = null,selectButtonName = null) {
 		Variables.assertDefined(parameterList = ${uploadFileName});
 
 		if (isSet(selectButtonName)) {
@@ -246,7 +259,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro uploadSingleFileWithoutFrameTop {
+	@summary = "Default summary"
+	macro uploadSingleFileWithoutFrameTop(uploadFileName = null,selectButtonName = null) {
 		Variables.assertDefined(parameterList = ${uploadFileName});
 
 		if (isSet(selectButtonName)) {

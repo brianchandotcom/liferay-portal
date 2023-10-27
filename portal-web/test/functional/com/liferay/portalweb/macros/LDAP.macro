@@ -1,7 +1,8 @@
 definition {
 
 	@description = "Add Apache DS server and test the connection between it and Liferay DXP"
-	macro addLDAPServerAndTestConnection {
+	@summary = "Default summary"
+	macro addLDAPServerAndTestConnection(baseURL = null,ldapServerName = null) {
 		PortalSettings.addLDAPServer(
 			baseURL = ${baseURL},
 			ldapServerName = ${ldapServerName});
@@ -14,7 +15,8 @@ definition {
 	}
 
 	@description = "Assert no pagination display in the LDAP connection page"
-	macro assertNoPagination {
+	@summary = "Default summary"
+	macro assertNoPagination(ldapServerName = null) {
 		PortalSettings.editLDAPServer(ldapServerName = ${ldapServerName});
 
 		AssertClick(
@@ -29,7 +31,8 @@ definition {
 	}
 
 	@description = "Enable LDAP debug logs"
-	macro enableLDAPDebugLogs {
+	@summary = "Default summary"
+	macro enableLDAPDebugLogs(baseURL = null) {
 		ServerAdministration.openServerAdmin(baseURL = ${baseURL});
 
 		ServerAdministration.addCategoryLogLevels(
@@ -46,7 +49,8 @@ definition {
 	}
 
 	@description = "Enable various LDAP related settings"
-	macro enableLDAPSettings {
+	@summary = "Default summary"
+	macro enableLDAPSettings(baseURL = null,enableSettingList = null) {
 		PortalSettings.configureLDAPSetting(
 			baseURL = ${baseURL},
 			enableSettingList = ${enableSettingList});
@@ -57,7 +61,8 @@ definition {
 	}
 
 	@description = "Import an LDIF file on LDAP then trigger the import manually with a groovy script"
-	macro importLDIFOnLDAPAndTriggerSync {
+	@summary = "Default summary"
+	macro importLDIFOnLDAPAndTriggerSync(ldifName = null) {
 		LDAP.updateLDAPDatabaseWithLDIFFile(ldifName = ${ldifName});
 
 		if (!(isSet(nodePort))) {
@@ -70,16 +75,19 @@ definition {
 	}
 
 	@description = "Install openldap util to be able to use ldap commands on command line"
-	macro installLDAPCommandUtil {
+	@summary = "Default summary"
+	macro installLDAPCommandUtil() {
 		AntCommands.runCommand("build-test-apacheds.xml", "get-apacheds-commands");
 	}
 
 	@description = "List the contents of the LDAP database"
-	macro searchLDAPDatabaseForUsersAndGroups {
+	@summary = "Default summary"
+	macro searchLDAPDatabaseForUsersAndGroups() {
 		AntCommands.runCommand("build-test-apacheds.xml", "search-apacheds");
 	}
 
-	macro setGeneralMethod {
+	@summary = "Default summary"
+	macro setGeneralMethod(generalMethod = null) {
 		Variables.assertDefined(parameterList = ${generalMethod});
 
 		PortalSettings.gotoConfiguration(
@@ -95,7 +103,8 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro setPasswordEncryption {
+	@summary = "Default summary"
+	macro setPasswordEncryption(passwordEncryption = null) {
 		Variables.assertDefined(parameterList = ${passwordEncryption});
 
 		PortalSettings.gotoConfiguration(
@@ -112,12 +121,14 @@ definition {
 	}
 
 	@description = "Update LDAP database through LDIF file"
-	macro updateLDAPDatabaseWithLDIFFile {
+	@summary = "Default summary"
+	macro updateLDAPDatabaseWithLDIFFile(ldifName = null) {
 		AntCommands.runCommand("build-test-apacheds.xml", "update-apacheds -DldifName=${ldifName}");
 	}
 
 	@description = "Verify that the group is imported on localhost after LDAP sync"
-	macro verifyLDAPUserGroupIsImported {
+	@summary = "Default summary"
+	macro verifyLDAPUserGroupIsImported(userGroupName = null) {
 		UserGroup.openUserGroupsAdmin();
 
 		AssertElementPresent(
@@ -126,7 +137,8 @@ definition {
 	}
 
 	@description = "Verify that the user is removed from group on localhost after LDAP sync"
-	macro verifyLDAPUserIsRemovedFromGroup {
+	@summary = "Default summary"
+	macro verifyLDAPUserIsRemovedFromGroup(userGroupName = null,userFirstName = null) {
 		UserGroup.openUserGroupsAdmin();
 
 		UserGroup.viewRemoveMemberCP(
@@ -135,7 +147,8 @@ definition {
 	}
 
 	@description = "Verify that the user's first name has changed in the LDAP database after sync"
-	macro verifyUserFirstNameIsChangedInLDAP {
+	@summary = "Default summary"
+	macro verifyUserFirstNameIsChangedInLDAP(userFirstName = null) {
 		Variables.assertDefined(parameterList = ${userFirstName});
 
 		LDAP.searchLDAPDatabaseForUsersAndGroups();
@@ -155,14 +168,15 @@ definition {
 	}
 
 	@description = "Verify that the user is imported on localhost after LDAP sync, after a specified interval time."
-	macro verifyUserImportAfterImportIntervalTime {
+	@summary = "Default summary"
+	macro verifyUserImportAfterImportIntervalTime(userScreenName = null) {
 		if (!(isSet(intervalTime))) {
 			var intervalTime = 60000;
 		}
 
 		// Wait for the amount of the import interval time. Needed for LRQA-75138.
 
-		Pause(locator1 = ${intervalTime});
+		Pause(value1 = ${intervalTime});
 
 		User.openUsersAdmin();
 
@@ -170,7 +184,8 @@ definition {
 	}
 
 	@description = "Verify that the user is imported on localhost after LDAP sync"
-	macro verifyUserIsImported {
+	@summary = "Default summary"
+	macro verifyUserIsImported(userScreenName = null) {
 		User.openUsersAdmin();
 
 		Search.searchCP(searchTerm = ${userScreenName});

@@ -1,6 +1,7 @@
 definition {
 
-	macro chooseSortOption {
+	@summary = "Default summary"
+	macro chooseSortOption(key_menuItem = null) {
 		Click(locator1 = "ManagementBar#FILTER_AND_ORDER");
 
 		Click(
@@ -8,7 +9,8 @@ definition {
 			locator1 = "ManagementBar#FILTER_AND_ORDER_ITEM");
 	}
 
-	macro viewSpecificOrder {
+	@summary = "Default summary"
+	macro viewSpecificOrder(resultsList = null) {
 		var resultOrder = 0;
 
 		for (var searchAssetTitle : list ${resultsList}) {

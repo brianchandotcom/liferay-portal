@@ -13,6 +13,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface SearchCapabilities {
 
+	public boolean isAnalyticsSupported();
+
 	public boolean isCommerceSupported();
 
 	public boolean isConcurrentModeSupported();

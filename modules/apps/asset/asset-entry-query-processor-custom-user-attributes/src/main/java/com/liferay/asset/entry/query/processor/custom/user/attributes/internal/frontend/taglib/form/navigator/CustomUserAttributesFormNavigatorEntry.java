@@ -83,12 +83,12 @@ public class CustomUserAttributesFormNavigatorEntry
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		PortletPreferences portletSetup =
+		PortletPreferences portletPreferences =
 			themeDisplay.getStrictLayoutPortletSetup(
 				themeDisplay.getLayout(), portletDisplay.getPortletResource());
 
 		String selectionStyle = GetterUtil.getString(
-			portletSetup.getValue("selectionStyle", null));
+			portletPreferences.getValue("selectionStyle", null));
 
 		if (Objects.equals(selectionStyle, "dynamic")) {
 			return true;

@@ -49,12 +49,13 @@ public class CustomUserAttributesAssetEntryQueryProcessor
 
 	@Override
 	public void processAssetEntryQuery(
-			User user, PortletPreferences preferences,
+			User user, PortletPreferences portletPreferences,
 			AssetEntryQuery assetEntryQuery)
 		throws Exception {
 
 		String customUserAttributes = GetterUtil.getString(
-			preferences.getValue("customUserAttributes", StringPool.BLANK));
+			portletPreferences.getValue(
+				"customUserAttributes", StringPool.BLANK));
 
 		_addUserAttributes(
 			user, StringUtil.split(customUserAttributes), assetEntryQuery);

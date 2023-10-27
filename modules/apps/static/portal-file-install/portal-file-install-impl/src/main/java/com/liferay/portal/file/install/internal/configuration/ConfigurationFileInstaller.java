@@ -263,13 +263,15 @@ public class ConfigurationFileInstaller implements FileInstaller {
 			Dictionary<String, Object> dictionary =
 				configuration.getProperties();
 
-			ExtendedObjectClassDefinition.Scope configurationScope =
-				_getConfigurationScope(dictionary);
+			if (dictionary != null) {
+				ExtendedObjectClassDefinition.Scope configurationScope =
+					_getConfigurationScope(dictionary);
 
-			if (Objects.equals(configurationScope.getValue(), "company")) {
-				safeCloseable = CompanyThreadLocal.setWithSafeCloseable(
-					_getCompanyIdFromConfiguration(
-						configurationScope, dictionary, file.getName()));
+				if (Objects.equals(configurationScope.getValue(), "company")) {
+					safeCloseable = CompanyThreadLocal.setWithSafeCloseable(
+						_getCompanyIdFromConfiguration(
+							configurationScope, dictionary, file.getName()));
+				}
 			}
 		}
 

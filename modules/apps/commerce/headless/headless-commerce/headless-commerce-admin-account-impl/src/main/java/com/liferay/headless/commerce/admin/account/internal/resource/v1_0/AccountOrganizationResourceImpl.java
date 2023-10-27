@@ -14,7 +14,6 @@ import com.liferay.headless.commerce.admin.account.dto.v1_0.Account;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountOrganization;
 import com.liferay.headless.commerce.admin.account.internal.util.v1_0.AccountOrganizationUtil;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountOrganizationResource;
-import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -251,8 +250,5 @@ public class AccountOrganizationResourceImpl
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;
-
-	@Reference
-	private ServiceContextHelper _serviceContextHelper;
 
 }

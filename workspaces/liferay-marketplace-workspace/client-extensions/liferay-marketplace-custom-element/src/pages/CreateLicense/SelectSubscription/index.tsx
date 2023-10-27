@@ -8,11 +8,12 @@ import {useCallback, useEffect, useState} from 'react';
 import RadioCardList, {
 	RadioCardContent,
 } from '../../../components/RadioCardList/RadioCardList';
+import {formatDate} from '../../PublishedAppsDashboard/PublishedDashboardPageUtil';
 
 interface SubscriptionSelectionProps {
 	licenseKeyData: any;
-	onSelectSubscription: (subscription: string) => void;
-	selectedSubscriptionValue?: string;
+	onSelectSubscription: (subscription: any) => void;
+	selectedSubscriptionValue?: any;
 }
 
 const SelectSubscription = ({
@@ -26,6 +27,11 @@ const SelectSubscription = ({
 
 	const getSubscriptionList = useCallback(async () => {
 		const contentList = licenseKeyData.map((licenseKey: any) => {
+			const expirationDate =
+				licenseKey.endDate === 'DNE'
+					? 'DNE'
+					: formatDate(licenseKey.endDate);
+
 			const contentValue = {
 				description: (
 					<small className="text-success">
@@ -33,10 +39,12 @@ const SelectSubscription = ({
 						of {licenseKey.provisionedCount}
 					</small>
 				),
-				label: `${licenseKey.startDate} - ${licenseKey.endDate}`,
-				selected: selectedSubscriptionValue === licenseKey.name,
+				label: `${formatDate(
+					licenseKey.startDate
+				)} - ${expirationDate}`,
+				selected: selectedSubscriptionValue?.name === licenseKey.name,
 				title: <h3 className="mt-0">{licenseKey.name}</h3>,
-				value: licenseKey.name,
+				value: licenseKey,
 			};
 
 			return contentValue;
@@ -49,8 +57,8 @@ const SelectSubscription = ({
 		getSubscriptionList();
 	}, [getSubscriptionList]);
 
-	const handleSelect = (radioOption: RadioOption<String>) => {
-		onSelectSubscription(String(radioOption.value));
+	const handleSelect = (radioOption: RadioOption<any>) => {
+		onSelectSubscription(radioOption.value);
 
 		setSubscription((previousValue) =>
 			previousValue.map((subscription, index) => ({

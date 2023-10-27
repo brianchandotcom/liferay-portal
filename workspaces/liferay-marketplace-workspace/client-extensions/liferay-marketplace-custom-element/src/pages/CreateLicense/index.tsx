@@ -19,15 +19,11 @@ import ProductCard from '../GetAppPage/components/ProductCard/ProductCard';
 import StepWizard from '../GetAppPage/components/StepWizard/StepWizard';
 import useGetProductById from '../GetAppPage/hooks/useGetProductById';
 import useGetProductCreatorAccount from '../GetAppPage/hooks/useGetProductCreatorAccount';
+import {formatDate} from '../PublishedAppsDashboard/PublishedDashboardPageUtil';
 import AccountEmailInfo from './AccountInfo';
 import LicenseDetails from './LicenseDetails';
 import SelectSubscription from './SelectSubscription';
-import {
-	CreateLicenseForm,
-	LicenseKeyProps,
-	StepCreateLicense,
-	StepsInformation,
-} from './Types';
+import {CreateLicenseForm, StepCreateLicense, StepsInformation} from './Types';
 
 const CreateLicense = () => {
 	const [step, setStep] = useState<string>(StepCreateLicense.SUBSCRIPTION);
@@ -43,21 +39,8 @@ const CreateLicense = () => {
 
 	const productCreatorAccount = useGetProductCreatorAccount(product);
 
-	const licenseKeyData = [
-		{
-			endDate: 'DNE',
-			name: 'standard',
-			perpetual: true,
-			productPurchasedKey: 'KOR-26360233',
-			provisionedCount: 0,
-			purchasedCount: 3,
-			startDate: '2023-10-24T21:18:43Z',
-		},
-	];
-
 	const {
 		formState: {errors, isSubmitting},
-		handleSubmit,
 		register,
 		setValue,
 		watch,
@@ -66,6 +49,7 @@ const CreateLicense = () => {
 			IP: '',
 			description: '',
 			hostName: '',
+			licenseKeyData: undefined,
 			macAddresses: '',
 			subscription: undefined,
 		},
@@ -77,14 +61,44 @@ const CreateLicense = () => {
 		if (product) {
 			const {familyName, givenName} = myUserAccount;
 
+			const licenseKeyDataValue = [
+				{
+					endDate: 'DNE',
+					name: 'standard',
+					perpetual: true,
+					productPurchasedKey: 'KOR-26360233',
+					provisionedCount: 0,
+					purchasedCount: 3,
+					startDate: '2023-10-24T21:18:43Z',
+				},
+				{
+					endDate: '2024-10-24T21:18:43Z',
+					name: 'developer',
+					perpetual: false,
+					productPurchasedKey: 'KOR-26360233',
+					provisionedCount: 0,
+					purchasedCount: 3,
+					startDate: '2023-10-24T21:18:43Z',
+				},
+			];
+
+			setValue('licenseKeyData', licenseKeyDataValue);
+
 			setValue(
 				'description',
-				`${givenName} ${familyName} - ${product?.name.en_US} - skuOptionValue`
+				`${givenName} ${familyName} - ${product?.name.en_US} - ${licenseKeyDataValue[0].name}`
 			);
 		}
 	}, [myUserAccount, product, setValue]);
 
-	const {IP, description, hostName, macAddresses, subscription} = watch();
+	const {
+		IP,
+		description,
+		hostName,
+		licenseKeyData,
+		macAddresses,
+		subscription,
+	} = watch();
 
 	const disableGenerateButton =
 		(IP === '' && hostName === '' && macAddresses === '') ||
@@ -96,19 +110,13 @@ const CreateLicense = () => {
 		required: true,
 	};
 
-	const SelectedLicenseKeyInfo: LicenseKeyProps = {
-		endDate: 'Oct 24, 2024',
-		keyType: 'skuOption',
-		startDate: 'Sep 24, 2023',
-	};
-
 	const stepsInformation: StepsInformation = {
 		[StepCreateLicense.SUBSCRIPTION]: {
 			backStep: StepCreateLicense.SUBSCRIPTION,
 			component: (
 				<SelectSubscription
 					licenseKeyData={licenseKeyData}
-					onSelectSubscription={(subscription: string) => {
+					onSelectSubscription={(subscription: any) => {
 						setValue('subscription', subscription);
 					}}
 					selectedSubscriptionValue={subscription}
@@ -134,7 +142,7 @@ const CreateLicense = () => {
 					Key type
 				</small>
 				<small className="col-6 col-md-4 subscription-banner-text">
-					{SelectedLicenseKeyInfo.keyType}
+					{subscription?.name}
 				</small>
 			</div>
 
@@ -143,8 +151,8 @@ const CreateLicense = () => {
 					Start Date - Exp. Date
 				</small>
 				<small className="col-6 col-md-4 subscription-banner-text text-nowrap">
-					{SelectedLicenseKeyInfo.startDate} &ndash;{' '}
-					{SelectedLicenseKeyInfo.endDate}
+					{formatDate(subscription?.startDate)} &ndash;{' '}
+					{subscription?.endDate}
 				</small>
 			</div>
 		</>
@@ -184,6 +192,8 @@ const CreateLicense = () => {
 			);
 
 			licenseKey.id = 12345;
+
+			console.log('licenseKey', licenseKey);
 
 			const downloadedKey = await ProvisioningKoroneikiOAuth2.downloadLicenseKey(
 				licenseKey.id
@@ -245,7 +255,7 @@ const CreateLicense = () => {
 					onClickCustomizedButton={() =>
 						setStep(StepCreateLicense.SUBSCRIPTION)
 					}
-					onClickNext={handleSubmit(handleNextButton)}
+					onClickNext={() => handleNextButton(watch())}
 				/>
 			</div>
 		</div>

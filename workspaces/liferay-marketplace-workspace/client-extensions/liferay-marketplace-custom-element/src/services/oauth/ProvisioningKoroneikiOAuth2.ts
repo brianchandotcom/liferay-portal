@@ -16,16 +16,36 @@ class ProvisioningKoroneikiOAuth2 extends OAuth2Client {
 	}
 
 	async getLicenseKeys(orderId: number) {
+		// const response = await this.oAuth2Client.fetch(
+		// 	`/koroneiki/license-keys/${orderId}`,
+		// 	{
+		// 		method: 'GET',
+		// 	}
+		// );
+
+		// return response
+
+		// eslint-disable-next-line no-console
+		console.log('orderIdAPI', orderId);
+
 		return [
 			{
-				endDate: new Date().toISOString(),
-				id: 54333,
-				orderId,
+				endDate: 'DNE',
+				name: 'standard',
 				perpetual: true,
-				provisionedCount: 2,
+				productPurchasedKey: 'KOR-26360233',
+				provisionedCount: 0,
 				purchasedCount: 3,
-				startDate: new Date().toISOString(),
-				subscriptionName: 'Trial',
+				startDate: '2023-10-24T21:18:43Z',
+			},
+			{
+				endDate: '2024-10-24T21:18:43Z',
+				name: 'developer',
+				perpetual: false,
+				productPurchasedKey: 'KOR-26360233',
+				provisionedCount: 0,
+				purchasedCount: 3,
+				startDate: '2023-10-24T21:18:43Z',
 			},
 		];
 	}
@@ -33,10 +53,32 @@ class ProvisioningKoroneikiOAuth2 extends OAuth2Client {
 	async createLicenseKey(data: any) {
 		await sleep(3000);
 
+		// const payload = {
+		// 	description: 'Redacted',
+		// 	expirationDate: '2122-10-09T00:00:00Z',
+		// 	hostName: 'Redacted',
+		// 	ipAddresses: 'Redacted',
+		// 	licenseType: 'production',
+		// 	macAddresses: 'Redacted',
+		// 	startDate: '2021-11-02T00:00:00Z',
+		// };
+
+		// await this.oAuth2Client.fetch("/provisioning/license-keys", {
+		// 	            body: JSON.stringify(data),
+		// 	            method: "POST"
+		// 	        })
+		// 	    }
+
 		return data;
 	}
 
 	async downloadLicenseKey(id: number) {
+		// await this.oAuth2Client.fetch(`/provisioning/license-keys/${id}/download`, {
+		// 		            body: JSON.stringify(data),
+		// 		            method: "POST"
+		// 		        })
+		// 		    }
+
 		const download = `${id} da license`;
 
 		return download;

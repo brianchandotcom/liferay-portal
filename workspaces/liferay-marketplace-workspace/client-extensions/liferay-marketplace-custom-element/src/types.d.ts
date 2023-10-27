@@ -490,7 +490,3 @@ type APIResponse<Query = any> = {
 	pageSize: number;
 	totalCount: number;
 };
-
-type Subscription = {
-	subscription: string;
-};

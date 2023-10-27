@@ -12,11 +12,10 @@ export type CreateLicenseForm = {
 	IP: string;
 	description: string;
 	hostName: string;
+	licenseKeyData: any;
 	macAddresses: string;
-	subscription: string;
+	subscription: any;
 };
-
-export type LicenseKeyProps = {[key: string]: string};
 
 export type StepsInformationProps = {
 	backStep: string;

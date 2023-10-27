@@ -11,9 +11,11 @@ import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectD
 import com.liferay.object.exception.ObjectFieldSettingValueException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.render.ObjectFieldRenderingContext;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -103,6 +105,15 @@ public class AutoIncrementObjectFieldBusinessType
 			ObjectFieldSettingConstants.NAME_INITIAL_VALUE,
 			ObjectFieldSettingConstants.NAME_PREFIX,
 			ObjectFieldSettingConstants.NAME_SUFFIX);
+	}
+
+	@Override
+	public boolean isVisible(ObjectDefinition objectDefinition) {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-196724")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

@@ -131,6 +131,11 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 	private static Pattern _getPattern(JSONObject jsonObject) {
 		String from = jsonObject.getString("from");
 
+		if (from.contains(StringPool.SLASH)) {
+			return Pattern.compile(
+				StringUtil.replace(from, CharPool.SLASH, "\\/"));
+		}
+
 		if (from.contains(StringPool.OPEN_PARENTHESIS)) {
 			from = from.substring(0, from.indexOf(CharPool.OPEN_PARENTHESIS));
 		}

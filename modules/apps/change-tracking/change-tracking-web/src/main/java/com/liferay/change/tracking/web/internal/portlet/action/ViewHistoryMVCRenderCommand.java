@@ -6,17 +6,10 @@
 package com.liferay.change.tracking.web.internal.portlet.action;
 
 import com.liferay.change.tracking.constants.CTPortletKeys;
-import com.liferay.change.tracking.model.CTCollection;
-import com.liferay.change.tracking.service.CTCollectionLocalService;
-import com.liferay.change.tracking.service.CTProcessService;
-import com.liferay.change.tracking.service.CTSchemaVersionLocalService;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.web.internal.display.context.ViewHistoryDisplayContext;
-import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 
 import javax.portlet.RenderRequest;
@@ -43,11 +36,8 @@ public class ViewHistoryMVCRenderCommand implements MVCRenderCommand {
 
 		ViewHistoryDisplayContext viewHistoryDisplayContext =
 			new ViewHistoryDisplayContext(
-				_backgroundTaskLocalService, _ctCollectionLocalService,
-				_ctCollectionModelResourcePermission, _ctProcessService,
-				_ctSchemaVersionLocalService,
 				_portal.getHttpServletRequest(renderRequest), _language,
-				renderRequest, renderResponse, _userLocalService);
+				renderRequest, renderResponse);
 
 		renderRequest.setAttribute(
 			CTWebKeys.VIEW_HISTORY_DISPLAY_CONTEXT, viewHistoryDisplayContext);
@@ -56,30 +46,9 @@ public class ViewHistoryMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Reference
-	private BackgroundTaskLocalService _backgroundTaskLocalService;
-
-	@Reference
-	private CTCollectionLocalService _ctCollectionLocalService;
-
-	@Reference(
-		target = "(model.class.name=com.liferay.change.tracking.model.CTCollection)"
-	)
-	private ModelResourcePermission<CTCollection>
-		_ctCollectionModelResourcePermission;
-
-	@Reference
-	private CTProcessService _ctProcessService;
-
-	@Reference
-	private CTSchemaVersionLocalService _ctSchemaVersionLocalService;
-
-	@Reference
 	private Language _language;
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

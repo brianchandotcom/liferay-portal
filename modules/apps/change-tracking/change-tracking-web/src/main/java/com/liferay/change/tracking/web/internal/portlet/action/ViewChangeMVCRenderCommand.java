@@ -114,8 +114,7 @@ public class ViewChangeMVCRenderCommand implements MVCRenderCommand {
 					_ctSchemaVersionLocalService, _groupLocalService, _language,
 					_portal,
 					new PublicationsDisplayContext(
-						_ctCollectionLocalService, _ctCollectionService,
-						_ctDisplayRendererRegistry, _ctEntryLocalService,
+						_ctCollectionLocalService, _ctDisplayRendererRegistry,
 						_ctPreferencesLocalService, _ctRemoteLocalService,
 						_portal.getHttpServletRequest(renderRequest), _language,
 						_publicationHelper, renderRequest, renderResponse),

@@ -1001,7 +1001,7 @@ public class FragmentEntryLocalServiceImpl
 	}
 
 	private String _getUniqueCopyName(FragmentEntry fragmentEntry) {
-		String copy = _language.get(LocaleUtil.getMostRelevantLocale(), "copy");
+		String copy = _language.get(LocaleUtil.getSiteDefault(), "copy");
 
 		String name = StringUtil.appendParentheticalSuffix(
 			fragmentEntry.getName(), copy);

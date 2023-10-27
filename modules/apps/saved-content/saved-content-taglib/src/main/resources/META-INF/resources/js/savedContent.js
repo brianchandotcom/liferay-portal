@@ -19,6 +19,7 @@ export default function SavedContent({
 	className,
 	classPK,
 	contentTitle,
+	enabled = false,
 	mySavedContentURL,
 	portletNamespace,
 	saved: initialSaved = false,
@@ -41,12 +42,15 @@ export default function SavedContent({
 			method: 'POST',
 		})
 			.then((response) => response.json())
-			.then(({errorMessage}) => {
-				if (errorMessage) {
-					showNotification(errorMessage, true);
+			.then((response) => {
+				if (response.errorMessage) {
+					setSaved((saved) => !saved);
+					showNotification(response.errorMessage, true);
 
 					return;
 				}
+
+				setSaved(response.saved.toLowerCase() === 'true');
 
 				const mySavedContentLink = `
 					<a href="${mySavedContentURL}" class="alert-link">${Liferay.Language.get(
@@ -86,7 +90,7 @@ export default function SavedContent({
 						? sub(Liferay.Language.get('remove-x'), contentTitle)
 						: sub(Liferay.Language.get('save-x'), contentTitle)
 				}
-				disabled={loading}
+				disabled={!enabled || loading}
 				displayType="secondary"
 				monospaced
 				size="sm"
@@ -106,8 +110,9 @@ SavedContent.propTypes = {
 	className: PropTypes.string.isRequired,
 	classPK: PropTypes.string.isRequired,
 	contentTitle: PropTypes.string.isRequired,
+	enabled: PropTypes.bool,
 	mySavedContentURL: PropTypes.string.isRequired,
-	portletNamespace: PropTypes.string,
+	portletNamespace: PropTypes.string.isRequired,
 	saved: PropTypes.bool,
 	savedContentURL: PropTypes.string.isRequired,
 };

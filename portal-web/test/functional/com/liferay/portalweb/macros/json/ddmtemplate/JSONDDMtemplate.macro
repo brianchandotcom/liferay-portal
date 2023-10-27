@@ -59,11 +59,14 @@ definition {
 	}
 
 	macro addWidgetTemplate {
-		Variables.assertDefined(parameterList = "${groupName},${itemType},${name}");
+		Variables.assertDefined(parameterList = "${itemType},${name}");
 
-		var groupId = JSONDDMtemplateSetter.setGroupId(
-			groupName = ${groupName},
-			site = ${site});
+		if (!(isSet(groupId))) {
+			var groupId = JSONDDMtemplateSetter.setGroupId(
+				groupName = ${groupName},
+				site = ${site});
+		}
+
 		var classNameId = JSONDDMtemplateSetter.setClassNameId(itemType = ${itemType});
 		var descriptionMap = JSONDDMtemplateSetter.setDescriptionMap(description = ${description});
 		var nameMap = JSONDDMtemplateSetter.setNameMap(title = ${name});

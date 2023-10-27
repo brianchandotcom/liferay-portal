@@ -55,6 +55,7 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 			UpgradeCatchAllCheck.getExpectedMessages());
 		test("upgrade/UpgradeCatchAllCheck.testjsp");
 		test("upgrade/UpgradeCatchAllCheck.testjspf");
+		test("upgrade/UpgradeCatchAllCheck.testscss");
 	}
 
 	@Test

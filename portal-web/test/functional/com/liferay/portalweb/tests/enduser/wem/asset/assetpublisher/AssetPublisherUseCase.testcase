@@ -6,10 +6,6 @@ definition {
 	property portal.upstream = "true";
 	property testray.main.component.name = "Asset Publisher";
 
-	static var randomSiteName = StringUtil.randomString(8);
-
-	var siteURLKey = StringUtil.toLowerCase(${randomSiteName});
-
 	setUp {
 		task ("Set up virtual instance") {
 			TestCase.setUpPortalInstance();
@@ -20,18 +16,18 @@ definition {
 		}
 
 		task ("Add a site") {
-			HeadlessSite.addSite(siteName = ${randomSiteName});
+			HeadlessSite.addSite(siteName = "Test Site Name");
 		}
 
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				layoutName = "Asset Publisher Page");
 		}
 
 		task ("Add an Asset Publisher to page") {
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				layoutName = "Asset Publisher Page",
 				widgetName = "Asset Publisher");
 		}
@@ -290,7 +286,7 @@ definition {
 		task ("Add a draft web content via Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			WebContent.addDraftPGViaAP(
 				webContentContent = "WC WebContent Content",
@@ -298,7 +294,7 @@ definition {
 		}
 
 		task ("View the draft web content in Web Content admin") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoViewStatus(
 				webContentStatus = "DRAFT",
@@ -318,12 +314,12 @@ definition {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
 				displayPageTemplateEntryName = "Display Page Name",
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				subType = "Basic Web Content");
 		}
 
 		task ("Add an Asset Publisher widget to display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
 
 			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
 
@@ -369,7 +365,7 @@ definition {
 		task ("Configure the Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Print");
 		}
@@ -405,13 +401,13 @@ definition {
 
 		task ("Assign the new user to site") {
 			JSONUser.addUserToSite(
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
 		}
 
 		task ("Assign the Site Administrator to new user") {
 			JSONRole.assignSiteRoleToUser(
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				roleTitle = "Site Administrator",
 				userEmailAddress = StringUtil.toLowerCase("${userEmailAddress}@liferay.com"));
 		}
@@ -423,7 +419,7 @@ definition {
 		task ("View the Asset Publisher using Collection") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssertVisible(
 				key_portletName = "Asset Publisher",
@@ -442,7 +438,7 @@ definition {
 		task ("Configure the Asset Publisher to Manual Selection") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.configureManualAssetSelectionPG();
 		}
@@ -450,7 +446,7 @@ definition {
 		task ("View the Asset Publisher using Manual Selection") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.viewManualAssetSelectionConfigurationPG();
 		}
@@ -465,7 +461,7 @@ definition {
 		task ("Disable Show Add Content Button") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.configureAssetLinkBehaviorPG(
 				assetLinkBehavior = "View on New Page",
@@ -475,7 +471,7 @@ definition {
 		task ("View the plus icon is hidden in Asset Publisher topper") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.viewPlusIconNotPresentPG();
 		}
@@ -489,7 +485,7 @@ definition {
 
 		task ("Add a dynamic collection for Web Content Article and Basic Web Content") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				itemSubtype = "Basic Web Content",
 				itemType = "Web Content Article",
 				title = "Dynamic Collection");
@@ -498,14 +494,14 @@ definition {
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				title = "Web Content Title");
 		}
 
 		task ("Select the dynamic collection in Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.gotoSelectCollection();
 
@@ -536,7 +532,7 @@ definition {
 		task ("View no assets shown in Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.viewManualNoAssetsMessagePG();
 		}
@@ -548,7 +544,7 @@ definition {
 		task ("View the global web content shown in Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.viewAssetPG(
 				assetContent = "WC WebContent Content",
@@ -580,21 +576,21 @@ definition {
 
 		task ("Add a Message Boards to page") {
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				layoutName = "Asset Publisher Page",
 				widgetName = "Message Boards");
 		}
 
 		task ("Add a message board thread") {
 			JSONMBMessage.addMessage(
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				threadBody = "MB Thread Message Body",
 				threadSubject = "MB Thread Message Subject");
 		}
 
 		task ("Add a reply under thread") {
 			JSONMBMessage.addMessageReply(
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				replyBody = "MB Thread Reply Body",
 				threadSubject = "MB Thread Message Subject");
 		}
@@ -602,7 +598,7 @@ definition {
 		task ("Select the message board thread in Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.configureSelectedPG(selectedAsset = "Message Boards Message");
 		}
@@ -610,7 +606,7 @@ definition {
 		task ("Edit the reply via Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			MessageboardsThread.editReplyViaAP(
 				threadBody = "MB Thread Reply Body Edit",
@@ -632,13 +628,13 @@ definition {
 
 		task ("Add a Language Selector to page") {
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				layoutName = "Asset Publisher Page",
 				widgetName = "Language Selector");
 		}
 
 		task ("Add a web content structure with multiple fields") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -648,7 +644,7 @@ definition {
 		}
 
 		task ("Add the first web content based on new structure") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
 
@@ -714,7 +710,7 @@ definition {
 		}
 
 		task ("Add the second structure with Text field") {
-			WebContentStructures.openWebContentStructuresAdmin(siteURLKey = ${siteURLKey});
+			WebContentStructures.openWebContentStructuresAdmin(siteURLKey = "test-site-name");
 
 			WebContentStructures.addCP(structureName = "WC Structure1 Name");
 
@@ -724,7 +720,7 @@ definition {
 		}
 
 		task ("Add the fifth web content based on the second structure") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure1 Name");
 
@@ -738,7 +734,7 @@ definition {
 		task ("View available filter fields of the first structure") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.viewFilterAndFieldsPG(
 				assetSubtype = "WC Structure Name",
@@ -749,7 +745,7 @@ definition {
 		task ("Filter assets by Numeric field") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.configureFilterByFieldPG(
 				assetSubtype = "WC Structure Name",
@@ -761,7 +757,7 @@ definition {
 		task ("Order assets by Numeric field") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.configureAssetDisplayOrderPG(
 				fieldNameOrder = "Numeric",
@@ -771,7 +767,7 @@ definition {
 		task ("View the displayed assets in en-US") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			var n = 1;
 
@@ -791,7 +787,7 @@ definition {
 
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			var n = 1;
 
@@ -813,7 +809,7 @@ definition {
 		task ("Change the subtype to Any") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.configureAssetTypePG(
 				assetSubtype = "Any",
@@ -823,7 +819,7 @@ definition {
 		task ("View the displayed assets") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.viewAssetPG(
 				assetContent = 345,
@@ -856,7 +852,7 @@ definition {
 		task ("View the displayed assets") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.viewAssetPG(
 				assetContent = 345,
@@ -880,7 +876,7 @@ definition {
 		}
 
 		task ("Disable the Searchable of the first structure's fields") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -898,7 +894,7 @@ definition {
 		task ("View no available filter fields of the first structure") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.viewFilterAndFieldsPG(
 				assetSubtype = "WC Structure Name",
@@ -914,13 +910,13 @@ definition {
 
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				title = "Vocabulary Name");
 		}
 
 		task ("Add a category") {
 			var categoryId = JSONCategory.addCategory(
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				title = "Vocabulary1 Category",
 				vocabularyName = "Vocabulary Name");
 		}
@@ -930,14 +926,14 @@ definition {
 				JSONWebcontent.addWebContent(
 					assetCategoryIds = ${categoryId},
 					content = "WC WebContent${i} Content",
-					groupName = ${randomSiteName},
+					groupName = "Test Site Name",
 					title = "WC WebContent${i} Title");
 			}
 		}
 
 		task ("Add a Categories Navigation to page") {
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				layoutName = "Asset Publisher Page",
 				widgetName = "Category Filter");
 		}
@@ -945,7 +941,7 @@ definition {
 		task ("Configure the pagination type to Regular") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.configurePaginationPG(
 				paginationNumber = 3,
@@ -955,7 +951,7 @@ definition {
 		task ("View the number of displayed assets in Page 1") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.viewPaginatedAssetsPG(
 				nextPageClick = "true",
@@ -976,7 +972,7 @@ definition {
 		task ("Configure the ordering") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.configureAssetDisplayOrderPG(
 				fieldNameOrder = "Modified Date",
@@ -986,7 +982,7 @@ definition {
 		task ("Filter assets by category") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			Category.viewFilterViaCategoriesNavigationPG(
 				categoryName = "Vocabulary1 Category",
@@ -1051,7 +1047,7 @@ definition {
 		task ("Given a page creator has an Asset Publisher and Blogs widget with scoped page") {
 			task ("Add a Blogs widget to page") {
 				JSONLayout.addWidgetToPublicLayout(
-					groupName = ${randomSiteName},
+					groupName = "Test Site Name",
 					layoutName = "Asset Publisher Page",
 					widgetName = "Blogs");
 			}
@@ -1059,7 +1055,7 @@ definition {
 			task ("Select current page as Scope on Blogs widget") {
 				Navigator.gotoSitePage(
 					pageName = "Asset Publisher Page",
-					siteName = ${randomSiteName});
+					siteName = "Test Site Name");
 
 				Portlet.selectScopePG(
 					portletIndex = 2,
@@ -1092,7 +1088,7 @@ definition {
 		task ("When the page creator configures the scope and source of Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.configureScope(pageName = "Asset Publisher Page");
 
@@ -1128,7 +1124,7 @@ definition {
 	@priority = 4
 	test FilterDocumentsByField {
 		task ("Add a document type with a Select from List field") {
-			DMDocument.openDocumentsAndMediaAdmin(siteURLKey = ${siteURLKey});
+			DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
 			DMNavigator.gotoDocumentType();
 
@@ -1167,14 +1163,14 @@ definition {
 
 		task ("Add a dynamic collection for Document and new document type") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				itemSubtype = "Document Type Name",
 				itemType = "Document",
 				title = "Dynamic Collection");
 		}
 
 		task ("Filter by Option 1 from Select from List field") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = ${siteURLKey});
+			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name");
 
 			AssetListsAdmin.editAssetList(assetListTitle = "Dynamic Collection");
 
@@ -1205,7 +1201,7 @@ definition {
 		task ("View both documents are shown in Asset Publisher by default") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			for (var title : list "1,2") {
 				AssetPublisherPortlet.viewAssetPG(
@@ -1238,7 +1234,7 @@ definition {
 		property test.run.type = "single";
 
 		task ("Stop and start com.liferay.layout.type.controller.portlet bundle via GogoShell") {
-			GogoShell.openGogoShellAdmin(siteURLKey = ${siteURLKey});
+			GogoShell.openGogoShellAdmin(siteURLKey = "test-site-name");
 
 			var moduleId = GogoShell.getModuleID(moduleName = "com.liferay.layout.type.controller.portlet");
 
@@ -1259,7 +1255,7 @@ definition {
 			for (var n : list "1,2,3") {
 				JSONWebcontent.addWebContent(
 					content = "Web Content Content",
-					groupName = ${randomSiteName},
+					groupName = "Test Site Name",
 					title = "Web Content Title ${n}");
 			}
 		}
@@ -1267,7 +1263,7 @@ definition {
 		task ("Select all web contents as manual selection in Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.configureManualAssetSelectionPG(
 				assetType = "Basic Web Content",
@@ -1318,7 +1314,7 @@ definition {
 			task ("Add two content pages") {
 				for (var i : list "1,2") {
 					JSONLayout.addPublicLayout(
-						groupName = ${randomSiteName},
+						groupName = "Test Site Name",
 						layoutName = "Test Page Name ${i}",
 						type = "content");
 				}
@@ -1328,7 +1324,7 @@ definition {
 				for (var i : list "1,2") {
 					ContentPagesNavigator.openEditContentPage(
 						pageName = "Test Page Name ${i}",
-						siteName = ${randomSiteName});
+						siteName = "Test Site Name");
 
 					PageEditor.addWidget(portletName = "Asset Publisher");
 
@@ -1339,7 +1335,7 @@ definition {
 			task ("Select Content Editing") {
 				ContentPagesNavigator.openEditContentPage(
 					pageName = "Test Page Name 2",
-					siteName = ${randomSiteName});
+					siteName = "Test Site Name");
 
 				Click(locator1 = "PageEditor#EDIT_MODE_SELECTOR");
 
@@ -1357,12 +1353,12 @@ definition {
 			task ("Add a web content") {
 				JSONWebcontent.addWebContent(
 					content = "Web Content Content",
-					groupName = ${randomSiteName},
+					groupName = "Test Site Name",
 					title = "Web Content Title");
 			}
 
 			task ("Select the second page as display template in the web content") {
-				WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
+				WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 				WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -1378,7 +1374,7 @@ definition {
 		task ("When the page creator republish the associated content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name 2",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			PortletEntry.publish();
 		}
@@ -1386,7 +1382,7 @@ definition {
 		task ("Then page creator should be redirected to the associated content page after clicking the web content title on Asset Publisher") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Page Name 1",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Web Content Title");
 
@@ -1405,11 +1401,11 @@ definition {
 			JSONWebcontent.addFolder(
 				folderDescription = "WC Folder Description",
 				folderName = "WC Folder Name",
-				groupName = ${randomSiteName});
+				groupName = "Test Site Name");
 		}
 
 		task ("Add a web content structure with a Text field") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			NavItem.gotoStructures();
 
@@ -1425,7 +1421,7 @@ definition {
 		task ("Add a web content based on new structure via Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.addAsset(assetType = "WC Structure Name");
 		}
@@ -1462,7 +1458,7 @@ definition {
 		}
 
 		task ("Navigate to the new folder in Web Content admin") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentFolder.gotoCP(
 				folderName = "WC Folder Name",
@@ -1483,13 +1479,13 @@ definition {
 			JSONWebcontent.addFolder(
 				folderDescription = "WC Folder Description",
 				folderName = "WC Folder Name",
-				groupName = ${randomSiteName});
+				groupName = "Test Site Name");
 		}
 
 		task ("Add a web content based on Basic Web Content via Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.addAsset(assetType = "Basic Web Content");
 		}
@@ -1524,7 +1520,7 @@ definition {
 		}
 
 		task ("Navigate to the new folder in Web Content admin") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentFolder.gotoCP(
 				folderName = "WC Folder Name",
@@ -1545,7 +1541,7 @@ definition {
 		task ("Set the Asset Publisher as default for this page") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Set as the Default Asset Publisher for This Page");
 		}
@@ -1553,12 +1549,12 @@ definition {
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				title = "Web Content Title");
 		}
 
 		task ("Select a display page in web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -1573,7 +1569,7 @@ definition {
 		task ("View web content is shown in Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			WebContent.viewPGViaAP(
 				webContentContent = "Web Content Content",
@@ -1586,13 +1582,13 @@ definition {
 	test ViewAssetsFilterByTagOrCategoryInAssetPublisher {
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				title = "Vocabulary Name");
 		}
 
 		task ("Add a category") {
 			var categoryId = JSONCategory.addCategory(
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				title = "Category Name",
 				vocabularyName = "Vocabulary Name");
 		}
@@ -1600,7 +1596,7 @@ definition {
 		task ("Add the first wiki page with category") {
 			JSONWiki.addWikiPage(
 				assetCategoryIds = ${categoryId},
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				wikiNodeName = "Main",
 				wikiPageContent = "Wiki Page Content 1",
 				wikiPageName = "Wiki Page Name 1");
@@ -1608,7 +1604,7 @@ definition {
 
 		task ("Add the second wiki page with tag") {
 			JSONWiki.addWikiPage(
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				tagName = "tagname",
 				wikiNodeName = "Main",
 				wikiPageContent = "Wiki Page Content 2",
@@ -1619,7 +1615,7 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetCategoryIds = ${categoryId},
 				content = "Web Content Content 1",
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				title = "Web Content Title 1");
 		}
 
@@ -1627,14 +1623,14 @@ definition {
 			JSONWebcontent.addWebContent(
 				assetTagNames = "tagname",
 				content = "Web Content Content 2",
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				title = "Web Content Title 2");
 		}
 
 		task ("Filter assets by category in Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.configureCategoriesFilterPG(
 				categoryName = "Category Name",
@@ -1644,7 +1640,7 @@ definition {
 		task ("View displayed content in Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.viewAssetNotPresentPG(
 				assetContent = "Wiki Page Content 2",
@@ -1666,7 +1662,7 @@ definition {
 		task ("Filter assets by tag in Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.configureTagsFilterPG(tagNameList = "tagname");
 		}
@@ -1674,7 +1670,7 @@ definition {
 		task ("View displayed content in Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.viewAssetPG(
 				assetContent = "Wiki Page Content 2",
@@ -1699,27 +1695,25 @@ definition {
 	test ViewAssetsFromDefinedSiteScope {
 		property portal.acceptance = "true";
 
-		var siteName = StringUtil.randomString(8);
-
 		task ("Add a new site") {
-			HeadlessSite.addSite(siteName = ${siteName});
+			HeadlessSite.addSite(siteName = "Site Name");
 		}
 
 		task ("Add a widget page") {
 			JSONLayout.addPublicLayout(
-				groupName = ${siteName},
+				groupName = "Site Name",
 				layoutName = "Site Page");
 		}
 
 		task ("Add an Asset Publisher to page") {
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = ${siteName},
+				groupName = "Site Name",
 				layoutName = "Site Page",
 				widgetName = "Asset Publisher");
 		}
 
 		task ("Add web contents to different sites") {
-			for (var name : list "${randomSiteName},${siteName},Global") {
+			for (var name : list "Test Site Name,Site Name,Global") {
 				JSONWebcontent.addWebContent(
 					content = "${name} WC Content",
 					groupName = ${name},
@@ -1730,13 +1724,13 @@ definition {
 		task ("View displayed assets in Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Site Page",
-				siteName = ${siteName});
+				siteName = "Site Name");
 
 			AssetPublisherPortlet.viewAssetPG(
-				assetContent = "${siteName} WC Content",
-				assetTitle = "${siteName} WC Title");
+				assetContent = "Site Name WC Content",
+				assetTitle = "Site Name WC Title");
 
-			for (var name : list "${randomSiteName},Global") {
+			for (var name : list "Test Site Name,Global") {
 				AssetPublisherPortlet.viewAssetNotPresentPG(
 					assetContent = "${name} WC Content",
 					assetTitle = "${name} WC Title");
@@ -1750,33 +1744,33 @@ definition {
 		task ("View displayed assets in Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Site Page",
-				siteName = ${siteName});
+				siteName = "Site Name");
 
-			for (var name : list "${siteName},Global") {
+			for (var name : list "Site Name,Global") {
 				AssetPublisherPortlet.viewAssetPG(
 					assetContent = "${name} WC Content",
 					assetTitle = "${name} WC Title");
 			}
 
 			AssetPublisherPortlet.viewAssetNotPresentPG(
-				assetContent = "${randomSiteName} WC Content",
-				assetTitle = "${randomSiteName} WC Title");
+				assetContent = "Test Site Name WC Content",
+				assetTitle = "Test Site Name WC Title");
 		}
 
 		task ("Remove the Global site from Site Scope") {
-			AssetPublisherPortlet.removeSiteScope(removeSiteScopes = ${siteName});
+			AssetPublisherPortlet.removeSiteScope(removeSiteScopes = "Site Name");
 		}
 
 		task ("View displayed assets in Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Site Page",
-				siteName = ${siteName});
+				siteName = "Site Name");
 
 			AssetPublisherPortlet.viewAssetPG(
 				assetContent = "Global WC Content",
 				assetTitle = "Global WC Title");
 
-			for (var name : list "${siteName},${randomSiteName}") {
+			for (var name : list "Site Name,Test Site Name") {
 				AssetPublisherPortlet.viewAssetNotPresentPG(
 					assetContent = "${name} WC Content",
 					assetTitle = "${name} WC Title");
@@ -1790,7 +1784,7 @@ definition {
 		task ("Given a user accesses to a page with an Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 		}
 
 		task ("When the user opens the dropdown menu of Display Template selector in Asset Publisher") {
@@ -1852,14 +1846,14 @@ definition {
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				title = "Web Content Title");
 		}
 
 		task ("The View details link is not shown in details page when use default template") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.viewAssetDetailsPG(
 				assetContent = "Web Content Content",
@@ -1913,7 +1907,7 @@ definition {
 		}
 
 		task ("Add a document type in normal site") {
-			DMDocument.openDocumentsAndMediaAdmin(siteURLKey = ${siteURLKey});
+			DMDocument.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
 
 			DMNavigator.gotoDocumentType();
 
@@ -1926,7 +1920,7 @@ definition {
 		task ("View document types shown in manual selection") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.configureManualAssetSelectionPG();
 
@@ -1971,7 +1965,7 @@ definition {
 		task ("Add the Global site to Site Scope") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.configureScope(globalSite = "true");
 		}
@@ -1979,7 +1973,7 @@ definition {
 		task ("View the global web content shown in Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.viewAssetPG(
 				assetContent = "WC WebContent Text",
@@ -1991,19 +1985,19 @@ definition {
 	@priority = 4
 	test ViewInContextTranslatedWCWithFriendlyURL {
 		JSONLayout.addWidgetToPublicLayout(
-			groupName = ${randomSiteName},
+			groupName = "Test Site Name",
 			layoutName = "Asset Publisher Page",
 			widgetName = "Language Selector");
 
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",
-			siteName = ${randomSiteName});
+			siteName = "Test Site Name");
 
 		AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Set as the Default Asset Publisher for This Page");
 
 		AssetPublisherPortlet.configureAssetLinkBehaviorPG(assetLinkBehavior = "View on New Page");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -2029,7 +2023,7 @@ definition {
 
 		Navigator.gotoSitePage(
 			pageName = "Asset Publisher Page",
-			siteName = ${randomSiteName});
+			siteName = "Test Site Name");
 
 		AssetPublisherPortlet.clickAssetTitle(assetTitle = "WC WebContent English Title");
 
@@ -2055,13 +2049,13 @@ definition {
 	test ViewLocalizedWebContentWithLocalizedCategories {
 		task ("Add a vocabulary with localized title") {
 			JSONCategory.addVocabulary(
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				titleMap = "en_US:Vocabulary Name,de_DE:Vokabular Namen,fr_FR:Nom Vocabulaire");
 		}
 
 		task ("Add a category with localized title") {
 			var categoryId = JSONCategory.addCategory(
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				titleMap = "en_US:Vocabulary1 Category,de_DE:Kategorienamen,fr_FR:Nom de la Categorie",
 				vocabularyName = "Vocabulary Name");
 		}
@@ -2070,13 +2064,13 @@ definition {
 			JSONWebcontent.addBasicWebContentLocalized(
 				assetCategoryIds = ${categoryId},
 				contentMap = "en_US:Web Content1 Content,de_DE:Netz Content1 Inhalt,fr_FR:Contenu de Contenu Web1",
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				titleMap = "en_US:Web Content1 Title,de_DE:Netz Content1 Titel,fr_FR:Titre de Contenu Web1");
 		}
 
 		task ("Add a Language Selector to page") {
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				layoutName = "Asset Publisher Page",
 				widgetName = "Language Selector");
 		}
@@ -2084,7 +2078,7 @@ definition {
 		task ("Configure Asset Publisher to show Categories") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.configureShowMetadataFieldsPG(
 				addMetadata = "true",
@@ -2097,7 +2091,7 @@ definition {
 		task ("View displayed content in en-US") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.viewAssetPG(
 				assetContent = "Web Content1 Content",
@@ -2146,7 +2140,7 @@ definition {
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content",
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				title = "WC WebContent Title");
 		}
 
@@ -2157,7 +2151,7 @@ definition {
 		task ("View no console error thrown when refresh page") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			Refresh();
 
@@ -2174,12 +2168,12 @@ definition {
 		task ("Add a normal web content") {
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content 1",
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				title = "WC WebContent Title 1");
 		}
 
 		task ("Add a non-searchable web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -2199,7 +2193,7 @@ definition {
 		task ("Assert both web contents are present in AP") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			for (var i : list "1,2") {
 				AssetPublisherPortlet.viewAssetPG(
@@ -2219,7 +2213,7 @@ definition {
 		task ("Assert both web contents are present in AP") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			for (var i : list "1,2") {
 				AssetPublisherPortlet.viewAssetPG(
@@ -2250,7 +2244,7 @@ definition {
 		task ("Enable the Subscribe in the Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Subscribe");
 
@@ -2264,7 +2258,7 @@ definition {
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "Web Content Content",
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				title = "Web Content Title");
 		}
 
@@ -2332,14 +2326,14 @@ catch (Exception e) {
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content",
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				title = "WC WebContent Title");
 		}
 
 		task ("Enable display conversions") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.configureDisplayConversionsPG(
 				check = "true",
@@ -2349,7 +2343,7 @@ catch (Exception e) {
 		task ("View conversions links") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			WebContent.viewConversionLinksPGViaAP(
 				documentTypes = "doc,odt,pdf,rtf,sxw,txt",
@@ -2360,7 +2354,7 @@ catch (Exception e) {
 		task ("Disable some display conversions") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.configureDisplayConversionsPG(
 				documentTypes = "odt,rtf,sxw",
@@ -2370,7 +2364,7 @@ catch (Exception e) {
 		task ("View conversions links") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			WebContent.viewConversionLinksPGViaAP(
 				documentTypes = "doc,pdf,txt",
@@ -2386,7 +2380,7 @@ catch (Exception e) {
 		task ("Display the rest display conversions") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.configureDisplayConversionsPG(
 				documentTypes = "doc,pdf,txt",
@@ -2396,7 +2390,7 @@ catch (Exception e) {
 		task ("View no conversions links shown") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			WebContent.viewNoConversionLinksPGViaAP(
 				documentTypes = "doc,odt,pdf,rtf,sxw,txt",
@@ -2412,14 +2406,14 @@ catch (Exception e) {
 			for (var i : list "1,2,3") {
 				JSONWebcontent.addWebContent(
 					content = "WC WebContent${i} Content",
-					groupName = ${randomSiteName},
+					groupName = "Test Site Name",
 					title = "WC WebContent${i} Title");
 			}
 		}
 
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				layoutName = "Test Content Page Name",
 				type = "content");
 		}
@@ -2427,7 +2421,7 @@ catch (Exception e) {
 		task ("Add two Asset Publisher widgets to page and configure the pagination type to Regular") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page Name",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			PageEditor.addWidget(portletName = "Asset Publisher");
 
@@ -2454,7 +2448,7 @@ catch (Exception e) {
 		task ("View the pagination in two Asset Publisher widgets") {
 			ContentPagesNavigator.openViewContentPage(
 				pageName = "Test Content Page Name",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			Click(locator1 = "Pagination#NEXT_LINK");
 
@@ -2486,7 +2480,7 @@ catch (Exception e) {
 	test ViewTagInAssetPublisher {
 		task ("Add a Tags Navigation to page") {
 			JSONLayout.addWidgetToPublicLayout(
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				layoutName = "Asset Publisher Page",
 				widgetName = "Tag Filter");
 		}
@@ -2494,7 +2488,7 @@ catch (Exception e) {
 		task ("Configure the Asset Publisher to display tags") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.configureShowMetadataFieldsPG(
 				addMetadata = "true",
@@ -2506,14 +2500,14 @@ catch (Exception e) {
 			JSONWebcontent.addWebContent(
 				assetTagNames = "tag name",
 				content = "Web Content Content",
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				title = "Web Content Title");
 		}
 
 		task ("View the tag of web content in Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			TagsNavigationPortlet.viewDefaultPG(tagNameList = "tag name");
 
@@ -2528,7 +2522,7 @@ catch (Exception e) {
 	@priority = 3
 	test ViewURLWhenPageHasAssetPublisher {
 		task ("Navigate to the page with Asset Publisher") {
-			Navigator.openSiteURL(siteName = ${randomSiteName});
+			Navigator.openSiteURL(siteName = "Test Site Name");
 
 			Click(
 				key_pageName = "Asset Publisher Page",
@@ -2538,7 +2532,7 @@ catch (Exception e) {
 		task ("View the URL") {
 			var baseURL = PropsUtil.get("portal.url");
 
-			AssertLocation(value1 = "${baseURL}/web/${siteURLKey}/asset-publisher-page");
+			AssertLocation(value1 = "${baseURL}/web/test-site-name/asset-publisher-page");
 		}
 	}
 
@@ -2579,7 +2573,7 @@ catch (Exception e) {
 					userEmailAddress = StringUtil.toLowerCase("${userScreenName}@liferay.com"));
 
 				JSONUser.addUserToSite(
-					groupName = ${randomSiteName},
+					groupName = "Test Site Name",
 					userEmailAddress = StringUtil.toLowerCase("${userScreenName}@liferay.com"));
 
 				JSONRole.assignRoleToUser(
@@ -2593,7 +2587,7 @@ catch (Exception e) {
 		}
 
 		task ("Add a web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -2607,7 +2601,7 @@ catch (Exception e) {
 		task ("View the web content author in Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			WebContent.viewPGViaAP(
 				author = "${userScreenName1} ${userScreenName1}",
@@ -2620,7 +2614,7 @@ catch (Exception e) {
 		}
 
 		task ("Modified the web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
 
@@ -2633,7 +2627,7 @@ catch (Exception e) {
 		task ("View the web content author") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			WebContent.viewPGViaAP(
 				author = "${userScreenName2} ${userScreenName2}",
@@ -2647,7 +2641,7 @@ catch (Exception e) {
 	test ViewWebContentInAssociatedPublicContentPage {
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				layoutName = "Content Page Name",
 				type = "content");
 		}
@@ -2655,7 +2649,7 @@ catch (Exception e) {
 		task ("Add an Asset Publisher widget to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Content Page Name",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			PageEditor.addWidget(portletName = "Asset Publisher");
 		}
@@ -2671,12 +2665,12 @@ catch (Exception e) {
 		task ("Add a web content") {
 			JSONWebcontent.addWebContent(
 				content = "Webcontent Content",
-				groupName = ${randomSiteName},
+				groupName = "Test Site Name",
 				title = "Webcontent Title");
 		}
 
 		task ("Select the content page in web content") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEditCP(webContentTitle = "Webcontent Title");
 
@@ -2688,7 +2682,7 @@ catch (Exception e) {
 		}
 
 		task ("View web content in associated public page") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEntryMenuItem(
 				entry = "Webcontent Title",
@@ -2706,7 +2700,7 @@ catch (Exception e) {
 		}
 
 		task ("View the friendly URL shown in address") {
-			AssertLocation.assertPartialLocation(value1 = "web/${siteURLKey}/-/webcontent-title");
+			AssertLocation.assertPartialLocation(value1 = "web/test-site-name/-/webcontent-title");
 		}
 
 		task ("Access to edit the web content via Asset Publisher") {
@@ -2718,7 +2712,7 @@ catch (Exception e) {
 		}
 
 		task ("View the friendly URL shown in address") {
-			AssertLocation.assertPartialLocation(value1 = "web/${siteURLKey}/-/webcontent-title");
+			AssertLocation.assertPartialLocation(value1 = "web/test-site-name/-/webcontent-title");
 		}
 	}
 
@@ -2728,7 +2722,7 @@ catch (Exception e) {
 		task ("Set the Asset Publisher as default for page") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.configureDisplaySettings(displaySettings = "Set as the Default Asset Publisher for This Page");
 		}
@@ -2736,7 +2730,7 @@ catch (Exception e) {
 		task ("Add a web content and associate it to the page") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.addAsset(assetType = "Basic Web Content");
 
@@ -2748,7 +2742,7 @@ catch (Exception e) {
 		}
 
 		task ("View web content in associated public page") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoEntryMenuItem(
 				entry = "WC WebContent Title",
@@ -2775,7 +2769,7 @@ catch (Exception e) {
 		}
 
 		task ("Add a web content with viewable by Site Members") {
-			WebContentNavigator.openWebContentAdmin(siteURLKey = ${siteURLKey});
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 			WebContentNavigator.gotoAddCP();
 
@@ -2790,7 +2784,7 @@ catch (Exception e) {
 		task ("View the web content in Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.viewAssetPG(
 				assetContent = "WC WebContent Content",
@@ -2802,7 +2796,7 @@ catch (Exception e) {
 
 			Navigator.gotoSitePage(
 				pageName = "Asset Publisher Page",
-				siteName = ${randomSiteName});
+				siteName = "Test Site Name");
 
 			AssetPublisherPortlet.viewAssetPG(
 				assetContent = "WC WebContent Content",

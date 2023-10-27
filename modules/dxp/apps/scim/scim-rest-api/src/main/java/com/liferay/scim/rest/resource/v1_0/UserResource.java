@@ -54,7 +54,7 @@ public interface UserResource {
 
 	public Response deleteV2User(String id) throws Exception;
 
-	public Object getV2User(String id) throws Exception;
+	public Object getV2UserById(String id) throws Exception;
 
 	public Response putV2User(String id, User user) throws Exception;
 

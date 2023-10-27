@@ -391,6 +391,7 @@ paths:
         get:
             description:
                 Retrieves a user.
+            operationId: getV2UserById
             parameters:
                 - in: path
                   name: id

@@ -51,6 +51,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHOOSE_CONTENT_FROM_LAST_PUBLISH_DATE_CHANGE</td>
+	<td>//input[contains(@id,'rangeLastPublish')]//following-sibling::span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHOOSE_CONTENT_LAST_CHANGE</td>
 	<td>//input[contains(@id,'rangeLast')]</td>
 	<td></td>

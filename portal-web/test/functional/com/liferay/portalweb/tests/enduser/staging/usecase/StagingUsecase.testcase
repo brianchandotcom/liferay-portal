@@ -3037,4 +3037,141 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-190736. TC1: Verify that the user is notified when choosing ALL in the Advanced Publish Process screen after enabling local staging."
+	@priority = 3
+	test ViewWarningMessageWhenChooseALL {
+		task ("Given: Navigate to the Advanced Publish Process screen") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Staging Test Page",
+				siteName = "Site Name");
+
+			Staging.gotoPublishToLive();
+		}
+
+		task ("When: Click on ALL in the Content section and click on 'Refresh Counts' button") {
+			Staging.configurePublishToLive(contentDateRange = "All");
+		}
+
+		task ("Then: The warning message should still display") {
+			AssertVisible(
+				key_warningMessage = "Please consider, publishing All content or using a wide Date Range may take some time.",
+				locator1 = "StagingPublishToLive#WARNING_SPECIFIC");
+		}
+
+		task ("When: Click on Last in the Content section") {
+			Click.clickNoMouseOverNoWaitForVisible(locator1 = "StagingPublishToLive#CONTENT_LAST");
+		}
+
+		task ("Then: The warning message should not display") {
+			AssertElementNotPresent(
+				key_warningMessage = "Please consider, publishing All content or using a wide Date Range may take some time.",
+				locator1 = "StagingPublishToLive#WARNING_SPECIFIC");
+		}
+
+		task ("When: Publish from the portlet") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+			Staging.configurePublishToLiveViaPortletCP(contentDateRange = "All");
+		}
+
+		task ("Then: The warning message should not display") {
+			AssertElementNotPresent(
+				key_warningMessage = "Please consider, publishing All content or using a wide Date Range may take some time.",
+				locator1 = "StagingPublishToLive#WARNING_SPECIFIC");
+		}
+	}
+
+	@description = "This is a use case for LPS-190736. TC2: Verify that the user is notified when choosing Date Range in the Advanced Publish Process screen after enabling local staging."
+	@priority = 3
+	test ViewWarningMessageWhenChooseDateRange {
+		task ("Given: Navigate to the Advanced Publish Process screen") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Staging Test Page",
+				siteName = "Site Name");
+
+			Staging.gotoPublishToLive();
+		}
+
+		task ("When: Click on Date Range in the Content section and click on 'Refresh Counts' button") {
+			Staging.configurePublishToLive(
+				contentDateRange = "Date Range",
+				dateRangeEndDate = '''10/12/2019''',
+				dateRangeStartDate = '''10/11/2019''');
+		}
+
+		task ("Then: The warning message should still display") {
+			AssertVisible(
+				key_warningMessage = "Please consider, publishing All content or using a wide Date Range may take some time.",
+				locator1 = "StagingPublishToLive#WARNING_SPECIFIC");
+		}
+
+		task ("When: Click on From Last Publish Date in the Content section") {
+			Click.clickNoMouseOverNoWaitForVisible(locator1 = "Radio#CHOOSE_CONTENT_FROM_LAST_PUBLISH_DATE_CHANGE");
+		}
+
+		task ("Then: The warning message should not display") {
+			AssertElementNotPresent(
+				key_warningMessage = "Please consider, publishing All content or using a wide Date Range may take some time.",
+				locator1 = "StagingPublishToLive#WARNING_SPECIFIC");
+		}
+
+		task ("When: Publish from the portlet") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name-staging");
+
+			Staging.configurePublishToLiveViaPortletCP(contentDateRange = "Date Range");
+		}
+
+		task ("Then: The warning message should not display") {
+			AssertElementNotPresent(
+				key_warningMessage = "Please consider, publishing All content or using a wide Date Range may take some time.",
+				locator1 = "StagingPublishToLive#WARNING_SPECIFIC");
+		}
+	}
+
+	@description = "This is a use case for LPS-190736. TC5: Verify that the user is notified when choosing ALL or Date Range in the Custom Publish Process screen after enabling local staging."
+	@priority = 3
+	test ViewWarningMessageWhenPublishFromStagingAdmin {
+		task ("Given: Navigate to the Advanced Publish Process screen") {
+			Staging.openStagingAdmin(siteURLKey = "site-name-staging");
+
+			Staging.addCustomPublication();
+
+			AssertElementNotPresent(
+				key_warningMessage = "Please consider, publishing All content or using a wide Date Range may take some time.",
+				locator1 = "StagingPublishToLive#WARNING_SPECIFIC");
+		}
+
+		task ("When: Click on ALL in the Content section and click on 'Refresh Counts' button") {
+			Staging.configurePublishToLive(contentDateRange = "All");
+		}
+
+		task ("Then: The warning message should still display") {
+			AssertVisible(
+				key_warningMessage = "Please consider, publishing All content or using a wide Date Range may take some time.",
+				locator1 = "StagingPublishToLive#WARNING_SPECIFIC");
+		}
+
+		task ("When: Click on Date Range in the Content section and click on 'Refresh Counts' button") {
+			Click(locator1 = "Radio#CHOOSE_CONTENT_DATE_RANGE_CHANGE");
+
+			ClickNoError(locator1 = "Link#REFRESH_COUNTS");
+		}
+
+		task ("Then: The warning message should still display") {
+			AssertVisible(
+				key_warningMessage = "Please consider, publishing All content or using a wide Date Range may take some time.",
+				locator1 = "StagingPublishToLive#WARNING_SPECIFIC");
+		}
+
+		task ("When: Click on Last in the Content section") {
+			Click.clickNoMouseOverNoWaitForVisible(locator1 = "StagingPublishToLive#CONTENT_LAST");
+		}
+
+		task ("Then: The warning message should not display") {
+			AssertElementNotPresent(
+				key_warningMessage = "Please consider, publishing All content or using a wide Date Range may take some time.",
+				locator1 = "StagingPublishToLive#WARNING_SPECIFIC");
+		}
+	}
+
 }

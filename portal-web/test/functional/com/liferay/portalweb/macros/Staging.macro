@@ -525,6 +525,22 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro configurePublishToLiveViaPortletCP {
+		LexiconEntry.gotoHeaderMenuItem(menuItem = "Staging");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+
+		if (isSet(contentDateRange)) {
+			ContentConfiguration.contentDateRange(
+				contentDateRange = ${contentDateRange},
+				dateRangeEndDate = ${dateRangeEndDate},
+				dateRangeStartDate = ${dateRangeStartDate});
+		}
+	}
+
+	@summary = "Default summary"
 	macro configureScheduleTime(endByDateDayLength = null,endByDateMonthLength = null,scheduleTitleName = null) {
 		Click(locator1 = "StagingPublishToLive#DATE_SCHEDULE_RADIO");
 
@@ -992,11 +1008,7 @@ definition {
 
 	@summary = "Default summary"
 	macro publishToLiveNowViaPortletCP(replicateIndividualDeletions = null) {
-		LexiconEntry.gotoHeaderMenuItem(menuItem = "Staging");
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+		Staging.configurePublishToLiveViaPortletCP();
 
 		if (${replicateIndividualDeletions} == "true") {
 			AssertVisible(locator1 = "Staging#STAGING_CONTENT_DELETIONS");
@@ -1008,7 +1020,7 @@ definition {
 
 		ClickNoError(locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON");
 
-		Confirm(value1 = "null");
+		AssertConfirm(value1 = "Are you sure you want to publish to live and update the existing application data?");
 
 		WaitForElementPresent(locator1 = "Staging#STAGING_STATUS_PORTLET");
 

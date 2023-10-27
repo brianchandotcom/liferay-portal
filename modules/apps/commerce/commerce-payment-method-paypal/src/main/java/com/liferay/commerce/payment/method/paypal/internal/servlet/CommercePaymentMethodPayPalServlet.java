@@ -32,9 +32,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"osgi.http.whiteboard.context.path=/" + PayPalCommercePaymentMethodConstants.SERVLET_PATH,
+		"osgi.http.whiteboard.context.path=/" + PayPalCommercePaymentMethodConstants.PAYMENT_METHOD_SERVLET_PATH,
 		"osgi.http.whiteboard.servlet.name=com.liferay.commerce.payment.method.paypal.internal.servlet.CommercePaymentMethodPayPalServlet",
-		"osgi.http.whiteboard.servlet.pattern=/" + PayPalCommercePaymentMethodConstants.SERVLET_PATH + "/*"
+		"osgi.http.whiteboard.servlet.pattern=/" + PayPalCommercePaymentMethodConstants.PAYMENT_METHOD_SERVLET_PATH + "/*"
 	},
 	service = Servlet.class
 )

@@ -454,7 +454,7 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 
 	@Override
 	public String getName(Locale locale) {
-		return _language.get(locale, KEY);
+		return "PayPal Subscriptions";
 	}
 
 	/**
@@ -473,7 +473,7 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 
 	@Override
 	public String getServletPath() {
-		return PayPalCommercePaymentMethodConstants.SERVLET_PATH;
+		return PayPalCommercePaymentMethodConstants.PAYMENT_METHOD_SERVLET_PATH;
 	}
 
 	@Override
@@ -508,22 +508,22 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 
 	@Override
 	public boolean isAuthorizeEnabled() {
-		return true;
+		return false;
 	}
 
 	@Override
 	public boolean isCancelEnabled() {
-		return true;
+		return false;
 	}
 
 	@Override
 	public boolean isCaptureEnabled() {
-		return true;
+		return false;
 	}
 
 	@Override
 	public boolean isCompleteEnabled() {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -533,12 +533,12 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 
 	@Override
 	public boolean isPartialRefundEnabled() {
-		return true;
+		return false;
 	}
 
 	@Override
 	public boolean isProcessPaymentEnabled() {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -548,7 +548,7 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 
 	@Override
 	public boolean isRefundEnabled() {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -1156,7 +1156,9 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 		return _configurationProvider.getConfiguration(
 			PayPalGroupServiceConfiguration.class,
 			new GroupServiceSettingsLocator(
-				groupId, PayPalCommercePaymentMethodConstants.SERVICE_NAME));
+				groupId,
+				PayPalCommercePaymentMethodConstants.
+					COMMERCE_PAYMENT_ENGINE_SERVICE_NAME));
 	}
 
 	private PayPalHttpClient _getPayPalHttpClient(CommerceOrder commerceOrder)

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.jdbc.ParamSetter;
 import com.liferay.portal.kernel.dao.jdbc.RowMapper;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListenerRegistrationUtil;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
@@ -64,6 +66,9 @@ import org.junit.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.internal.invocation.InterceptedInvocation;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Shuyang Zhou
@@ -121,6 +126,9 @@ public class TableMapperTest {
 
 		_rightBasePersistence.setDataSource(_dataSource);
 
+		_serviceRegistration = _bundleContext.registerService(
+			FinderCache.class, Mockito.mock(FinderCache.class), null);
+
 		_tableMapperImpl = new TableMapperImpl<>(
 			_TABLE_NAME, _COMPANY_COLUMN_NAME, _LEFT_COLUMN_NAME,
 			_RIGHT_COLUMN_NAME, Left.class, Right.class, _leftBasePersistence,
@@ -130,6 +138,11 @@ public class TableMapperTest {
 	@After
 	public void tearDown() {
 		_mappingSqlQueryFactoryUtilMockedStatic.close();
+
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
+
 		_sqlUpdateFactoryUtilMockedStatic.close();
 	}
 
@@ -1925,6 +1938,10 @@ public class TableMapperTest {
 	private static final String _RIGHT_COLUMN_NAME = "rightId";
 
 	private static final String _TABLE_NAME = "Lefts_Rights";
+
+	private static final BundleContext _bundleContext =
+		SystemBundleUtil.getBundleContext();
+	private static ServiceRegistration<FinderCache> _serviceRegistration;
 
 	private DataSource _dataSource;
 	private MockBasePersistence<Left> _leftBasePersistence;

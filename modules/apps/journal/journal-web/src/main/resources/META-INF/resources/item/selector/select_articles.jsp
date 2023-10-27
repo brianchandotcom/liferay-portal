@@ -19,9 +19,11 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 	cssClass="item-selector lfr-item-viewer"
 	id='<%= liferayPortletResponse.getNamespace() + "articlesContainer" %>'
 >
-	<liferay-site-navigation:breadcrumb
-		breadcrumbEntries="<%= journalArticleItemSelectorViewDisplayContext.getPortletBreadcrumbEntries() %>"
-	/>
+	<c:if test="<%= journalArticleItemSelectorViewDisplayContext.isShowBreadcrumb() %>">
+		<liferay-site-navigation:breadcrumb
+			breadcrumbEntries="<%= journalArticleItemSelectorViewDisplayContext.getPortletBreadcrumbEntries() %>"
+		/>
+	</c:if>
 
 	<liferay-ui:search-container
 		emptyResultsMessage="no-web-content-was-found"

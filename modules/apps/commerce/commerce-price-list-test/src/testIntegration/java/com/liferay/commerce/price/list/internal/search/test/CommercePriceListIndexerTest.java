@@ -69,7 +69,10 @@ public class CommercePriceListIndexerTest {
 
 		_indexer = _indexerRegistry.getIndexer(CommercePriceList.class);
 
-		_setUserToPermissionChecker(_user);
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_user));
+
+		PrincipalThreadLocal.setName(_user.getUserId());
 
 		_group = GroupTestUtil.addGroup(
 			_company.getCompanyId(), _user.getUserId(), 0);
@@ -128,17 +131,9 @@ public class CommercePriceListIndexerTest {
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
-	private void _setUserToPermissionChecker(User user) {
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(user));
-
-		PrincipalThreadLocal.setName(user.getUserId());
-	}
-
 	@Inject
 	private CommercePriceListLocalService _commercePriceListLocalService;
 
-	@DeleteAfterTestRun
 	private List<CommercePriceList> _commercePriceLists;
 
 	@DeleteAfterTestRun

@@ -156,6 +156,56 @@ definition {
 		DMFolder.viewEntryPresent(dmFolderName = "DM SubFolder2 Name");
 	}
 
+	@description = "This test ensures that Users can copy multiple folders with documents at the same time."
+	@priority = 5
+	test CanBulkCopyFoldersWithFiles {
+		property custom.properties = "feature.flag.LPS-182512=true";
+
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		for (var entryCount : list "1,2,3") {
+			JSONFolder.addFolder(
+				dmFolderDescription = "DM Folder Description",
+				dmFolderName = "DM Folder Name ${entryCount}",
+				groupName = "Guest");
+		}
+
+		for (var entryCount : list "1,2,3") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title",
+				folderName = "DM Folder Name ${entryCount}",
+				groupName = "Guest",
+				mimeType = "application/msword",
+				sourceFileName = "Document_1.doc");
+		}
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		for (var entryCount : list "1,2,3") {
+			LexiconCard.checkCardCheckbox(card = "DM Folder Name ${entryCount}");
+		}
+
+		DMNavigator.gotoItemViaManagementBar(
+			item = "dropdownMenu",
+			menuItem = "Copy To");
+
+		DMFolder.copy(
+			bulkCopy = "true",
+			homeFolder = "true",
+			siteName = "Site Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		for (var entryCount : list "1,2,3") {
+			DMNavigator.gotoFolder(dmFolderName = "DM Folder Name ${entryCount}");
+
+			LexiconEntry.viewEntryName(rowEntry = "DM Document Title");
+
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+		}
+	}
+
 	@priority = 3
 	test CanChangeRatingTypeForFolder {
 		var responseFromFolder = DocumentFolderAPI.addDocumentFolder(

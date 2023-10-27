@@ -75,10 +75,11 @@ public class UpgradePortletPreferences
 			String portletId, String xml)
 		throws Exception {
 
-		PortletPreferences preferences = PortletPreferencesFactoryUtil.fromXML(
-			companyId, ownerId, ownerType, plid, portletId, xml);
+		PortletPreferences portletPreferences =
+			PortletPreferencesFactoryUtil.fromXML(
+				companyId, ownerId, ownerType, plid, portletId, xml);
 
-		Map<String, String[]> preferencesMap = preferences.getMap();
+		Map<String, String[]> preferencesMap = portletPreferences.getMap();
 
 		String rootPortletId = PortletIdCodec.decodePortletName(portletId);
 
@@ -87,10 +88,10 @@ public class UpgradePortletPreferences
 
 			String newName = getName(rootPortletId, oldName);
 
-			preferences.reset(oldName);
+			portletPreferences.reset(oldName);
 
 			if (newName != null) {
-				preferences.setValues(newName, entry.getValue());
+				portletPreferences.setValues(newName, entry.getValue());
 			}
 		}
 
@@ -102,12 +103,13 @@ public class UpgradePortletPreferences
 
 			String name = entry.getKey();
 
-			if (preferences.getValues(name, null) == null) {
-				preferences.setValues(name, StringUtil.split(entry.getValue()));
+			if (portletPreferences.getValues(name, null) == null) {
+				portletPreferences.setValues(
+					name, StringUtil.split(entry.getValue()));
 			}
 		}
 
-		return PortletPreferencesFactoryUtil.toXML(preferences);
+		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 	}
 
 	private static final String[] _PORTLET_IDS = {

@@ -145,10 +145,10 @@ public class ArticlePortlet extends BaseKBPortlet {
 	protected long getResourcePrimKey(RenderRequest renderRequest)
 		throws PortalException {
 
-		PortletPreferences preferences = renderRequest.getPreferences();
+		PortletPreferences portletPreferences = renderRequest.getPreferences();
 
 		long defaultValue = GetterUtil.getLong(
-			preferences.getValue("resourcePrimKey", null));
+			portletPreferences.getValue("resourcePrimKey", null));
 
 		KBArticle defaultKBArticle = kbArticleService.fetchLatestKBArticle(
 			defaultValue, WorkflowConstants.STATUS_ANY);

@@ -323,11 +323,6 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testUpgradeSCSSImportsCheck() throws Exception {
-		test("upgrade/UpgradeSCSSImportsCheck.testscss");
-	}
-
-	@Test
 	public void testUpgradeSCSSMixinsCheck() throws Exception {
 		test(
 			"upgrade/UpgradeSCSSMixinsCheck.testscss",

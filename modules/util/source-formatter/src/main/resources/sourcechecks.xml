@@ -1761,10 +1761,6 @@
 			<category name="Upgrade" />
 			<description name="Replace Liferay's RejectedExecutionHandler with Java's RejectedExecutionHandler" />
 		</check>
-		<check name="UpgradeSCSSImportsCheck">
-			<category name="Upgrade" />
-			<description name="Replace compat/mixins by clay/cadmin-variables" />
-		</check>
 		<check name="UpgradeSCSSMixinsCheck">
 			<category name="Upgrade" />
 			<description name="Replace outdated mixins (e.g. media-query, respond-to, etc.)" />

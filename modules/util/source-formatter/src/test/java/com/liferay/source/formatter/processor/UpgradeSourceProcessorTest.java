@@ -213,11 +213,6 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testUpgradeJavaIndexerCheck() throws Exception {
-		test("upgrade/UpgradeJavaIndexerCheck.testjava");
-	}
-
-	@Test
 	public void testUpgradeJavaLanguageUtilCheck() throws Exception {
 		test("upgrade/UpgradeJavaLanguageUtilCheck.testjava");
 	}

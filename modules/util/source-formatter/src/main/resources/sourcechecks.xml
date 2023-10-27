@@ -1701,10 +1701,6 @@
 			<description name="Replace getLayoutDisplayPageProvider by getLayoutDisplayPageProviderByClassName" />
 			<weight>2</weight>
 		</check>
-		<check name="UpgradeJavaIndexerCheck">
-			<category name="Upgrade" />
-			<description name="Replace Indexer by Indexer&lt;?&gt;" />
-		</check>
 		<check name="UpgradeJavaLanguageUtilCheck">
 			<category name="Upgrade" />
 			<description name="Replace `ListUtil.fromArray` by `new ArrayList' when the parameter is to 'LanguageUtil.getAvailableLocales'" />

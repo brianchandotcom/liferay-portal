@@ -85,7 +85,7 @@ public class EditSavedContentMVCActionCommand extends BaseMVCActionCommand {
 					themeDisplay.getScopeGroupId(), className, classPK,
 					ServiceContextFactory.getInstance(
 						SavedContentEntry.class.getName(), actionRequest));
-				jsonObject.put("saved", Boolean.TRUE.toString());
+				jsonObject.put("saved", Boolean.TRUE);
 
 				return jsonObject;
 			}
@@ -93,7 +93,7 @@ public class EditSavedContentMVCActionCommand extends BaseMVCActionCommand {
 			_savedContentEntryService.deleteSavedContentEntry(
 				savedContentEntry);
 
-			jsonObject.put("saved", Boolean.FALSE.toString());
+			jsonObject.put("saved", Boolean.FALSE);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

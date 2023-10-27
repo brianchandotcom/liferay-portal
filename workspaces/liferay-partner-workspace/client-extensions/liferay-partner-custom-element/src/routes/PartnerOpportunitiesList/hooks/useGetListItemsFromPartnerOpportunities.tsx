@@ -65,8 +65,8 @@ export default function useGetListItemsFromPartnerOpportunities(
 				[PartnerOpportunitiesColumnKey.TYPE]: item.type
 					? item.type
 					: '- ',
-				[PartnerOpportunitiesColumnKey.CURRENCY]: item.currency.name
-					? item.currency.name
+				[PartnerOpportunitiesColumnKey.CURRENCY]: item.currency?.name
+					? item.currency?.name
 					: '- ',
 				[PartnerOpportunitiesColumnKey.SUBSCRIPTION_ARR]:
 					item.subscriptionArr && item.currency.key

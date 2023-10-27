@@ -5,12 +5,19 @@
 
 package com.liferay.saved.content.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.saved.content.constants.MySavedContentPortletKeys;
@@ -45,36 +52,75 @@ public class EditSavedContentMVCActionCommand extends BaseMVCActionCommand {
 			_updateSavedContentEntry(actionRequest));
 	}
 
-	private String _updateSavedContentEntry(ActionRequest actionRequest)
-		throws Exception {
+	private JSONObject _updateSavedContentEntry(ActionRequest actionRequest) {
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
 		String className = ParamUtil.getString(actionRequest, "className");
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
-		if (Validator.isNull(className) || (classPK == 0)) {
-			return null;
+		if (Validator.isBlank(className) || (classPK == 0)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("className or classPK are not correct");
+			}
+
+			jsonObject.put(
+				"errorMessage",
+				_language.get(
+					_portal.getHttpServletRequest(actionRequest),
+					"an-unexpected-error-occurred"));
+
+			return jsonObject;
 		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		SavedContentEntry savedContentEntry =
-			_savedContentEntryService.fetchSavedContentEntry(
-				themeDisplay.getScopeGroupId(), className, classPK);
+		try {
+			SavedContentEntry savedContentEntry =
+				_savedContentEntryService.fetchSavedContentEntry(
+					themeDisplay.getScopeGroupId(), className, classPK);
 
-		if (savedContentEntry == null) {
-			_savedContentEntryService.addSavedContentEntry(
-				themeDisplay.getScopeGroupId(), className, classPK,
-				ServiceContextFactory.getInstance(
-					SavedContentEntry.class.getName(), actionRequest));
+			if (savedContentEntry == null) {
+				_savedContentEntryService.addSavedContentEntry(
+					themeDisplay.getScopeGroupId(), className, classPK,
+					ServiceContextFactory.getInstance(
+						SavedContentEntry.class.getName(), actionRequest));
+				jsonObject.put("saved", Boolean.TRUE.toString());
 
-			return Boolean.TRUE.toString();
+				return jsonObject;
+			}
+
+			_savedContentEntryService.deleteSavedContentEntry(
+				savedContentEntry);
+
+			jsonObject.put("saved", Boolean.FALSE.toString());
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+
+			jsonObject.put(
+				"errorMessage",
+				_language.get(
+					_portal.getHttpServletRequest(actionRequest),
+					"an-unexpected-error-occurred"));
 		}
 
-		_savedContentEntryService.deleteSavedContentEntry(savedContentEntry);
-
-		return Boolean.FALSE.toString();
+		return jsonObject;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditSavedContentMVCActionCommand.class);
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
+	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private SavedContentEntryService _savedContentEntryService;

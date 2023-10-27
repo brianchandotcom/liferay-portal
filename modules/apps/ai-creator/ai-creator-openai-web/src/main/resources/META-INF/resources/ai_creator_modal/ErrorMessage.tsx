@@ -26,7 +26,6 @@ export function ErrorMessage({message}: Props) {
 					{Liferay.Language.get('error')}
 				</strong>{' '}
 				<span
-					className="d-inline-block"
 					dangerouslySetInnerHTML={{
 						__html: message,
 					}}

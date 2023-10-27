@@ -164,16 +164,9 @@ public class SiteInitializerClientExtension
 			URL url = enumeration.nextElement();
 
 			if (StringUtil.endsWith(url.getPath(), "site-initializer.json")) {
-				String json = SiteInitializerUtil.read(
-					bundle, "site-initializer.json", url);
-
-				site = Site.toDTO(json);
-
-				if (site == null) {
-					_log.error("Unable to transform site from JSON: " + json);
-
-					throw new Exception();
-				}
+				site = Site.toDTO(
+					SiteInitializerUtil.read(
+						bundle, "site-initializer.json", url));
 			}
 			else if (StringUtil.endsWith(
 						url.getPath(), "site-initializer.zip")) {

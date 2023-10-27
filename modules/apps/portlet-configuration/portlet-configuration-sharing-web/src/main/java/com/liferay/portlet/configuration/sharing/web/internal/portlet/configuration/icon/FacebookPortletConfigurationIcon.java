@@ -43,9 +43,10 @@ public class FacebookPortletConfigurationIcon
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		PortletPreferences portletSetup = portletDisplay.getPortletSetup();
+		PortletPreferences portletPreferences =
+			portletDisplay.getPortletSetup();
 
-		String lfrFacebookAPIKey = portletSetup.getValue(
+		String lfrFacebookAPIKey = portletPreferences.getValue(
 			"lfrFacebookApiKey", StringPool.BLANK);
 
 		return "http://www.facebook.com/add.php?api_key=" + lfrFacebookAPIKey +
@@ -64,14 +65,16 @@ public class FacebookPortletConfigurationIcon
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		PortletPreferences portletSetup = portletDisplay.getPortletSetup();
+		PortletPreferences portletPreferences =
+			portletDisplay.getPortletSetup();
 
-		String lfrFacebookAPIKey = portletSetup.getValue(
+		String lfrFacebookAPIKey = portletPreferences.getValue(
 			"lfrFacebookApiKey", StringPool.BLANK);
-		String lfrFacebookCanvasPageURL = portletSetup.getValue(
+		String lfrFacebookCanvasPageURL = portletPreferences.getValue(
 			"lfrFacebookCanvasPageUrl", StringPool.BLANK);
 		boolean facebookShowAddAppLink = GetterUtil.getBoolean(
-			portletSetup.getValue("lfrFacebookShowAddAppLink", null), true);
+			portletPreferences.getValue("lfrFacebookShowAddAppLink", null),
+			true);
 
 		if (Validator.isNull(lfrFacebookCanvasPageURL) ||
 			Validator.isNull(lfrFacebookAPIKey)) {

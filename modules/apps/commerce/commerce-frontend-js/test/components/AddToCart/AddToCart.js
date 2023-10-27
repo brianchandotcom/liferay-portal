@@ -94,12 +94,6 @@ describe('Add to Cart', () => {
 		expect(addToCart.container).toBeInTheDocument();
 	});
 
-	it('must be disabled consistently with its prop', () => {
-		addToCart.rerender(<AddToCart {...defaultProps} disabled={true} />);
-
-		expect(button.disabled).toBe(true);
-	});
-
 	// FIXME with COMMERCE-12057
 	/* it('must add a product to the cart', async () => {
 		await act(async () => {

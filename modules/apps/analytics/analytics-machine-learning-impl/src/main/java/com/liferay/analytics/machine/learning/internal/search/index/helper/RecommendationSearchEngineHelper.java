@@ -32,7 +32,7 @@ public class RecommendationSearchEngineHelper {
 			return;
 		}
 
-		if (_indicesExists(indexName)) {
+		if (_indexExists(indexName)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(String.format("Index %s already exist", indexName));
 			}
@@ -46,7 +46,7 @@ public class RecommendationSearchEngineHelper {
 		createIndexRequest.setMappings(_readJSON(indexMappingFileName));
 		createIndexRequest.setSettings(_readJSON("settings.json"));
 
-		searchEngineAdapter.execute(createIndexRequest);
+		_searchEngineAdapter.execute(createIndexRequest);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -59,7 +59,7 @@ public class RecommendationSearchEngineHelper {
 			return;
 		}
 
-		if (!_indicesExists(indexName)) {
+		if (!_indexExists(indexName)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(String.format("Index %s does not exist", indexName));
 			}
@@ -70,7 +70,7 @@ public class RecommendationSearchEngineHelper {
 		DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest(
 			indexName);
 
-		searchEngineAdapter.execute(deleteIndexRequest);
+		_searchEngineAdapter.execute(deleteIndexRequest);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -78,15 +78,12 @@ public class RecommendationSearchEngineHelper {
 		}
 	}
 
-	@Reference
-	protected SearchEngineAdapter searchEngineAdapter;
-
-	private boolean _indicesExists(String indexName) {
+	private boolean _indexExists(String indexName) {
 		IndicesExistsIndexRequest indicesExistsIndexRequest =
 			new IndicesExistsIndexRequest(indexName);
 
 		IndicesExistsIndexResponse indicesExistsIndexResponse =
-			searchEngineAdapter.execute(indicesExistsIndexRequest);
+			_searchEngineAdapter.execute(indicesExistsIndexRequest);
 
 		return indicesExistsIndexResponse.isExists();
 	}
@@ -100,9 +97,9 @@ public class RecommendationSearchEngineHelper {
 		}
 		catch (JSONException jsonException) {
 			_log.error(jsonException);
-		}
 
-		return null;
+			throw new IllegalStateException("Unable to read file " + fileName);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -113,5 +110,8 @@ public class RecommendationSearchEngineHelper {
 
 	@Reference
 	private SearchCapabilities _searchCapabilities;
+
+	@Reference
+	private SearchEngineAdapter _searchEngineAdapter;
 
 }

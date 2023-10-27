@@ -59,45 +59,102 @@ else {
 	<clay:container-fluid
 		cssClass="container-view sidenav-content"
 	>
-		<c:if test="<%= !journalDisplayContext.isNavigationMine() && !journalDisplayContext.isNavigationRecent() && !journalDisplayContext.isSearch() %>">
-			<liferay-site-navigation:breadcrumb
-				breadcrumbEntries="<%= JournalPortletUtil.getPortletBreadcrumbEntries(journalDisplayContext.getFolder(), request, false, liferayPortletResponse) %>"
-			/>
-		</c:if>
+		<c:choose>
+			<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-194763") %>'>
+				<clay:row>
+					<clay:col
+						lg="3"
+					>
+						<clay:vertical-nav
+							verticalNavItems="<%= journalDisplayContext.getVerticalNavItemList() %>"
+						/>
+					</clay:col>
 
-		<aui:form action="<%= journalDisplayContext.getPortletURL(null) %>" method="get" name="fm">
-			<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" />
-			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-			<aui:input name="groupId" type="hidden" value="<%= scopeGroupId %>" />
-			<aui:input name="newFolderId" type="hidden" />
+					<clay:col
+						lg="9"
+					>
+						<clay:sheet
+							size="full"
+						>
+							<aui:form action="<%= journalDisplayContext.getPortletURL(null) %>" method="get" name="fm">
+								<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" />
+								<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+								<aui:input name="groupId" type="hidden" value="<%= scopeGroupId %>" />
+								<aui:input name="newFolderId" type="hidden" />
 
-			<c:choose>
-				<c:when test="<%= !journalDisplayContext.isSearch() %>">
-					<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
-				</c:when>
-				<c:otherwise>
-					<clay:navigation-bar
-						cssClass="mt-4"
-						navigationItems="<%= journalDisplayContext.getSearchNavigationItems() %>"
+								<c:choose>
+									<c:when test="<%= !journalDisplayContext.isSearch() %>">
+										<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
+									</c:when>
+									<c:otherwise>
+										<clay:navigation-bar
+											cssClass="mt-4"
+											navigationItems="<%= journalDisplayContext.getSearchNavigationItems() %>"
+										/>
+
+										<c:choose>
+											<c:when test="<%= journalDisplayContext.isWebContentTabSelected() %>">
+												<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
+											</c:when>
+											<c:when test="<%= journalDisplayContext.isVersionsTabSelected() %>">
+												<liferay-util:include page="/view_versions.jsp" servletContext="<%= application %>" />
+											</c:when>
+											<c:when test="<%= journalDisplayContext.isCommentsTabSelected() %>">
+												<liferay-util:include page="/view_comments.jsp" servletContext="<%= application %>" />
+											</c:when>
+											<c:otherwise>
+												<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
+											</c:otherwise>
+										</c:choose>
+									</c:otherwise>
+								</c:choose>
+							</aui:form>
+						</clay:sheet>
+					</clay:col>
+				</clay:row>
+			</c:when>
+			<c:otherwise>
+				<c:if test="<%= !journalDisplayContext.isNavigationMine() && !journalDisplayContext.isNavigationRecent() && !journalDisplayContext.isSearch() %>">
+					<liferay-site-navigation:breadcrumb
+						breadcrumbEntries="<%= JournalPortletUtil.getPortletBreadcrumbEntries(journalDisplayContext.getFolder(), request, false, liferayPortletResponse) %>"
 					/>
+				</c:if>
+
+				<aui:form action="<%= journalDisplayContext.getPortletURL(null) %>" method="get" name="fm">
+					<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" />
+					<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+					<aui:input name="groupId" type="hidden" value="<%= scopeGroupId %>" />
+					<aui:input name="newFolderId" type="hidden" />
 
 					<c:choose>
-						<c:when test="<%= journalDisplayContext.isWebContentTabSelected() %>">
+						<c:when test="<%= !journalDisplayContext.isSearch() %>">
 							<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
-						</c:when>
-						<c:when test="<%= journalDisplayContext.isVersionsTabSelected() %>">
-							<liferay-util:include page="/view_versions.jsp" servletContext="<%= application %>" />
-						</c:when>
-						<c:when test="<%= journalDisplayContext.isCommentsTabSelected() %>">
-							<liferay-util:include page="/view_comments.jsp" servletContext="<%= application %>" />
 						</c:when>
 						<c:otherwise>
-							<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
+							<clay:navigation-bar
+								cssClass="mt-4"
+								navigationItems="<%= journalDisplayContext.getSearchNavigationItems() %>"
+							/>
+
+							<c:choose>
+								<c:when test="<%= journalDisplayContext.isWebContentTabSelected() %>">
+									<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
+								</c:when>
+								<c:when test="<%= journalDisplayContext.isVersionsTabSelected() %>">
+									<liferay-util:include page="/view_versions.jsp" servletContext="<%= application %>" />
+								</c:when>
+								<c:when test="<%= journalDisplayContext.isCommentsTabSelected() %>">
+									<liferay-util:include page="/view_comments.jsp" servletContext="<%= application %>" />
+								</c:when>
+								<c:otherwise>
+									<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
+								</c:otherwise>
+							</c:choose>
 						</c:otherwise>
 					</c:choose>
-				</c:otherwise>
-			</c:choose>
-		</aui:form>
+				</aui:form>
+			</c:otherwise>
+		</c:choose>
 	</clay:container-fluid>
 </div>
 

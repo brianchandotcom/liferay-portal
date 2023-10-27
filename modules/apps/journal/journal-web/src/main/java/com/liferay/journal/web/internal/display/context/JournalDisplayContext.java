@@ -19,6 +19,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBu
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItemListBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemListBuilder;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.journal.configuration.JournalServiceConfiguration;
 import com.liferay.journal.constants.JournalArticleConstants;
@@ -1019,6 +1021,26 @@ public class JournalDisplayContext {
 			_getVersionsSearchContainer();
 
 		return articleSearchContainer.getTotal();
+	}
+
+	public VerticalNavItemList getVerticalNavItemList() {
+		return VerticalNavItemListBuilder.add(
+			verticalNavItem -> {
+				String name = LanguageUtil.get(
+					_httpServletRequest, "content-library");
+
+				verticalNavItem.setActive(
+					Validator.isNull(
+						ParamUtil.getLong(
+							_httpServletRequest, "ddmStructureId")));
+				verticalNavItem.setHref(
+					PortletURLBuilder.createRenderURL(
+						_liferayPortletResponse
+					).buildString());
+				verticalNavItem.setId(name);
+				verticalNavItem.setLabel(name);
+			}
+		).build();
 	}
 
 	public boolean hasCommentsResults() throws PortalException {

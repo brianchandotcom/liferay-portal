@@ -1215,7 +1215,7 @@ private List<Dependency> _getPortalArtifactsDependencies(List<File> relengProper
 		artifactURLs.add(artifactProperties.getProperty("artifact.url"))
 	}
 
-	File sourceFormatterPropertiesFile = new File(projectDir, "source-formatter.properties")
+	File sourceFormatterPropertiesFile = new File(projectDir, "../source-formatter.properties")
 
 	if (sourceFormatterPropertiesFile.exists()) {
 		Properties sourceFormatterProperties = GUtil.loadProperties(sourceFormatterPropertiesFile)
@@ -1427,7 +1427,7 @@ private List<File> _getPortalSourcesDependencies(List<File> relengPropertiesFile
 		}
 	}
 
-	File sourceFormatterPropertiesFile = new File(projectDir, "source-formatter.properties")
+	File sourceFormatterPropertiesFile = new File(projectDir, "../source-formatter.properties")
 
 	if (sourceFormatterPropertiesFile.exists()) {
 		Properties sourceFormatterProperties = GUtil.loadProperties(sourceFormatterPropertiesFile)

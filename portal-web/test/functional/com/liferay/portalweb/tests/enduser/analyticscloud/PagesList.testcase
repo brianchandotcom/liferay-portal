@@ -197,11 +197,10 @@ definition {
 		task ("Search the Pages") {
 			var dataSourceName = StringUtil.extractFirst(${assignedPropertyName}, " ");
 
-			ACUtils.searchBar(searchItem = "${canonicalURL}");
+			ACUtils.searchBar(searchItem = ${canonicalURL});
 
 			ACUtils.viewNameList(nameList = "AC Page - Site Name - ${dataSourceName}");
 		}
-
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8342 | Test Summary: Custom Range time period filter in Page table"

@@ -56,17 +56,17 @@ public class PortletConfigurationCSSPortletDisplayContext {
 		String portletResource = ParamUtil.getString(
 			renderRequest, "portletResource");
 
-		PortletPreferences portletSetup =
+		PortletPreferences portletPreferences =
 			themeDisplay.getStrictLayoutPortletSetup(
 				themeDisplay.getLayout(), portletResource);
 
 		JSONObject portletSetupJSONObject = PortletSetupUtil.cssToJSONObject(
-			portletSetup);
+			portletPreferences);
 
 		_renderRequest = renderRequest;
 
 		_portletResource = portletResource;
-		_portletSetup = portletSetup;
+		_portletPreferences = portletPreferences;
 		_portletSetupJSONObject = portletSetupJSONObject;
 	}
 
@@ -156,7 +156,7 @@ public class PortletConfigurationCSSPortletDisplayContext {
 
 			String languageId = LocaleUtil.toLanguageId(curLocale);
 
-			String portletSetupTitle = _portletSetup.getValue(
+			String portletSetupTitle = _portletPreferences.getValue(
 				"portletSetupTitle_" + languageId,
 				PortalUtil.getPortletTitle(portlet, servletContext, curLocale));
 
@@ -221,7 +221,7 @@ public class PortletConfigurationCSSPortletDisplayContext {
 			return _portletDecoratorId;
 		}
 
-		_portletDecoratorId = _portletSetup.getValue(
+		_portletDecoratorId = _portletPreferences.getValue(
 			"portletSetupPortletDecoratorId", _getDefaultDecoratorId());
 
 		return _portletDecoratorId;
@@ -294,7 +294,7 @@ public class PortletConfigurationCSSPortletDisplayContext {
 		}
 
 		_useCustomTitle = GetterUtil.getBoolean(
-			_portletSetup.getValue(
+			_portletPreferences.getValue(
 				"portletSetupUseCustomTitle", StringPool.BLANK));
 
 		return _useCustomTitle;
@@ -322,8 +322,8 @@ public class PortletConfigurationCSSPortletDisplayContext {
 
 	private DecimalFormat _decimalFormat;
 	private String _portletDecoratorId;
+	private final PortletPreferences _portletPreferences;
 	private final String _portletResource;
-	private final PortletPreferences _portletSetup;
 	private final JSONObject _portletSetupJSONObject;
 	private final RenderRequest _renderRequest;
 	private Boolean _useCustomTitle;

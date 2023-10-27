@@ -86,7 +86,7 @@ public class PortletConfigurationCSSPortlet extends MVCPortlet {
 			return;
 		}
 
-		PortletPreferences portletSetup =
+		PortletPreferences portletPreferences =
 			themeDisplay.getStrictLayoutPortletSetup(layout, portletId);
 
 		String css = _getCSS(actionRequest);
@@ -122,27 +122,28 @@ public class PortletConfigurationCSSPortlet extends MVCPortlet {
 			if ((title != null) &&
 				!Objects.equals(defaultPortletTitle, title)) {
 
-				portletSetup.setValue("portletSetupTitle_" + languageId, title);
+				portletPreferences.setValue(
+					"portletSetupTitle_" + languageId, title);
 			}
 			else {
-				portletSetup.reset("portletSetupTitle_" + languageId);
+				portletPreferences.reset("portletSetupTitle_" + languageId);
 			}
 		}
 
-		portletSetup.setValue(
+		portletPreferences.setValue(
 			"portletSetupUseCustomTitle", String.valueOf(useCustomTitle));
 
 		if (Validator.isNotNull(portletDecoratorId)) {
-			portletSetup.setValue(
+			portletPreferences.setValue(
 				"portletSetupPortletDecoratorId", portletDecoratorId);
 		}
 		else {
-			portletSetup.reset("portletSetupPortletDecoratorId");
+			portletPreferences.reset("portletSetupPortletDecoratorId");
 		}
 
-		portletSetup.setValue("portletSetupCss", css);
+		portletPreferences.setValue("portletSetupCss", css);
 
-		portletSetup.store();
+		portletPreferences.store();
 
 		SessionMessages.add(
 			actionRequest,

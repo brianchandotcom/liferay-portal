@@ -69,8 +69,6 @@
 		</#if>
 
 		<section class="${portal_content_css_class} flex-fill" id="content">
-			<h2 <#if show_control_menu>aria-hidden="true"</#if> class="sr-only">${htmlUtil.escape(the_title)}</h2>
-
 			<#if selectable>
 				<@liferay_util["include"] page=content_include />
 			<#else>

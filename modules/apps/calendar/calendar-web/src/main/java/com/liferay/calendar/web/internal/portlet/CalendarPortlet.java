@@ -1196,14 +1196,14 @@ public class CalendarPortlet extends MVCPortlet {
 	}
 
 	private TimeZone _getTimeZone(PortletRequest portletRequest) {
-		PortletPreferences preferences = portletRequest.getPreferences();
+		PortletPreferences portletPreferences = portletRequest.getPreferences();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		User user = themeDisplay.getUser();
 
-		String timeZoneId = preferences.getValue(
+		String timeZoneId = portletPreferences.getValue(
 			"timeZoneId", user.getTimeZoneId());
 
 		if (Validator.isNull(timeZoneId)) {

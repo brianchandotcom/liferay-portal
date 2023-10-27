@@ -23,7 +23,8 @@ import com.liferay.commerce.model.CommerceShippingOption;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.CommerceOrderValidatorRegistry;
 import com.liferay.commerce.order.CommerceOrderValidatorResult;
-import com.liferay.commerce.payment.engine.CommercePaymentEngine;
+import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
+import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
 import com.liferay.commerce.percentage.PercentageFormatter;
 import com.liferay.commerce.price.CommerceOrderPrice;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
@@ -83,7 +84,8 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		CommerceOrderPriceCalculation commerceOrderPriceCalculation,
 		CommerceOrderValidatorRegistry commerceOrderValidatorRegistry,
 		CommerceOptionValueHelper commerceOptionValueHelper,
-		CommercePaymentEngine commercePaymentEngine,
+		CommercePaymentMethodGroupRelLocalService
+			commercePaymentMethodGroupRelLocalService,
 		CommerceProductPriceCalculation commerceProductPriceCalculation,
 		CommerceShippingEngineRegistry commerceShippingEngineRegistry,
 		CommerceTermEntryLocalService commerceTermEntryLocalService,
@@ -100,7 +102,8 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		_commerceOrderPriceCalculation = commerceOrderPriceCalculation;
 		_commerceOrderValidatorRegistry = commerceOrderValidatorRegistry;
 		_commerceOptionValueHelper = commerceOptionValueHelper;
-		_commercePaymentEngine = commercePaymentEngine;
+		_commercePaymentMethodGroupRelLocalService =
+			commercePaymentMethodGroupRelLocalService;
 		_commerceProductPriceCalculation = commerceProductPriceCalculation;
 		_commerceShippingEngineRegistry = commerceShippingEngineRegistry;
 		_commerceTermEntryLocalService = commerceTermEntryLocalService;
@@ -255,13 +258,21 @@ public class OrderSummaryCheckoutStepDisplayContext {
 			commerceCurrency.getMinFractionDigits(), percentage);
 	}
 
-	public String getPaymentMethodName(String paymentMethodKey, Locale locale) {
+	public String getPaymentMethodName(String paymentMethodKey, Locale locale)
+		throws PortalException {
+
 		if (paymentMethodKey.isEmpty() || (locale == null)) {
 			return StringPool.BLANK;
 		}
 
-		return _commercePaymentEngine.getPaymentMethodName(
-			paymentMethodKey, locale);
+		CommerceOrder commerceOrder = getCommerceOrder();
+
+		CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
+			_commercePaymentMethodGroupRelLocalService.
+				getCommercePaymentMethodGroupRel(
+					commerceOrder.getGroupId(), paymentMethodKey);
+
+		return commercePaymentMethodGroupRel.getName(locale);
 	}
 
 	public String getPaymentTermEntryName(Locale locale) {
@@ -555,7 +566,8 @@ public class OrderSummaryCheckoutStepDisplayContext {
 	private final CommerceOrderPriceCalculation _commerceOrderPriceCalculation;
 	private final CommerceOrderValidatorRegistry
 		_commerceOrderValidatorRegistry;
-	private final CommercePaymentEngine _commercePaymentEngine;
+	private final CommercePaymentMethodGroupRelLocalService
+		_commercePaymentMethodGroupRelLocalService;
 	private final CommerceProductPriceCalculation
 		_commerceProductPriceCalculation;
 	private final CommerceShippingEngineRegistry

@@ -21,6 +21,8 @@ import com.liferay.commerce.model.CommerceShippingOption;
 import com.liferay.commerce.model.CommerceShippingOptionAccountEntryRel;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.payment.engine.CommercePaymentEngine;
+import com.liferay.commerce.payment.integration.CommercePaymentIntegration;
+import com.liferay.commerce.payment.integration.CommercePaymentIntegrationRegistry;
 import com.liferay.commerce.payment.method.CommercePaymentMethod;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
@@ -60,7 +62,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletURL;
 
@@ -355,19 +359,53 @@ public class DefaultCommerceCheckoutStepHttpHelper
 			_commercePaymentEngine.getEnabledCommercePaymentMethodsForOrder(
 				commerceOrder.getGroupId(), commerceOrder.getCommerceOrderId());
 
-		if (commercePaymentMethods.isEmpty()) {
+		List<CommercePaymentIntegration> commercePaymentIntegrations =
+			Collections.emptyList();
+
+		if (!commerceOrder.isSubscriptionOrder()) {
+			Map<String, CommercePaymentIntegration>
+				commercePaymentIntegrationMaps =
+					_commercePaymentIntegrationRegistry.
+						getCommercePaymentIntegrations();
+
+			commercePaymentIntegrations = ListUtil.fromCollection(
+				commercePaymentIntegrationMaps.values());
+		}
+
+		if (commercePaymentMethods.isEmpty() &&
+			commercePaymentIntegrations.isEmpty()) {
+
 			_updateCommerceOrder(
 				commerceOrder, StringPool.BLANK, httpServletRequest);
 
 			return false;
 		}
 
-		if (commercePaymentMethods.size() == 1) {
+		int commercePaymentMethodsSize = commercePaymentMethods.size();
+		int commercePaymentIntegrationsSize =
+			commercePaymentIntegrations.size();
+
+		if ((commercePaymentMethodsSize == 1) &&
+			(commercePaymentIntegrationsSize == 0)) {
+
 			CommercePaymentMethod commercePaymentMethod =
 				commercePaymentMethods.get(0);
 
 			_updateCommerceOrder(
 				commerceOrder, commercePaymentMethod.getKey(),
+				httpServletRequest);
+
+			return false;
+		}
+
+		if ((commercePaymentMethodsSize == 0) &&
+			(commercePaymentIntegrationsSize == 1)) {
+
+			CommercePaymentIntegration commercePaymentIntegration =
+				commercePaymentIntegrations.get(0);
+
+			_updateCommerceOrder(
+				commerceOrder, commercePaymentIntegration.getKey(),
 				httpServletRequest);
 
 			return false;
@@ -1004,6 +1042,10 @@ public class DefaultCommerceCheckoutStepHttpHelper
 
 	@Reference
 	private CommercePaymentEngine _commercePaymentEngine;
+
+	@Reference
+	private CommercePaymentIntegrationRegistry
+		_commercePaymentIntegrationRegistry;
 
 	@Reference
 	private CommercePaymentMethodGroupRelLocalService

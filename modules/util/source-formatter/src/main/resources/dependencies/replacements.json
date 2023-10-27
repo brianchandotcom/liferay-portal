@@ -45,6 +45,18 @@
 		"to": "setA2"
 	},
 	{
+		"from": "DLUtil.getImagePreviewURL",
+		"issueKey": "LPS-187531",
+		"newImports": [
+			"com.liferay.document.library.util.DLURLHelperUtil"
+		],
+		"to": "DLURLHelperUtil.getImagePreviewURL",
+		"validExtensions": [
+			"java",
+			"jsp"
+		]
+	},
+	{
 		"classNames": [
 			"CountryService"
 		],

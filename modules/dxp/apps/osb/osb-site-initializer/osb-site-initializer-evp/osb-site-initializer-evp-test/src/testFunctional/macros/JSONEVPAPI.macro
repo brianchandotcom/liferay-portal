@@ -84,41 +84,43 @@ definition {
 
 		var curl = '''
 			${portalURL}/o/c/evprequests \
-				-u test@liferay.com:${password} \
+				-u ${emailAddress}:${password} \
 				-H 'accept: application/json' \
 				-H 'Content-Type: application/json' \
 				-d '{
-					"emailAddress": "${emailAddress}",
-					"endDate": "${endDate}",
-					"fullName": "${fullName}",
-					"grantAmount": "${grantAmount}",
-					"grantRequestType": {
-						"key": "${grantRequestTypeKey}",
-						"name": "${grantRequestType}"
-					},
-					"managerEmailAddress": "${managerEmailAddress}",
-					"messageEVPManager": "${messageEVPManager}",
-					"phoneNumber": "${phoneNumber}",
-					"requestBehalf": {
-						"key": "${requestBehalfKey}",
-						"name": "${requestBehalf}"
-					},
-					"requestDescription": "${requestDescription}",
-					"requestPurposes": {
-						"key": "${requestPurposesKey}",
-						"name": "${requestPurposes}"
-					},
-					"requestStatus": {
-						"key": "${requestStatusKey}",
-						"name": "${requestStatus}"
-					},
+					"r_organization_c_evpOrganizationId": "${organizationId}",
 					"requestType": {
 						"key": "${requestTypeKey}",
 						"name": "${requestType}"
 					},
+					"endDate": "${endDate}",
+					"fullName": "${fullName}",
+					"requestBehalf": {
+					"key": "displacedDistressed",
+					"name": "Displaced/Distressed"
+					},
+					"grantAmount": "${grantAmount}",
+					"requestDescription": "${requestDescription}",
+					"requestPurposes": {
+					"key": "disasterRelief",
+					"name": "Disaster Relief"
+					},
+					"emailAddress": "${emailAddress}",
+					"phoneNumber": "${phoneNumber}",
+					"grantRequestType": {
+						"key": "${grantRequestTypeKey}",
+						"name": "${grantRequestType}"
+					},
+					"liferayBranch": {
+						"key": "liferayLatam",
+						"name": "Liferay Latam"
+					},
 					"totalHoursRequested": "${totalHoursRequested}",
-					"startDate": "${startDate}",
-					"r_organization_c_evpOrganizationId": "${organizationId}"
+					"requestStatus": {
+						"key": "${requestStatusKey}",
+						"name": "${requestStatus}"
+					},
+					"startDate": "${startDate}"
 				}'
 		''';
 

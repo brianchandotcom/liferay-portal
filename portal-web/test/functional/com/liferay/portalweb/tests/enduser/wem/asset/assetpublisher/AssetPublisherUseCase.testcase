@@ -2134,6 +2134,122 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-195257. View widget templates order when configuring an asset publisher with new widget templates in new site."
+	@priority = 3
+	test ViewNewDisplayTemplatesOrder {
+		task ("Given a user has widget templates in sites") {
+			for (var widgetTemplateName : list "APT C,APT A,APT B") {
+				JSONDDMtemplate.addWidgetTemplate(
+					groupName = "Test Site Name",
+					itemType = "Asset Publisher Template",
+					name = ${widgetTemplateName},
+					script = "<#if entries?has_content><#list entries as curEntry>${curEntry.getTitle(locale)}[$CURSOR$]</#list></#if>");
+			}
+
+			var childGroupId = HeadlessSite.addSite(
+				parentSiteName = "Test Site Name",
+				siteName = "Test Child Site Name");
+
+			for (var widgetTemplateName : list "APT D,APT E") {
+				JSONDDMtemplate.addWidgetTemplate(
+					groupId = ${childGroupId},
+					itemType = "Asset Publisher Template",
+					name = ${widgetTemplateName},
+					script = "<#if entries?has_content><#list entries as curEntry>${curEntry.getTitle(locale)}[$CURSOR$]</#list></#if>");
+			}
+
+			var grandchildGroupId = HeadlessSite.addSite(
+				grandParentSiteName = "Test Site Name",
+				parentSiteName = "Test Child Site Name",
+				siteName = "Test Grandchild Site Name");
+
+			for (var widgetTemplateName : list "APT G,APT F") {
+				JSONDDMtemplate.addWidgetTemplate(
+					groupId = ${grandchildGroupId},
+					itemType = "Asset Publisher Template",
+					name = ${widgetTemplateName},
+					script = "<#if entries?has_content><#list entries as curEntry>${curEntry.getTitle(locale)}[$CURSOR$]</#list></#if>");
+			}
+		}
+
+		task ("When the user opens the dropdown menu of Display Template selector in Asset Publisher in grandchild site") {
+			JSONLayout.addPublicLayout(
+				groupId = ${grandchildGroupId},
+				layoutName = "Asset Publisher Page");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupId = ${grandchildGroupId},
+				layoutName = "Asset Publisher Page",
+				widgetName = "Asset Publisher");
+
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Grandchild Site Name");
+
+			Portlet.gotoPortletOptions(
+				portletName = "Asset Publisher",
+				portletOption = "Configuration");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			Navigator.gotoNavTab(navTab = "Display Settings");
+
+			Click(
+				key_class = "display-template-selector",
+				key_index = 1,
+				locator1 = "Button#ANY_WITH_CLASS_AND_INDEX");
+		}
+
+		task ("The the user could see the display templates are ordered by alphabetical") {
+			var index = 1;
+
+			for (var subHeader : list "Default,Test Grandchild Site Name,Test Child Site Name,Test Site Name,Global") {
+				AssertVisible(
+					index = ${index},
+					locator1 = "Dropdown#DROPDOWN_SUBHEADER_BY_INDEX",
+					subHeader = ${subHeader});
+
+				var index = ${index} + 1;
+			}
+
+			var index = 1;
+
+			for (var menuItem : list "APT A,APT B,APT C") {
+				AssertVisible(
+					index = ${index},
+					key_menuItem = ${menuItem},
+					key_subheader = "Test Site Name",
+					locator1 = "MenuItem#GROUPED_DROPDOWN_MENU_ITEM_BY_INDEX");
+
+				var index = ${index} + 1;
+			}
+
+			var index = 1;
+
+			for (var menuItem : list "APT D,APT E") {
+				AssertVisible(
+					index = ${index},
+					key_menuItem = ${menuItem},
+					key_subheader = "Test Child Site Name",
+					locator1 = "MenuItem#GROUPED_DROPDOWN_MENU_ITEM_BY_INDEX");
+
+				var index = ${index} + 1;
+			}
+
+			var index = 1;
+
+			for (var menuItem : list "APT F,APT G") {
+				AssertVisible(
+					index = ${index},
+					key_menuItem = ${menuItem},
+					key_subheader = "Test Grandchild Site Name",
+					locator1 = "MenuItem#GROUPED_DROPDOWN_MENU_ITEM_BY_INDEX");
+
+				var index = ${index} + 1;
+			}
+		}
+	}
+
 	@description = "View no console error thrown when refresh page as Guest."
 	@priority = 4
 	test ViewNoConsoleErrorWhenRefreshPageAsGuest {

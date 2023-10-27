@@ -486,7 +486,7 @@ public class StyleBookEntryLocalServiceImpl
 	}
 
 	private String _getUniqueCopyName(StyleBookEntry styleBookEntry) {
-		String copy = _language.get(LocaleUtil.getMostRelevantLocale(), "copy");
+		String copy = _language.get(LocaleUtil.getSiteDefault(), "copy");
 
 		String name = StringUtil.appendParentheticalSuffix(
 			styleBookEntry.getName(), copy);

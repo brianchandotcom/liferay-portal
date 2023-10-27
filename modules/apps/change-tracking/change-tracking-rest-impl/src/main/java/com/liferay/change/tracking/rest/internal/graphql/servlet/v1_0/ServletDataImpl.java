@@ -117,6 +117,16 @@ public class ServletDataImpl implements ServletData {
 							CTCollectionResourceImpl.class,
 							"patchCTCollectionByExternalReferenceCode"));
 					put(
+						"mutation#createCTCollectionByExternalReferenceCodePublish",
+						new ObjectValuePair<>(
+							CTCollectionResourceImpl.class,
+							"postCTCollectionByExternalReferenceCodePublish"));
+					put(
+						"mutation#createCTCollectionByExternalReferenceCodeSchedulePublish",
+						new ObjectValuePair<>(
+							CTCollectionResourceImpl.class,
+							"postCTCollectionByExternalReferenceCodeSchedulePublish"));
+					put(
 						"mutation#deleteCTCollection",
 						new ObjectValuePair<>(
 							CTCollectionResourceImpl.class,
@@ -210,6 +220,16 @@ public class ServletDataImpl implements ServletData {
 							CTCollectionResourceImpl.class,
 							"getCTCollectionByExternalReferenceCode"));
 					put(
+						"query#cTCollectionByExternalReferenceCodeShareLink",
+						new ObjectValuePair<>(
+							CTCollectionResourceImpl.class,
+							"getCTCollectionByExternalReferenceCodeShareLink"));
+					put(
+						"query#cTCollectionShareLink",
+						new ObjectValuePair<>(
+							CTCollectionResourceImpl.class,
+							"getCTCollectionShareLink"));
+					put(
 						"query#cTCollection",
 						new ObjectValuePair<>(
 							CTCollectionResourceImpl.class, "getCTCollection"));
@@ -239,6 +259,16 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							CTRemoteResourceImpl.class, "getCTRemote"));
 
+					put(
+						"query#CTCollection.shareLink",
+						new ObjectValuePair<>(
+							CTCollectionResourceImpl.class,
+							"getCTCollectionShareLink"));
+					put(
+						"query#CTCollection.byExternalReferenceCodeShareLink",
+						new ObjectValuePair<>(
+							CTCollectionResourceImpl.class,
+							"getCTCollectionByExternalReferenceCodeShareLink"));
 					put(
 						"query#CTProcess.cTCollection",
 						new ObjectValuePair<>(

@@ -585,6 +585,76 @@ public abstract class BaseCTCollectionResourceTestCase {
 	}
 
 	@Test
+	public void testPostCTCollectionByExternalReferenceCodePublish()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		CTCollection ctCollection =
+			testPostCTCollectionByExternalReferenceCodePublish_addCTCollection();
+
+		assertHttpResponseStatusCode(
+			204,
+			ctCollectionResource.
+				postCTCollectionByExternalReferenceCodePublishHttpResponse(
+					ctCollection.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			ctCollectionResource.
+				postCTCollectionByExternalReferenceCodePublishHttpResponse(
+					ctCollection.getExternalReferenceCode()));
+	}
+
+	protected CTCollection
+			testPostCTCollectionByExternalReferenceCodePublish_addCTCollection()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostCTCollectionByExternalReferenceCodeSchedulePublish()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		CTCollection ctCollection =
+			testPostCTCollectionByExternalReferenceCodeSchedulePublish_addCTCollection();
+
+		assertHttpResponseStatusCode(
+			204,
+			ctCollectionResource.
+				postCTCollectionByExternalReferenceCodeSchedulePublishHttpResponse(
+					ctCollection.getExternalReferenceCode(), null));
+
+		assertHttpResponseStatusCode(
+			404,
+			ctCollectionResource.
+				postCTCollectionByExternalReferenceCodeSchedulePublishHttpResponse(
+					ctCollection.getExternalReferenceCode(), null));
+	}
+
+	protected CTCollection
+			testPostCTCollectionByExternalReferenceCodeSchedulePublish_addCTCollection()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetCTCollectionByExternalReferenceCodeShareLink()
+		throws Exception {
+
+		Assert.assertTrue(false);
+	}
+
+	@Test
+	public void testGetCTCollectionShareLink() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testDeleteCTCollection() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		CTCollection ctCollection = testDeleteCTCollection_addCTCollection();

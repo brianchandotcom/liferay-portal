@@ -78,6 +78,21 @@ public interface CTCollectionResource {
 			String externalReferenceCode, CTCollection ctCollection)
 		throws Exception;
 
+	public void postCTCollectionByExternalReferenceCodePublish(
+			String externalReferenceCode)
+		throws Exception;
+
+	public void postCTCollectionByExternalReferenceCodeSchedulePublish(
+			String externalReferenceCode, Date publishDate)
+		throws Exception;
+
+	public String getCTCollectionByExternalReferenceCodeShareLink(
+			String externalReferenceCode)
+		throws Exception;
+
+	public String getCTCollectionShareLink(Long ctCollectionId)
+		throws Exception;
+
 	public void deleteCTCollection(Long ctCollectionId) throws Exception;
 
 	public Response deleteCTCollectionBatch(

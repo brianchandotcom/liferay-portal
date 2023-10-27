@@ -142,6 +142,39 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public boolean createCTCollectionByExternalReferenceCodePublish(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_ctCollectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctCollectionResource ->
+				ctCollectionResource.
+					postCTCollectionByExternalReferenceCodePublish(
+						externalReferenceCode));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean createCTCollectionByExternalReferenceCodeSchedulePublish(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("publishDate") Date publishDate)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_ctCollectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctCollectionResource ->
+				ctCollectionResource.
+					postCTCollectionByExternalReferenceCodeSchedulePublish(
+						externalReferenceCode, publishDate));
+
+		return true;
+	}
+
+	@GraphQLField
 	public boolean deleteCTCollection(
 			@GraphQLName("ctCollectionId") Long ctCollectionId)
 		throws Exception {

@@ -122,6 +122,42 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cTCollectionByExternalReferenceCodeShareLink(externalReferenceCode: ___){}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public String cTCollectionByExternalReferenceCodeShareLink(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ctCollectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctCollectionResource ->
+				ctCollectionResource.
+					getCTCollectionByExternalReferenceCodeShareLink(
+						externalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cTCollectionShareLink(ctCollectionId: ___){}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public String cTCollectionShareLink(
+			@GraphQLName("ctCollectionId") Long ctCollectionId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ctCollectionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ctCollectionResource ->
+				ctCollectionResource.getCTCollectionShareLink(ctCollectionId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cTCollection(ctCollectionId: ___){actions, dateCreated, dateModified, dateScheduled, description, externalReferenceCode, id, name, ownerName, status}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -252,6 +288,53 @@ public class Query {
 			_ctRemoteResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			ctRemoteResource -> ctRemoteResource.getCTRemote(id));
+	}
+
+	@GraphQLTypeExtension(CTCollection.class)
+	public class GetCTCollectionShareLinkTypeExtension {
+
+		public GetCTCollectionShareLinkTypeExtension(
+			CTCollection cTCollection) {
+
+			_cTCollection = cTCollection;
+		}
+
+		@GraphQLField
+		public String shareLink() throws Exception {
+			return _applyComponentServiceObjects(
+				_ctCollectionResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				ctCollectionResource ->
+					ctCollectionResource.getCTCollectionShareLink(
+						_cTCollection.getId()));
+		}
+
+		private CTCollection _cTCollection;
+
+	}
+
+	@GraphQLTypeExtension(CTCollection.class)
+	public class GetCTCollectionByExternalReferenceCodeShareLinkTypeExtension {
+
+		public GetCTCollectionByExternalReferenceCodeShareLinkTypeExtension(
+			CTCollection cTCollection) {
+
+			_cTCollection = cTCollection;
+		}
+
+		@GraphQLField
+		public String byExternalReferenceCodeShareLink() throws Exception {
+			return _applyComponentServiceObjects(
+				_ctCollectionResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				ctCollectionResource ->
+					ctCollectionResource.
+						getCTCollectionByExternalReferenceCodeShareLink(
+							_cTCollection.getExternalReferenceCode()));
+		}
+
+		private CTCollection _cTCollection;
+
 	}
 
 	@GraphQLTypeExtension(CTProcess.class)

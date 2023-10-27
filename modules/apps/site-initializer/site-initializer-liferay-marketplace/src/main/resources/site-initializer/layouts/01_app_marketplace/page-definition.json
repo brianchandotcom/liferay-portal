@@ -85,7 +85,7 @@
 										"marginTop": "",
 										"overflow": "visible",
 										"paddingBottom": "",
-										"paddingLeft": "4",
+										"paddingLeft": "3",
 										"paddingRight": "4",
 										"paddingTop": "",
 										"shadow": "",
@@ -118,7 +118,7 @@
 									],
 									"indexed": true,
 									"layout": {
-										"paddingLeft": 2,
+										"paddingLeft": 1,
 										"paddingRight": 2,
 										"widthType": "Fixed"
 									}
@@ -163,7 +163,6 @@
 												"marginTop": "",
 												"maxWidth": "1270px",
 												"paddingBottom": "",
-												"paddingLeft": "7",
 												"paddingTop": "",
 												"shadow": "",
 												"textAlign": ""
@@ -442,7 +441,7 @@
 									"fragmentStyle": {
 										"backgroundColor": "#F4F6F9",
 										"borderWidth": "0",
-										"paddingLeft": "8",
+										"paddingLeft": "2",
 										"paddingRight": "8"
 									},
 									"fragmentViewports": [
@@ -456,7 +455,6 @@
 									],
 									"indexed": true,
 									"layout": {
-										"paddingLeft": 10,
 										"paddingRight": 10,
 										"widthType": "Fixed"
 									}

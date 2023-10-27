@@ -39,13 +39,14 @@
 	.adt-solutions-search-results .labels .category-label {
 		background-color: #ebeef2;
 		color: #545D69;
+		font-size: smaller;
 	}
 
 	.adt-solutions-search-results .labels .category-label-remainder:hover .category-names {
 		display: block;
 	}
 
-	solution-search-results-card .card-image-title-container .developer-name {
+	.solution-search-results-card .card-image-title-container .developer-name {
 		color: #545d69;
 	}
 
@@ -56,7 +57,7 @@
 	.adt-solutions-search-results .solution-search-results-card .solution-search-image {
 		height: 180px;
 		object-fit: cover;
-		width: 329px;
+		width: 100%;
 	}
 
 	@media screen and (max-width: 599px) {
@@ -139,7 +140,7 @@
 							<img
 								alt=${productName}
 								class="solution-search-image rounded"
-								src="/o/${productThumbnail[1]}"
+								src="/o/${productThumbnail[1]!''}"
 							/>
 						</div>
 
@@ -149,8 +150,15 @@
 									<#assign productPriceModels = productSpecifications?filter(item -> item.specificationKey == "developer-name") />
 
 									<#list productPriceModels as productPriceModel>
+
+										<#if productPriceModel.value?has_content>
+											<#assign priceModel = productPriceModel.value />
+										<#else>
+											<#assign priceModel = "" />
+										</#if>
+
 										<div class="developer-name font-size-paragraph-small">
-											${productPriceModel.value.en_US}
+											${priceModel}
 										</div>
 									</#list>
 								</#if>

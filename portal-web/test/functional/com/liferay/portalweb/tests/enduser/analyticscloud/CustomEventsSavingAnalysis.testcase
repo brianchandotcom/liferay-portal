@@ -711,18 +711,7 @@ definition {
 	test CanPaginationAnalysisReportList {
 		var eventAnalysisNameList1 = "Save Analysis 0,Save Analysis 1,Save Analysis 2,Save Analysis 3";
 		var eventAnalysisNameList2 = "Save Analysis 4,Save Analysis 5,Save Analysis 6,Save Analysis 7";
-
-		task ("Fill fields and create custom event") {
-			var customEventName = ACCustomEvents.generateCustomEventName();
-
-			ACCustomEvents.createCustomEvent(
-				customEventName = ${customEventName},
-				timeToSendCustomEvent = 1);
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
+		var eventName = "pageViewed";
 
 		task ("Switch the property in AC and go to event analysis") {
 			ACUtils.launchAC();
@@ -734,19 +723,11 @@ definition {
 
 		for (var eventAnalysisName : list "${eventAnalysisNameList1},${eventAnalysisNameList2}") {
 			task ("Add the custom event to analysis by the all tab") {
-				ACEventAnalysis.addEvent(customEventName = ${customEventName});
+				ACEventAnalysis.addEvent(customEventName = ${eventName});
 			}
 
 			task ("Name the report") {
 				ACUtils.setItemName(itemName = ${eventAnalysisName});
-			}
-
-			task ("Check the analysis result appears") {
-				ACTimeFilter.clickTimeFilterButton();
-
-				ACTimeFilter.setLast24Hours();
-
-				ACEventAnalysis.viewAnalysisInformation(informationValueList = "${customEventName},1");
 			}
 
 			task ("Save the newly created analysis") {

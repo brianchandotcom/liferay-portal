@@ -61,14 +61,12 @@ public class ModifiedFacetDisplayContextBuilder implements Serializable {
 		ModifiedFacetDisplayContext modifiedFacetDisplayContext =
 			new ModifiedFacetDisplayContext();
 
-		modifiedFacetDisplayContext.setCalendarDisplayContext(
-			_buildCalendarDisplayContext());
-
-		modifiedFacetDisplayContext.setCustomRangeBucketDisplayContext(
-			_buildCustomRangeBucketDisplayContext());
-
 		modifiedFacetDisplayContext.setBucketDisplayContexts(
 			_buildBucketDisplayContexts());
+		modifiedFacetDisplayContext.setCalendarDisplayContext(
+			_buildCalendarDisplayContext());
+		modifiedFacetDisplayContext.setCustomRangeBucketDisplayContext(
+			_buildCustomRangeBucketDisplayContext());
 		modifiedFacetDisplayContext.setDefaultBucketDisplayContext(
 			_buildDefaultBucketDisplayContext());
 		modifiedFacetDisplayContext.setDisplayStyleGroupId(

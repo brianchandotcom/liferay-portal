@@ -61,14 +61,12 @@ public class DateFacetDisplayContextBuilder implements Serializable {
 		DateFacetDisplayContext dateFacetDisplayContext =
 			new DateFacetDisplayContext();
 
-		dateFacetDisplayContext.setCalendarDisplayContext(
-			_buildCalendarDisplayContext());
-
-		dateFacetDisplayContext.setCustomRangeBucketDisplayContext(
-			_buildCustomRangeBucketDisplayContext());
-
 		dateFacetDisplayContext.setBucketDisplayContexts(
 			_buildBucketDisplayContexts());
+		dateFacetDisplayContext.setCalendarDisplayContext(
+			_buildCalendarDisplayContext());
+		dateFacetDisplayContext.setCustomRangeBucketDisplayContext(
+			_buildCustomRangeBucketDisplayContext());
 		dateFacetDisplayContext.setDefaultBucketDisplayContext(
 			_buildDefaultBucketDisplayContext());
 		dateFacetDisplayContext.setDisplayCaption(getDisplayCaption());

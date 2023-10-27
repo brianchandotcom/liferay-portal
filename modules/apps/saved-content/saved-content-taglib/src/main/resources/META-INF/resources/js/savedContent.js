@@ -50,7 +50,7 @@ export default function SavedContent({
 					return;
 				}
 
-				setSaved(response.saved.toLowerCase() === 'true');
+				setSaved(response.saved);
 
 				const mySavedContentLink = `
 					<a href="${mySavedContentURL}" class="alert-link">${Liferay.Language.get(

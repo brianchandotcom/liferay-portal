@@ -392,6 +392,10 @@ definition {
 		}
 
 		task ("Log in as the user") {
+			Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+			Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
 				userLoginFullName = "userfn userln");
@@ -477,6 +481,10 @@ definition {
 		}
 
 		task ("Assign the created user to default site") {
+			Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+			Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 			User.openUsersAdmin();
 
 			User.editUserSiteCP(

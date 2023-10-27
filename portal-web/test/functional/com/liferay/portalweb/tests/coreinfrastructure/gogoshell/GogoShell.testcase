@@ -155,6 +155,10 @@ definition {
 			requireReset = "false",
 			userEmailAddress = "userea@liferay.com");
 
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 		User.openUsersAdmin();
 
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
@@ -162,6 +166,10 @@ definition {
 		User.editUserSiteCP(
 			siteName = ${siteName},
 			userScreenName = "usersn");
+
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 
 		Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 

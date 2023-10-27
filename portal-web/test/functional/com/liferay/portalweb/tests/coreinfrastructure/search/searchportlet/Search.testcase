@@ -2307,6 +2307,10 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -2396,6 +2400,10 @@ definition {
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
+
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",

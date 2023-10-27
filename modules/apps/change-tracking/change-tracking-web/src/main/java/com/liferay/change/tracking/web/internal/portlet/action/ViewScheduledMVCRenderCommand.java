@@ -38,9 +38,8 @@ public class ViewScheduledMVCRenderCommand implements MVCRenderCommand {
 
 		ViewScheduledDisplayContext viewScheduledDisplayContext =
 			new ViewScheduledDisplayContext(
-				_ctCollectionService,
 				_portal.getHttpServletRequest(renderRequest), _language,
-				_publishScheduler, renderRequest, renderResponse);
+				renderRequest, renderResponse);
 
 		renderRequest.setAttribute(
 			CTWebKeys.VIEW_SCHEDULED_DISPLAY_CONTEXT,

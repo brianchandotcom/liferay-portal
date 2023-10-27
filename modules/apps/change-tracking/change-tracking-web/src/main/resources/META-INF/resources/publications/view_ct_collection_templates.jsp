@@ -37,7 +37,7 @@ portletDisplay.setShowBackIcon(true);
 			modelVar="ctCollectionTemplate"
 		>
 			<c:choose>
-				<c:when test='<%= Objects.equals(publicationsDisplayContext.getDisplayStyle(), "descriptive") %>'>
+				<c:when test='<%= Objects.equals(viewTemplatesDisplayContext.getDisplayStyle(), "descriptive") %>'>
 					<liferay-ui:search-container-column-text>
 						<span class="lfr-portal-tooltip" title="<%= HtmlUtil.escape(ctCollectionTemplate.getUserName()) %>">
 							<liferay-user:user-portrait

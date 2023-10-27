@@ -12,7 +12,8 @@ import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderType;
-import com.liferay.commerce.payment.engine.CommercePaymentEngine;
+import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
+import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
@@ -135,11 +136,13 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 		String paymentMethodKey = commerceOrder.getCommercePaymentMethodKey();
 
 		if ((paymentMethodKey != null) && !paymentMethodKey.isEmpty()) {
-			String commerceOrderPaymentMethodName =
-				_commercePaymentEngine.getPaymentMethodName(
-					paymentMethodKey, locale);
+			CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
+				_commercePaymentMethodGroupRelLocalService.
+					getCommercePaymentMethodGroupRel(
+						commerceOrder.getGroupId(), paymentMethodKey);
 
-			cart.setPaymentMethodLabel(commerceOrderPaymentMethodName);
+			cart.setPaymentMethodLabel(
+				commercePaymentMethodGroupRel.getName(locale));
 		}
 
 		return cart;
@@ -496,7 +499,8 @@ public class CartDTOConverter implements DTOConverter<CommerceOrder, Cart> {
 	private CommerceOrderTypeService _commerceOrderTypeService;
 
 	@Reference
-	private CommercePaymentEngine _commercePaymentEngine;
+	private CommercePaymentMethodGroupRelLocalService
+		_commercePaymentMethodGroupRelLocalService;
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;

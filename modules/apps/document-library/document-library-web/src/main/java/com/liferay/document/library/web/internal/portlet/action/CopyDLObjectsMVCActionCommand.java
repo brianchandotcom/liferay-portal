@@ -142,7 +142,7 @@ public class CopyDLObjectsMVCActionCommand extends BaseMVCActionCommand {
 					_dlSizeLimitConfigurationProvider.getGroupMaxSizeToCopy(
 						group.getGroupId()),
 					_dlSizeLimitConfigurationProvider.getSystemMaxSizeToCopy(),
-					size, themeDisplay.getLocale()));
+					size, themeDisplay.getLocale(), true));
 		}
 	}
 

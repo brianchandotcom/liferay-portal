@@ -176,7 +176,7 @@ public class CopyDLObjectsMVCRenderCommand implements MVCRenderCommand {
 							themeDisplay.getScopeGroupId()),
 						_dlSizeLimitConfigurationProvider.
 							getSystemMaxSizeToCopy(),
-						size, themeDisplay.getLocale())));
+						size, themeDisplay.getLocale(), false)));
 		}
 	}
 

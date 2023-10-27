@@ -16,13 +16,22 @@ public class DLCopyValidationUtil {
 
 	public static String getCopyToValidationMessage(
 		long companyMaxSizeToCopy, long groupMaxSizeToCopy,
-		long systemMaxSizeToCopy, long size, Locale locale) {
+		long systemMaxSizeToCopy, long size, Locale locale,
+		boolean checkInDestination) {
 
 		if ((size > groupMaxSizeToCopy) && (groupMaxSizeToCopy != 0)) {
 			String messagePrefix = LanguageUtil.get(
 				locale,
 				"item-cannot-be-copied-because-it-exceeds-the-limit-defined-" +
 					"in-site-settings");
+
+			if (checkInDestination) {
+				messagePrefix = LanguageUtil.get(
+					locale,
+					"item-cannot-be-copied-because-it-exceeds-the-limit-set-" +
+						"in-destination-site-site-settings");
+			}
+
 			String messageSuffix = LanguageUtil.format(
 				locale, "the-total-size-of-all-items-to-copy-must-not-exceed-x",
 				LanguageUtil.formatStorageSize(groupMaxSizeToCopy, locale));

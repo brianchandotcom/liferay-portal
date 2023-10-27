@@ -4497,10 +4497,6 @@ public class JenkinsResultsParserUtil {
 							matcher.group(1);
 
 					updatingGitHubApiCall = true;
-
-					System.out.println(
-						"Routing updating GitHub API call through proxy server " +
-							buildProperties.getProperty("github.api.proxy"));
 				}
 
 				URL urlObject = new URL(url);

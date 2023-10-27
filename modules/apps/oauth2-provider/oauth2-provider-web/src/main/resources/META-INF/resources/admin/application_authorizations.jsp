@@ -87,9 +87,10 @@ OAuth2AuthorizationsManagementToolbarDisplayContext oAuth2AuthorizationsManageme
 
 				<%
 				Date expirationDate = oAuth2Authorization.getRefreshTokenExpirationDate();
+				Date accessTokenExpirationDate = oAuth2Authorization.getAccessTokenExpirationDate();
 
-				if (expirationDate == null) {
-					expirationDate = oAuth2Authorization.getAccessTokenExpirationDate();
+				if ((expirationDate == null) || expirationDate.before(accessTokenExpirationDate)) {
+					expirationDate = accessTokenExpirationDate;
 				}
 				%>
 

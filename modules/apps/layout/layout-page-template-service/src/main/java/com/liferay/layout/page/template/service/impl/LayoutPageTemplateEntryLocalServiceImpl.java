@@ -266,8 +266,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		String name = _getUniqueCopyName(
 			groupId, sourceLayoutPageTemplateEntry.getName(),
-			sourceLayoutPageTemplateEntry.getType(),
-			serviceContext.getLocale());
+			sourceLayoutPageTemplateEntry.getType());
 
 		long masterLayoutPlid = 0;
 
@@ -998,9 +997,9 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	}
 
 	private String _getUniqueCopyName(
-		long groupId, String sourceName, int type, Locale locale) {
+		long groupId, String sourceName, int type) {
 
-		String copy = _language.get(locale, "copy");
+		String copy = _language.get(LocaleUtil.getSiteDefault(), "copy");
 
 		String name = StringUtil.appendParentheticalSuffix(sourceName, copy);
 

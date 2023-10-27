@@ -59,6 +59,7 @@ const appRoutes: AppRouteComponent = {
 			]}
 			name="Partner Opportunities"
 			newButtonDeal={false}
+			renewalOpportunitiesFilter="type eq 'New Business' and type eq 'New Project Existing Business'"
 			sort="dateCreated:desc"
 		/>
 	),

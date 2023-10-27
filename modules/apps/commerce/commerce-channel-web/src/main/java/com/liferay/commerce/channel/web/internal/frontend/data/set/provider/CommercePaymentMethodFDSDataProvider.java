@@ -8,6 +8,8 @@ package com.liferay.commerce.channel.web.internal.frontend.data.set.provider;
 import com.liferay.commerce.channel.web.internal.constants.CommerceChannelFDSNames;
 import com.liferay.commerce.channel.web.internal.frontend.util.CommerceChannelClayTableUtil;
 import com.liferay.commerce.channel.web.internal.model.PaymentMethod;
+import com.liferay.commerce.payment.integration.CommercePaymentIntegration;
+import com.liferay.commerce.payment.integration.CommercePaymentIntegrationRegistry;
 import com.liferay.commerce.payment.method.CommercePaymentMethod;
 import com.liferay.commerce.payment.method.CommercePaymentMethodRegistry;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
@@ -17,6 +19,7 @@ import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -97,6 +100,42 @@ public class CommercePaymentMethodFDSDataProvider
 						themeDisplay.getLocale())));
 		}
 
+		Map<String, CommercePaymentIntegration> commercePaymentIntegrations =
+			_commercePaymentIntegrationRegistry.
+				getCommercePaymentIntegrations();
+
+		for (Map.Entry<String, CommercePaymentIntegration> entry :
+				commercePaymentIntegrations.entrySet()) {
+
+			CommercePaymentIntegration commercePaymentIntegration =
+				entry.getValue();
+
+			CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
+				_commercePaymentMethodGroupRelService.
+					fetchCommercePaymentMethodGroupRel(
+						commerceChannel.getGroupId(),
+						commercePaymentIntegration.getKey());
+
+			String description = StringPool.BLANK;
+			String paymentIntegrationName =
+				commercePaymentIntegration.getPaymentIntegrationName();
+
+			if (commercePaymentMethodGroupRel != null) {
+				description = commercePaymentMethodGroupRel.getDescription(
+					themeDisplay.getLocale());
+				paymentIntegrationName = commercePaymentMethodGroupRel.getName(
+					themeDisplay.getLocale());
+			}
+
+			paymentMethods.add(
+				new PaymentMethod(
+					description, commercePaymentIntegration.getKey(),
+					paymentIntegrationName, paymentIntegrationName,
+					CommerceChannelClayTableUtil.getLabelField(
+						_isActive(commercePaymentMethodGroupRel),
+						themeDisplay.getLocale())));
+		}
+
 		return paymentMethods;
 	}
 
@@ -123,6 +162,10 @@ public class CommercePaymentMethodFDSDataProvider
 
 	@Reference
 	private CommerceChannelService _commerceChannelService;
+
+	@Reference
+	private CommercePaymentIntegrationRegistry
+		_commercePaymentIntegrationRegistry;
 
 	@Reference
 	private CommercePaymentMethodGroupRelService

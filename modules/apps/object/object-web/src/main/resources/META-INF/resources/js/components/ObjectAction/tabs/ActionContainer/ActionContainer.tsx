@@ -76,6 +76,7 @@ export function ActionContainer({
 
 		return isObjectActionSystem
 			? businessType !== 'Aggregation' &&
+					businessType !== 'AutoIncrement' &&
 					businessType !== 'Formula' &&
 					businessType !== 'Relationship' &&
 					name !== 'creator' &&
@@ -84,6 +85,7 @@ export function ActionContainer({
 					name !== 'modifiedDate' &&
 					name !== 'status'
 			: businessType !== 'Aggregation' &&
+					businessType !== 'AutoIncrement' &&
 					businessType !== 'Formula' &&
 					businessType !== 'Relationship' &&
 					!system;

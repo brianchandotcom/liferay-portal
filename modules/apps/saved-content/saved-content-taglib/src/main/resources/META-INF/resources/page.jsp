@@ -6,7 +6,10 @@
 --%>
 
 <%@ include file="/init.jsp" %>
-
+<%
+	boolean enabled = GetterUtil.getBoolean(request.getAttribute("liferay-saved-content:saved-content:enabled"));
+	String contentTitle = GetterUtil.getString((String)request.getAttribute("liferay-saved-content:saved-content:contentTitle"));
+%>
 <div>
 	<clay:button
 		disabled="<%= true %>"

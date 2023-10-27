@@ -1416,7 +1416,7 @@ public class BundleSiteInitializerTest {
 			"Test Fragment Entry 2", testFragmentEntry2.getName());
 	}
 
-	private void _assertJournalArticles() throws Exception {
+	private void _assertJournalArticles1() throws Exception {
 		JournalArticle journalArticle1 =
 			_journalArticleLocalService.fetchArticle(
 				_group.getGroupId(), "test-journal-article-1");
@@ -3694,7 +3694,7 @@ public class BundleSiteInitializerTest {
 		_assertExpandoColumns1();
 		_assertExpandoValues1();
 		_assertFragmentEntries();
-		_assertJournalArticles();
+		_assertJournalArticles1();
 		_assertKBArticles();
 		_assertLayoutPageTemplateEntries();
 		_assertLayoutSets();

@@ -238,11 +238,13 @@ const FrontendDataSet = ({
 		loadClientExtensions([
 			{
 				cxDefinitions: initialFilters
-					?.filter((filter) => filter.cxFilterURL)
-					.map((filter) => ({
-						context: filter,
-						importDeclaration: `default from ${filter.cxFilterURL}`,
-					})),
+					? initialFilters
+							.filter((filter) => filter.cxFilterURL)
+							.map((filter) => ({
+								context: filter,
+								importDeclaration: `default from ${filter.cxFilterURL}`,
+							}))
+					: [],
 				onLoad: (bindingContexts) => {
 					const newFilters = bindingContexts.map(
 						({

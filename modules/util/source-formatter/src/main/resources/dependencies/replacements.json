@@ -199,6 +199,14 @@
 		"to": "addFolder(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, param#8#)"
 	},
 	{
+		"from": "compat/mixins",
+		"issueKey": "LPS-194519",
+		"to": "clay/cadmin-variables",
+		"validExtensions": [
+			"scss"
+		]
+	},
+	{
 		"classNames": [
 			"DLAppLocalService",
 			"DLAppLocalServiceUtil"

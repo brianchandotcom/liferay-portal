@@ -394,34 +394,6 @@ public class Main {
 		_fileNames.add(fileName);
 	}
 
-	private List<Permission> _clearCurrentPermissions(Long structuredContentId)
-		throws Exception {
-
-		List<Permission> permissions = new ArrayList<>();
-
-		if (structuredContentId == null) {
-			return permissions;
-		}
-
-		Page<Permission> structuredContentPermissionsPage =
-			_structuredContentResource.getStructuredContentPermissionsPage(
-				structuredContentId, null);
-
-		for (Permission permission :
-				structuredContentPermissionsPage.getItems()) {
-
-			if (Objects.equals(permission.getRoleName(), "Owner")) {
-				continue;
-			}
-
-			permission.setActionIds(new String[0]);
-
-			permissions.add(permission);
-		}
-
-		return permissions;
-	}
-
 	private String _dedent(int dedent, String line) {
 		if (line == null) {
 			return null;
@@ -719,8 +691,26 @@ public class Main {
 					file)));
 
 		Map<String, Object> data = snakeYamlFrontMatterVisitor.getData();
-		List<Permission> permissions = _clearCurrentPermissions(
-			structuredContentId);
+
+		List<Permission> permissions = new ArrayList<>();
+
+		if (structuredContentId != null) {
+			Page<Permission> structuredContentPermissionsPage =
+				_structuredContentResource.getStructuredContentPermissionsPage(
+					structuredContentId, null);
+
+			for (Permission permission :
+					structuredContentPermissionsPage.getItems()) {
+
+				if (Objects.equals(permission.getRoleName(), "Owner")) {
+					continue;
+				}
+
+				permission.setActionIds(new String[0]);
+
+				permissions.add(permission);
+			}
+		}
 
 		if ((data == null) || !data.containsKey("visibility")) {
 			permissions.add(

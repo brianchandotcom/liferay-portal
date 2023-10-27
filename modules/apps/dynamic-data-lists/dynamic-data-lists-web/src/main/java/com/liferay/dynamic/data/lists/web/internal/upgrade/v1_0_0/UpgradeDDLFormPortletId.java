@@ -64,8 +64,9 @@ public class UpgradeDDLFormPortletId extends BasePortletIdUpgradeProcess {
 				dynamicQuery.add(junction);
 			});
 		actionableDynamicQuery.setPerformActionMethod(
-			(PortletPreferences portletPreference) -> _updatePortletPreferences(
-				portletPreference, oldRootPortletId, newRootPortletId));
+			(PortletPreferences portletPreferences) ->
+				_updatePortletPreferences(
+					portletPreferences, oldRootPortletId, newRootPortletId));
 
 		actionableDynamicQuery.performActions();
 	}

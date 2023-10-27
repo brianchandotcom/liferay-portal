@@ -363,6 +363,7 @@ export default function ChangeTrackingIndicator({
 			<ClayDropDownWithItems
 				alignmentPosition={Align.BottomCenter}
 				items={dropdownItems}
+				menuElementAttrs={{style: {zIndex: 1021}}}
 				trigger={renderTrigger}
 			/>
 		);

@@ -66,15 +66,6 @@ public class UserContentRecommendationManagerImpl
 
 		BooleanQuery booleanQuery = new BooleanQueryImpl();
 
-		if (assetCategoryIds != null) {
-			for (long categoryId : assetCategoryIds) {
-				TermQuery categoryIdTermQuery = new TermQueryImpl(
-					Field.ASSET_CATEGORY_IDS, String.valueOf(categoryId));
-
-				booleanQuery.add(categoryIdTermQuery, BooleanClauseOccur.MUST);
-			}
-		}
-
 		booleanQuery.setPreBooleanFilter(
 			new BooleanFilter() {
 				{
@@ -88,6 +79,15 @@ public class UserContentRecommendationManagerImpl
 						BooleanClauseOccur.MUST);
 				}
 			});
+
+		if (assetCategoryIds != null) {
+			for (long categoryId : assetCategoryIds) {
+				TermQuery categoryIdTermQuery = new TermQueryImpl(
+					Field.ASSET_CATEGORY_IDS, String.valueOf(categoryId));
+
+				booleanQuery.add(categoryIdTermQuery, BooleanClauseOccur.MUST);
+			}
+		}
 
 		searchSearchRequest.setQuery(booleanQuery);
 
@@ -104,18 +104,22 @@ public class UserContentRecommendationManagerImpl
 	}
 
 	@Override
-	protected Document toDocument(UserContentRecommendation model) {
-		Document document = getDocument(model);
+	protected Document toDocument(
+		UserContentRecommendation userContentRecommendation) {
+
+		Document document = getDocument(userContentRecommendation);
 
 		document.addKeyword(
 			Field.UID,
 			String.valueOf(
 				getHash(
-					model.getEntryClassPK(),
-					model.getRecommendedEntryClassPK())));
+					userContentRecommendation.getEntryClassPK(),
+					userContentRecommendation.getRecommendedEntryClassPK())));
 		document.addNumber(
-			Field.ASSET_CATEGORY_IDS, model.getAssetCategoryIds());
-		document.addNumber(Field.ENTRY_CLASS_PK, model.getEntryClassPK());
+			Field.ASSET_CATEGORY_IDS,
+			userContentRecommendation.getAssetCategoryIds());
+		document.addNumber(
+			Field.ENTRY_CLASS_PK, userContentRecommendation.getEntryClassPK());
 
 		return document;
 	}

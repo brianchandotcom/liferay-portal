@@ -1,5 +1,46 @@
 components:
     schemas:
+        AssetEntity:
+            properties:
+                categoryIds:
+                    items:
+                        format: int64
+                        type: integer
+                    type: array
+                className:
+                    type: string
+                classPK:
+                    format: int64
+                    type: integer
+                classTypeId:
+                    format: int64
+                    type: integer
+                classTypeName:
+                    type: string
+                createDate:
+                    format: date
+                    type: string
+                expirationDate:
+                    format: date
+                    type: string
+                groupId:
+                    format: int64
+                    type: integer
+                id:
+                    format: int64
+                    type: integer
+                modifiedDate:
+                    format: date
+                    type: string
+                publishDate:
+                    format: date
+                    type: string
+                tagNames:
+                    items:
+                        type: string
+                    type: array
+                title:
+                    type: string
         DXPEntity:
             properties:
                 expandoFields:

@@ -54,7 +54,7 @@ const ProductFooter = ({
 }: ProductFooterProps) => {
 	const getButtonText = () => {
 		if (isFreeApp) {
-			return 'Get This App';
+			return 'Get App';
 		}
 
 		if ([StepType.ACCOUNT, StepType.LICENSES].includes(step)) {

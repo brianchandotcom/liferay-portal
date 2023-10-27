@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Locale;
@@ -188,8 +187,5 @@ public class EditCommerceNotificationTemplateMVCActionCommand
 
 	@Reference
 	private Localization _localization;
-
-	@Reference
-	private Portal _portal;
 
 }

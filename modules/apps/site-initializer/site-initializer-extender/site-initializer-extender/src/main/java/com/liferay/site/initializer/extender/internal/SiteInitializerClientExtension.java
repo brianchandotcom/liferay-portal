@@ -10,9 +10,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.liferay.headless.site.dto.v1_0.Site;
 import com.liferay.headless.site.resource.v1_0.SiteResource;
 import com.liferay.layout.util.LayoutServiceContextHelper;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -83,6 +84,7 @@ public class SiteInitializerClientExtension
 			return null;
 		}
 
+		long currentCompanyId = CompanyThreadLocal.getCompanyId();
 		PermissionChecker currentPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 		String currentPrincipalThreadLocalName = PrincipalThreadLocal.getName();
@@ -96,6 +98,7 @@ public class SiteInitializerClientExtension
 			throw new RuntimeException(exception);
 		}
 		finally {
+			CompanyThreadLocal.setCompanyId(currentCompanyId);
 			PermissionThreadLocal.setPermissionChecker(
 				currentPermissionChecker);
 			PrincipalThreadLocal.setName(currentPrincipalThreadLocalName);
@@ -118,6 +121,8 @@ public class SiteInitializerClientExtension
 	@Activate
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
+
+		_bundleContext = bundleContext;
 
 		_bundleTracker = new BundleTracker<>(
 			bundleContext, Bundle.ACTIVE, this);
@@ -179,8 +184,9 @@ public class SiteInitializerClientExtension
 				site = Site.toDTO(json);
 
 				if (site == null) {
-					throw new Exception(
-						"Unable to transform site from JSON: " + json);
+					_log.error("Unable to transform site from JSON: " + json);
+
+					throw new Exception();
 				}
 			}
 			else if (StringUtil.endsWith(
@@ -200,17 +206,13 @@ public class SiteInitializerClientExtension
 		Company company = _companyLocalService.getCompanyByWebId(
 			PropsUtil.get(PropsKeys.COMPANY_DEFAULT_WEB_ID));
 
-		long companyId = company.getCompanyId();
-
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setWithSafeCloseable(companyId)) {
-
+		try {
 			TransactionInvokerUtil.invoke(
 				_transactionConfig,
 				new SiteCallable(
 					company,
 					_userLocalService.getUserByScreenName(
-						companyId,
+						company.getCompanyId(),
 						PropsUtil.get(PropsKeys.DEFAULT_ADMIN_SCREEN_NAME)),
 					MultipartBody.of(
 						binaryFileMap, __ -> _objectMapper,
@@ -218,6 +220,8 @@ public class SiteInitializerClientExtension
 					site));
 		}
 		catch (Throwable throwable) {
+			_log.error(throwable);
+
 			throw new Exception(throwable);
 		}
 	}
@@ -251,11 +255,15 @@ public class SiteInitializerClientExtension
 		return false;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		SiteInitializerClientExtension.class);
+
 	private static final ObjectMapper _objectMapper = new ObjectMapper();
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
+	private BundleContext _bundleContext;
 	private BundleTracker<?> _bundleTracker;
 
 	@Reference

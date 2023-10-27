@@ -19,6 +19,8 @@ public class CommercePaymentEntryConstants {
 	public static final int STATUS_COMPLETED =
 		CommerceOrderPaymentConstants.STATUS_COMPLETED;
 
+	public static final int STATUS_CREATED = 18;
+
 	public static final int STATUS_FAILED =
 		CommerceOrderPaymentConstants.STATUS_FAILED;
 

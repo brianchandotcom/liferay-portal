@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -26,16 +26,16 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Luca Pellizzon
+ * @author Crescenzo Rega
  */
 @Component(
 	property = {
 		"javax.portlet.name=" + CPPortletKeys.COMMERCE_PAYMENT_METHODS,
-		"mvc.command.name=/commerce_payment_methods/edit_paypal_commerce_payment_method_configuration"
+		"mvc.command.name=/commerce_payment_integrations/edit_paypal_commerce_payment_integration_configuration"
 	},
 	service = MVCActionCommand.class
 )
-public class EditPayPalCommercePaymentMethodConfigurationMVCActionCommand
+public class EditPayPalCommercePaymentIntegrationConfigurationMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override
@@ -63,7 +63,7 @@ public class EditPayPalCommercePaymentMethodConfigurationMVCActionCommand
 			new GroupServiceSettingsLocator(
 				commerceChannel.getGroupId(),
 				PayPalCommercePaymentMethodConstants.
-					COMMERCE_PAYMENT_ENGINE_SERVICE_NAME));
+					COMMERCE_PAYMENT_INTEGRATION_SERVICE_NAME));
 
 		ModifiableSettings modifiableSettings =
 			settings.getModifiableSettings();

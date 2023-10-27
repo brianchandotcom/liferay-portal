@@ -1774,6 +1774,111 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-12676. As a buyer user, I cannot add the option to the cart when the option's stock quantity is zero and the allow back order is disabled"
+	@priority = 5
+	test CannotAddToCartOptionWhenStockIsZeroAndBackOrderIsDisabled {
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site with a buyer user") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And the Package Quantity option is added to product ABS Sensor") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "ABS Sensor");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceRelations.assignSingleRelationToProductsEntry(
+				entryName = "Package Quantity",
+				title = "Add Option");
+		}
+
+		task ("And all SKUs are generated") {
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceSKUs.generateAllSkuCombinations();
+		}
+
+		task ("And the inventory of other generated SKUs is configured besides SKU:6 and 24 which has 0 stock") {
+			for (var sku : list "112,48,12") {
+				CommerceJSONWarehousesAndInventoriesAPI._addWarehouseItem(
+					warehouseItemSku = ${sku},
+					warehouseItemQuantity = 10,
+					warehouseName = "Italy");
+			}
+		}
+
+		task ("And Allow Back Orders toggle is switched off for ABS Sensor") {
+			CommerceJSONProductsAPI._patchCommerceProductConfiguration(
+				allowBackOrder = "false",
+				productName = "ABS Sensor");
+		}
+
+		task ("When the buyer navigates to the ABS Sensor's details page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/abs-sensor");
+		}
+
+		task ("Then can see the selected option is 6 and the add-to-cart button is disabled") {
+			AssertSelectedLabel(
+				key_optionName = "Package Quantity",
+				locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT",
+				value1 = 6);
+
+			AssertElementPresent(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE_DISABLED");
+		}
+
+		task ("And other options can be added to cart with add-to-cart button enabled") {
+			var index = 1;
+
+			for (var optionValue : list "12,24,48,112") {
+				FrontStore.selectAssociatedFSOptionsValue(
+					fsOptionName = "Package Quantity",
+					fsOptionValue = ${optionValue});
+
+				WaitForElementPresent(
+					key_productSku = ${optionValue},
+					locator1 = "CommerceFrontStore#FS_PRODUCT_SKU");
+
+				if (${optionValue} == 24) {
+					AssertElementPresent(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE_DISABLED");
+				}
+				else {
+					AssertElementPresent(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+
+					Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
+
+					WaitForElementPresent(
+						key_itemCount = ${index},
+						locator1 = "CommerceAccelerators#MINI_CART_BUTTON_DATA_BADGE_COUNT");
+
+					var index = ${index} + 1;
+				}
+			}
+		}
+	}
+
 	@description = "This is a test for COMMERCE-10897. Users cannot view XSS with Availability Estimates in product details"
 	@priority = 3
 	test CannotExecuteXSSWithAvailabilityEstimatesInProductDetails {

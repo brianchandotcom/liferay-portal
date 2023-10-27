@@ -147,12 +147,12 @@ public class EmbeddedPortletWhenEmbeddingNonembeddablePortletInLayoutTest
 		Assert.assertEquals(
 			portletPreferences.toString(), 1, portletPreferences.size());
 
-		PortletPreferences embeddedPortletPreference = portletPreferences.get(
+		PortletPreferences embeddedPortletPreferences = portletPreferences.get(
 			0);
 
 		javax.portlet.PortletPreferences jxPortletPreferences =
 			_portletPreferenceValueLocalService.getPreferences(
-				embeddedPortletPreference);
+				embeddedPortletPreferences);
 
 		Assert.assertArrayEquals(
 			new String[] {"testValue1", "testValue2"},

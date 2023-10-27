@@ -3835,12 +3835,7 @@ public class ObjectEntryLocalServiceImpl
 			dynamicObjectDefinitionTable.getObjectFields();
 
 		for (ObjectField objectField : objectFields) {
-			if (objectField.compareBusinessType(
-					ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) ||
-				objectField.compareBusinessType(
-					ObjectFieldConstants.BUSINESS_TYPE_FORMULA) ||
-				objectField.isLocalized()) {
-
+			if (!objectField.hasUpdateValues() || objectField.isLocalized()) {
 				continue;
 			}
 
@@ -3919,12 +3914,9 @@ public class ObjectEntryLocalServiceImpl
 			int index = 1;
 
 			for (ObjectField objectField : objectFields) {
-				if (objectField.compareBusinessType(
-						ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) ||
-					objectField.compareBusinessType(
-						ObjectFieldConstants.BUSINESS_TYPE_FORMULA) ||
-					!values.containsKey(objectField.getName()) ||
-					objectField.isLocalized()) {
+				if (!objectField.hasUpdateValues() ||
+					objectField.isLocalized() ||
+					!values.containsKey(objectField.getName())) {
 
 					continue;
 				}

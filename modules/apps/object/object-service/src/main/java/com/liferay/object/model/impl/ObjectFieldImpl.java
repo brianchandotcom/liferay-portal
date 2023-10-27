@@ -83,6 +83,19 @@ public class ObjectFieldImpl extends ObjectFieldBaseImpl {
 		return false;
 	}
 
+	public boolean hasUpdateValues() {
+		if (compareBusinessType(
+				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) ||
+			compareBusinessType(
+				ObjectFieldConstants.BUSINESS_TYPE_AUTO_INCREMENT) ||
+			compareBusinessType(ObjectFieldConstants.BUSINESS_TYPE_FORMULA)) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	@Override
 	public boolean isDeletionAllowed() throws PortalException {
 		if (Validator.isNotNull(getRelationshipType())) {

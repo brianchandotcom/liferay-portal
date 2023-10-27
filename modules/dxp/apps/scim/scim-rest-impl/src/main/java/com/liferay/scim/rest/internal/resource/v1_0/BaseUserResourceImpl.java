@@ -175,7 +175,7 @@ public abstract class BaseUserResourceImpl implements UserResource {
 	@javax.ws.rs.Path("/v2/Users/{id}")
 	@javax.ws.rs.Produces("application/scim+json")
 	@Override
-	public Object getV2User(
+	public Object getV2UserById(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull @javax.ws.rs.PathParam("id")
 			String id)

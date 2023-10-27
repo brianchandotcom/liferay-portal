@@ -63,9 +63,8 @@ public class GlobalJSCETImplFactoryImpl implements CETImplFactory<GlobalJSCET> {
 
 		if (!Validator.isUrl(url)) {
 			throw new ClientExtensionEntryTypeSettingsException(
-				"Invalid URL: " + url,
-				"url-x-is-invalid", url
-			);
+				"Invalid JavaScript URL: " + url, "javascript-url-x-is-invalid",
+				url);
 		}
 	}
 

@@ -64,9 +64,7 @@ public class GlobalCSSCETImplFactoryImpl
 
 		if (!Validator.isUrl(url)) {
 			throw new ClientExtensionEntryTypeSettingsException(
-				"Invalid URL: " + url,
-				"url-x-is-invalid", url
-			);
+				"Invalid CSS URL: " + url, "css-url-x-is-invalid", url);
 		}
 	}
 

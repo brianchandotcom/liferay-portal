@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+	<service name="Plugin_Sample_FooService" provider="java:RPC" style="rpc" use="encoded">
+		<parameter name="allowedMethods" value="*" />
+		<parameter name="className" value="com.example.sample.service.http.FooServiceSoap" />
+		<parameter name="typeMappingVersion" value="1.2" />
+		<parameter name="wsdlPortType" value="FooServiceSoap" />
+		<parameter name="wsdlServiceElement" value="FooServiceSoapService" />
+		<parameter name="wsdlServicePort" value="Plugin_Sample_FooService" />
+		<parameter name="wsdlTargetNamespace" value="urn:http.service.sample.example.com" />
+	</service>
+</deployment>

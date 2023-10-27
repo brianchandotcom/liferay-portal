@@ -115,7 +115,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			}
 		}
 		finally {
-			removeDBPartitions(false);
+			removeDBPartitions();
 		}
 	}
 
@@ -142,7 +142,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 						"value:"));
 		}
 		finally {
-			removeDBPartitions(false);
+			removeDBPartitions();
 		}
 	}
 
@@ -183,7 +183,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		}
 		finally {
 			deletePartitionRequiredData();
-			removeDBPartitions(false);
+			removeDBPartitions();
 		}
 	}
 
@@ -205,7 +205,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 				tablesCount.put(companyId, _getTablesCount(companyId));
 			}
 
-			removeDBPartitions(true);
+			migrateDBPartitions();
 
 			for (long companyId : COMPANY_IDS) {
 				List<String> views = viewNames.get(companyId);
@@ -225,7 +225,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			}
 		}
 		finally {
-			removeDBPartitions(false);
+			removeDBPartitions();
 		}
 	}
 
@@ -247,7 +247,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 					createAndPopulateControlTable(fullTestTableName);
 
 					try {
-						removeDBPartitions(true);
+						migrateDBPartitions();
 
 						Assert.fail("Should throw an exception");
 					}
@@ -264,7 +264,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			}
 		}
 		finally {
-			removeDBPartitions(false);
+			removeDBPartitions();
 		}
 	}
 
@@ -272,7 +272,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	public void testRemoveDBPartition() throws Exception {
 		addDBPartitions();
 
-		removeDBPartitions(false);
+		removeDBPartitions();
 
 		DatabaseMetaData databaseMetaData = connection.getMetaData();
 

@@ -43,7 +43,7 @@ public class OnDemandAdminTicketGeneratorDBPartitionTest
 	public static void tearDownClass() throws Exception {
 		deletePartitionRequiredData();
 
-		removeDBPartitions(false);
+		removeDBPartitions();
 
 		disableDBPartition();
 	}

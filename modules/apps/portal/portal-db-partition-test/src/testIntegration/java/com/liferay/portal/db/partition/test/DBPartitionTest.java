@@ -87,7 +87,7 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 	public static void tearDownClass() throws Exception {
 		deletePartitionRequiredData();
 
-		removeDBPartitions(false);
+		removeDBPartitions();
 
 		dropTable(TEST_CONTROL_TABLE_NAME);
 
@@ -392,7 +392,7 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 		}
 		finally {
 			if (orphanedDBPartition) {
-				removeDBPartitions(new long[] {companyId}, false);
+				removeDBPartitions(new long[] {companyId});
 			}
 		}
 	}

@@ -44,7 +44,7 @@ public class UpgradePartitionedControlTableTest
 	public static void tearDownClass() throws Exception {
 		deletePartitionRequiredData();
 
-		removeDBPartitions(false);
+		removeDBPartitions();
 
 		disableDBPartition();
 	}

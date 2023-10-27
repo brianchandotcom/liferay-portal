@@ -9,6 +9,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -122,18 +123,26 @@ public class SavedContentTag extends IncludeTag {
 					WebKeys.THEME_DISPLAY);
 
 			httpServletRequest.setAttribute(
-				"liferay-saved-content:saved-content:contentTitle",
-				_contentTitle);
+				"liferay-saved-content:saved-content:ariaLabel",
+				_getAriaLabel(httpServletRequest));
 			httpServletRequest.setAttribute(
 				"liferay-saved-content:saved-content:data",
 				_getData(httpServletRequest, themeDisplay));
 			httpServletRequest.setAttribute(
-				"liferay-saved-content:saved-content:enabled",
-				_isEnabled(themeDisplay));
+				"liferay-saved-content:saved-content:saved", _saved);
 		}
 		catch (Exception exception) {
 			_log.error(exception);
 		}
+	}
+
+	private String _getAriaLabel(HttpServletRequest httpServletRequest) {
+		if (_saved) {
+			return LanguageUtil.format(
+				httpServletRequest, "remove-x", _contentTitle);
+		}
+
+		return LanguageUtil.format(httpServletRequest, "save-x", _contentTitle);
 	}
 
 	private Map<String, Object> _getData(

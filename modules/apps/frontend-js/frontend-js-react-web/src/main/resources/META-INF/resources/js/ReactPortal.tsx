@@ -5,7 +5,7 @@
 
 import classNames from 'classnames';
 import React from 'react';
-import ReactDOM, {createPortal} from 'react-dom';
+import {createPortal} from 'react-dom';
 
 interface IProps extends React.HTMLAttributes<HTMLDivElement> {
 
@@ -60,23 +60,6 @@ const ReactPortal = React.forwardRef<HTMLElement, IProps>(
 				{className: classNames(cssClass, children.props.className), id}
 			);
 		}
-
-		/**
-		 * When navigating to another page, this error is sometimes thrown:
-		 *
-		 * "Uncaught DOMException: Failed to execute 'removeChild' on 'Node':
-		 * The node to be removed is not a child of this node."
-		 *
-		 * This is caused when the container is unmounted before the children.
-		 * This ensures the portal children are unmounted first.
-		 */
-		Liferay.on('beforeNavigate', () => {
-			if (content) {
-				ReactDOM.unmountComponentAtNode(
-					content as Element | DocumentFragment
-				);
-			}
-		});
 
 		// eslint-disable-next-line @liferay/portal/no-react-dom-create-portal
 		return createPortal(content, container || document.body);

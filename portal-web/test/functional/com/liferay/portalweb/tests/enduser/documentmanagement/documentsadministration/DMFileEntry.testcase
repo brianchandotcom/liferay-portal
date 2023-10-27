@@ -521,6 +521,70 @@ definition {
 		}
 	}
 
+	@description = "This test ensures that document permissions can be copied over correctly."
+	@priority = 5
+	test CanBulkCopyFilesPermission {
+		property custom.properties = "feature.flag.LPS-182512=true";
+
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		for (var entryCount : list "1,2,3") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document_${entryCount}.jpg",
+				groupName = "Guest",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_${entryCount}.jpg");
+		}
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		for (var entryCount : list "1,2,3") {
+			DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "Document_${entryCount}.jpg");
+		}
+
+		DMNavigator.gotoItemViaManagementBar(
+			item = "dropdownMenu",
+			menuItem = "Permissions");
+
+		for (var permissionDefinitionKey : list "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX,INLINE_PERMISSIONS_DOWNLOAD_CHECKBOX,INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX") {
+			PermissionsInline.addOrRemoveAnyPermissionsFromSpecificRole(
+				permissionDefinitionKey = ${permissionDefinitionKey},
+				roleTitle = "Guest");
+		}
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		for (var entryCount : list "1,2,3") {
+			DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "Document_${entryCount}.jpg");
+		}
+
+		DMNavigator.gotoItemViaManagementBar(
+			item = "dropdownMenu",
+			menuItem = "Copy To");
+
+		DMDocument.copy(
+			bulkCopy = "true",
+			homeFolder = "true",
+			siteName = "Site Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		for (var entryCount : list "1,2,3") {
+			DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "Document_${entryCount}.jpg");
+		}
+
+		DMNavigator.gotoItemViaManagementBar(
+			item = "dropdownMenu",
+			menuItem = "Permissions");
+
+		for (var permissionDefinitionKey : list "CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX,INLINE_PERMISSIONS_DOWNLOAD_CHECKBOX,INLINE_PERMISSIONS_ADD_DISCUSSION_CHECKBOX") {
+			PermissionsInline.viewPermissionsRemoved(
+				permissionDefinitionKey = ${permissionDefinitionKey},
+				roleTitle = "Guest");
+		}
+	}
+
 	@priority = 4
 	@refactordone
 	test CanCancelCheckout {

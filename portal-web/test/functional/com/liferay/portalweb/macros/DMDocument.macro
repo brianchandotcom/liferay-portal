@@ -1420,6 +1420,9 @@ definition {
 			if (isSet(copyDuplicatedDocument)) {
 				Alert.viewErrorMessage(errorMessage = "A file entry already exists with title ${dmDocumentTitle}");
 			}
+			else if (isSet(bulkCopyDuplicatedDocument)) {
+				Alert.viewErrorMessage(errorMessage = ${specifyError});
+			}
 			else if (isSet(copyToUnconnectedSite)) {
 				Alert.viewErrorMessage(errorMessage = "The item is not copied because the site and asset library are not connected.");
 			}

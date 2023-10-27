@@ -143,7 +143,7 @@ public class CommandPoshiElement extends PoshiElement {
 					}
 
 					if (sb.length() > 0) {
-						sb.setLength(sb.length() - 1);
+						sb.setLength(sb.length() - 2);
 					}
 
 					argumentsValue = sb.toString();

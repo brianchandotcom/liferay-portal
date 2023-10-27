@@ -62,9 +62,8 @@ public class FDSCellRendererCETImplFactoryImpl
 
 		if (Validator.isNull(fdsCellRendererCET.getURL())) {
 			throw new ClientExtensionEntryTypeSettingsException(
-				"At least one URL is required",
-				"please-enter-at-least-one-url"
-			);
+				"At least one JavaScript URL is required",
+				"please-enter-at-least-one-javascript-url");
 		}
 	}
 

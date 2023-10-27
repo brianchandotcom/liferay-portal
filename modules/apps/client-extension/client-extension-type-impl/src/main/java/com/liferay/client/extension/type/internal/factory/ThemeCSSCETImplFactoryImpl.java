@@ -63,27 +63,24 @@ public class ThemeCSSCETImplFactoryImpl implements CETImplFactory<ThemeCSSCET> {
 
 		if (!Validator.isBlank(baseURL) && !Validator.isUrl(baseURL, true)) {
 			throw new ClientExtensionEntryTypeSettingsException(
-				"Invalid base URL: " + baseURL,
-				"url-x-is-invalid", baseURL
-			);
+				"Invalid base URL: " + baseURL, "base-url-x-is-invalid",
+				baseURL);
 		}
 
 		String clayURL = newThemeCSSCET.getClayURL();
 
 		if (!Validator.isBlank(clayURL) && !Validator.isUrl(clayURL, true)) {
 			throw new ClientExtensionEntryTypeSettingsException(
-				"Invalid Clay URL: " + clayURL,
-				"url-x-is-invalid", clayURL
-			);
+				"Invalid Clay CSS URL: " + clayURL, "clay-css-url-x-is-invalid",
+				clayURL);
 		}
 
 		String mainURL = newThemeCSSCET.getMainURL();
 
 		if (!Validator.isBlank(mainURL) && !Validator.isUrl(mainURL, true)) {
 			throw new ClientExtensionEntryTypeSettingsException(
-				"Invalid main URL: " + mainURL,
-				"url-x-is-invalid", mainURL
-			);
+				"Invalid Main CSS URL: " + mainURL, "main-css-url-x-is-invalid",
+				mainURL);
 		}
 	}
 

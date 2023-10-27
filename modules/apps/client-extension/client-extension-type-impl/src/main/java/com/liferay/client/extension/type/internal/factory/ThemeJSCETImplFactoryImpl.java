@@ -63,9 +63,7 @@ public class ThemeJSCETImplFactoryImpl implements CETImplFactory<ThemeJSCET> {
 
 		if (!Validator.isUrl(url)) {
 			throw new ClientExtensionEntryTypeSettingsException(
-				"Invalid URL: " + url,
-				"url-x-is-invalid", url
-			);
+				"Invalid URL: " + url, "url-x-is-invalid", url);
 		}
 	}
 

@@ -233,6 +233,11 @@
 	<td>//input[contains(@id,'StagingProcessesPortlet_name')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>WARNING_SPECIFIC</td>
+	<td>//ul[not(contains(@class,'hide'))]/div[contains(@class,'alert') and (contains(@class,'alert-warning'))][contains(.,'${key_warningMessage}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

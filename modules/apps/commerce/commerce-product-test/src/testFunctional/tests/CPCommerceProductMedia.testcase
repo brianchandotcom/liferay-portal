@@ -214,6 +214,7 @@ definition {
 	@description = "COMMERCE-12627 Verify that the product details is using the adaptive media"
 	@priority = 5
 	test CanProductDetailsUseAdaptiveMedia {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
 		property portal.acceptance = "true";
 
 		task ("Given a Minium site is created") {

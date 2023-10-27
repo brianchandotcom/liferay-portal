@@ -980,7 +980,7 @@ public class CompanyLocalServiceTest {
 			RandomTestUtil.randomString() + "test.com");
 
 		_verifyRandomCompanyId(
-			company.getCompanyId(), counterCompanyId, companyIds);
+			company.getCompanyId(), companyIds, counterCompanyId);
 
 		return company;
 	}
@@ -1207,7 +1207,7 @@ public class CompanyLocalServiceTest {
 	}
 
 	private void _verifyRandomCompanyId(
-		long companyId, long counterCompanyId, long[] companyIds) {
+		long companyId, long[] companyIds, long counterCompanyId) {
 
 		Assert.assertFalse(ArrayUtil.contains(companyIds, companyId));
 

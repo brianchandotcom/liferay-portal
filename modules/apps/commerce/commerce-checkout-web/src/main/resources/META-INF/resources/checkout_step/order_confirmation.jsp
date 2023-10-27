@@ -14,13 +14,10 @@ CommerceOrderPayment commerceOrderPayment = orderConfirmationCheckoutStepDisplay
 
 String commerceOrderPaymentContent = null;
 
-if (commerceOrderPayment != null) {
-	commerceOrderPaymentContent = commerceOrderPayment.getContent();
-}
-
 int paymentStatus = CommerceOrderPaymentConstants.STATUS_PENDING;
 
 if (commerceOrderPayment != null) {
+	commerceOrderPaymentContent = commerceOrderPayment.getContent();
 	paymentStatus = commerceOrderPayment.getStatus();
 }
 %>

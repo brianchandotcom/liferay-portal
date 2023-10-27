@@ -1,0 +1,898 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.commerce.payment.method.paypal.internal;
+
+import com.google.gson.Gson;
+
+import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
+import com.liferay.commerce.constants.CommercePaymentEntryConstants;
+import com.liferay.commerce.constants.CommercePaymentMethodConstants;
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.model.CommerceAddress;
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.payment.constants.CommercePaymentIntegrationConstants;
+import com.liferay.commerce.payment.integration.CommercePaymentIntegration;
+import com.liferay.commerce.payment.method.paypal.internal.configuration.PayPalGroupServiceConfiguration;
+import com.liferay.commerce.payment.method.paypal.internal.constants.PayPalCommercePaymentMethodConstants;
+import com.liferay.commerce.payment.model.CommercePaymentEntry;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.URLCodec;
+import com.liferay.portal.kernel.util.Validator;
+
+import com.paypal.core.PayPalEnvironment;
+import com.paypal.core.PayPalHttpClient;
+import com.paypal.http.HttpResponse;
+import com.paypal.http.exceptions.HttpException;
+import com.paypal.orders.AddressPortable;
+import com.paypal.orders.AmountBreakdown;
+import com.paypal.orders.AmountWithBreakdown;
+import com.paypal.orders.ApplicationContext;
+import com.paypal.orders.Authorization;
+import com.paypal.orders.Item;
+import com.paypal.orders.LinkDescription;
+import com.paypal.orders.Money;
+import com.paypal.orders.Name;
+import com.paypal.orders.Order;
+import com.paypal.orders.OrderRequest;
+import com.paypal.orders.OrdersAuthorizeRequest;
+import com.paypal.orders.OrdersCreateRequest;
+import com.paypal.orders.PaymentCollection;
+import com.paypal.orders.PurchaseUnit;
+import com.paypal.orders.PurchaseUnitRequest;
+import com.paypal.orders.ShippingDetail;
+import com.paypal.payments.AuthorizationsCaptureRequest;
+import com.paypal.payments.AuthorizationsVoidRequest;
+import com.paypal.payments.Capture;
+import com.paypal.payments.CapturesRefundRequest;
+import com.paypal.payments.Refund;
+import com.paypal.payments.RefundRequest;
+
+import java.io.IOException;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.ResourceBundle;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang3.StringUtils;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Luca Pellizzon
+ * @author Crescenzo Rega
+ */
+@Component(service = CommercePaymentIntegration.class)
+public class PayPalCommercePaymentIntegration
+	implements CommercePaymentIntegration {
+
+	public static final String KEY = "paypal-integration";
+
+	@Override
+	public CommercePaymentEntry authorize(
+			HttpServletRequest httpServletRequest,
+			CommercePaymentEntry commercePaymentEntry)
+		throws PortalException {
+
+		boolean success = false;
+		String transactionId = StringPool.BLANK;
+
+		try {
+			OrdersAuthorizeRequest ordersAuthorizeRequest =
+				new OrdersAuthorizeRequest(
+					commercePaymentEntry.getTransactionCode()
+				).prefer(
+					"return=representation"
+				);
+
+			ordersAuthorizeRequest.requestBody(new OrderRequest());
+
+			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(
+				commercePaymentEntry);
+
+			if (_log.isDebugEnabled()) {
+				String headers = new Gson(
+				).toJson(
+					ordersAuthorizeRequest.headers()
+				);
+
+				_log.debug("AUTHORIZE - HEADERS: " + headers);
+
+				String requestBody = new Gson(
+				).toJson(
+					ordersAuthorizeRequest.requestBody()
+				);
+
+				_log.debug("AUTHORIZE - REQUEST BODY: " + requestBody);
+			}
+
+			HttpResponse<Order> authorizeHttpResponse =
+				payPalHttpClient.execute(ordersAuthorizeRequest);
+
+			if (authorizeHttpResponse.statusCode() == 201) {
+				Order authorizeOrder = authorizeHttpResponse.result();
+
+				success = true;
+
+				List<PurchaseUnit> purchaseUnits =
+					authorizeOrder.purchaseUnits();
+
+				if (ListUtil.isNotEmpty(purchaseUnits)) {
+					PurchaseUnit purchaseUnit = purchaseUnits.get(0);
+
+					if (purchaseUnit != null) {
+						PaymentCollection payments = purchaseUnit.payments();
+
+						if (payments != null) {
+							List<Authorization> authorizations =
+								payments.authorizations();
+
+							if (ListUtil.isNotEmpty(authorizations)) {
+								Authorization authorization =
+									authorizations.get(0);
+
+								if (authorization != null) {
+									transactionId = authorization.id();
+								}
+							}
+						}
+					}
+				}
+			}
+
+			if (success) {
+				commercePaymentEntry.setPaymentStatus(
+					CommercePaymentEntryConstants.STATUS_AUTHORIZED);
+			}
+			else {
+				commercePaymentEntry.setPaymentStatus(
+					CommercePaymentEntryConstants.STATUS_FAILED);
+			}
+
+			commercePaymentEntry.setRedirectURL(null);
+			commercePaymentEntry.setTransactionCode(transactionId);
+
+			return commercePaymentEntry;
+		}
+		catch (IOException ioException) {
+			_log.error(ioException);
+
+			HttpException httpException = (HttpException)ioException;
+
+			JSONObject jsonObject = new JSONObject(httpException.getMessage());
+
+			commercePaymentEntry.setErrorMessages(
+				_getErrorMessages(
+					jsonObject, StringPool.BLANK
+				).toString());
+
+			commercePaymentEntry.setPaymentStatus(
+				CommercePaymentEntryConstants.STATUS_FAILED);
+
+			commercePaymentEntry.setTransactionCode(transactionId);
+
+			return commercePaymentEntry;
+		}
+	}
+
+	@Override
+	public CommercePaymentEntry cancel(
+			HttpServletRequest httpServletRequest,
+			CommercePaymentEntry commercePaymentEntry)
+		throws PortalException {
+
+		try {
+			AuthorizationsVoidRequest authorizationsVoidRequest =
+				new AuthorizationsVoidRequest(
+					commercePaymentEntry.getTransactionCode());
+
+			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(
+				commercePaymentEntry);
+
+			if (_log.isDebugEnabled()) {
+				String headers = new Gson(
+				).toJson(
+					authorizationsVoidRequest.headers()
+				);
+
+				_log.debug("CANCEL - HEADERS: " + headers);
+
+				String requestBody = new Gson(
+				).toJson(
+					authorizationsVoidRequest.requestBody()
+				);
+
+				_log.debug("CANCEL - REQUEST BODY: " + requestBody);
+			}
+
+			HttpResponse<Void> cancelHttpResponse = payPalHttpClient.execute(
+				authorizationsVoidRequest);
+
+			if (cancelHttpResponse.statusCode() == 204) {
+				commercePaymentEntry.setPaymentStatus(
+					CommercePaymentEntryConstants.STATUS_CANCELLED);
+
+				return commercePaymentEntry;
+			}
+
+			return commercePaymentEntry;
+		}
+		catch (IOException ioException) {
+			_log.error(ioException);
+
+			HttpException httpException = (HttpException)ioException;
+
+			JSONObject jsonObject = new JSONObject(httpException.getMessage());
+
+			commercePaymentEntry.setErrorMessages(
+				_getErrorMessages(
+					jsonObject, StringPool.BLANK
+				).toString());
+
+			return commercePaymentEntry;
+		}
+	}
+
+	@Override
+	public CommercePaymentEntry capture(
+			HttpServletRequest httpServletRequest,
+			CommercePaymentEntry commercePaymentEntry)
+		throws PortalException {
+
+		try {
+			AuthorizationsCaptureRequest authorizationsCaptureRequest =
+				new AuthorizationsCaptureRequest(
+					commercePaymentEntry.getTransactionCode());
+
+			authorizationsCaptureRequest.requestBody(new OrderRequest());
+
+			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(
+				commercePaymentEntry);
+
+			if (_log.isDebugEnabled()) {
+				String headers = new Gson(
+				).toJson(
+					authorizationsCaptureRequest.headers()
+				);
+
+				_log.debug("CAPTURE - HEADERS: " + headers);
+
+				String requestBody = new Gson(
+				).toJson(
+					authorizationsCaptureRequest.requestBody()
+				);
+
+				_log.debug("CAPTURE - REQUEST BODY: " + requestBody);
+			}
+
+			HttpResponse<Capture> captureHttpResponse =
+				payPalHttpClient.execute(authorizationsCaptureRequest);
+
+			if (captureHttpResponse.statusCode() == 201) {
+				Capture capture = captureHttpResponse.result();
+
+				commercePaymentEntry.setPaymentStatus(
+					CommercePaymentEntryConstants.STATUS_COMPLETED);
+				commercePaymentEntry.setTransactionCode(capture.id());
+
+				return commercePaymentEntry;
+			}
+
+			commercePaymentEntry.setPaymentStatus(
+				CommercePaymentEntryConstants.STATUS_FAILED);
+
+			return commercePaymentEntry;
+		}
+		catch (IOException ioException) {
+			_log.error(ioException);
+
+			HttpException httpException = (HttpException)ioException;
+
+			JSONObject jsonObject = new JSONObject(httpException.getMessage());
+
+			commercePaymentEntry.setErrorMessages(
+				_getErrorMessages(
+					jsonObject, StringPool.BLANK
+				).toString());
+
+			commercePaymentEntry.setPaymentStatus(
+				CommercePaymentEntryConstants.STATUS_FAILED);
+
+			return commercePaymentEntry;
+		}
+	}
+
+	@Override
+	public String getDescription(Locale locale) {
+		return _getResource(locale, "paypal-description");
+	}
+
+	@Override
+	public String getKey() {
+		return "paypal-integration";
+	}
+
+	@Override
+	public String getPaymentIntegrationName() {
+		return "PayPal";
+	}
+
+	@Override
+	public int getPaymentIntegrationType() {
+		return CommercePaymentIntegrationConstants.
+			TYPE_INTERNAL_ONLINE_REDIRECT;
+	}
+
+	@Override
+	public CommercePaymentEntry refund(
+			HttpServletRequest httpServletRequest,
+			CommercePaymentEntry commercePaymentEntry)
+		throws PortalException {
+
+		try {
+			CapturesRefundRequest capturesRefundRequest =
+				new CapturesRefundRequest(
+					commercePaymentEntry.getTransactionCode());
+
+			capturesRefundRequest.prefer("return=representation");
+
+			capturesRefundRequest.requestBody(
+				_buildRefundRequestBody(
+					commercePaymentEntry.getAmount(
+					).toString(),
+					commercePaymentEntry.getCurrencyCode()));
+
+			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(
+				commercePaymentEntry);
+
+			if (_log.isDebugEnabled()) {
+				String headers = new Gson(
+				).toJson(
+					capturesRefundRequest.headers()
+				);
+
+				_log.debug("REFUND - HEADERS: " + headers);
+
+				String requestBody = new Gson(
+				).toJson(
+					capturesRefundRequest.requestBody()
+				);
+
+				_log.debug("REFUND - REQUEST BODY: " + requestBody);
+			}
+
+			HttpResponse<Refund> refundHttpResponse = payPalHttpClient.execute(
+				capturesRefundRequest);
+
+			if (refundHttpResponse.statusCode() == 201) {
+				Refund refund = refundHttpResponse.result();
+
+				commercePaymentEntry.setPaymentStatus(
+					CommerceOrderPaymentConstants.STATUS_REFUNDED);
+				commercePaymentEntry.setTransactionCode(refund.id());
+
+				return commercePaymentEntry;
+			}
+
+			commercePaymentEntry.setPaymentStatus(
+				CommercePaymentEntryConstants.STATUS_FAILED);
+
+			return commercePaymentEntry;
+		}
+		catch (IOException ioException) {
+			_log.error(ioException);
+
+			HttpException httpException = (HttpException)ioException;
+
+			JSONObject jsonObject = new JSONObject(httpException.getMessage());
+
+			commercePaymentEntry.setErrorMessages(
+				_getErrorMessages(
+					jsonObject, StringPool.BLANK
+				).toString());
+
+			commercePaymentEntry.setPaymentStatus(
+				CommercePaymentEntryConstants.STATUS_FAILED);
+
+			return commercePaymentEntry;
+		}
+	}
+
+	@Override
+	public CommercePaymentEntry setUpPayment(
+			HttpServletRequest httpServletRequest,
+			CommercePaymentEntry commercePaymentEntry)
+		throws PortalException {
+
+		boolean success = false;
+		String transactionId = StringPool.BLANK;
+
+		try {
+			OrderRequest orderRequest = new OrderRequest();
+
+			orderRequest.checkoutPaymentIntent(
+				PayPalCommercePaymentMethodConstants.INTENT_AUTHORIZE);
+
+			if (StringUtils.equals(
+					commercePaymentEntry.getClassName(),
+					CommerceOrder.class.getName())) {
+
+				orderRequest.purchaseUnits(
+					_buildCommerceOrderRequestBody(
+						_commerceOrderLocalService.getCommerceOrder(
+							commercePaymentEntry.getClassPK()),
+						LocaleUtil.fromLanguageId(
+							commercePaymentEntry.getLanguageId())));
+			}
+			else {
+				_buildGenericRequestBody(commercePaymentEntry);
+			}
+
+			ApplicationContext applicationContext = new ApplicationContext(
+			).cancelUrl(
+				_getCancelUrl(
+					httpServletRequest, commercePaymentEntry,
+					commercePaymentEntry.getCancelURL())
+			).returnUrl(
+				_getReturnUrl(
+					httpServletRequest, commercePaymentEntry,
+					commercePaymentEntry.getCallbackURL())
+			).shippingPreference(
+				"SET_PROVIDED_ADDRESS"
+			).userAction(
+				"PAY_NOW"
+			);
+
+			orderRequest.applicationContext(applicationContext);
+
+			OrdersCreateRequest ordersCreateRequest = new OrdersCreateRequest(
+			).prefer(
+				"return=representation"
+			).requestBody(
+				orderRequest
+			).payPalPartnerAttributionId(
+				"Liferay_SP_PPCP_API"
+			);
+
+			if (_log.isDebugEnabled()) {
+				String headers = new Gson(
+				).toJson(
+					ordersCreateRequest.headers()
+				);
+
+				_log.debug("SET UP PAYMENT - HEADERS: " + headers);
+
+				String requestBody = new Gson(
+				).toJson(
+					ordersCreateRequest.requestBody()
+				);
+
+				_log.debug("SET UP PAYMENT - REQUEST BODY: " + requestBody);
+			}
+
+			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(
+				commercePaymentEntry);
+
+			HttpResponse<Order> orderCreateHttpResponse =
+				payPalHttpClient.execute(ordersCreateRequest);
+
+			if (orderCreateHttpResponse.statusCode() == 201) {
+				Order createOrder = orderCreateHttpResponse.result();
+
+				for (LinkDescription linkDescription : createOrder.links()) {
+					if (Objects.equals(
+							PayPalCommercePaymentMethodConstants.APPROVE_URL,
+							linkDescription.rel())) {
+
+						commercePaymentEntry.setRedirectURL(
+							linkDescription.href());
+
+						break;
+					}
+				}
+
+				success = true;
+				transactionId = createOrder.id();
+			}
+
+			if (success) {
+				commercePaymentEntry.setPaymentStatus(
+					CommercePaymentEntryConstants.STATUS_CREATED);
+			}
+			else {
+				commercePaymentEntry.setPaymentStatus(
+					CommercePaymentEntryConstants.STATUS_FAILED);
+			}
+
+			commercePaymentEntry.setTransactionCode(transactionId);
+
+			return commercePaymentEntry;
+		}
+		catch (IOException ioException) {
+			_log.error(ioException);
+
+			HttpException httpException = (HttpException)ioException;
+
+			JSONObject jsonObject = new JSONObject(httpException.getMessage());
+
+			commercePaymentEntry.setErrorMessages(
+				_getErrorMessages(
+					jsonObject, StringPool.BLANK
+				).toString());
+
+			commercePaymentEntry.setPaymentStatus(
+				CommercePaymentEntryConstants.STATUS_FAILED);
+
+			commercePaymentEntry.setTransactionCode(transactionId);
+
+			return commercePaymentEntry;
+		}
+	}
+
+	private List<PurchaseUnitRequest> _buildCommerceOrderRequestBody(
+			CommerceOrder commerceOrder, Locale locale)
+		throws PortalException {
+
+		List<PurchaseUnitRequest> purchaseUnitRequests = new ArrayList<>();
+
+		CommerceCurrency commerceCurrency = commerceOrder.getCommerceCurrency();
+
+		AmountWithBreakdown amountWithBreakdown = new AmountWithBreakdown();
+
+		amountWithBreakdown.currencyCode(commerceCurrency.getCode());
+		amountWithBreakdown.value(
+			_getAmountValue(commerceOrder.getTotal(), commerceCurrency));
+
+		AmountBreakdown amountBreakdown = new AmountBreakdown();
+
+		Money shippingMoney = new Money();
+
+		shippingMoney.currencyCode(commerceCurrency.getCode());
+		shippingMoney.value(
+			_getAmountValue(
+				commerceOrder.getShippingAmount(), commerceCurrency));
+
+		amountBreakdown.shipping(shippingMoney);
+
+		Money itemTotalMoney = new Money();
+
+		itemTotalMoney.currencyCode(commerceCurrency.getCode());
+		itemTotalMoney.value(
+			_getAmountValue(commerceOrder.getSubtotal(), commerceCurrency));
+
+		amountBreakdown.itemTotal(itemTotalMoney);
+
+		Money taxTotalMoney = new Money();
+
+		taxTotalMoney.currencyCode(commerceCurrency.getCode());
+		taxTotalMoney.value(
+			_getAmountValue(commerceOrder.getTaxAmount(), commerceCurrency));
+
+		amountBreakdown.taxTotal(taxTotalMoney);
+
+		amountWithBreakdown.amountBreakdown(amountBreakdown);
+
+		PurchaseUnitRequest purchaseUnitRequest = new PurchaseUnitRequest();
+
+		purchaseUnitRequest.amountWithBreakdown(amountWithBreakdown);
+
+		CommerceAddress shippingCommerceAddress =
+			commerceOrder.getShippingAddress();
+
+		if (shippingCommerceAddress != null) {
+			ShippingDetail shippingDetail = new ShippingDetail();
+
+			Name name = new Name();
+
+			name.fullName(shippingCommerceAddress.getName());
+
+			shippingDetail.name(name);
+
+			AddressPortable addressPortable = new AddressPortable();
+
+			addressPortable.addressLine1(shippingCommerceAddress.getStreet1());
+			addressPortable.addressLine2(shippingCommerceAddress.getStreet2());
+			addressPortable.postalCode(shippingCommerceAddress.getZip());
+
+			Country country = shippingCommerceAddress.getCountry();
+
+			addressPortable.countryCode(country.getA2());
+
+			Region region = shippingCommerceAddress.getRegion();
+
+			if (region != null) {
+				addressPortable.adminArea1(region.getRegionCode());
+			}
+
+			addressPortable.adminArea2(shippingCommerceAddress.getCity());
+
+			shippingDetail.addressPortable(addressPortable);
+
+			purchaseUnitRequest.shippingDetail(shippingDetail);
+		}
+
+		List<Item> items = new ArrayList<>();
+
+		for (CommerceOrderItem commerceOrderItem :
+				commerceOrder.getCommerceOrderItems()) {
+
+			Item item = new Item();
+
+			item.name(commerceOrderItem.getName(locale));
+			item.quantity(
+				String.valueOf(
+					commerceOrderItem.getQuantity(
+					).stripTrailingZeros()));
+			item.sku(commerceOrderItem.getSku());
+
+			Money unitAmountMoney = new Money();
+
+			unitAmountMoney.currencyCode(commerceCurrency.getCode());
+
+			BigDecimal finalPrice = commerceOrderItem.getFinalPrice();
+
+			BigDecimal unitAmount = finalPrice.divide(
+				commerceOrderItem.getQuantity());
+
+			unitAmountMoney.value(
+				_getAmountValue(unitAmount, commerceCurrency));
+
+			item.unitAmount(unitAmountMoney);
+
+			items.add(item);
+		}
+
+		purchaseUnitRequest.items(items);
+
+		purchaseUnitRequests.add(purchaseUnitRequest);
+
+		return purchaseUnitRequests;
+	}
+
+	private List<PurchaseUnitRequest> _buildGenericRequestBody(
+			CommercePaymentEntry commercePaymentEntry)
+		throws PortalException {
+
+		List<PurchaseUnitRequest> purchaseUnitRequests = new ArrayList<>();
+
+		CommerceCurrency commerceCurrency =
+			_commerceCurrencyLocalService.getCommerceCurrency(
+				commercePaymentEntry.getCompanyId(),
+				commercePaymentEntry.getCurrencyCode());
+
+		AmountWithBreakdown amountWithBreakdown = new AmountWithBreakdown();
+
+		amountWithBreakdown.currencyCode(commerceCurrency.getCode());
+		amountWithBreakdown.value(
+			_getAmountValue(
+				commercePaymentEntry.getAmount(), commerceCurrency));
+
+		PurchaseUnitRequest purchaseUnitRequest = new PurchaseUnitRequest();
+
+		purchaseUnitRequest.amountWithBreakdown(amountWithBreakdown);
+		purchaseUnitRequest.referenceId(
+			String.valueOf(commercePaymentEntry.getPrimaryKey()));
+
+		purchaseUnitRequests.add(purchaseUnitRequest);
+
+		return purchaseUnitRequests;
+	}
+
+	private RefundRequest _buildRefundRequestBody(
+		String amount, String currencyCode) {
+
+		com.paypal.payments.Money amountMoney = new com.paypal.payments.Money();
+
+		amountMoney.currencyCode(currencyCode);
+		amountMoney.value(amount);
+
+		RefundRequest refundRequest = new RefundRequest();
+
+		refundRequest.amount(amountMoney);
+
+		return refundRequest;
+	}
+
+	private String _getAmountValue(
+		BigDecimal amount, CommerceCurrency commerceCurrency) {
+
+		BigDecimal scaledAmount = amount.setScale(
+			commerceCurrency.getMaxFractionDigits(),
+			RoundingMode.valueOf(commerceCurrency.getRoundingMode()));
+
+		return scaledAmount.toPlainString();
+	}
+
+	private StringBundler _getBaseUrl(
+		HttpServletRequest httpServletRequest,
+		CommercePaymentEntry commercePaymentEntry, String redirect) {
+
+		StringBundler sb = new StringBundler(10);
+
+		sb.append(_portal.getPortalURL(httpServletRequest));
+		sb.append(_portal.getPathModule());
+		sb.append(CharPool.SLASH);
+		sb.append(CommercePaymentMethodConstants.SERVLET_PATH);
+		sb.append("?entryId=");
+		sb.append(commercePaymentEntry.getCommercePaymentEntryId());
+		sb.append("&entryKey=");
+		sb.append(KEY);
+
+		if (Validator.isNotNull(redirect)) {
+			sb.append("&redirect=");
+			sb.append(URLCodec.encodeURL(redirect));
+		}
+
+		return sb;
+	}
+
+	private String _getCancelUrl(
+		HttpServletRequest httpServletRequest,
+		CommercePaymentEntry commercePaymentEntry, String redirect) {
+
+		StringBundler sb = _getBaseUrl(
+			httpServletRequest, commercePaymentEntry, redirect);
+
+		sb.append("&cancel=true");
+
+		return sb.toString();
+	}
+
+	private List<String> _getErrorMessages(
+		JSONObject jsonObject, String prefix) {
+
+		List<String> errorMessages = new ArrayList<>();
+
+		Iterator<?> keysIterator = jsonObject.keys();
+		StringBuilder stringBuilder = new StringBuilder();
+
+		while (keysIterator.hasNext()) {
+			String key = (String)keysIterator.next();
+
+			stringBuilder.append(
+				String.format("%s%s: ", prefix, StringUtils.capitalize(key)));
+
+			if (jsonObject.get(key) instanceof JSONObject) {
+				stringBuilder.append(
+					_getErrorMessages(
+						jsonObject.getJSONObject(key), prefix + "\t"));
+			}
+			else if (jsonObject.get(key) instanceof JSONArray) {
+				int counter = 1;
+
+				for (Object object : jsonObject.getJSONArray(key)) {
+					stringBuilder.append(
+						String.format("\n%s\t%d:\n", prefix, counter++));
+					stringBuilder.append(
+						_getErrorMessages((JSONObject)object, prefix + "\t\t"));
+				}
+			}
+			else {
+				stringBuilder.append(
+					String.format("%s\n", jsonObject.getString(key)));
+			}
+		}
+
+		errorMessages.add(stringBuilder.toString());
+
+		return errorMessages;
+	}
+
+	private PayPalGroupServiceConfiguration _getPayPalGroupServiceConfiguration(
+			long groupId)
+		throws PortalException {
+
+		return _configurationProvider.getConfiguration(
+			PayPalGroupServiceConfiguration.class,
+			new GroupServiceSettingsLocator(
+				groupId,
+				PayPalCommercePaymentMethodConstants.
+					COMMERCE_PAYMENT_INTEGRATION_SERVICE_NAME));
+	}
+
+	private PayPalHttpClient _getPayPalHttpClient(
+			CommercePaymentEntry commercePaymentEntry)
+		throws PortalException {
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannel(
+				commercePaymentEntry.getCommerceChannelId());
+
+		PayPalGroupServiceConfiguration payPalGroupServiceConfiguration =
+			_getPayPalGroupServiceConfiguration(commerceChannel.getGroupId());
+
+		PayPalEnvironment payPalEnvironment = new PayPalEnvironment.Sandbox(
+			payPalGroupServiceConfiguration.clientId(),
+			payPalGroupServiceConfiguration.clientSecret());
+
+		String mode = payPalGroupServiceConfiguration.mode();
+
+		if (mode.equals(PayPalCommercePaymentMethodConstants.MODE_LIVE)) {
+			payPalEnvironment = new PayPalEnvironment.Live(
+				payPalGroupServiceConfiguration.clientId(),
+				payPalGroupServiceConfiguration.clientSecret());
+		}
+
+		return new PayPalHttpClient(payPalEnvironment);
+	}
+
+	private String _getResource(Locale locale, String key) {
+		if (locale == null) {
+			locale = LocaleUtil.getSiteDefault();
+		}
+
+		return _language.get(_getResourceBundle(locale), key);
+	}
+
+	private ResourceBundle _getResourceBundle(Locale locale) {
+		return ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+	}
+
+	private String _getReturnUrl(
+		HttpServletRequest httpServletRequest,
+		CommercePaymentEntry commercePaymentEntry, String redirect) {
+
+		StringBundler sb = _getBaseUrl(
+			httpServletRequest, commercePaymentEntry, redirect);
+
+		sb.append("&orderType=normal");
+
+		return sb.toString();
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PayPalCommercePaymentIntegration.class);
+
+	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
+
+	@Reference
+	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
+
+	@Reference
+	private CommerceOrderLocalService _commerceOrderLocalService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private Language _language;
+
+	@Reference
+	private Portal _portal;
+
+}

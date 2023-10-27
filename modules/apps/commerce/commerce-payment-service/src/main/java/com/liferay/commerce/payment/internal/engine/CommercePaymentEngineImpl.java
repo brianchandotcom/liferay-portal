@@ -542,7 +542,9 @@ public class CommercePaymentEngineImpl implements CommercePaymentEngine {
 						getCommercePaymentMethodGroupRelId(),
 					ActionKeys.VIEW) ||
 				(subscriptionOrder &&
-				 !commercePaymentMethod.isProcessRecurringEnabled())) {
+				 !commercePaymentMethod.isProcessRecurringEnabled()) ||
+				(!subscriptionOrder &&
+				 !commercePaymentMethod.isProcessPaymentEnabled())) {
 
 				continue;
 			}

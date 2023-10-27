@@ -25,7 +25,10 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -45,6 +48,7 @@ public class FunctionCommercePaymentIntegration
 
 	@Override
 	public CommercePaymentEntry authorize(
+			HttpServletRequest httpServletRequest,
 			CommercePaymentEntry commercePaymentEntry)
 		throws PortalException {
 
@@ -61,6 +65,7 @@ public class FunctionCommercePaymentIntegration
 
 	@Override
 	public CommercePaymentEntry cancel(
+			HttpServletRequest httpServletRequest,
 			CommercePaymentEntry commercePaymentEntry)
 		throws PortalException {
 
@@ -77,6 +82,7 @@ public class FunctionCommercePaymentIntegration
 
 	@Override
 	public CommercePaymentEntry capture(
+			HttpServletRequest httpServletRequest,
 			CommercePaymentEntry commercePaymentEntry)
 		throws PortalException {
 
@@ -92,17 +98,30 @@ public class FunctionCommercePaymentIntegration
 	}
 
 	@Override
+	public String getDescription(Locale locale) {
+		return "TEST";
+	}
+
+	@Override
 	public String getKey() {
 		return _functionCommercePaymentIntegrationConfiguration.key();
 	}
 
 	@Override
-	public int getType() {
-		return _functionCommercePaymentIntegrationConfiguration.type();
+	public String getPaymentIntegrationName() {
+		return _functionCommercePaymentIntegrationConfiguration.
+			paymentIntegrationName();
+	}
+
+	@Override
+	public int getPaymentIntegrationType() {
+		return _functionCommercePaymentIntegrationConfiguration.
+			paymentIntegrationType();
 	}
 
 	@Override
 	public CommercePaymentEntry refund(
+			HttpServletRequest httpServletRequest,
 			CommercePaymentEntry commercePaymentEntry)
 		throws PortalException {
 

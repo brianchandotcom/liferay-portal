@@ -36,17 +36,24 @@ const CreateLicense = () => {
 	const navigate = useNavigate();
 	const params = useParams();
 	const productId = String(params.appId);
+	const orderId = Number(params.orderId);
 	const {product} = useGetProductById('attachments', productId);
+
+	console.log('orderId', orderId);
 
 	const productCreatorAccount = useGetProductCreatorAccount(product);
 
-	const LicenseKeyInfo: LicenseKeyProps = {
-		licenseKeyData: {
-			endDate: 'Oct 24, 2024',
-			keyType: 'Trial',
-			startDate: 'Sep 24, 2023',
+	const licenseKeyData = [
+		{
+			endDate: 'DNE',
+			name: 'standard',
+			perpetual: true,
+			productPurchasedKey: 'KOR-26360233',
+			provisionedCount: 0,
+			purchasedCount: 3,
+			startDate: '2023-10-24T21:18:43Z',
 		},
-	};
+	];
 
 	const {
 		formState: {errors, isSubmitting},
@@ -69,17 +76,13 @@ const CreateLicense = () => {
 	useEffect(() => {
 		if (product) {
 			const {familyName, givenName} = myUserAccount;
+
 			setValue(
 				'description',
-				`${givenName} ${familyName} - ${product?.name.en_US} - ${LicenseKeyInfo?.licenseKeyData.keyType}`
+				`${givenName} ${familyName} - ${product?.name.en_US} - skuOptionValue`
 			);
 		}
-	}, [
-		LicenseKeyInfo?.licenseKeyData.keyType,
-		myUserAccount,
-		product,
-		setValue,
-	]);
+	}, [myUserAccount, product, setValue]);
 
 	const {IP, description, hostName, macAddresses, subscription} = watch();
 
@@ -93,11 +96,18 @@ const CreateLicense = () => {
 		required: true,
 	};
 
+	const SelectedLicenseKeyInfo: LicenseKeyProps = {
+		endDate: 'Oct 24, 2024',
+		keyType: 'skuOption',
+		startDate: 'Sep 24, 2023',
+	};
+
 	const stepsInformation: StepsInformation = {
 		[StepCreateLicense.SUBSCRIPTION]: {
 			backStep: StepCreateLicense.SUBSCRIPTION,
 			component: (
 				<SelectSubscription
+					licenseKeyData={licenseKeyData}
 					onSelectSubscription={(subscription: string) => {
 						setValue('subscription', subscription);
 					}}
@@ -124,7 +134,7 @@ const CreateLicense = () => {
 					Key type
 				</small>
 				<small className="col-6 col-md-4 subscription-banner-text">
-					{LicenseKeyInfo.licenseKeyData.keyType}
+					{SelectedLicenseKeyInfo.keyType}
 				</small>
 			</div>
 
@@ -133,8 +143,8 @@ const CreateLicense = () => {
 					Start Date - Exp. Date
 				</small>
 				<small className="col-6 col-md-4 subscription-banner-text text-nowrap">
-					{LicenseKeyInfo.licenseKeyData.startDate} &ndash;{' '}
-					{LicenseKeyInfo.licenseKeyData.endDate}
+					{SelectedLicenseKeyInfo.startDate} &ndash;{' '}
+					{SelectedLicenseKeyInfo.endDate}
 				</small>
 			</div>
 		</>

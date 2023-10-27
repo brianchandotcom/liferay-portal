@@ -27,7 +27,7 @@ const PurchasedAppsDashboardRouter = () => (
 			</Route>
 			<Route
 				element={<CreateLicense />}
-				path="app/:appId/create-license"
+				path="app/:appId/order/:orderId/create-license"
 			/>
 		</Routes>
 	</HashRouter>

@@ -153,7 +153,7 @@ export function PurchasedAppsDashboardTableRow({
 									disabled={orderStatusIsNotCompleted}
 									onClick={() =>
 										navigate(
-											`/app/${productId}/create-license`
+											`/app/${productId}/order/${orderId}/create-license`
 										)
 									}
 									title={

@@ -10,20 +10,13 @@ import RadioCardList, {
 } from '../../../components/RadioCardList/RadioCardList';
 
 interface SubscriptionSelectionProps {
+	licenseKeyData: any;
 	onSelectSubscription: (subscription: string) => void;
 	selectedSubscriptionValue?: string;
 }
 
-const licenseKeyData = {
-	avaliableKeys: {
-		provisionedCount: 1,
-		purchasedCount: 1,
-	},
-	supportLifeEndDate: 'Sep 24, 2024',
-	supportLifeStartDate: 'Sep 24, 2023',
-};
-
 const SelectSubscription = ({
+	licenseKeyData,
 	onSelectSubscription,
 	selectedSubscriptionValue,
 }: SubscriptionSelectionProps) => {
@@ -32,24 +25,25 @@ const SelectSubscription = ({
 	>([]);
 
 	const getSubscriptionList = useCallback(async () => {
-		const contentList: RadioCardContent<String>[] = [
-			{
+		const contentList = licenseKeyData.map((licenseKey: any) => {
+			const contentValue = {
 				description: (
 					<small className="text-success">
-						Key activations available:{' '}
-						{licenseKeyData.avaliableKeys.purchasedCount} of{' '}
-						{licenseKeyData.avaliableKeys.provisionedCount}
+						Key activations available: {licenseKey.purchasedCount}{' '}
+						of {licenseKey.provisionedCount}
 					</small>
 				),
-				label: `${licenseKeyData.supportLifeStartDate} - ${licenseKeyData.supportLifeEndDate}`,
-				selected: selectedSubscriptionValue === 'Trial',
-				title: <h3 className="mt-0">Trial</h3>,
-				value: 'Trial',
-			},
-		];
+				label: `${licenseKey.startDate} - ${licenseKey.endDate}`,
+				selected: selectedSubscriptionValue === licenseKey.name,
+				title: <h3 className="mt-0">{licenseKey.name}</h3>,
+				value: licenseKey.name,
+			};
+
+			return contentValue;
+		});
 
 		setSubscription(contentList);
-	}, [selectedSubscriptionValue]);
+	}, [licenseKeyData, selectedSubscriptionValue]);
 
 	useEffect(() => {
 		getSubscriptionList();

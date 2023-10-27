@@ -16,9 +16,7 @@ export type CreateLicenseForm = {
 	subscription: string;
 };
 
-export type LicenseKeyProps = {
-	licenseKeyData: {[key: string]: string};
-};
+export type LicenseKeyProps = {[key: string]: string};
 
 export type StepsInformationProps = {
 	backStep: string;

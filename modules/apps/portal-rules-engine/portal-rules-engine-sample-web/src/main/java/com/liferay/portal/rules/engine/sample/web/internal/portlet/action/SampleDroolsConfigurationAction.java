@@ -61,12 +61,12 @@ public class SampleDroolsConfigurationAction
 			return;
 		}
 
-		PortletPreferences preferences = actionRequest.getPreferences();
+		PortletPreferences portletPreferences = actionRequest.getPreferences();
 
-		_updatePreferences(actionRequest, preferences);
+		_updatePreferences(actionRequest, portletPreferences);
 
 		if (SessionErrors.isEmpty(actionRequest)) {
-			preferences.store();
+			portletPreferences.store();
 
 			SessionMessages.add(
 				actionRequest,
@@ -76,7 +76,7 @@ public class SampleDroolsConfigurationAction
 	}
 
 	private void _updatePreferences(
-			ActionRequest actionRequest, PortletPreferences preferences)
+			ActionRequest actionRequest, PortletPreferences portletPreferences)
 		throws Exception {
 
 		String domainName = ParamUtil.getString(actionRequest, "domainName");
@@ -110,16 +110,16 @@ public class SampleDroolsConfigurationAction
 		}
 
 		if (SessionErrors.isEmpty(actionRequest)) {
-			preferences.setValue("rules", rules);
-			preferences.setValue("domain-name", domainName);
+			portletPreferences.setValue("rules", rules);
+			portletPreferences.setValue("domain-name", domainName);
 
 			String userCustomAttributeNames = ParamUtil.getString(
 				actionRequest, "userCustomAttributeNames");
 
-			preferences.setValue(
+			portletPreferences.setValue(
 				"user-custom-attribute-names", userCustomAttributeNames);
 
-			preferences.setValues(
+			portletPreferences.setValues(
 				"class-name-ids", ArrayUtil.toStringArray(classNameIds));
 		}
 	}

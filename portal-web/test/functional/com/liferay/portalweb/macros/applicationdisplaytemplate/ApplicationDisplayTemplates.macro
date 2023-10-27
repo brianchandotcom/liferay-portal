@@ -42,7 +42,12 @@ definition {
 
 		SiteAdmin.viewPortletTitle(portletTitle = "Add ${adtType} Template");
 
-		PortletEntry.inputName(name = "${adtType} Test ADT");
+		if (isSet(widgetTemplateName)) {
+			PortletEntry.inputName(name = ${widgetTemplateName});
+		}
+		else {
+			PortletEntry.inputName(name = "${adtType} Test ADT");
+		}
 
 		if (isSet(templateScript)) {
 			Type.sendKeys(
@@ -77,9 +82,16 @@ definition {
 
 		PortletEntry.save();
 
-		AssertVisible(
-			key_tableEntry = "${adtType} Test ADT",
-			locator1 = "LexiconTable#TABLE_ENTRY_TITLE");
+		if (isSet(widgetTemplateName)) {
+			AssertVisible(
+				key_tableEntry = ${widgetTemplateName},
+				locator1 = "LexiconTable#TABLE_ENTRY_TITLE");
+		}
+		else {
+			AssertVisible(
+				key_tableEntry = "${adtType} Test ADT",
+				locator1 = "LexiconTable#TABLE_ENTRY_TITLE");
+		}
 	}
 
 	macro deleteCP {

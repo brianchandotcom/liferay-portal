@@ -352,9 +352,9 @@ public class APIEndpointRelevantObjectEntryModelListener
 	private static final Pattern _curlyBracePattern = Pattern.compile(
 		"^\\{[a-zA-Z0-9]+\\}$");
 	private static final Pattern _pathPattern = Pattern.compile(
-		"/[a-z0-9][a-z0-9-/]{1,253}");
+		"/[a-z0-9][a-z0-9-/]{0,253}");
 	private static final Pattern _singleElementPathPattern = Pattern.compile(
-		"/[a-zA-Z0-9][a-zA-Z0-9-/-{\\-}]{1,253}");
+		"/[a-zA-Z0-9][a-zA-Z0-9-/-{\\-}]{0,253}");
 
 	@Reference(
 		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"

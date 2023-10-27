@@ -27,12 +27,12 @@ import org.osgi.service.component.annotations.Component;
 public class RSSPreferencesValidator implements PreferencesValidator {
 
 	@Override
-	public void validate(PortletPreferences preferences)
+	public void validate(PortletPreferences portletPreferences)
 		throws ValidatorException {
 
 		List<String> badURLs = new ArrayList<>();
 
-		String[] urls = preferences.getValues("urls", new String[0]);
+		String[] urls = portletPreferences.getValues("urls", new String[0]);
 
 		for (String url : urls) {
 			if (!Validator.isUrl(url)) {

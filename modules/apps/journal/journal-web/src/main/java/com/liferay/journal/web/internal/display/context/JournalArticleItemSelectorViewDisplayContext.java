@@ -614,6 +614,9 @@ public class JournalArticleItemSelectorViewDisplayContext {
 			).setParameter(
 				"groupType", "site"
 			).setParameter(
+				"scopeGroupType",
+				ParamUtil.getBoolean(_httpServletRequest, "scopeGroupType")
+			).setParameter(
 				"showGroupSelector", true
 			).buildString());
 

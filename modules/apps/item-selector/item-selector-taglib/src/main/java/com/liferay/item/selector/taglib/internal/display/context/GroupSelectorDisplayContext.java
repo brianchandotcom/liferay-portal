@@ -82,8 +82,7 @@ public class GroupSelectorDisplayContext {
 		).setParameter(
 			"groupType", groupType
 		).setParameter(
-			"scopeGroupType",
-			ParamUtil.getBoolean(_liferayPortletRequest, "scopeGroupType")
+			"scopeGroupType", _isScopeGroupType()
 		).setParameter(
 			"selectedTab",
 			ParamUtil.getString(_liferayPortletRequest, "selectedTab")
@@ -116,7 +115,13 @@ public class GroupSelectorDisplayContext {
 		PortletURL portletURL = EntryURLUtil.getGroupPortletURL(
 			group, _liferayPortletRequest);
 
-		return portletURL.toString();
+		return PortletURLBuilder.create(
+			portletURL
+		).setParameter(
+			"groupType", _getGroupType()
+		).setParameter(
+			"scopeGroupType", _isScopeGroupType()
+		).buildString();
 	}
 
 	public boolean isGroupTypeActive(String groupType) {
@@ -192,6 +197,8 @@ public class GroupSelectorDisplayContext {
 		).setParameter(
 			"groupType", _getGroupType()
 		).setParameter(
+			"scopeGroupType", _isScopeGroupType()
+		).setParameter(
 			"selectedTab",
 			ParamUtil.getString(_liferayPortletRequest, "selectedTab")
 		).setParameter(
@@ -199,7 +206,19 @@ public class GroupSelectorDisplayContext {
 		).buildPortletURL();
 	}
 
+	private boolean _isScopeGroupType() {
+		if (_scopeGroupType != null) {
+			return _scopeGroupType;
+		}
+
+		_scopeGroupType = ParamUtil.getBoolean(
+			_liferayPortletRequest, "scopeGroupType");
+
+		return _scopeGroupType;
+	}
+
 	private String _groupType;
 	private final LiferayPortletRequest _liferayPortletRequest;
+	private Boolean _scopeGroupType;
 
 }

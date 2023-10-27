@@ -41,12 +41,12 @@ public class PortletPreferencesFactoryImplTest
 		addLayoutPortletPreferences(
 			testLayout, testPortlet, getPortletPreferencesXML(name, values));
 
-		PortletPreferences layoutPortletSetup =
+		PortletPreferences portletPreferences =
 			portletPreferencesFactory.getLayoutPortletSetup(
 				testLayout, _PORTLET_ID);
 
 		Assert.assertArrayEquals(
-			layoutPortletSetup.getValues(name, null), values);
+			portletPreferences.getValues(name, null), values);
 	}
 
 	@Test
@@ -67,12 +67,12 @@ public class PortletPreferencesFactoryImplTest
 			testLayout.getPlid(), customizableColumnPortletId, testPortlet,
 			getPortletPreferencesXML(name, values));
 
-		PortletPreferences layoutPortletSetup =
+		PortletPreferences portletPreferences =
 			portletPreferencesFactory.getLayoutPortletSetup(
 				testLayout, customizableColumnPortletId);
 
 		Assert.assertArrayEquals(
-			layoutPortletSetup.getValues(name, null), values);
+			portletPreferences.getValues(name, null), values);
 	}
 
 	@Override

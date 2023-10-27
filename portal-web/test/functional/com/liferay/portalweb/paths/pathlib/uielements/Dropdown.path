@@ -31,6 +31,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DROPDOWN_SUBHEADER_BY_INDEX</td>
+	<td>xpath=(//div[contains(@class,'dropdown-menu')]//li[contains(@class,'dropdown-subheader')])[${index}][normalize-space() = '${subHeader}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DROPDOWN_TOGGLE_BUTTON</td>
 	<td>//div[contains(@class,'btn-group')]//a[contains(.,'${key_toggleButtonName}')]</td>
 	<td></td>

@@ -68,6 +68,7 @@ public class APIEndpointRelevantObjectEntryModelListener
 		if (!_equals(
 				originalObjectEntry.getValues(), objectEntry.getValues(),
 				"httpMethod", "path", "pathParameter",
+				"pathParameterDescription",
 				"r_apiApplicationToAPIEndpoints_c_apiApplicationId",
 				"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId",
 				"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId")) {
@@ -148,9 +149,23 @@ public class APIEndpointRelevantObjectEntryModelListener
 						(String)values.get("retrieveType")),
 					APIApplication.Endpoint.RetrieveType.SINGLE_ELEMENT)) {
 
+				String pathParameter = (String)values.get("pathParameter");
+
 				_validateSingleElementPath(
-					objectEntry, (String)values.get("pathParameter"),
-					pathString, responseAPISchemaId);
+					objectEntry, pathParameter, pathString,
+					responseAPISchemaId);
+
+				if (Validator.isNull(pathParameter) &&
+					Validator.isNotNull(
+						(String)values.get("pathParameterDescription"))) {
+
+					throw new ObjectEntryValuesException.InvalidObjectField(
+						null,
+						"Path parameter description can not be set with " +
+							"empty path parameter property",
+						"path-parameter-description-can-not-be-set-with-" +
+							"empty-path-parameter-property");
+				}
 			}
 			else {
 				Matcher matcher = _pathPattern.matcher(pathString);

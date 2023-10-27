@@ -61,6 +61,10 @@ public class SavedContentTag extends IncludeTag {
 		return _inTrash;
 	}
 
+	public void isViewMode(boolean viewMode) {
+		_viewMode = viewMode;
+	}
+
 	public void setClassName(String className) {
 		if (className.equals(DLFileEntry.class.getName()) ||
 			className.equals(FileEntry.class.getName()) ||
@@ -102,6 +106,7 @@ public class SavedContentTag extends IncludeTag {
 		_inTrash = null;
 		_saved = false;
 		_url = null;
+		_viewMode = false;
 	}
 
 	@Override
@@ -117,8 +122,14 @@ public class SavedContentTag extends IncludeTag {
 					WebKeys.THEME_DISPLAY);
 
 			httpServletRequest.setAttribute(
+				"liferay-saved-content:saved-content:contentTitle",
+				_contentTitle);
+			httpServletRequest.setAttribute(
 				"liferay-saved-content:saved-content:data",
 				_getData(httpServletRequest, themeDisplay));
+			httpServletRequest.setAttribute(
+				"liferay-saved-content:saved-content:enabled",
+				_isEnabled(themeDisplay));
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -170,7 +181,7 @@ public class SavedContentTag extends IncludeTag {
 	private boolean _isEnabled(ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		if (!_isInTrash() && themeDisplay.isSignedIn()) {
+		if (_viewMode && !_isInTrash() && themeDisplay.isSignedIn()) {
 			Group group = themeDisplay.getSiteGroup();
 
 			if (!group.isStagingGroup() && !group.isStagedRemotely()) {
@@ -222,5 +233,6 @@ public class SavedContentTag extends IncludeTag {
 	private Boolean _inTrash;
 	private boolean _saved;
 	private String _url;
+	private boolean _viewMode;
 
 }

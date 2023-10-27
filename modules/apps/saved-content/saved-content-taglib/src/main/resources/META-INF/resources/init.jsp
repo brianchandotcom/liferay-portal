@@ -11,7 +11,7 @@ taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="java.util.Map" %>
-
+<%@ page import="com.liferay.portal.kernel.util.GetterUtil" %>
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />

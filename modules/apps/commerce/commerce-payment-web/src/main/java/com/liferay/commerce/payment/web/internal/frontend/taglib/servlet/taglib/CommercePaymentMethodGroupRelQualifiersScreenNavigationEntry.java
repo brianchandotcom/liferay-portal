@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.payment.web.internal.frontend.taglib.servlet.taglib;
 
+import com.liferay.commerce.payment.integration.CommercePaymentIntegrationRegistry;
 import com.liferay.commerce.payment.method.CommercePaymentMethodRegistry;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelQualifierService;
@@ -89,7 +90,8 @@ public class CommercePaymentMethodGroupRelQualifiersScreenNavigationEntry
 					_commerceChannelLocalService,
 					_commercePaymentMethodGroupRelService,
 					_commercePaymentMethodGroupRelQualifierService,
-					_commercePaymentMethodRegistry, _countryService,
+					_commercePaymentMethodRegistry,
+					_commercePaymentIntegrationRegistry, _countryService,
 					httpServletRequest);
 
 		httpServletRequest.setAttribute(
@@ -112,6 +114,10 @@ public class CommercePaymentMethodGroupRelQualifiersScreenNavigationEntry
 	)
 	private ModelResourcePermission<CommerceChannel>
 		_commerceChannelModelResourcePermission;
+
+	@Reference
+	private CommercePaymentIntegrationRegistry
+		_commercePaymentIntegrationRegistry;
 
 	@Reference
 	private CommercePaymentMethodGroupRelQualifierService

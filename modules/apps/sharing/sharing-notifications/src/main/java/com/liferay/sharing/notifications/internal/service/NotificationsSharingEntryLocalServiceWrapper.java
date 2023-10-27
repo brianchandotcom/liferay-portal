@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.sharing.constants.SharingPortletKeys;
@@ -168,9 +167,5 @@ public class NotificationsSharingEntryLocalServiceWrapper
 
 	@Reference
 	private UserLocalService _userLocalService;
-
-	@Reference
-	private UserNotificationEventLocalService
-		_userNotificationEventLocalService;
 
 }

@@ -5,8 +5,13 @@
 
 package com.liferay.commerce.payment.integration;
 
+import com.liferay.commerce.constants.CommercePaymentEntryConstants;
 import com.liferay.commerce.payment.model.CommercePaymentEntry;
 import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Luca Pellizzon
@@ -14,23 +19,42 @@ import com.liferay.portal.kernel.exception.PortalException;
 public interface CommercePaymentIntegration {
 
 	public CommercePaymentEntry authorize(
+			HttpServletRequest httpServletRequest,
 			CommercePaymentEntry commercePaymentEntry)
 		throws PortalException;
 
 	public CommercePaymentEntry cancel(
+			HttpServletRequest httpServletRequest,
 			CommercePaymentEntry commercePaymentEntry)
 		throws PortalException;
 
 	public CommercePaymentEntry capture(
+			HttpServletRequest httpServletRequest,
 			CommercePaymentEntry commercePaymentEntry)
 		throws PortalException;
+
+	public String getDescription(Locale locale);
 
 	public String getKey();
 
-	public int getType();
+	public String getPaymentIntegrationName();
+
+	public int getPaymentIntegrationType();
 
 	public CommercePaymentEntry refund(
+			HttpServletRequest httpServletRequest,
 			CommercePaymentEntry commercePaymentEntry)
 		throws PortalException;
+
+	public default CommercePaymentEntry setUpPayment(
+			HttpServletRequest httpServletRequest,
+			CommercePaymentEntry commercePaymentEntry)
+		throws PortalException {
+
+		commercePaymentEntry.setPaymentStatus(
+			CommercePaymentEntryConstants.STATUS_CREATED);
+
+		return commercePaymentEntry;
+	}
 
 }

@@ -30,7 +30,6 @@ import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelCons
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
-import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
@@ -388,7 +387,7 @@ public class DefaultCommerceCheckoutStepHttpHelper
 
 		if (accountEntry != null) {
 			CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
-				_commerceChannelAccountEntryRelService.
+				_commerceChannelAccountEntryRelLocalService.
 					fetchCommerceChannelAccountEntryRel(
 						accountEntry.getAccountEntryId(),
 						commerceContext.getCommerceChannelId(),
@@ -985,10 +984,6 @@ public class DefaultCommerceCheckoutStepHttpHelper
 	@Reference
 	private CommerceChannelAccountEntryRelLocalService
 		_commerceChannelAccountEntryRelLocalService;
-
-	@Reference
-	private CommerceChannelAccountEntryRelService
-		_commerceChannelAccountEntryRelService;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

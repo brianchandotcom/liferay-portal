@@ -108,17 +108,18 @@ public class LoginUtil {
 	}
 
 	public static String getEmailFromAddress(
-		PortletPreferences preferences, long companyId) {
+		PortletPreferences portletPreferences, long companyId) {
 
 		return PortalUtil.getEmailFromAddress(
-			preferences, companyId, PropsValues.LOGIN_EMAIL_FROM_ADDRESS);
+			portletPreferences, companyId,
+			PropsValues.LOGIN_EMAIL_FROM_ADDRESS);
 	}
 
 	public static String getEmailFromName(
-		PortletPreferences preferences, long companyId) {
+		PortletPreferences portletPreferences, long companyId) {
 
 		return PortalUtil.getEmailFromName(
-			preferences, companyId, PropsValues.LOGIN_EMAIL_FROM_NAME);
+			portletPreferences, companyId, PropsValues.LOGIN_EMAIL_FROM_NAME);
 	}
 
 	public static String getEmailTemplateXML(

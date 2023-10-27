@@ -5,6 +5,8 @@
 
 package com.liferay.commerce.payment.web.internal.display.context;
 
+import com.liferay.commerce.payment.integration.CommercePaymentIntegration;
+import com.liferay.commerce.payment.integration.CommercePaymentIntegrationRegistry;
 import com.liferay.commerce.payment.method.CommercePaymentMethod;
 import com.liferay.commerce.payment.method.CommercePaymentMethodRegistry;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
@@ -12,6 +14,7 @@ import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService
 import com.liferay.commerce.payment.web.internal.display.context.helper.CommercePaymentMethodRequestHelper;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -30,12 +33,15 @@ public class CommercePaymentMethodGroupRelsDisplayContext {
 		CommercePaymentMethodGroupRelService
 			commercePaymentMethodGroupRelService,
 		CommercePaymentMethodRegistry commercePaymentMethodRegistry,
+		CommercePaymentIntegrationRegistry commercePaymentIntegrationRegistry,
 		CountryService countryService, HttpServletRequest httpServletRequest) {
 
 		_commerceChannelLocalService = commerceChannelLocalService;
 		_commercePaymentMethodGroupRelService =
 			commercePaymentMethodGroupRelService;
 		_commercePaymentMethodRegistry = commercePaymentMethodRegistry;
+		_commercePaymentIntegrationRegistry =
+			commercePaymentIntegrationRegistry;
 		_countryService = countryService;
 
 		commercePaymentMethodRequestHelper =
@@ -61,6 +67,10 @@ public class CommercePaymentMethodGroupRelsDisplayContext {
 			_commercePaymentMethodRegistry.getCommercePaymentMethod(
 				getCommercePaymentMethodEngineKey());
 
+		if (commercePaymentMethod == null) {
+			return StringPool.BLANK;
+		}
+
 		return commercePaymentMethod.getDescription(locale);
 	}
 
@@ -75,9 +85,21 @@ public class CommercePaymentMethodGroupRelsDisplayContext {
 	}
 
 	public String getCommercePaymentMethodEngineName(Locale locale) {
+		String commercePaymentMethodEngineKey =
+			getCommercePaymentMethodEngineKey();
+
 		CommercePaymentMethod commercePaymentMethod =
 			_commercePaymentMethodRegistry.getCommercePaymentMethod(
-				getCommercePaymentMethodEngineKey());
+				commercePaymentMethodEngineKey);
+
+		if (commercePaymentMethod == null) {
+			CommercePaymentIntegration commercePaymentIntegration =
+				_commercePaymentIntegrationRegistry.
+					getCommercePaymentIntegration(
+						commercePaymentMethodEngineKey);
+
+			return commercePaymentIntegration.getPaymentIntegrationName();
+		}
 
 		return commercePaymentMethod.getName(locale);
 	}
@@ -120,6 +142,8 @@ public class CommercePaymentMethodGroupRelsDisplayContext {
 		commercePaymentMethodRequestHelper;
 
 	private final CommerceChannelLocalService _commerceChannelLocalService;
+	private final CommercePaymentIntegrationRegistry
+		_commercePaymentIntegrationRegistry;
 	private CommercePaymentMethodGroupRel _commercePaymentMethodGroupRel;
 	private final CommercePaymentMethodGroupRelService
 		_commercePaymentMethodGroupRelService;

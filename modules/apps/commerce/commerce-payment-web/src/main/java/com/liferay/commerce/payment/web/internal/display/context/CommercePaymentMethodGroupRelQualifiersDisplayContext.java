@@ -6,6 +6,7 @@
 package com.liferay.commerce.payment.web.internal.display.context;
 
 import com.liferay.commerce.model.CommerceOrderType;
+import com.liferay.commerce.payment.integration.CommercePaymentIntegrationRegistry;
 import com.liferay.commerce.payment.method.CommercePaymentMethodRegistry;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelQualifierService;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService;
@@ -42,11 +43,13 @@ public class CommercePaymentMethodGroupRelQualifiersDisplayContext
 		CommercePaymentMethodGroupRelQualifierService
 			commercePaymentMethodGroupRelQualifierService,
 		CommercePaymentMethodRegistry commercePaymentMethodRegistry,
+		CommercePaymentIntegrationRegistry commercePaymentIntegrationRegistry,
 		CountryService countryService, HttpServletRequest httpServletRequest) {
 
 		super(
 			commerceChannelLocalService, commercePaymentMethodGroupRelService,
-			commercePaymentMethodRegistry, countryService, httpServletRequest);
+			commercePaymentMethodRegistry, commercePaymentIntegrationRegistry,
+			countryService, httpServletRequest);
 
 		_commerceChannelModelResourcePermission =
 			commerceChannelModelResourcePermission;

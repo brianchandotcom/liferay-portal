@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.payment.web.internal.portlet;
 
+import com.liferay.commerce.payment.integration.CommercePaymentIntegrationRegistry;
 import com.liferay.commerce.payment.method.CommercePaymentMethodRegistry;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelService;
 import com.liferay.commerce.payment.web.internal.display.context.CommercePaymentMethodGroupRelsDisplayContext;
@@ -61,7 +62,8 @@ public class CommercePaymentMethodPortlet extends MVCPortlet {
 				new CommercePaymentMethodGroupRelsDisplayContext(
 					_commerceChannelLocalService,
 					_commercePaymentMethodGroupRelService,
-					_commercePaymentMethodRegistry, _countryService,
+					_commercePaymentMethodRegistry,
+					_commercePaymentIntegrationRegistry, _countryService,
 					_portal.getHttpServletRequest(renderRequest));
 
 		renderRequest.setAttribute(
@@ -73,6 +75,10 @@ public class CommercePaymentMethodPortlet extends MVCPortlet {
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;
+
+	@Reference
+	private CommercePaymentIntegrationRegistry
+		_commercePaymentIntegrationRegistry;
 
 	@Reference
 	private CommercePaymentMethodGroupRelService

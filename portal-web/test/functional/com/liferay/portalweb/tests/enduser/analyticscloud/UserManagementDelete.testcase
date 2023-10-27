@@ -27,8 +27,12 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9065 | Test Summary: Admin can delete users"
+	@ignore = "true"
 	@priority = 3
 	test AdminCanDeleteUser {
+
+		// The default AC users do not appear in Users and Organizations. The bug will be resolved after LRAC-14468
+
 		task ("Create a new user and check if it is present in the table") {
 			ACNavigation.goToSettings();
 
@@ -135,8 +139,12 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9066 | Test Summary: Member cannot delete users"
+	@ignore = "true"
 	@priority = 3
 	test MemberCantDeleteUser {
+
+		// The default AC users do not appear in Users and Organizations. The bug will be resolved after LRAC-14468
+
 		task ("Login with a member user and go to settings") {
 			ACWorkspace.signOut();
 

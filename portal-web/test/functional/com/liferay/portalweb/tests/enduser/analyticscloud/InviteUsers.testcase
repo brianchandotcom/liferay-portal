@@ -29,8 +29,12 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9072 | Test Summary: Admin can invite users"
+	@ignore = "true"
 	@priority = 3
 	test AdminCanInviteUsers {
+
+		// The default AC users do not appear in Users and Organizations. The bug will be resolved after LRAC-14468
+
 		task ("sign out and login as member") {
 			ACWorkspace.signOut();
 
@@ -123,8 +127,12 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9073 | Test Summary: Member cannot invite users"
+	@ignore = "true"
 	@priority = 3
 	test MemberCannotInviteUsers {
+
+		// The default AC users do not appear in Users and Organizations. The bug will be resolved after LRAC-14468
+
 		task ("sign out and login as member") {
 			ACWorkspace.signOut();
 
@@ -145,8 +153,12 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9071 | Test Summary: Owner can invite users"
+	@ignore = "true"
 	@priority = 5
 	test OwnerCanInviteUsers {
+
+		// The default AC users do not appear in Users and Organizations. The bug will be resolved after LRAC-14468
+
 		task ("sign out and login as member") {
 			ACWorkspace.signOut();
 

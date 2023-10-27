@@ -205,7 +205,7 @@ definition {
 	@priority = 4
 	test UserLostAccess {
 
-		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
+		// The default AC users do not appear in Users and Organizations. The bug will be resolved after LRAC-14468
 
 		task ("AC launch and go to the porpreties menu") {
 			ACUtils.launchAC();
@@ -276,8 +276,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8322 | Test Summary: A user (independent of user role) should only see the properties they are invited to by the AC admin or the properties which the user is owner"
+	@ignore = "true"
 	@priority = 4
 	test UserShouldOnlySeePropertiesAreInvitedByACAdminOrPropertiesWhichUserOwner {
+
+		// The default AC users do not appear in Users and Organizations. The bug will be resolved after LRAC-14468
+
 		task ("AC launch and go to the porpreties menu") {
 			ACUtils.launchAC();
 

@@ -221,9 +221,12 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-7346 | Automation ID: LRAC-10150 | Test Summary: Block/Unblock custom events as non-admin"
+	@ignore = "true"
 	@priority = 3
 	test CheckCannotBlockOrUnblockCustomEventsAsNonAdmin {
 		property test.run.type = "single";
+
+		// The default AC users do not appear in Users and Organizations. The bug will be resolved after LRAC-14468
 
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();

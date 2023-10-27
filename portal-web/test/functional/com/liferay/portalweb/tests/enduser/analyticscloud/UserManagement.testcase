@@ -31,8 +31,12 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9093 | Test Summary: Admin can add data sources"
+	@ignore = "true"
 	@priority = 4
 	test AdminCanAddDataSources {
+
+		// The default AC users do not appear in Users and Organizations. The bug will be resolved after LRAC-14468
+
 		task ("Logout AC and login as an admin user") {
 			ACWorkspace.signOut();
 
@@ -79,8 +83,12 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9095 | Test Summary: Admin can change user permissions"
+	@ignore = "true"
 	@priority = 3
 	test AdminCanChangeUserPermissions {
+
+		// The default AC users do not appear in Users and Organizations. The bug will be resolved after LRAC-14468
+
 		task ("SingOut and Login as administrator") {
 			ACWorkspace.signOut();
 
@@ -127,6 +135,7 @@ definition {
 
 		// AC Bug ticket: LRAC-10534
 		// It is not possible to delete properties and data source after LRAC-13389. This functionality should return after LRAC-8040
+		// The default AC users do not appear in Users and Organizations. The bug will be resolved after LRAC-14468
 
 		task ("Logout AC and login as an admin user") {
 			ACWorkspace.signOut();
@@ -378,8 +387,12 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9096 | Test Summary: Member cannot add data sources"
+	@ignore = "true"
 	@priority = 4
 	test MemberCannotAddDataSources {
+
+		// The default AC users do not appear in Users and Organizations. The bug will be resolved after LRAC-14468
+
 		task ("Login as user with member role") {
 			ACWorkspace.signOut();
 
@@ -402,8 +415,12 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9098 | Test Summary: Member cannot change user permissions"
+	@ignore = "true"
 	@priority = 4
 	test MemberCannotChangeUserPermissions {
+
+		// The default AC users do not appear in Users and Organizations. The bug will be resolved after LRAC-14468
+
 		task ("Go to AC and Login as user with member role") {
 			ACWorkspace.signOut();
 
@@ -426,8 +443,12 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9097 | Test Summary: Member cannot remove data sources"
+	@ignore = "true"
 	@priority = 4
 	test MemberCannotRemoveDataSources {
+
+		// The default AC users do not appear in Users and Organizations. The bug will be resolved after LRAC-14468
+
 		task ("Connect DXP to AC") {
 			ACSettings.takeTokenFromAnalyticsCloud();
 
@@ -468,9 +489,12 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9083 | Test Summary: [AC] Only admin or owner users are able to add properties on AC"
+	@ignore = "true"
 	@priority = 3
 	test OnlyAdminOrOwnerUsersCanAddPropertiesOnAC {
 		var userList = "michelle.hoshi@faro.io,bryan.cheung@faro.io";
+
+		// The default AC users do not appear in Users and Organizations. The bug will be resolved after LRAC-14468
 
 		for (var userEmail : list ${userList}) {
 			task ("Logout AC and login as an admin/owner user") {
@@ -523,8 +547,12 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9090 | Test Summary: Owner can add data sources"
+	@ignore = "true"
 	@priority = 5
 	test OwnerCanAddDataSources {
+
+		// The default AC users do not appear in Users and Organizations. The bug will be resolved after LRAC-14468
+
 		task ("Logout AC and login as an owner user") {
 			ACWorkspace.signOut();
 
@@ -571,9 +599,12 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9092 | Test Summary: Owner can change user permissions"
+	@ignore = "true"
 	@priority = 5
 	test OwnerCanChangeUserPermissions {
 		var userEmail = "ac@liferay.com";
+
+		// The default AC users do not appear in Users and Organizations. The bug will be resolved after LRAC-14468
 
 		task ("Login with another Owner User") {
 			ACWorkspace.signOut();
@@ -750,8 +781,12 @@ definition {
 	}
 
 	@description = "Automation ID: LRAC-9082 | Test Summary: A user lost access to a given property (because the admin removed the user's access of the system)"
+	@ignore = "true"
 	@priority = 3
 	test UserLostAccessToProperty {
+
+		// The default AC users do not appear in Users and Organizations. The bug will be resolved after LRAC-14468
+
 		task ("Go to settings then go to properties") {
 			ACNavigation.goToSettings();
 
@@ -960,8 +995,12 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8143 | Test Summary: Owner can delete users"
+	@ignore = "true"
 	@priority = 5
 	test ViewOwnerCanDeleteUser {
+
+		// The default AC users do not appear in Users and Organizations. The bug will be resolved after LRAC-14468
+
 		ACWorkspace.signOut();
 
 		ACLogin.loginAs(

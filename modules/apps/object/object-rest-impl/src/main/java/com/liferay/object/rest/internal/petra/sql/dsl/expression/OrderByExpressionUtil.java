@@ -5,10 +5,13 @@
 
 package com.liferay.object.rest.internal.petra.sql.dsl.expression;
 
+import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
+import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.query.sort.OrderByExpression;
 import com.liferay.petra.string.CharPool;
@@ -41,6 +44,21 @@ public class OrderByExpressionUtil {
 						sort.getFieldName(), CharPool.POUND);
 
 					fieldName = parts[1];
+				}
+
+				ObjectField objectField =
+					objectFieldLocalService.fetchObjectField(
+						objectDefinitionId, fieldName);
+
+				if (objectField.compareBusinessType(
+						ObjectFieldConstants.BUSINESS_TYPE_AUTO_INCREMENT)) {
+
+					Table<?> table = objectFieldLocalService.getTable(
+						objectDefinitionId, fieldName);
+
+					return _getOrderByExpression(
+						table.getColumn(objectField.getSortableDBColumnName()),
+						sort);
 				}
 
 				Column<?, ?> column = objectFieldLocalService.getColumn(

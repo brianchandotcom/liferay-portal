@@ -754,6 +754,15 @@ public class ObjectFieldLocalServiceImpl
 				dbTableName, objectField.getDBColumnName(),
 				objectField.getDBType()));
 
+		if (objectField.compareBusinessType(
+				ObjectFieldConstants.BUSINESS_TYPE_AUTO_INCREMENT)) {
+
+			runSQL(
+				DynamicObjectDefinitionTableUtil.getAlterTableAddColumnSQL(
+					dbTableName, objectField.getSortableDBColumnName(),
+					ObjectFieldConstants.DB_TYPE_LONG));
+		}
+
 		if (objectField.hasUniqueValues()) {
 			ObjectDBManagerUtil.createIndexMetadata(
 				_currentConnection.getConnection(
@@ -967,25 +976,37 @@ public class ObjectFieldLocalServiceImpl
 
 		_objectViewLocalService.unassociateObjectField(objectField);
 
-		if (objectDefinition.isApproved() &&
-			!objectField.compareBusinessType(
-				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) &&
-			!objectField.compareBusinessType(
-				ObjectFieldConstants.BUSINESS_TYPE_FORMULA) &&
-			!Objects.equals(objectField.getDBTableName(), "ObjectEntry") &&
-			!objectField.isLocalized()) {
-
-			_alterTableDropColumn(
-				objectField.getDBTableName(), objectField.getDBColumnName());
+		if (!objectDefinition.isApproved()) {
+			return objectField;
 		}
 
-		if (objectDefinition.isApproved() &&
-			objectDefinition.isEnableLocalization() &&
+		if (objectDefinition.isEnableLocalization() &&
 			objectField.isLocalized()) {
 
 			_alterTableDropColumn(
 				objectDefinition.getLocalizationDBTableName(),
 				objectField.getDBColumnName());
+
+			return objectField;
+		}
+
+		if (!objectField.hasInsertValues() ||
+			Objects.equals(
+				objectField.getDBTableName(),
+				ObjectEntryTable.INSTANCE.getTableName())) {
+
+			return objectField;
+		}
+
+		_alterTableDropColumn(
+			objectField.getDBTableName(), objectField.getDBColumnName());
+
+		if (objectField.compareBusinessType(
+				ObjectFieldConstants.BUSINESS_TYPE_AUTO_INCREMENT)) {
+
+			_alterTableDropColumn(
+				objectField.getDBTableName(),
+				objectField.getSortableDBColumnName());
 		}
 
 		return objectField;

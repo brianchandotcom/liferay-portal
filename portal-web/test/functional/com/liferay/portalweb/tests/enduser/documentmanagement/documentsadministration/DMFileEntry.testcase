@@ -3714,6 +3714,55 @@ definition {
 			dmDocumentTitle = "Document_5.txt");
 	}
 
+	@description = "This test ensures that Users can view generic error when bulk copy more than ten wrong files."
+	@priority = 4
+	test CanViewGenericErrorWhenBulkCopyMoreThanTenWrongFiles {
+		property custom.properties = "feature.flag.LPS-182512=true";
+
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		for (var entryCount : list "1,2,3,4,5,6,7,8,9,10,11") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "Document_${entryCount}.jpg",
+				groupName = "Guest",
+				mimeType = "image/jpeg",
+				sourceFileName = "Document_${entryCount}.jpg");
+		}
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		for (var entryCount : list "1,2,3,4,5,6,7,8,9,10,11") {
+			DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "Document_${entryCount}.jpg");
+		}
+
+		DMNavigator.gotoItemViaManagementBar(
+			item = "dropdownMenu",
+			menuItem = "Copy To");
+
+		DMDocument.copy(
+			bulkCopy = "true",
+			homeFolder = "true",
+			siteName = "Site Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		for (var entryCount : list "1,2,3,4,5,6,7,8,9,10,11") {
+			DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "Document_${entryCount}.jpg");
+		}
+
+		DMNavigator.gotoItemViaManagementBar(
+			item = "dropdownMenu",
+			menuItem = "Copy To");
+
+		DMDocument.copy(
+			bulkCopy = "true",
+			bulkCopyDuplicatedDocument = "true",
+			errorMessage = "Error:11 items could not be copied.",
+			homeFolder = "true",
+			siteName = "Site Name");
+	}
+
 	@description = "This ensures that a user can view the information about an image when navigating to info panel."
 	@priority = 4
 	@refactordone
@@ -3921,9 +3970,9 @@ definition {
 		DMDocument.copy(
 			bulkCopy = "true",
 			bulkCopyDuplicatedDocument = "true",
+			errorMessage = "Error:10 items could not be copied. A file entry already exists with title Document_10.jpg A file entry already exists with title Document_9.jpg A file entry already exists with title Document_8.jpg A file entry already exists with title Document_7.jpg A file entry already exists with title Document_6.jpg A file entry already exists with title Document_5.jpg A file entry already exists with title Document_4.jpg A file entry already exists with title Document_3.jpg A file entry already exists with title Document_2.jpg A file entry already exists with title Document_1.jpg",
 			homeFolder = "true",
-			siteName = "Site Name",
-			specifyError = "Error:10 items could not be copied. A file entry already exists with title Document_10.jpg A file entry already exists with title Document_9.jpg A file entry already exists with title Document_8.jpg A file entry already exists with title Document_7.jpg A file entry already exists with title Document_6.jpg A file entry already exists with title Document_5.jpg A file entry already exists with title Document_4.jpg A file entry already exists with title Document_3.jpg A file entry already exists with title Document_2.jpg A file entry already exists with title Document_1.jpg");
+			siteName = "Site Name");
 	}
 
 	@description = "This is a test for LPS-145630. It checks that the DOCs linked in web articles content can be updated."

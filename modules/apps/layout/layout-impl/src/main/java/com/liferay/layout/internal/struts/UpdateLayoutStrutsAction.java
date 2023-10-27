@@ -351,7 +351,7 @@ public class UpdateLayoutStrutsAction implements StrutsAction {
 		// We need to get the portlet setup before doing anything else to ensure
 		// that it is created in the database
 
-		PortletPreferences portletSetup =
+		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
 				layout, portletId);
 
@@ -380,10 +380,11 @@ public class UpdateLayoutStrutsAction implements StrutsAction {
 
 		if (portletPreferencesUpdater != null) {
 			portletPreferencesUpdater.updatePortletPreferences(
-				className, classPK, portletId, portletSetup, themeDisplay);
+				className, classPK, portletId, portletPreferences,
+				themeDisplay);
 		}
 
-		portletSetup.store();
+		portletPreferences.store();
 	}
 
 	@Reference

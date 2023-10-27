@@ -376,7 +376,7 @@ JournalArticleItemSelectorViewDisplayContext journalArticleItemSelectorViewDispl
 		<liferay-ui:search-iterator
 			displayStyle="<%= journalArticleItemSelectorViewDisplayContext.getDisplayStyle() %>"
 			markupView="lexicon"
-			resultRowSplitter="<%= new JournalResultRowSplitter() %>"
+			resultRowSplitter='<%= Objects.equals(journalArticleItemSelectorViewDisplayContext.getDisplayStyle(), "icon") ? new JournalResultRowSplitter() : null %>'
 			searchContainer="<%= searchContainer %>"
 		/>
 	</liferay-ui:search-container>

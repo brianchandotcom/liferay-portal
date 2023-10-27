@@ -448,6 +448,16 @@ public class JournalArticleItemSelectorViewDisplayContext {
 		return _searchEverywhere;
 	}
 
+	public boolean isShowBreadcrumb() {
+		Group group = _themeDisplay.getScopeGroup();
+
+		if (!group.isSite()) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public boolean showArticleId() {
 		if (!_journalWebConfiguration.journalArticleForceAutogenerateId() ||
 			_journalWebConfiguration.journalArticleShowId()) {

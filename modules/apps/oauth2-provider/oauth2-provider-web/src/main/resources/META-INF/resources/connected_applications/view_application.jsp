@@ -118,9 +118,10 @@ renderResponse.setTitle(oAuth2Application.getName());
 
 					<%
 					Date expirationDate = oAuth2Authorization.getRefreshTokenExpirationDate();
+					Date accessTokenExpirationDate = oAuth2Authorization.getAccessTokenExpirationDate();
 
-					if (expirationDate == null) {
-						expirationDate = oAuth2Authorization.getAccessTokenExpirationDate();
+					if ((expirationDate == null) || expirationDate.before(accessTokenExpirationDate)) {
+						expirationDate = accessTokenExpirationDate;
 					}
 					%>
 

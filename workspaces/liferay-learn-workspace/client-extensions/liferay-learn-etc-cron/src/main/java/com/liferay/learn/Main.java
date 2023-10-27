@@ -1125,11 +1125,15 @@ public class Main {
 	}
 
 	private void _loadTaxonomyVocabularies() throws Exception {
+		File file = new File(
+			_markdownImportDirName + "/../taxonomy-vocabularies.json");
+
+		if (!file.exists()) {
+			return;
+		}
+
 		JSONObject taxonomyVocabulariesJSONObject = new JSONObject(
-			FileUtils.readFileToString(
-				new File(
-					_markdownImportDirName + "/../taxonomy-vocabularies.json"),
-				StandardCharsets.UTF_8));
+			FileUtils.readFileToString(file, StandardCharsets.UTF_8));
 
 		if (taxonomyVocabulariesJSONObject.isEmpty()) {
 			return;

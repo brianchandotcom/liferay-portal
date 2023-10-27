@@ -1,0 +1,39 @@
+{
+	"properties": {
+		"assetCategoryIds": {
+			"index": true,
+			"store": true,
+			"type": "long"
+		},
+		"companyId": {
+			"index": true,
+			"store": true,
+			"type": "long"
+		},
+		"createDate": {
+			"index": false,
+			"store": true,
+			"type": "date"
+		},
+		"entryClassPK": {
+			"index": true,
+			"store": true,
+			"type": "long"
+		},
+		"jobId": {
+			"index": false,
+			"store": true,
+			"type": "keyword"
+		},
+		"recommendedEntryClassPK": {
+			"index": false,
+			"store": true,
+			"type": "long"
+		},
+		"score": {
+			"index": false,
+			"store": true,
+			"type": "float"
+		}
+	}
+}

@@ -46,6 +46,8 @@ function openSelectionModal({key, namespace, title, url}) {
 	const openerWindow = Liferay.Util.getOpener();
 
 	if (Liferay.FeatureFlags['COMMERCE-11287']) {
+		openerWindow.originalOpenerLiferay = Liferay;
+
 		return openerWindow.Liferay.Util.openModal({
 			buttons: [
 				{

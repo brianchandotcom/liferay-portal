@@ -44,17 +44,16 @@ function AddPriceEntryForm({
 	);
 
 	const closeModal = (modalConfig = {}) => {
-		let openerWindow = Liferay.Util.getOpener();
+		const openerWindow = Liferay.Util.getOpener();
 
 		openerWindow.Liferay.fire('closeModal', modalConfig);
 
-		if (dataSetId) {
-			do {
-				openerWindow.Liferay.fire(FDS_UPDATE_DISPLAY, {
-					id: dataSetId,
-				});
-				openerWindow = openerWindow[0];
-			} while (openerWindow.Liferay);
+		if (dataSetId && openerWindow.originalOpenerLiferay) {
+			openerWindow.originalOpenerLiferay.fire(FDS_UPDATE_DISPLAY, {
+				id: dataSetId,
+			});
+
+			delete openerWindow.originalOpenerLiferay;
 		}
 	};
 

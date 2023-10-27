@@ -20,6 +20,15 @@ import org.osgi.service.component.annotations.Reference;
 public class SearchCapabilitiesImpl implements SearchCapabilities {
 
 	@Override
+	public boolean isAnalyticsSupported() {
+		if (_isSearchEngineSolr()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	public boolean isCommerceSupported() {
 		if (_isSearchEngineSolr()) {
 			return false;

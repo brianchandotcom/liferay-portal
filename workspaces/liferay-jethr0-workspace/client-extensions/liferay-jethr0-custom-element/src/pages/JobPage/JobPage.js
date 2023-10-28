@@ -8,11 +8,14 @@ import ClayLayout from '@clayui/layout';
 import {useState} from 'react';
 import {useParams} from 'react-router-dom';
 
+import './JobPage.css';
 import Jethr0Breadcrumbs from '../../components/Jethr0Breadcrumbs/Jethr0Breadcrumbs';
+import Jethr0ButtonsRow from '../../components/Jethr0ButtonsRow/Jethr0ButtonsRow';
 import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
 import JobBuilds from '../../components/JobBuilds/JobBuilds';
 import JobInformation from '../../components/JobInformation/JobInformation';
+import postSpringBootData from '../../services/postSpringBootData'
 import useSpringBootData from '../../services/useSpringBootData';
 
 function JobPage() {
@@ -23,6 +26,10 @@ function JobPage() {
 		setData: setJob,
 		urlPath: '/jobs/' + id,
 	});
+
+	function redirectToJobsPage() {
+		window.location.replace('/#/jobs');
+	}
 
 	let jobName = 'Job #' + id;
 
@@ -41,9 +48,26 @@ function JobPage() {
 			<Jethr0Card>
 				<Jethr0NavigationBar active="Jobs" />
 				<Jethr0Breadcrumbs breadcrumbs={breadcrumbs} />
-				<Heading level={3} weight="lighter">
-					{jobName}
-				</Heading>
+				<ClayLayout.ContainerFluid className="jethr0-job-page-menu">
+					<ClayLayout.Row justify="between">
+						<Heading level={3} weight="lighter">
+							{jobName}
+						</Heading>
+						<Jethr0ButtonsRow
+							buttons={[
+								{
+									onClick: () => {
+										postSpringBootData({
+											redirect: redirectToJobsPage,
+											urlPath: '/jobs/delete/' + id,
+										});
+									},
+									title: 'Delete',
+								}
+							]}
+						/>
+					</ClayLayout.Row>
+				</ClayLayout.ContainerFluid>
 				<JobInformation job={job} />
 				<JobBuilds jobId={id} />
 			</Jethr0Card>

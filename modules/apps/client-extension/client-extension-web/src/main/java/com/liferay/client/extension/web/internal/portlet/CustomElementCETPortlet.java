@@ -56,6 +56,8 @@ public class CustomElementCETPortlet extends BaseCETPortlet<CustomElementCET> {
 				"com.liferay.portlet.css-class-wrapper",
 				"portlet-client-extension"
 			).put(
+				"com.liferay.portlet.deploy.parallel", false
+			).put(
 				"com.liferay.portlet.display-category",
 				cet.getPortletCategoryName()
 			).put(

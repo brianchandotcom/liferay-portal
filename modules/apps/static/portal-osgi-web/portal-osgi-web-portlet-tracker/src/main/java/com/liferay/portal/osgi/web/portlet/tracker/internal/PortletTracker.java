@@ -188,7 +188,12 @@ public class PortletTracker
 					return addedPortletModel;
 				});
 
-		if (_parallel) {
+		if (_parallel &&
+			GetterUtil.getBoolean(
+				serviceReference.getProperty(
+					"com.liferay.portlet.deploy.parallel"),
+				true)) {
+
 			ExecutorService executorService =
 				SystemExecutorServiceUtil.getExecutorService();
 

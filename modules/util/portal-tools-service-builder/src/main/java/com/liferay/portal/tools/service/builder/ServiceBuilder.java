@@ -4135,6 +4135,10 @@ public class ServiceBuilder {
 			List<IndexMetadata> indexMetadatas = indexMetadatasMap.get(
 				entity.getTable());
 
+			if (indexMetadatas != null) {
+				indexMetadatas.clear();
+			}
+
 			List<EntityFinder> entityFinders = entity.getEntityFinders();
 
 			for (EntityFinder entityFinder : entityFinders) {

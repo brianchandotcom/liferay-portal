@@ -11,8 +11,10 @@ import com.liferay.jethr0.entity.repository.BaseEntityRepository;
 import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.dalo.JobEntityDALO;
 import com.liferay.jethr0.job.dalo.JobToBuildsEntityRelationshipDALO;
+import com.liferay.jethr0.job.queue.JobQueue;
 import com.liferay.jethr0.util.StringUtil;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.Set;
 
@@ -65,6 +67,10 @@ public class JobEntityRepository extends BaseEntityRepository<JobEntity> {
 		return _jobEntityDALO;
 	}
 
+	public JobQueue getJobQueue() {
+		return _jobQueue;
+	}
+
 	@Override
 	public void initialize() {
 	}
@@ -79,10 +85,32 @@ public class JobEntityRepository extends BaseEntityRepository<JobEntity> {
 		buildEntity.setJobEntity(jobEntity);
 	}
 
+	@Override
+	public void remove(JobEntity jobEntity) {
+		JobQueue jobQueue = getJobQueue();
+
+		jobQueue.removeJobEntities(Collections.singleton(jobEntity));
+
+		super.remove(jobEntity);
+	}
+
+	@Override
+	public void remove(Set<JobEntity> jobEntities) {
+		JobQueue jobQueue = getJobQueue();
+
+		jobQueue.removeJobEntities(jobEntities);
+
+		super.remove(jobEntities);
+	}
+
 	public void setBuildEntityRepository(
 		BuildEntityRepository buildEntityRepository) {
 
 		_buildEntityRepository = buildEntityRepository;
+	}
+
+	public void setJobQueue(JobQueue jobQueue) {
+		_jobQueue = jobQueue;
 	}
 
 	@Override
@@ -114,6 +142,8 @@ public class JobEntityRepository extends BaseEntityRepository<JobEntity> {
 
 	@Autowired
 	private JobEntityDALO _jobEntityDALO;
+
+	private JobQueue _jobQueue;
 
 	@Autowired
 	private JobToBuildsEntityRelationshipDALO

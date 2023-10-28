@@ -11,6 +11,7 @@ import com.liferay.jethr0.bui1d.repository.BuildRunEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsCohortEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsNodeEntityRepository;
 import com.liferay.jethr0.jenkins.repository.JenkinsServerEntityRepository;
+import com.liferay.jethr0.job.queue.JobQueue;
 import com.liferay.jethr0.job.repository.JobComparatorEntityRepository;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
 import com.liferay.jethr0.job.repository.JobPrioritizerEntityRepository;
@@ -52,6 +53,7 @@ public class EntityInitializer {
 			_jobPrioritizerEntityRepository);
 
 		_jobEntityRepository.setBuildEntityRepository(_buildEntityRepository);
+		_jobEntityRepository.setJobQueue(_jobQueue);
 
 		_jobPrioritizerEntityRepository.setJobComparatorEntityRepository(
 			_jobComparatorEntityRepository);
@@ -103,5 +105,8 @@ public class EntityInitializer {
 
 	@Autowired
 	private JobPrioritizerEntityRepository _jobPrioritizerEntityRepository;
+
+	@Autowired
+	private JobQueue _jobQueue;
 
 }

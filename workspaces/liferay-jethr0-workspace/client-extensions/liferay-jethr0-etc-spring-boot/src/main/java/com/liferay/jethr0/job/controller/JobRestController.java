@@ -72,6 +72,19 @@ public class JobRestController {
 		return new ResponseEntity<>(jobEntity.toString(), HttpStatus.OK);
 	}
 
+	@PostMapping("/delete/{id}")
+	public ResponseEntity<String> deleteJob(
+		@AuthenticationPrincipal Jwt jwt, @PathVariable("id") int jobEntityId) {
+
+		JobEntity jobEntity = _jobEntityRepository.getById(jobEntityId);
+
+		_jobEntityRepository.remove(jobEntity);
+
+		JSONObject jobJSONObject = jobEntity.getJSONObject();
+
+		return new ResponseEntity<>(jobJSONObject.toString(), HttpStatus.OK);
+	}
+
 	@GetMapping("/{id}")
 	public ResponseEntity<String> job(
 		@AuthenticationPrincipal Jwt jwt, @PathVariable("id") int jobEntityId) {

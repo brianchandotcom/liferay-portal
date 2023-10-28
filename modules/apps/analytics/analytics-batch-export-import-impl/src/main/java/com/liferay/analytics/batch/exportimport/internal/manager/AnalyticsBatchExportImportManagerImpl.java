@@ -6,7 +6,6 @@
 package com.liferay.analytics.batch.exportimport.internal.manager;
 
 import com.liferay.analytics.batch.exportimport.manager.AnalyticsBatchExportImportManager;
-import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
 import com.liferay.analytics.message.storage.service.AnalyticsMessageLocalService;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
@@ -160,7 +159,7 @@ public class AnalyticsBatchExportImportManagerImpl
 		try (FileInputStream fileInputStream = new FileInputStream(tempFile)) {
 			_upload(
 				companyId, fileInputStream, resourceLastModifiedDate,
-				DXPEntity.class.getName());
+				resourceName);
 		}
 
 		_notify(

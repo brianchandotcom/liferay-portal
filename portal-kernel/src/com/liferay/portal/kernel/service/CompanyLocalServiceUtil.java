@@ -174,6 +174,12 @@ public class CompanyLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
+	public static Company doExportPartitionCompany(long companyId)
+		throws PortalException {
+
+		return getService().doExportPartitionCompany(companyId);
+	}
+
 	public static <T> T dslQuery(DSLQuery dslQuery) {
 		return getService().dslQuery(dslQuery);
 	}

@@ -6143,7 +6143,12 @@ public class ServiceBuilder {
 					IntegerWrapper count = frequencyMap.computeIfAbsent(
 						columnName, key -> new IntegerWrapper());
 
-					count.increment();
+					if (columnName.endsWith("Date")) {
+						count.setValue(0);
+					}
+					else {
+						count.increment();
+					}
 				}
 			}
 

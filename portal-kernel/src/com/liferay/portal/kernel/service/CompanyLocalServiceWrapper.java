@@ -186,6 +186,14 @@ public class CompanyLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.model.Company doExportPartitionCompany(
+			long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _companyLocalService.doExportPartitionCompany(companyId);
+	}
+
+	@Override
 	public <T> T dslQuery(com.liferay.petra.sql.dsl.query.DSLQuery dslQuery) {
 		return _companyLocalService.dslQuery(dslQuery);
 	}

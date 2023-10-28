@@ -81,8 +81,11 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Layout layout = themeDisplay.getLayout();
+		getLock(themeDisplay.getLayout(), themeDisplay.getUserId());
+	}
 
+	@Override
+	public void getLock(Layout layout, long userId) throws PortalException {
 		if (!layout.isDraftLayout()) {
 			return;
 		}
@@ -93,15 +96,15 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 		if (lock == null) {
 			try {
 				_lockManager.lock(
-					themeDisplay.getUserId(), Layout.class.getName(),
-					layout.getPlid(), String.valueOf(themeDisplay.getUserId()),
-					false, LayoutModelImpl.LOCK_EXPIRATION_TIME);
+					userId, Layout.class.getName(), layout.getPlid(),
+					String.valueOf(userId), false,
+					LayoutModelImpl.LOCK_EXPIRATION_TIME);
 			}
 			catch (PortalException portalException) {
 				throw new LockedLayoutException(portalException);
 			}
 		}
-		else if (lock.getUserId() == themeDisplay.getUserId()) {
+		else if (lock.getUserId() == userId) {
 			try {
 				_lockManager.refresh(
 					lock.getUuid(), lock.getCompanyId(),

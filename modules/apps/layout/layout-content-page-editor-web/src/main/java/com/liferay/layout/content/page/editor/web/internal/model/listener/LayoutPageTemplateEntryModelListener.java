@@ -5,6 +5,7 @@
 
 package com.liferay.layout.content.page.editor.web.internal.model.listener;
 
+import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.listener.FragmentEntryLinkListener;
@@ -18,6 +19,7 @@ import com.liferay.info.permission.provider.InfoPermissionProvider;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.layout.content.page.editor.web.internal.manager.FormItemManager;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.exception.RequiredLayoutPageTemplateEntryException;
 import com.liferay.layout.page.template.info.item.capability.EditPageInfoItemCapability;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -71,6 +73,16 @@ public class LayoutPageTemplateEntryModelListener
 
 		if (_isContentTypeChanged(
 				layoutPageTemplateEntry, originalLayoutPageTemplateEntry)) {
+
+			int usagesCount =
+				_assetDisplayPageEntryLocalService.
+					getAssetDisplayPageEntriesCountByLayoutPageTemplateEntryId(
+						layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+
+			if (usagesCount > 0) {
+				throw new ModelListenerException(
+					new RequiredLayoutPageTemplateEntryException());
+			}
 
 			try {
 				_removeContextReferences(
@@ -397,6 +409,10 @@ public class LayoutPageTemplateEntryModelListener
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutPageTemplateEntryModelListener.class);
+
+	@Reference
+	private AssetDisplayPageEntryLocalService
+		_assetDisplayPageEntryLocalService;
 
 	@Reference
 	private FormItemManager _formItemManager;

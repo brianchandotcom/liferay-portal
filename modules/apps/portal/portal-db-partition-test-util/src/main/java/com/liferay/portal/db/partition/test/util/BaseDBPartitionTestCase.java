@@ -174,6 +174,10 @@ public abstract class BaseDBPartitionTestCase {
 		_dbPartitionEnabled = DBPartition.isPartitionEnabled();
 
 		if (_dbPartitionEnabled) {
+			connection = DataAccess.getConnection();
+
+			dbInspector = new DBInspector(connection);
+
 			return;
 		}
 

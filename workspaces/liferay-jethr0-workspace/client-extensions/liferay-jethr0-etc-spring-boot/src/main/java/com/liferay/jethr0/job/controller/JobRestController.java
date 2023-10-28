@@ -15,6 +15,9 @@ import com.liferay.jethr0.job.JobEntity;
 import com.liferay.jethr0.job.queue.JobQueue;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -201,11 +204,26 @@ public class JobRestController {
 
 	@GetMapping
 	public ResponseEntity<String> jobs(@AuthenticationPrincipal Jwt jwt) {
+		List<JobEntity> jobEntities = new ArrayList<>(
+			_jobEntityRepository.getByState(JobEntity.State.COMPLETED));
+
+		Collections.sort(
+			jobEntities,
+			new Comparator<JobEntity>() {
+
+				@Override
+				public int compare(JobEntity jobEntity1, JobEntity jobEntity2) {
+					Long jobEntity1Id = jobEntity1.getId();
+					Long jobEntity2Id = jobEntity2.getId();
+
+					return jobEntity2Id.compareTo(jobEntity1Id);
+				}
+
+			});
+
 		JSONArray jobsJSONArray = new JSONArray();
 
-		for (JobEntity jobEntity :
-				_jobEntityRepository.getByState(JobEntity.State.COMPLETED)) {
-
+		for (JobEntity jobEntity : jobEntities) {
 			jobsJSONArray.put(jobEntity.getJSONObject());
 		}
 

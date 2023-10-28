@@ -9,13 +9,13 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.helper.LayoutCopyHelper;
+import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.exception.LockedLayoutException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -26,15 +26,11 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletRequest;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -142,34 +138,9 @@ public class DiscardDraftLayoutMVCActionCommand
 
 		sendRedirect(
 			actionRequest, actionResponse,
-			PortletURLBuilder.create(
-				_portal.getControlPanelPortletURL(
-					actionRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-					PortletRequest.RENDER_PHASE)
-			).setMVCRenderCommandName(
-				"/layout_admin/locked_layout"
-			).setBackURL(
-				() -> {
-					String backURL = ParamUtil.getString(
-						actionRequest, "backURL");
-
-					if (Validator.isNotNull(backURL)) {
-						return backURL;
-					}
-
-					HttpServletRequest httpServletRequest =
-						_portal.getHttpServletRequest(actionRequest);
-
-					backURL = ParamUtil.getString(
-						httpServletRequest, "p_l_back_url");
-
-					if (Validator.isNotNull(backURL)) {
-						return backURL;
-					}
-
-					return ParamUtil.getString(httpServletRequest, "redirect");
-				}
-			).buildString());
+			_layoutLockManager.getLockedLayoutURL(
+				_portal.getOriginalServletRequest(
+					_portal.getHttpServletRequest(actionRequest))));
 	}
 
 	@Reference
@@ -180,6 +151,9 @@ public class DiscardDraftLayoutMVCActionCommand
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private LayoutLockManager _layoutLockManager;
 
 	@Reference
 	private LayoutPageTemplateEntryLocalService

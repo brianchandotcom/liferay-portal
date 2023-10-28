@@ -15,7 +15,6 @@ function JobQueue() {
 
 	useSpringBootData({
 		setData: setJobQueue,
-		timeout: 1000,
 		urlPath: '/jobs/queue',
 	});
 

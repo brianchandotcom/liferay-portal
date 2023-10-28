@@ -17,7 +17,6 @@ function JobBuilds({jobId}) {
 
 	useSpringBootData({
 		setData: setJobBuilds,
-		timeout: 2500,
 		urlPath: '/jobs/builds/' + jobId,
 	});
 

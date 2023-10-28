@@ -5,18 +5,18 @@
 
 import {useEffect} from 'react';
 
-let oAuth2Client;
+function useSpringBootData({setData, urlPath}) {
+	let oAuth2Client;
 
-try {
-	oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(
-		'liferay-jethr0-etc-spring-boot-oauth-application-user-agent'
-	);
-}
-catch (error) {
-	console.error(error);
-}
+	try {
+		oAuth2Client = Liferay.OAuth2Client.FromUserAgentApplication(
+			'liferay-jethr0-etc-spring-boot-oauth-application-user-agent'
+		);
+	}
+	catch (error) {
+		console.error(error);
+	}
 
-function useSpringBootData({setData, timeout = -1, urlPath}) {
 	useEffect(() => {
 		oAuth2Client
 			?.fetch(urlPath)
@@ -29,21 +29,6 @@ function useSpringBootData({setData, timeout = -1, urlPath}) {
 				console.log(error);
 			});
 	}, [setData, urlPath]);
-
-	if (timeout > 0) {
-		setTimeout(() => {
-			oAuth2Client
-				?.fetch(urlPath)
-				.then((response) => response.text())
-				.then((data) => {
-					setData(JSON.parse(data));
-				})
-				.catch((error) => {
-					// eslint-disable-next-line no-console
-					console.log(error);
-				});
-		}, timeout);
-	}
 }
 
 export default useSpringBootData;

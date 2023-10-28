@@ -16,7 +16,6 @@ function BuildRuns({buildId}) {
 
 	useSpringBootData({
 		setData: setBuildRuns,
-		timeout: 2500,
 		urlPath: '/builds/runs/' + buildId,
 	});
 

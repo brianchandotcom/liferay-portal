@@ -86,7 +86,7 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 
 	@Override
 	public void getLock(Layout layout, long userId) throws PortalException {
-		if (!layout.isDraftLayout()) {
+		if ((layout == null) || !layout.isDraftLayout()) {
 			return;
 		}
 
@@ -256,7 +256,7 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 
 	@Override
 	public void unlock(Layout layout, long userId) {
-		if (!layout.isDraftLayout()) {
+		if ((layout == null) || !layout.isDraftLayout()) {
 			return;
 		}
 

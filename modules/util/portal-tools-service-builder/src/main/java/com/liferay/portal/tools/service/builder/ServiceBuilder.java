@@ -4158,7 +4158,9 @@ public class ServiceBuilder {
 				List<String> dbNames = new ArrayList<>();
 
 				for (EntityColumn entityColumn : entityColumns) {
-					dbNames.add(entityColumn.getDBName());
+					if (entityColumn.isIndexable()) {
+						dbNames.add(entityColumn.getDBName());
+					}
 				}
 
 				if (dbNames.isEmpty()) {
@@ -6822,6 +6824,8 @@ public class ServiceBuilder {
 					finderColumnElement.attributeValue("arrayable-operator"));
 				boolean finderColArrayablePagination = GetterUtil.getBoolean(
 					finderColumnElement.attributeValue("arrayable-pagination"));
+				boolean finderColIndexable = GetterUtil.getBoolean(
+					finderColumnElement.attributeValue("indexable"), true);
 
 				EntityColumn entityColumn = Entity.getEntityColumn(
 					finderColumnName, entityColumns);
@@ -6837,6 +6841,7 @@ public class ServiceBuilder {
 				entityColumn.setArrayableOperator(finderColArrayableOperator);
 				entityColumn.setArrayablePagination(
 					finderColArrayablePagination);
+				entityColumn.setIndexable(finderColIndexable);
 
 				entityColumn.validate();
 

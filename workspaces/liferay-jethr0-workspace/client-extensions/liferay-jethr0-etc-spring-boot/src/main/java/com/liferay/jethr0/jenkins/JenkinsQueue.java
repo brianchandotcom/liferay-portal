@@ -14,7 +14,10 @@ import com.liferay.jethr0.event.controller.EventJmsController;
 import com.liferay.jethr0.jenkins.node.JenkinsNodeEntity;
 import com.liferay.jethr0.jenkins.repository.JenkinsServerEntityRepository;
 import com.liferay.jethr0.jenkins.server.JenkinsServerEntity;
+import com.liferay.jethr0.util.StringUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+
+import java.util.Date;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -48,7 +51,8 @@ public class JenkinsQueue {
 	@Scheduled(cron = "${liferay.jethr0.jenkins.queue.update.cron}")
 	public void scheduledUpdate() {
 		if (_log.isInfoEnabled()) {
-			_log.info("Updating Jenkins queue");
+			_log.info(
+				"Updating Jenkins queue at " + StringUtil.toString(new Date()));
 		}
 
 		update();

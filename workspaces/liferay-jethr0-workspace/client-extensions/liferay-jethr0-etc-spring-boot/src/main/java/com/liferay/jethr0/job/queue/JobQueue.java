@@ -16,10 +16,12 @@ import com.liferay.jethr0.job.prioritizer.JobPrioritizerEntity;
 import com.liferay.jethr0.job.repository.JobComparatorEntityRepository;
 import com.liferay.jethr0.job.repository.JobEntityRepository;
 import com.liferay.jethr0.job.repository.JobPrioritizerEntityRepository;
+import com.liferay.jethr0.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -109,7 +111,8 @@ public class JobQueue {
 	@Scheduled(cron = "${liferay.jethr0.job.queue.update.cron}")
 	public void scheduledUpdate() {
 		if (_log.isInfoEnabled()) {
-			_log.info("Updating job queue");
+			_log.info(
+				"Updating job queue at " + StringUtil.toString(new Date()));
 		}
 
 		update();

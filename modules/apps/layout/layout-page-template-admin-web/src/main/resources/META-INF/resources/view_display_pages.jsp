@@ -114,8 +114,6 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 							<clay:vertical-card
 								additionalProps='<%=
 									HashMapBuilder.<String, Object>put(
-										"changeContentTypeURL", displayPageDisplayContext.getChangeContentTypeURL(curLayoutPageTemplateEntry)
-									).put(
 										"mappingTypes", displayPageDisplayContext.getMappingTypesJSONArray()
 									).build()
 								%>'

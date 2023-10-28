@@ -184,9 +184,34 @@ public class DisplayPageActionDropdownItemsProvider {
 
 		return dropdownItem -> {
 			dropdownItem.putData("action", "changeContentType");
+			dropdownItem.putData(
+				"changeContentTypeURL", _getChangeContentTypeURL());
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "change-content-type"));
 		};
+	}
+
+	private String _getChangeContentTypeURL() {
+		return PortletURLBuilder.createActionURL(
+			_renderResponse
+		).setActionName(
+			"/layout_page_template_admin/update_display_page_entry_content_type"
+		).setRedirect(
+			_themeDisplay.getURLCurrent()
+		).setParameter(
+			"layoutPageTemplateEntryId",
+			_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
+		).setParameter(
+			"p_l_back_url", _themeDisplay.getURLCurrent()
+		).setParameter(
+			"p_l_back_url_title",
+			() -> {
+				PortletDisplay portletDisplay =
+					_themeDisplay.getPortletDisplay();
+
+				return portletDisplay.getPortletDisplayName();
+			}
+		).buildString();
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>

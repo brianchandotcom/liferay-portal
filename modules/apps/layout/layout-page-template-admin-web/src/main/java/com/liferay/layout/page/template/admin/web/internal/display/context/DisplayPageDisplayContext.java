@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -70,31 +69,6 @@ public class DisplayPageDisplayContext {
 				InfoItemServiceRegistry.class.getName());
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
-	}
-
-	public String getChangeContentTypeURL(
-		LayoutPageTemplateEntry layoutPageTemplateEntry) {
-
-		return PortletURLBuilder.createActionURL(
-			_renderResponse
-		).setActionName(
-			"/layout_page_template_admin/update_display_page_entry_content_type"
-		).setRedirect(
-			_themeDisplay.getURLCurrent()
-		).setParameter(
-			"layoutPageTemplateEntryId",
-			layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
-		).setParameter(
-			"p_l_back_url",
-			_themeDisplay.getURLCurrent()
-		).setParameter(
-			"p_l_back_url_title",
-			() -> {
-				PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
-
-				return portletDisplay.getPortletDisplayName();
-			}
-		).buildString();
 	}
 
 	public SearchContainer<?> getDisplayPagesSearchContainer() {

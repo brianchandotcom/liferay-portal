@@ -99,7 +99,9 @@ public class DBPartitionTest extends BaseDBPartitionTestCase {
 		finderCache.removeCache(ClassNameImpl.class.getName());
 		finderCache.removeCache(ResourceActionImpl.class.getName());
 
-		_resourceActions.clear();
+		if (_resourceActions != null) {
+			_resourceActions.clear();
+		}
 
 		DBPartitionUtil.forEachCompanyId(
 			companyId -> _resourceActionLocalService.checkResourceActions());

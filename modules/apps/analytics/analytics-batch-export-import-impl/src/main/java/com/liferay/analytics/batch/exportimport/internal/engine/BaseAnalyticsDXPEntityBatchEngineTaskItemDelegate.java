@@ -6,7 +6,6 @@
 package com.liferay.analytics.batch.exportimport.internal.engine;
 
 import com.liferay.analytics.batch.exportimport.internal.odata.entity.AnalyticsDXPEntityEntityModel;
-import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
 import com.liferay.batch.engine.BaseBatchEngineTaskItemDelegate;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
@@ -24,9 +23,8 @@ import java.util.Map;
 /**
  * @author Marcos Martins
  */
-public abstract class BaseAnalyticsDXPEntityBatchEngineTaskItemDelegate
-	<DXPEntity>
-		extends BaseBatchEngineTaskItemDelegate<DXPEntity> {
+public abstract class BaseAnalyticsDXPEntityBatchEngineTaskItemDelegate<T>
+	extends BaseBatchEngineTaskItemDelegate<T> {
 
 	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)

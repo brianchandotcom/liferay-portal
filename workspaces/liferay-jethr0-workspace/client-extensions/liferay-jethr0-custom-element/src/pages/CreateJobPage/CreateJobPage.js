@@ -73,7 +73,7 @@ function CreateJobPage() {
 		name: jobName,
 		portalPullRequestURL,
 		priority: jobPriority,
-		state: 'opened',
+		state: 'queued',
 		testSuiteName,
 		type: jobTypeKey,
 	};
@@ -190,18 +190,6 @@ function CreateJobPage() {
 								});
 							},
 							title: 'Save',
-						},
-						{
-							onClick: () => {
-								jobData.state = 'queued';
-
-								postSpringBootData({
-									data: jobData,
-									redirect: redirectToJobPage,
-									urlPath: '/jobs/create',
-								});
-							},
-							title: 'Save & Start',
 						},
 					]}
 				/>

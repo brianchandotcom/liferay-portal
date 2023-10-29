@@ -1023,6 +1023,40 @@ public class JournalDisplayContext {
 		return articleSearchContainer.getTotal();
 	}
 
+	public VerticalNavItemList getVerticalNavDDMStructureList() {
+		VerticalNavItemList verticalNavItemList = new VerticalNavItemList();
+
+		for (DDMStructure ddmStructure : getVerticalNavigationDDMStructures()) {
+			verticalNavItemList.add(
+				verticalNavItem -> {
+					String name = ddmStructure.getName(
+						_themeDisplay.getLocale());
+
+					verticalNavItem.setActive(
+						Objects.equals(
+							ParamUtil.getLong(
+								_httpServletRequest, "ddmStructureId"),
+							ddmStructure.getStructureId()));
+					verticalNavItem.setHref(
+						PortletURLBuilder.createRenderURL(
+							_liferayPortletResponse
+						).setParameter(
+							"ddmStructureId", ddmStructure.getStructureId()
+						).buildString());
+					verticalNavItem.setId(name);
+					verticalNavItem.setLabel(name);
+				});
+		}
+
+		return verticalNavItemList;
+	}
+
+	public List<DDMStructure> getVerticalNavigationDDMStructures() {
+		return DDMStructureLocalServiceUtil.getStructures(
+			_themeDisplay.getScopeGroupId(),
+			PortalUtil.getClassNameId(JournalArticle.class));
+	}
+
 	public VerticalNavItemList getVerticalNavItemList() {
 		return VerticalNavItemListBuilder.add(
 			verticalNavItem -> {

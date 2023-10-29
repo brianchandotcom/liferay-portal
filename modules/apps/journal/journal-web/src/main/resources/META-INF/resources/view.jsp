@@ -68,6 +68,16 @@ else {
 						<clay:vertical-nav
 							verticalNavItems="<%= journalDisplayContext.getVerticalNavItemList() %>"
 						/>
+
+						<c:if test="<%= ListUtil.isNotEmpty(journalDisplayContext.getVerticalNavigationDDMStructures()) %>">
+							<span class="c-mb-1 c-mt-3 sheet-tertiary-title text-2 text-secondary">
+								<liferay-ui:message key="highlighted-structures" />
+							</span>
+
+							<clay:vertical-nav
+								verticalNavItems="<%= journalDisplayContext.getVerticalNavDDMStructureList() %>"
+							/>
+						</c:if>
 					</clay:col>
 
 					<clay:col

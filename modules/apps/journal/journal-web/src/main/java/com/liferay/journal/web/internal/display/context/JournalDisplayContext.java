@@ -1009,6 +1009,17 @@ public class JournalDisplayContext {
 		return _tab;
 	}
 
+	public String getTitle() {
+		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
+			getDDMStructureId());
+
+		if (ddmStructure != null) {
+			return ddmStructure.getName(_themeDisplay.getLocale());
+		}
+
+		return LanguageUtil.get(_httpServletRequest, "content-library");
+	}
+
 	public int getTotalItems() throws PortalException {
 		SearchContainer<?> articleSearchContainer =
 			_getArticlesSearchContainer();

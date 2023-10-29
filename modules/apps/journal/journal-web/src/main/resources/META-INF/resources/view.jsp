@@ -86,6 +86,8 @@ else {
 						<clay:sheet
 							size="full"
 						>
+							<h2 class="sheet-title"><%= journalDisplayContext.getTitle() %></h2>
+
 							<aui:form action="<%= journalDisplayContext.getPortletURL(null) %>" method="get" name="fm">
 								<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" />
 								<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />

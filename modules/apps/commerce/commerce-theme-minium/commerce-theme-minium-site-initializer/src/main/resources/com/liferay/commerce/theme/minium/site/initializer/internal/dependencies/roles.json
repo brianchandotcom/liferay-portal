@@ -297,6 +297,12 @@
 			},
 			{
 				"actionIds": [
+					"VIEW"
+				],
+				"resource": "com.liferay.commerce.inventory.model.CommerceInventoryWarehouse"
+			},
+			{
+				"actionIds": [
 					"VIEW_CONTROL_PANEL"
 				],
 				"resource": "90"

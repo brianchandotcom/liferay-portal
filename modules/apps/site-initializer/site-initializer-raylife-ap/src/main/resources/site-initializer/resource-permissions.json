@@ -223,6 +223,15 @@
 	},
 	{
 		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com.liferay.commerce.inventory.model.CommerceInventoryWarehouse",
+		"roleName": "Operations Manager",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
 			"UPDATE",
 			"VIEW"
 		],

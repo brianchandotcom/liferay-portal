@@ -15,7 +15,7 @@ import Jethr0Card from '../../components/Jethr0Card/Jethr0Card';
 import Jethr0NavigationBar from '../../components/Jethr0NavigationBar/Jethr0NavigationBar';
 import JobBuilds from '../../components/JobBuilds/JobBuilds';
 import JobInformation from '../../components/JobInformation/JobInformation';
-import postSpringBootData from '../../services/postSpringBootData'
+import postSpringBootData from '../../services/postSpringBootData';
 import useSpringBootData from '../../services/useSpringBootData';
 
 function JobPage() {
@@ -63,7 +63,7 @@ function JobPage() {
 										});
 									},
 									title: 'Delete',
-								}
+								},
 							]}
 						/>
 					</ClayLayout.Row>

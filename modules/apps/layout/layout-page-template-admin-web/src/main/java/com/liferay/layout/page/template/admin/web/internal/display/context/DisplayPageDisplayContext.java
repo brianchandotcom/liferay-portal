@@ -79,6 +79,10 @@ public class DisplayPageDisplayContext {
 	public boolean existsMappedContentType(
 		LayoutPageTemplateEntry layoutPageTemplateEntry) {
 
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-195263")) {
+			return true;
+		}
+
 		if (layoutPageTemplateEntry.getClassNameId() == 0) {
 			return false;
 		}

@@ -2904,10 +2904,11 @@ plugins.includes=</echo>
 					<equals arg1="${zip.executable.file}" arg2="liferay-portal-tomcat" />
 					<then>
 						<parallel>
-							<exec dir="dist/${tstamp.value}/liferay-portal-${lp.version}/tomcat-${app.server.tomcat.version}/bin" errorproperty="portal.startup.error" executable="sh" outputproperty="portal.startup.output">
+							<exec dir="dist/${tstamp.value}/liferay-portal-${lp.version}/tomcat-${app.server.tomcat.version}/bin" executable="sh">
 								<arg value="catalina.sh" />
 								<arg value="run" />
 								<env key="LIFERAY_CLEAN_OSGI_STATE" value="true" />
+								<redirector alwayslog="true" errorproperty="portal.startup.error" outputproperty="portal.startup.output" />
 							</exec>
 
 							<sequential>

@@ -118,17 +118,17 @@ public class WorkflowDefinitionContentUtilTest {
 		String[] contentLines = content.split(StringPool.NEW_LINE);
 
 		Assert.assertTrue(
-			StringUtil.contains(contentLines[2], "xy", StringPool.BLANK));
+			StringUtil.contains(contentLines[1], "xy", StringPool.BLANK));
 		Assert.assertTrue(
-			StringUtil.contains(contentLines[3], "168", StringPool.BLANK));
+			StringUtil.contains(contentLines[2], "168", StringPool.BLANK));
 		Assert.assertTrue(
-			StringUtil.contains(contentLines[4], "36", StringPool.BLANK));
+			StringUtil.contains(contentLines[3], "36", StringPool.BLANK));
 
 		// 4 spaces to 1 tab
 
 		Assert.assertEquals(
-			contentLines[1], 3,
-			StringUtils.countMatches(contentLines[1], StringPool.TAB));
+			contentLines[0], 0,
+			StringUtils.countMatches(contentLines[0], StringPool.TAB));
 	}
 
 	@Test

@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
@@ -184,6 +185,44 @@ public class CTEntrySearcherTest {
 	}
 
 	@Test
+	public void testSearchByStatus() throws Exception {
+		JournalFolder journalFolder1 = null;
+		JournalFolder journalFolder2 = null;
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					_ctCollection.getCtCollectionId())) {
+
+			journalFolder1 = _journalFolderFixture.addFolder(
+				_group.getGroupId(), "Test Folder A");
+
+			journalFolder1 = _journalFolderLocalService.updateStatus(
+				TestPropsValues.getUserId(), journalFolder1,
+				WorkflowConstants.STATUS_APPROVED);
+
+			journalFolder2 = _journalFolderFixture.addFolder(
+				_group.getGroupId(), "Test Folder B");
+
+			journalFolder2 = _journalFolderLocalService.updateStatus(
+				TestPropsValues.getUserId(), journalFolder2,
+				WorkflowConstants.STATUS_DRAFT);
+		}
+
+		_assertHits(
+			_getUIDs(_getCTEntries(journalFolder1)),
+			_byAttribute(
+				Field.STATUS, new int[] {WorkflowConstants.STATUS_APPROVED}),
+			_byAttribute(
+				"modelClassNameId", new long[] {_journalFolderClassNameId}));
+		_assertHits(
+			_getUIDs(_getCTEntries(journalFolder2)),
+			_byAttribute(
+				Field.STATUS, new int[] {WorkflowConstants.STATUS_DRAFT}),
+			_byAttribute(
+				"modelClassNameId", new long[] {_journalFolderClassNameId}));
+	}
+
+	@Test
 	public void testSearchByUserId() throws Exception {
 		User user = UserTestUtil.addUser();
 
@@ -243,6 +282,48 @@ public class CTEntrySearcherTest {
 		_assertHits(
 			_getUIDs(_getCTEntries(journalFolder2, journalFolder1)),
 			_getSort(Field.GROUP_ID, SortOrder.DESC),
+			_byAttribute(
+				"modelClassNameId", new long[] {_journalFolderClassNameId}));
+	}
+
+	@Test
+	public void testSortByStatus() throws Exception {
+		JournalFolder journalFolder1 = null;
+		JournalFolder journalFolder2 = null;
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					_ctCollection.getCtCollectionId())) {
+
+			journalFolder1 = _journalFolderFixture.addFolder(
+				_group.getGroupId(), "Test Folder A");
+
+			journalFolder1 = _journalFolderLocalService.updateStatus(
+				TestPropsValues.getUserId(), journalFolder1,
+				WorkflowConstants.STATUS_APPROVED);
+
+			journalFolder2 = _journalFolderFixture.addFolder(
+				_group.getGroupId(), "Test Folder B");
+
+			journalFolder2 = _journalFolderLocalService.updateStatus(
+				TestPropsValues.getUserId(), journalFolder2,
+				WorkflowConstants.STATUS_DRAFT);
+		}
+
+		_assertHits(
+			_getUIDs(_getCTEntries(journalFolder1, journalFolder2)),
+			_getSort(
+				Field.getSortableFieldName(
+					Field.getLocalizedName(LocaleUtil.US, "statusLabel")),
+				SortOrder.ASC),
+			_byAttribute(
+				"modelClassNameId", new long[] {_journalFolderClassNameId}));
+		_assertHits(
+			_getUIDs(_getCTEntries(journalFolder2, journalFolder1)),
+			_getSort(
+				Field.getSortableFieldName(
+					Field.getLocalizedName(LocaleUtil.US, "statusLabel")),
+				SortOrder.DESC),
 			_byAttribute(
 				"modelClassNameId", new long[] {_journalFolderClassNameId}));
 	}

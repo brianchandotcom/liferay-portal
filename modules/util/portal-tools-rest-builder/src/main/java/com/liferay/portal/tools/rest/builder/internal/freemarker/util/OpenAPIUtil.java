@@ -182,6 +182,31 @@ public class OpenAPIUtil {
 					propertySchemas = items.getPropertySchemas();
 				}
 				else if (schema.getAllOfSchemas() != null) {
+					boolean anyMissing = false;
+
+					for (Schema allOfSchema : schema.getAllOfSchemas()) {
+						if (allOfSchema.getReference() == null) {
+							continue;
+						}
+
+						if (!allSchemas.containsKey(
+								OpenAPIParserUtil.getReferenceName(
+									allOfSchema.getReference()))) {
+
+							anyMissing = true;
+
+							break;
+						}
+					}
+
+					if (anyMissing) {
+						queue.add(
+							Collections.singletonMap(
+								entry.getKey(), entry.getValue()));
+
+						continue;
+					}
+
 					propertySchemas = OpenAPIParserUtil.getAllOfPropertySchemas(
 						schema, allSchemas);
 				}

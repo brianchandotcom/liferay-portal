@@ -36,6 +36,18 @@ public class DBPartitionMySQL implements DBPartitionSQL {
 			tableName, " like ", fromSchemaName, StringPool.PERIOD, tableName);
 	}
 
+	@Override
+	public String getPartitionName(Connection connection) throws SQLException {
+		return connection.getCatalog();
+	}
+
+	@Override
+	public void setPartition(Connection connection, String schemaName)
+		throws SQLException {
+
+		connection.setCatalog(schemaName);
+	}
+
 	private String _getSessionCharsetEncoding(Connection connection)
 		throws SQLException {
 

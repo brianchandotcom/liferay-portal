@@ -546,17 +546,6 @@ public class AssetTagPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				assetTag, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "groupId"));
-
-		Assert.assertEquals(
-			Long.valueOf(assetTag.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				assetTag, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "groupId"));
-		Assert.assertEquals(
-			assetTag.getName(),
-			ReflectionTestUtil.invoke(
-				assetTag, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "name"));
 	}
 
 	protected AssetTag addAssetTag() throws Exception {

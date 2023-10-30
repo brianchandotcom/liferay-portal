@@ -13,6 +13,17 @@ import React from 'react';
 import {StoreAPIContextProvider} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
 import {ReorderSetsModal} from '../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/fragments_and_widgets/components/reorder_sets_modal/ReorderSetsModal';
 
+function dispatchKey(element, eventType, key) {
+	act(() => {
+		element.dispatchEvent(
+			new KeyboardEvent(eventType, {
+				bubbles: true,
+				key,
+			})
+		);
+	});
+}
+
 const renderComponent = (dispatch = () => {}) => {
 	return render(
 		<DndProvider backend={HTML5Backend}>
@@ -210,5 +221,70 @@ describe('ReorderSetsModal', () => {
 		fireEvent.click(screen.getByText('save'));
 
 		expect(mockDispatch).not.toBeCalled();
+	});
+
+	describe('LPS-196420 accessible drag and drop', () => {
+		beforeEach(() => {
+			Liferay.FeatureFlags['LPS-196420'] = true;
+		});
+
+		afterEach(() => {
+			Liferay.FeatureFlags['LPS-196420'] = false;
+		});
+
+		it('allows focusing drag and drop icons', () => {
+			const {getByRole} = renderComponent();
+
+			act(() => jest.runAllTimers());
+
+			const reorderButton = getByRole('button', {
+				name: /reorder category 1/i,
+			});
+
+			reorderButton.focus();
+			expect(document.activeElement).toBe(reorderButton);
+		});
+
+		it('moves the focus using arrow keys', async () => {
+			const {getByRole} = renderComponent();
+
+			act(() => jest.runAllTimers());
+
+			const reorderButton = getByRole('button', {
+				name: /reorder category 1/i,
+			});
+
+			reorderButton.focus();
+			dispatchKey(reorderButton, 'keydown', 'ArrowDown');
+
+			expect(document.activeElement).toBe(
+				getByRole('button', {
+					name: /reorder category 2/i,
+				})
+			);
+		});
+
+		it('allows moving items using keyboard', () => {
+			const {getAllByText, getByRole, getByText} = renderComponent();
+
+			act(() => jest.runAllTimers());
+
+			const reorderButton = getByRole('button', {
+				name: /reorder category 1/i,
+			});
+
+			reorderButton.focus();
+
+			dispatchKey(reorderButton, 'keyup', 'Enter');
+			expect(getByText(/use-up-and-down-arrows/i)).toBeInTheDocument();
+			dispatchKey(reorderButton, 'keyup', 'ArrowDown');
+
+			getAllByText(/targeting-x-of-x/i).forEach((element) =>
+				expect(element).toBeInTheDocument()
+			);
+
+			dispatchKey(reorderButton, 'keyup', 'Enter');
+			expect(getByText(/x-placed-on-x-of-x/i)).toBeInTheDocument();
+		});
 	});
 });

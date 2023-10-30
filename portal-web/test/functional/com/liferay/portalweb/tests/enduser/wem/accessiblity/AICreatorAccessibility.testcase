@@ -77,14 +77,14 @@ definition {
 
 		task ("Then the site administrator could see the size of AI Creator icon") {
 			AssertAttributeValue(
-				attribute1 = "height",
 				locator1 = "//img[contains(@src,'ai_creator.png')]",
-				value1 = 32);
+				value1 = "height",
+				value2 = 32);
 
 			AssertAttributeValue(
-				attribute1 = "width",
 				locator1 = "//img[contains(@src,'ai_creator.png')]",
-				value1 = 32);
+				value1 = "width",
+				value2 = 32);
 		}
 	}
 

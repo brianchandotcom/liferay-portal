@@ -16,6 +16,7 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -80,8 +81,11 @@ public class CommerceFrontendJsDynamicInclude extends BaseDynamicInclude {
 		throws PortalException {
 
 		return StringBundler.concat(
-			"<script data-senna-track=\"temporary\">var Liferay = ",
-			"window.Liferay || {}; Liferay.CommerceContext = ",
+			"<script",
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+				httpServletRequest),
+			" data-senna-track=\"temporary\">var Liferay = window.Liferay || ",
+			"{}; Liferay.CommerceContext = ",
 			JSONUtil.put(
 				"account",
 				() -> {

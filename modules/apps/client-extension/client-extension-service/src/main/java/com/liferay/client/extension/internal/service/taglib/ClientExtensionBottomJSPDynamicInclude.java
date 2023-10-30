@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -11,6 +11,7 @@ import com.liferay.client.extension.model.ClientExtensionEntryRel;
 import com.liferay.client.extension.type.GlobalJSCET;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -79,7 +80,10 @@ public class ClientExtensionBottomJSPDynamicInclude implements DynamicInclude {
 				continue;
 			}
 
-			printWriter.print("<script ");
+			printWriter.print("<script");
+			printWriter.print(
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+					httpServletRequest));
 
 			String loadType = typeSettingsUnicodeProperties.getProperty(
 				"loadType", StringPool.BLANK);
@@ -87,11 +91,12 @@ public class ClientExtensionBottomJSPDynamicInclude implements DynamicInclude {
 			if (Validator.isNotNull(loadType) &&
 				!Objects.equals(loadType, "default")) {
 
+				printWriter.print(StringPool.SPACE);
 				printWriter.print(loadType);
 				printWriter.print(StringPool.SPACE);
 			}
 
-			printWriter.print("data-senna-track=\"temporary\" src=\"");
+			printWriter.print(" data-senna-track=\"temporary\" src=\"");
 			printWriter.print(globalJSCET.getURL());
 			printWriter.print("\" type=\"text/javascript\"></script>");
 		}

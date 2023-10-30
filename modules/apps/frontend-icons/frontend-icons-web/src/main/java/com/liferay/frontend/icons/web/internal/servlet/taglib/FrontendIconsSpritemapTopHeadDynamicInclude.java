@@ -6,6 +6,7 @@
 package com.liferay.frontend.icons.web.internal.servlet.taglib;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -36,7 +37,11 @@ public class FrontendIconsSpritemapTopHeadDynamicInclude
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append("<script data-senna-track=\"temporary\">");
+		sb.append("<script");
+		sb.append(
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+				httpServletRequest));
+		sb.append(" data-senna-track=\"temporary\">");
 		sb.append("var Liferay = window.Liferay || {};");
 		sb.append("Liferay.Icons = Liferay.Icons || {};");
 

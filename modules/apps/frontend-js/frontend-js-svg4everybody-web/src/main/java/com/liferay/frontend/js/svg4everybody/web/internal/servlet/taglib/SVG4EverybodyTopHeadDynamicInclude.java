@@ -11,6 +11,7 @@ import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.ThemeSpritemapCET;
 import com.liferay.client.extension.type.manager.CETManager;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -100,7 +101,11 @@ public class SVG4EverybodyTopHeadDynamicInclude extends BaseDynamicInclude {
 				httpServletRequest);
 
 		for (String jsFileName : _JS_FILE_NAMES) {
-			printWriter.print("<script data-senna-track=\"permanent\" src=\"");
+			printWriter.print("<script");
+			printWriter.write(
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+					httpServletRequest));
+			printWriter.print(" data-senna-track=\"permanent\" src=\"");
 
 			BundleScriptAbsolutePortalURLBuilder
 				bundleScriptAbsolutePortalURLBuilder =

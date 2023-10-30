@@ -9,6 +9,7 @@ import com.liferay.frontend.js.top.head.extender.TopHeadResources;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResources;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
@@ -76,11 +77,13 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 		else {
 			if (themeDisplay.isThemeJsBarebone()) {
 				_renderBundleURLs(
-					httpServletResponse, resourceURLsHolder._jsResourceURLs);
+					httpServletRequest, httpServletResponse,
+					resourceURLsHolder._jsResourceURLs);
 			}
 			else {
 				_renderBundleURLs(
-					httpServletResponse, resourceURLsHolder._allJsResourceURLs);
+					httpServletRequest, httpServletResponse,
+					resourceURLsHolder._allJsResourceURLs);
 			}
 		}
 	}
@@ -241,7 +244,8 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 
 		for (String url : urls) {
 			if ((sb.length() + url.length() + 1) >= 2000) {
-				_renderScriptURL(printWriter, sb.toString());
+				_renderScriptURL(
+					httpServletRequest, printWriter, sb.toString());
 
 				sb = new StringBundler();
 			}
@@ -255,23 +259,31 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 		}
 
 		if (sb.length() > 0) {
-			_renderScriptURL(printWriter, sb.toString());
+			_renderScriptURL(httpServletRequest, printWriter, sb.toString());
 		}
 	}
 
 	private void _renderBundleURLs(
+			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, List<String> urls)
 		throws IOException {
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		for (String url : urls) {
-			_renderScriptURL(printWriter, url);
+			_renderScriptURL(httpServletRequest, printWriter, url);
 		}
 	}
 
-	private void _renderScriptURL(PrintWriter printWriter, String url) {
-		printWriter.print("<script data-senna-track=\"permanent\" src=\"");
+	private void _renderScriptURL(
+		HttpServletRequest httpServletRequest, PrintWriter printWriter,
+		String url) {
+
+		printWriter.print("<script");
+		printWriter.write(
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+				httpServletRequest));
+		printWriter.print(" data-senna-track=\"permanent\" src=\"");
 		printWriter.print(url);
 		printWriter.println("\" type=\"text/javascript\"></script>");
 	}

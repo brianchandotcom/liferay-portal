@@ -8,6 +8,7 @@ package com.liferay.frontend.js.jquery.web.internal.servlet.taglib;
 import com.liferay.frontend.js.jquery.web.internal.configuration.JSJQueryConfiguration;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -63,7 +64,11 @@ public class JQueryTopHeadDynamicInclude extends BaseDynamicInclude {
 				WebKeys.THEME_DISPLAY);
 
 		if (themeDisplay.isThemeJsFastLoad()) {
-			sb.append("<script data-senna-track=\"permanent\" src=\"");
+			printWriter.print("<script");
+			printWriter.write(
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+					httpServletRequest));
+			printWriter.print(" data-senna-track=\"permanent\" src=\"");
 
 			ComboRequestAbsolutePortalURLBuilder
 				comboRequestAbsolutePortalURLBuilder =

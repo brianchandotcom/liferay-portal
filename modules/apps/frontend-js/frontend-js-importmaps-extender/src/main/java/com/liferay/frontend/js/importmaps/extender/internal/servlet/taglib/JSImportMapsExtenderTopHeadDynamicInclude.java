@@ -8,6 +8,7 @@ package com.liferay.frontend.js.importmaps.extender.internal.servlet.taglib;
 import com.liferay.frontend.js.importmaps.extender.JSImportMapsContributor;
 import com.liferay.frontend.js.importmaps.extender.internal.configuration.JSImportMapsConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.frontend.esm.FrontendESMUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -62,7 +63,11 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 			(!_globalImportMapJSONObjects.isEmpty() ||
 			 !_scopedImportMapJSONObjects.isEmpty())) {
 
-			printWriter.print("<script type=\"");
+			printWriter.print("<script");
+			printWriter.write(
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+					httpServletRequest));
+			printWriter.print(" type=\"");
 
 			if (_jsImportMapsConfiguration.enableESModuleShims()) {
 				printWriter.print("importmap-shim");
@@ -77,8 +82,16 @@ public class JSImportMapsExtenderTopHeadDynamicInclude
 		}
 
 		if (_jsImportMapsConfiguration.enableESModuleShims()) {
-			printWriter.print("<script type=\"esms-options\">{\"shimMode\": ");
-			printWriter.print("true}</script><script src=\"");
+			printWriter.print("<script");
+			printWriter.write(
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+					httpServletRequest));
+			printWriter.print(" type=\"esms-options\">{\"shimMode\": ");
+			printWriter.print("true}</script><script");
+			printWriter.write(
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+					httpServletRequest));
+			printWriter.print(" src=\"");
 
 			AbsolutePortalURLBuilder absolutePortalURLBuilder =
 				_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(

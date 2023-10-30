@@ -8,6 +8,7 @@ package com.liferay.frontend.theme.contributor.extender.internal.servlet.taglib;
 import com.liferay.frontend.theme.contributor.extender.internal.BundleWebResources;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
@@ -233,7 +234,11 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 		long themeLastModified, HttpServletRequest httpServletRequest,
 		String portalURL, PrintWriter printWriter) {
 
-		printWriter.write("<script data-senna-track=\"permanent\" src=\"");
+		printWriter.write("<script");
+		printWriter.write(
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+				httpServletRequest));
+		printWriter.write(" data-senna-track=\"permanent\" src=\"");
 
 		String staticResourceURL = _portal.getStaticResourceURL(
 			httpServletRequest, _comboContextPath, "minifierType=js",
@@ -267,7 +272,11 @@ public class ThemeContributorTopHeadDynamicInclude implements DynamicInclude {
 		String portalURL, PrintWriter printWriter, List<String> resourceURLs) {
 
 		for (String resourceURL : resourceURLs) {
-			printWriter.write("<script data-senna-track=\"permanent\" src=\"");
+			printWriter.write("<script");
+			printWriter.write(
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+					httpServletRequest));
+			printWriter.write(" data-senna-track=\"permanent\" src=\"");
 			printWriter.write(
 				_portal.getStaticResourceURL(
 					httpServletRequest,

@@ -9,6 +9,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -39,6 +40,16 @@ public class ContentSecurityPolicyNonceProviderUtil {
 		}
 
 		return contentSecurityPolicyNonceProvider.getNonce(httpServletRequest);
+	}
+
+	public static String getNonceAttr(HttpServletRequest httpServletRequest) {
+		String nonce = getNonce(httpServletRequest);
+
+		if (Validator.isNull(nonce)) {
+			return StringPool.BLANK;
+		}
+
+		return " nonce=\"" + nonce + StringPool.QUOTE;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

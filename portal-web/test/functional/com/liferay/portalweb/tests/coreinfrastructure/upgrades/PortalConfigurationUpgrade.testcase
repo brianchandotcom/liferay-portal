@@ -29,6 +29,11 @@ definition {
 			locator1 = "TextInput#PASSWORD",
 			value1 = "test");
 
+		AssertClick(
+			buttonId = "LoginPortlet",
+			locator1 = "Button#BUTTON_ID",
+			value1 = "Sign In");
+
 		Button.click(button = "Sign In");
 
 		AssertLocation(value1 = "${portalURL}/web/test/home");

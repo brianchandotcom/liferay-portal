@@ -142,7 +142,10 @@ definition {
 				locator1 = "TextInput#PASSWORD",
 				value1 = "test");
 
-			Button.click(button = "Sign In");
+			AssertClick(
+				buttonId = "LoginPortlet",
+				locator1 = "Button#BUTTON_ID",
+				value1 = "Sign In");
 		}
 
 		task ("Assert we are redirected to web content display") {

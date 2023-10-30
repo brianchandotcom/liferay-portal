@@ -90,6 +90,25 @@ public class ObjectLayoutTabSerDes {
 			sb.append("]");
 		}
 
+		if (objectLayoutTab.getObjectRelationshipExternalReferenceCode() !=
+				null) {
+
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectRelationshipExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(
+				_escape(
+					objectLayoutTab.
+						getObjectRelationshipExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (objectLayoutTab.getObjectRelationshipId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -150,6 +169,19 @@ public class ObjectLayoutTabSerDes {
 			map.put(
 				"objectLayoutBoxes",
 				String.valueOf(objectLayoutTab.getObjectLayoutBoxes()));
+		}
+
+		if (objectLayoutTab.getObjectRelationshipExternalReferenceCode() ==
+				null) {
+
+			map.put("objectRelationshipExternalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"objectRelationshipExternalReferenceCode",
+				String.valueOf(
+					objectLayoutTab.
+						getObjectRelationshipExternalReferenceCode()));
 		}
 
 		if (objectLayoutTab.getObjectRelationshipId() == null) {
@@ -217,6 +249,15 @@ public class ObjectLayoutTabSerDes {
 
 					objectLayoutTab.setObjectLayoutBoxes(
 						objectLayoutBoxesArray);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"objectRelationshipExternalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					objectLayoutTab.setObjectRelationshipExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(

@@ -88,6 +88,32 @@ public class ObjectLayoutTab implements Cloneable, Serializable {
 
 	protected ObjectLayoutBox[] objectLayoutBoxes;
 
+	public String getObjectRelationshipExternalReferenceCode() {
+		return objectRelationshipExternalReferenceCode;
+	}
+
+	public void setObjectRelationshipExternalReferenceCode(
+		String objectRelationshipExternalReferenceCode) {
+
+		this.objectRelationshipExternalReferenceCode =
+			objectRelationshipExternalReferenceCode;
+	}
+
+	public void setObjectRelationshipExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			objectRelationshipExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			objectRelationshipExternalReferenceCode =
+				objectRelationshipExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String objectRelationshipExternalReferenceCode;
+
 	public Long getObjectRelationshipId() {
 		return objectRelationshipId;
 	}

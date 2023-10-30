@@ -135,6 +135,39 @@ public class ObjectLayoutTab implements Serializable {
 	protected ObjectLayoutBox[] objectLayoutBoxes;
 
 	@Schema
+	public String getObjectRelationshipExternalReferenceCode() {
+		return objectRelationshipExternalReferenceCode;
+	}
+
+	public void setObjectRelationshipExternalReferenceCode(
+		String objectRelationshipExternalReferenceCode) {
+
+		this.objectRelationshipExternalReferenceCode =
+			objectRelationshipExternalReferenceCode;
+	}
+
+	@JsonIgnore
+	public void setObjectRelationshipExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			objectRelationshipExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			objectRelationshipExternalReferenceCode =
+				objectRelationshipExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String objectRelationshipExternalReferenceCode;
+
+	@Schema
 	public Long getObjectRelationshipId() {
 		return objectRelationshipId;
 	}
@@ -255,6 +288,20 @@ public class ObjectLayoutTab implements Serializable {
 			}
 
 			sb.append("]");
+		}
+
+		if (objectRelationshipExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"objectRelationshipExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(objectRelationshipExternalReferenceCode));
+
+			sb.append("\"");
 		}
 
 		if (objectRelationshipId != null) {

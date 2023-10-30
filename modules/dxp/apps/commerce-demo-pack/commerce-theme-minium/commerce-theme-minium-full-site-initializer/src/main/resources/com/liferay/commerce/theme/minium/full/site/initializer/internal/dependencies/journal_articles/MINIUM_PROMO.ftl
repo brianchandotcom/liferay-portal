@@ -60,7 +60,7 @@
 
 </style>
 
-<script>
+<script ${nonceAttr}>
 	function getRelativeURL() {
 		Liferay.ctaURL = "${CTA.getData()}";
 

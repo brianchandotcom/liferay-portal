@@ -4,7 +4,7 @@
 	</#if>
 </div>
 
-<script>
+<script ${nonceAttr}>
 	var contentEl = document.querySelector('#mpLicense');
 	var tabPanel = contentEl.closest('.tab-panel-item');
 	var tabTarget = tabPanel.getAttribute('aria-labelledby');

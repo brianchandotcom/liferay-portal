@@ -112,52 +112,15 @@ definition {
 		task ("Given a user has a master page") {
 			JSONLayoutpagetemplate.addMasterPageTemplateEntry(
 				groupName = "Test Site Name",
-				masterPageTemplateEntryName = "Custom Masters Page Template");
-
-			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
-
-			MastersPageTemplatesAdmin.gotoMasters(masterLayoutName = "Custom Masters Page Template");
-
-			MastersPageTemplates.publishMaster();
+				masterPageTemplateEntryName = "Custom Masters Page Template",
+				masterPageTemplateStatus = "Approved");
 		}
 
 		task ("When the user accesses to the Masters admin") {
-			for (var navItem : list "Masters,Page Templates,Display Page Templates") {
-				KeyPress(
-					key_navItem = ${navItem},
-					locator1 = "NavBar#NAV_ITEM_LINK",
-					value1 = "\TAB");
-			}
+			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-site-name");
+		}
 
-			KeyPress(
-				locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT",
-				value1 = "\TAB");
-
-			KeyPress(
-				key_text = "Filter and Order",
-				locator1 = "Button#ANY",
-				value1 = "\TAB");
-
-			KeyPress(
-				locator1 = "ManagementBar#ORDER_ICON_GENERIC",
-				value1 = "\TAB");
-
-			KeyPress(
-				locator1 = "TextInput#SEARCH",
-				value1 = "\TAB");
-
-			for (var buttonTitle : list "Search for,Add") {
-				KeyPress(
-					key_title = ${buttonTitle},
-					locator1 = "Button#ANY_TITLE",
-					value1 = "\TAB");
-			}
-
-			KeyPress(
-				key_fieldName = "_com_liferay_layout_page_template_admin_web_portlet_LayoutPageTemplatesPortlet_rowIds",
-				locator1 = "Checkbox#CHECKBOX_NAME",
-				value1 = "\TAB");
-
+		task ("Then the user could copy master page via keyboard") {
 			KeyPress(
 				key_card = "Custom Masters Page Template",
 				locator1 = "Card#CARD_TITLE_LINK",
@@ -174,9 +137,7 @@ definition {
 					locator1 = "MenuItem#ANY_MENU_ITEM",
 					value1 = "\DOWN");
 			}
-		}
 
-		task ("Then the user could copy master page via keyboard") {
 			for (var menuItem : list "Make a Copy,Master Page") {
 				KeyPress(
 					key_menuItem = ${menuItem},

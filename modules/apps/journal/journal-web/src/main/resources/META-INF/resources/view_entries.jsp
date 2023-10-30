@@ -210,8 +210,11 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-expand-smallest table-cell-minw-200"
 								name="path"
-								value="<%= journalDisplayContext.getAbsolutePath(curArticle.getFolderId()) %>"
-							/>
+							>
+								<liferay-site-navigation:breadcrumb
+									breadcrumbEntries="<%= JournalPortletUtil.getPortletBreadcrumbEntries(curArticle.getFolder(), request, true, liferayPortletResponse) %>"
+								/>
+							</liferay-ui:search-container-column-text>
 						</c:if>
 
 						<liferay-ui:search-container-column-text
@@ -431,8 +434,11 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 							<liferay-ui:search-container-column-text
 								cssClass="table-cell-expand-smallest table-cell-minw-200"
 								name="path"
-								value="<%= journalDisplayContext.getAbsolutePath(curFolder.getParentFolderId()) %>"
-							/>
+							>
+								<liferay-site-navigation:breadcrumb
+									breadcrumbEntries="<%= JournalPortletUtil.getPortletBreadcrumbEntries(curFolder.getParentFolder(), request, true, liferayPortletResponse) %>"
+								/>
+							</liferay-ui:search-container-column-text>
 						</c:if>
 
 						<liferay-ui:search-container-column-text

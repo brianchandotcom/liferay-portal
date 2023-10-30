@@ -351,7 +351,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 
 							<c:if test="<%= journalDisplayContext.isSearch() && ((curFolder.getParentFolderId() <= 0) || JournalFolderPermission.contains(permissionChecker, curFolder.getParentFolder(), ActionKeys.VIEW)) %>">
 								<liferay-site-navigation:breadcrumb
-									breadcrumbEntries="<%= JournalPortletUtil.getPortletBreadcrumbEntries(curFolder, request, true, liferayPortletResponse) %>"
+									breadcrumbEntries="<%= JournalPortletUtil.getPortletBreadcrumbEntries(curFolder.getParentFolder(), request, true, liferayPortletResponse) %>"
 								/>
 							</c:if>
 						</liferay-ui:search-container-column-text>

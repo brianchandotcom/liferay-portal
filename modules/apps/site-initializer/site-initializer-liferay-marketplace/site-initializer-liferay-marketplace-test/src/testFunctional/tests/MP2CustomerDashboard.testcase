@@ -390,4 +390,45 @@ definition {
 			MP2Dashboards.assertNotViewCustomerGatePage(title = "Becoming a Liferay Marketplace Customer");
 		}
 	}
+
+	@description = "LPS-174809 | Verify that after passing through the gate and confirming all the information, the user is redirected to the account dashboard"
+	@priority = 5
+	test RedirectToAccountDashboard {
+		task ("Given that a user is invited to the Customer Dashboard") {
+			MP2Navigator.openSitePage(pageName = "Customer Dashboard");
+
+			MP2Dashboards.clickBreadcrumb(accountTitle = "QA Development");
+
+			MP2Navigator.gotoNavItem(navItem = "Members");
+
+			MP2Dashboards.inviteNewMember(
+				button = "true",
+				checkboxName = "Account Buyer",
+				emailAddress = "test.mp@liferay.com",
+				firstName = "Test",
+				lastName = "QA");
+		}
+
+		task ("And go to MockMock > Accept invitation to Marketplace account") {
+			User.logoutPG();
+
+			MockMock._gotoMail();
+
+			MP2Utils.firstLoginMKT(
+				asset = "Liferay Marketplace - Invitation from Dashboard Administrator",
+				bodyLink = "Accept invitation",
+				recipient = "da@administrator.com",
+				route = "customer-gate",
+				userEmailAddress = "test.mp@liferay.com");
+		}
+
+		task ("When I go through the Customer Gate page") {
+			MP2Dashboards.customerGateFlow();
+		}
+
+		task ("Then I should be able to assert that the user is redirected to the account dashboard") {
+			AssertLocation.assertPartialLocation(value1 = "web/marketplace-site/customer-dashboard");
+		}
+	}
+
 }

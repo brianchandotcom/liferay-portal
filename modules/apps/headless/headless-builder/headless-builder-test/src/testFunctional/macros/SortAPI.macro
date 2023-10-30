@@ -25,13 +25,13 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createAPISort(sortValue = null,endpointId = null,virtualHost = null) {
-		Variables.assertDefined(parameterList = "${sortValue},${endpointId}");
+	macro createAPISort(sortValue = null,endpointERC = null,virtualHost = null) {
+		Variables.assertDefined(parameterList = "${sortValue},${endpointERC}");
 
 		var curl = SortAPI._curlAPISort(virtualHost = ${virtualHost});
 		var body = '''
 			"oDataSort": "${sortValue}",
-			"r_apiEndpointToAPISorts_c_apiEndpointId": ${endpointId}
+			"r_apiEndpointToAPISorts_c_apiEndpointERC": ${endpointERC}
 		''';
 
 		var curl = StringUtil.add(${curl}, " -d { ${body} }", "");

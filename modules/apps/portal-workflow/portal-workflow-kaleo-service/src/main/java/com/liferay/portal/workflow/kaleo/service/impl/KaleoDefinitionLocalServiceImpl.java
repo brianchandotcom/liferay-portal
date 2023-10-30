@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowException;
+import com.liferay.portal.workflow.kaleo.definition.util.WorkflowDefinitionContentUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoConditionLocalService;
@@ -129,7 +130,11 @@ public class KaleoDefinitionLocalServiceImpl
 		kaleoDefinition.setName(name);
 		kaleoDefinition.setTitle(title);
 		kaleoDefinition.setDescription(description);
+
+		content = WorkflowDefinitionContentUtil.toJSON(content);
+
 		kaleoDefinition.setContent(content);
+
 		kaleoDefinition.setScope(scope);
 		kaleoDefinition.setVersion(version);
 		kaleoDefinition.setActive(false);
@@ -345,6 +350,9 @@ public class KaleoDefinitionLocalServiceImpl
 		kaleoDefinition.setModifiedDate(date);
 		kaleoDefinition.setTitle(title);
 		kaleoDefinition.setDescription(description);
+
+		content = WorkflowDefinitionContentUtil.toJSON(content);
+
 		kaleoDefinition.setContent(content);
 
 		int nextVersion = kaleoDefinition.getVersion() + 1;

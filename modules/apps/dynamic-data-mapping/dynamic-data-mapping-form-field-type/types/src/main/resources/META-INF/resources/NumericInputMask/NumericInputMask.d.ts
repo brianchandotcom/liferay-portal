@@ -18,7 +18,7 @@ interface IProps {
 	append?: string;
 	appendType?: 'prefix' | 'suffix';
 	decimalPlaces: number;
-	decimalSymbol: DecimalSymbol[];
+	decimalSymbol: DecimalSymbol[] | DecimalSymbol;
 	decimalSymbols: ISelectProps<DecimalSymbol>[];
 	defaultLanguageId: Locale;
 	editingLanguageId: Locale;
@@ -27,7 +27,7 @@ interface IProps {
 	onChange: FieldChangeEventHandler<unknown>;
 	onFocus: FocusEventHandler<HTMLInputElement>;
 	readOnly: boolean;
-	thousandsSeparator?: ThousandsSeparator[];
+	thousandsSeparator: ThousandsSeparator[] | ThousandsSeparator;
 	thousandsSeparators: ISelectProps<ThousandsSeparator>[];
 	value: INumericInputMaskValue;
 	visible: boolean;

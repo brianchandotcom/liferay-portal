@@ -39,7 +39,7 @@ interface IProps {
 	append?: string;
 	appendType?: 'prefix' | 'suffix';
 	decimalPlaces: number;
-	decimalSymbol: DecimalSymbol[];
+	decimalSymbol: DecimalSymbol[] | DecimalSymbol;
 	decimalSymbols: ISelectProps<DecimalSymbol>[];
 	defaultLanguageId: Locale;
 	editingLanguageId: Locale;
@@ -48,7 +48,7 @@ interface IProps {
 	onChange: FieldChangeEventHandler<unknown>;
 	onFocus: FocusEventHandler<HTMLInputElement>;
 	readOnly: boolean;
-	thousandsSeparator?: ThousandsSeparator[];
+	thousandsSeparator: ThousandsSeparator[] | ThousandsSeparator;
 	thousandsSeparators: ISelectProps<ThousandsSeparator>[];
 	value: INumericInputMaskValue;
 	visible: boolean;
@@ -166,19 +166,21 @@ const NumericInputMask: React.FC<IProps> = ({
 					<Select
 						label={Liferay.Language.get('thousands-separator')}
 						name="thousandsSeparator"
-						onBlur={onBlur}
-						onChange={(event: any, value: any) => {
+						onChange={(_: any, value: ThousandsSeparator[]) => {
 							handleChange('symbols', {
-								decimalSymbol: decimalSymbol?.[0],
+								decimalSymbol: (decimalSymbol as DecimalSymbol[])?.[0],
 								thousandsSeparator: value[0],
 							});
 
 							setThousandsSeparator(value[0]);
 						}}
-						onFocus={onFocus}
 						options={thousandsSeparators}
-						placeholder={Liferay.Language.get('choose-an-option')}
 						readOnly={readOnly}
+						selectedKey={
+							thousandsSeparator === '.'
+								? '$.2'
+								: (thousandsSeparator as string)
+						}
 						showEmptyOption={false}
 						value={thousandsSeparator}
 						visible={visible}
@@ -189,25 +191,27 @@ const NumericInputMask: React.FC<IProps> = ({
 					<Select
 						label={Liferay.Language.get('decimal-separator')}
 						name="decimalSymbol"
-						onBlur={onBlur}
-						onChange={(event: any, value: any) => {
+						onChange={(_: any, value: DecimalSymbol[]) => {
 							handleChange('symbols', {
 								decimalSymbol: value[0],
-								thousandsSeparator: thousandsSeparator?.includes(
+								thousandsSeparator: (thousandsSeparator?.includes(
 									'none'
 								)
 									? 'none'
-									: thousandsSeparator?.[0],
+									: thousandsSeparator[0]) as ThousandsSeparator,
 							});
 
 							setDecimalSymbol(value[0]);
 						}}
-						onFocus={onFocus}
 						options={decimalSymbols}
-						placeholder={Liferay.Language.get('choose-an-option')}
 						readOnly={readOnly}
+						selectedKey={
+							decimalSymbol === '.'
+								? '$.0'
+								: (decimalSymbol as string)
+						}
 						showEmptyOption={false}
-						value={decimalSymbol}
+						value={[]}
 						visible={visible}
 					/>
 				</div>

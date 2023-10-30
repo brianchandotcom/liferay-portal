@@ -66,7 +66,7 @@ definition {
 
 		task ("Assert that Retention Period changed") {
 			AssertElementPresent(
-				locator1 = "OpenIDConnectLogin#OPENID_CONNECT_DROPDOWN_MENU",
+				locator1 = "ACSettings#RETENTION_PERIOD",
 				value1 = "7 Months");
 		}
 	}

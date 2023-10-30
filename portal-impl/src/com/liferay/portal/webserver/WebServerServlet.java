@@ -262,13 +262,16 @@ public class WebServerServlet extends HttpServlet {
 		}
 
 		try {
+			MessageBus messageBus = _messageBusSnapshot.get();
+
+			Message message = new Message();
+
 			if (user == null) {
 				user = _getUser(httpServletRequest);
 			}
 
-			Message message = new Message();
-
 			message.put("companyId", user.getCompanyId());
+
 			message.put(
 				"objectDefinitionExternalReferenceCode",
 				objectDefinitionExternalReferenceCode);
@@ -277,8 +280,6 @@ public class WebServerServlet extends HttpServlet {
 				ParamUtil.getString(
 					httpServletRequest, "objectEntryExternalReferenceCode"));
 			message.put("userId", user.getUserId());
-
-			MessageBus messageBus = _messageBusSnapshot.get();
 
 			messageBus.sendMessage(
 				DestinationNames.OBJECT_ENTRY_ATTACHMENT_DOWNLOAD, message);

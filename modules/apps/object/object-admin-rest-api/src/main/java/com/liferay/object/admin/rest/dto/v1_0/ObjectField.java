@@ -1085,12 +1085,12 @@ public class ObjectField implements Serializable {
 	public static enum BusinessType {
 
 		AGGREGATION("Aggregation"), ATTACHMENT("Attachment"),
-		BOOLEAN("Boolean"), DATE("Date"), DATE_TIME("DateTime"),
-		DECIMAL("Decimal"), ENCRYPTED("Encrypted"), FORMULA("Formula"),
-		INTEGER("Integer"), LONG_INTEGER("LongInteger"), LONG_TEXT("LongText"),
-		MULTISELECT_PICKLIST("MultiselectPicklist"), PICKLIST("Picklist"),
-		PRECISION_DECIMAL("PrecisionDecimal"), RELATIONSHIP("Relationship"),
-		RICH_TEXT("RichText"), TEXT("Text");
+		AUTO_INCREMENT("AutoIncrement"), BOOLEAN("Boolean"), DATE("Date"),
+		DATE_TIME("DateTime"), DECIMAL("Decimal"), ENCRYPTED("Encrypted"),
+		FORMULA("Formula"), INTEGER("Integer"), LONG_INTEGER("LongInteger"),
+		LONG_TEXT("LongText"), MULTISELECT_PICKLIST("MultiselectPicklist"),
+		PICKLIST("Picklist"), PRECISION_DECIMAL("PrecisionDecimal"),
+		RELATIONSHIP("Relationship"), RICH_TEXT("RichText"), TEXT("Text");
 
 		@JsonCreator
 		public static BusinessType create(String value) {

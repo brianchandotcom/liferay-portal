@@ -4783,39 +4783,6 @@ tell application "Safari" to quit
 				</then>
 			</if>
 
-			<get-testcase-property property.name="theme.file.name" />
-
-			<if>
-				<isset property="theme.file.name" />
-				<then>
-					<propertyregex
-						input="${theme.file.name}"
-						override="true"
-						property="zipfileset.includes"
-						regexp="([^\.]+)(\.[^\s]+)"
-						replace="\1*\2"
-					/>
-
-					<if>
-						<resourcecount count="0" when="greater">
-							<zipfileset
-								dir="${liferay.home}/osgi/war"
-								includes="${zipfileset.includes}"
-							>
-								<patternset>
-									<include name="**/private.lar" />
-								</patternset>
-							</zipfileset>
-						</resourcecount>
-						<then>
-							<echo append="true" file="${test.ext.properties.file}">
-								theme.contains.resources=true
-							</echo>
-						</then>
-					</if>
-				</then>
-			</if>
-
 			<property name="default.timeout.explicit.wait" value="${timeout.explicit.wait}" />
 
 			<get-testcase-property property.name="timeout.explicit.wait" />
@@ -16390,33 +16357,6 @@ mail.send.blacklist=</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="theme.file.name" />
-
-		<if>
-			<isset property="theme.file.name" />
-			<then>
-				<mkdir dir="${liferay.home}/tmp" />
-
-				<move
-					todir="${liferay.home}/tmp"
-				>
-					<fileset
-						dir="${liferay.home}/deploy"
-						includes="${theme.file.name}"
-					/>
-				</move>
-
-				<move
-					todir="${liferay.home}/tmp"
-				>
-					<fileset
-						dir="${liferay.home}/osgi/marketplace"
-						includes="*Theme*.lpkg"
-					/>
-				</move>
-			</then>
-		</if>
-
 		<get-testcase-property property.name="portal.context" />
 		<propertycopy from="portal.context[${env.CI_TEST_SUITE}]" name="portal.context" silent="true" />
 
@@ -16503,43 +16443,6 @@ mail.send.blacklist=</echo>
 				</waitfor>
 
 				<antcall target="wait-for-plugins-deployment" />
-
-				<if>
-					<available file="${liferay.home}/tmp/${theme.file.name}" />
-					<then>
-						<move
-							todir="${liferay.home}/deploy"
-						>
-							<fileset
-								dir="${liferay.home}/tmp"
-								includes="${theme.file.name}"
-							/>
-						</move>
-
-						<delete dir="${liferay.home}/tmp" failonerror="false" />
-
-						<waitfor checkevery="5" maxwait="300" maxwaitunit="second" timeoutproperty="theme.not.deployed">
-							<available file="${liferay.home}/osgi/war/${theme.file.name}" />
-						</waitfor>
-
-						<fail if="theme.not.deployed" message="${theme.file.name} has failed to deploy." />
-					</then>
-					<elseif>
-						<available file="${liferay.home}/tmp" type="dir" />
-						<then>
-							<move
-								todir="${liferay.home}/osgi/marketplace"
-							>
-								<fileset
-									dir="${liferay.home}/tmp"
-									includes="*Theme*.lpkg"
-								/>
-							</move>
-
-							<delete dir="${liferay.home}/tmp" failonerror="false" />
-						</then>
-					</elseif>
-				</if>
 			</then>
 		</if>
 

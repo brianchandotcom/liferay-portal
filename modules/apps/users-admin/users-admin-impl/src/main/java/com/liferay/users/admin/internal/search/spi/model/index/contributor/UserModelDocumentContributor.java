@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.TeamLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -293,9 +292,6 @@ public class UserModelDocumentContributor
 
 	@Reference
 	private RoleLocalService _roleLocalService;
-
-	@Reference
-	private TeamLocalService _teamLocalService;
 
 	@Reference
 	private UserGroupLocalService _userGroupLocalService;

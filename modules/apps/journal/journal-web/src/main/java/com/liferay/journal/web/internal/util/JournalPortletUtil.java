@@ -105,6 +105,7 @@ public class JournalPortletUtil {
 
 	public static List<BreadcrumbEntry> getPortletBreadcrumbEntries(
 			JournalFolder folder, HttpServletRequest httpServletRequest,
+			boolean lastElementLinkable,
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
@@ -150,6 +151,15 @@ public class JournalPortletUtil {
 			JournalFolder unescapedFolder = folder.toUnescapedModel();
 
 			folderBreadcrumbEntry.setTitle(unescapedFolder.getName());
+
+			if (lastElementLinkable) {
+				folderBreadcrumbEntry.setURL(
+					PortletURLBuilder.createRenderURL(
+						liferayPortletResponse
+					).setParameter(
+						"folderId", folder.getFolderId()
+					).buildString());
+			}
 
 			breadcrumbEntries.add(folderBreadcrumbEntry);
 		}

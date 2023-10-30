@@ -74,7 +74,7 @@ definition {
 
 		AssertVisible(
 			key_publicationName = "Publication 1 Name",
-			locator1 = "Publications#LIST_REVERT_DISABLED");
+			locator1 = "Publications#REVERT_DISABLED");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",

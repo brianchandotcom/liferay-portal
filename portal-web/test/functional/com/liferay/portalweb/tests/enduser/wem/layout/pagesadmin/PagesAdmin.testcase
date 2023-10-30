@@ -2277,9 +2277,9 @@ definition {
 		task ("Then the Page designer can see the new icon icon on orphan widget entries") {
 			for (var entryName : list "Menu Display,Search Bar,User Personal Bar") {
 				AssertVisible(
-					key_listEntry = ${entryName},
+					key_tableEntry = ${entryName},
 					key_text = "trash",
-					locator1 = "LexiconList#ANY_ICON");
+					locator1 = "LexiconTable#TABLE_ENTRY_ICON");
 			}
 		}
 

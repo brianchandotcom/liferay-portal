@@ -49,8 +49,6 @@ definition {
 
 		PublicationsNavigator.openPublicationsAdmin();
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
 		AssertTextEquals(
 			key_publicationName = "Publication Name",
 			locator1 = "Publications#LIST_OUT_OF_DATE_STATUS",
@@ -64,8 +62,6 @@ definition {
 		property test.run.environment = "EE";
 
 		PublicationsNavigator.openPublicationsAdmin();
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		AssertTextEquals(
 			key_publicationName = "Publication Name",

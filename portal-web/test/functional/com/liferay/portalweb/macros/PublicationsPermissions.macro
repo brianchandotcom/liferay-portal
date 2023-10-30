@@ -90,8 +90,6 @@ definition {
 			panel = "Applications",
 			portlet = "Publications");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
 		Click(
 			key_publicationName = ${publicationName},
 			locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");

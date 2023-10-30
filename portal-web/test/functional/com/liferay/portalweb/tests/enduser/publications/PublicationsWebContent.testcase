@@ -329,8 +329,6 @@ definition {
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
 		AssertTextNotPresent(
 			locator1 = "WC#ENTRY_LIST_TITLE",
 			value1 = "Web Content Folder");
@@ -346,8 +344,6 @@ definition {
 		Publications.publishPublication(publicationName = "Publication 1 Name");
 
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		AssertTextNotPresent(
 			locator1 = "WC#ENTRY_LIST_TITLE",

@@ -284,6 +284,22 @@ public class CTEntrySearcherTest {
 			_getSort(Field.GROUP_ID, SortOrder.DESC),
 			_byAttribute(
 				"modelClassNameId", new long[] {_journalFolderClassNameId}));
+		_assertHits(
+			_getUIDs(_getCTEntries(journalFolder1, journalFolder2)),
+			_getSort(
+				Field.getSortableFieldName(
+					Field.getLocalizedName(LocaleUtil.US, "groupName")),
+				SortOrder.ASC),
+			_byAttribute(
+				"modelClassNameId", new long[] {_journalFolderClassNameId}));
+		_assertHits(
+			_getUIDs(_getCTEntries(journalFolder2, journalFolder1)),
+			_getSort(
+				Field.getSortableFieldName(
+					Field.getLocalizedName(LocaleUtil.US, "groupName")),
+				SortOrder.DESC),
+			_byAttribute(
+				"modelClassNameId", new long[] {_journalFolderClassNameId}));
 	}
 
 	@Test

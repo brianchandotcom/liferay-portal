@@ -9,13 +9,12 @@ import {
 	Input,
 	REQUIRED_MSG,
 	SingleSelect,
-	filterArrayByQuery,
 	getLocalizableLabel,
 	invalidateRequired,
 	useForm,
 } from '@liferay/object-js-components-web';
 import {createResourceURL} from 'frontend-js-web';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {defaultLanguageId} from '../../utils/constants';
 import CurrentObjectDefinition from './CurrentObjectDefinition';
@@ -178,17 +177,7 @@ export function ObjectRelationshipFormBase({
 	const [objectRelationshipTypes, setObjectRelationshipTypes] = useState<
 		ObjectRelationshipTypeInfo[]
 	>([ONE_TO_MANY]);
-	const [query, setQuery] = useState<string>('');
 	const [reverseOrder, setReverseOrder] = useState<boolean>(false);
-
-	const filteredRelationships = useMemo(() => {
-		return filterArrayByQuery({
-			array: objectDefinitions,
-			creationLanguageId,
-			query,
-			str: 'label',
-		});
-	}, [creationLanguageId, objectDefinitions, query]);
 
 	const switchObjects = () => {
 		const previousObjectDefinition1 = {
@@ -431,7 +420,6 @@ export function ObjectRelationshipFormBase({
 								}
 								disabled={readonly}
 								error={errors.objectDefinitionId2}
-								filteredRelationships={filteredRelationships}
 								label={
 									OBJECT_RELATIONSHIP_TYPES.find(
 										({value}) => value === values.type
@@ -441,11 +429,10 @@ export function ObjectRelationshipFormBase({
 								objectDefinitionExternalReferenceCode={
 									values.objectDefinitionExternalReferenceCode2
 								}
-								query={query}
+								objectDefinitions={objectDefinitions}
 								readOnly={readonly}
 								reverseOrder={reverseOrder}
 								setObjectDefinition={setObjectDefinition2}
-								setQuery={setQuery}
 								setValues={setValues}
 							/>
 						)}
@@ -476,7 +463,6 @@ export function ObjectRelationshipFormBase({
 								}
 								disabled={readonly}
 								error={errors.objectDefinitionId1}
-								filteredRelationships={filteredRelationships}
 								label={
 									OBJECT_RELATIONSHIP_TYPES.find(
 										({value}) => value === values.type
@@ -486,11 +472,10 @@ export function ObjectRelationshipFormBase({
 								objectDefinitionExternalReferenceCode={
 									values.objectDefinitionExternalReferenceCode1
 								}
-								query={query}
+								objectDefinitions={objectDefinitions}
 								readOnly={readonly}
 								reverseOrder={reverseOrder}
 								setObjectDefinition={setObjectDefinition1}
-								setQuery={setQuery}
 								setValues={setValues}
 							/>
 						)}

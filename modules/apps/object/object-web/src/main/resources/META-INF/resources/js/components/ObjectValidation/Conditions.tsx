@@ -7,15 +7,14 @@ import ClayAlert from '@clayui/alert';
 
 import 'codemirror/mode/groovy/groovy';
 import {
-	AutoComplete,
 	Card,
 	CodeEditor,
 	SidebarCategory,
-	filterArrayByQuery,
+	SingleSelect,
 	getLocalizableLabel,
 } from '@liferay/object-js-components-web';
 import {LearnMessage, LearnResourcesContext} from 'frontend-js-components-web';
-import React, {useMemo, useState} from 'react';
+import React, {useMemo} from 'react';
 
 import {NAME_OUTPUT_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE} from '../../utils/constants';
 import {ErrorMessage} from './ErrorMessage';
@@ -38,7 +37,6 @@ export function Conditions({
 	setValues,
 	values,
 }: ConditionsProps) {
-	const [query, setQuery] = useState<string>('');
 	const engine = values.engine;
 	const ddmTooltip = {
 		content: Liferay.Language.get(
@@ -62,15 +60,14 @@ export function Conditions({
 		placeholder = '';
 	}
 
-	const filteredCustomObjectFields = useMemo(() => {
-		if (customObjectFields) {
-			return filterArrayByQuery({
-				array: customObjectFields,
-				query,
-				str: 'label',
-			});
-		}
-	}, [customObjectFields, query]);
+	const objectFieldsItems = useMemo(() => {
+		return customObjectFields.map(
+			({externalReferenceCode, label, name}) => ({
+				label: getLocalizableLabel(creationLanguageId, label, name),
+				value: externalReferenceCode,
+			})
+		);
+	}, [creationLanguageId, customObjectFields]);
 
 	const getSelectedPartialValidationField = () => {
 		if (values.objectValidationRuleSettings?.length) {
@@ -84,11 +81,7 @@ export function Conditions({
 					partialValidationField.value
 			);
 
-			return getLocalizableLabel(
-				creationLanguageId,
-				customObjectField?.label,
-				customObjectField?.name
-			);
+			return customObjectField?.externalReferenceCode;
 		}
 
 		return '';
@@ -134,41 +127,24 @@ export function Conditions({
 				setValues={setValues}
 				values={values}
 			>
-				<AutoComplete<ObjectField>
-					emptyStateMessage={Liferay.Language.get(
-						'no-fields-were-found'
-					)}
+				<SingleSelect
 					error={errors.outputType}
 					id="objectValidationConditions"
-					items={filteredCustomObjectFields ?? []}
+					items={objectFieldsItems}
 					label={Liferay.Language.get('fields')}
-					onChangeQuery={setQuery}
-					onSelectItem={(item) => {
+					onSelectionChange={(value) => {
 						setValues({
 							objectValidationRuleSettings: [
 								{
 									name: NAME_OUTPUT_OBJECT_FIELD_EXTERNAL_REFERENCE_CODE,
-									value: item.externalReferenceCode as string,
+									value: value as string,
 								},
 							],
 						});
 					}}
-					query={query}
 					required
-					value={getSelectedPartialValidationField()}
-				>
-					{({label, name}) => (
-						<div className="d-flex justify-content-between">
-							<div>
-								{getLocalizableLabel(
-									creationLanguageId,
-									label,
-									name
-								)}
-							</div>
-						</div>
-					)}
-				</AutoComplete>
+					selectedKey={getSelectedPartialValidationField()}
+				/>
 			</ErrorMessage>
 		</>
 	);

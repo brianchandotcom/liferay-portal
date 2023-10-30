@@ -14,7 +14,7 @@ import {useStore} from 'react-flow-renderer';
 
 import {AccountRestrictionContainer} from '../../ObjectDetails/AccountRestrictionContainer';
 import {ConfigurationContainer} from '../../ObjectDetails/ConfigurationContainer';
-import {KeyValuePair} from '../../ObjectDetails/EditObjectDetails';
+import {SiteCompanyJSONArray} from '../../ObjectDetails/EditObjectDetails';
 import {EntryDisplayContainer} from '../../ObjectDetails/EntryDisplayContainer';
 import {ObjectDataContainer} from '../../ObjectDetails/ObjectDataContainer';
 import {ScopeContainer} from '../../ObjectDetails/ScopeContainer';
@@ -27,8 +27,8 @@ import {nonRelationshipObjectFieldsInfo} from '../types';
 import './RightSidebarObjectDefinitionDetails.scss';
 
 interface RightSidebarObjectDefinitionDetailsProps {
-	companyKeyValuePairs: KeyValuePair[];
-	siteKeyValuePairs: KeyValuePair[];
+	companyJSONArray: SiteCompanyJSONArray[];
+	siteJSONArray: SiteCompanyJSONArray[];
 }
 
 function setAccountRelationshipFieldMandatory(
@@ -54,8 +54,8 @@ function setAccountRelationshipFieldMandatory(
 }
 
 export function RightSidebarObjectDefinitionDetails({
-	companyKeyValuePairs,
-	siteKeyValuePairs,
+	companyJSONArray,
+	siteJSONArray,
 }: RightSidebarObjectDefinitionDetailsProps) {
 	const [
 		nonRelationshipObjectFieldsInfo,
@@ -255,7 +255,7 @@ export function RightSidebarObjectDefinitionDetails({
 				/>
 
 				<ScopeContainer
-					companyKeyValuePairs={companyKeyValuePairs}
+					companyJSONArray={companyJSONArray}
 					errors={errors}
 					hasUpdateObjectDefinitionPermission={true}
 					isApproved={values.status?.label === 'approved'}
@@ -266,7 +266,7 @@ export function RightSidebarObjectDefinitionDetails({
 					isRootDescendantNode={isRootDescendantNode}
 					onSubmit={onSubmit}
 					setValues={setValues}
-					siteKeyValuePairs={siteKeyValuePairs}
+					siteJSONArray={siteJSONArray}
 					values={values as ObjectDefinition}
 				/>
 			</div>

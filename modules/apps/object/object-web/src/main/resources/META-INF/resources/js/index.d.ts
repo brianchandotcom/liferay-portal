@@ -77,9 +77,9 @@ interface LabelNameObject {
 	name: string;
 }
 
-interface LabelValueObject {
+interface LabelValueObject<T = string> {
 	label: string;
-	value: string;
+	value: T;
 }
 
 interface ListTypeDefinition {

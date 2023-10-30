@@ -5,16 +5,16 @@
 
 /// <reference types="react" />
 
-import {KeyValuePair} from '../ObjectDetails/EditObjectDetails';
+import {SiteCompanyJSONArray} from '../ObjectDetails/EditObjectDetails';
 import './EditObjectFolder.scss';
 interface EditObjectFolder {
-	companyKeyValuePairs: KeyValuePair[];
+	companyJSONArray: SiteCompanyJSONArray[];
 	objectRelationshipDeletionTypes: LabelValueObject[];
-	siteKeyValuePairs: KeyValuePair[];
+	siteJSONArray: SiteCompanyJSONArray[];
 }
 export default function EditObjectFolder({
-	companyKeyValuePairs,
+	companyJSONArray,
 	objectRelationshipDeletionTypes,
-	siteKeyValuePairs,
+	siteJSONArray,
 }: EditObjectFolder): JSX.Element;
 export {};

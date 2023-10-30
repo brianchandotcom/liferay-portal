@@ -7,12 +7,10 @@ import {Option, Text} from '@clayui/core';
 import ClayForm from '@clayui/form';
 import {
 	API,
-	AutoComplete,
 	FormError,
 	Input,
 	SingleSelect,
 	Toggle,
-	stringIncludesQuery,
 } from '@liferay/object-js-components-web';
 import React, {
 	ChangeEventHandler,
@@ -31,12 +29,12 @@ import {removeFieldSettings} from '../../utils/fieldSettings';
 import {toCamelCase} from '../../utils/string';
 import {AggregationFormBase} from './AggregationFormBase';
 import {AttachmentFormBase} from './AttachmentFormBase';
+import {AutoIncrementFormBase} from './AutoIncrementFormBase';
 import {TimeStorage} from './TimeStorage';
 import {UniqueValues} from './UniqueValues';
 import {FORMULA_OUTPUT_OPTIONS, FormulaOutput} from './formulaFieldUtil';
 
 import './ObjectFieldFormBase.scss';
-import {AutoIncrementFormBase} from './AutoIncrementFormBase';
 
 interface ObjectFieldFormBaseProps {
 	children?: ReactNode;
@@ -177,9 +175,6 @@ export default function ObjectFieldFormBase({
 	const [listTypeDefinitions, setListTypeDefinitions] = useState<
 		Partial<ListTypeDefinition>[]
 	>([]);
-	const [listTypeDefinitionQuery, setListTypeDefinitionQuery] = useState<
-		string
-	>('');
 
 	const [
 		oneToManyObjectRelationship,
@@ -191,18 +186,19 @@ export default function ObjectFieldFormBase({
 		values.listTypeDefinitionId !== undefined &&
 		values.listTypeDefinitionId !== 0;
 
-	const filteredListTypeDefinitions = useMemo(() => {
-		return listTypeDefinitions.filter(({name}) => {
-			return stringIncludesQuery(name as string, listTypeDefinitionQuery);
-		});
-	}, [listTypeDefinitionQuery, listTypeDefinitions]);
+	const listTypeDefinitionsItems = useMemo(() => {
+		return listTypeDefinitions.map(({externalReferenceCode, name}) => ({
+			label: name,
+			value: externalReferenceCode,
+		})) as LabelValueObject[];
+	}, [listTypeDefinitions]);
 
-	const selectedListTypeDefinition = useMemo(() => {
+	const selectedListTypeDefinitionExternalReferenceCode = useMemo(() => {
 		return listTypeDefinitions.find(
 			({externalReferenceCode}) =>
 				values.listTypeDefinitionExternalReferenceCode ===
 				externalReferenceCode
-		);
+		)?.externalReferenceCode;
 	}, [listTypeDefinitions, values.listTypeDefinitionExternalReferenceCode]);
 
 	const handleTypeChange = async (selectedBusinessType: string) => {
@@ -282,21 +278,6 @@ export default function ObjectFieldFormBase({
 
 		return disabled || values.localized || values.state;
 	};
-
-	useEffect(() => {
-		const makeFetch = async () => {
-			await getObjectFieldSettingsByBusinessType(
-				objectRelationshipId as number,
-				setListTypeDefinitions,
-				setOneToManyObjectRelationship,
-				setSelectedOutputValue,
-				values
-			);
-		};
-
-		makeFetch();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [values.businessType]);
 
 	const handleStateToggleChange = (toggled: boolean) => {
 		let defaultValue;
@@ -536,50 +517,48 @@ export default function ObjectFieldFormBase({
 
 			{(values.businessType === 'Picklist' ||
 				values.businessType === 'MultiselectPicklist') && (
-				<AutoComplete<Partial<ListTypeDefinition>>
+				<SingleSelect
 					disabled={disabled}
-					emptyStateMessage={Liferay.Language.get('option-not-found')}
 					error={errors.listTypeDefinitionId}
 					id="objectFieldFormBase"
-					items={filteredListTypeDefinitions}
+					items={listTypeDefinitionsItems}
 					label={Liferay.Language.get('picklist')}
-					onActive={(item) =>
-						item.name === selectedListTypeDefinition?.name
-					}
-					onChangeQuery={setListTypeDefinitionQuery}
-					onSelectItem={(item) => {
-						setValues({
-							listTypeDefinitionExternalReferenceCode:
-								item.externalReferenceCode,
-							listTypeDefinitionId: item.id,
-							objectFieldSettings: removeFieldSettings(
-								['defaultValue', 'stateFlow'],
-								values
-							),
-						});
-
-						if (onSubmit) {
-							onSubmit({
-								...values,
+					onSelectionChange={(value) => {
+						const selectedListTypeDefinition = listTypeDefinitions.find(
+							({externalReferenceCode}) =>
+								externalReferenceCode === value
+						);
+						if (selectedListTypeDefinition) {
+							setValues({
 								listTypeDefinitionExternalReferenceCode:
-									item.externalReferenceCode,
-								listTypeDefinitionId: item.id,
+									selectedListTypeDefinition.externalReferenceCode,
+								listTypeDefinitionId:
+									selectedListTypeDefinition.id,
 								objectFieldSettings: removeFieldSettings(
 									['defaultValue', 'stateFlow'],
 									values
 								),
 							});
+
+							if (onSubmit) {
+								onSubmit({
+									...values,
+									listTypeDefinitionExternalReferenceCode:
+										selectedListTypeDefinition.externalReferenceCode,
+									listTypeDefinitionId:
+										selectedListTypeDefinition.id,
+									objectFieldSettings: removeFieldSettings(
+										['defaultValue', 'stateFlow'],
+										values
+									),
+								});
+							}
 						}
 					}}
-					query={listTypeDefinitionQuery}
-					value={selectedListTypeDefinition?.name}
-				>
-					{({name}) => (
-						<div className="d-flex justify-content-between">
-							<div>{name}</div>
-						</div>
-					)}
-				</AutoComplete>
+					selectedKey={
+						selectedListTypeDefinitionExternalReferenceCode
+					}
+				/>
 			)}
 
 			{values.businessType === 'DateTime' && (

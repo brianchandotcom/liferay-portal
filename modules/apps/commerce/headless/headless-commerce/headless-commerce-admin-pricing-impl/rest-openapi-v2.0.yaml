@@ -883,8 +883,7 @@ components:
                     example: price-list, promotion, contract
                     type: string
                 workflowStatusInfo:
-                    allOf:
-                        - $ref: "#/components/schemas/Status"
+                    $ref: "#/components/schemas/Status"
                     readOnly: true
             required:
                 - catalogId

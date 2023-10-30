@@ -79,8 +79,7 @@ components:
                     format: int64
                     type: integer
                 structure:
-                    allOf:
-                        - $ref: "#/components/schemas/FormStructure"
+                    $ref: "#/components/schemas/FormStructure"
                     readOnly: true
                 structureId:
                     format: int64
@@ -298,8 +297,7 @@ components:
             items:
                 properties:
                     formDocument:
-                        allOf:
-                            - $ref: "#/components/schemas/FormDocument"
+                        $ref: "#/components/schemas/FormDocument"
                         readOnly: true
                     formDocumentId:
                         format: int64

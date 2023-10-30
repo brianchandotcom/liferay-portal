@@ -34,8 +34,7 @@ components:
                     readOnly: true
                     type: array
                 creator:
-                    allOf:
-                        - $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#Creator"
+                    $ref: "../../headless-delivery/headless-delivery-impl/rest-openapi.yaml#Creator"
                     description:
                         The Display Page Template's creator.
                     readOnly: true
@@ -176,8 +175,7 @@ components:
                     readOnly: true
                     type: number
                 status:
-                    allOf:
-                        - $ref: "#/components/schemas/Status"
+                    $ref: "#/components/schemas/Status"
                     # @review
                     description:
                         Represents the status of a resource

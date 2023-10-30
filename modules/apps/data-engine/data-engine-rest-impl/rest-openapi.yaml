@@ -28,8 +28,7 @@ components:
                     format: date-time
                     type: string
                 defaultDataLayout:
-                    allOf:
-                        - $ref: "#/components/schemas/DataLayout"
+                    $ref: "#/components/schemas/DataLayout"
                 defaultLanguageId:
                     type: string
                 description:
@@ -109,8 +108,7 @@ components:
         DataDefinitionFieldLink:
             properties:
                 dataDefinition:
-                    allOf:
-                        - $ref: "#/components/schemas/DataDefinition"
+                    $ref: "#/components/schemas/DataDefinition"
                 dataLayouts:
                     items:
                         $ref: "#/components/schemas/DataLayout"

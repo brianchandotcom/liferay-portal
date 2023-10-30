@@ -70,8 +70,7 @@ components:
                     readOnly: true
                     type: object
                 aggregateRating:
-                    allOf:
-                        - $ref: "#/components/schemas/AggregateRating"
+                    $ref: "#/components/schemas/AggregateRating"
                     description:
                         The blog post's average rating.
                     readOnly: true
@@ -84,8 +83,7 @@ components:
                         The blog post's body (content).
                     type: string
                 creator:
-                    allOf:
-                        - $ref: "#/components/schemas/Creator"
+                    $ref: "#/components/schemas/Creator"
                     description:
                         The blog post's author.
                     readOnly: true
@@ -411,8 +409,7 @@ components:
                     readOnly: true
                     type: object
                 creator:
-                    allOf:
-                        - $ref: "#/components/schemas/Creator"
+                    $ref: "#/components/schemas/Creator"
                     description:
                         The comment's author.
                     readOnly: true
@@ -554,8 +551,7 @@ components:
                 (e.g., documents, geolocation, etc.).
             properties:
                 contentFieldValue:
-                    allOf:
-                        - $ref: "#/components/schemas/ContentFieldValue"
+                    $ref: "#/components/schemas/ContentFieldValue"
                     description:
                         The field's value.
                 contentFieldValue_i18n:
@@ -612,8 +608,7 @@ components:
                         The field's content for simple types.
                     type: string
                 document:
-                    allOf:
-                        - $ref: "#/components/schemas/ContentDocument"
+                    $ref: "#/components/schemas/ContentDocument"
                     description:
                         A content document element.
                 geo:
@@ -632,8 +627,7 @@ components:
                             type: number
                     type: object
                 image:
-                    allOf:
-                        - $ref: "#/components/schemas/ContentDocument"
+                    $ref: "#/components/schemas/ContentDocument"
                     description:
                         A content document element that stores an image file.
                 link:
@@ -651,8 +645,7 @@ components:
                             readOnly: true
                             type: string
                         embeddedStructuredContent:
-                            allOf:
-                                - $ref: "#/components/schemas/StructuredContent"
+                            $ref: "#/components/schemas/StructuredContent"
                             # @review
                             description:
                                 Optional field with the structured content, can be embedded with nestedFields.
@@ -730,8 +723,7 @@ components:
                     readOnly: true
                     type: array
                 creator:
-                    allOf:
-                        - $ref: "#/components/schemas/Creator"
+                    $ref: "#/components/schemas/Creator"
                     description:
                         The content structure's creator.
                     readOnly: true
@@ -923,8 +915,7 @@ components:
                     format: int64
                     type: integer
                 creator:
-                    allOf:
-                        - $ref: "#/components/schemas/Creator"
+                    $ref: "#/components/schemas/Creator"
                     # @review
                     description:
                         The content template's creator.
@@ -1112,8 +1103,7 @@ components:
                 geolocation, strings, etc.).
             properties:
                 customValue:
-                    allOf:
-                        - $ref: "#/components/schemas/CustomValue"
+                    $ref: "#/components/schemas/CustomValue"
                     description:
                         The field's value.
                 dataType:
@@ -1166,8 +1156,7 @@ components:
                         The localized field's content values for simple types.
                     type: object
                 geo:
-                    allOf:
-                        - $ref: "#/components/schemas/Geo"
+                    $ref: "#/components/schemas/Geo"
                     description:
                         A point determined by latitude and longitude.
             type: object
@@ -1272,8 +1261,7 @@ components:
                     readOnly: true
                     type: array
                 aggregateRating:
-                    allOf:
-                        - $ref: "#/components/schemas/AggregateRating"
+                    $ref: "#/components/schemas/AggregateRating"
                     description:
                         The document's average rating.
                     readOnly: true
@@ -1297,8 +1285,7 @@ components:
                     readOnly: true
                     type: string
                 creator:
-                    allOf:
-                        - $ref: "#/components/schemas/Creator"
+                    $ref: "#/components/schemas/Creator"
                     description:
                         The document's creator.
                     readOnly: true
@@ -1487,8 +1474,7 @@ components:
                     readOnly: true
                     type: string
                 creator:
-                    allOf:
-                        - $ref: "#/components/schemas/Creator"
+                    $ref: "#/components/schemas/Creator"
                     description:
                         The folder's creator.
                     readOnly: true
@@ -1657,14 +1643,12 @@ components:
                     oneOf:
                         - $ref: "#/components/schemas/FragmentMappedValue"
                 onError:
-                    allOf:
-                        - $ref: "#/components/schemas/ActionExecutionResult"
+                    $ref: "#/components/schemas/ActionExecutionResult"
                     # @review
                     description:
                         The action execution result in case the action fails.
                 onSuccess:
-                    allOf:
-                        - $ref: "#/components/schemas/ActionExecutionResult"
+                    $ref: "#/components/schemas/ActionExecutionResult"
                     # @review
                     description:
                         The action execution result in case the action succeeds.
@@ -1682,8 +1666,7 @@ components:
                 Represents a fragment field with a background image.
             properties:
                 backgroundFragmentImage:
-                    allOf:
-                        - $ref: "#/components/schemas/FragmentImage"
+                    $ref: "#/components/schemas/FragmentImage"
                     # @review
                     description:
                         The fragment field's background image.
@@ -1723,14 +1706,12 @@ components:
                 Represents a fragment field with an image.
             properties:
                 fragmentImage:
-                    allOf:
-                        - $ref: "#/components/schemas/FragmentImage"
+                    $ref: "#/components/schemas/FragmentImage"
                     # @review
                     description:
                         The fragment field's image.
                 fragmentLink:
-                    allOf:
-                        - $ref: "#/components/schemas/FragmentLink"
+                    $ref: "#/components/schemas/FragmentLink"
                     # @review
                     description:
                         A link to a fragment.
@@ -1741,8 +1722,7 @@ components:
                 Represents a fragment field with text.
             properties:
                 fragmentLink:
-                    allOf:
-                        - $ref: "#/components/schemas/FragmentLink"
+                    $ref: "#/components/schemas/FragmentLink"
                     # @review
                     description:
                         A link to a fragment.
@@ -1766,8 +1746,7 @@ components:
                     oneOf:
                         - $ref: "#/components/schemas/FragmentInlineValue"
                 fragmentImageClassPKReference:
-                    allOf:
-                        - $ref: "#/components/schemas/FragmentImageClassPKReference"
+                    $ref: "#/components/schemas/FragmentImageClassPKReference"
                     # @review
                     description:
                         A reference to a fragment image class primary key.
@@ -1798,8 +1777,7 @@ components:
                         A map of class primary key references.
                     type: object
                 fragmentImageConfiguration:
-                    allOf:
-                        - $ref: "#/components/schemas/FragmentImageConfiguration"
+                    $ref: "#/components/schemas/FragmentImageConfiguration"
                     # @review
                     description:
                         The fragment image's configuration.
@@ -1858,8 +1836,7 @@ components:
                     enum: [Blank, Parent, Self, Top]
                     type: string
                 value:
-                    allOf:
-                        - $ref: "#/components/schemas/FragmentLinkValue"
+                    $ref: "#/components/schemas/FragmentLinkValue"
                     # @review
                     description:
                         The fragment link's value.
@@ -1894,8 +1871,7 @@ components:
                 Represents a fragment mapped value.
             properties:
                 defaultFragmentInlineValue:
-                    allOf:
-                        - $ref: "#/components/schemas/FragmentInlineValue"
+                    $ref: "#/components/schemas/FragmentInlineValue"
                     # @review
                     description:
                         The default value of the fragment mapped value.
@@ -1966,8 +1942,7 @@ components:
                         The fragment's background color.
                     type: string
                 backgroundFragmentImage:
-                    allOf:
-                        - $ref: "#/components/schemas/FragmentImage"
+                    $ref: "#/components/schemas/FragmentImage"
                     # @review
                     description:
                         The fragment's background image.
@@ -2287,8 +2262,7 @@ components:
                     readOnly: true
                     type: object
                 aggregateRating:
-                    allOf:
-                        - $ref: "#/components/schemas/AggregateRating"
+                    $ref: "#/components/schemas/AggregateRating"
                     description:
                         The article's average rating.
                     readOnly: true
@@ -2297,8 +2271,7 @@ components:
                         The article's main content.
                     type: string
                 creator:
-                    allOf:
-                        - $ref: "#/components/schemas/Creator"
+                    $ref: "#/components/schemas/Creator"
                     description:
                         The article's author.
                     readOnly: true
@@ -2507,8 +2480,7 @@ components:
                     readOnly: true
                     type: object
                 creator:
-                    allOf:
-                        - $ref: "#/components/schemas/Creator"
+                    $ref: "#/components/schemas/Creator"
                     description:
                         The folder's creator.
                     readOnly: true
@@ -2724,8 +2696,7 @@ components:
                     readOnly: true
                     type: object
                 aggregateRating:
-                    allOf:
-                        - $ref: "#/components/schemas/AggregateRating"
+                    $ref: "#/components/schemas/AggregateRating"
                     description:
                         The message's average rating.
                     readOnly: true
@@ -2738,14 +2709,12 @@ components:
                         The message's main content.
                     type: string
                 creator:
-                    allOf:
-                        - $ref: "#/components/schemas/Creator"
+                    $ref: "#/components/schemas/Creator"
                     description:
                         The message's author.
                     readOnly: true
                 creatorStatistics:
-                    allOf:
-                        - $ref: "#/components/schemas/CreatorStatistics"
+                    $ref: "#/components/schemas/CreatorStatistics"
                     # @review
                     description:
                         The message's creator statistics (rank, join date, number of posts, ...)
@@ -2879,8 +2848,7 @@ components:
                     readOnly: true
                     type: object
                 creator:
-                    allOf:
-                        - $ref: "#/components/schemas/Creator"
+                    $ref: "#/components/schemas/Creator"
                     description:
                         The section's creator.
                     readOnly: true
@@ -2972,8 +2940,7 @@ components:
                     readOnly: true
                     type: object
                 aggregateRating:
-                    allOf:
-                        - $ref: "#/components/schemas/AggregateRating"
+                    $ref: "#/components/schemas/AggregateRating"
                     description:
                         The thread's average rating.
                     readOnly: true
@@ -2982,14 +2949,12 @@ components:
                         The thread's main body content (the message written as the thread's description).
                     type: string
                 creator:
-                    allOf:
-                        - $ref: "#/components/schemas/Creator"
+                    $ref: "#/components/schemas/Creator"
                     description:
                         The thread's creator.
                     readOnly: true
                 creatorStatistics:
-                    allOf:
-                        - $ref: "#/components/schemas/CreatorStatistics"
+                    $ref: "#/components/schemas/CreatorStatistics"
                     # @review
                     description:
                         The thread's creator statistics (rank, join date, number of posts, ...)
@@ -3149,8 +3114,7 @@ components:
                 Represents a definition of a submission result of type message.
             properties:
                 message:
-                    allOf:
-                        - $ref: "#/components/schemas/FragmentInlineValue"
+                    $ref: "#/components/schemas/FragmentInlineValue"
                     # @review
                     description:
                         The localized submission of message type.
@@ -3179,8 +3143,7 @@ components:
                     readOnly: true
                     type: object
                 creator:
-                    allOf:
-                        - $ref: "#/components/schemas/Creator"
+                    $ref: "#/components/schemas/Creator"
                     # @review
                     description:
                         The navigation menu's creator.
@@ -3250,9 +3213,8 @@ components:
                         The navigation menu item's content API REST URL.
                     type: string
                 creator:
-                    allOf:
-                        - $ref: "#/components/schemas/Creator"
-                     # @review
+                    $ref: "#/components/schemas/Creator"
+                        # @review
                     description:
                         The navigation menu item's creator.
                     readOnly: true
@@ -3357,8 +3319,7 @@ components:
                         Whether to reload the page after the action is executed.
                     type: boolean
                 text:
-                    allOf:
-                        - $ref: "#/components/schemas/FragmentInlineValue"
+                    $ref: "#/components/schemas/FragmentInlineValue"
                     # @review
                     description:
                         The localized text to display when an action is executed.
@@ -3381,8 +3342,7 @@ components:
                         The localized Open Graph's descriptions.
                     type: object
                 image:
-                    allOf:
-                        - $ref: "#/components/schemas/ContentDocument"
+                    $ref: "#/components/schemas/ContentDocument"
                     # @review
                     description:
                         The Open Graph's image.
@@ -3470,8 +3430,7 @@ components:
                             type: object
                     type: object
                 fragmentStyle:
-                    allOf:
-                        - $ref: "#/components/schemas/FragmentStyle"
+                    $ref: "#/components/schemas/FragmentStyle"
                     # @review
                     description:
                         The fragment style of the page collection.
@@ -3620,8 +3579,7 @@ components:
                 Represent a definition of a Page.
             properties:
                 pageElement:
-                    allOf:
-                        - $ref: "#/components/schemas/PageElement"
+                    $ref: "#/components/schemas/PageElement"
                     # @review
                     description:
                         The page's page element.
@@ -3633,8 +3591,7 @@ components:
                         $ref: "#/components/schemas/PageRule"
                     type: array
                 settings:
-                    allOf:
-                        - $ref: "#/components/schemas/Settings"
+                    $ref: "#/components/schemas/Settings"
                     # @review
                     description:
                         The page's settings.
@@ -3741,8 +3698,7 @@ components:
                             type: object
                     type: object
                 fragmentStyle:
-                    allOf:
-                        - $ref: "#/components/schemas/FragmentStyle"
+                    $ref: "#/components/schemas/FragmentStyle"
                     # @review
                     description:
                         The fragment style of a Page form.
@@ -3824,8 +3780,7 @@ components:
                         $ref: "#/components/schemas/CustomCSSViewport"
                     type: array
                 fragment:
-                    allOf:
-                        - $ref: "#/components/schemas/Fragment"
+                    $ref: "#/components/schemas/Fragment"
                     # @review
                     description:
                         The fragment of the page fragment instance.
@@ -3844,8 +3799,7 @@ components:
                         $ref: "#/components/schemas/FragmentField"
                     type: array
                 fragmentStyle:
-                    allOf:
-                        - $ref: "#/components/schemas/FragmentStyle"
+                    $ref: "#/components/schemas/FragmentStyle"
                     # @review
                     description:
                         The fragment style of the page fragment instance.
@@ -3904,8 +3858,7 @@ components:
                         $ref: "#/components/schemas/CustomCSSViewport"
                     type: array
                 fragmentStyle:
-                    allOf:
-                        - $ref: "#/components/schemas/FragmentStyle"
+                    $ref: "#/components/schemas/FragmentStyle"
                     # @review
                     description:
                         The fragment style of a Page row.
@@ -4018,8 +3971,7 @@ components:
                     deprecated: true
                     type: string
                 backgroundFragmentImage:
-                    allOf:
-                        - $ref: "#/components/schemas/FragmentImage"
+                    $ref: "#/components/schemas/FragmentImage"
                     # @review
                     description:
                         The background fragment image of the page section.
@@ -4064,14 +4016,12 @@ components:
                         $ref: "#/components/schemas/CustomCSSViewport"
                     type: array
                 fragmentLink:
-                    allOf:
-                        - $ref: "#/components/schemas/FragmentLink"
+                    $ref: "#/components/schemas/FragmentLink"
                     # @review
                     description:
                         The fragment link of the page section.
                 fragmentStyle:
-                    allOf:
-                        - $ref: "#/components/schemas/FragmentStyle"
+                    $ref: "#/components/schemas/FragmentStyle"
                     # @review
                     description:
                         The fragment style of the page section.
@@ -4197,20 +4147,17 @@ components:
                         A flag that indicates whether the page is hidden from navigation.
                     type: boolean
                 openGraphSettings:
-                    allOf:
-                        - $ref: "#/components/schemas/OpenGraphSettings"
+                    $ref: "#/components/schemas/OpenGraphSettings"
                     # @review
                     description:
                         The page's Open Graph settings.
                 seoSettings:
-                    allOf:
-                        - $ref: "#/components/schemas/SEOSettings"
+                    $ref: "#/components/schemas/SEOSettings"
                     # @review
                     description:
                         The page's SEO settings.
                 sitePageNavigationMenuSettings:
-                    allOf:
-                        - $ref: "#/components/schemas/SitePageNavigationMenuSettings"
+                    $ref: "#/components/schemas/SitePageNavigationMenuSettings"
                     # @review
                     description:
                         The page's site navigation menu settings.
@@ -4221,8 +4168,7 @@ components:
                 Represents a Page template.
             properties:
                 creator:
-                    allOf:
-                        - $ref: "#/components/schemas/Creator"
+                    $ref: "#/components/schemas/Creator"
                     # @review
                     description:
                         The page template's creator.
@@ -4261,14 +4207,12 @@ components:
                         The page template's name.
                     type: string
                 pageDefinition:
-                    allOf:
-                        - $ref: "#/components/schemas/PageDefinition"
+                    $ref: "#/components/schemas/PageDefinition"
                     # @review
                     description:
                         The page template's definition.
                 pageTemplateCollection:
-                    allOf:
-                        - $ref: "#/components/schemas/PageTemplateCollection"
+                    $ref: "#/components/schemas/PageTemplateCollection"
                     # @review
                     description:
                         The page template's collection.
@@ -4301,8 +4245,7 @@ components:
                 Represents a Page template collection.
             properties:
                 creator:
-                    allOf:
-                        - $ref: "#/components/schemas/Creator"
+                    $ref: "#/components/schemas/Creator"
                     # @review
                     description:
                         The page template collection's creator.
@@ -4369,8 +4312,7 @@ components:
                         $ref: "#/components/schemas/CustomCSSViewport"
                     type: array
                 fragmentStyle:
-                    allOf:
-                        - $ref: "#/components/schemas/FragmentStyle"
+                    $ref: "#/components/schemas/FragmentStyle"
                     # @review
                     description:
                         The fragment style of the page widget instance.
@@ -4387,8 +4329,7 @@ components:
                         The custom name of a Page Widget instance.
                     type: string
                 widgetInstance:
-                    allOf:
-                        - $ref: "#/components/schemas/WidgetInstance"
+                    $ref: "#/components/schemas/WidgetInstance"
                     # @review
                     description:
                         The widget instance of the page widget instance.
@@ -4415,8 +4356,7 @@ components:
                     readOnly: true
                     type: number
                 creator:
-                    allOf:
-                        - $ref: "#/components/schemas/Creator"
+                    $ref: "#/components/schemas/Creator"
                     description:
                         The rating's creator.
                     readOnly: true
@@ -4714,8 +4654,7 @@ components:
                         The page's JavaScript.
                     type: string
                 masterPage:
-                    allOf:
-                        - $ref: "#/components/schemas/MasterPage"
+                    $ref: "#/components/schemas/MasterPage"
                     # @review
                     description:
                         The page's master page.
@@ -4736,8 +4675,7 @@ components:
                             type: string
                     type: object
                 themeCSSClientExtension:
-                    allOf:
-                        - $ref: "#/components/schemas/ClientExtension"
+                    $ref: "#/components/schemas/ClientExtension"
                     # @review
                     description:
                         The Client Extension for the theme css of a page
@@ -4768,8 +4706,7 @@ components:
                     readOnly: true
                     type: object
                 aggregateRating:
-                    allOf:
-                        - $ref: "#/components/schemas/AggregateRating"
+                    $ref: "#/components/schemas/AggregateRating"
                     # @review
                     description:
                         The page's average rating.
@@ -4783,8 +4720,7 @@ components:
                     readOnly: true
                     type: array
                 creator:
-                    allOf:
-                        - $ref: "#/components/schemas/Creator"
+                    $ref: "#/components/schemas/Creator"
                     # @review
                     description:
                         The page's creator.
@@ -4817,8 +4753,7 @@ components:
                     format: date-time
                     type: string
                 experience:
-                    allOf:
-                        - $ref: "#/components/schemas/Experience"
+                    $ref: "#/components/schemas/Experience"
                     # @review
                     description:
                         Experience of the page that it's being retrieved.
@@ -4848,8 +4783,7 @@ components:
                         type: string
                     type: array
                 pageDefinition:
-                    allOf:
-                        - $ref: "#/components/schemas/PageDefinition"
+                    $ref: "#/components/schemas/PageDefinition"
                     # @review
                     description:
                         Optional field with the structure of all the elements of the page. Can be embedded with
@@ -4876,8 +4810,7 @@ components:
                         type: object
                     type: array
                 pageSettings:
-                    allOf:
-                        - $ref: "#/components/schemas/PageSettings"
+                    $ref: "#/components/schemas/PageSettings"
                     # @review
                     description:
                         Settings of the page, such as SEO or OpenGraph.
@@ -4898,8 +4831,7 @@ components:
                             type: string
                     type: object
                 renderedPage:
-                    allOf:
-                        - $ref: "#/components/schemas/RenderedPage"
+                    $ref: "#/components/schemas/RenderedPage"
                     # @review
                     description:
                         Metadata of the page such as it's master page and template.
@@ -4962,8 +4894,7 @@ components:
                 Represents a definition of an action execution of type page.
             properties:
                 itemReference:
-                    allOf:
-                        - $ref: "#/components/schemas/ClassFieldsReference"
+                    $ref: "#/components/schemas/ClassFieldsReference"
                     # @review
                     description:
                         The reference to a page.
@@ -4974,8 +4905,7 @@ components:
                 Represents a definition of a submission result of type page.
             properties:
                 itemReference:
-                    allOf:
-                        - $ref: "#/components/schemas/ClassFieldsReference"
+                    $ref: "#/components/schemas/ClassFieldsReference"
                     # @review
                     description:
                         The localized submission of page type.
@@ -5018,8 +4948,7 @@ components:
                     readOnly: true
                     type: object
                 aggregateRating:
-                    allOf:
-                        - $ref: "#/components/schemas/AggregateRating"
+                    $ref: "#/components/schemas/AggregateRating"
                     description:
                         The structured content's average rating.
                     readOnly: true
@@ -5048,8 +4977,7 @@ components:
                     format: int64
                     type: integer
                 creator:
-                    allOf:
-                        - $ref: "#/components/schemas/Creator"
+                    $ref: "#/components/schemas/Creator"
                     description:
                         The structured content's creator.
                     readOnly: true
@@ -5234,8 +5162,7 @@ components:
                     readOnly: true
                     type: string
                 creator:
-                    allOf:
-                        - $ref: "#/components/schemas/Creator"
+                    $ref: "#/components/schemas/Creator"
                     description:
                         The folder's creator.
                     readOnly: true
@@ -5367,8 +5294,7 @@ components:
                 Represents a definition of an action execution result of type URL.
             properties:
                 url:
-                    allOf:
-                        - $ref: "#/components/schemas/FragmentInlineValue"
+                    $ref: "#/components/schemas/FragmentInlineValue"
                     # @review
                     description:
                         The localized action execution result of type URL.
@@ -5379,8 +5305,7 @@ components:
                 Represents a definition of a submission result of type URL.
             properties:
                 url:
-                    allOf:
-                        - $ref: "#/components/schemas/FragmentInlineValue"
+                    $ref: "#/components/schemas/FragmentInlineValue"
                     # @review
                     description:
                         The localized submission of URL type.
@@ -5483,8 +5408,7 @@ components:
                     readOnly: true
                     type: object
                 creator:
-                    allOf:
-                        - $ref: "#/components/schemas/Creator"
+                    $ref: "#/components/schemas/Creator"
                     description:
                         The wiki node's creator.
                     readOnly: true
@@ -5558,8 +5482,7 @@ components:
                     readOnly: true
                     type: object
                 aggregateRating:
-                    allOf:
-                        - $ref: "#/components/schemas/AggregateRating"
+                    $ref: "#/components/schemas/AggregateRating"
                     description:
                         The blog post's average rating.
                     readOnly: true
@@ -5568,8 +5491,7 @@ components:
                         The wiki page's content.
                     type: string
                 creator:
-                    allOf:
-                        - $ref: "#/components/schemas/Creator"
+                    $ref: "#/components/schemas/Creator"
                     description:
                         The wiki page's creator.
                     readOnly: true

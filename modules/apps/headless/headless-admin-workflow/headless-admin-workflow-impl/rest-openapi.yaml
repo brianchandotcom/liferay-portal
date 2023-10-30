@@ -132,8 +132,7 @@ components:
                     readOnly: true
                     type: array
                 creator:
-                    allOf:
-                        - $ref: "#/components/schemas/Creator"
+                    $ref: "#/components/schemas/Creator"
                     description:
                         The role's creator.
                     readOnly: true
@@ -292,8 +291,7 @@ components:
                     readOnly: true
                     type: integer
                 objectReviewed:
-                    allOf:
-                        - $ref: "#/components/schemas/ObjectReviewed"
+                    $ref: "#/components/schemas/ObjectReviewed"
                     description:
                         The object/asset that the instance's workflow is managing.
                     readOnly: true
@@ -331,8 +329,7 @@ components:
                 Represents the log containing the workflow's activity history (e.g., transitions, assignees, etc.).
             properties:
                 auditPerson:
-                    allOf:
-                        - $ref: "#/components/schemas/Creator"
+                    $ref: "#/components/schemas/Creator"
                     description:
                         The user account of the person auditing the workflow.
                     readOnly: true
@@ -360,20 +357,17 @@ components:
                     readOnly: true
                     type: integer
                 person:
-                    allOf:
-                        - $ref: "#/components/schemas/Creator"
+                    $ref: "#/components/schemas/Creator"
                     description:
                         The person assigned to the workflow.
                     readOnly: true
                 previousPerson:
-                    allOf:
-                        - $ref: "#/components/schemas/Creator"
+                    $ref: "#/components/schemas/Creator"
                     description:
                         The previous person assigned to the workflow.
                     readOnly: true
                 previousRole:
-                    allOf:
-                        - $ref: "#/components/schemas/Role"
+                    $ref: "#/components/schemas/Role"
                     readOnly: true
                 previousState:
                     description:
@@ -386,8 +380,7 @@ components:
                     readOnly: true
                     type: string
                 role:
-                    allOf:
-                        - $ref: "#/components/schemas/Role"
+                    $ref: "#/components/schemas/Role"
                     readOnly: true
                 state:
                     description:
@@ -424,8 +417,7 @@ components:
                     readOnly: true
                     type: object
                 assigneePerson:
-                    allOf:
-                        - $ref: "#/components/schemas/Creator"
+                    $ref: "#/components/schemas/Creator"
                 assigneeRoles:
                     items:
                         $ref: "#/components/schemas/Role"
@@ -473,8 +465,7 @@ components:
                     readOnly: true
                     type: string
                 objectReviewed:
-                    allOf:
-                        - $ref: "#/components/schemas/ObjectReviewed"
+                    $ref: "#/components/schemas/ObjectReviewed"
                     description:
                         The object/asset that the task's workflow is managing.
                     readOnly: true

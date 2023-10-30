@@ -8,8 +8,7 @@ components:
                     readOnly: true
                     type: array
                 creator:
-                    allOf:
-                        - $ref: "../../headless/headless-delivery/headless-delivery-impl/rest-openapi.yaml#Creator"
+                    $ref: "../../headless/headless-delivery/headless-delivery-impl/rest-openapi.yaml#Creator"
                     readOnly: true
                 dateCreated:
                     format: date
@@ -80,8 +79,7 @@ components:
                     readOnly: true
                     type: array
                 creator:
-                    allOf:
-                        - $ref: "../../headless/headless-delivery/headless-delivery-impl/rest-openapi.yaml#Creator"
+                    $ref: "../../headless/headless-delivery/headless-delivery-impl/rest-openapi.yaml#Creator"
                     readOnly: true
                 dateCreated:
                     format: date

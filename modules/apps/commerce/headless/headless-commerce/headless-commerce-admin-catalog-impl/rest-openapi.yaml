@@ -416,8 +416,7 @@ components:
                         type: string
                     type: object
                 geo:
-                    allOf:
-                        - $ref: "#/components/schemas/Geo"
+                    $ref: "#/components/schemas/Geo"
                     description:
                         A point determined by latitude and longitude.
             type: object
@@ -1037,8 +1036,7 @@ components:
                     readOnly: true
                     type: integer
                 workflowStatusInfo:
-                    allOf:
-                        - $ref: "#/components/schemas/Status"
+                    $ref: "#/components/schemas/Status"
                     readOnly: true
             required:
                 - active

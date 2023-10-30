@@ -6,8 +6,7 @@ components:
                 (https://www.schema.org/Role) specification.
             properties:
                 creator:
-                    allOf:
-                        - $ref: "#/components/schemas/Creator"
+                    $ref: "#/components/schemas/Creator"
                     description:
                         The role's creator.
                     readOnly: true

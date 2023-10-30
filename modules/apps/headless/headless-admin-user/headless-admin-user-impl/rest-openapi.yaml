@@ -448,8 +448,7 @@ components:
                             type: array
                     type: object
                 parentOrganization:
-                    allOf:
-                        - $ref: "#/components/schemas/Organization"
+                    $ref: "#/components/schemas/Organization"
                     description:
                         The organization's parent organization.
                 services:
@@ -627,8 +626,7 @@ components:
                     readOnly: true
                     type: array
                 creator:
-                    allOf:
-                        - $ref: "#/components/schemas/Creator"
+                    $ref: "#/components/schemas/Creator"
                     description:
                         The role's creator.
                     readOnly: true

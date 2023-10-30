@@ -8,6 +8,8 @@ sourceCompatibility = "1.6"
 targetCompatibility = "1.6"
 
 dependencies {
+	api group: "com.liferay", name: "org.apache.logging.log4j", version: "2.17.1.LIFERAY-PATCHED-1"
+	api group: "com.liferay", name: "org.apache.logging.log4j.core", version: "2.17.1.LIFERAY-PATCHED-1"
 	api group: "org.apache.velocity", name: "velocity", version: "1.6.4"
 }
 
@@ -16,6 +18,8 @@ patch {
 		autoClean = false
 	}
 
+	fileNames "org/apache/velocity/runtime/log/Log4JLogChute.java"
+	fileNames "org/apache/velocity/runtime/log/SimpleLog4JLogSystem.java"
 	fileNames "org/apache/velocity/runtime/parser/node/ASTText.java"
 	fileNames "org/apache/velocity/util/introspection/SecureIntrospectorImpl.java"
 

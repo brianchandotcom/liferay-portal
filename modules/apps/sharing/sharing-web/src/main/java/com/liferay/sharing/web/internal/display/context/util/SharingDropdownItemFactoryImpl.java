@@ -49,15 +49,22 @@ public class SharingDropdownItemFactoryImpl
 
 	@Override
 	public UnsafeConsumer<DropdownContextItem, Exception>
-		createShareActionUnsafeConsumer(
-			String className, long classPK,
-			HttpServletRequest httpServletRequest) {
+			createShareActionUnsafeConsumer(
+				String className, long classPK,
+				HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		DropdownItem shareDropdownItem = createShareDropdownItem(
+			className, classPK, httpServletRequest);
+
+		shareDropdownItem.setLabel(
+			SharingItemFactoryUtil.getInviteToCollaborateLabel(
+				httpServletRequest));
 
 		return dropdownContextItem -> {
 			dropdownContextItem.setDropdownItems(
 				DropdownItemListBuilder.add(
-					createShareDropdownItem(
-						className, classPK, httpServletRequest)
+					shareDropdownItem
 				).add(
 					dropdownItem -> {
 						dropdownItem.putData("action", "copyLink");

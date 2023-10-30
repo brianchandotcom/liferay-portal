@@ -146,10 +146,6 @@ public class JournalDisplayContext {
 		return journalDisplayContext;
 	}
 
-	public String getAbsolutePath(long folderId) throws PortalException {
-		return _journalHelper.getAbsolutePath(_liferayPortletRequest, folderId);
-	}
-
 	public long[] getAddMenuFavItems() throws PortalException {
 		if (_addMenuFavItems != null) {
 			return _addMenuFavItems;

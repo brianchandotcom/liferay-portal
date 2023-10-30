@@ -203,11 +203,6 @@ public abstract class BaseDBPartitionTestCase {
 
 		PropsUtil.set("database.partition.enabled", "true");
 
-		_refreshComponent(
-			"com.liferay.portal.db.partition",
-			"com.liferay.portal.db.partition.internal.component.enabler." +
-				"DBPartitionComponentEnabler");
-
 		ReflectionTestUtil.setFieldValue(
 			DBPartitionUtil.class, "_DATABASE_PARTITION_SCHEMA_NAME_PREFIX",
 			_DATABASE_PARTITION_SCHEMA_NAME_PREFIX);
@@ -232,6 +227,11 @@ public abstract class BaseDBPartitionTestCase {
 		ReflectionTestUtil.setFieldValue(
 			InfrastructureUtil.class, "_dataSource",
 			_lazyConnectionDataSourceProxy);
+
+		_refreshComponent(
+			"com.liferay.portal.db.partition",
+			"com.liferay.portal.db.partition.internal.component.enabler." +
+				"DBPartitionComponentEnabler");
 
 		connection = DataAccess.getConnection();
 

@@ -35,6 +35,8 @@ import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -43,7 +45,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.portlet.PortletURL;
@@ -79,31 +83,27 @@ public class DisplayPageDisplayContext {
 			return false;
 		}
 
-		JSONObject typeJSONObject = _getJSONObject(
-			getMappingTypesJSONArray(),
-			String.valueOf(layoutPageTemplateEntry.getClassNameId()));
+		Map<Long, Long[]> classNameIdsMap = _getClassNameIdsMap();
 
-		if (typeJSONObject == null) {
+		if (!classNameIdsMap.containsKey(
+				layoutPageTemplateEntry.getClassNameId())) {
+
 			return false;
 		}
 
-		JSONArray subtypesJSONArray = typeJSONObject.getJSONArray("subtypes");
+		Long[] classTypeIds = classNameIdsMap.get(
+			layoutPageTemplateEntry.getClassNameId());
 
 		if ((layoutPageTemplateEntry.getClassTypeId() == 0) &&
-			JSONUtil.isEmpty(subtypesJSONArray)) {
+			ArrayUtil.isEmpty(classTypeIds)) {
 
 			return true;
 		}
 
-		if (layoutPageTemplateEntry.getClassTypeId() == 0) {
-			return false;
-		}
+		if ((layoutPageTemplateEntry.getClassTypeId() == 0) ||
+			!ArrayUtil.contains(
+				classTypeIds, layoutPageTemplateEntry.getClassTypeId())) {
 
-		JSONObject subtypeJSONObject = _getJSONObject(
-			subtypesJSONArray,
-			String.valueOf(layoutPageTemplateEntry.getClassTypeId()));
-
-		if (subtypeJSONObject == null) {
 			return false;
 		}
 
@@ -423,16 +423,39 @@ public class DisplayPageDisplayContext {
 		return breadcrumbEntry;
 	}
 
-	private JSONObject _getJSONObject(JSONArray jsonArray, String id) {
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			if (Objects.equals(id, jsonObject.getString("id"))) {
-				return jsonObject;
-			}
+	private Map<Long, Long[]> _getClassNameIdsMap() {
+		if (_classNameIdsMap != null) {
+			return _classNameIdsMap;
 		}
 
-		return null;
+		Map<Long, Long[]> classNameIdsMap = new HashMap<>();
+
+		JSONArray mappingTypesJSONArray = getMappingTypesJSONArray();
+
+		for (int i = 0; i < mappingTypesJSONArray.length(); i++) {
+			JSONObject typeJSONObject = mappingTypesJSONArray.getJSONObject(i);
+
+			JSONArray subtypesJSONArray = typeJSONObject.getJSONArray(
+				"subtypes");
+
+			Long[] classTypeIds = new Long[subtypesJSONArray.length()];
+
+			for (int j = 0; j < subtypesJSONArray.length(); j++) {
+				JSONObject subtypeJSONObject = subtypesJSONArray.getJSONObject(
+					j);
+
+				classTypeIds[j] = GetterUtil.getLong(
+					subtypeJSONObject.getString("id"));
+			}
+
+			classNameIdsMap.put(
+				GetterUtil.getLong(typeJSONObject.getString("id")),
+				classTypeIds);
+		}
+
+		_classNameIdsMap = classNameIdsMap;
+
+		return _classNameIdsMap;
 	}
 
 	private long _getLayoutPageTemplateCollectionId() {
@@ -527,6 +550,7 @@ public class DisplayPageDisplayContext {
 		return homeBreadcrumbEntry;
 	}
 
+	private Map<Long, Long[]> _classNameIdsMap;
 	private SearchContainer<?> _displayPagesSearchContainer;
 	private final HttpServletRequest _httpServletRequest;
 	private final InfoItemServiceRegistry _infoItemServiceRegistry;

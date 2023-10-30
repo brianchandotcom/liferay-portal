@@ -5,13 +5,18 @@
 
 package com.liferay.analytics.batch.exportimport.internal.dispatch.executor;
 
+import com.liferay.analytics.batch.exportimport.manager.AnalyticsBatchExportImportManager;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
+import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
+import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
+import com.liferay.dispatch.model.DispatchTrigger;
 
 import java.util.Arrays;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -29,18 +34,28 @@ public class DXPEntityAnalyticsExportDispatchTaskExecutor
 	public static final String KEY = "export-analytics-dxp-entities";
 
 	@Override
+	public void doExecute(
+			DispatchTrigger dispatchTrigger,
+			DispatchTaskExecutorOutput dispatchTaskExecutorOutput)
+		throws Exception {
+
+		if (!_analyticsConfigurationRegistry.isActive()) {
+			return;
+		}
+
+		_analyticsBatchExportImportManager.exportToAnalyticsCloud(
+			_batchEngineExportTaskItemDelegateNames,
+			dispatchTrigger.getCompanyId(),
+			getNotificationUnsafeConsumer(
+				dispatchTrigger.getDispatchTriggerId(),
+				dispatchTaskExecutorOutput),
+			getResourceLastModifiedDate(dispatchTrigger.getDispatchTriggerId()),
+			DXPEntity.class.getName(), dispatchTrigger.getUserId());
+	}
+
+	@Override
 	public String getName() {
 		return KEY;
-	}
-
-	@Override
-	protected List<String> getBatchEngineExportTaskItemDelegateNames() {
-		return _batchEngineExportTaskItemDelegateNames;
-	}
-
-	@Override
-	protected String getResourceName() {
-		return DXPEntity.class.getName();
 	}
 
 	private static final List<String> _batchEngineExportTaskItemDelegateNames =
@@ -54,5 +69,12 @@ public class DXPEntityAnalyticsExportDispatchTaskExecutor
 			"organization-analytics-dxp-entities",
 			"role-analytics-dxp-entities", "team-analytics-dxp-entities",
 			"user-analytics-dxp-entities", "user-group-analytics-dxp-entities");
+
+	@Reference
+	private AnalyticsBatchExportImportManager
+		_analyticsBatchExportImportManager;
+
+	@Reference
+	private AnalyticsConfigurationRegistry _analyticsConfigurationRegistry;
 
 }

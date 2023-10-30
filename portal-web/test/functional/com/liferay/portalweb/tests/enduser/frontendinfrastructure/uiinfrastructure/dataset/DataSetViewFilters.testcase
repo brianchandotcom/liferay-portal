@@ -1,7 +1,7 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
 
-	property custom.properties = "feature.flag.LPS-164563=true${line.separator}feature.flag.LPS-188645=true";
+	property custom.properties = "feature.flag.LPS-164563=true${line.separator}feature.flag.LPS-188645=true${line.separator}feature.flag.LPS-167253=true";
 	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
@@ -13,27 +13,15 @@ definition {
 
 		User.firstLoginPG();
 
-		task ("Given the creation of a new data set") {
-			DataSetAdmin.goToDataSetAdminPage();
+		task ("Given the creation of a new data set entry and view") {
 
-			DataSetAdmin.createDataSetEntryViaAPI(
+			DataSetAdmin.createAndConfigureDataSetEntry(
 				dataSetName = "Data Set Test",
+				dataSetViewDescription = "View Description",
+				dataSetViewName = "View Test",
 				restApplication = "/data-set-manager/date-filters",
 				restEndpoint = "/",
 				restSchema = "FDSDateFilter");
-		}
-
-		task ("And adding a data set view") {
-			DataSetAdmin.createFDSViewViaAPI(
-				dataSetName = "Data Set Test",
-				dataSetViewDescription = "FDSViewDescription",
-				key_dataSetViewNameList = "View Test");
-		}
-
-		task ("When go to the View page of the data set created.") {
-			DataSetAdmin.goToSpecificViewPage(
-				dataSetName = "Data Set Test",
-				key_viewName = "View Test");
 		}
 
 		task ("When the user accesses the Filters tab") {
@@ -48,6 +36,74 @@ definition {
 
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-190851. Confirm that the filter options are shown after clicking on the button plus"
+	@priority = 4
+	test AssertOptionsAfterClickingPlusButton {
+		task ("And clicks to add a new filter") {
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("Then 3 options is displayed") {
+			MenuItem.viewPresent(menuItem = "Date Range");
+			
+			MenuItem.viewPresent(menuItem = "Client Extension");
+			
+			MenuItem.viewPresent(menuItem = "Selection");
+		}
+	}
+
+	@description = "LPS-190851. Confirm that the filter options are shown after clicking on the Create Filter button"
+	@priority = 4
+	test AssertOptionsAfterClickingCreateButton {
+		task ("And clicks to add a new filter") {
+			Click(
+				key_text = "Create Filter",
+				locator1 = "Button#ANY");
+		}
+
+		task ("Then 3 options is displayed") {
+			MenuItem.viewPresent(menuItem = "Date Range");
+			
+			MenuItem.viewPresent(menuItem = "Client Extension");
+			
+			MenuItem.viewPresent(menuItem = "Selection");
+		}
+	}
+
+	@description = "LPS-190851. Confirm that it is not possible to create a Selection filter without creating a picklist before"
+	@priority = 4
+	test ConfirmPicklistIsNecessaryToCreateSelectionType {
+		task ("And selects the Selection option") {
+			DataSetAdmin.selectFilterType(key_filterType = "Selection");
+		}
+
+		task ("Then the New Selection Filter modal is displayed") {
+			AssertTextEquals(
+				locator1 = "Modal#HEADER",
+				value1 = "New Selection Filter");
+		}
+
+		task ("When Fill the Name filed") {
+			PortletEntry.inputText(
+				fieldLabel = "Name",
+				text = "Filter 1");
+		}
+
+		task ("Then The user cannot save the changes") {
+			AssertElementPresent(
+				key_text = "Save",
+				locator1 = "DataSet#ANY_BUTTON_DISABLED");
+		}
+
+		task ("And Confirm that is not possible edit the Filter by field") {
+			Click(
+				dropdownLabel = "Select",
+				locator1 = "Dropdown#ANY_DROPDOWN_LABEL");
+
+			DropdownMenuItem.viewDisabledItem(itemList = "creator,externalReferenceCode,status");
 		}
 	}
 

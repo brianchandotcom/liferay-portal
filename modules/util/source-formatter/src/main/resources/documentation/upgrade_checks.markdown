@@ -12,7 +12,6 @@ PropertiesUpgradeLiferayPluginPackageLiferayVersionsCheck | .eslintignore, .pret
 UpgradeBNDIncludeResourceCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Checks if the property value `-includeresource` or `Include-Resource` exists and removes it |
 UpgradeCatchAllCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Performs replacements on Liferay's outdated code |
 UpgradeDeprecatedAPICheck | .java | Finds calls to deprecated classes, constructors, fields or methods after an upgrade |
-UpgradeGetPortletGroupIdMethodCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Run code migration of the method 'getPortletGroupId' to 'getScopeGroupId' |
 UpgradeGradleIncludeResourceCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replaces with `compileInclude` the configuration attribute for dependencies in `build.gradle` that are listed at `Include-Resource` property at `bnd.bnd` associated file. |
 UpgradeJSPFieldSetGroupCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Run code to remove 'fieldset-group' tag |
 UpgradeJavaAccountPortletKeysCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replace constants of CommerceAccountPortletKeys by constants of AccountPortletKeys |

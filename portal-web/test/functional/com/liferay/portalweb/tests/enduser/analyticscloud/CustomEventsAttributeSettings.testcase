@@ -318,12 +318,15 @@ definition {
 	@description = "Feature ID: LRAC-4265 | Automation ID: LRAC-10013 | Test Summary: Rename Attributes Display Name"
 	@priority = 4
 	test RenameAttributeDisplayName {
-		var attributeName = "category";
+		var attributeName = "team";
+		var attributeValue = "analytics cloud";
 
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
 			ACCustomEvents.createCustomEvent(
+				attributesName = ${attributeName},
+				attributesValue = ${attributeValue},
 				customEventName = ${customEventName},
 				timeToSendCustomEvent = 1);
 		}

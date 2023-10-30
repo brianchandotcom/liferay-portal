@@ -223,12 +223,12 @@ public class DB2DB extends BaseDB {
 
 	@Override
 	public boolean isSupportsInlineDistinct() {
-		return _SUPPORTS_INLINE_DISTINCT;
+		return false;
 	}
 
 	@Override
 	public boolean isSupportsScrollableResults() {
-		return _SUPPORTS_SCROLLABLE_RESULTS;
+		return false;
 	}
 
 	@Override
@@ -462,7 +462,7 @@ public class DB2DB extends BaseDB {
 	}
 
 	protected boolean isSupportsDuplicatedIndexName() {
-		return _SUPPORTS_DUPLICATED_INDEX_NAME;
+		return false;
 	}
 
 	protected void reorgTable(Connection connection, String tableName)
@@ -620,12 +620,6 @@ public class DB2DB extends BaseDB {
 		Types.DOUBLE, Types.INTEGER, Types.BIGINT, Types.VARCHAR, Types.CLOB,
 		Types.VARCHAR
 	};
-
-	private static final boolean _SUPPORTS_DUPLICATED_INDEX_NAME = false;
-
-	private static final boolean _SUPPORTS_INLINE_DISTINCT = false;
-
-	private static final boolean _SUPPORTS_SCROLLABLE_RESULTS = false;
 
 	private static final Log _log = LogFactoryUtil.getLog(DB2DB.class);
 

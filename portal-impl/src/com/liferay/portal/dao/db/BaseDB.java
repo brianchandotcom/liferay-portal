@@ -418,32 +418,32 @@ public abstract class BaseDB implements DB {
 
 	@Override
 	public boolean isSupportsAlterColumnName() {
-		return _SUPPORTS_ALTER_COLUMN_NAME;
+		return true;
 	}
 
 	@Override
 	public boolean isSupportsAlterColumnType() {
-		return _SUPPORTS_ALTER_COLUMN_TYPE;
+		return true;
 	}
 
 	@Override
 	public boolean isSupportsDBPartition() {
-		return _SUPPORTS_DB_PARTITION;
+		return false;
 	}
 
 	@Override
 	public boolean isSupportsInlineDistinct() {
-		return _SUPPORTS_INLINE_DISTINCT;
+		return true;
 	}
 
 	@Override
 	public boolean isSupportsQueryingAfterException() {
-		return _SUPPORTS_QUERYING_AFTER_EXCEPTION;
+		return true;
 	}
 
 	@Override
 	public boolean isSupportsScrollableResults() {
-		return _SUPPORTS_SCROLLABLE_RESULTS;
+		return true;
 	}
 
 	@Override
@@ -453,7 +453,7 @@ public abstract class BaseDB implements DB {
 
 	@Override
 	public boolean isSupportsUpdateWithInnerJoin() {
-		return _SUPPORTS_UPDATE_WITH_INNER_JOIN;
+		return true;
 	}
 
 	@Override
@@ -1376,11 +1376,11 @@ public abstract class BaseDB implements DB {
 	protected abstract String[] getTemplate();
 
 	protected boolean isSupportsDDLRollback() {
-		return _SUPPORTS_DDL_ROLLBACK;
+		return true;
 	}
 
 	protected boolean isSupportsDuplicatedIndexName() {
-		return _SUPPORTS_DUPLICATED_INDEX_NAME;
+		return true;
 	}
 
 	protected String limitColumnLength(String column, int length) {
@@ -1581,24 +1581,6 @@ public abstract class BaseDB implements DB {
 
 		return primaryKeys;
 	}
-
-	private static final boolean _SUPPORTS_ALTER_COLUMN_NAME = true;
-
-	private static final boolean _SUPPORTS_ALTER_COLUMN_TYPE = true;
-
-	private static final boolean _SUPPORTS_DB_PARTITION = false;
-
-	private static final boolean _SUPPORTS_DDL_ROLLBACK = true;
-
-	private static final boolean _SUPPORTS_DUPLICATED_INDEX_NAME = true;
-
-	private static final boolean _SUPPORTS_INLINE_DISTINCT = true;
-
-	private static final boolean _SUPPORTS_QUERYING_AFTER_EXCEPTION = true;
-
-	private static final boolean _SUPPORTS_SCROLLABLE_RESULTS = true;
-
-	private static final boolean _SUPPORTS_UPDATE_WITH_INNER_JOIN = true;
 
 	private static final Log _log = LogFactoryUtil.getLog(BaseDB.class);
 

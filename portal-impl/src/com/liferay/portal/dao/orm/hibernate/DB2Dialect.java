@@ -81,7 +81,7 @@ public class DB2Dialect extends org.hibernate.dialect.DB2Dialect {
 
 	@Override
 	public boolean supportsVariableLimit() {
-		return _SUPPORTS_VARIABLE_LIMIT;
+		return false;
 	}
 
 	protected void addQueryForLimitedRows(
@@ -97,8 +97,6 @@ public class DB2Dialect extends org.hibernate.dialect.DB2Dialect {
 
 	private static final String _SQL_FETCH_FIRST_LIMITED_ROWS_ONLY =
 		"FETCH FIRST [$LIMIT$] ROWS ONLY";
-
-	private static final boolean _SUPPORTS_VARIABLE_LIMIT = false;
 
 	private final DB2LimitHandler _db2LimitHandler = new DB2LimitHandler();
 

@@ -18,16 +18,12 @@ public class SQLServer2005Dialect
 
 	@Override
 	public boolean supportsLimitOffset() {
-		return _SUPPORTS_LIMIT_OFFSET;
+		return true;
 	}
 
 	@Override
 	public boolean supportsVariableLimit() {
-		return _SUPPORTS_VARIABLE_LIMIT;
+		return false;
 	}
-
-	private static final boolean _SUPPORTS_LIMIT_OFFSET = true;
-
-	private static final boolean _SUPPORTS_VARIABLE_LIMIT = false;
 
 }

@@ -130,7 +130,7 @@ public class PostgreSQLDB extends BaseDB {
 
 	@Override
 	public boolean isSupportsDBPartition() {
-		return _SUPPORTS_DB_PARTITION;
+		return true;
 	}
 
 	@Override
@@ -140,7 +140,7 @@ public class PostgreSQLDB extends BaseDB {
 
 	@Override
 	public boolean isSupportsQueryingAfterException() {
-		return _SUPPORTS_QUERYING_AFTER_EXCEPTION;
+		return false;
 	}
 
 	@Override
@@ -320,7 +320,7 @@ public class PostgreSQLDB extends BaseDB {
 	}
 
 	protected boolean isSupportsDuplicatedIndexName() {
-		return _SUPPORTS_DUPLICATED_INDEX_NAME;
+		return false;
 	}
 
 	@Override
@@ -484,12 +484,6 @@ public class PostgreSQLDB extends BaseDB {
 		Types.DOUBLE, Types.INTEGER, Types.BIGINT, Types.VARCHAR, Types.VARCHAR,
 		Types.VARCHAR
 	};
-
-	private static final boolean _SUPPORTS_DB_PARTITION = true;
-
-	private static final boolean _SUPPORTS_DUPLICATED_INDEX_NAME = false;
-
-	private static final boolean _SUPPORTS_QUERYING_AFTER_EXCEPTION = false;
 
 	private static final Pattern _oidPattern = Pattern.compile(
 		" oid(\\W|$)", Pattern.CASE_INSENSITIVE);

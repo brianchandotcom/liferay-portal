@@ -229,11 +229,11 @@ public class HypersonicDB extends BaseDB {
 	}
 
 	protected boolean isSupportsDDLRollback() {
-		return _SUPPORTS_DDL_ROLLBACK;
+		return false;
 	}
 
 	protected boolean isSupportsDuplicatedIndexName() {
-		return _SUPPORTS_DUPLICATED_INDEX_NAME;
+		return false;
 	}
 
 	@Override
@@ -328,9 +328,5 @@ public class HypersonicDB extends BaseDB {
 		Types.DOUBLE, Types.INTEGER, Types.BIGINT, Types.VARCHAR, Types.VARCHAR,
 		Types.VARCHAR
 	};
-
-	private static final boolean _SUPPORTS_DDL_ROLLBACK = false;
-
-	private static final boolean _SUPPORTS_DUPLICATED_INDEX_NAME = false;
 
 }

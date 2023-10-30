@@ -52,7 +52,7 @@ public class ServerDetector {
 	}
 
 	public static boolean isSupportsComet() {
-		return _SUPPORTS_COMET;
+		return false;
 	}
 
 	public static boolean isTomcat() {
@@ -168,8 +168,6 @@ public class ServerDetector {
 
 		return false;
 	}
-
-	private static final boolean _SUPPORTS_COMET = false;
 
 	private static final Log _log = LogFactoryUtil.getLog(ServerDetector.class);
 

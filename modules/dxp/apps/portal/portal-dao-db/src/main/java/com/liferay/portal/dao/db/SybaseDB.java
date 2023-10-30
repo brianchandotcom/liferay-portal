@@ -80,12 +80,12 @@ public class SybaseDB extends BaseDB {
 
 	@Override
 	public boolean isSupportsInlineDistinct() {
-		return _SUPPORTS_INLINE_DISTINCT;
+		return false;
 	}
 
 	@Override
 	public boolean isSupportsNewUuidFunction() {
-		return _SUPPORTS_NEW_UUID_FUNCTION;
+		return true;
 	}
 
 	@Override
@@ -287,10 +287,6 @@ public class SybaseDB extends BaseDB {
 		_SQL_TYPE_TIMESTAMP, Types.DOUBLE, Types.INTEGER, Types.DECIMAL,
 		Types.VARCHAR, Types.LONGVARCHAR, Types.VARCHAR
 	};
-
-	private static final boolean _SUPPORTS_INLINE_DISTINCT = false;
-
-	private static final boolean _SUPPORTS_NEW_UUID_FUNCTION = true;
 
 	private static final String[] _SYBASE = {
 		"--", "1", "0", "'19700101'", "getdate()", " image", " image",

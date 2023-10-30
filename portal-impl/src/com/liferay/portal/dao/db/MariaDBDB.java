@@ -57,9 +57,7 @@ public class MariaDBDB extends MySQLDB {
 
 	@Override
 	public boolean isSupportsDBPartition() {
-		return _SUPPORTS_DB_PARTITION;
+		return false;
 	}
-
-	private static final boolean _SUPPORTS_DB_PARTITION = false;
 
 }

@@ -119,17 +119,17 @@ public class MySQLDB extends BaseDB {
 
 	@Override
 	public boolean isSupportsDBPartition() {
-		return _SUPPORTS_DB_PARTITION;
+		return true;
 	}
 
 	@Override
 	public boolean isSupportsNewUuidFunction() {
-		return _SUPPORTS_NEW_UUID_FUNCTION;
+		return true;
 	}
 
 	@Override
 	public boolean isSupportsUpdateWithInnerJoin() {
-		return _SUPPORTS_UPDATE_WITH_INNER_JOIN;
+		return true;
 	}
 
 	protected MySQLDB(DBType dbType, int majorVersion, int minorVersion) {
@@ -264,11 +264,5 @@ public class MySQLDB extends BaseDB {
 		Types.TIMESTAMP, Types.DOUBLE, Types.INTEGER, Types.BIGINT,
 		Types.LONGVARCHAR, Types.LONGVARCHAR, Types.VARCHAR
 	};
-
-	private static final boolean _SUPPORTS_DB_PARTITION = true;
-
-	private static final boolean _SUPPORTS_NEW_UUID_FUNCTION = true;
-
-	private static final boolean _SUPPORTS_UPDATE_WITH_INNER_JOIN = true;
 
 }

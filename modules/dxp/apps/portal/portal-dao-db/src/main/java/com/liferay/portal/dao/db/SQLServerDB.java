@@ -168,7 +168,7 @@ public class SQLServerDB extends BaseDB {
 
 	@Override
 	public boolean isSupportsNewUuidFunction() {
-		return _SUPPORTS_NEW_UUID_FUNCTION;
+		return true;
 	}
 
 	@Override
@@ -570,8 +570,6 @@ public class SQLServerDB extends BaseDB {
 		Types.TIMESTAMP, Types.DOUBLE, Types.INTEGER, Types.BIGINT,
 		Types.NVARCHAR, Types.NVARCHAR, Types.NVARCHAR
 	};
-
-	private static final boolean _SUPPORTS_NEW_UUID_FUNCTION = true;
 
 	private static final Pattern _defaultValuePattern = Pattern.compile(
 		"^\\('(.*)'\\)|\\(\\((\\d*)\\)\\)", Pattern.CASE_INSENSITIVE);

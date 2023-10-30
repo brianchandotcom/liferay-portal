@@ -189,7 +189,7 @@ public class OracleDB extends BaseDB {
 
 	@Override
 	public boolean isSupportsInlineDistinct() {
-		return _SUPPORTS_INLINE_DISTINCT;
+		return false;
 	}
 
 	@Override
@@ -388,12 +388,12 @@ public class OracleDB extends BaseDB {
 	}
 
 	protected boolean isSupportsDDLRollback() {
-		return _SUPPORTS_DDL_ROLLBACK;
+		return false;
 	}
 
 	@Override
 	protected boolean isSupportsDuplicatedIndexName() {
-		return _SUPPORTS_DUPLICATED_INDEX_NAME;
+		return false;
 	}
 
 	@Override
@@ -522,12 +522,6 @@ public class OracleDB extends BaseDB {
 		_SQL_TYPE_BINARY_DOUBLE, Types.NUMERIC, Types.NUMERIC, Types.VARCHAR,
 		Types.CLOB, Types.VARCHAR
 	};
-
-	private static final boolean _SUPPORTS_DDL_ROLLBACK = false;
-
-	private static final boolean _SUPPORTS_DUPLICATED_INDEX_NAME = false;
-
-	private static final boolean _SUPPORTS_INLINE_DISTINCT = false;
 
 	private static final Log _log = LogFactoryUtil.getLog(OracleDB.class);
 

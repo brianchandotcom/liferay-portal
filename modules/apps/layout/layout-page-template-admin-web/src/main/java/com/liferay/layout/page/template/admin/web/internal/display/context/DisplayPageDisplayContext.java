@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
@@ -69,6 +70,44 @@ public class DisplayPageDisplayContext {
 				InfoItemServiceRegistry.class.getName());
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	public boolean existsMappedContentType(
+		LayoutPageTemplateEntry layoutPageTemplateEntry) {
+
+		if (layoutPageTemplateEntry.getClassNameId() == 0) {
+			return false;
+		}
+
+		JSONObject typeJSONObject = _getJSONObject(
+			getMappingTypesJSONArray(),
+			String.valueOf(layoutPageTemplateEntry.getClassNameId()));
+
+		if (typeJSONObject == null) {
+			return false;
+		}
+
+		JSONArray subtypesJSONArray = typeJSONObject.getJSONArray("subtypes");
+
+		if ((layoutPageTemplateEntry.getClassTypeId() == 0) &&
+			JSONUtil.isEmpty(subtypesJSONArray)) {
+
+			return true;
+		}
+
+		if (layoutPageTemplateEntry.getClassTypeId() == 0) {
+			return false;
+		}
+
+		JSONObject subtypeJSONObject = _getJSONObject(
+			subtypesJSONArray,
+			String.valueOf(layoutPageTemplateEntry.getClassTypeId()));
+
+		if (subtypeJSONObject == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public SearchContainer<?> getDisplayPagesSearchContainer() {
@@ -382,6 +421,18 @@ public class DisplayPageDisplayContext {
 		breadcrumbEntry.setURL(portletURL.toString());
 
 		return breadcrumbEntry;
+	}
+
+	private JSONObject _getJSONObject(JSONArray jsonArray, String id) {
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			if (Objects.equals(id, jsonObject.getString("id"))) {
+				return jsonObject;
+			}
+		}
+
+		return null;
 	}
 
 	private long _getLayoutPageTemplateCollectionId() {

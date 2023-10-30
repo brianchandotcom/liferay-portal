@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_DROPDOWN_LABEL</td>
+	<td>//*[@class='form-group' and contains(.,'${dropdownLabel}')] //*[@class="dropdown"]</td>
+	<td></td>
+	</tr>
+<tr>
 	<td>CAPTION</td>
 	<td>//div[contains(@class,'caption') and normalize-space()='${key_caption}']</td>
 	<td></td>

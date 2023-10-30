@@ -4400,8 +4400,8 @@ public class JenkinsResultsParserUtil {
 			}
 		}
 
+		boolean gitHubAPICall = false;
 		int retryCount = 0;
-		boolean gitHubApiCall = false;
 
 		while (true) {
 			try {
@@ -4487,7 +4487,7 @@ public class JenkinsResultsParserUtil {
 				Matcher matcher = _gitHubAPIURLPattern.matcher(url);
 
 				if (matcher.matches()) {
-					gitHubApiCall = true;
+					gitHubAPICall = true;
 
 					if (_updatingHttpRequestMethods.contains(
 							httpRequestMethod)) {
@@ -4519,7 +4519,7 @@ public class JenkinsResultsParserUtil {
 							httpRequestMethod.name());
 					}
 
-					if (gitHubApiCall &&
+					if (gitHubAPICall &&
 						(httpURLConnection instanceof HttpsURLConnection)) {
 
 						SSLContext sslContext = null;
@@ -4591,7 +4591,7 @@ public class JenkinsResultsParserUtil {
 
 				urlConnection.connect();
 
-				if (gitHubApiCall) {
+				if (gitHubAPICall) {
 					try {
 						int limit = Integer.parseInt(
 							urlConnection.getHeaderField("X-RateLimit-Limit"));

@@ -166,6 +166,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PUBLICATION_TABLE_ITEM</td>
+	<td>//div[contains(.,'${key_tableItem}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PUBLICATION_TIMELINE_BUTTON</td>
 	<td>//button[contains(@class,'change-tracking-timeline-button')]</td>
 	<td></td>
@@ -207,7 +212,7 @@
 </tr>
 <tr>
 	<td>PUBLISHED_PUBLICATION_NAME</td>
-	<td>//div[contains(@class,'publication-name') and contains(.,'${key_publicationName}')]</td>
+	<td>//div[contains(@class,'table-list-title')]/a[ contains(.,'${key_publicationName}')]</td>
 	<td></td>
 </tr>
 <tr>

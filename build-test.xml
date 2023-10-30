@@ -10448,41 +10448,6 @@ org.apache.catalina.tribes.level = FINE]]>
 		</if>
 	</target>
 
-	<target name="deploy-specific-marketplace-apps">
-		<get-testcase-property property.name="specific.marketplace.app.includes" />
-
-		<if>
-			<isset property="specific.marketplace.app.includes" />
-			<then>
-				<for list="${specific.marketplace.app.includes}" param="specific.marketplace.app.includes">
-					<sequential>
-						<local name="specific.marketplace.app.file.name" />
-
-						<basename file="${portal.legacy.dir}/@{specific.marketplace.app.includes}" property="specific.marketplace.app.file.name" />
-
-						<echo>Copying ${portal.legacy.dir}/@{specific.marketplace.app.includes} to ${liferay.home}/deploy/${specific.marketplace.app.file.name}.</echo>
-
-						<copy
-							file="${portal.legacy.dir}/@{specific.marketplace.app.includes}"
-							todir="${liferay.home}/deploy"
-						/>
-					</sequential>
-				</for>
-
-				<get-testcase-property property.name="restart.required" />
-
-				<if>
-					<equals arg1="${restart.required}" arg2="true" />
-					<then>
-						<start-app-server />
-
-						<stop-app-server />
-					</then>
-				</if>
-			</then>
-		</if>
-	</target>
-
 	<target name="deploy-specific-plugins">
 
 		<!--
@@ -16175,15 +16140,6 @@ mail.send.blacklist=</echo>
 		</antcall>
 
 		<antcall target="deploy-dependency-jars" />
-
-		<get-testcase-property property.name="specific.marketplace.app.includes" />
-
-		<if>
-			<isset property="specific.marketplace.app.includes" />
-			<then>
-				<antcall target="deploy-specific-marketplace-apps" />
-			</then>
-		</if>
 
 		<antcall target="deploy-extra-apps" />
 

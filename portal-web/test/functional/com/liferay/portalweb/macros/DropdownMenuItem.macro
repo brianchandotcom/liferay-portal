@@ -8,6 +8,15 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro viewDisabledItem(itemList = null) {
+		for (var item : list ${itemList}) {
+			AssertElementPresent(
+				key_text = ${item},
+				locator1 = "Dropdown#ANY_DISABLED");
+		}
+	}
+
+	@summary = "Default summary"
 	macro viewIcon(iconList = null) {
 		for (var icon : list ${iconList}) {
 			AssertVisible(
@@ -16,12 +25,4 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewDisabledItem(itemList = null) {
-		for (var item : list ${itemList}) {
-			AssertElementPresent(
-					key_text = "${item}",
-					locator1 = "Dropdown#ANY_DISABLED");
-		}
-	}
 }

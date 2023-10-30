@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -66,8 +67,7 @@ public class AssetTagFinderImpl
 							)
 						)
 					).and(
-						AssetTagTable.INSTANCE.name.like(
-							StringUtil.toLowerCase(name))
+						AssetTagTable.INSTANCE.name.like(_getName(name))
 					)
 				));
 
@@ -134,8 +134,7 @@ public class AssetTagFinderImpl
 						}
 
 						return predicate.and(
-							AssetTagTable.INSTANCE.name.like(
-								StringUtil.toLowerCase(name)));
+							AssetTagTable.INSTANCE.name.like(_getName(name)));
 					}
 				));
 
@@ -203,8 +202,7 @@ public class AssetTagFinderImpl
 					}
 
 					return predicate.and(
-						AssetTagTable.INSTANCE.name.like(
-							StringUtil.toLowerCase(name)));
+						AssetTagTable.INSTANCE.name.like(_getName(name)));
 				}
 			).orderBy(
 				orderByStep -> {
@@ -309,6 +307,14 @@ public class AssetTagFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	private String _getName(String name) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPS-194362")) {
+			name = StringUtil.toLowerCase(name);
+		}
+
+		return name;
 	}
 
 }

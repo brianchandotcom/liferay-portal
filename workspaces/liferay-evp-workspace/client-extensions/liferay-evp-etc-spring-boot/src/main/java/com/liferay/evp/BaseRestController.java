@@ -5,52 +5,55 @@
 
 package com.liferay.evp;
 
-import java.time.Duration;
+import java.net.URI;
 
 import java.util.Objects;
-import java.util.function.Consumer;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.function.Function;
 
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
-
-import reactor.util.retry.Retry;
+import org.springframework.web.util.UriBuilder;
 
 /**
  * @author Elvison Victor
  */
 public abstract class BaseRestController {
 
-	protected JSONObject get(Consumer<String> consumer, Jwt jwt, String path) {
+	protected JSONObject get(Jwt jwt, Function<UriBuilder, URI> uriFunction) {
 		return new JSONObject(
-			Objects.requireNonNull(
-				WebClient.create(
-					lxcDXPServerProtocol + "://" + lxcDXPMainDomain
-				).get(
-				).uri(
-					uriBuilder -> uriBuilder.path(
-						path
-					).build()
-				).header(
-					"Authorization", "Bearer " + jwt.getTokenValue()
-				).retrieve(
-				).bodyToMono(
-					String.class
-				).retryWhen(
-					Retry.backoff(
-						3, Duration.ofSeconds(1)
-					).doAfterRetry(
-						retrySignal -> _log.info("Retrying request")
-					)
-				).doOnNext(
-					response -> consumer.accept(response)
-				).subscribe()));
+			getWebClient(
+			).get(
+			).uri(
+				uriBuilder -> uriFunction.apply(uriBuilder)
+			).accept(
+				MediaType.APPLICATION_JSON
+			).header(
+				HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
+			).retrieve(
+			).bodyToMono(
+				String.class
+			).block());
+	}
+
+	protected WebClient getWebClient() {
+		return WebClient.builder(
+		).baseUrl(
+			lxcDXPServerProtocol + "://" + lxcDXPMainDomain
+		).exchangeStrategies(
+			ExchangeStrategies.builder(
+			).codecs(
+				clientCodecConfigurer -> clientCodecConfigurer.defaultCodecs(
+				).maxInMemorySize(
+					5 * 1024 * 1024
+				)
+			).build()
+		).build();
 	}
 
 	protected JSONObject put(Object bodyValue, Jwt jwt, String path) {
@@ -82,8 +85,5 @@ public abstract class BaseRestController {
 
 	@Value("${com.liferay.lxc.dxp.server.protocol}")
 	protected String lxcDXPServerProtocol;
-
-	private static final Log _log = LogFactory.getLog(
-		BaseRestController.class);
 
 }

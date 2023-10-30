@@ -5,7 +5,7 @@
 
 package com.liferay.evp;
 
-import com.liferay.petra.string.StringBundler;
+import java.util.Objects;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -37,66 +37,60 @@ public class ObjectActionOrganizationStatusRestController
 			evpOrganizationJSONObject.getJSONObject(
 				"objectEntryDTOEVPOrganization");
 
+		long evpOrganizationId =
+			objectEntryDTOEVPOrganizationJSONObject.getLong("id");
+
+		JSONObject responseJSONObject = get(
+			jwt,
+			uriBuilder -> uriBuilder.path(
+				"/o/c/evprequests"
+			).queryParam(
+				"filter",
+				"r_organization_c_evpOrganizationId eq '" + evpOrganizationId +
+					"'"
+			).build());
+
+		if (responseJSONObject.getInt("totalCount") == 0) {
+			return new ResponseEntity<>(json, HttpStatus.OK);
+		}
+
 		JSONObject propertiesJSONObject =
 			objectEntryDTOEVPOrganizationJSONObject.getJSONObject("properties");
 
 		JSONObject evpOrganizationStatusJSONObject =
 			propertiesJSONObject.getJSONObject("organizationStatus");
 
-		long evpOrganizationId =
-			objectEntryDTOEVPOrganizationJSONObject.getLong("id");
+		JSONArray itemsJSONArray = responseJSONObject.getJSONArray("items");
 
-		get(
-			response -> {
-				JSONObject evpRequestsJSONObject = new JSONObject(response);
+		for (int i = 0; i < itemsJSONArray.length(); i++) {
+			JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
 
-				if (evpRequestsJSONObject.getInt("totalCount") < 0) {
-					return;
-				}
+			JSONObject evpRequestsStatusJSONObject =
+				itemJSONObject.getJSONObject("requestStatus");
 
-				JSONArray itemsJSONArray = evpRequestsJSONObject.getJSONArray(
-					"items");
+			if (Objects.equals(
+					evpOrganizationStatusJSONObject.getString("key"),
+					"verified")) {
 
-				for (int i = 0; i < itemsJSONArray.length(); i++) {
-					JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
+				JSONObject evpRequestTypeJSONObject =
+					itemJSONObject.getJSONObject("requestType");
 
-					JSONObject evpRequestsStatusJSONObject =
-						itemJSONObject.getJSONObject("requestStatus");
+				_setRequestStatus(
+					evpRequestsStatusJSONObject, evpRequestTypeJSONObject);
+			}
+			else if (Objects.equals(
+						evpOrganizationStatusJSONObject.getString("key"),
+						"rejected")) {
 
-					if (evpOrganizationStatusJSONObject.getString(
-							"key"
-						).equals(
-							"verified"
-						)) {
+				evpRequestsStatusJSONObject.put(
+					"key", "rejected"
+				).put(
+					"name", "Rejected"
+				);
+			}
+		}
 
-						JSONObject evpRequestTypeJSONObject =
-							itemJSONObject.getJSONObject("requestType");
-
-						_setRequestStatus(
-							evpRequestsStatusJSONObject,
-							evpRequestTypeJSONObject);
-					}
-					else if (evpOrganizationStatusJSONObject.getString(
-								"key"
-							).equals(
-								"rejected"
-							)) {
-
-						evpRequestsStatusJSONObject.put(
-							"key", "rejected"
-						).put(
-							"name", "Rejected"
-						);
-					}
-				}
-
-				put(itemsJSONArray.toString(), jwt, "/o/c/evprequests/batch");
-			},
-			jwt,
-			StringBundler.concat(
-				"/o/c/evprequests?filter=",
-				"r_organization_c_evpOrganizationId eq '", evpOrganizationId,
-				"'"));
+		put(itemsJSONArray.toString(), jwt, "/o/c/evprequests/batch");
 
 		return new ResponseEntity<>(json, HttpStatus.OK);
 	}
@@ -105,11 +99,8 @@ public class ObjectActionOrganizationStatusRestController
 		JSONObject evpRequestsStatusJSONObject,
 		JSONObject evpRequestTypeJSONObject) {
 
-		if (evpRequestTypeJSONObject.getString(
-				"key"
-			).equals(
-				"grant"
-			)) {
+		if (Objects.equals(
+				evpRequestTypeJSONObject.getString("key"), "grant")) {
 
 			evpRequestsStatusJSONObject.put(
 				"key", "awaitingApprovalOnEVP"

@@ -43,35 +43,34 @@ public class ObjectActionRequestStatusRestController
 		long evpOrganizationId = propertiesJSONObject.getLong(
 			"r_organization_c_evpOrganizationId");
 
-		get(
-			response -> {
-				JSONObject evpOrganizationJSONObject = new JSONObject(response);
+		JSONObject evpOrganizationJSONObject = get(
+			jwt,
+			uriBuilder -> uriBuilder.path(
+				"/o/c/evporganizations/" + evpOrganizationId
+			).build());
 
-				String evpOrganizationStatus =
-					evpOrganizationJSONObject.getJSONObject(
-						"organizationStatus"
-					).getString(
-						"key"
-					);
+		String evpOrganizationStatus = evpOrganizationJSONObject.getJSONObject(
+			"organizationStatus"
+		).getString(
+			"key"
+		);
 
-				if (evpOrganizationStatus.equals("awaitingApprovalOnEVP")) {
-					HashMap<String, HashMap<String, String>> map =
-						HashMapBuilder.<String, HashMap<String, String>>put(
-							"requestStatus",
-							HashMapBuilder.put(
-								"key", "awaitOrganizationReview"
-							).put(
-								"name", "Awaiting Organization Review"
-							).build()
-						).build();
+		if (evpOrganizationStatus.equals("awaitingApprovalOnEVP")) {
+			HashMap<String, HashMap<String, String>> map =
+				HashMapBuilder.<String, HashMap<String, String>>put(
+					"requestStatus",
+					HashMapBuilder.put(
+						"key", "awaitOrganizationReview"
+					).put(
+						"name", "Awaiting Organization Review"
+					).build()
+				).build();
 
-					put(
-						new JSONObject(map), jwt,
-						"/o/c/evprequests/" +
-							objectEntryDTOEVPRequestJSONObject.getLong("id"));
-				}
-			},
-			jwt, "/o/c/evporganizations/" + evpOrganizationId);
+			put(
+				new JSONObject(map), jwt,
+				"/o/c/evprequests/" +
+					objectEntryDTOEVPRequestJSONObject.getLong("id"));
+		}
 
 		return new ResponseEntity<>(json, HttpStatus.OK);
 	}

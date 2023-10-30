@@ -5,13 +5,10 @@
 
 package com.liferay.analytics.batch.exportimport.internal.dispatch.executor;
 
-import com.liferay.analytics.batch.exportimport.manager.AnalyticsBatchExportImportManager;
-import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
 import com.liferay.dispatch.executor.BaseDispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
 import com.liferay.dispatch.executor.DispatchTaskStatus;
 import com.liferay.dispatch.model.DispatchLog;
-import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchLogLocalService;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
@@ -22,7 +19,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.Date;
-import java.util.List;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -31,28 +27,6 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseAnalyticsDispatchTaskExecutor
 	extends BaseDispatchTaskExecutor {
-
-	@Override
-	public void doExecute(
-			DispatchTrigger dispatchTrigger,
-			DispatchTaskExecutorOutput dispatchTaskExecutorOutput)
-		throws Exception {
-
-		if (!analyticsConfigurationRegistry.isActive()) {
-			return;
-		}
-
-		analyticsBatchExportImportManager.exportToAnalyticsCloud(
-			getBatchEngineExportTaskItemDelegateNames(),
-			dispatchTrigger.getCompanyId(),
-			getNotificationUnsafeConsumer(
-				dispatchTrigger.getDispatchTriggerId(),
-				dispatchTaskExecutorOutput),
-			getResourceLastModifiedDate(dispatchTrigger.getDispatchTriggerId()),
-			getResourceName(), dispatchTrigger.getUserId());
-	}
-
-	protected abstract List<String> getBatchEngineExportTaskItemDelegateNames();
 
 	protected UnsafeConsumer<String, Exception> getNotificationUnsafeConsumer(
 		long dispatchTriggerId,
@@ -79,8 +53,6 @@ public abstract class BaseAnalyticsDispatchTaskExecutor
 		return latestSuccessfulDispatchLog.getEndDate();
 	}
 
-	protected abstract String getResourceName();
-
 	protected void updateDispatchLog(
 			long dispatchLogId,
 			DispatchTaskExecutorOutput dispatchTaskExecutorOutput,
@@ -105,13 +77,6 @@ public abstract class BaseAnalyticsDispatchTaskExecutor
 			dispatchTaskExecutorOutput.getOutput(),
 			DispatchTaskStatus.IN_PROGRESS);
 	}
-
-	@Reference
-	protected AnalyticsBatchExportImportManager
-		analyticsBatchExportImportManager;
-
-	@Reference
-	protected AnalyticsConfigurationRegistry analyticsConfigurationRegistry;
 
 	@Reference
 	protected DispatchLogLocalService dispatchLogLocalService;

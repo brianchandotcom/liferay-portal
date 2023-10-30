@@ -85,7 +85,6 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
-import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -576,27 +575,6 @@ public class JournalDisplayContext {
 				_trashHelper);
 
 		return folderActionDropdownItems.getActionDropdownItems();
-	}
-
-	public List<BreadcrumbEntry> getFolderBreadcrumbEntries(
-			JournalFolder folder)
-		throws Exception {
-
-		List<BreadcrumbEntry> breadcrumbEntries =
-			JournalPortletUtil.getPortletBreadcrumbEntries(
-				folder, _httpServletRequest, _liferayPortletResponse);
-
-		BreadcrumbEntry breadcrumbEntry = breadcrumbEntries.get(
-			breadcrumbEntries.size() - 1);
-
-		breadcrumbEntry.setURL(
-			PortletURLBuilder.createRenderURL(
-				_liferayPortletResponse
-			).setParameter(
-				"folderId", folder.getFolderId()
-			).buildString());
-
-		return breadcrumbEntries;
 	}
 
 	public long getFolderId() {

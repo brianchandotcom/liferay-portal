@@ -25,13 +25,13 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createAPIFilter(filterValue = null,endpointId = null,virtualHost = null) {
-		Variables.assertDefined(parameterList = "${filterValue},${endpointId}");
+	macro createAPIFilter(filterValue = null,endpointERC = null,virtualHost = null) {
+		Variables.assertDefined(parameterList = "${filterValue},${endpointERC}");
 
 		var curl = FilterAPI._curlAPIFilter(virtualHost = ${virtualHost});
 		var body = '''
 			"oDataFilter": "${filterValue}",
-			"r_apiEndpointToAPIFilters_c_apiEndpointId": ${endpointId}
+			"r_apiEndpointToAPIFilters_c_apiEndpointERC": "${endpointERC}"
 		''';
 
 		var curl = StringUtil.add(${curl}, " -d { ${body} }", "");

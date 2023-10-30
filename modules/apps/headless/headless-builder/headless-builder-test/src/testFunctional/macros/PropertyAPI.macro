@@ -25,14 +25,14 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createAPIProperty(objectFieldERC = null,schemaId = null,name = null,virtualHost = null) {
-		Variables.assertDefined(parameterList = "${objectFieldERC},${name},${schemaId}");
+	macro createAPIProperty(objectFieldERC = null,schemaERC = null,name = null,virtualHost = null) {
+		Variables.assertDefined(parameterList = "${objectFieldERC},${name},${schemaERC}");
 
 		var curl = PropertyAPI._curlAPIProperty(virtualHost = ${virtualHost});
 		var body = '''
 			"name": "${name}",
 			"objectFieldERC": "${objectFieldERC}",
-			"r_apiSchemaToAPIProperties_c_apiSchemaId": "${schemaId}"
+			"r_apiSchemaToAPIProperties_c_apiSchemaERC": "${schemaERC}"
 		''';
 
 		var curl = StringUtil.add(${curl}, " -d { ${body} }", "");

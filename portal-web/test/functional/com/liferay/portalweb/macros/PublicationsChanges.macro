@@ -155,7 +155,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoMoveChangeToAnotherPublication {
+	macro gotoMoveChangeToAnotherPublication(changeCategory = null, targetPublicationName = null, changeTitle = null, changeOrder = null,) {
 		Search.searchCP(searchTerm = ${changeTitle});
 
 		Click(
@@ -177,7 +177,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro moveChangeToAnotherPublication {
+	macro moveChangeToAnotherPublication(moveFailed = null) {
 		Click(
 			key_text = "Move Changes",
 			locator1 = "Button#ANY");

@@ -14,6 +14,8 @@ CommerceOrderPaymentConstants.STATUS_AUTHORIZED;
 CommerceOrderPaymentConstants.STATUS_COMPLETED;
 CommerceOrderPaymentConstants.STATUS_PENDING;
 
+PortalUtil.getCurrentAndAncestorSiteGroupIds(themeDisplay.getScopeGroupId());
+
 for (CommerceOrderItem commerceOrderItem : commerceOrder.getCommerceOrderItems()) {
 	commerceOrderItem.getQuantity();
 }

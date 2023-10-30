@@ -1284,6 +1284,19 @@
 				Users_Orgs.organizationId IS NULL
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.kernel.service.persistence.UserFinder.joinByNoOrganizationsOrAccounts">
+		<![CDATA[
+			LEFT JOIN
+				Users_Orgs ON
+					User_.userId = Users_Orgs.userId
+			LEFT JOIN
+				AccountEntryUserRel ON
+					User_.userId = AccountEntryUserRel.accountUserId
+			WHERE
+				(Users_Orgs.organizationId IS NULL) AND
+				(AccountEntryUserRel.accountEntryId IS NULL)
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.kernel.service.persistence.UserFinder.joinByUserGroupRole">
 		<![CDATA[
 			INNER JOIN

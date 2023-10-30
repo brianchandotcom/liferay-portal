@@ -9992,19 +9992,6 @@ org.apache.catalina.tribes.level = FINE]]>
 		</if>
 	</target>
 
-	<target name="deploy-extra-apps">
-		<get-testcase-property property.name="extraapps.plugins.includes" />
-
-		<if>
-			<isset property="extraapps.plugins.includes" />
-			<then>
-				<ant antfile="build-test-plugins.xml" target="deploy-extra-apps">
-					<property name="plugins.includes" value="${extraapps.plugins.includes}" />
-				</ant>
-			</then>
-		</if>
-	</target>
-
 	<target name="deploy-latest-marketplace-apps">
 		<get-testcase-property property.name="deploy.latest.marketplace.app.disabled" />
 

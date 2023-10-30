@@ -8,12 +8,13 @@ import {useCustomerPortal} from '../../../context';
 import DeveloperKeysLayouts from '../../../layouts/DeveloperKeysLayout';
 import {LIST_TYPES} from '../../../utils/constants';
 
-const DXP = () => {
+const DXP = ({hasKeyComplimentary}) => {
 	const [{project, sessionId}] = useCustomerPortal();
 
 	return (
 		<div className="mr-4">
 			<ActivationKeysTable
+				hasKeyComplimentary={hasKeyComplimentary}
 				initialFilter="(startswith(productName,'DXP') or startswith(productName,'Digital'))"
 				productName="DXP"
 				project={project}

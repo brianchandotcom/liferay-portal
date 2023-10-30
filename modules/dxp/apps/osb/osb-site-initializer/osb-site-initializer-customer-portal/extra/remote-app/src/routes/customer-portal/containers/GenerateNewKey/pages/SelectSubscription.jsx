@@ -22,9 +22,11 @@ import {getLicenseKeyEndDatesByLicenseType} from '../utils/licenseKeyEndDateUtil
 
 const SelectSubscription = ({
 	accountKey,
+	hasKeyComplimentary,
 	infoSelectedKey,
 	productGroupName,
 	sessionId,
+	setHasKeyComplimentary,
 	setInfoSelectedKey,
 	setStep,
 	urlPreviousPage,
@@ -66,8 +68,6 @@ const SelectSubscription = ({
 	const [selectedKeyType, setSelectedKeyType] = useState(
 		infoSelectedKey?.licenseEntryType
 	);
-
-	const [hasKeyComplimentary, setHasKeyComplimentary] = useState(false);
 
 	const doesNotAllowPermanentLicense = !generateFormValues?.allowPermanentLicenses;
 

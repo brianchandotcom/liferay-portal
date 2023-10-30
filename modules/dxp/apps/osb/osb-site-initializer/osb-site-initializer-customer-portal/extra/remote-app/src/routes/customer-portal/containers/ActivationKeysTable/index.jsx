@@ -44,7 +44,7 @@ const messageDeactivateKey = i18n.translate(
 );
 
 const ActivationKeysTable = ({
-	infoSelectedKey,
+	hasKeyComplimentary,
 	initialFilter,
 	productName,
 	project,
@@ -251,7 +251,7 @@ const ActivationKeysTable = ({
 				<DownloadAlert
 					downloadStatus={newKeyGeneratedAlertStatus}
 					message={
-						infoSelectedKey?.selectedSubscription.complimentary
+						!hasKeyComplimentary
 							? messageNewKeyGeneratedAlert
 							: messageNewKeyGeneratedAlertForComplimentary
 					}

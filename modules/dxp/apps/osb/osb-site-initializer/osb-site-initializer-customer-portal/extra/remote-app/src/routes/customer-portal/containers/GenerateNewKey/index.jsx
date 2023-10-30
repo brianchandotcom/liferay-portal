@@ -15,7 +15,11 @@ import {STEP_TYPES} from './utils/constants/stepType';
 
 const ACTIVATION_ROOT_ROUTER = 'activation';
 
-const GenerateNewKey = ({productGroupName}) => {
+const GenerateNewKey = ({
+	hasKeyComplimentary,
+	productGroupName,
+	setHasKeyComplimentary,
+}) => {
 	const [{project, sessionId, userAccount}] = useCustomerPortal();
 	const [infoSelectedKey, setInfoSelectedKey] = useState();
 	const [step, setStep] = useState(STEP_TYPES.selectDescriptions);
@@ -52,9 +56,11 @@ const GenerateNewKey = ({productGroupName}) => {
 		[STEP_TYPES.selectDescriptions]: (
 			<SelectSubscription
 				accountKey={project?.accountKey}
+				hasKeyComplimentary={hasKeyComplimentary}
 				infoSelectedKey={infoSelectedKey}
 				productGroupName={productGroupName}
 				sessionId={sessionId}
+				setHasKeyComplimentary={setHasKeyComplimentary}
 				setInfoSelectedKey={setInfoSelectedKey}
 				setStep={setStep}
 				urlPreviousPage={urlPreviousPage}

@@ -120,6 +120,14 @@ public class ListTypeEntryLocalServiceTest {
 					getMessage());
 		}
 
+		// Only allowed bundles can add system listTypeEntries
+
+		AssertUtils.assertFailure(
+			ListTypeDefinitionSystemException.class, false,
+			"Only allowed bundles can add system list type entries",
+			() -> _testAddListTypeEntry(
+				_systemListTypeDefinition.getListTypeDefinitionId(), "baker"));
+
 		// Key is null
 
 		try {
@@ -165,14 +173,6 @@ public class ListTypeEntryLocalServiceTest {
 				"No ListTypeDefinition exists with the primary key 0",
 				noSuchListTypeDefinitionException.getMessage());
 		}
-
-		// System list type definition
-
-		AssertUtils.assertFailure(
-			ListTypeDefinitionSystemException.class, false,
-			"Only allowed bundles can add system list type entries",
-			() -> _testAddListTypeEntry(
-				_systemListTypeDefinition.getListTypeDefinitionId(), "baker"));
 
 		ListTypeEntry listTypeEntry =
 			_listTypeEntryLocalService.addListTypeEntry(

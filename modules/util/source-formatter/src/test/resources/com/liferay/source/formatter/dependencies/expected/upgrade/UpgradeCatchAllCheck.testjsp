@@ -18,5 +18,7 @@ for (CommerceOrderItem commerceOrderItem : commerceOrder.getCommerceOrderItems()
 	commerceOrderItem.getQuantity();
 }
 
+PortalUtil.getCurrentAndAncestorSiteGroupIds(themeDisplay.getScopeGroupId());
+
 DLURLHelperUtil.getImagePreviewURL(null, null);
 %>

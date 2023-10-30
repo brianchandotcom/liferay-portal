@@ -56,6 +56,14 @@ public interface ObjectField extends ObjectFieldModel, PersistedModel {
 
 	public java.util.List<ObjectFieldSetting> getObjectFieldSettings();
 
+	public String getSortableDBColumnName();
+
+	public boolean hasInsertValues();
+
+	public boolean hasUniqueValues();
+
+	public boolean hasUpdateValues();
+
 	public boolean isDeletionAllowed()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

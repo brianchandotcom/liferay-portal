@@ -8,6 +8,7 @@ import {z} from 'zod';
 
 const zodSchema = {
 	accountCreator: z.object({
+		accounts: z.any().array().optional(),
 		agreeToTermsAndConditions: z.boolean(),
 		companyName: z
 			.string()

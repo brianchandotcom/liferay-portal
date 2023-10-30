@@ -60,7 +60,7 @@ TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	public static final String TABLE_SQL_DROP = "drop table AssetTag";
 
 	public static final String[] TABLE_SQL_ADD_INDEXES = {
-		"create unique index IX_D63322F9 on AssetTag (groupId, name[$COLUMN_LENGTH:75$])",
+		"create index IX_D63322F9 on AssetTag (groupId, name[$COLUMN_LENGTH:75$])",
 		"create index IX_C43137AF on AssetTag (name[$COLUMN_LENGTH:75$])",
 		"create index IX_84C501E4 on AssetTag (uuid_[$COLUMN_LENGTH:75$], companyId)",
 		"create unique index IX_B6ACB166 on AssetTag (uuid_[$COLUMN_LENGTH:75$], groupId)"

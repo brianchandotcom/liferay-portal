@@ -63,7 +63,7 @@ create index IX_5B6AC3B8 on AssetEntry (visible, ctCollectionId);
 
 create index IX_E534924E on AssetTag (ctCollectionId);
 create index IX_24286918 on AssetTag (groupId, ctCollectionId);
-create unique index IX_AA52E757 on AssetTag (groupId, name[$COLUMN_LENGTH:75$], ctCollectionId);
+create index IX_AA52E757 on AssetTag (groupId, name[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_7A6CD00D on AssetTag (name[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_71579042 on AssetTag (uuid_[$COLUMN_LENGTH:75$], companyId, ctCollectionId);
 create index IX_E7450E22 on AssetTag (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);

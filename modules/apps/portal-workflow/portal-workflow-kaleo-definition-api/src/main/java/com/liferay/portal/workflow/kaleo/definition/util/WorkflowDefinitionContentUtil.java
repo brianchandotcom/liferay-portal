@@ -37,6 +37,12 @@ import org.xml.sax.InputSource;
 public class WorkflowDefinitionContentUtil {
 
 	public static String toJSON(String xml) throws WorkflowException {
+		if (Validator.isNull(xml) ||
+			xml.startsWith(StringPool.OPEN_CURLY_BRACE)) {
+
+			return xml;
+		}
+
 		try {
 			DocumentBuilderFactory documentBuilderFactory =
 				SecureXMLFactoryProviderUtil.newDocumentBuilderFactory();
@@ -59,6 +65,10 @@ public class WorkflowDefinitionContentUtil {
 	}
 
 	public static String toXML(String json) throws WorkflowException {
+		if (Validator.isNull(json) || json.startsWith(StringPool.LESS_THAN)) {
+			return json;
+		}
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("<?xml version=\"1.0\"?>");

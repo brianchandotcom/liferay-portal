@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Document Library Preview API
 Bundle-SymbolicName: com.liferay.document.library.preview.api
-Bundle-Version: 2.1.1
+Bundle-Version: 3.0.0
 Export-Package:\
 	com.liferay.document.library.preview.background.task,\
 	com.liferay.document.library.preview.processor

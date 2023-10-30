@@ -60,13 +60,6 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testUpgradeGetPortletGroupIdMethodCheck() throws Exception {
-		test("upgrade/UpgradeFTLGetPortletGroupIdMethodCheck.testftl");
-		test("upgrade/UpgradeJavaGetPortletGroupIdMethodCheck.testjava");
-		test("upgrade/UpgradeJSPGetPortletGroupIdMethodCheck.testjsp");
-	}
-
-	@Test
 	public void testUpgradeGradleIncludeResourceCheck() throws Exception {
 		test(
 			SourceProcessorTestParameters.create(

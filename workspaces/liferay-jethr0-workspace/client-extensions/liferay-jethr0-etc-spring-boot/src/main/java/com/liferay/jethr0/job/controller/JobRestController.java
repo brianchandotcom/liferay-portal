@@ -204,6 +204,8 @@ public class JobRestController {
 
 	@GetMapping
 	public ResponseEntity<String> jobs(@AuthenticationPrincipal Jwt jwt) {
+		JSONArray jobsJSONArray = new JSONArray();
+
 		List<JobEntity> jobEntities = new ArrayList<>(
 			_jobEntityRepository.getByState(JobEntity.State.COMPLETED));
 
@@ -220,8 +222,6 @@ public class JobRestController {
 				}
 
 			});
-
-		JSONArray jobsJSONArray = new JSONArray();
 
 		for (JobEntity jobEntity : jobEntities) {
 			jobsJSONArray.put(jobEntity.getJSONObject());

@@ -55,4 +55,9 @@ public interface DBPartitionSQL {
 			"drop view if exists ", schemaName, StringPool.PERIOD, viewName);
 	}
 
+	public String getPartitionName(Connection connection) throws SQLException;
+
+	public void setPartition(Connection connection, String schemaName)
+		throws SQLException;
+
 }

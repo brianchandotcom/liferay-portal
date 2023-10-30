@@ -33,4 +33,16 @@ public class DBPartitionPostgreSQL implements DBPartitionSQL {
 			" INCLUDING ALL)");
 	}
 
+	@Override
+	public String getPartitionName(Connection connection) throws SQLException {
+		return connection.getSchema();
+	}
+
+	@Override
+	public void setPartition(Connection connection, String schemaName)
+		throws SQLException {
+
+		connection.setSchema(schemaName);
+	}
+
 }

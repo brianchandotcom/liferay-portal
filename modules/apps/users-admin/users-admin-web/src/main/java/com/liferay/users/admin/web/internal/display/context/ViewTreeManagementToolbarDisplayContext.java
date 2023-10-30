@@ -452,8 +452,6 @@ public class ViewTreeManagementToolbarDisplayContext {
 		}
 
 		int navigationStatus = status;
-
-		if (Validator.isNotNull(getKeywords())) {
 			searchContainer.setResultsAndTotal(
 				() -> {
 					Hits hits =
@@ -504,18 +502,6 @@ public class ViewTreeManagementToolbarDisplayContext {
 					_themeDisplay.getCompanyId(),
 					_organization.getOrganizationId(), getKeywords(),
 					navigationStatus, null));
-		}
-		else {
-			searchContainer.setResultsAndTotal(
-				() -> OrganizationLocalServiceUtil.getOrganizationsAndUsers(
-					_themeDisplay.getCompanyId(),
-					_organization.getOrganizationId(), navigationStatus,
-					searchContainer.getStart(), searchContainer.getEnd(),
-					searchContainer.getOrderByComparator()),
-				OrganizationLocalServiceUtil.getOrganizationsAndUsersCount(
-					_themeDisplay.getCompanyId(),
-					_organization.getOrganizationId(), navigationStatus));
-		}
 
 		searchContainer.setRowChecker(
 			new OrganizationUserChecker(_renderResponse));

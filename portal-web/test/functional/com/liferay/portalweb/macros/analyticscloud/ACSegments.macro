@@ -647,7 +647,7 @@ definition {
 			locator1 = "ACSegments#ACTIVITIES_CRITERION");
 
 		Click(
-			locator1 = "ACSegments#ACTIVITIES_CRITERION_DROPDOWN",
+			locator1 = "ACSegments#CRITERION_DROPDOWN_VALUE",
 			operator = ${operator});
 	}
 

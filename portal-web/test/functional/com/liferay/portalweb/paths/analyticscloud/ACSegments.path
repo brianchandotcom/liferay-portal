@@ -392,8 +392,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ACTIVITIES_CRITERION_DROPDOWN</td>
-	<td>xpath=(//button[contains(@class,'dropdown-item') and text()='${operator}'])</td>
+	<td>CRITERION_DROPDOWN_VALUE</td>
+	<td>//button[contains(@class,'dropdown-item') and text()='${operator}']</td>
 	<td></td>
 </tr>
 <tr>

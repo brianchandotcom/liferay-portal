@@ -82,7 +82,7 @@ definition {
 			Click(locator1 = "ACSites#COHORT_ANALYSIS_SELECT_VISITOR_TYPE");
 
 			Click(
-				locator1 = "ACSegments#ACTIVITIES_CRITERION_DROPDOWN",
+				locator1 = "ACSegments#CRITERION_DROPDOWN_VALUE",
 				operator = "Anonymous Visitors");
 
 			AssertTextEquals(

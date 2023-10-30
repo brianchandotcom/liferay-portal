@@ -22,7 +22,6 @@ type BaseWrapperProps = {
 	label?: string;
 	required?: boolean;
 };
-
 const BaseWrapper: React.FC<BaseWrapperProps> = ({
 	boldLabel = false,
 	children,
@@ -55,9 +54,7 @@ const BaseWrapper: React.FC<BaseWrapperProps> = ({
 					{label}
 				</label>
 			)}
-
 			{children}
-
 			{description && (
 				<small className="form-text text-muted" id="Help">
 					{description}
@@ -66,9 +63,10 @@ const BaseWrapper: React.FC<BaseWrapperProps> = ({
 
 			{error && <BaseWarning>{error}</BaseWarning>}
 
-			{helpMessage && <p className="mt-1">{helpMessage}</p>}
+			{helpMessage && (
+				<p className="input__base-text mt-1">{helpMessage}</p>
+			)}
 		</ClayForm.Group>
 	);
 };
-
 export default BaseWrapper;

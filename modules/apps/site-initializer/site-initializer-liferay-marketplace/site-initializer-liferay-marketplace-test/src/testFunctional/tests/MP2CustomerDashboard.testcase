@@ -262,6 +262,29 @@ definition {
 		}
 	}
 
+	@description = "LPS-174809 | Verify if it is possible to upload an image for the form avatar"
+	@priority = 3
+	test CanUploadImage {
+		task ("Given that the user goes to the Customer Gate page") {
+			var portalURL = PropsUtil.get("portal.url");
+
+			Navigator.openSpecificURL(url = "${portalURL}/web/marketplace-site/customer-gate");
+
+			MP2Dashboards.clickOnTheGetStartedButton();
+		}
+
+		task ("When I upload the image") {
+			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+				key_field = "image",
+				locator1 = "MP2Dashboards#UPLOAD_FIELD",
+				value1 = "marketplace_icon.png");
+		}
+
+		task ("Then I should be able to assert that the upload was made") {
+			MP2Utils.assertUploadImage();
+		}
+	}
+
 	@description = "ISSD-1261 | After an Administrator Account invite a new member, assert if the user is able to see the email in their email box"
 	@priority = 5
 	test CanViewInviteEmail {

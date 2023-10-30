@@ -34,7 +34,10 @@ definition {
 						locator1 = "Select#GENERIC_SELECT_FIELD",
 						value1 = ${idpName});
 
-					Button.click(button = "Sign In");
+					AssertClick(
+						buttonId = "LoginPortlet",
+						locator1 = "Button#BUTTON_ID",
+						value1 = "Sign In");
 				}
 			}
 			else if (IsElementPresent(key_text = "Sign In", locator1 = "Button#ANY")) {

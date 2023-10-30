@@ -125,14 +125,14 @@ public class Query {
 						Query.this::_populateResourceContext,
 						${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}Resource ->
 							new ${javaMethodSignature.schemaName}Page(
-								${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}Resource.${javaMethodSignature.methodName}(_${javaMethodSignature.parentSchemaName?uncap_first}.get${freeMarkerTool.getGraphQLJavaParameterName(configYAML, openAPIYAML, javaMethodSignature.parentSchemaName, javaMethodSignature.javaMethodParameters[0])}()
+								${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}Resource.${javaMethodSignature.methodName}(_${javaMethodSignature.parentSchemaName?uncap_first}.get${freeMarkerTool.getGraphQLJavaParameterName(configYAML, openAPIYAML, javaMethodSignature.parentSchemaName, allSchemas, javaMethodSignature.javaMethodParameters[0])}()
 
 								<#if arguments?has_content>
 									, ${arguments}
 								</#if>)));
 				<#else>
 					return _applyComponentServiceObjects(_${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}ResourceComponentServiceObjects, Query.this::_populateResourceContext, ${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}Resource -> ${freeMarkerTool.getSchemaVarName(javaMethodSignature.schemaName)}Resource.${javaMethodSignature.methodName}(
-						_${javaMethodSignature.parentSchemaName?uncap_first}.get${freeMarkerTool.getGraphQLJavaParameterName(configYAML, openAPIYAML, javaMethodSignature.parentSchemaName, javaMethodSignature.javaMethodParameters[0])}()
+						_${javaMethodSignature.parentSchemaName?uncap_first}.get${freeMarkerTool.getGraphQLJavaParameterName(configYAML, openAPIYAML, javaMethodSignature.parentSchemaName, allSchemas, javaMethodSignature.javaMethodParameters[0])}()
 
 						<#if arguments?has_content>
 							, ${arguments}

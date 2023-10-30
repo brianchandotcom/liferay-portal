@@ -183,7 +183,7 @@ public class OpenAPIUtil {
 				}
 				else if (schema.getAllOfSchemas() != null) {
 					propertySchemas = OpenAPIParserUtil.getAllOfPropertySchemas(
-						schema);
+						schema, allSchemas);
 				}
 				else {
 					propertySchemas = schema.getPropertySchemas();
@@ -254,7 +254,7 @@ public class OpenAPIUtil {
 			}
 			else if (schema.getAllOfSchemas() != null) {
 				propertySchemas = OpenAPIParserUtil.getAllOfPropertySchemas(
-					schema);
+					schema, schemas);
 			}
 			else {
 				propertySchemas = schema.getPropertySchemas();

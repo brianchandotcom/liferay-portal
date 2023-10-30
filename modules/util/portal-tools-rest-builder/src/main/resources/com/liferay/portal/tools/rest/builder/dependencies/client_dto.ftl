@@ -38,7 +38,7 @@ public class ${schemaName} implements Cloneable, Serializable {
 
 	<#assign
 		enumSchemas = freeMarkerTool.getDTOEnumSchemas(openAPIYAML, schema)
-		properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema)
+		properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema, allSchemas)
 	/>
 
 	<#list properties?keys as propertyName>

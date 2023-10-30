@@ -130,12 +130,12 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 	<#assign
 		enumSchemas = freeMarkerTool.getDTOEnumSchemas(openAPIYAML, schema)
 		jsonMapPropertyNames = []
-		properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema)
+		properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema, allSchemas)
 	/>
 
 	<#list properties?keys as propertyName>
 		<#assign
-			propertySchema = freeMarkerTool.getDTOPropertySchema(propertyName, schema)
+			propertySchema = freeMarkerTool.getDTOPropertySchema(propertyName, schema, allSchemas)
 			propertyType = properties[propertyName]
 			sizeParameters = []
 		/>
@@ -335,7 +335,7 @@ public class ${schemaName} <#if dtoParentClassName?has_content>extends ${dtoPare
 
 		<#list properties?keys as propertyName>
 			<#assign
-				propertySchema = freeMarkerTool.getDTOPropertySchema(propertyName, schema)
+				propertySchema = freeMarkerTool.getDTOPropertySchema(propertyName, schema, allSchemas)
 				propertyType = properties[propertyName]
 			/>
 

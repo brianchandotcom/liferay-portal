@@ -52,7 +52,9 @@ import java.util.TreeSet;
  */
 public class OpenAPIParserUtil {
 
-	public static Map<String, Schema> getAllOfPropertySchemas(Schema schema) {
+	public static Map<String, Schema> getAllOfPropertySchemas(
+		Schema schema, Map<String, Schema> schemas) {
+
 		List<Schema> allOfSchemas = schema.getAllOfSchemas();
 
 		if (allOfSchemas.size() == 1) {
@@ -63,16 +65,10 @@ public class OpenAPIParserUtil {
 
 		for (Schema allOfSchema : allOfSchemas) {
 			if (allOfSchema.getReference() != null) {
-				Schema itemSchema = new Schema();
+				allOfSchema = schemas.get(
+					getReferenceName(allOfSchema.getReference()));
 
-				String reference = allOfSchema.getReference();
-
-				itemSchema.setReference(reference);
-
-				propertySchemas.put(
-					StringUtil.lowerCaseFirstLetter(
-						getReferenceName(reference)),
-					itemSchema);
+				propertySchemas.putAll(allOfSchema.getPropertySchemas());
 			}
 			else {
 				propertySchemas.putAll(allOfSchema.getPropertySchemas());

@@ -379,12 +379,12 @@ public abstract class Base${schemaName}ResourceImpl
 					</#list>
 				);
 
-				<#assign properties = freeMarkerTool.getWritableDTOProperties(configYAML, openAPIYAML, schema) />
+				<#assign properties = freeMarkerTool.getWritableDTOProperties(configYAML, openAPIYAML, schema, allSchemas) />
 
 				<#list properties?keys as propertyName>
-					<#if !freeMarkerTool.isDTOSchemaProperty(openAPIYAML, propertyName, schema) && !stringUtil.equals(propertyName, "id")>
+					<#if !freeMarkerTool.isDTOSchemaProperty(propertyName, schema, allSchemas) && !stringUtil.equals(propertyName, "id")>
 						if (${schemaVarName}.get${propertyName?cap_first}() != null) {
-							<#assign dtoPropertySchema = freeMarkerTool.getDTOPropertySchema(propertyName, schema) />
+							<#assign dtoPropertySchema = freeMarkerTool.getDTOPropertySchema(propertyName, schema, allSchemas) />
 
 							<#if dtoPropertySchema.isJsonMap()>
 								${properties[propertyName]} ${propertyName} = existing${schemaName}.get${propertyName?cap_first}();
@@ -426,7 +426,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 	<#if generateBatch>
 		<#assign
-			properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema)
+			properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema, allSchemas)
 
 			createStrategies = freeMarkerTool.getVulcanBatchImplementationCreateStrategies(javaMethodSignatures, properties)
 			updateStrategies = freeMarkerTool.getVulcanBatchImplementationUpdateStrategies(javaMethodSignatures)

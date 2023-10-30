@@ -57,13 +57,14 @@ public class DTOOpenAPIParser {
 
 	public static Map<String, String> getProperties(
 		ConfigYAML configYAML, boolean excludeReadOnly, OpenAPIYAML openAPIYAML,
-		Schema schema) {
+		Schema schema, Map<String, Schema> schemas) {
 
 		Map<String, String> javaDataTypeMap =
 			OpenAPIParserUtil.getJavaDataTypeMap(configYAML, openAPIYAML);
 		Map<String, String> properties = new TreeMap<>();
 
-		Map<String, Schema> propertySchemas = _getPropertySchemas(schema);
+		Map<String, Schema> propertySchemas = _getPropertySchemas(
+			schema, schemas);
 
 		for (Map.Entry<String, Schema> entry : propertySchemas.entrySet()) {
 			Schema propertySchema = entry.getValue();
@@ -85,17 +86,18 @@ public class DTOOpenAPIParser {
 	}
 
 	public static Map<String, String> getProperties(
-		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, String schemaName) {
+		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, String schemaName,
+		Map<String, Schema> schemas) {
 
-		Map<String, Schema> schemas = OpenAPIUtil.getAllSchemas(openAPIYAML);
-
-		Schema schema = schemas.get(schemaName);
-
-		return getProperties(configYAML, false, openAPIYAML, schema);
+		return getProperties(
+			configYAML, false, openAPIYAML, schemas.get(schemaName), schemas);
 	}
 
-	public static Schema getPropertySchema(String propertyName, Schema schema) {
-		Map<String, Schema> propertySchemas = _getPropertySchemas(schema);
+	public static Schema getPropertySchema(
+		String propertyName, Schema schema, Map<String, Schema> schemas) {
+
+		Map<String, Schema> propertySchemas = _getPropertySchemas(
+			schema, schemas);
 
 		for (Map.Entry<String, Schema> entry : propertySchemas.entrySet()) {
 			String propertySchemaName = entry.getKey();
@@ -113,9 +115,10 @@ public class DTOOpenAPIParser {
 	}
 
 	public static boolean isSchemaProperty(
-		OpenAPIYAML openAPIYAML, String propertyName, Schema schema) {
+		String propertyName, Schema schema, Map<String, Schema> schemas) {
 
-		Map<String, Schema> propertySchemas = _getPropertySchemas(schema);
+		Map<String, Schema> propertySchemas = _getPropertySchemas(
+			schema, schemas);
 
 		for (Map.Entry<String, Schema> entry : propertySchemas.entrySet()) {
 			String propertySchemaName = entry.getKey();
@@ -172,7 +175,9 @@ public class DTOOpenAPIParser {
 		return name;
 	}
 
-	private static Map<String, Schema> _getPropertySchemas(Schema schema) {
+	private static Map<String, Schema> _getPropertySchemas(
+		Schema schema, Map<String, Schema> schemas) {
+
 		Map<String, Schema> propertySchemas = null;
 
 		Items items = schema.getItems();
@@ -181,7 +186,8 @@ public class DTOOpenAPIParser {
 			propertySchemas = items.getPropertySchemas();
 		}
 		else if (schema.getAllOfSchemas() != null) {
-			propertySchemas = OpenAPIParserUtil.getAllOfPropertySchemas(schema);
+			propertySchemas = OpenAPIParserUtil.getAllOfPropertySchemas(
+				schema, schemas);
 		}
 		else {
 			propertySchemas = schema.getPropertySchemas();

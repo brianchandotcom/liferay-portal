@@ -52,10 +52,12 @@ public class PublicationsChangesTableFDSView extends BaseTableFDSView {
 			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
 		).add(
 			"status", "status",
-			fdsTableSchemaField ->
+			fdsTableSchemaField -> {
 				fdsTableSchemaField.setContentRendererModuleURL(
 					_npmResolver.resolveModuleName("change-tracking-web") +
-						"/publications/js/components/StatusRenderer")
+						"/publications/js/components/StatusRenderer");
+				fdsTableSchemaField.setSortable(true);
+			}
 		).add(
 			"changeType", "change-type",
 			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)

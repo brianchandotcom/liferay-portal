@@ -12,7 +12,6 @@ import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.IdEntityField;
-import com.liferay.portal.odata.entity.IntegerEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 
 import java.util.Map;
@@ -40,7 +39,11 @@ public class CTEntryEntityModel implements EntityModel {
 				"ownerId", locale -> Field.USER_ID, String::valueOf),
 			new IdEntityField(
 				"siteId", locale -> Field.GROUP_ID, String::valueOf),
-			new IntegerEntityField("status", locale -> Field.STATUS),
+			new EntityField(
+				"status", EntityField.Type.INTEGER,
+				locale -> Field.getSortableFieldName(
+					"statusLabel_".concat(LocaleUtil.toLanguageId(locale))),
+				locale -> "status", String::valueOf),
 			new StringEntityField(
 				"changeType",
 				locale -> Field.getSortableFieldName(

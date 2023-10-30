@@ -63,7 +63,23 @@ public class AMImageValidatorTest {
 	private FileVersion _getFileVersion(String mimeType) {
 		return new FileVersionWrapper(null) {
 
+			@Override
 			public long getCompanyId() {
+				return 0;
+			}
+
+			@Override
+			public String getFileName() {
+				return "test";
+			}
+
+			@Override
+			public long getFileVersionId() {
+				return 0;
+			}
+
+			@Override
+			public long getGroupId() {
 				return 0;
 			}
 

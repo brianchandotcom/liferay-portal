@@ -8,7 +8,7 @@
 			"id":20123,
 			"name":"Test Test"
 		},
-		"externalReferenceCode":"TEST-OBJECT-ENTRY",
+		"externalReferenceCode":"$[OBJECT_ENTRY_ERC]",
 		"keywords":[
 
 		],

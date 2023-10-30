@@ -447,7 +447,7 @@ public class BatchEngineBrokerTest {
 		File file = _createImportFile(
 			_addDLFileEntry(
 				TestPropsValues.getGroupId(), TestPropsValues.getUserId()),
-			_objectDefinition1.getExternalReferenceCode(),
+			_OBJECT_ENTRY_ERC_1, _objectDefinition1.getExternalReferenceCode(),
 			"object_entry_import_template.txt");
 
 		URI uri = file.toURI();
@@ -488,7 +488,7 @@ public class BatchEngineBrokerTest {
 			batchPlannerPlan.getBatchPlannerPlanId());
 
 		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-			_OBJECT_ENTRY_ERC, _objectDefinition1.getObjectDefinitionId());
+			_OBJECT_ENTRY_ERC_1, _objectDefinition1.getObjectDefinitionId());
 
 		_assertEqualsImport(
 			_getExpectedJsonNode(
@@ -555,6 +555,25 @@ public class BatchEngineBrokerTest {
 		_assertEqualsImport(
 			_getExpectedJsonNode(_objectDefinition1),
 			_objectDefinitionImportFieldNames, jsonNode.get(0));
+	}
+
+	@Test
+	public void testImportSiteScopeObjectEntry() throws Exception {
+		_objectDefinition1 = _publishObjectDefinition(
+			TestPropsValues.getCompanyId(), "TestObject",
+			ObjectDefinitionConstants.SCOPE_SITE, TestPropsValues.getUser());
+
+		// default group
+
+		_testImportSiteScopeObjectEntry(
+			TestPropsValues.getGroupId(), _OBJECT_ENTRY_ERC_1);
+
+		Group group = GroupTestUtil.addGroup();
+
+		// different group
+
+		_testImportSiteScopeObjectEntry(
+			group.getGroupId(), _OBJECT_ENTRY_ERC_2);
 	}
 
 	private Company _addCompany(long companyId, String webId) throws Exception {
@@ -705,8 +724,8 @@ public class BatchEngineBrokerTest {
 	}
 
 	private File _createImportFile(
-			DLFileEntry dlFileEntry, String objectDefinitionERC,
-			String templateName)
+			DLFileEntry dlFileEntry, String objectEntryERC,
+			String objectDefinitionERC, String templateName)
 		throws Exception {
 
 		Class<?> clazz = getClass();
@@ -721,7 +740,7 @@ public class BatchEngineBrokerTest {
 
 		Link link = LinkUtil.toLink(
 			_dlAppService, dlFileEntry, _dlURLHelper, objectDefinitionERC,
-			_OBJECT_ENTRY_ERC, _portal);
+			objectEntryERC, _portal);
 
 		template = StringUtil.replace(
 			template, "$[ATTACHMENT_HREF]", link.getHref());
@@ -735,6 +754,9 @@ public class BatchEngineBrokerTest {
 
 		template = StringUtil.replace(
 			template, "$[ATTACHMENT_NAME]", dlFileEntry.getFileName());
+
+		template = StringUtil.replace(
+			template, "$[OBJECT_ENTRY_ERC]", objectEntryERC);
 
 		_file.write(file, template);
 
@@ -1117,13 +1139,78 @@ public class BatchEngineBrokerTest {
 		return jsonNode;
 	}
 
+	private void _testImportSiteScopeObjectEntry(
+			long groupId, String objectEntryERC)
+		throws Exception {
+
+		File file = _createImportFile(
+			_addDLFileEntry(
+				TestPropsValues.getGroupId(), TestPropsValues.getUserId()),
+			objectEntryERC, _objectDefinition1.getExternalReferenceCode(),
+			"object_entry_import_template.txt");
+
+		URI uri = file.toURI();
+
+		BatchPlannerPlan batchPlannerPlan =
+			_batchPlannerPlanLocalService.addBatchPlannerPlan(
+				TestPropsValues.getUserId(), false,
+				BatchPlannerPlanConstants.EXTERNAL_TYPE_JSON, uri.toString(),
+				"com.liferay.object.rest.dto.v1_0.ObjectEntry",
+				RandomTestUtil.randomString(), 0, "C_TestObject", false);
+
+		for (String fieldName : _objectEntryImportFieldNames) {
+			_batchPlannerMappingLocalService.addBatchPlannerMapping(
+				TestPropsValues.getUserId(),
+				batchPlannerPlan.getBatchPlannerPlanId(), fieldName, "String",
+				fieldName, "String", StringPool.BLANK);
+		}
+
+		_batchPlannerPolicyLocalService.addBatchPlannerPolicy(
+			TestPropsValues.getUserId(),
+			batchPlannerPlan.getBatchPlannerPlanId(), "onErrorFail", "true");
+
+		_batchPlannerPolicyLocalService.addBatchPlannerPolicy(
+			TestPropsValues.getUserId(),
+			batchPlannerPlan.getBatchPlannerPlanId(), "siteId",
+			String.valueOf(groupId));
+
+		_objectMapper.setFilterProvider(
+			new SimpleFilterProvider() {
+				{
+					addFilter(
+						"Liferay.Vulcan",
+						VulcanPropertyFilter.of(
+							new HashSet<>(_objectEntryImportFieldNames), null));
+				}
+			});
+
+		JsonNode jsonNode = _objectMapper.readTree(file);
+
+		_batchEngineBroker.submit(batchPlannerPlan.getBatchPlannerPlanId());
+
+		_getFinishedBatchEngineImportTask(
+			batchPlannerPlan.getBatchPlannerPlanId());
+
+		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+			objectEntryERC, _objectDefinition1.getObjectDefinitionId());
+
+		Assert.assertEquals(objectEntry.getGroupId(), groupId);
+
+		_assertEqualsImport(
+			_getExpectedJsonNode(
+				_objectDefinition1, objectEntry.getObjectEntryId()),
+			_objectEntryImportFieldNames, jsonNode.get(0));
+	}
+
 	private static final String _OBJECT_DEFINITION_1_ERC =
 		"TEST-OBJECT-DEFINITION-1";
 
 	private static final String _OBJECT_DEFINITION_2_ERC =
 		"TEST-OBJECT-DEFINITION-2";
 
-	private static final String _OBJECT_ENTRY_ERC = "TEST-OBJECT-ENTRY";
+	private static final String _OBJECT_ENTRY_ERC_1 = "TEST-OBJECT-ENTRY-1";
+
+	private static final String _OBJECT_ENTRY_ERC_2 = "TEST-OBJECT-ENTRY-2";
 
 	private static final Map<String, List<String>> _ignoredImportFields =
 		HashMapBuilder.<String, List<String>>put(

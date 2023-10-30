@@ -237,10 +237,17 @@ definition {
 			serviceContext = ${serviceContext},
 			workflowAction = ${workflowAction});
 
+		if (!(isSet(masterPageTemplateStatus))) {
+			var masterPageTemplateStatus = "Draft";
+		}
+
+		var status = JSONLayoutpagetemplateUtil._getStatus(layoutPageTemplateStatus = ${masterPageTemplateStatus});
+
 		JSONLayoutpagetemplateAPI._addMasterPageTemplateEntry(
 			groupId = ${groupId},
 			masterPageTemplateEntryName = ${masterPageTemplateEntryName},
-			serviceContext = ${serviceContext});
+			serviceContext = ${serviceContext},
+			status = ${status});
 	}
 
 	@summary = "Default summary"

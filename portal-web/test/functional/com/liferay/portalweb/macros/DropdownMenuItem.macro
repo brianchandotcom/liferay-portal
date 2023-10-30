@@ -16,4 +16,11 @@ definition {
 		}
 	}
 
+	macro viewDisabledItem {
+		for (var item : list ${itemList}) {
+			AssertElementPresent(
+					key_text = "${item}",
+					locator1 = "Dropdown#ANY_DISABLED");
+		}
+	}
 }

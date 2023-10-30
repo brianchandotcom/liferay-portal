@@ -132,7 +132,7 @@ function SiteActivities({index, onBlur, onInputSetItemChange, touched, value}) {
 
 	const SITE_ACTIVITIES_CONTRIBUTOR_ACTIVITY_OPTIONS = getSiteActivitiesContributorActivityOptions();
 
-	const _handleChangeAttribute = (property) => (event) => {
+	const _handleChangeAttributeInput = (property) => (event) => {
 		onInputSetItemChange(index, {
 			attributes: {
 				...value.attributes,
@@ -280,7 +280,7 @@ function SiteActivities({index, onBlur, onInputSetItemChange, touched, value}) {
 			<div className="c-mb-0 form-group-autofit">
 				<CharacterThresholdInput
 					onBlur={onBlur('attributes.characterThreshold')}
-					onChange={_handleChangeAttribute('characterThreshold')}
+					onChange={_handleChangeAttributeInput('characterThreshold')}
 					touched={touched['attributes.characterThreshold']}
 					value={value.attributes?.characterThreshold}
 				/>
@@ -311,7 +311,7 @@ function SiteActivities({index, onBlur, onInputSetItemChange, touched, value}) {
 							aria-label={Liferay.Language.get(
 								'match-display-language'
 							)}
-							onChange={_handleChangeAttribute(
+							onChange={_handleChangeAttributeInput(
 								'matchDisplayLanguageId'
 							)}
 							value={value.attributes?.matchDisplayLanguageId}
@@ -335,7 +335,7 @@ function SiteActivities({index, onBlur, onInputSetItemChange, touched, value}) {
 				].includes(value.contributorName) && (
 					<MinimumSearchesInput
 						onBlur={onBlur('attributes.minCounts')}
-						onChange={_handleChangeAttribute('minCounts')}
+						onChange={_handleChangeAttributeInput('minCounts')}
 						touched={touched['attributes.minCounts']}
 						value={value.attributes?.minCounts}
 					/>

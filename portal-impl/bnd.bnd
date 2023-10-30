@@ -6,6 +6,7 @@ Export-Package:\
 	com.liferay.portal.dao.orm.hibernate,\
 	com.liferay.portal.deploy.hot,\
 	com.liferay.portal.events,\
+	com.liferay.portal.format.util,\
 	com.liferay.portal.freemarker,\
 	com.liferay.portal.minifier,\
 	com.liferay.portal.plugin,\

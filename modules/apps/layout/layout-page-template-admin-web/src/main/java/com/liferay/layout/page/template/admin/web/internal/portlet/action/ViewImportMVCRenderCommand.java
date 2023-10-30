@@ -6,14 +6,12 @@
 package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rubén Pulido
@@ -33,8 +31,5 @@ public class ViewImportMVCRenderCommand implements MVCRenderCommand {
 
 		return "/view_import.jsp";
 	}
-
-	@Reference
-	private FeatureFlagManager _featureFlagManager;
 
 }

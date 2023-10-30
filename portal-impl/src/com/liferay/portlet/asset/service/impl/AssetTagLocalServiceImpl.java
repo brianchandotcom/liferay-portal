@@ -8,6 +8,7 @@ package com.liferay.portlet.asset.service.impl;
 import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.asset.kernel.exception.AssetTagNameException;
 import com.liferay.asset.kernel.exception.DuplicateTagException;
+import com.liferay.asset.kernel.exception.NoSuchTagException;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
@@ -266,7 +267,23 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	 */
 	@Override
 	public AssetTag fetchTag(long groupId, String name) {
-		return assetTagPersistence.fetchByG_N(groupId, name);
+		List<AssetTag> assetTags = assetTagPersistence.findByG_LikeN(
+			groupId, _getName(name));
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-194362")) {
+			for (AssetTag assetTag : assetTags) {
+				if (StringUtil.equals(assetTag.getName(), name)) {
+					return assetTag;
+				}
+			}
+		}
+		else {
+			if (ListUtil.isNotEmpty(assetTags)) {
+				return assetTags.get(0);
+			}
+		}
+
+		return null;
 	}
 
 	/**
@@ -395,7 +412,16 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	 */
 	@Override
 	public AssetTag getTag(long groupId, String name) throws PortalException {
-		return assetTagPersistence.findByG_N(groupId, name);
+		AssetTag assetTag = fetchTag(groupId, name);
+
+		if (assetTag != null) {
+			return assetTag;
+		}
+
+		throw new NoSuchTagException(
+			StringBundler.concat(
+				"No AssetTag found for {groupId=", groupId, ", name=", name,
+				"}"));
 	}
 
 	/**

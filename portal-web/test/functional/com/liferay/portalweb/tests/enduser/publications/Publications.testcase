@@ -1464,15 +1464,39 @@ definition {
 			value1 = "Continua");
 
 		AssertTextEquals.assertPartialText(
-			key_tableHeader = "Publicación",
-			locator1 = "LexiconTable#TABLE_HEADER",
+			key_tableItem = "Publicación",
+			locator1 = "Publications#PUBLICATION_TABLE_ITEM",
 			value1 = "Publicación");
 
 		AssertTextEquals.assertPartialText(
-			key_columnName = "status",
-			key_tableEntry = "En progreso",
-			locator1 = "LexiconTable#TABLE_ENTRY_INFO",
-			value1 = "En progreso");
+			key_tableItem = "Descripción",
+			locator1 = "Publications#PUBLICATION_TABLE_ITEM",
+			value1 = "Descripción");
+
+		AssertTextEquals.assertPartialText(
+			key_tableItem = "Última modificacion",
+			locator1 = "Publications#PUBLICATION_TABLE_ITEM",
+			value1 = "Última modificacion");
+
+		AssertTextEquals.assertPartialText(
+			key_tableItem = "Última modificacion",
+			locator1 = "Publications#PUBLICATION_TABLE_ITEM",
+			value1 = "Última modificacion");
+
+		AssertTextEquals.assertPartialText(
+			key_tableItem = "Fecha de creación",
+			locator1 = "Publications#PUBLICATION_TABLE_ITEM",
+			value1 = "Fecha de creación");
+
+		AssertTextEquals.assertPartialText(
+			key_tableItem = "Estado",
+			locator1 = "Publications#PUBLICATION_TABLE_ITEM",
+			value1 = "Estado");
+
+		AssertTextEquals.assertPartialText(
+			key_tableItem = "Propietario",
+			locator1 = "Publications#PUBLICATION_TABLE_ITEM",
+			value1 = "Propietario");
 	}
 
 	@description = "This is a use case for LPS-153949. Users should always be able to modify their account regardless of whether they are in a publication."
@@ -2312,7 +2336,7 @@ definition {
 
 			Click(
 				key_publicationName = "Publication Name",
-				locator1 = "Publications#ELLIPSIS_IN_DATASET_DIAPLAY");
+				locator1 = "Publications#PUBLICATION_ELLIPSIS");
 
 			MenuItem.clickNoError(menuItem = "Revert");
 

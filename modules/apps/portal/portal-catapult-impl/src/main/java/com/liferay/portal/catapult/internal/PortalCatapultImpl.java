@@ -20,6 +20,11 @@ import com.liferay.portal.kernel.util.Http;
 
 import java.io.IOException;
 
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -30,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = PortalCatapult.class)
 public class PortalCatapultImpl implements PortalCatapult {
 
-	public byte[] launch(
+	public Future<byte[]> launch(
 			long companyId, Http.Method method,
 			String oAuth2ApplicationExternalReferenceCode,
 			JSONObject payloadJSONObject, String resourcePath, long userId)
@@ -61,12 +66,21 @@ public class PortalCatapultImpl implements PortalCatapult {
 				"Authorization", "Bearer " + accessToken),
 			oAuth2Application, userId);
 
-		try {
-			return _http.URLtoByteArray(options);
-		}
-		catch (IOException ioException) {
-			return ReflectionUtil.throwException(ioException);
-		}
+		ExecutorService executorService = Executors.newSingleThreadExecutor();
+
+		return executorService.submit(
+			new Callable<byte[]>() {
+
+				public byte[] call() {
+					try {
+						return _http.URLtoByteArray(options);
+					}
+					catch (IOException ioException) {
+						return ReflectionUtil.throwException(ioException);
+					}
+				}
+
+			});
 	}
 
 	private String _getLocation(

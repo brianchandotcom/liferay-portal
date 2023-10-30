@@ -9,6 +9,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.Http;
 
+import java.util.concurrent.Future;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -18,7 +20,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PortalCatapult {
 
-	public byte[] launch(
+	public Future<byte[]> launch(
 			long companyId, Http.Method method,
 			String oAuth2ApplicationExternalReferenceCode,
 			JSONObject payloadJSONObject, String resourcePath, long userId)

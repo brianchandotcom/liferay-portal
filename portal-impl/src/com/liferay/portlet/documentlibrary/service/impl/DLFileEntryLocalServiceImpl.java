@@ -2579,13 +2579,13 @@ public class DLFileEntryLocalServiceImpl
 
 				for (DLFileVersion fileVersion : fileVersions) {
 					_expireFileVersion(
-						fileEntry, fileVersion, userId, workflowContext,
+						userId, fileEntry, fileVersion, workflowContext,
 						serviceContext);
 				}
 			}
 			else {
 				_expireFileVersion(
-					fileEntry, latestFileVersion, userId, workflowContext,
+					userId, fileEntry, latestFileVersion, workflowContext,
 					serviceContext);
 			}
 
@@ -2600,7 +2600,7 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	private void _expireFileVersion(
-			DLFileEntry fileEntry, DLFileVersion fileVersion, long userId,
+			long userId, DLFileEntry fileEntry, DLFileVersion fileVersion,
 			Map<String, Serializable> workflowContext,
 			ServiceContext serviceContext)
 		throws PortalException {

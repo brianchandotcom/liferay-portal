@@ -10454,18 +10454,6 @@ org.apache.catalina.tribes.level = FINE]]>
 		Deploy plugin files to the deploy directory.
 		-->
 
-		<get-testcase-property property.name="hook.plugins.includes" />
-
-		<if>
-			<isset property="hook.plugins.includes" />
-			<then>
-				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
-					<property name="plugin.types" value="hooks" />
-					<property name="plugins.includes" value="${hook.plugins.includes}" />
-				</ant>
-			</then>
-		</if>
-
 		<get-testcase-property property.name="layouttpl.plugins.includes" />
 
 		<if>
@@ -16244,23 +16232,6 @@ mail.send.blacklist=</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="hook.plugins.includes" />
-
-		<if>
-			<and>
-				<contains string="${hook.plugins.includes}" substring="so-hook" />
-				<or>
-					<equals arg1="${app.server.type}" arg2="jboss" />
-					<equals arg1="${app.server.type}" arg2="wildfly" />
-				</or>
-			</and>
-			<then>
-				<start-app-server />
-
-				<stop-app-server />
-			</then>
-		</if>
-
 		<get-testcase-property property.name="websphere.ssl.truststore.enabled" />
 
 		<if>
@@ -17044,7 +17015,6 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 	<target name="wait-for-plugins-deployment">
 		<fail message="Please set the property ${test.class}." unless="test.class" />
 
-		<get-testcase-property property.name="hook.plugins.includes" />
 		<get-testcase-property property.name="layouttpl.plugins.includes" />
 		<get-testcase-property property.name="portlet.plugins.includes" />
 		<get-testcase-property property.name="theme.plugins.includes" />
@@ -17052,7 +17022,6 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 
 		<if>
 			<or>
-				<isset property="hook.plugins.includes" />
 				<isset property="layouttpl.plugins.includes" />
 				<isset property="portlet.plugins.includes" />
 				<isset property="required.plugins.includes" />

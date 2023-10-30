@@ -452,56 +452,52 @@ public class ViewTreeManagementToolbarDisplayContext {
 		}
 
 		int navigationStatus = status;
-			searchContainer.setResultsAndTotal(
-				() -> {
-					Hits hits =
-						OrganizationLocalServiceUtil.
-							searchOrganizationsAndUsers(
-								_themeDisplay.getCompanyId(),
-								_organization.getOrganizationId(),
-								getKeywords(), navigationStatus, null,
-								searchContainer.getStart(),
-								searchContainer.getEnd(),
-								new Sort[] {
-									new Sort(
-										"name",
-										Objects.equals(
-											searchContainer.getOrderByType(),
-											"desc")),
-									new Sort(
-										"lastName",
-										Objects.equals(
-											searchContainer.getOrderByType(),
-											"desc"))
-								});
 
-					List<Object> results = new ArrayList<>(hits.getLength());
+		searchContainer.setResultsAndTotal(
+			() -> {
+				Hits hits =
+					OrganizationLocalServiceUtil.searchOrganizationsAndUsers(
+						_themeDisplay.getCompanyId(),
+						_organization.getOrganizationId(), getKeywords(),
+						navigationStatus, null, searchContainer.getStart(),
+						searchContainer.getEnd(),
+						new Sort[] {
+							new Sort(
+								"name",
+								Objects.equals(
+									searchContainer.getOrderByType(), "desc")),
+							new Sort(
+								"lastName",
+								Objects.equals(
+									searchContainer.getOrderByType(), "desc"))
+						});
 
-					List<SearchResult> searchResults =
-						SearchResultUtil.getSearchResults(
-							hits, _themeDisplay.getLocale());
+				List<Object> results = new ArrayList<>(hits.getLength());
 
-					for (SearchResult searchResult : searchResults) {
-						String className = searchResult.getClassName();
+				List<SearchResult> searchResults =
+					SearchResultUtil.getSearchResults(
+						hits, _themeDisplay.getLocale());
 
-						if (className.equals(Organization.class.getName())) {
-							results.add(
-								OrganizationLocalServiceUtil.fetchOrganization(
-									searchResult.getClassPK()));
-						}
-						else if (className.equals(User.class.getName())) {
-							results.add(
-								UserLocalServiceUtil.fetchUser(
-									searchResult.getClassPK()));
-						}
+				for (SearchResult searchResult : searchResults) {
+					String className = searchResult.getClassName();
+
+					if (className.equals(Organization.class.getName())) {
+						results.add(
+							OrganizationLocalServiceUtil.fetchOrganization(
+								searchResult.getClassPK()));
 					}
+					else if (className.equals(User.class.getName())) {
+						results.add(
+							UserLocalServiceUtil.fetchUser(
+								searchResult.getClassPK()));
+					}
+				}
 
-					return results;
-				},
-				OrganizationLocalServiceUtil.searchOrganizationsAndUsersCount(
-					_themeDisplay.getCompanyId(),
-					_organization.getOrganizationId(), getKeywords(),
-					navigationStatus, null));
+				return results;
+			},
+			OrganizationLocalServiceUtil.searchOrganizationsAndUsersCount(
+				_themeDisplay.getCompanyId(), _organization.getOrganizationId(),
+				getKeywords(), navigationStatus, null));
 
 		searchContainer.setRowChecker(
 			new OrganizationUserChecker(_renderResponse));

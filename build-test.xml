@@ -13273,17 +13273,6 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			</then>
 		</if>
 
-		<get-testcase-property property.name="liferay.data.guard.enabled" />
-
-		<if>
-			<istrue value="${liferay.data.guard.enabled}" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					liferay.data.guard.enabled=${liferay.data.guard.enabled}
-				</echo>
-			</then>
-		</if>
-
 		<if>
 			<isset property="liferay.portal.branch" />
 			<then>
@@ -16044,15 +16033,6 @@ mail.send.blacklist=</echo>
 		<antcall target="hot-deploy-osgi-apps" />
 
 		<antcall target="deploy-osgi-modules" />
-
-		<get-testcase-property property.name="liferay.data.guard.enabled" />
-
-		<if>
-			<istrue value="${liferay.data.guard.enabled}" />
-			<then>
-				<antcall target="deploy-data-guard" />
-			</then>
-		</if>
 
 		<antcall target="deploy-specific-plugins">
 			<param name="test.class" value="${test.class}" />

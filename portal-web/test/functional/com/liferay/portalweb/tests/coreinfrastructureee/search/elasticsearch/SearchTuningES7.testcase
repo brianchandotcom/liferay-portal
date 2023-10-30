@@ -202,7 +202,7 @@ definition {
 				value1 = "\RETURN");
 
 			AssertTextNotEquals.assertNotPartialText(
-				locator1 = "SearchTuning#RESULT_RANKINGS_ADD_RESULT_RESULTS",
+				locator1 = "SearchTuning#RESULT_RANKINGS_ADD_RESULT_RESULT_TITLE_SPECIFIC_ORDER",
 				resultOrder = 1,
 				value1 = "tree.png");
 		}

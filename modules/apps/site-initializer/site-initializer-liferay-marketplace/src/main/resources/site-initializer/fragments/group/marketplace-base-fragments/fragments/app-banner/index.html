@@ -1,4 +1,25 @@
-[#assign publisherEmail = configuration.publisherEmail]
+[#assign publisherEmail = configuration.publisherEmail /]
+
+[#if themeDisplay?has_content]
+	[#assign scopeGroupId = themeDisplay.getScopeGroupId() /]
+[/#if]
+
+[#assign channel = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels?accountId=-1&filter=name eq 'Marketplace Channel' and siteGroupId eq '${scopeGroupId}'").items /]
+
+[#if channel?has_content ]
+	[#list channel as ch]
+		[#assign channelId = ch.id /]
+		[#break /]
+	[/#list]
+[/#if]
+
+[#assign
+	productId = configuration.productId
+/]
+
+[#if channelId?has_content && productId?has_content]
+	[#assign product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${productId}?accountId=-1&nestedFields=productSpecifications,categories") productCategories = product.categories![] /]
+[/#if]
 
 <div class="banner p-4 p-lg-5 p-md-5 p-sm-4">
 	<div class="banner__content d-flex justify-content-between align-items-center">
@@ -35,7 +56,15 @@
 
 						<div class="d-flex ml-3">
 							<div class="banner__tag-container">
-								<div class="d-flex flex-wrap" id="category-label"></div>
+								<div class="d-flex flex-wrap" id="category-label">
+									[#if productCategories?has_content ]
+    									[#assign solutionCategories = productCategories?filter(category -> category.vocabulary=="marketplace solution category") /]
+										[#list solutionCategories as category]
+											<span class="banner__product-tag rounded mb-2 mr-2 mt-2 py-2 px-3">${category.name}</span>
+										[/#list]
+									[/#if]
+
+								</div>
 							</div>
 						</div>
 					</div>

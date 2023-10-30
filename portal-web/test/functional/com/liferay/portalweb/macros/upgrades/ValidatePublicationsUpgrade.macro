@@ -41,8 +41,6 @@ definition {
 
 		PublicationsNavigator.openPublicationsAdmin();
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
 		PublicationsNavigator.gotoReviewChanges(
 			gotoPublicationsAdmin = "true",
 			publicationName = "Publication Name");
@@ -55,8 +53,6 @@ definition {
 		PublicationsNavigator.openPublicationsAdmin();
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		var key_publicationName = "Publication 2 Name";
 
 		AssertTextEquals(
 			locator1 = "Publications#LIST_OUT_OF_DATE_STATUS",
@@ -75,8 +71,6 @@ definition {
 		Publications.deletePublication(publicationName = "Publication 2 Name");
 
 		PublicationsNavigator.openPublicationsHistory();
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		AssertVisible(
 			key_publicationName = "Publication 1 Name",

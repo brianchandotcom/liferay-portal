@@ -5,6 +5,7 @@
 
 import '@testing-library/jest-dom/extend-expect';
 import {cleanup, render} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import NumericInputMask from '../../../src/main/resources/META-INF/resources/NumericInputMask/NumericInputMask';
@@ -102,11 +103,16 @@ describe('Field Numeric Input Mask', () => {
 			/>
 		);
 
-		const disabledOption = document.querySelector(
-			'.dropdown-item.disabled:last-of-type'
+		const divWithDecimalSymbol = document.querySelector(
+			'div[data-field-name="decimalSymbol"]'
 		);
+		const buttonInsideDiv = divWithDecimalSymbol.querySelector('button');
 
-		expect(disabledOption.getAttribute('label')).toBe('0,00');
+		userEvent.click(buttonInsideDiv);
+		const disabledOption = document.querySelector(
+			'.dropdown-item[disabled]'
+		);
+		expect(disabledOption.innerHTML).toBe('0,00');
 	});
 
 	it('disables the thousandsSeparator option if its equal to the selected decimal symbol option', () => {
@@ -121,10 +127,18 @@ describe('Field Numeric Input Mask', () => {
 			/>
 		);
 
-		const disabledOption = document.querySelector(
-			'.dropdown-item.disabled:last-of-type'
+		const divWithThousandsSeparator = document.querySelector(
+			'div[data-field-name="thousandsSeparator"]'
+		);
+		const buttonInsideDiv = divWithThousandsSeparator.querySelector(
+			'button'
 		);
 
-		expect(disabledOption.getAttribute('label')).toBe('1.000');
+		userEvent.click(buttonInsideDiv);
+		const disabledOption = document.querySelector(
+			'.dropdown-item[disabled]'
+		);
+
+		expect(disabledOption.innerHTML).toBe('1.000');
 	});
 });

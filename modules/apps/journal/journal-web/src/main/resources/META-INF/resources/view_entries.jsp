@@ -117,7 +117,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 								</c:choose>
 							</div>
 
-							<span class="text-secondary">
+							<span class="c-pt-1 text-secondary">
 								<liferay-ui:message arguments="<%= new String[] {modifiedDateDescription, HtmlUtil.escape(curArticle.getStatusByUserName())} %>" key="modified-x-ago-by-x" />
 							</span>
 
@@ -345,7 +345,7 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 								</c:choose>
 							</div>
 
-							<span class="text-secondary">
+							<span class="c-pt-1 text-secondary">
 								<liferay-ui:message arguments="<%= new String[] {createDateDescription, HtmlUtil.escape(curFolder.getUserName())} %>" key="modified-x-ago-by-x" />
 							</span>
 

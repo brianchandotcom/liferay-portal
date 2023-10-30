@@ -42,6 +42,7 @@ import com.liferay.object.exception.ObjectRelationshipDeletionTypeException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
+import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.internal.action.util.ObjectActionThreadLocal;
 import com.liferay.object.internal.entry.util.ObjectEntrySearchUtil;
 import com.liferay.object.internal.filter.parser.ObjectFilterParser;
@@ -2240,10 +2241,59 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private String _getAutoIncrementSortableValue(
-		String prefix, String suffix, Object value) {
+		String prefix, String suffix, String value) {
 
 		return StringUtil.removeLast(
-			StringUtil.removeFirst(String.valueOf(value), prefix), suffix);
+			StringUtil.removeFirst(value, prefix), suffix);
+	}
+
+	private String _getAutoIncrementValue(
+		String counterName, String initialValue, String prefix, String suffix,
+		String valueString) {
+
+		long currentId = 0;
+
+		Connection connection = _currentConnection.getConnection(
+			objectEntryPersistence.getDataSource());
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select currentId from Counter where name = ?")) {
+
+			preparedStatement.setString(1, counterName);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					currentId = resultSet.getLong(1);
+				}
+			}
+		}
+		catch (Exception exception) {
+			throw new SystemException(exception);
+		}
+
+		long value = GetterUtil.getLong(
+			_getAutoIncrementSortableValue(prefix, suffix, valueString));
+
+		if ((currentId == 0) || (value > currentId)) {
+			currentId = Math.max(value, GetterUtil.getLong(initialValue));
+
+			counterLocalService.reset(counterName, currentId);
+		}
+		else if (value == 0) {
+			currentId = counterLocalService.increment(counterName);
+		}
+		else {
+			currentId = value;
+		}
+
+		StringBuilder sb = new StringBuilder(String.valueOf(currentId));
+
+		while (sb.length() < initialValue.length()) {
+			sb.insert(0, CharPool.NUMBER_0);
+		}
+
+		return StringBundler.concat(
+			GetterUtil.getString(prefix), sb, GetterUtil.getString(suffix));
 	}
 
 	private Map<String, Object> _getColumns(ObjectDefinition objectDefinition) {
@@ -3398,24 +3448,33 @@ public class ObjectEntryLocalServiceImpl
 				if (objectField.compareBusinessType(
 						ObjectFieldConstants.BUSINESS_TYPE_AUTO_INCREMENT)) {
 
-					_setColumn(
-						dynamicObjectDefinitionTable, index++, objectField,
-						preparedStatement, values);
-
 					Column<?, ?> column =
 						dynamicObjectDefinitionTable.getColumn(
-							objectField.getSortableDBColumnName());
+							objectField.getDBColumnName());
+
+					String prefix = ObjectFieldSettingUtil.getValue(
+						ObjectFieldSettingConstants.NAME_PREFIX, objectField);
+					String suffix = ObjectFieldSettingUtil.getValue(
+						ObjectFieldSettingConstants.NAME_SUFFIX, objectField);
+
+					String value = _getAutoIncrementValue(
+						ObjectFieldUtil.getCounterName(objectField),
+						ObjectFieldSettingUtil.getValue(
+							ObjectFieldSettingConstants.NAME_INITIAL_VALUE,
+							objectField),
+						prefix, suffix,
+						GetterUtil.getString(
+							values.get(objectField.getName())));
+
+					_setColumn(
+						preparedStatement, index++, column.getSQLType(), value);
+
+					column = dynamicObjectDefinitionTable.getColumn(
+						objectField.getSortableDBColumnName());
 
 					_setColumn(
 						preparedStatement, index++, column.getSQLType(),
-						_getAutoIncrementSortableValue(
-							ObjectFieldSettingUtil.getValue(
-								ObjectFieldSettingConstants.NAME_PREFIX,
-								objectField),
-							ObjectFieldSettingUtil.getValue(
-								ObjectFieldSettingConstants.NAME_SUFFIX,
-								objectField),
-							values.get(objectField.getName())));
+						_getAutoIncrementSortableValue(prefix, suffix, value));
 
 					continue;
 				}

@@ -1297,4 +1297,61 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-196044. View improvement in page audit when adding a Button fragment."
+	@priority = 3
+	test ViewImprovementWhenAddingAButtonFragment {
+		task ("Given a button fragment added in content page") {
+			task ("Add a Button fragment to content page") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Basic Components",
+					fragmentName = "Button");
+			}
+
+			task ("Publish the page") {
+				PageEditor.publish();
+			}
+		}
+
+		task ("When go to a Page Audit sidebar") {
+			task ("Open Page Audit sidebar") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+				Click(
+					key_text = "search-experiences",
+					locator1 = "Icon#ANY");
+			}
+		}
+
+		task ("Then there's improvement in page audit and fragment admin") {
+			AssertCssValue(
+				locator1 = "PageAudit#PAGE_AUDIT_NAME",
+				locator2 = "height",
+				value1 = "21px");
+
+			AssertCssValue(
+				locator1 = "PageAudit#PAGE_AUDIT_TIME",
+				locator2 = "height",
+				value1 = "21px");
+
+			task ("Go to Fragment Admin > Basic Components") {
+				FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
+
+				FragmentsAdminNavigator.gotoCollection(collectionName = "Basic Components");
+			}
+
+			task ("View “CACHED” label color is in blue") {
+				AssertCssValue(
+					index = 1,
+					key_card = "Button",
+					locator1 = "Card#CARD_LABEL",
+					locator2 = "color",
+					value1 = "rgba(46, 90, 172, 1)");
+			}
+		}
+	}
+
 }

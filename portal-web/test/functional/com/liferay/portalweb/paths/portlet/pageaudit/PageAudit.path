@@ -126,6 +126,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_AUDIT_NAME</td>
+	<td>//div[contains(@class,'page-audit')]//div[contains(@class,'justify-content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_AUDIT_TIME</td>
+	<td>//div[contains(@class,'page-audit')]//p</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PANEL_PAGE_TITLE</td>
 	<td>//*[contains(@class, 'text-truncate') and contains(@title, '${pageName}')]</td>
 	<td></td>

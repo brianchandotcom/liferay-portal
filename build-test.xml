@@ -9951,15 +9951,6 @@ org.apache.catalina.tribes.level = FINE]]>
 
 		<echo>Deploy directory is ${deploy.dir}.</echo>
 
-		<if>
-			<not>
-				<isset property="liferay.dependency.jar" />
-			</not>
-			<then>
-				<get-testcase-property property.name="liferay.dependency.jar" />
-			</then>
-		</if>
-
 		<property name="liferay.dependency.dir" value="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies" />
 
 		<if>

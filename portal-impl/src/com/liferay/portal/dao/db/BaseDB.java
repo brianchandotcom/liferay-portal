@@ -427,6 +427,11 @@ public abstract class BaseDB implements DB {
 	}
 
 	@Override
+	public boolean isSupportsDBPartition() {
+		return _SUPPORTS_DB_PARTITION;
+	}
+
+	@Override
 	public boolean isSupportsInlineDistinct() {
 		return _SUPPORTS_INLINE_DISTINCT;
 	}
@@ -1580,6 +1585,8 @@ public abstract class BaseDB implements DB {
 	private static final boolean _SUPPORTS_ALTER_COLUMN_NAME = true;
 
 	private static final boolean _SUPPORTS_ALTER_COLUMN_TYPE = true;
+
+	private static final boolean _SUPPORTS_DB_PARTITION = false;
 
 	private static final boolean _SUPPORTS_DDL_ROLLBACK = true;
 

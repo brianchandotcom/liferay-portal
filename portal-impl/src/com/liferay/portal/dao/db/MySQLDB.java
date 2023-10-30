@@ -118,6 +118,11 @@ public class MySQLDB extends BaseDB {
 	}
 
 	@Override
+	public boolean isSupportsDBPartition() {
+		return _SUPPORTS_DB_PARTITION;
+	}
+
+	@Override
 	public boolean isSupportsNewUuidFunction() {
 		return _SUPPORTS_NEW_UUID_FUNCTION;
 	}
@@ -259,6 +264,8 @@ public class MySQLDB extends BaseDB {
 		Types.TIMESTAMP, Types.DOUBLE, Types.INTEGER, Types.BIGINT,
 		Types.LONGVARCHAR, Types.LONGVARCHAR, Types.VARCHAR
 	};
+
+	private static final boolean _SUPPORTS_DB_PARTITION = true;
 
 	private static final boolean _SUPPORTS_NEW_UUID_FUNCTION = true;
 

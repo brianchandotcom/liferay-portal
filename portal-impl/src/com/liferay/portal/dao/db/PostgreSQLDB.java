@@ -129,6 +129,11 @@ public class PostgreSQLDB extends BaseDB {
 	}
 
 	@Override
+	public boolean isSupportsDBPartition() {
+		return _SUPPORTS_DB_PARTITION;
+	}
+
+	@Override
 	public boolean isSupportsNewUuidFunction() {
 		return _supportsNewUuidFunction;
 	}
@@ -479,6 +484,8 @@ public class PostgreSQLDB extends BaseDB {
 		Types.DOUBLE, Types.INTEGER, Types.BIGINT, Types.VARCHAR, Types.VARCHAR,
 		Types.VARCHAR
 	};
+
+	private static final boolean _SUPPORTS_DB_PARTITION = true;
 
 	private static final boolean _SUPPORTS_DUPLICATED_INDEX_NAME = false;
 

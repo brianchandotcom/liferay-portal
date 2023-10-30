@@ -115,6 +115,8 @@ public interface DB {
 
 	public boolean isSupportsAlterColumnType();
 
+	public boolean isSupportsDBPartition();
+
 	public boolean isSupportsInlineDistinct();
 
 	public default boolean isSupportsNewUuidFunction() {

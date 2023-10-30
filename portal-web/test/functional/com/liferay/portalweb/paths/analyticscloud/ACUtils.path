@@ -170,6 +170,11 @@
 	<td>xpath=(//*[contains(@class,'recharts-pie-labels')])[${key_index}]//*[contains(text(),'${key_percentage}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>AUDIENCE_TOTAL_METRIC</td>
+	<td>xpath=(//div[@class='audience-report-chart-donut'])[${key_index}]//*[text()='${key_metricValue}']</td>
+	<td></td>
+</tr>
 
 <!-- CLICKABLE -->
 

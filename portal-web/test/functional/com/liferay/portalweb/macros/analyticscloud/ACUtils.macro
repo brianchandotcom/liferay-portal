@@ -198,6 +198,14 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro assertAudienceCardTotalNumber(index = null,metricValue = null) {
+		var key_index = ${index};
+		var key_metricValue = ${metricValue};
+
+		AssertElementPresent(locator1 = "ACUtils#AUDIENCE_TOTAL_METRIC");
+	}
+
+	@summary = "Default summary"
 	macro assertDataSourceName(dataSourceName = null) {
 		var itemName = ${dataSourceName};
 

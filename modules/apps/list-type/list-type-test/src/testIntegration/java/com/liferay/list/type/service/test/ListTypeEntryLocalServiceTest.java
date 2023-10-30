@@ -166,7 +166,7 @@ public class ListTypeEntryLocalServiceTest {
 				noSuchListTypeDefinitionException.getMessage());
 		}
 
-		// System list type definition
+		// Only allowed bundles can add system listTypeEntries
 
 		AssertUtils.assertFailure(
 			ListTypeDefinitionSystemException.class, false,

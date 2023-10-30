@@ -12137,39 +12137,6 @@ javascript.fast.load=false</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="blacklist.portal.profile.names.remove" />
-
-		<if>
-			<isset property="blacklist.portal.profile.names.remove" />
-			<then>
-				<beanshell>
-					<![CDATA[
-						StringBuilder sb = new StringBuilder();
-
-						String blacklistPortalProfileNamesString = project.getProperty("blacklist.portal.profile.names");
-
-						List blacklistPortalProfileNames = new ArrayList(Arrays.asList(blacklistPortalProfileNamesString.split(",")));
-
-						String blacklistPortalProfileNamesRemoveString = project.getProperty("blacklist.portal.profile.names.remove");
-
-						List blacklistPortalProfileNamesRemove = new ArrayList(Arrays.asList(blacklistPortalProfileNamesRemoveString.split(",")));
-
-						blacklistPortalProfileNames.removeAll(blacklistPortalProfileNamesRemove);
-
-						for (int i = 0; i < blacklistPortalProfileNames.size(); i++) {
-							sb.append(blacklistPortalProfileNames.get(i));
-
-							if ((i + 1) < blacklistPortalProfileNames.size()) {
-								sb.append(",");
-							}
-						}
-
-						project.setProperty("blacklist.portal.profile.names", sb.toString());
-					]]>
-				</beanshell>
-			</then>
-		</if>
-
 		<echo append="true" file="portal-impl/src/portal-ext.properties">
 
 module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.profile.names}</echo>

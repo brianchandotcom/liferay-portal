@@ -134,7 +134,11 @@ export default function ContentContainer({
 			)}
 
 			{values.type === 'email' && (
-				<Attachments setValues={setValues} values={values} />
+				<Attachments
+					objectDefinitions={objectDefinitions}
+					setValues={setValues}
+					values={values}
+				/>
 			)}
 		</Card>
 	);

@@ -4,18 +4,18 @@
  */
 
 import ClayButton from '@clayui/button';
+import {Option} from '@clayui/core';
 import ClayForm from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import ClayModal from '@clayui/modal';
 import {Observer} from '@clayui/modal/lib/types';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {
-	AutoComplete,
 	FormError,
 	Input,
 	REQUIRED_MSG,
+	SingleSelect,
 	getLocalizableLabel,
-	stringIncludesQuery,
 	useForm,
 } from '@liferay/object-js-components-web';
 import classNames from 'classnames';
@@ -74,6 +74,10 @@ interface TabTypeProps extends React.HTMLAttributes<HTMLElement> {
 	onChangeType: (type: string) => void;
 	selected: string;
 	type: string;
+}
+
+interface ObjectRelationshipItem extends LabelValueObject {
+	reverse: boolean;
 }
 
 function TabType({
@@ -135,24 +139,25 @@ export function ModalAddObjectLayoutTab({
 		dispatch,
 	] = useLayoutContext();
 	const [selectedType, setSelectedType] = useState(TYPES.FIELDS);
-	const [query, setQuery] = useState<string>('');
 	const [selectedRelationship, setSelectedRelationship] = useState<
 		TObjectRelationship
 	>();
 
-	const filteredRelationships = useMemo(() => {
-		return objectRelationships.filter(
-			({inLayout, label, name}) =>
-				stringIncludesQuery(
-					getLocalizableLabel(creationLanguageId, label, name),
-					query
-				) && !inLayout
-		);
-	}, [creationLanguageId, objectRelationships, query]);
+	const objectRelationshipItems = useMemo(() => {
+		const availableObjectRelationships: ObjectRelationshipItem[] = [];
 
-	const selectedRelationshipInfo: TLabelInfo = useMemo(() => {
-		return getRelationshipInfo(selectedRelationship?.reverse ?? false);
-	}, [selectedRelationship]);
+		objectRelationships.forEach(({inLayout, label, name, reverse}) => {
+			if (!inLayout) {
+				availableObjectRelationships.push({
+					label: getLocalizableLabel(creationLanguageId, label, name),
+					reverse,
+					value: name,
+				});
+			}
+		});
+
+		return availableObjectRelationships;
+	}, [creationLanguageId, objectRelationships]);
 
 	const onSubmit = (values: TObjectLayoutTab) => {
 		dispatch({
@@ -246,70 +251,53 @@ export function ModalAddObjectLayoutTab({
 					</ClayForm.Group>
 
 					{selectedType === TYPES.RELATIONSHIPS && (
-						<AutoComplete<TObjectRelationship>
-							contentRight={
-								<ClayLabel
-									className="label-inside-custom-select"
-									displayType={
-										selectedRelationshipInfo.displayType
-									}
-								>
-									{selectedRelationshipInfo.labelContent}
-								</ClayLabel>
-							}
-							emptyStateMessage={Liferay.Language.get(
-								'there-are-no-relationship-for-this-object'
-							)}
+						<SingleSelect
 							error={errors.objectRelationshipId}
 							id="modalAddObjectLayoutTab"
-							items={filteredRelationships}
+							items={objectRelationshipItems}
 							label={Liferay.Language.get('relationship')}
-							onActive={(item) =>
-								item.name === selectedRelationship?.name
-							}
-							onChangeQuery={setQuery}
-							onSelectItem={(item) => {
-								setSelectedRelationship(item);
+							onSelectionChange={(value) => {
+								const selectedObjectRelationship = objectRelationships.find(
+									({name}) => name === value
+								);
+
+								setSelectedRelationship(
+									selectedObjectRelationship
+								);
 								setValues({
-									objectRelationshipId: item.id,
+									objectRelationshipId:
+										selectedObjectRelationship?.id,
 								});
 							}}
-							query={query}
 							required
-							value={getLocalizableLabel(
-								creationLanguageId,
-								selectedRelationship?.label,
-								selectedRelationship?.name
-							)}
+							selectedKey={selectedRelationship?.name}
 						>
-							{({label, name, reverse}) => {
+							{({label, reverse, value}) => {
 								const relationshipInfo = getRelationshipInfo(
 									reverse
 								);
 
 								return (
-									<div className="d-flex justify-content-between">
-										<div>
-											{getLocalizableLabel(
-												creationLanguageId,
-												label,
-												name
-											)}
-										</div>
+									<Option key={value} textValue={label}>
+										<div className="d-flex justify-content-between">
+											<div>{label}</div>
 
-										<div className="object-web-relationship-item-label">
-											<ClayLabel
-												displayType={
-													relationshipInfo.displayType
-												}
-											>
-												{relationshipInfo.labelContent}
-											</ClayLabel>
+											<div className="object-web-relationship-item-label">
+												<ClayLabel
+													displayType={
+														relationshipInfo.displayType
+													}
+												>
+													{
+														relationshipInfo.labelContent
+													}
+												</ClayLabel>
+											</div>
 										</div>
-									</div>
+									</Option>
 								);
 							}}
-						</AutoComplete>
+						</SingleSelect>
 					)}
 				</ClayModal.Body>
 

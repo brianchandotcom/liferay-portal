@@ -6,9 +6,14 @@
 /// <reference types="react" />
 
 import './Attachments.scss';
-export declare function Attachments({setValues, values}: IProps): JSX.Element;
-interface IProps {
+interface AttachmentsProps {
+	objectDefinitions: ObjectDefinition[];
 	setValues: (values: Partial<NotificationTemplate>) => void;
 	values: Partial<NotificationTemplate>;
 }
+export declare function Attachments({
+	objectDefinitions,
+	setValues,
+	values,
+}: AttachmentsProps): JSX.Element;
 export {};

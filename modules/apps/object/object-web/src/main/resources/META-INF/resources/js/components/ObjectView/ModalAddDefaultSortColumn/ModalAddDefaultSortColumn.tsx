@@ -7,15 +7,11 @@ import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal from '@clayui/modal';
 import {Observer} from '@clayui/modal/lib/types';
-import {
-	AutoComplete,
-	SingleSelect,
-	filterArrayByQuery,
-} from '@liferay/object-js-components-web';
+import {SingleSelect} from '@liferay/object-js-components-web';
 import React, {FormEvent, useEffect, useMemo, useState} from 'react';
 
 import {TYPES, useViewContext} from '../objectViewContext';
-import {TObjectViewColumn, TObjectViewSortColumn} from '../types';
+import {TObjectViewColumn} from '../types';
 
 interface ModalAddDefaultSortColumnProps {
 	editingObjectFieldName?: string;
@@ -56,27 +52,26 @@ export function ModalAddDefaultSortColumn({
 		TObjectViewColumn[]
 	>(objectViewColumns);
 
-	const [selectedObjectSortColumn, setSelectedObjectSortColumn] = useState<
-		TObjectViewSortColumn
-	>();
+	const [
+		selectedObjectSortColumnName,
+		setSelectedObjectSortColumnValueName,
+	] = useState<string>();
 	const [selectedObjetSortValue, setSelectedObjetSortValue] = useState('asc');
-	const [query, setQuery] = useState<string>('');
 
-	const filteredObjectSortColumn = useMemo(() => {
-		return filterArrayByQuery({
-			array: availableViewColumns,
-			query,
-			str: 'fieldLabel',
-		});
-	}, [availableViewColumns, query]);
+	const objectSortColumnItems = useMemo(() => {
+		return availableViewColumns.map(({fieldLabel, objectFieldName}) => ({
+			label: fieldLabel,
+			value: objectFieldName,
+		}));
+	}, [availableViewColumns]);
 
 	const onSubmit = (event: FormEvent) => {
 		event.preventDefault();
 
-		let objectFieldName = selectedObjectSortColumn?.objectFieldName;
+		let objectFieldName = selectedObjectSortColumnName;
 
-		if (!objectFieldName && !!filteredObjectSortColumn.length) {
-			objectFieldName = filteredObjectSortColumn[0].objectFieldName;
+		if (!objectFieldName && !!objectSortColumnItems.length) {
+			objectFieldName = objectSortColumnItems[0].value;
 		}
 
 		if (isEditingSort && editingObjectFieldName) {
@@ -123,7 +118,9 @@ export function ModalAddDefaultSortColumn({
 					editingObjectFieldName
 			);
 
-			setSelectedObjectSortColumn(newSelectedObjectSortColumn);
+			setSelectedObjectSortColumnValueName(
+				newSelectedObjectSortColumn?.objectFieldName
+			);
 			setSelectedObjetSortValue(
 				newSelectedObjectSortColumn?.sortOrder as string
 			);
@@ -137,32 +134,19 @@ export function ModalAddDefaultSortColumn({
 				<ClayModal.Header>{header}</ClayModal.Header>
 
 				<ClayModal.Body>
-					<AutoComplete<TObjectViewColumn>
+					<SingleSelect
 						disabled={isEditingSort}
-						emptyStateMessage={Liferay.Language.get(
-							'there-are-no-columns-added-in-this-view-yet'
-						)}
 						id="objectViewModalAddDefaultSortColumn"
-						items={filteredObjectSortColumn}
+						items={objectSortColumnItems}
 						label={Liferay.Language.get('columns')}
-						onActive={(item) =>
-							item.objectFieldName ===
-							selectedObjectSortColumn?.objectFieldName
-						}
-						onChangeQuery={setQuery}
-						onSelectItem={(item) => {
-							setSelectedObjectSortColumn(item);
+						onSelectionChange={(value) => {
+							setSelectedObjectSortColumnValueName(
+								value as string
+							);
 						}}
-						query={query}
 						required
-						value={selectedObjectSortColumn?.fieldLabel}
-					>
-						{({fieldLabel}) => (
-							<div className="d-flex justify-content-between">
-								<div>{fieldLabel}</div>
-							</div>
-						)}
-					</AutoComplete>
+						selectedKey={selectedObjectSortColumnName}
+					/>
 
 					<SingleSelect<LabelValueObject>
 						items={SORT_OPTIONS}
@@ -188,7 +172,7 @@ export function ModalAddDefaultSortColumn({
 								disabled={
 									isEditingSort
 										? false
-										: !selectedObjectSortColumn
+										: !selectedObjectSortColumnName
 								}
 								displayType="primary"
 								type="submit"

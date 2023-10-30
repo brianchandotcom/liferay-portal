@@ -6,13 +6,13 @@
 /// <reference types="react" />
 
 import './ObjectDetails.scss';
-export declare type KeyValuePair = {
-	key: string;
-	value: string;
+export declare type SiteCompanyJSONArray = {
+	items: LabelValueObject[];
+	label: string;
 };
 interface EditObjectDetailsProps {
 	backURL: string;
-	companyKeyValuePair: KeyValuePair[];
+	companyJSONArray: SiteCompanyJSONArray[];
 	dbTableName: string;
 	externalReferenceCode: string;
 	hasPublishObjectPermission: boolean;
@@ -28,12 +28,12 @@ interface EditObjectDetailsProps {
 	pluralLabel: LocalizedValue<string>;
 	portletNamespace: string;
 	shortName: string;
-	siteKeyValuePair: KeyValuePair[];
+	siteJSONArray: SiteCompanyJSONArray[];
 	storageTypes: LabelValueObject[];
 }
 export default function EditObjectDetails({
 	backURL,
-	companyKeyValuePair,
+	companyJSONArray,
 	dbTableName,
 	externalReferenceCode,
 	hasPublishObjectPermission,
@@ -46,7 +46,7 @@ export default function EditObjectDetails({
 	pluralLabel,
 	portletNamespace,
 	shortName,
-	siteKeyValuePair,
+	siteJSONArray,
 	storageTypes,
 }: EditObjectDetailsProps): JSX.Element;
 export {};

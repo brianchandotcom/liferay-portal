@@ -3,29 +3,30 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {Option} from '@clayui/core';
 import ClayLabel from '@clayui/label';
 import {
 	API,
-	AutoComplete,
+	SingleSelect,
 	getLocalizableLabel,
 } from '@liferay/object-js-components-web';
-import React, {Dispatch, useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
+
+import './SelectObjectDefinition.scss';
 
 interface SelectObjectDefinitionProps {
 	creationLanguageId: Liferay.Language.Locale;
 	disabled?: boolean;
 	error?: string;
-	filteredRelationships: Partial<ObjectDefinition>[];
 	label?: string;
 	objectDefinition?: Partial<ObjectDefinition>;
 	objectDefinitionExternalReferenceCode?: string;
-	query: string;
+	objectDefinitions: Partial<ObjectDefinition>[];
 	readOnly?: boolean;
 	reverseOrder: boolean;
 	setObjectDefinition: (
 		value: React.SetStateAction<Partial<ObjectDefinition> | undefined>
 	) => void;
-	setQuery: Dispatch<React.SetStateAction<string>>;
 	setValues: (values: Partial<ObjectRelationship>) => void;
 }
 
@@ -33,29 +34,46 @@ export default function SelectObjectDefinition({
 	creationLanguageId,
 	disabled,
 	error,
-	filteredRelationships,
 	label,
 	objectDefinition,
 	objectDefinitionExternalReferenceCode,
-	query,
+	objectDefinitions,
 	readOnly,
 	reverseOrder,
 	setObjectDefinition,
-	setQuery,
 	setValues,
 }: SelectObjectDefinitionProps) {
-	const [selectedObjectDefinition, setSelectedObjectDefinition] = useState<
-		Partial<ObjectDefinition> | undefined
-	>(objectDefinition);
+	const [
+		selectedObjectDefinitionExternalReferenceCode,
+		setSelectedObjectDefinitionExternalReferenceCode,
+	] = useState<string | undefined>(objectDefinition?.externalReferenceCode);
+
+	const objectDefinitionsItems = useMemo(() => {
+		return objectDefinitions.map(
+			({externalReferenceCode, label, name, system}) => ({
+				label: getLocalizableLabel(
+					creationLanguageId as Liferay.Language.Locale,
+					label,
+					name
+				),
+				system,
+				value: externalReferenceCode,
+			})
+		);
+	}, [creationLanguageId, objectDefinitions]);
 
 	useEffect(() => {
 		if (readOnly && !objectDefinition) {
 			const fetchObjectDefinition = async () => {
-				const object = await API.getObjectDefinitionByExternalReferenceCode(
+				const {
+					externalReferenceCode,
+				} = await API.getObjectDefinitionByExternalReferenceCode(
 					objectDefinitionExternalReferenceCode as string
 				);
 
-				setSelectedObjectDefinition(object);
+				setSelectedObjectDefinitionExternalReferenceCode(
+					externalReferenceCode
+				);
 			};
 
 			fetchObjectDefinition();
@@ -64,60 +82,54 @@ export default function SelectObjectDefinition({
 	}, []);
 
 	return (
-		<AutoComplete<Partial<ObjectDefinition>>
+		<SingleSelect
 			disabled={disabled}
-			emptyStateMessage={Liferay.Language.get('no-objects-were-found')}
 			error={error}
 			id="objectRelationshipSelectObjectDefinition"
-			items={filteredRelationships}
+			items={objectDefinitionsItems}
 			label={label ?? ''}
-			onActive={(item) => item.name === selectedObjectDefinition?.name}
-			onChangeQuery={setQuery}
-			onSelectItem={(item) => {
+			onSelectionChange={(value) => {
+				const selectedObjectDefinition = objectDefinitions.find(
+					({externalReferenceCode}) => externalReferenceCode === value
+				);
+
 				if (!reverseOrder) {
 					setValues({
 						objectDefinitionExternalReferenceCode2:
-							item.externalReferenceCode,
-						objectDefinitionId2: item.id,
-						objectDefinitionName2: item.name,
+							selectedObjectDefinition?.externalReferenceCode,
+						objectDefinitionId2: selectedObjectDefinition?.id,
+						objectDefinitionName2: selectedObjectDefinition?.name,
 					});
 				}
 				else {
 					setValues({
 						objectDefinitionExternalReferenceCode1:
-							item.externalReferenceCode,
-						objectDefinitionId1: item.id,
+							selectedObjectDefinition?.externalReferenceCode,
+						objectDefinitionId1: selectedObjectDefinition?.id,
 					});
 				}
 
-				setObjectDefinition(item);
-				setSelectedObjectDefinition(item);
+				setObjectDefinition(selectedObjectDefinition);
+				setSelectedObjectDefinitionExternalReferenceCode(
+					selectedObjectDefinition?.externalReferenceCode
+				);
 			}}
-			query={query}
 			required
-			value={getLocalizableLabel(
-				selectedObjectDefinition?.defaultLanguageId as Liferay.Language.Locale,
-				selectedObjectDefinition?.label,
-				selectedObjectDefinition?.name
-			)}
+			selectedKey={selectedObjectDefinitionExternalReferenceCode}
 		>
-			{({label, name, system}) => (
-				<div className="d-flex justify-content-between">
-					<div>
-						{getLocalizableLabel(
-							creationLanguageId as Liferay.Language.Locale,
-							label,
-							name
-						)}
-					</div>
+			{({label, system, value}) => (
+				<Option key={value} textValue={label}>
+					<div className="lfr-objects__select-object-definition-option">
+						<div>{label}</div>
 
-					<ClayLabel displayType={system ? 'info' : 'warning'}>
-						{system
-							? Liferay.Language.get('system')
-							: Liferay.Language.get('custom')}
-					</ClayLabel>
-				</div>
+						<ClayLabel displayType={system ? 'info' : 'warning'}>
+							{system
+								? Liferay.Language.get('system')
+								: Liferay.Language.get('custom')}
+						</ClayLabel>
+					</div>
+				</Option>
 			)}
-		</AutoComplete>
+		</SingleSelect>
 	);
 }

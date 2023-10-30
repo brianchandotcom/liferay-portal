@@ -77,4 +77,65 @@ definition {
 		}
 	}
 
+	@description = "LPS-189380 - Verify the user can to see relationships tabs in the initial out-of-the-box layout of one level of children"
+	@priority = 4
+	test CanViewRelationTabOOTB {
+		property custom.properties = "feature.flag.LPS-187142=true";
+
+		task ("Given two custom object definitions, Santa Cruz and Andre, with a text field and a 1:M relationship between them") {
+			for (var objectName : list "Andre,SantaCruz") {
+				ObjectAdmin.addObjectViaAPI(
+					labelName = ${objectName},
+					objectName = ${objectName},
+					pluralLabelName = ${objectName});
+			}
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Type your name to become a Santa Cruz fan",
+				fieldName = "textField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "SantaCruz");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "SantaCruz",
+				objectName_2 = "Andre",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+		}
+
+		task ("and Given Andre is bound to Santa Cruz") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectRootModel.bindToRootObject(
+				childObject = "Andre",
+				rootObjectPath = "SantaCruz (Relationship)");
+
+			WaitForPageLoad();
+		}
+
+		task ("and Given an object entry in Santa Cruz") {
+			ObjectAdmin.publishObjectViaAPI(objectName = "SantaCruz");
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "textField",
+				objectName = "SantaCruze",
+				value = "Andre");
+		}
+
+		task ("When the user navigates to the object entry") {
+			ObjectAdmin.goToCustomObject(objectName = "SantaCruz");
+
+			ObjectPortlet.viewEntryDetails(entry = "Andre");
+		}
+
+		task ("Then there's a relationship tab to Andre") {
+			AssertElementPresent(
+				key_selectedTab = "Andre",
+				locator1 = "ObjectAdmin#VIEW_SELECTED_TAB_ON_OBJECT");
+		}
+	}
+
 }

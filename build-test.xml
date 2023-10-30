@@ -4783,17 +4783,6 @@ tell application "Safari" to quit
 				</then>
 			</if>
 
-			<get-testcase-property property.name="test.name.skip.portal.instance" />
-
-			<if>
-				<isset property="test.name.skip.portal.instance" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						test.name.skip.portal.instance=${test.name.skip.portal.instance}
-					</echo>
-				</then>
-			</if>
-
 			<get-testcase-property property.name="theme.file.name" />
 
 			<if>

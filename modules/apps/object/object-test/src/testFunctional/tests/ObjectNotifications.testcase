@@ -733,7 +733,6 @@ definition {
 		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
-		property test.name.skip.portal.instance = "ObjectNotifications#CanSendEmailViaActionDelete";
 		property test.run.type = "single";
 		property test.smtp.server.enabled = "true";
 
@@ -993,7 +992,6 @@ definition {
 		property custom.properties = "mail.send.blacklist=noreply@liferay.com,noreply@domain.invalid,test@domain.invalid";
 		property portal.acceptance = "true";
 		property test.liferay.virtual.instance = "false";
-		property test.name.skip.portal.instance = "ObjectNotifications#CanSendEmailViaActionUpdate";
 		property test.run.type = "single";
 		property test.smtp.server.enabled = "true";
 

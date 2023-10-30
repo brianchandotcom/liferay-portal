@@ -276,7 +276,6 @@ definition {
 	test CanViewCXOptionsInDataSetFragment {
 		property osgi.modules.includes = "liferay-sample-fds-filter";
 		property test.liferay.virtual.instance = "false";
-		property test.name.skip.portal.instance = "FrontendDataSetClientExtension#CanViewCXOptionsInDataSetFragment";
 
 		task ("Given a new Client Extension Frontend Data Set filter deployed") {
 			FileInstall.deployFileOnServer(jarFile = "liferay-sample-fds-filter.zip");

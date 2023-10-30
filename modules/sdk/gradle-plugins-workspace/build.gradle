@@ -240,15 +240,6 @@ gradleTest {
 	beforeTest {
 		println "  ${it.name}"
 	}
-
-	if (project.hasProperty("testDebug")) {
-		debug true
-		debugTests true
-	}
-
-	if (project.hasProperty("testShowOutput")) {
-		testLogging.showStandardStreams = true
-	}
 }
 
 gradleTestGenerator {

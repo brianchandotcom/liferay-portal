@@ -107,7 +107,7 @@ export function AutoIncrementFormBase({
 				}}
 				required
 				tooltip={Liferay.Language.get(
-					'define-the-initial-value-from-which-the-incremental-value-will-be-added'
+					'set-the-initial-numeric-value-to-increment-this-value-cannot-be-less-than-1'
 				)}
 				type="number"
 				value={

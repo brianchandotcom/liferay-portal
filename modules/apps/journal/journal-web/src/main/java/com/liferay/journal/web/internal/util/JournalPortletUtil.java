@@ -159,6 +159,11 @@ public class JournalPortletUtil {
 			breadcrumbEntries.add(folderBreadcrumbEntry);
 		}
 
+		BreadcrumbEntry lastBreadcrumbEntry = breadcrumbEntries.get(
+			breadcrumbEntries.size() - 1);
+
+		lastBreadcrumbEntry.setURL(null);
+
 		return breadcrumbEntries;
 	}
 

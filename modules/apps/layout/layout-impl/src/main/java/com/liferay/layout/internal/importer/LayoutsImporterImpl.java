@@ -253,23 +253,27 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			long groupId, long layoutPageTemplateCollectionId, File file)
 		throws Exception {
 
+		List<LayoutsImporterResultEntry> layoutsImporterResultEntries =
+			new ArrayList<>();
+
 		try (ZipFile zipFile = new ZipFile(file)) {
 			boolean valid = _validateMasterLayoutPageTemplateEntries(
-				groupId, zipFile);
+				groupId, layoutsImporterResultEntries, zipFile);
 
 			if (!valid) {
 				return false;
 			}
 
 			valid = _validateDisplayPageTemplatePageTemplateEntries(
-				groupId, zipFile);
+				groupId, layoutsImporterResultEntries, zipFile);
 
 			if (!valid) {
 				return false;
 			}
 
 			return _validateBasicLayoutPageTemplateEntries(
-				groupId, layoutPageTemplateCollectionId, zipFile);
+				groupId, layoutsImporterResultEntries,
+				layoutPageTemplateCollectionId, zipFile);
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {

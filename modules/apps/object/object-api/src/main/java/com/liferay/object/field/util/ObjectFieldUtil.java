@@ -20,6 +20,8 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldSettingLocalServiceUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -170,6 +172,12 @@ public class ObjectFieldUtil {
 			businessType, null, dbType, false, false, null, label, 0, name,
 			objectFieldSettings, ObjectFieldConstants.READ_ONLY_FALSE, null,
 			false, false);
+	}
+
+	public static String getCounterName(ObjectField objectField) {
+		return StringBundler.concat(
+			"auto.increment.object.field#", objectField.getCompanyId(),
+			StringPool.POUND, objectField.getObjectFieldId());
 	}
 
 	public static String getDateTimePattern(String value) {

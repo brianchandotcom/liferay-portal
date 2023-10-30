@@ -144,6 +144,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_METRIC_VALUE</td>
+	<td>//a[text()='${key_pageName}']/ancestor::td[contains(@class, 'table-cell')]/following::td[${key_index}][text()='${key_metricValue}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE_PATH</td>
 	<td>//*[name()='svg']//*[contains(@class, 'analytics-sankey-title') and @y='0']//*[text()='${key_pageName}']</td>
 	<td></td>

@@ -459,7 +459,7 @@ public class BatchEngineBrokerTest {
 				"com.liferay.object.rest.dto.v1_0.ObjectEntry",
 				RandomTestUtil.randomString(), 0, "C_TestObject", false);
 
-		for (String fieldName : _objectEntryExportFieldNames) {
+		for (String fieldName : _objectEntryImportFieldNames) {
 			_batchPlannerMappingLocalService.addBatchPlannerMapping(
 				TestPropsValues.getUserId(),
 				batchPlannerPlan.getBatchPlannerPlanId(), fieldName, "String",

@@ -32,6 +32,7 @@ components:
                     # @review
                     description:
                         optional field with the content of the document in Base64, can be embedded with nestedFields
+                        (the format of the nested field must be `<attachment field name>.fieldBase64`)
                     readOnly: true
                     type: string
                 id:

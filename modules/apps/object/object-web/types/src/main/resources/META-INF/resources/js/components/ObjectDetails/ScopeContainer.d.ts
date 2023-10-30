@@ -6,9 +6,9 @@
 /// <reference types="react" />
 
 import {FormError} from '@liferay/object-js-components-web';
-import {KeyValuePair} from './EditObjectDetails';
+import {SiteCompanyJSONArray} from './EditObjectDetails';
 interface ScopeContainerProps {
-	companyKeyValuePairs: KeyValuePair[];
+	companyJSONArray: SiteCompanyJSONArray[];
 	errors: FormError<ObjectDefinition>;
 	hasUpdateObjectDefinitionPermission: boolean;
 	isApproved: boolean;
@@ -16,11 +16,11 @@ interface ScopeContainerProps {
 	isRootDescendantNode: boolean;
 	onSubmit?: (editedObjectDefinition?: Partial<ObjectDefinition>) => void;
 	setValues: (values: Partial<ObjectDefinition>) => void;
-	siteKeyValuePairs: KeyValuePair[];
+	siteJSONArray: SiteCompanyJSONArray[];
 	values: Partial<ObjectDefinition>;
 }
 export declare function ScopeContainer({
-	companyKeyValuePairs,
+	companyJSONArray,
 	errors,
 	hasUpdateObjectDefinitionPermission,
 	isApproved,
@@ -28,7 +28,7 @@ export declare function ScopeContainer({
 	isRootDescendantNode,
 	onSubmit,
 	setValues,
-	siteKeyValuePairs,
+	siteJSONArray,
 	values,
 }: ScopeContainerProps): JSX.Element;
 export {};

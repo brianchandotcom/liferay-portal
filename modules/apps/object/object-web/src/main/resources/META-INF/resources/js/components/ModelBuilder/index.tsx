@@ -6,13 +6,13 @@
 import React from 'react';
 import {ReactFlowProvider} from 'react-flow-renderer';
 
-import {KeyValuePair} from '../ObjectDetails/EditObjectDetails';
+import {SiteCompanyJSONArray} from '../ObjectDetails/EditObjectDetails';
 import EditObjectFolder from './EditObjectFolder';
 import {ObjectFolderContextProvider} from './ModelBuilderContext/objectFolderContext';
 
 interface CustomObjectFolderWrapperProps {
 	baseResourceURL: string;
-	companyKeyValuePairs: KeyValuePair[];
+	companyJSONArray: SiteCompanyJSONArray[];
 	editObjectDefinitionURL: string;
 	filterOperators: TFilterOperators;
 	forbiddenChars: string[];
@@ -22,13 +22,13 @@ interface CustomObjectFolderWrapperProps {
 	objectDefinitionsStorageTypes: LabelValueObject[];
 	objectRelationshipDeletionTypes: LabelValueObject[];
 	objectWebLearnResources: ObjectWebLearnResources;
-	siteKeyValuePairs: KeyValuePair[];
+	siteJSONArray: SiteCompanyJSONArray[];
 	workflowStatusJSONArray: LabelValueObject[];
 }
 
 export default function CustomObjectFolderWrapper({
 	baseResourceURL,
-	companyKeyValuePairs,
+	companyJSONArray,
 	editObjectDefinitionURL,
 	filterOperators,
 	forbiddenChars,
@@ -38,7 +38,7 @@ export default function CustomObjectFolderWrapper({
 	objectDefinitionsStorageTypes,
 	objectRelationshipDeletionTypes,
 	objectWebLearnResources,
-	siteKeyValuePairs,
+	siteJSONArray,
 	workflowStatusJSONArray,
 }: CustomObjectFolderWrapperProps) {
 	return (
@@ -58,11 +58,11 @@ export default function CustomObjectFolderWrapper({
 				}}
 			>
 				<EditObjectFolder
-					companyKeyValuePairs={companyKeyValuePairs}
+					companyJSONArray={companyJSONArray}
 					objectRelationshipDeletionTypes={
 						objectRelationshipDeletionTypes
 					}
-					siteKeyValuePairs={siteKeyValuePairs}
+					siteJSONArray={siteJSONArray}
 				/>
 			</ObjectFolderContextProvider>
 		</ReactFlowProvider>

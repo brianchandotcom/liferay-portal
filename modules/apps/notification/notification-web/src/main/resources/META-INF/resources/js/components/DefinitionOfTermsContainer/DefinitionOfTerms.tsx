@@ -5,8 +5,7 @@
 
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import {
-	AutoComplete,
-	filterArrayByQuery,
+	SingleSelect,
 	getLocalizableLabel,
 	onActionDropdownItemClick,
 	openToast,
@@ -40,28 +39,25 @@ export function DefinitionOfTerms({
 	baseResourceURL,
 	objectDefinitions,
 }: DefinitionOfTermsProps) {
-	const [selectedEntity, setSelectedEntity] = useState<ObjectDefinition>();
-	const [query, setQuery] = useState<string>('');
-
+	const [selectedEntityId, setSelectedEntityId] = useState<number>();
 	const [entityFields, setObjectFieldTerms] = useState<Item[]>([]);
 	const [relationshipSections, setRelationshipSections] = useState<
 		RelationshipSections[]
 	>([]);
 
-	const filteredObjectDefinitions = useMemo(() => {
-		if (objectDefinitions) {
-			return filterArrayByQuery({
-				array: objectDefinitions,
-				query,
-				str: 'label',
-			});
-		}
-	}, [objectDefinitions, query]);
+	const objectDefinitionItems = useMemo(() => {
+		return objectDefinitions.map(
+			({defaultLanguageId, id, label, name}) => ({
+				label: getLocalizableLabel(defaultLanguageId, label, name),
+				value: id,
+			})
+		) as LabelValueObject<number>[];
+	}, [objectDefinitions]);
 
-	const getObjectFieldTerms = async (objectDefinition: ObjectDefinition) => {
+	const getObjectFieldTerms = async (objectDefinitionId: number) => {
 		const response = await fetch(
 			createResourceURL(baseResourceURL, {
-				objectDefinitionId: objectDefinition.id,
+				objectDefinitionId,
 				p_p_resource_id:
 					'/notification_templates/get_object_field_notification_template_terms',
 			}).toString()
@@ -96,37 +92,16 @@ export function DefinitionOfTerms({
 	return (
 		<>
 			<>
-				<AutoComplete<ObjectDefinition>
-					emptyStateMessage={Liferay.Language.get(
-						'no-entities-were-found'
-					)}
-					items={filteredObjectDefinitions ?? []}
+				<SingleSelect
+					items={objectDefinitionItems}
 					label={Liferay.Language.get('entity')}
-					onActive={(item) => item.name === selectedEntity?.name}
-					onChangeQuery={setQuery}
-					onSelectItem={(item) => {
-						getObjectFieldTerms(item);
-						setSelectedEntity(item);
+					onSelectionChange={(value) => {
+						getObjectFieldTerms(value as number);
+						setSelectedEntityId(value as number);
 					}}
-					query={query}
-					value={getLocalizableLabel(
-						selectedEntity?.defaultLanguageId as Locale,
-						selectedEntity?.label,
-						selectedEntity?.name as string
-					)}
-				>
-					{({defaultLanguageId, label, name}) => (
-						<div className="d-flex justify-content-between">
-							<div>
-								{getLocalizableLabel(
-									defaultLanguageId,
-									label,
-									name
-								)}
-							</div>
-						</div>
-					)}
-				</AutoComplete>
+					selectedKey={selectedEntityId}
+				/>
+
 				<div id="lfr-notification-web__definition-of-terms-table">
 					<FrontendDataSet
 						id="DefinitionOfTermsTable"

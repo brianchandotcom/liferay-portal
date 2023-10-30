@@ -8,13 +8,11 @@ import ClayModal from '@clayui/modal';
 import {Observer} from '@clayui/modal/lib/types';
 import {
 	API,
-	AutoComplete,
 	DatePicker,
 	Input,
 	MultiSelectItem,
 	MultipleSelect,
 	SingleSelect,
-	filterArrayByQuery,
 	getLocalizableLabel,
 } from '@liferay/object-js-components-web';
 import React, {
@@ -140,19 +138,19 @@ export function ModalAddFilter({
 
 	const [errors, setErrors] = useState<FilterErrors>({});
 
-	const [query, setQuery] = useState<string>('');
-
 	const [filterStartDate, setFilterStartDate] = useState('');
 	const [filterEndDate, setFilterEndDate] = useState('');
 
-	const filteredAvailableFields = useMemo(() => {
-		return filterArrayByQuery({
-			array: objectFields,
-			creationLanguageId: creationLanguageId as Liferay.Language.Locale,
-			query,
-			str: 'label',
-		});
-	}, [creationLanguageId, objectFields, query]);
+	const filterByItems = useMemo(() => {
+		return objectFields.map(({id, label, name}) => ({
+			label: getLocalizableLabel(
+				creationLanguageId as Liferay.Language.Locale,
+				label,
+				name
+			),
+			value: id,
+		})) as LabelValueObject<number>[];
+	}, [creationLanguageId, objectFields]);
 
 	const setEditingFilterType = () => {
 		const currentFilterColumn = currentFilters.find((filterColumn) => {
@@ -452,30 +450,28 @@ export function ModalAddFilter({
 
 			<ClayModal.Body>
 				{!editingFilter && (
-					<AutoComplete<ObjectField>
-						emptyStateMessage={Liferay.Language.get(
-							'there-are-no-columns-available'
-						)}
+					<SingleSelect
 						error={errors.selectedFilterBy}
 						id="modalAddFilterBy"
-						items={filteredAvailableFields}
+						items={filterByItems}
 						label={Liferay.Language.get('filter-by')}
-						onActive={(item) =>
-							item.name === selectedFilterBy?.name
-						}
-						onChangeQuery={setQuery}
-						onSelectItem={(item) => {
-							const userRelationship = !!item.objectFieldSettings?.find(
+						onSelectionChange={(value) => {
+							const selectedField = objectFields.find(
+								({id}) => id.toString() === value
+							);
+
+							const userRelationship = !!selectedField?.objectFieldSettings?.find(
 								({name, value}) =>
 									name === 'objectDefinition1ShortName' &&
 									value === 'User'
 							);
 
-							setSelectedFilterBy(item);
+							setSelectedFilterBy(selectedField);
 							setValue('');
 
 							if (
-								item.businessType === 'Relationship' &&
+								selectedField?.businessType ===
+									'Relationship' &&
 								userRelationship &&
 								aggregationFilter
 							) {
@@ -486,25 +482,9 @@ export function ModalAddFilter({
 
 							setSelectedFilterTypeValue(undefined);
 						}}
-						query={query}
 						required
-						value={getLocalizableLabel(
-							creationLanguageId as Liferay.Language.Locale,
-							selectedFilterBy?.label
-						)}
-					>
-						{({label, name}) => (
-							<div className="d-flex justify-content-between">
-								<div>
-									{getLocalizableLabel(
-										creationLanguageId as Liferay.Language.Locale,
-										label,
-										name
-									)}
-								</div>
-							</div>
-						)}
-					</AutoComplete>
+						selectedKey={selectedFilterBy?.id.toString()}
+					/>
 				)}
 
 				{selectedFilterBy &&

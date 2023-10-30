@@ -5,9 +5,8 @@
 
 import {
 	API,
-	AutoComplete,
+	SingleSelect,
 	getLocalizableLabel,
-	stringIncludesQuery,
 } from '@liferay/object-js-components-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
@@ -29,8 +28,7 @@ export default function SelectRelationship({
 		Liferay.Language.Locale
 	>();
 	const [objectFields, setObjectFields] = useState<ObjectField[]>([]);
-	const [query, setQuery] = useState<string>('');
-	const options = useMemo(
+	const objectFieldItems = useMemo(
 		() =>
 			objectFields.map(({label, name}) => {
 				return {
@@ -39,19 +37,11 @@ export default function SelectRelationship({
 						label,
 						name
 					),
-					name,
+					value: name,
 				};
 			}),
 		[creationLanguageId, objectFields]
 	);
-
-	const filteredOptions = useMemo(() => {
-		if (options) {
-			return options.filter((option) =>
-				stringIncludesQuery(option.label, query)
-			);
-		}
-	}, [options, query]);
 
 	const selectedValue = useMemo(() => {
 		return objectFields.find(({name}) => name === value);
@@ -96,37 +86,24 @@ export default function SelectRelationship({
 	}, [objectDefinitionExternalReferenceCode1]);
 
 	return (
-		<AutoComplete<LabelNameObject>
-			emptyStateMessage={Liferay.Language.get('no-parameters-were-found')}
+		<SingleSelect
 			error={error}
 			id="objectRelationshipSelectObjectRelationship"
-			items={filteredOptions ?? []}
+			items={objectFieldItems ?? []}
 			label={Liferay.Language.get('parameter')}
-			onActive={(item) => item.name === selectedValue?.name}
-			onChangeQuery={setQuery}
-			onSelectItem={({name}) => {
+			onSelectionChange={(value) => {
 				onChange(
-					objectFields.find(({name: fieldName}) => fieldName === name)
-						?.name!
+					objectFields.find(
+						({name: fieldName}) => fieldName === value
+					)?.name!
 				);
 			}}
-			query={query}
 			required
+			selectedKey={selectedValue?.name}
 			tooltip={Liferay.Language.get(
 				'choose-a-relationship-field-from-the-selected-object'
 			)}
-			value={getLocalizableLabel(
-				creationLanguageId as Liferay.Language.Locale,
-				selectedValue?.label,
-				selectedValue?.name
-			)}
 			{...otherProps}
-		>
-			{({label, name}) => (
-				<div className="d-flex justify-content-between">
-					{label ?? name}
-				</div>
-			)}
-		</AutoComplete>
+		/>
 	);
 }

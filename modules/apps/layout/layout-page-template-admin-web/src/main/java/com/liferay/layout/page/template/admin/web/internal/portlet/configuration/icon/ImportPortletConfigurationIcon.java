@@ -8,7 +8,6 @@ package com.liferay.layout.page.template.admin.web.internal.portlet.configuratio
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIcon;
@@ -110,9 +109,6 @@ public class ImportPortletConfigurationIcon
 	protected ServletContext getServletContext() {
 		return _servletContext;
 	}
-
-	@Reference
-	private FeatureFlagManager _featureFlagManager;
 
 	@Reference
 	private Language _language;

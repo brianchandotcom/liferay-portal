@@ -108,6 +108,14 @@
 	<td></td>
 </tr>
 
+<!-- DATA CONTROL & PRIVACY -->
+
+<tr>
+	<td>RETENTION_PERIOD</td>
+	<td>//button[contains(@class,'form-control')]</td>
+	<td></td>
+</tr>
+
 <!-- ADD DATA SOURCE SCREEN -->
 
 <tr>

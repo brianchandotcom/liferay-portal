@@ -450,14 +450,14 @@ definition {
 
 	@summary = "Default summary"
 	macro changeRetentionPeriodTo7Months() {
-		Click(locator1 = "OpenIDConnectLogin#OPENID_CONNECT_DROPDOWN_MENU");
+		Click(locator1 = "ACSettings#RETENTION_PERIOD");
 
 		KeyPress(
-			locator1 = "OpenIDConnectLogin#OPENID_CONNECT_DROPDOWN_MENU",
+			locator1 = "ACSettings#RETENTION_PERIOD",
 			value1 = "\UP");
 
 		KeyPress(
-			locator1 = "OpenIDConnectLogin#OPENID_CONNECT_DROPDOWN_MENU",
+			locator1 = "ACSettings#RETENTION_PERIOD",
 			value1 = "\ENTER");
 
 		Click(locator1 = "ACSettings#DELETE_CONFIRMATION_BUTTON");

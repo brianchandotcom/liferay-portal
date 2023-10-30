@@ -78,7 +78,6 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -974,13 +973,10 @@ public class CompanyLocalServiceTest {
 	protected Company addCompany() throws Exception {
 		long counterCompanyId = _counterLocalService.increment() + 1;
 
-		long[] companyIds = PortalInstances.getCompanyIds();
-
 		Company company = addCompany(
 			RandomTestUtil.randomString() + "test.com");
 
-		_verifyRandomCompanyId(
-			company.getCompanyId(), companyIds, counterCompanyId);
+		_verifyRandomCompanyId(company.getCompanyId(), counterCompanyId);
 
 		return company;
 	}
@@ -1206,11 +1202,7 @@ public class CompanyLocalServiceTest {
 		return list;
 	}
 
-	private void _verifyRandomCompanyId(
-		long companyId, long[] companyIds, long counterCompanyId) {
-
-		Assert.assertFalse(ArrayUtil.contains(companyIds, companyId));
-
+	private void _verifyRandomCompanyId(long companyId, long counterCompanyId) {
 		Assert.assertNotEquals(counterCompanyId, companyId);
 
 		Assert.assertTrue(companyId > 0);

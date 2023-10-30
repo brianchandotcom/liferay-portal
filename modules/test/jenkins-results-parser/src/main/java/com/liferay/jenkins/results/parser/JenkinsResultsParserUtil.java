@@ -4401,7 +4401,7 @@ public class JenkinsResultsParserUtil {
 		}
 
 		int retryCount = 0;
-		boolean updatingGitHubAPICall = false;
+		boolean gitHubApiCall = false;
 
 		while (true) {
 			try {
@@ -4495,7 +4495,7 @@ public class JenkinsResultsParserUtil {
 						buildProperties.getProperty("github.api.proxy") +
 							matcher.group(1);
 
-					updatingGitHubAPICall = true;
+					gitHubApiCall = true;
 				}
 
 				URL urlObject = new URL(url);
@@ -4518,7 +4518,7 @@ public class JenkinsResultsParserUtil {
 					}
 
 					if ((url.startsWith("https://api.github.com") ||
-						 updatingGitHubAPICall) &&
+						 gitHubApiCall) &&
 						(httpURLConnection instanceof HttpsURLConnection)) {
 
 						SSLContext sslContext = null;
@@ -4591,7 +4591,7 @@ public class JenkinsResultsParserUtil {
 				urlConnection.connect();
 
 				if (url.startsWith("https://api.github.com") ||
-					updatingGitHubAPICall) {
+					gitHubApiCall) {
 
 					try {
 						int limit = Integer.parseInt(

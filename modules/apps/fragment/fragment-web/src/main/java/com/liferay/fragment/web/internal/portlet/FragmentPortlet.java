@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -178,9 +177,6 @@ public class FragmentPortlet extends MVCPortlet {
 
 	@Reference
 	private FragmentRendererController _fragmentRendererController;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private ItemSelector _itemSelector;

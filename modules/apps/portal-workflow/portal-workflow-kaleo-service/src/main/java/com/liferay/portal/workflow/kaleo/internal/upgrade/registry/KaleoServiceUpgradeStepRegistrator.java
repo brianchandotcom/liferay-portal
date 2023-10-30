@@ -42,6 +42,7 @@ import com.liferay.portal.workflow.kaleo.internal.upgrade.v2_0_0.util.KaleoTrans
 import com.liferay.portal.workflow.kaleo.internal.upgrade.v2_0_1.UpgradeMessageBoardsClassName;
 import com.liferay.portal.workflow.kaleo.internal.upgrade.v3_1_1.KaleoNotificationUpgradeProcess;
 import com.liferay.portal.workflow.kaleo.internal.upgrade.v3_2_0.KaleoInstanceUpgradeProcess;
+import com.liferay.portal.workflow.kaleo.internal.upgrade.v4_0_0.KaleoDefinitionContentUpgradeProcess;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -168,6 +169,9 @@ public class KaleoServiceUpgradeStepRegistrator
 			"3.5.1", "3.5.2",
 			UpgradeProcessFactory.alterColumnType(
 				"KaleoAction", "scriptLanguage", "VARCHAR(255) null"));
+
+		registry.register(
+			"3.5.2", "4.0.0", new KaleoDefinitionContentUpgradeProcess());
 	}
 
 }

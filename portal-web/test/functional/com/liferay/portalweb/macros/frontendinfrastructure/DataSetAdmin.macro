@@ -410,6 +410,12 @@ definition {
 		}
 	}
 
+	macro selectFilterType{
+		LexiconEntry.gotoAdd();
+
+		MenuItem.click(menuItem = "${key_filterType}");
+	}
+
 	@summary = "Default summary"
 	macro createFilters(key_filterList = null) {
 		for (var key_filterType : list ${key_filterList}) {

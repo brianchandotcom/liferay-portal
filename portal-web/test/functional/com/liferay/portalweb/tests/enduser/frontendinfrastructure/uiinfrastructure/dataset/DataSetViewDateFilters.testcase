@@ -86,6 +86,33 @@ definition {
 	@ignore = "true"
 	@priority = 5
 	test AssertDateFieldsClayDatePicker {
+		task ("Given the creation of a new data set") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Data Set Fields Test",
+				restApplication = "/headless-admin-taxonomy/v1.0",
+				restEndpoint = "/v1.0/keywords/ranked",
+				restSchema = "Keyword");
+		}
+
+		task ("And adding a data set view") {
+			DataSetAdmin.createFDSViewViaAPI(
+				dataSetName = "Data Set Fields Test",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Fields Test");
+		}
+
+		task ("When go to the View page of the data set created.") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Data Set Fields Test",
+				key_viewName = "View Fields Test");
+		}
+
+		task ("When the user accesses the Filters tab") {
+			DataSetAdmin.goToTab(tabName = "Filters");
+		}
+
 		task ("And click on the 'Create Filter' button") {
 			Button.click(button = "Create Filter");
 		}
@@ -133,6 +160,33 @@ definition {
 	@ignore = "true"
 	@priority = 3
 	test AssertDateFieldsFormat {
+		task ("Given the creation of a new data set") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Data Set Fields Test",
+				restApplication = "/headless-admin-taxonomy/v1.0",
+				restEndpoint = "/v1.0/keywords/ranked",
+				restSchema = "Keyword");
+		}
+
+		task ("And adding a data set view") {
+			DataSetAdmin.createFDSViewViaAPI(
+				dataSetName = "Data Set Fields Test",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Fields Test");
+		}
+
+		task ("When go to the View page of the data set created.") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Data Set Fields Test",
+				key_viewName = "View Fields Test");
+		}
+
+		task ("When the user accesses the Filters tab") {
+			DataSetAdmin.goToTab(tabName = "Filters");
+		}
+
 		task ("And click on the 'Create Filter' button") {
 			Button.click(button = "Create Filter");
 		}
@@ -166,6 +220,33 @@ definition {
 	@ignore = "true"
 	@priority = 4
 	test CanAssertFilterbyInDateIsNotEditable {
+		task ("Given the creation of a new data set") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Data Set Fields Test",
+				restApplication = "/headless-admin-taxonomy/v1.0",
+				restEndpoint = "/v1.0/keywords/ranked",
+				restSchema = "Keyword");
+		}
+
+		task ("And adding a data set view") {
+			DataSetAdmin.createFDSViewViaAPI(
+				dataSetName = "Data Set Fields Test",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Fields Test");
+		}
+
+		task ("When go to the View page of the data set created.") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Data Set Fields Test",
+				key_viewName = "View Fields Test");
+		}
+
+		task ("When the user accesses the Filters tab") {
+			DataSetAdmin.goToTab(tabName = "Filters");
+		}
+
 		task ("And create a new filter") {
 			DataSetAdmin.createFilters(
 				filterName = "Test Filter",
@@ -189,6 +270,33 @@ definition {
 	@ignore = "true"
 	@priority = 4
 	test CanCancelDateFilterCreation {
+		task ("Given the creation of a new data set") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Data Set Fields Test",
+				restApplication = "/headless-admin-taxonomy/v1.0",
+				restEndpoint = "/v1.0/keywords/ranked",
+				restSchema = "Keyword");
+		}
+
+		task ("And adding a data set view") {
+			DataSetAdmin.createFDSViewViaAPI(
+				dataSetName = "Data Set Fields Test",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Fields Test");
+		}
+
+		task ("When go to the View page of the data set created.") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Data Set Fields Test",
+				key_viewName = "View Fields Test");
+		}
+
+		task ("When the user accesses the Filters tab") {
+			DataSetAdmin.goToTab(tabName = "Filters");
+		}
+
 		task ("And click on the Create Filter button") {
 			Button.click(button = "Create Filter");
 		}
@@ -224,6 +332,33 @@ definition {
 	@ignore = "true"
 	@priority = 5
 	test CanConfirmChangesInDate {
+		task ("Given the creation of a new data set") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Data Set Fields Test",
+				restApplication = "/headless-admin-taxonomy/v1.0",
+				restEndpoint = "/v1.0/keywords/ranked",
+				restSchema = "Keyword");
+		}
+
+		task ("And adding a data set view") {
+			DataSetAdmin.createFDSViewViaAPI(
+				dataSetName = "Data Set Fields Test",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Fields Test");
+		}
+
+		task ("When go to the View page of the data set created.") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Data Set Fields Test",
+				key_viewName = "View Fields Test");
+		}
+
+		task ("When the user accesses the Filters tab") {
+			DataSetAdmin.goToTab(tabName = "Filters");
+		}
+
 		task ("And create a new filter") {
 			DataSetAdmin.createFilters(
 				filterName = "Test Filter",
@@ -289,6 +424,33 @@ definition {
 	@ignore = "true"
 	@priority = 4
 	test CannotSaveAnInvalidDateRangeInDateFields {
+		task ("Given the creation of a new data set") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Data Set Fields Test",
+				restApplication = "/headless-admin-taxonomy/v1.0",
+				restEndpoint = "/v1.0/keywords/ranked",
+				restSchema = "Keyword");
+		}
+
+		task ("And adding a data set view") {
+			DataSetAdmin.createFDSViewViaAPI(
+				dataSetName = "Data Set Fields Test",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Fields Test");
+		}
+
+		task ("When go to the View page of the data set created.") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Data Set Fields Test",
+				key_viewName = "View Fields Test");
+		}
+
+		task ("When the user accesses the Filters tab") {
+			DataSetAdmin.goToTab(tabName = "Filters");
+		}
+
 		task ("And click on the 'Create Filter' button") {
 			Button.click(button = "Create Filter");
 		}
@@ -328,6 +490,33 @@ definition {
 	@ignore = "true"
 	@priority = 5
 	test CanSaveDateFilter {
+		task ("Given the creation of a new data set") {
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Data Set Fields Test",
+				restApplication = "/headless-admin-taxonomy/v1.0",
+				restEndpoint = "/v1.0/keywords/ranked",
+				restSchema = "Keyword");
+		}
+
+		task ("And adding a data set view") {
+			DataSetAdmin.createFDSViewViaAPI(
+				dataSetName = "Data Set Fields Test",
+				dataSetViewDescription = "FDSViewDescription",
+				key_dataSetViewNameList = "View Fields Test");
+		}
+
+		task ("When go to the View page of the data set created.") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Data Set Fields Test",
+				key_viewName = "View Fields Test");
+		}
+
+		task ("When the user accesses the Filters tab") {
+			DataSetAdmin.goToTab(tabName = "Filters");
+		}
+
 		task ("And click on the Create Filter button") {
 			Button.click(button = "Create Filter");
 		}

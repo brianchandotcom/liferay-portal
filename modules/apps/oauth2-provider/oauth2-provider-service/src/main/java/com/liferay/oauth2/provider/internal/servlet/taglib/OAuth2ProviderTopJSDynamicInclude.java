@@ -10,6 +10,7 @@ import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.redirect.OAuth2RedirectURIInterpolator;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
@@ -71,7 +72,10 @@ public class OAuth2ProviderTopJSDynamicInclude implements DynamicInclude {
 		}
 
 		String string = StringBundler.concat(
-			"<script data-senna-track=\"temporary\" type=\"",
+			"<script",
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+				httpServletRequest),
+			" data-senna-track=\"temporary\" type=\"",
 			ContentTypes.TEXT_JAVASCRIPT,
 			"\">window.Liferay = Liferay || {}; window.Liferay.OAuth2 = ",
 			"{getAuthorizeURL: function() {return '", url,

@@ -7,6 +7,7 @@ package com.liferay.frontend.js.lodash.web.internal.servlet.taglib;
 
 import com.liferay.frontend.js.lodash.web.internal.configuration.JSLodashConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
@@ -53,7 +54,11 @@ public class LodashTopHeadDynamicInclude extends BaseDynamicInclude {
 				httpServletRequest);
 
 		for (String fileName : _FILE_NAMES) {
-			printWriter.print("<script data-senna-track=\"permanent\" src=\"");
+			printWriter.print("<script");
+			printWriter.write(
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+					httpServletRequest));
+			printWriter.print(" data-senna-track=\"permanent\" src=\"");
 
 			printWriter.print(
 				absolutePortalURLBuilder.forBundleScript(

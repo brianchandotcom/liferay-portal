@@ -7,6 +7,7 @@ package com.liferay.journal.internal.transformer;
 
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.templateparser.BaseTransformerListener;
@@ -52,7 +53,9 @@ public class ViewCounterTransformerListener extends BaseTransformerListener {
 		return StringUtil.replace(
 			s, _COUNTER_TOKEN,
 			StringBundler.concat(
-				"<script type=\"text/javascript\">",
+				"<script",
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttr(null),
+				" type=\"text/javascript\">",
 				"Liferay.Service('/assetentry/increment-view-counter',",
 				"{userId:0, className:'",
 				"com.liferay.journal.model.JournalArticle', classPK:",

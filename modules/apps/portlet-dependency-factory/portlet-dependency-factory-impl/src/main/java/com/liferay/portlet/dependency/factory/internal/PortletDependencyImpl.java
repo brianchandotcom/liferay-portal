@@ -6,6 +6,7 @@
 package com.liferay.portlet.dependency.factory.internal;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.model.portlet.PortletDependency;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -94,8 +95,10 @@ public class PortletDependencyImpl implements PortletDependency {
 				sb.append("\" type=\"text/css\"></link>");
 			}
 			else if (_type == Type.JAVASCRIPT) {
-				sb.append("<script ");
-				sb.append("src=\"");
+				sb.append("<script");
+				sb.append(
+					ContentSecurityPolicyNonceProviderUtil.getNonceAttr(null));
+				sb.append(" src=\"");
 				sb.append(_getURL());
 				sb.append("\" type=\"text/javascript\"></script>");
 			}

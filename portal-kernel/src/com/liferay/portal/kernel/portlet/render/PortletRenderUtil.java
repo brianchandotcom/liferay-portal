@@ -7,6 +7,7 @@ package com.liferay.portal.kernel.portlet.render;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.frontend.esm.FrontendESMUtil;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
@@ -487,7 +488,10 @@ public class PortletRenderUtil {
 			type = FrontendESMUtil.getScriptType();
 		}
 
-		printWriter.print("<script src=\"");
+		printWriter.print("<script");
+		printWriter.print(
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttr(null));
+		printWriter.print(" src=\"");
 		printWriter.print(HtmlUtil.escapeAttribute(javaScriptPath));
 		printWriter.print("\" type=\"");
 		printWriter.print(type);

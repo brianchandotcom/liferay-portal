@@ -6,6 +6,7 @@
 package com.liferay.oauth2.provider.rest.internal.endpoint.redirect;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 
@@ -43,7 +44,9 @@ public class OAuth2ProviderApplicationRedirect {
 		return Response.ok(
 			StringBundler.concat(
 				"<html><head><title>Liferay OAuth2 Redirect</title></head>",
-				"<body><script type=\"text/javascript\">window.postMessage(",
+				"<body><script",
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttr(null),
+				" type=\"text/javascript\">window.postMessage(",
 				JSONUtil.put(
 					"code", HtmlUtil.escapeJS(code)
 				).put(

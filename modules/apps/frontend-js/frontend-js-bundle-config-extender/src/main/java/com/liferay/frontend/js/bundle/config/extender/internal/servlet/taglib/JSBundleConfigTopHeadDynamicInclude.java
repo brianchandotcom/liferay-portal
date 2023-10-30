@@ -9,6 +9,7 @@ import com.liferay.frontend.js.bundle.config.extender.internal.JSBundleConfigReg
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProvider;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -64,8 +65,11 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 			_jsBundleConfigRegistry.getJSConfigs();
 
 		if (!jsConfigs.isEmpty()) {
-			stringWriter.write("<script data-senna-track=\"temporary\" ");
-			stringWriter.write("type=\"");
+			stringWriter.write("<script");
+			stringWriter.write(
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+					httpServletRequest));
+			stringWriter.write(" data-senna-track=\"temporary\" type=\"");
 			stringWriter.write(ContentTypes.TEXT_JAVASCRIPT);
 			stringWriter.write("\">");
 

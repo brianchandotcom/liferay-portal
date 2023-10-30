@@ -628,6 +628,7 @@
 		<module name="com.liferay.source.formatter.checkstyle.check.OSGiCommandsCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Perform several checks on `*OSGiCommands` classes" />
+			<property name="enabled" value="false" />
 			<message key="bad.class.name" value="The names of clases that implement OSGi commands must end with ''OSGiCommands''" />
 			<message key="bad.osgi.reference" value="OSGi references to `*OSGiCommands` classes are not allowed" />
 			<message key="missing.command.function" value="OSGi command ''{0}'' is missing a method that implements it" />

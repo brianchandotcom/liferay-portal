@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SavedContent render disabled 1`] = `
+<div>
+  <form>
+    <button
+      aria-label="save-contentTitle"
+      class="btn btn-monospaced btn-sm btn-secondary"
+      disabled=""
+      title="save-content"
+      type="submit"
+    >
+      <svg
+        class="lexicon-icon lexicon-icon-bookmarks"
+        role="presentation"
+      >
+        <use
+          href="#bookmarks"
+        />
+      </svg>
+    </button>
+  </form>
+</div>
+`;
+
+exports[`SavedContent render enabled 1`] = `
+<div>
+  <form>
+    <button
+      aria-label="save-contentTitle"
+      class="btn btn-monospaced btn-sm btn-secondary"
+      title="save-content"
+      type="submit"
+    >
+      <svg
+        class="lexicon-icon lexicon-icon-bookmarks"
+        role="presentation"
+      >
+        <use
+          href="#bookmarks"
+        />
+      </svg>
+    </button>
+  </form>
+</div>
+`;

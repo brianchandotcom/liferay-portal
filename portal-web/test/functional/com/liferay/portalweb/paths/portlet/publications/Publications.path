@@ -102,7 +102,7 @@
 </tr>
 <tr>
 	<td>PUBLICATION_ELLIPSIS</td>
-	<td>//div[contains(.,'${key_publicationName}')]//following-sibling::div[6]//*[contains(@class,'lexicon-icon lexicon-icon-ellipsis-v')]</td>
+	<td>//div[contains(@class, 'dnd-td') and contains(.,'${key_publicationName}')]//following-sibling::div//*[contains(@class,'lexicon-icon lexicon-icon-ellipsis-v')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -5,6 +5,12 @@ definition {
 		AssertElementNotPresent(locator1 = "MP2Dashboards#RESEND_INVITATION");
 	}
 
+	macro assertNotViewCustomerGatePage {
+		AssertElementNotPresent(
+			key_headerTitle = ${title},
+			locator1 = "MP2Dashboards#HEADER_TITLE_CG");
+	}
+
 	@summary = "Default summary"
 	macro assertResendInvitationButton() {
 		AssertElementPresent(locator1 = "MP2Dashboards#RESEND_INVITATION");
@@ -18,7 +24,8 @@ definition {
 
 		Click(
 			key_accountTitle = ${accountTitle},
-			locator1 = "MP2Dashboards#SVG_DROPDOWN_LIST");
+			locator1 = "MP2Dashboards#SVG_DROPDOWN_OPTIONS",
+			value1 = ${accountTitle});
 	}
 
 	@summary = "Default summary"
@@ -26,6 +33,10 @@ definition {
 		Click(
 			key_buttonName = ${buttonName},
 			locator1 = "MP2Dashboards#ANY_DASHBOARD_BUTTON");
+	}
+
+	macro clickOnTheGetStartedButton {
+		Click(locator1 = "MP2Dashboards#GET_STARTED_BUTTON");
 	}
 
 	@summary = "Default summary"
@@ -41,6 +52,31 @@ definition {
 		Click(locator1 = "MP2Dashboards#RESEND_INVITATION");
 
 		Alert.viewSuccessMessage();
+	}
+
+	macro customerGateFlow {
+		Click(locator1 = "MP2Dashboards#GET_STARTED_BUTTON");
+
+		if (isSet(imageName)) {
+			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+				key_field = ${field},
+				locator1 = "MP2Dashboards#UPLOAD_FIELD",
+				value1 = ${imageName});
+		}
+
+		if (!(isSet(checkboxName))) {
+			var checkboxName = "";
+		}
+
+		Check.checkNotVisible(
+			checkboxName = ${checkboxName},
+			locator1 = "Checkbox#ANY_CHECKBOX");
+
+		Button.click(button = "Next");
+
+		WaitForElementPresent(
+			key_navItem = "Members",
+			locator1 = "MP2Navigation#NAV_ITEM");
 	}
 
 	@summary = "Default summary"

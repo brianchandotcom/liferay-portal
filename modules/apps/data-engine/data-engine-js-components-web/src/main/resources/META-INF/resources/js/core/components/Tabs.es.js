@@ -42,7 +42,10 @@ export function Tabs({activePage, pages}) {
 							key={index}
 							onClick={() =>
 								dispatch({
-									payload: {activePage: index},
+									payload: {
+										activePage: index,
+										activeTabTitle: page.title,
+									},
 									type: EVENT_TYPES.PAGE.CHANGE,
 								})
 							}

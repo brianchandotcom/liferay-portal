@@ -8,9 +8,9 @@ import {EVENT_TYPES} from '../actions/eventTypes.es';
 export default function activePageReducer(state, action) {
 	switch (action.type) {
 		case EVENT_TYPES.PAGE.CHANGE: {
-			const {activePage} = action.payload;
+			const {activePage, activeTabTitle} = action.payload;
 
-			return {activePage};
+			return {activePage, activeTabTitle};
 		}
 		default:
 			return state;

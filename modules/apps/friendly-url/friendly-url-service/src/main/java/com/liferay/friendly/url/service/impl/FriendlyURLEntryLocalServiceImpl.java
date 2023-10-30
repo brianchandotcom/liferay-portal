@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
@@ -779,8 +778,5 @@ public class FriendlyURLEntryLocalServiceImpl
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private Portal _portal;
 
 }

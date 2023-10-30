@@ -76,7 +76,7 @@ if ((commerceOrder != null) && Validator.isNull(cmd)) {
 					'/commerce.commercecountrymanagerimpl/get-shipping-countries',
 					{
 						active: true,
-						companyId: <%= company.getCompanyId() %>,
+						companyId: '<%= company.getCompanyId() %>',
 						shippingAllowed: true,
 					},
 					injectCountryPlaceholder

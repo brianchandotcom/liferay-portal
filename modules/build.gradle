@@ -682,6 +682,11 @@ gradle.beforeProject {
 			gradleTest {
 				dependsOn prepareGradleTestInputs
 
+				if (project.hasProperty("testDebug")) {
+					debug true
+					debugTests true
+				}
+
 				if (project.hasProperty("testExcludes")) {
 					exclude project.getProperty("testExcludes").tokenize(", ").collect {
 						"**/${it}"
@@ -692,6 +697,10 @@ gradle.beforeProject {
 					include project.getProperty("testIncludes").tokenize(", ").collect {
 						"**/${it}"
 					}
+				}
+
+				if (project.hasProperty("testShowOutput")) {
+					testLogging.showStandardStreams = true
 				}
 			}
 

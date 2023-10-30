@@ -96,7 +96,7 @@ export function MembersPage({
 		[currentUserAccountBriefs, marketplaceContext.myUserAccount]
 	);
 
-	const members = useMembers({
+	const {members, mutate: mutateMembers} = useMembers({
 		accountId,
 		isCustomerDashboard,
 		isPublisherDashboard,
@@ -159,6 +159,7 @@ export function MembersPage({
 					}
 					handleClose={() => setVisible(false)}
 					listOfRoles={listOfRoles}
+					mutateMembers={mutateMembers}
 					rolesPermissionDescription={rolesPermissionDescription}
 					selectedAccount={selectedAccount}
 				/>

@@ -45,55 +45,59 @@ const useMembers = ({
 		[selectedAccount?.id]
 	);
 
-	const {data: members = []} = useSWR(`/${accountId}/members`, async () => {
-		const userAccountResponse = await getUserAccounts();
+	const {data: members = [], mutate} = useSWR(
+		`/${accountId}/members`,
+		async () => {
+			const userAccountResponse = await getUserAccounts();
 
-		return userAccountResponse?.items
-			.map((member: UserAccountProps) => {
-				const _member = {
-					accountBriefs: member.accountBriefs,
-					dateCreated: member.dateCreated,
-					email: member.emailAddress,
-					image: member.image,
-					isCustomerAccount: false,
-					isInvitedMember: false,
-					isPublisherAccount: false,
-					lastLoginDate: member.lastLoginDate,
-					name: member.name,
-					role: getRolesList(member.accountBriefs),
-					userId: member.id,
-				} as MemberProps;
+			return userAccountResponse?.items
+				.map((member: UserAccountProps) => {
+					const _member = {
+						accountBriefs: member.accountBriefs,
+						dateCreated: member.dateCreated,
+						email: member.emailAddress,
+						image: member.image,
+						isCustomerAccount: false,
+						isInvitedMember: false,
+						isPublisherAccount: false,
+						lastLoginDate: member.lastLoginDate,
+						name: member.name,
+						role: getRolesList(member.accountBriefs),
+						userId: member.id,
+					} as MemberProps;
 
-				const roles = _member.role.split(', ');
+					const roles = _member.role.split(', ');
 
-				_member.isCustomerAccount =
-					isCustomerDashboard &&
-					roles.some((role) => customerRoles.includes(role));
+					_member.isCustomerAccount =
+						isCustomerDashboard &&
+						roles.some((role) => customerRoles.includes(role));
 
-				_member.isInvitedMember = roles.some(
-					(role) => role === 'Invited Member'
+					_member.isInvitedMember = roles.some(
+						(role) => role === 'Invited Member'
+					);
+
+					_member.isPublisherAccount =
+						isPublisherDashboard &&
+						roles.some((role) => publisherRoles.includes(role));
+
+					return _member;
+				})
+				.filter(
+					(member: MemberProps) =>
+						member.accountBriefs.find(
+							(accountBrief: AccountBriefProps) =>
+								accountBrief.externalReferenceCode ===
+								selectedAccount.externalReferenceCode
+						) &&
+						((member.isCustomerAccount && isCustomerDashboard) ||
+							(member.isPublisherAccount &&
+								isPublisherDashboard) ||
+							member.isInvitedMember)
 				);
+		}
+	);
 
-				_member.isPublisherAccount =
-					isPublisherDashboard &&
-					roles.some((role) => publisherRoles.includes(role));
-
-				return _member;
-			})
-			.filter(
-				(member: MemberProps) =>
-					member.accountBriefs.find(
-						(accountBrief: AccountBriefProps) =>
-							accountBrief.externalReferenceCode ===
-							selectedAccount.externalReferenceCode
-					) &&
-					((member.isCustomerAccount && isCustomerDashboard) ||
-						(member.isPublisherAccount && isPublisherDashboard) ||
-						member.isInvitedMember)
-			);
-	});
-
-	return members;
+	return {members, mutate};
 };
 
 export default useMembers;

@@ -375,7 +375,7 @@ const Accounts = () => {
 		selectedAccount,
 	} = useOutletContext<any>();
 
-	const members = useMembers({
+	const {members} = useMembers({
 		accountId,
 		isCustomerDashboard: false,
 		isPublisherDashboard: true,

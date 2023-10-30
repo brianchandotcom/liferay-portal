@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -129,16 +131,31 @@ public class JournalPortletUtil {
 
 		Collections.reverse(ancestorFolders);
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
 		for (JournalFolder ancestorFolder : ancestorFolders) {
 			BreadcrumbEntry folderBreadcrumbEntry = new BreadcrumbEntry();
 
-			folderBreadcrumbEntry.setTitle(ancestorFolder.getName());
-			folderBreadcrumbEntry.setURL(
-				PortletURLBuilder.createRenderURL(
-					liferayPortletResponse
-				).setParameter(
-					"folderId", ancestorFolder.getFolderId()
-				).buildString());
+			if (permissionChecker.hasPermission(
+					ancestorFolder.getGroupId(), JournalFolder.class.getName(),
+					ancestorFolder.getFolderId(), ActionKeys.VIEW)) {
+
+				folderBreadcrumbEntry.setTitle(ancestorFolder.getName());
+				folderBreadcrumbEntry.setURL(
+					PortletURLBuilder.createRenderURL(
+						liferayPortletResponse
+					).setParameter(
+						"folderId", ancestorFolder.getFolderId()
+					).buildString());
+			}
+			else {
+				folderBreadcrumbEntry.setTitle(StringPool.TRIPLE_PERIOD);
+			}
 
 			breadcrumbEntries.add(folderBreadcrumbEntry);
 		}
@@ -148,17 +165,25 @@ public class JournalPortletUtil {
 
 			BreadcrumbEntry folderBreadcrumbEntry = new BreadcrumbEntry();
 
-			JournalFolder unescapedFolder = folder.toUnescapedModel();
+			if (permissionChecker.hasPermission(
+					folder.getGroupId(), JournalFolder.class.getName(),
+					folder.getFolderId(), ActionKeys.VIEW)) {
 
-			folderBreadcrumbEntry.setTitle(unescapedFolder.getName());
+				JournalFolder unescapedFolder = folder.toUnescapedModel();
 
-			if (lastElementLinkable) {
-				folderBreadcrumbEntry.setURL(
-					PortletURLBuilder.createRenderURL(
-						liferayPortletResponse
-					).setParameter(
-						"folderId", folder.getFolderId()
-					).buildString());
+				folderBreadcrumbEntry.setTitle(unescapedFolder.getName());
+
+				if (lastElementLinkable) {
+					folderBreadcrumbEntry.setURL(
+						PortletURLBuilder.createRenderURL(
+							liferayPortletResponse
+						).setParameter(
+							"folderId", folder.getFolderId()
+						).buildString());
+				}
+			}
+			else {
+				folderBreadcrumbEntry.setTitle(StringPool.TRIPLE_PERIOD);
 			}
 
 			breadcrumbEntries.add(folderBreadcrumbEntry);

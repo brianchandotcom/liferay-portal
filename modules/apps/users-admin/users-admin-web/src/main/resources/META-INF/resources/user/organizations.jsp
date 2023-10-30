@@ -138,12 +138,12 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 			'.modify-link'
 		);
 
-		var selectOrganizationLink = A.one(
-			'#<portlet:namespace />selectOrganizationLink'
+		const selectOrganizationLink = document.getElementById(
+			'<portlet:namespace />selectOrganizationLink'
 		);
 
 		if (selectOrganizationLink) {
-			selectOrganizationLink.on('click', (event) => {
+			selectOrganizationLink.addEventListener('click', (event) => {
 				Liferay.Util.openSelectionModal({
 					multiple: true,
 					onSelect(data) {

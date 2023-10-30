@@ -23,6 +23,7 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -47,7 +48,6 @@ import com.liferay.taglib.util.BodyBottomTag;
 import java.io.IOException;
 import java.io.Writer;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -115,42 +115,48 @@ public class AnalyticsReportsProductNavigationControlMenuEntry
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		Map<String, String> values = new HashMap<>();
-
-		if (isPanelStateOpen(
-				httpServletRequest,
-				ProductNavigationControlMenuEntryConstants.
-					SESSION_CLICKS_KEY)) {
-
-			values.put("cssClass", "active");
-		}
-		else {
-			values.put("cssClass", StringPool.BLANK);
-		}
-
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			_portal.getLocale(httpServletRequest), getClass());
-
-		values.put(
-			"title",
-			HtmlUtil.escape(
-				_language.get(resourceBundle, "content-performance")));
-
-		IconTag iconTag = new IconTag();
-
-		iconTag.setCssClass("icon-monospaced");
-		iconTag.setSymbol("analytics");
+		Map<String, String> values;
 
 		try {
-			values.put(
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				_portal.getLocale(httpServletRequest), getClass());
+
+			IconTag iconTag = new IconTag();
+
+			iconTag.setCssClass("icon-monospaced");
+			iconTag.setSymbol("analytics");
+
+			values = HashMapBuilder.put(
+				"cssClass",
+				() -> {
+					if (isPanelStateOpen(
+							httpServletRequest,
+							ProductNavigationControlMenuEntryConstants.
+								SESSION_CLICKS_KEY)) {
+
+						return "active";
+					}
+
+					return StringPool.BLANK;
+				}
+			).put(
 				"iconTag",
-				iconTag.doTagAsString(httpServletRequest, httpServletResponse));
+				iconTag.doTagAsString(httpServletRequest, httpServletResponse)
+			).put(
+				"nonceAttr",
+				ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+					httpServletRequest)
+			).put(
+				"portletNamespace", _portletNamespace
+			).put(
+				"title",
+				HtmlUtil.escape(
+					_language.get(resourceBundle, "content-performance"))
+			).build();
 		}
 		catch (JspException jspException) {
 			throw new IOException(jspException);
 		}
-
-		values.put("portletNamespace", _portletNamespace);
 
 		Writer writer = httpServletResponse.getWriter();
 

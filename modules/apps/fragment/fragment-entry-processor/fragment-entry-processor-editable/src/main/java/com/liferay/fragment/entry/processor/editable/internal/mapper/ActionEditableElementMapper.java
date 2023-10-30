@@ -8,9 +8,15 @@ package com.liferay.fragment.entry.processor.editable.internal.mapper;
 import com.liferay.fragment.entry.processor.editable.element.constants.ActionEditableElementConstants;
 import com.liferay.fragment.entry.processor.editable.mapper.EditableElementMapper;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
+import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.info.item.provider.InfoItemObjectProvider;
+import com.liferay.info.localized.bundle.FunctionInfoLocalizedValue;
+import com.liferay.info.type.WebURL;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -19,6 +25,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -98,13 +105,16 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 		element.attr("data-lfr-field-id", fieldId);
 
 		_addDataAtributes(
+			GetterUtil.getLong(classNameId), GetterUtil.getLong(classPK),
 			element, configJSONObject.getJSONObject("onError"), "error");
 		_addDataAtributes(
+			GetterUtil.getLong(classNameId), GetterUtil.getLong(classPK),
 			element, configJSONObject.getJSONObject("onSuccess"), "success");
 	}
 
 	private void _addDataAtributes(
-			Element element, JSONObject jsonObject, String resultType)
+			long classNameId, long classPK, Element element,
+			JSONObject jsonObject, String resultType)
 		throws PortalException {
 
 		if (jsonObject == null) {
@@ -140,6 +150,83 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 
 		if (themeDisplay == null) {
 			return;
+		}
+
+		if (interaction.equals(
+				ActionEditableElementConstants.INTERACTION_DISPLAY_PAGE)) {
+
+			if (!resultType.equals("success")) {
+				return;
+			}
+
+			InfoItemObjectProvider<?> infoItemObjectProvider =
+				_infoItemServiceRegistry.getFirstInfoItemService(
+					InfoItemObjectProvider.class,
+					_portal.getClassName(classNameId),
+					ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
+
+			if (infoItemObjectProvider == null) {
+				return;
+			}
+
+			InfoItemFieldValuesProvider<Object> infoItemFieldValuesProvider =
+				_infoItemServiceRegistry.getFirstInfoItemService(
+					InfoItemFieldValuesProvider.class,
+					_portal.getClassName(classNameId));
+
+			if (infoItemFieldValuesProvider == null) {
+				return;
+			}
+
+			Object infoItem = infoItemObjectProvider.getInfoItem(
+				new ClassPKInfoItemIdentifier(classPK));
+
+			if (infoItem == null) {
+				return;
+			}
+
+			String displayPageUniqueFieldId = jsonObject.getString(
+				"displayPage");
+
+			if (Validator.isNull(displayPageUniqueFieldId)) {
+				return;
+			}
+
+			InfoFieldValue<Object> infoFieldValue =
+				infoItemFieldValuesProvider.getInfoFieldValue(
+					infoItem, displayPageUniqueFieldId);
+
+			if (infoFieldValue == null) {
+				return;
+			}
+
+			Object infoFieldValueValue = infoFieldValue.getValue();
+
+			String url = null;
+
+			if (infoFieldValueValue instanceof FunctionInfoLocalizedValue) {
+				FunctionInfoLocalizedValue<?> functionInfoLocalizedValue =
+					(FunctionInfoLocalizedValue<?>)infoFieldValueValue;
+
+				Object value = functionInfoLocalizedValue.getValue();
+
+				if (!(value instanceof WebURL)) {
+					return;
+				}
+
+				WebURL webURL = (WebURL)value;
+
+				url = webURL.getURL();
+			}
+			else if (infoFieldValueValue instanceof String) {
+				url = (String)infoFieldValueValue;
+			}
+
+			if (Validator.isNull(url)) {
+				return;
+			}
+
+			element.attr("data-lfr-on-" + resultType + "-page-url", url);
 		}
 
 		if (interaction.equals(
@@ -206,6 +293,9 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 			element.attr("data-lfr-on-" + resultType + "-page-url", url);
 		}
 	}
+
+	@Reference
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

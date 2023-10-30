@@ -10,6 +10,8 @@ package com.liferay.fragment.entry.processor.editable.element.constants;
  */
 public class ActionEditableElementConstants {
 
+	public static final String INTERACTION_DISPLAY_PAGE = "displayPage";
+
 	public static final String INTERACTION_NONE = "none";
 
 	public static final String INTERACTION_NOTIFICATION = "notification";

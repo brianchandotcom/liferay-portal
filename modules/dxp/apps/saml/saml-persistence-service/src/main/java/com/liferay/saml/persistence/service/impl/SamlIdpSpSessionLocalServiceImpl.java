@@ -17,7 +17,6 @@ import com.liferay.saml.persistence.model.SamlIdpSpSession;
 import com.liferay.saml.persistence.model.SamlPeerBinding;
 import com.liferay.saml.persistence.service.SamlPeerBindingLocalService;
 import com.liferay.saml.persistence.service.base.SamlIdpSpSessionLocalServiceBaseImpl;
-import com.liferay.saml.persistence.service.persistence.SamlPeerBindingPersistence;
 
 import java.util.Date;
 import java.util.List;
@@ -147,9 +146,6 @@ public class SamlIdpSpSessionLocalServiceImpl
 
 	@Reference
 	private SamlPeerBindingLocalService _samlPeerBindingLocalService;
-
-	@Reference
-	private SamlPeerBindingPersistence _samlPeerBindingPersistence;
 
 	@Reference
 	private UserLocalService _userLocalService;

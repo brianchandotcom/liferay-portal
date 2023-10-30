@@ -1,7 +1,7 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
 
-	property custom.properties = "feature.flag.LPS-164563=true${line.separator}feature.flag.LPS-188645=true${line.separator}feature.flag.LPS-167253=true";
+	property custom.properties = "feature.flag.LPS-164563=true${line.separator}feature.flag.LPS-167253=true${line.separator}feature.flag.LPS-188645=true";
 	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
@@ -21,152 +21,6 @@ definition {
 
 		if (${testLiferayVirtualInstance} == "true") {
 			PortalInstances.tearDownCP();
-		}
-	}
-
-	@description = "LPS-190851. Confirm that a sticker 'in use' is shown in the field when we create a filter from it and that it is not possible to create another filter with the same field"
-	@priority = 5
-	test ConfirmBadgeInUse {
-		task ("Given a new Object entity") {
-			ObjectAdmin.addObjectViaAPI(
-				labelName = "Date Object",
-				objectName = "DateObject",
-				pluralLabelName = "Date Objects");
-
-			ObjectAdmin.addObjectFieldViaAPI(
-				fieldBusinessType = "Date",
-				fieldLabelName = "Date Field",
-				fieldName = "dateField",
-				fieldType = "Date",
-				isRequired = "false",
-				objectName = "DateObject");
-
-			ObjectAdmin.publishObjectViaAPI(objectName = "DateObject");
-		}
-
-		task ("And new entries in the new Object entity") {
-			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-				fieldName = "dateField",
-				objectName = "DateObject",
-				value = "2023-06-06");
-
-			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-				fieldName = "dateField",
-				objectName = "DateObject",
-				value = "2023-02-02");
-
-			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
-				fieldName = "dateField",
-				objectName = "DateObject",
-				value = "2023-03-03");
-		}
-		
-		task ("Given a new data set entry, view") {
-			DataSetAdmin.createAndConfigureDataSetEntry(
-				dataSetName = "Custom Data Set Entry",
-				dataSetViewDescription = "View Description",
-				dataSetViewName = "Date filters view",
-				restApplication = "/c/dateobjects",
-				restEndpoint = "/",
-				restSchema = "DateObject");
-		}
-
-		task ("When the user accesses the Filters tab") {
-			DataSetAdmin.goToTab(tabName = "Filters");
-		}
-
-		task ("And create New Date Range Filter") {
-			DataSetAdmin.createDateFilter(
-				fieldValueFrom = "2023-01-01",
-				fieldValueTo = "2023-03-10",
-				filterBy = "dateField",
-				filterName = "Date Filter 1",
-				valueDayFrom = 1,
-				valueDayTo = 10,
-				valueMonthFrom = "January",
-				valueMonthTo = "March",
-				valueYearFrom = 2023,
-				valueYearTo = 2023);
-		}
-
-		task ("And selects the Date Range option") {
-			DataSetAdmin.selectFilterType(key_filterType = "Date Range");
-		}
-
-		task ("And fill name with Filter 2") {
-			PortletEntry.inputName(name = "Date Filter 2");
-		}
-
-		task ("And Open dropdown related to Filter By field") {
-			Click(
-				dropdownLabel = "Select",
-				locator1 = "Dropdown#ANY_DROPDOWN_LABEL");
-		}
-
-		task ("Then Confirm that the In use sticker is shown next to the dateCreated field") {
-			AssertElementPresent(
-				locator1 = "DataSet#IN_USE_BADGE",
-				filterByItem = "dateField");
-		}
-
-		task ("When select dateCreated option") {
-			DropdownMenuItem.click(menuItem = "dateField");
-		}
-
-		task ("Then Confirm that Info message is shown") {
-			AssertTextEquals(
-				locator1 = "Message#WARNING_FEEDBACK",
-				value1 = "This field is being used by another filter. Only one field per filter is allowed.");
-		}
-
-		task ("And The user cannot save the changes") {
-			AssertElementPresent(
-				key_text = "Save",
-				locator1 = "DataSet#ANY_BUTTON_DISABLED");
-		}
-	}
-
-	@description = "LPS-190851. Cannot create a date filter when the chosen endpoint does not have a date field"
-	@priority = 5
-	test CannotCreateFilterWithoutDateTypeField {
-		task ("Given a new data set entry, view") {
-			DataSetAdmin.createAndConfigureDataSetEntry(
-				dataSetName = "Custom Data Set Entry",
-				dataSetViewDescription = "View Description",
-				dataSetViewName = "Date filters view",
-				restApplication = "search-experiences-rest/v1.0",
-				restEndpoint = "/",
-				restSchema = "KeywordQueryContributor");
-		}
-
-		task ("When the user accesses the Filters tab") {
-			DataSetAdmin.goToTab(tabName = "Filters");
-		}
-
-		task ("And selects the Date Range option") {
-			DataSetAdmin.selectFilterType(key_filterType = "Date Range");
-		}
-
-		task ("Then the No Fields Available modal is displayed") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Modal#HEADER",
-				value1 = "No Fields Available");
-			
-			AssertTextEquals(
-				locator1 = "Modal#BODY",
-				value1 = "There are no fields compatible with this type of filter.");
-		}
-
-		task ("When clicks on the Close button") {
-			Click(
-				key_modalTitle = "No Fields Available",
-				locator1 = "Button#CLOSE_MODAL");
-		}
-
-		task ("Then the No Fields Available modal is closed") {
-			AssertElementNotPresent(
-				key_modalTitle = "No Fields Available",
-				locator1 = "Button#CLOSE_MODAL");
 		}
 	}
 
@@ -566,6 +420,50 @@ definition {
 		}
 	}
 
+	@description = "LPS-190851. Cannot create a date filter when the chosen endpoint does not have a date field"
+	@priority = 5
+	test CannotCreateFilterWithoutDateTypeField {
+		task ("Given a new data set entry, view") {
+			DataSetAdmin.createAndConfigureDataSetEntry(
+				dataSetName = "Custom Data Set Entry",
+				dataSetViewDescription = "View Description",
+				dataSetViewName = "Date filters view",
+				restApplication = "search-experiences-rest/v1.0",
+				restEndpoint = "/",
+				restSchema = "KeywordQueryContributor");
+		}
+
+		task ("When the user accesses the Filters tab") {
+			DataSetAdmin.goToTab(tabName = "Filters");
+		}
+
+		task ("And selects the Date Range option") {
+			DataSetAdmin.selectFilterType(key_filterType = "Date Range");
+		}
+
+		task ("Then the No Fields Available modal is displayed") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Modal#HEADER",
+				value1 = "No Fields Available");
+
+			AssertTextEquals(
+				locator1 = "Modal#BODY",
+				value1 = "There are no fields compatible with this type of filter.");
+		}
+
+		task ("When clicks on the Close button") {
+			Click(
+				key_modalTitle = "No Fields Available",
+				locator1 = "Button#CLOSE_MODAL");
+		}
+
+		task ("Then the No Fields Available modal is closed") {
+			AssertElementNotPresent(
+				key_modalTitle = "No Fields Available",
+				locator1 = "Button#CLOSE_MODAL");
+		}
+	}
+
 	@description = "LPS-181281. Confirms the user cannot create a new date filter with invalid date range."
 	@ignore = "true"
 	@priority = 4
@@ -697,6 +595,108 @@ definition {
 			AssertVisible(
 				key_entryName = "Test",
 				locator1 = "DataSet#FILTERS_ENTRY");
+		}
+	}
+
+	@description = "LPS-190851. Confirm that a sticker 'in use' is shown in the field when we create a filter from it and that it is not possible to create another filter with the same field"
+	@priority = 5
+	test ConfirmBadgeInUse {
+		task ("Given a new Object entity") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Date Object",
+				objectName = "DateObject",
+				pluralLabelName = "Date Objects");
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Date",
+				fieldLabelName = "Date Field",
+				fieldName = "dateField",
+				fieldType = "Date",
+				isRequired = "false",
+				objectName = "DateObject");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "DateObject");
+		}
+
+		task ("And new entries in the new Object entity") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "dateField",
+				objectName = "DateObject",
+				value = "2023-06-06");
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "dateField",
+				objectName = "DateObject",
+				value = "2023-02-02");
+
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "dateField",
+				objectName = "DateObject",
+				value = "2023-03-03");
+		}
+
+		task ("Given a new data set entry, view") {
+			DataSetAdmin.createAndConfigureDataSetEntry(
+				dataSetName = "Custom Data Set Entry",
+				dataSetViewDescription = "View Description",
+				dataSetViewName = "Date filters view",
+				restApplication = "/c/dateobjects",
+				restEndpoint = "/",
+				restSchema = "DateObject");
+		}
+
+		task ("When the user accesses the Filters tab") {
+			DataSetAdmin.goToTab(tabName = "Filters");
+		}
+
+		task ("And create New Date Range Filter") {
+			DataSetAdmin.createDateFilter(
+				fieldValueFrom = "2023-01-01",
+				fieldValueTo = "2023-03-10",
+				filterBy = "dateField",
+				filterName = "Date Filter 1",
+				valueDayFrom = 1,
+				valueDayTo = 10,
+				valueMonthFrom = "January",
+				valueMonthTo = "March",
+				valueYearFrom = 2023,
+				valueYearTo = 2023);
+		}
+
+		task ("And selects the Date Range option") {
+			DataSetAdmin.selectFilterType(key_filterType = "Date Range");
+		}
+
+		task ("And fill name with Filter 2") {
+			PortletEntry.inputName(name = "Date Filter 2");
+		}
+
+		task ("And Open dropdown related to Filter By field") {
+			Click(
+				dropdownLabel = "Select",
+				locator1 = "Dropdown#ANY_DROPDOWN_LABEL");
+		}
+
+		task ("Then Confirm that the In use sticker is shown next to the dateCreated field") {
+			AssertElementPresent(
+				filterByItem = "dateField",
+				locator1 = "DataSet#IN_USE_BADGE");
+		}
+
+		task ("When select dateCreated option") {
+			DropdownMenuItem.click(menuItem = "dateField");
+		}
+
+		task ("Then Confirm that Info message is shown") {
+			AssertTextEquals(
+				locator1 = "Message#WARNING_FEEDBACK",
+				value1 = "This field is being used by another filter. Only one field per filter is allowed.");
+		}
+
+		task ("And The user cannot save the changes") {
+			AssertElementPresent(
+				key_text = "Save",
+				locator1 = "DataSet#ANY_BUTTON_DISABLED");
 		}
 	}
 

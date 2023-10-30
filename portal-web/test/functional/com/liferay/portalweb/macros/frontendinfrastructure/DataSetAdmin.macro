@@ -723,7 +723,14 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectPreselectedValue(picklist = null, preselectType = null, key_sortOption = null) {
+	macro selectFilterType(key_filterType = null) {
+		LexiconEntry.gotoAdd();
+
+		MenuItem.click(menuItem = ${key_filterType});
+	}
+
+	@summary = "Default summary"
+	macro selectPreselectedValue(picklist = null,preselectType = null,key_sortOption = null) {
 		Select(
 			locator1 = "DataSet#SOURCE_OPTIONS_SELECT",
 			value1 = ${picklist});

@@ -16,7 +16,8 @@ definition {
 		}
 	}
 
-	macro viewDisabledItem {
+	@summary = "Default summary"
+	macro viewDisabledItem(itemList = null) {
 		for (var item : list ${itemList}) {
 			AssertElementPresent(
 					key_text = "${item}",

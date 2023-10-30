@@ -345,6 +345,11 @@
 	<td>//li[contains(@class,'list-group-item')]//dt[contains(.,'${key_specification}')]/..//dd[contains(.,'${key_value}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>BOOLEAN_CHECKBOX</td>
+	<td>//label[contains(.,'${checkboxName}')]/..//input[@type='checkbox']</td>
+	<td></td>
+</tr>
 
 <!--FRAGMENTS-->
 

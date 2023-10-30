@@ -595,8 +595,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MINI_CART_ITEM_NAME_H6</td>
+	<td>//h6[@class='item-name' and contains(.,'${key_cartItemName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CART_ITEM_NAME_H6_ACCORDION_SHOW</td>
+	<td>//div[contains(@class,'panel-collapse show')]//h6[@class='item-name' and contains(.,'${key_cartItemName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MINI_CART_ITEM_SKU</td>
 	<td>//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CART_ITEM_SKU_ACCORDION_SHOW</td>
+	<td>//div[contains(@class,'panel-collapse show')]//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]</td>
 	<td></td>
 </tr>
 <tr>

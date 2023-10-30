@@ -2890,4 +2890,170 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	@description = "COMMERCE-12540"
+	@priority = 5
+	test CanUseTheAccordionForNormalProducts {
+		property custom.properties = "feature.flag.COMMERCE-9599=true${line.separator}jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site with a buyer user is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("Given 7 Options, one for each type") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Simple Product",
+				productType = "Simple");
+
+			CommerceJSONOptionsAPI._addCommerceOption(
+				fieldType = "select",
+				optionKey = "option-select-from-the-list-key",
+				optionName = "select from the list",
+				optionValues = "select-from-the-list-option-value-key:select from the list option value:1");
+
+			for (var fieldType : list "checkbox,date,numeric,text") {
+				CommerceJSONOptionsAPI._addCommerceOption(
+					fieldType = ${fieldType},
+					optionKey = "option-${fieldType}-key",
+					optionName = ${fieldType},
+					skuContributor = "false");
+			}
+
+			for (var fieldType : list "checkbox_multiple,radio,checkbox") {
+				if(${fieldType} == "checkbox_multiple") {
+					CommerceJSONOptionsAPI._addCommerceOption(
+						fieldType = ${fieldType},
+						optionKey = "option-multiple-selection-key",
+						optionName = "multiple selection",
+						optionValues = "multiple-selection-option-value-key:multiple selection option name:1",
+						skuContributor = "false");
+				}
+				else {
+					if(${fieldType} == "radio") { 
+						CommerceJSONOptionsAPI._addCommerceOption(
+							fieldType = ${fieldType},
+							optionKey = "option-single-selection-key",
+							optionName = "single selection",
+							optionValues = "single-selection-option-value-key:single selection option name:1",
+							skuContributor = "false");
+					} 
+					else {
+						CommerceJSONOptionsAPI._addCommerceOption(
+							fieldType = ${fieldType},
+							optionKey = "option-boolean-selection-key",
+							optionName = "boolean",
+							optionValues = "boolean-option-value-key:boolean option name:1",
+							skuContributor = "false");
+					}			
+				}
+				
+			}
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = '''"Simple Product"''');
+
+			CommerceNavigator.gotoEntry(entryName = "Simple Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			for (var optionName : list "select from the list,boolean,multiple selection,date,numeric,single selection,text") {
+				CommerceRelations.assignSingleRelationToProductsEntry(
+					entryName = ${optionName},
+					title = "Add Option");
+			}
+		}
+
+		task ("And the buyer logs in") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("When the buyer compiles or chooses something for all the option values") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/simple-product");
+
+			FrontStore.addToCartFromProductDetails(
+				boolean = "enabled:boolean",
+				date = "10/23/2023",
+				multipleSelectionValuesChecked = "multiple selection option name",
+				numeric = 10,
+				optionNamesAndValues = "select from the list:select from the list option value",
+				productName = "Simple Product",
+				productSku = "Simple Product_default",
+				singleSelectionValueChecked = "single selection option name",
+				text = "Text Content");
+		}
+
+		task ("Then on the mini cart an accordion is present to be expanded") {
+			CommerceNavigator.gotoMiniCart();
+
+			Click(
+				locator1 = "Sharing#MANAGE_COLLABORATORS_NAME",
+				key_userName = "Show Options");
+
+			FrontStore.viewMiniCartItem(
+				cartItemName = "Simple Product",
+				cartItemQuantity = 1,
+				cartItemSku = "Simple Product_default");
+		}
+
+		task ("Then all the information inside is correct based on how the buyers compiled the values") {
+			for (var entriesList : list "select from the list:select from the list option value,date:2023-10-23,numeric:10,text:Text Content,multiple selection:multiple selection option name,single selection:single selection option name,boolean:option-boolean-selection-key") { 
+				var optionName = StringUtil.extractFirst(${entriesList}, ":");
+				var optionValue = StringUtil.extractLast(${entriesList}, ":");
+
+				echo("Checking option name [${optionName}] with value [${optionValue}] is present");
+
+				AssertElementPresent(
+					key_cartItemName = "${optionName}",
+					locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_H6");
+
+				AssertElementPresent(
+					key_cartItemSku = ${optionValue},
+					locator1 = "CommerceAccelerators#MINI_CART_ITEM_SKU");
+			}
+		}
+
+		task ("But if the accordion is closed") {
+			Click(
+				locator1 = "Sharing#MANAGE_COLLABORATORS_NAME",
+				key_userName = "Hide Options");
+		}
+
+		task ("Then all the information will be hidden again") {
+			for (var entriesList : list "select from the list:select from the list option value,date:2023-10-23,numeric:10,text:Text Content,multiple selection:multiple selection option name,single selection:single selection option name,boolean:option-boolean-selection-key") { 
+				var optionName = StringUtil.extractFirst(${entriesList}, ":");
+				var optionValue = StringUtil.extractLast(${entriesList}, ":");
+
+				echo("Checking option name [${optionName}] with value [${optionValue}] is not present");
+
+				AssertElementNotPresent(
+					key_cartItemName = "${optionName}",
+					locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_H6_ACCORDION_SHOW");
+
+				AssertElementNotPresent(
+					key_cartItemSku = ${optionValue},
+					locator1 = "CommerceAccelerators#MINI_CART_ITEM_SKU_ACCORDION_SHOW");
+			}
+		} 
+	}
+
 }

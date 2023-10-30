@@ -365,10 +365,13 @@ definition {
 	@summary = "Default summary"
 	macro editWebBehaviorCriterion(month2 = null, occurenceNumber = null, year = null, indexField = null, year2 = null, atLeastMost = null, searchTerm = null, month = null, activitiesOption = null, day2 = null, timePeriod = null, day = null, timeOption = null) {
 		if (isSet(activitiesOption)) {
-			Select(
+			Click(
 				key_indexField = ${indexField},
-				locator1 = "ACSegments#ACTIVITIES_CRITERION",
-				value1 = ${activitiesOption});
+				locator1 = "ACSegments#ACTIVITIES_CRITERION");
+
+			Click(
+				locator1 = "ACSegments#CRITERION_DROPDOWN_VALUE",
+				operator = ${activitiesOption});
 		}
 
 		if (isSet(searchTerm)) {
@@ -378,10 +381,13 @@ definition {
 		}
 
 		if (isSet(atLeastMost)) {
-			Select(
+			Click(
 				key_indexField = ${indexField},
-				locator1 = "ACSegments#OCCURENCE_SELECT",
-				value1 = ${atLeastMost});
+				locator1 = "ACSegments#OCCURENCE_SELECT");
+
+			Click(
+				locator1 = "ACSegments#CRITERION_DROPDOWN_VALUE",
+				operator = ${atLeastMost});
 		}
 
 		if (isSet(occurenceNumber)) {
@@ -410,16 +416,19 @@ definition {
 				locator1 = "ACSegments#TIME_INPUT_CRITERION_CONJUNCTION");
 
 			Click(
-				locator1 = "ACSegments#ACTIVITIES_CRITERION_DROPDOWN",
+				locator1 = "ACSegments#CRITERION_DROPDOWN_VALUE",
 				operator = ${timeOption});
 		}
 
 		if (isSet(timePeriod)) {
 			if ((${timeOption} == "since") || !(isSet(timeOption))) {
-				Select(
+				Click(
 					key_indexField = ${indexField},
-					locator1 = "ACSegments#TIME_INPUT_CRITERION",
-					value1 = ${timePeriod});
+					locator1 = "ACSegments#TIME_INPUT_CRITERION");
+
+				Click(
+					locator1 = "ACSegments#CRITERION_DROPDOWN_VALUE",
+					operator = ${timePeriod});
 			}
 		}
 

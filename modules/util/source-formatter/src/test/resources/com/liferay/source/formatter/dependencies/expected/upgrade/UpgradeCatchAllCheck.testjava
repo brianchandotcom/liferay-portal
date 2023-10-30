@@ -6,11 +6,16 @@
 package com.liferay.source.formatter.dependencies.upgrade;
 
 import com.liferay.commerce.constants.CommerceOrderPaymentConstants;
-import com.liferay.document.library.util.DLURLHelperUtil;
-import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.util.HtmlParser;
+
 import com.liferay.portal.kernel.util.PortalUtil;
+
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+
+import com.liferay.portal.kernel.util.HtmlParser;
+
+import com.liferay.portal.kernel.search.Sort;
+
+import com.liferay.document.library.util.DLURLHelperUtil;
 
 import org.osgi.service.component.annotations.Reference;
 

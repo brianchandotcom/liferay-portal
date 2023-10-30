@@ -607,6 +607,7 @@ definition {
 	@summary = "Default summary"
 	macro createAndPublishObjectDefinition(objectDefinitionExternalReferenceCode = null,requiredStringFieldNameExternalReferenceCode = null,scope = null,name = null,en_US_label = null,requiredStringFieldName = null,virtualHost = null,en_US_plural_label = null,token = null) {
 		var objectDefinitionId = ObjectDefinitionAPI.createObjectDefinition(
+			businessType = ${businessType},
 			en_US_label = ${en_US_label},
 			en_US_plural_label = ${en_US_plural_label},
 			name = ${name},
@@ -702,6 +703,10 @@ definition {
 			var en_US_label = ${name};
 		}
 
+		if (!(isSet(businessType))) {
+			var businessType = "Text";
+		}
+
 		if (!(isSet(requiredStringFieldName))) {
 			var requiredStringFieldName = "name";
 		}
@@ -719,7 +724,7 @@ definition {
 						},
 						"name": "${name}",
 						"objectFields": [{
-							"businessType": "Text",
+							"businessType": "${businessType}",
 							"externalReferenceCode": "${requiredStringFieldNameExternalReferenceCode}",
 							"indexed": true,
 							"indexedAsKeyword": true,
@@ -750,7 +755,7 @@ definition {
 						},
 						"name": "${name}",
 						"objectFields": [{
-							"businessType": "Text",
+							"businessType": "${businessType}",
 							"indexed": true,
 							"indexedAsKeyword": true,
 							"label": {

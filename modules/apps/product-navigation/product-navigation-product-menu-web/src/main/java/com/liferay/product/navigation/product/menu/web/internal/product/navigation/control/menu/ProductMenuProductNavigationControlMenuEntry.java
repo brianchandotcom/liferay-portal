@@ -7,6 +7,7 @@ package com.liferay.product.navigation.product.menu.web.internal.product.navigat
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -133,6 +134,10 @@ public class ProductMenuProductNavigationControlMenuEntry
 
 				return StringPool.FALSE;
 			}
+		).put(
+			"nonceAttr",
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+				httpServletRequest)
 		).put(
 			"openProductMenuTitle",
 			HtmlUtil.escape(

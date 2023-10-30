@@ -751,8 +751,7 @@ definition {
 			for (var pageName : list "Home Child Page 1,Home Child Page 1 Child Page,Home Child Page 2") {
 				AssertAttributeValue.assertAttributeNotPresent(
 					locator1 = "//div[contains(@class,'layout-content')]//a[contains(@class, 'dropdown-item')][contains(text(), '${pageName}')]",
-					value1 = "role",
-					value2 = "menuitem");
+					value1 = "role");
 			}
 		}
 	}

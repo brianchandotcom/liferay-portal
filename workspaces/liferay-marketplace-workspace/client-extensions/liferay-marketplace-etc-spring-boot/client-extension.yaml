@@ -1,5 +1,10 @@
 assemble:
     - fromTask: bootJar
+liferay-marketplace-etc-spring-boot-create-product-purchase:
+    name: Liferay Marketplace Product Purchase
+    oAuth2ApplicationExternalReferenceCode: liferay-marketplace-etc-spring-boot-oauth-application-user-agent
+    resourcePath: /koroneiki/product-purchase
+    type: objectAction
 liferay-marketplace-etc-spring-boot-oauth-application-user-agent:
     .serviceAddress: localhost:58081
     .serviceScheme: http
@@ -7,4 +12,7 @@ liferay-marketplace-etc-spring-boot-oauth-application-user-agent:
     scopes:
         - Liferay.Headless.Admin.User.everything
         - Liferay.Headless.Admin.Workflow.everything
+        - Liferay.Headless.Commerce.Delivery.Catalog.everything
+        - Liferay.Headless.Commerce.Admin.Catalog.everything
+        - Liferay.Headless.Commerce.Admin.Order.everything
     type: oAuthApplicationUserAgent

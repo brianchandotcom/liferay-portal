@@ -36,6 +36,8 @@ import com.liferay.portal.util.PropsValues;
 import java.io.File;
 import java.io.IOException;
 
+import java.nio.file.Files;
+
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
@@ -458,7 +460,9 @@ public class UpgradeReport {
 		if (!Validator.isBlank(PropsValues.UPGRADE_REPORT_DIR)) {
 			reportsDir = new File(PropsValues.UPGRADE_REPORT_DIR);
 
-			if (!reportsDir.exists() && !reportsDir.mkdir()) {
+			if ((!reportsDir.exists() && !reportsDir.mkdir()) ||
+				!Files.isWritable(reportsDir.toPath())) {
+
 				reportsDir = null;
 
 				if (_log.isWarnEnabled()) {

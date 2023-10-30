@@ -582,20 +582,19 @@ public class JournalDisplayContext {
 			JournalFolder folder)
 		throws Exception {
 
-		PortletURL folderURL = PortletURLBuilder.createRenderURL(
-			_liferayPortletResponse
-		).setParameter(
-			"folderId", folder.getFolderId()
-		).buildPortletURL();
-
 		List<BreadcrumbEntry> breadcrumbEntries =
 			JournalPortletUtil.getPortletBreadcrumbEntries(
-				folder, _httpServletRequest, folderURL);
+				folder, _httpServletRequest, _liferayPortletResponse);
 
 		BreadcrumbEntry breadcrumbEntry = breadcrumbEntries.get(
 			breadcrumbEntries.size() - 1);
 
-		breadcrumbEntry.setURL(folderURL.toString());
+		breadcrumbEntry.setURL(
+			PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setParameter(
+				"folderId", folder.getFolderId()
+			).buildString());
 
 		return breadcrumbEntries;
 	}

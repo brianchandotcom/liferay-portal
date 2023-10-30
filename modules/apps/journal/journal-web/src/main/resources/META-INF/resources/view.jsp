@@ -61,7 +61,7 @@ else {
 	>
 		<c:if test="<%= !journalDisplayContext.isNavigationMine() && !journalDisplayContext.isNavigationRecent() %>">
 			<liferay-site-navigation:breadcrumb
-				breadcrumbEntries="<%= JournalPortletUtil.getPortletBreadcrumbEntries(journalDisplayContext.getFolder(), request, journalDisplayContext.getPortletURL(null)) %>"
+				breadcrumbEntries="<%= JournalPortletUtil.getPortletBreadcrumbEntries(journalDisplayContext.getFolder(), request, liferayPortletResponse) %>"
 			/>
 		</c:if>
 

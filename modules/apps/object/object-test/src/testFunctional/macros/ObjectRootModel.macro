@@ -1,0 +1,22 @@
+definition {
+
+	@summary = "Bind one or multiple object definitions to the root object"
+	macro bindToRootObject(childObject,rootObjectPath) {
+		Click(
+			key_objectLabel = ${childObject},
+			locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
+
+		MenuItem.clickNoError(menuItem = "Bind");
+
+		for (var rootObject : list ${rootObjectPath}) {
+			Click(locator1 = "Button#SELECT");
+
+			Click(
+				key_menuItem = ${rootObject},
+				locator1 = "MenuItem#ANY_MENU_ITEM");
+		}
+
+		Button.click(button = "Bind to Root");
+	}
+
+}

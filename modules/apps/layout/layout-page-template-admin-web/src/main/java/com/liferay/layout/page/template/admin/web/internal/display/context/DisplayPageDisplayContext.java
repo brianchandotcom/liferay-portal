@@ -255,6 +255,10 @@ public class DisplayPageDisplayContext {
 	}
 
 	public JSONArray getMappingTypesJSONArray() {
+		if (_mappingTypesJSONArray != null) {
+			return _mappingTypesJSONArray;
+		}
+
 		JSONArray mappingTypesJSONArray = JSONFactoryUtil.createJSONArray();
 
 		for (InfoItemClassDetails infoItemClassDetails :
@@ -278,7 +282,9 @@ public class DisplayPageDisplayContext {
 				));
 		}
 
-		return mappingTypesJSONArray;
+		_mappingTypesJSONArray = mappingTypesJSONArray;
+
+		return _mappingTypesJSONArray;
 	}
 
 	public String getOrderByCol() {
@@ -476,6 +482,7 @@ public class DisplayPageDisplayContext {
 	private String _keywords;
 	private Long _layoutPageTemplateCollectionId;
 	private Long _layoutPageTemplateEntryId;
+	private JSONArray _mappingTypesJSONArray;
 	private String _orderByCol;
 	private String _orderByType;
 	private final RenderRequest _renderRequest;

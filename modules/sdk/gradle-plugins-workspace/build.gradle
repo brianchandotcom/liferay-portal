@@ -230,7 +230,7 @@ gradleTest {
 
 	deprecationMessagesAreFailures = false
 
-	excludes = ["**/*_base*"]
+	exclude "**/*_base*"
 
 	gradleArguments "--project-prop", "app.server.parent.dir=" + FileUtil.getAbsolutePath(copyBundle.destinationDir)
 	gradleArguments "--project-prop", "pluginClasspathDir=${uri(gradleTestDependenciesDir)}"

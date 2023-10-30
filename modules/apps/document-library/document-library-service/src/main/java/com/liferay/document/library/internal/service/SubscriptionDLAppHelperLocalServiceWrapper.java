@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.EscapableLocalizableFunction;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -369,9 +368,6 @@ public class SubscriptionDLAppHelperLocalServiceWrapper
 
 	@Reference
 	private Localization _localization;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;

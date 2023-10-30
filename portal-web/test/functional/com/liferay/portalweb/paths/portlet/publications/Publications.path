@@ -81,26 +81,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LIST_PUBLICATION_ELLIPSIS</td>
-	<td>//*[@data-qa-id='row'][contains(.,'${key_publicationName}')]//*[contains(@class,'lexicon-icon lexicon-icon-ellipsis-v')] | //tr[contains(.,'${key_publicationName}')]//following-sibling::div//*[contains(@class,'lexicon-icon lexicon-icon-ellipsis-v')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LIST_PUBLISHED_STATUS</td>
-	<td>//p[contains(.,'${key_publicationName}')]//following-sibling::p/span[contains(.,'Published')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LIST_REVERT_BUTTON</td>
-	<td>//div[contains(.,'${key_publicationName}')]//following-sibling::div//a[contains(.,'Revert')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LIST_REVERT_DISABLED</td>
-	<td>//div[contains(.,'${key_publicationName}')]//following-sibling::div//a[contains(@class, 'disabled btn') and contains(.,'Revert')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>MANAGE_PUBLICATIONS_PAGE_TITLE</td>
 	<td>//h1[contains(@data-qa-id,'headerTitle')]</td>
 	<td></td>
@@ -118,6 +98,11 @@
 <tr>
 	<td>PUBLICATION_DESCRIPTION</td>
 	<td>//textarea[contains(@placeholder,'Enter the description of the publication.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLICATION_ELLIPSIS</td>
+	<td>//div[contains(.,'${key_publicationName}')]//following-sibling::div[6]//*[contains(@class,'lexicon-icon lexicon-icon-ellipsis-v')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -226,8 +211,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PUBLISHED_STATUS</td>
+	<td>//div[contains(.,'${key_publicationName}')]//following-sibling::div//strong[contains(.,'Published')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RESCHEDULE_BUTTON</td>
 	<td>//*[contains(@class,'btn')][normalize-space(text())='Reschedule']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REVERT_BUTTON</td>
+	<td>//div[contains(.,'${key_publicationName}')]//following-sibling::div//a[contains(.,'Revert')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REVERT_DISABLED</td>
+	<td>//div[contains(.,'${key_publicationName}')]//following-sibling::div//a[contains(@class, 'disabled btn') and contains(.,'Revert')]</td>
 	<td></td>
 </tr>
 <tr>

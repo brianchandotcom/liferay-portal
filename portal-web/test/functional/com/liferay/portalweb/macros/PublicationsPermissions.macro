@@ -36,7 +36,7 @@ definition {
 	macro assertEditorPermissions(publicationName = null) {
 		Click(
 			key_publicationName = ${publicationName},
-			locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
+			locator1 = "Publications#PUBLICATION_ELLIPSIS");
 
 		AssertElementNotPresent(
 			key_menuItem = "Publish",
@@ -92,7 +92,7 @@ definition {
 
 		Click(
 			key_publicationName = ${publicationName},
-			locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
+			locator1 = "Publications#PUBLICATION_ELLIPSIS");
 
 		AssertElementNotPresent(
 			key_menuItem = "Publish",
@@ -138,7 +138,7 @@ definition {
 	macro assertViewerPermissions(publicationName = null) {
 		Click(
 			key_publicationName = ${publicationName},
-			locator1 = "Publications#LIST_PUBLICATION_ELLIPSIS");
+			locator1 = "Publications#PUBLICATION_ELLIPSIS");
 
 		AssertElementNotPresent(
 			key_menuItem = "Publish",

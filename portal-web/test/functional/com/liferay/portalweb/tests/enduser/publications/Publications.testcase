@@ -1435,7 +1435,7 @@ definition {
 
 		AssertTextEquals(
 			key_publicationName = "Publication Name",
-			locator1 = "Publications#LIST_PUBLISHED_STATUS",
+			locator1 = "Publications#PUBLISHED_STATUS",
 			value1 = "Published");
 	}
 

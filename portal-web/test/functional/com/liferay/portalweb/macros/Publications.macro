@@ -36,7 +36,7 @@ definition {
 		var key_publicationName = ${publicationName};
 
 		AssertTextEquals(
-			locator1 = "Publications#LIST_PUBLISHED_STATUS",
+			locator1 = "Publications#PUBLISHED_STATUS",
 			value1 = "Published");
 	}
 
@@ -381,7 +381,7 @@ definition {
 
 		if (!(IsElementPresent(locator1 = "//div[(@class='data-set-content-wrapper')]"))) {
 			AssertTextEquals(
-				locator1 = "Publications#LIST_PUBLISHED_STATUS",
+				locator1 = "Publications#PUBLISHED_STATUS",
 				value1 = "Published");
 		}
 		else {
@@ -395,7 +395,7 @@ definition {
 	macro revertPublication(publishNow = null, publicationName = null) {
 		var key_publicationName = ${publicationName};
 
-		Click(locator1 = "Publications#LIST_REVERT_BUTTON");
+		Click(locator1 = "Publications#REVERT_BUTTON");
 
 		AssertTextEquals(
 			locator1 = "Publications#PUBLICATION_NAME",

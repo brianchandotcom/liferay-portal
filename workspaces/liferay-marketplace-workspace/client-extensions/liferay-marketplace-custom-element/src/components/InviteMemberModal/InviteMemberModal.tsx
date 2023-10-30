@@ -12,6 +12,7 @@ import './inviteMemberModal.scss';
 
 import ClayIcon from '@clayui/icon';
 import {useForm} from 'react-hook-form';
+import {KeyedMutator} from 'swr';
 import {z} from 'zod';
 
 import {useMarketplaceContext} from '../../context/MarketplaceContext';
@@ -40,6 +41,7 @@ interface InviteMemberModalProps {
 	dashboardType: 'customer-dashboard' | 'publisher-dashboard';
 	handleClose: () => void;
 	listOfRoles: string[];
+	mutateMembers: KeyedMutator<UserAccount[] | undefined>;
 	rolesPermissionDescription: {
 		appPermissions: PermissionDescription[];
 		dashboardPermissions: PermissionDescription[];
@@ -109,6 +111,7 @@ export function InviteMemberModal({
 	dashboardType,
 	handleClose,
 	listOfRoles,
+	mutateMembers,
 	rolesPermissionDescription,
 	selectedAccount,
 }: InviteMemberModalProps) {
@@ -242,6 +245,8 @@ export function InviteMemberModal({
 
 		await addExistentUserIntoAccount(selectedAccount.id, form.emailAddress);
 		await addAccountRolesToUser(user);
+
+		mutateMembers((previousMembers) => previousMembers, {revalidate: true});
 
 		await addAdditionalInfo({
 			acceptInviteStatus: false,

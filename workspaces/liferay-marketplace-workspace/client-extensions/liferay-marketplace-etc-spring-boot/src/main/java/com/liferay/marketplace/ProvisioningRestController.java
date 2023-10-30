@@ -194,6 +194,39 @@ public class ProvisioningRestController extends BaseRestController {
 			HttpStatus.OK);
 	}
 
+	@GetMapping("license-keys/{id}/download")
+	public ResponseEntity downloadLicenseKey(@PathVariable("id") String id)
+		throws Exception {
+
+		_initResource();
+
+		long licenseKeyId = GetterUtil.getLong(id);
+
+		AppLicenseKey appLicenseKey = _appLicenseKeyResource.getAppLicenseKey(
+			licenseKeyId);
+
+		HttpInvoker.HttpResponse licenseKeyHttpResponse =
+			_appLicenseKeyResource.getAppLicenseKeyDownloadHttpResponse(
+				licenseKeyId);
+
+		String appLicenseName = StringBundler.concat(
+			"activation-key-", appLicenseKey.getProductName(), StringPool.DASH,
+			appLicenseKey.getProductVersion(), StringPool.DASH,
+			appLicenseKey.getHostName(), ".xml"
+		).replaceAll(
+			StringPool.SPACE, StringPool.DASH
+		).toLowerCase();
+
+		HttpHeaders headers = new HttpHeaders();
+
+		headers.setContentDispositionFormData("attachment", appLicenseName);
+		headers.setContentType(MediaType.TEXT_XML);
+		headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+
+		return new ResponseEntity(
+			licenseKeyHttpResponse.getBinaryContent(), headers, HttpStatus.OK);
+	}
+
 	@GetMapping("license-keys/{id}")
 	public AppLicenseKey getLicenseKey(@PathVariable("id") String id)
 		throws Exception {
@@ -218,6 +251,7 @@ public class ProvisioningRestController extends BaseRestController {
 
 		return new JSONObject(response);
 	}
+
 	private String _getOAuthAuthorization() throws Exception {
 		if (Validator.isNotNull(_oauthAccessToken) &&
 			(_oauthExpirationMillis < System.currentTimeMillis())) {
@@ -272,6 +306,7 @@ public class ProvisioningRestController extends BaseRestController {
 			throw new Exception("Unable to get OAuth authorization");
 		}
 	}
+
 	private WebClient _getWebClient(Jwt jwt) {
 		WebClient.Builder builder = WebClient.builder();
 
@@ -283,6 +318,31 @@ public class ProvisioningRestController extends BaseRestController {
 			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
 		).defaultHeader(
 			HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
+		).build();
+	}
+
+	private void _initResource() throws Exception {
+		String authorization = _getOAuthAuthorization();
+
+		URL koroneikiURL = new URL(_koroneikiAuthURL);
+		URL provisioningURL = new URL(_provisioningAuthURL);
+
+		_productPurchaseResource = ProductPurchaseResource.builder(
+		).header(
+			"API_TOKEN", _koroneikiAuthToken
+		).endpoint(
+			koroneikiURL.getHost(), koroneikiURL.getPort(),
+			koroneikiURL.getProtocol()
+		).build();
+
+		AppLicenseKeyResource.Builder appLicenseKeyResourceBuilder =
+			AppLicenseKeyResource.builder();
+
+		_appLicenseKeyResource = appLicenseKeyResourceBuilder.header(
+			"Authorization", authorization
+		).endpoint(
+			provisioningURL.getHost(), provisioningURL.getPort(),
+			provisioningURL.getProtocol()
 		).build();
 	}
 

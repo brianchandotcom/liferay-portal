@@ -681,6 +681,18 @@ gradle.beforeProject {
 
 			gradleTest {
 				dependsOn prepareGradleTestInputs
+
+				if (project.hasProperty("testExcludes")) {
+					exclude project.getProperty("testExcludes").tokenize(", ").collect {
+						"**/${it}"
+					}
+				}
+
+				if (project.hasProperty("testIncludes")) {
+					include project.getProperty("testIncludes").tokenize(", ").collect {
+						"**/${it}"
+					}
+				}
 			}
 
 			prepareGradleTestInputs {

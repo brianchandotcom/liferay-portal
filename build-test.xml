@@ -10465,18 +10465,6 @@ org.apache.catalina.tribes.level = FINE]]>
 				</ant>
 			</then>
 		</if>
-
-		<get-testcase-property property.name="web.plugins.includes" />
-
-		<if>
-			<isset property="web.plugins.includes" />
-			<then>
-				<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
-					<property name="plugin.types" value="webs" />
-					<property name="plugins.includes" value="${web.plugins.includes}" />
-				</ant>
-			</then>
-		</if>
 	</target>
 
 	<target name="deploy-sql-zip">
@@ -16992,13 +16980,11 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 		<fail message="Please set the property ${test.class}." unless="test.class" />
 
 		<get-testcase-property property.name="portlet.plugins.includes" />
-		<get-testcase-property property.name="web.plugins.includes" />
 
 		<if>
 			<or>
 				<isset property="portlet.plugins.includes" />
 				<isset property="required.plugins.includes" />
-				<isset property="web.plugins.includes" />
 			</or>
 			<then>
 				<if>

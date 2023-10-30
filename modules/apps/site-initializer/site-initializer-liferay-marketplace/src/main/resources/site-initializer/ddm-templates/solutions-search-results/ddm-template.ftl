@@ -122,11 +122,14 @@
 					</#if>
 
 					<#if product.urlImage?has_content>
-						<#assign
-							productThumbnail = product.urlImage?split("/o/")
-						/>
+						<#assign productThumbnail = product.urlImage?split("/o/") />
+						<#if productThumbnail?has_content && productThumbnail?size gte 2>
+							<#assign productThumbnail1 = "/o/${productThumbnail[1]}" />
+						<#else>
+							<#assign productThumbnail1 = "/o/commerce-media/default/?groupId=${scopeGroupId}" />
+						</#if>
 					<#else>
-						<#assign productThumbnail = "" />
+						<#assign productThumbnail1 = "/o/commerce-media/default/?groupId=${scopeGroupId}" />
 					</#if>
 
 					<#if product.urls?has_content>
@@ -140,7 +143,7 @@
 							<img
 								alt=${productName}
 								class="solution-search-image rounded"
-								src="/o/${productThumbnail[1]!''}"
+								src=${productThumbnail1}
 							/>
 						</div>
 
@@ -150,13 +153,11 @@
 									<#assign productPriceModels = productSpecifications?filter(item -> item.specificationKey == "developer-name") />
 
 									<#list productPriceModels as productPriceModel>
-
 										<#if productPriceModel.value?has_content>
 											<#assign priceModel = productPriceModel.value />
 										<#else>
 											<#assign priceModel = "" />
 										</#if>
-
 										<div class="developer-name font-size-paragraph-small">
 											${priceModel}
 										</div>

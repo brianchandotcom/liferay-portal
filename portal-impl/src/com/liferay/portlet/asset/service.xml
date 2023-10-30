@@ -215,7 +215,7 @@
 		<finder name="Name" return-type="Collection">
 			<finder-column arrayable-operator="OR" name="name" />
 		</finder>
-		<finder name="G_N" return-type="AssetTag">
+		<finder name="G_N" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="name" />
 		</finder>

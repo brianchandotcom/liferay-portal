@@ -4409,8 +4409,24 @@ public class JenkinsResultsParserUtil {
 					System.out.println("Downloading " + url);
 				}
 
+				Matcher matcher = _gitHubAPIURLPattern.matcher(url);
+
+				if (matcher.matches()) {
+					gitHubAPICall = true;
+
+					if (_updatingHttpRequestMethods.contains(
+							httpRequestMethod)) {
+
+						Properties buildProperties = getBuildProperties();
+
+						url =
+							buildProperties.getProperty("github.api.proxy") +
+								matcher.group(1);
+					}
+				}
+
 				if ((httpAuthorizationHeader == null) &&
-					(url.startsWith("https://api.github.com") ||
+					(gitHubAPICall ||
 					 url.startsWith(
 						 "https://raw.githubusercontent.com/liferay/"))) {
 
@@ -4482,22 +4498,6 @@ public class JenkinsResultsParserUtil {
 							buildProperties, "testray.admin.user.password"),
 						getProperty(
 							buildProperties, "testray.admin.user.name"));
-				}
-
-				Matcher matcher = _gitHubAPIURLPattern.matcher(url);
-
-				if (matcher.matches()) {
-					gitHubAPICall = true;
-
-					if (_updatingHttpRequestMethods.contains(
-							httpRequestMethod)) {
-
-						Properties buildProperties = getBuildProperties();
-
-						url =
-							buildProperties.getProperty("github.api.proxy") +
-								matcher.group(1);
-					}
 				}
 
 				URL urlObject = new URL(url);

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 
 import './index.scss';
 
@@ -14,11 +14,11 @@ import FooterButtons from '../../components/FooterButtons';
 import {useMarketplaceContext} from '../../context/MarketplaceContext';
 import {Liferay} from '../../liferay/liferay';
 import zodSchema, {zodResolver} from '../../schema/zod';
-import ProvisioningKoroneikiOAuth2 from '../../services/oauth/ProvisioningKoroneikiOAuth2';
 import ProductCard from '../GetAppPage/components/ProductCard/ProductCard';
 import StepWizard from '../GetAppPage/components/StepWizard/StepWizard';
 import useGetProductById from '../GetAppPage/hooks/useGetProductById';
 import useGetProductCreatorAccount from '../GetAppPage/hooks/useGetProductCreatorAccount';
+import useProvisioningKoroneikiOAuth2 from '../GetAppPage/hooks/useProvisioningKoroneikiOAuth2';
 import {formatDate} from '../PublishedAppsDashboard/PublishedDashboardPageUtil';
 import AccountEmailInfo from './AccountInfo';
 import LicenseDetails from './LicenseDetails';
@@ -34,8 +34,6 @@ const CreateLicense = () => {
 	const productId = String(params.appId);
 	const orderId = Number(params.orderId);
 	const {product} = useGetProductById('attachments', productId);
-
-	console.log('orderId', orderId);
 
 	const productCreatorAccount = useGetProductCreatorAccount(product);
 
@@ -57,39 +55,34 @@ const CreateLicense = () => {
 		resolver: zodResolver(zodSchema.generateLicenseKey),
 	});
 
+	const provisioningKoroneikiOAuth2 = useProvisioningKoroneikiOAuth2();
+
+	const getSubscriptions = useCallback(async () => {
+		const {familyName, givenName} = myUserAccount;
+
+		const subscriptions = await provisioningKoroneikiOAuth2.getSubscriptions(
+			orderId
+		);
+
+		setValue('licenseKeyData', subscriptions);
+
+		setValue(
+			'description',
+			`${givenName} ${familyName} - ${product?.name.en_US} - test`
+		);
+	}, [
+		myUserAccount,
+		provisioningKoroneikiOAuth2,
+		orderId,
+		setValue,
+		product?.name.en_US,
+	]);
+
 	useEffect(() => {
 		if (product) {
-			const {familyName, givenName} = myUserAccount;
-
-			const licenseKeyDataValue = [
-				{
-					endDate: 'DNE',
-					name: 'standard',
-					perpetual: true,
-					productPurchasedKey: 'KOR-26360233',
-					provisionedCount: 0,
-					purchasedCount: 3,
-					startDate: '2023-10-24T21:18:43Z',
-				},
-				{
-					endDate: '2024-10-24T21:18:43Z',
-					name: 'developer',
-					perpetual: false,
-					productPurchasedKey: 'KOR-26360233',
-					provisionedCount: 0,
-					purchasedCount: 3,
-					startDate: '2023-10-24T21:18:43Z',
-				},
-			];
-
-			setValue('licenseKeyData', licenseKeyDataValue);
-
-			setValue(
-				'description',
-				`${givenName} ${familyName} - ${product?.name.en_US} - ${licenseKeyDataValue[0].name}`
-			);
+			getSubscriptions();
 		}
-	}, [myUserAccount, product, setValue]);
+	}, [getSubscriptions, product]);
 
 	const {
 		IP,
@@ -181,21 +174,17 @@ const CreateLicense = () => {
 		},
 	};
 
-	const handleNextButton = async (form: CreateLicenseForm) => {
+	const handleNextButton = async (form: any) => {
 		if (step === StepCreateLicense.SUBSCRIPTION) {
 			setStep(StepCreateLicense.LICENSE_KEY_DETAILS);
 		}
 
 		if (step === StepCreateLicense.LICENSE_KEY_DETAILS) {
-			const licenseKey = await ProvisioningKoroneikiOAuth2.createLicenseKey(
-				form
+			const licenseKey = await provisioningKoroneikiOAuth2.createLicenseKey(
+				form.licenseKeyData
 			);
 
-			licenseKey.id = 12345;
-
-			console.log('licenseKey', licenseKey);
-
-			const downloadedKey = await ProvisioningKoroneikiOAuth2.downloadLicenseKey(
+			const downloadedKey = provisioningKoroneikiOAuth2.downloadLicenseKey(
 				licenseKey.id
 			);
 

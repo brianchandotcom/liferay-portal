@@ -118,7 +118,7 @@ DisplayPageManagementToolbarDisplayContext displayPageManagementToolbarDisplayCo
 									).build()
 								%>'
 								propsTransformer="js/propsTransformers/DisplayPageDropdownPropsTransformer"
-								verticalCard="<%= new DisplayPageVerticalCard(curLayoutPageTemplateEntry, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
+								verticalCard="<%= new DisplayPageVerticalCard(curLayoutPageTemplateEntry, displayPageDisplayContext.existsMappedContentType(curLayoutPageTemplateEntry), renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 							/>
 						</liferay-ui:search-container-column-text>
 					</c:when>

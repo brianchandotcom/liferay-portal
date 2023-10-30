@@ -688,13 +688,17 @@ gradle.beforeProject {
 				}
 
 				if (project.hasProperty("testExcludes")) {
-					exclude project.getProperty("testExcludes").tokenize(", ").collect {
+					String[] testExcludes = project.getProperty("testExcludes").split(",")
+
+					exclude testExcludes.collect {
 						"**/${it}"
 					}
 				}
 
 				if (project.hasProperty("testIncludes")) {
-					include project.getProperty("testIncludes").tokenize(", ").collect {
+					String[] testIncludes = project.getProperty("testIncludes").split(",")
+
+					include testIncludes.collect {
 						"**/${it}"
 					}
 				}

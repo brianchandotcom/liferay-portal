@@ -86,8 +86,8 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addMasterPageTemplateEntry(groupId = null,masterPageTemplateEntryName = null,serviceContext = null) {
-		Variables.assertDefined(parameterList = "${groupId},${masterPageTemplateEntryName},${serviceContext}");
+	macro _addMasterPageTemplateEntry(groupId = null,masterPageTemplateEntryName = null,serviceContext = null,status = null) {
+		Variables.assertDefined(parameterList = "${groupId},${masterPageTemplateEntryName},${serviceContext},${status}");
 
 		var portalURL = JSONCompany.getPortalURL();
 		var userLoginInfo = JSONUtil2.formatJSONUser();
@@ -100,7 +100,7 @@ definition {
 				-d name=${masterPageTemplateEntryName} \
 				-d type=3 \
 				-d masterLayoutPlid=0 \
-				-d status=2 \
+				-d status=${status} \
 				-d serviceContext=${serviceContext}
 		''';
 

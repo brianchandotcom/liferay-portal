@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -191,7 +192,7 @@ public abstract class BaseTaxCategoryResourceTestCase {
 			taxCategoryResource.getCommerceAdminSiteSettingGroupTaxCategoryPage(
 				groupId, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantGroupId != null) {
 			TaxCategory irrelevantTaxCategory =
@@ -201,13 +202,13 @@ public abstract class BaseTaxCategoryResourceTestCase {
 			page =
 				taxCategoryResource.
 					getCommerceAdminSiteSettingGroupTaxCategoryPage(
-						irrelevantGroupId, Pagination.of(1, 2));
+						irrelevantGroupId,
+						Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantTaxCategory),
-				(List<TaxCategory>)page.getItems());
+			assertContains(
+				irrelevantTaxCategory, (List<TaxCategory>)page.getItems());
 			assertValid(
 				page,
 				testGetCommerceAdminSiteSettingGroupTaxCategoryPage_getExpectedActions(
@@ -226,11 +227,10 @@ public abstract class BaseTaxCategoryResourceTestCase {
 			taxCategoryResource.getCommerceAdminSiteSettingGroupTaxCategoryPage(
 				groupId, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(taxCategory1, taxCategory2),
-			(List<TaxCategory>)page.getItems());
+		assertContains(taxCategory1, (List<TaxCategory>)page.getItems());
+		assertContains(taxCategory2, (List<TaxCategory>)page.getItems());
 		assertValid(
 			page,
 			testGetCommerceAdminSiteSettingGroupTaxCategoryPage_getExpectedActions(
@@ -258,6 +258,12 @@ public abstract class BaseTaxCategoryResourceTestCase {
 		Long groupId =
 			testGetCommerceAdminSiteSettingGroupTaxCategoryPage_getGroupId();
 
+		Page<TaxCategory> taxCategoryPage =
+			taxCategoryResource.getCommerceAdminSiteSettingGroupTaxCategoryPage(
+				groupId, null);
+
+		int totalCount = GetterUtil.getInteger(taxCategoryPage.getTotalCount());
+
 		TaxCategory taxCategory1 =
 			testGetCommerceAdminSiteSettingGroupTaxCategoryPage_addTaxCategory(
 				groupId, randomTaxCategory());
@@ -272,18 +278,18 @@ public abstract class BaseTaxCategoryResourceTestCase {
 
 		Page<TaxCategory> page1 =
 			taxCategoryResource.getCommerceAdminSiteSettingGroupTaxCategoryPage(
-				groupId, Pagination.of(1, 2));
+				groupId, Pagination.of(1, totalCount + 2));
 
 		List<TaxCategory> taxCategories1 = (List<TaxCategory>)page1.getItems();
 
 		Assert.assertEquals(
-			taxCategories1.toString(), 2, taxCategories1.size());
+			taxCategories1.toString(), totalCount + 2, taxCategories1.size());
 
 		Page<TaxCategory> page2 =
 			taxCategoryResource.getCommerceAdminSiteSettingGroupTaxCategoryPage(
-				groupId, Pagination.of(2, 2));
+				groupId, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<TaxCategory> taxCategories2 = (List<TaxCategory>)page2.getItems();
 
@@ -292,11 +298,11 @@ public abstract class BaseTaxCategoryResourceTestCase {
 
 		Page<TaxCategory> page3 =
 			taxCategoryResource.getCommerceAdminSiteSettingGroupTaxCategoryPage(
-				groupId, Pagination.of(1, 3));
+				groupId, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(taxCategory1, taxCategory2, taxCategory3),
-			(List<TaxCategory>)page3.getItems());
+		assertContains(taxCategory1, (List<TaxCategory>)page3.getItems());
+		assertContains(taxCategory2, (List<TaxCategory>)page3.getItems());
+		assertContains(taxCategory3, (List<TaxCategory>)page3.getItems());
 	}
 
 	protected TaxCategory

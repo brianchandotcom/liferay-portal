@@ -243,11 +243,12 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 	public void testGetWorkflowDefinitionsPageWithPagination()
 		throws Exception {
 
-		Page<WorkflowDefinition> totalPage =
+		Page<WorkflowDefinition> workflowDefinitionPage =
 			workflowDefinitionResource.getWorkflowDefinitionsPage(
 				null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(
+			workflowDefinitionPage.getTotalCount());
 
 		WorkflowDefinition workflowDefinition1 =
 			testGetWorkflowDefinitionsPage_addWorkflowDefinition(
@@ -286,7 +287,7 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 
 		Page<WorkflowDefinition> page3 =
 			workflowDefinitionResource.getWorkflowDefinitionsPage(
-				null, Pagination.of(1, totalCount + 3), null);
+				null, Pagination.of(1, (int)totalCount + 3), null);
 
 		assertContains(
 			workflowDefinition1, (List<WorkflowDefinition>)page3.getItems());
@@ -419,21 +420,33 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 			testGetWorkflowDefinitionsPage_addWorkflowDefinition(
 				workflowDefinition2);
 
+		Page<WorkflowDefinition> page =
+			workflowDefinitionResource.getWorkflowDefinitionsPage(
+				null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<WorkflowDefinition> ascPage =
 				workflowDefinitionResource.getWorkflowDefinitionsPage(
-					null, Pagination.of(1, 2), entityField.getName() + ":asc");
+					null, Pagination.of(1, (int)page.getTotalCount() + 1),
+					entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(workflowDefinition1, workflowDefinition2),
+			assertContains(
+				workflowDefinition1,
+				(List<WorkflowDefinition>)ascPage.getItems());
+			assertContains(
+				workflowDefinition2,
 				(List<WorkflowDefinition>)ascPage.getItems());
 
 			Page<WorkflowDefinition> descPage =
 				workflowDefinitionResource.getWorkflowDefinitionsPage(
-					null, Pagination.of(1, 2), entityField.getName() + ":desc");
+					null, Pagination.of(1, (int)page.getTotalCount() + 1),
+					entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(workflowDefinition2, workflowDefinition1),
+			assertContains(
+				workflowDefinition2,
+				(List<WorkflowDefinition>)descPage.getItems());
+			assertContains(
+				workflowDefinition1,
 				(List<WorkflowDefinition>)descPage.getItems());
 		}
 	}

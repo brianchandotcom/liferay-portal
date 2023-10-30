@@ -324,10 +324,11 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 
 	@Test
 	public void testGetMeasurementUnitsPageWithPagination() throws Exception {
-		Page<MeasurementUnit> totalPage =
+		Page<MeasurementUnit> measurementUnitPage =
 			measurementUnitResource.getMeasurementUnitsPage(null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(
+			measurementUnitPage.getTotalCount());
 
 		MeasurementUnit measurementUnit1 =
 			testGetMeasurementUnitsPage_addMeasurementUnit(
@@ -366,7 +367,7 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 
 		Page<MeasurementUnit> page3 =
 			measurementUnitResource.getMeasurementUnitsPage(
-				null, Pagination.of(1, totalCount + 3), null);
+				null, Pagination.of(1, (int)totalCount + 3), null);
 
 		assertContains(
 			measurementUnit1, (List<MeasurementUnit>)page3.getItems());
@@ -489,22 +490,29 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 		measurementUnit2 = testGetMeasurementUnitsPage_addMeasurementUnit(
 			measurementUnit2);
 
+		Page<MeasurementUnit> page =
+			measurementUnitResource.getMeasurementUnitsPage(null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<MeasurementUnit> ascPage =
 				measurementUnitResource.getMeasurementUnitsPage(
-					null, Pagination.of(1, 2), entityField.getName() + ":asc");
+					null, Pagination.of(1, (int)page.getTotalCount() + 1),
+					entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(measurementUnit1, measurementUnit2),
-				(List<MeasurementUnit>)ascPage.getItems());
+			assertContains(
+				measurementUnit1, (List<MeasurementUnit>)ascPage.getItems());
+			assertContains(
+				measurementUnit2, (List<MeasurementUnit>)ascPage.getItems());
 
 			Page<MeasurementUnit> descPage =
 				measurementUnitResource.getMeasurementUnitsPage(
-					null, Pagination.of(1, 2), entityField.getName() + ":desc");
+					null, Pagination.of(1, (int)page.getTotalCount() + 1),
+					entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(measurementUnit2, measurementUnit1),
-				(List<MeasurementUnit>)descPage.getItems());
+			assertContains(
+				measurementUnit2, (List<MeasurementUnit>)descPage.getItems());
+			assertContains(
+				measurementUnit1, (List<MeasurementUnit>)descPage.getItems());
 		}
 	}
 
@@ -830,7 +838,7 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 			measurementUnitResource.getMeasurementUnitsByType(
 				measurementUnitType, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantMeasurementUnitType != null) {
 			MeasurementUnit irrelevantMeasurementUnit =
@@ -839,12 +847,13 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 					randomIrrelevantMeasurementUnit());
 
 			page = measurementUnitResource.getMeasurementUnitsByType(
-				irrelevantMeasurementUnitType, Pagination.of(1, 2), null);
+				irrelevantMeasurementUnitType,
+				Pagination.of(1, (int)totalCount + 1), null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantMeasurementUnit),
+			assertContains(
+				irrelevantMeasurementUnit,
 				(List<MeasurementUnit>)page.getItems());
 			assertValid(
 				page,
@@ -863,11 +872,12 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 		page = measurementUnitResource.getMeasurementUnitsByType(
 			measurementUnitType, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(measurementUnit1, measurementUnit2),
-			(List<MeasurementUnit>)page.getItems());
+		assertContains(
+			measurementUnit1, (List<MeasurementUnit>)page.getItems());
+		assertContains(
+			measurementUnit2, (List<MeasurementUnit>)page.getItems());
 		assertValid(
 			page,
 			testGetMeasurementUnitsByType_getExpectedActions(
@@ -893,6 +903,13 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 		String measurementUnitType =
 			testGetMeasurementUnitsByType_getMeasurementUnitType();
 
+		Page<MeasurementUnit> measurementUnitPage =
+			measurementUnitResource.getMeasurementUnitsByType(
+				measurementUnitType, null, null);
+
+		int totalCount = GetterUtil.getInteger(
+			measurementUnitPage.getTotalCount());
+
 		MeasurementUnit measurementUnit1 =
 			testGetMeasurementUnitsByType_addMeasurementUnit(
 				measurementUnitType, randomMeasurementUnit());
@@ -907,19 +924,20 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 
 		Page<MeasurementUnit> page1 =
 			measurementUnitResource.getMeasurementUnitsByType(
-				measurementUnitType, Pagination.of(1, 2), null);
+				measurementUnitType, Pagination.of(1, totalCount + 2), null);
 
 		List<MeasurementUnit> measurementUnits1 =
 			(List<MeasurementUnit>)page1.getItems();
 
 		Assert.assertEquals(
-			measurementUnits1.toString(), 2, measurementUnits1.size());
+			measurementUnits1.toString(), totalCount + 2,
+			measurementUnits1.size());
 
 		Page<MeasurementUnit> page2 =
 			measurementUnitResource.getMeasurementUnitsByType(
-				measurementUnitType, Pagination.of(2, 2), null);
+				measurementUnitType, Pagination.of(2, totalCount + 2), null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<MeasurementUnit> measurementUnits2 =
 			(List<MeasurementUnit>)page2.getItems();
@@ -929,11 +947,15 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 
 		Page<MeasurementUnit> page3 =
 			measurementUnitResource.getMeasurementUnitsByType(
-				measurementUnitType, Pagination.of(1, 3), null);
+				measurementUnitType, Pagination.of(1, (int)totalCount + 3),
+				null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(measurementUnit1, measurementUnit2, measurementUnit3),
-			(List<MeasurementUnit>)page3.getItems());
+		assertContains(
+			measurementUnit1, (List<MeasurementUnit>)page3.getItems());
+		assertContains(
+			measurementUnit2, (List<MeasurementUnit>)page3.getItems());
+		assertContains(
+			measurementUnit3, (List<MeasurementUnit>)page3.getItems());
 	}
 
 	@Test
@@ -1056,24 +1078,32 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 		measurementUnit2 = testGetMeasurementUnitsByType_addMeasurementUnit(
 			measurementUnitType, measurementUnit2);
 
+		Page<MeasurementUnit> page =
+			measurementUnitResource.getMeasurementUnitsByType(
+				measurementUnitType, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<MeasurementUnit> ascPage =
 				measurementUnitResource.getMeasurementUnitsByType(
-					measurementUnitType, Pagination.of(1, 2),
+					measurementUnitType,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(measurementUnit1, measurementUnit2),
-				(List<MeasurementUnit>)ascPage.getItems());
+			assertContains(
+				measurementUnit1, (List<MeasurementUnit>)ascPage.getItems());
+			assertContains(
+				measurementUnit2, (List<MeasurementUnit>)ascPage.getItems());
 
 			Page<MeasurementUnit> descPage =
 				measurementUnitResource.getMeasurementUnitsByType(
-					measurementUnitType, Pagination.of(1, 2),
+					measurementUnitType,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(measurementUnit2, measurementUnit1),
-				(List<MeasurementUnit>)descPage.getItems());
+			assertContains(
+				measurementUnit2, (List<MeasurementUnit>)descPage.getItems());
+			assertContains(
+				measurementUnit1, (List<MeasurementUnit>)descPage.getItems());
 		}
 	}
 

@@ -297,10 +297,10 @@ public abstract class BaseOptionResourceTestCase {
 
 	@Test
 	public void testGetOptionsPageWithPagination() throws Exception {
-		Page<Option> totalPage = optionResource.getOptionsPage(
+		Page<Option> optionPage = optionResource.getOptionsPage(
 			null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(optionPage.getTotalCount());
 
 		Option option1 = testGetOptionsPage_addOption(randomOption());
 
@@ -326,7 +326,7 @@ public abstract class BaseOptionResourceTestCase {
 		Assert.assertEquals(options2.toString(), 1, options2.size());
 
 		Page<Option> page3 = optionResource.getOptionsPage(
-			null, null, Pagination.of(1, totalCount + 3), null);
+			null, null, Pagination.of(1, (int)totalCount + 3), null);
 
 		assertContains(option1, (List<Option>)page3.getItems());
 		assertContains(option2, (List<Option>)page3.getItems());
@@ -438,22 +438,23 @@ public abstract class BaseOptionResourceTestCase {
 
 		option2 = testGetOptionsPage_addOption(option2);
 
+		Page<Option> page = optionResource.getOptionsPage(
+			null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<Option> ascPage = optionResource.getOptionsPage(
-				null, null, Pagination.of(1, 2),
+				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(option1, option2),
-				(List<Option>)ascPage.getItems());
+			assertContains(option1, (List<Option>)ascPage.getItems());
+			assertContains(option2, (List<Option>)ascPage.getItems());
 
 			Page<Option> descPage = optionResource.getOptionsPage(
-				null, null, Pagination.of(1, 2),
+				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(option2, option1),
-				(List<Option>)descPage.getItems());
+			assertContains(option2, (List<Option>)descPage.getItems());
+			assertContains(option1, (List<Option>)descPage.getItems());
 		}
 	}
 

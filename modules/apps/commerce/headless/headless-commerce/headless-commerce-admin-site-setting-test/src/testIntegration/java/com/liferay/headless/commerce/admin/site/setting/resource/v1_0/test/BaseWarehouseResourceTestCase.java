@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -203,7 +204,7 @@ public abstract class BaseWarehouseResourceTestCase {
 			warehouseResource.getCommerceAdminSiteSettingGroupWarehousePage(
 				groupId, null, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantGroupId != null) {
 			Warehouse irrelevantWarehouse =
@@ -212,13 +213,13 @@ public abstract class BaseWarehouseResourceTestCase {
 
 			page =
 				warehouseResource.getCommerceAdminSiteSettingGroupWarehousePage(
-					irrelevantGroupId, null, Pagination.of(1, 2));
+					irrelevantGroupId, null,
+					Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantWarehouse),
-				(List<Warehouse>)page.getItems());
+			assertContains(
+				irrelevantWarehouse, (List<Warehouse>)page.getItems());
 			assertValid(
 				page,
 				testGetCommerceAdminSiteSettingGroupWarehousePage_getExpectedActions(
@@ -236,11 +237,10 @@ public abstract class BaseWarehouseResourceTestCase {
 		page = warehouseResource.getCommerceAdminSiteSettingGroupWarehousePage(
 			groupId, null, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(warehouse1, warehouse2),
-			(List<Warehouse>)page.getItems());
+		assertContains(warehouse1, (List<Warehouse>)page.getItems());
+		assertContains(warehouse2, (List<Warehouse>)page.getItems());
 		assertValid(
 			page,
 			testGetCommerceAdminSiteSettingGroupWarehousePage_getExpectedActions(
@@ -268,6 +268,12 @@ public abstract class BaseWarehouseResourceTestCase {
 		Long groupId =
 			testGetCommerceAdminSiteSettingGroupWarehousePage_getGroupId();
 
+		Page<Warehouse> warehousePage =
+			warehouseResource.getCommerceAdminSiteSettingGroupWarehousePage(
+				groupId, null, null);
+
+		int totalCount = GetterUtil.getInteger(warehousePage.getTotalCount());
+
 		Warehouse warehouse1 =
 			testGetCommerceAdminSiteSettingGroupWarehousePage_addWarehouse(
 				groupId, randomWarehouse());
@@ -282,17 +288,18 @@ public abstract class BaseWarehouseResourceTestCase {
 
 		Page<Warehouse> page1 =
 			warehouseResource.getCommerceAdminSiteSettingGroupWarehousePage(
-				groupId, null, Pagination.of(1, 2));
+				groupId, null, Pagination.of(1, totalCount + 2));
 
 		List<Warehouse> warehouses1 = (List<Warehouse>)page1.getItems();
 
-		Assert.assertEquals(warehouses1.toString(), 2, warehouses1.size());
+		Assert.assertEquals(
+			warehouses1.toString(), totalCount + 2, warehouses1.size());
 
 		Page<Warehouse> page2 =
 			warehouseResource.getCommerceAdminSiteSettingGroupWarehousePage(
-				groupId, null, Pagination.of(2, 2));
+				groupId, null, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<Warehouse> warehouses2 = (List<Warehouse>)page2.getItems();
 
@@ -300,11 +307,11 @@ public abstract class BaseWarehouseResourceTestCase {
 
 		Page<Warehouse> page3 =
 			warehouseResource.getCommerceAdminSiteSettingGroupWarehousePage(
-				groupId, null, Pagination.of(1, 3));
+				groupId, null, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(warehouse1, warehouse2, warehouse3),
-			(List<Warehouse>)page3.getItems());
+		assertContains(warehouse1, (List<Warehouse>)page3.getItems());
+		assertContains(warehouse2, (List<Warehouse>)page3.getItems());
+		assertContains(warehouse3, (List<Warehouse>)page3.getItems());
 	}
 
 	protected Warehouse

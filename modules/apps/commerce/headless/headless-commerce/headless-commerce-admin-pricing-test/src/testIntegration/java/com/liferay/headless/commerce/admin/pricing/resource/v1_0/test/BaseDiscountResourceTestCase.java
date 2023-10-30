@@ -228,9 +228,9 @@ public abstract class BaseDiscountResourceTestCase {
 
 	@Test
 	public void testGetDiscountsPageWithPagination() throws Exception {
-		Page<Discount> totalPage = discountResource.getDiscountsPage(null);
+		Page<Discount> discountPage = discountResource.getDiscountsPage(null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(discountPage.getTotalCount());
 
 		Discount discount1 = testGetDiscountsPage_addDiscount(randomDiscount());
 
@@ -256,7 +256,7 @@ public abstract class BaseDiscountResourceTestCase {
 		Assert.assertEquals(discounts2.toString(), 1, discounts2.size());
 
 		Page<Discount> page3 = discountResource.getDiscountsPage(
-			Pagination.of(1, totalCount + 3));
+			Pagination.of(1, (int)totalCount + 3));
 
 		assertContains(discount1, (List<Discount>)page3.getItems());
 		assertContains(discount2, (List<Discount>)page3.getItems());

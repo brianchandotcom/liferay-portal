@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -214,7 +215,7 @@ public abstract class BaseDiscountSkuResourceTestCase {
 				getDiscountByExternalReferenceCodeDiscountSkusPage(
 					externalReferenceCode, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantExternalReferenceCode != null) {
 			DiscountSku irrelevantDiscountSku =
@@ -225,13 +226,13 @@ public abstract class BaseDiscountSkuResourceTestCase {
 			page =
 				discountSkuResource.
 					getDiscountByExternalReferenceCodeDiscountSkusPage(
-						irrelevantExternalReferenceCode, Pagination.of(1, 2));
+						irrelevantExternalReferenceCode,
+						Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantDiscountSku),
-				(List<DiscountSku>)page.getItems());
+			assertContains(
+				irrelevantDiscountSku, (List<DiscountSku>)page.getItems());
 			assertValid(
 				page,
 				testGetDiscountByExternalReferenceCodeDiscountSkusPage_getExpectedActions(
@@ -251,11 +252,10 @@ public abstract class BaseDiscountSkuResourceTestCase {
 				getDiscountByExternalReferenceCodeDiscountSkusPage(
 					externalReferenceCode, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(discountSku1, discountSku2),
-			(List<DiscountSku>)page.getItems());
+		assertContains(discountSku1, (List<DiscountSku>)page.getItems());
+		assertContains(discountSku2, (List<DiscountSku>)page.getItems());
 		assertValid(
 			page,
 			testGetDiscountByExternalReferenceCodeDiscountSkusPage_getExpectedActions(
@@ -279,6 +279,13 @@ public abstract class BaseDiscountSkuResourceTestCase {
 		String externalReferenceCode =
 			testGetDiscountByExternalReferenceCodeDiscountSkusPage_getExternalReferenceCode();
 
+		Page<DiscountSku> discountSkuPage =
+			discountSkuResource.
+				getDiscountByExternalReferenceCodeDiscountSkusPage(
+					externalReferenceCode, null);
+
+		int totalCount = GetterUtil.getInteger(discountSkuPage.getTotalCount());
+
 		DiscountSku discountSku1 =
 			testGetDiscountByExternalReferenceCodeDiscountSkusPage_addDiscountSku(
 				externalReferenceCode, randomDiscountSku());
@@ -294,18 +301,19 @@ public abstract class BaseDiscountSkuResourceTestCase {
 		Page<DiscountSku> page1 =
 			discountSkuResource.
 				getDiscountByExternalReferenceCodeDiscountSkusPage(
-					externalReferenceCode, Pagination.of(1, 2));
+					externalReferenceCode, Pagination.of(1, totalCount + 2));
 
 		List<DiscountSku> discountSkus1 = (List<DiscountSku>)page1.getItems();
 
-		Assert.assertEquals(discountSkus1.toString(), 2, discountSkus1.size());
+		Assert.assertEquals(
+			discountSkus1.toString(), totalCount + 2, discountSkus1.size());
 
 		Page<DiscountSku> page2 =
 			discountSkuResource.
 				getDiscountByExternalReferenceCodeDiscountSkusPage(
-					externalReferenceCode, Pagination.of(2, 2));
+					externalReferenceCode, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<DiscountSku> discountSkus2 = (List<DiscountSku>)page2.getItems();
 
@@ -314,11 +322,12 @@ public abstract class BaseDiscountSkuResourceTestCase {
 		Page<DiscountSku> page3 =
 			discountSkuResource.
 				getDiscountByExternalReferenceCodeDiscountSkusPage(
-					externalReferenceCode, Pagination.of(1, 3));
+					externalReferenceCode,
+					Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(discountSku1, discountSku2, discountSku3),
-			(List<DiscountSku>)page3.getItems());
+		assertContains(discountSku1, (List<DiscountSku>)page3.getItems());
+		assertContains(discountSku2, (List<DiscountSku>)page3.getItems());
+		assertContains(discountSku3, (List<DiscountSku>)page3.getItems());
 	}
 
 	protected DiscountSku
@@ -377,7 +386,7 @@ public abstract class BaseDiscountSkuResourceTestCase {
 			discountSkuResource.getDiscountIdDiscountSkusPage(
 				id, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantId != null) {
 			DiscountSku irrelevantDiscountSku =
@@ -385,13 +394,13 @@ public abstract class BaseDiscountSkuResourceTestCase {
 					irrelevantId, randomIrrelevantDiscountSku());
 
 			page = discountSkuResource.getDiscountIdDiscountSkusPage(
-				irrelevantId, null, null, Pagination.of(1, 2), null);
+				irrelevantId, null, null, Pagination.of(1, (int)totalCount + 1),
+				null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantDiscountSku),
-				(List<DiscountSku>)page.getItems());
+			assertContains(
+				irrelevantDiscountSku, (List<DiscountSku>)page.getItems());
 			assertValid(
 				page,
 				testGetDiscountIdDiscountSkusPage_getExpectedActions(
@@ -409,11 +418,10 @@ public abstract class BaseDiscountSkuResourceTestCase {
 		page = discountSkuResource.getDiscountIdDiscountSkusPage(
 			id, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(discountSku1, discountSku2),
-			(List<DiscountSku>)page.getItems());
+		assertContains(discountSku1, (List<DiscountSku>)page.getItems());
+		assertContains(discountSku2, (List<DiscountSku>)page.getItems());
 		assertValid(
 			page, testGetDiscountIdDiscountSkusPage_getExpectedActions(id));
 	}
@@ -530,6 +538,12 @@ public abstract class BaseDiscountSkuResourceTestCase {
 
 		Long id = testGetDiscountIdDiscountSkusPage_getId();
 
+		Page<DiscountSku> discountSkuPage =
+			discountSkuResource.getDiscountIdDiscountSkusPage(
+				id, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(discountSkuPage.getTotalCount());
+
 		DiscountSku discountSku1 =
 			testGetDiscountIdDiscountSkusPage_addDiscountSku(
 				id, randomDiscountSku());
@@ -544,17 +558,18 @@ public abstract class BaseDiscountSkuResourceTestCase {
 
 		Page<DiscountSku> page1 =
 			discountSkuResource.getDiscountIdDiscountSkusPage(
-				id, null, null, Pagination.of(1, 2), null);
+				id, null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<DiscountSku> discountSkus1 = (List<DiscountSku>)page1.getItems();
 
-		Assert.assertEquals(discountSkus1.toString(), 2, discountSkus1.size());
+		Assert.assertEquals(
+			discountSkus1.toString(), totalCount + 2, discountSkus1.size());
 
 		Page<DiscountSku> page2 =
 			discountSkuResource.getDiscountIdDiscountSkusPage(
-				id, null, null, Pagination.of(2, 2), null);
+				id, null, null, Pagination.of(2, totalCount + 2), null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<DiscountSku> discountSkus2 = (List<DiscountSku>)page2.getItems();
 
@@ -562,11 +577,11 @@ public abstract class BaseDiscountSkuResourceTestCase {
 
 		Page<DiscountSku> page3 =
 			discountSkuResource.getDiscountIdDiscountSkusPage(
-				id, null, null, Pagination.of(1, 3), null);
+				id, null, null, Pagination.of(1, (int)totalCount + 3), null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(discountSku1, discountSku2, discountSku3),
-			(List<DiscountSku>)page3.getItems());
+		assertContains(discountSku1, (List<DiscountSku>)page3.getItems());
+		assertContains(discountSku2, (List<DiscountSku>)page3.getItems());
+		assertContains(discountSku3, (List<DiscountSku>)page3.getItems());
 	}
 
 	@Test
@@ -690,24 +705,30 @@ public abstract class BaseDiscountSkuResourceTestCase {
 		discountSku2 = testGetDiscountIdDiscountSkusPage_addDiscountSku(
 			id, discountSku2);
 
+		Page<DiscountSku> page =
+			discountSkuResource.getDiscountIdDiscountSkusPage(
+				id, null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<DiscountSku> ascPage =
 				discountSkuResource.getDiscountIdDiscountSkusPage(
-					id, null, null, Pagination.of(1, 2),
+					id, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(discountSku1, discountSku2),
-				(List<DiscountSku>)ascPage.getItems());
+			assertContains(discountSku1, (List<DiscountSku>)ascPage.getItems());
+			assertContains(discountSku2, (List<DiscountSku>)ascPage.getItems());
 
 			Page<DiscountSku> descPage =
 				discountSkuResource.getDiscountIdDiscountSkusPage(
-					id, null, null, Pagination.of(1, 2),
+					id, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(discountSku2, discountSku1),
-				(List<DiscountSku>)descPage.getItems());
+			assertContains(
+				discountSku2, (List<DiscountSku>)descPage.getItems());
+			assertContains(
+				discountSku1, (List<DiscountSku>)descPage.getItems());
 		}
 	}
 

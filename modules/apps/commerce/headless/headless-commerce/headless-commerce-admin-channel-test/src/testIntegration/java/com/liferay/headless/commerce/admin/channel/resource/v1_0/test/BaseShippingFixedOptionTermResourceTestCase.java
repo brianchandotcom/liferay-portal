@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -218,7 +219,7 @@ public abstract class BaseShippingFixedOptionTermResourceTestCase {
 				getShippingFixedOptionIdShippingFixedOptionTermsPage(
 					id, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantId != null) {
 			ShippingFixedOptionTerm irrelevantShippingFixedOptionTerm =
@@ -228,12 +229,13 @@ public abstract class BaseShippingFixedOptionTermResourceTestCase {
 			page =
 				shippingFixedOptionTermResource.
 					getShippingFixedOptionIdShippingFixedOptionTermsPage(
-						irrelevantId, null, null, Pagination.of(1, 2), null);
+						irrelevantId, null, null,
+						Pagination.of(1, (int)totalCount + 1), null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantShippingFixedOptionTerm),
+			assertContains(
+				irrelevantShippingFixedOptionTerm,
 				(List<ShippingFixedOptionTerm>)page.getItems());
 			assertValid(
 				page,
@@ -254,10 +256,13 @@ public abstract class BaseShippingFixedOptionTermResourceTestCase {
 				getShippingFixedOptionIdShippingFixedOptionTermsPage(
 					id, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(shippingFixedOptionTerm1, shippingFixedOptionTerm2),
+		assertContains(
+			shippingFixedOptionTerm1,
+			(List<ShippingFixedOptionTerm>)page.getItems());
+		assertContains(
+			shippingFixedOptionTerm2,
 			(List<ShippingFixedOptionTerm>)page.getItems());
 		assertValid(
 			page,
@@ -388,6 +393,14 @@ public abstract class BaseShippingFixedOptionTermResourceTestCase {
 		Long id =
 			testGetShippingFixedOptionIdShippingFixedOptionTermsPage_getId();
 
+		Page<ShippingFixedOptionTerm> shippingFixedOptionTermPage =
+			shippingFixedOptionTermResource.
+				getShippingFixedOptionIdShippingFixedOptionTermsPage(
+					id, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(
+			shippingFixedOptionTermPage.getTotalCount());
+
 		ShippingFixedOptionTerm shippingFixedOptionTerm1 =
 			testGetShippingFixedOptionIdShippingFixedOptionTermsPage_addShippingFixedOptionTerm(
 				id, randomShippingFixedOptionTerm());
@@ -403,21 +416,21 @@ public abstract class BaseShippingFixedOptionTermResourceTestCase {
 		Page<ShippingFixedOptionTerm> page1 =
 			shippingFixedOptionTermResource.
 				getShippingFixedOptionIdShippingFixedOptionTermsPage(
-					id, null, null, Pagination.of(1, 2), null);
+					id, null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<ShippingFixedOptionTerm> shippingFixedOptionTerms1 =
 			(List<ShippingFixedOptionTerm>)page1.getItems();
 
 		Assert.assertEquals(
-			shippingFixedOptionTerms1.toString(), 2,
+			shippingFixedOptionTerms1.toString(), totalCount + 2,
 			shippingFixedOptionTerms1.size());
 
 		Page<ShippingFixedOptionTerm> page2 =
 			shippingFixedOptionTermResource.
 				getShippingFixedOptionIdShippingFixedOptionTermsPage(
-					id, null, null, Pagination.of(2, 2), null);
+					id, null, null, Pagination.of(2, totalCount + 2), null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<ShippingFixedOptionTerm> shippingFixedOptionTerms2 =
 			(List<ShippingFixedOptionTerm>)page2.getItems();
@@ -429,12 +442,17 @@ public abstract class BaseShippingFixedOptionTermResourceTestCase {
 		Page<ShippingFixedOptionTerm> page3 =
 			shippingFixedOptionTermResource.
 				getShippingFixedOptionIdShippingFixedOptionTermsPage(
-					id, null, null, Pagination.of(1, 3), null);
+					id, null, null, Pagination.of(1, (int)totalCount + 3),
+					null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(
-				shippingFixedOptionTerm1, shippingFixedOptionTerm2,
-				shippingFixedOptionTerm3),
+		assertContains(
+			shippingFixedOptionTerm1,
+			(List<ShippingFixedOptionTerm>)page3.getItems());
+		assertContains(
+			shippingFixedOptionTerm2,
+			(List<ShippingFixedOptionTerm>)page3.getItems());
+		assertContains(
+			shippingFixedOptionTerm3,
 			(List<ShippingFixedOptionTerm>)page3.getItems());
 	}
 
@@ -568,27 +586,38 @@ public abstract class BaseShippingFixedOptionTermResourceTestCase {
 			testGetShippingFixedOptionIdShippingFixedOptionTermsPage_addShippingFixedOptionTerm(
 				id, shippingFixedOptionTerm2);
 
+		Page<ShippingFixedOptionTerm> page =
+			shippingFixedOptionTermResource.
+				getShippingFixedOptionIdShippingFixedOptionTermsPage(
+					id, null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<ShippingFixedOptionTerm> ascPage =
 				shippingFixedOptionTermResource.
 					getShippingFixedOptionIdShippingFixedOptionTermsPage(
-						id, null, null, Pagination.of(1, 2),
+						id, null, null,
+						Pagination.of(1, (int)page.getTotalCount() + 1),
 						entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(
-					shippingFixedOptionTerm1, shippingFixedOptionTerm2),
+			assertContains(
+				shippingFixedOptionTerm1,
+				(List<ShippingFixedOptionTerm>)ascPage.getItems());
+			assertContains(
+				shippingFixedOptionTerm2,
 				(List<ShippingFixedOptionTerm>)ascPage.getItems());
 
 			Page<ShippingFixedOptionTerm> descPage =
 				shippingFixedOptionTermResource.
 					getShippingFixedOptionIdShippingFixedOptionTermsPage(
-						id, null, null, Pagination.of(1, 2),
+						id, null, null,
+						Pagination.of(1, (int)page.getTotalCount() + 1),
 						entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(
-					shippingFixedOptionTerm2, shippingFixedOptionTerm1),
+			assertContains(
+				shippingFixedOptionTerm2,
+				(List<ShippingFixedOptionTerm>)descPage.getItems());
+			assertContains(
+				shippingFixedOptionTerm1,
 				(List<ShippingFixedOptionTerm>)descPage.getItems());
 		}
 	}

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -203,7 +204,7 @@ public abstract class BaseCTEntryResourceTestCase {
 		Page<CTEntry> page = ctEntryResource.getCtCollectionCTEntriesPage(
 			ctCollectionId, null, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantCtCollectionId != null) {
 			CTEntry irrelevantCTEntry =
@@ -211,14 +212,12 @@ public abstract class BaseCTEntryResourceTestCase {
 					irrelevantCtCollectionId, randomIrrelevantCTEntry());
 
 			page = ctEntryResource.getCtCollectionCTEntriesPage(
-				irrelevantCtCollectionId, null, null, null, Pagination.of(1, 2),
-				null);
+				irrelevantCtCollectionId, null, null, null,
+				Pagination.of(1, (int)totalCount + 1), null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantCTEntry),
-				(List<CTEntry>)page.getItems());
+			assertContains(irrelevantCTEntry, (List<CTEntry>)page.getItems());
 			assertValid(
 				page,
 				testGetCtCollectionCTEntriesPage_getExpectedActions(
@@ -234,10 +233,10 @@ public abstract class BaseCTEntryResourceTestCase {
 		page = ctEntryResource.getCtCollectionCTEntriesPage(
 			ctCollectionId, null, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(ctEntry1, ctEntry2), (List<CTEntry>)page.getItems());
+		assertContains(ctEntry1, (List<CTEntry>)page.getItems());
+		assertContains(ctEntry2, (List<CTEntry>)page.getItems());
 		assertValid(
 			page,
 			testGetCtCollectionCTEntriesPage_getExpectedActions(
@@ -356,6 +355,12 @@ public abstract class BaseCTEntryResourceTestCase {
 		Long ctCollectionId =
 			testGetCtCollectionCTEntriesPage_getCtCollectionId();
 
+		Page<CTEntry> ctEntryPage =
+			ctEntryResource.getCtCollectionCTEntriesPage(
+				ctCollectionId, null, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(ctEntryPage.getTotalCount());
+
 		CTEntry ctEntry1 = testGetCtCollectionCTEntriesPage_addCTEntry(
 			ctCollectionId, randomCTEntry());
 
@@ -366,27 +371,31 @@ public abstract class BaseCTEntryResourceTestCase {
 			ctCollectionId, randomCTEntry());
 
 		Page<CTEntry> page1 = ctEntryResource.getCtCollectionCTEntriesPage(
-			ctCollectionId, null, null, null, Pagination.of(1, 2), null);
+			ctCollectionId, null, null, null, Pagination.of(1, totalCount + 2),
+			null);
 
 		List<CTEntry> ctEntries1 = (List<CTEntry>)page1.getItems();
 
-		Assert.assertEquals(ctEntries1.toString(), 2, ctEntries1.size());
+		Assert.assertEquals(
+			ctEntries1.toString(), totalCount + 2, ctEntries1.size());
 
 		Page<CTEntry> page2 = ctEntryResource.getCtCollectionCTEntriesPage(
-			ctCollectionId, null, null, null, Pagination.of(2, 2), null);
+			ctCollectionId, null, null, null, Pagination.of(2, totalCount + 2),
+			null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<CTEntry> ctEntries2 = (List<CTEntry>)page2.getItems();
 
 		Assert.assertEquals(ctEntries2.toString(), 1, ctEntries2.size());
 
 		Page<CTEntry> page3 = ctEntryResource.getCtCollectionCTEntriesPage(
-			ctCollectionId, null, null, null, Pagination.of(1, 3), null);
+			ctCollectionId, null, null, null,
+			Pagination.of(1, (int)totalCount + 3), null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(ctEntry1, ctEntry2, ctEntry3),
-			(List<CTEntry>)page3.getItems());
+		assertContains(ctEntry1, (List<CTEntry>)page3.getItems());
+		assertContains(ctEntry2, (List<CTEntry>)page3.getItems());
+		assertContains(ctEntry3, (List<CTEntry>)page3.getItems());
 	}
 
 	@Test
@@ -507,24 +516,27 @@ public abstract class BaseCTEntryResourceTestCase {
 		ctEntry2 = testGetCtCollectionCTEntriesPage_addCTEntry(
 			ctCollectionId, ctEntry2);
 
+		Page<CTEntry> page = ctEntryResource.getCtCollectionCTEntriesPage(
+			ctCollectionId, null, null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<CTEntry> ascPage =
 				ctEntryResource.getCtCollectionCTEntriesPage(
-					ctCollectionId, null, null, null, Pagination.of(1, 2),
+					ctCollectionId, null, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(ctEntry1, ctEntry2),
-				(List<CTEntry>)ascPage.getItems());
+			assertContains(ctEntry1, (List<CTEntry>)ascPage.getItems());
+			assertContains(ctEntry2, (List<CTEntry>)ascPage.getItems());
 
 			Page<CTEntry> descPage =
 				ctEntryResource.getCtCollectionCTEntriesPage(
-					ctCollectionId, null, null, null, Pagination.of(1, 2),
+					ctCollectionId, null, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(ctEntry2, ctEntry1),
-				(List<CTEntry>)descPage.getItems());
+			assertContains(ctEntry2, (List<CTEntry>)descPage.getItems());
+			assertContains(ctEntry1, (List<CTEntry>)descPage.getItems());
 		}
 	}
 

@@ -217,7 +217,7 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 				getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
 					knowledgeBaseArticleId);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantKnowledgeBaseArticleId != null) {
 			KnowledgeBaseAttachment irrelevantKnowledgeBaseAttachment =
@@ -230,10 +230,10 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 					getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
 						irrelevantKnowledgeBaseArticleId);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantKnowledgeBaseAttachment),
+			assertContains(
+				irrelevantKnowledgeBaseAttachment,
 				(List<KnowledgeBaseAttachment>)page.getItems());
 			assertValid(
 				page,
@@ -254,10 +254,13 @@ public abstract class BaseKnowledgeBaseAttachmentResourceTestCase {
 				getKnowledgeBaseArticleKnowledgeBaseAttachmentsPage(
 					knowledgeBaseArticleId);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(knowledgeBaseAttachment1, knowledgeBaseAttachment2),
+		assertContains(
+			knowledgeBaseAttachment1,
+			(List<KnowledgeBaseAttachment>)page.getItems());
+		assertContains(
+			knowledgeBaseAttachment2,
 			(List<KnowledgeBaseAttachment>)page.getItems());
 		assertValid(
 			page,

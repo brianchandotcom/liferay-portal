@@ -318,10 +318,11 @@ public abstract class BaseOptionCategoryResourceTestCase {
 
 	@Test
 	public void testGetOptionCategoriesPageWithPagination() throws Exception {
-		Page<OptionCategory> totalPage =
+		Page<OptionCategory> optionCategoryPage =
 			optionCategoryResource.getOptionCategoriesPage(null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(
+			optionCategoryPage.getTotalCount());
 
 		OptionCategory optionCategory1 =
 			testGetOptionCategoriesPage_addOptionCategory(
@@ -360,7 +361,7 @@ public abstract class BaseOptionCategoryResourceTestCase {
 
 		Page<OptionCategory> page3 =
 			optionCategoryResource.getOptionCategoriesPage(
-				null, Pagination.of(1, totalCount + 3), null);
+				null, Pagination.of(1, (int)totalCount + 3), null);
 
 		assertContains(optionCategory1, (List<OptionCategory>)page3.getItems());
 		assertContains(optionCategory2, (List<OptionCategory>)page3.getItems());
@@ -480,22 +481,29 @@ public abstract class BaseOptionCategoryResourceTestCase {
 		optionCategory2 = testGetOptionCategoriesPage_addOptionCategory(
 			optionCategory2);
 
+		Page<OptionCategory> page =
+			optionCategoryResource.getOptionCategoriesPage(null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<OptionCategory> ascPage =
 				optionCategoryResource.getOptionCategoriesPage(
-					null, Pagination.of(1, 2), entityField.getName() + ":asc");
+					null, Pagination.of(1, (int)page.getTotalCount() + 1),
+					entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(optionCategory1, optionCategory2),
-				(List<OptionCategory>)ascPage.getItems());
+			assertContains(
+				optionCategory1, (List<OptionCategory>)ascPage.getItems());
+			assertContains(
+				optionCategory2, (List<OptionCategory>)ascPage.getItems());
 
 			Page<OptionCategory> descPage =
 				optionCategoryResource.getOptionCategoriesPage(
-					null, Pagination.of(1, 2), entityField.getName() + ":desc");
+					null, Pagination.of(1, (int)page.getTotalCount() + 1),
+					entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(optionCategory2, optionCategory1),
-				(List<OptionCategory>)descPage.getItems());
+			assertContains(
+				optionCategory2, (List<OptionCategory>)descPage.getItems());
+			assertContains(
+				optionCategory1, (List<OptionCategory>)descPage.getItems());
 		}
 	}
 

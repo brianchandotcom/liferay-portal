@@ -225,10 +225,11 @@ public abstract class BaseObjectFolderResourceTestCase {
 
 	@Test
 	public void testGetObjectFoldersPageWithPagination() throws Exception {
-		Page<ObjectFolder> totalPage =
+		Page<ObjectFolder> objectFolderPage =
 			objectFolderResource.getObjectFoldersPage(null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(
+			objectFolderPage.getTotalCount());
 
 		ObjectFolder objectFolder1 = testGetObjectFoldersPage_addObjectFolder(
 			randomObjectFolder());
@@ -260,7 +261,7 @@ public abstract class BaseObjectFolderResourceTestCase {
 			objectFolders2.toString(), 1, objectFolders2.size());
 
 		Page<ObjectFolder> page3 = objectFolderResource.getObjectFoldersPage(
-			null, Pagination.of(1, totalCount + 3));
+			null, Pagination.of(1, (int)totalCount + 3));
 
 		assertContains(objectFolder1, (List<ObjectFolder>)page3.getItems());
 		assertContains(objectFolder2, (List<ObjectFolder>)page3.getItems());

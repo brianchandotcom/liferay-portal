@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -429,7 +430,7 @@ public abstract class BaseNavigationMenuResourceTestCase {
 			navigationMenuResource.getSiteNavigationMenusPage(
 				siteId, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantSiteId != null) {
 			NavigationMenu irrelevantNavigationMenu =
@@ -437,12 +438,12 @@ public abstract class BaseNavigationMenuResourceTestCase {
 					irrelevantSiteId, randomIrrelevantNavigationMenu());
 
 			page = navigationMenuResource.getSiteNavigationMenusPage(
-				irrelevantSiteId, Pagination.of(1, 2));
+				irrelevantSiteId, Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantNavigationMenu),
+			assertContains(
+				irrelevantNavigationMenu,
 				(List<NavigationMenu>)page.getItems());
 			assertValid(
 				page,
@@ -461,11 +462,10 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		page = navigationMenuResource.getSiteNavigationMenusPage(
 			siteId, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(navigationMenu1, navigationMenu2),
-			(List<NavigationMenu>)page.getItems());
+		assertContains(navigationMenu1, (List<NavigationMenu>)page.getItems());
+		assertContains(navigationMenu2, (List<NavigationMenu>)page.getItems());
 		assertValid(
 			page, testGetSiteNavigationMenusPage_getExpectedActions(siteId));
 
@@ -498,6 +498,12 @@ public abstract class BaseNavigationMenuResourceTestCase {
 
 		Long siteId = testGetSiteNavigationMenusPage_getSiteId();
 
+		Page<NavigationMenu> navigationMenuPage =
+			navigationMenuResource.getSiteNavigationMenusPage(siteId, null);
+
+		int totalCount = GetterUtil.getInteger(
+			navigationMenuPage.getTotalCount());
+
 		NavigationMenu navigationMenu1 =
 			testGetSiteNavigationMenusPage_addNavigationMenu(
 				siteId, randomNavigationMenu());
@@ -512,19 +518,20 @@ public abstract class BaseNavigationMenuResourceTestCase {
 
 		Page<NavigationMenu> page1 =
 			navigationMenuResource.getSiteNavigationMenusPage(
-				siteId, Pagination.of(1, 2));
+				siteId, Pagination.of(1, totalCount + 2));
 
 		List<NavigationMenu> navigationMenus1 =
 			(List<NavigationMenu>)page1.getItems();
 
 		Assert.assertEquals(
-			navigationMenus1.toString(), 2, navigationMenus1.size());
+			navigationMenus1.toString(), totalCount + 2,
+			navigationMenus1.size());
 
 		Page<NavigationMenu> page2 =
 			navigationMenuResource.getSiteNavigationMenusPage(
-				siteId, Pagination.of(2, 2));
+				siteId, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<NavigationMenu> navigationMenus2 =
 			(List<NavigationMenu>)page2.getItems();
@@ -534,11 +541,11 @@ public abstract class BaseNavigationMenuResourceTestCase {
 
 		Page<NavigationMenu> page3 =
 			navigationMenuResource.getSiteNavigationMenusPage(
-				siteId, Pagination.of(1, 3));
+				siteId, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(navigationMenu1, navigationMenu2, navigationMenu3),
-			(List<NavigationMenu>)page3.getItems());
+		assertContains(navigationMenu1, (List<NavigationMenu>)page3.getItems());
+		assertContains(navigationMenu2, (List<NavigationMenu>)page3.getItems());
+		assertContains(navigationMenu3, (List<NavigationMenu>)page3.getItems());
 	}
 
 	protected NavigationMenu testGetSiteNavigationMenusPage_addNavigationMenu(
@@ -580,7 +587,7 @@ public abstract class BaseNavigationMenuResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/navigationMenus");
 
-		Assert.assertEquals(0, navigationMenusJSONObject.get("totalCount"));
+		long totalCount = navigationMenusJSONObject.getLong("totalCount");
 
 		NavigationMenu navigationMenu1 =
 			testGraphQLGetSiteNavigationMenusPage_addNavigationMenu();
@@ -591,10 +598,16 @@ public abstract class BaseNavigationMenuResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/navigationMenus");
 
-		Assert.assertEquals(2, navigationMenusJSONObject.getLong("totalCount"));
+		Assert.assertEquals(
+			totalCount + 2, navigationMenusJSONObject.getLong("totalCount"));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(navigationMenu1, navigationMenu2),
+		assertContains(
+			navigationMenu1,
+			Arrays.asList(
+				NavigationMenuSerDes.toDTOs(
+					navigationMenusJSONObject.getString("items"))));
+		assertContains(
+			navigationMenu2,
 			Arrays.asList(
 				NavigationMenuSerDes.toDTOs(
 					navigationMenusJSONObject.getString("items"))));

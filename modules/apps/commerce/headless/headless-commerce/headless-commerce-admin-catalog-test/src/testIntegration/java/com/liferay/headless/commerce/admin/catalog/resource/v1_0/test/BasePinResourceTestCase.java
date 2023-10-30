@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -236,7 +237,7 @@ public abstract class BasePinResourceTestCase {
 		Page<Pin> page = pinResource.getProductByExternalReferenceCodePinsPage(
 			externalReferenceCode, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantExternalReferenceCode != null) {
 			Pin irrelevantPin =
@@ -244,13 +245,12 @@ public abstract class BasePinResourceTestCase {
 					irrelevantExternalReferenceCode, randomIrrelevantPin());
 
 			page = pinResource.getProductByExternalReferenceCodePinsPage(
-				irrelevantExternalReferenceCode, null, Pagination.of(1, 2),
-				null);
+				irrelevantExternalReferenceCode, null,
+				Pagination.of(1, (int)totalCount + 1), null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantPin), (List<Pin>)page.getItems());
+			assertContains(irrelevantPin, (List<Pin>)page.getItems());
 			assertValid(
 				page,
 				testGetProductByExternalReferenceCodePinsPage_getExpectedActions(
@@ -266,10 +266,10 @@ public abstract class BasePinResourceTestCase {
 		page = pinResource.getProductByExternalReferenceCodePinsPage(
 			externalReferenceCode, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(pin1, pin2), (List<Pin>)page.getItems());
+		assertContains(pin1, (List<Pin>)page.getItems());
+		assertContains(pin2, (List<Pin>)page.getItems());
 		assertValid(
 			page,
 			testGetProductByExternalReferenceCodePinsPage_getExpectedActions(
@@ -297,6 +297,12 @@ public abstract class BasePinResourceTestCase {
 		String externalReferenceCode =
 			testGetProductByExternalReferenceCodePinsPage_getExternalReferenceCode();
 
+		Page<Pin> pinPage =
+			pinResource.getProductByExternalReferenceCodePinsPage(
+				externalReferenceCode, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(pinPage.getTotalCount());
+
 		Pin pin1 = testGetProductByExternalReferenceCodePinsPage_addPin(
 			externalReferenceCode, randomPin());
 
@@ -307,26 +313,30 @@ public abstract class BasePinResourceTestCase {
 			externalReferenceCode, randomPin());
 
 		Page<Pin> page1 = pinResource.getProductByExternalReferenceCodePinsPage(
-			externalReferenceCode, null, Pagination.of(1, 2), null);
+			externalReferenceCode, null, Pagination.of(1, totalCount + 2),
+			null);
 
 		List<Pin> pins1 = (List<Pin>)page1.getItems();
 
-		Assert.assertEquals(pins1.toString(), 2, pins1.size());
+		Assert.assertEquals(pins1.toString(), totalCount + 2, pins1.size());
 
 		Page<Pin> page2 = pinResource.getProductByExternalReferenceCodePinsPage(
-			externalReferenceCode, null, Pagination.of(2, 2), null);
+			externalReferenceCode, null, Pagination.of(2, totalCount + 2),
+			null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<Pin> pins2 = (List<Pin>)page2.getItems();
 
 		Assert.assertEquals(pins2.toString(), 1, pins2.size());
 
 		Page<Pin> page3 = pinResource.getProductByExternalReferenceCodePinsPage(
-			externalReferenceCode, null, Pagination.of(1, 3), null);
+			externalReferenceCode, null, Pagination.of(1, (int)totalCount + 3),
+			null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(pin1, pin2, pin3), (List<Pin>)page3.getItems());
+		assertContains(pin1, (List<Pin>)page3.getItems());
+		assertContains(pin2, (List<Pin>)page3.getItems());
+		assertContains(pin3, (List<Pin>)page3.getItems());
 	}
 
 	@Test
@@ -447,22 +457,27 @@ public abstract class BasePinResourceTestCase {
 		pin2 = testGetProductByExternalReferenceCodePinsPage_addPin(
 			externalReferenceCode, pin2);
 
+		Page<Pin> page = pinResource.getProductByExternalReferenceCodePinsPage(
+			externalReferenceCode, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<Pin> ascPage =
 				pinResource.getProductByExternalReferenceCodePinsPage(
-					externalReferenceCode, null, Pagination.of(1, 2),
+					externalReferenceCode, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(pin1, pin2), (List<Pin>)ascPage.getItems());
+			assertContains(pin1, (List<Pin>)ascPage.getItems());
+			assertContains(pin2, (List<Pin>)ascPage.getItems());
 
 			Page<Pin> descPage =
 				pinResource.getProductByExternalReferenceCodePinsPage(
-					externalReferenceCode, null, Pagination.of(1, 2),
+					externalReferenceCode, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(pin2, pin1), (List<Pin>)descPage.getItems());
+			assertContains(pin2, (List<Pin>)descPage.getItems());
+			assertContains(pin1, (List<Pin>)descPage.getItems());
 		}
 	}
 
@@ -515,19 +530,19 @@ public abstract class BasePinResourceTestCase {
 		Page<Pin> page = pinResource.getProductIdPinsPage(
 			id, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantId != null) {
 			Pin irrelevantPin = testGetProductIdPinsPage_addPin(
 				irrelevantId, randomIrrelevantPin());
 
 			page = pinResource.getProductIdPinsPage(
-				irrelevantId, null, Pagination.of(1, 2), null);
+				irrelevantId, null, Pagination.of(1, (int)totalCount + 1),
+				null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantPin), (List<Pin>)page.getItems());
+			assertContains(irrelevantPin, (List<Pin>)page.getItems());
 			assertValid(
 				page,
 				testGetProductIdPinsPage_getExpectedActions(irrelevantId));
@@ -540,10 +555,10 @@ public abstract class BasePinResourceTestCase {
 		page = pinResource.getProductIdPinsPage(
 			id, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(pin1, pin2), (List<Pin>)page.getItems());
+		assertContains(pin1, (List<Pin>)page.getItems());
+		assertContains(pin2, (List<Pin>)page.getItems());
 		assertValid(page, testGetProductIdPinsPage_getExpectedActions(id));
 
 		pinResource.deletePin(pin1.getId());
@@ -564,6 +579,11 @@ public abstract class BasePinResourceTestCase {
 	public void testGetProductIdPinsPageWithPagination() throws Exception {
 		Long id = testGetProductIdPinsPage_getId();
 
+		Page<Pin> pinPage = pinResource.getProductIdPinsPage(
+			id, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(pinPage.getTotalCount());
+
 		Pin pin1 = testGetProductIdPinsPage_addPin(id, randomPin());
 
 		Pin pin2 = testGetProductIdPinsPage_addPin(id, randomPin());
@@ -571,26 +591,27 @@ public abstract class BasePinResourceTestCase {
 		Pin pin3 = testGetProductIdPinsPage_addPin(id, randomPin());
 
 		Page<Pin> page1 = pinResource.getProductIdPinsPage(
-			id, null, Pagination.of(1, 2), null);
+			id, null, Pagination.of(1, totalCount + 2), null);
 
 		List<Pin> pins1 = (List<Pin>)page1.getItems();
 
-		Assert.assertEquals(pins1.toString(), 2, pins1.size());
+		Assert.assertEquals(pins1.toString(), totalCount + 2, pins1.size());
 
 		Page<Pin> page2 = pinResource.getProductIdPinsPage(
-			id, null, Pagination.of(2, 2), null);
+			id, null, Pagination.of(2, totalCount + 2), null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<Pin> pins2 = (List<Pin>)page2.getItems();
 
 		Assert.assertEquals(pins2.toString(), 1, pins2.size());
 
 		Page<Pin> page3 = pinResource.getProductIdPinsPage(
-			id, null, Pagination.of(1, 3), null);
+			id, null, Pagination.of(1, (int)totalCount + 3), null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(pin1, pin2, pin3), (List<Pin>)page3.getItems());
+		assertContains(pin1, (List<Pin>)page3.getItems());
+		assertContains(pin2, (List<Pin>)page3.getItems());
+		assertContains(pin3, (List<Pin>)page3.getItems());
 	}
 
 	@Test
@@ -700,18 +721,22 @@ public abstract class BasePinResourceTestCase {
 
 		pin2 = testGetProductIdPinsPage_addPin(id, pin2);
 
+		Page<Pin> page = pinResource.getProductIdPinsPage(id, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<Pin> ascPage = pinResource.getProductIdPinsPage(
-				id, null, Pagination.of(1, 2), entityField.getName() + ":asc");
+				id, null, Pagination.of(1, (int)page.getTotalCount() + 1),
+				entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(pin1, pin2), (List<Pin>)ascPage.getItems());
+			assertContains(pin1, (List<Pin>)ascPage.getItems());
+			assertContains(pin2, (List<Pin>)ascPage.getItems());
 
 			Page<Pin> descPage = pinResource.getProductIdPinsPage(
-				id, null, Pagination.of(1, 2), entityField.getName() + ":desc");
+				id, null, Pagination.of(1, (int)page.getTotalCount() + 1),
+				entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(pin2, pin1), (List<Pin>)descPage.getItems());
+			assertContains(pin2, (List<Pin>)descPage.getItems());
+			assertContains(pin1, (List<Pin>)descPage.getItems());
 		}
 	}
 

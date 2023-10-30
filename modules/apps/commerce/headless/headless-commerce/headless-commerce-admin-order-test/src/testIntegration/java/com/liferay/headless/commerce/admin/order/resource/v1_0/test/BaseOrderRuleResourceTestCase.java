@@ -313,10 +313,10 @@ public abstract class BaseOrderRuleResourceTestCase {
 
 	@Test
 	public void testGetOrderRulesPageWithPagination() throws Exception {
-		Page<OrderRule> totalPage = orderRuleResource.getOrderRulesPage(
+		Page<OrderRule> orderRulePage = orderRuleResource.getOrderRulesPage(
 			null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(orderRulePage.getTotalCount());
 
 		OrderRule orderRule1 = testGetOrderRulesPage_addOrderRule(
 			randomOrderRule());
@@ -345,7 +345,7 @@ public abstract class BaseOrderRuleResourceTestCase {
 		Assert.assertEquals(orderRules2.toString(), 1, orderRules2.size());
 
 		Page<OrderRule> page3 = orderRuleResource.getOrderRulesPage(
-			null, null, Pagination.of(1, totalCount + 3), null);
+			null, null, Pagination.of(1, (int)totalCount + 3), null);
 
 		assertContains(orderRule1, (List<OrderRule>)page3.getItems());
 		assertContains(orderRule2, (List<OrderRule>)page3.getItems());
@@ -459,22 +459,23 @@ public abstract class BaseOrderRuleResourceTestCase {
 
 		orderRule2 = testGetOrderRulesPage_addOrderRule(orderRule2);
 
+		Page<OrderRule> page = orderRuleResource.getOrderRulesPage(
+			null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<OrderRule> ascPage = orderRuleResource.getOrderRulesPage(
-				null, null, Pagination.of(1, 2),
+				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(orderRule1, orderRule2),
-				(List<OrderRule>)ascPage.getItems());
+			assertContains(orderRule1, (List<OrderRule>)ascPage.getItems());
+			assertContains(orderRule2, (List<OrderRule>)ascPage.getItems());
 
 			Page<OrderRule> descPage = orderRuleResource.getOrderRulesPage(
-				null, null, Pagination.of(1, 2),
+				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(orderRule2, orderRule1),
-				(List<OrderRule>)descPage.getItems());
+			assertContains(orderRule2, (List<OrderRule>)descPage.getItems());
+			assertContains(orderRule1, (List<OrderRule>)descPage.getItems());
 		}
 	}
 

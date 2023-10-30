@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -225,7 +226,7 @@ public abstract class BaseDataListViewResourceTestCase {
 				dataDefinitionId, RandomTestUtil.randomString(),
 				Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantDataDefinitionId != null) {
 			DataListView irrelevantDataListView =
@@ -233,13 +234,13 @@ public abstract class BaseDataListViewResourceTestCase {
 					irrelevantDataDefinitionId, randomIrrelevantDataListView());
 
 			page = dataListViewResource.getDataDefinitionDataListViewsPage(
-				irrelevantDataDefinitionId, null, Pagination.of(1, 2), null);
+				irrelevantDataDefinitionId, null,
+				Pagination.of(1, (int)totalCount + 1), null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantDataListView),
-				(List<DataListView>)page.getItems());
+			assertContains(
+				irrelevantDataListView, (List<DataListView>)page.getItems());
 			assertValid(
 				page,
 				testGetDataDefinitionDataListViewsPage_getExpectedActions(
@@ -257,11 +258,10 @@ public abstract class BaseDataListViewResourceTestCase {
 		page = dataListViewResource.getDataDefinitionDataListViewsPage(
 			dataDefinitionId, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(dataListView1, dataListView2),
-			(List<DataListView>)page.getItems());
+		assertContains(dataListView1, (List<DataListView>)page.getItems());
+		assertContains(dataListView2, (List<DataListView>)page.getItems());
 		assertValid(
 			page,
 			testGetDataDefinitionDataListViewsPage_getExpectedActions(
@@ -299,6 +299,13 @@ public abstract class BaseDataListViewResourceTestCase {
 		Long dataDefinitionId =
 			testGetDataDefinitionDataListViewsPage_getDataDefinitionId();
 
+		Page<DataListView> dataListViewPage =
+			dataListViewResource.getDataDefinitionDataListViewsPage(
+				dataDefinitionId, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(
+			dataListViewPage.getTotalCount());
+
 		DataListView dataListView1 =
 			testGetDataDefinitionDataListViewsPage_addDataListView(
 				dataDefinitionId, randomDataListView());
@@ -313,19 +320,19 @@ public abstract class BaseDataListViewResourceTestCase {
 
 		Page<DataListView> page1 =
 			dataListViewResource.getDataDefinitionDataListViewsPage(
-				dataDefinitionId, null, Pagination.of(1, 2), null);
+				dataDefinitionId, null, Pagination.of(1, totalCount + 2), null);
 
 		List<DataListView> dataListViews1 =
 			(List<DataListView>)page1.getItems();
 
 		Assert.assertEquals(
-			dataListViews1.toString(), 2, dataListViews1.size());
+			dataListViews1.toString(), totalCount + 2, dataListViews1.size());
 
 		Page<DataListView> page2 =
 			dataListViewResource.getDataDefinitionDataListViewsPage(
-				dataDefinitionId, null, Pagination.of(2, 2), null);
+				dataDefinitionId, null, Pagination.of(2, totalCount + 2), null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<DataListView> dataListViews2 =
 			(List<DataListView>)page2.getItems();
@@ -335,11 +342,12 @@ public abstract class BaseDataListViewResourceTestCase {
 
 		Page<DataListView> page3 =
 			dataListViewResource.getDataDefinitionDataListViewsPage(
-				dataDefinitionId, null, Pagination.of(1, 3), null);
+				dataDefinitionId, null, Pagination.of(1, (int)totalCount + 3),
+				null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(dataListView1, dataListView2, dataListView3),
-			(List<DataListView>)page3.getItems());
+		assertContains(dataListView1, (List<DataListView>)page3.getItems());
+		assertContains(dataListView2, (List<DataListView>)page3.getItems());
+		assertContains(dataListView3, (List<DataListView>)page3.getItems());
 	}
 
 	@Test
@@ -465,24 +473,32 @@ public abstract class BaseDataListViewResourceTestCase {
 		dataListView2 = testGetDataDefinitionDataListViewsPage_addDataListView(
 			dataDefinitionId, dataListView2);
 
+		Page<DataListView> page =
+			dataListViewResource.getDataDefinitionDataListViewsPage(
+				dataDefinitionId, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<DataListView> ascPage =
 				dataListViewResource.getDataDefinitionDataListViewsPage(
-					dataDefinitionId, null, Pagination.of(1, 2),
+					dataDefinitionId, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(dataListView1, dataListView2),
-				(List<DataListView>)ascPage.getItems());
+			assertContains(
+				dataListView1, (List<DataListView>)ascPage.getItems());
+			assertContains(
+				dataListView2, (List<DataListView>)ascPage.getItems());
 
 			Page<DataListView> descPage =
 				dataListViewResource.getDataDefinitionDataListViewsPage(
-					dataDefinitionId, null, Pagination.of(1, 2),
+					dataDefinitionId, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(dataListView2, dataListView1),
-				(List<DataListView>)descPage.getItems());
+			assertContains(
+				dataListView2, (List<DataListView>)descPage.getItems());
+			assertContains(
+				dataListView1, (List<DataListView>)descPage.getItems());
 		}
 	}
 

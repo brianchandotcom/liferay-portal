@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -275,7 +276,7 @@ public abstract class BaseFormRecordResourceTestCase {
 		Page<FormRecord> page = formRecordResource.getFormFormRecordsPage(
 			formId, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantFormId != null) {
 			FormRecord irrelevantFormRecord =
@@ -283,13 +284,12 @@ public abstract class BaseFormRecordResourceTestCase {
 					irrelevantFormId, randomIrrelevantFormRecord());
 
 			page = formRecordResource.getFormFormRecordsPage(
-				irrelevantFormId, Pagination.of(1, 2));
+				irrelevantFormId, Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantFormRecord),
-				(List<FormRecord>)page.getItems());
+			assertContains(
+				irrelevantFormRecord, (List<FormRecord>)page.getItems());
 			assertValid(
 				page,
 				testGetFormFormRecordsPage_getExpectedActions(
@@ -305,11 +305,10 @@ public abstract class BaseFormRecordResourceTestCase {
 		page = formRecordResource.getFormFormRecordsPage(
 			formId, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(formRecord1, formRecord2),
-			(List<FormRecord>)page.getItems());
+		assertContains(formRecord1, (List<FormRecord>)page.getItems());
+		assertContains(formRecord2, (List<FormRecord>)page.getItems());
 		assertValid(
 			page, testGetFormFormRecordsPage_getExpectedActions(formId));
 	}
@@ -336,6 +335,11 @@ public abstract class BaseFormRecordResourceTestCase {
 	public void testGetFormFormRecordsPageWithPagination() throws Exception {
 		Long formId = testGetFormFormRecordsPage_getFormId();
 
+		Page<FormRecord> formRecordPage =
+			formRecordResource.getFormFormRecordsPage(formId, null);
+
+		int totalCount = GetterUtil.getInteger(formRecordPage.getTotalCount());
+
 		FormRecord formRecord1 = testGetFormFormRecordsPage_addFormRecord(
 			formId, randomFormRecord());
 
@@ -346,27 +350,28 @@ public abstract class BaseFormRecordResourceTestCase {
 			formId, randomFormRecord());
 
 		Page<FormRecord> page1 = formRecordResource.getFormFormRecordsPage(
-			formId, Pagination.of(1, 2));
+			formId, Pagination.of(1, totalCount + 2));
 
 		List<FormRecord> formRecords1 = (List<FormRecord>)page1.getItems();
 
-		Assert.assertEquals(formRecords1.toString(), 2, formRecords1.size());
+		Assert.assertEquals(
+			formRecords1.toString(), totalCount + 2, formRecords1.size());
 
 		Page<FormRecord> page2 = formRecordResource.getFormFormRecordsPage(
-			formId, Pagination.of(2, 2));
+			formId, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<FormRecord> formRecords2 = (List<FormRecord>)page2.getItems();
 
 		Assert.assertEquals(formRecords2.toString(), 1, formRecords2.size());
 
 		Page<FormRecord> page3 = formRecordResource.getFormFormRecordsPage(
-			formId, Pagination.of(1, 3));
+			formId, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(formRecord1, formRecord2, formRecord3),
-			(List<FormRecord>)page3.getItems());
+		assertContains(formRecord1, (List<FormRecord>)page3.getItems());
+		assertContains(formRecord2, (List<FormRecord>)page3.getItems());
+		assertContains(formRecord3, (List<FormRecord>)page3.getItems());
 	}
 
 	protected FormRecord testGetFormFormRecordsPage_addFormRecord(

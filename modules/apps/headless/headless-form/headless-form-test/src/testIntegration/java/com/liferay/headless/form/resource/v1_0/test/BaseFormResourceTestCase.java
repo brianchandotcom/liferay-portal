@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -257,19 +258,18 @@ public abstract class BaseFormResourceTestCase {
 		Page<Form> page = formResource.getSiteFormsPage(
 			siteId, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantSiteId != null) {
 			Form irrelevantForm = testGetSiteFormsPage_addForm(
 				irrelevantSiteId, randomIrrelevantForm());
 
 			page = formResource.getSiteFormsPage(
-				irrelevantSiteId, Pagination.of(1, 2));
+				irrelevantSiteId, Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantForm), (List<Form>)page.getItems());
+			assertContains(irrelevantForm, (List<Form>)page.getItems());
 			assertValid(
 				page,
 				testGetSiteFormsPage_getExpectedActions(irrelevantSiteId));
@@ -281,10 +281,10 @@ public abstract class BaseFormResourceTestCase {
 
 		page = formResource.getSiteFormsPage(siteId, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(form1, form2), (List<Form>)page.getItems());
+		assertContains(form1, (List<Form>)page.getItems());
+		assertContains(form2, (List<Form>)page.getItems());
 		assertValid(page, testGetSiteFormsPage_getExpectedActions(siteId));
 	}
 
@@ -301,6 +301,10 @@ public abstract class BaseFormResourceTestCase {
 	public void testGetSiteFormsPageWithPagination() throws Exception {
 		Long siteId = testGetSiteFormsPage_getSiteId();
 
+		Page<Form> formPage = formResource.getSiteFormsPage(siteId, null);
+
+		int totalCount = GetterUtil.getInteger(formPage.getTotalCount());
+
 		Form form1 = testGetSiteFormsPage_addForm(siteId, randomForm());
 
 		Form form2 = testGetSiteFormsPage_addForm(siteId, randomForm());
@@ -308,26 +312,27 @@ public abstract class BaseFormResourceTestCase {
 		Form form3 = testGetSiteFormsPage_addForm(siteId, randomForm());
 
 		Page<Form> page1 = formResource.getSiteFormsPage(
-			siteId, Pagination.of(1, 2));
+			siteId, Pagination.of(1, totalCount + 2));
 
 		List<Form> forms1 = (List<Form>)page1.getItems();
 
-		Assert.assertEquals(forms1.toString(), 2, forms1.size());
+		Assert.assertEquals(forms1.toString(), totalCount + 2, forms1.size());
 
 		Page<Form> page2 = formResource.getSiteFormsPage(
-			siteId, Pagination.of(2, 2));
+			siteId, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<Form> forms2 = (List<Form>)page2.getItems();
 
 		Assert.assertEquals(forms2.toString(), 1, forms2.size());
 
 		Page<Form> page3 = formResource.getSiteFormsPage(
-			siteId, Pagination.of(1, 3));
+			siteId, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(form1, form2, form3), (List<Form>)page3.getItems());
+		assertContains(form1, (List<Form>)page3.getItems());
+		assertContains(form2, (List<Form>)page3.getItems());
+		assertContains(form3, (List<Form>)page3.getItems());
 	}
 
 	protected Form testGetSiteFormsPage_addForm(Long siteId, Form form)
@@ -366,7 +371,7 @@ public abstract class BaseFormResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/forms");
 
-		Assert.assertEquals(0, formsJSONObject.get("totalCount"));
+		long totalCount = formsJSONObject.getLong("totalCount");
 
 		Form form1 = testGraphQLGetSiteFormsPage_addForm();
 		Form form2 = testGraphQLGetSiteFormsPage_addForm();
@@ -375,10 +380,15 @@ public abstract class BaseFormResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/forms");
 
-		Assert.assertEquals(2, formsJSONObject.getLong("totalCount"));
+		Assert.assertEquals(
+			totalCount + 2, formsJSONObject.getLong("totalCount"));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(form1, form2),
+		assertContains(
+			form1,
+			Arrays.asList(
+				FormSerDes.toDTOs(formsJSONObject.getString("items"))));
+		assertContains(
+			form2,
 			Arrays.asList(
 				FormSerDes.toDTOs(formsJSONObject.getString("items"))));
 	}

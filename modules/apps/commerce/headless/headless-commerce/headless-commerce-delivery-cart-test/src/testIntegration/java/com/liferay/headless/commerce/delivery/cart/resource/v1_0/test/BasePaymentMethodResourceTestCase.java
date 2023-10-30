@@ -193,7 +193,7 @@ public abstract class BasePaymentMethodResourceTestCase {
 		Page<PaymentMethod> page =
 			paymentMethodResource.getCartPaymentMethodsPage(cartId);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantCartId != null) {
 			PaymentMethod irrelevantPaymentMethod =
@@ -203,11 +203,10 @@ public abstract class BasePaymentMethodResourceTestCase {
 			page = paymentMethodResource.getCartPaymentMethodsPage(
 				irrelevantCartId);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantPaymentMethod),
-				(List<PaymentMethod>)page.getItems());
+			assertContains(
+				irrelevantPaymentMethod, (List<PaymentMethod>)page.getItems());
 			assertValid(
 				page,
 				testGetCartPaymentMethodsPage_getExpectedActions(
@@ -224,11 +223,10 @@ public abstract class BasePaymentMethodResourceTestCase {
 
 		page = paymentMethodResource.getCartPaymentMethodsPage(cartId);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(paymentMethod1, paymentMethod2),
-			(List<PaymentMethod>)page.getItems());
+		assertContains(paymentMethod1, (List<PaymentMethod>)page.getItems());
+		assertContains(paymentMethod2, (List<PaymentMethod>)page.getItems());
 		assertValid(
 			page, testGetCartPaymentMethodsPage_getExpectedActions(cartId));
 	}

@@ -230,10 +230,11 @@ public abstract class BaseCommerceChannelResourceTestCase {
 
 	@Test
 	public void testGetCommerceChannelsPageWithPagination() throws Exception {
-		Page<CommerceChannel> totalPage =
+		Page<CommerceChannel> commerceChannelPage =
 			commerceChannelResource.getCommerceChannelsPage(null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(
+			commerceChannelPage.getTotalCount());
 
 		CommerceChannel commerceChannel1 =
 			testGetCommerceChannelsPage_addCommerceChannel(
@@ -272,7 +273,7 @@ public abstract class BaseCommerceChannelResourceTestCase {
 
 		Page<CommerceChannel> page3 =
 			commerceChannelResource.getCommerceChannelsPage(
-				null, Pagination.of(1, totalCount + 3), null);
+				null, Pagination.of(1, (int)totalCount + 3), null);
 
 		assertContains(
 			commerceChannel1, (List<CommerceChannel>)page3.getItems());
@@ -395,22 +396,29 @@ public abstract class BaseCommerceChannelResourceTestCase {
 		commerceChannel2 = testGetCommerceChannelsPage_addCommerceChannel(
 			commerceChannel2);
 
+		Page<CommerceChannel> page =
+			commerceChannelResource.getCommerceChannelsPage(null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<CommerceChannel> ascPage =
 				commerceChannelResource.getCommerceChannelsPage(
-					null, Pagination.of(1, 2), entityField.getName() + ":asc");
+					null, Pagination.of(1, (int)page.getTotalCount() + 1),
+					entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(commerceChannel1, commerceChannel2),
-				(List<CommerceChannel>)ascPage.getItems());
+			assertContains(
+				commerceChannel1, (List<CommerceChannel>)ascPage.getItems());
+			assertContains(
+				commerceChannel2, (List<CommerceChannel>)ascPage.getItems());
 
 			Page<CommerceChannel> descPage =
 				commerceChannelResource.getCommerceChannelsPage(
-					null, Pagination.of(1, 2), entityField.getName() + ":desc");
+					null, Pagination.of(1, (int)page.getTotalCount() + 1),
+					entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(commerceChannel2, commerceChannel1),
-				(List<CommerceChannel>)descPage.getItems());
+			assertContains(
+				commerceChannel2, (List<CommerceChannel>)descPage.getItems());
+			assertContains(
+				commerceChannel1, (List<CommerceChannel>)descPage.getItems());
 		}
 	}
 

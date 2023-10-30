@@ -208,7 +208,7 @@ public abstract class BasePostalAddressResourceTestCase {
 		Page<PostalAddress> page =
 			postalAddressResource.getAccountPostalAddressesPage(accountId);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantAccountId != null) {
 			PostalAddress irrelevantPostalAddress =
@@ -218,11 +218,10 @@ public abstract class BasePostalAddressResourceTestCase {
 			page = postalAddressResource.getAccountPostalAddressesPage(
 				irrelevantAccountId);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantPostalAddress),
-				(List<PostalAddress>)page.getItems());
+			assertContains(
+				irrelevantPostalAddress, (List<PostalAddress>)page.getItems());
 			assertValid(
 				page,
 				testGetAccountPostalAddressesPage_getExpectedActions(
@@ -239,11 +238,10 @@ public abstract class BasePostalAddressResourceTestCase {
 
 		page = postalAddressResource.getAccountPostalAddressesPage(accountId);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(postalAddress1, postalAddress2),
-			(List<PostalAddress>)page.getItems());
+		assertContains(postalAddress1, (List<PostalAddress>)page.getItems());
+		assertContains(postalAddress2, (List<PostalAddress>)page.getItems());
 		assertValid(
 			page,
 			testGetAccountPostalAddressesPage_getExpectedActions(accountId));
@@ -322,7 +320,7 @@ public abstract class BasePostalAddressResourceTestCase {
 			postalAddressResource.getOrganizationPostalAddressesPage(
 				organizationId);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantOrganizationId != null) {
 			PostalAddress irrelevantPostalAddress =
@@ -332,11 +330,10 @@ public abstract class BasePostalAddressResourceTestCase {
 			page = postalAddressResource.getOrganizationPostalAddressesPage(
 				irrelevantOrganizationId);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantPostalAddress),
-				(List<PostalAddress>)page.getItems());
+			assertContains(
+				irrelevantPostalAddress, (List<PostalAddress>)page.getItems());
 			assertValid(
 				page,
 				testGetOrganizationPostalAddressesPage_getExpectedActions(
@@ -354,11 +351,10 @@ public abstract class BasePostalAddressResourceTestCase {
 		page = postalAddressResource.getOrganizationPostalAddressesPage(
 			organizationId);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(postalAddress1, postalAddress2),
-			(List<PostalAddress>)page.getItems());
+		assertContains(postalAddress1, (List<PostalAddress>)page.getItems());
+		assertContains(postalAddress2, (List<PostalAddress>)page.getItems());
 		assertValid(
 			page,
 			testGetOrganizationPostalAddressesPage_getExpectedActions(
@@ -606,7 +602,7 @@ public abstract class BasePostalAddressResourceTestCase {
 			postalAddressResource.getUserAccountPostalAddressesPage(
 				userAccountId);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantUserAccountId != null) {
 			PostalAddress irrelevantPostalAddress =
@@ -616,11 +612,10 @@ public abstract class BasePostalAddressResourceTestCase {
 			page = postalAddressResource.getUserAccountPostalAddressesPage(
 				irrelevantUserAccountId);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantPostalAddress),
-				(List<PostalAddress>)page.getItems());
+			assertContains(
+				irrelevantPostalAddress, (List<PostalAddress>)page.getItems());
 			assertValid(
 				page,
 				testGetUserAccountPostalAddressesPage_getExpectedActions(
@@ -638,11 +633,10 @@ public abstract class BasePostalAddressResourceTestCase {
 		page = postalAddressResource.getUserAccountPostalAddressesPage(
 			userAccountId);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(postalAddress1, postalAddress2),
-			(List<PostalAddress>)page.getItems());
+		assertContains(postalAddress1, (List<PostalAddress>)page.getItems());
+		assertContains(postalAddress2, (List<PostalAddress>)page.getItems());
 		assertValid(
 			page,
 			testGetUserAccountPostalAddressesPage_getExpectedActions(

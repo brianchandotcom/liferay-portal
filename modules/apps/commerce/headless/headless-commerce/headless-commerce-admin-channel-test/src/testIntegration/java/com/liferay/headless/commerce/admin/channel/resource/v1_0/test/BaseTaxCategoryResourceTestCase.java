@@ -212,10 +212,10 @@ public abstract class BaseTaxCategoryResourceTestCase {
 
 	@Test
 	public void testGetTaxCategoriesPageWithPagination() throws Exception {
-		Page<TaxCategory> totalPage = taxCategoryResource.getTaxCategoriesPage(
-			null, null);
+		Page<TaxCategory> taxCategoryPage =
+			taxCategoryResource.getTaxCategoriesPage(null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(taxCategoryPage.getTotalCount());
 
 		TaxCategory taxCategory1 = testGetTaxCategoriesPage_addTaxCategory(
 			randomTaxCategory());
@@ -245,7 +245,7 @@ public abstract class BaseTaxCategoryResourceTestCase {
 			taxCategories2.toString(), 1, taxCategories2.size());
 
 		Page<TaxCategory> page3 = taxCategoryResource.getTaxCategoriesPage(
-			null, Pagination.of(1, totalCount + 3));
+			null, Pagination.of(1, (int)totalCount + 3));
 
 		assertContains(taxCategory1, (List<TaxCategory>)page3.getItems());
 		assertContains(taxCategory2, (List<TaxCategory>)page3.getItems());

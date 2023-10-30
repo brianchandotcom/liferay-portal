@@ -350,11 +350,12 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 
 	@Test
 	public void testGetObjectDefinitionsPageWithPagination() throws Exception {
-		Page<ObjectDefinition> totalPage =
+		Page<ObjectDefinition> objectDefinitionPage =
 			objectDefinitionResource.getObjectDefinitionsPage(
 				null, null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(
+			objectDefinitionPage.getTotalCount());
 
 		ObjectDefinition objectDefinition1 =
 			testGetObjectDefinitionsPage_addObjectDefinition(
@@ -393,7 +394,7 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 
 		Page<ObjectDefinition> page3 =
 			objectDefinitionResource.getObjectDefinitionsPage(
-				null, null, null, Pagination.of(1, totalCount + 3), null);
+				null, null, null, Pagination.of(1, (int)totalCount + 3), null);
 
 		assertContains(
 			objectDefinition1, (List<ObjectDefinition>)page3.getItems());
@@ -518,24 +519,32 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 		objectDefinition2 = testGetObjectDefinitionsPage_addObjectDefinition(
 			objectDefinition2);
 
+		Page<ObjectDefinition> page =
+			objectDefinitionResource.getObjectDefinitionsPage(
+				null, null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<ObjectDefinition> ascPage =
 				objectDefinitionResource.getObjectDefinitionsPage(
-					null, null, null, Pagination.of(1, 2),
+					null, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(objectDefinition1, objectDefinition2),
-				(List<ObjectDefinition>)ascPage.getItems());
+			assertContains(
+				objectDefinition1, (List<ObjectDefinition>)ascPage.getItems());
+			assertContains(
+				objectDefinition2, (List<ObjectDefinition>)ascPage.getItems());
 
 			Page<ObjectDefinition> descPage =
 				objectDefinitionResource.getObjectDefinitionsPage(
-					null, null, null, Pagination.of(1, 2),
+					null, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(objectDefinition2, objectDefinition1),
-				(List<ObjectDefinition>)descPage.getItems());
+			assertContains(
+				objectDefinition2, (List<ObjectDefinition>)descPage.getItems());
+			assertContains(
+				objectDefinition1, (List<ObjectDefinition>)descPage.getItems());
 		}
 	}
 

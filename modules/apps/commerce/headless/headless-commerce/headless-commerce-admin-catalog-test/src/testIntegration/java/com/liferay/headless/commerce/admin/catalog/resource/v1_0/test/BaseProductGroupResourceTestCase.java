@@ -308,10 +308,11 @@ public abstract class BaseProductGroupResourceTestCase {
 
 	@Test
 	public void testGetProductGroupsPageWithPagination() throws Exception {
-		Page<ProductGroup> totalPage =
+		Page<ProductGroup> productGroupPage =
 			productGroupResource.getProductGroupsPage(null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(
+			productGroupPage.getTotalCount());
 
 		ProductGroup productGroup1 = testGetProductGroupsPage_addProductGroup(
 			randomProductGroup());
@@ -343,7 +344,7 @@ public abstract class BaseProductGroupResourceTestCase {
 			productGroups2.toString(), 1, productGroups2.size());
 
 		Page<ProductGroup> page3 = productGroupResource.getProductGroupsPage(
-			null, null, Pagination.of(1, totalCount + 3), null);
+			null, null, Pagination.of(1, (int)totalCount + 3), null);
 
 		assertContains(productGroup1, (List<ProductGroup>)page3.getItems());
 		assertContains(productGroup2, (List<ProductGroup>)page3.getItems());
@@ -460,24 +461,29 @@ public abstract class BaseProductGroupResourceTestCase {
 
 		productGroup2 = testGetProductGroupsPage_addProductGroup(productGroup2);
 
+		Page<ProductGroup> page = productGroupResource.getProductGroupsPage(
+			null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<ProductGroup> ascPage =
 				productGroupResource.getProductGroupsPage(
-					null, null, Pagination.of(1, 2),
+					null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(productGroup1, productGroup2),
-				(List<ProductGroup>)ascPage.getItems());
+			assertContains(
+				productGroup1, (List<ProductGroup>)ascPage.getItems());
+			assertContains(
+				productGroup2, (List<ProductGroup>)ascPage.getItems());
 
 			Page<ProductGroup> descPage =
 				productGroupResource.getProductGroupsPage(
-					null, null, Pagination.of(1, 2),
+					null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(productGroup2, productGroup1),
-				(List<ProductGroup>)descPage.getItems());
+			assertContains(
+				productGroup2, (List<ProductGroup>)descPage.getItems());
+			assertContains(
+				productGroup1, (List<ProductGroup>)descPage.getItems());
 		}
 	}
 

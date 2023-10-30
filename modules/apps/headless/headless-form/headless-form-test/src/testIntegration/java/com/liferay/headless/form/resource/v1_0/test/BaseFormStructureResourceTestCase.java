@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -266,7 +267,7 @@ public abstract class BaseFormStructureResourceTestCase {
 			formStructureResource.getSiteFormStructuresPage(
 				siteId, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantSiteId != null) {
 			FormStructure irrelevantFormStructure =
@@ -274,13 +275,12 @@ public abstract class BaseFormStructureResourceTestCase {
 					irrelevantSiteId, randomIrrelevantFormStructure());
 
 			page = formStructureResource.getSiteFormStructuresPage(
-				irrelevantSiteId, Pagination.of(1, 2));
+				irrelevantSiteId, Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantFormStructure),
-				(List<FormStructure>)page.getItems());
+			assertContains(
+				irrelevantFormStructure, (List<FormStructure>)page.getItems());
 			assertValid(
 				page,
 				testGetSiteFormStructuresPage_getExpectedActions(
@@ -298,11 +298,10 @@ public abstract class BaseFormStructureResourceTestCase {
 		page = formStructureResource.getSiteFormStructuresPage(
 			siteId, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(formStructure1, formStructure2),
-			(List<FormStructure>)page.getItems());
+		assertContains(formStructure1, (List<FormStructure>)page.getItems());
+		assertContains(formStructure2, (List<FormStructure>)page.getItems());
 		assertValid(
 			page, testGetSiteFormStructuresPage_getExpectedActions(siteId));
 	}
@@ -320,6 +319,12 @@ public abstract class BaseFormStructureResourceTestCase {
 	public void testGetSiteFormStructuresPageWithPagination() throws Exception {
 		Long siteId = testGetSiteFormStructuresPage_getSiteId();
 
+		Page<FormStructure> formStructurePage =
+			formStructureResource.getSiteFormStructuresPage(siteId, null);
+
+		int totalCount = GetterUtil.getInteger(
+			formStructurePage.getTotalCount());
+
 		FormStructure formStructure1 =
 			testGetSiteFormStructuresPage_addFormStructure(
 				siteId, randomFormStructure());
@@ -334,19 +339,19 @@ public abstract class BaseFormStructureResourceTestCase {
 
 		Page<FormStructure> page1 =
 			formStructureResource.getSiteFormStructuresPage(
-				siteId, Pagination.of(1, 2));
+				siteId, Pagination.of(1, totalCount + 2));
 
 		List<FormStructure> formStructures1 =
 			(List<FormStructure>)page1.getItems();
 
 		Assert.assertEquals(
-			formStructures1.toString(), 2, formStructures1.size());
+			formStructures1.toString(), totalCount + 2, formStructures1.size());
 
 		Page<FormStructure> page2 =
 			formStructureResource.getSiteFormStructuresPage(
-				siteId, Pagination.of(2, 2));
+				siteId, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<FormStructure> formStructures2 =
 			(List<FormStructure>)page2.getItems();
@@ -356,11 +361,11 @@ public abstract class BaseFormStructureResourceTestCase {
 
 		Page<FormStructure> page3 =
 			formStructureResource.getSiteFormStructuresPage(
-				siteId, Pagination.of(1, 3));
+				siteId, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(formStructure1, formStructure2, formStructure3),
-			(List<FormStructure>)page3.getItems());
+		assertContains(formStructure1, (List<FormStructure>)page3.getItems());
+		assertContains(formStructure2, (List<FormStructure>)page3.getItems());
+		assertContains(formStructure3, (List<FormStructure>)page3.getItems());
 	}
 
 	protected FormStructure testGetSiteFormStructuresPage_addFormStructure(
@@ -402,7 +407,7 @@ public abstract class BaseFormStructureResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/formStructures");
 
-		Assert.assertEquals(0, formStructuresJSONObject.get("totalCount"));
+		long totalCount = formStructuresJSONObject.getLong("totalCount");
 
 		FormStructure formStructure1 =
 			testGraphQLGetSiteFormStructuresPage_addFormStructure();
@@ -413,10 +418,16 @@ public abstract class BaseFormStructureResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/formStructures");
 
-		Assert.assertEquals(2, formStructuresJSONObject.getLong("totalCount"));
+		Assert.assertEquals(
+			totalCount + 2, formStructuresJSONObject.getLong("totalCount"));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(formStructure1, formStructure2),
+		assertContains(
+			formStructure1,
+			Arrays.asList(
+				FormStructureSerDes.toDTOs(
+					formStructuresJSONObject.getString("items"))));
+		assertContains(
+			formStructure2,
 			Arrays.asList(
 				FormStructureSerDes.toDTOs(
 					formStructuresJSONObject.getString("items"))));

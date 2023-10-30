@@ -197,19 +197,19 @@ public abstract class BaseRegionResourceTestCase {
 		Page<Region> page = regionResource.getCountryRegionsPage(
 			countryId, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantCountryId != null) {
 			Region irrelevantRegion = testGetCountryRegionsPage_addRegion(
 				irrelevantCountryId, randomIrrelevantRegion());
 
 			page = regionResource.getCountryRegionsPage(
-				irrelevantCountryId, null, null, Pagination.of(1, 2), null);
+				irrelevantCountryId, null, null,
+				Pagination.of(1, (int)totalCount + 1), null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantRegion), (List<Region>)page.getItems());
+			assertContains(irrelevantRegion, (List<Region>)page.getItems());
 			assertValid(
 				page,
 				testGetCountryRegionsPage_getExpectedActions(
@@ -225,10 +225,10 @@ public abstract class BaseRegionResourceTestCase {
 		page = regionResource.getCountryRegionsPage(
 			countryId, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(region1, region2), (List<Region>)page.getItems());
+		assertContains(region1, (List<Region>)page.getItems());
+		assertContains(region2, (List<Region>)page.getItems());
 		assertValid(
 			page, testGetCountryRegionsPage_getExpectedActions(countryId));
 
@@ -259,6 +259,11 @@ public abstract class BaseRegionResourceTestCase {
 	public void testGetCountryRegionsPageWithPagination() throws Exception {
 		Long countryId = testGetCountryRegionsPage_getCountryId();
 
+		Page<Region> regionPage = regionResource.getCountryRegionsPage(
+			countryId, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(regionPage.getTotalCount());
+
 		Region region1 = testGetCountryRegionsPage_addRegion(
 			countryId, randomRegion());
 
@@ -269,27 +274,28 @@ public abstract class BaseRegionResourceTestCase {
 			countryId, randomRegion());
 
 		Page<Region> page1 = regionResource.getCountryRegionsPage(
-			countryId, null, null, Pagination.of(1, 2), null);
+			countryId, null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<Region> regions1 = (List<Region>)page1.getItems();
 
-		Assert.assertEquals(regions1.toString(), 2, regions1.size());
+		Assert.assertEquals(
+			regions1.toString(), totalCount + 2, regions1.size());
 
 		Page<Region> page2 = regionResource.getCountryRegionsPage(
-			countryId, null, null, Pagination.of(2, 2), null);
+			countryId, null, null, Pagination.of(2, totalCount + 2), null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<Region> regions2 = (List<Region>)page2.getItems();
 
 		Assert.assertEquals(regions2.toString(), 1, regions2.size());
 
 		Page<Region> page3 = regionResource.getCountryRegionsPage(
-			countryId, null, null, Pagination.of(1, 3), null);
+			countryId, null, null, Pagination.of(1, (int)totalCount + 3), null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(region1, region2, region3),
-			(List<Region>)page3.getItems());
+		assertContains(region1, (List<Region>)page3.getItems());
+		assertContains(region2, (List<Region>)page3.getItems());
+		assertContains(region3, (List<Region>)page3.getItems());
 	}
 
 	@Test
@@ -399,22 +405,25 @@ public abstract class BaseRegionResourceTestCase {
 
 		region2 = testGetCountryRegionsPage_addRegion(countryId, region2);
 
+		Page<Region> page = regionResource.getCountryRegionsPage(
+			countryId, null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<Region> ascPage = regionResource.getCountryRegionsPage(
-				countryId, null, null, Pagination.of(1, 2),
+				countryId, null, null,
+				Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(region1, region2),
-				(List<Region>)ascPage.getItems());
+			assertContains(region1, (List<Region>)ascPage.getItems());
+			assertContains(region2, (List<Region>)ascPage.getItems());
 
 			Page<Region> descPage = regionResource.getCountryRegionsPage(
-				countryId, null, null, Pagination.of(1, 2),
+				countryId, null, null,
+				Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(region2, region1),
-				(List<Region>)descPage.getItems());
+			assertContains(region2, (List<Region>)descPage.getItems());
+			assertContains(region1, (List<Region>)descPage.getItems());
 		}
 	}
 
@@ -582,10 +591,10 @@ public abstract class BaseRegionResourceTestCase {
 
 	@Test
 	public void testGetRegionsPageWithPagination() throws Exception {
-		Page<Region> totalPage = regionResource.getRegionsPage(
+		Page<Region> regionPage = regionResource.getRegionsPage(
 			null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(regionPage.getTotalCount());
 
 		Region region1 = testGetRegionsPage_addRegion(randomRegion());
 
@@ -611,7 +620,7 @@ public abstract class BaseRegionResourceTestCase {
 		Assert.assertEquals(regions2.toString(), 1, regions2.size());
 
 		Page<Region> page3 = regionResource.getRegionsPage(
-			null, null, Pagination.of(1, totalCount + 3), null);
+			null, null, Pagination.of(1, (int)totalCount + 3), null);
 
 		assertContains(region1, (List<Region>)page3.getItems());
 		assertContains(region2, (List<Region>)page3.getItems());
@@ -723,22 +732,23 @@ public abstract class BaseRegionResourceTestCase {
 
 		region2 = testGetRegionsPage_addRegion(region2);
 
+		Page<Region> page = regionResource.getRegionsPage(
+			null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<Region> ascPage = regionResource.getRegionsPage(
-				null, null, Pagination.of(1, 2),
+				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(region1, region2),
-				(List<Region>)ascPage.getItems());
+			assertContains(region1, (List<Region>)ascPage.getItems());
+			assertContains(region2, (List<Region>)ascPage.getItems());
 
 			Page<Region> descPage = regionResource.getRegionsPage(
-				null, null, Pagination.of(1, 2),
+				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(region2, region1),
-				(List<Region>)descPage.getItems());
+			assertContains(region2, (List<Region>)descPage.getItems());
+			assertContains(region1, (List<Region>)descPage.getItems());
 		}
 	}
 

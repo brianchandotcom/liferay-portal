@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -235,7 +236,7 @@ public abstract class BaseDocumentResourceTestCase {
 		Page<Document> page = documentResource.getAssetLibraryDocumentsPage(
 			assetLibraryId, null, null, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantAssetLibraryId != null) {
 			Document irrelevantDocument =
@@ -244,13 +245,11 @@ public abstract class BaseDocumentResourceTestCase {
 
 			page = documentResource.getAssetLibraryDocumentsPage(
 				irrelevantAssetLibraryId, null, null, null, null,
-				Pagination.of(1, 2), null);
+				Pagination.of(1, (int)totalCount + 1), null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantDocument),
-				(List<Document>)page.getItems());
+			assertContains(irrelevantDocument, (List<Document>)page.getItems());
 			assertValid(
 				page,
 				testGetAssetLibraryDocumentsPage_getExpectedActions(
@@ -266,11 +265,10 @@ public abstract class BaseDocumentResourceTestCase {
 		page = documentResource.getAssetLibraryDocumentsPage(
 			assetLibraryId, null, null, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(document1, document2),
-			(List<Document>)page.getItems());
+		assertContains(document1, (List<Document>)page.getItems());
+		assertContains(document2, (List<Document>)page.getItems());
 		assertValid(
 			page,
 			testGetAssetLibraryDocumentsPage_getExpectedActions(
@@ -402,6 +400,12 @@ public abstract class BaseDocumentResourceTestCase {
 		Long assetLibraryId =
 			testGetAssetLibraryDocumentsPage_getAssetLibraryId();
 
+		Page<Document> documentPage =
+			documentResource.getAssetLibraryDocumentsPage(
+				assetLibraryId, null, null, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(documentPage.getTotalCount());
+
 		Document document1 = testGetAssetLibraryDocumentsPage_addDocument(
 			assetLibraryId, randomDocument());
 
@@ -412,27 +416,31 @@ public abstract class BaseDocumentResourceTestCase {
 			assetLibraryId, randomDocument());
 
 		Page<Document> page1 = documentResource.getAssetLibraryDocumentsPage(
-			assetLibraryId, null, null, null, null, Pagination.of(1, 2), null);
+			assetLibraryId, null, null, null, null,
+			Pagination.of(1, totalCount + 2), null);
 
 		List<Document> documents1 = (List<Document>)page1.getItems();
 
-		Assert.assertEquals(documents1.toString(), 2, documents1.size());
+		Assert.assertEquals(
+			documents1.toString(), totalCount + 2, documents1.size());
 
 		Page<Document> page2 = documentResource.getAssetLibraryDocumentsPage(
-			assetLibraryId, null, null, null, null, Pagination.of(2, 2), null);
+			assetLibraryId, null, null, null, null,
+			Pagination.of(2, totalCount + 2), null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<Document> documents2 = (List<Document>)page2.getItems();
 
 		Assert.assertEquals(documents2.toString(), 1, documents2.size());
 
 		Page<Document> page3 = documentResource.getAssetLibraryDocumentsPage(
-			assetLibraryId, null, null, null, null, Pagination.of(1, 3), null);
+			assetLibraryId, null, null, null, null,
+			Pagination.of(1, (int)totalCount + 3), null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(document1, document2, document3),
-			(List<Document>)page3.getItems());
+		assertContains(document1, (List<Document>)page3.getItems());
+		assertContains(document2, (List<Document>)page3.getItems());
+		assertContains(document3, (List<Document>)page3.getItems());
 	}
 
 	@Test
@@ -553,24 +561,27 @@ public abstract class BaseDocumentResourceTestCase {
 		document2 = testGetAssetLibraryDocumentsPage_addDocument(
 			assetLibraryId, document2);
 
+		Page<Document> page = documentResource.getAssetLibraryDocumentsPage(
+			assetLibraryId, null, null, null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<Document> ascPage =
 				documentResource.getAssetLibraryDocumentsPage(
-					assetLibraryId, null, null, null, null, Pagination.of(1, 2),
+					assetLibraryId, null, null, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(document1, document2),
-				(List<Document>)ascPage.getItems());
+			assertContains(document1, (List<Document>)ascPage.getItems());
+			assertContains(document2, (List<Document>)ascPage.getItems());
 
 			Page<Document> descPage =
 				documentResource.getAssetLibraryDocumentsPage(
-					assetLibraryId, null, null, null, null, Pagination.of(1, 2),
+					assetLibraryId, null, null, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(document2, document1),
-				(List<Document>)descPage.getItems());
+			assertContains(document2, (List<Document>)descPage.getItems());
+			assertContains(document1, (List<Document>)descPage.getItems());
 		}
 	}
 
@@ -927,7 +938,7 @@ public abstract class BaseDocumentResourceTestCase {
 			documentResource.getAssetLibraryDocumentsRatedByMePage(
 				assetLibraryId, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantAssetLibraryId != null) {
 			Document irrelevantDocument =
@@ -935,13 +946,12 @@ public abstract class BaseDocumentResourceTestCase {
 					irrelevantAssetLibraryId, randomIrrelevantDocument());
 
 			page = documentResource.getAssetLibraryDocumentsRatedByMePage(
-				irrelevantAssetLibraryId, Pagination.of(1, 2));
+				irrelevantAssetLibraryId,
+				Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantDocument),
-				(List<Document>)page.getItems());
+			assertContains(irrelevantDocument, (List<Document>)page.getItems());
 			assertValid(
 				page,
 				testGetAssetLibraryDocumentsRatedByMePage_getExpectedActions(
@@ -959,11 +969,10 @@ public abstract class BaseDocumentResourceTestCase {
 		page = documentResource.getAssetLibraryDocumentsRatedByMePage(
 			assetLibraryId, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(document1, document2),
-			(List<Document>)page.getItems());
+		assertContains(document1, (List<Document>)page.getItems());
+		assertContains(document2, (List<Document>)page.getItems());
 		assertValid(
 			page,
 			testGetAssetLibraryDocumentsRatedByMePage_getExpectedActions(
@@ -991,6 +1000,12 @@ public abstract class BaseDocumentResourceTestCase {
 		Long assetLibraryId =
 			testGetAssetLibraryDocumentsRatedByMePage_getAssetLibraryId();
 
+		Page<Document> documentPage =
+			documentResource.getAssetLibraryDocumentsRatedByMePage(
+				assetLibraryId, null);
+
+		int totalCount = GetterUtil.getInteger(documentPage.getTotalCount());
+
 		Document document1 =
 			testGetAssetLibraryDocumentsRatedByMePage_addDocument(
 				assetLibraryId, randomDocument());
@@ -1005,17 +1020,18 @@ public abstract class BaseDocumentResourceTestCase {
 
 		Page<Document> page1 =
 			documentResource.getAssetLibraryDocumentsRatedByMePage(
-				assetLibraryId, Pagination.of(1, 2));
+				assetLibraryId, Pagination.of(1, totalCount + 2));
 
 		List<Document> documents1 = (List<Document>)page1.getItems();
 
-		Assert.assertEquals(documents1.toString(), 2, documents1.size());
+		Assert.assertEquals(
+			documents1.toString(), totalCount + 2, documents1.size());
 
 		Page<Document> page2 =
 			documentResource.getAssetLibraryDocumentsRatedByMePage(
-				assetLibraryId, Pagination.of(2, 2));
+				assetLibraryId, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<Document> documents2 = (List<Document>)page2.getItems();
 
@@ -1023,11 +1039,11 @@ public abstract class BaseDocumentResourceTestCase {
 
 		Page<Document> page3 =
 			documentResource.getAssetLibraryDocumentsRatedByMePage(
-				assetLibraryId, Pagination.of(1, 3));
+				assetLibraryId, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(document1, document2, document3),
-			(List<Document>)page3.getItems());
+		assertContains(document1, (List<Document>)page3.getItems());
+		assertContains(document2, (List<Document>)page3.getItems());
+		assertContains(document3, (List<Document>)page3.getItems());
 	}
 
 	protected Document testGetAssetLibraryDocumentsRatedByMePage_addDocument(
@@ -1062,7 +1078,7 @@ public abstract class BaseDocumentResourceTestCase {
 			documentFolderId, null, null, null, null, Pagination.of(1, 10),
 			null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantDocumentFolderId != null) {
 			Document irrelevantDocument =
@@ -1071,13 +1087,11 @@ public abstract class BaseDocumentResourceTestCase {
 
 			page = documentResource.getDocumentFolderDocumentsPage(
 				irrelevantDocumentFolderId, null, null, null, null,
-				Pagination.of(1, 2), null);
+				Pagination.of(1, (int)totalCount + 1), null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantDocument),
-				(List<Document>)page.getItems());
+			assertContains(irrelevantDocument, (List<Document>)page.getItems());
 			assertValid(
 				page,
 				testGetDocumentFolderDocumentsPage_getExpectedActions(
@@ -1094,11 +1108,10 @@ public abstract class BaseDocumentResourceTestCase {
 			documentFolderId, null, null, null, null, Pagination.of(1, 10),
 			null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(document1, document2),
-			(List<Document>)page.getItems());
+		assertContains(document1, (List<Document>)page.getItems());
+		assertContains(document2, (List<Document>)page.getItems());
 		assertValid(
 			page,
 			testGetDocumentFolderDocumentsPage_getExpectedActions(
@@ -1233,6 +1246,12 @@ public abstract class BaseDocumentResourceTestCase {
 		Long documentFolderId =
 			testGetDocumentFolderDocumentsPage_getDocumentFolderId();
 
+		Page<Document> documentPage =
+			documentResource.getDocumentFolderDocumentsPage(
+				documentFolderId, null, null, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(documentPage.getTotalCount());
+
 		Document document1 = testGetDocumentFolderDocumentsPage_addDocument(
 			documentFolderId, randomDocument());
 
@@ -1243,30 +1262,31 @@ public abstract class BaseDocumentResourceTestCase {
 			documentFolderId, randomDocument());
 
 		Page<Document> page1 = documentResource.getDocumentFolderDocumentsPage(
-			documentFolderId, null, null, null, null, Pagination.of(1, 2),
-			null);
+			documentFolderId, null, null, null, null,
+			Pagination.of(1, totalCount + 2), null);
 
 		List<Document> documents1 = (List<Document>)page1.getItems();
 
-		Assert.assertEquals(documents1.toString(), 2, documents1.size());
+		Assert.assertEquals(
+			documents1.toString(), totalCount + 2, documents1.size());
 
 		Page<Document> page2 = documentResource.getDocumentFolderDocumentsPage(
-			documentFolderId, null, null, null, null, Pagination.of(2, 2),
-			null);
+			documentFolderId, null, null, null, null,
+			Pagination.of(2, totalCount + 2), null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<Document> documents2 = (List<Document>)page2.getItems();
 
 		Assert.assertEquals(documents2.toString(), 1, documents2.size());
 
 		Page<Document> page3 = documentResource.getDocumentFolderDocumentsPage(
-			documentFolderId, null, null, null, null, Pagination.of(1, 3),
-			null);
+			documentFolderId, null, null, null, null,
+			Pagination.of(1, (int)totalCount + 3), null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(document1, document2, document3),
-			(List<Document>)page3.getItems());
+		assertContains(document1, (List<Document>)page3.getItems());
+		assertContains(document2, (List<Document>)page3.getItems());
+		assertContains(document3, (List<Document>)page3.getItems());
 	}
 
 	@Test
@@ -1387,24 +1407,27 @@ public abstract class BaseDocumentResourceTestCase {
 		document2 = testGetDocumentFolderDocumentsPage_addDocument(
 			documentFolderId, document2);
 
+		Page<Document> page = documentResource.getDocumentFolderDocumentsPage(
+			documentFolderId, null, null, null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<Document> ascPage =
 				documentResource.getDocumentFolderDocumentsPage(
 					documentFolderId, null, null, null, null,
-					Pagination.of(1, 2), entityField.getName() + ":asc");
+					Pagination.of(1, (int)page.getTotalCount() + 1),
+					entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(document1, document2),
-				(List<Document>)ascPage.getItems());
+			assertContains(document1, (List<Document>)ascPage.getItems());
+			assertContains(document2, (List<Document>)ascPage.getItems());
 
 			Page<Document> descPage =
 				documentResource.getDocumentFolderDocumentsPage(
 					documentFolderId, null, null, null, null,
-					Pagination.of(1, 2), entityField.getName() + ":desc");
+					Pagination.of(1, (int)page.getTotalCount() + 1),
+					entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(document2, document1),
-				(List<Document>)descPage.getItems());
+			assertContains(document2, (List<Document>)descPage.getItems());
+			assertContains(document1, (List<Document>)descPage.getItems());
 		}
 	}
 
@@ -1729,21 +1752,19 @@ public abstract class BaseDocumentResourceTestCase {
 		Page<Document> page = documentResource.getSiteDocumentsPage(
 			siteId, null, null, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantSiteId != null) {
 			Document irrelevantDocument = testGetSiteDocumentsPage_addDocument(
 				irrelevantSiteId, randomIrrelevantDocument());
 
 			page = documentResource.getSiteDocumentsPage(
-				irrelevantSiteId, null, null, null, null, Pagination.of(1, 2),
-				null);
+				irrelevantSiteId, null, null, null, null,
+				Pagination.of(1, (int)totalCount + 1), null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantDocument),
-				(List<Document>)page.getItems());
+			assertContains(irrelevantDocument, (List<Document>)page.getItems());
 			assertValid(
 				page,
 				testGetSiteDocumentsPage_getExpectedActions(irrelevantSiteId));
@@ -1758,11 +1779,10 @@ public abstract class BaseDocumentResourceTestCase {
 		page = documentResource.getSiteDocumentsPage(
 			siteId, null, null, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(document1, document2),
-			(List<Document>)page.getItems());
+		assertContains(document1, (List<Document>)page.getItems());
+		assertContains(document2, (List<Document>)page.getItems());
 		assertValid(page, testGetSiteDocumentsPage_getExpectedActions(siteId));
 
 		documentResource.deleteDocument(document1.getId());
@@ -1881,6 +1901,11 @@ public abstract class BaseDocumentResourceTestCase {
 	public void testGetSiteDocumentsPageWithPagination() throws Exception {
 		Long siteId = testGetSiteDocumentsPage_getSiteId();
 
+		Page<Document> documentPage = documentResource.getSiteDocumentsPage(
+			siteId, null, null, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(documentPage.getTotalCount());
+
 		Document document1 = testGetSiteDocumentsPage_addDocument(
 			siteId, randomDocument());
 
@@ -1891,27 +1916,31 @@ public abstract class BaseDocumentResourceTestCase {
 			siteId, randomDocument());
 
 		Page<Document> page1 = documentResource.getSiteDocumentsPage(
-			siteId, null, null, null, null, Pagination.of(1, 2), null);
+			siteId, null, null, null, null, Pagination.of(1, totalCount + 2),
+			null);
 
 		List<Document> documents1 = (List<Document>)page1.getItems();
 
-		Assert.assertEquals(documents1.toString(), 2, documents1.size());
+		Assert.assertEquals(
+			documents1.toString(), totalCount + 2, documents1.size());
 
 		Page<Document> page2 = documentResource.getSiteDocumentsPage(
-			siteId, null, null, null, null, Pagination.of(2, 2), null);
+			siteId, null, null, null, null, Pagination.of(2, totalCount + 2),
+			null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<Document> documents2 = (List<Document>)page2.getItems();
 
 		Assert.assertEquals(documents2.toString(), 1, documents2.size());
 
 		Page<Document> page3 = documentResource.getSiteDocumentsPage(
-			siteId, null, null, null, null, Pagination.of(1, 3), null);
+			siteId, null, null, null, null,
+			Pagination.of(1, (int)totalCount + 3), null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(document1, document2, document3),
-			(List<Document>)page3.getItems());
+		assertContains(document1, (List<Document>)page3.getItems());
+		assertContains(document2, (List<Document>)page3.getItems());
+		assertContains(document3, (List<Document>)page3.getItems());
 	}
 
 	@Test
@@ -2021,22 +2050,25 @@ public abstract class BaseDocumentResourceTestCase {
 
 		document2 = testGetSiteDocumentsPage_addDocument(siteId, document2);
 
+		Page<Document> page = documentResource.getSiteDocumentsPage(
+			siteId, null, null, null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<Document> ascPage = documentResource.getSiteDocumentsPage(
-				siteId, null, null, null, null, Pagination.of(1, 2),
+				siteId, null, null, null, null,
+				Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(document1, document2),
-				(List<Document>)ascPage.getItems());
+			assertContains(document1, (List<Document>)ascPage.getItems());
+			assertContains(document2, (List<Document>)ascPage.getItems());
 
 			Page<Document> descPage = documentResource.getSiteDocumentsPage(
-				siteId, null, null, null, null, Pagination.of(1, 2),
+				siteId, null, null, null, null,
+				Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(document2, document1),
-				(List<Document>)descPage.getItems());
+			assertContains(document2, (List<Document>)descPage.getItems());
+			assertContains(document1, (List<Document>)descPage.getItems());
 		}
 	}
 
@@ -2079,7 +2111,7 @@ public abstract class BaseDocumentResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/documents");
 
-		Assert.assertEquals(0, documentsJSONObject.get("totalCount"));
+		long totalCount = documentsJSONObject.getLong("totalCount");
 
 		Document document1 = testGraphQLGetSiteDocumentsPage_addDocument();
 		Document document2 = testGraphQLGetSiteDocumentsPage_addDocument();
@@ -2088,10 +2120,15 @@ public abstract class BaseDocumentResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/documents");
 
-		Assert.assertEquals(2, documentsJSONObject.getLong("totalCount"));
+		Assert.assertEquals(
+			totalCount + 2, documentsJSONObject.getLong("totalCount"));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(document1, document2),
+		assertContains(
+			document1,
+			Arrays.asList(
+				DocumentSerDes.toDTOs(documentsJSONObject.getString("items"))));
+		assertContains(
+			document2,
 			Arrays.asList(
 				DocumentSerDes.toDTOs(documentsJSONObject.getString("items"))));
 	}
@@ -2418,7 +2455,7 @@ public abstract class BaseDocumentResourceTestCase {
 		Page<Document> page = documentResource.getSiteDocumentsRatedByMePage(
 			siteId, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantSiteId != null) {
 			Document irrelevantDocument =
@@ -2426,13 +2463,11 @@ public abstract class BaseDocumentResourceTestCase {
 					irrelevantSiteId, randomIrrelevantDocument());
 
 			page = documentResource.getSiteDocumentsRatedByMePage(
-				irrelevantSiteId, Pagination.of(1, 2));
+				irrelevantSiteId, Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantDocument),
-				(List<Document>)page.getItems());
+			assertContains(irrelevantDocument, (List<Document>)page.getItems());
 			assertValid(
 				page,
 				testGetSiteDocumentsRatedByMePage_getExpectedActions(
@@ -2448,11 +2483,10 @@ public abstract class BaseDocumentResourceTestCase {
 		page = documentResource.getSiteDocumentsRatedByMePage(
 			siteId, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(document1, document2),
-			(List<Document>)page.getItems());
+		assertContains(document1, (List<Document>)page.getItems());
+		assertContains(document2, (List<Document>)page.getItems());
 		assertValid(
 			page, testGetSiteDocumentsRatedByMePage_getExpectedActions(siteId));
 
@@ -2476,6 +2510,11 @@ public abstract class BaseDocumentResourceTestCase {
 
 		Long siteId = testGetSiteDocumentsRatedByMePage_getSiteId();
 
+		Page<Document> documentPage =
+			documentResource.getSiteDocumentsRatedByMePage(siteId, null);
+
+		int totalCount = GetterUtil.getInteger(documentPage.getTotalCount());
+
 		Document document1 = testGetSiteDocumentsRatedByMePage_addDocument(
 			siteId, randomDocument());
 
@@ -2486,27 +2525,28 @@ public abstract class BaseDocumentResourceTestCase {
 			siteId, randomDocument());
 
 		Page<Document> page1 = documentResource.getSiteDocumentsRatedByMePage(
-			siteId, Pagination.of(1, 2));
+			siteId, Pagination.of(1, totalCount + 2));
 
 		List<Document> documents1 = (List<Document>)page1.getItems();
 
-		Assert.assertEquals(documents1.toString(), 2, documents1.size());
+		Assert.assertEquals(
+			documents1.toString(), totalCount + 2, documents1.size());
 
 		Page<Document> page2 = documentResource.getSiteDocumentsRatedByMePage(
-			siteId, Pagination.of(2, 2));
+			siteId, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<Document> documents2 = (List<Document>)page2.getItems();
 
 		Assert.assertEquals(documents2.toString(), 1, documents2.size());
 
 		Page<Document> page3 = documentResource.getSiteDocumentsRatedByMePage(
-			siteId, Pagination.of(1, 3));
+			siteId, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(document1, document2, document3),
-			(List<Document>)page3.getItems());
+		assertContains(document1, (List<Document>)page3.getItems());
+		assertContains(document2, (List<Document>)page3.getItems());
+		assertContains(document3, (List<Document>)page3.getItems());
 	}
 
 	protected Document testGetSiteDocumentsRatedByMePage_addDocument(

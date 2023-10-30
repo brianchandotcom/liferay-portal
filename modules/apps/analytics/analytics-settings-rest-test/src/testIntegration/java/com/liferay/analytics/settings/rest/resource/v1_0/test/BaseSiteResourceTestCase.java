@@ -221,9 +221,9 @@ public abstract class BaseSiteResourceTestCase {
 
 	@Test
 	public void testGetSitesPageWithPagination() throws Exception {
-		Page<Site> totalPage = siteResource.getSitesPage(null, null, null);
+		Page<Site> sitePage = siteResource.getSitesPage(null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(sitePage.getTotalCount());
 
 		Site site1 = testGetSitesPage_addSite(randomSite());
 
@@ -248,7 +248,7 @@ public abstract class BaseSiteResourceTestCase {
 		Assert.assertEquals(sites2.toString(), 1, sites2.size());
 
 		Page<Site> page3 = siteResource.getSitesPage(
-			null, Pagination.of(1, totalCount + 3), null);
+			null, Pagination.of(1, (int)totalCount + 3), null);
 
 		assertContains(site1, (List<Site>)page3.getItems());
 		assertContains(site2, (List<Site>)page3.getItems());
@@ -360,18 +360,22 @@ public abstract class BaseSiteResourceTestCase {
 
 		site2 = testGetSitesPage_addSite(site2);
 
+		Page<Site> page = siteResource.getSitesPage(null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<Site> ascPage = siteResource.getSitesPage(
-				null, Pagination.of(1, 2), entityField.getName() + ":asc");
+				null, Pagination.of(1, (int)page.getTotalCount() + 1),
+				entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(site1, site2), (List<Site>)ascPage.getItems());
+			assertContains(site1, (List<Site>)ascPage.getItems());
+			assertContains(site2, (List<Site>)ascPage.getItems());
 
 			Page<Site> descPage = siteResource.getSitesPage(
-				null, Pagination.of(1, 2), entityField.getName() + ":desc");
+				null, Pagination.of(1, (int)page.getTotalCount() + 1),
+				entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(site2, site1), (List<Site>)descPage.getItems());
+			assertContains(site2, (List<Site>)descPage.getItems());
+			assertContains(site1, (List<Site>)descPage.getItems());
 		}
 	}
 

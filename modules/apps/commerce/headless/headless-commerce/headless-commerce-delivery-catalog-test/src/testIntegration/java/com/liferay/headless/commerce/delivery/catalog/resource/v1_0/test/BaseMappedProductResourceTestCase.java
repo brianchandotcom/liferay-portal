@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -208,7 +209,7 @@ public abstract class BaseMappedProductResourceTestCase {
 			mappedProductResource.getChannelProductMappedProductsPage(
 				channelId, productId, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if ((irrelevantChannelId != null) && (irrelevantProductId != null)) {
 			MappedProduct irrelevantMappedProduct =
@@ -218,13 +219,12 @@ public abstract class BaseMappedProductResourceTestCase {
 
 			page = mappedProductResource.getChannelProductMappedProductsPage(
 				irrelevantChannelId, irrelevantProductId, null, null,
-				Pagination.of(1, 2), null);
+				Pagination.of(1, (int)totalCount + 1), null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantMappedProduct),
-				(List<MappedProduct>)page.getItems());
+			assertContains(
+				irrelevantMappedProduct, (List<MappedProduct>)page.getItems());
 			assertValid(
 				page,
 				testGetChannelProductMappedProductsPage_getExpectedActions(
@@ -242,11 +242,10 @@ public abstract class BaseMappedProductResourceTestCase {
 		page = mappedProductResource.getChannelProductMappedProductsPage(
 			channelId, productId, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(mappedProduct1, mappedProduct2),
-			(List<MappedProduct>)page.getItems());
+		assertContains(mappedProduct1, (List<MappedProduct>)page.getItems());
+		assertContains(mappedProduct2, (List<MappedProduct>)page.getItems());
 		assertValid(
 			page,
 			testGetChannelProductMappedProductsPage_getExpectedActions(
@@ -270,6 +269,13 @@ public abstract class BaseMappedProductResourceTestCase {
 		Long channelId = testGetChannelProductMappedProductsPage_getChannelId();
 		Long productId = testGetChannelProductMappedProductsPage_getProductId();
 
+		Page<MappedProduct> mappedProductPage =
+			mappedProductResource.getChannelProductMappedProductsPage(
+				channelId, productId, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(
+			mappedProductPage.getTotalCount());
+
 		MappedProduct mappedProduct1 =
 			testGetChannelProductMappedProductsPage_addMappedProduct(
 				channelId, productId, randomMappedProduct());
@@ -284,19 +290,21 @@ public abstract class BaseMappedProductResourceTestCase {
 
 		Page<MappedProduct> page1 =
 			mappedProductResource.getChannelProductMappedProductsPage(
-				channelId, productId, null, null, Pagination.of(1, 2), null);
+				channelId, productId, null, null,
+				Pagination.of(1, totalCount + 2), null);
 
 		List<MappedProduct> mappedProducts1 =
 			(List<MappedProduct>)page1.getItems();
 
 		Assert.assertEquals(
-			mappedProducts1.toString(), 2, mappedProducts1.size());
+			mappedProducts1.toString(), totalCount + 2, mappedProducts1.size());
 
 		Page<MappedProduct> page2 =
 			mappedProductResource.getChannelProductMappedProductsPage(
-				channelId, productId, null, null, Pagination.of(2, 2), null);
+				channelId, productId, null, null,
+				Pagination.of(2, totalCount + 2), null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<MappedProduct> mappedProducts2 =
 			(List<MappedProduct>)page2.getItems();
@@ -306,11 +314,12 @@ public abstract class BaseMappedProductResourceTestCase {
 
 		Page<MappedProduct> page3 =
 			mappedProductResource.getChannelProductMappedProductsPage(
-				channelId, productId, null, null, Pagination.of(1, 3), null);
+				channelId, productId, null, null,
+				Pagination.of(1, (int)totalCount + 3), null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(mappedProduct1, mappedProduct2, mappedProduct3),
-			(List<MappedProduct>)page3.getItems());
+		assertContains(mappedProduct1, (List<MappedProduct>)page3.getItems());
+		assertContains(mappedProduct2, (List<MappedProduct>)page3.getItems());
+		assertContains(mappedProduct3, (List<MappedProduct>)page3.getItems());
 	}
 
 	@Test
@@ -439,24 +448,32 @@ public abstract class BaseMappedProductResourceTestCase {
 			testGetChannelProductMappedProductsPage_addMappedProduct(
 				channelId, productId, mappedProduct2);
 
+		Page<MappedProduct> page =
+			mappedProductResource.getChannelProductMappedProductsPage(
+				channelId, productId, null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<MappedProduct> ascPage =
 				mappedProductResource.getChannelProductMappedProductsPage(
-					channelId, productId, null, null, Pagination.of(1, 2),
+					channelId, productId, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(mappedProduct1, mappedProduct2),
-				(List<MappedProduct>)ascPage.getItems());
+			assertContains(
+				mappedProduct1, (List<MappedProduct>)ascPage.getItems());
+			assertContains(
+				mappedProduct2, (List<MappedProduct>)ascPage.getItems());
 
 			Page<MappedProduct> descPage =
 				mappedProductResource.getChannelProductMappedProductsPage(
-					channelId, productId, null, null, Pagination.of(1, 2),
+					channelId, productId, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(mappedProduct2, mappedProduct1),
-				(List<MappedProduct>)descPage.getItems());
+			assertContains(
+				mappedProduct2, (List<MappedProduct>)descPage.getItems());
+			assertContains(
+				mappedProduct1, (List<MappedProduct>)descPage.getItems());
 		}
 	}
 

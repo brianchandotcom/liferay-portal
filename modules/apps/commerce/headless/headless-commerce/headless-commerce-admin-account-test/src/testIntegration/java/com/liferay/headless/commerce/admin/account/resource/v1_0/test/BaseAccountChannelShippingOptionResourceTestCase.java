@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -413,7 +414,7 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 				getAccountByExternalReferenceCodeAccountChannelShippingOptionPage(
 					externalReferenceCode, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantExternalReferenceCode != null) {
 			AccountChannelShippingOption
@@ -425,12 +426,13 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 			page =
 				accountChannelShippingOptionResource.
 					getAccountByExternalReferenceCodeAccountChannelShippingOptionPage(
-						irrelevantExternalReferenceCode, Pagination.of(1, 2));
+						irrelevantExternalReferenceCode,
+						Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantAccountChannelShippingOption),
+			assertContains(
+				irrelevantAccountChannelShippingOption,
 				(List<AccountChannelShippingOption>)page.getItems());
 			assertValid(
 				page,
@@ -451,11 +453,13 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 				getAccountByExternalReferenceCodeAccountChannelShippingOptionPage(
 					externalReferenceCode, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(
-				accountChannelShippingOption1, accountChannelShippingOption2),
+		assertContains(
+			accountChannelShippingOption1,
+			(List<AccountChannelShippingOption>)page.getItems());
+		assertContains(
+			accountChannelShippingOption2,
 			(List<AccountChannelShippingOption>)page.getItems());
 		assertValid(
 			page,
@@ -486,6 +490,14 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 		String externalReferenceCode =
 			testGetAccountByExternalReferenceCodeAccountChannelShippingOptionPage_getExternalReferenceCode();
 
+		Page<AccountChannelShippingOption> accountChannelShippingOptionPage =
+			accountChannelShippingOptionResource.
+				getAccountByExternalReferenceCodeAccountChannelShippingOptionPage(
+					externalReferenceCode, null);
+
+		int totalCount = GetterUtil.getInteger(
+			accountChannelShippingOptionPage.getTotalCount());
+
 		AccountChannelShippingOption accountChannelShippingOption1 =
 			testGetAccountByExternalReferenceCodeAccountChannelShippingOptionPage_addAccountChannelShippingOption(
 				externalReferenceCode, randomAccountChannelShippingOption());
@@ -501,21 +513,21 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 		Page<AccountChannelShippingOption> page1 =
 			accountChannelShippingOptionResource.
 				getAccountByExternalReferenceCodeAccountChannelShippingOptionPage(
-					externalReferenceCode, Pagination.of(1, 2));
+					externalReferenceCode, Pagination.of(1, totalCount + 2));
 
 		List<AccountChannelShippingOption> accountChannelShippingOptions1 =
 			(List<AccountChannelShippingOption>)page1.getItems();
 
 		Assert.assertEquals(
-			accountChannelShippingOptions1.toString(), 2,
+			accountChannelShippingOptions1.toString(), totalCount + 2,
 			accountChannelShippingOptions1.size());
 
 		Page<AccountChannelShippingOption> page2 =
 			accountChannelShippingOptionResource.
 				getAccountByExternalReferenceCodeAccountChannelShippingOptionPage(
-					externalReferenceCode, Pagination.of(2, 2));
+					externalReferenceCode, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<AccountChannelShippingOption> accountChannelShippingOptions2 =
 			(List<AccountChannelShippingOption>)page2.getItems();
@@ -527,12 +539,17 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 		Page<AccountChannelShippingOption> page3 =
 			accountChannelShippingOptionResource.
 				getAccountByExternalReferenceCodeAccountChannelShippingOptionPage(
-					externalReferenceCode, Pagination.of(1, 3));
+					externalReferenceCode,
+					Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(
-				accountChannelShippingOption1, accountChannelShippingOption2,
-				accountChannelShippingOption3),
+		assertContains(
+			accountChannelShippingOption1,
+			(List<AccountChannelShippingOption>)page3.getItems());
+		assertContains(
+			accountChannelShippingOption2,
+			(List<AccountChannelShippingOption>)page3.getItems());
+		assertContains(
+			accountChannelShippingOption3,
 			(List<AccountChannelShippingOption>)page3.getItems());
 	}
 
@@ -600,7 +617,7 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 				getAccountIdAccountChannelShippingOptionPage(
 					id, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantId != null) {
 			AccountChannelShippingOption
@@ -612,12 +629,12 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 			page =
 				accountChannelShippingOptionResource.
 					getAccountIdAccountChannelShippingOptionPage(
-						irrelevantId, Pagination.of(1, 2));
+						irrelevantId, Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantAccountChannelShippingOption),
+			assertContains(
+				irrelevantAccountChannelShippingOption,
 				(List<AccountChannelShippingOption>)page.getItems());
 			assertValid(
 				page,
@@ -638,11 +655,13 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 				getAccountIdAccountChannelShippingOptionPage(
 					id, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(
-				accountChannelShippingOption1, accountChannelShippingOption2),
+		assertContains(
+			accountChannelShippingOption1,
+			(List<AccountChannelShippingOption>)page.getItems());
+		assertContains(
+			accountChannelShippingOption2,
 			(List<AccountChannelShippingOption>)page.getItems());
 		assertValid(
 			page,
@@ -672,6 +691,13 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 
 		Long id = testGetAccountIdAccountChannelShippingOptionPage_getId();
 
+		Page<AccountChannelShippingOption> accountChannelShippingOptionPage =
+			accountChannelShippingOptionResource.
+				getAccountIdAccountChannelShippingOptionPage(id, null);
+
+		int totalCount = GetterUtil.getInteger(
+			accountChannelShippingOptionPage.getTotalCount());
+
 		AccountChannelShippingOption accountChannelShippingOption1 =
 			testGetAccountIdAccountChannelShippingOptionPage_addAccountChannelShippingOption(
 				id, randomAccountChannelShippingOption());
@@ -687,21 +713,21 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 		Page<AccountChannelShippingOption> page1 =
 			accountChannelShippingOptionResource.
 				getAccountIdAccountChannelShippingOptionPage(
-					id, Pagination.of(1, 2));
+					id, Pagination.of(1, totalCount + 2));
 
 		List<AccountChannelShippingOption> accountChannelShippingOptions1 =
 			(List<AccountChannelShippingOption>)page1.getItems();
 
 		Assert.assertEquals(
-			accountChannelShippingOptions1.toString(), 2,
+			accountChannelShippingOptions1.toString(), totalCount + 2,
 			accountChannelShippingOptions1.size());
 
 		Page<AccountChannelShippingOption> page2 =
 			accountChannelShippingOptionResource.
 				getAccountIdAccountChannelShippingOptionPage(
-					id, Pagination.of(2, 2));
+					id, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<AccountChannelShippingOption> accountChannelShippingOptions2 =
 			(List<AccountChannelShippingOption>)page2.getItems();
@@ -713,12 +739,16 @@ public abstract class BaseAccountChannelShippingOptionResourceTestCase {
 		Page<AccountChannelShippingOption> page3 =
 			accountChannelShippingOptionResource.
 				getAccountIdAccountChannelShippingOptionPage(
-					id, Pagination.of(1, 3));
+					id, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(
-				accountChannelShippingOption1, accountChannelShippingOption2,
-				accountChannelShippingOption3),
+		assertContains(
+			accountChannelShippingOption1,
+			(List<AccountChannelShippingOption>)page3.getItems());
+		assertContains(
+			accountChannelShippingOption2,
+			(List<AccountChannelShippingOption>)page3.getItems());
+		assertContains(
+			accountChannelShippingOption3,
 			(List<AccountChannelShippingOption>)page3.getItems());
 	}
 

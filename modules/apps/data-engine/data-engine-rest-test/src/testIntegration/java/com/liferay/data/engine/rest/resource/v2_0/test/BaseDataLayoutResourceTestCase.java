@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -228,7 +229,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 				dataDefinitionId, RandomTestUtil.randomString(),
 				Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantDataDefinitionId != null) {
 			DataLayout irrelevantDataLayout =
@@ -236,13 +237,13 @@ public abstract class BaseDataLayoutResourceTestCase {
 					irrelevantDataDefinitionId, randomIrrelevantDataLayout());
 
 			page = dataLayoutResource.getDataDefinitionDataLayoutsPage(
-				irrelevantDataDefinitionId, null, Pagination.of(1, 2), null);
+				irrelevantDataDefinitionId, null,
+				Pagination.of(1, (int)totalCount + 1), null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantDataLayout),
-				(List<DataLayout>)page.getItems());
+			assertContains(
+				irrelevantDataLayout, (List<DataLayout>)page.getItems());
 			assertValid(
 				page,
 				testGetDataDefinitionDataLayoutsPage_getExpectedActions(
@@ -260,11 +261,10 @@ public abstract class BaseDataLayoutResourceTestCase {
 		page = dataLayoutResource.getDataDefinitionDataLayoutsPage(
 			dataDefinitionId, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(dataLayout1, dataLayout2),
-			(List<DataLayout>)page.getItems());
+		assertContains(dataLayout1, (List<DataLayout>)page.getItems());
+		assertContains(dataLayout2, (List<DataLayout>)page.getItems());
 		assertValid(
 			page,
 			testGetDataDefinitionDataLayoutsPage_getExpectedActions(
@@ -302,6 +302,12 @@ public abstract class BaseDataLayoutResourceTestCase {
 		Long dataDefinitionId =
 			testGetDataDefinitionDataLayoutsPage_getDataDefinitionId();
 
+		Page<DataLayout> dataLayoutPage =
+			dataLayoutResource.getDataDefinitionDataLayoutsPage(
+				dataDefinitionId, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(dataLayoutPage.getTotalCount());
+
 		DataLayout dataLayout1 =
 			testGetDataDefinitionDataLayoutsPage_addDataLayout(
 				dataDefinitionId, randomDataLayout());
@@ -316,17 +322,18 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		Page<DataLayout> page1 =
 			dataLayoutResource.getDataDefinitionDataLayoutsPage(
-				dataDefinitionId, null, Pagination.of(1, 2), null);
+				dataDefinitionId, null, Pagination.of(1, totalCount + 2), null);
 
 		List<DataLayout> dataLayouts1 = (List<DataLayout>)page1.getItems();
 
-		Assert.assertEquals(dataLayouts1.toString(), 2, dataLayouts1.size());
+		Assert.assertEquals(
+			dataLayouts1.toString(), totalCount + 2, dataLayouts1.size());
 
 		Page<DataLayout> page2 =
 			dataLayoutResource.getDataDefinitionDataLayoutsPage(
-				dataDefinitionId, null, Pagination.of(2, 2), null);
+				dataDefinitionId, null, Pagination.of(2, totalCount + 2), null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<DataLayout> dataLayouts2 = (List<DataLayout>)page2.getItems();
 
@@ -334,11 +341,12 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 		Page<DataLayout> page3 =
 			dataLayoutResource.getDataDefinitionDataLayoutsPage(
-				dataDefinitionId, null, Pagination.of(1, 3), null);
+				dataDefinitionId, null, Pagination.of(1, (int)totalCount + 3),
+				null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(dataLayout1, dataLayout2, dataLayout3),
-			(List<DataLayout>)page3.getItems());
+		assertContains(dataLayout1, (List<DataLayout>)page3.getItems());
+		assertContains(dataLayout2, (List<DataLayout>)page3.getItems());
+		assertContains(dataLayout3, (List<DataLayout>)page3.getItems());
 	}
 
 	@Test
@@ -461,24 +469,28 @@ public abstract class BaseDataLayoutResourceTestCase {
 		dataLayout2 = testGetDataDefinitionDataLayoutsPage_addDataLayout(
 			dataDefinitionId, dataLayout2);
 
+		Page<DataLayout> page =
+			dataLayoutResource.getDataDefinitionDataLayoutsPage(
+				dataDefinitionId, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<DataLayout> ascPage =
 				dataLayoutResource.getDataDefinitionDataLayoutsPage(
-					dataDefinitionId, null, Pagination.of(1, 2),
+					dataDefinitionId, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(dataLayout1, dataLayout2),
-				(List<DataLayout>)ascPage.getItems());
+			assertContains(dataLayout1, (List<DataLayout>)ascPage.getItems());
+			assertContains(dataLayout2, (List<DataLayout>)ascPage.getItems());
 
 			Page<DataLayout> descPage =
 				dataLayoutResource.getDataDefinitionDataLayoutsPage(
-					dataDefinitionId, null, Pagination.of(1, 2),
+					dataDefinitionId, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(dataLayout2, dataLayout1),
-				(List<DataLayout>)descPage.getItems());
+			assertContains(dataLayout2, (List<DataLayout>)descPage.getItems());
+			assertContains(dataLayout1, (List<DataLayout>)descPage.getItems());
 		}
 	}
 

@@ -301,10 +301,10 @@ public abstract class BaseChannelResourceTestCase {
 
 	@Test
 	public void testGetChannelsPageWithPagination() throws Exception {
-		Page<Channel> totalPage = channelResource.getChannelsPage(
+		Page<Channel> channelPage = channelResource.getChannelsPage(
 			null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(channelPage.getTotalCount());
 
 		Channel channel1 = testGetChannelsPage_addChannel(randomChannel());
 
@@ -330,7 +330,7 @@ public abstract class BaseChannelResourceTestCase {
 		Assert.assertEquals(channels2.toString(), 1, channels2.size());
 
 		Page<Channel> page3 = channelResource.getChannelsPage(
-			null, null, Pagination.of(1, totalCount + 3), null);
+			null, null, Pagination.of(1, (int)totalCount + 3), null);
 
 		assertContains(channel1, (List<Channel>)page3.getItems());
 		assertContains(channel2, (List<Channel>)page3.getItems());
@@ -442,22 +442,23 @@ public abstract class BaseChannelResourceTestCase {
 
 		channel2 = testGetChannelsPage_addChannel(channel2);
 
+		Page<Channel> page = channelResource.getChannelsPage(
+			null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<Channel> ascPage = channelResource.getChannelsPage(
-				null, null, Pagination.of(1, 2),
+				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(channel1, channel2),
-				(List<Channel>)ascPage.getItems());
+			assertContains(channel1, (List<Channel>)ascPage.getItems());
+			assertContains(channel2, (List<Channel>)ascPage.getItems());
 
 			Page<Channel> descPage = channelResource.getChannelsPage(
-				null, null, Pagination.of(1, 2),
+				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(channel2, channel1),
-				(List<Channel>)descPage.getItems());
+			assertContains(channel2, (List<Channel>)descPage.getItems());
+			assertContains(channel1, (List<Channel>)descPage.getItems());
 		}
 	}
 

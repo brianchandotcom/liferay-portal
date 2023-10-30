@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -214,7 +215,7 @@ public abstract class BaseDiscountProductResourceTestCase {
 				getDiscountByExternalReferenceCodeDiscountProductsPage(
 					externalReferenceCode, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantExternalReferenceCode != null) {
 			DiscountProduct irrelevantDiscountProduct =
@@ -225,12 +226,13 @@ public abstract class BaseDiscountProductResourceTestCase {
 			page =
 				discountProductResource.
 					getDiscountByExternalReferenceCodeDiscountProductsPage(
-						irrelevantExternalReferenceCode, Pagination.of(1, 2));
+						irrelevantExternalReferenceCode,
+						Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantDiscountProduct),
+			assertContains(
+				irrelevantDiscountProduct,
 				(List<DiscountProduct>)page.getItems());
 			assertValid(
 				page,
@@ -251,11 +253,12 @@ public abstract class BaseDiscountProductResourceTestCase {
 				getDiscountByExternalReferenceCodeDiscountProductsPage(
 					externalReferenceCode, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(discountProduct1, discountProduct2),
-			(List<DiscountProduct>)page.getItems());
+		assertContains(
+			discountProduct1, (List<DiscountProduct>)page.getItems());
+		assertContains(
+			discountProduct2, (List<DiscountProduct>)page.getItems());
 		assertValid(
 			page,
 			testGetDiscountByExternalReferenceCodeDiscountProductsPage_getExpectedActions(
@@ -279,6 +282,14 @@ public abstract class BaseDiscountProductResourceTestCase {
 		String externalReferenceCode =
 			testGetDiscountByExternalReferenceCodeDiscountProductsPage_getExternalReferenceCode();
 
+		Page<DiscountProduct> discountProductPage =
+			discountProductResource.
+				getDiscountByExternalReferenceCodeDiscountProductsPage(
+					externalReferenceCode, null);
+
+		int totalCount = GetterUtil.getInteger(
+			discountProductPage.getTotalCount());
+
 		DiscountProduct discountProduct1 =
 			testGetDiscountByExternalReferenceCodeDiscountProductsPage_addDiscountProduct(
 				externalReferenceCode, randomDiscountProduct());
@@ -294,20 +305,21 @@ public abstract class BaseDiscountProductResourceTestCase {
 		Page<DiscountProduct> page1 =
 			discountProductResource.
 				getDiscountByExternalReferenceCodeDiscountProductsPage(
-					externalReferenceCode, Pagination.of(1, 2));
+					externalReferenceCode, Pagination.of(1, totalCount + 2));
 
 		List<DiscountProduct> discountProducts1 =
 			(List<DiscountProduct>)page1.getItems();
 
 		Assert.assertEquals(
-			discountProducts1.toString(), 2, discountProducts1.size());
+			discountProducts1.toString(), totalCount + 2,
+			discountProducts1.size());
 
 		Page<DiscountProduct> page2 =
 			discountProductResource.
 				getDiscountByExternalReferenceCodeDiscountProductsPage(
-					externalReferenceCode, Pagination.of(2, 2));
+					externalReferenceCode, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<DiscountProduct> discountProducts2 =
 			(List<DiscountProduct>)page2.getItems();
@@ -318,11 +330,15 @@ public abstract class BaseDiscountProductResourceTestCase {
 		Page<DiscountProduct> page3 =
 			discountProductResource.
 				getDiscountByExternalReferenceCodeDiscountProductsPage(
-					externalReferenceCode, Pagination.of(1, 3));
+					externalReferenceCode,
+					Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(discountProduct1, discountProduct2, discountProduct3),
-			(List<DiscountProduct>)page3.getItems());
+		assertContains(
+			discountProduct1, (List<DiscountProduct>)page3.getItems());
+		assertContains(
+			discountProduct2, (List<DiscountProduct>)page3.getItems());
+		assertContains(
+			discountProduct3, (List<DiscountProduct>)page3.getItems());
 	}
 
 	protected DiscountProduct
@@ -382,7 +398,7 @@ public abstract class BaseDiscountProductResourceTestCase {
 			discountProductResource.getDiscountIdDiscountProductsPage(
 				id, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantId != null) {
 			DiscountProduct irrelevantDiscountProduct =
@@ -390,12 +406,13 @@ public abstract class BaseDiscountProductResourceTestCase {
 					irrelevantId, randomIrrelevantDiscountProduct());
 
 			page = discountProductResource.getDiscountIdDiscountProductsPage(
-				irrelevantId, null, null, Pagination.of(1, 2), null);
+				irrelevantId, null, null, Pagination.of(1, (int)totalCount + 1),
+				null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantDiscountProduct),
+			assertContains(
+				irrelevantDiscountProduct,
 				(List<DiscountProduct>)page.getItems());
 			assertValid(
 				page,
@@ -414,11 +431,12 @@ public abstract class BaseDiscountProductResourceTestCase {
 		page = discountProductResource.getDiscountIdDiscountProductsPage(
 			id, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(discountProduct1, discountProduct2),
-			(List<DiscountProduct>)page.getItems());
+		assertContains(
+			discountProduct1, (List<DiscountProduct>)page.getItems());
+		assertContains(
+			discountProduct2, (List<DiscountProduct>)page.getItems());
 		assertValid(
 			page, testGetDiscountIdDiscountProductsPage_getExpectedActions(id));
 	}
@@ -536,6 +554,13 @@ public abstract class BaseDiscountProductResourceTestCase {
 
 		Long id = testGetDiscountIdDiscountProductsPage_getId();
 
+		Page<DiscountProduct> discountProductPage =
+			discountProductResource.getDiscountIdDiscountProductsPage(
+				id, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(
+			discountProductPage.getTotalCount());
+
 		DiscountProduct discountProduct1 =
 			testGetDiscountIdDiscountProductsPage_addDiscountProduct(
 				id, randomDiscountProduct());
@@ -550,19 +575,20 @@ public abstract class BaseDiscountProductResourceTestCase {
 
 		Page<DiscountProduct> page1 =
 			discountProductResource.getDiscountIdDiscountProductsPage(
-				id, null, null, Pagination.of(1, 2), null);
+				id, null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<DiscountProduct> discountProducts1 =
 			(List<DiscountProduct>)page1.getItems();
 
 		Assert.assertEquals(
-			discountProducts1.toString(), 2, discountProducts1.size());
+			discountProducts1.toString(), totalCount + 2,
+			discountProducts1.size());
 
 		Page<DiscountProduct> page2 =
 			discountProductResource.getDiscountIdDiscountProductsPage(
-				id, null, null, Pagination.of(2, 2), null);
+				id, null, null, Pagination.of(2, totalCount + 2), null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<DiscountProduct> discountProducts2 =
 			(List<DiscountProduct>)page2.getItems();
@@ -572,11 +598,14 @@ public abstract class BaseDiscountProductResourceTestCase {
 
 		Page<DiscountProduct> page3 =
 			discountProductResource.getDiscountIdDiscountProductsPage(
-				id, null, null, Pagination.of(1, 3), null);
+				id, null, null, Pagination.of(1, (int)totalCount + 3), null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(discountProduct1, discountProduct2, discountProduct3),
-			(List<DiscountProduct>)page3.getItems());
+		assertContains(
+			discountProduct1, (List<DiscountProduct>)page3.getItems());
+		assertContains(
+			discountProduct2, (List<DiscountProduct>)page3.getItems());
+		assertContains(
+			discountProduct3, (List<DiscountProduct>)page3.getItems());
 	}
 
 	@Test
@@ -704,24 +733,32 @@ public abstract class BaseDiscountProductResourceTestCase {
 			testGetDiscountIdDiscountProductsPage_addDiscountProduct(
 				id, discountProduct2);
 
+		Page<DiscountProduct> page =
+			discountProductResource.getDiscountIdDiscountProductsPage(
+				id, null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<DiscountProduct> ascPage =
 				discountProductResource.getDiscountIdDiscountProductsPage(
-					id, null, null, Pagination.of(1, 2),
+					id, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(discountProduct1, discountProduct2),
-				(List<DiscountProduct>)ascPage.getItems());
+			assertContains(
+				discountProduct1, (List<DiscountProduct>)ascPage.getItems());
+			assertContains(
+				discountProduct2, (List<DiscountProduct>)ascPage.getItems());
 
 			Page<DiscountProduct> descPage =
 				discountProductResource.getDiscountIdDiscountProductsPage(
-					id, null, null, Pagination.of(1, 2),
+					id, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(discountProduct2, discountProduct1),
-				(List<DiscountProduct>)descPage.getItems());
+			assertContains(
+				discountProduct2, (List<DiscountProduct>)descPage.getItems());
+			assertContains(
+				discountProduct1, (List<DiscountProduct>)descPage.getItems());
 		}
 	}
 

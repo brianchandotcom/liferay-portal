@@ -227,11 +227,11 @@ public abstract class BaseSkuForecastResourceTestCase {
 	public void testGetSkuForecastsByMonthlyRevenuePageWithPagination()
 		throws Exception {
 
-		Page<SkuForecast> totalPage =
+		Page<SkuForecast> skuForecastPage =
 			skuForecastResource.getSkuForecastsByMonthlyRevenuePage(
 				null, null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(skuForecastPage.getTotalCount());
 
 		SkuForecast skuForecast1 =
 			testGetSkuForecastsByMonthlyRevenuePage_addSkuForecast(
@@ -266,7 +266,7 @@ public abstract class BaseSkuForecastResourceTestCase {
 
 		Page<SkuForecast> page3 =
 			skuForecastResource.getSkuForecastsByMonthlyRevenuePage(
-				null, null, null, null, Pagination.of(1, totalCount + 3));
+				null, null, null, null, Pagination.of(1, (int)totalCount + 3));
 
 		assertContains(skuForecast1, (List<SkuForecast>)page3.getItems());
 		assertContains(skuForecast2, (List<SkuForecast>)page3.getItems());

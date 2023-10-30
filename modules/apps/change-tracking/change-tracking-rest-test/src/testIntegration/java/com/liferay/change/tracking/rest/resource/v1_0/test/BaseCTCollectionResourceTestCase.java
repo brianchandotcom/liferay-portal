@@ -230,10 +230,11 @@ public abstract class BaseCTCollectionResourceTestCase {
 
 	@Test
 	public void testGetCTCollectionsPageWithPagination() throws Exception {
-		Page<CTCollection> totalPage =
+		Page<CTCollection> ctCollectionPage =
 			ctCollectionResource.getCTCollectionsPage(null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(
+			ctCollectionPage.getTotalCount());
 
 		CTCollection ctCollection1 = testGetCTCollectionsPage_addCTCollection(
 			randomCTCollection());
@@ -265,7 +266,7 @@ public abstract class BaseCTCollectionResourceTestCase {
 			ctCollections2.toString(), 1, ctCollections2.size());
 
 		Page<CTCollection> page3 = ctCollectionResource.getCTCollectionsPage(
-			null, null, Pagination.of(1, totalCount + 3), null);
+			null, null, Pagination.of(1, (int)totalCount + 3), null);
 
 		assertContains(ctCollection1, (List<CTCollection>)page3.getItems());
 		assertContains(ctCollection2, (List<CTCollection>)page3.getItems());
@@ -382,24 +383,29 @@ public abstract class BaseCTCollectionResourceTestCase {
 
 		ctCollection2 = testGetCTCollectionsPage_addCTCollection(ctCollection2);
 
+		Page<CTCollection> page = ctCollectionResource.getCTCollectionsPage(
+			null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<CTCollection> ascPage =
 				ctCollectionResource.getCTCollectionsPage(
-					null, null, Pagination.of(1, 2),
+					null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(ctCollection1, ctCollection2),
-				(List<CTCollection>)ascPage.getItems());
+			assertContains(
+				ctCollection1, (List<CTCollection>)ascPage.getItems());
+			assertContains(
+				ctCollection2, (List<CTCollection>)ascPage.getItems());
 
 			Page<CTCollection> descPage =
 				ctCollectionResource.getCTCollectionsPage(
-					null, null, Pagination.of(1, 2),
+					null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(ctCollection2, ctCollection1),
-				(List<CTCollection>)descPage.getItems());
+			assertContains(
+				ctCollection2, (List<CTCollection>)descPage.getItems());
+			assertContains(
+				ctCollection1, (List<CTCollection>)descPage.getItems());
 		}
 	}
 

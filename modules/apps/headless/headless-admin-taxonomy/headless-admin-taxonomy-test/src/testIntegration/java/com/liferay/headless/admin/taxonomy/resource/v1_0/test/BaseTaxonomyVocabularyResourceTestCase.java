@@ -411,11 +411,12 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		Long assetLibraryId =
 			testGetAssetLibraryTaxonomyVocabulariesPage_getAssetLibraryId();
 
-		Page<TaxonomyVocabulary> totalPage =
+		Page<TaxonomyVocabulary> taxonomyVocabularyPage =
 			taxonomyVocabularyResource.getAssetLibraryTaxonomyVocabulariesPage(
 				assetLibraryId, null, null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(
+			taxonomyVocabularyPage.getTotalCount());
 
 		TaxonomyVocabulary taxonomyVocabulary1 =
 			testGetAssetLibraryTaxonomyVocabulariesPage_addTaxonomyVocabulary(
@@ -1164,11 +1165,12 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		Long siteId = testGetSiteTaxonomyVocabulariesPage_getSiteId();
 
-		Page<TaxonomyVocabulary> totalPage =
+		Page<TaxonomyVocabulary> taxonomyVocabularyPage =
 			taxonomyVocabularyResource.getSiteTaxonomyVocabulariesPage(
 				siteId, null, null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(
+			taxonomyVocabularyPage.getTotalCount());
 
 		TaxonomyVocabulary taxonomyVocabulary1 =
 			testGetSiteTaxonomyVocabulariesPage_addTaxonomyVocabulary(

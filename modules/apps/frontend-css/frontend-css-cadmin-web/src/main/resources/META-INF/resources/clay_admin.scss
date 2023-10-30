@@ -146,6 +146,35 @@ html#{$cadmin-selector} {
 			color: $user-icon-color-9;
 		}
 
+		// Autocomplete Input List
+
+		.yui3-aclist {
+			&-content {
+				background: $cadmin-white;
+				border: 1px solid #afafaf;
+				box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.58);
+			}
+
+			&-hidden {
+				visibility: hidden;
+			}
+
+			&-item {
+				padding: 2px 5px;
+
+				&-active {
+					background: #2647a0;
+					color: $cadmin-white;
+				}
+			}
+
+			&-list {
+				margin: 0;
+				overflow: hidden;
+				padding: 0;
+			}
+		}
+
 		// Taglib Move Boxes
 
 		.taglib-move-boxes {

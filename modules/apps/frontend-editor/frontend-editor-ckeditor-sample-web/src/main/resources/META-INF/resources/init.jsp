@@ -5,8 +5,19 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/editor" prefix="liferay-editor" %><%@
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+
+<%@ taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
+taglib uri="http://liferay.com/tld/editor" prefix="liferay-editor" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
+<%@ page import="com.liferay.frontend.editor.ckeditor.sample.web.internal.constants.CKEditorSampleWebKeys" %><%@
+page import="com.liferay.frontend.editor.ckeditor.sample.web.internal.display.context.CKEditorSampleDisplayContext" %><%@
+page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItem" %>
+
+<%@ page import="java.util.List" %>
+
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />

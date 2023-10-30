@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = EditorConfigContributor.class
 )
-public class CKEditorSampleEditorConfigContributor
+public class BalloonEditorConfigContributor
 	extends BaseEditorConfigContributor {
 
 	@Override

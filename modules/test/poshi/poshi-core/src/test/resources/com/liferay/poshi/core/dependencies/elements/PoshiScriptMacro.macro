@@ -7,7 +7,7 @@ definition {
 
 	@prose = "I want to print rows-hash table: ${table}"
 	@summary = "Default summary"
-	macro echoRowsHashTable(rawTable = null,rowsHashTable = null,table = null) {
+	macro echoRowsHashTable(rawTable = null, rowsHashTable = null, table = null) {
 		var RowsHashTable rowsHashTable = new RowsHashTable("${table}");
 
 		for (var row : table ${rowsHashTable}) {
@@ -26,8 +26,8 @@ definition {
 	}
 
 	@prose = "I assert the ${breadcrumbName}"
-	@summary = "Default summary"
-	macro viewPG(breadcrumbName = null,allLinksChecked = null,videoGenerationTimeMaxWaitTime = null,videoGenerationTimeCounter = null,check = null,url = null) {
+	@summary = "View PG"
+	macro viewPG(breadcrumbName = null, allLinksChecked = null, videoGenerationTimeMaxWaitTime = null, videoGenerationTimeCounter = null, check = null, url = null) {
 		var key_breadcrumbName = ${breadcrumbName};
 		static var breadcrumbNameUppercase = StringUtil.upperCase(${breadcrumbName});
 		var integer = 5 + 5;

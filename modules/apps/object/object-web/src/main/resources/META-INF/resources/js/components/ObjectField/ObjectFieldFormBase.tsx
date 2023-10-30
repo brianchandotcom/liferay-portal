@@ -574,8 +574,8 @@ export default function ObjectFieldFormBase({
 
 			<ClayForm.Group>
 				{values.businessType !== 'Aggregation' &&
-					values.businessType !== 'Formula' &&
-					values.businessType !== 'AutoIncrement' && (
+					values.businessType !== 'AutoIncrement' &&
+					values.businessType !== 'Formula' && (
 						<Toggle
 							disabled={getMandatoryToggleDisabledState()}
 							label={Liferay.Language.get('mandatory')}

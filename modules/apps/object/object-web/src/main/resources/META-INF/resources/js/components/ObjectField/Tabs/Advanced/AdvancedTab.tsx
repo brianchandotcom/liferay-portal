@@ -38,10 +38,10 @@ export function AdvancedTab({
 	values,
 }: AdvancedTabProps) {
 	const disabledReadyOnly =
-		values.system ||
-		values.businessType === 'AutoIncrement' ||
 		values.businessType === 'Aggregation' ||
-		values.businessType === 'Formula';
+		values.businessType === 'AutoIncrement' ||
+		values.businessType === 'Formula' ||
+		values.system;
 
 	return (
 		<>

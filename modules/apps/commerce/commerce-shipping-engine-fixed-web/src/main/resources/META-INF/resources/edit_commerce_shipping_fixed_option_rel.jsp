@@ -153,7 +153,7 @@ if (commerceShippingFixedOptionRel != null) {
 					'/country/get-company-countries',
 					{
 						active: true,
-						companyId: <%= company.getCompanyId() %>,
+						companyId: '<%= company.getCompanyId() %>',
 					},
 					callback
 				);

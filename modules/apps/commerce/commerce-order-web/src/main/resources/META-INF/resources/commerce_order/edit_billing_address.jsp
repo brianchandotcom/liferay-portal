@@ -79,7 +79,7 @@ if ((commerceOrder != null) && Validator.isNull(cmd)) {
 					{
 						active: true,
 						billingAllowed: true,
-						companyId: <%= company.getCompanyId() %>,
+						companyId: '<%= company.getCompanyId() %>',
 					},
 					injectCountryPlaceholder
 				);

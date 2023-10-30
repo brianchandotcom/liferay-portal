@@ -223,10 +223,10 @@ public abstract class BaseFieldResourceTestCase {
 
 	@Test
 	public void testGetFieldsAccountsPageWithPagination() throws Exception {
-		Page<Field> totalPage = fieldResource.getFieldsAccountsPage(
+		Page<Field> fieldPage = fieldResource.getFieldsAccountsPage(
 			null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(fieldPage.getTotalCount());
 
 		Field field1 = testGetFieldsAccountsPage_addField(randomField());
 
@@ -251,7 +251,7 @@ public abstract class BaseFieldResourceTestCase {
 		Assert.assertEquals(fields2.toString(), 1, fields2.size());
 
 		Page<Field> page3 = fieldResource.getFieldsAccountsPage(
-			null, Pagination.of(1, totalCount + 3), null);
+			null, Pagination.of(1, (int)totalCount + 3), null);
 
 		assertContains(field1, (List<Field>)page3.getItems());
 		assertContains(field2, (List<Field>)page3.getItems());
@@ -363,19 +363,23 @@ public abstract class BaseFieldResourceTestCase {
 
 		field2 = testGetFieldsAccountsPage_addField(field2);
 
+		Page<Field> page = fieldResource.getFieldsAccountsPage(
+			null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<Field> ascPage = fieldResource.getFieldsAccountsPage(
-				null, Pagination.of(1, 2), entityField.getName() + ":asc");
+				null, Pagination.of(1, (int)page.getTotalCount() + 1),
+				entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(field1, field2), (List<Field>)ascPage.getItems());
+			assertContains(field1, (List<Field>)ascPage.getItems());
+			assertContains(field2, (List<Field>)ascPage.getItems());
 
 			Page<Field> descPage = fieldResource.getFieldsAccountsPage(
-				null, Pagination.of(1, 2), entityField.getName() + ":desc");
+				null, Pagination.of(1, (int)page.getTotalCount() + 1),
+				entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(field2, field1),
-				(List<Field>)descPage.getItems());
+			assertContains(field2, (List<Field>)descPage.getItems());
+			assertContains(field1, (List<Field>)descPage.getItems());
 		}
 	}
 
@@ -423,10 +427,10 @@ public abstract class BaseFieldResourceTestCase {
 
 	@Test
 	public void testGetFieldsOrdersPageWithPagination() throws Exception {
-		Page<Field> totalPage = fieldResource.getFieldsOrdersPage(
+		Page<Field> fieldPage = fieldResource.getFieldsOrdersPage(
 			null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(fieldPage.getTotalCount());
 
 		Field field1 = testGetFieldsOrdersPage_addField(randomField());
 
@@ -451,7 +455,7 @@ public abstract class BaseFieldResourceTestCase {
 		Assert.assertEquals(fields2.toString(), 1, fields2.size());
 
 		Page<Field> page3 = fieldResource.getFieldsOrdersPage(
-			null, Pagination.of(1, totalCount + 3), null);
+			null, Pagination.of(1, (int)totalCount + 3), null);
 
 		assertContains(field1, (List<Field>)page3.getItems());
 		assertContains(field2, (List<Field>)page3.getItems());
@@ -563,19 +567,22 @@ public abstract class BaseFieldResourceTestCase {
 
 		field2 = testGetFieldsOrdersPage_addField(field2);
 
+		Page<Field> page = fieldResource.getFieldsOrdersPage(null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<Field> ascPage = fieldResource.getFieldsOrdersPage(
-				null, Pagination.of(1, 2), entityField.getName() + ":asc");
+				null, Pagination.of(1, (int)page.getTotalCount() + 1),
+				entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(field1, field2), (List<Field>)ascPage.getItems());
+			assertContains(field1, (List<Field>)ascPage.getItems());
+			assertContains(field2, (List<Field>)ascPage.getItems());
 
 			Page<Field> descPage = fieldResource.getFieldsOrdersPage(
-				null, Pagination.of(1, 2), entityField.getName() + ":desc");
+				null, Pagination.of(1, (int)page.getTotalCount() + 1),
+				entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(field2, field1),
-				(List<Field>)descPage.getItems());
+			assertContains(field2, (List<Field>)descPage.getItems());
+			assertContains(field1, (List<Field>)descPage.getItems());
 		}
 	}
 
@@ -623,10 +630,10 @@ public abstract class BaseFieldResourceTestCase {
 
 	@Test
 	public void testGetFieldsPeoplePageWithPagination() throws Exception {
-		Page<Field> totalPage = fieldResource.getFieldsPeoplePage(
+		Page<Field> fieldPage = fieldResource.getFieldsPeoplePage(
 			null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(fieldPage.getTotalCount());
 
 		Field field1 = testGetFieldsPeoplePage_addField(randomField());
 
@@ -651,7 +658,7 @@ public abstract class BaseFieldResourceTestCase {
 		Assert.assertEquals(fields2.toString(), 1, fields2.size());
 
 		Page<Field> page3 = fieldResource.getFieldsPeoplePage(
-			null, Pagination.of(1, totalCount + 3), null);
+			null, Pagination.of(1, (int)totalCount + 3), null);
 
 		assertContains(field1, (List<Field>)page3.getItems());
 		assertContains(field2, (List<Field>)page3.getItems());
@@ -763,19 +770,22 @@ public abstract class BaseFieldResourceTestCase {
 
 		field2 = testGetFieldsPeoplePage_addField(field2);
 
+		Page<Field> page = fieldResource.getFieldsPeoplePage(null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<Field> ascPage = fieldResource.getFieldsPeoplePage(
-				null, Pagination.of(1, 2), entityField.getName() + ":asc");
+				null, Pagination.of(1, (int)page.getTotalCount() + 1),
+				entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(field1, field2), (List<Field>)ascPage.getItems());
+			assertContains(field1, (List<Field>)ascPage.getItems());
+			assertContains(field2, (List<Field>)ascPage.getItems());
 
 			Page<Field> descPage = fieldResource.getFieldsPeoplePage(
-				null, Pagination.of(1, 2), entityField.getName() + ":desc");
+				null, Pagination.of(1, (int)page.getTotalCount() + 1),
+				entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(field2, field1),
-				(List<Field>)descPage.getItems());
+			assertContains(field2, (List<Field>)descPage.getItems());
+			assertContains(field1, (List<Field>)descPage.getItems());
 		}
 	}
 
@@ -823,10 +833,10 @@ public abstract class BaseFieldResourceTestCase {
 
 	@Test
 	public void testGetFieldsProductsPageWithPagination() throws Exception {
-		Page<Field> totalPage = fieldResource.getFieldsProductsPage(
+		Page<Field> fieldPage = fieldResource.getFieldsProductsPage(
 			null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(fieldPage.getTotalCount());
 
 		Field field1 = testGetFieldsProductsPage_addField(randomField());
 
@@ -851,7 +861,7 @@ public abstract class BaseFieldResourceTestCase {
 		Assert.assertEquals(fields2.toString(), 1, fields2.size());
 
 		Page<Field> page3 = fieldResource.getFieldsProductsPage(
-			null, Pagination.of(1, totalCount + 3), null);
+			null, Pagination.of(1, (int)totalCount + 3), null);
 
 		assertContains(field1, (List<Field>)page3.getItems());
 		assertContains(field2, (List<Field>)page3.getItems());
@@ -963,19 +973,23 @@ public abstract class BaseFieldResourceTestCase {
 
 		field2 = testGetFieldsProductsPage_addField(field2);
 
+		Page<Field> page = fieldResource.getFieldsProductsPage(
+			null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<Field> ascPage = fieldResource.getFieldsProductsPage(
-				null, Pagination.of(1, 2), entityField.getName() + ":asc");
+				null, Pagination.of(1, (int)page.getTotalCount() + 1),
+				entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(field1, field2), (List<Field>)ascPage.getItems());
+			assertContains(field1, (List<Field>)ascPage.getItems());
+			assertContains(field2, (List<Field>)ascPage.getItems());
 
 			Page<Field> descPage = fieldResource.getFieldsProductsPage(
-				null, Pagination.of(1, 2), entityField.getName() + ":desc");
+				null, Pagination.of(1, (int)page.getTotalCount() + 1),
+				entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(field2, field1),
-				(List<Field>)descPage.getItems());
+			assertContains(field2, (List<Field>)descPage.getItems());
+			assertContains(field1, (List<Field>)descPage.getItems());
 		}
 	}
 

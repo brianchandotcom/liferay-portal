@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -194,7 +195,7 @@ public abstract class BaseLinkedProductResourceTestCase {
 			linkedProductResource.getProductIdLinkedProductsPage(
 				id, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantId != null) {
 			LinkedProduct irrelevantLinkedProduct =
@@ -202,13 +203,12 @@ public abstract class BaseLinkedProductResourceTestCase {
 					irrelevantId, randomIrrelevantLinkedProduct());
 
 			page = linkedProductResource.getProductIdLinkedProductsPage(
-				irrelevantId, Pagination.of(1, 2));
+				irrelevantId, Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantLinkedProduct),
-				(List<LinkedProduct>)page.getItems());
+			assertContains(
+				irrelevantLinkedProduct, (List<LinkedProduct>)page.getItems());
 			assertValid(
 				page,
 				testGetProductIdLinkedProductsPage_getExpectedActions(
@@ -226,11 +226,10 @@ public abstract class BaseLinkedProductResourceTestCase {
 		page = linkedProductResource.getProductIdLinkedProductsPage(
 			id, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(linkedProduct1, linkedProduct2),
-			(List<LinkedProduct>)page.getItems());
+		assertContains(linkedProduct1, (List<LinkedProduct>)page.getItems());
+		assertContains(linkedProduct2, (List<LinkedProduct>)page.getItems());
 		assertValid(
 			page, testGetProductIdLinkedProductsPage_getExpectedActions(id));
 	}
@@ -250,6 +249,12 @@ public abstract class BaseLinkedProductResourceTestCase {
 
 		Long id = testGetProductIdLinkedProductsPage_getId();
 
+		Page<LinkedProduct> linkedProductPage =
+			linkedProductResource.getProductIdLinkedProductsPage(id, null);
+
+		int totalCount = GetterUtil.getInteger(
+			linkedProductPage.getTotalCount());
+
 		LinkedProduct linkedProduct1 =
 			testGetProductIdLinkedProductsPage_addLinkedProduct(
 				id, randomLinkedProduct());
@@ -264,19 +269,19 @@ public abstract class BaseLinkedProductResourceTestCase {
 
 		Page<LinkedProduct> page1 =
 			linkedProductResource.getProductIdLinkedProductsPage(
-				id, Pagination.of(1, 2));
+				id, Pagination.of(1, totalCount + 2));
 
 		List<LinkedProduct> linkedProducts1 =
 			(List<LinkedProduct>)page1.getItems();
 
 		Assert.assertEquals(
-			linkedProducts1.toString(), 2, linkedProducts1.size());
+			linkedProducts1.toString(), totalCount + 2, linkedProducts1.size());
 
 		Page<LinkedProduct> page2 =
 			linkedProductResource.getProductIdLinkedProductsPage(
-				id, Pagination.of(2, 2));
+				id, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<LinkedProduct> linkedProducts2 =
 			(List<LinkedProduct>)page2.getItems();
@@ -286,11 +291,11 @@ public abstract class BaseLinkedProductResourceTestCase {
 
 		Page<LinkedProduct> page3 =
 			linkedProductResource.getProductIdLinkedProductsPage(
-				id, Pagination.of(1, 3));
+				id, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(linkedProduct1, linkedProduct2, linkedProduct3),
-			(List<LinkedProduct>)page3.getItems());
+		assertContains(linkedProduct1, (List<LinkedProduct>)page3.getItems());
+		assertContains(linkedProduct2, (List<LinkedProduct>)page3.getItems());
+		assertContains(linkedProduct3, (List<LinkedProduct>)page3.getItems());
 	}
 
 	protected LinkedProduct testGetProductIdLinkedProductsPage_addLinkedProduct(

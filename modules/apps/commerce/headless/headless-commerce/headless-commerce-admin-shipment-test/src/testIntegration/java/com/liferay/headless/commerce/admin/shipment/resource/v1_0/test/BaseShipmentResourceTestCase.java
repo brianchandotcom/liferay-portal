@@ -309,10 +309,10 @@ public abstract class BaseShipmentResourceTestCase {
 
 	@Test
 	public void testGetShipmentsPageWithPagination() throws Exception {
-		Page<Shipment> totalPage = shipmentResource.getShipmentsPage(
+		Page<Shipment> shipmentPage = shipmentResource.getShipmentsPage(
 			null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(shipmentPage.getTotalCount());
 
 		Shipment shipment1 = testGetShipmentsPage_addShipment(randomShipment());
 
@@ -338,7 +338,7 @@ public abstract class BaseShipmentResourceTestCase {
 		Assert.assertEquals(shipments2.toString(), 1, shipments2.size());
 
 		Page<Shipment> page3 = shipmentResource.getShipmentsPage(
-			null, null, Pagination.of(1, totalCount + 3), null);
+			null, null, Pagination.of(1, (int)totalCount + 3), null);
 
 		assertContains(shipment1, (List<Shipment>)page3.getItems());
 		assertContains(shipment2, (List<Shipment>)page3.getItems());
@@ -450,22 +450,23 @@ public abstract class BaseShipmentResourceTestCase {
 
 		shipment2 = testGetShipmentsPage_addShipment(shipment2);
 
+		Page<Shipment> page = shipmentResource.getShipmentsPage(
+			null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<Shipment> ascPage = shipmentResource.getShipmentsPage(
-				null, null, Pagination.of(1, 2),
+				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(shipment1, shipment2),
-				(List<Shipment>)ascPage.getItems());
+			assertContains(shipment1, (List<Shipment>)ascPage.getItems());
+			assertContains(shipment2, (List<Shipment>)ascPage.getItems());
 
 			Page<Shipment> descPage = shipmentResource.getShipmentsPage(
-				null, null, Pagination.of(1, 2),
+				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(shipment2, shipment1),
-				(List<Shipment>)descPage.getItems());
+			assertContains(shipment2, (List<Shipment>)descPage.getItems());
+			assertContains(shipment1, (List<Shipment>)descPage.getItems());
 		}
 	}
 

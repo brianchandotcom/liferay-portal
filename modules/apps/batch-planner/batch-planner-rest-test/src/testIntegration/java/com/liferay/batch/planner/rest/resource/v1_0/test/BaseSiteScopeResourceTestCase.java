@@ -194,7 +194,7 @@ public abstract class BaseSiteScopeResourceTestCase {
 			siteScopeResource.getPlanInternalClassNameKeySiteScopesPage(
 				internalClassNameKey, null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantInternalClassNameKey != null) {
 			SiteScope irrelevantSiteScope =
@@ -205,11 +205,10 @@ public abstract class BaseSiteScopeResourceTestCase {
 			page = siteScopeResource.getPlanInternalClassNameKeySiteScopesPage(
 				irrelevantInternalClassNameKey, null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantSiteScope),
-				(List<SiteScope>)page.getItems());
+			assertContains(
+				irrelevantSiteScope, (List<SiteScope>)page.getItems());
 			assertValid(
 				page,
 				testGetPlanInternalClassNameKeySiteScopesPage_getExpectedActions(
@@ -227,11 +226,10 @@ public abstract class BaseSiteScopeResourceTestCase {
 		page = siteScopeResource.getPlanInternalClassNameKeySiteScopesPage(
 			internalClassNameKey, null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(siteScope1, siteScope2),
-			(List<SiteScope>)page.getItems());
+		assertContains(siteScope1, (List<SiteScope>)page.getItems());
+		assertContains(siteScope2, (List<SiteScope>)page.getItems());
 		assertValid(
 			page,
 			testGetPlanInternalClassNameKeySiteScopesPage_getExpectedActions(

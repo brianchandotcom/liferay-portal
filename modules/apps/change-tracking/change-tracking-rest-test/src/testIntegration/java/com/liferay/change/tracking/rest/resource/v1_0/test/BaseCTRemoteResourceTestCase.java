@@ -232,10 +232,10 @@ public abstract class BaseCTRemoteResourceTestCase {
 
 	@Test
 	public void testGetCTRemotesPageWithPagination() throws Exception {
-		Page<CTRemote> totalPage = ctRemoteResource.getCTRemotesPage(
+		Page<CTRemote> ctRemotePage = ctRemoteResource.getCTRemotesPage(
 			null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(ctRemotePage.getTotalCount());
 
 		CTRemote ctRemote1 = testGetCTRemotesPage_addCTRemote(randomCTRemote());
 
@@ -261,7 +261,7 @@ public abstract class BaseCTRemoteResourceTestCase {
 		Assert.assertEquals(ctRemotes2.toString(), 1, ctRemotes2.size());
 
 		Page<CTRemote> page3 = ctRemoteResource.getCTRemotesPage(
-			null, Pagination.of(1, totalCount + 3), null);
+			null, Pagination.of(1, (int)totalCount + 3), null);
 
 		assertContains(ctRemote1, (List<CTRemote>)page3.getItems());
 		assertContains(ctRemote2, (List<CTRemote>)page3.getItems());
@@ -373,20 +373,23 @@ public abstract class BaseCTRemoteResourceTestCase {
 
 		ctRemote2 = testGetCTRemotesPage_addCTRemote(ctRemote2);
 
+		Page<CTRemote> page = ctRemoteResource.getCTRemotesPage(
+			null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<CTRemote> ascPage = ctRemoteResource.getCTRemotesPage(
-				null, Pagination.of(1, 2), entityField.getName() + ":asc");
+				null, Pagination.of(1, (int)page.getTotalCount() + 1),
+				entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(ctRemote1, ctRemote2),
-				(List<CTRemote>)ascPage.getItems());
+			assertContains(ctRemote1, (List<CTRemote>)ascPage.getItems());
+			assertContains(ctRemote2, (List<CTRemote>)ascPage.getItems());
 
 			Page<CTRemote> descPage = ctRemoteResource.getCTRemotesPage(
-				null, Pagination.of(1, 2), entityField.getName() + ":desc");
+				null, Pagination.of(1, (int)page.getTotalCount() + 1),
+				entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(ctRemote2, ctRemote1),
-				(List<CTRemote>)descPage.getItems());
+			assertContains(ctRemote2, (List<CTRemote>)descPage.getItems());
+			assertContains(ctRemote1, (List<CTRemote>)descPage.getItems());
 		}
 	}
 

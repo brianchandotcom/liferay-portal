@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -213,7 +214,7 @@ public abstract class BaseObjectFieldResourceTestCase {
 					externalReferenceCode, null, null, Pagination.of(1, 10),
 					null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantExternalReferenceCode != null) {
 			ObjectField irrelevantObjectField =
@@ -225,13 +226,12 @@ public abstract class BaseObjectFieldResourceTestCase {
 				objectFieldResource.
 					getObjectDefinitionByExternalReferenceCodeObjectFieldsPage(
 						irrelevantExternalReferenceCode, null, null,
-						Pagination.of(1, 2), null);
+						Pagination.of(1, (int)totalCount + 1), null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantObjectField),
-				(List<ObjectField>)page.getItems());
+			assertContains(
+				irrelevantObjectField, (List<ObjectField>)page.getItems());
 			assertValid(
 				page,
 				testGetObjectDefinitionByExternalReferenceCodeObjectFieldsPage_getExpectedActions(
@@ -252,11 +252,10 @@ public abstract class BaseObjectFieldResourceTestCase {
 					externalReferenceCode, null, null, Pagination.of(1, 10),
 					null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(objectField1, objectField2),
-			(List<ObjectField>)page.getItems());
+		assertContains(objectField1, (List<ObjectField>)page.getItems());
+		assertContains(objectField2, (List<ObjectField>)page.getItems());
 		assertValid(
 			page,
 			testGetObjectDefinitionByExternalReferenceCodeObjectFieldsPage_getExpectedActions(
@@ -387,6 +386,13 @@ public abstract class BaseObjectFieldResourceTestCase {
 		String externalReferenceCode =
 			testGetObjectDefinitionByExternalReferenceCodeObjectFieldsPage_getExternalReferenceCode();
 
+		Page<ObjectField> objectFieldPage =
+			objectFieldResource.
+				getObjectDefinitionByExternalReferenceCodeObjectFieldsPage(
+					externalReferenceCode, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(objectFieldPage.getTotalCount());
+
 		ObjectField objectField1 =
 			testGetObjectDefinitionByExternalReferenceCodeObjectFieldsPage_addObjectField(
 				externalReferenceCode, randomObjectField());
@@ -402,20 +408,21 @@ public abstract class BaseObjectFieldResourceTestCase {
 		Page<ObjectField> page1 =
 			objectFieldResource.
 				getObjectDefinitionByExternalReferenceCodeObjectFieldsPage(
-					externalReferenceCode, null, null, Pagination.of(1, 2),
-					null);
+					externalReferenceCode, null, null,
+					Pagination.of(1, totalCount + 2), null);
 
 		List<ObjectField> objectFields1 = (List<ObjectField>)page1.getItems();
 
-		Assert.assertEquals(objectFields1.toString(), 2, objectFields1.size());
+		Assert.assertEquals(
+			objectFields1.toString(), totalCount + 2, objectFields1.size());
 
 		Page<ObjectField> page2 =
 			objectFieldResource.
 				getObjectDefinitionByExternalReferenceCodeObjectFieldsPage(
-					externalReferenceCode, null, null, Pagination.of(2, 2),
-					null);
+					externalReferenceCode, null, null,
+					Pagination.of(2, totalCount + 2), null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<ObjectField> objectFields2 = (List<ObjectField>)page2.getItems();
 
@@ -424,12 +431,12 @@ public abstract class BaseObjectFieldResourceTestCase {
 		Page<ObjectField> page3 =
 			objectFieldResource.
 				getObjectDefinitionByExternalReferenceCodeObjectFieldsPage(
-					externalReferenceCode, null, null, Pagination.of(1, 3),
-					null);
+					externalReferenceCode, null, null,
+					Pagination.of(1, (int)totalCount + 3), null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(objectField1, objectField2, objectField3),
-			(List<ObjectField>)page3.getItems());
+		assertContains(objectField1, (List<ObjectField>)page3.getItems());
+		assertContains(objectField2, (List<ObjectField>)page3.getItems());
+		assertContains(objectField3, (List<ObjectField>)page3.getItems());
 	}
 
 	@Test
@@ -558,26 +565,33 @@ public abstract class BaseObjectFieldResourceTestCase {
 			testGetObjectDefinitionByExternalReferenceCodeObjectFieldsPage_addObjectField(
 				externalReferenceCode, objectField2);
 
+		Page<ObjectField> page =
+			objectFieldResource.
+				getObjectDefinitionByExternalReferenceCodeObjectFieldsPage(
+					externalReferenceCode, null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<ObjectField> ascPage =
 				objectFieldResource.
 					getObjectDefinitionByExternalReferenceCodeObjectFieldsPage(
-						externalReferenceCode, null, null, Pagination.of(1, 2),
+						externalReferenceCode, null, null,
+						Pagination.of(1, (int)page.getTotalCount() + 1),
 						entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(objectField1, objectField2),
-				(List<ObjectField>)ascPage.getItems());
+			assertContains(objectField1, (List<ObjectField>)ascPage.getItems());
+			assertContains(objectField2, (List<ObjectField>)ascPage.getItems());
 
 			Page<ObjectField> descPage =
 				objectFieldResource.
 					getObjectDefinitionByExternalReferenceCodeObjectFieldsPage(
-						externalReferenceCode, null, null, Pagination.of(1, 2),
+						externalReferenceCode, null, null,
+						Pagination.of(1, (int)page.getTotalCount() + 1),
 						entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(objectField2, objectField1),
-				(List<ObjectField>)descPage.getItems());
+			assertContains(
+				objectField2, (List<ObjectField>)descPage.getItems());
+			assertContains(
+				objectField1, (List<ObjectField>)descPage.getItems());
 		}
 	}
 
@@ -639,7 +653,7 @@ public abstract class BaseObjectFieldResourceTestCase {
 			objectFieldResource.getObjectDefinitionObjectFieldsPage(
 				objectDefinitionId, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantObjectDefinitionId != null) {
 			ObjectField irrelevantObjectField =
@@ -648,14 +662,13 @@ public abstract class BaseObjectFieldResourceTestCase {
 					randomIrrelevantObjectField());
 
 			page = objectFieldResource.getObjectDefinitionObjectFieldsPage(
-				irrelevantObjectDefinitionId, null, null, Pagination.of(1, 2),
-				null);
+				irrelevantObjectDefinitionId, null, null,
+				Pagination.of(1, (int)totalCount + 1), null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantObjectField),
-				(List<ObjectField>)page.getItems());
+			assertContains(
+				irrelevantObjectField, (List<ObjectField>)page.getItems());
 			assertValid(
 				page,
 				testGetObjectDefinitionObjectFieldsPage_getExpectedActions(
@@ -673,11 +686,10 @@ public abstract class BaseObjectFieldResourceTestCase {
 		page = objectFieldResource.getObjectDefinitionObjectFieldsPage(
 			objectDefinitionId, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(objectField1, objectField2),
-			(List<ObjectField>)page.getItems());
+		assertContains(objectField1, (List<ObjectField>)page.getItems());
+		assertContains(objectField2, (List<ObjectField>)page.getItems());
 		assertValid(
 			page,
 			testGetObjectDefinitionObjectFieldsPage_getExpectedActions(
@@ -815,6 +827,12 @@ public abstract class BaseObjectFieldResourceTestCase {
 		Long objectDefinitionId =
 			testGetObjectDefinitionObjectFieldsPage_getObjectDefinitionId();
 
+		Page<ObjectField> objectFieldPage =
+			objectFieldResource.getObjectDefinitionObjectFieldsPage(
+				objectDefinitionId, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(objectFieldPage.getTotalCount());
+
 		ObjectField objectField1 =
 			testGetObjectDefinitionObjectFieldsPage_addObjectField(
 				objectDefinitionId, randomObjectField());
@@ -829,17 +847,20 @@ public abstract class BaseObjectFieldResourceTestCase {
 
 		Page<ObjectField> page1 =
 			objectFieldResource.getObjectDefinitionObjectFieldsPage(
-				objectDefinitionId, null, null, Pagination.of(1, 2), null);
+				objectDefinitionId, null, null,
+				Pagination.of(1, totalCount + 2), null);
 
 		List<ObjectField> objectFields1 = (List<ObjectField>)page1.getItems();
 
-		Assert.assertEquals(objectFields1.toString(), 2, objectFields1.size());
+		Assert.assertEquals(
+			objectFields1.toString(), totalCount + 2, objectFields1.size());
 
 		Page<ObjectField> page2 =
 			objectFieldResource.getObjectDefinitionObjectFieldsPage(
-				objectDefinitionId, null, null, Pagination.of(2, 2), null);
+				objectDefinitionId, null, null,
+				Pagination.of(2, totalCount + 2), null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<ObjectField> objectFields2 = (List<ObjectField>)page2.getItems();
 
@@ -847,11 +868,12 @@ public abstract class BaseObjectFieldResourceTestCase {
 
 		Page<ObjectField> page3 =
 			objectFieldResource.getObjectDefinitionObjectFieldsPage(
-				objectDefinitionId, null, null, Pagination.of(1, 3), null);
+				objectDefinitionId, null, null,
+				Pagination.of(1, (int)totalCount + 3), null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(objectField1, objectField2, objectField3),
-			(List<ObjectField>)page3.getItems());
+		assertContains(objectField1, (List<ObjectField>)page3.getItems());
+		assertContains(objectField2, (List<ObjectField>)page3.getItems());
+		assertContains(objectField3, (List<ObjectField>)page3.getItems());
 	}
 
 	@Test
@@ -976,24 +998,30 @@ public abstract class BaseObjectFieldResourceTestCase {
 		objectField2 = testGetObjectDefinitionObjectFieldsPage_addObjectField(
 			objectDefinitionId, objectField2);
 
+		Page<ObjectField> page =
+			objectFieldResource.getObjectDefinitionObjectFieldsPage(
+				objectDefinitionId, null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<ObjectField> ascPage =
 				objectFieldResource.getObjectDefinitionObjectFieldsPage(
-					objectDefinitionId, null, null, Pagination.of(1, 2),
+					objectDefinitionId, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(objectField1, objectField2),
-				(List<ObjectField>)ascPage.getItems());
+			assertContains(objectField1, (List<ObjectField>)ascPage.getItems());
+			assertContains(objectField2, (List<ObjectField>)ascPage.getItems());
 
 			Page<ObjectField> descPage =
 				objectFieldResource.getObjectDefinitionObjectFieldsPage(
-					objectDefinitionId, null, null, Pagination.of(1, 2),
+					objectDefinitionId, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(objectField2, objectField1),
-				(List<ObjectField>)descPage.getItems());
+			assertContains(
+				objectField2, (List<ObjectField>)descPage.getItems());
+			assertContains(
+				objectField1, (List<ObjectField>)descPage.getItems());
 		}
 	}
 

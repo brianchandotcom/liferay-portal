@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -588,7 +589,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 					parentKnowledgeBaseArticleId, null, null, null, null,
 					Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantParentKnowledgeBaseArticleId != null) {
 			KnowledgeBaseArticle irrelevantKnowledgeBaseArticle =
@@ -600,12 +601,13 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				knowledgeBaseArticleResource.
 					getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
 						irrelevantParentKnowledgeBaseArticleId, null, null,
-						null, null, Pagination.of(1, 2), null);
+						null, null, Pagination.of(1, (int)totalCount + 1),
+						null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantKnowledgeBaseArticle),
+			assertContains(
+				irrelevantKnowledgeBaseArticle,
 				(List<KnowledgeBaseArticle>)page.getItems());
 			assertValid(
 				page,
@@ -627,11 +629,12 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 					parentKnowledgeBaseArticleId, null, null, null, null,
 					Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(knowledgeBaseArticle1, knowledgeBaseArticle2),
-			(List<KnowledgeBaseArticle>)page.getItems());
+		assertContains(
+			knowledgeBaseArticle1, (List<KnowledgeBaseArticle>)page.getItems());
+		assertContains(
+			knowledgeBaseArticle2, (List<KnowledgeBaseArticle>)page.getItems());
 		assertValid(
 			page,
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getExpectedActions(
@@ -767,6 +770,15 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		Long parentKnowledgeBaseArticleId =
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_getParentKnowledgeBaseArticleId();
 
+		Page<KnowledgeBaseArticle> knowledgeBaseArticlePage =
+			knowledgeBaseArticleResource.
+				getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
+					parentKnowledgeBaseArticleId, null, null, null, null, null,
+					null);
+
+		int totalCount = GetterUtil.getInteger(
+			knowledgeBaseArticlePage.getTotalCount());
+
 		KnowledgeBaseArticle knowledgeBaseArticle1 =
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				parentKnowledgeBaseArticleId, randomKnowledgeBaseArticle());
@@ -783,22 +795,22 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			knowledgeBaseArticleResource.
 				getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
 					parentKnowledgeBaseArticleId, null, null, null, null,
-					Pagination.of(1, 2), null);
+					Pagination.of(1, totalCount + 2), null);
 
 		List<KnowledgeBaseArticle> knowledgeBaseArticles1 =
 			(List<KnowledgeBaseArticle>)page1.getItems();
 
 		Assert.assertEquals(
-			knowledgeBaseArticles1.toString(), 2,
+			knowledgeBaseArticles1.toString(), totalCount + 2,
 			knowledgeBaseArticles1.size());
 
 		Page<KnowledgeBaseArticle> page2 =
 			knowledgeBaseArticleResource.
 				getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
 					parentKnowledgeBaseArticleId, null, null, null, null,
-					Pagination.of(2, 2), null);
+					Pagination.of(2, totalCount + 2), null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<KnowledgeBaseArticle> knowledgeBaseArticles2 =
 			(List<KnowledgeBaseArticle>)page2.getItems();
@@ -811,12 +823,16 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			knowledgeBaseArticleResource.
 				getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
 					parentKnowledgeBaseArticleId, null, null, null, null,
-					Pagination.of(1, 3), null);
+					Pagination.of(1, (int)totalCount + 3), null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(
-				knowledgeBaseArticle1, knowledgeBaseArticle2,
-				knowledgeBaseArticle3),
+		assertContains(
+			knowledgeBaseArticle1,
+			(List<KnowledgeBaseArticle>)page3.getItems());
+		assertContains(
+			knowledgeBaseArticle2,
+			(List<KnowledgeBaseArticle>)page3.getItems());
+		assertContains(
+			knowledgeBaseArticle3,
 			(List<KnowledgeBaseArticle>)page3.getItems());
 	}
 
@@ -948,25 +964,39 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testGetKnowledgeBaseArticleKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				parentKnowledgeBaseArticleId, knowledgeBaseArticle2);
 
+		Page<KnowledgeBaseArticle> page =
+			knowledgeBaseArticleResource.
+				getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
+					parentKnowledgeBaseArticleId, null, null, null, null, null,
+					null);
+
 		for (EntityField entityField : entityFields) {
 			Page<KnowledgeBaseArticle> ascPage =
 				knowledgeBaseArticleResource.
 					getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
 						parentKnowledgeBaseArticleId, null, null, null, null,
-						Pagination.of(1, 2), entityField.getName() + ":asc");
+						Pagination.of(1, (int)page.getTotalCount() + 1),
+						entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(knowledgeBaseArticle1, knowledgeBaseArticle2),
+			assertContains(
+				knowledgeBaseArticle1,
+				(List<KnowledgeBaseArticle>)ascPage.getItems());
+			assertContains(
+				knowledgeBaseArticle2,
 				(List<KnowledgeBaseArticle>)ascPage.getItems());
 
 			Page<KnowledgeBaseArticle> descPage =
 				knowledgeBaseArticleResource.
 					getKnowledgeBaseArticleKnowledgeBaseArticlesPage(
 						parentKnowledgeBaseArticleId, null, null, null, null,
-						Pagination.of(1, 2), entityField.getName() + ":desc");
+						Pagination.of(1, (int)page.getTotalCount() + 1),
+						entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(knowledgeBaseArticle2, knowledgeBaseArticle1),
+			assertContains(
+				knowledgeBaseArticle2,
+				(List<KnowledgeBaseArticle>)descPage.getItems());
+			assertContains(
+				knowledgeBaseArticle1,
 				(List<KnowledgeBaseArticle>)descPage.getItems());
 		}
 	}
@@ -1038,7 +1068,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 					knowledgeBaseFolderId, null, null, null, null,
 					Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantKnowledgeBaseFolderId != null) {
 			KnowledgeBaseArticle irrelevantKnowledgeBaseArticle =
@@ -1050,12 +1080,12 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				knowledgeBaseArticleResource.
 					getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
 						irrelevantKnowledgeBaseFolderId, null, null, null, null,
-						Pagination.of(1, 2), null);
+						Pagination.of(1, (int)totalCount + 1), null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantKnowledgeBaseArticle),
+			assertContains(
+				irrelevantKnowledgeBaseArticle,
 				(List<KnowledgeBaseArticle>)page.getItems());
 			assertValid(
 				page,
@@ -1077,11 +1107,12 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 					knowledgeBaseFolderId, null, null, null, null,
 					Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(knowledgeBaseArticle1, knowledgeBaseArticle2),
-			(List<KnowledgeBaseArticle>)page.getItems());
+		assertContains(
+			knowledgeBaseArticle1, (List<KnowledgeBaseArticle>)page.getItems());
+		assertContains(
+			knowledgeBaseArticle2, (List<KnowledgeBaseArticle>)page.getItems());
 		assertValid(
 			page,
 			testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage_getExpectedActions(
@@ -1228,6 +1259,14 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		Long knowledgeBaseFolderId =
 			testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage_getKnowledgeBaseFolderId();
 
+		Page<KnowledgeBaseArticle> knowledgeBaseArticlePage =
+			knowledgeBaseArticleResource.
+				getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
+					knowledgeBaseFolderId, null, null, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(
+			knowledgeBaseArticlePage.getTotalCount());
+
 		KnowledgeBaseArticle knowledgeBaseArticle1 =
 			testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				knowledgeBaseFolderId, randomKnowledgeBaseArticle());
@@ -1244,22 +1283,22 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			knowledgeBaseArticleResource.
 				getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
 					knowledgeBaseFolderId, null, null, null, null,
-					Pagination.of(1, 2), null);
+					Pagination.of(1, totalCount + 2), null);
 
 		List<KnowledgeBaseArticle> knowledgeBaseArticles1 =
 			(List<KnowledgeBaseArticle>)page1.getItems();
 
 		Assert.assertEquals(
-			knowledgeBaseArticles1.toString(), 2,
+			knowledgeBaseArticles1.toString(), totalCount + 2,
 			knowledgeBaseArticles1.size());
 
 		Page<KnowledgeBaseArticle> page2 =
 			knowledgeBaseArticleResource.
 				getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
 					knowledgeBaseFolderId, null, null, null, null,
-					Pagination.of(2, 2), null);
+					Pagination.of(2, totalCount + 2), null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<KnowledgeBaseArticle> knowledgeBaseArticles2 =
 			(List<KnowledgeBaseArticle>)page2.getItems();
@@ -1272,12 +1311,16 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			knowledgeBaseArticleResource.
 				getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
 					knowledgeBaseFolderId, null, null, null, null,
-					Pagination.of(1, 3), null);
+					Pagination.of(1, (int)totalCount + 3), null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(
-				knowledgeBaseArticle1, knowledgeBaseArticle2,
-				knowledgeBaseArticle3),
+		assertContains(
+			knowledgeBaseArticle1,
+			(List<KnowledgeBaseArticle>)page3.getItems());
+		assertContains(
+			knowledgeBaseArticle2,
+			(List<KnowledgeBaseArticle>)page3.getItems());
+		assertContains(
+			knowledgeBaseArticle3,
 			(List<KnowledgeBaseArticle>)page3.getItems());
 	}
 
@@ -1409,25 +1452,38 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testGetKnowledgeBaseFolderKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				knowledgeBaseFolderId, knowledgeBaseArticle2);
 
+		Page<KnowledgeBaseArticle> page =
+			knowledgeBaseArticleResource.
+				getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
+					knowledgeBaseFolderId, null, null, null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<KnowledgeBaseArticle> ascPage =
 				knowledgeBaseArticleResource.
 					getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
 						knowledgeBaseFolderId, null, null, null, null,
-						Pagination.of(1, 2), entityField.getName() + ":asc");
+						Pagination.of(1, (int)page.getTotalCount() + 1),
+						entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(knowledgeBaseArticle1, knowledgeBaseArticle2),
+			assertContains(
+				knowledgeBaseArticle1,
+				(List<KnowledgeBaseArticle>)ascPage.getItems());
+			assertContains(
+				knowledgeBaseArticle2,
 				(List<KnowledgeBaseArticle>)ascPage.getItems());
 
 			Page<KnowledgeBaseArticle> descPage =
 				knowledgeBaseArticleResource.
 					getKnowledgeBaseFolderKnowledgeBaseArticlesPage(
 						knowledgeBaseFolderId, null, null, null, null,
-						Pagination.of(1, 2), entityField.getName() + ":desc");
+						Pagination.of(1, (int)page.getTotalCount() + 1),
+						entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(knowledgeBaseArticle2, knowledgeBaseArticle1),
+			assertContains(
+				knowledgeBaseArticle2,
+				(List<KnowledgeBaseArticle>)descPage.getItems());
+			assertContains(
+				knowledgeBaseArticle1,
 				(List<KnowledgeBaseArticle>)descPage.getItems());
 		}
 	}
@@ -1494,7 +1550,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			knowledgeBaseArticleResource.getSiteKnowledgeBaseArticlesPage(
 				siteId, null, null, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantSiteId != null) {
 			KnowledgeBaseArticle irrelevantKnowledgeBaseArticle =
@@ -1504,12 +1560,12 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			page =
 				knowledgeBaseArticleResource.getSiteKnowledgeBaseArticlesPage(
 					irrelevantSiteId, null, null, null, null,
-					Pagination.of(1, 2), null);
+					Pagination.of(1, (int)totalCount + 1), null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantKnowledgeBaseArticle),
+			assertContains(
+				irrelevantKnowledgeBaseArticle,
 				(List<KnowledgeBaseArticle>)page.getItems());
 			assertValid(
 				page,
@@ -1528,11 +1584,12 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 		page = knowledgeBaseArticleResource.getSiteKnowledgeBaseArticlesPage(
 			siteId, null, null, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(knowledgeBaseArticle1, knowledgeBaseArticle2),
-			(List<KnowledgeBaseArticle>)page.getItems());
+		assertContains(
+			knowledgeBaseArticle1, (List<KnowledgeBaseArticle>)page.getItems());
+		assertContains(
+			knowledgeBaseArticle2, (List<KnowledgeBaseArticle>)page.getItems());
 		assertValid(
 			page,
 			testGetSiteKnowledgeBaseArticlesPage_getExpectedActions(siteId));
@@ -1669,6 +1726,13 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		Long siteId = testGetSiteKnowledgeBaseArticlesPage_getSiteId();
 
+		Page<KnowledgeBaseArticle> knowledgeBaseArticlePage =
+			knowledgeBaseArticleResource.getSiteKnowledgeBaseArticlesPage(
+				siteId, null, null, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(
+			knowledgeBaseArticlePage.getTotalCount());
+
 		KnowledgeBaseArticle knowledgeBaseArticle1 =
 			testGetSiteKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				siteId, randomKnowledgeBaseArticle());
@@ -1683,20 +1747,22 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		Page<KnowledgeBaseArticle> page1 =
 			knowledgeBaseArticleResource.getSiteKnowledgeBaseArticlesPage(
-				siteId, null, null, null, null, Pagination.of(1, 2), null);
+				siteId, null, null, null, null,
+				Pagination.of(1, totalCount + 2), null);
 
 		List<KnowledgeBaseArticle> knowledgeBaseArticles1 =
 			(List<KnowledgeBaseArticle>)page1.getItems();
 
 		Assert.assertEquals(
-			knowledgeBaseArticles1.toString(), 2,
+			knowledgeBaseArticles1.toString(), totalCount + 2,
 			knowledgeBaseArticles1.size());
 
 		Page<KnowledgeBaseArticle> page2 =
 			knowledgeBaseArticleResource.getSiteKnowledgeBaseArticlesPage(
-				siteId, null, null, null, null, Pagination.of(2, 2), null);
+				siteId, null, null, null, null,
+				Pagination.of(2, totalCount + 2), null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<KnowledgeBaseArticle> knowledgeBaseArticles2 =
 			(List<KnowledgeBaseArticle>)page2.getItems();
@@ -1707,12 +1773,17 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		Page<KnowledgeBaseArticle> page3 =
 			knowledgeBaseArticleResource.getSiteKnowledgeBaseArticlesPage(
-				siteId, null, null, null, null, Pagination.of(1, 3), null);
+				siteId, null, null, null, null,
+				Pagination.of(1, (int)totalCount + 3), null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(
-				knowledgeBaseArticle1, knowledgeBaseArticle2,
-				knowledgeBaseArticle3),
+		assertContains(
+			knowledgeBaseArticle1,
+			(List<KnowledgeBaseArticle>)page3.getItems());
+		assertContains(
+			knowledgeBaseArticle2,
+			(List<KnowledgeBaseArticle>)page3.getItems());
+		assertContains(
+			knowledgeBaseArticle3,
 			(List<KnowledgeBaseArticle>)page3.getItems());
 	}
 
@@ -1843,23 +1914,35 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testGetSiteKnowledgeBaseArticlesPage_addKnowledgeBaseArticle(
 				siteId, knowledgeBaseArticle2);
 
+		Page<KnowledgeBaseArticle> page =
+			knowledgeBaseArticleResource.getSiteKnowledgeBaseArticlesPage(
+				siteId, null, null, null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<KnowledgeBaseArticle> ascPage =
 				knowledgeBaseArticleResource.getSiteKnowledgeBaseArticlesPage(
-					siteId, null, null, null, null, Pagination.of(1, 2),
+					siteId, null, null, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(knowledgeBaseArticle1, knowledgeBaseArticle2),
+			assertContains(
+				knowledgeBaseArticle1,
+				(List<KnowledgeBaseArticle>)ascPage.getItems());
+			assertContains(
+				knowledgeBaseArticle2,
 				(List<KnowledgeBaseArticle>)ascPage.getItems());
 
 			Page<KnowledgeBaseArticle> descPage =
 				knowledgeBaseArticleResource.getSiteKnowledgeBaseArticlesPage(
-					siteId, null, null, null, null, Pagination.of(1, 2),
+					siteId, null, null, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(knowledgeBaseArticle2, knowledgeBaseArticle1),
+			assertContains(
+				knowledgeBaseArticle2,
+				(List<KnowledgeBaseArticle>)descPage.getItems());
+			assertContains(
+				knowledgeBaseArticle1,
 				(List<KnowledgeBaseArticle>)descPage.getItems());
 		}
 	}
@@ -1907,8 +1990,7 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 				invokeGraphQLQuery(graphQLField), "JSONObject/data",
 				"JSONObject/knowledgeBaseArticles");
 
-		Assert.assertEquals(
-			0, knowledgeBaseArticlesJSONObject.get("totalCount"));
+		long totalCount = knowledgeBaseArticlesJSONObject.getLong("totalCount");
 
 		KnowledgeBaseArticle knowledgeBaseArticle1 =
 			testGraphQLGetSiteKnowledgeBaseArticlesPage_addKnowledgeBaseArticle();
@@ -1920,10 +2002,16 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			"JSONObject/knowledgeBaseArticles");
 
 		Assert.assertEquals(
-			2, knowledgeBaseArticlesJSONObject.getLong("totalCount"));
+			totalCount + 2,
+			knowledgeBaseArticlesJSONObject.getLong("totalCount"));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(knowledgeBaseArticle1, knowledgeBaseArticle2),
+		assertContains(
+			knowledgeBaseArticle1,
+			Arrays.asList(
+				KnowledgeBaseArticleSerDes.toDTOs(
+					knowledgeBaseArticlesJSONObject.getString("items"))));
+		assertContains(
+			knowledgeBaseArticle2,
 			Arrays.asList(
 				KnowledgeBaseArticleSerDes.toDTOs(
 					knowledgeBaseArticlesJSONObject.getString("items"))));

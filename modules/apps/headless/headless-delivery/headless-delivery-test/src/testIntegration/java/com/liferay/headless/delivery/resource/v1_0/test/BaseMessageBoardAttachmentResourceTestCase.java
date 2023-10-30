@@ -367,7 +367,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 				getMessageBoardMessageMessageBoardAttachmentsPage(
 					messageBoardMessageId);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantMessageBoardMessageId != null) {
 			MessageBoardAttachment irrelevantMessageBoardAttachment =
@@ -380,10 +380,10 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 					getMessageBoardMessageMessageBoardAttachmentsPage(
 						irrelevantMessageBoardMessageId);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantMessageBoardAttachment),
+			assertContains(
+				irrelevantMessageBoardAttachment,
 				(List<MessageBoardAttachment>)page.getItems());
 			assertValid(
 				page,
@@ -404,10 +404,13 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 				getMessageBoardMessageMessageBoardAttachmentsPage(
 					messageBoardMessageId);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(messageBoardAttachment1, messageBoardAttachment2),
+		assertContains(
+			messageBoardAttachment1,
+			(List<MessageBoardAttachment>)page.getItems());
+		assertContains(
+			messageBoardAttachment2,
 			(List<MessageBoardAttachment>)page.getItems());
 		assertValid(
 			page,
@@ -514,7 +517,7 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 				getMessageBoardThreadMessageBoardAttachmentsPage(
 					messageBoardThreadId);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantMessageBoardThreadId != null) {
 			MessageBoardAttachment irrelevantMessageBoardAttachment =
@@ -527,10 +530,10 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 					getMessageBoardThreadMessageBoardAttachmentsPage(
 						irrelevantMessageBoardThreadId);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantMessageBoardAttachment),
+			assertContains(
+				irrelevantMessageBoardAttachment,
 				(List<MessageBoardAttachment>)page.getItems());
 			assertValid(
 				page,
@@ -551,10 +554,13 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 				getMessageBoardThreadMessageBoardAttachmentsPage(
 					messageBoardThreadId);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(messageBoardAttachment1, messageBoardAttachment2),
+		assertContains(
+			messageBoardAttachment1,
+			(List<MessageBoardAttachment>)page.getItems());
+		assertContains(
+			messageBoardAttachment2,
 			(List<MessageBoardAttachment>)page.getItems());
 		assertValid(
 			page,

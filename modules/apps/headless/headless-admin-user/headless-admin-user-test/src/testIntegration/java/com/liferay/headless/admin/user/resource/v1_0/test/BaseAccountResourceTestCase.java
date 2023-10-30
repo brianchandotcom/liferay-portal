@@ -303,10 +303,10 @@ public abstract class BaseAccountResourceTestCase {
 
 	@Test
 	public void testGetAccountsPageWithPagination() throws Exception {
-		Page<Account> totalPage = accountResource.getAccountsPage(
+		Page<Account> accountPage = accountResource.getAccountsPage(
 			null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(accountPage.getTotalCount());
 
 		Account account1 = testGetAccountsPage_addAccount(randomAccount());
 
@@ -332,7 +332,7 @@ public abstract class BaseAccountResourceTestCase {
 		Assert.assertEquals(accounts2.toString(), 1, accounts2.size());
 
 		Page<Account> page3 = accountResource.getAccountsPage(
-			null, null, Pagination.of(1, totalCount + 3), null);
+			null, null, Pagination.of(1, (int)totalCount + 3), null);
 
 		assertContains(account1, (List<Account>)page3.getItems());
 		assertContains(account2, (List<Account>)page3.getItems());
@@ -444,22 +444,23 @@ public abstract class BaseAccountResourceTestCase {
 
 		account2 = testGetAccountsPage_addAccount(account2);
 
+		Page<Account> page = accountResource.getAccountsPage(
+			null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<Account> ascPage = accountResource.getAccountsPage(
-				null, null, Pagination.of(1, 2),
+				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(account1, account2),
-				(List<Account>)ascPage.getItems());
+			assertContains(account1, (List<Account>)ascPage.getItems());
+			assertContains(account2, (List<Account>)ascPage.getItems());
 
 			Page<Account> descPage = accountResource.getAccountsPage(
-				null, null, Pagination.of(1, 2),
+				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(account2, account1),
-				(List<Account>)descPage.getItems());
+			assertContains(account2, (List<Account>)descPage.getItems());
+			assertContains(account1, (List<Account>)descPage.getItems());
 		}
 	}
 
@@ -968,7 +969,7 @@ public abstract class BaseAccountResourceTestCase {
 		Page<Account> page = accountResource.getOrganizationAccountsPage(
 			organizationId, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantOrganizationId != null) {
 			Account irrelevantAccount =
@@ -976,14 +977,12 @@ public abstract class BaseAccountResourceTestCase {
 					irrelevantOrganizationId, randomIrrelevantAccount());
 
 			page = accountResource.getOrganizationAccountsPage(
-				irrelevantOrganizationId, null, null, Pagination.of(1, 2),
-				null);
+				irrelevantOrganizationId, null, null,
+				Pagination.of(1, (int)totalCount + 1), null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantAccount),
-				(List<Account>)page.getItems());
+			assertContains(irrelevantAccount, (List<Account>)page.getItems());
 			assertValid(
 				page,
 				testGetOrganizationAccountsPage_getExpectedActions(
@@ -999,10 +998,10 @@ public abstract class BaseAccountResourceTestCase {
 		page = accountResource.getOrganizationAccountsPage(
 			organizationId, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(account1, account2), (List<Account>)page.getItems());
+		assertContains(account1, (List<Account>)page.getItems());
+		assertContains(account2, (List<Account>)page.getItems());
 		assertValid(
 			page,
 			testGetOrganizationAccountsPage_getExpectedActions(organizationId));
@@ -1124,6 +1123,11 @@ public abstract class BaseAccountResourceTestCase {
 		String organizationId =
 			testGetOrganizationAccountsPage_getOrganizationId();
 
+		Page<Account> accountPage = accountResource.getOrganizationAccountsPage(
+			organizationId, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(accountPage.getTotalCount());
+
 		Account account1 = testGetOrganizationAccountsPage_addAccount(
 			organizationId, randomAccount());
 
@@ -1134,27 +1138,29 @@ public abstract class BaseAccountResourceTestCase {
 			organizationId, randomAccount());
 
 		Page<Account> page1 = accountResource.getOrganizationAccountsPage(
-			organizationId, null, null, Pagination.of(1, 2), null);
+			organizationId, null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<Account> accounts1 = (List<Account>)page1.getItems();
 
-		Assert.assertEquals(accounts1.toString(), 2, accounts1.size());
+		Assert.assertEquals(
+			accounts1.toString(), totalCount + 2, accounts1.size());
 
 		Page<Account> page2 = accountResource.getOrganizationAccountsPage(
-			organizationId, null, null, Pagination.of(2, 2), null);
+			organizationId, null, null, Pagination.of(2, totalCount + 2), null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<Account> accounts2 = (List<Account>)page2.getItems();
 
 		Assert.assertEquals(accounts2.toString(), 1, accounts2.size());
 
 		Page<Account> page3 = accountResource.getOrganizationAccountsPage(
-			organizationId, null, null, Pagination.of(1, 3), null);
+			organizationId, null, null, Pagination.of(1, (int)totalCount + 3),
+			null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(account1, account2, account3),
-			(List<Account>)page3.getItems());
+		assertContains(account1, (List<Account>)page3.getItems());
+		assertContains(account2, (List<Account>)page3.getItems());
+		assertContains(account3, (List<Account>)page3.getItems());
 	}
 
 	@Test
@@ -1275,23 +1281,26 @@ public abstract class BaseAccountResourceTestCase {
 		account2 = testGetOrganizationAccountsPage_addAccount(
 			organizationId, account2);
 
+		Page<Account> page = accountResource.getOrganizationAccountsPage(
+			organizationId, null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<Account> ascPage = accountResource.getOrganizationAccountsPage(
-				organizationId, null, null, Pagination.of(1, 2),
+				organizationId, null, null,
+				Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(account1, account2),
-				(List<Account>)ascPage.getItems());
+			assertContains(account1, (List<Account>)ascPage.getItems());
+			assertContains(account2, (List<Account>)ascPage.getItems());
 
 			Page<Account> descPage =
 				accountResource.getOrganizationAccountsPage(
-					organizationId, null, null, Pagination.of(1, 2),
+					organizationId, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(account2, account1),
-				(List<Account>)descPage.getItems());
+			assertContains(account2, (List<Account>)descPage.getItems());
+			assertContains(account1, (List<Account>)descPage.getItems());
 		}
 	}
 

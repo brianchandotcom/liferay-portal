@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -278,7 +279,7 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 			placedOrderItemResource.getPlacedOrderPlacedOrderItemsPage(
 				placedOrderId, null, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantPlacedOrderId != null) {
 			PlacedOrderItem irrelevantPlacedOrderItem =
@@ -286,12 +287,13 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 					irrelevantPlacedOrderId, randomIrrelevantPlacedOrderItem());
 
 			page = placedOrderItemResource.getPlacedOrderPlacedOrderItemsPage(
-				irrelevantPlacedOrderId, null, Pagination.of(1, 2));
+				irrelevantPlacedOrderId, null,
+				Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantPlacedOrderItem),
+			assertContains(
+				irrelevantPlacedOrderItem,
 				(List<PlacedOrderItem>)page.getItems());
 			assertValid(
 				page,
@@ -310,11 +312,12 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 		page = placedOrderItemResource.getPlacedOrderPlacedOrderItemsPage(
 			placedOrderId, null, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(placedOrderItem1, placedOrderItem2),
-			(List<PlacedOrderItem>)page.getItems());
+		assertContains(
+			placedOrderItem1, (List<PlacedOrderItem>)page.getItems());
+		assertContains(
+			placedOrderItem2, (List<PlacedOrderItem>)page.getItems());
 		assertValid(
 			page,
 			testGetPlacedOrderPlacedOrderItemsPage_getExpectedActions(
@@ -338,6 +341,13 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 		Long placedOrderId =
 			testGetPlacedOrderPlacedOrderItemsPage_getPlacedOrderId();
 
+		Page<PlacedOrderItem> placedOrderItemPage =
+			placedOrderItemResource.getPlacedOrderPlacedOrderItemsPage(
+				placedOrderId, null, null);
+
+		int totalCount = GetterUtil.getInteger(
+			placedOrderItemPage.getTotalCount());
+
 		PlacedOrderItem placedOrderItem1 =
 			testGetPlacedOrderPlacedOrderItemsPage_addPlacedOrderItem(
 				placedOrderId, randomPlacedOrderItem());
@@ -352,19 +362,20 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 
 		Page<PlacedOrderItem> page1 =
 			placedOrderItemResource.getPlacedOrderPlacedOrderItemsPage(
-				placedOrderId, null, Pagination.of(1, 2));
+				placedOrderId, null, Pagination.of(1, totalCount + 2));
 
 		List<PlacedOrderItem> placedOrderItems1 =
 			(List<PlacedOrderItem>)page1.getItems();
 
 		Assert.assertEquals(
-			placedOrderItems1.toString(), 2, placedOrderItems1.size());
+			placedOrderItems1.toString(), totalCount + 2,
+			placedOrderItems1.size());
 
 		Page<PlacedOrderItem> page2 =
 			placedOrderItemResource.getPlacedOrderPlacedOrderItemsPage(
-				placedOrderId, null, Pagination.of(2, 2));
+				placedOrderId, null, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<PlacedOrderItem> placedOrderItems2 =
 			(List<PlacedOrderItem>)page2.getItems();
@@ -374,11 +385,14 @@ public abstract class BasePlacedOrderItemResourceTestCase {
 
 		Page<PlacedOrderItem> page3 =
 			placedOrderItemResource.getPlacedOrderPlacedOrderItemsPage(
-				placedOrderId, null, Pagination.of(1, 3));
+				placedOrderId, null, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(placedOrderItem1, placedOrderItem2, placedOrderItem3),
-			(List<PlacedOrderItem>)page3.getItems());
+		assertContains(
+			placedOrderItem1, (List<PlacedOrderItem>)page3.getItems());
+		assertContains(
+			placedOrderItem2, (List<PlacedOrderItem>)page3.getItems());
+		assertContains(
+			placedOrderItem3, (List<PlacedOrderItem>)page3.getItems());
 	}
 
 	protected PlacedOrderItem

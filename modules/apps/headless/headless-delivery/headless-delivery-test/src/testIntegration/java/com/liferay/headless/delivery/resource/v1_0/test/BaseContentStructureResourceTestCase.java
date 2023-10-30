@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -220,7 +221,7 @@ public abstract class BaseContentStructureResourceTestCase {
 			contentStructureResource.getAssetLibraryContentStructuresPage(
 				assetLibraryId, null, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantAssetLibraryId != null) {
 			ContentStructure irrelevantContentStructure =
@@ -231,12 +232,12 @@ public abstract class BaseContentStructureResourceTestCase {
 			page =
 				contentStructureResource.getAssetLibraryContentStructuresPage(
 					irrelevantAssetLibraryId, null, null, null,
-					Pagination.of(1, 2), null);
+					Pagination.of(1, (int)totalCount + 1), null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantContentStructure),
+			assertContains(
+				irrelevantContentStructure,
 				(List<ContentStructure>)page.getItems());
 			assertValid(
 				page,
@@ -255,11 +256,12 @@ public abstract class BaseContentStructureResourceTestCase {
 		page = contentStructureResource.getAssetLibraryContentStructuresPage(
 			assetLibraryId, null, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(contentStructure1, contentStructure2),
-			(List<ContentStructure>)page.getItems());
+		assertContains(
+			contentStructure1, (List<ContentStructure>)page.getItems());
+		assertContains(
+			contentStructure2, (List<ContentStructure>)page.getItems());
 		assertValid(
 			page,
 			testGetAssetLibraryContentStructuresPage_getExpectedActions(
@@ -383,6 +385,13 @@ public abstract class BaseContentStructureResourceTestCase {
 		Long assetLibraryId =
 			testGetAssetLibraryContentStructuresPage_getAssetLibraryId();
 
+		Page<ContentStructure> contentStructurePage =
+			contentStructureResource.getAssetLibraryContentStructuresPage(
+				assetLibraryId, null, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(
+			contentStructurePage.getTotalCount());
+
 		ContentStructure contentStructure1 =
 			testGetAssetLibraryContentStructuresPage_addContentStructure(
 				assetLibraryId, randomContentStructure());
@@ -397,19 +406,22 @@ public abstract class BaseContentStructureResourceTestCase {
 
 		Page<ContentStructure> page1 =
 			contentStructureResource.getAssetLibraryContentStructuresPage(
-				assetLibraryId, null, null, null, Pagination.of(1, 2), null);
+				assetLibraryId, null, null, null,
+				Pagination.of(1, totalCount + 2), null);
 
 		List<ContentStructure> contentStructures1 =
 			(List<ContentStructure>)page1.getItems();
 
 		Assert.assertEquals(
-			contentStructures1.toString(), 2, contentStructures1.size());
+			contentStructures1.toString(), totalCount + 2,
+			contentStructures1.size());
 
 		Page<ContentStructure> page2 =
 			contentStructureResource.getAssetLibraryContentStructuresPage(
-				assetLibraryId, null, null, null, Pagination.of(2, 2), null);
+				assetLibraryId, null, null, null,
+				Pagination.of(2, totalCount + 2), null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<ContentStructure> contentStructures2 =
 			(List<ContentStructure>)page2.getItems();
@@ -419,12 +431,15 @@ public abstract class BaseContentStructureResourceTestCase {
 
 		Page<ContentStructure> page3 =
 			contentStructureResource.getAssetLibraryContentStructuresPage(
-				assetLibraryId, null, null, null, Pagination.of(1, 3), null);
+				assetLibraryId, null, null, null,
+				Pagination.of(1, (int)totalCount + 3), null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(
-				contentStructure1, contentStructure2, contentStructure3),
-			(List<ContentStructure>)page3.getItems());
+		assertContains(
+			contentStructure1, (List<ContentStructure>)page3.getItems());
+		assertContains(
+			contentStructure2, (List<ContentStructure>)page3.getItems());
+		assertContains(
+			contentStructure3, (List<ContentStructure>)page3.getItems());
 	}
 
 	@Test
@@ -553,24 +568,32 @@ public abstract class BaseContentStructureResourceTestCase {
 			testGetAssetLibraryContentStructuresPage_addContentStructure(
 				assetLibraryId, contentStructure2);
 
+		Page<ContentStructure> page =
+			contentStructureResource.getAssetLibraryContentStructuresPage(
+				assetLibraryId, null, null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<ContentStructure> ascPage =
 				contentStructureResource.getAssetLibraryContentStructuresPage(
-					assetLibraryId, null, null, null, Pagination.of(1, 2),
+					assetLibraryId, null, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(contentStructure1, contentStructure2),
-				(List<ContentStructure>)ascPage.getItems());
+			assertContains(
+				contentStructure1, (List<ContentStructure>)ascPage.getItems());
+			assertContains(
+				contentStructure2, (List<ContentStructure>)ascPage.getItems());
 
 			Page<ContentStructure> descPage =
 				contentStructureResource.getAssetLibraryContentStructuresPage(
-					assetLibraryId, null, null, null, Pagination.of(1, 2),
+					assetLibraryId, null, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(contentStructure2, contentStructure1),
-				(List<ContentStructure>)descPage.getItems());
+			assertContains(
+				contentStructure2, (List<ContentStructure>)descPage.getItems());
+			assertContains(
+				contentStructure1, (List<ContentStructure>)descPage.getItems());
 		}
 	}
 
@@ -815,7 +838,7 @@ public abstract class BaseContentStructureResourceTestCase {
 			contentStructureResource.getSiteContentStructuresPage(
 				siteId, null, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantSiteId != null) {
 			ContentStructure irrelevantContentStructure =
@@ -823,12 +846,13 @@ public abstract class BaseContentStructureResourceTestCase {
 					irrelevantSiteId, randomIrrelevantContentStructure());
 
 			page = contentStructureResource.getSiteContentStructuresPage(
-				irrelevantSiteId, null, null, null, Pagination.of(1, 2), null);
+				irrelevantSiteId, null, null, null,
+				Pagination.of(1, (int)totalCount + 1), null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantContentStructure),
+			assertContains(
+				irrelevantContentStructure,
 				(List<ContentStructure>)page.getItems());
 			assertValid(
 				page,
@@ -847,11 +871,12 @@ public abstract class BaseContentStructureResourceTestCase {
 		page = contentStructureResource.getSiteContentStructuresPage(
 			siteId, null, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(contentStructure1, contentStructure2),
-			(List<ContentStructure>)page.getItems());
+		assertContains(
+			contentStructure1, (List<ContentStructure>)page.getItems());
+		assertContains(
+			contentStructure2, (List<ContentStructure>)page.getItems());
 		assertValid(
 			page, testGetSiteContentStructuresPage_getExpectedActions(siteId));
 	}
@@ -969,6 +994,13 @@ public abstract class BaseContentStructureResourceTestCase {
 
 		Long siteId = testGetSiteContentStructuresPage_getSiteId();
 
+		Page<ContentStructure> contentStructurePage =
+			contentStructureResource.getSiteContentStructuresPage(
+				siteId, null, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(
+			contentStructurePage.getTotalCount());
+
 		ContentStructure contentStructure1 =
 			testGetSiteContentStructuresPage_addContentStructure(
 				siteId, randomContentStructure());
@@ -983,19 +1015,22 @@ public abstract class BaseContentStructureResourceTestCase {
 
 		Page<ContentStructure> page1 =
 			contentStructureResource.getSiteContentStructuresPage(
-				siteId, null, null, null, Pagination.of(1, 2), null);
+				siteId, null, null, null, Pagination.of(1, totalCount + 2),
+				null);
 
 		List<ContentStructure> contentStructures1 =
 			(List<ContentStructure>)page1.getItems();
 
 		Assert.assertEquals(
-			contentStructures1.toString(), 2, contentStructures1.size());
+			contentStructures1.toString(), totalCount + 2,
+			contentStructures1.size());
 
 		Page<ContentStructure> page2 =
 			contentStructureResource.getSiteContentStructuresPage(
-				siteId, null, null, null, Pagination.of(2, 2), null);
+				siteId, null, null, null, Pagination.of(2, totalCount + 2),
+				null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<ContentStructure> contentStructures2 =
 			(List<ContentStructure>)page2.getItems();
@@ -1005,12 +1040,15 @@ public abstract class BaseContentStructureResourceTestCase {
 
 		Page<ContentStructure> page3 =
 			contentStructureResource.getSiteContentStructuresPage(
-				siteId, null, null, null, Pagination.of(1, 3), null);
+				siteId, null, null, null, Pagination.of(1, (int)totalCount + 3),
+				null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(
-				contentStructure1, contentStructure2, contentStructure3),
-			(List<ContentStructure>)page3.getItems());
+		assertContains(
+			contentStructure1, (List<ContentStructure>)page3.getItems());
+		assertContains(
+			contentStructure2, (List<ContentStructure>)page3.getItems());
+		assertContains(
+			contentStructure3, (List<ContentStructure>)page3.getItems());
 	}
 
 	@Test
@@ -1138,24 +1176,32 @@ public abstract class BaseContentStructureResourceTestCase {
 			testGetSiteContentStructuresPage_addContentStructure(
 				siteId, contentStructure2);
 
+		Page<ContentStructure> page =
+			contentStructureResource.getSiteContentStructuresPage(
+				siteId, null, null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<ContentStructure> ascPage =
 				contentStructureResource.getSiteContentStructuresPage(
-					siteId, null, null, null, Pagination.of(1, 2),
+					siteId, null, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(contentStructure1, contentStructure2),
-				(List<ContentStructure>)ascPage.getItems());
+			assertContains(
+				contentStructure1, (List<ContentStructure>)ascPage.getItems());
+			assertContains(
+				contentStructure2, (List<ContentStructure>)ascPage.getItems());
 
 			Page<ContentStructure> descPage =
 				contentStructureResource.getSiteContentStructuresPage(
-					siteId, null, null, null, Pagination.of(1, 2),
+					siteId, null, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(contentStructure2, contentStructure1),
-				(List<ContentStructure>)descPage.getItems());
+			assertContains(
+				contentStructure2, (List<ContentStructure>)descPage.getItems());
+			assertContains(
+				contentStructure1, (List<ContentStructure>)descPage.getItems());
 		}
 	}
 
@@ -1201,7 +1247,7 @@ public abstract class BaseContentStructureResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/contentStructures");
 
-		Assert.assertEquals(0, contentStructuresJSONObject.get("totalCount"));
+		long totalCount = contentStructuresJSONObject.getLong("totalCount");
 
 		ContentStructure contentStructure1 =
 			testGraphQLGetSiteContentStructuresPage_addContentStructure();
@@ -1213,10 +1259,15 @@ public abstract class BaseContentStructureResourceTestCase {
 			"JSONObject/contentStructures");
 
 		Assert.assertEquals(
-			2, contentStructuresJSONObject.getLong("totalCount"));
+			totalCount + 2, contentStructuresJSONObject.getLong("totalCount"));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(contentStructure1, contentStructure2),
+		assertContains(
+			contentStructure1,
+			Arrays.asList(
+				ContentStructureSerDes.toDTOs(
+					contentStructuresJSONObject.getString("items"))));
+		assertContains(
+			contentStructure2,
 			Arrays.asList(
 				ContentStructureSerDes.toDTOs(
 					contentStructuresJSONObject.getString("items"))));

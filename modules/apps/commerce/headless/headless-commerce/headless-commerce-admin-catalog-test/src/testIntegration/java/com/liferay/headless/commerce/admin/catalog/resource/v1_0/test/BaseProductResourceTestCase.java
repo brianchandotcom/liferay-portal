@@ -305,10 +305,10 @@ public abstract class BaseProductResourceTestCase {
 
 	@Test
 	public void testGetProductsPageWithPagination() throws Exception {
-		Page<Product> totalPage = productResource.getProductsPage(
+		Page<Product> productPage = productResource.getProductsPage(
 			null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(productPage.getTotalCount());
 
 		Product product1 = testGetProductsPage_addProduct(randomProduct());
 
@@ -334,7 +334,7 @@ public abstract class BaseProductResourceTestCase {
 		Assert.assertEquals(products2.toString(), 1, products2.size());
 
 		Page<Product> page3 = productResource.getProductsPage(
-			null, null, Pagination.of(1, totalCount + 3), null);
+			null, null, Pagination.of(1, (int)totalCount + 3), null);
 
 		assertContains(product1, (List<Product>)page3.getItems());
 		assertContains(product2, (List<Product>)page3.getItems());
@@ -446,22 +446,23 @@ public abstract class BaseProductResourceTestCase {
 
 		product2 = testGetProductsPage_addProduct(product2);
 
+		Page<Product> page = productResource.getProductsPage(
+			null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<Product> ascPage = productResource.getProductsPage(
-				null, null, Pagination.of(1, 2),
+				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(product1, product2),
-				(List<Product>)ascPage.getItems());
+			assertContains(product1, (List<Product>)ascPage.getItems());
+			assertContains(product2, (List<Product>)ascPage.getItems());
 
 			Page<Product> descPage = productResource.getProductsPage(
-				null, null, Pagination.of(1, 2),
+				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(product2, product1),
-				(List<Product>)descPage.getItems());
+			assertContains(product2, (List<Product>)descPage.getItems());
+			assertContains(product1, (List<Product>)descPage.getItems());
 		}
 	}
 

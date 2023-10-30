@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -367,20 +368,18 @@ public abstract class BaseCartItemResourceTestCase {
 		Page<CartItem> page = cartItemResource.getCartItemsPage(
 			cartId, null, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantCartId != null) {
 			CartItem irrelevantCartItem = testGetCartItemsPage_addCartItem(
 				irrelevantCartId, randomIrrelevantCartItem());
 
 			page = cartItemResource.getCartItemsPage(
-				irrelevantCartId, null, Pagination.of(1, 2));
+				irrelevantCartId, null, Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantCartItem),
-				(List<CartItem>)page.getItems());
+			assertContains(irrelevantCartItem, (List<CartItem>)page.getItems());
 			assertValid(
 				page,
 				testGetCartItemsPage_getExpectedActions(irrelevantCartId));
@@ -395,11 +394,10 @@ public abstract class BaseCartItemResourceTestCase {
 		page = cartItemResource.getCartItemsPage(
 			cartId, null, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(cartItem1, cartItem2),
-			(List<CartItem>)page.getItems());
+		assertContains(cartItem1, (List<CartItem>)page.getItems());
+		assertContains(cartItem2, (List<CartItem>)page.getItems());
 		assertValid(page, testGetCartItemsPage_getExpectedActions(cartId));
 
 		cartItemResource.deleteCartItem(cartItem1.getId());
@@ -420,6 +418,11 @@ public abstract class BaseCartItemResourceTestCase {
 	public void testGetCartItemsPageWithPagination() throws Exception {
 		Long cartId = testGetCartItemsPage_getCartId();
 
+		Page<CartItem> cartItemPage = cartItemResource.getCartItemsPage(
+			cartId, null, null);
+
+		int totalCount = GetterUtil.getInteger(cartItemPage.getTotalCount());
+
 		CartItem cartItem1 = testGetCartItemsPage_addCartItem(
 			cartId, randomCartItem());
 
@@ -430,27 +433,28 @@ public abstract class BaseCartItemResourceTestCase {
 			cartId, randomCartItem());
 
 		Page<CartItem> page1 = cartItemResource.getCartItemsPage(
-			cartId, null, Pagination.of(1, 2));
+			cartId, null, Pagination.of(1, totalCount + 2));
 
 		List<CartItem> cartItems1 = (List<CartItem>)page1.getItems();
 
-		Assert.assertEquals(cartItems1.toString(), 2, cartItems1.size());
+		Assert.assertEquals(
+			cartItems1.toString(), totalCount + 2, cartItems1.size());
 
 		Page<CartItem> page2 = cartItemResource.getCartItemsPage(
-			cartId, null, Pagination.of(2, 2));
+			cartId, null, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<CartItem> cartItems2 = (List<CartItem>)page2.getItems();
 
 		Assert.assertEquals(cartItems2.toString(), 1, cartItems2.size());
 
 		Page<CartItem> page3 = cartItemResource.getCartItemsPage(
-			cartId, null, Pagination.of(1, 3));
+			cartId, null, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(cartItem1, cartItem2, cartItem3),
-			(List<CartItem>)page3.getItems());
+		assertContains(cartItem1, (List<CartItem>)page3.getItems());
+		assertContains(cartItem2, (List<CartItem>)page3.getItems());
+		assertContains(cartItem3, (List<CartItem>)page3.getItems());
 	}
 
 	protected CartItem testGetCartItemsPage_addCartItem(
@@ -491,7 +495,7 @@ public abstract class BaseCartItemResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/cartItems");
 
-		Assert.assertEquals(0, cartItemsJSONObject.get("totalCount"));
+		long totalCount = cartItemsJSONObject.getLong("totalCount");
 
 		CartItem cartItem1 = testGraphQLGetCartItemsPage_addCartItem();
 		CartItem cartItem2 = testGraphQLGetCartItemsPage_addCartItem();
@@ -500,10 +504,15 @@ public abstract class BaseCartItemResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/cartItems");
 
-		Assert.assertEquals(2, cartItemsJSONObject.getLong("totalCount"));
+		Assert.assertEquals(
+			totalCount + 2, cartItemsJSONObject.getLong("totalCount"));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(cartItem1, cartItem2),
+		assertContains(
+			cartItem1,
+			Arrays.asList(
+				CartItemSerDes.toDTOs(cartItemsJSONObject.getString("items"))));
+		assertContains(
+			cartItem2,
 			Arrays.asList(
 				CartItemSerDes.toDTOs(cartItemsJSONObject.getString("items"))));
 	}

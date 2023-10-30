@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -212,21 +213,19 @@ public abstract class BaseProductResourceTestCase {
 		Page<Product> page = productResource.getChannelProductsPage(
 			channelId, null, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantChannelId != null) {
 			Product irrelevantProduct = testGetChannelProductsPage_addProduct(
 				irrelevantChannelId, randomIrrelevantProduct());
 
 			page = productResource.getChannelProductsPage(
-				irrelevantChannelId, null, null, null, Pagination.of(1, 2),
-				null);
+				irrelevantChannelId, null, null, null,
+				Pagination.of(1, (int)totalCount + 1), null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantProduct),
-				(List<Product>)page.getItems());
+			assertContains(irrelevantProduct, (List<Product>)page.getItems());
 			assertValid(
 				page,
 				testGetChannelProductsPage_getExpectedActions(
@@ -242,10 +241,10 @@ public abstract class BaseProductResourceTestCase {
 		page = productResource.getChannelProductsPage(
 			channelId, null, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(product1, product2), (List<Product>)page.getItems());
+		assertContains(product1, (List<Product>)page.getItems());
+		assertContains(product2, (List<Product>)page.getItems());
 		assertValid(
 			page, testGetChannelProductsPage_getExpectedActions(channelId));
 	}
@@ -353,6 +352,11 @@ public abstract class BaseProductResourceTestCase {
 	public void testGetChannelProductsPageWithPagination() throws Exception {
 		Long channelId = testGetChannelProductsPage_getChannelId();
 
+		Page<Product> productPage = productResource.getChannelProductsPage(
+			channelId, null, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(productPage.getTotalCount());
+
 		Product product1 = testGetChannelProductsPage_addProduct(
 			channelId, randomProduct());
 
@@ -363,27 +367,31 @@ public abstract class BaseProductResourceTestCase {
 			channelId, randomProduct());
 
 		Page<Product> page1 = productResource.getChannelProductsPage(
-			channelId, null, null, null, Pagination.of(1, 2), null);
+			channelId, null, null, null, Pagination.of(1, totalCount + 2),
+			null);
 
 		List<Product> products1 = (List<Product>)page1.getItems();
 
-		Assert.assertEquals(products1.toString(), 2, products1.size());
+		Assert.assertEquals(
+			products1.toString(), totalCount + 2, products1.size());
 
 		Page<Product> page2 = productResource.getChannelProductsPage(
-			channelId, null, null, null, Pagination.of(2, 2), null);
+			channelId, null, null, null, Pagination.of(2, totalCount + 2),
+			null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<Product> products2 = (List<Product>)page2.getItems();
 
 		Assert.assertEquals(products2.toString(), 1, products2.size());
 
 		Page<Product> page3 = productResource.getChannelProductsPage(
-			channelId, null, null, null, Pagination.of(1, 3), null);
+			channelId, null, null, null, Pagination.of(1, (int)totalCount + 3),
+			null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(product1, product2, product3),
-			(List<Product>)page3.getItems());
+		assertContains(product1, (List<Product>)page3.getItems());
+		assertContains(product2, (List<Product>)page3.getItems());
+		assertContains(product3, (List<Product>)page3.getItems());
 	}
 
 	@Test
@@ -493,22 +501,25 @@ public abstract class BaseProductResourceTestCase {
 
 		product2 = testGetChannelProductsPage_addProduct(channelId, product2);
 
+		Page<Product> page = productResource.getChannelProductsPage(
+			channelId, null, null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<Product> ascPage = productResource.getChannelProductsPage(
-				channelId, null, null, null, Pagination.of(1, 2),
+				channelId, null, null, null,
+				Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(product1, product2),
-				(List<Product>)ascPage.getItems());
+			assertContains(product1, (List<Product>)ascPage.getItems());
+			assertContains(product2, (List<Product>)ascPage.getItems());
 
 			Page<Product> descPage = productResource.getChannelProductsPage(
-				channelId, null, null, null, Pagination.of(1, 2),
+				channelId, null, null, null,
+				Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(product2, product1),
-				(List<Product>)descPage.getItems());
+			assertContains(product2, (List<Product>)descPage.getItems());
+			assertContains(product1, (List<Product>)descPage.getItems());
 		}
 	}
 

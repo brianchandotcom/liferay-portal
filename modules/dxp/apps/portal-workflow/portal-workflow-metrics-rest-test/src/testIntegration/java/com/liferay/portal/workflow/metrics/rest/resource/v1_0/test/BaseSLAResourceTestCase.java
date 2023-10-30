@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -197,19 +198,19 @@ public abstract class BaseSLAResourceTestCase {
 		Page<SLA> page = slaResource.getProcessSLAsPage(
 			processId, null, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantProcessId != null) {
 			SLA irrelevantSLA = testGetProcessSLAsPage_addSLA(
 				irrelevantProcessId, randomIrrelevantSLA());
 
 			page = slaResource.getProcessSLAsPage(
-				irrelevantProcessId, null, Pagination.of(1, 2));
+				irrelevantProcessId, null,
+				Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantSLA), (List<SLA>)page.getItems());
+			assertContains(irrelevantSLA, (List<SLA>)page.getItems());
 			assertValid(
 				page,
 				testGetProcessSLAsPage_getExpectedActions(irrelevantProcessId));
@@ -222,10 +223,10 @@ public abstract class BaseSLAResourceTestCase {
 		page = slaResource.getProcessSLAsPage(
 			processId, null, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(sla1, sla2), (List<SLA>)page.getItems());
+		assertContains(sla1, (List<SLA>)page.getItems());
+		assertContains(sla2, (List<SLA>)page.getItems());
 		assertValid(page, testGetProcessSLAsPage_getExpectedActions(processId));
 
 		slaResource.deleteSLA(sla1.getId());
@@ -255,6 +256,11 @@ public abstract class BaseSLAResourceTestCase {
 	public void testGetProcessSLAsPageWithPagination() throws Exception {
 		Long processId = testGetProcessSLAsPage_getProcessId();
 
+		Page<SLA> slaPage = slaResource.getProcessSLAsPage(
+			processId, null, null);
+
+		int totalCount = GetterUtil.getInteger(slaPage.getTotalCount());
+
 		SLA sla1 = testGetProcessSLAsPage_addSLA(processId, randomSLA());
 
 		SLA sla2 = testGetProcessSLAsPage_addSLA(processId, randomSLA());
@@ -262,26 +268,27 @@ public abstract class BaseSLAResourceTestCase {
 		SLA sla3 = testGetProcessSLAsPage_addSLA(processId, randomSLA());
 
 		Page<SLA> page1 = slaResource.getProcessSLAsPage(
-			processId, null, Pagination.of(1, 2));
+			processId, null, Pagination.of(1, totalCount + 2));
 
 		List<SLA> slas1 = (List<SLA>)page1.getItems();
 
-		Assert.assertEquals(slas1.toString(), 2, slas1.size());
+		Assert.assertEquals(slas1.toString(), totalCount + 2, slas1.size());
 
 		Page<SLA> page2 = slaResource.getProcessSLAsPage(
-			processId, null, Pagination.of(2, 2));
+			processId, null, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<SLA> slas2 = (List<SLA>)page2.getItems();
 
 		Assert.assertEquals(slas2.toString(), 1, slas2.size());
 
 		Page<SLA> page3 = slaResource.getProcessSLAsPage(
-			processId, null, Pagination.of(1, 3));
+			processId, null, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(sla1, sla2, sla3), (List<SLA>)page3.getItems());
+		assertContains(sla1, (List<SLA>)page3.getItems());
+		assertContains(sla2, (List<SLA>)page3.getItems());
+		assertContains(sla3, (List<SLA>)page3.getItems());
 	}
 
 	protected SLA testGetProcessSLAsPage_addSLA(Long processId, SLA sla)

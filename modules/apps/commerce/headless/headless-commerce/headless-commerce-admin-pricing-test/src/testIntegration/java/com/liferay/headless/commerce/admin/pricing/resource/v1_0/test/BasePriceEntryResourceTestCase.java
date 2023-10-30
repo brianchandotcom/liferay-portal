@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -450,7 +451,7 @@ public abstract class BasePriceEntryResourceTestCase {
 				getPriceListByExternalReferenceCodePriceEntriesPage(
 					externalReferenceCode, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantExternalReferenceCode != null) {
 			PriceEntry irrelevantPriceEntry =
@@ -461,13 +462,13 @@ public abstract class BasePriceEntryResourceTestCase {
 			page =
 				priceEntryResource.
 					getPriceListByExternalReferenceCodePriceEntriesPage(
-						irrelevantExternalReferenceCode, Pagination.of(1, 2));
+						irrelevantExternalReferenceCode,
+						Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantPriceEntry),
-				(List<PriceEntry>)page.getItems());
+			assertContains(
+				irrelevantPriceEntry, (List<PriceEntry>)page.getItems());
 			assertValid(
 				page,
 				testGetPriceListByExternalReferenceCodePriceEntriesPage_getExpectedActions(
@@ -487,11 +488,10 @@ public abstract class BasePriceEntryResourceTestCase {
 				getPriceListByExternalReferenceCodePriceEntriesPage(
 					externalReferenceCode, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(priceEntry1, priceEntry2),
-			(List<PriceEntry>)page.getItems());
+		assertContains(priceEntry1, (List<PriceEntry>)page.getItems());
+		assertContains(priceEntry2, (List<PriceEntry>)page.getItems());
 		assertValid(
 			page,
 			testGetPriceListByExternalReferenceCodePriceEntriesPage_getExpectedActions(
@@ -519,6 +519,13 @@ public abstract class BasePriceEntryResourceTestCase {
 		String externalReferenceCode =
 			testGetPriceListByExternalReferenceCodePriceEntriesPage_getExternalReferenceCode();
 
+		Page<PriceEntry> priceEntryPage =
+			priceEntryResource.
+				getPriceListByExternalReferenceCodePriceEntriesPage(
+					externalReferenceCode, null);
+
+		int totalCount = GetterUtil.getInteger(priceEntryPage.getTotalCount());
+
 		PriceEntry priceEntry1 =
 			testGetPriceListByExternalReferenceCodePriceEntriesPage_addPriceEntry(
 				externalReferenceCode, randomPriceEntry());
@@ -534,18 +541,19 @@ public abstract class BasePriceEntryResourceTestCase {
 		Page<PriceEntry> page1 =
 			priceEntryResource.
 				getPriceListByExternalReferenceCodePriceEntriesPage(
-					externalReferenceCode, Pagination.of(1, 2));
+					externalReferenceCode, Pagination.of(1, totalCount + 2));
 
 		List<PriceEntry> priceEntries1 = (List<PriceEntry>)page1.getItems();
 
-		Assert.assertEquals(priceEntries1.toString(), 2, priceEntries1.size());
+		Assert.assertEquals(
+			priceEntries1.toString(), totalCount + 2, priceEntries1.size());
 
 		Page<PriceEntry> page2 =
 			priceEntryResource.
 				getPriceListByExternalReferenceCodePriceEntriesPage(
-					externalReferenceCode, Pagination.of(2, 2));
+					externalReferenceCode, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<PriceEntry> priceEntries2 = (List<PriceEntry>)page2.getItems();
 
@@ -554,11 +562,12 @@ public abstract class BasePriceEntryResourceTestCase {
 		Page<PriceEntry> page3 =
 			priceEntryResource.
 				getPriceListByExternalReferenceCodePriceEntriesPage(
-					externalReferenceCode, Pagination.of(1, 3));
+					externalReferenceCode,
+					Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(priceEntry1, priceEntry2, priceEntry3),
-			(List<PriceEntry>)page3.getItems());
+		assertContains(priceEntry1, (List<PriceEntry>)page3.getItems());
+		assertContains(priceEntry2, (List<PriceEntry>)page3.getItems());
+		assertContains(priceEntry3, (List<PriceEntry>)page3.getItems());
 	}
 
 	protected PriceEntry
@@ -618,7 +627,7 @@ public abstract class BasePriceEntryResourceTestCase {
 			priceEntryResource.getPriceListIdPriceEntriesPage(
 				id, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantId != null) {
 			PriceEntry irrelevantPriceEntry =
@@ -626,13 +635,12 @@ public abstract class BasePriceEntryResourceTestCase {
 					irrelevantId, randomIrrelevantPriceEntry());
 
 			page = priceEntryResource.getPriceListIdPriceEntriesPage(
-				irrelevantId, Pagination.of(1, 2));
+				irrelevantId, Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantPriceEntry),
-				(List<PriceEntry>)page.getItems());
+			assertContains(
+				irrelevantPriceEntry, (List<PriceEntry>)page.getItems());
 			assertValid(
 				page,
 				testGetPriceListIdPriceEntriesPage_getExpectedActions(
@@ -650,11 +658,10 @@ public abstract class BasePriceEntryResourceTestCase {
 		page = priceEntryResource.getPriceListIdPriceEntriesPage(
 			id, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(priceEntry1, priceEntry2),
-			(List<PriceEntry>)page.getItems());
+		assertContains(priceEntry1, (List<PriceEntry>)page.getItems());
+		assertContains(priceEntry2, (List<PriceEntry>)page.getItems());
 		assertValid(
 			page, testGetPriceListIdPriceEntriesPage_getExpectedActions(id));
 
@@ -678,6 +685,11 @@ public abstract class BasePriceEntryResourceTestCase {
 
 		Long id = testGetPriceListIdPriceEntriesPage_getId();
 
+		Page<PriceEntry> priceEntryPage =
+			priceEntryResource.getPriceListIdPriceEntriesPage(id, null);
+
+		int totalCount = GetterUtil.getInteger(priceEntryPage.getTotalCount());
+
 		PriceEntry priceEntry1 =
 			testGetPriceListIdPriceEntriesPage_addPriceEntry(
 				id, randomPriceEntry());
@@ -692,17 +704,18 @@ public abstract class BasePriceEntryResourceTestCase {
 
 		Page<PriceEntry> page1 =
 			priceEntryResource.getPriceListIdPriceEntriesPage(
-				id, Pagination.of(1, 2));
+				id, Pagination.of(1, totalCount + 2));
 
 		List<PriceEntry> priceEntries1 = (List<PriceEntry>)page1.getItems();
 
-		Assert.assertEquals(priceEntries1.toString(), 2, priceEntries1.size());
+		Assert.assertEquals(
+			priceEntries1.toString(), totalCount + 2, priceEntries1.size());
 
 		Page<PriceEntry> page2 =
 			priceEntryResource.getPriceListIdPriceEntriesPage(
-				id, Pagination.of(2, 2));
+				id, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<PriceEntry> priceEntries2 = (List<PriceEntry>)page2.getItems();
 
@@ -710,11 +723,11 @@ public abstract class BasePriceEntryResourceTestCase {
 
 		Page<PriceEntry> page3 =
 			priceEntryResource.getPriceListIdPriceEntriesPage(
-				id, Pagination.of(1, 3));
+				id, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(priceEntry1, priceEntry2, priceEntry3),
-			(List<PriceEntry>)page3.getItems());
+		assertContains(priceEntry1, (List<PriceEntry>)page3.getItems());
+		assertContains(priceEntry2, (List<PriceEntry>)page3.getItems());
+		assertContains(priceEntry3, (List<PriceEntry>)page3.getItems());
 	}
 
 	protected PriceEntry testGetPriceListIdPriceEntriesPage_addPriceEntry(

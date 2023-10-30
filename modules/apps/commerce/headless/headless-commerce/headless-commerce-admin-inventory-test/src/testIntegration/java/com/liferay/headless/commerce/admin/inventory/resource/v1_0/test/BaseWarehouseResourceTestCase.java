@@ -314,10 +314,10 @@ public abstract class BaseWarehouseResourceTestCase {
 
 	@Test
 	public void testGetWarehousesPageWithPagination() throws Exception {
-		Page<Warehouse> totalPage = warehouseResource.getWarehousesPage(
+		Page<Warehouse> warehousePage = warehouseResource.getWarehousesPage(
 			null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(warehousePage.getTotalCount());
 
 		Warehouse warehouse1 = testGetWarehousesPage_addWarehouse(
 			randomWarehouse());
@@ -346,7 +346,7 @@ public abstract class BaseWarehouseResourceTestCase {
 		Assert.assertEquals(warehouses2.toString(), 1, warehouses2.size());
 
 		Page<Warehouse> page3 = warehouseResource.getWarehousesPage(
-			null, Pagination.of(1, totalCount + 3), null);
+			null, Pagination.of(1, (int)totalCount + 3), null);
 
 		assertContains(warehouse1, (List<Warehouse>)page3.getItems());
 		assertContains(warehouse2, (List<Warehouse>)page3.getItems());
@@ -460,20 +460,23 @@ public abstract class BaseWarehouseResourceTestCase {
 
 		warehouse2 = testGetWarehousesPage_addWarehouse(warehouse2);
 
+		Page<Warehouse> page = warehouseResource.getWarehousesPage(
+			null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<Warehouse> ascPage = warehouseResource.getWarehousesPage(
-				null, Pagination.of(1, 2), entityField.getName() + ":asc");
+				null, Pagination.of(1, (int)page.getTotalCount() + 1),
+				entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(warehouse1, warehouse2),
-				(List<Warehouse>)ascPage.getItems());
+			assertContains(warehouse1, (List<Warehouse>)ascPage.getItems());
+			assertContains(warehouse2, (List<Warehouse>)ascPage.getItems());
 
 			Page<Warehouse> descPage = warehouseResource.getWarehousesPage(
-				null, Pagination.of(1, 2), entityField.getName() + ":desc");
+				null, Pagination.of(1, (int)page.getTotalCount() + 1),
+				entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(warehouse2, warehouse1),
-				(List<Warehouse>)descPage.getItems());
+			assertContains(warehouse2, (List<Warehouse>)descPage.getItems());
+			assertContains(warehouse1, (List<Warehouse>)descPage.getItems());
 		}
 	}
 

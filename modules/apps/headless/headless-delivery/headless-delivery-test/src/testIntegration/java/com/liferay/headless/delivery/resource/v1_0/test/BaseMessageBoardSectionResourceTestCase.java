@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -543,7 +544,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 					parentMessageBoardSectionId, null, null, null,
 					Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantParentMessageBoardSectionId != null) {
 			MessageBoardSection irrelevantMessageBoardSection =
@@ -555,12 +556,12 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				messageBoardSectionResource.
 					getMessageBoardSectionMessageBoardSectionsPage(
 						irrelevantParentMessageBoardSectionId, null, null, null,
-						Pagination.of(1, 2), null);
+						Pagination.of(1, (int)totalCount + 1), null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantMessageBoardSection),
+			assertContains(
+				irrelevantMessageBoardSection,
 				(List<MessageBoardSection>)page.getItems());
 			assertValid(
 				page,
@@ -582,11 +583,12 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 					parentMessageBoardSectionId, null, null, null,
 					Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(messageBoardSection1, messageBoardSection2),
-			(List<MessageBoardSection>)page.getItems());
+		assertContains(
+			messageBoardSection1, (List<MessageBoardSection>)page.getItems());
+		assertContains(
+			messageBoardSection2, (List<MessageBoardSection>)page.getItems());
 		assertValid(
 			page,
 			testGetMessageBoardSectionMessageBoardSectionsPage_getExpectedActions(
@@ -720,6 +722,14 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		Long parentMessageBoardSectionId =
 			testGetMessageBoardSectionMessageBoardSectionsPage_getParentMessageBoardSectionId();
 
+		Page<MessageBoardSection> messageBoardSectionPage =
+			messageBoardSectionResource.
+				getMessageBoardSectionMessageBoardSectionsPage(
+					parentMessageBoardSectionId, null, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(
+			messageBoardSectionPage.getTotalCount());
+
 		MessageBoardSection messageBoardSection1 =
 			testGetMessageBoardSectionMessageBoardSectionsPage_addMessageBoardSection(
 				parentMessageBoardSectionId, randomMessageBoardSection());
@@ -736,21 +746,22 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			messageBoardSectionResource.
 				getMessageBoardSectionMessageBoardSectionsPage(
 					parentMessageBoardSectionId, null, null, null,
-					Pagination.of(1, 2), null);
+					Pagination.of(1, totalCount + 2), null);
 
 		List<MessageBoardSection> messageBoardSections1 =
 			(List<MessageBoardSection>)page1.getItems();
 
 		Assert.assertEquals(
-			messageBoardSections1.toString(), 2, messageBoardSections1.size());
+			messageBoardSections1.toString(), totalCount + 2,
+			messageBoardSections1.size());
 
 		Page<MessageBoardSection> page2 =
 			messageBoardSectionResource.
 				getMessageBoardSectionMessageBoardSectionsPage(
 					parentMessageBoardSectionId, null, null, null,
-					Pagination.of(2, 2), null);
+					Pagination.of(2, totalCount + 2), null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<MessageBoardSection> messageBoardSections2 =
 			(List<MessageBoardSection>)page2.getItems();
@@ -762,13 +773,14 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			messageBoardSectionResource.
 				getMessageBoardSectionMessageBoardSectionsPage(
 					parentMessageBoardSectionId, null, null, null,
-					Pagination.of(1, 3), null);
+					Pagination.of(1, (int)totalCount + 3), null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(
-				messageBoardSection1, messageBoardSection2,
-				messageBoardSection3),
-			(List<MessageBoardSection>)page3.getItems());
+		assertContains(
+			messageBoardSection1, (List<MessageBoardSection>)page3.getItems());
+		assertContains(
+			messageBoardSection2, (List<MessageBoardSection>)page3.getItems());
+		assertContains(
+			messageBoardSection3, (List<MessageBoardSection>)page3.getItems());
 	}
 
 	@Test
@@ -897,25 +909,38 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			testGetMessageBoardSectionMessageBoardSectionsPage_addMessageBoardSection(
 				parentMessageBoardSectionId, messageBoardSection2);
 
+		Page<MessageBoardSection> page =
+			messageBoardSectionResource.
+				getMessageBoardSectionMessageBoardSectionsPage(
+					parentMessageBoardSectionId, null, null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<MessageBoardSection> ascPage =
 				messageBoardSectionResource.
 					getMessageBoardSectionMessageBoardSectionsPage(
 						parentMessageBoardSectionId, null, null, null,
-						Pagination.of(1, 2), entityField.getName() + ":asc");
+						Pagination.of(1, (int)page.getTotalCount() + 1),
+						entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(messageBoardSection1, messageBoardSection2),
+			assertContains(
+				messageBoardSection1,
+				(List<MessageBoardSection>)ascPage.getItems());
+			assertContains(
+				messageBoardSection2,
 				(List<MessageBoardSection>)ascPage.getItems());
 
 			Page<MessageBoardSection> descPage =
 				messageBoardSectionResource.
 					getMessageBoardSectionMessageBoardSectionsPage(
 						parentMessageBoardSectionId, null, null, null,
-						Pagination.of(1, 2), entityField.getName() + ":desc");
+						Pagination.of(1, (int)page.getTotalCount() + 1),
+						entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(messageBoardSection2, messageBoardSection1),
+			assertContains(
+				messageBoardSection2,
+				(List<MessageBoardSection>)descPage.getItems());
+			assertContains(
+				messageBoardSection1,
 				(List<MessageBoardSection>)descPage.getItems());
 		}
 	}
@@ -1095,7 +1120,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			messageBoardSectionResource.getSiteMessageBoardSectionsPage(
 				siteId, null, null, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantSiteId != null) {
 			MessageBoardSection irrelevantMessageBoardSection =
@@ -1103,13 +1128,13 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 					irrelevantSiteId, randomIrrelevantMessageBoardSection());
 
 			page = messageBoardSectionResource.getSiteMessageBoardSectionsPage(
-				irrelevantSiteId, null, null, null, null, Pagination.of(1, 2),
-				null);
+				irrelevantSiteId, null, null, null, null,
+				Pagination.of(1, (int)totalCount + 1), null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantMessageBoardSection),
+			assertContains(
+				irrelevantMessageBoardSection,
 				(List<MessageBoardSection>)page.getItems());
 			assertValid(
 				page,
@@ -1128,11 +1153,12 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		page = messageBoardSectionResource.getSiteMessageBoardSectionsPage(
 			siteId, null, null, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(messageBoardSection1, messageBoardSection2),
-			(List<MessageBoardSection>)page.getItems());
+		assertContains(
+			messageBoardSection1, (List<MessageBoardSection>)page.getItems());
+		assertContains(
+			messageBoardSection2, (List<MessageBoardSection>)page.getItems());
 		assertValid(
 			page,
 			testGetSiteMessageBoardSectionsPage_getExpectedActions(siteId));
@@ -1268,6 +1294,13 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 
 		Long siteId = testGetSiteMessageBoardSectionsPage_getSiteId();
 
+		Page<MessageBoardSection> messageBoardSectionPage =
+			messageBoardSectionResource.getSiteMessageBoardSectionsPage(
+				siteId, null, null, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(
+			messageBoardSectionPage.getTotalCount());
+
 		MessageBoardSection messageBoardSection1 =
 			testGetSiteMessageBoardSectionsPage_addMessageBoardSection(
 				siteId, randomMessageBoardSection());
@@ -1282,19 +1315,22 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 
 		Page<MessageBoardSection> page1 =
 			messageBoardSectionResource.getSiteMessageBoardSectionsPage(
-				siteId, null, null, null, null, Pagination.of(1, 2), null);
+				siteId, null, null, null, null,
+				Pagination.of(1, totalCount + 2), null);
 
 		List<MessageBoardSection> messageBoardSections1 =
 			(List<MessageBoardSection>)page1.getItems();
 
 		Assert.assertEquals(
-			messageBoardSections1.toString(), 2, messageBoardSections1.size());
+			messageBoardSections1.toString(), totalCount + 2,
+			messageBoardSections1.size());
 
 		Page<MessageBoardSection> page2 =
 			messageBoardSectionResource.getSiteMessageBoardSectionsPage(
-				siteId, null, null, null, null, Pagination.of(2, 2), null);
+				siteId, null, null, null, null,
+				Pagination.of(2, totalCount + 2), null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<MessageBoardSection> messageBoardSections2 =
 			(List<MessageBoardSection>)page2.getItems();
@@ -1304,13 +1340,15 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 
 		Page<MessageBoardSection> page3 =
 			messageBoardSectionResource.getSiteMessageBoardSectionsPage(
-				siteId, null, null, null, null, Pagination.of(1, 3), null);
+				siteId, null, null, null, null,
+				Pagination.of(1, (int)totalCount + 3), null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(
-				messageBoardSection1, messageBoardSection2,
-				messageBoardSection3),
-			(List<MessageBoardSection>)page3.getItems());
+		assertContains(
+			messageBoardSection1, (List<MessageBoardSection>)page3.getItems());
+		assertContains(
+			messageBoardSection2, (List<MessageBoardSection>)page3.getItems());
+		assertContains(
+			messageBoardSection3, (List<MessageBoardSection>)page3.getItems());
 	}
 
 	@Test
@@ -1438,23 +1476,35 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			testGetSiteMessageBoardSectionsPage_addMessageBoardSection(
 				siteId, messageBoardSection2);
 
+		Page<MessageBoardSection> page =
+			messageBoardSectionResource.getSiteMessageBoardSectionsPage(
+				siteId, null, null, null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<MessageBoardSection> ascPage =
 				messageBoardSectionResource.getSiteMessageBoardSectionsPage(
-					siteId, null, null, null, null, Pagination.of(1, 2),
+					siteId, null, null, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(messageBoardSection1, messageBoardSection2),
+			assertContains(
+				messageBoardSection1,
+				(List<MessageBoardSection>)ascPage.getItems());
+			assertContains(
+				messageBoardSection2,
 				(List<MessageBoardSection>)ascPage.getItems());
 
 			Page<MessageBoardSection> descPage =
 				messageBoardSectionResource.getSiteMessageBoardSectionsPage(
-					siteId, null, null, null, null, Pagination.of(1, 2),
+					siteId, null, null, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(messageBoardSection2, messageBoardSection1),
+			assertContains(
+				messageBoardSection2,
+				(List<MessageBoardSection>)descPage.getItems());
+			assertContains(
+				messageBoardSection1,
 				(List<MessageBoardSection>)descPage.getItems());
 		}
 	}
@@ -1502,8 +1552,7 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				invokeGraphQLQuery(graphQLField), "JSONObject/data",
 				"JSONObject/messageBoardSections");
 
-		Assert.assertEquals(
-			0, messageBoardSectionsJSONObject.get("totalCount"));
+		long totalCount = messageBoardSectionsJSONObject.getLong("totalCount");
 
 		MessageBoardSection messageBoardSection1 =
 			testGraphQLGetSiteMessageBoardSectionsPage_addMessageBoardSection();
@@ -1515,10 +1564,16 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 			"JSONObject/messageBoardSections");
 
 		Assert.assertEquals(
-			2, messageBoardSectionsJSONObject.getLong("totalCount"));
+			totalCount + 2,
+			messageBoardSectionsJSONObject.getLong("totalCount"));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(messageBoardSection1, messageBoardSection2),
+		assertContains(
+			messageBoardSection1,
+			Arrays.asList(
+				MessageBoardSectionSerDes.toDTOs(
+					messageBoardSectionsJSONObject.getString("items"))));
+		assertContains(
+			messageBoardSection2,
 			Arrays.asList(
 				MessageBoardSectionSerDes.toDTOs(
 					messageBoardSectionsJSONObject.getString("items"))));

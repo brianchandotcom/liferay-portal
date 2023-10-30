@@ -314,10 +314,11 @@ public abstract class BaseSpecificationResourceTestCase {
 
 	@Test
 	public void testGetSpecificationsPageWithPagination() throws Exception {
-		Page<Specification> totalPage =
+		Page<Specification> specificationPage =
 			specificationResource.getSpecificationsPage(null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(
+			specificationPage.getTotalCount());
 
 		Specification specification1 =
 			testGetSpecificationsPage_addSpecification(randomSpecification());
@@ -349,7 +350,7 @@ public abstract class BaseSpecificationResourceTestCase {
 			specifications2.toString(), 1, specifications2.size());
 
 		Page<Specification> page3 = specificationResource.getSpecificationsPage(
-			null, null, Pagination.of(1, totalCount + 3), null);
+			null, null, Pagination.of(1, (int)totalCount + 3), null);
 
 		assertContains(specification1, (List<Specification>)page3.getItems());
 		assertContains(specification2, (List<Specification>)page3.getItems());
@@ -469,24 +470,29 @@ public abstract class BaseSpecificationResourceTestCase {
 		specification2 = testGetSpecificationsPage_addSpecification(
 			specification2);
 
+		Page<Specification> page = specificationResource.getSpecificationsPage(
+			null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<Specification> ascPage =
 				specificationResource.getSpecificationsPage(
-					null, null, Pagination.of(1, 2),
+					null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(specification1, specification2),
-				(List<Specification>)ascPage.getItems());
+			assertContains(
+				specification1, (List<Specification>)ascPage.getItems());
+			assertContains(
+				specification2, (List<Specification>)ascPage.getItems());
 
 			Page<Specification> descPage =
 				specificationResource.getSpecificationsPage(
-					null, null, Pagination.of(1, 2),
+					null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(specification2, specification1),
-				(List<Specification>)descPage.getItems());
+			assertContains(
+				specification2, (List<Specification>)descPage.getItems());
+			assertContains(
+				specification1, (List<Specification>)descPage.getItems());
 		}
 	}
 

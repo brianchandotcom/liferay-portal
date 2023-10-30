@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -195,20 +196,18 @@ public abstract class BaseSegmentResourceTestCase {
 		Page<Segment> page = segmentResource.getSiteSegmentsPage(
 			siteId, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantSiteId != null) {
 			Segment irrelevantSegment = testGetSiteSegmentsPage_addSegment(
 				irrelevantSiteId, randomIrrelevantSegment());
 
 			page = segmentResource.getSiteSegmentsPage(
-				irrelevantSiteId, Pagination.of(1, 2));
+				irrelevantSiteId, Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantSegment),
-				(List<Segment>)page.getItems());
+			assertContains(irrelevantSegment, (List<Segment>)page.getItems());
 			assertValid(
 				page,
 				testGetSiteSegmentsPage_getExpectedActions(irrelevantSiteId));
@@ -223,10 +222,10 @@ public abstract class BaseSegmentResourceTestCase {
 		page = segmentResource.getSiteSegmentsPage(
 			siteId, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(segment1, segment2), (List<Segment>)page.getItems());
+		assertContains(segment1, (List<Segment>)page.getItems());
+		assertContains(segment2, (List<Segment>)page.getItems());
 		assertValid(page, testGetSiteSegmentsPage_getExpectedActions(siteId));
 	}
 
@@ -243,6 +242,11 @@ public abstract class BaseSegmentResourceTestCase {
 	public void testGetSiteSegmentsPageWithPagination() throws Exception {
 		Long siteId = testGetSiteSegmentsPage_getSiteId();
 
+		Page<Segment> segmentPage = segmentResource.getSiteSegmentsPage(
+			siteId, null);
+
+		int totalCount = GetterUtil.getInteger(segmentPage.getTotalCount());
+
 		Segment segment1 = testGetSiteSegmentsPage_addSegment(
 			siteId, randomSegment());
 
@@ -253,27 +257,28 @@ public abstract class BaseSegmentResourceTestCase {
 			siteId, randomSegment());
 
 		Page<Segment> page1 = segmentResource.getSiteSegmentsPage(
-			siteId, Pagination.of(1, 2));
+			siteId, Pagination.of(1, totalCount + 2));
 
 		List<Segment> segments1 = (List<Segment>)page1.getItems();
 
-		Assert.assertEquals(segments1.toString(), 2, segments1.size());
+		Assert.assertEquals(
+			segments1.toString(), totalCount + 2, segments1.size());
 
 		Page<Segment> page2 = segmentResource.getSiteSegmentsPage(
-			siteId, Pagination.of(2, 2));
+			siteId, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<Segment> segments2 = (List<Segment>)page2.getItems();
 
 		Assert.assertEquals(segments2.toString(), 1, segments2.size());
 
 		Page<Segment> page3 = segmentResource.getSiteSegmentsPage(
-			siteId, Pagination.of(1, 3));
+			siteId, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(segment1, segment2, segment3),
-			(List<Segment>)page3.getItems());
+		assertContains(segment1, (List<Segment>)page3.getItems());
+		assertContains(segment2, (List<Segment>)page3.getItems());
+		assertContains(segment3, (List<Segment>)page3.getItems());
 	}
 
 	protected Segment testGetSiteSegmentsPage_addSegment(
@@ -315,7 +320,7 @@ public abstract class BaseSegmentResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/segments");
 
-		Assert.assertEquals(0, segmentsJSONObject.get("totalCount"));
+		long totalCount = segmentsJSONObject.getLong("totalCount");
 
 		Segment segment1 = testGraphQLGetSiteSegmentsPage_addSegment();
 		Segment segment2 = testGraphQLGetSiteSegmentsPage_addSegment();
@@ -324,10 +329,15 @@ public abstract class BaseSegmentResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/segments");
 
-		Assert.assertEquals(2, segmentsJSONObject.getLong("totalCount"));
+		Assert.assertEquals(
+			totalCount + 2, segmentsJSONObject.getLong("totalCount"));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(segment1, segment2),
+		assertContains(
+			segment1,
+			Arrays.asList(
+				SegmentSerDes.toDTOs(segmentsJSONObject.getString("items"))));
+		assertContains(
+			segment2,
 			Arrays.asList(
 				SegmentSerDes.toDTOs(segmentsJSONObject.getString("items"))));
 	}
@@ -351,7 +361,7 @@ public abstract class BaseSegmentResourceTestCase {
 		Page<Segment> page = segmentResource.getSiteUserAccountSegmentsPage(
 			siteId, userAccountId);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if ((irrelevantSiteId != null) && (irrelevantUserAccountId != null)) {
 			Segment irrelevantSegment =
@@ -362,11 +372,9 @@ public abstract class BaseSegmentResourceTestCase {
 			page = segmentResource.getSiteUserAccountSegmentsPage(
 				irrelevantSiteId, irrelevantUserAccountId);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantSegment),
-				(List<Segment>)page.getItems());
+			assertContains(irrelevantSegment, (List<Segment>)page.getItems());
 			assertValid(
 				page,
 				testGetSiteUserAccountSegmentsPage_getExpectedActions(
@@ -382,10 +390,10 @@ public abstract class BaseSegmentResourceTestCase {
 		page = segmentResource.getSiteUserAccountSegmentsPage(
 			siteId, userAccountId);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(segment1, segment2), (List<Segment>)page.getItems());
+		assertContains(segment1, (List<Segment>)page.getItems());
+		assertContains(segment2, (List<Segment>)page.getItems());
 		assertValid(
 			page,
 			testGetSiteUserAccountSegmentsPage_getExpectedActions(

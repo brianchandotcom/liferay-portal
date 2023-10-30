@@ -227,9 +227,9 @@ public abstract class BasePlanResourceTestCase {
 
 	@Test
 	public void testGetPlansPageWithPagination() throws Exception {
-		Page<Plan> totalPage = planResource.getPlansPage(null);
+		Page<Plan> planPage = planResource.getPlansPage(null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(planPage.getTotalCount());
 
 		Plan plan1 = testGetPlansPage_addPlan(randomPlan());
 
@@ -254,7 +254,7 @@ public abstract class BasePlanResourceTestCase {
 		Assert.assertEquals(plans2.toString(), 1, plans2.size());
 
 		Page<Plan> page3 = planResource.getPlansPage(
-			Pagination.of(1, totalCount + 3));
+			Pagination.of(1, (int)totalCount + 3));
 
 		assertContains(plan1, (List<Plan>)page3.getItems());
 		assertContains(plan2, (List<Plan>)page3.getItems());

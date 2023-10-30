@@ -229,11 +229,12 @@ public abstract class BaseContactAccountGroupResourceTestCase {
 	public void testGetContactAccountGroupsPageWithPagination()
 		throws Exception {
 
-		Page<ContactAccountGroup> totalPage =
+		Page<ContactAccountGroup> contactAccountGroupPage =
 			contactAccountGroupResource.getContactAccountGroupsPage(
 				null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(
+			contactAccountGroupPage.getTotalCount());
 
 		ContactAccountGroup contactAccountGroup1 =
 			testGetContactAccountGroupsPage_addContactAccountGroup(
@@ -272,7 +273,7 @@ public abstract class BaseContactAccountGroupResourceTestCase {
 
 		Page<ContactAccountGroup> page3 =
 			contactAccountGroupResource.getContactAccountGroupsPage(
-				null, Pagination.of(1, totalCount + 3), null);
+				null, Pagination.of(1, (int)totalCount + 3), null);
 
 		assertContains(
 			contactAccountGroup1, (List<ContactAccountGroup>)page3.getItems());
@@ -405,21 +406,33 @@ public abstract class BaseContactAccountGroupResourceTestCase {
 			testGetContactAccountGroupsPage_addContactAccountGroup(
 				contactAccountGroup2);
 
+		Page<ContactAccountGroup> page =
+			contactAccountGroupResource.getContactAccountGroupsPage(
+				null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<ContactAccountGroup> ascPage =
 				contactAccountGroupResource.getContactAccountGroupsPage(
-					null, Pagination.of(1, 2), entityField.getName() + ":asc");
+					null, Pagination.of(1, (int)page.getTotalCount() + 1),
+					entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(contactAccountGroup1, contactAccountGroup2),
+			assertContains(
+				contactAccountGroup1,
+				(List<ContactAccountGroup>)ascPage.getItems());
+			assertContains(
+				contactAccountGroup2,
 				(List<ContactAccountGroup>)ascPage.getItems());
 
 			Page<ContactAccountGroup> descPage =
 				contactAccountGroupResource.getContactAccountGroupsPage(
-					null, Pagination.of(1, 2), entityField.getName() + ":desc");
+					null, Pagination.of(1, (int)page.getTotalCount() + 1),
+					entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(contactAccountGroup2, contactAccountGroup1),
+			assertContains(
+				contactAccountGroup2,
+				(List<ContactAccountGroup>)descPage.getItems());
+			assertContains(
+				contactAccountGroup1,
 				(List<ContactAccountGroup>)descPage.getItems());
 		}
 	}

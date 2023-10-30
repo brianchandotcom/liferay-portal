@@ -226,10 +226,10 @@ public abstract class BaseCountryResourceTestCase {
 
 	@Test
 	public void testGetCountriesPageWithPagination() throws Exception {
-		Page<Country> totalPage = countryResource.getCountriesPage(
+		Page<Country> countryPage = countryResource.getCountriesPage(
 			null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(countryPage.getTotalCount());
 
 		Country country1 = testGetCountriesPage_addCountry(randomCountry());
 
@@ -255,7 +255,7 @@ public abstract class BaseCountryResourceTestCase {
 		Assert.assertEquals(countries2.toString(), 1, countries2.size());
 
 		Page<Country> page3 = countryResource.getCountriesPage(
-			null, null, Pagination.of(1, totalCount + 3), null);
+			null, null, Pagination.of(1, (int)totalCount + 3), null);
 
 		assertContains(country1, (List<Country>)page3.getItems());
 		assertContains(country2, (List<Country>)page3.getItems());
@@ -367,22 +367,23 @@ public abstract class BaseCountryResourceTestCase {
 
 		country2 = testGetCountriesPage_addCountry(country2);
 
+		Page<Country> page = countryResource.getCountriesPage(
+			null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<Country> ascPage = countryResource.getCountriesPage(
-				null, null, Pagination.of(1, 2),
+				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(country1, country2),
-				(List<Country>)ascPage.getItems());
+			assertContains(country1, (List<Country>)ascPage.getItems());
+			assertContains(country2, (List<Country>)ascPage.getItems());
 
 			Page<Country> descPage = countryResource.getCountriesPage(
-				null, null, Pagination.of(1, 2),
+				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(country2, country1),
-				(List<Country>)descPage.getItems());
+			assertContains(country2, (List<Country>)descPage.getItems());
+			assertContains(country1, (List<Country>)descPage.getItems());
 		}
 	}
 

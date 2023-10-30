@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -372,7 +373,7 @@ public abstract class BaseCartCommentResourceTestCase {
 		Page<CartComment> page = cartCommentResource.getCartCommentsPage(
 			cartId, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantCartId != null) {
 			CartComment irrelevantCartComment =
@@ -380,13 +381,12 @@ public abstract class BaseCartCommentResourceTestCase {
 					irrelevantCartId, randomIrrelevantCartComment());
 
 			page = cartCommentResource.getCartCommentsPage(
-				irrelevantCartId, Pagination.of(1, 2));
+				irrelevantCartId, Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantCartComment),
-				(List<CartComment>)page.getItems());
+			assertContains(
+				irrelevantCartComment, (List<CartComment>)page.getItems());
 			assertValid(
 				page,
 				testGetCartCommentsPage_getExpectedActions(irrelevantCartId));
@@ -401,11 +401,10 @@ public abstract class BaseCartCommentResourceTestCase {
 		page = cartCommentResource.getCartCommentsPage(
 			cartId, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(cartComment1, cartComment2),
-			(List<CartComment>)page.getItems());
+		assertContains(cartComment1, (List<CartComment>)page.getItems());
+		assertContains(cartComment2, (List<CartComment>)page.getItems());
 		assertValid(page, testGetCartCommentsPage_getExpectedActions(cartId));
 
 		cartCommentResource.deleteCartComment(cartComment1.getId());
@@ -426,6 +425,11 @@ public abstract class BaseCartCommentResourceTestCase {
 	public void testGetCartCommentsPageWithPagination() throws Exception {
 		Long cartId = testGetCartCommentsPage_getCartId();
 
+		Page<CartComment> cartCommentPage =
+			cartCommentResource.getCartCommentsPage(cartId, null);
+
+		int totalCount = GetterUtil.getInteger(cartCommentPage.getTotalCount());
+
 		CartComment cartComment1 = testGetCartCommentsPage_addCartComment(
 			cartId, randomCartComment());
 
@@ -436,27 +440,28 @@ public abstract class BaseCartCommentResourceTestCase {
 			cartId, randomCartComment());
 
 		Page<CartComment> page1 = cartCommentResource.getCartCommentsPage(
-			cartId, Pagination.of(1, 2));
+			cartId, Pagination.of(1, totalCount + 2));
 
 		List<CartComment> cartComments1 = (List<CartComment>)page1.getItems();
 
-		Assert.assertEquals(cartComments1.toString(), 2, cartComments1.size());
+		Assert.assertEquals(
+			cartComments1.toString(), totalCount + 2, cartComments1.size());
 
 		Page<CartComment> page2 = cartCommentResource.getCartCommentsPage(
-			cartId, Pagination.of(2, 2));
+			cartId, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<CartComment> cartComments2 = (List<CartComment>)page2.getItems();
 
 		Assert.assertEquals(cartComments2.toString(), 1, cartComments2.size());
 
 		Page<CartComment> page3 = cartCommentResource.getCartCommentsPage(
-			cartId, Pagination.of(1, 3));
+			cartId, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(cartComment1, cartComment2, cartComment3),
-			(List<CartComment>)page3.getItems());
+		assertContains(cartComment1, (List<CartComment>)page3.getItems());
+		assertContains(cartComment2, (List<CartComment>)page3.getItems());
+		assertContains(cartComment3, (List<CartComment>)page3.getItems());
 	}
 
 	protected CartComment testGetCartCommentsPage_addCartComment(
@@ -499,7 +504,7 @@ public abstract class BaseCartCommentResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/cartComments");
 
-		Assert.assertEquals(0, cartCommentsJSONObject.get("totalCount"));
+		long totalCount = cartCommentsJSONObject.getLong("totalCount");
 
 		CartComment cartComment1 =
 			testGraphQLGetCartCommentsPage_addCartComment();
@@ -510,10 +515,16 @@ public abstract class BaseCartCommentResourceTestCase {
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
 			"JSONObject/cartComments");
 
-		Assert.assertEquals(2, cartCommentsJSONObject.getLong("totalCount"));
+		Assert.assertEquals(
+			totalCount + 2, cartCommentsJSONObject.getLong("totalCount"));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(cartComment1, cartComment2),
+		assertContains(
+			cartComment1,
+			Arrays.asList(
+				CartCommentSerDes.toDTOs(
+					cartCommentsJSONObject.getString("items"))));
+		assertContains(
+			cartComment2,
 			Arrays.asList(
 				CartCommentSerDes.toDTOs(
 					cartCommentsJSONObject.getString("items"))));

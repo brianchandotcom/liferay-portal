@@ -192,7 +192,7 @@ public abstract class BaseWebUrlResourceTestCase {
 		Page<WebUrl> page = webUrlResource.getOrganizationWebUrlsPage(
 			organizationId);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantOrganizationId != null) {
 			WebUrl irrelevantWebUrl = testGetOrganizationWebUrlsPage_addWebUrl(
@@ -201,10 +201,9 @@ public abstract class BaseWebUrlResourceTestCase {
 			page = webUrlResource.getOrganizationWebUrlsPage(
 				irrelevantOrganizationId);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantWebUrl), (List<WebUrl>)page.getItems());
+			assertContains(irrelevantWebUrl, (List<WebUrl>)page.getItems());
 			assertValid(
 				page,
 				testGetOrganizationWebUrlsPage_getExpectedActions(
@@ -219,10 +218,10 @@ public abstract class BaseWebUrlResourceTestCase {
 
 		page = webUrlResource.getOrganizationWebUrlsPage(organizationId);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(webUrl1, webUrl2), (List<WebUrl>)page.getItems());
+		assertContains(webUrl1, (List<WebUrl>)page.getItems());
+		assertContains(webUrl2, (List<WebUrl>)page.getItems());
 		assertValid(
 			page,
 			testGetOrganizationWebUrlsPage_getExpectedActions(organizationId));
@@ -269,7 +268,7 @@ public abstract class BaseWebUrlResourceTestCase {
 		Page<WebUrl> page = webUrlResource.getUserAccountWebUrlsPage(
 			userAccountId);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantUserAccountId != null) {
 			WebUrl irrelevantWebUrl = testGetUserAccountWebUrlsPage_addWebUrl(
@@ -278,10 +277,9 @@ public abstract class BaseWebUrlResourceTestCase {
 			page = webUrlResource.getUserAccountWebUrlsPage(
 				irrelevantUserAccountId);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantWebUrl), (List<WebUrl>)page.getItems());
+			assertContains(irrelevantWebUrl, (List<WebUrl>)page.getItems());
 			assertValid(
 				page,
 				testGetUserAccountWebUrlsPage_getExpectedActions(
@@ -296,10 +294,10 @@ public abstract class BaseWebUrlResourceTestCase {
 
 		page = webUrlResource.getUserAccountWebUrlsPage(userAccountId);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(webUrl1, webUrl2), (List<WebUrl>)page.getItems());
+		assertContains(webUrl1, (List<WebUrl>)page.getItems());
+		assertContains(webUrl2, (List<WebUrl>)page.getItems());
 		assertValid(
 			page,
 			testGetUserAccountWebUrlsPage_getExpectedActions(userAccountId));

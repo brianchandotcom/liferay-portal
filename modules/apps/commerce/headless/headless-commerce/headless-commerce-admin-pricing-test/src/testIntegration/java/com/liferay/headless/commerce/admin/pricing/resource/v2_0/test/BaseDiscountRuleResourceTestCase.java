@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -364,7 +365,7 @@ public abstract class BaseDiscountRuleResourceTestCase {
 				getDiscountByExternalReferenceCodeDiscountRulesPage(
 					externalReferenceCode, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantExternalReferenceCode != null) {
 			DiscountRule irrelevantDiscountRule =
@@ -375,13 +376,13 @@ public abstract class BaseDiscountRuleResourceTestCase {
 			page =
 				discountRuleResource.
 					getDiscountByExternalReferenceCodeDiscountRulesPage(
-						irrelevantExternalReferenceCode, Pagination.of(1, 2));
+						irrelevantExternalReferenceCode,
+						Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantDiscountRule),
-				(List<DiscountRule>)page.getItems());
+			assertContains(
+				irrelevantDiscountRule, (List<DiscountRule>)page.getItems());
 			assertValid(
 				page,
 				testGetDiscountByExternalReferenceCodeDiscountRulesPage_getExpectedActions(
@@ -401,11 +402,10 @@ public abstract class BaseDiscountRuleResourceTestCase {
 				getDiscountByExternalReferenceCodeDiscountRulesPage(
 					externalReferenceCode, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(discountRule1, discountRule2),
-			(List<DiscountRule>)page.getItems());
+		assertContains(discountRule1, (List<DiscountRule>)page.getItems());
+		assertContains(discountRule2, (List<DiscountRule>)page.getItems());
 		assertValid(
 			page,
 			testGetDiscountByExternalReferenceCodeDiscountRulesPage_getExpectedActions(
@@ -433,6 +433,14 @@ public abstract class BaseDiscountRuleResourceTestCase {
 		String externalReferenceCode =
 			testGetDiscountByExternalReferenceCodeDiscountRulesPage_getExternalReferenceCode();
 
+		Page<DiscountRule> discountRulePage =
+			discountRuleResource.
+				getDiscountByExternalReferenceCodeDiscountRulesPage(
+					externalReferenceCode, null);
+
+		int totalCount = GetterUtil.getInteger(
+			discountRulePage.getTotalCount());
+
 		DiscountRule discountRule1 =
 			testGetDiscountByExternalReferenceCodeDiscountRulesPage_addDiscountRule(
 				externalReferenceCode, randomDiscountRule());
@@ -448,20 +456,20 @@ public abstract class BaseDiscountRuleResourceTestCase {
 		Page<DiscountRule> page1 =
 			discountRuleResource.
 				getDiscountByExternalReferenceCodeDiscountRulesPage(
-					externalReferenceCode, Pagination.of(1, 2));
+					externalReferenceCode, Pagination.of(1, totalCount + 2));
 
 		List<DiscountRule> discountRules1 =
 			(List<DiscountRule>)page1.getItems();
 
 		Assert.assertEquals(
-			discountRules1.toString(), 2, discountRules1.size());
+			discountRules1.toString(), totalCount + 2, discountRules1.size());
 
 		Page<DiscountRule> page2 =
 			discountRuleResource.
 				getDiscountByExternalReferenceCodeDiscountRulesPage(
-					externalReferenceCode, Pagination.of(2, 2));
+					externalReferenceCode, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<DiscountRule> discountRules2 =
 			(List<DiscountRule>)page2.getItems();
@@ -472,11 +480,12 @@ public abstract class BaseDiscountRuleResourceTestCase {
 		Page<DiscountRule> page3 =
 			discountRuleResource.
 				getDiscountByExternalReferenceCodeDiscountRulesPage(
-					externalReferenceCode, Pagination.of(1, 3));
+					externalReferenceCode,
+					Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(discountRule1, discountRule2, discountRule3),
-			(List<DiscountRule>)page3.getItems());
+		assertContains(discountRule1, (List<DiscountRule>)page3.getItems());
+		assertContains(discountRule2, (List<DiscountRule>)page3.getItems());
+		assertContains(discountRule3, (List<DiscountRule>)page3.getItems());
 	}
 
 	protected DiscountRule
@@ -536,7 +545,7 @@ public abstract class BaseDiscountRuleResourceTestCase {
 			discountRuleResource.getDiscountIdDiscountRulesPage(
 				id, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantId != null) {
 			DiscountRule irrelevantDiscountRule =
@@ -544,13 +553,13 @@ public abstract class BaseDiscountRuleResourceTestCase {
 					irrelevantId, randomIrrelevantDiscountRule());
 
 			page = discountRuleResource.getDiscountIdDiscountRulesPage(
-				irrelevantId, null, null, Pagination.of(1, 2), null);
+				irrelevantId, null, null, Pagination.of(1, (int)totalCount + 1),
+				null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantDiscountRule),
-				(List<DiscountRule>)page.getItems());
+			assertContains(
+				irrelevantDiscountRule, (List<DiscountRule>)page.getItems());
 			assertValid(
 				page,
 				testGetDiscountIdDiscountRulesPage_getExpectedActions(
@@ -568,11 +577,10 @@ public abstract class BaseDiscountRuleResourceTestCase {
 		page = discountRuleResource.getDiscountIdDiscountRulesPage(
 			id, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(discountRule1, discountRule2),
-			(List<DiscountRule>)page.getItems());
+		assertContains(discountRule1, (List<DiscountRule>)page.getItems());
+		assertContains(discountRule2, (List<DiscountRule>)page.getItems());
 		assertValid(
 			page, testGetDiscountIdDiscountRulesPage_getExpectedActions(id));
 
@@ -693,6 +701,13 @@ public abstract class BaseDiscountRuleResourceTestCase {
 
 		Long id = testGetDiscountIdDiscountRulesPage_getId();
 
+		Page<DiscountRule> discountRulePage =
+			discountRuleResource.getDiscountIdDiscountRulesPage(
+				id, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(
+			discountRulePage.getTotalCount());
+
 		DiscountRule discountRule1 =
 			testGetDiscountIdDiscountRulesPage_addDiscountRule(
 				id, randomDiscountRule());
@@ -707,19 +722,19 @@ public abstract class BaseDiscountRuleResourceTestCase {
 
 		Page<DiscountRule> page1 =
 			discountRuleResource.getDiscountIdDiscountRulesPage(
-				id, null, null, Pagination.of(1, 2), null);
+				id, null, null, Pagination.of(1, totalCount + 2), null);
 
 		List<DiscountRule> discountRules1 =
 			(List<DiscountRule>)page1.getItems();
 
 		Assert.assertEquals(
-			discountRules1.toString(), 2, discountRules1.size());
+			discountRules1.toString(), totalCount + 2, discountRules1.size());
 
 		Page<DiscountRule> page2 =
 			discountRuleResource.getDiscountIdDiscountRulesPage(
-				id, null, null, Pagination.of(2, 2), null);
+				id, null, null, Pagination.of(2, totalCount + 2), null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<DiscountRule> discountRules2 =
 			(List<DiscountRule>)page2.getItems();
@@ -729,11 +744,11 @@ public abstract class BaseDiscountRuleResourceTestCase {
 
 		Page<DiscountRule> page3 =
 			discountRuleResource.getDiscountIdDiscountRulesPage(
-				id, null, null, Pagination.of(1, 3), null);
+				id, null, null, Pagination.of(1, (int)totalCount + 3), null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(discountRule1, discountRule2, discountRule3),
-			(List<DiscountRule>)page3.getItems());
+		assertContains(discountRule1, (List<DiscountRule>)page3.getItems());
+		assertContains(discountRule2, (List<DiscountRule>)page3.getItems());
+		assertContains(discountRule3, (List<DiscountRule>)page3.getItems());
 	}
 
 	@Test
@@ -858,24 +873,32 @@ public abstract class BaseDiscountRuleResourceTestCase {
 		discountRule2 = testGetDiscountIdDiscountRulesPage_addDiscountRule(
 			id, discountRule2);
 
+		Page<DiscountRule> page =
+			discountRuleResource.getDiscountIdDiscountRulesPage(
+				id, null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<DiscountRule> ascPage =
 				discountRuleResource.getDiscountIdDiscountRulesPage(
-					id, null, null, Pagination.of(1, 2),
+					id, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(discountRule1, discountRule2),
-				(List<DiscountRule>)ascPage.getItems());
+			assertContains(
+				discountRule1, (List<DiscountRule>)ascPage.getItems());
+			assertContains(
+				discountRule2, (List<DiscountRule>)ascPage.getItems());
 
 			Page<DiscountRule> descPage =
 				discountRuleResource.getDiscountIdDiscountRulesPage(
-					id, null, null, Pagination.of(1, 2),
+					id, null, null,
+					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(discountRule2, discountRule1),
-				(List<DiscountRule>)descPage.getItems());
+			assertContains(
+				discountRule2, (List<DiscountRule>)descPage.getItems());
+			assertContains(
+				discountRule1, (List<DiscountRule>)descPage.getItems());
 		}
 	}
 

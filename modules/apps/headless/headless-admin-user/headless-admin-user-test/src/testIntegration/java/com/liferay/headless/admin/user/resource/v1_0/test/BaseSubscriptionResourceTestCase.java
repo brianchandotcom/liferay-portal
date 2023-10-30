@@ -226,10 +226,11 @@ public abstract class BaseSubscriptionResourceTestCase {
 	public void testGetMyUserAccountSubscriptionsPageWithPagination()
 		throws Exception {
 
-		Page<Subscription> totalPage =
+		Page<Subscription> subscriptionPage =
 			subscriptionResource.getMyUserAccountSubscriptionsPage(null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(
+			subscriptionPage.getTotalCount());
 
 		Subscription subscription1 =
 			testGetMyUserAccountSubscriptionsPage_addSubscription(
@@ -267,7 +268,7 @@ public abstract class BaseSubscriptionResourceTestCase {
 
 		Page<Subscription> page3 =
 			subscriptionResource.getMyUserAccountSubscriptionsPage(
-				null, Pagination.of(1, totalCount + 3));
+				null, Pagination.of(1, (int)totalCount + 3));
 
 		assertContains(subscription1, (List<Subscription>)page3.getItems());
 		assertContains(subscription2, (List<Subscription>)page3.getItems());

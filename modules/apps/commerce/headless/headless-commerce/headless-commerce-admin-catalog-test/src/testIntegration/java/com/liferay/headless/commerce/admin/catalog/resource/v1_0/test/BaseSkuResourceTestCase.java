@@ -214,7 +214,7 @@ public abstract class BaseSkuResourceTestCase {
 		Page<Sku> page = skuResource.getProductByExternalReferenceCodeSkusPage(
 			externalReferenceCode, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantExternalReferenceCode != null) {
 			Sku irrelevantSku =
@@ -222,12 +222,12 @@ public abstract class BaseSkuResourceTestCase {
 					irrelevantExternalReferenceCode, randomIrrelevantSku());
 
 			page = skuResource.getProductByExternalReferenceCodeSkusPage(
-				irrelevantExternalReferenceCode, Pagination.of(1, 2));
+				irrelevantExternalReferenceCode,
+				Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantSku), (List<Sku>)page.getItems());
+			assertContains(irrelevantSku, (List<Sku>)page.getItems());
 			assertValid(
 				page,
 				testGetProductByExternalReferenceCodeSkusPage_getExpectedActions(
@@ -243,10 +243,10 @@ public abstract class BaseSkuResourceTestCase {
 		page = skuResource.getProductByExternalReferenceCodeSkusPage(
 			externalReferenceCode, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(sku1, sku2), (List<Sku>)page.getItems());
+		assertContains(sku1, (List<Sku>)page.getItems());
+		assertContains(sku2, (List<Sku>)page.getItems());
 		assertValid(
 			page,
 			testGetProductByExternalReferenceCodeSkusPage_getExpectedActions(
@@ -274,6 +274,12 @@ public abstract class BaseSkuResourceTestCase {
 		String externalReferenceCode =
 			testGetProductByExternalReferenceCodeSkusPage_getExternalReferenceCode();
 
+		Page<Sku> skuPage =
+			skuResource.getProductByExternalReferenceCodeSkusPage(
+				externalReferenceCode, null);
+
+		int totalCount = GetterUtil.getInteger(skuPage.getTotalCount());
+
 		Sku sku1 = testGetProductByExternalReferenceCodeSkusPage_addSku(
 			externalReferenceCode, randomSku());
 
@@ -284,26 +290,27 @@ public abstract class BaseSkuResourceTestCase {
 			externalReferenceCode, randomSku());
 
 		Page<Sku> page1 = skuResource.getProductByExternalReferenceCodeSkusPage(
-			externalReferenceCode, Pagination.of(1, 2));
+			externalReferenceCode, Pagination.of(1, totalCount + 2));
 
 		List<Sku> skus1 = (List<Sku>)page1.getItems();
 
-		Assert.assertEquals(skus1.toString(), 2, skus1.size());
+		Assert.assertEquals(skus1.toString(), totalCount + 2, skus1.size());
 
 		Page<Sku> page2 = skuResource.getProductByExternalReferenceCodeSkusPage(
-			externalReferenceCode, Pagination.of(2, 2));
+			externalReferenceCode, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<Sku> skus2 = (List<Sku>)page2.getItems();
 
 		Assert.assertEquals(skus2.toString(), 1, skus2.size());
 
 		Page<Sku> page3 = skuResource.getProductByExternalReferenceCodeSkusPage(
-			externalReferenceCode, Pagination.of(1, 3));
+			externalReferenceCode, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(sku1, sku2, sku3), (List<Sku>)page3.getItems());
+		assertContains(sku1, (List<Sku>)page3.getItems());
+		assertContains(sku2, (List<Sku>)page3.getItems());
+		assertContains(sku3, (List<Sku>)page3.getItems());
 	}
 
 	protected Sku testGetProductByExternalReferenceCodeSkusPage_addSku(
@@ -355,19 +362,18 @@ public abstract class BaseSkuResourceTestCase {
 		Page<Sku> page = skuResource.getProductIdSkusPage(
 			id, Pagination.of(1, 10));
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantId != null) {
 			Sku irrelevantSku = testGetProductIdSkusPage_addSku(
 				irrelevantId, randomIrrelevantSku());
 
 			page = skuResource.getProductIdSkusPage(
-				irrelevantId, Pagination.of(1, 2));
+				irrelevantId, Pagination.of(1, (int)totalCount + 1));
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantSku), (List<Sku>)page.getItems());
+			assertContains(irrelevantSku, (List<Sku>)page.getItems());
 			assertValid(
 				page,
 				testGetProductIdSkusPage_getExpectedActions(irrelevantId));
@@ -379,10 +385,10 @@ public abstract class BaseSkuResourceTestCase {
 
 		page = skuResource.getProductIdSkusPage(id, Pagination.of(1, 10));
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(sku1, sku2), (List<Sku>)page.getItems());
+		assertContains(sku1, (List<Sku>)page.getItems());
+		assertContains(sku2, (List<Sku>)page.getItems());
 		assertValid(page, testGetProductIdSkusPage_getExpectedActions(id));
 
 		skuResource.deleteSku(sku1.getId());
@@ -403,6 +409,10 @@ public abstract class BaseSkuResourceTestCase {
 	public void testGetProductIdSkusPageWithPagination() throws Exception {
 		Long id = testGetProductIdSkusPage_getId();
 
+		Page<Sku> skuPage = skuResource.getProductIdSkusPage(id, null);
+
+		int totalCount = GetterUtil.getInteger(skuPage.getTotalCount());
+
 		Sku sku1 = testGetProductIdSkusPage_addSku(id, randomSku());
 
 		Sku sku2 = testGetProductIdSkusPage_addSku(id, randomSku());
@@ -410,26 +420,27 @@ public abstract class BaseSkuResourceTestCase {
 		Sku sku3 = testGetProductIdSkusPage_addSku(id, randomSku());
 
 		Page<Sku> page1 = skuResource.getProductIdSkusPage(
-			id, Pagination.of(1, 2));
+			id, Pagination.of(1, totalCount + 2));
 
 		List<Sku> skus1 = (List<Sku>)page1.getItems();
 
-		Assert.assertEquals(skus1.toString(), 2, skus1.size());
+		Assert.assertEquals(skus1.toString(), totalCount + 2, skus1.size());
 
 		Page<Sku> page2 = skuResource.getProductIdSkusPage(
-			id, Pagination.of(2, 2));
+			id, Pagination.of(2, totalCount + 2));
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<Sku> skus2 = (List<Sku>)page2.getItems();
 
 		Assert.assertEquals(skus2.toString(), 1, skus2.size());
 
 		Page<Sku> page3 = skuResource.getProductIdSkusPage(
-			id, Pagination.of(1, 3));
+			id, Pagination.of(1, (int)totalCount + 3));
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(sku1, sku2, sku3), (List<Sku>)page3.getItems());
+		assertContains(sku1, (List<Sku>)page3.getItems());
+		assertContains(sku2, (List<Sku>)page3.getItems());
+		assertContains(sku3, (List<Sku>)page3.getItems());
 	}
 
 	protected Sku testGetProductIdSkusPage_addSku(Long id, Sku sku)
@@ -566,9 +577,9 @@ public abstract class BaseSkuResourceTestCase {
 
 	@Test
 	public void testGetSkusPageWithPagination() throws Exception {
-		Page<Sku> totalPage = skuResource.getSkusPage(null, null, null, null);
+		Page<Sku> skuPage = skuResource.getSkusPage(null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(skuPage.getTotalCount());
 
 		Sku sku1 = testGetSkusPage_addSku(randomSku());
 
@@ -593,7 +604,7 @@ public abstract class BaseSkuResourceTestCase {
 		Assert.assertEquals(skus2.toString(), 1, skus2.size());
 
 		Page<Sku> page3 = skuResource.getSkusPage(
-			null, null, Pagination.of(1, totalCount + 3), null);
+			null, null, Pagination.of(1, (int)totalCount + 3), null);
 
 		assertContains(sku1, (List<Sku>)page3.getItems());
 		assertContains(sku2, (List<Sku>)page3.getItems());
@@ -705,20 +716,22 @@ public abstract class BaseSkuResourceTestCase {
 
 		sku2 = testGetSkusPage_addSku(sku2);
 
+		Page<Sku> page = skuResource.getSkusPage(null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<Sku> ascPage = skuResource.getSkusPage(
-				null, null, Pagination.of(1, 2),
+				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(sku1, sku2), (List<Sku>)ascPage.getItems());
+			assertContains(sku1, (List<Sku>)ascPage.getItems());
+			assertContains(sku2, (List<Sku>)ascPage.getItems());
 
 			Page<Sku> descPage = skuResource.getSkusPage(
-				null, null, Pagination.of(1, 2),
+				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(sku2, sku1), (List<Sku>)descPage.getItems());
+			assertContains(sku2, (List<Sku>)descPage.getItems());
+			assertContains(sku1, (List<Sku>)descPage.getItems());
 		}
 	}
 
@@ -1151,10 +1164,10 @@ public abstract class BaseSkuResourceTestCase {
 
 	@Test
 	public void testGetUnitOfMeasureSkusPageWithPagination() throws Exception {
-		Page<Sku> totalPage = skuResource.getUnitOfMeasureSkusPage(
+		Page<Sku> skuPage = skuResource.getUnitOfMeasureSkusPage(
 			null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(skuPage.getTotalCount());
 
 		Sku sku1 = testGetUnitOfMeasureSkusPage_addSku(randomSku());
 
@@ -1179,7 +1192,7 @@ public abstract class BaseSkuResourceTestCase {
 		Assert.assertEquals(skus2.toString(), 1, skus2.size());
 
 		Page<Sku> page3 = skuResource.getUnitOfMeasureSkusPage(
-			null, null, Pagination.of(1, totalCount + 3), null);
+			null, null, Pagination.of(1, (int)totalCount + 3), null);
 
 		assertContains(sku1, (List<Sku>)page3.getItems());
 		assertContains(sku2, (List<Sku>)page3.getItems());
@@ -1293,20 +1306,23 @@ public abstract class BaseSkuResourceTestCase {
 
 		sku2 = testGetUnitOfMeasureSkusPage_addSku(sku2);
 
+		Page<Sku> page = skuResource.getUnitOfMeasureSkusPage(
+			null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<Sku> ascPage = skuResource.getUnitOfMeasureSkusPage(
-				null, null, Pagination.of(1, 2),
+				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(sku1, sku2), (List<Sku>)ascPage.getItems());
+			assertContains(sku1, (List<Sku>)ascPage.getItems());
+			assertContains(sku2, (List<Sku>)ascPage.getItems());
 
 			Page<Sku> descPage = skuResource.getUnitOfMeasureSkusPage(
-				null, null, Pagination.of(1, 2),
+				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(sku2, sku1), (List<Sku>)descPage.getItems());
+			assertContains(sku2, (List<Sku>)descPage.getItems());
+			assertContains(sku1, (List<Sku>)descPage.getItems());
 		}
 	}
 

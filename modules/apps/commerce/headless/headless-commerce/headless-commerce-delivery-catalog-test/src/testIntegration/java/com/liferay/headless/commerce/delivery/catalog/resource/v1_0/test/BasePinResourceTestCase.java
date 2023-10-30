@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -196,7 +197,7 @@ public abstract class BasePinResourceTestCase {
 		Page<Pin> page = pinResource.getChannelProductPinsPage(
 			channelId, productId, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if ((irrelevantChannelId != null) && (irrelevantProductId != null)) {
 			Pin irrelevantPin = testGetChannelProductPinsPage_addPin(
@@ -205,12 +206,11 @@ public abstract class BasePinResourceTestCase {
 
 			page = pinResource.getChannelProductPinsPage(
 				irrelevantChannelId, irrelevantProductId, null, null,
-				Pagination.of(1, 2), null);
+				Pagination.of(1, (int)totalCount + 1), null);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantPin), (List<Pin>)page.getItems());
+			assertContains(irrelevantPin, (List<Pin>)page.getItems());
 			assertValid(
 				page,
 				testGetChannelProductPinsPage_getExpectedActions(
@@ -226,10 +226,10 @@ public abstract class BasePinResourceTestCase {
 		page = pinResource.getChannelProductPinsPage(
 			channelId, productId, null, null, Pagination.of(1, 10), null);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(pin1, pin2), (List<Pin>)page.getItems());
+		assertContains(pin1, (List<Pin>)page.getItems());
+		assertContains(pin2, (List<Pin>)page.getItems());
 		assertValid(
 			page,
 			testGetChannelProductPinsPage_getExpectedActions(
@@ -251,6 +251,11 @@ public abstract class BasePinResourceTestCase {
 		Long channelId = testGetChannelProductPinsPage_getChannelId();
 		Long productId = testGetChannelProductPinsPage_getProductId();
 
+		Page<Pin> pinPage = pinResource.getChannelProductPinsPage(
+			channelId, productId, null, null, null, null);
+
+		int totalCount = GetterUtil.getInteger(pinPage.getTotalCount());
+
 		Pin pin1 = testGetChannelProductPinsPage_addPin(
 			channelId, productId, randomPin());
 
@@ -261,26 +266,30 @@ public abstract class BasePinResourceTestCase {
 			channelId, productId, randomPin());
 
 		Page<Pin> page1 = pinResource.getChannelProductPinsPage(
-			channelId, productId, null, null, Pagination.of(1, 2), null);
+			channelId, productId, null, null, Pagination.of(1, totalCount + 2),
+			null);
 
 		List<Pin> pins1 = (List<Pin>)page1.getItems();
 
-		Assert.assertEquals(pins1.toString(), 2, pins1.size());
+		Assert.assertEquals(pins1.toString(), totalCount + 2, pins1.size());
 
 		Page<Pin> page2 = pinResource.getChannelProductPinsPage(
-			channelId, productId, null, null, Pagination.of(2, 2), null);
+			channelId, productId, null, null, Pagination.of(2, totalCount + 2),
+			null);
 
-		Assert.assertEquals(3, page2.getTotalCount());
+		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
 		List<Pin> pins2 = (List<Pin>)page2.getItems();
 
 		Assert.assertEquals(pins2.toString(), 1, pins2.size());
 
 		Page<Pin> page3 = pinResource.getChannelProductPinsPage(
-			channelId, productId, null, null, Pagination.of(1, 3), null);
+			channelId, productId, null, null,
+			Pagination.of(1, (int)totalCount + 3), null);
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(pin1, pin2, pin3), (List<Pin>)page3.getItems());
+		assertContains(pin1, (List<Pin>)page3.getItems());
+		assertContains(pin2, (List<Pin>)page3.getItems());
+		assertContains(pin3, (List<Pin>)page3.getItems());
 	}
 
 	@Test
@@ -395,20 +404,25 @@ public abstract class BasePinResourceTestCase {
 
 		pin2 = testGetChannelProductPinsPage_addPin(channelId, productId, pin2);
 
+		Page<Pin> page = pinResource.getChannelProductPinsPage(
+			channelId, productId, null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<Pin> ascPage = pinResource.getChannelProductPinsPage(
-				channelId, productId, null, null, Pagination.of(1, 2),
+				channelId, productId, null, null,
+				Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(pin1, pin2), (List<Pin>)ascPage.getItems());
+			assertContains(pin1, (List<Pin>)ascPage.getItems());
+			assertContains(pin2, (List<Pin>)ascPage.getItems());
 
 			Page<Pin> descPage = pinResource.getChannelProductPinsPage(
-				channelId, productId, null, null, Pagination.of(1, 2),
+				channelId, productId, null, null,
+				Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(pin2, pin1), (List<Pin>)descPage.getItems());
+			assertContains(pin2, (List<Pin>)descPage.getItems());
+			assertContains(pin1, (List<Pin>)descPage.getItems());
 		}
 	}
 

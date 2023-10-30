@@ -223,9 +223,9 @@ public abstract class BaseSiteResourceTestCase {
 
 	@Test
 	public void testGetMyUserAccountSitesPageWithPagination() throws Exception {
-		Page<Site> totalPage = siteResource.getMyUserAccountSitesPage(null);
+		Page<Site> sitePage = siteResource.getMyUserAccountSitesPage(null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(sitePage.getTotalCount());
 
 		Site site1 = testGetMyUserAccountSitesPage_addSite(randomSite());
 
@@ -250,7 +250,7 @@ public abstract class BaseSiteResourceTestCase {
 		Assert.assertEquals(sites2.toString(), 1, sites2.size());
 
 		Page<Site> page3 = siteResource.getMyUserAccountSitesPage(
-			Pagination.of(1, totalCount + 3));
+			Pagination.of(1, (int)totalCount + 3));
 
 		assertContains(site1, (List<Site>)page3.getItems());
 		assertContains(site2, (List<Site>)page3.getItems());

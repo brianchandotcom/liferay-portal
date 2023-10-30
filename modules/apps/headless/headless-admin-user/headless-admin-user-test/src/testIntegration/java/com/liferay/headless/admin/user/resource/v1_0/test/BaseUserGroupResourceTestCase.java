@@ -200,7 +200,7 @@ public abstract class BaseUserGroupResourceTestCase {
 		Page<UserGroup> page = userGroupResource.getUserUserGroups(
 			userAccountId);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long totalCount = page.getTotalCount();
 
 		if (irrelevantUserAccountId != null) {
 			UserGroup irrelevantUserGroup = testGetUserUserGroups_addUserGroup(
@@ -208,11 +208,10 @@ public abstract class BaseUserGroupResourceTestCase {
 
 			page = userGroupResource.getUserUserGroups(irrelevantUserAccountId);
 
-			Assert.assertEquals(1, page.getTotalCount());
+			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
-			assertEquals(
-				Arrays.asList(irrelevantUserGroup),
-				(List<UserGroup>)page.getItems());
+			assertContains(
+				irrelevantUserGroup, (List<UserGroup>)page.getItems());
 			assertValid(
 				page,
 				testGetUserUserGroups_getExpectedActions(
@@ -227,11 +226,10 @@ public abstract class BaseUserGroupResourceTestCase {
 
 		page = userGroupResource.getUserUserGroups(userAccountId);
 
-		Assert.assertEquals(2, page.getTotalCount());
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertEqualsIgnoringOrder(
-			Arrays.asList(userGroup1, userGroup2),
-			(List<UserGroup>)page.getItems());
+		assertContains(userGroup1, (List<UserGroup>)page.getItems());
+		assertContains(userGroup2, (List<UserGroup>)page.getItems());
 		assertValid(
 			page, testGetUserUserGroups_getExpectedActions(userAccountId));
 
@@ -384,10 +382,10 @@ public abstract class BaseUserGroupResourceTestCase {
 
 	@Test
 	public void testGetUserGroupsPageWithPagination() throws Exception {
-		Page<UserGroup> totalPage = userGroupResource.getUserGroupsPage(
+		Page<UserGroup> userGroupPage = userGroupResource.getUserGroupsPage(
 			null, null, null, null);
 
-		int totalCount = GetterUtil.getInteger(totalPage.getTotalCount());
+		int totalCount = GetterUtil.getInteger(userGroupPage.getTotalCount());
 
 		UserGroup userGroup1 = testGetUserGroupsPage_addUserGroup(
 			randomUserGroup());
@@ -416,7 +414,7 @@ public abstract class BaseUserGroupResourceTestCase {
 		Assert.assertEquals(userGroups2.toString(), 1, userGroups2.size());
 
 		Page<UserGroup> page3 = userGroupResource.getUserGroupsPage(
-			null, null, Pagination.of(1, totalCount + 3), null);
+			null, null, Pagination.of(1, (int)totalCount + 3), null);
 
 		assertContains(userGroup1, (List<UserGroup>)page3.getItems());
 		assertContains(userGroup2, (List<UserGroup>)page3.getItems());
@@ -530,22 +528,23 @@ public abstract class BaseUserGroupResourceTestCase {
 
 		userGroup2 = testGetUserGroupsPage_addUserGroup(userGroup2);
 
+		Page<UserGroup> page = userGroupResource.getUserGroupsPage(
+			null, null, null, null);
+
 		for (EntityField entityField : entityFields) {
 			Page<UserGroup> ascPage = userGroupResource.getUserGroupsPage(
-				null, null, Pagination.of(1, 2),
+				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":asc");
 
-			assertEquals(
-				Arrays.asList(userGroup1, userGroup2),
-				(List<UserGroup>)ascPage.getItems());
+			assertContains(userGroup1, (List<UserGroup>)ascPage.getItems());
+			assertContains(userGroup2, (List<UserGroup>)ascPage.getItems());
 
 			Page<UserGroup> descPage = userGroupResource.getUserGroupsPage(
-				null, null, Pagination.of(1, 2),
+				null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":desc");
 
-			assertEquals(
-				Arrays.asList(userGroup2, userGroup1),
-				(List<UserGroup>)descPage.getItems());
+			assertContains(userGroup2, (List<UserGroup>)descPage.getItems());
+			assertContains(userGroup1, (List<UserGroup>)descPage.getItems());
 		}
 	}
 

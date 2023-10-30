@@ -16,6 +16,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.image.ImageToolUtil_IW;
 import com.liferay.portal.kernel.audit.AuditMessageFactory;
 import com.liferay.portal.kernel.audit.AuditRouterUtil;
+import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -201,6 +202,13 @@ public class TemplateContextHelper {
 	public void prepare(
 		Map<String, Object> contextObjects,
 		HttpServletRequest httpServletRequest) {
+
+		// CSP nonce
+
+		contextObjects.put(
+			"nonceAttr",
+			ContentSecurityPolicyNonceProviderUtil.getNonceAttr(
+				httpServletRequest));
 
 		// Request
 

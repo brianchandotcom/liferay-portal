@@ -20,7 +20,7 @@
 	<#if is_signed_in>
 		<@liferay_portlet["runtime"] portletName="faro_portlet" />
 
-		<script defer src="${htmlUtil.escape(portalUtil.getStaticResourceURL(request, "/o/osb-faro-web/dist/main.js"))}"></script>
+		<script defer ${nonceAttr} src="${htmlUtil.escape(portalUtil.getStaticResourceURL(request, "/o/osb-faro-web/dist/main.js"))}"></script>
 	<#else>
 		<@liferay_util["include"] page=top_head_include />
 
@@ -34,7 +34,7 @@
 	</#if>
 
 	<#if !is_signed_in>
-		<script>
+		<script ${nonceAttr}}>
 			const parsedUrl = new URL(window.location.href);
 			const params = new URLSearchParams(parsedUrl.search);
 			const paramName = params.get('_com_liferay_login_web_portlet_LoginPortlet_mvcRenderCommandName')?.replace('/login/', '') ?? null;

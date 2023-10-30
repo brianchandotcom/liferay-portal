@@ -1,6 +1,22 @@
 definition {
 
 	@summary = "Default summary"
+	macro _getCachedCompanyId(portalInstanceName = null, companiesCache = null) {
+		Variables.assertDefined(parameterList = ${portalInstanceName});
+
+		var company = JSONObjectList.getJSONObject(
+			jSONObjectKey = "portalInstanceId",
+			jSONObjectList = ${companiesCache},
+			jSONObjectValue = ${portalInstanceName});
+
+		var companyId = JSONObjectList.getJSONObjectValueFromKey(
+			jSONObject = ${company},
+			jSONObjectKey = "companyId");
+
+		return ${companyId};
+	}
+
+	@summary = "Default summary"
 	macro getAllCompanyNames() {
 		if (!(isSet(portalInstanceName))) {
 			var portalInstanceName = JSONCompany.getPortalInstanceNameNoSelenium();
@@ -83,12 +99,19 @@ definition {
 			var creatorPassword = JSONUtil2.getSuperAdminUserPassword();
 		}
 
-		var curl = '''
-			${portalURL}/api/jsonws/company/get-company-by-virtual-host/virtual-host/${portalInstanceName} \
-				-u ${creatorEmailAddress}:${creatorPassword}
-		''';
+		var companyId = JSONCompany._getCachedCompanyId(portalInstanceName = ${portalInstanceName});
 
-		var companyId = JSONCurlUtil.get(${curl}, "$['companyId']");
+		if (${companyId} == "") {
+			var curl = '''
+				${portalURL}/api/jsonws/company/get-company-by-virtual-host/virtual-host/${portalInstanceName} \
+					-u ${creatorEmailAddress}:${creatorPassword}
+			''';
+
+			var companyId = JSONCurlUtil.get(${curl}, "$['companyId']");
+		}
+		else {
+			echo("Using cached companyId: ${companyId} instead of a JSON call.");
+		}
 
 		return ${companyId};
 	}

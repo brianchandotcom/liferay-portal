@@ -60,7 +60,13 @@ definition {
 			var curl = StringUtil.add(${curl}, " -H 'Authorization: Bearer ${token}'", "");
 		}
 
-		JSONCurlUtil.post(${curl});
+		var company = JSONCurlUtil.post(${curl});
+
+		var companiesCacheTemp = JSONObjectList.addJSONObject(
+			jSONObject = ${company},
+			jSONObjectList = ${companiesCache});
+
+		static var companiesCache = ${companiesCacheTemp};
 	}
 
 	@summary = "Default summary"

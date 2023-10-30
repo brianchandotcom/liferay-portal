@@ -1,0 +1,59 @@
+definition {
+
+	@description = "Append JSONObject to JSONObjectList, if JSONObjectList is empty, create a new List, then return JSONObjectList"
+	@summary = "Default summary"
+	macro addJSONObject() {
+		Variables.assertDefined(parameterList = ${jSONObject});
+
+		// This is needed otherwise Poshi for loops will break with existing commas
+
+		var jSONObject = StringUtil.replace(${jSONObject}, ",", ";");
+
+		if (!(isSet(jSONObjectList))) {
+			var jSONObjectList = ${jSONObject};
+		}
+		else {
+			var jSONObjectList = "${jSONObjectList},${jSONObject}";
+		}
+
+		return ${jSONObjectList};
+	}
+
+	@description = "Grab JSONObject from JSONObjectList, if 2 or more Objects are found, error out"
+	@summary = "Default summary"
+	macro getJSONObject(jSONObjectList, jSONObjectValue, jSONObjectKey) {
+		Variables.assertDefined(parameterList = "${jSONObjectKey},${jSONObjectValue}");
+
+		var matchingJSONObject = "";
+
+		if (isSet(jSONObjectList) && (${jSONObjectList} != "")) {
+			for (var jSONObject : list ${jSONObjectList}) {
+				var value = JSONObjectList.getJSONObjectValueFromKey(
+					jSONObject = ${jSONObject},
+					jSONObjectKey = ${jSONObjectKey});
+
+				if (${value} == ${jSONObjectValue}) {
+					if (${matchingJSONObject} != "") {
+						fail("2 matching JSONObjects found");
+					}
+
+					var matchingJSONObject = ${jSONObject};
+				}
+			}
+		}
+
+		return ${matchingJSONObject};
+	}
+
+	@summary = "Default summary"
+	macro getJSONObjectValueFromKey(jSONObject = null, jSONObjectKey = null) {
+		Variables.assertDefined(parameterList = "${jSONObjectKey},${jSONObject}");
+
+		// We expect a semicolon in place of a comma for this implementation
+
+		var jSONObjectValue = RegexUtil.replace(${jSONObject}, "\"${jSONObjectKey}\"\s*:\s*\"?(.*?)\"?;", 1);
+
+		return ${jSONObjectValue};
+	}
+
+}

@@ -144,7 +144,9 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 
 				searchContainer.deleteRow(tr, rowId);
 
-				A.Array.removeItem(addUserGroupIds, rowId);
+				addUserGroupIds = addUserGroupIds.filter((userGroupId) => {
+					return userGroupId !== rowId;
+				});
 
 				deleteUserGroupIds.push(rowId);
 
@@ -158,11 +160,13 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 			'.modify-link'
 		);
 
-		A.one('#<portlet:namespace />openUserGroupsLink').on('click', (event) => {
+		const selectUserGroupButton = document.getElementById(
+			'<portlet:namespace />openUserGroupsLink'
+		);
+
+		selectUserGroupButton.addEventListener('click', (event) => {
 			Liferay.Util.openSelectionModal({
 				onSelect: function (selectedItem) {
-					const A = AUI();
-
 					const itemValue = JSON.parse(selectedItem.value);
 
 					const label = Liferay.Util.sub(
@@ -186,7 +190,9 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 
 					searchContainer.updateDataStore();
 
-					A.Array.removeItem(deleteUserGroupIds, itemValue.userGroupId);
+					deleteUserGroupIds = deleteUserGroupIds.filter((userGroupId) => {
+						return userGroupId !== itemValue.userGroupId;
+					});
 
 					addUserGroupIds.push(itemValue.userGroupId);
 

@@ -12,7 +12,7 @@ import Radio from '../Radio/Radio.es';
 
 // @ts-ignore
 
-import Select from '../Select/Select.es';
+import Select from '../Select/Select';
 
 // @ts-ignore
 

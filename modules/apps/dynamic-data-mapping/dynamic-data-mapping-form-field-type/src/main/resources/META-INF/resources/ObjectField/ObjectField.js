@@ -14,7 +14,7 @@ import {
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useMemo} from 'react';
 
-import Select from '../Select/Select.es';
+import Select from '../Select/Select';
 
 const dataTypes = {
 	double: ['double', 'bigdecimal'],

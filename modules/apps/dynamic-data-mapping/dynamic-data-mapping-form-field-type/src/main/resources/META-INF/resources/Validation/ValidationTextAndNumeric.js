@@ -6,7 +6,7 @@
 import React from 'react';
 
 import Numeric from '../Numeric/Numeric';
-import Select from '../Select/Select.es';
+import Select from '../Select/Select';
 import Text from '../Text/Text.es';
 import {EVENT_TYPES} from './validationReducer';
 

@@ -96,6 +96,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENDPOINT_DROPDOWN</td>
+	<td>//button[@aria-controls='selectDropdown' and contains(.,'${key_value}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTER_NAME</td>
 	<td>//input[(@placeholder='Enter name.')]</td>
 	<td></td>

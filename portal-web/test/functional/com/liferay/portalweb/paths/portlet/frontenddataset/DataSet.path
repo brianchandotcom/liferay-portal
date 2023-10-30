@@ -321,6 +321,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_BUTTON_DISABLED</td>
+	<td>//button[contains(text(),'Save') and @disabled]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IN_USE_BADGE</td>
+	<td>//button[contains(@class, 'dropdown-item') and contains (text(), '${filterByItem}')]//span[contains(@class, "label-item label-item-expand") and text()="In Use"]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NEW_FILTER_INVALID_DATE</td>
 	<td>//*[contains(text(), 'Date range is invalid. "From" must be before "to"')]</td>
 	<td></td>

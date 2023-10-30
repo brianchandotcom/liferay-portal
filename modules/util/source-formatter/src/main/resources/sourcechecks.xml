@@ -1609,10 +1609,6 @@
 			<description name="Performs replacements on Liferay's outdated code" />
 			<weight>1</weight>
 		</check>
-		<check name="UpgradeDLUtilCheck">
-			<category name="Upgrade" />
-			<description name="Replace the getGroupIds method of class `DLUtil` by getCurrentAndAncestorSiteGroupIds of class `PortalUtil`." />
-		</check>
 		<check name="UpgradeGetPortletGroupIdMethodCheck">
 			<category name="Upgrade" />
 			<description name="Run code migration of the method 'getPortletGroupId' to 'getScopeGroupId'" />

@@ -61,6 +61,82 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-14813 | Automation ID: LRAC-14813 | Test Summary: Assert page view accuracy between cards Visitor Behavior, Audience, and Page List number"
+	@priority = 4
+	test AssertPageViewAccuracyBetweenCards {
+		var metricNum = 1;
+
+		task ("Create Blog to Add to Page") {
+			ACUtils.createBlogsAndAddToPage();
+		}
+
+		task ("Sign in as new user") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+		}
+
+		task ("View the blog page") {
+			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Blogs AC Title",
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
+		}
+
+		task ("Navigate to Pages tab in Sites dashboard") {
+			ACNavigation.goToSites();
+
+			ACNavigation.switchTab(tabName = "Pages");
+		}
+
+		task ("Select the Last 24 hours in time period") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Search the Pages") {
+			var dataSourceName = StringUtil.extractFirst(${assignedPropertyName}, " ");
+
+			ACUtils.searchBar(searchItem = "AC Page - Site Name - ${dataSourceName}");
+		}
+
+		task ("View Page Metric of Unique Visitors in Page List") {
+			ACSites.viewPageMetric(
+				metricName = "Unique Visitors",
+				metricValue = ${metricNum};
+				pageName = "AC Page - Site Name - ${dataSourceName}");
+		}
+
+		task ("Navigate to page") {
+			ACNavigation.openItem(itemName = "AC Page - Site Name - ${dataSourceName}");
+		}
+
+		task ("View Unique Visitors metric value in Visitors Behavior card") {
+			ACCards.viewMetricValue(
+				cardTitle = "Visitors Behavior",
+				metricName = "Unique Visitors",
+				metricValue = ${metricNum});
+		}
+
+		task ("View Visitors metric value in Audience card") {
+			ACUtils.assertAudienceCardTotalNumber(
+				index = 1,
+				metricValue = ${metricNum});
+		}
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8514 | Test Summary: Page Profile Visitor behavior card shows the number of unique visitors and views"
 	@priority = 5
 	test ShowNumberOfUniqueVisitorsAndViews {

@@ -83,8 +83,7 @@ components:
                     readOnly: true
                     type: string
                 creator:
-                    allOf:
-                        - $ref: "#/components/schemas/Creator"
+                    $ref: "#/components/schemas/Creator"
                     description:
                         The keyword's creator.
                     readOnly: true
@@ -150,8 +149,7 @@ components:
                     readOnly: true
                     type: array
                 creator:
-                    allOf:
-                        - $ref: "#/components/schemas/Creator"
+                    $ref: "#/components/schemas/Creator"
                     description:
                         The category's creator.
                     readOnly: true
@@ -296,8 +294,7 @@ components:
                     readOnly: true
                     type: array
                 creator:
-                    allOf:
-                        - $ref: "#/components/schemas/Creator"
+                    $ref: "#/components/schemas/Creator"
                     description:
                         The vocabulary's creator.
                     readOnly: true

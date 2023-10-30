@@ -13390,7 +13390,6 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 
 		<get-testcase-property property.name="ci.retries.disabled" />
-		<get-testcase-property property.name="test.jvm.max.retries" />
 
 		<if>
 			<equals arg1="${ci.retries.disabled}" arg2="true" />

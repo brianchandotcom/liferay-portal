@@ -165,7 +165,7 @@
 </tr>
 <tr>
 	<td>OCCURENCE_SELECT</td>
-	<td>xpath=(//div[(@class='criterion')])[${key_indexField}]//select[@class='form-control operator-input']</td>
+	<td>xpath=((//div[(@class='criterion')])[${key_indexField}]//button[contains(@class,'operator-input')])[2]</td>
 	<td></td>
 </tr>
 <tr>

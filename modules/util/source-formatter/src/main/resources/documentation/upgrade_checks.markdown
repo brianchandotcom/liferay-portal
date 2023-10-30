@@ -34,7 +34,6 @@ UpgradeJavaGetFDSTableSchemaParameterCheck | .bnd, .ftl, .gradle, .java, .json, 
 UpgradeJavaGetFileMethodCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Run code migration of method from 'getFile' to 'getFileAsStream', and include a method 'FileUtil.createTempFile' |
 UpgradeJavaGetLayoutDisplayPageObjectProviderCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replace parameter type long by ItemInfoReference in the getLayoutDisplayPageObjectProvider method |
 UpgradeJavaGetLayoutDisplayPageProviderCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replace getLayoutDisplayPageProvider by getLayoutDisplayPageProviderByClassName |
-UpgradeJavaIndexerCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replace Indexer by Indexer<?> |
 UpgradeJavaLanguageUtilCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replace `ListUtil.fromArray` by `new ArrayList' when the parameter is to 'LanguageUtil.getAvailableLocales' |
 UpgradeJavaMultiVMPoolUtilCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replaces the references of the MultiVMPoolUtil class and also its methods usages. |
 UpgradeJavaPortletIdMethodCheck | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm | Replace the 'document.get(Field.PORTLET_ID)' by the new interface 'PortletProviderUtil.getPortletId' |

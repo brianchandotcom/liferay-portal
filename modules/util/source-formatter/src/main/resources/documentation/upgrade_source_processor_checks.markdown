@@ -26,7 +26,6 @@ UpgradeJavaGetFDSTableSchemaParameterCheck | [Upgrade](upgrade_checks.markdown#u
 UpgradeJavaGetFileMethodCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Run code migration of method from 'getFile' to 'getFileAsStream', and include a method 'FileUtil.createTempFile' |
 UpgradeJavaGetLayoutDisplayPageObjectProviderCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace parameter type long by ItemInfoReference in the getLayoutDisplayPageObjectProvider method |
 UpgradeJavaGetLayoutDisplayPageProviderCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace getLayoutDisplayPageProvider by getLayoutDisplayPageProviderByClassName |
-UpgradeJavaIndexerCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace Indexer by Indexer<?> |
 UpgradeJavaLanguageUtilCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace `ListUtil.fromArray` by `new ArrayList' when the parameter is to 'LanguageUtil.getAvailableLocales' |
 UpgradeJavaMultiVMPoolUtilCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replaces the references of the MultiVMPoolUtil class and also its methods usages. |
 UpgradeJavaPortletIdMethodCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace the 'document.get(Field.PORTLET_ID)' by the new interface 'PortletProviderUtil.getPortletId' |

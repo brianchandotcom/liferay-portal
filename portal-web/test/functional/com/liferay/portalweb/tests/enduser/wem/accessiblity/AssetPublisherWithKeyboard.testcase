@@ -51,7 +51,7 @@ definition {
 			Navigator.gotoNavTab(navTab = "Display Settings");
 		}
 
-		task ("The the user could select display template by keyboard") {
+		task ("The user could select display template by keyboard") {
 			AssertTextEquals(
 				key_class = "display-template-selector",
 				key_index = 1,

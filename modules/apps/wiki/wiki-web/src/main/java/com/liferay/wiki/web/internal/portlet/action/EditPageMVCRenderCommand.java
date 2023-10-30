@@ -185,10 +185,6 @@ public class EditPageMVCRenderCommand implements MVCRenderCommand {
 	@Reference
 	private WikiEngineRenderer _wikiEngineRenderer;
 
-	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiNode)")
-	private volatile ModelResourcePermission<WikiNode>
-		_wikiNodeModelResourcePermission;
-
 	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiPage)")
 	private volatile ModelResourcePermission<WikiPage>
 		_wikiPageModelResourcePermission;

@@ -310,6 +310,13 @@ public class ObjectFieldLocalServiceImpl
 
 			objectFieldPersistence.remove(objectField);
 
+			if (objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_AUTO_INCREMENT)) {
+
+				counterLocalService.reset(
+					ObjectFieldUtil.getCounterName(objectField));
+			}
+
 			_objectFieldSettingLocalService.deleteObjectFieldObjectFieldSetting(
 				objectField);
 		}
@@ -1016,6 +1023,9 @@ public class ObjectFieldLocalServiceImpl
 			_alterTableDropColumn(
 				objectField.getDBTableName(),
 				objectField.getSortableDBColumnName());
+
+			counterLocalService.reset(
+				ObjectFieldUtil.getCounterName(objectField));
 		}
 
 		return objectField;

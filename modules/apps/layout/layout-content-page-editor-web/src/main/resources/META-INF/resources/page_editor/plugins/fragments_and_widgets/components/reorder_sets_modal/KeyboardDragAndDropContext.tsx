@@ -126,7 +126,11 @@ export function KeyboardDragAndDropContextProvider({
 			return;
 		}
 
-		targetElement.scrollIntoView({
+		// Current jest dom does not have "scrollIntoView" implemented for
+		// HTMLElement. We need to check if "scrollIntoView" exists until
+		// we update jest or we do not have it in our unit tests.
+
+		targetElement.scrollIntoView?.({
 			behavior: 'smooth',
 			block: 'center',
 		});

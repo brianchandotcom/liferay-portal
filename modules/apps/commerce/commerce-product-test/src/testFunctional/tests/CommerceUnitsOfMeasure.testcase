@@ -538,15 +538,15 @@ definition {
 				productStockQuantity = 0);
 		}
 
-		task ("And adds try to the cart the SKU/Second UOM combination with quantity 6") {
+		task ("And try to add to the cart the SKU/Second UOM combination with quantity 6") {
 			Type(
 				locator1 = "CommerceAccelerators#PRODUCT_DETAILS_QUANTITY_SELECTOR_INPUT_FIELD",
 				value1 = 6);
 
 			Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
 
-			task ("But an error is present") {
-				Alert.viewErrorMessage(errorMessage = "Danger:The specified quantity is unavailable.");
+			task ("But the add to cart button is disabled") {
+				AssertElementPresent(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE_DISABLED");
 			}
 		}
 
@@ -1186,12 +1186,10 @@ definition {
 				locator1 = "CommerceFrontStore#FS_PRODUCT_AVAILABILITY");
 		}
 
-		task ("When adding the UOM2 to the cart") {
+		task ("And the add to cart button is disabled") {
 			Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
-		}
 
-		task ("Then an alert is shown: Danger:The specified quantity is unavailable") {
-			Alert.viewErrorMessage(errorMessage = "Danger:The specified quantity is unavailable.");
+			AssertElementPresent(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE_DISABLED");
 		}
 
 		task ("And no items are added to the cart") {

@@ -31,6 +31,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRODUCT_IMAGE</td>
+	<td>//img[@class='sticker-img']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SIGN_IN_BUTTON</td>
 	<td>//button[contains(.,'Sign In')] | //input[@value='Sign In']</td>
 	<td></td>

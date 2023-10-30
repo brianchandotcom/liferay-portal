@@ -5,12 +5,13 @@
 
 package com.liferay.analytics.batch.exportimport.internal.dispatch.executor;
 
+import com.liferay.analytics.batch.exportimport.manager.AnalyticsBatchExportImportManager;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.AssetEntity;
+import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
 import com.liferay.dispatch.executor.DispatchTaskExecutor;
+import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
+import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
-
-import java.util.Arrays;
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -31,6 +32,26 @@ public class AssetEntityAnalyticsExportDispatchTaskExecutor
 	public static final String KEY = "export-analytics-asset-entities";
 
 	@Override
+	public void doExecute(
+			DispatchTrigger dispatchTrigger,
+			DispatchTaskExecutorOutput dispatchTaskExecutorOutput)
+		throws Exception {
+
+		if (!_analyticsConfigurationRegistry.isActive()) {
+			return;
+		}
+
+		_analyticsBatchExportImportManager.exportToAnalyticsCloud(
+			"asset-entry-analytics-dxp-entities",
+			dispatchTrigger.getCompanyId(), null, null,
+			getNotificationUnsafeConsumer(
+				dispatchTrigger.getDispatchTriggerId(),
+				dispatchTaskExecutorOutput),
+			getResourceLastModifiedDate(dispatchTrigger.getDispatchTriggerId()),
+			AssetEntity.class.getName(), dispatchTrigger.getUserId());
+	}
+
+	@Override
 	public String getName() {
 		return KEY;
 	}
@@ -40,18 +61,12 @@ public class AssetEntityAnalyticsExportDispatchTaskExecutor
 		return !_featureFlagManager.isEnabled("LRAC-14771");
 	}
 
-	@Override
-	protected List<String> getBatchEngineExportTaskItemDelegateNames() {
-		return _batchEngineExportTaskItemDelegateNames;
-	}
+	@Reference
+	private AnalyticsBatchExportImportManager
+		_analyticsBatchExportImportManager;
 
-	@Override
-	protected String getResourceName() {
-		return AssetEntity.class.getName();
-	}
-
-	private static final List<String> _batchEngineExportTaskItemDelegateNames =
-		Arrays.asList("asset-entry-analytics-dxp-entities");
+	@Reference
+	private AnalyticsConfigurationRegistry _analyticsConfigurationRegistry;
 
 	@Reference
 	private FeatureFlagManager _featureFlagManager;

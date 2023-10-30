@@ -305,7 +305,8 @@ public class FreeMarkerTool {
 	public Map<String, String> getDTOProperties(
 		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, Schema schema) {
 
-		return DTOOpenAPIParser.getProperties(configYAML, openAPIYAML, schema);
+		return DTOOpenAPIParser.getProperties(
+			configYAML, false, openAPIYAML, schema);
 	}
 
 	public Map<String, String> getDTOProperties(

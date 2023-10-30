@@ -85,19 +85,13 @@ public class DTOOpenAPIParser {
 	}
 
 	public static Map<String, String> getProperties(
-		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, Schema schema) {
-
-		return getProperties(configYAML, false, openAPIYAML, schema);
-	}
-
-	public static Map<String, String> getProperties(
 		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, String schemaName) {
 
 		Map<String, Schema> schemas = OpenAPIUtil.getAllSchemas(openAPIYAML);
 
 		Schema schema = schemas.get(schemaName);
 
-		return getProperties(configYAML, openAPIYAML, schema);
+		return getProperties(configYAML, false, openAPIYAML, schema);
 	}
 
 	public static Schema getPropertySchema(String propertyName, Schema schema) {

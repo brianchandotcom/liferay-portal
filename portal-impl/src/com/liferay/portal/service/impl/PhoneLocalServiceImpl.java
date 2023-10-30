@@ -5,11 +5,11 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.format.util.PhoneNumberFormatUtil;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PhoneNumberException;
 import com.liferay.portal.kernel.exception.PhoneNumberExtensionException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.format.PhoneNumberFormatUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ListTypeConstants;

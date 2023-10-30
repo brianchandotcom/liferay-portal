@@ -525,7 +525,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configurePublishToLiveViaPortletCP {
+	macro configurePublishToLiveViaPortletCP(contentDateRange = null, dateRangeStartDate = null, dateRangeEndDate = null) {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Staging");
 
 		WaitForLiferayEvent.initializeLiferayEventLog();

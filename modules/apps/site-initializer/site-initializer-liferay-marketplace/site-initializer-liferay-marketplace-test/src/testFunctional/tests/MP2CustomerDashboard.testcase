@@ -353,4 +353,41 @@ definition {
 		}
 	}
 
+	@description = "LPS-174809 | Verify that after accepting an invitation, as a Publisher, when logging into the marketplace account the customer does not see the customer gate"
+	@priority = 4
+	test DoNotRedirectToCustomerGate {
+		task ("Given that a marketplace account administrator invites a member to the Publisher Dashboard") {
+			MP2Navigator.openSitePage(pageName = "Publisher Dashboard");
+
+			MP2Navigator.gotoNavItem(navItem = "Members");
+
+			MP2Dashboards.inviteNewMember(
+				button = "true",
+				checkboxName = "App Editor",
+				emailAddress = "test.mp@liferay.com",
+				firstName = "Test",
+				lastName = "QA");
+		}
+
+		task ("And I go to MockMock") {
+			User.logoutPG();
+
+			MockMock._gotoMail();
+		}
+
+		task ("When the user accepts the invitation to the Publisher Dashboard") {
+			MP2Utils.firstLoginMKT(
+				asset = "Liferay Marketplace - Invitation from Dashboard Administrator",
+				bodyLink = "Accept invitation",
+				recipient = "da@administrator.com",
+				route = "loading",
+				userEmailAddress = "test.mp@liferay.com");
+
+			AssertLocation.assertPartialLocation(value1 = "web/marketplace-site/publisher-dashboard");
+		}
+
+		task ("Then I should be able to assert that the user does not go through the Customer Gate page") {
+			MP2Dashboards.assertNotViewCustomerGatePage(title = "Becoming a Liferay Marketplace Customer");
+		}
+	}
 }

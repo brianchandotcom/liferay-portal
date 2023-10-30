@@ -2,7 +2,7 @@
 @summary = "Drag and drop portlet to an object"
 definition {
 
-	function dragAndDropPortletToObject {
+	function dragAndDropPortletToObject(locator1,value1) {
 		WaitForSPARefresh();
 
 		Pause(locator1 = 1000);

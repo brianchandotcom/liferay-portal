@@ -84,6 +84,18 @@ public class ListTypeDefinitionLocalServiceTest {
 
 	@Test
 	public void testDeleteListTypeDefinition() throws Exception {
+		ListTypeDefinition systemListTypeDefinition =
+			_addSystemListTypeDefinition();
+
+		AssertUtils.assertFailure(
+			ListTypeDefinitionSystemException.class, false,
+			"Only allowed bundles can delete system list type definitions",
+			() -> _listTypeDefinitionLocalService.deleteListTypeDefinition(
+				systemListTypeDefinition.getListTypeDefinitionId()));
+
+		_testDeleteListTypeDefinition(
+			systemListTypeDefinition.getListTypeDefinitionId());
+
 		ListTypeDefinition listTypeDefinition = _addListTypeDefinition();
 
 		ObjectField objectField = ObjectFieldUtil.createObjectField(
@@ -112,18 +124,6 @@ public class ListTypeDefinitionLocalServiceTest {
 
 		_testDeleteListTypeDefinition(
 			listTypeDefinition.getListTypeDefinitionId());
-
-		ListTypeDefinition systemListTypeDefinition =
-			_addSystemListTypeDefinition();
-
-		AssertUtils.assertFailure(
-			ListTypeDefinitionSystemException.class, false,
-			"Only allowed bundles can delete system list type definitions",
-			() -> _listTypeDefinitionLocalService.deleteListTypeDefinition(
-				systemListTypeDefinition.getListTypeDefinitionId()));
-
-		_testDeleteListTypeDefinition(
-			systemListTypeDefinition.getListTypeDefinitionId());
 	}
 
 	@Test

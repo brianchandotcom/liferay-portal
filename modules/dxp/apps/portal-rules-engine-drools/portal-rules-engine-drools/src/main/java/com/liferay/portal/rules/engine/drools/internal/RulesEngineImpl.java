@@ -5,7 +5,6 @@
 
 package com.liferay.portal.rules.engine.drools.internal;
 
-import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.resource.ResourceRetriever;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -51,7 +50,6 @@ import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -380,10 +378,6 @@ public class RulesEngineImpl implements RulesEngine {
 	private ResourceType _defaultResourceType;
 	private final Map<String, KnowledgeBase> _knowledgeBaseMap =
 		new ConcurrentHashMap<>();
-
-	@Reference
-	private MessageBus _messageBus;
-
 	private Map<RulesLanguage, ResourceType> _resourceTypeMap =
 		new ConcurrentHashMap<>();
 

@@ -7,7 +7,6 @@ package com.liferay.headless.commerce.punchout.internal.resource.v1_0;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.model.CommerceOrder;
@@ -479,9 +478,6 @@ public class PunchOutSessionResourceImpl
 
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
-
-	@Reference
-	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
 
 	@Reference
 	private CommerceAccountHelper _commerceAccountHelper;

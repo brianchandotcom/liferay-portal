@@ -96,14 +96,14 @@ definition {
 					"endDate": "${endDate}",
 					"fullName": "${fullName}",
 					"requestBehalf": {
-					"key": "displacedDistressed",
-					"name": "Displaced/Distressed"
+						"key": "displacedDistressed",
+						"name": "Displaced/Distressed"
 					},
 					"grantAmount": "${grantAmount}",
 					"requestDescription": "${requestDescription}",
 					"requestPurposes": {
-					"key": "disasterRelief",
-					"name": "Disaster Relief"
+						"key": "disasterRelief",
+						"name": "Disaster Relief"
 					},
 					"emailAddress": "${emailAddress}",
 					"phoneNumber": "${phoneNumber}",

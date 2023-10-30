@@ -379,16 +379,9 @@ definition {
 
 		PublicationsNavigator.openPublicationsHistory();
 
-		if (!(IsElementPresent(locator1 = "//div[(@class='data-set-content-wrapper')]"))) {
-			AssertTextEquals(
-				locator1 = "Publications#PUBLISHED_STATUS",
-				value1 = "Published");
-		}
-		else {
-			AssertTextEquals(
-				locator1 = "Publications#PUBLISHED_STATUS_IN_DATASET_DIAPLAY",
-				value1 = "Published");
-		}
+		AssertTextEquals(
+			locator1 = "Publications#PUBLISHED_STATUS",
+			value1 = "Published");
 	}
 
 	@summary = "Default summary"

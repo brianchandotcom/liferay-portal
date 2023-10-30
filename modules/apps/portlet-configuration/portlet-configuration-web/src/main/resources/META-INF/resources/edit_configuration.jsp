@@ -7,6 +7,15 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+String redirect = ParamUtil.getString(request, "redirect");
+
+if (FeatureFlagManagerUtil.isEnabled("LPS-197692") && Validator.isNotNull(redirect)) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+}
+%>
+
 <c:if test="<%= !layout.isTypeControlPanel() && !windowState.equals(LiferayWindowState.EXCLUSIVE) %>">
 	<liferay-util:include page="/tabs1.jsp" servletContext="<%= application %>">
 		<liferay-util:param name="tabs1" value="setup" />

@@ -15,6 +15,7 @@ import {CheckboxField} from '../../../../../../app/components/fragment_configura
 import {SelectField} from '../../../../../../app/components/fragment_configuration_fields/SelectField';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPES} from '../../../../../../app/config/constants/editableTypes';
+import {LAYOUT_TYPES} from '../../../../../../app/config/constants/layoutTypes';
 import {config} from '../../../../../../app/config/index';
 import {useCollectionConfig} from '../../../../../../app/contexts/CollectionItemContext';
 import {
@@ -150,21 +151,21 @@ export default function EditableActionPanel({item}) {
 			{isMapped(mappedAction) && (
 				<>
 					<InteractionSelector
-						config={editableValue.config}
 						data={INTERACTION_DATA.success}
 						fragmentId={item.parentId}
 						interactionOptions={SUCCESS_INTERACTION_OPTIONS}
+						itemConfig={editableValue.config}
 						onValueSelect={onValueSelect}
 					/>
 
 					<InteractionSelector
-						config={editableValue.config}
 						data={{
 							...INTERACTION_DATA.error,
 							defaultMessage: defaultError,
 						}}
 						fragmentId={item.parentId}
 						interactionOptions={ERROR_INTERACTION_OPTIONS}
+						itemConfig={editableValue.config}
 						onValueSelect={onValueSelect}
 					/>
 				</>
@@ -178,15 +179,15 @@ EditableActionPanel.propTypes = {
 };
 
 function InteractionSelector({
-	config,
 	data,
 	fragmentId,
 	interactionOptions,
+	itemConfig,
 	onValueSelect,
 }) {
 	const {defaultMessage, field, label, type} = data;
 
-	const interactionConfig = config[field];
+	const interactionConfig = itemConfig[field];
 
 	const {displayPage, interaction, page, reload, text, url} =
 		interactionConfig || {};
@@ -240,9 +241,23 @@ function InteractionSelector({
 		previewElement?.remove();
 	};
 
-	const mappingIds = collectionConfig
-		? collectionConfig.collection
-		: config.mappedAction;
+	let mappingIds = null;
+
+	if (
+		config.layoutType === LAYOUT_TYPES.display &&
+		itemConfig.mappedAction.mappedField
+	) {
+		const {selectedMappingTypes} = config;
+		mappingIds = {
+			classNameId: selectedMappingTypes.type.id,
+			classTypeId: selectedMappingTypes.subtype.id,
+		};
+	}
+	else {
+		mappingIds = collectionConfig
+			? collectionConfig.collection
+			: itemConfig.mappedAction;
+	}
 
 	return (
 		<>
@@ -407,8 +422,8 @@ function InteractionSelector({
 }
 
 InteractionSelector.propTypes = {
-	config: PropTypes.object.isRequired,
 	data: PropTypes.object.isRequired,
 	fragmentId: PropTypes.string.isRequired,
+	itemConfig: PropTypes.object.isRequired,
 	onValueSelect: PropTypes.func.isRequired,
 };

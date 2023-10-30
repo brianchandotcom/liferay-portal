@@ -395,7 +395,9 @@ definition {
 	macro revertPublication(publishNow = null, publicationName = null) {
 		var key_publicationName = ${publicationName};
 
-		Click(locator1 = "Publications#REVERT_BUTTON");
+		Click(locator1 = "Publications#PUBLICATION_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Revert");
 
 		AssertTextEquals(
 			locator1 = "Publications#PUBLICATION_NAME",

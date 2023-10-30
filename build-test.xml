@@ -8834,15 +8834,6 @@ diff -y -B -W250 ${selenium.output.dir.name}/upgraded-@{upgraded.db.schema}.sql 
 			<get-dxp-license-product-name />
 
 			<wait-for-app-server-log-message log.message="${dxp.license.product.name} license validation passed" />
-
-			<get-testcase-property property.name="commerce.license.enabled" />
-
-			<if>
-				<equals arg1="${commerce.license.enabled}" arg2="true" />
-				<then>
-					<wait-for-app-server-log-message log.message="Liferay Commerce Subscription Development license validation passed" />
-				</then>
-			</if>
 		</sequential>
 	</macrodef>
 
@@ -10151,15 +10142,6 @@ org.apache.catalina.tribes.level = FINE]]>
 					/>
 				</then>
 			</elseif>
-		</if>
-
-		<get-testcase-property property.name="commerce.license.enabled" />
-
-		<if>
-			<equals arg1="${commerce.license.enabled}" arg2="true" />
-			<then>
-				<antcall target="deploy-commerce-license-xml" />
-			</then>
 		</if>
 	</target>
 

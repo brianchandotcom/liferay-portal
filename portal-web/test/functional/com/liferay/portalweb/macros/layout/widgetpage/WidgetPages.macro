@@ -70,7 +70,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPageLayout(pageColumnNumberList = null,spanList = null) {
+	macro viewPageLayout(pageColumnNumberList = null, spanList = null) {
 		var list1 = ListUtil.newListFromString(${pageColumnNumberList});
 		var list2 = ListUtil.newListFromString(${spanList});
 		var size = ListUtil.size(${list1});

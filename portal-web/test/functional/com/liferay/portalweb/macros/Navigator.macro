@@ -30,7 +30,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro closeSpecificWindow(closeWindowTitle = null,selectWindowTitle = null) {
+	macro closeSpecificWindow(closeWindowTitle = null, selectWindowTitle = null) {
 		Navigator.selectSpecificWindow(windowTitle = ${closeWindowTitle});
 
 		Close.closeAndSelectWindow(value1 = "title=${selectWindowTitle}");
@@ -156,7 +156,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoPage(baseURL = null,pageName = null) {
+	macro gotoPage(baseURL = null, pageName = null) {
 		Navigator.openURL(baseURL = ${baseURL});
 
 		Pause(value1 = 3000);
@@ -170,7 +170,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoPrivateSitePage(baseURL = null,siteName = null,pageName = null) {
+	macro gotoPrivateSitePage(baseURL = null, siteName = null, pageName = null) {
 		Navigator.openPrivateSiteURL(
 			baseURL = ${baseURL},
 			siteName = ${siteName});
@@ -179,7 +179,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoPrivateStagedSitePage(baseURL = null,siteName = null,pageName = null) {
+	macro gotoPrivateStagedSitePage(baseURL = null, siteName = null, pageName = null) {
 		Navigator.openPrivateStagedSiteURL(
 			baseURL = ${baseURL},
 			siteNameURL = ${siteName});
@@ -201,7 +201,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoSitePage(baseURL = null,siteName = null,pageName = null) {
+	macro gotoSitePage(baseURL = null, siteName = null, pageName = null) {
 		Navigator.openSiteURL(
 			baseURL = ${baseURL},
 			siteName = ${siteName});
@@ -210,14 +210,14 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoSpecificURLPage(pageName = null,url = null) {
+	macro gotoSpecificURLPage(pageName = null, url = null) {
 		Navigator.openSpecificURL(url = ${url});
 
 		Navigator._gotoPage(pageName = ${pageName});
 	}
 
 	@summary = "Default summary"
-	macro gotoStagedSitePage(baseURL = null,siteName = null,defaultSite = null,pageName = null) {
+	macro gotoStagedSitePage(baseURL = null, siteName = null, defaultSite = null, pageName = null) {
 		Navigator.openStagingSiteURL(
 			baseURL = ${baseURL},
 			defaultSite = ${defaultSite},
@@ -241,7 +241,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openPrivateSitePageURL(siteName = null,pageName = null) {
+	macro openPrivateSitePageURL(siteName = null, pageName = null) {
 		var siteNameURL = StringUtil.replace(${siteName}, " ", "-");
 
 		var siteNameURL = StringUtil.lowerCase(${siteNameURL});
@@ -297,7 +297,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openSitePage(siteName = null,pageName = null) {
+	macro openSitePage(siteName = null, pageName = null) {
 		var siteNameURL = StringUtil.replace(${siteName}, " ", "-");
 
 		var siteNameURL = StringUtil.lowerCase(${siteNameURL});
@@ -343,7 +343,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openSpecificURL(domain = null,url = null) {
+	macro openSpecificURL(domain = null, url = null) {
 		Open(value1 = ${url});
 
 		Alert.confirmSecurity(domain = ${domain});
@@ -374,7 +374,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToGroupPagesPortlet(groupName = null,site = null,portalURL = null,siteURLKey = null,portlet = null,layoutName = null) {
+	macro openToGroupPagesPortlet(groupName = null, site = null, portalURL = null, siteURLKey = null, portlet = null, layoutName = null) {
 		var plid = JSONLayout.getPlid(
 			groupName = ${groupName},
 			layoutName = ${layoutName},

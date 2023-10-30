@@ -5,7 +5,7 @@ definition {
 
 	@summary = "Default summary"
 	@summary-ignore = "true"
-	macro runSmoke(i = null,) {
+	macro runSmoke(i = null) {
 		task ("Ensure that the super admin can add a Blank Site") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Sites",

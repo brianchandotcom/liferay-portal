@@ -18,7 +18,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setUpDataSetPage(dataSetViewName = null,pageName = null) {
+	macro setUpDataSetPage(dataSetViewName = null, pageName = null) {
 		Navigator.openURL();
 
 		ContentPages.addPage(pageName = ${pageName});

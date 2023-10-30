@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro changeLocale(fieldName = null,locale = null) {
+	macro changeLocale(fieldName = null, locale = null) {
 		Click.clickNoMouseOver(
 			key_fieldName = ${fieldName},
 			locator1 = "Button#LOCALIZATION_OPEN_GRAPH");
@@ -19,7 +19,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureOpenGraph(depotName = null,customDescription = null,customImage = null,customTitle = null,altDescription = null) {
+	macro configureOpenGraph(depotName = null, customDescription = null, customImage = null, customTitle = null, altDescription = null) {
 		if (isSet(customTitle)) {
 			var checkboxName = "Use Custom Title";
 
@@ -139,7 +139,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro mapEditableTextToField(mappedFieldText = null,mappedFieldName = null,textType = null,mappedField = null) {
+	macro mapEditableTextToField(mappedFieldText = null, mappedFieldName = null, textType = null, mappedField = null) {
 		if (${textType} == "TextInput") {
 			Type(
 				key_text = ${mappedField},
@@ -248,7 +248,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewDefaultMappedField(description = null,portlet = null,title = null) {
+	macro viewDefaultMappedField(description = null, portlet = null, title = null) {
 		if (${portlet} == "Open Graph") {
 			AssertAttributeValue(
 				key_mappedField = "Title",
@@ -299,7 +299,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewMappedField(mappedFieldValue = null,mappedField = null) {
+	macro viewMappedField(mappedFieldValue = null, mappedField = null) {
 		if (isSet(textType)) {
 			AssertTextEquals(
 				key_mappedField = ${mappedField},

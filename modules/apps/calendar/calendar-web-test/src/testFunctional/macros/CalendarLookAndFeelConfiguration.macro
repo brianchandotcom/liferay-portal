@@ -36,7 +36,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro fillBorderColorColumn(colorValueRight = null,colorValueBottom = null,colorValueLeft = null,colorValueTop = null) {
+	macro fillBorderColorColumn(colorValueRight = null, colorValueBottom = null, colorValueLeft = null, colorValueTop = null) {
 		if (isSet(colorValueTop)) {
 			Type(
 				key_fieldName = "Top",
@@ -67,7 +67,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro fillBorderWidthColumn(optionBottom = null,optionRight = null,fieldTextTop = null,optionLeft = null,fieldTextLeft = null,fieldTextBottom = null,optionTop = null,fieldTextRight = null) {
+	macro fillBorderWidthColumn(optionBottom = null, optionRight = null, fieldTextTop = null, optionLeft = null, fieldTextLeft = null, fieldTextBottom = null, optionTop = null, fieldTextRight = null) {
 		if (isSet(fieldTextTop)) {
 			Type(
 				key_fieldName = "Top",
@@ -127,7 +127,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro fillMarginColumn(optionBottom = null,optionRight = null,fieldTextTop = null,optionLeft = null,fieldTextLeft = null,fieldTextBottom = null,optionTop = null,fieldTextRight = null) {
+	macro fillMarginColumn(optionBottom = null, optionRight = null, fieldTextTop = null, optionLeft = null, fieldTextLeft = null, fieldTextBottom = null, optionTop = null, fieldTextRight = null) {
 		if (isSet(fieldTextTop)) {
 			Type(
 				key_fieldName = "Top",
@@ -178,7 +178,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro fillPaddingColumn(optionBottom = null,optionRight = null,fieldTextTop = null,optionLeft = null,fieldTextLeft = null,fieldTextBottom = null,optionTop = null,fieldTextRight = null) {
+	macro fillPaddingColumn(optionBottom = null, optionRight = null, fieldTextTop = null, optionLeft = null, fieldTextLeft = null, fieldTextBottom = null, optionTop = null, fieldTextRight = null) {
 		if (isSet(fieldTextTop)) {
 			Type(
 				key_fieldName = "Top",
@@ -252,7 +252,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectSameForAllInBorderStyles(borderWidthOption = null,borderColorOption = null,borderStyleOption = null) {
+	macro selectSameForAllInBorderStyles(borderWidthOption = null, borderColorOption = null, borderStyleOption = null) {
 		if (isSet(borderWidthOption)) {
 			Click.javaScriptClick(
 				key_nameColumn = ${borderWidthOption},
@@ -304,7 +304,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCssValues(cssValue = null,cssElement = null) {
+	macro viewCssValues(cssValue = null, cssElement = null) {
 		var idElement = selenium.getAttribute("//div[contains(@class, 'portlet-column-only')]//..//div[contains(@class, 'portlet-borderless')]@id");
 
 		AssertElementPresent(
@@ -315,7 +315,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewNotPresentCssValues(cssValue = null,cssElement = null) {
+	macro viewNotPresentCssValues(cssValue = null, cssElement = null) {
 		var idElement = selenium.getAttribute("//div[contains(@class, 'portlet-column-only')]//..//div[contains(@class, 'portlet-borderless')]@id");
 
 		AssertElementNotPresent(

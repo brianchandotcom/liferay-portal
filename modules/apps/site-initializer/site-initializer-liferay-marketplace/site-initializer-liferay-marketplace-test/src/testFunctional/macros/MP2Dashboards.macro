@@ -29,7 +29,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro clickOnTheInvitedUser(label = null,value = null) {
+	macro clickOnTheInvitedUser(label = null, value = null) {
 		Click(
 			key_label = ${label},
 			key_text = ${value},
@@ -44,7 +44,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro inviteNewMember(firstName = null,lastName = null,emailAddress = null,checkboxName = null) {
+	macro inviteNewMember(firstName = null, lastName = null, emailAddress = null, checkboxName = null) {
 		MP2Dashboards.clickNewMemberButton(buttonName = "New Member");
 
 		WaitForPageLoad();
@@ -71,7 +71,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro typeNewMemberInfoFields(field = null,fieldInput = null) {
+	macro typeNewMemberInfoFields(field = null, fieldInput = null) {
 		Type(
 			key_field = ${field},
 			locator1 = "MP2Dashboards#SETUP_FIELDS",

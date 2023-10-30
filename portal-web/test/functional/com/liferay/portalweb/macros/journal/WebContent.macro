@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addArticleCP(webContentTitle = null,webContentContent = null) {
+	macro addArticleCP(webContentTitle = null, webContentContent = null) {
 		WebContentNavigator.gotoAddCP();
 
 		WebContent.addCP(
@@ -12,7 +12,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addCP(videoShortcutTitle = null,depotName = null,siteName = null,webContentDescription = null,navTab = null,uploadFileName = null,viewableBy = null,webContentTitle = null,embedVideo = null,imageFileName = null,webContentContent = null,webContentId = null,folderName = null,imageSourceURL = null) {
+	macro addCP(videoShortcutTitle = null, depotName = null, siteName = null, webContentDescription = null, navTab = null, uploadFileName = null, viewableBy = null, webContentTitle = null, embedVideo = null, imageFileName = null, webContentContent = null, webContentId = null, folderName = null, imageSourceURL = null) {
 		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
 		if (isSet(webContentTitle)) {
@@ -124,7 +124,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addDraft(webContentTitle = null,webContentContent = null) {
+	macro addDraft(webContentTitle = null, webContentContent = null) {
 		WebContent.addCP(
 			webContentContent = ${webContentContent},
 			webContentTitle = ${webContentTitle});
@@ -135,7 +135,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addDraftPGViaAP(webContentTitle = null,webContentContent = null) {
+	macro addDraftPGViaAP(webContentTitle = null, webContentContent = null) {
 		AssetPublisherPortlet.addAsset(assetType = "Basic Web Content");
 
 		WebContent.addCP(
@@ -146,7 +146,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addExistingRelatedAssetCP(scopeSite = null,webContentTitle = null,otherSite = null,assetTitle = null,siteName = null,assetType = null) {
+	macro addExistingRelatedAssetCP(scopeSite = null, webContentTitle = null, otherSite = null, assetTitle = null, siteName = null, assetType = null) {
 		var key_webContentTitle = ${webContentTitle};
 
 		RelatedAssets.selectAsset(
@@ -228,7 +228,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addFeaturedImageFromDocumentsAndMedia(imageFileName = null,dmFolderName = null) {
+	macro addFeaturedImageFromDocumentsAndMedia(imageFileName = null, dmFolderName = null) {
 		Panel.expandPanel(panel = "Featured Image");
 
 		Select(
@@ -296,7 +296,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPGViaAP(webContentTitle = null,webContentContent = null) {
+	macro addPGViaAP(webContentTitle = null, webContentContent = null) {
 		AssetPublisherPortlet.addAsset(assetType = "Basic Web Content");
 
 		WebContent.addCP(
@@ -325,7 +325,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPGViaAPWithoutAsserts(webContentTitle = null,webContentContent = null) {
+	macro addPGViaAPWithoutAsserts(webContentTitle = null, webContentContent = null) {
 		AssetPublisherPortlet.addAsset(assetType = "Basic Web Content");
 
 		WebContent.addCP(
@@ -347,7 +347,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addReviewDate(reviewDate = null,reviewTime = null) {
+	macro addReviewDate(reviewDate = null, reviewTime = null) {
 		Panel.expandPanel(panel = "Schedule");
 
 		Uncheck(locator1 = "Checkbox#NEVER_REVIEW");
@@ -364,7 +364,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addViaCKEditor(webContentTitle = null,webContentContent = null) {
+	macro addViaCKEditor(webContentTitle = null, webContentContent = null) {
 		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
 		PortletEntry.inputTitle(title = ${webContentTitle});
@@ -375,7 +375,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addWithCategoryCP(userSegmentDetailTitle = null,webContentTitle = null,webContentContent = null,vocabularyName = null,categoryName = null) {
+	macro addWithCategoryCP(userSegmentDetailTitle = null, webContentTitle = null, webContentContent = null, vocabularyName = null, categoryName = null) {
 		for (var key_panel : list "Basic Information,Default Template,Display Page Template,Featured Image ") {
 			if ((IsElementPresent(locator1 = "Panel#PANEL_EXPANDED")) && (IsVisible(locator1 = "Panel#PANEL_EXPANDED"))) {
 				AssertClick(
@@ -397,7 +397,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addWithDocumentCP(dmDocumentTitle = null,webContentTitle = null,webContentContent = null,siteName = null) {
+	macro addWithDocumentCP(dmDocumentTitle = null, webContentTitle = null, webContentContent = null, siteName = null) {
 		WebContent.addCP(
 			webContentContent = ${webContentContent},
 			webContentTitle = ${webContentTitle});
@@ -433,7 +433,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addWithFriendlyURL(webContentTitle = null,webContentContent = null,friendlyURL = null) {
+	macro addWithFriendlyURL(webContentTitle = null, webContentContent = null, friendlyURL = null) {
 		WebContent.addCP(
 			webContentContent = ${webContentContent},
 			webContentTitle = ${webContentTitle});
@@ -449,7 +449,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addWithMultipleCategories(allowMultipleCategories = null,webContentTitle = null,webContentContent = null,vocabularyName = null,categoryNameList = null) {
+	macro addWithMultipleCategories(allowMultipleCategories = null, webContentTitle = null, webContentContent = null, vocabularyName = null, categoryNameList = null) {
 		for (var key_panel : list "Basic Information,Default Template,Display Page Template,Featured Image ") {
 			if ((IsElementPresent(locator1 = "Panel#PANEL_EXPANDED")) && (IsVisible(locator1 = "Panel#PANEL_EXPANDED"))) {
 				AssertClick(
@@ -479,7 +479,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addWithPriorityCP(webContentTitle = null,webContentContent = null,assetPriority = null) {
+	macro addWithPriorityCP(webContentTitle = null, webContentContent = null, assetPriority = null) {
 		WebContent.addCP(
 			webContentContent = ${webContentContent},
 			webContentTitle = ${webContentTitle});
@@ -494,7 +494,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addWithStructureAndWorkflowCP(webContentText = null,webContentTitle = null) {
+	macro addWithStructureAndWorkflowCP(webContentText = null, webContentTitle = null) {
 		WebContent.addCP(webContentTitle = ${webContentTitle});
 
 		if (isSet(webContentText)) {
@@ -512,7 +512,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addWithStructureCP(saveAsDraft = null,webContentUpload = null,available = null,description = null,webContentGeolocation = null,webContentImageDescription = null,webContentLinkToPage = null,webContentText = null,dmDocumentTitle = null,webContentImage = null,row = null,webContentSelectFromList = null,webContentSingleSelection = null,depotName = null,otherSiteName = null,webContentColor = null,structureName = null,webContentDate = null,webContentWebContent = null,navTab = null,webContentNumeric = null,webContentTitle = null,templateName = null,webContentRichText = null,dmFolderName = null,folderName = null,webContentMultipleSelection = null,fieldType = null,invalidFileValidation = null,dmNavTab = null) {
+	macro addWithStructureCP(saveAsDraft = null, webContentUpload = null, available = null, description = null, webContentGeolocation = null, webContentImageDescription = null, webContentLinkToPage = null, webContentText = null, dmDocumentTitle = null, webContentImage = null, row = null, webContentSelectFromList = null, webContentSingleSelection = null, depotName = null, otherSiteName = null, webContentColor = null, structureName = null, webContentDate = null, webContentWebContent = null, navTab = null, webContentNumeric = null, webContentTitle = null, templateName = null, webContentRichText = null, dmFolderName = null, folderName = null, webContentMultipleSelection = null, fieldType = null, invalidFileValidation = null, dmNavTab = null) {
 		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 
 		if (isSet(webContentTitle)) {
@@ -875,7 +875,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addWithTagCP(webContentTitle = null,webContentContent = null,tagNameList = null) {
+	macro addWithTagCP(webContentTitle = null, webContentContent = null, tagNameList = null) {
 		for (var key_panel : list "Basic Information,Default Template,Display Page Template,Featured Image ") {
 			if ((IsElementPresent(locator1 = "Panel#PANEL_EXPANDED")) && (IsVisible(locator1 = "Panel#PANEL_EXPANDED"))) {
 				AssertClick(
@@ -898,7 +898,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addWithWorkflowCP(webContentTitle = null,webContentContent = null) {
+	macro addWithWorkflowCP(webContentTitle = null, webContentContent = null) {
 		WebContent.addCP(
 			webContentContent = ${webContentContent},
 			webContentTitle = ${webContentTitle});
@@ -909,7 +909,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addWithWorkflowPGViaAP(webContentTitle = null,webContentContent = null) {
+	macro addWithWorkflowPGViaAP(webContentTitle = null, webContentContent = null) {
 		AssetPublisherPortlet.addAsset(assetType = "Basic Web Content");
 
 		WebContent.addCP(
@@ -933,7 +933,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertFieldOnWebContent(fieldHelpText = null,fieldName = null,fieldFieldLabel = null) {
+	macro assertFieldOnWebContent(fieldHelpText = null, fieldName = null, fieldFieldLabel = null) {
 		var key_fieldFieldLabel = ${fieldFieldLabel};
 		var key_fieldName = ${fieldName};
 
@@ -985,7 +985,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteCP(depotName = null,webContentTitle = null,webContentTitleEscapeCharacter = null,siteURLKey = null) {
+	macro deleteCP(depotName = null, webContentTitle = null, webContentTitleEscapeCharacter = null, siteURLKey = null) {
 		WebContent.moveToRecycleBinCP(
 			assetType = "Web Content Article",
 			webContentTitle = ${webContentTitle},
@@ -1010,7 +1010,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteStagedCP(depotName = null,webContentTitle = null,webContentTitleEscapeCharacter = null,siteName = null,pageName = null) {
+	macro deleteStagedCP(depotName = null, webContentTitle = null, webContentTitleEscapeCharacter = null, siteName = null, pageName = null) {
 		WebContent.moveToRecycleBinCP(
 			assetType = "Web Content Article",
 			webContentTitle = ${webContentTitle},
@@ -1065,7 +1065,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editCP(videoShortcutTitle = null,depotName = null,saveAsDraft = null,webContentContentEdit = null,available = null,webContentImageDescription = null,webContentWebContent = null,navTab = null,embedVideo = null,webContentImage = null,webContentTitleEdit = null,folderName = null) {
+	macro editCP(videoShortcutTitle = null, depotName = null, saveAsDraft = null, webContentContentEdit = null, available = null, webContentImageDescription = null, webContentWebContent = null, navTab = null, embedVideo = null, webContentImage = null, webContentTitleEdit = null, folderName = null) {
 		WebContent.addCP(webContentTitle = ${webContentTitleEdit});
 
 		if (isSet(webContentContentEdit)) {
@@ -1217,7 +1217,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editDisplayPage(pageType = null,pageName = null) {
+	macro editDisplayPage(pageType = null, pageName = null) {
 		Panel.expandPanel(panel = "Display Page");
 
 		if (!(isSet(displayPageTemplateType))) {
@@ -1344,7 +1344,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editDisplayPagePGViaAP(pageType = null,displayPageName = null,assetTitle = null) {
+	macro editDisplayPagePGViaAP(pageType = null, displayPageName = null, assetTitle = null) {
 		AssetPublisherPortlet.gotoEditAssetPG(assetTitle = ${assetTitle});
 
 		WebContent.editDisplayPage(
@@ -1355,7 +1355,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editFieldValue(fieldFieldLabel = null,index = null,value = null) {
+	macro editFieldValue(fieldFieldLabel = null, index = null, value = null) {
 		Type(
 			index = ${index},
 			key_fieldFieldLabel = ${fieldFieldLabel},
@@ -1374,7 +1374,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editInReview(webContentImage = null,webContentTitleEdit = null) {
+	macro editInReview(webContentImage = null, webContentTitleEdit = null) {
 		WebContent.addCP(webContentTitle = ${webContentTitleEdit});
 
 		if (isSet(webContentImage)) {
@@ -1421,7 +1421,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editViaContentPanel(fieldName = null,webContentTitle = null,saveAsDraft = null,webContentContentEdit = null,webContentSelectWcFile = null,webContentTitleEdit = null) {
+	macro editViaContentPanel(fieldName = null, webContentTitle = null, saveAsDraft = null, webContentContentEdit = null, webContentSelectWcFile = null, webContentTitleEdit = null) {
 		PageEditor.gotoEllipsisMenuItemInPageContentPanel(
 			itemName = ${webContentTitle},
 			menuItem = "Edit");
@@ -1464,7 +1464,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editWebContentContent(saveAsDraft = null,webContentContentEdit = null,webContentTitleEdit = null) {
+	macro editWebContentContent(saveAsDraft = null, webContentContentEdit = null, webContentTitleEdit = null) {
 		WebContent.addCP(webContentTitle = ${webContentTitleEdit});
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME_2");
@@ -1490,7 +1490,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editWithStructureCP(webContentColor = null,saveAsDraft = null,structureName = null,webContentUpload = null,column = null,webContentDate = null,webContentLinkToPage = null,locale = null,webContentWebContent = null,navTab = null,webContentNumeric = null,webContentText = null,webContentTitle = null,templateName = null,webContentGrid = null,webContentRichText = null,webContentImage = null,webContentTitleEdit = null,row = null,webContentMultipleSelection = null,webContentSelectFromList = null,webContentSingleSelection = null,dmNavTab = null) {
+	macro editWithStructureCP(webContentColor = null, saveAsDraft = null, structureName = null, webContentUpload = null, column = null, webContentDate = null, webContentLinkToPage = null, locale = null, webContentWebContent = null, navTab = null, webContentNumeric = null, webContentText = null, webContentTitle = null, templateName = null, webContentGrid = null, webContentRichText = null, webContentImage = null, webContentTitleEdit = null, row = null, webContentMultipleSelection = null, webContentSelectFromList = null, webContentSingleSelection = null, dmNavTab = null) {
 		WebContentNavigator.gotoEditCP(webContentTitle = ${webContentTitle});
 
 		if (isSet(locale)) {
@@ -1574,7 +1574,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getAssetId(folderAsset = null,webContentAsset = null) {
+	macro getAssetId(folderAsset = null, webContentAsset = null) {
 		if (isSet(webContentAsset)) {
 			var webContentId = selenium.getAttribute("//*[contains(@data-title,'${webContentAsset}')]//input@value");
 
@@ -1604,7 +1604,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro moveArticlesToFolderCP(webContentArticlesList = null,folderName = null) {
+	macro moveArticlesToFolderCP(webContentArticlesList = null, folderName = null) {
 		for (var webContentTitle : list ${webContentArticlesList}) {
 			Check(
 				key_webContentTitle = ${webContentTitle},
@@ -1633,7 +1633,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro moveMultipleToFolderCP(folderName = null,rowEntryCheckList = null) {
+	macro moveMultipleToFolderCP(folderName = null, rowEntryCheckList = null) {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		for (var rowEntry : list ${rowEntryCheckList}) {
@@ -1662,7 +1662,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro moveToFolderCP(webContentTitle = null,folderName = null) {
+	macro moveToFolderCP(webContentTitle = null, folderName = null) {
 		WebContentNavigator.gotoEntryMenuItem(
 			entry = ${webContentTitle},
 			menuItem = "Move");
@@ -1690,7 +1690,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro moveToRecycleBinCP(webContentTitle = null,webContentTitleEscapeCharacter = null) {
+	macro moveToRecycleBinCP(webContentTitle = null, webContentTitleEscapeCharacter = null) {
 		WebContent.viewTitle(
 			webContentTitle = ${webContentTitle},
 			webContentTitleEscapeCharacter = ${webContentTitleEscapeCharacter});
@@ -1729,7 +1729,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro paginateRelatedAssets(webContentTitle = null,itemsPerPage = null,assetType = null) {
+	macro paginateRelatedAssets(webContentTitle = null, itemsPerPage = null, assetType = null) {
 		WebContentNavigator.gotoEditCP(webContentTitle = ${webContentTitle});
 
 		Panel.expandPanel(panel = "Related Assets");
@@ -1800,7 +1800,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro searchNoResultsCP(webContentTitle = null,searchQuery = null) {
+	macro searchNoResultsCP(webContentTitle = null, searchQuery = null) {
 		Search.searchCP(searchTerm = ${searchQuery});
 
 		AssertTextEquals.assertPartialText(
@@ -1821,7 +1821,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectCategory(userSegmentDetailTitle = null,vocabularyName = null,categoryNameList = null) {
+	macro selectCategory(userSegmentDetailTitle = null, vocabularyName = null, categoryNameList = null) {
 		Panel.expandPanel(panel = "Categorization");
 
 		if (isSet(userSegmentDetailTitle)) {
@@ -1840,7 +1840,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectFolder(searchTerm = null,folderName = null) {
+	macro selectFolder(searchTerm = null, folderName = null) {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		Click(locator1 = "Button#PARENT_FOLDER_SELECT");
@@ -1913,7 +1913,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectRepositoryWC(depotName = null,available = null,folderName = null,contentName = null) {
+	macro selectRepositoryWC(depotName = null, available = null, folderName = null, contentName = null) {
 		var key_contentName = ${contentName};
 
 		ItemSelector.changeWorkspaces(workspacesType = "Asset Library");
@@ -1933,7 +1933,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectTemplateCP(templateName = null,structureName = null) {
+	macro selectTemplateCP(templateName = null, structureName = null) {
 		ScrollBy(value1 = "0, 50");
 
 		AssertTextEquals.assertPartialText(
@@ -1970,7 +1970,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setImageDescription(fieldFieldLabel = null,webContentImageDescription = null) {
+	macro setImageDescription(fieldFieldLabel = null, webContentImageDescription = null) {
 		Type(
 			key_fieldFieldLabel = ${fieldFieldLabel},
 			locator1 = "WCEditWebContent#IMAGE_DESCRIPTION",
@@ -2025,7 +2025,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro uploadAudio(navTab = null,dmDocumentURL = null) {
+	macro uploadAudio(navTab = null, dmDocumentURL = null) {
 		Click(locator1 = "CKEditor#TOOLBAR_AUDIO_BUTTON");
 
 		ItemSelector.addAudioFromURL(
@@ -2042,7 +2042,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro uploadVideo(navTab = null,videoShortcutTitle = null,dmDocumentURL = null,videoShortcutPreview = null) {
+	macro uploadVideo(navTab = null, videoShortcutTitle = null, dmDocumentURL = null, videoShortcutPreview = null) {
 		Click(locator1 = "WCEditWebContent#VIDEO_BUTTON");
 
 		if (${navTab} == "URL") {
@@ -2078,7 +2078,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewAvailableLanguages(availableLanguageList = null,unavailableLanguageList = null) {
+	macro viewAvailableLanguages(availableLanguageList = null, unavailableLanguageList = null) {
 		Click(locator1 = "Button#LOCALIZATION_GENERIC");
 
 		for (var availableLanguage : list ${availableLanguageList}) {
@@ -2095,7 +2095,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCategorizationCategoriesOrderCP(vocabularyName = null, categoryNameList = null,) {
+	macro viewCategorizationCategoriesOrderCP(vocabularyName = null, categoryNameList = null) {
 		Panel.expandPanel(panel = "Categorization");
 
 		var index = 1;
@@ -2113,7 +2113,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCategorizationCategoryCP(categoryNameList = null,) {
+	macro viewCategorizationCategoryCP(categoryNameList = null) {
 		Panel.expandPanel(panel = "Categorization");
 
 		for (var categoryName : list ${categoryNameList}) {
@@ -2167,7 +2167,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCompareVersions(newContent = null,version = null) {
+	macro viewCompareVersions(newContent = null, version = null) {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		LexiconEntry.gotoEntry(rowEntry = ${version});
@@ -2180,7 +2180,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewConversionLinksPGViaAP(webContentTitle = null,author = null,documentTypes = null,webContentContent = null) {
+	macro viewConversionLinksPGViaAP(webContentTitle = null, author = null, documentTypes = null, webContentContent = null) {
 		WebContent.viewPGViaAP(
 			author = ${author},
 			webContentContent = ${webContentContent},
@@ -2198,7 +2198,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCP(webContentDescription = null,webContentTitle = null,upgradedFieldLabel = null,webContentTitleEscapeCharacter = null,webContentContent = null,otherLocaleSummary = null) {
+	macro viewCP(webContentDescription = null, webContentTitle = null, upgradedFieldLabel = null, webContentTitleEscapeCharacter = null, webContentContent = null, otherLocaleSummary = null) {
 		if (isSet(webContentTitleEscapeCharacter)) {
 			var key_webContentTitle = ${webContentTitleEscapeCharacter};
 		}
@@ -2305,7 +2305,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewDuplicatedField(fieldLabel = null,totalPortletCount = null) {
+	macro viewDuplicatedField(fieldLabel = null, totalPortletCount = null) {
 		var i = 0;
 
 		while (${i} != ${totalPortletCount}) {
@@ -2359,7 +2359,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewEntryAsWorkflowAsset(webContentTitle = null,webContentContent = null) {
+	macro viewEntryAsWorkflowAsset(webContentTitle = null, webContentContent = null) {
 		SiteAdmin.viewPortletTitle(portletTitle = ${webContentTitle});
 
 		AssertTextEquals(
@@ -2370,7 +2370,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewEntryListAuthor(author = null,entryTitle = null) {
+	macro viewEntryListAuthor(author = null, entryTitle = null) {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		AssertTextEquals.assertPartialText(
@@ -2394,7 +2394,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewFieldRepeated(ddlRecordFieldData = null,fieldName = null) {
+	macro viewFieldRepeated(ddlRecordFieldData = null, fieldName = null) {
 		AssertTextEquals(
 			locator1 = "xpath=(//div[@data-fieldname='${fieldName}'][1]//a[contains(@class,'ddm-repeatable-add-button')]/../div//input)",
 			value1 = ${ddlRecordFieldData});
@@ -2425,7 +2425,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewLinkedAssetPGViaAP(webContentTitle = null,webContentContent = null) {
+	macro viewLinkedAssetPGViaAP(webContentTitle = null, webContentContent = null) {
 		AssertClick.assertPartialTextClickAt(
 			key_assetTitle = ${webContentTitle},
 			locator1 = "AP#ASSET_ABSTRACT_TITLE",
@@ -2443,7 +2443,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewNoConversionLinksPGViaAP(webContentTitle = null,author = null,documentTypes = null,webContentContent = null) {
+	macro viewNoConversionLinksPGViaAP(webContentTitle = null, author = null, documentTypes = null, webContentContent = null) {
 		WebContent.viewPGViaAP(
 			author = ${author},
 			webContentContent = ${webContentContent},
@@ -2494,7 +2494,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewNoTagsFromInfoPanel(webContentTitle = null,tagNameList = null) {
+	macro viewNoTagsFromInfoPanel(webContentTitle = null, tagNameList = null) {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		Check(
@@ -2518,7 +2518,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPaginateRelatedAssets(numberOfPages = null,itemsPerPage = null) {
+	macro viewPaginateRelatedAssets(numberOfPages = null, itemsPerPage = null) {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Pagination#ITEMS_PER_PAGE_SELECT",
 			value1 = ${itemsPerPage});
@@ -2529,7 +2529,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPGViaAP(webContentTitle = null,author = null,webContentContent = null) {
+	macro viewPGViaAP(webContentTitle = null, author = null, webContentContent = null) {
 		var key_assetContent = ${webContentContent};
 		var key_assetTitle = ${webContentTitle};
 
@@ -2575,7 +2575,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSelectedDisplayPageTemplateCP(displayPageTemplateType = null,displayPageTemplateName = null) {
+	macro viewSelectedDisplayPageTemplateCP(displayPageTemplateType = null, displayPageTemplateName = null) {
 		Panel.expandPanel(panel = "Display Page");
 
 		if (IsElementPresent(locator1 = "Select#SELECT_ID", selectFieldId = "displayPageType")) {
@@ -2626,7 +2626,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSpecificVersionHistoryCP(webContentTitle = null,webContentStatus = null) {
+	macro viewSpecificVersionHistoryCP(webContentTitle = null, webContentStatus = null) {
 		var key_webContentTitle = ${webContentTitle};
 
 		AssertTextEquals(
@@ -2639,7 +2639,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewStatus(webContentTitle = null,webContentContent = null,webContentStatus = null) {
+	macro viewStatus(webContentTitle = null, webContentContent = null, webContentStatus = null) {
 		AssertTextEquals(
 			key_status = ${webContentStatus},
 			locator1 = "WCEditWebContent#WORKFLOW_STATUS",
@@ -2661,7 +2661,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewStructureAndTemplateLocalization(structureLocalizationName = null,panel = null,templateLocalizationName = null) {
+	macro viewStructureAndTemplateLocalization(structureLocalizationName = null, panel = null, templateLocalizationName = null) {
 		if (isSet(structureLocalizationName)) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "WCEditWebContent#SELECTED_STRUCTURE",
@@ -2721,7 +2721,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTitle(webContentTitle = null,webContentTitleEscapeCharacter = null,onLive = null) {
+	macro viewTitle(webContentTitle = null, webContentTitleEscapeCharacter = null, onLive = null) {
 		if (isSet(webContentTitleEscapeCharacter)) {
 			var key_webContentTitle = ${webContentTitleEscapeCharacter};
 		}
@@ -2742,7 +2742,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewUserEditCP(userFirstLast = null,webContentTitle = null) {
+	macro viewUserEditCP(userFirstLast = null, webContentTitle = null) {
 		AssertTextEquals.assertPartialText(
 			key_webContentTitle = ${webContentTitle},
 			locator1 = "WC#ENTRY_LIST_LAST_MODIFIED",
@@ -2754,7 +2754,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewVersion(webContentTitle = null,version = null) {
+	macro viewVersion(webContentTitle = null, version = null) {
 		var key_panel = "Basic Information";
 
 		WebContentNavigator.gotoEditCP(webContentTitle = ${webContentTitle});
@@ -2773,7 +2773,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewVideoPreview(webContentTitle = null,service = null,liveSite = null) {
+	macro viewVideoPreview(webContentTitle = null, service = null, liveSite = null) {
 		if (isSet(webContentTitle)) {
 			WebContentNavigator.gotoPreviewEntryCP(
 				liveSite = ${liveSite},
@@ -2799,7 +2799,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewWithStructureCP(webContentLocaleFieldLabel = null,webContentTitleEscapeCharacter = null,webContentUpload = null,description = null,webContentImageDescription = null,webContentLinkToPage = null,webContentText = null,webContentGrid = null,webContentImage = null,row = null,webContentSelectFromList = null,webContentSingleSelection = null,skipGotoEditCp = null,webContentColor = null,webContentDate = null,webContentWebContent = null,webContentNumeric = null,webContentBoolean = null,webContentTitle = null,webContentRichText = null,webContentTitleTranslated = null,location = null,webContentMultipleSelection = null,fieldType = null) {
+	macro viewWithStructureCP(webContentLocaleFieldLabel = null, webContentTitleEscapeCharacter = null, webContentUpload = null, description = null, webContentImageDescription = null, webContentLinkToPage = null, webContentText = null, webContentGrid = null, webContentImage = null, row = null, webContentSelectFromList = null, webContentSingleSelection = null, skipGotoEditCp = null, webContentColor = null, webContentDate = null, webContentWebContent = null, webContentNumeric = null, webContentBoolean = null, webContentTitle = null, webContentRichText = null, webContentTitleTranslated = null, location = null, webContentMultipleSelection = null, fieldType = null) {
 		if (!(isSet(predefinedValue))) {
 			if (${skipGotoEditCp} != "true") {
 				LexiconEntry.changeDisplayStyle(displayStyle = "list");
@@ -3092,7 +3092,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewWithWorkflowCP(webContentTitle = null,webContentContent = null) {
+	macro viewWithWorkflowCP(webContentTitle = null, webContentContent = null) {
 		WebContentNavigator.gotoViewStatus(
 			webContentStatus = "PENDING",
 			webContentTitle = ${webContentTitle});

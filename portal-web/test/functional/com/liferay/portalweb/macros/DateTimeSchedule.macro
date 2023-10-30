@@ -44,7 +44,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro increaseDisplayTime(field = null,minuteIncreaseValue = null) {
+	macro increaseDisplayTime(field = null, minuteIncreaseValue = null) {
 		var key_field = ${field};
 
 		var displayDateHour = selenium.getAttribute("//input[contains(@id,'${key_field}DateHour')]@value");

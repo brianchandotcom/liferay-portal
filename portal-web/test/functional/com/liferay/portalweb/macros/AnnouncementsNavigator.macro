@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro opentoAdmin(groupName = null,baseURL = null,siteURLKey = null) {
+	macro opentoAdmin(groupName = null, baseURL = null, siteURLKey = null) {
 		var groupId = JSONGroupSetter.setGroupId(groupName = ${groupName});
 
 		Navigator.openWithAppendToBaseURL(
@@ -10,7 +10,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToEntriesTab(tabName = null,siteURLKey = null,layoutName = null) {
+	macro openToEntriesTab(tabName = null, siteURLKey = null, layoutName = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${layoutName}?p_p_id=com_liferay_announcements_web_portlet_AnnouncementsPortlet_INSTANCE_8zMt0QV1K3AB&_com_liferay_announcements_web_portlet_AnnouncementsPortlet_INSTANCE_8zMt0QV1K3AB_mvcRenderCommandName=%2Fannouncements%2Fview&_com_liferay_announcements_web_portlet_AnnouncementsPortlet_INSTANCE_8zMt0QV1K3AB_tabs1=${tabName}");
 	}
 

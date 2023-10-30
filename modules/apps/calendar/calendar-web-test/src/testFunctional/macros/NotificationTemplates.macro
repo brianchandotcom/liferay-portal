@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro gotoCalendarMenuOption(calendarName = null,menuListOption = null) {
+	macro gotoCalendarMenuOption(calendarName = null, menuListOption = null) {
 		Navigator.gotoPage(pageName = "Calendar Page");
 
 		Click(

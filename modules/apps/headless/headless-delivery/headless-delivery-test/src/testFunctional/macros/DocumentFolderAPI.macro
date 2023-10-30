@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _curlDocumentFolders(documentFolderId = null,depotName = null,groupName = null,parameter = null,parentDocumentFolderId = null,parameterValue = null,externalReferenceCode = null) {
+	macro _curlDocumentFolders(documentFolderId = null, depotName = null, groupName = null, parameter = null, parentDocumentFolderId = null, parameterValue = null, externalReferenceCode = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(depotName)) {
@@ -44,7 +44,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addDocumentFolder(depotName = null,groupName = null,name = null,parentDocumentFolderId = null,externalReferenceCode = null) {
+	macro addDocumentFolder(depotName = null, groupName = null, name = null, parentDocumentFolderId = null, externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = ${name});
 
 		var body = '''"name": "${name}"''';
@@ -66,7 +66,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertProperBatchInActionBlock(depotName = null,groupName = null,responseToParse = null,batchActions = null) {
+	macro assertProperBatchInActionBlock(depotName = null, groupName = null, responseToParse = null, batchActions = null) {
 		Variables.assertDefined(parameterList = ${responseToParse});
 
 		for (var batchAction : list ${batchActions}) {
@@ -106,7 +106,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertProperDocumentFolderTotalCount(groupName = null,parameter = null,expectedDocumentTotalCount = null,parameterValue = null) {
+	macro assertProperDocumentFolderTotalCount(groupName = null, parameter = null, expectedDocumentTotalCount = null, parameterValue = null) {
 		Variables.assertDefined(parameterList = "${expectedDocumentTotalCount},${groupName},${parameter},${parameterValue}");
 
 		var response = DocumentFolderAPI.getDocumentFoldersWithDifferentPameter(
@@ -122,7 +122,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteDocumentFolderByName(groupName = null,documentFolderName = null) {
+	macro deleteDocumentFolderByName(groupName = null, documentFolderName = null) {
 		Variables.assertDefined(parameterList = "${documentFolderName},${groupName}");
 
 		var response = DocumentFolderAPI.getDocumentFoldersWithDifferentPameter(
@@ -140,7 +140,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteDocumentFolderBySiteIdAndErc(groupName = null,externalReferenceCode = null) {
+	macro deleteDocumentFolderBySiteIdAndErc(groupName = null, externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = "${externalReferenceCode},${groupName}");
 
 		var curl = DocumentFolderAPI._curlDocumentFolders(
@@ -151,7 +151,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getDocumentFolderBySiteIdAndErc(groupName = null,externalReferenceCode = null) {
+	macro getDocumentFolderBySiteIdAndErc(groupName = null, externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = "${externalReferenceCode},${groupName}");
 
 		var curl = DocumentFolderAPI._curlDocumentFolders(
@@ -164,7 +164,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getDocumentFolders(depotName = null,groupName = null) {
+	macro getDocumentFolders(depotName = null, groupName = null) {
 		var curl = DocumentFolderAPI._curlDocumentFolders(
 			depotName = ${depotName},
 			groupName = ${groupName});
@@ -175,7 +175,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getDocumentFoldersWithDifferentPameter(groupName = null,parameter = null,parameterValue = null) {
+	macro getDocumentFoldersWithDifferentPameter(groupName = null, parameter = null, parameterValue = null) {
 		var curl = DocumentFolderAPI._curlDocumentFolders(
 			groupName = ${groupName},
 			parameter = ${parameter},
@@ -241,7 +241,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro postRatingWithFolderID(ratingValue = null,folderId = null) {
+	macro postRatingWithFolderID(ratingValue = null, folderId = null) {
 		if (!(isSet(userEmailAddress))) {
 			var userEmailAddress = "test@liferay.com";
 		}
@@ -266,7 +266,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro putRatingWithFolderID(ratingValue = null,folderId = null) {
+	macro putRatingWithFolderID(ratingValue = null, folderId = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var body = '''"creator": "","ratingValue": "${ratingValue}"''';
 		var curlWithoutBody = '''
@@ -305,7 +305,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updateDocumentFolderBySiteIdAndErc(groupName = null,name = null,externalReferenceCodeInBody = null,externalReferenceCode = null) {
+	macro updateDocumentFolderBySiteIdAndErc(groupName = null, name = null, externalReferenceCodeInBody = null, externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = "${groupName},${externalReferenceCode}");
 
 		var curlWithoutBody = DocumentFolderAPI._curlDocumentFolders(

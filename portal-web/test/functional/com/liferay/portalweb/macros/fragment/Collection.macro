@@ -20,7 +20,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editCollection(collectionDescription = null,collectionName = null) {
+	macro editCollection(collectionDescription = null, collectionName = null) {
 		PortletEntry.inputName(name = ${collectionName});
 
 		if (isSet(collectionDescription)) {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro renameCollection(collectionDescription = null,collectionName = null,collectionNameEdit = null) {
+	macro renameCollection(collectionDescription = null, collectionName = null, collectionNameEdit = null) {
 		Navigator.gotoNavNested(navNested = ${collectionName});
 
 		Click.waitForMenuToggleJSClick(

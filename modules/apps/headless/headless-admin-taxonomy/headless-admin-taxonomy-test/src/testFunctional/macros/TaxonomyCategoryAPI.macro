@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _createTaxonomyCategory(taxonomyVocabularyId = null,name = null,parentTaxonomyCategoryId = null,externalReferenceCode = null) {
+	macro _createTaxonomyCategory(taxonomyVocabularyId = null, name = null, parentTaxonomyCategoryId = null, externalReferenceCode = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(parentTaxonomyCategoryId)) {
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createTaxonomyCategory(name = null,taxonomyVocabularyId = null,parentTaxonomyCategoryId = null) {
+	macro createTaxonomyCategory(name = null, taxonomyVocabularyId = null, parentTaxonomyCategoryId = null) {
 		Variables.assertDefined(parameterList = ${name});
 
 		if (!(isSet(externalReferenceCode))) {
@@ -44,7 +44,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro staticTaxonomyCategoryId(name = null,taxonomyVocabularyId = null,parentTaxonomyCategoryId = null,externalReferenceCode = null) {
+	macro staticTaxonomyCategoryId(name = null, taxonomyVocabularyId = null, parentTaxonomyCategoryId = null, externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = ${name});
 
 		var response = TaxonomyCategoryAPI.createTaxonomyCategory(

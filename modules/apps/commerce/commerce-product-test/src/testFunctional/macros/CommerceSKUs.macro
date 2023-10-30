@@ -8,7 +8,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addSKU(noOption = null,key_menuItem = null,optionValuesList = null) {
+	macro addSKU(noOption = null, key_menuItem = null, optionValuesList = null) {
 		for (var optionValues : list ${optionValuesList}) {
 			var optionValue = StringUtil.extractFirst(${optionValues}, ":");
 			var price = StringUtil.extractLast(${optionValues}, ":");
@@ -70,7 +70,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editSkuPricing(priceOnApplication = null,promoPrice = null,cost = null,basePrice = null) {
+	macro editSkuPricing(priceOnApplication = null, promoPrice = null, cost = null, basePrice = null) {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 		CommerceSKUs.setSkuPricing(
@@ -101,7 +101,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setSkuInventory(northeastQuantity = null,italyQuantity = null,southwestQuantity = null) {
+	macro setSkuInventory(northeastQuantity = null, italyQuantity = null, southwestQuantity = null) {
 		if (isSet(italyQuantity)) {
 			Type(
 				key_value1 = 0,
@@ -137,7 +137,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setSkuPricing(priceOnApplication = null,promoPrice = null,cost = null,basePrice = null) {
+	macro setSkuPricing(priceOnApplication = null, promoPrice = null, cost = null, basePrice = null) {
 		if (isSet(priceOnApplication)) {
 			if (${priceOnApplication} == "true") {
 				Check.checkToggleSwitch(
@@ -204,7 +204,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSkuUomWarehouse(uomKey = null,uomLists = null) {
+	macro viewSkuUomWarehouse(uomKey = null, uomLists = null) {
 		for (var uomList : list ${uomLists}) {
 			var index = StringUtil.extractFirst(${uomList}, ":");
 			var warehouseName = StringUtil.extractLast(${uomList}, ":");

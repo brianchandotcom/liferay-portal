@@ -25,7 +25,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editDataProvider(outputParameterLabel = null,outputParameterPath2 = null,inputParameterName = null,inputParameterLabel = null,url = null,timeout = null,outputParameterName = null,outputParameterPath = null,password = null,inputParameterType = null,outputParameterName2 = null,name = null,outputParameterType2 = null,outputParameterLabel2 = null,outputParameterType = null,username = null) {
+	macro editDataProvider(outputParameterLabel = null, outputParameterPath2 = null, inputParameterName = null, inputParameterLabel = null, url = null, timeout = null, outputParameterName = null, outputParameterPath = null, password = null, inputParameterType = null, outputParameterName2 = null, name = null, outputParameterType2 = null, outputParameterLabel2 = null, outputParameterType = null, username = null) {
 		FormFields.editText(
 			fieldName = "DataProviderPortlet_name",
 			fieldValue = ${name});
@@ -71,7 +71,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editDataProviderInputParameter(inputParameterName = null,inputParameterType = null,inputParameterLabel = null) {
+	macro editDataProviderInputParameter(inputParameterName = null, inputParameterType = null, inputParameterLabel = null) {
 		Type(
 			locator1 = "Form#DATA_PROVIDER_INPUT_PARAMETER_LABEL_FIELD",
 			value1 = ${inputParameterLabel});
@@ -84,7 +84,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editDataProviderLocalNetwork(outputParameterLabel = null,outputParameterPath2 = null,description = null,url = null,timeout = null,outputParameterPath = null,filterParameterName = null,password = null,name = null,outputParameterType2 = null,cacheable = null,outputParameterLabel2 = null,outputParameterType = null,username = null) {
+	macro editDataProviderLocalNetwork(outputParameterLabel = null, outputParameterPath2 = null, description = null, url = null, timeout = null, outputParameterPath = null, filterParameterName = null, password = null, name = null, outputParameterType2 = null, cacheable = null, outputParameterLabel2 = null, outputParameterType = null, username = null) {
 		FormFields.editText(
 			fieldName = "DataProviderPortlet_name",
 			fieldValue = ${name});
@@ -148,7 +148,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editDataProviderOutputParameter(outputParameterLabel = null,outputParameterPath = null,outputParameterPath2 = null,outputParameterType2 = null,outputParameterLabel2 = null,outputParameterType = null) {
+	macro editDataProviderOutputParameter(outputParameterLabel = null, outputParameterPath = null, outputParameterPath2 = null, outputParameterType2 = null, outputParameterLabel2 = null, outputParameterType = null) {
 		FormFields.editText(
 			fieldName = "outputParameterName",
 			fieldValue = ${outputParameterLabel});
@@ -181,7 +181,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editFormEntry(formEntryValue = null,fieldValue = null) {
+	macro editFormEntry(formEntryValue = null, fieldValue = null) {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Edit",
 			rowEntry = ${formEntryValue});
@@ -279,7 +279,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCheckboxEntry(fieldName = null,fieldValue = null) {
+	macro viewCheckboxEntry(fieldName = null, fieldValue = null) {
 		FormsAdmin.viewCannotEditFormEntries();
 
 		var key_fieldName = ${fieldName};
@@ -293,7 +293,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewColorEntry(onSitePage = null,fieldName = null,fieldLabel = null,fieldValue = null) {
+	macro viewColorEntry(onSitePage = null, fieldName = null, fieldLabel = null, fieldValue = null) {
 		FormsAdmin.viewCannotEditFormEntries(onSitePage = ${onSitePage});
 
 		FormFields.viewColorLabel(
@@ -306,7 +306,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewDateEntry(fieldName = null,fieldLabel = null,fieldValue = null) {
+	macro viewDateEntry(fieldName = null, fieldLabel = null, fieldValue = null) {
 		FormsAdmin.viewCannotEditFormEntries();
 
 		FormFields.viewDateLabel(
@@ -320,7 +320,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewForm(formName = null,formDescription = null) {
+	macro viewForm(formName = null, formDescription = null) {
 		var key_formName = ${formName};
 
 		WaitForElementPresent(
@@ -350,7 +350,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewFormTableEntry(fieldLabel = null,fieldValue = null) {
+	macro viewFormTableEntry(fieldLabel = null, fieldValue = null) {
 		var key_fieldLabel = ${fieldLabel};
 		var key_fieldValue = ${fieldValue};
 
@@ -360,7 +360,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewFormTableEntryNotPresent(fieldLabel = null,fieldValue = null) {
+	macro viewFormTableEntryNotPresent(fieldLabel = null, fieldValue = null) {
 		var key_fieldLabel = ${fieldLabel};
 		var key_fieldValue = ${fieldValue};
 
@@ -377,7 +377,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewImageEntry(fieldName = null,fieldLabel = null,fieldDescription = null) {
+	macro viewImageEntry(fieldName = null, fieldLabel = null, fieldDescription = null) {
 		FormsAdmin.viewCannotEditFormEntries();
 
 		FormFields.viewTextLabel(
@@ -395,7 +395,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewMultilineTextEntry(fieldName = null,fieldLabel = null,fieldValue = null) {
+	macro viewMultilineTextEntry(fieldName = null, fieldLabel = null, fieldValue = null) {
 		FormsAdmin.viewCannotEditFormEntries();
 
 		FormFields.viewTextLabel(
@@ -440,7 +440,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewRadioEntry(onSitePage = null,fieldName = null,fieldLabel = null,fieldValue = null) {
+	macro viewRadioEntry(onSitePage = null, fieldName = null, fieldLabel = null, fieldValue = null) {
 		FormsAdmin.viewCannotEditFormEntries(onSitePage = ${onSitePage});
 
 		FormFields.viewRadioLabel(
@@ -453,7 +453,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSelectEntry(onSitePage = null,fieldName = null,fieldLabel = null) {
+	macro viewSelectEntry(onSitePage = null, fieldName = null, fieldLabel = null) {
 		FormsAdmin.viewCannotEditFormEntries(onSitePage = ${onSitePage});
 
 		FormFields.viewSelectLabel(
@@ -464,7 +464,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTableEntryNotPresent(fieldLabel = null,fieldValue = null) {
+	macro viewTableEntryNotPresent(fieldLabel = null, fieldValue = null) {
 		AssertElementNotPresent(
 			key_fieldLabel = ${fieldLabel},
 			key_fieldValue = ${fieldValue},
@@ -472,7 +472,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTextEntry(onSitePage = null,fieldName = null,fieldLabel = null,fieldValue = null) {
+	macro viewTextEntry(onSitePage = null, fieldName = null, fieldLabel = null, fieldValue = null) {
 		FormsAdmin.viewCannotEditFormEntries(onSitePage = ${onSitePage});
 
 		FormFields.viewTextLabel(
@@ -485,7 +485,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewUploadFile(uploadFileName = null,fieldName = null,fieldLabel = null) {
+	macro viewUploadFile(uploadFileName = null, fieldName = null, fieldLabel = null) {
 		FormFields.viewUploadLabel(
 			fieldLabel = ${fieldLabel},
 			fieldName = ${fieldName});

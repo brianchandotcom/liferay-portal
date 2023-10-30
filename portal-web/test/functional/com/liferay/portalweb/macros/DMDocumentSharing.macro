@@ -12,7 +12,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro changePermission(dmDocumentTitle = null,dmDocumentDescription = null,userName = null,selectPermission = null) {
+	macro changePermission(dmDocumentTitle = null, dmDocumentDescription = null, userName = null, selectPermission = null) {
 		if (isSet(depotName)) {
 			DMDocument.viewCP(dmDocumentTitle = ${dmDocumentTitle});
 		}
@@ -48,7 +48,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editViaSharedwithMe(dmDocumentTitle = null,entryTitleEdit = null,entryTitle = null) {
+	macro editViaSharedwithMe(dmDocumentTitle = null, entryTitleEdit = null, entryTitle = null) {
 		Asset.openTosharedContent(
 			navTab = "Shared with Me",
 			siteURLKey = "guest");
@@ -112,7 +112,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewDocumentViaSharedContent(dmDocumentTitle = null,contentSharingPermission = null) {
+	macro viewDocumentViaSharedContent(dmDocumentTitle = null, contentSharingPermission = null) {
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
 			value1 = "Shared Content");
@@ -169,7 +169,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSharedFlag(displayStyle = null,dmDocumentTitle = null) {
+	macro viewSharedFlag(displayStyle = null, dmDocumentTitle = null) {
 		if (isSet(detailsView)) {
 			if (${displayStyle} == "table") {
 				AssertVisible(
@@ -190,7 +190,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSharingOption(dmDocumentTitle = null,sharing = null) {
+	macro viewSharingOption(dmDocumentTitle = null, sharing = null) {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		Click(

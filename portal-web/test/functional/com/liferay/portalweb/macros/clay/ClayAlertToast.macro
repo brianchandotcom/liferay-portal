@@ -8,7 +8,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getElementRectanglePositionX(code = null,index = null) {
+	macro getElementRectanglePositionX(code = null, index = null) {
 		WaitForSPARefresh();
 
 		var javascript = '''
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getElementRectanglePositionY(code = null,index = null) {
+	macro getElementRectanglePositionY(code = null, index = null) {
 		WaitForSPARefresh();
 
 		var javascript = '''

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro getElementCirclePositionX(elementClass = null,childIndex = null) {
+	macro getElementCirclePositionX(elementClass = null, childIndex = null) {
 		WaitForSPARefresh();
 
 		var javascript = '''
@@ -22,7 +22,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getElementCirclePositionY(elementClass = null,childIndex = null) {
+	macro getElementCirclePositionY(elementClass = null, childIndex = null) {
 		WaitForSPARefresh();
 
 		var javascript = '''
@@ -81,7 +81,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCoordinatePositionMatchesElementStep(hotspotElementClass = null,stepElementId = null) {
+	macro viewCoordinatePositionMatchesElementStep(hotspotElementClass = null, stepElementId = null) {
 		var step_x = WalkthroughPopover.getElementRectanglePositionX(elementId = ${stepElementId});
 		var step_y = WalkthroughPopover.getElementRectanglePositionY(elementId = ${stepElementId});
 		var hotspotChildIndex = 1;

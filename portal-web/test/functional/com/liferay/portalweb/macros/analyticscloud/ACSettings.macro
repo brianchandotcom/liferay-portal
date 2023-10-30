@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addCSVDataSource(sourceFileName = null,fieldName = null,fieldType = null,fieldNameList = null,dataSourceName = null) {
+	macro addCSVDataSource(sourceFileName = null, fieldName = null, fieldType = null, fieldNameList = null, dataSourceName = null) {
 
 		// CSV data source tests are no longer possible to run due to this ticket LRAC-11651
 
@@ -132,7 +132,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addSalesforceAndCancel(consumerSecret = null,salesforceName = null,consumerKey = null) {
+	macro addSalesforceAndCancel(consumerSecret = null, salesforceName = null, consumerKey = null) {
 		var key_salesforceName = ${salesforceName};
 		var key_consumerKey = ${consumerKey};
 		var key_consumerSecret = ${consumerSecret};
@@ -181,7 +181,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertAddonsDetails(addOnItem = null,annualPrice = null,limit = null,time = null) {
+	macro assertAddonsDetails(addOnItem = null, annualPrice = null, limit = null, time = null) {
 		if (isSet(limit)) {
 			AssertVisible(
 				key_addOnItem = ${addOnItem},
@@ -235,7 +235,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertCurrentPlanLimitAndAddOn(metricName = null,currentPlanLimitAndAddOn = null) {
+	macro assertCurrentPlanLimitAndAddOn(metricName = null, currentPlanLimitAndAddOn = null) {
 		AssertTextEquals(
 			key_metricName = ${metricName},
 			locator1 = "ACUsage#USAGE_CURRENT_PLAN_LIMIT_AND_ADD_ON",
@@ -243,7 +243,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertDataSourceStatus(section = null,status = null) {
+	macro assertDataSourceStatus(section = null, status = null) {
 		var key_dataSourceStatus = ${status};
 		var key_sectionStatus = ${section};
 
@@ -285,7 +285,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertOverviewUsage(current = null,metricName = null,usageSince = null,limit = null,notEquals = null) {
+	macro assertOverviewUsage(current = null, metricName = null, usageSince = null, limit = null, notEquals = null) {
 		if (isSet(current)) {
 			AssertTextEquals(
 				key_metricName = ${metricName},
@@ -323,7 +323,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertPlanDetails(individualsLimit = null,individualsAddOnsPrice = null,pageViewsAddOnsLimit = null,pageViewsLimit = null,individualsAddOnsLimit = null,planName = null,usersLimit = null,pageViewsAddOnsPrice = null) {
+	macro assertPlanDetails(individualsLimit = null, individualsAddOnsPrice = null, pageViewsAddOnsLimit = null, pageViewsLimit = null, individualsAddOnsLimit = null, planName = null, usersLimit = null, pageViewsAddOnsPrice = null) {
 		AssertElementPresent(
 			key_planName = ${planName},
 			locator1 = "ACUsage#PLAN_NAME");
@@ -428,7 +428,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro changeMultipleUsersPermissions(permissionType = null,userEmail = null) {
+	macro changeMultipleUsersPermissions(permissionType = null, userEmail = null) {
 		ACSettings.clickUsersByEmail(userEmail = ${userEmail});
 
 		Click(
@@ -464,7 +464,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro changeUserRole(permissionType = null,userEmail = null,newRole = null) {
+	macro changeUserRole(permissionType = null, userEmail = null, newRole = null) {
 		Click(
 			key_userEmail = ${userEmail},
 			locator1 = "ACSettings#EDIT_BUTTON_BY_EMAIL");
@@ -549,7 +549,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createRequestLogByEmail(fieldType = null,email = null) {
+	macro createRequestLogByEmail(fieldType = null, email = null) {
 		var key_fieldType = ${fieldType};
 
 		ACSettings.goToDataControlAndPrivacy();
@@ -954,7 +954,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro navigateToRequestOrSuppressedOptions(optionValue = null,optionName = null) {
+	macro navigateToRequestOrSuppressedOptions(optionValue = null, optionName = null) {
 		var key_optionName = ${optionName};
 		var key_optionValue = ${optionValue};
 
@@ -1047,7 +1047,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewFilterButton(filter = null,nofilter = null) {
+	macro viewFilterButton(filter = null, nofilter = null) {
 		if (isSet(nofilter)) {
 			AssertElementNotPresent(
 				key_text = ${nofilter},

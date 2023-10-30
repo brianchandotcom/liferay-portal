@@ -10,7 +10,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setTypeSettings(mainURL = null,url = null) {
+	macro setTypeSettings(mainURL = null, url = null) {
 		if (isSet(mainURL)) {
 			var typeSettings = "mainURL=${mainURL}%0A";
 		}

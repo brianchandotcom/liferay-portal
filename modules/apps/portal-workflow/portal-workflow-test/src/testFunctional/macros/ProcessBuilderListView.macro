@@ -36,7 +36,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro validateIfSearchItem(numberResults = null,workflowName = null) {
+	macro validateIfSearchItem(numberResults = null, workflowName = null) {
 		if (isSet(singleResult)) {
 			AssertTextEquals(
 				locator1 = "ProcessBuilderListView#VALIDATE_SEARCH_RESULTS_BAR",

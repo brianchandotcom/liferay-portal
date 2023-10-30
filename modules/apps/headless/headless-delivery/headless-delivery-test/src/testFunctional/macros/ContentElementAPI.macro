@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _getAssetLibraryContentElementsByDifferentParameters(depotName = null,parameter = null,fieldValue = null) {
+	macro _getAssetLibraryContentElementsByDifferentParameters(depotName = null, parameter = null, fieldValue = null) {
 		Variables.assertDefined(parameterList = "${depotName},${parameter},${fieldValue}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -19,7 +19,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertResponseHasABodyWithAssetLibraryKeyOnly(responseToParse = null,expectedValue = null) {
+	macro assertResponseHasABodyWithAssetLibraryKeyOnly(responseToParse = null, expectedValue = null) {
 		var actualValue = JSONUtil.getWithJSONPath(${responseToParse}, "$.items");
 
 		TestUtils.assertEquals(
@@ -28,7 +28,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getAssetLibraryContentElementsByDifferentParameters(depotName = null,parameter = null,fieldValue = null) {
+	macro getAssetLibraryContentElementsByDifferentParameters(depotName = null, parameter = null, fieldValue = null) {
 		ContentElementAPI._getAssetLibraryContentElementsByDifferentParameters(
 			depotName = ${depotName},
 			fieldValue = ${fieldValue},

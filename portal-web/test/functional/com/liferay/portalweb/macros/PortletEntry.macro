@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro changeLocale(fieldName = null,locale = null) {
+	macro changeLocale(fieldName = null, locale = null) {
 		Portlet.waitForForm();
 
 		if (isSet(fieldName)) {
@@ -113,7 +113,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro inputLocalizedName(localizedName = null,language = null) {
+	macro inputLocalizedName(localizedName = null, language = null) {
 		PortletEntry.changeLocale(
 			fieldName = "Name",
 			locale = ${language});
@@ -129,7 +129,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro inputNumber(number = null,fieldLabel = null) {
+	macro inputNumber(number = null, fieldLabel = null) {
 		Type(
 			key_fieldLabel = ${fieldLabel},
 			locator1 = "TextInput#GENERIC_NUMBER_INPUT",
@@ -144,7 +144,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro inputText(fieldLabel = null,text = null) {
+	macro inputText(fieldLabel = null, text = null) {
 		Type(
 			key_fieldLabel = ${fieldLabel},
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
@@ -152,7 +152,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro inputTextArea(text = null,fieldId = null) {
+	macro inputTextArea(text = null, fieldId = null) {
 		Type(
 			key_text = ${fieldId},
 			locator1 = "TextArea#ANY",
@@ -247,7 +247,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewLocale(locale = null,portletName = null) {
+	macro viewLocale(locale = null, portletName = null) {
 		if (${portletName} == "Web Content") {
 			AssertElementPresent(
 				key_locale = ${locale},

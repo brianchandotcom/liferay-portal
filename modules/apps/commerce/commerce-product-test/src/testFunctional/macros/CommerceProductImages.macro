@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addAttachmentImages(imageTitles = null,validationImage = null) {
+	macro addAttachmentImages(imageTitles = null, validationImage = null) {
 		for (var imageTitle : list ${imageTitles}) {
 			echo("imageTitle is equal to ${imageTitle}");
 
@@ -111,7 +111,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addDiagramImages(imageTitles = null,imageType = null,productType = null) {
+	macro addDiagramImages(imageTitles = null, imageType = null, productType = null) {
 		for (var imageTitle : list ${imageTitles}) {
 			echo("imageTitle is equal to ${imageTitle}");
 
@@ -139,7 +139,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addProductImages(imageTitles = null,validationImage = null) {
+	macro addProductImages(imageTitles = null, validationImage = null) {
 		for (var imageTitle : list ${imageTitles}) {
 			echo("imageTitle is equal to ${imageTitle}");
 

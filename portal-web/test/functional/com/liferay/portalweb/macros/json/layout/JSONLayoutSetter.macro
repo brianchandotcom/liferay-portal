@@ -19,7 +19,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setGroupId(groupName = null,portalURL = null,grandParentGroupName = null,parentGroupName = null) {
+	macro setGroupId(groupName = null, portalURL = null, grandParentGroupName = null, parentGroupName = null) {
 		if (!(isSet(site))) {
 			var site = "true";
 		}
@@ -35,7 +35,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setLayoutId(groupId = null,privateLayout = null,layoutName = null) {
+	macro setLayoutId(groupId = null, privateLayout = null, layoutName = null) {
 		Variables.assertDefined(parameterList = "${groupId},${layoutName},${privateLayout}");
 
 		var layoutId = JSONLayoutAPI._getLayoutIdByName(
@@ -47,7 +47,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setParentLayoutId(parentLayoutName = null,groupId = null) {
+	macro setParentLayoutId(parentLayoutName = null, groupId = null) {
 		var privateLayout = JSONLayoutSetter.setPrivateLayout(privateLayout = ${privateLayout});
 
 		if (isSet(parentLayoutName)) {
@@ -75,7 +75,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setServiceContext(assetCategoryIds = null,assetTagNames = null,workflowAction = null) {
+	macro setServiceContext(assetCategoryIds = null, assetTagNames = null, workflowAction = null) {
 		if (!(isSet(serviceContext))) {
 			var serviceContext = JSONServiceContextUtil.setServiceContext(
 				addGuestPermissions = "true",
@@ -106,7 +106,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setTypeSettings(remoteAppEntryId = null,widgetName = null,groupId = null,column = null,embeddedLayoutURL = null,layoutTemplate = null,privateLayout = null,layoutName = null) {
+	macro setTypeSettings(remoteAppEntryId = null, widgetName = null, groupId = null, column = null, embeddedLayoutURL = null, layoutTemplate = null, privateLayout = null, layoutName = null) {
 		Variables.assertDefined(parameterList = "${groupId},${layoutName},${privateLayout}");
 
 		var typeSettings = JSONLayoutAPI._getTypeSettingsByName(

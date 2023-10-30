@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addFragment(fragmentName = null,index = null,collectionName = null) {
+	macro addFragment(fragmentName = null, index = null, collectionName = null) {
 		PageEditor.assertFragmentSidebarLoaded();
 
 		PageEditor.gotoTab(tabName = "Fragments and Widgets");
@@ -43,7 +43,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addMappedDisplayPageTemplateEntry(groupName = null,fragmentName = null,displayPageName = null,siteURLKey = null,menuItem = null,contentType = null,fieldsList = null) {
+	macro addMappedDisplayPageTemplateEntry(groupName = null, fragmentName = null, displayPageName = null, siteURLKey = null, menuItem = null, contentType = null, fieldsList = null) {
 		task ("Given a new ${contentType} type display page template with fragment created") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = ${contentType},
@@ -86,7 +86,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureProductCardFragment(fragmentName = null,checkList = null,uncheckList = null) {
+	macro configureProductCardFragment(fragmentName = null, checkList = null, uncheckList = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -115,7 +115,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editCollectionDisplay(deviceType = null,listItemStyle = null,infoListProviderName = null,depotName = null,fragmentName = null,columnNumber = null,styleDisplay = null,assetListName = null,infoItemRelatedListProviderName = null) {
+	macro editCollectionDisplay(deviceType = null, listItemStyle = null, infoListProviderName = null, depotName = null, fragmentName = null, columnNumber = null, styleDisplay = null, assetListName = null, infoItemRelatedListProviderName = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -253,7 +253,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editDynamicField(field = null,fragmentName = null,valueElementType = null,label = null,labelElementType = null) {
+	macro editDynamicField(field = null, fragmentName = null, valueElementType = null, label = null, labelElementType = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -294,7 +294,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro mapEditableTextToField(field = null,fragmentName = null,index = null,className = null,source = null) {
+	macro mapEditableTextToField(field = null, fragmentName = null, index = null, className = null, source = null) {
 		if (${index} == 1) {
 			var contributed = "false";
 		}
@@ -329,7 +329,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro mapFragmentsToFields(fragmentName = null,displayPageName = null,siteURLKey = null,fieldsList = null) {
+	macro mapFragmentsToFields(fragmentName = null, displayPageName = null, siteURLKey = null, fieldsList = null) {
 		Variables.assertDefined(parameterList = "${displayPageName},${fieldsList},${fragmentName},${siteURLKey}");
 
 		if (!(isSet(collectionName))) {
@@ -360,7 +360,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewDynamicFieldContent(fieldLabel = null,fieldValue = null) {
+	macro viewDynamicFieldContent(fieldLabel = null, fieldValue = null) {
 		Variables.assertDefined(parameterList = ${fieldValue});
 
 		if (!(isSet(index))) {

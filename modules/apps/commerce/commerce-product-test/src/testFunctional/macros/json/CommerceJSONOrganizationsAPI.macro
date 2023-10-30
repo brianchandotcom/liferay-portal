@@ -33,7 +33,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _deleteOrganizationById(organizationId = null,) {
+	macro _deleteOrganizationById(organizationId = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {

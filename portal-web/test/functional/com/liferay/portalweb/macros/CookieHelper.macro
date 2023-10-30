@@ -70,7 +70,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro checkEachCookiesSavedValue(cookieNameListWithTrueValue = null,cookieNameListWithFalseValue = null) {
+	macro checkEachCookiesSavedValue(cookieNameListWithTrueValue = null, cookieNameListWithFalseValue = null) {
 		if (isSet(cookieNameListWithTrueValue)) {
 			for (var cookieName : list ${cookieNameListWithTrueValue}) {
 				CookieHelper._checkSelectedCookieValue(
@@ -236,7 +236,7 @@ definition {
 
 	@description = "Navigate to home page"
 	@summary = "Default summary"
-	macro siteVisit(domain = null,virtualHostsURL = null) {
+	macro siteVisit(domain = null, virtualHostsURL = null) {
 		if (isSet(virtualHostsURL)) {
 			Navigator.openSpecificURL(
 				domain = ${domain},

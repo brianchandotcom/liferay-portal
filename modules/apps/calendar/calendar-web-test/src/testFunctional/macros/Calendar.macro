@@ -5,7 +5,7 @@ definition {
 	var siteName = "Liferay";
 
 	@summary = "Default summary"
-	macro _checkForRSSTitle(siteCalendarName = null,siteName = null,pageName = null) {
+	macro _checkForRSSTitle(siteCalendarName = null, siteName = null, pageName = null) {
 		if (IsElementNotPresent(locator1 = "RSS#FEED_TITLE")) {
 			Navigator.gotoPage(pageName = ${pageName});
 
@@ -63,7 +63,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _gotoSiteCalendarMenulist(siteCalendarName = null,siteName = null) {
+	macro _gotoSiteCalendarMenulist(siteCalendarName = null, siteName = null) {
 		var key_siteCalendarName = ${siteCalendarName};
 		var key_siteName = ${siteName};
 
@@ -114,7 +114,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro add(calendarName = null,calendarType = null) {
+	macro add(calendarName = null, calendarType = null) {
 		if (${calendarType} == "My Calendars") {
 			CalendarNavigator.gotoAddMyCalendars();
 
@@ -147,7 +147,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro changeColor(site = null,calendarType = null,siteCalendarColor = null,user = null,myCalendarColor = null) {
+	macro changeColor(site = null, calendarType = null, siteCalendarColor = null, user = null, myCalendarColor = null) {
 		CalendarNavigator.gotoView(viewType = "Week");
 
 		if (${calendarType} == "My Calendars") {
@@ -182,14 +182,14 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro chooseOtherCalendarMenulistOption(calendarName = null,menuListOption = null) {
+	macro chooseOtherCalendarMenulistOption(calendarName = null, menuListOption = null) {
 		Calendar._gotoOtherCalendarMenulist(calendarName = ${calendarName});
 
 		Calendar._gotoMenulistOption(menuListOption = ${menuListOption});
 	}
 
 	@summary = "Default summary"
-	macro chooseSiteCalendarMenulistOption(menuListOption = null,siteCalendarName = null,siteName = null) {
+	macro chooseSiteCalendarMenulistOption(menuListOption = null, siteCalendarName = null, siteName = null) {
 		Calendar._gotoSiteCalendarMenulist(
 			siteCalendarName = ${siteCalendarName},
 			siteName = ${siteName});
@@ -198,7 +198,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro delete(calendarName = null,site = null,calendarType = null,user = null) {
+	macro delete(calendarName = null, site = null, calendarType = null, user = null) {
 		CalendarNavigator.gotoView(viewType = "Week");
 
 		if (${calendarType} == "My Calendars") {
@@ -228,7 +228,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro edit(calendarName = null,calendarType = null,calendarNameEdit = null,user = null) {
+	macro edit(calendarName = null, calendarType = null, calendarNameEdit = null, user = null) {
 		CalendarNavigator.gotoView(viewType = "Week");
 
 		if (${calendarType} == "My Calendars") {
@@ -286,7 +286,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editEmailTemplate(calendarName = null,site = null,calendarType = null,reminderEmail = null,fromAddressEdit = null,fromNameEdit = null,user = null,inviteEmail = null) {
+	macro editEmailTemplate(calendarName = null, site = null, calendarType = null, reminderEmail = null, fromAddressEdit = null, fromNameEdit = null, user = null, inviteEmail = null) {
 		CalendarNavigator.gotoView(viewType = "Week");
 
 		if (${calendarType} == "My Calendars") {
@@ -386,7 +386,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro enableComments(calendarName = null,site = null,calendarType = null,user = null) {
+	macro enableComments(calendarName = null, site = null, calendarType = null, user = null) {
 		CalendarNavigator.gotoView(viewType = "Week");
 
 		if (${calendarType} == "My Calendars") {
@@ -467,7 +467,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro importCalendarFile(calendarName = null,calendarFile = null) {
+	macro importCalendarFile(calendarName = null, calendarFile = null) {
 		var key_calendarName = ${calendarName};
 
 		AssertTextEquals(
@@ -490,7 +490,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro removeViewPermissions(site = null,roleTitle = null) {
+	macro removeViewPermissions(site = null, roleTitle = null) {
 		CalendarNavigator.gotoView(viewType = "Week");
 
 		var key_site = ${site};
@@ -580,7 +580,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro view(calendarName = null,site = null,calendarType = null,user = null) {
+	macro view(calendarName = null, site = null, calendarType = null, user = null) {
 		var key_calendarName = ${calendarName};
 
 		if (${calendarType} == "My Calendars") {
@@ -607,7 +607,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCalendarColorPicker(calendarName = null,color = null) {
+	macro viewCalendarColorPicker(calendarName = null, color = null) {
 		Calendar._gotoOtherCalendarMenulist(calendarName = ${calendarName});
 
 		var key_color = ${color};
@@ -616,7 +616,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewColor(calendarType = null,myCalendarColor = null) {
+	macro viewColor(calendarType = null, myCalendarColor = null) {
 		var key_color = ${myCalendarColor};
 
 		if (${calendarType} == "My Calendars") {
@@ -627,7 +627,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCurrentSiteCalendarName(calendarName = null,siteName = null) {
+	macro viewCurrentSiteCalendarName(calendarName = null, siteName = null) {
 		var key_siteName = ${siteName};
 
 		AssertTextEquals(
@@ -714,7 +714,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewOtherCalendarMenulist(calendarName = null,color = null,pageName = null) {
+	macro viewOtherCalendarMenulist(calendarName = null, color = null, pageName = null) {
 		Calendar.chooseOtherCalendarMenulistOption(
 			calendarName = ${calendarName},
 			menuListOption = "Add Event");
@@ -775,7 +775,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewRSSFeedEventNotPresent(calendarName = null,eventTitle = null,siteCalendarName = null,siteName = null,pageName = null) {
+	macro viewRSSFeedEventNotPresent(calendarName = null, eventTitle = null, siteCalendarName = null, siteName = null, pageName = null) {
 		Calendar._checkForRSSTitle(
 			pageName = ${pageName},
 			siteCalendarName = ${siteCalendarName},
@@ -795,7 +795,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewRSSFeedEventPresent(calendarName = null,eventTitle = null,siteCalendarName = null,siteName = null,pageName = null) {
+	macro viewRSSFeedEventPresent(calendarName = null, eventTitle = null, siteCalendarName = null, siteName = null, pageName = null) {
 		Calendar._checkForRSSTitle(
 			pageName = ${pageName},
 			siteCalendarName = ${siteCalendarName},
@@ -849,7 +849,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSiteCalendarNoMenulistOption(menuListOption = null,siteCalendarName = null,siteName = null) {
+	macro viewSiteCalendarNoMenulistOption(menuListOption = null, siteCalendarName = null, siteName = null) {
 		Calendar._gotoSiteCalendarMenulist(
 			siteCalendarName = ${siteCalendarName},
 			siteName = ${siteName});

@@ -13,7 +13,7 @@ definition {
 		}
 	}
 
-	function assertPartialTextClickAt(locator1,value1) {
+	function assertPartialTextClickAt(locator1, value1) {
 		WaitForSPARefresh();
 
 		AssertTextEquals.assertPartialText();
@@ -23,7 +23,7 @@ definition {
 		selenium.clickAt(${locator1}, ${value1});
 	}
 
-	function assertTextClick(locator1) {
+	function assertTextClick(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");
@@ -37,7 +37,7 @@ definition {
 		selenium.click(${locator1});
 	}
 
-	function assertValueClick(locator1) {
+	function assertValueClick(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");

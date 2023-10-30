@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addDiagramProductWithImage(catalogName = null,shortDescription = null,sku = null,imageTitle = null,productName = null) {
+	macro addDiagramProductWithImage(catalogName = null, shortDescription = null, sku = null, imageTitle = null, productName = null) {
 		CommerceJSONProductsAPI._addCommerceProduct(
 			catalogName = ${catalogName},
 			productName = ${productName},
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addEntry(productShortDescription = null,publishProduct = null,key_menuItem = null,compileDescription = null,productFullDescription = null,productType = null,productName = null) {
+	macro addEntry(productShortDescription = null, publishProduct = null, key_menuItem = null, compileDescription = null, productFullDescription = null, productType = null, productName = null) {
 		Click(locator1 = "Button#PLUS");
 
 		Click(
@@ -68,7 +68,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addProductWithStatusViaAPI(catalogName = null,productStatusCode = null,productType = null) {
+	macro addProductWithStatusViaAPI(catalogName = null, productStatusCode = null, productType = null) {
 		if (${productStatusCode} == 0) {
 			var productName = "Approved Product";
 		}
@@ -108,7 +108,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro approvePendingProduct(userLastName = null,userFirstName = null,approveRequest = null) {
+	macro approvePendingProduct(userLastName = null, userFirstName = null, approveRequest = null) {
 		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
 
 		Click(
@@ -245,7 +245,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro checkProductIdsEqual(firstProductId = null,secondProductId = null,status = null) {
+	macro checkProductIdsEqual(firstProductId = null, secondProductId = null, status = null) {
 		var equals = CommerceProducts.isProductIdsEqual(
 			firstProductId = ${firstProductId},
 			secondProductId = ${secondProductId});
@@ -260,7 +260,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro checkProductIdsNotEqual(firstProductId = null,secondProductId = null) {
+	macro checkProductIdsNotEqual(firstProductId = null, secondProductId = null) {
 		var equals = CommerceProducts.isProductIdsEqual(
 			firstProductId = ${firstProductId},
 			secondProductId = ${secondProductId});
@@ -363,7 +363,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro checkProductStatusAfterDuplicationAndConvertionToDraft(entryName = null,productName = null,productCatalog = null,status = null) {
+	macro checkProductStatusAfterDuplicationAndConvertionToDraft(entryName = null, productName = null, productCatalog = null, status = null) {
 		AppBuilderAdmin.searchByItem(itemName = ${entryName});
 
 		CommerceNavigator.gotoEntry(entryName = ${entryName});
@@ -386,7 +386,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureSubscription(subscriptionExactDay = null,subscriptionMonth = null,subscriptionLength = null,subscriptionCycleValue = null,subscriptionType = null,subscriptionName = null,subscriptionMode = null) {
+	macro configureSubscription(subscriptionExactDay = null, subscriptionMonth = null, subscriptionLength = null, subscriptionCycleValue = null, subscriptionType = null, subscriptionName = null, subscriptionMode = null) {
 		if (${subscriptionName} == "Payment Subscription") {
 			var indexNumber = 1;
 		}
@@ -470,7 +470,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureVirtualProduct(assertUploaded = null,attachment = null,activationStatus = null,maxDownloads = null) {
+	macro configureVirtualProduct(assertUploaded = null, attachment = null, activationStatus = null, maxDownloads = null) {
 		Click(locator1 = "FormFields#SELECT_UPLOAD_FIELD");
 
 		SelectFrameTop();
@@ -629,7 +629,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro duplicateProduct(productShortDescription = null,publishProduct = null,checkProductFields = null,compileDescription = null,productFullDescription = null,status = null,productCatalog = null) {
+	macro duplicateProduct(productShortDescription = null, publishProduct = null, checkProductFields = null, compileDescription = null, productFullDescription = null, status = null, productCatalog = null) {
 		var productName = ${productName};
 
 		if (isSet(status)) {
@@ -704,7 +704,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro isProductIdsEqual(firstProductId = null,secondProductId = null) {
+	macro isProductIdsEqual(firstProductId = null, secondProductId = null) {
 		if (${firstProductId} == ${secondProductId}) {
 			return "true";
 		}
@@ -757,7 +757,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updateProductInventoryConfiguration(displayStockQuantity = null,allowBackOrders = null,displayAvailability = null,minOrderQuantity = null) {
+	macro updateProductInventoryConfiguration(displayStockQuantity = null, allowBackOrders = null, displayAvailability = null, minOrderQuantity = null) {
 		if (isSet(displayAvailability)) {
 			if (${displayAvailability} == "true") {
 				Check.checkToggleSwitch(
@@ -808,7 +808,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updateProductVirtualActivationStatus(activationStatus = null,key_contentType = null,key_fieldLabel = null) {
+	macro updateProductVirtualActivationStatus(activationStatus = null, key_contentType = null, key_fieldLabel = null) {
 		SelectFrameTop();
 
 		WaitForElementNotPresent(locator1 = "CommerceEntry#ANY_IFRAME");
@@ -830,7 +830,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updateProductVirtualConfiguration(sampleFileName = null,activationStatus = null,virtualProductFile = null,key_contentType = null,key_fieldLabel = null,enableSample = null) {
+	macro updateProductVirtualConfiguration(sampleFileName = null, activationStatus = null, virtualProductFile = null, key_contentType = null, key_fieldLabel = null, enableSample = null) {
 		if (IsElementPresent(key_accordionTitle = "details", locator1 = "CommerceEntry#ACCORDION_COLLAPSED")) {
 			Click(
 				key_accordionTitle = "details",
@@ -858,7 +858,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updateProductVirtualSettingOverride(sampleFileName = null,activationStatus = null,virtualProductFile = null,key_contentType = null,key_fieldLabel = null,enableSample = null,maxDownloads = null) {
+	macro updateProductVirtualSettingOverride(sampleFileName = null, activationStatus = null, virtualProductFile = null, key_contentType = null, key_fieldLabel = null, enableSample = null, maxDownloads = null) {
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#IFRAME");
 
 		CommerceEntry.gotoMenuTab(menuTab = "Virtual Settings Override");
@@ -882,7 +882,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updateVirtualSkuActivationStatus(activationStatus = null,key_contentType = null,key_fieldLabel = null) {
+	macro updateVirtualSkuActivationStatus(activationStatus = null, key_contentType = null, key_fieldLabel = null) {
 		if (IsElementPresent(key_contentType = ${key_contentType}, locator1 = "CommerceEntry#NOTIFICATION_DELIVERY_PANEL_CLOSED")) {
 			Click(
 				key_contentType = ${key_contentType},
@@ -900,7 +900,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updateVirtualSkuConfiguration(duration = null,maxDownload = null,sampleFileName = null,activationStatus = null,virtualProductFile = null,key_contentType = null,key_fieldLabel = null,maxDownloads = null,enableSample = null) {
+	macro updateVirtualSkuConfiguration(duration = null, maxDownload = null, sampleFileName = null, activationStatus = null, virtualProductFile = null, key_contentType = null, key_fieldLabel = null, maxDownloads = null, enableSample = null) {
 		if (IsElementPresent(key_accordionTitle = "details", locator1 = "CommerceEntry#ACCORDION_COLLAPSED_CONTAINS")) {
 			Click(
 				key_accordionTitle = "details",
@@ -966,7 +966,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro uploadVirtualProductSample(sampleFileName = null,publish = null,enableSample = null) {
+	macro uploadVirtualProductSample(sampleFileName = null, publish = null, enableSample = null) {
 		Variables.assertDefined(parameterList = "${enableSample},${sampleFileName}");
 
 		if (IsElementPresent(key_accordionTitle = "sample", locator1 = "CommerceEntry#ACCORDION_COLLAPSED")) {
@@ -996,7 +996,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro uploadVirtualSkuSample(sampleFileName = null,enableSample = null) {
+	macro uploadVirtualSkuSample(sampleFileName = null, enableSample = null) {
 		Variables.assertDefined(parameterList = "${enableSample},${sampleFileName}");
 
 		if (!(isSet(publish))) {
@@ -1030,7 +1030,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewVirtualSkuConfiguration(virtualURL = null,duration = null,simpleFileURL = null,sampleFileName = null,activationStatus = null,virtualProductFile = null,maxDownloads = null,enableSample = null) {
+	macro viewVirtualSkuConfiguration(virtualURL = null, duration = null, simpleFileURL = null, sampleFileName = null, activationStatus = null, virtualProductFile = null, maxDownloads = null, enableSample = null) {
 		if (isSet(virtualURL) || isSet(virtualProductFile)) {
 			if (IsElementPresent(key_accordionTitle = "details", locator1 = "CommerceEntry#ACCORDION_COLLAPSED_CONTAINS")) {
 				Click(

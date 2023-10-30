@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro configureDisplaySettingsPG(enableDisplaySettingsRelatedAssets = null,currentDisplayStyleViews = null,entriesToDisplayCount = null,enableDisplaySettingsShowSearch = null,portletName = null) {
+	macro configureDisplaySettingsPG(enableDisplaySettingsRelatedAssets = null, currentDisplayStyleViews = null, entriesToDisplayCount = null, enableDisplaySettingsShowSearch = null, portletName = null) {
 		Portlet.gotoPortletOptions(
 			portletName = ${portletName},
 			portletOption = "Configuration");

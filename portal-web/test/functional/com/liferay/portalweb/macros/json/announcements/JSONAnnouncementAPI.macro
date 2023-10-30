@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _addAnnouncement(userPassword = null,announcementURL = null,displayDate = null,announcementTitle = null,announcementContent = null,userEmailAddress = null,announcementType = null,priority = null,expirationDate = null) {
+	macro _addAnnouncement(userPassword = null, announcementURL = null, displayDate = null, announcementTitle = null, announcementContent = null, userEmailAddress = null, announcementType = null, priority = null, expirationDate = null) {
 		Variables.assertDefined(parameterList = "${announcementTitle},${announcementContent}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -25,7 +25,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getEntryId(groupName = null,baseURL = null,siteURLKey = null) {
+	macro _getEntryId(groupName = null, baseURL = null, siteURLKey = null) {
 		var groupId = JSONGroupSetter.setGroupId(groupName = ${groupName});
 
 		Navigator.openWithAppendToBaseURL(

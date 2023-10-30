@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro disableFeatureFlag(featureFlag = null,scope = null) {
+	macro disableFeatureFlag(featureFlag = null, scope = null) {
 		FeatureFlag.toggleFeatureFlag(
 			featureFlag = ${featureFlag},
 			scope = ${scope},
@@ -9,7 +9,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro enableFeatureFlag(featureFlag = null,scope = null) {
+	macro enableFeatureFlag(featureFlag = null, scope = null) {
 		FeatureFlag.toggleFeatureFlag(
 			featureFlag = ${featureFlag},
 			scope = ${scope},
@@ -17,7 +17,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro toggleFeatureFlag(toggleState = null,featureFlag = null,scope = null) {
+	macro toggleFeatureFlag(toggleState = null, featureFlag = null, scope = null) {
 		if (isSet(scope)) {
 			Click(
 				key_configurationName = ${scope},

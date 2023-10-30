@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro changeLanguage(languageOption = null,language = null) {
+	macro changeLanguage(languageOption = null, language = null) {
 		var key_languageOption = ${languageOption};
 		var key_language = ${language};
 
@@ -19,7 +19,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureWorkspaceSettings(timezone = null,timezoneId = null,workspaceName = null) {
+	macro configureWorkspaceSettings(timezone = null, timezoneId = null, workspaceName = null) {
 		if (isSet(workspaceName)) {
 			Type(
 				key_text = "Workspace Name",
@@ -71,7 +71,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createWorkspace(emailList = null,workspaceName = null) {
+	macro createWorkspace(emailList = null, workspaceName = null) {
 		ACUtils.clickAnyButton(button = "Start Free Trial");
 
 		Type(
@@ -113,7 +113,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setFriendlyURL(urlName = null,friendlyURL = null) {
+	macro setFriendlyURL(urlName = null, friendlyURL = null) {
 		var key_friendlyURL = ${friendlyURL};
 
 		Type(
@@ -177,7 +177,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewWorkspaceSettings(timezone = null,timezoneId = null,workspaceName = null) {
+	macro viewWorkspaceSettings(timezone = null, timezoneId = null, workspaceName = null) {
 		if (isSet(workspaceName)) {
 			AssertTextEquals(
 				key_text = "Workspace Name",

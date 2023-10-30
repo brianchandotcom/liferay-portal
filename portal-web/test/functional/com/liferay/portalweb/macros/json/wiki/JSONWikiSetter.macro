@@ -16,7 +16,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setNodeId(noSelenium = null,groupName = null,name = null) {
+	macro setNodeId(noSelenium = null, groupName = null, name = null) {
 		Variables.assertDefined(parameterList = "${name},${groupName}");
 
 		if (!(isSet(site))) {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setPageId(groupName = null,name = null,title = null) {
+	macro setPageId(groupName = null, name = null, title = null) {
 		Variables.assertDefined(parameterList = "${title},${groupName},${name}");
 
 		if (!(isSet(site))) {
@@ -59,7 +59,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setResourcePrimKey(groupName = null,name = null,title = null) {
+	macro setResourcePrimKey(groupName = null, name = null, title = null) {
 		Variables.assertDefined(parameterList = "${title},${groupName},${name}");
 
 		if (!(isSet(site))) {
@@ -82,7 +82,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setServiceContext(groupName = null,assetCategoryIds = null,assetTagNames = null) {
+	macro setServiceContext(groupName = null, assetCategoryIds = null, assetTagNames = null) {
 		var serviceContext = JSONServiceContextUtil.setServiceContext(
 			assetCategoryIds = ${assetCategoryIds},
 			assetTagNames = ${assetTagNames},

@@ -5,7 +5,7 @@ definition {
 	var rowNumber = 1;
 
 	@summary = "Default summary"
-	macro addFieldFromSidebarToFieldsGroup(key_fieldName = null,key_fieldLabel = null) {
+	macro addFieldFromSidebarToFieldsGroup(key_fieldName = null, key_fieldLabel = null) {
 		DragAndDrop.javaScriptDragAndDropToBottom(
 			key_fieldLabel = ${key_fieldLabel},
 			key_fieldName = ${key_fieldName},
@@ -14,7 +14,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addFieldOutsideOfFieldsGroup(fieldName = null,index = null) {
+	macro addFieldOutsideOfFieldsGroup(fieldName = null, index = null) {
 		DragAndDrop.javaScriptDragAndDropToBottom(
 			key_fieldName = ${fieldName},
 			key_index = ${index},
@@ -23,7 +23,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addFieldSameRow(fieldColumnNumber = null,fieldRowNumber = null,formPageNumber = null,fieldType = null) {
+	macro addFieldSameRow(fieldColumnNumber = null, fieldRowNumber = null, formPageNumber = null, fieldType = null) {
 		var key_fieldLabel = ${fieldType};
 
 		if (isSet(formPageNumber)) {
@@ -54,7 +54,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addFieldToFieldsGroup(targetFieldLabel = null,sourceFieldName = null) {
+	macro addFieldToFieldsGroup(targetFieldLabel = null, sourceFieldName = null) {
 		DragAndDrop.javaScriptDragAndDropToBottom(
 			key_fieldLabel = ${targetFieldLabel},
 			key_fieldName = ${sourceFieldName},
@@ -98,7 +98,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addTextField(fieldPositionNumber = null,formPageNumber = null) {
+	macro addTextField(fieldPositionNumber = null, formPageNumber = null) {
 		if (isSet(formPageNumber)) {
 			Form.gotoAddField(
 				fieldPositionNumber = ${fieldPositionNumber},
@@ -113,7 +113,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addTextFieldReference(fieldPositionNumber = null,key_fieldReferenceText = null,formPageNumber = null) {
+	macro addTextFieldReference(fieldPositionNumber = null, key_fieldReferenceText = null, formPageNumber = null) {
 		if (isSet(formPageNumber)) {
 			Form.gotoAddField(
 				fieldPositionNumber = ${fieldPositionNumber},
@@ -147,7 +147,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertFieldPositionAtFormsGroupOnPublishedForm(key_rowNumber = null,key_text = null,key_formPageNumber = null) {
+	macro assertFieldPositionAtFormsGroupOnPublishedForm(key_rowNumber = null, key_text = null, key_formPageNumber = null) {
 		AssertElementPresent(
 			key_formPageNumber = ${key_formPageNumber},
 			key_rowNumber = ${key_rowNumber},
@@ -175,7 +175,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureEmailNotifications(subject = null,fromName = null,fromAddress = null,toAddress = null) {
+	macro configureEmailNotifications(subject = null, fromName = null, fromAddress = null, toAddress = null) {
 		AssertClick(
 			locator1 = "Form#SETTINGS_TAB_EMAIL_NOTIFICATIONS",
 			value1 = "Notifications");
@@ -270,7 +270,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteCurrentLastPage(formDropDownNumber = null,formPageNumber = null) {
+	macro deleteCurrentLastPage(formDropDownNumber = null, formPageNumber = null) {
 		var key_formDropDownNumber = ${formDropDownNumber};
 		var key_formPageNumber = ${formPageNumber};
 
@@ -286,7 +286,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteCurrentPage(formDropDownNumber = null,formPageNumber = null) {
+	macro deleteCurrentPage(formDropDownNumber = null, formPageNumber = null) {
 		var key_formDropDownNumber = ${formDropDownNumber};
 		var key_formPageNumber = ${formPageNumber};
 
@@ -302,7 +302,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteFieldModalConfirmation(fieldName = null,fieldLabel = null) {
+	macro deleteFieldModalConfirmation(fieldName = null, fieldLabel = null) {
 		FormsAdminNavigator.gotoDeleteField(fieldName = ${fieldName});
 
 		while (IsElementPresent(locator1 = "Form#VALIDATE_DELETE_FIELD_MODAL_DELETE_MESSAGE")) {
@@ -381,7 +381,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editFieldDataProvider(dataProviderOutput = null,dataProvider = null) {
+	macro editFieldDataProvider(dataProviderOutput = null, dataProvider = null) {
 		FormFields.selectSelectOption(
 			fieldName = "dataSourceType",
 			selectOption = "From Data Provider");
@@ -478,7 +478,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editPageTitle(formPageName = null,formTitleNumber = null) {
+	macro editPageTitle(formPageName = null, formTitleNumber = null) {
 		var key_titleNumber = ${formTitleNumber};
 
 		ScrollWebElementIntoView(locator1 = "Form#PAGE_TITLE_FIELD");
@@ -493,7 +493,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editSuccessPage(successPageDescription = null,successPageTitle = null) {
+	macro editSuccessPage(successPageDescription = null, successPageTitle = null) {
 		Type(
 			locator1 = "Form#SUCCESS_PAGE_TITLE_FIELD",
 			value1 = ${successPageTitle});
@@ -504,7 +504,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editTextFieldDataProvider(dataProviderOutput = null,dataProvider = null) {
+	macro editTextFieldDataProvider(dataProviderOutput = null, dataProvider = null) {
 		FormFields.selectRadioOption(
 			fieldName = "dataSourceType",
 			radioOption = "From Data Provider");
@@ -533,7 +533,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoAddElementSet(fieldPositionNumber = null,formPageNumber = null,elementSetTitle = null) {
+	macro gotoAddElementSet(fieldPositionNumber = null, formPageNumber = null, elementSetTitle = null) {
 		WaitForElementPresent(locator1 = "Form#SIDEBAR_CONTENT_OPEN");
 
 		Form.gotoElementSetsTab();
@@ -561,7 +561,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoAddField(fieldPositionNumber = null,localeBasic = null,formPageNumber = null,localeFields = null,fieldType = null) {
+	macro gotoAddField(fieldPositionNumber = null, localeBasic = null, formPageNumber = null, localeFields = null, fieldType = null) {
 		WaitForElementPresent(locator1 = "Form#SIDEBAR_CONTENT_OPEN");
 
 		if (isSet(localeFields)) {
@@ -731,7 +731,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro moveFieldToRow(fieldPositionNumber = null,fieldNameTarget = null,fieldLabel = null,formPageNumber = null) {
+	macro moveFieldToRow(fieldPositionNumber = null, fieldNameTarget = null, fieldLabel = null, formPageNumber = null) {
 		if (isSet(formPageNumber)) {
 			var key_formPageNumber = ${formPageNumber};
 		}
@@ -768,7 +768,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro navigateFormPagesTopList(key_formPageName = null,key_formPageNumber = null) {
+	macro navigateFormPagesTopList(key_formPageName = null, key_formPageNumber = null) {
 		var formPageNumber = ${key_formPageNumber};
 		var formPageName = ${key_formPageName};
 
@@ -802,7 +802,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro previewForm(fieldName = null,formName = null,fieldLabel = null,fieldValue = null) {
+	macro previewForm(fieldName = null, formName = null, fieldLabel = null, fieldValue = null) {
 		Navigator.selectSpecificWindow(windowTitle = "Form - Forms");
 
 		WaitForPageLoad();
@@ -840,7 +840,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro reorderFields(fieldName = null,index = null) {
+	macro reorderFields(fieldName = null, index = null) {
 		DragAndDrop.javaScriptDragAndDropToObject(
 			key_fieldName = ${fieldName},
 			key_index = ${index},
@@ -849,7 +849,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro reorderFieldsFromFieldsGroup(key_rowNumber = null,key_fieldName = null,key_pageNumber = null) {
+	macro reorderFieldsFromFieldsGroup(key_rowNumber = null, key_fieldName = null, key_pageNumber = null) {
 		DragAndDrop.javaScriptDragAndDropToObject(
 			key_fieldName = ${key_fieldName},
 			key_pageNumber = ${key_pageNumber},
@@ -947,7 +947,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro submitFormPublish(fieldName = null,fieldLabel = null,fieldValue = null) {
+	macro submitFormPublish(fieldName = null, fieldLabel = null, fieldValue = null) {
 		Form.viewFormPublish(
 			fieldLabel = ${fieldLabel},
 			fieldName = ${fieldName});
@@ -1024,7 +1024,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewButtonPageDisabled(formPageName = null,pageMove = null) {
+	macro viewButtonPageDisabled(formPageName = null, pageMove = null) {
 		AssertElementPresent(
 			key_formPageName = ${formPageName},
 			key_movePage = "Move Page ${pageMove}",
@@ -1056,7 +1056,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewFieldReference(fieldName = null,fieldReference = null) {
+	macro viewFieldReference(fieldName = null, fieldReference = null) {
 		var key_fieldName = ${fieldName};
 		var key_fieldReference = ${fieldReference};
 
@@ -1072,7 +1072,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewFieldReferenceFromTextField(fieldName = null,key_fieldReference = null) {
+	macro viewFieldReferenceFromTextField(fieldName = null, key_fieldReference = null) {
 		Click(
 			key_fieldName = ${fieldName},
 			locator1 = "Form#FIELD_BODY");
@@ -1144,7 +1144,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewFormPublish(fieldName = null,formName = null,fieldLabel = null) {
+	macro viewFormPublish(fieldName = null, formName = null, fieldLabel = null) {
 		FormsAdminNavigator.openPublishURL();
 
 		var key_formName = ${formName};
@@ -1185,7 +1185,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPageName(formPageName = null,formTitleNumber = null) {
+	macro viewPageName(formPageName = null, formTitleNumber = null) {
 		AssertElementPresent(
 			key_pageName = ${formTitleNumber},
 			locator1 = "Form#PAGE_NAME",
@@ -1221,7 +1221,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewReorderPageAndVerifyField(fieldPositionNumber = null,fieldName = null,formPageNumber = null) {
+	macro viewReorderPageAndVerifyField(fieldPositionNumber = null, fieldName = null, formPageNumber = null) {
 		AssertElementPresent(
 			key_fieldName = ${fieldName},
 			key_fieldPositionNumber = ${fieldPositionNumber},
@@ -1256,7 +1256,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSelectFromListOptionOnPreview(optionValue = null,rowPosition = null) {
+	macro viewSelectFromListOptionOnPreview(optionValue = null, rowPosition = null) {
 		AssertElementPresent(
 			key_optionValue = ${optionValue},
 			key_rowPosition = ${rowPosition},

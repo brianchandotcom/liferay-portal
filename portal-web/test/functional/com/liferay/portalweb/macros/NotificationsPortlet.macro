@@ -10,7 +10,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro disableUserDeliveries(actionType = null,notificationType = null,contentType = null) {
+	macro disableUserDeliveries(actionType = null, notificationType = null, contentType = null) {
 		var key_contentType = ${contentType};
 		var key_panel = ${contentType};
 

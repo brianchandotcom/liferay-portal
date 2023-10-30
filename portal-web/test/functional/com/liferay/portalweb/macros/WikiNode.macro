@@ -16,7 +16,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addImage(navTab = null,contentImageName = null,imageSourceURL = null) {
+	macro addImage(navTab = null, contentImageName = null, imageSourceURL = null) {
 		ItemSelector.gotoItemSelectorViaCKEditor();
 
 		ItemSelector.addImageFromURL(
@@ -41,7 +41,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addWikiPage(wikiPageTitle = null,wikiPageContent = null) {
+	macro addWikiPage(wikiPageTitle = null, wikiPageContent = null) {
 		var key_wikiPageTitle = ${wikiPageTitle};
 		var key_wikiPageContent = ${wikiPageContent};
 
@@ -80,7 +80,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editCP(wikiNodeName = null,wikiNodeNameEdit = null,wikiNodeDescriptionEdit = null) {
+	macro editCP(wikiNodeName = null, wikiNodeNameEdit = null, wikiNodeDescriptionEdit = null) {
 		var key_wikiNodeName = ${wikiNodeName};
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
@@ -107,7 +107,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro importWikiPage(wikiNodeName = null,fileName = null) {
+	macro importWikiPage(wikiNodeName = null, fileName = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Import Pages",
 			rowEntry = ${wikiNodeName});
@@ -144,7 +144,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCP(wikiNodeName = null,numberOfWikiPages = null) {
+	macro viewCP(wikiNodeName = null, numberOfWikiPages = null) {
 		var key_wikiNodeName = ${wikiNodeName};
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
@@ -165,7 +165,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewImageIsPresent(wikiPageTitle = null,contentImageName = null) {
+	macro viewImageIsPresent(wikiPageTitle = null, contentImageName = null) {
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		Click(

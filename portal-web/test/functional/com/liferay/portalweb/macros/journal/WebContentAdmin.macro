@@ -11,7 +11,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro clickEntryEllipsisItem(entry = null,item = null) {
+	macro clickEntryEllipsisItem(entry = null, item = null) {
 		LexiconList.clickEllipsisItem(
 			item = ${item},
 			listEntry = ${entry});
@@ -23,7 +23,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureEmailNotifications(navTab = null,fieldName = null,notificationsSubject = null,notificationsBody = null,enabled = null) {
+	macro configureEmailNotifications(navTab = null, fieldName = null, notificationsSubject = null, notificationsBody = null, enabled = null) {
 		Navigator.gotoNavTab(navTab = ${navTab});
 
 		if (${enabled} == "true") {
@@ -74,7 +74,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewEntryWorkflowStatus(entry = null,workflowStatus = null) {
+	macro viewEntryWorkflowStatus(entry = null, workflowStatus = null) {
 		LexiconList.viewListEntryLabel(
 			listEntry = ${entry},
 			listEntryLabel = ${workflowStatus});

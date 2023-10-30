@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addOrderRule(orderRuleDescription = null,applyTo = null,amount = null,orderRuleCurrency = null,orderRuleType = null,orderRuleName = null,active = null) {
+	macro addOrderRule(orderRuleDescription = null, applyTo = null, amount = null, orderRuleCurrency = null, orderRuleType = null, orderRuleName = null, active = null) {
 		LexiconEntry.gotoAdd();
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
@@ -51,7 +51,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addOrderType(orderTypeDescription = null,orderTypeName = null) {
+	macro addOrderType(orderTypeDescription = null, orderTypeName = null) {
 		LexiconEntry.gotoAdd();
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
@@ -140,7 +140,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertOrderImportPreviewEntry(unitPrice = null,importStatus = null,productSku = null,productQuantity = null,totalPrice = null,requestedDeliveryDate = null,productName = null) {
+	macro assertOrderImportPreviewEntry(unitPrice = null, importStatus = null, productSku = null, productQuantity = null, totalPrice = null, requestedDeliveryDate = null, productName = null) {
 		if (isSet(productSku)) {
 			AssertTextEquals(
 				key_columnNumber = 1,
@@ -197,7 +197,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertOrderRulesEntry(orderRuleDescription = null,applyTo = null,amount = null,orderRuleCurrency = null,orderRuleType = null,orderRuleName = null,priority = null) {
+	macro assertOrderRulesEntry(orderRuleDescription = null, applyTo = null, amount = null, orderRuleCurrency = null, orderRuleType = null, orderRuleName = null, priority = null) {
 		AssertTextEquals(
 			locator1 = "CommerceEntry#NAME_FIELD",
 			value1 = ${orderRuleName});
@@ -237,7 +237,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertOrderTypesEntry(orderTypeDescription = null,displayOrder = null,orderTypeName = null) {
+	macro assertOrderTypesEntry(orderTypeDescription = null, displayOrder = null, orderTypeName = null) {
 		AssertTextEquals(
 			locator1 = "CommerceEntry#NAME_FIELD",
 			value1 = ${orderTypeName});
@@ -254,7 +254,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro checkoutFullWorkflow(productSkus = null,orderIds = null,outstandingQuantities = null) {
+	macro checkoutFullWorkflow(productSkus = null, orderIds = null, outstandingQuantities = null) {
 		if (!(isSet(quantityInShipment))) {
 			var quantityInShipment = 1;
 		}
@@ -363,7 +363,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createShipment(productSkuList = null,trackingURL = null,shippingMethod = null,complement = null,carrierDetail = null,trackingNumber = null,warehouseName = null) {
+	macro createShipment(productSkuList = null, trackingURL = null, shippingMethod = null, complement = null, carrierDetail = null, trackingNumber = null, warehouseName = null) {
 		if (!(isSet(moveItemQuantitiesInShipment))) {
 			var moveItemQuantitiesInShipment = "true";
 		}
@@ -480,7 +480,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editCommerceOrderNote(orderNoteBody = null,orderNoteBodyEdit = null) {
+	macro editCommerceOrderNote(orderNoteBody = null, orderNoteBodyEdit = null) {
 		if (!(isSet(restricted))) {
 			var restricted = "false";
 		}
@@ -511,7 +511,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editOrderAddressCP(editedCountry = null,editedName = null,editedStreet1 = null,editedCity = null,editedZipCode = null,editedRegion = null) {
+	macro editOrderAddressCP(editedCountry = null, editedName = null, editedStreet1 = null, editedCity = null, editedZipCode = null, editedRegion = null) {
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		if (IsElementPresent(locator1 = "Button#PLUS")) {
@@ -570,7 +570,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editOrderDetails(printedNote = null,purchaseOrderNumber = null,requestedDeliveryDate = null) {
+	macro editOrderDetails(printedNote = null, purchaseOrderNumber = null, requestedDeliveryDate = null) {
 		if (isSet(printedNote)) {
 			if (IsElementPresent(key_buttonName = "Add", key_titleName = "Printed Note", locator1 = "CommerceOrders#ORDER_GENERAL_DETAILS_ADD_EDIT_BUTTON")) {
 				Click(
@@ -657,7 +657,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editOrderItemDetails(orderItemDiscount = null,orderItemDeliveryGroup = null,orderItemSku = null,orderItemMeasurementUnit = null,orderItemPrice = null,orderItemRequestedDeliveryDate = null,orderItemQuantity = null,orderItemTotal = null) {
+	macro editOrderItemDetails(orderItemDiscount = null, orderItemDeliveryGroup = null, orderItemSku = null, orderItemMeasurementUnit = null, orderItemPrice = null, orderItemRequestedDeliveryDate = null, orderItemQuantity = null, orderItemTotal = null) {
 		CommerceNavigator.gotoEntry(entryName = ${orderItemSku});
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
@@ -721,7 +721,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editOrdersEntryTerms(newTerm = null,type = null) {
+	macro editOrdersEntryTerms(newTerm = null, type = null) {
 		if (${type} == "Payment") {
 			Click(
 				key_buttonName = "Edit",
@@ -759,7 +759,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editOrderShipmentDetails(shippingAddressCity = null,shippingAddressZipCode = null,carrierName = null,shippingAddressStreet1 = null,estimatedShippingDate = null,shippingAddressName = null,carrierTrackingNumber = null,carrierShippingMethod = null,shippingAddressRegion = null,estimatedDeliveryDate = null,carrierBaseTrackingURL = null,shippingAddressCountry = null) {
+	macro editOrderShipmentDetails(shippingAddressCity = null, shippingAddressZipCode = null, carrierName = null, shippingAddressStreet1 = null, estimatedShippingDate = null, shippingAddressName = null, carrierTrackingNumber = null, carrierShippingMethod = null, shippingAddressRegion = null, estimatedDeliveryDate = null, carrierBaseTrackingURL = null, shippingAddressCountry = null) {
 		if (isSet(carrierName)) {
 			Click(
 				key_text = "Carrier Details",
@@ -828,7 +828,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editOrderSummary(totalNewValue = null,subtotalDiscountNewValue = null,totalDiscountNewValue = null,taxNewValue = null,deliveryNewValue = null,deliveryDiscountNewValue = null,subtotalNewValue = null) {
+	macro editOrderSummary(totalNewValue = null, subtotalDiscountNewValue = null, totalDiscountNewValue = null, taxNewValue = null, deliveryNewValue = null, deliveryDiscountNewValue = null, subtotalNewValue = null) {
 		Click(locator1 = "CommerceOrders#ORDER_EDIT_SUMMARY_BUTTON");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
@@ -891,7 +891,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editOrderType(orderTypeDescription = null,displayOrder = null,orderTypeName = null) {
+	macro editOrderType(orderTypeDescription = null, displayOrder = null, orderTypeName = null) {
 		if (isSet(orderTypeName)) {
 			Type(
 				locator1 = "CommerceEntry#NAME_FIELD",
@@ -916,7 +916,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editPaymentMethod(eligiblePaymentMethods = null,notEligiblePaymentMethods = null,paymentMethod = null) {
+	macro editPaymentMethod(eligiblePaymentMethods = null, notEligiblePaymentMethods = null, paymentMethod = null) {
 		Click(
 			key_titleName = "Payment Method",
 			locator1 = "CommerceOrders#ORDER_DETAILS_EDIT_BUTTON");
@@ -967,7 +967,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getOrderCreationDateFromTable(columnIndex = null,rowIndex = null) {
+	macro getOrderCreationDateFromTable(columnIndex = null, rowIndex = null) {
 		var key_columnIndex = ${columnIndex};
 		var key_rowIndex = ${rowIndex};
 		var orderCreationDate = selenium.getText("CommerceEntry#TABLE_ENTRY_ROW_FIELD_GENERIC");
@@ -976,7 +976,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro importFromOrder(productImportStatuses = null,productSkus = null,orderId = null,productTotalPrices = null,productUnitPrices = null,productNames = null,productQuantities = null,productRequestedDeliveryDates = null) {
+	macro importFromOrder(productImportStatuses = null, productSkus = null, orderId = null, productTotalPrices = null, productUnitPrices = null, productNames = null, productQuantities = null, productRequestedDeliveryDates = null) {
 		Click(locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS_ORDER");
 
 		MenuItem.click(menuItem = "Import from Orders");
@@ -1043,7 +1043,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro searchOrderIdFromAccountSelectorDropdown(orderId = null,searchBarValue = null) {
+	macro searchOrderIdFromAccountSelectorDropdown(orderId = null, searchBarValue = null) {
 		Click.clickNoMouseOver(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_DROPDOWN");
 
 		Click(
@@ -1068,7 +1068,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCommerceOrderNote(commerceOrderNoteAuthor = null,commerceOrderNoteBody = null) {
+	macro viewCommerceOrderNote(commerceOrderNoteAuthor = null, commerceOrderNoteBody = null) {
 		var key_entryComment = ${commerceOrderNoteBody};
 		var key_userFullName = ${commerceOrderNoteAuthor};
 		var orderId = CommerceJSONOrdersAPI._getCommerceOrder();
@@ -1087,7 +1087,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCPCommerceOrderNote(commerceOrderNoteAuthor = null,commerceOrderNoteBody = null,userEmailAddress = null) {
+	macro viewCPCommerceOrderNote(commerceOrderNoteAuthor = null, commerceOrderNoteBody = null, userEmailAddress = null) {
 		var key_entryComment = ${commerceOrderNoteBody};
 		var key_userFullName = ${commerceOrderNoteAuthor};
 		var orderId = CommerceJSONOrdersAPI._getCommerceOrderIds(email = ${userEmailAddress});
@@ -1140,7 +1140,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewOrderAddress(addressZipCode = null,addressType = null,addressStreet1 = null,addressRegion = null,addressCity = null) {
+	macro viewOrderAddress(addressZipCode = null, addressType = null, addressStreet1 = null, addressRegion = null, addressCity = null) {
 		WaitForPageLoad();
 
 		if (${addressType} == "Billing") {
@@ -1188,7 +1188,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewOrderPrices(totalPrice = null,taxPrice = null,deliveryPrice = null,subTotalPrice = null) {
+	macro viewOrderPrices(totalPrice = null, taxPrice = null, deliveryPrice = null, subTotalPrice = null) {
 		AssertTextEquals.assertPartialText(
 			key_priceName = "Subtotal",
 			locator1 = "CommerceOrders#ORDER_PRICES_SEPARETED",
@@ -1211,7 +1211,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewOrdersDetails(shippingAddressCity = null,billingAddressCity = null,productTotalPrice = null,shippingAddressName = null,billingAddressName = null,billingAddressZipCode = null,productListPrice = null,productName = null,shippingAddressAddress = null,shippingAddressZipCode = null,productSku = null,productQuantity = null,productDiscount = null,billingAddressAddress = null) {
+	macro viewOrdersDetails(shippingAddressCity = null, productOptions = null, billingAddressCity = null, productTotalPrice = null, shippingAddressName = null, billingAddressName = null, billingAddressZipCode = null, productListPrice = null, productName = null, shippingAddressAddress = null, shippingAddressZipCode = null, productSku = null, productQuantity = null, productDiscount = null, billingAddressAddress = null) {
 		if (isSet(productSku)) {
 			AssertElementPresent(
 				key_productSku = ${productSku},
@@ -1307,7 +1307,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewOrdersEntry(addressZipCode = null,orderType = null,addressAddress = null,productOptions = null,deliveryTerm = null,productTotalPrice = null,productDeliveryDate = null,productListPrice = null,productName = null,productDeliveryGroup = null,productSku = null,productQuantity = null,printedNote = null,purchaseOrderNumber = null,requestedDeliveryDate = null,productDiscount = null,paymentMethod = null,paymentTerm = null,addressCity = null) {
+	macro viewOrdersEntry(addressZipCode = null, orderType = null, addressAddress = null, productOptions = null, deliveryTerm = null, productTotalPrice = null, productDeliveryDate = null, productListPrice = null, productName = null, productDeliveryGroup = null, productSku = null, productQuantity = null, printedNote = null, purchaseOrderNumber = null, requestedDeliveryDate = null, productDiscount = null, paymentMethod = null, paymentTerm = null, addressCity = null) {
 		if (isSet(addressAddress) && isSet(addressCity) && isSet(addressZipCode)) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "CommerceOrders#ORDER_DETAILS_BILLING_ADDRESS",
@@ -1443,7 +1443,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewOrderShipmentDetails(addressCountry = null,addressZipCode = null,addressAddress = null,carrierName = null,estimatedShippingDate = null,carrierTrackingNumber = null,addressStreet1 = null,carrierShippingMethod = null,estimatedDeliveryDate = null,addressCity = null,carrierBaseTrackingURL = null) {
+	macro viewOrderShipmentDetails(addressCountry = null, addressZipCode = null, addressAddress = null, carrierName = null, estimatedShippingDate = null, carrierTrackingNumber = null, addressStreet1 = null, carrierShippingMethod = null, estimatedDeliveryDate = null, addressCity = null, carrierBaseTrackingURL = null) {
 		if (isSet(addressAddress)) {
 			AssertTextEquals.assertPartialText(
 				key_addressInfo = ${addressAddress},
@@ -1519,7 +1519,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewOrderSummary(totalValue = null,deliveryDiscountValue = null,taxValue = null,deliveryValue = null,totalDiscountValue = null,subtotalValue = null,subtotalDiscountValue = null) {
+	macro viewOrderSummary(totalValue = null, deliveryDiscountValue = null, taxValue = null, deliveryValue = null, totalDiscountValue = null, subtotalValue = null, subtotalDiscountValue = null) {
 		if (isSet(deliveryDiscountValue)) {
 			AssertTextEquals(
 				key_label = "Delivery Discount",

@@ -30,7 +30,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoStyleBookEllipsisItem(item = null,styleBookName = null) {
+	macro gotoStyleBookEllipsisItem(item = null, styleBookName = null) {
 		LexiconCard.clickEllipsisItem(
 			card = ${styleBookName},
 			item = ${item});
@@ -58,7 +58,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro markStyleBookAsDefault(confirmMessage = null,styleBookName = null) {
+	macro markStyleBookAsDefault(confirmMessage = null, styleBookName = null) {
 		StyleBooksAdmin.gotoStyleBookEllipsisItem(
 			item = "Mark as Default",
 			styleBookName = ${styleBookName});

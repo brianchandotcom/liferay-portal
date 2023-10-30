@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _curlAccount(relationshipName = null,accountId = null) {
+	macro _curlAccount(relationshipName = null, accountId = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(accountId)) {
@@ -26,7 +26,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createAccount(name = null,description = null,externalReferenceCode = null) {
+	macro createAccount(name = null, description = null, externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = ${name});
 
 		var curl = AccountAPI._curlAccount();
@@ -79,7 +79,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getRelationshipByAccountId(relationshipName = null,accountId = null) {
+	macro getRelationshipByAccountId(relationshipName = null, accountId = null) {
 		var curl = AccountAPI._curlAccount(
 			accountId = ${accountId},
 			relationshipName = ${relationshipName});
@@ -90,7 +90,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro putAccountRelationship(relationshipName = null,accountId = null) {
+	macro putAccountRelationship(relationshipName = null, accountId = null) {
 		var curl = AccountAPI._curlAccount(
 			accountId = ${accountId},
 			relationshipName = ${relationshipName});
@@ -101,7 +101,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro relateObjectEntries(relationshipName = null,customObjectId = null,userAccountId = null) {
+	macro relateObjectEntries(relationshipName = null, customObjectId = null, userAccountId = null) {
 		Variables.assertDefined(parameterList = "${userAccountId},${customObjectId},${relationshipName}");
 
 		var curl = AccountAPI._curlAccount(

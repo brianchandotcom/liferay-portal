@@ -18,14 +18,14 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro clickEllipsisItem(item = null,assetName = null) {
+	macro clickEllipsisItem(item = null, assetName = null) {
 		LexiconTable.clickEllipsisItem(
 			item = ${item},
 			tableEntry = ${assetName});
 	}
 
 	@summary = "Default summary"
-	macro deleteCP(assetName = null,multipleAssets = null,assetType = null) {
+	macro deleteCP(assetName = null, multipleAssets = null, assetType = null) {
 		LexiconTable.viewTableEntryTitle(tableEntry = ${assetName});
 
 		LexiconTable.viewTableEntryText(
@@ -103,7 +103,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro restoreContentFromFolderCP(breadcrumbName = null,assetType2 = null,assetName = null,documentName = null,assetType = null,assetRestoreLocation = null) {
+	macro restoreContentFromFolderCP(breadcrumbName = null, assetType2 = null, assetName = null, documentName = null, assetType = null, assetRestoreLocation = null) {
 		var key_assetName = ${assetName};
 
 		LexiconTable.viewTableEntryTitle(tableEntry = ${assetName});
@@ -155,7 +155,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro restoreContentWithoutOriginalFolder(assetName = null,assetType = null,assetRestoreLocation = null) {
+	macro restoreContentWithoutOriginalFolder(assetName = null, assetType = null, assetRestoreLocation = null) {
 		LexiconTable.viewTableEntryTitle(tableEntry = ${assetName});
 
 		RecycleBin.clickEllipsisItem(
@@ -178,7 +178,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro restoreCP(assetName = null,multipleAssets = null,assetType = null,assetRestoreLocation = null) {
+	macro restoreCP(assetName = null, multipleAssets = null, assetType = null, assetRestoreLocation = null) {
 		var key_assetName = ${assetName};
 
 		LexiconTable.viewTableEntryTitle(tableEntry = ${assetName});
@@ -230,7 +230,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro restoreRenameCP(newName = null,assetName = null) {
+	macro restoreRenameCP(newName = null, assetName = null) {
 		RecycleBin.clickEllipsisItem(
 			assetName = ${assetName},
 			item = "Restore");
@@ -256,7 +256,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCP(deleteUser = null,assetName = null,assetType = null) {
+	macro viewCP(deleteUser = null, assetName = null, assetType = null) {
 		var key_assetName = ${assetName};
 
 		LexiconTable.viewTableEntryTitleLink(tableEntry = ${assetName});

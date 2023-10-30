@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addAccountAndChildToOrganization(siteName = null,key_nodeName = null,key_nodeDestination = null,pageName = null,key_nodeOrigin = null) {
+	macro addAccountAndChildToOrganization(siteName = null, key_nodeName = null, key_nodeDestination = null, pageName = null, key_nodeOrigin = null) {
 		Navigator.openSitePage(
 			pageName = ${pageName},
 			siteName = ${siteName});
@@ -32,7 +32,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addAccountViaOrganizationManagementWidget(key_radioOption = null,value = null) {
+	macro addAccountViaOrganizationManagementWidget(key_radioOption = null, value = null) {
 		Click.clickAtNotVisible(
 			key_radioOption = ${key_radioOption},
 			locator1 = "CommerceEntry#RADIO_BUTTON");
@@ -45,7 +45,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addRootCategory(vocabularyName = null,categoryName = null) {
+	macro addRootCategory(vocabularyName = null, categoryName = null) {
 		var key_categoryName = ${categoryName};
 
 		Type(
@@ -61,7 +61,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addUserViaOrganizationManagementWidget(key_roleOption = null,value = null) {
+	macro addUserViaOrganizationManagementWidget(key_roleOption = null, value = null) {
 		Type(
 			locator1 = "CommerceOrganizationManagementWidget#INVITE_EMAIL_INPUT",
 			value1 = ${value});
@@ -74,7 +74,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertOptionFacetsCount(expectedLabels = null,stringToMatch = null) {
+	macro assertOptionFacetsCount(expectedLabels = null, stringToMatch = null) {
 		var optionName = ${optionName};
 
 		var javaScriptCountElement = '''
@@ -104,7 +104,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertSpecificationPanel2FacetsCount(expectedLabels = null,stringToMatch = null) {
+	macro assertSpecificationPanel2FacetsCount(expectedLabels = null, stringToMatch = null) {
 		var specificationGroup = ${specificationGroup};
 
 		var javaScriptCountElement = '''
@@ -127,7 +127,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro associateAccountWithOrganization(key_radioOption = null,value = null) {
+	macro associateAccountWithOrganization(key_radioOption = null, value = null) {
 		Click.clickAtNotVisible(
 			key_radioOption = ${key_radioOption},
 			locator1 = "CommerceEntry#RADIO_BUTTON");
@@ -153,7 +153,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro canDragAndDropOrganizaitionAndChildOrganization(key_nodeName = null,key_nodeDestination = null,key_nodeChild = null,key_nodeOrigin = null) {
+	macro canDragAndDropOrganizaitionAndChildOrganization(key_nodeName = null, key_nodeDestination = null, key_nodeChild = null, key_nodeOrigin = null) {
 		Click(locator1 = "Button#EXPAND");
 
 		Click(
@@ -213,7 +213,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoSVGNode(key_orgType = null,key_nodeName = null) {
+	macro gotoSVGNode(key_orgType = null, key_nodeName = null) {
 		Click(locator1 = "Button#EXPAND");
 
 		Click(
@@ -237,7 +237,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro productPublisherAddFilter(optionAndOperator = null,categories = null,filterType = null,filterEntries = null,optionQuery = null) {
+	macro productPublisherAddFilter(optionAndOperator = null, categories = null, filterType = null, filterEntries = null, optionQuery = null) {
 		CommerceUtilities.expandField(accordionTitle = "filter");
 
 		Click(
@@ -282,7 +282,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro removeChildOrganization(key_nodeName = null,key_nodeChild = null) {
+	macro removeChildOrganization(key_nodeName = null, key_nodeChild = null) {
 		Click(locator1 = "Button#EXPAND");
 
 		Click(
@@ -305,7 +305,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setFilterItems(filterTitle = null,key_card = null,categories = null,tags = null) {
+	macro setFilterItems(filterTitle = null, key_card = null, categories = null, tags = null) {
 		SelectFrame.selectFrameNoLoading(
 			key_title = ${filterTitle},
 			locator1 = "IFrame#MODAL_ANY");
@@ -348,7 +348,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updateFacetConfiguration(displayTemplate = null,maxTerms = null,displayFrequencies = null,frequencyThreshold = null,parameterName = null,rangesArray = null,portletName = null) {
+	macro updateFacetConfiguration(displayTemplate = null, maxTerms = null, displayFrequencies = null, frequencyThreshold = null, parameterName = null, rangesArray = null, portletName = null) {
 		Portlet.gotoPortletOptions(
 			portletName = ${portletName},
 			portletOption = "Configuration");
@@ -409,7 +409,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updateProductPublisherConfiguration(renderSelection = null,itemsPerPage = null,filterEntries = null,filterType = null,portletName = null,productSelection = null) {
+	macro updateProductPublisherConfiguration(renderSelection = null, itemsPerPage = null, filterEntries = null, filterType = null, portletName = null, productSelection = null) {
 		Portlet.gotoPortletOptions(
 			portletName = ${portletName},
 			portletOption = "Configuration");

@@ -61,7 +61,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro changePagination(quantity = null,modal = null) {
+	macro changePagination(quantity = null, modal = null) {
 		WaitForElementPresent(locator1 = "Pagination#RESULTS");
 
 		if (${modal} == "true") {
@@ -191,7 +191,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro nextSectionBreadcrumb(routine = null,build = null,project = null,caseResult = null,run = null) {
+	macro nextSectionBreadcrumb(routine = null, build = null, project = null, caseResult = null, run = null) {
 		if (isSet(project)) {
 			Type(
 				locator1 = "TestrayTestflow#BREADCRUMB_INPUT_NAME",
@@ -306,7 +306,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectCheckboxOptions(buttonText = null,linkText = null) {
+	macro selectCheckboxOptions(buttonText = null, linkText = null) {
 		WaitForElementPresent(
 			key_text = ${linkText},
 			locator1 = "Button#ANY");
@@ -337,7 +337,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectDefaultEnvironmentFactors(listCategory = null,firstOption = null,liferayVersion = null,portalEdition = null,javaJDK = null,arrowDirection = null,mobileOperatingSystem = null,operatingSystem = null,mobileBrowser = null,productEdition = null,database = null,secondOption = null,applicationServer = null,browser = null,mobileDevice = null) {
+	macro selectDefaultEnvironmentFactors(listCategory = null, firstOption = null, liferayVersion = null, portalEdition = null, javaJDK = null, arrowDirection = null, mobileOperatingSystem = null, operatingSystem = null, mobileBrowser = null, productEdition = null, database = null, secondOption = null, applicationServer = null, browser = null, mobileDevice = null) {
 		AssertElementPresent.pauseAssertVisible(
 			key_arrowDirection = "Right",
 			key_caseParameters = "Available",
@@ -510,7 +510,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro verifySpecificEnvironmentFactors(listCategory = null,listOption = null) {
+	macro verifySpecificEnvironmentFactors(listCategory = null, listOption = null) {
 		if (isSet(listCategory)) {
 			for (var listboxItem : list ${listCategory}) {
 				AssertElementPresent(
@@ -532,7 +532,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewErrorMessage(fieldLabel = null,warningMessage = null) {
+	macro viewErrorMessage(fieldLabel = null, warningMessage = null) {
 		AssertElementPresent(
 			key_fieldLabel = ${fieldLabel},
 			key_warningMessage = ${warningMessage},

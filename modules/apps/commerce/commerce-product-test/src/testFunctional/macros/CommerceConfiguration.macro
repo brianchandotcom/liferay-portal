@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addCP(customBooleanDefaultValue = null,localization = null,baseURL = null,nameLocalization = null,modelResource = null,customInputDataType = null,resourceName = null,customFieldName = null,searchable = null,customFieldType = null,startingValue = null) {
+	macro addCP(customBooleanDefaultValue = null, localization = null, baseURL = null, nameLocalization = null, modelResource = null, customInputDataType = null, resourceName = null, customFieldName = null, searchable = null, customFieldType = null, startingValue = null) {
 		var key_resourceName = ${resourceName};
 
 		if (isSet(modelResource)) {
@@ -364,7 +364,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureWorkflow(workflowDefinition = null,workflowResourceValue = null) {
+	macro configureWorkflow(workflowDefinition = null, workflowResourceValue = null) {
 		var key_workflowResourceValue = ${workflowResourceValue};
 
 		if (!(IsElementPresent(locator1 = "Pagination#ICON_DISABLED", type = "angle-right")) && (IsElementPresent(locator1 = "Pagination#FIRST_LINK"))) {
@@ -426,7 +426,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setupB2BGuestCheckoutPages(pageNameList = null,siteName = null) {
+	macro setupB2BGuestCheckoutPages(pageNameList = null, siteName = null) {
 		Variables.assertDefined(parameterList = "${pageNameList},${siteName}");
 
 		PagesAdmin.openPagesAdmin(siteURLKey = ${siteName});
@@ -454,7 +454,7 @@ definition {
 
 	@description = "Create a Content Page to be used as Catalog page"
 	@summary = "Default summary"
-	macro setUpCatalogPage(pageName = null,facets = null) {
+	macro setUpCatalogPage(pageName = null, facets = null) {
 		var leftColumnWidgets = "Search Bar,Search Options";
 		var rightColumnWidgets = "Sort,Search Results";
 

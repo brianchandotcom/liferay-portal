@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _addCommerceCart(shippingAddressName = null,billingAddressName = null,cartItems = null,accountEntryName = null) {
+	macro _addCommerceCart(shippingAddressName = null, billingAddressName = null, cartItems = null, accountEntryName = null) {
 		Variables.assertDefined(parameterList = ${accountEntryName});
 
 		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});
@@ -149,7 +149,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getOrderItemPostRequestStatus(cartItems = null,accountEntryName = null) {
+	macro getOrderItemPostRequestStatus(cartItems = null, accountEntryName = null) {
 		var responseBody = CommerceJSONDeliveryCart._addCommerceCart(
 			accountEntryName = ${accountEntryName},
 			cartItems = ${cartItems});

@@ -1,7 +1,7 @@
 @default = "assertTextMatches"
 definition {
 
-	function assertTextMatches(locator1) {
+	function assertTextMatches(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");

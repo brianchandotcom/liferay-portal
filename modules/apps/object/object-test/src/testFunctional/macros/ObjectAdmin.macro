@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro activateOrDeactivateAction(viewEntry = null,active = null) {
+	macro activateOrDeactivateAction(viewEntry = null, active = null) {
 		ObjectAdmin.goToActionDetails(viewEntry = ${viewEntry});
 
 		SelectFrame.selectFrameNoLoading(locator1 = "ObjectAction#IFRAME_SIDE_PANEL");
@@ -21,7 +21,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addAttachmentFileFromDMInObjectEntryViaUI(fileName = null,objectName = null) {
+	macro addAttachmentFileFromDMInObjectEntryViaUI(fileName = null, objectName = null) {
 		ObjectAdmin.goToCustomObject(objectName = ${objectName});
 
 		LexiconEntry.gotoAdd();
@@ -41,7 +41,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addLanguageForOBJ(key_type = null,key_text2 = null,key_text1 = null,key_menuItem = null,key_label = null) {
+	macro addLanguageForOBJ(key_type = null, key_text2 = null, key_text1 = null, key_menuItem = null, key_label = null) {
 		Click(locator1 = "Button#PLUS");
 
 		Type(
@@ -85,7 +85,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addNewObject(fieldName = null,fieldLabelName = null,pluralLabelName = null) {
+	macro addNewObject(fieldName = null, fieldLabelName = null, pluralLabelName = null) {
 		Click(locator1 = "ObjectAdmin#ADD_CUSTOM_OBJECT");
 
 		Type(
@@ -104,7 +104,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addObjectActionViaUI(fieldName = null,secretAction = null,urlAction = null,errorMessage = null,active = null,actionDescription = null,actionLabel = null,scriptValidation = null,inputMethod = null,inputValue = null,whenAction = null,notificationName = null,inputExpressionValue = null,objectLabel = null,actionName = null,inputExpression = null,thenAction = null) {
+	macro addObjectActionViaUI(fieldName = null, secretAction = null, urlAction = null, errorMessage = null, active = null, actionDescription = null, actionLabel = null, scriptValidation = null, inputMethod = null, inputValue = null, whenAction = null, notificationName = null, inputExpressionValue = null, objectLabel = null, actionName = null, inputExpression = null, thenAction = null) {
 		ObjectAdmin.gotoAddObjectAction();
 
 		ObjectAdmin.fillObjectAction(
@@ -130,7 +130,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addObjectBooleanFieldEntryViaUI(objectName = null,value = null) {
+	macro addObjectBooleanFieldEntryViaUI(objectName = null, value = null) {
 		ObjectAdmin.goToCustomObject(objectName = ${objectName});
 
 		LexiconEntry.gotoAdd();
@@ -156,7 +156,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addObjectEntryViaAPI(userPassword = null,valueList = null,objectName = null,userEmailAddress = null,fieldNameList = null) {
+	macro addObjectEntryViaAPI(userPassword = null, valueList = null, objectName = null, userEmailAddress = null, fieldNameList = null) {
 		var objectEntryId = JSONObject.addObjectEntry(
 			fieldNameList = ${fieldNameList},
 			objectName = ${objectName},
@@ -170,7 +170,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addObjectFieldViaAPI(isRequired = null,userPassword = null,fieldName = null,indexed = null,outputOption = null,fileSource = null,showFilesInDocumentsAndMedia = null,userEmailAddress = null,fieldBusinessType = null,readOnlyExpression = null,picklistName = null,indexedAsKeyword = null,isReadOnly = null,formulaScript = null,fieldLabelName = null,indexedLanguageId = null,objectName = null,fieldType = null,timeStorageOption = null) {
+	macro addObjectFieldViaAPI(isRequired = null, userPassword = null, fieldName = null, indexed = null, outputOption = null, fileSource = null, showFilesInDocumentsAndMedia = null, userEmailAddress = null, fieldBusinessType = null, readOnlyExpression = null, picklistName = null, indexedAsKeyword = null, isReadOnly = null, formulaScript = null, fieldLabelName = null, indexedLanguageId = null, objectName = null, fieldType = null, timeStorageOption = null) {
 		JSONObject.addObjectField(
 			fieldBusinessType = ${fieldBusinessType},
 			fieldLabelName = ${fieldLabelName},
@@ -194,7 +194,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addObjectFieldViaUI(fieldTimeStorage = null,fieldName = null,acceptUniqueValuesOnly = null,formulaFieldOption = null,fieldPicklist = null,itemName = null,field = null,fieldLabel = null,sorting = null,markAsState = null,fieldAttachment = null,functionType = null,relationship = null,fieldType = null,isMandatory = null) {
+	macro addObjectFieldViaUI(fieldTimeStorage = null, fieldName = null, acceptUniqueValuesOnly = null, formulaFieldOption = null, fieldPicklist = null, itemName = null, field = null, fieldLabel = null, sorting = null, markAsState = null, fieldAttachment = null, functionType = null, relationship = null, fieldType = null, isMandatory = null) {
 		LexiconEntry.gotoAdd();
 
 		Type(
@@ -307,7 +307,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addObjectLayoutViaAPI(userPassword = null,objectName = null,userEmailAddress = null,layoutName = null) {
+	macro addObjectLayoutViaAPI(userPassword = null, objectName = null, userEmailAddress = null, layoutName = null) {
 		JSONObject.addObjectLayout(
 			layoutName = ${layoutName},
 			objectName = ${objectName},
@@ -349,7 +349,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addObjectPicklistFieldEntryViaUI(picklistOption = null,saveName = null) {
+	macro addObjectPicklistFieldEntryViaUI(picklistOption = null, saveName = null) {
 		LexiconEntry.gotoAdd();
 
 		Click(locator1 = "ObjectAdmin#ENTRY_CHOOSE_OPTION");
@@ -367,7 +367,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addObjectRelationshipViaAPI(relationshipName = null,userPassword = null,relationshipType = null,deletionType = null,userEmailAddress = null,objectName_1 = null,objectName_2 = null,relationshipLabel = null) {
+	macro addObjectRelationshipViaAPI(relationshipName = null, userPassword = null, relationshipType = null, deletionType = null, userEmailAddress = null, objectName_1 = null, objectName_2 = null, relationshipLabel = null) {
 		JSONObject.addObjectRelationship(
 			deletionType = ${deletionType},
 			objectName_1 = ${objectName_1},
@@ -380,7 +380,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addObjectRelationshipViaUI(invalidEntry = null,parameterOption = null,name = null,label = null,type = null,object = null) {
+	macro addObjectRelationshipViaUI(invalidEntry = null, parameterOption = null, name = null, label = null, type = null, object = null) {
 		LexiconEntry.gotoAdd();
 
 		Type(
@@ -422,7 +422,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addObjectSingleFieldEntryViaAPI(userPassword = null,fieldName = null,objectName = null,userEmailAddress = null,value = null) {
+	macro addObjectSingleFieldEntryViaAPI(userPassword = null, fieldName = null, objectName = null, userEmailAddress = null, value = null) {
 		var objectEntryId = JSONObject.addObjectSingleFieldEntry(
 			fieldName = ${fieldName},
 			objectName = ${objectName},
@@ -436,7 +436,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addObjectStringFieldEntryViaUI(invalidEntry = null,entryOption = null,entryValue = null) {
+	macro addObjectStringFieldEntryViaUI(invalidEntry = null, entryOption = null, entryValue = null) {
 		LexiconEntry.gotoAdd();
 
 		WaitForSPARefresh();
@@ -462,7 +462,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addObjectViaAPI(userPassword = null,scope = null,objectName = null,userEmailAddress = null,panelCategoryKey = null,labelName = null,pluralLabelName = null,externalReferenceCode = null) {
+	macro addObjectViaAPI(userPassword = null, scope = null, objectName = null, userEmailAddress = null, panelCategoryKey = null, labelName = null, pluralLabelName = null, externalReferenceCode = null) {
 		JSONObject.addObject(
 			externalReferenceCode = ${externalReferenceCode},
 			labelName = ${labelName},
@@ -475,7 +475,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addObjectWithStorageType(fieldLabelName = null,storageType = null,pluralLabelName = null) {
+	macro addObjectWithStorageType(fieldLabelName = null, storageType = null, pluralLabelName = null) {
 		SelectFrame(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
 
 		ObjectAdmin.addNewObject(
@@ -490,7 +490,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addTabFieldsOnLayout(tabName = null,blockName = null,columnsNumber = null,isCollapsible = null,fieldList = null) {
+	macro addTabFieldsOnLayout(tabName = null, blockName = null, columnsNumber = null, isCollapsible = null, fieldList = null) {
 		LexiconEntry.gotoAddNoSelectFrame();
 
 		Click(
@@ -560,7 +560,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addTabRelationshipsOnLayout(tabName = null,relationshipsLabelName = null) {
+	macro addTabRelationshipsOnLayout(tabName = null, relationshipsLabelName = null) {
 		LexiconEntry.gotoAddNoSelectFrame();
 
 		Click(
@@ -651,7 +651,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertObjectActions(actionLabel = null,status = null) {
+	macro assertObjectActions(actionLabel = null, status = null) {
 		AssertElementPresent(
 			key_actionLabel = ${actionLabel},
 			locator1 = "ObjectAdmin#VIEW_ACTIONS_LABEL");
@@ -673,7 +673,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertObjectColumnValue(system = null,scope = null,label = null,status = null) {
+	macro assertObjectColumnValue(system = null, scope = null, label = null, status = null) {
 		var key_label = ${label};
 		var key_scope = ${scope};
 		var key_system = ${system};
@@ -697,7 +697,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertObjectEntryFieldValueViaAPI(fieldName = null,attributeValue = null,expectedValue = null,objectName = null,attribute = null,type = null) {
+	macro assertObjectEntryFieldValueViaAPI(fieldName = null, attributeValue = null, expectedValue = null, objectName = null, attribute = null, type = null) {
 		var actualValue = JSONObject.getObjectEntryFieldValue(
 			attribute = ${attribute},
 			attributeValue = ${attributeValue},
@@ -711,7 +711,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertObjectField(fieldLabel = null,fieldType = null) {
+	macro assertObjectField(fieldLabel = null, fieldType = null) {
 		var key_fieldLabel = ${fieldLabel};
 		var key_fieldType = ${fieldType};
 
@@ -744,7 +744,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertRelationshipsTypeDescription(description = null,type = null) {
+	macro assertRelationshipsTypeDescription(description = null, type = null) {
 		AssertTextEquals(
 			key_type = ${type},
 			locator1 = "ObjectAdmin#RELATIONSHIPS_TYPE_DESCRIPTION",
@@ -792,7 +792,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro changePicklistFieldEntry(newPicklistOption = null,entrySelected = null) {
+	macro changePicklistFieldEntry(newPicklistOption = null, entrySelected = null) {
 		Click(
 			key_entrySelected = ${entrySelected},
 			locator1 = "ObjectPortlet#OBJECT_FIELD_SELECTED");
@@ -812,7 +812,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro changeScopeOnDefinePermissions(siteCard = null,scopeActionName = null) {
+	macro changeScopeOnDefinePermissions(siteCard = null, scopeActionName = null) {
 		ObjectAdmin.searchInDefinePermissions(search = "Custom Objects");
 
 		Click(
@@ -885,7 +885,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteAllCustomObjectsViaAPI(userPassword = null,userEmailAddress = null) {
+	macro deleteAllCustomObjectsViaAPI(userPassword = null, userEmailAddress = null) {
 		ObjectAdmin.deleteAllRelationships();
 
 		JSONObject.deleteAllCustomObjects(
@@ -916,7 +916,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteCustomObjectViaUI(objectName = null,labelName = null) {
+	macro deleteCustomObjectViaUI(objectName = null, labelName = null) {
 		Click(
 			key_objectLabel = ${labelName},
 			locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
@@ -935,7 +935,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteObjectEntryViaAPI(userPassword = null,fieldName = null,objectName = null,userEmailAddress = null,value = null) {
+	macro deleteObjectEntryViaAPI(userPassword = null, fieldName = null, objectName = null, userEmailAddress = null, value = null) {
 		JSONObject.deleteObjectEntry(
 			fieldName = ${fieldName},
 			objectName = ${objectName},
@@ -945,7 +945,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteObjectEntryViaUI(objectName = null,labelName = null) {
+	macro deleteObjectEntryViaUI(objectName = null, labelName = null) {
 		Click(
 			key_objectLabel = ${labelName},
 			locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
@@ -973,7 +973,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteObjectViaAPI(userPassword = null,objectName = null,userEmailAddress = null,virtualHost = null,token = null) {
+	macro deleteObjectViaAPI(userPassword = null, objectName = null, userEmailAddress = null, virtualHost = null, token = null) {
 		JSONObject.deleteObject(
 			objectName = ${objectName},
 			token = ${token},
@@ -983,7 +983,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteRelationshipViaUI(relationshipName = null,relationshipLabel = null) {
+	macro deleteRelationshipViaUI(relationshipName = null, relationshipLabel = null) {
 		Click(
 			key_objectLabel = ${relationshipLabel},
 			locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
@@ -1027,7 +1027,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editCustomObject(fieldName = null,fieldLabelName = null,pluralLabelName = null) {
+	macro editCustomObject(fieldName = null, fieldLabelName = null, pluralLabelName = null) {
 		if (isSet(fieldName)) {
 			Type(
 				locator1 = "ObjectAdmin#DETAILS_NAME_CUSTOM_OBJECT",
@@ -1050,7 +1050,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editEntryName(invalidEntry = null,newEntryValue = null) {
+	macro editEntryName(invalidEntry = null, newEntryValue = null) {
 		Type(
 			locator1 = "ObjectAdmin#ENTRY_STRING_VALUE_FIELD",
 			value1 = ${newEntryValue});
@@ -1078,7 +1078,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editObjectAction(viewEntry = null,fieldName = null,secretAction = null,urlAction = null,active = null,actionLabel = null,inputMethod = null,inputValue = null,whenAction = null,inputExpressionValue = null,objectLabel = null,actionName = null,inputExpression = null,thenAction = null) {
+	macro editObjectAction(viewEntry = null, fieldName = null, secretAction = null, urlAction = null, active = null, actionLabel = null, inputMethod = null, inputValue = null, whenAction = null, inputExpressionValue = null, objectLabel = null, actionName = null, inputExpression = null, thenAction = null) {
 		ObjectAdmin.goToActionDetails(viewEntry = ${viewEntry});
 
 		ObjectAdmin.viewDetails();
@@ -1103,7 +1103,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editObjectDeletionType(field = null,deletionType = null,label = null,labelName = null) {
+	macro editObjectDeletionType(field = null, deletionType = null, label = null, labelName = null) {
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = ${label});
@@ -1131,7 +1131,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro fillObjectAction(fieldName = null,secretAction = null,urlAction = null,notRefreshAttribute = null,errorMessage = null,active = null,actionDescription = null,click = null,actionLabel = null,scriptValidation = null,inputMethod = null,inputValue = null,whenAction = null,notificationName = null,objectLabel = null,inputExpressionValue = null,actionName = null,thenAction = null,inputExpression = null) {
+	macro fillObjectAction(fieldName = null, secretAction = null, urlAction = null, notRefreshAttribute = null, errorMessage = null, active = null, actionDescription = null, click = null, actionLabel = null, scriptValidation = null, inputMethod = null, inputValue = null, whenAction = null, notificationName = null, objectLabel = null, inputExpressionValue = null, actionName = null, thenAction = null, inputExpression = null) {
 		if (isSet(actionLabel)) {
 			Type(
 				locator1 = "ObjectAdmin#ACTION_LABEL_FIELD",
@@ -1304,7 +1304,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro filterObjectEntryViaAPI(userPassword = null,fieldName = null,objectName = null,userEmailAddress = null,value = null) {
+	macro filterObjectEntryViaAPI(userPassword = null, fieldName = null, objectName = null, userEmailAddress = null, value = null) {
 		JSONObject.filterObjectEntry(
 			fieldName = ${fieldName},
 			objectName = ${objectName},
@@ -1314,7 +1314,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getObjectSortedEntry(sortString = null,objectName = null) {
+	macro getObjectSortedEntry(sortString = null, objectName = null) {
 		var entrySort = JSONObject.getObjectSortedEntry(
 			objectName = ${objectName},
 			sortString = ${sortString});
@@ -1348,7 +1348,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro goToCustomObject(userPassword = null,objectName = null,userEmailAddress = null) {
+	macro goToCustomObject(userPassword = null, objectName = null, userEmailAddress = null) {
 		var objectId = JSONObject.getObjectId(
 			objectName = ${objectName},
 			userEmailAddress = ${userEmailAddress},
@@ -1391,7 +1391,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro goToRelationshipsDetails(fieldName = null,labelName = null) {
+	macro goToRelationshipsDetails(fieldName = null, labelName = null) {
 		if (isSet(labelName)) {
 			Click(
 				key_name = ${labelName},
@@ -1414,7 +1414,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoRolesAndSelectCustomObject(roleName = null,key_itemName = null) {
+	macro gotoRolesAndSelectCustomObject(roleName = null, key_itemName = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -1508,7 +1508,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro publishObjectViaAPI(userPassword = null,objectName = null,userEmailAddress = null) {
+	macro publishObjectViaAPI(userPassword = null, objectName = null, userEmailAddress = null) {
 		JSONObject.publishObject(
 			objectName = ${objectName},
 			userEmailAddress = ${userEmailAddress},
@@ -1555,7 +1555,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectAttachmentFileInObjectEntryViaUI(fileName = null,objectName = null,objectEntryId = null) {
+	macro selectAttachmentFileInObjectEntryViaUI(fileName = null, objectName = null, objectEntryId = null) {
 		ObjectAdmin.goToCustomObject(objectName = ${objectName});
 
 		Click(
@@ -1574,7 +1574,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectCategoryInObjectEntry(vocabularyName = null,categoryNameList = null) {
+	macro selectCategoryInObjectEntry(vocabularyName = null, categoryNameList = null) {
 		SelectFrameTop();
 
 		Click(
@@ -1623,7 +1623,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectSpecificKebabMenuOption(kebabOption = null,objectLabel = null) {
+	macro selectSpecificKebabMenuOption(kebabOption = null, objectLabel = null) {
 		Click(
 			key_objectLabel = ${objectLabel},
 			locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
@@ -1700,7 +1700,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewObjectAction(viewEntry = null,active = null,whenAction = null,actionDescription = null,notificationName = null,actionLabel = null,actionName = null,inputExpression = null,thenAction = null) {
+	macro viewObjectAction(viewEntry = null, active = null, whenAction = null, actionDescription = null, notificationName = null, actionLabel = null, actionName = null, inputExpression = null, thenAction = null) {
 		ObjectAdmin.goToActionDetails(viewEntry = ${viewEntry});
 
 		ObjectAdmin.viewDetails();
@@ -1766,7 +1766,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewObjectPresentOnSite(portlet = null,category = null) {
+	macro viewObjectPresentOnSite(portlet = null, category = null) {
 		ProductMenuHelper.openProductMenu();
 
 		ProductMenuHelper.expandCategory(category = ${category});
@@ -1777,7 +1777,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewOptionTitleField(optionNamePresent = null,optionNameNotPresent = null) {
+	macro viewOptionTitleField(optionNamePresent = null, optionNameNotPresent = null) {
 		if (isSet(optionNamePresent)) {
 			AssertElementPresent(
 				key_optionName = ${optionNamePresent},

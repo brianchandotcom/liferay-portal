@@ -95,7 +95,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewAssetTypeFacetPG(searchAssetType = null,searchAssetTitle = null,facetFrequency = null,searchAssetSummary = null) {
+	macro viewAssetTypeFacetPG(searchAssetType = null, searchAssetTitle = null, facetFrequency = null, searchAssetSummary = null) {
 		var key_searchAssetType = ${searchAssetType};
 
 		AssertTextEquals(
@@ -124,7 +124,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSearchNoPG(searchTerm = null,searchNoResults = null,searchAssetTitle = null) {
+	macro viewSearchNoPG(searchTerm = null, searchNoResults = null, searchAssetTitle = null) {
 		var key_searchAssetTitle = ${searchAssetTitle};
 
 		AssertElementNotPresent(locator1 = "ClassicSearch#CLASSIC_ASSET_ENTRY_TABLE_TITLE");
@@ -143,7 +143,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSearchResultPG(searchAssetType = null,searchAssetTitle = null,searchAssetSummary = null) {
+	macro viewSearchResultPG(searchAssetType = null, searchAssetTitle = null, searchAssetSummary = null) {
 		var key_searchAssetTitle = ${searchAssetTitle};
 		var key_searchAssetType = ${searchAssetType};
 
@@ -163,7 +163,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewUserFacetPG(searchAssetType = null,searchAssetTitle = null,userLoginFullName = null,facetFrequency = null,searchAssetSummary = null) {
+	macro viewUserFacetPG(searchAssetType = null, searchAssetTitle = null, userLoginFullName = null, facetFrequency = null, searchAssetSummary = null) {
 		AssertElementPresent(
 			key_term = "Any User",
 			locator1 = "SearchPage#USER_FACET_TERM");

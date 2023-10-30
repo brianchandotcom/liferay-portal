@@ -48,7 +48,7 @@ definition {
 		selenium.open(${value1});
 	}
 
-	function openRedirect(locator1,javaScript) {
+	function openRedirect(locator1, javaScript) {
 		WaitForSPARefresh();
 
 		var javascript = '''

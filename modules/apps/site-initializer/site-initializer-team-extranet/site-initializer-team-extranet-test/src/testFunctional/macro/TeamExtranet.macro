@@ -3,7 +3,7 @@ definition {
 	var siteType = "Open";
 
 	@summary = "Default summary"
-	macro addCP(membershipType = null,singleSiteTypePermission = null,parentSiteName = null,uncheckPropagation = null,siteName = null,siteType = null) {
+	macro addCP(membershipType = null, singleSiteTypePermission = null, parentSiteName = null, uncheckPropagation = null, siteName = null, siteType = null) {
 		LexiconEntry.gotoAdd();
 
 		if (${singleSiteTypePermission} != "true") {
@@ -121,7 +121,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addSiteTemplateCP(membershipType = null,parentSiteName = null,uncheckPropagation = null,siteName = null,siteTemplateName = null) {
+	macro addSiteTemplateCP(membershipType = null, parentSiteName = null, uncheckPropagation = null, siteName = null, siteTemplateName = null) {
 		TeamExtranet.addCP(
 			membershipType = ${membershipType},
 			parentSiteName = ${parentSiteName},
@@ -132,7 +132,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editFragmentImage(container = null,fileName = null,imageFileName = null,imageDescription = null,id = null,imageSourceURL = null) {
+	macro editFragmentImage(container = null, fileName = null, imageFileName = null, imageDescription = null, id = null, imageSourceURL = null) {
 		Click(
 			key_imageName = ${id},
 			locator1 = "TeamExtranet#BACKGROUND_IMAGE");
@@ -210,7 +210,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro searchEmbedded(searchTerm = null,clickMagnifyingGlassIcon = null) {
+	macro searchEmbedded(searchTerm = null, clickMagnifyingGlassIcon = null) {
 		AssertElementPresent(locator1 = "TeamExtranet#EMBEDDED_SEARCH_BAR");
 
 		Type(

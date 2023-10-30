@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addInformationTemplate(itemType = null,description = null,language = null,script = null,groupName = null,site = null,name = null,itemSubtype = null) {
+	macro addInformationTemplate(itemType = null, description = null, language = null, script = null, groupName = null, site = null, name = null, itemSubtype = null) {
 		Variables.assertDefined(parameterList = "${groupName},${itemType},${name}");
 
 		var groupId = JSONDDMtemplateSetter.setGroupId(
@@ -60,7 +60,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addWidgetTemplate(groupName = null,itemType = null,site = null,name = null,description = null,script = null) {
+	macro addWidgetTemplate(itemType = null, groupName = null, site = null, name = null, description = null, script = null) {
 		Variables.assertDefined(parameterList = "${itemType},${name}");
 
 		if (!(isSet(groupId))) {

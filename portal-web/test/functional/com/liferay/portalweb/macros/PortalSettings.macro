@@ -48,7 +48,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureAudienceTargetingAnalytics(enableAnalyticsList = null,disableAnalyticsList = null) {
+	macro configureAudienceTargetingAnalytics(enableAnalyticsList = null, disableAnalyticsList = null) {
 		if (isSet(enableAnalyticsList)) {
 			for (var enableAnalytics : list ${enableAnalyticsList}) {
 				Check.checkToggleSwitch(
@@ -124,7 +124,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureCurrentLanguagesCP(failExpected = null,errorMessage = null,currentPortalLanguages = null) {
+	macro configureCurrentLanguagesCP(failExpected = null, errorMessage = null, currentPortalLanguages = null) {
 		if (isSet(currentPortalLanguages)) {
 			while (IsElementPresent(locator1 = "LanguageConfiguration#LANGUAGES_CURRENT_SELECT")) {
 				AddSelection(
@@ -172,7 +172,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureEmailSender(emailAddress = null,emailSenderName = null) {
+	macro configureEmailSender(emailAddress = null, emailSenderName = null) {
 		Type(
 			locator1 = "PortalSettingsEmailNotifications#EMAIL_NOTIFICATIONS_SENDER_NAME_FIELD",
 			value1 = ${emailSenderName});
@@ -185,7 +185,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureGoogleDrive(googleClientSecret = null,googlePickerApiKey = null,googleClientId = null) {
+	macro configureGoogleDrive(googleClientSecret = null, googlePickerApiKey = null, googleClientId = null) {
 		Type(
 			key_text = "clientId",
 			locator1 = "TextArea#ANY",
@@ -211,7 +211,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureLDAPSetting(baseURL = null,enableSettingList = null) {
+	macro configureLDAPSetting(baseURL = null, enableSettingList = null) {
 		for (var enableSetting : list ${enableSettingList}) {
 			if (${enableSetting} == "enabled") {
 				PortalSettings.gotoConfiguration(
@@ -252,7 +252,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureOpenSSO(openSsoServiceURL = null,openSsoLoginURL = null,openSsoLogoutURL = null) {
+	macro configureOpenSSO(openSsoServiceURL = null, openSsoLoginURL = null, openSsoLogoutURL = null) {
 		Check(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_OPEN_SSO_ENABLED_CHECKBOX");
 
 		FormFields.editText(
@@ -271,7 +271,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureRatingType(ratingType = null,configureBlogsRatingType = null,configureKbRatingType = null) {
+	macro configureRatingType(ratingType = null, configureBlogsRatingType = null, configureKbRatingType = null) {
 		if (${configureBlogsRatingType} == "true") {
 			Select(
 				locator1 = "Select#BLOGS_RATING",
@@ -301,7 +301,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureWikiService(editor = null,counter = null) {
+	macro configureWikiService(editor = null, counter = null) {
 		var key_counter = ${counter};
 
 		Type(
@@ -341,7 +341,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editConfigurationAuthenticationFacebook(facebookApplicationSecret = null,facebookApplicationId = null) {
+	macro editConfigurationAuthenticationFacebook(facebookApplicationSecret = null, facebookApplicationId = null) {
 		Check(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_FACEBOOK_ENABLED_CHECKBOX");
 
 		Type(
@@ -372,7 +372,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editConfigurationAuthenticationGeneral(enableRequireStrangers = null,authenticationMethod = null) {
+	macro editConfigurationAuthenticationGeneral(enableRequireStrangers = null, authenticationMethod = null) {
 		if (${enableRequireStrangers} == "true") {
 			Check(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GENERAL_REQUIRE_STRANGERS_TO_VERIFY_THEIR_EMAIL_ADDRESS_CHECKBOX");
 		}
@@ -386,7 +386,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editConfigurationUsersDefaultUserAssociationsCP(orgName = null,roleTitle = null,userGroupName = null,siteName = null) {
+	macro editConfigurationUsersDefaultUserAssociationsCP(orgName = null, roleTitle = null, userGroupName = null, siteName = null) {
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Users",
 			configurationName = "Default User Associations",
@@ -470,7 +470,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editConfigurationUsersEmailNotificationsCP(configurationName = null,notificationsSubject = null,notificationsBody = null) {
+	macro editConfigurationUsersEmailNotificationsCP(configurationName = null, notificationsSubject = null, notificationsBody = null) {
 		PortalSettings.gotoConfiguration(
 			configurationCategory = "Email",
 			configurationName = ${configurationName},
@@ -602,7 +602,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro enableGoogleSSOCP(googleClientSecret = null,googleClientId = null) {
+	macro enableGoogleSSOCP(googleClientSecret = null, googleClientId = null) {
 		Check(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_GOOGLE_ENABLED_CHECKBOX");
 
 		FormFields.editText(
@@ -695,7 +695,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoConfiguration(baseURL = null,configurationScope = null,configurationName = null,configurationCategory = null) {
+	macro gotoConfiguration(baseURL = null, configurationScope = null, configurationName = null, configurationCategory = null) {
 		PortalSettings.openInstanceSettingsAdmin(baseURL = ${baseURL});
 
 		SystemSettings.gotoConfiguration(
@@ -725,7 +725,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToConfigInInstanceSettings(portletKey = null,portletId = null) {
+	macro openToConfigInInstanceSettings(portletKey = null, portletId = null) {
 		if (!(isSet(baseURL))) {
 			var baseURL = JSONCompany.getPortalURL();
 		}
@@ -1056,7 +1056,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCurrentDefaultPortalLanguageCP(defaultPortalLanguage = null,localizationTranslation = null) {
+	macro viewCurrentDefaultPortalLanguageCP(defaultPortalLanguage = null, localizationTranslation = null) {
 		var configuration = "Localization";
 
 		if (isSet(localizationTranslation)) {
@@ -1206,7 +1206,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewEnabledLDAPSetting(baseURL = null,enableSettingList = null) {
+	macro viewEnabledLDAPSetting(baseURL = null, enableSettingList = null) {
 		for (var enableSetting : list ${enableSettingList}) {
 			if (${enableSetting} == "enabled") {
 				PortalSettings.gotoConfiguration(

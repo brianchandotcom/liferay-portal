@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _getFileEntryTypeId(fileEntryTypeName = null,groupId = null) {
+	macro _getFileEntryTypeId(fileEntryTypeName = null, groupId = null) {
 		Variables.assertDefined(parameterList = "${fileEntryTypeName},${groupId}");
 
 		var portalURL = JSONCompany.getPortalURL();

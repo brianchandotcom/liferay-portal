@@ -1,7 +1,7 @@
 @default = "setElementAttribute"
 definition {
 
-	function setElementAttribute(locator1,value1,attribute1,javascript) {
+	function setElementAttribute(locator1, value1, attribute1, javascript) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");

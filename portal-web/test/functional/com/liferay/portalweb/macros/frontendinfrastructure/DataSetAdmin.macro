@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addActions(messageType = null,icon = null,headlessAction = null,type = null,url = null,actionName = null,confirmationMessage = null) {
+	macro addActions(messageType = null, icon = null, headlessAction = null, type = null, url = null, actionName = null, confirmationMessage = null) {
 		if (isSet(actionName)) {
 			var key_actionNameList = ${actionName};
 		}
@@ -71,7 +71,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addAFilterWithTranslation(selectLanguage = null,key_newValue = null,filterType = null,defocusModal = null,key_changeName = null,key_sortOption = null) {
+	macro addAFilterWithTranslation(selectLanguage = null, key_newValue = null, filterType = null, defocusModal = null, key_changeName = null, key_sortOption = null) {
 		LexiconEntry.gotoAdd();
 
 		Click(
@@ -166,7 +166,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertFieldsOnTable(key_position = null,keyName = null) {
+	macro assertFieldsOnTable(key_position = null, keyName = null) {
 		AssertElementPresent(
 			key_position = ${key_position},
 			keyName = ${keyName},
@@ -213,7 +213,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createAndConfigureDataSetEntry(restSchema = null,defaultItemsPerPage = null,key_fieldList = null,restApplication = null,listOfItemsPerPage = null,dataSetViewName = null,dataSetName = null,restEndpoint = null,dataSetViewDescription = null) {
+	macro createAndConfigureDataSetEntry(restSchema = null, defaultItemsPerPage = null, key_fieldList = null, restApplication = null, listOfItemsPerPage = null, dataSetViewName = null, dataSetName = null, restEndpoint = null, dataSetViewDescription = null) {
 		DataSetAdmin.goToDataSetAdminPage();
 
 		DataSetAdmin.createDataSetEntryViaAPI(
@@ -241,7 +241,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createASort(key_field = null,key_sorting = null) {
+	macro createASort(key_field = null, key_sorting = null) {
 		LexiconEntry.gotoAdd();
 
 		Select(
@@ -256,7 +256,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createDataSet(key_name = null,key_type = null) {
+	macro createDataSet(key_name = null, key_type = null) {
 		if (isSet(key_name)) {
 			var key_dataSetNameList = ${key_name};
 		}
@@ -279,7 +279,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createDataSetEntryViaAPI(restApplication = null,dataSetName = null) {
+	macro createDataSetEntryViaAPI(restApplication = null, dataSetName = null) {
 		if (${restApplication} == "/data-set-manager/entries") {
 			var restSchema = "FDSEntry";
 			var restEndpoint = "/";
@@ -293,7 +293,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createDataSetView(key_name = null,description = null) {
+	macro createDataSetView(key_name = null, description = null) {
 		if (isSet(key_name)) {
 			var key_dataSetViewNameList = ${key_name};
 		}
@@ -314,7 +314,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createDateFilter(button = null,valueYearTo = null,valueDayTo = null,valueYearFrom = null,fieldValueFrom = null,filterName = null,valueMonthTo = null,fieldValueTo = null,filterBy = null,valueMonthFrom = null,valueDayFrom = null) {
+	macro createDateFilter(button = null, valueYearTo = null, valueDayTo = null, valueYearFrom = null, fieldValueFrom = null, filterName = null, valueMonthTo = null, fieldValueTo = null, filterBy = null, valueMonthFrom = null, valueDayFrom = null) {
 		Click(locator1 = "Button#PLUS");
 
 		DropdownMenuItem.click(menuItem = "Date Range");
@@ -394,7 +394,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createFDSViewViaAPI(dataSetName = null,key_dataSetViewNameList = null,dataSetViewDescription = null) {
+	macro createFDSViewViaAPI(dataSetName = null, key_dataSetViewNameList = null, dataSetViewDescription = null) {
 		if (!(isSet(defaultItemsPerPage))) {
 			var defaultItemsPerPage = 4;
 			var listOfItemsPerPage = "4, 8, 20, 40, 60, 100";
@@ -528,7 +528,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editField(key_fieldItem = null,sortable = null,key_newLabel = null) {
+	macro editField(key_fieldItem = null, sortable = null, key_newLabel = null) {
 		Click(
 			key_fieldName = ${key_fieldItem},
 			locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
@@ -582,7 +582,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editView(key_newDescription = null,key_newName = null,key_oldName = null) {
+	macro editView(key_newDescription = null, key_newName = null, key_oldName = null) {
 		Click(
 			key_name = ${key_oldName},
 			locator1 = "DataSet#DATA_SET_VIEW_ENTRY_KEBAB_MENU");
@@ -617,7 +617,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro goToSpecificViewPage(dataSetName = null,key_viewName = null) {
+	macro goToSpecificViewPage(dataSetName = null, key_viewName = null) {
 		DataSetAdmin.goToDataSetViewAdminPage(dataSetName = ${dataSetName});
 
 		Click(
@@ -628,7 +628,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro goToTab(tabName = null,dataSetViewName = null) {
+	macro goToTab(tabName = null, dataSetViewName = null) {
 		if (isSet(dataSetViewName)) {
 			Click(
 				key_name = ${dataSetViewName},
@@ -691,7 +691,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectDataSetFragmentView(key_modalTitle = null,key_selectView = null,key_viewName = null) {
+	macro selectDataSetFragmentView(key_modalTitle = null, key_selectView = null, key_viewName = null) {
 		Click(locator1 = "ReportsAdminViewReportEntry#INFO_MESSAGE");
 
 		Click.javaScriptClick(
@@ -717,7 +717,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectPreselectedValue(picklist = null,preselectType = null,key_sortOption = null) {
+	macro selectPreselectedValue(picklist = null, preselectType = null, key_sortOption = null) {
 		Select(
 			locator1 = "DataSet#SOURCE_OPTIONS_SELECT",
 			value1 = ${picklist});

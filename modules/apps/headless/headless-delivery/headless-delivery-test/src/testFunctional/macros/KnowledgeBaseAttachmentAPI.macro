@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _curlKnowledgeBaseAttachment(knowledgeBaseAttachmentId = null,knowledgeBaseArticleId = null,knowledgeBaseArticleExternalReferenceCode = null,attachmentPath = null) {
+	macro _curlKnowledgeBaseAttachment(knowledgeBaseAttachmentId = null, knowledgeBaseArticleId = null, knowledgeBaseArticleExternalReferenceCode = null, attachmentPath = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(knowledgeBaseArticleId)) {
@@ -45,7 +45,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createKnowledgeBaseAttachment(knowledgeBaseArticleId = null,attachmentPath = null,externalReferenceCode = null) {
+	macro createKnowledgeBaseAttachment(knowledgeBaseArticleId = null, attachmentPath = null, externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = "${attachmentPath},${knowledgeBaseArticleId}");
 
 		var curl = KnowledgeBaseAttachmentAPI._curlKnowledgeBaseAttachment(
@@ -59,7 +59,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteKBAttachmentByKBArticleErcAndKBAttachmentErc(kBArticleErc = null,kBAttachmentErc = null) {
+	macro deleteKBAttachmentByKBArticleErcAndKBAttachmentErc(kBArticleErc = null, kBAttachmentErc = null) {
 		Variables.assertDefined(parameterList = "${kBAttachmentErc},${kBArticleErc}");
 
 		var curl = KnowledgeBaseAttachmentAPI._curlKnowledgeBaseAttachment(
@@ -81,7 +81,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getKBAttachmentByKBArticleErcAndKBAttachmentErc(kBArticleErc = null,kBAttachmentErc = null) {
+	macro getKBAttachmentByKBArticleErcAndKBAttachmentErc(kBArticleErc = null, kBAttachmentErc = null) {
 		Variables.assertDefined(parameterList = "${kBAttachmentErc},${kBArticleErc}");
 
 		var curl = KnowledgeBaseAttachmentAPI._curlKnowledgeBaseAttachment(

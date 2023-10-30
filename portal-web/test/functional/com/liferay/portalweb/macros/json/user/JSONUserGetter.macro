@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _getUserByIdCurl(authenticationMethod = null,userId = null) {
+	macro _getUserByIdCurl(authenticationMethod = null, userId = null) {
 		Variables.assertDefined(parameterList = ${userId});
 
 		var companyId = JSONCompany.getCompanyId(authenticationMethod = ${authenticationMethod});
@@ -39,7 +39,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getEmailAddress(authenticationMethod = null,userId = null) {
+	macro getEmailAddress(authenticationMethod = null, userId = null) {
 		Variables.assertDefined(parameterList = ${userId});
 
 		var curl = JSONUserGetter._getUserByIdCurl(

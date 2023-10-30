@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addFolder(parentFolderName = null,groupName = null,dmFolderName = null) {
+	macro addFolder(parentFolderName = null, groupName = null, dmFolderName = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(site))) {
@@ -57,7 +57,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteFolder(groupName = null,folderName = null) {
+	macro deleteFolder(groupName = null, folderName = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var folderId = JSONDocumentAPI._getFolderIdByFolderName(
 			groupName = ${groupName},
@@ -72,7 +72,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro moveFolderToTrash(groupName = null,folderName = null) {
+	macro moveFolderToTrash(groupName = null, folderName = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var folderId = JSONDocumentAPI._getFolderIdByFolderName(
 			groupName = ${groupName},

@@ -1,7 +1,7 @@
 @default = "isTextEqual"
 definition {
 
-	function isPartialText(locator1) {
+	function isPartialText(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");
@@ -11,7 +11,7 @@ definition {
 		selenium.isPartialTextCaseInsensitive(${locator1}, ${value1});
 	}
 
-	function isText(locator1) {
+	function isText(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");
@@ -32,7 +32,7 @@ definition {
 		}
 	}
 
-	function isValue(locator1) {
+	function isValue(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _selectMappingTypes(subType = null,contentType = null) {
+	macro _selectMappingTypes(subType = null, contentType = null) {
 		if (isSet(contentType)) {
 			Select(
 				locator1 = "//div[contains(.,'Content Type')]/select",
@@ -16,7 +16,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addDisplayPage(displayPageName = null,subType = null,contentType = null,masterLayoutName = null) {
+	macro addDisplayPage(displayPageName = null, subType = null, contentType = null, masterLayoutName = null) {
 		LexiconEntry.gotoAdd();
 
 		if (isSet(masterLayoutName)) {
@@ -38,7 +38,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteDisplayPage(displayPageName = null,defaultDisplayPageTemplate = null) {
+	macro deleteDisplayPage(displayPageName = null, defaultDisplayPageTemplate = null) {
 		LexiconCard.clickEllipsisItem(
 			card = ${displayPageName},
 			item = "Delete");
@@ -67,7 +67,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoDisplayPageEllipsisItem(item = null,displayPageName = null) {
+	macro gotoDisplayPageEllipsisItem(item = null, displayPageName = null) {
 		WaitForPageLoad();
 
 		LexiconCard.clickEllipsisItem(
@@ -125,7 +125,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro renameDisplayPage(newDisplayPageName = null,displayPageName = null) {
+	macro renameDisplayPage(newDisplayPageName = null, displayPageName = null) {
 		DisplayPageTemplatesAdmin.gotoDisplayPageEllipsisItem(
 			displayPageName = ${displayPageName},
 			item = "Rename");
@@ -146,7 +146,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPGViaAP(webContentTitle = null,webContentContent = null,contentList = null) {
+	macro viewPGViaAP(webContentTitle = null, webContentContent = null, contentList = null) {
 		var key_assetContent = ${webContentContent};
 		var key_assetTitle = ${webContentTitle};
 

@@ -65,7 +65,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTrafficViews(trafficChannel = null,numberViews = null) {
+	macro viewTrafficViews(trafficChannel = null, numberViews = null) {
 		ContentPerformance.openContentPerformance();
 
 		while (IsElementPresent(locator1 = "ContentPerformance#TOTAL_VIEWS_EMPTY")) {

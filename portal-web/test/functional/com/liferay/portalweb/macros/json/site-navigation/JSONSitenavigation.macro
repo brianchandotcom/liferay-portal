@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addSiteNavigationMenu(groupName = null,site = null,siteNavigationMenuName = null,grandParentGroupName = null,parentGroupName = null) {
+	macro addSiteNavigationMenu(groupName = null, site = null, siteNavigationMenuName = null, grandParentGroupName = null, parentGroupName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${siteNavigationMenuName}");
 
 		var groupId = JSONSitenavigationSetter.setGroupId(
@@ -21,7 +21,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addSiteNavigationMenuItem(grandParentGroupName = null,type = null,parentSiteNavigationMenuItem = null,privateLayout = null,parentGroupName = null,url = null,groupName = null,site = null,siteNavigationMenuName = null,layoutUuid = null,siteNavigationMenuItemName = null,useNewTab = null) {
+	macro addSiteNavigationMenuItem(grandParentGroupName = null, type = null, parentSiteNavigationMenuItem = null, privateLayout = null, parentGroupName = null, url = null, groupName = null, site = null, siteNavigationMenuName = null, layoutUuid = null, siteNavigationMenuItemName = null, useNewTab = null) {
 		Variables.assertDefined(parameterList = "${groupName},${siteNavigationMenuItemName},${siteNavigationMenuName},${type}");
 
 		var groupId = JSONSitenavigationSetter.setGroupId(
@@ -66,7 +66,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteSiteNavigationMenu(groupName = null,site = null,siteNavigationMenuName = null) {
+	macro deleteSiteNavigationMenu(groupName = null, site = null, siteNavigationMenuName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${siteNavigationMenuName}");
 
 		var siteNavigationMenuId = JSONSitenavigationSetter.setSiteNavigationMenuId(

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _curlCreateObjectAction(objectDefinitionId = null,objectActionExecutorKey = null,objectActionTriggerKey = null,name = null,errorMessage = null,label = null,parameters = null) {
+	macro _curlCreateObjectAction(objectDefinitionId = null, objectActionExecutorKey = null, objectActionTriggerKey = null, name = null, errorMessage = null, label = null, parameters = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
@@ -28,7 +28,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _setParametersForObjectAction(objectActionExecutorKey = null,notificationTemplateId = null) {
+	macro _setParametersForObjectAction(objectActionExecutorKey = null, notificationTemplateId = null) {
 		Variables.assertDefined(parameterList = ${objectActionExecutorKey});
 
 		if (${objectActionExecutorKey} == "notification") {
@@ -44,7 +44,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createObjectAction(objectDefinitionId = null,objectActionExecutorKey = null,objectActionTriggerKey = null,name = null,errorMessage = null,label = null,notificationTemplateId = null) {
+	macro createObjectAction(objectDefinitionId = null, objectActionExecutorKey = null, objectActionTriggerKey = null, name = null, errorMessage = null, label = null, notificationTemplateId = null) {
 		Variables.assertDefined(parameterList = "${objectDefinitionId},${label},${name},${objectActionExecutorKey},${objectActionTriggerKey}");
 
 		var parameters = ObjectActionAPI._setParametersForObjectAction(

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro fillGoalsChat(chatProviderId = null,siteSettingsStrategy = null) {
+	macro fillGoalsChat(chatProviderId = null, siteSettingsStrategy = null) {
 		if (isSet(siteSettingsStrategy)) {
 			Select(
 				locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY",
@@ -57,7 +57,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTheFieldsPresent(chatProviderOption = null,chatProviderId = null,siteSettingsStrategy = null) {
+	macro viewTheFieldsPresent(chatProviderOption = null, chatProviderId = null, siteSettingsStrategy = null) {
 		if (isSet(siteSettingsStrategy)) {
 			AssertElementPresent(
 				locator1 = "ClickToChatConfiguration#SITE_SETTINGS_STRATEGY_CHOOSEN",

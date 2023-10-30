@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addPG(dmDocumentTitle = null,commentBody = null) {
+	macro addPG(dmDocumentTitle = null, commentBody = null) {
 		AssertClick(
 			key_dmDocumentTitle = ${dmDocumentTitle},
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",
@@ -23,7 +23,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPG(dmDocumentTitle = null,commentBody = null) {
+	macro viewPG(dmDocumentTitle = null, commentBody = null) {
 		AssertClick(
 			key_dmDocumentTitle = ${dmDocumentTitle},
 			locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_TITLE",

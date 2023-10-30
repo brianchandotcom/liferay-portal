@@ -14,7 +14,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewFeed(feedSubtitle = null,feedTitle = null,entryTitle = null,entryContent = null,rssURL = null) {
+	macro viewFeed(feedSubtitle = null, feedTitle = null, entryTitle = null, entryContent = null, rssURL = null) {
 		RSS.gotoFeed(rssURL = ${rssURL});
 
 		RSS.viewFeedTitle(
@@ -46,7 +46,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewFeedTitle(feedSubtitle = null,feedTitle = null) {
+	macro viewFeedTitle(feedSubtitle = null, feedTitle = null) {
 		AssertTextEquals(
 			locator1 = "RSS#FEED_TITLE",
 			value1 = ${feedTitle});

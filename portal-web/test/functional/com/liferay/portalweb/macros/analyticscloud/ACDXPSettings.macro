@@ -10,7 +10,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertToggleOnOff(boolean = null,toggleType = null) {
+	macro assertToggleOnOff(boolean = null, toggleType = null) {
 		AssertElementPresent(
 			key_boolean = ${boolean},
 			key_toggleType = ${toggleType},
@@ -56,7 +56,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro connectAnalyticsCloud(staticACToken = null,acToken = null,staticExistingSourceToken = null) {
+	macro connectAnalyticsCloud(staticACToken = null, acToken = null, staticExistingSourceToken = null) {
 		ACDXPSettings.disconnectDXPFromAnalyticsCloud();
 
 		Click(locator1 = "ACDXPSettings#TOKEN_INPUT_FIELD");
@@ -83,7 +83,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro connectDXPtoAnalyticsCloud(orgName = null,acToken = null,accountGroup = null,siteName = null,channelName = null,userGroup = null) {
+	macro connectDXPtoAnalyticsCloud(orgName = null, acToken = null, accountGroup = null, siteName = null, channelName = null, userGroup = null) {
 		if (isSet(acToken)) {
 			ACDXPSettings.connectAnalyticsCloud(acToken = ${acToken});
 		}
@@ -127,7 +127,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro connectDXPtoAnalyticsCloudWithTryAgain(orgName = null,acToken = null,accountGroup = null,siteName = null,channelName = null,userGroup = null) {
+	macro connectDXPtoAnalyticsCloudWithTryAgain(orgName = null, acToken = null, accountGroup = null, siteName = null, channelName = null, userGroup = null) {
 		if (isSet(acToken)) {
 			ACDXPSettings.connectAnalyticsCloud(acToken = ${acToken});
 		}
@@ -231,7 +231,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro desyncAttributes(attributeCategory = null,attributeNameList = null) {
+	macro desyncAttributes(attributeCategory = null, attributeNameList = null) {
 		if ((IsElementNotPresent(locator1 = "ACDXPSettings#AC_CONNECTION_NAV_SIDEBAR")) && (IsElementNotPresent(key_wizardStepName = "Attributes", locator1 = "ACDXPSettings#WIZARD_STEP_BUTTON"))) {
 			ACDXPSettings.goToInstanceSettingsAC();
 
@@ -409,7 +409,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro syncAttributes(attributeCategory = null,attributeNameList = null) {
+	macro syncAttributes(attributeCategory = null, attributeNameList = null) {
 		if ((IsElementNotPresent(locator1 = "ACDXPSettings#AC_CONNECTION_NAV_SIDEBAR")) && (IsElementNotPresent(key_wizardStepName = "Attributes", locator1 = "ACDXPSettings#WIZARD_STEP_BUTTON"))) {
 			ACDXPSettings.goToInstanceSettingsAC();
 
@@ -436,7 +436,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro syncChannel(newPropertyName = null,channelName = null) {
+	macro syncChannel(newPropertyName = null, channelName = null) {
 		if (isSet(newPropertyName)) {
 			ACDXPSettings.createNewProperty(newPropertyNameList = ${newPropertyName});
 
@@ -474,7 +474,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro syncContactsData(orgName = null,userGroup = null) {
+	macro syncContactsData(orgName = null, userGroup = null) {
 		if (IsElementPresent(key_panel = "Select Contacts", locator1 = "Panel#PANEL_COLLAPSED")) {
 			Click(
 				key_panel = "Select Contacts",
@@ -534,7 +534,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro syncSites(newPropertyName = null,siteName = null) {
+	macro syncSites(newPropertyName = null, siteName = null) {
 		if (isSet(newPropertyName)) {
 			ACDXPSettings.createNewProperty(newPropertyNameList = ${newPropertyName});
 
@@ -626,7 +626,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewIncreaseOrDecreaseSyncNumber(attributeCategory = null,decreaseAttributeNumber = null,currentAttributeNumber = null,increaseAttributeNumber = null) {
+	macro viewIncreaseOrDecreaseSyncNumber(attributeCategory = null, decreaseAttributeNumber = null, currentAttributeNumber = null, increaseAttributeNumber = null) {
 		if (isSet(increaseAttributeNumber)) {
 			var expectedAttributeNumber = ${currentAttributeNumber} + ${increaseAttributeNumber};
 		}
@@ -643,7 +643,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSyncedChannelsAndSitesNumber(syncedChannelsNumber = null,propertyName = null,syncedSitesNumber = null) {
+	macro viewSyncedChannelsAndSitesNumber(syncedChannelsNumber = null, propertyName = null, syncedSitesNumber = null) {
 		if (isSet(syncedChannelsNumber)) {
 			AssertTextEquals(
 				index = 1,
@@ -662,7 +662,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSyncNumberPreview(syncNumber = null,syncFieldName = null) {
+	macro viewSyncNumberPreview(syncNumber = null, syncFieldName = null) {
 		var key_syncFieldName = ${syncFieldName};
 
 		AssertTextEquals(

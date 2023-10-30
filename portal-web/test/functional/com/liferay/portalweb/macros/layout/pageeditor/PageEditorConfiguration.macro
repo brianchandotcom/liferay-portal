@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro changeConfigColor(fragmentName = null,fieldLabel = null,colorPicker = null,colorPalette = null) {
+	macro changeConfigColor(fragmentName = null, fieldLabel = null, colorPicker = null, colorPalette = null) {
 		var key_fragmentName = ${fragmentName};
 
 		PageEditor.clickConfigurableField(fragmentName = ${fragmentName});
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro changeConfigSelection(fragmentName = null,fieldLabel = null,optionValue = null) {
+	macro changeConfigSelection(fragmentName = null, fieldLabel = null, optionValue = null) {
 		PageEditor.clickConfigurableField(fragmentName = ${fragmentName});
 
 		AssertVisible(
@@ -45,7 +45,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro changeConfigText(fragmentName = null,editableText = null,textConfigName = null) {
+	macro changeConfigText(fragmentName = null, editableText = null, textConfigName = null) {
 		var key_fragmentName = ${fragmentName};
 
 		PageEditor.clickConfigurableField(fragmentName = ${fragmentName});
@@ -68,7 +68,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro checkConfigCheckbox(fragmentName = null,checkboxName = null) {
+	macro checkConfigCheckbox(fragmentName = null, checkboxName = null) {
 		var key_fragmentName = ${fragmentName};
 
 		Click(locator1 = "PageEditor#CONTENT_PAGE_DISABLED_HEADER");

@@ -31,7 +31,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setTypeSettings(groupId = null,selectionType = null,itemSubtype = null) {
+	macro setTypeSettings(groupId = null, selectionType = null, itemSubtype = null) {
 		var globalGroupId = JSONGroupAPI._getGroupIdByName(
 			groupName = "Global",
 			site = "true");

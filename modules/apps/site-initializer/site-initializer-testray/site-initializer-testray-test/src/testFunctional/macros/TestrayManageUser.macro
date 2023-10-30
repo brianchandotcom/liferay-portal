@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addUser(rolePermissionList = null,userPassword = null,userFirstNameEdit = null,userLastNameEdit = null,rePassword = null,userEmailAddressEdit = null,userScreenNameEdit = null) {
+	macro addUser(rolePermissionList = null, userPassword = null, userFirstNameEdit = null, userLastNameEdit = null, rePassword = null, userEmailAddressEdit = null, userScreenNameEdit = null) {
 		LexiconEntry.gotoAdd();
 
 		if (isSet(userFirstNameEdit)) {
@@ -57,7 +57,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editUserInformation(rolePermissionList = null,userFirstNameEdit = null,userLastNameEdit = null,userEmailAddressEdit = null,userScreenNameEdit = null) {
+	macro editUserInformation(rolePermissionList = null, userFirstNameEdit = null, userLastNameEdit = null, userEmailAddressEdit = null, userScreenNameEdit = null) {
 		if (isSet(userFirstNameEdit)) {
 			Type(
 				locator1 = "TextInput#FIRST_NAME",
@@ -103,7 +103,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewUserInfomation(lastName = null,firstName = null,emailAddress = null,screenName = null) {
+	macro viewUserInfomation(lastName = null, firstName = null, emailAddress = null, screenName = null) {
 		AssertTextEquals(
 			locator1 = "TextInput#ANY_WITH_NAME",
 			name = "familyName",

@@ -56,7 +56,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewActivitiesPercentage(valueNumber = null,entryName = null) {
+	macro viewActivitiesPercentage(valueNumber = null, entryName = null) {
 		AssertElementPresent(
 			key_entry = ${entryName},
 			key_number = ${valueNumber},
@@ -94,7 +94,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewVisitedTopPages(pageNameList = null,positionList = null) {
+	macro viewVisitedTopPages(pageNameList = null, positionList = null) {
 		var list1 = ListUtil.newListFromString(${pageNameList});
 		var list2 = ListUtil.newListFromString(${positionList});
 		var size = ListUtil.size(${list1});
@@ -124,7 +124,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewVisitorsOnGraph(visitorsTypeList = null,valueVisitorsList = null) {
+	macro viewVisitorsOnGraph(visitorsTypeList = null, valueVisitorsList = null) {
 		ACTimeFilter.clickTimeFilterButton();
 
 		ACTimeFilter.setLast24Hours();

@@ -29,7 +29,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deployFileOnServer(jarFile = null,bundleIndex = null) {
+	macro deployFileOnServer(jarFile = null, bundleIndex = null) {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
 		if ((${bundleIndex} == 0) || !(isSet(bundleIndex))) {

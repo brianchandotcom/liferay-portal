@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addAccountManager(orgName = null,accountName = null,userLastName = null,userScreenName = null,userEmailAddress = null,orgRoleTitle = null,userFirstName = null) {
+	macro addAccountManager(orgName = null, accountName = null, userLastName = null, userScreenName = null, userEmailAddress = null, orgRoleTitle = null, userFirstName = null) {
 		JSONUser.addUser(
 			userEmailAddress = ${userEmailAddress},
 			userFirstName = ${userFirstName},

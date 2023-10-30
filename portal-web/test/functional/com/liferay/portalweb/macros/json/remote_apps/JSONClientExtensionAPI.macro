@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _addCustomElementRemoteAppEntry(customElementName = null,customElementCssurl = null,customElementUseESM = null,customElementProperties = null,customElementHtmlName = null,customElementURL = null) {
+	macro _addCustomElementRemoteAppEntry(customElementName = null, customElementCssurl = null, customElementUseESM = null, customElementProperties = null, customElementHtmlName = null, customElementURL = null) {
 		Variables.assertDefined(parameterList = "${customElementName},${customElementHtmlName},${customElementURL}");
 
 		var customElementCssurlModified = ${customElementCssurl};
@@ -48,7 +48,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addIFrameRemoteAppEntry(iFrameURL = null,name = null) {
+	macro _addIFrameRemoteAppEntry(iFrameURL = null, name = null) {
 		Variables.assertDefined(parameterList = "${iFrameURL},${name}");
 
 		var iFrameURLModified = StringUtil.replace(${iFrameURL}, ":", "%3A");
@@ -72,7 +72,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addRemoteAppEntry(nameMap = null,typeSettings = null,description = null,type = null,properties = null) {
+	macro _addRemoteAppEntry(nameMap = null, typeSettings = null, description = null, type = null, properties = null) {
 		Variables.assertDefined(parameterList = "${description},${nameMap},${properties},${type},${typeSettings}");
 
 		var portalURL = JSONCompany.getPortalURL();

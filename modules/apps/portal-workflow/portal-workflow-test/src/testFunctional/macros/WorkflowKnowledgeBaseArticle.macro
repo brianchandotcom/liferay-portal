@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addChildArticle(kbChildArticleContent = null,submitForWorkflow = null,saveAsDraft = null,kbChildArticleTitle = null,kbArticleTitle = null) {
+	macro addChildArticle(kbChildArticleContent = null, submitForWorkflow = null, saveAsDraft = null, kbChildArticleTitle = null, kbArticleTitle = null) {
 		var key_rowEntry = ${kbArticleTitle};
 
 		if (IsElementPresent(locator1 = "Icon#ROW_VERTICAL_ELLIPSIS")) {
@@ -33,7 +33,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editKBArticle(cancel = null,kbArticleTitleEdit = null,kbArticleContentEdit = null,submitForWorkflow = null,saveAsDraft = null,kbArticleAttachment = null,customFieldTextEdit = null,kbArticleTitle = null) {
+	macro editKBArticle(cancel = null, kbArticleTitleEdit = null, kbArticleContentEdit = null, submitForWorkflow = null, saveAsDraft = null, kbArticleAttachment = null, customFieldTextEdit = null, kbArticleTitle = null) {
 		Click(
 			key_rowEntry = ${kbArticleTitle},
 			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");

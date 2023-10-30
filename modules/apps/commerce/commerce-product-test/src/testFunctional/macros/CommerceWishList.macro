@@ -30,7 +30,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertWishListProduct(wishListName = null,productName = null) {
+	macro assertWishListProduct(wishListName = null, productName = null) {
 		AssertElementPresent(
 			locator1 = "CommerceEntry#WISH_LIST_NAME",
 			wishListName = ${wishListName});

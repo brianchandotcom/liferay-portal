@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addEntryNotificationQueue(subject = null,body = null,type = null) {
+	macro addEntryNotificationQueue(subject = null, body = null, type = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {

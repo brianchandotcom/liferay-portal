@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addCP(pageFriendlyURL = null,structureName = null,feedTitle = null) {
+	macro addCP(pageFriendlyURL = null, structureName = null, feedTitle = null) {
 		LexiconEntry.gotoAdd();
 
 		Type(

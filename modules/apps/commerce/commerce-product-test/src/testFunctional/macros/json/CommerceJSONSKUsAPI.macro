@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _addCommerceUOM(productSKU = null,uomName = null,uomKey = null,basePrice = null) {
+	macro _addCommerceUOM(productSKU = null, uomName = null, uomKey = null, basePrice = null) {
 		Variables.assertDefined(parameterList = "${basePrice},${uomName},${uomKey},${productSKU}");
 
 		var baseURL = ${baseURL};
@@ -100,7 +100,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _deleteCommerceSkuUom(productSKU = null,uomKey = null) {
+	macro _deleteCommerceSkuUom(productSKU = null, uomKey = null) {
 		Variables.assertDefined(parameterList = "${productSKU},${uomKey}");
 
 		var baseURL = ${baseURL};
@@ -124,7 +124,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getCommerceSkuUomIdByKey(productSKU = null,uomKey = null) {
+	macro _getCommerceSkuUomIdByKey(productSKU = null, uomKey = null) {
 		Variables.assertDefined(parameterList = "${productSKU},${uomKey}");
 
 		var responseBody = CommerceJSONSKUsAPI._getCommerceSkuUomsBySKU(productSKU = ${productSKU});

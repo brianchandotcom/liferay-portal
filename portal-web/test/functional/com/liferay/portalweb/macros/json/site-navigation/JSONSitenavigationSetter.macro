@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro setGroupId(groupName = null,grandParentGroupName = null,parentGroupName = null) {
+	macro setGroupId(groupName = null, grandParentGroupName = null, parentGroupName = null) {
 		Variables.assertDefined(parameterList = ${groupName});
 
 		if (!(isSet(site))) {
@@ -18,7 +18,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setSiteNavigationMenuId(groupName = null,site = null,siteNavigationMenuName = null,grandParentGroupName = null,parentGroupName = null) {
+	macro setSiteNavigationMenuId(groupName = null, site = null, siteNavigationMenuName = null, grandParentGroupName = null, parentGroupName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${siteNavigationMenuName}");
 
 		var groupId = JSONSitenavigationSetter.setGroupId(
@@ -35,7 +35,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setSiteNavigationMenuItemId(groupName = null,site = null,siteNavigationMenuName = null,grandParentGroupName = null,parentGroupName = null,siteNavigationMenuItemName = null) {
+	macro setSiteNavigationMenuItemId(groupName = null, site = null, siteNavigationMenuName = null, grandParentGroupName = null, parentGroupName = null, siteNavigationMenuItemName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${siteNavigationMenuItemName},${siteNavigationMenuName}");
 
 		var groupId = JSONSitenavigationSetter.setGroupId(
@@ -56,7 +56,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setTypeSettings(groupId = null,type = null,privateLayout = null,url = null,siteNavigationMenuItemName = null,useNewTab = null) {
+	macro setTypeSettings(groupId = null, type = null, privateLayout = null, url = null, siteNavigationMenuItemName = null, useNewTab = null) {
 		Variables.assertDefined(parameterList = "${siteNavigationMenuItemName},${type}");
 
 		if (${type} == "layout") {

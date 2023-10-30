@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addNewContacts(ddlRecordFieldData = null,ddlPhoneOffice = null,ddlLastName = null,ddlnotes = null,ddlPhoneMobile = null,ddlUserName = null,ddlCompany = null,ddlFirstName = null,ddlJobTitle = null,ddlEmail = null) {
+	macro addNewContacts(ddlRecordFieldData = null, ddlPhoneOffice = null, ddlLastName = null, ddlnotes = null, ddlPhoneMobile = null, ddlUserName = null, ddlCompany = null, ddlFirstName = null, ddlJobTitle = null, ddlEmail = null) {
 		if (isSet(ddlCompany)) {
 			Type(
 				key_field = "company",
@@ -93,7 +93,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editDLLRecordContacts(ddlCompanyEdit = null,ddlListName = null,ddlFirstNameEdit = null) {
+	macro editDLLRecordContacts(ddlCompanyEdit = null, ddlListName = null, ddlFirstNameEdit = null) {
 		DDLRecord.editPG(ddlListName = ${ddlListName});
 
 		if (isSet(ddlCompanyEdit)) {
@@ -123,7 +123,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewColumnsOnDetails(ddlimService = null,ddlPhoneOffice = null,ddlLastName = null,ddlnotes = null,ddlPhoneMobile = null,ddlUserName = null,ddlCompany = null,ddlFirstName = null,ddlJobTitle = null,ddlEmail = null) {
+	macro viewColumnsOnDetails(ddlimService = null, ddlPhoneOffice = null, ddlLastName = null, ddlnotes = null, ddlPhoneMobile = null, ddlUserName = null, ddlCompany = null, ddlFirstName = null, ddlJobTitle = null, ddlEmail = null) {
 		if (isSet(ddlCompany)) {
 			AssertTextEquals.assertPartialText(
 				key_ddlRecordFieldData = "Company",

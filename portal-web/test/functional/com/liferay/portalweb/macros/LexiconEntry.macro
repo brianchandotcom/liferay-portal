@@ -27,7 +27,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro delete(rowEntry = null,failure = null,confirmationText = null) {
+	macro delete(rowEntry = null, failure = null, confirmationText = null) {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Delete",
 			rowEntry = ${rowEntry});
@@ -136,35 +136,35 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoEntryMenuItem(rowEntry = null,menuItem = null) {
+	macro gotoEntryMenuItem(rowEntry = null, menuItem = null) {
 		LexiconEntry.openEntryMenu(rowEntry = ${rowEntry});
 
 		MenuItem.click(menuItem = ${menuItem});
 	}
 
 	@summary = "Default summary"
-	macro gotoEntryMenuItemNoError(rowEntry = null,menuItem = null) {
+	macro gotoEntryMenuItemNoError(rowEntry = null, menuItem = null) {
 		LexiconEntry.openEntryMenu(rowEntry = ${rowEntry});
 
 		MenuItem.clickNoError(menuItem = ${menuItem});
 	}
 
 	@summary = "Default summary"
-	macro gotoEntryMenuItemNoWait(rowEntry = null,menuItem = null) {
+	macro gotoEntryMenuItemNoWait(rowEntry = null, menuItem = null) {
 		LexiconEntry.openEntryMenu(rowEntry = ${rowEntry});
 
 		MenuItem.click(menuItem = ${menuItem});
 	}
 
 	@summary = "Default summary"
-	macro gotoEntryMenuItemNoWaitNoError(rowEntry = null,menuItem = null) {
+	macro gotoEntryMenuItemNoWaitNoError(rowEntry = null, menuItem = null) {
 		LexiconEntry.openEntryMenu(rowEntry = ${rowEntry});
 
 		MenuItem.clickNoError(menuItem = ${menuItem});
 	}
 
 	@summary = "Default summary"
-	macro gotoFragmentPageContentEllipsisMenuItem(rowEntry = null,menuItem = null) {
+	macro gotoFragmentPageContentEllipsisMenuItem(rowEntry = null, menuItem = null) {
 		Click.clickAtNotVisible(
 			key_rowEntry = ${rowEntry},
 			locator1 = "Icon#FRAGMENT_PAGE_CONTENT_VERTICAL_ELLIPSIS");
@@ -228,7 +228,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewEntryContent(rowEntry = null,rowAny = null) {
+	macro viewEntryContent(rowEntry = null, rowAny = null) {
 		AssertElementPresent(
 			key_rowAny = ${rowAny},
 			key_rowEntry = ${rowEntry},
@@ -252,7 +252,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewEntryMenuItem(rowEntry = null,menuItem = null) {
+	macro viewEntryMenuItem(rowEntry = null, menuItem = null) {
 		LexiconEntry.openEntryMenu(rowEntry = ${rowEntry});
 
 		AssertElementPresent(
@@ -279,7 +279,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewEntryStatus(rowEntry = null,rowStatus = null) {
+	macro viewEntryStatus(rowEntry = null, rowStatus = null) {
 		AssertElementPresent(
 			key_rowEntry = ${rowEntry},
 			key_rowStatus = ${rowStatus},
@@ -301,7 +301,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewNoEntryMenuItem(rowEntry = null,menuItem = null) {
+	macro viewNoEntryMenuItem(rowEntry = null, menuItem = null) {
 		LexiconEntry.openEntryMenu(rowEntry = ${rowEntry});
 
 		AssertElementNotPresent(

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _addAssetListEntry(groupId = null,title = null,type = null) {
+	macro _addAssetListEntry(groupId = null, title = null, type = null) {
 		Variables.assertDefined(parameterList = "${groupId},${title},${type}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -21,7 +21,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addDynamicAssetListEntry(itemType = null,groupId = null,itemSubtype = null,title = null) {
+	macro _addDynamicAssetListEntry(itemType = null, groupId = null, itemSubtype = null, title = null) {
 		Variables.assertDefined(parameterList = "${groupId},${itemType},${title}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -46,7 +46,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addManualAssetListEntry(itemType = null,groupId = null,itemSubtype = null,title = null) {
+	macro _addManualAssetListEntry(itemType = null, groupId = null, itemSubtype = null, title = null) {
 		Variables.assertDefined(parameterList = "${groupId},${itemType},${title}");
 
 		var assetListEntryId = JSONAssetlistAPI._addAssetListEntry(
@@ -66,7 +66,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _updateAssetListEntryTypeSettings(assetListEntryId = null,segmentsEntryId = null,typeSettings = null) {
+	macro _updateAssetListEntryTypeSettings(assetListEntryId = null, segmentsEntryId = null, typeSettings = null) {
 		Variables.assertDefined(parameterList = "${assetListEntryId},${segmentsEntryId},${typeSettings}");
 
 		var portalURL = JSONCompany.getPortalURL();

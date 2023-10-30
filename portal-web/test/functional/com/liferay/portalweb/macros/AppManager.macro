@@ -17,7 +17,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro filtersApp(filterName = null,filterBy = null) {
+	macro filtersApp(filterName = null, filterBy = null) {
 		var key_filterName = ${filterName};
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MARKETPLACE_STORE_PORTLET_IFRAME");
@@ -79,7 +79,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro purchaseApp(searchName = null,type = null) {
+	macro purchaseApp(searchName = null, type = null) {
 		var key_searchName = ${searchName};
 
 		AssertElementPresent(
@@ -134,7 +134,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro uploadApp(warFileName = null,appName = null) {
+	macro uploadApp(warFileName = null, appName = null) {
 		var key_appName = ${appName};
 
 		Click(locator1 = "Portlet#OPTIONS_ICON");
@@ -167,7 +167,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewApp(searchTerm = null,appName = null,appStatus = null) {
+	macro viewApp(searchTerm = null, appName = null, appStatus = null) {
 		var key_appName = ${appName};
 
 		if (isSet(searchTerm)) {

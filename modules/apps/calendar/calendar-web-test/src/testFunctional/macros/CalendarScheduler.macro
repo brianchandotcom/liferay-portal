@@ -14,7 +14,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _viewCalendarViaDialogBox(calendarName = null,schedulerEventDialogBox = null) {
+	macro _viewCalendarViaDialogBox(calendarName = null, schedulerEventDialogBox = null) {
 		if (${schedulerEventDialogBox} == "false") {
 			AssertElementNotPresent(locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_CALENDAR");
 		}
@@ -26,7 +26,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _viewRegularEventTitleViaMonthView(eventTitle = null,startDateTime = null,endDate = null,endDateTime = null,startDate = null) {
+	macro _viewRegularEventTitleViaMonthView(eventTitle = null, startDateTime = null, endDate = null, endDateTime = null, startDate = null) {
 		CalendarNavigator.gotoView(viewType = "Month");
 
 		var key_endDate = ${endDate};
@@ -41,7 +41,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addEventToday(eventTitle = null,viewType = null,viewTypeUppercase = null) {
+	macro addEventToday(eventTitle = null, viewType = null, viewTypeUppercase = null) {
 		CalendarNavigator.gotoAddEventToday(
 			viewType = ${viewType},
 			viewTypeUppercase = ${viewTypeUppercase});
@@ -54,7 +54,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addLocalizedEvent(eventTitle = null,viewType = null,viewTypeUppercase = null,saveButton = null) {
+	macro addLocalizedEvent(eventTitle = null, viewType = null, viewTypeUppercase = null, saveButton = null) {
 		CalendarNavigator.gotoAddEventToday(
 			viewType = ${viewType},
 			viewTypeUppercase = ${viewTypeUppercase});
@@ -71,7 +71,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro changeCalendar(calendarName = null,eventTitle = null) {
+	macro changeCalendar(calendarName = null, eventTitle = null) {
 		CalendarNavigator.gotoView(viewType = "Week");
 
 		CalendarScheduler.selectSpecificEventNoRefresh(eventTitle = ${eventTitle});
@@ -109,7 +109,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editTitleAndCalendar(calendarName = null,eventTitle = null,currentEventTitle = null) {
+	macro editTitleAndCalendar(calendarName = null, eventTitle = null, currentEventTitle = null) {
 		CalendarScheduler.selectSpecificEvent(eventTitle = ${currentEventTitle});
 
 		CalendarScheduler.editTitle(eventTitle = ${eventTitle});
@@ -259,7 +259,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewAgenda(eventTitle = null,numberOfOccurrences = null) {
+	macro viewAgenda(eventTitle = null, numberOfOccurrences = null) {
 		CalendarNavigator.gotoView(viewType = "Agenda");
 
 		var key_eventTitle = ${eventTitle};
@@ -296,7 +296,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewDefault(eventTitle = null,pageName = null) {
+	macro viewDefault(eventTitle = null, pageName = null) {
 		var key_eventTitle = ${eventTitle};
 
 		CalendarNavigator.gotoView(viewType = "Day");
@@ -327,7 +327,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewEventDuration(eventTitle = null,minutes = null) {
+	macro viewEventDuration(eventTitle = null, minutes = null) {
 		var key_eventTitle = ${eventTitle};
 
 		if (${minutes} == 15) {
@@ -347,7 +347,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewEventTimesViaDialogBox(startDateTime = null,endDateTime = null) {
+	macro viewEventTimesViaDialogBox(startDateTime = null, endDateTime = null) {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Calendar#SCHEDULER_EVENT_DIALOG_BOX_WHEN_FIELD",
 			value1 = ${startDateTime});
@@ -426,7 +426,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewLocalizedEvent(viewTypeLocalized = null,eventTitle = null) {
+	macro viewLocalizedEvent(viewTypeLocalized = null, eventTitle = null) {
 		CalendarNavigator.gotoView(viewType = ${viewTypeLocalized});
 
 		AssertElementPresent(
@@ -435,7 +435,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewMonth(eventTitle = null,eventNumber = null,numberOfOccurrences = null,frequency = null) {
+	macro viewMonth(eventTitle = null, eventNumber = null, numberOfOccurrences = null, frequency = null) {
 		CalendarNavigator.gotoView(viewType = "Month");
 
 		var key_eventTitle = ${eventTitle};
@@ -478,7 +478,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewNoRSVP(eventTitle = null,eventToday = null) {
+	macro viewNoRSVP(eventTitle = null, eventToday = null) {
 		var setDates = ${setDates};
 
 		if (${setDates} == "true") {
@@ -512,7 +512,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewRSVP(eventTitle = null,eventToday = null,rsvp = null) {
+	macro viewRSVP(eventTitle = null, eventToday = null, rsvp = null) {
 		CalendarScheduler.selectSpecificEvent(
 			eventTitle = ${eventTitle},
 			eventToday = ${eventToday});
@@ -534,7 +534,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewShowMoreLocalizedViaDayView(viewTypeLocalized = null,messageLocalized = null) {
+	macro viewShowMoreLocalizedViaDayView(viewTypeLocalized = null, messageLocalized = null) {
 		AssertClick(
 			locator1 = "Calendar#VIEW_DAY_BUTTON",
 			value1 = ${viewTypeLocalized});
@@ -555,7 +555,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewShowMoreLocalizedViaMonthView(viewTypeLocalized = null,messageLocalized = null) {
+	macro viewShowMoreLocalizedViaMonthView(viewTypeLocalized = null, messageLocalized = null) {
 		AssertClick(
 			locator1 = "Calendar#VIEW_MONTH_BUTTON",
 			value1 = ${viewTypeLocalized});
@@ -568,7 +568,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewShowMoreLocalizedViaWeekView(viewTypeLocalized = null,messageLocalized = null) {
+	macro viewShowMoreLocalizedViaWeekView(viewTypeLocalized = null, messageLocalized = null) {
 		AssertClick(
 			locator1 = "Calendar#VIEW_WEEK_BUTTON",
 			value1 = ${viewTypeLocalized});
@@ -606,7 +606,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewWeek(eventTitle = null,numberOfOccurrences = null,frequency = null) {
+	macro viewWeek(eventTitle = null, numberOfOccurrences = null, frequency = null) {
 		CalendarNavigator.gotoView(viewType = "Week");
 
 		var key_eventTitle = ${eventTitle};

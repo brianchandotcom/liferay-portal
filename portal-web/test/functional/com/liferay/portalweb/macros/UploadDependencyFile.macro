@@ -11,7 +11,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro uploadFile(fileName = null,filePath = null) {
+	macro uploadFile(fileName = null, filePath = null) {
 		var dependencyFilePath = TestCase.getDependenciesDirPath(
 			fileName = ${fileName},
 			filePath = ${filePath});

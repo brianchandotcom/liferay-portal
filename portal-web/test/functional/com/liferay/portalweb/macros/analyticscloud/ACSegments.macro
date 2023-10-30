@@ -19,7 +19,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addBreakdownByAttribute(breakdownName = null,attribute = null,binsAmount = null) {
+	macro addBreakdownByAttribute(breakdownName = null, attribute = null, binsAmount = null) {
 		Click(locator1 = "ACSegments#ADD_BREAKDOWN_BUTTON");
 
 		Click(locator1 = "ACSegments#SEGMENT_OVERVIEW_ATTRIBUTE");
@@ -147,7 +147,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertMembershipValue(membership = null,segmentName = null) {
+	macro assertMembershipValue(membership = null, segmentName = null) {
 		AssertElementPresent(
 			locator1 = "ACSegments#SEGMENT_TABLE_MEMBERSHIP_NAME_AND_VALUE",
 			membershipName = ${membership},
@@ -176,7 +176,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertTotalActivitiesValue(totalActivities = null,segmentName = null) {
+	macro assertTotalActivitiesValue(totalActivities = null, segmentName = null) {
 		AssertElementPresent(
 			locator1 = "ACSegments#SEGMENT_TABLE_TOTAL_ACTIVITIES_NAME_AND_VALUE",
 			segmentName = ${segmentName},
@@ -196,7 +196,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro clickMemberButton(buttonName = null,memberName = null) {
+	macro clickMemberButton(buttonName = null, memberName = null) {
 		var key_tableMember = ${memberName};
 		var key_buttonName = ${buttonName};
 
@@ -211,7 +211,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createDynamicSegmentAndFillFields(criterion = null,segmentField = null,segments = null) {
+	macro createDynamicSegmentAndFillFields(criterion = null, segmentField = null, segments = null) {
 		ACSegments.createDynamicSegment();
 
 		ACUtils.setItemName(itemName = ${segments});
@@ -294,7 +294,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editDateCriterion(month = null,year = null,day = null) {
+	macro editDateCriterion(month = null, year = null, day = null) {
 		if (IsElementNotPresent(locator1 = "ACSegments#DATE_PICKER")) {
 			Click(
 				key_text = "calendar",
@@ -363,7 +363,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editWebBehaviorCriterion(month2 = null,occurenceNumber = null,year = null,indexField = null,year2 = null,atLeastMost = null,searchTerm = null,month = null,activitiesOption = null,day2 = null,timePeriod = null,day = null,timeOption = null) {
+	macro editWebBehaviorCriterion(month2 = null, occurenceNumber = null, year = null, indexField = null, year2 = null, atLeastMost = null, searchTerm = null, month = null, activitiesOption = null, day2 = null, timePeriod = null, day = null, timeOption = null) {
 		if (isSet(activitiesOption)) {
 			Select(
 				key_indexField = ${indexField},
@@ -403,7 +403,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editWebBehaviorTimeCriterion(month2 = null,month = null,year = null,timePeriod = null,day2 = null,indexField = null,day = null,year2 = null,timeOption = null) {
+	macro editWebBehaviorTimeCriterion(month2 = null, month = null, year = null, timePeriod = null, day2 = null, indexField = null, day = null, year2 = null, timeOption = null) {
 		if (isSet(timeOption)) {
 			Click(
 				key_indexField = ${indexField},
@@ -591,7 +591,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectAutocompleteOption(criteriaName = null,autocompleteText = null) {
+	macro selectAutocompleteOption(criteriaName = null, autocompleteText = null) {
 		var key_autocompleteText = ${autocompleteText};
 
 		Click(
@@ -617,7 +617,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectDocument(indexField = null,documentTitle = null) {
+	macro selectDocument(indexField = null, documentTitle = null) {
 		var key_indexField = ${indexField};
 		var key_tableMember = ${documentTitle};
 
@@ -678,7 +678,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewAutocompleteSuggestions(notPresent = null,autocompleteText = null) {
+	macro viewAutocompleteSuggestions(notPresent = null, autocompleteText = null) {
 		Click(
 			index = 1,
 			locator1 = "ACSegments#TEXT_INPUT");
@@ -730,7 +730,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewDuplicatedCriteria(totalCriteriaCount = null,criteriaName = null) {
+	macro viewDuplicatedCriteria(totalCriteriaCount = null, criteriaName = null) {
 		var i = 0;
 
 		while (${i} != ${totalCriteriaCount}) {
@@ -763,7 +763,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSegmentComposition(individualsPercent = null,individualsNumber = null,individualsType = null) {
+	macro viewSegmentComposition(individualsPercent = null, individualsNumber = null, individualsType = null) {
 		if (${individualsType} == "Active") {
 			AssertTextEquals(
 				locator1 = "ACSegments#SEGMENT_COMPOSITION_COUNT",
@@ -785,7 +785,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSegmentCriteriaIndividualAttributes(condition = null,conjunction = null,attributeValue = null,attributeName = null) {
+	macro viewSegmentCriteriaIndividualAttributes(condition = null, conjunction = null, attributeValue = null, attributeName = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -829,7 +829,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSegmentCriteriaSessionAttributes(condition = null,conjunction = null,attributeValue = null,preposition = null,attributeName = null,time = null) {
+	macro viewSegmentCriteriaSessionAttributes(condition = null, conjunction = null, attributeValue = null, preposition = null, attributeName = null, time = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -883,7 +883,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSegmentCriteriaWebBehavior(date = null,searchTerm = null,occurenceNumber = null,activitiesOption = null,timePeriod = null,atLeastMost = null,timeOption = null) {
+	macro viewSegmentCriteriaWebBehavior(date = null, searchTerm = null, occurenceNumber = null, activitiesOption = null, timePeriod = null, atLeastMost = null, timeOption = null) {
 		if (isSet(activitiesOption)) {
 			AssertTextEquals(
 				key_index = 1,
@@ -935,7 +935,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSegmentMembershipChartNumbers(netChange = null,removedMember = null,addedMember = null) {
+	macro viewSegmentMembershipChartNumbers(netChange = null, removedMember = null, addedMember = null) {
 		MouseOver(locator1 = "ACSegments#SEGMENT_MEMBERSHIP_CHART_HOVER");
 
 		AssertTextEquals(
@@ -955,7 +955,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSegmentMembershipChartRowNumbers(row = null,value = null) {
+	macro viewSegmentMembershipChartRowNumbers(row = null, value = null) {
 		AssertTextEquals.assertPartialText(
 			key_row = ${row},
 			locator1 = "ACSegments#SEGMENT_MEMBERSHIP_CHART_HOVER_DATA_ROW",
@@ -963,7 +963,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSegmentMembershipLegendNumbers(totalNumber = null,knownNumber = null,anonymousNumber = null) {
+	macro viewSegmentMembershipLegendNumbers(totalNumber = null, knownNumber = null, anonymousNumber = null) {
 		AssertTextEquals(
 			key_memberType = "Known Members:",
 			locator1 = "ACSegments#SEGMENT_MEMBERSHIP_LEGEND",

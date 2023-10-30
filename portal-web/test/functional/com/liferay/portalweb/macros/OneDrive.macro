@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro AddDocument(dmDocumentTitle = null,dmDocumentTypeName = null,dmDocumentContent = null) {
+	macro AddDocument(dmDocumentTitle = null, dmDocumentTypeName = null, dmDocumentContent = null) {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		Alert.viewInfoMessageSpecific(infoMessage = "The document has been checked out. Please check in the document after edits are made to save the changes into the document library.");
@@ -229,7 +229,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro goToOneDrive(userPassword = null,userName = null) {
+	macro goToOneDrive(userPassword = null, userName = null) {
 		Navigator.openSpecificURL(url = "https://liferaycolab-my.sharepoint.com/personal/sharepoint_liferaycolab_onmicrosoft_com/_layouts/15/onedrive.aspx?view=0");
 
 		WaitForPageLoad();

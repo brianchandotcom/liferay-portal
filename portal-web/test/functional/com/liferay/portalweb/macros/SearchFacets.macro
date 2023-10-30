@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro checkFacetTerm(facetTerm = null,facetName = null) {
+	macro checkFacetTerm(facetTerm = null, facetName = null) {
 		if (IsNotChecked.isNotCheckedNotVisible(key_checkboxName = ${facetTerm}, key_facetName = ${facetName}, locator1 = "SearchPage#FACET_CHECKBOX_SPECIFIC")) {
 			Click(
 				key_checkboxName = ${facetTerm},
@@ -11,7 +11,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro checkFacetTermAndViewURL(facetTerm = null,facetName = null,searchPage = null,searchTerm = null,termURLValue = null) {
+	macro checkFacetTermAndViewURL(facetTerm = null, facetName = null, searchPage = null, searchTerm = null, termURLValue = null) {
 		SearchFacets.checkFacetTerm(
 			facetName = ${facetName},
 			facetTerm = ${facetTerm});
@@ -87,7 +87,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureCategoryFacet(index = null,vocabularyScope = null) {
+	macro configureCategoryFacet(index = null, vocabularyScope = null) {
 		if (isSet(index)) {
 			SearchFacets.gotoSearchFacetOptionsSpecific(
 				index = ${index},
@@ -137,7 +137,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureCustomFacet(aggregationField = null,customHeading = null,customParameterName = null) {
+	macro configureCustomFacet(aggregationField = null, customHeading = null, customParameterName = null) {
 		Portlet.gotoPortletOptions(
 			portletName = "Custom Facet",
 			portletOption = "Configuration");
@@ -170,7 +170,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro generateFacetCheckedURL(facetTerm = null,facetName = null,searchPage = null,searchTerm = null) {
+	macro generateFacetCheckedURL(facetTerm = null, facetName = null, searchPage = null, searchTerm = null) {
 		if (!(isSet(searchURL))) {
 			var searchURL = SearchPage.getSearchTermURL(
 				searchPage = ${searchPage},
@@ -235,7 +235,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro generateFacetUncheckedURL(facetTerm = null,facetName = null) {
+	macro generateFacetUncheckedURL(facetTerm = null, facetName = null) {
 		if (${facetName} == "Type Facet") {
 			var termURLValue = SearchFacets.getTypeFacetTermURLValue(typeFacetTerm = ${facetTerm});
 		}
@@ -312,7 +312,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoSearchFacetOptionsSpecific(index = null,portletName = null,portletOption = null) {
+	macro gotoSearchFacetOptionsSpecific(index = null, portletName = null, portletOption = null) {
 		MouseOver.mouseOverNotVisible(
 			key_index = ${index},
 			key_portletName = ${portletName},
@@ -356,7 +356,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro uncheckFacetTerm(facetTerm = null,facetName = null) {
+	macro uncheckFacetTerm(facetTerm = null, facetName = null) {
 		if (IsChecked(key_checkboxName = ${facetTerm}, key_facetName = ${facetName}, locator1 = "SearchPage#FACET_CHECKBOX_SPECIFIC")) {
 			Click(
 				key_checkboxName = ${facetTerm},
@@ -366,7 +366,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro uncheckFacetTermAndViewURL(facetTerm = null,facetName = null,termURLValue = null) {
+	macro uncheckFacetTermAndViewURL(facetTerm = null, facetName = null, termURLValue = null) {
 		SearchFacets.uncheckFacetTerm(
 			facetName = ${facetName},
 			facetTerm = ${facetTerm});
@@ -383,7 +383,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updateFacetConfiguration(sortOption = null,displayTemplate = null,maxTerms = null,displayFrequencies = null,frequencyThreshold = null,parameterName = null,portletName = null) {
+	macro updateFacetConfiguration(sortOption = null, displayTemplate = null, maxTerms = null, displayFrequencies = null, frequencyThreshold = null, parameterName = null, portletName = null) {
 		Portlet.gotoPortletOptions(
 			portletName = ${portletName},
 			portletOption = "Configuration");
@@ -438,7 +438,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewFacetTermsSpecificOrder(termList = null,facetName = null) {
+	macro viewFacetTermsSpecificOrder(termList = null, facetName = null) {
 		var termOrder = 0;
 
 		for (var termItem : list ${termList}) {

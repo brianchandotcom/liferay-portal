@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _curlDeleteByErc(wikiPageErc = null,groupName = null,wikiPageAttachmentErc = null) {
+	macro _curlDeleteByErc(wikiPageErc = null, groupName = null, wikiPageAttachmentErc = null) {
 		Variables.assertDefined(parameterList = "${groupName},${wikiPageAttachmentErc},${wikiPageErc}");
 
 		var siteId = JSONGroupAPI._getGroupIdByNameNoSelenium(
@@ -20,7 +20,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _curlWikiPageAttachments(wikiPageErc = null,wikiPageAttachementErc = null,groupName = null,wikiPageId = null,wikiPageAttachementId = null) {
+	macro _curlWikiPageAttachments(wikiPageErc = null, wikiPageAttachementErc = null, groupName = null, wikiPageId = null, wikiPageAttachementId = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(wikiPageId)) {
@@ -67,7 +67,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro AssertCorrectErcInResponse(responseToParse = null,expectedErc = null) {
+	macro AssertCorrectErcInResponse(responseToParse = null, expectedErc = null) {
 		Variables.assertDefined(parameterList = "${responseToParse},${expectedErc}");
 
 		var actualErc = JSONUtil.getWithJSONPath(${responseToParse}, "$..externalReferenceCode");
@@ -78,7 +78,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createWikiPageAttachment(wikiPageId = null,filePath = null) {
+	macro createWikiPageAttachment(wikiPageId = null, filePath = null) {
 		Variables.assertDefined(parameterList = "${filePath},${wikiPageId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -96,7 +96,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteByErc(wikiPageErc = null,groupName = null,wikiPageAttachmentErc = null) {
+	macro deleteByErc(wikiPageErc = null, groupName = null, wikiPageAttachmentErc = null) {
 		Variables.assertDefined(parameterList = "${groupName},${wikiPageAttachmentErc},${wikiPageErc}");
 
 		var curl = WikiPageAttachmentAPI._curlDeleteByErc(
@@ -119,7 +119,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getWikiPageAttachments(wikiPageAttachementErc = null,wikiPageErc = null,groupName = null,wikiPageAttachementId = null,wikiPageId = null) {
+	macro getWikiPageAttachments(wikiPageAttachementErc = null, wikiPageErc = null, groupName = null, wikiPageAttachementId = null, wikiPageId = null) {
 		var curl = WikiPageAttachmentAPI._curlWikiPageAttachments(
 			groupName = ${groupName},
 			wikiPageAttachementErc = ${wikiPageAttachementErc},

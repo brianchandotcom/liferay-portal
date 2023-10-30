@@ -26,7 +26,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoPortlet(portlet = null,panel = null,category = null) {
+	macro gotoPortlet(portlet = null, panel = null, category = null) {
 		ApplicationsMenuHelper.openApplicationsMenu();
 
 		ApplicationsMenu.gotoPanel(panel = ${panel});
@@ -57,7 +57,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoSiteViaViewAll(depotName = null,site = null) {
+	macro gotoSiteViaViewAll(depotName = null, site = null) {
 		ApplicationsMenuHelper.openApplicationsMenu();
 
 		ApplicationsMenuHelper.openWorkspace();

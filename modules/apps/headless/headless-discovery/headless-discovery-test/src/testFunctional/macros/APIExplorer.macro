@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addHeaders(headerValue = null,headerKey = null) {
+	macro addHeaders(headerValue = null, headerKey = null) {
 		Variables.assertDefined(parameterList = "${headerKey},${headerValue}");
 
 		Click(
@@ -22,7 +22,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertExposedActionsInSchema(schema = null,method = null,property = null,objectHref = null) {
+	macro assertExposedActionsInSchema(schema = null, method = null, property = null, objectHref = null) {
 		Variables.assertDefined(parameterList = "${schema},${property},${method},${objectHref}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertSchemaFieldsPresent(schemaFields = null,schemaEntity = null) {
+	macro assertSchemaFieldsPresent(schemaFields = null, schemaEntity = null) {
 		Variables.assertDefined(parameterList = "${schemaEntity},${schemaFields}");
 
 		Click(
@@ -52,7 +52,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro executeAllActionInSchema(schema = null,actionsList = null) {
+	macro executeAllActionInSchema(schema = null, actionsList = null) {
 		Variables.assertDefined(parameterList = "${schema},${actionsList}");
 
 		Click(
@@ -74,7 +74,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro executeAPIMethod(parameter_two = null,method = null,requestBody = null,service = null,parameter = null,scopeKey = null,value_two = null) {
+	macro executeAPIMethod(parameter_two = null, method = null, requestBody = null, service = null, parameter = null, scopeKey = null, value_two = null) {
 		Variables.assertDefined(parameterList = "${service},${method}");
 
 		APIExplorer.expandAPIMethod(
@@ -153,7 +153,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro expandAPIMethod(method = null,service = null) {
+	macro expandAPIMethod(method = null, service = null) {
 		Variables.assertDefined(parameterList = "${service},${method}");
 
 		Click(
@@ -163,7 +163,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro expandPropertyInActionsSchema(schema = null,property = null) {
+	macro expandPropertyInActionsSchema(schema = null, property = null) {
 		Variables.assertDefined(parameterList = "${schema},${property}");
 
 		Click(
@@ -183,7 +183,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro navigateToOpenAPI(customObjectPlural = null,api = null,virtualHost = null,version = null) {
+	macro navigateToOpenAPI(customObjectPlural = null, api = null, virtualHost = null, version = null) {
 		if (isSet(virtualHost)) {
 			if (!(isSet(port))) {
 				var port = 8080;

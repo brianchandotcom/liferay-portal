@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _getFormInstanceId(groupName = null,formName = null) {
+	macro _getFormInstanceId(groupName = null, formName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${formName}");
 
 		var portalURL = JSONCompany.getPortalURL();

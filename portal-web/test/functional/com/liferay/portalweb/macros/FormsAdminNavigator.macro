@@ -45,7 +45,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoEditField(fieldPositionNumber = null,fieldName = null,formPageNumber = null) {
+	macro gotoEditField(fieldPositionNumber = null, fieldName = null, formPageNumber = null) {
 		WaitForElementPresent(locator1 = "Form#SIDEBAR_CONTENT_OPEN");
 
 		Form.gotoFieldsTab();
@@ -96,7 +96,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoEntriesLabel(key_value = null,key_key_type = null) {
+	macro gotoEntriesLabel(key_value = null, key_key_type = null) {
 		Click(
 			key_fieldName = ${key_value},
 			locator1 = "FormFields#TEXT_FIELD_LABEL_REPORT_CARD");
@@ -225,7 +225,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openFormsAdmin(baseURL = null,siteURLKey = null) {
+	macro openFormsAdmin(baseURL = null, siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet");

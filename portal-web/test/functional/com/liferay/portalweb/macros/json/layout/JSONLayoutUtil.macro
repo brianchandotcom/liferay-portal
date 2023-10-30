@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _addWidgetToTypeSettings(remoteAppEntryId = null,widgetName = null) {
+	macro _addWidgetToTypeSettings(remoteAppEntryId = null, widgetName = null) {
 
 		// Get column # we want to set to (can only be 1-3), default is 1
 

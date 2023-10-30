@@ -12,7 +12,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertTextInOSGiConfig(osgiConfigFileName = null,text = null) {
+	macro assertTextInOSGiConfig(osgiConfigFileName = null, text = null) {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
 		var fileContent = FileUtil.read("${liferayHome}/osgi/configs/${osgiConfigFileName}");
@@ -26,7 +26,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertTextNotInOSGiConfig(osgiConfigFileName = null,text = null) {
+	macro assertTextNotInOSGiConfig(osgiConfigFileName = null, text = null) {
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
 		var fileContent = FileUtil.read("${liferayHome}/osgi/configs/${osgiConfigFileName}");
@@ -40,7 +40,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro copyOSGiConfigFile(osgiConfigFileBaseDir = null,osgiConfigFileName = null) {
+	macro copyOSGiConfigFile(osgiConfigFileBaseDir = null, osgiConfigFileName = null) {
 		Variables.assertDefined(parameterList = "${osgiConfigFileBaseDir},${osgiConfigFileName}");
 
 		var configs = FileUtil.read("${osgiConfigFileBaseDir}/${osgiConfigFileName}");
@@ -59,7 +59,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deployOSGiConfigFile(osgiConfigFileName = null,osgiConfigs = null) {
+	macro deployOSGiConfigFile(osgiConfigFileName = null, osgiConfigs = null) {
 		Variables.assertDefined(parameterList = "${osgiConfigs},${osgiConfigFileName}");
 
 		var configList = "";
@@ -75,7 +75,7 @@ ${configList}''';
 	}
 
 	@summary = "Default summary"
-	macro editOSGiConfigFileFromTempFolder(newValue = null,osgiConfigFileName = null,oldValue = null) {
+	macro editOSGiConfigFileFromTempFolder(newValue = null, osgiConfigFileName = null, oldValue = null) {
 		var tempDir = PropsUtil.get("output.dir.name");
 
 		Variables.assertDefined(parameterList = "${tempDir},${osgiConfigFileName}");

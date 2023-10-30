@@ -20,7 +20,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addAttachmentViaPageEdit(wikiNodeName = null,layoutURLKey = null,groupName = null,attachmentFileName = null,wikiPageTitle = null,siteURLKey = null) {
+	macro addAttachmentViaPageEdit(wikiNodeName = null, layoutURLKey = null, groupName = null, attachmentFileName = null, wikiPageTitle = null, siteURLKey = null) {
 		if (isSet(layoutURLKey)) {
 			WikiNavigator.openToEditPage(
 				groupName = ${groupName},
@@ -59,7 +59,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addChildPagePG(htmlSource = null,wikiChildPageContent = null,wikiChildPageTitle = null) {
+	macro addChildPagePG(htmlSource = null, wikiChildPageContent = null, wikiChildPageTitle = null) {
 		AssertClick(
 			locator1 = "Link#ADD_CHILD_PAGE",
 			value1 = "Add Child Page");
@@ -97,7 +97,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addChildPagePGViaWD(htmlSource = null,wikiChildPageContent = null,wikiChildPageTitle = null) {
+	macro addChildPagePGViaWD(htmlSource = null, wikiChildPageContent = null, wikiChildPageTitle = null) {
 		AssertClick(
 			locator1 = "Link#ADD_CHILD_PAGE",
 			value1 = "Add Child Page");
@@ -133,7 +133,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addChildPageViaEllipsis(wikiPageTitle = null,wikiChildPageTitle = null) {
+	macro addChildPageViaEllipsis(wikiPageTitle = null, wikiChildPageTitle = null) {
 		var key_wikiChildPageTitle = ${wikiChildPageTitle};
 
 		LexiconEntry.openEntryMenu(rowEntry = ${wikiPageTitle});
@@ -163,7 +163,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addCP(wikiNodeName = null,navTab = null,groupName = null,wikiPageTitle = null,siteURLKey = null,wikiAdmin = null,wikiPageContent = null,contentImageName = null,imageSourceURL = null) {
+	macro addCP(wikiNodeName = null, navTab = null, groupName = null, wikiPageTitle = null, siteURLKey = null, wikiAdmin = null, wikiPageContent = null, contentImageName = null, imageSourceURL = null) {
 		if (isSet(siteURLKey)) {
 			WikiNavigator.openToAddPage(
 				groupName = ${groupName},
@@ -200,7 +200,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addFrontPageChildPageInvalidTitle(wikiNodeName = null,layoutURLKey = null,groupName = null,siteURLKey = null,wikiParentPageTitle = null,wikiChildPageContent = null,wikiChildPageTitle = null) {
+	macro addFrontPageChildPageInvalidTitle(wikiNodeName = null, layoutURLKey = null, groupName = null, siteURLKey = null, wikiParentPageTitle = null, wikiChildPageContent = null, wikiChildPageTitle = null) {
 		if (isSet(siteURLKey)) {
 			WikiNavigator.openToAddChildPage(
 				groupName = ${groupName},
@@ -239,7 +239,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addFrontPageChildPageInvalidTitleViaWD(wikiChildPageContent = null,wikiChildPageTitle = null) {
+	macro addFrontPageChildPageInvalidTitleViaWD(wikiChildPageContent = null, wikiChildPageTitle = null) {
 		AssertClick(
 			locator1 = "Link#ADD_CHILD_PAGE",
 			value1 = "Add Child Page");
@@ -283,7 +283,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addFrontPagePG(wikiNodeName = null,pageAddTag = null,layoutURLKey = null,groupName = null,creoleSource = null,wikiPageTitle = null,siteURLKey = null,htmlSource = null,tagNameList = null,wikiPageContent = null) {
+	macro addFrontPagePG(wikiNodeName = null, pageAddTag = null, layoutURLKey = null, groupName = null, creoleSource = null, wikiPageTitle = null, siteURLKey = null, htmlSource = null, tagNameList = null, wikiPageContent = null) {
 		var key_wikiNodeName = ${wikiNodeName};
 
 		if (isSet(addFrontPagetoNode)) {
@@ -361,7 +361,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addInlineImage(navTab = null,wikiAdmin = null,contentImageName = null,imageSourceURL = null) {
+	macro addInlineImage(navTab = null, wikiAdmin = null, contentImageName = null, imageSourceURL = null) {
 		ItemSelector.gotoItemSelectorViaCKEditor();
 
 		ItemSelector.addImageFromURL(
@@ -373,7 +373,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addInlineImageViaEdit(navTab = null,uploadFileName = null) {
+	macro addInlineImageViaEdit(navTab = null, uploadFileName = null) {
 		ItemSelector.gotoItemSelectorViaCKEditor();
 
 		ItemSelector.uploadFile(
@@ -382,7 +382,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addLocalizedFrontPagePG(wikiPageContent = null,rtl = null,successMessage = null,emptyPageMessage = null) {
+	macro addLocalizedFrontPagePG(wikiPageContent = null, rtl = null, successMessage = null, emptyPageMessage = null) {
 		AssertClick(
 			locator1 = "Wiki#FRONTPAGE_DEFAULT_MESSAGE",
 			value1 = ${emptyPageMessage});
@@ -420,7 +420,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPageWithWorkflowPG(wikiPageTitle = null,wikiPageContent = null) {
+	macro addPageWithWorkflowPG(wikiPageTitle = null, wikiPageContent = null) {
 		WikiNavigator.gotoAddPageViaPG();
 
 		WikiEntry.addPageTitle(title = ${wikiPageTitle});
@@ -441,7 +441,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPermissionsPGCmd(permissionDefinitionKey = null,viewableBy = null,addOrRemoveViewPermission = null,roleTitle = null) {
+	macro addPermissionsPGCmd(permissionDefinitionKey = null, viewableBy = null, addOrRemoveViewPermission = null, roleTitle = null) {
 		if (isSet(viewableBy)) {
 			Select(
 				locator1 = "AssetPermissions#VIEWABLE_AS_SELECT",
@@ -457,7 +457,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPG(wikiFormat = null,pageAddPermissions = null,wikiPageTitle = null,htmlSource = null,viewCkEditorResizer = null,wikiAdmin = null,tagNameList = null,customFieldText = null,wikiPageContent = null,wikiNodeName = null,viewFormat = null,navTab = null,pageAddTag = null,layoutURLKey = null,groupName = null,wikiPageTitleVariation = null,siteURLKey = null,contentImageName = null,imageSourceURL = null) {
+	macro addPG(wikiFormat = null, pageAddPermissions = null, wikiPageTitle = null, htmlSource = null, viewCkEditorResizer = null, wikiAdmin = null, tagNameList = null, customFieldText = null, wikiPageContent = null, wikiNodeName = null, viewFormat = null, navTab = null, pageAddTag = null, layoutURLKey = null, groupName = null, wikiPageTitleVariation = null, siteURLKey = null, contentImageName = null, imageSourceURL = null) {
 		if (isSet(siteURLKey)) {
 			WikiNavigator.openToAddPage(
 				groupName = ${groupName},
@@ -570,7 +570,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro changeParentWikipageCP(wikiPageTitle = null,newParentWikiPageTitle = null) {
+	macro changeParentWikipageCP(wikiPageTitle = null, newParentWikiPageTitle = null) {
 		WikiNavigator.gotoEntryMoveViaTable(wikiPageTitle = ${wikiPageTitle});
 
 		WikiNavigator.gotoChangeParent();
@@ -579,7 +579,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro changeParentWikipagetoWikipagePG(wikiPage2Title = null,wikiPage1Title = null,wikiPage2Content = null) {
+	macro changeParentWikipagetoWikipagePG(wikiPage2Title = null, wikiPage1Title = null, wikiPage2Content = null) {
 		var key_wikiPageTitle = ${wikiPage2Title};
 
 		AssertTextEquals(
@@ -625,7 +625,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro compareVersionsCP(wikiNodeName = null,wikiPageVersionNew = null,wikiPageVersionDiff = null,wikiPageTitle = null,siteURLKey = null,wikiPageVersionOld = null) {
+	macro compareVersionsCP(wikiNodeName = null, wikiPageVersionNew = null, wikiPageVersionDiff = null, wikiPageTitle = null, siteURLKey = null, wikiPageVersionOld = null) {
 		var key_wikiPageTitle = ${wikiPageTitle};
 
 		WikiNavigator.openToWikiPage(
@@ -683,7 +683,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro compareVersionsPG(wikiPageCompareContentDetails = null,wikiPageVersionDiff = null,wikiPageTitle = null,wikiPageContentCompareAdded = null,wikiPageContentCompareFull = null,compareLineNumberOld = null,wikiNodeName = null,wikiPageVersionNew = null,compareLineNumberNew = null,wikiPageContentCompareNew = null,wikiPageVersionOld = null,wikiPageContentCompareRemoved = null,wikiPageContentCompareOld = null) {
+	macro compareVersionsPG(wikiPageCompareContentDetails = null, wikiPageVersionDiff = null, wikiPageTitle = null, wikiPageContentCompareAdded = null, wikiPageContentCompareFull = null, compareLineNumberOld = null, wikiNodeName = null, wikiPageVersionNew = null, compareLineNumberNew = null, wikiPageContentCompareNew = null, wikiPageVersionOld = null, wikiPageContentCompareRemoved = null, wikiPageContentCompareOld = null) {
 		var key_wikiNodeName = ${wikiNodeName};
 
 		AssertClick(
@@ -862,7 +862,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editPageCP(wikiNodeName = null,groupName = null,wikiPageContentEdit = null,wikiPageTitle = null,siteURLKey = null) {
+	macro editPageCP(wikiNodeName = null, groupName = null, wikiPageContentEdit = null, wikiPageTitle = null, siteURLKey = null) {
 		if (isSet(siteURLKey)) {
 			WikiNavigator.openToEditPage(
 				groupName = ${groupName},
@@ -888,7 +888,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editPagePG(wikiNodeName = null,layoutURLKey = null,groupName = null,wikiPageContentEdit = null,minorEdit = null,wikiPageTitle = null,siteURLKey = null,customFieldTextEdit = null) {
+	macro editPagePG(wikiNodeName = null, layoutURLKey = null, groupName = null, wikiPageContentEdit = null, minorEdit = null, wikiPageTitle = null, siteURLKey = null, customFieldTextEdit = null) {
 		var key_wikiPageTitle = ${wikiPageTitle};
 
 		if (isSet(siteURLKey)) {
@@ -937,7 +937,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro linkPG(wikiPage2Title = null,wikiPage2Link = null,wikiPage2Content = null) {
+	macro linkPG(wikiPage2Title = null, wikiPage2Link = null, wikiPage2Content = null) {
 		var key_wikiPageTitle = ${wikiPage2Title};
 
 		AssertTextNotPresent(
@@ -1023,7 +1023,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro removeRedirectWikiPagePG(wikiPageTitleRename = null,wikiPageTitle = null,wikiPage2Content = null) {
+	macro removeRedirectWikiPagePG(wikiPageTitleRename = null, wikiPageTitle = null, wikiPage2Content = null) {
 		AssertClick(
 			locator1 = "Link#REDIRECT",
 			value1 = "(Redirected from ${wikiPageTitle})");
@@ -1048,7 +1048,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro renameWikiPageCP(wikiPageTitleRename = null,wikiPageTitle = null) {
+	macro renameWikiPageCP(wikiPageTitleRename = null, wikiPageTitle = null) {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Move");
 
 		AssertTextEquals(
@@ -1072,7 +1072,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro renameWikiPagePG(wikiPageTitleRename = null,wikiPageTitle = null) {
+	macro renameWikiPagePG(wikiPageTitleRename = null, wikiPageTitle = null) {
 		AssertClick(
 			locator1 = "Link#DETAILS",
 			value1 = "Details");
@@ -1098,7 +1098,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro revertChangeParentWikipagetoWikipagePG(wikiPage2Title = null,wikiVersion1Summary = null,wikiPage2Content = null,wikiVersion2Summary = null,wikiPageRevision = null) {
+	macro revertChangeParentWikipagetoWikipagePG(wikiPage2Title = null, wikiVersion1Summary = null, wikiPage2Content = null, wikiVersion2Summary = null, wikiPageRevision = null) {
 		var key_wikiPageTitle = ${wikiPage2Title};
 
 		AssertTextEquals(
@@ -1148,7 +1148,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro revertEditPG(wikiPageRevisionOld = null,wikiPageTitle = null,wikiVersionSummary = null,wikiPageRevisionNew = null,wikiPageRevision = null) {
+	macro revertEditPG(wikiPageRevisionOld = null, wikiPageTitle = null, wikiVersionSummary = null, wikiPageRevisionNew = null, wikiPageRevision = null) {
 		var key_wikiPageTitle = ${wikiPageTitle};
 
 		AssertTextEquals(
@@ -1186,7 +1186,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro searchPG(searchTerm = null,wikiPageTitle = null) {
+	macro searchPG(searchTerm = null, wikiPageTitle = null) {
 		var key_wikiPageTitle = ${wikiPageTitle};
 
 		Search.searchPG(
@@ -1234,7 +1234,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewAttachmentPGViaEdit(wikiNodeName = null,layoutURLKey = null,groupName = null,attachmentFileName = null,wikiPageTitle = null,siteURLKey = null,attachmentFileSize = null) {
+	macro viewAttachmentPGViaEdit(wikiNodeName = null, layoutURLKey = null, groupName = null, attachmentFileName = null, wikiPageTitle = null, siteURLKey = null, attachmentFileSize = null) {
 		var key_attachmentFileName = ${attachmentFileName};
 		var key_wikiPageTitle = ${wikiPageTitle};
 
@@ -1273,7 +1273,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewChildPageCP(wikiPageTitle = null,wikiPageContent = null,wikiChildPageContent = null,wikiChildPageTitle = null) {
+	macro viewChildPageCP(wikiPageTitle = null, wikiPageContent = null, wikiChildPageContent = null, wikiChildPageTitle = null) {
 		WikiNavigator.gotoEntryViaPGTable(wikiPageTitle = ${wikiPageTitle});
 
 		WikiEntry.viewPageContentBody(wikiPageContent = ${wikiPageContent});
@@ -1284,7 +1284,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewChildPagePG(wikiChildPageContent = null,wikiChildPageTitle = null) {
+	macro viewChildPagePG(wikiChildPageContent = null, wikiChildPageTitle = null) {
 		AssertTextEquals(
 			locator1 = "Portlet#H3_HEADER",
 			value1 = ${wikiChildPageTitle});
@@ -1295,7 +1295,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewChildPagePGViaWD(wikiPageTitle = null,wikiPageContent = null,wikiChildPageTitle = null) {
+	macro viewChildPagePGViaWD(wikiPageTitle = null, wikiPageContent = null, wikiChildPageTitle = null) {
 		AssertTextEquals(
 			locator1 = "Portlet#H3_HEADER",
 			value1 = ${wikiPageTitle});
@@ -1316,7 +1316,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCommentPG(entryComment = null,wikiPageTitle = null) {
+	macro viewCommentPG(entryComment = null, wikiPageTitle = null) {
 		var key_entryComment = ${entryComment};
 		var key_wikiPageTitle = ${wikiPageTitle};
 
@@ -1326,7 +1326,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCP(akismetEnabled = null,wikiPageTitle = null,wikiPageContent = null,contentImageName = null,wikiPageRevision = null) {
+	macro viewCP(akismetEnabled = null, wikiPageTitle = null, wikiPageContent = null, contentImageName = null, wikiPageRevision = null) {
 		var key_wikiPageTitle = ${wikiPageTitle};
 
 		AssertTextEquals.assertPartialText(
@@ -1460,7 +1460,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewFrontPagePG(wikiNodeName = null,viewWikiNode = null,wikiPageContent = null,contentImageName = null) {
+	macro viewFrontPagePG(wikiNodeName = null, viewWikiNode = null, wikiPageContent = null, contentImageName = null) {
 		var key_wikiNodeName = ${wikiNodeName};
 
 		if (${viewWikiNode} == "true") {
@@ -1487,7 +1487,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewLocalizedFrontPagePG(rightToLeft = null,wikiPageContent = null) {
+	macro viewLocalizedFrontPagePG(rightToLeft = null, wikiPageContent = null) {
 		if (${rightToLeft} == "true") {
 			var textDirection = "rtl";
 		}
@@ -1518,7 +1518,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewNoChildPagePGViaAllPages(wikiPageTitle = null,wikiPageRevision = null,wikiChildPageTitle = null) {
+	macro viewNoChildPagePGViaAllPages(wikiPageTitle = null, wikiPageRevision = null, wikiChildPageTitle = null) {
 		var key_wikiPageTitle = ${wikiPageTitle};
 
 		AssertTextEquals(
@@ -1564,7 +1564,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPageNoAttachment(attachmentFileName = null,wikiPageTitle = null,wikiPageContent = null) {
+	macro viewPageNoAttachment(attachmentFileName = null, wikiPageTitle = null, wikiPageContent = null) {
 		WikiPage.viewPG(
 			wikiPageContent = ${wikiPageContent},
 			wikiPageTitle = ${wikiPageTitle});
@@ -1577,7 +1577,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPagePG(wikiPageTitle = null,customFieldText = null,wikiPageContent = null) {
+	macro viewPagePG(wikiPageTitle = null, customFieldText = null, wikiPageContent = null) {
 		var key_wikiPageTitle = ${wikiPageTitle};
 
 		AssertTextEquals(
@@ -1598,7 +1598,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPageWithAttachment(attachmentFileName = null,wikiPageTitle = null,inlineImage = null,wikiPageContent = null) {
+	macro viewPageWithAttachment(attachmentFileName = null, wikiPageTitle = null, inlineImage = null, wikiPageContent = null) {
 		var key_attachmentFileName = ${attachmentFileName};
 		var key_wikiPageContent = ${wikiPageContent};
 		var key_wikiPageTitle = ${wikiPageTitle};
@@ -1626,7 +1626,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPageWithWorkflowPG(wikiPageTitle = null,wikiPageStatus = null,wikiPageUsername = null) {
+	macro viewPageWithWorkflowPG(wikiPageTitle = null, wikiPageStatus = null, wikiPageUsername = null) {
 		var key_wikiPageTitle = ${wikiPageTitle};
 
 		AssertTextEquals(
@@ -1653,7 +1653,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPG(wikiPageContentTable = null,wikiPageTitleIncomingLink = null,wikiPageContentGeneric = null,wikiPageTitle = null,viewCountNumber = null,wikiPageContentIncomingLink = null,viewIncomingLinks = null,wikiPageContent = null,wikiPageUsername = null,wikiPageContentLink = null,wikiPageRevisionIncomingLink = null,wikiPageUsernameIncomingLink = null) {
+	macro viewPG(wikiPageContentTable = null, wikiPageTitleIncomingLink = null, wikiPageContentGeneric = null, wikiPageTitle = null, viewCountNumber = null, wikiPageContentIncomingLink = null, viewIncomingLinks = null, wikiPageContent = null, wikiPageUsername = null, wikiPageContentLink = null, wikiPageRevisionIncomingLink = null, wikiPageUsernameIncomingLink = null) {
 		AssertTextEquals(
 			locator1 = "Portlet#H3_HEADER",
 			value1 = ${wikiPageTitle});
@@ -1740,7 +1740,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPGViaWD(wikiPageTitle = null,wikiPageContent = null) {
+	macro viewPGViaWD(wikiPageTitle = null, wikiPageContent = null) {
 		AssertTextEquals(
 			locator1 = "Portlet#H3_HEADER",
 			value1 = ${wikiPageTitle});
@@ -1768,7 +1768,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSearchResultsPG(wikiNodeName = null,searchTerm = null,searchNoResults = null,wikiPageTitle = null,commentBody = null,wikiPageContent = null,wikiAttachmentBody = null,wikiComment = null,wikiAttachment = null) {
+	macro viewSearchResultsPG(wikiNodeName = null, searchTerm = null, searchNoResults = null, wikiPageTitle = null, commentBody = null, wikiPageContent = null, wikiAttachmentBody = null, wikiComment = null, wikiAttachment = null) {
 		var key_wikiPageTitle = ${wikiPageTitle};
 
 		if (${searchNoResults} == "true") {
@@ -1816,7 +1816,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSummary(wikiPageTitle = null,wikiVersionSummary = null,wikiPageRevision = null) {
+	macro viewSummary(wikiPageTitle = null, wikiVersionSummary = null, wikiPageRevision = null) {
 		var key_wikiPageRevision = ${wikiPageRevision};
 		var key_wikiPageTitle = ${wikiPageTitle};
 		var key_wikiVersionSummary = ${wikiVersionSummary};

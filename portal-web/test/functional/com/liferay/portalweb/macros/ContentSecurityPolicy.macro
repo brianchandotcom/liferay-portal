@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro configureCSP(csp = null,enableCSP = null,excludedPaths = null) {
+	macro configureCSP(csp = null, enableCSP = null, excludedPaths = null) {
 		if (${enableCSP} == "true") {
 			FormFields.enableCheckbox(fieldName = "enabled");
 		}
@@ -30,7 +30,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deployInstanceConfigFile(portalInstanceName = null,osgiConfigFileName = null) {
+	macro deployInstanceConfigFile(portalInstanceName = null, osgiConfigFileName = null) {
 		var companyId = JSONCompany.getCompanyId(portalInstanceName = ${portalInstanceName});
 
 		AntCommands.runCommand("build-test-content-security-policy.xml", "prepare-content-security-policy-osgi-configuration -DcompanyId=${companyId} -Dosgi.config.file.name=${osgiConfigFileName}");

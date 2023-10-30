@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro select(selectFieldValue = null,selectFieldLabel = null) {
+	macro select(selectFieldValue = null, selectFieldLabel = null) {
 		Select(
 			key_selectFieldLabel = ${selectFieldLabel},
 			locator1 = "Select#ANY",

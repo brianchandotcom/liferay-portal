@@ -1,7 +1,7 @@
 @default = "isSelectedLabel"
 definition {
 
-	function isSelectedLabel(locator1) {
+	function isSelectedLabel(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");

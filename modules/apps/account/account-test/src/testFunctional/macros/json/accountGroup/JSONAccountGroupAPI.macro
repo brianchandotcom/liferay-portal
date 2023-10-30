@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _addAccountGroup(creatorPassword = null,accountGroupDescription = null,accountGroupName = null,creatorEmailAddress = null) {
+	macro _addAccountGroup(creatorPassword = null, accountGroupDescription = null, accountGroupName = null, creatorEmailAddress = null) {
 		Variables.assertDefined(parameterList = ${accountGroupName});
 
 		var companyId = JSONCompany.getCompanyId();

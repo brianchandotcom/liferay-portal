@@ -51,7 +51,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertIndividualAttributesSource(attributeList = null,dataSourceName = null) {
+	macro assertIndividualAttributesSource(attributeList = null, dataSourceName = null) {
 		var key_dataSourceName = ${dataSourceName};
 
 		for (var attributeName : list ${attributeList}) {

@@ -13,7 +13,7 @@ definition {
 
 	@description = "Replace the first occurence of ${regex} in ${fileName} with ${content}"
 	@summary = "Default summary"
-	macro regexReplace(fileName = null,regex = null,content = null) {
+	macro regexReplace(fileName = null, regex = null, content = null) {
 		Variables.assertDefined(parameterList = "${fileName},${regex},${content}");
 
 		var fileContent = FileUtil.read(${fileName});
@@ -25,7 +25,7 @@ definition {
 
 	@description = "Replace all occurences of ${regex} in ${fileName} with ${content}"
 	@summary = "Default summary"
-	macro regexReplaceAll(fileName = null,regex = null,content = null) {
+	macro regexReplaceAll(fileName = null, regex = null, content = null) {
 		Variables.assertDefined(parameterList = "${fileName},${regex},${content}");
 
 		var fileContent = FileUtil.read(${fileName});

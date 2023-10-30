@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addDocumentum(dmCabinetName = null,dmRepositoryFieldName = null) {
+	macro addDocumentum(dmCabinetName = null, dmRepositoryFieldName = null) {
 		Panel.expandPanel(panel = "Repository Configuration");
 
 		Select(
@@ -18,7 +18,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addSharepoint(permissionDefinitionKey = null,dmRepositorySiteURL = null,dmRepositoryLibraryPath = null,roleTitle = null,dmServerVersion = null,dmRepositoryName = null,dmRepositorySiteAbsoluteURL = null,dmRepositoryLibraryName = null) {
+	macro addSharepoint(permissionDefinitionKey = null, dmRepositorySiteURL = null, dmRepositoryLibraryPath = null, roleTitle = null, dmServerVersion = null, dmRepositoryName = null, dmRepositorySiteAbsoluteURL = null, dmRepositoryLibraryName = null) {
 		Panel.expandPanel(panel = "Repository Configuration");
 
 		Select(
@@ -77,7 +77,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro cleanRepository(dmDocumentTitle = null,dmFolderName = null) {
+	macro cleanRepository(dmDocumentTitle = null, dmFolderName = null) {
 		Navigator.openSpecificURL(url = "https://localhost:8443/group/guest/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
 
 		DMRepository.gotoCP(dmRepositoryName = "Collaboration Test Application");

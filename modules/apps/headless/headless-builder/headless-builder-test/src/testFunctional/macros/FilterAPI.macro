@@ -25,7 +25,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createAPIFilter(filterValue = null,endpointERC = null,virtualHost = null) {
+	macro createAPIFilter(filterValue = null, endpointERC = null, virtualHost = null) {
 		Variables.assertDefined(parameterList = "${filterValue},${endpointERC}");
 
 		var curl = FilterAPI._curlAPIFilter(virtualHost = ${virtualHost});

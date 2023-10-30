@@ -108,7 +108,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoEntryCP(entryStatus = null,entryTitle = null) {
+	macro gotoEntryCP(entryStatus = null, entryTitle = null) {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		var key_entryTitle = ${entryTitle};
@@ -123,7 +123,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoEntryPG(entryTitle = null,entryContent = null) {
+	macro gotoEntryPG(entryTitle = null, entryContent = null) {
 		var key_entryContent = ${entryContent};
 		var key_entryTitle = ${entryTitle};
 
@@ -141,7 +141,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoEntryWithAbstractPG(entryAbstractDescription = null,entryTitle = null) {
+	macro gotoEntryWithAbstractPG(entryAbstractDescription = null, entryTitle = null) {
 		var key_entryAbstractDescription = ${entryAbstractDescription};
 		var key_entryTitle = ${entryTitle};
 
@@ -164,7 +164,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoPG(blogEntryURL = null,entryTitle = null) {
+	macro gotoPG(blogEntryURL = null, entryTitle = null) {
 		var key_entryTitle = ${entryTitle};
 
 		if (isSet(blogEntryURL)) {
@@ -221,14 +221,14 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openBlogsAdmin(baseURL = null,siteURLKey = null) {
+	macro openBlogsAdmin(baseURL = null, siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_blogs_web_portlet_BlogsAdminPortlet");
 	}
 
 	@summary = "Default summary"
-	macro openBlogsImages(baseURL = null,siteURLKey = null) {
+	macro openBlogsImages(baseURL = null, siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_blogs_web_portlet_BlogsAdminPortlet&_com_liferay_blogs_web_portlet_BlogsAdminPortlet_navigation=images");
@@ -237,7 +237,7 @@ definition {
 	// You can use this navigation when you need to access the configuration quickly without checking the UI.
 
 	@summary = "Default summary"
-	macro openToAddEntry(siteURLKey = null,layoutName = null) {
+	macro openToAddEntry(siteURLKey = null, layoutName = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -287,7 +287,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToEditEntryInSite(groupName = null,site = null,siteURLKey = null,friendlyURL = null,entryTitle = null) {
+	macro openToEditEntryInSite(groupName = null, site = null, siteURLKey = null, friendlyURL = null, entryTitle = null) {
 		var entryId = JSONBlog.getBlogEntryId(
 			entryTitle = ${entryTitle},
 			friendlyURL = ${friendlyURL},
@@ -303,12 +303,12 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToNotPublishedTab(siteURLKey = null,layoutName = null) {
+	macro openToNotPublishedTab(siteURLKey = null, layoutName = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${layoutName}?p_p_id=com_liferay_blogs_web_portlet_BlogsPortlet&_com_liferay_blogs_web_portlet_BlogsPortlet_mvcRenderCommandName=%2Fblogs%2Fview_not_published_entries");
 	}
 
 	@summary = "Default summary"
-	macro openToStagingCP(groupName = null,siteURLKey = null) {
+	macro openToStagingCP(groupName = null, siteURLKey = null) {
 		if (!(isSet(site))) {
 			var site = "true";
 		}

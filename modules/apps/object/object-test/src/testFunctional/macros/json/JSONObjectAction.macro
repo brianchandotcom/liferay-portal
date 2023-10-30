@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addEntryAction(inputAsValueTitle = null,valueName = null,inputAsValueAccountId = null,description = null,valueLastName = null,inputAsValueActive = null,valueTitle = null,inputAsValueScreenName = null,actionLabel = null,valueShippingAmount = null,inputAsValueCurrencyCode = null,valueOrderStatus = null,inputAsValueOrderStatus = null,valueType = null,whenAction = null,inputAsValueGivenName = null,inputAsValueLastName = null,objectERC = null,conditionExpression = null,valueScreenName = null,inputAsValueEmailAddress = null,valueGivenName = null,valueActive = null,valueCatalogId = null,active = null,valueAccountId = null,inputAsValueType = null,valueStreet1 = null,valueChannelId = null,valueEmailAddress = null,valueCurrencyCode = null,inputAsValueShippingAmount = null,objectNameAction = null,inputAsValueChannelId = null,valueProductType = null,inputAsValueProductType = null,objectName = null,inputAsValueStreet1 = null,inputAsValueCatalogId = null,actionName = null,inputAsValueName = null) {
+	macro addEntryAction(inputAsValueTitle = null, valueName = null, inputAsValueAccountId = null, description = null, valueLastName = null, inputAsValueActive = null, valueTitle = null, inputAsValueScreenName = null, actionLabel = null, valueShippingAmount = null, inputAsValueCurrencyCode = null, valueOrderStatus = null, inputAsValueOrderStatus = null, valueType = null, whenAction = null, inputAsValueGivenName = null, inputAsValueLastName = null, objectERC = null, conditionExpression = null, valueScreenName = null, inputAsValueEmailAddress = null, valueGivenName = null, valueActive = null, valueCatalogId = null, active = null, valueAccountId = null, inputAsValueType = null, valueStreet1 = null, valueChannelId = null, valueEmailAddress = null, valueCurrencyCode = null, inputAsValueShippingAmount = null, objectNameAction = null, inputAsValueChannelId = null, valueProductType = null, inputAsValueProductType = null, objectName = null, inputAsValueStreet1 = null, inputAsValueCatalogId = null, actionName = null, inputAsValueName = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var objectId = JSONObject.getObjectId(objectName = ${objectName});
 
@@ -410,7 +410,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro groovyScriptAction(conditionExpression = null,groovyScript = null,active = null,description = null,actionLabel = null,objectName = null,whenAction = null,actionName = null) {
+	macro groovyScriptAction(conditionExpression = null, groovyScript = null, active = null, description = null, actionLabel = null, objectName = null, whenAction = null, actionName = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var objectId = JSONObject.getObjectId(objectName = ${objectName});
 
@@ -449,7 +449,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro notificationAction(conditionExpression = null,active = null,description = null,notificationType = null,actionLabel = null,notificationERC = null,objectName = null,whenAction = null,actionName = null) {
+	macro notificationAction(conditionExpression = null, active = null, description = null, notificationType = null, actionLabel = null, notificationERC = null, objectName = null, whenAction = null, actionName = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var objectId = JSONObject.getObjectId(objectName = ${objectName});
 
@@ -489,7 +489,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setAddEntryAction(inputAsValueTitle = null,valueName = null,inputAsValueAccountId = null,description = null,valueLastName = null,inputAsValueActive = null,inputAsValueScreenName = null,valueTitle = null,actionLabel = null,valueShippingAmount = null,inputAsValueCurrencyCode = null,valueOrderStatus = null,inputAsValueOrderStatus = null,valueType = null,inputAsValueGivenName = null,whenAction = null,inputAsValueLastName = null,objectERC = null,conditionExpression = null,inputAsValueEmailAddress = null,valueGivenName = null,valueScreenName = null,valueActive = null,valueCatalogId = null,active = null,valueAccountId = null,inputAsValueType = null,valueStreet1 = null,valueChannelId = null,valueEmailAddress = null,inputAsValueShippingAmount = null,valueCurrencyCode = null,objectNameAction = null,inputAsValueChannelId = null,valueProductType = null,inputAsValueProductType = null,inputAsValueStreet1 = null,objectName = null,inputAsValueCatalogId = null,actionName = null,inputAsValueName = null) {
+	macro setAddEntryAction(inputAsValueTitle = null, valueName = null, inputAsValueAccountId = null, description = null, valueLastName = null, inputAsValueActive = null, inputAsValueScreenName = null, valueTitle = null, actionLabel = null, valueShippingAmount = null, inputAsValueCurrencyCode = null, valueOrderStatus = null, inputAsValueOrderStatus = null, valueType = null, inputAsValueGivenName = null, whenAction = null, inputAsValueLastName = null, objectERC = null, conditionExpression = null, inputAsValueEmailAddress = null, valueGivenName = null, valueScreenName = null, valueActive = null, valueCatalogId = null, active = null, valueAccountId = null, inputAsValueType = null, valueStreet1 = null, valueChannelId = null, valueEmailAddress = null, inputAsValueShippingAmount = null, valueCurrencyCode = null, objectNameAction = null, inputAsValueChannelId = null, valueProductType = null, inputAsValueProductType = null, inputAsValueStreet1 = null, objectName = null, inputAsValueCatalogId = null, actionName = null, inputAsValueName = null) {
 		JSONObjectAction.addEntryAction(
 			actionLabel = ${actionLabel},
 			actionName = ${actionName},
@@ -535,7 +535,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setGroovyScriptAction(conditionExpression = null,groovyScript = null,active = null,description = null,objectName = null,whenAction = null,actionLabel = null,actionName = null) {
+	macro setGroovyScriptAction(conditionExpression = null, groovyScript = null, active = null, description = null, objectName = null, whenAction = null, actionLabel = null, actionName = null) {
 		JSONObjectAction.groovyScriptAction(
 			actionLabel = ${actionLabel},
 			actionName = ${actionName},
@@ -548,7 +548,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setNotificationAction(conditionExpression = null,active = null,description = null,objectName = null,whenAction = null,notificationType = null,actionLabel = null,actionName = null,notificationERC = null) {
+	macro setNotificationAction(conditionExpression = null, active = null, description = null, objectName = null, whenAction = null, notificationType = null, actionLabel = null, actionName = null, notificationERC = null) {
 		JSONObjectAction.notificationAction(
 			actionLabel = ${actionLabel},
 			actionName = ${actionName},
@@ -562,7 +562,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setUpdateEntryAction(objectERC = null,conditionExpression = null,active = null,description = null,objectName = null,whenAction = null,actionLabel = null,actionName = null) {
+	macro setUpdateEntryAction(objectERC = null, conditionExpression = null, active = null, description = null, objectName = null, whenAction = null, actionLabel = null, actionName = null) {
 		JSONObjectAction.updateEntryAction(
 			actionLabel = ${actionLabel},
 			actionName = ${actionName},
@@ -575,7 +575,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setWebhookAction(conditionExpression = null,secretAction = null,urlAction = null,active = null,description = null,objectName = null,whenAction = null,actionLabel = null,actionName = null) {
+	macro setWebhookAction(conditionExpression = null, secretAction = null, urlAction = null, active = null, description = null, objectName = null, whenAction = null, actionLabel = null, actionName = null) {
 		JSONObjectAction.webhookAction(
 			actionLabel = ${actionLabel},
 			actionName = ${actionName},
@@ -589,7 +589,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updateEntryAction(objectERC = null,conditionExpression = null,active = null,description = null,actionLabel = null,objectName = null,whenAction = null,actionName = null) {
+	macro updateEntryAction(objectERC = null, conditionExpression = null, active = null, description = null, actionLabel = null, objectName = null, whenAction = null, actionName = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var objectId = JSONObject.getObjectId(objectName = ${objectName});
 
@@ -628,7 +628,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro webhookAction(conditionExpression = null,secretAction = null,urlAction = null,active = null,description = null,actionLabel = null,objectName = null,whenAction = null,actionName = null) {
+	macro webhookAction(conditionExpression = null, secretAction = null, urlAction = null, active = null, description = null, actionLabel = null, objectName = null, whenAction = null, actionName = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var objectId = JSONObject.getObjectId(objectName = ${objectName});
 

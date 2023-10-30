@@ -2,7 +2,7 @@
 @summary = "Assert that '${locator1}' equals the value '${value1}'"
 definition {
 
-	function assertPartialText(locator1) {
+	function assertPartialText(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");
@@ -16,7 +16,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function assertPartialTextAceEditor(locator1) {
+	function assertPartialTextAceEditor(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");
@@ -30,7 +30,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function assertPartialTextCaseSensitive(locator1,value1) {
+	function assertPartialTextCaseSensitive(locator1, value1) {
 		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.waitForPartialText(${locator1}, ${value1});
@@ -38,7 +38,7 @@ definition {
 		selenium.assertPartialText(${locator1}, ${value1});
 	}
 
-	function assertText(locator1) {
+	function assertText(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");
@@ -52,7 +52,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function assertTextCaseSensitive(locator1) {
+	function assertTextCaseSensitive(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");
@@ -77,7 +77,7 @@ definition {
 		}
 	}
 
-	function assertValue(locator1) {
+	function assertValue(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");

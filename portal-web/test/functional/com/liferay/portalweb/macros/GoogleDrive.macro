@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro gotoDrive(userPassword = null,userEmailAddress = null,windowTitle = null) {
+	macro gotoDrive(userPassword = null, userEmailAddress = null, windowTitle = null) {
 		AssertVisible(locator1 = "Button#SELECT_FILE");
 
 		AssertClick.assertTextClickAtWaitForLastScript(
@@ -50,7 +50,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectDocument(googleDocName = null,googleDocTitle = null) {
+	macro selectDocument(googleDocName = null, googleDocTitle = null) {
 		var key_googleDocName = ${googleDocName};
 
 		if (IsElementNotPresent(locator1 = "GoogleDrive#LIST_VIEW_DOCUMENT_SPECIFIC")) {

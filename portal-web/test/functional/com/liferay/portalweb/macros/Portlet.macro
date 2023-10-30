@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _clickAddPortlet(categoryName = null,portletName = null) {
+	macro _clickAddPortlet(categoryName = null, portletName = null) {
 		if (isSet(categoryName)) {
 			Click.clickNoWaitForVisible(
 				key_categoryName = ${categoryName},
@@ -192,7 +192,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureBorderStylesViaLookAndFeelPG(borderStyleAttributeList = null,borderColorAttributeList = null,sameForAllFieldsetLabelList = null,borderWidthAttributeList = null,borderWidthUnitList = null) {
+	macro configureBorderStylesViaLookAndFeelPG(borderStyleAttributeList = null, borderColorAttributeList = null, sameForAllFieldsetLabelList = null, borderWidthAttributeList = null, borderWidthUnitList = null) {
 		Navigator.gotoNavTab(navTab = "Border Styles");
 
 		if (isSet(sameForAllFieldsetLabelList)) {
@@ -270,7 +270,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureGeneralViaLookAndFeelPG(applicationDecorators = null,customTitle = null) {
+	macro configureGeneralViaLookAndFeelPG(applicationDecorators = null, customTitle = null) {
 		Navigator.gotoNavTab(navTab = "General");
 
 		if (isSet(customTitle)) {
@@ -297,7 +297,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureMarginAndPaddingViaLookAndFeelPG(marginAttributeList = null,sameForAllFieldsetLabelList = null,paddingUnitList = null,paddingAttributeList = null,marginUnitList = null) {
+	macro configureMarginAndPaddingViaLookAndFeelPG(marginAttributeList = null, sameForAllFieldsetLabelList = null, paddingUnitList = null, paddingAttributeList = null, marginUnitList = null) {
 		Navigator.gotoNavTab(navTab = "Margin and Padding");
 
 		if (isSet(marginAttributeList)) {
@@ -361,7 +361,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureSharingPG(checkAnyWebSiteToggle = null,portletName = null) {
+	macro configureSharingPG(checkAnyWebSiteToggle = null, portletName = null) {
 		Portlet.gotoPortletOptions(
 			portletName = ${portletName},
 			portletOption = "Configuration");
@@ -389,7 +389,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureTextStylesViaLookAndFeelPG(color = null,size = null,wordSpacing = null,letterSpacing = null,textDecoration = null,lineHeight = null,bold = null,alignment = null,italic = null,font = null) {
+	macro configureTextStylesViaLookAndFeelPG(color = null, size = null, wordSpacing = null, letterSpacing = null, textDecoration = null, lineHeight = null, bold = null, alignment = null, italic = null, font = null) {
 		Navigator.gotoNavTab(navTab = "Text Styles");
 
 		if (isSet(alignment)) {
@@ -490,7 +490,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro dragAndDropPortletToColumnPG(columnNumberTo = null,columnNumberFrom = null,portletName = null) {
+	macro dragAndDropPortletToColumnPG(columnNumberTo = null, columnNumberFrom = null, portletName = null) {
 		var key_portletName = ${portletName};
 
 		AssertTextEquals(
@@ -523,7 +523,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoPortletOptions(siteTemplate = null,portletName = null,portletIndex = null,portletOption = null) {
+	macro gotoPortletOptions(siteTemplate = null, portletName = null, portletIndex = null, portletOption = null) {
 		if (isSet(portletName)) {
 			var key_portletName = ${portletName};
 			var browserType = PropsUtil.get("browser.type");
@@ -596,7 +596,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectScopePG(scope = null,portletIndex = null,portletName = null) {
+	macro selectScopePG(scope = null, portletIndex = null, portletName = null) {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		Portlet.gotoPortletOptions(
@@ -629,7 +629,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro startServer(noLicense = null,deleteLiferayHome = null,keepOsGiState = null,keepCachedAppServerData = null) {
+	macro startServer(noLicense = null, deleteLiferayHome = null, keepOsGiState = null, keepCachedAppServerData = null) {
 		var appServerType = PropsUtil.get("app.server.type");
 
 		if (${deleteLiferayHome} == "false") {
@@ -664,7 +664,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewApplicationDecorator(decorator = null,portletName = null) {
+	macro viewApplicationDecorator(decorator = null, portletName = null) {
 		if (isSet(portletName)) {
 			var key_decorator = StringUtil.lowerCase(${decorator});
 			var key_portletTitleName = ${portletName};
@@ -679,7 +679,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewBody(portletBody = null,portletName = null) {
+	macro viewBody(portletBody = null, portletName = null) {
 		var key_portletName = ${portletName};
 
 		AssertTextEquals.assertPartialText(
@@ -724,7 +724,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewConfigureSharingPG(checkedAnyWebSiteToggle = null,portletName = null) {
+	macro viewConfigureSharingPG(checkedAnyWebSiteToggle = null, portletName = null) {
 		Portlet.gotoPortletOptions(
 			portletName = ${portletName},
 			portletOption = "Configuration");
@@ -757,7 +757,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewDuplicatePG(totalPortletCount = null,portletName = null) {
+	macro viewDuplicatePG(totalPortletCount = null, portletName = null) {
 		var i = 0;
 
 		while (${i} != ${totalPortletCount}) {
@@ -791,7 +791,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewNoPortletsPresentCP(portlet = null,panel = null,category = null) {
+	macro viewNoPortletsPresentCP(portlet = null, panel = null, category = null) {
 		ApplicationsMenuHelper.openApplicationsMenu();
 
 		Navigator.gotoNavTab(navTab = ${panel});
@@ -816,7 +816,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPG(portletBody = null,portletName = null) {
+	macro viewPG(portletBody = null, portletName = null) {
 		Portlet.viewTitle(portletName = ${portletName});
 
 		if (isSet(portletBody)) {
@@ -897,7 +897,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSpecificPG(pageColumnNumber = null,portletName = null) {
+	macro viewSpecificPG(pageColumnNumber = null, portletName = null) {
 		if (isSet(pageColumnNumber)) {
 			AssertTextEquals(
 				key_pageColumnNumber = ${pageColumnNumber},

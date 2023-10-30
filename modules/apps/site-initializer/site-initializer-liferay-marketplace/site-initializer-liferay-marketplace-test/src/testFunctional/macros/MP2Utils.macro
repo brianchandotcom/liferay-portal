@@ -10,7 +10,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro firstLoginMKT(recipient = null,userEmailAddress = null,asset = null) {
+	macro firstLoginMKT(recipient = null, userEmailAddress = null, asset = null) {
 		var baseURL = PropsUtil.get("portal.url");
 
 		MockMock._gotoMailMessage(

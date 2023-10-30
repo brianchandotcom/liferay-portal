@@ -22,7 +22,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro accountSignIn(userPassword = null,userEmailAddress = null) {
+	macro accountSignIn(userPassword = null, userEmailAddress = null) {
 		Navigator.openURL();
 
 		AssertClick(

@@ -45,7 +45,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function waitForSelectPopUp(value1, value2) {
+	function waitForSelectPopUp(value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForPopUp(${value1}, "");

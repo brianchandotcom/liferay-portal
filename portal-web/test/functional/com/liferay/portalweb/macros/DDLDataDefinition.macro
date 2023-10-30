@@ -5,7 +5,7 @@ definition {
 	var ddlListName = "List Name";
 
 	@summary = "Default summary"
-	macro _add(ddlDataDefinitionName = null,ddlDataDefinitionDescription = null) {
+	macro _add(ddlDataDefinitionName = null, ddlDataDefinitionDescription = null) {
 		if (IsTextNotEqual(locator1 = "Portlet#HEADER", value1 = "Data Definitions")) {
 			AssertTextEquals(
 				locator1 = "DataEngineModal#MODAL_TITLE",
@@ -77,7 +77,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addCP(ddlDataDefinitionName = null,ddlDataDefinitionDescription = null) {
+	macro addCP(ddlDataDefinitionName = null, ddlDataDefinitionDescription = null) {
 		DDLNavigator.gotoManageDataDefinitions();
 
 		DDLDataDefinition._add(
@@ -86,7 +86,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addViaDDLDisplayPG(ddlDataDefinitionName = null,ddlDataDefinitionDescription = null) {
+	macro addViaDDLDisplayPG(ddlDataDefinitionName = null, ddlDataDefinitionDescription = null) {
 		DDLDataDefinition._add(
 			ddlDataDefinitionDescription = ${ddlDataDefinitionDescription},
 			ddlDataDefinitionName = ${ddlDataDefinitionName});
@@ -104,7 +104,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro copyCP(ddlDataDefinitionName = null,ddlDataDefinitionCopyName = null,copyDisplayTemplates = null,copyFormTemplates = null) {
+	macro copyCP(ddlDataDefinitionName = null, ddlDataDefinitionCopyName = null, copyDisplayTemplates = null, copyFormTemplates = null) {
 		DDLNavigator.gotoManageDataDefinitions();
 
 		var key_ddlDataDefinitionName = ${ddlDataDefinitionName};
@@ -177,7 +177,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editCP(ddlDataDefinitionName = null,ddlDataDefinitionNameEdit = null,ddlDataDefinitionDescriptionEdit = null) {
+	macro editCP(ddlDataDefinitionName = null, ddlDataDefinitionNameEdit = null, ddlDataDefinitionDescriptionEdit = null) {
 		DDLNavigator.gotoManageDataDefinitions();
 
 		Search.searchCP(searchTerm = ${ddlDataDefinitionName});
@@ -205,7 +205,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editPermissionsCP(addOrRemoveViewPermission = null,roleList = null) {
+	macro editPermissionsCP(addOrRemoveViewPermission = null, roleList = null) {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		PermissionsInline.addOrRemoveViewPermissionFromAllRoles(
@@ -314,7 +314,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCP(ddlDataDefinitionName = null,fieldFieldLabel = null,ddlDataDefinitionDescription = null) {
+	macro viewCP(ddlDataDefinitionName = null, fieldFieldLabel = null, ddlDataDefinitionDescription = null) {
 		DDLNavigator.gotoManageDataDefinitions();
 
 		var key_ddlDataDefinitionName = ${ddlDataDefinitionName};

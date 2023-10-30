@@ -22,7 +22,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _curlUserNotifications(parameter = null,userAccountId = null,userNotificationId = null) {
+	macro _curlUserNotifications(parameter = null, userAccountId = null, userNotificationId = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(userNotificationId)) {
@@ -77,7 +77,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro postNotificationTemplate(recipientType = null,en_US = null,userScreenName = null,name = null,term = null,type = null,externalReferenceCode = null) {
+	macro postNotificationTemplate(recipientType = null, en_US = null, userScreenName = null, name = null, term = null, type = null, externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = "${name},${recipientType},${en_US},${type}");
 
 		if (${recipientType} == "term") {

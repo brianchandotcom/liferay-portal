@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addInitializerProductToCart(orderType = null,productQuantity = null,allowedQuantities = null,productName = null) {
+	macro addInitializerProductToCart(orderType = null, productQuantity = null, allowedQuantities = null, productName = null) {
 		var newItemCount = FrontStore.getCurrentCartItemCount(productName = ${productName});
 
 		Refresh();
@@ -41,7 +41,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addInitializerProductToCartFromProductDetails(productQuantity = null,uomName = null,productName = null) {
+	macro addInitializerProductToCartFromProductDetails(productQuantity = null, uomName = null, productName = null) {
 		var newItemCount = FrontStore.getCurrentCartItemCount(productName = ${productName});
 
 		Refresh();
@@ -64,7 +64,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addToCartFromProductDetails(productSku = null,optionNamesAndValues = null,productName = null) {
+	macro addToCartFromProductDetails(date = null, multipleSelectionValuesChecked = null, numeric = null, productName = null, productSku = null, boolean = null, optionNamesAndValues = null, multipleSelectionValuesNotChecked = null, text = null, singleSelectionValueChecked = null) {
 		var newItemCount = FrontStore.getCurrentCartItemCount(productName = ${productName});
 
 		Refresh();
@@ -101,7 +101,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addToCartProductWithInvalidQuantityValue(productQuantity = null,productName = null) {
+	macro addToCartProductWithInvalidQuantityValue(productQuantity = null, productName = null) {
 		var currentCartItemCount = FrontStore.getCurrentCartDataBadgeCount();
 
 		Type(
@@ -123,7 +123,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro applyCouponCode(errorMessage = null,discountCouponCode = null) {
+	macro applyCouponCode(errorMessage = null, discountCouponCode = null) {
 		AssertElementPresent(locator1 = "TextInput#DISCOUNT");
 
 		Type(
@@ -145,7 +145,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertMiniCartItemAllowedQuantities(allowedQuantities = null,cartItemSku = null) {
+	macro assertMiniCartItemAllowedQuantities(allowedQuantities = null, cartItemSku = null) {
 		for (var number : list ${allowedQuantities}) {
 			AssertElementPresent(
 				key_cartItemSku = ${cartItemSku},
@@ -218,7 +218,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertProductDetails(productAvailability = null,productMPN = null,sampleFileName = null,deliverySubscriptionPeriod = null,productName = null,productGTIN = null,discountPercentage = null,productSKU = null,minQuantity = null,productNetPrice = null,groupedProductEntryNames = null,productStockQuantity = null,paymentSubscriptionPeriod = null,productSpecifications = null,endOfLifeDate = null,productListPrice = null,productSalePriceInactive = null,productSalePrice = null,productImages = null,productShortDescription = null,productListPriceInactive = null,productFullDescription = null) {
+	macro assertProductDetails(productAvailability = null, productMPN = null, sampleFileName = null, deliverySubscriptionPeriod = null, productName = null, productGTIN = null, discountPercentage = null, productSKU = null, minQuantity = null, productNetPrice = null, groupedProductEntryNames = null, productStockQuantity = null, paymentSubscriptionPeriod = null, productSpecifications = null, endOfLifeDate = null, productListPrice = null, productSalePriceInactive = null, productSalePrice = null, productImages = null, productShortDescription = null, productListPriceInactive = null, productFullDescription = null) {
 		if (isSet(productName)) {
 			AssertElementPresent(
 				locator1 = "CommerceFrontStore#FS_PRODUCT_NAME",
@@ -374,7 +374,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertPromoPrice(promoPrice = null,productName = null,basePrice = null) {
+	macro assertPromoPrice(promoPrice = null, productName = null, basePrice = null) {
 		AssertTextEquals.assertPartialText(
 			key_productName = ${productName},
 			locator1 = "CommerceFrontStore#FS_PRODUCT_VALUE_PROMO_PRICE",
@@ -387,7 +387,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro changeQuantityByUsingKeyArrows(quantitySelectorType = null,productSKU = null,productName = null,arrowAction = null) {
+	macro changeQuantityByUsingKeyArrows(quantitySelectorType = null, productSKU = null, productName = null, arrowAction = null) {
 		if (${quantitySelectorType} == "Product Card") {
 			Click(
 				key_productName = ${productName},
@@ -432,7 +432,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro clickEllipsisItemInMiniCart(uomKey = null,menuItem = null) {
+	macro clickEllipsisItemInMiniCart(uomKey = null, menuItem = null) {
 		Click(
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS_WITH_UOM",
 			uomKey = ${uomKey});
@@ -441,7 +441,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro compareProducts(products = null,clickCompare = null) {
+	macro compareProducts(products = null, clickCompare = null) {
 		var comparisonItems = 0;
 
 		for (var product : list ${products}) {
@@ -472,7 +472,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editMiniCartItemBundledProduct(date = null, boolean = null, multipleSelectionValuesChecked = null, cartItemOptionName = null, multipleSelectionValuesNotChecked = null, numeric = null, cartItemOptionValue = null, text = null, singleSelectionValueNotChecked = null, singleSelectionValueChecked = null,) {
+	macro editMiniCartItemBundledProduct(date = null, boolean = null, multipleSelectionValuesChecked = null, cartItemOptionName = null, multipleSelectionValuesNotChecked = null, numeric = null, cartItemOptionValue = null, text = null, singleSelectionValueNotChecked = null, singleSelectionValueChecked = null) {
 		Select(
 			key_optionName = ${cartItemOptionName},
 			locator1 = "CommerceAccelerators#MINI_CART_PRODUCT_OPTIONS_SELECT",
@@ -501,7 +501,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editUOMAndQuantityInMiniCart(quantity = null, uomKey = null, uomName = null,) {
+	macro editUOMAndQuantityInMiniCart(quantity = null, uomKey = null, uomName = null) {
 		Click(
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS_WITH_UOM",
 			uomKey = ${uomKey});
@@ -545,7 +545,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoEditMiniCartItemBundledProduct(cartItemSku = null,) {
+	macro gotoEditMiniCartItemBundledProduct(cartItemSku = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -559,7 +559,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro quickAddToCartSearchAndSelectItem(orderItemSku = null,) {
+	macro quickAddToCartSearchAndSelectItem(orderItemSku = null) {
 		Type(
 			locator1 = "Publications#KEYWORD_TEXTFIELD",
 			value1 = ${orderItemSku});
@@ -570,7 +570,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectAssociatedFSOptionsValue(fsOptionValue = null,fsOptionName = null) {
+	macro selectAssociatedFSOptionsValue(fsOptionValue = null, fsOptionName = null) {
 		Select(
 			key_optionName = ${fsOptionName},
 			locator1 = "CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT",
@@ -578,7 +578,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setAssociatedFSOptionsValue(date = null, boolean = null, multipleSelectionValuesChecked = null, multipleSelectionValuesNotChecked = null, numeric = null, text = null, singleSelectionValueChecked = null,) {
+	macro setAssociatedFSOptionsValue(date = null, boolean = null, multipleSelectionValuesChecked = null, multipleSelectionValuesNotChecked = null, numeric = null, text = null, singleSelectionValueChecked = null) {
 		if (${boolean} == "enabled") {
 			Check.checkNotVisible(
 				checkboxName = "",
@@ -634,7 +634,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setMaxComparisonItems(maxItems = null,) {
+	macro setMaxComparisonItems(maxItems = null) {
 		Portlet.gotoPortletOptions(
 			portletName = "Product Comparison",
 			portletOption = "Configuration");
@@ -680,7 +680,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewAssociatedFSOptionsValue(boolean = null, multipleSelectionValuesChecked = null, multipleSelectionValuesNotChecked = null, numeric = null, text = null, singleSelectionValueChecked = null,) {
+	macro viewAssociatedFSOptionsValue(boolean = null, multipleSelectionValuesChecked = null, multipleSelectionValuesNotChecked = null, numeric = null, text = null, singleSelectionValueChecked = null) {
 		if (${boolean} == "enabled") {
 			AssertChecked.assertCheckedNotVisible(
 				checkboxName = "",
@@ -745,7 +745,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewGroupedProductEntries(productNames = null,) {
+	macro viewGroupedProductEntries(productNames = null) {
 		Variables.assertDefined(parameterList = ${productNames});
 
 		for (var productName : list ${productNames}) {
@@ -772,7 +772,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewMiniCart(cartItemNames = null,cartSummaryTotal = null,cartItemOptions = null,cartItemQuantities = null,cartItemSkUs = null,cartItemPriceValues = null,cartSummaryOrderDiscount = null,cartSummaryQuantity = null,cartSummarySubtotal = null) {
+	macro viewMiniCart(cartItemNames = null, cartSummaryTotal = null, cartItemOptions = null, cartItemQuantities = null, cartItemSkUs = null, cartItemPriceValues = null, cartSummaryOrderDiscount = null, cartSummaryQuantity = null, cartSummarySubtotal = null) {
 		FrontStore.viewMiniCartItems(
 			cartItemNames = ${cartItemNames},
 			cartItemOption = ${cartItemOptions},
@@ -809,7 +809,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewMiniCartEditBundledProduct(date = null, multipleSelectionValuesChecked = null, cartItemPromoPriceValue = null, cartItemPriceAsConfiguredValue = null, numeric = null, cartItemPriceValue = null, singleSelectionValueNotChecked = null, boolean = null, cartItemPriceInactiveValue = null, cartItemDiscountValue = null, cartItemOptionName = null, multipleSelectionValuesNotChecked = null, cartItemOptionValue = null, text = null, singleSelectionValueChecked = null,) {
+	macro viewMiniCartEditBundledProduct(date = null, multipleSelectionValuesChecked = null, cartItemPromoPriceValue = null, cartItemPriceAsConfiguredValue = null, numeric = null, cartItemPriceValue = null, singleSelectionValueNotChecked = null, boolean = null, cartItemPriceInactiveValue = null, cartItemDiscountValue = null, cartItemOptionName = null, multipleSelectionValuesNotChecked = null, cartItemOptionValue = null, text = null, singleSelectionValueChecked = null) {
 		AssertVisible(
 			key_productName = "Bundled Product",
 			locator1 = "CommerceAccelerators#MINI_CART_EDIT_ITEM_PANEL");
@@ -864,7 +864,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewMiniCartItem(cartItemPriceInactiveValue = null, cartItemName = null, cartItemPromoPriceValue = null, cartItemQuantity = null, bundledItems = null, cartItemSku = null, cartItemPriceValue = null, cartItemUOMKey = null,) {
+	macro viewMiniCartItem(cartItemPriceInactiveValue = null, cartItemName = null, cartItemPromoPriceValue = null, cartItemQuantity = null, bundledItems = null, cartItemSku = null, cartItemPriceValue = null, cartItemUOMKey = null) {
 		if (!(isSet(cartItemPriceOnApplication))) {
 			var cartItemPriceOnApplication = "false";
 		}
@@ -1004,7 +1004,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewProductCard(salePrice = null,description = null,netPrice = null,availability = null,productName = null,listPriceInactive = null,sku = null,listPrice = null) {
+	macro viewProductCard(salePrice = null, description = null, netPrice = null, availability = null, productName = null, listPriceInactive = null, sku = null, listPrice = null) {
 		Variables.assertDefined(parameterList = ${productName});
 
 		var key_element = "";
@@ -1187,7 +1187,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewProductDetail(fsProductName = null,fsOptionValuesList = null,fsOptionName = null) {
+	macro viewProductDetail(fsProductName = null, fsOptionValuesList = null, fsOptionName = null) {
 		AssertTextEquals(
 			locator1 = "CommerceFrontStore#FS_PRODUCT_NAME",
 			value1 = ${fsProductName});
@@ -1225,7 +1225,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewQuantitySelectorPopoverListItem(quantityConfiguration = null,quantity = null) {
+	macro viewQuantitySelectorPopoverListItem(quantityConfiguration = null, quantity = null) {
 		Variables.assertDefined(parameterList = "${quantityConfiguration},${quantity}");
 
 		if (!(isSet(conditionNotSatisfied))) {

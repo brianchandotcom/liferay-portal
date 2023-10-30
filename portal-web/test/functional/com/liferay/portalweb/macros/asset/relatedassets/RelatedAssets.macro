@@ -46,7 +46,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectAsset(scopeSite = null,depotName = null,otherSite = null,assetTitle = null,assetType = null) {
+	macro selectAsset(scopeSite = null, depotName = null, otherSite = null, assetTitle = null, assetType = null) {
 		Panel.expandPanel(panel = "Related Assets");
 
 		RelatedAssets._selectAssetType(assetType = ${assetType});

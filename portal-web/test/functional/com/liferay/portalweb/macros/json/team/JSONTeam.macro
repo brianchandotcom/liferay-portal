@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addTeam(teamName = null,siteName = null,teamDescription = null) {
+	macro addTeam(teamName = null, siteName = null, teamDescription = null) {
 		if (!(isSet(portalURL))) {
 			var portalURL = JSONCompany.getPortalURL();
 		}
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addUserToTeam(teamName = null,userEmailAddress = null,siteName = null) {
+	macro addUserToTeam(teamName = null, userEmailAddress = null, siteName = null) {
 		Variables.assertDefined(parameterList = "${teamName},${userEmailAddress}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -48,7 +48,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getTeamId(teamName = null,siteName = null) {
+	macro getTeamId(teamName = null, siteName = null) {
 		Variables.assertDefined(parameterList = ${teamName});
 
 		var portalURL = JSONCompany.getPortalURL();

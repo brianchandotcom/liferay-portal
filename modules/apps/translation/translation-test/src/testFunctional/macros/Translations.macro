@@ -16,7 +16,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertFileNameFromTempFolder(webContentTitle = null,pageName = null) {
+	macro assertFileNameFromTempFolder(webContentTitle = null, pageName = null) {
 		if (isSet(pageName)) {
 			var translationZipFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "${pageName}*.zip");
 		}
@@ -42,7 +42,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro changeBaseLocale(currentBaseLocale = null,newBaseLocale = null) {
+	macro changeBaseLocale(currentBaseLocale = null, newBaseLocale = null) {
 		Portlet.waitForForm();
 
 		Click.clickNoMouseOver(
@@ -59,7 +59,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro changeTargetLocale(newTargetLocale = null,currentTargetLocale = null) {
+	macro changeTargetLocale(newTargetLocale = null, currentTargetLocale = null) {
 		Portlet.waitForForm();
 
 		Click.clickNoMouseOver(
@@ -76,7 +76,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro copyTranslateFile(translationFileName = null,dependencyFile = null) {
+	macro copyTranslateFile(translationFileName = null, dependencyFile = null) {
 		if (contains(${translationZipFileName}, " ")) {
 			var translationZipFileName = StringUtil.replace(${translationZipFileName}, " ", "*");
 		}
@@ -90,7 +90,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteTranslationEntry(translationEntry = null,confirmationText = null) {
+	macro deleteTranslationEntry(translationEntry = null, confirmationText = null) {
 		LexiconEntry.delete(
 			confirmationText = ${confirmationText},
 			rowEntry = ${translationEntry});
@@ -154,7 +154,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro exportTranslation(defaultLanguage = null,experienceList = null,multiplePageExperiencesSelector = null,exportFileFormat = null) {
+	macro exportTranslation(defaultLanguage = null, experienceList = null, multiplePageExperiencesSelector = null, exportFileFormat = null) {
 		AssertElementPresent(
 			key_defaultLanguage = "English (United States)",
 			locator1 = "Language#EXPORT_TRANSLATION_DEFAULT_ORIGINAL_LANGUAGE");
@@ -280,7 +280,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoExportTranslation(webContentTitle = null,pageName = null) {
+	macro gotoExportTranslation(webContentTitle = null, pageName = null) {
 		if (isSet(pageName)) {
 			WaitForPageLoad();
 
@@ -300,7 +300,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoImportTranslation(webContentTitle = null,pageName = null) {
+	macro gotoImportTranslation(webContentTitle = null, pageName = null) {
 		if (isSet(pageName)) {
 			WaitForPageLoad();
 
@@ -327,7 +327,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro importTranslation(successFileNumber = null,workflow = null,zipFileName = null,filePath = null,save = null,replace = null,errorMessage = null,successFileName = null,validateInvalidFile = null,failFileName = null,pageName = null,successMessage = null,remove = null,webContentTitle = null,errorMessageItem = null,successFileName2 = null,successFileName3 = null,workflowResubmit = null,workflowSave = null,failFileName2 = null) {
+	macro importTranslation(successFileNumber = null, workflow = null, zipFileName = null, filePath = null, save = null, replace = null, errorMessage = null, successFileName = null, validateInvalidFile = null, failFileName = null, pageName = null, successMessage = null, remove = null, webContentTitle = null, errorMessageItem = null, successFileName2 = null, successFileName3 = null, workflowResubmit = null, workflowSave = null, failFileName2 = null) {
 		if (isSet(pageName)) {
 			Translations.gotoImportTranslation(pageName = ${pageName});
 		}
@@ -428,7 +428,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToTranslateEntry(groupName = null,baseURL = null,webContentTitle = null,sourceLanguageId = null,siteURLKey = null,targetLanguageId = null) {
+	macro openToTranslateEntry(groupName = null, baseURL = null, webContentTitle = null, sourceLanguageId = null, siteURLKey = null, targetLanguageId = null) {
 		var classNameId = JSONClassname._getClassNameId(value = "com.liferay.journal.model.JournalArticle");
 		var urlTitle = StringUtil.replace(${webContentTitle}, " ", "-");
 
@@ -444,7 +444,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openTranslationAdmin(baseURL = null,siteURLKey = null) {
+	macro openTranslationAdmin(baseURL = null, siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_translation_web_internal_portlet_TranslationPortlet");
@@ -529,7 +529,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro translateContentPageFile(contentPageTranslation = null,fragmentContent = null,fragmentContentTranslation = null,encoding = null,operation = null) {
+	macro translateContentPageFile(contentPageTranslation = null, fragmentContent = null, fragmentContentTranslation = null, encoding = null, operation = null) {
 		if (contains(${translationFileName}, " ") && contains(${translationFileName}, "(") && contains(${translationFileName}, ")")) {
 			var translationFileName = StringUtil.extractLast(${translationFileName}, " ");
 
@@ -551,7 +551,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro translateFields(webContentDescription = null,webContentSourceHtml = null,webContentText = null,webContentInteger = null,webContentTitle = null,webContentContent = null,webContentTextBox = null,webContentNumber = null,webContentDecimal = null) {
+	macro translateFields(webContentDescription = null, webContentSourceHtml = null, webContentText = null, webContentInteger = null, webContentTitle = null, webContentContent = null, webContentTextBox = null, webContentNumber = null, webContentDecimal = null) {
 		if (isSet(webContentTitle)) {
 			PortletEntry.inputTitle(title = ${webContentTitle});
 		}
@@ -623,7 +623,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro translateFile(webContentDescription = null,translationZipFileName = null,contentTranslation = null,webContentTitle = null,webContentContent = null,descriptionTranslation = null,encoding = null,operation = null,titleTranslation = null) {
+	macro translateFile(webContentDescription = null, translationZipFileName = null, contentTranslation = null, webContentTitle = null, webContentContent = null, descriptionTranslation = null, encoding = null, operation = null, titleTranslation = null) {
 		var os = OSDetector.isWindows();
 
 		if (contains(${translationFileName}, " ")) {
@@ -643,7 +643,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro translateFragmentField(fieldName = null,experienceName = null,fragmentText = null) {
+	macro translateFragmentField(fieldName = null, experienceName = null, fragmentText = null) {
 		if (isSet(experienceName)) {
 			Select(
 				locator1 = "Translation#EXPERIENCE_SELECTOR",
@@ -691,7 +691,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updateTranslateFileID(structuredContentId = null,translationFileName = null,translationEntryType = null,dependencyFile = null) {
+	macro updateTranslateFileID(structuredContentId = null, translationFileName = null, translationEntryType = null, dependencyFile = null) {
 		if (contains(${translationZipFileName}, " ")) {
 			var translationZipFileName = StringUtil.replace(${translationZipFileName}, " ", "*");
 		}
@@ -716,7 +716,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewBaseFields(webContentDescription = null,webContentText = null,webContentNumeric = null,webContentTitle = null,webContentRichText = null,webContentContent = null,numericType = null,fieldType = null) {
+	macro viewBaseFields(webContentDescription = null, webContentText = null, webContentNumeric = null, webContentTitle = null, webContentRichText = null, webContentContent = null, numericType = null, fieldType = null) {
 		if (isSet(webContentTitle)) {
 			AssertElementPresent(
 				key_fieldName = "Title",
@@ -788,7 +788,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCSVErrorReport(viewNoSuccessfullyImportedTranslation = null,reportContent = null,errorReportName = null) {
+	macro viewCSVErrorReport(viewNoSuccessfullyImportedTranslation = null, reportContent = null, errorReportName = null) {
 		var fileContent = TestCase.getTempFileContent(fileName = ${errorReportName});
 
 		if (contains(${fileContent}, ${reportContent})) {
@@ -834,7 +834,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewErrorMessages(errorMessage = null,errorMessageItem = null) {
+	macro viewErrorMessages(errorMessage = null, errorMessageItem = null) {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR_IMPORT_TRANSLATIONS",
 			value1 = ${errorMessage});
@@ -845,7 +845,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewImportResult(successFileNumber = null,zipFileName = null,successFileName = null,errorMessage = null,errorMessageItem = null,failFileName = null,successFileName2 = null,successFileName3 = null,failFileName2 = null) {
+	macro viewImportResult(successFileNumber = null, zipFileName = null, successFileName = null, errorMessage = null, errorMessageItem = null, failFileName = null, successFileName2 = null, successFileName3 = null, failFileName2 = null) {
 		if (isSet(successFileName)) {
 			Panel.expandPanel(panel = ${successFileNumber});
 
@@ -909,7 +909,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTargetFields(webContentDescription = null,webContentText = null,elementText = null,webContentInteger = null,webContentTitle = null,link = null,webContentContent = null,webContentTextBox = null,webContentNumber = null,contentPageName = null,webContentHtml = null,webContentDecimal = null) {
+	macro viewTargetFields(webContentDescription = null, webContentText = null, elementText = null, webContentInteger = null, webContentTitle = null, link = null, webContentContent = null, webContentTextBox = null, webContentNumber = null, contentPageName = null, webContentHtml = null, webContentDecimal = null) {
 		if (isSet(contentPageName)) {
 			AssertElementPresent(
 				key_fieldName = "Name",
@@ -1032,7 +1032,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTranslationDetails(webContentDescription = null,webContentText = null,webContentTitle = null,webContentContent = null,webContentNumber = null,currentTargetLocale = null) {
+	macro viewTranslationDetails(webContentDescription = null, webContentText = null, webContentTitle = null, webContentContent = null, webContentNumber = null, currentTargetLocale = null) {
 		AssertElementPresent(
 			key_currentLocale = StringUtil.lowerCase(${currentTargetLocale}),
 			locator1 = "Button#TRANSLATIONS_LOCALIZATION");
@@ -1046,7 +1046,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTranslationEntry(modifiedDate = null,language = null,title = null,status = null) {
+	macro viewTranslationEntry(modifiedDate = null, language = null, title = null, status = null) {
 		AssertTextEquals(
 			key_rowEntry = ${title},
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",

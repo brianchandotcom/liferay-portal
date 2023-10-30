@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _assignGroupRoleToUser(roleId = null,groupId = null,userId = null) {
+	macro _assignGroupRoleToUser(roleId = null, groupId = null, userId = null) {
 		Variables.assertDefined(parameterList = "${groupId},${roleId},${userId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -19,7 +19,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _assignGroupRoleToUserGroup(userGroupId = null,roleId = null,groupId = null) {
+	macro _assignGroupRoleToUserGroup(userGroupId = null, roleId = null, groupId = null) {
 		Variables.assertDefined(parameterList = "${groupId},${roleId},${userGroupId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -37,7 +37,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _assignOrganizationToGroup(organizationId = null,groupId = null) {
+	macro _assignOrganizationToGroup(organizationId = null, groupId = null) {
 		Variables.assertDefined(parameterList = "${groupId},${organizationId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -54,7 +54,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _assignUserGroupToGroup(userGroupId = null,groupId = null) {
+	macro _assignUserGroupToGroup(userGroupId = null, groupId = null) {
 		Variables.assertDefined(parameterList = "${groupId},${userGroupId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -69,7 +69,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _assignUserToGroup(groupId = null,userId = null) {
+	macro _assignUserToGroup(groupId = null, userId = null) {
 		Variables.assertDefined(parameterList = "${groupId},${userId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -105,7 +105,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getDepotEntryGroupRelIdByGroupName(groupName = null,site = null) {
+	macro _getDepotEntryGroupRelIdByGroupName(groupName = null, site = null) {
 		Variables.assertDefined(parameterList = ${groupName});
 
 		var companyId = JSONCompany.getCompanyId();
@@ -133,7 +133,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getDepotIdByName(noSelenium = null,depotName = null) {
+	macro _getDepotIdByName(noSelenium = null, depotName = null) {
 		Variables.assertDefined(parameterList = ${depotName});
 
 		if (!(isSet(portalURL))) {
@@ -202,7 +202,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getGroupIdByGroupKey(site = null,grandParentGroupName = null,parentGroupName = null,groupKey = null) {
+	macro _getGroupIdByGroupKey(site = null, grandParentGroupName = null, parentGroupName = null, groupKey = null) {
 		Variables.assertDefined(parameterList = "${groupKey},${site}");
 
 		var companyId = JSONCompany.getCompanyId();
@@ -227,7 +227,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getGroupIdByName(groupName = null,site = null,grandParentGroupName = null,specificURL = null,parentGroupName = null) {
+	macro _getGroupIdByName(groupName = null, site = null, grandParentGroupName = null, specificURL = null, parentGroupName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${site}");
 
 		if (isSet(specificURL)) {
@@ -269,7 +269,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getGroupIdByNameNoError(groupName = null,site = null,grandParentGroupName = null,parentGroupName = null) {
+	macro _getGroupIdByNameNoError(groupName = null, site = null, grandParentGroupName = null, parentGroupName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${site}");
 
 		if (!(isSet(portalURL))) {
@@ -293,7 +293,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getGroupIdByNameNoSelenium(groupName = null,site = null,grandParentGroupName = null,parentGroupName = null) {
+	macro _getGroupIdByNameNoSelenium(groupName = null, site = null, grandParentGroupName = null, parentGroupName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${site}");
 
 		if (!(isSet(portalURL))) {
@@ -323,7 +323,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getGroupIdByNameViaOtherUser(grandParentGroupName = null,parentGroupName = null,groupName = null,site = null,portalInstanceName = null) {
+	macro _getGroupIdByNameViaOtherUser(grandParentGroupName = null, parentGroupName = null, groupName = null, site = null, portalInstanceName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${site}");
 
 		if (isSet(portalInstanceName)) {
@@ -373,7 +373,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getGroupKeyByName(groupName = null,site = null,grandParentGroupName = null,parentGroupName = null) {
+	macro _getGroupKeyByName(groupName = null, site = null, grandParentGroupName = null, parentGroupName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${site}");
 
 		if (!(isSet(portalURL))) {
@@ -403,7 +403,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getGroupName(groupNam = null,groupId = null) {
+	macro _getGroupName(groupNam = null, groupId = null) {
 		Variables.assertDefined(parameterList = ${groupId});
 
 		var companyId = JSONCompany.getCompanyId();
@@ -445,7 +445,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getParentGroupIdByName(groupName = null,portalInstanceName = null,grandParentGroupName = null) {
+	macro _getParentGroupIdByName(groupName = null, portalInstanceName = null, grandParentGroupName = null) {
 		Variables.assertDefined(parameterList = ${groupName});
 
 		if (!(isSet(portalURL))) {
@@ -503,7 +503,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getSiteIdByGroupKeyNoSelenium(groupName = null,token = null) {
+	macro _getSiteIdByGroupKeyNoSelenium(groupName = null, token = null) {
 		Variables.assertDefined(parameterList = ${groupName});
 
 		if (!(isSet(portalURL))) {

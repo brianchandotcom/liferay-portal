@@ -12,7 +12,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createTokenWithOAuth2Scopes(resourcePanels = null,resourceCheckList = null) {
+	macro createTokenWithOAuth2Scopes(resourcePanels = null, resourceCheckList = null) {
 		Variables.assertDefined(parameterList = ${resourceCheckList});
 
 		if (!(isSet(baseURL))) {

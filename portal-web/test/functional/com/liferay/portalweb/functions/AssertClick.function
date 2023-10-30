@@ -13,7 +13,7 @@ definition {
 		}
 	}
 
-	function assertPartialTextClickAt(locator1,value1) {
+	function assertPartialTextClickAt(locator1, value1) {
 		WaitForSPARefresh();
 
 		AssertTextEquals.assertPartialText();
@@ -27,7 +27,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function assertPartialTextClickAtNoMouseOver(locator1,value1) {
+	function assertPartialTextClickAtNoMouseOver(locator1, value1) {
 		WaitForSPARefresh();
 
 		AssertTextEquals.assertPartialText();
@@ -39,7 +39,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function assertTextClickAt(locator1,value1) {
+	function assertTextClickAt(locator1, value1) {
 		WaitForSPARefresh();
 
 		AssertTextEquals.assertText();
@@ -53,7 +53,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function assertTextClickAtAndPause(locator1,value1) {
+	function assertTextClickAtAndPause(locator1, value1) {
 		WaitForSPARefresh();
 
 		AssertTextEquals.assertText();
@@ -69,7 +69,7 @@ definition {
 		selenium.pause(1000);
 	}
 
-	function assertTextClickAtNoJavaScript(locator1,value1) {
+	function assertTextClickAtNoJavaScript(locator1, value1) {
 		WaitForSPARefresh();
 
 		AssertTextEquals.assertText();
@@ -121,7 +121,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function assertValueClickAt(locator1,value1) {
+	function assertValueClickAt(locator1, value1) {
 		WaitForSPARefresh();
 
 		AssertTextEquals.assertValue();

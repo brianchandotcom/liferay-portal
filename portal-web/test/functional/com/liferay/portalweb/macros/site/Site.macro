@@ -38,7 +38,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addBlankCP(membershipType = null,singleSiteTypePermission = null,parentSiteName = null,uncheckPropagation = null,siteName = null,siteTemplateName = null) {
+	macro addBlankCP(membershipType = null, singleSiteTypePermission = null, parentSiteName = null, uncheckPropagation = null, siteName = null, siteTemplateName = null) {
 		Site.addCP(
 			membershipType = ${membershipType},
 			parentSiteName = ${parentSiteName},
@@ -50,7 +50,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addCP(membershipType = null,singleSiteTypePermission = null,siteTemplateTab = null,parentSiteName = null,uncheckPropagation = null,siteName = null,siteType = null) {
+	macro addCP(membershipType = null, singleSiteTypePermission = null, siteTemplateTab = null, parentSiteName = null, uncheckPropagation = null, siteName = null, siteType = null) {
 		LexiconEntry.gotoAdd();
 
 		if (${singleSiteTypePermission} != "true") {
@@ -162,7 +162,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addCustomCP(siteName = null,siteTemplateName = null) {
+	macro addCustomCP(siteName = null, siteTemplateName = null) {
 		LexiconEntry.gotoAdd();
 
 		LexiconCard.clickCard(card = ${siteTemplateName});
@@ -187,7 +187,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addLocalizedName(localizedNameList = null,localeList = null) {
+	macro addLocalizedName(localizedNameList = null, localeList = null) {
 		Click(
 			key_itemName = "Site Configuration",
 			locator1 = "ListGroupItem#ITEM_TEXT");
@@ -214,7 +214,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addSiteTemplateCP(membershipType = null,siteTemplateTab = null,parentSiteName = null,uncheckPropagation = null,siteName = null,enablePrivatePage = null,siteTemplateName = null) {
+	macro addSiteTemplateCP(membershipType = null, siteTemplateTab = null, parentSiteName = null, uncheckPropagation = null, siteName = null, enablePrivatePage = null, siteTemplateName = null) {
 		if (isSet(siteTemplateTab)) {
 			Site.addCP(
 				enablePrivatePage = ${enablePrivatePage},
@@ -238,7 +238,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addVirtualHostsURLCP(stagingPrivatePages = null,stagingPages = null,stagingPublicPages = null,pageVirtualHostURL = null,privatePageVirtualHostURL = null,publicPageVirtualHostURL = null) {
+	macro addVirtualHostsURLCP(stagingPrivatePages = null, stagingPages = null, stagingPublicPages = null, pageVirtualHostURL = null, privatePageVirtualHostURL = null, publicPageVirtualHostURL = null) {
 		Click(
 			key_itemName = "Site Configuration",
 			locator1 = "ListGroupItem#ITEM_TEXT");
@@ -291,7 +291,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro approveJoinSiteRestrictedViaMySitesPG(userLastName = null,userScreenName = null,userFirstName = null) {
+	macro approveJoinSiteRestrictedViaMySitesPG(userLastName = null, userScreenName = null, userFirstName = null) {
 		var key_userScreenName = ${userScreenName};
 
 		Click(locator1 = "Icon#INFO");
@@ -362,7 +362,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertMemberNotVisibleCP(userLastName = null,userScreenName = null,userFirstName = null) {
+	macro assertMemberNotVisibleCP(userLastName = null, userScreenName = null, userFirstName = null) {
 		var key_userScreenName = ${userScreenName};
 
 		AssertTextNotPresent(
@@ -429,7 +429,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assignSiteRoleCP(roleTitle = null,resourceName = null) {
+	macro assignSiteRoleCP(roleTitle = null, resourceName = null) {
 		LexiconCard.clickEllipsisItem(
 			card = ${resourceName},
 			item = "Assign Roles");
@@ -446,7 +446,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assignSiteRoleToUserGroup(userGroupName = null,roleName = null) {
+	macro assignSiteRoleToUserGroup(userGroupName = null, roleName = null) {
 		var key_userGroupName = ${userGroupName};
 
 		Navigator.gotoNavItem(navItem = "User Groups");
@@ -480,7 +480,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assignUserAsMemberCP(userLastName = null,userScreenName = null,userMiddleName = null,userFirstName = null) {
+	macro assignUserAsMemberCP(userLastName = null, userScreenName = null, userMiddleName = null, userFirstName = null) {
 		var key_cardText = ${userScreenName};
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
@@ -529,7 +529,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro changeSiteLogo(logoFile = null,pageName = null) {
+	macro changeSiteLogo(logoFile = null, pageName = null) {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");
@@ -553,7 +553,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureCurrentLanguagesCP(currentSiteLanguages = null,localizedSaveButton = null,category = null) {
+	macro configureCurrentLanguagesCP(currentSiteLanguages = null, localizedSaveButton = null, category = null) {
 		if (isSet(category)) {
 			Click(
 				key_itemName = ${category},
@@ -656,7 +656,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deactivateCP(siteName = null,successMessage = null) {
+	macro deactivateCP(siteName = null, successMessage = null) {
 		var key_siteName = ${siteName};
 
 		Search.searchCP(searchTerm = ${siteName});
@@ -745,7 +745,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editCP(siteNameEdit = null,siteName = null) {
+	macro editCP(siteNameEdit = null, siteName = null) {
 		Click(
 			key_itemName = "Site Configuration",
 			locator1 = "ListGroupItem#ITEM_TEXT");
@@ -764,7 +764,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editFriendlyURLCP(siteFriendlyURLEdit = null,friendlyURLInvalid = null) {
+	macro editFriendlyURLCP(siteFriendlyURLEdit = null, friendlyURLInvalid = null) {
 		Click(
 			key_itemName = "Site Configuration",
 			locator1 = "ListGroupItem#ITEM_TEXT");
@@ -813,7 +813,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editMatomoCP(confirmationText = null,matomo = null) {
+	macro editMatomoCP(confirmationText = null, matomo = null) {
 		Click(
 			key_itemName = "Analytics",
 			locator1 = "ListGroupItem#ITEM_TEXT");
@@ -910,7 +910,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro joinViaMySitesPG(membershipType = null,siteName = null,userRole = null) {
+	macro joinViaMySitesPG(membershipType = null, siteName = null, userRole = null) {
 		var key_siteName = ${siteName};
 
 		AssertTextEquals.assertPartialText(
@@ -982,7 +982,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro leaveViaMySitesPG(siteName = null,userRole = null) {
+	macro leaveViaMySitesPG(siteName = null, userRole = null) {
 		LexiconList.viewListEntryPresent(listEntry = ${siteName});
 
 		LexiconList.viewListEntrySubtitle(
@@ -1037,7 +1037,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro manageMembershipOptions(membershipType = null,selectMembershipType = null,allowManualMembershipManagement = null) {
+	macro manageMembershipOptions(membershipType = null, selectMembershipType = null, allowManualMembershipManagement = null) {
 		Click(
 			key_itemName = "Site Configuration",
 			locator1 = "ListGroupItem#ITEM_TEXT");
@@ -1077,7 +1077,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openSiteSettingsAdmin(baseURL = null,siteURLKey = null) {
+	macro openSiteSettingsAdmin(baseURL = null, siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/site/settings");
@@ -1089,7 +1089,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToSiteSettingsPages(siteURLKey = null,portlet = null) {
+	macro openToSiteSettingsPages(siteURLKey = null, portlet = null) {
 		if (${portlet} == "Open Graph") {
 			var configurationScreenKey = "site-configuration-open-graph";
 		}
@@ -1102,7 +1102,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro removeMemberCP(userLastName = null,userScreenName = null,userMiddleName = null,userFirstName = null) {
+	macro removeMemberCP(userLastName = null, userScreenName = null, userMiddleName = null, userFirstName = null) {
 		var key_cardText = ${userScreenName};
 
 		Search.searchCP(searchTerm = ${userScreenName});
@@ -1128,7 +1128,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro removeOrganizationCP(userGroupName = null,orgNameList = null) {
+	macro removeOrganizationCP(userGroupName = null, orgNameList = null) {
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		if (isSet(bulkEditing)) {
@@ -1161,7 +1161,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro searchMemberCP(userLastNameSearchValue = null,userScreenNameSearchValue = null,userEmailAddressSearchValue = null,userLastName = null,userScreenName = null,userFirstNameSearchValue = null,userFirstName = null) {
+	macro searchMemberCP(userLastNameSearchValue = null, userScreenNameSearchValue = null, userEmailAddressSearchValue = null, userLastName = null, userScreenName = null, userFirstNameSearchValue = null, userFirstName = null) {
 		var searchTerm = ${userEmailAddressSearchValue};
 
 		if (isSet(userScreenNameSearchValue)) {
@@ -1183,7 +1183,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro searchMembershipCP(emptyResults = null,searchValue = null) {
+	macro searchMembershipCP(emptyResults = null, searchValue = null) {
 		Search.searchCP(searchTerm = ${searchValue});
 
 		if (${emptyResults} == "true") {
@@ -1197,7 +1197,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectPageType(checkPropagation = null,siteTemplate = null,selectPrivatePages = null,selectPublicPages = null) {
+	macro selectPageType(checkPropagation = null, siteTemplate = null, selectPrivatePages = null, selectPublicPages = null) {
 		Click(
 			key_itemName = "Pages",
 			locator1 = "ListGroupItem#ITEM_TEXT");
@@ -1223,7 +1223,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectParentSite(parentSiteName = null,chooseButtonAvailable = null) {
+	macro selectParentSite(parentSiteName = null, chooseButtonAvailable = null) {
 		Click(
 			key_itemName = "Site Configuration",
 			locator1 = "ListGroupItem#ITEM_TEXT");
@@ -1315,7 +1315,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro unassignSiteRoleToUserGroup(userGroupName = null,roleName = null) {
+	macro unassignSiteRoleToUserGroup(userGroupName = null, roleName = null) {
 		var key_userGroupName = ${userGroupName};
 
 		Navigator.gotoNavItem(navItem = "User Groups");
@@ -1346,7 +1346,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCannotAdd(siteNameInvalid = null,siteName = null) {
+	macro viewCannotAdd(siteNameInvalid = null, siteName = null) {
 		LexiconEntry.gotoAdd();
 
 		WaitForElementPresent.waitForLastScript();
@@ -1370,7 +1370,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewChildCP(siteName = null,childSiteName = null) {
+	macro viewChildCP(siteName = null, childSiteName = null) {
 		Site.viewCP(siteName = ${siteName});
 
 		LexiconTable.clickEllipsisItem(
@@ -1383,7 +1383,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCP(siteMember = null,siteName = null,siteType = null) {
+	macro viewCP(siteMember = null, siteName = null, siteType = null) {
 		AssertElementPresent(
 			key_siteName = ${siteName},
 			locator1 = "Sites#SITE_TABLE_CHECKBOX");
@@ -1445,7 +1445,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewGlobalLandingDefault(siteName = null,portletName = null) {
+	macro viewGlobalLandingDefault(siteName = null, portletName = null) {
 		var key_portletName = ${portletName};
 		var key_siteName = ${siteName};
 
@@ -1459,7 +1459,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewLimitMembershipParentSiteCP(userLastName = null,userScreenName = null,userFirstName = null) {
+	macro viewLimitMembershipParentSiteCP(userLastName = null, userScreenName = null, userFirstName = null) {
 		var key_userScreenName = ${userScreenName};
 
 		Navigator.gotoNavItem(navItem = "Users");
@@ -1478,7 +1478,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewMemberCP(userLastName = null,userScreenName = null,userFirstName = null) {
+	macro viewMemberCP(userLastName = null, userScreenName = null, userFirstName = null) {
 		LexiconCard.viewCardPresent(card = "${userFirstName} ${userLastName}");
 
 		LexiconCard.viewCardTitle(card = "${userFirstName} ${userLastName}");
@@ -1505,7 +1505,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewMemberOrganizationCP(orgName = null,toolTip = null) {
+	macro viewMemberOrganizationCP(orgName = null, toolTip = null) {
 		var key_tableEntry = ${orgName};
 
 		Navigator.gotoNavItem(navItem = "Organizations");
@@ -1536,7 +1536,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewMySitesViaMySitesPG(memberCount = null,siteName = null) {
+	macro viewMySitesViaMySitesPG(memberCount = null, siteName = null) {
 		AssertTextEquals(
 			key_navItem = "My Sites",
 			locator1 = "NavBar#NAV_ITEM_LINK",
@@ -1585,7 +1585,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSearchResultsCP(siteName = null,siteType = null) {
+	macro viewSearchResultsCP(siteName = null, siteType = null) {
 		var key_siteName = ${siteName};
 
 		AssertElementPresent(
@@ -1639,7 +1639,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSiteClonedFromSiteTemplateCP(clonedFromTemplate = null,siteTemplateName = null) {
+	macro viewSiteClonedFromSiteTemplateCP(clonedFromTemplate = null, siteTemplateName = null) {
 		Click(
 			key_itemName = "Other",
 			locator1 = "ListGroupItem#ITEM_TEXT");
@@ -1659,7 +1659,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSiteFriendlyURLPG(siteName = null,sitePageURL = null) {
+	macro viewSiteFriendlyURLPG(siteName = null, sitePageURL = null) {
 		AssertTextEquals(
 			locator1 = "Home#SITE_NAME",
 			value1 = ${siteName});
@@ -1668,7 +1668,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSiteMembershipsRequest(userLastName = null,userFirstName = null) {
+	macro viewSiteMembershipsRequest(userLastName = null, userFirstName = null) {
 		Click(locator1 = "Icon#INFO");
 
 		AssertTextEquals.assertPartialText(
@@ -1691,7 +1691,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSiteRoleViaSiteMembershipsCP(roleTitle = null,resourceName = null) {
+	macro viewSiteRoleViaSiteMembershipsCP(roleTitle = null, resourceName = null) {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		LexiconList.viewListEntryPresent(listEntry = ${resourceName});
@@ -1702,7 +1702,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewUserGroupSiteRoleViaSiteMembershipsCP(roleTitle = null,resourceName = null) {
+	macro viewUserGroupSiteRoleViaSiteMembershipsCP(roleTitle = null, resourceName = null) {
 		AssertTextEquals(
 			key_userGroupName = ${resourceName},
 			locator1 = "SiteMemberships#USER_GROUPS_TABLE_NAME",
@@ -1715,7 +1715,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewVirtualHostsURLPG(siteName = null,pageName = null,sitePageURL = null) {
+	macro viewVirtualHostsURLPG(siteName = null, pageName = null, sitePageURL = null) {
 		var key_pageName = ${pageName};
 
 		AssertTextEquals(

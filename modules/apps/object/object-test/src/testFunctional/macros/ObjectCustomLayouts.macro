@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addEntryOnRelationshipTab(selectEntry = null,newEntry = null) {
+	macro addEntryOnRelationshipTab(selectEntry = null, newEntry = null) {
 		LexiconEntry.gotoAdd();
 
 		if (isSet(newEntry)) {

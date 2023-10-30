@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro revokeAndUpdateSharedEntry(blogsEntryTitleUpdate = null,blogsEntryTitleView = null,dmDocumentTitleUpdate = null,dmDocumentTitleView = null) {
+	macro revokeAndUpdateSharedEntry(blogsEntryTitleUpdate = null, blogsEntryTitleView = null, dmDocumentTitleUpdate = null, dmDocumentTitleView = null) {
 		Asset.openTosharedContent(
 			navTab = "Shared by Me",
 			siteURLKey = "guest");

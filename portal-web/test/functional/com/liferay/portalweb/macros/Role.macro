@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _changePermisionScope(permissionValue = null,assetLibrariesScope = null,siteNameScope = null,permissionSheetSubtitle = null,removeSiteScope = null) {
+	macro _changePermisionScope(permissionValue = null, assetLibrariesScope = null, siteNameScope = null, permissionSheetSubtitle = null, removeSiteScope = null) {
 		if (isSet(siteNameScope)) {
 			AssertClick(
 				key_permissionSheetSubtitle = ${permissionSheetSubtitle},
@@ -49,7 +49,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _goToRoleAssigneeType(roleTitle = null,assigneeType = null) {
+	macro _goToRoleAssigneeType(roleTitle = null, assigneeType = null) {
 		LexiconEntry.gotoEntry(rowEntry = ${roleTitle});
 
 		Navigator.gotoNavItem(navItem = "Assignees");
@@ -58,7 +58,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro add(roleTitle = null,roleKey = null,roleDescription = null) {
+	macro add(roleTitle = null, roleKey = null, roleDescription = null) {
 		if (!(isSet(roleKey)) && !(isSet(roleTitle))) {
 			fail("Please declear the roleKey or roleTitle when refering this macro.");
 		}
@@ -91,7 +91,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addAssignee(roleTitle = null,assigneeName = null,assigneeType = null) {
+	macro addAssignee(roleTitle = null, assigneeName = null, assigneeType = null) {
 		Role._goToRoleAssigneeType(
 			assigneeType = ${assigneeType},
 			roleTitle = ${roleTitle});
@@ -118,7 +118,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addAssigneeInKaleoForms(roleTitle = null,assigneeName = null,assigneeType = null) {
+	macro addAssigneeInKaleoForms(roleTitle = null, assigneeName = null, assigneeType = null) {
 		Role._goToRoleAssigneeType(
 			assigneeType = ${assigneeType},
 			roleTitle = ${roleTitle});
@@ -146,7 +146,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro definePermissionPG(permissionsList = null,roleTitle = null) {
+	macro definePermissionPG(permissionsList = null, roleTitle = null) {
 		var key_roleTitle = StringUtil.replace(${roleTitle}, " ", "-");
 
 		var key_roleTitle = StringUtil.lowerCase(${key_roleTitle});
@@ -178,7 +178,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editPermissionCP(assetLibrariesScope = null,siteNameScope = null,permissionNavItem = null,permissionSheetSubtitle = null,define = null,removeSiteScope = null,permissionNavHeader = null,remove = null) {
+	macro editPermissionCP(assetLibrariesScope = null, siteNameScope = null, permissionNavItem = null, permissionSheetSubtitle = null, define = null, removeSiteScope = null, permissionNavHeader = null, remove = null) {
 		if (!(isSet(navItem))) {
 			var navItem = "Define Permissions";
 		}
@@ -245,7 +245,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editRole(roleDescriptionEdit = null,roleKeyEdit = null,roleTitleEdit = null) {
+	macro editRole(roleDescriptionEdit = null, roleKeyEdit = null, roleTitleEdit = null) {
 		if (isSet(roleTitleEdit)) {
 			PortletEntry.inputTitle(title = ${roleTitleEdit});
 		}
@@ -273,7 +273,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro removeAssignee(roleTitle = null,assigneeName = null,assigneeType = null) {
+	macro removeAssignee(roleTitle = null, assigneeName = null, assigneeType = null) {
 		Role.openRolesAdmin();
 
 		Role._goToRoleAssigneeType(
@@ -286,7 +286,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro removePermissionPG(permissionDefinitionKey = null,roleTitle = null) {
+	macro removePermissionPG(permissionDefinitionKey = null, roleTitle = null) {
 		var key_roleTitle = StringUtil.replace(${roleTitle}, " ", "-");
 
 		var key_roleTitle = StringUtil.lowerCase(${key_roleTitle});
@@ -338,7 +338,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewAssignee(roleTitle = null,assigneeName = null,assigneeType = null) {
+	macro viewAssignee(roleTitle = null, assigneeName = null, assigneeType = null) {
 		Role._goToRoleAssigneeType(
 			assigneeType = ${assigneeType},
 			roleTitle = ${roleTitle});
@@ -347,7 +347,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCP(toolTip = null,roleType = null,roleDescription = null) {
+	macro viewCP(toolTip = null, roleType = null, roleDescription = null) {
 		if (contains("Asset Library,Organization,Site", ${roleType})) {
 			Navigator.gotoNavItem(navItem = "${roleType} Roles");
 		}
@@ -407,7 +407,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewNoPermissionCP(siteNameScope = null,permissionDefinitionValue = null,permissionNavigationValue = null) {
+	macro viewNoPermissionCP(siteNameScope = null, permissionDefinitionValue = null, permissionNavigationValue = null) {
 		var key_permissionDefinitionValue = ${permissionDefinitionValue};
 		var key_permissionNavigationValue = ${permissionNavigationValue};
 
@@ -421,7 +421,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPermissionCP(siteNameScope = null,permissionDefinitionValue = null,permissionNavigationValue = null) {
+	macro viewPermissionCP(siteNameScope = null, permissionDefinitionValue = null, permissionNavigationValue = null) {
 		var key_permissionDefinitionValue = ${permissionDefinitionValue};
 		var key_permissionNavigationValue = ${permissionNavigationValue};
 
@@ -442,7 +442,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPermissionPG(permissionDefinitionKey = null,roleTitle = null,permissionFlagged = null) {
+	macro viewPermissionPG(permissionDefinitionKey = null, roleTitle = null, permissionFlagged = null) {
 		var key_roleTitle = StringUtil.replace(${roleTitle}, " ", "-");
 
 		var key_roleTitle = StringUtil.lowerCase(${key_roleTitle});
@@ -456,7 +456,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPermissionSubdirectory(navItem = null,subItemList = null) {
+	macro viewPermissionSubdirectory(navItem = null, subItemList = null) {
 		var key_navItem = ${navItem};
 
 		if (IsElementPresent(locator1 = "RolesPermissionsNavigation#PERMISSIONS_NAVITEM_COLLAPSED")) {

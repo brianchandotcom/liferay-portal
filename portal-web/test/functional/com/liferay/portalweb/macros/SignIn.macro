@@ -5,7 +5,7 @@ definition {
 	var userPasswordReminderAnswer = "test";
 
 	@summary = "Default summary"
-	macro _signIn(virtualHostsURL = null,userEmailAddress = null) {
+	macro _signIn(virtualHostsURL = null, userEmailAddress = null) {
 		var appServerType = PropsUtil.get("app.server.type");
 
 		if (${appServerType} == "weblogic") {
@@ -53,7 +53,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro signIn(userPassword = null,userEmailAddress = null) {
+	macro signIn(userPassword = null, userEmailAddress = null) {
 		SignIn._signIn(
 			userEmailAddress = ${userEmailAddress},
 			userPassword = ${userPassword});
@@ -85,7 +85,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro signInSpecificURL(userPassword = null,userEmailAddress = null,url = null) {
+	macro signInSpecificURL(userPassword = null, userEmailAddress = null, url = null) {
 		SignIn._signIn(
 			userEmailAddress = ${userEmailAddress},
 			userPassword = ${userPassword},
@@ -93,7 +93,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro signInTestSetup(userPassword = null,licenseExpired = null) {
+	macro signInTestSetup(userPassword = null, licenseExpired = null) {
 		var userEmailAddress = JSONUtil2.getDefaultUserEmail();
 
 		JSONUser.agreeToTermsAndAnswerReminderQuery(userEmailAddress = ${userEmailAddress});

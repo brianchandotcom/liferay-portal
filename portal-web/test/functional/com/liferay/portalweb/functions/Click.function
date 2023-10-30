@@ -16,7 +16,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function clickAt(locator1,value1) {
+	function clickAt(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");
@@ -30,7 +30,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function clickAtNotVisible(locator1) {
+	function clickAtNotVisible(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");
@@ -84,7 +84,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function clickNoSPARefresh(locator1,value1) {
+	function clickNoSPARefresh(locator1) {
 		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.mouseOver(${locator1});

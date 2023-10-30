@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addTag(groupName = null,tagName = null) {
+	macro addTag(groupName = null, tagName = null) {
 		Variables.assertDefined(parameterList = ${tagName});
 
 		if (!(isSet(site))) {
@@ -20,7 +20,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getTagId(groupName = null,site = null,tagName = null) {
+	macro getTagId(groupName = null, site = null, tagName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${tagName}");
 
 		var groupId = JSONAssettagSetter.setGroupId(

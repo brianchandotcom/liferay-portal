@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addRemoteServer(remoteServerName = null,remoteServerClientId = null,remoteServerDescription = null,remoteServerClientSecret = null,remoteServerURL = null) {
+	macro addRemoteServer(remoteServerName = null, remoteServerClientId = null, remoteServerDescription = null, remoteServerClientSecret = null, remoteServerURL = null) {
 		Click(locator1 = "Button#PLUS");
 
 		Type(
@@ -47,7 +47,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editRemoteServer(remoteServerName = null,remoteServerURLEdit = null,remoteServerDescriptionEdit = null,remoteServerClientId = null,remoteServerClientSecret = null,remoteServerNameEdit = null) {
+	macro editRemoteServer(remoteServerName = null, remoteServerURLEdit = null, remoteServerDescriptionEdit = null, remoteServerClientId = null, remoteServerClientSecret = null, remoteServerNameEdit = null) {
 		Click(
 			key_remoteServerName = ${remoteServerName},
 			locator1 = "PublicationsRemoteServer#REMOTE_SERVER_DROPDOWN_MENU");

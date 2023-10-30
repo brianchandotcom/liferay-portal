@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _enableLocalStaging(branchingPublic = null,branchingPrivate = null,groupId = null,unCheckedContent = null) {
+	macro _enableLocalStaging(branchingPublic = null, branchingPrivate = null, groupId = null, unCheckedContent = null) {
 		Variables.assertDefined(parameterList = "${groupId},${branchingPublic},${branchingPrivate}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -23,7 +23,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _enableRemoteStaging(remoteGroupId = null,branchingPublic = null,branchingPrivate = null,groupId = null,remotePort = null) {
+	macro _enableRemoteStaging(remoteGroupId = null, branchingPublic = null, branchingPrivate = null, groupId = null, remotePort = null) {
 		Variables.assertDefined(parameterList = "${groupId},${remoteGroupId}");
 
 		var portalURL = JSONCompany.getPortalURL();

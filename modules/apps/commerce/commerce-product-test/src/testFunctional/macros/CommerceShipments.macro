@@ -12,7 +12,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertOrderItemShipmentInPlacedOrders(carrier = null,quantity = null,shipmentId = null,entryName = null,trackingNumber = null) {
+	macro assertOrderItemShipmentInPlacedOrders(carrier = null, quantity = null, shipmentId = null, entryName = null, trackingNumber = null) {
 		Variables.assertDefined(parameterList = "${entryName},${shipmentId}");
 
 		ClickNoError(
@@ -70,7 +70,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertShipmentItemWarehouseAndQuantityInShipment(shipmentItemSku = null,warehouseName = null,quantityInShipment = null) {
+	macro assertShipmentItemWarehouseAndQuantityInShipment(shipmentItemSku = null, warehouseName = null, quantityInShipment = null) {
 		AssertTextEquals(
 			key_columnNumber = 4,
 			key_entryName = ${shipmentItemSku},
@@ -85,7 +85,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editShipmentCarrierDetails(trackingURL = null,shippingMethod = null,carrierDetail = null,trackingNumber = null) {
+	macro editShipmentCarrierDetails(trackingURL = null, shippingMethod = null, carrierDetail = null, trackingNumber = null) {
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
 
 		Type(
@@ -123,7 +123,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editShipmentCustomFields(textValue = null,customFieldType = null) {
+	macro editShipmentCustomFields(textValue = null, customFieldType = null) {
 		Click(
 			key_customFieldType = ${customFieldType},
 			locator1 = "CustomFields#CUSTOM_FIELD_TYPE");
@@ -138,7 +138,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro moveItemQuantitiesInShipment(productSkuList = null,warehouseName = null) {
+	macro moveItemQuantitiesInShipment(productSkuList = null, warehouseName = null) {
 		Variables.assertDefined(parameterList = "${productSkuList},${warehouseName}");
 
 		for (var productSku : list ${productSkuList}) {

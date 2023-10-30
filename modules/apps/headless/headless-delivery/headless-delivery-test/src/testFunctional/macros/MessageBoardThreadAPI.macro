@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _curlMessageBoardThread(messageBoardSectionId = null,headline = null,messageBoardThreadId = null) {
+	macro _curlMessageBoardThread(messageBoardSectionId = null, headline = null, messageBoardThreadId = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(messageBoardSectionId)) {
@@ -39,7 +39,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createMessageThreadInMessageBoardSection(messageBoardSectionId = null,headline = null) {
+	macro createMessageThreadInMessageBoardSection(messageBoardSectionId = null, headline = null) {
 		Variables.assertDefined(parameterList = "${headline},${messageBoardSectionId}");
 
 		var curl = MessageBoardThreadAPI._curlMessageBoardThread(

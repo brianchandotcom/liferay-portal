@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _curlAPIApplication(aPIApplicationId = null,virtualHost = null) {
+	macro _curlAPIApplication(aPIApplicationId = null, virtualHost = null) {
 		if (isSet(virtualHost)) {
 			if (!(isSet(port))) {
 				var port = 8080;
@@ -32,7 +32,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createAPIApplication(objectFieldErc = null,mainObjectDefinitionErc = null,endpointName = null,virtualHost = null,retrieveType = null,schemaName = null,pathParameter = null,endpointPath = null,baseURL = null,status = null) {
+	macro createAPIApplication(objectFieldErc = null, mainObjectDefinitionErc = null, endpointName = null, virtualHost = null, retrieveType = null, schemaName = null, pathParameter = null, endpointPath = null, baseURL = null, status = null) {
 		Variables.assertDefined(parameterList = "${baseURL},${status},${title}");
 
 		var curl = ApplicationAPI._curlAPIApplication(virtualHost = ${virtualHost});
@@ -170,7 +170,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updateAPIApplication(parameter = null,aPIApplicationId = null,parameterValue = null) {
+	macro updateAPIApplication(parameter = null, aPIApplicationId = null, parameterValue = null) {
 		Variables.assertDefined(parameterList = "${aPIApplicationId},${parameter},${parameterValue}");
 
 		var curl = ApplicationAPI._curlAPIApplication(aPIApplicationId = ${aPIApplicationId});

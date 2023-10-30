@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _gotoChildArticle(kbChildArticleContent = null,kbChildArticleTitle = null) {
+	macro _gotoChildArticle(kbChildArticleContent = null, kbChildArticleTitle = null) {
 		var key_kbChildArticleContent = ${kbChildArticleContent};
 		var key_kbChildArticleTitle = ${kbChildArticleTitle};
 
@@ -23,7 +23,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addChildArticleViaKBAdmin(kbChildArticleContent = null,kbChildArticleTitle = null,kbArticleTitle = null) {
+	macro addChildArticleViaKBAdmin(kbChildArticleContent = null, kbChildArticleTitle = null, kbArticleTitle = null) {
 		if (isSet(navigationPane)) {
 			KBArticle.gotoMenuItemViaNavigationPane(
 				kbArticleTitle = ${kbArticleTitle},
@@ -54,7 +54,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addCP(videoShortcutTitle = null,kbDescription = null,enableExpirationDate = null,kbArticleContentSource = null,kbArticleAddViaTemplate = null,saveAsDraft = null,kbTemplateTitle = null,viewExpirationTime = null,kbArticleAttachment = null,vocabularyName = null,kbArticleFriendlyURL = null,categoryName = null,uncheckNeverReview = null,embedVideo = null,configureReviewDate = null,kbMissingRequiredCategory = null,videoName = null,kbArticleAddViaSource = null,assetTitle = null,increaseMinutes = null,videoShortcutPreview = null,kbArticleDuplicateFriendlyURL = null,depotName = null,kbArticleContent = null,kbArticleSourceURL = null,assetType = null,navTab = null,kbArticleInvalidContent = null,kbArticleSection = null,kbWorkflowAction = null,kbArticleTitle = null,extendedMinutes = null,notificationDate = null) {
+	macro addCP(videoShortcutTitle = null, kbDescription = null, enableExpirationDate = null, kbArticleContentSource = null, kbArticleAddViaTemplate = null, saveAsDraft = null, kbTemplateTitle = null, viewExpirationTime = null, kbArticleAttachment = null, vocabularyName = null, kbArticleFriendlyURL = null, categoryName = null, uncheckNeverReview = null, embedVideo = null, configureReviewDate = null, kbMissingRequiredCategory = null, videoName = null, kbArticleAddViaSource = null, assetTitle = null, increaseMinutes = null, videoShortcutPreview = null, kbArticleDuplicateFriendlyURL = null, depotName = null, kbArticleContent = null, kbArticleSourceURL = null, assetType = null, navTab = null, kbArticleInvalidContent = null, kbArticleSection = null, kbWorkflowAction = null, kbArticleTitle = null, extendedMinutes = null, notificationDate = null) {
 		WaitForVisible(locator1 = "Button#PLUS");
 
 		if (isSet(kbTemplateTitle)) {
@@ -276,7 +276,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addCPWithInvalidAttachmentSize(kbArticleAttachment = null,maxFileSize = null,kbArticleContent = null,kbArticleTitle = null) {
+	macro addCPWithInvalidAttachmentSize(kbArticleAttachment = null, maxFileSize = null, kbArticleContent = null, kbArticleTitle = null) {
 		LexiconEntry.gotoAdd();
 
 		MenuItem.click(menuItem = "Basic Article");
@@ -299,7 +299,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addCPWithInvalidTitle(kbArticleContent = null,kbArticleTitle = null) {
+	macro addCPWithInvalidTitle(kbArticleContent = null, kbArticleTitle = null) {
 		LexiconEntry.gotoAdd();
 
 		MenuItem.click(menuItem = "Basic Article");
@@ -320,7 +320,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addCPWithTextFieldCustomField(customFieldText = null,kbArticleContent = null,kbArticleTitle = null) {
+	macro addCPWithTextFieldCustomField(customFieldText = null, kbArticleContent = null, kbArticleTitle = null) {
 		LexiconEntry.gotoAdd();
 
 		MenuItem.click(menuItem = "Basic Article");
@@ -343,7 +343,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPGViaAP(kbArticleContent = null,kbArticleTitle = null) {
+	macro addPGViaAP(kbArticleContent = null, kbArticleTitle = null) {
 		AssetPublisherPortlet.addAsset(assetType = "Knowledge Base Article");
 
 		AssertElementPresent(locator1 = "TextInput#TITLE");
@@ -358,7 +358,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro cancelAddKBArticle(kbArticleContent = null,kbArticleTitle = null) {
+	macro cancelAddKBArticle(kbArticleContent = null, kbArticleTitle = null) {
 		LexiconEntry.gotoAddMenuItem(menuItem = "Basic Article");
 
 		AssertElementPresent(locator1 = "TextInput#TITLE");
@@ -396,7 +396,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureEmailCP(userEmailAddress = null,userName = null) {
+	macro configureEmailCP(userEmailAddress = null, userName = null) {
 		Click(locator1 = "Portlet#OPTIONS_ICON");
 
 		MenuItem.click(menuItem = "Configuration");
@@ -543,7 +543,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editCP(videoShortcutTitle = null,cancel = null,kbArticleTitleEdit = null,enableExpirationDate = null,depotName = null,saveAsDraft = null,kbArticleAttachment = null,customFieldTextEdit = null,navTab = null,uploadFileName = null,kbArticleContentEdit = null,dmImage = null,kbArticleTitle = null,extendedMinutes = null,notificationDate = null) {
+	macro editCP(videoShortcutTitle = null, cancel = null, kbArticleTitleEdit = null, enableExpirationDate = null, depotName = null, saveAsDraft = null, kbArticleAttachment = null, customFieldTextEdit = null, navTab = null, uploadFileName = null, kbArticleContentEdit = null, dmImage = null, kbArticleTitle = null, extendedMinutes = null, notificationDate = null) {
 		if (!(isSet(skipNavigation))) {
 			if (isSet(navigationPane)) {
 				KBArticle.gotoMenuItemViaNavigationPane(
@@ -730,7 +730,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoKBChildArticleViaKBDisplayHierarchyNavigationPG(kbChildArticleTitle = null,kbArticleTitle = null) {
+	macro gotoKBChildArticleViaKBDisplayHierarchyNavigationPG(kbChildArticleTitle = null, kbArticleTitle = null) {
 		var key_kbArticleTitle = ${kbArticleTitle};
 		var key_kbChildArticleTitle = ${kbChildArticleTitle};
 
@@ -744,7 +744,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoMenuItemViaNavigationPane(menuItem = null,kbArticleTitle = null) {
+	macro gotoMenuItemViaNavigationPane(menuItem = null, kbArticleTitle = null) {
 		MouseOver(
 			key_itemName = ${kbArticleTitle},
 			locator1 = "KnowledgeBase#PAGE_TREE_ITEM_NAME");
@@ -796,7 +796,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro importCP(kbFolderName = null,kbZipFile = null,applyNumericalPrefix = null) {
+	macro importCP(kbFolderName = null, kbZipFile = null, applyNumericalPrefix = null) {
 		if (isSet(centerPaneButton)) {
 			Button.click(button = "New");
 
@@ -826,7 +826,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro moveArticleCP(destinationItem = null,kbArticleTitle = null) {
+	macro moveArticleCP(destinationItem = null, kbArticleTitle = null) {
 		var key_rowEntry = ${kbArticleTitle};
 		var key_nodeName = ${destinationItem};
 
@@ -884,7 +884,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToAddKBArticle(groupName = null,site = null,siteURLKey = null) {
+	macro openToAddKBArticle(groupName = null, site = null, siteURLKey = null) {
 
 		// You can use this navigation when you need to access the configuration quickly without checking the UI.
 
@@ -909,7 +909,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToEditKBArticleInSite(groupName = null,site = null,kbChildArticleTitle = null,siteURLKey = null,kbArticleTitle = null) {
+	macro openToEditKBArticleInSite(groupName = null, site = null, kbChildArticleTitle = null, siteURLKey = null, kbArticleTitle = null) {
 
 		// You can use this navigation when you need to access the configuration quickly without checking the UI.
 
@@ -938,7 +938,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToKBArticleInSite(groupName = null,site = null,siteURLKey = null,folderName = null,kbArticleTitle = null) {
+	macro openToKBArticleInSite(groupName = null, site = null, siteURLKey = null, folderName = null, kbArticleTitle = null) {
 
 		// You can use this navigation when you need to access the configuration quickly without checking the UI.
 
@@ -977,7 +977,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro searchArticleInMoveModal(searchItem = null,kbArticleTitle = null) {
+	macro searchArticleInMoveModal(searchItem = null, kbArticleTitle = null) {
 		var key_rowEntry = ${kbArticleTitle};
 
 		Click(locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
@@ -1032,7 +1032,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectArticlesToDisplayOnWidget(kbFolderName = null,kbArticleTitle = null,portletName = null,childArticles = null) {
+	macro selectArticlesToDisplayOnWidget(kbFolderName = null, kbArticleTitle = null, portletName = null, childArticles = null) {
 		Portlet.gotoPortletOptions(
 			portletName = ${portletName},
 			portletOption = "Configuration");
@@ -1107,7 +1107,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectFolderThroughPageTreePanel(kbFolderName = null,kbChildFolderName = null) {
+	macro selectFolderThroughPageTreePanel(kbFolderName = null, kbChildFolderName = null) {
 		if (isSet(kbChildFolderName)) {
 			Click(locator1 = "KnowledgeBase#PAGE_TREE_CHEVRON_ICON_RIGHT");
 
@@ -1272,7 +1272,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewArticleHistoryCP(kbArticleContentRemovedDiff = null,kbArticleContentAddedDiff = null,kbArticleVersionOld = null,kbArticleVersionNew = null,kbArticleTitle = null) {
+	macro viewArticleHistoryCP(kbArticleContentRemovedDiff = null, kbArticleContentAddedDiff = null, kbArticleVersionOld = null, kbArticleVersionNew = null, kbArticleTitle = null) {
 		Click(
 			key_rowEntry = ${kbArticleTitle},
 			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
@@ -1308,7 +1308,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewArticleHistoryPG(kbArticleContentRemovedDiff = null,kbArticleContentAddedDiff = null,kbArticleVersionOld = null,viewNoXmlInTitle = null,kbArticleVersionNew = null) {
+	macro viewArticleHistoryPG(kbArticleContentRemovedDiff = null, kbArticleContentAddedDiff = null, kbArticleVersionOld = null, viewNoXmlInTitle = null, kbArticleVersionNew = null) {
 		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "History");
 
 		Check(
@@ -1346,7 +1346,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewArticleThroughPageTreePanel(kbFolderName = null,kbChildArticleTitle = null,kbArticleTitle = null) {
+	macro viewArticleThroughPageTreePanel(kbFolderName = null, kbChildArticleTitle = null, kbArticleTitle = null) {
 		if (isSet(kbChildArticleTitle)) {
 			Click(locator1 = "KnowledgeBase#PAGE_TREE_CHEVRON_ICON_RIGHT");
 
@@ -1407,7 +1407,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewChildArticleCP(kbChildArticleContent = null,kbChildArticleTitle = null) {
+	macro viewChildArticleCP(kbChildArticleContent = null, kbChildArticleTitle = null) {
 		if (isSet(pageTreePanel)) {
 			Click(
 				key_itemName = ${kbChildArticleTitle},
@@ -1429,7 +1429,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewChildArticlePG(kbChildArticleContent = null,kbChildArticleTitle = null,kbArticleTitle = null) {
+	macro viewChildArticlePG(kbChildArticleContent = null, kbChildArticleTitle = null, kbArticleTitle = null) {
 		AssertClick.assertTextClickNoMouseOver(
 			key_kbArticleTitle = ${kbArticleTitle},
 			key_kbChildArticleTitle = ${kbChildArticleTitle},
@@ -1446,7 +1446,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCP(kbDescription = null,kbChildArticleContent = null,internalVideo = null,vocabularyName = null,indexNumber = null,kbArticleContent = null,categoryName = null,versionNumber = null,kbArticleRelatedAssetTitle = null,service = null,videoName = null,kbChildArticleTitle = null,kbStatus = null,kbArticleTitle = null) {
+	macro viewCP(kbDescription = null, kbChildArticleContent = null, internalVideo = null, vocabularyName = null, indexNumber = null, kbArticleContent = null, categoryName = null, versionNumber = null, kbArticleRelatedAssetTitle = null, service = null, videoName = null, kbChildArticleTitle = null, kbStatus = null, kbArticleTitle = null) {
 		var key_kbArticleTitle = ${kbArticleTitle};
 
 		if (isSet(pageTreePanel)) {
@@ -1586,7 +1586,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCPWithHTML(kbArticleContent = null,kbArticleTitle = null) {
+	macro viewCPWithHTML(kbArticleContent = null, kbArticleTitle = null) {
 		AssertClick(
 			key_kbArticleTitle = ${kbArticleTitle},
 			locator1 = "KnowledgeBase#DESCRIPTIVE_VIEW_ARTICLE_TITLE",
@@ -1627,7 +1627,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewExpirationStatus(kbExpirationStatus = null,kbArticleTitle = null) {
+	macro viewExpirationStatus(kbExpirationStatus = null, kbArticleTitle = null) {
 		AssertTextEquals(
 			key_kbArticleTitle = ${kbArticleTitle},
 			locator1 = "KnowledgeBase#ARTICLE_TABLE_EXPIRATION_STATUS",
@@ -1650,7 +1650,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewFriendlyURLCP(kbArticleFriendlyURL = null,kbArticleTitle = null) {
+	macro viewFriendlyURLCP(kbArticleFriendlyURL = null, kbArticleTitle = null) {
 		if (!(isSet(skipNavigation))) {
 			Click(
 				key_rowEntry = ${kbArticleTitle},
@@ -1673,7 +1673,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewImageIsPresent(contentImageName = null,kbArticleTitle = null) {
+	macro viewImageIsPresent(contentImageName = null, kbArticleTitle = null) {
 		Click(
 			key_kbArticleTitle = ${kbArticleTitle},
 			locator1 = "KnowledgeBase#ARTICLE_DESCRIPTIVE_ARTICLE_TITLE");
@@ -1689,7 +1689,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewInfoPanel(workflowStatus = null,childArticlesQuantity = null,viewQuantity = null,kbArticleTitle = null,versionNumber = null) {
+	macro viewInfoPanel(workflowStatus = null, childArticlesQuantity = null, viewQuantity = null, kbArticleTitle = null, versionNumber = null) {
 		Click(locator1 = "Button#OPEN");
 
 		AssertTextEquals(
@@ -1725,7 +1725,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewInfoPanelVersions(entryVersion = null,userName = null) {
+	macro viewInfoPanelVersions(entryVersion = null, userName = null) {
 		Navigator.gotoNavTab(navTab = "Versions");
 
 		AssertTextEquals(
@@ -1743,7 +1743,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewKBArticlePriorityCP(kbPriority = null,kbArticleTitle = null) {
+	macro viewKBArticlePriorityCP(kbPriority = null, kbArticleTitle = null) {
 		var key_kbArticleTitle = ${kbArticleTitle};
 
 		AssertTextEquals(
@@ -1756,7 +1756,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewKBArticleWithAttachmentCP(kbArticleAttachment = null,kbArticleContent = null,kbArticleTitle = null) {
+	macro viewKBArticleWithAttachmentCP(kbArticleAttachment = null, kbArticleContent = null, kbArticleTitle = null) {
 		Click(
 			key_rowEntry = ${kbArticleTitle},
 			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
@@ -1789,7 +1789,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewNavigationLinksPG(next = null,previous = null) {
+	macro viewNavigationLinksPG(next = null, previous = null) {
 		if (${previous} == "true") {
 			AssertElementPresent(locator1 = "KnowledgeBaseArticle#PREVIOUS");
 		}
@@ -1827,7 +1827,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPG(kbDescription = null,description = null,customFieldValue = null,kbArticleContent = null,customFieldName = null,kbArticleTitle = null) {
+	macro viewPG(kbDescription = null, description = null, customFieldValue = null, kbArticleContent = null, customFieldName = null, kbArticleTitle = null) {
 		AssertTextEquals.assertPartialText(
 			locator1 = "KnowledgeBase#DISPLAY_TITLE",
 			value1 = ${kbArticleTitle});
@@ -1878,7 +1878,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPGViaAP(kbArticleContent = null,kbArticleTitle = null) {
+	macro viewPGViaAP(kbArticleContent = null, kbArticleTitle = null) {
 		var key_assetContent = ${kbArticleContent};
 		var key_assetTitle = ${kbArticleTitle};
 
@@ -1892,7 +1892,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPrintContent(kbArticleContent = null,kbArticleTitle = null) {
+	macro viewPrintContent(kbArticleContent = null, kbArticleTitle = null) {
 		Click(
 			key_rowEntry = ${kbArticleTitle},
 			locator1 = "Icon#ROW_VERTICAL_ELLIPSIS");
@@ -1925,7 +1925,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSourceURLCP(kbArticleTitle = null,kbArticleSourceURL = null) {
+	macro viewSourceURLCP(kbArticleTitle = null, kbArticleSourceURL = null) {
 		if (isSet(kbChildArticleTitle)) {
 			Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
 		}
@@ -1966,7 +1966,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewViaNextLinkPG(kbArticleContent = null,kbArticleTitle = null) {
+	macro viewViaNextLinkPG(kbArticleContent = null, kbArticleTitle = null) {
 		AssertClick(
 			locator1 = "KnowledgeBaseArticle#NEXT",
 			value1 = ${kbArticleTitle});

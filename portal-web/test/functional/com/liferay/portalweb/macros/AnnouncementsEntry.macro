@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addEntryWithFutureDate(distributionScope = null,entryURL = null,minutesAdjustmentValue = null,entryTitle = null,entryContent = null) {
+	macro addEntryWithFutureDate(distributionScope = null, entryURL = null, minutesAdjustmentValue = null, entryTitle = null, entryContent = null) {
 		AssertClick(
 			locator1 = "Button#ADD_ANNOUNCEMENT",
 			value1 = "Add Announcement");
@@ -58,7 +58,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPG(distributionScope = null,entryURL = null,priority = null,entryTitle = null,entryContent = null,expirationDate = null) {
+	macro addPG(distributionScope = null, entryURL = null, priority = null, entryTitle = null, entryContent = null, expirationDate = null) {
 		AssertClick(
 			locator1 = "Button#ADD_ANNOUNCEMENT",
 			value1 = "Add Announcement");
@@ -120,7 +120,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editPG(entryContentEdit = null,distributionScope = null,entryTitleEdit = null,entryTitle = null,entryContent = null,entryURLEdit = null) {
+	macro editPG(entryContentEdit = null, distributionScope = null, entryTitleEdit = null, entryTitle = null, entryContent = null, entryURLEdit = null) {
 		var key_distributionScope = ${distributionScope};
 		var key_entryTitle = ${entryTitle};
 
@@ -169,7 +169,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro markAsReadPG(tabName = null,siteURLKey = null,entryContent = null,layoutName = null) {
+	macro markAsReadPG(tabName = null, siteURLKey = null, entryContent = null, layoutName = null) {
 		var key_entryContent = ${entryContent};
 
 		AnnouncementsNavigator.openToEntriesTab(
@@ -206,7 +206,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewList(distributionScope = null,entryTitle = null) {
+	macro viewList(distributionScope = null, entryTitle = null) {
 		var key_entryTitle = ${entryTitle};
 
 		AssertTextEquals(
@@ -235,7 +235,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPG(distributionScope = null,priority = null,entryTitle = null,entryContent = null) {
+	macro viewPG(distributionScope = null, priority = null, entryTitle = null, entryContent = null) {
 		var key_distributionScope = ${distributionScope};
 		var key_entryTitle = ${entryTitle};
 
@@ -261,7 +261,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewReadPG(distributionScope = null,announcementType = null,entryTitle = null,entryContent = null) {
+	macro viewReadPG(distributionScope = null, announcementType = null, entryTitle = null, entryContent = null) {
 		Click(
 			locator1 = "Announcements#NAVIGATION_ENTRIES_READ",
 			value1 = "Read");

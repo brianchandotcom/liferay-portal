@@ -12,7 +12,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro changeTeamToComponent(tableEntry = null,newTeamName = null) {
+	macro changeTeamToComponent(tableEntry = null, newTeamName = null) {
 		TestrayManage.selectTableRowOption(
 			rowOption = "Edit",
 			tableEntry = ${tableEntry});
@@ -44,7 +44,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createComponent(teamName = null,componentName = null) {
+	macro createComponent(teamName = null, componentName = null) {
 		SelectFrame(locator1 = "Testray#MODAL_BODY");
 
 		Click(locator1 = "Testray#MODAL_PLUS");
@@ -75,7 +75,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createNewOption(category = null,option = null) {
+	macro createNewOption(category = null, option = null) {
 		Click(locator1 = "Testray#MODAL_PLUS");
 
 		PortletEntry.inputName(name = ${option});
@@ -102,7 +102,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createTeam(teamName = null,component = null) {
+	macro createTeam(teamName = null, component = null) {
 		Click(locator1 = "Testray#MODAL_PLUS");
 
 		if (isSet(teamName)) {
@@ -201,7 +201,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editCaseType(newName = null,tableEntry = null) {
+	macro editCaseType(newName = null, tableEntry = null) {
 		TestrayManage.selectTableRowOption(
 			rowOption = "Edit",
 			tableEntry = ${tableEntry});
@@ -216,7 +216,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editCategory(newName = null,tableEntry = null) {
+	macro editCategory(newName = null, tableEntry = null) {
 		TestrayManage.selectTableRowOption(
 			rowOption = "Edit",
 			tableEntry = ${tableEntry});
@@ -227,7 +227,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editComponent(newComponentName = null,tableEntry = null,newTeamName = null) {
+	macro editComponent(newComponentName = null, tableEntry = null, newTeamName = null) {
 		TestrayManage.selectTableRowOption(
 			rowOption = "Edit",
 			tableEntry = ${tableEntry});
@@ -247,7 +247,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editOption(newName = null,tableEntry = null,category = null) {
+	macro editOption(newName = null, tableEntry = null, category = null) {
 		TestrayManage.selectTableRowOption(
 			rowOption = "Edit",
 			tableEntry = ${tableEntry});
@@ -267,7 +267,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editProductVersion(newName = null,tableEntry = null) {
+	macro editProductVersion(newName = null, tableEntry = null) {
 		TestrayManage.selectTableRowOption(
 			rowOption = "Edit",
 			tableEntry = ${tableEntry});
@@ -278,7 +278,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editTeam(newName = null,tableEntry = null) {
+	macro editTeam(newName = null, tableEntry = null) {
 		TestrayManage.selectTableRowOption(
 			rowOption = "Edit",
 			tableEntry = ${tableEntry});
@@ -291,7 +291,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectTableRowOption(tableEntry = null,rowOption = null) {
+	macro selectTableRowOption(tableEntry = null, rowOption = null) {
 		WaitForElementPresent(
 			key_tableEntry = ${tableEntry},
 			locator1 = "Testray#TABLE_ENTRY");

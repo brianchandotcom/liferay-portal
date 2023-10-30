@@ -8,7 +8,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertIssue(issue = null,label = null) {
+	macro assertIssue(issue = null, label = null) {
 		AssertElementPresent(
 			key_issue = ${issue},
 			key_label = ${label},

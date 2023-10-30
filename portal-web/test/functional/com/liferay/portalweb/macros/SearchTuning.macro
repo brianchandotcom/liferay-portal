@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _clickResultEllipsisItem(assetTitle = null,menuItem = null) {
+	macro _clickResultEllipsisItem(assetTitle = null, menuItem = null) {
 		Click(
 			key_assetTitle = ${assetTitle},
 			locator1 = "SearchTuning#RESULT_RANKINGS_RESULT_ELLIPSIS");
@@ -10,7 +10,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addResult(searchTerm = null,assetTitle = null) {
+	macro addResult(searchTerm = null, assetTitle = null) {
 		Button.click(button = "Add Result");
 
 		Type(
@@ -67,7 +67,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureAliases(deleteAlias = null,addAlias = null) {
+	macro configureAliases(deleteAlias = null, addAlias = null) {
 		if (isSet(deleteAlias)) {
 			Click(
 				key_alias = ${deleteAlias},
@@ -103,7 +103,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editSynonymSet(addSynonyms = null,deleteSynonym = null,synonymSet = null) {
+	macro editSynonymSet(addSynonyms = null, deleteSynonym = null, synonymSet = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${synonymSet});
@@ -164,7 +164,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro unhideResult(assetTitle = null,pinResult = null) {
+	macro unhideResult(assetTitle = null, pinResult = null) {
 		if (IsElementNotPresent(key_tab = "Hidden", locator1 = "NavTab#ACTIVE_TAB_LINK")) {
 			Navigator.gotoNavTab(navTab = "Hidden");
 		}

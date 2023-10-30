@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addNewPriceModifier(modifier = null,name = null,target = null) {
+	macro addNewPriceModifier(modifier = null, name = null, target = null) {
 		Click(locator1 = "Button#PLUS");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createPriceListPriceTiers(key_quantity = null,key_value = null,key_pricingType = null) {
+	macro createPriceListPriceTiers(key_quantity = null, key_value = null, key_pricingType = null) {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 		Click(
@@ -123,7 +123,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createTierPriceEntryDirectlyInsideProductSKU(quantity = null,price = null,tierPriceSetting = null) {
+	macro createTierPriceEntryDirectlyInsideProductSKU(quantity = null, price = null, tierPriceSetting = null) {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 		if (isSet(tierPriceSetting)) {
@@ -162,7 +162,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editPriceListDetails(parentPriceList = null,name = null,priceType = null,currency = null,priority = null) {
+	macro editPriceListDetails(parentPriceList = null, name = null, priceType = null, currency = null, priority = null) {
 		if (isSet(name)) {
 			Type(
 				key_text = "Name",
@@ -218,7 +218,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editPriceModifier(amountValue = null,modifier = null,entryName = null,priceModifierName = null,modifierTarget = null,target = null,relation = null) {
+	macro editPriceModifier(amountValue = null, modifier = null, entryName = null, priceModifierName = null, modifierTarget = null, target = null, relation = null) {
 		if (!(isSet(active))) {
 			var active = "true";
 		}
@@ -270,7 +270,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editTierPriceEntryDirectlyInsideProductSKU(quantity = null,price = null,entryName = null) {
+	macro editTierPriceEntryDirectlyInsideProductSKU(quantity = null, price = null, entryName = null) {
 		SelectFrame.selectFrame(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 		CommerceEntry.clickEntryDropdownMenuItem(
@@ -317,7 +317,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPriceListEntry(priceListCatalog = null,priceListType = null,priceListCurrency = null,priceListPriority = null,priceListParent = null,priceListName = null) {
+	macro viewPriceListEntry(priceListCatalog = null, priceListType = null, priceListCurrency = null, priceListPriority = null, priceListParent = null, priceListName = null) {
 		if (isSet(priceListName)) {
 			AssertTextEquals(
 				locator1 = "CommerceEntry#NAME_FIELD",

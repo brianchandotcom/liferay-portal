@@ -12,7 +12,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addContactInformation(country = null,extension = null,address = null,city = null,addressType = null,postalCode = null,mondayClose = null,contactType = null,mondayOpen = null,makePrimary = null,url = null,number = null,street1 = null,region = null) {
+	macro addContactInformation(country = null, extension = null, address = null, city = null, addressType = null, postalCode = null, mondayClose = null, contactType = null, mondayOpen = null, makePrimary = null, url = null, number = null, street1 = null, region = null) {
 		if (isSet(contactType)) {
 			var key_contactType = ${contactType};
 
@@ -126,7 +126,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addSecurityQuestionsCP(securityQuestions = null,localizedLanguage = null,localizedSecurityQuestions = null) {
+	macro addSecurityQuestionsCP(securityQuestions = null, localizedLanguage = null, localizedSecurityQuestions = null) {
 		MenuBar.gotoSecurityQuestions();
 
 		Type(
@@ -163,7 +163,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addSiteCP(checkEnablePropagationCheckbox = null,orgName = null,siteTemplateName = null) {
+	macro addSiteCP(checkEnablePropagationCheckbox = null, orgName = null, siteTemplateName = null) {
 		Organization.gotoEdit(orgName = ${orgName});
 
 		UsersAndOrganizationsNavigator.gotoMenuBarOrganizationSite();
@@ -189,7 +189,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addSuborganizationCP(orgName = null,suborgName = null) {
+	macro addSuborganizationCP(orgName = null, suborgName = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Add Organization",
 			rowEntry = ${orgName});
@@ -206,7 +206,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addUser(userJobTitle = null,userComment = null,organizationName = null,userTag = null,userLastName = null,userScreenName = null,userMiddleName = null,userEmailAddress = null,userGender = null,userFirstName = null,userBirthday = null) {
+	macro addUser(userJobTitle = null, userComment = null, organizationName = null, userTag = null, userLastName = null, userScreenName = null, userMiddleName = null, userEmailAddress = null, userGender = null, userFirstName = null, userBirthday = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Add User",
 			rowEntry = ${organizationName});
@@ -238,7 +238,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addWithLocalizedCountryCP(navItem = null,localizedOption = null,orgName = null,countryName = null,saveButton = null) {
+	macro addWithLocalizedCountryCP(navItem = null, localizedOption = null, orgName = null, countryName = null, saveButton = null) {
 		Navigator.gotoNavItem(navItem = ${navItem});
 
 		LexiconEntry.gotoAdd();
@@ -265,7 +265,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assignOrgRole(orgName = null,roleTitle = null,userLastName = null,userScreenName = null,userFirstName = null) {
+	macro assignOrgRole(orgName = null, roleTitle = null, userLastName = null, userScreenName = null, userFirstName = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Assign Organization Roles",
 			rowEntry = ${orgName});
@@ -298,7 +298,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assignUser(orgName = null,userScreenName = null) {
+	macro assignUser(orgName = null, userScreenName = null) {
 		Organization.gotoCP(orgName = ${orgName});
 
 		LexiconEntry.gotoAdd();
@@ -341,7 +341,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro edit(orgName = null,orgNameEdit = null) {
+	macro edit(orgName = null, orgNameEdit = null) {
 		Organization.gotoEdit(orgName = ${orgName});
 
 		Type(
@@ -380,7 +380,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro removeSuborganizationCP(orgName = null,subOrgName = null) {
+	macro removeSuborganizationCP(orgName = null, subOrgName = null) {
 		var key_orgName = ${orgName};
 
 		AssertClick(
@@ -393,7 +393,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro searchCP(searchTerm = null,orgName = null) {
+	macro searchCP(searchTerm = null, orgName = null) {
 		Search.searchCP(searchTerm = ${searchTerm});
 
 		var key_orgName = ${orgName};
@@ -463,7 +463,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCP(orgType = null,orgName = null) {
+	macro viewCP(orgType = null, orgName = null) {
 		AssertTextEquals(
 			key_columnName = "name",
 			key_tableEntry = ${orgName},
@@ -478,7 +478,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewLocalizedCountryCP(editLocalized = null,navItem = null,orgName = null,countryName = null) {
+	macro viewLocalizedCountryCP(editLocalized = null, navItem = null, orgName = null, countryName = null) {
 		AssertClick(
 			key_navItem = ${navItem},
 			locator1 = "NavBar#NAV_ITEM_LINK",
@@ -495,7 +495,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewParentOrganizationCP(orgName = null,subOrgName = null,parentOrgName = null) {
+	macro viewParentOrganizationCP(orgName = null, subOrgName = null, parentOrgName = null) {
 		Organization.gotoEdit(orgName = ${orgName});
 
 		var key_orgName = ${subOrgName};
@@ -522,7 +522,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSuborganizationCP(orgType = null,orgName = null,suborgType = null,suborgName = null) {
+	macro viewSuborganizationCP(orgType = null, orgName = null, suborgType = null, suborgName = null) {
 		LexiconEntry.openEntryMenu(rowEntry = ${suborgName});
 
 		MenuItem.click(menuItem = "Edit");

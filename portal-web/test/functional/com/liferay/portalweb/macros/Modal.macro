@@ -12,7 +12,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro publish(warningMessage = null,action = null) {
+	macro publish(warningMessage = null, action = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}

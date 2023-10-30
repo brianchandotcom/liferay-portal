@@ -30,7 +30,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editMiniCartItemQuantity(productQuantity = null,cartItemSku = null) {
+	macro editMiniCartItemQuantity(productQuantity = null, cartItemSku = null) {
 		Type(
 			key_cartItemSku = ${cartItemSku},
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",
@@ -93,7 +93,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoMiniCartEntry(entryName = null,cartItemSku = null) {
+	macro gotoMiniCartEntry(entryName = null, cartItemSku = null) {
 		AssertClickNoError(
 			key_cartItemSku = ${cartItemSku},
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_USING_SKU",
@@ -157,7 +157,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoPortlet(portlet = null,category = null) {
+	macro gotoPortlet(portlet = null, category = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = ${category},
 			panel = "Commerce",
@@ -290,7 +290,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro validateMiniCartItemQuantity(productQuantity = null,cartItemSku = null) {
+	macro validateMiniCartItemQuantity(productQuantity = null, cartItemSku = null) {
 		AssertTextEquals(
 			key_cartItemSku = ${cartItemSku},
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_QUANTITY",

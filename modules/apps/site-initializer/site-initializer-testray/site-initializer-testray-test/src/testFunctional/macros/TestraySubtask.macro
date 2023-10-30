@@ -35,7 +35,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro verifySubtaskDetails(score = null,comment = null,userName = null,issues = null,updated = null,status = null) {
+	macro verifySubtaskDetails(score = null, comment = null, userName = null, issues = null, updated = null, status = null) {
 		AssertElementPresent(
 			key_comment = ${comment},
 			key_issues = ${issues},

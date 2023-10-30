@@ -2,7 +2,7 @@ definition {
 
 	@description = "Create a page or child page to an existing site template."
 	@summary = "Default summary"
-	macro addLayoutToSiteTemplate(groupName = null,parentLayoutName = null,layoutName = null) {
+	macro addLayoutToSiteTemplate(groupName = null, parentLayoutName = null, layoutName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${layoutName}");
 
 		JSONLayout.addPrivateLayout(
@@ -13,7 +13,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addSiteFromSiteTemplate(groupName = null,siteTemplateName = null) {
+	macro addSiteFromSiteTemplate(groupName = null, siteTemplateName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${siteTemplateName}");
 
 		var privateLayout = JSONLayoutSetter.setPrivateLayout(privateLayout = ${privateLayout});
@@ -54,7 +54,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteSiteTemplateByName(companyId = null,siteTemplateName = null) {
+	macro deleteSiteTemplateByName(companyId = null, siteTemplateName = null) {
 		Variables.assertDefined(parameterList = ${siteTemplateName});
 
 		var layoutSetPrototypeId = JSONSiteTemplateAPI._getSiteTemplateIdByName(companyId = ${companyId});
@@ -63,7 +63,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getPlid(portalURL = null,siteTemplateName = null,layoutName = null) {
+	macro getPlid(portalURL = null, siteTemplateName = null, layoutName = null) {
 		Variables.assertDefined(parameterList = "${layoutName},${siteTemplateName}");
 
 		if (!(isSet(site))) {

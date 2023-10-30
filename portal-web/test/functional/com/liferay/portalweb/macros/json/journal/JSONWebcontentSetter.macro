@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro setArticleId(groupName = null,site = null,title = null) {
+	macro setArticleId(groupName = null, site = null, title = null) {
 		Variables.assertDefined(parameterList = "${groupName},${title}");
 
 		var groupId = JSONWebcontentSetter.setGroupId(
@@ -28,7 +28,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setContentXML(contentMap = null,source = null,content = null) {
+	macro setContentXML(contentMap = null, source = null, content = null) {
 		JSONUtil2._exclusiveOrCheck(
 			a = ${content},
 			b = ${contentMap},
@@ -66,7 +66,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setFolderId(groupId = null,folderName = null) {
+	macro setFolderId(groupId = null, folderName = null) {
 		if (isSet(folderName)) {
 			Variables.assertDefined(parameterList = ${groupId});
 
@@ -97,7 +97,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setServiceContext(assetCategoryIds = null,assetTagNames = null,workflowAction = null) {
+	macro setServiceContext(assetCategoryIds = null, assetTagNames = null, workflowAction = null) {
 		if (!(isSet(serviceContext))) {
 			var serviceContext = JSONServiceContextUtil.setServiceContext(
 				addGroupPermissions = "true",

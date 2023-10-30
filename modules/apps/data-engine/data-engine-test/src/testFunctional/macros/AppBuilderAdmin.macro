@@ -23,7 +23,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addOrRemovePermissionFromRoles(addOrRemovePermission = null,permission = null,roleList = null) {
+	macro addOrRemovePermissionFromRoles(addOrRemovePermission = null, permission = null, roleList = null) {
 		for (var roleTitle : list ${roleList}) {
 			var key_roleTitle = ${roleTitle};
 
@@ -95,7 +95,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro chooseMultipleFilter(deploymentFilterOption = null,statusFilterOption = null) {
+	macro chooseMultipleFilter(deploymentFilterOption = null, statusFilterOption = null) {
 		Click(locator1 = "AppBuilder#SEARCH_FILTER_AND_ORDER_MENU");
 
 		Click.clickAtNotVisible(
@@ -138,7 +138,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteApp(itemName = null,key_itemName = null) {
+	macro deleteApp(itemName = null, key_itemName = null) {
 		Click(
 			key_itemName = ${itemName},
 			locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
@@ -153,7 +153,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteEntry(itemName = null,key_itemName = null) {
+	macro deleteEntry(itemName = null, key_itemName = null) {
 		Click(
 			key_itemName = ${itemName},
 			locator1 = "AppBuilder#VERTICAL_ELLIPSIS_BUTTON");
@@ -373,7 +373,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro validateEmptyListMessage(description = null,title = null) {
+	macro validateEmptyListMessage(description = null, title = null) {
 		AssertTextEquals(
 			locator1 = "AppBuilder#MESSAGE_TITLE_EMPTY_LIST",
 			value1 = ${title});
@@ -440,7 +440,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro validateListTitleAtRow(rowNumber = null,title = null) {
+	macro validateListTitleAtRow(rowNumber = null, title = null) {
 		AssertTextEquals(
 			key_rowNumber = ${rowNumber},
 			locator1 = "AppBuilder#VALIDATE_LIST_TITLE_NAME_AT_ROW",

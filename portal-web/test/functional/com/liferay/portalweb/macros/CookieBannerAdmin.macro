@@ -34,7 +34,7 @@ definition {
 
 	@description = "Save Cookie Banner settings"
 	@summary = "Default summary"
-	macro saveSettings(linkDisplayText = null,content = null,privacyPolicyLink = null) {
+	macro saveSettings(linkDisplayText = null, content = null, privacyPolicyLink = null) {
 		WaitForElementPresent(locator1 = "CookieBannerAdmin#MENU_TITLE");
 
 		if (isSet(content)) {
@@ -103,7 +103,7 @@ definition {
 
 	@description = "Set custom texts for Cookie Banner at Site Level"
 	@summary = "Default summary"
-	macro setCustomTextForAllFieldsAtSiteLevel(baseURL = null,siteURLKey = null,text = null) {
+	macro setCustomTextForAllFieldsAtSiteLevel(baseURL = null, siteURLKey = null, text = null) {
 		Variables.assertDefined(parameterList = ${text});
 
 		CookieNavigator.gotoSiteSettings(

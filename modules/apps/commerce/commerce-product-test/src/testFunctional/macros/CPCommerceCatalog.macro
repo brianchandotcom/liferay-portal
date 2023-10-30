@@ -25,7 +25,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro newOptionsEntry(optionFieldType = null,optionDescription = null,facetable = null,skuContributor = null,optionName = null,required = null) {
+	macro newOptionsEntry(optionFieldType = null, optionDescription = null, facetable = null, skuContributor = null, optionName = null, required = null) {
 		Click(locator1 = "CommerceEntry#ADD_BUTTON");
 
 		WaitForElementPresent(locator1 = "IFrame#MODAL_BODY");
@@ -42,7 +42,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro newProductsEntry(publishProduct = null,compileDescription = null,productName = null,productType = null,productCatalog = null) {
+	macro newProductsEntry(publishProduct = null, compileDescription = null, productName = null, productType = null, productCatalog = null) {
 		CommerceProducts.addEntry(
 			compileDescription = ${compileDescription},
 			productCatalog = ${productCatalog},

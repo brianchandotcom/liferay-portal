@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addEntry(productTitle = null,productShortDescription = null,productFullDescription = null,plusMenu = null) {
+	macro addEntry(productTitle = null, productShortDescription = null, productFullDescription = null, plusMenu = null) {
 		Click(locator1 = "Button#PLUS");
 
 		AssertClick(
@@ -16,7 +16,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editCatalogEntry(catalogName = null,catalogNewName = null,catalogBasePriceList = null,catalogBasePromotion = null,catalogLanguage = null,catalogCurrency = null) {
+	macro editCatalogEntry(catalogName = null, catalogNewName = null, catalogBasePriceList = null, catalogBasePromotion = null, catalogLanguage = null, catalogCurrency = null) {
 		if (IsElementNotPresent(locator1 = "CommerceEntry#HEADER_ID")) {
 			CommerceEntry.clickTableEntryEditButton(entryName = ${catalogName});
 		}

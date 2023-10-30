@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addContent(linkAddress = null,linkText = null) {
+	macro addContent(linkAddress = null, linkText = null) {
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#GOOGLE_DOC");
 
 		if (IsElementPresent(locator1 = "GoogleDoc#DISMISS")) {
@@ -62,7 +62,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoEdit(dmDocumentTitle = null,dmDocumentTypeName = null) {
+	macro gotoEdit(dmDocumentTitle = null, dmDocumentTypeName = null) {
 		var key_dmDocumentTitle = ${dmDocumentTitle};
 
 		Click(locator1 = "DocumentsAndMedia#DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS");

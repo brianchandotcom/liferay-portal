@@ -49,7 +49,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoLocalizedSite(displayStyle = null,site = null,navItem = null) {
+	macro gotoLocalizedSite(displayStyle = null, site = null, navItem = null) {
 		var siteName = TestCase.getSiteName(siteName = ${siteName});
 
 		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
@@ -82,7 +82,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoPortlet(site = null,portlet = null,category = null) {
+	macro gotoPortlet(site = null, portlet = null, category = null) {
 		if (IsElementNotPresent(locator1 = "ProductMenu#TOGGLE")) {
 			ApplicationsMenu.gotoSite(site = ${site});
 		}
@@ -95,7 +95,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoPortletWhenDisableApplicationsMenu(portlet = null,panel = null,category = null) {
+	macro gotoPortletWhenDisableApplicationsMenu(portlet = null, panel = null, category = null) {
 		ProductMenuHelper.expandPanel(panel = ${panel});
 
 		ProductMenuHelper.expandCategory(category = ${category});
@@ -104,7 +104,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoScopedPortlet(scope = null,portlet = null,category = null) {
+	macro gotoScopedPortlet(scope = null, portlet = null, category = null) {
 		ProductMenuHelper.openProductMenu();
 
 		ProductMenuHelper.expandCategory(category = ${category});

@@ -3,7 +3,7 @@ definition {
 	var formName = "Created Form Name";
 
 	@summary = "Default summary"
-	macro changeLanguage(newLanguage = null,currentLanguage = null) {
+	macro changeLanguage(newLanguage = null, currentLanguage = null) {
 		Click(
 			key_language = ${currentLanguage},
 			locator1 = "FormPortletConfiguration#SELECT_LANGUAGE");
@@ -14,7 +14,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureScopePG(scopeSelection = null,portletName = null) {
+	macro configureScopePG(scopeSelection = null, portletName = null) {
 		Portlet.gotoPortletOptions(
 			portletName = ${portletName},
 			portletOption = "Configuration");
@@ -49,7 +49,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectFormOnAPage(formName = null,pageName = null) {
+	macro selectFormOnAPage(formName = null, pageName = null) {
 		Navigator.gotoPage(pageName = ${pageName});
 
 		FormPortletNavigator.gotoSelectForm();

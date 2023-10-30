@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro add(embedImage = null,portletNameScoped = null,siteName = null,fieldLabelList = null,source = null,webContentTextSingleLine = null,webContentTextMultipleLines = null,webContentTitle = null,templateName = null,imageFileName = null,webContentContent = null) {
+	macro add(embedImage = null, portletNameScoped = null, siteName = null, fieldLabelList = null, source = null, webContentTextSingleLine = null, webContentTextMultipleLines = null, webContentTitle = null, templateName = null, imageFileName = null, webContentContent = null) {
 		WebContentDisplayPortletNavigator.gotoAdd(
 			portletNameScoped = ${portletNameScoped},
 			structureName = ${structureName});
@@ -43,7 +43,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addDraft(webContentTitle = null,webContentContent = null) {
+	macro addDraft(webContentTitle = null, webContentContent = null) {
 		WebContentDisplayPortletNavigator.gotoAdd();
 
 		WebContent.addDraft(
@@ -52,7 +52,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addLocalized(webContentTitle = null,portletNameTranslation = null,localizedBasicWebContent = null,webContentContent = null) {
+	macro addLocalized(webContentTitle = null, portletNameTranslation = null, localizedBasicWebContent = null, webContentContent = null) {
 		WebContentDisplayPortletNavigator.gotoAdd(
 			portletNameTranslation = ${portletNameTranslation},
 			structureName = ${localizedBasicWebContent});
@@ -98,7 +98,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addWithWorkflow(webContentTitle = null,webContentContent = null,selectStructureName = null) {
+	macro addWithWorkflow(webContentTitle = null, webContentContent = null, selectStructureName = null) {
 		WebContentDisplayPortletNavigator.gotoAdd(structureName = ${selectStructureName});
 
 		WebContent.addCP(
@@ -113,7 +113,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureScope(scopeSelection = null,portletName = null) {
+	macro configureScope(scopeSelection = null, portletName = null) {
 		Portlet.gotoPortletOptions(
 			portletName = ${portletName},
 			portletOption = "Configuration");
@@ -130,7 +130,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureSetup(userToolNameList = null,metadataNameList = null,enableViewCountIncrement = null) {
+	macro configureSetup(userToolNameList = null, metadataNameList = null, enableViewCountIncrement = null) {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if (isSet(userToolNameList)) {
@@ -161,7 +161,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro edit(webContentContentEdit = null,webContentTitleEdit = null,webContentTextSingleLine = null) {
+	macro edit(webContentContentEdit = null, webContentTitleEdit = null, webContentTextSingleLine = null) {
 		WebContent.addCP(webContentTitle = ${webContentTitleEdit});
 
 		if (isSet(webContentTextSingleLine)) {
@@ -182,7 +182,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editTemplate(templateScript = null,webContentTitle = null,templateName = null,editTemplateButton = null,structureName = null,webContentContent = null,menuItem = null) {
+	macro editTemplate(templateScript = null, webContentTitle = null, templateName = null, editTemplateButton = null, structureName = null, webContentContent = null, menuItem = null) {
 		if (${editTemplateButton} == "true") {
 			WebContentDisplayPortlet.gotoEditTemplate(webContentTitle = ${webContentTitle});
 		}
@@ -271,7 +271,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoSelectWebContent(depotName = null,portletIndex = null) {
+	macro gotoSelectWebContent(depotName = null, portletIndex = null) {
 		if (!(isSet(portletName))) {
 			var portletName = "Web Content Display";
 		}
@@ -342,7 +342,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro searchWebContent(depotName = null,searchTerm = null,errorMessage = null,webContentTitleList = null,webContentTitleNotPresentList = null,portletName = null) {
+	macro searchWebContent(depotName = null, searchTerm = null, errorMessage = null, webContentTitleList = null, webContentTitleNotPresentList = null, portletName = null) {
 		WebContentDisplayPortlet.gotoSelectWebContent(
 			depotName = ${depotName},
 			portletName = ${portletName});
@@ -385,7 +385,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectWebContent(depotName = null,searchTerm = null,webContentTitle = null,portletIndex = null,portletName = null) {
+	macro selectWebContent(depotName = null, searchTerm = null, webContentTitle = null, portletIndex = null, portletName = null) {
 		WebContentDisplayPortlet.gotoSelectWebContent(
 			depotName = ${depotName},
 			portletIndex = ${portletIndex},
@@ -437,7 +437,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewAllSettingsEnabled(webContentContentLocalized = null,webContentTitleLocalized = null,relatedAssetTitle = null,locale = null) {
+	macro viewAllSettingsEnabled(webContentContentLocalized = null, webContentTitleLocalized = null, relatedAssetTitle = null, locale = null) {
 		Click(locator1 = "WCD#WEB_CONTENT_TRANSLATION_DROPDOWN");
 
 		Click(
@@ -522,7 +522,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewContent(videoShortcutTitle = null,displayText = null,webContentTitle = null,imageFileName = null,webContentContent = null,audioFileName = null,pageName = null,url = null) {
+	macro viewContent(videoShortcutTitle = null, displayText = null, webContentTitle = null, imageFileName = null, webContentContent = null, audioFileName = null, pageName = null, url = null) {
 		if (isSet(audioFileName)) {
 			AssertElementPresent(
 				key_audioFileName = ${audioFileName},
@@ -619,7 +619,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewMenuItem(webContentTitle = null,menuItemList = null) {
+	macro viewMenuItem(webContentTitle = null, menuItemList = null) {
 		WebContentDisplayPortletNavigator.gotoArticleEllipsisMenu(webContentTitle = ${webContentTitle});
 
 		for (var menuItem : list ${menuItemList}) {
@@ -628,7 +628,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewMessage(recycleBinWebContentTitle = null,expiredWebContentTitle = null,draftWebContentTitle = null) {
+	macro viewMessage(recycleBinWebContentTitle = null, expiredWebContentTitle = null, draftWebContentTitle = null) {
 		if (isSet(recycleBinWebContentTitle)) {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_3",
@@ -667,7 +667,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewWorkflow(webContentTitle = null,webContentContent = null) {
+	macro viewWorkflow(webContentTitle = null, webContentContent = null) {
 		AssertTextEquals(
 			locator1 = "Message#ERROR_3",
 			value1 = "${webContentTitle} is not approved.");

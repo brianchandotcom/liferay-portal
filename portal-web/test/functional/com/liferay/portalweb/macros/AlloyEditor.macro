@@ -26,7 +26,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro typeEditor(editor = null,content = null) {
+	macro typeEditor(editor = null, content = null) {
 		Type.typeEditor(
 			key_editor = ${editor},
 			locator1 = "AlloyEditor#EDITOR",

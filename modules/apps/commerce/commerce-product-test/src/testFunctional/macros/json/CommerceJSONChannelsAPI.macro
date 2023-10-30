@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _addChannel(channelName = null,channelType = null,currencyCode = null) {
+	macro _addChannel(channelName = null, channelType = null, currencyCode = null) {
 		Variables.assertDefined(parameterList = "${channelName},${channelType},${currencyCode}");
 
 		var baseURL = ${baseURL};
@@ -103,7 +103,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getCommerceChannelIdByName(channelCount = null,channelName = null) {
+	macro _getCommerceChannelIdByName(channelCount = null, channelName = null) {
 		Variables.assertDefined(parameterList = ${channelName});
 
 		var baseURL = ${baseURL};
@@ -184,7 +184,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _patchCommerceChannel(accountIdByName = null,channelName = null) {
+	macro _patchCommerceChannel(accountIdByName = null, channelName = null) {
 		Variables.assertDefined(parameterList = ${channelName});
 
 		var baseURL = ${baseURL};

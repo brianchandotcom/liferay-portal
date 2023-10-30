@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _addSite(templateType = null,membershipType = null,siteName = null,parentSiteKey = null,templateKey = null) {
+	macro _addSite(templateType = null, membershipType = null, siteName = null, parentSiteKey = null, templateKey = null) {
 		if (!(isSet(portalURL))) {
 			var portalURL = JSONCompany.getPortalURL();
 		}

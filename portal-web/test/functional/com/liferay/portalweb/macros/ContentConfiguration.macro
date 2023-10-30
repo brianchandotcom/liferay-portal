@@ -55,7 +55,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro checkSubSubContent(checkSubSubContent = null,subContent = null,contentName = null) {
+	macro checkSubSubContent(checkSubSubContent = null, subContent = null, contentName = null) {
 		var key_contentName = ${contentName};
 
 		Check.checkNotVisible(locator1 = "PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX");
@@ -75,7 +75,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro contentDateRange(contentDateRange = null,dateRangeStartDate = null,dateRangeEndDate = null) {
+	macro contentDateRange(contentDateRange = null, dateRangeStartDate = null, dateRangeEndDate = null) {
 		if (IsElementPresent(locator1 = "Button#PUBLISH")) {
 			ScrollWebElementIntoView(locator1 = "Button#PUBLISH");
 		}
@@ -231,7 +231,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro uncheckSubContent(uncheckSubContent = null,mainContent = null) {
+	macro uncheckSubContent(uncheckSubContent = null, mainContent = null) {
 		var key_contentName = ${mainContent};
 		var key_subContent = ${uncheckSubContent};
 
@@ -251,7 +251,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro uncheckSubSubContent(subContent = null,contentName = null,uncheckSubSubContent = null) {
+	macro uncheckSubSubContent(subContent = null, contentName = null, uncheckSubSubContent = null) {
 		var key_contentName = ${contentName};
 
 		Check.checkNotVisible(locator1 = "PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX");

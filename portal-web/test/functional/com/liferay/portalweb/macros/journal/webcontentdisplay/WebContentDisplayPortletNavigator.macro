@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro gotoAdd(portletNameScoped = null,portletNameTranslation = null) {
+	macro gotoAdd(portletNameScoped = null, portletNameTranslation = null) {
 		var portletName = "Web Content Display";
 
 		if (isSet(portletNameScoped)) {
@@ -59,7 +59,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoEdit(webContentTitle = null,menuItem = null) {
+	macro gotoEdit(webContentTitle = null, menuItem = null) {
 		WebContentDisplayPortletNavigator.gotoArticleEllipsisMenu(webContentTitle = ${webContentTitle});
 
 		MenuItem.click(menuItem = ${menuItem});

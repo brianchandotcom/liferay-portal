@@ -14,7 +14,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewEntry(entryStatus = null,wikiPageTitle = null,revision = null) {
+	macro viewEntry(entryStatus = null, wikiPageTitle = null, revision = null) {
 		var key_wikiPageTitle = ${wikiPageTitle};
 
 		AssertTextEquals(

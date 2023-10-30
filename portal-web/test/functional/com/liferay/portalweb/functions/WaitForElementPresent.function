@@ -1,7 +1,7 @@
 @default = "waitForElementPresent"
 definition {
 
-	function waitForElementPresent(locator1,value1) {
+	function waitForElementPresent(locator1) {
 		selenium.waitForElementPresent(${locator1}, "false");
 	}
 
@@ -9,7 +9,7 @@ definition {
 		selenium.waitForElementPresent(${locator1}, "false");
 	}
 
-	function waitForLastScript(locator1,value1) {
+	function waitForLastScript(locator1) {
 		selenium.waitForElementPresent(${locator1}, "false");
 	}
 

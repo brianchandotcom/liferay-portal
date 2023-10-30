@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _addAccountEntry(countryNumber = null,threeLetterISOCode = null,subjectToVAT = null,creatorEmailAddress = null,twoLetterISOCode = null,shippingAllowed = null,creatorPassword = null,billingAllowed = null,countryPriority = null,countryName = null,countryStatus = null) {
+	macro _addAccountEntry(countryNumber = null, threeLetterISOCode = null, subjectToVAT = null, creatorEmailAddress = null, twoLetterISOCode = null, shippingAllowed = null, creatorPassword = null, billingAllowed = null, countryPriority = null, countryName = null, countryStatus = null) {
 		Variables.assertDefined(parameterList = "${countryName},${countryNumber},${threeLetterISOCode},${twoLetterISOCode}");
 
 		var companyId = JSONCompany.getCompanyId();

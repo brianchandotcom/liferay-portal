@@ -28,7 +28,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoEditCalendarsManage(calendarManage = null,editNameCalendarManage = null) {
+	macro gotoEditCalendarsManage(calendarManage = null, editNameCalendarManage = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${calendarManage});
@@ -37,7 +37,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewManageCalendarDefault(calendarName = null,calendarDefault = null) {
+	macro viewManageCalendarDefault(calendarName = null, calendarDefault = null) {
 		AssertElementPresent(
 			key_calendarDefault = ${calendarDefault},
 			key_calendarName = ${calendarName},
@@ -45,7 +45,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewManageCalendarsByPosition(calendarName = null,rowNumber = null) {
+	macro viewManageCalendarsByPosition(calendarName = null, rowNumber = null) {
 		AssertElementPresent(
 			key_calendarName = ${calendarName},
 			key_rowNumber = ${rowNumber},

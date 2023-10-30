@@ -103,7 +103,7 @@ definition {
 
 	@description = "Elasticsearch provides a Cluster Health API (http://localhost:${nodePort}/_cluster/health?pretty=true) to easily view the current status of the cluster."
 	@summary = "Default summary"
-	macro viewClusterStatusViaClusterHealthAPI(numberOfNodes = null,nodePort = null) {
+	macro viewClusterStatusViaClusterHealthAPI(numberOfNodes = null, nodePort = null) {
 		var portalHostname = PropsUtil.get("portal.hostname");
 
 		Navigator.openSpecificURL(url = "http://${portalHostname}:${nodePort}/_cluster/health?level=indices&pretty");

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addFileWithWorkflow(dmDocumentTitle = null,dmDocumentTypeName = null,dmDocumentDescription = null,workflowPngFile = null) {
+	macro addFileWithWorkflow(dmDocumentTitle = null, dmDocumentTypeName = null, dmDocumentDescription = null, workflowPngFile = null) {
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = ${dmDocumentTypeName});
 
 		WorkflowDocumentsAndMedia.editImageFileDocument(
@@ -19,7 +19,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addMultipleCP(dateValue = null,documentType = null,dmDocumentFileList = null,currentDocumentType = null,uploadTempFile = null) {
+	macro addMultipleCP(dateValue = null, documentType = null, dmDocumentFileList = null, currentDocumentType = null, uploadTempFile = null) {
 		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "Multiple Files Upload");
 
 		if (isSet(dmDocumentFileList)) {
@@ -90,7 +90,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editImageFileDocument(dmDocumentTitle = null,dmDocumentDescription = null,workflowPngFile = null) {
+	macro editImageFileDocument(dmDocumentTitle = null, dmDocumentDescription = null, workflowPngFile = null) {
 		var projectDir = PropsUtil.get("project.dir");
 
 		UploadDependencyFile.uploadFile(fileName = ${workflowPngFile});
@@ -108,7 +108,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro videoShortcutAddCP(videoShortcutTitle = null,videoURL = null,extractedVideoShortcutTitle = null,vocabularyName = null,tagNameList = null,videoShortcutPreview = null,videoShortcutDescription = null,categoryName = null) {
+	macro videoShortcutAddCP(videoShortcutTitle = null, videoURL = null, extractedVideoShortcutTitle = null, vocabularyName = null, tagNameList = null, videoShortcutPreview = null, videoShortcutDescription = null, categoryName = null) {
 		if (!(isSet(skipNavigation))) {
 			DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "External Video Shortcut");
 		}

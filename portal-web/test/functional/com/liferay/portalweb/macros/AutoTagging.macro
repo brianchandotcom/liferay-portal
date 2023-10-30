@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro disableAutoTagging(disableAutoTaggingFor = null,siteURLKey = null) {
+	macro disableAutoTagging(disableAutoTaggingFor = null, siteURLKey = null) {
 		if (${disableAutoTaggingFor} == "System Settings") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
@@ -40,7 +40,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro enableAutoTagging(maximumNumberOfTags = null,site = null,enableAutoTaggingFor = null,systemSettingsInstanceScope = null,validationError = null) {
+	macro enableAutoTagging(maximumNumberOfTags = null, site = null, enableAutoTaggingFor = null, systemSettingsInstanceScope = null, validationError = null) {
 		if (${enableAutoTaggingFor} == "System Settings") {
 			AutoTagging.openToAssetAutoTagging(configurationScope = "System Settings");
 
@@ -105,7 +105,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro enableOpenNLP(confidenceThreshold = null,assetType = null) {
+	macro enableOpenNLP(confidenceThreshold = null, assetType = null) {
 		AutoTagging.openToOpenNLP();
 
 		if (isSet(confidenceThreshold)) {
@@ -208,7 +208,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToAutoTaggingSiteSettings(siteURLKey = null,portlet = null) {
+	macro openToAutoTaggingSiteSettings(siteURLKey = null, portlet = null) {
 		if (${portlet} == "Asset Auto Tagging") {
 			var configurationScreenKey = "site-configuration-asset-auto-tagger";
 		}
@@ -231,7 +231,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewUpdateAutoTagsSetting(updateAutoTagsFor = null,updateAutoTags = null) {
+	macro viewUpdateAutoTagsSetting(updateAutoTagsFor = null, updateAutoTags = null) {
 		if (${updateAutoTagsFor} == "System Settings") {
 			AutoTagging.openToAssetAutoTagging(configurationScope = "System Settings");
 

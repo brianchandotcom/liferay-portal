@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addMentionViaBlogsEntry(mentionsUserScreenName = null,siteURLKey = null,entryTitle = null,entryContent = null,layoutName = null) {
+	macro addMentionViaBlogsEntry(mentionsUserScreenName = null, siteURLKey = null, entryTitle = null, entryContent = null, layoutName = null) {
 		var key_entryContent = ${entryContent};
 		var key_mentionsUserScreenName = ${mentionsUserScreenName};
 
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addMentionViaComments(entryComment = null,mentionsUserScreenName = null,userLastName = null,parentComment = null,userEmailAddress = null,userFirstName = null) {
+	macro addMentionViaComments(entryComment = null, mentionsUserScreenName = null, userLastName = null, parentComment = null, userEmailAddress = null, userFirstName = null) {
 		if (isSet(parentComment)) {
 			AssertClick(
 				key_entryComment = ${parentComment},
@@ -124,7 +124,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addMentionViaMessageBoardsReply(groupName = null,threadSubject = null,mentionsUserScreenName = null,siteURLKey = null,threadBody = null,layoutName = null) {
+	macro addMentionViaMessageBoardsReply(groupName = null, threadSubject = null, mentionsUserScreenName = null, siteURLKey = null, threadBody = null, layoutName = null) {
 		var key_mentionsUserScreenName = ${mentionsUserScreenName};
 		var key_threadSubject = ${threadSubject};
 
@@ -161,7 +161,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addMentionViaMessageBoardThread(threadSubject = null,siteURLKey = null,mentionsUserScreenNameList = null) {
+	macro addMentionViaMessageBoardThread(threadSubject = null, siteURLKey = null, mentionsUserScreenNameList = null) {
 		if (isSet(siteURLKey)) {
 			MessageboardsThread.openToAddThread(siteURLKey = ${siteURLKey});
 		}
@@ -208,7 +208,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addMentionViaMessageBoardThreadEdit(groupName = null,threadSubject = null,mentionsUserScreenName = null,siteURLKey = null,threadBody = null) {
+	macro addMentionViaMessageBoardThreadEdit(groupName = null, threadSubject = null, mentionsUserScreenName = null, siteURLKey = null, threadBody = null) {
 		if (isSet(siteURLKey)) {
 			MessageboardsThread.openToEditThread(
 				groupName = ${groupName},
@@ -237,7 +237,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCommentMentionTagLink(mentionsUserScreenName = null,mentionsUserFullName = null) {
+	macro viewCommentMentionTagLink(mentionsUserScreenName = null, mentionsUserFullName = null) {
 		var key_mentionsUserFullName = ${mentionsUserFullName};
 		var key_mentionsUserScreenName = ${mentionsUserScreenName};
 		var key_siteName = ${mentionsUserFullName};
@@ -258,7 +258,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewMentionTagLink(mentionsUserScreenName = null,mentionsUserFullName = null) {
+	macro viewMentionTagLink(mentionsUserScreenName = null, mentionsUserFullName = null) {
 		var key_mentionsUserScreenName = ${mentionsUserScreenName};
 		var key_siteName = ${mentionsUserFullName};
 

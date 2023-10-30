@@ -65,7 +65,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoCheckedOutDocument(dmDocumentTitle = null,dmCheckedOutDocumentTitle = null) {
+	macro gotoCheckedOutDocument(dmDocumentTitle = null, dmCheckedOutDocumentTitle = null) {
 		var key_dmDocumentTitle = ${dmDocumentTitle};
 
 		AssertClick(
@@ -221,7 +221,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoItemViaManagementBar(item = null,menuItem = null) {
+	macro gotoItemViaManagementBar(item = null, menuItem = null) {
 		if (${item} == "Edit Tags") {
 			Click(locator1 = "Icon#EDIT_TAGS");
 		}
@@ -237,7 +237,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoRelatedAssetPG(dmDocumentTitle = null,assetTitle = null) {
+	macro gotoRelatedAssetPG(dmDocumentTitle = null, assetTitle = null) {
 		var key_dmDocumentTitle = ${dmDocumentTitle};
 
 		AssertClick(
@@ -316,7 +316,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoShareViaSharedContent(dmDocumentTitle = null,contentTitle = null) {
+	macro gotoShareViaSharedContent(dmDocumentTitle = null, contentTitle = null) {
 		var key_contentTitle = ${dmDocumentTitle};
 
 		Click(
@@ -343,7 +343,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openDocumentsAndMediaAdmin(baseURL = null,siteURLKey = null) {
+	macro openDocumentsAndMediaAdmin(baseURL = null, siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet");
@@ -352,7 +352,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openDocumentTypesAdmin(baseURL = null,siteURLKey = null) {
+	macro openDocumentTypesAdmin(baseURL = null, siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet&_com_liferay_document_library_web_portlet_DLAdminPortlet_navigation=file_entry_types");
@@ -361,7 +361,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openMetadataSetsAdmin(baseURL = null,siteURLKey = null) {
+	macro openMetadataSetsAdmin(baseURL = null, siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage?p_p_id=com_liferay_document_library_web_portlet_DLAdminPortlet&_com_liferay_document_library_web_portlet_DLAdminPortlet_navigation=file_entry_metadata_sets");
@@ -377,7 +377,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToAddDocumentType(groupName = null,baseURL = null,dmDocumentTypeName = null,siteURLKey = null,folderId = null) {
+	macro openToAddDocumentType(groupName = null, baseURL = null, dmDocumentTypeName = null, siteURLKey = null, folderId = null) {
 		if (isSet(documentTypeName)) {
 			var fileEntryId = JSONDocument.getFileEntryTypeId(
 				dmDocumentTypeName = ${dmDocumentTypeName},
@@ -401,7 +401,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToAddEntry(groupName = null,siteURLKey = null,documentTypeName = null,folderName = null,layoutName = null) {
+	macro openToAddEntry(groupName = null, siteURLKey = null, documentTypeName = null, folderName = null, layoutName = null) {
 		var groupId = JSONGroupAPI._getGroupIdByName(
 			groupName = ${groupName},
 			site = "true");
@@ -476,7 +476,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToConfigInSiteSettings(siteURLKey = null,portlet = null) {
+	macro openToConfigInSiteSettings(siteURLKey = null, portlet = null) {
 		var baseURL = JSONCompany.getPortalURL();
 
 		if (${portlet} == "Documents and Media Size Limits") {
@@ -569,7 +569,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToEditEntryInSite(dmDocumentTitle = null,groupName = null,site = null,siteURLKey = null,folderName = null) {
+	macro openToEditEntryInSite(dmDocumentTitle = null, groupName = null, site = null, siteURLKey = null, folderName = null) {
 		if (isSet(folderName)) {
 			Variables.assertDefined(parameterList = "${folderName},${groupName}");
 
@@ -590,7 +590,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToEntryInAdmin(dmDocumentTitle = null,groupName = null,baseURL = null,site = null,siteURLKey = null,folderId = null) {
+	macro openToEntryInAdmin(dmDocumentTitle = null, groupName = null, baseURL = null, site = null, siteURLKey = null, folderId = null) {
 		var fileEntryId = JSONDocument.getFileEntryId(
 			dmDocumentTitle = ${dmDocumentTitle},
 			folderId = ${folderId},
@@ -606,7 +606,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToFolderInAdmin(parentFolderName = null,displayStyle = null,groupName = null,siteURLKey = null,dmFolderName = null) {
+	macro openToFolderInAdmin(parentFolderName = null, displayStyle = null, groupName = null, siteURLKey = null, dmFolderName = null) {
 		if (isSet(parentFolderName)) {
 			var parentFolderId = JSONDocumentAPI._getFolderIdByFolderName(
 				groupName = ${groupName},

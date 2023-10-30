@@ -3,7 +3,7 @@ definition {
 	// There is no need for a SocialActivity#tearDownCP, as the User Statistics will not be reset and Jenkins does not run teardowns.
 
 	@summary = "Default summary"
-	macro configureActionCP(userAction = null,participationIncrement = null,participationLimitPeriod = null,participationLimitValue = null,contributionLimitPeriod = null,contributionIncrement = null,contributionLimitValue = null) {
+	macro configureActionCP(userAction = null, participationIncrement = null, participationLimitPeriod = null, participationLimitValue = null, contributionLimitPeriod = null, contributionIncrement = null, contributionLimitValue = null) {
 		var key_userAction = ${userAction};
 
 		if (isSet(participationIncrement)) {
@@ -72,7 +72,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updateGroupStatisticsConfiguration(chartWidth = null,displayActivityCounterName = null,dataRange = null,chartType = null) {
+	macro updateGroupStatisticsConfiguration(chartWidth = null, displayActivityCounterName = null, dataRange = null, chartType = null) {
 		Portlet.gotoPortletOptions(
 			portletName = "Group Statistics",
 			portletOption = "Configuration");
@@ -106,7 +106,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPGViaGroupStatistics(siteStatistics = null,currentValue = null) {
+	macro viewPGViaGroupStatistics(siteStatistics = null, currentValue = null) {
 		var key_siteStatistics = ${siteStatistics};
 
 		AssertTextEquals.assertPartialText(
@@ -123,7 +123,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPGViaUserStatistics(contributionScore = null,participationScore = null,userRank = null,userName = null) {
+	macro viewPGViaUserStatistics(contributionScore = null, participationScore = null, userRank = null, userName = null) {
 		var key_userName = ${userName};
 
 		AssertTextEquals(

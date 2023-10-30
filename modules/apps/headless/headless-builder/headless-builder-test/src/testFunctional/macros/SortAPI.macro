@@ -25,7 +25,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createAPISort(sortValue = null,endpointERC = null,virtualHost = null) {
+	macro createAPISort(sortValue = null, endpointERC = null, virtualHost = null) {
 		Variables.assertDefined(parameterList = "${sortValue},${endpointERC}");
 
 		var curl = SortAPI._curlAPISort(virtualHost = ${virtualHost});

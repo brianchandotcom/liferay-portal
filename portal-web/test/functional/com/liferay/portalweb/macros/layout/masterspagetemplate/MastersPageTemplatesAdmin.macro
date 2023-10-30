@@ -36,7 +36,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoMastersEllipsisItem(item = null,masterLayoutName = null) {
+	macro gotoMastersEllipsisItem(item = null, masterLayoutName = null) {
 		Click.waitForMenuToggleJSClick(
 			key_card = ${masterLayoutName},
 			locator1 = "Card#CARD_ELLIPSIS");

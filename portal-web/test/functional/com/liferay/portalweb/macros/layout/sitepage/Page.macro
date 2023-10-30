@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro assertAlternateURL(portalURL = null,locale = null) {
+	macro assertAlternateURL(portalURL = null, locale = null) {
 		var html = '''<link data-senna-track="temporary" href="''';
 
 		if (${locale} == "zh") {
@@ -19,7 +19,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertCanonicalURL(customCanonicalURL = null,locale = null) {
+	macro assertCanonicalURL(customCanonicalURL = null, locale = null) {
 		var html = '''<link data-senna-track="temporary" href="''';
 		var html2 = '''" rel="canonical">''';
 
@@ -146,7 +146,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoChildPagePG(childPageName = null,pageName = null) {
+	macro gotoChildPagePG(childPageName = null, pageName = null) {
 		MouseOver.javaScriptMouseOver(
 			key_pageName = ${pageName},
 			locator1 = "NavigationMenusWidget#CHILD_TOGGLE");
@@ -157,7 +157,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoCollectionEntryEllipsisItem(item = null,tableEntry = null) {
+	macro gotoCollectionEntryEllipsisItem(item = null, tableEntry = null) {
 		LexiconTable.clickEllipsisItem(
 			item = ${item},
 			tableEntry = ${tableEntry});
@@ -206,7 +206,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectFilterInCollectionFilter(searchTerm = null,columnNumber = null,filterName = null,title = null,selectedName = null,categoryNameList = null) {
+	macro selectFilterInCollectionFilter(searchTerm = null, columnNumber = null, filterName = null, title = null, selectedName = null, categoryNameList = null) {
 		if (isSet(columnNumber)) {
 			Click.clickNoWaitForVisible(
 				key_columnNumber = ${columnNumber},
@@ -275,7 +275,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewChildPageDropdown(viewChildPageDropdown = null,childPageName = null,javaScriptPage = null) {
+	macro viewChildPageDropdown(viewChildPageDropdown = null, childPageName = null, javaScriptPage = null) {
 		ClickNoError(locator1 = "Home#${viewChildPageDropdown}");
 
 		if (isSet(javaScriptPage)) {
@@ -331,7 +331,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewDefaultSiteTemplatePagesPG(siteName = null,pageName = null) {
+	macro viewDefaultSiteTemplatePagesPG(siteName = null, pageName = null) {
 		Click(locator1 = "Home#PAGE_NAVIGATION_BAR");
 
 		var key_pageName = ${pageName};
@@ -380,7 +380,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPanelPortletListPG(portletNameList = null,componentName = null,pageName = null) {
+	macro viewPanelPortletListPG(portletNameList = null, componentName = null, pageName = null) {
 		var key_componentName = ${componentName};
 
 		AssertTextEquals(
@@ -407,7 +407,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPreview(htmlTitle = null,description = null,locale = null,pageName = null,siteNameURL = null) {
+	macro viewPreview(htmlTitle = null, description = null, locale = null, pageName = null, siteNameURL = null) {
 		if (isSet(key_imageName)) {
 			AssertVisible(locator1 = "PagesAdmin#PREVIEW_IMAGE");
 		}
@@ -521,7 +521,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSiteNameTranslationsPG(textIconList = null,siteNameList = null,localeList = null) {
+	macro viewSiteNameTranslationsPG(textIconList = null, siteNameList = null, localeList = null) {
 		var list1 = ListUtil.newListFromString(${localeList});
 		var list2 = ListUtil.newListFromString(${siteNameList});
 		var list3 = ListUtil.newListFromString(${textIconList});
@@ -559,7 +559,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTranslationsPG(defaultLanguageLocalizationMessage = null,translationLanguageLocalizationMessage = null,sitePageURL = null,preferredLanguageLocalizationMessage = null) {
+	macro viewTranslationsPG(defaultLanguageLocalizationMessage = null, translationLanguageLocalizationMessage = null, sitePageURL = null, preferredLanguageLocalizationMessage = null) {
 		Navigator.openSpecificURL(url = ${sitePageURL});
 
 		AssertLocation(value1 = ${sitePageURL});
@@ -572,7 +572,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewURLLocale(localizationPageURL = null,localizationOption = null) {
+	macro viewURLLocale(localizationPageURL = null, localizationOption = null) {
 		if (isSet(localizationOption)) {
 			AssertClick(
 				key_pageLocale = ${localizationOption},
@@ -584,7 +584,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewWithWorkflowPG(livePage = null,workflowStatus = null,pageName = null) {
+	macro viewWithWorkflowPG(livePage = null, workflowStatus = null, pageName = null) {
 		if (${workflowStatus} == "Ready for Publication") {
 			AssertElementPresent(locator1 = "Staging#STAGING_MENU_READY_FOR_PUBLICATION");
 		}

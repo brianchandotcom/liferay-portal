@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro initializeNewSiteViaAccelerator(siteName = null,siteTemplateName = null) {
+	macro initializeNewSiteViaAccelerator(siteName = null, siteTemplateName = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Sites",
 			panel = "Control Panel",

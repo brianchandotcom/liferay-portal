@@ -22,7 +22,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _gotoMailMessage(recipient = null,asset = null) {
+	macro _gotoMailMessage(recipient = null, asset = null) {
 		var key_columnEntry = ${asset};
 
 		if (isSet(recipient)) {
@@ -52,7 +52,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _viewMailFromInbox(sender = null,recipient = null,asset = null) {
+	macro _viewMailFromInbox(sender = null, recipient = null, asset = null) {
 		var key_columnEntry = ${asset};
 		var key_recipient = ${recipient};
 		var key_sender = ${sender};
@@ -75,7 +75,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _viewMailMessage(toName = null,subject = null,fromAddress = null,content = null) {
+	macro _viewMailMessage(toName = null, subject = null, fromAddress = null, content = null) {
 		var key_asset = ${subject};
 
 		AssertTextEquals.assertPartialText(
@@ -100,7 +100,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro clickBodyLink(bodyLink = null,recipient = null,asset = null) {
+	macro clickBodyLink(bodyLink = null, recipient = null, asset = null) {
 		MockMock._gotoMailMessage(
 			asset = ${asset},
 			recipient = ${recipient});
@@ -113,7 +113,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteMail(asset = null,newTab = null) {
+	macro deleteMail(asset = null, newTab = null) {
 		var key_columnEntry = ${asset};
 
 		MockMock._gotoMail(newTab = ${newTab});
@@ -137,7 +137,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getBodySpecificText(specificText = null,subject = null,extractFirstText = null,asset = null,content = null) {
+	macro getBodySpecificText(specificText = null, subject = null, extractFirstText = null, asset = null, content = null) {
 		var key_asset = ${asset};
 		var key_columnEntry = ${asset};
 
@@ -176,7 +176,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getHTMLBodyFormattedText(sender = null,subject = null,recipient = null,newTab = null) {
+	macro getHTMLBodyFormattedText(sender = null, subject = null, recipient = null, newTab = null) {
 		MockMock._gotoMail(newTab = ${newTab});
 
 		AssertVisible(
@@ -201,7 +201,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openBodyLink(subject = null,asset = null,content = null) {
+	macro openBodyLink(subject = null, asset = null, content = null) {
 		var key_asset = ${asset};
 
 		MockMock._gotoMail();
@@ -222,7 +222,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openCalendarBodyLink(subject = null,asset = null,content = null) {
+	macro openCalendarBodyLink(subject = null, asset = null, content = null) {
 		var key_asset = ${asset};
 
 		MockMock._gotoMail();
@@ -248,7 +248,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewFormattedHTMLTextDiffs(newContent = null,sender = null,recipient = null,asset = null,oldContent = null) {
+	macro viewFormattedHTMLTextDiffs(newContent = null, sender = null, recipient = null, asset = null, oldContent = null) {
 		MockMock._gotoMail();
 
 		MockMock._viewMailFromInbox(
@@ -270,7 +270,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewMail(sender = null,toName = null,subject = null,recipient = null,fromAddress = null,asset = null,content = null) {
+	macro viewMail(sender = null, toName = null, subject = null, recipient = null, fromAddress = null, asset = null, content = null) {
 		MockMock._gotoMail();
 
 		MockMock._viewMailFromInbox(
@@ -292,7 +292,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewMailForOTP(sender = null,subject = null,content = null) {
+	macro viewMailForOTP(sender = null, subject = null, content = null) {
 		MockMock._gotoMail();
 
 		var key_columnEntry = ${subject};
@@ -323,7 +323,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewUnformattedHTMLText(sender = null,subject = null,recipient = null,asset = null,unFormattedContent = null) {
+	macro viewUnformattedHTMLText(sender = null, subject = null, recipient = null, asset = null, unFormattedContent = null) {
 		MockMock._gotoMail();
 
 		MockMock._viewMailFromInbox(

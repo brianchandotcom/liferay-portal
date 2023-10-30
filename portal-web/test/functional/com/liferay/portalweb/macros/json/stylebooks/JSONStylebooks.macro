@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addStyleBookEntry(groupName = null,site = null,styleBookEntryName = null) {
+	macro addStyleBookEntry(groupName = null, site = null, styleBookEntryName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${styleBookEntryName}");
 
 		var groupId = JSONStylebooksSetter.setGroupId(

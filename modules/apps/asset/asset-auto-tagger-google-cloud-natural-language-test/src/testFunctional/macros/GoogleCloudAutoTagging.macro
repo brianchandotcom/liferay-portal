@@ -20,7 +20,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro enableTextAutoTagging(salience = null,confidence = null,assetType = null) {
+	macro enableTextAutoTagging(salience = null, confidence = null, assetType = null) {
 		var googleApiKey = PropsUtil.get("google.cloud.autotagging.service.key");
 
 		Type(

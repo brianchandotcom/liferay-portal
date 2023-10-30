@@ -10,7 +10,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addChildPGViaKBDisplay(cancel = null,saveAsDraft = null,kbArticleContent = null,kbArticleFriendlyURL = null,kbArticleTitle = null) {
+	macro addChildPGViaKBDisplay(cancel = null, saveAsDraft = null, kbArticleContent = null, kbArticleFriendlyURL = null, kbArticleTitle = null) {
 		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Add Child Article");
 
 		AssertElementPresent(locator1 = "TextInput#TITLE");
@@ -56,7 +56,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureKBArticleDisplayPG(kbFolderName = null,kbArticleTitle = null) {
+	macro configureKBArticleDisplayPG(kbFolderName = null, kbArticleTitle = null) {
 		KBDisplayWidget._gotoWidgetConfiguration();
 
 		AssertClick(
@@ -89,7 +89,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureKBDisplaySettingsPG(print = null,subscribe = null,history = null) {
+	macro configureKBDisplaySettingsPG(print = null, subscribe = null, history = null) {
 		KBDisplayWidget._gotoWidgetConfiguration();
 
 		// Added additional assertions for LPS-159901
@@ -155,7 +155,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureKBSocialBookmarkSites(enableSocialBookmarkSites = null,socialBookmarkSite = null,disableSocialBookmarkSites = null) {
+	macro configureKBSocialBookmarkSites(enableSocialBookmarkSites = null, socialBookmarkSite = null, disableSocialBookmarkSites = null) {
 		KBDisplayWidget._gotoWidgetConfiguration();
 
 		if (isSet(enableSocialBookmarkSites)) {
@@ -174,7 +174,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editPGViaKBDisplay(cancel = null,kbArticleTitleEdit = null,saveAsDraft = null) {
+	macro editPGViaKBDisplay(cancel = null, kbArticleTitleEdit = null, saveAsDraft = null) {
 		LexiconEntry.gotoVerticalEllipsisMenuItemNoError(menuItem = "Edit");
 
 		AssertTextEquals(
@@ -203,7 +203,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editPGViaLocalizedKBDisplay(kbArticleTitleEdit = null,kbArticleTitle = null) {
+	macro editPGViaLocalizedKBDisplay(kbArticleTitleEdit = null, kbArticleTitle = null) {
 		var key_editLocalized = "Editar";
 		var key_kbArticleTitle = ${kbArticleTitle};
 		var key_localizedText = "Editor de texto enriquecido";
@@ -236,7 +236,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoKBGrandchildArticleViaKBDisplayHierarchyNavigationPG(kbGrandchildArticleTitle = null,kbChildArticleTitle = null,kbArticleTitle = null) {
+	macro gotoKBGrandchildArticleViaKBDisplayHierarchyNavigationPG(kbGrandchildArticleTitle = null, kbChildArticleTitle = null, kbArticleTitle = null) {
 		var key_kbArticleTitle = ${kbArticleTitle};
 		var key_kbChildArticleTitle = ${kbChildArticleTitle};
 
@@ -351,7 +351,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewKBDisplayPG(sourceURL = null,print = null,subscribe = null,history = null) {
+	macro viewKBDisplayPG(sourceURL = null, print = null, subscribe = null, history = null) {
 		if (${sourceURL} == "true") {
 			AssertClick(
 				locator1 = "KnowledgeBaseArticle#EDIT_ON_GITHUB",
@@ -418,7 +418,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewViaKBDisplayPG(kbArticleRelatedAssetTitle = null,kbArticleContent = null,kbArticleTitle = null) {
+	macro viewViaKBDisplayPG(kbArticleRelatedAssetTitle = null, kbArticleContent = null, kbArticleTitle = null) {
 		AssertTextEquals.assertPartialText(
 			locator1 = "KnowledgeBase#DISPLAY_TITLE",
 			value1 = ${kbArticleTitle});

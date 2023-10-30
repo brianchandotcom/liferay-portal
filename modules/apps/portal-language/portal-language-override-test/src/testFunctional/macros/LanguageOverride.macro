@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addLanguageKey(translationOverrideValueList = null,translationOverrideList = null,languageKey = null) {
+	macro addLanguageKey(translationOverrideValueList = null, translationOverrideList = null, languageKey = null) {
 		LexiconEntry.gotoAdd();
 
 		PortletEntry.inputText(
@@ -41,7 +41,7 @@ definition {
 
 	@description = "Assert values for existing language keys"
 	@summary = "Default summary"
-	macro assertLanguageKeyWithoutOverride(translation = null,languageKey = null) {
+	macro assertLanguageKeyWithoutOverride(translation = null, languageKey = null) {
 		LexiconList.viewListEntryPresent(listEntry = ${languageKey});
 
 		LexiconList.viewListEntrySubtitle(
@@ -51,7 +51,7 @@ definition {
 
 	@description = "Assert the following values for language key with override when a language is NOT selected: language key, languages with override but not highlighted"
 	@summary = "Default summary"
-	macro assertLanguageKeyWithOverrideInListView(languagesWithOverride = null,languageKey = null) {
+	macro assertLanguageKeyWithOverrideInListView(languagesWithOverride = null, languageKey = null) {
 		LexiconList.viewListEntryPresent(listEntry = ${languageKey});
 
 		LexiconList.viewListEntrySubtitle(
@@ -61,7 +61,7 @@ definition {
 
 	@description = "Assert the following values for language key with override when a language is selected: language key, current translation, and the highlighted language with override"
 	@summary = "Default summary"
-	macro assertSelectedLanguageInListView(currentTranslationOverride = null,languagesWithOverride = null,selectedLanguage = null,languageKey = null) {
+	macro assertSelectedLanguageInListView(currentTranslationOverride = null, languagesWithOverride = null, selectedLanguage = null, languageKey = null) {
 		LexiconList.viewListEntryPresent(listEntry = ${languageKey});
 
 		LexiconList.viewListEntrySubtitle(
@@ -132,7 +132,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro removeTranslationOverrideForSelectedLanguage(currentLanguage = null,languageKey = null) {
+	macro removeTranslationOverrideForSelectedLanguage(currentLanguage = null, languageKey = null) {
 		PageEditor.changeLocale(
 			currentLocale = ${currentLanguage},
 			locale = ${newLanguage});
@@ -149,7 +149,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updateTranslationOverrideValues(translationOverrideValueList = null,translationOverrideList = null,languageKey = null) {
+	macro updateTranslationOverrideValues(translationOverrideValueList = null, translationOverrideList = null, languageKey = null) {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Edit",
 			rowEntry = ${languageKey});

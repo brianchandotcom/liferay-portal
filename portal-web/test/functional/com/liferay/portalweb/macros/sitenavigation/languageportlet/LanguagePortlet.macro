@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro configureDisplaySettings(displayTemplate = null,displayCurrentLocale = null) {
+	macro configureDisplaySettings(displayTemplate = null, displayCurrentLocale = null) {
 		Panel.expandPanel(panel = "Display Settings");
 
 		if (isSet(displayTemplate)) {
@@ -56,7 +56,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectLanguagePG(locale = null,textIcon = null) {
+	macro selectLanguagePG(locale = null, textIcon = null) {
 		var portletName = ${portletName};
 
 		if (!(isSet(portletName))) {
@@ -95,7 +95,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewLanguages(displayTemplate = null,availableLanguageList = null,unavailableLanguageList = null,unavailableIconList = null,availableIconList = null) {
+	macro viewLanguages(displayTemplate = null, availableLanguageList = null, unavailableLanguageList = null, unavailableIconList = null, availableIconList = null) {
 		if (${displayTemplate} == "Icon") {
 			for (var availableIcon : list ${availableIconList}) {
 				AssertElementPresent(

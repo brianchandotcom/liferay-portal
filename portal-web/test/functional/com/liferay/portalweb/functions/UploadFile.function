@@ -1,7 +1,7 @@
 @default = "uploadFile"
 definition {
 
-	function uploadFile(locator1) {
+	function uploadFile(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");

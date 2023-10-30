@@ -198,7 +198,7 @@ definition {
 
 	@description = "Verify that customized texts are present in portlet"
 	@summary = "Default summary"
-	macro verifyCustomTextsArePresentInPortlet(key_text = null,siteName = null,pageName = null) {
+	macro verifyCustomTextsArePresentInPortlet(key_text = null, siteName = null, pageName = null) {
 		Variables.assertDefined(parameterList = ${key_text});
 
 		var siteNameURL = StringUtil.replace(${siteName}, " ", "-");

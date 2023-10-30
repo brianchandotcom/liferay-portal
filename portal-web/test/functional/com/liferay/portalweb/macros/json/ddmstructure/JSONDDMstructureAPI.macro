@@ -40,7 +40,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getStructureId(structureName = null,groupId = null,classNameId = null) {
+	macro _getStructureId(structureName = null, groupId = null, classNameId = null) {
 		Variables.assertDefined(parameterList = "${classNameId},${groupId},${structureName}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -68,7 +68,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getStructureIds(groupId = null,classNameId = null) {
+	macro _getStructureIds(groupId = null, classNameId = null) {
 		Variables.assertDefined(parameterList = "${classNameId},${groupId}");
 
 		var portalURL = JSONCompany.getPortalURL();

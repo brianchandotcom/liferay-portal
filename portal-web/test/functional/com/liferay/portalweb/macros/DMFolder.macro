@@ -3,7 +3,7 @@ definition {
 	var assetType = "Documents Folder";
 
 	@summary = "Default summary"
-	macro addCP(dmFolderDescription = null,dmFolder = null,siteName = null,dmFolderName = null) {
+	macro addCP(dmFolderDescription = null, dmFolder = null, siteName = null, dmFolderName = null) {
 		var key_dmFolderName = ${dmFolderName};
 
 		LexiconEntry.gotoAdd();
@@ -47,7 +47,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addDMFolderLoginUserPG(viewableBy = null,dmFolderDescription = null,siteName = null,dmFolder = null,dmFolderName = null,userLoginFullName = null,userLoginEmailAddress = null,pageName = null) {
+	macro addDMFolderLoginUserPG(viewableBy = null, dmFolderDescription = null, siteName = null, dmFolder = null, dmFolderName = null, userLoginFullName = null, userLoginEmailAddress = null, pageName = null) {
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",
 			userLoginFullName = "Test Test");
@@ -73,7 +73,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPG(viewableBy = null,addOrRemoveViewPermission = null,roleTitle = null,dmFolderDescription = null,permissionDefinitionKeyList = null,dmFolder = null,dmFolderName = null) {
+	macro addPG(viewableBy = null, addOrRemoveViewPermission = null, roleTitle = null, dmFolderDescription = null, permissionDefinitionKeyList = null, dmFolder = null, dmFolderName = null) {
 		if (isSet(contentPage)) {
 			LexiconEntry.gotoAdd();
 		}
@@ -129,7 +129,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPGViaMG(mgFolderName = null,mgFolderDescription = null) {
+	macro addPGViaMG(mgFolderName = null, mgFolderDescription = null) {
 		Portlet.clickPortletPlusIconPG(portletName = "Media Gallery");
 
 		AssertClick.assertTextClickAt(
@@ -162,7 +162,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertExpectedFileNumber(key_folder = null,expectedFileNumber = null) {
+	macro assertExpectedFileNumber(key_folder = null, expectedFileNumber = null) {
 		var tempDir = PropsUtil.get("output.dir.name");
 
 		var folderPath = ${tempDir};
@@ -188,7 +188,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureWorkflowCP(workflowRestriction = null,workflowDefinition = null,dmDocumentTypeName = null,dmFolderName = null) {
+	macro configureWorkflowCP(workflowRestriction = null, workflowDefinition = null, dmDocumentTypeName = null, dmFolderName = null) {
 		if (${dmFolderName} == "homeFolder") {
 			Portlet.gotoPortletOptions(portletOption = "Edit");
 		}
@@ -251,7 +251,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro copy(depotName = null,targetFolderName = null,siteName = null,dmFolderName = null) {
+	macro copy(depotName = null, targetFolderName = null, siteName = null, dmFolderName = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Copy To",
 			rowEntry = ${dmFolderName});
@@ -378,7 +378,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editCP(dmFolderNameEdit = null,dmFolderName = null,dmFolderDescriptionEdit = null) {
+	macro editCP(dmFolderNameEdit = null, dmFolderName = null, dmFolderDescriptionEdit = null) {
 		var key_dmFolderName = ${dmFolderName};
 
 		DMFolder.viewEntryPresent(dmFolderName = ${dmFolderName});
@@ -399,7 +399,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editPG(dmFolderNameEdit = null,dmFolderName = null,dmFolderDescriptionEdit = null) {
+	macro editPG(dmFolderNameEdit = null, dmFolderName = null, dmFolderDescriptionEdit = null) {
 		var key_dmFolderName = ${dmFolderName};
 
 		AssertTextEquals(
@@ -426,7 +426,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editPGViaMG(mgFolderNameEdit = null,mgFolderName = null,mgFolderDescriptionEdit = null) {
+	macro editPGViaMG(mgFolderNameEdit = null, mgFolderName = null, mgFolderDescriptionEdit = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${mgFolderName});
@@ -470,7 +470,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro moveToFolderCP(moveSubfolder = null,dmFolderName1 = null,moveFailure = null,dmFolderName = null,dmFolderName2 = null) {
+	macro moveToFolderCP(moveSubfolder = null, dmFolderName1 = null, moveFailure = null, dmFolderName = null, dmFolderName2 = null) {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		var key_dmFolderName = ${dmFolderName};
@@ -551,7 +551,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro removePermissions(roleTitle = null,dmFolder = null,permissionNameList = null) {
+	macro removePermissions(roleTitle = null, dmFolder = null, permissionNameList = null) {
 		DMFolder.viewFolderPermissionsPG(
 			dmFolder = ${dmFolder},
 			key_roleTitle = ${roleTitle});
@@ -631,7 +631,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCP(displayStyle = null,dmFolderName = null,specificNameFolder = null) {
+	macro viewCP(displayStyle = null, dmFolderName = null, specificNameFolder = null) {
 		var key_dmFolderName = ${dmFolderName};
 
 		if (IsElementPresent(key_displayStyle = "list", locator1 = "Icon#CURRENT_DISPLAY_STYLE_ACTIVE")) {
@@ -673,7 +673,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewDetailsInListView(authorName = null,dmFolderName = null,contextualBreadcrumb = null) {
+	macro viewDetailsInListView(authorName = null, dmFolderName = null, contextualBreadcrumb = null) {
 		var key_dmFolderName = ${dmFolderName};
 
 		AssertTextEquals(

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addFragmentCollection(groupName = null,site = null,name = null,description = null,groupKey = null) {
+	macro addFragmentCollection(groupName = null, site = null, name = null, description = null, groupKey = null) {
 		Variables.assertDefined(parameterList = ${name});
 
 		var groupId = JSONFragmentSetter.setGroupId(
@@ -16,7 +16,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addSection(groupKey = null,collectionName = null,groupName = null,site = null,fragmentStatus = null,name = null) {
+	macro addSection(groupKey = null, collectionName = null, groupName = null, site = null, fragmentStatus = null, name = null) {
 		Variables.assertDefined(parameterList = "${collectionName},${name}");
 
 		var groupId = JSONFragmentSetter.setGroupId(
@@ -45,7 +45,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertFragmentCollectionInGroup(groupName = null,site = null,groupKey = null,collectionName = null) {
+	macro assertFragmentCollectionInGroup(groupName = null, site = null, groupKey = null, collectionName = null) {
 		Variables.assertDefined(parameterList = ${collectionName});
 
 		var groupId = JSONFragmentSetter.setGroupId(
@@ -63,7 +63,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertFragmentCollectionNotInGroup(groupName = null,site = null,groupKey = null,collectionName = null) {
+	macro assertFragmentCollectionNotInGroup(groupName = null, site = null, groupKey = null, collectionName = null) {
 		Variables.assertDefined(parameterList = ${collectionName});
 
 		var groupId = JSONFragmentSetter.setGroupId(
@@ -81,7 +81,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertFragmentInGroup(groupName = null,site = null,fragmentName = null,groupKey = null,collectionName = null) {
+	macro assertFragmentInGroup(groupName = null, site = null, fragmentName = null, groupKey = null, collectionName = null) {
 		Variables.assertDefined(parameterList = "${collectionName},${fragmentName}");
 
 		var groupId = JSONFragmentSetter.setGroupId(
@@ -104,7 +104,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertFragmentNotInGroup(groupName = null,site = null,fragmentName = null,groupKey = null,collectionName = null) {
+	macro assertFragmentNotInGroup(groupName = null, site = null, fragmentName = null, groupKey = null, collectionName = null) {
 		Variables.assertDefined(parameterList = "${collectionName},${fragmentName}");
 
 		var groupId = JSONFragmentSetter.setGroupId(
@@ -127,7 +127,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteFragmentCollection(groupName = null,site = null,name = null) {
+	macro deleteFragmentCollection(groupName = null, site = null, name = null) {
 		Variables.assertDefined(parameterList = "${groupName},${name}");
 
 		var groupId = JSONFragmentSetter.setGroupId(

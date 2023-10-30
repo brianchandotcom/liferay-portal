@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro assertCurrentTimeFilterRange(cardName = null,timeFilterRangeWarning = null,timeFilterRange = null) {
+	macro assertCurrentTimeFilterRange(cardName = null, timeFilterRangeWarning = null, timeFilterRange = null) {
 		if (isSet(cardName)) {
 			var key_cardName = ${cardName};
 
@@ -41,7 +41,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setCustomRange(cardName = null,startMonth = null,startDay = null,endDay = null,startYear = null,endMonth = null,endYear = null) {
+	macro setCustomRange(cardName = null, startMonth = null, startDay = null, endDay = null, startYear = null, endMonth = null, endYear = null) {
 		var key_dropdownOption = "Custom Range";
 
 		if (isSet(cardName)) {

@@ -81,7 +81,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro clickMenuOfVersion(versionName = null,menuItem = null) {
+	macro clickMenuOfVersion(versionName = null, menuItem = null) {
 		Click.waitForMenuToggleJSClick(
 			key_version = ${versionName},
 			locator1 = "ContentDashboard#VERSION_ELLIPSIS");
@@ -108,7 +108,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro clickQuickActionIcon(iconName = null,assetName = null) {
+	macro clickQuickActionIcon(iconName = null, assetName = null) {
 		if (isSet(assetName)) {
 			Click.clickNoMouseOver(
 				key_assetName = ${assetName},
@@ -129,7 +129,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createVersionsForDocument(dmDocumentTitle = null,groupName = null,versionsCreated = null) {
+	macro createVersionsForDocument(dmDocumentTitle = null, groupName = null, versionsCreated = null) {
 		var count = 0;
 
 		while (${count} != ${versionsCreated}) {
@@ -162,7 +162,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editAsset(assetNewTitle = null,assetTitle = null) {
+	macro editAsset(assetNewTitle = null, assetTitle = null) {
 		LexiconTable.clickEllipsisItem(
 			item = "Edit",
 			tableEntry = ${assetTitle});
@@ -359,7 +359,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro moveVocabularyDisplayConfiguration(warningMessage = null,vocabularyName = null) {
+	macro moveVocabularyDisplayConfiguration(warningMessage = null, vocabularyName = null) {
 		ContentDashboard.openAuditGraphConfiguration();
 
 		for (var key_vocabularyName : list ${vocabularyName}) {
@@ -394,7 +394,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro navigateToDocumentVersionHistoryPage(dmDocumentTitle = null,groupName = null,siteURLKey = null) {
+	macro navigateToDocumentVersionHistoryPage(dmDocumentTitle = null, groupName = null, siteURLKey = null) {
 		var fileEntryId = JSONDocument.getFileEntryId(
 			dmDocumentTitle = ${dmDocumentTitle},
 			groupName = ${groupName});

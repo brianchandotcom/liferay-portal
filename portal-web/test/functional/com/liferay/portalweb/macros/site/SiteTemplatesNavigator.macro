@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro gotoSiteTemplatesPage(baseURL = null,pageName = null,siteTemplateName = null) {
+	macro gotoSiteTemplatesPage(baseURL = null, pageName = null, siteTemplateName = null) {
 		var siteTemplateId = JSONSiteTemplate.getSiteTemplateIdByName(siteTemplateName = ${siteTemplateName});
 
 		Navigator.openWithAppendToBaseURL(
@@ -14,7 +14,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoSiteTemplatesPageViaUI(siteName = null,pageName = null,siteTemplateName = null) {
+	macro gotoSiteTemplatesPageViaUI(siteName = null, pageName = null, siteTemplateName = null) {
 		var key_siteTemplateName = ${siteTemplateName};
 
 		SiteTemplatesNavigator.openSiteTemplatesAdmin();
@@ -31,7 +31,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openPagesAdmin(baseURL = null,siteTemplateName = null) {
+	macro openPagesAdmin(baseURL = null, siteTemplateName = null) {
 		var siteTemplateId = JSONSiteTemplate.getSiteTemplateIdByName(siteTemplateName = ${siteTemplateName});
 
 		Navigator.openWithAppendToBaseURL(
@@ -47,7 +47,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToConfigurePage(siteTemplateName = null,layoutName = null) {
+	macro openToConfigurePage(siteTemplateName = null, layoutName = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {

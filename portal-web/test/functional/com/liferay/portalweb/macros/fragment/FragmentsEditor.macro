@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro assertFragmentPreview(fragmentLocator = null,text = null) {
+	macro assertFragmentPreview(fragmentLocator = null, text = null) {
 		SelectFrame.selectFrameNoLoading(locator1 = "FragmentEditor#PREVIEW_IFRAME");
 
 		if (isSet(text)) {
@@ -17,7 +17,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro autocompleteFragmentHTML(fragmentHtml = null,htmlSnippet = null,autocompleteField = null) {
+	macro autocompleteFragmentHTML(fragmentHtml = null, htmlSnippet = null, autocompleteField = null) {
 		FragmentsEditor.typeHtmlEditor(content = "");
 
 		Type.sendKeysAceEditor(

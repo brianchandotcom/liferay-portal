@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _getLanguages(depotName = null,siteId = null) {
+	macro _getLanguages(depotName = null, siteId = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(depotName)) {

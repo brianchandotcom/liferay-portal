@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _addStylebookEntry(groupId = null,styleBookEntryName = null) {
+	macro _addStylebookEntry(groupId = null, styleBookEntryName = null) {
 		Variables.assertDefined(parameterList = "${groupId},${styleBookEntryName}");
 
 		var portalURL = JSONCompany.getPortalURL();

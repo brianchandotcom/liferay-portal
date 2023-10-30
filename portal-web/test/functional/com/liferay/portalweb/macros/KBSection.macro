@@ -39,7 +39,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPG(kbDescription = null,description = null,kbArticleTitle = null) {
+	macro viewPG(kbDescription = null, description = null, kbArticleTitle = null) {
 		AssertClick(
 			key_text = ${kbArticleTitle},
 			locator1 = "Link#ANY",

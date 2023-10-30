@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro archiveAndDeleteOriginalFile(sourceFilePath = null,fileNameWithExtension = null) {
+	macro archiveAndDeleteOriginalFile(sourceFilePath = null, fileNameWithExtension = null) {
 		Variables.assertDefined(parameterList = "${sourceFilePath},${fileNameWithExtension}");
 
 		if (!(isSet(destinationPath))) {
@@ -18,7 +18,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertExportedFileContainsCorrectObject(fileName = null,expectedValue = null,jsonObject = null) {
+	macro assertExportedFileContainsCorrectObject(fileName = null, expectedValue = null, jsonObject = null) {
 		Variables.assertDefined(parameterList = "${fileName},${jsonObject},${expectedValue}");
 
 		var fileContent = TestCase.getTempFileContent(fileName = ${fileName});
@@ -64,7 +64,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro moveFileToDeployFolder(fileName = null,sourceFilePath = null) {
+	macro moveFileToDeployFolder(fileName = null, sourceFilePath = null) {
 		Variables.assertDefined(parameterList = "${sourceFilePath},${fileName}");
 
 		if (!(isSet(destinationPath))) {
@@ -79,7 +79,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro moveFileToOSGIModulesFolder(fileName = null,appName = null,sourceFilePath = null) {
+	macro moveFileToOSGIModulesFolder(fileName = null, appName = null, sourceFilePath = null) {
 		Variables.assertDefined(parameterList = "${sourceFilePath},${fileName},${appName}");
 
 		if (!(isSet(destinationPath))) {

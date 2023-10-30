@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro MarkAsNotSpam(wikiPageTitle = null,assetType = null) {
+	macro MarkAsNotSpam(wikiPageTitle = null, assetType = null) {
 		if (${assetType} == "wikiPage") {
 			var key_wikiPageTitle = ${wikiPageTitle};
 
@@ -34,7 +34,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewMarkedAsSpam(wikiPageTitle = null,wikiPageUsername = null,wikiPageRevision = null,assetType = null) {
+	macro viewMarkedAsSpam(wikiPageTitle = null, wikiPageUsername = null, wikiPageRevision = null, assetType = null) {
 		if (${assetType} == "wikiPage") {
 			var key_wikiPageTitle = ${wikiPageTitle};
 

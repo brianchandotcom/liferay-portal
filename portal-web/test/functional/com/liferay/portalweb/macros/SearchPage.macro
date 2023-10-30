@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addSortOption(displayLabel = null,indexedField = null,order = null) {
+	macro addSortOption(displayLabel = null, indexedField = null, order = null) {
 		Click(
 			key_text = "Add Option",
 			locator1 = "Button#ANY");
@@ -144,7 +144,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureCustomFilter(federatedSearchKey = null,filterQueryType = null,filterValue = null,occur = null,parentQueryName = null,queryName = null,customParameterName = null,filterField = null,portletIndex = null) {
+	macro configureCustomFilter(federatedSearchKey = null, filterQueryType = null, filterValue = null, occur = null, parentQueryName = null, queryName = null, customParameterName = null, filterField = null, portletIndex = null) {
 		Portlet.gotoPortletOptions(
 			portletIndex = ${portletIndex},
 			portletName = "Custom Filter",
@@ -214,7 +214,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureEmbeddedSearchBar(federatedSearchKey = null,searchScope = null,invisible = null) {
+	macro configureEmbeddedSearchBar(federatedSearchKey = null, searchScope = null, invisible = null) {
 		SearchPage.gotoEmbeddedOptions(portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
@@ -272,7 +272,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureLowLevelSearchOptions(federatedSearchKey = null,indexes = null,attributesKey = null,connectionId = null,attributesValue = null) {
+	macro configureLowLevelSearchOptions(federatedSearchKey = null, indexes = null, attributesKey = null, connectionId = null, attributesValue = null) {
 		Portlet.gotoPortletOptions(
 			portletName = "Low Level Search Options",
 			portletOption = "Configuration");
@@ -317,7 +317,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureSearchBarWidget(federatedSearchKey = null,scopeParameterName = null,searchScope = null,keywordsParameterName = null,index = null) {
+	macro configureSearchBarWidget(federatedSearchKey = null, scopeParameterName = null, searchScope = null, keywordsParameterName = null, index = null) {
 		if (isSet(index)) {
 			SearchPage.gotoSearchBarWidgetOptionsSpecific(
 				index = ${index},
@@ -377,7 +377,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureSearchOptions(federatedSearchKey = null,allowEmptySearches = null,basicFacetSelection = null) {
+	macro configureSearchOptions(federatedSearchKey = null, allowEmptySearches = null, basicFacetSelection = null) {
 		Portlet.gotoPortletOptions(
 			portletName = "Search Options",
 			portletOption = "Configuration");
@@ -413,7 +413,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureSimilarResults(displayTemplate = null,maximumItemDisplay = null,searchScope = null,minimumDocumentFrequency = null,minimumTermFrequency = null,maximumDocumentFrequency = null,minimumShouldMatch = null,maximumQueryTerms = null,stopWords = null,minimumWordLength = null,analyzer = null,fields = null,linkBehavior = null,maximumWordLength = null) {
+	macro configureSimilarResults(displayTemplate = null, maximumItemDisplay = null, searchScope = null, minimumDocumentFrequency = null, minimumTermFrequency = null, maximumDocumentFrequency = null, minimumShouldMatch = null, maximumQueryTerms = null, stopWords = null, minimumWordLength = null, analyzer = null, fields = null, linkBehavior = null, maximumWordLength = null) {
 		Portlet.gotoPortletOptions(
 			portletName = "Similar Results",
 			portletOption = "Configuration");
@@ -610,7 +610,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoSearchBarWidgetOptionsSpecific(index = null,portletOption = null) {
+	macro gotoSearchBarWidgetOptionsSpecific(index = null, portletOption = null) {
 		MouseOver.mouseOverNotVisible(
 			key_index = ${index},
 			key_portletName = "Search Bar",
@@ -629,7 +629,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openSearchPage(searchTerm = null,locale = null) {
+	macro openSearchPage(searchTerm = null, locale = null) {
 		if (!(isSet(siteURLKey))) {
 			var siteURLKey = "guest";
 		}
@@ -646,7 +646,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro searchEmbedded(searchTerm = null,clickMagnifyingGlassIcon = null) {
+	macro searchEmbedded(searchTerm = null, clickMagnifyingGlassIcon = null) {
 		AssertElementPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
 
 		Type(
@@ -668,7 +668,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro searchWidget(searchTerm = null,clickMagnifyingGlassIcon = null) {
+	macro searchWidget(searchTerm = null, clickMagnifyingGlassIcon = null) {
 		Type(
 			locator1 = "Search#SEARCH_BAR_WIDGET",
 			value1 = ${searchTerm});
@@ -714,7 +714,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewUserResultDetails(userName = null,pageName = null) {
+	macro viewUserResultDetails(userName = null, pageName = null) {
 		AssertTextEquals(
 			locator1 = "Home#SITE_NAME",
 			value1 = ${userName});

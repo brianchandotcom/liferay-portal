@@ -11,7 +11,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewEntryInTableView(tableColumnNames = null,kbEntryTitle = null,tableColumnContents = null) {
+	macro viewEntryInTableView(tableColumnNames = null, kbEntryTitle = null, tableColumnContents = null) {
 		var tableEntry = ${kbEntryTitle};
 		var list1 = ListUtil.newListFromString(${tableColumnNames});
 		var list2 = ListUtil.newListFromString(${tableColumnContents});

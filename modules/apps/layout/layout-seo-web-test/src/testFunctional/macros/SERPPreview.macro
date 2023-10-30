@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addGeneralSettings(htmlTitle = null,description = null) {
+	macro addGeneralSettings(htmlTitle = null, description = null) {
 		if (isSet(htmlTitle)) {
 			PortletEntry.inputText(
 				fieldLabel = "HTML Title",

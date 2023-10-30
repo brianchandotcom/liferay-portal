@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addAssociatedAssetType(required = null,assetType = null) {
+	macro addAssociatedAssetType(required = null, assetType = null) {
 		Panel.expandPanel(panel = "Associated Asset Types");
 
 		if (!(isSet(rowNumber))) {
@@ -21,7 +21,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addCP(allowMultipleCategories = null,localizationName = null,locale2 = null,vocabularyDescription = null,localization2Name = null,vocabularyName = null,locale = null) {
+	macro addCP(allowMultipleCategories = null, localizationName = null, locale2 = null, vocabularyDescription = null, localization2Name = null, vocabularyName = null, locale = null) {
 		Vocabulary.gotoAddVocabulary();
 
 		PortletEntry.inputName(name = ${vocabularyName});
@@ -73,7 +73,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addViewableByCP(viewableBy = null,vocabularyName = null) {
+	macro addViewableByCP(viewableBy = null, vocabularyName = null) {
 		Vocabulary.gotoAddVocabulary();
 
 		PortletEntry.inputName(name = ${vocabularyName});
@@ -110,7 +110,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addWithAssociatedAssetTypeCP(assetSubtype = null,vocabularyName = null,rowNumber = null,required = null,assetType = null) {
+	macro addWithAssociatedAssetTypeCP(assetSubtype = null, vocabularyName = null, rowNumber = null, required = null, assetType = null) {
 		Vocabulary.gotoAddVocabulary();
 
 		PortletEntry.inputName(name = ${vocabularyName});
@@ -139,7 +139,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertVocabularyVisibilityNonEditable(vocabularyName = null,visibilityType = null) {
+	macro assertVocabularyVisibilityNonEditable(vocabularyName = null, visibilityType = null) {
 		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
@@ -246,7 +246,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editCP(allowMultipleCategories = null,vocabularyNameEdit = null,vocabularyName = null) {
+	macro editCP(allowMultipleCategories = null, vocabularyNameEdit = null, vocabularyName = null) {
 		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		Click.waitForMenuToggleJSClick(
@@ -330,7 +330,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCP(allowMultipleCategories = null,vocabularyName = null) {
+	macro viewCP(allowMultipleCategories = null, vocabularyName = null) {
 		AssertTextEquals(
 			key_navNested = ${vocabularyName},
 			locator1 = "NavNested#NAV_NESTED_LINK",
@@ -376,7 +376,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewVocabularyPermissionsCP(viewableBy = null,vocabularyName = null) {
+	macro viewVocabularyPermissionsCP(viewableBy = null, vocabularyName = null) {
 		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		WaitForLiferayEvent.initializeLiferayEventLog();
@@ -414,7 +414,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewWithAssociatedAssetTypeCP(vocabularyName = null,vocabularyAssociatedAssetType = null) {
+	macro viewWithAssociatedAssetTypeCP(vocabularyName = null, vocabularyAssociatedAssetType = null) {
 		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		Click.waitForMenuToggleJSClick(

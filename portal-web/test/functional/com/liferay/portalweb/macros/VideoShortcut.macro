@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addCP(videoShortcutTitle = null,localizedPublish = null,vocabularyName = null,tagNameList = null,categoryName = null,localizedDocumentTypeName = null,localizedVideoURL = null,videoURL = null,extractedVideoShortcutTitle = null,videoShortcutPreview = null,videoShortcutDescription = null) {
+	macro addCP(videoShortcutTitle = null, localizedPublish = null, vocabularyName = null, tagNameList = null, categoryName = null, localizedDocumentTypeName = null, localizedVideoURL = null, videoURL = null, extractedVideoShortcutTitle = null, videoShortcutPreview = null, videoShortcutDescription = null) {
 		if (!(isSet(skipNavigation))) {
 			if (isSet(localizedDocumentTypeName)) {
 				DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = ${localizedDocumentTypeName});
@@ -96,7 +96,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPG(videoShortcutTitle = null,contentPage = null,videoURL = null,extractedVideoShortcutTitle = null,videoShortcutPreview = null,videoShortcutDescription = null) {
+	macro addPG(videoShortcutTitle = null, contentPage = null, videoURL = null, extractedVideoShortcutTitle = null, videoShortcutPreview = null, videoShortcutDescription = null) {
 		DMNavigator.gotoAddDocumentTypePG(
 			contentPage = ${contentPage},
 			dmDocumentTypeName = "External Video Shortcut");
@@ -142,7 +142,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editCP(videoShortcutTitle = null,videoShortcutPreviousDescription = null,videoShortcutDescriptionEdit = null,videoShortcutPreviousTitle = null,videoShortcutTitleEdit = null,videoShortcutPreview = null,videoURLEdit = null) {
+	macro editCP(videoShortcutTitle = null, videoShortcutPreviousDescription = null, videoShortcutDescriptionEdit = null, videoShortcutPreviousTitle = null, videoShortcutTitleEdit = null, videoShortcutPreview = null, videoURLEdit = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${videoShortcutTitle});
@@ -241,7 +241,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPG(videoShortcutTitle = null,videoShortcutDescription = null) {
+	macro viewPG(videoShortcutTitle = null, videoShortcutDescription = null) {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		AssertClick(

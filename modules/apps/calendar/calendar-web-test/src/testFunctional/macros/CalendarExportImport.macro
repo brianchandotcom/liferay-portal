@@ -55,7 +55,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro importCalendarFile(importValidationErrorMessage = null,calendarFile = null) {
+	macro importCalendarFile(importValidationErrorMessage = null, calendarFile = null) {
 		UploadDependencyFile.uploadArchiveFile(fileName = ${calendarFile});
 
 		if (isSet(importValidationErrorMessage)) {

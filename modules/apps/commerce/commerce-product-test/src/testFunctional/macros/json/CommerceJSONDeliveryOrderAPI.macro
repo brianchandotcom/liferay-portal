@@ -45,7 +45,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getPlacedOrderItemsFieldByOrderId(placedOrderId = null,jsonPath = null) {
+	macro getPlacedOrderItemsFieldByOrderId(placedOrderId = null, jsonPath = null) {
 		Variables.assertDefined(parameterList = "${jsonPath},${placedOrderId}");
 
 		var responseBody = CommerceJSONDeliveryOrderAPI._getCommercePlacedOrderItemsByOrderId(placedOrderId = ${placedOrderId});

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro dragAndDropPortletToPortletColumnPG(columnNumberFrom = null,nestedColumnNumberTo = null,portletName = null) {
+	macro dragAndDropPortletToPortletColumnPG(columnNumberFrom = null, nestedColumnNumberTo = null, portletName = null) {
 		var key_portletName = ${portletName};
 
 		MouseOver.mouseOverNotVisible(
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewConfigurationDefaultLayoutTemplate(defaultColumnName = null,portletName = null) {
+	macro viewConfigurationDefaultLayoutTemplate(defaultColumnName = null, portletName = null) {
 		Portlet.gotoPortletOptions(
 			portletName = ${portletName},
 			portletOption = "Configuration");
@@ -42,7 +42,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPG(nestedColumnNumber = null,portletName = null) {
+	macro viewPG(nestedColumnNumber = null, portletName = null) {
 		AssertTextEquals(
 			key_nestedColumnNumber = ${nestedColumnNumber},
 			key_portletName = ${portletName},

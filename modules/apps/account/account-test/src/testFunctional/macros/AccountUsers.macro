@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addUser(accountName = null,userLastName = null,userScreenName = null,userEmailAddress = null,userFirstName = null) {
+	macro addUser(accountName = null, userLastName = null, userScreenName = null, userEmailAddress = null, userFirstName = null) {
 		LexiconEntry.gotoAdd();
 
 		SelectFrame(locator1 = "IFrame#SELECT_ACCOUNT");
@@ -52,7 +52,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editUser(password = null,editFirstName = null,accountUser = null,editScreenName = null,editEmailAddress = null,accountManagementWidget = null) {
+	macro editUser(password = null, editFirstName = null, accountUser = null, editScreenName = null, editEmailAddress = null, accountManagementWidget = null) {
 		if (${accountManagementWidget} == "true") {
 			LexiconEntry.gotoEntry(rowEntry = ${accountUser});
 		}
@@ -99,7 +99,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro removeAccount(accountName = null,accountUser = null) {
+	macro removeAccount(accountName = null, accountUser = null) {
 		LexiconEntry.gotoEntry(rowEntry = ${accountUser});
 
 		Navigator.gotoNavUnderline(navUnderline = "General");
@@ -133,7 +133,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setUserPassword(accountUser = null,accountUserPassword = null) {
+	macro setUserPassword(accountUser = null, accountUserPassword = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${accountUser});
@@ -158,7 +158,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewEntryAccounts(accountUserName = null,accountName = null) {
+	macro viewEntryAccounts(accountUserName = null, accountName = null) {
 		AssertElementPresent(
 			key_columnName = "lfr-accounts-column",
 			key_rowEntry = ${accountUserName},

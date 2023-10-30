@@ -23,7 +23,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addImageResolution(imageName = null,maxHeight = null,description = null,customId = null,maxWidth = null) {
+	macro addImageResolution(imageName = null, maxHeight = null, description = null, customId = null, maxWidth = null) {
 		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "New Image Resolution")) {
 			LexiconEntry.gotoAdd();
 		}
@@ -81,7 +81,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addNonNumericImageResolution(imageName = null,maxHeight = null,maxWidth = null) {
+	macro addNonNumericImageResolution(imageName = null, maxHeight = null, maxWidth = null) {
 		LexiconEntry.gotoAdd();
 
 		PortletEntry.inputName(name = ${imageName});
@@ -121,7 +121,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro disableImageResolution(imageState = null,imageName = null) {
+	macro disableImageResolution(imageState = null, imageName = null) {
 		var key_imageName = ${imageName};
 
 		Click(locator1 = "AdaptiveMediaTable#IMAGE_RESOLUTION_OPTIONS");
@@ -138,7 +138,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editImageResolution(imageIdEdit = null,imageName = null,maxHeightEdit = null,imageNameEdit = null,maxWidthEdit = null) {
+	macro editImageResolution(imageIdEdit = null, imageName = null, maxHeightEdit = null, imageNameEdit = null, maxWidthEdit = null) {
 		var key_imageName = ${imageName};
 
 		Click(locator1 = "AdaptiveMediaTable#IMAGE_RESOLUTION_OPTIONS");
@@ -208,7 +208,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro enableImageResolution(imageState = null,imageName = null) {
+	macro enableImageResolution(imageState = null, imageName = null) {
 		var key_imageName = ${imageName};
 
 		Click(locator1 = "AdaptiveMediaTable#IMAGE_RESOLUTION_OPTIONS");
@@ -257,7 +257,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewImageResolutionTableEntry(imageState = null,imageName = null,maxHeight = null,percentAdapted = null,maxWidth = null) {
+	macro viewImageResolutionTableEntry(imageState = null, imageName = null, maxHeight = null, percentAdapted = null, maxWidth = null) {
 		var key_imageName = ${imageName};
 
 		AssertTextEquals.assertPartialText(

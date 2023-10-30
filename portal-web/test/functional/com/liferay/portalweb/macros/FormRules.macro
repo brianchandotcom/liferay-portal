@@ -54,7 +54,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureActionOptions(actionRowNumber = null,action = null,actionTarget = null) {
+	macro configureActionOptions(actionRowNumber = null, action = null, actionTarget = null) {
 		FormRules.selectAction(
 			action = ${action},
 			actionRowNumber = ${actionRowNumber});
@@ -66,7 +66,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureConditionOptions(conditionFieldValue = null,conditionOperator = null,conditionRowNumber = null,conditionField = null,conditionValueType = null,conditionValueField = null) {
+	macro configureConditionOptions(conditionFieldValue = null, conditionOperator = null, conditionRowNumber = null, conditionField = null, conditionValueType = null, conditionValueField = null) {
 		FormRules.selectConditionField(
 			conditionField = ${conditionField},
 			conditionRowNumber = ${conditionRowNumber});
@@ -87,7 +87,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro defineConditionValue(conditionFieldValue = null,conditionRowNumber = null,conditionValueField = null) {
+	macro defineConditionValue(conditionFieldValue = null, conditionRowNumber = null, conditionValueField = null) {
 		if (isSet(conditionFieldValue)) {
 			var key_conditionRowNumber = ${conditionRowNumber};
 			var key_fieldColumnNumber = 4;
@@ -165,7 +165,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectAction(actionRowNumber = null,action = null) {
+	macro selectAction(actionRowNumber = null, action = null) {
 		var key_selectValue = ${action};
 		var key_actionRowNumber = ${actionRowNumber};
 		var key_fieldColumnNumber = 1;
@@ -178,7 +178,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectActionTarget(actionRowNumber = null,actionTarget = null) {
+	macro selectActionTarget(actionRowNumber = null, actionTarget = null) {
 		var key_actionRowNumber = ${actionRowNumber};
 		var key_selectValue = ${actionTarget};
 		var key_fieldColumnNumber = 2;
@@ -191,7 +191,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectAutofillFromDataProvider(dataProviderOption = null,dataProviderParameterName = null) {
+	macro selectAutofillFromDataProvider(dataProviderOption = null, dataProviderParameterName = null) {
 		var key_dataProviderOption = ${dataProviderOption};
 		var key_dataProviderParameterName = ${dataProviderParameterName};
 
@@ -229,7 +229,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectConditionField(conditionRowNumber = null,conditionField = null) {
+	macro selectConditionField(conditionRowNumber = null, conditionField = null) {
 		var key_selectValue = ${conditionField};
 		var key_conditionRowNumber = ${conditionRowNumber};
 		var key_fieldColumnNumber = 1;
@@ -244,7 +244,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectConditionOperator(conditionOperator = null,conditionRowNumber = null) {
+	macro selectConditionOperator(conditionOperator = null, conditionRowNumber = null) {
 		var key_selectValue = ${conditionOperator};
 		var key_conditionRowNumber = ${conditionRowNumber};
 		var key_fieldColumnNumber = 2;
@@ -257,7 +257,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectConditionValue(conditionRowNumber = null,conditionValueType = null) {
+	macro selectConditionValue(conditionRowNumber = null, conditionValueType = null) {
 		var key_conditionRowNumber = ${conditionRowNumber};
 		var key_fieldColumnNumber = 3;
 
@@ -283,7 +283,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewAction(actionRowNumber = null,action = null,actionTarget = null) {
+	macro viewAction(actionRowNumber = null, action = null, actionTarget = null) {
 		var key_selectActionValue = ${action};
 		var key_actionRowNumber = ${actionRowNumber};
 		var key_selectActionTargetValue = ${actionTarget};
@@ -300,7 +300,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewActionNotPresent(actionRowNumber = null,action = null,actionTarget = null) {
+	macro viewActionNotPresent(actionRowNumber = null, action = null, actionTarget = null) {
 		var key_selectActionValue = ${action};
 		var key_actionRowNumber = ${actionRowNumber};
 		var key_selectActionTargetValue = ${actionTarget};
@@ -317,7 +317,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewActionSummary(ruleNumber = null,action = null) {
+	macro viewActionSummary(ruleNumber = null, action = null) {
 		AssertTextEquals.assertPartialText(
 			key_action = ${action},
 			key_ruleNumber = ${ruleNumber},
@@ -326,7 +326,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewActionTargetSummary(ruleNumber = null,action = null,actionTarget = null) {
+	macro viewActionTargetSummary(ruleNumber = null, action = null, actionTarget = null) {
 		AssertTextEquals(
 			key_action = ${action},
 			key_actionTarget = ${actionTarget},
@@ -351,7 +351,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewConditionFieldConstantSummary(ruleNumber = null,conditionFieldConstant = null) {
+	macro viewConditionFieldConstantSummary(ruleNumber = null, conditionFieldConstant = null) {
 		AssertTextEquals(
 			key_conditionFieldConstant = ${conditionFieldConstant},
 			key_ruleNumber = ${ruleNumber},
@@ -360,7 +360,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewConditionFieldSummary(ruleNumber = null,conditionField = null) {
+	macro viewConditionFieldSummary(ruleNumber = null, conditionField = null) {
 		AssertTextEquals(
 			key_conditionField = ${conditionField},
 			key_ruleNumber = ${ruleNumber},
@@ -369,7 +369,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewConditionNotPresent(conditionFieldValue = null,conditionOperator = null,conditionRowNumber = null,conditionField = null,conditionValueType = null) {
+	macro viewConditionNotPresent(conditionFieldValue = null, conditionOperator = null, conditionRowNumber = null, conditionField = null, conditionValueType = null) {
 		var key_conditionField = ${conditionField};
 		var key_conditionOperator = ${conditionOperator};
 		var key_conditionRowNumber = ${conditionRowNumber};
@@ -414,7 +414,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewConditionOperatorSummary(conditionOperator = null,ruleNumber = null) {
+	macro viewConditionOperatorSummary(conditionOperator = null, ruleNumber = null) {
 		var conditionOperatorLowerCase = StringUtil.lowerCase(${conditionOperator});
 
 		AssertTextEquals.assertPartialText(
@@ -425,7 +425,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewConditionPresent(conditionFieldValue = null,conditionOperator = null,conditionRowNumber = null,conditionField = null,conditionValueType = null) {
+	macro viewConditionPresent(conditionFieldValue = null, conditionOperator = null, conditionRowNumber = null, conditionField = null, conditionValueType = null) {
 		var key_conditionField = ${conditionField};
 		var key_conditionOperator = ${conditionOperator};
 		var key_conditionRowNumber = ${conditionRowNumber};
@@ -442,7 +442,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewConditionSummaryNotPresent(conditionOperator = null,ruleNumber = null,conditionField = null) {
+	macro viewConditionSummaryNotPresent(conditionOperator = null, ruleNumber = null, conditionField = null) {
 		var key_conditionField = ${conditionField};
 		var key_conditionOperator = ${conditionOperator};
 		var key_ruleNumber = ${ruleNumber};
@@ -451,7 +451,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewFieldNotPresentAtActions(actionRowNumber = null,action = null,actionTarget = null) {
+	macro viewFieldNotPresentAtActions(actionRowNumber = null, action = null, actionTarget = null) {
 		var key_actionRowNumber = ${actionRowNumber};
 		var key_selectValue = ${actionTarget};
 		var key_fieldColumnNumber = 2;
@@ -468,7 +468,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewFieldPresentAtActions(actionRowNumber = null,action = null,actionTarget = null) {
+	macro viewFieldPresentAtActions(actionRowNumber = null, action = null, actionTarget = null) {
 		var key_actionRowNumber = ${actionRowNumber};
 		var key_selectValue = ${actionTarget};
 		var key_fieldColumnNumber = 2;
@@ -497,7 +497,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewRuleBuilderAction(positionNumber = null,value = null) {
+	macro viewRuleBuilderAction(positionNumber = null, value = null) {
 		AssertElementPresent(
 			key_positionNumber = ${positionNumber},
 			key_value = ${value},
@@ -505,7 +505,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewRuleBuilderCondition(positionNumber = null,value = null) {
+	macro viewRuleBuilderCondition(positionNumber = null, value = null) {
 		AssertElementPresent(
 			key_positionNumber = ${positionNumber},
 			key_value = ${value},
@@ -513,7 +513,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewRuleCondition(condition = null,conditonRowNumber = null) {
+	macro viewRuleCondition(condition = null, conditonRowNumber = null) {
 		AssertTextEquals(
 			key_condition = ${condition},
 			key_conditonRowNumber = ${conditonRowNumber},
@@ -532,7 +532,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSummary(conditionOperator = null,ruleNumber = null,action = null,conditionFieldConstant = null,actionTarget = null,conditionField = null) {
+	macro viewSummary(conditionOperator = null, ruleNumber = null, action = null, conditionFieldConstant = null, actionTarget = null, conditionField = null) {
 		FormRules.viewConditionFieldSummary(
 			conditionField = ${conditionField},
 			ruleNumber = ${ruleNumber});

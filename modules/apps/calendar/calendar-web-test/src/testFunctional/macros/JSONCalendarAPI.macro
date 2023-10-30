@@ -170,7 +170,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updateColor(calendarId = null,color = null) {
+	macro updateColor(calendarId = null, color = null) {
 		Variables.assertDefined(parameterList = "${calendarId},${color}");
 
 		var portalURL = JSONCompany.getPortalURL();

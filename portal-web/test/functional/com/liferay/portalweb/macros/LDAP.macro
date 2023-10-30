@@ -2,7 +2,7 @@ definition {
 
 	@description = "Add Apache DS server and test the connection between it and Liferay DXP"
 	@summary = "Default summary"
-	macro addLDAPServerAndTestConnection(baseURL = null,ldapServerName = null) {
+	macro addLDAPServerAndTestConnection(baseURL = null, ldapServerName = null) {
 		PortalSettings.addLDAPServer(
 			baseURL = ${baseURL},
 			ldapServerName = ${ldapServerName});
@@ -50,7 +50,7 @@ definition {
 
 	@description = "Enable various LDAP related settings"
 	@summary = "Default summary"
-	macro enableLDAPSettings(baseURL = null,enableSettingList = null) {
+	macro enableLDAPSettings(baseURL = null, enableSettingList = null) {
 		PortalSettings.configureLDAPSetting(
 			baseURL = ${baseURL},
 			enableSettingList = ${enableSettingList});
@@ -138,7 +138,7 @@ definition {
 
 	@description = "Verify that the user is removed from group on localhost after LDAP sync"
 	@summary = "Default summary"
-	macro verifyLDAPUserIsRemovedFromGroup(userGroupName = null,userFirstName = null) {
+	macro verifyLDAPUserIsRemovedFromGroup(userGroupName = null, userFirstName = null) {
 		UserGroup.openUserGroupsAdmin();
 
 		UserGroup.viewRemoveMemberCP(

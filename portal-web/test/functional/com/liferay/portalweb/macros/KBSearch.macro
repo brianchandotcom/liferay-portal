@@ -12,7 +12,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSearchResultPG(kbDescription = null,description = null,kbArticleTitle = null) {
+	macro viewSearchResultPG(kbDescription = null, description = null, kbArticleTitle = null) {
 		AssertTextEquals.assertPartialText(
 			key_kbArticleTitle = ${kbArticleTitle},
 			locator1 = "KnowledgeBase#SEARCH_WIDGET_ARTICLE_TITLE",

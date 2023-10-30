@@ -21,7 +21,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getRecordSetId(groupName = null,ddlListName = null) {
+	macro _getRecordSetId(groupName = null, ddlListName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${ddlListName}");
 
 		var portalURL = JSONCompany.getPortalURL();

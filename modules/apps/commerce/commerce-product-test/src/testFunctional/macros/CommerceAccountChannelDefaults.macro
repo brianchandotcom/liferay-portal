@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addChannelAccountManagersEntry(assertError = null,channelName = null,userName = null) {
+	macro addChannelAccountManagersEntry(assertError = null, channelName = null, userName = null) {
 		Variables.assertDefined(parameterList = "${channelName},${userName}");
 
 		Click(
@@ -30,7 +30,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteAccountChannelDefaultsEntry(defaultEntryName = null,defaultEntryLabel = null,channelName = null) {
+	macro deleteAccountChannelDefaultsEntry(defaultEntryName = null, defaultEntryLabel = null, channelName = null) {
 		Variables.assertDefined(parameterList = "${channelName},${defaultEntryName},${defaultEntryLabel}");
 
 		Click(
@@ -45,7 +45,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editChannelAccountManagersEntry(newChannelName = null,newUserName = null,assertError = null,userFullName = null,channelName = null) {
+	macro editChannelAccountManagersEntry(newChannelName = null, newUserName = null, assertError = null, userFullName = null, channelName = null) {
 		Variables.assertDefined(parameterList = "${channelName},${userFullName}");
 
 		Click(
@@ -82,7 +82,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editDefaultPriceList(newChannelName = null,currentChannelName = null,assertError = null,newPriceListName = null,currentPriceListName = null,override = null) {
+	macro editDefaultPriceList(newChannelName = null, currentChannelName = null, assertError = null, newPriceListName = null, currentPriceListName = null, override = null) {
 		Variables.assertDefined(parameterList = "${currentChannelName},${currentPriceListName}");
 
 		Click(
@@ -125,7 +125,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setAccountChannelDefaults(defaultPaymentMethod = null,accountName = null,paymentMethod = null,channelName = null,shippingMethodEntry = null) {
+	macro setAccountChannelDefaults(defaultPaymentMethod = null, accountName = null, paymentMethod = null, channelName = null, shippingMethodEntry = null) {
 		CommerceNavigator.gotoMiniumAccountOrderDefaults(accountName = ${accountName});
 
 		if (isSet(paymentMethod)) {
@@ -198,7 +198,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setDefaultPriceList(priceListTitle = null,channelEntry = null,assertError = null,override = null) {
+	macro setDefaultPriceList(priceListTitle = null, channelEntry = null, assertError = null, override = null) {
 		WaitForElementPresent(
 			key_title = "Add Default Price List",
 			locator1 = "Button#ANY_TITLE");
@@ -237,7 +237,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewDefaultPriceListEntries(row = null,priceListEntries = null,priceListLabel = null) {
+	macro viewDefaultPriceListEntries(row = null, priceListEntries = null, priceListLabel = null) {
 		if (isSet(priceListEntries)) {
 			if (isSet(row) && (${row} != "")) {
 				for (var priceListEntry : list ${priceListEntries}) {

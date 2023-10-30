@@ -115,7 +115,7 @@ definition {
 
 	@description = "Set custom text for all fields at Site level"
 	@summary = "Default summary"
-	macro setCustomTextForAllFieldsAtSiteLevel(baseURL = null,siteURLKey = null,text = null,webSiteText = null) {
+	macro setCustomTextForAllFieldsAtSiteLevel(baseURL = null, siteURLKey = null, text = null, webSiteText = null) {
 		Variables.assertDefined(parameterList = "${text},${webSiteText}");
 
 		CookieNavigator.gotoSiteSettings(

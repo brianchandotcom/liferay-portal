@@ -96,7 +96,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertObjectFieldNameIsAutofilled(fieldName = null,fieldLabel = null) {
+	macro assertObjectFieldNameIsAutofilled(fieldName = null, fieldLabel = null) {
 		LexiconEntry.gotoAdd();
 
 		Type(
@@ -146,7 +146,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertValuesOnScope(valuePanelCategory = null,valueScope = null) {
+	macro assertValuesOnScope(valuePanelCategory = null, valueScope = null) {
 		AssertTextEquals(
 			locator1 = "CreateObject#VIEW_OBJECT_SCOPE",
 			value1 = ${valueScope});
@@ -175,7 +175,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteEntryInRelationshipTab(entryName = null,labelName = null) {
+	macro deleteEntryInRelationshipTab(entryName = null, labelName = null) {
 		ObjectAdmin.gotoRelationshipsTab();
 
 		if (isSet(entryName)) {
@@ -261,7 +261,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectDeletionType(fieldName = null,deletionType = null) {
+	macro selectDeletionType(fieldName = null, deletionType = null) {
 		ObjectAdmin.gotoRelationshipsTab();
 
 		ObjectAdmin.goToRelationshipsDetails(fieldName = ${fieldName});

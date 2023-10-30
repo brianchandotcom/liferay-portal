@@ -21,7 +21,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro playEmbeddedVideo(videoPlayNode = null,videoDuration = null,progressBarInitialization = null) {
+	macro playEmbeddedVideo(videoPlayNode = null, videoDuration = null, progressBarInitialization = null) {
 		SelectFrame(locator1 = "IFrame#EMBEDDED_VIDEO_IFRAME");
 
 		WaitForElementPresent(

@@ -1,7 +1,7 @@
 @default = "assertAttributeValue"
 definition {
 
-	function assertAttributeNotPresent(locator1,value1) {
+	function assertAttributeNotPresent(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");
@@ -13,7 +13,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function assertAttributeValue(locator1,value1,value2) {
+	function assertAttributeValue(locator1, value2, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");

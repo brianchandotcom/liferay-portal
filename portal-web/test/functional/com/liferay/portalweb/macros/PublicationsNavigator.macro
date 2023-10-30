@@ -8,7 +8,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoPublicationEllipsisItem(publicationName = null,menuItem = null) {
+	macro gotoPublicationEllipsisItem(publicationName = null, menuItem = null) {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		Click(
@@ -19,7 +19,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoPublish(gotoPublicationsAdmin = null,publicationName = null) {
+	macro gotoPublish(gotoPublicationsAdmin = null, publicationName = null) {
 		if (${gotoPublicationsAdmin} == "true") {
 			PublicationsNavigator.openPublicationsAdmin();
 
@@ -37,7 +37,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoReviewChanges(gotoPublicationsAdmin = null,publicationName = null) {
+	macro gotoReviewChanges(gotoPublicationsAdmin = null, publicationName = null) {
 		if (${gotoPublicationsAdmin} == "true") {
 			PublicationsNavigator.openPublicationsAdmin();
 
@@ -53,7 +53,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoViewChangeDetails(changeCategory = null,changeTitle = null) {
+	macro gotoViewChangeDetails(changeCategory = null, changeTitle = null) {
 		var key_changeCategory = ${changeCategory};
 		var key_changeTitle = ${changeTitle};
 

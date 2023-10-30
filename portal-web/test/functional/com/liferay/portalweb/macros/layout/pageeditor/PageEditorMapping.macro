@@ -11,7 +11,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoEditableFieldMapping(fragmentName = null,className = null,id = null,contributed = null) {
+	macro gotoEditableFieldMapping(fragmentName = null, className = null, id = null, contributed = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -48,7 +48,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro mapEditableFieldToAsset(uploadFileName = null,navItem = null,contentItem = null,entryTitle = null,rowItem = null) {
+	macro mapEditableFieldToAsset(uploadFileName = null, navItem = null, contentItem = null, entryTitle = null, rowItem = null) {
 		if (IsTextEqual(key_fieldLabel = "Item", locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT", value1 = "")) {
 			Click(
 				key_fieldLabel = "Item",
@@ -126,7 +126,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro mapEditableFieldToCollectionItems(field = null,fragmentName = null,id = null) {
+	macro mapEditableFieldToCollectionItems(field = null, fragmentName = null, id = null) {
 		Click(locator1 = "PageEditor#CONTENT_PAGE_DISABLED_HEADER");
 
 		Click.clickNoWaitForVisible(
@@ -176,7 +176,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro mapEditableTextToField(field = null,fragmentName = null,index = null,className = null,id = null,source = null,contributed = null) {
+	macro mapEditableTextToField(field = null, fragmentName = null, index = null, className = null, id = null, source = null, contributed = null) {
 		PageEditorMapping.gotoEditableFieldMapping(
 			className = ${className},
 			contributed = ${contributed},

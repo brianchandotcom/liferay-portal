@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addRedirect(sourceURL = null,groupName = null) {
+	macro addRedirect(sourceURL = null, groupName = null) {
 		Variables.assertDefined(parameterList = "${sourceURL},${destinationURL}");
 
 		if (!(isSet(site))) {
@@ -50,7 +50,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteEntry(groupName = null,destinationURL = null) {
+	macro deleteEntry(groupName = null, destinationURL = null) {
 		var redirectEntryId = JSONRedirect.getRedirectEntryId(
 			destinationURL = ${destinationURL},
 			groupName = ${groupName});
@@ -74,7 +74,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getRedirectEntryId(groupName = null,destinationURL = null) {
+	macro getRedirectEntryId(groupName = null, destinationURL = null) {
 		Variables.assertDefined(parameterList = "${destinationURL},${groupName}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -100,7 +100,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updateEntry(sourceURL = null,groupName = null) {
+	macro updateEntry(sourceURL = null, groupName = null) {
 		var redirectEntryId = JSONRedirect.getRedirectEntryId(
 			destinationURL = ${destinationURL},
 			groupName = ${groupName});

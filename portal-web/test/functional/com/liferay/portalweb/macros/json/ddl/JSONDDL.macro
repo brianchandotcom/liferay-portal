@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro getRecordId(groupName = null,ddlListName = null) {
+	macro getRecordId(groupName = null, ddlListName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${ddlListName}");
 
 		var recordSetId = JSONDDLAPI._getRecordSetId(

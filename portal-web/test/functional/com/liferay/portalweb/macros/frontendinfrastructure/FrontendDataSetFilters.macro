@@ -52,7 +52,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editFilters(key_filter = null,key_enableFilters = null,key_disableFilters = null) {
+	macro editFilters(key_filter = null, key_enableFilters = null, key_disableFilters = null) {
 		FrontendDataSetFilters.openFilters();
 
 		FrontendDataSetFilters.searchFilter(searchTerm = ${key_filter});

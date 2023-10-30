@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addCP(selectSiteTemplate = null,userGroupName = null,userGroupNameVariation = null,siteTemplateName = null) {
+	macro addCP(selectSiteTemplate = null, userGroupName = null, userGroupNameVariation = null, siteTemplateName = null) {
 		var key_userGroupName = ${userGroupName};
 
 		LexiconEntry.gotoAdd();
@@ -68,7 +68,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assignMemberCP(userGroupName = null,userScreenName = null) {
+	macro assignMemberCP(userGroupName = null, userScreenName = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Assign Members",
 			rowEntry = ${userGroupName});
@@ -135,7 +135,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editCP(userGroupSite = null,checkEnablePropagationCheckbox = null,userGroupDescriptionEdit = null,userGroupName = null,userGroupNameEdit = null) {
+	macro editCP(userGroupSite = null, checkEnablePropagationCheckbox = null, userGroupDescriptionEdit = null, userGroupName = null, userGroupNameEdit = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${userGroupName});
@@ -176,7 +176,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoProfilePages(userGroupName = null,siteName = null) {
+	macro gotoProfilePages(userGroupName = null, siteName = null) {
 		Search.searchCP(searchTerm = ${userGroupName});
 
 		Click.waitForMenuToggleJSClick(
@@ -196,7 +196,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro removeMemberCP(userGroupName = null,userScreenName = null) {
+	macro removeMemberCP(userGroupName = null, userScreenName = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Assign Members",
 			rowEntry = ${userGroupName});
@@ -241,7 +241,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewAssignMemberCP(userGroupName = null,userScreenName = null) {
+	macro viewAssignMemberCP(userGroupName = null, userScreenName = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Assign Members",
 			rowEntry = ${userGroupName});
@@ -284,7 +284,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewRemoveMemberCP(userGroupName = null,userFirstName = null) {
+	macro viewRemoveMemberCP(userGroupName = null, userFirstName = null) {
 		LexiconEntry.viewEntryName(rowEntry = ${userGroupName});
 
 		LexiconEntry.gotoEntry(rowEntry = ${userGroupName});

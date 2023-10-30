@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addPG(emailAddress = null,contactName = null) {
+	macro addPG(emailAddress = null, contactName = null) {
 		Button.click(button = "Add Contact");
 
 		AssertElementPresent(locator1 = "TextInput#NAME");
@@ -20,7 +20,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editPG(contactName = null,contactNameEdit = null,emailAddressEdit = null) {
+	macro editPG(contactName = null, contactNameEdit = null, emailAddressEdit = null) {
 		AssertClick(
 			key_contact = ${contactName},
 			locator1 = "ContactsCenter#CONTACT_LIST",
@@ -67,7 +67,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewContactCenterContainerPG(myContact = null,contactFollower = null,contactConnection = null,contactFollowing = null,allUser = null) {
+	macro viewContactCenterContainerPG(myContact = null, contactFollower = null, contactConnection = null, contactFollowing = null, allUser = null) {
 		if (${contactConnection} != 1) {
 			AssertTextEquals(
 				locator1 = "ContactsCenter#CONTACT_CONNECTIONS_COUNT",
@@ -118,7 +118,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewContactPG(emailAddress = null,contactName = null,interactButton = null) {
+	macro viewContactPG(emailAddress = null, contactName = null, interactButton = null) {
 		AssertClick.assertPartialTextClickAt(
 			key_contact = ${contactName},
 			locator1 = "ContactsCenter#CONTACT_LIST",

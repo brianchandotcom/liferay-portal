@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro assertEndpointsInResponse(responseToParse = null,attributesList = null) {
+	macro assertEndpointsInResponse(responseToParse = null, attributesList = null) {
 		Variables.assertDefined(parameterList = "${responseToParse},${attributesList}");
 
 		for (var attribute : list ${attributesList}) {

@@ -15,7 +15,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoPortlet(portlet = null,category = null) {
+	macro gotoPortlet(portlet = null, category = null) {
 		Click(
 			key_category = ${category},
 			key_portlet = ${portlet},

@@ -17,7 +17,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createNewUserAccount(userLastName = null,userScreenName = null,userEmailAddress = null,newPassword = null,userFirstName = null) {
+	macro createNewUserAccount(userLastName = null, userScreenName = null, userEmailAddress = null, newPassword = null, userFirstName = null) {
 		SignInNavigator.gotoCreateAccount();
 
 		Type(
@@ -50,7 +50,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoViaNotification(user = null,assetType = null) {
+	macro gotoViaNotification(user = null, assetType = null) {
 		Notifications.gotoNotifications();
 
 		if (isSet(user)) {
@@ -73,7 +73,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro previewTranslationsBaseFields(webContentDescription = null,currentBaseLocale = null,webContentTitle = null,webContentContent = null) {
+	macro previewTranslationsBaseFields(webContentDescription = null, currentBaseLocale = null, webContentTitle = null, webContentContent = null) {
 		AssertElementPresent(
 			key_localizationName = ${currentBaseLocale},
 			locator1 = "AssetWorkflow#TRANSLATIONS_PREVIEW_LOCALIZATION");
@@ -97,7 +97,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro previewTranslationsTargetFields(webContentDescription = null,webContentTitle = null,webContentContent = null,currentTargetLocale = null) {
+	macro previewTranslationsTargetFields(webContentDescription = null, webContentTitle = null, webContentContent = null, currentTargetLocale = null) {
 		AssertElementPresent(
 			key_localizationName = ${currentTargetLocale},
 			locator1 = "AssetWorkflow#TRANSLATIONS_PREVIEW_LOCALIZATION");
@@ -121,7 +121,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro previewViewContent(fieldLabel = null,fieldValue = null) {
+	macro previewViewContent(fieldLabel = null, fieldValue = null) {
 		var key_fieldLabel = ${fieldLabel};
 		var key_fieldValue = ${fieldValue};
 
@@ -138,7 +138,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewDetails(workflowStatus = null,userName = null) {
+	macro viewDetails(workflowStatus = null, userName = null) {
 		Click(locator1 = "Icon#INFO");
 
 		AssertTextEquals(
@@ -155,7 +155,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewFormEntryTable(workflowStatus = null,fieldLabel = null,fieldValue = null) {
+	macro viewFormEntryTable(workflowStatus = null, fieldLabel = null, fieldValue = null) {
 		FormsAdmin.viewFormTableEntry(
 			fieldLabel = ${fieldLabel},
 			fieldValue = ${fieldValue});

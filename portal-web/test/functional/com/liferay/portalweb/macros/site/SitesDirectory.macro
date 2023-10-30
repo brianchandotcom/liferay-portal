@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro configureSetupPG(directorySites = null,directoryDisplayStyle = null,portletName = null) {
+	macro configureSetupPG(directorySites = null, directoryDisplayStyle = null, portletName = null) {
 		Portlet.gotoPortletOptions(
 			portletName = ${portletName},
 			portletOption = "Configuration");
@@ -76,7 +76,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewListHierarchyPG(availableSiteName = null,currentSiteName = null,childSiteName1 = null,childSiteName2 = null,childSiteName3 = null) {
+	macro viewListHierarchyPG(availableSiteName = null, currentSiteName = null, childSiteName1 = null, childSiteName2 = null, childSiteName3 = null) {
 		var key_siteName = ${availableSiteName};
 
 		AssertTextEquals(

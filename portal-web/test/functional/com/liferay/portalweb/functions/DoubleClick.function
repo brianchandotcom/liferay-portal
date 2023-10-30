@@ -15,7 +15,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function doubleClickAt(locator1) {
+	function doubleClickAt(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");

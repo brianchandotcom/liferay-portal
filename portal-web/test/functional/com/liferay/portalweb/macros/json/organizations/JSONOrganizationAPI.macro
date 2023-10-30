@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _addOrganization(organizationName = null,organizationRegion = null,organizationCountry = null) {
+	macro _addOrganization(organizationName = null, organizationRegion = null, organizationCountry = null) {
 		Variables.assertDefined(parameterList = ${organizationName});
 
 		var organizationNameEncoded = URLUtil.encodeUTF8(${organizationName});
@@ -62,7 +62,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addOrganizationToSite(organizationId = null,groupId = null) {
+	macro _addOrganizationToSite(organizationId = null, groupId = null) {
 		Variables.assertDefined(parameterList = "${groupId},${organizationId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -77,7 +77,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _assignPasswordPolicyToOrganization(organizationId = null,passwordPolicyId = null) {
+	macro _assignPasswordPolicyToOrganization(organizationId = null, passwordPolicyId = null) {
 		Variables.assertDefined(parameterList = "${organizationId},${passwordPolicyId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -94,7 +94,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _assignUserToOrganization(organizationId = null,userId = null) {
+	macro _assignUserToOrganization(organizationId = null, userId = null) {
 		Variables.assertDefined(parameterList = "${organizationId},${userId}");
 
 		var portalURL = JSONCompany.getPortalURL();

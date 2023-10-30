@@ -66,7 +66,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoCP(isOrphanPage = null,wikiPageTitle = null) {
+	macro gotoCP(isOrphanPage = null, wikiPageTitle = null) {
 		Click.clickAt(locator1 = "Dropdown#FILTER_AND_ORDER");
 
 		if (${isOrphanPage} == "true") {
@@ -157,7 +157,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoPG(isOrphanPage = null,wikiPageTitle = null) {
+	macro gotoPG(isOrphanPage = null, wikiPageTitle = null) {
 		if (${isOrphanPage} == "true") {
 			AssertClick(
 				locator1 = "WikiTable#NAVIGATION_ORPHAN_PAGES",
@@ -188,7 +188,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoWidgetSpecificTabByURL(wikiNodeName = null,layoutURLKey = null,baseURL = null,siteURLKey = null,tabURLKey = null) {
+	macro gotoWidgetSpecificTabByURL(wikiNodeName = null, layoutURLKey = null, baseURL = null, siteURLKey = null, tabURLKey = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "web/${siteURLKey}/${layoutURLKey}/-/wiki/${wikiNodeName}/${tabURLKey}?wiki_nodeName=${wikiNodeName}");
@@ -197,7 +197,7 @@ definition {
 	// You can use this navigation when you need to access the configuration quickly without checking the UI.
 
 	@summary = "Default summary"
-	macro openToAddChildPage(wikiNodeName = null,layoutURLKey = null,groupName = null,siteURLKey = null,wikiParentPageTitle = null) {
+	macro openToAddChildPage(wikiNodeName = null, layoutURLKey = null, groupName = null, siteURLKey = null, wikiParentPageTitle = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -217,7 +217,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToAddPage(wikiNodeName = null,layoutURLKey = null,groupName = null,siteURLKey = null) {
+	macro openToAddPage(wikiNodeName = null, layoutURLKey = null, groupName = null, siteURLKey = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -239,7 +239,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToEditPage(wikiNodeName = null,layoutURLKey = null,groupName = null,baseURL = null,wikiPageTitle = null,siteURLKey = null) {
+	macro openToEditPage(wikiNodeName = null, layoutURLKey = null, groupName = null, baseURL = null, wikiPageTitle = null, siteURLKey = null) {
 		var nodeId = JSONWikiSetter.setNodeId(
 			groupName = ${groupName},
 			name = ${wikiNodeName});
@@ -257,7 +257,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToWikiNode(wikiNodeName = null,groupName = null,baseURL = null,siteURLKey = null) {
+	macro openToWikiNode(wikiNodeName = null, groupName = null, baseURL = null, siteURLKey = null) {
 		var nodeId = JSONWikiSetter.setNodeId(
 			groupName = ${groupName},
 			name = ${wikiNodeName});
@@ -268,7 +268,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToWikiPage(wikiNodeName = null,layoutURLKey = null,baseURL = null,wikiPageTitle = null,siteURLKey = null) {
+	macro openToWikiPage(wikiNodeName = null, layoutURLKey = null, baseURL = null, wikiPageTitle = null, siteURLKey = null) {
 		if (isSet(layoutURLKey)) {
 			Navigator.openWithAppendToBaseURL(
 				baseURL = ${baseURL},

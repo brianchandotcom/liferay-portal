@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro checkout(selectedShippingAddressName = null,newAddressAddress = null,newAddressCity = null,newAddressCountry = null,newAddressZipCode = null,deliveryTerm = null,shippingMethod = null,paymentMethod = null,guestEmail = null,paymentTerm = null,newAddressName = null) {
+	macro checkout(selectedShippingAddressName = null, newAddressAddress = null, newAddressCity = null, newAddressCountry = null, newAddressZipCode = null, deliveryTerm = null, shippingMethod = null, paymentMethod = null, guestEmail = null, paymentTerm = null, newAddressName = null) {
 		CommerceCheckout.setAddress(
 			guestEmail = ${guestEmail},
 			newAddressAddress = ${newAddressAddress},
@@ -47,7 +47,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getDeliveryCost(deliveryDiscountFixedAmount = null,shippingMethod = null,deliveryDiscountPercentage = null,customDeliveryValue = null) {
+	macro getDeliveryCost(deliveryDiscountFixedAmount = null, shippingMethod = null, deliveryDiscountPercentage = null, customDeliveryValue = null) {
 		var deliveryExpeditedCost = 25;
 		var deliveryStandardCost = 15;
 
@@ -96,7 +96,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro initializersCheckout(defaultPaymentMethod = null,manageDeliveryTerms = null,deliveryDiscountValue = null,totalPrice = null,accountName = null,productUnitPrice = null,productName = null,shippingOption = null,notEligibleShippingMethods = null,eligiblePaymentMethods = null,productDiscountedTotalPrice = null,newAddressZipCode = null,eligibleShippingMethods = null,selectedBillingAddressName = null,viewBillingAddressPermission = null,manageShippingOptionsPermission = null,deliveryTerm = null,managePaymentTerms = null,shippingMethod = null,guestEmail = null,selectedShippingAddressName = null,productQuantity = null,deliveryDiscountFixedAmount = null,notEligiblePaymentMethods = null,taxValue = null,deliveryValue = null,deliveryDiscountPercentage = null,customDeliveryValue = null,productDiscountValue = null,paymentMethod = null,defaultShippingMethod = null,paymentTerm = null) {
+	macro initializersCheckout(defaultPaymentMethod = null, manageDeliveryTerms = null, deliveryDiscountValue = null, totalPrice = null, accountName = null, productUnitPrice = null, productName = null, shippingOption = null, notEligibleShippingMethods = null, eligiblePaymentMethods = null, productDiscountedTotalPrice = null, newAddressZipCode = null, eligibleShippingMethods = null, selectedBillingAddressName = null, viewBillingAddressPermission = null, manageShippingOptionsPermission = null, deliveryTerm = null, managePaymentTerms = null, shippingMethod = null, guestEmail = null, selectedShippingAddressName = null, productQuantity = null, deliveryDiscountFixedAmount = null, notEligiblePaymentMethods = null, taxValue = null, deliveryValue = null, deliveryDiscountPercentage = null, customDeliveryValue = null, productDiscountValue = null, paymentMethod = null, defaultShippingMethod = null, paymentTerm = null) {
 		CommerceCheckout.setAddress(
 			guestEmail = ${guestEmail},
 			newAddressAddress = ${newAddressAddress},
@@ -346,7 +346,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setAddress(newAddressAddress = null,newAddressCountry = null,newAddressZipCode = null,newAddressCity = null,selectedAddressName = null,guestEmail = null,newAddressName = null) {
+	macro setAddress(newAddressAddress = null, newAddressCountry = null, newAddressZipCode = null, newAddressCity = null, selectedAddressName = null, guestEmail = null, newAddressName = null) {
 		WaitForElementPresent(locator1 = "CommerceAccelerators#CHECKOUT_PORTLET_BODY");
 
 		if (isSet(newAddressName)) {
@@ -390,7 +390,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setDeliveryDate(displayDateMonth = null,displayDateYear = null,displayDateDay = null) {
+	macro setDeliveryDate(displayDateMonth = null, displayDateYear = null, displayDateDay = null) {
 		var displayDate = "${displayDateMonth}/${displayDateDay}/${displayDateYear}";
 
 		Type(
@@ -411,7 +411,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCheckoutOrderSummary(addressAddress = null,deliveryDiscountValue = null,billingAddressName = null,subtotalValue = null,productName = null,shippingOption = null,productDiscountedTotalPrice = null,billingAddressAddress = null,addressCity = null,addressCountry = null,totalValue = null,viewBillingAddressPermission = null,billingAddressCity = null,deliveryTerm = null,productQuantity = null,taxValue = null,deliveryValue = null,productDiscountValue = null,paymentMethod = null,addressName = null,billingAddressCountry = null,paymentTerm = null,productPrice = null) {
+	macro viewCheckoutOrderSummary(addressAddress = null, deliveryDiscountValue = null, billingAddressName = null, subtotalValue = null, productName = null, shippingOption = null, productDiscountedTotalPrice = null, billingAddressAddress = null, addressCity = null, addressCountry = null, totalValue = null, viewBillingAddressPermission = null, billingAddressCity = null, productOptions = null, deliveryTerm = null, productQuantity = null, taxValue = null, deliveryValue = null, productDiscountValue = null, paymentMethod = null, addressName = null, billingAddressCountry = null, paymentTerm = null, productPrice = null) {
 		if (!(isSet(currency))) {
 			var currency = "$";
 		}

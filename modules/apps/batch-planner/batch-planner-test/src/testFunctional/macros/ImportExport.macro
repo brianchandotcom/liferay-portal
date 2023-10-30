@@ -28,7 +28,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertExecutionEntry(executionAction = null,executionName = null,successfulRows = null,entityType = null,executionStatus = null,failedRows = null,totalRows = null) {
+	macro assertExecutionEntry(executionAction = null, executionName = null, successfulRows = null, entityType = null, executionStatus = null, failedRows = null, totalRows = null) {
 		AssertElementPresent(
 			key_entityType = ${entityType},
 			key_executionAction = ${executionAction},
@@ -58,7 +58,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertExportTemplate(templateName = null,entityType = null,exportFields = null,exportFileFormat = null) {
+	macro assertExportTemplate(templateName = null, entityType = null, exportFields = null, exportFileFormat = null) {
 		WaitForElementPresent(
 			key_title = "Fields",
 			locator1 = "Header#H4_TITLE");
@@ -89,7 +89,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertFileContent(fileName = null,comparisonFileName = null) {
+	macro assertFileContent(fileName = null, comparisonFileName = null) {
 		var fileContent = TestCase.getTempFileContent(fileName = ${fileName});
 		var expectedFileContent = TestCase.getFileContent(fileName = ${comparisonFileName});
 
@@ -141,7 +141,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertImportTemplate(templateName = null,entityType = null) {
+	macro assertImportTemplate(templateName = null, entityType = null) {
 		AssertSelectedLabel(
 			key_selectFieldLabel = "Template",
 			locator1 = "ImportExport#SELECT",
@@ -153,7 +153,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertNoExecutionEntry(executionAction = null,entityType = null,executionStatus = null) {
+	macro assertNoExecutionEntry(executionAction = null, entityType = null, executionStatus = null) {
 		AssertElementNotPresent(
 			key_entityType = ${entityType},
 			key_executionAction = ${executionAction},
@@ -171,7 +171,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertPreviewEntry(entryName = null,previewFields = null) {
+	macro assertPreviewEntry(entryName = null, previewFields = null) {
 		AssertElementPresent(
 			key_entryName = ${entryName},
 			locator1 = "ImportExport#PREVIEW_ENTRY");
@@ -203,7 +203,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertStrategiesForEntityTypes(updateStrategy = null,entityTypes = null,importStrategy = null) {
+	macro assertStrategiesForEntityTypes(updateStrategy = null, entityTypes = null, importStrategy = null) {
 		Variables.assertDefined(parameterList = ${entityTypes});
 
 		for (var entityType : list ${entityTypes}) {
@@ -223,7 +223,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureExport(containsHeaders = null,templateName = null,entityType = null,exportFields = null,exportFileFormat = null) {
+	macro configureExport(containsHeaders = null, templateName = null, entityType = null, exportFields = null, exportFileFormat = null) {
 		ImportExport.selectEntity(entityType = ${entityType});
 
 		Select(
@@ -247,7 +247,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureImport(containsHeaders = null,fileName = null,templateName = null,entityType = null,importName = null,csvSeparator = null,fieldMappings = null,importStrategy = null,stopImportOnError = null) {
+	macro configureImport(containsHeaders = null, fileName = null, templateName = null, entityType = null, importName = null, csvSeparator = null, fieldMappings = null, importStrategy = null, stopImportOnError = null) {
 		UploadDependencyFile.uploadFile(fileName = ${fileName});
 
 		if (isSet(importName)) {
@@ -312,7 +312,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro exportFile(containsHeaders = null,entityType = null,exportFields = null,exportFileFormat = null) {
+	macro exportFile(containsHeaders = null, entityType = null, exportFields = null, exportFileFormat = null) {
 		Click(locator1 = "Button#PLUS");
 
 		MenuItem.click(menuItem = "Export File");
@@ -362,7 +362,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro importFile(containsHeaders = null,fileName = null,entityType = null,importName = null,csvSeparator = null,fieldMappings = null,stopImportOnError = null) {
+	macro importFile(containsHeaders = null, fileName = null, entityType = null, importName = null, csvSeparator = null, fieldMappings = null, stopImportOnError = null) {
 		Click(locator1 = "Button#PLUS");
 
 		MenuItem.click(menuItem = "Import File");

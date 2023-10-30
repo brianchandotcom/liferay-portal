@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addTemplate(fieldName = null,gitHash = null,routineName = null,description = null,dropdownItem = null,caseList = null) {
+	macro addTemplate(fieldName = null, gitHash = null, routineName = null, description = null, dropdownItem = null, caseList = null) {
 		WaitForElementPresent(
 			key_pageTabTitle = "Build History",
 			locator1 = "Testray#PAGE_TAB_TITLE");

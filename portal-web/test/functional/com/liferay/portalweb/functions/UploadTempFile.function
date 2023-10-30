@@ -1,7 +1,7 @@
 @default = "uploadTempFile"
 definition {
 
-	function uploadTempFile(locator1) {
+	function uploadTempFile(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");
@@ -15,7 +15,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function uploadTempFileHiddenNoMouseOver(locator1) {
+	function uploadTempFileHiddenNoMouseOver(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");

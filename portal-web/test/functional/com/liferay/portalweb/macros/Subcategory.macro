@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _addCP(subcategoryName = null,grandSubcategoryName = null,vocabularyName = null,categoryName = null,subcategoryDescription = null,grandSubcategoryDescription = null) {
+	macro _addCP(subcategoryName = null, grandSubcategoryName = null, vocabularyName = null, categoryName = null, subcategoryDescription = null, grandSubcategoryDescription = null) {
 		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		if (isSet(grandSubcategoryName)) {
@@ -37,7 +37,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addCP(displayPageTemplateType = null,subcategoryName = null,grandSubcategoryName = null,displayPageName = null,vocabularyName = null,categoryName = null,subcategoryDescription = null,grandSubcategoryDescription = null) {
+	macro addCP(displayPageTemplateType = null, subcategoryName = null, grandSubcategoryName = null, displayPageName = null, vocabularyName = null, categoryName = null, subcategoryDescription = null, grandSubcategoryDescription = null) {
 		Subcategory._addCP(
 			categoryName = ${categoryName},
 			grandSubcategoryDescription = ${grandSubcategoryDescription},
@@ -105,7 +105,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addDuplicateCP(subcategoryName = null,vocabularyName = null,categoryName = null) {
+	macro addDuplicateCP(subcategoryName = null, vocabularyName = null, categoryName = null) {
 		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		LexiconEntry.gotoEntryMenuItem(
@@ -124,7 +124,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPropertyCP(subcategoryName = null,propertiesValueField = null,propertiesKeyField = null) {
+	macro addPropertyCP(subcategoryName = null, propertiesValueField = null, propertiesKeyField = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${subcategoryName});
@@ -143,7 +143,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteViaIconCP(subcategoryName = null,vocabularyName = null,categoryName = null) {
+	macro deleteViaIconCP(subcategoryName = null, vocabularyName = null, categoryName = null) {
 		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		LexiconEntry.gotoEntry(rowEntry = ${categoryName});
@@ -170,7 +170,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteViaMenuCP(subcategoryName = null,vocabularyName = null,categoryName = null) {
+	macro deleteViaMenuCP(subcategoryName = null, vocabularyName = null, categoryName = null) {
 		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		LexiconEntry.gotoEntry(rowEntry = ${categoryName});
@@ -193,7 +193,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editCP(subcategoryNameEdit = null,subcategoryName = null,vocabularyName = null,categoryName = null) {
+	macro editCP(subcategoryNameEdit = null, subcategoryName = null, vocabularyName = null, categoryName = null) {
 		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		LexiconEntry.gotoEntry(rowEntry = ${categoryName});
@@ -208,7 +208,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro moveCP(subcategoryName = null,categoryNameMove = null,vocabularyName = null,categoryName = null) {
+	macro moveCP(subcategoryName = null, categoryNameMove = null, vocabularyName = null, categoryName = null) {
 		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		AssertClick(
@@ -224,7 +224,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro searchCP(subcategorySearchEntry = null,vocabularyName = null,categoryName = null) {
+	macro searchCP(subcategorySearchEntry = null, vocabularyName = null, categoryName = null) {
 		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		LexiconEntry.gotoEntry(rowEntry = ${categoryName});
@@ -233,7 +233,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCategoryPropertyCP(subcategoryName = null,propertiesValueField = null,propertiesKeyField = null,vocabularyName = null,categoryName = null) {
+	macro viewCategoryPropertyCP(subcategoryName = null, propertiesValueField = null, propertiesKeyField = null, vocabularyName = null, categoryName = null) {
 		Navigator.gotoNavNested(navNested = ${vocabularyName});
 
 		var key_categoryName = ${categoryName};
@@ -256,7 +256,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCP(subcategoryName = null,vocabularyName = null,categoryName = null) {
+	macro viewCP(subcategoryName = null, vocabularyName = null, categoryName = null) {
 		var key_categoryName = ${categoryName};
 
 		Navigator.gotoNavNested(navNested = ${vocabularyName});
@@ -273,7 +273,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSearchResultsCP(subcategoryName = null,nullResult = null,subcategoryDescriptionList = null,subCategoryNameList = null,subcategoryDescription = null) {
+	macro viewSearchResultsCP(subcategoryName = null, nullResult = null, subcategoryDescriptionList = null, subCategoryNameList = null, subcategoryDescription = null) {
 		if (isSet(subCategoryNameList)) {
 			for (var subCategoryName : list ${subCategoryNameList}) {
 				var key_subCategoryName = ${subCategoryName};

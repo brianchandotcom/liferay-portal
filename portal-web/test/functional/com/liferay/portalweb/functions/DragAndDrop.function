@@ -1,7 +1,7 @@
 @default = "dragAndDropToObject"
 definition {
 
-	function dragAndDrop(locator1,value1) {
+	function dragAndDrop(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.dragAndDrop(${locator1}, ${value1});
@@ -11,7 +11,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function dragAndDropObjectMoveTwice(locator1,position1,position2) {
+	function dragAndDropObjectMoveTwice(locator1, position1, position2) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");
@@ -37,7 +37,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function dragAndDropPortletToObject(locator2,locator1,value1) {
+	function dragAndDropPortletToObject(locator2, locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");
@@ -73,7 +73,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function dragAndDropPortletToPortlet(locator2,locator1,value1) {
+	function dragAndDropPortletToPortlet(locator2, locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");
@@ -103,7 +103,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function dragAndDropPortletToPortletNoError(locator2,locator1,value1) {
+	function dragAndDropPortletToPortletNoError(locator2, locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");
@@ -131,7 +131,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function dragAndDropReorganizeObjects(locator2,locator1,position) {
+	function dragAndDropReorganizeObjects(locator2, locator1, position) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");
@@ -157,7 +157,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function dragAndDropToObject(locator2,locator1,value1) {
+	function dragAndDropToObject(locator2, locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");
@@ -177,7 +177,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function dragAndDropWithMouseMove(locator2,locator1) {
+	function dragAndDropWithMouseMove(locator2, locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");
@@ -199,7 +199,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function dragAtAndDrop(locator2,locator1,value1) {
+	function dragAtAndDrop(locator2, locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.dragAtAndDrop(${locator1}, ${locator2}, ${value1});
@@ -209,7 +209,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function javaScriptDragAndDropObjectAboveShortNestedObject(locator2,locator1) {
+	function javaScriptDragAndDropObjectAboveShortNestedObject(locator2, locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");
@@ -259,7 +259,7 @@ Simulate.dragAndDrop(arguments[0], arguments[1]);
 		selenium.assertLiferayErrors();
 	}
 
-	function javaScriptDragAndDropObjectAboveTallNestedObject(locator2,locator1) {
+	function javaScriptDragAndDropObjectAboveTallNestedObject(locator2, locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");
@@ -309,7 +309,7 @@ Simulate.dragAndDrop(arguments[0], arguments[1]);
 		selenium.assertLiferayErrors();
 	}
 
-	function javaScriptDragAndDropObjectBelowShortNestedObject(locator2,locator1) {
+	function javaScriptDragAndDropObjectBelowShortNestedObject(locator2, locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");
@@ -359,7 +359,7 @@ Simulate.dragAndDrop(arguments[0], arguments[1]);
 		selenium.assertLiferayErrors();
 	}
 
-	function javaScriptDragAndDropObjectBelowTallNestedObject(locator2,locator1) {
+	function javaScriptDragAndDropObjectBelowTallNestedObject(locator2, locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");
@@ -413,7 +413,7 @@ Simulate.dragAndDrop(arguments[0], arguments[1], ${ratio});
 		selenium.assertLiferayErrors();
 	}
 
-	function javaScriptDragAndDropToBottom(locator2,locator1) {
+	function javaScriptDragAndDropToBottom(locator2, locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");
@@ -459,7 +459,7 @@ Simulate.dragAndDrop(arguments[0], arguments[1]);
 		selenium.assertLiferayErrors();
 	}
 
-	function javaScriptDragAndDropToObject(locator2,locator1) {
+	function javaScriptDragAndDropToObject(locator2, locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");
@@ -505,7 +505,7 @@ Simulate.dragAndDrop(arguments[0], arguments[1]);
 		selenium.assertLiferayErrors();
 	}
 
-	function javaScriptDragAndDropToUp(locator2,locator1) {
+	function javaScriptDragAndDropToUp(locator2, locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");
@@ -555,7 +555,7 @@ Simulate.dragAndDrop(arguments[0], arguments[1]);
 		selenium.assertLiferayErrors();
 	}
 
-	function javaScriptDragAndDropUpperLeftCorner(locator2,locator1) {
+	function javaScriptDragAndDropUpperLeftCorner(locator2, locator1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro configure(samlRoleType = null,samlEntityId = null) {
+	macro configure(samlRoleType = null, samlEntityId = null) {
 		Select(
 			locator1 = "CPSAMLAdmin#SAML_ROLE_SELECT",
 			value1 = ${samlRoleType});
@@ -20,7 +20,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureCertificateAndPrivateKey(samlKeyPassword = null,certificateUsage = null) {
+	macro configureCertificateAndPrivateKey(samlKeyPassword = null, certificateUsage = null) {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		if (isSet(keystoreEnabled)) {
@@ -55,7 +55,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureIdentityProvider(idpSessionMaximumAge = null,idpSessionIdleTimeout = null) {
+	macro configureIdentityProvider(idpSessionMaximumAge = null, idpSessionIdleTimeout = null) {
 		if (isSet(idpSessionIdleTimeout)) {
 			Type(
 				locator1 = "CPSAMLAdmin#IDENTITY_PROVIDER_SESSION_IDLE_TIMEOUT",
@@ -144,7 +144,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro importCertificateAndPrivateKey(keyStoreAlias = null,certificateUsage = null) {
+	macro importCertificateAndPrivateKey(keyStoreAlias = null, certificateUsage = null) {
 		if (${certificateUsage} == "SIGNING") {
 			AssertClick(
 				key_certificateUsage = "SIGNING",
@@ -208,7 +208,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewGeneralConfigurations(samlRoleType = null,samlEntityId = null) {
+	macro viewGeneralConfigurations(samlRoleType = null, samlEntityId = null) {
 		AssertChecked(locator1 = "CPSAMLAdmin#SAML_ENABLED_CHECKBOX");
 
 		AssertElementPresent(

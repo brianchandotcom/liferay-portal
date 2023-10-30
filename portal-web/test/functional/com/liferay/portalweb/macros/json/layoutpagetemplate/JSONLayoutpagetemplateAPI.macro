@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _addDisplayPageTemplateEntry(displayPageTemplateEntryName = null,groupId = null,masterLayoutPlid = null,classNameId = null,serviceContext = null,classTypeId = null,status = null) {
+	macro _addDisplayPageTemplateEntry(displayPageTemplateEntryName = null, groupId = null, masterLayoutPlid = null, classNameId = null, serviceContext = null, classTypeId = null, status = null) {
 		Variables.assertDefined(parameterList = "${classNameId},${classTypeId},${displayPageTemplateEntryName},${groupId},${masterLayoutPlid},${serviceContext}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -24,7 +24,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addGlobalPageTemplateEntry(nameMap = null,active = null,descriptionMap = null,serviceContext = null) {
+	macro _addGlobalPageTemplateEntry(nameMap = null, active = null, descriptionMap = null, serviceContext = null) {
 		Variables.assertDefined(parameterList = "${active},${descriptionMap},${nameMap},${serviceContext}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -43,7 +43,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addLayoutPageTemplateCollection(layoutPageTemplateCollectionName = null,groupId = null,description = null,serviceContext = null,type = null) {
+	macro _addLayoutPageTemplateCollection(layoutPageTemplateCollectionName = null, groupId = null, description = null, serviceContext = null, type = null) {
 		Variables.assertDefined(parameterList = "${description},${groupId},${layoutPageTemplateCollectionName},${serviceContext},${type}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -64,7 +64,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addLayoutPageTemplateEntry(groupId = null,layoutPageTemplateCollectionId = null,masterLayoutPlid = null,layoutPageTemplateEntryName = null,serviceContext = null,type = null,status = null) {
+	macro _addLayoutPageTemplateEntry(groupId = null, layoutPageTemplateCollectionId = null, masterLayoutPlid = null, layoutPageTemplateEntryName = null, serviceContext = null, type = null, status = null) {
 		Variables.assertDefined(parameterList = "${groupId},${layoutPageTemplateCollectionId},${layoutPageTemplateEntryName},${masterLayoutPlid},${serviceContext},${status},${type}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -86,7 +86,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addMasterPageTemplateEntry(groupId = null,masterPageTemplateEntryName = null,serviceContext = null) {
+	macro _addMasterPageTemplateEntry(groupId = null, masterPageTemplateEntryName = null, serviceContext = null) {
 		Variables.assertDefined(parameterList = "${groupId},${masterPageTemplateEntryName},${serviceContext}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -124,7 +124,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getDisplayPageTemplatePlidByName(plid = null,displayPageTemplateEntryName = null,groupId = null) {
+	macro _getDisplayPageTemplatePlidByName(plid = null, displayPageTemplateEntryName = null, groupId = null) {
 		Variables.assertDefined(parameterList = "${groupId},${displayPageTemplateEntryName}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -150,7 +150,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getLayoutPageTemplateCollectionIdByName(layoutPageTemplateCollectionName = null,groupId = null,type = null) {
+	macro _getLayoutPageTemplateCollectionIdByName(layoutPageTemplateCollectionName = null, groupId = null, type = null) {
 		Variables.assertDefined(parameterList = "${groupId},${layoutPageTemplateCollectionName}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -173,7 +173,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getLayoutPageTemplateEntryIdByName(groupId = null,layoutPageTemplateEntryName = null,type = null) {
+	macro _getLayoutPageTemplateEntryIdByName(groupId = null, layoutPageTemplateEntryName = null, type = null) {
 		Variables.assertDefined(parameterList = "${groupId},${layoutPageTemplateEntryName},${type}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -199,7 +199,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getLayoutPrototypeId(groupId = null,layoutPageTemplateEntryName = null,type = null) {
+	macro _getLayoutPrototypeId(groupId = null, layoutPageTemplateEntryName = null, type = null) {
 		Variables.assertDefined(parameterList = "${groupId},${layoutPageTemplateEntryName},${type}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -225,7 +225,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getMasterLayoutPlidByName(groupId = null,masterLayoutEntryName = null) {
+	macro _getMasterLayoutPlidByName(groupId = null, masterLayoutEntryName = null) {
 		Variables.assertDefined(parameterList = "${groupId},${masterLayoutEntryName}");
 
 		var portalURL = JSONCompany.getPortalURL();

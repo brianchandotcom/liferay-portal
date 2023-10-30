@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro configureMailSettings(incomingPOPServer = null,userPassword = null,outgoingSMTPServer = null,userName = null,incomingPort = null,outgoingPort = null) {
+	macro configureMailSettings(incomingPOPServer = null, userPassword = null, outgoingSMTPServer = null, userName = null, incomingPort = null, outgoingPort = null) {
 		ACAdmin.goToServerAdministration();
 
 		Navigator.gotoNavItem(navItem = "Mail");

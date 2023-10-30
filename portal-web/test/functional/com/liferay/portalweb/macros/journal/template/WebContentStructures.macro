@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addCP(structureKey = null,structureName = null,structureDescription = null) {
+	macro addCP(structureKey = null, structureName = null, structureDescription = null) {
 		LexiconEntry.gotoAdd();
 
 		AssertVisible(locator1 = "Sidebar#FORM_BUILDER");
@@ -41,7 +41,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addLocalization(localizedManageTranslations = null,locale2 = null,localization2Name = null,locale = null,localizedDone = null,localization1Name = null) {
+	macro addLocalization(localizedManageTranslations = null, locale2 = null, localization2Name = null, locale = null, localizedDone = null, localization1Name = null) {
 		Click(locator1 = "Button#LOCALIZATION_GENERIC");
 
 		if (IsElementNotPresent(key_locale = ${locale}, locator1 = "Translation#LOCALIZATION_NAME")) {
@@ -98,7 +98,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addTranslations(localizedManageTranslations = null,localizedDone = null,localeList = null) {
+	macro addTranslations(localizedManageTranslations = null, localizedDone = null, localeList = null) {
 		if (isSet(localizedManageTranslations)) {
 			var manageTranslations = ${localizedManageTranslations};
 		}
@@ -139,7 +139,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro copyCP(copyTemplates = null,structureName = null,structureCopyLocalName = null,locale = null,structureCopyName = null) {
+	macro copyCP(copyTemplates = null, structureName = null, structureCopyLocalName = null, locale = null, structureCopyName = null) {
 		var key_ddlDataDefinitionName = ${structureName};
 
 		Click(locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS");
@@ -170,7 +170,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteCP(structureName = null,webContentHasReference = null) {
+	macro deleteCP(structureName = null, webContentHasReference = null) {
 		Navigator.gotoNavItem(navItem = "Structures");
 
 		var key_ddlDataDefinitionName = ${structureName};
@@ -218,7 +218,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro importStructure(uploadFileName = null,structureName = null) {
+	macro importStructure(uploadFileName = null, structureName = null) {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Import Structure");
 
 		PortletEntry.inputName(name = ${structureName});
@@ -240,7 +240,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro resetStructureDefaultValuesCP(templateName = null,assetTitle = null) {
+	macro resetStructureDefaultValuesCP(templateName = null, assetTitle = null) {
 		ClickNoError(
 			key_text = "Reset Values",
 			locator1 = "Button#ANY");
@@ -294,7 +294,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro saveCP(addRoleViewPermissions = null,structureName = null) {
+	macro saveCP(addRoleViewPermissions = null, structureName = null) {
 		PortletEntry.save();
 
 		if (isSet(addRoleViewPermissions)) {
@@ -338,7 +338,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCP(structureName = null,structureDescription = null) {
+	macro viewCP(structureName = null, structureDescription = null) {
 		var key_ddlDataDefinitionName = ${structureName};
 
 		if (isSet(structureName)) {
@@ -357,7 +357,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewFavoriteStructureViaIFrame(structureName = null,indexNumber = null) {
+	macro viewFavoriteStructureViaIFrame(structureName = null, indexNumber = null) {
 		AssertTextEquals(
 			locator1 = "WC#ADD_TO_FAVORITES",
 			value1 = "Add to Favorites (${indexNumber})");
@@ -388,7 +388,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewScopesViaMoreIFrame(structureName = null,scopeName = null) {
+	macro viewScopesViaMoreIFrame(structureName = null, scopeName = null) {
 		AssertTextEquals(
 			key_tableEntry = ${structureName},
 			key_tableEntryText = ${scopeName},
@@ -405,7 +405,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTableEntryCP(structureName = null,structureDescription = null) {
+	macro viewTableEntryCP(structureName = null, structureDescription = null) {
 		var key_ddlDataDefinitionName = ${structureName};
 
 		AssertTextEquals(

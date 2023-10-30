@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _addCommerceOption(optionKey = null,optionName = null,fieldType = null,optionValues = null) {
+	macro _addCommerceOption(optionKey = null, optionName = null, fieldType = null, optionValues = null) {
 		Variables.assertDefined(parameterList = "${fieldType},${optionKey},${optionName}");
 
 		if (!(isSet(baseURL))) {
@@ -168,7 +168,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _assignOptionToCommerceProduct(optionKey = null,optionName = null,fieldType = null,productName = null) {
+	macro _assignOptionToCommerceProduct(optionKey = null, optionName = null, fieldType = null, productName = null) {
 		if (!(isSet(baseURL))) {
 			var baseURL = JSONCompany.getPortalURL();
 		}

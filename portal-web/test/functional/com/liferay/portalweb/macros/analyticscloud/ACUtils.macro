@@ -65,7 +65,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertActiveIndividualChart(visitorLegend = null,startMonth = null,startDay = null,endDay = null,startYear = null,endMonth = null,endYear = null,timeFilter = null) {
+	macro assertActiveIndividualChart(visitorLegend = null, startMonth = null, startDay = null, endDay = null, startYear = null, endMonth = null, endYear = null, timeFilter = null) {
 		var key_timeFilter = ${timeFilter};
 
 		if (isSet(visitorLegend)) {
@@ -181,7 +181,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertAudienceCard(index = null,percentageList = null) {
+	macro assertAudienceCard(index = null, percentageList = null) {
 		var key_index = ${index};
 
 		for (var percentage : list ${percentageList}) {
@@ -205,7 +205,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertDatePattern(date = null,format = null) {
+	macro assertDatePattern(date = null, format = null) {
 		if (${format} == "MMM d") {
 			var pattern = "[A-Z][a-z][a-z]\s\d+";
 		}
@@ -246,7 +246,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertEventNotPresent(eventId = null,applicationId = null) {
+	macro assertEventNotPresent(eventId = null, applicationId = null) {
 		var postDataText = ProxyUtil.getHarRecording("$..request..postData..text");
 
 		var actual = JSONUtil.getWithJSONPath("[${postDataText}]", "$..[?(@['applicationId'] == '${applicationId}' && @['eventId'] == '${eventId}')]['eventId']");
@@ -257,7 +257,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertEventPresent(eventId = null,applicationId = null) {
+	macro assertEventPresent(eventId = null, applicationId = null) {
 		var postDataText = ProxyUtil.getHarRecording("$..request..postData..text");
 
 		var actual = JSONUtil.getWithJSONPath("[${postDataText}]", "$..[?(@['applicationId'] == '${applicationId}' && @['eventId'] == '${eventId}')]['eventId']");
@@ -268,7 +268,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertEventPropertyValue(eventId = null,property = null,applicationId = null,value = null) {
+	macro assertEventPropertyValue(eventId = null, property = null, applicationId = null, value = null) {
 		var postDataText = ProxyUtil.getHarRecording("$..request..postData..text");
 
 		var actual = JSONUtil.getWithJSONPath("[${postDataText}]", "$..[?(@['applicationId'] == '${applicationId}' && @['eventId'] == '${eventId}')]..${property}");
@@ -350,7 +350,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertRequestCommonPropertiesValue(expectedDataSourceId = null,expectedChannelId = null) {
+	macro assertRequestCommonPropertiesValue(expectedDataSourceId = null, expectedChannelId = null) {
 		var actualChannelId = ACUtils.getRequestCommonPropertyValue(property = "channelId");
 
 		TestUtils.assertEquals(
@@ -377,7 +377,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertTimePattern(format = null,time = null) {
+	macro assertTimePattern(format = null, time = null) {
 		if (${format} == "h tt") {
 			var pattern = "\d+\s[A-Z][A-Z]";
 		}
@@ -677,7 +677,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getEventPropertyValue(eventId = null,property = null,applicationId = null) {
+	macro getEventPropertyValue(eventId = null, property = null, applicationId = null) {
 		var postDataText = ProxyUtil.getHarRecording("$..request..postData..text");
 
 		var value = JSONUtil.getWithJSONPath("[${postDataText}]", "$..[?(@['applicationId'] == '${applicationId}' && @['eventId'] == '${eventId}')]..${property}");
@@ -756,7 +756,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getPageRefRequestPropertyValue(property = null,pageRef = null) {
+	macro getPageRefRequestPropertyValue(property = null, pageRef = null) {
 		var postDataText = ProxyUtil.getHarRecording("$..[?(@['pageref'] == '${pageRef}')].request[?(@.method == 'POST' && @.url contains '/${pageRef}')]..text");
 
 		var value = JSONUtil.getWithJSONPath("[${postDataText}]", "$..${property}");
@@ -774,7 +774,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro launchAC(password = null,emailList = null,workspaceName = null) {
+	macro launchAC(password = null, emailList = null, workspaceName = null) {
 		var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
 
 		Open(value1 = ${analyticsCloudURL});
@@ -839,7 +839,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro navigateToSitePage(actionType = null,submitText = null,documentTitleList = null,siteName = null,pageName = null,commentText = null) {
+	macro navigateToSitePage(actionType = null, submitText = null, documentTitleList = null, siteName = null, pageName = null, commentText = null) {
 		for (var documentTitle : list ${documentTitleList}) {
 			Navigator.gotoSitePage(
 				pageName = ${pageName},
@@ -896,7 +896,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro navigateToSitePageWithUser(actionType = null,submitText = null,emailList = null,documentTitleList = null,siteName = null,pageName = null) {
+	macro navigateToSitePageWithUser(actionType = null, submitText = null, emailList = null, documentTitleList = null, siteName = null, pageName = null) {
 		for (var email : list ${emailList}) {
 			User.logoutAndLoginPG(userLoginEmailAddress = ${email});
 
@@ -967,7 +967,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro searchBar(searchItem = null,cardTitle = null) {
+	macro searchBar(searchItem = null, cardTitle = null) {
 		if (isSet(cardTitle)) {
 			Type(
 				key_cardTitle = ${cardTitle},
@@ -1011,7 +1011,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setLocalStorageValue(keyValue = null,keyName = null) {
+	macro setLocalStorageValue(keyValue = null, keyName = null) {
 		var javaScript = '''
 		localStorage.setItem('${keyName}', '${keyValue}');
 		''';
@@ -1222,14 +1222,14 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSearchResultsInfo(searchTerm = null,count = null) {
+	macro viewSearchResultsInfo(searchTerm = null, count = null) {
 		AssertTextEquals(
 			locator1 = "ACIndividualsDashboard#KNOWN_INDIVIDUAL_ATTRIBUTE_SEARCH_INFO",
 			value1 = "${count} Results for ${searchTerm}");
 	}
 
 	@summary = "Default summary"
-	macro viewTableInformation(nameList = null,numberValueList = null) {
+	macro viewTableInformation(nameList = null, numberValueList = null) {
 		var list1 = ListUtil.newListFromString(${nameList});
 		var list2 = ListUtil.newListFromString(${numberValueList});
 		var size = ListUtil.size(${list1});

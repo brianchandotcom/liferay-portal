@@ -45,7 +45,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addSelectTypeFieldOptions(optionValue = null,rowNumber = null) {
+	macro addSelectTypeFieldOptions(optionValue = null, rowNumber = null) {
 		var key_rowNumber = ${rowNumber};
 
 		Type(
@@ -61,7 +61,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertHelpTextPresent(fieldName = null,fieldValue = null) {
+	macro assertHelpTextPresent(fieldName = null, fieldValue = null) {
 		AssertTextEquals(
 			key_fieldName = ${fieldName},
 			locator1 = "FormViewBuilder#HELP_TEXT_AT_APP_DEPLOYED",
@@ -83,7 +83,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertPlaceholderTextFormField(key_fieldLabel = null,placeHolder = null) {
+	macro assertPlaceholderTextFormField(key_fieldLabel = null, placeHolder = null) {
 		AssertElementPresent(
 			key_fieldLabel = ${key_fieldLabel},
 			key_placeHolder = ${placeHolder},
@@ -91,7 +91,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertPredefinedDateValuePresent(fieldLabel = null,fieldValue = null) {
+	macro assertPredefinedDateValuePresent(fieldLabel = null, fieldValue = null) {
 		AssertElementPresent(
 			key_fieldName = ${fieldLabel},
 			key_fieldValue = ${fieldValue},
@@ -111,7 +111,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertTextPresent(fieldName = null,fieldValue = null) {
+	macro assertTextPresent(fieldName = null, fieldValue = null) {
 		AssertTextEquals(
 			key_fieldName = ${fieldName},
 			locator1 = "FormViewBuilder#TEXT_FIELD",
@@ -224,7 +224,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro confirmDeleteFromObject(selectAction = null,key_fieldLabel = null) {
+	macro confirmDeleteFromObject(selectAction = null, key_fieldLabel = null) {
 		Click(
 			locator1 = "FormViewBuilder#FIELD_LABEL",
 			value1 = ${key_fieldLabel});
@@ -249,7 +249,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteDisabledFieldSetEntry(rowNumber = null,selectAction = null) {
+	macro deleteDisabledFieldSetEntry(rowNumber = null, selectAction = null) {
 		var key_rowNumber = ${rowNumber};
 
 		Click(locator1 = "FormViewBuilder#FIELD_SET_DISABLED_ELLIPSIS_ACTION");
@@ -264,7 +264,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteFieldSetEntry(rowNumber = null,selectAction = null) {
+	macro deleteFieldSetEntry(rowNumber = null, selectAction = null) {
 		var key_rowNumber = ${rowNumber};
 
 		Click(locator1 = "FormViewBuilder#FIELD_SET_ELLIPSIS_ACTION");
@@ -307,7 +307,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deselectSelectWithMultipleOptions(fieldName = null,selectOptionsList = null) {
+	macro deselectSelectWithMultipleOptions(fieldName = null, selectOptionsList = null) {
 		for (var selectOption : list ${selectOptionsList}) {
 			FormViewBuilder.disableCheckbox(
 				fieldName = ${fieldName},
@@ -316,7 +316,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro disableCheckbox(fieldName = null,fieldValue = null) {
+	macro disableCheckbox(fieldName = null, fieldValue = null) {
 		var key_fieldName = ${fieldName};
 		var key_fieldValue = ${fieldValue};
 
@@ -364,7 +364,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editColor(fieldName = null,fieldValue = null) {
+	macro editColor(fieldName = null, fieldValue = null) {
 		Type(
 			key_fieldName = ${fieldName},
 			locator1 = "FormViewBuilder#COLOR_FIELD",
@@ -372,7 +372,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editDate(fieldName = null,fieldValue = null) {
+	macro editDate(fieldName = null, fieldValue = null) {
 		Type(
 			key_fieldName = ${fieldName},
 			locator1 = "FormViewBuilder#DATE_FIELD",
@@ -380,7 +380,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editDisabledFieldSetEntry(rowNumber = null,selectAction = null) {
+	macro editDisabledFieldSetEntry(rowNumber = null, selectAction = null) {
 		var key_rowNumber = ${rowNumber};
 
 		Click(locator1 = "FormViewBuilder#FIELD_SET_DISABLED_ELLIPSIS_ACTION");
@@ -391,7 +391,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editFieldInObject(fieldName = null,fieldLabel = null) {
+	macro editFieldInObject(fieldName = null, fieldLabel = null) {
 		Click(
 			key_fieldName = ${fieldName},
 			locator1 = "FormViewBuilder#OBJECT_FIELD_SEARCH_RESULT");
@@ -400,7 +400,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editFieldLabel(fieldLabel = null,label = null) {
+	macro editFieldLabel(fieldLabel = null, label = null) {
 		Click(
 			locator1 = "FormViewBuilder#FIELD_LABEL",
 			value1 = ${fieldLabel});
@@ -411,7 +411,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editFieldSetEntry(rowNumber = null,selectAction = null) {
+	macro editFieldSetEntry(rowNumber = null, selectAction = null) {
 		var key_rowNumber = ${rowNumber};
 
 		Click(locator1 = "FormViewBuilder#FIELD_SET_ELLIPSIS_ACTION");
@@ -429,7 +429,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editOptionsRow(optionValue = null,rowNumber = null) {
+	macro editOptionsRow(optionValue = null, rowNumber = null) {
 		var key_rowNumber = ${rowNumber};
 
 		Type.typeNotVisibleNoMouseOver(
@@ -463,7 +463,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editText(fieldName = null,fieldValue = null) {
+	macro editText(fieldName = null, fieldValue = null) {
 		Type(
 			key_fieldName = ${fieldName},
 			locator1 = "FormViewBuilder#TEXT_FIELD",
@@ -471,7 +471,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro enableCheckbox(fieldName = null,fieldValue = null) {
+	macro enableCheckbox(fieldName = null, fieldValue = null) {
 		var key_fieldName = ${fieldName};
 		var key_fieldValue = ${fieldValue};
 
@@ -496,7 +496,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro fieldEllipsisAction(selectAction = null,key_fieldLabel = null) {
+	macro fieldEllipsisAction(selectAction = null, key_fieldLabel = null) {
 		Click(
 			locator1 = "FormViewBuilder#FIELD_LABEL",
 			value1 = ${key_fieldLabel});
@@ -513,7 +513,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro fieldEllipsisActionFieldset(selectAction = null,key_fieldLabel = null) {
+	macro fieldEllipsisActionFieldset(selectAction = null, key_fieldLabel = null) {
 		Click(
 			locator1 = "FormViewBuilder#FIELD_FROM_FIELDSET",
 			value1 = ${key_fieldLabel});
@@ -613,7 +613,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectRadioOption(fieldName = null,radioOption = null) {
+	macro selectRadioOption(fieldName = null, radioOption = null) {
 		Click.clickNoMouseOverNoWaitForVisible(
 			key_fieldName = ${fieldName},
 			key_radioOption = ${radioOption},
@@ -628,7 +628,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectSelectOption(fieldName = null,selectOption = null) {
+	macro selectSelectOption(fieldName = null, selectOption = null) {
 		var key_fieldName = ${fieldName};
 		var key_selectOption = ${selectOption};
 
@@ -655,7 +655,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectSelectWithMultipleOptions(fieldName = null,selectOptionsList = null) {
+	macro selectSelectWithMultipleOptions(fieldName = null, selectOptionsList = null) {
 		for (var selectOption : list ${selectOptionsList}) {
 			FormViewBuilder.enableCheckbox(
 				fieldName = ${fieldName},
@@ -664,7 +664,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectSelectWithMultipleOptionsPredefined(fieldName = null,selectOptionsList = null) {
+	macro selectSelectWithMultipleOptionsPredefined(fieldName = null, selectOptionsList = null) {
 		var key_fieldName = ${fieldName};
 
 		Click(locator1 = "FormViewBuilder#SIDEBAR_ADVANCED_PREDEFINED_SELECT_FROM_LIST");
@@ -753,7 +753,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro switchLocalization(localizationName = null,symbolName = null) {
+	macro switchLocalization(localizationName = null, symbolName = null) {
 		Click(
 			key_symbolName = ${symbolName},
 			locator1 = "FormViewBuilder#BUTTON_LOCALIZATION");
@@ -764,7 +764,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro switchLocalizationForFieldSets(localizationName = null,statusName = null,symbolName = null) {
+	macro switchLocalizationForFieldSets(localizationName = null, statusName = null, symbolName = null) {
 		Click(
 			key_symbolName = ${symbolName},
 			locator1 = "FormViewBuilder#BUTTON_LOCALIZATION_FIELD_SET");
@@ -845,7 +845,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro validateFormMultipleSelectionField(fieldName = null,fieldLabel = null) {
+	macro validateFormMultipleSelectionField(fieldName = null, fieldLabel = null) {
 		var key_fieldType = ${fieldLabel};
 
 		FormViewBuilder.validateFieldLabel(fieldLabel = ${fieldName});
@@ -915,7 +915,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro validatePredefinedDate(fieldName = null,fieldValue = null) {
+	macro validatePredefinedDate(fieldName = null, fieldValue = null) {
 		var key_fieldName = ${fieldName};
 		var key_fieldValue = ${fieldValue};
 
@@ -925,7 +925,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro validatePredefinedMultipleSelection(fieldName = null,selectOptionsList = null) {
+	macro validatePredefinedMultipleSelection(fieldName = null, selectOptionsList = null) {
 		for (var selectOption : list ${selectOptionsList}) {
 			FormViewBuilder.viewCheckboxChecked(
 				fieldName = ${fieldName},
@@ -934,7 +934,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro validatePredefinedSelectFromList(fieldName = null,fieldValue = null) {
+	macro validatePredefinedSelectFromList(fieldName = null, fieldValue = null) {
 		var key_fieldName = ${fieldName};
 		var key_fieldValue = ${fieldValue};
 
@@ -944,14 +944,14 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro validatePredefinedSingleSelection(fieldName = null,fieldValue = null) {
+	macro validatePredefinedSingleSelection(fieldName = null, fieldValue = null) {
 		FormViewBuilder.viewSingleSelectionChecked(
 			fieldName = ${fieldName},
 			fieldValue = ${fieldValue});
 	}
 
 	@summary = "Default summary"
-	macro validatePredefinedText(fieldName = null,fieldValue = null) {
+	macro validatePredefinedText(fieldName = null, fieldValue = null) {
 		var key_fieldName = ${fieldName};
 		var key_fieldValue = ${fieldValue};
 
@@ -968,7 +968,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro validateRuleSummary(condition = null,action = null,secondField = null,firstField = null) {
+	macro validateRuleSummary(condition = null, action = null, secondField = null, firstField = null) {
 		var key_firstField = ${firstField};
 		var key_secondField = ${secondField};
 		var key_condition = ${condition};
@@ -1001,7 +1001,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro validateSelectFromListField(optionValue = null,rowNumber = null) {
+	macro validateSelectFromListField(optionValue = null, rowNumber = null) {
 		var key_rowNumber = ${rowNumber};
 
 		AssertTextEquals(
@@ -1039,7 +1039,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro validateTranslatedLocalization(localizationName = null,statusName = null,symbolName = null) {
+	macro validateTranslatedLocalization(localizationName = null, statusName = null, symbolName = null) {
 		Click(
 			key_symbolName = ${symbolName},
 			locator1 = "FormViewBuilder#BUTTON_LOCALIZATION_FIELD_SET");
@@ -1061,7 +1061,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCheckboxChecked(fieldName = null,fieldValue = null) {
+	macro viewCheckboxChecked(fieldName = null, fieldValue = null) {
 		AssertChecked.assertCheckedNotVisible(
 			key_fieldName = ${fieldName},
 			key_fieldValue = ${fieldValue},
@@ -1076,7 +1076,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCheckboxNotChecked(fieldName = null,fieldValue = null) {
+	macro viewCheckboxNotChecked(fieldName = null, fieldValue = null) {
 		AssertNotChecked.assertNotCheckedNotVisible(
 			key_fieldName = ${fieldName},
 			key_fieldValue = ${fieldValue},
@@ -1109,7 +1109,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSelectChecked(fieldName = null,fieldValue = null) {
+	macro viewSelectChecked(fieldName = null, fieldValue = null) {
 		AssertChecked.assertCheckedNotVisible(
 			key_fieldName = ${fieldName},
 			key_fieldValue = ${fieldValue},
@@ -1117,7 +1117,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSingleSelectionChecked(fieldName = null,fieldValue = null) {
+	macro viewSingleSelectionChecked(fieldName = null, fieldValue = null) {
 		AssertChecked.assertCheckedNotVisible(
 			key_fieldName = ${fieldName},
 			key_fieldValue = ${fieldValue},
@@ -1125,7 +1125,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSummaryEntry(key_entryName = null,key_card = null,key_entryNumber = null) {
+	macro viewSummaryEntry(key_entryName = null, key_card = null, key_entryNumber = null) {
 		AssertElementPresent(
 			key_card = ${key_card},
 			locator1 = "Card#CARD_TITLE");
@@ -1140,7 +1140,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSummaryEntryNumeric(key_averageValue = null,key_sumValue = null,key_minValue = null,key_maxValue = null) {
+	macro viewSummaryEntryNumeric(key_averageValue = null, key_sumValue = null, key_minValue = null, key_maxValue = null) {
 		AssertElementPresent(
 			key_type = "Sum",
 			key_value = ${key_sumValue},

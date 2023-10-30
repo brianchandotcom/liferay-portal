@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro editText(fieldLabel = null,text = null) {
+	macro editText(fieldLabel = null, text = null) {
 		Type(
 			key_text = ${fieldLabel},
 			locator1 = "TextInput#ANY",
@@ -9,7 +9,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewText(fieldLabel = null,text = null) {
+	macro viewText(fieldLabel = null, text = null) {
 		AssertTextEquals(
 			key_text = ${fieldLabel},
 			locator1 = "TextInput#ANY",

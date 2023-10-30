@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro assertEngineVendorAndVersions(serverVersion = null,engineVendor = null,clientVersion = null) {
+	macro assertEngineVendorAndVersions(serverVersion = null, engineVendor = null, clientVersion = null) {
 		AssertTextEquals.assertPartialText(
 			locator1 = "SearchAdmin#SEARCH_ENGINE_VENDOR",
 			value1 = ${engineVendor});
@@ -18,7 +18,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro executeReindex(executionScope = null,waitForReindexFinished = null,reindexMode = null) {
+	macro executeReindex(executionScope = null, waitForReindexFinished = null, reindexMode = null) {
 		SearchAdministration.openIndexActions();
 
 		AssertTextEquals(

@@ -28,7 +28,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addJSONArrayValues(values = null,key = null) {
+	macro _addJSONArrayValues(values = null, key = null) {
 		if (!(isSet(json)) || !(isSet(key)) || !(isSet(values))) {
 			fail("Error, 'JSON', 'key', and 'values' must all be set");
 		}
@@ -63,7 +63,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addJSONObject(value = null,key = null) {
+	macro _addJSONObject(value = null, key = null) {
 		if (!(isSet(json)) || !(isSet(key)) || !(isSet(value))) {
 			fail("Error, 'JSON', 'key', and 'value' must all be set");
 		}
@@ -117,7 +117,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _isJSONArrayPresent(json = null,key = null) {
+	macro _isJSONArrayPresent(json = null, key = null) {
 		var temp = RegexUtil.replace(${json}, "\"(${key})\"\s*:\s*\[.*?\]", 1);
 
 		if (${temp} == ${key}) {
@@ -129,7 +129,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _isJSONObjectPresent(json = null,key = null) {
+	macro _isJSONObjectPresent(json = null, key = null) {
 		var temp = RegexUtil.replace(${json}, "\"(${key})\"\s*:\s*", 1);
 
 		if (${temp} == ${key}) {

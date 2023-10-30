@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro assertAxisTick(cardName = null,tick = null,axis = null) {
+	macro assertAxisTick(cardName = null, tick = null, axis = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -23,7 +23,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getAxisTick(cardName = null,axis = null) {
+	macro getAxisTick(cardName = null, axis = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -54,7 +54,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro noViewTopVisitedPages(key_entry = null,key_result = null) {
+	macro noViewTopVisitedPages(key_entry = null, key_result = null) {
 		AssertElementNotPresent(
 			key_entryName = ${key_entry},
 			key_resultNumber = ${key_result},
@@ -62,7 +62,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectInterval(cardName = null,interval = null) {
+	macro selectInterval(cardName = null, interval = null) {
 		if (isSet(cardName)) {
 			Click(
 				interval = ${interval},
@@ -103,7 +103,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewGeomapTableText(rightText = null,leftText = null,cardTitle = null) {
+	macro viewGeomapTableText(rightText = null, leftText = null, cardTitle = null) {
 		AssertTextEquals(
 			key_cardTitle = ${cardTitle},
 			locator1 = "ACCards#GEOMAP_TABLE_TEXT",
@@ -118,7 +118,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewMetricBarStyle(backgroundColor = null,entryName = null,style = null,cardTitle = null) {
+	macro viewMetricBarStyle(backgroundColor = null, entryName = null, style = null, cardTitle = null) {
 		AssertAttributeValue(
 			entryName = ${entryName},
 			key_cardTitle = ${cardTitle},
@@ -135,7 +135,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewMetricValue(metricName = null,startMonth = null,startDay = null,endDay = null,metricValue = null,startYear = null,endMonth = null,cardTitle = null,endYear = null,timeFilter = null) {
+	macro viewMetricValue(metricName = null, startMonth = null, startDay = null, endDay = null, metricValue = null, startYear = null, endMonth = null, cardTitle = null, endYear = null, timeFilter = null) {
 		var key_cardTitle = ${cardTitle};
 		var key_metricName = ${metricName};
 		var key_metricValue = ${metricValue};
@@ -196,7 +196,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSelectedInterval(cardName = null,interval = null) {
+	macro viewSelectedInterval(cardName = null, interval = null) {
 		if (isSet(cardName)) {
 			AssertElementPresent(
 				interval = ${interval},
@@ -211,7 +211,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTableEntryInfo(entryName = null,column = null,entryInfo = null,cardTitle = null) {
+	macro viewTableEntryInfo(entryName = null, column = null, entryInfo = null, cardTitle = null) {
 		AssertVisible(
 			column = ${column},
 			entryInfo = ${entryInfo},
@@ -221,7 +221,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTopSitesByIndexes(key_entry = null,key_index = null) {
+	macro viewTopSitesByIndexes(key_entry = null, key_index = null) {
 		AssertElementPresent(
 			key_entryName = ${key_entry},
 			key_indexNumber = ${key_index},
@@ -236,7 +236,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTopVisitedPages(key_entry = null,key_result = null) {
+	macro viewTopVisitedPages(key_entry = null, key_result = null) {
 		AssertElementPresent(
 			key_entryName = ${key_entry},
 			key_resultNumber = ${key_result},
@@ -244,7 +244,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTotalCount(cardName = null,count = null) {
+	macro viewTotalCount(cardName = null, count = null) {
 		AssertTextEquals(
 			key_cardTitle = ${cardName},
 			locator1 = "ACCards#TOTAL_COUNT",

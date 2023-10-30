@@ -42,7 +42,7 @@ definition {
 
 	@description = "Compare two dates, if the first is greater than the second it returns the string"
 	@summary = "Default summary"
-	macro compareDates(date2 = null,date1 = null) {
+	macro compareDates(date2 = null, date1 = null) {
 		var javaScript = '''
 			CompareDates = {
 				compareDates: function (dateString1, dateString2) {
@@ -120,7 +120,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getFutureDate(increaseYears = null,monthFormat = null,dayFormat = null,yearFormat = null,increaseDays = null,increaseMonths = null) {
+	macro getFutureDate(increaseYears = null, monthFormat = null, dayFormat = null, yearFormat = null, increaseDays = null, increaseMonths = null) {
 		if (isSet(monthFormat)) {
 			var dateMonth = DateUtil.getFormattedCurrentDate(${monthFormat});
 		}
@@ -177,7 +177,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getLocaleDateLocalized(date = null,options = null,lang = null) {
+	macro getLocaleDateLocalized(date = null, options = null, lang = null) {
 		Variables.assertDefined(parameterList = ${date});
 
 		var javaScript = '''
@@ -240,7 +240,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro uploadSingleFile(uploadFileName = null,selectButtonName = null) {
+	macro uploadSingleFile(uploadFileName = null, selectButtonName = null) {
 		Variables.assertDefined(parameterList = ${uploadFileName});
 
 		if (isSet(selectButtonName)) {
@@ -260,7 +260,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro uploadSingleFileWithoutFrameTop(uploadFileName = null,selectButtonName = null) {
+	macro uploadSingleFileWithoutFrameTop(uploadFileName = null, selectButtonName = null) {
 		Variables.assertDefined(parameterList = ${uploadFileName});
 
 		if (isSet(selectButtonName)) {

@@ -12,7 +12,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro executeCommandViaTelnet(expectedOutput = null,command = null) {
+	macro executeCommandViaTelnet(expectedOutput = null, command = null) {
 		if (!(isSet(nodePort))) {
 			var nodePort = 8080;
 		}
@@ -103,7 +103,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewModuleStatus(moduleStatus = null,moduleName = null) {
+	macro viewModuleStatus(moduleStatus = null, moduleName = null) {
 		GogoShell.listModuleStatus(moduleName = ${moduleName});
 
 		AssertTextEquals.assertPartialText(

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addAnyProductRelation(key_relation = null,key_product = null) {
+	macro addAnyProductRelation(key_relation = null, key_product = null) {
 		Click(locator1 = "Button#PLUS");
 
 		Click(
@@ -58,7 +58,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assignSingleRelationToEligibility(entryName = null,title = null,key_eligibilityCardTitle = null) {
+	macro assignSingleRelationToEligibility(entryName = null, title = null, key_eligibilityCardTitle = null) {
 		var searchTerm = '''"${entryName}"''';
 
 		Type(
@@ -91,7 +91,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assignSingleRelationToProductsEntry(entryName = null,title = null) {
+	macro assignSingleRelationToProductsEntry(entryName = null, title = null) {
 		var searchTerm = '''"${entryName}"''';
 
 		Type(
@@ -133,7 +133,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro productRelationSetPriority(priorityValue = null,productNameRelation = null) {
+	macro productRelationSetPriority(priorityValue = null, productNameRelation = null) {
 		Click(
 			key_value = ${productNameRelation},
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");

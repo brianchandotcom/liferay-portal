@@ -22,7 +22,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoDDLRecordEditViaWorkflow(workflowStatus = null,userName = null) {
+	macro gotoDDLRecordEditViaWorkflow(workflowStatus = null, userName = null) {
 		Click(locator1 = "WorkflowSubmissionsTask#PREVIEW_EDIT");
 
 		DDLNavigator.viewDetails(

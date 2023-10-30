@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro configureAnonymousPostingCP(siteURLKey = null,anonymousPostingEnabled = null) {
+	macro configureAnonymousPostingCP(siteURLKey = null, anonymousPostingEnabled = null) {
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = ${siteURLKey});
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
@@ -19,7 +19,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureGeneralCP(threadAsQuestionByDefaultEnabled = null,siteURLKey = null) {
+	macro configureGeneralCP(threadAsQuestionByDefaultEnabled = null, siteURLKey = null) {
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = ${siteURLKey});
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
@@ -34,7 +34,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureMessageAddedEmail(siteURLKey = null,bodyContent = null,messageAddedEmailEnabled = null) {
+	macro configureMessageAddedEmail(siteURLKey = null, bodyContent = null, messageAddedEmailEnabled = null) {
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = ${siteURLKey});
 
 		Click(locator1 = "Portlet#OPTIONS_ICON");
@@ -70,7 +70,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureMessageEmailFromCP(emailFromName = null,emailFromAddress = null) {
+	macro configureMessageEmailFromCP(emailFromName = null, emailFromAddress = null) {
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -103,7 +103,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureMessageFormat(messageFormat = null,siteURLKey = null) {
+	macro configureMessageFormat(messageFormat = null, siteURLKey = null) {
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = ${siteURLKey});
 
 		Click(locator1 = "Portlet#OPTIONS_ICON");
@@ -125,7 +125,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureMessageUpdatedEmail(siteURLKey = null,messageUpdatedEmailEnabled = null) {
+	macro configureMessageUpdatedEmail(siteURLKey = null, messageUpdatedEmailEnabled = null) {
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = ${siteURLKey});
 
 		Click(locator1 = "Portlet#OPTIONS_ICON");
@@ -226,7 +226,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewAnonymousPostingConfigurationCP(siteURLKey = null,anonymousPostingEnabled = null) {
+	macro viewAnonymousPostingConfigurationCP(siteURLKey = null, anonymousPostingEnabled = null) {
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = ${siteURLKey});
 
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
@@ -242,7 +242,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewBannedUserCP(siteURLKey = null,userScreenName = null) {
+	macro viewBannedUserCP(siteURLKey = null, userScreenName = null) {
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = ${siteURLKey});
 
 		AssertClick(
@@ -299,7 +299,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewDefaultEmailFromCP(emailFromAddress = null,siteURLKey = null) {
+	macro viewDefaultEmailFromCP(emailFromAddress = null, siteURLKey = null) {
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = ${siteURLKey});
 
 		Click(locator1 = "Portlet#OPTIONS_ICON");
@@ -330,7 +330,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro ViewMessageEmailTemplate(messageURL = null,messageSubject = null,siteURLKey = null,messageAddedEmail = null,content = null) {
+	macro ViewMessageEmailTemplate(messageURL = null, messageSubject = null, siteURLKey = null, messageAddedEmail = null, content = null) {
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = ${siteURLKey});
 
 		Click(locator1 = "Portlet#OPTIONS_ICON");

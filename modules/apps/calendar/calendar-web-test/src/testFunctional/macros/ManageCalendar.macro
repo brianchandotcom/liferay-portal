@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addCalendar(enableCommentsOption = null,calendarName = null,color = null,description = null,timeZone = null,enableRatingsOption = null,defaultCalendarOption = null) {
+	macro addCalendar(enableCommentsOption = null, calendarName = null, color = null, description = null, timeZone = null, enableRatingsOption = null, defaultCalendarOption = null) {
 		Click(locator1 = "ManageCalendar#ADD_CALENDAR");
 
 		Calendar._editName(calendarName = ${calendarName});
@@ -38,7 +38,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editCalendar(newTimeZone = null,enableCommentsOption = null,newColor = null,newCalendarName = null,enableRatingsOption = null,newDescription = null,defaultCalendarOption = null,calendarCurrentName = null) {
+	macro editCalendar(newTimeZone = null, enableCommentsOption = null, newColor = null, newCalendarName = null, enableRatingsOption = null, newDescription = null, defaultCalendarOption = null, calendarCurrentName = null) {
 		Click(
 			key_calendarName = ${calendarCurrentName},
 			locator1 = "ManageCalendar#VERTICAL_ELLIPSIS_BY_NAME");
@@ -125,7 +125,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewDefaultOptionOfCalendar(calendarName = null,defaultOption = null) {
+	macro viewDefaultOptionOfCalendar(calendarName = null, defaultOption = null) {
 		AssertElementPresent(
 			key_calendarName = ${calendarName},
 			key_optionDefault = ${defaultOption},
@@ -133,7 +133,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewMenuItemNotPresent(calendarName = null,menuItem = null) {
+	macro viewMenuItemNotPresent(calendarName = null, menuItem = null) {
 		Click(
 			key_calendarName = ${calendarName},
 			locator1 = "ManageCalendar#VERTICAL_ELLIPSIS_BY_NAME");
@@ -146,7 +146,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewMenuItemPresent(calendarName = null,menuItem = null) {
+	macro viewMenuItemPresent(calendarName = null, menuItem = null) {
 		Click(
 			key_calendarName = ${calendarName},
 			locator1 = "ManageCalendar#VERTICAL_ELLIPSIS_BY_NAME");

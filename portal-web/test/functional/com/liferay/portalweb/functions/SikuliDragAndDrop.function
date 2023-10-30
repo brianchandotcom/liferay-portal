@@ -1,7 +1,7 @@
 @default = "sikuliDragAndDrop"
 definition {
 
-	function sikuliDragAndDrop(locator1,value1) {
+	function sikuliDragAndDrop(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.sikuliDragAndDrop(${locator1}, ${value1});

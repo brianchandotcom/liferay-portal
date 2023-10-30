@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _addUser(jobTitle = null,userEmailAddress = null,userFirstName = null,locale = null,serviceContext = null,creatorEmailAddress = null,birthdayMonth = null,creatorPassword = null,userLastName = null,birthdayDay = null,userScreenName = null,portalInstanceName = null,specificURL = null,birthdayYear = null) {
+	macro _addUser(jobTitle = null, userEmailAddress = null, userFirstName = null, locale = null, serviceContext = null, creatorEmailAddress = null, birthdayMonth = null, creatorPassword = null, userLastName = null, birthdayDay = null, userScreenName = null, portalInstanceName = null, specificURL = null, birthdayYear = null) {
 		Variables.assertDefined(parameterList = "${locale},${userEmailAddress},${userFirstName},${userLastName},${userScreenName}");
 
 		if (isSet(specificURL)) {
@@ -51,7 +51,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addUserToSite(groupId = null,specificURL = null,userId = null) {
+	macro _addUserToSite(groupId = null, specificURL = null, userId = null) {
 		Variables.assertDefined(parameterList = "${groupId},${userId}");
 
 		if (isSet(specificURL)) {
@@ -72,7 +72,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addUserToUserGroup(userGroupId = null,specificURL = null,userId = null) {
+	macro _addUserToUserGroup(userGroupId = null, specificURL = null, userId = null) {
 		Variables.assertDefined(parameterList = "${userGroupId},${userId}");
 
 		if (isSet(specificURL)) {
@@ -93,7 +93,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _agreeToTermsAndAnswerReminderQuery(specificURL = null,userEmailAddress = null,userId = null) {
+	macro _agreeToTermsAndAnswerReminderQuery(specificURL = null, userEmailAddress = null, userId = null) {
 		Variables.assertDefined(parameterList = ${userId});
 
 		if (isSet(specificURL)) {
@@ -132,7 +132,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _agreeToTermsAndAnswerReminderQueryByScreenName(specificURL = null,userId = null) {
+	macro _agreeToTermsAndAnswerReminderQueryByScreenName(specificURL = null, userId = null) {
 		Variables.assertDefined(parameterList = ${userId});
 
 		if (isSet(specificURL)) {
@@ -158,7 +158,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _deleteUser(authenticationMethod = null,specificURL = null,userId = null) {
+	macro _deleteUser(authenticationMethod = null, specificURL = null, userId = null) {
 		Variables.assertDefined(parameterList = ${userId});
 
 		if (isSet(specificURL)) {
@@ -231,7 +231,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getUserIdByEmailAddress(portalInstanceName = null,userEmailAddress = null,specificURL = null) {
+	macro _getUserIdByEmailAddress(portalInstanceName = null, userEmailAddress = null, specificURL = null) {
 		Variables.assertDefined(parameterList = ${userEmailAddress});
 
 		var companyId = JSONCompany.getCompanyIdNoSelenium(
@@ -270,7 +270,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getUserIdByScreenName(portalInstanceName = null,specificURL = null) {
+	macro _getUserIdByScreenName(portalInstanceName = null, specificURL = null) {
 		Variables.assertDefined(parameterList = ${userScreenName});
 
 		var companyId = JSONCompany.getCompanyId(
@@ -305,7 +305,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getUserIds(authenticationMethod = null,specificURL = null) {
+	macro _getUserIds(authenticationMethod = null, specificURL = null) {
 		var companyId = JSONCompany.getCompanyId(authenticationMethod = ${authenticationMethod});
 
 		if (isSet(specificURL)) {
@@ -362,7 +362,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _removeUserFromUserGroup(userGroupId = null,specificURL = null,userId = null) {
+	macro _removeUserFromUserGroup(userGroupId = null, specificURL = null, userId = null) {
 		Variables.assertDefined(parameterList = "${userGroupId},${userId}");
 
 		if (isSet(specificURL)) {
@@ -383,7 +383,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _updatePassword(newPassword = null,specificURL = null,requireReset = null,userId = null) {
+	macro _updatePassword(newPassword = null, specificURL = null, requireReset = null, userId = null) {
 		Variables.assertDefined(parameterList = "${userId},${newPassword},${requireReset}");
 
 		if (isSet(specificURL)) {
@@ -408,7 +408,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _updateStatus(specificURL = null,userId = null,status = null) {
+	macro _updateStatus(specificURL = null, userId = null, status = null) {
 		Variables.assertDefined(parameterList = "${userId},${status}");
 
 		if (isSet(specificURL)) {
@@ -431,7 +431,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _updateUser(userFirstName = null,userId = null,creatorEmailAddress = null,birthdayMonth = null,creatorPassword = null,userLastName = null,birthdayDay = null,userEmailAddressUpdate = null,specificURL = null,screenNameUpdate = null,birthdayYear = null) {
+	macro _updateUser(userFirstName = null, userId = null, creatorEmailAddress = null, birthdayMonth = null, creatorPassword = null, userLastName = null, birthdayDay = null, userEmailAddressUpdate = null, specificURL = null, screenNameUpdate = null, birthdayYear = null) {
 		Variables.assertDefined(parameterList = "${screenNameUpdate},${userId},${userEmailAddressUpdate},${userFirstName},${userLastName}");
 
 		if (isSet(specificURL)) {

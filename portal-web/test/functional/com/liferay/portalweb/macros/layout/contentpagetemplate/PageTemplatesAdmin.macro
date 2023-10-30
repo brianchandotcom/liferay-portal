@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _addPageTemplate(siteTemplate = null,pageTemplateName = null,menuItem = null,masterLayoutName = null) {
+	macro _addPageTemplate(siteTemplate = null, pageTemplateName = null, menuItem = null, masterLayoutName = null) {
 		if (!(isSet(pageTemplateType))) {
 			var pageTemplateType = "Content Page Template";
 		}
@@ -52,7 +52,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addCollection(collectionDescription = null,collectionName = null) {
+	macro addCollection(collectionDescription = null, collectionName = null) {
 		PageTemplatesAdmin._gotoAddCollection();
 
 		Collection.editCollection(
@@ -63,7 +63,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addDuplicatePageTemplate(pageTemplateType = null,duplicatePageTemplate = null,siteTemplate = null,pageTemplateName = null,menuItem = null) {
+	macro addDuplicatePageTemplate(pageTemplateType = null, duplicatePageTemplate = null, siteTemplate = null, pageTemplateName = null, menuItem = null) {
 		PageTemplatesAdmin._addPageTemplate(
 			duplicatePageTemplate = ${duplicatePageTemplate},
 			menuItem = ${menuItem},
@@ -88,7 +88,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPageTemplate(pageTemplateType = null,siteTemplate = null,pageTemplateName = null,menuItem = null,masterLayoutName = null) {
+	macro addPageTemplate(pageTemplateType = null, siteTemplate = null, pageTemplateName = null, menuItem = null, masterLayoutName = null) {
 		PageTemplatesAdmin._addPageTemplate(
 			masterLayoutName = ${masterLayoutName},
 			menuItem = ${menuItem},
@@ -150,7 +150,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoPageTemplateEllipsisItem(item = null,pageTemplateName = null) {
+	macro gotoPageTemplateEllipsisItem(item = null, pageTemplateName = null) {
 		Click.waitForMenuToggleJSClick(
 			key_card = ${pageTemplateName},
 			locator1 = "Card#CARD_ELLIPSIS");
@@ -202,7 +202,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro renamePageTemplate(newPageTemplateName = null,pageTemplateName = null) {
+	macro renamePageTemplate(newPageTemplateName = null, pageTemplateName = null) {
 		PageTemplatesAdmin.gotoPageTemplateEllipsisItem(
 			item = "Rename",
 			pageTemplateName = ${pageTemplateName});
@@ -222,7 +222,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewEntryWorkflowStatus(entry = null,workflowStatus = null) {
+	macro viewEntryWorkflowStatus(entry = null, workflowStatus = null) {
 		LexiconCard.viewCardLabel(
 			card = ${entry},
 			cardLabel = ${workflowStatus});

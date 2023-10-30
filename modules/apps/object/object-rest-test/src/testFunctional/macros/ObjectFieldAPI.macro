@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _curlObjectField(objectDefinitionId = null,objectFieldId = null) {
+	macro _curlObjectField(objectDefinitionId = null, objectFieldId = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(objectDefinitionId)) {
@@ -22,7 +22,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createObjectFieldByObjectDefinitionId(objectDefinitionId = null,name = null,dbType = null) {
+	macro createObjectFieldByObjectDefinitionId(objectDefinitionId = null, name = null, dbType = null) {
 		Variables.assertDefined(parameterList = "${objectDefinitionId},${dbType},${name}");
 
 		var curl = ObjectFieldAPI._curlObjectField(objectDefinitionId = ${objectDefinitionId});
@@ -58,7 +58,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getIdOfCreatedObjectField(objectDefinitionId = null,name = null,dbType = null) {
+	macro getIdOfCreatedObjectField(objectDefinitionId = null, name = null, dbType = null) {
 		var response = ObjectFieldAPI.createObjectFieldByObjectDefinitionId(
 			dbType = ${dbType},
 			name = ${name},
@@ -81,7 +81,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setUpGlobalObjectFieldErcByObjectDefinitionId(objectDefinitionId = null,name = null) {
+	macro setUpGlobalObjectFieldErcByObjectDefinitionId(objectDefinitionId = null, name = null) {
 		Variables.assertDefined(parameterList = "${name},${objectDefinitionId}");
 
 		var objectFields = ObjectFieldAPI.getObjectFieldsByObjectId(objectDefinitionId = ${objectDefinitionId});
@@ -98,7 +98,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setUpGlobalObjectFieldId(objectDefinitionId = null,name = null,dbType = null) {
+	macro setUpGlobalObjectFieldId(objectDefinitionId = null, name = null, dbType = null) {
 		var objectFieldId = ObjectFieldAPI.getIdOfCreatedObjectField(
 			dbType = ${dbType},
 			name = ${name},
@@ -110,7 +110,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updateFieldOfEntryById(fieldLabel = null,requiredFieldLabel = null,requiredFieldValue = null,fieldValue2 = null,fieldValue = null,en_US_plural_label = null,entryId = null) {
+	macro updateFieldOfEntryById(fieldLabel = null, requiredFieldLabel = null, requiredFieldValue = null, fieldValue2 = null, fieldValue = null, en_US_plural_label = null, entryId = null) {
 		Variables.assertDefined(parameterList = "${en_US_plural_label},${entryId},${fieldLabel},${fieldValue},${requiredFieldLabel},${requiredFieldValue}");
 
 		var portalURL = JSONCompany.getPortalURL();

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addAccountGroups(accountGroupNames = null,productName = null) {
+	macro addAccountGroups(accountGroupNames = null, productName = null) {
 		Click(
 			key_name = "Account Groups",
 			locator1 = "ToggleSwitch#ENABLE_SPECIFIC_TOGGLE_SWITCH");
@@ -37,7 +37,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPin(diagram = null,quantity = null,pinNumber = null,selectType = null,label = null,position = null,sku = null) {
+	macro addPin(diagram = null, quantity = null, pinNumber = null, selectType = null, label = null, position = null, sku = null) {
 		var key_pinNumber = ${pinNumber};
 
 		Click(locator1 = "CommerceDiagrams#DIAGRAM_IMAGE");
@@ -113,7 +113,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertPinSize(pinSize = null,value = null) {
+	macro assertPinSize(pinSize = null, value = null) {
 		AssertElementPresent(
 			key_text = ${pinSize},
 			locator1 = "CommerceDiagrams#DIAGRAM_PIN_SIZE_BUTTON_TEXT");
@@ -137,7 +137,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertPinToolTipInfo(diagram = null,pinType = null,quantity = null,pinNumber = null,label = null,sku = null) {
+	macro assertPinToolTipInfo(diagram = null, pinType = null, quantity = null, pinNumber = null, label = null, sku = null) {
 		AssertElementPresent(
 			key_positionValue = ${pinNumber},
 			locator1 = "CommerceDiagrams#DIAGRAM_ADMIN_TOOLTIP_POSITION");
@@ -168,7 +168,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertPinToolTipInfoInProduct(replaceText = null,selectedType = null,sku = null,productName = null) {
+	macro assertPinToolTipInfoInProduct(replaceText = null, selectedType = null, sku = null, productName = null) {
 		if (${selectedType} == "Linked to a SKU") {
 			AssertElementPresent(
 				key_sku = ${sku},
@@ -217,7 +217,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro changePinInfo(diagram = null,newPinNumber = null,quantity = null,pinNumber = null,selectType = null,label = null,sku = null) {
+	macro changePinInfo(diagram = null, newPinNumber = null, quantity = null, pinNumber = null, selectType = null, label = null, sku = null) {
 		CommerceDiagram.viewPin(pinNumber = ${pinNumber});
 
 		Type(
@@ -303,7 +303,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setVisibility(webContentTitle = null,name = null,checkboxName = null) {
+	macro setVisibility(webContentTitle = null, name = null, checkboxName = null) {
 		CommerceEntry.gotoMenuTab(menuTab = "Visibility");
 
 		Click(
@@ -333,7 +333,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro useDragOnBackground(image_name = null,position = null) {
+	macro useDragOnBackground(image_name = null, position = null) {
 
 		// Verify the postion after mouse drag
 
@@ -358,7 +358,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro useDragOnPin(image_name = null,position = null) {
+	macro useDragOnPin(image_name = null, position = null) {
 
 		// Verify the postion after mouse drag on pin
 
@@ -429,7 +429,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewMappedProducts(pinNumber = null,productName = null) {
+	macro viewMappedProducts(pinNumber = null, productName = null) {
 		AssertElementPresent(
 			key_pinNumber = ${pinNumber},
 			key_productName = ${productName},

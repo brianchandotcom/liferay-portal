@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro configureAdministratorUserPG(administratorEmail = null,administratorFirstName = null,administratorLastName = null) {
+	macro configureAdministratorUserPG(administratorEmail = null, administratorFirstName = null, administratorLastName = null) {
 		Type(
 			locator1 = "TextInput#FIRST_NAME",
 			value1 = ${administratorFirstName});
@@ -16,7 +16,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureDatabasePG(databaseType = null,databaseName = null,databasePassword = null,jdbcDriverClassName = null,databaseUserName = null) {
+	macro configureDatabasePG(databaseType = null, databaseName = null, databasePassword = null, jdbcDriverClassName = null, databaseUserName = null) {
 		if (IsElementNotPresent(locator1 = "SetupWizard#DATABASE_CHANGE_USE_CONFIGURED_DATABASE_LINK")) {
 			AssertClick(
 				locator1 = "SetupWizard#DATABASE_CHANGE_LINK",
@@ -58,7 +58,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureDefaultPG(base_branch = null,virtualHostsURL = null,newPassword = null) {
+	macro configureDefaultPG(base_branch = null, virtualHostsURL = null, newPassword = null) {
 		SetupWizard.viewDefaultPortalNamePG();
 
 		SetupWizard.viewDefaultAdministratorUserPG();
@@ -100,7 +100,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configurePG(base_branch = null,databaseName = null,addSampleData = null,virtualHostsURL = null,administratorFirstName = null,newPassword = null,administratorLastName = null,jdbcDriverClassName = null,databaseUserName = null,databaseType = null,portalName = null,administratorEmail = null,jdbcURL = null,databasePassword = null) {
+	macro configurePG(base_branch = null, databaseName = null, addSampleData = null, virtualHostsURL = null, administratorFirstName = null, newPassword = null, administratorLastName = null, jdbcDriverClassName = null, databaseUserName = null, databaseType = null, portalName = null, administratorEmail = null, jdbcURL = null, databasePassword = null) {
 		if (isSet(portalName)) {
 			SetupWizard.configurePortalNamePG(portalName = ${portalName});
 		}

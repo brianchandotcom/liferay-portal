@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _addChannelDefaultsBillingAddress(billingAddressName = null,channelName = null,accountEntryName = null) {
+	macro _addChannelDefaultsBillingAddress(billingAddressName = null, channelName = null, accountEntryName = null) {
 		Variables.assertDefined(parameterList = "${accountEntryName},${channelName},${billingAddressName}");
 
 		var baseURL = ${baseURL};
@@ -43,7 +43,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addChannelDefaultsChannelAccountManager(userEmailAddress = null,channelName = null,accountEntryName = null) {
+	macro _addChannelDefaultsChannelAccountManager(userEmailAddress = null, channelName = null, accountEntryName = null) {
 		Variables.assertDefined(parameterList = "${accountEntryName},${channelName},${userEmailAddress}");
 
 		var baseURL = ${baseURL};
@@ -83,7 +83,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addChannelDefaultsCurrency(channelName = null,accountEntryName = null,currencyCode = null) {
+	macro _addChannelDefaultsCurrency(channelName = null, accountEntryName = null, currencyCode = null) {
 		Variables.assertDefined(parameterList = "${accountEntryName},${channelName},${currencyCode}");
 
 		var baseURL = ${baseURL};
@@ -123,7 +123,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addChannelDefaultsDeliveryTerm(termsAndConditionsName = null,channelName = null,accountEntryName = null) {
+	macro _addChannelDefaultsDeliveryTerm(termsAndConditionsName = null, channelName = null, accountEntryName = null) {
 		Variables.assertDefined(parameterList = "${accountEntryName},${channelName},${termsAndConditionsName}");
 
 		var baseURL = ${baseURL};
@@ -163,7 +163,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addChannelDefaultsDiscount(discountTitle = null,channelName = null,accountEntryName = null) {
+	macro _addChannelDefaultsDiscount(discountTitle = null, channelName = null, accountEntryName = null) {
 		Variables.assertDefined(parameterList = "${accountEntryName},${channelName},${discountTitle}");
 
 		var baseURL = ${baseURL};
@@ -203,7 +203,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addChannelDefaultsPaymentTerm(termsAndConditionsName = null,channelName = null,accountEntryName = null) {
+	macro _addChannelDefaultsPaymentTerm(termsAndConditionsName = null, channelName = null, accountEntryName = null) {
 		Variables.assertDefined(parameterList = "${accountEntryName},${channelName},${termsAndConditionsName}");
 
 		var baseURL = ${baseURL};
@@ -243,7 +243,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addChannelDefaultsPriceList(channelName = null,priceListName = null,accountEntryName = null) {
+	macro _addChannelDefaultsPriceList(channelName = null, priceListName = null, accountEntryName = null) {
 		Variables.assertDefined(parameterList = "${accountEntryName},${channelName},${priceListName}");
 
 		var baseURL = ${baseURL};
@@ -283,7 +283,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addChannelDefaultsShippingAddress(shippingAddressName = null,channelName = null,accountEntryName = null) {
+	macro _addChannelDefaultsShippingAddress(shippingAddressName = null, channelName = null, accountEntryName = null) {
 		Variables.assertDefined(parameterList = "${accountEntryName},${channelName},${shippingAddressName}");
 
 		var baseURL = ${baseURL};
@@ -360,7 +360,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addCommerceAccountAddress(zip = null,city = null,countryISOCode = null,name = null,street1 = null,accountEntryName = null) {
+	macro _addCommerceAccountAddress(zip = null, city = null, countryISOCode = null, name = null, street1 = null, accountEntryName = null) {
 		Variables.assertDefined(parameterList = "${accountEntryName},${countryISOCode},${name},${street1},${city},${zip}");
 
 		var baseURL = ${baseURL};
@@ -472,7 +472,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getAccountAddressCityByAddressName(addressName = null,accountEntryName = null) {
+	macro _getAccountAddressCityByAddressName(addressName = null, accountEntryName = null) {
 		Variables.assertDefined(parameterList = ${addressName});
 
 		if (isSet(accountEntryName) && !(isSet(accountEntryId))) {
@@ -499,7 +499,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getAccountAddressCountryByAddressName(addressName = null,accountEntryName = null) {
+	macro _getAccountAddressCountryByAddressName(addressName = null, accountEntryName = null) {
 		Variables.assertDefined(parameterList = ${addressName});
 
 		if (isSet(accountEntryName) && !(isSet(accountEntryId))) {
@@ -526,7 +526,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getAccountAddressIdByAddressName(addressName = null,accountEntryName = null) {
+	macro _getAccountAddressIdByAddressName(addressName = null, accountEntryName = null) {
 		Variables.assertDefined(parameterList = ${addressName});
 
 		if (isSet(accountEntryName) && !(isSet(accountEntryId))) {
@@ -553,7 +553,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getAccountAddressStreetByAddressName(streetNumber = null,addressName = null,accountEntryName = null) {
+	macro _getAccountAddressStreetByAddressName(streetNumber = null, addressName = null, accountEntryName = null) {
 		Variables.assertDefined(parameterList = "${addressName},${streetNumber}");
 
 		if (isSet(accountEntryName) && !(isSet(accountEntryId))) {
@@ -694,7 +694,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getAccountFieldByAccountName(field = null,accountName = null) {
+	macro getAccountFieldByAccountName(field = null, accountName = null) {
 		Variables.assertDefined(parameterList = ${accountName});
 
 		var responseBody = CommerceJSONAccountsAPI._getAccounts();

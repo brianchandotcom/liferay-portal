@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _addDocument(documentFolderId = null,depotName = null,fileName = null,filePath = null,siteId = null) {
+	macro _addDocument(documentFolderId = null, depotName = null, fileName = null, filePath = null, siteId = null) {
 		Variables.assertDefined(parameterList = ${filePath});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -55,7 +55,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _deleteDocumentsByErcInAssetLibrary(depotName = null,siteId = null,externalReferenceCode = null) {
+	macro _deleteDocumentsByErcInAssetLibrary(depotName = null, siteId = null, externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = ${externalReferenceCode});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -81,7 +81,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _filterDocument(depotName = null,filtervalue = null,siteId = null) {
+	macro _filterDocument(depotName = null, filtervalue = null, siteId = null) {
 		Variables.assertDefined(parameterList = ${filtervalue});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -107,7 +107,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getDocumentsByDifferentParameters(parameter = null,documentId = null,parameterValue = null) {
+	macro _getDocumentsByDifferentParameters(parameter = null, documentId = null, parameterValue = null) {
 		Variables.assertDefined(parameterList = ${documentId});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -131,7 +131,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getDocumentsByErcInAssetLibrary(depotName = null,externalReferenceCode = null) {
+	macro _getDocumentsByErcInAssetLibrary(depotName = null, externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = ${externalReferenceCode});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -152,7 +152,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _updateDocumentByErc(depotName = null,filePath = null,title = null,externalReferenceCode = null,updateExternalReferenceCode = null,siteId = null) {
+	macro _updateDocumentByErc(depotName = null, filePath = null, title = null, externalReferenceCode = null, updateExternalReferenceCode = null, siteId = null) {
 		Variables.assertDefined(parameterList = ${externalReferenceCode});
 
 		if (!(isSet(filePath) || isSet(title) || isSet(updateExternalReferenceCode))) {
@@ -210,7 +210,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addDocumentInAssetLibraryByUploadFile(dmDocumentTitle = null,depotName = null,fileName = null,filePath = null,externalReferenceCode = null) {
+	macro addDocumentInAssetLibraryByUploadFile(dmDocumentTitle = null, depotName = null, fileName = null, filePath = null, externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = "${depotName},${filePath}");
 
 		var response = DocumentAPI._addDocument(
@@ -224,7 +224,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addDocumentWithFileInDocumentFolder(documentFolderId = null,dmDocumentTitle = null,fileName = null,filePath = null,externalReferenceCode = null) {
+	macro addDocumentWithFileInDocumentFolder(documentFolderId = null, dmDocumentTitle = null, fileName = null, filePath = null, externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = "${documentFolderId},${filePath}");
 
 		var response = DocumentAPI._addDocument(
@@ -238,7 +238,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addDocumentWithFileInSite(dmDocumentTitle = null,sourceFileName = null,assetCategoryIds = null,siteId = null,externalReferenceCode = null) {
+	macro addDocumentWithFileInSite(dmDocumentTitle = null, sourceFileName = null, assetCategoryIds = null, siteId = null, externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = ${siteId});
 
 		if (isSet(sourceFileName)) {
@@ -258,7 +258,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertDMPermissions(expectedDMPermissions = null,roleName = null,documentId = null) {
+	macro assertDMPermissions(expectedDMPermissions = null, roleName = null, documentId = null) {
 		var response = DocumentAPI.getDMPermissionsWithDocumentID(documentId = ${documentId});
 
 		var actualDMPermissions = JSONUtil.getWithJSONPath(${response}, "$..items[?(@.roleName == '${roleName}')].actionIds");
@@ -284,7 +284,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertProperDocumentTotalCount(depotName = null,expectedDocumentTotalCount = null,filtervalue = null,siteId = null) {
+	macro assertProperDocumentTotalCount(depotName = null, expectedDocumentTotalCount = null, filtervalue = null, siteId = null) {
 		Variables.assertDefined(parameterList = ${expectedDocumentTotalCount});
 
 		var response = DocumentAPI._filterDocument(
@@ -300,7 +300,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteDocumentInAssetLibrary(depotName = null,responseToParse = null) {
+	macro deleteDocumentInAssetLibrary(depotName = null, responseToParse = null) {
 		Variables.assertDefined(parameterList = ${depotName});
 
 		if (!(isSet(externalReferenceCode))) {
@@ -340,7 +340,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getDocumentsByDifferentParameters(parameter = null,documentId = null,parameterValue = null) {
+	macro getDocumentsByDifferentParameters(parameter = null, documentId = null, parameterValue = null) {
 		var response = DocumentAPI._getDocumentsByDifferentParameters(
 			documentId = ${documentId},
 			parameter = ${parameter},
@@ -350,7 +350,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getDocumentsByErcInAssetLibrary(depotName = null,assetLibraryId = null,externalReferenceCode = null) {
+	macro getDocumentsByErcInAssetLibrary(depotName = null, assetLibraryId = null, externalReferenceCode = null) {
 		var response = DocumentAPI._getDocumentsByErcInAssetLibrary(
 			assetLibraryId = ${assetLibraryId},
 			depotName = ${depotName},
@@ -367,7 +367,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getIdOfCreatedDocument(dmDocumentTitle = null,depotName = null,fileName = null,filePath = null,externalReferenceCode = null) {
+	macro getIdOfCreatedDocument(dmDocumentTitle = null, depotName = null, fileName = null, filePath = null, externalReferenceCode = null) {
 		var response = DocumentAPI.addDocumentInAssetLibraryByUploadFile(
 			depotName = ${depotName},
 			dmDocumentTitle = ${dmDocumentTitle},
@@ -455,7 +455,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro postRatingWithDocumentID(ratingValue = null,documentId = null) {
+	macro postRatingWithDocumentID(ratingValue = null, documentId = null) {
 		Variables.assertDefined(parameterList = ${documentId});
 
 		if (!(isSet(portalURL))) {
@@ -486,7 +486,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro putDMPermissionsWithDocumentID(actionIds = null,roleName = null,documentId = null) {
+	macro putDMPermissionsWithDocumentID(actionIds = null, roleName = null, documentId = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var body = '''
 			[
@@ -512,7 +512,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updateDocumentByDocumentId(fileName = null,documentId = null,title = null) {
+	macro updateDocumentByDocumentId(fileName = null, documentId = null, title = null) {
 		Variables.assertDefined(parameterList = ${documentId});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -529,7 +529,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updateDocumentByErcInAssetLibrary(updateExternalReferenceCode = null,depotName = null,filePath = null,title = null,externalReferenceCode = null) {
+	macro updateDocumentByErcInAssetLibrary(updateExternalReferenceCode = null, depotName = null, filePath = null, title = null, externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = ${depotName});
 
 		var response = DocumentAPI._updateDocumentByErc(

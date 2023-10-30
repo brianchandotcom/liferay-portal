@@ -22,7 +22,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertIndividualAttributeValue(individualAttribute = null,individualAttributeValue = null) {
+	macro assertIndividualAttributeValue(individualAttribute = null, individualAttributeValue = null) {
 		var key_individualAttribute = ${individualAttribute};
 
 		AssertTextEquals(
@@ -171,7 +171,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewActivitiesOnGraph(typeList = null,valueList = null,notEquals = null) {
+	macro viewActivitiesOnGraph(typeList = null, valueList = null, notEquals = null) {
 		while ((IsElementNotPresent(locator1 = "ACIndividualsDashboard#ACTIVE_INDIVIDUAL_CHART")) && (maxIterations = "50")) {
 			TestUtils.hardRefresh();
 
@@ -236,7 +236,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewBreakdownRecharts(fillColor = null,tick = null) {
+	macro viewBreakdownRecharts(fillColor = null, tick = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -254,7 +254,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewDistributionBarByAttribute(type = null,value = null) {
+	macro viewDistributionBarByAttribute(type = null, value = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -276,7 +276,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewIndividualDetailsCard(fullName = null,userEmailAddress = null) {
+	macro viewIndividualDetailsCard(fullName = null, userEmailAddress = null) {
 		AssertVisible(locator1 = "ACIndividualsDashboard#INDIVIDUAL_DETAILS_CARD_AVATAR");
 
 		AssertVisible(
@@ -340,7 +340,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTimelineItem(positionList = null,activityNameList = null) {
+	macro viewTimelineItem(positionList = null, activityNameList = null) {
 		var list1 = ListUtil.newListFromString(${activityNameList});
 		var list2 = ListUtil.newListFromString(${positionList});
 		var size = ListUtil.size(${list1});
@@ -362,7 +362,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTimelineItemNotPresent(positionList = null,activityNameList = null) {
+	macro viewTimelineItemNotPresent(positionList = null, activityNameList = null) {
 		var list1 = ListUtil.newListFromString(${activityNameList});
 		var list2 = ListUtil.newListFromString(${positionList});
 		var size = ListUtil.size(${list1});

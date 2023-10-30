@@ -13,7 +13,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function assertVisibleNoSPAWait(locator1,value1) {
+	function assertVisibleNoSPAWait(locator1) {
 		selenium.waitForVisible(${locator1}, "false");
 
 		selenium.assertVisible(${locator1});

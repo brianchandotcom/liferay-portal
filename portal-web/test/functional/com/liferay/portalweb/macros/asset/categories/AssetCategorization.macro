@@ -21,7 +21,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addCategory(vocabularyName = null,categoryName = null) {
+	macro addCategory(vocabularyName = null, categoryName = null) {
 		var key_categoryName = ${categoryName};
 
 		Type(
@@ -37,7 +37,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addCategoryViaSelect(vocabularyName = null,categoryName = null) {
+	macro addCategoryViaSelect(vocabularyName = null, categoryName = null) {
 		Panel.expandPanel(panel = "Categorization");
 
 		Click(
@@ -67,7 +67,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addMultipleCategories(vocabularyName = null,categoryNameList = null) {
+	macro addMultipleCategories(vocabularyName = null, categoryNameList = null) {
 		for (var categoryName : list ${categoryNameList}) {
 			AssetCategorization.addCategory(
 				categoryName = ${categoryName},
@@ -132,7 +132,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectCategories(modalTitle = null,categoryNameList = null) {
+	macro selectCategories(modalTitle = null, categoryNameList = null) {
 		AssetCategorization.gotoSelectCategory();
 
 		Portlet.expandTree();
@@ -188,7 +188,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectTag(tagRow = null,tagNameList = null) {
+	macro selectTag(tagRow = null, tagNameList = null) {
 		if (isSet(tagRow)) {
 			Click(
 				key_tagRow = ${tagRow},

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addComment(groupName = null,commentBody = null,friendlyURL = null,entryTitle = null) {
+	macro addComment(groupName = null, commentBody = null, friendlyURL = null, entryTitle = null) {
 		var entryId = JSONBlog.getBlogEntryId(
 			entryTitle = ${entryTitle},
 			friendlyURL = ${friendlyURL},
@@ -41,7 +41,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addEntry(workflowAction = null,increaseYears = null,site = null,assetCategoryIds = null,assetTagNames = null,increaseMinutes = null,entryTitle = null,entryContent = null) {
+	macro addEntry(workflowAction = null, increaseYears = null, site = null, assetCategoryIds = null, assetTagNames = null, increaseMinutes = null, entryTitle = null, entryContent = null) {
 		Variables.assertDefined(parameterList = "${entryContent},${entryTitle}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -142,7 +142,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addEntryWithImage(grandParentGroupName = null,parentGroupName = null,groupName = null,entryTitle = null,entryContent = null) {
+	macro addEntryWithImage(grandParentGroupName = null, parentGroupName = null, groupName = null, entryTitle = null, entryContent = null) {
 		Variables.assertDefined(parameterList = "${entryContent},${entryTitle},${groupName}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -226,7 +226,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getBlogEntryId(groupName = null,friendlyURL = null,entryTitle = null) {
+	macro getBlogEntryId(groupName = null, friendlyURL = null, entryTitle = null) {
 		if (!(isSet(site))) {
 			var site = "true";
 		}
@@ -265,7 +265,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getBlogImageId(groupName = null,imageTitle = null) {
+	macro getBlogImageId(groupName = null, imageTitle = null) {
 		Variables.assertDefined(parameterList = "${groupName},${imageTitle}");
 
 		if (!(isSet(site))) {
@@ -289,7 +289,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro moveEntryToTrash(groupName = null,friendlyURL = null,entryTitle = null) {
+	macro moveEntryToTrash(groupName = null, friendlyURL = null, entryTitle = null) {
 		Variables.assertDefined(parameterList = "${entryTitle},${groupName}");
 
 		var entryId = JSONBlog.getBlogEntryId(
@@ -316,7 +316,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro removeBlogImage(groupName = null,site = null,imageTitle = null) {
+	macro removeBlogImage(groupName = null, site = null, imageTitle = null) {
 		Variables.assertDefined(parameterList = "${groupName},${imageTitle}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -335,7 +335,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro subscribeToBlogsWidget(groupName = null,grandParentGroupName = null,parentGroupName = null) {
+	macro subscribeToBlogsWidget(groupName = null, grandParentGroupName = null, parentGroupName = null) {
 		Variables.assertDefined(parameterList = ${groupName});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -368,7 +368,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updateEntry(newEntryContent = null,assetTagNames = null,increaseMinutes = null,entryContent = null,workflowAction = null,groupName = null,assetCategoryIds = null,friendlyURL = null,entryTitle = null) {
+	macro updateEntry(newEntryContent = null, assetTagNames = null, increaseMinutes = null, entryContent = null, workflowAction = null, groupName = null, assetCategoryIds = null, friendlyURL = null, entryTitle = null) {
 		Variables.assertDefined(parameterList = "${entryTitle},${groupName}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -467,7 +467,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updateEntryCoverImage(grandParentGroupName = null,parentGroupName = null,groupName = null,coverImageId = null,friendlyURL = null,entryTitle = null,entryContent = null) {
+	macro updateEntryCoverImage(grandParentGroupName = null, parentGroupName = null, groupName = null, coverImageId = null, friendlyURL = null, entryTitle = null, entryContent = null) {
 		Variables.assertDefined(parameterList = "${entryTitle},${entryContent},${groupName}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -515,7 +515,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro uploadBlogImage(groupName = null,sourceFileName = null,grandParentGroupName = null,parentGroupName = null) {
+	macro uploadBlogImage(groupName = null, sourceFileName = null, grandParentGroupName = null, parentGroupName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${sourceFileName}");
 
 		var portalURL = JSONCompany.getPortalURL();

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro setGroupId(noSelenium = null,specificURL = null) {
+	macro setGroupId(noSelenium = null, specificURL = null) {
 		if (!(isSet(groupName))) {
 			var groupName = "Global";
 		}
@@ -34,7 +34,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setRoleId(roleTitle = null,specificURL = null) {
+	macro setRoleId(roleTitle = null, specificURL = null) {
 		Variables.assertDefined(parameterList = ${roleTitle});
 
 		var roleId = JSONRoleAPI._getRoleIdByName(

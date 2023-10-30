@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _curlKnowledgeBaseFolder(parentKnowledgeBaseFolderId = null,name = null,knowledgeBaseFolderId = null) {
+	macro _curlKnowledgeBaseFolder(parentKnowledgeBaseFolderId = null, name = null, knowledgeBaseFolderId = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(parentKnowledgeBaseFolderId)) {
@@ -37,7 +37,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createKnowledgeBaseFolder(parentKnowledgeBaseFolderId = null,name = null,externalReferenceCode = null) {
+	macro createKnowledgeBaseFolder(parentKnowledgeBaseFolderId = null, name = null, externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = ${name});
 
 		var curl = KnowledgeBaseFolderAPI._curlKnowledgeBaseFolder(
@@ -60,7 +60,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setUpGlobalKnowledgeBaseFolderId(parentKnowledgeBaseFolderId = null,name = null,externalReferenceCode = null) {
+	macro setUpGlobalKnowledgeBaseFolderId(parentKnowledgeBaseFolderId = null, name = null, externalReferenceCode = null) {
 		var response = KnowledgeBaseFolderAPI.createKnowledgeBaseFolder(
 			externalReferenceCode = ${externalReferenceCode},
 			name = ${name},

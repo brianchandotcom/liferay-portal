@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _getObjectId(objectName = null,object = null) {
+	macro _getObjectId(objectName = null, object = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
@@ -68,7 +68,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createBuildAPI(buildName = null,projectId = null,routineId = null,productVersionId = null) {
+	macro createBuildAPI(buildName = null, projectId = null, routineId = null, productVersionId = null) {
 		Variables.assertDefined(parameterList = "${buildName},${projectId},${routineId},${productVersionId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -119,7 +119,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createCaseResultAPI(caseResultName = null,componentId = null,buildId = null,runId = null,casesId = null) {
+	macro createCaseResultAPI(caseResultName = null, componentId = null, buildId = null, runId = null, casesId = null) {
 		Variables.assertDefined(parameterList = "${buildId},${casesId},${caseResultName},${componentId},${runId}");
 
 		if (!(isSet(key))) {
@@ -163,7 +163,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createCaseResultsForSubtaskAPI(caseResultId = null,subtaskId = null,caseResultForSubtask = null) {
+	macro createCaseResultsForSubtaskAPI(caseResultId = null, subtaskId = null, caseResultForSubtask = null) {
 		Variables.assertDefined(parameterList = "${caseResultForSubtask},${caseResultId},${subtaskId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -188,7 +188,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createCasesAPI(caseTypeId = null,componentId = null,caseName = null,projectId = null) {
+	macro createCasesAPI(caseTypeId = null, componentId = null, caseName = null, projectId = null) {
 		Variables.assertDefined(parameterList = "${caseName},${caseTypeId},${projectId},${componentId}");
 
 		if (!(isSet(description))) {
@@ -257,7 +257,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createComponentAPI(teamId = null,componentName = null,projectId = null) {
+	macro createComponentAPI(teamId = null, componentName = null, projectId = null) {
 		Variables.assertDefined(parameterList = "${componentName},${projectId},${teamId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -282,7 +282,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createEnvironmentFactorsAPI(environmentFactorsName = null,factorCategoryId = null,factorOptionsId = null,routineId = null) {
+	macro createEnvironmentFactorsAPI(environmentFactorsName = null, factorCategoryId = null, factorOptionsId = null, routineId = null) {
 		Variables.assertDefined(parameterList = "${environmentFactorsName},${factorCategoryId},${factorOptionsId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -331,7 +331,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createFactorOptionsAPI(optionsName = null,factorCategoryId = null) {
+	macro createFactorOptionsAPI(optionsName = null, factorCategoryId = null) {
 		Variables.assertDefined(parameterList = "${optionsName},${factorCategoryId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -355,7 +355,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createProductVersionAPI(productVersion = null,projectId = null) {
+	macro createProductVersionAPI(productVersion = null, projectId = null) {
 		Variables.assertDefined(parameterList = "${productVersion},${projectId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -379,7 +379,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createProjectAPI(projectDescription = null,projectName = null) {
+	macro createProjectAPI(projectDescription = null, projectName = null) {
 		Variables.assertDefined(parameterList = "${projectName},${projectDescription}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -403,7 +403,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createRequirementAPI(requirementName = null,linkTitle = null,componentId = null,projectId = null) {
+	macro createRequirementAPI(requirementName = null, linkTitle = null, componentId = null, projectId = null) {
 		Variables.assertDefined(parameterList = "${requirementName},${linkTitle},${componentId},${projectId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -439,7 +439,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createRoutineAPI(routineName = null,projectId = null) {
+	macro createRoutineAPI(routineName = null, projectId = null) {
 		Variables.assertDefined(parameterList = "${routineName},${projectId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -463,7 +463,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createRunAPI(runName = null,buildId = null) {
+	macro createRunAPI(runName = null, buildId = null) {
 		Variables.assertDefined(parameterList = "${runName},${buildId}");
 
 		if (!(isSet(runNumber))) {
@@ -491,7 +491,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createSubtaskAPI(subtaskName = null,statusSubtask = null,key = null,taskId = null) {
+	macro createSubtaskAPI(subtaskName = null, statusSubtask = null, key = null, taskId = null) {
 		Variables.assertDefined(parameterList = ${subtaskName});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -534,7 +534,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createSuiteAPI(projectId = null,suiteName = null) {
+	macro createSuiteAPI(projectId = null, suiteName = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(description))) {
@@ -566,7 +566,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createTaskAPI(taskName = null,buildId = null,key = null,statusTask = null) {
+	macro createTaskAPI(taskName = null, buildId = null, key = null, statusTask = null) {
 		Variables.assertDefined(parameterList = "${taskName},${buildId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -594,7 +594,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createTeamAPI(teamName = null,projectId = null) {
+	macro createTeamAPI(teamName = null, projectId = null) {
 		Variables.assertDefined(parameterList = "${teamName},${projectId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -618,7 +618,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteObjectViaAPI(objectName = null,object = null) {
+	macro deleteObjectViaAPI(objectName = null, object = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var objectId = JSONTestrayAPI._getObjectId(
 			object = ${object},

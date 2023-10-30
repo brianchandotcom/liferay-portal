@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addTermsAndConditions(termsAndConditionsName = null,termsAndConditionsType = null,valuePosition = null,active = null) {
+	macro addTermsAndConditions(termsAndConditionsName = null, termsAndConditionsType = null, valuePosition = null, active = null) {
 		LexiconEntry.gotoAdd();
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
@@ -30,7 +30,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertTermsAndConditionsEntry(termsAndConditionsName = null,valuePosition = null,termsAndConditionsDescription = null) {
+	macro assertTermsAndConditionsEntry(termsAndConditionsName = null, valuePosition = null, termsAndConditionsDescription = null) {
 		AssertTextEquals(
 			locator1 = "CommerceEntry#NAME_FIELD_SPECIAL",
 			value1 = ${termsAndConditionsName});
@@ -51,7 +51,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro cancelAddTermsAndConditions(termsAndConditionsName = null,termsAndConditionsType = null,valuePosition = null) {
+	macro cancelAddTermsAndConditions(termsAndConditionsName = null, termsAndConditionsType = null, valuePosition = null) {
 		LexiconEntry.gotoAddNoSelectFrame();
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
@@ -94,7 +94,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editTermsAndConditions(termsAndConditionsName = null,valuePosition = null,termsAndConditionsDescription = null) {
+	macro editTermsAndConditions(termsAndConditionsName = null, valuePosition = null, termsAndConditionsDescription = null) {
 		if (isSet(deactivate)) {
 			ClickNoError(locator1 = "ToggleSwitch#ACTIVE");
 		}
@@ -127,7 +127,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoEntryMenuItem(termsAndConditionsName = null,menuItem = null) {
+	macro gotoEntryMenuItem(termsAndConditionsName = null, menuItem = null) {
 		Click(
 			key_value = ${termsAndConditionsName},
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
@@ -158,7 +158,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTermsAndConditionsEntry(termsAndConditionsName = null,termsAndConditionsType = null,valuePosition = null,termsAndConditionsActiveStatus = null) {
+	macro viewTermsAndConditionsEntry(termsAndConditionsName = null, termsAndConditionsType = null, valuePosition = null, termsAndConditionsActiveStatus = null) {
 		AssertTextEquals.assertPartialText(
 			key_termsAndConditionsName = ${termsAndConditionsName},
 			locator1 = "CommercePaymentTerms#ORDER_DETAILS_TERMS_AND_CONDITIONS_NAME",
@@ -181,7 +181,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTermsAndConditionsEntrySortByPriority(termsAndConditionsName = null,valuePosition = null,rowNumber = null) {
+	macro viewTermsAndConditionsEntrySortByPriority(termsAndConditionsName = null, valuePosition = null, rowNumber = null) {
 		AssertTextPresent(
 			key_rowNumber = ${rowNumber},
 			key_termsAndConditionsName = ${termsAndConditionsName},

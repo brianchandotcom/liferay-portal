@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addComment(fragmentName = null,mentionsUserScreenName = null,fragmentComment = null) {
+	macro addComment(fragmentName = null, mentionsUserScreenName = null, fragmentComment = null) {
 		PageEditor.assertFragmentSidebarLoaded();
 
 		PageEditor.gotoTab(tabName = "Comments");
@@ -39,7 +39,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addCommentViaFragment(fragmentName = null,fragmentComment = null,position = null) {
+	macro addCommentViaFragment(fragmentName = null, fragmentComment = null, position = null) {
 		PageEditor.gotoCommentViaFragment(
 			fragmentName = ${fragmentName},
 			key_position = ${position});
@@ -62,7 +62,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addElementToColumn(navTab = null,targetFragmentName = null,fragmentName = null,columnNumber = null,collectionName = null,height = null,portletName = null) {
+	macro addElementToColumn(navTab = null, targetFragmentName = null, fragmentName = null, columnNumber = null, collectionName = null, height = null, portletName = null) {
 		if (!(isSet(position))) {
 			var position = 1;
 		}
@@ -217,7 +217,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addElementToContainer(targetElementName = null,dropTarget = null,collectionName = null,portletName = null,navTab = null,fragmentName = null,ratio = null) {
+	macro addElementToContainer(targetElementName = null, dropTarget = null, collectionName = null, portletName = null, navTab = null, fragmentName = null, ratio = null) {
 		if (!(isSet(targetElementName))) {
 			if (!(isSet(position))) {
 				var position = 1;
@@ -446,7 +446,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addElementToDropdownPanel(navTab = null,fragmentName = null,collectionName = null,portletName = null) {
+	macro addElementToDropdownPanel(navTab = null, fragmentName = null, collectionName = null, portletName = null) {
 		PageEditor.gotoTab(tabName = "Fragments and Widgets");
 
 		if (!(isSet(displayStyle))) {
@@ -531,7 +531,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addElementToTab(navTab = null,navItem = null,fragmentName = null,index = null,position = null,collectionName = null,portletName = null) {
+	macro addElementToTab(navTab = null, navItem = null, fragmentName = null, index = null, position = null, collectionName = null, portletName = null) {
 		PageEditor.gotoTabsFragmentNavItem(navItem = ${navItem});
 
 		AssertVisible(
@@ -627,7 +627,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addEntryWithLink(entryExternalURL = null,fragmentName = null,id = null,contributed = null) {
+	macro addEntryWithLink(entryExternalURL = null, fragmentName = null, id = null, contributed = null) {
 		PageEditor.gotoEditableFieldEdit(
 			contributed = ${contributed},
 			fragmentName = ${fragmentName},
@@ -651,7 +651,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addExperience(experienceName = null,failureText = null,segmentName = null) {
+	macro addExperience(experienceName = null, failureText = null, segmentName = null) {
 		var key_experienceName = ${experienceName};
 		var key_segmentName = ${segmentName};
 
@@ -686,7 +686,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addFragment(targetFragmentName = null,fragmentName = null,scope = null,dropTarget = null,position = null,collectionName = null) {
+	macro addFragment(targetFragmentName = null, fragmentName = null, scope = null, dropTarget = null, position = null, collectionName = null) {
 		PageEditor.assertFragmentSidebarLoaded();
 
 		PageEditor.gotoTab(tabName = "Fragments and Widgets");
@@ -831,7 +831,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addFragmentToCollectionDisplay(targetFragmentName = null,fragmentName = null,entryTitle = null,collectionName = null) {
+	macro addFragmentToCollectionDisplay(targetFragmentName = null, fragmentName = null, entryTitle = null, collectionName = null) {
 		PageEditor.assertFragmentSidebarLoaded();
 
 		PageEditor.gotoTab(tabName = "Fragments and Widgets");
@@ -905,7 +905,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addFragmentToFormContainer(targetFragmentName = null,fragmentName = null,collectionName = null) {
+	macro addFragmentToFormContainer(targetFragmentName = null, fragmentName = null, collectionName = null) {
 		if (!(isSet(position))) {
 			var position = 1;
 		}
@@ -956,7 +956,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addFragmentViaKeyboard(fragmentName = null,upCount = null,collectionName = null) {
+	macro addFragmentViaKeyboard(fragmentName = null, upCount = null, collectionName = null) {
 		PageEditor.assertFragmentSidebarLoaded();
 
 		PageEditor.gotoTab(tabName = "Fragments and Widgets");
@@ -1070,7 +1070,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addWidget(targetFragmentName = null,dropTarget = null,position = null,portletName = null,collectionName = null) {
+	macro addWidget(targetFragmentName = null, dropTarget = null, position = null, portletName = null, collectionName = null) {
 		PageEditor.assertFragmentSidebarLoaded();
 
 		PageEditor.gotoTab(tabName = "Fragments and Widgets");
@@ -1139,7 +1139,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addWidgetViaKeyboard(widgetName = null,upCount = null,categoryName = null) {
+	macro addWidgetViaKeyboard(widgetName = null, upCount = null, categoryName = null) {
 		PageEditor.assertFragmentSidebarLoaded();
 
 		PageEditor.gotoTab(tabName = "Fragments and Widgets");
@@ -1185,7 +1185,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertAutoImageResolution(type = null,element = null,adaptiveMediaName = null) {
+	macro assertAutoImageResolution(type = null, element = null, adaptiveMediaName = null) {
 		if (${type} == "backgroundImage") {
 			var backgroundImage = Css.getCssValue(
 				attribute = "background-image",
@@ -1261,7 +1261,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro changeLocale(currentLocale = null,locale = null) {
+	macro changeLocale(currentLocale = null, locale = null) {
 		Click(
 			key_currentLocale = StringUtil.lowerCase(${currentLocale}),
 			locator1 = "Button#TRANSLATIONS_LOCALIZATION");
@@ -1311,7 +1311,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro clickEditableField(className = null,contributed = null) {
+	macro clickEditableField(className = null, contributed = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -1370,7 +1370,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureFragment(boxShadow = null,borderColor = null,enableLazyLoading = null,cssClasses = null,paddingRight = null,type = null,numberOfSlides = null,marginRight = null,paddingBottom = null,borderWidth = null,fieldLabel = null,hideFragment = null,action = null,imageSize = null,paddingTop = null,numberOfTabs = null,key = null,vocabularyType = null,customCSS = null,height = null,separatorColor = null,backgroundColor = null,successInteraction = null,hideFromSiteSearchResults = null,textColor = null,errorInteraction = null,marginLeft = null,errorText = null,unit = null,borderRadius = null,size = null,bottomSpacing = null,successText = null,fontSize = null,marginBottom = null,style = null,opacity = null,headingLevel = null,paddingLeft = null,marginTop = null) {
+	macro configureFragment(boxShadow = null, borderColor = null, enableLazyLoading = null, cssClasses = null, paddingRight = null, type = null, numberOfSlides = null, marginRight = null, paddingBottom = null, borderWidth = null, fieldLabel = null, hideFragment = null, action = null, imageSize = null, paddingTop = null, numberOfTabs = null, key = null, vocabularyType = null, customCSS = null, height = null, separatorColor = null, backgroundColor = null, successInteraction = null, hideFromSiteSearchResults = null, textColor = null, errorInteraction = null, marginLeft = null, errorText = null, unit = null, borderRadius = null, size = null, bottomSpacing = null, successText = null, fontSize = null, marginBottom = null, style = null, opacity = null, headingLevel = null, paddingLeft = null, marginTop = null) {
 		if (isSet(action)) {
 			Select(
 				key_fieldLabel = "Action",
@@ -1804,7 +1804,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureFragmentViaKeyboard(fieldLabel = null,difference = null) {
+	macro configureFragmentViaKeyboard(fieldLabel = null, difference = null) {
 		if (${difference} == "Up") {
 			KeyPress(
 				key_fieldLabel = ${fieldLabel},
@@ -1827,7 +1827,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createPageTemplate(alertMessage = null,collectionName = null) {
+	macro createPageTemplate(alertMessage = null, collectionName = null) {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Convert to Page Template");
 
 		if (isSet(experienceName)) {
@@ -1953,7 +1953,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editAppliedFilters(columnNumber = null,targetCollection = null) {
+	macro editAppliedFilters(columnNumber = null, targetCollection = null) {
 		var key_fragmentName = "Applied Filters";
 
 		if (isSet(columnNumber)) {
@@ -1996,7 +1996,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editCDLayoutAndMaxNumber(maxNumber = null,layoutColumns = null) {
+	macro editCDLayoutAndMaxNumber(maxNumber = null, layoutColumns = null) {
 		Click.clickNoWaitForVisible(locator1 = "Masterclass#COLLECTION_DISPLAY");
 
 		Navigator.gotoNavTab(navTab = "General");
@@ -2011,7 +2011,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editCollectionDisplay(pagination = null,itemTypeList = null,tagNameList = null,infoListProviderName = null,emptyCollectionAlert = null,maxNumberOfItemsToDisplay = null,displayAllPages = null,fragmentName = null,columnNumber = null,flexWrap = null,fieldLabel = null,assetTitle = null,showEmptyCollectionAlert = null,deviceType = null,depotName = null,filterResults = null,alignItems = null,styleDisplay = null,maxNumberOfPagesToDisplay = null,spaceBetweenColumns = null,selectedName = null,maxNumberOfItemsPerPage = null,assetListName = null,infoItemRelatedListProviderName = null,justifyContent = null,listItemStyle = null,layout = null,displayAllCollectionItems = null,option = null) {
+	macro editCollectionDisplay(pagination = null, itemTypeList = null, tagNameList = null, infoListProviderName = null, emptyCollectionAlert = null, maxNumberOfItemsToDisplay = null, displayAllPages = null, fragmentName = null, columnNumber = null, flexWrap = null, fieldLabel = null, assetTitle = null, showEmptyCollectionAlert = null, deviceType = null, depotName = null, filterResults = null, alignItems = null, styleDisplay = null, maxNumberOfPagesToDisplay = null, spaceBetweenColumns = null, selectedName = null, maxNumberOfItemsPerPage = null, assetListName = null, infoItemRelatedListProviderName = null, justifyContent = null, listItemStyle = null, layout = null, displayAllCollectionItems = null, option = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -2419,7 +2419,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editCollectionFilter(index = null,vocabularyName = null,label = null,selectedName = null,categoryName = null,filter = null,subcategoryNameList = null,fragmentName = null,columnNumber = null,targetCollection = null,categoryNameList = null) {
+	macro editCollectionFilter(index = null, vocabularyName = null, label = null, selectedName = null, categoryName = null, filter = null, subcategoryNameList = null, fragmentName = null, columnNumber = null, targetCollection = null, categoryNameList = null) {
 		var key_fragmentName = ${fragmentName};
 
 		if (isSet(columnNumber)) {
@@ -2595,7 +2595,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editContentDisplay(template = null,sourceFileName = null,depotName = null,navTab = null,webContentTitle = null,fragmentName = null,imageFileName = null,webContentContent = null,assetTitle = null,objectEntryId = null,navItemStyle = null,entryTitle = null,entryContent = null,object = null) {
+	macro editContentDisplay(template = null, sourceFileName = null, depotName = null, navTab = null, webContentTitle = null, fragmentName = null, imageFileName = null, webContentContent = null, assetTitle = null, objectEntryId = null, navItemStyle = null, entryTitle = null, entryContent = null, object = null) {
 		var key_fragmentName = ${fragmentName};
 
 		PageEditor.clickConfigurableField(fragmentName = ${fragmentName});
@@ -2829,7 +2829,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editDropdown(displayedBehavior = null,panel = null,panelType = null) {
+	macro editDropdown(displayedBehavior = null, panel = null, panelType = null) {
 		var key_fragmentName = "Dropdown";
 
 		PageEditor.clickConfigurableField(fragmentName = "Dropdown");
@@ -2866,7 +2866,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editExperience(new_segmentName = null,new_experienceName = null) {
+	macro editExperience(new_segmentName = null, new_experienceName = null) {
 		PageEditor.openExperienceMenu();
 
 		Click(locator1 = "PageEditor#EXPERIENCE_EDIT_BUTTON");
@@ -2887,7 +2887,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editFormContainer(deviceType = null,showNotificationWhenFormIsSubmitted = null,displayPageName = null,siteName = null,successMessage = null,pageName = null,url = null,columnNumber = null,subtype = null,successText = null,panel = null,contentType = null,successNotificationText = null) {
+	macro editFormContainer(deviceType = null, showNotificationWhenFormIsSubmitted = null, displayPageName = null, siteName = null, successMessage = null, pageName = null, url = null, columnNumber = null, subtype = null, successText = null, panel = null, contentType = null, successNotificationText = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -3101,7 +3101,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editFragmentHTML(fileName = null,fragmentName = null,id = null,contributed = null) {
+	macro editFragmentHTML(fileName = null, fragmentName = null, id = null, contributed = null) {
 		PageEditor.gotoEditableFieldEdit(
 			contributed = ${contributed},
 			fragmentName = ${fragmentName},
@@ -3121,7 +3121,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editFragmentImage(navTab = null,depotName = null,uploadFileName = null,fileName = null,fragmentName = null,imageFileName = null,imageDescription = null,id = null,invalidFileValidation = null,imageSourceURL = null,contributed = null) {
+	macro editFragmentImage(navTab = null, depotName = null, uploadFileName = null, fileName = null, fragmentName = null, imageFileName = null, imageDescription = null, id = null, invalidFileValidation = null, imageSourceURL = null, contributed = null) {
 		PageEditor.gotoImageSource(
 			contributed = ${contributed},
 			fragmentName = ${fragmentName},
@@ -3216,7 +3216,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editFragmentText(fragmentName = null,className = null,style = null,id = null,text = null,contributed = null) {
+	macro editFragmentText(fragmentName = null, className = null, style = null, id = null, text = null, contributed = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -3253,7 +3253,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editFragmentTextViaPageContentPanel(itemName = null,style = null,text = null) {
+	macro editFragmentTextViaPageContentPanel(itemName = null, style = null, text = null) {
 		Click.clickAtNotVisible(
 			key_itemName = ${itemName},
 			locator1 = "PageEditor#PAGE_CONTENTS_ITEM_EDIT_PENCIL");
@@ -3287,7 +3287,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editInput(helpText = null,numberOfLines = null,numberOfOptions = null,markAsRequired = null,label = null,showAllOptions = null,showCharactersCount = null,field = null,fragmentName = null,placeholder = null,hideLabel = null,hideHelpText = null) {
+	macro editInput(helpText = null, numberOfLines = null, numberOfOptions = null, markAsRequired = null, label = null, showAllOptions = null, showCharactersCount = null, field = null, fragmentName = null, placeholder = null, hideLabel = null, hideHelpText = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -3467,7 +3467,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editLayoutContainer(boxShadow = null,borderColor = null,navItem = null,fieldName = null,htmlTag = null,backgroundImage = null,paddingRight = null,link = null,source = null,containerWidth = null,marginRight = null,uploadFileName = null,paddingBottom = null,flexWrap = null,maxHeight = null,borderWidth = null,paddingTop = null,contentDisplay = null,panel = null,height = null,backgroundColor = null,depotName = null,alignItems = null,hideFromSiteSearchResults = null,justifyContent = null,url = null,marginLeft = null,target = null,borderRadius = null,field = null,imageFileName = null,width = null,marginBottom = null,position = null,opacity = null,entryTitle = null,imageSourceURL = null,paddingLeft = null,marginTop = null) {
+	macro editLayoutContainer(boxShadow = null, borderColor = null, navItem = null, fieldName = null, htmlTag = null, backgroundImage = null, paddingRight = null, link = null, source = null, containerWidth = null, marginRight = null, uploadFileName = null, paddingBottom = null, flexWrap = null, maxHeight = null, borderWidth = null, paddingTop = null, contentDisplay = null, panel = null, height = null, backgroundColor = null, depotName = null, alignItems = null, hideFromSiteSearchResults = null, justifyContent = null, url = null, marginLeft = null, target = null, borderRadius = null, field = null, imageFileName = null, width = null, marginBottom = null, position = null, opacity = null, entryTitle = null, imageSourceURL = null, paddingLeft = null, marginTop = null) {
 		if (isSet(position)) {
 			var index = ${position};
 		}
@@ -3821,7 +3821,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editLayoutGrid(boxShadow = null,borderColor = null,navItem = null,fieldName = null,backgroundImage = null,paddingRight = null,source = null,marginRight = null,uploadFileName = null,paddingBottom = null,borderWidth = null,paddingTop = null,panel = null,height = null,backgroundColor = null,depotName = null,inverseOrder = null,columnCount = null,spaceBetweenColumns = null,marginLeft = null,layout = null,borderRadius = null,imageFileName = null,marginBottom = null,position = null,opacity = null,entryTitle = null,imageSourceURL = null,paddingLeft = null,marginTop = null,verticalAlignment = null) {
+	macro editLayoutGrid(boxShadow = null, borderColor = null, navItem = null, fieldName = null, backgroundImage = null, paddingRight = null, source = null, marginRight = null, uploadFileName = null, paddingBottom = null, borderWidth = null, paddingTop = null, panel = null, height = null, backgroundColor = null, depotName = null, inverseOrder = null, columnCount = null, spaceBetweenColumns = null, marginLeft = null, layout = null, borderRadius = null, imageFileName = null, marginBottom = null, position = null, opacity = null, entryTitle = null, imageSourceURL = null, paddingLeft = null, marginTop = null, verticalAlignment = null) {
 		if (isSet(position)) {
 			var index = ${position};
 		}
@@ -4088,7 +4088,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editMenuDisplay(displayStyle = null,selectedItemColor = null,sublevels = null,hoveredItemColor = null,panel = null,siteMenus = null) {
+	macro editMenuDisplay(displayStyle = null, selectedItemColor = null, sublevels = null, hoveredItemColor = null, panel = null, siteMenus = null) {
 		var key_fragmentName = "Menu Display";
 
 		PageEditor.clickConfigurableField(fragmentName = "Menu Display");
@@ -4173,7 +4173,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editTabs(persistSelectedTab = null,panel = null,numberOfTabs = null) {
+	macro editTabs(persistSelectedTab = null, panel = null, numberOfTabs = null) {
 		PageEditor.clickConfigurableField(fragmentName = "Tabs");
 
 		AssertVisible(
@@ -4311,7 +4311,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro gotoAdvanced(fragmentName = null,index = null) {
+	macro gotoAdvanced(fragmentName = null, index = null) {
 		PageEditor.clickConfigurableField(
 			fragmentName = ${fragmentName},
 			index = ${index});
@@ -4348,7 +4348,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro gotoConfiguration(fragmentName = null,index = null) {
+	macro gotoConfiguration(fragmentName = null, index = null) {
 		PageEditor.clickConfigurableField(
 			fragmentName = ${fragmentName},
 			index = ${index});
@@ -4376,7 +4376,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro gotoEditableFieldEdit(className = null,id = null,contributed = null) {
+	macro gotoEditableFieldEdit(className = null, id = null, contributed = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -4406,7 +4406,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro gotoEllipsisMenuItemInItemSelector(fieldLabel = null,menuItem = null) {
+	macro gotoEllipsisMenuItemInItemSelector(fieldLabel = null, menuItem = null) {
 		Click(
 			key_fieldLabel = ${fieldLabel},
 			key_text = "ellipsis-v",
@@ -4416,7 +4416,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro gotoEllipsisMenuItemInPageContentPanel(itemName = null,menuItem = null) {
+	macro gotoEllipsisMenuItemInPageContentPanel(itemName = null, menuItem = null) {
 		PageEditor.gotoTab(tabName = "Page Content");
 
 		LexiconEntry.gotoFragmentPageContentEllipsisMenuItem(
@@ -4425,7 +4425,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro gotoEllipsisMenuItemInPageElementsPanel(fragmentName = null,menuItem = null) {
+	macro gotoEllipsisMenuItemInPageElementsPanel(fragmentName = null, menuItem = null) {
 		if (!(isSet(position))) {
 			var position = 1;
 		}
@@ -4451,7 +4451,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro gotoImageSource(fragmentName = null,id = null,contributed = null) {
+	macro gotoImageSource(fragmentName = null, id = null, contributed = null) {
 		PageEditor.clickEditableField(
 			contributed = ${contributed},
 			fragmentName = ${fragmentName},
@@ -4498,7 +4498,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro gotoStyle(deviceType = null,fragmentName = null) {
+	macro gotoStyle(deviceType = null, fragmentName = null) {
 		if (isSet(deviceType) && (${deviceType} != "Desktop")) {
 			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#PAGE_EDITOR_GLOBAL_CONTEXT_IFRAME");
 		}
@@ -4609,7 +4609,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro markFavorite(fragmentName = null,collectionName = null) {
+	macro markFavorite(fragmentName = null, collectionName = null) {
 		if (isSet(displayStyle)) {
 			var displayStyle = "list";
 		}
@@ -4693,7 +4693,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro publish(action = null,objectName = null) {
+	macro publish(action = null, objectName = null) {
 		Button.click(button = "Publish");
 
 		if ((IsElementPresent(locator1 = "Modal#BODY")) && (IsTextEqual(locator1 = "Modal#HEADER", value1 = "Form Errors"))) {
@@ -4727,7 +4727,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro removeFragment(fragmentName = null,index = null) {
+	macro removeFragment(fragmentName = null, index = null) {
 		var key_fragmentName = ${fragmentName};
 
 		PageEditor.clickConfigurableField(
@@ -4742,7 +4742,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro reopenResolvedComment(commentReply = null,fragmentComment = null) {
+	macro reopenResolvedComment(commentReply = null, fragmentComment = null) {
 		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "PageEditor#FRAGMENT_SIDEBAR_SHOW_RESOLVED_COMMENTS_CHECKBOX_UNCHECKED");
 
 		MouseOver(locator1 = "PageEditor#FRAGMENT_SIDEBAR_SHOW_RESOLVED_COMMENTS_LABEL");
@@ -4767,7 +4767,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro reorderElementViaKeyboard(downCount = null,upCount = null,elementName = null) {
+	macro reorderElementViaKeyboard(downCount = null, upCount = null, elementName = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -4820,7 +4820,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro reorderSets(navTab = null,setName = null,action = null) {
+	macro reorderSets(navTab = null, setName = null, action = null) {
 		Click(locator1 = "PageEditor#FRAGMENTS_AND_WIDGETS_REORDER_SETS_BUTTON");
 
 		Modal.gotoNavTab(navTab = ${navTab});
@@ -4850,7 +4850,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro resizeConfigurationPanel(fragmentName = null,position = null) {
+	macro resizeConfigurationPanel(fragmentName = null, position = null) {
 		PageEditor.clickConfigurableField(fragmentName = ${fragmentName});
 
 		AssertElementPresent(
@@ -4943,7 +4943,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro selectColorSwatchItem(fieldLabel = null,colorSwatchItem = null) {
+	macro selectColorSwatchItem(fieldLabel = null, colorSwatchItem = null) {
 		if (IsElementPresent(key_fieldLabel = ${fieldLabel}, key_text = "theme", locator1 = "Icon#ANY_ITEM_SELECTOR")) {
 			Click(
 				key_fieldLabel = ${fieldLabel},
@@ -5063,7 +5063,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro unmarkFavorite(fragmentName = null,collectionName = null) {
+	macro unmarkFavorite(fragmentName = null, collectionName = null) {
 		if (isSet(displayStyle)) {
 			var displayStyle = "list";
 		}
@@ -5087,7 +5087,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro viewCannotAddFragmentToOutsideOfDropZone(fragmentName = null,collectionName = null) {
+	macro viewCannotAddFragmentToOutsideOfDropZone(fragmentName = null, collectionName = null) {
 		WaitForPageLoad();
 
 		Navigator.gotoNavTab(navTab = "Fragments");
@@ -5105,7 +5105,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro viewCollectionDisplayStyle(layout = null,alignItems = null,flexWrap = null,columnCount = null,position = null,spaceBetweenColumns = null,justifyContent = null) {
+	macro viewCollectionDisplayStyle(layout = null, alignItems = null, flexWrap = null, columnCount = null, position = null, spaceBetweenColumns = null, justifyContent = null) {
 		if (!(isSet(rowNumber))) {
 			var rowNumer = 1;
 		}
@@ -5198,7 +5198,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro viewComment(mentionsUserScreenName = null,fragmentComment = null,mentionsUserFullName = null) {
+	macro viewComment(mentionsUserScreenName = null, fragmentComment = null, mentionsUserFullName = null) {
 		if (isSet(fragmentComment)) {
 			if (isSet(fromNotifications)) {
 				AssertTextEquals(
@@ -5245,7 +5245,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro viewCommentList(fragmentName = null,commentCount = null) {
+	macro viewCommentList(fragmentName = null, commentCount = null) {
 		AssertTextEquals(
 			key_fragmentName = ${fragmentName},
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENT_LIST_HEADING",
@@ -5264,7 +5264,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro viewCommentReply(commentReply = null,user = null) {
+	macro viewCommentReply(commentReply = null, user = null) {
 		if (isSet(fromNotifications)) {
 			AssertTextEquals(
 				key_commentReply = ${commentReply},
@@ -5285,7 +5285,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro viewContainerStyle(boxShadow = null,backgroundColor = null,borderColor = null,alignItems = null,backgroundImage = null,paddingRight = null,justifyContent = null,containerWidth = null,marginLeft = null,marginRight = null,paddingBottom = null,borderRadius = null,flexWrap = null,borderWidth = null,marginBottom = null,contentDisplay = null,paddingTop = null,opacity = null,paddingLeft = null,marginTop = null,height = null) {
+	macro viewContainerStyle(boxShadow = null, backgroundColor = null, borderColor = null, alignItems = null, backgroundImage = null, paddingRight = null, justifyContent = null, containerWidth = null, marginLeft = null, marginRight = null, paddingBottom = null, borderRadius = null, flexWrap = null, borderWidth = null, marginBottom = null, contentDisplay = null, paddingTop = null, opacity = null, paddingLeft = null, marginTop = null, height = null) {
 		if (!(isSet(position))) {
 			var position = 1;
 		}
@@ -5473,7 +5473,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro viewElementInsideModule(moduleNumber = null,elementName = null) {
+	macro viewElementInsideModule(moduleNumber = null, elementName = null) {
 		if (!(isSet(position))) {
 			var position = 1;
 		}
@@ -5486,7 +5486,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro viewElementNotPresentInsideModule(moduleNumber = null,elementName = null) {
+	macro viewElementNotPresentInsideModule(moduleNumber = null, elementName = null) {
 		if (!(isSet(position))) {
 			var position = 1;
 		}
@@ -5555,7 +5555,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro viewExperienceValues(experienceName = null,segmentName = null) {
+	macro viewExperienceValues(experienceName = null, segmentName = null) {
 		PageEditor.openExperienceMenu();
 
 		AssertVisible(
@@ -5579,7 +5579,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro viewFragmentCommonStyle(styleValue = null,fragmentName = null,index = null,styleName = null) {
+	macro viewFragmentCommonStyle(styleValue = null, fragmentName = null, index = null, styleName = null) {
 		var commonStylesClass = PageEditor.getCommonStylesClass(
 			fragmentName = ${fragmentName},
 			index = ${index});
@@ -5598,7 +5598,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro viewFragmentEditableImage(imageFileName = null,imageDescription = null,fragmentClass = null,id = null,contributed = null) {
+	macro viewFragmentEditableImage(imageFileName = null, imageDescription = null, fragmentClass = null, id = null, contributed = null) {
 		if (${contributed} == "false") {
 			AssertVisible(
 				key_fragmentClass = ${fragmentClass},
@@ -5615,7 +5615,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro viewFragmentEditableText(editableText = null,className = null,style = null,id = null,contributed = null) {
+	macro viewFragmentEditableText(editableText = null, className = null, style = null, id = null, contributed = null) {
 		if (!(isSet(position))) {
 			var position = 1;
 		}
@@ -5746,7 +5746,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro viewFragmentOrder(fragmentName = null,position = null) {
+	macro viewFragmentOrder(fragmentName = null, position = null) {
 		AssertElementPresent(
 			key_fragmentName = ${fragmentName},
 			key_position = ${position},
@@ -5754,7 +5754,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro viewFragmentStyle(boxShadow = null,borderColor = null,paddingRight = null,marginRight = null,paddingBottom = null,fragmentName = null,borderWidth = null,imageSize = null,paddingTop = null,height = null,separatorColor = null,backgroundColor = null,textColor = null,marginLeft = null,borderRadius = null,size = null,bottomSpacing = null,marginBottom = null,style = null,alignment = null,opacity = null,headingLevel = null,paddingLeft = null,marginTop = null) {
+	macro viewFragmentStyle(boxShadow = null, borderColor = null, paddingRight = null, marginRight = null, paddingBottom = null, fragmentName = null, borderWidth = null, imageSize = null, paddingTop = null, height = null, separatorColor = null, backgroundColor = null, textColor = null, marginLeft = null, borderRadius = null, size = null, bottomSpacing = null, marginBottom = null, style = null, alignment = null, opacity = null, headingLevel = null, paddingLeft = null, marginTop = null) {
 		if (!(isSet(position))) {
 			var position = 1;
 		}
@@ -5936,7 +5936,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro viewFragmentTopperStyle(styleValue = null,fragmentName = null,index = null,styleName = null) {
+	macro viewFragmentTopperStyle(styleValue = null, fragmentName = null, index = null, styleName = null) {
 		var topperStylesClass = PageEditor.getTopperStylesClass(
 			fragmentName = ${fragmentName},
 			index = ${index});
@@ -5955,7 +5955,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro viewGridStyle(layout = null,columnCount = null,position = null,spaceBetweenColumns = null,verticalAlignment = null) {
+	macro viewGridStyle(layout = null, columnCount = null, position = null, spaceBetweenColumns = null, verticalAlignment = null) {
 		if (isSet(columnCount)) {
 			var i = 0;
 
@@ -6021,7 +6021,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro viewInputStyle(charactersCount = null,helpText = null,numberOfLines = null,label = null,placeholder = null,type = null,showLabel = null,showHelpText = null) {
+	macro viewInputStyle(charactersCount = null, helpText = null, numberOfLines = null, label = null, placeholder = null, type = null, showLabel = null, showHelpText = null) {
 		if (!(isSet(position))) {
 			var position = 1;
 		}
@@ -6102,7 +6102,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro viewItemSelectorText(fieldLabel = null,text = null) {
+	macro viewItemSelectorText(fieldLabel = null, text = null) {
 		SelectFrameTop();
 
 		AssertTextEquals(
@@ -6117,7 +6117,7 @@ return	Array.from(getWebElement("(//div[@aria-label='${fragmentName}'])[${index}
 	}
 
 	@summary = "Default summary"
-	macro viewMentionsDisplayOption(mentionsUserScreenName = null,fragmentComment = null,noMentionsUserScreenName = null) {
+	macro viewMentionsDisplayOption(mentionsUserScreenName = null, fragmentComment = null, noMentionsUserScreenName = null) {
 		Click.clickAt(locator1 = "PageEditor#FRAGMENT_SIDEBAR_COMMENTS");
 
 		Type.sendKeys(

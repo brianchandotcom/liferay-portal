@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addCustomFieldEntryViaUI(invalidEntry = null,entry = null,customField = null) {
+	macro addCustomFieldEntryViaUI(invalidEntry = null, entry = null, customField = null) {
 		LexiconEntry.gotoAdd();
 
 		Type.type(
@@ -18,7 +18,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addSingleFieldEntryViaUI(invalidEntry = null,entry = null) {
+	macro addSingleFieldEntryViaUI(invalidEntry = null, entry = null) {
 		LexiconEntry.gotoAdd();
 
 		Type.type(
@@ -34,7 +34,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertAuthorColumnDisplaysUserName(authorName = null,column = null) {
+	macro assertAuthorColumnDisplaysUserName(authorName = null, column = null) {
 		AssertElementPresent(
 			key_column = ${column},
 			locator1 = "ObjectPortlet#ENTRY_COLUMN");
@@ -99,7 +99,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertFieldLabelName(key_fieldLabelName = null,fieldLabelName = null) {
+	macro assertFieldLabelName(key_fieldLabelName = null, fieldLabelName = null) {
 		AssertTextEquals(
 			key_fieldLabelName = ${fieldLabelName},
 			locator1 = "ObjectPortlet#FIELD_LABEL_NAME",
@@ -107,7 +107,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertFieldLabelNameNotPresent(key_fieldLabelName = null,fieldLabelName = null) {
+	macro assertFieldLabelNameNotPresent(key_fieldLabelName = null, fieldLabelName = null) {
 		AssertTextNotEquals(
 			key_fieldLabelName = ${fieldLabelName},
 			locator1 = "ObjectPortlet#FIELD_LABEL_NAME",
@@ -204,7 +204,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro chooseEntryOnRelationshipFieldSpecific(entryOption = null,relationshipFieldLabel = null) {
+	macro chooseEntryOnRelationshipFieldSpecific(entryOption = null, relationshipFieldLabel = null) {
 		Click(
 			key_relationshipFieldLabel = ${relationshipFieldLabel},
 			locator1 = "ObjectPortlet#SEARCH_ENTRY_ON_RELATIONSHIP_FIELD_LABEL_SPECIFIC");
@@ -306,7 +306,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectRelationshipFieldEntry(entry = null,newEntry = null) {
+	macro selectRelationshipFieldEntry(entry = null, newEntry = null) {
 		Click(
 			key_entry = ${entry},
 			locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY");
@@ -334,7 +334,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro typeCustomField(entry = null,customField = null) {
+	macro typeCustomField(entry = null, customField = null) {
 		Type.type(
 			key_customField = ${customField},
 			locator1 = "ObjectPortlet#ENTRY_FIELD_GENERIC",
@@ -351,7 +351,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updateEntry(invalidEntry = null,entry = null,updateEntry = null) {
+	macro updateEntry(invalidEntry = null, entry = null, updateEntry = null) {
 		ObjectPortlet.viewEntryDetails(entry = ${entry});
 
 		Type.type(

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _configureExportSiteOptions(contentDateRange = null,checkContentNameList = null,uncheckContentNameList = null,checkPageName = null,uncheckLogo = null,larFileName = null,uncheckSiteTemplateSettings = null,contentName = null,uncheckSubSubContent = null,uncheckSubContent = null,exportPermissions = null,uncheckSitePagesSettings = null,contentDeletion = null,mainContent = null,subContent = null) {
+	macro _configureExportSiteOptions(contentDateRange = null, checkContentNameList = null, uncheckContentNameList = null, checkPageName = null, uncheckLogo = null, larFileName = null, uncheckSiteTemplateSettings = null, contentName = null, uncheckSubSubContent = null, uncheckSubContent = null, exportPermissions = null, uncheckSitePagesSettings = null, contentDeletion = null, mainContent = null, subContent = null) {
 		if (isSet(larFileName)) {
 			Type(
 				inputFieldId = "ExportPortlet_name",
@@ -71,7 +71,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _export(exportPermissions = null,exportIndividualDeletions = null,larFileName = null) {
+	macro _export(exportPermissions = null, exportIndividualDeletions = null, larFileName = null) {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		Alert.viewWarningSpecific(warningMessage = "Export process and export LAR file will be deleted after 30 days.");
@@ -145,7 +145,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _importSite(checkContentNameList = null,uncheckContentNameList = null,contentDeletion = null,mirrorWithOverwriting = null,importPermissions = null,privateLayout = null,deleteApplicationData = null,copyAsNew = null) {
+	macro _importSite(checkContentNameList = null, uncheckContentNameList = null, contentDeletion = null, mirrorWithOverwriting = null, importPermissions = null, privateLayout = null, deleteApplicationData = null, copyAsNew = null) {
 		while (IsElementNotPresent(locator1 = "Button#CONTINUE")) {
 			WaitForElementPresent(locator1 = "Button#CONTINUE");
 		}
@@ -225,7 +225,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _selectImportFile(importValidationMissingItem = null,cannotImport = null,mirrorWithOverwriting = null,uploadFrom = null,importDeletions = null,importPermissions = null,larFileName = null,copyAsNew = null) {
+	macro _selectImportFile(importValidationMissingItem = null, cannotImport = null, mirrorWithOverwriting = null, uploadFrom = null, importDeletions = null, importPermissions = null, larFileName = null, copyAsNew = null) {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		NavItem.click(navItem = "Import");
@@ -333,7 +333,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _selectImportFileSite(importValidationMissingItem = null,importFail = null,uploadFrom = null,importCampaignValidationError = null,larFileName = null) {
+	macro _selectImportFileSite(importValidationMissingItem = null, importFail = null, uploadFrom = null, importCampaignValidationError = null, larFileName = null) {
 		LexiconEntry.gotoAdd();
 
 		while (IsElementNotPresent(locator1 = "Button#SELECT_FILE")) {
@@ -395,7 +395,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _selectImportFileWithDeleteApplicationData(uploadFrom = null,importDeletions = null,importPermissions = null,larFileName = null,copyAsNew = null) {
+	macro _selectImportFileWithDeleteApplicationData(uploadFrom = null, importDeletions = null, importPermissions = null, larFileName = null, copyAsNew = null) {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		NavItem.click(navItem = "Import");
@@ -455,7 +455,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addExportTemplateCP(exportTemplateName = null,exportTemplateDescription = null) {
+	macro addExportTemplateCP(exportTemplateName = null, exportTemplateDescription = null) {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Export Templates");
 
 		LexiconEntry.gotoAdd();
@@ -478,7 +478,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureExportOptions(checkContentNameList = null,uncheckContentNameList = null,checkPageName = null,uncheckLogo = null,deleteMissingPages = null,larFileName = null,lastDateRange = null,contentName = null,uncheckSubSubContent = null,uncheckSubContent = null,exportPermissions = null,contentDeletion = null,mainContent = null,subContent = null) {
+	macro configureExportOptions(checkContentNameList = null, uncheckContentNameList = null, checkPageName = null, uncheckLogo = null, deleteMissingPages = null, larFileName = null, lastDateRange = null, contentName = null, uncheckSubSubContent = null, uncheckSubContent = null, exportPermissions = null, contentDeletion = null, mainContent = null, subContent = null) {
 		LAR._configureExportSiteOptions(
 			checkContentNameList = ${checkContentNameList},
 			checkPageName = ${checkPageName},
@@ -497,7 +497,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureExportSiteCP(checkContentNameList = null,uncheckContentNameList = null,siteScopeName = null,checkPageName = null,uncheckLogo = null,deleteMissingPages = null,larFileName = null,lastDateRange = null,contentName = null,uncheckSiteTemplateSettings = null,uncheckSubSubContent = null,uncheckSubContent = null,exportPermissions = null,uncheckSitesPageSettings = null,contentDeletion = null,mainContent = null,subContent = null) {
+	macro configureExportSiteCP(checkContentNameList = null, uncheckContentNameList = null, siteScopeName = null, checkPageName = null, uncheckLogo = null, deleteMissingPages = null, larFileName = null, lastDateRange = null, contentName = null, uncheckSiteTemplateSettings = null, uncheckSubSubContent = null, uncheckSubContent = null, exportPermissions = null, uncheckSitesPageSettings = null, contentDeletion = null, mainContent = null, subContent = null) {
 		LAR.openExportAdmin(siteScopeName = ${siteScopeName});
 
 		LexiconEntry.gotoAdd();
@@ -548,7 +548,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editExportTemplateCP(exportTemplateDescriptionEdit = null,exportTemplateName = null,exportTemplateNameEdit = null) {
+	macro editExportTemplateCP(exportTemplateDescriptionEdit = null, exportTemplateName = null, exportTemplateNameEdit = null) {
 		AssertClick(
 			key_columnName = "title",
 			key_tableEntry = ${exportTemplateName},
@@ -561,7 +561,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro exportDDL(exportPermissions = null,larFileName = null) {
+	macro exportDDL(exportPermissions = null, larFileName = null) {
 		LAR._gotoExportImport();
 
 		LAR._export(
@@ -570,7 +570,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro exportExportTemplateCP(exportTemplateName = null,larFileName = null) {
+	macro exportExportTemplateCP(exportTemplateName = null, larFileName = null) {
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Export");
 
 		if (isSet(larFileName)) {
@@ -597,7 +597,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro exportPortlet(exportPermissions = null,contentLastRange = null,exportIndividualDeletions = null,larFileName = null,portletName = null) {
+	macro exportPortlet(exportPermissions = null, contentLastRange = null, exportIndividualDeletions = null, larFileName = null, portletName = null) {
 		LAR._gotoExportImport();
 
 		AssertElementPresent(locator1 = "IFrame#MODAL_BODY");
@@ -618,7 +618,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro exportSiteCP(depotName = null,siteScopeName = null,privateLayout = null,larFileName = null) {
+	macro exportSiteCP(depotName = null, siteScopeName = null, privateLayout = null, larFileName = null) {
 		if (isSet(depotName)) {
 			LAR.openDepotExportAdmin(depotName = ${depotName});
 		}
@@ -638,7 +638,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro exportTeam(exportPermissions = null,larFileName = null) {
+	macro exportTeam(exportPermissions = null, larFileName = null) {
 		MouseOver.mouseOverNotVisible(locator1 = "Portlet#OPTIONS_ICON");
 
 		Click.waitForMenuToggleJSClick(locator1 = "Portlet#OPTIONS_ICON");
@@ -651,7 +651,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro exportUserGroups(exportPermissions = null,larFileName = null) {
+	macro exportUserGroups(exportPermissions = null, larFileName = null) {
 		LAR._gotoExportImport();
 
 		LAR._export(
@@ -696,7 +696,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro importPortlet(importSchemaVersionMismatching = null,importValidationMissingItem = null,cannotImport = null,mirrorWithOverwriting = null,uploadFrom = null,initializeLiferayEvent = null,importDeletions = null,failureExpected = null,importPermissions = null,larFileName = null,copyAsNew = null,portletName = null) {
+	macro importPortlet(importSchemaVersionMismatching = null, importValidationMissingItem = null, cannotImport = null, mirrorWithOverwriting = null, uploadFrom = null, initializeLiferayEvent = null, importDeletions = null, failureExpected = null, importPermissions = null, larFileName = null, copyAsNew = null, portletName = null) {
 		LAR._gotoExportImport(initializeLiferayEvent = ${initializeLiferayEvent});
 
 		LAR._selectImportFile(
@@ -721,7 +721,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro importPortletWithDeleteApplicationData(cancelImport = null,uploadFrom = null,initializeLiferayEvent = null,importDeletions = null,importPermissions = null,larFileName = null,copyAsNew = null,portletName = null) {
+	macro importPortletWithDeleteApplicationData(cancelImport = null, uploadFrom = null, initializeLiferayEvent = null, importDeletions = null, importPermissions = null, larFileName = null, copyAsNew = null, portletName = null) {
 		LAR._gotoExportImport(initializeLiferayEvent = ${initializeLiferayEvent});
 
 		LAR._selectImportFileWithDeleteApplicationData(
@@ -743,7 +743,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro importSiteCP(depotName = null,importValidationMissingItem = null,checkContentNameList = null,uncheckContentNameList = null,siteName = null,larFileName = null,privateLayout = null,deleteApplicationData = null,copyAsNew = null,contentName = null,baseURL = null,contentDeletion = null,uploadFrom = null,importCampaignValidationError = null,importPermissions = null) {
+	macro importSiteCP(depotName = null, importValidationMissingItem = null, checkContentNameList = null, uncheckContentNameList = null, siteName = null, larFileName = null, privateLayout = null, deleteApplicationData = null, copyAsNew = null, contentName = null, baseURL = null, contentDeletion = null, uploadFrom = null, importCampaignValidationError = null, importPermissions = null) {
 		if (isSet(depotName)) {
 			LAR.openDepotImportAdmin(
 				baseURL = ${baseURL},
@@ -776,7 +776,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro importTeam(cannotImport = null,mirrorWithOverwriting = null,uploadFrom = null,importDeletions = null,failureExpected = null,importPermissions = null,larFileName = null,copyAsNew = null,portletName = null) {
+	macro importTeam(cannotImport = null, mirrorWithOverwriting = null, uploadFrom = null, importDeletions = null, failureExpected = null, importPermissions = null, larFileName = null, copyAsNew = null, portletName = null) {
 		MouseOver.mouseOverNotVisible(locator1 = "Portlet#OPTIONS_ICON");
 
 		Click.waitForMenuToggleJSClick(locator1 = "Portlet#OPTIONS_ICON");
@@ -884,7 +884,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro saveExportTemplateCP(exportTemplateName = null,exportTemplateDescription = null) {
+	macro saveExportTemplateCP(exportTemplateName = null, exportTemplateDescription = null) {
 		Button.clickSave();
 
 		AssertTextEquals(
@@ -901,7 +901,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro searchTemplate(exportTemplateName = null,exportTemplateDescription = null) {
+	macro searchTemplate(exportTemplateName = null, exportTemplateDescription = null) {
 		Search.searchCP(searchTerm = ${exportTemplateName});
 
 		AssertTextEquals(
@@ -918,7 +918,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewExportTemplateCP(exportTemplateName = null,exportTemplateDescription = null) {
+	macro viewExportTemplateCP(exportTemplateName = null, exportTemplateDescription = null) {
 		AssertTextEquals(
 			key_columnName = "title",
 			key_tableEntry = ${exportTemplateName},

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _viewLiveSession(navItem = null,count = null) {
+	macro _viewLiveSession(navItem = null, count = null) {
 		var key_navItem = ${navItem};
 		var key_index = ${count};
 
@@ -17,7 +17,7 @@ definition {
 
 	@description = "Deploy the following jar into Liferay Portal server at port ${nodePort}"
 	@summary = "Default summary"
-	macro deployClusteringModule(deployDir = null,nodePort = null) {
+	macro deployClusteringModule(deployDir = null, nodePort = null) {
 		if (isSet(deployDir)) {
 			var liferayHome = ${deployDir};
 		}
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro enableDebugging(nodePort = null,categoryName = null) {
+	macro enableDebugging(nodePort = null, categoryName = null) {
 		Navigator.openSpecificURL(url = "http://localhost:${nodePort}");
 
 		if (IsElementPresent(locator1 = "UserBar#USER_SIGN_IN")) {
@@ -186,7 +186,7 @@ definition {
 
 	@description = "This will start the server at a specific bundle at ${base_branch}-bundles-${bundle_index}\tomcat."
 	@summary = "Default summary"
-	macro startSpecificServer(deleteLiferayHome = null,nodePort = null,keepCachedAppServerData = null) {
+	macro startSpecificServer(deleteLiferayHome = null, nodePort = null, keepCachedAppServerData = null) {
 		var leadingPortNumber = StringUtil.replace(${nodePort}, 080, "");
 
 		var bundleIndex = ${leadingPortNumber} - 8;
@@ -203,7 +203,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updatePortalPropertiesOnSpecificServer(propertiesOriginal = null,nodePort = null,propertiesUpdate = null) {
+	macro updatePortalPropertiesOnSpecificServer(propertiesOriginal = null, nodePort = null, propertiesUpdate = null) {
 		var leadingPortNumber = StringUtil.replace(${nodePort}, 080, "");
 
 		var bundleIndex = ${leadingPortNumber} - 8;
@@ -237,7 +237,7 @@ definition {
 
 	@description = "This will view the text not shows at a specific bundle at ${base_branch}-bundles-${bundle_index}/logs."
 	@summary = "Default summary"
-	macro viewNoSessionReplicateLogErrorOnSpecificNode(exceptionText = null,nodePort = null) {
+	macro viewNoSessionReplicateLogErrorOnSpecificNode(exceptionText = null, nodePort = null) {
 		if (${nodePort} == 8080) {
 			AssertConsoleTextNotPresent(value1 = ${exceptionText});
 		}
@@ -252,7 +252,7 @@ definition {
 
 	@description = "This will view the text not shows at a specific bundle at ${base_branch}-bundles-${bundle_index}/logs."
 	@summary = "Default summary"
-	macro viewTextNotPresentOnSpecificNode(exceptionText = null,nodePort = null) {
+	macro viewTextNotPresentOnSpecificNode(exceptionText = null, nodePort = null) {
 		if (${nodePort} == 8080) {
 			AssertConsoleTextNotPresent(value1 = ${exceptionText});
 		}
@@ -267,7 +267,7 @@ definition {
 
 	@description = "This will view the text shows at a specific bundle at ${base_branch}-bundles-${bundle_index}/logs."
 	@summary = "Default summary"
-	macro viewTextPresentOnSpecificNode(expectedText = null,nodePort = null) {
+	macro viewTextPresentOnSpecificNode(expectedText = null, nodePort = null) {
 		if (${nodePort} == 8080) {
 			WaitForConsoleTextPresent(value1 = ${expectedText});
 		}

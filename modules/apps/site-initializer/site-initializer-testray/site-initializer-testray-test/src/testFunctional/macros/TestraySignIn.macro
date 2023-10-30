@@ -15,7 +15,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro changePassword(newPassword = null,confirmPassword = null,currentPassword = null) {
+	macro changePassword(newPassword = null, confirmPassword = null, currentPassword = null) {
 		if (isSet(currentPassword)) {
 			Type(
 				locator1 = "TextInput#CURRENT_PASSWORD",
@@ -38,7 +38,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro loginUserTestrayPG(emailAddress = null,password = null) {
+	macro loginUserTestrayPG(emailAddress = null, password = null) {
 		if (isSet(emailAddress)) {
 			Type(
 				locator1 = "TextInput#TEXT",

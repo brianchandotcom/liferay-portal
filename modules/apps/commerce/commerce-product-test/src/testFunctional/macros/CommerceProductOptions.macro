@@ -11,7 +11,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createProductOptionValue(key_name = null,key_position = null) {
+	macro createProductOptionValue(key_name = null, key_position = null) {
 		Click(locator1 = "Button#PLUS");
 
 		SelectFrame.selectFrameTop();
@@ -47,7 +47,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editOptionValue(optionValue = null,priceType = null,sku = null) {
+	macro editOptionValue(optionValue = null, priceType = null, sku = null) {
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
 
 		if (isSet(priceType)) {
@@ -74,7 +74,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editProductOption(key_position = null,key_fieldType = null,productAddOptionCategoriesList = null,productOptionDefineExternally = null,collectionProvider = null,key_option = null,productOptionRequired = null,key_optionName = null,productOptionFacetable = null,productOptionSkuContributor = null,key_description = null,key_priceType = null,categoryNameList = null) {
+	macro editProductOption(key_position = null, key_fieldType = null, productAddOptionCategoriesList = null, productOptionDefineExternally = null, collectionProvider = null, key_option = null, productOptionRequired = null, key_optionName = null, productOptionFacetable = null, productOptionSkuContributor = null, key_description = null, key_priceType = null, categoryNameList = null) {
 		Click(
 			key_index = ${key_option},
 			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");

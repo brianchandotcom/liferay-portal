@@ -57,7 +57,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoDepotAdminViaBreadcrumb(depotName = null,portletName = null) {
+	macro gotoDepotAdminViaBreadcrumb(depotName = null, portletName = null) {
 		if (isSet(portletName)) {
 			AssertTextEquals(
 				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_ACTIVE_ENTRY",
@@ -87,7 +87,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoDepotPortlet(depotName = null,portlet = null) {
+	macro gotoDepotPortlet(depotName = null, portlet = null) {
 		if (isSet(listView)) {
 			var key_listEntry = ${depotName};
 
@@ -118,7 +118,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoDepotPortletViaBreadcrumb(depotName = null,portlet = null,otherDepotName = null) {
+	macro gotoDepotPortletViaBreadcrumb(depotName = null, portlet = null, otherDepotName = null) {
 		if (isSet(otherDepotName)) {
 			Click(
 				key_breadcrumbName = "Asset Libraries",
@@ -183,7 +183,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoPortlet(depotName = null,portlet = null) {
+	macro gotoPortlet(depotName = null, portlet = null) {
 		Click(
 			key_card = ${portlet},
 			locator1 = "Card#CARD_TITLE");
@@ -322,7 +322,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openDepotLanguages(defaultLocale = null,depotName = null) {
+	macro openDepotLanguages(defaultLocale = null, depotName = null) {
 		var depotId = JSONGroupAPI._getDepotIdByName(
 			defaultLocale = ${defaultLocale},
 			depotName = ${depotName});
@@ -352,7 +352,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openDepotSettingsGeneral(defaultLocale = null,depotName = null) {
+	macro openDepotSettingsGeneral(defaultLocale = null, depotName = null) {
 		var depotId = JSONGroupAPI._getDepotIdByName(
 			defaultLocale = ${defaultLocale},
 			depotName = ${depotName});
@@ -429,7 +429,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToAddDMEntry(depotName = null,documentTypeName = null,folderName = null) {
+	macro openToAddDMEntry(depotName = null, documentTypeName = null, folderName = null) {
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
 		var groupId = JSONGroupAPI._getGroupIdByName(
 			groupName = ${depotName},
@@ -479,7 +479,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToDMEntryInDepot(dmDocumentTitle = null,depotName = null,baseURL = null,folderName = null) {
+	macro openToDMEntryInDepot(dmDocumentTitle = null, depotName = null, baseURL = null, folderName = null) {
 		var depotId = JSONGroupAPI._getDepotIdByName(
 			depotName = ${depotName},
 			portalURL = ${baseURL});
@@ -505,7 +505,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToDMFolder(parentFolderName = null,depotName = null,baseURL = null,folderName = null) {
+	macro openToDMFolder(parentFolderName = null, depotName = null, baseURL = null, folderName = null) {
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
 
 		if (isSet(parentFolderName)) {
@@ -540,7 +540,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToEditDMEntryInDepot(dmDocumentTitle = null,depotName = null,baseURL = null,folderName = null) {
+	macro openToEditDMEntryInDepot(dmDocumentTitle = null, depotName = null, baseURL = null, folderName = null) {
 		var depotId = JSONGroupAPI._getDepotIdByName(depotName = ${depotName});
 
 		if (isSet(staging)) {
@@ -578,7 +578,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToEditWCEntry(depotName = null,webContentTitle = null,folderName = null) {
+	macro openToEditWCEntry(depotName = null, webContentTitle = null, folderName = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {

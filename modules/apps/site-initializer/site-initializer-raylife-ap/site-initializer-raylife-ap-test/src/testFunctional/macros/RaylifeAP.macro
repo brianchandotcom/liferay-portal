@@ -62,7 +62,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertTableElement(line = null,column = null,text = null) {
+	macro assertTableElement(line = null, column = null, text = null) {
 		AssertElementPresent(
 			key_colunmPosition = ${column},
 			key_linePosition = ${line},
@@ -71,7 +71,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertTableValue(product = null,status = null) {
+	macro assertTableValue(product = null, status = null) {
 		AssertElementPresent(
 			key_product = ${product},
 			key_status = ${status},
@@ -79,7 +79,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertTextAtTable(linePosition = null,text = null,lineColunm = null) {
+	macro assertTextAtTable(linePosition = null, text = null, lineColunm = null) {
 		var key_linePosition = ${linePosition};
 		var key_colunmPosition = ${lineColunm};
 		var key_text = ${text};
@@ -106,7 +106,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro clickInApplicationKebabOption(product = null,status = null,option = null) {
+	macro clickInApplicationKebabOption(product = null, status = null, option = null) {
 		Click(
 			key_product = ${product},
 			key_status = ${status},
@@ -118,7 +118,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro clickInApplicationNumber(product = null,status = null) {
+	macro clickInApplicationNumber(product = null, status = null) {
 		Click(
 			key_product = ${product},
 			key_status = ${status},
@@ -247,7 +247,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro signIn(emailAddress = null,password = null) {
+	macro signIn(emailAddress = null, password = null) {
 		if (isSet(emailAddress)) {
 			Type(
 				labelTitle = "Email Address",

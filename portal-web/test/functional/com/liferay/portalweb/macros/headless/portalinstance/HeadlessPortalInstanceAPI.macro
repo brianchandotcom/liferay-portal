@@ -23,7 +23,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPortalInstance(authenticationMethod = null,domain = null,portalInstanceId = null,virtualHost = null,token = null) {
+	macro addPortalInstance(authenticationMethod = null, domain = null, portalInstanceId = null, virtualHost = null, token = null) {
 		Variables.assertDefined(parameterList = "${domain},${virtualHost},${portalInstanceId}");
 
 		var portalURL = JSONCompany.getDefaultPortalURL();
@@ -64,7 +64,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPortalInstanceWithVirtualInstanceInitializer(siteInitializerKey = null,authenticationMethod = null,domain = null,portalInstanceId = null,virtualHost = null) {
+	macro addPortalInstanceWithVirtualInstanceInitializer(siteInitializerKey = null, authenticationMethod = null, domain = null, portalInstanceId = null, virtualHost = null) {
 		Variables.assertDefined(parameterList = "${domain},${virtualHost},${portalInstanceId},${siteInitializerKey}");
 
 		var portalURL = JSONCompany.getPortalURL();

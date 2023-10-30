@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _curlKnowledgeBaseArticle(articleBody = null,knowledgeBaseArticleId = null,parentKnowledgeBaseArticleId = null,title = null,knowledgeBaseFolderId = null) {
+	macro _curlKnowledgeBaseArticle(articleBody = null, knowledgeBaseArticleId = null, parentKnowledgeBaseArticleId = null, title = null, knowledgeBaseFolderId = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(knowledgeBaseFolderId)) {
@@ -44,7 +44,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createKnowledgeBaseArticle(datePublished = null,articleBody = null,parentKnowledgeBaseArticleId = null,title = null,knowledgeBaseFolderId = null,externalReferenceCode = null) {
+	macro createKnowledgeBaseArticle(datePublished = null, articleBody = null, parentKnowledgeBaseArticleId = null, title = null, knowledgeBaseFolderId = null, externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = "${articleBody},${title}");
 
 		var curl = KnowledgeBaseArticleAPI._curlKnowledgeBaseArticle(
@@ -70,7 +70,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setUpGlobalKnowledgeBaseArticleIdAndErc(articleBody = null,title = null,knowledgeBaseFolderId = null,externalReferenceCode = null,datePublished = null,parentKnowledgeBaseArticleId = null) {
+	macro setUpGlobalKnowledgeBaseArticleIdAndErc(articleBody = null, title = null, knowledgeBaseFolderId = null, externalReferenceCode = null, datePublished = null, parentKnowledgeBaseArticleId = null) {
 		var response = KnowledgeBaseArticleAPI.createKnowledgeBaseArticle(
 			articleBody = ${articleBody},
 			datePublished = ${datePublished},

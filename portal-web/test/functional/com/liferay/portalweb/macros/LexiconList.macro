@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro clickEllipsis(userRole = null,listEntry = null) {
+	macro clickEllipsis(userRole = null, listEntry = null) {
 		if (${userRole} == "Guest") {
 			Click(
 				key_listEntry = ${listEntry},
@@ -15,7 +15,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro clickEllipsisItem(item = null,userRole = null,listEntry = null) {
+	macro clickEllipsisItem(item = null, userRole = null, listEntry = null) {
 		LexiconList.clickEllipsis(
 			listEntry = ${listEntry},
 			userRole = ${userRole});
@@ -48,7 +48,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewListEntryLabel(listEntryLabel = null,listEntry = null) {
+	macro viewListEntryLabel(listEntryLabel = null, listEntry = null) {
 		AssertTextEquals(
 			key_listEntry = ${listEntry},
 			key_listEntryLabel = ${listEntryLabel},
@@ -71,7 +71,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewListEntrySpecific(position = null,listEntry = null) {
+	macro viewListEntrySpecific(position = null, listEntry = null) {
 		AssertTextEquals.assertPartialText(
 			key_listEntry = ${listEntry},
 			key_position = ${position},
@@ -80,7 +80,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewListEntrySubtitle(listEntrySubtitle = null,listEntry = null) {
+	macro viewListEntrySubtitle(listEntrySubtitle = null, listEntry = null) {
 		AssertTextEquals(
 			key_listEntry = ${listEntry},
 			key_listEntrySubtitle = ${listEntrySubtitle},
@@ -105,7 +105,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewListEntryTitleLinkSpecific(position = null,listEntry = null) {
+	macro viewListEntryTitleLinkSpecific(position = null, listEntry = null) {
 		AssertTextEquals.assertPartialText(
 			key_listEntry = ${listEntry},
 			key_position = ${position},

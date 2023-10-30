@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addExportProcessCP(userLastName = null,userFirstName = null,applications = null) {
+	macro addExportProcessCP(userLastName = null, userFirstName = null, applications = null) {
 		var key_application = ${application};
 
 		LexiconEntry.gotoAdd();
@@ -61,7 +61,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro anonymizeAllEntriesinApplicationCP(totalItemsCount = null,applicationItemsCount = null,applications = null) {
+	macro anonymizeAllEntriesinApplicationCP(totalItemsCount = null, applicationItemsCount = null, applications = null) {
 		GDPR.filterByApplications(
 			applicationItemsCount = ${applicationItemsCount},
 			applications = ${applications},
@@ -185,7 +185,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteAndAnonymizeAllEntriesCP(totalItemsCount = null,applicationItemsCount = null,userName = null) {
+	macro deleteAndAnonymizeAllEntriesCP(totalItemsCount = null, applicationItemsCount = null, userName = null) {
 		GDPR.filterByApplications(
 			applicationItemsCount = ${applicationItemsCount},
 			applications = "All Applications",
@@ -284,7 +284,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editEntryCP(rowEntry = null,applicationsTitle = null) {
+	macro editEntryCP(rowEntry = null, applicationsTitle = null) {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Edit",
 			rowEntry = ${rowEntry});
@@ -295,7 +295,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro filterByApplications(totalItemsCount = null,webContent = null,applicationItemsCount = null,applications = null) {
+	macro filterByApplications(totalItemsCount = null, webContent = null, applicationItemsCount = null, applications = null) {
 		Click.clickNoWaitForVisible(
 			key_selectData = ${applications},
 			locator1 = "DataErasure#REVIEW_DATA_SELECT");
@@ -333,7 +333,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewEntryRowInApplicationCP(tableEntry = null,tableEntryPartialTextList = null) {
+	macro viewEntryRowInApplicationCP(tableEntry = null, tableEntryPartialTextList = null) {
 		for (var tableEntryPartialText : list ${tableEntryPartialTextList}) {
 			LexiconTable.viewTableEntryPartialText(
 				tableEntry = ${tableEntry},

@@ -8,7 +8,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro clickEllipsisItem(item = null,tableEntry = null) {
+	macro clickEllipsisItem(item = null, tableEntry = null) {
 		Click.waitForMenuToggleJSClick(
 			key_tableEntry = ${tableEntry},
 			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
@@ -17,7 +17,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro clickTableEntryColumnLink(tableEntry = null,columnName = null) {
+	macro clickTableEntryColumnLink(tableEntry = null, columnName = null) {
 		Click(
 			key_columnName = ${columnName},
 			key_tableEntry = ${tableEntry},
@@ -41,7 +41,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTableEntryFormFragment(tableEntryInfo = null,fieldType = null) {
+	macro viewTableEntryFormFragment(tableEntryInfo = null, fieldType = null) {
 		AssertTextEquals.assertValue(
 			key_tableEntry = ${fieldType},
 			locator1 = "TextInput#FRAGMENT_CONFIGURATION_FORM_FRAGMENT",
@@ -49,7 +49,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTableEntryInfo(tableEntry = null,tableEntryInfo = null,index = null,columnName = null) {
+	macro viewTableEntryInfo(tableEntry = null, tableEntryInfo = null, index = null, columnName = null) {
 		if (isSet(index)) {
 			AssertTextEquals(
 				index = ${index},
@@ -74,7 +74,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTableEntryPartialText(tableEntryPartialText = null,tableEntry = null) {
+	macro viewTableEntryPartialText(tableEntryPartialText = null, tableEntry = null) {
 		AssertTextEquals.assertPartialText(
 			key_tableEntry = ${tableEntry},
 			key_tableEntryPartialText = ${tableEntryPartialText},
@@ -83,7 +83,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTableEntryText(tableEntry = null,tableEntryText = null) {
+	macro viewTableEntryText(tableEntry = null, tableEntryText = null) {
 		AssertTextEquals(
 			key_tableEntry = ${tableEntry},
 			key_tableEntryText = ${tableEntryText},

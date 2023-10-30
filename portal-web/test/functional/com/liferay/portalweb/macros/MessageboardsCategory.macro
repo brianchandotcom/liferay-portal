@@ -3,7 +3,7 @@ definition {
 	var assetType = "Message Boards Category";
 
 	@summary = "Default summary"
-	macro addCP(categoryName = null,categoryDescriptionEnabled = null,categoryDescription = null) {
+	macro addCP(categoryName = null, categoryDescriptionEnabled = null, categoryDescription = null) {
 		LexiconEntry.gotoAdd();
 
 		MenuItem.click(menuItem = "Category");
@@ -18,7 +18,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPG(displayStyle = null,siteURLKey = null,categoryName = null,categoryWithoutName = null,categoryDescriptionEnabled = null,layoutName = null,categoryDescription = null) {
+	macro addPG(displayStyle = null, siteURLKey = null, categoryName = null, categoryWithoutName = null, categoryDescriptionEnabled = null, layoutName = null, categoryDescription = null) {
 		if (isSet(siteURLKey)) {
 			MessageboardsCategory.openToAddCategory(
 				layoutName = ${layoutName},
@@ -90,7 +90,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editPG(groupName = null,categoryNameEdit = null,siteURLKey = null,categoryName = null,layoutName = null) {
+	macro editPG(groupName = null, categoryNameEdit = null, siteURLKey = null, categoryName = null, layoutName = null) {
 		if (isSet(siteURLKey)) {
 			MessageboardsCategory.openToEditCategory(
 				categoryName = ${categoryName},
@@ -131,7 +131,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoPG(subCategoryEnabled = null,categoryName = null,categoryDescriptionEnabled = null,categoryDescription = null,subCategoryName = null) {
+	macro gotoPG(subCategoryEnabled = null, categoryName = null, categoryDescriptionEnabled = null, categoryDescription = null, subCategoryName = null) {
 		if (${categoryDescriptionEnabled} == "true") {
 			var key_categoryDescription = ${categoryDescription};
 			var key_categoryName = ${categoryName};
@@ -158,7 +158,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToAddCategory(siteURLKey = null,layoutName = null) {
+	macro openToAddCategory(siteURLKey = null, layoutName = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -169,7 +169,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToCategory(groupName = null,siteURLKey = null,categoryName = null,layoutName = null) {
+	macro openToCategory(groupName = null, siteURLKey = null, categoryName = null, layoutName = null) {
 		var categoryId = JSONMBMessage.getCategoryIdByName(
 			categoryName = ${categoryName},
 			groupName = ${groupName});
@@ -188,7 +188,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToEditCategory(groupName = null,siteURLKey = null,categoryName = null,layoutName = null) {
+	macro openToEditCategory(groupName = null, siteURLKey = null, categoryName = null, layoutName = null) {
 		var categoryId = JSONMBMessage.getCategoryIdByName(
 			categoryName = ${categoryName},
 			groupName = ${groupName});
@@ -241,7 +241,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCategoryDefaultPG(categoryCount = null,threadCount = null,categoryName = null) {
+	macro viewCategoryDefaultPG(categoryCount = null, threadCount = null, categoryName = null) {
 		var key_categoryName = ${categoryName};
 
 		AssertTextEquals(
@@ -307,7 +307,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCP(localizedHeader = null,categoryCount = null,threadCount = null,categoryName = null) {
+	macro viewCP(localizedHeader = null, categoryCount = null, threadCount = null, categoryName = null) {
 		var key_categoryName = ${categoryName};
 
 		AssertElementPresent(locator1 = "MessageBoards#CATEGORY_LIST_CHECKBOX");
@@ -354,7 +354,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewMySubscriptionsPG(parentcategory2 = null,subscribedThread = null,parentcategory1 = null) {
+	macro viewMySubscriptionsPG(parentcategory2 = null, subscribedThread = null, parentcategory1 = null) {
 		AssertClick(
 			locator1 = "MessageBoards#NAVIGATION_MY_SUBSCRIPTIONS",
 			value1 = "My Subscriptions");
@@ -393,7 +393,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPG(threadPostCount = null,threadCount = null,categoryName = null,categoryDescription = null) {
+	macro viewPG(threadPostCount = null, threadCount = null, categoryName = null, categoryDescription = null) {
 		var key_categoryName = ${categoryName};
 		var key_threadCount = ${threadCount};
 

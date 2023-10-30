@@ -4,7 +4,7 @@ definition {
 	var userName = "Test Test";
 
 	@summary = "Default summary"
-	macro addCP(displayText = null,dmDocumentTitle = null,threadSubject = null,mbAttachmentFile = null,siteURLKey = null,fieldLabel = null,threadBody = null,vocabularyName = null,pageName = null,categoryName = null) {
+	macro addCP(displayText = null, dmDocumentTitle = null, threadSubject = null, mbAttachmentFile = null, siteURLKey = null, fieldLabel = null, threadBody = null, vocabularyName = null, pageName = null, categoryName = null) {
 		if (isSet(siteURLKey)) {
 			MessageboardsThread.openToAddThread(siteURLKey = ${siteURLKey});
 		}
@@ -69,7 +69,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addInvalidAttachmentPG(threadSubject = null,maxAttachmentFileSize = null,invalidSize = null,mbThreadAttachment = null) {
+	macro addInvalidAttachmentPG(threadSubject = null, maxAttachmentFileSize = null, invalidSize = null, mbThreadAttachment = null) {
 		AssertClick(
 			locator1 = "Button#NEW_THREAD",
 			value1 = "New Thread");
@@ -96,7 +96,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPG(threadSubject = null,bold = null,tagName = null,priority = null,categoryName = null,invalidCharacters = null,layoutName = null,groupName = null,siteURLKey = null,threadBody = null,threadBodyImageName = null,mbAttachmentFileList = null) {
+	macro addPG(threadSubject = null, bold = null, tagName = null, priority = null, categoryName = null, invalidCharacters = null, layoutName = null, groupName = null, siteURLKey = null, threadBody = null, threadBodyImageName = null, mbAttachmentFileList = null) {
 		if (isSet(siteURLKey)) {
 			MessageboardsThread.openToAddThread(
 				categoryName = ${categoryName},
@@ -215,7 +215,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPGAsQuestion(breadcrumbName = null,replyCount = null,threadSubject = null,threadBody = null,lastPostUserName = null,pageName = null,categoryName = null) {
+	macro addPGAsQuestion(breadcrumbName = null, replyCount = null, threadSubject = null, threadBody = null, lastPostUserName = null, pageName = null, categoryName = null) {
 		AssertClick(
 			locator1 = "Button#NEW_THREAD",
 			value1 = "New Thread");
@@ -261,7 +261,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPGWithAttachment(threadSubject = null,threadBody = null,mbThreadAttachment = null) {
+	macro addPGWithAttachment(threadSubject = null, threadBody = null, mbThreadAttachment = null) {
 		AssertClick(
 			locator1 = "Button#NEW_THREAD",
 			value1 = "New Thread");
@@ -300,7 +300,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPGWithPermissions(threadSubject = null,viewableBySelection = null,threadBody = null) {
+	macro addPGWithPermissions(threadSubject = null, viewableBySelection = null, threadBody = null) {
 		if (!(isSet(skipNavigation))) {
 			AssertClick(
 				locator1 = "Button#NEW_THREAD",
@@ -331,7 +331,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addWithWorkflowCP(threadSubject = null,threadBody = null) {
+	macro addWithWorkflowCP(threadSubject = null, threadBody = null) {
 		LexiconEntry.gotoAdd();
 
 		MenuItem.click(menuItem = "Thread");
@@ -356,7 +356,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addWithWorkflowPG(threadSubject = null,threadBody = null) {
+	macro addWithWorkflowPG(threadSubject = null, threadBody = null) {
 		AssertClick(
 			locator1 = "Button#NEW_THREAD",
 			value1 = "New Thread");
@@ -384,7 +384,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertDownloadedFileNameFromTempFolder(attachmentFileName = null,exportedFileName = null) {
+	macro assertDownloadedFileNameFromTempFolder(attachmentFileName = null, exportedFileName = null) {
 		if (isSet(exportedFileName)) {
 			var downloadedFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "${exportedFileName}.lar");
 		}
@@ -417,7 +417,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro cancelAdd(threadSubject = null,threadBody = null) {
+	macro cancelAdd(threadSubject = null, threadBody = null) {
 		AssertClick(
 			locator1 = "Button#NEW_THREAD",
 			value1 = "New Thread");
@@ -440,7 +440,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro cancelEdit(threadSubject = null,threadSubjectEdit = null,threadBodyEdit = null) {
+	macro cancelEdit(threadSubject = null, threadSubjectEdit = null, threadBodyEdit = null) {
 		Click(
 			key_threadSubject = ${threadSubject},
 			locator1 = "MessageBoards#VERTICAL_ELLIPSIS");
@@ -482,7 +482,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteReply(localizedMenuItem = null,localizedConfirmMessage = null) {
+	macro deleteReply(localizedMenuItem = null, localizedConfirmMessage = null) {
 		Click(locator1 = "MessageBoards#VERTICAL_ELLIPSIS_REPLY_CARD");
 
 		if (isSet(localizedMenuItem)) {
@@ -517,7 +517,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editCP(depotName = null,threadSubject = null,threadBodyImageEdit = null,threadSubjectEdit = null,mbAttachmentFile = null,threadAttachmentRemove = null,threadBodyEdit = null,siteName = null,threadBody = null) {
+	macro editCP(depotName = null, threadSubject = null, threadBodyImageEdit = null, threadSubjectEdit = null, mbAttachmentFile = null, threadAttachmentRemove = null, threadBodyEdit = null, siteName = null, threadBody = null) {
 		if (!(isSet(skipNavigation))) {
 			Click(
 				key_listEntry = ${threadSubject},
@@ -602,7 +602,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editPG(preview = null,groupName = null,threadSubject = null,threadSubjectEdit = null,saveAsDraft = null,siteURLKey = null,threadBodyEdit = null,userName = null,categoryName = null,layoutName = null) {
+	macro editPG(preview = null, groupName = null, threadSubject = null, threadSubjectEdit = null, saveAsDraft = null, siteURLKey = null, threadBodyEdit = null, userName = null, categoryName = null, layoutName = null) {
 		if (isSet(siteURLKey)) {
 			MessageboardsThread.openToEditThread(
 				categoryName = ${categoryName},
@@ -680,7 +680,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editReplyViaAP(threadReplySubject = null,threadSubject = null,mbAttachmentFile = null,threadBody = null) {
+	macro editReplyViaAP(threadReplySubject = null, threadSubject = null, mbAttachmentFile = null, threadBody = null) {
 		MouseOver(locator1 = "Portlet#PORTLET_CONTENT");
 
 		Click(
@@ -722,7 +722,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editViaMyPosts(threadSubject = null,threadSubjectEdit = null) {
+	macro editViaMyPosts(threadSubject = null, threadSubjectEdit = null) {
 		AssertClick(
 			locator1 = "MessageBoards#NAVIGATION_MY_POSTS",
 			value1 = "My Posts");
@@ -745,7 +745,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro flagThread(flagReason = null,siteName = null) {
+	macro flagThread(flagReason = null, siteName = null) {
 		Click(locator1 = "ReportContent#FLAG_LINK");
 
 		AssertElementPresent.assertVisible(locator1 = "ReportContent#FLAG_MODAL");
@@ -776,7 +776,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoPG(replyCount = null,threadSubject = null,messageBoardsThreadURL = null,lastPostUserName = null) {
+	macro gotoPG(replyCount = null, threadSubject = null, messageBoardsThreadURL = null, lastPostUserName = null) {
 		var key_repliesCount = ${replyCount};
 		var key_threadSubject = ${threadSubject};
 		var key_userName = ${lastPostUserName};
@@ -818,7 +818,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro lockPG(groupName = null,threadSubject = null,siteURLKey = null,layoutName = null) {
+	macro lockPG(groupName = null, threadSubject = null, siteURLKey = null, layoutName = null) {
 		MessageboardsThread.openToThread(
 			groupName = ${groupName},
 			layoutName = ${layoutName},
@@ -857,7 +857,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro movePG(categoryName1 = null,threadSubject = null,explanationSubject = null,explanationBody = null,explanationPost = null) {
+	macro movePG(categoryName1 = null, threadSubject = null, explanationSubject = null, explanationBody = null, explanationPost = null) {
 		AssertClick(
 			key_categoryName = ${categoryName1},
 			locator1 = "MessageBoards#CATEGORY_LIST_CATEGORY",
@@ -925,7 +925,7 @@ definition {
 	// You can use this navigation when you need to access the configuration quickly without checking the UI.
 
 	@summary = "Default summary"
-	macro openToAddThread(groupName = null,siteURLKey = null,categoryName = null,layoutName = null) {
+	macro openToAddThread(groupName = null, siteURLKey = null, categoryName = null, layoutName = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -952,7 +952,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToEditThread(groupName = null,threadSubject = null,siteURLKey = null,categoryName = null,layoutName = null) {
+	macro openToEditThread(groupName = null, threadSubject = null, siteURLKey = null, categoryName = null, layoutName = null) {
 		var messageId = JSONMBMessage.getMessageIdByName(
 			categoryName = ${categoryName},
 			groupName = ${groupName},
@@ -973,12 +973,12 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToStatistics(siteURLKey = null,layoutName = null) {
+	macro openToStatistics(siteURLKey = null, layoutName = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${layoutName}/-/message_boards/statistics");
 	}
 
 	@summary = "Default summary"
-	macro openToThread(groupName = null,threadSubject = null,siteURLKey = null,categoryName = null,layoutName = null) {
+	macro openToThread(groupName = null, threadSubject = null, siteURLKey = null, categoryName = null, layoutName = null) {
 		var messageId = JSONMBMessage.getMessageIdByName(
 			categoryName = ${categoryName},
 			groupName = ${groupName},
@@ -993,7 +993,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro replyCP(markAsQuestion = null,threadSubject = null,threadReplyBody = null) {
+	macro replyCP(markAsQuestion = null, threadSubject = null, threadReplyBody = null) {
 		if (${markAsQuestion} == "true") {
 			AssertClick(
 				key_threadSubject = ${threadSubject},
@@ -1020,7 +1020,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro replyPG(displayStyle = null,threadSubject = null,anonymous = null,threadBody = null,threadReplyBody = null,markAsAnswer = null) {
+	macro replyPG(displayStyle = null, threadSubject = null, anonymous = null, threadBody = null, threadReplyBody = null, markAsAnswer = null) {
 		if (${displayStyle} == "Question") {
 			AssertClick.assertPartialTextClickAt(
 				key_threadSubject = ${threadSubject},
@@ -1090,7 +1090,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro replyWithAttachmentPG(threadSubject = null,mbThreadAttachment = null,threadReplyBody = null) {
+	macro replyWithAttachmentPG(threadSubject = null, mbThreadAttachment = null, threadReplyBody = null) {
 		var key_threadSubject = ${threadSubject};
 
 		AssertClick.assertPartialTextClickAt(
@@ -1162,7 +1162,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro saveNewThreadAsDraft(threadSubject = null,threadBody = null) {
+	macro saveNewThreadAsDraft(threadSubject = null, threadBody = null) {
 		if (!(isSet(skipNavigation))) {
 			AssertClick(
 				locator1 = "Button#NEW_THREAD",
@@ -1193,7 +1193,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro splitThreadPG(threadSubject = null,threadSplitSubject = null,threadSplitReplyBody = null,threadSplitReplySubject = null,threadReplyBody = null) {
+	macro splitThreadPG(threadSubject = null, threadSplitSubject = null, threadSplitReplyBody = null, threadSplitReplySubject = null, threadReplyBody = null) {
 		Click(locator1 = "MessageBoards#VERTICAL_ELLIPSIS_REPLY_CARD");
 
 		MenuItem.click(menuItem = "Split Thread");
@@ -1274,7 +1274,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro unbanUser(siteURLKey = null,userScreenName = null) {
+	macro unbanUser(siteURLKey = null, userScreenName = null) {
 		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = ${siteURLKey});
 
 		AssertClick(
@@ -1289,7 +1289,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro unlockPG(groupName = null,threadSubject = null,siteURLKey = null,layoutName = null) {
+	macro unlockPG(groupName = null, threadSubject = null, siteURLKey = null, layoutName = null) {
 		MessageboardsThread.openToThread(
 			groupName = ${groupName},
 			layoutName = ${layoutName},
@@ -1332,7 +1332,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewAnswerPG(answerCount = null,threadSubject = null) {
+	macro viewAnswerPG(answerCount = null, threadSubject = null) {
 		var key_answerCount = ${answerCount};
 		var key_threadSubject = ${threadSubject};
 
@@ -1354,7 +1354,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewAsWorkflowAsset(threadSubject = null,threadBody = null) {
+	macro viewAsWorkflowAsset(threadSubject = null, threadBody = null) {
 		SiteAdmin.viewPortletTitle(portletTitle = ${threadSubject});
 
 		AssertTextEquals(
@@ -1371,7 +1371,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewBBCodeNoXSS(threadSubject = null,threadBody = null,userName = null) {
+	macro viewBBCodeNoXSS(threadSubject = null, threadBody = null, userName = null) {
 		var key_threadBody = ${threadBody};
 		var key_threadSubject = ${threadSubject};
 		var key_userName = ${userName};
@@ -1392,7 +1392,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCP(replyCount = null,threadSubject = null,mbAttachmentFile = null,threadBody = null,threadBodyImage = null,userName = null) {
+	macro viewCP(replyCount = null, threadSubject = null, mbAttachmentFile = null, threadBody = null, threadBodyImage = null, userName = null) {
 		var key_threadBody = ${threadBody};
 		var key_threadSubject = ${threadSubject};
 		var key_userName = ${userName};
@@ -1457,7 +1457,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewDefaultCP(threadSubject = null,userName = null) {
+	macro viewDefaultCP(threadSubject = null, userName = null) {
 		var key_threadSubject = ${threadSubject};
 		var key_userName = ${userName};
 
@@ -1481,7 +1481,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewDoNotHaveRequiredPermissionsPG(threadSubject = null,userName = null) {
+	macro viewDoNotHaveRequiredPermissionsPG(threadSubject = null, userName = null) {
 		var key_repliesCount = 0;
 		var key_threadSubject = ${threadSubject};
 		var key_userName = ${userName};
@@ -1530,7 +1530,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewLinkedEntry(linkedEntry = null,imageFileName = null,pageName = null) {
+	macro viewLinkedEntry(linkedEntry = null, imageFileName = null, pageName = null) {
 		Click(
 			key_text = ${linkedEntry},
 			locator1 = "Link#ANY");
@@ -1689,7 +1689,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewNoXSSPG(threadSubject = null,sourceContent = null,threadBody = null,userName = null) {
+	macro viewNoXSSPG(threadSubject = null, sourceContent = null, threadBody = null, userName = null) {
 		var key_threadSubject = ${threadSubject};
 		var key_title = ${threadBody};
 		var key_userName = ${userName};
@@ -1719,7 +1719,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPG(threadSubject = null,workflowTask = null,threadBody2 = null,threadBody = null,fontSize = null,threadSubject2 = null,position = null,bold = null,threadBodyImageName = null,userName = null,tagName = null) {
+	macro viewPG(threadSubject = null, workflowTask = null, threadBody2 = null, threadBody = null, fontSize = null, threadSubject2 = null, position = null, bold = null, threadBodyImageName = null, userName = null, tagName = null) {
 		var key_threadBody = ${threadBody};
 		var key_threadSubject = ${threadSubject};
 		var key_userName = ${userName};
@@ -1803,7 +1803,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPGViaAP(threadSubject = null,threadBody = null) {
+	macro viewPGViaAP(threadSubject = null, threadBody = null) {
 		var key_assetTitle = ${threadSubject};
 
 		AssertTextEquals(
@@ -1830,7 +1830,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewReplyCP(threadSubject = null,mbAttachmentFile = null,threadBody = null,userName = null) {
+	macro viewReplyCP(threadSubject = null, mbAttachmentFile = null, threadBody = null, userName = null) {
 		var key_threadBody = ${threadBody};
 		var key_threadSubject = ${threadSubject};
 		var key_userName = ${userName};
@@ -1851,7 +1851,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewReplyPG(replyCount = null,threadSubject = null,loggedOut = null,guestReply = null,threadBody = null,mbThreadAttachment = null,threadReplyStatus = null,userName = null,threadReplyBody = null) {
+	macro viewReplyPG(replyCount = null, threadSubject = null, loggedOut = null, guestReply = null, threadBody = null, mbThreadAttachment = null, threadReplyStatus = null, userName = null, threadReplyBody = null) {
 		var key_repliesCount = ${replyCount};
 		var key_threadBody = ${threadBody};
 		var key_threadSubject = ${threadSubject};
@@ -1963,7 +1963,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSplitThreadPG(threadSubject = null,threadSplitSubject = null,threadSplitReplyBody = null,siteName = null,threadBody = null,userName = null,pageName = null,threadReplyBody = null,threadSplitReplySubject = null) {
+	macro viewSplitThreadPG(threadSubject = null, threadSplitSubject = null, threadSplitReplyBody = null, siteName = null, threadBody = null, userName = null, pageName = null, threadReplyBody = null, threadSplitReplySubject = null) {
 		var key_repliesCount = 1;
 		var key_threadBody = ${threadBody};
 		var key_threadSubject = ${threadSubject};
@@ -2050,7 +2050,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewStatisticsPostsCountDefaultPG(siteURLKey = null,layoutName = null) {
+	macro viewStatisticsPostsCountDefaultPG(siteURLKey = null, layoutName = null) {
 		if (isSet(siteURLKey)) {
 			MessageboardsThread.openToStatistics(
 				layoutName = ${layoutName},
@@ -2084,7 +2084,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewStatisticsPostsCountPG(siteURLKey = null,userMessageboardsRank = null,userName = null,threadPostNumber = null,layoutName = null) {
+	macro viewStatisticsPostsCountPG(siteURLKey = null, userMessageboardsRank = null, userName = null, threadPostNumber = null, layoutName = null) {
 		if (isSet(siteURLKey)) {
 			MessageboardsThread.openToStatistics(
 				layoutName = ${layoutName},
@@ -2118,7 +2118,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewStatisticsTopPoster(userMessageboardsRank = null,userPostNumber = null,userName = null) {
+	macro viewStatisticsTopPoster(userMessageboardsRank = null, userPostNumber = null, userName = null) {
 		AssertClick(
 			locator1 = "MessageBoards#NAVIGATION_STATISTICS",
 			value1 = "Statistics");
@@ -2175,7 +2175,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewThreadInRecycleBin(threadSubject = null,threadBody = null) {
+	macro viewThreadInRecycleBin(threadSubject = null, threadBody = null) {
 		LexiconEntry.gotoEntry(rowEntry = ${threadSubject});
 
 		AssertTextEquals(
@@ -2226,7 +2226,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewWithWorkflowPG(threadSubject = null,threadBody = null,userName = null) {
+	macro viewWithWorkflowPG(threadSubject = null, threadBody = null, userName = null) {
 		var key_threadBody = "threadBody";
 		var key_threadSubject = ${threadSubject};
 		var key_userName = ${userName};

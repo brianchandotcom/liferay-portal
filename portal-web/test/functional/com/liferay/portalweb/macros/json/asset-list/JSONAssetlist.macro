@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addDynamicAssetListEntry(groupName = null,site = null,title = null) {
+	macro addDynamicAssetListEntry(groupName = null, site = null, title = null) {
 		Variables.assertDefined(parameterList = "${groupName},${title}");
 
 		var groupId = JSONAssetlistSetter.setGroupId(
@@ -16,7 +16,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addDynamicAssetListEntryWithItemType(groupName = null,itemType = null,site = null,itemSubtype = null,title = null) {
+	macro addDynamicAssetListEntryWithItemType(groupName = null, itemType = null, site = null, itemSubtype = null, title = null) {
 		Variables.assertDefined(parameterList = "${groupName},${itemType},${title}");
 
 		var groupId = JSONAssetlistSetter.setGroupId(
@@ -31,7 +31,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addManualAssetListEntry(groupName = null,site = null,title = null) {
+	macro addManualAssetListEntry(groupName = null, site = null, title = null) {
 		Variables.assertDefined(parameterList = "${groupName},${title}");
 
 		var groupId = JSONAssetlistSetter.setGroupId(
@@ -46,7 +46,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addManualAssetListEntryWithItemType(groupName = null,itemType = null,site = null,itemSubtype = null,title = null) {
+	macro addManualAssetListEntryWithItemType(groupName = null, itemType = null, site = null, itemSubtype = null, title = null) {
 		Variables.assertDefined(parameterList = "${groupName},${itemType},${title}");
 
 		var groupId = JSONAssetlistSetter.setGroupId(

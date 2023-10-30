@@ -119,7 +119,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setServiceContext(groupName = null,site = null,assetCategoryIds = null,addGroupPermissions = null,addGuestPermissions = null,assetTagNames = null,attributes = null,workflowAction = null) {
+	macro setServiceContext(groupName = null, site = null, assetCategoryIds = null, addGroupPermissions = null, addGuestPermissions = null, assetTagNames = null, attributes = null, workflowAction = null) {
 		var serviceContext = "{}";
 
 		if (isSet(assetCategoryIds)) {

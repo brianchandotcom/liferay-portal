@@ -10,7 +10,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro changeUserLanguage(saveButton = null,languageName = null) {
+	macro changeUserLanguage(saveButton = null, languageName = null) {
 		Select(
 			locator1 = "MyAccount#LANGUAGE_SELECT",
 			value1 = ${languageName});
@@ -44,7 +44,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureDisplaySettingsLanguageLocalized(portlet = null,category = null,saveButton = null,languageName = null) {
+	macro configureDisplaySettingsLanguageLocalized(portlet = null, category = null, saveButton = null, languageName = null) {
 		ProductMenu.gotoPortlet(
 			category = ${category},
 			panel = "User",

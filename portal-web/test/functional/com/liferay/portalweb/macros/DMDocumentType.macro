@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro add(metadataSetName = null,dmDocumentTypeName = null,dmDocumentTypeDescription = null,dmDocumentTypeFieldNames = null,skipNavigation = null) {
+	macro add(metadataSetName = null, dmDocumentTypeName = null, dmDocumentTypeDescription = null, dmDocumentTypeFieldNames = null, skipNavigation = null) {
 		DMDocumentType.addWithoutSave(
 			dmDocumentTypeDescription = ${dmDocumentTypeDescription},
 			dmDocumentTypeFieldNames = ${dmDocumentTypeFieldNames},
@@ -13,7 +13,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addWithoutSave(metadataSetName = null,dmDocumentTypeName = null,dmDocumentTypeDescription = null,dmDocumentTypeFieldNames = null) {
+	macro addWithoutSave(metadataSetName = null, dmDocumentTypeName = null, dmDocumentTypeDescription = null, dmDocumentTypeFieldNames = null) {
 		if (!(isSet(skipNavigation))) {
 			LexiconEntry.gotoAdd();
 		}
@@ -64,7 +64,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro delete(dmDocumentTypeName = null,documentTypeHasReference = null) {
+	macro delete(dmDocumentTypeName = null, documentTypeHasReference = null) {
 		DMDocumentType.selectDocumentTypeFrame();
 
 		var key_dmDocumentTypeName = ${dmDocumentTypeName};
@@ -109,7 +109,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro edit(metadataSetName = null,dmDocumentTypeFieldRequiredEdit = null,dmDocumentTypeName = null,fieldFieldLabel = null,dmDocumentTypeFieldNames = null,locale = null,fieldFieldLabelEdit = null,removeMetadataSet = null,dmDocumentTypeDescriptionEdit = null,dmDocumentTypeNameEdit = null) {
+	macro edit(metadataSetName = null, dmDocumentTypeFieldRequiredEdit = null, dmDocumentTypeName = null, fieldFieldLabel = null, dmDocumentTypeFieldNames = null, locale = null, fieldFieldLabelEdit = null, removeMetadataSet = null, dmDocumentTypeDescriptionEdit = null, dmDocumentTypeNameEdit = null) {
 		DMDocumentType.selectDocumentTypeFrame();
 
 		var key_dmDocumentTypeName = ${dmDocumentTypeName};
@@ -303,7 +303,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCP(dmDocumentTypeScope = null,dmDocumentTypeName = null) {
+	macro viewCP(dmDocumentTypeScope = null, dmDocumentTypeName = null) {
 		var key_dmDocumentTypeName = ${dmDocumentTypeName};
 
 		if (isSet(dmDocumentTypeScope)) {

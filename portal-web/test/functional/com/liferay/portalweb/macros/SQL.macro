@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro assertDatabaseCount(databaseSubstring = null,databaseFilter = null,expectedCount = null) {
+	macro assertDatabaseCount(databaseSubstring = null, databaseFilter = null, expectedCount = null) {
 		Variables.assertDefined(parameterList = "${databaseFilter},${databaseSubstring},${expectedCount}");
 
 		var mysqlStatement = "SHOW DATABASES LIKE '${databaseFilter}';";
@@ -16,7 +16,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertTextInMySQLStatementResult(text = null,mysqlStatement = null) {
+	macro assertTextInMySQLStatementResult(text = null, mysqlStatement = null) {
 		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = ${mysqlStatement});
 
 		if (!(contains(${sqlResults}, ${text}))) {
@@ -25,7 +25,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertTextNotInMySQLStatementResult(text = null,mysqlStatement = null) {
+	macro assertTextNotInMySQLStatementResult(text = null, mysqlStatement = null) {
 		var sqlResults = SQL.executeMySQLStatement(mysqlStatement = ${mysqlStatement});
 
 		if (contains(${sqlResults}, ${text})) {
@@ -34,7 +34,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro dropMySQLIndex(indexName = null,tableName = null) {
+	macro dropMySQLIndex(indexName = null, tableName = null) {
 		Variables.assertDefined(parameterList = "${indexName},${tableName}");
 
 		SQL.executeMySQLStatement(mysqlStatement = "drop index ${indexName} on ${tableName};");

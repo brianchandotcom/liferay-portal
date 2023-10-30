@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro clickSelectTranslation(key_currentLocale = null,key_title = null) {
+	macro clickSelectTranslation(key_currentLocale = null, key_title = null) {
 		Click.clickNoMouseOver(
 			key_currentLocale = ${key_currentLocale},
 			key_title = ${key_title},
@@ -9,7 +9,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro goToAuiTagManageTranslationsModal(key_currentLocale = null,key_title = null) {
+	macro goToAuiTagManageTranslationsModal(key_currentLocale = null, key_title = null) {
 		Click.clickNoMouseOver(
 			key_currentLocale = ${key_currentLocale},
 			key_title = ${key_title},
@@ -19,7 +19,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro goToManageTranslationsModal(key_currentLocale = null,key_title = null) {
+	macro goToManageTranslationsModal(key_currentLocale = null, key_title = null) {
 		TranslationManagerPortlet.clickSelectTranslation(
 			key_currentLocale = ${key_currentLocale},
 			key_title = ${key_title});
@@ -28,7 +28,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro inputTextInAuiTagField(languagefirst = null,key_currentLocale = null,key_leftTitle = null,key_rightTitle = null,languagesecond = null,key_locale = null) {
+	macro inputTextInAuiTagField(languagefirst = null, key_currentLocale = null, key_leftTitle = null, key_rightTitle = null, languagesecond = null, key_locale = null) {
 		Type(
 			key_title = ${key_leftTitle},
 			locator1 = "TranslationManager#AUI_TAG_INPUT_TEXT_FIELD",
@@ -56,7 +56,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectLanguageInAuiTagSelector(key_currentLocale = null,key_leftTitle = null,key_locale = null) {
+	macro selectLanguageInAuiTagSelector(key_currentLocale = null, key_leftTitle = null, key_locale = null) {
 		Click.clickNoMouseOver(
 			key_currentLocale = ${key_currentLocale},
 			key_title = ${key_leftTitle},

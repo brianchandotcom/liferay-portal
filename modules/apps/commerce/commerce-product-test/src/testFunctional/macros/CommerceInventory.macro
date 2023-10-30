@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addIncomingQuantity(quantity = null,expectedDeliveryDate = null,destination = null) {
+	macro addIncomingQuantity(quantity = null, expectedDeliveryDate = null, destination = null) {
 		Variables.assertDefined(parameterList = "${expectedDeliveryDate},${quantity}");
 
 		Click(locator1 = "Button#PLUS");
@@ -30,7 +30,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editInventoryByWarehouse(quantityOnHand = null,index = null,sku = null,safetyStockQuantity = null) {
+	macro editInventoryByWarehouse(quantityOnHand = null, index = null, sku = null, safetyStockQuantity = null) {
 		CommerceInventory.openInventoryAdmin();
 
 		CommerceNavigator.searchEntry(entryName = ${sku});
@@ -74,7 +74,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewInventoryByWarehouse(index = null,inventory = null) {
+	macro viewInventoryByWarehouse(index = null, inventory = null) {
 		for (var warehouse : list ${warehouse}) {
 			AssertElementPresent(
 				key_entryTitle = ${warehouse},

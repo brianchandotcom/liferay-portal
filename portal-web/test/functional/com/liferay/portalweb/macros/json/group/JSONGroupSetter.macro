@@ -44,7 +44,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setGroupId(groupName = null,portalInstanceName = null,portalURL = null,parentGroupName = null) {
+	macro setGroupId(groupName = null, portalInstanceName = null, portalURL = null, parentGroupName = null) {
 		Variables.assertDefined(parameterList = ${groupName});
 
 		if (!(isSet(site))) {
@@ -87,7 +87,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setParentGroupId(portalInstanceName = null,portalURL = null,grandParentGroupName = null,parentGroupName = null) {
+	macro setParentGroupId(portalInstanceName = null, portalURL = null, grandParentGroupName = null, parentGroupName = null) {
 		if (isSet(parentGroupName)) {
 			var parentGroupId = JSONGroupAPI._getParentGroupIdByName(
 				grandParentGroupName = ${grandParentGroupName},

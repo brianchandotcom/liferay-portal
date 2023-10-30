@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addCustomElementRemoteAppEntry(customElementProperties = null,customElementName = null,customElementHtmlName = null,customElementURL = null,customElementCssurl = null,customElementUseESM = null) {
+	macro addCustomElementRemoteAppEntry(customElementProperties = null, customElementName = null, customElementHtmlName = null, customElementURL = null, customElementCssurl = null, customElementUseESM = null) {
 		Variables.assertDefined(parameterList = "${customElementName},${customElementHtmlName},${customElementURL}");
 
 		JSONClientExtensionAPI._addCustomElementRemoteAppEntry(
@@ -14,7 +14,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addIFrameRemoteAppEntry(iFrameURL = null,name = null) {
+	macro addIFrameRemoteAppEntry(iFrameURL = null, name = null) {
 		Variables.assertDefined(parameterList = "${iFrameURL},${name}");
 
 		JSONClientExtensionAPI._addIFrameRemoteAppEntry(
@@ -23,7 +23,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addRemoteAppEntry(name = null,type = null,mainURL = null,url = null) {
+	macro addRemoteAppEntry(name = null, type = null, mainURL = null, url = null) {
 		Variables.assertDefined(parameterList = "${name},${type}");
 
 		if (!(isSet(description))) {

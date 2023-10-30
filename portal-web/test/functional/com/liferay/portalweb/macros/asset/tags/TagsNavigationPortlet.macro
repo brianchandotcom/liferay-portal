@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro clickTagView(tagAssetCount = null,tagName = null) {
+	macro clickTagView(tagAssetCount = null, tagName = null) {
 		var key_tagName = ${tagName};
 
 		if (isSet(tagAssetCount)) {
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureFlaggableSettingsPG(showAssetCount = null,showUnusedTags = null) {
+	macro configureFlaggableSettingsPG(showAssetCount = null, showUnusedTags = null) {
 		Portlet.gotoPortletOptions(
 			portletName = "Tag Filter",
 			portletOption = "Configuration");
@@ -59,7 +59,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewADTColorByPopularityPG(adtTagColor = null,tagName = null) {
+	macro viewADTColorByPopularityPG(adtTagColor = null, tagName = null) {
 		var key_adtTagColor = ${adtTagColor};
 		var key_tagName = ${tagName};
 
@@ -80,7 +80,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTagCloud(tagPopularityLevel = null,tagName = null) {
+	macro viewTagCloud(tagPopularityLevel = null, tagName = null) {
 		var key_tagPopularityLevel = ${tagPopularityLevel};
 
 		AssertTextEquals(
@@ -89,7 +89,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTagCloudConfiguration(displayTemplate = null,showAssetCount = null,showUnusedTags = null) {
+	macro viewTagCloudConfiguration(displayTemplate = null, showAssetCount = null, showUnusedTags = null) {
 		Portlet.gotoPortletOptions(
 			portletName = "Tag Cloud",
 			portletOption = "Configuration");

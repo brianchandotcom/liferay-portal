@@ -454,7 +454,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewWithStructureCP(webContentTitle = null,webContentTitleEscapeCharacter = null,webContentImage = null,description = null) {
+	macro viewWithStructureCP(webContentTitle = null, webContentTitleEscapeCharacter = null, webContentImage = null, description = null) {
 		if (!(isSet(predefinedValue))) {
 			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 

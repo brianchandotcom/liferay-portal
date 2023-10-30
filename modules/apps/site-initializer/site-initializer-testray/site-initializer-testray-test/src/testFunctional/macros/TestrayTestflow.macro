@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addTask(userGroups = null,selectProject = null,userList = null,caseTypeList = null,taskName = null,selectBuild = null,selectRoutine = null) {
+	macro addTask(userGroups = null, selectProject = null, userList = null, caseTypeList = null, taskName = null, selectBuild = null, selectRoutine = null) {
 		LexiconEntry.gotoAdd();
 
 		TestrayTestflow.editBreadcrumb(
@@ -60,7 +60,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertStatus(label = null,status = null) {
+	macro assertStatus(label = null, status = null) {
 		AssertElementPresent(
 			key_label = ${label},
 			key_status = ${status},
@@ -68,7 +68,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertTaskDetails(routine = null,build = null,project = null,taskName = null,status = null) {
+	macro assertTaskDetails(routine = null, build = null, project = null, taskName = null, status = null) {
 		AssertElementPresent(
 			key_build = ${build},
 			key_project = ${project},
@@ -79,7 +79,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assignUsers(tableEntry = null,assignButton = null,userName = null,rowOption = null) {
+	macro assignUsers(tableEntry = null, assignButton = null, userName = null, rowOption = null) {
 		if (isSet(assignButton)) {
 			Button.click(button = ${assignButton});
 
@@ -103,7 +103,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editBreadcrumb(routine = null,build = null,project = null) {
+	macro editBreadcrumb(routine = null, build = null, project = null) {
 		Click(locator1 = "TestrayTestflow#BREADCRUMB_INPUT_NAME");
 
 		for (var text : list "${project},${routine},${build}") {
@@ -116,7 +116,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editStatus(button = null,selectStatus = null,comment = null,issues = null) {
+	macro editStatus(button = null, selectStatus = null, comment = null, issues = null) {
 		WaitForElementPresent(
 			key_text = ${button},
 			locator1 = "Button#ANY");
@@ -147,7 +147,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editStatusByRightClick(selectStatus = null,tableEntry = null,comment = null,issues = null) {
+	macro editStatusByRightClick(selectStatus = null, tableEntry = null, comment = null, issues = null) {
 		TestrayManage.selectTableRowOption(
 			rowOption = "Complete",
 			tableEntry = ${tableEntry});
@@ -176,7 +176,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editTask(taskName = null,userNameList = null) {
+	macro editTask(taskName = null, userNameList = null) {
 		Button.click(button = "Edit Task");
 
 		if (isSet(taskName)) {
@@ -194,7 +194,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro goToTaskByBuild(buildName = null,routineName = null,projectName = null) {
+	macro goToTaskByBuild(buildName = null, routineName = null, projectName = null) {
 		TestrayDropdown.goToResultSidebar();
 
 		Testray.changePagination(quantity = 150);

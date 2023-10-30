@@ -36,7 +36,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewEmailReportDetails(metricNameList = null,metricValueList = null) {
+	macro viewEmailReportDetails(metricNameList = null, metricValueList = null) {
 		var list1 = ListUtil.newListFromString(${metricNameList});
 		var list2 = ListUtil.newListFromString(${metricValueList});
 		var size = ListUtil.size(${list1});

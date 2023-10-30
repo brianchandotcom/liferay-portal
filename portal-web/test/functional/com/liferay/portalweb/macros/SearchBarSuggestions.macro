@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro configureEmbeddedSearchBarSuggestions(characterThresholdForDisplayingSuggestions = null,suggestionContributorMinimumSearches = null,addContributor = null,suggestionContributor = null,suggestionContributorDisplayGroupName = null,suggestionContributorBlueprint = null,deleteBasicContributor = null,suggestionContributorActivity = null,suggestionContributorSize = null,characterThreshold = null) {
+	macro configureEmbeddedSearchBarSuggestions(characterThresholdForDisplayingSuggestions = null, suggestionContributorMinimumSearches = null, addContributor = null, suggestionContributor = null, suggestionContributorDisplayGroupName = null, suggestionContributorBlueprint = null, deleteBasicContributor = null, suggestionContributorActivity = null, suggestionContributorSize = null, characterThreshold = null) {
 		SearchPage.gotoEmbeddedOptions(portletOption = "Configuration");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
@@ -96,7 +96,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro copyConfiguration(contributorOrder = null,suggestionContributor = null) {
+	macro copyConfiguration(contributorOrder = null, suggestionContributor = null) {
 		if (${suggestionContributor} == "Display Group Name") {
 			Click.clickAt(
 				key_suggestionContributorOrder = ${contributorOrder},
@@ -142,7 +142,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro pasteConfiguration(contributorOrder = null,suggestionContributor = null) {
+	macro pasteConfiguration(contributorOrder = null, suggestionContributor = null) {
 		if (${suggestionContributor} == "Display Group Name") {
 			Click.clickAt(
 				key_suggestionContributorOrder = ${contributorOrder},
@@ -195,7 +195,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSuggestionResultDetailsURL(expectedURL = null,searchAssetTitle = null) {
+	macro viewSuggestionResultDetailsURL(expectedURL = null, searchAssetTitle = null) {
 		Type(
 			locator1 = "Search#EMBEDDED_SEARCH_BAR",
 			value1 = ${searchAssetTitle});
@@ -218,7 +218,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSuggestions(searchAssetDescription = null,searchAssetTitle = null) {
+	macro viewSuggestions(searchAssetDescription = null, searchAssetTitle = null) {
 		if (!(isSet(suggestionContributorDisplayGroupName))) {
 			var suggestionContributorDisplayGroupName = "Suggestions";
 		}

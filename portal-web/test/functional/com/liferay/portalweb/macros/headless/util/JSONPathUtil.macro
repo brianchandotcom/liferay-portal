@@ -19,7 +19,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getProperty(response = null,property = null) {
+	macro getProperty(response = null, property = null) {
 		Variables.assertDefined(parameterList = "${response},${property}");
 
 		var propertyValue = JSONUtil.getWithJSONPath(${response}, ${property});

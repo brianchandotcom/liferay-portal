@@ -33,7 +33,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro delete(metadataSetName = null,metadataSetHasReference = null,deleteViaManagementBar = null) {
+	macro delete(metadataSetName = null, metadataSetHasReference = null, deleteViaManagementBar = null) {
 		if (isSet(searchMetadataSet)) {
 			Search.searchCP(searchTerm = ${metadataSetName});
 		}

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro assertMarkerPosition(lng = null,lat = null) {
+	macro assertMarkerPosition(lng = null, lat = null) {
 		WaitForVisible(locator1 = "DDMField#GEOLOCATION_MAP");
 
 		if (IsElementPresent(locator1 = "//div[contains(@class,'ddm-geolocation')]")) {
@@ -19,7 +19,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setMarkerPosition(lng = null,lat = null) {
+	macro setMarkerPosition(lng = null, lat = null) {
 		WaitForVisible(locator1 = "DDMField#GEOLOCATION_MAP");
 
 		if (IsElementPresent(locator1 = "//div[contains(@class,'ddm-geolocation')]")) {

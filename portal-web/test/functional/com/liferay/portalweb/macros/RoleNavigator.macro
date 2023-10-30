@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro gotoDefineRolePermissions(permissionNavItem = null,roleTitle = null,roleType = null,permissionNavHeader = null) {
+	macro gotoDefineRolePermissions(permissionNavItem = null, roleTitle = null, roleType = null, permissionNavHeader = null) {
 		if (contains("Account,Asset Library,Organization,Site", ${roleType})) {
 			Navigator.gotoNavItem(navItem = "${roleType} Roles");
 		}
@@ -44,7 +44,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoViewNotHaveRolePermissions(roleTitle = null,roleType = null) {
+	macro gotoViewNotHaveRolePermissions(roleTitle = null, roleType = null) {
 		if (contains("Asset Library,Organization,Site", ${roleType})) {
 			Navigator.gotoNavItem(navItem = "${roleType} Roles");
 		}

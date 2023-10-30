@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addCP(navTab = null,uploadFileName = null,depotName = null,siteURLKey = null,kbTemplateTitle = null,imageFileName = null,kbTemplateContent = null,siteName = null,imageSourceURL = null) {
+	macro addCP(navTab = null, uploadFileName = null, depotName = null, siteURLKey = null, kbTemplateTitle = null, imageFileName = null, kbTemplateContent = null, siteName = null, imageSourceURL = null) {
 		if (isSet(addByCenterButton)) {
 			Button.click(button = "New");
 		}
@@ -83,7 +83,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editTemplate(kbTemplateTitle = null,kbTemplateTitleEdit = null,kbTemplateContentEdit = null) {
+	macro editTemplate(kbTemplateTitle = null, kbTemplateTitleEdit = null, kbTemplateContentEdit = null) {
 		if (isSet(pageTreePanel)) {
 			KBTemplate.gotoTemplateMenuItemThroughPageTreePanel(
 				kbTemplateTitle = ${kbTemplateTitle},
@@ -120,7 +120,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoTemplateMenuItemThroughPageTreePanel(kbTemplateTitle = null,menuItem = null) {
+	macro gotoTemplateMenuItemThroughPageTreePanel(kbTemplateTitle = null, menuItem = null) {
 		MouseOver(
 			key_itemLinkName = ${kbTemplateTitle},
 			locator1 = "KnowledgeBase#PAGE_TREE_ITEM_LINK");
@@ -151,7 +151,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro previewTemplate(kbTemplateTitle = null,kbTemplateContent = null) {
+	macro previewTemplate(kbTemplateTitle = null, kbTemplateContent = null) {
 		if (isSet(pageTreePanel)) {
 			KBTemplate.gotoTemplateMenuItemThroughPageTreePanel(
 				kbTemplateTitle = ${kbTemplateTitle},
@@ -254,7 +254,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCPViaAddTemplate(kbTemplateTitle = null,kbTemplateContent = null) {
+	macro viewCPViaAddTemplate(kbTemplateTitle = null, kbTemplateContent = null) {
 		LexiconEntry.gotoAddMenuItem(menuItem = ${kbTemplateTitle});
 
 		AssertTextEquals(

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addApp(entryName = null,entryURL = null) {
+	macro addApp(entryName = null, entryURL = null) {
 		ClientExtensionGeneral.addType(type = "IFrame");
 
 		ClientExtensionEntry.addEntry(
@@ -46,7 +46,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertTableStatus(entryStatus = null,entryName = null) {
+	macro assertTableStatus(entryStatus = null, entryName = null) {
 		AssertElementPresent(
 			key_tableEntryName = ${entryName},
 			locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE");

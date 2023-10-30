@@ -20,7 +20,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertContent(linkToPageFieldLabel = null,linkToPageContent = null) {
+	macro assertContent(linkToPageFieldLabel = null, linkToPageContent = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -33,7 +33,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertContentInLinktoPageField(linkToPageFieldLabel = null,index = null,linkToPageContent = null) {
+	macro assertContentInLinktoPageField(linkToPageFieldLabel = null, index = null, linkToPageContent = null) {
 		DERenderer.assertContent(
 			index = ${index},
 			linkToPageContent = ${linkToPageContent},
@@ -41,7 +41,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertDataInColorField(fieldLabel = null,value = null) {
+	macro assertDataInColorField(fieldLabel = null, value = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -54,7 +54,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertDataInDateField(fieldLabel = null,value = null) {
+	macro assertDataInDateField(fieldLabel = null, value = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -67,7 +67,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertDataInGridField(fieldLabel = null,row = null) {
+	macro assertDataInGridField(fieldLabel = null, row = null) {
 		if (!(isSet(fieldIndex))) {
 			var fieldIndex = 1;
 		}
@@ -83,7 +83,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertDataInImageField(imageFile = null,fieldLabel = null,imageDescription = null,imageTitle = null) {
+	macro assertDataInImageField(imageFile = null, fieldLabel = null, imageDescription = null, imageTitle = null) {
 		AssertElementPresent(
 			key_fieldLabel = ${fieldLabel},
 			locator1 = "DataEngineRenderer#IMAGE_INPUT_INDEXED",
@@ -103,7 +103,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertDataInMultipleSelectionField(fieldLabel = null,optionValue = null) {
+	macro assertDataInMultipleSelectionField(fieldLabel = null, optionValue = null) {
 		if (!(isSet(fieldIndex))) {
 			var fieldIndex = 1;
 		}
@@ -121,7 +121,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertDataInNumericField(fieldLabel = null,value = null) {
+	macro assertDataInNumericField(fieldLabel = null, value = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -134,7 +134,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertDataInRichTextField(fieldLabel = null,index = null,content = null) {
+	macro assertDataInRichTextField(fieldLabel = null, index = null, content = null) {
 		DERenderer.selectCKEditorByIndex(
 			fieldLabel = ${fieldLabel},
 			index = ${index});
@@ -147,7 +147,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertDataInSelectFromListField(fieldLabel = null,optionValue = null) {
+	macro assertDataInSelectFromListField(fieldLabel = null, optionValue = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -160,7 +160,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertDataInSingleSelectionField(fieldLabel = null,optionValue = null) {
+	macro assertDataInSingleSelectionField(fieldLabel = null, optionValue = null) {
 		if (!(isSet(fieldIndex))) {
 			var fieldIndex = 1;
 		}
@@ -178,7 +178,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertDataInTextField(fieldLabel = null,value = null) {
+	macro assertDataInTextField(fieldLabel = null, value = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -191,7 +191,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertDataInUploadField(webContentUpload = null,fieldLabel = null) {
+	macro assertDataInUploadField(webContentUpload = null, fieldLabel = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -204,7 +204,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertDataInWebContentField(fieldLabel = null,contentName = null) {
+	macro assertDataInWebContentField(fieldLabel = null, contentName = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -217,7 +217,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertImageNotPresent(imageField = null,fieldLabel = null) {
+	macro assertImageNotPresent(imageField = null, fieldLabel = null) {
 		AssertElementNotPresent(
 			key_fieldLabel = ${fieldLabel},
 			key_image = ${imageField},
@@ -225,7 +225,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertLinktoPageIsClear(linkToPageFieldLabel = null,index = null) {
+	macro assertLinktoPageIsClear(linkToPageFieldLabel = null, index = null) {
 		DERenderer.assertContent(
 			index = ${index},
 			linkToPageContent = "",
@@ -233,7 +233,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertMultipleSelectionOptionIsUnchecked(fieldLabel = null,optionValue = null) {
+	macro assertMultipleSelectionOptionIsUnchecked(fieldLabel = null, optionValue = null) {
 		if (!(isSet(fieldIndex))) {
 			var fieldIndex = 1;
 		}
@@ -265,7 +265,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertWebContentNotPresent(fieldLabel = null,contentName = null) {
+	macro assertWebContentNotPresent(fieldLabel = null, contentName = null) {
 		AssertElementNotPresent(
 			key_contentName = ${contentName},
 			key_fieldLabel = ${fieldLabel},
@@ -300,7 +300,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro inputDataInColorField(valueRed = null,valueGreen = null,fieldLabel = null,value = null,valueBlue = null) {
+	macro inputDataInColorField(valueRed = null, valueGreen = null, fieldLabel = null, value = null, valueBlue = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -367,7 +367,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro inputDataInDateField(fieldLabel = null,value = null) {
+	macro inputDataInDateField(fieldLabel = null, value = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -380,7 +380,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro inputDataInGridField(fieldLabel = null,row = null) {
+	macro inputDataInGridField(fieldLabel = null, row = null) {
 		if (!(isSet(fieldIndex))) {
 			var fieldIndex = 1;
 		}
@@ -396,7 +396,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro inputDataInImageField(navTab = null,depotName = null,fieldLabel = null,imageDescription = null,webContentImage = null,folderName = null) {
+	macro inputDataInImageField(navTab = null, depotName = null, fieldLabel = null, imageDescription = null, webContentImage = null, folderName = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -444,7 +444,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro inputDataInLinkToPageField(linkToPageFieldLabel = null,linkToPageContent = null) {
+	macro inputDataInLinkToPageField(linkToPageFieldLabel = null, linkToPageContent = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -470,7 +470,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro inputDataInMultipleSelectionField(fieldLabel = null,optionValue = null) {
+	macro inputDataInMultipleSelectionField(fieldLabel = null, optionValue = null) {
 		if (!(isSet(fieldIndex))) {
 			var fieldIndex = 1;
 		}
@@ -488,7 +488,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro inputDataInNumericField(fieldLabel = null,value = null) {
+	macro inputDataInNumericField(fieldLabel = null, value = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -501,7 +501,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro inputDataInRichTextField(fieldLabel = null,index = null,content = null) {
+	macro inputDataInRichTextField(fieldLabel = null, index = null, content = null) {
 		DERenderer.selectCKEditorByIndex(
 			fieldLabel = ${fieldLabel},
 			index = ${index});
@@ -514,7 +514,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro inputDataInSelectFromListField(fieldLabel = null,optionValue = null) {
+	macro inputDataInSelectFromListField(fieldLabel = null, optionValue = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -528,7 +528,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro inputDataInSingleSelectionField(fieldLabel = null,optionValue = null) {
+	macro inputDataInSingleSelectionField(fieldLabel = null, optionValue = null) {
 		if (!(isSet(fieldIndex))) {
 			var fieldIndex = 1;
 		}
@@ -546,7 +546,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro inputDataInTextField(fieldLabel = null,value = null) {
+	macro inputDataInTextField(fieldLabel = null, value = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -559,7 +559,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro inputDataInUploadField(dmDocumentTitle = null,depotName = null,webContentUpload = null,fieldLabel = null,folderName = null,dmNavTab = null) {
+	macro inputDataInUploadField(dmDocumentTitle = null, depotName = null, webContentUpload = null, fieldLabel = null, folderName = null, dmNavTab = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -599,7 +599,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro inputDataInWebContentField(depotName = null,fieldLabel = null,available = null,folderName = null,contentName = null) {
+	macro inputDataInWebContentField(depotName = null, fieldLabel = null, available = null, folderName = null, contentName = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}

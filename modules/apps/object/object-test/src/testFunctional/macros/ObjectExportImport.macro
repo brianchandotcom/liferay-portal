@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro exportObject(objectName = null,objectLabel = null) {
+	macro exportObject(objectName = null, objectLabel = null) {
 		ObjectAdmin.selectSpecificKebabMenuOption(
 			kebabOption = "Export as JSON",
 			objectLabel = ${objectLabel});
@@ -20,7 +20,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro importObject(objectFileName = null,objectName = null) {
+	macro importObject(objectFileName = null, objectName = null) {
 		ObjectAdmin.openObjectAdmin();
 
 		Click(locator1 = "ObjectAdmin#KEBAB_MENU");

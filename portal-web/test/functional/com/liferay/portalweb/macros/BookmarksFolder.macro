@@ -3,7 +3,7 @@ definition {
 	var assetType = "Bookmarks Folder";
 
 	@summary = "Default summary"
-	macro addCP(folderDescription = null,folderName = null) {
+	macro addCP(folderDescription = null, folderName = null) {
 		LexiconEntry.gotoAdd();
 
 		MenuItem.click(menuItem = "Folder");
@@ -57,7 +57,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPG(folderDescription = null,folderName = null) {
+	macro addPG(folderDescription = null, folderName = null) {
 		Portlet.clickPortletPlusIconPG(portletName = "Bookmarks");
 
 		MenuItem.click(menuItem = "Folder");
@@ -74,7 +74,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addSubfolderCP(subfolderName = null,subfolderDescription = null,folderName = null) {
+	macro addSubfolderCP(subfolderName = null, subfolderDescription = null, folderName = null) {
 		var key_assetName = ${folderName};
 
 		AssertClick(
@@ -107,7 +107,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addSubfolderPG(folderDescription = null,folderName = null) {
+	macro addSubfolderPG(folderDescription = null, folderName = null) {
 		Portlet.clickPortletPlusIconPG(portletName = "Bookmarks");
 
 		MenuItem.click(menuItem = "Folder");
@@ -140,7 +140,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editCP(folderNameEdit = null,folderName = null,folderDescriptionEdit = null) {
+	macro editCP(folderNameEdit = null, folderName = null, folderDescriptionEdit = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${folderName});
@@ -157,7 +157,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editPG(folderNameEdit = null,folderName = null,folderDescriptionEdit = null) {
+	macro editPG(folderNameEdit = null, folderName = null, folderDescriptionEdit = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${folderName});
@@ -174,7 +174,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editSubfolderCP(subfolderName = null,editSubfolderName = null,folderName = null,editSubfolderDescription = null) {
+	macro editSubfolderCP(subfolderName = null, editSubfolderName = null, folderName = null, editSubfolderDescription = null) {
 		AssertClick(
 			key_assetName = ${folderName},
 			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_TITLE",
@@ -210,7 +210,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoSubfolderPG(subfolderName = null,siteName = null,folderName = null,pageName = null) {
+	macro gotoSubfolderPG(subfolderName = null, siteName = null, folderName = null, pageName = null) {
 		Navigator.gotoSitePage(
 			pageName = ${pageName},
 			siteName = ${siteName});
@@ -235,7 +235,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro mergeSubfolderToFolderCP(subfolderName = null,bookmarkName = null,folderName = null,bookmarkURL = null) {
+	macro mergeSubfolderToFolderCP(subfolderName = null, bookmarkName = null, folderName = null, bookmarkURL = null) {
 		AssertClick(
 			key_assetName = ${folderName},
 			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_TITLE",
@@ -308,7 +308,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewFolder(folderDescription = null,folderName = null) {
+	macro viewFolder(folderDescription = null, folderName = null) {
 		AssertTextEquals(
 			key_assetName = ${folderName},
 			locator1 = "Bookmarks#DESCRIPTIVE_ENTRY_TITLE",

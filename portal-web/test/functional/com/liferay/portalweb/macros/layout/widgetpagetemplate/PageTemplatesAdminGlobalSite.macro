@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addCP(pageTemplateActive = null,pageTemplateName = null) {
+	macro addCP(pageTemplateActive = null, pageTemplateName = null) {
 		LexiconEntry.gotoAdd();
 
 		PortletEntry.inputName(name = ${pageTemplateName});
@@ -54,7 +54,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editCP(pageTemplateActive = null,pageTemplateName = null) {
+	macro editCP(pageTemplateActive = null, pageTemplateName = null) {
 		PageTemplatesAdminGlobalSite.viewPageTemplatePresent(pageTemplateName = ${pageTemplateName});
 
 		PageTemplatesAdminGlobalSite.gotoPageTemplateEllipsisItem(
@@ -81,7 +81,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editDescription(pageTemplateName = null,pageTemplateDescription = null) {
+	macro editDescription(pageTemplateName = null, pageTemplateDescription = null) {
 		PageTemplatesAdminGlobalSite.viewDescription(
 			pageTemplateDescription = ${pageTemplateDescription},
 			pageTemplateName = ${pageTemplateName});
@@ -92,7 +92,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoPageTemplateEllipsisItem(item = null,pageTemplateName = null) {
+	macro gotoPageTemplateEllipsisItem(item = null, pageTemplateName = null) {
 		LexiconCard.clickEllipsisItem(
 			card = ${pageTemplateName},
 			item = ${item});
@@ -139,7 +139,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewDefaultLocalizedCP(pageTemplateNameList = null,portletTitle = null) {
+	macro viewDefaultLocalizedCP(pageTemplateNameList = null, portletTitle = null) {
 		for (var pageTemplateNameTranslation : list ${pageTemplateNameList}) {
 			var key_pageTemplateName = ${pageTemplateNameTranslation};
 
@@ -152,7 +152,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewDescription(pageTemplateName = null,pageTemplateDescription = null) {
+	macro viewDescription(pageTemplateName = null, pageTemplateDescription = null) {
 		PageTemplatesAdminGlobalSite.viewPageTemplatePresent(pageTemplateName = ${pageTemplateName});
 
 		PageTemplatesAdminGlobalSite.gotoPageTemplateEllipsisItem(
@@ -170,7 +170,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPG(siteName = null,pageTemplateName = null) {
+	macro viewPG(siteName = null, pageTemplateName = null) {
 		var key_pageTemplateName = ${pageTemplateName};
 
 		AssertClick.assertPartialTextClickAt(
@@ -185,7 +185,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewStatus(pageTemplateName = null,pageTemplateStatus = null) {
+	macro viewStatus(pageTemplateName = null, pageTemplateStatus = null) {
 		PageTemplatesAdminGlobalSite.viewPageTemplatePresent(pageTemplateName = ${pageTemplateName});
 
 		LexiconCard.viewCardLabel(

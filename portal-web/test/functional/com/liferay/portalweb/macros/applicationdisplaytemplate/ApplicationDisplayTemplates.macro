@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addADTWithFieldEntryCP(fieldName = null,portletName = null) {
+	macro addADTWithFieldEntryCP(fieldName = null, portletName = null) {
 		AssertVisible(locator1 = "Button#PLUS");
 
 		LexiconEntry.gotoAdd();
@@ -22,7 +22,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addCP(adtType = null,templateScript = null,adtFile = null,fieldNameList = null) {
+	macro addCP(adtType = null, templateScript = null, widgetTemplateName = null, adtFile = null, fieldNameList = null) {
 		var key_adtType = ${adtType};
 
 		Portlet.viewEmptyMessage(message = "There are no templates.");
@@ -127,7 +127,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editWidgetTemplate(oldWidgetTemplateName = null,adtFile = null,newWidgetTemplateName = null) {
+	macro editWidgetTemplate(oldWidgetTemplateName = null, adtFile = null, newWidgetTemplateName = null) {
 		SiteAdmin.viewPortletTitle(portletTitle = "Edit ${oldWidgetTemplateName}");
 
 		if (isSet(newWidgetTemplateName)) {
@@ -165,7 +165,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoWidgetTemplatesEllipsisItem(item = null,widgetTemplateName = null) {
+	macro gotoWidgetTemplatesEllipsisItem(item = null, widgetTemplateName = null) {
 		Click.waitForMenuToggleJSClick(
 			key_tableEntry = ${widgetTemplateName},
 			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
@@ -188,7 +188,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectPortletADT(templateName = null,portletName = null) {
+	macro selectPortletADT(templateName = null, portletName = null) {
 		Portlet.gotoPortletOptions(
 			portletName = ${portletName},
 			portletOption = "Configuration");
@@ -221,7 +221,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewUsage(usageAmount = null,tableEntry = null) {
+	macro viewUsage(usageAmount = null, tableEntry = null) {
 		AssertTextEquals(
 			key_columnName = "usages",
 			key_tableEntry = ${tableEntry},

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _addAccountEntry(creatorPassword = null,accountEntryDescription = null,accountEntryStatus = null,accountEntryName = null,creatorEmailAddress = null,accountEntryType = null) {
+	macro _addAccountEntry(creatorPassword = null, accountEntryDescription = null, accountEntryStatus = null, accountEntryName = null, creatorEmailAddress = null, accountEntryType = null) {
 		Variables.assertDefined(parameterList = "${accountEntryName},${accountEntryType},${accountEntryStatus}");
 
 		var companyId = JSONCompany.getCompanyId();
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addAccountEntryOrganization(organizationId = null,accountEntryId = null) {
+	macro _addAccountEntryOrganization(organizationId = null, accountEntryId = null) {
 		Variables.assertDefined(parameterList = "${accountEntryId},${organizationId}");
 
 		if (!(isSet(creatorEmailAddress))) {
@@ -150,7 +150,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _setAccountExternalReferenceCode(accountEntryName = null,externalReferenceCode = null) {
+	macro _setAccountExternalReferenceCode(accountEntryName = null, externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = "${accountEntryName},${externalReferenceCode}");
 
 		var portalURL = JSONCompany.getPortalURL();

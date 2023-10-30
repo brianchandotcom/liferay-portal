@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _addWarehouse(latitude = null,warehouseName = null,longitude = null) {
+	macro _addWarehouse(latitude = null, warehouseName = null, longitude = null) {
 		Variables.assertDefined(parameterList = "${latitude},${longitude},${warehouseName}");
 
 		var baseURL = ${baseURL};
@@ -33,7 +33,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addWarehouseItem(warehouseItemSku = null,warehouseName = null,warehouseItemQuantity = null) {
+	macro _addWarehouseItem(warehouseItemSku = null, warehouseName = null, warehouseItemQuantity = null) {
 		Variables.assertDefined(parameterList = "${warehouseItemSku},${warehouseItemQuantity},${warehouseName}");
 
 		var baseURL = ${baseURL};
@@ -177,7 +177,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getWarehouseId(warehouseCount = null,warehouseName = null) {
+	macro _getWarehouseId(warehouseCount = null, warehouseName = null) {
 		Variables.assertDefined(parameterList = ${warehouseName});
 
 		var baseURL = ${baseURL};
@@ -209,7 +209,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getWarehouseItemId(productSku = null,uomKey = null,warehouseName = null) {
+	macro _getWarehouseItemId(productSku = null, uomKey = null, warehouseName = null) {
 		Variables.assertDefined(parameterList = "${productSku},${warehouseName}");
 
 		var baseURL = ${baseURL};
@@ -239,7 +239,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _patchWarehouseItem(warehouseName = null,productSku = null,uomKey = null) {
+	macro _patchWarehouseItem(warehouseName = null, productSku = null, uomKey = null) {
 		Variables.assertDefined(parameterList = ${warehouseName});
 
 		var baseURL = ${baseURL};

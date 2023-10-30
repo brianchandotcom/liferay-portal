@@ -75,7 +75,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectFilterDropdownItem(columnLabel = null,dropdownItemList = null) {
+	macro selectFilterDropdownItem(columnLabel = null, dropdownItemList = null) {
 		TableViewBuilder.openFilterDropdown(columnLabel = ${columnLabel});
 
 		for (var dropdownItem : list ${dropdownItemList}) {
@@ -121,7 +121,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro validateFilterDropdownList(columnLabel = null,itemList = null) {
+	macro validateFilterDropdownList(columnLabel = null, itemList = null) {
 		AssertTextEquals(
 			key_columnLabel = ${columnLabel},
 			locator1 = "TableViewBuilder#FILTER_DROPDOWN",

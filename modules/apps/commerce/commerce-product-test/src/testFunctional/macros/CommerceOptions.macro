@@ -11,7 +11,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addEntry(optionFieldType = null,optionDescription = null,facetable = null,skuContributor = null,optionName = null,required = null) {
+	macro addEntry(optionFieldType = null, optionDescription = null, facetable = null, skuContributor = null, optionName = null, required = null) {
 		WaitForElementPresent(locator1 = "CommerceEntry#NAME_FIELD");
 
 		AssertElementPresent(locator1 = "CommerceEntry#NAME_FIELD");
@@ -26,7 +26,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addNewOptionValue(valueName = null,valuePosition = null) {
+	macro addNewOptionValue(valueName = null, valuePosition = null) {
 		Click(locator1 = "Button#PLUS");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
@@ -43,7 +43,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addOptionValueEntry(optionValuePriority = null,optionValueName = null) {
+	macro addOptionValueEntry(optionValuePriority = null, optionValueName = null) {
 		if (IsElementPresent(locator1 = "Button#DELETE")) {
 			Click(locator1 = "CommerceEntry#ADD_BUTTON");
 		}
@@ -91,7 +91,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setDeltaPrice(productSKU = null,quantity = null,deltaPrice = null,key_optionIndex = null,key_index = null,multipleValuesLeft = null) {
+	macro setDeltaPrice(productSKU = null, quantity = null, deltaPrice = null, key_optionIndex = null, key_index = null, multipleValuesLeft = null) {
 		Click(
 			key_index = ${key_index},
 			locator1 = "WorkflowMetrics#SEARCH_FIELD_MAPPINGS_METRICS_INDEXES");

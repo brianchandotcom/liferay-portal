@@ -55,7 +55,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewConversionMessage(alertMessage = null,alertType = null) {
+	macro viewConversionMessage(alertMessage = null, alertType = null) {
 		AssertVisible(
 			key_alertMessage = ${alertMessage},
 			key_type = ${alertType},
@@ -85,7 +85,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewFieldErrorMessage(fieldLabel = null,errorMessage = null) {
+	macro viewFieldErrorMessage(fieldLabel = null, errorMessage = null) {
 		AssertTextEquals(
 			fieldLabel = ${fieldLabel},
 			locator1 = "Message#ERROR_FIELD",
@@ -114,7 +114,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewLocalizationMessage(defaultLanguageLocalizationMessage = null,translationLanguageLocalizationMessage = null,preferredLanguageLocalizationMessage = null) {
+	macro viewLocalizationMessage(defaultLanguageLocalizationMessage = null, translationLanguageLocalizationMessage = null, preferredLanguageLocalizationMessage = null) {
 		WaitForElementPresent(locator1 = "Home#PORTAL_LOCALIZATION_TRANSLATION_LANGUAGE_MESSAGE");
 
 		AssertTextEquals.assertPartialText(

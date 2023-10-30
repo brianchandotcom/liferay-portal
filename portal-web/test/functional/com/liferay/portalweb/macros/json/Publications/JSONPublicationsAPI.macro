@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _addPublication(publicationDescription = null,publicationName = null) {
+	macro _addPublication(publicationDescription = null, publicationName = null) {
 		Variables.assertDefined(parameterList = "${publicationDescription},${publicationName}");
 
 		var portalURL = JSONCompany.getPortalURL();

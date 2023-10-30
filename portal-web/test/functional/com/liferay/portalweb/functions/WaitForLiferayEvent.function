@@ -80,7 +80,7 @@ definition {
 		ExecuteJavaScript(value1 = ${javascript});
 	}
 
-	function waitForLiferayEvent(attributeValue,eventName,attributeName) {
+	function waitForLiferayEvent(attributeValue, eventName, attributeName) {
 		var javascript = '''
 			try {
 				var eventValue = LFR_JS_EVENTS_LOG.getLastEvent("${eventName}").${attributeName};

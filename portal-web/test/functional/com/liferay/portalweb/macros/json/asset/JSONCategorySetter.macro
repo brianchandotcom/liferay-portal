@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro setCategoryId(vocabularyId = null,groupId = null,categoryName = null) {
+	macro setCategoryId(vocabularyId = null, groupId = null, categoryName = null) {
 		Variables.assertDefined(parameterList = "${categoryName},${groupId},${vocabularyId}");
 
 		var categoryId = JSONCategoryAPI._getCategoryIdByName(
@@ -43,7 +43,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setParentCategoryId(parentCategoryName = null,vocabularyId = null,groupId = null) {
+	macro setParentCategoryId(parentCategoryName = null, vocabularyId = null, groupId = null) {
 		if (!(isSet(parentCategoryName))) {
 			var parentCategoryId = 0;
 		}
@@ -102,7 +102,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setVocabularyId(groupId = null,vocabularyName = null) {
+	macro setVocabularyId(groupId = null, vocabularyName = null) {
 		Variables.assertDefined(parameterList = "${groupId},${vocabularyName}");
 
 		var vocabularyId = JSONCategoryAPI._getVocabularyIdByName(

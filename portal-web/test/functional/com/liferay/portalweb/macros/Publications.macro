@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro assertDiscardIsUnavailableForInactivePublication(changeCategory = null,changeTitle = null,publicationName = null) {
+	macro assertDiscardIsUnavailableForInactivePublication(changeCategory = null, changeTitle = null, publicationName = null) {
 		if (isSet(changeOrder)) {
 			var changeOrder = ${changeOrder};
 		}
@@ -56,7 +56,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createNewPublication(publicationDescription = null,gotoPublicationsAdmin = null,publicationName = null) {
+	macro createNewPublication(publicationDescription = null, gotoPublicationsAdmin = null, publicationName = null) {
 		if (${gotoPublicationsAdmin} == "true") {
 			PublicationsNavigator.openPublicationsAdmin();
 
@@ -86,7 +86,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createNewPublicationWithTemplate(publicationDescription = null,templateName = null,gotoPublicationsAdmin = null,publicationName = null) {
+	macro createNewPublicationWithTemplate(publicationDescription = null, templateName = null, gotoPublicationsAdmin = null, publicationName = null) {
 		if (${gotoPublicationsAdmin} == "true") {
 			PublicationsNavigator.openPublicationsAdmin();
 
@@ -208,7 +208,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro enablePublications(gotoInstancesettings = null,enableSandboxOnly = null) {
+	macro enablePublications(gotoInstancesettings = null, enableSandboxOnly = null) {
 		if (${gotoInstancesettings} == "true") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
@@ -267,7 +267,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro filterPublishedPublicationInDatasetDisplay(Exclude = null,statusList = null) {
+	macro filterPublishedPublicationInDatasetDisplay(Exclude = null, statusList = null) {
 		Click(
 			key_name = "Filter",
 			locator1 = "PublicationsChanges#SORT_BUTTON");
@@ -318,7 +318,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro inviteUsers(userInvite = null,userMissingPublicationsRole = null,publicationName = null,gotoReviewChanges = null,publicationRole = null) {
+	macro inviteUsers(userInvite = null, userMissingPublicationsRole = null, publicationName = null, gotoReviewChanges = null, publicationRole = null) {
 		if (${gotoReviewChanges} == "true") {
 			PublicationsNavigator.gotoPublicationEllipsisItem(
 				menuItem = "Review Changes",
@@ -362,7 +362,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro publishPublication(gotoPublicationsAdmin = null,publicationName = null) {
+	macro publishPublication(gotoPublicationsAdmin = null, publicationName = null) {
 		var key_publicationName = ${publicationName};
 
 		if (!(IsElementPresent(key_uniqueSuccess = "No unresolved conflicts, ready to publish.", locator1 = "Message#UNIQUE_SUCCESS"))) {
@@ -396,7 +396,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro revertPublication(publishNow = null,publicationName = null) {
+	macro revertPublication(publishNow = null, publicationName = null) {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		var key_publicationName = ${publicationName};
@@ -441,7 +441,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro schedulePublication(reschedule = null,utcMinutes = null,gotoPublicationsAdmin = null,publicationName = null) {
+	macro schedulePublication(reschedule = null, utcMinutes = null, gotoPublicationsAdmin = null, publicationName = null) {
 		if (${gotoPublicationsAdmin} == "true") {
 			PublicationsNavigator.openPublicationsAdmin();
 
@@ -525,7 +525,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectPublication(gotoPublicationsAdmin = null,publicationName = null) {
+	macro selectPublication(gotoPublicationsAdmin = null, publicationName = null) {
 		if (${gotoPublicationsAdmin} == "true") {
 			PublicationsNavigator.openPublicationsAdmin();
 
@@ -562,7 +562,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewAutomaticallyResolved(entryTitle = null,successMessage = null) {
+	macro viewAutomaticallyResolved(entryTitle = null, successMessage = null) {
 		AssertElementPresent(locator1 = "Publications#AUTOMATICALLY_RESOLVED_TABLE");
 
 		AssertElementPresent(
@@ -581,7 +581,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewInvitedUser(userInvite = null,publicationRole = null) {
+	macro viewInvitedUser(userInvite = null, publicationRole = null) {
 		AssertElementPresent(
 			key_publicationRole = ${publicationRole},
 			key_userInvite = ${userInvite},
@@ -589,7 +589,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewNeedsManualResolution(warningMessage = null,entryTitle = null) {
+	macro viewNeedsManualResolution(warningMessage = null, entryTitle = null) {
 		AssertElementPresent(locator1 = "Publications#NEEDS_MANUAL_RESOLUTION_TABLE");
 
 		AssertElementPresent(
@@ -619,7 +619,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPublicationTimeline(isEmpty = null,publicationName = null) {
+	macro viewPublicationTimeline(isEmpty = null, publicationName = null) {
 		Click(locator1 = "Publications#PUBLICATION_TIMELINE_BUTTON");
 
 		if (${isEmpty} == "true") {
@@ -638,7 +638,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSandboxedPublication(sandboxedUser = null,sandboxedPublicationName = null) {
+	macro viewSandboxedPublication(sandboxedUser = null, sandboxedPublicationName = null) {
 		var key_publicationName = ${sandboxedPublicationName};
 
 		if (${sandboxedUser} == "true") {

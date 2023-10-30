@@ -1,7 +1,7 @@
 @default = "assertValue"
 definition {
 
-	function assertValue(locator1) {
+	function assertValue(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");

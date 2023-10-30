@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addComment(dmDocumentTitle = null,groupName = null,baseURL = null,commentBody = null,folderId = null) {
+	macro addComment(dmDocumentTitle = null, groupName = null, baseURL = null, commentBody = null, folderId = null) {
 		var fileEntryId = JSONDocument.getFileEntryId(
 			dmDocumentTitle = ${dmDocumentTitle},
 			folderId = ${folderId},
@@ -34,7 +34,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addFile(workflowAction = null,dmDocumentTitle = null,groupName = null,assetCategoryIds = null,assetTagNames = null,folderName = null) {
+	macro addFile(workflowAction = null, dmDocumentTitle = null, groupName = null, assetCategoryIds = null, assetTagNames = null, folderName = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(repositoryId))) {
@@ -99,7 +99,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addFileWithUploadedFile(fileName = null,dmDocumentDescription = null,mimeType = null,dmDocumentTitle = null,assetTagNames = null,increaseMinutes = null,workflowAction = null,parentFolderName = null,groupName = null,assetCategoryIds = null,folderName = null) {
+	macro addFileWithUploadedFile(fileName = null, dmDocumentDescription = null, mimeType = null, dmDocumentTitle = null, assetTagNames = null, increaseMinutes = null, workflowAction = null, parentFolderName = null, groupName = null, assetCategoryIds = null, folderName = null) {
 		Variables.assertDefined(parameterList = "${mimeType},${sourceFileName}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -231,7 +231,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addMultipleFilesWithUploadedFile(groupName = null,documentFileNames = null,folderName = null) {
+	macro addMultipleFilesWithUploadedFile(groupName = null, documentFileNames = null, folderName = null) {
 		var list1 = ListUtil.newListFromString(${documentFileNames});
 
 		var size = ListUtil.size(${list1});
@@ -273,7 +273,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addShortcut(sourceGroupName = null,sourceParentFolderNames = null,targetFolderName = null,targetGroupName = null,dmDocumentTitle = null,baseURL = null,sourceFolderName = null,sourceParentFolderName = null,targetParentFolderName = null) {
+	macro addShortcut(sourceGroupName = null, sourceParentFolderNames = null, targetFolderName = null, targetGroupName = null, dmDocumentTitle = null, baseURL = null, sourceFolderName = null, sourceParentFolderName = null, targetParentFolderName = null) {
 		Variables.assertDefined(parameterList = "${targetGroupName},${sourceGroupName},${dmDocumentTitle}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -343,7 +343,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro checkInFile(dmDocumentTitle = null,groupName = null) {
+	macro checkInFile(dmDocumentTitle = null, groupName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${dmDocumentTitle}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -363,7 +363,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro checkOutFile(dmDocumentTitle = null,groupName = null) {
+	macro checkOutFile(dmDocumentTitle = null, groupName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${dmDocumentTitle}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -382,7 +382,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteFile(dmDocumentTitle = null,groupName = null,folderName = null) {
+	macro deleteFile(dmDocumentTitle = null, groupName = null, folderName = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(site))) {
@@ -416,7 +416,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getFileEntryId(dmDocumentTitle = null,groupName = null) {
+	macro getFileEntryId(dmDocumentTitle = null, groupName = null) {
 		if (!(isSet(portalURL))) {
 			var portalURL = JSONCompany.getPortalURL();
 		}
@@ -452,7 +452,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getFileEntryTypeId(dmDocumentTitle = null,groupName = null,fileEntryTypeId = null) {
+	macro getFileEntryTypeId(dmDocumentTitle = null, groupName = null, fileEntryTypeId = null) {
 		if (!(isSet(portalURL))) {
 			var portalURL = JSONCompany.getPortalURL();
 		}
@@ -483,7 +483,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getFileEntryUUID(dmDocumentTitle = null,groupName = null) {
+	macro getFileEntryUUID(dmDocumentTitle = null, groupName = null) {
 		if (!(isSet(portalURL))) {
 			var portalURL = JSONCompany.getPortalURL();
 		}
@@ -517,7 +517,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getFileEntryVersionId(dmDocumentTitle = null,groupName = null,baseURL = null,dmDocumentVersion = null,folderId = null) {
+	macro getFileEntryVersionId(dmDocumentTitle = null, groupName = null, baseURL = null, dmDocumentVersion = null, folderId = null) {
 		if (!(isSet(portalURL))) {
 			var portalURL = JSONCompany.getPortalURL();
 		}
@@ -549,7 +549,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getLatestVersionURL(dmDocumentTitle = null,groupName = null) {
+	macro getLatestVersionURL(dmDocumentTitle = null, groupName = null) {
 		Variables.assertDefined(parameterList = "${dmDocumentTitle},${groupName}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -564,7 +564,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro moveFileEntryToFolder(dmDocumentTitle = null,groupName = null,baseURL = null,site = null,folderName = null,folderId = null) {
+	macro moveFileEntryToFolder(dmDocumentTitle = null, groupName = null, baseURL = null, site = null, folderName = null, folderId = null) {
 		var fileEntryId = JSONDocument.getFileEntryId(
 			dmDocumentTitle = ${dmDocumentTitle},
 			folderId = ${folderId},
@@ -588,7 +588,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro moveToRecycleBin(dmDocumentTitle = null,groupName = null,baseURL = null,site = null,stagingDepotName = null,parentFolderId = null,folderName = null) {
+	macro moveToRecycleBin(dmDocumentTitle = null, groupName = null, baseURL = null, site = null, stagingDepotName = null, parentFolderId = null, folderName = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(folderName)) {
@@ -627,7 +627,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro subscribeToFolder(groupName = null,dmFolderName = null) {
+	macro subscribeToFolder(groupName = null, dmFolderName = null) {
 		var folderId = JSONDocumentAPI._getFolderIdByFolderName(
 			groupName = ${groupName},
 			name = ${dmFolderName});

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addFragment(fragmentName = null,siteURLKey = null,displayPageName = null,publish = null,collectionName = null) {
+	macro addFragment(fragmentName = null, siteURLKey = null, displayPageName = null, publish = null, collectionName = null) {
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = ${siteURLKey});
 
 		DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = ${displayPageName});
@@ -30,7 +30,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectDisplayPageTemplateForAsset(groupName = null,siteURLKey = null,kbChildArticleTitle = null,entryTitle = null,pageName = null,assetType = null) {
+	macro selectDisplayPageTemplateForAsset(groupName = null, siteURLKey = null, kbChildArticleTitle = null, entryTitle = null, pageName = null, assetType = null) {
 		if (${assetType} == "Blogs Entry") {
 			BlogsNavigator.openToEditEntryInSite(
 				entryTitle = ${entryTitle},
@@ -63,7 +63,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectPreviewItem(item = null,searchTerm = null,assetTitle = null,assetType = null) {
+	macro selectPreviewItem(item = null, searchTerm = null, assetTitle = null, assetType = null) {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		Click(locator1 = "ControlMenu#DISPLAY_PAGE_PREVIEW_ITEM_SELECTOR");

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addAudioFromURL(navTab = null,audioSourceURL = null) {
+	macro addAudioFromURL(navTab = null, audioSourceURL = null) {
 		var key_navTab = ${navTab};
 
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
@@ -30,7 +30,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addImageFromURL(navTab = null,imageSourceURL = null) {
+	macro addImageFromURL(navTab = null, imageSourceURL = null) {
 		var key_imageSourceURL = ${imageSourceURL};
 		var key_navTab = ${navTab};
 
@@ -79,7 +79,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addVideo(videoShortcutTitle = null,extractedVideoShortcutTitle = null,videoURL = null,videoShortcutDescription = null,videoShortcutPreview = null) {
+	macro addVideo(videoShortcutTitle = null, extractedVideoShortcutTitle = null, videoURL = null, videoShortcutDescription = null, videoShortcutPreview = null) {
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
 		AssertClick(
@@ -102,7 +102,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addVideoFromDM(navTab = null,videoShortcutTitle = null,depotName = null,videoShortcutPreview = null) {
+	macro addVideoFromDM(navTab = null, videoShortcutTitle = null, depotName = null, videoShortcutPreview = null) {
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
 		AssertClick(
@@ -152,7 +152,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addVideoFromURL(navTab = null,videoSourceURL = null) {
+	macro addVideoFromURL(navTab = null, videoSourceURL = null) {
 		var key_navTab = ${navTab};
 
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
@@ -189,7 +189,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro changeWorkspaces(navTab = null,workspacesType = null) {
+	macro changeWorkspaces(navTab = null, workspacesType = null) {
 		if (!(isSet(customImage))) {
 			SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 		}
@@ -213,7 +213,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro clearFilterResults(webContentTitle = null,currentSiteWebContentTitle = null) {
+	macro clearFilterResults(webContentTitle = null, currentSiteWebContentTitle = null) {
 		Click(locator1 = "Link#CLEAR");
 
 		AssertElementNotPresent(locator1 = "Search#SEARCH_INFO");
@@ -228,7 +228,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureFilterViaSelectFile(navTab = null,filterBy = null) {
+	macro configureFilterViaSelectFile(navTab = null, filterBy = null) {
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
 		AssertClick(
@@ -304,7 +304,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro previewEmbeddedVideo(invalidURL = null,validURL = null) {
+	macro previewEmbeddedVideo(invalidURL = null, validURL = null) {
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
 		WaitForPageLoad();
@@ -353,7 +353,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro previewVideoFromDM(navTab = null,videoShortcutTitle = null,depotName = null,validURL = null) {
+	macro previewVideoFromDM(navTab = null, videoShortcutTitle = null, depotName = null, validURL = null) {
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
 		AssertClick(
@@ -465,7 +465,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectBlogImage(navTab = null,imageFileName = null) {
+	macro selectBlogImage(navTab = null, imageFileName = null) {
 		var key_imageFileName = ${imageFileName};
 		var key_navTab = ${navTab};
 		var key_uploadFileName = ${imageFileName};
@@ -490,7 +490,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectDMImage(navTab = null,dmSubFolderName = null,imageFileName = null,dmFolderName = null) {
+	macro selectDMImage(navTab = null, dmSubFolderName = null, imageFileName = null, dmFolderName = null) {
 		var key_navTab = ${navTab};
 		var key_uploadFileName = ${imageFileName};
 
@@ -526,7 +526,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectRepositoryImage(navTab = null,depotName = null,imageFileName = null,customImage = null,folderName = null) {
+	macro selectRepositoryImage(navTab = null, depotName = null, imageFileName = null, customImage = null, folderName = null) {
 		var key_imageFileName = ${imageFileName};
 
 		ItemSelector.changeWorkspaces(
@@ -551,7 +551,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectSiteImage(imageFileName = null,siteName = null) {
+	macro selectSiteImage(imageFileName = null, siteName = null) {
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
 		Click(
@@ -582,7 +582,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro uploadFile(navTab = null,uploadFileName = null,invalidFileValidation = null) {
+	macro uploadFile(navTab = null, uploadFileName = null, invalidFileValidation = null) {
 		var key_navTab = ${navTab};
 		var key_uploadFileName = ${uploadFileName};
 
@@ -621,7 +621,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro uploadFileWithSelectFrameNoLoading(navTab = null,uploadFileName = null,invalidFileValidation = null) {
+	macro uploadFileWithSelectFrameNoLoading(navTab = null, uploadFileName = null, invalidFileValidation = null) {
 		var key_navTab = ${navTab};
 		var key_uploadFileName = ${uploadFileName};
 
@@ -663,7 +663,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewBlogImageDetails(imageFormat = null,uploadFileName = null,imageFileName = null,lastModifiedBy = null,imageSize = null,imageStatus = null,versionNumber = null) {
+	macro viewBlogImageDetails(imageFormat = null, uploadFileName = null, imageFileName = null, lastModifiedBy = null, imageSize = null, imageStatus = null, versionNumber = null) {
 		var key_imageFileName = ${imageFileName};
 		var key_uploadFileName = ${uploadFileName};
 
@@ -719,7 +719,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCardThumbnails(navTab = null,cardList = null,depotName = null,customImage = null) {
+	macro viewCardThumbnails(navTab = null, cardList = null, depotName = null, customImage = null) {
 		if (isSet(depotName)) {
 			ItemSelector.changeWorkspaces(
 				customImage = ${customImage},
@@ -740,7 +740,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCurrentSiteFilterResults(navTab = null,imageFileName = null,noImageFileName = null,viewNoLocationInfo = null) {
+	macro viewCurrentSiteFilterResults(navTab = null, imageFileName = null, noImageFileName = null, viewNoLocationInfo = null) {
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
 		if (isSet(navTab)) {
@@ -786,7 +786,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewEverywhereFilterResults(navTab = null,imageFileName = null,dmFolderName = null) {
+	macro viewEverywhereFilterResults(navTab = null, imageFileName = null, dmFolderName = null) {
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
 		if (isSet(navTab)) {
@@ -812,7 +812,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewExternalVideoInDifferentViews(navTab = null,videoShortcutList = null) {
+	macro viewExternalVideoInDifferentViews(navTab = null, videoShortcutList = null) {
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
 		if (isSet(navTab)) {
@@ -845,7 +845,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewFilteredResultsViaAssetLists(itemType = null,assetTitle = null,itemSubtype = null,assetListName = null,assetType = null) {
+	macro viewFilteredResultsViaAssetLists(itemType = null, assetTitle = null, itemSubtype = null, assetListName = null, assetType = null) {
 		if (isSet(assetListName)) {
 			Click(
 				key_title = ${assetListName},
@@ -894,7 +894,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewListThumbnails(navTab = null,depotName = null,customImage = null,listEntry = null) {
+	macro viewListThumbnails(navTab = null, depotName = null, customImage = null, listEntry = null) {
 		if (isSet(depotName)) {
 			ItemSelector.changeWorkspaces(
 				customImage = ${customImage},
@@ -917,7 +917,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewLocationInfoViaBlogs(navTab = null,locationName = null,titleList = null) {
+	macro viewLocationInfoViaBlogs(navTab = null, locationName = null, titleList = null) {
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
 		if (isSet(navTab)) {
@@ -961,7 +961,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewLocationInfoViaWCD(depotName = null,locationName = null,titleList = null,portletName = null) {
+	macro viewLocationInfoViaWCD(depotName = null, locationName = null, titleList = null, portletName = null) {
 		WebContentDisplayPortlet.gotoSelectWebContent(
 			depotName = ${depotName},
 			portletName = ${portletName});
@@ -1000,7 +1000,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPreview(footer = null,imageFileName = null) {
+	macro viewPreview(footer = null, imageFileName = null) {
 		AssertElementPresent(
 			key_footer = ${footer},
 			locator1 = "ItemSelector#VIEWER_FOOTER");
@@ -1058,7 +1058,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewWCCurrentSiteFilterResults(webContentTitle = null,noWebContentTitle = null,viewNoLocationInfo = null) {
+	macro viewWCCurrentSiteFilterResults(webContentTitle = null, noWebContentTitle = null, viewNoLocationInfo = null) {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		AssertVisible(
@@ -1095,7 +1095,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewWCEverywhereFilterResults(siteName = null,folderWebContentTitle = null,wcFolderName = null) {
+	macro viewWCEverywhereFilterResults(siteName = null, folderWebContentTitle = null, wcFolderName = null) {
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
 		ManagementBar.setFilterAndOrder(filterBy = "Everywhere");

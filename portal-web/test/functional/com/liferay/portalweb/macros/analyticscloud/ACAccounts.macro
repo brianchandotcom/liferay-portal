@@ -8,7 +8,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertAccountDetails(propertyName = null,propertyValue = null) {
+	macro assertAccountDetails(propertyName = null, propertyValue = null) {
 		var key_propertyName = ${propertyName};
 		var key_propertyValue = ${propertyValue};
 

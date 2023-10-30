@@ -57,7 +57,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectItemActionDropdownMenuList(key_viewMode = null,key_title = null) {
+	macro selectItemActionDropdownMenuList(key_viewMode = null, key_title = null) {
 		Click(
 			key_title = ${key_title},
 			locator1 = "FrontendDataSet#ENTRY_VERTICAL_ELLIPSIS");

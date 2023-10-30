@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addCP(informationTemplateName = null,itemType = null,itemSubtype = null) {
+	macro addCP(informationTemplateName = null, itemType = null, itemSubtype = null) {
 		LexiconEntry.gotoAdd();
 
 		PortletEntry.inputName(name = ${informationTemplateName});
@@ -33,7 +33,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addField(fieldName = null,panelTitle = null) {
+	macro addField(fieldName = null, panelTitle = null) {
 		WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
 
 		Navigator.gotoSidebarTab(tabName = "Elements");
@@ -45,7 +45,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro copyCP(informationTemplateName = null,description = null,informationTemplateCopyName = null) {
+	macro copyCP(informationTemplateName = null, description = null, informationTemplateCopyName = null) {
 		InformationTemplates.gotoInformationTemplateEllipsisItem(
 			informationTemplateName = ${informationTemplateName},
 			item = "Make a Copy");
@@ -86,7 +86,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoInformationTemplateEllipsisItem(informationTemplateName = null,item = null) {
+	macro gotoInformationTemplateEllipsisItem(informationTemplateName = null, item = null) {
 		Click(
 			key_tableEntry = ${informationTemplateName},
 			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
@@ -139,7 +139,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTemplate(informationTemplateName = null,itemType = null,itemSubtype = null) {
+	macro viewTemplate(informationTemplateName = null, itemType = null, itemSubtype = null) {
 		AssertTextEquals(
 			key_columnName = "name",
 			key_tableEntry = ${informationTemplateName},

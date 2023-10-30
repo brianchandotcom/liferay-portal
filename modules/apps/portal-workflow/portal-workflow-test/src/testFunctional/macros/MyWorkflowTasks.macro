@@ -17,7 +17,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updateDueDateAtMyWorkflowTasks(dueDateTime = null,workflowTask = null,dueDate = null,workflowDueDateTime = null,workflowAssetTitle = null) {
+	macro updateDueDateAtMyWorkflowTasks(dueDateTime = null, workflowTask = null, dueDate = null, workflowDueDateTime = null, workflowAssetTitle = null) {
 		Workflow.viewTaskAssignedToMyRoles(
 			ddlDataDefinitionName = "Data Definition Name",
 			workflowAssetTitle = "Blogs Entry Title 1",
@@ -53,7 +53,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updateDueDateMyWorkflowTasksFutureDate(ddlDataDefinitionName = null,workflowAssetType = null,workflowDueDateTime = null,displayDateYear = null,key_timePeriod = null) {
+	macro updateDueDateMyWorkflowTasksFutureDate(ddlDataDefinitionName = null, workflowAssetType = null, workflowDueDateTime = null, displayDateYear = null, key_timePeriod = null) {
 		var key_workflowAssetTitle = ${key_workflowAssetTitle};
 		var key_workflowTask = ${key_workflowTask};
 		var displayDateDay = DateUtil.getCurrentDate();
@@ -110,7 +110,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewDueDateValue(dueDateValue = null,workflowTask = null,workflowAssetTitle = null) {
+	macro viewDueDateValue(dueDateValue = null, workflowTask = null, workflowAssetTitle = null) {
 		AssertTextEquals.assertPartialText(
 			key_workflowAssetTitle = ${workflowAssetTitle},
 			key_workflowTask = ${workflowTask},
@@ -133,7 +133,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewMyWorkflowTaskItemPosition(title = null,rowPosition = null) {
+	macro viewMyWorkflowTaskItemPosition(title = null, rowPosition = null) {
 		var key_rowPosition = ${rowPosition};
 		var key_title = ${title};
 
@@ -144,7 +144,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTaskAssignedAndAssertTextsPresent(nameAuthor = null,titleMessageBoard = null) {
+	macro viewTaskAssignedAndAssertTextsPresent(nameAuthor = null, titleMessageBoard = null) {
 		var elements = "Assigned to,Task Name,Create Date,Due Date";
 
 		for (var list : list ${elements}) {

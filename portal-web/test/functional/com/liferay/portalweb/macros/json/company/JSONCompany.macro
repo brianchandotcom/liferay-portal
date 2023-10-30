@@ -23,7 +23,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getCompanyGroupIdByGroupKey(portalInstanceName = null,groupKey = null) {
+	macro getCompanyGroupIdByGroupKey(portalInstanceName = null, groupKey = null) {
 		Variables.assertDefined(parameterList = "${groupKey},${portalInstanceName}");
 
 		var companyId = JSONCompany.getCompanyId(portalInstanceName = ${portalInstanceName});
@@ -56,7 +56,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getCompanyId(authenticationMethod = null,userScreenName = null) {
+	macro getCompanyId(authenticationMethod = null, userScreenName = null) {
 		if (!(isSet(portalInstanceName)) || (${portalInstanceName} == "liferay.com")) {
 			var portalInstanceName = JSONCompany.getPortalInstanceName();
 		}
@@ -194,7 +194,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getWebId(authenticationMethod = null,userScreenName = null) {
+	macro getWebId(authenticationMethod = null, userScreenName = null) {
 		if (!(isSet(portalInstanceName)) || (${portalInstanceName} == "liferay.com")) {
 			var portalInstanceName = JSONCompany.getPortalInstanceName();
 		}

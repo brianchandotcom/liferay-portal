@@ -48,7 +48,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro clickEllipsisItem(item = null,card = null) {
+	macro clickEllipsisItem(item = null, card = null) {
 		if (!(isSet(specificFormFragment))) {
 			Click.waitForMenuToggleJSClick(
 				key_card = ${card},
@@ -73,7 +73,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCardLabel(cardLabel = null,card = null) {
+	macro viewCardLabel(cardLabel = null, card = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -93,7 +93,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCardOrder(index = null,card = null) {
+	macro viewCardOrder(index = null, card = null) {
 		AssertElementPresent(
 			key_card = ${card},
 			key_index = ${index},
@@ -108,7 +108,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCardSticker(icon = null,card = null) {
+	macro viewCardSticker(icon = null, card = null) {
 		AssertVisible(
 			key_card = ${card},
 			key_icon = ${icon},
@@ -116,7 +116,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCardSubtitle(cardSubtitle = null,card = null) {
+	macro viewCardSubtitle(cardSubtitle = null, card = null) {
 		AssertTextEquals(
 			key_card = ${card},
 			locator1 = "Card#CARD_SUBTITLE",
@@ -139,7 +139,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewMenuItemDisabled(item = null,card = null) {
+	macro viewMenuItemDisabled(item = null, card = null) {
 		Click(
 			key_card = ${card},
 			locator1 = "Card#CARD_ELLIPSIS");
@@ -150,7 +150,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewMenuItemNotPresent(item = null,card = null) {
+	macro viewMenuItemNotPresent(item = null, card = null) {
 		Click(
 			key_card = ${card},
 			locator1 = "Card#CARD_ELLIPSIS");
@@ -168,7 +168,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSpecificCardThumbnail(imageFileName = null,card = null) {
+	macro viewSpecificCardThumbnail(imageFileName = null, card = null) {
 		AssertVisible(
 			key_card = ${card},
 			key_imageFileName = ${imageFileName},

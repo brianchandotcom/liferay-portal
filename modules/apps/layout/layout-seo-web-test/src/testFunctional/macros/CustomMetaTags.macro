@@ -18,7 +18,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addTag(customContent = null,customProperty = null) {
+	macro addTag(customContent = null, customProperty = null) {
 		Type(
 			locator1 = "TextInput#CUSTOM_META_TAGS_PROPERTY",
 			value1 = ${customProperty});
@@ -40,7 +40,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editMultipleTags(newCustomProperty = null,customContentsList = null,newCustomContent = null,customPropertiesList = null) {
+	macro editMultipleTags(newCustomProperty = null, customContentsList = null, newCustomContent = null, customPropertiesList = null) {
 		if (isSet(newCustomProperty)) {
 			for (var customProperty : list ${customPropertiesList}) {
 				Type(
@@ -65,7 +65,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editTag(newCustomProperty = null,customContent = null,newCustomContent = null,customProperty = null) {
+	macro editTag(newCustomProperty = null, customContent = null, newCustomContent = null, customProperty = null) {
 		if (isSet(newCustomProperty)) {
 			Type(
 				key_customProperty = ${customProperty},
@@ -84,7 +84,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToCustomMetaTags(groupName = null,siteURLKey = null,layoutName = null) {
+	macro openToCustomMetaTags(groupName = null, siteURLKey = null, layoutName = null) {
 		var plid = JSONLayout.getPlid(
 			groupName = ${groupName},
 			layoutName = ${layoutName});

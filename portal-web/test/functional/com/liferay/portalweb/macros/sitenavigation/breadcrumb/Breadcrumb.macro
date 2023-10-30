@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro configureBreadcrumb(selectAdtType = null,configureWithoutSave = null) {
+	macro configureBreadcrumb(selectAdtType = null, configureWithoutSave = null) {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		if (isSet(checkSetupName)) {
@@ -122,7 +122,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewConfigurationPreview(breadcrumbListVisible = null,breadcrumbListNotVisible = null) {
+	macro viewConfigurationPreview(breadcrumbListVisible = null, breadcrumbListNotVisible = null) {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		if (isSet(breadcrumbListVisible)) {
@@ -174,7 +174,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPG(breadcrumbListVisible = null,breadcrumbListNotVisible = null) {
+	macro viewPG(breadcrumbListVisible = null, breadcrumbListNotVisible = null) {
 		if (isSet(breadcrumbListVisible)) {
 			for (var breadcrumbName : list ${breadcrumbListVisible}) {
 				var key_breadcrumbName = ${breadcrumbName};
@@ -195,7 +195,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSpecificPG(breadcrumbListVisible = null,breadcrumbListNotVisible = null) {
+	macro viewSpecificPG(breadcrumbListVisible = null, breadcrumbListNotVisible = null) {
 		if (isSet(breadcrumbListNotVisible)) {
 			for (var breadcrumbName : list ${breadcrumbListNotVisible}) {
 				AssertElementNotPresent(

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addContent(kbArticleContentEdit = null,content = null) {
+	macro addContent(kbArticleContentEdit = null, content = null) {
 		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 
 		if (isSet(kbArticleContentEdit)) {
@@ -19,7 +19,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addContentInWebContent(fieldLabel = null,content = null) {
+	macro addContentInWebContent(fieldLabel = null, content = null) {
 		SelectFrame.selectFrameNoLoading(
 			key_fieldLabel = ${fieldLabel},
 			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
@@ -32,7 +32,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addEntryExternalURL(entryExternalURL = null,displayText = null,fieldLabel = null) {
+	macro addEntryExternalURL(entryExternalURL = null, displayText = null, fieldLabel = null) {
 		Click(
 			key_fieldLabel = ${fieldLabel},
 			locator1 = "CKEditor#TOOLBAR_LINK_BUTTON");
@@ -53,7 +53,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addEntryExternalURLToExistingText(entryExternalURL = null,fieldLabel = null) {
+	macro addEntryExternalURLToExistingText(entryExternalURL = null, fieldLabel = null) {
 		SelectFrame.selectFrameNoLoading(
 			key_fieldLabel = ${fieldLabel},
 			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
@@ -102,7 +102,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addTextWithLink(entryExternalURL = null,displayText = null,dmDocumentTitle = null,fieldLabel = null,pageName = null) {
+	macro addTextWithLink(entryExternalURL = null, displayText = null, dmDocumentTitle = null, fieldLabel = null, pageName = null) {
 		SelectFrame.selectFrameNoLoading(
 			key_fieldLabel = ${fieldLabel},
 			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
@@ -180,7 +180,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewEntryContent(fieldLabel = null,content = null) {
+	macro viewEntryContent(fieldLabel = null, content = null) {
 		SelectFrame.selectFrameNoLoading(
 			key_fieldLabel = ${fieldLabel},
 			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");

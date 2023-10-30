@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addEntry(siteName = null,destinationURL = null,sourceURL = null,noUpdateReferences = null,groupName = null,portalName = null,redirectChain = null,redirectURLVariation = null,destinationURLVariation = null,noUpdateRedirect = null,destinationPageName = null,redirectType = null,expirationDate = null,sourceURLVariation = null,updateRedirect = null) {
+	macro addEntry(siteName = null, destinationURL = null, sourceURL = null, noUpdateReferences = null, groupName = null, portalName = null, redirectChain = null, redirectURLVariation = null, destinationURLVariation = null, noUpdateRedirect = null, destinationPageName = null, redirectType = null, expirationDate = null, sourceURLVariation = null, updateRedirect = null) {
 		var portalURL = PropsUtil.get("portal.url");
 
 		if (!(isSet(skipNavigation))) {
@@ -85,7 +85,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addEntryVia404URLs(sourceURL = null,noUpdateReferences = null,activeIgnoreURL = null,siteName = null,destinationURL = null,redirectType = null,ignoredURL = null,expirationDate = null) {
+	macro addEntryVia404URLs(sourceURL = null, noUpdateReferences = null, activeIgnoreURL = null, siteName = null, destinationURL = null, redirectType = null, ignoredURL = null, expirationDate = null) {
 		var portalURL = PropsUtil.get("portal.url");
 
 		if (!(isSet(skipNavigation))) {
@@ -144,7 +144,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPattern(destinationIndex = null,patternIndex = null,pattern = null,userAgent = null,destinationURL = null,userAgentIndex = null) {
+	macro addPattern(destinationIndex = null, patternIndex = null, pattern = null, userAgent = null, destinationURL = null, userAgentIndex = null) {
 		if (${patternIndex} != 0) {
 			Click(
 				key_index = ${patternIndex},
@@ -192,7 +192,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureCrawlerUserAgents(removeCrawlerUserAgent = null,addCrawlerUserAgent = null) {
+	macro configureCrawlerUserAgents(removeCrawlerUserAgent = null, addCrawlerUserAgent = null) {
 		if (isSet(removeCrawlerUserAgent)) {
 			Click(
 				key_crawlerUserAgent = ${removeCrawlerUserAgent},
@@ -297,7 +297,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editEntry(sourceURL = null,noUpdateReferences = null,sourceURLEdit = null,noUpdateRedirect = null,redirectTypeEdit = null,destinationURLEdit = null,expirationDate = null,updateRedirect = null) {
+	macro editEntry(sourceURL = null, noUpdateReferences = null, sourceURLEdit = null, noUpdateRedirect = null, redirectTypeEdit = null, destinationURLEdit = null, expirationDate = null, updateRedirect = null) {
 		if (!(isSet(skipNavigation))) {
 			Redirect.gotoEntryMenuItem(
 				item = "Edit",
@@ -381,7 +381,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoEntryMenuItem(sourceURL = null,item = null) {
+	macro gotoEntryMenuItem(sourceURL = null, item = null) {
 		LexiconTable.clickEllipsisItem(
 			item = ${item},
 			tableEntry = ${sourceURL});
@@ -395,7 +395,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro ignoreEntry(unignore = null,ignoreURL = null,unignoreAllEntries = null,ignoreAllEntries = null) {
+	macro ignoreEntry(unignore = null, ignoreURL = null, unignoreAllEntries = null, ignoreAllEntries = null) {
 		if (!(isSet(skipNavigation))) {
 			AssertClick(
 				key_navItem = "404 URLs",
@@ -470,7 +470,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToEditEntry(groupName = null,siteURLKey = null,destinationURL = null) {
+	macro openToEditEntry(groupName = null, siteURLKey = null, destinationURL = null) {
 		var redirectEntryId = JSONRedirect.getRedirectEntryId(
 			destinationURL = ${destinationURL},
 			groupName = ${groupName});
@@ -496,7 +496,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro view404URLs(requestNumber = null,ignoreURL = null,multipleUrLs = null) {
+	macro view404URLs(requestNumber = null, ignoreURL = null, multipleUrLs = null) {
 		if (isSet(activeIgnoreURL)) {
 			AssertClick(
 				key_navItem = "404 URLs",
@@ -563,7 +563,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewEntry(sourceURL = null,destinationURL = null,redirectType = null,expirationDate = null) {
+	macro viewEntry(sourceURL = null, destinationURL = null, redirectType = null, expirationDate = null) {
 		AssertTextEquals.assertPartialText(
 			key_rowEntry = ${sourceURL},
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME",
@@ -609,7 +609,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewEntryInfo(latestOccurrence = null,createdBy = null,type = null,createDate = null,expirationDate = null) {
+	macro viewEntryInfo(latestOccurrence = null, createdBy = null, type = null, createDate = null, expirationDate = null) {
 		var portalURL = PropsUtil.get("portal.url");
 
 		Check(
@@ -645,7 +645,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewOrderedURLs(entry1 = null,entry2 = null) {
+	macro viewOrderedURLs(entry1 = null, entry2 = null) {
 		AssertTextEquals(
 			key_rowNumber = 1,
 			locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD_3",
@@ -658,7 +658,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewResultEntryTitle(searchTerm = null,searchEntryTitle = null) {
+	macro viewResultEntryTitle(searchTerm = null, searchEntryTitle = null) {
 		Search.searchCP(searchTerm = ${searchTerm});
 
 		AssertTextEquals(
@@ -668,7 +668,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewURLRedirectionType(temporary = null,permanent = null,url = null) {
+	macro viewURLRedirectionType(temporary = null, permanent = null, url = null) {
 		var curl = '''
 			${url} \
 				-w %{http_code}

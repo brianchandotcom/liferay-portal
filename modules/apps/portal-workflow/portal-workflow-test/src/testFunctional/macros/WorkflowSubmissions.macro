@@ -10,7 +10,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSubmissionStatus(submissionStatus = null,submissionTitle = null) {
+	macro viewSubmissionStatus(submissionStatus = null, submissionTitle = null) {
 		Click(locator1 = "Dropdown#FILTER_AND_ORDER");
 
 		MenuItem.click(menuItem = ${submissionStatus});

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro editUsers(lastName = null,firstName = null,emailAddress = null) {
+	macro editUsers(lastName = null, firstName = null, emailAddress = null) {
 		Type(
 			key_name = "lastName",
 			locator1 = "JSFSignInAndPrimeFacesUsers#DETAIL_PAGE_INPUT_FIELD",
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro filterUsers(sortName = null,name = null,filterName = null,screenName3 = null,sort = null,screenName1 = null,screenName2 = null) {
+	macro filterUsers(sortName = null, name = null, filterName = null, screenName3 = null, sort = null, screenName1 = null, screenName2 = null) {
 		Click(
 			key_name = ${sortName},
 			locator1 = "JSFSignInAndPrimeFacesUsers#SORT_BUTTON");
@@ -99,7 +99,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro sortUsers(screenName3 = null,sort = null,screenName4 = null,screenName1 = null,screenName2 = null) {
+	macro sortUsers(screenName3 = null, sort = null, screenName4 = null, screenName1 = null, screenName2 = null) {
 		Click(
 			key_name = "screenName",
 			locator1 = "JSFSignInAndPrimeFacesUsers#SORT_BUTTON");
@@ -137,7 +137,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro uploadPortrait(fileName = null,sortName = null,filterName = null,screenName1 = null) {
+	macro uploadPortrait(fileName = null, sortName = null, filterName = null, screenName1 = null) {
 		var imageSrc = selenium.getAttribute("//img[contains(@id,'portrait')]@src");
 
 		AssertElementPresent(locator1 = "//img[contains(@src,'${imageSrc}')]");
@@ -165,7 +165,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro validateUserField(emailAddress = null,name = null) {
+	macro validateUserField(emailAddress = null, name = null) {
 		Type(
 			key_name = "emailAddress",
 			locator1 = "JSFSignInAndPrimeFacesUsers#DETAIL_PAGE_INPUT_FIELD",

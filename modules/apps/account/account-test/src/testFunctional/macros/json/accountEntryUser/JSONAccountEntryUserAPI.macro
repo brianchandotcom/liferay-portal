@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _addAccountEntryUser(creatorPassword = null,userLastName = null,userScreenName = null,userEmailAddress = null,userFirstName = null,accountEntryName = null,creatorEmailAddress = null,accountEntryId = null) {
+	macro _addAccountEntryUser(creatorPassword = null, userLastName = null, userScreenName = null, userEmailAddress = null, userFirstName = null, accountEntryName = null, creatorEmailAddress = null, accountEntryId = null) {
 		Variables.assertDefined(parameterList = ${accountEntryName});
 
 		var companyId = JSONCompany.getCompanyId();
@@ -28,7 +28,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addExistUsertoAccount(accountEntryId = null,userId = null) {
+	macro _addExistUsertoAccount(accountEntryId = null, userId = null) {
 		Variables.assertDefined(parameterList = "${accountEntryId},${userId}");
 
 		if (!(isSet(creatorEmailAddress))) {

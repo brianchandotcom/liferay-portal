@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _addBookmarks(groupId = null,name = null,serviceContext = null,folderId = null,url = null) {
+	macro _addBookmarks(groupId = null, name = null, serviceContext = null, folderId = null, url = null) {
 		Variables.assertDefined(parameterList = "${groupId},${folderId},${serviceContext},${url}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -30,7 +30,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addFolder(folderDescription = null,parentFolderId = null,folderName = null,serviceContext = null) {
+	macro _addFolder(folderDescription = null, parentFolderId = null, folderName = null, serviceContext = null) {
 		Variables.assertDefined(parameterList = "${folderName},${parentFolderId},${serviceContext}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -57,7 +57,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getFolderIdByFolderName(groupId = null,folderName = null) {
+	macro _getFolderIdByFolderName(groupId = null, folderName = null) {
 		Variables.assertDefined(parameterList = "${groupId},${folderName}");
 
 		var portalURL = JSONCompany.getPortalURL();

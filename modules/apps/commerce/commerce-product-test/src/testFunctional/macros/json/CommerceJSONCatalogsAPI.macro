@@ -84,7 +84,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getCommerceCatalogIdByName(catalogName = null,catalogCount = null) {
+	macro _getCommerceCatalogIdByName(catalogName = null, catalogCount = null) {
 		Variables.assertDefined(parameterList = ${catalogName});
 
 		var baseURL = ${baseURL};
@@ -152,7 +152,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _patchCommerceCatalog(accountIdByName = null,catalogName = null,newCatalogName = null) {
+	macro _patchCommerceCatalog(accountIdByName = null, catalogName = null, newCatalogName = null) {
 		Variables.assertDefined(parameterList = ${catalogName});
 
 		var baseURL = ${baseURL};

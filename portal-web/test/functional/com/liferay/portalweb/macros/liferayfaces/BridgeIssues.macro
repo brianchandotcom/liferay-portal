@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addPageAndPortlet(pageURL = null,portletName = null) {
+	macro addPageAndPortlet(pageURL = null, portletName = null) {
 		JSONLayout.addPublicLayout(
 			groupName = "Bridge Issues",
 			layoutName = ${portletName});
@@ -21,7 +21,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro navigateToDo(urlAppend = null,pageLink = null) {
+	macro navigateToDo(urlAppend = null, pageLink = null) {
 		var key_urlAppend = ${urlAppend};
 
 		Navigator.openWithAppendToBaseURL(urlAppend = ${key_urlAppend});
@@ -45,7 +45,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro upload3250File(mode = null,fileName = null,instantAjax = null) {
+	macro upload3250File(mode = null, fileName = null, instantAjax = null) {
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
 			key_mode = ${mode},
 			locator1 = "BridgeIssues#CHOOSE_FILE_BUTTON",
@@ -59,7 +59,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro urlParameters(buttonName = null,urlEnd = null,alpha = null,beta = null,gamma = null) {
+	macro urlParameters(buttonName = null, urlEnd = null, alpha = null, beta = null, gamma = null) {
 		Click(
 			key_buttonName = ${buttonName},
 			locator1 = "BridgeIssues#URL_BUTTON");
@@ -80,7 +80,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro verifyParam(liIndex = null,paramLink = null,ulIndex = null,paramValue = null) {
+	macro verifyParam(liIndex = null, paramLink = null, ulIndex = null, paramValue = null) {
 		var key_liIndex = ${liIndex};
 		var key_ulIndex = ${ulIndex};
 
@@ -98,7 +98,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro verifyValue(toPageLink = null,inValidURL = null,restoreState = null,textValue = null,statusValue = null,detailValue = null,link = null,validURL = null) {
+	macro verifyValue(toPageLink = null, inValidURL = null, restoreState = null, textValue = null, statusValue = null, detailValue = null, link = null, validURL = null) {
 		if (${restoreState} == "true") {
 			Click(
 				key_pageLink = ${link},

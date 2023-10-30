@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro createAccount(firstName = null,lastName = null,emailAddress = null,password = null,screenName = null) {
+	macro createAccount(firstName = null, lastName = null, emailAddress = null, password = null, screenName = null) {
 		AssertClick(
 			locator1 = "Link#CREATE_ACCOUNT",
 			value1 = "Create Account");
@@ -50,7 +50,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro goToLink(key_href = null,key_description = null,key_buttonName = null,key_title = null) {
+	macro goToLink(key_href = null, key_description = null, key_buttonName = null, key_title = null) {
 		Click(
 			key_buttonName = ${key_buttonName},
 			key_href = ${key_href},
@@ -90,7 +90,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro signIn(emailAddress = null,password = null) {
+	macro signIn(emailAddress = null, password = null) {
 		if (isSet(emailAddress)) {
 			Type(
 				labelTitle = "Email Address",
@@ -125,7 +125,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro simulateAndViewPageElements(deviceType = null,elementsList = null) {
+	macro simulateAndViewPageElements(deviceType = null, elementsList = null) {
 		MobileDevice.previewPG(deviceType = ${deviceType});
 
 		for (var element : list ${elementsList}) {
@@ -147,7 +147,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCoursesInPage(key_href = null,key_description = null,key_title = null,key_buttonName = null) {
+	macro viewCoursesInPage(key_href = null, key_description = null, key_title = null, key_buttonName = null) {
 		if (isSet(title)) {
 			AssertElementPresent(
 				key_title = ${key_title},

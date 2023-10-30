@@ -19,7 +19,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getDependenciesDirPath(fileName = null,filePath = null) {
+	macro getDependenciesDirPath(fileName = null, filePath = null) {
 		var projectDir = PropsUtil.get("project.dir");
 		var testBaseDir = PropsUtil.get("test.base.dir.name");
 		var testDependenciesDir = PropsUtil.get("test.dependencies.dir.name");
@@ -207,7 +207,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updatePortalProperties(newProperty = null,oldProperty = null) {
+	macro updatePortalProperties(newProperty = null, oldProperty = null) {
 		if (isSet(oldProperty)) {
 			AntCommands.runCommand("build-test.xml", "portal-ext-properties-update -Dupdate.properties=${newProperty} -Dupdate.properties.original=${oldProperty}");
 		}

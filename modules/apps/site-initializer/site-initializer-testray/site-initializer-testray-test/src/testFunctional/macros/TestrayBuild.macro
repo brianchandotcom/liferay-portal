@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addBuildViaUI(routine = null,productVersionOption = null,gitHash = null,description = null,dropdownItem = null,buildFieldName = null,caseList = null) {
+	macro addBuildViaUI(routine = null, productVersionOption = null, gitHash = null, description = null, dropdownItem = null, buildFieldName = null, caseList = null) {
 		if (!(isSet(addVersion))) {
 			var addVersion = "1.3";
 		}
@@ -55,7 +55,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addBuildWithMultipleOptions(labelStack = null,productVersion = null,fieldName = null,routine = null,gitHash = null,addVersion = null,stackName = null,description = null,dropdownItem = null,optionName = null,categoryName = null,caseList = null) {
+	macro addBuildWithMultipleOptions(labelStack = null, productVersion = null, fieldName = null, routine = null, gitHash = null, addVersion = null, stackName = null, description = null, dropdownItem = null, optionName = null, categoryName = null, caseList = null) {
 		Click(locator1 = "Button#PLUS");
 
 		if (isSet(dropdownItem)) {
@@ -115,7 +115,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addNewOptionInBuild(category = null,option = null) {
+	macro addNewOptionInBuild(category = null, option = null) {
 		Button.click(button = "Add Option");
 
 		SelectFrame(locator1 = "Testray#MODAL_BODY");
@@ -137,7 +137,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addSelectStacksInBuild(parameterLabel = null,stackOptions = null) {
+	macro addSelectStacksInBuild(parameterLabel = null, stackOptions = null) {
 		Button.click(button = "Select Stacks");
 
 		Click(
@@ -176,7 +176,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editBuild(productVersion = null,newName = null,routine = null,gitHash = null,addVersion = null,description = null,caseList = null) {
+	macro editBuild(productVersion = null, newName = null, routine = null, gitHash = null, addVersion = null, description = null, caseList = null) {
 		if (isSet(newName)) {
 			PortletEntry.inputName(name = ${newName});
 		}

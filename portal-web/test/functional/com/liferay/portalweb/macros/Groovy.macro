@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro runScriptViaGogoShell(expectedOutput = null,scriptFile = null) {
+	macro runScriptViaGogoShell(expectedOutput = null, scriptFile = null) {
 		if (!(isSet(nodePort))) {
 			var nodePort = 8080;
 		}

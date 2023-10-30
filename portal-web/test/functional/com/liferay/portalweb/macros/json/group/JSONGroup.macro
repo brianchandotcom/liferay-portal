@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro assignGroupRoleToUser(groupName = null,roleTitle = null,userEmailAddress = null,parentGroupName = null) {
+	macro assignGroupRoleToUser(groupName = null, roleTitle = null, userEmailAddress = null, parentGroupName = null) {
 		Variables.assertDefined(parameterList = "${roleTitle},${userEmailAddress}");
 
 		if (!(isSet(groupId))) {
@@ -20,7 +20,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assignGroupRoleToUserGroup(groupName = null,roleTitle = null,userGroupName = null,parentGroupName = null) {
+	macro assignGroupRoleToUserGroup(groupName = null, roleTitle = null, userGroupName = null, parentGroupName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${roleTitle},${userGroupName}");
 
 		var groupId = JSONGroupSetter.setGroupId(
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assignOrganizationToGroup(groupName = null,organizationName = null,parentGroupName = null) {
+	macro assignOrganizationToGroup(groupName = null, organizationName = null, parentGroupName = null) {
 		Variables.assertDefined(parameterList = ${organizationName});
 
 		if (!(isSet(groupId))) {
@@ -53,7 +53,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assignUserGroupToGroup(groupName = null,userGroupName = null) {
+	macro assignUserGroupToGroup(groupName = null, userGroupName = null) {
 		Variables.assertDefined(parameterList = ${userGroupName});
 
 		if (!(isSet(groupId))) {
@@ -68,7 +68,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assignUserToGroup(groupName = null,userEmailAddress = null,parentGroupName = null) {
+	macro assignUserToGroup(groupName = null, userEmailAddress = null, parentGroupName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${userEmailAddress}");
 
 		var groupId = JSONGroupSetter.setGroupId(
@@ -82,7 +82,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteGroupByName(groupName = null,portalURL = null) {
+	macro deleteGroupByName(groupName = null, portalURL = null) {
 		Variables.assertDefined(parameterList = ${groupName});
 
 		var groupId = JSONGroupSetter.setGroupId(

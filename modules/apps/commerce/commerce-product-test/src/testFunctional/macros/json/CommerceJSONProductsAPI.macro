@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _addCommerceProduct(specifications = null,productName = null,catalogName = null,replacementSKU = null) {
+	macro _addCommerceProduct(specifications = null, productName = null, catalogName = null, replacementSKU = null) {
 		Variables.assertDefined(parameterList = "${catalogName},${productName},${productType}");
 
 		var productType = StringUtil.lowerCase(${productType});
@@ -383,7 +383,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addCommerceProductImageLinkedToOptionValue(optionValue = null,productERC = null,optionName = null) {
+	macro _addCommerceProductImageLinkedToOptionValue(optionValue = null, productERC = null, optionName = null) {
 		Variables.assertDefined(parameterList = "${productERC},${optionName},${optionValue}");
 
 		var baseURL = JSONCompany.getPortalURL();
@@ -420,7 +420,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addCommerceProductSku(skuName = null,productName = null) {
+	macro _addCommerceProductSku(skuName = null, productName = null) {
 		Variables.assertDefined(parameterList = "${productName},${skuName}");
 
 		var baseURL = ${baseURL};
@@ -473,7 +473,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addCommerceProductSpecifications(specificationKey = null,value = null,productName = null) {
+	macro _addCommerceProductSpecifications(specificationKey = null, value = null, productName = null) {
 		Variables.assertDefined(parameterList = "${productName},${specificationKey},${value}");
 
 		var baseURL = ${baseURL};
@@ -509,7 +509,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addDiagramPin(quantity = null,label = null,positionX = null,positionY = null,diagram = null,linkedDiagram = null,linkedSKU = null,position = null) {
+	macro _addDiagramPin(quantity = null, label = null, positionX = null, positionY = null, diagram = null, linkedDiagram = null, linkedSKU = null, position = null) {
 		Variables.assertDefined(parameterList = "${pinType},${position},${positionX},${positionY},${quantity},${diagram}");
 
 		var baseURL = ${baseURL};
@@ -605,7 +605,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _deleteCommerceProductAttachment(attachmentName = null,type = null,productName = null) {
+	macro _deleteCommerceProductAttachment(attachmentName = null, type = null, productName = null) {
 		Variables.assertDefined(parameterList = "${attachmentName},${productName},${type}");
 
 		var baseURL = JSONCompany.getPortalURL();
@@ -632,7 +632,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getCommerceFieldValue(groupName = null,field = null) {
+	macro _getCommerceFieldValue(groupName = null, field = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var title = StringUtil.replace(${title}, " ", "%20");
 		var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = ${groupName});
@@ -781,7 +781,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getCommerceProductImageURL(productId = null,channelId = null) {
+	macro _getCommerceProductImageURL(productId = null, channelId = null) {
 		Variables.assertDefined(parameterList = "${channelId},${productId}");
 
 		var baseURL = ${baseURL};
@@ -804,7 +804,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getCommerceProductOptionId(productOptionName = null,productName = null) {
+	macro _getCommerceProductOptionId(productOptionName = null, productName = null) {
 		Variables.assertDefined(parameterList = "${productName},${productOptionName}");
 
 		var baseURL = ${baseURL};
@@ -1029,7 +1029,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getProductId(productSKU = null,productName = null) {
+	macro _getProductId(productSKU = null, productName = null) {
 		if (isSet(productSKU)) {
 			var search = ${productSKU};
 		}
@@ -1092,7 +1092,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _patchCommerceProductAttachmentUsingERC(customFieldContent = null,productERC = null,customFieldName = null,customFieldType = null) {
+	macro _patchCommerceProductAttachmentUsingERC(customFieldContent = null, productERC = null, customFieldName = null, customFieldType = null) {
 		Variables.assertDefined(parameterList = ${productERC});
 
 		var baseURL = JSONCompany.getPortalURL();
@@ -1308,7 +1308,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _patchCommerceProductRelations(productRelations = null,baseProductName = null) {
+	macro _patchCommerceProductRelations(productRelations = null, baseProductName = null) {
 		Variables.assertDefined(parameterList = "${baseProductName},${productRelations}");
 
 		var baseURL = ${baseURL};
@@ -1367,7 +1367,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _patchCommerceSku(replacementSku = null,productSku = null) {
+	macro _patchCommerceSku(replacementSku = null, productSku = null) {
 		Variables.assertDefined(parameterList = ${productSku});
 
 		var baseURL = ${baseURL};
@@ -1497,7 +1497,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _updateCommerceProduct(productName = null,increaseMinutes = null) {
+	macro _updateCommerceProduct(productName = null, increaseMinutes = null) {
 		Variables.assertDefined(parameterList = ${productName});
 
 		var baseURL = ${baseURL};
@@ -1593,7 +1593,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addCommerceProductSku(skuName = null,promoPrice = null,purchasable = null,cost = null,price = null,published = null,productName = null) {
+	macro addCommerceProductSku(skuName = null, promoPrice = null, purchasable = null, cost = null, price = null, published = null, productName = null) {
 		Variables.assertDefined(parameterList = "${productName},${skuName}");
 
 		var responseBody = CommerceJSONProductsAPI._addCommerceProductSku(
@@ -1611,7 +1611,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getCommerceProductMediaFieldValues(jsonPath = null,type = null,productName = null) {
+	macro getCommerceProductMediaFieldValues(jsonPath = null, type = null, productName = null) {
 		Variables.assertDefined(parameterList = "${jsonPath},${productName}");
 
 		if (${type} == "images") {
@@ -1630,7 +1630,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getProductField(jsonPath = null,productName = null) {
+	macro getProductField(jsonPath = null, productName = null) {
 		Variables.assertDefined(parameterList = "${jsonPath},${productName}");
 
 		var responseBody = CommerceJSONProductsAPI._getProductById(productName = ${productName});

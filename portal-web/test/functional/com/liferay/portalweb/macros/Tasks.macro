@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addTask(taskReporter = null,taskDescription = null,dueDate = null,taskPriority = null,dueTime = null,taskAssignee = null,numberOfTags = null) {
+	macro addTask(taskReporter = null, taskDescription = null, dueDate = null, taskPriority = null, dueTime = null, taskAssignee = null, numberOfTags = null) {
 		if (IsElementNotPresent(locator1 = "Tasks#TASK_DESCRIPTION")) {
 			AssertTextEquals(
 				locator1 = "Tasks#INFO_MESSAGE",

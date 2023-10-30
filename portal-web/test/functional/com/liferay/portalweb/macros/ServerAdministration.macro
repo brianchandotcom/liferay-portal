@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addCategoryLogLevels(categoryLevel = null,categoryName = null) {
+	macro addCategoryLogLevels(categoryLevel = null, categoryName = null) {
 		Navigator.gotoNavItem(navItem = "Log Levels");
 
 		LexiconEntry.gotoAdd();
@@ -33,7 +33,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureMailServerSettings(userPassword = null,needsReply = null,userName = null) {
+	macro configureMailServerSettings(userPassword = null, needsReply = null, userName = null) {
 		if (IsElementPresent(key_navItem = "Mail", locator1 = "NavBar#NAV_ITEM_LINK")) {
 			Navigator.gotoNavItem(navItem = "Mail");
 		}
@@ -98,7 +98,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro executeScript(htmlOutput = null,language = null,script = null) {
+	macro executeScript(htmlOutput = null, language = null, script = null) {
 		Navigator.gotoNavItem(navItem = "Script");
 
 		Select(
@@ -257,7 +257,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewProperties(propertyName = null,propertyTitle = null) {
+	macro viewProperties(propertyName = null, propertyTitle = null) {
 		Navigator.gotoNavItem(navItem = "Properties");
 
 		var key_propertyName = ${propertyName};

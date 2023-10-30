@@ -10,12 +10,12 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _openToAddQuestion(siteURLKey = null,topicName = null,layoutName = null) {
+	macro _openToAddQuestion(siteURLKey = null, topicName = null, layoutName = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${layoutName}#/questions/${topicName}/new");
 	}
 
 	@summary = "Default summary"
-	macro addRootTopic(rootTopicDescription = null,invalidCharacters = null,rootTopicName = null) {
+	macro addRootTopic(rootTopicDescription = null, invalidCharacters = null, rootTopicName = null) {
 		WaitForElementPresent(
 			key_text = "New Topic",
 			locator1 = "Button#ANY");
@@ -55,7 +55,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addSubTopic(subTopicDescription = null,subTopicName = null) {
+	macro addSubTopic(subTopicDescription = null, subTopicName = null) {
 		Click(locator1 = "Questions#NEW_TOPIC");
 
 		Type(
@@ -125,7 +125,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro askQuestionFillingTheMandatoryFields(tagLocatorList = null,password = null,depotName = null,titleField = null,siteURLKey = null,imageFileName = null,topicName = null,userEmailAddress = null,invalidCharacters = null,contentField = null,layoutName = null) {
+	macro askQuestionFillingTheMandatoryFields(tagLocatorList = null, password = null, depotName = null, titleField = null, siteURLKey = null, imageFileName = null, topicName = null, userEmailAddress = null, invalidCharacters = null, contentField = null, layoutName = null) {
 		if (isSet(siteURLKey)) {
 			Questions._openToAddQuestion(
 				layoutName = ${layoutName},
@@ -194,7 +194,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertCanonicalURL(category = null,title = null) {
+	macro assertCanonicalURL(category = null, title = null) {
 		var html = '''<link href="''';
 		var html2 = '''" rel="canonical" data-react-helmet="true">''';
 		var portalURL = ${portalURL};
@@ -228,7 +228,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro changeTopic(gotoParentTopic = null,parentTopicName = null,subTopicName = null) {
+	macro changeTopic(gotoParentTopic = null, parentTopicName = null, subTopicName = null) {
 		if (isSet(gotoParentTopic)) {
 			if (isSet(multipleSubTopics)) {
 				Click(locator1 = "Questions#QUESTIONS_BREADCRUMB_ELLIPSIS");
@@ -323,7 +323,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureRootTopic(parentCategoryName = null,categoryName = null,subCategoryName = null) {
+	macro configureRootTopic(parentCategoryName = null, categoryName = null, subCategoryName = null) {
 		Portlet.gotoPortletOptions(
 			portletName = "Questions",
 			portletOption = "Configuration");
@@ -379,7 +379,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createSomethingInMessageBoards(displayStyleOption = null,nameField = null,menuItem = null) {
+	macro createSomethingInMessageBoards(displayStyleOption = null, nameField = null, menuItem = null) {
 		LexiconEntry.gotoAdd();
 
 		MenuItem.click(menuItem = ${menuItem});
@@ -563,7 +563,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editQuestion(questionTitle = null,contentFieldEdit = null,titleFieldEdit = null) {
+	macro editQuestion(questionTitle = null, contentFieldEdit = null, titleFieldEdit = null) {
 		Questions.gotoDetails(
 			questionTabField = "Questions",
 			questionTitle = ${questionTitle});
@@ -600,7 +600,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editRootTopic(groupName = null,categoryNameEdit = null,siteURLKey = null,categoryName = null) {
+	macro editRootTopic(groupName = null, categoryNameEdit = null, siteURLKey = null, categoryName = null) {
 		if (isSet(siteURLKey)) {
 			MessageboardsCategory.openToEditCategory(
 				categoryName = ${categoryName},
@@ -757,12 +757,12 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToEditQuestion(siteURLKey = null,topicName = null,questionsTitle = null,layoutName = null) {
+	macro openToEditQuestion(siteURLKey = null, topicName = null, questionsTitle = null, layoutName = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${layoutName}#/questions/${topicName}/${questionsTitle}/edit");
 	}
 
 	@summary = "Default summary"
-	macro openToQuestionDetails(siteURLKey = null,topicName = null,questionsTitle = null,friendlyURL = null,layoutName = null) {
+	macro openToQuestionDetails(siteURLKey = null, topicName = null, questionsTitle = null, friendlyURL = null, layoutName = null) {
 		if (isSet(localization)) {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${layoutName}#/questions/${topicName}/-");
 		}
@@ -775,14 +775,14 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToQuestionsTopic(siteURLKey = null,topicName = null,layoutName = null) {
+	macro openToQuestionsTopic(siteURLKey = null, topicName = null, layoutName = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${layoutName}#/questions/${topicName}");
 
 		WaitForPageLoad();
 	}
 
 	@summary = "Default summary"
-	macro openToTagsTab(siteURLKey = null,layoutName = null) {
+	macro openToTagsTab(siteURLKey = null, layoutName = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = "web/${siteURLKey}/${layoutName}#/tags");
 
 		WaitForPageLoad();
@@ -833,7 +833,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro search(resultsInfo = null,searchKey = null) {
+	macro search(resultsInfo = null, searchKey = null) {
 		if (isSet(searchTag)) {
 			Type(
 				locator1 = "Questions#SEARCH_QUESTION_FIELD",
@@ -956,7 +956,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewFilterResults(questionTitle = null,lastQuestionTitle = null) {
+	macro viewFilterResults(questionTitle = null, lastQuestionTitle = null) {
 		AssertTextEquals(
 			key_questionTitle = ${questionTitle},
 			locator1 = "Questions#QUESTIONS_TITLE",
@@ -989,7 +989,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewList(unlistedQuestions = null,listedQuestions = null) {
+	macro viewList(unlistedQuestions = null, listedQuestions = null) {
 		if (isSet(unlistedQuestions)) {
 			for (var unlistedQuestion : list ${unlistedQuestions}) {
 				AssertElementNotPresent(
@@ -1123,7 +1123,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewQuestionViaTag(questionTitle = null,tagName = null) {
+	macro viewQuestionViaTag(questionTitle = null, tagName = null) {
 		Click(
 			key_tagName = ${tagName},
 			locator1 = "Questions#TAGS_LIST_TAB_NAMES");
@@ -1156,7 +1156,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewStatistics(headerName = null,userName = null) {
+	macro viewStatistics(headerName = null, userName = null) {
 		MouseOver(
 			key_userName = ${userName},
 			locator1 = "Questions#QUESTIONS_STATISTICS_USER_NAME");
@@ -1244,7 +1244,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTags(tagName = null,amountOfUsedTimes = null) {
+	macro viewTags(tagName = null, amountOfUsedTimes = null) {
 		if (isSet(noTagResults)) {
 			AssertTextEquals(
 				locator1 = "Questions#TAGS_LIST_TAB_NO_RESULTS",
@@ -1265,7 +1265,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTagsFilterResults(usedTimes = null,position = null,tagName = null) {
+	macro viewTagsFilterResults(usedTimes = null, position = null, tagName = null) {
 		AssertTextEquals.assertPartialText(
 			key_position = ${position},
 			locator1 = "Questions#TAGS_POSITION",
@@ -1336,7 +1336,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewVotedResult(questionTitle = null,votedCount = null,votedCaret = null) {
+	macro viewVotedResult(questionTitle = null, votedCount = null, votedCaret = null) {
 		if (isSet(answersList)) {
 			AssertTextEquals(
 				key_votedResult = ${votedCount},

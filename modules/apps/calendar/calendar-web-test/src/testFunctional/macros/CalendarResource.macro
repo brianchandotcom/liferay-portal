@@ -67,7 +67,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro edit(calendarResourceName = null,calendarResourceNameEdit = null) {
+	macro edit(calendarResourceName = null, calendarResourceNameEdit = null) {
 		CalendarNavigator.gotoResources();
 
 		var key_calendarResourceName = ${calendarResourceName};

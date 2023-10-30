@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addCategoriesFilter(queryContains = null,queryAndOperator = null,categoryNameList = null) {
+	macro addCategoriesFilter(queryContains = null, queryAndOperator = null, categoryNameList = null) {
 		Panel.expandPanel(panel = "Filter");
 
 		if (isSet(queryAndOperator)) {
@@ -61,7 +61,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addKeywordsFilter(keyWords = null,queryContains = null,queryAndOperator = null) {
+	macro addKeywordsFilter(keyWords = null, queryContains = null, queryAndOperator = null) {
 		Panel.expandPanel(panel = "Source");
 
 		if (!(IsSelectedLabel(locator1 = "APConfiguration#SOURCE_SCOPE_ASSET_TYPE_SELECT", value1 = "All Types"))) {
@@ -144,7 +144,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addSelection(menuItem = null,collectionName = null,selectedAsset = null) {
+	macro addSelection(menuItem = null, collectionName = null, selectedAsset = null) {
 		Click(locator1 = "Button#NEW");
 
 		MenuItem.click(menuItem = ${menuItem});
@@ -167,7 +167,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addTagsFilter(queryContains = null,queryAndOperator = null,tagNameList = null) {
+	macro addTagsFilter(queryContains = null, queryAndOperator = null, tagNameList = null) {
 		Panel.expandPanel(panel = "Filter");
 
 		if (isSet(queryAndOperator)) {
@@ -246,7 +246,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureItemTypeInDynamicCollection(itemType = null,itemSubtype = null) {
+	macro configureItemTypeInDynamicCollection(itemType = null, itemSubtype = null) {
 		WaitForPageLoad();
 
 		Panel.expandPanel(panel = "Source");
@@ -271,7 +271,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureItemTypeInManualCollection(itemType = null,variationName = null,itemSubtype = null) {
+	macro configureItemTypeInManualCollection(itemType = null, variationName = null, itemSubtype = null) {
 		WaitForPageLoad();
 
 		if (isSet(variationName)) {
@@ -298,7 +298,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureScope(otherSite = null,assetListTitle = null,defaultSite = null,selectedAsset = null) {
+	macro configureScope(otherSite = null, assetListTitle = null, defaultSite = null, selectedAsset = null) {
 		Click(
 			key_title = ${assetListTitle},
 			locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
@@ -453,7 +453,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoEntryMenuItem(item = null,assetListTitle = null) {
+	macro gotoEntryMenuItem(item = null, assetListTitle = null) {
 		LexiconList.clickEllipsisItem(
 			item = ${item},
 			listEntry = ${assetListTitle});
@@ -477,7 +477,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openViewItems(personalizedVariation = null,assetListTitle = null) {
+	macro openViewItems(personalizedVariation = null, assetListTitle = null) {
 		if (isSet(assetListTitle)) {
 			LexiconEntry.gotoEntry(rowEntry = ${assetListTitle});
 		}
@@ -507,7 +507,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro removeScope(scopeName = null,assetListTitle = null) {
+	macro removeScope(scopeName = null, assetListTitle = null) {
 		Click(
 			key_title = ${assetListTitle},
 			locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
@@ -529,7 +529,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro renameAssetList(newAssetListTitle = null,oldAssetListTitle = null) {
+	macro renameAssetList(newAssetListTitle = null, oldAssetListTitle = null) {
 		AssetListsAdmin.gotoEntryMenuItem(
 			assetListTitle = ${oldAssetListTitle},
 			item = "Rename");
@@ -563,7 +563,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectAsset(itemType = null,depotName = null,entryList = null,itemSubtype = null,assetListName = null,assetType = null) {
+	macro selectAsset(itemType = null, depotName = null, entryList = null, itemSubtype = null, assetListName = null, assetType = null) {
 		if (isSet(assetListName)) {
 			Click(
 				key_title = ${assetListName},
@@ -619,7 +619,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewAssetList(assetListTitle = null,type = null) {
+	macro viewAssetList(assetListTitle = null, type = null) {
 		var key_title = ${assetListTitle};
 		var key_type = ${type};
 
@@ -634,7 +634,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewAssetTypeList(itemType = null,assetTypeList = null,itemSubtype = null,assetListName = null) {
+	macro viewAssetTypeList(itemType = null, assetTypeList = null, itemSubtype = null, assetListName = null) {
 		var key_title = ${assetListName};
 
 		Click(locator1 = "AssetLists#ASSET_LIST_ENTRY_TITLE");
@@ -679,7 +679,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewContent(assetTitleList = null,personalizedVariation = null,assetListTitle = null,assetType = null) {
+	macro viewContent(assetTitleList = null, personalizedVariation = null, assetListTitle = null, assetType = null) {
 		AssetListsAdmin.openViewItems(
 			assetListTitle = ${assetListTitle},
 			personalizedVariation = ${personalizedVariation});
@@ -744,7 +744,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewNoContent(personalizedVariation = null,assetTitle = null,assetListTitle = null) {
+	macro viewNoContent(personalizedVariation = null, assetTitle = null, assetListTitle = null) {
 		AssetListsAdmin.openViewItems(
 			assetListTitle = ${assetListTitle},
 			personalizedVariation = ${personalizedVariation});

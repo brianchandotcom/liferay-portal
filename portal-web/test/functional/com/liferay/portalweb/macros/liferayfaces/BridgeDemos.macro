@@ -13,7 +13,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro autoPopulateCityState(city = null,postalCode = null,applicantName = null,state = null) {
+	macro autoPopulateCityState(city = null, postalCode = null, applicantName = null, state = null) {
 		Type(
 			key_text = "Zip/Postal",
 			locator1 = "TextInput#ANY",
@@ -40,7 +40,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro bookFlight(firstName = null,lastName = null,emailAddress = null,cvv = null,phoneNumber = null,province = null,city = null,addressLine1 = null,expirationMonth = null,title = null,accountNumber = null,paymentType = null) {
+	macro bookFlight(firstName = null, lastName = null, emailAddress = null, cvv = null, phoneNumber = null, province = null, city = null, addressLine1 = null, expirationMonth = null, title = null, accountNumber = null, paymentType = null) {
 		Select(
 			key_item = "title",
 			locator1 = "BridgeDemos#FLIGHT_SELECT",
@@ -119,7 +119,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editDateFormat(dateFormat = null,displayDate = null) {
+	macro editDateFormat(dateFormat = null, displayDate = null) {
 		BridgeDemos.gotoEdit();
 
 		Type(
@@ -134,7 +134,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editStartDate(dateFormat = null,displayDate = null) {
+	macro editStartDate(dateFormat = null, displayDate = null) {
 		Click(locator1 = "BridgeDemos#CUSTOMER_EDIT_BUTTON");
 
 		Type(
@@ -164,7 +164,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro findFlight(date = null,bookAdditionalTravel = null,arrival = null,bookingType = null,departure = null) {
+	macro findFlight(date = null, bookAdditionalTravel = null, arrival = null, bookingType = null, departure = null) {
 		Click(
 			key_buttonName = "Enter Booking Flow",
 			locator1 = "BridgeDemos#JSF_FLOWS_BUTTON");
@@ -223,7 +223,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro submit(firstName = null,lastName = null,emailAddress = null,phoneNumber = null,comments = null,city = null,postalCode = null,applicantName = null,state = null,confirmation = null) {
+	macro submit(firstName = null, lastName = null, emailAddress = null, phoneNumber = null, comments = null, city = null, postalCode = null, applicantName = null, state = null, confirmation = null) {
 		Type(
 			key_text = "First Name",
 			locator1 = "TextInput#ANY",
@@ -275,7 +275,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro submitSurvey(question2 = null,question1 = null) {
+	macro submitSurvey(question2 = null, question1 = null) {
 		Click(
 			key_buttonName = "Call Survey Flow",
 			locator1 = "BridgeDemos#JSF_FLOWS_BUTTON");
@@ -304,7 +304,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro uploadFile(fileName = null,applicantName = null) {
+	macro uploadFile(fileName = null, applicantName = null) {
 		if (${applicantName} == "JSF JSP") {
 			Click(locator1 = "BridgeDemos#ADD_ATTACHMENT");
 		}
@@ -326,7 +326,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro validateField(fieldNameText = null,fieldName = null,errorMessage = null,applicantName = null,fieldValue = null,urlAppend = null) {
+	macro validateField(fieldNameText = null, fieldName = null, errorMessage = null, applicantName = null, fieldValue = null, urlAppend = null) {
 		Navigator.openWithAppendToBaseURL(urlAppend = ${urlAppend});
 
 		if (${applicantName} == "JSF JSP") {
@@ -429,7 +429,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewFieldErrorMessage(fieldName = null,errorMessage = null,applicantName = null) {
+	macro viewFieldErrorMessage(fieldName = null, errorMessage = null, applicantName = null) {
 		if (${applicantName} == "Butter Faces") {
 			AssertTextEquals.assertPartialText(
 				key_fieldName = ${fieldName},
@@ -460,7 +460,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewNames(firstName = null,lastName = null,firstNameEdit = null,customerId = null,lastNameEdit = null) {
+	macro viewNames(firstName = null, lastName = null, firstNameEdit = null, customerId = null, lastNameEdit = null) {
 		Click(
 			key_customerId = ${customerId},
 			locator1 = "BridgeDemos#CUSTOMER_EDIT_BUTTON");
@@ -529,7 +529,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewStartDate(customerId = null,startDateEdit = null,startDate = null) {
+	macro viewStartDate(customerId = null, startDateEdit = null, startDate = null) {
 		Click(
 			key_customerId = ${customerId},
 			locator1 = "BridgeDemos#CUSTOMER_EDIT_BUTTON");

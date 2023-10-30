@@ -12,7 +12,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureURLPattern(errorMessage = null,multipleURL = null,urlPattern = null) {
+	macro configureURLPattern(errorMessage = null, multipleURL = null, urlPattern = null) {
 		Type(
 			locator1 = "ExportImport#URL_PATTERN",
 			value1 = ${urlPattern});
@@ -46,7 +46,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deployInstanceConfigFile(portalInstanceName = null,osgiConfigFileName = null) {
+	macro deployInstanceConfigFile(portalInstanceName = null, osgiConfigFileName = null) {
 		var companyId = JSONCompany.getCompanyId(portalInstanceName = ${portalInstanceName});
 
 		AntCommands.runCommand("build-test-export-import.xml", "prepare-export-import-osgi-configuration -DcompanyId=${companyId} -Dosgi.config.file.name=${osgiConfigFileName}");
@@ -158,7 +158,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewValidationMessage(urlPattern = null,url = null) {
+	macro viewValidationMessage(urlPattern = null, url = null) {
 		AssertTextPresent(
 			locator1 = "Message#ERROR",
 			value1 = "Your request failed to complete.");

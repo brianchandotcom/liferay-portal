@@ -61,7 +61,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureIPAddress(enableIp = null,allowedIp = null) {
+	macro configureIPAddress(enableIp = null, allowedIp = null) {
 		if (${enableIp} == "true") {
 			FormFields.enableCheckbox(fieldName = "enabled");
 
@@ -95,7 +95,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureOTP(enableOtp = null,order = null) {
+	macro configureOTP(enableOtp = null, order = null) {
 		if (${enableOtp} == "true") {
 			FormFields.enableCheckbox(fieldName = "enabled");
 		}
@@ -114,7 +114,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureOTPEmailSender(emailAddress = null,emailSenderName = null) {
+	macro configureOTPEmailSender(emailAddress = null, emailSenderName = null) {
 		Type(
 			locator1 = "MultiFactorAuthentication#EMAIL_OTP_SENDER_ADDRESS_FIELD",
 			value1 = ${emailAddress});
@@ -308,7 +308,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro verifyCustomOTP(userPassword = null,verificationText = null,specificURL = null,userEmailAddress = null) {
+	macro verifyCustomOTP(userPassword = null, verificationText = null, specificURL = null, userEmailAddress = null) {
 		if (isSet(specificURL)) {
 			Navigator.openSpecificURL(url = ${specificURL});
 		}
@@ -338,7 +338,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro verifyOTP(userPassword = null,validOtp = null,portalURL = null,recipient = null,specificURL = null,userEmailAddress = null) {
+	macro verifyOTP(userPassword = null, validOtp = null, portalURL = null, recipient = null, specificURL = null, userEmailAddress = null) {
 		if (${validOtp} == "false") {
 			Type(
 				locator1 = "MultiFactorAuthentication#EMAIL_OTP_VERIFY_FIELD",
@@ -387,7 +387,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewConfigurationPresent(configurationNameList = null,configurationScope = null) {
+	macro viewConfigurationPresent(configurationNameList = null, configurationScope = null) {
 		for (var configurationName : list ${configurationNameList}) {
 			AssertElementPresent(
 				key_configurationName = ${configurationName},
@@ -414,7 +414,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewOTPEmailSenderCP(emailAddress = null,emailSenderName = null) {
+	macro viewOTPEmailSenderCP(emailAddress = null, emailSenderName = null) {
 		AssertTextEquals(
 			locator1 = "MultiFactorAuthentication#EMAIL_OTP_SENDER_ADDRESS_FIELD",
 			value1 = ${emailAddress});

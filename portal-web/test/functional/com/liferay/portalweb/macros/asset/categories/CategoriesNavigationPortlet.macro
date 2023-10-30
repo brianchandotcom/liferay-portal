@@ -11,7 +11,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCustomADTMultiColumnPG(vocabularyNameList = null,columnList = null,categoryNameList = null) {
+	macro viewCustomADTMultiColumnPG(vocabularyNameList = null, columnList = null, categoryNameList = null) {
 		for (var column : list ${columnList}) {
 			var key_column = ${column};
 
@@ -50,7 +50,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewDefaultPG(vocabularyName = null,categoryName = null) {
+	macro viewDefaultPG(vocabularyName = null, categoryName = null) {
 		var key_nodeListName = ${vocabularyName};
 
 		Portlet.expandTree();

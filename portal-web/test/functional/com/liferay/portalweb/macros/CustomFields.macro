@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addCP(customBooleanDefaultValue = null,localization = null,baseURL = null,nameLocalization = null,modelResource = null,customInputDataType = null,resourceName = null,customFieldName = null,searchable = null,customFieldType = null,startingValue = null) {
+	macro addCP(customBooleanDefaultValue = null, localization = null, baseURL = null, nameLocalization = null, modelResource = null, customInputDataType = null, resourceName = null, customFieldName = null, searchable = null, customFieldType = null, startingValue = null) {
 		var key_resourceName = ${resourceName};
 
 		if (isSet(modelResource)) {
@@ -105,7 +105,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteCP(resourceName = null,customFieldName = null) {
+	macro deleteCP(resourceName = null, customFieldName = null) {
 		var key_resourceName = ${resourceName};
 
 		AssertClick(
@@ -128,7 +128,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editCP(resourceName = null,customFieldName = null,customFieldType = null,startingValue = null) {
+	macro editCP(resourceName = null, customFieldName = null, customFieldType = null, startingValue = null) {
 		var key_resourceName = ${resourceName};
 
 		AssertClick(
@@ -163,7 +163,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToAddResourceCustomField(baseURL = null,modelResource = null) {
+	macro openToAddResourceCustomField(baseURL = null, modelResource = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_expando_web_portlet_ExpandoPortlet&_com_liferay_expando_web_portlet_ExpandoPortlet_mvcPath=%2Fedit%2Fselect_field_type.jsp&_com_liferay_expando_web_portlet_ExpandoPortlet_modelResource=${modelResource}");
@@ -193,7 +193,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCPIsNotPresent(resourceName = null,customFieldName = null) {
+	macro viewCPIsNotPresent(resourceName = null, customFieldName = null) {
 		var key_resourceName = ${resourceName};
 
 		AssertClick(
@@ -206,7 +206,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCPIsPresent(resourceName = null,customFieldName = null) {
+	macro viewCPIsPresent(resourceName = null, customFieldName = null) {
 		var key_resourceName = ${resourceName};
 
 		AssertClick(

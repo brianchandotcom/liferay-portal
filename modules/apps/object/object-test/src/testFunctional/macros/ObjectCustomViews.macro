@@ -18,7 +18,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addDefaultSort(columnOption = null,sortOption = null) {
+	macro addDefaultSort(columnOption = null, sortOption = null) {
 		if (IsElementPresent(key_text = "No default sort was created yet", locator1 = "ObjectCustomViews#VIEW_BUILDER_EMPTY_STATE_TEXT")) {
 			ObjectCustomViews.addNewDefaultSort();
 		}
@@ -44,7 +44,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addNewAggregationFilterViaUI(dateValueList = null,filterValue = null,filterBy = null,filterType = null) {
+	macro addNewAggregationFilterViaUI(dateValueList = null, filterValue = null, filterBy = null, filterType = null) {
 		Click(locator1 = "ObjectCustomViews#ADD_BUTTON_FILTERS");
 
 		Click(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
@@ -89,7 +89,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addNewFilterViaUI(filterValue = null,filterBy = null,filterType = null) {
+	macro addNewFilterViaUI(filterValue = null, filterBy = null, filterType = null) {
 		Click(locator1 = "ObjectCustomViews#ADD_BUTTON_FILTERS");
 
 		Click(locator1 = "ObjectCustomViews#VIEW_MODAL_CONTENT");
@@ -133,7 +133,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertColumnPresentOnDefaultSort(sortingLabel = null,columnName = null) {
+	macro assertColumnPresentOnDefaultSort(sortingLabel = null, columnName = null) {
 		AssertElementPresent(
 			key_columnName = ${columnName},
 			locator1 = "ObjectCustomViews#DEFAULT_SORT_SEARCH_RESULT");
@@ -181,7 +181,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertPresentEntriesOnFilters(filterValue = null,filterBy = null) {
+	macro assertPresentEntriesOnFilters(filterValue = null, filterBy = null) {
 		AssertElementPresent(
 			key_columnName = ${filterBy},
 			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT");
@@ -212,7 +212,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro defineDateOnFilter(filterName = null,displayDateMonth = null,displayDateYear = null,displayDateDay = null) {
+	macro defineDateOnFilter(filterName = null, displayDateMonth = null, displayDateYear = null, displayDateDay = null) {
 		var displayDate = "${displayDateMonth}/${displayDateDay}/${displayDateYear}";
 
 		Type(
@@ -268,7 +268,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editSortingType(newSortOption = null,actualSort = null) {
+	macro editSortingType(newSortOption = null, actualSort = null) {
 		Click(
 			key_cardName = "Default Sort",
 			locator1 = "ObjectCustomViews#SELECT_DROPDOWN_ON_LABEL");
@@ -475,7 +475,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewOptionNotPresentInKebabMenu(entryName = null,menuItem = null) {
+	macro viewOptionNotPresentInKebabMenu(entryName = null, menuItem = null) {
 		if (IsElementPresent(key_objectLabel = ${entryName}, locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU")) {
 			Click(
 				key_objectLabel = ${entryName},
@@ -493,7 +493,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewOrdersOfTheColumns(position = null,columnName = null) {
+	macro viewOrdersOfTheColumns(position = null, columnName = null) {
 		AssertVisible(
 			key_columnName1 = ${columnName},
 			key_position = ${position},

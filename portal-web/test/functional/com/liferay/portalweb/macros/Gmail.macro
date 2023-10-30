@@ -27,7 +27,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoMail(emailFromUserName = null,gmailMessageTitle = null,gmailAssetType = null) {
+	macro gotoMail(emailFromUserName = null, gmailMessageTitle = null, gmailAssetType = null) {
 		var key_gmailAssetType = ${gmailAssetType};
 
 		if (IsElementNotPresent(locator1 = "Gmail#GMAIL_HTML_MODE_MAIL_TABLE_USER_NAME")) {
@@ -52,7 +52,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro login(userPassword = null,userEmailAddress = null) {
+	macro login(userPassword = null, userEmailAddress = null) {
 		Navigator.openSpecificURL(url = "http://www.gmail.com");
 
 		WaitForPageLoad();
@@ -96,7 +96,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro logoutAndLogin(userPassword = null,userEmailAddress = null) {
+	macro logoutAndLogin(userPassword = null, userEmailAddress = null) {
 		Navigator.openSpecificURL(url = "http://www.gmail.com");
 
 		WaitForPageLoad();
@@ -141,7 +141,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openMessageContinueReadingButton(siteName = null,contentTitle = null,pageName = null) {
+	macro openMessageContinueReadingButton(siteName = null, contentTitle = null, pageName = null) {
 		var pageNameURL = StringUtil.replace(${pageName}, " ", "-");
 
 		var pageNameURL = StringUtil.lowerCase("/${pageNameURL}");
@@ -159,7 +159,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openMessageLink(siteName = null,gmailAssetType = null,contentTitle = null) {
+	macro openMessageLink(siteName = null, gmailAssetType = null, contentTitle = null) {
 		var key_gmailAssetType = ${gmailAssetType};
 		var pageNameURL = StringUtil.replace(${pageName}, " ", "-");
 
@@ -200,7 +200,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewMail(emailFromUserName = null,gmailMessageTitle = null,gmailMessageBody = null,gmailAssetType = null,gmailMessageAttachment = null) {
+	macro viewMail(emailFromUserName = null, gmailMessageTitle = null, gmailMessageBody = null, gmailAssetType = null, gmailMessageAttachment = null) {
 		Gmail.gotoMail(
 			emailFromUserName = ${emailFromUserName},
 			gmailAssetType = ${gmailAssetType},

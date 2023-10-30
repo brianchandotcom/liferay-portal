@@ -17,7 +17,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editJsonwsUserView(userSuffixId = null,userBirthdayYear = null,userEmailAddress = null,userFirstName = null,userId = null,userFacebookId = null,userBirthdayMonth = null,userPrefixId = null,userLastName = null,userScreenName = null,userBirthdayDay = null,userRoleTitles = null) {
+	macro editJsonwsUserView(userSuffixId = null, userBirthdayYear = null, userEmailAddress = null, userFirstName = null, userId = null, userFacebookId = null, userBirthdayMonth = null, userPrefixId = null, userLastName = null, userScreenName = null, userBirthdayDay = null, userRoleTitles = null) {
 		AssertTextEquals(
 			locator1 = "JSONWSUser#API_METHOD",
 			value1 = "/user/update-user");

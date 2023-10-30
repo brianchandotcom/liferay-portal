@@ -1,7 +1,7 @@
 @default = "sikuliType"
 definition {
 
-	function sikuliType(locator1,value1) {
+	function sikuliType(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.sikuliType(${locator1}, ${value1});

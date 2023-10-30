@@ -39,7 +39,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewXSLPortletHymnDisplay(tableCountryEntry = null,tableYearEntry = null,tableTitleEntry = null,tableArtistEntry = null) {
+	macro viewXSLPortletHymnDisplay(tableCountryEntry = null, tableYearEntry = null, tableTitleEntry = null, tableArtistEntry = null) {
 		AssertTextEquals(
 			locator1 = "XSLContentPortlet#TITLE",
 			value1 = "My Hymn Collection");

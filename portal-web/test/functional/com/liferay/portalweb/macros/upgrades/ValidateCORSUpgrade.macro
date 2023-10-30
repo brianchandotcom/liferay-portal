@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro viewPortalCORS(name = null,header = null,urlPattern = null) {
+	macro viewPortalCORS(name = null, header = null, urlPattern = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${name});
@@ -18,7 +18,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewWebContextsCORS(filter = null,urlPattern = null) {
+	macro viewWebContextsCORS(filter = null, urlPattern = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${filter});

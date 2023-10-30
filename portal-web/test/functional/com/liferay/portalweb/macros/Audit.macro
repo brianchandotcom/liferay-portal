@@ -44,7 +44,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro searchCP(resourceAction = null,resourceId = null,searchTerm = null,groupId = null,match = null,resourceName = null,userName = null,userId = null) {
+	macro searchCP(resourceAction = null, resourceId = null, searchTerm = null, groupId = null, match = null, resourceName = null, userName = null, userId = null) {
 		if (${searchTerm} == ${resourceAction}) {
 			var reportFieldKey = "RESOURCE_ACTION";
 		}
@@ -105,7 +105,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro searchViaKeywords(searchTerm = null,resourceName = null) {
+	macro searchViaKeywords(searchTerm = null, resourceName = null) {
 		WaitForElementPresent(locator1 = "TextInput#SITE_SEARCH_KEYWORDS");
 
 		Type(
@@ -121,7 +121,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro verifyConfigurationElementIsConfigured(portlet = null,text = null,element = null) {
+	macro verifyConfigurationElementIsConfigured(portlet = null, text = null, element = null) {
 		Audit.gotoSystemSettings(portlet = ${portlet});
 
 		while ((IsTextNotEqual(locator1 = ${element}, value1 = ${text})) && (maxIterations = "10")) {
@@ -130,7 +130,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewAuditDetails(resourceAction = null,additionalInformation = null,clientIp = null,groupId = null,resourceName = null,userName = null) {
+	macro viewAuditDetails(resourceAction = null, additionalInformation = null, clientIp = null, groupId = null, resourceName = null, userName = null) {
 		var key_resourceAction = ${resourceAction};
 		var key_resourceName = ${resourceName};
 
@@ -176,7 +176,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewAuditDetailsByPosition(resourceAction = null,additionalInformation = null,clientIp = null,resourceName = null,userName = null,nameByPosition = null) {
+	macro viewAuditDetailsByPosition(resourceAction = null, additionalInformation = null, clientIp = null, resourceName = null, userName = null, nameByPosition = null) {
 		var key_resourceAction = ${resourceAction};
 		var key_resourceName = ${resourceName};
 
@@ -211,7 +211,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewAuditEntries(resourceAction = null,resourceID = null,clientIP = null,resourceName = null,id = null,position = null,userName = null,createDate = null) {
+	macro viewAuditEntries(resourceAction = null, resourceID = null, clientIP = null, resourceName = null, id = null, position = null, userName = null, createDate = null) {
 		AssertElementPresent(
 			key_clientIP = ${clientIP},
 			key_createDate = ${createDate},

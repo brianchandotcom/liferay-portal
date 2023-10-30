@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addCP(folderDescription = null,folderName = null) {
+	macro addCP(folderDescription = null, folderName = null) {
 		var key_webContentTitle = ${folderName};
 
 		LexiconEntry.gotoAdd();
@@ -28,7 +28,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addSubfolderCP(subfolderName = null,subfolderDescription = null,folderName = null) {
+	macro addSubfolderCP(subfolderName = null, subfolderDescription = null, folderName = null) {
 		var key_webContentTitle = ${folderName};
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
@@ -65,7 +65,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro checkSubfolderPermissions(subfolder = null,folderName = null) {
+	macro checkSubfolderPermissions(subfolder = null, folderName = null) {
 		var key_webContentTitle = ${folderName};
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
@@ -89,7 +89,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureWorkflowCP(workflowRestriction = null,workflowDefinition = null,structureName = null,folderName = null) {
+	macro configureWorkflowCP(workflowRestriction = null, workflowDefinition = null, structureName = null, folderName = null) {
 		WebContentFolder.gotoEditCP(
 			folderName = ${folderName},
 			webContentTitle = ${folderName});
@@ -136,7 +136,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoCP(webContentTitle = null,folderName = null) {
+	macro gotoCP(webContentTitle = null, folderName = null) {
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
 		var key_webContentTitle = ${webContentTitle};
@@ -155,7 +155,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoEditCP(webContentTitle = null,folderName = null) {
+	macro gotoEditCP(webContentTitle = null, folderName = null) {
 		var key_webContentTitle = ${folderName};
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
@@ -196,7 +196,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewFolderWorkflow(workflowResourceValue = null,folderName = null) {
+	macro viewFolderWorkflow(workflowResourceValue = null, folderName = null) {
 		WebContentFolder.gotoEditCP(
 			folderName = ${folderName},
 			webContentTitle = ${folderName});

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro gotoPagesPG(item = null,siteName = null,pageName = null) {
+	macro gotoPagesPG(item = null, siteName = null, pageName = null) {
 		LexiconList.clickEllipsisItem(
 			item = ${item},
 			listEntry = ${siteName});
@@ -14,7 +14,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewMembershipRequested(siteName = null,userRole = null) {
+	macro viewMembershipRequested(siteName = null, userRole = null) {
 		LexiconList.clickEllipsis(
 			listEntry = ${siteName},
 			userRole = ${userRole});
@@ -25,7 +25,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewNoOptions(navItem = null,siteName = null) {
+	macro viewNoOptions(navItem = null, siteName = null) {
 		Navigator.gotoNavItem(navItem = ${navItem});
 
 		AssertElementNotPresent(

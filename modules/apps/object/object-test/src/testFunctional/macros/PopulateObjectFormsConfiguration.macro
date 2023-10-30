@@ -31,7 +31,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro mapFormObjectField(formObjectField = null,fieldLabelName = null) {
+	macro mapFormObjectField(formObjectField = null, fieldLabelName = null) {
 		Click(locator1 = "PopulateObjectFormsConfiguration#ADVANCED_TAB");
 
 		AssertClick(
@@ -141,7 +141,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewUnmappedObjectRequiredFieldsError(fieldLabelName = null,fieldType = null) {
+	macro viewUnmappedObjectRequiredFieldsError(fieldLabelName = null, fieldType = null) {
 		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_OBJECT_REQUIRED_FIELDS_ERROR_MODAL_TITLE");
 
 		AssertElementPresent(locator1 = "PopulateObjectFormsConfiguration#UNMAPPED_OBJECT_REQUIRED_FIELDS_ERROR_MODAL_BODY");

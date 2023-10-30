@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addFolder(folderLabel = null,folderName = null) {
+	macro addFolder(folderLabel = null, folderName = null) {
 		Variables.assertDefined(parameterList = "${folderLabel},${folderName}");
 
 		var portalURL = JSONCompany.getPortalURL();

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _createDataSetEntry(restSchema = null,restApplication = null,dataSetName = null,restEndpoint = null) {
+	macro _createDataSetEntry(restSchema = null, restApplication = null, dataSetName = null, restEndpoint = null) {
 		Variables.assertDefined(parameterList = "${dataSetName},${restApplication},${restEndpoint},${restSchema}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -37,7 +37,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _createFDSViewViaAPI(defaultItemsPerPage = null,listOfItemsPerPage = null,dataSetViewName = null,dataSetName = null) {
+	macro _createFDSViewViaAPI(defaultItemsPerPage = null, listOfItemsPerPage = null, dataSetViewName = null, dataSetName = null) {
 		Variables.assertDefined(parameterList = "${dataSetName},${dataSetViewName}");
 
 		var portalURL = JSONCompany.getPortalURL();

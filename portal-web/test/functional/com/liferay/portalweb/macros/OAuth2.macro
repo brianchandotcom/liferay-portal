@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addAndEditExternalApplication(baseURL = null,clientId = null,clientProfile = null,websiteURL = null,callbackUri = null,checkboxCheckList = null,checkboxUncheckList = null,clientSecret = null,clientAuthenticationMethod = null,applicationName = null) {
+	macro addAndEditExternalApplication(baseURL = null, clientId = null, clientProfile = null, websiteURL = null, callbackUri = null, checkboxCheckList = null, checkboxUncheckList = null, clientSecret = null, clientAuthenticationMethod = null, applicationName = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(baseURL)) {
@@ -43,7 +43,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addApplication(jwks = null,clientProfile = null,websiteURL = null,callbackUri = null,checkboxCheckList = null,checkboxUncheckList = null,description = null,clientAuthenticationMethod = null,privacyPolicyURL = null,applicationName = null) {
+	macro addApplication(jwks = null, clientProfile = null, websiteURL = null, callbackUri = null, checkboxCheckList = null, checkboxUncheckList = null, description = null, clientAuthenticationMethod = null, privacyPolicyURL = null, applicationName = null) {
 		LexiconEntry.gotoAdd();
 
 		OAuth2.inputApplicationValues(
@@ -64,7 +64,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addApplicationPermissionToRole(userRole = null,applicationName = null) {
+	macro addApplicationPermissionToRole(userRole = null, applicationName = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Permissions",
 			rowEntry = ${applicationName});
@@ -103,7 +103,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPrefixHandlerInSystemSettings(excludedScopesName = null,symbolicName = null,separator = null,serviceProperties = null,osgiJaxrsName = null) {
+	macro addPrefixHandlerInSystemSettings(excludedScopesName = null, symbolicName = null, separator = null, serviceProperties = null, osgiJaxrsName = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
 			panel = "Control Panel",
@@ -140,7 +140,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertAbleToDeleteJournalArticle(msg = null,deleteOutput = null) {
+	macro assertAbleToDeleteJournalArticle(msg = null, deleteOutput = null) {
 		if (contains(${deleteOutput}, ${msg})) {
 			fail("Unable to delete journal article");
 		}
@@ -178,7 +178,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertPermissionsDenied(msg = null,deleteOutput = null) {
+	macro assertPermissionsDenied(msg = null, deleteOutput = null) {
 		if (!(contains(${deleteOutput}, ${msg}))) {
 			fail("Could not find message for denied permissions.");
 		}
@@ -200,7 +200,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro authorizeMyApplication(clientId = null,portalURL = null,clientSecret = null,noAuthorize = null,newTab = null) {
+	macro authorizeMyApplication(clientId = null, portalURL = null, clientSecret = null, noAuthorize = null, newTab = null) {
 		var oauth2URL = PropsUtil.get("oauth2.url");
 
 		if (${newTab} == "true") {
@@ -270,7 +270,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro authorizePKCEApplication(clientId = null,portalURL = null) {
+	macro authorizePKCEApplication(clientId = null, portalURL = null) {
 		Navigator.openSpecificURL(url = "https://localhost:8443/oauth2-tester/pkce/");
 
 		if (isSet(portalURL)) {
@@ -324,7 +324,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editApplication(newApplicationName = null,clientId = null,clientProfile = null,checkboxUncheckList = null,description = null,privacyPolicyURL = null,websiteURL = null,callbackUri = null,checkboxCheckList = null,clientSecret = null,generateNewSecret = null,applicationName = null) {
+	macro editApplication(newApplicationName = null, clientId = null, clientProfile = null, checkboxUncheckList = null, description = null, privacyPolicyURL = null, websiteURL = null, callbackUri = null, checkboxCheckList = null, clientSecret = null, generateNewSecret = null, applicationName = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${applicationName});
@@ -352,7 +352,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editScopes(uncheckGlobalScope = null,checkGlobalScope = null,resourcePanels = null,modalLinkScope = null,checkGlobalScopesViaModal = null,resourceUncheckList = null,uncheckAllResourceScopes = null,resourceCheckList = null,applicationName = null) {
+	macro editScopes(uncheckGlobalScope = null, checkGlobalScope = null, resourcePanels = null, modalLinkScope = null, checkGlobalScopesViaModal = null, resourceUncheckList = null, uncheckAllResourceScopes = null, resourceCheckList = null, applicationName = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${applicationName});
@@ -469,7 +469,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getAccessToken(client_secret = null,grantFlow = null,client_id = null) {
+	macro getAccessToken(client_secret = null, grantFlow = null, client_id = null) {
 		if (!(isSet(portalURL))) {
 			var portalURL = JSONCompany.getPortalURL();
 		}
@@ -544,7 +544,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro inputApplicationValues(clientId = null,clientProfile = null,description = null,checkboxUncheckList = null,privacyPolicyURL = null,websiteURL = null,callbackUri = null,checkboxCheckList = null,clientCredentialsUser = null,clientSecret = null,clientAuthenticationMethod = null,generateNewSecret = null,applicationName = null) {
+	macro inputApplicationValues(clientId = null, clientProfile = null, description = null, checkboxUncheckList = null, privacyPolicyURL = null, websiteURL = null, callbackUri = null, checkboxCheckList = null, clientCredentialsUser = null, clientSecret = null, clientAuthenticationMethod = null, generateNewSecret = null, applicationName = null) {
 		if (isSet(clientId)) {
 			Click(locator1 = "OAuth2#ADMIN_INPUT_FORM_CLIENT_ID_EDIT_BUTTON");
 
@@ -773,7 +773,7 @@ definition {
 
 	@description = "Request the liferay access token for OAuth2 application with the JWT via curl."
 	@summary = "Default summary"
-	macro requestAccessTokenWithJWTViaCurl(clientId = null,jwtFileBaseDir = null,jwtFileName = null,clientSecret = null,scopes = null) {
+	macro requestAccessTokenWithJWTViaCurl(clientId = null, jwtFileBaseDir = null, jwtFileName = null, clientSecret = null, scopes = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var jwt = FileUtil.read("${jwtFileBaseDir}/${jwtFileName}");
 
@@ -819,7 +819,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro revokeGrantedAuthViaAdmin(userName = null,applicationName = null) {
+	macro revokeGrantedAuthViaAdmin(userName = null, applicationName = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${applicationName});
@@ -871,7 +871,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewApplication(clientId = null,jwks = null,websiteURL = null,clientProfile = null,callbackUri = null,checkboxCheckList = null,description = null,clientSecret = null,clientAuthenticationMethod = null,privacyPolicyURL = null,applicationName = null) {
+	macro viewApplication(clientId = null, jwks = null, websiteURL = null, clientProfile = null, callbackUri = null, checkboxCheckList = null, description = null, clientSecret = null, clientAuthenticationMethod = null, privacyPolicyURL = null, applicationName = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${applicationName});
@@ -954,7 +954,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewApplicationInAuthorizationsTable(entryIndex = null,tableEntry = null) {
+	macro viewApplicationInAuthorizationsTable(entryIndex = null, tableEntry = null) {
 		AssertTextEquals(
 			key_columnName = "lfr-authorizations",
 			key_tableEntry = ${tableEntry},
@@ -963,7 +963,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewApplicationInTable(clientId = null,description = null,applicationName = null) {
+	macro viewApplicationInTable(clientId = null, description = null, applicationName = null) {
 		AssertElementPresent(
 			key_tableName = ${applicationName},
 			locator1 = "OAuth2#ADMIN_TABLE_APP_NAME");
@@ -1010,7 +1010,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewGrantedAuthViaAdmin(noAuthorizations = null,userName = null,applicationName = null) {
+	macro viewGrantedAuthViaAdmin(noAuthorizations = null, userName = null, applicationName = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${applicationName});
@@ -1039,7 +1039,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewGrantedAuthViaUser(noAuthorizations = null,applicationName = null) {
+	macro viewGrantedAuthViaUser(noAuthorizations = null, applicationName = null) {
 		Navigator.openURL();
 
 		UserBar.gotoDropdownItem(dropdownItem = "My Connected Applications");
@@ -1065,7 +1065,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPropertyInLiferayExtraProperties(propertyName = null,propertyValue = null) {
+	macro viewPropertyInLiferayExtraProperties(propertyName = null, propertyValue = null) {
 		AssertTextEquals(
 			key_columnName = "lfr-extra-properties",
 			key_tableEntry = ${propertyName},
@@ -1097,7 +1097,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewScopeAliases(resourcePanels = null,scopeAliasList = null,applicationName = null) {
+	macro viewScopeAliases(resourcePanels = null, scopeAliasList = null, applicationName = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${applicationName});
@@ -1116,7 +1116,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewScopeMappings(resourcePanels = null,scopeTranslation = null,applicationName = null,globalScopeLinkValue = null) {
+	macro viewScopeMappings(resourcePanels = null, scopeTranslation = null, applicationName = null, globalScopeLinkValue = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${applicationName});
@@ -1154,7 +1154,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewScopes(resourceCheckedList = null,resourceUncheckedList = null,resourcePanels = null,checkedGlobalScope = null,removedScope = null,uncheckedGlobalScope = null,modalLinkScope = null,allResourceScopesUnchecked = null,checkedGlobalScopesViaModal = null,applicationName = null) {
+	macro viewScopes(resourceCheckedList = null, resourceUncheckedList = null, resourcePanels = null, checkedGlobalScope = null, removedScope = null, uncheckedGlobalScope = null, modalLinkScope = null, allResourceScopesUnchecked = null, checkedGlobalScopesViaModal = null, applicationName = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${applicationName});
@@ -1260,7 +1260,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewValidOAuth2LaunchRequest(clientId = null,clientSecret = null) {
+	macro viewValidOAuth2LaunchRequest(clientId = null, clientSecret = null) {
 		Type(
 			locator1 = "OAuth2#OAUTH2_TESTER_CLIENT_ID_2",
 			value1 = ${clientId});

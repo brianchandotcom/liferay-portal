@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addServiceAccessPolicy(serviceClass = null,defaultSwitch = null,policyName = null,methodName = null,title = null,enabled = null) {
+	macro addServiceAccessPolicy(serviceClass = null, defaultSwitch = null, policyName = null, methodName = null, title = null, enabled = null) {
 		LexiconEntry.gotoAdd();
 
 		FormFields.editText(
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editServiceAccessPolicy(newName = null,serviceClass = null,policyName = null,methodName = null,allowedServiceSignature = null,title = null,enabled = null) {
+	macro editServiceAccessPolicy(newName = null, serviceClass = null, policyName = null, methodName = null, allowedServiceSignature = null, title = null, enabled = null) {
 		ServiceAccessPolicy.gotoServiceAccessPolicy(policyName = ${policyName});
 
 		if (isSet(allowedServiceSignature)) {
@@ -99,7 +99,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToServiceAccessPolicy(groupName = null,baseURL = null,siteURLKey = null) {
+	macro openToServiceAccessPolicy(groupName = null, baseURL = null, siteURLKey = null) {
 		var groupId = JSONGroupSetter.setGroupId(groupName = ${groupName});
 
 		Navigator.openWithAppendToBaseURL(

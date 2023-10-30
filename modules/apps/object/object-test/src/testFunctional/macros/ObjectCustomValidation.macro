@@ -13,7 +13,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addObjectValidation(validationName = null,validationType = null) {
+	macro addObjectValidation(validationName = null, validationType = null) {
 		LexiconEntry.gotoAdd();
 
 		Type(
@@ -30,7 +30,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertValidationPresent(validationName = null,validationType = null,validationActive = null) {
+	macro assertValidationPresent(validationName = null, validationType = null, validationActive = null) {
 		AssertElementPresent(
 			key_validationName = ${validationName},
 			locator1 = "ObjectCustomValidation#VIEW_LABEL_VALIDATION");

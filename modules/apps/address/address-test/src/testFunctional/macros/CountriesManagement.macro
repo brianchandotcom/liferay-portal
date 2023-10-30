@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _inputCountryDetails(threeLetterISOCode = null,countryNumber = null,countryKey = null,countryCallingCode = null,countryPriority = null,countryName = null,twoLetterISOCode = null) {
+	macro _inputCountryDetails(threeLetterISOCode = null, countryNumber = null, countryKey = null, countryCallingCode = null, countryPriority = null, countryName = null, twoLetterISOCode = null) {
 		if (isSet(countryName)) {
 			PortletEntry.inputName(name = ${countryName});
 		}
@@ -44,7 +44,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _inputRegionDetails(regionCode = null,regionKey = null,regionPriority = null,regionName = null) {
+	macro _inputRegionDetails(regionCode = null, regionKey = null, regionPriority = null, regionName = null) {
 		PortletEntry.inputName(name = ${regionName});
 
 		if (isSet(regionKey)) {
@@ -105,7 +105,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addCountry(countryNumber = null,threeLetterISOCode = null,countryKey = null,countryCallingCode = null,countryPriority = null,countryName = null,countryStatus = null,twoLetterISOCode = null) {
+	macro addCountry(countryNumber = null, threeLetterISOCode = null, countryKey = null, countryCallingCode = null, countryPriority = null, countryName = null, countryStatus = null, twoLetterISOCode = null) {
 		LexiconEntry.gotoAdd();
 
 		CountriesManagement._inputCountryDetails(
@@ -147,7 +147,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addRegion(regionStatus = null,regionCode = null,regionKey = null,regionPriority = null,regionName = null,countryName = null) {
+	macro addRegion(regionStatus = null, regionCode = null, regionKey = null, regionPriority = null, regionName = null, countryName = null) {
 		CountriesManagement.goToRegions(countryName = ${countryName});
 
 		LexiconEntry.gotoAdd();
@@ -212,7 +212,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteCountry(deleteType = null,countryName = null) {
+	macro deleteCountry(deleteType = null, countryName = null) {
 		Search.searchCP(searchTerm = ${countryName});
 
 		if (${deleteType} == "Delete Icon") {
@@ -249,7 +249,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteRegion(regionName = null,deleteType = null) {
+	macro deleteRegion(regionName = null, deleteType = null) {
 		Search.searchCP(searchTerm = ${regionName});
 
 		if (${deleteType} == "Delete Icon") {
@@ -286,7 +286,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editRegion(regionKeyEdit = null,regionName = null,regionCodeEdit = null,regionPriorityEdit = null,regionNameEdit = null,regionStatusEdit = null) {
+	macro editRegion(regionKeyEdit = null, regionName = null, regionCodeEdit = null, regionPriorityEdit = null, regionNameEdit = null, regionStatusEdit = null) {
 		LexiconEntry.gotoEntryMenuItemNoError(
 			menuItem = "Edit",
 			rowEntry = ${regionName});
@@ -347,7 +347,7 @@ definition {
 
 	@description = "Assert values in country table. Need to set countryName, billingAllowed, shippingAllowed, twoLetterISOCode, countryStatus"
 	@summary = "Default summary"
-	macro viewCountryInTable(billingAllowed = null,countryPriority = null,countryName = null,countryStatus = null,twoLetterISOCode = null,shippingAllowed = null) {
+	macro viewCountryInTable(billingAllowed = null, countryPriority = null, countryName = null, countryStatus = null, twoLetterISOCode = null, shippingAllowed = null) {
 		LexiconTable.viewTableEntryTitle(tableEntry = ${countryName});
 
 		if (${billingAllowed} == "true") {
@@ -404,7 +404,7 @@ definition {
 
 	@description = "Assert values in region table. Need to set regionName, regionCode, and regionStatus"
 	@summary = "Default summary"
-	macro viewRegionsInTable(regionStatus = null,regionCode = null,regionPriority = null,regionName = null) {
+	macro viewRegionsInTable(regionStatus = null, regionCode = null, regionPriority = null, regionName = null) {
 		LexiconTable.viewTableEntryTitle(tableEntry = ${regionName});
 
 		LexiconTable.viewTableEntryInfo(

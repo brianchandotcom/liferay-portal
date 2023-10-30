@@ -45,7 +45,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro compareValue(key_columnIndex = null,key_valueIndex2 = null,key_valueIndex1 = null) {
+	macro compareValue(key_columnIndex = null, key_valueIndex2 = null, key_valueIndex1 = null) {
 		var dataSetValue1 = FrontendDataSetCustomView.getValueByPosition(
 			columnIndex = ${key_columnIndex},
 			valueIndex = ${key_valueIndex1});
@@ -110,7 +110,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getValueByPosition(valueIndex = null,columnIndex = null) {
+	macro getValueByPosition(valueIndex = null, columnIndex = null) {
 		var key_columnIndex = ${columnIndex};
 		var key_valueIndex = ${valueIndex};
 		var dataSetValue = selenium.getText("FrontendDataSet#TABLE_CELL");

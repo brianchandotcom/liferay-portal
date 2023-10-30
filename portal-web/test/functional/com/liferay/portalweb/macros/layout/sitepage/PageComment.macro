@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addWithWorkflowPG(commentAuthor = null,commentBody = null) {
+	macro addWithWorkflowPG(commentAuthor = null, commentBody = null) {
 		PageComment.reply(commentBody = ${commentBody});
 
 		var key_commentBody = ${commentBody};
@@ -67,7 +67,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPG(commentAuthor = null,commentBody = null) {
+	macro viewPG(commentAuthor = null, commentBody = null) {
 		var key_commentBody = ${commentBody};
 
 		AssertElementNotPresent(locator1 = "Comments#WORKFLOW_STATUS");
@@ -85,7 +85,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewWithWorkflowPG(commentAuthor = null,commentBody = null,commentStatus = null) {
+	macro viewWithWorkflowPG(commentAuthor = null, commentBody = null, commentStatus = null) {
 		var key_commentBody = ${commentBody};
 
 		AssertTextEquals(

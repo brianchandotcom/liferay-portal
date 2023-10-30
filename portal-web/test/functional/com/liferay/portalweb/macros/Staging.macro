@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro activateStagingCP(pageVersioningEnabled = null,remotePort = null,siteName = null,siteId = null,uncheckContent = null,isNotEditable = null) {
+	macro activateStagingCP(pageVersioningEnabled = null, remotePort = null, siteName = null, siteId = null, uncheckContent = null, isNotEditable = null) {
 		ProductMenuHelper.openProductMenu();
 
 		AssertTextEquals.assertPartialText(
@@ -91,7 +91,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addCustomPublication(publishTemplateName = null,headerTitle = null) {
+	macro addCustomPublication(publishTemplateName = null, headerTitle = null) {
 		WaitForElementPresent(locator1 = "Button#PLUS");
 
 		LexiconEntry.gotoAdd();
@@ -139,7 +139,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPublishTemplate(publishTemplateDescription = null,publishTemplateName = null) {
+	macro addPublishTemplate(publishTemplateDescription = null, publishTemplateName = null) {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Publish Templates");
 
 		WaitForElementPresent(locator1 = "Button#PLUS");
@@ -154,7 +154,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addRepeatEvent(scheduleTitleName = null,frequency = null) {
+	macro addRepeatEvent(scheduleTitleName = null, frequency = null) {
 		Click(locator1 = "Staging#STAGING_PUBLISH_TO_LIVE_BUTTON");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
@@ -198,7 +198,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addSitePagesVariationPG(sitePagesVariationName = null,copySitePagesVariationName = null) {
+	macro addSitePagesVariationPG(sitePagesVariationName = null, copySitePagesVariationName = null) {
 		Click.waitForMenuToggleJSClick(locator1 = "Icon#STAGING_BAR_VERTICAL_ELLIPSIS");
 
 		Click(locator1 = "Staging#MANAGE_VARIATIONS");
@@ -328,7 +328,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro changePageVariationPG(pageVariationNameMenulistName = null,pageVariationName = null) {
+	macro changePageVariationPG(pageVariationNameMenulistName = null, pageVariationName = null) {
 		var key_pageVariationName = ${pageVariationName};
 
 		AssertClick(
@@ -354,7 +354,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro changeSitePageVariationPG(sitePagesVariationName = null,sitePagesVariationMenulistName = null) {
+	macro changeSitePageVariationPG(sitePagesVariationName = null, sitePagesVariationMenulistName = null) {
 		var key_sitePagesVariationName = ${sitePagesVariationName};
 
 		Refresh();
@@ -384,7 +384,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configurePublishToLive(contentDateRange = null,includeThumbnailsAndPreviewsDuringStaging = null,dateRangeStartDate = null,checkContentNameList = null,uncheckContentNameList = null,checkPageName = null,uncheckChildPagesNameList = null,uncheckLogo = null,checkSubSubContent = null,dateRangeEndDate = null,deleteMissingPages = null,checkPrivatePages = null,deleteApplicationData = null,contentName = null,uncheckSubSubContent = null,uncheckSubContent = null,contentDeletion = null,mainContent = null,checkPublicPages = null,subContent = null,pageDeletion = null) {
+	macro configurePublishToLive(contentDateRange = null, includeThumbnailsAndPreviewsDuringStaging = null, dateRangeStartDate = null, checkContentNameList = null, uncheckContentNameList = null, checkPageName = null, uncheckChildPagesNameList = null, uncheckLogo = null, checkSubSubContent = null, dateRangeEndDate = null, deleteMissingPages = null, checkPrivatePages = null, deleteApplicationData = null, contentName = null, uncheckSubSubContent = null, uncheckSubContent = null, contentDeletion = null, mainContent = null, checkPublicPages = null, subContent = null, pageDeletion = null) {
 		if (IsElementPresent.isElementPresentAfterWait(locator1 = "StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION")) {
 			AssertClick.assertPartialTextClickAt(
 				locator1 = "StagingPublishToLive#SWITCH_TO_ADVANCED_PUBLICATION",
@@ -541,7 +541,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureScheduleTime(endByDateDayLength = null,endByDateMonthLength = null,scheduleTitleName = null) {
+	macro configureScheduleTime(endByDateDayLength = null, endByDateMonthLength = null, scheduleTitleName = null) {
 		Click(locator1 = "StagingPublishToLive#DATE_SCHEDULE_RADIO");
 
 		if (isSet(scheduleTitleName)) {
@@ -586,7 +586,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro copyFromLive(portletName = null,portletOption = null) {
+	macro copyFromLive(portletName = null, portletOption = null) {
 		Portlet.gotoPortletOptions(
 			portletName = ${portletName},
 			portletOption = ${portletOption});
@@ -722,7 +722,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editPublishTemplate(publishTemplateNameEdit = null,publishTemplateName = null,publishTemplateDescriptionEdit = null) {
+	macro editPublishTemplate(publishTemplateNameEdit = null, publishTemplateName = null, publishTemplateDescriptionEdit = null) {
 		Click(locator1 = "Icon#BODY_VERTICAL_ELLIPSIS");
 
 		Navigator.gotoNavItem(navItem = "Publish Templates");
@@ -745,7 +745,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editPublishTemplateRemoteSiteID(groupName = null,remotePort = null) {
+	macro editPublishTemplateRemoteSiteID(groupName = null, remotePort = null) {
 		Panel.expandPanel(panel = "Remote Live Connection Settings");
 
 		var siteId = JSONGroupAPI._getGroupIdByName(
@@ -780,7 +780,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editStagingConfiguration(pageVersioningEnabled = null,isNotEditable = null) {
+	macro editStagingConfiguration(pageVersioningEnabled = null, isNotEditable = null) {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Staging Configuration");
 
 		if (${pageVersioningEnabled} == "true") {
@@ -801,7 +801,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro enablePageInSitePagesVariation(sitePagesVariationName = null,privacy = null,pageName = null) {
+	macro enablePageInSitePagesVariation(sitePagesVariationName = null, privacy = null, pageName = null) {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Staging#STAGING_BAR_PAGE_VARIATIONS_ALERT",
 			value1 = "The page ${pageName} is not enabled in ${sitePagesVariationName}, but is available for other pages variations.");
@@ -866,7 +866,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro mergeSitePagesVariation(sitePagesVariationName = null,sitePagesVariationMergeName = null) {
+	macro mergeSitePagesVariation(sitePagesVariationName = null, sitePagesVariationMergeName = null) {
 		Refresh();
 
 		Staging.navigateToSitePageVariation();
@@ -941,7 +941,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro publishCustomPublication(scheduleProcess = null,inProcess = null,checkContentNameList = null,validateErrorMessage = null,rangeAll = null,editPublishTemplateName = null,publishTemplateName = null,failureExpected = null,remoteStaging = null,headerTitle = null) {
+	macro publishCustomPublication(scheduleProcess = null, inProcess = null, checkContentNameList = null, validateErrorMessage = null, rangeAll = null, editPublishTemplateName = null, publishTemplateName = null, failureExpected = null, remoteStaging = null, headerTitle = null) {
 		Staging.addCustomPublication(
 			headerTitle = ${headerTitle},
 			publishTemplateName = ${publishTemplateName});
@@ -983,7 +983,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro publishToLive(scheduleProcess = null,validateErrorMessage = null,failureExpected = null,remoteStaging = null,publicationName = null) {
+	macro publishToLive(scheduleProcess = null, validateErrorMessage = null, failureExpected = null, remoteStaging = null, publicationName = null) {
 		if (isSet(publicationName)) {
 			PortletEntry.inputName(name = ${publicationName});
 		}
@@ -1134,7 +1134,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro publishViaSAP(entry = null,confirmMessage = null) {
+	macro publishViaSAP(entry = null, confirmMessage = null) {
 		if (IsElementPresent(key_rowEntry = ${entry}, locator1 = "Icon#ROW_VERTICAL_ELLIPSIS")) {
 			Click(
 				key_rowEntry = ${entry},
@@ -1167,7 +1167,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro remoteStagingSetUp(pageVersioningEnabled = null,siteName = null,uncheckContent = null,contentName = null) {
+	macro remoteStagingSetUp(pageVersioningEnabled = null, siteName = null, uncheckContent = null, contentName = null) {
 		if (!(isSet(remotePort))) {
 			var remotePort = 8080;
 		}
@@ -1194,7 +1194,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro remoteStagingSetUpViaJson(branchingPublic = null,groupName = null,branchingPrivate = null,parentGroupName = null) {
+	macro remoteStagingSetUpViaJson(branchingPublic = null, groupName = null, branchingPrivate = null, parentGroupName = null) {
 		if (!(isSet(remotePort))) {
 			var remotePort = 8080;
 		}
@@ -1265,7 +1265,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro savePublishTemplate(publishTemplateDescription = null,publishTemplateName = null) {
+	macro savePublishTemplate(publishTemplateDescription = null, publishTemplateName = null) {
 		Button.clickSave();
 
 		var key_publishTemplateName = ${publishTemplateName};
@@ -1300,7 +1300,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro schedulePublishToLivePG(checkContentNameList = null,scheduleTitleName = null,frequency = null) {
+	macro schedulePublishToLivePG(checkContentNameList = null, scheduleTitleName = null, frequency = null) {
 		if (IsElementPresent(locator1 = "Staging#STAGING_MENU_READY_FOR_PUBLICATION")) {
 			Check.toggleSwitch(locator1 = "Staging#STAGING_MENU_READY_FOR_PUBLICATION");
 		}
@@ -1452,7 +1452,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewDateRange(dateRangeStartDate = null,dateRangeEndDate = null) {
+	macro viewDateRange(dateRangeStartDate = null, dateRangeEndDate = null) {
 		AssertElementPresent(
 			key_dateRangeStartDate = ${dateRangeStartDate},
 			locator1 = "Select#DATE_RANGE_START_DATE_VALUE");
@@ -1481,7 +1481,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewHistoryVersionPG(historyVersion = null,historyVersionName = null,modifiedVersion = null) {
+	macro viewHistoryVersionPG(historyVersion = null, historyVersionName = null, modifiedVersion = null) {
 		if (IsElementPresent(locator1 = "Icon#STAGING_BAR_VERTICAL_ELLIPSIS")) {
 			Staging.gotoHistory();
 		}
@@ -1589,7 +1589,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPublicationSummary(lookAndFeelList = null,noContentList = null,pagesOption = null,pagesNotToPublish = null,pagesToPublish = null,dateRestrictionOption = null,publicationTitle = null,contentList = null) {
+	macro viewPublicationSummary(lookAndFeelList = null, noContentList = null, pagesOption = null, pagesNotToPublish = null, pagesToPublish = null, dateRestrictionOption = null, publicationTitle = null, contentList = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Summary",
 			rowEntry = ${publicationTitle});
@@ -1682,7 +1682,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPublishContentCountViaPortletStagingCP(contentInformation = null,contentCount = null) {
+	macro viewPublishContentCountViaPortletStagingCP(contentInformation = null, contentCount = null) {
 		LexiconEntry.gotoHeaderMenuItem(menuItem = "Staging");
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
@@ -1706,7 +1706,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPublishTemplate(uncheckContentNameList = null,publishTemplateDescription = null,publishTemplateName = null) {
+	macro viewPublishTemplate(uncheckContentNameList = null, publishTemplateDescription = null, publishTemplateName = null) {
 		if (IsElementPresent(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS")) {
 			Click(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
 		}
@@ -1737,7 +1737,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewRepeatingEventDetails(endDate = null,siteName = null,scheduleTitleName = null) {
+	macro viewRepeatingEventDetails(endDate = null, siteName = null, scheduleTitleName = null) {
 		Staging.openStagingAdmin(siteURLKey = ${siteName});
 
 		Navigator.gotoNavItem(navItem = "Scheduled");
@@ -1777,7 +1777,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewStagingLocalLiveVariationMessagePG(sitePagesVariationName = null,pagesVariationName = null,pageName = null) {
+	macro viewStagingLocalLiveVariationMessagePG(sitePagesVariationName = null, pagesVariationName = null, pageName = null) {
 		if (IsElementNotPresent(locator1 = "Staging#LIVE_MENU_MESSAGE")) {
 			AssertClick(
 				locator1 = "Staging#LIVE_DROP_DOWN_BUTTON",
@@ -1854,7 +1854,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewVariationTooltipMessage(title = null,pageName = null) {
+	macro viewVariationTooltipMessage(title = null, pageName = null) {
 		var key_pageName = ${pageName};
 		var key_title = ${title};
 

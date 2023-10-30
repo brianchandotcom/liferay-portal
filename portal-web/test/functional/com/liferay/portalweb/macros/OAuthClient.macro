@@ -16,7 +16,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addClient(jsonFileName = null,authRequestParametersJSON = null,userMapperJSON = null,tokenRequestParametersJSON = null) {
+	macro addClient(jsonFileName = null, authRequestParametersJSON = null, userMapperJSON = null, tokenRequestParametersJSON = null) {
 		var jsonFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/openidconnect/dependencies";
 
 		var clientInfo = FileUtil.read("${jsonFileBaseDir}/${jsonFileName}");
@@ -92,7 +92,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addInvalidClient(jsonFileName = null,authRequestParametersJSON = null,wellknownURI = null,tokenRequestParametersJSON = null) {
+	macro addInvalidClient(jsonFileName = null, authRequestParametersJSON = null, wellknownURI = null, tokenRequestParametersJSON = null) {
 		LexiconEntry.gotoAdd();
 
 		if (isSet(wellknownURI)) {
@@ -133,7 +133,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro clearAndType(fieldName = null,fieldValue = null) {
+	macro clearAndType(fieldName = null, fieldValue = null) {
 		var key_fieldName = ${fieldName};
 
 		DoubleClick(locator1 = "FormFields#TEXT_MULTILINE_FIELD");
@@ -176,7 +176,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openOAuthClientAdmin(baseURL = null,navbar = null) {
+	macro openOAuthClientAdmin(baseURL = null, navbar = null) {
 		Variables.assertDefined(parameterList = ${navbar});
 
 		if (${navbar} == "Auth Server Local Metadata") {

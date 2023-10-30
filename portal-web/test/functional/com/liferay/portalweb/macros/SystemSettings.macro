@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro assertPortalBuildNumber(portalBuild = null,accessToken = null) {
+	macro assertPortalBuildNumber(portalBuild = null, accessToken = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var buildNumberCurl = '''
@@ -16,7 +16,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertPortalVersion(accessToken = null,portalVersion = null) {
+	macro assertPortalVersion(accessToken = null, portalVersion = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var portalVersionCurl = '''
@@ -53,7 +53,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureSystemSetting(enableSetting = null,settingValue = null,settingFieldName = null,settingName = null) {
+	macro configureSystemSetting(enableSetting = null, settingValue = null, settingFieldName = null, settingName = null) {
 		var key_settingFieldName = ${settingFieldName};
 
 		if (${enableSetting} == "true") {
@@ -79,7 +79,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureSystemSettingWithRefresh(enableSetting = null,settingFieldName = null) {
+	macro configureSystemSettingWithRefresh(enableSetting = null, settingFieldName = null) {
 		var key_settingFieldName = ${settingFieldName};
 
 		if (${enableSetting} == "true") {
@@ -147,7 +147,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editTextAreaSetting(settingValue = null,settingName = null) {
+	macro editTextAreaSetting(settingValue = null, settingName = null) {
 		Type(
 			key_label = ${settingName},
 			locator1 = "TextArea#ANY_LABELED",
@@ -155,7 +155,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editTextAreaSettingMultiLines(settingValues = null,settingName = null) {
+	macro editTextAreaSettingMultiLines(settingValues = null, settingName = null) {
 		for (var settingValue : list ${settingValues}) {
 			Type.sendKeys(
 				key_label = ${settingName},
@@ -170,7 +170,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editTextSetting(settingValue = null,settingName = null) {
+	macro editTextSetting(settingValue = null, settingName = null) {
 		Type(
 			key_fieldLabel = ${settingName},
 			locator1 = "TextInput#GENERIC_TEXT_INPUT",
@@ -225,7 +225,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getUserEmailSuccessfully(curl = null,companyId = null) {
+	macro getUserEmailSuccessfully(curl = null, companyId = null) {
 		Variables.assertDefined(parameterList = "${curl},${companyId}");
 
 		var output = JSONCurlUtil.post(${curl});
@@ -242,7 +242,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getViewUserEmailPermissionDenied(curl = null,userId = null) {
+	macro getViewUserEmailPermissionDenied(curl = null, userId = null) {
 		Variables.assertDefined(parameterList = "${curl},${userId}");
 
 		var output = JSONCurlUtil.post(${curl});
@@ -253,7 +253,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoConfiguration(configurationScope = null,configurationName = null,configurationCategory = null) {
+	macro gotoConfiguration(configurationScope = null, configurationName = null, configurationCategory = null) {
 		Click(
 			key_itemName = ${configurationCategory},
 			locator1 = "ListGroupItem#ITEM_TEXT");
@@ -319,7 +319,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectOptionSetting(fieldName = null,selectOption = null) {
+	macro selectOptionSetting(fieldName = null, selectOption = null) {
 		Click(
 			key_fieldLabel = ${fieldName},
 			locator1 = "SystemSettings#DROPDOWN_MENU");
@@ -330,7 +330,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewConfigurationNotAvailable(configurationScope = null,configurationName = null) {
+	macro viewConfigurationNotAvailable(configurationScope = null, configurationName = null) {
 		AssertElementNotPresent(
 			key_configurationName = ${configurationName},
 			key_configurationScope = ${configurationScope},
@@ -338,7 +338,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewInputText(fieldLabel = null,fieldValue = null) {
+	macro viewInputText(fieldLabel = null, fieldValue = null) {
 		AssertTextEquals.assertValue(
 			key_text = ${fieldLabel},
 			locator1 = "TextInput#ANY",
@@ -346,7 +346,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewNumberInputText(fieldLabel = null,fieldValue = null) {
+	macro viewNumberInputText(fieldLabel = null, fieldValue = null) {
 		AssertTextEquals(
 			key_fieldLabel = ${fieldLabel},
 			locator1 = "TextInput#GENERIC_NUMBER_INPUT",
@@ -362,7 +362,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTextareaPartialText(settingValue = null,settingName = null) {
+	macro viewTextareaPartialText(settingValue = null, settingName = null) {
 		AssertTextEquals.assertPartialText(
 			key_label = ${settingName},
 			locator1 = "TextArea#ANY_LABELED",
@@ -370,7 +370,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTextareaValue(fieldName = null,fieldValue = null,repeatableFieldNumber = null) {
+	macro viewTextareaValue(fieldName = null, fieldValue = null, repeatableFieldNumber = null) {
 		if (isSet(repeatableFieldNumber)) {
 			AssertTextEquals.assertValue(
 				key_fieldName = ${fieldName},

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addAndViewAccountGroup(accountGroupDescription = null,accountGroupName = null) {
+	macro addAndViewAccountGroup(accountGroupDescription = null, accountGroupName = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
@@ -17,7 +17,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addAndViewBusinessAccount(accountTaxId = null,accountDescription = null,accountName = null) {
+	macro addAndViewBusinessAccount(accountTaxId = null, accountDescription = null, accountName = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
@@ -34,7 +34,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addUserToBusinessAccount(accountName = null,userLastName = null,userScreenName = null,userEmailAddress = null,userFirstName = null) {
+	macro addUserToBusinessAccount(accountName = null, userLastName = null, userScreenName = null, userEmailAddress = null, userFirstName = null) {
 		ApplicationsMenu.gotoPortlet(
 			category = "Accounts",
 			panel = "Control Panel",
@@ -90,7 +90,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewAccountUserRoleNoPermissions(permissionDefinitionValue = null,permissionNavigationValue = null,accountRoleTitle = null) {
+	macro viewAccountUserRoleNoPermissions(permissionDefinitionValue = null, permissionNavigationValue = null, accountRoleTitle = null) {
 		Role.openRolesAdmin();
 
 		RoleNavigator.gotoRoleType(roleType = "Account");

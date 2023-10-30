@@ -20,7 +20,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createAccounts(objectField = null,accountName = null,numberOfAccounts = null,nestedField = null,fieldValue = null,name = null) {
+	macro createAccounts(objectField = null, accountName = null, numberOfAccounts = null, nestedField = null, fieldValue = null, name = null) {
 		Variables.assertDefined(parameterList = "${accountName},${numberOfAccounts},");
 
 		var curl = CommerceAdminAccountAPI._curlAccount(batch = "true");

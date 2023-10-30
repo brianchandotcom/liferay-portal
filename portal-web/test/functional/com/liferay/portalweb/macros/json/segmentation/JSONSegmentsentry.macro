@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addSegment(date = null,fieldName = null,description = null,workflowAction = null,selectedOption = null,segmentName = null,operator = null,groupName = null,site = null,assetCategoryIds = null,firstSegmentId = null,assetTagNames = null,conditionType = null,value = null,key = null,secondSegmentId = null) {
+	macro addSegment(date = null, fieldName = null, description = null, workflowAction = null, selectedOption = null, segmentName = null, operator = null, groupName = null, site = null, assetCategoryIds = null, firstSegmentId = null, assetTagNames = null, conditionType = null, value = null, key = null, secondSegmentId = null) {
 		Variables.assertDefined(parameterList = "${groupName},${segmentName},${fieldName},${operator}");
 
 		var descriptionMap = JSONSegmentsentrySetter.setDescriptionMap(description = ${description});
@@ -62,7 +62,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteSegment(groupName = null,segmentName = null) {
+	macro deleteSegment(groupName = null, segmentName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${segmentName}");
 
 		var segmentId = JSONSegmentsentry.getSegmentId(

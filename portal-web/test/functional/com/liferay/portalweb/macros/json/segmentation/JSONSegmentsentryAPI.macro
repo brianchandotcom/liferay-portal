@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _addSegment(nameMap = null,criteria = null,descriptionMap = null,serviceContext = null) {
+	macro _addSegment(nameMap = null, criteria = null, descriptionMap = null, serviceContext = null) {
 		Variables.assertDefined(parameterList = "${criteria},${descriptionMap},${nameMap},${serviceContext}");
 
 		var portalURL = JSONCompany.getPortalURL();

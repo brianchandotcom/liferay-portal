@@ -47,7 +47,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPageTitle(wikiPageTitle = null,wikiChildPageTitle = null) {
+	macro addPageTitle(wikiPageTitle = null, wikiChildPageTitle = null) {
 		if (isSet(wikiPageTitle)) {
 			var title = ${wikiPageTitle};
 		}

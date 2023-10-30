@@ -8,7 +8,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addCustomElement(entryName = null,entryURL = null,entryHtmlName = null) {
+	macro addCustomElement(entryName = null, entryURL = null, entryHtmlName = null) {
 		Type(
 			key_text = "Name",
 			locator1 = "TextInput#ANY",
@@ -26,7 +26,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addCustomElementAllFields(entryProperties = null,entryName = null,entryURL = null,entryHtmlName = null,entryCssurl = null) {
+	macro addCustomElementAllFields(entryProperties = null, entryName = null, entryURL = null, entryHtmlName = null, entryCssurl = null) {
 		Type(
 			key_text = "Name",
 			locator1 = "TextInput#ANY",
@@ -53,7 +53,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addCustomElementMultipleURLs(entryCssurl2 = null,entryName = null,entryCssurl1 = null,entryUrl2 = null,entryUrl1 = null,entryHtmlName = null) {
+	macro addCustomElementMultipleURLs(entryCssurl2 = null, entryName = null, entryCssurl1 = null, entryUrl2 = null, entryUrl1 = null, entryHtmlName = null) {
 		Type(
 			key_text = "Name",
 			locator1 = "TextInput#ANY",
@@ -94,7 +94,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addEntry(entryName = null,entryURL = null,mainURL = null,entryHTMLElementName = null) {
+	macro addEntry(entryName = null, entryURL = null, mainURL = null, entryHTMLElementName = null) {
 		Type(
 			key_text = "Name",
 			locator1 = "TextInput#ANY",

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro setGroupId(groupName = null,parentGroupName = null) {
+	macro setGroupId(groupName = null, parentGroupName = null) {
 		Variables.assertDefined(parameterList = ${groupName});
 
 		if (!(isSet(site))) {
@@ -56,7 +56,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setServiceContext(assetCategoryIds = null,assetTagNames = null,workflowAction = null) {
+	macro setServiceContext(assetCategoryIds = null, assetTagNames = null, workflowAction = null) {
 		if (!(isSet(serviceContext))) {
 			var serviceContext = JSONServiceContextUtil.setServiceContext(
 				addGroupPermissions = "true",
@@ -98,7 +98,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setUserId(creatorPassword = null,portalInstanceName = null,userEmailAddress = null,specificURL = null,creatorEmailAddress = null) {
+	macro setUserId(creatorPassword = null, portalInstanceName = null, userEmailAddress = null, specificURL = null, creatorEmailAddress = null) {
 		Variables.assertDefined(parameterList = ${userEmailAddress});
 
 		var userId = JSONUserAPI._getUserIdByEmailAddress(
@@ -112,7 +112,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setUserIdByScreenName(creatorPassword = null,userScreenName = null,portalInstanceName = null) {
+	macro setUserIdByScreenName(creatorPassword = null, userScreenName = null, portalInstanceName = null) {
 		Variables.assertDefined(parameterList = ${userScreenName});
 
 		var userId = JSONUserAPI._getUserIdByScreenName(

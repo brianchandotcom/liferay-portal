@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _curlMessageBoardSection(parentMessageBoardSectionId = null,title = null) {
+	macro _curlMessageBoardSection(parentMessageBoardSectionId = null, title = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(parentMessageBoardSectionId)) {
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createChildMessageBoardSection(parentMessageBoardSectionId = null,title = null) {
+	macro createChildMessageBoardSection(parentMessageBoardSectionId = null, title = null) {
 		Variables.assertDefined(parameterList = "${title},${parentMessageBoardSectionId}");
 
 		var curl = MessageBoardSectionAPI._curlMessageBoardSection(title = ${title});

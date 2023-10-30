@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addAutoTaggedBlogsEntry(tagName = null,entryTitle = null,entryContent = null) {
+	macro addAutoTaggedBlogsEntry(tagName = null, entryTitle = null, entryContent = null) {
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 
 		Blogs.addEntry(
@@ -21,7 +21,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addAutoTaggedDM(dmDocumentTitle = null,dmDocumentFile = null,tagName = null) {
+	macro addAutoTaggedDM(dmDocumentTitle = null, dmDocumentFile = null, tagName = null) {
 		if (isSet(depotName)) {
 			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 		}
@@ -49,7 +49,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addAutoTaggedWebContent(webContentTitle = null,webContentContent = null,tagName = null) {
+	macro addAutoTaggedWebContent(webContentTitle = null, webContentContent = null, tagName = null) {
 		if (isSet(depotName)) {
 			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 		}
@@ -85,7 +85,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addAutoTagViaGogoShell(blogTagNum = null,dmDocumentTitle = null,dmTagName = null,webContentTitle = null,wcTagNum = null,webContentTitleXml = null,blogTagName = null,wcTagName = null,blogEntryTitle = null,dmTagNum = null) {
+	macro addAutoTagViaGogoShell(blogTagNum = null, dmDocumentTitle = null, dmTagName = null, webContentTitle = null, wcTagNum = null, webContentTitleXml = null, blogTagName = null, wcTagName = null, blogEntryTitle = null, dmTagNum = null) {
 		var companyId = JSONCompany.getCompanyId();
 
 		GogoShell.openGogoShellAdmin();
@@ -148,7 +148,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editTagsAndDeleteAutoTaggedBlogsEntry(entryTitleKey = null,tagName = null,entryTitle = null,entryContent = null) {
+	macro editTagsAndDeleteAutoTaggedBlogsEntry(entryTitleKey = null, tagName = null, entryTitle = null, entryContent = null) {
 		BlogsNavigator.openToBlogEntry(
 			entryTitle = ${entryTitleKey},
 			layoutName = "test-page",
@@ -196,7 +196,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editTagsAndDeleteAutoTaggedDM(dmDocumentTitle = null,tagName = null) {
+	macro editTagsAndDeleteAutoTaggedDM(dmDocumentTitle = null, tagName = null) {
 		if (isSet(depotName)) {
 			DepotNavigator.openDepotDocumentsAndMediaAdmin(depotName = "Test Depot Name");
 		}
@@ -249,7 +249,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editTagsAndDeleteAutoTaggedWebContent(webContentTitle = null,tagName = null) {
+	macro editTagsAndDeleteAutoTaggedWebContent(webContentTitle = null, tagName = null) {
 		if (isSet(depotName)) {
 			DepotNavigator.openDepotWebContentAdmin(depotName = "Test Depot Name");
 		}

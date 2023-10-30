@@ -12,7 +12,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addApp(entryName = null,entryURL = null,entryHTMLElementName = null,mainURL = null) {
+	macro addApp(entryName = null, entryURL = null, entryHTMLElementName = null, mainURL = null) {
 		ClientExtensionEntry.addEntry(
 			entryHTMLElementName = ${entryHTMLElementName},
 			entryName = ${entryName},
@@ -23,7 +23,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addCustomElement(entryName = null,entryURL = null,entryHtmlName = null) {
+	macro addCustomElement(entryName = null, entryURL = null, entryHtmlName = null) {
 		ClientExtensionGeneral.addType(type = "Custom Element");
 
 		ClientExtensionEntry.addCustomElement(
@@ -35,7 +35,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addCustomElementAllFields(entryProperties = null,entryName = null,entryURL = null,entryHtmlName = null,entryCssurl = null) {
+	macro addCustomElementAllFields(entryProperties = null, entryName = null, entryURL = null, entryHtmlName = null, entryCssurl = null) {
 		ClientExtensionGeneral.addType(type = "Custom Element");
 
 		ClientExtensionEntry.addCustomElementAllFields(
@@ -81,7 +81,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addFrontendDataSetFilter(javaScriptURL = null,name = null,description = null) {
+	macro addFrontendDataSetFilter(javaScriptURL = null, name = null, description = null) {
 		LexiconEntry.gotoAdd();
 
 		MenuItem.click(menuItem = "Add Frontend Data Set Filter");
@@ -106,7 +106,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addThemeSvgSpritemap(entryName = null,entryURL = null) {
+	macro addThemeSvgSpritemap(entryName = null, entryURL = null) {
 		ClientExtensionGeneral.addType(type = "Add Theme SVG Spritemap");
 
 		ClientExtensionGeneral.addThemeSvgSpritemapElement(
@@ -121,7 +121,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addThemeSvgSpritemapElement(entryName = null,entryURL = null) {
+	macro addThemeSvgSpritemapElement(entryName = null, entryURL = null) {
 		Type(
 			key_text = "Name",
 			locator1 = "TextInput#ANY",
@@ -143,7 +143,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertContentField(entryInformation = null,entryField = null) {
+	macro assertContentField(entryInformation = null, entryField = null) {
 		AssertTextEquals(
 			key_text = ${entryField},
 			locator1 = "ClientExtension#REMOTE_APPS_FIELDS",
@@ -151,7 +151,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertCustomElementFields(entryProperties = null,entryName = null,entryURL = null,entryHtmlName = null,entryCssurl = null) {
+	macro assertCustomElementFields(entryProperties = null, entryName = null, entryURL = null, entryHtmlName = null, entryCssurl = null) {
 		AssertTextEquals(
 			custom_entryName = ${entryName},
 			key_text = "Name",
@@ -232,7 +232,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertMultipleFields(entryType = null,entryCSSURLs = null,entryFriendlyURLMapping = null,entrydescription = null,entrySourceCodeURL = null,entryName = null,entryproperties = null,entry_URLs = null,entryHTMLElementName = null,entryPortletCategoryName = null) {
+	macro assertMultipleFields(entryType = null, entryCSSURLs = null, entryFriendlyURLMapping = null, entrydescription = null, entrySourceCodeURL = null, entryName = null, entryproperties = null, entry_URLs = null, entryHTMLElementName = null, entryPortletCategoryName = null) {
 		ClientExtensionGeneral.assertContentField(
 			entryField = "Name",
 			entryInformation = ${entryName});
@@ -283,7 +283,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro changeSiteCurrentThemeSvgSpritemap(entryName = null,privacy = null) {
+	macro changeSiteCurrentThemeSvgSpritemap(entryName = null, privacy = null) {
 		WaitForPageLoad();
 
 		Click.waitForMenuToggleJSClick(locator1 = "Icon#HEADER_VERTICAL_ELLIPSIS");
@@ -344,7 +344,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editCustomElement(entryProperties = null,entryName = null,entryHtmlName = null,entryCssurl = null) {
+	macro editCustomElement(entryProperties = null, entryName = null, entryHtmlName = null, entryCssurl = null) {
 		Type(
 			key_text = "Name",
 			locator1 = "TextInput#ANY",
@@ -417,7 +417,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openOrCloseCollapseField(key_status = null,key_fieldName = null) {
+	macro openOrCloseCollapseField(key_status = null, key_fieldName = null) {
 		if (${key_status} == "Open") {
 			if (IsVisible(locator1 = "ClientExtension#COLLAPSE_ICON_CLOSED", value1 = ${key_fieldName})) {
 				Click(
@@ -452,7 +452,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTableEntries(entryType = null,entryName = null) {
+	macro viewTableEntries(entryType = null, entryName = null) {
 		AssertTextEquals(
 			key_tableEntryName = ${entryName},
 			locator1 = "ClientExtension#TABLE_ENTRY_NAME_REMOTE_TABLE",

@@ -22,7 +22,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _postProductGroups(productsJSON = null,productGroupName = null,productNames = null) {
+	macro _postProductGroups(productsJSON = null, productGroupName = null, productNames = null) {
 		Variables.assertDefined(parameterList = ${productGroupName});
 
 		var baseURL = ${baseURL};

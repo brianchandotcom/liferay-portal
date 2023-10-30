@@ -14,7 +14,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro clickInStack(menuBar = null,stackName = null) {
+	macro clickInStack(menuBar = null, stackName = null) {
 		var key_menuBar = ${menuBar};
 		var key_stackName = ${stackName};
 

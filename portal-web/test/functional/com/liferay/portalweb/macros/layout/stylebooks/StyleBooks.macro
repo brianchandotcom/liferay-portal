@@ -47,7 +47,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureUnit(unit = null,fieldLabel = null) {
+	macro configureUnit(unit = null, fieldLabel = null) {
 		Click(
 			key_fieldLabel = ${fieldLabel},
 			locator1 = "Dropdown#DROPDOWN_TOGGLE_BUTTON_WITH_LABEL");
@@ -74,7 +74,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro linkValueFromStyleBook(fieldLabel = null,colorSwatchItem = null) {
+	macro linkValueFromStyleBook(fieldLabel = null, colorSwatchItem = null) {
 		Click.clickNoWaitForVisible(
 			key_fieldLabel = ${fieldLabel},
 			key_text = "theme",
@@ -100,7 +100,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectPreviewItem(scope = null,caption = null,previewType = null,previewItem = null) {
+	macro selectPreviewItem(scope = null, caption = null, previewType = null, previewItem = null) {
 		Click(
 			index = 2,
 			locator1 = "StyleBookEditor#PREVIEW_SELECTOR");

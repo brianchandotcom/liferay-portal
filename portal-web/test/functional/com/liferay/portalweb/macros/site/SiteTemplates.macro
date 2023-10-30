@@ -16,7 +16,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addChildPageViaSiteTemplateCP(parentPageName = null,childPageName = null,siteTemplateName = null,masterLayoutName = null) {
+	macro addChildPageViaSiteTemplateCP(parentPageName = null, childPageName = null, siteTemplateName = null, masterLayoutName = null) {
 		SiteTemplatesNavigator.openPagesAdmin(siteTemplateName = ${siteTemplateName});
 
 		MouseOver(
@@ -58,7 +58,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addCP(siteTemplateActive = null,disableChanges = null,disablePropagation = null,siteTemplateName = null) {
+	macro addCP(siteTemplateActive = null, disableChanges = null, disablePropagation = null, siteTemplateName = null) {
 		if (!(isSet(baseURL))) {
 			var baseURL = JSONCompany.getPortalURL();
 		}
@@ -90,7 +90,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addSitePageViaSiteTemplateCP(inheritChanges = null,pageTemplateName = null,pageName = null,siteTemplateName = null,masterLayoutName = null,hideFromNavMenu = null) {
+	macro addSitePageViaSiteTemplateCP(inheritChanges = null, pageTemplateName = null, pageName = null, siteTemplateName = null, masterLayoutName = null, hideFromNavMenu = null) {
 		SiteTemplatesNavigator.openPagesAdmin(siteTemplateName = ${siteTemplateName});
 
 		AssertClick(
@@ -149,7 +149,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addSiteTemplateJavaScript(javaScript = null,pageName = null) {
+	macro addSiteTemplateJavaScript(javaScript = null, pageName = null) {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");
@@ -208,7 +208,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteCP(associatedToSite = null,siteTemplateName = null) {
+	macro deleteCP(associatedToSite = null, siteTemplateName = null) {
 		var key_siteTemplateName = ${siteTemplateName};
 
 		LexiconEntry.openEntryMenu(rowEntry = ${siteTemplateName});
@@ -234,7 +234,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deletePage(pageName = null,siteTemplateName = null) {
+	macro deletePage(pageName = null, siteTemplateName = null) {
 		var key_siteTemplateName = ${siteTemplateName};
 
 		AssertTextEquals.assertPartialText(
@@ -311,7 +311,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editCP(siteTemplateDescription = null,siteTemplateName = null) {
+	macro editCP(siteTemplateDescription = null, siteTemplateName = null) {
 		SiteTemplates.gotoSettingsCP(siteTemplateName = ${siteTemplateName});
 
 		PortletEntry.inputName(name = "${siteTemplateName} Edit");
@@ -327,7 +327,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editSitePageViaSiteTemplateCP(friendlyURLEdit = null,siteTemplateName = null,layoutName = null) {
+	macro editSitePageViaSiteTemplateCP(friendlyURLEdit = null, siteTemplateName = null, layoutName = null) {
 		SiteTemplatesNavigator.openToConfigurePage(
 			layoutName = ${layoutName},
 			siteTemplateName = ${siteTemplateName});
@@ -349,7 +349,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editTemplateStatusCP(siteTemplateActiveEdit = null,siteTemplateName = null) {
+	macro editTemplateStatusCP(siteTemplateActiveEdit = null, siteTemplateName = null) {
 		SiteTemplates.gotoSettingsCP(siteTemplateName = ${siteTemplateName});
 
 		if (isSet(siteTemplateActiveEdit)) {
@@ -434,7 +434,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getPageModificationDate(pageNameFilter = null,groupName = null) {
+	macro getPageModificationDate(pageNameFilter = null, groupName = null) {
 		Variables.assertDefined(parameterList = "${groupName},${pageNameFilter}");
 
 		var groupId = JSONGroupAPI._getGroupIdByName(
@@ -484,7 +484,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoViewPages(siteName = null,siteTemplateName = null) {
+	macro gotoViewPages(siteName = null, siteTemplateName = null) {
 		var key_siteTemplateName = ${siteTemplateName};
 
 		AssertClick.assertPartialTextClickAt(
@@ -569,7 +569,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro resetPageChanges(columnNumberTo = null,portletName = null) {
+	macro resetPageChanges(columnNumberTo = null, portletName = null) {
 		WaitForEditable(locator1 = "ControlMenu#INFO");
 
 		Click.waitForMenuToggleJSClick(locator1 = "ControlMenu#INFO");
@@ -623,7 +623,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCP(siteTemplateDescription = null,siteTemplateName = null) {
+	macro viewCP(siteTemplateDescription = null, siteTemplateName = null) {
 		AssertTextEquals.assertPartialText(
 			key_siteTemplateName = ${siteTemplateName},
 			locator1 = "SiteTemplates#SITE_TEMPLATE_TABLE_NAME",
@@ -699,7 +699,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewResetPageChanges(columnNumberFrom = null,portletName = null) {
+	macro viewResetPageChanges(columnNumberFrom = null, portletName = null) {
 		AssertTextNotPresent(
 			locator1 = "Message#CUSTOMIZED_PAGE_INFO",
 			value1 = "This page has been changed since the last update from the site template.");
@@ -716,7 +716,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro ViewSiteTemplateJavaScript(javaScript = null,pageName = null) {
+	macro ViewSiteTemplateJavaScript(javaScript = null, pageName = null) {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");
@@ -754,7 +754,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTemplateStatusCP(siteTemplateActiveEdit = null,siteTemplateName = null) {
+	macro viewTemplateStatusCP(siteTemplateActiveEdit = null, siteTemplateName = null) {
 		var key_siteTemplateName = ${siteTemplateName};
 
 		AssertTextEquals.assertPartialText(

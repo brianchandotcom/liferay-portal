@@ -22,7 +22,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPGAsGuest(userLastName = null,userEmailAddress = null,userFirstName = null,entryTitle = null,entryContent = null) {
+	macro addPGAsGuest(userLastName = null, userEmailAddress = null, userFirstName = null, entryTitle = null, entryContent = null) {
 		BlogsNavigator.gotoEntryPG(
 			entryContent = ${entryContent},
 			entryTitle = ${entryTitle});
@@ -147,7 +147,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro edit(entryCommentEdit = null,entryComment = null,mentionsUserScreenName = null) {
+	macro edit(entryCommentEdit = null, entryComment = null, mentionsUserScreenName = null) {
 		var key_entryComment = ${entryComment};
 
 		Click.mouseOverClick(locator1 = "Comments#COMMENT_BODY_SPECIFIC");
@@ -296,7 +296,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewNoPG(entryComment = null,userFullName = null) {
+	macro viewNoPG(entryComment = null, userFullName = null) {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Comments#ENTRY_COUNT_PANEL",
 			value1 = "0 COMMENTS");
@@ -311,7 +311,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPG(entryComment = null,userFullName = null,commentCount = null) {
+	macro viewPG(entryComment = null, userFullName = null, commentCount = null) {
 		var key_entryComment = ${entryComment};
 
 		WaitForElementPresent(locator1 = "Comments#COMMENT_BODY");

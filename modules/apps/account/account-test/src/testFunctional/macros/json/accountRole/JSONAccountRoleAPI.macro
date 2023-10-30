@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _associateUser(accountRoleId = null,accountEntryId = null,userId = null) {
+	macro _associateUser(accountRoleId = null, accountEntryId = null, userId = null) {
 		Variables.assertDefined(parameterList = "${accountEntryId},${accountRoleId},${userId}");
 
 		var portalURL = JSONCompany.getPortalURL();

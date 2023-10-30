@@ -24,7 +24,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertOptionAndDescriptionOnRequestFiles(description = null,option = null) {
+	macro assertOptionAndDescriptionOnRequestFiles(description = null, option = null) {
 		Click(locator1 = "ObjectField#REQUEST_FILES_INPUT");
 
 		AssertElementPresent(
@@ -55,7 +55,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editFormulaField(newContent = null,formulaScript = null,newTypeFormula = null) {
+	macro editFormulaField(newContent = null, formulaScript = null, newTypeFormula = null) {
 		ObjectField.typeLabel(content = ${newContent});
 
 		Click(

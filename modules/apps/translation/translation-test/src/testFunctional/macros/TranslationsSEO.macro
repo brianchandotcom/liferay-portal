@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro disableOnlyTranslatedHreflangs(configurationScope = null,siteURLKey = null) {
+	macro disableOnlyTranslatedHreflangs(configurationScope = null, siteURLKey = null) {
 		TranslationsSEO.openToConfiguration(
 			configurationScope = ${configurationScope},
 			siteURLKey = ${siteURLKey});
@@ -17,7 +17,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro enableOnlyTranslatedHreflangs(configurationScope = null,siteURLKey = null) {
+	macro enableOnlyTranslatedHreflangs(configurationScope = null, siteURLKey = null) {
 		TranslationsSEO.openToConfiguration(
 			configurationScope = ${configurationScope},
 			siteURLKey = ${siteURLKey});
@@ -33,7 +33,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openToConfiguration(configurationScope = null,siteURLKey = null) {
+	macro openToConfiguration(configurationScope = null, siteURLKey = null) {
 
 		// You can use this navigation when you need to access the configuration quickly without checking the UI.
 

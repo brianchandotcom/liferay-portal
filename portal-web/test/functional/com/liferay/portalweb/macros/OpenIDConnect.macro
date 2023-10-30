@@ -55,7 +55,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro accountSignIn(userPassword = null,specificURL = null,userEmailAddress = null) {
+	macro accountSignIn(userPassword = null, specificURL = null, userEmailAddress = null) {
 		if (!(isSet(specificURL))) {
 			Navigator.openURL();
 		}
@@ -100,7 +100,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addProvider(openIdConnectClientSecret = null,openIdConnectClientId = null,customTokenRequestParameters = null,customAuthorizationRequestParameters = null,discoveryEndpoint = null,providerName = null) {
+	macro addProvider(openIdConnectClientSecret = null, openIdConnectClientId = null, customTokenRequestParameters = null, customAuthorizationRequestParameters = null, discoveryEndpoint = null, providerName = null) {
 		Button.clickAdd();
 
 		FormFields.editTextMultiline(

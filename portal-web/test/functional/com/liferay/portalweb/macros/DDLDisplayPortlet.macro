@@ -8,7 +8,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureListViewPG(configureChecked = null,configureCheckBoxName = null) {
+	macro configureListViewPG(configureChecked = null, configureCheckBoxName = null) {
 		Portlet.gotoPortletOptions(portletOption = "Configuration");
 
 		DDLNavigator.gotoOptionalConfiguration();
@@ -40,7 +40,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewFieldSelectViaSpreadsheetView(ddlRecordFieldData = null,fieldName = null,ddlRecordRow = null) {
+	macro viewFieldSelectViaSpreadsheetView(ddlRecordFieldData = null, fieldName = null, ddlRecordRow = null) {
 		var key_ddlRecordRow = ${ddlRecordRow};
 		var key_fieldName = ${fieldName};
 

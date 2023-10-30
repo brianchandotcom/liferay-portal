@@ -35,7 +35,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setClassTypeId(structureName = null,groupId = null,classNameId = null) {
+	macro setClassTypeId(structureName = null, groupId = null, classNameId = null) {
 		Variables.assertDefined(parameterList = "${classNameId},${groupId},${structureName}");
 
 		var classTypeId = JSONDDMstructureAPI._getStructureId(
@@ -59,7 +59,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setDisplayPageTemplatePlid(displayPageTemplateEntryName = null,groupId = null) {
+	macro setDisplayPageTemplatePlid(displayPageTemplateEntryName = null, groupId = null) {
 		Variables.assertDefined(parameterList = "${groupId},${displayPageTemplateEntryName}");
 
 		var displayPageTemplatePlid = JSONLayoutpagetemplateAPI._getDisplayPageTemplatePlidByName(
@@ -70,7 +70,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setGroupId(grandParentGroupName = null,parentGroupName = null,groupKey = null) {
+	macro setGroupId(grandParentGroupName = null, parentGroupName = null, groupKey = null) {
 		Variables.assertDefined(parameterList = ${groupKey});
 
 		if (!(isSet(site))) {
@@ -87,7 +87,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setLayoutPageTemplateCollectionId(layoutPageTemplateType = null,layoutPageTemplateCollectionName = null,groupId = null) {
+	macro setLayoutPageTemplateCollectionId(layoutPageTemplateType = null, layoutPageTemplateCollectionName = null, groupId = null) {
 		Variables.assertDefined(parameterList = "${groupId},${layoutPageTemplateCollectionName}");
 
 		if (${layoutPageTemplateType} == "Display Page Template") {
@@ -106,7 +106,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setLayoutPageTemplateEntryId(groupId = null,layoutPageTemplateEntryName = null) {
+	macro setLayoutPageTemplateEntryId(groupId = null, layoutPageTemplateEntryName = null) {
 		Variables.assertDefined(parameterList = "${groupId},${layoutPageTemplateEntryName},${type}");
 
 		if (${type} == "Content Page Template") {
@@ -131,7 +131,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setMasterLayoutPlid(groupId = null,masterLayoutEntryName = null) {
+	macro setMasterLayoutPlid(groupId = null, masterLayoutEntryName = null) {
 		Variables.assertDefined(parameterList = "${groupId},${masterLayoutEntryName}");
 
 		var masterLayoutPlid = JSONLayoutpagetemplateAPI._getMasterLayoutPlidByName(
@@ -151,7 +151,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setServiceContext(assetCategoryIds = null,addGuestPermissions = null,assetTagNames = null,workflowAction = null) {
+	macro setServiceContext(assetCategoryIds = null, addGuestPermissions = null, assetTagNames = null, workflowAction = null) {
 		if (!(isSet(serviceContext))) {
 			var serviceContext = JSONServiceContextUtil.setServiceContext(
 				addGuestPermissions = ${addGuestPermissions},

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addFeed(feedType = null,feedRowIndexNumber = null,feedURLLink = null,feedTitle = null,viewWarningMessage = null,buttonRowIndexNumber = null) {
+	macro addFeed(feedType = null, feedRowIndexNumber = null, feedURLLink = null, feedTitle = null, viewWarningMessage = null, buttonRowIndexNumber = null) {
 		Portlet.gotoPortletOptions(
 			portletName = "RSS Publisher",
 			portletOption = "Configuration");
@@ -56,7 +56,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro changeFeedsOrder(toRowNumber = null,offset = null,fromRowNumber = null) {
+	macro changeFeedsOrder(toRowNumber = null, offset = null, fromRowNumber = null) {
 		var key_fromRowNumber = ${fromRowNumber};
 		var key_toRowNumber = ${toRowNumber};
 
@@ -67,7 +67,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureDisplaySettings(feedDisplayStyle = null,numberOfEntriesPerFeed = null) {
+	macro configureDisplaySettings(feedDisplayStyle = null, numberOfEntriesPerFeed = null) {
 		Portlet.gotoPortletOptions(
 			portletName = "RSS Publisher",
 			portletOption = "Configuration");
@@ -137,7 +137,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openFeed(siteName = null,feedTitle = null) {
+	macro openFeed(siteName = null, feedTitle = null) {
 		var key_feedTitle = ${feedTitle};
 
 		AssertClick.assertPartialTextClickAt(
@@ -191,7 +191,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewFeedContent(feedEntryContent = null,feedEntryTitle = null) {
+	macro viewFeedContent(feedEntryContent = null, feedEntryTitle = null) {
 		Panel.expandPanel(panel = ${feedEntryTitle});
 
 		AssertTextEquals.assertPartialText(
@@ -200,7 +200,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewNavigationDisplayFeedTitle(navigationNullAdt = null,feedTitle = null) {
+	macro viewNavigationDisplayFeedTitle(navigationNullAdt = null, feedTitle = null) {
 		var key_feedTitle = ${feedTitle};
 
 		AssertTextEquals(
@@ -220,7 +220,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPG(feedRowIndexNumber = null,rowIndexNumber = null,feedTitle = null) {
+	macro viewPG(feedRowIndexNumber = null, rowIndexNumber = null, feedTitle = null) {
 		var key_feedRowIndexNumber = ${feedRowIndexNumber};
 		var key_rowIndexNumber = ${rowIndexNumber};
 
@@ -243,7 +243,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewUpdateFeedTitle(feedHeading = null,pageName = null) {
+	macro viewUpdateFeedTitle(feedHeading = null, pageName = null) {
 		var key_feedHeading = ${feedHeading};
 
 		if (isSet(updateFeed)) {

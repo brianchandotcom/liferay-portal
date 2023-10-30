@@ -20,7 +20,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getLayoutUtilityPageEntryId(groupId = null,layoutUtilityPageName = null) {
+	macro _getLayoutUtilityPageEntryId(groupId = null, layoutUtilityPageName = null) {
 		Variables.assertDefined(parameterList = "${groupId},${layoutUtilityPageName}");
 
 		if (!(isSet(portalURL))) {

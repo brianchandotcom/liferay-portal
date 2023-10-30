@@ -58,7 +58,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro changeCustomEventDisplayNameOrDescription(newDisplayName = null,newDescription = null) {
+	macro changeCustomEventDisplayNameOrDescription(newDisplayName = null, newDescription = null) {
 		if (isSet(newDisplayName)) {
 			Type(
 				locator1 = "TextInput#TEXT",
@@ -79,7 +79,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro copySampleJavascript(newAttributeList = null,attributesList = null,oldCustomEventName = null,newCustomEventName = null,newValueList = null,oldValueList = null,oldAttributeList = null) {
+	macro copySampleJavascript(newAttributeList = null, attributesList = null, oldCustomEventName = null, newCustomEventName = null, newValueList = null, oldValueList = null, oldAttributeList = null) {
 		if (!(isSet(disableAttributesList))) {
 
 			// If the list is not set, you must always disable global attributes
@@ -157,7 +157,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createCustomEvent(customEventName = null,timeToSendCustomEvent = null) {
+	macro createCustomEvent(customEventName = null, timeToSendCustomEvent = null) {
 		if (!(isSet(attributesName))) {
 			var attributesName = "category,price,temp,birthdate,like,duration";
 		}

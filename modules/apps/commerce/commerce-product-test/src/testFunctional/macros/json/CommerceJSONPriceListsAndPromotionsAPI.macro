@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _addPriceList(catalogName = null,priceListName = null,currencyCode = null) {
+	macro _addPriceList(catalogName = null, priceListName = null, currencyCode = null) {
 		Variables.assertDefined(parameterList = "${catalogName},${priceListName},${currencyCode}");
 
 		var catalogId = CommerceJSONCatalogsAPI._getCommerceCatalogIdByName(catalogName = ${catalogName});
@@ -38,7 +38,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addPriceListEntry(entryPrice = null,productSKU = null,unitOfMeasureKey = null,priceListName = null) {
+	macro _addPriceListEntry(entryPrice = null, productSKU = null, unitOfMeasureKey = null, priceListName = null) {
 		Variables.assertDefined(parameterList = "${productSKU},${priceListName},${entryPrice}");
 
 		var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = ${productSKU});
@@ -88,7 +88,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addPriceModifier(priceModifierTitle = null,priceListName = null,modifierType = null,modifierAmount = null,target = null) {
+	macro _addPriceModifier(priceModifierTitle = null, priceListName = null, modifierType = null, modifierAmount = null, target = null) {
 		Variables.assertDefined(parameterList = "${modifierAmount},${modifierType},${priceListName},${priceModifierTitle},${target}");
 
 		var priceListId = CommerceJSONPriceListsAndPromotionsAPI._getCommercePriceListsAndPromotionsIdByName(priceListAndPromotionName = ${priceListName});
@@ -127,7 +127,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addPriceModifierCategory(priceModifierTitle = null,priceListName = null,productName = null) {
+	macro _addPriceModifierCategory(priceModifierTitle = null, priceListName = null, productName = null) {
 		Variables.assertDefined(parameterList = "${priceListName},${priceModifierTitle},${productName}");
 
 		var baseURL = ${baseURL};
@@ -159,7 +159,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addPriceModifierProduct(priceModifierTitle = null,priceListName = null,productName = null) {
+	macro _addPriceModifierProduct(priceModifierTitle = null, priceListName = null, productName = null) {
 		Variables.assertDefined(parameterList = "${priceListName},${priceModifierTitle},${productName}");
 
 		var baseURL = ${baseURL};
@@ -189,7 +189,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addPriceModifierProductGroup(priceModifierTitle = null,productGroupNames = null,priceListName = null) {
+	macro _addPriceModifierProductGroup(priceModifierTitle = null, productGroupNames = null, priceListName = null) {
 		Variables.assertDefined(parameterList = "${priceListName},${priceModifierTitle},${productGroupNames}");
 
 		var baseURL = ${baseURL};
@@ -225,7 +225,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addPromotion(catalogName = null,promotionName = null,currencyCode = null) {
+	macro _addPromotion(catalogName = null, promotionName = null, currencyCode = null) {
 		Variables.assertDefined(parameterList = "${catalogName},${promotionName},${currencyCode}");
 
 		var catalogId = CommerceJSONCatalogsAPI._getCommerceCatalogIdByName(catalogName = ${catalogName});
@@ -262,7 +262,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addPromotionEntry(entryPrice = null,productSKU = null,promotionName = null) {
+	macro _addPromotionEntry(entryPrice = null, productSKU = null, promotionName = null) {
 		Variables.assertDefined(parameterList = "${productSKU},${promotionName},${entryPrice}");
 
 		var skuId = CommerceJSONProductsAPI._getSKUId(productSKU = ${productSKU});
@@ -292,7 +292,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addTierPriceEntry(productSKU = null,price = null,priceListName = null) {
+	macro _addTierPriceEntry(productSKU = null, price = null, priceListName = null) {
 		Variables.assertDefined(parameterList = "${price},${priceListName},${productSKU}");
 
 		var baseURL = ${baseURL};
@@ -416,7 +416,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getCommercePriceListsAndPromotionsIdByName(priceListAndPromotionCount = null,priceListAndPromotionName = null) {
+	macro _getCommercePriceListsAndPromotionsIdByName(priceListAndPromotionCount = null, priceListAndPromotionName = null) {
 		Variables.assertDefined(parameterList = ${priceListAndPromotionName});
 
 		var baseURL = ${baseURL};
@@ -446,7 +446,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getPriceEntryId(productSKU = null,priceListName = null) {
+	macro _getPriceEntryId(productSKU = null, priceListName = null) {
 		Variables.assertDefined(parameterList = "${priceListName},${productSKU}");
 
 		var baseURL = ${baseURL};
@@ -484,7 +484,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getPriceModifierIdByTitle(priceModifierTitle = null,priceListName = null) {
+	macro _getPriceModifierIdByTitle(priceModifierTitle = null, priceListName = null) {
 		Variables.assertDefined(parameterList = "${priceListName},${priceModifierTitle}");
 
 		var priceListId = CommerceJSONPriceListsAndPromotionsAPI._getCommercePriceListsAndPromotionsIdByName(priceListAndPromotionName = ${priceListName});

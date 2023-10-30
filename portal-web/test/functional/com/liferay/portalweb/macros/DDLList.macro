@@ -5,7 +5,7 @@ definition {
 	var ddlListName = "List Name";
 
 	@summary = "Default summary"
-	macro addCP(ddlListName = null,workflowDefinition = null,ddlListDescription = null) {
+	macro addCP(ddlListName = null, workflowDefinition = null, ddlListDescription = null) {
 		LexiconEntry.gotoAdd();
 
 		Type.clickAtType(
@@ -30,7 +30,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addViaDDLDisplayPG(ddlListName = null,workflowDefinition = null,ddlListDescription = null) {
+	macro addViaDDLDisplayPG(ddlListName = null, workflowDefinition = null, ddlListDescription = null) {
 		Click(
 			locator1 = "DDL#PORTLET_ACTIONS_ADD_LIST",
 			value1 = "Add List");
@@ -85,7 +85,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editCP(ddlListName = null,ddlListDescriptionEdit = null,ddlListNameEdit = null) {
+	macro editCP(ddlListName = null, ddlListDescriptionEdit = null, ddlListNameEdit = null) {
 		LexiconEntry.viewEntryName(rowEntry = ${ddlListName});
 
 		LexiconEntry.gotoEllipsisMenuItem(menuItem = "Edit");
@@ -113,7 +113,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editUserViewPermissionCP(ddlListName = null,addOrRemoveViewPermission = null,roleList = null) {
+	macro editUserViewPermissionCP(ddlListName = null, addOrRemoveViewPermission = null, roleList = null) {
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Dynamic Data Lists");
@@ -130,7 +130,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editViaDDLDisplayPG(ddlListDescriptionEdit = null,ddlListNameEdit = null) {
+	macro editViaDDLDisplayPG(ddlListDescriptionEdit = null, ddlListNameEdit = null) {
 		Click(
 			locator1 = "DDL#PORTLET_ACTIONS_EDIT_LIST",
 			value1 = "Edit List");
@@ -229,7 +229,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCP(ddlListName = null,ddlListDescription = null) {
+	macro viewCP(ddlListName = null, ddlListDescription = null) {
 		LexiconEntry.viewEntryName(rowEntry = ${ddlListName});
 
 		if (isSet(ddlListDescription)) {

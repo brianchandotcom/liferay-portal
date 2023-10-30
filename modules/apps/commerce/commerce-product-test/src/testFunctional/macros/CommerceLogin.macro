@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro createAccount(userLastName = null,userScreenName = null,userEmailAddress = null,newPassword = null,userFirstName = null) {
+	macro createAccount(userLastName = null, userScreenName = null, userEmailAddress = null, newPassword = null, userFirstName = null) {
 		Type(
 			locator1 = "TextInput#FIRST_NAME",
 			value1 = ${userFirstName});
@@ -31,7 +31,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editPasswordCP(userScreenName = null,requirePasswordReset = null) {
+	macro editPasswordCP(userScreenName = null, requirePasswordReset = null) {
 		UserNavigator.gotoUser(userScreenName = ${userScreenName});
 
 		if (!(isSet(newPassword))) {
@@ -58,7 +58,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro loginPG(localization = null,password = null,authenticationMethod = null,userScreenName = null,userEmailAddress = null,rememberMeChecked = null,newPassword = null,samlEnabled = null) {
+	macro loginPG(localization = null, password = null, authenticationMethod = null, userScreenName = null, userEmailAddress = null, rememberMeChecked = null, newPassword = null, samlEnabled = null) {
 		if (${samlEnabled} != "true") {
 			User._clickSignInLink(localization = ${localization});
 		}
@@ -117,7 +117,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro miniumLogin(password = null,userEmailAddress = null,urlAppend = null) {
+	macro miniumLogin(password = null, userEmailAddress = null, urlAppend = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {
@@ -149,7 +149,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro speedwellLogin(password = null,userEmailAddress = null,urlAppend = null) {
+	macro speedwellLogin(password = null, userEmailAddress = null, urlAppend = null) {
 		var baseURL = ${baseURL};
 
 		if (!(isSet(baseURL))) {

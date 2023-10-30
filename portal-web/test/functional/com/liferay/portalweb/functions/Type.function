@@ -2,7 +2,7 @@
 @summary = "Type to '${locator1}' the value '${value1}'"
 definition {
 
-	function clickAtType(locator1) {
+	function clickAtType(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");
@@ -28,7 +28,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function sendKeys(locator1) {
+	function sendKeys(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");
@@ -44,7 +44,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function sendKeysAceEditor(locator1) {
+	function sendKeysAceEditor(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");
@@ -72,7 +72,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function type(locator1) {
+	function type(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");
@@ -88,7 +88,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function typeAceEditor(locator1) {
+	function typeAceEditor(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");
@@ -104,7 +104,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function typeAceEditorNoError(locator1) {
+	function typeAceEditorNoError(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");
@@ -116,7 +116,7 @@ definition {
 		selenium.typeAceEditor(${locator1}, ${value1});
 	}
 
-	function typeAceEditorNoMouseOver(locator1) {
+	function typeAceEditorNoMouseOver(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");
@@ -130,7 +130,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function typeClickAt(locator1) {
+	function typeClickAt(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");
@@ -148,7 +148,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function typeCodeMirrorEditorNoError(locator1) {
+	function typeCodeMirrorEditorNoError(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");
@@ -158,7 +158,7 @@ definition {
 		selenium.typeCodeMirrorEditor(${locator1}, ${value1});
 	}
 
-	function typeEditor(locator1) {
+	function typeEditor(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");
@@ -192,7 +192,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function typeKeys(locator1,value1) {
+	function typeKeys(locator1, value1) {
 		selenium.typeKeys(${locator1}, ${value1});
 
 		selenium.assertJavaScriptErrors("true");
@@ -200,7 +200,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function typeNoMouseOver(locator1) {
+	function typeNoMouseOver(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForElementPresent(${locator1}, "false");
@@ -214,7 +214,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function typeNotVisibleNoMouseOver(locator1,value1) {
+	function typeNotVisibleNoMouseOver(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForEditable(${locator1});
@@ -226,7 +226,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function typeNotVisibleNoMouseOverNoError(locator1,value1) {
+	function typeNotVisibleNoMouseOverNoError(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForEditable(${locator1});
@@ -236,7 +236,7 @@ definition {
 		selenium.type(${locator1}, ${value1});
 	}
 
-	function typePause(locator1) {
+	function typePause(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");

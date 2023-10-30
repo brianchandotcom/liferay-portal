@@ -17,7 +17,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editStatus(entryContentEdit = null,entryContent = null) {
+	macro editStatus(entryContentEdit = null, entryContent = null) {
 		var key_actionType = "Edit";
 		var key_entryContent = ${entryContent};
 
@@ -75,7 +75,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewEntry(userName = null,entryContent = null) {
+	macro viewEntry(userName = null, entryContent = null) {
 		var key_entryContent = ${entryContent};
 
 		AssertTextEquals(

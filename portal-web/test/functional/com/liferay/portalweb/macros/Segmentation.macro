@@ -52,7 +52,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assignSiteRoles(roleName = null,segmentName = null) {
+	macro assignSiteRoles(roleName = null, segmentName = null) {
 		Click.waitForMenuToggleJSClick(
 			key_tableEntry = ${segmentName},
 			locator1 = "LexiconTable#TABLE_ENTRY_ELLIPSIS");
@@ -130,7 +130,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createExperienceWithSegment(newExperience = null,newSegment = null) {
+	macro createExperienceWithSegment(newExperience = null, newSegment = null) {
 		Click(locator1 = "PageEditor#EXPERIENCE_DEFAULT_BUTTON_NAME");
 
 		Click(
@@ -295,7 +295,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro fillProperty(selectEntry = null,dateValue = null,selectCheckbox = null,optionsValue = null,selectCard = null,criterionKey = null,indexNumber = null,criterionValue = null,selectLink = null,selectCategory = null) {
+	macro fillProperty(selectEntry = null, dateValue = null, selectCheckbox = null, optionsValue = null, selectCard = null, criterionKey = null, indexNumber = null, criterionValue = null, selectLink = null, selectCategory = null) {
 		if (isSet(criterionKey)) {
 			Type(
 				locator1 = "Segmentation#CRITERION_KEY_ANY",
@@ -515,7 +515,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setVocabularySessionProperty(propertyName = null,vocabularyName = null) {
+	macro setVocabularySessionProperty(propertyName = null, vocabularyName = null) {
 		PortalSettings.openInstanceSettingsAdmin();
 
 		SystemSettings.gotoConfiguration(

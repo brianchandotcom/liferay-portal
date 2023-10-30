@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _curlMessageBoardMessage(headline = null,messageBoardMessageId = null,messageBoardThreadId = null,parentMessageBoardMessageId = null) {
+	macro _curlMessageBoardMessage(headline = null, messageBoardMessageId = null, messageBoardThreadId = null, parentMessageBoardMessageId = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(messageBoardThreadId)) {
@@ -35,7 +35,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createChildMbMessageByMbMessageId(headline = null,parentMessageBoardMessageId = null) {
+	macro createChildMbMessageByMbMessageId(headline = null, parentMessageBoardMessageId = null) {
 		Variables.assertDefined(parameterList = "${headline},${parentMessageBoardMessageId}");
 
 		var curl = MessageBoardMessageAPI._curlMessageBoardMessage(
@@ -48,7 +48,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createMbMessageByMbThreadId(headline = null,messageBoardThreadId = null) {
+	macro createMbMessageByMbThreadId(headline = null, messageBoardThreadId = null) {
 		Variables.assertDefined(parameterList = "${headline},${messageBoardThreadId}");
 
 		var curl = MessageBoardMessageAPI._curlMessageBoardMessage(
@@ -61,7 +61,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getIdOfCreatedMbMessageByMbThreadId(headline = null,messageBoardThreadId = null) {
+	macro getIdOfCreatedMbMessageByMbThreadId(headline = null, messageBoardThreadId = null) {
 		var response = MessageBoardMessageAPI.createMbMessageByMbThreadId(
 			headline = ${headline},
 			messageBoardThreadId = ${messageBoardThreadId});

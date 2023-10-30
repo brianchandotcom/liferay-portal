@@ -19,7 +19,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openEditContentPage(pageFriendlyURL = null,siteURLKey = null,siteName = null,locale = null,privateLayout = null,pageName = null) {
+	macro openEditContentPage(pageFriendlyURL = null, siteURLKey = null, siteName = null, locale = null, privateLayout = null, pageName = null) {
 		if (contains(${siteName}, "Staging")) {
 			Navigator.openSiteURL(siteName = ${siteName});
 		}
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openViewContentPage(siteName = null,privateLayout = null,locale = null,pageName = null) {
+	macro openViewContentPage(siteName = null, privateLayout = null, locale = null, pageName = null) {
 		if (!(isSet(siteURLKey))) {
 			var siteURLKey = ContentPagesNavigator._convertNameToKey(name = ${siteName});
 		}

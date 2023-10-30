@@ -56,7 +56,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewBlogsEntryViaBAPortletPG(entryQuoteContent = null,entryTitle = null,entryContent = null) {
+	macro viewBlogsEntryViaBAPortletPG(entryQuoteContent = null, entryTitle = null, entryContent = null) {
 		AssertTextEquals(
 			key_entryTitle = ${entryTitle},
 			locator1 = "BlogsAggregator#ENTRY_TITLE",
@@ -78,7 +78,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewParentOrganizationPG(orgName = null,parentOrgName = null,portletName = null) {
+	macro viewParentOrganizationPG(orgName = null, parentOrgName = null, portletName = null) {
 		Portlet.gotoPortletOptions(
 			portletName = ${portletName},
 			portletOption = "Configuration");

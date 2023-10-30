@@ -10,7 +10,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewHelpInformation(header = null,info = null) {
+	macro viewHelpInformation(header = null, info = null) {
 		MouseOver(
 			key_text = "question-circle",
 			locator1 = "Icon#ANY");

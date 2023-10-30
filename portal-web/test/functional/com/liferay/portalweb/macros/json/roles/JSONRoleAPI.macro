@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _addAccountRole(name = null,descriptionMap = null,type = null,titleMap = null) {
+	macro _addAccountRole(name = null, descriptionMap = null, type = null, titleMap = null) {
 		Variables.assertDefined(parameterList = "${name},${titleMap},${descriptionMap},${type}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -23,7 +23,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addRole(name = null,specificURL = null,descriptionMap = null,type = null,titleMap = null) {
+	macro _addRole(name = null, specificURL = null, descriptionMap = null, type = null, titleMap = null) {
 		Variables.assertDefined(parameterList = "${name},${titleMap},${descriptionMap},${type}");
 
 		if (isSet(specificURL)) {
@@ -51,7 +51,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _assignDepotRoleToUser(roleId = null,groupId = null,userId = null) {
+	macro _assignDepotRoleToUser(roleId = null, groupId = null, userId = null) {
 		Variables.assertDefined(parameterList = "${groupId},${roleId},${userId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -69,7 +69,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _assignRoleToGroup(roleId = null,groupId = null) {
+	macro _assignRoleToGroup(roleId = null, groupId = null) {
 		Variables.assertDefined(parameterList = "${groupId},${roleId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -86,7 +86,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _assignRoleToUser(roleId = null,userId = null) {
+	macro _assignRoleToUser(roleId = null, userId = null) {
 		Variables.assertDefined(parameterList = "${roleId},${userId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -103,7 +103,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _assignSiteRoleToUser(roleId = null,groupId = null,userId = null) {
+	macro _assignSiteRoleToUser(roleId = null, groupId = null, userId = null) {
 		Variables.assertDefined(parameterList = "${groupId},${roleId},${userId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -137,7 +137,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getRoleIdByName(name = null,specificURL = null) {
+	macro _getRoleIdByName(name = null, specificURL = null) {
 		Variables.assertDefined(parameterList = ${name});
 
 		if (isSet(specificURL)) {

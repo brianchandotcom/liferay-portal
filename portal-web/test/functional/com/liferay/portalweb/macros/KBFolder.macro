@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addCP(kbFolderName = null,kbFolderDescription = null,customField = null) {
+	macro addCP(kbFolderName = null, kbFolderDescription = null, customField = null) {
 		if (isSet(centerPaneButton)) {
 			Button.click(button = "New");
 
@@ -56,7 +56,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editCP(kbFolderName = null,kbFolderEditedName = null,kbFolderDescription = null) {
+	macro editCP(kbFolderName = null, kbFolderEditedName = null, kbFolderDescription = null) {
 		if (isSet(navigationPane)) {
 			KBFolder.gotoMenuItemViaNavigationPane(
 				kbFolderName = ${kbFolderName},
@@ -107,7 +107,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoMenuItemViaNavigationPane(kbFolderName = null,menuItem = null) {
+	macro gotoMenuItemViaNavigationPane(kbFolderName = null, menuItem = null) {
 		MouseOver(
 			key_itemName = ${kbFolderName},
 			locator1 = "KnowledgeBase#PAGE_TREE_ITEM_NAME");
@@ -136,7 +136,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro moveFolder(kbFolderName = null,destinationItem = null) {
+	macro moveFolder(kbFolderName = null, destinationItem = null) {
 		if (isSet(navigationPane)) {
 			KBFolder.gotoMenuItemViaNavigationPane(
 				kbFolderName = ${kbFolderName},
@@ -177,7 +177,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewFolderInfo(kbFolderName = null,entryDefaultInfo = null,foldersQuantity = null,folderQuantity = null,articleQuantity = null) {
+	macro viewFolderInfo(kbFolderName = null, entryDefaultInfo = null, foldersQuantity = null, folderQuantity = null, articleQuantity = null) {
 		VerifyElementPresent(
 			key_entryTitle = ${kbFolderName},
 			key_infoText = ${entryDefaultInfo},

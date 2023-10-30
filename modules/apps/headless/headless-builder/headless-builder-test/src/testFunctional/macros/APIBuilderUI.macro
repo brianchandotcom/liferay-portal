@@ -55,7 +55,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createAPIApplication(baseURL = null,description = null,title = null) {
+	macro createAPIApplication(baseURL = null, description = null, title = null) {
 		Variables.assertDefined(parameterList = ${title});
 
 		ApplicationsMenu.gotoPortlet(
@@ -92,7 +92,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createAPIEndpoint(path = null,name = null,applicationId = null) {
+	macro createAPIEndpoint(path = null, name = null, applicationId = null) {
 		Variables.assertDefined(parameterList = "${name},${path}");
 
 		Click(locator1 = "Button#PLUS");
@@ -122,7 +122,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createAPISchema(objectDefinitionName = null,name = null) {
+	macro createAPISchema(objectDefinitionName = null, name = null) {
 		Variables.assertDefined(parameterList = "${name},${objectDefinitionName}");
 
 		Click(locator1 = "APIBuilder#ADD_NEW_SCHEMA");
@@ -157,7 +157,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteAPIEndpoint(endpointPath = null,applicationTitle = null) {
+	macro deleteAPIEndpoint(endpointPath = null, applicationTitle = null) {
 		APIBuilderUI.switchToRelatedEntryInEditApplication(
 			entity = "Endpoints",
 			title = ${applicationTitle});
@@ -174,7 +174,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteAPISchema(applicationTitle = null,schemaName = null) {
+	macro deleteAPISchema(applicationTitle = null, schemaName = null) {
 		APIBuilderUI.switchToRelatedEntryInEditApplication(
 			entity = "Schemas",
 			title = ${applicationTitle});
@@ -191,7 +191,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro filterByLastUpdated(fromDate = null,toDate = null) {
+	macro filterByLastUpdated(fromDate = null, toDate = null) {
 		Variables.assertDefined(parameterList = "${fromDate},${toDate}");
 
 		Click.pauseClickAt(locator1 = "Dropdown#FILTER");
@@ -299,7 +299,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro switchToRelatedEntryInEditApplication(title = null,entity = null) {
+	macro switchToRelatedEntryInEditApplication(title = null, entity = null) {
 		Variables.assertDefined(parameterList = "${entity},${title}");
 
 		APIBuilderUI.goToEditAPIApplicationPage(key_title = ${title});

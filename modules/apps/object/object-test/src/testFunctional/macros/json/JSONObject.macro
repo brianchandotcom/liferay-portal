@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addEmailNotificationTemplateViaAPI(cc = null,bcc = null,templateName = null,subject = null,fromName = null,bodyContent = null,fromAddress = null,toAddress = null) {
+	macro addEmailNotificationTemplateViaAPI(cc = null, bcc = null, templateName = null, subject = null, fromName = null, bodyContent = null, fromAddress = null, toAddress = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
@@ -51,7 +51,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addObject(objectName = null,labelName = null,pluralLabelName = null) {
+	macro addObject(objectName = null, labelName = null, pluralLabelName = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
@@ -97,7 +97,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addObjectEntry(fieldNameList = null,valueList = null) {
+	macro addObjectEntry(fieldNameList = null, valueList = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
@@ -215,7 +215,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addObjectField(fieldName = null,picklistName = null,fieldLabelName = null,timeStorageOption = null,isRequired = null,outputOption = null,fileSource = null,fieldBusinessType = null,formulaScript = null,objectName = null,fieldType = null) {
+	macro addObjectField(fieldName = null, picklistName = null, fieldLabelName = null, timeStorageOption = null, isRequired = null, outputOption = null, fileSource = null, fieldBusinessType = null, formulaScript = null, objectName = null, fieldType = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var objectId = JSONObject.getObjectId(
 			objectName = ${objectName},
@@ -502,7 +502,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addObjectLayout(objectName = null,layoutName = null) {
+	macro addObjectLayout(objectName = null, layoutName = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var objectId = JSONObject.getObjectId(
 			objectName = ${objectName},
@@ -534,7 +534,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addObjectRelationship(relationshipName = null,relationshipType = null,objectName_1 = null,objectName_2 = null,relationshipLabel = null) {
+	macro addObjectRelationship(relationshipName = null, relationshipType = null, objectName_1 = null, objectName_2 = null, relationshipLabel = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var objectID_1 = JSONObject.getObjectId(
 			objectName = ${objectName_1},
@@ -578,7 +578,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addObjectSingleFieldEntry(fieldName = null,value = null) {
+	macro addObjectSingleFieldEntry(fieldName = null, value = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
@@ -607,7 +607,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addObjectValidation(validationType = null,objectName = null,labelName = null) {
+	macro addObjectValidation(validationType = null, objectName = null, labelName = null) {
 		Variables.assertDefined(parameterList = "${objectName},${labelName},${script},${validationType}");
 
 		var portalURL = JSONCompany.getDefaultPortalURL();
@@ -691,7 +691,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPicklistItem(picklistName = null,itemName = null,itemKey = null) {
+	macro addPicklistItem(picklistName = null, itemName = null, itemKey = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var picklistId = JSONObject.getPicklistId(
 			picklistName = ${picklistName},
@@ -792,7 +792,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteObject(objectName = null,virtualHost = null,token = null) {
+	macro deleteObject(objectName = null, virtualHost = null, token = null) {
 		if (isSet(virtualHost)) {
 			if (!(isSet(port))) {
 				var port = 8080;
@@ -832,7 +832,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteObjectEntry(fieldName = null,value = null) {
+	macro deleteObjectEntry(fieldName = null, value = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var entryId = JSONObject.getObjectEntryId(
 			entryValue = ${value},
@@ -906,7 +906,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro filterObjectEntry(fieldName = null,value = null) {
+	macro filterObjectEntry(fieldName = null, value = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var entryId = JSONObject.getObjectEntryId(
 			entryValue = ${value},
@@ -993,7 +993,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getObjectEntryFieldValue(fieldName = null,attributeValue = null,attribute = null,type = null) {
+	macro getObjectEntryFieldValue(fieldName = null, attributeValue = null, attribute = null, type = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (!(isSet(userEmailAddress))) {
@@ -1022,7 +1022,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getObjectEntryId(fieldName = null,entryValue = null,virtualHost = null) {
+	macro getObjectEntryId(fieldName = null, entryValue = null, virtualHost = null) {
 		if (isSet(virtualHost)) {
 			if (!(isSet(port))) {
 				var port = 8080;
@@ -1055,7 +1055,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getObjectFieldId(fieldName = null,virtualHost = null,objectId = null,token = null) {
+	macro getObjectFieldId(fieldName = null, virtualHost = null, objectId = null, token = null) {
 		if (isSet(virtualHost)) {
 			if (!(isSet(port))) {
 				var port = 8080;
@@ -1090,7 +1090,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getObjectId(objectName = null,virtualHost = null,token = null) {
+	macro getObjectId(objectName = null, virtualHost = null, token = null) {
 		if (isSet(virtualHost)) {
 			if (!(isSet(port))) {
 				var port = 8080;
@@ -1273,7 +1273,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updateObject(configKey = null,objectName = null,configValue = null) {
+	macro updateObject(configKey = null, objectName = null, configValue = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var objectId = JSONObject.getObjectId(objectName = ${objectName});
 
@@ -1298,7 +1298,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updateObjectField(configKey = null,fieldName = null,objectName = null,configValue = null) {
+	macro updateObjectField(configKey = null, fieldName = null, objectName = null, configValue = null) {
 		var portalURL = JSONCompany.getPortalURL();
 		var objectId = JSONObject.getObjectId(objectName = ${objectName});
 

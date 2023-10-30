@@ -55,7 +55,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createABTest(goal = null,testTitle = null) {
+	macro createABTest(goal = null, testTitle = null) {
 		while (IsElementNotPresent(key_text = "Create Test", locator1 = "Button#ANY")) {
 			Click(locator1 = "ABTest#AB_TEST_BUTTON");
 		}
@@ -152,7 +152,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro fillInput(labelValue = null,key_testTitle = null) {
+	macro fillInput(labelValue = null, key_testTitle = null) {
 		Click(
 			key_fieldLabel = ${labelValue},
 			locator1 = "Modal#INPUT_WITH_LABEL");

@@ -16,7 +16,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteCP(kbSuggestionBody = null,kbArticleTitle = null) {
+	macro deleteCP(kbSuggestionBody = null, kbArticleTitle = null) {
 		var key_kbArticleTitle = ${kbArticleTitle};
 		var key_kbSuggestionBody = ${kbSuggestionBody};
 		var key_rowEntry = ${kbSuggestionBody};
@@ -35,7 +35,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoSuggestionStatusNew(suggestionCount = null,kbArticleTitle = null) {
+	macro gotoSuggestionStatusNew(suggestionCount = null, kbArticleTitle = null) {
 		var key_kbArticleTitle = ${kbArticleTitle};
 
 		AssertTextEquals.assertPartialText(
@@ -62,7 +62,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewNoDuplicatePG(kbSuggestionUserName = null,kbThereAreSuggestionsLink = null,kbSuggestionBody = null,status = null) {
+	macro viewNoDuplicatePG(kbSuggestionUserName = null, kbThereAreSuggestionsLink = null, kbSuggestionBody = null, status = null) {
 		var key_kbSuggestionBody = ${kbSuggestionBody};
 
 		AssertTextEquals.assertPartialText(
@@ -90,7 +90,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPG(kbSuggestionUserName = null,kbSuggestionBody = null,status = null) {
+	macro viewPG(kbSuggestionUserName = null, kbSuggestionBody = null, status = null) {
 		var key_kbSuggestionBody = ${kbSuggestionBody};
 
 		AssertTextEquals.assertPartialText(
@@ -125,7 +125,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSuggestionStatus(kbSuggestionBody = null,status = null) {
+	macro viewSuggestionStatus(kbSuggestionBody = null, status = null) {
 		var key_kbSuggestionBody = ${kbSuggestionBody};
 
 		AssertTextEquals.assertPartialText(

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addPublicationTemplate(publicationDescription = null,defaultTemplate = null,userInvite1 = null,publicationRole1 = null,userInvite2 = null,userMissingPublicationsRole = null,titleRole1 = null,templateName = null,publicationRole2 = null,userInvite = null,templateDescription = null,titleRole2 = null,defaultSandboxTemplate = null,publicationName = null) {
+	macro addPublicationTemplate(publicationDescription = null, defaultTemplate = null, userInvite1 = null, publicationRole1 = null, userInvite2 = null, userMissingPublicationsRole = null, titleRole1 = null, templateName = null, publicationRole2 = null, userInvite = null, templateDescription = null, titleRole2 = null, defaultSandboxTemplate = null, publicationName = null) {
 		Click(locator1 = "Button#PLUS");
 
 		if (isSet(templateName)) {
@@ -81,7 +81,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editPublicationTemplate(publicationNameEdit = null,templateName = null,publicationDescriptionEdit = null,templateDescriptionEdit = null,templateNameEdit = null) {
+	macro editPublicationTemplate(publicationNameEdit = null, templateName = null, publicationDescriptionEdit = null, templateDescriptionEdit = null, templateNameEdit = null) {
 		Click(
 			key_templateName = ${templateName},
 			locator1 = "PublicationsTemplate#TEMPLATE_DROPDOWN_MENU");
@@ -148,7 +148,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro inviteUser(userInvite = null,titleRole = null,publicationRole = null) {
+	macro inviteUser(userInvite = null, titleRole = null, publicationRole = null) {
 		Click(
 			key_title = ${titleRole},
 			locator1 = "Button#ANY_TITLE");
@@ -186,7 +186,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTemplateInvitedUser(templateName = null,usersAndRoles = null) {
+	macro viewTemplateInvitedUser(templateName = null, usersAndRoles = null) {
 		Click(
 			key_templateName = ${templateName},
 			locator1 = "PublicationsTemplate#TEMPLATE_DROPDOWN_MENU");

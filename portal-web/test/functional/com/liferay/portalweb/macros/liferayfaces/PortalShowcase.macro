@@ -129,7 +129,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro submitImmediate(textResult = null,immediate = null,messageImmediate2 = null,messageImmediate1 = null,text = null) {
+	macro submitImmediate(textResult = null, immediate = null, messageImmediate2 = null, messageImmediate1 = null, text = null) {
 		if (${immediate} == "true") {
 			Click(locator1 = "PortalShowcase#WRITEABLE_FIELD");
 

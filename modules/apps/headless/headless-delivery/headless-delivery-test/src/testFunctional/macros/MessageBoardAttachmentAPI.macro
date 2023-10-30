@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _curlMessageBoardAttachment(messageBoardMessageErc = null,messageBoardAttachmentErc = null,attachmentPath = null,messageBoardMessageId = null,messageBoardAttachmentId = null,messageBoardThreadId = null) {
+	macro _curlMessageBoardAttachment(messageBoardMessageErc = null, messageBoardAttachmentErc = null, attachmentPath = null, messageBoardMessageId = null, messageBoardAttachmentId = null, messageBoardThreadId = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(messageBoardThreadId)) {
@@ -56,7 +56,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createMessageBoardMessageMessageBoardAttachment(attachmentPath = null,messageBoardMessageId = null) {
+	macro createMessageBoardMessageMessageBoardAttachment(attachmentPath = null, messageBoardMessageId = null) {
 		Variables.assertDefined(parameterList = "${messageBoardMessageId},${attachmentPath}");
 
 		var curl = MessageBoardAttachmentAPI._curlMessageBoardAttachment(
@@ -69,7 +69,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createMessageBoardThreadMessageBoardAttachment(attachmentPath = null,messageBoardThreadId = null) {
+	macro createMessageBoardThreadMessageBoardAttachment(attachmentPath = null, messageBoardThreadId = null) {
 		Variables.assertDefined(parameterList = "${messageBoardThreadId},${attachmentPath}");
 
 		var curl = MessageBoardAttachmentAPI._curlMessageBoardAttachment(
@@ -82,7 +82,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteMessageBoardAttachmentByMbMessageErcAndMbAttachmentErc(messageBoardMessageErc = null,messageBoardAttachmentErc = null) {
+	macro deleteMessageBoardAttachmentByMbMessageErcAndMbAttachmentErc(messageBoardMessageErc = null, messageBoardAttachmentErc = null) {
 		Variables.assertDefined(parameterList = "${messageBoardMessageErc},${messageBoardAttachmentErc}");
 
 		var curl = MessageBoardAttachmentAPI._curlMessageBoardAttachment(
@@ -106,7 +106,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getMessageBoardAttachmentByMbMessageErcAndMbAttachmentErc(messageBoardMessageErc = null,messageBoardAttachmentErc = null) {
+	macro getMessageBoardAttachmentByMbMessageErcAndMbAttachmentErc(messageBoardMessageErc = null, messageBoardAttachmentErc = null) {
 		Variables.assertDefined(parameterList = "${messageBoardMessageErc},${messageBoardAttachmentErc}");
 
 		var curl = MessageBoardAttachmentAPI._curlMessageBoardAttachment(

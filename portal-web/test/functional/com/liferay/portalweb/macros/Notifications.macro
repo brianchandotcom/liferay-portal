@@ -227,7 +227,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewNewComment(fragmentName = null,user = null,contentBody = null,content = null) {
+	macro viewNewComment(fragmentName = null, user = null, contentBody = null, content = null) {
 		var assetType = StringUtil.lowerCase(${assetType});
 		var key_contentBody = ${contentBody};
 
@@ -261,7 +261,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewNewContent(user = null,contentBody = null) {
+	macro viewNewContent(user = null, contentBody = null) {
 		var assetType = StringUtil.lowerCase(${assetType});
 		var key_contentBody = ${contentBody};
 
@@ -275,7 +275,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewNewSharedContent(ownerName = null,contentSharingPermission = null,contentTitle = null) {
+	macro viewNewSharedContent(ownerName = null, contentSharingPermission = null, contentTitle = null) {
 		var key_contentSharingPermission = ${contentSharingPermission};
 		var key_contentTitle = ${contentTitle};
 		var key_ownerName = ${ownerName};
@@ -323,7 +323,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewNoPermissions(notificationCount = null,contentBody = null) {
+	macro viewNoPermissions(notificationCount = null, contentBody = null) {
 		Notifications.viewBadgeCount(notificationCount = ${notificationCount});
 
 		Notifications.gotoNotifications();
@@ -364,7 +364,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSpecificNotificationDetails(notificationsTitle = null,contentBody = null) {
+	macro viewSpecificNotificationDetails(notificationsTitle = null, contentBody = null) {
 		AssertTextEquals(
 			key_notificationsTitle = ${notificationsTitle},
 			locator1 = "Notifications#NOTIFICATIONS_TITLE_SPECIFIC",
@@ -377,7 +377,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSuccessfulPublication(publicationType = null,contentBody = null,portletName = null) {
+	macro viewSuccessfulPublication(publicationType = null, contentBody = null, portletName = null) {
 		var key_contentBody = ${contentBody};
 		var key_portletName = ${portletName};
 		var key_publicationType = ${publicationType};
@@ -388,7 +388,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewUpdatedContent(user = null,contentBody = null) {
+	macro viewUpdatedContent(user = null, contentBody = null) {
 		var assetType = StringUtil.lowerCase(${assetType});
 		var key_contentBody = ${contentBody};
 

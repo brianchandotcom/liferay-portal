@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro assertCompanyLogContent(logContent = null,portalInstanceName = null) {
+	macro assertCompanyLogContent(logContent = null, portalInstanceName = null) {
 		var groupId = JSONCompany.getCompanyGroupIdByGroupKey(
 			groupKey = "Guest",
 			portalInstanceName = ${portalInstanceName});

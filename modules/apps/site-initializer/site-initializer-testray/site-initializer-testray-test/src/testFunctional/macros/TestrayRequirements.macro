@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addRequirement(requirementName = null,linkTitle = null,componentId = null,linkURL = null,requirementDescription = null) {
+	macro addRequirement(requirementName = null, linkTitle = null, componentId = null, linkURL = null, requirementDescription = null) {
 		LexiconEntry.gotoAdd();
 
 		if (isSet(requirementName)) {
@@ -43,7 +43,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editRequirement(linkTitle = null,newName = null,componentId = null,linkURL = null,requirementDescription = null) {
+	macro editRequirement(linkTitle = null, newName = null, componentId = null, linkURL = null, requirementDescription = null) {
 		if (isSet(newName)) {
 			Type(
 				key_fieldLabel = "Summary",

@@ -11,7 +11,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro installPatchOnSpecificServer(nodePort = null,patchFileZipURL = null) {
+	macro installPatchOnSpecificServer(nodePort = null, patchFileZipURL = null) {
 		var leadingPortNumber = StringUtil.replace(${nodePort}, 080, "");
 
 		var bundleIndex = ${leadingPortNumber} - 8;
@@ -39,7 +39,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updateConfigurationOnSpecificServer(nodePort = null,updateConfiguration = null) {
+	macro updateConfigurationOnSpecificServer(nodePort = null, updateConfiguration = null) {
 		var leadingPortNumber = StringUtil.replace(${nodePort}, 080, "");
 
 		var bundleIndex = ${leadingPortNumber} - 8;

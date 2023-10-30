@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addField(fieldName = null,fieldLabel = null) {
+	macro addField(fieldName = null, fieldLabel = null) {
 		Navigator.gotoSidebarTab(tabName = "Builder");
 
 		Navigator.gotoNavTab(navTab = "Fields");
@@ -28,7 +28,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addFieldNested(fieldName = null,targetFieldsGroupLabel = null,targetFieldLabel = null,fieldLabel = null) {
+	macro addFieldNested(fieldName = null, targetFieldsGroupLabel = null, targetFieldLabel = null, fieldLabel = null) {
 		Navigator.gotoSidebarTab(tabName = "Builder");
 
 		Navigator.gotoNavTab(navTab = "Fields");
@@ -61,7 +61,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addFieldOptions(optionValueList = null,fieldLabel = null,optionFieldLabel = null) {
+	macro addFieldOptions(optionValueList = null, fieldLabel = null, optionFieldLabel = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -94,7 +94,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addFieldsetNestedToBuilder(fieldsetName = null,targetFieldsGroupLabel = null,targetFieldLabel = null) {
+	macro addFieldsetNestedToBuilder(fieldsetName = null, targetFieldsGroupLabel = null, targetFieldLabel = null) {
 		Navigator.gotoSidebarTab(tabName = "Builder");
 
 		Navigator.gotoNavTab(navTab = "Fieldsets");
@@ -172,7 +172,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertFieldOptionLabels(fieldFieldLabel = null,optionLabelList = null,optionFieldLabel = null) {
+	macro assertFieldOptionLabels(fieldFieldLabel = null, optionLabelList = null, optionFieldLabel = null) {
 		Navigator.gotoSidebarTab(tabName = "Builder");
 
 		AssertClick.assertPartialTextClickAt(
@@ -221,7 +221,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertFieldOptionLabelsNotPresent(fieldFieldLabel = null,optionLabelList = null,optionFieldLabel = null) {
+	macro assertFieldOptionLabelsNotPresent(fieldFieldLabel = null, optionLabelList = null, optionFieldLabel = null) {
 		if (isSet(fieldFieldLabel)) {
 			AssertClick.assertPartialTextClickAt(
 				key_fieldFieldLabel = ${fieldFieldLabel},
@@ -251,7 +251,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertFieldReference(fieldLabel = null,fieldReference = null) {
+	macro assertFieldReference(fieldLabel = null, fieldReference = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -281,7 +281,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertFieldsGroup(fieldGroupDepth = null,fieldGroupLabel = null,fieldsLabelList = null) {
+	macro assertFieldsGroup(fieldGroupDepth = null, fieldGroupLabel = null, fieldsLabelList = null) {
 		for (var fieldFieldLabel : list ${fieldsLabelList}) {
 			AssertElementPresent(
 				key_fieldFieldLabel = ${fieldFieldLabel},
@@ -299,7 +299,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertOptionReferences(optionReferenceList = null,fieldLabel = null,optionFieldLabel = null) {
+	macro assertOptionReferences(optionReferenceList = null, fieldLabel = null, optionFieldLabel = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -375,7 +375,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editFieldReference(fieldLabel = null,assertErrorMessage = null,fieldReference = null) {
+	macro editFieldReference(fieldLabel = null, assertErrorMessage = null, fieldReference = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -401,7 +401,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editHelpTextField(fieldHelpText = null,fieldLabel = null) {
+	macro editHelpTextField(fieldHelpText = null, fieldLabel = null) {
 		Click(locator1 = "DataEngineBuilder#FIELD_BODY");
 
 		Type(
@@ -413,7 +413,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editOptionReferences(optionReferenceList = null,fieldLabel = null,assertOptionIndex = null,assertErrorMessage = null,optionFieldLabel = null) {
+	macro editOptionReferences(optionReferenceList = null, fieldLabel = null, assertOptionIndex = null, assertErrorMessage = null, optionFieldLabel = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -480,7 +480,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getOptionReference(optionIndex = null,fieldLabel = null,optionFieldLabel = null) {
+	macro getOptionReference(optionIndex = null, fieldLabel = null, optionFieldLabel = null) {
 		if (!(isSet(index))) {
 			var index = 1;
 		}
@@ -505,7 +505,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro nestCreatedFields(targetFieldGroupLabel = null,targetFieldLabel = null,fieldLabel = null) {
+	macro nestCreatedFields(targetFieldGroupLabel = null, targetFieldLabel = null, fieldLabel = null) {
 		if (isSet(targetFieldGroupLabel)) {
 			DragAndDrop.javaScriptDragAndDropToObject(
 				key_fieldFieldGroupLabel = ${targetFieldGroupLabel},

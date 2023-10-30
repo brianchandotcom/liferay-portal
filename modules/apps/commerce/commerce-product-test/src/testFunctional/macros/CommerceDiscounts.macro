@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addNewDiscountsRule(name = null,type = null) {
+	macro addNewDiscountsRule(name = null, type = null) {
 		Click(locator1 = "Button#PLUS");
 
 		SelectFrameTop();
@@ -24,7 +24,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editDiscountRule(quantity = null,key_fieldLabel = null) {
+	macro editDiscountRule(quantity = null, key_fieldLabel = null) {
 		SelectFrameTop();
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");

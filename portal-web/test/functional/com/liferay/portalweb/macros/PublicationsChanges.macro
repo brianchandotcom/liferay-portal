@@ -48,7 +48,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro discardChanges(conflictingChanges = null,changeCategory = null,changeTitle = null) {
+	macro discardChanges(conflictingChanges = null, changeCategory = null, changeTitle = null) {
 		if (isSet(changeOrder)) {
 			var changeOrder = ${changeOrder};
 		}
@@ -96,7 +96,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editComment(commentValueEdit = null,commentValue = null,userName = null) {
+	macro editComment(commentValueEdit = null, commentValue = null, userName = null) {
 		Click.mouseOverClick(
 			key_commentValue = ${commentValue},
 			locator1 = "PublicationsChanges#COMMENT_ACTIONS");
@@ -119,7 +119,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro filterChangesByItem(checkboxName = null,menuItem = null) {
+	macro filterChangesByItem(checkboxName = null, menuItem = null) {
 		if (IsElementPresent(key_text = "Clear", locator1 = "Button#ANY")) {
 			Click(
 				key_text = "Clear",
@@ -138,7 +138,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoEditChanges(changeCategory = null,changeTitle = null,editInLocation = null) {
+	macro gotoEditChanges(changeCategory = null, changeTitle = null, editInLocation = null) {
 		if (isSet(changeOrder)) {
 			var changeOrder = ${changeOrder};
 		}
@@ -155,7 +155,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoMoveChangeToAnotherPublication {
+	macro gotoMoveChangeToAnotherPublication(changeCategory = null, targetPublicationName = null, changeTitle = null, changeOrder = null) {
 		Search.searchCP(searchTerm = ${changeTitle});
 
 		Click(
@@ -177,7 +177,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro moveChangeToAnotherPublication {
+	macro moveChangeToAnotherPublication(moveFailed = null) {
 		Click(
 			key_text = "Move Changes",
 			locator1 = "Button#ANY");
@@ -201,7 +201,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro sortChanges(sortName = null,sort = null) {
+	macro sortChanges(sortName = null, sort = null) {
 		Click(
 			key_name = ${sortName},
 			locator1 = "PublicationsChanges#SORT_BUTTON");
@@ -220,7 +220,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewChanges(changeCategory = null,changeUser = null,publishedPublication = null,changeType = null,changeSite = null,changeTitle = null,changeStatus = null,publicationName = null,showAllItems = null) {
+	macro viewChanges(changeCategory = null, changeUser = null, publishedPublication = null, changeType = null, changeSite = null, changeTitle = null, changeStatus = null, publicationName = null, showAllItems = null) {
 		if (${publishedPublication} == "true") {
 			Click(
 				key_publicationName = ${publicationName},
@@ -286,7 +286,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewChangesResultNotPresent(changeCategory = null,changeTitle = null) {
+	macro viewChangesResultNotPresent(changeCategory = null, changeTitle = null) {
 		var key_changeCategory = ${changeCategory};
 		var key_changeTitle = ${changeTitle};
 
@@ -303,7 +303,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewChangesResultsOrder(changeCategory = null,changesList = null) {
+	macro viewChangesResultsOrder(changeCategory = null, changesList = null) {
 		var changeOrder = 0;
 
 		for (var changeTitle : list ${changesList}) {

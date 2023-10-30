@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro activateScheduleTrigger(cronExpression = null,trigger = null) {
+	macro activateScheduleTrigger(cronExpression = null, trigger = null) {
 		LexiconEntry.gotoEntry(rowEntry = ${trigger});
 
 		Navigator.gotoNavTab(navTab = "Job Scheduler Trigger");
@@ -21,7 +21,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addScheduleTrigger(triggerName = null,triggerProperties = null,taskExecutorType = null) {
+	macro addScheduleTrigger(triggerName = null, triggerProperties = null, taskExecutorType = null) {
 		Click(locator1 = "Button#NEW");
 
 		MenuItem.click(menuItem = ${taskExecutorType});
@@ -70,7 +70,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setJobSchedulerTrigger(key_name = null,selectFieldValue = null,selectFieldLabel = null) {
+	macro setJobSchedulerTrigger(key_name = null, selectFieldValue = null, selectFieldLabel = null) {
 		Variables.assertDefined(parameterList = "${key_name},${selectFieldLabel},${selectFieldValue}");
 
 		Click(

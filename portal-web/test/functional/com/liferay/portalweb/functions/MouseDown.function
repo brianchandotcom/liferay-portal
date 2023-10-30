@@ -11,7 +11,7 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function mouseDownAt(locator1,value1) {
+	function mouseDownAt(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.waitForVisible(${locator1}, "false");

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _openToConfigInSiteSettings(siteURLKey = null,portlet = null) {
+	macro _openToConfigInSiteSettings(siteURLKey = null, portlet = null) {
 		var baseURL = JSONCompany.getPortalURL();
 
 		if (${portlet} == "Ratings") {
@@ -12,7 +12,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro configureRatingType(ratingType = null,siteURLKey = null,siteName = null,portlet = null,applications = null) {
+	macro configureRatingType(ratingType = null, siteURLKey = null, siteName = null, portlet = null, applications = null) {
 		if (isSet(siteURLKey)) {
 			Ratings._openToConfigInSiteSettings(
 				portlet = ${portlet},
@@ -129,7 +129,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro rateStarSpecificAsset(assetTitle = null,ratingStarCount = null) {
+	macro rateStarSpecificAsset(assetTitle = null, ratingStarCount = null) {
 		Click(
 			key_assetTitle = ${assetTitle},
 			locator1 = "Ratings#YOUR_RATING_STAR_SPECIFIC_ASSET");
@@ -156,7 +156,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro rateThumb(threadSubject = null,ratingResult = null) {
+	macro rateThumb(threadSubject = null, ratingResult = null) {
 		if (isSet(blogCommentRating)) {
 			Click.javaScriptClick(
 				key_ratingResult = ${ratingResult},
@@ -244,7 +244,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewRateStackedStar(averageStarCount = null,ratingStarCount = null) {
+	macro viewRateStackedStar(averageStarCount = null, ratingStarCount = null) {
 		var count = 0;
 
 		while (${count} != ${ratingStarCount}) {
@@ -263,7 +263,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewRateStar(averageRatingStarCount = null,ratingStarCount = null) {
+	macro viewRateStar(averageRatingStarCount = null, ratingStarCount = null) {
 		AssertElementPresent(
 			key_ratingStarCount = ${ratingStarCount},
 			locator1 = "Ratings#YOUR_RATING_STAR_RESULT");
@@ -288,7 +288,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewRateThumb(ratingResult = null,voteCount = null) {
+	macro viewRateThumb(ratingResult = null, voteCount = null) {
 		if (isSet(ratingResult)) {
 			if (isSet(commentRating)) {
 				AssertTextEquals(

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addLayout(workflowAction = null,layoutName = null,assetCategoryIds = null,userGroupName = null,assetTagNames = null) {
+	macro addLayout(workflowAction = null, layoutName = null, assetCategoryIds = null, userGroupName = null, assetTagNames = null) {
 		Variables.assertDefined(parameterList = "${userGroupName},${layoutName}");
 
 		var friendlyURL = JSONLayoutSetter.setFriendlyURL(friendlyURL = ${friendlyURL});
@@ -35,7 +35,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addUserGroup(userGroupName = null,userGroupDescription = null) {
+	macro addUserGroup(userGroupName = null, userGroupDescription = null) {
 		Variables.assertDefined(parameterList = ${userGroupName});
 
 		JSONUserGroupAPI._addUserGroup(
@@ -44,7 +44,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assignGroupRoleToUserGroup(groupName = null,roleTitle = null,userGroupName = null) {
+	macro assignGroupRoleToUserGroup(groupName = null, roleTitle = null, userGroupName = null) {
 		Variables.assertDefined(parameterList = "${roleTitle},${userGroupName}");
 
 		if (!(isSet(groupId))) {

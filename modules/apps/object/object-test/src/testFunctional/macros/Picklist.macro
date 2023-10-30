@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addLanguageOnPicklist(itemName = null,newLanguage = null) {
+	macro addLanguageOnPicklist(itemName = null, newLanguage = null) {
 		SelectFrameTop();
 
 		Picklist.assertPicklistDetails(title = "Basic Info");
@@ -16,7 +16,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addLanguageOnPicklistItem(itemName = null,newLanguage = null) {
+	macro addLanguageOnPicklistItem(itemName = null, newLanguage = null) {
 		SelectFrameTop();
 
 		if (IsElementPresent(locator1 = "IFrame#MODAL_IFRAME")) {
@@ -33,7 +33,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPicklistItemViaAPI(itemName = null,picklistName = null,userPassword = null,userEmailAddress = null,itemKey = null) {
+	macro addPicklistItemViaAPI(itemName = null, picklistName = null, userPassword = null, userEmailAddress = null, itemKey = null) {
 		JSONObject.addPicklistItem(
 			itemKey = ${itemKey},
 			itemName = ${itemName},
@@ -43,7 +43,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPicklistItemViaUI(picklistItemKey = null,picklistItemName = null) {
+	macro addPicklistItemViaUI(picklistItemKey = null, picklistItemName = null) {
 		SelectFrame(locator1 = "Picklist#IFRAME_PICKLIST_MODAL");
 
 		WaitForElementPresent(locator1 = "Picklist#ADD_ITEM_BUTTON");
@@ -68,7 +68,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPicklistItemWithTranslationViaUI(picklistItemName = null,newLanguage = null,defaultLanguage = null,newItemName = null) {
+	macro addPicklistItemWithTranslationViaUI(picklistItemName = null, newLanguage = null, defaultLanguage = null, newItemName = null) {
 		Picklist.addPicklistItemViaUI(picklistItemName = ${picklistItemName});
 
 		ObjectAdmin.chooseAnyLanguage(
@@ -96,7 +96,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPicklistViaAPI(picklistName = null,userPassword = null,userEmailAddress = null,externalReferenceCode = null) {
+	macro addPicklistViaAPI(picklistName = null, userPassword = null, userEmailAddress = null, externalReferenceCode = null) {
 		JSONObject.addPicklist(
 			externalReferenceCode = ${externalReferenceCode},
 			picklistName = ${picklistName},
@@ -162,7 +162,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertEntryRelationshipFieldPicklist(newEntry = null,selectField = null) {
+	macro assertEntryRelationshipFieldPicklist(newEntry = null, selectField = null) {
 		Click(
 			key_selectField = ${selectField},
 			locator1 = "Picklist#SELECT_FIELD_RELATIONSHIP_OBJECT");
@@ -173,7 +173,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertItemNameAndItemKeyOnModal(itemName = null,itemKey = null) {
+	macro assertItemNameAndItemKeyOnModal(itemName = null, itemKey = null) {
 		if (IsElementPresent(locator1 = "Picklist#VIEW_PICKLIST_ITEM_NAME")) {
 			AssertElementPresent(
 				key_itemName = ${itemName},
@@ -216,7 +216,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertPicklistItem(picklistItemKey = null,picklistItemName = null) {
+	macro assertPicklistItem(picklistItemKey = null, picklistItemName = null) {
 		if (IsElementPresent(locator1 = "Picklist#IFRAME_PICKLIST_MODAL")) {
 			SelectFrame(locator1 = "Picklist#IFRAME_PICKLIST_MODAL");
 		}
@@ -230,7 +230,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertPicklistItemByLanguage(newLanguage = null,nameItem = null) {
+	macro assertPicklistItemByLanguage(newLanguage = null, nameItem = null) {
 		SelectFrameTop();
 
 		if (IsElementPresent(locator1 = "IFrame#MODAL_IFRAME")) {
@@ -245,7 +245,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertPicklistItemInTable(picklistItemKey = null,picklistItemName = null) {
+	macro assertPicklistItemInTable(picklistItemKey = null, picklistItemName = null) {
 		Picklist.assertPicklistDetails(title = "Items");
 
 		AssertElementPresent(
@@ -255,7 +255,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertPicklistItemNotPresent(picklistItemKey = null,picklistItemName = null) {
+	macro assertPicklistItemNotPresent(picklistItemKey = null, picklistItemName = null) {
 		var key_picklistItemName = ${picklistItemName};
 		var key_picklistItemKey = ${picklistItemKey};
 
@@ -270,7 +270,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertPicklistNameByLanguage(newLanguage = null,nameItem = null) {
+	macro assertPicklistNameByLanguage(newLanguage = null, nameItem = null) {
 		SelectFrameTop();
 
 		Picklist.assertPicklistDetails(title = "Basic Info");
@@ -311,14 +311,14 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteAllPicklistsViaAPI(userPassword = null,userEmailAddress = null) {
+	macro deleteAllPicklistsViaAPI(userPassword = null, userEmailAddress = null) {
 		JSONObject.deleteAllPicklists(
 			userEmailAddress = ${userEmailAddress},
 			userPassword = ${userPassword});
 	}
 
 	@summary = "Default summary"
-	macro deletePicklistViaAPI(picklistName = null,userPassword = null,userEmailAddress = null) {
+	macro deletePicklistViaAPI(picklistName = null, userPassword = null, userEmailAddress = null) {
 		JSONObject.deletePicklist(
 			picklistName = ${picklistName},
 			userEmailAddress = ${userEmailAddress},
@@ -342,7 +342,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro importPicklist(picklistFileName = null,picklistName = null) {
+	macro importPicklist(picklistFileName = null, picklistName = null) {
 		Click(locator1 = "ObjectAdmin#KEBAB_MENU");
 
 		Click(locator1 = "Picklist#IMPORT_PICKLIST");
@@ -362,7 +362,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro optionsPicklist(picklistName = null,menuItem = null) {
+	macro optionsPicklist(picklistName = null, menuItem = null) {
 		Click.javaScriptClick(
 			key_picklistName = ${picklistName},
 			locator1 = "Picklist#PICKLIST_KEBAB_MENU");
@@ -371,7 +371,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro optionsPicklistItem(menuItem = null,itemKey = null) {
+	macro optionsPicklistItem(menuItem = null, itemKey = null) {
 		var key_itemKey = ${itemKey};
 
 		SelectFrameTop();
@@ -413,7 +413,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectPicklistImportFile(picklistFileName = null,picklistName = null) {
+	macro selectPicklistImportFile(picklistFileName = null, picklistName = null) {
 		var filePath = TestCase.getDependenciesDirPath(fileName = "${picklistFileName}.json");
 
 		UploadFile(
@@ -429,7 +429,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updatePicklistItemName(newItemName = null,itemkey = null) {
+	macro updatePicklistItemName(newItemName = null, itemkey = null) {
 		Picklist.optionsPicklistItem(
 			itemKey = ${itemkey},
 			menuItem = "View");

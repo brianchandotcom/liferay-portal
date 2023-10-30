@@ -1,7 +1,7 @@
 @default = "sikuliUploadTCatFile"
 definition {
 
-	function sikuliUploadTCatFile(locator1,value1) {
+	function sikuliUploadTCatFile(locator1, value1) {
 		WaitForSPARefresh();
 
 		selenium.sikuliUploadTCatFile(${locator1}, ${value1});

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addUser(userEmailAddress = null,workflowAction = null,assetCategoryIds = null,userScreenName = null,portalInstanceName = null,assetTagNames = null,specificURL = null,preferredLocale = null) {
+	macro addUser(userEmailAddress = null, workflowAction = null, assetCategoryIds = null, userScreenName = null, portalInstanceName = null, assetTagNames = null, specificURL = null, preferredLocale = null) {
 		Variables.assertDefined(parameterList = "${userEmailAddress},${userFirstName},${userLastName},${userScreenName}");
 
 		var locale = JSONUserSetter.setLocale(locale = ${preferredLocale});
@@ -57,7 +57,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addUserByJSONWSUI(userLastName = null,userFirstName = null) {
+	macro addUserByJSONWSUI(userLastName = null, userFirstName = null) {
 		var companyId = JSONCompany.getCompanyId();
 
 		Type(
@@ -130,7 +130,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addUserToDepot(depotName = null,userEmailAddress = null) {
+	macro addUserToDepot(depotName = null, userEmailAddress = null) {
 		Variables.assertDefined(parameterList = "${depotName},${userEmailAddress}");
 
 		var depotId = JSONUserSetter.setGroupId(
@@ -144,7 +144,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addUserToSite(groupName = null,userEmailAddress = null,parentGroupName = null) {
+	macro addUserToSite(groupName = null, userEmailAddress = null, parentGroupName = null) {
 		Variables.assertDefined(parameterList = ${userEmailAddress});
 
 		if (!(isSet(groupId))) {
@@ -161,7 +161,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addUserToUserGroup(userGroupName = null,userEmailAddress = null) {
+	macro addUserToUserGroup(userGroupName = null, userEmailAddress = null) {
 		Variables.assertDefined(parameterList = "${userGroupName},${userEmailAddress}");
 
 		var userGroupId = JSONUserGroupSetter.setUserGroupId(userGroupName = ${userGroupName});
@@ -173,7 +173,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addUserWithRole(roleTitle = null,userLastName = null,userScreenName = null,userEmailAddress = null,userFirstName = null) {
+	macro addUserWithRole(roleTitle = null, userLastName = null, userScreenName = null, userEmailAddress = null, userFirstName = null) {
 		JSONUser.addUser(
 			userEmailAddress = ${userEmailAddress},
 			userFirstName = ${userFirstName},
@@ -191,7 +191,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro agreeToTermsAndAnswerReminderQuery(creatorPassword = null,portalURL = null,userEmailAddress = null,creatorEmailAddress = null) {
+	macro agreeToTermsAndAnswerReminderQuery(creatorPassword = null, portalURL = null, userEmailAddress = null, creatorEmailAddress = null) {
 		Variables.assertDefined(parameterList = ${userEmailAddress});
 
 		var portalInstanceName = JSONUserSetter.setPortalInstanceName(portalURL = ${portalURL});
@@ -213,7 +213,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro agreeToTermsAndAnswerReminderQueryByScreenName(creatorPassword = null,userScreenName = null,portalURL = null) {
+	macro agreeToTermsAndAnswerReminderQueryByScreenName(creatorPassword = null, userScreenName = null, portalURL = null) {
 		Variables.assertDefined(parameterList = ${userScreenName});
 
 		var portalInstanceName = JSONUserSetter.setPortalInstanceName(portalURL = ${portalURL});
@@ -236,7 +236,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteUserByUserId(authenticationMethod = null,userId = null) {
+	macro deleteUserByUserId(authenticationMethod = null, userId = null) {
 		Variables.assertDefined(parameterList = ${userId});
 
 		JSONUserAPI._deleteUser(
@@ -245,7 +245,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro removeUserFromUserGroup(userGroupName = null,userEmailAddress = null) {
+	macro removeUserFromUserGroup(userGroupName = null, userEmailAddress = null) {
 		Variables.assertDefined(parameterList = "${userGroupName},${userEmailAddress}");
 
 		var userGroupId = JSONUserGroupSetter.setUserGroupId(userGroupName = ${userGroupName});
@@ -257,7 +257,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setFirstPassword(userEmailAddress = null,agreeToTermsAndAnswerReminderQuery = null) {
+	macro setFirstPassword(userEmailAddress = null, agreeToTermsAndAnswerReminderQuery = null) {
 
 		// Using this macro will require reconfiguring portal.properties. See LRQA-52401.
 
@@ -282,7 +282,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro tearDownByFirstName(userIds = null,userFirstName = null) {
+	macro tearDownByFirstName(userIds = null, userFirstName = null) {
 		Variables.assertDefined(parameterList = ${userFirstName});
 
 		var userId = JSONUserAPI._getUserIds();
@@ -333,7 +333,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updateStatus(userStatus = null,userEmailAddress = null) {
+	macro updateStatus(userStatus = null, userEmailAddress = null) {
 		Variables.assertDefined(parameterList = ${userEmailAddress});
 
 		var userIds = JSONUserAPI._getUserIdByEmailAddress(userEmailAddress = ${userEmailAddress});
@@ -347,7 +347,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updateUser(userEmailAddressUpdate = null,userEmailAddress = null,screenNameUpdate = null) {
+	macro updateUser(userEmailAddressUpdate = null, userEmailAddress = null, screenNameUpdate = null) {
 		Variables.assertDefined(parameterList = "${userEmailAddress},${userEmailAddressUpdate},${userFirstName},${userLastName},${screenNameUpdate}");
 
 		var userId = JSONUserSetter.setUserId(

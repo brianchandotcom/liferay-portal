@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _addAttachmentToWikiPage(fileName = null,mimeType = null,title = null,nodeId = null) {
+	macro _addAttachmentToWikiPage(fileName = null, mimeType = null, title = null, nodeId = null) {
 		Variables.assertDefined(parameterList = "${nodeId},${title},${mimeType},${fileName}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -31,7 +31,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addWikiChildPage(parentResourcePrimKey = null,headline = null,content = null) {
+	macro _addWikiChildPage(parentResourcePrimKey = null, headline = null, content = null) {
 		Variables.assertDefined(parameterList = "${parentResourcePrimKey},${headline}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -84,7 +84,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addWikiNode(name = null,serviceContext = null) {
+	macro _addWikiNode(name = null, serviceContext = null) {
 		Variables.assertDefined(parameterList = ${name});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -110,7 +110,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _addWikiPage(nodeId = null,headline = null,content = null) {
+	macro _addWikiPage(nodeId = null, headline = null, content = null) {
 		Variables.assertDefined(parameterList = "${nodeId},${headline}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -181,7 +181,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getNodeIdByName(groupId = null,name = null) {
+	macro _getNodeIdByName(groupId = null, name = null) {
 		Variables.assertDefined(parameterList = "${groupId},${name}");
 
 		if (!(isSet(portalURL))) {
@@ -207,7 +207,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getPageIdByName(title = null,nodeId = null) {
+	macro _getPageIdByName(title = null, nodeId = null) {
 		Variables.assertDefined(parameterList = "${nodeId},${title}");
 
 		if (!(isSet(portalURL))) {
@@ -235,7 +235,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getPageResourcePrimKey(title = null,nodeId = null) {
+	macro _getPageResourcePrimKey(title = null, nodeId = null) {
 		Variables.assertDefined(parameterList = "${nodeId},${title}");
 
 		if (!(isSet(portalURL))) {
@@ -283,7 +283,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _movePageToTrash(title = null,nodeId = null) {
+	macro _movePageToTrash(title = null, nodeId = null) {
 		Variables.assertDefined(parameterList = "${title},${nodeId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -300,7 +300,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _updateWikiPage(headline = null,resourcePrimKey = null,content = null) {
+	macro _updateWikiPage(headline = null, resourcePrimKey = null, content = null) {
 		Variables.assertDefined(parameterList = ${resourcePrimKey});
 
 		var portalURL = JSONCompany.getPortalURL();

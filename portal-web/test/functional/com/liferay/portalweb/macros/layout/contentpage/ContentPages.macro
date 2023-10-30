@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _selectCard(pageTemplateName = null,masterLayoutName = null,collectionName = null) {
+	macro _selectCard(pageTemplateName = null, masterLayoutName = null, collectionName = null) {
 		if (isSet(collectionName)) {
 			Navigator.gotoNavNested(navNested = ${collectionName});
 
@@ -20,7 +20,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addChildPage(parentPageName = null,basicTemplate = null,pageTemplateName = null,childPageName = null,vocabularyName = null,categoryName = null,masterLayoutName = null,collectionName = null,categoryNameList = null) {
+	macro addChildPage(parentPageName = null, basicTemplate = null, pageTemplateName = null, childPageName = null, vocabularyName = null, categoryName = null, masterLayoutName = null, collectionName = null, categoryNameList = null) {
 		WaitForElementPresent(
 			locator1 = "ControlMenu#HEADING",
 			value1 = "Pages");
@@ -65,7 +65,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addCollectionItemInCollectionPage(itemSubtype = null,title = null) {
+	macro addCollectionItemInCollectionPage(itemSubtype = null, title = null) {
 		if (isSet(itemSubtype)) {
 			Click(
 				key_title = ${title},
@@ -81,7 +81,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addCollectionPage(tabName = null,vocabularyName = null,menuItem = null,pageName = null,categoryName = null,masterLayoutName = null,collectionName = null,selectedAsset = null,categoryNameList = null) {
+	macro addCollectionPage(tabName = null, vocabularyName = null, menuItem = null, pageName = null, categoryName = null, masterLayoutName = null, collectionName = null, selectedAsset = null, categoryNameList = null) {
 		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
 			ProductMenu.gotoPortlet(
 				category = "Site Builder",
@@ -145,7 +145,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPage(assertCheckboxMissing = null,basicTemplate = null,pageTemplateName = null,vocabularyName = null,pageName = null,categoryName = null,navigationMenus = null,masterLayoutName = null,collectionName = null,categoryNameList = null) {
+	macro addPage(assertCheckboxMissing = null, basicTemplate = null, pageTemplateName = null, vocabularyName = null, pageName = null, categoryName = null, navigationMenus = null, masterLayoutName = null, collectionName = null, categoryNameList = null) {
 		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
 			ProductMenu.gotoPortlet(
 				category = "Site Builder",
@@ -198,7 +198,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPrivatePage(basicTemplate = null,pageTemplateName = null,pageName = null,masterLayoutName = null,collectionName = null) {
+	macro addPrivatePage(basicTemplate = null, pageTemplateName = null, pageName = null, masterLayoutName = null, collectionName = null) {
 		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
 			ProductMenu.gotoPortlet(
 				category = "Site Builder",
@@ -235,7 +235,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPublicCollectionPage(tabName = null,vocabularyName = null,menuItem = null,pageName = null,categoryName = null,masterLayoutName = null,collectionName = null,selectedAsset = null,categoryNameList = null) {
+	macro addPublicCollectionPage(tabName = null, vocabularyName = null, menuItem = null, pageName = null, categoryName = null, masterLayoutName = null, collectionName = null, selectedAsset = null, categoryNameList = null) {
 		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
 			ProductMenu.gotoPortlet(
 				category = "Site Builder",
@@ -299,7 +299,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addPublicPage(basicTemplate = null,pageTemplateName = null,pageName = null,masterLayoutName = null,collectionName = null) {
+	macro addPublicPage(basicTemplate = null, pageTemplateName = null, pageName = null, masterLayoutName = null, collectionName = null) {
 		if (IsTextNotEqual(locator1 = "ControlMenu#HEADING", value1 = "Pages")) {
 			ProductMenu.gotoPortlet(
 				category = "Site Builder",
@@ -336,7 +336,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro changeExperience(experienceName = null,locale = null) {
+	macro changeExperience(experienceName = null, locale = null) {
 		ContentPages.openExperienceMenu(locale = ${locale});
 
 		MenuItem.click(menuItem = ${experienceName});
@@ -429,7 +429,7 @@ return	Array.from(getWebElement("(//*[contains(@class,'lfr-layout-structure-item
 	}
 
 	@summary = "Default summary"
-	macro viewFragmentCommonStyle(styleValue = null,index = null,className = null,styleName = null) {
+	macro viewFragmentCommonStyle(styleValue = null, index = null, className = null, styleName = null) {
 		if (isSet(className)) {
 			var fragmentName = ${className};
 		}
@@ -457,7 +457,7 @@ return	Array.from(getWebElement("(//*[contains(@class,'lfr-layout-structure-item
 	}
 
 	@summary = "Default summary"
-	macro viewFragmentImage(image = null,fragmentName = null,id = null,assetType = null) {
+	macro viewFragmentImage(image = null, fragmentName = null, id = null, assetType = null) {
 		if (!(isSet(position))) {
 			var position = 1;
 		}
@@ -488,7 +488,7 @@ return	Array.from(getWebElement("(//*[contains(@class,'lfr-layout-structure-item
 	}
 
 	@summary = "Default summary"
-	macro viewFragmentText(fragmentName = null,text = null,id = null,contributed = null,assetType = null) {
+	macro viewFragmentText(fragmentName = null, text = null, id = null, contributed = null, assetType = null) {
 		if (!(isSet(position))) {
 			var position = 1;
 		}

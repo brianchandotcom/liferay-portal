@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _selectContent(navItem = null,entryTitle = null) {
+	macro _selectContent(navItem = null, entryTitle = null) {
 		if (IsTextEqual(key_fieldLabel = "Item", locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT", value1 = "")) {
 			Click(
 				key_fieldLabel = "Item",
@@ -55,7 +55,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoEditableFieldLink(fragmentName = null,id = null,contributed = null) {
+	macro gotoEditableFieldLink(fragmentName = null, id = null, contributed = null) {
 		PageEditor.clickEditableField(
 			contributed = ${contributed},
 			fragmentName = ${fragmentName},
@@ -65,7 +65,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro mapEditableFieldToPage(navItem = null,keywords = null,fragmentName = null,id = null,pageName = null) {
+	macro mapEditableFieldToPage(navItem = null, keywords = null, fragmentName = null, id = null, pageName = null) {
 		PageEditorEditableLink.gotoEditableFieldLink(
 			fragmentName = ${fragmentName},
 			id = ${id});
@@ -118,7 +118,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro mapURLToAsset(navItem = null,field = null,source = null,entryTitle = null) {
+	macro mapURLToAsset(navItem = null, field = null, source = null, entryTitle = null) {
 		Select(
 			key_fieldLabel = "Link",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
@@ -145,7 +145,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updateURL(url = null,target = null) {
+	macro updateURL(url = null, target = null) {
 		Variables.assertDefined(parameterList = ${url});
 
 		Type(

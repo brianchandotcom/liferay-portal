@@ -27,7 +27,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro searchPG(searchTerm = null,portletName = null) {
+	macro searchPG(searchTerm = null, portletName = null) {
 		var key_portletName = ${portletName};
 
 		AssertElementPresent(locator1 = "Portlet#SEARCH_FIELD");
@@ -46,7 +46,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewNotPresentInContentBody(siteName = null,elementValue = null) {
+	macro viewNotPresentInContentBody(siteName = null, elementValue = null) {
 		AssertClick(
 			key_rowEntry = ${siteName},
 			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK",

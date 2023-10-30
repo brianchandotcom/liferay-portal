@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addBlogEntry(userPassword = null,grandParentGroupName = null,description = null,userEmailAddress = null,title = null,parentGroupName = null,content = null,groupName = null,assetCategoryIds = null,viewableBy = null,coverImageId = null,subtitle = null,assetTagNames = null) {
+	macro addBlogEntry(userPassword = null, grandParentGroupName = null, description = null, userEmailAddress = null, title = null, parentGroupName = null, content = null, groupName = null, assetCategoryIds = null, viewableBy = null, coverImageId = null, subtitle = null, assetTagNames = null) {
 		Variables.assertDefined(parameterList = "${content},${title}");
 
 		if (!(isSet(site))) {

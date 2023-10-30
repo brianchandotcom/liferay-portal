@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _addUserGroup(userGroupName = null,userGroupDescription = null) {
+	macro _addUserGroup(userGroupName = null, userGroupDescription = null) {
 		Variables.assertDefined(parameterList = ${userGroupName});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -18,7 +18,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _assignGroupRoleToUserGroup(userGroupId = null,roleId = null,groupId = null) {
+	macro _assignGroupRoleToUserGroup(userGroupId = null, roleId = null, groupId = null) {
 		Variables.assertDefined(parameterList = "${groupId},${roleId},${userGroupId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -36,7 +36,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getUserGroupIdByName(userGroupName = null,groupId = null) {
+	macro _getUserGroupIdByName(userGroupName = null, groupId = null) {
 		Variables.assertDefined(parameterList = ${userGroupName});
 
 		var portalURL = JSONCompany.getPortalURL();

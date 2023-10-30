@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addCollection(collectionDescription = null,collectionName = null) {
+	macro addCollection(collectionDescription = null, collectionName = null) {
 		FragmentsAdminNavigator.gotoAddCollection();
 
 		Collection.editCollection(
@@ -27,7 +27,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addFragment(fragmentName = null,supportedFieldTypes = null) {
+	macro addFragment(fragmentName = null, supportedFieldTypes = null) {
 		LexiconEntry.gotoAdd();
 
 		AssertTextEquals(
@@ -93,7 +93,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addResourceToFolder(resourceFile = null,folderName = null) {
+	macro addResourceToFolder(resourceFile = null, folderName = null) {
 		LexiconCard.clickCardTitleLink(card = ${folderName});
 
 		UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
@@ -102,7 +102,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addSubfolder(subfolderName = null,folderName = null) {
+	macro addSubfolder(subfolderName = null, folderName = null) {
 		LexiconCard.clickCardTitleLink(card = ${folderName});
 
 		LexiconEntry.gotoAdd();
@@ -160,7 +160,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro exportFragment(fragmentName = null,collectionName = null) {
+	macro exportFragment(fragmentName = null, collectionName = null) {
 		FragmentsAdminNavigator.gotoCollection(collectionName = ${collectionName});
 
 		FragmentsAdminNavigator.gotoEntryEllipsisItem(
@@ -184,7 +184,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro importCollectionFromDependenciesFolder(collectionZipFile = null,importOption = null) {
+	macro importCollectionFromDependenciesFolder(collectionZipFile = null, importOption = null) {
 		FragmentsAdminNavigator.gotoImportCollection();
 
 		WaitForPageLoad();
@@ -242,7 +242,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro importFragmentFromTempFolder(importOption = null,collectionName = null) {
+	macro importFragmentFromTempFolder(importOption = null, collectionName = null) {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		Click.waitForMenuToggleJSClick(
@@ -324,21 +324,21 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewEntryWorkflowStatus(entry = null,workflowStatus = null) {
+	macro viewEntryWorkflowStatus(entry = null, workflowStatus = null) {
 		LexiconCard.viewCardLabel(
 			card = ${entry},
 			cardLabel = ${workflowStatus});
 	}
 
 	@summary = "Default summary"
-	macro viewFormFragementForEachFieldType(formFragmentName = null,fieldType = null) {
+	macro viewFormFragementForEachFieldType(formFragmentName = null, fieldType = null) {
 		LexiconTable.viewTableEntryFormFragment(
 			fieldType = ${fieldType},
 			tableEntryInfo = ${formFragmentName});
 	}
 
 	@summary = "Default summary"
-	macro viewSiteUsages(siteName = null,usages = null) {
+	macro viewSiteUsages(siteName = null, usages = null) {
 		LexiconTable.viewTableEntryInfo(
 			columnName = "usages",
 			tableEntry = ${siteName},

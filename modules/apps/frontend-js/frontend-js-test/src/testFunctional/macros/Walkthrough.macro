@@ -100,7 +100,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setupWalkthroughPage(filename = null,siteName = null) {
+	macro setupWalkthroughPage(filename = null, siteName = null) {
 		task ("Given there is a site-level JSON defined for current site") {
 			Walkthrough.addWalkthrough(fileName = ${filename});
 

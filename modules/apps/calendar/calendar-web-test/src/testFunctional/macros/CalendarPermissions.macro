@@ -34,7 +34,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPermissionsRoleName(roleName = null,key_roleName = null) {
+	macro viewPermissionsRoleName(roleName = null, key_roleName = null) {
 		AssertTextEquals(
 			key_roleName = ${roleName},
 			locator1 = "CalendarPermissions#PERMISSIONS_ROLE_NAME",

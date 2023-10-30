@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addBuild(buildName = null,productVersion = null,routineName = null,projectName = null) {
+	macro addBuild(buildName = null, productVersion = null, routineName = null, projectName = null) {
 		Variables.assertDefined(parameterList = "${buildName},${projectName},${routineName},${productVersion}");
 
 		var projectId = JSONTestraySetter.getProjectId(projectName = ${projectName});
@@ -16,7 +16,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addCaseResult(buildName = null,caseResultName = null,runName = null,caseName = null,messageError = null,componentName = null) {
+	macro addCaseResult(buildName = null, caseResultName = null, runName = null, caseName = null, messageError = null, componentName = null) {
 		Variables.assertDefined(parameterList = "${buildName},${caseResultName},${componentName},${caseName},${runName}");
 
 		var buildId = JSONTestraySetter.getBuildId(buildName = ${buildName});
@@ -34,7 +34,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addCaseResultForSubtask(caseResultName = null,caseResultForSubtask = null,subtaskName = null) {
+	macro addCaseResultForSubtask(caseResultName = null, caseResultForSubtask = null, subtaskName = null) {
 		Variables.assertDefined(parameterList = "${caseResultForSubtask},${caseResultName},${subtaskName}");
 
 		var caseResultId = JSONTestraySetter.getCaseResultId(caseResultName = ${caseResultName});
@@ -47,7 +47,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addCases(caseName = null,description = null,componentName = null,projectName = null,priority = null,steps = null,caseType = null) {
+	macro addCases(caseName = null, description = null, componentName = null, projectName = null, priority = null, steps = null, caseType = null) {
 		Variables.assertDefined(parameterList = "${caseName},${caseType},${projectName},${componentName}");
 
 		var caseTypeId = JSONTestraySetter.getCaseTypeId(caseType = ${caseType});
@@ -70,7 +70,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addComponent(teamName = null,componentName = null,projectName = null) {
+	macro addComponent(teamName = null, componentName = null, projectName = null) {
 		Variables.assertDefined(parameterList = "${componentName},${projectName},${teamName}");
 
 		var projectId = JSONTestraySetter.getProjectId(projectName = ${projectName});
@@ -124,7 +124,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addFactorOptions(optionsName = null,factorCategoryId = null) {
+	macro addFactorOptions(optionsName = null, factorCategoryId = null) {
 		Variables.assertDefined(parameterList = ${optionsName});
 
 		var factorOptionsId = JSONTestrayAPI.createFactorOptionsAPI(
@@ -148,7 +148,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addProject(projectDescription = null,projectName = null) {
+	macro addProject(projectDescription = null, projectName = null) {
 		Variables.assertDefined(parameterList = "${projectName},${projectDescription}");
 
 		var projectId = JSONTestrayAPI.createProjectAPI(
@@ -157,7 +157,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addRequirement(linkTitle = null,requirementName = null,linkURL = null,componentName = null,projectName = null) {
+	macro addRequirement(linkTitle = null, requirementName = null, linkURL = null, componentName = null, projectName = null) {
 		Variables.assertDefined(parameterList = "${componentName},${linkTitle},${projectName},${requirementName}");
 
 		var componentId = JSONTestraySetter.getComponentId(componentName = ${componentName});
@@ -172,7 +172,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addRoutine(routineName = null,projectName = null) {
+	macro addRoutine(routineName = null, projectName = null) {
 		Variables.assertDefined(parameterList = "${routineName},${projectName}");
 
 		var projectId = JSONTestraySetter.getProjectId(projectName = ${projectName});
@@ -183,7 +183,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addRun(buildName = null,runName = null) {
+	macro addRun(buildName = null, runName = null) {
 		Variables.assertDefined(parameterList = "${runName},${buildName}");
 
 		var buildId = JSONTestraySetter.getBuildId(buildName = ${buildName});
@@ -194,7 +194,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addSubtask(score = null,subtaskNumber = null,messageError = null,subtaskName = null,taskName = null,statusSubtask = null,key = null) {
+	macro addSubtask(score = null, subtaskNumber = null, messageError = null, subtaskName = null, taskName = null, statusSubtask = null, key = null) {
 		Variables.assertDefined(parameterList = "${subtaskName},${subtaskNumber},${taskName},${key},${score}");
 
 		var taskId = JSONTestraySetter.getTaskId(taskName = ${taskName});
@@ -223,7 +223,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addTask(buildName = null,taskName = null,key = null,statusTask = null) {
+	macro addTask(buildName = null, taskName = null, key = null, statusTask = null) {
 		Variables.assertDefined(parameterList = "${taskName},${key},${statusTask},${buildName}");
 
 		var buildId = JSONTestraySetter.getBuildId(buildName = ${buildName});
@@ -236,7 +236,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addTeam(teamName = null,projectName = null) {
+	macro addTeam(teamName = null, projectName = null) {
 		Variables.assertDefined(parameterList = "${teamName},${projectName}");
 
 		var projectId = JSONTestraySetter.getProjectId(projectName = ${projectName});

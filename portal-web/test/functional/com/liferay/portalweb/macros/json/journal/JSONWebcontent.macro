@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addBasicWebContentLocalized(userPassword = null,contentMap = null,description = null,userEmailAddress = null,workflowAction = null,title = null,content = null,groupName = null,assetCategoryIds = null,assetTagNames = null,folderName = null) {
+	macro addBasicWebContentLocalized(userPassword = null, contentMap = null, description = null, userEmailAddress = null, workflowAction = null, title = null, content = null, groupName = null, assetCategoryIds = null, assetTagNames = null, folderName = null) {
 		Variables.assertDefined(parameterList = ${groupName});
 
 		var groupId = JSONWebcontentSetter.setGroupId(groupName = ${groupName});
@@ -35,7 +35,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addFolder(parentFolderName = null,groupName = null,site = null,userPassword = null,folderDescription = null,userEmailAddress = null,folderName = null) {
+	macro addFolder(parentFolderName = null, groupName = null, site = null, userPassword = null, folderDescription = null, userEmailAddress = null, folderName = null) {
 		Variables.assertDefined(parameterList = "${folderName},${groupName}");
 
 		var groupId = JSONWebcontentSetter.setGroupId(
@@ -56,7 +56,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addWebContent(userPassword = null,description = null,userEmailAddress = null,source = null,title = null,workflowAction = null,content = null,groupName = null,site = null,assetCategoryIds = null,assetTagNames = null,folderName = null) {
+	macro addWebContent(userPassword = null, description = null, userEmailAddress = null, source = null, title = null, workflowAction = null, content = null, groupName = null, site = null, assetCategoryIds = null, assetTagNames = null, folderName = null) {
 		Variables.assertDefined(parameterList = "${content},${title}");
 
 		if (!(isSet(groupId))) {
@@ -91,7 +91,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteWebContent(groupName = null,site = null,title = null) {
+	macro deleteWebContent(groupName = null, site = null, title = null) {
 		Variables.assertDefined(parameterList = "${groupName},${title}");
 
 		var groupId = JSONWebcontentSetter.setGroupId(
@@ -108,7 +108,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getFolderIdByFolderName(groupName = null,folderName = null) {
+	macro getFolderIdByFolderName(groupName = null, folderName = null) {
 		Variables.assertDefined(parameterList = "${folderName},${groupName}");
 
 		var groupId = JSONWebcontentSetter.setGroupId(groupName = ${groupName});
@@ -121,7 +121,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getFolderUuidByFolderName(groupName = null,site = null,folderName = null) {
+	macro getFolderUuidByFolderName(groupName = null, site = null, folderName = null) {
 		Variables.assertDefined(parameterList = "${folderName},${groupName}");
 
 		var groupId = JSONWebcontentSetter.setGroupId(
@@ -136,7 +136,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getResourcePrimKeyByURLTitle(groupName = null,title = null) {
+	macro getResourcePrimKeyByURLTitle(groupName = null, title = null) {
 		Variables.assertDefined(parameterList = "${groupName},${title}");
 
 		var urlTitle = StringUtil.replace(${title}, " ", "-");
@@ -151,7 +151,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro moveWebContentToTrash(groupName = null,title = null) {
+	macro moveWebContentToTrash(groupName = null, title = null) {
 		Variables.assertDefined(parameterList = "${groupName},${title}");
 
 		var groupId = JSONWebcontentSetter.setGroupId(groupName = ${groupName});
@@ -180,7 +180,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro updateStatus(groupName = null,statusKey = null,title = null) {
+	macro updateStatus(groupName = null, statusKey = null, title = null) {
 		Variables.assertDefined(parameterList = "${groupName},${statusKey},${title}");
 
 		var articleId = JSONWebcontentSetter.setArticleId(

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addPortletToWidgetPage(widgetPageName = null,portletName = null) {
+	macro addPortletToWidgetPage(widgetPageName = null, portletName = null) {
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
 			layoutName = ${widgetPageName});

@@ -54,7 +54,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoSublevel(itemName = null,type = null,pageName = null) {
+	macro gotoSublevel(itemName = null, type = null, pageName = null) {
 		if (${type} == "Drop Down") {
 			WaitForElementPresent(locator1 = "//script[contains(@src,'/o/frontend-js-loader-modules-extender/loader.js')]");
 

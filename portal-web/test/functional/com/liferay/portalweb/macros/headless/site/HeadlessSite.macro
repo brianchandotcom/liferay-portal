@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addSite(userPassword = null,templateName = null,parentSiteName = null,portalURL = null,siteName = null,userEmailAddress = null,grandParentSiteName = null) {
+	macro addSite(userPassword = null, templateName = null, parentSiteName = null, portalURL = null, siteName = null, userEmailAddress = null, grandParentSiteName = null) {
 		if (isSet(membershipType)) {
 			var membershipType = StringUtil.lowerCase(${membershipType});
 		}

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addDepotRole(roleTitle = null,roleKey = null,roleDescription = null) {
+	macro addDepotRole(roleTitle = null, roleKey = null, roleDescription = null) {
 		Variables.assertDefined(parameterList = ${roleTitle});
 
 		var descriptionMap = JSONRoleSetter.setDescriptionMap(description = ${roleDescription});
@@ -17,7 +17,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addOrganizationRole(roleTitle = null,roleKey = null,roleDescription = null) {
+	macro addOrganizationRole(roleTitle = null, roleKey = null, roleDescription = null) {
 		Variables.assertDefined(parameterList = ${roleTitle});
 
 		var descriptionMap = JSONRoleSetter.setDescriptionMap(description = ${roleDescription});
@@ -33,7 +33,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addRegularRole(roleTitle = null,roleKey = null,specificURL = null,roleDescription = null) {
+	macro addRegularRole(roleTitle = null, roleKey = null, specificURL = null, roleDescription = null) {
 		Variables.assertDefined(parameterList = ${roleTitle});
 
 		var descriptionMap = JSONRoleSetter.setDescriptionMap(description = ${roleDescription});
@@ -50,7 +50,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addSharedAccountRole(roleTitle = null,roleKey = null,roleDescription = null) {
+	macro addSharedAccountRole(roleTitle = null, roleKey = null, roleDescription = null) {
 		Variables.assertDefined(parameterList = ${roleTitle});
 
 		var descriptionMap = JSONRoleSetter.setDescriptionMap(description = ${roleDescription});
@@ -66,7 +66,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addSiteRole(roleTitle = null,roleKey = null,roleDescription = null) {
+	macro addSiteRole(roleTitle = null, roleKey = null, roleDescription = null) {
 		Variables.assertDefined(parameterList = ${roleTitle});
 
 		var descriptionMap = JSONRoleSetter.setDescriptionMap(description = ${roleDescription});
@@ -82,7 +82,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assignDepotRoleToUser(depotName = null,roleTitle = null,userEmailAddress = null) {
+	macro assignDepotRoleToUser(depotName = null, roleTitle = null, userEmailAddress = null) {
 		Variables.assertDefined(parameterList = "${depotName},${roleTitle},${userEmailAddress}");
 
 		var depotId = JSONUserSetter.setGroupId(
@@ -98,7 +98,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assignRoleToGroup(groupName = null,roleTitle = null) {
+	macro assignRoleToGroup(groupName = null, roleTitle = null) {
 		Variables.assertDefined(parameterList = "${groupName},${roleTitle}");
 
 		var groupId = JSONUserSetter.setGroupId(groupName = ${groupName});
@@ -110,7 +110,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assignRoleToUser(roleTitle = null,userEmailAddress = null) {
+	macro assignRoleToUser(roleTitle = null, userEmailAddress = null) {
 		Variables.assertDefined(parameterList = "${roleTitle},${userEmailAddress}");
 
 		var roleId = JSONRoleSetter.setRoleId(name = ${roleTitle});
@@ -122,7 +122,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assignSiteRoleToUser(groupName = null,roleTitle = null,userEmailAddress = null,parentGroupName = null) {
+	macro assignSiteRoleToUser(groupName = null, roleTitle = null, userEmailAddress = null, parentGroupName = null) {
 		Variables.assertDefined(parameterList = "${roleTitle},${userEmailAddress}");
 
 		if (!(isSet(groupId))) {

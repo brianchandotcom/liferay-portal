@@ -10,7 +10,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addAutoAssertionTagViaBlogsPG(tagName = null,entryTitle = null,entryContent = null) {
+	macro addAutoAssertionTagViaBlogsPG(tagName = null, entryTitle = null, entryContent = null) {
 		BlogsNavigator.gotoAddEntry();
 
 		BlogsEntry.addEntryContent(
@@ -69,7 +69,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro cancelEditCP(tagNameEdit = null,tagMenuName = null) {
+	macro cancelEditCP(tagNameEdit = null, tagMenuName = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${tagMenuName});
@@ -118,7 +118,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editCP(tagNameEdit = null,tagMenuName = null) {
+	macro editCP(tagNameEdit = null, tagMenuName = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = ${tagMenuName});
@@ -129,7 +129,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoMerge(mergeMethod = null,tagNameList = null) {
+	macro gotoMerge(mergeMethod = null, tagNameList = null) {
 		if (${mergeMethod} == "menuItem") {
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Merge",
@@ -156,7 +156,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro mergeTags(tagNameList = null,mergedTag = null) {
+	macro mergeTags(tagNameList = null, mergedTag = null) {
 		Select(
 			key_fieldLabel = "Into This Tag:",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
@@ -191,14 +191,14 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro openTagsAdmin(baseURL = null,siteURLKey = null) {
+	macro openTagsAdmin(baseURL = null, siteURLKey = null) {
 		Navigator.openWithAppendToBaseURL(
 			baseURL = ${baseURL},
 			urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/tags_admin/");
 	}
 
 	@summary = "Default summary"
-	macro tearDownCP(stagingSite = null,site = null) {
+	macro tearDownCP(stagingSite = null, site = null) {
 		if (${stagingSite} == "true") {
 			ProductMenu.gotoStagingSite(site = ${site});
 		}

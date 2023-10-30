@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _curlAPISchema(requestSchemaId = null,responseSchemaId = null,endpointId = null,virtualHost = null,responseSchemaErc = null,requestSchemaErc = null,endpointErc = null) {
+	macro _curlAPISchema(requestSchemaId = null, responseSchemaId = null, endpointId = null, virtualHost = null, responseSchemaErc = null, requestSchemaErc = null, endpointErc = null) {
 		if (isSet(virtualHost)) {
 			if (!(isSet(port))) {
 				var port = 8080;
@@ -41,7 +41,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createAPISchema(mainObjectDefinitionERC = null,name = null,virtualHost = null,externalReferenceCode = null) {
+	macro createAPISchema(mainObjectDefinitionERC = null, name = null, virtualHost = null, externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = "${mainObjectDefinitionERC},${name},${externalReferenceCode}");
 
 		if (!(isSet(externalReferenceCodeSchema))) {
@@ -66,7 +66,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createNAPISchemas(numberOfSchemas = null,mainObjectDefinitionERC = null,name = null,externalReferenceCode = null) {
+	macro createNAPISchemas(numberOfSchemas = null, mainObjectDefinitionERC = null, name = null, externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = "${numberOfSchemas},${mainObjectDefinitionERC},${name},${externalReferenceCode}");
 
 		var i = 0;
@@ -91,7 +91,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro relateRequestSchemaToEndpointByErc(requestSchemaErc = null,endpointErc = null) {
+	macro relateRequestSchemaToEndpointByErc(requestSchemaErc = null, endpointErc = null) {
 		Variables.assertDefined(parameterList = "${endpointErc},${requestSchemaErc}");
 
 		var curl = SchemaAPI._curlAPISchema(
@@ -108,7 +108,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro relateRequestSchemaToEndpointByIds(requestSchemaId = null,endpointId = null) {
+	macro relateRequestSchemaToEndpointByIds(requestSchemaId = null, endpointId = null) {
 		Variables.assertDefined(parameterList = "${requestSchemaId},${endpointId}");
 
 		var curl = SchemaAPI._curlAPISchema(
@@ -125,7 +125,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro relateResponseSchemaToEndpointByErc(responseSchemaErc = null,endpointErc = null) {
+	macro relateResponseSchemaToEndpointByErc(responseSchemaErc = null, endpointErc = null) {
 		Variables.assertDefined(parameterList = "${endpointErc},${responseSchemaErc}");
 
 		var curl = SchemaAPI._curlAPISchema(
@@ -142,7 +142,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro relateResponseSchemaToEndpointByIds(responseSchemaId = null,endpointId = null) {
+	macro relateResponseSchemaToEndpointByIds(responseSchemaId = null, endpointId = null) {
 		Variables.assertDefined(parameterList = "${responseSchemaId},${endpointId}");
 
 		var curl = SchemaAPI._curlAPISchema(

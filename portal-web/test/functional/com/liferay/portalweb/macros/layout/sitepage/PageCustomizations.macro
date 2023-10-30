@@ -26,7 +26,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro enableSectionCustomizableCP(columnIdList = null,pageName = null) {
+	macro enableSectionCustomizableCP(columnIdList = null, pageName = null) {
 		PagesAdmin.gotoPageEllipsisMenuItem(
 			menuItem = "Configure",
 			pageName = ${pageName});

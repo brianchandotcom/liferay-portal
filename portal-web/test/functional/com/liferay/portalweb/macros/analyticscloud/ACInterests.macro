@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro assertKeywordNotPresentByIndex(keywordName = null,index = null) {
+	macro assertKeywordNotPresentByIndex(keywordName = null, index = null) {
 		var key_keywordName = ${keywordName};
 		var key_index = ${index};
 
@@ -9,7 +9,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertKeywordPresentByIndex(keywordName = null,index = null) {
+	macro assertKeywordPresentByIndex(keywordName = null, index = null) {
 		var key_keywordName = ${keywordName};
 		var key_index = ${index};
 
@@ -83,7 +83,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewInterest(membersCount = null,interestTopic = null,membersPercentage = null) {
+	macro viewInterest(membersCount = null, interestTopic = null, membersPercentage = null) {
 		var key_interestTopic = ${interestTopic};
 
 		AssertTextEquals(
@@ -108,7 +108,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewInterestContributingPage(interestTopic = null,interestContributingPage = null) {
+	macro viewInterestContributingPage(interestTopic = null, interestContributingPage = null) {
 		var key_interestTopic = ${interestTopic};
 		var key_interestContributingPage = ${interestContributingPage};
 
@@ -118,7 +118,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewInterestHeader(interestTopic = null,interestName = null) {
+	macro viewInterestHeader(interestTopic = null, interestName = null) {
 		var key_interestTopic = ${interestTopic};
 
 		AssertTextEquals(
@@ -134,7 +134,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewInterestPage(pageViews = null,pageURL = null,pageName = null) {
+	macro viewInterestPage(pageViews = null, pageURL = null, pageName = null) {
 		var key_pageName = ${pageName};
 
 		AssertTextEquals(
@@ -155,7 +155,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewInterestPageViaPosition(positionValue = null,pageName = null) {
+	macro viewInterestPageViaPosition(positionValue = null, pageName = null) {
 		var key_positionValue = ${positionValue};
 
 		AssertTextEquals(
@@ -173,7 +173,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewInterestUser(userAccount = null,userEmailAddress = null,userName = null) {
+	macro viewInterestUser(userAccount = null, userEmailAddress = null, userName = null) {
 		var key_userName = ${userName};
 
 		AssertTextEquals(
@@ -194,7 +194,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewInterestUserViaPosition(userName = null,positionValue = null) {
+	macro viewInterestUserViaPosition(userName = null, positionValue = null) {
 		var key_positionValue = ${positionValue};
 
 		AssertTextEquals(
@@ -203,7 +203,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewInterestViaPosition(interestTopic = null,positionValue = null) {
+	macro viewInterestViaPosition(interestTopic = null, positionValue = null) {
 		var key_positionValue = ${positionValue};
 
 		AssertTextEquals(

@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro createProject(description = null,projectName = null) {
+	macro createProject(description = null, projectName = null) {
 		Click(locator1 = "Button#PLUS");
 
 		SelectFrame(locator1 = "Testray#MODAL_BODY");
@@ -20,7 +20,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createProjectByDropdown(description = null,projectName = null) {
+	macro createProjectByDropdown(description = null, projectName = null) {
 		TestrayDropdown.selectOptionSidebar(
 			buttonOption = "Manage",
 			menuItem = "Add Project");
@@ -71,7 +71,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro editProject(newName = null,newDescription = null) {
+	macro editProject(newName = null, newDescription = null) {
 		SelectFrame(locator1 = "Testray#MODAL_BODY");
 
 		if (isSet(newName)) {

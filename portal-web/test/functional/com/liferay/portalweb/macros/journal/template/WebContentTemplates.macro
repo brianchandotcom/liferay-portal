@@ -90,7 +90,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addCP(templateScript = null,templateName = null,structureName = null,templateDescription = null,generalVariables = null,templateFile = null,templateFieldNames = null,imageSourceURL = null) {
+	macro addCP(templateScript = null, templateName = null, structureName = null, templateDescription = null, generalVariables = null, templateFile = null, templateFieldNames = null, imageSourceURL = null) {
 		LexiconEntry.gotoAdd();
 
 		WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
@@ -124,7 +124,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addRoleViewPermissions(templateName = null,roles = null) {
+	macro addRoleViewPermissions(templateName = null, roles = null) {
 		WebContentTemplates.gotoTemplateEllipsisItem(
 			item = "Permissions",
 			templateName = ${templateName});
@@ -139,7 +139,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro copyCP(templateCopyName = null,templateName = null,description = null) {
+	macro copyCP(templateCopyName = null, templateName = null, description = null) {
 		WebContentTemplates.gotoTemplateEllipsisItem(
 			item = "Make a Copy",
 			templateName = ${templateName});
@@ -158,7 +158,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro deleteCP(templateName = null,webContentHasReference = null) {
+	macro deleteCP(templateName = null, webContentHasReference = null) {
 		var key_ddlTemplateName = ${templateName};
 
 		Click(
@@ -182,7 +182,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoTemplateEllipsisItem(item = null,templateName = null) {
+	macro gotoTemplateEllipsisItem(item = null, templateName = null) {
 		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
 		if (${item} == "Permissions") {
@@ -204,7 +204,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro inputTemplateAddScreenFields(templateScript = null,templateName = null,structureName = null,templateDescription = null,generalVariables = null,templateFile = null,templateFieldNames = null,imageSourceURL = null) {
+	macro inputTemplateAddScreenFields(templateScript = null, templateName = null, structureName = null, templateDescription = null, generalVariables = null, templateFile = null, templateFieldNames = null, imageSourceURL = null) {
 		if (isSet(templateName)) {
 			PortletEntry.inputName(name = ${templateName});
 		}
@@ -231,7 +231,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro localizeTemplateName(locale2 = null,templateName = null,localization2Name = null,locale = null,localization1Name = null) {
+	macro localizeTemplateName(locale2 = null, templateName = null, localization2Name = null, locale = null, localization1Name = null) {
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
 		var key_ddlTemplateName = ${templateName};
@@ -260,7 +260,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro modifyTemplate(templateScript = null,templatePreviousName = null,templateName = null,templateDescription = null,templateFile = null,templateFieldNames = null,imageSourceURL = null) {
+	macro modifyTemplate(templateScript = null, templatePreviousName = null, templateName = null, templateDescription = null, templateFile = null, templateFieldNames = null, imageSourceURL = null) {
 		WebContentTemplates.gotoTemplateEllipsisItem(
 			item = "Edit",
 			templateName = ${templatePreviousName});
@@ -321,7 +321,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCardsEntryCP(templateName = null,templateSmallImage = null) {
+	macro viewCardsEntryCP(templateName = null, templateSmallImage = null) {
 		LexiconCard.viewCardTitle(card = ${templateName});
 
 		if (isSet(templateSmallImage)) {
@@ -332,7 +332,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCardsEntryCP2(templateName = null,templateSmallImage = null) {
+	macro viewCardsEntryCP2(templateName = null, templateSmallImage = null) {
 		LexiconCard.viewCardTitle(card = ${templateName});
 
 		if (isSet(templateSmallImage)) {
@@ -347,7 +347,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewCP(templateScript = null,templateName = null,structureName = null,templateDescription = null,userEditPermission = null) {
+	macro viewCP(templateScript = null, templateName = null, structureName = null, templateDescription = null, userEditPermission = null) {
 		var key_ddlStructureName = ${structureName};
 		var key_ddlTemplateDescription = ${templateDescription};
 		var key_ddlTemplateName = ${templateName};
@@ -405,7 +405,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewTableEntryCP(templateName = null,templateDescription = null,templateSmallImage = null) {
+	macro viewTableEntryCP(templateName = null, templateDescription = null, templateSmallImage = null) {
 		var key_ddlTemplateName = ${templateName};
 
 		AssertVisible(

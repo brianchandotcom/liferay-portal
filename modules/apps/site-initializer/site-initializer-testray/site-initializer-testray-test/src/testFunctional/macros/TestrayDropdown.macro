@@ -15,7 +15,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectOptionSidebar(buttonOption = null,menuItem = null) {
+	macro selectOptionSidebar(buttonOption = null, menuItem = null) {
 		Click(
 			key_button = ${buttonOption},
 			locator1 = "TestrayDropdown#SIDEBAR_CONTENT");

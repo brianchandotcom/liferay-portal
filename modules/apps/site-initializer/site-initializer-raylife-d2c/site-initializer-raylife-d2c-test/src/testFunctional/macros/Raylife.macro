@@ -200,7 +200,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewProductsList(productsList = null,productList = null) {
+	macro viewProductsList(productsList = null, productList = null) {
 		for (var productsName : list ${productList}) {
 			AssertElementPresent(
 				key_productsName = ${productsList},

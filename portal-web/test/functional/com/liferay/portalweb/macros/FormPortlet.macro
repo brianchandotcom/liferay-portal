@@ -26,7 +26,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro nextPage(formPageCurrent = null,formPageNext = null) {
+	macro nextPage(formPageCurrent = null, formPageNext = null) {
 		AssertClick(
 			locator1 = "Button#NEXT",
 			value1 = "Next");
@@ -116,7 +116,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewSuccessPage(successPageDescription = null,successPageTitle = null) {
+	macro viewSuccessPage(successPageDescription = null, successPageTitle = null) {
 		var key_successPageTitle = ${successPageTitle};
 
 		AssertTextEquals(

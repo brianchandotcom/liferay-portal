@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _createNCommentsInBlogPosting(numberOfCommentsToCreate = null,createStrategy = null,blogPostingId = null) {
+	macro _createNCommentsInBlogPosting(numberOfCommentsToCreate = null, createStrategy = null, blogPostingId = null) {
 		Variables.assertDefined(parameterList = "${blogPostingId},${numberOfCommentsToCreate},${createStrategy}");
 
 		var size = ${numberOfCommentsToCreate} + 1;
@@ -45,7 +45,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _curlBlogPostingComments(blogPostingId = null,commentId = null) {
+	macro _curlBlogPostingComments(blogPostingId = null, commentId = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		if (isSet(commentId)) {
@@ -65,7 +65,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _curlBlogPostingCommentsByExternalReferenceCode(blogPostingChildCommentErc = null,blogPostingErc = null,blogPostingCommentErc = null) {
+	macro _curlBlogPostingCommentsByExternalReferenceCode(blogPostingChildCommentErc = null, blogPostingErc = null, blogPostingCommentErc = null) {
 		Variables.assertDefined(parameterList = ${blogPostingCommentErc});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -90,7 +90,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createCommentInBlogPosting(blogPostingId = null,commentId = null,commentText = null) {
+	macro createCommentInBlogPosting(blogPostingId = null, commentId = null, commentText = null) {
 		Variables.assertDefined(parameterList = ${commentText});
 
 		if (!(isSet(externalReferenceCode))) {
@@ -125,7 +125,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getFieldValueOfBlogPostingComments(blogPostingChildCommentErc = null,fieldName = null,blogPostingId = null,commentId = null,blogPostingErc = null,blogPostingCommentErc = null) {
+	macro getFieldValueOfBlogPostingComments(blogPostingChildCommentErc = null, fieldName = null, blogPostingId = null, commentId = null, blogPostingErc = null, blogPostingCommentErc = null) {
 		Variables.assertDefined(parameterList = ${fieldName});
 
 		if (!(isSet(responseToParse))) {
@@ -150,7 +150,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getIdOfCreateNCommentsInBlogPostingBatchEngineImportTask(numberOfCommentsToCreate = null,createStrategy = null,blogPostingId = null) {
+	macro getIdOfCreateNCommentsInBlogPostingBatchEngineImportTask(numberOfCommentsToCreate = null, createStrategy = null, blogPostingId = null) {
 		var response = CommentAPI._createNCommentsInBlogPosting(
 			blogPostingId = ${blogPostingId},
 			createStrategy = ${createStrategy},

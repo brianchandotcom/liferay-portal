@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro associateUser(userEmailAddress = null,accountRole = null,accountEntryName = null) {
+	macro associateUser(userEmailAddress = null, accountRole = null, accountEntryName = null) {
 		Variables.assertDefined(parameterList = "${accountEntryName},${accountRole},${userEmailAddress}");
 
 		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = ${accountEntryName});

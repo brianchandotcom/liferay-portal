@@ -36,7 +36,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro signIn(userPassword = null,depotName = null,userEmailAddress = null) {
+	macro signIn(userPassword = null, depotName = null, userEmailAddress = null) {
 		if (isSet(windowTitle)) {
 			SelectWindow(value1 = "GoogleLogin#PAGE_TITLE");
 

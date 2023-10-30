@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _addWebcontentFolder(depotName = null,name = null,siteId = null) {
+	macro _addWebcontentFolder(depotName = null, name = null, siteId = null) {
 		Variables.assertDefined(parameterList = ${name});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -44,7 +44,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _subscribeStructuredContentFolder(structuredContentFolderId = null,userName = null) {
+	macro _subscribeStructuredContentFolder(structuredContentFolderId = null, userName = null) {
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
@@ -59,7 +59,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createStructuredContentFolder(groupName = null,userPassword = null,viewableBy = null,name = null,description = null,userEmailAddress = null,externalReferenceCode = null) {
+	macro createStructuredContentFolder(groupName = null, userPassword = null, viewableBy = null, name = null, description = null, userEmailAddress = null, externalReferenceCode = null) {
 		Variables.assertDefined(parameterList = "${groupName},${name}");
 
 		var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = ${groupName});
@@ -77,7 +77,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro getElementOfCreatedStructuredContentFolder(responseToParse = null,element = null) {
+	macro getElementOfCreatedStructuredContentFolder(responseToParse = null, element = null) {
 		Variables.assertDefined(parameterList = "${responseToParse},${element}");
 
 		var elementValue = JSONUtil.getWithJSONPath(${responseToParse}, ${element});
@@ -86,7 +86,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro structuredContentFolderSubscribeByUserName(structuredContentFolderId = null,userName = null) {
+	macro structuredContentFolderSubscribeByUserName(structuredContentFolderId = null, userName = null) {
 		Variables.assertDefined(parameterList = "${structuredContentFolderId},${userName}");
 
 		var response = HeadlessWebcontentFolderAPI._subscribeStructuredContentFolder(

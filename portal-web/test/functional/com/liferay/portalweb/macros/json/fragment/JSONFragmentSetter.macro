@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro setCollectionId(groupId = null,collectionName = null) {
+	macro setCollectionId(groupId = null, collectionName = null) {
 		Variables.assertDefined(parameterList = "${collectionName},${groupId}");
 
 		var collectionId = JSONFragmentAPI._getCollectionIdByName(
@@ -21,7 +21,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setGroupId(groupName = null,groupKey = null) {
+	macro setGroupId(groupName = null, groupKey = null) {
 		JSONUtil2._exclusiveOrCheck(
 			a = ${groupName},
 			b = ${groupKey},

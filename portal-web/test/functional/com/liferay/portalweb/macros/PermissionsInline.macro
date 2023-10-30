@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro addOrRemoveAccessPermissionFromAllRoles(addOrRemoveViewPermission = null,roleList = null) {
+	macro addOrRemoveAccessPermissionFromAllRoles(addOrRemoveViewPermission = null, roleList = null) {
 		for (var roleTitle : list ${roleList}) {
 			var roleTitle = ${roleTitle};
 
@@ -29,7 +29,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addOrRemoveAnyPermissionsFromSpecificRole(addOrRemoveViewPermission = null,roleTitle = null,permissionsKeyList = null) {
+	macro addOrRemoveAnyPermissionsFromSpecificRole(addOrRemoveViewPermission = null, roleTitle = null, permissionsKeyList = null) {
 		var key_roleTitle = StringUtil.replace(${roleTitle}, " ", "-");
 
 		var key_roleTitle = StringUtil.lowerCase(${key_roleTitle});
@@ -80,7 +80,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addOrRemoveEntryPermissionsFromAllRoles(addOrRemoveViewPermission = null,roleTitle = null,permissionDefinitionKeyList = null) {
+	macro addOrRemoveEntryPermissionsFromAllRoles(addOrRemoveViewPermission = null, roleTitle = null, permissionDefinitionKeyList = null) {
 		if (IsNotVisible(locator1 = "AssetPermissions#HIDE_OPTIONS_LINK")) {
 			AssertClick.assertPartialTextClickAt(
 				locator1 = "AssetPermissions#MORE_OPTIONS_LINK",
@@ -106,7 +106,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addOrRemoveManagePagesPermissionFromAllRoles(addOrRemoveViewPermission = null,roleList = null) {
+	macro addOrRemoveManagePagesPermissionFromAllRoles(addOrRemoveViewPermission = null, roleList = null) {
 		for (var roleTitle : list ${roleList}) {
 			var roleTitle = ${roleTitle};
 
@@ -130,7 +130,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addOrRemoveSubscribePermissionFromAllRoles(addOrRemoveViewPermission = null,roleList = null) {
+	macro addOrRemoveSubscribePermissionFromAllRoles(addOrRemoveViewPermission = null, roleList = null) {
 		for (var roleTitle : list ${roleList}) {
 			var roleTitle = ${roleTitle};
 
@@ -154,7 +154,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addOrRemoveViewPermissionFromAllRoles(addOrRemoveViewPermission = null,roleList = null) {
+	macro addOrRemoveViewPermissionFromAllRoles(addOrRemoveViewPermission = null, roleList = null) {
 		for (var roleTitle : list ${roleList}) {
 			var roleTitle = ${roleTitle};
 
@@ -218,7 +218,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoConfigurationPG(siteTemplate = null,portletOption = null,portletName = null) {
+	macro gotoConfigurationPG(siteTemplate = null, portletOption = null, portletName = null) {
 		if (isSet(portletOption)) {
 			var optionName = ${portletOption};
 		}
@@ -257,7 +257,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoDocumentsAndMediaHomeFolderPG(siteName = null,pageName = null) {
+	macro gotoDocumentsAndMediaHomeFolderPG(siteName = null, pageName = null) {
 		Navigator.gotoSitePage(
 			pageName = ${pageName},
 			siteName = ${siteName});
@@ -316,7 +316,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoMessageBoardsThreadReplyPG(threadSubject = null,siteName = null,pageName = null,threadReplyBody = null) {
+	macro gotoMessageBoardsThreadReplyPG(threadSubject = null, siteName = null, pageName = null, threadReplyBody = null) {
 		Navigator.gotoSitePage(
 			pageName = ${pageName},
 			siteName = ${siteName});
@@ -336,7 +336,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoPagePG(site = null,pageName = null) {
+	macro gotoPagePG(site = null, pageName = null) {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages",
@@ -370,7 +370,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoSitePageCP(privacy = null,pageName = null) {
+	macro gotoSitePageCP(privacy = null, pageName = null) {
 		if (isSet(privacy)) {
 			PagesAdmin.togglePrivacy(privacy = ${privacy});
 		}
@@ -385,7 +385,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoSiteTeamsCP(teamName = null,siteScopeName = null,portletName = null) {
+	macro gotoSiteTeamsCP(teamName = null, siteScopeName = null, portletName = null) {
 		Navigator.openSiteURL(siteName = ${siteScopeName});
 
 		ProductMenu.gotoPortlet(
@@ -400,7 +400,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoSiteTemplateCP(site = null,page = null) {
+	macro gotoSiteTemplateCP(site = null, page = null) {
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages",
@@ -432,7 +432,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPermissionsChecked(permissionDefinitionKey = null,roleTitle = null) {
+	macro viewPermissionsChecked(permissionDefinitionKey = null, roleTitle = null) {
 		var key_roleTitle = StringUtil.replace(${roleTitle}, " ", "-");
 
 		var key_roleTitle = StringUtil.lowerCase(${key_roleTitle});
@@ -443,7 +443,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewPermissionsRemoved(permissionDefinitionKey = null,roleTitle = null) {
+	macro viewPermissionsRemoved(permissionDefinitionKey = null, roleTitle = null) {
 		var key_roleTitle = StringUtil.replace(${roleTitle}, " ", "-");
 
 		var key_roleTitle = StringUtil.lowerCase(${key_roleTitle});

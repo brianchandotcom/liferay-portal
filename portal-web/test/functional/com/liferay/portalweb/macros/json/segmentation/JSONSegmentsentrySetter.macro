@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro setCriteria(date = null,field = null,text = null,operator = null) {
+	macro setCriteria(date = null, field = null, text = null, operator = null) {
 		Variables.assertDefined(parameterList = "${field},${operator}");
 
 		if (${operator} == "equals") {
@@ -188,7 +188,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setOrganizationCriteria(date = null,field = null,text = null,operator = null) {
+	macro setOrganizationCriteria(date = null, field = null, text = null, operator = null) {
 		Variables.assertDefined(parameterList = "${field},${operator}");
 
 		if (${operator} == "equals") {
@@ -215,7 +215,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setSegmentCriteria(firstSegmentId = null,secondSegmentId = null) {
+	macro setSegmentCriteria(firstSegmentId = null, secondSegmentId = null) {
 		Variables.assertDefined(parameterList = "${conjunctionOperator},${firstSegmentId},${secondSegmentId}");
 
 		var conjunctionOperator = StringUtil.toLowerCase(${conjunctionOperator});
@@ -226,7 +226,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setSelectedOptionId(groupName = null,fieldName = null,selectedOption = null) {
+	macro setSelectedOptionId(groupName = null, fieldName = null, selectedOption = null) {
 		Variables.assertDefined(parameterList = "${fieldName},${selectedOption}");
 
 		if (${fieldName} == "roleIds") {
@@ -269,7 +269,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setServiceContext(groupName = null,site = null,assetCategoryIds = null,assetTagNames = null,workflowAction = null) {
+	macro setServiceContext(groupName = null, site = null, assetCategoryIds = null, assetTagNames = null, workflowAction = null) {
 		if (isSet(groupName)) {
 			var serviceContext = JSONServiceContextUtil.setServiceContext(
 				addGroupPermissions = "true",
@@ -294,7 +294,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setSessionCriteria(date = null,field = null,text = null,value = null,operator = null,key = null) {
+	macro setSessionCriteria(date = null, field = null, text = null, value = null, operator = null, key = null) {
 		Variables.assertDefined(parameterList = "${field},${operator}");
 
 		if (${operator} == "equals") {

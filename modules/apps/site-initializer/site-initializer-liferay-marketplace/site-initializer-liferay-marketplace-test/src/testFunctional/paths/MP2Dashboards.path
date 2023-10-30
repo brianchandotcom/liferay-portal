@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>ANY_DASHBOARD_BUTTON</td>
-	<td>//*[contains(@class, 'dashboard-page') and contains(text(), '${key_buttonName}')]</td>
+	<td>//*[contains(@class, 'dashboard-page')]//*[@type='button' and contains(text(), '${key_buttonName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -26,8 +26,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GET_STARTED_BUTTON</td>
+	<td>//button[contains(@class, 'customer-gate-page') and text()='Get Started']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HEADER</td>
 	<td>//*[contains(@class, 'header-container')]//*[contains(text(), '${key_header}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HEADER_TITLE_CG</td>
+	<td>//div[@class='customer-gate-page-container']//span[contains(text(),'key_headerTitle')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -36,8 +46,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RESEND_INVITATION</td>
-	<td>//button[contains(@class, 'resend-invitation')]</td>
+	<td>SVG_DROPDOWN</td>
+	<td>//div[contains(@class, 'dashboard-navigation-header-text-container')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SVG_DROPDOWN_OPTIONS</td>
+	<td>//button[contains(@class, 'dropdown-item') and contains(text(), '${key_accountTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -46,13 +61,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SVG_DROPDOWN</td>
-	<td>//*[contains(@class, 'dashboard-navigation-header')]/following-sibling::div</td>
+	<td>UPLOAD_FIELD</td>
+	<td>//input[@name='${key_field}']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SVG_DROPDOWN_LIST</td>
-	<td>//*[contains(@class, 'dropdown-item') and contains(text(), '${key_accountTitle}')]</td>
+	<td>RESEND_INVITATION</td>
+	<td>//button[contains(@class, 'resend-invitation')]</td>
 	<td></td>
 </tr>
 

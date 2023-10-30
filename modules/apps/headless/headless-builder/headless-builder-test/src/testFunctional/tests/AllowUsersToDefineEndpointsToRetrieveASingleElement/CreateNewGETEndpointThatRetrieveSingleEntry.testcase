@@ -46,7 +46,7 @@ definition {
 		}
 
 		task ("And Given a unpublished API Application with singleElement and ID and '/getTest/{entryId}' path Endpoint with Student as main object Schema") {
-			var response = ApplicationAPI.createAPIApplication(
+			ApplicationAPI.createAPIApplication(
 				baseURL = "my-app",
 				endpointName = "testendpoint",
 				endpointPath = "/gettest/{entryId}",
@@ -69,12 +69,10 @@ definition {
 		}
 
 		task ("And Given I create schema a property with erc of name field") {
-			var schemaId = JSONUtil.getWithJSONPath(${response}, "$.apiApplicationToAPISchemas[*].id");
-
 			PropertyAPI.createAPIProperty(
 				name = "entryName",
 				objectFieldERC = "studentName",
-				schemaId = ${schemaId});
+				schemaERC = "testSchema");
 		}
 
 		task ("When I navigate to API application in API Explorer") {

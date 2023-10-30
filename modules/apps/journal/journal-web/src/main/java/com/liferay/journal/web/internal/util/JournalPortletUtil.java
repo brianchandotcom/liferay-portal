@@ -151,18 +151,8 @@ public class JournalPortletUtil {
 
 			folderBreadcrumbEntry.setTitle(unescapedFolder.getName());
 
-			portletURL.setParameter(
-				"folderId", String.valueOf(folder.getFolderId()));
-
-			folderBreadcrumbEntry.setURL(portletURL.toString());
-
 			breadcrumbEntries.add(folderBreadcrumbEntry);
 		}
-
-		BreadcrumbEntry lastBreadcrumbEntry = breadcrumbEntries.get(
-			breadcrumbEntries.size() - 1);
-
-		lastBreadcrumbEntry.setURL(null);
 
 		return breadcrumbEntries;
 	}

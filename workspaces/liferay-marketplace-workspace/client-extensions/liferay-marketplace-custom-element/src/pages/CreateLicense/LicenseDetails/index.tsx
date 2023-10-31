@@ -16,60 +16,62 @@ type InputPropsLicense = {
 		required: boolean;
 	};
 };
-const LicenseDetails = ({inputProps}: InputPropsLicense) => {
-	return (
-		<>
-			<h5>
-				Environment Details <RequiredMask />
-			</h5>
-			<hr className="mt-2"></hr>
-			<FormInput
-				{...inputProps}
-				boldLabel
-				className="custom-input"
-				helpMessage="Include a description to uniquely identify this environment. This cannot be edited later."
-				label="Description"
-				name="description"
-			/>
 
-			<h5 className="mt-7">
-				Activation Key Server Details <RequiredMask />
-			</h5>
+const LicenseDetails = ({inputProps}: InputPropsLicense) => (
+	<div className="license-details-form">
+		<h5>
+			Environment Details <RequiredMask />
+		</h5>
 
-			<hr className="mt-2"></hr>
-			<FormInput
-				{...inputProps}
-				boldLabel
-				className="custom-input"
-				helpMessage="Input one Host name per instance"
-				label="Host Name"
-				name="hostName"
-				placeholder="Enter Host Name"
-			/>
+		<hr className="mt-2" />
 
-			<FormInput
-				{...inputProps}
-				boldLabel
-				className="custom-input"
-				component="textarea"
-				helpMessage="Add one IP addresses per line. IPv6 addresses are not supported."
-				label="IP Addresses"
-				name="IP"
-				placeholder={`1.1.1.1` + '\n' + `2.2.2.2`}
-			/>
+		<FormInput
+			{...inputProps}
+			boldLabel
+			className="custom-input"
+			helpMessage="Include a description to uniquely identify this environment. This cannot be edited later."
+			label="Description"
+			name="description"
+		/>
 
-			<FormInput
-				{...inputProps}
-				boldLabel
-				className="custom-input"
-				component="textarea"
-				helpMessage="Add one MAC addresses per line"
-				label="Mac Addresses"
-				name="macAddresses"
-				placeholder={`XX-XX-XX-XX-XX-XX` + '\n' + `XX-XX-XX-XX-XX-XX`}
-			/>
-		</>
-	);
-};
+		<h5 className="mt-7">
+			Activation Key Server Details <RequiredMask />
+		</h5>
+
+		<hr className="mt-2" />
+
+		<FormInput
+			{...inputProps}
+			boldLabel
+			className="custom-input"
+			helpMessage="Input one Host name per instance"
+			label="Host Name"
+			name="hostName"
+			placeholder="Enter Host Name"
+		/>
+
+		<FormInput
+			{...inputProps}
+			boldLabel
+			className="custom-input"
+			component="textarea"
+			helpMessage="Add one IP addresses per line. IPv6 addresses are not supported."
+			label="IP Addresses"
+			name="IP"
+			placeholder={`1.1.1.1` + '\n' + `2.2.2.2`}
+		/>
+
+		<FormInput
+			{...inputProps}
+			boldLabel
+			className="custom-input"
+			component="textarea"
+			helpMessage="Add one MAC addresses per line"
+			label="Mac Addresses"
+			name="macAddresses"
+			placeholder={`XX-XX-XX-XX-XX-XX` + '\n' + `XX-XX-XX-XX-XX-XX`}
+		/>
+	</div>
+);
 
 export default LicenseDetails;

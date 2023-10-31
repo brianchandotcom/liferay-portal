@@ -7,17 +7,17 @@ import ClaySticker from '@clayui/sticker';
 
 import emptyPictureIcon from '../../../assets/icons/empty_picture_icon.svg';
 
-interface userAccount {
+type UserAccount = {
 	emailAddress?: string;
 	image?: string;
 	name?: string;
-}
-
-type AccountInfoProps = {
-	userAccount?: userAccount;
 };
 
-const AccountEmailInfo = ({userAccount}: AccountInfoProps) => (
+type AccountInfoProps = {
+	userAccount?: UserAccount;
+};
+
+const AccountEmailInfo: React.FC<AccountInfoProps> = ({userAccount}) => (
 	<div className="align-items-center d-flex">
 		<div className="account-banner-name-text align-items-end d-flex flex-column m-2">
 			<strong>{userAccount?.name}</strong>
@@ -31,7 +31,7 @@ const AccountEmailInfo = ({userAccount}: AccountInfoProps) => (
 			<ClaySticker.Image
 				alt="placeholder"
 				height="24"
-				src={userAccount?.image ? userAccount?.image : emptyPictureIcon}
+				src={userAccount?.image ?? emptyPictureIcon}
 				width="24"
 			/>
 		</ClaySticker>

@@ -10,11 +10,11 @@ import RadioCardList, {
 } from '../../../components/RadioCardList/RadioCardList';
 import {formatDate} from '../../PublishedAppsDashboard/PublishedDashboardPageUtil';
 
-interface SubscriptionSelectionProps {
+type SubscriptionSelectionProps = {
 	licenseKeyData: any;
 	onSelectSubscription: (subscription: any) => void;
 	selectedSubscriptionValue?: any;
-}
+};
 
 const SelectSubscription = ({
 	licenseKeyData,
@@ -26,38 +26,38 @@ const SelectSubscription = ({
 	>([]);
 
 	const getSubscriptionList = useCallback(async () => {
-		const contentList = licenseKeyData.map((licenseKey: any) => {
-			const expirationDate =
-				licenseKey.endDate === 'DNE'
-					? 'DNE'
-					: formatDate(licenseKey.endDate);
+		setSubscription(
+			licenseKeyData.map((licenseKey: any) => {
+				const expirationDate =
+					licenseKey.endDate === 'DNE'
+						? 'DNE'
+						: formatDate(licenseKey.endDate);
 
-			const contentValue = {
-				description: (
-					<small className="text-success">
-						Key activations available: {licenseKey.purchasedCount}{' '}
-						of {licenseKey.provisionedCount}
-					</small>
-				),
-				label: `${formatDate(
-					licenseKey.startDate
-				)} - ${expirationDate}`,
-				selected: selectedSubscriptionValue?.name === licenseKey.name,
-				title: <h3 className="mt-0">{licenseKey.name}</h3>,
-				value: licenseKey,
-			};
-
-			return contentValue;
-		});
-
-		setSubscription(contentList);
+				return {
+					description: (
+						<small className="text-success">
+							Key activations available:{' '}
+							{licenseKey.purchasedCount} of{' '}
+							{licenseKey.provisionedCount}
+						</small>
+					),
+					label: `${formatDate(
+						licenseKey.startDate
+					)} - ${expirationDate}`,
+					selected:
+						selectedSubscriptionValue?.name === licenseKey.name,
+					title: <h3 className="mt-0">{licenseKey.name}</h3>,
+					value: licenseKey,
+				};
+			})
+		);
 	}, [licenseKeyData, selectedSubscriptionValue]);
 
 	useEffect(() => {
 		getSubscriptionList();
 	}, [getSubscriptionList]);
 
-	const handleSelect = (radioOption: RadioOption<any>) => {
+	const handleSelect = (radioOption: RadioOption<unknown>) => {
 		onSelectSubscription(radioOption.value);
 
 		setSubscription((previousValue) =>

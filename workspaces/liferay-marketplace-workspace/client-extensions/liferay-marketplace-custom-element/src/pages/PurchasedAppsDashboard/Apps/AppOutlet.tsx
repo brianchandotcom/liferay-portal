@@ -9,7 +9,7 @@ import ClayNavigationBar from '@clayui/navigation-bar';
 import {useState} from 'react';
 import {Outlet, useNavigate, useParams} from 'react-router-dom';
 
-import { AppTabType } from './enums/AppTabType';
+import {AppTabType} from './enums/AppTabType';
 
 const AppOutlet = () => {
 	const navigate = useNavigate();

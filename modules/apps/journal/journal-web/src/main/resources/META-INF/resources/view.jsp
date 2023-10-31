@@ -59,8 +59,13 @@ else {
 	<clay:container-fluid
 		cssClass="container-view sidenav-content"
 	>
+
+		<%
+		VerticalNavItemList verticalNavItemList = journalDisplayContext.getVerticalNavDDMStructureList();
+		%>
+
 		<c:choose>
-			<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-194763") %>'>
+			<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-194763") && ListUtil.isNotEmpty(verticalNavItemList) %>'>
 				<clay:row>
 					<clay:col
 						lg="3"
@@ -69,19 +74,13 @@ else {
 							verticalNavItems="<%= journalDisplayContext.getVerticalNavItemList() %>"
 						/>
 
-						<%
-						VerticalNavItemList verticalNavItemList = journalDisplayContext.getVerticalNavDDMStructureList();
-						%>
+						<span class="c-mb-1 c-mt-3 sheet-tertiary-title text-2 text-secondary">
+							<liferay-ui:message key="highlighted-structures" />
+						</span>
 
-						<c:if test="<%= ListUtil.isNotEmpty(verticalNavItemList) %>">
-							<span class="c-mb-1 c-mt-3 sheet-tertiary-title text-2 text-secondary">
-								<liferay-ui:message key="highlighted-structures" />
-							</span>
-
-							<clay:vertical-nav
-								verticalNavItems="<%= verticalNavItemList %>"
-							/>
-						</c:if>
+						<clay:vertical-nav
+							verticalNavItems="<%= verticalNavItemList %>"
+						/>
 					</clay:col>
 
 					<clay:col

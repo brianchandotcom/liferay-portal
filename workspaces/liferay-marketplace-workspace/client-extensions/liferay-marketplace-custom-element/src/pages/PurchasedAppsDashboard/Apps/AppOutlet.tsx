@@ -42,7 +42,7 @@ const AppOutlet = () => {
 				<ClayNavigationBar.Item active={active === AppTabType.LICENSES}>
 					<ClayButton
 						onClick={() => {
-							navigate(`app/${productId}/licenses`);
+							navigate(`licenses`);
 							setActive(AppTabType.LICENSES);
 						}}
 					>

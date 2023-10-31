@@ -629,7 +629,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for 119020. Can add web content when the portal change the default language."
+	@description = "This is a use case for LPS-119020. Can add web content when the portal change the default language."
 	@priority = 4
 	test ViewChangedDefaultPortalLanguageViaWebContent {
 		property testray.component.names = "Localization,Web Content Administration";

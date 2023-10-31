@@ -21,6 +21,7 @@ export declare const CACHE_KEYS: {
 	readonly collectionVariations: 'collectionVariations';
 	readonly collectionWarningMessage: 'collectionWarningMessage';
 	readonly formFields: 'formFields';
+	readonly roles: 'roles';
 	readonly users: 'users';
 };
 export declare type CacheKey = typeof CACHE_KEYS[keyof typeof CACHE_KEYS];

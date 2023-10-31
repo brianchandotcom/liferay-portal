@@ -89,7 +89,6 @@ const FrontendDataSet = ({
 	views,
 }) => {
 	const wrapperRef = useRef(null);
-	const [collectionActions, setCollectionActions] = useState(null);
 	const [componentLoading, setComponentLoading] = useState(false);
 	const [creationMenuItems, setCreationMenuItems] = useState(null);
 	const [dataLoading, setDataLoading] = useState(!!apiURL);
@@ -228,26 +227,25 @@ const FrontendDataSet = ({
 
 	const isMounted = useIsMounted();
 
-	function updateDataSetItems(dataSetData) {
-		setCollectionActions(dataSetData.actions);
-		setItems(dataSetData.items);
-		setTotal(dataSetData.totalCount);
-	}
-
-	useEffect(() => {
+	function updateDataSetActions(actions) {
 		const filteredCreationMenu = {};
 
-		if (creationMenu && collectionActions) {
+		if (creationMenu && actions) {
 			if (creationMenu.primaryItems) {
 				filteredCreationMenu.primaryItems = filterCreationActions(
 					creationMenu.primaryItems,
-					collectionActions
+					actions
 				);
 			}
 		}
 
-		setCreationMenuItems(filteredCreationMenu);
-	}, [creationMenu, collectionActions]);
+		setCreationMenuItems(() => filteredCreationMenu);
+	}
+
+	function updateDataSetItems(dataSetData) {
+		setItems(dataSetData.items);
+		setTotal(dataSetData.totalCount);
+	}
 
 	useEffect(() => {
 		if (itemsProp) {
@@ -420,6 +418,8 @@ const FrontendDataSet = ({
 					handleApiError({data, statusCode});
 				}
 				else {
+					updateDataSetActions(data.actions);
+
 					updateDataSetItems(data);
 				}
 				setDataLoading(false);
@@ -517,7 +517,7 @@ const FrontendDataSet = ({
 						}
 					>
 						{creationMenu && (
-							<CreationMenu {...creationMenu} inEmptyState />
+							<CreationMenu {...creationMenuItems} inEmptyState />
 						)}
 					</ClayEmptyState>
 				)}

@@ -270,6 +270,14 @@ definition {
 
 	@summary = "Default summary"
 	macro getAssignedPropertyName() {
+		while (IsElementPresent(key_text = "Try Again", locator1 = "Button#ANY")) {
+			Refresh();
+
+			Click(
+				key_text = "Next"
+				locator1 = "Button#ANY");
+		}
+
 		WaitForVisible(
 			key_text = "Assign",
 			locator1 = "Button#ANY");

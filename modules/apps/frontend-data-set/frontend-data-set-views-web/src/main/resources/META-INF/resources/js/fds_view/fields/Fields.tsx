@@ -36,6 +36,7 @@ const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
 
 export interface IFDSField {
+	contextPath: string;
 	externalReferenceCode: string;
 	id: number;
 	label: string;
@@ -157,7 +158,7 @@ const SaveFDSFieldsModalContent = ({
 		setSaveButtonDisabled(true);
 
 		const creationData: Array<{name: string; type: string}> = [];
-		const deletionIds: Array<number> = [];
+		const deletionIds: Array<string> = [];
 
 		fields?.forEach((field) => {
 			if (field.selected && !field.id) {
@@ -223,7 +224,7 @@ const SaveFDSFieldsModalContent = ({
 					);
 
 					return {
-						id: fdsField?.id,
+						id: fdsField ? String(fdsField.id) : undefined,
 						name: field.name,
 						selected: Boolean(fdsField),
 						type: field.type,
@@ -767,8 +768,33 @@ const Fields = ({
 				contentComponent: ({closeModal}: {closeModal: Function}) => (
 					<AddFieldsModalContent
 						closeModal={closeModal}
-						fdsFields={fdsFields || []}
 						fdsView={fdsView}
+						namespace={namespace}
+						onSave={({
+							createdFDSFields,
+							deletedFDSFieldsIds,
+						}: {
+							createdFDSFields: Array<IFDSField>;
+							deletedFDSFieldsIds: Array<number>;
+						}) => {
+							const newFDSFields: Array<IFDSField> = [];
+
+							fdsFields?.forEach((fdsField) => {
+								if (
+									!deletedFDSFieldsIds.includes(fdsField.id)
+								) {
+									newFDSFields.push(fdsField);
+								}
+							});
+
+							createdFDSFields.forEach((fdsField) => {
+								newFDSFields.push(fdsField);
+							});
+
+							setFDSFields(newFDSFields);
+						}}
+						saveFDSFieldsURL={saveFDSFieldsURL}
+						savedFDSFields={fdsFields || []}
 					/>
 				),
 				size: 'full-screen',

@@ -12,7 +12,6 @@ import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegist
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.ModelListenerException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -49,6 +48,10 @@ public abstract class BaseAnalyticsDXPEntityModelListener
 
 	@Override
 	public void onAfterRemove(T model) throws ModelListenerException {
+		if (!analyticsConfigurationRegistry.isActive() || !isTracked(model)) {
+			return;
+		}
+
 		ShardedModel shardedModel = (ShardedModel)model;
 
 		analyticsAssociationLocalService.deleteAnalyticsAssociations(
@@ -68,9 +71,7 @@ public abstract class BaseAnalyticsDXPEntityModelListener
 
 	@Override
 	public void onBeforeRemove(T model) throws ModelListenerException {
-		if (!FeatureFlagManagerUtil.isEnabled("LRAC-10632") ||
-			!isTracked(model)) {
-
+		if (!analyticsConfigurationRegistry.isActive() || !isTracked(model)) {
 			return;
 		}
 
@@ -181,9 +182,7 @@ public abstract class BaseAnalyticsDXPEntityModelListener
 		String associationClassName, Object associationClassPK,
 		Object classPK) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LRAC-10632") ||
-			!analyticsConfigurationRegistry.isActive()) {
-
+		if (!analyticsConfigurationRegistry.isActive()) {
 			return;
 		}
 

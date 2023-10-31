@@ -222,43 +222,6 @@ public class AnalyticsConfigurationRegistryImpl
 		_userLocalService.updateUser(user);
 	}
 
-	private void _addAnalyticsMessages(
-		String action, List<? extends BaseModel> baseModels, long companyId) {
-
-		if (baseModels.isEmpty()) {
-			return;
-		}
-
-		Message message = new Message();
-
-		message.put("action", action);
-		message.put("command", AnalyticsMessagesProcessorCommand.ADD);
-
-		BaseModel<?> baseModel = baseModels.get(0);
-
-		message.put(
-			"analyticsEntityModel",
-			_serviceTrackerMap.getService(baseModel.getModelClassName()));
-
-		message.put("principalName", _getAnalyticsAdminUserId(companyId));
-
-		message.setPayload(baseModels);
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Queueing add analytics messages message");
-		}
-
-		TransactionCommitCallbackUtil.registerCallback(
-			() -> {
-				_messageBus.sendMessage(
-					AnalyticsMessagesDestinationNames.
-						ANALYTICS_MESSAGES_PROCESSOR,
-					message);
-
-				return null;
-			});
-	}
-
 	private void _addSAPEntry(long companyId) throws Exception {
 		String sapEntryName = _SAP_ENTRY_OBJECT[0];
 
@@ -274,48 +237,6 @@ public class AnalyticsConfigurationRegistryImpl
 			false, true, sapEntryName,
 			Collections.singletonMap(LocaleUtil.getDefault(), sapEntryName),
 			new ServiceContext());
-	}
-
-	private void _addUsersAnalyticsMessages(long companyId, List<User> users) {
-		List<AnalyticsUserImpl> analyticsUsers = new ArrayList<>(users.size());
-
-		List<Contact> contacts = new ArrayList<>(users.size());
-
-		for (User user : users) {
-			Map<String, long[]> memberships = new HashMap<>();
-
-			for (AnalyticsEntityModel<?> analyticsEntityModel :
-					_serviceTrackerMap.values()) {
-
-				try {
-					long[] membershipIds =
-						analyticsEntityModel.getMembershipIds(user);
-
-					if (membershipIds.length == 0) {
-						continue;
-					}
-
-					memberships.put(
-						analyticsEntityModel.getModelClassName(),
-						membershipIds);
-				}
-				catch (Exception exception) {
-					_log.error(exception);
-				}
-			}
-
-			analyticsUsers.add(new AnalyticsUserImpl(user, memberships));
-
-			Contact contact = user.fetchContact();
-
-			if (contact != null) {
-				contacts.add(contact);
-			}
-		}
-
-		_addAnalyticsMessages("update", analyticsUsers, companyId);
-
-		_addAnalyticsMessages("update", contacts, companyId);
 	}
 
 	private void _deleteAnalyticsAdmin(long companyId) throws Exception {
@@ -350,9 +271,6 @@ public class AnalyticsConfigurationRegistryImpl
 							DISPATCH_TRIGGER_NAME_PRODUCT
 					});
 
-				_analyticsMessageLocalService.deleteAnalyticsMessages(
-					companyId);
-
 				_deleteAnalyticsAdmin(companyId);
 				_deleteSAPEntry(companyId);
 			}
@@ -382,11 +300,9 @@ public class AnalyticsConfigurationRegistryImpl
 		try {
 			Set<String> dispatchTriggerNames = new HashSet<>();
 
-			if (FeatureFlagManagerUtil.isEnabled("LRAC-10632")) {
-				dispatchTriggerNames.add(
-					AnalyticsDXPEntityBatchExporterConstants.
-						DISPATCH_TRIGGER_NAME_DXP_ENTITIES);
-			}
+			dispatchTriggerNames.add(
+				AnalyticsDXPEntityBatchExporterConstants.
+					DISPATCH_TRIGGER_NAME_DXP_ENTITIES);
 
 			if (_analyticsSettingsManager.syncedCommerceSettingsEnabled(
 					companyId)) {
@@ -399,70 +315,11 @@ public class AnalyticsConfigurationRegistryImpl
 						DISPATCH_TRIGGER_NAME_PRODUCT);
 			}
 
-			if (FeatureFlagManagerUtil.isEnabled("LRAC-10632") ||
-				!dispatchTriggerNames.isEmpty()) {
+			_analyticsDXPEntityBatchExporter.scheduleExportTriggers(
+				companyId, dispatchTriggerNames.toArray(new String[0]));
 
-				_analyticsDXPEntityBatchExporter.scheduleExportTriggers(
-					companyId, dispatchTriggerNames.toArray(new String[0]));
-
-				_analyticsDXPEntityBatchExporter.export(
-					companyId, dispatchTriggerNames.toArray(new String[0]));
-			}
-
-			if (!FeatureFlagManagerUtil.isEnabled("LRAC-10632")) {
-				AnalyticsConfiguration analyticsConfiguration =
-					getAnalyticsConfiguration(companyId);
-
-				Collection<AnalyticsEntityModel<?>> analyticsEntityModels =
-					_serviceTrackerMap.values();
-
-				for (AnalyticsEntityModel<?> analyticsEntityModel :
-						analyticsEntityModels) {
-
-					analyticsEntityModel.syncAll(companyId);
-				}
-
-				_syncDefaultFields(
-					companyId, analyticsConfiguration.syncedContactFieldNames(),
-					analyticsConfiguration.syncedUserFieldNames());
-
-				_syncUserCustomFields(
-					companyId, analyticsConfiguration.syncedUserFieldNames());
-
-				if (GetterUtil.getBoolean(
-						analyticsConfiguration.syncAllContacts())) {
-
-					_syncContacts(companyId);
-				}
-				else {
-					_syncOrganizationUsers(
-						companyId,
-						analyticsConfiguration.syncedOrganizationIds());
-					_syncUserGroupUsers(
-						companyId, analyticsConfiguration.syncedUserGroupIds());
-				}
-
-				Message message = new Message();
-
-				message.put("command", AnalyticsMessagesProcessorCommand.SEND);
-				message.put("companyId", companyId);
-				message.put(
-					"principalName", _getAnalyticsAdminUserId(companyId));
-
-				if (_log.isInfoEnabled()) {
-					_log.info("Queueing send analytics messages message");
-				}
-
-				TransactionCommitCallbackUtil.registerCallback(
-					() -> {
-						_messageBus.sendMessage(
-							AnalyticsMessagesDestinationNames.
-								ANALYTICS_MESSAGES_PROCESSOR,
-							message);
-
-						return null;
-					});
-			}
+			_analyticsDXPEntityBatchExporter.export(
+				companyId, dispatchTriggerNames.toArray(new String[0]));
 
 			_analyticsSettingsManager.updateCompanyConfiguration(
 				companyId, Collections.singletonMap("firstSync", false));
@@ -470,17 +327,6 @@ public class AnalyticsConfigurationRegistryImpl
 		catch (Exception exception) {
 			_log.error(exception);
 		}
-	}
-
-	private long _getAnalyticsAdminUserId(long companyId) {
-		User user = _userLocalService.fetchUserByScreenName(
-			companyId, AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN);
-
-		if (user == null) {
-			return 0;
-		}
-
-		return user.getUserId();
 	}
 
 	private boolean _hasConfiguration() {
@@ -515,349 +361,95 @@ public class AnalyticsConfigurationRegistryImpl
 
 	private void _sync(long companyId, Dictionary<String, ?> dictionary) {
 		try {
-			if (!FeatureFlagManagerUtil.isEnabled("LRAC-10632") &&
-				Validator.isNotNull(dictionary.get("token")) &&
-				Validator.isNull(dictionary.get("previousToken"))) {
+			Set<String> refreshDispatchTriggerNames = new HashSet<>();
+			Set<String> unscheduleDispatchTriggerNames = new HashSet<>();
 
-				Collection<AnalyticsEntityModel<?>> analyticsEntityModels =
-					_serviceTrackerMap.values();
-
-				for (AnalyticsEntityModel<?> analyticsEntityModel :
-						analyticsEntityModels) {
-
-					analyticsEntityModel.syncAll(companyId);
-				}
-			}
-
-			if (FeatureFlagManagerUtil.isEnabled("LRAC-10632") ||
-				!FeatureFlagManagerUtil.isEnabled("LRAC-10757")) {
-
-				Set<String> refreshDispatchTriggerNames = new HashSet<>();
-				Set<String> unscheduleDispatchTriggerNames = new HashSet<>();
-
-				if (_analyticsSettingsManager.syncedCommerceSettingsChanged(
-						companyId)) {
-
-					if (_analyticsSettingsManager.syncedCommerceSettingsEnabled(
-							companyId)) {
-
-						Collections.addAll(
-							refreshDispatchTriggerNames,
-							AnalyticsDXPEntityBatchExporterConstants.
-								DISPATCH_TRIGGER_NAME_ORDER,
-							AnalyticsDXPEntityBatchExporterConstants.
-								DISPATCH_TRIGGER_NAME_PRODUCT);
-					}
-					else {
-						Collections.addAll(
-							unscheduleDispatchTriggerNames,
-							AnalyticsDXPEntityBatchExporterConstants.
-								DISPATCH_TRIGGER_NAME_ORDER,
-							AnalyticsDXPEntityBatchExporterConstants.
-								DISPATCH_TRIGGER_NAME_PRODUCT);
-					}
-				}
+			if (_analyticsSettingsManager.syncedCommerceSettingsChanged(
+					companyId)) {
 
 				if (_analyticsSettingsManager.syncedCommerceSettingsEnabled(
 						companyId)) {
 
-					if (_analyticsSettingsManager.syncedOrderFieldsChanged(
-							companyId)) {
-
-						refreshDispatchTriggerNames.add(
-							AnalyticsDXPEntityBatchExporterConstants.
-								DISPATCH_TRIGGER_NAME_ORDER);
-					}
-
-					if (_analyticsSettingsManager.syncedProductFieldsChanged(
-							companyId)) {
-
-						refreshDispatchTriggerNames.add(
-							AnalyticsDXPEntityBatchExporterConstants.
-								DISPATCH_TRIGGER_NAME_PRODUCT);
-					}
+					Collections.addAll(
+						refreshDispatchTriggerNames,
+						AnalyticsDXPEntityBatchExporterConstants.
+							DISPATCH_TRIGGER_NAME_ORDER,
+						AnalyticsDXPEntityBatchExporterConstants.
+							DISPATCH_TRIGGER_NAME_PRODUCT);
 				}
+				else {
+					Collections.addAll(
+						unscheduleDispatchTriggerNames,
+						AnalyticsDXPEntityBatchExporterConstants.
+							DISPATCH_TRIGGER_NAME_ORDER,
+						AnalyticsDXPEntityBatchExporterConstants.
+							DISPATCH_TRIGGER_NAME_PRODUCT);
+				}
+			}
 
-				if (FeatureFlagManagerUtil.isEnabled("LRAC-10632") &&
-					((_analyticsSettingsManager.syncedAccountSettingsChanged(
-						companyId) &&
-					  _analyticsSettingsManager.syncedAccountSettingsEnabled(
-						  companyId)) ||
-					 (_analyticsSettingsManager.syncedAccountSettingsEnabled(
-						 companyId) &&
-					  _analyticsSettingsManager.syncedAccountFieldsChanged(
-						  companyId)) ||
-					 (_analyticsSettingsManager.syncedContactSettingsChanged(
-						 companyId) &&
-					  _analyticsSettingsManager.syncedContactSettingsEnabled(
-						  companyId)) ||
-					 (_analyticsSettingsManager.syncedContactSettingsEnabled(
-						 companyId) &&
-					  _analyticsSettingsManager.syncedUserFieldsChanged(
-						  companyId)))) {
+			if (_analyticsSettingsManager.syncedCommerceSettingsEnabled(
+					companyId)) {
+
+				if (_analyticsSettingsManager.syncedOrderFieldsChanged(
+						companyId)) {
 
 					refreshDispatchTriggerNames.add(
 						AnalyticsDXPEntityBatchExporterConstants.
-							DISPATCH_TRIGGER_NAME_DXP_ENTITIES);
+							DISPATCH_TRIGGER_NAME_ORDER);
 				}
 
-				if (!refreshDispatchTriggerNames.isEmpty()) {
-					_analyticsDXPEntityBatchExporter.refreshExportTriggers(
-						companyId,
-						refreshDispatchTriggerNames.toArray(new String[0]));
+				if (_analyticsSettingsManager.syncedProductFieldsChanged(
+						companyId)) {
 
-					if (FeatureFlagManagerUtil.isEnabled("LRAC-10632") &&
-						FeatureFlagManagerUtil.isEnabled("LRAC-10757")) {
-
-						_analyticsDXPEntityBatchExporter.export(
-							companyId,
-							new String[] {
-								AnalyticsDXPEntityBatchExporterConstants.
-									DISPATCH_TRIGGER_NAME_DXP_ENTITIES
-							});
-					}
-				}
-
-				if (!unscheduleDispatchTriggerNames.isEmpty()) {
-					_analyticsDXPEntityBatchExporter.unscheduleExportTriggers(
-						companyId,
-						unscheduleDispatchTriggerNames.toArray(new String[0]));
-				}
-
-				if (FeatureFlagManagerUtil.isEnabled("LRAC-10632")) {
-					return;
+					refreshDispatchTriggerNames.add(
+						AnalyticsDXPEntityBatchExporterConstants.
+							DISPATCH_TRIGGER_NAME_PRODUCT);
 				}
 			}
 
-			String[] previousSyncedContactFieldNames =
-				GetterUtil.getStringValues(
-					dictionary.get("previousSyncedContactFieldNames"));
+			if ((_analyticsSettingsManager.syncedAccountSettingsChanged(
+					companyId) &&
+				  _analyticsSettingsManager.syncedAccountSettingsEnabled(
+					  companyId)) ||
+				 (_analyticsSettingsManager.syncedAccountSettingsEnabled(
+					 companyId) &&
+				  _analyticsSettingsManager.syncedAccountFieldsChanged(
+					  companyId)) ||
+				 (_analyticsSettingsManager.syncedContactSettingsChanged(
+					 companyId) &&
+				  _analyticsSettingsManager.syncedContactSettingsEnabled(
+					  companyId)) ||
+				 (_analyticsSettingsManager.syncedContactSettingsEnabled(
+					 companyId) &&
+				  _analyticsSettingsManager.syncedUserFieldsChanged(
+					  companyId))) {
 
-			Arrays.sort(previousSyncedContactFieldNames);
-
-			String[] previousSyncedUserFieldNames = GetterUtil.getStringValues(
-				dictionary.get("previousSyncedUserFieldNames"));
-
-			Arrays.sort(previousSyncedUserFieldNames);
-
-			String[] syncedContactFieldNames = GetterUtil.getStringValues(
-				dictionary.get("syncedContactFieldNames"));
-
-			Arrays.sort(syncedContactFieldNames);
-
-			String[] syncedUserFieldNames = GetterUtil.getStringValues(
-				dictionary.get("syncedUserFieldNames"));
-
-			Arrays.sort(syncedUserFieldNames);
-
-			if (!Arrays.equals(
-					previousSyncedUserFieldNames, syncedUserFieldNames)) {
-
-				_syncUserCustomFields(companyId, syncedUserFieldNames);
+				refreshDispatchTriggerNames.add(
+					AnalyticsDXPEntityBatchExporterConstants.
+						DISPATCH_TRIGGER_NAME_DXP_ENTITIES);
 			}
 
-			if (!Arrays.equals(
-					previousSyncedContactFieldNames, syncedContactFieldNames) ||
-				!Arrays.equals(
-					previousSyncedUserFieldNames, syncedUserFieldNames)) {
-
-				_syncDefaultFields(
-					companyId, syncedContactFieldNames, syncedUserFieldNames);
-			}
-
-			if (GetterUtil.getBoolean(dictionary.get("syncAllContacts"))) {
-				if (!GetterUtil.getBoolean(
-						dictionary.get("previousSyncAllContacts")) ||
-					!Arrays.equals(
-						previousSyncedContactFieldNames,
-						syncedContactFieldNames) ||
-					!Arrays.equals(
-						previousSyncedUserFieldNames, syncedUserFieldNames)) {
-
-					_syncContacts(companyId);
-				}
-			}
-			else {
-				_syncOrganizationUsers(
+			if (!refreshDispatchTriggerNames.isEmpty()) {
+				_analyticsDXPEntityBatchExporter.refreshExportTriggers(
 					companyId,
-					(String[])dictionary.get("syncedOrganizationIds"));
-				_syncUserGroupUsers(
-					companyId, (String[])dictionary.get("syncedUserGroupIds"));
+					refreshDispatchTriggerNames.toArray(new String[0]));
+
+				_analyticsDXPEntityBatchExporter.export(
+					companyId,
+					new String[] {
+						AnalyticsDXPEntityBatchExporterConstants.
+							DISPATCH_TRIGGER_NAME_DXP_ENTITIES
+					});
 			}
 
-			Message message = new Message();
-
-			message.put("command", AnalyticsMessagesProcessorCommand.SEND);
-			message.put("companyId", dictionary.get("companyId"));
-			message.put("principalName", _getAnalyticsAdminUserId(companyId));
-
-			if (_log.isInfoEnabled()) {
-				_log.info("Queueing send analytics messages message");
+			if (!unscheduleDispatchTriggerNames.isEmpty()) {
+				_analyticsDXPEntityBatchExporter.unscheduleExportTriggers(
+					companyId,
+					unscheduleDispatchTriggerNames.toArray(new String[0]));
 			}
-
-			TransactionCommitCallbackUtil.registerCallback(
-				() -> {
-					_messageBus.sendMessage(
-						AnalyticsMessagesDestinationNames.
-							ANALYTICS_MESSAGES_PROCESSOR,
-						message);
-
-					return null;
-				});
 		}
 		catch (Exception exception) {
 			_log.error(exception);
-		}
-	}
-
-	private void _syncContacts(long companyId) {
-		int count = _userLocalService.getCompanyUsersCount(companyId);
-
-		int pages = count / _DEFAULT_DELTA;
-
-		for (int i = 0; i <= pages; i++) {
-			int start = i * _DEFAULT_DELTA;
-
-			int end = start + _DEFAULT_DELTA;
-
-			if (end > count) {
-				end = count;
-			}
-
-			List<User> users = _userLocalService.getCompanyUsers(
-				companyId, start, end);
-
-			_addUsersAnalyticsMessages(companyId, users);
-		}
-	}
-
-	private void _syncDefaultFields(
-		long companyId, String[] syncedContactFieldNames,
-		String[] syncedUserFieldNames) {
-
-		for (Map.Entry<String, String> entry : _defaultFieldNames.entrySet()) {
-			String fieldName = entry.getKey();
-
-			if (!ArrayUtil.contains(syncedContactFieldNames, fieldName) &&
-				!ArrayUtil.contains(syncedUserFieldNames, fieldName)) {
-
-				continue;
-			}
-
-			JSONObject jsonObject = JSONUtil.put(
-				"className", User.class.getName()
-			).put(
-				"companyId", companyId
-			).put(
-				"dataType", entry.getValue()
-			).put(
-				"name", fieldName
-			);
-
-			try {
-				AnalyticsMessage.Builder analyticsMessageBuilder =
-					AnalyticsMessage.builder(User.class.getName() + ".field");
-
-				analyticsMessageBuilder.action("add");
-				analyticsMessageBuilder.object(jsonObject);
-
-				String analyticsMessageJSON =
-					analyticsMessageBuilder.buildJSONString();
-
-				_analyticsMessageLocalService.addAnalyticsMessage(
-					companyId, _userLocalService.getGuestUserId(companyId),
-					analyticsMessageJSON.getBytes(Charset.defaultCharset()));
-			}
-			catch (Exception exception) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to add analytics message " +
-							jsonObject.toString(),
-						exception);
-				}
-			}
-		}
-	}
-
-	private void _syncOrganizationUsers(
-		long companyId, String[] organizationIds) {
-
-		for (String organizationId : organizationIds) {
-			int count = _userLocalService.getOrganizationUsersCount(
-				GetterUtil.getLong(organizationId));
-
-			int pages = count / _DEFAULT_DELTA;
-
-			for (int i = 0; i <= pages; i++) {
-				int start = i * _DEFAULT_DELTA;
-
-				int end = start + _DEFAULT_DELTA;
-
-				if (end > count) {
-					end = count;
-				}
-
-				try {
-					List<User> users = _userLocalService.getOrganizationUsers(
-						GetterUtil.getLong(organizationId), start, end);
-
-					_addUsersAnalyticsMessages(companyId, users);
-				}
-				catch (Exception exception) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to get organization users for " +
-								"organization " + organizationId,
-							exception);
-					}
-				}
-			}
-		}
-	}
-
-	private void _syncUserCustomFields(
-		long companyId, String[] syncedUserFieldNames) {
-
-		List<ExpandoColumn> expandoColumns = new ArrayList<>();
-
-		List<ExpandoColumn> defaultTableColumns =
-			_expandoColumnLocalService.getDefaultTableColumns(
-				companyId, User.class.getName());
-
-		for (ExpandoColumn defaultTableColumn : defaultTableColumns) {
-			if (ArrayUtil.contains(
-					syncedUserFieldNames, defaultTableColumn.getName())) {
-
-				expandoColumns.add(defaultTableColumn);
-			}
-		}
-
-		if (!expandoColumns.isEmpty()) {
-			_addAnalyticsMessages("add", expandoColumns, companyId);
-		}
-	}
-
-	private void _syncUserGroupUsers(long companyId, String[] userGroupIds) {
-		for (String userGroupId : userGroupIds) {
-			int count = _userLocalService.getUserGroupUsersCount(
-				GetterUtil.getLong(userGroupId));
-
-			int pages = count / _DEFAULT_DELTA;
-
-			for (int i = 0; i <= pages; i++) {
-				int start = i * _DEFAULT_DELTA;
-
-				int end = start + _DEFAULT_DELTA;
-
-				if (end > count) {
-					end = count;
-				}
-
-				List<User> users = _userLocalService.getUserGroupUsers(
-					GetterUtil.getLong(userGroupId), start, end);
-
-				_addUsersAnalyticsMessages(companyId, users);
-			}
 		}
 	}
 
@@ -918,8 +510,6 @@ public class AnalyticsConfigurationRegistryImpl
 		}
 	}
 
-	private static final int _DEFAULT_DELTA = 500;
-
 	private static final String[] _SAP_ENTRY_OBJECT = {
 		AnalyticsSecurityConstants.SERVICE_ACCESS_POLICY_NAME,
 		StringBundler.concat(
@@ -934,102 +524,12 @@ public class AnalyticsConfigurationRegistryImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		AnalyticsConfigurationRegistryImpl.class);
 
-	private static final Map<String, String> _defaultFieldNames =
-		HashMapBuilder.put(
-			"agreedToTermsOfUse", "boolean"
-		).put(
-			"birthday", "date"
-		).put(
-			"classNameId", "Integer"
-		).put(
-			"classPK", "Integer"
-		).put(
-			"comments", "Text"
-		).put(
-			"companyId", "Integer"
-		).put(
-			"contactId", "Integer"
-		).put(
-			"createDate", "date"
-		).put(
-			"emailAddress", "Text"
-		).put(
-			"emailAddressVerified", "boolean"
-		).put(
-			"employeeNumber", "Text"
-		).put(
-			"employeeStatusId", "Text"
-		).put(
-			"externalReferenceCode", "Text"
-		).put(
-			"facebookId", "Integer"
-		).put(
-			"facebookSn", "Text"
-		).put(
-			"firstName", "Text"
-		).put(
-			"googleUserId", "Text"
-		).put(
-			"greeting", "Text"
-		).put(
-			"hoursOfOperation", "Text"
-		).put(
-			"jabberSn", "Text"
-		).put(
-			"jobClass", "Text"
-		).put(
-			"jobTitle", "Text"
-		).put(
-			"languageId", "Text"
-		).put(
-			"lastName", "Text"
-		).put(
-			"ldapServerId", "Integer"
-		).put(
-			"male", "boolean"
-		).put(
-			"middleName", "Text"
-		).put(
-			"modifiedDate", "date"
-		).put(
-			"openId", "Text"
-		).put(
-			"parentContactId", "Integer"
-		).put(
-			"portraitId", "Integer"
-		).put(
-			"prefixListTypeId", "Integer"
-		).put(
-			"screenName", "Text"
-		).put(
-			"skypeSn", "Text"
-		).put(
-			"smsSn", "Text"
-		).put(
-			"status", "Integer"
-		).put(
-			"suffixListTypeId", "Integer"
-		).put(
-			"timeZoneId", "Text"
-		).put(
-			"twitterSn", "Text"
-		).put(
-			"userId", "Integer"
-		).put(
-			"userName", "Text"
-		).put(
-			"uuid", "Text"
-		).build();
-
 	private boolean _active;
 	private final Map<Long, AnalyticsConfiguration> _analyticsConfigurations =
 		new ConcurrentHashMap<>();
 
 	@Reference
 	private AnalyticsDXPEntityBatchExporter _analyticsDXPEntityBatchExporter;
-
-	@Reference
-	private AnalyticsMessageLocalService _analyticsMessageLocalService;
 
 	@Reference
 	private AnalyticsSettingsManager _analyticsSettingsManager;
@@ -1042,13 +542,7 @@ public class AnalyticsConfigurationRegistryImpl
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
 
-	@Reference
-	private ExpandoColumnLocalService _expandoColumnLocalService;
-
 	private final Set<Long> _initializedCompanyIds = new HashSet<>();
-
-	@Reference
-	private MessageBus _messageBus;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

@@ -545,9 +545,15 @@ definition {
 	macro unschedulePublication(publicationName = null) {
 		PublicationsNavigator.openPublicationsScheduled();
 
-		PublicationsNavigator.gotoPublicationEllipsisItem(
-			menuItem = "Unschedule",
-			publicationName = ${publicationName});
+		Click(
+			key_publicationName = ${publicationName},
+			locator1 = "Publications#PUBLICATION_ELLIPSIS");
+
+		ClickNoError(
+			key_menuItem = "Unschedule",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
+
+		AssertConfirm(value1 = "Are you sure you want to unschedule this publication?");
 	}
 
 	@summary = "Default summary"

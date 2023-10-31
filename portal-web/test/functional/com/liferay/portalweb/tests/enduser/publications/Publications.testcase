@@ -1924,8 +1924,8 @@ definition {
 		Publications.unschedulePublication(publicationName = "Publication Name");
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "Message#EMPTY_INFO",
-			value1 = "No publication has been scheduled yet.");
+			locator1 = "Message#EMPTY_STATE_TEXT",
+			value1 = "Sorry, no results were found.");
 	}
 
 	@priority = 5

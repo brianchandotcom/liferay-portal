@@ -178,6 +178,7 @@ public abstract class BaseProductOptionValueResourceTestCase {
 		ProductOptionValue productOptionValue = randomProductOptionValue();
 
 		productOptionValue.setKey(regex);
+		productOptionValue.setUnitOfMeasureKey(regex);
 
 		String json = ProductOptionValueSerDes.toJSON(productOptionValue);
 
@@ -186,6 +187,7 @@ public abstract class BaseProductOptionValueResourceTestCase {
 		productOptionValue = ProductOptionValueSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, productOptionValue.getKey());
+		Assert.assertEquals(regex, productOptionValue.getUnitOfMeasureKey());
 	}
 
 	@Test
@@ -807,6 +809,14 @@ public abstract class BaseProductOptionValueResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("deltaPrice", additionalAssertFieldName)) {
+				if (productOptionValue.getDeltaPrice() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("key", additionalAssertFieldName)) {
 				if (productOptionValue.getKey() == null) {
 					valid = false;
@@ -823,8 +833,40 @@ public abstract class BaseProductOptionValueResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("preselected", additionalAssertFieldName)) {
+				if (productOptionValue.getPreselected() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("priority", additionalAssertFieldName)) {
 				if (productOptionValue.getPriority() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("quantity", additionalAssertFieldName)) {
+				if (productOptionValue.getQuantity() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("skuId", additionalAssertFieldName)) {
+				if (productOptionValue.getSkuId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("unitOfMeasureKey", additionalAssertFieldName)) {
+				if (productOptionValue.getUnitOfMeasureKey() == null) {
 					valid = false;
 				}
 
@@ -952,6 +994,17 @@ public abstract class BaseProductOptionValueResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("deltaPrice", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						productOptionValue1.getDeltaPrice(),
+						productOptionValue2.getDeltaPrice())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("id", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						productOptionValue1.getId(),
@@ -985,10 +1038,54 @@ public abstract class BaseProductOptionValueResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("preselected", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						productOptionValue1.getPreselected(),
+						productOptionValue2.getPreselected())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("priority", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						productOptionValue1.getPriority(),
 						productOptionValue2.getPriority())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("quantity", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						productOptionValue1.getQuantity(),
+						productOptionValue2.getQuantity())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("skuId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						productOptionValue1.getSkuId(),
+						productOptionValue2.getSkuId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("unitOfMeasureKey", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						productOptionValue1.getUnitOfMeasureKey(),
+						productOptionValue2.getUnitOfMeasureKey())) {
 
 					return false;
 				}
@@ -1100,6 +1197,11 @@ public abstract class BaseProductOptionValueResourceTestCase {
 		sb.append(operator);
 		sb.append(" ");
 
+		if (entityFieldName.equals("deltaPrice")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1156,8 +1258,69 @@ public abstract class BaseProductOptionValueResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("preselected")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("priority")) {
 			sb.append(String.valueOf(productOptionValue.getPriority()));
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("quantity")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("skuId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("unitOfMeasureKey")) {
+			Object object = productOptionValue.getUnitOfMeasureKey();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -1208,7 +1371,11 @@ public abstract class BaseProductOptionValueResourceTestCase {
 			{
 				id = RandomTestUtil.randomLong();
 				key = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				preselected = RandomTestUtil.randomBoolean();
 				priority = RandomTestUtil.randomDouble();
+				skuId = RandomTestUtil.randomLong();
+				unitOfMeasureKey = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 			}
 		};
 	}

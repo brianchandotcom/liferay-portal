@@ -5,6 +5,7 @@
 
 package com.liferay.headless.commerce.admin.catalog.client.serdes.v1_0;
 
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.CustomField;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Option;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.OptionValue;
 import com.liferay.headless.commerce.admin.catalog.client.json.BaseJSONParser;
@@ -63,6 +64,26 @@ public class OptionSerDes {
 			sb.append("\"catalogId\": ");
 
 			sb.append(option.getCatalogId());
+		}
+
+		if (option.getCustomFields() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"customFields\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < option.getCustomFields().length; i++) {
+				sb.append(String.valueOf(option.getCustomFields()[i]));
+
+				if ((i + 1) < option.getCustomFields().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (option.getDescription() != null) {
@@ -229,6 +250,13 @@ public class OptionSerDes {
 			map.put("catalogId", String.valueOf(option.getCatalogId()));
 		}
 
+		if (option.getCustomFields() == null) {
+			map.put("customFields", null);
+		}
+		else {
+			map.put("customFields", String.valueOf(option.getCustomFields()));
+		}
+
 		if (option.getDescription() == null) {
 			map.put("description", null);
 		}
@@ -339,6 +367,22 @@ public class OptionSerDes {
 				if (jsonParserFieldValue != null) {
 					option.setCatalogId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "customFields")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					CustomField[] customFieldsArray =
+						new CustomField[jsonParserFieldValues.length];
+
+					for (int i = 0; i < customFieldsArray.length; i++) {
+						customFieldsArray[i] = CustomFieldSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					option.setCustomFields(customFieldsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "description")) {

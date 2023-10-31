@@ -47,6 +47,48 @@ public class ProductOption implements Cloneable, Serializable {
 
 	protected Long catalogId;
 
+	public CustomField[] getCustomFields() {
+		return customFields;
+	}
+
+	public void setCustomFields(CustomField[] customFields) {
+		this.customFields = customFields;
+	}
+
+	public void setCustomFields(
+		UnsafeSupplier<CustomField[], Exception> customFieldsUnsafeSupplier) {
+
+		try {
+			customFields = customFieldsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected CustomField[] customFields;
+
+	public Boolean getDefinedExternally() {
+		return definedExternally;
+	}
+
+	public void setDefinedExternally(Boolean definedExternally) {
+		this.definedExternally = definedExternally;
+	}
+
+	public void setDefinedExternally(
+		UnsafeSupplier<Boolean, Exception> definedExternallyUnsafeSupplier) {
+
+		try {
+			definedExternally = definedExternallyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean definedExternally;
+
 	public Map<String, String> getDescription() {
 		return description;
 	}
@@ -130,6 +172,27 @@ public class ProductOption implements Cloneable, Serializable {
 
 	protected Long id;
 
+	public String getInfoItemServiceKey() {
+		return infoItemServiceKey;
+	}
+
+	public void setInfoItemServiceKey(String infoItemServiceKey) {
+		this.infoItemServiceKey = infoItemServiceKey;
+	}
+
+	public void setInfoItemServiceKey(
+		UnsafeSupplier<String, Exception> infoItemServiceKeyUnsafeSupplier) {
+
+		try {
+			infoItemServiceKey = infoItemServiceKeyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String infoItemServiceKey;
+
 	public String getKey() {
 		return key;
 	}
@@ -190,6 +253,27 @@ public class ProductOption implements Cloneable, Serializable {
 	}
 
 	protected Long optionId;
+
+	public String getPriceType() {
+		return priceType;
+	}
+
+	public void setPriceType(String priceType) {
+		this.priceType = priceType;
+	}
+
+	public void setPriceType(
+		UnsafeSupplier<String, Exception> priceTypeUnsafeSupplier) {
+
+		try {
+			priceType = priceTypeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String priceType;
 
 	public Double getPriority() {
 		return priority;
@@ -277,6 +361,27 @@ public class ProductOption implements Cloneable, Serializable {
 	}
 
 	protected Boolean skuContributor;
+
+	public String getTypeSettings() {
+		return typeSettings;
+	}
+
+	public void setTypeSettings(String typeSettings) {
+		this.typeSettings = typeSettings;
+	}
+
+	public void setTypeSettings(
+		UnsafeSupplier<String, Exception> typeSettingsUnsafeSupplier) {
+
+		try {
+			typeSettings = typeSettingsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String typeSettings;
 
 	@Override
 	public ProductOption clone() throws CloneNotSupportedException {

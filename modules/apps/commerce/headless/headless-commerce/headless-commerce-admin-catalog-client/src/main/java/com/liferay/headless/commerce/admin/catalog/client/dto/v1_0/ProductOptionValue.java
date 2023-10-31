@@ -10,6 +10,8 @@ import com.liferay.headless.commerce.admin.catalog.client.serdes.v1_0.ProductOpt
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
 import java.util.Map;
 import java.util.Objects;
 
@@ -25,6 +27,27 @@ public class ProductOptionValue implements Cloneable, Serializable {
 	public static ProductOptionValue toDTO(String json) {
 		return ProductOptionValueSerDes.toDTO(json);
 	}
+
+	public BigDecimal getDeltaPrice() {
+		return deltaPrice;
+	}
+
+	public void setDeltaPrice(BigDecimal deltaPrice) {
+		this.deltaPrice = deltaPrice;
+	}
+
+	public void setDeltaPrice(
+		UnsafeSupplier<BigDecimal, Exception> deltaPriceUnsafeSupplier) {
+
+		try {
+			deltaPrice = deltaPriceUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected BigDecimal deltaPrice;
 
 	public Long getId() {
 		return id;
@@ -85,6 +108,27 @@ public class ProductOptionValue implements Cloneable, Serializable {
 
 	protected Map<String, String> name;
 
+	public Boolean getPreselected() {
+		return preselected;
+	}
+
+	public void setPreselected(Boolean preselected) {
+		this.preselected = preselected;
+	}
+
+	public void setPreselected(
+		UnsafeSupplier<Boolean, Exception> preselectedUnsafeSupplier) {
+
+		try {
+			preselected = preselectedUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean preselected;
+
 	public Double getPriority() {
 		return priority;
 	}
@@ -105,6 +149,67 @@ public class ProductOptionValue implements Cloneable, Serializable {
 	}
 
 	protected Double priority;
+
+	public BigDecimal getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(BigDecimal quantity) {
+		this.quantity = quantity;
+	}
+
+	public void setQuantity(
+		UnsafeSupplier<BigDecimal, Exception> quantityUnsafeSupplier) {
+
+		try {
+			quantity = quantityUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected BigDecimal quantity;
+
+	public Long getSkuId() {
+		return skuId;
+	}
+
+	public void setSkuId(Long skuId) {
+		this.skuId = skuId;
+	}
+
+	public void setSkuId(UnsafeSupplier<Long, Exception> skuIdUnsafeSupplier) {
+		try {
+			skuId = skuIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long skuId;
+
+	public String getUnitOfMeasureKey() {
+		return unitOfMeasureKey;
+	}
+
+	public void setUnitOfMeasureKey(String unitOfMeasureKey) {
+		this.unitOfMeasureKey = unitOfMeasureKey;
+	}
+
+	public void setUnitOfMeasureKey(
+		UnsafeSupplier<String, Exception> unitOfMeasureKeyUnsafeSupplier) {
+
+		try {
+			unitOfMeasureKey = unitOfMeasureKeyUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String unitOfMeasureKey;
 
 	@Override
 	public ProductOptionValue clone() throws CloneNotSupportedException {

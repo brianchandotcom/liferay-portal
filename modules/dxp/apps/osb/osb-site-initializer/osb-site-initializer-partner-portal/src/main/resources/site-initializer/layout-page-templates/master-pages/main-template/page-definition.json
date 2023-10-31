@@ -1421,19 +1421,19 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"ar_SA": "Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
-																		"ca_ES": "Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
-																		"de_DE": "Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
-																		"en_US": "Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
-																		"es_ES": "Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
-																		"fi_FI": "Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
-																		"fr_FR": "Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
-																		"hu_HU": "Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
-																		"ja_JP": "Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
-																		"nl_NL": "Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
-																		"pt_BR": "Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
-																		"sv_SE": "Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
-																		"zh_CN": "Contact your Channel Account Manager<br />\nor email the Liferay Channel team:"
+																		"ar_SA": "<b>Any Questions?</b> <br />Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
+																		"ca_ES": "<b>Any Questions?</b> <br />Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
+																		"de_DE": "<b>Any Questions?</b> <br />Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
+																		"en_US": "<b>Any Questions?</b> <br />Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
+																		"es_ES": "<b>Any Questions?</b> <br />Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
+																		"fi_FI": "<b>Any Questions?</b> <br />Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
+																		"fr_FR": "<b>Any Questions?</b> <br />Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
+																		"hu_HU": "<b>Any Questions?</b> <br />Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
+																		"ja_JP": "<b>Any Questions?</b> <br />Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
+																		"nl_NL": "<b>Any Questions?</b> <br />Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
+																		"pt_BR": "<b>Any Questions?</b> <br />Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
+																		"sv_SE": "<b>Any Questions?</b> <br />Contact your Channel Account Manager<br />\nor email the Liferay Channel team:",
+																		"zh_CN": "<b>Any Questions?</b> <br />Contact your Channel Account Manager<br />\nor email the Liferay Channel team:"
 																	}
 																}
 															}
@@ -1462,19 +1462,104 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"ar_SA": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
-																		"ca_ES": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
-																		"de_DE": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
-																		"en_US": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
-																		"es_ES": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
-																		"fi_FI": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
-																		"fr_FR": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
-																		"hu_HU": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
-																		"ja_JP": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
-																		"nl_NL": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
-																		"pt_BR": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
-																		"sv_SE": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
-																		"zh_CN": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>"
+																		"ar_SA": "Portal questions? <br />Please contact Partner Operations - <a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
+																		"ca_ES": "Portal questions? <br />Please contact Partner Operations - <a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
+																		"de_DE": "Portal questions? <br />Please contact Partner Operations - <a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
+																		"en_US": "Portal questions? <br />Please contact Partner Operations - <a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
+																		"es_ES": "Portal questions? <br />Please contact Partner Operations - <a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
+																		"fi_FI": "Portal questions? <br />Please contact Partner Operations - <a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
+																		"fr_FR": "Portal questions? <br />Please contact Partner Operations - <a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
+																		"hu_HU": "Portal questions? <br />Please contact Partner Operations - <a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
+																		"ja_JP": "Portal questions? <br />Please contact Partner Operations - <a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
+																		"nl_NL": "Portal questions? <br />Please contact Partner Operations - <a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
+																		"pt_BR": "Portal questions? <br />Please contact Partner Operations - <a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
+																		"sv_SE": "Portal questions? <br />Please contact Partner Operations - <a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
+																		"zh_CN": "Portal questions? <br />Please contact Partner Operations - <a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "2",
+														"textAlign": ""
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-paragraph"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"ar_SA": "Marketing questions? <br />Please contact - Marketing Operations - <a href=\"partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
+																		"ca_ES": "Marketing questions? <br />Please contact - Marketing Operations - <a href=\"partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
+																		"de_DE": "Marketing questions? <br />Please contact - Marketing Operations - <a href=\"partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
+																		"en_US": "Marketing questions? <br />Please contact - Marketing Operations - <a href=\"partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
+																		"es_ES": "Marketing questions? <br />Please contact - Marketing Operations - <a href=\"partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
+																		"fi_FI": "Marketing questions? <br />Please contact - Marketing Operations - <a href=\"partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
+																		"fr_FR": "Marketing questions? <br />Please contact - Marketing Operations - <a href=\"partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
+																		"hu_HU": "Marketing questions? <br />Please contact - Marketing Operations - <a href=\"partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
+																		"ja_JP": "Marketing questions? <br />Please contact - Marketing Operations - <a href=\"partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
+																		"nl_NL": "Marketing questions? <br />Please contact - Marketing Operations - <a href=\"partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
+																		"pt_BR": "Marketing questions? <br />Please contact - Marketing Operations - <a href=\"partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
+																		"sv_SE": "Marketing questions? <br />Please contact - Marketing Operations - <a href=\"partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
+																		"zh_CN": "Marketing questions? <br />Please contact - Marketing Operations - <a href=\"partner-marketing@liferay.com\">partner-marketing@liferay.com</a>"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"backgroundColor": "",
+														"borderColor": "",
+														"marginBottom": "2",
+														"textAlign": "",
+														"textColor": ""
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-paragraph"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {
+																},
+																"text": {
+																	"value_i18n": {
+																		"ar_SA": "<b>Additional questions:</b>",
+																		"ca_ES": "<b>Additional questions:</b>",
+																		"de_DE": "<b>Additional questions:</b>",
+																		"en_US": "<b>Additional questions:</b>",
+																		"es_ES": "<b>Additional questions:</b>",
+																		"fi_FI": "<b>Additional questions:</b>",
+																		"fr_FR": "<b>Additional questions:</b>",
+																		"hu_HU": "<b>Additional questions:</b>",
+																		"ja_JP": "<b>Additional questions:</b>",
+																		"nl_NL": "<b>Additional questions:</b>",
+																		"pt_BR": "<b>Additional questions:</b>",
+																		"sv_SE": "<b>Additional questions:</b>",
+																		"zh_CN": "<b>Additional questions:</b>"
 																	}
 																}
 															}
@@ -1522,50 +1607,6 @@
 														}
 													],
 													"fragmentStyle": {
-														"backgroundColor": "",
-														"borderColor": "",
-														"marginBottom": "2",
-														"textAlign": "",
-														"textColor": ""
-													},
-													"indexed": true
-												},
-												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragment": {
-														"key": "BASIC_COMPONENT-paragraph"
-													},
-													"fragmentConfig": {
-													},
-													"fragmentFields": [
-														{
-															"id": "element-text",
-															"value": {
-																"fragmentLink": {
-																},
-																"text": {
-																	"value_i18n": {
-																		"ar_SA": "<a href=\"mailto:partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
-																		"ca_ES": "<a href=\"mailto:partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
-																		"de_DE": "<a href=\"mailto:partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
-																		"en_US": "<a href=\"mailto:partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
-																		"es_ES": "<a href=\"mailto:partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
-																		"fi_FI": "<a href=\"mailto:partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
-																		"fr_FR": "<a href=\"mailto:partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
-																		"hu_HU": "<a href=\"mailto:partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
-																		"ja_JP": "<a href=\"mailto:partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
-																		"nl_NL": "<a href=\"mailto:partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
-																		"pt_BR": "<a href=\"mailto:partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
-																		"sv_SE": "<a href=\"mailto:partner-marketing@liferay.com\">partner-marketing@liferay.com</a>",
-																		"zh_CN": "<a href=\"mailto:partner-marketing@liferay.com\">partner-marketing@liferay.com</a>"
-																	}
-																}
-															}
-														}
-													],
-													"fragmentStyle": {
 														"marginBottom": "2",
 														"textAlign": ""
 													},
@@ -1588,60 +1629,19 @@
 																},
 																"text": {
 																	"value_i18n": {
-																		"ar_SA": "<a href=\"mailto:sales-engineering-channels@liferay.com\">sales-engineering-channels@liferay.com</a>",
-																		"ca_ES": "<a href=\"mailto:sales-engineering-channels@liferay.com\">sales-engineering-channels@liferay.com</a>",
-																		"de_DE": "<a href=\"mailto:sales-engineering-channels@liferay.com\">sales-engineering-channels@liferay.com</a>",
-																		"en_US": "<a href=\"mailto:sales-engineering-channels@liferay.com\">sales-engineering-channels@liferay.com</a>",
-																		"es_ES": "<a href=\"mailto:sales-engineering-channels@liferay.com\">sales-engineering-channels@liferay.com</a>",
-																		"fi_FI": "<a href=\"mailto:sales-engineering-channels@liferay.com\">sales-engineering-channels@liferay.com</a>",
-																		"fr_FR": "<a href=\"mailto:sales-engineering-channels@liferay.com\">sales-engineering-channels@liferay.com</a>",
-																		"hu_HU": "<a href=\"mailto:sales-engineering-channels@liferay.com\">sales-engineering-channels@liferay.com</a>",
-																		"ja_JP": "<a href=\"mailto:sales-engineering-channels@liferay.com\">sales-engineering-channels@liferay.com</a>",
-																		"nl_NL": "<a href=\"mailto:sales-engineering-channels@liferay.com\">sales-engineering-channels@liferay.com</a>",
-																		"pt_BR": "<a href=\"mailto:sales-engineering-channels@liferay.com\">sales-engineering-channels@liferay.com</a>",
-																		"sv_SE": "<a href=\"mailto:sales-engineering-channels@liferay.com\">sales-engineering-channels@liferay.com</a>",
-																		"zh_CN": "<a href=\"mailto:sales-engineering-channels@liferay.com\">sales-engineering-channels@liferay.com</a>"
-																	}
-																}
-															}
-														}
-													],
-													"fragmentStyle": {
-														"marginBottom": "2",
-														"textAlign": ""
-													},
-													"indexed": true
-												},
-												"type": "Fragment"
-											},
-											{
-												"definition": {
-													"fragment": {
-														"key": "BASIC_COMPONENT-paragraph"
-													},
-													"fragmentConfig": {
-													},
-													"fragmentFields": [
-														{
-															"id": "element-text",
-															"value": {
-																"fragmentLink": {
-																},
-																"text": {
-																	"value_i18n": {
-																		"ar_SA": "<a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
-																		"ca_ES": "<a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
-																		"de_DE": "<a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
-																		"en_US": "<a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
-																		"es_ES": "<a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
-																		"fi_FI": "<a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
-																		"fr_FR": "<a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
-																		"hu_HU": "<a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
-																		"ja_JP": "<a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
-																		"nl_NL": "<a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
-																		"pt_BR": "<a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
-																		"sv_SE": "<a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>",
-																		"zh_CN": "<a href=\"mailto:partner-operations@liferay.com\">partner-operations@liferay.com</a>"
+																		"ar_SA": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
+																		"ca_ES": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
+																		"de_DE": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
+																		"en_US": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
+																		"es_ES": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
+																		"fi_FI": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
+																		"fr_FR": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
+																		"hu_HU": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
+																		"ja_JP": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
+																		"nl_NL": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
+																		"pt_BR": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
+																		"sv_SE": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>",
+																		"zh_CN": "<a href=\"mailto:partner-sales@liferay.com\">partner-sales@liferay.com</a>"
 																	}
 																}
 															}

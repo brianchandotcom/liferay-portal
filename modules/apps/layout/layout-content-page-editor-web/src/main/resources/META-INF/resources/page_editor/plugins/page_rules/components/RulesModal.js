@@ -40,6 +40,7 @@ export default function RulesModal({editingRule, onCloseModal}) {
 
 	const [actions, setActions] = useState(editingRule?.actions || []);
 	const [conditions, setConditions] = useState(editingRule?.conditions || []);
+	const [conditionType, setConditionType] = useState('all');
 
 	const layoutDataItems = useMemo(() => {
 		const items = [];
@@ -160,7 +161,9 @@ export default function RulesModal({editingRule, onCloseModal}) {
 					role="group"
 				>
 					<RuleBuilderConditionSection
+						conditionType={conditionType}
 						conditions={conditions}
+						setConditionType={setConditionType}
 						setConditions={setConditions}
 					/>
 				</div>

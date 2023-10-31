@@ -49,6 +49,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectFieldModel;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.impl.ObjectDefinitionImpl;
@@ -1779,6 +1780,18 @@ public class ObjectDefinitionLocalServiceImpl
 			_objectFieldPersistence.findByObjectDefinitionId(
 				objectDefinition.getObjectDefinitionId());
 
+		if (!objectDefinition.isEnableLocalization() &&
+			ListUtil.exists(objectFields, ObjectFieldModel::isLocalized)) {
+
+			throw new ObjectDefinitionEnableLocalizationException(
+				"You cannot disable entry translation for the object " +
+					"definition because translation is enabled for custom " +
+						"fields",
+				"you-cannot-disable-entry-translation-for-the-object-" +
+					"definition-because-translation-is-enabled-for-custom-" +
+						"fields");
+		}
+
 		if (!ListUtil.exists(
 				objectFields, objectField -> !objectField.isMetadata())) {
 
@@ -1797,20 +1810,6 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 		objectDefinition = objectDefinitionPersistence.update(objectDefinition);
-
-		for (ObjectField objectField : objectFields) {
-			if (objectField.isLocalized() &&
-				!objectDefinition.isEnableLocalization()) {
-
-				throw new ObjectDefinitionEnableLocalizationException(
-					"You cannot disable entry translation for the object " +
-						"definition because translation is enabled for " +
-							"custom fields",
-					"you-cannot-disable-entry-translation-for-the-object-" +
-						"definition-because-translation-is-enabled-for-" +
-							"custom-fields");
-			}
-		}
 
 		_createLocalizationTable(objectDefinition);
 		_createTable(objectDefinition.getDBTableName(), objectDefinition);

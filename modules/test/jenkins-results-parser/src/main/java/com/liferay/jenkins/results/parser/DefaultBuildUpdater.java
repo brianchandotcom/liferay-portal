@@ -7,7 +7,9 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -164,20 +166,19 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 
 	protected boolean isBuildRunning() {
 		try {
-			JSONObject runningBuildJSONObject = _getRunningBuildJSONObject();
+			JSONObject buildJSONObject = _getBuildJSONObject();
 
-			if (runningBuildJSONObject == null) {
+			if (buildJSONObject == null) {
 				return false;
 			}
 
 			Build build = getBuild();
 
-			build.setBuildURL(runningBuildJSONObject.getString("url"));
+			build.setBuildURL(buildJSONObject.getString("url"));
 
 			Build.Invocation buildInvocation = build.getCurrentInvocation();
 
-			buildInvocation.setQueueId(
-				runningBuildJSONObject.getLong("queueId"));
+			buildInvocation.setQueueId(buildJSONObject.getLong("queueId"));
 
 			return true;
 		}
@@ -192,6 +193,37 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 		}
 
 		return false;
+	}
+
+	private JSONObject _getBuildJSONObject() {
+		Build build = getBuild();
+
+		Build.Invocation currentInvocation = build.getCurrentInvocation();
+
+		long currentQueueId = currentInvocation.getQueueId();
+
+		JenkinsMaster jenkinsMaster = currentInvocation.getJenkinsMaster();
+
+		List<JSONObject> buildJSONObjects = jenkinsMaster.getBuildJSONObjects(
+			build.getJobName());
+
+		for (JSONObject buildJSONObject : buildJSONObjects) {
+			if (currentQueueId > 0) {
+				if (Objects.equals(
+						buildJSONObject.getLong("queueId"), currentQueueId)) {
+
+					return buildJSONObject;
+				}
+
+				continue;
+			}
+
+			if (_matchesBuildParameters(_getBuildParameters(buildJSONObject))) {
+				return buildJSONObject;
+			}
+		}
+
+		return null;
 	}
 
 	private Map<String, String> _getBuildParameters(JSONObject jsonObject) {
@@ -245,17 +277,8 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 				return null;
 			}
 
-			JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
-				JenkinsResultsParserUtil.combine(
-					String.valueOf(jenkinsMaster.getURL()), "/queue/api/json?",
-					"tree=items[actions[parameters[name,value]],id,task[url]]"),
-				false);
-
-			JSONArray queueItemsJSONArray = jsonObject.getJSONArray("items");
-
-			if (queueItemsJSONArray == null) {
-				return null;
-			}
+			List<JSONObject> queueItemJSONObjects = new ArrayList<>(
+				jenkinsMaster.getQueueItemJSONObjects());
 
 			String jenkinsJobName = build.getJobName();
 
@@ -263,10 +286,7 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 
 			long currentQueueId = currentInvocation.getQueueId();
 
-			for (int i = 0; i < queueItemsJSONArray.length(); i++) {
-				JSONObject queueItemJSONObject =
-					queueItemsJSONArray.getJSONObject(i);
-
+			for (JSONObject queueItemJSONObject : queueItemJSONObjects) {
 				if (currentQueueId > 0) {
 					if (Objects.equals(
 							queueItemJSONObject.getLong("id"),
@@ -294,89 +314,11 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 				}
 			}
 		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 
 		return null;
-	}
-
-	private JSONObject _getRunningBuildJSONObject() {
-		Build build = getBuild();
-
-		Build.Invocation currentInvocation = build.getCurrentInvocation();
-
-		long currentQueueId = currentInvocation.getQueueId();
-
-		int page = 0;
-
-		while (true) {
-			JSONArray runningBuildsJSONArray = _getRunningBuildsJSONArray(page);
-
-			if (runningBuildsJSONArray.length() == 0) {
-				break;
-			}
-
-			for (int i = 0; i < runningBuildsJSONArray.length(); i++) {
-				JSONObject runningBuildJSONObject =
-					runningBuildsJSONArray.getJSONObject(i);
-
-				if (currentQueueId > 0) {
-					if (Objects.equals(
-							runningBuildJSONObject.getLong("queueId"),
-							currentQueueId)) {
-
-						return runningBuildJSONObject;
-					}
-
-					continue;
-				}
-
-				if (_matchesBuildParameters(
-						_getBuildParameters(runningBuildJSONObject))) {
-
-					return runningBuildJSONObject;
-				}
-			}
-
-			page++;
-		}
-
-		return null;
-	}
-
-	private JSONArray _getRunningBuildsJSONArray(final int page) {
-		Retryable<JSONArray> retryable = new Retryable<JSONArray>(
-			true, 2, 10, true) {
-
-			@Override
-			public JSONArray execute() {
-				Build build = getBuild();
-
-				JenkinsMaster jenkinsMaster = build.getJenkinsMaster();
-
-				String url = JenkinsResultsParserUtil.getLocalURL(
-					JenkinsResultsParserUtil.combine(
-						String.valueOf(jenkinsMaster.getURL()), "/job/",
-						build.getJobName(), "/api/json?tree=allBuilds[",
-						"actions[parameters[name,value]],queueId,url]{",
-						String.valueOf(page * 100), ",",
-						String.valueOf((page + 1) * 100), "}"));
-
-				try {
-					JSONObject jsonObject =
-						JenkinsResultsParserUtil.toJSONObject(url, false);
-
-					return jsonObject.getJSONArray("allBuilds");
-				}
-				catch (IOException ioException) {
-					throw new RuntimeException(ioException);
-				}
-			}
-
-		};
-
-		return retryable.executeWithRetries();
 	}
 
 	private Build.Invocation _invoke(JenkinsMaster jenkinsMaster) {
@@ -431,24 +373,6 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 				throw new RuntimeException(exception);
 			}
 		}
-	}
-
-	private boolean _isBuildCompleted(Build build) {
-		JSONObject buildJSONObject = build.getBuildJSONObject(
-			"duration,result");
-
-		if (buildJSONObject == null) {
-			return false;
-		}
-
-		long duration = buildJSONObject.optLong("duration");
-		String result = buildJSONObject.optString("result");
-
-		if ((duration == 0) || JenkinsResultsParserUtil.isNullOrEmpty(result)) {
-			return false;
-		}
-
-		return true;
 	}
 
 	private boolean _matchesBuildParameters(

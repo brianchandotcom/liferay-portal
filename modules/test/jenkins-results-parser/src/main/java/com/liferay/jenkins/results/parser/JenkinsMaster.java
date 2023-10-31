@@ -360,10 +360,6 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 				long queueUpdateDuration = currentTime - _queueUpdateTime;
 
 				if (queueUpdateDuration <= _MAXIMUM_QUEUE_UPDATE_DURATION) {
-					System.out.println(
-						"Returned " + _queueItemJSONObjects.size() +
-							" queue items");
-
 					return _queueItemJSONObjects;
 				}
 			}
@@ -395,9 +391,6 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 			catch (IOException ioException) {
 				throw new RuntimeException(ioException);
 			}
-
-			System.out.println(
-				"Retrieved " + _queueItemJSONObjects.size() + " queue items");
 
 			_queueUpdateTime = JenkinsResultsParserUtil.getCurrentTimeMillis();
 

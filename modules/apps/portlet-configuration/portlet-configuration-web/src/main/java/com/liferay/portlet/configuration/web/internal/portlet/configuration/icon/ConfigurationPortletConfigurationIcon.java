@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(service = PortletConfigurationIcon.class)
-public class BrowseConfigurationPortletConfigurationIcon
+public class ConfigurationPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
@@ -140,7 +140,7 @@ public class BrowseConfigurationPortletConfigurationIcon
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BrowseConfigurationPortletConfigurationIcon.class);
+		ConfigurationPortletConfigurationIcon.class);
 
 	@Reference
 	private Language _language;

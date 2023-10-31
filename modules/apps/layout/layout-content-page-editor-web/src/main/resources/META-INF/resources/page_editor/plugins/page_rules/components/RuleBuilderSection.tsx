@@ -7,7 +7,7 @@ import ClayButton from '@clayui/button';
 import {Option, Picker} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import ClayPanel from '@clayui/panel';
-import React, {useState} from 'react';
+import React from 'react';
 
 // @ts-ignore
 
@@ -110,17 +110,23 @@ export function RuleBuilderActionSection({
 	);
 }
 
+type ConditionType = 'all' | 'any';
+
 type RuleBuilderConditionProps = {
+	conditionType: ConditionType;
 	conditions: Condition[];
+	setConditionType: (
+		initializer: (previous: ConditionType) => ConditionType
+	) => {};
 	setConditions: (initializer: (previous: Condition[]) => Condition[]) => {};
 };
 
 export function RuleBuilderConditionSection({
+	conditionType,
 	conditions,
+	setConditionType,
 	setConditions,
 }: RuleBuilderConditionProps) {
-	const [selectedConditionType, setSelectedConditonType] = useState('all');
-
 	return (
 		<ClayPanel
 			className="page-editor__rule-builder-section"
@@ -149,10 +155,10 @@ export function RuleBuilderConditionSection({
 										value: 'all',
 									},
 								]}
-								onSelectionChange={(key: React.Key) =>
-									setSelectedConditonType(key as string)
+								onSelectionChange={(key: any) =>
+									setConditionType(key)
 								}
-								selectedKey={selectedConditionType}
+								selectedKey={conditionType}
 							>
 								{(item) => (
 									<Option key={item.value}>

@@ -1300,6 +1300,8 @@ definition {
 	@description = "This is a test for LPS-196044. View improvement in page audit when adding a Button fragment."
 	@priority = 3
 	test ViewImprovementWhenAddingAButtonFragment {
+		property custom.properties = "feature.flag.LPS-187284=true${line.separator}feature.flag.LPS-187285=true";
+
 		task ("Given a button fragment added in content page") {
 			task ("Add a Button fragment to content page") {
 				ContentPagesNavigator.openEditContentPage(
@@ -1357,6 +1359,8 @@ definition {
 	@description = "This is a test for LPS-196044. View improvement in page audit when adding an Image fragment."
 	@priority = 3
 	test ViewImprovementWhenAddingAnImageFragment {
+		property custom.properties = "feature.flag.LPS-187284=true${line.separator}feature.flag.LPS-187285=true";
+
 		task ("Given a button fragment and an image fragment added in content page") {
 			task ("Add a Button fragment to content page") {
 				ContentPagesNavigator.openEditContentPage(

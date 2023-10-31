@@ -22,8 +22,6 @@
 			</then>
 		</if>
 
-		<antcall target="record-test-generated-properties" />
-
 		<antcall inheritAll="false" target="setup-testable-tomcat" />
 
 		<antcall target="prepare-virtual-host-name-properties" />

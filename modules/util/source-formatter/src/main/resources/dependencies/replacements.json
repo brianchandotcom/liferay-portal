@@ -238,6 +238,32 @@
 			"DLAppLocalService",
 			"DLAppLocalServiceUtil"
 		],
+		"from": "updateFileEntry(long, long, String, String, String, String, String, boolean, byte[], ServiceContext)",
+		"issueKey": "LPS-194134",
+		"newImports": [
+			"com.liferay.document.library.kernel.model.DLVersionNumberIncrease",
+			"java.util.Date"
+		],
+		"to": "updateFileEntry(param#0#, param#1#, param#2#, param#3#, param#4#, null, param#5#, param#6#, dlVersionNumberIncrease, param#7#, null, null, param#8#, param#9#)"
+	},
+	{
+		"classNames": [
+			"DLAppLocalService",
+			"DLAppLocalServiceUtil"
+		],
+		"from": "updateFileEntry(long, long, String, String, String, String, String, DLVersionNumberIncrease, byte[], ServiceContext)",
+		"issueKey": "LPS-194134",
+		"newImports": [
+			"com.liferay.document.library.kernel.model.DLVersionNumberIncrease",
+			"java.util.Date"
+		],
+		"to": "updateFileEntry(param#0#, param#1#, param#2#, param#3#, param#4#, null, param#5#, param#6#, param#7#, param#8#, null, null, param#9#)"
+	},
+	{
+		"classNames": [
+			"DLAppLocalService",
+			"DLAppLocalServiceUtil"
+		],
 		"from": "addFileEntry(long, long, long, String, String, String, String, String, byte[], ServiceContext)",
 		"issueKey": "LPS-194818",
 		"to": "addFileEntry(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, null, param#6#, param#7#, param#8#, null, null, param#9#)"

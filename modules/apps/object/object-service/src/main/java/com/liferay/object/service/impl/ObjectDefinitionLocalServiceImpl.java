@@ -656,11 +656,8 @@ public class ObjectDefinitionLocalServiceImpl
 			return objectDefinition2;
 		}
 
-		ObjectField objectField = _objectFieldLocalService.getObjectField(
-			objectRelationship.getObjectFieldId2());
-
 		objectDefinition2.setAccountEntryRestrictedObjectFieldId(
-			objectField.getObjectFieldId());
+			objectRelationship.getObjectFieldId2());
 
 		objectDefinition2.setAccountEntryRestricted(true);
 

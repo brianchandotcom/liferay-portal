@@ -19,7 +19,7 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@description = "This is a use case for LPS-71487."
+	@description = "This is a use case for LPS-71487. View Multi WCD After Upgrade 625"
 	@priority = 5
 	test ViewMultiWCDAfterUpgrade625 {
 		property data.archive.type = "data-archive-multi-wcd-portlet";
@@ -33,7 +33,7 @@ definition {
 			totalPortletCount = 3);
 	}
 
-	@description = "This is a use case for LPS-71487."
+	@description = "This is a use case for LPS-71487. View Multi WCD Archive 621015"
 	@priority = 5
 	test ViewMultiWCDArchive621015 {
 		property data.archive.type = "data-archive-multi-wcd-portlet";
@@ -47,7 +47,7 @@ definition {
 			totalPortletCount = 3);
 	}
 
-	@description = "This is a use case for LPS-71487."
+	@description = "This is a use case for LPS-71487. View Multi WCD Archive 621021"
 	@priority = 5
 	test ViewMultiWCDArchive621021 {
 		property data.archive.type = "data-archive-multi-wcd-portlet";

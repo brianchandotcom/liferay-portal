@@ -1037,7 +1037,11 @@ public class JournalDisplayContext {
 	public VerticalNavItemList getVerticalNavDDMStructureList() {
 		VerticalNavItemList verticalNavItemList = new VerticalNavItemList();
 
-		for (DDMStructure ddmStructure : getVerticalNavigationDDMStructures()) {
+		for (DDMStructure ddmStructure :
+				DDMStructureLocalServiceUtil.getStructures(
+					_themeDisplay.getScopeGroupId(),
+					PortalUtil.getClassNameId(JournalArticle.class))) {
+
 			verticalNavItemList.add(
 				verticalNavItem -> {
 					String name = ddmStructure.getName(
@@ -1057,12 +1061,6 @@ public class JournalDisplayContext {
 		}
 
 		return verticalNavItemList;
-	}
-
-	public List<DDMStructure> getVerticalNavigationDDMStructures() {
-		return DDMStructureLocalServiceUtil.getStructures(
-			_themeDisplay.getScopeGroupId(),
-			PortalUtil.getClassNameId(JournalArticle.class));
 	}
 
 	public VerticalNavItemList getVerticalNavItemList() {

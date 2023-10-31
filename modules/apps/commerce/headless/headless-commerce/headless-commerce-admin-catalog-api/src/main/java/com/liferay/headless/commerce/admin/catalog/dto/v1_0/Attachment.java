@@ -308,6 +308,34 @@ public class Attachment implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Long fileEntryId;
 
+	@Schema
+	public Boolean getGalleryEnabled() {
+		return galleryEnabled;
+	}
+
+	public void setGalleryEnabled(Boolean galleryEnabled) {
+		this.galleryEnabled = galleryEnabled;
+	}
+
+	@JsonIgnore
+	public void setGalleryEnabled(
+		UnsafeSupplier<Boolean, Exception> galleryEnabledUnsafeSupplier) {
+
+		try {
+			galleryEnabled = galleryEnabledUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean galleryEnabled;
+
 	@DecimalMin("0")
 	@Schema(example = "30130")
 	public Long getId() {
@@ -655,6 +683,16 @@ public class Attachment implements Serializable {
 			sb.append("\"fileEntryId\": ");
 
 			sb.append(fileEntryId);
+		}
+
+		if (galleryEnabled != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"galleryEnabled\": ");
+
+			sb.append(galleryEnabled);
 		}
 
 		if (id != null) {

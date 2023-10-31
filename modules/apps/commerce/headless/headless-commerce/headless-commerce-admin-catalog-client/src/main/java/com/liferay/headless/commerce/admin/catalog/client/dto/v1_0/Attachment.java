@@ -216,6 +216,27 @@ public class Attachment implements Cloneable, Serializable {
 
 	protected Long fileEntryId;
 
+	public Boolean getGalleryEnabled() {
+		return galleryEnabled;
+	}
+
+	public void setGalleryEnabled(Boolean galleryEnabled) {
+		this.galleryEnabled = galleryEnabled;
+	}
+
+	public void setGalleryEnabled(
+		UnsafeSupplier<Boolean, Exception> galleryEnabledUnsafeSupplier) {
+
+		try {
+			galleryEnabled = galleryEnabledUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean galleryEnabled;
+
 	public Long getId() {
 		return id;
 	}

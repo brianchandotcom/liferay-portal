@@ -594,6 +594,14 @@ public abstract class BaseAttachmentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("galleryEnabled", additionalAssertFieldName)) {
+				if (attachment.getGalleryEnabled() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("neverExpire", additionalAssertFieldName)) {
 				if (attachment.getNeverExpire() == null) {
 					valid = false;
@@ -785,6 +793,17 @@ public abstract class BaseAttachmentResourceTestCase {
 				if (!Objects.deepEquals(
 						attachment1.getExpirationDate(),
 						attachment2.getExpirationDate())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("galleryEnabled", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						attachment1.getGalleryEnabled(),
+						attachment2.getGalleryEnabled())) {
 
 					return false;
 				}
@@ -1077,6 +1096,11 @@ public abstract class BaseAttachmentResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("galleryEnabled")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1244,6 +1268,7 @@ public abstract class BaseAttachmentResourceTestCase {
 					RandomTestUtil.randomString());
 				displayDate = RandomTestUtil.nextDate();
 				expirationDate = RandomTestUtil.nextDate();
+				galleryEnabled = RandomTestUtil.randomBoolean();
 				id = RandomTestUtil.randomLong();
 				neverExpire = RandomTestUtil.randomBoolean();
 				priority = RandomTestUtil.randomDouble();

@@ -23,6 +23,7 @@ export const CACHE_KEYS = {
 	collectionVariations: 'collectionVariations',
 	collectionWarningMessage: 'collectionWarningMessage',
 	formFields: 'formFields',
+	roles: 'roles',
 	users: 'users',
 } as const;
 

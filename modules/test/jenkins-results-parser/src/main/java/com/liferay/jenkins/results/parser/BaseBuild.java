@@ -1479,6 +1479,10 @@ public abstract class BaseBuild implements Build {
 		_jenkinsSlave = null;
 		_result = null;
 		_statusModifiedTime = 0;
+
+		if (_buildUpdater != null) {
+			_buildUpdater.reset();
+		}
 	}
 
 	@Override

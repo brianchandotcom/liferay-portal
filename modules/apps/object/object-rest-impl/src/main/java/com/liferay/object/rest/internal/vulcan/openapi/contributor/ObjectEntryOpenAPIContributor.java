@@ -103,9 +103,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		Map<ObjectRelationship, ObjectDefinition> relatedObjectDefinitionsMap =
 			_getRelatedObjectDefinitionsMap();
 
-		Components components = openAPI.getComponents();
-
-		Map<String, Schema> schemas = components.getSchemas();
+		Map<String, Schema> schemas = _getSchemas(openAPI);
 
 		Schema objectDefinitionSchema = schemas.get(
 			_objectDefinition.getShortName());
@@ -217,7 +215,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 					openAPIContext, openAPI.getPaths()));
 		}
 
-		_setReadOnlyProperties(openAPI);
+		_setReadOnlyProperties(schemas);
 	}
 
 	private void _addObjectActionPathItem(
@@ -514,14 +512,6 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		return individualActionSchemas;
 	}
 
-	private Schema _getObjectDefinitionSchema(OpenAPI openAPI) {
-		Components components = openAPI.getComponents();
-
-		Map<String, Schema> schemas = components.getSchemas();
-
-		return schemas.get(_objectDefinition.getShortName());
-	}
-
 	private ApiResponses _getObjectRelationshipApiResponses(
 		Operation operation, String schemaName) {
 
@@ -701,6 +691,12 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		return objectSchema;
 	}
 
+	private Map<String, Schema> _getSchemas(OpenAPI openAPI) {
+		Components components = openAPI.getComponents();
+
+		return components.getSchemas();
+	}
+
 	private void _setCollectionActionSchemas(
 		Map<String, Schema> actionSchemas, OpenAPIContext openAPIContext,
 		Map<PathItem.HttpMethod, Operation> operations, String pathName) {
@@ -789,23 +785,24 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 		}
 	}
 
-	private void _setReadOnlyProperties(OpenAPI openAPI) {
+	private void _setReadOnlyProperties(Map<String, Schema> schemas) {
 		Map<String, ObjectField> objectFields =
 			ObjectFieldUtil.toObjectFieldsMap(
 				_objectFieldLocalService.getObjectFields(
 					_objectDefinition.getObjectDefinitionId()));
 
-		Schema schema = _getObjectDefinitionSchema(openAPI);
+		Schema objectDefinitionSchema = schemas.get(
+			_objectDefinition.getShortName());
 
-		Map<String, Schema> properties = schema.getProperties();
+		Map<String, Schema> properties = objectDefinitionSchema.getProperties();
 
 		for (Map.Entry<String, Schema> entry : properties.entrySet()) {
 			String key = entry.getKey();
 
-			schema = entry.getValue();
+			objectDefinitionSchema = entry.getValue();
 
 			if (_readOnlyFieldNames.contains(key)) {
-				schema.readOnly(true);
+				objectDefinitionSchema.readOnly(true);
 
 				continue;
 			}
@@ -823,12 +820,12 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 					objectField.getReadOnly(),
 					ObjectFieldConstants.READ_ONLY_FALSE)) {
 
-				schema.readOnly(false);
+				objectDefinitionSchema.readOnly(false);
 
 				continue;
 			}
 
-			schema.readOnly(true);
+			objectDefinitionSchema.readOnly(true);
 		}
 	}
 
@@ -842,9 +839,7 @@ public class ObjectEntryOpenAPIContributor extends BaseOpenAPIContributor {
 			(objectRelationship.getObjectDefinitionId2() ==
 				_objectDefinition.getObjectDefinitionId())) {
 
-			Components components = openAPI.getComponents();
-
-			Map<String, Schema> schemas = components.getSchemas();
+			Map<String, Schema> schemas = _getSchemas(openAPI);
 
 			Schema schema = schemas.get(relatedSchemaName);
 

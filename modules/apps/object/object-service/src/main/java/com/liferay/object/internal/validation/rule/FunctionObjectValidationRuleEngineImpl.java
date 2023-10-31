@@ -26,7 +26,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.Future;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -56,17 +55,17 @@ public class FunctionObjectValidationRuleEngineImpl
 			JSONObject creatorJSONObject = payloadJSONObject.getJSONObject(
 				"creator");
 
-			Future<byte[]> future = _portalCatapult.launch(
-				_companyId, Http.Method.POST,
-				_functionObjectValidationRuleEngineImplConfiguration.
-					oAuth2ApplicationExternalReferenceCode(),
-				payloadJSONObject,
-				_functionObjectValidationRuleEngineImplConfiguration.
-					resourcePath(),
-				creatorJSONObject.getLong("id"));
-
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
-				new String(future.get()));
+				new String(
+					_portalCatapult.launch(
+						_companyId, Http.Method.POST,
+						_functionObjectValidationRuleEngineImplConfiguration.
+							oAuth2ApplicationExternalReferenceCode(),
+						payloadJSONObject,
+						_functionObjectValidationRuleEngineImplConfiguration.
+							resourcePath(),
+						creatorJSONObject.getLong("id")
+					).get()));
 
 			results.put(
 				"validationCriteriaMet",

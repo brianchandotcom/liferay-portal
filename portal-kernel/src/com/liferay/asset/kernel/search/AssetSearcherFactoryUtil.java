@@ -6,8 +6,8 @@
 package com.liferay.asset.kernel.search;
 
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.BaseSearcher;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Lourdes Fernández Besada
@@ -17,12 +17,14 @@ public class AssetSearcherFactoryUtil {
 	public static BaseSearcher createBaseSearcher(
 		AssetEntryQuery assetEntryQuery) {
 
-		return _assetSearcherFactory.createBaseSearcher(assetEntryQuery);
+		AssetSearcherFactory assetSearcherFactory =
+			_assetSearcherFactorySnapshot.get();
+
+		return assetSearcherFactory.createBaseSearcher(assetEntryQuery);
 	}
 
-	private static volatile AssetSearcherFactory _assetSearcherFactory =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			AssetSearcherFactory.class, AssetSearcherFactoryUtil.class,
-			"_assetSearcherFactory", true);
+	private static final Snapshot<AssetSearcherFactory>
+		_assetSearcherFactorySnapshot = new Snapshot<>(
+			AssetSearcherFactoryUtil.class, AssetSearcherFactory.class);
 
 }

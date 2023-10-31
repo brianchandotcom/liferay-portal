@@ -76,10 +76,12 @@ else {
 					<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
 				</c:when>
 				<c:otherwise>
-					<clay:navigation-bar
-						cssClass="mt-4"
-						navigationItems="<%= journalDisplayContext.getSearchNavigationItems() %>"
-					/>
+					<div>
+						<react:component
+							module="js/SearchOptions"
+							props="<%= journalDisplayContext.getSearchProps() %>"
+						/>
+					</div>
 
 					<c:choose>
 						<c:when test="<%= journalDisplayContext.isWebContentTabSelected() %>">

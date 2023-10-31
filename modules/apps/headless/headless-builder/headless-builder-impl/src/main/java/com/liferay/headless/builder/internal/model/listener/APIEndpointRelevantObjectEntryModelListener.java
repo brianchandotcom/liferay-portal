@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -125,8 +126,9 @@ public class APIEndpointRelevantObjectEntryModelListener
 
 			String pathString = (String)values.get("path");
 
-			long apiApplicationId = (long)values.get(
-				"r_apiApplicationToAPIEndpoints_c_apiApplicationId");
+			long apiApplicationId = GetterUtil.getLong(
+				values.get(
+					"r_apiApplicationToAPIEndpoints_c_apiApplicationId"));
 
 			if (!_objectEntryHelper.isValidObjectEntry(
 					apiApplicationId, "L_API_APPLICATION")) {
@@ -137,8 +139,8 @@ public class APIEndpointRelevantObjectEntryModelListener
 					"an-api-endpoint-must-be-related-to-an-api-application");
 			}
 
-			long responseAPISchemaId = (long)values.get(
-				"r_responseAPISchemaToAPIEndpoints_c_apiSchemaId");
+			long responseAPISchemaId = GetterUtil.getLong(
+				values.get("r_responseAPISchemaToAPIEndpoints_c_apiSchemaId"));
 
 			if (responseAPISchemaId != 0) {
 				_validateAPISchema(apiApplicationId, responseAPISchemaId);
@@ -234,8 +236,8 @@ public class APIEndpointRelevantObjectEntryModelListener
 						"path");
 			}
 
-			long requestAPISchemaId = (long)values.get(
-				"r_requestAPISchemaToAPIEndpoints_c_apiSchemaId");
+			long requestAPISchemaId = GetterUtil.getLong(
+				values.get("r_requestAPISchemaToAPIEndpoints_c_apiSchemaId"));
 
 			if (requestAPISchemaId != 0) {
 				_validateAPISchema(apiApplicationId, requestAPISchemaId);

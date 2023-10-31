@@ -37,17 +37,14 @@ public class ObjectActionOrganizationStatusRestController
 			evpOrganizationJSONObject.getJSONObject(
 				"objectEntryDTOEVPOrganization");
 
-		long evpOrganizationId =
-			objectEntryDTOEVPOrganizationJSONObject.getLong("id");
-
 		JSONObject responseJSONObject = get(
 			jwt,
 			uriBuilder -> uriBuilder.path(
 				"/o/c/evprequests"
 			).queryParam(
 				"filter",
-				"r_organization_c_evpOrganizationId eq '" + evpOrganizationId +
-					"'"
+				"r_organization_c_evpOrganizationId eq '" +
+					objectEntryDTOEVPOrganizationJSONObject.getLong("id") + "'"
 			).build());
 
 		if (responseJSONObject.getInt("totalCount") == 0) {
@@ -72,11 +69,9 @@ public class ObjectActionOrganizationStatusRestController
 					evpOrganizationStatusJSONObject.getString("key"),
 					"verified")) {
 
-				JSONObject evpRequestTypeJSONObject =
-					itemJSONObject.getJSONObject("requestType");
-
 				_setRequestStatus(
-					evpRequestsStatusJSONObject, evpRequestTypeJSONObject);
+					evpRequestsStatusJSONObject,
+					itemJSONObject.getJSONObject("requestType"));
 			}
 			else if (Objects.equals(
 						evpOrganizationStatusJSONObject.getString("key"),

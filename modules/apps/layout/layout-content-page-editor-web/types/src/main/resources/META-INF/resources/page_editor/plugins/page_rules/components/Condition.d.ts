@@ -15,10 +15,12 @@ interface ConditionProps {
 	condition: Condition;
 	onConditionChange: (condition: Condition) => void;
 	onDeleteCondition: () => void;
+	showDeleteButton: boolean;
 }
 export default function Condition({
 	condition,
 	onConditionChange,
 	onDeleteCondition,
+	showDeleteButton,
 }: ConditionProps): JSX.Element;
 export {};

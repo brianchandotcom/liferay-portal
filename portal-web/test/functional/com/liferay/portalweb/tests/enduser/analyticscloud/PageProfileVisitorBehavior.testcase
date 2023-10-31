@@ -115,7 +115,7 @@ definition {
 		task ("View Page Metric of Unique Visitors in Page List") {
 			ACSites.viewPageMetric(
 				metricName = "Unique Visitors",
-				metricValue = ${metricNum};
+				metricValue = ${metricNum},
 				pageName = "AC Page - Site Name - ${dataSourceName}");
 		}
 

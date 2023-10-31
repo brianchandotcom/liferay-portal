@@ -77,6 +77,80 @@ definition {
 		}
 	}
 
+	@description = "Description LPS-189380 - Verify published child object definitions do not have dedicated portlets and the related configurations are read only"
+	@priority = 3
+	test CannotViewChildPortlet {
+		property custom.properties = "feature.flag.LPS-187142=true";
+
+		task ("Given two custom object definitions, Parent and Child, with a text field and a 1:M relationship between them") {
+			for (var objectName : list "Parent,Child") {
+				ObjectAdmin.addObjectViaAPI(
+					labelName = ${objectName},
+					objectName = ${objectName},
+					pluralLabelName = ${objectName});
+			}
+
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Text Field",
+				fieldName = "textField",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "Parent");
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "Parent",
+				objectName_2 = "Child",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+		}
+
+		task ("and Given Child is bound to Parent") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectRootModel.bindToRootObject(
+				childObject = "Child",
+				rootObjectPath = "Parent (Relationship)");
+
+			WaitForPageLoad();
+		}
+
+		task ("When the user navigates to Child") {
+			ObjectPortlet.selectCustomObject(label = "Child");
+		}
+
+		task ("Then the enable widget option and panel key category are read only") {
+			AssertElementPresent(
+				key_checkboxName = "Show Widget in Page Builder",
+				locator1 = "Checkbox#CHECKBOX_DISABLED");
+
+			AssertElementPresent(
+				key_text = "Control Panel > Object",
+				locator1 = "Dropdown#ANY_DISABLED");
+		}
+
+		task ("and When the user publishes Parent") {
+			ObjectAdmin.publishObjectViaAPI(objectName = "Parent");
+
+			Navigator.gotoBack();
+		}
+
+		task ("Then Child is published as well and does not have a dedicated portlet") {
+			AssertTextEquals(
+				key_label = "Child",
+				locator1 = "ObjectAdmin#OBJECT_STATUS",
+				value1 = "Approved");
+
+			Click(locator1 = "ApplicationsMenu#TOGGLE");
+
+			AssertElementNotPresent(
+				key_category = "Objects",
+				key_portlet = "Child",
+				locator1 = "ApplicationsMenu#PORTLET");
+		}
+	}
+
 	@description = "LPS-189380 - Verify the user can to see relationships tabs in the initial out-of-the-box layout of one level of children"
 	@priority = 4
 	test CanViewRelationTabOOTB {

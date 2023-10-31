@@ -33,7 +33,6 @@ exports[`Field Paragraph has a label 1`] = `
     <label
       aria-labelledby="textField_fieldDetails"
       class="ddm-label"
-      tabindex="0"
     >
       label
     </label>
@@ -189,7 +188,6 @@ exports[`Field Paragraph renders Label if showLabel is true 1`] = `
     <label
       aria-labelledby="textField_fieldDetails"
       class="ddm-label"
-      tabindex="0"
     >
       text
     </label>

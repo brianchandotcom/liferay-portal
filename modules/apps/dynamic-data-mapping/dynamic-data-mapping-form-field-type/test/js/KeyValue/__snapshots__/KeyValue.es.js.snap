@@ -80,7 +80,6 @@ exports[`KeyValue has a label 1`] = `
     <label
       aria-labelledby="keyValue_fieldDetails"
       class="ddm-label"
-      tabindex="0"
     >
       label
     </label>
@@ -427,7 +426,6 @@ exports[`KeyValue renders Label if showLabel is true 1`] = `
     <label
       aria-labelledby="keyValue_fieldDetails"
       class="ddm-label"
-      tabindex="0"
     >
       text
     </label>

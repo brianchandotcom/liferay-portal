@@ -21,6 +21,8 @@ exports[`Field DocumentLibrary has a helptext 1`] = `
             class="form-control bg-light field"
             disabled=""
             id="uploadFieldinputFile"
+            readonly="true"
+            tabindex="-1"
             type="text"
             value=""
           />
@@ -31,6 +33,7 @@ exports[`Field DocumentLibrary has a helptext 1`] = `
           <button
             class="select-button btn btn-secondary"
             disabled=""
+            id="uploadField"
             type="button"
           >
             <span
@@ -102,7 +105,6 @@ exports[`Field DocumentLibrary has a label 1`] = `
     <label
       aria-labelledby="uploadField_fieldDetails"
       class="ddm-label"
-      tabindex="0"
     >
       label
     </label>
@@ -120,6 +122,8 @@ exports[`Field DocumentLibrary has a label 1`] = `
             class="form-control bg-light field"
             disabled=""
             id="uploadFieldinputFile"
+            readonly="true"
+            tabindex="-1"
             type="text"
             value=""
           />
@@ -130,6 +134,7 @@ exports[`Field DocumentLibrary has a label 1`] = `
           <button
             class="select-button btn btn-secondary"
             disabled=""
+            id="uploadField"
             type="button"
           >
             <span
@@ -208,6 +213,8 @@ exports[`Field DocumentLibrary has a placeholder 1`] = `
             class="form-control bg-light field"
             disabled=""
             id="uploadFieldinputFile"
+            readonly="true"
+            tabindex="-1"
             type="text"
             value=""
           />
@@ -218,6 +225,7 @@ exports[`Field DocumentLibrary has a placeholder 1`] = `
           <button
             class="select-button btn btn-secondary"
             disabled=""
+            id="uploadField"
             type="button"
           >
             <span
@@ -295,6 +303,8 @@ exports[`Field DocumentLibrary has a spritemap 1`] = `
             class="form-control bg-light field"
             disabled=""
             id="uploadFieldinputFile"
+            readonly="true"
+            tabindex="-1"
             type="text"
             value=""
           />
@@ -305,6 +315,7 @@ exports[`Field DocumentLibrary has a spritemap 1`] = `
           <button
             class="select-button btn btn-secondary"
             disabled=""
+            id="uploadField"
             type="button"
           >
             <span
@@ -381,6 +392,8 @@ exports[`Field DocumentLibrary has a value 1`] = `
             class="form-control bg-light field"
             disabled=""
             id="uploadFieldinputFile"
+            readonly="true"
+            tabindex="-1"
             type="text"
             value=""
           />
@@ -391,6 +404,7 @@ exports[`Field DocumentLibrary has a value 1`] = `
           <button
             class="select-button btn btn-secondary"
             disabled=""
+            id="uploadField"
             type="button"
           >
             <span
@@ -467,6 +481,8 @@ exports[`Field DocumentLibrary has an id 1`] = `
             class="form-control bg-light field"
             disabled=""
             id="uploadFieldinputFile"
+            readonly="true"
+            tabindex="-1"
             type="text"
             value=""
           />
@@ -477,6 +493,7 @@ exports[`Field DocumentLibrary has an id 1`] = `
           <button
             class="select-button btn btn-secondary"
             disabled=""
+            id="uploadField"
             type="button"
           >
             <span
@@ -553,6 +570,8 @@ exports[`Field DocumentLibrary is not readOnly 1`] = `
             aria-label="file"
             class="form-control bg-light field"
             id="uploadFieldinputFile"
+            readonly="true"
+            tabindex="-1"
             type="text"
             value=""
           />
@@ -562,6 +581,7 @@ exports[`Field DocumentLibrary is not readOnly 1`] = `
         >
           <button
             class="select-button btn btn-secondary"
+            id="uploadField"
             type="button"
           >
             <span
@@ -609,6 +629,8 @@ exports[`Field DocumentLibrary is not required 1`] = `
             class="form-control bg-light field"
             disabled=""
             id="uploadFieldinputFile"
+            readonly="true"
+            tabindex="-1"
             type="text"
             value=""
           />
@@ -619,6 +641,7 @@ exports[`Field DocumentLibrary is not required 1`] = `
           <button
             class="select-button btn btn-secondary"
             disabled=""
+            id="uploadField"
             type="button"
           >
             <span
@@ -683,7 +706,6 @@ exports[`Field DocumentLibrary renders Label if showLabel is true 1`] = `
     <label
       aria-labelledby="uploadField_fieldDetails"
       class="ddm-label"
-      tabindex="0"
     >
       text
     </label>
@@ -701,6 +723,8 @@ exports[`Field DocumentLibrary renders Label if showLabel is true 1`] = `
             class="form-control bg-light field"
             disabled=""
             id="uploadFieldinputFile"
+            readonly="true"
+            tabindex="-1"
             type="text"
             value=""
           />
@@ -711,6 +735,7 @@ exports[`Field DocumentLibrary renders Label if showLabel is true 1`] = `
           <button
             class="select-button btn btn-secondary"
             disabled=""
+            id="uploadField"
             type="button"
           >
             <span

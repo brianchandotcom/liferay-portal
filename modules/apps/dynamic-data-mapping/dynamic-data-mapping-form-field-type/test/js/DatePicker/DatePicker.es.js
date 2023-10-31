@@ -24,9 +24,8 @@ describe('DatePicker', () => {
 		render(<DatePicker label="Date picker" />);
 
 		const allByText = screen.getAllByText('Date picker');
-		expect(allByText).toHaveLength(2);
+		expect(allByText).toHaveLength(1);
 		expect(allByText[0]).toBeInTheDocument();
-		expect(allByText[1]).toBeInTheDocument();
 	});
 
 	it('renders the predefined value', () => {

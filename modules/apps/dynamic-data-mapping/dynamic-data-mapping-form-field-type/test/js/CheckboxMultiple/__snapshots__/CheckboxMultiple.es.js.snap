@@ -178,7 +178,6 @@ exports[`Field Checkbox Multiple has a label 1`] = `
     <label
       aria-labelledby="undefined_fieldDetails"
       class="ddm-label"
-      tabindex="0"
     >
       label
     </label>
@@ -874,7 +873,6 @@ exports[`Field Checkbox Multiple renders Label if showLabel is true 1`] = `
     <label
       aria-labelledby="undefined_fieldDetails"
       class="ddm-label"
-      tabindex="0"
     >
       text
     </label>

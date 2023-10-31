@@ -426,7 +426,7 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 	@Override
 	public List<CPMedia> getImages(
-			long cpDefinitionId, ThemeDisplay themeDisplay)
+			long cpDefinitionId, boolean gallery, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
@@ -436,7 +436,7 @@ public class CPContentHelperImpl implements CPContentHelper {
 			_amImageHTMLTagFactory,
 			_portal.getClassNameId(CPDefinition.class.getName()),
 			cpDefinition.getCPDefinitionId(), _commerceCatalogDefaultImage,
-			_commerceMediaResolver, _cpAttachmentFileEntryLocalService,
+			_commerceMediaResolver, _cpAttachmentFileEntryLocalService, gallery,
 			cpDefinition.getGroupId(), themeDisplay);
 	}
 

@@ -120,7 +120,7 @@ public interface CPContentHelper {
 		throws PortalException;
 
 	public List<CPMedia> getImages(
-			long cpDefinitionId, ThemeDisplay themeDisplay)
+			long cpDefinitionId, boolean gallery, ThemeDisplay themeDisplay)
 		throws PortalException;
 
 	public String getImageURL(FileEntry fileEntry, ThemeDisplay themeDisplay)

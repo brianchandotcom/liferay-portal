@@ -55,6 +55,7 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBMessageLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -90,12 +91,12 @@ import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -325,8 +326,7 @@ public class JournalDisplayContext {
 			availableActions.add("exportTranslation");
 		}
 
-		return com.liferay.petra.string.StringUtil.merge(
-			availableActions, StringPool.COMMA);
+		return StringUtil.merge(availableActions, StringPool.COMMA);
 	}
 
 	public String getAvailableActions(JournalFolder folder)
@@ -348,8 +348,7 @@ public class JournalDisplayContext {
 			availableActions.add("moveEntries");
 		}
 
-		return com.liferay.petra.string.StringUtil.merge(
-			availableActions, StringPool.COMMA);
+		return StringUtil.merge(availableActions, StringPool.COMMA);
 	}
 
 	public String[] getCharactersBlacklist() throws PortalException {
@@ -900,6 +899,18 @@ public class JournalDisplayContext {
 			portletURL.setParameter("keywords", keywords);
 		}
 
+		String searchIn = _getSearchIn();
+
+		if (Validator.isNotNull(searchIn)) {
+			portletURL.setParameter("searchIn", searchIn);
+		}
+
+		String searchLocation = _getSearchLocation();
+
+		if (Validator.isNotNull(searchLocation)) {
+			portletURL.setParameter("searchLocation", searchLocation);
+		}
+
 		String orderByCol = getOrderByCol();
 
 		if (Validator.isNotNull(orderByCol)) {
@@ -964,37 +975,85 @@ public class JournalDisplayContext {
 		return _searchContainer;
 	}
 
-	public List<NavigationItem> getSearchNavigationItems() {
-		return NavigationItemListBuilder.add(
-			() -> hasResults(),
-			navigationItem -> {
-				navigationItem.setActive(isWebContentTabSelected());
-				navigationItem.setHref(getPortletURL("web-content"));
-				navigationItem.setLabel(
-					StringUtil.appendParentheticalSuffix(
-						LanguageUtil.get(_httpServletRequest, "web-content"),
-						getTotalItems()));
+	public Map<String, Object> getSearchProps() throws PortalException {
+		return HashMapBuilder.<String, Object>put(
+			"initialSearchIn", _getSearchIn()
+		).put(
+			"initialSearchLocation", _getSearchLocation()
+		).put(
+			"initialSearchResults", getTab()
+		).put(
+			"searchInOptions",
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"label",
+					LanguageUtil.get(_themeDisplay.getLocale(), "all-fields")
+				).put(
+					"value", "all-fields"
+				),
+				JSONUtil.put(
+					"label",
+					LanguageUtil.get(_themeDisplay.getLocale(), "title-only")
+				).put(
+					"value", "title"
+				))
+		).put(
+			"searchLocationOptions",
+			() -> {
+				if (getFolderId() ==
+						JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+					return null;
+				}
+
+				JournalFolder folder = getFolder();
+
+				return JSONUtil.putAll(
+					JSONUtil.put(
+						"label", folder.getName()
+					).put(
+						"value", "current-folder"
+					),
+					JSONUtil.put(
+						"label",
+						LanguageUtil.get(
+							_themeDisplay.getLocale(), "everywhere")
+					).put(
+						"value", "everywhere"
+					));
 			}
-		).add(
-			() -> isIndexAllArticleVersions() && hasVersionsResults(),
-			navigationItem -> {
-				navigationItem.setActive(isVersionsTabSelected());
-				navigationItem.setHref(getPortletURL("versions"));
-				navigationItem.setLabel(
-					StringUtil.appendParentheticalSuffix(
-						LanguageUtil.get(_httpServletRequest, "versions"),
-						getVersionsTotal()));
-			}
-		).add(
-			() -> hasCommentsResults(),
-			navigationItem -> {
-				navigationItem.setActive(isCommentsTabSelected());
-				navigationItem.setHref(getPortletURL("comments"));
-				navigationItem.setLabel(
-					StringUtil.appendParentheticalSuffix(
-						LanguageUtil.get(_httpServletRequest, "comments"),
-						getCommentsTotal()));
-			}
+		).put(
+			"searchResultsOptions",
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"label",
+					LanguageUtil.get(_themeDisplay.getLocale(), "web-content")
+				).put(
+					"value", "web-content"
+				),
+				JSONUtil.put(
+					"label",
+					LanguageUtil.get(_themeDisplay.getLocale(), "versions")
+				).put(
+					"value", "versions"
+				),
+				JSONUtil.put(
+					"label",
+					LanguageUtil.get(_themeDisplay.getLocale(), "comments")
+				).put(
+					"value", "comments"
+				))
+		).put(
+			"searchURL",
+			PortletURLBuilder.createRenderURL(
+				_liferayPortletResponse
+			).setKeywords(
+				getKeywords()
+			).setParameter(
+				"folderId", getFolderId()
+			).setParameter(
+				"status", getStatus()
+			).buildString()
 		).build();
 	}
 
@@ -1415,16 +1474,6 @@ public class JournalDisplayContext {
 		).buildString();
 	}
 
-	private List<Long> _getFolderIds() {
-		List<Long> folderIds = new ArrayList<>(1);
-
-		if (getFolderId() != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			folderIds.add(getFolderId());
-		}
-
-		return folderIds;
-	}
-
 	private OrderByComparator<Object> _getFolderOrderByComparator() {
 		boolean orderByAsc = false;
 
@@ -1482,6 +1531,28 @@ public class JournalDisplayContext {
 		}
 
 		return jsonArray;
+	}
+
+	private String _getSearchIn() {
+		if (_searchIn != null) {
+			return _searchIn;
+		}
+
+		_searchIn = ParamUtil.getString(
+			_httpServletRequest, "searchIn", "all-fields");
+
+		return _searchIn;
+	}
+
+	private String _getSearchLocation() {
+		if (_searchLocation != null) {
+			return _searchLocation;
+		}
+
+		_searchLocation = ParamUtil.getString(
+			_httpServletRequest, "searchLocation", "current-folder");
+
+		return _searchLocation;
 	}
 
 	private Sort _getSort() {
@@ -1576,22 +1647,25 @@ public class JournalDisplayContext {
 
 		Map<String, Serializable> attributes = searchContext.getAttributes();
 
-		attributes.put(Field.ARTICLE_ID, getKeywords());
+		if (Objects.equals(_getSearchIn(), "all-fields")) {
+			attributes.put(Field.ARTICLE_ID, getKeywords());
+			attributes.put(Field.CONTENT, getKeywords());
+			attributes.put(Field.DESCRIPTION, getKeywords());
+			attributes.put(
+				"params",
+				LinkedHashMapBuilder.<String, Object>put(
+					"expandoAttributes", getKeywords()
+				).put(
+					"keywords", getKeywords()
+				).build());
+		}
+
 		attributes.put(
 			Field.CLASS_NAME_ID, JournalArticleConstants.CLASS_NAME_ID_DEFAULT);
-		attributes.put(Field.CONTENT, getKeywords());
-		attributes.put(Field.DESCRIPTION, getKeywords());
 		attributes.put(Field.STATUS, getStatus());
 		attributes.put(Field.TITLE, getKeywords());
 		attributes.put("head", !showVersions);
 		attributes.put("latest", !showVersions);
-		attributes.put(
-			"params",
-			LinkedHashMapBuilder.<String, Object>put(
-				"expandoAttributes", getKeywords()
-			).put(
-				"keywords", getKeywords()
-			).build());
 		attributes.put("showNonindexable", !showVersions);
 
 		searchContext.setAttributes(attributes);
@@ -1605,10 +1679,18 @@ public class JournalDisplayContext {
 
 		searchContext.setCompanyId(_themeDisplay.getCompanyId());
 		searchContext.setEnd(end);
-		searchContext.setFolderIds(_getFolderIds());
+
+		if (Objects.equals(_getSearchLocation(), "current-folder")) {
+			searchContext.setFolderIds(
+				Collections.singletonList(getFolderId()));
+		}
+
 		searchContext.setGroupIds(new long[] {_themeDisplay.getScopeGroupId()});
 		searchContext.setIncludeInternalAssetCategories(true);
-		searchContext.setKeywords(getKeywords());
+
+		if (Objects.equals(_getSearchIn(), "all-fields")) {
+			searchContext.setKeywords(getKeywords());
+		}
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 
@@ -1654,6 +1736,8 @@ public class JournalDisplayContext {
 	private final PortalPreferences _portalPreferences;
 	private Integer _restrictionType;
 	private SearchContainer<?> _searchContainer;
+	private String _searchIn;
+	private String _searchLocation;
 	private Integer _status;
 	private String _tab;
 	private final ThemeDisplay _themeDisplay;

@@ -27,6 +27,13 @@
 				navigationItems="<%= journalDisplayContext.getSearchNavigationItems() %>"
 			/>
 
+			<div>
+				<react:component
+					module="js/SearchOptions"
+					props="<%= journalDisplayContext.getSearchProps() %>"
+				/>
+			</div>
+
 			<c:choose>
 				<c:when test="<%= journalDisplayContext.isWebContentTabSelected() %>">
 					<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />

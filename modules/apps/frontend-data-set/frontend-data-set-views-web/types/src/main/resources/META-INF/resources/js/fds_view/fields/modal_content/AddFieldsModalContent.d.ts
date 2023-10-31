@@ -9,11 +9,23 @@ import {FDSViewType} from '../../../FDSViews';
 import {IFDSField} from '../Fields';
 declare const AddFieldsModalContent: ({
 	closeModal,
-	fdsFields,
 	fdsView,
+	namespace,
+	onSave,
+	saveFDSFieldsURL,
+	savedFDSFields,
 }: {
 	closeModal: Function;
-	fdsFields: Array<IFDSField>;
 	fdsView: FDSViewType;
+	namespace: string;
+	onSave: ({
+		createdFDSFields,
+		deletedFDSFieldsIds,
+	}: {
+		createdFDSFields: Array<IFDSField>;
+		deletedFDSFieldsIds: Array<number>;
+	}) => void;
+	saveFDSFieldsURL: string;
+	savedFDSFields: Array<IFDSField>;
 }) => JSX.Element;
 export default AddFieldsModalContent;

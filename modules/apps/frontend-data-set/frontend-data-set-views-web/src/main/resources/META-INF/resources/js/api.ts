@@ -32,9 +32,11 @@ interface ISchemas {
 }
 
 function getValidFields({
+	contextPath,
 	schemaName,
 	schemas,
 }: {
+	contextPath: string;
 	schemaName: string;
 	schemas: ISchemas;
 }): Array<IField> {
@@ -63,11 +65,12 @@ function getValidFields({
 			if (Liferay.FeatureFlags['LPS-186871']) {
 				fields.push({
 					children: getValidFields({
+						contextPath: `${contextPath}${propertyKey}.`,
 						schemaName: propertyValue.$ref.replace(/^.*\//, ''),
 						schemas,
 					}),
 					label: propertyKey,
-					name: propertyKey,
+					name: `${contextPath}${propertyKey}`,
 					type,
 				});
 			}
@@ -78,7 +81,7 @@ function getValidFields({
 		fields.push({
 			format: propertyValue.format,
 			label: propertyKey,
-			name: propertyKey,
+			name: `${contextPath}${propertyKey}`,
 			type,
 		});
 	});
@@ -109,7 +112,11 @@ export async function getFields(fdsView: FDSViewType) {
 		return [];
 	}
 
-	return getValidFields({schemaName: restSchema, schemas});
+	return getValidFields({
+		contextPath: '',
+		schemaName: restSchema,
+		schemas,
+	});
 }
 
 export async function getAllPicklists(

@@ -9,6 +9,7 @@ import {IFDSViewSectionProps} from '../../FDSView';
 import '../../../css/Fields.scss';
 declare type LocalizedValue<T> = Liferay.Language.LocalizedValue<T>;
 export interface IFDSField {
+	contextPath: string;
 	externalReferenceCode: string;
 	id: number;
 	label: string;

@@ -23,7 +23,7 @@ export declare enum EFieldType {
 export interface IField {
 	children?: Array<IField>;
 	format?: EFieldFormat;
-	id?: number;
+	id?: string;
 	label?: string;
 	name: string;
 	selected?: boolean;

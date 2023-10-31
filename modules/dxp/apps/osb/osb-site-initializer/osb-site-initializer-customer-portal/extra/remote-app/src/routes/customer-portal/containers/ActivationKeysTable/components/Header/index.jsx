@@ -5,9 +5,11 @@
 
 import ClayAlert from '@clayui/alert';
 import {useCallback, useMemo, useState} from 'react';
+import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
 import i18n from '../../../../../../common/I18n';
 import {ROLE_TYPES} from '../../../../../../common/utils/constants';
 import {ALERT_DOWNLOAD_TYPE} from '../../../../utils/constants/alertDownloadType';
+import {has100YearsDifference} from '../../utils';
 import {ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT} from '../../utils/constants/alertAggregateKeysDownloadText';
 import {ALERT_ACTIVATION_MULTIPLE_KEYS_DOWNLOAD_TEXT} from '../../utils/constants/alertMultipleKeysDownloadText';
 import {DOWNLOADABLE_LICENSE_KEYS} from '../../utils/constants/downlodableLicenseKeys';
@@ -16,6 +18,7 @@ import BadgeFilter from '../BadgeFilter';
 import DeactivateButton from '../Deactivate';
 import DownloadAlert from '../DownloadAlert';
 import Filter from '../Filter';
+import RenewButton from '../Renew';
 import useGetAccountUserAccount from './hooks/useGetAccountUserAccount';
 
 const ActivationKeysTableHeader = ({
@@ -48,6 +51,8 @@ const ActivationKeysTableHeader = ({
 			return hasAdminRoles;
 		}
 	}, [userAccounts]);
+
+	const {featureFlags} = useAppPropertiesContext();
 
 	const [status, setStatus] = useState({
 		deactivate: '',
@@ -105,6 +110,26 @@ const ActivationKeysTableHeader = ({
 
 	const allowSelfProvisioning = project.allowSelfProvisioning;
 
+	function isBulkRenewAvailable(items) {
+		const firstItem = items[0];
+
+		for (const item of items) {
+			if (
+				item.productName !== firstItem.productName ||
+				item.expirationDate !== firstItem.expirationDate ||
+				item.startDate !== firstItem.startDate ||
+				has100YearsDifference(item.startDate, item.expirationDate)
+			) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+	const bulkRenewAvailable = isBulkRenewAvailable(
+		activationKeysByStatusPaginatedChecked
+	);
+
 	return (
 		<>
 			<div className="bg-neutral-1 d-flex flex-column pb-1 pt-3 px-3 rounded">
@@ -146,6 +171,23 @@ const ActivationKeysTableHeader = ({
 							</>
 						)}
 
+						{featureFlags.includes('ISSD-78') &&
+							isAdminOrPartnerManager &&
+							allowSelfProvisioning &&
+							activationKeysByStatusPaginatedChecked.length >=
+								2 &&
+							bulkRenewAvailable && (
+								<RenewButton
+									activationKeysByStatusPaginatedChecked={
+										activationKeysByStatusPaginatedChecked
+									}
+									filterCheckedActivationKeys={
+										filterCheckedActivationKeys
+									}
+									identifier="renew"
+								/>
+							)}
+
 						<ActionButton
 							activationKeysByStatusPaginatedChecked={
 								activationKeysByStatusPaginatedChecked
@@ -153,6 +195,7 @@ const ActivationKeysTableHeader = ({
 							filterCheckedActivationKeys={
 								filterCheckedActivationKeys
 							}
+							identifier="action"
 							isAbleToDownloadAggregateKeys={
 								isAbleToDownloadAggregateKeys
 							}

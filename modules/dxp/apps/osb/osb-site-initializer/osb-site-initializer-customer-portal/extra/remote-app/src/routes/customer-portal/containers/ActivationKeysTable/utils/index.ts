@@ -12,3 +12,4 @@ export * from './getEnvironmentType';
 export * from './getDoesNotExpire';
 export * from './getInstanceSize';
 export * from './getDropDownAvailableFields';
+export * from './has100YearsDifference';

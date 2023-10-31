@@ -17,6 +17,7 @@ import {getActivationKeysDownloadItems} from '../../utils/getActivationKeysDownl
 const ActionButton = ({
 	activationKeysByStatusPaginatedChecked,
 	filterCheckedActivationKeys,
+	identifier,
 	isAbleToDownloadAggregateKeys,
 	isAdminOrPartnerManager,
 	productName,
@@ -94,7 +95,14 @@ const ActionButton = ({
 		);
 	}
 
-	const handleRedirectPage = () => navigate('new');
+	const handleRedirectPage = () => {
+		navigate('new', {
+			state: {
+				activationKeys: [],
+				id: identifier,
+			},
+		});
+	};
 	const handleDeactivatePage = () => navigate('deactivate');
 
 	const activationKeysActionsItems = getActivationKeysActionsItems(

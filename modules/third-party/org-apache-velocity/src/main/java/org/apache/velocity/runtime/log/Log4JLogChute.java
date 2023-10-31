@@ -19,14 +19,16 @@ package org.apache.velocity.runtime.log;
  * under the License.    
  */
 
-import java.io.IOException;
-import java.lang.reflect.Field;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PatternLayout;
-import org.apache.log4j.RollingFileAppender;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
+import org.apache.logging.log4j.core.appender.RollingFileAppender;
+import org.apache.logging.log4j.core.config.LoggerConfig;
+import org.apache.logging.log4j.spi.AbstractLogger;
+
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.RuntimeServices;
+import org.apache.velocity.runtime.log.internal.Log4jUtil;
 import org.apache.velocity.util.ExceptionUtils;
 
 /**
@@ -48,7 +50,6 @@ public class Log4JLogChute implements LogChute
             "runtime.log.logsystem.log4j.logger.level";
 
     private RuntimeServices rsvc = null;
-    private boolean hasTrace = false;
     private RollingFileAppender appender = null;
 
     /**
@@ -69,68 +70,40 @@ public class Log4JLogChute implements LogChute
         String name = (String)rsvc.getProperty(RUNTIME_LOG_LOG4J_LOGGER);
         if (name != null)
         {
-            logger = Logger.getLogger(name);
-            log(DEBUG_ID, "Log4JLogChute using logger '" + name + '\'');
+			logger = (Logger)LogManager.getLogger(name);
+
+			log(DEBUG_ID, "Log4JLogChute using logger '" + name + '\'');
         }
         else
         {
             // create a logger with this class name to avoid conflicts
-            logger = Logger.getLogger(this.getClass().getName());
+			logger = (Logger)LogManager.getLogger(this.getClass().getName());
 
             // if we have a file property, then create a separate
             // rolling file log for velocity messages only
             String file = rsvc.getString(RuntimeConstants.RUNTIME_LOG);
             if (file != null && file.length() > 0)
             {
-                initAppender(file);
+				appender = Log4jUtil.createRollingFileAppender(file);
+
+				logger.addAppender(appender);
+
+				// don't inherit appenders from higher in the logger heirarchy
+
+				LoggerConfig loggerConfig = logger.get();
+
+				loggerConfig.setAdditive(false);
+
+				log(
+					DEBUG_ID,
+					"Log4JLogChute initialized using file '" + file + '\'');
             }
         }
 
         /* get and set specified level for this logger */
         String lvl = rsvc.getString(RUNTIME_LOG_LOG4J_LOGGER_LEVEL);
-        if (lvl != null)
-        {
-            Level level = Level.toLevel(lvl);
-            logger.setLevel(level);
-        }
-        
-        /* Ok, now let's see if this version of log4j supports the trace level. */
-        try
-        {
-            Field traceLevel = Level.class.getField("TRACE");
-            // we'll never get here in pre 1.2.12 log4j
-            hasTrace = true;
-        }
-        catch (NoSuchFieldException e)
-        {
-            log(DEBUG_ID,
-                "The version of log4j being used does not support the \"trace\" level.");
-        }
-    }
-
-    // This tries to create a file appender for the specified file name.
-    private void initAppender(String file) throws Exception
-    {
-        try
-        {
-            // to add the appender
-            PatternLayout layout = new PatternLayout("%d - %m%n");
-            this.appender = new RollingFileAppender(layout, file, true);
-
-            // if we successfully created the file appender,
-            // configure it and set the logger to use only it
-            appender.setMaxBackupIndex(1);
-            appender.setMaximumFileSize(100000);
-
-            // don't inherit appenders from higher in the logger heirarchy
-            logger.setAdditivity(false);
-            logger.addAppender(appender);
-            log(DEBUG_ID, "Log4JLogChute initialized using file '"+file+'\'');
-        }
-        catch (IOException ioe)
-        {
-            rsvc.getLog().error("Could not create file appender '"+file+'\'', ioe);
-            throw ExceptionUtils.createRuntimeException("Error configuring Log4JLogChute : ", ioe);
+        if (lvl != null) {
+			Log4jUtil.setLevel(logger.getName(), Level.toLevel(lvl));
         }
     }
 
@@ -144,28 +117,26 @@ public class Log4JLogChute implements LogChute
     {
         switch (level)
         {
-            case LogChute.WARN_ID:
-                logger.warn(message);
-                break;
-            case LogChute.INFO_ID:
-                logger.info(message);
-                break;
-            case LogChute.TRACE_ID:
-                if (hasTrace)
-                {
-                    logger.trace(message);
-                }
-                else
-                {
-                    logger.debug(message);
-                }
-                break;
-            case LogChute.ERROR_ID:
-                logger.error(message);
-                break;
-            case LogChute.DEBUG_ID:
-            default:
-                logger.debug(message);
+			case LogChute.WARN_ID:
+				logger.logIfEnabled(
+					_FQCN, Level.WARN, null, (Object)message, null);
+				break;
+			case LogChute.INFO_ID:
+				logger.logIfEnabled(
+					_FQCN, Level.INFO, null, (Object)message, null);
+				break;
+			case LogChute.TRACE_ID:
+				logger.logIfEnabled(
+					_FQCN, Level.TRACE, null, (Object)message, null);
+				break;
+			case LogChute.ERROR_ID:
+				logger.logIfEnabled(
+					_FQCN, Level.ERROR, null, (Object)message, null);
+				break;
+			case LogChute.DEBUG_ID:
+			default:
+				logger.logIfEnabled(
+					_FQCN, Level.DEBUG, null, (Object)message, null);
                 break;
         }
     }
@@ -177,28 +148,26 @@ public class Log4JLogChute implements LogChute
     {
         switch (level)
         {
-            case LogChute.WARN_ID:
-                logger.warn(message, t);
-                break;
-            case LogChute.INFO_ID:
-                logger.info(message, t);
-                break;
-            case LogChute.TRACE_ID:
-                if (hasTrace)
-                {
-                    logger.trace(message, t);
-                }
-                else
-                {
-                    logger.debug(message, t);
-                }
-                break;
-            case LogChute.ERROR_ID:
-                logger.error(message, t);
-                break;
-            case LogChute.DEBUG_ID:
-            default:
-                logger.debug(message, t);
+			case LogChute.WARN_ID:
+				logger.logIfEnabled(
+					_FQCN, Level.WARN, null, (Object)message, t);
+				break;
+			case LogChute.INFO_ID:
+				logger.logIfEnabled(
+					_FQCN, Level.INFO, null, (Object)message, t);
+				break;
+			case LogChute.TRACE_ID:
+				logger.logIfEnabled(
+					_FQCN, Level.TRACE, null, (Object)message, t);
+				break;
+			case LogChute.ERROR_ID:
+				logger.logIfEnabled(
+					_FQCN, Level.ERROR, null, (Object)message, t);
+				break;
+			case LogChute.DEBUG_ID:
+			default:
+				logger.logIfEnabled(
+					_FQCN, Level.DEBUG, null, (Object)message, t);
                 break;
         }
     }
@@ -215,19 +184,11 @@ public class Log4JLogChute implements LogChute
             case LogChute.INFO_ID:
                 return logger.isInfoEnabled();
             case LogChute.TRACE_ID:
-                if (hasTrace)
-                {
-                    return logger.isTraceEnabled();
-                }
-                else
-                {
-                    return logger.isDebugEnabled();
-                }
+				return logger.isTraceEnabled();
             case LogChute.WARN_ID:
-                return logger.isEnabledFor(Level.WARN);
+				return logger.isWarnEnabled();
             case LogChute.ERROR_ID:
-                // can't be disabled in log4j
-                return logger.isEnabledFor(Level.ERROR);
+				return logger.isErrorEnabled();
             default:
                 return true;
         }
@@ -247,10 +208,15 @@ public class Log4JLogChute implements LogChute
     {
         if (appender != null)
         {
-            logger.removeAppender(appender);
-            appender.close();
-            appender = null;
+			logger.removeAppender(appender);
+
+			appender.stop();
+
+			appender = null;
         }
     }
 
+	private static final String _FQCN = AbstractLogger.class.getName();
+
 }
+/* @generated */

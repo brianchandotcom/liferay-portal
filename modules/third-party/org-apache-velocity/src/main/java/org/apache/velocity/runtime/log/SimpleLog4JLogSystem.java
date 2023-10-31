@@ -19,12 +19,16 @@ package org.apache.velocity.runtime.log;
  * under the License.    
  */
 
-import org.apache.log4j.Category;
-import org.apache.log4j.Level;
-import org.apache.log4j.PatternLayout;
-import org.apache.log4j.RollingFileAppender;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
+import org.apache.logging.log4j.core.appender.RollingFileAppender;
+import org.apache.logging.log4j.core.config.LoggerConfig;
+import org.apache.logging.log4j.spi.AbstractLogger;
+
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.RuntimeServices;
+import org.apache.velocity.runtime.log.internal.Log4jUtil;
 
 /**
  * <p><em>This class is deprecated in favor of the new {@link Log4JLogChute},
@@ -46,7 +50,7 @@ public class SimpleLog4JLogSystem implements LogSystem
     private RollingFileAppender appender = null;
 
     /** log4java logging interface */
-    protected Category logger = null;
+    protected Logger logger = null;
 
     /**
      *
@@ -71,7 +75,7 @@ public class SimpleLog4JLogSystem implements LogSystem
 
         if ( categoryname != null )
         {
-            logger = Category.getInstance( categoryname );
+			logger = (Logger)LogManager.getLogger(categoryname);
 
             logVelocityMessage( 0,
                                 "SimpleLog4JLogSystem using category '" + categoryname + "'");
@@ -113,22 +117,24 @@ public class SimpleLog4JLogSystem implements LogSystem
          *  that might be used...
          */
 
-        logger = Category.getInstance(this.getClass().getName());
-        logger.setAdditivity(false);
+    	String loggerName = this.getClass().getName();
 
-        /*
-         * Priority is set for DEBUG becouse this implementation checks
-         * log level.
-         */
-        logger.setLevel(Level.DEBUG);
+		logger = (Logger)LogManager.getLogger(loggerName);
 
-        appender = new RollingFileAppender( new PatternLayout( "%d - %m%n"), logfile, true);
+		/*
+		 * Priority is set for DEBUG becouse this implementation checks
+		 * log level.
+		 */
 
-        appender.setMaxBackupIndex( 1 );
+		Log4jUtil.setLevel(loggerName, Level.DEBUG);
 
-        appender.setMaximumFileSize( 100000 );
+		LoggerConfig loggerConfig = logger.get();
 
-        logger.addAppender(appender);
+		loggerConfig.setAdditive(false);
+
+		appender = Log4jUtil.createRollingFileAppender(logfile);
+
+		logger.addAppender(appender);
     }
 
     /**
@@ -142,18 +148,22 @@ public class SimpleLog4JLogSystem implements LogSystem
         switch (level)
         {
             case LogSystem.WARN_ID:
-                logger.warn( message );
-                break;
+				logger.logIfEnabled(
+					_FQCN, Level.WARN, null, (Object)message, null);
+				break;
             case LogSystem.INFO_ID:
-                logger.info(message);
-                break;
+				logger.logIfEnabled(
+					_FQCN, Level.INFO, null, (Object)message, null);
+				break;
             case LogSystem.ERROR_ID:
-                logger.error(message);
-                break;
+				logger.logIfEnabled(
+					_FQCN, Level.ERROR, null, (Object)message, null);
+				break;
             case LogSystem.DEBUG_ID:
             default:
-                logger.debug(message);
-                break;
+				logger.logIfEnabled(
+					_FQCN, Level.DEBUG, null, (Object)message, null);
+				break;
         }
     }
 
@@ -171,9 +181,15 @@ public class SimpleLog4JLogSystem implements LogSystem
     {
         if (appender != null)
         {
-            logger.removeAppender(appender);
-            appender.close();
-            appender = null;
+			logger.removeAppender(appender);
+
+			appender.stop();
+
+			appender = null;
         }
     }
+
+	private static final String _FQCN = AbstractLogger.class.getName();
+
 }
+/* @generated */

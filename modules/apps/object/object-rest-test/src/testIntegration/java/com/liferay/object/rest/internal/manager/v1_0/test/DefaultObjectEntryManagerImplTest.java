@@ -498,11 +498,11 @@ public class DefaultObjectEntryManagerImplTest
 						"Id")),
 				null, null, null, null));
 
-		_tree = TreeTestUtil.createObjectDefinitionTree(
+		_objectDefinitionTree = TreeTestUtil.createObjectDefinitionTree(
 			objectDefinitionLocalService, _objectRelationshipLocalService,
 			_treeFactory);
 
-		Node node = _tree.getRootNode();
+		Node node = _objectDefinitionTree.getRootNode();
 
 		_rootObjectDefinition =
 			objectDefinitionLocalService.getObjectDefinition(
@@ -1014,7 +1014,7 @@ public class DefaultObjectEntryManagerImplTest
 
 		_assignAccountEntryRole(accountEntry, _buyerRole, _user);
 
-		Node rootNode = _tree.getRootNode();
+		Node rootNode = _objectDefinitionTree.getRootNode();
 
 		ObjectEntry objectEntry = _defaultObjectEntryManager.addObjectEntry(
 			_simpleDTOConverterContext,
@@ -1034,7 +1034,7 @@ public class DefaultObjectEntryManagerImplTest
 			objectDefinitionLocalService.fetchObjectDefinition(
 				companyId, "C_AA");
 
-		Node childNode = _tree.getNode(
+		Node childNode = _objectDefinitionTree.getNode(
 			objectDefinition.getObjectDefinitionId());
 
 		ObjectRelationship objectRelationship =
@@ -2018,7 +2018,7 @@ public class DefaultObjectEntryManagerImplTest
 		_user = _addUser();
 
 		TreeTestUtil.forEachNodeObjectDefinition(
-			_tree.iterator(), objectDefinitionLocalService,
+			_objectDefinitionTree.iterator(), objectDefinitionLocalService,
 			objectDefinition -> _assertObjectEntriesSize(objectDefinition, 0));
 
 		_addResourcePermission(
@@ -2027,13 +2027,13 @@ public class DefaultObjectEntryManagerImplTest
 		_assignAccountEntryRole(accountEntry1, _buyerRole, _user);
 
 		TreeTestUtil.forEachNodeObjectDefinition(
-			_tree.iterator(), objectDefinitionLocalService,
+			_objectDefinitionTree.iterator(), objectDefinitionLocalService,
 			objectDefinition -> _assertObjectEntriesSize(objectDefinition, 1));
 
 		_assignAccountEntryRole(accountEntry2, _buyerRole, _user);
 
 		TreeTestUtil.forEachNodeObjectDefinition(
-			_tree.iterator(), objectDefinitionLocalService,
+			_objectDefinitionTree.iterator(), objectDefinitionLocalService,
 			objectDefinition -> _assertObjectEntriesSize(objectDefinition, 2));
 	}
 
@@ -3721,6 +3721,8 @@ public class DefaultObjectEntryManagerImplTest
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition3;
 
+	private Tree _objectDefinitionTree;
+
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
 
@@ -3751,7 +3753,6 @@ public class DefaultObjectEntryManagerImplTest
 	private RoleLocalService _roleLocalService;
 
 	private ObjectDefinition _rootObjectDefinition;
-	private Tree _tree;
 
 	@Inject
 	private TreeFactory _treeFactory;

@@ -4,7 +4,7 @@ exports[`Custom Inputs Util createCustomValueMap should create an immutable valu
 Immutable.Record {
   "criterionGroup": Immutable.Map {
     "conjunctionName": "and",
-    "criteriaGroupId": "group_2",
+    "criteriaGroupId": "group_3963e0fe-6033-4101-8164-284e95230f43",
     "items": Immutable.List [
       Immutable.Map {
         "operatorName": "eq",

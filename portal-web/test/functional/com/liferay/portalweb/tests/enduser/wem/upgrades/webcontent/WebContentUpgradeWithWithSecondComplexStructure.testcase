@@ -22,7 +22,7 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@description = "This is a use case for LRQA-61632."
+	@description = "This is a use case for LRQA-61632. Can Add And Remove Translation To Web Content Structure With With Second Complex Structure"
 	@priority = 3
 	test CanAddAndRemoveTranslationToWebContentStructure {
 		task ("Add translation labels") {
@@ -132,7 +132,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-61632."
+	@description = "This is a use case for LRQA-61632. Can Add Default Value To Web Content Structure With With Second Complex Structure"
 	@priority = 3
 	test CanAddDefaultValueToWebContentStructure {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -174,7 +174,7 @@ definition {
 			value1 = "Edited LabelUFComunicado Field");
 	}
 
-	@description = "This is a use case for LRQA-61632."
+	@description = "This is a use case for LRQA-61632. Can Disable Searchable In Text Field With With Second Complex Structure"
 	@priority = 3
 	test CanDisableSearchableInTextField {
 		property data.archive.type = "data-archive-web-content-second-complex-fields";
@@ -200,7 +200,7 @@ definition {
 		SearchResults.viewSearchResultNotPresent(searchAssetTitle = "Web Content Complex Title 1");
 	}
 
-	@description = "This is a use case for LRQA-61632."
+	@description = "This is a use case for LRQA-61632. Can Duplicate Field Group With Nested Fields And Move Nested Field With With Second Complex Structure"
 	@priority = 3
 	test CanDuplicateFieldGroupWithNestedFieldsAndMoveNestedField {
 		task ("Duplicate the last field group with many nested fields, 10 times, and save") {
@@ -287,7 +287,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-61632."
+	@description = "This is a use case for LRQA-61632. Can Duplicate Repeatable Fields And Remove Them With With Second Complex Structure"
 	@priority = 3
 	test CanDuplicateRepeatableFieldsAndRemoveThem {
 		task ("Duplicate all fields that can be duplicated, 1-4 times") {
@@ -345,7 +345,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-61632. Can copy web content and web content structure. Set all fields to Required and check submission."
+	@description = "This is a use case for LRQA-61632. Can copy web content and web content structure. Set all fields to Required and check submission With With Second Complex Structure"
 	@priority = 3
 	test CanEditWebContentStructureFieldsToReqiredFields {
 		task ("Copy Article successfully") {
@@ -388,7 +388,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-61632."
+	@description = "This is a use case for LRQA-61632. Can Move Web Content To Folder With With Second Complex Structure"
 	@priority = 3
 	test CanMoveWebContentToFolder {
 		JSONWebcontent.addFolder(
@@ -405,7 +405,7 @@ definition {
 			webContentTitle = "Web Content Complex Title 1");
 	}
 
-	@description = "This is a use case for LRQA-61632. Preview fields entered."
+	@description = "This is a use case for LRQA-61632. Preview fields entered With With Second Complex Structure"
 	@priority = 3
 	test CanPreviewWebContent {
 		property test.run.type = "single";
@@ -444,9 +444,9 @@ definition {
 		AssertElementPresent(locator1 = "//img[contains(@src,'Document_1.jpg')]");
 	}
 
-	@description = "This is a use case for LRQA-61632."
+	@description = "This is a use case for LRQA-61632. Can Publish Draft Web Content And View Other Versions With With Second Complex Structure"
 	@priority = 3
-	test CanPulishDraftWebContentAndViewOtherVersions {
+	test CanPublishDraftWebContentAndViewOtherVersions {
 		task ("Save as Draft, and then preview other versions") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -478,7 +478,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-61632."
+	@description = "This is a use case for LRQA-61632. Can Select And View Web Content In WCD With With Second Complex Structure"
 	@priority = 3
 	test CanSelectAndViewWebContentInWCD {
 		property test.run.type = "single";
@@ -532,7 +532,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-61632. Enable Staging,Publish to live site, assert value entered persists,including images and links."
+	@description = "This is a use case for LRQA-61632. Enable Staging,Publish to live site, assert value entered persists,including images and links With With Second Complex Structure"
 	@priority = 3
 	test ViewWebcontentInStaging {
 		Staging.openStagingAdmin(siteURLKey = "test-site-name");

@@ -9,12 +9,14 @@ import React, {ReactNode} from 'react';
 interface RuleBuilderItemProps {
 	children: ReactNode;
 	onDeleteButtonClick: () => void;
+	showDeleteButton: boolean;
 	type: 'action' | 'condition';
 }
 
 export default function RuleBuilderItem({
 	children,
 	onDeleteButtonClick,
+	showDeleteButton,
 	type,
 }: RuleBuilderItemProps) {
 	return (
@@ -23,24 +25,26 @@ export default function RuleBuilderItem({
 		>
 			<div className="c-gap-2 d-flex flex-grow-1">{children}</div>
 
-			<ClayButtonWithIcon
-				aria-label={
-					type === 'action'
-						? Liferay.Language.get('delete-action')
-						: Liferay.Language.get('delete-condition')
-				}
-				borderless
-				className="page-editor__rule-builder-delete-button"
-				displayType="secondary"
-				onClick={() => onDeleteButtonClick()}
-				size="sm"
-				symbol="times-circle"
-				title={
-					type === 'action'
-						? Liferay.Language.get('delete-action')
-						: Liferay.Language.get('delete-condition')
-				}
-			/>
+			{showDeleteButton ? (
+				<ClayButtonWithIcon
+					aria-label={
+						type === 'action'
+							? Liferay.Language.get('delete-action')
+							: Liferay.Language.get('delete-condition')
+					}
+					borderless
+					className="page-editor__rule-builder-delete-button"
+					displayType="secondary"
+					onClick={() => onDeleteButtonClick()}
+					size="sm"
+					symbol="times-circle"
+					title={
+						type === 'action'
+							? Liferay.Language.get('delete-action')
+							: Liferay.Language.get('delete-condition')
+					}
+				/>
+			) : null}
 		</div>
 	);
 }

@@ -70,6 +70,13 @@ function deleteRule({
 }
 
 /**
+ * Get roles
+ */
+function getRoles(): Promise<Array<{name: string; roleId: string}>> {
+	return serviceFetch(config.getRolesURL, {});
+}
+
+/**
  * Get users
  */
 function getUsers(): Promise<Array<{screenName: string; userId: string}>> {
@@ -111,4 +118,4 @@ function updateRule({
 	);
 }
 
-export default {addRule, deleteRule, getUsers, updateRule};
+export default {addRule, deleteRule, getRoles, getUsers, updateRule};

@@ -31,6 +31,7 @@ components:
         KeywordBulkSelection:
             allOf:
                 - $ref: "#/components/schemas/DocumentBulkSelection"
+                  x-merge-properties: false
                 - properties:
                       keywordsToAdd:
                           items:
@@ -60,6 +61,7 @@ components:
         TaxonomyCategoryBulkSelection:
             allOf:
                 - $ref: "#/components/schemas/DocumentBulkSelection"
+                  x-merge-properties: false
                 - properties:
                       taxonomyCategoryIdsToAdd:
                           items:

@@ -9,6 +9,7 @@ import {InputHTMLAttributes} from 'react';
 import BaseWrapper from '../base/BaseWrapper';
 
 import './index.scss';
+
 import classNames from 'classnames';
 
 export type InputProps = {

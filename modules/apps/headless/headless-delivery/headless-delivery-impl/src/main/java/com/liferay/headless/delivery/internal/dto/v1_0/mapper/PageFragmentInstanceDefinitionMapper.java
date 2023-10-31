@@ -17,6 +17,7 @@ import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.headless.delivery.dto.v1_0.ActionExecutionResult;
 import com.liferay.headless.delivery.dto.v1_0.ClassPKReference;
+import com.liferay.headless.delivery.dto.v1_0.DisplayPageActionExecutionResult;
 import com.liferay.headless.delivery.dto.v1_0.Fragment;
 import com.liferay.headless.delivery.dto.v1_0.FragmentField;
 import com.liferay.headless.delivery.dto.v1_0.FragmentFieldAction;
@@ -388,7 +389,43 @@ public class PageFragmentInstanceDefinitionMapper {
 		String interaction = jsonObject.getString("interaction", null);
 
 		if (interaction.equals(
-				ActionEditableElementConstants.INTERACTION_NONE)) {
+				ActionEditableElementConstants.INTERACTION_DISPLAY_PAGE)) {
+
+			return new ActionExecutionResult() {
+				{
+					type = ActionExecutionResult.Type.DISPLAY_PAGE;
+
+					setValue(
+						() -> {
+							if (!saveMapping ||
+								!jsonObject.has("displayPageUniqueFieldId")) {
+
+								return null;
+							}
+
+							String displayPageUniqueFieldId =
+								jsonObject.getString(
+									"displayPageUniqueFieldId", null);
+
+							if (displayPageUniqueFieldId == null) {
+								return null;
+							}
+
+							return new DisplayPageActionExecutionResult() {
+								{
+									mapping = new Mapping() {
+										{
+											fieldKey = displayPageUniqueFieldId;
+										}
+									};
+								}
+							};
+						});
+				}
+			};
+		}
+		else if (interaction.equals(
+					ActionEditableElementConstants.INTERACTION_NONE)) {
 
 			return new ActionExecutionResult() {
 				{

@@ -20,4 +20,5 @@ export default interface MDFClaim extends Partial<LiferayObject> {
 	submitted?: boolean;
 	totalClaimAmount?: number;
 	totalMDFRequestedAmount?: number;
+	submitDate?: string;
 }

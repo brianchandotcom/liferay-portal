@@ -39,7 +39,7 @@ export default function useGetListItemsFromMDFClaims(
 					item.currency
 				),
 				[MDFClaimColumnKey.DATE_SUBMITTED]: getDateCustomFormat(
-					item.dateCreated as string,
+					item.submitDate as string,
 					customFormatDateOptions.SHORT_MONTH
 				),
 				[MDFClaimColumnKey.AMOUNT_PAID]: !item.claimPaid

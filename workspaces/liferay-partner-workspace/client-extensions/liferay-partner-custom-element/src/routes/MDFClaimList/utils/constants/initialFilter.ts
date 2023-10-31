@@ -4,7 +4,7 @@
  */
 
 export const INITIAL_FILTER = {
-	dateCreated: {
+	submitDate: {
 		dates: {
 			endDate: '',
 			startDate: '',

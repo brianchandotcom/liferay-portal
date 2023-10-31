@@ -23,13 +23,13 @@ export default function useFilters() {
 		let hasFilter = false;
 
 		if (
-			filters.dateCreated.dates.endDate ||
-			filters.dateCreated.dates.startDate
+			filters.submitDate.dates.endDate ||
+			filters.submitDate.dates.startDate
 		) {
 			hasFilter = true;
 			initialFilter = getDateCreatedFilterTerm(
 				initialFilter,
-				filters.dateCreated
+				filters.submitDate
 			);
 		}
 
@@ -85,7 +85,7 @@ export default function useFilters() {
 
 		setFilterTerm(initialFilter);
 	}, [
-		filters.dateCreated,
+		filters.submitDate,
 		filters.partner,
 		filters.searchTerm,
 		filters.status,

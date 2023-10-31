@@ -452,7 +452,7 @@
 																		},
 																		"text": {
 																			"mapping": {
-																				"fieldKey": "ObjectEntry_createDate",
+																				"fieldKey": "ObjectEntry_submitDate",
 																				"itemReference": {
 																					"contextSource": "DisplayPageItem"
 																				}

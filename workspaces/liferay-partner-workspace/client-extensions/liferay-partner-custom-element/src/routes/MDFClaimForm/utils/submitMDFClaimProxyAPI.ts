@@ -46,6 +46,7 @@ export default async function submitMDFClaimProxyAPI(
 		}
 		else {
 			mdfClaim.submitted = true;
+			mdfClaim.submitDate = new Date().toISOString();
 
 			dtoMDFClaimResponse = await createMDFClaim(
 				ResourceName.MDF_CLAIM_DXP,

@@ -157,7 +157,7 @@ const MDFClaimList = () => {
 											startDate: string;
 										}) => {
 											onFilter({
-												dateCreated: {
+												submitDate: {
 													dates,
 												},
 											});

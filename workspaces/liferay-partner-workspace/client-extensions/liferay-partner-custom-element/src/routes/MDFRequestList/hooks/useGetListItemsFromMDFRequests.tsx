@@ -36,7 +36,7 @@ export default function useGetListItemsFromMDFRequests(
 					: getIntlNumberFormat(item.currency).format(
 							Number(item.totalClaimedRequest)
 					  ),
-				...getMDFDates(item.dateCreated, item.dateModified),
+				...getMDFDates(item.submitDate, item.dateModified),
 				...getMDFBudgetInfos(
 					item.totalCostOfExpense,
 					item.totalMDFRequestAmount,

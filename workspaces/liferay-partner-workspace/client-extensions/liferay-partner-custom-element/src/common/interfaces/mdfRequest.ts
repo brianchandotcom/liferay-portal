@@ -35,4 +35,5 @@ export default interface MDFRequest extends Partial<LiferayObject> {
 	totalMDFRequestAmount: number;
 	totalPaidAmount?: string;
 	totalRequested?: number;
+	submitDate?: string;
 }

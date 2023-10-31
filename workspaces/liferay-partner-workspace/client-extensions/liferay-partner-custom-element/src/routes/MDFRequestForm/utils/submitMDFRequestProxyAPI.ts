@@ -39,6 +39,7 @@ export default async function createMDFRequestProxyAPI(mdfRequest: MDFRequest) {
 		}
 		else {
 			mdfRequest.submitted = true;
+			mdfRequest.submitDate = new Date().toISOString();
 
 			dtoMDFRequestResponse = await createMDFRequest(
 				ResourceName.MDF_REQUEST_DXP,

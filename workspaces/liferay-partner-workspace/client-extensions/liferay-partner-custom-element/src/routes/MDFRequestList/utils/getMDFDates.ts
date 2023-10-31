@@ -8,12 +8,12 @@ import {customFormatDateOptions} from '../../../common/utils/constants/customFor
 import getDateCustomFormat from '../../../common/utils/getDateCustomFormat';
 
 export default function getMDFDates(
-	dateCreated?: string,
+	submitDate?: string,
 	dateModified?: string
 ) {
-	if (dateCreated && dateModified) {
+	if (submitDate && dateModified) {
 		const dateSubmitted = getDateCustomFormat(
-			dateCreated,
+			submitDate,
 			customFormatDateOptions.SHORT_MONTH
 		);
 

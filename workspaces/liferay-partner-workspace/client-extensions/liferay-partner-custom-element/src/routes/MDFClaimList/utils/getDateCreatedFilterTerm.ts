@@ -7,20 +7,20 @@ import {INITIAL_FILTER} from './constants/initialFilter';
 
 export default function getDateCreatedFilterTerm(
 	initialFilter: string,
-	activityPeriod: typeof INITIAL_FILTER.dateCreated
+	activityPeriod: typeof INITIAL_FILTER.submitDate
 ) {
 	const filterDates = [];
 
 	if (activityPeriod.dates.startDate) {
 		filterDates.push(
-			`dateCreated ge ${new Date(
+			`submitDate ge ${new Date(
 				activityPeriod.dates.startDate
 			).toISOString()}`
 		);
 	}
 	if (activityPeriod.dates.endDate) {
 		filterDates.push(
-			`dateCreated le ${new Date(
+			`submitDate le ${new Date(
 				activityPeriod.dates.endDate
 			).toISOString()}`
 		);

@@ -107,7 +107,8 @@ public class ActionExecutionResult implements Cloneable, Serializable {
 
 	public static enum Type {
 
-		NONE("None"), NOTIFICATION("Notification"), PAGE("Page"), URL("URL");
+		DISPLAY_PAGE("DisplayPage"), NONE("None"), NOTIFICATION("Notification"),
+		PAGE("Page"), URL("URL");
 
 		public static Type create(String value) {
 			for (Type type : values()) {

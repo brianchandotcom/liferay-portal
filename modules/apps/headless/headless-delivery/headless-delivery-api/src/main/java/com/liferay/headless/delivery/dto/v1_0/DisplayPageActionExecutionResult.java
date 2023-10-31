@@ -1,19 +1,16 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.delivery.dto.v1_0;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
@@ -40,45 +37,39 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName(
-	description = "Represents a definition of an action execution result.",
-	value = "ActionExecutionResult"
+	description = "Represents a definition of an action execution of type display page.",
+	value = "DisplayPageActionExecutionResult"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "ActionExecutionResult")
-public class ActionExecutionResult implements Serializable {
+@XmlRootElement(name = "DisplayPageActionExecutionResult")
+public class DisplayPageActionExecutionResult implements Serializable {
 
-	public static ActionExecutionResult toDTO(String json) {
-		return ObjectMapperUtil.readValue(ActionExecutionResult.class, json);
+	public static DisplayPageActionExecutionResult toDTO(String json) {
+		return ObjectMapperUtil.readValue(
+			DisplayPageActionExecutionResult.class, json);
 	}
 
-	public static ActionExecutionResult unsafeToDTO(String json) {
+	public static DisplayPageActionExecutionResult unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			ActionExecutionResult.class, json);
+			DisplayPageActionExecutionResult.class, json);
 	}
 
-	@Schema(description = "The type of result.")
+	@Schema(description = "The mapping of the display page action result.")
 	@Valid
-	public Type getType() {
-		return type;
+	public Mapping getMapping() {
+		return mapping;
+	}
+
+	public void setMapping(Mapping mapping) {
+		this.mapping = mapping;
 	}
 
 	@JsonIgnore
-	public String getTypeAsString() {
-		if (type == null) {
-			return null;
-		}
+	public void setMapping(
+		UnsafeSupplier<Mapping, Exception> mappingUnsafeSupplier) {
 
-		return type.toString();
-	}
-
-	public void setType(Type type) {
-		this.type = type;
-	}
-
-	@JsonIgnore
-	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
 		try {
-			type = typeUnsafeSupplier.get();
+			mapping = mappingUnsafeSupplier.get();
 		}
 		catch (RuntimeException re) {
 			throw re;
@@ -88,38 +79,11 @@ public class ActionExecutionResult implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The type of result.")
+	@GraphQLField(
+		description = "The mapping of the display page action result."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Type type;
-
-	@Schema
-	@Valid
-	public Object getValue() {
-		return value;
-	}
-
-	public void setValue(Object value) {
-		this.value = value;
-	}
-
-	@JsonIgnore
-	public void setValue(
-		UnsafeSupplier<Object, Exception> valueUnsafeSupplier) {
-
-		try {
-			value = valueUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object value;
+	protected Mapping mapping;
 
 	@Override
 	public boolean equals(Object object) {
@@ -127,14 +91,15 @@ public class ActionExecutionResult implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof ActionExecutionResult)) {
+		if (!(object instanceof DisplayPageActionExecutionResult)) {
 			return false;
 		}
 
-		ActionExecutionResult actionExecutionResult =
-			(ActionExecutionResult)object;
+		DisplayPageActionExecutionResult displayPageActionExecutionResult =
+			(DisplayPageActionExecutionResult)object;
 
-		return Objects.equals(toString(), actionExecutionResult.toString());
+		return Objects.equals(
+			toString(), displayPageActionExecutionResult.toString());
 	}
 
 	@Override
@@ -149,38 +114,14 @@ public class ActionExecutionResult implements Serializable {
 
 		sb.append("{");
 
-		if (type != null) {
+		if (mapping != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"type\": ");
+			sb.append("\"mapping\": ");
 
-			sb.append("\"");
-
-			sb.append(type);
-
-			sb.append("\"");
-		}
-
-		if (value != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"value\": ");
-
-			if (value instanceof Map) {
-				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)value));
-			}
-			else if (value instanceof String) {
-				sb.append("\"");
-				sb.append(_escape((String)value));
-				sb.append("\"");
-			}
-			else {
-				sb.append(value);
-			}
+			sb.append(String.valueOf(mapping));
 		}
 
 		sb.append("}");
@@ -190,49 +131,10 @@ public class ActionExecutionResult implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.ActionExecutionResult",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.DisplayPageActionExecutionResult",
 		name = "x-class-name"
 	)
 	public String xClassName;
-
-	@GraphQLName("Type")
-	public static enum Type {
-
-		DISPLAY_PAGE("DisplayPage"), NONE("None"), NOTIFICATION("Notification"),
-		PAGE("Page"), URL("URL");
-
-		@JsonCreator
-		public static Type create(String value) {
-			if ((value == null) || value.equals("")) {
-				return null;
-			}
-
-			for (Type type : values()) {
-				if (Objects.equals(type.getValue(), value)) {
-					return type;
-				}
-			}
-
-			throw new IllegalArgumentException("Invalid enum value: " + value);
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Type(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

@@ -189,6 +189,44 @@ public class GitUtil {
 		return sb.toString();
 	}
 
+	public static List<String> getFullBranchCommitMessages(
+			String baseDirName, String gitWorkingBranchName)
+		throws Exception {
+
+		String gitWorkingBranchLatestCommitId = _getLatestCommitId(
+			gitWorkingBranchName, "origin/" + gitWorkingBranchName,
+			"upstream/" + gitWorkingBranchName);
+
+		List<String> commitMessages = new ArrayList<>();
+
+		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
+			"git log --pretty=format:%B--messageEnd " +
+				gitWorkingBranchLatestCommitId + "..HEAD");
+
+		String line = null;
+
+		StringBundler sb = new StringBundler();
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			if (line.equals("--messageEnd")) {
+				if (sb.index() > 1) {
+					sb.setIndex(sb.index() - 1);
+				}
+
+				commitMessages.add(sb.toString());
+
+				sb = new StringBundler();
+
+				continue;
+			}
+
+			sb.append(line);
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		return commitMessages;
+	}
+
 	public static List<String> getLatestAuthorFileNames(String baseDirName)
 		throws Exception {
 

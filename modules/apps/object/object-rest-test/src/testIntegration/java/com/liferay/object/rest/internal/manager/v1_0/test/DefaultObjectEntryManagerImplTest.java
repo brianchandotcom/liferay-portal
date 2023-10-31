@@ -63,6 +63,7 @@ import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectFilterLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.TreeTestUtil;
+import com.liferay.object.tree.Edge;
 import com.liferay.object.tree.Node;
 import com.liferay.object.tree.Tree;
 import com.liferay.object.tree.TreeFactory;
@@ -1025,10 +1026,11 @@ public class DefaultObjectEntryManagerImplTest
 		Node childNode = _objectDefinitionTree.getNode(
 			objectDefinition.getObjectDefinitionId());
 
+		Edge edge = childNode.getEdge();
+
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.getObjectRelationship(
-				childNode.getEdge(
-				).getObjectRelationshipId());
+				edge.getObjectRelationshipId());
 
 		ObjectField objectField = objectFieldLocalService.getObjectField(
 			objectRelationship.getObjectFieldId2());

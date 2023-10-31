@@ -23,6 +23,7 @@ import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedObject
 import com.liferay.object.exception.ObjectDefinitionActiveException;
 import com.liferay.object.exception.ObjectDefinitionEnableCategorizationException;
 import com.liferay.object.exception.ObjectDefinitionEnableCommentsException;
+import com.liferay.object.exception.ObjectDefinitionEnableLocalizationException;
 import com.liferay.object.exception.ObjectDefinitionEnableObjectEntryHistoryException;
 import com.liferay.object.exception.ObjectDefinitionExternalReferenceCodeException;
 import com.liferay.object.exception.ObjectDefinitionLabelException;
@@ -1774,10 +1775,12 @@ public class ObjectDefinitionLocalServiceImpl
 				"the-object-definition-is-already-published");
 		}
 
+		List<ObjectField> objectFields =
+			_objectFieldPersistence.findByObjectDefinitionId(
+				objectDefinition.getObjectDefinitionId());
+
 		if (!ListUtil.exists(
-				_objectFieldPersistence.findByObjectDefinitionId(
-					objectDefinition.getObjectDefinitionId()),
-				objectField -> !objectField.isMetadata())) {
+				objectFields, objectField -> !objectField.isMetadata())) {
 
 			throw new ObjectDefinitionStatusException(
 				"At least one object field must be added when publishing the " +
@@ -1794,6 +1797,20 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 		objectDefinition = objectDefinitionPersistence.update(objectDefinition);
+
+		for (ObjectField objectField : objectFields) {
+			if (objectField.isLocalized() &&
+				!objectDefinition.isEnableLocalization()) {
+
+				throw new ObjectDefinitionEnableLocalizationException(
+					"You cannot disable entry translation for the object " +
+						"definition because translation is enabled for " +
+							"custom fields",
+					"you-cannot-disable-entry-translation-for-the-object-" +
+						"definition-because-translation-is-enabled-for-" +
+							"custom-fields");
+			}
+		}
 
 		_createLocalizationTable(objectDefinition);
 		_createTable(objectDefinition.getDBTableName(), objectDefinition);

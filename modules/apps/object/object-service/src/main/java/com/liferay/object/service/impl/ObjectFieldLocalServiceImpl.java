@@ -1546,7 +1546,9 @@ public class ObjectFieldLocalServiceImpl
 					" business types support localization"));
 		}
 
-		if (!objectDefinition.isEnableLocalization()) {
+		if (!objectDefinition.isEnableLocalization() &&
+			objectDefinition.isApproved()) {
+
 			throw new ObjectDefinitionEnableLocalizationException();
 		}
 

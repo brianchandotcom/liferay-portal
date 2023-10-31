@@ -16,18 +16,22 @@ public class ObjectDefinitionEnableLocalizationException
 	public ObjectDefinitionEnableLocalizationException() {
 	}
 
-	public ObjectDefinitionEnableLocalizationException(String msg) {
-		super(msg);
+	public ObjectDefinitionEnableLocalizationException(String message) {
+		super(message);
 	}
 
 	public ObjectDefinitionEnableLocalizationException(
-		String msg, Throwable throwable) {
+		String message, String messageKey) {
 
-		super(msg, throwable);
+		super(message);
+
+		_messageKey = messageKey;
 	}
 
-	public ObjectDefinitionEnableLocalizationException(Throwable throwable) {
-		super(throwable);
+	public String getMessageKey() {
+		return _messageKey;
 	}
+
+	private String _messageKey;
 
 }

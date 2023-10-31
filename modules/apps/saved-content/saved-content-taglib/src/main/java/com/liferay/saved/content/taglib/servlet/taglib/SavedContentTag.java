@@ -123,26 +123,18 @@ public class SavedContentTag extends IncludeTag {
 					WebKeys.THEME_DISPLAY);
 
 			httpServletRequest.setAttribute(
-				"liferay-saved-content:saved-content:ariaLabel",
-				_getAriaLabel(httpServletRequest));
-			httpServletRequest.setAttribute(
 				"liferay-saved-content:saved-content:data",
 				_getData(httpServletRequest, themeDisplay));
+
+			httpServletRequest.setAttribute(
+				"liferay-saved-content:saved-content:label",
+				_getLabel(httpServletRequest));
 			httpServletRequest.setAttribute(
 				"liferay-saved-content:saved-content:saved", _saved);
 		}
 		catch (Exception exception) {
 			_log.error(exception);
 		}
-	}
-
-	private String _getAriaLabel(HttpServletRequest httpServletRequest) {
-		if (_saved) {
-			return LanguageUtil.format(
-				httpServletRequest, "remove-x", _contentTitle);
-		}
-
-		return LanguageUtil.format(httpServletRequest, "save-x", _contentTitle);
 	}
 
 	private Map<String, Object> _getData(
@@ -168,6 +160,15 @@ public class SavedContentTag extends IncludeTag {
 		).put(
 			"savedContentURL", _getURL(httpServletRequest)
 		).build();
+	}
+
+	private String _getLabel(HttpServletRequest httpServletRequest) {
+		if (_saved) {
+			return LanguageUtil.format(
+				httpServletRequest, "remove-x", _contentTitle);
+		}
+
+		return LanguageUtil.format(httpServletRequest, "save-x", _contentTitle);
 	}
 
 	private String _getURL(HttpServletRequest httpServletRequest) {

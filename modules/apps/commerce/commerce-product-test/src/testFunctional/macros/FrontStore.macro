@@ -579,15 +579,21 @@ definition {
 
 	@summary = "Default summary"
 	macro setAssociatedFSOptionsValue(date = null, boolean = null, multipleSelectionValuesChecked = null, multipleSelectionValuesNotChecked = null, numeric = null, text = null, singleSelectionValueChecked = null) {
-		if (${boolean} == "enabled") {
-			Check.checkNotVisible(
-				checkboxName = "",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-		}
-		else if (${boolean} == "disabled") {
-			Uncheck.uncheckNotVisible(
-				checkboxName = "",
-				locator1 = "Checkbox#ANY_CHECKBOX");
+		if(isSet(boolean)) {
+			var booleanStatus = StringUtil.extractFirst(${boolean}, ":");
+			var booleanCheckboxName = StringUtil.extractLast(${boolean}, ":");
+
+			if (${booleanStatus} == "enabled") {
+				Check.checkNotVisible(
+					checkboxName = "${booleanCheckboxName}",
+					locator1 = "CommerceFrontStore#BOOLEAN_CHECKBOX");
+
+			}
+			else if (${booleanStatus} == "disabled") {
+				Uncheck.uncheckNotVisible(
+					checkboxName = "${booleanCheckboxName}",
+					locator1 = "CommerceFrontStore#BOOLEAN_CHECKBOX");
+			}
 		}
 
 		if (isSet(date)) {
@@ -901,11 +907,13 @@ definition {
 			}
 
 			for (var bundledItem : list ${bundledItems}) {
-				AssertTextEquals.assertPartialText(
-					key_cartItemSku = ${cartItemSku},
-					key_index = ${index},
-					locator1 = "CommerceAccelerators#MINI_CART_SPECIFIC_ITEM_BUNDLED_ITEMS_N",
-					value1 = ${bundledItem});
+				AssertElementPresent(
+					key_cartItemName = "${optionName}",
+					locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_H6");
+
+				AssertElementPresent(
+					key_cartItemSku = "${bundledItems}",
+					locator1 = "CommerceAccelerators#MINI_CART_ITEM_SKU");
 			}
 		}
 

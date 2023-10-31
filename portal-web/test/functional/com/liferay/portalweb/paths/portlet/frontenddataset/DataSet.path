@@ -395,7 +395,7 @@
 </tr>
 <tr>
 	<td>SELECT_DATASET</td>
-	<td>//table[contains(@class,'table-list')]//tr[contains(@class,'orderable-table-row') and contains(.,'${key_nameField}')]//td[@class="drag-handle-cell"]//button[@aria-label="Drag Item"]</td>
+	<td>//table[contains(@class,'table-list')]//tr[contains(@class,'orderable-table-row') and contains(.,'${key_nameField}')]//td[@class="drag-handle-cell"]//button[contains(@aria-label, 'Drag')]</td>
 	<td></td>
 </tr>
 

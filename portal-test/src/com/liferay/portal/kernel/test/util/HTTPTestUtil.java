@@ -44,9 +44,17 @@ public class HTTPTestUtil {
 			String body, String endpoint, Http.Method httpMethod)
 		throws Exception {
 
+		return JSONFactoryUtil.createJSONObject(
+			invokeToString(body, endpoint, httpMethod));
+	}
+
+	public static String invokeToString(
+			String body, String endpoint, Http.Method httpMethod)
+		throws Exception {
+
 		Http.Options options = _getHttpOptions(body, endpoint, httpMethod);
 
-		return JSONFactoryUtil.createJSONObject(HttpUtil.URLtoString(options));
+		return HttpUtil.URLtoString(options);
 	}
 
 	public static class HTTPTestUtilCustomizer {

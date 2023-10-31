@@ -385,7 +385,7 @@
 
 <tr>
 	<td>FILTER_BY_SELECT</td>
-	<td>//div[label[contains(.,'Filter By')]]/select</td>
+	<td>//div[label[contains(.,'Filter By')]]/..//button[contains(@class,'select')]</td>
 	<td></td>
 </tr>
 <tr>

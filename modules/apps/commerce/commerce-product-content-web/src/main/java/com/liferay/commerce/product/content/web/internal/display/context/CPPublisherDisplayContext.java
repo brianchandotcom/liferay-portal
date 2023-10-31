@@ -196,7 +196,7 @@ public class CPPublisherDisplayContext extends BaseCPPublisherDisplayContext {
 			_amImageHTMLTagFactory,
 			_portal.getClassNameId(CPDefinition.class.getName()),
 			cpDefinition.getCPDefinitionId(), _commerceCatalogDefaultImage,
-			_commerceMediaResolver, _cpAttachmentFileEntryLocalService,
+			_commerceMediaResolver, _cpAttachmentFileEntryLocalService, false,
 			cpDefinition.getGroupId(), themeDisplay);
 	}
 

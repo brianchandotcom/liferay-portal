@@ -2,7 +2,7 @@ apply plugin: "com.liferay.js.module.config.generator"
 apply plugin: "java-library"
 
 node {
-	nodeVersion = "18.18.2"
+	nodeVersion = "14.19.0"
 	useNpm = true
 }
 

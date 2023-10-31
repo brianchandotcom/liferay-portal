@@ -7,35 +7,18 @@ package com.liferay.analytics.settings.internal.configuration;
 
 import com.liferay.analytics.batch.exportimport.AnalyticsDXPEntityBatchExporter;
 import com.liferay.analytics.batch.exportimport.constants.AnalyticsDXPEntityBatchExporterConstants;
-import com.liferay.analytics.message.sender.constants.AnalyticsMessagesDestinationNames;
-import com.liferay.analytics.message.sender.constants.AnalyticsMessagesProcessorCommand;
-import com.liferay.analytics.message.sender.model.AnalyticsMessage;
-import com.liferay.analytics.message.sender.model.listener.AnalyticsEntityModel;
-import com.liferay.analytics.message.storage.service.AnalyticsMessageLocalService;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
-import com.liferay.analytics.settings.internal.model.AnalyticsUserImpl;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.analytics.settings.security.constants.AnalyticsSecurityConstants;
-import com.liferay.expando.kernel.model.ExpandoColumn;
-import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
-import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBus;
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
-import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
@@ -44,29 +27,16 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-
-import java.nio.charset.Charset;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Dictionary;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -74,7 +44,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
-import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -181,15 +150,11 @@ public class AnalyticsConfigurationRegistryImpl
 				"com.liferay.analytics.settings.configuration." +
 					"AnalyticsConfiguration.scoped"
 			).build());
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, AnalyticsEntityModel.class, null,
-			new AnalyticsEntityModelServiceReferenceMapper(bundleContext));
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		_serviceRegistration.unregister();
-		_serviceTrackerMap.close();
 	}
 
 	@Modified
@@ -359,7 +324,7 @@ public class AnalyticsConfigurationRegistryImpl
 		return false;
 	}
 
-	private void _sync(long companyId, Dictionary<String, ?> dictionary) {
+	private void _sync(long companyId) {
 		try {
 			Set<String> refreshDispatchTriggerNames = new HashSet<>();
 			Set<String> unscheduleDispatchTriggerNames = new HashSet<>();
@@ -409,20 +374,20 @@ public class AnalyticsConfigurationRegistryImpl
 
 			if ((_analyticsSettingsManager.syncedAccountSettingsChanged(
 					companyId) &&
-				  _analyticsSettingsManager.syncedAccountSettingsEnabled(
-					  companyId)) ||
-				 (_analyticsSettingsManager.syncedAccountSettingsEnabled(
-					 companyId) &&
-				  _analyticsSettingsManager.syncedAccountFieldsChanged(
-					  companyId)) ||
-				 (_analyticsSettingsManager.syncedContactSettingsChanged(
-					 companyId) &&
-				  _analyticsSettingsManager.syncedContactSettingsEnabled(
-					  companyId)) ||
-				 (_analyticsSettingsManager.syncedContactSettingsEnabled(
-					 companyId) &&
-				  _analyticsSettingsManager.syncedUserFieldsChanged(
-					  companyId))) {
+				 _analyticsSettingsManager.syncedAccountSettingsEnabled(
+					 companyId)) ||
+				(_analyticsSettingsManager.syncedAccountSettingsEnabled(
+					companyId) &&
+				 _analyticsSettingsManager.syncedAccountFieldsChanged(
+					 companyId)) ||
+				(_analyticsSettingsManager.syncedContactSettingsChanged(
+					companyId) &&
+				 _analyticsSettingsManager.syncedContactSettingsEnabled(
+					 companyId)) ||
+				(_analyticsSettingsManager.syncedContactSettingsEnabled(
+					companyId) &&
+				 _analyticsSettingsManager.syncedUserFieldsChanged(
+					 companyId))) {
 
 				refreshDispatchTriggerNames.add(
 					AnalyticsDXPEntityBatchExporterConstants.
@@ -505,7 +470,7 @@ public class AnalyticsConfigurationRegistryImpl
 				_firstSync(companyId);
 			}
 			else {
-				_sync((Long)dictionary.get("companyId"), dictionary);
+				_sync((Long)dictionary.get("companyId"));
 			}
 		}
 	}
@@ -551,8 +516,6 @@ public class AnalyticsConfigurationRegistryImpl
 	private SAPEntryLocalService _sapEntryLocalService;
 
 	private ServiceRegistration<ManagedServiceFactory> _serviceRegistration;
-	private ServiceTrackerMap<String, AnalyticsEntityModel<?>>
-		_serviceTrackerMap;
 	private volatile AnalyticsConfiguration _systemAnalyticsConfiguration;
 
 	@Reference
@@ -605,48 +568,6 @@ public class AnalyticsConfigurationRegistryImpl
 				CompanyThreadLocal.setCompanyId(companyThreadLocalCompanyId);
 			}
 		}
-
-	}
-
-	private class AnalyticsEntityModelServiceReferenceMapper
-		<T extends BaseModel<T>>
-			implements ServiceReferenceMapper<String, AnalyticsEntityModel<T>> {
-
-		public AnalyticsEntityModelServiceReferenceMapper(
-			BundleContext bundleContext) {
-
-			_bundleContext = bundleContext;
-		}
-
-		@Override
-		public void map(
-			ServiceReference<AnalyticsEntityModel<T>> serviceReference,
-			Emitter<String> emitter) {
-
-			AnalyticsEntityModel<?> analyticsEntityModel =
-				_bundleContext.getService(serviceReference);
-
-			Class<?> clazz = _getParameterizedClass(
-				analyticsEntityModel.getClass());
-
-			try {
-				emitter.emit(clazz.getName());
-			}
-			finally {
-				_bundleContext.ungetService(serviceReference);
-			}
-		}
-
-		private Class<?> _getParameterizedClass(Class<?> clazz) {
-			ParameterizedType parameterizedType =
-				(ParameterizedType)clazz.getGenericSuperclass();
-
-			Type[] types = parameterizedType.getActualTypeArguments();
-
-			return (Class<?>)types[0];
-		}
-
-		private final BundleContext _bundleContext;
 
 	}
 

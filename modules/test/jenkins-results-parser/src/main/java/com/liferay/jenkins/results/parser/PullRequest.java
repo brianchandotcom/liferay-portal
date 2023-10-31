@@ -84,9 +84,9 @@ public class PullRequest {
 			StringBuilder sb = new StringBuilder();
 
 			sb.append("Unable to post comment in GitHub pull request\n");
-			sb.append("pull request: ");
+			sb.append("URL: ");
 			sb.append(getURL());
-			sb.append("\n message:\n");
+			sb.append("\nMessage:\n");
 			sb.append(body);
 			sb.append("\n");
 

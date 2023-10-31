@@ -282,8 +282,8 @@ public class ResourceOpenAPIParser {
 	}
 
 	public static String getParameters(
-		List<JavaMethodParameter> javaMethodParameters, Operation operation,
-		Map<String, Schema> schemas, boolean annotation) {
+		ConfigYAML configYAML, List<JavaMethodParameter> javaMethodParameters,
+		Operation operation, Map<String, Schema> schemas, boolean annotation) {
 
 		StringBuilder sb = new StringBuilder();
 
@@ -292,7 +292,7 @@ public class ResourceOpenAPIParser {
 
 			if (annotation) {
 				parameterAnnotation = _getParameterAnnotation(
-					javaMethodParameter, operation, schemas);
+					configYAML, javaMethodParameter, operation, schemas);
 			}
 
 			sb.append(
@@ -686,7 +686,7 @@ public class ResourceOpenAPIParser {
 	}
 
 	private static String _getDefaultValue(
-		Schema schema, Map<String, Schema> schemas) {
+		ConfigYAML configYAML, Schema schema, Map<String, Schema> schemas) {
 
 		if (schema.getDefault() != null) {
 			return schema.getDefault();
@@ -699,7 +699,7 @@ public class ResourceOpenAPIParser {
 
 			if (referenceSchema == null) {
 				Map<String, Schema> enumSchemas =
-					OpenAPIUtil.getGlobalEnumSchemas(schemas);
+					OpenAPIUtil.getGlobalEnumSchemas(configYAML, schemas);
 
 				referenceSchema = enumSchemas.get(referenceName);
 			}
@@ -1055,8 +1055,8 @@ public class ResourceOpenAPIParser {
 	}
 
 	private static String _getParameterAnnotation(
-		JavaMethodParameter javaMethodParameter, Operation operation,
-		Map<String, Schema> schemas) {
+		ConfigYAML configYAML, JavaMethodParameter javaMethodParameter,
+		Operation operation, Map<String, Schema> schemas) {
 
 		List<Parameter> parameters = operation.getParameters();
 
@@ -1106,7 +1106,7 @@ public class ResourceOpenAPIParser {
 			StringBundler sb = new StringBundler(11);
 
 			String defaultValue = _getDefaultValue(
-				parameter.getSchema(), schemas);
+				configYAML, parameter.getSchema(), schemas);
 
 			if (defaultValue != null) {
 				sb.append("@javax.ws.rs.DefaultValue(\"");

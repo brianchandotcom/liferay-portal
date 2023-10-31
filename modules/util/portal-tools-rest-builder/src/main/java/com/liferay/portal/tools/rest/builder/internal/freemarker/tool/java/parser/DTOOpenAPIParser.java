@@ -28,7 +28,7 @@ import java.util.TreeMap;
 public class DTOOpenAPIParser {
 
 	public static Map<String, Schema> getEnumSchemas(
-		OpenAPIYAML openAPIYAML, Schema schema) {
+		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, Schema schema) {
 
 		Map<String, Schema> propertySchemas = schema.getPropertySchemas();
 
@@ -47,7 +47,7 @@ public class DTOOpenAPIParser {
 				String propertySchemaName = entry.getKey();
 
 				enumSchemas.put(
-					_getEnumName(openAPIYAML, propertySchemaName),
+					_getEnumName(configYAML, openAPIYAML, propertySchemaName),
 					propertySchema);
 			}
 		}
@@ -64,7 +64,7 @@ public class DTOOpenAPIParser {
 		Map<String, String> properties = new TreeMap<>();
 
 		Map<String, Schema> propertySchemas = _getPropertySchemas(
-			schema, schemas);
+			configYAML, schema, schemas);
 
 		for (Map.Entry<String, Schema> entry : propertySchemas.entrySet()) {
 			Schema propertySchema = entry.getValue();
@@ -78,7 +78,7 @@ public class DTOOpenAPIParser {
 			properties.put(
 				_getPropertyName(propertySchema, propertySchemaName),
 				_getPropertyType(
-					javaDataTypeMap, openAPIYAML, propertySchema,
+					configYAML, javaDataTypeMap, openAPIYAML, propertySchema,
 					propertySchemaName));
 		}
 
@@ -94,10 +94,11 @@ public class DTOOpenAPIParser {
 	}
 
 	public static Schema getPropertySchema(
-		String propertyName, Schema schema, Map<String, Schema> schemas) {
+		ConfigYAML configYAML, String propertyName, Schema schema,
+		Map<String, Schema> schemas) {
 
 		Map<String, Schema> propertySchemas = _getPropertySchemas(
-			schema, schemas);
+			configYAML, schema, schemas);
 
 		for (Map.Entry<String, Schema> entry : propertySchemas.entrySet()) {
 			String propertySchemaName = entry.getKey();
@@ -115,10 +116,11 @@ public class DTOOpenAPIParser {
 	}
 
 	public static boolean isSchemaProperty(
-		String propertyName, Schema schema, Map<String, Schema> schemas) {
+		ConfigYAML configYAML, String propertyName, Schema schema,
+		Map<String, Schema> schemas) {
 
 		Map<String, Schema> propertySchemas = _getPropertySchemas(
-			schema, schemas);
+			configYAML, schema, schemas);
 
 		for (Map.Entry<String, Schema> entry : propertySchemas.entrySet()) {
 			String propertySchemaName = entry.getKey();
@@ -136,9 +138,11 @@ public class DTOOpenAPIParser {
 	}
 
 	private static String _getEnumName(
-		OpenAPIYAML openAPIYAML, String propertySchemaName) {
+		ConfigYAML configYAML, OpenAPIYAML openAPIYAML,
+		String propertySchemaName) {
 
-		Map<String, Schema> schemas = OpenAPIUtil.getAllSchemas(openAPIYAML);
+		Map<String, Schema> schemas = OpenAPIUtil.getAllSchemas(
+			configYAML, openAPIYAML);
 
 		for (String schemaName : schemas.keySet()) {
 			if (propertySchemaName.length() <= schemaName.length()) {
@@ -176,7 +180,7 @@ public class DTOOpenAPIParser {
 	}
 
 	private static Map<String, Schema> _getPropertySchemas(
-		Schema schema, Map<String, Schema> schemas) {
+		ConfigYAML configYAML, Schema schema, Map<String, Schema> schemas) {
 
 		Map<String, Schema> propertySchemas = null;
 
@@ -187,7 +191,7 @@ public class DTOOpenAPIParser {
 		}
 		else if (schema.getAllOfSchemas() != null) {
 			propertySchemas = OpenAPIParserUtil.getAllOfPropertySchemas(
-				schema, schemas);
+				configYAML, schema, schemas);
 		}
 		else {
 			propertySchemas = schema.getPropertySchemas();
@@ -210,13 +214,14 @@ public class DTOOpenAPIParser {
 	}
 
 	private static String _getPropertyType(
-		Map<String, String> javaDataTypeMap, OpenAPIYAML openAPIYAML,
-		Schema propertySchema, String propertySchemaName) {
+		ConfigYAML configYAML, Map<String, String> javaDataTypeMap,
+		OpenAPIYAML openAPIYAML, Schema propertySchema,
+		String propertySchemaName) {
 
 		List<String> enumValues = propertySchema.getEnumValues();
 
 		if ((enumValues != null) && !enumValues.isEmpty()) {
-			return _getEnumName(openAPIYAML, propertySchemaName);
+			return _getEnumName(configYAML, openAPIYAML, propertySchemaName);
 		}
 
 		Items items = propertySchema.getItems();

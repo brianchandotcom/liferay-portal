@@ -51,7 +51,8 @@ public class GraphQLOpenAPIParser {
 			schemas.putAll(components.getSchemas());
 		}
 
-		schemas.putAll(OpenAPIUtil.getAllExternalSchemas(openAPIYAML));
+		schemas.putAll(
+			OpenAPIUtil.getAllExternalSchemas(configYAML, openAPIYAML));
 
 		for (String schemaName : schemas.keySet()) {
 			javaMethodSignatures.addAll(

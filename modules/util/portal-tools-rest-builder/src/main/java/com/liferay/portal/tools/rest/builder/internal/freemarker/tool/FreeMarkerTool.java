@@ -268,9 +268,9 @@ public class FreeMarkerTool {
 	}
 
 	public Map<String, Schema> getDTOEnumSchemas(
-		OpenAPIYAML openAPIYAML, Schema schema) {
+		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, Schema schema) {
 
-		return DTOOpenAPIParser.getEnumSchemas(openAPIYAML, schema);
+		return DTOOpenAPIParser.getEnumSchemas(configYAML, openAPIYAML, schema);
 	}
 
 	public String getDTOParentClassName(
@@ -319,10 +319,11 @@ public class FreeMarkerTool {
 	}
 
 	public Schema getDTOPropertySchema(
-		String propertyName, Schema schema, Map<String, Schema> schemas) {
+		ConfigYAML configYAML, String propertyName, Schema schema,
+		Map<String, Schema> schemas) {
 
 		return DTOOpenAPIParser.getPropertySchema(
-			propertyName, schema, schemas);
+			configYAML, propertyName, schema, schemas);
 	}
 
 	public String getEnumFieldName(String value) {
@@ -751,11 +752,11 @@ public class FreeMarkerTool {
 	}
 
 	public String getResourceParameters(
-		List<JavaMethodParameter> javaMethodParameters, Operation operation,
-		Map<String, Schema> schemas, boolean annotation) {
+		ConfigYAML configYAML, List<JavaMethodParameter> javaMethodParameters,
+		Operation operation, Map<String, Schema> schemas, boolean annotation) {
 
 		return ResourceOpenAPIParser.getParameters(
-			javaMethodParameters, operation, schemas, annotation);
+			configYAML, javaMethodParameters, operation, schemas, annotation);
 	}
 
 	public String getResourceTestCaseArguments(
@@ -772,11 +773,11 @@ public class FreeMarkerTool {
 	}
 
 	public String getResourceTestCaseParameters(
-		List<JavaMethodParameter> javaMethodParameters, Operation operation,
-		Map<String, Schema> schemas, boolean annotation) {
+		ConfigYAML configYAML, List<JavaMethodParameter> javaMethodParameters,
+		Operation operation, Map<String, Schema> schemas, boolean annotation) {
 
 		return ResourceTestCaseOpenAPIParser.getParameters(
-			javaMethodParameters, operation, schemas, annotation);
+			configYAML, javaMethodParameters, operation, schemas, annotation);
 	}
 
 	public String getRESTMethodJavadoc(
@@ -1004,9 +1005,11 @@ public class FreeMarkerTool {
 	}
 
 	public boolean isDTOSchemaProperty(
-		String propertyName, Schema schema, Map<String, Schema> schemas) {
+		ConfigYAML configYAML, String propertyName, Schema schema,
+		Map<String, Schema> schemas) {
 
-		return DTOOpenAPIParser.isSchemaProperty(propertyName, schema, schemas);
+		return DTOOpenAPIParser.isSchemaProperty(
+			configYAML, propertyName, schema, schemas);
 	}
 
 	public boolean isParameter(

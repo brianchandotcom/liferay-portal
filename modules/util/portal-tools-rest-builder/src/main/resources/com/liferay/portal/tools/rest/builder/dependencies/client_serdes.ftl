@@ -57,7 +57,7 @@ public class ${schemaName}SerDes {
 		sb.append("{");
 
 		<#assign
-			enumSchemas = freeMarkerTool.getDTOEnumSchemas(openAPIYAML, schema)
+			enumSchemas = freeMarkerTool.getDTOEnumSchemas(configYAML, openAPIYAML, schema)
 			properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema, allSchemas)
 		/>
 
@@ -74,7 +74,7 @@ public class ${schemaName}SerDes {
 		<#list properties?keys as propertyName>
 			<#assign
 				capitalizedPropertyName = propertyName?cap_first
-				propertySchema = freeMarkerTool.getDTOPropertySchema(propertyName, schema, allSchemas)
+				propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, schema, allSchemas)
 			/>
 
 			<#if enumSchemas?keys?seq_contains(properties[propertyName])>
@@ -192,7 +192,7 @@ public class ${schemaName}SerDes {
 		<#list properties?keys as propertyName>
 			<#assign
 				capitalizedPropertyName = propertyName?cap_first
-				propertySchema = freeMarkerTool.getDTOPropertySchema(propertyName, schema, allSchemas)
+				propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, schema, allSchemas)
 			/>
 
 			<#if enumSchemas?keys?seq_contains(properties[propertyName])>
@@ -237,7 +237,7 @@ public class ${schemaName}SerDes {
 		@Override
 		protected void setField(${schemaName} ${schemaVarName}, String jsonParserFieldName, Object jsonParserFieldValue) {
 			<#list properties?keys as propertyName>
-				<#assign propertySchema = freeMarkerTool.getDTOPropertySchema(propertyName, schema, allSchemas) />
+				<#assign propertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, schema, allSchemas) />
 
 				<#if !propertyName?is_first>
 					else

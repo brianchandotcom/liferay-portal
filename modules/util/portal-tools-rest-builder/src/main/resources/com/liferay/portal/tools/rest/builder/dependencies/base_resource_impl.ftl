@@ -179,7 +179,7 @@ public abstract class Base${schemaName}ResourceImpl
 		</#if>
 		@Override
 		${freeMarkerTool.getResourceMethodAnnotations(javaMethodSignature)}
-		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getResourceParameters(javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, allSchemas, true)}) throws Exception {
+		public ${javaMethodSignature.returnType} ${javaMethodSignature.methodName}(${freeMarkerTool.getResourceParameters(configYAML, javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, allSchemas, true)}) throws Exception {
 			<#if stringUtil.equals(javaMethodSignature.returnType, "boolean")>
 				return false;
 			<#elseif generateBatch && stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName + "Batch")>
@@ -382,9 +382,9 @@ public abstract class Base${schemaName}ResourceImpl
 				<#assign properties = freeMarkerTool.getWritableDTOProperties(configYAML, openAPIYAML, schema, allSchemas) />
 
 				<#list properties?keys as propertyName>
-					<#if !freeMarkerTool.isDTOSchemaProperty(propertyName, schema, allSchemas) && !stringUtil.equals(propertyName, "id")>
+					<#if !freeMarkerTool.isDTOSchemaProperty(configYAML, propertyName, schema, allSchemas) && !stringUtil.equals(propertyName, "id")>
 						if (${schemaVarName}.get${propertyName?cap_first}() != null) {
-							<#assign dtoPropertySchema = freeMarkerTool.getDTOPropertySchema(propertyName, schema, allSchemas) />
+							<#assign dtoPropertySchema = freeMarkerTool.getDTOPropertySchema(configYAML, propertyName, schema, allSchemas) />
 
 							<#if dtoPropertySchema.isJsonMap()>
 								${properties[propertyName]} ${propertyName} = existing${schemaName}.get${propertyName?cap_first}();

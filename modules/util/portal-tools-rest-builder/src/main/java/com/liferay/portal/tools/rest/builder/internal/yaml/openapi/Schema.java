@@ -114,6 +114,10 @@ public class Schema {
 		return _jsonString;
 	}
 
+	public boolean isMergeProperties() {
+		return _mergeProperties;
+	}
+
 	public boolean isReadOnly() {
 		return _readOnly;
 	}
@@ -178,6 +182,10 @@ public class Schema {
 		_maxLength = maxLength;
 	}
 
+	public void setMergeProperties(boolean mergeProperties) {
+		_mergeProperties = mergeProperties;
+	}
+
 	public void setMinimum(Double minimum) {
 		_minimum = minimum;
 	}
@@ -238,6 +246,7 @@ public class Schema {
 	private boolean _jsonString;
 	private Double _maximum;
 	private Integer _maxLength;
+	private boolean _mergeProperties = true;
 	private Double _minimum;
 	private Integer _minLength;
 	private String _name;

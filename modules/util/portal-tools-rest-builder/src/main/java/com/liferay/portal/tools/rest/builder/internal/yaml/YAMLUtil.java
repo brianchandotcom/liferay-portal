@@ -171,10 +171,14 @@ public class YAMLUtil {
 		schemaTypeDescription.addPropertyParameters("required", String.class);
 
 		schemaTypeDescription.substituteProperty(
-			"x-json-map", boolean.class, "getJsonMap", "setJsonMap");
+			"x-json-map", boolean.class, "isJsonMap", "setJsonMap");
 
 		schemaTypeDescription.substituteProperty(
-			"x-json-string", boolean.class, "getJsonString", "setJsonString");
+			"x-json-string", boolean.class, "isJsonString", "setJsonString");
+
+		schemaTypeDescription.substituteProperty(
+			"x-merge-properties", boolean.class, "isMergeProperties",
+			"setMergeProperties");
 
 		schemaTypeDescription.substituteProperty(
 			"xml", XML.class, "getXML", "setXML");

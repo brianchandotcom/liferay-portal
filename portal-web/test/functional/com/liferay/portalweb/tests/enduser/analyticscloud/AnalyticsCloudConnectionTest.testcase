@@ -48,66 +48,63 @@ definition {
 		}
 
 		task ("Connect DXP to AC") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Open site Liferay DXP and close all sessions") {
-			Navigator.openURL();
+			for (var n : list "1,2,3") {
+				Navigator.openURL();
+			}
 
 			ACUtils.closeAllSessionsAndWait();
 		}
 
-		task ("Launch AC, go to sites overview and change sites activities to the last 24 hours") {
+		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = ${propertyName});
-
-			ACNavigation.goToSites();
-
-			ACNavigation.switchTab(tabName = "Overview");
-
-			ACTimeFilter.clickTimeFilterButton();
-
-			ACTimeFilter.setLast24Hours();
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
-		task ("View the number of Unique Visitors in the sites activities") {
-			ACCards.viewMetricValue(
-				cardTitle = "${propertyName} Activities",
-				metricName = "Unique Visitors",
-				metricValue = 0);
+		task ("Navigate to the Overview on the Individuals dashboard") {
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToOverviewTab();
+		}
+
+		task ("View the number of Total Individuals and Anonymous") {
+			ACCards.viewTotalCount(
+				cardName = "Total Individuals",
+				count = 0);
 		}
 
 		task ("Launch DXP and go to site") {
 			ACUtils.launchDXP();
 
 			ACUtils.navigateToSitePage(
+				documentTitleList = "1,2,3",
+				actionType = "View WC",
 				pageName = "AC Page",
 				siteName = "Site Name");
+
+			ACUtils.closeAllSessionsAndWait();
 		}
 
-		task ("Launch AC and go to sites overview and change sites activities to the last 24 hours") {
-			ACUtils.closeAllSessionsAndWait();
-
+		task ("Switch the property in AC") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = ${propertyName});
-
-			ACNavigation.goToSites();
-
-			ACNavigation.switchTab(tabName = "Overview");
-
-			ACTimeFilter.clickTimeFilterButton();
-
-			ACTimeFilter.setLast24Hours();
+			ACProperties.switchProperty(propertyName = ${assignedPropertyName});
 		}
 
-		task ("View if the number of Unique Visitors in the sites activities has changed, this secure the connection ") {
-			ACCards.viewMetricValue(
-				cardTitle = "${propertyName} Activities",
-				metricName = "Unique Visitors",
-				metricValue = 1,
-				timeFilter = "Last 24 hours");
+		task ("Navigate to the Overview on the Individuals dashboard") {
+			ACNavigation.goToIndividuals();
+
+			ACIndividualsDashboard.goToOverviewTab();
+		}
+
+		task ("View the number of Total Individuals and Anonymous") {
+			ACCards.viewTotalCount(
+				cardName = "Total Individuals",
+				count = 1);
 		}
 	}
 

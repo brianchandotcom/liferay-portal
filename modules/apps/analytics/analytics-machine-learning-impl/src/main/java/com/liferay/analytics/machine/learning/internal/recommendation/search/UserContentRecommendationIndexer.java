@@ -21,7 +21,8 @@ public class UserContentRecommendationIndexer implements RecommendationIndexer {
 	@Override
 	public void createIndex(long companyId) {
 		_recommendationSearchEngineHelper.createIndex(
-			getIndexName(companyId), _INDEX_MAPPING_FILE_NAME);
+			getIndexName(companyId),
+			"user-content-recommendation-mappings.json");
 	}
 
 	@Override
@@ -31,15 +32,9 @@ public class UserContentRecommendationIndexer implements RecommendationIndexer {
 
 	@Override
 	public String getIndexName(long companyId) {
-		return String.format(
-			_INDEX_NAME_PATTERN, _indexNameBuilder.getIndexName(companyId));
+		return _indexNameBuilder.getIndexName(companyId) +
+			"-user-content-recommendation";
 	}
-
-	private static final String _INDEX_MAPPING_FILE_NAME =
-		"user-content-recommendation-mappings.json";
-
-	private static final String _INDEX_NAME_PATTERN =
-		"%s-user-content-recommendation";
 
 	@Reference
 	private IndexNameBuilder _indexNameBuilder;

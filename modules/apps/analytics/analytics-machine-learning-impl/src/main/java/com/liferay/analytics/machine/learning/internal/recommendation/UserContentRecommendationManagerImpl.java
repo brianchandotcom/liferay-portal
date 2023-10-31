@@ -72,9 +72,8 @@ public class UserContentRecommendationManagerImpl
 			(indexDocumentResponse.getStatus() >= 300)) {
 
 			throw new PortalException(
-				String.format(
-					"Index request return status: %d",
-					indexDocumentResponse.getStatus()));
+				"Index request return status: " +
+					indexDocumentResponse.getStatus());
 		}
 
 		return userContentRecommendation;
@@ -131,7 +130,7 @@ public class UserContentRecommendationManagerImpl
 
 	private Date _getDate(String dateString) {
 		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-			_INDEX_DATE_FORMAT_PATTERN);
+			"yyyy-MM-dd'T'HH:mm:ss.SSSX");
 
 		try {
 			return dateFormat.parse(dateString);
@@ -234,9 +233,6 @@ public class UserContentRecommendationManagerImpl
 
 		return userContentRecommendation;
 	}
-
-	private static final String _INDEX_DATE_FORMAT_PATTERN =
-		"yyyy-MM-dd'T'HH:mm:ss.SSSX";
 
 	private static final int _SEARCH_SEARCH_REQUEST_SIZE = 10;
 

@@ -173,6 +173,8 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 			expirationDateHour += 12;
 		}
 
+		boolean galleryEnabled = ParamUtil.getBoolean(
+			actionRequest, "galleryEnabled");
 		boolean neverExpire = ParamUtil.getBoolean(
 			actionRequest, "neverExpire");
 		String cpInstanceOptions = ParamUtil.getString(
@@ -196,8 +198,8 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 				displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, titleMap, cpInstanceOptions,
-				priority, type, serviceContext);
+				expirationDateMinute, neverExpire, galleryEnabled, titleMap,
+				cpInstanceOptions, priority, type, serviceContext);
 		}
 		else {
 			_cpAttachmentFileEntryService.addCPAttachmentFileEntry(
@@ -207,8 +209,8 @@ public class EditCPAttachmentFileEntryMVCActionCommand
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, expirationDateMonth, expirationDateDay,
 				expirationDateYear, expirationDateHour, expirationDateMinute,
-				neverExpire, titleMap, cpInstanceOptions, priority, type,
-				serviceContext);
+				neverExpire, galleryEnabled, titleMap, cpInstanceOptions,
+				priority, type, serviceContext);
 		}
 	}
 

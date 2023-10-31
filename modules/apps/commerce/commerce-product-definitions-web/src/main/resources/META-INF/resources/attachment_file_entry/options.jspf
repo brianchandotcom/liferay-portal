@@ -22,3 +22,7 @@
 		</div>
 	</c:otherwise>
 </c:choose>
+
+<c:if test="<%= type == CPAttachmentFileEntryConstants.TYPE_IMAGE %>">
+	<aui:input label="use-in-shopping-experience-image-gallery" name="galleryEnabled" type="toggle-switch" value="<%= (cpAttachmentFileEntry == null) ? true : cpAttachmentFileEntry.isGalleryEnabled() %>" />
+</c:if>

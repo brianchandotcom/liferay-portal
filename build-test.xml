@@ -15980,8 +15980,6 @@ mail.send.blacklist=</echo>
 
 		<antcall target="deploy-dependency-jars" />
 
-		<antcall target="deploy-extra-apps" />
-
 		<get-testcase-property property.name="cluster.session.replicated" />
 
 		<if>

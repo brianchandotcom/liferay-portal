@@ -101,13 +101,21 @@ public class AddObjectFieldCompositeKeyCandidatesMVCResourceCommand
 						return StringPool.BLANK;
 					}
 
+					if (objectFieldLabels.size() > 1) {
+						return _language.format(
+							_portal.getHttpServletRequest(resourceRequest),
+							"the-selected-fields-x-cannot-be-added-to-the-" +
+								"unique-composite-key",
+							StringUtil.merge(
+								objectFieldLabels, StringPool.COMMA_AND_SPACE),
+							false);
+					}
+
 					return _language.format(
 						_portal.getHttpServletRequest(resourceRequest),
-						"the-selected-fields-x-cannot-be-added-to-the-unique-" +
+						"the-selected-field-x-cannot-be-added-to-the-unique-" +
 							"composite-key",
-						StringUtil.merge(
-							objectFieldLabels, StringPool.COMMA_AND_SPACE),
-						false);
+						objectFieldLabels.get(0), false);
 				}
 			).put(
 				"status",

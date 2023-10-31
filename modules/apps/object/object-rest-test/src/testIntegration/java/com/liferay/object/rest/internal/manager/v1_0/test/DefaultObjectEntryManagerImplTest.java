@@ -508,7 +508,7 @@ public class DefaultObjectEntryManagerImplTest
 			objectDefinitionLocalService.getObjectDefinition(
 				node.getPrimaryKey());
 
-		ObjectRelationship objectRelationship3 =
+		objectDefinitionLocalService.enableAccountEntryRestricted(
 			_objectRelationshipLocalService.addObjectRelationship(
 				adminUser.getUserId(),
 				accountEntryObjectDefinition.getObjectDefinitionId(),
@@ -516,14 +516,8 @@ public class DefaultObjectEntryManagerImplTest
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"oneToManyRelationshipName2", false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
-		_rootObjectDefinition.setAccountEntryRestricted(true);
-		_rootObjectDefinition.setAccountEntryRestrictedObjectFieldId(
-			objectRelationship3.getObjectFieldId2());
-
-		objectDefinitionLocalService.updateObjectDefinition(
-			_rootObjectDefinition);
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY)
+		);
 
 		objectDefinitionLocalService.publishCustomObjectDefinition(
 			adminUser.getUserId(),

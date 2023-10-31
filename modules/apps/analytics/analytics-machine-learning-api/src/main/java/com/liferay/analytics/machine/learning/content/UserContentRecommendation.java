@@ -10,34 +10,70 @@ import java.util.Date;
 /**
  * @author Riccardo Ferrari
  */
-public interface UserContentRecommendation {
+public class UserContentRecommendation {
 
-	public long[] getAssetCategoryIds();
+	public long[] getAssetCategoryIds() {
+		return _assetCategoryIds;
+	}
 
-	public long getCompanyId();
+	public long getCompanyId() {
+		return _companyId;
+	}
 
-	public Date getCreateDate();
+	public Date getCreateDate() {
+		return _createDate;
+	}
 
-	public long getEntryClassPK();
+	public long getEntryClassPK() {
+		return _entryClassPK;
+	}
 
-	public String getJobId();
+	public String getJobId() {
+		return _jobId;
+	}
 
-	public long getRecommendedEntryClassPK();
+	public long getRecommendedEntryClassPK() {
+		return _recommendedEntryClassPK;
+	}
 
-	public float getScore();
+	public float getScore() {
+		return _score;
+	}
 
-	public void setAssetCategoryIds(long[] assetCategoryIds);
+	public void setAssetCategoryIds(long[] assetCategoryIds) {
+		_assetCategoryIds = assetCategoryIds;
+	}
 
-	public void setCompanyId(long companyId);
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
 
-	public void setCreateDate(Date createDate);
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
+	}
 
-	public void setEntryClassPK(long entryClassPK);
+	public void setEntryClassPK(long entryClassPK) {
+		_entryClassPK = entryClassPK;
+	}
 
-	public void setJobId(String jobId);
+	public void setJobId(String jobId) {
+		_jobId = jobId;
+	}
 
-	public void setRecommendedEntryClassPK(long recommendedEntryClassPK);
+	public void setRecommendedEntryClassPK(long recommendedEntryClassPK) {
+		_recommendedEntryClassPK = recommendedEntryClassPK;
+	}
 
-	public void setScore(float score);
+	public void setScore(float score) {
+		_score = score;
+	}
+
+	private long[] _assetCategoryIds;
+	private long _companyId;
+	private Date _createDate;
+	private long _entryClassPK;
+	private String _jobId;
+	private long _recommendedEntryClassPK;
+	private float _score;
 
 }

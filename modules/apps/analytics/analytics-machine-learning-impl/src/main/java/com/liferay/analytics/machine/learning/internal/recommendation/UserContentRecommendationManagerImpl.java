@@ -81,11 +81,6 @@ public class UserContentRecommendationManagerImpl
 	}
 
 	@Override
-	public UserContentRecommendation create() {
-		return new UserContentRecommendationImpl();
-	}
-
-	@Override
 	public List<UserContentRecommendation> getUserContentRecommendations(
 			long[] assetCategoryIds, long companyId, long userId)
 		throws PortalException {
@@ -218,7 +213,7 @@ public class UserContentRecommendationManagerImpl
 		Document document) {
 
 		UserContentRecommendation userContentRecommendation =
-			new UserContentRecommendationImpl();
+			new UserContentRecommendation();
 
 		userContentRecommendation.setAssetCategoryIds(
 			GetterUtil.getLongValues(

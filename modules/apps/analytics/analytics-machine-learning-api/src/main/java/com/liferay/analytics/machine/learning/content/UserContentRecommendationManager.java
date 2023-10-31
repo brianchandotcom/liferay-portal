@@ -18,8 +18,6 @@ public interface UserContentRecommendationManager {
 			UserContentRecommendation userContentRecommendation)
 		throws PortalException;
 
-	public UserContentRecommendation create();
-
 	public List<UserContentRecommendation> getUserContentRecommendations(
 			long[] assetCategoryIds, long companyId, long userId)
 		throws PortalException;

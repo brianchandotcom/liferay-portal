@@ -71,8 +71,10 @@ function AddToCart({
 
 	const buttonDisabled = useMemo(() => {
 		if (
+			initialDisabled ||
 			!account?.id ||
 			cpInstance.disabled ||
+			cpInstance.published === false ||
 			cpInstance.purchasable === false ||
 			(cpInstance.availability?.stockQuantity !== undefined &&
 				cpInstance.backOrderAllowed === false &&
@@ -83,7 +85,7 @@ function AddToCart({
 		}
 
 		return false;
-	}, [account, cpInstance]);
+	}, [account, cpInstance, initialDisabled]);
 
 	useEffect(() => {
 		setCpInstance({
@@ -102,6 +104,7 @@ function AddToCart({
 					backOrderAllowed: incomingCpInstance.backOrderAllowed,
 					disabled: incomingCpInstance.disabled,
 					inCart,
+					published: incomingCpInstance.published,
 					purchasable: incomingCpInstance.purchasable,
 					skuId: incomingCpInstance.skuId,
 					skuOptions: Array.isArray(incomingCpInstance.skuOptions)

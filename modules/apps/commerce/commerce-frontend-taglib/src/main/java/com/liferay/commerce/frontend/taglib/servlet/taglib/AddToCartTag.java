@@ -127,7 +127,8 @@ public class AddToCartTag extends IncludeTag {
 
 			if (cpSku != null) {
 				_cpInstanceId = cpSku.getCPInstanceId();
-				_disabled = !cpSku.isPurchasable() || (_commerceAccountId == 0);
+				_published = cpSku.isPublished();
+				_purchasable = cpSku.isPurchasable();
 				sku = cpSku.getSku();
 
 				if (commerceOrder != null) {
@@ -163,13 +164,6 @@ public class AddToCartTag extends IncludeTag {
 
 				_stockQuantity = stockQuantity.intValue();
 
-				if (!_disabled) {
-					_disabled =
-						(!_productSettingsModel.isBackOrders() &&
-						 (_stockQuantity <= 0)) ||
-						!cpSku.isPublished() || !cpSku.isPurchasable();
-				}
-
 				if (Validator.isNull(_skuOptions) || _skuOptions.equals("[]")) {
 					JSONArray jsonArray = CPJSONUtil.toJSONArray(
 						_cpDefinitionOptionRelLocalService.
@@ -189,7 +183,6 @@ public class AddToCartTag extends IncludeTag {
 							WebKeys.THEME_DISPLAY);
 
 					_disabled =
-						_disabled ||
 						!_commerceOrderPortletResourcePermission.contains(
 							themeDisplay.getPermissionChecker(),
 							accountEntry.getAccountEntryGroupId(),
@@ -210,12 +203,11 @@ public class AddToCartTag extends IncludeTag {
 										SERVICE_NAME_COMMERCE_ORDER));
 
 					_disabled =
-						_disabled ||
-						(accountEntry.isGuestAccount() &&
-						 (CommerceChannelConstants.SITE_TYPE_B2B ==
-							 commerceContext.getCommerceSiteType()) &&
-						 !commerceOrderCheckoutConfiguration.
-							 guestCheckoutEnabled());
+						accountEntry.isGuestAccount() &&
+						(CommerceChannelConstants.SITE_TYPE_B2B ==
+							commerceContext.getCommerceSiteType()) &&
+						!commerceOrderCheckoutConfiguration.
+							guestCheckoutEnabled();
 				}
 			}
 
@@ -260,6 +252,14 @@ public class AddToCartTag extends IncludeTag {
 
 	public String getNamespace() {
 		return _namespace;
+	}
+
+	public boolean getPublished() {
+		return _published;
+	}
+
+	public boolean getPurchasable() {
+		return _purchasable;
 	}
 
 	public BigDecimal getQuantity() {
@@ -307,6 +307,8 @@ public class AddToCartTag extends IncludeTag {
 		setNamespacedAttribute(httpServletRequest, "iconOnly", _iconOnly);
 		setNamespacedAttribute(httpServletRequest, "inCart", _inCart);
 		setNamespacedAttribute(httpServletRequest, "inline", _inline);
+		setNamespacedAttribute(httpServletRequest, "purchasable", _purchasable);
+		setNamespacedAttribute(httpServletRequest, "published", _published);
 		setNamespacedAttribute(httpServletRequest, "namespace", _namespace);
 		setNamespacedAttribute(httpServletRequest, "productId", _productId);
 		setNamespacedAttribute(
@@ -372,6 +374,14 @@ public class AddToCartTag extends IncludeTag {
 		_productHelper = ServletContextUtil.getProductHelper();
 	}
 
+	public void setPublished(boolean published) {
+		_published = published;
+	}
+
+	public void setPurchasable(boolean purchasable) {
+		_purchasable = purchasable;
+	}
+
 	public void setQuantity(BigDecimal quantity) {
 		_quantity = quantity;
 	}
@@ -421,6 +431,8 @@ public class AddToCartTag extends IncludeTag {
 		_productHelper = null;
 		_productId = 0;
 		_productSettingsModel = null;
+		_published = false;
+		_purchasable = false;
 		_quantity = BigDecimal.ZERO;
 		_showOrderTypeModal = false;
 		_showOrderTypeModalURL = null;
@@ -492,6 +504,8 @@ public class AddToCartTag extends IncludeTag {
 	private ProductHelper _productHelper;
 	private long _productId;
 	private ProductSettingsModel _productSettingsModel;
+	private boolean _published;
+	private boolean _purchasable;
 	private BigDecimal _quantity = BigDecimal.ZERO;
 	private boolean _showOrderTypeModal;
 	private String _showOrderTypeModalURL;

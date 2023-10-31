@@ -71,6 +71,8 @@ if (alignment.equals("full-width")) {
 				? productConfiguration.backOrders
 				: null,
 			inCart: <%= inCart %>,
+			published: <%= published %>,
+			purchasable: <%= purchasable %>,
 			skuId: <%= cpInstanceId %>,
 			skuOptions: <%= skuOptions %> || [],
 			stockQuantity: <%= stockQuantity %>,

@@ -1610,11 +1610,6 @@
 			<description name="Replaces with `compileInclude` the configuration attribute for dependencies in `build.gradle` that are listed at `Include-Resource` property at `bnd.bnd` associated file." />
 			<weight>2</weight>
 		</check>
-		<check name="UpgradeJavaAccountPortletKeysCheck">
-			<category name="Upgrade" />
-			<description name="Replace constants of CommerceAccountPortletKeys by constants of AccountPortletKeys" />
-			<weight>2</weight>
-		</check>
 		<check name="UpgradeJavaAssetEntryAssetCategoriesCheck">
 			<category name="Upgrade" />
 			<description name="Replaces methods referring to class `AssetEntryAssetCategory` in class `AssetCategoryLocalService` with equivalent methods in class `AssetEntryAssetCategoryRelLocalService`." />

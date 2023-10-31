@@ -16235,21 +16235,6 @@ mail.send.blacklist=</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="workspaces.names" />
-
-		<if>
-			<isset property="workspaces.names" />
-			<then>
-				<for list="${workspaces.names}" param="workspace.name">
-					<sequential>
-						<ant antfile="build-test-@{workspace.name}.xml" inheritAll="false" target="start-workspace">
-							<property name="workspace.name" value="@{workspace.name}" />
-						</ant>
-					</sequential>
-				</for>
-			</then>
-		</if>
-
 		<get-testcase-property property.name="jmxremote.enabled" />
 
 		<if>
@@ -16287,21 +16272,6 @@ CATALINA_OPTS="$CATALINA_OPTS -Dcom.sun.management.jmxremote -Dcom.sun.managemen
 				<ant antfile="build-test-${test.workspace.name}.xml" inheritAll="false" target="stop-workspace">
 					<property name="workspace.name" value="${test.workspace.name}" />
 				</ant>
-			</then>
-		</if>
-
-		<get-testcase-property property.name="workspaces.names" />
-
-		<if>
-			<isset property="workspaces.names" />
-			<then>
-				<for list="${workspaces.names}" param="workspace.name">
-					<sequential>
-						<ant antfile="build-test-@{workspace.name}.xml" inheritAll="false" target="stop-workspace">
-							<property name="workspace.name" value="@{workspace.name}" />
-						</ant>
-					</sequential>
-				</for>
 			</then>
 		</if>
 

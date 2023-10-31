@@ -82,7 +82,7 @@
 </tr>
 <tr>
 	<td>INVITED_USER</td>
-	<td>//td[contains(.,'${key_userInvite}')]//following-sibling::td[contains(.,'${key_publicationRole}')]</td>
+	<td>//td[contains(.,'${key_userInvite}')]//following-sibling::td//button[contains(.,'${key_publicationRole}')]</td>
 	<td></td>
 </tr>
 <tr>

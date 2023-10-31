@@ -1354,4 +1354,131 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-196044. View improvement in page audit when adding an Image fragment."
+	@priority = 3
+	test ViewImprovementWhenAddingAnImageFragment {
+		task ("Given a button fragment and an image fragment added in content page") {
+			task ("Add a Button fragment to content page") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+
+				PageEditor.addFragment(
+					collectionName = "Basic Components",
+					fragmentName = "Button");
+
+				PageEditor.addFragment(
+					collectionName = "Basic Components",
+					fragmentName = "Image",
+					targetFragmentName = "Button");
+			}
+
+			task ("Enable big image file size and add a big size image") {
+				PageEditor.editFragmentImage(
+					fragmentName = "Image",
+					id = "image-square",
+					imageFileName = "More than 500k size image",
+					uploadFileName = "More_than_500k_size_image.jpg");
+			}
+
+			task ("Publish the page") {
+				PageEditor.publish();
+			}
+		}
+
+		task ("When go to a Page Audit sidebar") {
+			task ("Open Page Audit sidebar") {
+				Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page");
+
+				Click(
+					key_text = "search-experiences",
+					locator1 = "Icon#ANY");
+			}
+		}
+
+		task ("Then there's improvement in page audit") {
+			task ("Click into the Image card") {
+				WaitForPageLoad();
+
+				Click(
+					cardName = "Image",
+					locator1 = "PageAudit#PAGE_AUDIT_CARD");
+			}
+
+			task ("View the first sentence of the warning indicator is semi-bold. And the rest is regular.") {
+				AssertCssValue(
+					errorTitle = "Big image file size used.",
+					locator1 = "PageAudit#ERROR_WARNING_TITLE",
+					locator2 = "font-weight",
+					value1 = 600);
+
+				AssertCssValue(
+					locator1 = "PageAudit#WARNING_TEXT",
+					locator2 = "font-weight",
+					value1 = 400);
+			}
+
+			task ("View the distance between feedback indicator and “Basic information” accordion is 24 px") {
+				AssertCssValue(
+					locator1 = "PageAudit#WARNING_TEXT",
+					locator2 = "margin-top",
+					value1 = "16px");
+
+				AssertCssValue(
+					key_panel = "Basic Information",
+					locator1 = "Panel#PANEL",
+					locator2 = "padding-top",
+					value1 = "8px");
+			}
+
+			task ("Click back and click into the button card") {
+				Click(
+					key_text = "angle-left",
+					locator1 = "Icon#ANY");
+
+				Click(
+					cardName = "Button",
+					locator1 = "PageAudit#PAGE_AUDIT_CARD");
+			}
+
+			task ("View the distance between feedback indicator and “Basic information” accordion is 24 px") {
+				AssertCssValue(
+					locator1 = "//div[contains(@class,'panel-collapse')]//div[contains(@class,'panel-body')]",
+					locator2 = "padding-top",
+					value1 = "16px");
+
+				AssertCssValue(
+					key_panel = "Basic Information",
+					locator1 = "Panel#PANEL",
+					locator2 = "padding-top",
+					value1 = "8px");
+			}
+
+			task ("Go to content page edit mode") {
+				ContentPagesNavigator.openEditContentPage(
+					pageName = "Test Page Name",
+					siteName = "Test Site Name");
+			}
+
+			task ("Go to the configuration of Image fragment") {
+				PageEditor.clickEditableField(
+					contributed = "true",
+					fragmentName = "Image",
+					id = "image");
+			}
+
+			task ("View Enable Lazy Loading configuration is above “Image description” field.") {
+				AssertTextEquals.assertPartialText(
+					key_itemNumber = 5,
+					locator1 = "PageAudit#PAGE_AUDIT_ANY_ITEM",
+					value1 = "Enable Lazy Loading");
+
+				AssertTextEquals.assertPartialText(
+					key_itemNumber = 6,
+					locator1 = "PageAudit#PAGE_AUDIT_ANY_ITEM",
+					value1 = "Image Description");
+			}
+		}
+	}
+
 }

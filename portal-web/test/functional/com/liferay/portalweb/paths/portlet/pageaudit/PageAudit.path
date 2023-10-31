@@ -51,6 +51,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WARNING_TEXT</td>
+	<td>//*[contains(@class,'text-warning')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ERROR_WARNING_MESSAGE</td>
 	<td>//dd[text()='${errorMessage}']</td>
 	<td></td>
@@ -121,8 +126,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_AUDIT_ANY_ITEM</td>
+	<td>xpath=(//div[contains(@class,'tab-content')]//div[contains(@class,'form-group')])[${key_itemNumber}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_AUDIT_BUTTON</td>
 	<td>//*[contains(@class, 'lexicon-icon-info-circle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_AUDIT_CARD</td>
+	<td>//div[contains(@class,'page-audit')]//button[contains(@aria-label,'${cardName}')]</td>
 	<td></td>
 </tr>
 <tr>

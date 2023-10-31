@@ -36,6 +36,7 @@ create table CPAttachmentFileEntry (
 	cdnURL STRING null,
 	displayDate DATE null,
 	expirationDate DATE null,
+	galleryEnabled BOOLEAN,
 	title STRING null,
 	json TEXT null,
 	priority DOUBLE,

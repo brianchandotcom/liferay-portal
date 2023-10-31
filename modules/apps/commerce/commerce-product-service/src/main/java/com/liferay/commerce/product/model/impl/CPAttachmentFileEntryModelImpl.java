@@ -82,11 +82,11 @@ public class CPAttachmentFileEntryModelImpl
 		{"classPK", Types.BIGINT}, {"fileEntryId", Types.BIGINT},
 		{"cdnEnabled", Types.BOOLEAN}, {"cdnURL", Types.VARCHAR},
 		{"displayDate", Types.TIMESTAMP}, {"expirationDate", Types.TIMESTAMP},
-		{"title", Types.VARCHAR}, {"json", Types.CLOB},
-		{"priority", Types.DOUBLE}, {"type_", Types.INTEGER},
-		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
-		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
-		{"statusDate", Types.TIMESTAMP}
+		{"galleryEnabled", Types.BOOLEAN}, {"title", Types.VARCHAR},
+		{"json", Types.CLOB}, {"priority", Types.DOUBLE},
+		{"type_", Types.INTEGER}, {"lastPublishDate", Types.TIMESTAMP},
+		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
+		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -111,6 +111,7 @@ public class CPAttachmentFileEntryModelImpl
 		TABLE_COLUMNS_MAP.put("cdnURL", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("displayDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("galleryEnabled", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("title", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("json", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
@@ -123,7 +124,7 @@ public class CPAttachmentFileEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table CPAttachmentFileEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,CPAttachmentFileEntryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,fileEntryId LONG,cdnEnabled BOOLEAN,cdnURL STRING null,displayDate DATE null,expirationDate DATE null,title STRING null,json TEXT null,priority DOUBLE,type_ INTEGER,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (CPAttachmentFileEntryId, ctCollectionId))";
+		"create table CPAttachmentFileEntry (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,CPAttachmentFileEntryId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,fileEntryId LONG,cdnEnabled BOOLEAN,cdnURL STRING null,displayDate DATE null,expirationDate DATE null,galleryEnabled BOOLEAN,title STRING null,json TEXT null,priority DOUBLE,type_ INTEGER,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (CPAttachmentFileEntryId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table CPAttachmentFileEntry";
@@ -186,32 +187,38 @@ public class CPAttachmentFileEntryModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long GROUPID_COLUMN_BITMASK = 128L;
+	public static final long GALLERYENABLED_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long STATUS_COLUMN_BITMASK = 256L;
+	public static final long GROUPID_COLUMN_BITMASK = 256L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long TYPE_COLUMN_BITMASK = 512L;
+	public static final long STATUS_COLUMN_BITMASK = 512L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 1024L;
+	public static final long TYPE_COLUMN_BITMASK = 1024L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 2048L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long PRIORITY_COLUMN_BITMASK = 2048L;
+	public static final long PRIORITY_COLUMN_BITMASK = 4096L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -364,6 +371,8 @@ public class CPAttachmentFileEntryModelImpl
 			attributeGetterFunctions.put(
 				"expirationDate", CPAttachmentFileEntry::getExpirationDate);
 			attributeGetterFunctions.put(
+				"galleryEnabled", CPAttachmentFileEntry::getGalleryEnabled);
+			attributeGetterFunctions.put(
 				"title", CPAttachmentFileEntry::getTitle);
 			attributeGetterFunctions.put(
 				"json", CPAttachmentFileEntry::getJson);
@@ -472,6 +481,10 @@ public class CPAttachmentFileEntryModelImpl
 				"expirationDate",
 				(BiConsumer<CPAttachmentFileEntry, Date>)
 					CPAttachmentFileEntry::setExpirationDate);
+			attributeSetterBiConsumers.put(
+				"galleryEnabled",
+				(BiConsumer<CPAttachmentFileEntry, Boolean>)
+					CPAttachmentFileEntry::setGalleryEnabled);
 			attributeSetterBiConsumers.put(
 				"title",
 				(BiConsumer<CPAttachmentFileEntry, String>)
@@ -935,6 +948,37 @@ public class CPAttachmentFileEntryModelImpl
 		}
 
 		_expirationDate = expirationDate;
+	}
+
+	@JSON
+	@Override
+	public boolean getGalleryEnabled() {
+		return _galleryEnabled;
+	}
+
+	@JSON
+	@Override
+	public boolean isGalleryEnabled() {
+		return _galleryEnabled;
+	}
+
+	@Override
+	public void setGalleryEnabled(boolean galleryEnabled) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_galleryEnabled = galleryEnabled;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public boolean getOriginalGalleryEnabled() {
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("galleryEnabled"));
 	}
 
 	@JSON
@@ -1443,6 +1487,7 @@ public class CPAttachmentFileEntryModelImpl
 		cpAttachmentFileEntryImpl.setCDNURL(getCDNURL());
 		cpAttachmentFileEntryImpl.setDisplayDate(getDisplayDate());
 		cpAttachmentFileEntryImpl.setExpirationDate(getExpirationDate());
+		cpAttachmentFileEntryImpl.setGalleryEnabled(isGalleryEnabled());
 		cpAttachmentFileEntryImpl.setTitle(getTitle());
 		cpAttachmentFileEntryImpl.setJson(getJson());
 		cpAttachmentFileEntryImpl.setPriority(getPriority());
@@ -1499,6 +1544,8 @@ public class CPAttachmentFileEntryModelImpl
 			this.<Date>getColumnOriginalValue("displayDate"));
 		cpAttachmentFileEntryImpl.setExpirationDate(
 			this.<Date>getColumnOriginalValue("expirationDate"));
+		cpAttachmentFileEntryImpl.setGalleryEnabled(
+			this.<Boolean>getColumnOriginalValue("galleryEnabled"));
 		cpAttachmentFileEntryImpl.setTitle(
 			this.<String>getColumnOriginalValue("title"));
 		cpAttachmentFileEntryImpl.setJson(
@@ -1697,6 +1744,8 @@ public class CPAttachmentFileEntryModelImpl
 			cpAttachmentFileEntryCacheModel.expirationDate = Long.MIN_VALUE;
 		}
 
+		cpAttachmentFileEntryCacheModel.galleryEnabled = isGalleryEnabled();
+
 		cpAttachmentFileEntryCacheModel.title = getTitle();
 
 		String title = cpAttachmentFileEntryCacheModel.title;
@@ -1831,6 +1880,7 @@ public class CPAttachmentFileEntryModelImpl
 	private String _cdnURL;
 	private Date _displayDate;
 	private Date _expirationDate;
+	private boolean _galleryEnabled;
 	private String _title;
 	private String _titleCurrentLanguageId;
 	private String _json;
@@ -1892,6 +1942,7 @@ public class CPAttachmentFileEntryModelImpl
 		_columnOriginalValues.put("cdnURL", _cdnURL);
 		_columnOriginalValues.put("displayDate", _displayDate);
 		_columnOriginalValues.put("expirationDate", _expirationDate);
+		_columnOriginalValues.put("galleryEnabled", _galleryEnabled);
 		_columnOriginalValues.put("title", _title);
 		_columnOriginalValues.put("json", _json);
 		_columnOriginalValues.put("priority", _priority);
@@ -1961,23 +2012,25 @@ public class CPAttachmentFileEntryModelImpl
 
 		columnBitmasks.put("expirationDate", 131072L);
 
-		columnBitmasks.put("title", 262144L);
+		columnBitmasks.put("galleryEnabled", 262144L);
 
-		columnBitmasks.put("json", 524288L);
+		columnBitmasks.put("title", 524288L);
 
-		columnBitmasks.put("priority", 1048576L);
+		columnBitmasks.put("json", 1048576L);
 
-		columnBitmasks.put("type_", 2097152L);
+		columnBitmasks.put("priority", 2097152L);
 
-		columnBitmasks.put("lastPublishDate", 4194304L);
+		columnBitmasks.put("type_", 4194304L);
 
-		columnBitmasks.put("status", 8388608L);
+		columnBitmasks.put("lastPublishDate", 8388608L);
 
-		columnBitmasks.put("statusByUserId", 16777216L);
+		columnBitmasks.put("status", 16777216L);
 
-		columnBitmasks.put("statusByUserName", 33554432L);
+		columnBitmasks.put("statusByUserId", 33554432L);
 
-		columnBitmasks.put("statusDate", 67108864L);
+		columnBitmasks.put("statusByUserName", 67108864L);
+
+		columnBitmasks.put("statusDate", 134217728L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

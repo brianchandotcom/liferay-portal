@@ -55,8 +55,9 @@ public interface CPAttachmentFileEntryService extends BaseService {
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, Map<Locale, String> titleMap, String json,
-			double priority, int type, ServiceContext serviceContext)
+			boolean neverExpire, boolean galleryEnabled,
+			Map<Locale, String> titleMap, String json, double priority,
+			int type, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CPAttachmentFileEntry addOrUpdateCPAttachmentFileEntry(
@@ -67,8 +68,9 @@ public interface CPAttachmentFileEntryService extends BaseService {
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, Map<Locale, String> titleMap, String json,
-			double priority, int type, ServiceContext serviceContext)
+			boolean neverExpire, boolean galleryEnabled,
+			Map<Locale, String> titleMap, String json, double priority,
+			int type, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void deleteCPAttachmentFileEntry(long cpAttachmentFileEntryId)
@@ -132,8 +134,8 @@ public interface CPAttachmentFileEntryService extends BaseService {
 			int expirationDateMonth, int expirationDateDay,
 			int expirationDateYear, int expirationDateHour,
 			int expirationDateMinute, boolean neverExpire,
-			Map<Locale, String> titleMap, String json, double priority,
-			int type, ServiceContext serviceContext)
+			boolean galleryEnabled, Map<Locale, String> titleMap, String json,
+			double priority, int type, ServiceContext serviceContext)
 		throws PortalException;
 
 }

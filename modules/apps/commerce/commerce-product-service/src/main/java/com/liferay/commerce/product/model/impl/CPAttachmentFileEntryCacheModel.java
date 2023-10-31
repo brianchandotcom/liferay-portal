@@ -69,7 +69,7 @@ public class CPAttachmentFileEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(57);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -107,6 +107,8 @@ public class CPAttachmentFileEntryCacheModel
 		sb.append(displayDate);
 		sb.append(", expirationDate=");
 		sb.append(expirationDate);
+		sb.append(", galleryEnabled=");
+		sb.append(galleryEnabled);
 		sb.append(", title=");
 		sb.append(title);
 		sb.append(", json=");
@@ -207,6 +209,8 @@ public class CPAttachmentFileEntryCacheModel
 				new Date(expirationDate));
 		}
 
+		cpAttachmentFileEntryImpl.setGalleryEnabled(galleryEnabled);
+
 		if (title == null) {
 			cpAttachmentFileEntryImpl.setTitle("");
 		}
@@ -285,6 +289,8 @@ public class CPAttachmentFileEntryCacheModel
 		cdnURL = objectInput.readUTF();
 		displayDate = objectInput.readLong();
 		expirationDate = objectInput.readLong();
+
+		galleryEnabled = objectInput.readBoolean();
 		title = objectInput.readUTF();
 		json = (String)objectInput.readObject();
 
@@ -356,6 +362,8 @@ public class CPAttachmentFileEntryCacheModel
 		objectOutput.writeLong(displayDate);
 		objectOutput.writeLong(expirationDate);
 
+		objectOutput.writeBoolean(galleryEnabled);
+
 		if (title == null) {
 			objectOutput.writeUTF("");
 		}
@@ -407,6 +415,7 @@ public class CPAttachmentFileEntryCacheModel
 	public String cdnURL;
 	public long displayDate;
 	public long expirationDate;
+	public boolean galleryEnabled;
 	public String title;
 	public String json;
 	public double priority;

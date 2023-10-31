@@ -11,6 +11,7 @@ create index IX_8DE7A0B5 on CPAttachmentFileEntry (classNameId, classPK, cdnURL[
 create index IX_E53AD4BF on CPAttachmentFileEntry (classNameId, classPK, ctCollectionId);
 create index IX_68966943 on CPAttachmentFileEntry (classNameId, classPK, displayDate, status, ctCollectionId);
 create index IX_7C51979E on CPAttachmentFileEntry (classNameId, classPK, fileEntryId, ctCollectionId);
+create index IX_DA1DCBF5 on CPAttachmentFileEntry (classNameId, classPK, galleryEnabled, type_, status, ctCollectionId);
 create index IX_EDBD5798 on CPAttachmentFileEntry (classNameId, classPK, type_, status, ctCollectionId);
 create index IX_8AF22978 on CPAttachmentFileEntry (displayDate, status, ctCollectionId);
 create unique index IX_AA66335 on CPAttachmentFileEntry (externalReferenceCode[$COLUMN_LENGTH:75$], companyId, ctCollectionId);

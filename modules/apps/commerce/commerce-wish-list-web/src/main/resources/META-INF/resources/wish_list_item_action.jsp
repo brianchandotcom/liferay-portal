@@ -22,6 +22,7 @@ CProduct cProduct = commerceWishListItem.getCProduct();
 	<c:when test="<%= cpInstance != null %>">
 		<commerce-ui:add-to-cart
 			alignment="left"
+			CPCatalogEntry="<%= commerceWishListDisplayContext.getCPCatalogEntry(cProduct.getPublishedCPDefinitionId()) %>"
 			CPInstanceId="<%= cpInstance.getCPInstanceId() %>"
 			inline="<%= true %>"
 			size="md"

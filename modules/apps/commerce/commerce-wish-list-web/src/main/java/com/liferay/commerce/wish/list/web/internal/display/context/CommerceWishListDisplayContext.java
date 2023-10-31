@@ -10,6 +10,7 @@ import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.price.CommerceProductPriceCalculation;
+import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
@@ -247,6 +248,18 @@ public class CommerceWishListDisplayContext {
 				commerceWishList.getCommerceWishListId()));
 
 		return _commerceWishListItemsSearchContainer;
+	}
+
+	public CPCatalogEntry getCPCatalogEntry(long cpDefinitionId)
+		throws PortalException {
+
+		CommerceContext commerceContext =
+			_commerceWishListRequestHelper.getCommerceContext();
+
+		return _cpDefinitionHelper.getCPCatalogEntry(
+			CommerceUtil.getCommerceAccountId(commerceContext),
+			commerceContext.getCommerceChannelGroupId(), cpDefinitionId,
+			_commerceWishListRequestHelper.getLocale());
 	}
 
 	public String getCPDefinitionURL(

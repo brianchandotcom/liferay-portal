@@ -3,7 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import React, {
+	ReactNode,
 	RefObject,
 	useCallback,
 	useEffect,
@@ -14,7 +17,6 @@ import React, {
 import {MODAL_TYPES, ModalType} from '../constants/modalTypes';
 import {MappingSubtype, MappingType} from '../types/MappingTypes';
 import {ValidationError} from '../types/ValidationError';
-import FormField from './FormField';
 
 interface Props {
 	displayPageName: string;
@@ -26,7 +28,7 @@ interface Props {
 	type: ModalType;
 }
 
-export default function DisplayPageModalForm({
+export default function ContentTypeModalForm({
 	displayPageName,
 	error: initialError,
 	formRef,
@@ -183,5 +185,42 @@ function MappingTypeSelector({
 				</FormField>
 			)}
 		</fieldset>
+	);
+}
+
+interface FormFieldProps {
+	children: ReactNode;
+	error?: string;
+	id: string;
+	name: string;
+}
+
+function FormField({children, error, id, name}: FormFieldProps) {
+	const hasError = Boolean(error);
+
+	return (
+		<div
+			className={classNames({'form-group': true, 'has-error': hasError})}
+		>
+			<label htmlFor={id}>
+				{name}
+
+				<span className="reference-mark">
+					<ClayIcon symbol="asterisk" />
+				</span>
+			</label>
+
+			{children}
+
+			{hasError && (
+				<div className="form-feedback-item">
+					<span className="form-feedback-indicator mr-1">
+						<ClayIcon symbol="exclamation-full" />
+					</span>
+
+					{error}
+				</div>
+			)}
+		</div>
 	);
 }

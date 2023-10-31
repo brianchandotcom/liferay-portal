@@ -12,12 +12,12 @@ import {
 } from 'frontend-js-web';
 
 import {MODAL_TYPES} from '../constants/modalTypes';
+import openContentTypeModal from '../modal/openContentTypeModal';
 import openDeletePageTemplateModal from '../modal/openDeletePageTemplateModal';
-import openDisplayPageModal from '../modal/openDisplayPageModal.es';
 
 const ACTIONS = {
 	changeContentType({changeContentTypeURL, mappingTypes}, namespace) {
-		openDisplayPageModal({
+		openContentTypeModal({
 			formSubmitURL: changeContentTypeURL,
 			mappingTypes,
 			namespace,

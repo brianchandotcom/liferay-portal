@@ -7,8 +7,8 @@ import {ClayIconSpriteContext} from '@clayui/icon';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import ContentTypeModal from '../components/ContentTypeModal';
 import {MODAL_TYPES} from '../constants/modalTypes';
-import DisplayPageModal from './DisplayPageModal';
 
 let container;
 
@@ -23,7 +23,7 @@ let container;
  * @param {string} param.spritemap
  * @param {string} param.title
  */
-export default function openDisplayPageModal({
+export default function openContentTypeModal({
 	displayPageName,
 	formSubmitURL,
 	mappingTypes,
@@ -44,7 +44,7 @@ export default function openDisplayPageModal({
 	// eslint-disable-next-line @liferay/portal/no-react-dom-render
 	ReactDOM.render(
 		<ClayIconSpriteContext.Provider value={spritemap}>
-			<DisplayPageModal
+			<ContentTypeModal
 				displayPageName={displayPageName}
 				formSubmitURL={formSubmitURL}
 				mappingTypes={mappingTypes}

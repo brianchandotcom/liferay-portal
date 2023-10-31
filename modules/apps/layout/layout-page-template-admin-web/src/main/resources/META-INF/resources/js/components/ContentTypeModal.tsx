@@ -12,7 +12,7 @@ import React, {useCallback, useRef, useState} from 'react';
 import {MODAL_TYPES, ModalType} from '../constants/modalTypes';
 import {MappingType} from '../types/MappingTypes';
 import {ValidationError} from '../types/ValidationError';
-import DisplayPageModalForm from './DisplayPageModalForm';
+import ContentTypeModalForm from './ContentTypeModalForm';
 
 interface Props {
 	displayPageName: string;
@@ -25,7 +25,7 @@ interface Props {
 	warningMessage: string;
 }
 
-export default function DisplayPageModal({
+export default function ContentTypeModal({
 	displayPageName,
 	formSubmitURL,
 	mappingTypes,
@@ -171,7 +171,7 @@ export default function DisplayPageModal({
 					</ClayAlert>
 				)}
 
-				<DisplayPageModalForm
+				<ContentTypeModalForm
 					displayPageName={displayPageName}
 					error={error}
 					formRef={formRef}

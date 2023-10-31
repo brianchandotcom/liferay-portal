@@ -5,7 +5,7 @@
 
 import {getSpritemap} from '@liferay/frontend-icons-web';
 
-import openDisplayPageModal from '../modal/openDisplayPageModal.es';
+import openContentTypeModal from '../modal/openContentTypeModal';
 
 export default function SelectDisplayPageMasterLayoutVerticalCardPropsTransformer({
 	additionalProps: {addDisplayPageUrl, mappingTypes, title},
@@ -17,7 +17,7 @@ export default function SelectDisplayPageMasterLayoutVerticalCardPropsTransforme
 		onClick: (event) => {
 			event.preventDefault();
 
-			openDisplayPageModal({
+			openContentTypeModal({
 				formSubmitURL: addDisplayPageUrl,
 				mappingTypes,
 				namespace,

@@ -9,7 +9,6 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
-import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
@@ -28,7 +27,6 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.vulcan.batch.engine.Field;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -49,7 +47,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -265,24 +262,23 @@ public class ObjectEntryOpenAPIResourceImpl
 			boolean addRelatedSchemas, String type, UriInfo uriInfo)
 		throws Exception {
 
-		return _setReadOnly(
-			_openAPIResource.getOpenAPI(
-				new ObjectEntryOpenAPIContributor(
-					addRelatedSchemas, _bundleContext, _dtoConverterRegistry,
-					_objectActionLocalService, _objectDefinition,
-					_objectDefinitionLocalService, this,
-					_objectEntryOpenAPIResourceProvider,
-					_objectRelationshipLocalService, _openAPIResource,
-					_systemObjectDefinitionManagerRegistry),
-				_getOpenAPISchemaFilter(_objectDefinition),
-				new HashSet<Class<?>>() {
-					{
-						add(ObjectEntryRelatedObjectsResourceImpl.class);
-						add(ObjectEntryResourceImpl.class);
-						add(OpenAPIResourceImpl.class);
-					}
-				},
-				type, uriInfo));
+		return _openAPIResource.getOpenAPI(
+			new ObjectEntryOpenAPIContributor(
+				addRelatedSchemas, _bundleContext, _dtoConverterRegistry,
+				_objectActionLocalService, _objectDefinition,
+				_objectDefinitionLocalService, this,
+				_objectEntryOpenAPIResourceProvider, _objectFieldLocalService,
+				_objectRelationshipLocalService, _openAPIResource,
+				_systemObjectDefinitionManagerRegistry),
+			_getOpenAPISchemaFilter(_objectDefinition),
+			new HashSet<Class<?>>() {
+				{
+					add(ObjectEntryRelatedObjectsResourceImpl.class);
+					add(ObjectEntryResourceImpl.class);
+					add(OpenAPIResourceImpl.class);
+				}
+			},
+			type, uriInfo);
 	}
 
 	private OpenAPISchemaFilter _getOpenAPISchemaFilter(
@@ -408,52 +404,6 @@ public class ObjectEntryOpenAPIResourceImpl
 		return requiredPropertySchemaNames;
 	}
 
-	private Response _setReadOnly(Response response) {
-		Map<String, ObjectField> objectFields =
-			ObjectFieldUtil.toObjectFieldsMap(
-				_objectFieldLocalService.getObjectFields(
-					_objectDefinition.getObjectDefinitionId()));
-
-		Schema schema = _getObjectDefinitionSchema(
-			(OpenAPI)response.getEntity());
-
-		Map<String, Schema> properties = schema.getProperties();
-
-		for (Map.Entry<String, Schema> entry : properties.entrySet()) {
-			String key = entry.getKey();
-
-			schema = entry.getValue();
-
-			if (_readOnlyFieldNames.contains(key)) {
-				schema.readOnly(true);
-
-				continue;
-			}
-
-			ObjectField objectField = objectFields.get(key);
-
-			if (objectField == null) {
-				continue;
-			}
-
-			if (Objects.equals(
-					objectField.getReadOnly(),
-					ObjectFieldConstants.READ_ONLY_CONDITIONAL) ||
-				Objects.equals(
-					objectField.getReadOnly(),
-					ObjectFieldConstants.READ_ONLY_FALSE)) {
-
-				schema.readOnly(false);
-
-				continue;
-			}
-
-			schema.readOnly(true);
-		}
-
-		return response;
-	}
-
 	private final BundleContext _bundleContext;
 	private final DTOConverterRegistry _dtoConverterRegistry;
 	private final Map<String, String> _fieldNameMappings = HashMapBuilder.put(
@@ -470,8 +420,6 @@ public class ObjectEntryOpenAPIResourceImpl
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
 	private final OpenAPIResource _openAPIResource;
-	private final Set<String> _readOnlyFieldNames = SetUtil.fromArray(
-		"dateCreated", "dateModified", "id");
 	private final SystemObjectDefinitionManagerRegistry
 		_systemObjectDefinitionManagerRegistry;
 

@@ -4,8 +4,8 @@ definition {
 	property ci.retries.disabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
-	property testray.component.names = "Look And Feel";
-	property testray.main.component.name = "Look And Feel";
+	property testray.component.names = "Widget Pages";
+	property testray.main.component.name = "Widget Pages";
 
 	setUp {
 		task ("Set up instance and sign in") {

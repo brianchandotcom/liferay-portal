@@ -123,12 +123,19 @@ public class ObjectEntryModelResourcePermission
 			String actionId)
 		throws PortalException {
 
-		User user = permissionChecker.getUser();
-
 		if (objectEntry.getRootObjectEntryId() != 0) {
-			objectEntry = _objectEntryLocalService.getObjectEntry(
-				objectEntry.getRootObjectEntryId());
+			ObjectEntry rootObjectEntry =
+				_objectEntryLocalService.fetchObjectEntry(
+					objectEntry.getRootObjectEntryId());
+
+			if (rootObjectEntry == null) {
+				return true;
+			}
+
+			objectEntry = rootObjectEntry;
 		}
+
+		User user = permissionChecker.getUser();
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(

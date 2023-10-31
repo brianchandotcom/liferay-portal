@@ -19,7 +19,7 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@description = "This is a test for LPS-133390. View Card fragment width is same as column width at mobile mode after upgrade."
+	@description = "This is a test for LPS-133390. View Card fragment width is same as column width at mobile mode after upgrade from 721."
 	@priority = 5
 	test ViewCardsInsideModuleAfterUpgrade721 {
 		property data.archive.type = "data-archive-layout-section-with-three-columns";
@@ -29,7 +29,7 @@ definition {
 		ValidateFragmentsUpgrade.viewCardWithThreeColumnsInMobileBreakpoint();
 	}
 
-	@description = "This is a test for LPS-133390. View Card fragment width is same as column width at mobile mode after upgrade."
+	@description = "This is a test for LPS-133390. View Card fragment width is same as column width at mobile mode after upgrade from 72104"
 	@priority = 5
 	test ViewCardsInsideModuleAfterUpgrade72104 {
 		property data.archive.type = "data-archive-layout-section-with-three-columns";

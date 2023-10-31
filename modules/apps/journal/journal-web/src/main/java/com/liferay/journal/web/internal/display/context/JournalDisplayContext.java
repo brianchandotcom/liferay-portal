@@ -1034,7 +1034,7 @@ public class JournalDisplayContext {
 		return articleSearchContainer.getTotal();
 	}
 
-	public VerticalNavItemList getVerticalNavDDMStructureList() {
+	public VerticalNavItemList getDDMStructureVerticalNavItemList() {
 		VerticalNavItemList verticalNavItemList = new VerticalNavItemList();
 
 		for (DDMStructure ddmStructure :

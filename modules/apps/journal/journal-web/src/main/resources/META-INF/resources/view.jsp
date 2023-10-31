@@ -61,11 +61,11 @@ else {
 	>
 
 		<%
-		VerticalNavItemList verticalNavItemList = journalDisplayContext.getVerticalNavDDMStructureList();
+		VerticalNavItemList ddmStructureVerticalNavItemList = journalDisplayContext.getDDMStructureVerticalNavItemList();
 		%>
 
 		<c:choose>
-			<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-194763") && ListUtil.isNotEmpty(verticalNavItemList) %>'>
+			<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPS-194763") && ListUtil.isNotEmpty(ddmStructureVerticalNavItemList) %>'>
 				<clay:row>
 					<clay:col
 						lg="3"
@@ -79,7 +79,7 @@ else {
 						</span>
 
 						<clay:vertical-nav
-							verticalNavItems="<%= verticalNavItemList %>"
+							verticalNavItems="<%= ddmStructureVerticalNavItemList %>"
 						/>
 					</clay:col>
 

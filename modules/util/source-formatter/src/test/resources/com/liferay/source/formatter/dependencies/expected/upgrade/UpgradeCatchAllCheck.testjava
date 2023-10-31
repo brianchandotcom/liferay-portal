@@ -131,6 +131,24 @@ public class UpgradeCatchAllCheck {
 	}
 
 	public void method(
+		long commerceOrderId, long cpInstanceId, int quantity,
+		int shippedQuantity, String json, CommerceContext commerceContext,
+		ServiceContext serviceContext) {
+
+		_commerceOrderItemLocalService.addCommerceOrderItem(0, commerceOrderId, cpInstanceId, json, BigDecimal.valueOf(quantity), cpInstanceId, BigDecimal.valueOf(shippedQuantity), null, commerceContext, serviceContext);
+		_commerceOrderItemService.addCommerceOrderItem(0, commerceOrderId, cpInstanceId, json, BigDecimal.valueOf(quantity), cpInstanceId, BigDecimal.valueOf(shippedQuantity), null, commerceContext, serviceContext);
+		_commerceOrderItemService.addCommerceOrderItem(123, cpInstanceId, 123, shippedQuantity, "test", commerceContext, serviceContext);
+
+		CommerceOrderItemLocalServiceUtil.addCommerceOrderItem(commerceOrderId, cpInstanceId, json, BigDecimal.valueOf(quantity), cpInstanceId, BigDecimal.valueOf(shippedQuantity), null, commerceContext, serviceContext);
+		CommerceOrderItemServiceUtil.addCommerceOrderItem(commerceOrderId, cpInstanceId, json, BigDecimal.valueOf(quantity), cpInstanceId, BigDecimal.valueOf(shippedQuantity), null, commerceContext, serviceContext);
+		CommerceOrderItemServiceUtil.addCommerceOrderItem(123, cpInstanceId, 123, shippedQuantity, "test", commerceContext, serviceContext);
+
+		CommerceOrderItemLocalServiceUtil.deleteCommerceOrderItems(0, commerceOrderId);
+		_commerceOrderItemLocalService.deleteCommerceOrderItems(0, commerceOrderId);
+		_commerceOrderItemLocalService.deleteCommerceOrderItems(123);
+	}
+
+	public void method(
 		long userId, long groupId, long repositoryId, boolean mountPoint,
 		long parentFolderId, String name, String description, boolean hidden,
 		ServiceContext serviceContext) {
@@ -367,6 +385,12 @@ public class UpgradeCatchAllCheck {
 
 	@Reference
 	private CommerceAccountHelper _commerceAccountHelper;
+
+	@Reference
+	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
+
+	@Reference
+	private CommerceOrderItemService _commerceOrderItemService;
 
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;

@@ -60,9 +60,8 @@ const CreateLicense = () => {
 	const getSubscriptions = useCallback(async () => {
 		const {familyName, givenName} = myUserAccount;
 
-		const subscriptions = await provisioningKoroneikiOAuth2.getSubscriptions(
-			orderId
-		);
+		const subscriptions =
+			await provisioningKoroneikiOAuth2.getSubscriptions(orderId);
 
 		setValue('licenseKeyData', subscriptions);
 
@@ -180,18 +179,17 @@ const CreateLicense = () => {
 		}
 
 		if (step === StepCreateLicense.LICENSE_KEY_DETAILS) {
-			const licenseKey = await provisioningKoroneikiOAuth2.createLicenseKey(
-				form.licenseKeyData
-			);
+			const licenseKey =
+				await provisioningKoroneikiOAuth2.createLicenseKey(
+					form.licenseKeyData
+				);
 
-			const downloadedKey = provisioningKoroneikiOAuth2.downloadLicenseKey(
-				licenseKey.id
-			);
+			provisioningKoroneikiOAuth2.downloadLicenseKey(licenseKey.id);
 
 			navigate('/');
 
 			Liferay.Util.openToast({
-				message: `License Key created successfully: ${downloadedKey}`,
+				message: `License Key created successfully`,
 				type: 'success',
 			});
 		}
@@ -239,7 +237,8 @@ const CreateLicense = () => {
 					className="d-flex justify-content-between mt-6"
 					dataButtons={ButtonsInfo}
 					onClickCancel={() => {
-						window.location.href = Liferay.ThemeDisplay.getCanonicalURL();
+						window.location.href =
+							Liferay.ThemeDisplay.getCanonicalURL();
 					}}
 					onClickCustomizedButton={() =>
 						setStep(StepCreateLicense.SUBSCRIPTION)

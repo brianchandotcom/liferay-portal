@@ -3,27 +3,20 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useCallback, useEffect, useState} from 'react';
-
 import {getProductById} from '../../../utils/api';
+import useSWR from 'swr';
 
 const useGetProductById = (nestedFields: string, productId?: string) => {
-	const [product, setProduct] = useState<Product>();
-
-	const getProductInformation = useCallback(async () => {
-		if (productId) {
-			const fetchProduct = await getProductById({
-				nestedFields,
-				productId,
-			});
-
-			setProduct(fetchProduct);
+	const {data: product} = useSWR(`/product/${productId}}`, async () => {
+		if (!productId) {
+			return;
 		}
-	}, [productId, setProduct, nestedFields]);
 
-	useEffect(() => {
-		getProductInformation();
-	}, [getProductInformation]);
+		return getProductById({
+			nestedFields,
+			productId,
+		});
+	});
 
 	return {product};
 };

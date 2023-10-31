@@ -9,6 +9,7 @@ import {InputHTMLAttributes} from 'react';
 import BaseWrapper from '../base/BaseWrapper';
 
 import './index.scss';
+import classNames from 'classnames';
 
 export type InputProps = {
 	boldLabel?: boolean;
@@ -56,7 +57,7 @@ const FormInput: React.FC<InputProps> = ({
 			required={required}
 		>
 			<ClayInput
-				className={`rounded-xs ${className}`}
+				className={classNames('rounded-xs', className)}
 				component={type === 'textarea' ? 'textarea' : 'input'}
 				disabled={disabled}
 				id={id}

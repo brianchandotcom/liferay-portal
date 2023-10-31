@@ -210,6 +210,14 @@ public class JournalConfigurationDisplayContext {
 		).build();
 	}
 
+	public String getSubtitle() {
+		if (Objects.equals(getNavigation(), "structures")) {
+			return LanguageUtil.get(_httpServletRequest, "highlighted");
+		}
+
+		return LanguageUtil.get(_httpServletRequest, "email");
+	}
+
 	public String getTitle() {
 		return LanguageUtil.get(_httpServletRequest, getNavigation());
 	}

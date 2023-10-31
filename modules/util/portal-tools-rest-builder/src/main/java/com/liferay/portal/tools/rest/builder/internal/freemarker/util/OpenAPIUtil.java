@@ -241,17 +241,9 @@ public class OpenAPIUtil {
 	}
 
 	public static Map<String, Schema> getGlobalEnumSchemas(
-		OpenAPIYAML openAPIYAML) {
+		Map<String, Schema> schemas) {
 
 		Map<String, Schema> globalEnumSchemas = new TreeMap<>();
-
-		Components components = openAPIYAML.getComponents();
-
-		if (components == null) {
-			return globalEnumSchemas;
-		}
-
-		Map<String, Schema> schemas = components.getSchemas();
 
 		for (Map.Entry<String, Schema> entry : schemas.entrySet()) {
 			Schema schema = entry.getValue();

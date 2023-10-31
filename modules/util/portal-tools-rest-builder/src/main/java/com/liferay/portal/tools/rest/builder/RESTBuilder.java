@@ -235,7 +235,7 @@ public class RESTBuilder {
 			context.put("escapedVersion", escapedVersion);
 
 			Map<String, Schema> globalEnumSchemas =
-				OpenAPIUtil.getGlobalEnumSchemas(openAPIYAML);
+				OpenAPIUtil.getGlobalEnumSchemas(allSchemas);
 
 			context.put("globalEnumSchemas", globalEnumSchemas);
 

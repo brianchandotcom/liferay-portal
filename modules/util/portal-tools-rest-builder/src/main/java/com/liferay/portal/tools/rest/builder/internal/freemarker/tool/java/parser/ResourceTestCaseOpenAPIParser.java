@@ -16,6 +16,7 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Info;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Operation;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.RequestBody;
+import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,11 +59,11 @@ public class ResourceTestCaseOpenAPIParser {
 	}
 
 	public static String getParameters(
-		List<JavaMethodParameter> javaMethodParameters, OpenAPIYAML openAPIYAML,
-		Operation operation, boolean annotation) {
+		List<JavaMethodParameter> javaMethodParameters, Operation operation,
+		Map<String, Schema> schemas, boolean annotation) {
 
 		return ResourceOpenAPIParser.getParameters(
-			javaMethodParameters, openAPIYAML, operation, annotation);
+			javaMethodParameters, operation, schemas, annotation);
 	}
 
 	private static String _getMethodName(

@@ -282,8 +282,8 @@ public class ResourceOpenAPIParser {
 	}
 
 	public static String getParameters(
-		List<JavaMethodParameter> javaMethodParameters, OpenAPIYAML openAPIYAML,
-		Operation operation, boolean annotation) {
+		List<JavaMethodParameter> javaMethodParameters, Operation operation,
+		Map<String, Schema> schemas, boolean annotation) {
 
 		StringBuilder sb = new StringBuilder();
 
@@ -292,7 +292,7 @@ public class ResourceOpenAPIParser {
 
 			if (annotation) {
 				parameterAnnotation = _getParameterAnnotation(
-					javaMethodParameter, openAPIYAML, operation);
+					javaMethodParameter, operation, schemas);
 			}
 
 			sb.append(
@@ -686,15 +686,12 @@ public class ResourceOpenAPIParser {
 	}
 
 	private static String _getDefaultValue(
-		OpenAPIYAML openAPIYAML, Schema schema) {
+		Schema schema, Map<String, Schema> schemas) {
 
 		if (schema.getDefault() != null) {
 			return schema.getDefault();
 		}
 		else if (schema.getReference() != null) {
-			Map<String, Schema> schemas = OpenAPIUtil.getAllSchemas(
-				openAPIYAML);
-
 			String referenceName = OpenAPIParserUtil.getReferenceName(
 				schema.getReference());
 
@@ -702,7 +699,7 @@ public class ResourceOpenAPIParser {
 
 			if (referenceSchema == null) {
 				Map<String, Schema> enumSchemas =
-					OpenAPIUtil.getGlobalEnumSchemas(openAPIYAML);
+					OpenAPIUtil.getGlobalEnumSchemas(schemas);
 
 				referenceSchema = enumSchemas.get(referenceName);
 			}
@@ -1058,8 +1055,8 @@ public class ResourceOpenAPIParser {
 	}
 
 	private static String _getParameterAnnotation(
-		JavaMethodParameter javaMethodParameter, OpenAPIYAML openAPIYAML,
-		Operation operation) {
+		JavaMethodParameter javaMethodParameter, Operation operation,
+		Map<String, Schema> schemas) {
 
 		List<Parameter> parameters = operation.getParameters();
 
@@ -1109,7 +1106,7 @@ public class ResourceOpenAPIParser {
 			StringBundler sb = new StringBundler(11);
 
 			String defaultValue = _getDefaultValue(
-				openAPIYAML, parameter.getSchema());
+				parameter.getSchema(), schemas);
 
 			if (defaultValue != null) {
 				sb.append("@javax.ws.rs.DefaultValue(\"");

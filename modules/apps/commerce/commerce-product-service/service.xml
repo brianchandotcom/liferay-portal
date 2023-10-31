@@ -225,6 +225,7 @@
 		<column method-name="CDNURL" name="cdnURL" type="String" />
 		<column name="displayDate" type="Date" />
 		<column name="expirationDate" type="Date" />
+		<column name="galleryEnabled" type="boolean" />
 		<column localized="true" name="title" type="String" />
 		<column name="json" type="String" />
 		<column name="priority" type="double" />
@@ -284,6 +285,20 @@
 		<finder name="C_C_T_NotST" return-type="Collection">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
+			<finder-column name="type" />
+			<finder-column comparator="!=" name="status" />
+		</finder>
+		<finder name="C_C_G_T_ST" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="galleryEnabled" />
+			<finder-column name="type" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="C_C_G_T_NotST" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="galleryEnabled" />
 			<finder-column name="type" />
 			<finder-column comparator="!=" name="status" />
 		</finder>

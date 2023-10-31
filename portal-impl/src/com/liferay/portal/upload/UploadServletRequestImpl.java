@@ -9,6 +9,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.io.ByteArrayFileInputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
@@ -17,7 +18,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProgressTracker;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -80,7 +80,10 @@ public class UploadServletRequestImpl
 				location,
 				UploadServletRequestConfigurationProviderUtil.getTempDir());
 
-			List<FileItem> fileItemsList = _servletFileUpload.parseRequest(
+			ServletFileUpload servletFileUpload =
+				_servletFileUploadSnapshot.get();
+
+			List<FileItem> fileItemsList = servletFileUpload.parseRequest(
 				liferayServletRequest, location, fileSizeThreshold);
 
 			liferayServletRequest.setFinishedReadingOriginalStream(true);
@@ -588,10 +591,9 @@ public class UploadServletRequestImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		UploadServletRequestImpl.class);
 
-	private static volatile ServletFileUpload _servletFileUpload =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			ServletFileUpload.class, UploadServletRequestImpl.class,
-			"_servletFileUpload", true);
+	private static final Snapshot<ServletFileUpload>
+		_servletFileUploadSnapshot = new Snapshot<>(
+			UploadServletRequestImpl.class, ServletFileUpload.class);
 
 	private final Map<String, FileItem[]> _fileParameters;
 	private final LiferayServletRequest _liferayServletRequest;

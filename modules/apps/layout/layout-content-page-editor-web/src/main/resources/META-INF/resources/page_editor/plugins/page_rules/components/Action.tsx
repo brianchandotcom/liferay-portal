@@ -21,6 +21,7 @@ interface ActionProps {
 	layoutDataItems: {label: string; value: string}[];
 	onActionChange: (action: Action) => void;
 	onDeleteAction: () => void;
+	showDeleteButton: boolean;
 }
 
 const TYPE_ITEMS = [
@@ -47,9 +48,14 @@ export default function Action({
 	layoutDataItems,
 	onActionChange,
 	onDeleteAction,
+	showDeleteButton,
 }: ActionProps) {
 	return (
-		<RuleBuilderItem onDeleteButtonClick={onDeleteAction} type="action">
+		<RuleBuilderItem
+			onDeleteButtonClick={onDeleteAction}
+			showDeleteButton={showDeleteButton}
+			type="action"
+		>
 			<RuleSelect
 				aria-label={sub(
 					Liferay.Language.get('select-x'),
@@ -57,7 +63,7 @@ export default function Action({
 				)}
 				items={TYPE_ITEMS}
 				onSelectionChange={(type) => onActionChange({...action, type})}
-				selectedKey={action.type}
+				selectedKey={action.type ?? ''}
 			/>
 
 			{action.type ? (

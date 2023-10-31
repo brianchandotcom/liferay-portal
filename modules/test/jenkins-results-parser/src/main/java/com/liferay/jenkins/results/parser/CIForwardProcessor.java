@@ -148,16 +148,15 @@ public class CIForwardProcessor {
 
 				StringBuilder sb = new StringBuilder();
 
-				sb.append("Unable to forward pull request.\n");
-				sb.append("pull request: ");
+				sb.append("Secondary rate limit exceeded\n");
+				sb.append("Pull Request URL: ");
 				sb.append(_pullRequest.getURL());
-				sb.append("\n console log: ");
+				sb.append("\nConsole log URL: ");
 				sb.append(_consoleLogURL);
-				sb.append("\n");
 
 				NotificationUtil.sendSlackNotification(
 					sb.toString(), "#ci-notifications", ":liferay-ci:",
-					"Secondary Rate Limit exceeded", "Liferay CI");
+					"Unable to forward pull request. ", "Liferay CI");
 
 				throw new GitHubSecondaryRateLimitRuntimeException(
 					gitHubSecondaryRateLimitRuntimeException.getGitHubApiUrl(),

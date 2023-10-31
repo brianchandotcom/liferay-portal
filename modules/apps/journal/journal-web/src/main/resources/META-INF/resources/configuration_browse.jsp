@@ -23,7 +23,7 @@ portletDisplay.setURLBack(journalConfigurationDisplayContext.getBackURL());
 		<clay:col
 			lg="3"
 		>
-			<p class="small text-uppercase">
+			<p class="c-mb-1 sheet-tertiary-title text-2 text-secondary">
 				<liferay-ui:message key="settings" />
 			</p>
 
@@ -31,7 +31,7 @@ portletDisplay.setURLBack(journalConfigurationDisplayContext.getBackURL());
 				verticalNavItems="<%= journalConfigurationDisplayContext.getSettingsVerticalNavItemList() %>"
 			/>
 
-			<p class="small text-uppercase">
+			<p class="c-mb-1 sheet-tertiary-title text-2 text-secondary">
 				<liferay-ui:message key="notifications" />
 			</p>
 

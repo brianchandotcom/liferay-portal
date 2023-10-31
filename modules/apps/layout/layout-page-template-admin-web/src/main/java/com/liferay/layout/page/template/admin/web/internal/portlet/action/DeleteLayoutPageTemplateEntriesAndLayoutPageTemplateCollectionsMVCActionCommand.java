@@ -45,7 +45,7 @@ public class
 				deleteLayoutPageTemplateCollectionIds);
 
 		long[] deleteLayoutPageTemplateEntryIds = ParamUtil.getLongValues(
-			actionRequest, "rowIdsLayoutPageTemplateEntry");
+			actionRequest, "rowIds");
 
 		_layoutPageTemplateEntryService.deleteLayoutPageTemplateEntries(
 			deleteLayoutPageTemplateEntryIds);

@@ -85,7 +85,7 @@ public class InfoPanelMVCResourceCommand extends BaseMVCResourceCommand {
 		throws Exception {
 
 		long[] layoutPageTemplateEntryIds = ParamUtil.getLongValues(
-			resourceRequest, "rowIdsLayoutPageTemplateEntry");
+			resourceRequest, "rowIds");
 
 		List<LayoutPageTemplateEntry> layoutPageTemplateEntries =
 			new ArrayList<>();

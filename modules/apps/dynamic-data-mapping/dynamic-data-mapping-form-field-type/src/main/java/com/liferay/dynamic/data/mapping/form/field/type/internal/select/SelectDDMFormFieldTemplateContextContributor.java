@@ -140,11 +140,11 @@ public class SelectDDMFormFieldTemplateContextContributor
 		Locale locale,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		List<Map<String, String>> objectFieldOptions = _getObjectFieldOptions(
-			ddmFormField, ddmFormFieldOptions, ddmFormFieldRenderingContext);
-
 		boolean alphabeticalOrder = GetterUtil.getBoolean(
 			ddmFormField.getProperty("alphabeticalOrder"));
+
+		List<Map<String, String>> objectFieldOptions = _getObjectFieldOptions(
+			ddmFormField, ddmFormFieldOptions, ddmFormFieldRenderingContext);
 
 		if (ListUtil.isNotEmpty(objectFieldOptions)) {
 			ServiceContext serviceContext =

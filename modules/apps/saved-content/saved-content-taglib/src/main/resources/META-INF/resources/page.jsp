@@ -13,7 +13,7 @@ Boolean saved = GetterUtil.getBoolean(request.getAttribute("liferay-saved-conten
 
 <div>
 	<clay:button
-		aria-label="<%= GetterUtil.getString((String)request.getAttribute("liferay-saved-content:saved-content:ariaLabel")) %>"
+		aria-label="<%= GetterUtil.getString((String)request.getAttribute("liferay-saved-content:saved-content:label")) %>"
 		disabled="<%= true %>"
 		displayType="secondary"
 		monospaced="<%= true %>"

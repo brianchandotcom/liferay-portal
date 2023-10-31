@@ -8,7 +8,23 @@ import DropDown from '@clayui/drop-down';
 import ClayForm from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import {addParams, navigate} from 'frontend-js-web';
-import React from 'react';
+import React, {Key} from 'react';
+
+type Option = {
+	label: string;
+	value: string;
+};
+
+type Props = {
+	portletNamespace: string;
+	searchIn: Key;
+	searchInOptions: Option[];
+	searchLocation: Key;
+	searchLocationOptions: Option[];
+	searchResults: Key;
+	searchResultsOptions: Option[];
+	searchURL: string;
+};
 
 const SearchOptions = ({
 	portletNamespace: namespace,
@@ -19,8 +35,16 @@ const SearchOptions = ({
 	searchResults: initialResults,
 	searchResultsOptions,
 	searchURL,
-}) => {
-	const onChange = ({location, results, searchIn}) => {
+}: Props) => {
+	const onChange = ({
+		location,
+		results,
+		searchIn,
+	}: {
+		location?: Key;
+		results?: Key;
+		searchIn?: Key;
+	}) => {
 		const url = addParams(
 			{
 				[`${namespace}searchIn`]: searchIn || initialSearchIn,
@@ -39,7 +63,9 @@ const SearchOptions = ({
 				<ClayForm.Group className="c-mr-2 d-inline-flex">
 					<Picker
 						id={`${namespace}searchResults`}
-						onSelectionChange={(key) => onChange({results: key})}
+						onSelectionChange={(key: Key) =>
+							onChange({results: key})
+						}
 						selectedKey={initialResults}
 					>
 						<DropDown.Group
@@ -57,7 +83,7 @@ const SearchOptions = ({
 					<ClayForm.Group className="c-mr-2 d-inline-flex">
 						<Picker
 							id={`${namespace}searchLocation`}
-							onSelectionChange={(key) =>
+							onSelectionChange={(key: Key) =>
 								onChange({location: key})
 							}
 							selectedKey={initialLocation}
@@ -79,7 +105,9 @@ const SearchOptions = ({
 				<ClayForm.Group className="d-inline-flex">
 					<Picker
 						id={`${namespace}searchIn`}
-						onSelectionChange={(key) => onChange({searchIn: key})}
+						onSelectionChange={(key: Key) =>
+							onChange({searchIn: key})
+						}
 						selectedKey={initialSearchIn}
 					>
 						<DropDown.Group

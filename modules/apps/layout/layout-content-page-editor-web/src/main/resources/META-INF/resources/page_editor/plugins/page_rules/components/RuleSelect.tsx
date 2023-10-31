@@ -28,15 +28,17 @@ const TriggerLabel = React.forwardRef<HTMLButtonElement, any>(
 );
 
 interface RuleSelectProps<T> {
-	items: ReadonlyArray<{label: string; value: T}>;
-	onSelectionChange: (selection: T) => void;
-	selectedKey?: string;
+	'aria-label'?: string;
+	'items': ReadonlyArray<{label: string; value: T}>;
+	'onSelectionChange': (selection: T) => void;
+	'selectedKey'?: string;
 }
 
 export default function RuleSelect<T extends string>({
 	items,
 	onSelectionChange,
 	selectedKey,
+	...otherProps
 }: RuleSelectProps<T>) {
 	return (
 		<Picker
@@ -47,6 +49,7 @@ export default function RuleSelect<T extends string>({
 			}
 			placeholder={Liferay.Language.get('select')}
 			selectedKey={selectedKey}
+			{...otherProps}
 		>
 			{(item) => <Option key={item.value}>{item.label}</Option>}
 		</Picker>

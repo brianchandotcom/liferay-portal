@@ -6,6 +6,6 @@ application:
     name: "Liferay.Headless.Commerce.Admin.Account"
 author: "Alessio Antonio Rendina"
 clientDir: "../headless-commerce-admin-account-client/src/main/java"
-compatibilityVersion: 3
+compatibilityVersion: 4
 forcePredictableOperationId: false
 testDir: "../headless-commerce-admin-account-test/src/testIntegration/java"

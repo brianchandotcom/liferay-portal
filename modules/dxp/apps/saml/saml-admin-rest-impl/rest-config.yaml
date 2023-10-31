@@ -6,6 +6,6 @@ application:
     name: "Liferay.Saml.Admin.REST"
 author: "Stian Sigvartsen"
 clientDir: "../saml-admin-rest-client/src/main/java"
-compatibilityVersion: 3
+compatibilityVersion: 4
 forcePredictableOperationId: true
 testDir: "../saml-admin-rest-test/src/testIntegration/java"

@@ -6,6 +6,6 @@ application:
     name: "Liferay.Portal.Search.REST"
 author: "Petteri Karttunen"
 clientDir: "../portal-search-rest-client/src/main/java"
-compatibilityVersion: 3
+compatibilityVersion: 4
 forcePredictableOperationId: true
 testDir: "../portal-search-rest-test/src/testIntegration/java"

@@ -6,6 +6,6 @@ application:
     name: "Liferay.Dispatch.REST"
 author: "Nilton Vieira"
 clientDir: "../dispatch-rest-client/src/main/java"
-compatibilityVersion: 3
+compatibilityVersion: 4
 forcePredictableOperationId: true
 testDir: "../dispatch-rest-test/src/testIntegration/java"

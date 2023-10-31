@@ -6,6 +6,6 @@ application:
     name: "Liferay.Headless.Commerce.Machine.Learning"
 author: "Riccardo Ferrari"
 clientDir: "../headless-commerce-machine-learning-client/src/main/java"
-compatibilityVersion: 3
+compatibilityVersion: 4
 forcePredictableSchemaPropertyName: true
 testDir: "../headless-commerce-machine-learning-test/src/testIntegration/java"

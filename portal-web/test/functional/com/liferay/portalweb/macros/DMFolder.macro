@@ -251,7 +251,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro copycopy(depotName = null,targetFolderName = null,siteName = null,dmFolderName = null) {
+	macro copy(depotName = null,targetFolderName = null,siteName = null,dmFolderName = null) {
 		if (!(isSet(bulkCopy))) {
 			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Copy To",

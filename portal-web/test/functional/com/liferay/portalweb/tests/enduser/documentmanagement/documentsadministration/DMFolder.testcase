@@ -182,9 +182,9 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		for (var entryCount : list "1,2,3") {
-			LexiconCard.checkCardCheckbox(card = "DM Folder Name ${entryCount}");
-		}
+		DMFolder.deleteCP(dmFolderName = "Provided by Liferay");
+
+		PortletEntry.selectAll();
 
 		DMNavigator.gotoItemViaManagementBar(
 			item = "dropdownMenu",

@@ -54,9 +54,9 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		for (var entryCount : list "1,2,3") {
-			DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "Document_${entryCount}.jpg");
-		}
+		DMFolder.deleteCP(dmFolderName = "Provided by Liferay");
+
+		PortletEntry.selectAll();
 
 		DMNavigator.gotoItemViaManagementBar(
 			item = "dropdownMenu",
@@ -70,9 +70,7 @@ definition {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 		}
 
-		for (var entryCount : list "1,2,3") {
-			DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "Document_${entryCount}.jpg");
-		}
+		PortletEntry.selectAll();
 
 		DMNavigator.gotoItemViaManagementBar(
 			item = "dropdownMenu",
@@ -501,9 +499,9 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		for (var entryCount : list "1,2,3") {
-			DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "Document_${entryCount}.jpg");
-		}
+		DMFolder.deleteCP(dmFolderName = "Provided by Liferay");
+
+		PortletEntry.selectAll();
 
 		DMNavigator.gotoItemViaManagementBar(
 			item = "dropdownMenu",
@@ -539,9 +537,9 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		for (var entryCount : list "1,2,3") {
-			DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "Document_${entryCount}.jpg");
-		}
+		DMFolder.deleteCP(dmFolderName = "Provided by Liferay");
+
+		PortletEntry.selectAll();
 
 		DMNavigator.gotoItemViaManagementBar(
 			item = "dropdownMenu",
@@ -555,9 +553,7 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		for (var entryCount : list "1,2,3") {
-			DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "Document_${entryCount}.jpg");
-		}
+		PortletEntry.selectAll();
 
 		DMNavigator.gotoItemViaManagementBar(
 			item = "dropdownMenu",
@@ -570,9 +566,7 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
-		for (var entryCount : list "1,2,3") {
-			DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "Document_${entryCount}.jpg");
-		}
+		PortletEntry.selectAll();
 
 		DMNavigator.gotoItemViaManagementBar(
 			item = "dropdownMenu",
@@ -3714,7 +3708,7 @@ definition {
 			dmDocumentTitle = "Document_5.txt");
 	}
 
-	@description = "This test ensures that Users can view generic error when bulk copy more than ten wrong files."
+	@description = "This test ensures that users can view generic error when bulk copy more than ten wrong files."
 	@priority = 4
 	test CanViewGenericErrorWhenBulkCopyMoreThanTenWrongFiles {
 		property custom.properties = "feature.flag.LPS-182512=true";
@@ -3732,9 +3726,9 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		for (var entryCount : list "1,2,3,4,5,6,7,8,9,10,11") {
-			DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "Document_${entryCount}.jpg");
-		}
+		DMFolder.deleteCP(dmFolderName = "Provided by Liferay");
+
+		PortletEntry.selectAll();
 
 		DMNavigator.gotoItemViaManagementBar(
 			item = "dropdownMenu",
@@ -3747,9 +3741,7 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		for (var entryCount : list "1,2,3,4,5,6,7,8,9,10,11") {
-			DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "Document_${entryCount}.jpg");
-		}
+		PortletEntry.selectAll();
 
 		DMNavigator.gotoItemViaManagementBar(
 			item = "dropdownMenu",
@@ -3944,9 +3936,9 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		for (var entryCount : list "1,2,3,4,5,6,7,8,9,10") {
-			DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "Document_${entryCount}.jpg");
-		}
+		DMFolder.deleteCP(dmFolderName = "Provided by Liferay");
+
+		PortletEntry.selectAll();
 
 		DMNavigator.gotoItemViaManagementBar(
 			item = "dropdownMenu",
@@ -3959,9 +3951,7 @@ definition {
 
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
 
-		for (var entryCount : list "1,2,3,4,5,6,7,8,9,10") {
-			DMDocument.checkDocumentCheckboxCP(dmDocumentTitle = "Document_${entryCount}.jpg");
-		}
+		PortletEntry.selectAll();
 
 		DMNavigator.gotoItemViaManagementBar(
 			item = "dropdownMenu",

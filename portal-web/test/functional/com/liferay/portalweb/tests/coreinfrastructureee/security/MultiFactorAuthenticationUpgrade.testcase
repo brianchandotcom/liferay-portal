@@ -22,6 +22,7 @@ definition {
 	@priority = 4
 	test ViewMFAConfigurationInInstanceLevelAfterUpgrade7310 {
 		property data.archive.type = "data-archive-mfa-instance-level";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.3.10";
 
 		task ("Login at able.com and send otp email") {

@@ -41,6 +41,7 @@ definition {
 	@priority = 4
 	test ViewWebContextsCORSConfigurationAfterUpgrade72101 {
 		property data.archive.type = "data-archive-web-contexts-cors";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
 		property portal.version = "7.2.10.1";
 
 		task ("Go to configuration and view web content CORS") {

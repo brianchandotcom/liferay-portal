@@ -83,37 +83,23 @@ public class ListTypeEntryLocalServiceTest {
 
 	@Test
 	public void testAddListTypeEntry() throws Exception {
-		try {
-			_testAddListTypeEntry(
-				_listTypeDefinition.getListTypeDefinitionId(), "able");
-		}
-		catch (DuplicateListTypeEntryException
-					duplicateListTypeEntryException) {
-
-			Assert.assertEquals(
-				"Duplicate key able",
-				duplicateListTypeEntryException.getMessage());
-		}
+		AssertUtils.assertFailure(
+			DuplicateListTypeEntryException.class, "Duplicate key able",
+			() -> _testAddListTypeEntry(
+				_listTypeDefinition.getListTypeDefinitionId(), "able"));
 
 		String externalReferenceCode =
 			_listTypeEntry.getExternalReferenceCode();
 
-		try {
-			_listTypeEntryLocalService.addListTypeEntry(
+		AssertUtils.assertFailure(
+			DuplicateListTypeEntryExternalReferenceCodeException.class,
+			"Duplicate external reference code " + externalReferenceCode,
+			() -> _listTypeEntryLocalService.addListTypeEntry(
 				externalReferenceCode, TestPropsValues.getUserId(),
 				_listTypeDefinition.getListTypeDefinitionId(),
 				RandomTestUtil.randomString(),
 				Collections.singletonMap(
-					LocaleUtil.US, RandomTestUtil.randomString()));
-		}
-		catch (DuplicateListTypeEntryExternalReferenceCodeException
-					duplicateListTypeEntryExternalReferenceCodeException) {
-
-			Assert.assertEquals(
-				"Duplicate external reference code " + externalReferenceCode,
-				duplicateListTypeEntryExternalReferenceCodeException.
-					getMessage());
-		}
+					LocaleUtil.US, RandomTestUtil.randomString())));
 
 		AssertUtils.assertFailure(
 			ListTypeDefinitionSystemException.class, false,
@@ -121,45 +107,25 @@ public class ListTypeEntryLocalServiceTest {
 			() -> _testAddListTypeEntry(
 				_systemListTypeDefinition.getListTypeDefinitionId(), "baker"));
 
-		try {
-			_testAddListTypeEntry(
-				_listTypeDefinition.getListTypeDefinitionId(), null);
+		AssertUtils.assertFailure(
+			ListTypeEntryKeyException.class, "Key is null",
+			() -> _testAddListTypeEntry(
+				_listTypeDefinition.getListTypeDefinitionId(), null));
 
-			Assert.fail();
-		}
-		catch (ListTypeEntryKeyException listTypeEntryKeyException) {
-			Assert.assertEquals(
-				"Key is null", listTypeEntryKeyException.getMessage());
-		}
-
-		try {
-			_testAddListTypeEntry(
-				_listTypeDefinition.getListTypeDefinitionId(), " able ");
-
-			Assert.fail();
-		}
-		catch (ListTypeEntryKeyException listTypeEntryKeyException) {
-			Assert.assertEquals(
-				"Key must only contain letters and digits",
-				listTypeEntryKeyException.getMessage());
-		}
+		AssertUtils.assertFailure(
+			ListTypeEntryKeyException.class,
+			"Key must only contain letters and digits",
+			() -> _testAddListTypeEntry(
+				_listTypeDefinition.getListTypeDefinitionId(), " able "));
 
 		Assert.assertEquals(
 			_listTypeEntry.getUuid(),
 			_listTypeEntry.getExternalReferenceCode());
 
-		try {
-			_testAddListTypeEntry(0, "able");
-
-			Assert.fail();
-		}
-		catch (NoSuchListTypeDefinitionException
-					noSuchListTypeDefinitionException) {
-
-			Assert.assertEquals(
-				"No ListTypeDefinition exists with the primary key 0",
-				noSuchListTypeDefinitionException.getMessage());
-		}
+		AssertUtils.assertFailure(
+			NoSuchListTypeDefinitionException.class,
+			"No ListTypeDefinition exists with the primary key 0",
+			() -> _testAddListTypeEntry(0, "able"));
 
 		ListTypeEntry listTypeEntry =
 			_listTypeEntryLocalService.addListTypeEntry(

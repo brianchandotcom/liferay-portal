@@ -84,6 +84,10 @@ public class ObjectFieldDTOConverter
 				state = objectField.isState();
 				system = objectField.getSystem();
 				type = ObjectField.Type.create(objectField.getDBType());
+				unique =
+					com.liferay.object.field.setting.util.
+						ObjectFieldSettingUtil.isUnique(
+							objectField.getObjectFieldSettings());
 
 				setListTypeDefinitionExternalReferenceCode(
 					() -> {

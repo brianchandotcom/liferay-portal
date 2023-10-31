@@ -6,6 +6,15 @@
 // Cookies API
 
 export {
+	default as CookiesBanner,
 	checkCookieConsentForTypes,
 	openCookieConsentModal,
 } from '../cookies_banner/js/CookiesBanner';
+
+export {default as CookiesBannerConfiguration} from '../cookies_banner_configuration/js/CookiesBannerConfiguration';
+
+export {
+	default as toggleThirdPartyCookies,
+	runThirdPartyCookiesInterval,
+	flipThirdPartyCookiesOff,
+} from './toggleThirdPartyCookies';

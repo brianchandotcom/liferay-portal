@@ -162,5 +162,5 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 <liferay-frontend:component
 	componentId="CookiesBannerConfiguration"
 	context="<%= cookiesBannerConfigurationDisplayContext.getContext() %>"
-	module="cookies_banner_configuration/js/CookiesBannerConfiguration"
+	module="{CookiesBannerConfiguration} from cookies-banner-web"
 />

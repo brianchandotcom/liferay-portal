@@ -977,11 +977,7 @@ public class JournalDisplayContext {
 
 	public Map<String, Object> getSearchProps() throws PortalException {
 		return HashMapBuilder.<String, Object>put(
-			"initialSearchIn", _getSearchIn()
-		).put(
-			"initialSearchLocation", _getSearchLocation()
-		).put(
-			"initialSearchResults", getTab()
+			"searchIn", _getSearchIn()
 		).put(
 			"searchInOptions",
 			JSONUtil.putAll(
@@ -997,6 +993,8 @@ public class JournalDisplayContext {
 				).put(
 					"value", "title"
 				))
+		).put(
+			"searchLocation", _getSearchLocation()
 		).put(
 			"searchLocationOptions",
 			() -> {
@@ -1022,6 +1020,8 @@ public class JournalDisplayContext {
 						"value", "everywhere"
 					));
 			}
+		).put(
+			"searchResults", getTab()
 		).put(
 			"searchResultsOptions",
 			JSONUtil.putAll(

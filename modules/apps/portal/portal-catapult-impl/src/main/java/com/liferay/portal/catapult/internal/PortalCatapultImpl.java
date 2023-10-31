@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.Http;
 
 import java.io.IOException;
 
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -69,17 +68,13 @@ public class PortalCatapultImpl implements PortalCatapult {
 		ExecutorService executorService = Executors.newSingleThreadExecutor();
 
 		return executorService.submit(
-			new Callable<byte[]>() {
-
-				public byte[] call() {
-					try {
-						return _http.URLtoByteArray(options);
-					}
-					catch (IOException ioException) {
-						return ReflectionUtil.throwException(ioException);
-					}
+			() -> {
+				try {
+					return _http.URLtoByteArray(options);
 				}
-
+				catch (IOException ioException) {
+					return ReflectionUtil.throwException(ioException);
+				}
 			});
 	}
 

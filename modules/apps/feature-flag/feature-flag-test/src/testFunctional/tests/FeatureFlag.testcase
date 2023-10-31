@@ -111,6 +111,16 @@ definition {
 		}
 
 		task ("Then a feature flag that depends on the enabled feature flag can be enabled") {
+			WaitForElementPresent(
+				locator1 = "FeatureFlag#TOGGLE_ROW",
+				title_row = "Dependency FF Test",
+				toggle_state = "Disabled");
+
+			ScrollWebElementIntoView(
+				locator1 = "FeatureFlag#TOGGLE_ROW",
+				title_row = "Dependency FF Test",
+				toggle_state = "Disabled");
+
 			Check.checkToggleSwitch(
 				locator1 = "FeatureFlag#TOGGLE_ROW",
 				title_row = "Dependency FF Test",
@@ -144,6 +154,18 @@ definition {
 	@priority = 3
 	test CannotBeEnabledByADependency {
 		task ("When the user tries to enable a dependency before enabling a FF") {
+			if (IsElementPresent(locator1 = "FeatureFlag#TOGGLE_ROW", title_row = "Terms and Conditions pages", toggle_state = "Enabled")) {
+				ClickNoError(
+					locator1 = "FeatureFlag#TOGGLE_ROW",
+					title_row = "Terms and Conditions pages",
+					toggle_state = "Enabled");
+
+				ScrollWebElementIntoView(
+					locator1 = "FeatureFlag#TOGGLE_ROW",
+					title_row = "Dependency FF Test",
+					toggle_state = "Disabled");
+			}
+
 			Check.checkToggleSwitch(
 				locator1 = "FeatureFlag#TOGGLE_ROW",
 				title_row = "Dependency FF Test",

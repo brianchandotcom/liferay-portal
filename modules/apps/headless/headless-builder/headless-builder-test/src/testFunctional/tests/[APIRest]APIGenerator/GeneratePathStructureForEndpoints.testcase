@@ -87,7 +87,6 @@ definition {
 		task ("Given creating an API application") {
 			var response = ApplicationAPI.createAPIApplication(
 				baseURL = "app-test",
-				status = "unpublished",
 				title = "App-test");
 		}
 
@@ -156,7 +155,6 @@ definition {
 		task ("Given creating an API application") {
 			var response = ApplicationAPI.createAPIApplication(
 				baseURL = "app-test",
-				status = "unpublished",
 				title = "App-test");
 		}
 
@@ -205,7 +203,6 @@ definition {
 				endpointName = "testendpoint",
 				endpointPath = "/testendpoint",
 				relatedEndpoint = "true",
-				status = "unpublished",
 				title = "App-test");
 		}
 
@@ -259,7 +256,6 @@ definition {
 		task ("Given creating an API application") {
 			var response = ApplicationAPI.createAPIApplication(
 				baseURL = "app-test",
-				status = "unpublished",
 				title = "App-test");
 		}
 

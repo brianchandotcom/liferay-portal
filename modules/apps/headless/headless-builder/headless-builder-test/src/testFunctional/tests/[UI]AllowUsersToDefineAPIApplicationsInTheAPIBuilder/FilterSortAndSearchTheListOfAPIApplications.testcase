@@ -20,12 +20,10 @@ definition {
 
 			ApplicationAPI.createAPIApplication(
 				baseURL = "test2",
-				status = "unpublished",
 				title = "test2");
 
 			ApplicationAPI.createAPIApplication(
 				baseURL = "test3",
-				status = "unpublished",
 				title = "test3");
 
 			ApplicationsMenu.gotoPortlet(

@@ -38,7 +38,6 @@ definition {
 				relatedEndpoint = "true",
 				relatedSchema = "true",
 				schemaName = "testSchema",
-				status = "unpublished",
 				title = "My-app");
 
 			var endpointId = JSONUtil.getWithJSONPath(${response}, "$.apiApplicationToAPIEndpoints[*].id");
@@ -134,7 +133,6 @@ definition {
 				relatedEndpoint = "true",
 				relatedSchema = "true",
 				schemaName = "testSchema",
-				status = "unpublished",
 				title = "My-app");
 
 			var endpointId = JSONUtil.getWithJSONPath(${response}, "$.apiApplicationToAPIEndpoints[*].id");
@@ -173,7 +171,6 @@ definition {
 				relatedEndpoint = "true",
 				relatedSchema = "true",
 				schemaName = "testSchema",
-				status = "unpublished",
 				title = "My-app");
 
 			var endpointId = JSONUtil.getWithJSONPath(${response}, "$.apiApplicationToAPIEndpoints[*].id");

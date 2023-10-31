@@ -33,7 +33,7 @@ definition {
 
 	@summary = "Default summary"
 	macro createAPIApplication(objectFieldErc = null, mainObjectDefinitionErc = null, endpointName = null, virtualHost = null, retrieveType = null, schemaName = null, pathParameter = null, endpointPath = null, baseURL = null, status = null) {
-		Variables.assertDefined(parameterList = "${baseURL},${status},${title}");
+		Variables.assertDefined(parameterList = "${baseURL},${title}");
 
 		var curl = ApplicationAPI._curlAPIApplication(virtualHost = ${virtualHost});
 
@@ -41,6 +41,10 @@ definition {
 			var title = StringUtil.removeSpaces(${title});
 
 			var externalReferenceCode = ${title};
+		}
+
+		if (!(isSet(status))) {
+			var status = "unpublished";
 		}
 
 		var body = '''

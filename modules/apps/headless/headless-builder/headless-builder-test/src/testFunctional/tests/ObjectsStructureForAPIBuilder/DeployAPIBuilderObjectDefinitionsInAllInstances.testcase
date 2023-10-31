@@ -63,7 +63,6 @@ definition {
 		task ("When with postAPIApplication to create a published API application") {
 			var response = ApplicationAPI.createAPIApplication(
 				baseURL = "test",
-				status = "unpublished",
 				title = "test",
 				virtualHost = "www.able.com");
 		}

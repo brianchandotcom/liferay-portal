@@ -62,7 +62,6 @@ definition {
 		task ("And Given create an API with title "test"") {
 			ApplicationAPI.createAPIApplication(
 				baseURL = "test",
-				status = "unpublished",
 				title = "test");
 		}
 
@@ -170,7 +169,6 @@ definition {
 		task ("And Given I create an API with title "test"") {
 			ApplicationAPI.createAPIApplication(
 				baseURL = "test1",
-				status = "unpublished",
 				title = "test");
 		}
 
@@ -210,7 +208,6 @@ definition {
 		task ("And Given I create an API with url "test-url"") {
 			ApplicationAPI.createAPIApplication(
 				baseURL = "test-url",
-				status = "unpublished",
 				title = "test1");
 		}
 

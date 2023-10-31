@@ -30,7 +30,6 @@ definition {
 		task ("Given the API Application is created") {
 			ApplicationAPI.createAPIApplication(
 				baseURL = "test1",
-				status = "unpublished",
 				title = "test1");
 		}
 
@@ -66,7 +65,6 @@ definition {
 		task ("Given the API Application is created") {
 			ApplicationAPI.createAPIApplication(
 				baseURL = "test2",
-				status = "unpublished",
 				title = "test2");
 		}
 
@@ -102,7 +100,6 @@ definition {
 		task ("Given the API Application is created") {
 			ApplicationAPI.createAPIApplication(
 				baseURL = "test3",
-				status = "unpublished",
 				title = "test3");
 		}
 

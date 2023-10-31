@@ -85,7 +85,6 @@ definition {
 				endpointPath = "/testendpoint",
 				relatedEndpoint = "true",
 				scopeKey = "group",
-				status = "unpublished",
 				title = "My-app");
 		}
 

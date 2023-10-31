@@ -59,7 +59,6 @@ definition {
 		task ("Given with postAPIApplication to create an API application with unpublished status") {
 			ApplicationAPI.createAPIApplication(
 				baseURL = "test",
-				status = "unpublished",
 				title = "test");
 		}
 

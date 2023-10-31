@@ -502,26 +502,20 @@ public class DefaultObjectEntryManagerImplTest
 			objectDefinitionLocalService, _objectRelationshipLocalService,
 			_treeFactory);
 
-		Node node = _objectDefinitionTree.getRootNode();
-
-		_rootObjectDefinition =
-			objectDefinitionLocalService.getObjectDefinition(
-				node.getPrimaryKey());
+		Node rootNode = _objectDefinitionTree.getRootNode();
 
 		objectDefinitionLocalService.enableAccountEntryRestricted(
 			_objectRelationshipLocalService.addObjectRelationship(
 				adminUser.getUserId(),
 				accountEntryObjectDefinition.getObjectDefinitionId(),
-				_rootObjectDefinition.getObjectDefinitionId(), 0,
+				rootNode.getPrimaryKey(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"oneToManyRelationshipName2", false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY)
-		);
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
 
 		objectDefinitionLocalService.publishCustomObjectDefinition(
-			adminUser.getUserId(),
-			_rootObjectDefinition.getRootObjectDefinitionId());
+			adminUser.getUserId(), rootNode.getPrimaryKey());
 	}
 
 	@After

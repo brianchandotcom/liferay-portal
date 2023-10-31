@@ -363,6 +363,22 @@
 	},
 	{
 		"classNames": [
+			"AccountPortletKeys"
+		],
+		"from": "COMMERCE_ACCOUNT_ADMIN",
+		"issueKey": "LPS-197053",
+		"to": "ACCOUNT_USERS_ADMIN"
+	},
+	{
+		"classNames": [
+			"AccountPortletKeys"
+		],
+		"from": "COMMERCE_ACCOUNT_GROUP_ADMIN",
+		"issueKey": "LPS-197053",
+		"to": "ACCOUNT_GROUPS_ADMIN"
+	},
+	{
+		"classNames": [
 			"CommerceOrderItemLocalService",
 			"CommerceOrderItemService"
 		],

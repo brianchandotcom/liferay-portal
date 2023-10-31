@@ -6,7 +6,7 @@
 package com.liferay.portal.internal.change.tracking.hibernate;
 
 import com.liferay.portal.change.tracking.sql.CTSQLTransformer;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.module.service.Snapshot;
 
 import org.hibernate.EmptyInterceptor;
 
@@ -18,7 +18,9 @@ public class CTSQLInterceptor extends EmptyInterceptor {
 	@Override
 	public String onPrepareStatement(String sql) {
 		if (_enabled) {
-			return _ctSQLTransformer.transform(sql);
+			CTSQLTransformer ctSQLTransformer = _ctSQLTransformerSnapshot.get();
+
+			return ctSQLTransformer.transform(sql);
 		}
 
 		return sql;
@@ -28,10 +30,8 @@ public class CTSQLInterceptor extends EmptyInterceptor {
 		_enabled = enabled;
 	}
 
-	private static volatile CTSQLTransformer _ctSQLTransformer =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			CTSQLTransformer.class, CTSQLInterceptor.class, "_ctSQLTransformer",
-			true);
+	private static final Snapshot<CTSQLTransformer> _ctSQLTransformerSnapshot =
+		new Snapshot<>(CTSQLInterceptor.class, CTSQLTransformer.class);
 
 	private boolean _enabled;
 

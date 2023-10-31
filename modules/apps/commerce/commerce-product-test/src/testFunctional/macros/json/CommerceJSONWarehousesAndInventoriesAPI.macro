@@ -1,6 +1,7 @@
 definition {
 
-	macro _addIncomingQuantity {
+	@summary = "Default summary"
+	macro _addIncomingQuantity(quantity = null, sku = null, warehouseName = null,) {
 		Variables.assertDefined(parameterList = "${quantity},${sku},${warehouseName}");
 
 		var baseURL = ${baseURL};
@@ -23,7 +24,6 @@ definition {
 
 		var warehouseId = CommerceJSONWarehousesAndInventoriesAPI._getWarehouseId(warehouseName = ${warehouseName});
 		var userLoginInfo = JSONUtil2.formatJSONUser();
-
 		var curl = '''
 			${baseURL}/o/headless-commerce-admin-inventory/v1.0/warehouses/${warehouseId}/skus/by-sku/${sku}/replenishment-items \
 				-u test@liferay.com:test \

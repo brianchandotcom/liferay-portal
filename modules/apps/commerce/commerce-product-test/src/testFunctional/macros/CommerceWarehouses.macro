@@ -1,6 +1,7 @@
 definition {
 
-	macro assertWarehouseDetails {
+	@summary = "Default summary"
+	macro assertWarehouseDetails(country = null, street3 = null, city = null, latitude = null, postalCode = null, description = null, active = null, name = null, street1 = null, street2 = null, region = null, longitude = null,) {
 		if (!(isSet(warehouseEditable))) {
 			var warehouseEditable = "true";
 		}
@@ -188,7 +189,8 @@ definition {
 		}
 	}
 
-	macro editWarehouseDetails {
+	@summary = "Default summary"
+	macro editWarehouseDetails(country = null, street3 = null, city = null, latitude = null, postalCode = null, name = null, description = null, active = null, street1 = null, street2 = null, region = null, longitude = null,) {
 		if (isSet(name)) {
 			Type(
 				key_fieldLabel = "Name",

@@ -29,7 +29,8 @@ definition {
 		Button.clickSubmitButton();
 	}
 
-	macro addInventoryByWarehouse {
+	@summary = "Default summary"
+	macro addInventoryByWarehouse(quantity = null, warehouseName = null,) {
 		Click(locator1 = "Button#PLUS");
 
 		Click(
@@ -53,7 +54,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro addInventoryEntry {
+	@summary = "Default summary"
+	macro addInventoryEntry(quantity = null, sku = null, warehouse = null,) {
 		Click(locator1 = "Button#PLUS");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
@@ -78,7 +80,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro createTransfer {
+	@summary = "Default summary"
+	macro createTransfer(quantity = null, destination = null, source = null,) {
 		Click(locator1 = "Button#PLUS");
 
 		Click(
@@ -107,7 +110,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro editIncomingQuantity {
+	@summary = "Default summary"
+	macro editIncomingQuantity(quantity = null, expectedDeliveryDate = null, warehouse = null,) {
 		CommerceNavigator.gotoEntry(entryName = ${warehouse});
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
@@ -153,7 +157,8 @@ definition {
 		}
 	}
 
-	macro editWarehouseInventory {
+	@summary = "Default summary"
+	macro editWarehouseInventory(quantityOnHand = null, warehouse = null, safetyStockQuantity = null,) {
 		CommerceNavigator.gotoTableListEntry(entryName = ${warehouse});
 
 		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
@@ -186,7 +191,8 @@ definition {
 			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_commerce_inventory_web_internal_portlet_CommerceInventoryPortlet");
 	}
 
-	macro viewIncomingQuantityByWarehouse {
+	@summary = "Default summary"
+	macro viewIncomingQuantityByWarehouse(quantity = null, expectedDeliveryDate = null, warehouse = null,) {
 		if (!(isSet(warehouseWithLink))) {
 			var warehouseWithLink = "true";
 		}
@@ -230,7 +236,8 @@ definition {
 		}
 	}
 
-	macro viewInventoryByWarehouseEntry {
+	@summary = "Default summary"
+	macro viewInventoryByWarehouseEntry(incoming = null, onHand = null, safetyStock = null, available = null, warehouse = null,) {
 		if (!(isSet(warehouseWithLink))) {
 			var warehouseWithLink = "true";
 		}
@@ -303,7 +310,8 @@ definition {
 		}
 	}
 
-	macro viewInventoryEntryQuantity {
+	@summary = "Default summary"
+	macro viewInventoryEntryQuantity(incoming = null, onHand = null, onOrder = null, sku = null,) {
 		if (isSet(onHand)) {
 			AssertElementPresent(
 				key_quantity = ${onHand},

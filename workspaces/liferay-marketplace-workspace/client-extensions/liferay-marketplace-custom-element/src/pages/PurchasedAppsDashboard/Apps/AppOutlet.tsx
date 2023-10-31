@@ -9,6 +9,8 @@ import ClayNavigationBar from '@clayui/navigation-bar';
 import {useState} from 'react';
 import {Outlet, useNavigate, useParams} from 'react-router-dom';
 
+import { AppTabType } from './enums/AppTabType';
+
 const AppOutlet = () => {
 	const navigate = useNavigate();
 
@@ -27,21 +29,21 @@ const AppOutlet = () => {
 				Back to My Apps
 			</ClayButton>
 			<ClayNavigationBar className="mb-4" triggerLabel={active}>
-				<ClayNavigationBar.Item active={active === 'Details'}>
+				<ClayNavigationBar.Item active={active === AppTabType.DETAILS}>
 					<ClayButton
 						onClick={() => {
 							navigate(`/app/${productId}`);
-							setActive('Details');
+							setActive(AppTabType.DETAILS);
 						}}
 					>
 						Details
 					</ClayButton>
 				</ClayNavigationBar.Item>
-				<ClayNavigationBar.Item active={active === 'Licenses'}>
+				<ClayNavigationBar.Item active={active === AppTabType.LICENSES}>
 					<ClayButton
 						onClick={() => {
 							navigate(`app/${productId}/licenses`);
-							setActive('Licenses');
+							setActive(AppTabType.LICENSES);
 						}}
 					>
 						Licenses

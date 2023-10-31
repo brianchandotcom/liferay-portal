@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.constants.SearchContextAttributes;
 import com.liferay.portal.search.elasticsearch7.constants.ElasticsearchSearchContextAttributes;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
+import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.internal.legacy.searcher.SearchRequestBuilderFactoryImpl;
@@ -93,7 +94,7 @@ public class ElasticsearchIndexSearcherTest {
 		Assert.assertEquals("testValue", searchSearchRequest.getPreference());
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testSearchPastMaxResultWindow() {
 		int maxResultWindow = 10000;
 
@@ -101,6 +102,12 @@ public class ElasticsearchIndexSearcherTest {
 			_elasticsearchConfigurationWrapper.indexMaxResultWindow()
 		).thenReturn(
 			maxResultWindow
+		);
+
+		Mockito.when(
+			_searchEngineAdapter.execute(Mockito.any(SearchSearchRequest.class))
+		).thenThrow(
+			new RuntimeException("Search of size 0 attempted")
 		);
 
 		SearchContext searchContext = new SearchContext();
@@ -125,6 +132,9 @@ public class ElasticsearchIndexSearcherTest {
 			elasticsearchIndexSearcher, "_indexNameBuilder",
 			(IndexNameBuilder)String::valueOf);
 		ReflectionTestUtil.setFieldValue(
+			elasticsearchIndexSearcher, "_searchEngineAdapter",
+			_searchEngineAdapter);
+		ReflectionTestUtil.setFieldValue(
 			elasticsearchIndexSearcher, "_searchResponseBuilderFactory",
 			new SearchResponseBuilderFactoryImpl());
 		ReflectionTestUtil.setFieldValue(
@@ -139,6 +149,8 @@ public class ElasticsearchIndexSearcherTest {
 		_elasticsearchConfigurationWrapper = Mockito.mock(
 			ElasticsearchConfigurationWrapper.class);
 	private ElasticsearchIndexSearcher _elasticsearchIndexSearcher;
+	private final SearchEngineAdapter _searchEngineAdapter = Mockito.mock(
+		SearchEngineAdapter.class);
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 }

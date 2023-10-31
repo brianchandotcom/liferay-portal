@@ -579,6 +579,32 @@ definition {
 		}
 	}
 
+	@description = "LPS-188333 - Verify	if when the user goes to the Details page, there is not save and cancel button"
+	@priority = 3
+	test CanSeeSaveAndCancelButtonOnDetails {
+		task ("And add a new view") {
+			DataSetAdmin.createDataSetView(
+				description = "Description Test",
+				key_name = "View Test");
+		}
+
+		task ("When the user goes to the Details tab") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Data Set Test",
+				key_viewName = "View Test");
+
+			AssertElementPresent(
+				key_title = "Details",
+				locator1 = "Header#H2_TITLE");
+		}
+
+		task ("Then the Save and Cancel button are not present") {
+			AssertElementPresent(locator1 = "Button#CANCEL");
+
+			AssertElementPresent(locator1 = "Button#SAVE");
+		}
+	}
+
 	@description = "LPS-176189. Confirm that the view was really deleted"
 	@priority = 5
 	test CanUpdateNumberOfViews {

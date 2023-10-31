@@ -34,8 +34,6 @@ definition {
 			locator1 = "Button#BUTTON_ID",
 			value1 = "Sign In");
 
-		Button.click(button = "Sign In");
-
 		AssertLocation(value1 = "${portalURL}/web/test/home");
 
 		SearchAdministration.executeReindex();

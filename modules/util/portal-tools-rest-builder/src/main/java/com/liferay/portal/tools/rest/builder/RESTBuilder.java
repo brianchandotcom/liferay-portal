@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.Validator_IW;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.FreeMarkerTool;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
-import com.liferay.portal.tools.rest.builder.internal.freemarker.util.ConfigUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.util.FreeMarkerUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.util.OpenAPIUtil;
 import com.liferay.portal.tools.rest.builder.internal.util.FileUtil;
@@ -352,7 +351,7 @@ public class RESTBuilder {
 						context, escapedVersion, schemaName);
 				}
 
-				if (ConfigUtil.isVersionCompatible(_configYAML, 4)) {
+				if (_configYAML.isGenerateActionProviders()) {
 					_createBaseDTOActionMetadataProviderFile(
 						context, escapedVersion, schemaName);
 					_createDTOActionMetadataProviderFile(

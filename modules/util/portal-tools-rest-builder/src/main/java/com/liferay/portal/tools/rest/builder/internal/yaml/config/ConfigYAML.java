@@ -78,6 +78,10 @@ public class ConfigYAML {
 		return _forcePredictableSchemaPropertyName;
 	}
 
+	public boolean isGenerateActionProviders() {
+		return _generateActionProviders;
+	}
+
 	public boolean isGenerateBatch() {
 		return _generateBatch;
 	}
@@ -156,6 +160,10 @@ public class ConfigYAML {
 			forcePredictableSchemaPropertyName;
 	}
 
+	public void setGenerateActionProviders(boolean generateActionProviders) {
+		_generateActionProviders = generateActionProviders;
+	}
+
 	public void setGenerateBatch(boolean generateBatch) {
 		_generateBatch = generateBatch;
 	}
@@ -215,6 +223,7 @@ public class ConfigYAML {
 	private boolean _forcePredictableContentApplicationXML = true;
 	private boolean _forcePredictableOperationId;
 	private boolean _forcePredictableSchemaPropertyName = true;
+	private boolean _generateActionProviders;
 	private boolean _generateBatch = true;
 	private boolean _generateGraphQL = true;
 	private boolean _generateOpenAPI = true;

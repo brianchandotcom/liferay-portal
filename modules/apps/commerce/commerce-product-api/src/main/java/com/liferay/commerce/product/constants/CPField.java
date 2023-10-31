@@ -79,6 +79,8 @@ public class CPField {
 
 	public static final String FILE_ENTRY_ID = "fileEntryId";
 
+	public static final String GALLERY_ENABLED = "galleryEnabled";
+
 	public static final String HAS_CHILD_CP_DEFINITIONS =
 		"hasChildCPDefinitions";
 

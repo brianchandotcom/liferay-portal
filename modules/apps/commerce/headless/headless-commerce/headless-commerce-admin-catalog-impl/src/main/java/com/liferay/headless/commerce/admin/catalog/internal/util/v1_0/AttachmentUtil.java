@@ -195,6 +195,7 @@ public class AttachmentUtil {
 			expirationDateConfig.getDay(), expirationDateConfig.getYear(),
 			expirationDateConfig.getHour(), expirationDateConfig.getMinute(),
 			GetterUtil.get(attachmentBase64.getNeverExpire(), false),
+			GetterUtil.get(attachmentBase64.getGalleryEnabled(), true),
 			getTitleMap(null, attachmentBase64.getTitle()),
 			_getJSON(
 				cpDefinitionOptionRelService, cpDefinitionOptionValueRelService,
@@ -255,6 +256,7 @@ public class AttachmentUtil {
 			expirationDateConfig.getDay(), expirationDateConfig.getYear(),
 			expirationDateConfig.getHour(), expirationDateConfig.getMinute(),
 			GetterUtil.get(attachmentUrl.getNeverExpire(), false),
+			GetterUtil.get(attachmentUrl.getGalleryEnabled(), true),
 			getTitleMap(null, attachmentUrl.getTitle()),
 			_getJSON(
 				cpDefinitionOptionRelService, cpDefinitionOptionValueRelService,
@@ -342,6 +344,7 @@ public class AttachmentUtil {
 			expirationDateConfig.getDay(), expirationDateConfig.getYear(),
 			expirationDateConfig.getHour(), expirationDateConfig.getMinute(),
 			GetterUtil.get(attachment.getNeverExpire(), false),
+			GetterUtil.get(attachment.getGalleryEnabled(), true),
 			getTitleMap(null, attachment.getTitle()),
 			_getJSON(
 				cpDefinitionOptionRelService, cpDefinitionOptionValueRelService,

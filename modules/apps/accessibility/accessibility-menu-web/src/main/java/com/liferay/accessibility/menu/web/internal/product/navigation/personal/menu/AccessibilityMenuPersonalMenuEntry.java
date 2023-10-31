@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"product.navigation.personal.menu.entry.order:Integer=0",
+		"product.navigation.personal.menu.entry.order:Integer=50",
 		"product.navigation.personal.menu.group:Integer=300"
 	},
 	service = PersonalMenuEntry.class

@@ -103,7 +103,7 @@ public class CPAttachmentFileEntryTableReferenceDefinitionTest
 			null, TestPropsValues.getUserId(), group.getGroupId(),
 			PortalUtil.getClassNameId(CPDefinition.class.getName()),
 			_cpDefinition.getCPDefinitionId(), _dlFileEntry.getFileEntryId(),
-			false, null, 1, 1, 2020, 1, 1, 2, 2, 2021, 2, 2, true,
+			false, null, 1, 1, 2020, 1, 1, 2, 2, 2021, 2, 2, true, true,
 			RandomTestUtil.randomLocaleStringMap(), null, 0D,
 			CPAttachmentFileEntryConstants.TYPE_IMAGE, _serviceContext);
 	}

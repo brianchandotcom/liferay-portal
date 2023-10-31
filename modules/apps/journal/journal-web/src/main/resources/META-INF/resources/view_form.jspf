@@ -5,6 +5,12 @@
  */
 --%>
 
+<c:if test='<%= !journalDisplayContext.isNavigationMine() && !journalDisplayContext.isNavigationRecent() && (!FeatureFlagManagerUtil.isEnabled("LPS-194763") || (FeatureFlagManagerUtil.isEnabled("LPS-194763") && (journalDisplayContext.getDDMStructureId() == 0))) %>'>
+	<liferay-site-navigation:breadcrumb
+		breadcrumbEntries="<%= JournalPortletUtil.getPortletBreadcrumbEntries(journalDisplayContext.getFolder(), request, false, liferayPortletResponse) %>"
+	/>
+</c:if>
+
 <aui:form action="<%= journalDisplayContext.getPortletURL(null) %>" method="get" name="fm">
 	<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />

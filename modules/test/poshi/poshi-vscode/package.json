@@ -125,7 +125,7 @@
 	"eslintConfig": {
 		"overrides": [
 			{
-				"files": ["*.ts"],
+				"files": ["*.mjs", "*.ts"],
 				"rules": {
 					"@liferay/no-extraneous-dependencies": "off"
 				}

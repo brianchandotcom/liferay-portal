@@ -16,6 +16,10 @@
 		width: 144px;
 	}
 
+	&-button {
+		border-radius: 8px;
+	}
+
 	&-description {
 		color: #54555f;
 		white-space: pre-line;
@@ -30,7 +34,7 @@
 	&-image {
 		filter: invert(18%) sepia(87%) saturate(3738%) hue-rotate(218deg)
 			brightness(85%) contrast(103%);
-		width: 42px;
+		width: 32px;
 	}
 
 	&-title {

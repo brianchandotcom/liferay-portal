@@ -7,10 +7,13 @@ export default {
 	'access-console': 'Access Console',
 	'back-to-my-apps': 'Back to My Apps',
 	'create-license-key': 'Create License Key',
+	'create-new-licenses-and-they-will-show-up-here':
+		'Create new licenses and they will show up here.',
 	'details': 'Details',
 	'download-app': 'Download App',
 	'licenses': 'Licenses',
 	'manage': 'Manage',
+	'no-licenses-yet': 'No Licenses yet',
 	'no-results-found': 'No results found',
 	'sorry-there-are-no-results-found': 'Sorry, there are no results found',
 	'the-order-must-be-completed-before-licensing-this-app.':

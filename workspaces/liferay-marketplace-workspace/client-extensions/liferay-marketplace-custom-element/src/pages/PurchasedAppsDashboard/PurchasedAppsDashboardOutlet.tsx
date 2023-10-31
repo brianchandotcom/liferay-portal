@@ -48,6 +48,7 @@ interface PurchasedAppTable {
 }
 
 const PurchasedAppsDashboardOutlet = () => {
+	const [active, setActive] = useState('');
 	const [searchParams] = useSearchParams();
 	const accountId = searchParams.get('accountId');
 	const [commerceAccount, setCommerceAccount] = useState<CommerceAccount>();
@@ -206,10 +207,12 @@ const PurchasedAppsDashboardOutlet = () => {
 
 			<Outlet
 				context={{
+					active,
 					dashboardNavigationItems,
 					page,
 					purchasedAppTable,
 					selectedAccount,
+					setActive,
 					setPage,
 					solutionsItems,
 				}}

@@ -5,14 +5,20 @@
 
 import './DashboardEmptyTable.scss';
 
+import ClayButton from '@clayui/button';
+
 export function DashboardEmptyTable({
+	button,
+	buttonName,
 	description1,
 	description2,
 	icon,
 	title,
 }: {
+	button?: boolean;
+	buttonName?: string;
 	description1: string;
-	description2: string;
+	description2?: string;
 	icon: string;
 	title: string;
 }) {
@@ -28,7 +34,7 @@ export function DashboardEmptyTable({
 
 			<div className="dashboard-empty-state-title">{title}</div>
 
-			<div className="dashboard-empty-state-description">
+			<div className="dashboard-empty-state-description mb-4">
 				{description1 && (
 					<span className="dashboard-empty-state-description-first">
 						{description1}
@@ -36,6 +42,13 @@ export function DashboardEmptyTable({
 				)}
 
 				{description2 && <span> {description2}</span>}
+			</div>
+			<div>
+				{button && (
+					<ClayButton className="dashboard-empty-state-button">
+						{buttonName}
+					</ClayButton>
+				)}
 			</div>
 		</div>
 	);

@@ -497,6 +497,36 @@ public class JournalDisplayContext {
 		return _ddmStructures;
 	}
 
+	public VerticalNavItemList getDDMStructureVerticalNavItemList() {
+		VerticalNavItemList verticalNavItemList = new VerticalNavItemList();
+
+		for (DDMStructure ddmStructure :
+				DDMStructureLocalServiceUtil.getStructures(
+					_themeDisplay.getScopeGroupId(),
+					PortalUtil.getClassNameId(JournalArticle.class))) {
+
+			verticalNavItemList.add(
+				verticalNavItem -> {
+					verticalNavItem.setActive(
+						getDDMStructureId() == ddmStructure.getStructureId());
+					verticalNavItem.setHref(
+						PortletURLBuilder.createRenderURL(
+							_liferayPortletResponse
+						).setParameter(
+							"ddmStructureId", ddmStructure.getStructureId()
+						).buildString());
+
+					String name = ddmStructure.getName(
+						_themeDisplay.getLocale());
+
+					verticalNavItem.setId(name);
+					verticalNavItem.setLabel(name);
+				});
+		}
+
+		return verticalNavItemList;
+	}
+
 	public int getDefaultStatus() {
 		PermissionChecker permissionChecker =
 			_themeDisplay.getPermissionChecker();
@@ -1032,36 +1062,6 @@ public class JournalDisplayContext {
 			_getVersionsSearchContainer();
 
 		return articleSearchContainer.getTotal();
-	}
-
-	public VerticalNavItemList getVerticalNavDDMStructureList() {
-		VerticalNavItemList verticalNavItemList = new VerticalNavItemList();
-
-		for (DDMStructure ddmStructure :
-				DDMStructureLocalServiceUtil.getStructures(
-					_themeDisplay.getScopeGroupId(),
-					PortalUtil.getClassNameId(JournalArticle.class))) {
-
-			verticalNavItemList.add(
-				verticalNavItem -> {
-					verticalNavItem.setActive(
-						getDDMStructureId() == ddmStructure.getStructureId());
-					verticalNavItem.setHref(
-						PortletURLBuilder.createRenderURL(
-							_liferayPortletResponse
-						).setParameter(
-							"ddmStructureId", ddmStructure.getStructureId()
-						).buildString());
-
-					String name = ddmStructure.getName(
-						_themeDisplay.getLocale());
-
-					verticalNavItem.setId(name);
-					verticalNavItem.setLabel(name);
-				});
-		}
-
-		return verticalNavItemList;
 	}
 
 	public VerticalNavItemList getVerticalNavItemList() {

@@ -442,7 +442,7 @@ public class SalesforceObjectEntryManagerImpl
 				 Validator.isNotNull(filterSOSQLString)) {
 
 			sosqlString = StringBundler.concat(
-				" WHERE ", filterSOSQLString, " AND ",
+				" WHERE (", filterSOSQLString, ") AND ",
 				accountRestrictionSOSQLString);
 		}
 

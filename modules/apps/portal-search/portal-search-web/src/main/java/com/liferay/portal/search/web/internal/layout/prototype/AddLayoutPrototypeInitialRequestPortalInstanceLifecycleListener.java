@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Lino Alves
  */
 @Component(service = PortalInstanceLifecycleListener.class)
-public class AddLayoutPrototypePortalInstanceLifecycleListener
+public class AddLayoutPrototypeInitialRequestPortalInstanceLifecycleListener
 	extends InitialRequestPortalInstanceLifecycleListener {
 
 	@Override

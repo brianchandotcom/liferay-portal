@@ -92,14 +92,26 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createAPIEndpoint(path = null, name = null, applicationId = null) {
-		Variables.assertDefined(parameterList = "${name},${path}");
+	macro createAPIEndpoint(path = null, name = null, applicationId = null, scope = null) {
+		Variables.assertDefined(parameterList = ${path});
 
 		Click(locator1 = "Button#PLUS");
 
-		Type(
-			locator1 = "TextInput#NAME",
-			value1 = ${name});
+		if (isSet(name)) {
+			Type(
+				locator1 = "TextInput#NAME",
+				value1 = ${name});
+		}
+
+		if (isSet(scope)) {
+			Click(
+				key_value = "Select Scope",
+				locator1 = "APIBuilder#ENDPOINT_DROPDOWN");
+
+			Click(
+				key_optionName = ${scope},
+				locator1 = "ObjectAdmin#LAYOUT_ADD_FIELD_OPTION");
+		}
 
 		Type(
 			key_fieldLabel = "Path",
@@ -116,9 +128,14 @@ definition {
 				locator1 = "APIBuilder#API_APPLICATION_TO_API_ENDPOINTS");
 		}
 
-		AssertClick(
-			locator1 = "Button#SAVE",
-			value1 = "Save");
+		if (IsElementPresent(locator1 = "Button#SAVE")) {
+			AssertClick(
+				locator1 = "Button#SAVE",
+				value1 = "Save");
+		}
+		else {
+			Click(locator1 = "APIBuilder#CREATE_BUTTON");
+		}
 	}
 
 	@summary = "Default summary"

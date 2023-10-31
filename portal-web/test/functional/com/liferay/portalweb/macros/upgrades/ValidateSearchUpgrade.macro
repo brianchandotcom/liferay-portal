@@ -73,7 +73,11 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
-		NavigationMenusAdmin.viewDisplayTemplate(displayTemplate = "Search Bar Test ADT");
+		AssertTextEquals(
+			key_class = "display-template-selector",
+			key_index = 1,
+			locator1 = "Button#ANY_WITH_CLASS_AND_INDEX",
+			value1 = "Search Bar Test ADT");
 
 		ApplicationDisplayTemplates.openWidgetTemplatesAdmin(siteURLKey = "guest");
 

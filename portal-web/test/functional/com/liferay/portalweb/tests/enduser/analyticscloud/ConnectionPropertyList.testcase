@@ -430,6 +430,8 @@ definition {
 		task ("Copy the token from AC again") {
 			ACUtils.launchAC();
 
+			ACNavigation.goToSettings();
+
 			ACSettings.goToDataSources();
 
 			Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");

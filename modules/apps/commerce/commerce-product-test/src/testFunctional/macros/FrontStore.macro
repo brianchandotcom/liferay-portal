@@ -579,19 +579,18 @@ definition {
 
 	@summary = "Default summary"
 	macro setAssociatedFSOptionsValue(date = null, boolean = null, multipleSelectionValuesChecked = null, multipleSelectionValuesNotChecked = null, numeric = null, text = null, singleSelectionValueChecked = null) {
-		if(isSet(boolean)) {
+		if (isSet(boolean)) {
 			var booleanStatus = StringUtil.extractFirst(${boolean}, ":");
 			var booleanCheckboxName = StringUtil.extractLast(${boolean}, ":");
 
 			if (${booleanStatus} == "enabled") {
 				Check.checkNotVisible(
-					checkboxName = "${booleanCheckboxName}",
+					checkboxName = ${booleanCheckboxName},
 					locator1 = "CommerceFrontStore#BOOLEAN_CHECKBOX");
-
 			}
 			else if (${booleanStatus} == "disabled") {
 				Uncheck.uncheckNotVisible(
-					checkboxName = "${booleanCheckboxName}",
+					checkboxName = ${booleanCheckboxName},
 					locator1 = "CommerceFrontStore#BOOLEAN_CHECKBOX");
 			}
 		}
@@ -908,11 +907,11 @@ definition {
 
 			for (var bundledItem : list ${bundledItems}) {
 				AssertElementPresent(
-					key_cartItemName = "${optionName}",
+					key_cartItemName = ${optionName},
 					locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_H6");
 
 				AssertElementPresent(
-					key_cartItemSku = "${bundledItems}",
+					key_cartItemSku = ${bundledItems},
 					locator1 = "CommerceAccelerators#MINI_CART_ITEM_SKU");
 			}
 		}

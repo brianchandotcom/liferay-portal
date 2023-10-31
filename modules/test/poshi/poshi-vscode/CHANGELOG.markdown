@@ -5,6 +5,7 @@
 - Reduces package size
 - Adds a license
 - Moves release notes to CHANGELOG.markdown
+- POSHI-662: Adds support for new macro definition syntax
 
 ## [0.3.1] - [0.3.6]
 

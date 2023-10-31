@@ -83,7 +83,7 @@ public class CPMediaUtil {
 			CommerceCatalogDefaultImage commerceCatalogDefaultImage,
 			CommerceMediaResolver commerceMediaResolver,
 			CPAttachmentFileEntryLocalService cpAttachmentFileEntryLocalService,
-			long groupId, ThemeDisplay themeDisplay)
+			boolean gallery, long groupId, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		HttpServletRequest httpServletRequest = themeDisplay.getRequest();
@@ -94,11 +94,24 @@ public class CPMediaUtil {
 
 		List<CPMedia> cpMedias = new ArrayList<>();
 
-		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
-			cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
-				classNameId, classPK, CPAttachmentFileEntryConstants.TYPE_IMAGE,
-				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+		List<CPAttachmentFileEntry> cpAttachmentFileEntries = null;
+
+		if (gallery) {
+			cpAttachmentFileEntries =
+				cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
+					classNameId, classPK, true,
+					CPAttachmentFileEntryConstants.TYPE_IMAGE,
+					WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS);
+		}
+		else {
+			cpAttachmentFileEntries =
+				cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
+					classNameId, classPK,
+					CPAttachmentFileEntryConstants.TYPE_IMAGE,
+					WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS);
+		}
 
 		for (CPAttachmentFileEntry cpAttachmentFileEntry :
 				cpAttachmentFileEntries) {

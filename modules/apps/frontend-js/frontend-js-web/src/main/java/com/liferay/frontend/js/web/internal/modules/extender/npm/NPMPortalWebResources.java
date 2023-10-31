@@ -21,8 +21,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Peter Fellwock
  */
 @Component(service = PortalWebResources.class)
-public class NPMJavaScriptAwarePortalWebResources
-	implements PortalWebResources {
+public class NPMPortalWebResources implements PortalWebResources {
 
 	@Override
 	public String getContextPath() {

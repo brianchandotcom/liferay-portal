@@ -79,6 +79,7 @@ public class AttachmentDTOConverter
 				externalReferenceCode =
 					cpAttachmentFileEntry.getExternalReferenceCode();
 				fileEntryId = cpAttachmentFileEntry.getFileEntryId();
+				galleryEnabled = cpAttachmentFileEntry.isGalleryEnabled();
 				id = cpAttachmentFileEntry.getCPAttachmentFileEntryId();
 				options = _getAttachmentOptions(cpAttachmentFileEntry);
 				priority = cpAttachmentFileEntry.getPriority();

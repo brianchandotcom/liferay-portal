@@ -489,6 +489,62 @@ definition {
 			changeTitle = "DM Document Title Edit");
 	}
 
+	@description = "Assert published Publication can be filtered."
+	@priority = 4
+	test CanFilterPublishedPublication {
+		task ("Add a new Publication") {
+			JSONPublications.addPublication(publicationName = "Publication Name");
+
+			JSONPublications.selectPublication(publicationName = "Publication Name");
+		}
+
+		JSONWebcontent.addWebContent(
+			content = "WC Content Title",
+			groupName = "Guest",
+			title = "WC Title Title");
+
+		task ("Publish the Publication") {
+			Refresh();
+
+			Publications.publishPublication(publicationName = "Publication Name");
+		}
+
+		task ("Assert Revert and Review Changes under Ellipsis Item") {
+			PublicationsNavigator.openPublicationsHistory();
+
+			Click(
+				key_publicationName = "Publication Name",
+				locator1 = "Publications#PUBLICATION_ELLIPSIS");
+
+			MenuItem.clickNoError(menuItem = "Revert");
+
+			AssertTextEquals(
+				locator1 = "Publications#PUBLICATION_NAME",
+				value1 = "Revert \"Publication Name\"");
+
+			PublicationsNavigator.openPublicationsHistory();
+
+			Click(
+				key_publicationName = "Publication Name",
+				locator1 = "Publications#PUBLICATION_ELLIPSIS");
+
+			MenuItem.clickNoError(menuItem = "Review Changes");
+
+			AssertElementPresent(locator1 = "PublicationsChanges#CHANGE_HEADER");
+		}
+
+		task ("Filter and view published publication") {
+			PublicationsNavigator.openPublicationsHistory();
+
+			Publications.filterPublishedPublication(statusList = "Published");
+
+			AssertTextEquals.assertPartialText(
+				key_publicationName = "Publication Name",
+				locator1 = "Publications#PUBLICATION_NAME_VIEW",
+				value1 = "Publication Name");
+		}
+	}
+
 	@description = "This is the use case for LPS-196973.As a publication admin, I would like to hide applications that shouldn't be used in a publication"
 	@priority = 3
 	test CanHideApplicationThatShouldnotBeUsedInPublication {
@@ -1945,7 +2001,7 @@ definition {
 
 			Click(
 				key_publicationName = "Publication Name",
-				locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
+				locator1 = "Publications#PUBLICATION_NAME_VIEW");
 
 			PublicationsChanges.viewChanges(
 				changeCategory = "Page",
@@ -2295,76 +2351,6 @@ definition {
 		Pagination.viewResults(results = "Showing 5 to 7 of 7 entries.");
 
 		Publications.viewPublicationOrderInHistory(publicationList = "Publication Name 3,Publication Name 2,Publication Name 1");
-	}
-
-	@description = "This is use case for LPS-186230. Assert Publication History uses Dataset Display"
-	@priority = 4
-	test ViewPublicationsHistoryTableUsingDatasetDisplay {
-		property custom.properties = "feature.flag.LPS-180155=true";
-
-		task ("Add a new Publication") {
-			JSONPublications.addPublication(publicationName = "Publication Name");
-
-			JSONPublications.selectPublication(publicationName = "Publication Name");
-		}
-
-		JSONWebcontent.addWebContent(
-			content = "WC Content Title",
-			groupName = "Guest",
-			title = "WC Title Title");
-
-		task ("Publish the Publication") {
-			Refresh();
-
-			Publications.publishPublication(publicationName = "Publication Name");
-		}
-
-		task ("Assert Publications History table uses dataset display") {
-			PublicationsNavigator.openPublicationsHistory();
-
-			AssertElementPresent(locator1 = "//button[contains(text(),'Publication')]");
-
-			AssertElementPresent(locator1 = "//button[contains(text(),'Published Date')]");
-
-			AssertElementPresent(locator1 = "//div[contains(text(),'Published By')]");
-
-			AssertElementPresent(locator1 = "//div[contains(text(),'Status')]");
-		}
-
-		task ("Assert Revert and Review Changes under Ellipsis Item") {
-			PublicationsNavigator.openPublicationsHistory();
-
-			Click(
-				key_publicationName = "Publication Name",
-				locator1 = "Publications#PUBLICATION_ELLIPSIS");
-
-			MenuItem.clickNoError(menuItem = "Revert");
-
-			AssertTextEquals(
-				locator1 = "Publications#PUBLICATION_NAME",
-				value1 = "Revert \"Publication Name\"");
-
-			PublicationsNavigator.openPublicationsHistory();
-
-			Click(
-				key_publicationName = "Publication Name",
-				locator1 = "Publications#ELLIPSIS_IN_DATASET_DIAPLAY");
-
-			MenuItem.clickNoError(menuItem = "Review Changes");
-
-			AssertElementPresent(locator1 = "PublicationsChanges#CHANGE_HEADER");
-		}
-
-		task ("Filter and view published publication") {
-			PublicationsNavigator.openPublicationsHistory();
-
-			Publications.filterPublishedPublicationInDatasetDisplay(statusList = "Published");
-
-			AssertTextEquals.assertPartialText(
-				key_publicationName = "Publication Name",
-				locator1 = "Publications#PUBLICATION_NAME_IN_DATASET_DIAPLAY",
-				value1 = "Publication Name");
-		}
 	}
 
 }

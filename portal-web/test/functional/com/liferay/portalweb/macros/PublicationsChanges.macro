@@ -224,7 +224,7 @@ definition {
 		if (${publishedPublication} == "true") {
 			Click(
 				key_publicationName = ${publicationName},
-				locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
+				locator1 = "Publications#PUBLICATION_NAME_VIEW");
 		}
 
 		WaitForElementPresent(locator1 = "PublicationsChanges#CHANGE_HEADER");

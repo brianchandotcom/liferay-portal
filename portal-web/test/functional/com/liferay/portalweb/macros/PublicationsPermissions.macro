@@ -14,7 +14,7 @@ definition {
 
 		AssertElementPresent(
 			key_publicationName = "New ${publicationName}",
-			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
+			locator1 = "Publications#PUBLICATION_NAME_VIEW");
 
 		Publications.inviteUsers(
 			gotoReviewChanges = "true",
@@ -58,7 +58,7 @@ definition {
 
 		AssertElementPresent(
 			key_publicationName = "New ${publicationName}",
-			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
+			locator1 = "Publications#PUBLICATION_NAME_VIEW");
 
 		PublicationsNavigator.gotoReviewChanges(
 			gotoPublicationsAdmin = "true",
@@ -121,7 +121,7 @@ definition {
 
 		AssertElementPresent(
 			key_publicationName = "New ${publicationName}",
-			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
+			locator1 = "Publications#PUBLICATION_NAME_VIEW");
 
 		PublicationsNavigator.gotoReviewChanges(
 			gotoPublicationsAdmin = "true",

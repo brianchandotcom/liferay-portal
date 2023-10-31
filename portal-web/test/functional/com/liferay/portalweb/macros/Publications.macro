@@ -11,7 +11,7 @@ definition {
 
 		Click(
 			key_publicationName = ${publicationName},
-			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
+			locator1 = "Publications#PUBLICATION_NAME_VIEW");
 
 		WaitForElementPresent(locator1 = "PublicationsChanges#CHANGE_HEADER");
 
@@ -265,24 +265,24 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro filterPublishedPublicationInDatasetDisplay(Exclude = null, statusList = null) {
+	macro filterPublishedPublication(Exclude = null, statusList = null) {
 		Click(
 			key_name = "Filter",
 			locator1 = "PublicationsChanges#SORT_BUTTON");
 
-		Click(locator1 = "Publications#STATUS_BUTTON_IN_DATASET_DIAPLAY");
+		Click(locator1 = "Publications#STATUS_BUTTON");
 
 		if (${Exclude} == "true") {
-			Check.checkToggleSwitch(locator1 = "Publications#EXCLUDE_TOGGLE_SWITCH_IN_DATASET_DIAPLAY");
+			Check.checkToggleSwitch(locator1 = "Publications#EXCLUDE_TOGGLE_SWITCH");
 		}
 
 		for (var statusType : list ${statusList}) {
 			Check.checkNotVisible(
 				key_statusType = ${statusType},
-				locator1 = "Publications#STATUS_IN_DATASET_DIAPLAY");
+				locator1 = "Publications#PUBLICATION_STATUS");
 		}
 
-		Click(locator1 = "Publications#ADD_FILTER_BUTTON_IN_DATASET_DIAPLAY");
+		Click(locator1 = "Publications#ADD_FILTER_BUTTON");
 	}
 
 	@summary = "Default summary"
@@ -509,7 +509,7 @@ definition {
 		var key_publicationName = ${publicationName};
 
 		AssertTextEquals(
-			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME",
+			locator1 = "Publications#PUBLICATION_NAME_VIEW",
 			value1 = ${publicationName});
 	}
 
@@ -635,7 +635,7 @@ definition {
 		PublicationsNavigator.openPublicationsAdmin();
 
 		AssertTextEquals.assertPartialText(
-			locator1 = "Publications#PUBLICATION_NAME_IN_ONGOING",
+			locator1 = "Publications#PUBLICATION_NAME_VIEW",
 			value1 = ${sandboxedPublicationName});
 	}
 

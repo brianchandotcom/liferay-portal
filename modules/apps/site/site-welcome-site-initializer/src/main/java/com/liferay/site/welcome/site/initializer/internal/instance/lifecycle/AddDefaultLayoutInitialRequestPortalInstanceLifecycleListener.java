@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pavel Savinov
  */
 @Component(service = PortalInstanceLifecycleListener.class)
-public class AddDefaultLayoutPortalInstanceLifecycleListener
+public class AddDefaultLayoutInitialRequestPortalInstanceLifecycleListener
 	extends InitialRequestPortalInstanceLifecycleListener {
 
 	@Activate

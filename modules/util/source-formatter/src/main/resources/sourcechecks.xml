@@ -1636,10 +1636,6 @@
 			<description name="Performs upgrade checks for `java` files" />
 			<weight>3</weight>
 		</check>
-		<check name="UpgradeJavaCommerceOrderItemServicesCheck">
-			<category name="Upgrade" />
-			<description name="Fill the new parameters of the method `addCommerceOrderItem` and `deleteCommerceOrderItems` of `CommerceOrderItemLocalService`, `CommerceOrderItemLocalServiceUtil`, `CommerceOrderItemService` and `CommerceOrderItemServiceUtil` classes" />
-		</check>
 		<check name="UpgradeJavaCommerceOrderValidatorCheck">
 			<category name="Upgrade" />
 			<description name="Replace the parameter Int for BigDecimal of method validate of 'CommerceOrderValidator' interface" />

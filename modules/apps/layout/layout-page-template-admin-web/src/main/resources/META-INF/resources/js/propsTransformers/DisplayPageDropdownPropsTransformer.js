@@ -13,21 +13,30 @@ import {
 
 import openContentTypeModal from '../commands/openContentTypeModal';
 import openDeletePageTemplateModal from '../commands/openDeletePageTemplateModal';
+import openInUseModal from '../commands/openInUseModal';
 import {MODAL_TYPES} from '../constants/modalTypes';
 
 const ACTIONS = {
-	changeContentType({changeContentTypeURL, mappingTypes}, namespace) {
-		openContentTypeModal({
-			formSubmitURL: changeContentTypeURL,
-			mappingTypes,
-			namespace,
-			spritemap: getSpritemap(),
-			title: Liferay.Language.get('change-content-type'),
-			type: MODAL_TYPES.edit,
-			warningMessage: Liferay.Language.get(
-				'changing-the-content-type-may-cause-some-elements-of-the-display-page-template-to-lose-their-previous-mapping'
-			),
-		});
+	changeContentType(
+		{assetType, changeContentTypeURL, mappingTypes, viewUsagesURL},
+		namespace
+	) {
+		if (viewUsagesURL) {
+			openInUseModal({assetType, status: 'info', viewUsagesURL});
+		}
+		else {
+			openContentTypeModal({
+				formSubmitURL: changeContentTypeURL,
+				mappingTypes,
+				namespace,
+				spritemap: getSpritemap(),
+				title: Liferay.Language.get('change-content-type'),
+				type: MODAL_TYPES.edit,
+				warningMessage: Liferay.Language.get(
+					'changing-the-content-type-may-cause-some-elements-of-the-display-page-template-to-lose-their-previous-mapping'
+				),
+			});
+		}
 	},
 
 	copyDisplayPage({copyDisplayPageURL}) {

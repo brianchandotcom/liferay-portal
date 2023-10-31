@@ -213,7 +213,7 @@ definition {
 		ValidateWebContentUpgrade.publishWCDraft();
 	}
 
-	@description = "This is a use case for LPS-123590."
+	@description = "This is a use case for LPS-123590. View Specific Display Page Template Archive 721"
 	@priority = 4
 	test ViewSpecificDisplayPageTemplateArchive721 {
 		property data.archive.type = "data-archive-display-page-templates";
@@ -223,7 +223,7 @@ definition {
 		ValidateWebContentUpgrade.viewSpecificDisplayPageTemplateViaAssetPublisher();
 	}
 
-	@description = "This is a use case for LPS-123590."
+	@description = "This is a use case for LPS-123590. View Specific Display Page Template Archive 72104"
 	@priority = 4
 	test ViewSpecificDisplayPageTemplateArchive72104 {
 		property data.archive.type = "data-archive-display-page-templates";
@@ -323,7 +323,7 @@ definition {
 		ValidateWebContentUpgrade.viewWebContentWithAllFields();
 	}
 
-	@description = "This is a use case for LPS-98619."
+	@description = "This is a use case for LPS-98619. View Web Content With Image Archive 704"
 	@priority = 3
 	test ViewWebContentWithImageArchive704 {
 		property data.archive.type = "data-archive-web-content-with-image";
@@ -357,7 +357,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-98619."
+	@description = "This is a use case for LPS-98619. View Web Content With Image Archive 70106"
 	@priority = 3
 	test ViewWebContentWithImageArchive70106 {
 		property data.archive.type = "data-archive-web-content-with-image";
@@ -376,7 +376,7 @@ definition {
 			webContentTitle = "WC WebContent Title");
 	}
 
-	@description = "This is a use case for LPS-130915."
+	@description = "This is a use case for LPS-130915. View Web Content With No Display Page Template Archive 735"
 	@priority = 5
 	test ViewWebContentWithNoDisplayPageTemplateArchive735 {
 		property data.archive.type = "data-archive-web-content-with-no-display-page-template";
@@ -386,7 +386,7 @@ definition {
 		ValidateWebContentUpgrade.viewWebContentWithNoDisplayPageTemplate();
 	}
 
-	@description = "This is a use case for LPS-130915."
+	@description = "This is a use case for LPS-130915. View Web Content With No Display Page Template Archive 73101"
 	@priority = 5
 	test ViewWebContentWithNoDisplayPageTemplateArchive73101 {
 		property data.archive.type = "data-archive-web-content-with-no-display-page-template";
@@ -396,7 +396,7 @@ definition {
 		ValidateWebContentUpgrade.viewWebContentWithNoDisplayPageTemplate();
 	}
 
-	@description = "This is a use case for LRQA-62830."
+	@description = "This is a use case for LRQA-62830. View Web Content With Predefined Value In Web Content Field Archive 713"
 	@priority = 4
 	test ViewWebContentWithPredefinedValueInWebContentFieldArchive713 {
 		property data.archive.type = "data-archive-web-content-with-predefined-value-in-web-content-field";
@@ -406,7 +406,7 @@ definition {
 		ValidateWebContentUpgrade.viewWebContentWithPredefinedValueInWebContentField();
 	}
 
-	@description = "This is a use case for LRQA-62834."
+	@description = "This is a use case for LRQA-62834. View Web Content With Predefined Value In Web Content Field Archive 721"
 	@priority = 4
 	test ViewWebContentWithPredefinedValueInWebContentFieldArchive721 {
 		property data.archive.type = "data-archive-web-content-with-predefined-value-in-web-content-field";
@@ -416,7 +416,7 @@ definition {
 		ValidateWebContentUpgrade.viewWebContentWithPredefinedValueInWebContentField();
 	}
 
-	@description = "This is a use case for LRQA-62836."
+	@description = "This is a use case for LRQA-62836. View Web Content With Predefined Value In Web Content Field Archive 730"
 	@priority = 4
 	test ViewWebContentWithPredefinedValueInWebContentFieldArchive730 {
 		property data.archive.type = "data-archive-web-content-with-predefined-value-in-web-content-field";
@@ -426,7 +426,7 @@ definition {
 		ValidateWebContentUpgrade.viewWebContentWithPredefinedValueInWebContentField();
 	}
 
-	@description = "This is a use case for LRQA-62830."
+	@description = "This is a use case for LRQA-62830. View Web Content With Predefined Value In Web Content Field Archive 71103"
 	@priority = 4
 	test ViewWebContentWithPredefinedValueInWebContentFieldArchive71103 {
 		property data.archive.type = "data-archive-web-content-with-predefined-value-in-web-content-field";
@@ -437,7 +437,7 @@ definition {
 		ValidateWebContentUpgrade.viewWebContentWithPredefinedValueInWebContentField();
 	}
 
-	@description = "This is a use case for LRQA-62834."
+	@description = "This is a use case for LRQA-62834. View Web Content With Predefined Value In Web Content Field Archive 72101"
 	@priority = 4
 	test ViewWebContentWithPredefinedValueInWebContentFieldArchive72101 {
 		property data.archive.type = "data-archive-web-content-with-predefined-value-in-web-content-field";
@@ -448,7 +448,7 @@ definition {
 		ValidateWebContentUpgrade.viewWebContentWithPredefinedValueInWebContentField();
 	}
 
-	@description = "This is a use case for LRQA-62836."
+	@description = "This is a use case for LRQA-62836. View Web Content With Predefined Value In Web Content Field Archive 73101"
 	@priority = 4
 	test ViewWebContentWithPredefinedValueInWebContentFieldArchive73101 {
 		property data.archive.type = "data-archive-web-content-with-predefined-value-in-web-content-field";
@@ -459,7 +459,7 @@ definition {
 		ValidateWebContentUpgrade.viewWebContentWithPredefinedValueInWebContentField();
 	}
 
-	@description = "This is a use case for LRQA-62801."
+	@description = "This is a use case for LRQA-62801. View Web Content With Predefined Value In Web Content Field Archive 701014"
 	@priority = 4
 	test ViewWebContentWithPredefinedValueInWebContentFieldArchive701014 {
 		property data.archive.type = "data-archive-web-content-with-predefined-value-in-web-content-field";

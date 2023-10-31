@@ -14,5 +14,5 @@ for (CommerceOrderItem commerceOrderItem : commerceOrder.getCommerceOrderItems()
 	commerceOrderItem.getQuantity();
 }
 
-DLUtil.getImagePreviewURL(testEntry, test);
+DLUtil.getImagePreviewURL(null, null);
 %>

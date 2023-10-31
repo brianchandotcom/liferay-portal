@@ -42,13 +42,13 @@ public class UpgradeCatchAllCheck {
 		DestinationNames.COMMERCE_STOCK_QUANTITY;
 		DestinationNames.COMMERCE_SUBSCRIPTION_STATUS;
 
-		DLURLHelperUtil.getImagePreviewURL(testEntry, testEntry.getTestVersion(), null);
+		DLURLHelperUtil.getImagePreviewURL(null, null, null);
 
 		FDSTableSchemaBuilder fDSTableSchemaBuilder = _fDSTableSchemaBuilderFactory.create();
 
 		fDSTableSchemaBuilder.add("test123", "test123");
 
-		_htmlParser.extractText(testEntry.getContent());
+		_htmlParser.extractText(null);
 
 		if (true) {
 			_htmlParser.extractText(testEntry.getContent());

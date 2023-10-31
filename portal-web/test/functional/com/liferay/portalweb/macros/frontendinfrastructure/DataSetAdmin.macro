@@ -435,13 +435,24 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro createFilters(key_filterList = null) {
+	macro createFilters(key_filterList = null,filterType = null,filterName = null,key_text = null) {
 		for (var key_filterType : list ${key_filterList}) {
 			LexiconEntry.gotoAdd();
 
-			Select(
-				locator1 = "DataSet#FILTER_BY_SELECT",
-				value1 = ${key_filterType});
+			MenuItem.click(menuItem = ${filterType});
+
+			SelectFrameTop();
+
+			if (isSet(name)) {
+				Type(
+					key_text = "Name",
+					locator1 = "TextInput#ANY",
+					value1 = ${filterName});
+			}
+
+			Click(locator1 = "DataSet#FILTER_BY_SELECT");
+
+			MenuItem.click(menuItem = ${key_filterType});
 
 			Click(
 				key_text = "Save",

@@ -24,6 +24,7 @@ interface ConditionProps {
 	condition: Condition;
 	onConditionChange: (condition: Condition) => void;
 	onDeleteCondition: () => void;
+	showDeleteButton: boolean;
 }
 
 const TYPE_VALUES = {
@@ -74,6 +75,7 @@ export default function Condition({
 	condition,
 	onConditionChange,
 	onDeleteCondition,
+	showDeleteButton,
 }: ConditionProps) {
 	const ValueSelectorComponent: FC<SelectorProps> | null = condition.condition
 		? VALUE_SELECTOR_COMPONENTS[condition.condition]
@@ -82,6 +84,7 @@ export default function Condition({
 	return (
 		<RuleBuilderItem
 			onDeleteButtonClick={onDeleteCondition}
+			showDeleteButton={showDeleteButton}
 			type="condition"
 		>
 			<RuleSelect
@@ -92,7 +95,7 @@ export default function Condition({
 				onSelectionChange={(type) =>
 					onConditionChange({...condition, type})
 				}
-				selectedKey={condition.type}
+				selectedKey={condition.type ?? ''}
 			/>
 
 			{condition.type && CONDITION_ITEMS[condition.type] ? (

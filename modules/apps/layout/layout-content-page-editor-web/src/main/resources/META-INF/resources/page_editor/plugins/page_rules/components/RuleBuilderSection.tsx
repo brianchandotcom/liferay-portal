@@ -7,7 +7,7 @@ import ClayButton from '@clayui/button';
 import {Option, Picker} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import ClayPanel from '@clayui/panel';
-import React from 'react';
+import React, {Dispatch, SetStateAction} from 'react';
 
 // @ts-ignore
 
@@ -34,7 +34,7 @@ const TriggerLabel = React.forwardRef<HTMLButtonElement, any>(
 type RuleBuilderActionProps = {
 	actions: Action[];
 	layoutDataItems: {label: string; value: string}[];
-	setActions: (initializer: (previous: Action[]) => Action[]) => {};
+	setActions: Dispatch<SetStateAction<Action[]>>;
 };
 
 export function RuleBuilderActionSection({
@@ -82,13 +82,19 @@ export function RuleBuilderActionSection({
 							})
 						}
 						onDeleteAction={() => {
-							setActions((previousActions) =>
-								previousActions.filter(
-									(_action, currentIndex) =>
-										currentIndex !== index
-								)
-							);
+							if (actions.length === 1) {
+								setActions([{id: action.id} as Action]);
+							}
+							else {
+								setActions((previousActions) =>
+									previousActions.filter(
+										(_action, currentIndex) =>
+											currentIndex !== index
+									)
+								);
+							}
 						}}
+						showDeleteButton={actions.length > 1 || !!action.type}
 					/>
 				))}
 
@@ -115,10 +121,8 @@ type ConditionType = 'all' | 'any';
 type RuleBuilderConditionProps = {
 	conditionType: ConditionType;
 	conditions: Condition[];
-	setConditionType: (
-		initializer: (previous: ConditionType) => ConditionType
-	) => {};
-	setConditions: (initializer: (previous: Condition[]) => Condition[]) => {};
+	setConditionType: Dispatch<SetStateAction<ConditionType>>;
+	setConditions: Dispatch<SetStateAction<Condition[]>>;
 };
 
 export function RuleBuilderConditionSection({
@@ -180,7 +184,7 @@ export function RuleBuilderConditionSection({
 			showCollapseIcon
 		>
 			<ClayPanel.Body>
-				{conditions.map((condition, index) => (
+				{conditions.map((condition, index, conditions) => (
 					<ConditionComponent
 						condition={condition}
 						key={condition.id}
@@ -194,13 +198,23 @@ export function RuleBuilderConditionSection({
 							})
 						}
 						onDeleteCondition={() => {
-							setConditions((previousConditions) =>
-								previousConditions.filter(
-									(_condition, currentIndex) =>
-										currentIndex !== index
-								)
-							);
+							if (conditions.length === 1) {
+								setConditions([
+									{id: condition.id} as Condition,
+								]);
+							}
+							else {
+								setConditions((previousConditions) =>
+									previousConditions.filter(
+										(_condition, currentIndex) =>
+											currentIndex !== index
+									)
+								);
+							}
 						}}
+						showDeleteButton={
+							conditions.length > 1 || !!condition.type
+						}
 					/>
 				))}
 

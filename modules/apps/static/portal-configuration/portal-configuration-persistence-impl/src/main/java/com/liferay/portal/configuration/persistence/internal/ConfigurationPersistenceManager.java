@@ -199,30 +199,27 @@ public class ConfigurationPersistenceManager
 		}
 	}
 
-	public void start() {
-		try {
+	public void start() throws Exception {
+		if (!StartupHelperUtil.isDBNew()) {
 			_populateDictionaries();
+
+			return;
 		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
 
-			_createConfigurationTable();
+		_createConfigurationTable();
 
-			for (Bundle bundle : _bundleContext.getBundles()) {
-				if (Objects.equals(
-						bundle.getSymbolicName(),
-						"org.apache.felix.configurator")) {
+		for (Bundle bundle : _bundleContext.getBundles()) {
+			if (Objects.equals(
+					bundle.getSymbolicName(),
+					"org.apache.felix.configurator")) {
 
-					File stateFile = bundle.getDataFile("state.ser");
+				File stateFile = bundle.getDataFile("state.ser");
 
-					if (stateFile.exists()) {
-						stateFile.delete();
-					}
-
-					break;
+				if (stateFile.exists()) {
+					stateFile.delete();
 				}
+
+				break;
 			}
 		}
 	}
@@ -437,11 +434,6 @@ public class ConfigurationPersistenceManager
 	}
 
 	private void _populateDictionaries() throws Exception {
-		if (StartupHelperUtil.isDBNew()) {
-			throw new Exception(
-				"Database is new. Configuration_ table does not exist.");
-		}
-
 		Map<String, Map<String, Object>> overridePropertiesMap = new HashMap<>(
 			ConfigurationOverridePropertiesUtil.getOverridePropertiesMap());
 

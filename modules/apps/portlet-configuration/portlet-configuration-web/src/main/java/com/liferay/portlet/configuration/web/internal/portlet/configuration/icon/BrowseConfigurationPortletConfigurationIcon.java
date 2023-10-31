@@ -5,19 +5,27 @@
 
 package com.liferay.portlet.configuration.web.internal.portlet.configuration.icon;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portlet.configuration.kernel.util.PortletConfigurationApplicationType;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.WindowState;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,9 +61,50 @@ public class BrowseConfigurationPortletConfigurationIcon
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		return HttpComponentsUtil.addParameter(
-			portletDisplay.getUrlConfigurationBrowse(), "p_p_state",
-			WindowState.MAXIMIZED.toString());
+		try {
+			return PortletURLBuilder.create(
+				PortletProviderUtil.getPortletURL(
+					portletRequest,
+					PortletConfigurationApplicationType.PortletConfiguration.
+						CLASS_NAME,
+					PortletProvider.Action.VIEW)
+			).setMVCPath(
+				"/edit_configuration.jsp"
+			).setRedirect(
+				themeDisplay.getURLCurrent()
+			).setPortletResource(
+				portletDisplay.getId()
+			).setParameter(
+				"portletConfiguration", true
+			).setParameter(
+				"resourcePrimKey",
+				() -> {
+					Portlet portlet = (Portlet)portletRequest.getAttribute(
+						WebKeys.RENDER_PORTLET);
+
+					return PortletPermissionUtil.getPrimaryKey(
+						themeDisplay.getPlid(), portlet.getPortletId());
+				}
+			).setParameter(
+				"returnToFullPageURL", themeDisplay.getURLCurrent()
+			).setParameter(
+				"settingsScope",
+				() -> {
+					String settingsScope = (String)portletRequest.getAttribute(
+						WebKeys.SETTINGS_SCOPE);
+
+					return ParamUtil.get(
+						portletRequest, "settingsScope", settingsScope);
+				}
+			).buildString();
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return null;
 	}
 
 	@Override
@@ -89,6 +138,9 @@ public class BrowseConfigurationPortletConfigurationIcon
 	public boolean isShowInEditMode(PortletRequest portletRequest) {
 		return true;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BrowseConfigurationPortletConfigurationIcon.class);
 
 	@Reference
 	private Language _language;

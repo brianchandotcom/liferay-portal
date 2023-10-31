@@ -14,6 +14,7 @@ import com.liferay.commerce.product.service.CPOptionLocalService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOption;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOptionValue;
 import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.constants.DTOConverterConstants;
+import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -52,6 +53,12 @@ public class ProductOptionDTOConverter
 
 		return new ProductOption() {
 			{
+				customFields = CustomFieldsUtil.toCustomFields(
+					dtoConverterContext.isAcceptAllLanguages(),
+					CPDefinitionOptionRel.class.getName(),
+					cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
+					cpDefinitionOptionRel.getCompanyId(),
+					dtoConverterContext.getLocale());
 				description = LanguageUtils.getLanguageIdMap(
 					cpDefinitionOptionRel.getDescriptionMap());
 				facetable = cpDefinitionOptionRel.isFacetable();
@@ -60,8 +67,10 @@ public class ProductOptionDTOConverter
 				key = cpDefinitionOptionRel.getKey();
 				name = LanguageUtils.getLanguageIdMap(
 					cpDefinitionOptionRel.getNameMap());
+				priceType = cpDefinitionOptionRel.getPriceType();
 				required = cpDefinitionOptionRel.isRequired();
 				skuContributor = cpDefinitionOptionRel.isSkuContributor();
+				typeSettings = cpDefinitionOptionRel.getTypeSettings();
 
 				setOptionId(
 					() -> {

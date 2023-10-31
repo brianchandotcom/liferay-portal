@@ -920,11 +920,20 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 		if (productOptions != null) {
 			for (ProductOption productOption : productOptions) {
+				serviceContext.setExpandoBridgeAttributes(
+					CustomFieldsUtil.toMap(
+						CPDefinitionOptionRel.class.getName(),
+						contextCompany.getCompanyId(),
+						productOption.getCustomFields(),
+						contextAcceptLanguage.getPreferredLocale()));
+
 				CPDefinitionOptionRel cpDefinitionOptionRel =
 					ProductOptionUtil.addOrUpdateCPDefinitionOptionRel(
 						_cpDefinitionOptionRelService, _cpOptionService,
 						productOption, cpDefinition.getCPDefinitionId(),
 						serviceContext);
+
+				serviceContext.setExpandoBridgeAttributes(null);
 
 				ProductOptionValue[] productOptionValues =
 					productOption.getProductOptionValues();

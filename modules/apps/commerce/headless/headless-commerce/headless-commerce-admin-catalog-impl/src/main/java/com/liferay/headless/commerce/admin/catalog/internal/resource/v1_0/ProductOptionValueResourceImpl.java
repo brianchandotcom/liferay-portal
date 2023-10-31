@@ -20,6 +20,7 @@ import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -71,19 +72,18 @@ public class ProductOptionValueResourceImpl
 						search, pagination.getStartPosition(),
 						pagination.getEndPosition(), sorts);
 
-		int totalItems =
-			_cpDefinitionOptionValueRelService.
-				searchCPDefinitionOptionValueRelsCount(
-					cpDefinitionOptionRel.getCompanyId(),
-					cpDefinitionOptionRel.getGroupId(),
-					cpDefinitionOptionRel.getCPDefinitionOptionRelId(), search);
-
 		return Page.of(
 			transform(
 				cpDefinitionOptionValueRelBaseModelSearchResult.getBaseModels(),
 				cpDefinitionOptionValueRel -> _toProductOptionValue(
 					cpDefinitionOptionValueRel)),
-			pagination, totalItems);
+			pagination,
+			_cpDefinitionOptionValueRelService.
+				searchCPDefinitionOptionValueRelsCount(
+					cpDefinitionOptionRel.getCompanyId(),
+					cpDefinitionOptionRel.getGroupId(),
+					cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
+					search));
 	}
 
 	@Override
@@ -121,18 +121,26 @@ public class ProductOptionValueResourceImpl
 
 		return _toProductOptionValue(
 			_cpDefinitionOptionValueRelService.updateCPDefinitionOptionValueRel(
-				id, cpInstanceId,
+				id, GetterUtil.get(productOptionValue.getSkuId(), cpInstanceId),
 				GetterUtil.get(
 					productOptionValue.getKey(),
 					cpDefinitionOptionValueRel.getKey()),
 				LanguageUtils.getLocalizedMap(nameMap),
-				cpDefinitionOptionValueRel.isPreselected(),
-				cpDefinitionOptionValueRel.getPrice(),
-				GetterUtil.getDouble(
+				GetterUtil.get(
+					productOptionValue.getPreselected(),
+					cpDefinitionOptionValueRel.isPreselected()),
+				BigDecimalUtil.get(
+					productOptionValue.getDeltaPrice(),
+					cpDefinitionOptionValueRel.getPrice()),
+				GetterUtil.get(
 					productOptionValue.getPriority(),
 					cpDefinitionOptionValueRel.getPriority()),
-				cpDefinitionOptionValueRel.getQuantity(),
-				cpDefinitionOptionValueRel.getUnitOfMeasureKey(),
+				BigDecimalUtil.get(
+					productOptionValue.getQuantity(),
+					cpDefinitionOptionValueRel.getQuantity()),
+				GetterUtil.get(
+					productOptionValue.getUnitOfMeasureKey(),
+					cpDefinitionOptionValueRel.getUnitOfMeasureKey()),
 				_serviceContextHelper.getServiceContext(
 					cpDefinitionOptionValueRel.getGroupId())));
 	}
@@ -153,14 +161,12 @@ public class ProductOptionValueResourceImpl
 			_cpDefinitionOptionRelService.getCPDefinitionOptionRel(
 				productOptionId);
 
-		CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+		return _toProductOptionValue(
 			ProductOptionValueUtil.addOrUpdateCPDefinitionOptionValueRel(
 				_cpDefinitionOptionValueRelService, productOptionValue,
 				cpDefinitionOptionRel.getCPDefinitionOptionRelId(),
 				_serviceContextHelper.getServiceContext(
-					cpDefinitionOptionRel.getGroupId()));
-
-		return _toProductOptionValue(cpDefinitionOptionValueRel);
+					cpDefinitionOptionRel.getGroupId())));
 	}
 
 	private ProductOptionValue _toProductOptionValue(

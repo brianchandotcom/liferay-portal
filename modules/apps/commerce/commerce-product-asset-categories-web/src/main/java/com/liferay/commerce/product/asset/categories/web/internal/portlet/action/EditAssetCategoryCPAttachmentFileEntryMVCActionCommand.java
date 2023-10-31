@@ -155,8 +155,8 @@ public class EditAssetCategoryCPAttachmentFileEntryMVCActionCommand
 				displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, titleMap, null, priority,
-				type, serviceContext);
+				expirationDateMinute, true, neverExpire, titleMap, null,
+				priority, type, serviceContext);
 		}
 		else {
 			long classNameId = _portal.getClassNameId(AssetCategory.class);
@@ -172,7 +172,8 @@ public class EditAssetCategoryCPAttachmentFileEntryMVCActionCommand
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, expirationDateMonth, expirationDateDay,
 				expirationDateYear, expirationDateHour, expirationDateMinute,
-				neverExpire, titleMap, null, priority, type, serviceContext);
+				true, neverExpire, titleMap, null, priority, type,
+				serviceContext);
 		}
 	}
 

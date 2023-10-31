@@ -175,7 +175,7 @@ public class EditCSDiagramSettingMVCActionCommand extends BaseMVCActionCommand {
 				expirationCalendar.get(Calendar.DAY_OF_MONTH),
 				expirationCalendar.get(Calendar.YEAR),
 				expirationCalendar.get(Calendar.HOUR),
-				expirationCalendar.get(Calendar.MINUTE), true,
+				expirationCalendar.get(Calendar.MINUTE), true, true,
 				Collections.emptyMap(), null, 0D,
 				CSDiagramSettingsConstants.TYPE_DIAGRAM, serviceContext);
 		}
@@ -198,7 +198,7 @@ public class EditCSDiagramSettingMVCActionCommand extends BaseMVCActionCommand {
 			expirationCalendar.get(Calendar.DAY_OF_MONTH),
 			expirationCalendar.get(Calendar.YEAR),
 			expirationCalendar.get(Calendar.HOUR),
-			expirationCalendar.get(Calendar.MINUTE), true,
+			expirationCalendar.get(Calendar.MINUTE), true, true,
 			Collections.emptyMap(), null, 0D,
 			CSDiagramSettingsConstants.TYPE_DIAGRAM, serviceContext);
 	}

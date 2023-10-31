@@ -171,8 +171,8 @@ public class CPAttachmentFileEntryCreator {
 			fileEntry.getFileEntryId(), false, null, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, true, titleMap, null,
-			priority, type, serviceContext);
+			expirationDateHour, expirationDateMinute, true, true, titleMap,
+			null, priority, type, serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

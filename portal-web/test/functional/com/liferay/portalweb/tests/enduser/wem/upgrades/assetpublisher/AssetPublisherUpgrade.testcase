@@ -19,7 +19,7 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade."
+	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade from 625."
 	@priority = 5
 	test ViewAssetPublisherArchive625 {
 		property data.archive.type = "data-archive-asset-publisher";
@@ -29,7 +29,7 @@ definition {
 		ValidateAssetPublisherUpgrade.viewAssetPublisher();
 	}
 
-	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade."
+	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade from 706."
 	@priority = 5
 	test ViewAssetPublisherArchive706 {
 		property data.archive.type = "data-archive-asset-publisher";
@@ -41,7 +41,7 @@ definition {
 		ValidateAssetPublisherUpgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 
-	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade."
+	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade from 713."
 	@priority = 5
 	test ViewAssetPublisherArchive713 {
 		property data.archive.type = "data-archive-asset-publisher";
@@ -53,7 +53,7 @@ definition {
 		ValidateAssetPublisherUpgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 
-	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade."
+	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade from 721."
 	@priority = 5
 	test ViewAssetPublisherArchive721 {
 		property data.archive.type = "data-archive-asset-publisher";
@@ -65,7 +65,7 @@ definition {
 		ValidateAssetPublisherUpgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 
-	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade."
+	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade from 730."
 	@priority = 5
 	test ViewAssetPublisherArchive730 {
 		property data.archive.type = "data-archive-asset-publisher";
@@ -77,7 +77,7 @@ definition {
 		ValidateAssetPublisherUpgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 
-	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade."
+	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade from 7310."
 	@priority = 5
 	test ViewAssetPublisherArchive7310 {
 		property data.archive.type = "data-archive-asset-publisher";
@@ -87,7 +87,7 @@ definition {
 		ValidateAssetPublisherUpgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 
-	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade."
+	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade from 7413."
 	@priority = 5
 	test ViewAssetPublisherArchive7413 {
 		property data.archive.type = "data-archive-asset-publisher";
@@ -97,7 +97,7 @@ definition {
 		ValidateAssetPublisherUpgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 
-	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade."
+	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade from 70106."
 	@priority = 5
 	test ViewAssetPublisherArchive70106 {
 		property data.archive.type = "data-archive-asset-publisher";
@@ -109,7 +109,7 @@ definition {
 		ValidateAssetPublisherUpgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 
-	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade."
+	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade from 71103."
 	@priority = 5
 	test ViewAssetPublisherArchive71103 {
 		property data.archive.type = "data-archive-asset-publisher";
@@ -121,7 +121,7 @@ definition {
 		ValidateAssetPublisherUpgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 
-	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade."
+	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade from 72101."
 	@priority = 5
 	test ViewAssetPublisherArchive72101 {
 		property data.archive.type = "data-archive-asset-publisher";
@@ -133,7 +133,7 @@ definition {
 		ValidateAssetPublisherUpgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 
-	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade."
+	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade from 74321."
 	@priority = 5
 	test ViewAssetPublisherArchive74321 {
 		property data.archive.type = "data-archive-asset-publisher";
@@ -143,7 +143,7 @@ definition {
 		ValidateAssetPublisherUpgrade.viewAssetPublisher(categoryName = "Category Name");
 	}
 
-	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade."
+	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade from 621015."
 	@priority = 5
 	test ViewAssetPublisherArchive621015 {
 		property data.archive.type = "data-archive-asset-publisher";
@@ -153,7 +153,7 @@ definition {
 		ValidateAssetPublisherUpgrade.viewAssetPublisher();
 	}
 
-	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade."
+	@description = "This is a use case for LPS-78284. View dynamic selection and manual selection of Asset Publisher after upgrade from 621021."
 	@priority = 5
 	test ViewAssetPublisherArchive621021 {
 		property data.archive.type = "data-archive-asset-publisher";

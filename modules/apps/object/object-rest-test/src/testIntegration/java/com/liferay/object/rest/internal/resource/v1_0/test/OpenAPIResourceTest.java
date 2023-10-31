@@ -5,6 +5,9 @@
 
 package com.liferay.object.rest.internal.resource.v1_0.test;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
@@ -21,6 +24,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
@@ -218,6 +222,39 @@ public class OpenAPIResourceTest {
 				_objectDefinitionLocalService.updateObjectDefinition(
 					_objectDefinition1);
 		}
+	}
+
+	private void _assertJSONObjectOpenAPI(
+		JSONObject openAPIJSONObject, ObjectDefinition objectDefinition1,
+		ObjectDefinition objectDefinition2) {
+
+		Assert.assertNotNull(openAPIJSONObject.getString("openapi"));
+		Assert.assertNull(
+			openAPIJSONObject.getJSONArray(
+				objectDefinition2.getRESTContextPath()));
+
+		JSONObject schemasJSONObject = openAPIJSONObject.getJSONObject(
+			"components"
+		).getJSONObject(
+			"schemas"
+		);
+
+		Assert.assertNotNull(
+			schemasJSONObject.getJSONObject("TaxonomyCategoryBrief"));
+
+		JSONObject propertiesJSONObject = schemasJSONObject.getJSONObject(
+			objectDefinition1.getShortName()
+		).getJSONObject(
+			"properties"
+		);
+
+		Assert.assertNull(propertiesJSONObject.getJSONObject("createDate"));
+		Assert.assertNotNull(propertiesJSONObject.getJSONObject("keywords"));
+		Assert.assertNull(propertiesJSONObject.getJSONObject("modifiedDate"));
+		Assert.assertNotNull(
+			propertiesJSONObject.getJSONObject("taxonomyCategoryBriefs"));
+		Assert.assertNotNull(
+			propertiesJSONObject.getJSONObject("taxonomyCategoryIds"));
 	}
 
 	private void _assertObjectRelationshipEndpoints(
@@ -431,10 +468,10 @@ public class OpenAPIResourceTest {
 			ObjectDefinition objectDefinition2)
 		throws Exception {
 
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+		JSONObject openAPIJSONObject = HTTPTestUtil.invokeToJSONObject(
 			null, "/openapi", Http.Method.GET);
 
-		JSONArray jsonArray = jsonObject.getJSONArray(
+		JSONArray jsonArray = openAPIJSONObject.getJSONArray(
 			objectDefinition1.getRESTContextPath());
 
 		Assert.assertEquals(1, jsonArray.length());
@@ -443,42 +480,37 @@ public class OpenAPIResourceTest {
 				"/openapi.yaml",
 			jsonArray.get(0));
 
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
+		openAPIJSONObject = HTTPTestUtil.invokeToJSONObject(
 			null, objectDefinition1.getRESTContextPath() + "/openapi.json",
 			Http.Method.GET);
 
-		Assert.assertNotNull(jsonObject.getString("openapi"));
-		Assert.assertNull(
-			jsonObject.getJSONArray(objectDefinition2.getRESTContextPath()));
+		_assertJSONObjectOpenAPI(
+			openAPIJSONObject, objectDefinition1, objectDefinition2);
 
-		JSONObject schemasJSONObject = jsonObject.getJSONObject(
-			"components"
-		).getJSONObject(
-			"schemas"
-		);
-
-		Assert.assertNotNull(
-			schemasJSONObject.getJSONObject("TaxonomyCategoryBrief"));
-
-		JSONObject propertiesJSONObject = schemasJSONObject.getJSONObject(
-			objectDefinition1.getShortName()
-		).getJSONObject(
-			"properties"
-		);
-
-		Assert.assertNull(propertiesJSONObject.getJSONObject("createDate"));
-		Assert.assertNotNull(propertiesJSONObject.getJSONObject("keywords"));
-		Assert.assertNull(propertiesJSONObject.getJSONObject("modifiedDate"));
-		Assert.assertNotNull(
-			propertiesJSONObject.getJSONObject("taxonomyCategoryBriefs"));
-		Assert.assertNotNull(
-			propertiesJSONObject.getJSONObject("taxonomyCategoryIds"));
-
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, objectDefinition2.getRESTContextPath() + "/openapi.json",
 			Http.Method.GET);
 
 		Assert.assertEquals("NOT_FOUND", jsonObject.getString("status"));
+
+		String openAPIYAMLString = HTTPTestUtil.invokeToString(
+			null, objectDefinition1.getRESTContextPath() + "/openapi.yaml",
+			Http.Method.GET);
+
+		_assertJSONObjectOpenAPI(
+			_toJSONObject(openAPIYAMLString), objectDefinition1,
+			objectDefinition2);
+	}
+
+	private JSONObject _toJSONObject(String yamlString) throws Exception {
+		ObjectMapper yamlObjectMapper = new ObjectMapper(new YAMLFactory());
+
+		Object object = yamlObjectMapper.readValue(yamlString, Object.class);
+
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		return JSONFactoryUtil.createJSONObject(
+			objectMapper.writeValueAsString(object));
 	}
 
 	private static final String _OBJECT_FIELD_NAME =

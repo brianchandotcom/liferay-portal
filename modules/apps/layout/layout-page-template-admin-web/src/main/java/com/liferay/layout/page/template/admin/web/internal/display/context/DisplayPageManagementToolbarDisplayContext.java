@@ -247,17 +247,27 @@ public class DisplayPageManagementToolbarDisplayContext
 	}
 
 	private String _getDeleteSelectedEntriesURL() {
+		if (FeatureFlagManagerUtil.isEnabled("LPS-189856")) {
+			return PortletURLBuilder.createActionURL(
+				liferayPortletResponse
+			).setActionName(
+				"/layout_page_template_admin/delete_layout_page_template_" +
+					"entries_and_layout_page_template_collections"
+			).setTabs1(
+				"display-page-templates"
+			).setParameter(
+				"layoutPageTemplateCollectionId",
+				ParamUtil.getLong(
+					httpServletRequest, "layoutPageTemplateCollectionId")
+			).buildString();
+		}
+
 		return PortletURLBuilder.createActionURL(
 			liferayPortletResponse
 		).setActionName(
-			"/layout_page_template_admin/delete_layout_page_template_entries_" +
-				"and_layout_page_template_collections"
-		).setTabs1(
-			"display-page-templates"
-		).setParameter(
-			"layoutPageTemplateCollectionId",
-			ParamUtil.getLong(
-				httpServletRequest, "layoutPageTemplateCollectionId")
+			"/layout_page_template_admin/delete_layout_page_template_entry"
+		).setRedirect(
+			_themeDisplay.getURLCurrent()
 		).buildString();
 	}
 

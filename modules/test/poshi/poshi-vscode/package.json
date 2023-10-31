@@ -122,6 +122,16 @@
 		"node": ">=16",
 		"vscode": "^1.64.0"
 	},
+	"eslintConfig": {
+		"overrides": [
+			{
+				"files": ["*.ts"],
+				"rules": {
+					"@liferay/no-extraneous-dependencies": "off"
+				}
+			}
+		]
+	},
 	"icon": "images/icon.png",
 	"keywords": [
 		"liferay",

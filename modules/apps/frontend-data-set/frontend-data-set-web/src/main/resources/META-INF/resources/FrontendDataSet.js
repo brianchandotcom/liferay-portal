@@ -232,10 +232,10 @@ const FrontendDataSet = ({
 
 		if (creationMenu && actions) {
 			if (creationMenu.primaryItems) {
-				filteredCreationMenu.primaryItems = filterCreationActions(
-					creationMenu.primaryItems,
-					actions
-				);
+				filteredCreationMenu.primaryItems = filterCreationActions({
+					creationActions: creationMenu.primaryItems,
+					globalCollectionActions: actions
+				});
 			}
 		}
 

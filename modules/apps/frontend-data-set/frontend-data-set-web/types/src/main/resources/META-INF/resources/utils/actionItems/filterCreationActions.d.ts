@@ -4,8 +4,11 @@
  */
 
 import {ICreationActionItem} from '../../management_bar/components/CreationMenu';
-declare const filterCreationActions: (
-	actions: Array<ICreationActionItem>,
-	itemData: any
-) => Array<ICreationActionItem> | null;
+declare const filterCreationActions: ({
+	creationActions,
+	globalCollectionActions,
+}: {
+	creationActions: Array<ICreationActionItem>;
+	globalCollectionActions: any;
+}) => Array<ICreationActionItem> | null;
 export default filterCreationActions;

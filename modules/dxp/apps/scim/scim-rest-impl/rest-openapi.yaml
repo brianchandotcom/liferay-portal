@@ -23,7 +23,7 @@ components:
                         type: string
                     type: array
             type: object
-        Group:
+        GroupSchema:
             allOf:
                 - $ref: "#/components/schemas/BaseScim"
                 - properties:
@@ -136,7 +136,7 @@ components:
                     description:
                         A multi-valued list of complex objects containing the requested resources.
                     oneOf:
-                        - $ref: "#/components/schemas/Group"
+                        - $ref: "#/components/schemas/GroupSchema"
                         - $ref: "#/components/schemas/User"
                     type: object
                 itemsPerPage:
@@ -359,7 +359,7 @@ paths:
                 content:
                     application/scim+json:
                         schema:
-                            $ref: "#/components/schemas/Group"
+                            $ref: "#/components/schemas/GroupSchema"
             responses:
                 201:
                     content:
@@ -368,7 +368,7 @@ paths:
                                 oneOf:
                                     - format: binary
                                       type: string
-                                    - $ref: "#/components/schemas/Group"
+                                    - $ref: "#/components/schemas/GroupSchema"
                     description:
                         The Group was successfully created.
             tags: ["Group"]
@@ -429,7 +429,7 @@ paths:
                                 oneOf:
                                     - format: binary
                                       type: string
-                                    - $ref: "#/components/schemas/Group"
+                                    - $ref: "#/components/schemas/GroupSchema"
                     description:
                         If the resource exists, the server responds with HTTP status code 200 (OK) and includes the
                         result in the body of the response.
@@ -448,7 +448,7 @@ paths:
                 content:
                     application/scim+json:
                         schema:
-                            $ref: "#/components/schemas/Group"
+                            $ref: "#/components/schemas/GroupSchema"
             responses:
                 200:
                     content:
@@ -457,7 +457,7 @@ paths:
                                 oneOf:
                                     - format: binary
                                       type: string
-                                    - $ref: "#/components/schemas/Group"
+                                    - $ref: "#/components/schemas/GroupSchema"
                     description:
                         The Group was successfully updated.
             tags: ["Group"]

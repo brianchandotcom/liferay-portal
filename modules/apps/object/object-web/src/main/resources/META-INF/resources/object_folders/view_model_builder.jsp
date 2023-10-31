@@ -28,7 +28,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "object-model-builder"));
 			HashMapBuilder.<String, Object>put(
 				"baseResourceURL", String.valueOf(baseResourceURL)
 			).put(
-				"companyKeyValuePairs", objectDefinitionsDetailsDisplayContext.getScopeKeyValuePairs("company")
+				"companyKeyValuePairs", objectDefinitionsDetailsDisplayContext.getScopeJSONArray("company")
 			).put(
 				"editObjectDefinitionURL", objectDefinitionsDetailsDisplayContext.getEditObjectDefinitionURL()
 			).put(
@@ -48,7 +48,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "object-model-builder"));
 			).put(
 				"objectWebLearnResources", LearnMessageUtil.getReactDataJSONObject("object-web")
 			).put(
-				"siteKeyValuePairs", objectDefinitionsDetailsDisplayContext.getScopeKeyValuePairs("site")
+				"siteKeyValuePairs", objectDefinitionsDetailsDisplayContext.getScopeJSONArray("site")
 			).put(
 				"viewApiURL", "/o/object-admin/v1.0/object-definitions"
 			).put(

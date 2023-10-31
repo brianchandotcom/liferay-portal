@@ -23,6 +23,21 @@ components:
                         type: string
                     type: array
             type: object
+        Group:
+            allOf:
+                - $ref: "#/components/schemas/BaseScim"
+                - properties:
+                      displayName:
+                          description:
+                              A human-readable name for the Group.
+                          type: string
+                      members:
+                          description:
+                              A list of members of the Group.
+                          items:
+                              $ref: "#/components/schemas/MultiValuedAttribute"
+                          type: array
+                  type: object
         Meta:
             description:
                 A complex attribute containing resource metadata.
@@ -121,6 +136,7 @@ components:
                     description:
                         A multi-valued list of complex objects containing the requested resources.
                     oneOf:
+                        - $ref: "#/components/schemas/Group"
                         - $ref: "#/components/schemas/User"
                     type: object
                 itemsPerPage:
@@ -309,6 +325,142 @@ info:
     version: v1.0
 openapi: 3.0.1
 paths:
+    /v2/Groups:
+        get:
+            description:
+                Lists groups.
+            operationId: getV2Group
+            parameters:
+                - in: query
+                  name: count
+                  schema:
+                      type: integer
+                - in: query
+                  name: startIndex
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/scim+json:
+                            schema:
+                                oneOf:
+                                    - format: binary
+                                      type: string
+                                    - $ref: "#/components/schemas/QueryResponse"
+                    description:
+                        The list of groups.
+            tags: ["Group"]
+        post:
+            description:
+                Creates a group.
+            operationId: postV2Group
+            requestBody:
+                content:
+                    application/scim+json:
+                        schema:
+                            $ref: "#/components/schemas/Group"
+            responses:
+                201:
+                    content:
+                        application/scim+json:
+                            schema:
+                                oneOf:
+                                    - format: binary
+                                      type: string
+                                    - $ref: "#/components/schemas/Group"
+                    description:
+                        The Group was successfully created.
+            tags: ["Group"]
+    /v2/Groups/.search:
+        post:
+            description:
+                Query groups.
+            operationId: postV2GroupSearch
+            requestBody:
+                content:
+                    application/scim+json:
+                        schema:
+                            $ref: "#/components/schemas/QueryAttributes"
+            responses:
+                200:
+                    content:
+                        application/scim+json:
+                            schema:
+                                oneOf:
+                                    - format: binary
+                                      type: string
+                                    - $ref: "#/components/schemas/QueryResponse"
+                    description:
+                        List of found groups based on query
+            tags: ["Group"]
+    /v2/Groups/{id}:
+        delete:
+            description:
+                Deletes a group.
+            operationId: deleteV2Group
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    description:
+                        In response to a successful DELETE, the server SHALL return a successful HTTP status code 204
+                        (No Content).
+            tags: ["Group"]
+        get:
+            description:
+                Retrieves a group.
+            operationId: getV2GroupById
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/scim+json:
+                            schema:
+                                oneOf:
+                                    - format: binary
+                                      type: string
+                                    - $ref: "#/components/schemas/Group"
+                    description:
+                        If the resource exists, the server responds with HTTP status code 200 (OK) and includes the
+                        result in the body of the response.
+            tags: ["Group"]
+        put:
+            description:
+                Updates a group.
+            operationId: putV2Group
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/scim+json:
+                        schema:
+                            $ref: "#/components/schemas/Group"
+            responses:
+                200:
+                    content:
+                        application/scim+json:
+                            schema:
+                                oneOf:
+                                    - format: binary
+                                      type: string
+                                    - $ref: "#/components/schemas/Group"
+                    description:
+                        The Group was successfully updated.
+            tags: ["Group"]
     /v2/Users:
         get:
             description:

@@ -48,7 +48,10 @@ export function PurchasedAppsDashboardTableRow({
 		provisioningLabel !== OrderStatus.COMPLETED;
 
 	return (
-		<ClayTable.Row>
+		<ClayTable.Row
+			className="dashboard-table-row"
+			onClick={() => navigate(`/app/${productId}`)}
+		>
 			<ClayTable.Cell>
 				<div className="dashboard-table-row-name-container">
 					<div>
@@ -136,7 +139,7 @@ export function PurchasedAppsDashboardTableRow({
 				</div>
 			</ClayTable.Cell>
 
-			<ClayTable.Cell>
+			<ClayTable.Cell onClick={(event) => event.stopPropagation()}>
 				<DropDown
 					trigger={
 						<ClayButton displayType="secondary">

@@ -3056,4 +3056,287 @@ definition {
 		} 
 	}
 
+	@description = "COMMERCE-12540"
+	@priority = 5
+	test CanUseTheAccordionForDefineExternallyProducts {
+		property custom.properties = "feature.flag.COMMERCE-9599=true${line.separator}jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site with a buyer user is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And the admin opens the U-Joint Product via Admin") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceProducts.searchAndGoToProductEntry(entryProductName = "U-Joint");
+		}
+
+		task ("And a new option is created") {
+			CommerceJSONOptionsAPI._addCommerceOption(
+				fieldType = "select",
+				optionKey = "option-select-from-list",
+				optionName = "Option Select from List");
+		}
+
+		task ("And is linked to the product") {
+			CommerceJSONOptionsAPI._assignOptionToCommerceProduct(
+				fieldType = "select",
+				optionKey = "option-select-from-list",
+				optionName = "Option Select from List",
+				productName = "U-Joint");
+		}
+
+		task ("When the admin enables the Define Externally toggle with a category") {
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceProductOptions.editProductOption(
+				collectionProvider = "SKUs by Categories",
+				key_option = "Option Select from List",
+				key_priceType = "Dynamic",
+				productAddOptionCategoriesList = "Transmission",
+				productOptionDefineExternally = "true",
+				productOptionPriceType = "true");
+		}
+
+		task ("And the buyer logs in on MInium") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("When the buyer add to the cart U-Joint with an option") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/u-joint");
+
+			FrontStore.addToCartFromProductDetails(
+				optionNamesAndValues = "Option Select from List:Mount",
+				productName = "U-Joint",
+				productSku = "MIN55861");
+		}
+
+		task ("Then all the information inside is correct") {
+			CommerceNavigator.gotoMiniCart();
+
+			Click(
+				locator1 = "Sharing#MANAGE_COLLABORATORS_NAME",
+				key_userName = "Show Options");
+
+			FrontStore.viewMiniCartItem(
+				cartItemName = "U-Joint",
+				cartItemQuantity = 1,
+				cartItemSku = "MIN55861");
+
+			echo("Checking option name [${optionName}] with value [${optionValue}] is present");
+
+			AssertElementPresent(
+				key_cartItemName = "Option Select from List",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_H6");
+
+			AssertElementPresent(
+				key_cartItemSku = "Mount(1 × Mount )",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_SKU");
+		}
+	}
+
+	@description = "COMMERCE-12540"
+	@priority = 4
+	test CanForProductsWithNoOptionsTheAccordionDisappear {
+		property custom.properties = "feature.flag.COMMERCE-9599=true${line.separator}jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "false";
+
+		task ("Given a Minium site with a buyer user is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("And the buyer logs in on Minium") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+		}
+
+		task ("When the buyer add to the cart U-Joint with an option") {
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/u-joint");
+
+			FrontStore.addToCartFromProductDetails(
+				productName = "U-Joint",
+				productSku = "MIN55861");
+		}
+
+		task ("Then the accordion is not present") {
+			CommerceNavigator.gotoMiniCart();
+
+			AssertElementNotPresent(
+				locator1 = "Sharing#MANAGE_COLLABORATORS_NAME",
+				key_userName = "Show Options");
+
+			FrontStore.viewMiniCartItem(
+				cartItemName = "U-Joint",
+				cartItemQuantity = 1,
+				cartItemSku = "MIN55861");
+		}
+	}
+
+	@description = "COMMERCE-12540"
+	@priority = 5
+	test CanUseTheAccordionForBundleProductsWithUOM {
+		property custom.properties = "feature.flag.COMMERCE-9599=true${line.separator}feature.flag.COMMERCE-11287=true${line.separator}jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
+
+		task ("Given a Minium site with a buyer user is created") {
+			CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
+			CommerceEntry.addAccountEntryUser(
+				accountName = "Commerce Account",
+				accountType = "Business",
+				agreeToTermsAndAnswerReminderQuery = "true",
+				createNewAccount = "true",
+				requireReset = "false",
+				userEmailAddress = "buyer@liferay.com",
+				userFirstName = "Buyer",
+				userLastName = "User",
+				userRole = "Buyer",
+				userScreenName = "buyeruser",
+				userSiteMembership = "Minium");
+		}
+
+		task ("Given 1 UOMs are created to MIN93015") {
+			CommerceJSONSKUsAPI._addCommerceUOM(
+				basePrice = 30,
+				productSKU = "MIN93015",
+				uomKey = "UOM1KEY",
+				uomName = "UOM1");
+		}
+
+		task ("And a new Bundled product with an optionand Dynamic Price Type is created") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Minium",
+				productName = "Bundled Product",
+				productType = "Simple");
+
+			CommerceJSONOptionsAPI._addCommerceOption(
+				fieldType = "select",
+				optionKey = "option-select-from-list",
+				optionName = "Option Select from List",
+				optionValues = "select-from-the-list-option-value-key:Value:1");
+
+			CommerceJSONOptionsAPI._assignOptionToCommerceProduct(
+				fieldType = "select",
+				optionKey = "option-select-from-list",
+				optionName = "Option Select from List",
+				productName = "Bundled Product");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.searchEntry(entryName = '''"Bundled Product"''');
+
+			CommerceNavigator.gotoEntry(entryName = "Bundled Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Options");
+
+			CommerceProductOptions.editProductOption(
+				key_option = "Option Select from List",
+				key_priceType = "Dynamic",
+				productOptionPriceType = "true",
+				productOptionRequired = "true",
+				productOptionSkuContributor = "true");
+
+			SelectFrameTop();
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Click(locator1 = "Icon#CLOSE");
+
+			SelectFrameTop();
+		}
+
+		task ("And the admin selects SKU/UOM as the linked product for each option value") {
+			for (var optionValueList : list "Value:MIN93015 - UOM1KEY") {
+				var optionValueName = StringUtil.extractFirst(${optionValueList}, ":");
+				var sku = StringUtil.extractLast(${optionValueList}, ":");
+
+				CommerceNavigator.gotoEntry(entryName = "Option Select from List");
+
+				CommerceProductOptions.editOptionValue(
+					optionValue = ${optionValueName},
+					sku = ${sku});
+			}
+		}
+
+		task ("And all SKUs are generated") {
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			CommerceSKUs.generateAllSkuCombinations();
+		}
+
+		task ("When the buyer navigates to Bundled Product's detail page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/bundled-product");
+		}
+
+		task ("When the buyer adds to the cart the product with the option value that is linked to another product") {
+			FrontStore.addToCartFromProductDetails(
+				optionNamesAndValues = "Option Select from List:Value",
+				productName = "Bundled Product",
+				productSku = "VALUE");
+		}
+
+		task ("Then all the information inside is correct") {
+			CommerceNavigator.gotoMiniCart();
+
+			Click(
+				locator1 = "Sharing#MANAGE_COLLABORATORS_NAME",
+				key_userName = "Show Options");
+
+			FrontStore.viewMiniCartItem(
+				cartItemName = "Bundled Product",
+				cartItemQuantity = 1,
+				cartItemSku = "VALUE");
+
+			AssertElementPresent(
+				key_cartItemName = "Option Select from List",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_H6");
+
+			AssertElementPresent(
+				key_cartItemSku = "Value(1 × ABS Sensor UOM1KEY)",
+				locator1 = "CommerceAccelerators#MINI_CART_ITEM_SKU");
+		}
+	}
 }

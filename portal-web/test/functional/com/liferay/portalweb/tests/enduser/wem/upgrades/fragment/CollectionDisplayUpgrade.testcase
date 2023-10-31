@@ -83,7 +83,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-151984. View Filter on Tag in Collections after upgrade."
+	@description = "This is a use case for LPS-151984. View Filter on Tag in Collections after upgrade from 735."
 	@priority = 3
 	test ViewFilteredOnTagDisplayedInCollectionsAfterUpgrade735 {
 		property data.archive.type = "data-archive-collection-display";
@@ -123,7 +123,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-151984. View Filter on Tag in Collections after upgrade."
+	@description = "This is a use case for LPS-151984. View Filter on Tag in Collections after upgrade from 7413."
 	@priority = 3
 	test ViewFilteredOnTagDisplayedInCollectionsAfterUpgrade7413 {
 		property data.archive.type = "data-archive-collection-display";
@@ -163,7 +163,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-151984. View Filter on Tag in Collections after upgrade."
+	@description = "This is a use case for LPS-151984. View Filter on Tag in Collections after upgrade from 73101."
 	@priority = 3
 	test ViewFilteredOnTagDisplayedInCollectionsAfterUpgrade73101 {
 		property data.archive.type = "data-archive-collection-display";
@@ -203,7 +203,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-151984. View Filter on Tag in Collections after upgrade."
+	@description = "This is a use case for LPS-151984. View Filter on Tag in Collections after upgrade from 74321."
 	@priority = 3
 	test ViewFilteredOnTagDisplayedInCollectionsAfterUpgrade74321 {
 		property data.archive.type = "data-archive-collection-display";

@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Analytics Message Sender Implementation
-Bundle-SymbolicName: com.liferay.analytics.message.sender.impl
-Bundle-Version: 5.0.40
--dsannotations-options: inherit

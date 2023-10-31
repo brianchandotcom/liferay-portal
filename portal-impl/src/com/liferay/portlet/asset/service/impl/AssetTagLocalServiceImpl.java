@@ -498,7 +498,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	 */
 	@Override
 	public long[] getTagIds(String name) {
-		List<AssetTag> tags = assetTagPersistence.findByName(name);
+		List<AssetTag> tags = assetTagPersistence.findByName(_getName(name));
 
 		List<Long> tagIds = new ArrayList<>(tags.size());
 
@@ -704,7 +704,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		long[] groupIds, String name, int start, int end) {
 
 		return assetTagPersistence.findByG_LikeN(
-			groupIds, name, start, end, new AssetTagNameComparator());
+			groupIds, _getName(name), start, end, new AssetTagNameComparator());
 	}
 
 	@Override

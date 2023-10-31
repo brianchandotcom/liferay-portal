@@ -95,7 +95,7 @@ definition {
 		Publications.cancelPublicationCreation(publicationName = "Publication Name");
 
 		AssertElementNotPresent(
-			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME",
+			locator1 = "Publications#PUBLICATION_NAME_VIEW",
 			value1 = "Publication Name");
 	}
 
@@ -351,7 +351,7 @@ definition {
 
 		AssertElementNotPresent(
 			key_publicationName = "Publication Name",
-			locator1 = "Publications#PUBLISHED_PUBLICATION_NAME");
+			locator1 = "Publications#PUBLICATION_NAME_VIEW");
 
 		AssertTextPresent(
 			locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE",

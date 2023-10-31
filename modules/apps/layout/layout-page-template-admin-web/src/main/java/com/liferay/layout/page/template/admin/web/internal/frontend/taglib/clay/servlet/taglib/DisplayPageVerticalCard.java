@@ -119,12 +119,6 @@ public class DisplayPageVerticalCard
 	}
 
 	@Override
-	public String getInputName() {
-		return rowChecker.getRowIds() +
-			LayoutPageTemplateEntry.class.getSimpleName();
-	}
-
-	@Override
 	public List<LabelItem> getLabels() {
 		if (_draftLayout == null) {
 			return Collections.emptyList();

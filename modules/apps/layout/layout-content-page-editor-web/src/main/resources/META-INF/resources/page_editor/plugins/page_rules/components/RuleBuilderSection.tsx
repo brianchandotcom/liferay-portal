@@ -13,8 +13,8 @@ import React, {useState} from 'react';
 
 import {v4 as uuidv4} from 'uuid';
 
-import Action, {Action as ActionType} from './Action';
-import Condition, {Condition as ConditionType} from './Condition';
+import ActionComponent, {Action} from './Action';
+import ConditionComponent, {Condition} from './Condition';
 
 const TriggerLabel = React.forwardRef<HTMLButtonElement, any>(
 	({children, className: _className, onClick, ...otherProps}, ref) => (
@@ -32,9 +32,9 @@ const TriggerLabel = React.forwardRef<HTMLButtonElement, any>(
 );
 
 type RuleBuilderActionProps = {
-	actions: ActionType[];
+	actions: Action[];
 	layoutDataItems: {label: string; value: string}[];
-	setActions: (initializer: (previous: ActionType[]) => ActionType[]) => {};
+	setActions: (initializer: (previous: Action[]) => Action[]) => {};
 };
 
 export function RuleBuilderActionSection({
@@ -68,7 +68,7 @@ export function RuleBuilderActionSection({
 		>
 			<ClayPanel.Body>
 				{actions.map((action, index) => (
-					<Action
+					<ActionComponent
 						action={action}
 						key={action.id}
 						layoutDataItems={layoutDataItems}
@@ -98,7 +98,7 @@ export function RuleBuilderActionSection({
 					onClick={() =>
 						setActions((previousActions) => [
 							...previousActions,
-							{id: uuidv4()} as ActionType,
+							{id: uuidv4()} as Action,
 						])
 					}
 					size="sm"
@@ -111,10 +111,8 @@ export function RuleBuilderActionSection({
 }
 
 type RuleBuilderConditionProps = {
-	conditions: ConditionType[];
-	setConditions: (
-		initializer: (previous: ConditionType[]) => ConditionType[]
-	) => {};
+	conditions: Condition[];
+	setConditions: (initializer: (previous: Condition[]) => Condition[]) => {};
 };
 
 export function RuleBuilderConditionSection({
@@ -177,7 +175,7 @@ export function RuleBuilderConditionSection({
 		>
 			<ClayPanel.Body>
 				{conditions.map((condition, index) => (
-					<Condition
+					<ConditionComponent
 						condition={condition}
 						key={condition.id}
 						onConditionChange={(condition) =>
@@ -206,7 +204,7 @@ export function RuleBuilderConditionSection({
 					onClick={() =>
 						setConditions((previousConditions) => [
 							...previousConditions,
-							{id: uuidv4()} as ConditionType,
+							{id: uuidv4()} as Condition,
 						])
 					}
 					size="sm"

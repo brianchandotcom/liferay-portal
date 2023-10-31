@@ -185,11 +185,12 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowDefinitionByName(name: ___, version: ___){actions, active, content, dateCreated, dateModified, description, id, name, nodes, title, title_i18n, transitions, version}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {workflowDefinitionByName(contentFormat: ___, name: ___, version: ___){actions, active, content, dateCreated, dateModified, description, id, name, nodes, title, title_i18n, transitions, version}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
 	public WorkflowDefinition workflowDefinitionByName(
 			@GraphQLName("name") String name,
+			@GraphQLName("contentFormat") String contentFormat,
 			@GraphQLName("version") Integer version)
 		throws Exception {
 
@@ -198,7 +199,7 @@ public class Query {
 			this::_populateResourceContext,
 			workflowDefinitionResource ->
 				workflowDefinitionResource.getWorkflowDefinitionByName(
-					name, version));
+					name, contentFormat, version));
 	}
 
 	/**

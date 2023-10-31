@@ -67,11 +67,11 @@ public interface WorkflowDefinitionResource {
 		throws Exception;
 
 	public WorkflowDefinition getWorkflowDefinitionByName(
-			String name, Integer version)
+			String name, String contentFormat, Integer version)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getWorkflowDefinitionByNameHttpResponse(
-			String name, Integer version)
+			String name, String contentFormat, Integer version)
 		throws Exception;
 
 	public WorkflowDefinition postWorkflowDefinitionDeploy(
@@ -688,11 +688,12 @@ public interface WorkflowDefinitionResource {
 		}
 
 		public WorkflowDefinition getWorkflowDefinitionByName(
-				String name, Integer version)
+				String name, String contentFormat, Integer version)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getWorkflowDefinitionByNameHttpResponse(name, version);
+				getWorkflowDefinitionByNameHttpResponse(
+					name, contentFormat, version);
 
 			String content = httpResponse.getContent();
 
@@ -754,7 +755,7 @@ public interface WorkflowDefinitionResource {
 		}
 
 		public HttpInvoker.HttpResponse getWorkflowDefinitionByNameHttpResponse(
-				String name, Integer version)
+				String name, String contentFormat, Integer version)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -777,6 +778,11 @@ public interface WorkflowDefinitionResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (contentFormat != null) {
+				httpInvoker.parameter(
+					"contentFormat", String.valueOf(contentFormat));
+			}
 
 			if (version != null) {
 				httpInvoker.parameter("version", String.valueOf(version));

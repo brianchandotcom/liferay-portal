@@ -541,7 +541,7 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 
 		WorkflowDefinition getWorkflowDefinition =
 			workflowDefinitionResource.getWorkflowDefinitionByName(
-				postWorkflowDefinition.getName(), null);
+				postWorkflowDefinition.getName(), null, null);
 
 		assertEquals(postWorkflowDefinition, getWorkflowDefinition);
 		assertValid(getWorkflowDefinition);

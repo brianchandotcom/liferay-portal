@@ -66,7 +66,7 @@ public interface WorkflowDefinitionResource {
 		throws Exception;
 
 	public WorkflowDefinition getWorkflowDefinitionByName(
-			String name, Integer version)
+			String name, String contentFormat, Integer version)
 		throws Exception;
 
 	public WorkflowDefinition postWorkflowDefinitionDeploy(

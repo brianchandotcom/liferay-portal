@@ -561,7 +561,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-61632. Can select different type pages in Link to Page field."
+	@description = "This is a use case for LRQA-61632. Can select embedded pages in Link to Page field."
 	@priority = 4
 	test SelectEmbeddedPageInLinkToPageField {
 		task ("Add a page based on Embedded") {
@@ -621,7 +621,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-61632. Can select different type pages in Link to Page field."
+	@description = "This is a use case for LRQA-61632. Can select full page application pages in Link to Page field."
 	@priority = 4
 	test SelectFullPageApplicationPageInLinkToPageField {
 		task ("Add a page based on Full Page Application") {
@@ -837,7 +837,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-61632. Can select different type pages in Link to Page field."
+	@description = "This is a use case for LRQA-61632. Can select link to a page of this site in Link to Page field."
 	@priority = 4
 	test SelectLinkToAPageOfThisSitePageInLinkToPageField {
 		task ("Add a page based on Link to a Page of This Site") {
@@ -984,7 +984,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-61632. Can select different type pages in Link to Page field."
+	@description = "This is a use case for LRQA-61632. Can select page set in Link to Page field."
 	@priority = 4
 	test SelectPageSetPageInLinkToPageField {
 		task ("Add a page based on Page Set") {
@@ -1048,7 +1048,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-61632. Can select different type pages in Link to Page field."
+	@description = "This is a use case for LRQA-61632. Can select panel page in Link to Page field."
 	@priority = 4
 	test SelectPanelPageInLinkToPageField {
 		task ("Add a page based on Panel") {
@@ -1108,7 +1108,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-61632. Can select different type pages in Link to Page field."
+	@description = "This is a use case for LRQA-61632. Can select search page in Link to Page field."
 	@priority = 4
 	test SelectSearchPageInLinkToPageField {
 		task ("Add a page based on Search") {
@@ -1168,7 +1168,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-61632. Can select different type pages in Link to Page field."
+	@description = "This is a use case for LRQA-61632. Can select widget page in Link to Page field."
 	@priority = 4
 	test SelectWidgetPageInLinkToPageField {
 		task ("Add a widget page") {

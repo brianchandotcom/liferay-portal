@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "service.ranking:Integer=100",
 	service = PortalInstanceLifecycleListener.class
 )
-public class AddSalesforceConnectorPortalInstanceLifecycleListener
+public class AddSalesforceConnectorInitialRequestPortalInstanceLifecycleListener
 	extends InitialRequestPortalInstanceLifecycleListener {
 
 	@Activate

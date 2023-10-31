@@ -56,15 +56,37 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 		build.reset();
 	}
 
+	@Override
+	public void reset() {
+		super.reset();
+
+		_buildCompleted = null;
+		_buildFailing = null;
+	}
+
 	protected DefaultBuildUpdater(Build build) {
 		super(build);
 	}
 
 	@Override
 	protected boolean isBuildCompleted() {
+		if (_buildCompleted != null) {
+			return _buildCompleted;
+		}
+
 		Build build = getBuild();
 
-		if (!_isBuildCompleted(build)) {
+		JSONObject buildJSONObject = build.getBuildJSONObject(
+			"duration,result");
+
+		if (buildJSONObject == null) {
+			return false;
+		}
+
+		long duration = buildJSONObject.optLong("duration");
+		String result = buildJSONObject.optString("result");
+
+		if ((duration == 0) || JenkinsResultsParserUtil.isNullOrEmpty(result)) {
 			return false;
 		}
 
@@ -72,32 +94,44 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 			ParentBuild parentBuild = (ParentBuild)build;
 
 			for (Build downstreamBuild : parentBuild.getDownstreamBuilds()) {
-				if (!_isBuildCompleted(downstreamBuild)) {
+				if (!downstreamBuild.isCompleted()) {
 					return false;
 				}
 			}
 		}
 
-		return true;
+		_buildCompleted = true;
+
+		return _buildCompleted;
 	}
 
 	@Override
 	protected boolean isBuildFailing() {
-		Build build = getBuild();
-
-		JSONObject buildJSONObject = build.getBuildJSONObject("result");
-
-		if (buildJSONObject == null) {
-			return true;
+		if (_buildFailing != null) {
+			return _buildFailing;
 		}
 
-		String result = buildJSONObject.optString("result");
+		Build build = getBuild();
+
+		String result = build.getResult();
+
+		if (result == null) {
+			JSONObject buildJSONObject = build.getBuildJSONObject("result");
+
+			if (buildJSONObject == null) {
+				return true;
+			}
+
+			result = buildJSONObject.optString("result");
+		}
 
 		if (!Objects.equals(result, "SUCCESS")) {
 			return true;
 		}
 
-		return false;
+		_buildFailing = false;
+
+		return _buildFailing;
 	}
 
 	@Override
@@ -439,5 +473,8 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 
 		return true;
 	}
+
+	private Boolean _buildCompleted;
+	private Boolean _buildFailing;
 
 }

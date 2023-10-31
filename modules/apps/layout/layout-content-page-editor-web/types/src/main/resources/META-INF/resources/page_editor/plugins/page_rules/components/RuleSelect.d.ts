@@ -6,16 +6,18 @@
 /// <reference types="react" />
 
 interface RuleSelectProps<T> {
-	items: ReadonlyArray<{
+	'aria-label'?: string;
+	'items': ReadonlyArray<{
 		label: string;
 		value: T;
 	}>;
-	onSelectionChange: (selection: T) => void;
-	selectedKey?: string;
+	'onSelectionChange': (selection: T) => void;
+	'selectedKey'?: string;
 }
 export default function RuleSelect<T extends string>({
 	items,
 	onSelectionChange,
 	selectedKey,
+	...otherProps
 }: RuleSelectProps<T>): JSX.Element;
 export {};

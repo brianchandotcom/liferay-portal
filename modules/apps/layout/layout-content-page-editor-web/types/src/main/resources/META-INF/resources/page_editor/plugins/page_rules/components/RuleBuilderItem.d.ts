@@ -7,11 +7,13 @@ import {ReactNode} from 'react';
 interface RuleBuilderItemProps {
 	children: ReactNode;
 	onDeleteButtonClick: () => void;
+	showDeleteButton: boolean;
 	type: 'action' | 'condition';
 }
 export default function RuleBuilderItem({
 	children,
 	onDeleteButtonClick,
+	showDeleteButton,
 	type,
 }: RuleBuilderItemProps): JSX.Element;
 export {};

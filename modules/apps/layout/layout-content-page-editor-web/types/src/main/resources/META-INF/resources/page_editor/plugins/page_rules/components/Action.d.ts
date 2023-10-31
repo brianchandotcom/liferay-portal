@@ -13,12 +13,19 @@ export interface Action {
 }
 interface ActionProps {
 	action: Action;
+	layoutDataItems: {
+		label: string;
+		value: string;
+	}[];
 	onActionChange: (action: Action) => void;
 	onDeleteAction: () => void;
+	showDeleteButton: boolean;
 }
-export default function Condition({
+export default function Action({
 	action,
+	layoutDataItems,
 	onActionChange,
 	onDeleteAction,
+	showDeleteButton,
 }: ActionProps): JSX.Element;
 export {};

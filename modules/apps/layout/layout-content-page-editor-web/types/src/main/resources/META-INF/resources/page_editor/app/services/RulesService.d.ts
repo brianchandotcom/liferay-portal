@@ -13,6 +13,7 @@ import updateNetwork from '../actions/updateNetwork';
  */
 declare type AddRuleProps = {
 	actions: Action[];
+	conditionType: ConditionType;
 	conditions: Condition[];
 	name: string;
 	onNetworkStatus: (action: ReturnType<typeof updateNetwork>) => void;
@@ -20,6 +21,7 @@ declare type AddRuleProps = {
 };
 declare function addRule({
 	actions,
+	conditionType,
 	conditions,
 	name,
 	onNetworkStatus,

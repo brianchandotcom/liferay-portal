@@ -135,6 +135,7 @@ export interface Config {
 	getLayoutPageTemplateCollectionsURL: string;
 	getPageContentsURL: string;
 	getPortletsURL: string;
+	getRolesURL: string;
 	getUsersURL: string;
 	imageSelectorURL: string;
 	infoItemPreviewSelectorURL: string;

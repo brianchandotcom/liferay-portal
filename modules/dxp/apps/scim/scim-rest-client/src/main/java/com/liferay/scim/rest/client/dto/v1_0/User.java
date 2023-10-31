@@ -67,27 +67,6 @@ public class User implements Cloneable, Serializable {
 
 	protected Object[] addresses;
 
-	public BaseScim getBaseScim() {
-		return baseScim;
-	}
-
-	public void setBaseScim(BaseScim baseScim) {
-		this.baseScim = baseScim;
-	}
-
-	public void setBaseScim(
-		UnsafeSupplier<BaseScim, Exception> baseScimUnsafeSupplier) {
-
-		try {
-			baseScim = baseScimUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected BaseScim baseScim;
-
 	public String getDisplayName() {
 		return displayName;
 	}
@@ -153,6 +132,27 @@ public class User implements Cloneable, Serializable {
 
 	protected MultiValuedAttribute[] entitlements;
 
+	public String getExternalId() {
+		return externalId;
+	}
+
+	public void setExternalId(String externalId) {
+		this.externalId = externalId;
+	}
+
+	public void setExternalId(
+		UnsafeSupplier<String, Exception> externalIdUnsafeSupplier) {
+
+		try {
+			externalId = externalIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String externalId;
+
 	public MultiValuedAttribute[] getGroups() {
 		return groups;
 	}
@@ -174,6 +174,25 @@ public class User implements Cloneable, Serializable {
 	}
 
 	protected MultiValuedAttribute[] groups;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String id;
 
 	public MultiValuedAttribute[] getIms() {
 		return ims;
@@ -216,6 +235,25 @@ public class User implements Cloneable, Serializable {
 	}
 
 	protected String locale;
+
+	public Meta getMeta() {
+		return meta;
+	}
+
+	public void setMeta(Meta meta) {
+		this.meta = meta;
+	}
+
+	public void setMeta(UnsafeSupplier<Meta, Exception> metaUnsafeSupplier) {
+		try {
+			meta = metaUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Meta meta;
 
 	public Name getName() {
 		return name;

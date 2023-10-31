@@ -110,35 +110,6 @@ public class User implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Object[] addresses;
 
-	@Schema
-	@Valid
-	public BaseScim getBaseScim() {
-		return baseScim;
-	}
-
-	public void setBaseScim(BaseScim baseScim) {
-		this.baseScim = baseScim;
-	}
-
-	@JsonIgnore
-	public void setBaseScim(
-		UnsafeSupplier<BaseScim, Exception> baseScimUnsafeSupplier) {
-
-		try {
-			baseScim = baseScimUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected BaseScim baseScim;
-
 	@Schema(
 		description = "The name of the user, suitable for display to end-users."
 	)
@@ -236,6 +207,38 @@ public class User implements Serializable {
 	protected MultiValuedAttribute[] entitlements;
 
 	@Schema(
+		description = "A String that is an identifier for the resource as defined by the provisioning client."
+	)
+	public String getExternalId() {
+		return externalId;
+	}
+
+	public void setExternalId(String externalId) {
+		this.externalId = externalId;
+	}
+
+	@JsonIgnore
+	public void setExternalId(
+		UnsafeSupplier<String, Exception> externalIdUnsafeSupplier) {
+
+		try {
+			externalId = externalIdUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "A String that is an identifier for the resource as defined by the provisioning client."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String externalId;
+
+	@Schema(
 		description = "A list of groups to which the user belongs, either through direct membership, through nested groups, or dynamically calculated."
 	)
 	@Valid
@@ -268,6 +271,36 @@ public class User implements Serializable {
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected MultiValuedAttribute[] groups;
+
+	@Schema(
+		description = "A unique identifier for a SCIM resource as defined by the service provider."
+	)
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
+		try {
+			id = idUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(
+		description = "A unique identifier for a SCIM resource as defined by the service provider."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String id;
 
 	@Schema(description = "Instant messaging address for the user.")
 	@Valid
@@ -329,6 +362,33 @@ public class User implements Serializable {
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String locale;
+
+	@Schema
+	@Valid
+	public Meta getMeta() {
+		return meta;
+	}
+
+	public void setMeta(Meta meta) {
+		this.meta = meta;
+	}
+
+	@JsonIgnore
+	public void setMeta(UnsafeSupplier<Meta, Exception> metaUnsafeSupplier) {
+		try {
+			meta = metaUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Meta meta;
 
 	@Schema(description = "The components of the user's name.")
 	@Valid
@@ -801,16 +861,6 @@ public class User implements Serializable {
 			sb.append("]");
 		}
 
-		if (baseScim != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"baseScim\": ");
-
-			sb.append(String.valueOf(baseScim));
-		}
-
 		if (displayName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -865,6 +915,20 @@ public class User implements Serializable {
 			sb.append("]");
 		}
 
+		if (externalId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalId\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(externalId));
+
+			sb.append("\"");
+		}
+
 		if (groups != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -883,6 +947,20 @@ public class User implements Serializable {
 			}
 
 			sb.append("]");
+		}
+
+		if (id != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"id\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(id));
+
+			sb.append("\"");
 		}
 
 		if (ims != null) {
@@ -917,6 +995,16 @@ public class User implements Serializable {
 			sb.append(_escape(locale));
 
 			sb.append("\"");
+		}
+
+		if (meta != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"meta\": ");
+
+			sb.append(String.valueOf(meta));
 		}
 
 		if (name != null) {

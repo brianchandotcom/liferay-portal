@@ -170,6 +170,8 @@ public abstract class BaseUserResourceTestCase {
 		User user = randomUser();
 
 		user.setDisplayName(regex);
+		user.setExternalId(regex);
+		user.setId(regex);
 		user.setLocale(regex);
 		user.setNickName(regex);
 		user.setPassword(regex);
@@ -187,6 +189,8 @@ public abstract class BaseUserResourceTestCase {
 		user = UserSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, user.getDisplayName());
+		Assert.assertEquals(regex, user.getExternalId());
+		Assert.assertEquals(regex, user.getId());
 		Assert.assertEquals(regex, user.getLocale());
 		Assert.assertEquals(regex, user.getNickName());
 		Assert.assertEquals(regex, user.getPassword());
@@ -215,7 +219,36 @@ public abstract class BaseUserResourceTestCase {
 
 	@Test
 	public void testDeleteV2User() throws Exception {
-		Assert.assertTrue(false);
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		User user = testDeleteV2User_addUser();
+
+		assertHttpResponseStatusCode(
+			204, userResource.deleteV2UserHttpResponse(user.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			userResource.getV2UserHttpResponse(
+				testDeleteV2User_getCount(), testDeleteV2User_getStartIndex()));
+
+		assertHttpResponseStatusCode(
+			404,
+			userResource.getV2UserHttpResponse(
+				testDeleteV2User_getCount(), testDeleteV2User_getStartIndex()));
+	}
+
+	protected Integer testDeleteV2User_getCount() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Integer testDeleteV2User_getStartIndex() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected User testDeleteV2User_addUser() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -226,6 +259,11 @@ public abstract class BaseUserResourceTestCase {
 	@Test
 	public void testPutV2User() throws Exception {
 		Assert.assertTrue(false);
+	}
+
+	protected User testGraphQLUser_addUser() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected void assertContains(User user, List<User> users) {
@@ -289,6 +327,10 @@ public abstract class BaseUserResourceTestCase {
 	protected void assertValid(User user) throws Exception {
 		boolean valid = true;
 
+		if (user.getId() == null) {
+			valid = false;
+		}
+
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -302,14 +344,6 @@ public abstract class BaseUserResourceTestCase {
 
 			if (Objects.equals("addresses", additionalAssertFieldName)) {
 				if (user.getAddresses() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("baseScim", additionalAssertFieldName)) {
-				if (user.getBaseScim() == null) {
 					valid = false;
 				}
 
@@ -340,6 +374,14 @@ public abstract class BaseUserResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("externalId", additionalAssertFieldName)) {
+				if (user.getExternalId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("groups", additionalAssertFieldName)) {
 				if (user.getGroups() == null) {
 					valid = false;
@@ -358,6 +400,14 @@ public abstract class BaseUserResourceTestCase {
 
 			if (Objects.equals("locale", additionalAssertFieldName)) {
 				if (user.getLocale() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("meta", additionalAssertFieldName)) {
+				if (user.getMeta() == null) {
 					valid = false;
 				}
 
@@ -602,16 +652,6 @@ public abstract class BaseUserResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("baseScim", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						user1.getBaseScim(), user2.getBaseScim())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("displayName", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						user1.getDisplayName(), user2.getDisplayName())) {
@@ -640,8 +680,26 @@ public abstract class BaseUserResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("externalId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						user1.getExternalId(), user2.getExternalId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("groups", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(user1.getGroups(), user2.getGroups())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("id", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(user1.getId(), user2.getId())) {
 					return false;
 				}
 
@@ -658,6 +716,14 @@ public abstract class BaseUserResourceTestCase {
 
 			if (Objects.equals("locale", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(user1.getLocale(), user2.getLocale())) {
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("meta", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(user1.getMeta(), user2.getMeta())) {
 					return false;
 				}
 
@@ -903,11 +969,6 @@ public abstract class BaseUserResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("baseScim")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("displayName")) {
 			Object object = user.getDisplayName();
 
@@ -964,9 +1025,101 @@ public abstract class BaseUserResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("externalId")) {
+			Object object = user.getExternalId();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("groups")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("id")) {
+			Object object = user.getId();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("ims")) {
@@ -1018,6 +1171,11 @@ public abstract class BaseUserResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("meta")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("name")) {
@@ -1460,6 +1618,9 @@ public abstract class BaseUserResourceTestCase {
 				active = RandomTestUtil.randomBoolean();
 				displayName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				externalId = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				id = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				locale = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				nickName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

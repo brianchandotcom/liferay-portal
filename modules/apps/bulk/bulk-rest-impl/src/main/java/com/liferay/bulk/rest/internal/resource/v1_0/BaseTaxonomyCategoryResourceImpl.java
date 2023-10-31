@@ -49,7 +49,7 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/bulk/v1.0/taxonomy-categories/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/bulk/v1.0/taxonomy-categories/batch' -d $'{"documentBulkSelection": ___, "taxonomyCategoryIdsToAdd": ___, "taxonomyCategoryIdsToRemove": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
@@ -69,7 +69,7 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/bulk/v1.0/taxonomy-categories/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/bulk/v1.0/taxonomy-categories/batch' -d $'{"documentBulkSelection": ___, "taxonomyCategoryIdsToAdd": ___, "taxonomyCategoryIdsToRemove": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {

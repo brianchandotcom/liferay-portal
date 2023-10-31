@@ -52,7 +52,7 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/bulk/v1.0/keywords/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/bulk/v1.0/keywords/batch' -d $'{"documentBulkSelection": ___, "keywordsToAdd": ___, "keywordsToRemove": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Keyword")}
@@ -69,7 +69,7 @@ public abstract class BaseKeywordResourceImpl implements KeywordResource {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/bulk/v1.0/keywords/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/bulk/v1.0/keywords/batch' -d $'{"documentBulkSelection": ___, "keywordsToAdd": ___, "keywordsToRemove": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Keyword")}

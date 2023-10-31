@@ -1520,6 +1520,14 @@ public abstract class BaseObjectFieldResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("unique", additionalAssertFieldName)) {
+				if (objectField.getUnique() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -1881,6 +1889,16 @@ public abstract class BaseObjectFieldResourceTestCase {
 			if (Objects.equals("type", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						objectField1.getType(), objectField2.getType())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("unique", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						objectField1.getUnique(), objectField2.getUnique())) {
 
 					return false;
 				}
@@ -2348,6 +2366,11 @@ public abstract class BaseObjectFieldResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("unique")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -2411,6 +2434,7 @@ public abstract class BaseObjectFieldResourceTestCase {
 				required = RandomTestUtil.randomBoolean();
 				state = RandomTestUtil.randomBoolean();
 				system = RandomTestUtil.randomBoolean();
+				unique = RandomTestUtil.randomBoolean();
 			}
 		};
 	}

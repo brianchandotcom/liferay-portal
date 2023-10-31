@@ -730,6 +730,34 @@ public class ObjectField implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Type type;
 
+	@Schema
+	public Boolean getUnique() {
+		return unique;
+	}
+
+	public void setUnique(Boolean unique) {
+		this.unique = unique;
+	}
+
+	@JsonIgnore
+	public void setUnique(
+		UnsafeSupplier<Boolean, Exception> uniqueUnsafeSupplier) {
+
+		try {
+			unique = uniqueUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Boolean unique;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -1029,6 +1057,16 @@ public class ObjectField implements Serializable {
 			sb.append(type);
 
 			sb.append("\"");
+		}
+
+		if (unique != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"unique\": ");
+
+			sb.append(unique);
 		}
 
 		sb.append("}");

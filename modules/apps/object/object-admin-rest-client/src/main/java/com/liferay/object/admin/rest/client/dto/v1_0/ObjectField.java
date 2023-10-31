@@ -536,6 +536,27 @@ public class ObjectField implements Cloneable, Serializable {
 
 	protected Type type;
 
+	public Boolean getUnique() {
+		return unique;
+	}
+
+	public void setUnique(Boolean unique) {
+		this.unique = unique;
+	}
+
+	public void setUnique(
+		UnsafeSupplier<Boolean, Exception> uniqueUnsafeSupplier) {
+
+		try {
+			unique = uniqueUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean unique;
+
 	@Override
 	public ObjectField clone() throws CloneNotSupportedException {
 		return (ObjectField)super.clone();

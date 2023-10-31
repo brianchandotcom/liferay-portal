@@ -83,9 +83,6 @@ public class ListTypeEntryLocalServiceTest {
 
 	@Test
 	public void testAddListTypeEntry() throws Exception {
-
-		// Duplicate key
-
 		try {
 			_testAddListTypeEntry(
 				_listTypeDefinition.getListTypeDefinitionId(), "able");
@@ -97,8 +94,6 @@ public class ListTypeEntryLocalServiceTest {
 				"Duplicate key able",
 				duplicateListTypeEntryException.getMessage());
 		}
-
-		// Duplicate ERC
 
 		String externalReferenceCode =
 			_listTypeEntry.getExternalReferenceCode();
@@ -120,15 +115,11 @@ public class ListTypeEntryLocalServiceTest {
 					getMessage());
 		}
 
-		// Only allowed bundles can add system listTypeEntries
-
 		AssertUtils.assertFailure(
 			ListTypeDefinitionSystemException.class, false,
 			"Only allowed bundles can add system list type entries",
 			() -> _testAddListTypeEntry(
 				_systemListTypeDefinition.getListTypeDefinitionId(), "baker"));
-
-		// Key is null
 
 		try {
 			_testAddListTypeEntry(
@@ -140,8 +131,6 @@ public class ListTypeEntryLocalServiceTest {
 			Assert.assertEquals(
 				"Key is null", listTypeEntryKeyException.getMessage());
 		}
-
-		// Key must only contain letters and digits
 
 		try {
 			_testAddListTypeEntry(
@@ -158,8 +147,6 @@ public class ListTypeEntryLocalServiceTest {
 		Assert.assertEquals(
 			_listTypeEntry.getUuid(),
 			_listTypeEntry.getExternalReferenceCode());
-
-		// No ListTypeDefinition exists with the primary key
 
 		try {
 			_testAddListTypeEntry(0, "able");

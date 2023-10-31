@@ -214,7 +214,7 @@ definition {
 		}
 	}
 
-	@description = "Assert could manage child site with Manage Subsites	site role and could not after removing."
+	@description = "Assert could manage child site with Manage Subsites site role and could not after removing."
 	@priority = 4
 	test ViewSiteManageChildSiteSiteRole {
 		var roleKey = StringUtil.randomString(8);
@@ -360,7 +360,7 @@ definition {
 		}
 	}
 
-	@description = "Assert could manage pages with Manage Pages	regular role and could not after removing."
+	@description = "Assert could manage pages with Manage Pages regular role and could not after removing."
 	@priority = 4
 	test ViewSiteManagePagesRegRole {
 		task ("Get site name") {

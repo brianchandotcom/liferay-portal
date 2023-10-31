@@ -28,6 +28,9 @@ import org.osgi.service.component.annotations.Reference;
 public class UpgradeCatchAllCheck {
 
 	public void method() {
+		AccountPortletKeys.ACCOUNT_USERS_ADMIN;
+		AccountPortletKeys.ACCOUNT_GROUPS_ADMIN;
+
 		CommerceOrderPaymentConstants.STATUS_AUTHORIZED;
 		CommerceOrderPaymentConstants.STATUS_COMPLETED;
 		CommerceOrderPaymentConstants.STATUS_PENDING;

@@ -106,9 +106,9 @@ public class UserContentRecommendationManagerImpl
 			});
 
 		if (assetCategoryIds != null) {
-			for (long categoryId : assetCategoryIds) {
+			for (long assetCategoryId : assetCategoryIds) {
 				TermQuery categoryIdTermQuery = new TermQueryImpl(
-					Field.ASSET_CATEGORY_IDS, String.valueOf(categoryId));
+					Field.ASSET_CATEGORY_IDS, String.valueOf(assetCategoryId));
 
 				booleanQuery.add(categoryIdTermQuery, BooleanClauseOccur.MUST);
 			}

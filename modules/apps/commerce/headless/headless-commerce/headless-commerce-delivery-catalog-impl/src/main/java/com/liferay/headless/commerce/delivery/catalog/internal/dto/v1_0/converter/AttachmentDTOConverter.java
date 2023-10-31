@@ -68,6 +68,7 @@ public class AttachmentDTOConverter
 			{
 				displayDate = cpAttachmentFileEntry.getDisplayDate();
 				expirationDate = cpAttachmentFileEntry.getExpirationDate();
+				galleryEnabled = cpAttachmentFileEntry.isGalleryEnabled();
 				id = cpAttachmentFileEntry.getCPAttachmentFileEntryId();
 				options = _getAttachmentOptions(cpAttachmentFileEntry);
 				priority = cpAttachmentFileEntry.getPriority();

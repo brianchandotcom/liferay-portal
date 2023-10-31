@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {sub} from 'frontend-js-web';
 import React from 'react';
 
 import RuleBuilderItem from './RuleBuilderItem';
@@ -50,6 +51,10 @@ export default function Action({
 	return (
 		<RuleBuilderItem onDeleteButtonClick={onDeleteAction} type="action">
 			<RuleSelect
+				aria-label={sub(
+					Liferay.Language.get('select-x'),
+					Liferay.Language.get('action')
+				)}
 				items={TYPE_ITEMS}
 				onSelectionChange={(type) => onActionChange({...action, type})}
 				selectedKey={action.type}
@@ -57,6 +62,9 @@ export default function Action({
 
 			{action.type ? (
 				<RuleSelect
+					aria-label={Liferay.Language.get(
+						'select-item-for-the-action'
+					)}
 					items={ACTION_ITEMS}
 					onSelectionChange={(selectedAction) =>
 						onActionChange({
@@ -96,6 +104,10 @@ function FragmentSelector({
 }) {
 	return (
 		<RuleSelect
+			aria-label={sub(
+				Liferay.Language.get('select-x'),
+				Liferay.Language.get('fragment')
+			)}
 			items={layoutDataItems}
 			onSelectionChange={onItemIdChanged}
 			selectedKey={itemId}

@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {sub} from 'frontend-js-web';
 import React, {FC} from 'react';
 
 import {config} from '../../../app/config/index';
@@ -84,6 +85,9 @@ export default function Condition({
 			type="condition"
 		>
 			<RuleSelect
+				aria-label={Liferay.Language.get(
+					'select-item-for-the-condition'
+				)}
 				items={TYPE_ITEMS}
 				onSelectionChange={(type) =>
 					onConditionChange({...condition, type})
@@ -93,6 +97,10 @@ export default function Condition({
 
 			{condition.type && CONDITION_ITEMS[condition.type] ? (
 				<RuleSelect
+					aria-label={sub(
+						Liferay.Language.get('select-x'),
+						Liferay.Language.get('condition')
+					)}
 					items={CONDITION_ITEMS[condition.type]}
 					onSelectionChange={(selectedCondition) =>
 						onConditionChange({
@@ -137,6 +145,10 @@ function RolesSelector({onValueChanged, value}: SelectorProps) {
 
 	return (
 		<RuleSelect
+			aria-label={sub(
+				Liferay.Language.get('select-x'),
+				Liferay.Language.get('role')
+			)}
 			items={roles.map((role) => ({
 				label: role.name,
 				value: role.roleId,
@@ -161,6 +173,10 @@ function UserSelector({onValueChanged, value}: SelectorProps) {
 
 	return (
 		<RuleSelect
+			aria-label={sub(
+				Liferay.Language.get('select-x'),
+				Liferay.Language.get('user')
+			)}
 			items={users.map((user) => ({
 				label: user.screenName,
 				value: user.userId,
@@ -176,6 +192,10 @@ function UserSelector({onValueChanged, value}: SelectorProps) {
 function SegmentsSelector({onValueChanged, value}: SelectorProps) {
 	return (
 		<RuleSelect
+			aria-label={sub(
+				Liferay.Language.get('select-x'),
+				Liferay.Language.get('segment')
+			)}
 			items={Object.values(config.availableSegmentsEntries).map(
 				(segmentsEntry) => ({
 					label: segmentsEntry.name,

@@ -179,7 +179,7 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 		throws PortalException {
 
 		DSLQuery dslQuery = _getUnrelatedModelsGroupByStep(
-			companyId, DSLQueryFactoryUtil.select(_table), groupId,
+			companyId, DSLQueryFactoryUtil.selectDistinct(_table), groupId,
 			objectDefinition, objectEntryId, objectRelationshipId
 		).limit(
 			start, end
@@ -199,8 +199,11 @@ public class SystemObjectMtoMObjectRelatedModelsProviderImpl
 		throws PortalException {
 
 		DSLQuery dslQuery = _getUnrelatedModelsGroupByStep(
-			companyId, DSLQueryFactoryUtil.count(), groupId, objectDefinition,
-			objectEntryId, objectRelationshipId);
+			companyId,
+			DSLQueryFactoryUtil.countDistinct(
+				_table.getColumn(
+					_objectDefinition.getPKObjectFieldDBColumnName())),
+			groupId, objectDefinition, objectEntryId, objectRelationshipId);
 
 		PersistedModelLocalService persistedModelLocalService =
 			PersistedModelLocalServiceRegistryUtil.

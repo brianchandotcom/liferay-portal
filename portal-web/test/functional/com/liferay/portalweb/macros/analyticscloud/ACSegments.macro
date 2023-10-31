@@ -687,7 +687,9 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewAutocompleteSuggestions(notPresent = null, autocompleteText = null) {
+	macro viewAutocompleteSuggestions(notPresent = null,autocompleteText = null) {
+		var key_autocompleteText = ${autocompleteText};
+
 		Click(
 			index = 1,
 			locator1 = "ACSegments#TEXT_INPUT");

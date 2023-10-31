@@ -155,16 +155,23 @@ export default function RulesModal({editingRule, onCloseModal}) {
 					)}
 				</p>
 
-				<RuleBuilderConditionSection
-					conditions={conditions}
-					setConditions={setConditions}
-				/>
+				<div
+					aria-label={Liferay.Language.get('conditions')}
+					role="group"
+				>
+					<RuleBuilderConditionSection
+						conditions={conditions}
+						setConditions={setConditions}
+					/>
+				</div>
 
-				<RuleBuilderActionSection
-					actions={actions}
-					layoutDataItems={layoutDataItems}
-					setActions={setActions}
-				/>
+				<div aria-label={Liferay.Language.get('actions')} role="group">
+					<RuleBuilderActionSection
+						actions={actions}
+						layoutDataItems={layoutDataItems}
+						setActions={setActions}
+					/>
+				</div>
 			</ClayModal.Body>
 
 			<ClayModal.Footer

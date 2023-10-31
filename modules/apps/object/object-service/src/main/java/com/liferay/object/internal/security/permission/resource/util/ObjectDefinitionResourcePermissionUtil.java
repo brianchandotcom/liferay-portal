@@ -92,8 +92,8 @@ public class ObjectDefinitionResourcePermissionUtil {
 					objectDefinition.getPortletId(),
 					objectDefinition.getResourceName(),
 					_getRootDescendantNodeObjectDefinitionsModelResources(
-						objectActionLocalService, objectDefinitionPersistence,
-						objectDefinition, treeFactory)
+						objectActionLocalService, objectDefinition,
+						objectDefinitionPersistence, treeFactory)
 				}));
 
 		resourceActions.populateModelResources(document);
@@ -141,8 +141,9 @@ public class ObjectDefinitionResourcePermissionUtil {
 
 	private static String _getRootDescendantNodeObjectDefinitionsModelResources(
 			ObjectActionLocalService objectActionLocalService,
+			ObjectDefinition objectDefinition,
 			ObjectDefinitionPersistence objectDefinitionPersistence,
-			ObjectDefinition objectDefinition, TreeFactory treeFactory)
+			TreeFactory treeFactory)
 		throws Exception {
 
 		if (!objectDefinition.isRootNode()) {

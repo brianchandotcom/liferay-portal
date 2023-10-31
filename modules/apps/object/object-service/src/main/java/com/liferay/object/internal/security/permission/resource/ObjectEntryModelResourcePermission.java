@@ -14,10 +14,10 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
-import com.liferay.object.definition.tree.Edge;
-import com.liferay.object.definition.tree.Node;
-import com.liferay.object.definition.tree.Tree;
-import com.liferay.object.definition.tree.TreeFactory;
+import com.liferay.object.tree.Edge;
+import com.liferay.object.tree.Node;
+import com.liferay.object.tree.Tree;
+import com.liferay.object.tree.TreeFactory;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -138,7 +138,7 @@ public class ObjectEntryModelResourcePermission
 
 		if (objectEntry.getRootObjectEntryId() != 0 &&
 			!_isObjectActionName(
-				objectEntry.getObjectDefinitionId(), actionId)) {
+				actionId, objectEntry.getObjectDefinitionId())) {
 
 			ObjectEntry rootObjectEntry =
 				_objectEntryLocalService.fetchObjectEntry(
@@ -279,7 +279,7 @@ public class ObjectEntryModelResourcePermission
 	}
 
 	private boolean _isObjectActionName(
-		long objectDefinitionId, String actionId) {
+		String actionId, long objectDefinitionId) {
 
 		for (ObjectAction objectAction :
 				_objectActionLocalService.getObjectActions(

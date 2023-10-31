@@ -5938,7 +5938,7 @@ information. Make sure to commit in all format-javadoc results.
 										<propertycopy from="gradle.plugins.test.excludes.globs[${gradle.plugin.dir.name}]" name="gradle.plugins.test.excludes.globs" override="true" />
 
 										<gradle-execute dir="@{gradle.plugin.dir}" forcedcacheenabled="false" task="gradleTest">
-											<arg value="-DgradleTest.exclude=${gradle.plugins.test.excludes.globs}" />
+											<arg value="-PtestExcludes=${gradle.plugins.test.excludes.globs}" />
 										</gradle-execute>
 									</then>
 									<else>

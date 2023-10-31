@@ -48,7 +48,7 @@ definition {
 		}
 
 		task ("When the administrator disables a feature flag") {
-			Check.checkToggleSwitch(
+			ClickNoError(
 				locator1 = "FeatureFlag#TOGGLE_ROW",
 				title_row = "Terms and Conditions pages",
 				toggle_state = "Enabled");
@@ -69,7 +69,7 @@ definition {
 
 		task ("And a feature flag is disabled") {
 			if (IsElementPresent(locator1 = "FeatureFlag#TOGGLE_ROW", title_row = "Terms and Conditions pages", toggle_state = "Enabled")) {
-				Check.checkToggleSwitch(
+				ClickNoError(
 					locator1 = "FeatureFlag#TOGGLE_ROW",
 					title_row = "Terms and Conditions pages",
 					toggle_state = "Enabled");
@@ -91,6 +91,38 @@ definition {
 		}
 	}
 
+	@description = "LPS-167698 - This tests asserts that a feature flag can be enabled with dependencies."
+	@priority = 3
+	test CanBeEnabledWithDependencies {
+		task ("And a feature flag is disabled") {
+			if (IsElementPresent(locator1 = "FeatureFlag#TOGGLE_ROW", title_row = "Terms and Conditions pages", toggle_state = "Enabled")) {
+				ClickNoError(
+					locator1 = "FeatureFlag#TOGGLE_ROW",
+					title_row = "Terms and Conditions pages",
+					toggle_state = "Enabled");
+			}
+		}
+
+		task ("When the administrator enables a feature flag that is a dependent") {
+			Check.checkToggleSwitch(
+				locator1 = "FeatureFlag#TOGGLE_ROW",
+				title_row = "Terms and Conditions pages",
+				toggle_state = "Disabled");
+		}
+
+		task ("Then a feature flag that depends on the enabled feature flag can be enabled") {
+			Check.checkToggleSwitch(
+				locator1 = "FeatureFlag#TOGGLE_ROW",
+				title_row = "Dependency FF Test",
+				toggle_state = "Disabled");
+
+			AssertElementPresent(
+				locator1 = "FeatureFlag#TOGGLE_ROW",
+				title_row = "Dependency FF Test",
+				toggle_state = "Enabled");
+		}
+	}
+
 	@description = "LPS-167698 - This tests asserts that a feature flag can be searched by title."
 	@priority = 4
 	test CanBeSearchedByTitle {
@@ -104,6 +136,31 @@ definition {
 			AssertElementPresent(
 				locator1 = "FeatureFlag#TOGGLE_ROW",
 				title_row = "Terms and Conditions pages",
+				toggle_state = "Disabled");
+		}
+	}
+
+	@description = "LPS-167698 - This tests asserts that a feature flag cannot be enabled by dependencies."
+	@priority = 3
+	test CannotBeEnabledByADependency {
+		task ("When the user tries to enable a dependency before enabling a FF") {
+			Check.checkToggleSwitch(
+				locator1 = "FeatureFlag#TOGGLE_ROW",
+				title_row = "Dependency FF Test",
+				toggle_state = "Disabled");
+		}
+
+		task ("Then assert the dependency toggle remains in a disabled state") {
+			AssertElementPresent(
+				locator1 = "FeatureFlag#TOGGLE_ROW",
+				title_row = "Dependency FF Test",
+				toggle_state = "Disabled");
+		}
+
+		task ("And Then assert the dependency toggle is not editable") {
+			AssertNotChecked(
+				locator1 = "FeatureFlag#TOGGLE_ROW",
+				title_row = "Dependency FF Test",
 				toggle_state = "Disabled");
 		}
 	}

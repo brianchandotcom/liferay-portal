@@ -726,12 +726,12 @@
 </tr>
 <tr>
 	<td>MINI_CART_SPECIFIC_ITEM_BUNDLED_ITEM_HIDE_OPTIONS_PANEL_EXPANDED</td>
-	<td>xpath=(//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]//../..//*[contains(@class,'panel')]//*[normalize-space()='Hide Product Options'][@aria-expanded='true'])[${key_index}]</td>
+	<td>xpath=(//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]//../..//*[contains(@class,'panel')]//*[normalize-space()='Hide Options'][@aria-expanded='true'])[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MINI_CART_SPECIFIC_ITEM_BUNDLED_ITEM_SHOW_OPTIONS_PANEL_COLLAPSED</td>
-	<td>xpath=(//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]//../..//*[contains(@class,'panel')]//*[normalize-space()='Show Product Options'][@aria-expanded='false'])[${key_index}]</td>
+	<td>xpath=(//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]//../..//*[contains(@class,'panel')]//*[normalize-space()='Show Options'][@aria-expanded='false'])[${key_index}]</td>
 	<td></td>
 </tr>
 <tr>

@@ -148,6 +148,17 @@
 									{
 										"key": "get",
 										"objectStateTransitions": [
+											{
+												"key": "post"
+											}
+										]
+									},
+									{
+										"key": "post",
+										"objectStateTransitions": [
+											{
+												"key": "get"
+											}
 										]
 									}
 								]

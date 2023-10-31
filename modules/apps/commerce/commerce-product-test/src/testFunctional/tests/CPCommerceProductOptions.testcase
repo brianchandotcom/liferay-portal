@@ -250,7 +250,7 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/bundled-product");
 
 			FrontStore.addToCartFromProductDetails(
-				boolean = "enabled",
+				boolean = "enabled:checkbox",
 				date = "10/23/2023",
 				multipleSelectionValuesChecked = "value1,value2",
 				numeric = 10,
@@ -423,7 +423,7 @@ definition {
 			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/bundled-product");
 
 			FrontStore.addToCartFromProductDetails(
-				boolean = "enabled",
+				boolean = "enabled:checkbox",
 				date = "10/23/2023",
 				multipleSelectionValuesChecked = "value1,value2",
 				numeric = 10,
@@ -2939,7 +2939,7 @@ definition {
 						fieldType = ${fieldType},
 						optionKey = "option-multiple-selection-key",
 						optionName = "multiple selection",
-						optionValues = "multiple-selection-option-value-key:multiple selection option name:1",
+						optionValues = "multiple-selection-option-value-key:multiple selection option value:1",
 						skuContributor = "false");
 				}
 				else {
@@ -2948,7 +2948,7 @@ definition {
 							fieldType = ${fieldType},
 							optionKey = "option-single-selection-key",
 							optionName = "single selection",
-							optionValues = "single-selection-option-value-key:single selection option name:1",
+							optionValues = "single-selection-option-value-key:single selection option value:1",
 							skuContributor = "false");
 					} 
 					else {
@@ -2956,7 +2956,7 @@ definition {
 							fieldType = ${fieldType},
 							optionKey = "option-boolean-selection-key",
 							optionName = "boolean",
-							optionValues = "boolean-option-value-key:boolean option name:1",
+							optionValues = "boolean-option-value-key:boolean option value:1",
 							skuContributor = "false");
 					}			
 				}
@@ -2976,6 +2976,23 @@ definition {
 					entryName = ${optionName},
 					title = "Add Option");
 			}
+
+			var elementsList = ListUtil.newListFromString("option-select-from-the-list-key:select from the list,option-boolean-selection-key:boolean,option-multiple-selection-key:multiple selection,option-date-key:date,option-numeric-key:numeric,option-single-selection-key:single selection,option-text-key:text");
+			var count = 0;
+
+			for (var optionFieldType : list "select,checkbox,checkbox_multiple,date,numeric,radio,text") {
+				var element = ListUtil.get(${elementsList}, ${count});	
+				var optionKey = StringUtil.extractFirst(${element}, ":");
+				var optionName = StringUtil.extractLast(${element}, ":");
+
+				var count = ${count} + 1;
+
+				CommerceJSONOptionsAPI._assignOptionToCommerceProduct(
+					fieldType = "${optionFieldType}",
+					optionKey = "${optionKey}",
+					optionName = "${optionName}",
+					productName = "Simple Product");	
+			}
 		}
 
 		task ("And the buyer logs in") {
@@ -2993,12 +3010,12 @@ definition {
 			FrontStore.addToCartFromProductDetails(
 				boolean = "enabled:boolean",
 				date = "10/23/2023",
-				multipleSelectionValuesChecked = "multiple selection option name",
+				multipleSelectionValuesChecked = "multiple selection option value",
 				numeric = 10,
 				optionNamesAndValues = "select from the list:select from the list option value",
 				productName = "Simple Product",
 				productSku = "Simple Product_default",
-				singleSelectionValueChecked = "single selection option name",
+				singleSelectionValueChecked = "single selection option value",
 				text = "Text Content");
 		}
 
@@ -3016,7 +3033,7 @@ definition {
 		}
 
 		task ("Then all the information inside is correct based on how the buyers compiled the values") {
-			for (var entriesList : list "select from the list:select from the list option value,date:2023-10-23,numeric:10,text:Text Content,multiple selection:multiple selection option name,single selection:single selection option name,boolean:option-boolean-selection-key") { 
+			for (var entriesList : list "select from the list:select from the list option value,date:2023-10-23,numeric:10,text:Text Content,multiple selection:multiple selection option value,single selection:single selection option value,boolean:option-boolean-selection-key") { 
 				var optionName = StringUtil.extractFirst(${entriesList}, ":");
 				var optionValue = StringUtil.extractLast(${entriesList}, ":");
 

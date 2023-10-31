@@ -125,6 +125,18 @@ export default function FragmentList({
 			type: SET_SELECTED_ITEM,
 		});
 
+	const getLabelText = (
+		type: string,
+		fromMaster: boolean,
+		cached: boolean
+	) => {
+		return [
+			type,
+			...(fromMaster ? [Liferay.Language.get('from-master')] : []),
+			...(cached ? [Liferay.Language.get('cached')] : []),
+		].join(', ');
+	};
+
 	return (
 		<div className="page-audit__fragmentList">
 			{fragmentsWithPosition
@@ -270,18 +282,29 @@ export default function FragmentList({
 							</p>
 
 							<p className="mb-0">
-								<ClayLabel displayType="secondary">
+								<span className="sr-only">
+									{getLabelText(
+										getComponentType(fragment),
+										fromMaster,
+										cached
+									)}
+								</span>
+
+								<ClayLabel aria-hidden displayType="secondary">
 									{getComponentType(fragment)}
 								</ClayLabel>
 
 								{fromMaster && (
-									<ClayLabel displayType="secondary">
+									<ClayLabel
+										aria-hidden
+										displayType="secondary"
+									>
 										{Liferay.Language.get('from-master')}
 									</ClayLabel>
 								)}
 
 								{cached && (
-									<ClayLabel displayType="info">
+									<ClayLabel aria-hidden displayType="info">
 										{Liferay.Language.get('cached')}
 									</ClayLabel>
 								)}

@@ -22,7 +22,7 @@ definition {
 		SearchAdministration.executeReindex();
 	}
 
-	@description = "This is a use case for LRQA-61632."
+	@description = "This is a use case for LRQA-61632. Can Add And Remove Translation To Web Content Structure With First Complex Structure"
 	@priority = 3
 	test CanAddAndRemoveTranslationToWebContentStructure {
 		task ("Translate labels") {
@@ -128,7 +128,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-61632."
+	@description = "This is a use case for LRQA-61632. Can Copy And Delete Web Content Structure With First Complex Structure"
 	@priority = 3
 	test CanCopyAndDeleteWebContentStructure {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -144,7 +144,7 @@ definition {
 		WebContentStructures.deleteCP(structureName = "WC Structure Copy En-US Name");
 	}
 
-	@description = "This is a use case for LRQA-61632."
+	@description = "This is a use case for LRQA-61632. Can Disable Searchable In Text Field With First Complex Structure"
 	@priority = 3
 	test CanDisableSearchableInTextField {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -166,7 +166,7 @@ definition {
 		SearchResults.viewSearchResultNotPresent(searchAssetTitle = "Web Content Complex Title 1");
 	}
 
-	@description = "This is a use case for LRQA-61632."
+	@description = "This is a use case for LRQA-61632. Can Duplicate Field Group With Nested Fields And Move Nested Field With First Complex Structure"
 	@priority = 3
 	test CanDuplicateFieldGroupWithNestedFieldsAndMoveNestedField {
 		task ("Duplicate the last field group with many nested fields, 10 times, and save") {
@@ -220,7 +220,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-61632."
+	@description = "This is a use case for LRQA-61632. Can Duplicate Repeatable Fields And Remove Them With First Complex Structure"
 	@priority = 3
 	test CanDuplicateRepeatableFieldsAndRemoveThem {
 		task ("Duplicate all fields that can be duplicated, 1-4 times") {
@@ -277,7 +277,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-61632. Preview fields entered."
+	@description = "This is a use case for LRQA-61632. Preview fields entered With First Complex Structure"
 	@priority = 3
 	test CanPreviewWebContent {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -320,7 +320,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-61632."
+	@description = "This is a use case for LRQA-61632. Can Select And View Web Content In WCD With First Complex Structure"
 	@priority = 3
 	test CanSelectAndViewWebContentInWCD {
 		task ("Add a widget page and WCD to widget page") {
@@ -366,7 +366,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LRQA-61632. Assert Images added in one field is not available in the next image field before article is submitted."
+	@description = "This is a use case for LRQA-61632. Assert Images added in one field is not available in the next image field before article is submitted  With First Complex Structure"
 	@priority = 3
 	test ViewNoDocumentFromOtherImageField {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
@@ -398,7 +398,7 @@ definition {
 		PortletEntry.publish();
 	}
 
-	@description = "This is a use case for LRQA-61632. Enable Staging,Publish to live site, assert value entered persists,including images and links."
+	@description = "This is a use case for LRQA-61632. Enable Staging,Publish to live site, assert value entered persists,including images and links  With First Complex Structure"
 	@priority = 3
 	test ViewWebcontentInStaging {
 		Staging.openStagingAdmin(siteURLKey = "test-site-name");

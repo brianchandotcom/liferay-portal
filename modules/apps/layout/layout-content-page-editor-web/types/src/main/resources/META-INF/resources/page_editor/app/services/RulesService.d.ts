@@ -46,6 +46,16 @@ declare function deleteRule({
 }>;
 
 /**
+ * Get roles
+ */
+declare function getRoles(): Promise<
+	Array<{
+		name: string;
+		roleId: string;
+	}>
+>;
+
+/**
  * Get users
  */
 declare function getUsers(): Promise<
@@ -79,6 +89,7 @@ declare function updateRule({
 declare const _default: {
 	addRule: typeof addRule;
 	deleteRule: typeof deleteRule;
+	getRoles: typeof getRoles;
 	getUsers: typeof getUsers;
 	updateRule: typeof updateRule;
 };

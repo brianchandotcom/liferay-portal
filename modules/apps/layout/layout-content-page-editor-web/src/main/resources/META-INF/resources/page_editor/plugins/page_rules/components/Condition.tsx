@@ -65,7 +65,7 @@ const VALUE_SELECTOR_COMPONENTS: Record<
 	FC<SelectorProps> | null
 > = {
 	[CONDITION_VALUES.user]: UserSelector,
-	[CONDITION_VALUES.role]: null,
+	[CONDITION_VALUES.role]: RolesSelector,
 	[CONDITION_VALUES.segment]: SegmentsSelector,
 };
 
@@ -123,6 +123,30 @@ export default function Condition({
 interface SelectorProps {
 	onValueChanged: (value: string) => void;
 	value: string | undefined;
+}
+
+function RolesSelector({onValueChanged, value}: SelectorProps) {
+	const roles = useCache({
+		fetcher: () => RulesService.getRoles(),
+		key: [CACHE_KEYS.roles],
+	});
+
+	if (!roles) {
+		return null;
+	}
+
+	return (
+		<RuleSelect
+			items={roles.map((role) => ({
+				label: role.name,
+				value: role.roleId,
+			}))}
+			onSelectionChange={(value: React.Key) =>
+				onValueChanged(value as string)
+			}
+			selectedKey={value}
+		/>
+	);
 }
 
 function UserSelector({onValueChanged, value}: SelectorProps) {

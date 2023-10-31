@@ -56,6 +56,7 @@ public class CPAttachmentFileEntryWrapper
 		attributes.put("cdnURL", getCDNURL());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
+		attributes.put("galleryEnabled", isGalleryEnabled());
 		attributes.put("title", getTitle());
 		attributes.put("json", getJson());
 		attributes.put("priority", getPriority());
@@ -179,6 +180,12 @@ public class CPAttachmentFileEntryWrapper
 
 		if (expirationDate != null) {
 			setExpirationDate(expirationDate);
+		}
+
+		Boolean galleryEnabled = (Boolean)attributes.get("galleryEnabled");
+
+		if (galleryEnabled != null) {
+			setGalleryEnabled(galleryEnabled);
 		}
 
 		String title = (String)attributes.get("title");
@@ -386,6 +393,16 @@ public class CPAttachmentFileEntryWrapper
 	@Override
 	public long getFileEntryId() {
 		return model.getFileEntryId();
+	}
+
+	/**
+	 * Returns the gallery enabled of this cp attachment file entry.
+	 *
+	 * @return the gallery enabled of this cp attachment file entry
+	 */
+	@Override
+	public boolean getGalleryEnabled() {
+		return model.getGalleryEnabled();
 	}
 
 	/**
@@ -685,6 +702,16 @@ public class CPAttachmentFileEntryWrapper
 	}
 
 	/**
+	 * Returns <code>true</code> if this cp attachment file entry is gallery enabled.
+	 *
+	 * @return <code>true</code> if this cp attachment file entry is gallery enabled; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isGalleryEnabled() {
+		return model.isGalleryEnabled();
+	}
+
+	/**
 	 * Returns <code>true</code> if this cp attachment file entry is inactive.
 	 *
 	 * @return <code>true</code> if this cp attachment file entry is inactive; <code>false</code> otherwise
@@ -867,6 +894,16 @@ public class CPAttachmentFileEntryWrapper
 	@Override
 	public void setFileEntryId(long fileEntryId) {
 		model.setFileEntryId(fileEntryId);
+	}
+
+	/**
+	 * Sets whether this cp attachment file entry is gallery enabled.
+	 *
+	 * @param galleryEnabled the gallery enabled of this cp attachment file entry
+	 */
+	@Override
+	public void setGalleryEnabled(boolean galleryEnabled) {
+		model.setGalleryEnabled(galleryEnabled);
 	}
 
 	/**

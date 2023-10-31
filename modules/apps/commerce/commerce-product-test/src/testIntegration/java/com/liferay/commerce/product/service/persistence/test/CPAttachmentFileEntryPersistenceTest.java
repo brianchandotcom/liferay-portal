@@ -156,6 +156,9 @@ public class CPAttachmentFileEntryPersistenceTest {
 
 		newCPAttachmentFileEntry.setExpirationDate(RandomTestUtil.nextDate());
 
+		newCPAttachmentFileEntry.setGalleryEnabled(
+			RandomTestUtil.randomBoolean());
+
 		newCPAttachmentFileEntry.setTitle(RandomTestUtil.randomString());
 
 		newCPAttachmentFileEntry.setJson(RandomTestUtil.randomString());
@@ -241,6 +244,9 @@ public class CPAttachmentFileEntryPersistenceTest {
 				existingCPAttachmentFileEntry.getExpirationDate()),
 			Time.getShortTimestamp(
 				newCPAttachmentFileEntry.getExpirationDate()));
+		Assert.assertEquals(
+			existingCPAttachmentFileEntry.isGalleryEnabled(),
+			newCPAttachmentFileEntry.isGalleryEnabled());
 		Assert.assertEquals(
 			existingCPAttachmentFileEntry.getTitle(),
 			newCPAttachmentFileEntry.getTitle());
@@ -405,6 +411,28 @@ public class CPAttachmentFileEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_C_G_T_ST() throws Exception {
+		_persistence.countByC_C_G_T_ST(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean(), RandomTestUtil.nextInt(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC_C_G_T_ST(
+			0L, 0L, RandomTestUtil.randomBoolean(), 0, 0);
+	}
+
+	@Test
+	public void testCountByC_C_G_T_NotST() throws Exception {
+		_persistence.countByC_C_G_T_NotST(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean(), RandomTestUtil.nextInt(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC_C_G_T_NotST(
+			0L, 0L, RandomTestUtil.randomBoolean(), 0, 0);
+	}
+
+	@Test
 	public void testCountByERC_C() throws Exception {
 		_persistence.countByERC_C("", RandomTestUtil.nextLong());
 
@@ -447,10 +475,10 @@ public class CPAttachmentFileEntryPersistenceTest {
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "classNameId", true, "classPK", true,
 			"fileEntryId", true, "cdnEnabled", true, "cdnURL", true,
-			"displayDate", true, "expirationDate", true, "title", true,
-			"priority", true, "type", true, "lastPublishDate", true, "status",
-			true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+			"displayDate", true, "expirationDate", true, "galleryEnabled", true,
+			"title", true, "priority", true, "type", true, "lastPublishDate",
+			true, "status", true, "statusByUserId", true, "statusByUserName",
+			true, "statusDate", true);
 	}
 
 	@Test
@@ -810,6 +838,8 @@ public class CPAttachmentFileEntryPersistenceTest {
 		cpAttachmentFileEntry.setDisplayDate(RandomTestUtil.nextDate());
 
 		cpAttachmentFileEntry.setExpirationDate(RandomTestUtil.nextDate());
+
+		cpAttachmentFileEntry.setGalleryEnabled(RandomTestUtil.randomBoolean());
 
 		cpAttachmentFileEntry.setTitle(RandomTestUtil.randomString());
 

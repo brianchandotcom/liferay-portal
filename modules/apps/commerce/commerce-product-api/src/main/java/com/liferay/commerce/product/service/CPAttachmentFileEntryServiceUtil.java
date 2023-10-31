@@ -38,8 +38,9 @@ public class CPAttachmentFileEntryServiceUtil {
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, Map<java.util.Locale, String> titleMap,
-			String json, double priority, int type,
+			boolean galleryEnabled, boolean neverExpire,
+			Map<java.util.Locale, String> titleMap, String json,
+			double priority, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
@@ -48,7 +49,8 @@ public class CPAttachmentFileEntryServiceUtil {
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, titleMap, json, priority, type, serviceContext);
+			galleryEnabled, neverExpire, titleMap, json, priority, type,
+			serviceContext);
 	}
 
 	public static CPAttachmentFileEntry addOrUpdateCPAttachmentFileEntry(
@@ -59,8 +61,9 @@ public class CPAttachmentFileEntryServiceUtil {
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, Map<java.util.Locale, String> titleMap,
-			String json, double priority, int type,
+			boolean galleryEnabled, boolean neverExpire,
+			Map<java.util.Locale, String> titleMap, String json,
+			double priority, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
@@ -70,7 +73,8 @@ public class CPAttachmentFileEntryServiceUtil {
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, titleMap, json, priority, type, serviceContext);
+			galleryEnabled, neverExpire, titleMap, json, priority, type,
+			serviceContext);
 	}
 
 	public static void deleteCPAttachmentFileEntry(long cpAttachmentFileEntryId)
@@ -160,9 +164,9 @@ public class CPAttachmentFileEntryServiceUtil {
 			int displayDateYear, int displayDateHour, int displayDateMinute,
 			int expirationDateMonth, int expirationDateDay,
 			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
-			Map<java.util.Locale, String> titleMap, String json,
-			double priority, int type,
+			int expirationDateMinute, boolean galleryEnabled,
+			boolean neverExpire, Map<java.util.Locale, String> titleMap,
+			String json, double priority, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
@@ -171,7 +175,8 @@ public class CPAttachmentFileEntryServiceUtil {
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, titleMap, json, priority, type, serviceContext);
+			galleryEnabled, neverExpire, titleMap, json, priority, type,
+			serviceContext);
 	}
 
 	public static CPAttachmentFileEntryService getService() {

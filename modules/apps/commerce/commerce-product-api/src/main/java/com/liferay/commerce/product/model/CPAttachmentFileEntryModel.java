@@ -377,6 +377,27 @@ public interface CPAttachmentFileEntryModel
 	public void setExpirationDate(Date expirationDate);
 
 	/**
+	 * Returns the gallery enabled of this cp attachment file entry.
+	 *
+	 * @return the gallery enabled of this cp attachment file entry
+	 */
+	public boolean getGalleryEnabled();
+
+	/**
+	 * Returns <code>true</code> if this cp attachment file entry is gallery enabled.
+	 *
+	 * @return <code>true</code> if this cp attachment file entry is gallery enabled; <code>false</code> otherwise
+	 */
+	public boolean isGalleryEnabled();
+
+	/**
+	 * Sets whether this cp attachment file entry is gallery enabled.
+	 *
+	 * @param galleryEnabled the gallery enabled of this cp attachment file entry
+	 */
+	public void setGalleryEnabled(boolean galleryEnabled);
+
+	/**
 	 * Returns the title of this cp attachment file entry.
 	 *
 	 * @return the title of this cp attachment file entry

@@ -90,8 +90,9 @@ public interface CPAttachmentFileEntryLocalService
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, Map<Locale, String> titleMap, String json,
-			double priority, int type, ServiceContext serviceContext)
+			boolean galleryEnabled, boolean neverExpire,
+			Map<Locale, String> titleMap, String json, double priority,
+			int type, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CPAttachmentFileEntry addOrUpdateCPAttachmentFileEntry(
@@ -102,8 +103,9 @@ public interface CPAttachmentFileEntryLocalService
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, Map<Locale, String> titleMap, String json,
-			double priority, int type, ServiceContext serviceContext)
+			boolean galleryEnabled, boolean neverExpire,
+			Map<Locale, String> titleMap, String json, double priority,
+			int type, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void checkCPAttachmentFileEntries() throws PortalException;
@@ -295,6 +297,18 @@ public interface CPAttachmentFileEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
+			long cpDefinitionId, Boolean galleryEnabled,
+			String serializedDDMFormValues, int type, int start, int end)
+		throws Exception;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
+			long classNameId, long classPK, boolean galleryEnabled, int type,
+			int status, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
 			long classNameId, long classPK, int type, int status, int start,
 			int end)
 		throws PortalException;
@@ -310,12 +324,6 @@ public interface CPAttachmentFileEntryLocalService
 			long classNameId, long classPK, String keywords, int type,
 			int status, int start, int end)
 		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
-			long cpDefinitionId, String serializedDDMFormValues, int type,
-			int start, int end)
-		throws Exception;
 
 	/**
 	 * Returns all the cp attachment file entries matching the UUID and company.
@@ -438,8 +446,9 @@ public interface CPAttachmentFileEntryLocalService
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, Map<Locale, String> titleMap, String json,
-			double priority, int type, ServiceContext serviceContext)
+			boolean galleryEnabled, boolean neverExpire,
+			Map<Locale, String> titleMap, String json, double priority,
+			int type, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)

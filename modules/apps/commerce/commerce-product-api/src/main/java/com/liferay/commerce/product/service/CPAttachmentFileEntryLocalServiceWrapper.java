@@ -59,7 +59,7 @@ public class CPAttachmentFileEntryLocalServiceWrapper
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire,
+			boolean galleryEnabled, boolean neverExpire,
 			java.util.Map<java.util.Locale, String> titleMap, String json,
 			double priority, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -70,8 +70,8 @@ public class CPAttachmentFileEntryLocalServiceWrapper
 			fileEntryId, cdnEnabled, cdnURL, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire, titleMap,
-			json, priority, type, serviceContext);
+			expirationDateHour, expirationDateMinute, galleryEnabled,
+			neverExpire, titleMap, json, priority, type, serviceContext);
 	}
 
 	@Override
@@ -83,7 +83,7 @@ public class CPAttachmentFileEntryLocalServiceWrapper
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire,
+			boolean galleryEnabled, boolean neverExpire,
 			java.util.Map<java.util.Locale, String> titleMap, String json,
 			double priority, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -96,8 +96,8 @@ public class CPAttachmentFileEntryLocalServiceWrapper
 				displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, titleMap, json, priority,
-				type, serviceContext);
+				expirationDateMinute, galleryEnabled, neverExpire, titleMap,
+				json, priority, type, serviceContext);
 	}
 
 	@Override
@@ -393,6 +393,27 @@ public class CPAttachmentFileEntryLocalServiceWrapper
 
 	@Override
 	public java.util.List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
+			long cpDefinitionId, Boolean galleryEnabled,
+			String serializedDDMFormValues, int type, int start, int end)
+		throws Exception {
+
+		return _cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
+			cpDefinitionId, galleryEnabled, serializedDDMFormValues, type,
+			start, end);
+	}
+
+	@Override
+	public java.util.List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
+			long classNameId, long classPK, boolean galleryEnabled, int type,
+			int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
+			classNameId, classPK, galleryEnabled, type, status, start, end);
+	}
+
+	@Override
+	public java.util.List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
 			long classNameId, long classPK, int type, int status, int start,
 			int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -421,16 +442,6 @@ public class CPAttachmentFileEntryLocalServiceWrapper
 
 		return _cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
 			classNameId, classPK, keywords, type, status, start, end);
-	}
-
-	@Override
-	public java.util.List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
-			long cpDefinitionId, String serializedDDMFormValues, int type,
-			int start, int end)
-		throws Exception {
-
-		return _cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
-			cpDefinitionId, serializedDDMFormValues, type, start, end);
 	}
 
 	/**
@@ -611,7 +622,7 @@ public class CPAttachmentFileEntryLocalServiceWrapper
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire,
+			boolean galleryEnabled, boolean neverExpire,
 			java.util.Map<java.util.Locale, String> titleMap, String json,
 			double priority, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -622,7 +633,8 @@ public class CPAttachmentFileEntryLocalServiceWrapper
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, titleMap, json, priority, type, serviceContext);
+			galleryEnabled, neverExpire, titleMap, json, priority, type,
+			serviceContext);
 	}
 
 	@Override

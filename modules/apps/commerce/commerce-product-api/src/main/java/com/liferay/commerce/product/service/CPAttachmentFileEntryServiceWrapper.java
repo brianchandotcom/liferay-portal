@@ -37,7 +37,7 @@ public class CPAttachmentFileEntryServiceWrapper
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire,
+			boolean galleryEnabled, boolean neverExpire,
 			java.util.Map<java.util.Locale, String> titleMap, String json,
 			double priority, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -48,7 +48,8 @@ public class CPAttachmentFileEntryServiceWrapper
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, titleMap, json, priority, type, serviceContext);
+			galleryEnabled, neverExpire, titleMap, json, priority, type,
+			serviceContext);
 	}
 
 	@Override
@@ -60,7 +61,7 @@ public class CPAttachmentFileEntryServiceWrapper
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire,
+			boolean galleryEnabled, boolean neverExpire,
 			java.util.Map<java.util.Locale, String> titleMap, String json,
 			double priority, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -72,7 +73,8 @@ public class CPAttachmentFileEntryServiceWrapper
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, titleMap, json, priority, type, serviceContext);
+			galleryEnabled, neverExpire, titleMap, json, priority, type,
+			serviceContext);
 	}
 
 	@Override
@@ -178,7 +180,8 @@ public class CPAttachmentFileEntryServiceWrapper
 			int displayDateYear, int displayDateHour, int displayDateMinute,
 			int expirationDateMonth, int expirationDateDay,
 			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
+			int expirationDateMinute, boolean galleryEnabled,
+			boolean neverExpire,
 			java.util.Map<java.util.Locale, String> titleMap, String json,
 			double priority, int type,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -189,7 +192,8 @@ public class CPAttachmentFileEntryServiceWrapper
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, titleMap, json, priority, type, serviceContext);
+			galleryEnabled, neverExpire, titleMap, json, priority, type,
+			serviceContext);
 	}
 
 	@Override

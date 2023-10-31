@@ -78,6 +78,10 @@ public class CPAttachmentFileEntryTable
 	public final Column<CPAttachmentFileEntryTable, Date> expirationDate =
 		createColumn(
 			"expirationDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
+	public final Column<CPAttachmentFileEntryTable, Boolean> galleryEnabled =
+		createColumn(
+			"galleryEnabled", Boolean.class, Types.BOOLEAN,
+			Column.FLAG_DEFAULT);
 	public final Column<CPAttachmentFileEntryTable, String> title =
 		createColumn("title", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CPAttachmentFileEntryTable, Clob> json = createColumn(

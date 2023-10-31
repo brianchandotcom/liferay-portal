@@ -95,6 +95,7 @@
 		</field>
 		<field name="displayDate" type="Date" />
 		<field name="expirationDate" type="Date" />
+		<field name="galleryEnabled" type="boolean" />
 		<field localized="true" name="title" type="String" />
 		<field name="json" type="String">
 			<hint-collection name="CLOB" />

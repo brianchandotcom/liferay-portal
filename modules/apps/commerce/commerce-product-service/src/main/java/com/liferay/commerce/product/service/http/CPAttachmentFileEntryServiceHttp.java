@@ -49,7 +49,8 @@ public class CPAttachmentFileEntryServiceHttp {
 				int displayDateYear, int displayDateHour, int displayDateMinute,
 				int expirationDateMonth, int expirationDateDay,
 				int expirationDateYear, int expirationDateHour,
-				int expirationDateMinute, boolean neverExpire,
+				int expirationDateMinute, boolean galleryEnabled,
+				boolean neverExpire,
 				java.util.Map<java.util.Locale, String> titleMap, String json,
 				double priority, int type,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -66,8 +67,8 @@ public class CPAttachmentFileEntryServiceHttp {
 				cdnEnabled, cdnURL, displayDateMonth, displayDateDay,
 				displayDateYear, displayDateHour, displayDateMinute,
 				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, neverExpire, titleMap,
-				json, priority, type, serviceContext);
+				expirationDateHour, expirationDateMinute, galleryEnabled,
+				neverExpire, titleMap, json, priority, type, serviceContext);
 
 			Object returnObj = null;
 
@@ -108,7 +109,7 @@ public class CPAttachmentFileEntryServiceHttp {
 				int displayDateMinute, int expirationDateMonth,
 				int expirationDateDay, int expirationDateYear,
 				int expirationDateHour, int expirationDateMinute,
-				boolean neverExpire,
+				boolean galleryEnabled, boolean neverExpire,
 				java.util.Map<java.util.Locale, String> titleMap, String json,
 				double priority, int type,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -126,8 +127,8 @@ public class CPAttachmentFileEntryServiceHttp {
 				displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, titleMap, json, priority,
-				type, serviceContext);
+				expirationDateMinute, galleryEnabled, neverExpire, titleMap,
+				json, priority, type, serviceContext);
 
 			Object returnObj = null;
 
@@ -560,7 +561,8 @@ public class CPAttachmentFileEntryServiceHttp {
 				int displayDateHour, int displayDateMinute,
 				int expirationDateMonth, int expirationDateDay,
 				int expirationDateYear, int expirationDateHour,
-				int expirationDateMinute, boolean neverExpire,
+				int expirationDateMinute, boolean galleryEnabled,
+				boolean neverExpire,
 				java.util.Map<java.util.Locale, String> titleMap, String json,
 				double priority, int type,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -577,8 +579,8 @@ public class CPAttachmentFileEntryServiceHttp {
 				cdnURL, displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, titleMap, json, priority,
-				type, serviceContext);
+				expirationDateMinute, galleryEnabled, neverExpire, titleMap,
+				json, priority, type, serviceContext);
 
 			Object returnObj = null;
 
@@ -617,16 +619,17 @@ public class CPAttachmentFileEntryServiceHttp {
 			long.class, long.class, long.class, long.class, boolean.class,
 			String.class, int.class, int.class, int.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class,
-			boolean.class, java.util.Map.class, String.class, double.class,
-			int.class, com.liferay.portal.kernel.service.ServiceContext.class
+			boolean.class, boolean.class, java.util.Map.class, String.class,
+			double.class, int.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
 		_addOrUpdateCPAttachmentFileEntryParameterTypes1 = new Class[] {
 			String.class, long.class, long.class, long.class, long.class,
 			long.class, boolean.class, String.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, boolean.class, java.util.Map.class,
-			String.class, double.class, int.class,
+			int.class, int.class, boolean.class, boolean.class,
+			java.util.Map.class, String.class, double.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
@@ -665,8 +668,8 @@ public class CPAttachmentFileEntryServiceHttp {
 		_updateCPAttachmentFileEntryParameterTypes11 = new Class[] {
 			long.class, long.class, boolean.class, String.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class, int.class, boolean.class, java.util.Map.class,
-			String.class, double.class, int.class,
+			int.class, int.class, int.class, boolean.class, boolean.class,
+			java.util.Map.class, String.class, double.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 

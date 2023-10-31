@@ -176,7 +176,10 @@ public abstract class BaseProductOptionResourceTestCase {
 		ProductOption productOption = randomProductOption();
 
 		productOption.setFieldType(regex);
+		productOption.setInfoItemServiceKey(regex);
 		productOption.setKey(regex);
+		productOption.setPriceType(regex);
+		productOption.setTypeSettings(regex);
 
 		String json = ProductOptionSerDes.toJSON(productOption);
 
@@ -185,7 +188,10 @@ public abstract class BaseProductOptionResourceTestCase {
 		productOption = ProductOptionSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, productOption.getFieldType());
+		Assert.assertEquals(regex, productOption.getInfoItemServiceKey());
 		Assert.assertEquals(regex, productOption.getKey());
+		Assert.assertEquals(regex, productOption.getPriceType());
+		Assert.assertEquals(regex, productOption.getTypeSettings());
 	}
 
 	@Test
@@ -1043,6 +1049,24 @@ public abstract class BaseProductOptionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("customFields", additionalAssertFieldName)) {
+				if (productOption.getCustomFields() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"definedExternally", additionalAssertFieldName)) {
+
+				if (productOption.getDefinedExternally() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (productOption.getDescription() == null) {
 					valid = false;
@@ -1067,6 +1091,16 @@ public abstract class BaseProductOptionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"infoItemServiceKey", additionalAssertFieldName)) {
+
+				if (productOption.getInfoItemServiceKey() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("key", additionalAssertFieldName)) {
 				if (productOption.getKey() == null) {
 					valid = false;
@@ -1085,6 +1119,14 @@ public abstract class BaseProductOptionResourceTestCase {
 
 			if (Objects.equals("optionId", additionalAssertFieldName)) {
 				if (productOption.getOptionId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("priceType", additionalAssertFieldName)) {
+				if (productOption.getPriceType() == null) {
 					valid = false;
 				}
 
@@ -1119,6 +1161,14 @@ public abstract class BaseProductOptionResourceTestCase {
 
 			if (Objects.equals("skuContributor", additionalAssertFieldName)) {
 				if (productOption.getSkuContributor() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("typeSettings", additionalAssertFieldName)) {
+				if (productOption.getTypeSettings() == null) {
 					valid = false;
 				}
 
@@ -1255,6 +1305,30 @@ public abstract class BaseProductOptionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("customFields", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						productOption1.getCustomFields(),
+						productOption2.getCustomFields())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"definedExternally", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						productOption1.getDefinedExternally(),
+						productOption2.getDefinedExternally())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (!equals(
 						(Map)productOption1.getDescription(),
@@ -1298,6 +1372,19 @@ public abstract class BaseProductOptionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"infoItemServiceKey", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						productOption1.getInfoItemServiceKey(),
+						productOption2.getInfoItemServiceKey())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("key", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						productOption1.getKey(), productOption2.getKey())) {
@@ -1323,6 +1410,17 @@ public abstract class BaseProductOptionResourceTestCase {
 				if (!Objects.deepEquals(
 						productOption1.getOptionId(),
 						productOption2.getOptionId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("priceType", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						productOption1.getPriceType(),
+						productOption2.getPriceType())) {
 
 					return false;
 				}
@@ -1369,6 +1467,17 @@ public abstract class BaseProductOptionResourceTestCase {
 				if (!Objects.deepEquals(
 						productOption1.getSkuContributor(),
 						productOption2.getSkuContributor())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("typeSettings", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						productOption1.getTypeSettings(),
+						productOption2.getTypeSettings())) {
 
 					return false;
 				}
@@ -1484,6 +1593,16 @@ public abstract class BaseProductOptionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("customFields")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("definedExternally")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("description")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1545,6 +1664,52 @@ public abstract class BaseProductOptionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("infoItemServiceKey")) {
+			Object object = productOption.getInfoItemServiceKey();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("key")) {
 			Object object = productOption.getKey();
 
@@ -1601,6 +1766,52 @@ public abstract class BaseProductOptionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("priceType")) {
+			Object object = productOption.getPriceType();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("priority")) {
 			sb.append(String.valueOf(productOption.getPriority()));
 
@@ -1620,6 +1831,52 @@ public abstract class BaseProductOptionResourceTestCase {
 		if (entityFieldName.equals("skuContributor")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("typeSettings")) {
+			Object object = productOption.getTypeSettings();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
 		}
 
 		throw new IllegalArgumentException(
@@ -1667,15 +1924,22 @@ public abstract class BaseProductOptionResourceTestCase {
 		return new ProductOption() {
 			{
 				catalogId = RandomTestUtil.randomLong();
+				definedExternally = RandomTestUtil.randomBoolean();
 				facetable = RandomTestUtil.randomBoolean();
 				fieldType = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
+				infoItemServiceKey = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				key = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				optionId = RandomTestUtil.randomLong();
+				priceType = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				priority = RandomTestUtil.randomDouble();
 				required = RandomTestUtil.randomBoolean();
 				skuContributor = RandomTestUtil.randomBoolean();
+				typeSettings = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 			}
 		};
 	}

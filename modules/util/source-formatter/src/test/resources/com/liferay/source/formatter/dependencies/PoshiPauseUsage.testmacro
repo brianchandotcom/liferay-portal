@@ -1,6 +1,7 @@
 definition {
 
-	macro testPoshiPauseUsage {
+	@summary = "Default summary"
+	macro testPoshiPauseUsage() {
 		Button.clickSave();
 
 		Pause(locator1 = "1000");

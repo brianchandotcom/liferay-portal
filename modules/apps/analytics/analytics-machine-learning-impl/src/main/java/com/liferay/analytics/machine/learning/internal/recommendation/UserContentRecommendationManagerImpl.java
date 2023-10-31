@@ -7,7 +7,7 @@ package com.liferay.analytics.machine.learning.internal.recommendation;
 
 import com.liferay.analytics.machine.learning.content.UserContentRecommendation;
 import com.liferay.analytics.machine.learning.content.UserContentRecommendationManager;
-import com.liferay.analytics.machine.learning.internal.recommendation.constants.RecommendationField;
+import com.liferay.analytics.machine.learning.internal.recommendation.search.RecommendationField;
 import com.liferay.analytics.machine.learning.internal.search.api.RecommendationIndexer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.HashUtil;

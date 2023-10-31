@@ -316,7 +316,7 @@ public class CommerceCurrencyLocalServiceImpl
 		SearchHits searchHits = searchResponse.getSearchHits();
 
 		return new BaseModelSearchResult<>(
-			TransformUtil.transform(
+			(List<CommerceCurrency>)TransformUtil.transform(
 				searchHits.getSearchHits(),
 				searchHit -> {
 					Document document = searchHit.getDocument();
@@ -339,7 +339,7 @@ public class CommerceCurrencyLocalServiceImpl
 
 					return commerceCurrency;
 				}),
-				searchResponse.getTotalHits());
+			searchResponse.getTotalHits());
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

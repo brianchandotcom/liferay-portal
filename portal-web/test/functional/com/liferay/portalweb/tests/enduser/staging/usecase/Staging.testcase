@@ -2323,9 +2323,9 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		var companyId = JSONCompany.getCompanyId(portalURL = "http://localhost:9080");
-
-		var siteId = JSONGroupAPI._getSiteIdByGroupKey(groupName = ${companyId});
+		var siteId = JSONGroupSetter.setGroupId(
+			groupName = "Global",
+			portalURL = "http://localhost:9080");
 
 		Staging.openStagingAdmin(siteURLKey = "global");
 

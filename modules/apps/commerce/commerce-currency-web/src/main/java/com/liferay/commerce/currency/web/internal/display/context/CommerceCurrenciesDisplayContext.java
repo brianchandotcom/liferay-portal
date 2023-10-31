@@ -207,17 +207,17 @@ public class CommerceCurrenciesDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Boolean activeNavigation = null;
+		Boolean active = null;
 		String emptyResultsMessage = "there-are-no-currencies";
 
 		String navigation = _getNavigation();
 
 		if (navigation.equals("active")) {
-			activeNavigation = Boolean.TRUE;
+			active = Boolean.TRUE;
 			emptyResultsMessage = "there-are-no-active-currencies";
 		}
 		else if (navigation.equals("inactive")) {
-			activeNavigation = Boolean.FALSE;
+			active = Boolean.FALSE;
 			emptyResultsMessage = "there-are-no-inactive-currencies";
 		}
 
@@ -233,16 +233,16 @@ public class CommerceCurrenciesDisplayContext {
 		String keywords = ParamUtil.getString(_renderRequest, "keywords");
 
 		if (Validator.isBlank(keywords)) {
-			if (activeNavigation != null) {
-				boolean active = activeNavigation;
+			if (active != null) {
+				boolean finalActive = active;
 
 				_searchContainer.setResultsAndTotal(
 					() -> _commerceCurrencyService.getCommerceCurrencies(
-						themeDisplay.getCompanyId(), active,
+						themeDisplay.getCompanyId(), finalActive,
 						_searchContainer.getStart(), _searchContainer.getEnd(),
 						_searchContainer.getOrderByComparator()),
 					_commerceCurrencyService.getCommerceCurrenciesCount(
-						themeDisplay.getCompanyId(), active));
+						themeDisplay.getCompanyId(), finalActive));
 			}
 			else {
 				_searchContainer.setResultsAndTotal(
@@ -257,8 +257,8 @@ public class CommerceCurrenciesDisplayContext {
 		else {
 			LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
-			if (activeNavigation != null) {
-				params.put(CPField.ACTIVE, activeNavigation);
+			if (active != null) {
+				params.put(CPField.ACTIVE, active);
 			}
 
 			_searchContainer.setResultsAndTotal(

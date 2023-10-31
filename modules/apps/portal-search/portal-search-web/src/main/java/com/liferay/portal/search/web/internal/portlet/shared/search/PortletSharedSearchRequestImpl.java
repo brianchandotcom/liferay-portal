@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -211,6 +212,28 @@ public class PortletSharedSearchRequestImpl
 			}
 		}
 
+		if ((!layout.isTypeAssetDisplay() && !layout.isTypeContent()) ||
+			(layout.getMasterLayoutPlid() <= 0)) {
+
+			return portlets;
+		}
+
+		Layout masterLayout = _layoutLocalService.fetchLayout(
+			layout.getMasterLayoutPlid());
+
+		if (masterLayout == null) {
+			return portlets;
+		}
+
+		instantiatedPortlets = _getInstantiatedPortlets(
+			masterLayout, companyId);
+
+		for (Portlet instantiatedPortlet : instantiatedPortlets) {
+			if (!portlets.contains(instantiatedPortlet)) {
+				portlets.add(instantiatedPortlet);
+			}
+		}
+
 		return portlets;
 	}
 
@@ -286,6 +309,9 @@ public class PortletSharedSearchRequestImpl
 		return new PortletSharedSearchResponseImpl(
 			searchResponseImpl, portletSharedRequestHelper);
 	}
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	private ServiceTrackerMap<String, PortletSharedSearchContributor>
 		_serviceTrackerMap;

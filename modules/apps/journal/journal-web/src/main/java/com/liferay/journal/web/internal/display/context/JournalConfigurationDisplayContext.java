@@ -112,9 +112,43 @@ public class JournalConfigurationDisplayContext {
 		}
 
 		_navigation = ParamUtil.getString(
-			_renderRequest, "navigation", "email-from");
+			_renderRequest, "navigation", "structures");
 
 		return _navigation;
+	}
+
+	public VerticalNavItemList getNotificationsVerticalNavItemList() {
+		VerticalNavItemList verticalNavItemList =
+			VerticalNavItemListBuilder.add(
+				_getVerticalNavItemUnsafeConsumer("email-from")
+			).add(
+				_getVerticalNavItemUnsafeConsumer("web-content-added")
+			).add(
+				_getVerticalNavItemUnsafeConsumer("web-content-expired")
+			).add(
+				_getVerticalNavItemUnsafeConsumer(
+					"web-content-moved-from-folder")
+			).add(
+				_getVerticalNavItemUnsafeConsumer("web-content-moved-to-folder")
+			).add(
+				_getVerticalNavItemUnsafeConsumer("web-content-review")
+			).add(
+				_getVerticalNavItemUnsafeConsumer("web-content-updated")
+			).build();
+
+		if (JournalUtil.hasWorkflowDefinitionsLinks(_themeDisplay)) {
+			verticalNavItemList.add(
+				_getVerticalNavItemUnsafeConsumer(
+					"web-content-approval-denied"));
+			verticalNavItemList.add(
+				_getVerticalNavItemUnsafeConsumer(
+					"web-content-approval-granted"));
+			verticalNavItemList.add(
+				_getVerticalNavItemUnsafeConsumer(
+					"web-content-approval-requested"));
+		}
+
+		return verticalNavItemList;
 	}
 
 	public PortletURL getPortletURL() {
@@ -170,42 +204,14 @@ public class JournalConfigurationDisplayContext {
 				ddmStructureItemSelectorCriterion));
 	}
 
-	public String getTitle() {
-		return LanguageUtil.get(_httpServletRequest, getNavigation());
+	public VerticalNavItemList getSettingsVerticalNavItemList() {
+		return VerticalNavItemListBuilder.add(
+			_getVerticalNavItemUnsafeConsumer("structures")
+		).build();
 	}
 
-	public VerticalNavItemList getVerticalNavItemList() {
-		VerticalNavItemList verticalNavItemList =
-			VerticalNavItemListBuilder.add(
-				_getVerticalNavItemUnsafeConsumer("email-from")
-			).add(
-				_getVerticalNavItemUnsafeConsumer("web-content-added")
-			).add(
-				_getVerticalNavItemUnsafeConsumer("web-content-expired")
-			).add(
-				_getVerticalNavItemUnsafeConsumer(
-					"web-content-moved-from-folder")
-			).add(
-				_getVerticalNavItemUnsafeConsumer("web-content-moved-to-folder")
-			).add(
-				_getVerticalNavItemUnsafeConsumer("web-content-review")
-			).add(
-				_getVerticalNavItemUnsafeConsumer("web-content-updated")
-			).build();
-
-		if (JournalUtil.hasWorkflowDefinitionsLinks(_themeDisplay)) {
-			verticalNavItemList.add(
-				_getVerticalNavItemUnsafeConsumer(
-					"web-content-approval-denied"));
-			verticalNavItemList.add(
-				_getVerticalNavItemUnsafeConsumer(
-					"web-content-approval-granted"));
-			verticalNavItemList.add(
-				_getVerticalNavItemUnsafeConsumer(
-					"web-content-approval-requested"));
-		}
-
-		return verticalNavItemList;
+	public String getTitle() {
+		return LanguageUtil.get(_httpServletRequest, getNavigation());
 	}
 
 	private UnsafeConsumer<VerticalNavItem, Exception>

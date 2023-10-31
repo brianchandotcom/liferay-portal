@@ -24,11 +24,19 @@ portletDisplay.setURLBack(journalConfigurationDisplayContext.getBackURL());
 			lg="3"
 		>
 			<p class="small text-uppercase">
+				<liferay-ui:message key="settings" />
+			</p>
+
+			<clay:vertical-nav
+				verticalNavItems="<%= journalConfigurationDisplayContext.getSettingsVerticalNavItemList() %>"
+			/>
+
+			<p class="small text-uppercase">
 				<liferay-ui:message key="notifications" />
 			</p>
 
 			<clay:vertical-nav
-				verticalNavItems="<%= journalConfigurationDisplayContext.getVerticalNavItemList() %>"
+				verticalNavItems="<%= journalConfigurationDisplayContext.getNotificationsVerticalNavItemList() %>"
 			/>
 		</clay:col>
 
@@ -83,6 +91,13 @@ portletDisplay.setURLBack(journalConfigurationDisplayContext.getBackURL());
 					<liferay-ui:error embed="<%= false %>" key="emailArticleUpdatedSubject" message="please-enter-a-valid-subject" />
 
 					<c:choose>
+						<c:when test='<%= Objects.equals(journalConfigurationDisplayContext.getNavigation(), "structures") %>'>
+							<div class="c-px-4">
+								<div class="sheet-text">
+									<liferay-ui:message key="select-the-structures-you-want-to-highlight-in-web-content-administration-to-quickly-access-and-manage-all-its-contents" />
+								</div>
+							</div>
+						</c:when>
 						<c:when test='<%= Objects.equals(journalConfigurationDisplayContext.getNavigation(), "web-content-added") %>'>
 							<div class="c-px-1">
 								<liferay-frontend:email-notification-settings

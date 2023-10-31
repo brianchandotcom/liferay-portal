@@ -5,7 +5,7 @@
 
 import {openModal, openSimpleInputModal} from 'frontend-js-web';
 
-import openDeletePageTemplateModal from '../modal/openDeletePageTemplateModal';
+import openDeletePageTemplateModal from '../commands/openDeletePageTemplateModal';
 
 const ACTIONS = {
 	deleteLayoutPageTemplateCollection({

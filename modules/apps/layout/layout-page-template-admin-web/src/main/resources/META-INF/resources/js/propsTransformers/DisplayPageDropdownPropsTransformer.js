@@ -11,9 +11,9 @@ import {
 	openSimpleInputModal,
 } from 'frontend-js-web';
 
+import openContentTypeModal from '../commands/openContentTypeModal';
+import openDeletePageTemplateModal from '../commands/openDeletePageTemplateModal';
 import {MODAL_TYPES} from '../constants/modalTypes';
-import openContentTypeModal from '../modal/openContentTypeModal';
-import openDeletePageTemplateModal from '../modal/openDeletePageTemplateModal';
 
 const ACTIONS = {
 	changeContentType({changeContentTypeURL, mappingTypes}, namespace) {

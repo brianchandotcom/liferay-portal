@@ -5,7 +5,7 @@
 
 import {openSimpleInputModal} from 'frontend-js-web';
 
-import openDeletePageTemplateModal from '../modal/openDeletePageTemplateModal';
+import openDeletePageTemplateModal from '../commands/openDeletePageTemplateModal';
 
 export default function propsTransformer({portletNamespace, ...otherProps}) {
 	const deleteLayoutPageTemplateEntries = () => {

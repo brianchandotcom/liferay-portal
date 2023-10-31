@@ -5,7 +5,7 @@
 
 import {getSpritemap} from '@liferay/frontend-icons-web';
 
-import openContentTypeModal from '../modal/openContentTypeModal';
+import openContentTypeModal from '../commands/openContentTypeModal';
 
 export default function SelectDisplayPageMasterLayoutVerticalCardPropsTransformer({
 	additionalProps: {addDisplayPageUrl, mappingTypes, title},

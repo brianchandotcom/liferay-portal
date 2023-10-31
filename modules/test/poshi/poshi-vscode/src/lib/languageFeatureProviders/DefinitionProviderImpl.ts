@@ -83,6 +83,10 @@ export class DefinitionProviderImpl implements vscode.DefinitionProvider {
 						`**/${fileName}.{function,macro}`,
 						`(?:macro|function) (${methodName}) \\{`
 					),
+					getMethodLocations(
+						`**/${fileName}.macro`,
+						`macro (${methodName})\\(`
+					),
 				]);
 
 				return result.flat();

@@ -39,7 +39,7 @@ public class UserContentRecommendationIndexer implements RecommendationIndexer {
 
 		if (_indexExists(indexName)) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(String.format("Index %s already exist", indexName));
+				_log.debug("Index " + indexName + " already exist");
 			}
 
 			return;
@@ -55,8 +55,7 @@ public class UserContentRecommendationIndexer implements RecommendationIndexer {
 		_searchEngineAdapter.execute(createIndexRequest);
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				String.format("Index %s created successfully", indexName));
+			_log.debug("Index " + indexName + " created successfully");
 		}
 	}
 
@@ -70,7 +69,7 @@ public class UserContentRecommendationIndexer implements RecommendationIndexer {
 
 		if (!_indexExists(indexName)) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(String.format("Index %s does not exist", indexName));
+				_log.debug("Index " + indexName + " does not exist");
 			}
 
 			return;
@@ -82,8 +81,7 @@ public class UserContentRecommendationIndexer implements RecommendationIndexer {
 		_searchEngineAdapter.execute(deleteIndexRequest);
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				String.format("Index %s dropped successfully", indexName));
+			_log.debug("Index " + indexName + " dropped successfully");
 		}
 	}
 

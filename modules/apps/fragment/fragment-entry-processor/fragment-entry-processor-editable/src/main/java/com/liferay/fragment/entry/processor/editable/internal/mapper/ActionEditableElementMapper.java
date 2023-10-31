@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -71,10 +70,10 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 			return;
 		}
 
-		String classNameId = mappedActionJSONObject.getString("classNameId");
-		String classPK = mappedActionJSONObject.getString("classPK");
+		long classNameId = mappedActionJSONObject.getLong("classNameId");
+		long classPK = mappedActionJSONObject.getLong("classPK");
 
-		if (Validator.isNull(classNameId) || Validator.isNull(classPK)) {
+		if ((classNameId == 0) || (classPK == 0)) {
 			InfoItemReference infoItemReference =
 				fragmentEntryProcessorContext.getContextInfoItemReference();
 
@@ -82,8 +81,8 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 				return;
 			}
 
-			classNameId = String.valueOf(
-				_portal.getClassNameId(infoItemReference.getClassName()));
+			classNameId = _portal.getClassNameId(
+				infoItemReference.getClassName());
 
 			InfoItemIdentifier infoItemIdentifier =
 				infoItemReference.getInfoItemIdentifier();
@@ -92,25 +91,24 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 				ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
 					(ClassPKInfoItemIdentifier)infoItemIdentifier;
 
-				classPK = String.valueOf(
-					classPKInfoItemIdentifier.getClassPK());
+				classPK = classPKInfoItemIdentifier.getClassPK();
 			}
 
-			if (Validator.isNull(classNameId) || Validator.isNull(classPK)) {
+			if ((classNameId == 0) || (classPK == 0)) {
 				return;
 			}
 		}
 
-		element.attr("data-lfr-class-name-id", classNameId);
-		element.attr("data-lfr-class-pk", classPK);
+		element.attr("data-lfr-class-name-id", String.valueOf(classNameId));
+		element.attr("data-lfr-class-pk", String.valueOf(classPK));
 		element.attr("data-lfr-field-id", fieldId);
 
 		_addDataAtributes(
-			GetterUtil.getLong(classNameId), GetterUtil.getLong(classPK),
-			element, configJSONObject.getJSONObject("onError"), "error");
+			classNameId, classPK, element,
+			configJSONObject.getJSONObject("onError"), "error");
 		_addDataAtributes(
-			GetterUtil.getLong(classNameId), GetterUtil.getLong(classPK),
-			element, configJSONObject.getJSONObject("onSuccess"), "success");
+			classNameId, classPK, element,
+			configJSONObject.getJSONObject("onSuccess"), "success");
 	}
 
 	private void _addDataAtributes(

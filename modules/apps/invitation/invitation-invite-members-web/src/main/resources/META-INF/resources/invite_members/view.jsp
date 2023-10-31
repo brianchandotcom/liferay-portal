@@ -16,32 +16,15 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 		<liferay-ui:message key="this-application-will-only-function-when-placed-on-a-site-page" />
 	</c:when>
 	<c:when test="<%= GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.UPDATE) %>">
-		<portlet:renderURL var="inviteURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="mvcPath" value="/invite_members/view_invite.jsp" />
-		</portlet:renderURL>
 
-		<aui:a cssClass="btn btn-secondary" href="javascript:void(0);" id="inviteMembersButton" label="invite-members" />
+		<%
+		InviteMembersDisplayContext inviteMembersDisplayContext = new InviteMembersDisplayContext(renderRequest, renderResponse);
+		%>
 
-		<aui:script position="inline">
-			var <portlet:namespace />inviteMembersButton = document.getElementById(
-				'<portlet:namespace />inviteMembersButton'
-			);
-
-			<portlet:namespace />inviteMembersButton.addEventListener('click', (event) => {
-				Liferay.Util.openWindow({
-					dialog: {
-						cssClass: 'so-portlet-invite-members',
-						destroyOnHide: true,
-						width: 700,
-					},
-					dialogIframe: {
-						bodyCssClass: 'dialog-with-footer',
-					},
-					title: '<%= portletDisplay.getTitle() %>',
-					uri: '<%= HtmlUtil.escapeJS(inviteURL) %>',
-				});
-			});
-		</aui:script>
+		<react:component
+			module="invite_members/js/InviteMembers"
+			props="<%= inviteMembersDisplayContext.getInviteMembersProps() %>"
+		/>
 	</c:when>
 	<c:otherwise>
 		<aui:script>

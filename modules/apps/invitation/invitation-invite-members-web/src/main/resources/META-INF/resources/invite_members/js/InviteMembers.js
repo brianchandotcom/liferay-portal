@@ -1,0 +1,536 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import {Option, Picker, Text} from '@clayui/core';
+import ClayForm, {ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
+import ClayList from '@clayui/list';
+import ClayModal, {useModal} from '@clayui/modal';
+import ClayTable from '@clayui/table';
+import {ClayTooltipProvider} from '@clayui/tooltip';
+import {debounce, fetch, sub} from 'frontend-js-web';
+import React, {useCallback, useEffect, useState} from 'react';
+
+export default function InviteMembers({
+	assignRolesPermission,
+	getAvailableUsersURL,
+	manageTeamsPermission,
+	namespace,
+	roles,
+	scopeGroupId,
+	sendInvitesURL,
+	teams,
+}) {
+	const {observer, onOpenChange, open} = useModal();
+
+	const [invitedEmails, setInvitedEmails] = useState([]);
+	const [invitedUsers, setInvitedUsers] = useState([]);
+	const [invitedUsersIds, setInvitedUsersIds] = useState([]);
+	const [roleId, setRoleId] = useState('');
+	const [teamId, setTeamId] = useState('');
+	const [numTotalUsers, setNumTotalUsers] = useState(0);
+	const [users, setUsers] = useState([]);
+	const [viewMoreCount, setViewMoreCount] = useState(1);
+
+	const fetchAvailableUsers = useCallback(
+		({end = 50, keywords = ''} = {}) => {
+			const url = new URL(getAvailableUsersURL);
+
+			const body = new URLSearchParams(
+				Liferay.Util.ns(namespace, {
+					end,
+					keywords,
+					start: 0,
+				})
+			);
+
+			fetch(url, {
+				body,
+				method: 'POST',
+			})
+				.then((response) => response.json())
+				.then(({count, users}) => {
+					setNumTotalUsers(count);
+					setUsers(users);
+				});
+		},
+		[getAvailableUsersURL, namespace]
+	);
+
+	useEffect(() => {
+		fetchAvailableUsers({end: viewMoreCount * 50});
+	}, [fetchAvailableUsers, viewMoreCount]);
+
+	const onAddEmailClicklHandler = () => {
+		const emailValue = document.getElementById(`${namespace}emailAddress`)
+			.value;
+
+		if (
+			emailValue &&
+			!invitedEmails.find((email) => email === emailValue)
+		) {
+			setInvitedEmails([...invitedEmails, emailValue]);
+		}
+	};
+
+	const onUserClickHandler = (user) => {
+		if (
+			invitedUsers.find(
+				(invitedUser) => invitedUser.userId === user.userId
+			)
+		) {
+			removeInvitedUser(user);
+		}
+		else {
+			setInvitedUsers([...invitedUsers, user]);
+
+			setInvitedUsersIds([...invitedUsersIds, user.userId]);
+		}
+	};
+
+	const removeInvitedUser = ({userId}) => {
+		setInvitedUsers(
+			invitedUsers.filter((invitedUser) => invitedUser.userId !== userId)
+		);
+
+		setInvitedUsersIds(
+			invitedUsersIds.filter(
+				(invitedUsersId) => invitedUsersId !== userId
+			)
+		);
+	};
+
+	const searchUsersCallback = (event) => {
+		const debouncedFetch = debounce((keywords) => {
+			fetchAvailableUsers({keywords});
+		}, 1000);
+
+		debouncedFetch(event.target.value);
+	};
+
+	const Users = () => {
+		return users.map((user) => {
+			return (
+				<div key={user.userId}>
+					<ClayList.Item className="border-0 p-1" flex>
+						<ClayList.ItemField className="justify-content-center">
+							{invitedUsers.find(
+								(invitedUser) =>
+									invitedUser.userId === user.userId
+							) ? (
+								<ClayButtonWithIcon
+									aria-label={sub(
+										Liferay.Language.get('remove-x'),
+										Liferay.Language.get('user')
+									)}
+									className="lfr-portal-tooltip"
+									displayType="unstyled"
+									onClick={() => onUserClickHandler(user)}
+									symbol="times"
+									title={Liferay.Language.get('remove')}
+								/>
+							) : user.hasPendingMemberRequest ? (
+								<ClayButtonWithIcon
+									aria-label={Liferay.Language.get(
+										'user-already-invited'
+									)}
+									className="lfr-portal-tooltip"
+									displayType="unstyled"
+									onClick={() => onUserClickHandler(user)}
+									symbol="check"
+									title={Liferay.Language.get(
+										'user-already-invited'
+									)}
+								/>
+							) : (
+								<ClayButtonWithIcon
+									aria-label={sub(
+										Liferay.Language.get('add-x'),
+										Liferay.Language.get('user')
+									)}
+									className="lfr-portal-tooltip"
+									displayType="unstyled"
+									onClick={() => onUserClickHandler(user)}
+									symbol="plus"
+									title={Liferay.Language.get('add')}
+								/>
+							)}
+						</ClayList.ItemField>
+
+						<ClayList.ItemField className="justify-content-center">
+							{user.userFullName}
+						</ClayList.ItemField>
+
+						<ClayList.ItemField className="justify-content-center">
+							<Text color="muted" size={2}>
+								{user.userEmailAddress}
+							</Text>
+						</ClayList.ItemField>
+					</ClayList.Item>
+				</div>
+			);
+		});
+	};
+
+	const InvitedEmails = () => {
+		return (
+			<ClayTable>
+				<ClayTable.Body>
+					{invitedEmails.map((invitedEmail) => {
+						return (
+							<ClayTable.Row key={invitedEmail}>
+								<ClayTable.Cell>
+									<Text size={3} weight="semi-bold">
+										{invitedEmail}
+									</Text>
+								</ClayTable.Cell>
+
+								<ClayTable.Cell className="text-right">
+									<ClayButtonWithIcon
+										aria-label={sub(
+											Liferay.Language.get('remove-x'),
+											[invitedEmail]
+										)}
+										className="lfr-portal-tooltip"
+										displayType="unstyled"
+										onClick={() => {
+											setInvitedEmails(
+												invitedEmails.filter(
+													(emailToRemove) =>
+														emailToRemove !==
+														invitedEmail
+												)
+											);
+										}}
+										symbol="times"
+										title={Liferay.Language.get('remove')}
+									/>
+								</ClayTable.Cell>
+							</ClayTable.Row>
+						);
+					})}
+				</ClayTable.Body>
+			</ClayTable>
+		);
+	};
+
+	const InvitedUsers = () => {
+		return (
+			<ClayTable>
+				<ClayTable.Body>
+					{invitedUsers.map((invitedUser) => {
+						return (
+							<ClayTable.Row key={invitedUser.userId}>
+								<ClayTable.Cell>
+									<p className="c-mb-0 font-weight-semi-bold small">
+										{invitedUser.userFullName}
+									</p>
+								</ClayTable.Cell>
+
+								<ClayTable.Cell>
+									{invitedUser.userEmailAddress}
+								</ClayTable.Cell>
+
+								<ClayTable.Cell className="text-right">
+									<ClayButtonWithIcon
+										aria-label={sub(
+											Liferay.Language.get('remove-x'),
+											[invitedUser.userFullName]
+										)}
+										className="lfr-portal-tooltip"
+										displayType="unstyled"
+										onClick={() => {
+											removeInvitedUser(invitedUser);
+										}}
+										symbol="times"
+										title={Liferay.Language.get('remove')}
+									/>
+								</ClayTable.Cell>
+							</ClayTable.Row>
+						);
+					})}
+				</ClayTable.Body>
+			</ClayTable>
+		);
+	};
+
+	return (
+		<>
+			{open && (
+				<ClayModal
+					className="so-portlet-invite-members"
+					observer={observer}
+					size="md"
+				>
+					<ClayModal.Header>
+						{Liferay.Language.get('invite-members')}
+					</ClayModal.Header>
+
+					<ClayModal.Body scrollable>
+						<ClayForm
+							action={sendInvitesURL}
+							id={`${namespace}fm`}
+							method="post"
+							name={`${namespace}fm`}
+						>
+							<ClayInput
+								name={`${namespace}groupId`}
+								type="hidden"
+								value={scopeGroupId}
+							/>
+
+							<ClayInput
+								name={`${namespace}receiverUserIds`}
+								type="hidden"
+								value={invitedUsersIds.join(',')}
+							/>
+
+							<ClayInput
+								name={`${namespace}receiverEmailAddresses`}
+								type="hidden"
+								value={invitedEmails.join(',')}
+							/>
+
+							<ClayInput
+								name={`${namespace}invitedRoleId`}
+								type="hidden"
+								value={roleId}
+							/>
+
+							<ClayInput
+								name={`${namespace}invitedTeamId`}
+								type="hidden"
+								value={teamId}
+							/>
+
+							<div className="sheet">
+								<div className="c-mb-3">
+									<label>
+										{Liferay.Language.get('find-members')}
+									</label>
+
+									<p className="small text-muted">
+										<ClayIcon
+											className="ml-1 mr-1"
+											symbol="check"
+										/>
+
+										<span>
+											{Liferay.Language.get(
+												'previous-invitation-was-sent'
+											)}
+										</span>
+									</p>
+
+									<ClayForm.Group className="input-text-wrapper">
+										<ClayInput
+											id={`${namespace}inviteUserSearch`}
+											name={`${namespace}userName`}
+											onChange={(event) => {
+												searchUsersCallback(event);
+											}}
+											placeholder={Liferay.Language.get(
+												'search'
+											)}
+										/>
+									</ClayForm.Group>
+
+									<div
+										className="search"
+										id={`${namespace}membersList`}
+									>
+										{!users.length && (
+											<Text color="muted" size={3}>
+												{Liferay.Language.get(
+													'there-are-no-users-to-invite'
+												)}
+											</Text>
+										)}
+
+										{!!users.length && <Users />}
+
+										{numTotalUsers / (viewMoreCount * 50) >
+											1 && (
+											<div className="d-flex justify-content-center">
+												<ClayButton
+													displayType="secondary"
+													onClick={() => {
+														setViewMoreCount(
+															viewMoreCount + 1
+														);
+													}}
+												>
+													{Liferay.Language.get(
+														'view-more'
+													)}
+												</ClayButton>
+											</div>
+										)}
+									</div>
+
+									<label>
+										{Liferay.Language.get(
+											'email-addresses-to-send-invite'
+										)}
+
+										<ClayTooltipProvider>
+											<span
+												data-tooltip-align="top"
+												title={Liferay.Language.get(
+													'to-add,-click-members-on-the-top-list'
+												)}
+											>
+												<ClayIcon
+													className="ml-1 text-secondary"
+													symbol="question-circle-full"
+												/>
+											</span>
+										</ClayTooltipProvider>
+									</label>
+
+									<div id={`${namespace}invitedMembersList`}>
+										{!!invitedUsers && <InvitedUsers />}
+									</div>
+
+									<div className="button-holder controls">
+										<ClayForm.Group>
+											<label
+												htmlFor={`${namespace}emailAddress`}
+											>
+												{Liferay.Language.get(
+													'invite-by-email'
+												)}
+											</label>
+
+											<ClayInput
+												id={`${namespace}emailAddress`}
+												type="text"
+											/>
+										</ClayForm.Group>
+
+										<ClayButton
+											className="c-mb-3"
+											displayType="secondary"
+											name={`${namespace}emailButton`}
+											onClick={() =>
+												onAddEmailClicklHandler()
+											}
+											type="button"
+										>
+											{Liferay.Language.get(
+												'add-email-address'
+											)}
+										</ClayButton>
+									</div>
+
+									<label>
+										{Liferay.Language.get(
+											'email-addresses-to-send-invite'
+										)}
+									</label>
+
+									<div id={`${namespace}invitedEmailList`}>
+										{!!invitedEmails && <InvitedEmails />}
+									</div>
+
+									{roles.length !== 0 &&
+										assignRolesPermission && (
+											<ClayForm.Group>
+												<label
+													htmlFor="roleSelector"
+													id="roleSelectorLabel"
+												>
+													{Liferay.Language.get(
+														'invite-to-role'
+													)}
+												</label>
+
+												<Picker
+													aria-labelledby="roleSelectorLabel"
+													id="roleSelector"
+													items={roles}
+													onSelectionChange={(
+														roleId
+													) => setRoleId(roleId)}
+												>
+													{({label, value}) => (
+														<Option
+															key={value}
+															textValue={label}
+														>
+															{label}
+														</Option>
+													)}
+												</Picker>
+											</ClayForm.Group>
+										)}
+
+									{teams.length !== 0 &&
+										manageTeamsPermission && (
+											<ClayForm.Group>
+												<label
+													htmlFor="teamSelector"
+													id="teamSelectorLabel"
+												>
+													{Liferay.Language.get(
+														'invite-to-team'
+													)}
+												</label>
+
+												<Picker
+													aria-labelledby="teamSelectorLabel"
+													id="teamSelector"
+													items={teams}
+													onSelectionChange={(
+														teamId
+													) => setTeamId(teamId)}
+												>
+													{({label, value}) => (
+														<Option
+															key={value}
+															textValue={label}
+														>
+															{label}
+														</Option>
+													)}
+												</Picker>
+											</ClayForm.Group>
+										)}
+								</div>
+							</div>
+						</ClayForm>
+					</ClayModal.Body>
+
+					<ClayModal.Footer
+						last={
+							<ClayButton.Group spaced>
+								<ClayButton
+									displayType="secondary"
+									onClick={() => onOpenChange(false)}
+								>
+									{Liferay.Language.get('cancel')}
+								</ClayButton>
+
+								<ClayButton
+									form={`${namespace}fm`}
+									type="submit"
+								>
+									{Liferay.Language.get('send-invitations')}
+								</ClayButton>
+							</ClayButton.Group>
+						}
+					/>
+				</ClayModal>
+			)}
+			<ClayButton
+				displayType="secondary"
+				onClick={() => onOpenChange(true)}
+			>
+				{Liferay.Language.get('invite-members')}
+			</ClayButton>
+		</>
+	);
+}

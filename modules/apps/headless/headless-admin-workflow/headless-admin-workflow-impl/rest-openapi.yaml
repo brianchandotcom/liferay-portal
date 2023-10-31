@@ -724,6 +724,11 @@ paths:
                   schema:
                       type: string
                 - in: query
+                  name: contentFormat
+                  schema:
+                      enum: [JSON, XML]
+                      type: string
+                - in: query
                   name: version
                   schema:
                       type: integer

@@ -33,10 +33,10 @@ function retrieveAccountRoles(accountId) {
 }
 
 function retrieveDefinitionRequest(definitionName, versionNumber) {
-	let url = `${workflowBaseURL}/workflow-definitions/by-name/${definitionName}`;
+	let url = `${workflowBaseURL}/workflow-definitions/by-name/${definitionName}?contentFormat=xml`;
 
 	if (versionNumber) {
-		url = `${url}?version=${versionNumber}`;
+		url = `${url}&version=${versionNumber}`;
 	}
 
 	return fetch(url, {

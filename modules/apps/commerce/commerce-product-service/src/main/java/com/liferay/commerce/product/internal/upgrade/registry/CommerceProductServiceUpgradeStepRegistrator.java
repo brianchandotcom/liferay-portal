@@ -31,6 +31,7 @@ import com.liferay.commerce.product.internal.upgrade.v2_5_0.FriendlyURLEntryUpgr
 import com.liferay.commerce.product.internal.upgrade.v3_9_2.MiniumSiteInitializerUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v4_0_0.util.CommerceChannelAccountEntryRelTable;
 import com.liferay.commerce.product.internal.upgrade.v4_0_2.CommerceRepositoryUpgradeProcess;
+import com.liferay.commerce.product.internal.upgrade.v5_11_0.CPAttachmentFileEntryGalleryEnabledUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v5_4_0.CommercePermissionUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v5_5_0.util.CPInstanceUnitOfMeasureTable;
 import com.liferay.counter.kernel.service.CounterLocalService;
@@ -406,6 +407,10 @@ public class CommerceProductServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.alterColumnName(
 				"CPOption", "DDMFormFieldTypeName",
 				"commerceOptionTypeKey VARCHAR(75) null"));
+
+		registry.register(
+			"5.10.0", "5.11.0",
+			new CPAttachmentFileEntryGalleryEnabledUpgradeProcess());
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");

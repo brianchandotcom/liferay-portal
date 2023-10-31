@@ -530,11 +530,13 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			SearchSearchRequest searchSearchRequest = createSearchSearchRequest(
 				searchRequest, searchContext, query);
 
-			searchSearchRequest.setSize(
-				Math.min(
-					end - start,
-					_elasticsearchConfigurationWrapper.indexMaxResultWindow() -
-						start));
+			int size = Math.min(
+				end - start,
+				_elasticsearchConfigurationWrapper.indexMaxResultWindow() -
+					start);
+
+			searchSearchRequest.setSize(size);
+
 			searchSearchRequest.setSorts(searchContext.getSorts());
 			searchSearchRequest.setSorts(searchRequest.getSorts());
 			searchSearchRequest.setStart(start);
@@ -559,7 +561,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 			Document[] documents = hits.getDocs();
 
-			if ((documents.length != 0) || (start == 0)) {
+			if ((documents.length != 0) || (start == 0) || (size < 1)) {
 				break;
 			}
 

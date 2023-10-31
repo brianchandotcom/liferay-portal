@@ -40,31 +40,6 @@ public class DLFileVersionModelListener
 	extends BaseModelListener<DLFileVersion> {
 
 	@Override
-	public void onAfterUpdate(DLFileVersion originalModel, DLFileVersion model)
-		throws ModelListenerException {
-
-		if (Objects.equals(originalModel.getVersion(), model.getVersion()) &&
-			!Objects.equals(
-				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
-				originalModel.getVersion()) &&
-			!Objects.equals(
-				originalModel.getStoreFileName(), model.getStoreFileName())) {
-
-			try {
-				DLFileEntry fileEntry = originalModel.getFileEntry();
-
-				DLStoreUtil.deleteFile(
-					originalModel.getCompanyId(),
-					originalModel.getRepositoryId(), fileEntry.getName(),
-					originalModel.getStoreFileName());
-			}
-			catch (PortalException portalException) {
-				_log.error(portalException);
-			}
-		}
-	}
-
-	@Override
 	public void onAfterRemove(DLFileVersion dlFileVersion)
 		throws ModelListenerException {
 
@@ -91,6 +66,31 @@ public class DLFileVersionModelListener
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
+		}
+	}
+
+	@Override
+	public void onAfterUpdate(DLFileVersion originalModel, DLFileVersion model)
+		throws ModelListenerException {
+
+		if (Objects.equals(originalModel.getVersion(), model.getVersion()) &&
+			!Objects.equals(
+				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
+				originalModel.getVersion()) &&
+			!Objects.equals(
+				originalModel.getStoreFileName(), model.getStoreFileName())) {
+
+			try {
+				DLFileEntry fileEntry = originalModel.getFileEntry();
+
+				DLStoreUtil.deleteFile(
+					originalModel.getCompanyId(),
+					originalModel.getRepositoryId(), fileEntry.getName(),
+					originalModel.getStoreFileName());
+			}
+			catch (PortalException portalException) {
+				_log.error(portalException);
+			}
 		}
 	}
 

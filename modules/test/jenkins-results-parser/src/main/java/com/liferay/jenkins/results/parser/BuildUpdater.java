@@ -16,6 +16,8 @@ public interface BuildUpdater {
 
 	public void reinvoke();
 
+	public void reset();
+
 	public void update();
 
 }

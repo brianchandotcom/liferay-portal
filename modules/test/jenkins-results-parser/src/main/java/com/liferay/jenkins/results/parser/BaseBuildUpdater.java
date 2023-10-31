@@ -5,6 +5,9 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Michael Hashimoto
  */
@@ -13,6 +16,10 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 	@Override
 	public Build getBuild() {
 		return _build;
+	}
+
+	@Override
+	public void reset() {
 	}
 
 	@Override
@@ -84,17 +91,15 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 	protected void runQueued() {
 		_build.setStatus("queued");
 
-		if (isBuildQueued()) {
-			return;
-		}
-
 		if (isBuildRunning()) {
 			runRunning();
 
 			return;
 		}
 
-		_build.setStatus("missing");
+		if (!isBuildQueued()) {
+			_build.setStatus("missing");
+		}
 	}
 
 	protected void runReporting() {
@@ -189,9 +194,10 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 			return false;
 		}
 
-		for (SlaveOfflineRule slaveOfflineRule :
-				SlaveOfflineRule.getSlaveOfflineRules()) {
+		List<SlaveOfflineRule> slaveOfflineRules = new ArrayList<>(
+			SlaveOfflineRule.getSlaveOfflineRules());
 
+		for (SlaveOfflineRule slaveOfflineRule : slaveOfflineRules) {
 			if (!slaveOfflineRule.matches(build)) {
 				continue;
 			}

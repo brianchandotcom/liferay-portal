@@ -182,24 +182,7 @@ public class OpenAPIUtil {
 					propertySchemas = items.getPropertySchemas();
 				}
 				else if (schema.getAllOfSchemas() != null) {
-					boolean anyMissing = false;
-
-					for (Schema allOfSchema : schema.getAllOfSchemas()) {
-						if (allOfSchema.getReference() == null) {
-							continue;
-						}
-
-						if (!allSchemas.containsKey(
-								OpenAPIParserUtil.getReferenceName(
-									allOfSchema.getReference()))) {
-
-							anyMissing = true;
-
-							break;
-						}
-					}
-
-					if (anyMissing) {
+					if (_isAnyAllOfSchemasMissing(schema, allSchemas)) {
 						queue.add(
 							Collections.singletonMap(
 								entry.getKey(), entry.getValue()));
@@ -209,6 +192,9 @@ public class OpenAPIUtil {
 
 					propertySchemas = OpenAPIParserUtil.getAllOfPropertySchemas(
 						schema, allSchemas);
+
+					schema.setAllOfSchemas(null);
+					schema.setPropertySchemas(propertySchemas);
 				}
 				else {
 					propertySchemas = schema.getPropertySchemas();
@@ -316,6 +302,37 @@ public class OpenAPIUtil {
 			allExternalSchemas.putAll(externalSchemaMap);
 			queue.add(externalSchemaMap);
 		}
+	}
+
+	private static boolean _isAnyAllOfSchemasMissing(
+		Schema schema, Map<String, Schema> schemas) {
+
+		if (schema.getAllOfSchemas() != null) {
+			for (Schema allOfSchema : schema.getAllOfSchemas()) {
+				if (allOfSchema.getReference() == null) {
+					continue;
+				}
+
+				if (!schemas.containsKey(
+						OpenAPIParserUtil.getReferenceName(
+							allOfSchema.getReference()))) {
+
+					return true;
+				}
+			}
+		}
+
+		if (schema.getPropertySchemas() != null) {
+			Map<String, Schema> propertySchemas = schema.getPropertySchemas();
+
+			for (Schema propertySchema : propertySchemas.values()) {
+				if (_isAnyAllOfSchemasMissing(propertySchema, schemas)) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	private static final Pattern _leadingUnderscorePattern = Pattern.compile(

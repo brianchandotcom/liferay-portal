@@ -136,6 +136,27 @@ public class ProjectTemplatesPanelAppTest
 
 		testNotContains(gradleProjectDir, "build.gradle", "version: \"[0-9].*");
 
+		if (_liferayVersion.startsWith("7.4")) {
+			testContains(
+				gradleProjectDir,
+				"src/main/java/gradle/test/application/list/FooPanelApp.java",
+				"public Portlet getPortlet(");
+			testNotContains(
+				gradleProjectDir,
+				"src/main/java/gradle/test/application/list/FooPanelApp.java",
+				"public void setPortlet(");
+		}
+		else {
+			testContains(
+				gradleProjectDir,
+				"src/main/java/gradle/test/application/list/FooPanelApp.java",
+				"public void setPortlet(");
+			testNotContains(
+				gradleProjectDir,
+				"src/main/java/gradle/test/application/list/FooPanelApp.java",
+				"public Portlet getPortlet(");
+		}
+
 		File mavenWorkspaceDir = buildWorkspace(
 			temporaryFolder, "maven", "mavenWS", _liferayVersion,
 			mavenExecutor);

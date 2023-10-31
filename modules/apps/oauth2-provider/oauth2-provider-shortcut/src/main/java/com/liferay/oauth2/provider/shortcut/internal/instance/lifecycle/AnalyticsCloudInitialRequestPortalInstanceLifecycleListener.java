@@ -77,7 +77,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PortalInstanceLifecycleListener.class
 )
-public class AnalyticsCloudPortalInstanceLifecycleListener
+public class AnalyticsCloudInitialRequestPortalInstanceLifecycleListener
 	extends InitialRequestPortalInstanceLifecycleListener {
 
 	@Activate

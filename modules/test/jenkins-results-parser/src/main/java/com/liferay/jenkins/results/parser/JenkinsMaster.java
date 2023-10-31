@@ -149,6 +149,68 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 			getOnlineJenkinsSlavesCount();
 	}
 
+	public List<JSONObject> getBuildJSONObjects(String jobName) {
+		synchronized (_buildJSONObjectsMap) {
+			List<JSONObject> buildsJSONObjects = _buildJSONObjectsMap.get(
+				jobName);
+			Long buildsUpdateTime = _buildsUpdateTimes.get(jobName);
+
+			if ((buildsJSONObjects != null) && (buildsUpdateTime != null)) {
+				long currentTime =
+					JenkinsResultsParserUtil.getCurrentTimeMillis();
+
+				long buildUpdateDuration = currentTime - buildsUpdateTime;
+
+				if (buildUpdateDuration <= _MAXIMUM_BUILD_UPDATE_DURATION) {
+					return buildsJSONObjects;
+				}
+			}
+
+			buildsJSONObjects = new ArrayList<>();
+
+			int page = 0;
+
+			while (true) {
+				JSONArray buildsJSONArray = _getBuildsJSONArray(jobName, page);
+
+				if (buildsJSONArray.length() == 0) {
+					break;
+				}
+
+				boolean findNextBuild = true;
+
+				for (int i = 0; i < buildsJSONArray.length(); i++) {
+					JSONObject buildsJSONObject = buildsJSONArray.getJSONObject(
+						i);
+
+					buildsJSONObjects.add(buildsJSONObject);
+
+					long buildAge =
+						JenkinsResultsParserUtil.getCurrentTimeMillis() -
+							buildsJSONObject.getLong("timestamp");
+
+					if (buildAge >= _MAXIMUM_BUILD_AGE) {
+						findNextBuild = false;
+
+						break;
+					}
+				}
+
+				if (!findNextBuild) {
+					break;
+				}
+
+				page++;
+			}
+
+			_buildJSONObjectsMap.put(jobName, buildsJSONObjects);
+			_buildsUpdateTimes.put(
+				jobName, JenkinsResultsParserUtil.getCurrentTimeMillis());
+
+			return buildsJSONObjects;
+		}
+	}
+
 	public List<String> getBuildURLs() {
 		return new ArrayList<>(_buildURLs);
 	}
@@ -287,6 +349,60 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 
 	public Map<String, JSONObject> getQueuedBuildURLs() {
 		return new HashMap<>(_queuedBuildURLs);
+	}
+
+	public List<JSONObject> getQueueItemJSONObjects() {
+		synchronized (_queueItemJSONObjects) {
+			if (_queueUpdateTime != null) {
+				long currentTime =
+					JenkinsResultsParserUtil.getCurrentTimeMillis();
+
+				long queueUpdateDuration = currentTime - _queueUpdateTime;
+
+				if (queueUpdateDuration <= _MAXIMUM_QUEUE_UPDATE_DURATION) {
+					System.out.println(
+						"Returned " + _queueItemJSONObjects.size() +
+							" queue items");
+
+					return _queueItemJSONObjects;
+				}
+			}
+
+			_queueItemJSONObjects.clear();
+
+			try {
+				JSONObject jsonObject = JenkinsResultsParserUtil.toJSONObject(
+					JenkinsResultsParserUtil.combine(
+						String.valueOf(getURL()), "/queue/api/json?tree=",
+						"items[actions[parameters[name,value]],id,task[url]]"),
+					false);
+
+				JSONArray queueItemsJSONArray = jsonObject.getJSONArray(
+					"items");
+
+				if (queueItemsJSONArray == null) {
+					_queueUpdateTime =
+						JenkinsResultsParserUtil.getCurrentTimeMillis();
+
+					return _queueItemJSONObjects;
+				}
+
+				for (int i = 0; i < queueItemsJSONArray.length(); i++) {
+					_queueItemJSONObjects.add(
+						queueItemsJSONArray.getJSONObject(i));
+				}
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+
+			System.out.println(
+				"Retrieved " + _queueItemJSONObjects.size() + " queue items");
+
+			_queueUpdateTime = JenkinsResultsParserUtil.getCurrentTimeMillis();
+
+			return _queueItemJSONObjects;
+		}
 	}
 
 	public String getRemoteURL() {
@@ -766,6 +882,38 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		}
 	}
 
+	private JSONArray _getBuildsJSONArray(
+		final String jobName, final int page) {
+
+		Retryable<JSONArray> retryable = new Retryable<JSONArray>(
+			true, 2, 10, true) {
+
+			@Override
+			public JSONArray execute() {
+				String url = JenkinsResultsParserUtil.getLocalURL(
+					JenkinsResultsParserUtil.combine(
+						String.valueOf(getURL()), "/job/", jobName,
+						"/api/json?tree=allBuilds[actions[parameters",
+						"[name,value]],queueId,timestamp,url]{",
+						String.valueOf(page * 100), ",",
+						String.valueOf((page + 1) * 100), "}"));
+
+				try {
+					JSONObject jsonObject =
+						JenkinsResultsParserUtil.toJSONObject(url, false);
+
+					return jsonObject.getJSONArray("allBuilds");
+				}
+				catch (IOException ioException) {
+					throw new RuntimeException(ioException);
+				}
+			}
+
+		};
+
+		return retryable.executeWithRetries();
+	}
+
 	private synchronized int _getRecentBatchSizesTotal() {
 		long currentTimestamp = JenkinsResultsParserUtil.getCurrentTimeMillis();
 		int recentBatchSizesTotal = 0;
@@ -793,6 +941,12 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 
 	private static final long _AVAILABLE_TIMEOUT = 1000 * 60 * 5;
 
+	private static final long _MAXIMUM_BUILD_AGE = 24 * 60 * 60 * 1000;
+
+	private static final long _MAXIMUM_BUILD_UPDATE_DURATION = 30 * 1000;
+
+	private static final long _MAXIMUM_QUEUE_UPDATE_DURATION = 15 * 1000;
+
 	private static final Map<String, JenkinsMaster> _jenkinsMasters =
 		Collections.synchronizedMap(new HashMap<String, JenkinsMaster>());
 	private static final List<String> _jenkinsMastersBlacklist =
@@ -818,6 +972,9 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	private long _availableTimestamp = -1;
 	private final Map<Long, Integer> _batchSizes = new TreeMap<>();
 	private boolean _blacklisted;
+	private final Map<String, List<JSONObject>> _buildJSONObjectsMap =
+		new HashMap<>();
+	private final Map<String, Long> _buildsUpdateTimes = new HashMap<>();
 	private final List<String> _buildURLs = new CopyOnWriteArrayList<>();
 	private final List<DefaultBuild> _defaultBuilds = new ArrayList<>();
 	private JenkinsCohort _jenkinsCohort;
@@ -829,6 +986,8 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	private int _queueCount;
 	private final Map<String, JSONObject> _queuedBuildURLs =
 		Collections.synchronizedMap(new HashMap<String, JSONObject>());
+	private final List<JSONObject> _queueItemJSONObjects = new ArrayList<>();
+	private Long _queueUpdateTime;
 	private int _reportedAvailableSlavesCount;
 	private final Integer _slaveRAM;
 	private final Integer _slavesPerHost;

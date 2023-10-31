@@ -15,9 +15,13 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 
 import java.util.List;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -75,12 +79,41 @@ public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 			long groupId, long userGroupId)
 		throws PortalException {
 
-		for (long userId :
-				_userGroupLocalService.getUserPrimaryKeys(userGroupId)) {
+		Set<Long> userGroupUserIds = SetUtil.fromArray(
+			_userGroupLocalService.getUserPrimaryKeys(userGroupId));
 
-			if (!_groupLocalService.hasUserGroup(userId, groupId)) {
-				_blogsEntryLocalService.unsubscribe(userId, groupId);
+		userGroupUserIds.removeAll(
+			SetUtil.fromArray(_groupLocalService.getUserPrimaryKeys(groupId)));
+
+		long[] organizationIds = _groupLocalService.getOrganizationPrimaryKeys(
+			groupId);
+
+		Group group = _groupLocalService.getGroup(groupId);
+
+		if (group.getOrganizationId() > 0) {
+			organizationIds = ArrayUtil.append(
+				organizationIds, group.getOrganizationId());
+		}
+
+		for (long organizationId : organizationIds) {
+			userGroupUserIds.removeAll(
+				SetUtil.fromArray(
+					_userLocalService.getOrganizationUserIds(organizationId)));
+		}
+
+		for (long userGroupPK :
+				_groupLocalService.getUserGroupPrimaryKeys(groupId)) {
+
+			if (userGroupPK != userGroupId) {
+				userGroupUserIds.removeAll(
+					SetUtil.fromArray(
+						_userGroupLocalService.getUserPrimaryKeys(
+							userGroupPK)));
 			}
+		}
+
+		for (long userId : userGroupUserIds) {
+			_blogsEntryLocalService.unsubscribe(userId, groupId);
 		}
 	}
 
@@ -92,5 +125,8 @@ public class UserGroupModelListener extends BaseModelListener<UserGroup> {
 
 	@Reference
 	private UserGroupLocalService _userGroupLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

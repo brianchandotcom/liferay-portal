@@ -150,6 +150,16 @@ public class AttachmentBase64SerDes {
 			sb.append("\"");
 		}
 
+		if (attachmentBase64.getGalleryEnabled() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"galleryEnabled\": ");
+
+			sb.append(attachmentBase64.getGalleryEnabled());
+		}
+
 		if (attachmentBase64.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -301,6 +311,15 @@ public class AttachmentBase64SerDes {
 				String.valueOf(attachmentBase64.getExternalReferenceCode()));
 		}
 
+		if (attachmentBase64.getGalleryEnabled() == null) {
+			map.put("galleryEnabled", null);
+		}
+		else {
+			map.put(
+				"galleryEnabled",
+				String.valueOf(attachmentBase64.getGalleryEnabled()));
+		}
+
 		if (attachmentBase64.getId() == null) {
 			map.put("id", null);
 		}
@@ -419,6 +438,12 @@ public class AttachmentBase64SerDes {
 				if (jsonParserFieldValue != null) {
 					attachmentBase64.setExternalReferenceCode(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "galleryEnabled")) {
+				if (jsonParserFieldValue != null) {
+					attachmentBase64.setGalleryEnabled(
+						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

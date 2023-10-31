@@ -502,9 +502,11 @@ public class DefaultObjectEntryManagerImplTest
 			objectDefinitionLocalService, _objectRelationshipLocalService,
 			_treeFactory);
 
+		Node node = _tree.getRootNode();
+
 		_rootObjectDefinition =
-			objectDefinitionLocalService.fetchObjectDefinition(
-				companyId, "C_A");
+			objectDefinitionLocalService.getObjectDefinition(
+				node.getPrimaryKey());
 
 		ObjectRelationship objectRelationship3 =
 			_objectRelationshipLocalService.addObjectRelationship(

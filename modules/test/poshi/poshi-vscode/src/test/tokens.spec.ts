@@ -55,18 +55,23 @@ const tokenTypeTestCases: {[K in TokenType]: TestCase[]} = {
 	methodDefinition: [
 		{
 			expectedMatchText: ['fooBar'],
-			input: 'macro |fooBar {',
+			input: 'macro |fooBar(',
 			optionalDescription: 'macro',
 		},
 		{
 			expectedMatchText: ['fooBar'],
-			input: 'macro fooBar| {',
+			input: 'macro fooBar|(',
 			optionalDescription: 'macro with cursor at the end',
 		},
 		{
 			expectedMatchText: ['foo-Bar_Baz8'],
-			input: 'macro |foo-Bar_Baz8 {',
+			input: 'macro |foo-Bar_Baz8(',
 			optionalDescription: 'macro with numbers and special characters',
+		},
+		{
+			expectedMatchText: ['fooBar'],
+			input: 'macro |fooBar {',
+			optionalDescription: 'macro with legacy syntax',
 		},
 		{
 			expectedMatchText: ['fooBar'],

@@ -5,6 +5,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.module.service.Snapshot;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -18,71 +20,97 @@ import javax.servlet.http.Cookie;
 public class HttpUtil {
 
 	public static Cookie[] getCookies() {
-		return _http.getCookies();
+		Http http = _httpSnapshot.get();
+
+		return http.getCookies();
 	}
 
 	public static Http getHttp() {
-		return _http;
+		return _httpSnapshot.get();
 	}
 
 	public static boolean hasProxyConfig() {
-		return _http.hasProxyConfig();
+		Http http = _httpSnapshot.get();
+
+		return http.hasProxyConfig();
 	}
 
 	public static boolean isNonProxyHost(String host) {
-		return _http.isNonProxyHost(host);
+		Http http = _httpSnapshot.get();
+
+		return http.isNonProxyHost(host);
 	}
 
 	public static boolean isProxyHost(String host) {
-		return _http.isProxyHost(host);
+		Http http = _httpSnapshot.get();
+
+		return http.isProxyHost(host);
 	}
 
 	public static byte[] URLtoByteArray(Http.Options options)
 		throws IOException {
 
-		return _http.URLtoByteArray(options);
+		Http http = _httpSnapshot.get();
+
+		return http.URLtoByteArray(options);
 	}
 
 	public static byte[] URLtoByteArray(String location) throws IOException {
-		return _http.URLtoByteArray(location);
+		Http http = _httpSnapshot.get();
+
+		return http.URLtoByteArray(location);
 	}
 
 	public static byte[] URLtoByteArray(String location, boolean post)
 		throws IOException {
 
-		return _http.URLtoByteArray(location, post);
+		Http http = _httpSnapshot.get();
+
+		return http.URLtoByteArray(location, post);
 	}
 
 	public static InputStream URLtoInputStream(Http.Options options)
 		throws IOException {
 
-		return _http.URLtoInputStream(options);
+		Http http = _httpSnapshot.get();
+
+		return http.URLtoInputStream(options);
 	}
 
 	public static InputStream URLtoInputStream(String location)
 		throws IOException {
 
-		return _http.URLtoInputStream(location);
+		Http http = _httpSnapshot.get();
+
+		return http.URLtoInputStream(location);
 	}
 
 	public static InputStream URLtoInputStream(String location, boolean post)
 		throws IOException {
 
-		return _http.URLtoInputStream(location, post);
+		Http http = _httpSnapshot.get();
+
+		return http.URLtoInputStream(location, post);
 	}
 
 	public static String URLtoString(Http.Options options) throws IOException {
-		return _http.URLtoString(options);
+		Http http = _httpSnapshot.get();
+
+		return http.URLtoString(options);
 	}
 
 	public static String URLtoString(String location) throws IOException {
-		return _http.URLtoString(location);
+		Http http = _httpSnapshot.get();
+
+		return http.URLtoString(location);
 	}
 
 	public static String URLtoString(String location, boolean post)
 		throws IOException {
 
-		return _http.URLtoString(location, post);
+		Http http = _httpSnapshot.get();
+
+		return http.URLtoString(location, post);
 	}
 
 	/**
@@ -97,11 +125,12 @@ public class HttpUtil {
 	 * @throws IOException if an IO Exception occurred
 	 */
 	public static String URLtoString(URL url) throws IOException {
-		return _http.URLtoString(url);
+		Http http = _httpSnapshot.get();
+
+		return http.URLtoString(url);
 	}
 
-	private static volatile Http _http =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			Http.class, HttpUtil.class, "_http", true);
+	private static final Snapshot<Http> _httpSnapshot = new Snapshot<>(
+		HttpUtil.class, Http.class);
 
 }

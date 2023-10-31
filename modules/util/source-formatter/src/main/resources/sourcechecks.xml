@@ -1729,10 +1729,6 @@
 			<category name="Upgrade" />
 			<description name="Replace parameter in updateCommerceAddress method by other parameters list" />
 		</check>
-		<check name="UpgradeJavaUpdateFileEntryMethodCheck">
-			<category name="Upgrade" />
-			<description name="Fill in the new parameters of the method 'updateFileEntry' of 'DLAppLocalService' and 'DLAppLocalServiceUtil'" />
-		</check>
 		<check name="UpgradeJavaUserLocalServiceUtilCheck">
 			<category name="Upgrade" />
 			<description name="Replace parameters of addUser and updateStatus methods in UserServices" />

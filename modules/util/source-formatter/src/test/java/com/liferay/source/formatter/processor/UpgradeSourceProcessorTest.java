@@ -260,16 +260,6 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testUpgradeJavaUpdateFileEntryMethodCheck() throws Exception {
-		test(
-			"upgrade/UpgradeJavaUpdateFileEntryMethodCheck.testjava",
-			StringBundler.concat(
-				"Unable to format method updateFileEntry from ",
-				"DLAppLocalService and DLAppLocalServiceUtil. Fill the new ",
-				"parameters manually, see LPS-194134."));
-	}
-
-	@Test
 	public void testUpgradeJavaUserLocalServiceUtilCheck() throws Exception {
 		test(
 			"upgrade/UpgradeJavaUserLocalServiceUtilCheck.testjava",

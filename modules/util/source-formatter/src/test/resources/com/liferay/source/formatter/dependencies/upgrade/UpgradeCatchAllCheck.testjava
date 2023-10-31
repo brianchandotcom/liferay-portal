@@ -62,6 +62,13 @@ public class UpgradeCatchAllCheck {
 		_commerceAccountHelper.getCurrentCommerceAccount(null);
 	}
 
+	public void method(
+		Indexer indexer, ServiceReference<Indexer> serviceReference) {
+
+		Map<Indexer, Indexer> indexerRequests = new LinkedHashMap<>();
+		List<Indexer> indexers = portlet.getIndexerInstances();
+	}
+
 	public void method(Indexer<?> indexer) {
 		indexer.getClassNames();
 	}
@@ -289,13 +296,6 @@ public class UpgradeCatchAllCheck {
 		CommercePriceEntryLocalServiceUtil.addCommercePriceEntry(externalReferenceCode, cProductId, cpInstanceUuid, commercePriceListId, price, promoPrice, serviceContext);
 		_commercePriceEntryLocalService.addCommercePriceEntry("test123", cProductId, cpInstanceUuid, commercePriceListId, price, promoPrice, serviceContext);
 		_commercePriceEntryLocalService.addCommercePriceEntry(externalReferenceCode, cProductId, cpInstanceUuid, commercePriceListId, price, promoPrice, serviceContext);
-	}
-
-	public void method(
-		Indexer indexer, ServiceReference<Indexer> serviceReference) {
-
-		Map<Indexer, Indexer> indexerRequests = new LinkedHashMap<>();
-		List<Indexer> indexers = portlet.getIndexerInstances();
 	}
 
 	@Reference

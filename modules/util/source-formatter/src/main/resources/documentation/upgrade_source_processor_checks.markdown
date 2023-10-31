@@ -33,7 +33,6 @@ UpgradeJavaServiceReferenceAnnotationCheck | [Upgrade](upgrade_checks.markdown#u
 UpgradeJavaServiceTrackerListCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace the number of generic type arguments in ServiceTrackerList |
 UpgradeJavaStorageTypeAwareCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Run code to delete StorageTypeAware interface |
 UpgradeJavaUpdateCommerceAddressCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace parameter in updateCommerceAddress method by other parameters list |
-UpgradeJavaUpdateFileEntryMethodCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Fill in the new parameters of the method 'updateFileEntry' of 'DLAppLocalService' and 'DLAppLocalServiceUtil' |
 UpgradeJavaUserLocalServiceUtilCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace parameters of addUser and updateStatus methods in UserServices |
 UpgradePortletDisplayCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replaces 'portletDisplay.getPortletInstanceConfiguration' with 'ConfigurationProviderUtil.getPortletInstanceConfiguration' |
 UpgradePortletFTLCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Include the CSS classes 'cadmin' and include for impression of 'right cadmin' in 'portlet.ftl' file |

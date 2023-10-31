@@ -132,7 +132,7 @@
 </tr>
 <tr>
 	<td>PUBLICATION_ORDER_IN_HISTORY</td>
-	<td>//ul[contains(@class,'publications-table')]//li[${resultOrder}]/div/p/a</td>
+	<td>//div[contains(@class,'dnd-tbody')]/div[${resultOrder}]/div/div[1]</td>
 	<td></td>
 </tr>
 <tr>

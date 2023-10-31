@@ -8,6 +8,8 @@ import {HashRouter, Route, Routes} from 'react-router-dom';
 import CreateLicense from '../CreateLicense';
 import Apps from './Apps';
 import App from './Apps/App';
+import AppOutlet from './Apps/AppOutlet';
+import Licenses from './Apps/Licenses';
 import Members from './Members';
 import PurchasedAppsDashboardOutlet from './PurchasedAppsDashboardOutlet';
 import Solutions from './Solutions';
@@ -18,8 +20,12 @@ const PurchasedAppsDashboardRouter = () => (
 			<Route element={<PurchasedAppsDashboardOutlet />}>
 				<Route path="/">
 					<Route element={<Apps />} index />
-					<Route path="app/:appId">
+					<Route element={<AppOutlet />} path="app/:appId">
 						<Route element={<App />} index />
+						<Route
+							element={<Licenses />}
+							path="app/:appId/licenses"
+						/>
 					</Route>
 				</Route>
 				<Route element={<Members />} path="members" />

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -50,164 +49,127 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 		_upgradeDDMStructureVersion();
 	}
 
-	private void _addConfirmationErrorMessageAndConfirmationLabel(
-		Set<Locale> availableLocales, List<DDMFormField> ddmFormFields) {
+	private void _setProperty(
+		Set<Locale> availableLocales, DDMFormField ddmFormField,
+		String propertyName, String propertyValue) {
 
-		for (DDMFormField ddmFormField : ddmFormFields) {
-			if (Objects.equals(
-					ddmFormField.getType(), DDMFormFieldTypeConstants.TEXT) ||
-				Objects.equals(
-					ddmFormField.getType(),
-					DDMFormFieldTypeConstants.NUMERIC)) {
-
-				if (!_isConfirmationErrorMessageSet(ddmFormField)) {
-					ddmFormField.setProperty(
-						"confirmationErrorMessage",
-						new LocalizedValue() {
-							{
-								for (Locale locale : availableLocales) {
-									addString(
-										locale,
-										_language.get(
-											locale,
-											"the-information-does-not-match"));
-								}
-							}
-						});
-				}
-
-				if (!_isConfirmationLabelSet(ddmFormField)) {
-					ddmFormField.setProperty(
-						"confirmationLabel",
-						new LocalizedValue() {
-							{
-								for (Locale locale : availableLocales) {
-									addString(
-										locale,
-										_language.get(locale, "confirm"));
-								}
-							}
-						});
-				}
-			}
-
-			if (ListUtil.isNotEmpty(ddmFormField.getNestedDDMFormFields())) {
-				_addConfirmationErrorMessageAndConfirmationLabel(
-					availableLocales, ddmFormField.getNestedDDMFormFields());
-			}
-		}
-	}
-
-	private String _addConfirmationErrorMessageAndConfirmationLabel(
-			String dataDefinition)
-		throws Exception {
-
-		DDMForm ddmForm = DDMFormDeserializeUtil.deserialize(
-			_ddmFormDeserializer, dataDefinition);
-
-		_addConfirmationErrorMessageAndConfirmationLabel(
-			ddmForm.getAvailableLocales(), ddmForm.getDDMFormFields());
-
-		return DDMFormSerializeUtil.serialize(ddmForm, _ddmFormSerializer);
-	}
-
-	private boolean _isConfirmationErrorMessageSet(DDMFormField ddmFormField) {
 		LocalizedValue localizedValue =
-			(LocalizedValue)ddmFormField.getProperty(
-				"confirmationErrorMessage");
+			(LocalizedValue)ddmFormField.getProperty(propertyName);
 
 		if (localizedValue != null) {
 			Map<Locale, String> values = localizedValue.getValues();
 
 			for (String value : values.values()) {
 				if (Validator.isNotNull(value)) {
-					return true;
+					return;
 				}
 			}
 		}
 
-		return false;
-	}
-
-	private boolean _isConfirmationLabelSet(DDMFormField ddmFormField) {
-		LocalizedValue localizedValue =
-			(LocalizedValue)ddmFormField.getProperty("confirmationLabel");
-
-		if (localizedValue != null) {
-			Map<Locale, String> values = localizedValue.getValues();
-
-			for (String value : values.values()) {
-				if (Validator.isNotNull(value)) {
-					return true;
+		ddmFormField.setProperty(
+			propertyName,
+			new LocalizedValue() {
+				{
+					for (Locale locale : availableLocales) {
+						addString(locale, _language.get(locale, propertyValue));
+					}
 				}
-			}
-		}
-
-		return false;
+			});
 	}
 
 	private void _upgradeDDMStructure() throws Exception {
-		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select structureId, definition from DDMStructure where " +
-					"classNameId = ? order by createDate");
-			PreparedStatement preparedStatement2 =
+		try (PreparedStatement selectPreparedStatement =
+				connection.prepareStatement(
+					"select structureId, definition from DDMStructure where " +
+						"classNameId = ?");
+			PreparedStatement updatePreparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update DDMStructure set definition = ? where " +
 						"structureId = ?")) {
 
-			preparedStatement1.setLong(
-				1, PortalUtil.getClassNameId(_CLASS_NAME_DDM_FORM_INSTANCE));
+			_upgradeDDMStructureDefinition(
+				"structureId", selectPreparedStatement,
+				updatePreparedStatement);
+		}
+	}
 
-			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
-				while (resultSet.next()) {
-					preparedStatement2.setString(
-						1,
-						_addConfirmationErrorMessageAndConfirmationLabel(
-							resultSet.getString("definition")));
-					preparedStatement2.setLong(
-						2, resultSet.getLong("structureId"));
+	private void _upgradeDDMStructureDefinition(
+			String idColumnName, PreparedStatement selectPreparedStatement,
+			PreparedStatement updatePreparedStatement)
+		throws Exception {
 
-					preparedStatement2.addBatch();
-				}
+		selectPreparedStatement.setLong(
+			1, PortalUtil.getClassNameId(_CLASS_NAME_DDM_FORM_INSTANCE));
 
-				preparedStatement2.executeBatch();
+		try (ResultSet resultSet = selectPreparedStatement.executeQuery()) {
+			while (resultSet.next()) {
+				DDMForm ddmForm = DDMFormDeserializeUtil.deserialize(
+					_ddmFormDeserializer, resultSet.getString("definition"));
+
+				ListUtil.isNotEmptyForEach(
+					ddmForm.getDDMFormFields(),
+					ddmFormField -> _upgradeRequireConfirmationProperties(
+						ddmForm.getAvailableLocales(), ddmFormField));
+
+				updatePreparedStatement.setString(
+					1,
+					DDMFormSerializeUtil.serialize(
+						ddmForm, _ddmFormSerializer));
+
+				updatePreparedStatement.setLong(
+					2, resultSet.getLong(idColumnName));
+
+				updatePreparedStatement.addBatch();
 			}
+
+			updatePreparedStatement.executeBatch();
 		}
 	}
 
 	private void _upgradeDDMStructureVersion() throws Exception {
-		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				StringBundler.concat(
-					"select DDMStructure.structureKey,  ",
-					"DDMStructureVersion.structureVersionId, ",
-					"DDMStructureVersion.definition from DDMStructureVersion ",
-					"inner join DDMStructure on DDMStructure.structureId = ",
-					"DDMStructureVersion.structureId where ",
-					"DDMStructure.classNameId = ? "));
-			PreparedStatement preparedStatement2 =
+		try (PreparedStatement selectPreparedStatement =
+				connection.prepareStatement(
+					StringBundler.concat(
+						"select DDMStructureVersion.structureVersionId, ",
+						"DDMStructureVersion.definition from ",
+						"DDMStructureVersion inner join DDMStructure on ",
+						"DDMStructure.structureId = ",
+						"DDMStructureVersion.structureId where ",
+						"DDMStructure.classNameId = ?"));
+			PreparedStatement updatePreparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
 					"update DDMStructureVersion set definition = ? where " +
 						"structureVersionId = ?")) {
 
-			preparedStatement1.setLong(
-				1, PortalUtil.getClassNameId(_CLASS_NAME_DDM_FORM_INSTANCE));
-
-			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
-				while (resultSet.next()) {
-					preparedStatement2.setString(
-						1,
-						_addConfirmationErrorMessageAndConfirmationLabel(
-							resultSet.getString("definition")));
-					preparedStatement2.setLong(
-						2, resultSet.getLong("structureVersionId"));
-					preparedStatement2.addBatch();
-				}
-
-				preparedStatement2.executeBatch();
-			}
+			_upgradeDDMStructureDefinition(
+				"structureVersionId", selectPreparedStatement,
+				updatePreparedStatement);
 		}
+	}
+
+	private void _upgradeRequireConfirmationProperties(
+		Set<Locale> availableLocales, DDMFormField ddmFormField) {
+
+		ListUtil.isNotEmptyForEach(
+			ddmFormField.getNestedDDMFormFields(),
+			nestedDDMFormField -> _upgradeRequireConfirmationProperties(
+				availableLocales, nestedDDMFormField));
+
+		if (!Objects.equals(
+				ddmFormField.getType(), DDMFormFieldTypeConstants.TEXT) &&
+			!Objects.equals(
+				ddmFormField.getType(), DDMFormFieldTypeConstants.NUMERIC)) {
+
+			return;
+		}
+
+		_setProperty(
+			availableLocales, ddmFormField, "confirmationErrorMessage",
+			"the-information-does-not-match");
+		_setProperty(
+			availableLocales, ddmFormField, "confirmationLabel", "confirm");
 	}
 
 	private static final String _CLASS_NAME_DDM_FORM_INSTANCE =

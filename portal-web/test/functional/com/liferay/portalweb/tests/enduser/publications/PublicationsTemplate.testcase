@@ -238,8 +238,8 @@ definition {
 			PublicationsNavigator.openPublicationsAdmin();
 
 			Click(
-				key_templateName = "P1",
-				locator1 = "PublicationsTemplate#TEMPLATE_DROPDOWN_MENU");
+				key_publicationName = "P1",
+				locator1 = "Publications#PUBLICATION_ELLIPSIS");
 
 			MenuItem.click(menuItem = "Edit");
 

@@ -1,6 +1,7 @@
 definition {
 
-	macro addTest {
+	@summary = "Default summary"
+	macro addTest() {
 		task ("Test  A") {
 			ACUtils.launchAC();
 		}

@@ -668,6 +668,10 @@ components:
                 catalogId:
                     format: int64
                     type: integer
+                customFields:
+                    items:
+                        $ref: "#/components/schemas/CustomField"
+                    type: array
                 description:
                     type: object
                     additionalProperties:
@@ -1230,6 +1234,13 @@ components:
                 catalogId:
                     format: int64
                     type: integer
+                customFields:
+                    items:
+                        $ref: "#/components/schemas/CustomField"
+                    type: array
+                definedExternally:
+                    example: true
+                    type: boolean
                 description:
                     type: object
                     additionalProperties:
@@ -1250,6 +1261,9 @@ components:
                     minimum: 0
                     readOnly: true
                     type: integer
+                infoItemServiceKey:
+                    example:
+                    type: string
                 key:
                     example: color
                     type: string
@@ -1266,6 +1280,9 @@ components:
                     format: int64
                     minimum: 0
                     type: integer
+                priceType:
+                    example: dynamic, static
+                    type: string
                 priority:
                     example: 1.2
                     format: double
@@ -1280,6 +1297,9 @@ components:
                 skuContributor:
                     example: true
                     type: boolean
+                typeSettings:
+                    example: "22.50"
+                    type: string
             required:
                 - fieldType
                 - key
@@ -1288,6 +1308,11 @@ components:
             type: object
         ProductOptionValue:
             properties:
+                deltaPrice:
+                    example: 10
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
                 id:
                     example: 30130
                     format: int64
@@ -1305,10 +1330,27 @@ components:
                         hr_HR: Black HR
                         hu_HU: Black HU
                     type: object
+                preselected:
+                    example: true
+                    type: boolean
                 priority:
                     example: 1.2
                     format: double
                     type: number
+                quantity:
+                    example: 10
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                skuId:
+                    example: 30129
+                    format: int64
+                    minimum: 0
+                    type: integer
+                unitOfMeasureKey:
+                    example: pl
+                    readOnly: true
+                    type: string
             required:
                 - key
                 - name

@@ -9,9 +9,11 @@ import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import classNames from 'classnames';
 import {useId} from 'frontend-js-components-web';
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
+import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
+import selectLayoutDataItemLabel from '../../../app/selectors/selectLayoutDataItemLabel';
 import addRule from '../../../app/thunks/addRule';
 import updateRule from '../../../app/thunks/updateRule';
 import {
@@ -22,7 +24,10 @@ import {
 export default function RulesModal({editingRule, onCloseModal}) {
 	const {observer, onClose} = useModal({onClose: () => onCloseModal()});
 
-	const rules = useSelector((state) => state.layoutData.pageRules);
+	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
+	const layoutData = useSelector((state) => state.layoutData);
+
+	const rules = layoutData.pageRules;
 
 	const dispatch = useDispatch();
 	const nameId = useId();
@@ -35,6 +40,29 @@ export default function RulesModal({editingRule, onCloseModal}) {
 
 	const [actions, setActions] = useState(editingRule?.actions || []);
 	const [conditions, setConditions] = useState(editingRule?.conditions || []);
+
+	const layoutDataItems = useMemo(() => {
+		const items = [];
+
+		Object.values(layoutData.items).forEach((item) => {
+			if (
+				item.type !== LAYOUT_DATA_ITEM_TYPES.collectionItem &&
+				item.type !== LAYOUT_DATA_ITEM_TYPES.fragmentDropZone &&
+				item.type !== LAYOUT_DATA_ITEM_TYPES.fragmentDropZone &&
+				item.type !== LAYOUT_DATA_ITEM_TYPES.root
+			) {
+				items.push({
+					label: selectLayoutDataItemLabel(
+						{fragmentEntryLinks},
+						item
+					),
+					value: item.itemId,
+				});
+			}
+		});
+
+		return items;
+	}, [layoutData, fragmentEntryLinks]);
 
 	const onSave = () => {
 		if (!name) {
@@ -134,6 +162,7 @@ export default function RulesModal({editingRule, onCloseModal}) {
 
 				<RuleBuilderActionSection
 					actions={actions}
+					layoutDataItems={layoutDataItems}
 					setActions={setActions}
 				/>
 			</ClayModal.Body>

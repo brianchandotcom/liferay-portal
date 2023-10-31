@@ -17,6 +17,7 @@ export interface Action {
 
 interface ActionProps {
 	action: Action;
+	layoutDataItems: {label: string; value: string}[];
 	onActionChange: (action: Action) => void;
 	onDeleteAction: () => void;
 }
@@ -40,8 +41,9 @@ const ACTION_ITEMS = [
 	},
 ] as const;
 
-export default function Condition({
+export default function Action({
 	action,
+	layoutDataItems,
 	onActionChange,
 	onDeleteAction,
 }: ActionProps) {
@@ -66,6 +68,37 @@ export default function Condition({
 					selectedKey={action.action}
 				/>
 			) : null}
+
+			{action.action ? (
+				<FragmentSelector
+					itemId={action.itemId}
+					layoutDataItems={layoutDataItems}
+					onItemIdChanged={(itemId) => {
+						onActionChange({
+							...action,
+							itemId,
+						});
+					}}
+				/>
+			) : null}
 		</RuleBuilderItem>
+	);
+}
+
+function FragmentSelector({
+	itemId,
+	layoutDataItems,
+	onItemIdChanged,
+}: {
+	itemId: string | undefined;
+	layoutDataItems: {label: string; value: string}[];
+	onItemIdChanged: (itemId: string) => void;
+}) {
+	return (
+		<RuleSelect
+			items={layoutDataItems}
+			onSelectionChange={onItemIdChanged}
+			selectedKey={itemId}
+		/>
 	);
 }

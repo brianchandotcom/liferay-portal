@@ -476,4 +476,60 @@ definition {
 		}
 	}
 
+	@description = "LPS-188333. Confirm that changes in the sorting are not autosaved when edit and delete an entry"
+	@priority = 3
+	test SortingChangesAreAutosaved {
+		task ("And the Save and Cancel button are not present") {
+			AssertElementNotPresent(locator1 = "Button#CANCEL");
+
+			AssertElementNotPresent(locator1 = "Button#SAVE");
+		}
+
+		task ("When the user adds 3 sortings") {
+			for (var key_fieldList : list "creator,id,status") {
+				DataSetAdmin.createASort(
+					key_field = ${key_fieldList},
+					key_sorting = "Descending");
+			}
+		}
+
+		task ("And edits one of them") {
+			DataSetAdmin.editSorting(
+				key_entryPosition = 1,
+				key_sortingOption = "Ascending");
+		}
+
+		task ("When the user deletes one of the sortings") {
+			Click(
+				key_fieldName = "status",
+				locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+			MenuItem.click(menuItem = "Delete");
+
+			Click(locator1 = "Button#MODAL_DELETE");
+		}
+
+		task ("Then the sorting is deleted") {
+			AssertElementNotPresent(
+				key_rowPosition = 1,
+				key_text = "Descending",
+				locator1 = "DataSet#SORT_ENTRY_TABLE");
+		}
+
+		task ("When the user reorder the sortings") {
+			DragAndDrop.javaScriptDragAndDropToObject(
+				key_rowPosition = 1,
+				key_text = "Ascending",
+				locator1 = "DataSet#SORT_ENTRY_TABLE",
+				locator2 = "//tr[@class='orderable-table-row'][2]//*[contains(text(), 'id')]");
+		}
+
+		task ("Then the sortings are ordered accordingly to the changes") {
+			AssertElementPresent(
+				key_rowPosition = 2,
+				key_text = "Ascending",
+				locator1 = "DataSet#SORT_ENTRY_TABLE");
+		}
+	}
+
 }

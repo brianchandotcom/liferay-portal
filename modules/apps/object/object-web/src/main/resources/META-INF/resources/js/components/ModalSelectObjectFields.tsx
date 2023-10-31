@@ -228,7 +228,9 @@ function ModalSelectObjectFields<T extends ModalItem>() {
 							small
 							title={
 								emptyState?.title ??
-								Liferay.Language.get('no-fields-created-yet')
+								Liferay.Language.get(
+									'there-are-no-fields-created-yet'
+								)
 							}
 						/>
 					</div>

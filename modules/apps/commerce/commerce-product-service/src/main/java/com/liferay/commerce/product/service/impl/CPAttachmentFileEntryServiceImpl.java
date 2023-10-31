@@ -60,8 +60,9 @@ public class CPAttachmentFileEntryServiceImpl
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, Map<Locale, String> titleMap, String json,
-			double priority, int type, ServiceContext serviceContext)
+			boolean neverExpire, boolean galleryEnabled,
+			Map<Locale, String> titleMap, String json, double priority,
+			int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		_checkCPAttachmentFileEntryPermissions(
@@ -72,8 +73,8 @@ public class CPAttachmentFileEntryServiceImpl
 			cdnEnabled, cdnURL, displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire, titleMap,
-			json, priority, type, serviceContext);
+			expirationDateHour, expirationDateMinute, neverExpire,
+			galleryEnabled, titleMap, json, priority, type, serviceContext);
 	}
 
 	@Override
@@ -85,8 +86,9 @@ public class CPAttachmentFileEntryServiceImpl
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, Map<Locale, String> titleMap, String json,
-			double priority, int type, ServiceContext serviceContext)
+			boolean neverExpire, boolean galleryEnabled,
+			Map<Locale, String> titleMap, String json, double priority,
+			int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		CPAttachmentFileEntry cpAttachmentFileEntry = null;
@@ -117,8 +119,8 @@ public class CPAttachmentFileEntryServiceImpl
 				cdnURL, displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, titleMap, json, priority,
-				type, serviceContext);
+				expirationDateMinute, neverExpire, galleryEnabled, titleMap,
+				json, priority, type, serviceContext);
 	}
 
 	@Override
@@ -375,8 +377,8 @@ public class CPAttachmentFileEntryServiceImpl
 			int expirationDateMonth, int expirationDateDay,
 			int expirationDateYear, int expirationDateHour,
 			int expirationDateMinute, boolean neverExpire,
-			Map<Locale, String> titleMap, String json, double priority,
-			int type, ServiceContext serviceContext)
+			boolean galleryEnabled, Map<Locale, String> titleMap, String json,
+			double priority, int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		_checkCPAttachmentFileEntryPermissions(cpAttachmentFileEntryId);
@@ -386,8 +388,8 @@ public class CPAttachmentFileEntryServiceImpl
 			cdnURL, displayDateMonth, displayDateDay, displayDateYear,
 			displayDateHour, displayDateMinute, expirationDateMonth,
 			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, titleMap, json, priority, type,
-			serviceContext);
+			expirationDateMinute, neverExpire, galleryEnabled, titleMap, json,
+			priority, type, serviceContext);
 	}
 
 	private void _checkCommerceCatalog(long cpDefinitionId, String actionId)

@@ -111,8 +111,9 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, Map<Locale, String> titleMap, String json,
-			double priority, int type, ServiceContext serviceContext)
+			boolean neverExpire, boolean galleryEnabled,
+			Map<Locale, String> titleMap, String json, double priority,
+			int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product attachment file entry
@@ -193,6 +194,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			cpAttachmentFileEntry.setStatus(WorkflowConstants.STATUS_EXPIRED);
 		}
 
+		cpAttachmentFileEntry.setGalleryEnabled(galleryEnabled);
 		cpAttachmentFileEntry.setTitleMap(
 			_getValidLocalizedMap(
 				LocaleUtil.getSiteDefault(), fileEntry, titleMap));
@@ -221,8 +223,9 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			int displayDateHour, int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, Map<Locale, String> titleMap, String json,
-			double priority, int type, ServiceContext serviceContext)
+			boolean neverExpire, boolean galleryEnabled,
+			Map<Locale, String> titleMap, String json, double priority,
+			int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		CPAttachmentFileEntry cpAttachmentFileEntry = null;
@@ -246,8 +249,8 @@ public class CPAttachmentFileEntryLocalServiceImpl
 					displayDateDay, displayDateYear, displayDateHour,
 					displayDateMinute, expirationDateMonth, expirationDateDay,
 					expirationDateYear, expirationDateHour,
-					expirationDateMinute, neverExpire, titleMap, json, priority,
-					type, serviceContext);
+					expirationDateMinute, neverExpire, galleryEnabled, titleMap,
+					json, priority, type, serviceContext);
 		}
 		else {
 			cpAttachmentFileEntry =
@@ -257,8 +260,8 @@ public class CPAttachmentFileEntryLocalServiceImpl
 					displayDateDay, displayDateYear, displayDateHour,
 					displayDateMinute, expirationDateMonth, expirationDateDay,
 					expirationDateYear, expirationDateHour,
-					expirationDateMinute, neverExpire, titleMap, json, priority,
-					type, serviceContext);
+					expirationDateMinute, neverExpire, galleryEnabled, titleMap,
+					json, priority, type, serviceContext);
 		}
 
 		return cpAttachmentFileEntry;
@@ -448,65 +451,8 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 	@Override
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
-			long classNameId, long classPK, int type, int status, int start,
-			int end)
-		throws PortalException {
-
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return cpAttachmentFileEntryPersistence.findByC_C_T_NotST(
-				classNameId, classPK, type, WorkflowConstants.STATUS_IN_TRASH,
-				start, end);
-		}
-
-		return cpAttachmentFileEntryPersistence.findByC_C_T_ST(
-			classNameId, classPK, type, status, start, end);
-	}
-
-	@Override
-	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
-			long classNameId, long classPK, int type, int status, int start,
-			int end, OrderByComparator<CPAttachmentFileEntry> orderByComparator)
-		throws PortalException {
-
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return cpAttachmentFileEntryPersistence.findByC_C_T_NotST(
-				classNameId, classPK, type, WorkflowConstants.STATUS_IN_TRASH,
-				start, end, orderByComparator);
-		}
-
-		return cpAttachmentFileEntryPersistence.findByC_C_T_ST(
-			classNameId, classPK, type, status, start, end, orderByComparator);
-	}
-
-	@Override
-	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
-			long classNameId, long classPK, String keywords, int type,
-			int status, int start, int end)
-		throws PortalException {
-
-		return TransformUtil.transform(
-			dslQuery(
-				_getGroupByStep(
-					DSLQueryFactoryUtil.selectDistinct(
-						CPAttachmentFileEntryTable.INSTANCE.
-							CPAttachmentFileEntryId
-					).from(
-						CPAttachmentFileEntryTable.INSTANCE
-					),
-					classNameId, classPK, keywords, type, status,
-					CPAttachmentFileEntryTable.INSTANCE.title
-				).limit(
-					start, end
-				)),
-			cpAttachmentFileEntryId ->
-				cpAttachmentFileEntryLocalService.getCPAttachmentFileEntry(
-					(Long)cpAttachmentFileEntryId));
-	}
-
-	@Override
-	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
-			long cpDefinitionId, String serializedDDMFormValues, int type,
-			int start, int end)
+			long cpDefinitionId, Boolean galleryEnabled,
+			String serializedDDMFormValues, int type, int start, int end)
 		throws Exception {
 
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries = new ArrayList<>();
@@ -527,6 +473,8 @@ public class CPAttachmentFileEntryLocalServiceImpl
 
 		Map<String, Serializable> attributes =
 			HashMapBuilder.<String, Serializable>put(
+				CPField.GALLERY_ENABLED, galleryEnabled
+			).put(
 				CPField.RELATED_ENTITY_CLASS_NAME_ID,
 				_portal.getClassNameId(CPDefinition.class)
 			).put(
@@ -601,6 +549,79 @@ public class CPAttachmentFileEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
+			long classNameId, long classPK, boolean galleryEnabled, int type,
+			int status, int start, int end)
+		throws PortalException {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return cpAttachmentFileEntryPersistence.findByC_C_G_T_NotST(
+				classNameId, classPK, galleryEnabled, type,
+				WorkflowConstants.STATUS_IN_TRASH, start, end);
+		}
+
+		return cpAttachmentFileEntryPersistence.findByC_C_G_T_ST(
+			classNameId, classPK, galleryEnabled, type, status, start, end);
+	}
+
+	@Override
+	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
+			long classNameId, long classPK, int type, int status, int start,
+			int end)
+		throws PortalException {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return cpAttachmentFileEntryPersistence.findByC_C_T_NotST(
+				classNameId, classPK, type, WorkflowConstants.STATUS_IN_TRASH,
+				start, end);
+		}
+
+		return cpAttachmentFileEntryPersistence.findByC_C_T_ST(
+			classNameId, classPK, type, status, start, end);
+	}
+
+	@Override
+	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
+			long classNameId, long classPK, int type, int status, int start,
+			int end, OrderByComparator<CPAttachmentFileEntry> orderByComparator)
+		throws PortalException {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return cpAttachmentFileEntryPersistence.findByC_C_T_NotST(
+				classNameId, classPK, type, WorkflowConstants.STATUS_IN_TRASH,
+				start, end, orderByComparator);
+		}
+
+		return cpAttachmentFileEntryPersistence.findByC_C_T_ST(
+			classNameId, classPK, type, status, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
+			long classNameId, long classPK, String keywords, int type,
+			int status, int start, int end)
+		throws PortalException {
+
+		return TransformUtil.transform(
+			dslQuery(
+				_getGroupByStep(
+					DSLQueryFactoryUtil.selectDistinct(
+						CPAttachmentFileEntryTable.INSTANCE.
+							CPAttachmentFileEntryId
+					).from(
+						CPAttachmentFileEntryTable.INSTANCE
+					),
+					classNameId, classPK, keywords, type, status,
+					CPAttachmentFileEntryTable.INSTANCE.title
+				).limit(
+					start, end
+				)),
+			cpAttachmentFileEntryId ->
+				cpAttachmentFileEntryLocalService.getCPAttachmentFileEntry(
+					(Long)cpAttachmentFileEntryId));
+	}
+
+	@Override
 	public int getCPAttachmentFileEntriesCount(
 		long classNameId, long classPK, int type, int status) {
 
@@ -639,8 +660,9 @@ public class CPAttachmentFileEntryLocalServiceImpl
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, Map<Locale, String> titleMap, String json,
-			double priority, int type, ServiceContext serviceContext)
+			boolean neverExpire, boolean galleryEnabled,
+			Map<Locale, String> titleMap, String json, double priority,
+			int type, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -730,6 +752,7 @@ public class CPAttachmentFileEntryLocalServiceImpl
 		cpAttachmentFileEntry.setFileEntryId(fileEntryId);
 		cpAttachmentFileEntry.setCDNEnabled(cdnEnabled);
 		cpAttachmentFileEntry.setCDNURL(cdnURL);
+		cpAttachmentFileEntry.setGalleryEnabled(galleryEnabled);
 		cpAttachmentFileEntry.setTitleMap(
 			_getValidLocalizedMap(
 				LocaleUtil.getSiteDefault(), fileEntry, titleMap));

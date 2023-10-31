@@ -530,13 +530,22 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			SearchSearchRequest searchSearchRequest = createSearchSearchRequest(
 				searchRequest, searchContext, query);
 
-			int size = Math.min(
-				end - start,
-				_elasticsearchConfigurationWrapper.indexMaxResultWindow() -
-					start);
+			if (_elasticsearchConfigurationWrapper.indexMaxResultWindow() <=
+					start) {
 
-			searchSearchRequest.setSize(size);
+				throw new IllegalArgumentException(
+					StringBundler.concat(
+						"Start:", start,
+						" is not less than the maxResultWindow: ",
+						_elasticsearchConfigurationWrapper.
+							indexMaxResultWindow()));
+			}
 
+			searchSearchRequest.setSize(
+				Math.min(
+					end - start,
+					_elasticsearchConfigurationWrapper.indexMaxResultWindow() -
+						start));
 			searchSearchRequest.setSorts(searchContext.getSorts());
 			searchSearchRequest.setSorts(searchRequest.getSorts());
 			searchSearchRequest.setStart(start);
@@ -561,7 +570,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 			Document[] documents = hits.getDocs();
 
-			if ((documents.length != 0) || (start == 0) || (size < 1)) {
+			if ((documents.length != 0) || (start == 0)) {
 				break;
 			}
 

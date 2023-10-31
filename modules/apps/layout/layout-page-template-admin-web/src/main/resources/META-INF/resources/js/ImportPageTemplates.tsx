@@ -12,7 +12,7 @@ interface Props {
 	portletNamespace: string;
 }
 
-export default function ImportFragments(props: Props) {
+export default function ImportPageTemplates(props: Props) {
 	return (
 		<Import
 			helpLink={{

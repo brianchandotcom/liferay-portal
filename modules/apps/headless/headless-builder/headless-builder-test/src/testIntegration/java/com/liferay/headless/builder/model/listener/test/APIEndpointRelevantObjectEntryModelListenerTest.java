@@ -296,7 +296,7 @@ public class APIEndpointRelevantObjectEntryModelListenerTest
 				"status", "BAD_REQUEST"
 			).put(
 				"title",
-				"Path parameter description can not be set with empty path " +
+				"Path parameter description cannot be set with empty path " +
 					"parameter property."
 			).toString(),
 			HTTPTestUtil.invokeToJSONObject(

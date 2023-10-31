@@ -161,10 +161,10 @@ public class APIEndpointRelevantObjectEntryModelListener
 
 					throw new ObjectEntryValuesException.InvalidObjectField(
 						null,
-						"Path parameter description can not be set with " +
-							"empty path parameter property",
-						"path-parameter-description-can-not-be-set-with-" +
-							"empty-path-parameter-property");
+						"Path parameter description cannot be set with empty " +
+							"path parameter property",
+						"path-parameter-description-cannot-be-set-with-empty-" +
+							"path-parameter-property");
 				}
 			}
 			else {

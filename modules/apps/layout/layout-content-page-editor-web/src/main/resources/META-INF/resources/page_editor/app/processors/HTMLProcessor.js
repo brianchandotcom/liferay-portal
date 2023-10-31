@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {flipThirdPartyCookiesOff} from '@liferay/cookies-banner-web';
 import {render} from '@liferay/frontend-js-react-web';
 import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 
@@ -22,7 +23,7 @@ function createEditor(element, changeCallback, destroyCallback) {
 	render(
 		HTMLEditorModal,
 		{
-			initialContent: element.innerHTML,
+			initialContent: flipThirdPartyCookiesOff(element).innerHTML,
 			onClose: destroyCallback,
 			onSave: (content) => {
 				changeCallback(content);

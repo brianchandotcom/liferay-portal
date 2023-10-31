@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {flipThirdPartyCookiesOff} from '@liferay/cookies-banner-web';
 import CKEditor from 'ckeditor4-react';
 import PropTypes from 'prop-types';
 import React, {forwardRef, useCallback, useEffect, useRef} from 'react';
@@ -12,6 +13,13 @@ import '../css/main.scss';
 const BASEPATH = '/o/frontend-editor-ckeditor-web/ckeditor/';
 const CONTEXT_URL = Liferay.ThemeDisplay.getPathContext();
 const CURRENT_PATH = CONTEXT_URL ? CONTEXT_URL + BASEPATH : BASEPATH;
+
+function createElementFromHTML(htmlString) {
+	const div = document.createElement('div');
+	div.innerHTML = htmlString;
+
+	return flipThirdPartyCookiesOff(div).innerHTML;
+}
 
 /**
  * This component contains shared code between
@@ -50,7 +58,7 @@ const BaseEditor = forwardRef(
 				data = data.replace(/(\u200B){7}/, '');
 			}
 
-			return data;
+			return createElementFromHTML(data);
 		}, [contents]);
 
 		const onChangeCallback = () => {

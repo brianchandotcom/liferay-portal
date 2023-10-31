@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"@liferay/cookies-banner-web": "*",
 		"ckeditor4": "4.22.1",
 		"ckeditor4-react": "1.4.2",
 		"frontend-js-web": "*",

@@ -11,31 +11,24 @@ import {addParams, navigate} from 'frontend-js-web';
 import React from 'react';
 
 const SearchOptions = ({
-	initialSearchIn,
-	initialSearchLocation,
-	initialSearchResults,
-	portletNamespace,
+	portletNamespace: namespace,
+	searchIn: initialSearchIn,
 	searchInOptions,
+	searchLocation: initialLocation,
 	searchLocationOptions,
+	searchResults: initialResults,
 	searchResultsOptions,
 	searchURL,
 }) => {
-	const onSelectionChangeHandlder = (
-		searchIn,
-		searchLocation,
-		searchResults
-	) => {
-		let url = addParams(
-			`${portletNamespace}tab=${searchResults}`,
+	const onChange = ({location, results, searchIn}) => {
+		const url = addParams(
+			{
+				[`${namespace}searchIn`]: searchIn || initialSearchIn,
+				[`${namespace}searchLocation`]: location || initialLocation,
+				[`${namespace}tab`]: results || initialResults,
+			},
 			searchURL
 		);
-
-		url = addParams(
-			`${portletNamespace}searchLocation=${searchLocation}`,
-			url
-		);
-
-		url = addParams(`${portletNamespace}searchIn=${searchIn}`, url);
 
 		navigate(url);
 	};
@@ -45,15 +38,9 @@ const SearchOptions = ({
 			<ClayLayout.Col>
 				<ClayForm.Group className="c-mr-2 d-inline-flex">
 					<Picker
-						id={`${portletNamespace}searchResults`}
-						onSelectionChange={(key) =>
-							onSelectionChangeHandlder(
-								initialSearchIn,
-								initialSearchLocation,
-								key
-							)
-						}
-						selectedKey={initialSearchResults}
+						id={`${namespace}searchResults`}
+						onSelectionChange={(key) => onChange({results: key})}
+						selectedKey={initialResults}
 					>
 						<DropDown.Group
 							header={Liferay.Language.get('results')}
@@ -69,15 +56,11 @@ const SearchOptions = ({
 				{searchLocationOptions ? (
 					<ClayForm.Group className="c-mr-2 d-inline-flex">
 						<Picker
-							id={`${portletNamespace}searchLocation`}
+							id={`${namespace}searchLocation`}
 							onSelectionChange={(key) =>
-								onSelectionChangeHandlder(
-									initialSearchIn,
-									key,
-									initialSearchResults
-								)
+								onChange({location: key})
 							}
-							selectedKey={initialSearchLocation}
+							selectedKey={initialLocation}
 						>
 							<DropDown.Group
 								header={Liferay.Language.get('location')}
@@ -95,14 +78,8 @@ const SearchOptions = ({
 
 				<ClayForm.Group className="d-inline-flex">
 					<Picker
-						id={`${portletNamespace}searchIn`}
-						onSelectionChange={(key) =>
-							onSelectionChangeHandlder(
-								key,
-								initialSearchLocation,
-								initialSearchResults
-							)
-						}
+						id={`${namespace}searchIn`}
+						onSelectionChange={(key) => onChange({searchIn: key})}
 						selectedKey={initialSearchIn}
 					>
 						<DropDown.Group

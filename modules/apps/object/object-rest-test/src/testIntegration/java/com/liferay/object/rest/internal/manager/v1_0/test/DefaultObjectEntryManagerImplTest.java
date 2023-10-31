@@ -505,7 +505,8 @@ public class DefaultObjectEntryManagerImplTest
 
 		Node rootNode = _objectDefinitionTree.getRootNode();
 
-		objectDefinitionLocalService.enableAccountEntryRestricted(
+		_rootObjectDefinition =
+			objectDefinitionLocalService.enableAccountEntryRestricted(
 			_objectRelationshipLocalService.addObjectRelationship(
 				adminUser.getUserId(),
 				accountEntryObjectDefinition.getObjectDefinitionId(),

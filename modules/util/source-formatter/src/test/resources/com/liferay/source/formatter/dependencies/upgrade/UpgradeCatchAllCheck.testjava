@@ -73,6 +73,12 @@ public class UpgradeCatchAllCheck {
 		indexer.getClassNames();
 	}
 
+	public void method(long commerceOrderId) {
+		CommerceOrderItemLocalServiceUtil.deleteCommerceOrderItems(commerceOrderId);
+		_commerceOrderItemLocalService.deleteCommerceOrderItems(123);
+		_commerceOrderItemLocalService.deleteCommerceOrderItems(commerceOrderId);
+	}
+
 	public void method(
 		long groupId, boolean privateLayout, long layoutId, long parentLayoutId,
 		Map<java.util.Locale, String> nameMap,
@@ -122,6 +128,20 @@ public class UpgradeCatchAllCheck {
 		CPDefinitionLinkLocalServiceUtil.addCPDefinitionLinkByCProductId(123, cProductId, priority, type, serviceContext);
 		CPDefinitionLinkLocalServiceUtil.addCPDefinitionLinkByCProductId(cpDefinitionId, cProductId, priority, type, serviceContext);
 		_cpDefinitionLinkLocalService.addCPDefinitionLinkByCProductId(cpDefinitionId, cProductId, priority, type, serviceContext);
+	}
+
+	public void method(
+		long commerceOrderId, long cpInstanceId, int quantity,
+		int shippedQuantity, String json, CommerceContext commerceContext,
+		ServiceContext serviceContext) {
+
+		CommerceOrderItemLocalServiceUtil.addCommerceOrderItem(commerceOrderId, cpInstanceId, quantity, shippedQuantity, json, commerceContext, serviceContext);
+		CommerceOrderItemServiceUtil.addCommerceOrderItem(123, cpInstanceId, 123, shippedQuantity, "test", commerceContext, serviceContext);
+		CommerceOrderItemServiceUtil.addCommerceOrderItem(commerceOrderId, cpInstanceId, quantity, shippedQuantity, json, commerceContext, serviceContext);
+
+		_commerceOrderItemLocalService.addCommerceOrderItem(commerceOrderId, cpInstanceId, quantity, shippedQuantity, json, commerceContext, serviceContext);
+		_commerceOrderItemService.addCommerceOrderItem(123, cpInstanceId, 123, shippedQuantity, "test", commerceContext, serviceContext);
+		_commerceOrderItemService.addCommerceOrderItem(commerceOrderId, cpInstanceId, quantity, shippedQuantity, json, commerceContext, serviceContext);
 	}
 
 	public void method(
@@ -358,6 +378,12 @@ public class UpgradeCatchAllCheck {
 
 	@Reference
 	private CommerceAccountHelper _commerceAccountHelper;
+
+	@Reference
+	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
+
+	@Reference
+	private CommerceOrderItemService _commerceOrderItemService;
 
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;

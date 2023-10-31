@@ -258,11 +258,7 @@
 			</or>
 		</condition>
 
-		<condition property="artifact.location.src" value="${osgi.dir}/portal/${Bundle-SymbolicName}.jar">
-			<contains string="${Bundle-SymbolicName}" substring="com.liferay.portal" />
-		</condition>
-
-		<property name="artifact.location.src" value="${osgi.dir}/modules/${Bundle-SymbolicName}.jar" />
+		<property name="artifact.location.src" value="${osgi.dir}/portal/${Bundle-SymbolicName}.jar" />
 
 		<dirname file="${artifact.location.src}" property="artifact.dir.name" />
 		<basename file="${artifact.location.src}" property="artifact.file.name" />

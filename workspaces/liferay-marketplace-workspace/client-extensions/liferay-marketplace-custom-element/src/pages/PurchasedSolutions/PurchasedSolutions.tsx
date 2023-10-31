@@ -150,22 +150,25 @@ const PurchasedSolutions: React.FC = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [trialLenght]);
 
-	const account = accountForm.formUtil.watch('accountSelected');
+	const account = accountForm.watch('accountSelected');
 
-	const onsubmit = async (responeAccount?: Account) => {
+	const agreeToTermsAndConditions = accountForm.watch(
+		'agreeToTermsAndConditions'
+	);
+
+	const hasAllValidations =
+		agreeToTermsAndConditions && accountForm.formState.isValid;
+
+	const onSubmit = async (responeAccount?: Account) => {
 		await postOrder({
 			account: {
 				id: Number(account?.id) || Number(responeAccount?.id),
 				type:
-					(accountForm.formUtil.form.accountSelected
-						?.type as string) || (responeAccount?.type as string),
+					(account?.type as string) ||
+					(responeAccount?.type as string),
 			},
-			accountExternalReferenceCode:
-				accountForm.formUtil.form.accountSelected
-					?.externalReferenceCode,
-			accountId:
-				Number(accountForm.formUtil.form.accountSelected?.id) ||
-				Number(responeAccount?.id),
+			accountExternalReferenceCode: account?.externalReferenceCode,
+			accountId: Number(account?.id) || Number(responeAccount?.id),
 			channel: {
 				currencyCode: channel?.currencyCode,
 				id: channel?.id,
@@ -196,7 +199,7 @@ const PurchasedSolutions: React.FC = () => {
 					accountForm={accountForm}
 					disabledButton={disabledButton}
 					setStep={setStep}
-					submitOrder={onsubmit}
+					submitOrder={onSubmit}
 				/>
 			),
 			stepTitle: 'Create Trial',
@@ -205,7 +208,7 @@ const PurchasedSolutions: React.FC = () => {
 			component: (
 				<PurchasedSolutionsAccountSelection
 					accountForm={accountForm}
-					onsubmit={onsubmit}
+					onSubmit={onSubmit}
 					setStep={setStep}
 				/>
 			),
@@ -248,7 +251,8 @@ const PurchasedSolutions: React.FC = () => {
 			<div className="align-items-center d-flex flex-column justify-content-center purchased-solutions-container">
 				<div className="border d-flex flex-column justify-content-center p-6 purchased-solutions-body rounded">
 					<div className="d-flex justify-content-center mb-5">
-						{accountForm.formUtil.form.accountQuantity > 1 &&
+						{accountForm.accountQuantity >
+							accountForm.singleAccount &&
 							step !== StepType.CHECKOUT && (
 								<StepWizard
 									className="col-6"
@@ -260,12 +264,10 @@ const PurchasedSolutions: React.FC = () => {
 									}}
 									wizardSteps={{
 										[StepType.ACCOUNT]:
-											!!accountForm.formUtil.form
-												.accountSelected &&
+											!!account &&
 											step !== StepType.ACCOUNT,
 										[StepType.FORM]:
-											accountForm.formUtil
-												.hasAllValidations &&
+											hasAllValidations &&
 											step !== StepType.FORM,
 									}}
 								/>

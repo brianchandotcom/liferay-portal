@@ -20,7 +20,7 @@ import {Liferay} from '../../../liferay/liferay';
 import zodSchema from '../../../schema/zod';
 import {getListTypeDefinitionByExternalReferenceCode} from '../../../utils/api';
 import {StepType} from '../PurchasedSolutions';
-import {getPhones} from '../PurchasedSolutionsUtil';
+import {Phone, phones} from '../PurchasedSolutionsUtil';
 import useAccountForm from '../hooks/useAccountForm';
 import useHandleAccount from '../hooks/useHandleAccount';
 
@@ -32,13 +32,14 @@ type AccountFormType = {
 	accountForm: ReturnType<typeof useAccountForm>;
 	disabledButton: boolean;
 	setStep: React.Dispatch<React.SetStateAction<StepType>>;
-	submitOrder: (aacount?: Account) => void;
+	submitOrder: (responeAccount?: Account) => Promise<void>;
 };
 
 enum AccountQuantities {
 	SINGLE = 1,
 	NO_ACCOUNT = 0,
 }
+
 const AccountForm: React.FC<AccountFormType> = ({
 	accountForm,
 	disabledButton,
@@ -49,22 +50,18 @@ const AccountForm: React.FC<AccountFormType> = ({
 		code: '+1',
 		flag: 'en-us',
 	});
-	const [industries, setIndustries] = useState<Industries[]>();
-	const [phonesFlags, setPhonesFlags] = useState<PhonesFlags[]>();
 
-	const {mutateMyUserAccout, myUserAccount} = useMarketplaceContext();
+	const [industries, setIndustries] = useState<Industries[]>();
+
+	const {mutateMyUserAccount, myUserAccount} = useMarketplaceContext();
 
 	const {createAccount, formDataTransform, updateAccount} = useHandleAccount({
-		mutateMyUserAccout,
+		mutateMyUserAccount,
 		myUserAccount,
 	});
 
 	useEffect(() => {
 		(async () => {
-			const flags = getPhones();
-
-			setPhonesFlags(flags);
-
 			const industriesListTypeEntries = await getListTypeDefinitionByExternalReferenceCode(
 				externalReferenceCode
 			);
@@ -74,21 +71,22 @@ const AccountForm: React.FC<AccountFormType> = ({
 	}, []);
 
 	const inputProps = {
-		error: accountForm.formUtil.formState.errors,
-		register: accountForm.formUtil.register,
+		error: accountForm.formState.errors,
+		register: accountForm.register,
 		required: true,
 	};
 
 	const handleNextStep = async () => {
-		const form = accountForm.formUtil.form;
+		const form = accountForm.watch();
 
-		switch (accountForm.formUtil.form.accountQuantity) {
+		switch (accountForm.accountQuantity) {
 			case AccountQuantities.SINGLE: {
 				await updateAccount({
 					accountId: Number(form?.accountSelected?.id),
 					data: formDataTransform(form),
 				});
-				submitOrder();
+
+				await submitOrder();
 
 				setStep(StepType.CHECKOUT);
 
@@ -100,18 +98,27 @@ const AccountForm: React.FC<AccountFormType> = ({
 					formDataTransform(form)
 				);
 
-				submitOrder(response);
+				await submitOrder(response);
 
 				setStep(StepType.CHECKOUT);
 
 				break;
 			}
 
-			default:
+			default: {
 				setStep(StepType.ACCOUNT);
+
 				break;
+			}
 		}
 	};
+
+	const agreeToTermsAndConditions = accountForm.watch(
+		'agreeToTermsAndConditions'
+	);
+
+	const hasAllValidations =
+		agreeToTermsAndConditions && accountForm.formState.isValid;
 
 	return (
 		<div className="align-items-center d-flex flex-column justify-content-center">
@@ -236,35 +243,35 @@ const AccountForm: React.FC<AccountFormType> = ({
 										</div>
 									}
 								>
-									<DropDown.ItemList items={phonesFlags}>
+									<DropDown.ItemList items={phones}>
 										{(item) => {
-											const itemList = item as PhonesFlags;
+											const phone = item as Phone;
 
 											return (
 												<DropDown.Item
 													onClick={() => {
 														setCurrentPhonesFlags({
-															code: itemList.code,
-															flag: itemList.flag,
+															code: phone.code,
+															flag: phone.flag,
 														});
 
-														accountForm.formUtil.setValue(
+														accountForm.setValue(
 															'phone',
 															{
 																code:
-																	itemList.code,
+																	phone.code,
 																flag:
-																	itemList.flag,
+																	phone.flag,
 															}
 														);
 													}}
 												>
 													<ClayIcon
 														className="mr-2"
-														symbol={itemList.flag}
+														symbol={phone.flag}
 													/>
 
-													{itemList.code}
+													{phone.code}
 												</DropDown.Item>
 											);
 										}}
@@ -302,15 +309,15 @@ const AccountForm: React.FC<AccountFormType> = ({
 						<div className="d-flex justify-content-start">
 							<>
 								<ClayCheckbox
-									checked={accountForm.formUtil.watch(
+									checked={accountForm.watch(
 										'agreeToTermsAndConditions'
 									)}
 									className="danger"
 									id="newsSubscription"
 									onChange={() =>
-										accountForm.formUtil.setValue(
+										accountForm.setValue(
 											'agreeToTermsAndConditions',
-											!accountForm.formUtil.watch(
+											!accountForm.watch(
 												'agreeToTermsAndConditions'
 											)
 										)
@@ -348,13 +355,11 @@ const AccountForm: React.FC<AccountFormType> = ({
 							</div>
 
 							<ClayButton
-								disabled={
-									!accountForm.formUtil.hasAllValidations ||
-									disabledButton
-								}
+								disabled={!hasAllValidations || disabledButton}
 								onClick={handleNextStep}
 							>
-								{accountForm.formUtil.form.accountQuantity <= 1
+								{accountForm.accountQuantity <=
+								AccountQuantities.SINGLE
 									? 'Start Trial'
 									: 'Continue'}
 							</ClayButton>

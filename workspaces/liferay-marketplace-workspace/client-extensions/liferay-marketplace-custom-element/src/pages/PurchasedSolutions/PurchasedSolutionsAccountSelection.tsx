@@ -11,7 +11,7 @@ import {Header} from '../../components/Header/Header';
 
 import './PurchasedSolutions.scss';
 
-import {useCallback, useEffect, useState} from 'react';
+import {useState} from 'react';
 
 import {getSiteURL} from '../../components/InviteMemberModal/services';
 import RadioCardList, {
@@ -23,37 +23,32 @@ import useAccountForm from './hooks/useAccountForm';
 
 type AccountSelectionProps = {
 	accountForm: ReturnType<typeof useAccountForm>;
-	onsubmit: () => Promise<void>;
+	onSubmit: (responeAccount?: Account) => Promise<void>;
 	setStep: React.Dispatch<React.SetStateAction<StepType>>;
 };
 
 const AccountSelection: React.FC<AccountSelectionProps> = ({
 	accountForm,
-	onsubmit,
+	onSubmit,
 	setStep,
 }) => {
-	const [accounts, setAccounts] = useState<RadioCardContent<Account>[]>([]);
-
-	const buildContentList = useCallback(() => {
-		setAccounts(
-			accountForm.formUtil.form.accounts.map((account: Account) => ({
+	const accountSelected = accountForm.watch('accountSelected');
+	const emailAddress = accountForm.watch('emailAddress');
+	const [accounts, setAccounts] = useState<RadioCardContent<Account>[]>(
+		() => {
+			return accountForm.accounts.map((account: Account) => ({
 				imageURL: account.logoURL,
 				selected:
-					accountForm.formUtil.form.accountSelected
-						?.externalReferenceCode ===
+					accountSelected?.externalReferenceCode ===
 					account.externalReferenceCode,
 				title: account.name,
 				value: account,
-			}))
-		);
-	}, [accountForm]);
-
-	useEffect(() => {
-		buildContentList();
-	}, [buildContentList]);
+			}));
+		}
+	);
 
 	const handleSelectAccount = (radioOption: RadioOption<Account>) => {
-		accountForm.formUtil.setValue('accountSelected', radioOption.value);
+		accountForm.setValue('accountSelected', radioOption.value);
 
 		setAccounts((previousValue) =>
 			previousValue.map((account, index) => ({
@@ -63,8 +58,9 @@ const AccountSelection: React.FC<AccountSelectionProps> = ({
 		);
 	};
 
-	const handleNextStep = () => {
-		onsubmit();
+	const handleNextStep = async () => {
+		await onSubmit();
+
 		setStep(StepType.CHECKOUT);
 	};
 
@@ -78,7 +74,7 @@ const AccountSelection: React.FC<AccountSelectionProps> = ({
 				<span>
 					{`Accounts available for `}
 
-					<strong>{accountForm.formUtil.form?.emailAddress}</strong>
+					<strong>{emailAddress}</strong>
 
 					{` (you)`}
 				</span>
@@ -130,10 +126,7 @@ const AccountSelection: React.FC<AccountSelectionProps> = ({
 									Back
 								</ClayButton>
 								<ClayButton
-									disabled={
-										!accountForm.formUtil.form
-											.accountSelected
-									}
+									disabled={!accountSelected}
 									onClick={handleNextStep}
 								>
 									Continue

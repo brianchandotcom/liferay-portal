@@ -66,6 +66,7 @@
 
 			.custom-control {
 				margin-bottom: 0 !important;
+				width: -moz-fit-content;
 				width: fit-content;
 			}
 
@@ -144,6 +145,7 @@
 	background: -webkit-linear-gradient(360deg, #0140dc, #ad1aee);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
+	background-clip: text;
 }
 
 .product-card {

@@ -460,7 +460,7 @@ type Industries = {
 type UserForm = {
 	accountQuantity: number;
 	accountSelected: Account | undefined;
-	accounts: any;
+	accounts: Account[];
 	agreeToTermsAndConditions: boolean;
 	companyName: string;
 	emailAddress: string;

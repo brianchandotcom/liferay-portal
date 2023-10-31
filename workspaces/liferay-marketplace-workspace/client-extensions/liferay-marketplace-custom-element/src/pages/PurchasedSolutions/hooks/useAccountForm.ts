@@ -4,7 +4,7 @@
  */
 
 import {zodResolver} from '@hookform/resolvers/zod';
-import {useCallback, useEffect, useMemo} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useForm} from 'react-hook-form';
 
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
@@ -18,6 +18,8 @@ const useAccountForm = (
 	step: StepType,
 	setStep: React.Dispatch<React.SetStateAction<StepType>>
 ) => {
+	const [accountQuantity, setAccountQuantity] = useState<number>(0);
+	const [accounts, setAccounts] = useState<Account[]>([]);
 	const {myUserAccount} = useMarketplaceContext();
 
 	const accountBriefs = useMemo(() => myUserAccount?.accountBriefs || [], [
@@ -33,9 +35,7 @@ const useAccountForm = (
 		watch,
 	} = useForm<UserForm>({
 		defaultValues: {
-			accountQuantity: 0,
 			accountSelected: undefined,
-			accounts: [],
 			agreeToTermsAndConditions: false,
 			companyName: '',
 			emailAddress: '',
@@ -81,28 +81,22 @@ const useAccountForm = (
 				setValue('accountSelected', userAccounts[0]);
 			}
 
-			setValue('accounts', userAccounts);
-			setValue('accountQuantity', userAccounts.length);
+			setAccounts(userAccounts);
+			setAccountQuantity(userAccounts.length);
 		})();
 	}, [fetchAccount, myUserAccount, setStep, setValue, step]);
 
-	const form = watch();
-
-	const agreeToTermsAndConditions = form['agreeToTermsAndConditions'];
-
-	const hasAllValidations = agreeToTermsAndConditions && isValid;
-
 	return {
-		formUtil: {
-			form,
-			formState: {errors, isValid},
-			getValues,
-			handleSubmit,
-			hasAllValidations,
-			register,
-			setValue,
-			watch,
-		},
+		accountQuantity,
+		accounts,
+		formState: {errors, isValid},
+		getValues,
+		handleSubmit,
+		register,
+		setAccounts,
+		setValue,
+		singleAccount,
+		watch,
 	};
 };
 export default useAccountForm;

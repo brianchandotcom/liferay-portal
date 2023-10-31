@@ -3,6 +3,20 @@
 		{
 			"fields": [
 				{
+					"defaultValue": "Marketplace Channel",
+					"description": "Marketplace Channel",
+					"label": "Channel Name",
+					"name": "channelName",
+					"type": "text"
+				},
+				{
+					"defaultValue": "marketplace solution category",
+					"description": "Category Vocabulary",
+					"label": "Category Vocabulary",
+					"name": "categoryVocabulary",
+					"type": "text"
+				},
+				{
 					"description": "johndoe@example.com",
 					"label": "Publisher Email",
 					"name": "publisherEmail",

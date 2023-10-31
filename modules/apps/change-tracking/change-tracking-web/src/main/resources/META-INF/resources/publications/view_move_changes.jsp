@@ -68,18 +68,22 @@ renderResponse.setTitle(LanguageUtil.get(request, "move-changes"));
 </clay:container-fluid>
 
 <aui:script use="aui-base">
-	A.one('#<portlet:namespace />toPublication').on('change', (event) => {
-		var selection = A.one('#<portlet:namespace />toPublication').get('value');
+	const toPublicationSelector = document.getElementById(
+		'<portlet:namespace />toPublication'
+	);
 
-		var button = A.one('#<portlet:namespace />submitMove');
+	toPublicationSelector.addEventListener('change', (event) => {
+		const selection = toPublicationSelector.value;
+
+		const button = document.getElementById('<portlet:namespace />submitMove');
 
 		if (selection) {
-			button.removeClass('disabled');
-			button.attr('disabled', false);
+			button.classList.remove('disabled');
+			button.disabled = false;
 		}
 		else {
-			button.addClass('disabled');
-			button.attr('disabled', true);
+			button.classList.add('disabled');
+			button.disabled = true;
 		}
 	});
 </aui:script>

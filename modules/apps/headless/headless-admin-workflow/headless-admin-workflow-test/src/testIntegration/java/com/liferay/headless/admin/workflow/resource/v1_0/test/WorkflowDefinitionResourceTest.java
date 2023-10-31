@@ -114,15 +114,15 @@ public class WorkflowDefinitionResourceTest
 		assertHttpResponseStatusCode(
 			200,
 			workflowDefinitionResource.getWorkflowDefinitionByNameHttpResponse(
-				workflowDefinition.getName(), null));
+				workflowDefinition.getName(), null, null));
 		assertHttpResponseStatusCode(
 			200,
 			workflowDefinitionResource.getWorkflowDefinitionByNameHttpResponse(
-				workflowDefinition.getName(), 1));
+				workflowDefinition.getName(), null, 1));
 		assertHttpResponseStatusCode(
 			404,
 			workflowDefinitionResource.getWorkflowDefinitionByNameHttpResponse(
-				workflowDefinition.getName(), 2));
+				workflowDefinition.getName(), null, 2));
 
 		testPostWorkflowDefinitionDeploy_addWorkflowDefinition(
 			workflowDefinition);
@@ -130,11 +130,11 @@ public class WorkflowDefinitionResourceTest
 		assertHttpResponseStatusCode(
 			200,
 			workflowDefinitionResource.getWorkflowDefinitionByNameHttpResponse(
-				workflowDefinition.getName(), 2));
+				workflowDefinition.getName(), null, 2));
 
 		WorkflowDefinition latestWorkflowDefinition =
 			workflowDefinitionResource.getWorkflowDefinitionByName(
-				workflowDefinition.getName(), null);
+				workflowDefinition.getName(), null, null);
 
 		Assert.assertEquals(
 			workflowDefinition.getDateCreated(),

@@ -3625,7 +3625,7 @@ public class BundleSiteInitializerTest {
 
 		WorkflowDefinition workflowDefinitionTest1 =
 			workflowDefinitionResource.getWorkflowDefinitionByName(
-				"Test Workflow Definition 1", 1);
+				"Test Workflow Definition 1", null, 1);
 
 		Assert.assertNotNull(workflowDefinitionTest1);
 		Assert.assertEquals(
@@ -3648,7 +3648,7 @@ public class BundleSiteInitializerTest {
 
 		WorkflowDefinition workflowDefinitionTest2 =
 			workflowDefinitionResource.getWorkflowDefinitionByName(
-				"Test Workflow Definition 2", 1);
+				"Test Workflow Definition 2", null, 1);
 
 		Assert.assertNotNull(workflowDefinitionTest2);
 		Assert.assertEquals(

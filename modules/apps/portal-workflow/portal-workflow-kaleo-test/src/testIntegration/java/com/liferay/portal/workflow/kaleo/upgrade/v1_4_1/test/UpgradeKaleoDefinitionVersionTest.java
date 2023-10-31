@@ -148,7 +148,7 @@ public class UpgradeKaleoDefinitionVersionTest {
 			preparedStatement.setString(8, name);
 			preparedStatement.setString(9, StringUtil.randomString());
 			preparedStatement.setString(10, StringUtil.randomString());
-			preparedStatement.setString(11, StringUtil.randomString());
+			preparedStatement.setString(11, "{}");
 			preparedStatement.setInt(12, version);
 			preparedStatement.setBoolean(13, true);
 			preparedStatement.setLong(14, RandomTestUtil.randomLong());

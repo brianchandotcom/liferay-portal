@@ -5,10 +5,11 @@
 
 package com.liferay.object.internal.search.spi.model.index.contributor;
 
+import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
@@ -38,14 +39,20 @@ public class ObjectFieldModelDocumentContributor
 		document.addKeyword(
 			"objectDefinitionId", objectField.getObjectDefinitionId());
 		document.addKeyword("state", objectField.isState());
+		document.addKeyword(
+			"unique",
+			ObjectFieldSettingUtil.isUnique(
+				_objectFieldSettingLocalService.
+					getObjectFieldObjectFieldSettings(
+						objectField.getObjectFieldId())));
 
 		document.remove(Field.USER_NAME);
 	}
 
 	@Reference
-	protected ClassNameLocalService classNameLocalService;
+	private Localization _localization;
 
 	@Reference
-	private Localization _localization;
+	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
 
 }

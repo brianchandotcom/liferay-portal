@@ -39,9 +39,6 @@ definition {
 	@priority = 3
 	test AddDataSourceForOneSite {
 		property portal.release = "true";
-		property portal.upstream = "quarantine";
-
-		// AC Quarantine Reason: Test improvements needed see LRAC-14017
 
 		task ("Add site and page") {
 			ACUtils.addSiteAndPage();
@@ -71,7 +68,7 @@ definition {
 			ACIndividualsDashboard.goToOverviewTab();
 		}
 
-		task ("View the number of Total Individuals and Anonymous") {
+		task ("View the number of Total Individuals") {
 			ACCards.viewTotalCount(
 				cardName = "Total Individuals",
 				count = 0);
@@ -81,8 +78,8 @@ definition {
 			ACUtils.launchDXP();
 
 			ACUtils.navigateToSitePage(
-				documentTitleList = "1,2,3",
 				actionType = "View WC",
+				documentTitleList = "1,2,3",
 				pageName = "AC Page",
 				siteName = "Site Name");
 
@@ -101,7 +98,7 @@ definition {
 			ACIndividualsDashboard.goToOverviewTab();
 		}
 
-		task ("View the number of Total Individuals and Anonymous") {
+		task ("View the number of Total Individuals") {
 			ACCards.viewTotalCount(
 				cardName = "Total Individuals",
 				count = 1);

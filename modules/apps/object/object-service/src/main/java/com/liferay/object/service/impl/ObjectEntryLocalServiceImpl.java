@@ -145,8 +145,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -809,7 +807,7 @@ public class ObjectEntryLocalServiceImpl
 		return objectEntryPersistence.countByG_ODI(groupId, objectDefinitionId);
 	}
 
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	@Override
 	public long getObjectEntriesCount(
 			long groupId, ObjectDefinition objectDefinition,
 			Predicate predicate)
@@ -832,20 +830,23 @@ public class ObjectEntryLocalServiceImpl
 			).eq(
 				dynamicObjectDefinitionTable.getPrimaryKeyColumn()
 			)
+		).innerJoinON(
+			ObjectEntryTable.INSTANCE,
+			ObjectEntryTable.INSTANCE.objectEntryId.eq(
+				dynamicObjectDefinitionTable.getPrimaryKeyColumn())
 		);
 
-		if (!StringUtil.equals(objectDefinition.getScope(), "site")) {
+		ObjectScopeProvider objectScopeProvider =
+			_objectScopeProviderRegistry.getObjectScopeProvider(
+				objectDefinition.getScope());
+
+		if (!objectScopeProvider.isGroupAware()) {
 			return dslQueryCount(joinStep.where(predicate));
 		}
 
 		return dslQueryCount(
-			joinStep.innerJoinON(
-				ObjectEntryTable.INSTANCE,
-				ObjectEntryTable.INSTANCE.objectEntryId.eq(
-					dynamicObjectDefinitionTable.getPrimaryKeyColumn())
-			).where(
-				predicate.and(ObjectEntryTable.INSTANCE.groupId.eq(groupId))
-			));
+			joinStep.where(
+				predicate.and(ObjectEntryTable.INSTANCE.groupId.eq(groupId))));
 	}
 
 	@Override

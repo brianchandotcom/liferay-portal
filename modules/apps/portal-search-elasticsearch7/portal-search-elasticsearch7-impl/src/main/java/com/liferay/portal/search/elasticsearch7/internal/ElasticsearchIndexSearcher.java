@@ -533,12 +533,16 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			if (_elasticsearchConfigurationWrapper.indexMaxResultWindow() <=
 					start) {
 
-				throw new IllegalArgumentException(
-					StringBundler.concat(
-						"Start:", start,
-						" is not less than the maxResultWindow: ",
-						_elasticsearchConfigurationWrapper.
-							indexMaxResultWindow()));
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						StringBundler.concat(
+							"Skipping search. Start:", start,
+							" is not less than the maxResultWindow: ",
+							_elasticsearchConfigurationWrapper.
+								indexMaxResultWindow()));
+				}
+
+				return new HitsImpl();
 			}
 
 			searchSearchRequest.setSize(

@@ -24,14 +24,22 @@ export default function RuleBuilderItem({
 			<div className="c-gap-2 d-flex flex-grow-1">{children}</div>
 
 			<ClayButtonWithIcon
-				aria-label={Liferay.Language.get('delete-condition')}
+				aria-label={
+					type === 'action'
+						? Liferay.Language.get('delete-action')
+						: Liferay.Language.get('delete-condition')
+				}
 				borderless
 				className="page-editor__rule-builder-delete-button"
 				displayType="secondary"
 				onClick={() => onDeleteButtonClick()}
 				size="sm"
 				symbol="times-circle"
-				title={Liferay.Language.get('delete-condition')}
+				title={
+					type === 'action'
+						? Liferay.Language.get('delete-action')
+						: Liferay.Language.get('delete-condition')
+				}
 			/>
 		</div>
 	);

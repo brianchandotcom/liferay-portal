@@ -200,9 +200,9 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 				return;
 			}
 
-			Object infoFieldValueValue = infoFieldValue.getValue();
-
 			String url = null;
+
+			Object infoFieldValueValue = infoFieldValue.getValue();
 
 			if (infoFieldValueValue instanceof FunctionInfoLocalizedValue) {
 				FunctionInfoLocalizedValue<?> functionInfoLocalizedValue =

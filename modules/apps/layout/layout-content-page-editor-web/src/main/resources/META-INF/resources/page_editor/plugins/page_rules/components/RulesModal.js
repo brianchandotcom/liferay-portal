@@ -10,6 +10,7 @@ import ClayModal, {useModal} from '@clayui/modal';
 import classNames from 'classnames';
 import {useId} from 'frontend-js-components-web';
 import React, {useMemo, useState} from 'react';
+import {v4 as uuidv4} from 'uuid';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
@@ -38,8 +39,12 @@ export default function RulesModal({editingRule, onCloseModal}) {
 
 	const [nameError, setNameError] = useState(false);
 
-	const [actions, setActions] = useState(editingRule?.actions || []);
-	const [conditions, setConditions] = useState(editingRule?.conditions || []);
+	const [actions, setActions] = useState(
+		() => editingRule?.actions || [{id: uuidv4}]
+	);
+	const [conditions, setConditions] = useState(
+		() => editingRule?.conditions || [{id: uuidv4}]
+	);
 	const [conditionType, setConditionType] = useState('all');
 
 	const layoutDataItems = useMemo(() => {

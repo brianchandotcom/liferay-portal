@@ -192,7 +192,7 @@ definition {
 
 		WebContent.copyCP(webContentTitle = "EXAMPLE");
 
-		var key_webContentTitle = "EXAMPLE (Copy 1)";
+		var key_webContentTitle = "EXAMPLE (Copy)";
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "table");
 

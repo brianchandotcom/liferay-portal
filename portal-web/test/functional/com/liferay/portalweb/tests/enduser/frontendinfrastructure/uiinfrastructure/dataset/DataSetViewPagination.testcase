@@ -301,4 +301,24 @@ definition {
 		}
 	}
 
+	@description = "LPS-188333. Confirm that changes in the pagination are not autosaved"
+	@priority = 3
+	test PaginationChangesAreNotAutoSaved {
+		task ("And the user fills in the pagination items field") {
+			DataSetAdmin.changePaginationItems(paginationItems = "10, 20, 30, 40, 50, 60");
+		}
+
+		task ("And fills the default value field") {
+			DataSetAdmin.changePaginationDefaultItems(defaultPagination = 10);
+
+			DataSetAdmin.goToTab(tabName = "Pagination");
+		}
+
+		task ("Then the changes are autosaved") {
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+	}
+
 }

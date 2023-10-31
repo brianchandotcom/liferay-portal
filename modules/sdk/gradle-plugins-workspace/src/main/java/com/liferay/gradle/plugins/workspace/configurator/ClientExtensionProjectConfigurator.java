@@ -53,7 +53,6 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -158,23 +157,13 @@ public class ClientExtensionProjectConfigurator
 				project, VALIDATE_CLIENT_EXTENSIONS_TASK_NAME,
 				DefaultTask.class);
 
-		_addInputFile(
-			project.file(_CLIENT_EXTENSION_YAML), () -> true,
-			assembleClientExtensionTaskProvider,
-			createClientExtensionConfigTaskProvider,
-			validateClientExtensionIdsTaskProvider,
-			validateClientExtensionTaskProvider);
-
-		_setOutputsUpToDateAlways(
-			validateClientExtensionIdsTaskProvider,
-			validateClientExtensionTaskProvider);
-
 		_baseConfigureClientExtensionProject(
 			project, assembleClientExtensionTaskProvider,
 			buildClientExtensionZipTaskProvider,
 			buildSiteInitializerZipTaskProvider,
 			createClientExtensionConfigTaskProvider,
-			validateClientExtensionIdsTaskProvider, workspaceExtension);
+			validateClientExtensionIdsTaskProvider,
+			validateClientExtensionTaskProvider, workspaceExtension);
 
 		AtomicBoolean hasThemeCSSClientExtension = new AtomicBoolean(false);
 
@@ -463,28 +452,6 @@ public class ClientExtensionProjectConfigurator
 		cleanTask.dependsOn(dockerRemoveImage);
 	}
 
-	@SafeVarargs
-	private final void _addInputFile(
-		File inputFile, Supplier<Boolean> supplier,
-		TaskProvider<? extends Task>... taskProviders) {
-
-		for (TaskProvider<? extends Task> taskProvider : taskProviders) {
-			taskProvider.configure(
-				new Action<Task>() {
-
-					@Override
-					public void execute(Task task) {
-						if (supplier.get()) {
-							TaskInputs inputs = task.getInputs();
-
-							inputs.file(inputFile);
-						}
-					}
-
-				});
-		}
-	}
-
 	private TaskProvider<Zip> _baseConfigureClientExtensionProject(
 		Project project, TaskProvider<Copy> assembleClientExtensionTaskProvider,
 		TaskProvider<Zip> buildClientExtensionZipTaskProvider,
@@ -492,6 +459,7 @@ public class ClientExtensionProjectConfigurator
 		TaskProvider<CreateClientExtensionConfigTask>
 			createClientExtensionConfigTaskProvider,
 		TaskProvider<DefaultTask> validateClientExtensionIdsTaskProvider,
+		TaskProvider<DefaultTask> validateClientExtensionTaskProvider,
 		WorkspaceExtension workspaceExtension) {
 
 		if (isDefaultRepositoryEnabled()) {
@@ -519,7 +487,8 @@ public class ClientExtensionProjectConfigurator
 			buildClientExtensionZipTaskProvider,
 			buildSiteInitializerZipTaskProvider,
 			createClientExtensionConfigTaskProvider,
-			validateClientExtensionIdsTaskProvider);
+			validateClientExtensionIdsTaskProvider,
+			validateClientExtensionTaskProvider);
 
 		addTaskDockerDeploy(
 			project, buildClientExtensionZipTaskProvider,
@@ -618,9 +587,8 @@ public class ClientExtensionProjectConfigurator
 			});
 	}
 
-	@SafeVarargs
-	private final Map<String, JsonNode> _configureClientExtensionJsonNodes(
-		Project project, TaskProvider<? extends Task>... taskProviders) {
+	private Map<String, JsonNode> _configureClientExtensionJsonNodes(
+		Project project, TaskProvider<?>... taskProviders) {
 
 		Map<String, JsonNode> profileJsonNodes = new HashMap<>();
 
@@ -663,9 +631,16 @@ public class ClientExtensionProjectConfigurator
 
 			profileJsonNodes.put(profileName, jsonNode);
 
-			_addInputFile(
-				file, () -> _isActiveProfile(project, profileName),
-				taskProviders);
+			for (TaskProvider<?> taskProvider : taskProviders) {
+				taskProvider.configure(
+					task -> {
+						if (_isActiveProfile(project, profileName)) {
+							TaskInputs inputs = task.getInputs();
+
+							inputs.file(file);
+						}
+					});
+			}
 		}
 
 		return profileJsonNodes;
@@ -677,7 +652,10 @@ public class ClientExtensionProjectConfigurator
 		TaskProvider<Zip> buildSiteInitializerZipTaskProvider,
 		TaskProvider<CreateClientExtensionConfigTask>
 			createClientExtensionConfigTaskProvider,
-		TaskProvider<DefaultTask> validateClientExtensionIdsTaskProvider) {
+		TaskProvider<DefaultTask> validateClientExtensionIdsTaskProvider,
+		TaskProvider<DefaultTask> validateClientExtensionTaskProvider) {
+
+		File clientExtensionYamlFile = project.file(_CLIENT_EXTENSION_YAML);
 
 		createClientExtensionConfigTaskProvider.configure(
 			createClientExtensionConfigTask -> {
@@ -685,6 +663,10 @@ public class ClientExtensionProjectConfigurator
 					ASSEMBLE_CLIENT_EXTENSION_TASK_NAME,
 					VALIDATE_CLIENT_EXTENSION_IDS_TASK_NAME,
 					VALIDATE_CLIENT_EXTENSIONS_TASK_NAME);
+
+				TaskInputs inputs = createClientExtensionConfigTask.getInputs();
+
+				inputs.file(clientExtensionYamlFile);
 
 				createClientExtensionConfigTask.addClientExtensionProperties(
 					_getClientExtensionProperties());
@@ -694,7 +676,13 @@ public class ClientExtensionProjectConfigurator
 			project.getBuildDir(), CLIENT_EXTENSION_BUILD_DIR);
 
 		assembleClientExtensionTaskProvider.configure(
-			copy -> copy.into(clientExtensionBuildDir));
+			copy -> {
+				TaskInputs inputs = copy.getInputs();
+
+				inputs.file(clientExtensionYamlFile);
+
+				copy.into(clientExtensionBuildDir);
+			});
 
 		buildClientExtensionZipTaskProvider.configure(
 			zip -> {
@@ -731,6 +719,15 @@ public class ClientExtensionProjectConfigurator
 						"unique among all projects.");
 				validateClientExtensionIdsTask.setGroup(
 					LifecycleBasePlugin.VERIFICATION_GROUP);
+
+				TaskInputs inputs = validateClientExtensionIdsTask.getInputs();
+
+				inputs.file(clientExtensionYamlFile);
+
+				TaskOutputs outputs =
+					validateClientExtensionIdsTask.getOutputs();
+
+				outputs.upToDateWhen(task1 -> true);
 
 				validateClientExtensionIdsTask.doFirst(
 					new Action<Task>() {
@@ -779,6 +776,17 @@ public class ClientExtensionProjectConfigurator
 						}
 
 					});
+			});
+
+		validateClientExtensionTaskProvider.configure(
+			task -> {
+				TaskInputs inputs = task.getInputs();
+
+				inputs.file(clientExtensionYamlFile);
+
+				TaskOutputs outputs = task.getOutputs();
+
+				outputs.upToDateWhen(task1 -> true);
 			});
 
 		buildSiteInitializerZipTaskProvider.configure(
@@ -1104,25 +1112,6 @@ public class ClientExtensionProjectConfigurator
 			}
 
 			baseObjectNode.replace(fieldName, fieldNameOverrideJsonNode);
-		}
-	}
-
-	@SafeVarargs
-	private final void _setOutputsUpToDateAlways(
-		TaskProvider<? extends Task>... taskProviders) {
-
-		for (TaskProvider<? extends Task> taskProvider : taskProviders) {
-			taskProvider.configure(
-				new Action<Task>() {
-
-					@Override
-					public void execute(Task task) {
-						TaskOutputs outputs = task.getOutputs();
-
-						outputs.upToDateWhen(task1 -> true);
-					}
-
-				});
 		}
 	}
 

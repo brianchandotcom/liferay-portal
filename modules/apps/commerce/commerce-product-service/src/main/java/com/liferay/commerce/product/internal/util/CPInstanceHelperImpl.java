@@ -200,7 +200,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			commerceChannelGroupId, cpDefinitionId);
 
 		return _cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
-			cpDefinitionId, serializedFormFieldValues, type, start, end);
+			cpDefinitionId, true, serializedFormFieldValues, type, start, end);
 	}
 
 	@Override
@@ -356,7 +356,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
 			_cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
-				cpInstance.getCPDefinitionId(), jsonArray.toString(),
+				cpInstance.getCPDefinitionId(), null, jsonArray.toString(),
 				CPAttachmentFileEntryConstants.TYPE_IMAGE, 0, 1);
 
 		if (cpAttachmentFileEntries.isEmpty()) {
@@ -498,7 +498,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
 			_cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
-				cpInstance.getCPDefinitionId(), jsonArray.toString(),
+				cpInstance.getCPDefinitionId(), null, jsonArray.toString(),
 				CPAttachmentFileEntryConstants.TYPE_IMAGE, 0, 1);
 
 		if (cpAttachmentFileEntries.isEmpty()) {
@@ -552,7 +552,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
 			_cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
-				cpInstance.getCPDefinitionId(), jsonArray.toString(),
+				cpInstance.getCPDefinitionId(), null, jsonArray.toString(),
 				CPAttachmentFileEntryConstants.TYPE_IMAGE, 0, 1);
 
 		if (cpAttachmentFileEntries.isEmpty()) {

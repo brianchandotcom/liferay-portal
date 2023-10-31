@@ -284,7 +284,7 @@ public class CommerceMediaResolverTest {
 				false, null, displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, true,
+				expirationDateMinute, true, true,
 				RandomTestUtil.randomLocaleStringMap(), null, 0D,
 				CPAttachmentFileEntryConstants.TYPE_IMAGE, _serviceContext);
 

@@ -154,7 +154,7 @@ public class AttachmentResourceTest extends BaseAttachmentResourceTestCase {
 				expirationDate.get(Calendar.DAY_OF_MONTH),
 				expirationDate.get(Calendar.YEAR),
 				expirationDate.get(Calendar.HOUR),
-				expirationDate.get(Calendar.MINUTE), true,
+				expirationDate.get(Calendar.MINUTE), true, true,
 				RandomTestUtil.randomLocaleStringMap(), null,
 				RandomTestUtil.nextDouble(), attachment.getType(),
 				_serviceContext);

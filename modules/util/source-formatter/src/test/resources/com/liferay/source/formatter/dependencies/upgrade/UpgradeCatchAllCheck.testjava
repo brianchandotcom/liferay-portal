@@ -37,10 +37,6 @@ public class UpgradeCatchAllCheck {
 		fDSTableSchemaBuilder.addFDSTableSchemaField("test123", "test123");
 
 		HtmlUtil.extractText(null);
-
-		if (true) {
-			HtmlUtil.extractText(testEntry.getContent());
-		}
 	}
 
 	public void method(AssetCategory<?> assetCategory) {

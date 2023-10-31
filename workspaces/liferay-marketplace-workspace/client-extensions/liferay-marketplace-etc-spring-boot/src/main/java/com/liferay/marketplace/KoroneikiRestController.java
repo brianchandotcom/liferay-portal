@@ -5,13 +5,25 @@
 
 package com.liferay.marketplace;
 
+import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductSpecification;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Sku;
+import com.liferay.headless.commerce.admin.catalog.client.pagination.Page;
+import com.liferay.headless.commerce.admin.catalog.client.pagination.Pagination;
+import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductResource;
+import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductSpecificationResource;
+import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.SkuResource;
+import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
+import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
+import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderItemResource;
+import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResource;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductConsumption;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchaseView;
 import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductPurchaseResource;
 import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductPurchaseViewResource;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -20,6 +32,7 @@ import java.net.URL;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +42,6 @@ import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,7 +50,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * @author Keven Leone
@@ -52,7 +63,7 @@ public class KoroneikiRestController extends BaseRestController {
 			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
 		throws Exception {
 
-		_initResource();
+		_initResource(jwt);
 
 		JSONObject jsonObject = new JSONObject(json);
 
@@ -66,18 +77,13 @@ public class KoroneikiRestController extends BaseRestController {
 			return;
 		}
 
-		int accountId = commerceOrderJSONObject.getInt("accountId");
+		long orderId = commerceOrderJSONObject.getLong("id");
 
-		JSONObject accountJSONObject = _getAccountJSONObject(jwt, accountId);
+		Order order = new Order();
 
-		int orderId = commerceOrderJSONObject.getInt("id");
+		order.setOrderStatus(_COMMERCE_ORDER_PROCESSING_STATUS);
 
-		_patchOrderStatus(
-			jwt, orderId,
-			new JSONObject(
-			).put(
-				"orderStatus", _COMMERCE_ORDER_PROCESSING_STATUS
-			));
+		_orderResource.patchOrder(orderId, order);
 
 		int cpDefinitionIdInt = GetterUtil.getInteger(
 			orderItemsJSONArray.getJSONObject(
@@ -86,16 +92,22 @@ public class KoroneikiRestController extends BaseRestController {
 				"cpDefinitionId"
 			));
 
-		String cpDefinitionId = String.valueOf(cpDefinitionIdInt + 1);
+		long cpDefinitionId = cpDefinitionIdInt + 1;
 
-		JSONObject commerceProductJSONObject = _getCommerceProductJSONObject(
-			jwt, commerceOrderJSONObject.getInt("channelId"), cpDefinitionId);
+		Product product = _productResource.getProduct(cpDefinitionId);
+
+		Page<Sku> skuPage = _skuResource.getProductIdSkusPage(
+			product.getProductId(), Pagination.of(1, 10));
+
+		Page<ProductSpecification> productSpecificationPage =
+			_productSpecificationResource.getProductIdProductSpecificationsPage(
+				product.getProductId(), Pagination.of(1, 10));
 
 		Map<String, String> commerceProductSKUs = _getCommerceProductSKUS(
-			jwt, cpDefinitionId);
+			skuPage.getItems());
 
 		String licenseType = _getLicenseType(
-			commerceProductJSONObject.getJSONArray("productSpecifications"));
+			productSpecificationPage.getItems());
 
 		ZonedDateTime commerceOrderStartDate = ZonedDateTime.parse(
 			commerceOrderJSONObject.getString("createDate"),
@@ -110,7 +122,8 @@ public class KoroneikiRestController extends BaseRestController {
 				i);
 
 			_getDXPLicenseUsageTypeProperties(
-				orderItemJSONObject, dxpLicenseUsageTypePropertiesMap);
+				orderItemJSONObject.getString("options"),
+				dxpLicenseUsageTypePropertiesMap);
 
 			ProductPurchase productPurchase = new ProductPurchase();
 
@@ -161,8 +174,9 @@ public class KoroneikiRestController extends BaseRestController {
 							jsonObject.getString("userName"),
 							String.valueOf(
 								commerceOrderJSONObject.getInt("userId")),
-							accountJSONObject.getString(
-								"externalReferenceCode"),
+							_accountResource.getAccount(
+								commerceOrderJSONObject.getLong("accountId")
+							).getExternalReferenceCode(),
 							productPurchase);
 
 				successCount++;
@@ -176,10 +190,7 @@ public class KoroneikiRestController extends BaseRestController {
 			}
 		}
 
-		JSONObject orderDetailsJSONObject = new JSONObject(
-		).put(
-			"orderStatus", _COMMERCE_ORDER_COMPLETED_STATUS
-		);
+		order.setOrderStatus(_COMMERCE_ORDER_COMPLETED_STATUS);
 
 		boolean orderCompleted = false;
 
@@ -195,8 +206,8 @@ public class KoroneikiRestController extends BaseRestController {
 			if (dxpLicenseUsageTypePropertiesMap.get("trial")) {
 				orderCompleted = true;
 
-				orderDetailsJSONObject.put(
-					"paymentStatus", _COMMERCE_ORDER_PAYMENT_COMPLETED_STATUS);
+				order.setPaymentStatus(
+					_COMMERCE_ORDER_PAYMENT_COMPLETED_STATUS);
 			}
 
 			if (!dxpLicenseUsageTypePropertiesMap.get("developer") &&
@@ -208,26 +219,8 @@ public class KoroneikiRestController extends BaseRestController {
 		}
 
 		if (orderCompleted) {
-			_patchOrderStatus(jwt, orderId, orderDetailsJSONObject);
+			_orderResource.patchOrder(orderId, order);
 		}
-	}
-
-	public JSONObject getOrderJSONObject(Jwt jwt, String orderId) {
-		WebClient webClient = _getWebClient(jwt);
-
-		String response = webClient.get(
-		).uri(
-			uriBuilder -> uriBuilder.path(
-				"o/headless-commerce-admin-order/v1.0/orders/" + orderId
-			).queryParam(
-				"nestedFields", "orderItems"
-			).build()
-		).retrieve(
-		).bodyToMono(
-			String.class
-		).block();
-
-		return new JSONObject(response);
 	}
 
 	@GetMapping("subscriptions/{orderId}")
@@ -236,33 +229,37 @@ public class KoroneikiRestController extends BaseRestController {
 			@PathVariable("orderId") String orderId)
 		throws Exception {
 
-		_initResource();
+		_initResource(jwt);
 
 		JSONArray jsonArray = new JSONArray();
 
-		JSONObject orderJSONObject = getOrderJSONObject(jwt, orderId);
+		long orderId2 = GetterUtil.getLong(orderId);
 
-		JSONArray orderItemsJSONArray = orderJSONObject.getJSONArray(
-			"orderItems");
+		com.liferay.headless.commerce.admin.order.client.pagination.Page
+			<OrderItem> orderItemPage =
+				_orderItemResource.getOrderIdOrderItemsPage(
+					orderId2,
+					com.liferay.headless.commerce.admin.order.client.pagination.
+						Pagination.of(1, 10));
 
-		for (int i = 0; i < orderItemsJSONArray.length(); i++) {
-			JSONObject orderItemJSONObject = orderItemsJSONArray.getJSONObject(
-				i);
+		Order order = _orderResource.getOrder(orderId2);
 
-			String skuExternalReferenceCode = orderItemJSONObject.getString(
-				"skuExternalReferenceCode");
+		Collection<OrderItem> orderItemCollection = orderItemPage.getItems();
+
+		for (OrderItem orderItem : orderItemCollection) {
+			String skuExternalReferenceCode =
+				orderItem.getSkuExternalReferenceCode();
 
 			Map<String, Boolean> dxpLicenseUsageTypePropertiesMap =
 				new HashMap<>();
 
 			_getDXPLicenseUsageTypeProperties(
-				orderItemJSONObject, dxpLicenseUsageTypePropertiesMap);
+				orderItem.getOptions(), dxpLicenseUsageTypePropertiesMap);
 
 			ProductPurchaseView productPurchaseView =
 				_productPurchaseViewResource.
 					getAccountAccountKeyProductProductKeyProductPurchaseView(
-						orderJSONObject.getString(
-							"accountExternalReferenceCode"),
+						order.getAccountExternalReferenceCode(),
 						skuExternalReferenceCode);
 
 			ProductConsumption[] productConsumptions =
@@ -306,18 +303,17 @@ public class KoroneikiRestController extends BaseRestController {
 				).put(
 					"name", name
 				).put(
-					"purchasedCount", orderItemJSONObject.getInt("quantity")
+					"purchasedCount", orderItem.getQuantity()
 				).put(
 					"provisionedCount", provisionedCount
 				).put(
 					"productPurchasedKey", productPurchase.getKey()
 				).put(
-					"skuId", orderItemJSONObject.getInt("skuId")
+					"skuId", orderItem.getSkuId()
 				).put(
 					"startDate",
-					productPurchase.getPerpetual() ?
-						orderJSONObject.getString("createDate") :
-							productPurchase.getStartDate()
+					productPurchase.getPerpetual() ? order.getCreateDate() :
+						productPurchase.getStartDate()
 				).put(
 					"perpetual", productPurchase.getPerpetual()
 				));
@@ -326,87 +322,19 @@ public class KoroneikiRestController extends BaseRestController {
 		return jsonArray.toString();
 	}
 
-	private JSONObject _getAccountJSONObject(Jwt jwt, int accountId) {
-		WebClient webClient = _getWebClient(jwt);
-
-		String response = webClient.get(
-		).uri(
-			uriBuilder -> uriBuilder.path(
-				"o/headless-admin-user/v1.0/accounts/" + accountId
-			).build()
-		).retrieve(
-		).bodyToMono(
-			String.class
-		).block();
-
-		return new JSONObject(response);
-	}
-
-	private JSONObject _getCommerceProductJSONObject(
-		Jwt jwt, int channelId, String productId) {
-
-		WebClient webClient = _getWebClient(jwt);
-
-		String response = webClient.get(
-		).uri(
-			uriBuilder -> uriBuilder.path(
-				StringBundler.concat(
-					"o/headless-commerce-delivery-catalog/v1.0/channels/",
-					channelId, "/products/", productId)
-			).queryParam(
-				"accountId", "-1"
-			).queryParam(
-				"nestedFields", "productSpecifications"
-			).build()
-		).retrieve(
-		).bodyToMono(
-			String.class
-		).block();
-
-		return new JSONObject(response);
-	}
-
 	private Map<String, String> _getCommerceProductSKUS(
-		Jwt jwt, String productId) {
-
-		WebClient webClient = _getWebClient(jwt);
-
-		String response = webClient.get(
-		).uri(
-			uriBuilder -> uriBuilder.path(
-				"o/headless-commerce-admin-catalog/v1.0/products/" + productId +
-					"/skus"
-			).queryParam(
-				"accountId", "-1"
-			).queryParam(
-				"nestedFields", "productSpecifications"
-			).build()
-		).retrieve(
-		).bodyToMono(
-			String.class
-		).block();
-
-		JSONArray jsonArray = new JSONObject(
-			response
-		).getJSONArray(
-			"items"
-		);
+		Collection<Sku> skuCollection) {
 
 		Map<String, String> map = new HashMap<>();
 
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			map.put(
-				jsonObject.getString("sku"),
-				jsonObject.getString("externalReferenceCode"));
-		}
+		skuCollection.forEach(
+			sku -> map.put(sku.getSku(), sku.getExternalReferenceCode()));
 
 		return map;
 	}
 
 	private void _getDXPLicenseUsageTypeProperties(
-		JSONObject orderJSONObject, Map<String, Boolean> map) {
+		String options, Map<String, Boolean> map) {
 
 		if (map.isEmpty()) {
 			map.put("developer", false);
@@ -414,8 +342,7 @@ public class KoroneikiRestController extends BaseRestController {
 			map.put("trial", false);
 		}
 
-		JSONArray optionsJSONArray = new JSONArray(
-			orderJSONObject.getString("options"));
+		JSONArray optionsJSONArray = new JSONArray(options);
 
 		for (int i = 0; i < optionsJSONArray.length(); i++) {
 			JSONObject jsonObject = optionsJSONArray.getJSONObject(i);
@@ -446,36 +373,52 @@ public class KoroneikiRestController extends BaseRestController {
 		}
 	}
 
-	private String _getLicenseType(JSONArray jsonArray) {
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
+	private String _getLicenseType(
+		Collection<ProductSpecification> productSpecificationCollection) {
 
-			String specificationKey = jsonObject.getString("specificationKey");
+		for (ProductSpecification productSpecification :
+				productSpecificationCollection) {
+
+			String specificationKey =
+				productSpecification.getSpecificationKey();
 
 			if (specificationKey.equals("license-type")) {
-				return jsonObject.getString("value");
+				return productSpecification.getValue(
+				).get(
+					"en_US"
+				);
 			}
 		}
 
 		return null;
 	}
 
-	private WebClient _getWebClient(Jwt jwt) {
-		WebClient.Builder builder = WebClient.builder();
-
-		return builder.baseUrl(
-			lxcDXPServerProtocol + "://" + lxcDXPMainDomain
-		).defaultHeader(
-			HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE
-		).defaultHeader(
-			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
-		).defaultHeader(
-			HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
-		).build();
-	}
-
-	private void _initResource() throws Exception {
+	private void _initResource(Jwt jwt) throws Exception {
 		URL url = new URL(_koroneikiAuthURL);
+
+		URL liferayURL = new URL(
+			lxcDXPServerProtocol + "://" + lxcDXPMainDomain);
+
+		_accountResource = AccountResource.builder(
+		).header(
+			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
+		).endpoint(
+			liferayURL.getHost(), liferayURL.getPort(), liferayURL.getProtocol()
+		).build();
+
+		_orderItemResource = OrderItemResource.builder(
+		).header(
+			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
+		).endpoint(
+			liferayURL.getHost(), liferayURL.getPort(), liferayURL.getProtocol()
+		).build();
+
+		_orderResource = OrderResource.builder(
+		).header(
+			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
+		).endpoint(
+			liferayURL.getHost(), liferayURL.getPort(), liferayURL.getProtocol()
+		).build();
 
 		_productPurchaseResource = ProductPurchaseResource.builder(
 		).header(
@@ -490,40 +433,27 @@ public class KoroneikiRestController extends BaseRestController {
 		).endpoint(
 			url.getHost(), url.getPort(), url.getProtocol()
 		).build();
-	}
 
-	private void _patchOrderStatus(
-		Jwt jwt, int orderId, JSONObject jsonObject) {
+		_productResource = ProductResource.builder(
+		).header(
+			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
+		).endpoint(
+			liferayURL.getHost(), liferayURL.getPort(), liferayURL.getProtocol()
+		).build();
 
-		WebClient webClient = _getWebClient(jwt);
+		_productSpecificationResource = ProductSpecificationResource.builder(
+		).header(
+			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
+		).endpoint(
+			liferayURL.getHost(), liferayURL.getPort(), liferayURL.getProtocol()
+		).build();
 
-		try {
-			webClient.patch(
-			).uri(
-				uriBuilder -> uriBuilder.path(
-					"o/headless-commerce-admin-order/v1.0/orders/" + orderId
-				).build()
-			).accept(
-				MediaType.APPLICATION_JSON
-			).contentType(
-				MediaType.APPLICATION_JSON
-			).bodyValue(
-				jsonObject.toString()
-			).retrieve(
-			).bodyToMono(
-				String.class
-			).block();
-
-			System.out.println(
-				StringBundler.concat(
-					"Order: ", orderId, " updated to status: ", jsonObject));
-		}
-		catch (Exception exception) {
-			System.out.println(
-				StringBundler.concat(
-					"Unable to update the order: ", orderId, " to ",
-					jsonObject.getInt("orderStatus"), "Reason: ", exception));
-		}
+		_skuResource = SkuResource.builder(
+		).header(
+			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
+		).endpoint(
+			liferayURL.getHost(), liferayURL.getPort(), liferayURL.getProtocol()
+		).build();
 	}
 
 	private static final int _COMMERCE_ORDER_COMPLETED_STATUS = 0;
@@ -532,13 +462,20 @@ public class KoroneikiRestController extends BaseRestController {
 
 	private static final int _COMMERCE_ORDER_PROCESSING_STATUS = 10;
 
+	private AccountResource _accountResource;
+
 	@Value("${com.liferay.lxc.koroneiki.auth.token}")
 	private String _koroneikiAuthToken;
 
 	@Value("${com.liferay.lxc.koroneiki.auth.url}")
 	private String _koroneikiAuthURL;
 
+	private OrderItemResource _orderItemResource;
+	private OrderResource _orderResource;
 	private ProductPurchaseResource _productPurchaseResource;
 	private ProductPurchaseViewResource _productPurchaseViewResource;
+	private ProductResource _productResource;
+	private ProductSpecificationResource _productSpecificationResource;
+	private SkuResource _skuResource;
 
 }

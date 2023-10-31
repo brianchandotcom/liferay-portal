@@ -5,6 +5,9 @@
 
 package com.liferay.marketplace;
 
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.CustomField;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Sku;
+import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.SkuResource;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductPurchaseResource;
 import com.liferay.osb.provisioning.marketplace.rest.client.dto.v1_0.AppLicenseKey;
@@ -33,7 +36,6 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -49,7 +51,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * @author Keven Leone
@@ -72,7 +73,7 @@ public class ProvisioningRestController extends BaseRestController {
 		String orderId;
 		String productPurchaseKey;
 		String type;
-		int skuId;
+		long skuId;
 
 		JSONObject jsonObject = new JSONObject(json);
 
@@ -82,7 +83,7 @@ public class ProvisioningRestController extends BaseRestController {
 			ipAddress = jsonObject.getString("ipAddress");
 			macAddress = jsonObject.getString("macAddress");
 			orderId = jsonObject.getString("orderId");
-			skuId = jsonObject.getInt("skuId");
+			skuId = jsonObject.getLong("skuId");
 			productPurchaseKey = jsonObject.getString("productPurchaseKey");
 			type = jsonObject.getString("type");
 		}
@@ -107,23 +108,28 @@ public class ProvisioningRestController extends BaseRestController {
 		String version = "1.0.0";
 
 		try {
-			JSONObject skuJSONObject = getSkuJSONObject(jwt, skuId);
+			URL liferayURL = new URL(
+				lxcDXPServerProtocol + "://" + lxcDXPMainDomain);
 
-			JSONArray customFieldsJSONArray = skuJSONObject.getJSONArray(
-				"customFields");
+			SkuResource skuResource = SkuResource.builder(
+			).header(
+				HttpHeaders.AUTHORIZATION, jwt.getTokenValue()
+			).endpoint(
+				liferayURL.getHost(), liferayURL.getPort(),
+				liferayURL.getProtocol()
+			).build();
 
-			for (int i = 0; i < customFieldsJSONArray.length(); i++) {
-				JSONObject customFieldJSONObject =
-					customFieldsJSONArray.getJSONObject(i);
+			Sku sku = skuResource.getSku(skuId);
 
-				String name = customFieldJSONObject.getString("name");
+			CustomField[] customFields = sku.getCustomFields();
+
+			for (CustomField customField : customFields) {
+				String name = customField.getName();
 
 				if (name.equals("Version")) {
-					version = customFieldJSONObject.getJSONObject(
-						"customValue"
-					).getString(
-						"data"
-					);
+					version = customField.getCustomValue(
+					).getData(
+					).toString();
 
 					break;
 				}
@@ -236,22 +242,6 @@ public class ProvisioningRestController extends BaseRestController {
 		return _appLicenseKeyResource.getAppLicenseKey(Long.valueOf(id));
 	}
 
-	public JSONObject getSkuJSONObject(Jwt jwt, int skuId) {
-		WebClient webClient = _getWebClient(jwt);
-
-		String response = webClient.get(
-		).uri(
-			uriBuilder -> uriBuilder.path(
-				"o/headless-commerce-admin-catalog/v1.0/skus/" + skuId
-			).build()
-		).retrieve(
-		).bodyToMono(
-			String.class
-		).block();
-
-		return new JSONObject(response);
-	}
-
 	private String _getOAuthAuthorization() throws Exception {
 		if (Validator.isNotNull(_oauthAccessToken) &&
 			(_oauthExpirationMillis < System.currentTimeMillis())) {
@@ -305,20 +295,6 @@ public class ProvisioningRestController extends BaseRestController {
 
 			throw new Exception("Unable to get OAuth authorization");
 		}
-	}
-
-	private WebClient _getWebClient(Jwt jwt) {
-		WebClient.Builder builder = WebClient.builder();
-
-		return builder.baseUrl(
-			lxcDXPServerProtocol + "://" + lxcDXPMainDomain
-		).defaultHeader(
-			HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE
-		).defaultHeader(
-			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
-		).defaultHeader(
-			HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE
-		).build();
 	}
 
 	private void _initResource() throws Exception {

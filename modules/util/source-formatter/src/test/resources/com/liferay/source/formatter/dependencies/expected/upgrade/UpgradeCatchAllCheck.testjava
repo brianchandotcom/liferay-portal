@@ -88,6 +88,12 @@ public class UpgradeCatchAllCheck {
 		indexer.getSearchClassNames();
 	}
 
+	public void method(long commerceOrderId) {
+		CommerceOrderItemLocalServiceUtil.deleteCommerceOrderItems(0, commerceOrderId);
+		_commerceOrderItemLocalService.deleteCommerceOrderItems(123);
+		_commerceOrderItemLocalService.deleteCommerceOrderItems(0, commerceOrderId);
+	}
+
 	public void method(
 		long groupId, boolean privateLayout, long layoutId, long parentLayoutId,
 		Map<java.util.Locale, String> nameMap,
@@ -128,6 +134,20 @@ public class UpgradeCatchAllCheck {
 		CPDefinitionLinkLocalServiceUtil.addCPDefinitionLinkByCProductId(123, cProductId, priority, type, serviceContext);
 		CPDefinitionLinkLocalServiceUtil.addCPDefinitionLinkByCProductId(cpDefinitionId, cProductId, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true, priority, type, serviceContext);
 		_cpDefinitionLinkLocalService.addCPDefinitionLinkByCProductId(cpDefinitionId, cProductId, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, true, priority, type, serviceContext);
+	}
+
+	public void method(
+		long commerceOrderId, long cpInstanceId, int quantity,
+		int shippedQuantity, String json, CommerceContext commerceContext,
+		ServiceContext serviceContext) {
+
+		CommerceOrderItemLocalServiceUtil.addCommerceOrderItem(commerceOrderId, cpInstanceId, json, BigDecimal.valueOf(quantity), cpInstanceId, BigDecimal.valueOf(shippedQuantity), null, commerceContext, serviceContext);
+		CommerceOrderItemServiceUtil.addCommerceOrderItem(123, cpInstanceId, 123, shippedQuantity, "test", commerceContext, serviceContext);
+		CommerceOrderItemServiceUtil.addCommerceOrderItem(commerceOrderId, cpInstanceId, json, BigDecimal.valueOf(quantity), cpInstanceId, BigDecimal.valueOf(shippedQuantity), null, commerceContext, serviceContext);
+
+		_commerceOrderItemLocalService.addCommerceOrderItem(0, commerceOrderId, cpInstanceId, json, BigDecimal.valueOf(quantity), cpInstanceId, BigDecimal.valueOf(shippedQuantity), null, commerceContext, serviceContext);
+		_commerceOrderItemService.addCommerceOrderItem(123, cpInstanceId, 123, shippedQuantity, "test", commerceContext, serviceContext);
+		_commerceOrderItemService.addCommerceOrderItem(0, commerceOrderId, cpInstanceId, json, BigDecimal.valueOf(quantity), cpInstanceId, BigDecimal.valueOf(shippedQuantity), null, commerceContext, serviceContext);
 	}
 
 	public void method(
@@ -367,6 +387,12 @@ public class UpgradeCatchAllCheck {
 
 	@Reference
 	private CommerceAccountHelper _commerceAccountHelper;
+
+	@Reference
+	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
+
+	@Reference
+	private CommerceOrderItemService _commerceOrderItemService;
 
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;

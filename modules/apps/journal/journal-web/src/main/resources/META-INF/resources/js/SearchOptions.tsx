@@ -3,12 +3,34 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayButton from '@clayui/button';
 import {Option, Picker} from '@clayui/core';
 import DropDown from '@clayui/drop-down';
 import ClayForm from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import {addParams, navigate} from 'frontend-js-web';
 import React, {Key} from 'react';
+
+const Trigger = React.forwardRef<HTMLButtonElement, any>(
+	(
+		{children, className: _className, onClick, triggerIcon, ...otherProps},
+		ref
+	) => (
+		<ClayButton
+			className="form-control-select"
+			displayType="secondary"
+			onClick={onClick}
+			ref={ref}
+			size="sm"
+			{...otherProps}
+		>
+			{triggerIcon && <ClayIcon className="mr-2" symbol={triggerIcon} />}
+
+			{children}
+		</ClayButton>
+	)
+);
 
 type Option = {
 	label: string;
@@ -58,10 +80,11 @@ const SearchOptions = ({
 	};
 
 	return (
-		<ClayLayout.Row>
+		<ClayLayout.Row className="cadmin">
 			<ClayLayout.Col>
 				<ClayForm.Group className="c-mr-2 d-inline-flex">
 					<Picker
+						as={Trigger}
 						id={`${namespace}searchResults`}
 						onSelectionChange={(key: Key) =>
 							onChange({results: key})
@@ -82,11 +105,13 @@ const SearchOptions = ({
 				{searchLocationOptions ? (
 					<ClayForm.Group className="c-mr-2 d-inline-flex">
 						<Picker
+							as={Trigger}
 							id={`${namespace}searchLocation`}
 							onSelectionChange={(key: Key) =>
 								onChange({location: key})
 							}
 							selectedKey={initialLocation}
+							triggerIcon="folder"
 						>
 							<DropDown.Group
 								header={Liferay.Language.get('location')}
@@ -104,6 +129,7 @@ const SearchOptions = ({
 
 				<ClayForm.Group className="d-inline-flex">
 					<Picker
+						as={Trigger}
 						id={`${namespace}searchIn`}
 						onSelectionChange={(key: Key) =>
 							onChange({searchIn: key})

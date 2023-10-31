@@ -9,11 +9,12 @@ components:
                     # @review
                     description:
                         The type of result.
-                    enum: [None, Notification, Page, URL]
+                    enum: [DisplayPage, None, Notification, Page, URL]
                     type:
                         string
                 value:
                     oneOf:
+                        - $ref: "#/components/schemas/DisplayPageActionExecutionResult"
                         - $ref: "#/components/schemas/NoneActionExecutionResult"
                         - $ref: "#/components/schemas/NotificationActionExecutionResult"
                         - $ref: "#/components/schemas/SitePageActionExecutionResult"
@@ -1170,6 +1171,23 @@ components:
                         - $ref: "#/components/schemas/Geo"
                     description:
                         A point determined by latitude and longitude.
+            type: object
+        DisplayPageActionExecutionResult:
+            # @review
+            description:
+                Represents a definition of an action execution of type display page.
+            properties:
+                mapping:
+                    # @review
+                    description:
+                        The mapping of the display page action result.
+                    properties:
+                        fieldKey:
+                            # @review
+                            description:
+                                The mapping's field key.
+                            type: string
+                    type: object
             type: object
         DisplayPageTemplate:
             description:

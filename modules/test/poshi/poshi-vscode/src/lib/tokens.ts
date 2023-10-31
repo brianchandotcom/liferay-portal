@@ -14,7 +14,7 @@ const tokenPatternMap = {
 	pathLocator: /"([A-Z][\w-]+)#([A-Z][A-Z0-9_-]+)"/g,
 	className: /[^\w.]([A-Z][\w-]+)[(.]/g,
 	methodInvocation: /[^\w.]([A-Z][\w-]+)\.([\w-]+)/g,
-	methodDefinition: /(?:macro|function) ([\w-]+) \{/g,
+	methodDefinition: /(?:macro|function) ([\w-]+)(?:\(| \{)/g,
 	liferaySelenium: /[^\w.](selenium)[.]/g,
 	liferaySeleniumMethod: /[^\w.](selenium)\.([A-Za-z_][A-Za-z]+)/g,
 };

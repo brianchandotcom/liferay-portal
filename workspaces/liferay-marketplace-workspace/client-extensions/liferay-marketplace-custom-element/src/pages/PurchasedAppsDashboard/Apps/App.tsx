@@ -5,7 +5,6 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
-import ClayIcon from '@clayui/icon';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import classNames from 'classnames';
 import {useEffect, useMemo} from 'react';
@@ -80,11 +79,6 @@ const App = () => {
 
 	return (
 		<div className="app-details-page-container">
-			<button className="app-details-page-back-button">
-				<ClayIcon symbol="order-arrow-left" />
-				Back to Apps
-			</button>
-
 			{status === 'Draft' && (
 				<ClayAlert
 					className="app-details-page-alert-container"

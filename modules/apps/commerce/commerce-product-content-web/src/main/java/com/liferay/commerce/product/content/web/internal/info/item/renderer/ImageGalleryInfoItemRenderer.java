@@ -81,7 +81,8 @@ public class ImageGalleryInfoItemRenderer
 					"images",
 					() -> {
 						List<CPMedia> images = _cpContentHelper.getImages(
-							cpDefinition.getCPDefinitionId(), themeDisplay);
+							cpDefinition.getCPDefinitionId(), true,
+							themeDisplay);
 
 						JSONArray jsonArray = _jsonFactory.createJSONArray();
 

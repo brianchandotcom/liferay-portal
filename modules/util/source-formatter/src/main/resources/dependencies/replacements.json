@@ -363,6 +363,33 @@
 	},
 	{
 		"classNames": [
+			"CommerceOrderItemLocalService",
+			"CommerceOrderItemService"
+		],
+		"from": "addCommerceOrderItem(long, long, int, int, String, CommerceContext, ServiceContext)",
+		"issueKey": "LPS-197459",
+		"to": "addCommerceOrderItem(0, param#0#, param#1#, param#4#, BigDecimal.valueOf(param#2#), param#1#, BigDecimal.valueOf(param#3#), null, param#5#, param#6#)"
+	},
+	{
+		"classNames": [
+			"CommerceOrderItemLocalServiceUtil",
+			"CommerceOrderItemServiceUtil"
+		],
+		"from": "addCommerceOrderItem(long, long, int, int, String, CommerceContext, ServiceContext)",
+		"issueKey": "LPS-197459",
+		"to": "addCommerceOrderItem(param#0#, param#1#, param#4#, BigDecimal.valueOf(param#2#), param#1#, BigDecimal.valueOf(param#3#), null, param#5#, param#6#)"
+	},
+	{
+		"classNames": [
+			"CommerceOrderItemLocalService",
+			"CommerceOrderItemLocalServiceUtil"
+		],
+		"from": "deleteCommerceOrderItems(long)",
+		"issueKey": "LPS-197459",
+		"to": "deleteCommerceOrderItems(0, param#0#)"
+	},
+	{
+		"classNames": [
 			"CPDefinitionLocalService",
 			"CPDefinitionLocalServiceUtil",
 			"CPDefinitionService",

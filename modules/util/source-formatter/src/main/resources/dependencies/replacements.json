@@ -198,6 +198,14 @@
 		]
 	},
 	{
+		"from": "ListUtil.fromArray",
+		"issueKey": "LPS-192403",
+		"newImports": [
+			"java.util.ArrayList"
+		],
+		"to": "new ArrayList<>"
+	},
+	{
 		"classNames": [
 			"AddressLocalService",
 			"AddressLocalServiceUtil",

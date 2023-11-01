@@ -97,6 +97,51 @@ public class UpgradeCatchAllCheck {
 	}
 
 	public void method(
+		long companyId, boolean autoPassword, String password1,
+		String password2, boolean autoScreenName, String screenName,
+		String emailAddress, long facebookId, String openId, Locale locale,
+		String firstName, String middleName, String lastName, long prefixId,
+		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
+		int birthdayYear, String jobTitle, long[] groupIds,
+		long[] organizationIds, long[] roleIds, long[] userGroupIds,
+		boolean sendEmail, ServiceContext serviceContext) {
+
+		UserLocalServiceUtil.addUser(companyId, autoPassword, password1, password2, autoScreenName, screenName, emailAddress, facebookId, openId, locale, firstName, middleName, lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
+		UserServiceUtil.addUser(123, autoPassword, password1, password2, autoScreenName, screenName, emailAddress, facebookId, openId, locale, firstName, middleName, lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
+		UserServiceUtil.addUser(companyId, autoPassword, password1, password2, autoScreenName, screenName, emailAddress, facebookId, openId, locale, firstName, middleName, lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
+		_userLocalService.addUser(companyId, autoPassword, password1, password2, autoScreenName, screenName, emailAddress, facebookId, openId, locale, firstName, middleName, lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
+		_userService.addUser(companyId, autoPassword, password1, password2, autoScreenName, screenName, emailAddress, facebookId, openId, locale, firstName, middleName, lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
+	}
+
+	public void method(
+		long companyId, boolean autoPassword, String password1,
+		String password2, boolean autoScreenName, String screenName,
+		String emailAddress, long facebookId, String openId, Locale locale,
+		String firstName, String middleName, String lastName, long prefixId,
+		long suffixId, boolean male, int birthdayMonth, int birthdayDay,
+		int birthdayYear, String jobTitle, long[] groupIds,
+		long[] organizationIds, long[] roleIds, long[] userGroupIds,
+		List<Address> addresses, List<EmailAddress> emailAddresses,
+		List<Phone> phones, List<Website> websites,
+		List<AnnouncementsDelivery> announcementsDelivers, boolean sendEmail,
+		ServiceContext serviceContext) {
+
+		UserLocalServiceUtil.addUser(companyId, autoPassword, password1, password2, autoScreenName, screenName, emailAddress, facebookId, openId, locale, firstName, middleName, lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds, roleIds, userGroupIds, addresses, emailAddresses, phones, websites, announcementsDelivers, sendEmail, serviceContext);
+		UserServiceUtil.addUser(123, autoPassword, password1, password2, autoScreenName, screenName, emailAddress, facebookId, openId, locale, firstName, middleName, lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds, roleIds, userGroupIds, addresses, emailAddresses, phones, websites, announcementsDelivers, sendEmail, serviceContext);
+		UserServiceUtil.addUser(companyId, autoPassword, password1, password2, autoScreenName, screenName, emailAddress, facebookId, openId, locale, firstName, middleName, lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds, roleIds, userGroupIds, addresses, emailAddresses, phones, websites, announcementsDelivers, sendEmail, serviceContext);
+		_userLocalService.addUser(companyId, autoPassword, password1, password2, autoScreenName, screenName, emailAddress, facebookId, openId, locale, firstName, middleName, lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds, roleIds, userGroupIds, addresses, emailAddresses, phones, websites, announcementsDelivers, sendEmail, serviceContext);
+		_userService.addUser(companyId, autoPassword, password1, password2, autoScreenName, screenName, emailAddress, facebookId, openId, locale, firstName, middleName, lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds, roleIds, userGroupIds, addresses, emailAddresses, phones, websites, announcementsDelivers, sendEmail, serviceContext);
+	}
+
+	public void method(long userId, int status) {
+		UserLocalServiceUtil.updateStatus(userId, status);
+		UserServiceUtil.updateStatus(123, status);
+		UserServiceUtil.updateStatus(userId, status);
+		_userLocalService.updateStatus(userId, status);
+		_userService.updateStatus(userId, status);
+	}
+
+	public void method(
 		long userId, long groupId, boolean privateLayout, long parentLayoutId,
 		long classNameId, long classPK, Map<java.util.Locale, String> nameMap,
 		Map<java.util.Locale, String> titleMap,
@@ -119,6 +164,23 @@ public class UpgradeCatchAllCheck {
 		DLFolderServiceUtil.addFolder(123, groupId, mountPoint, parentFolderId, name, description, serviceContext);
 		DLFolderServiceUtil.addFolder(userId, groupId, mountPoint, parentFolderId, name, description, serviceContext);
 		_dlFolderService.addFolder(userId, groupId, mountPoint, parentFolderId, name, description, serviceContext);
+	}
+
+	public void method(
+		long creatorUserId, long companyId, boolean autoPassword,
+		String password1, String password2, boolean autoScreenName,
+		String screenName, String emailAddress, long facebookId, String openId,
+		Locale locale, String firstName, String middleName, String lastName,
+		long prefixId, long suffixId, boolean male, int birthdayMonth,
+		int birthdayDay, int birthdayYear, String jobTitle, long[] groupIds,
+		long[] organizationIds, long[] roleIds, long[] userGroupIds,
+		boolean sendEmail, ServiceContext serviceContext) {
+
+		UserLocalServiceUtil.addUser(creatorUserId, companyId, autoPassword, password1, password2, autoScreenName, screenName, emailAddress, facebookId, openId, locale, firstName, middleName, lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
+		UserServiceUtil.addUser(123, companyId, autoPassword, password1, password2, autoScreenName, screenName, emailAddress, facebookId, openId, locale, firstName, middleName, lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
+		UserServiceUtil.addUser(creatorUserId, companyId, autoPassword, password1, password2, autoScreenName, screenName, emailAddress, facebookId, openId, locale, firstName, middleName, lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
+		_userLocalService.addUser(creatorUserId, companyId, autoPassword, password1, password2, autoScreenName, screenName, emailAddress, facebookId, openId, locale, firstName, middleName, lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
+		_userService.addUser(creatorUserId, companyId, autoPassword, password1, password2, autoScreenName, screenName, emailAddress, facebookId, openId, locale, firstName, middleName, lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear, jobTitle, groupIds, organizationIds, roleIds, userGroupIds, sendEmail, serviceContext);
 	}
 
 	public void method(
@@ -436,5 +498,11 @@ public class UpgradeCatchAllCheck {
 
 	@Reference
 	private LayoutService _layoutService;
+
+	@Reference
+	private UserLocalService _userLocalService;
+
+	@Reference
+	private UserService _userService;
 
 }

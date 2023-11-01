@@ -67,7 +67,7 @@ public class ProvisioningRestController extends BaseRestController {
 			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
 		throws Exception {
 
-		_initResource();
+		_initResourceBuilders();
 
 		String description;
 		String hostname;
@@ -94,13 +94,7 @@ public class ProvisioningRestController extends BaseRestController {
 			return new ResponseEntity<>(
 				new JSONObject(
 				).put(
-					"stack", exception.getMessage()
-				).put(
-					"message",
-					StringBundler.concat(
-						"One of the fields: description|hostname|ipAddress",
-						"macAddress|orderId|skuId|productPurchasedKey|type",
-						"is missing.")
+					"message", exception.getMessage()
 				).toString(),
 				HttpStatus.BAD_REQUEST);
 		}
@@ -208,7 +202,7 @@ public class ProvisioningRestController extends BaseRestController {
 	public ResponseEntity downloadLicenseKey(@PathVariable("id") String id)
 		throws Exception {
 
-		_initResource();
+		_initResourceBuilders();
 
 		long licenseKeyId = GetterUtil.getLong(id);
 
@@ -241,7 +235,7 @@ public class ProvisioningRestController extends BaseRestController {
 	public AppLicenseKey getLicenseKey(@PathVariable("id") String id)
 		throws Exception {
 
-		_initResource();
+		_initResourceBuilders();
 
 		return _appLicenseKeyResource.getAppLicenseKey(Long.valueOf(id));
 	}
@@ -254,7 +248,7 @@ public class ProvisioningRestController extends BaseRestController {
 				pageSize)
 		throws Exception {
 
-		_initResource();
+		_initResourceBuilders();
 
 		return _appLicenseKeyResource.getAppLicenseKeysPage(
 			"", "orderId eq '" + orderId + "'",
@@ -265,7 +259,7 @@ public class ProvisioningRestController extends BaseRestController {
 
 	private String _getOAuthAuthorization() throws Exception {
 		if (Validator.isNotNull(_oauthAccessToken) &&
-			(_oauthExpirationMillis < System.currentTimeMillis())) {
+			((_oauthExpirationMillis - 15000) < System.currentTimeMillis())) {
 
 			return _oauthAccessToken;
 		}
@@ -304,7 +298,7 @@ public class ProvisioningRestController extends BaseRestController {
 						Charset.defaultCharset()));
 
 				_oauthExpirationMillis =
-					jsonObject.getLong("expires_in") +
+					(jsonObject.getLong("expires_in") * 1000) +
 						System.currentTimeMillis();
 
 				_oauthAccessToken =
@@ -318,7 +312,7 @@ public class ProvisioningRestController extends BaseRestController {
 		}
 	}
 
-	private void _initResource() throws Exception {
+	private void _initResourceBuilders() throws Exception {
 		String authorization = _getOAuthAuthorization();
 
 		URL koroneikiURL = new URL(_koroneikiAuthURL);

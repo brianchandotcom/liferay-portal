@@ -77,6 +77,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -94,6 +95,7 @@ import org.apache.http.StatusLine;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
@@ -179,6 +181,7 @@ public class Main {
 
 	public void uploadToLiferay() throws Exception {
 		if (!_validateUUIDs()) {
+			_sendSlackMessage(false);
 			System.exit(1);
 		}
 
@@ -375,7 +378,11 @@ public class Main {
 				System.out.println(errorMessage);
 			}
 
+			_sendSlackMessage(false);
 			System.exit(1);
+		}
+		else {
+			_sendSlackMessage(true);
 		}
 	}
 
@@ -1618,6 +1625,60 @@ public class Main {
 		}
 
 		return line;
+	}
+
+	private String _sendSlackMessage(boolean success) throws Exception {
+		String log_url = StringBundler.concat(
+			"https://console.", System.getenv("LCP_INFRASTRUCTURE_DOMAIN"),
+			"/projects/", System.getenv("LCP_PROJECT_ID"), "/services/",
+			System.getenv("LCP_SERVICE_ID"), "/logs?instanceId=",
+			System.getenv("HOSTNAME"), "&logServiceId=",
+			System.getenv("LCP_SERVICE_ID"));
+
+		String slackMessage = StringBundler.concat(
+			new Date(), " *", System.getenv("LCP_PROJECT_ID"), "*->*",
+			System.getenv("LCP_SERVICE_ID"), "* <", log_url, "|",
+			System.getenv("HOSTNAME"), "> \n>");
+
+		if (success) {
+			slackMessage += ":sunflower:Import job finished with return code 0";
+		}
+		else {
+			slackMessage += ":red-alert:Import job finished with return code 1";
+		}
+
+		HttpPost httpPost = new HttpPost(
+			System.getenv("LIFERAY_LEARN_ETC_CRON_SLACK_ENDPOINT"));
+
+		String slackJSON = StringBundler.concat(
+			"{\"channel\":\"",
+			System.getenv("LIFERAY_LEARN_ETC_CRON_SLACK_CHANNEL"),
+			"\",\"icon_emoji\":\":robot_face:\",\"text\":\"", slackMessage,
+			"\",\"username\":\"devopsbot\"}");
+
+		StringEntity entity = new StringEntity(slackJSON);
+
+		httpPost.setEntity(entity);
+
+		httpPost.setHeader("Accept", "application/json");
+		httpPost.setHeader("Content-type", "application/json");
+
+		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
+
+		try (CloseableHttpClient closeableHttpClient =
+				httpClientBuilder.build()) {
+
+			CloseableHttpResponse closeableHttpResponse =
+				closeableHttpClient.execute(httpPost);
+
+			StatusLine statusLine = closeableHttpResponse.getStatusLine();
+
+			if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
+				return "Message sent";
+			}
+
+			throw new Exception("Unable to send message");
+		}
 	}
 
 	private String _toFriendlyURLPath(File file) {

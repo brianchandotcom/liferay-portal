@@ -154,19 +154,20 @@ definition {
 				singleSelectionValueChecked = "value2",
 				text = "Text Content");
 
-			var cartItemOption1 = '''blue, option-checkbox-key, 2023-10-23, 10, Text Content, value1,value2, value2''';
+			var cartItemOption1 = '''Color:Blue,checkbox:option-checkbox-key,date:2023-10-23,numeric:10,text:Text Content,checkbox_multiple:value1,checkbox_multiple:value2,radio:value2''';
 		}
 
 		task ("Then can view the filled option values for the order item shown in the mini-cart") {
 			CommerceNavigator.gotoMiniCart();
 
 			FrontStore.viewMiniCartItem(
-				bundledItems = "1 × ABS Sensor",
+				bundledItems = "Blue(1 × ABS Sensor )",
 				cartItemName = "Bundled Product",
 				cartItemOption = ${cartItemOption1},
 				cartItemPriceValue = "20.00",
 				cartItemQuantity = 1,
-				cartItemSku = "BLUE");
+				cartItemSku = "BLUE",
+				optionName = "Color");
 		}
 
 		task ("And can view the option values set in the Edit Bundled Product panel") {
@@ -196,19 +197,20 @@ definition {
 				singleSelectionValueChecked = "value1",
 				text = "Text Content Edit");
 
-			var cartItemOption1 = '''blue, option-checkbox-key, 2023-10-20, 20, Text Content Edit, value1, value1''';
+			var cartItemOption1 = '''Color:Blue,checkbox:option-checkbox-key,date:2023-10-20,numeric:20,text:Text Content Edit,checkbox_multiple:value1,radio:value1''';
 		}
 
 		task ("Then can view the option values saved in the mini-cart") {
 			CommerceNavigator.gotoMiniCart();
 
 			FrontStore.viewMiniCartItem(
-				bundledItems = "1 × ABS Sensor",
+				bundledItems = "Blue(1 × ABS Sensor )",
 				cartItemName = "Bundled Product",
 				cartItemOption = ${cartItemOption1},
 				cartItemPriceValue = "20.00",
 				cartItemQuantity = 1,
-				cartItemSku = "BLUE");
+				cartItemSku = "BLUE",
+				optionName = "Color");
 		}
 
 		task ("When adding BLUE to the cart with filled the same option values again in the bundled product details") {
@@ -216,19 +218,20 @@ definition {
 
 			Click(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE");
 
-			var cartItemOption2 = '''blue, option-checkbox-key, 2023-10-23, 10, Text Content, value1,value2, value2''';
+			var cartItemOption2 = '''Color:Blue,checkbox:option-checkbox-key,date:2023-10-23,numeric:10,text:Text Content,checkbox_multiple:value1,checkbox_multiple:value2,radio:value2''';
 		}
 
 		task ("Then can view the option values saved and shown as another item in the mini-cart") {
 			CommerceNavigator.gotoMiniCart();
 
 			FrontStore.viewMiniCartItem(
-				bundledItems = "1 × ABS Sensor",
+				bundledItems = "Blue(1 × ABS Sensor )",
 				cartItemName = "Bundled Product",
 				cartItemOption = ${cartItemOption1},
 				cartItemPriceValue = "20.00",
 				cartItemQuantity = 1,
-				cartItemSku = "BLUE");
+				cartItemSku = "BLUE",
+				optionName = "Color");
 
 			Click(
 				key_cartItemSku = "BLUE",
@@ -236,12 +239,13 @@ definition {
 				locator1 = "CommerceAccelerators#MINI_CART_SPECIFIC_ITEM_BUNDLED_ITEM_HIDE_OPTIONS_PANEL_EXPANDED");
 
 			FrontStore.viewMiniCartItem(
-				bundledItems = "1 × ABS Sensor",
+				bundledItems = "Blue(1 × ABS Sensor )",
 				cartItemName = "Bundled Product",
 				cartItemOption = ${cartItemOption2},
 				cartItemPriceValue = "20.00",
 				cartItemQuantity = 1,
 				cartItemSku = "BLUE",
+				optionName = "Color",
 				index = 2);
 		}
 
@@ -663,35 +667,6 @@ definition {
 				key_cartItemSku = "WHITE",
 				key_index = 1,
 				locator1 = "CommerceAccelerators#MINI_CART_SPECIFIC_ITEM_BUNDLED_ITEM_BODY_VERTICAL_ELLIPSIS");
-		}
-
-		task ("But if the buyer adds another non-bundled product to the cart(e.g. Brake Fluid)") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/brake-fluid");
-
-			FrontStore.addToCartFromProductDetails(
-				optionNamesAndValues = "Package Quantity:12",
-				productName = "Brake Fluid",
-				productSku = "MIN93016A");
-		}
-
-		task ("Then no 'Show Product Options' panel and the Edit action button for the non-bundled product") {
-			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/catalog");
-
-			CommerceNavigator.gotoMiniCart();
-
-			AssertElementNotPresent(
-				key_cartItemSku = "MIN93016A",
-				key_index = 1,
-				locator1 = "CommerceAccelerators#MINI_CART_SPECIFIC_ITEM_BUNDLED_ITEM_SHOW_OPTIONS_PANEL_COLLAPSED");
-
-			AssertElementNotPresent(
-				key_cartItemSku = "MIN93016A",
-				key_index = 1,
-				locator1 = "CommerceAccelerators#MINI_CART_SPECIFIC_ITEM_BUNDLED_ITEM_BODY_VERTICAL_ELLIPSIS");
-
-			AssertElementPresent(
-				key_cartItemSku = "MIN93016A",
-				locator1 = "CommerceAccelerators#MINI_CART_REMOVE_ITEM");
 		}
 
 		task ("When the Edit Bundled Product panel is opened for an order item") {

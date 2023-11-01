@@ -1870,7 +1870,7 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-12540"
+	@description = "COMMERCE-12700 Verify that is not possible to view the accordion 'Show Option' in case the product has not options"
 	@priority = 4
 	test CanForProductsWithNoOptionsTheAccordionDisappear {
 		property custom.properties = "feature.flag.COMMERCE-9599=true${line.separator}jsonws.web.service.paths.excludes=";
@@ -2308,7 +2308,7 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-12540"
+	@description = "COMMERCE-12701 Verify that is possible to view and use the accordion 'Show Options' for the bundle products with UOM"
 	@priority = 5
 	test CanUseTheAccordionForBundleProductsWithUOM {
 		property custom.properties = "feature.flag.COMMERCE-9599=true${line.separator}feature.flag.COMMERCE-11287=true${line.separator}jsonws.web.service.paths.excludes=";
@@ -2440,7 +2440,7 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-12540"
+	@description = "COMMERCE-12699 Verify that is possible to view and use the accordion 'Show Options' for the Define Externally bundle products"
 	@priority = 5
 	test CanUseTheAccordionForDefineExternallyProducts {
 		property custom.properties = "feature.flag.COMMERCE-9599=true${line.separator}jsonws.web.service.paths.excludes=";
@@ -2538,7 +2538,7 @@ definition {
 		}
 	}
 
-	@description = "COMMERCE-12540"
+	@description = "COMMERCE-12698 Verify that is possible to view and use the accordion 'Show Options' for the normal products"
 	@priority = 5
 	test CanUseTheAccordionForNormalProducts {
 		property custom.properties = "feature.flag.COMMERCE-9599=true${line.separator}jsonws.web.service.paths.excludes=";

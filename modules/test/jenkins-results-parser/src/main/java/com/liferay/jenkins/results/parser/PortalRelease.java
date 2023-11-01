@@ -23,6 +23,10 @@ import org.dom4j.Node;
 public class PortalRelease {
 
 	public static boolean isQuarterlyRelease(String portalVersion) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(portalVersion)) {
+			return false;
+		}
+
 		return portalVersion.matches(_QUARTERLY_RELEASE_VERSION_REGEX);
 	}
 
@@ -681,7 +685,7 @@ public class PortalRelease {
 			"(\\-(ep|ga|rc|sp)\\d+)?)";
 
 	private static final String _QUARTERLY_RELEASE_VERSION_REGEX =
-		"(?<portalVersion>\\d{4}.q\\d+.\\d+)";
+		"(?<portalVersion>\\d{4}.[Qq]\\d+.\\d+)";
 
 	private static final MultiPattern _bundleFileNamePattern = new MultiPattern(
 		".+\\-" + _PORTAL_VERSION_REGEX + ".*\\.(7z|tar.gz|zip)",

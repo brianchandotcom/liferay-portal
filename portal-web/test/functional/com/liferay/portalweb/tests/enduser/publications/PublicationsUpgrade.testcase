@@ -51,7 +51,7 @@ definition {
 
 		AssertTextEquals(
 			key_publicationName = "Publication Name",
-			locator1 = "Publications#LIST_OUT_OF_DATE_STATUS",
+			locator1 = "Publications#OUT_OF_DATE_STATUS",
 			value1 = "Out of Date");
 	}
 
@@ -65,7 +65,7 @@ definition {
 
 		AssertTextEquals(
 			key_publicationName = "Publication Name",
-			locator1 = "Publications#LIST_OUT_OF_DATE_STATUS",
+			locator1 = "Publications#OUT_OF_DATE_STATUS",
 			value1 = "Out of Date");
 	}
 

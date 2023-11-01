@@ -67,7 +67,7 @@
 </tr>
 <tr>
 	<td>MOCKMOCK_MESSAGE_BODY</td>
-	<td>//div[@class='well' and contains(.,'${key_asset}')]</td>
+	<td>//div[@class='well' and contains(normalize-space(),'${key_asset}')]</td>
 	<td></td>
 </tr>
 <tr>

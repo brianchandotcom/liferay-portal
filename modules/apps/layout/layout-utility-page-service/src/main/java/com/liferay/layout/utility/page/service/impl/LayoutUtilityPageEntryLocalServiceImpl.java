@@ -5,7 +5,6 @@
 
 package com.liferay.layout.utility.page.service.impl;
 
-import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.utility.page.exception.LayoutUtilityPageEntryNameException;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
@@ -567,9 +566,6 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 		';', '/', '?', ':', '@', '=', '&', '\"', '<', '>', '#', '%', '{', '}',
 		'|', '\\', '^', '~', '[', ']', '`'
 	};
-
-	@Reference
-	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Reference
 	private File _file;

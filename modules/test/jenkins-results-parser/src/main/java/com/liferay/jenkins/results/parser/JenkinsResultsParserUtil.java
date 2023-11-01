@@ -4059,6 +4059,10 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static String redact(String string) {
+		if (isNullOrEmpty(string)) {
+			return string;
+		}
+
 		if (_redactTokens.isEmpty()) {
 			synchronized (_redactTokens) {
 				_initializeRedactTokens();

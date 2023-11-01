@@ -141,13 +141,14 @@ public class SiteInitializerClientExtension
 				WebKeys.THEME_DISPLAY);
 
 		// LayoutServiceContextHelper#getServiceContextAutoCloseable ensures
-		// the wrapped HTTP servlet request has an attribute for WebKeys#LAYOUT.
-		// However, fragments are processed with
+		// the wrapped HTTP servlet request has an attribute for WebKeys#LAYOUT
+		// and WebKeys#THEME_DISPLAY. However, fragments are processed with
 		// com.liferay.taglib.portletext.RuntimeTag which grabs the original
 		// HTTP servlet request.
 
 		httpServletRequest.setAttribute(
 			WebKeys.LAYOUT, themeDisplay.getLayout());
+		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
 		SiteResource.Builder builder = _siteResourceFactory.create();
 

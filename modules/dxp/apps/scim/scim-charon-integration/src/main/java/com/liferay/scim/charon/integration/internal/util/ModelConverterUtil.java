@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.scim.charon.integration.internal.ScimUser;
 import com.liferay.scim.charon.integration.internal.constants.ScimConstants;
-import com.liferay.scim.user.manager.ScimUser;
 
 import java.util.Calendar;
 import java.util.Collections;

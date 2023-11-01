@@ -435,6 +435,31 @@ public class ObjectActionLocalServiceTest {
 				"João", ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE,
 				_objectDefinition, "John", WorkflowConstants.STATUS_APPROVED);
 
+			// Execute standalone system action to update the current object
+			// entry
+
+			objectEntry = _objectEntryLocalService.updateObjectEntry(
+				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
+				HashMapBuilder.<String, Serializable>put(
+					"firstName", "Jane"
+				).build(),
+				ServiceContextTestUtil.getServiceContext());
+
+			_addModelResourcePermissions(
+				systemObjectAction.getName(), objectEntry.getObjectEntryId(),
+				_user.getUserId());
+
+			objectEntryResource.
+				putByExternalReferenceCodeObjectEntryExternalReferenceCodeObjectActionObjectActionName(
+					objectEntry.getExternalReferenceCode(),
+					systemObjectAction.getName());
+
+			Map<String, Serializable> values =
+				_objectEntryLocalService.getValues(
+					objectEntry.getObjectEntryId());
+
+			Assert.assertEquals("Jack", MapUtil.getString(values, "firstName"));
+
 			// Execute standalone action to update the current object entry
 
 			try {
@@ -463,37 +488,13 @@ public class ObjectActionLocalServiceTest {
 					objectEntry.getExternalReferenceCode(),
 					objectAction5.getName());
 
-			Map<String, Serializable> values =
-				_objectEntryLocalService.getValues(
-					objectEntry.getObjectEntryId());
+			values = _objectEntryLocalService.getValues(
+				objectEntry.getObjectEntryId());
 
 			Assert.assertEquals(
 				"Peter", MapUtil.getString(values, "firstName"));
 			Assert.assertEquals(
 				"2023-06-01 06:42:08.0", MapUtil.getString(values, "time"));
-
-			// Assert functionality of system actions
-
-			objectEntry = _objectEntryLocalService.updateObjectEntry(
-				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
-				HashMapBuilder.<String, Serializable>put(
-					"firstName", "Jane"
-				).build(),
-				ServiceContextTestUtil.getServiceContext());
-
-			_addModelResourcePermissions(
-				systemObjectAction.getName(), objectEntry.getObjectEntryId(),
-				_user.getUserId());
-
-			objectEntryResource.
-				putByExternalReferenceCodeObjectEntryExternalReferenceCodeObjectActionObjectActionName(
-					objectEntry.getExternalReferenceCode(),
-					systemObjectAction.getName());
-
-			values = _objectEntryLocalService.getValues(
-				objectEntry.getObjectEntryId());
-
-			Assert.assertEquals("Jack", MapUtil.getString(values, "firstName"));
 
 			// Delete object entry
 
@@ -504,8 +505,8 @@ public class ObjectActionLocalServiceTest {
 			// On after remove
 
 			_assertWebhookObjectAction(
-				"Jack", ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE,
-				_objectDefinition, "Jack", WorkflowConstants.STATUS_APPROVED);
+				"Peter", ObjectActionTriggerConstants.KEY_ON_AFTER_DELETE,
+				_objectDefinition, "Peter", WorkflowConstants.STATUS_APPROVED);
 
 			// Draft
 

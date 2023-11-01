@@ -8,17 +8,14 @@ package com.liferay.scim.charon.integration.internal.resource;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.scim.charon.integration.internal.ScimUserManager;
 import com.liferay.scim.charon.integration.internal.constants.ScimConstants;
 import com.liferay.scim.charon.integration.internal.user.manager.UserManagerImpl;
 import com.liferay.scim.resource.UserResource;
-import com.liferay.scim.user.manager.ScimUser;
 
 import java.io.File;
 
@@ -78,16 +75,9 @@ public class UserResourceImpl implements UserResource {
 
 	@Override
 	public Response updateUser(String id, String resourceString) {
-		ScimUser scimUser = _scimUserManager.fetchScimUser(
-			CompanyThreadLocal.getCompanyId(), GetterUtil.getLong(id));
-
-		if (scimUser != null) {
-			return _buildResponse(
-				_userResourceManager.updateWithPUT(
-					id, resourceString, _userManager, null, null));
-		}
-
-		return createUser(resourceString);
+		return _buildResponse(
+			_userResourceManager.updateWithPUT(
+				id, resourceString, _userManager, null, null));
 	}
 
 	@Activate
@@ -98,13 +88,13 @@ public class UserResourceImpl implements UserResource {
 
 		_registerLiferayUserSchemaExtension();
 
-		_scimUserManager = new ScimUserManager(
-			_classNameLocalService, _companyLocalService, _configurationAdmin,
-			_expandoColumnLocalService, _expandoTableLocalService,
-			_expandoValueLocalService, _userLocalService);
-
 		_userManager = new UserManagerImpl(
-			_companyLocalService, _scimUserManager);
+			_companyLocalService,
+			new ScimUserManager(
+				_classNameLocalService, _companyLocalService,
+				_configurationAdmin, _expandoColumnLocalService,
+				_expandoTableLocalService, _expandoValueLocalService,
+				_userLocalService));
 	}
 
 	private Response _buildResponse(SCIMResponse scimResponse) {
@@ -157,8 +147,6 @@ public class UserResourceImpl implements UserResource {
 
 	@Reference
 	private com.liferay.portal.kernel.util.File _file;
-
-	private ScimUserManager _scimUserManager;
 
 	@Reference
 	private UserLocalService _userLocalService;

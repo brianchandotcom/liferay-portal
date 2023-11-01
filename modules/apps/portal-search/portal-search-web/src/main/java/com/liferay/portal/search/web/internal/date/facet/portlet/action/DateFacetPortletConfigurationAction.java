@@ -80,7 +80,7 @@ public class DateFacetPortletConfigurationAction
 			DateRangeFactoryUtil.validateRanges(ranges);
 		}
 		catch (Exception exception) {
-			SessionErrors.add(actionRequest, "unparsableSyntax");
+			SessionErrors.add(actionRequest, "unparsableDate");
 
 			_log.error(exception);
 		}

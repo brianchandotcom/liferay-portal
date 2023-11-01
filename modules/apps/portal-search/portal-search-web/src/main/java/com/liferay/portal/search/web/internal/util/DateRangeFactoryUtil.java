@@ -57,7 +57,7 @@ public class DateRangeFactoryUtil {
 
 		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyyMMddHHmmss", TimeZoneUtil.GMT);
-		DateFormat timeZoneDateFormat =
+		DateFormat userTimeZoneDateFormat =
 			DateFormatFactoryUtil.getSimpleDateFormat(
 				"yyyyMMddHHmmss", timeZone);
 
@@ -66,9 +66,9 @@ public class DateRangeFactoryUtil {
 
 		try {
 			String fromUTC = dateFormat.format(
-				timeZoneDateFormat.parse(normalizedFrom));
+				userTimeZoneDateFormat.parse(normalizedFrom));
 			String toUTC = dateFormat.format(
-				timeZoneDateFormat.parse(normalizedTo));
+				userTimeZoneDateFormat.parse(normalizedTo));
 
 			return StringBundler.concat("[", fromUTC, " TO ", toUTC, "]");
 		}

@@ -248,12 +248,14 @@ public class DateFacetPortletSharedSearchContributor
 		for (int i = 0; i < rangesJSONArray.length(); i++) {
 			JSONObject rangeJSONObject = rangesJSONArray.getJSONObject(i);
 
+			String label = rangeJSONObject.getString("label");
+
 			String range = rangeJSONObject.getString("range");
 
 			String[] rangeParts = RangeParserUtil.parserRange(range);
 
 			dateRangeAggregation.addRange(
-				new Range(range, rangeParts[0], rangeParts[1]));
+				new Range(label, rangeParts[0], rangeParts[1]));
 		}
 
 		return dateRangeAggregation;
@@ -269,35 +271,23 @@ public class DateFacetPortletSharedSearchContributor
 		BooleanFilter booleanFilter = new BooleanFilter();
 
 		for (String selection : selectedRangeStrings) {
-			String start = StringPool.BLANK;
-			String end = StringPool.BLANK;
+			String[] rangeParts = RangeParserUtil.parserRange(selection);
 
-			if (Validator.isNotNull(selection)) {
-				String[] range = RangeParserUtil.parserRange(selection);
+			String from = rangeParts[0];
+			String to = rangeParts[1];
 
-				start = range[0];
-				end = range[1];
-			}
-
-			if (Validator.isNull(start) && Validator.isNull(end)) {
-				return null;
+			if (Validator.isNull(from) && Validator.isNull(to)) {
+				continue;
 			}
 
 			DateRangeFilterBuilder dateRangeFilterBuilder =
 				_filterBuilders.dateRangeFilterBuilder();
 
 			dateRangeFilterBuilder.setFieldName(fieldToAggregate);
-
-			if (Validator.isNotNull(start)) {
-				dateRangeFilterBuilder.setFrom(start);
-			}
-
+			dateRangeFilterBuilder.setFrom(from);
 			dateRangeFilterBuilder.setIncludeLower(true);
-			dateRangeFilterBuilder.setIncludeUpper(true);
-
-			if (Validator.isNotNull(end)) {
-				dateRangeFilterBuilder.setTo(end);
-			}
+			dateRangeFilterBuilder.setIncludeUpper(false);
+			dateRangeFilterBuilder.setTo(to);
 
 			booleanFilter.add(
 				dateRangeFilterBuilder.build(), BooleanClauseOccur.SHOULD);

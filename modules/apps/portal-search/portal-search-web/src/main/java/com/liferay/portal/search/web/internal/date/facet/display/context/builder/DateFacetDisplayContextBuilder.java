@@ -239,14 +239,10 @@ public class DateFacetDisplayContextBuilder implements Serializable {
 
 			String label = jsonObject.getString("label");
 
-			if (label.equals("custom-range")) {
-				continue;
-			}
-
-			String range = jsonObject.getString("range");
-
-			if ((_frequencyThreshold > 0) &&
-				(_frequencyThreshold > getFrequency(getTermCollector(range)))) {
+			if (label.equals("custom-range") ||
+				((_frequencyThreshold > 0) &&
+				 (_frequencyThreshold > getFrequency(
+					 getTermCollector(label))))) {
 
 				continue;
 			}

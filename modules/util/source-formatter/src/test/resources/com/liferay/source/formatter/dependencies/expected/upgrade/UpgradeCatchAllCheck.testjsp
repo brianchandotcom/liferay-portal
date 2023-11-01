@@ -21,4 +21,6 @@ for (CommerceOrderItem commerceOrderItem : commerceOrder.getCommerceOrderItems()
 PortalUtil.getCurrentAndAncestorSiteGroupIds(themeDisplay.getScopeGroupId());
 
 DLURLHelperUtil.getImagePreviewURL(null, null);
+
+themeDisplay.getScopeGroupId();
 %>

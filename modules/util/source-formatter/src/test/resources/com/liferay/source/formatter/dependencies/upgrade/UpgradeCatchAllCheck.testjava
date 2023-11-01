@@ -322,6 +322,7 @@ public class UpgradeCatchAllCheck {
 	public void method(ThemeDisplay themeDisplay) {
 		DLUtil.getGroupIds(null);
 		DLUtil.getGroupIds(themeDisplay);
+		themeDisplay.getPortletGroupId();
 	}
 
 	@Reference

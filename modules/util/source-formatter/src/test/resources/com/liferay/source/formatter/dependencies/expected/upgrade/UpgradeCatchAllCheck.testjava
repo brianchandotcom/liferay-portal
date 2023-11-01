@@ -337,6 +337,7 @@ public class UpgradeCatchAllCheck {
 	public void method(ThemeDisplay themeDisplay) {
 		DLUtil.getGroupIds(null);
 		PortalUtil.getCurrentAndAncestorSiteGroupIds(themeDisplay.getScopeGroupId());
+		themeDisplay.getScopeGroupId();
 	}
 
 	@Reference

@@ -85,6 +85,7 @@
 	{
 		"from": "CommerceShippingOption(String, String, BigDecimal)",
 		"issueKey": "LPS-187666",
+		"skipParametersValidation": true,
 		"to": "CommerceShippingOption(param#2#, \"\", param#0#, param#0#, 0)"
 	},
 	{
@@ -196,6 +197,15 @@
 			"java",
 			"jsp"
 		]
+	},
+	{
+		"from": "ListUtil.fromArray(LanguageUtil.getAvailableLocales())",
+		"issueKey": "LPS-192403",
+		"newImports": [
+			"java.util.ArrayList"
+		],
+		"skipParametersValidation": true,
+		"to": "new ArrayList<>(LanguageUtil.getAvailableLocales())"
 	},
 	{
 		"classNames": [

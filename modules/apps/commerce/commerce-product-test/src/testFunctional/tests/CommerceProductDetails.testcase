@@ -1817,8 +1817,8 @@ definition {
 		task ("And the inventory of other generated SKUs is configured besides SKU:6 and 24 which has 0 stock") {
 			for (var sku : list "112,48,12") {
 				CommerceJSONWarehousesAndInventoriesAPI._addWarehouseItem(
-					warehouseItemSku = ${sku},
 					warehouseItemQuantity = 10,
+					warehouseItemSku = ${sku},
 					warehouseName = "Italy");
 			}
 		}

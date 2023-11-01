@@ -1,6 +1,7 @@
 definition {
 
-	macro _addPage {
+	@summary = "Default summary"
+	macro _addPage(assertCheckboxMissing = null, inheritChanges = null, sitePageType = null, customDescription = null, pageTemplateName = null, vocabularyName = null, customTitle = null, navigationMenus = null, pageName = null, categoryName = null, collectionName = null) {
 		SitePages._selectPageType(
 			collectionName = ${collectionName},
 			pageTemplateName = ${pageTemplateName},

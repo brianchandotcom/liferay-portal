@@ -1,0 +1,120 @@
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+
+		<title>Build History Report</title>
+	</head>
+
+	<body>
+		<h2>Build History Report</h2>
+
+		<div>
+			<button class="accordion"><h3>CI Build History</h3></button>
+
+			<div class="panel">
+				<div>
+					<h4>Category Descriptions</h4>
+
+					<div id="descriptions">
+						<p>
+							<strong>liferay-portal/master PR&apos;s:</strong>
+
+							<em>This accounts for all CI builds (all test suites) related to the liferay-portal/master pull request jobs.</em>
+						</p>
+
+						<p>
+							<strong>liferay-portal/master Upstream:</strong>
+
+							<em>This accounts for all CI builds related to liferay-portal/master upstream jobs. This includes acceptance upstream, test suite upstream jobs.</em>
+						</p>
+
+						<p>
+							<strong>liferay-portal-ee PR&apos;s &amp; Upstream:</strong>
+
+							<em>This accounts for all CI builds for pull request and upstream jobs related to non master branches.</em>
+						</p>
+
+						<p>
+							<strong>Portal Release:</strong>
+
+							<em>This accounts for all CI builds related to the release job. Includes master and legacy branches.</em>
+						</p>
+
+						<p>
+							<strong>Portal Fixpack &amp; Hotfix Release:</strong>
+
+							<em>This accounts for all CI builds for fixpack and hotfix jobs across all portal branches.</em>
+						</p>
+
+						<p>
+							<strong>CI Maintenance:</strong>
+
+							<em>This accounts for CI server upkeep jobs such as verification, maintenance daily, and maintenance weekly.</em>
+						</p>
+
+						<p>
+							<strong>Other:</strong>
+
+							<em>This accounts for all other job types not in an above category.</em>
+						</p>
+					</div>
+				</div>
+
+				<div>
+					<h4>Categorized CI Builds over time</h4>
+
+					<canvas height="800" id="build-history-canvas"></canvas>
+				</div>
+
+				<div>
+					<h4>CI Build History Table</h4>
+
+					<div>
+						<i class="fa fa-search"></i>
+
+						<input id="search" onkeyup="searchTable(this.id, 'build-history-table')" placeholder="Filter by category name or metric name (e.g. Portal Upstream, Invoked Builds)" type="text" />
+					</div>
+
+					<div class="table-wrapper">
+						<table class="table table-bordered table-hover" data-sortable id="build-history-table"></table>
+					</div>
+
+					<br />
+				</div>
+			</div>
+
+			<button class="accordion"><h3>Average Build Duration</h3></button>
+
+			<div class="panel">
+				<div>
+					<canvas height="800" id="build-duration-canvas"></canvas>
+				</div>
+			</div>
+
+			<button class="accordion"><h3>Average Queue Duration</h3></button>
+
+			<div class="panel">
+				<div>
+					<canvas height="800" id="queue-duration-canvas"></canvas>
+				</div>
+			</div>
+		</div>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-adapter-moment/1.0.1/chartjs-adapter-moment.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/sortable/0.8.0/js/sortable.min.js"></script>
+
+		<script src="js/table-data.js"></script>
+		<script src="js/timeline-data.js"></script>
+		<script src="js/utils.js"></script>
+
+		<script src="js/main.js"></script>
+
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/sortable/0.8.0/css/sortable-theme-bootstrap.min.css" rel="stylesheet" />
+		<link href="css/report.css" rel="stylesheet" />
+		<link href="css/main.css" rel="stylesheet" />
+	</body>
+</html>

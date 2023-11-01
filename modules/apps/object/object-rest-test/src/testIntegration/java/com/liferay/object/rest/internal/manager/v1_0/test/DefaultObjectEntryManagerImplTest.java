@@ -507,14 +507,15 @@ public class DefaultObjectEntryManagerImplTest
 
 		_rootObjectDefinition =
 			objectDefinitionLocalService.enableAccountEntryRestricted(
-			_objectRelationshipLocalService.addObjectRelationship(
-				adminUser.getUserId(),
-				accountEntryObjectDefinition.getObjectDefinitionId(),
-				rootNode.getPrimaryKey(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"oneToManyRelationshipName2", false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
+				_objectRelationshipLocalService.addObjectRelationship(
+					adminUser.getUserId(),
+					accountEntryObjectDefinition.getObjectDefinitionId(),
+					rootNode.getPrimaryKey(), 0,
+					ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString()),
+					"oneToManyRelationshipName2", false,
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY));
 
 		objectDefinitionLocalService.publishCustomObjectDefinition(
 			adminUser.getUserId(), rootNode.getPrimaryKey());

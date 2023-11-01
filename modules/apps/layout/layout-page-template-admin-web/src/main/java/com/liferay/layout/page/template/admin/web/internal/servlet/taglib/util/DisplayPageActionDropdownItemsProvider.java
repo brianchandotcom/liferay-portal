@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.portlet.url.builder.RenderURLBuilder;
 import com.liferay.portal.kernel.portlet.url.builder.ResourceURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -622,17 +623,26 @@ public class DisplayPageActionDropdownItemsProvider {
 		return dropdownItem -> {
 			dropdownItem.setDisabled(usagesCount == 0);
 			dropdownItem.setHref(
-				_renderResponse.createRenderURL(), "mvcRenderCommandName",
-				"/layout_page_template_admin/view_asset_display_page_usages",
-				"redirect", _themeDisplay.getURLCurrent(), "classNameId",
-				String.valueOf(_layoutPageTemplateEntry.getClassNameId()),
-				"classTypeId",
-				String.valueOf(_layoutPageTemplateEntry.getClassTypeId()),
-				"layoutPageTemplateEntryId",
-				String.valueOf(
-					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()),
-				"defaultTemplate",
-				String.valueOf(_layoutPageTemplateEntry.isDefaultTemplate()));
+				RenderURLBuilder.createRenderURL(
+					_renderResponse
+				).setMVCRenderCommandName(
+					"/layout_page_template_admin/view_asset_display_page_usages"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"classNameId",
+					String.valueOf(_layoutPageTemplateEntry.getClassNameId())
+				).setParameter(
+					"classTypeId",
+					String.valueOf(_layoutPageTemplateEntry.getClassTypeId())
+				).setParameter(
+					"layoutPageTemplateEntryId",
+					String.valueOf(
+						_layoutPageTemplateEntry.getLayoutPageTemplateEntryId())
+				).setParameter(
+					"defaultTemplate",
+					String.valueOf(_layoutPageTemplateEntry.isDefaultTemplate())
+				).buildString());
 			dropdownItem.setIcon("list-ul");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "view-usages"));

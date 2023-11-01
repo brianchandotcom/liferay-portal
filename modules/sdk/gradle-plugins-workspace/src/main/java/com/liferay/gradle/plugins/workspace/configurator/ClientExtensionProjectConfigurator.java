@@ -726,10 +726,10 @@ public class ClientExtensionProjectConfigurator
 
 				taskInputs.file(clientExtensionYamlFile);
 
-				TaskOutputs outputs =
+				TaskOutputs taskOutputs =
 					validateClientExtensionIdsTask.getOutputs();
 
-				outputs.upToDateWhen(task1 -> true);
+				taskOutputs.upToDateWhen(task1 -> true);
 
 				validateClientExtensionIdsTask.doFirst(
 					new Action<Task>() {
@@ -786,9 +786,9 @@ public class ClientExtensionProjectConfigurator
 
 				taskInputs.file(clientExtensionYamlFile);
 
-				TaskOutputs outputs = task.getOutputs();
+				TaskOutputs taskOutputs = task.getOutputs();
 
-				outputs.upToDateWhen(task1 -> true);
+				taskOutputs.upToDateWhen(task1 -> true);
 			});
 
 		buildSiteInitializerZipTaskProvider.configure(

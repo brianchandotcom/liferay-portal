@@ -75,8 +75,8 @@ public class DisplayPageVerticalCard
 			DisplayPageActionDropdownItemsProvider
 				displayPageActionDropdownItemsProvider =
 					new DisplayPageActionDropdownItemsProvider(
-						_layoutPageTemplateEntry, _renderRequest,
-						_renderResponse);
+						_existsMappedContentType, _layoutPageTemplateEntry,
+						_renderRequest, _renderResponse);
 
 			return displayPageActionDropdownItemsProvider.
 				getActionDropdownItems();

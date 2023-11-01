@@ -955,11 +955,24 @@ definition {
 
 		if (isSet(cartItemOption)) {
 			for (var cartItemOption : list ${cartItemOption}) {
-				AssertTextEquals.assertPartialText(
-					key_cartItemSku = ${cartItemSku},
-					key_index = ${index},
-					locator1 = "CommerceAccelerators#MINI_CART_ITEM_INFO_EXTRA_N",
-					value1 = ${cartItemOption});
+				var optionName = StringUtil.extractFirst(${cartItemOption}, ":");
+				var optionValue = StringUtil.extractLast(${cartItemOption}, ":");
+
+				if (isSet(index)) { 
+					AssertElementPresent(
+						key_cartItemName = ${optionName},
+						key_cartItemSku = ${optionValue},
+						key_index = ${index},
+						locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_SKU_INDEX");
+				} 
+				else {
+					AssertElementPresent(
+						key_cartItemName = ${optionName},
+						key_cartItemSku = ${optionValue},
+						locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_SKU");
+				}
+
+				echo("The option [${optionName}] with the value [${optionValue}] is present");
 			}
 		}
 	}

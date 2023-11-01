@@ -24,6 +24,10 @@ const ProductCard = ({
 	product,
 	showExtendBanner = false,
 }: ProductCardProps) => {
+	if (!product) {
+		return null;
+	}
+
 	const getIconUrl = () => {
 		const iconURL = product
 			? getThumbnailByProductAttachment(product.attachments)?.split('/o/')
@@ -31,10 +35,6 @@ const ProductCard = ({
 
 		return iconURL ? `/o/${iconURL[1]}` : '';
 	};
-
-	if (!product) {
-		return null;
-	}
 
 	return (
 		<div className="pb-3 product-banner pt-5 px-5">
@@ -50,7 +50,7 @@ const ProductCard = ({
 
 					<div className="align-items-center ml-4">
 						<h1 className="text-weight-bold">
-							{product.name.en_US}
+							{product.name?.en_US}
 						</h1>
 
 						<div className="sub-text">

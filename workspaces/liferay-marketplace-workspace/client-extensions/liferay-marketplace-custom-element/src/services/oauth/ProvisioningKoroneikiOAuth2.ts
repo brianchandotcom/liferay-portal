@@ -5,7 +5,7 @@
 
 import OAuth2Client from './OAuth2Client';
 
-type SubscriptionsType = {
+export type SubscriptionsType = {
 	endDate?: string;
 	name: string;
 	perpetual: boolean;
@@ -78,10 +78,15 @@ class ProvisioningKoroneikiOAuth2 extends OAuth2Client {
 	}
 
 	downloadLicenseKey(id: number) {
-		window.open(
+		const anchor = document.createElement('a');
+
+		anchor.href =
 			this.oAuth2Client.homePageURL +
-				`/provisioning/license-keys/${id}/download`
-		);
+			`/provisioning/license-keys/${id}/download`;
+
+		document.body.appendChild(anchor);
+		anchor.click();
+		anchor.remove();
 	}
 }
 

@@ -27,11 +27,17 @@ const zodSchema = {
 	}),
 
 	generateLicenseKey: z.object({
-		IP: z.string(),
 		description: z.string().max(100, {message: 'Invalid license name'}),
-		hostName: z.string(),
-		macAddresses: z.string(),
-		subscription: z.string(),
+		hostname: z.string(),
+		ipAddress: z.string(),
+		macAddress: z.string(),
+		subscription: z
+			.object({
+				name: z.string(),
+				productPurchasedKey: z.string(),
+				skuId: z.number(),
+			})
+			.optional(),
 	}),
 
 	invitedNewMember: z.object({

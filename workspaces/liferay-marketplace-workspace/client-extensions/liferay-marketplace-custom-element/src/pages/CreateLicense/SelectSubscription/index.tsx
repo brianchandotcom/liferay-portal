@@ -4,20 +4,20 @@
  */
 
 import {useCallback, useEffect, useState} from 'react';
+import {useParams} from 'react-router-dom';
 
 import RadioCardList, {
 	RadioCardContent,
 } from '../../../components/RadioCardList/RadioCardList';
+import useProvisioningKoroneikiOAuth2 from '../../GetAppPage/hooks/useProvisioningKoroneikiOAuth2';
 import {formatDate} from '../../PublishedAppsDashboard/PublishedDashboardPageUtil';
 
 type SubscriptionSelectionProps = {
-	licenseKeyData: any;
 	onSelectSubscription: (subscription: any) => void;
 	selectedSubscriptionValue?: any;
 };
 
 const SelectSubscription = ({
-	licenseKeyData,
 	onSelectSubscription,
 	selectedSubscriptionValue,
 }: SubscriptionSelectionProps) => {
@@ -25,39 +25,46 @@ const SelectSubscription = ({
 		RadioCardContent<String>[]
 	>([]);
 
-	const getSubscriptionList = useCallback(async () => {
-		setSubscription(
-			licenseKeyData.map((licenseKey: any) => {
-				const expirationDate =
-					licenseKey.endDate === 'DNE'
-						? 'DNE'
-						: formatDate(licenseKey.endDate);
+	const params = useParams();
 
-				return {
-					description: (
-						<small className="text-success">
-							Key activations available:{' '}
-							{licenseKey.purchasedCount} of{' '}
-							{licenseKey.provisionedCount}
-						</small>
-					),
-					label: `${formatDate(
-						licenseKey.startDate
-					)} - ${expirationDate}`,
-					selected:
-						selectedSubscriptionValue?.name === licenseKey.name,
-					title: <h3 className="mt-0">{licenseKey.name}</h3>,
-					value: licenseKey,
-				};
-			})
+	const orderId = Number(params.orderId);
+
+	const provisioningKoroneikiOAuth2 = useProvisioningKoroneikiOAuth2();
+
+	const getSubscriptionList = useCallback(async () => {
+		const _subscriptions = await provisioningKoroneikiOAuth2.getSubscriptions(
+			orderId
 		);
-	}, [licenseKeyData, selectedSubscriptionValue]);
+
+		const subscriptions = _subscriptions.map((licenseKey: any) => {
+			const expirationDate = licenseKey?.endDate
+				? formatDate(new Date(licenseKey.endDate).toISOString())
+				: 'DNE';
+
+			return {
+				description: (
+					<small className="text-success">
+						Key activations available: {licenseKey.provisionedCount}{' '}
+						of {licenseKey.purchasedCount}
+					</small>
+				),
+				label: `${formatDate(
+					licenseKey.startDate
+				)} - ${expirationDate}`,
+				selected: selectedSubscriptionValue?.name === licenseKey.name,
+				title: <h3 className="mt-0">{licenseKey.name}</h3>,
+				value: licenseKey,
+			};
+		});
+
+		setSubscription(subscriptions);
+	}, [orderId, provisioningKoroneikiOAuth2, selectedSubscriptionValue?.name]);
 
 	useEffect(() => {
 		getSubscriptionList();
 	}, [getSubscriptionList]);
 
-	const handleSelect = (radioOption: RadioOption<unknown>) => {
+	const handleSelect = (radioOption: RadioOption<any>) => {
 		onSelectSubscription(radioOption.value);
 
 		setSubscription((previousValue) =>

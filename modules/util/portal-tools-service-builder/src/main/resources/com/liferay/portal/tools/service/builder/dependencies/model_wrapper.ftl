@@ -115,6 +115,10 @@ public class ${entity.name}Wrapper
 				<#assign hasGetStagedModelTypeMethod = true />
 			</#if>
 
+			<#if stringUtil.equals(method.name, "populateVersionModel")>
+				<#assign hasPopulateVersionModel = true />
+			</#if>
+
 			${serviceBuilder.getJavadocComment(method)}
 
 			<#if serviceBuilder.hasAnnotation(method, "Deprecated")>
@@ -249,10 +253,12 @@ public class ${entity.name}Wrapper
 			return ${entityFieldName}.isHead();
 		}
 
-		@Override
-		public void populateVersionModel(${versionEntity.name} ${versionEntity.variableName}) {
-			${entityFieldName}.populateVersionModel(${versionEntity.variableName});
-		}
+		<#if !hasPopulateVersionModel!false>
+			@Override
+			public void populateVersionModel(${versionEntity.name} ${versionEntity.variableName}) {
+				${entityFieldName}.populateVersionModel(${versionEntity.variableName});
+			}
+		</#if>
 	<#elseif entity.versionedEntity??>
 		<#assign versionedEntity = entity.versionedEntity />
 

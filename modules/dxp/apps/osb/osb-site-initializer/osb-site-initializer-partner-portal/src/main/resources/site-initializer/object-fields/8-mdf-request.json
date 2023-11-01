@@ -419,6 +419,19 @@
 			"required": false,
 			"state": false,
 			"system": false
+		},
+		{
+			"DBType": "DateTime",
+			"businessType": "DateTime",
+			"externalReferenceCode": "611d345a-3453-46b7-9656-d32b6affe9d3",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Submit Date"
+			},
+			"name": "submitDate",
+			"required": false,
+			"type": "DateTime"
 		}
 	],
 	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:MDFRequest$]"

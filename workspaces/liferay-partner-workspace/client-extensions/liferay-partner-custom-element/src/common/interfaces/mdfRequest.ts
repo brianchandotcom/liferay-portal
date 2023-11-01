@@ -27,6 +27,7 @@ export default interface MDFRequest extends Partial<LiferayObject> {
 	overallCampaignName: string;
 	partnerCountry: LiferayPicklist;
 	r_usrToMDFReqs_userId?: number;
+	submitDate?: string;
 	submitted?: boolean;
 	targetAudienceRoles?: string[];
 	targetMarkets?: string[];
@@ -35,5 +36,4 @@ export default interface MDFRequest extends Partial<LiferayObject> {
 	totalMDFRequestAmount: number;
 	totalPaidAmount?: string;
 	totalRequested?: number;
-	submitDate?: string;
 }

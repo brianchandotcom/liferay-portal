@@ -4,12 +4,6 @@
  */
 
 export const INITIAL_FILTER = {
-	submitDate: {
-		dates: {
-			endDate: '',
-			startDate: '',
-		},
-	},
 	hasValue: false,
 	partner: {
 		name: 'Partner',
@@ -20,6 +14,13 @@ export const INITIAL_FILTER = {
 		name: 'Status',
 		value: [] as string[],
 	},
+	submitDate: {
+		dates: {
+			endDate: '',
+			startDate: '',
+		},
+	},
+
 	type: {
 		name: 'Type',
 		value: [] as string[],

@@ -45,6 +45,7 @@ export function getDTOFromMDFRequest(
 		r_usrToMDFReqs_userId: mdfRequest.id
 			? mdfRequest.r_usrToMDFReqs_userId
 			: Number(Liferay.ThemeDisplay.getUserId()),
+		submitDate: mdfRequest.submitDate,
 		submitted: mdfRequest.submitted,
 		targetAudienceRoles: mdfRequest.targetAudienceRoles?.join('; '),
 		targetMarkets: mdfRequest.targetMarkets?.join('; '),

@@ -28,9 +28,12 @@ export default async function createMDFRequestProxyAPI(mdfRequest: MDFRequest) {
 	let dtoMDFRequestResponse: MDFRequestDTO | undefined = undefined;
 
 	if (dtoMDFRequestSFResponse.externalReferenceCode) {
-		if (mdfRequest.id) {
+		if (!mdfRequest.submitted) {
 			mdfRequest.submitted = true;
+			mdfRequest.submitDate = new Date().toISOString();
+		}
 
+		if (mdfRequest.id) {
 			dtoMDFRequestResponse = await updateMDFRequest(
 				ResourceName.MDF_REQUEST_DXP,
 				mdfRequest,
@@ -38,9 +41,6 @@ export default async function createMDFRequestProxyAPI(mdfRequest: MDFRequest) {
 			);
 		}
 		else {
-			mdfRequest.submitted = true;
-			mdfRequest.submitDate = new Date().toISOString();
-
 			dtoMDFRequestResponse = await createMDFRequest(
 				ResourceName.MDF_REQUEST_DXP,
 				mdfRequest,

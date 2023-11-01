@@ -104,11 +104,6 @@ definition {
 				key_filterLabel = "Value",
 				locator1 = "ObjectCustomViews#SELECT_FILTER_GENERIC");
 
-			Click(
-				key_currentOption = "Select an option",
-				key_labelName = "Value",
-				locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
-
 			for (var filterValueList : list ${filterValue}) {
 				Click.clickAtNotVisible(
 					key_columnOption = ${filterValueList},

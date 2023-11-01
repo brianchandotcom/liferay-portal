@@ -2702,13 +2702,16 @@ definition {
 		}
 
 		task ("Select title field and assert it") {
-			CreateObject.selectTitleField(fieldLabel = "External Reference Code");
+			CreateObject.selectTitleField(
+				currentOption = "ID",
+				fieldLabel = "External Reference Code");
 
 			CreateObject.saveObject();
 
 			AssertElementPresent(
-				locator1 = "CreateObject#TITLE_FIELD",
-				value1 = "External Reference Code");
+				key_currentOption = "External Reference Code",
+				key_labelName = "Entry Title Field",
+				locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject162184");
 		}
@@ -2939,7 +2942,9 @@ definition {
 
 			ObjectPortlet.selectSystemObject(label = "User");
 
-			CreateObject.selectTitleField(fieldLabel = "ID");
+			CreateObject.selectTitleField(
+				currentOption = "First Name",
+				fieldLabel = "ID");
 
 			CreateObject.saveObject();
 		}
@@ -3519,8 +3524,8 @@ definition {
 			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 
 		AssertElementPresent(
-			key_fieldType = "Attachment",
-			locator1 = "ObjectField#TYPE_OPTION");
+			key_optionName = ${fieldType},
+			locator1 = "ObjectAdmin#CLAY_GENERIC_DROPDOWN_ITEM");
 
 		AssertTextEquals(
 			key_type = "Attachment",

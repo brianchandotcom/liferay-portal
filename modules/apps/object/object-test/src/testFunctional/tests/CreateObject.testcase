@@ -5500,7 +5500,7 @@ definition {
 		ObjectPortlet.selectCustomObject(label = "Custom Object B 122");
 
 		CreateObject.selectTitleField(
-			currentOption = "Custom Field A",
+			currentOption = "ID",
 			fieldLabel = "Custom Field B");
 
 		PortletEntry.publish();
@@ -5606,7 +5606,7 @@ definition {
 		ObjectPortlet.selectCustomObject(label = "Custom Object B 123");
 
 		CreateObject.selectTitleField(
-			currentOption = "Custom Field A",
+			currentOption = "ID",
 			fieldLabel = "Custom Field B");
 
 		CreateObject.saveObject();
@@ -5992,7 +5992,7 @@ definition {
 		ObjectPortlet.selectCustomObject(label = "Custom Object B 127");
 
 		CreateObject.selectTitleField(
-			currentOption = "Custom Field A",
+			currentOption = "ID",
 			fieldLabel = "Custom Field B");
 
 		PortletEntry.publish();
@@ -6106,7 +6106,7 @@ definition {
 		ObjectPortlet.selectCustomObject(label = "Custom Object B 128");
 
 		CreateObject.selectTitleField(
-			currentOption = "Custom Field A",
+			currentOption = "ID",
 			fieldLabel = "Custom Field B");
 
 		CreateObject.saveObject();
@@ -7925,7 +7925,7 @@ definition {
 		ObjectPortlet.selectCustomObject(label = "Custom Object B 163");
 
 		CreateObject.selectTitleField(
-			currentOption = "Custom Field A",
+			currentOption = "ID",
 			fieldLabel = "Custom Field B");
 
 		PortletEntry.publish();
@@ -8032,7 +8032,7 @@ definition {
 		ObjectPortlet.selectCustomObject(label = "Custom Object B 164");
 
 		CreateObject.selectTitleField(
-			currentOption = "Custom Field A",
+			currentOption = "ID",
 			fieldLabel = "Custom Field B");
 
 		CreateObject.saveObject();

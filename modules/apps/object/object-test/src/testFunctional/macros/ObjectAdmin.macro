@@ -1242,8 +1242,8 @@ definition {
 
 			if (${thenAction} == "Notification") {
 				ObjectAdmin.selectDropdownItem(
-					currentOption = "Definition of Terms",
-					labelName = "Recipients",
+					currentOption = "Select an option",
+					labelName = "",
 					optionName = ${notificationName});
 			}
 		}

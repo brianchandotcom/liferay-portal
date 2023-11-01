@@ -63,7 +63,7 @@ definition {
 
 		ObjectAdmin.selectDropdownItem(
 			currentOption = "Decimal",
-			labelName = "Filter Type",
+			labelName = "Output",
 			optionName = ${newTypeFormula});
 
 		Type(

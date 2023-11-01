@@ -71,6 +71,30 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro addAFDSFieldWithTranslation(selectLanguage = null, key_fieldName = null, dropdownMenuItem = null, key_newLabel = null,) {
+		Click(
+			key_fieldName = ${key_fieldName},
+			locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
+
+		MenuItem.click(menuItem = ${dropdownMenuItem});
+
+		Click(
+			key_symbolName = "",
+			locator1 = "FormViewBuilder#BUTTON_LOCALIZATION");
+
+		Click(
+			key_menuItem = ${selectLanguage},
+			locator1 = "MenuItem#MENU_ITEM_SPECIFIC");
+
+		Type(
+			key_text = "Label",
+			locator1 = "TextInput#ANY",
+			value1 = ${key_newLabel});
+
+		Button.clickSave();
+	}
+
+	@summary = "Default summary"
 	macro addAFilterWithTranslation(selectLanguage = null, key_newValue = null, filterType = null, defocusModal = null, key_changeName = null, key_sortOption = null) {
 		LexiconEntry.gotoAdd();
 
@@ -762,30 +786,6 @@ definition {
 				checkboxName = ${key_fieldItem},
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
-	}
-
-	@summary = "Default summary"
-	macro addAFDSFieldWithTranslation(selectLanguage = null, key_fieldName = null, dropdownMenuItem = null, key_newLabel = null,) {
-		Click(
-			key_fieldName = ${key_fieldName},
-			locator1 = "DataSet#VERTICAL_ELLIPSIS_BY_FIELDS_NAME");
-
-		MenuItem.click(menuItem = ${dropdownMenuItem});
-
-		Click(
-			key_symbolName = "",
-			locator1 = "FormViewBuilder#BUTTON_LOCALIZATION");
-
-		Click(
-			key_menuItem = ${selectLanguage},
-			locator1 = "MenuItem#MENU_ITEM_SPECIFIC");
-
-		Type(
-			key_text = "Label",
-			locator1 = "TextInput#ANY",
-			value1 = ${key_newLabel});
-
-		Button.clickSave();
 	}
 
 }

@@ -319,6 +319,10 @@ public class UpgradeCatchAllCheck {
 		_commercePriceEntryLocalService.addCommercePriceEntry(externalReferenceCode, cProductId, cpInstanceUuid, commercePriceListId, price, promoPrice, serviceContext);
 	}
 
+	public void method(String name, String label, BigDecimal amount) {
+		CommerceShippingOption(name, label, amount);
+	}
+
 	public void method(ThemeDisplay themeDisplay) {
 		DLUtil.getGroupIds(null);
 		DLUtil.getGroupIds(themeDisplay);

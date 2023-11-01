@@ -158,6 +158,13 @@ public class DateRangeFactoryUtil {
 				"range"
 			);
 
+			if (!range.contains(" TO ") || !StringUtil.startsWith(range, "[") ||
+				!StringUtil.endsWith(range, "]")) {
+
+				throw new IllegalArgumentException(
+					"Invalid range syntax " + range);
+			}
+
 			String from = range.split("TO")[0].trim();
 
 			from = from.substring(1);
@@ -169,27 +176,6 @@ public class DateRangeFactoryUtil {
 			to = to.substring(0, to.length() - 1);
 
 			_validateDateFormat(to);
-		}
-	}
-
-	public static void validateRangeSyntax(String ranges)
-		throws JSONException, ParseException {
-
-		JSONArray rangesJSONArray = JSONFactoryUtil.createJSONArray(ranges);
-
-		for (int i = 0; i < rangesJSONArray.length(); i++) {
-			String range = rangesJSONArray.getJSONObject(
-				i
-			).getString(
-				"range"
-			);
-
-			if (!range.contains(" TO ") || !StringUtil.startsWith(range, "[") ||
-				!StringUtil.endsWith(range, "]")) {
-
-				throw new IllegalArgumentException(
-					"Invalid range syntax " + range);
-			}
 		}
 	}
 

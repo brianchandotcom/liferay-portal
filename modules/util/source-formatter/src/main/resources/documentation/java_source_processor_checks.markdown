@@ -162,7 +162,6 @@ JavaTransactionBoundaryCheck | [Bug Prevention](bug_prevention_checks.markdown#b
 [JavaUnusedSourceFormatterChecksCheck](check/java_unused_source_formatter_checks_check.markdown#javaunusedsourceformattercheckscheck) | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | Finds `*Check` classes that are not configured. |
 [JavaUpgradeAlterCheck](check/java_upgrade_alter_check.markdown#javaupgradealtercheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on `alter` calls in Upgrade classes. |
 [JavaUpgradeClassCheck](check/java_upgrade_class_check.markdown#javaupgradeclasscheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on Upgrade classes. |
-JavaUpgradeCommerceShippingOptionCheck | [Upgrade](upgrade_checks.markdown#upgrade-checks) | Replace and reorder parameters in the CommerceShippingOption instance. |
 JavaUpgradeConnectionCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds cases where `DataAccess.getConnection` is used (instead of using the available global variable `connection`). |
 [JavaUpgradeDropTableCheck](check/java_upgrade_drop_table_check.markdown#javaupgradedroptablecheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds cases where `DROP_TABLE_IF_EXISTS` should be used (instead of `drop table if exists`). |
 JavaUpgradeEmptyLinesCheck | [Styling](styling_checks.markdown#styling-checks) | Finds missing and unnecessary empty lines in Upgrade classes. |

@@ -3855,10 +3855,9 @@ public class ObjectEntryLocalServiceImpl
 		ObjectEntry parentObjectEntry = getObjectEntry(
 			MapUtil.getLong(values, objectField.getName()));
 
-		if ((objectEntry.getRootObjectEntryId() != 0) &&
-			(objectEntry.getRootObjectEntryId() !=
-			 parentObjectEntry.getRootObjectEntryId())) {
-			
+		if (objectEntry.getRootObjectEntryId() !=
+				parentObjectEntry.getRootObjectEntryId()) {
+
 			_updateDescendantsRootObjectEntryId(
 				objectEntry, parentObjectEntry.getRootObjectEntryId(),
 				treeFactory);

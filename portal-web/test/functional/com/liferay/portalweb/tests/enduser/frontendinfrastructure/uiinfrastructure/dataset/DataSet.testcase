@@ -162,6 +162,90 @@ definition {
 		}
 	}
 
+	@description = "LPS-194126 Confirm that a new translation field has been created"
+	@priority = 3
+	test AssertTheNewFieldTranslation {
+		task ("Given an object definition 'Data Set Object' with name field and Scope: custom Text Entry and Add a translation to the added field title") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "DataSetObject",
+				objectName = "DataSetObject",
+				pluralLabelName = "DataSetObjects");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "DataSetObject");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Text Entry",
+				fieldType = "Text");
+
+			ObjectAdmin.goToFieldsDetails(label = "Text Entry");
+
+			ObjectAdmin.chooseAnyLanguage(
+				newLanguage = "pt_BR",
+				symbolName = "");
+
+			Type(
+				key_placeHolder = "Text to translate",
+				locator1 = "TextInput#ANY_PLACEHOLDER",
+				value1 = "Portugues");
+
+			CreateObject.saveObject();
+
+			ObjectAdmin.goToDetailsTab();
+
+			CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+
+			Check.checkNotVisible(
+				checkboxName = "Enable Entry Translation",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			Button.clickSave();
+
+			PortletEntry.publish();
+		}
+
+		task ("Given a new data set entry //Name: Data Set Test //REST Application: /c/datasetobjects //REST Schema: DataSetObject //REST Endpoint:/ ") {
+			Navigator.openURL();
+
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Data Set Test",
+				restApplication = "/c/datasetobjects",
+				restEndpoint = "/",
+				restSchema = "DataSetObject");
+
+			Refresh();
+		}
+
+		task ("And go to views tab on data set created") {
+			DataSetAdmin.goToViews(dataSetName = "Data Set Test");
+
+			DataSetAdmin.createDataSetView(
+				description = "Description",
+				key_name = "Data Set View");
+		}
+
+		task ("When go to the View page of the data set created.") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Data Set Test",
+				key_viewName = "Data Set View");
+
+			DataSetAdmin.goToTab(tabName = "Fields");
+		}
+
+		task ("Then there is “custom Text Entry” field available") {
+			LexiconEntry.gotoAdd();
+
+			AssertElementPresent(
+				key_columnName = "textEntry",
+				locator1 = "DataSet#NEW_FIELD_OPTION");
+		}
+	}
+
 	@description = "LPS-181546 Confirm that the new data set information is created and displayed correctly in the page content"
 	@priority = 5
 	test AssertTheValueInFieldsName {
@@ -1866,6 +1950,92 @@ definition {
 		}
 	}
 
+	@description = "LPS-194126 Confirm that when creating an object field with translation, a new view fields value is not displayed"
+	@priority = 3
+	test NewFieldValueIsNotDisplayed {
+		task ("Given an object with name field 'custom Text Entry' and Add a translation to the added field title") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "DataSetObject",
+				objectName = "DataSetObject",
+				pluralLabelName = "DataSetObjects");
+
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "DataSetObject");
+
+			ObjectAdmin.goToFieldsTab();
+
+			ObjectAdmin.addObjectFieldViaUI(
+				fieldLabel = "Text Entry",
+				fieldType = "Text");
+
+			ObjectAdmin.goToFieldsDetails(label = "Text Entry");
+
+			ObjectAdmin.chooseAnyLanguage(
+				newLanguage = "pt_BR",
+				symbolName = "");
+
+			Type(
+				key_placeHolder = "Text to translate",
+				locator1 = "TextInput#ANY_PLACEHOLDER",
+				value1 = "Portugues");
+
+			CreateObject.saveObject();
+
+			ObjectAdmin.goToDetailsTab();
+
+			CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+
+			Check.checkNotVisible(
+				checkboxName = "Enable Entry Translation",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			Button.clickSave();
+
+			PortletEntry.publish();
+		}
+
+		task ("Given a new data set entry //Name: Data Set Test //REST Application: /c/datasetobjects //REST Schema: DataSetObject //REST Endpoint:/ ") {
+			Navigator.openURL();
+
+			DataSetAdmin.goToDataSetAdminPage();
+
+			DataSetAdmin.createDataSetEntryViaAPI(
+				dataSetName = "Data Set Test",
+				restApplication = "/c/datasetobjects",
+				restEndpoint = "/",
+				restSchema = "DataSetObject");
+
+			Refresh();
+		}
+
+		task ("And go to views tab on data set created") {
+			DataSetAdmin.goToViews(dataSetName = "Data Set Test");
+
+			DataSetAdmin.createDataSetView(
+				description = "Description",
+				key_name = "Data Set View");
+		}
+
+		task ("When go to the View page of the data set created.") {
+			DataSetAdmin.goToSpecificViewPage(
+				dataSetName = "Data Set Test",
+				key_viewName = "Data Set View");
+		}
+
+		task ("When goes to Fields Tab.") {
+			DataSetAdmin.goToTab(tabName = "Fields");
+		}
+
+		task ("Then there is not any “Text Entry_i18n” field available") {
+			LexiconEntry.gotoAdd();
+
+			AssertElementNotPresent(
+				key_columnName = "Text Entry_i18n",
+				locator1 = "DataSet#NEW_FIELD_OPTION");
+		}
+	}
+
 	@description = "LPS-175990. Confirm that the user can cancel the creation of a data set entry"
 	@priority = 5
 	test NotCreatedAfterCancel {
@@ -1955,198 +2125,6 @@ definition {
 			AssertElementPresent(
 				key_itemName = "Test Data Set",
 				locator1 = "DataSet#TABLE_CELL");
-		}
-	}
-
-	@description = "Needs refactor after LPS-183512 is fixed | LPS-175990. Confirm that the user can create a data set entry with special chatacters"
-	@priority = 5
-	test WithSpecialCharacters {
-		task ("When Create a DataSet") {
-			DataSetAdmin.createDataSet(
-				key_name = "Data Set ~!@#$%^&*(){}[].<>/? name",
-				key_type = "/data-set-manager/entries");
-		}
-
-		task ("Then confirm that the data set is created and if the name is provided as expected") {
-			AssertElementPresent(
-				key_itemName = "Data Set ~!@#$%^&*(){}[].<>/? name",
-				locator1 = "DataSet#TABLE_CELL");
-		}
-
-		task ("And Then Confirm the Provider as expected") {
-			AssertElementPresent(
-				key_itemName = "/data-set-manager/entries",
-				locator1 = "DataSet#TABLE_CELL");
-		}
-	}
-
-	@description = "LPS-194126 Confirm that a new translation field has been created"
-	@priority = 3
-	test AssertTheNewFieldTranslation {
-		task ("Given an object definition 'Data Set Object' with name field and Scope: custom Text Entry and Add a translation to the added field title") {
-			ObjectAdmin.addObjectViaAPI(
-				labelName = "DataSetObject",
-				objectName = "DataSetObject",
-				pluralLabelName = "DataSetObjects");
-
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "DataSetObject");
-
-			ObjectAdmin.goToFieldsTab();
-
-			ObjectAdmin.addObjectFieldViaUI(
-				fieldLabel = "Text Entry",
-				fieldType = "Text");
-
-			ObjectAdmin.goToFieldsDetails(label = "Text Entry");
-
-			ObjectAdmin.chooseAnyLanguage(
-				newLanguage = "pt_BR",
-				symbolName = "");
-
-			Type(
-				key_placeHolder = "Text to translate",
-				locator1 = "TextInput#ANY_PLACEHOLDER",
-				value1 = "Portugues");
-
-			CreateObject.saveObject();
-
-			ObjectAdmin.goToDetailsTab();
-
-			CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
-
-			Check.checkNotVisible(
-				checkboxName = "Enable Entry Translation",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-
-			Button.clickSave();
-
-			PortletEntry.publish();
-		}
-
-		task ("Given a new data set entry //Name: Data Set Test //REST Application: /c/datasetobjects //REST Schema: DataSetObject //REST Endpoint:/ ") {
-			Navigator.openURL();
-
-			DataSetAdmin.goToDataSetAdminPage();
-
-			DataSetAdmin.createDataSetEntryViaAPI(
-				dataSetName = "Data Set Test",
-				restApplication = "/c/datasetobjects",
-				restEndpoint = "/",
-				restSchema = "DataSetObject");
-
-			Refresh();
-		}
-
-		task ("And go to views tab on data set created") {
-			DataSetAdmin.goToViews(dataSetName = "Data Set Test");
-
-			DataSetAdmin.createDataSetView(
-				description = "Description",
-				key_name = "Data Set View");
-		}
-
-		task ("When go to the View page of the data set created.") {
-			DataSetAdmin.goToSpecificViewPage(
-				dataSetName = "Data Set Test",
-				key_viewName = "Data Set View");
-
-			DataSetAdmin.goToTab(tabName = "Fields");
-		}
-
-		task ("Then there is “custom Text Entry” field available") {
-			LexiconEntry.gotoAdd();
-
-			AssertElementPresent(
-				key_columnName = "textEntry",
-				locator1 = "DataSet#NEW_FIELD_OPTION");
-		}
-	}
-
-	@description = "LPS-194126 Confirm that when creating an object field with translation, a new view fields value is not displayed"
-	@priority = 3
-	test NewFieldValueIsNotDisplayed {
-		task ("Given an object with name field 'custom Text Entry' and Add a translation to the added field title") {
-			ObjectAdmin.addObjectViaAPI(
-				labelName = "DataSetObject",
-				objectName = "DataSetObject",
-				pluralLabelName = "DataSetObjects");
-
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "DataSetObject");
-
-			ObjectAdmin.goToFieldsTab();
-
-			ObjectAdmin.addObjectFieldViaUI(
-				fieldLabel = "Text Entry",
-				fieldType = "Text");
-
-			ObjectAdmin.goToFieldsDetails(label = "Text Entry");
-
-			ObjectAdmin.chooseAnyLanguage(
-				newLanguage = "pt_BR",
-				symbolName = "");
-
-			Type(
-				key_placeHolder = "Text to translate",
-				locator1 = "TextInput#ANY_PLACEHOLDER",
-				value1 = "Portugues");
-
-			CreateObject.saveObject();
-
-			ObjectAdmin.goToDetailsTab();
-
-			CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
-
-			Check.checkNotVisible(
-				checkboxName = "Enable Entry Translation",
-				locator1 = "Checkbox#ANY_CHECKBOX");
-
-			Button.clickSave();
-
-			PortletEntry.publish();
-		}
-
-		task ("Given a new data set entry //Name: Data Set Test //REST Application: /c/datasetobjects //REST Schema: DataSetObject //REST Endpoint:/ ") {
-			Navigator.openURL();
-
-			DataSetAdmin.goToDataSetAdminPage();
-
-			DataSetAdmin.createDataSetEntryViaAPI(
-				dataSetName = "Data Set Test",
-				restApplication = "/c/datasetobjects",
-				restEndpoint = "/",
-				restSchema = "DataSetObject");
-
-			Refresh();
-		}
-
-		task ("And go to views tab on data set created") {
-			DataSetAdmin.goToViews(dataSetName = "Data Set Test");
-
-			DataSetAdmin.createDataSetView(
-				description = "Description",
-				key_name = "Data Set View");
-		}
-
-		task ("When go to the View page of the data set created.") {
-			DataSetAdmin.goToSpecificViewPage(
-				dataSetName = "Data Set Test",
-				key_viewName = "Data Set View");
-		}
-
-		task ("When goes to Fields Tab.") {
-			DataSetAdmin.goToTab(tabName = "Fields");
-		}
-
-		task ("Then there is not any “Text Entry_i18n” field available") {
-			LexiconEntry.gotoAdd();
-
-			AssertElementNotPresent(
-				key_columnName = "Text Entry_i18n",
-				locator1 = "DataSet#NEW_FIELD_OPTION");
 		}
 	}
 
@@ -2380,6 +2358,28 @@ definition {
 			AssertElementPresent(
 				key_column = "Nome",
 				locator1 = "DataSet#ENTRY_COLUMN_NAME");
+		}
+	}
+
+	@description = "Needs refactor after LPS-183512 is fixed | LPS-175990. Confirm that the user can create a data set entry with special chatacters"
+	@priority = 5
+	test WithSpecialCharacters {
+		task ("When Create a DataSet") {
+			DataSetAdmin.createDataSet(
+				key_name = "Data Set ~!@#$%^&*(){}[].<>/? name",
+				key_type = "/data-set-manager/entries");
+		}
+
+		task ("Then confirm that the data set is created and if the name is provided as expected") {
+			AssertElementPresent(
+				key_itemName = "Data Set ~!@#$%^&*(){}[].<>/? name",
+				locator1 = "DataSet#TABLE_CELL");
+		}
+
+		task ("And Then Confirm the Provider as expected") {
+			AssertElementPresent(
+				key_itemName = "/data-set-manager/entries",
+				locator1 = "DataSet#TABLE_CELL");
 		}
 	}
 

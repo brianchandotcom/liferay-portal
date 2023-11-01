@@ -10,8 +10,8 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.scim.charon.integration.internal.util.ModelConverterUtil;
+import com.liferay.scim.internal.user.manager.ScimUserManagerImpl;
 import com.liferay.scim.user.manager.ScimUser;
-import com.liferay.scim.user.manager.ScimUserManager;
 
 import java.util.Map;
 
@@ -33,10 +33,10 @@ public class UserManagerImpl implements UserManager {
 
 	public UserManagerImpl(
 		CompanyLocalService companyLocalService,
-		ScimUserManager scimUserManager) {
+		ScimUserManagerImpl scimUserManagerImpl) {
 
 		_companyLocalService = companyLocalService;
-		_scimUserManager = scimUserManager;
+		_scimUserManagerImpl = scimUserManagerImpl;
 	}
 
 	@Override
@@ -94,7 +94,7 @@ public class UserManagerImpl implements UserManager {
 	public User getUser(String id, Map<String, Boolean> requiredAttributes)
 		throws BadRequestException, CharonException, NotFoundException {
 
-		ScimUser scimUser = _scimUserManager.fetchScimUser(
+		ScimUser scimUser = _scimUserManagerImpl.fetchScimUser(
 			CompanyThreadLocal.getCompanyId(), GetterUtil.getLong(id));
 
 		if (scimUser == null) {
@@ -156,7 +156,7 @@ public class UserManagerImpl implements UserManager {
 			Company company = _companyLocalService.getCompany(
 				CompanyThreadLocal.getCompanyId());
 
-			ScimUser scimUser = _scimUserManager.addOrUpdateScimUser(
+			ScimUser scimUser = _scimUserManagerImpl.addOrUpdateScimUser(
 				ModelConverterUtil.toScimUser(
 					company.getCompanyId(), company.getLocale(), user));
 
@@ -171,6 +171,6 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	private final CompanyLocalService _companyLocalService;
-	private final ScimUserManager _scimUserManager;
+	private final ScimUserManagerImpl _scimUserManagerImpl;
 
 }

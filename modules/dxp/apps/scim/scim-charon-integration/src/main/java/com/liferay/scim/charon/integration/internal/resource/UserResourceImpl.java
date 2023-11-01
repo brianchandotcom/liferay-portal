@@ -11,9 +11,9 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.scim.charon.integration.internal.constants.ScimConstants;
 import com.liferay.scim.charon.integration.internal.user.manager.UserManagerImpl;
+import com.liferay.scim.internal.user.manager.ScimUserManagerImpl;
 import com.liferay.scim.resource.UserResource;
 import com.liferay.scim.user.manager.ScimUser;
-import com.liferay.scim.user.manager.ScimUserManager;
 
 import java.io.File;
 
@@ -72,7 +72,7 @@ public class UserResourceImpl implements UserResource {
 
 	@Override
 	public Response updateUser(String id, String resourceString) {
-		ScimUser scimUser = _scimUserManager.fetchScimUser(
+		ScimUser scimUser = _scimUserManagerImpl.fetchScimUser(
 			CompanyThreadLocal.getCompanyId(), GetterUtil.getLong(id));
 
 		if (scimUser != null) {
@@ -93,7 +93,7 @@ public class UserResourceImpl implements UserResource {
 		_registerLiferayUserSchemaExtension();
 
 		_userManager = new UserManagerImpl(
-			_companyLocalService, _scimUserManager);
+			_companyLocalService, _scimUserManagerImpl);
 	}
 
 	private Response _buildResponse(SCIMResponse scimResponse) {
@@ -133,7 +133,7 @@ public class UserResourceImpl implements UserResource {
 	private com.liferay.portal.kernel.util.File _file;
 
 	@Reference
-	private ScimUserManager _scimUserManager;
+	private ScimUserManagerImpl _scimUserManagerImpl;
 
 	private UserManager _userManager;
 	private final UserResourceManager _userResourceManager =

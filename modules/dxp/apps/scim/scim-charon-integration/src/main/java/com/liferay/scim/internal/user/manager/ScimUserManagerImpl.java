@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.scim.client.configuration.ScimClientOAuth2ApplicationConfiguration;
 import com.liferay.scim.client.util.ScimClientUtil;
 import com.liferay.scim.user.manager.ScimUser;
-import com.liferay.scim.user.manager.ScimUserManager;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -52,10 +51,9 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Rafael Praxedes
  */
-@Component(service = ScimUserManager.class)
-public class ScimUserManagerImpl implements ScimUserManager {
+@Component(service = ScimUserManagerImpl.class)
+public class ScimUserManagerImpl {
 
-	@Override
 	public ScimUser addOrUpdateScimUser(ScimUser scimUser)
 		throws PortalException {
 
@@ -92,7 +90,6 @@ public class ScimUserManagerImpl implements ScimUserManager {
 		return _toScimUser(user);
 	}
 
-	@Override
 	public ScimUser fetchScimUser(long companyId, long userId) {
 		User user = _userLocalService.fetchUserById(userId);
 

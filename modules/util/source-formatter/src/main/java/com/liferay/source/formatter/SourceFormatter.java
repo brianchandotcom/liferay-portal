@@ -683,16 +683,15 @@ public class SourceFormatter {
 				continue;
 			}
 
-			if (commitMessage.contains("## what") ||
-				commitMessage.contains("## why") ||
-				commitMessage.contains("## alternatives")) {
+			if (!commitMessage.contains("## Alternatives") ||
+				!commitMessage.contains("## What") ||
+				!commitMessage.contains("## Why")) {
 
 				throw new Exception(
 					StringBundler.concat(
-						"Commit message \n'", commitMessage,
-						"' error.\nReplace {'## what', '## why', '## ",
-						"alternatives'} to {'## What', '## Why', '## ",
-						"Alternatives'}"));
+						"Found formatting issues:\n", "The commit message ",
+						"contains '# breaking_change_report' must have '## ",
+						"What## Why' and '## Alternatives'"));
 			}
 
 			_containsSplitLine(

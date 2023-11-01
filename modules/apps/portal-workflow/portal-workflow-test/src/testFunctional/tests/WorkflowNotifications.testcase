@@ -112,7 +112,7 @@ definition {
 		Notifications.viewSuccessfulPublication(
 			contentBody = "for review in the workflow.",
 			portletName = "Test Test",
-			publicationType = "sent you a Commerce Order");
+			publicationType = "sent you a Order");
 	}
 
 	@description = "Verify that the user can open new user details by notifications"

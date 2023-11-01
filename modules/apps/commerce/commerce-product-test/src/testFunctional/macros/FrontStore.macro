@@ -958,13 +958,13 @@ definition {
 				var optionName = StringUtil.extractFirst(${cartItemOption}, ":");
 				var optionValue = StringUtil.extractLast(${cartItemOption}, ":");
 
-				if (isSet(index)) { 
+				if (isSet(index)) {
 					AssertElementPresent(
 						key_cartItemName = ${optionName},
 						key_cartItemSku = ${optionValue},
 						key_index = ${index},
 						locator1 = "CommerceAccelerators#MINI_CART_ITEM_NAME_SKU_INDEX");
-				} 
+				}
 				else {
 					AssertElementPresent(
 						key_cartItemName = ${optionName},

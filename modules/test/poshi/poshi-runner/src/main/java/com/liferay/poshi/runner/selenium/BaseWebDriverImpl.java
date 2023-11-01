@@ -145,20 +145,17 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		options.deleteAllCookies();
 
-		WebDriver.Window window = options.window();
-
 		String browserResolution = poshiProperties.browserResolution;
 
 		if (Validator.isNotNull(browserResolution)) {
+			WebDriver.Window window = options.window();
+
 			if (browserResolution.equals("maximize")) {
 				window.maximize();
 			}
 			else {
-				setWindowSize(browserResolution);
+				window.setSize(_getDimension(browserResolution));
 			}
-		}
-		else {
-			window.setSize(new Dimension(1280, 1040));
 		}
 
 		try {
@@ -2628,12 +2625,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		WebDriver.Window window = options.window();
 
-		String[] sizeCoordinates = StringUtil.split(size, ",");
-
-		int x = GetterUtil.getInteger(sizeCoordinates[0]);
-		int y = GetterUtil.getInteger(sizeCoordinates[1]);
-
-		window.setSize(new Dimension(x, y));
+		window.setSize(_getDimension(size));
 	}
 
 	@Override
@@ -4742,6 +4734,15 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		private final String _message;
 
+	}
+
+	private Dimension _getDimension(String size) {
+		String[] sizeCoordinates = StringUtil.split(size, "[\\D]+");
+
+		int x = GetterUtil.getInteger(sizeCoordinates[0]);
+		int y = GetterUtil.getInteger(sizeCoordinates[1]);
+
+		return new Dimension(x, y);
 	}
 
 	private static final String _OCULAR_BASELINE_IMAGE_DIR_NAME;

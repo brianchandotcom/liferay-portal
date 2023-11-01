@@ -188,7 +188,7 @@ public class DateRangeFactoryUtil {
 	}
 
 	private static void _validateDateFormat(String date) throws ParseException {
-		if (!ArrayUtil.contains(_ALIASES, date)) {
+		if (!ArrayUtil.contains(_ALIASES, date) && !date.contains("now")) {
 			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 				"yyyyMMddHHmmss");
 

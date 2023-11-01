@@ -213,9 +213,7 @@ export function NextStepPage({
 								before licensing the app. An invoice will be
 								sent to the email address listed in the order.
 								Once payment is processed, you will be notified
-								as to the next steps to license your app. Your{' '}
-								<strong>{appName}</strong> app is ready for
-								download.
+								as to the next steps to license your app.
 							</p>
 							<p>
 								{orderId && (

@@ -441,8 +441,7 @@
 									"fragmentStyle": {
 										"backgroundColor": "#F4F6F9",
 										"borderWidth": "0",
-										"paddingLeft": "2",
-										"paddingRight": "8"
+										"paddingLeft": "2"
 									},
 									"fragmentViewports": [
 										{
@@ -455,7 +454,6 @@
 									],
 									"indexed": true,
 									"layout": {
-										"paddingRight": 10,
 										"widthType": "Fixed"
 									}
 								},

@@ -454,8 +454,7 @@
 					{
 						"definition": {
 							"fragmentStyle": {
-								"borderWidth": "0",
-								"paddingRight": "8"
+								"borderWidth": "0"
 							},
 							"fragmentViewports": [
 								{
@@ -468,7 +467,6 @@
 							],
 							"indexed": true,
 							"layout": {
-								"paddingRight": 10,
 								"widthType": "Fixed"
 							}
 						},

@@ -71,7 +71,9 @@ definition {
 
 		ObjectPortlet.selectSystemObject(label = "Account");
 
-		CreateObject.selectTitleField(fieldLabel = "Type");
+		CreateObject.selectTitleField(
+			currentOption = "Name",
+			fieldLabel = "Type");
 
 		CreateObject.saveObject();
 
@@ -530,7 +532,9 @@ definition {
 
 		ObjectPortlet.selectSystemObject(label = "Account");
 
-		CreateObject.selectTitleField(fieldLabel = "Description");
+		CreateObject.selectTitleField(
+			currentOption = "Name",
+			fieldLabel = "Description");
 
 		CreateObject.saveObject();
 
@@ -753,7 +757,9 @@ definition {
 
 		ObjectPortlet.selectSystemObject(label = "Account");
 
-		CreateObject.selectTitleField(fieldLabel = "Type");
+		CreateObject.selectTitleField(
+			currentOption = "Name",
+			fieldLabel = "Type");
 
 		CreateObject.saveObject();
 
@@ -777,7 +783,9 @@ definition {
 
 		ObjectPortlet.selectSystemObject(label = "Account");
 
-		CreateObject.selectTitleField(fieldLabel = "Type");
+		CreateObject.selectTitleField(
+			currentOption = "Name",
+			fieldLabel = "Type");
 
 		CreateObject.saveObject();
 

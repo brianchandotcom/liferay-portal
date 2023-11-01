@@ -1123,7 +1123,9 @@ definition {
 
 			ObjectPortlet.selectCustomObject(label = "Custom Object A");
 
-			CreateObject.selectTitleField(fieldLabel = "Text Field A");
+			CreateObject.selectTitleField(
+				currentOption = "ID",
+				fieldLabel = "Text Field A");
 
 			CreateObject.saveObject();
 		}
@@ -1326,7 +1328,9 @@ definition {
 
 			ObjectPortlet.selectCustomObject(label = "Custom Object A");
 
-			CreateObject.selectTitleField(fieldLabel = "Text Field A");
+			CreateObject.selectTitleField(
+				currentOption = "ID",
+				fieldLabel = "Text Field A");
 
 			CreateObject.saveObject();
 		}

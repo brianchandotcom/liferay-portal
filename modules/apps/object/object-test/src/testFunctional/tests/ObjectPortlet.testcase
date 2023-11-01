@@ -1671,7 +1671,9 @@ definition {
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 264");
 
-		CreateObject.selectTitleField(fieldLabel = "Field");
+		CreateObject.selectTitleField(
+			currentOption = "ID",
+			fieldLabel = "Field");
 
 		CreateObject.saveObject();
 

@@ -50,11 +50,6 @@
 		<td>//div[contains(@class,'dnd-td') and contains(text(),'${key_termName}')]</td>
 		<td></td>
 	</tr>
-	<tr>
-		<td>RECIPIENT_TYPE</td>
-		<td>//div[contains(@class,'autocomplete-dropdown-menu')]//div[contains(text(),'${key_recipientType}')]</td>
-		<td></td>
-	</tr>
 </tbody>
 </table>
 </body>

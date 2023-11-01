@@ -113,28 +113,13 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>SEARCHABLE_LANGUAGE_SELECT</td>
-		<td>//div[@class="lfr-objects__card"]//input[@value="${selected}"]</td>
-		<td></td>
-	</tr>
-	<tr>
 		<td>SEARCHABLE_LANGUAGE_OPTION</td>
 		<td>//select[@name="indexedLanguageId"]//option[contains(., '${key_language}')]</td>
 		<td></td>
 	</tr>
 	<tr>
-		<td>TYPE_FIELD</td>
-		<td>//input[(@placeholder='Choose an Option' or @placeholder='Escolha uma Opção')]</td>
-		<td></td>
-	</tr>
-	<tr>
 		<td>TYPE_FIELD_DISABLED</td>
-		<td>//input[@placeholder='Choose an Option' and @disabled]</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>TYPE_OPTION</td>
-		<td>//button[@class='dropdown-item']//div[(text()="${key_fieldType}")]</td>
+		<td>//div[contains(@class,'form-group') and contains(label,'Type') and //@disabled]</td>
 		<td></td>
 	</tr>
 	<tr>

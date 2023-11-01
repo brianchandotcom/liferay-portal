@@ -571,11 +571,6 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>DROPDOWN_DEFAULT_VALUE</td>
-		<td>//div[contains(@class,'form-group')]//label[contains(text(),'Default Value') or contains(text(),'Input as Value')]//..//div[contains(@class,'input-group-item')]</td>
-		<td></td>
-	</tr>
-	<tr>
 		<td>SELECT_DROPDOWN_ITEM_DEFAULT_VALUE</td>
 		<td>//*[contains(@class,'list-unstyled')]//button[contains(@class,'dropdown-item')]//..//div[contains(text(),'${key_dropdownItem}')]</td>
 		<td></td>
@@ -593,16 +588,6 @@
 	<tr>
 		<td>SELECT_CHOOSE_OPTION</td>
 		<td>//option[contains(text(),'${chooseOption}')]</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>CHOOSE_AN_OBJECT</td>
-		<td>//input[@placeholder="Choose an Object"]</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>CHOOSE_OBJECT_LABEL</td>
-		<td>//button[contains(text(),'${key_objectLabel}')]</td>
 		<td></td>
 	</tr>
 	<tr>

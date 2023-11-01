@@ -77,7 +77,7 @@
 	</tr>
 	<tr>
 		<td>VIEW_OBJECT_SCOPE_DISABLED</td>
-		<td>//label[contains(.,'Scope')]/following-sibling::div//input[@disabled='']</td>
+		<td>//label[contains(text(),'Scope') and (@class='disabled')]//..//button</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -215,7 +215,7 @@
 
 	<tr>
 		<td>ACCOUNT_RESTRICTED_FIELD</td>
-		<td>//label[text()='Account Restricted Field']/following-sibling::div//input</td>
+		<td>//label[contains(text(),'Account Restricted Field')]//..//button</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -230,7 +230,7 @@
 	</tr>
 	<tr>
 		<td>ACCOUNT_RESTRICTED_FIELD_DISABLED</td>
-		<td>//label[text()='Account Restricted Field']/following-sibling::div//input[@disabled='']</td>
+		<td>//label[contains(text(),'Account Restricted Field') and (@class='disabled')]//..//button</td>
 		<td></td>
 	</tr>
 	<tr>

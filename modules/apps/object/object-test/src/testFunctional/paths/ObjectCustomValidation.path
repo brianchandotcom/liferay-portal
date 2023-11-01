@@ -12,12 +12,7 @@
 <tbody>
 	<tr>
 		<td>LABEL_ON_ADD_VALIDATION</td>
-		<td>//input[contains(@id,'objectFieldLabel')]</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>SELECT_TYPE_VALIDATION</td>
-		<td>//input[@placeholder='Choose an Option']</td>
+		<td>//input[(@name='label') and contains(@class,'form-control')]</td>
 		<td></td>
 	</tr>
 	<tr>

@@ -208,4 +208,63 @@ definition {
 		}
 	}
 
+	@description = "LPS-185676 - Verify the object definition cards persist after the relationship is deleted"
+	@priority = 3
+	test CanViewCardAfterRelationshipDeletion {
+		task ("Given a relationship between two object definitions in the same folder") {
+			var objectFolderERC = JSONObjectFolder.addFolder(
+				folderLabel = "Custom Folder 198088",
+				folderName = "CustomFolder198088");
+
+			for (var object : list "981,088") {
+				ObjectAdmin.addObjectViaAPI(
+					labelName = "Custom Object ${object}",
+					objectName = "CustomObject${object}",
+					pluralLabelName = "Custom Objects ${object}");
+
+				JSONObject.updateObject(
+					configKey = "objectFolderExternalReferenceCode",
+					configValue = ${objectFolderERC},
+					objectName = "CustomObject${object}");
+			}
+
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "CustomObject981",
+				objectName_2 = "CustomObject088",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+		}
+
+		task ("When the user deletes the relationship") {
+			ObjectModelBuilder.openObjectFolderInModelBuilder(objectFolderName = "CustomFolder198088");
+
+			Click(
+				key_connectorLabel = "Relationship",
+				locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_CONNECTOR_LABEL");
+
+			ClickNoError(locator1 = "Button#TRASH_ENABLED");
+
+			Type(
+				locator1 = "ObjectAdmin#PLACEHOLDER_DELETE_RELATIONSHIP",
+				value1 = "relationship");
+
+			Click(locator1 = "Form#SIDEBAR_DELETE_FIELD_MODAL_DELETE_BUTTON");
+		}
+
+		task ("Then the relationship is deleted and the object definition cards persist") {
+			AssertElementNotPresent(
+				key_connectorLabel = "Relationship",
+				locator1 = "ProcessBuilderKaleoDesignerReact#DIAGRAM_CONNECTOR_LABEL");
+
+			AssertElementPresent(
+				locator1 = "ObjectModelBuilder#OBJECT_DEFINITION_NODE",
+				objectLabel = "Custom Object 981");
+
+			AssertElementPresent(
+				locator1 = "ObjectModelBuilder#OBJECT_DEFINITION_NODE",
+				objectLabel = "Custom Object 088");
+		}
+	}
+
 }

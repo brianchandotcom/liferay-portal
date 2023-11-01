@@ -1,0 +1,19 @@
+{
+	"object-entries": [
+		{
+			"director": "Christopher Nolan",
+			"releaseDate": "2023-07-21",
+			"stars": "Cillian Murphy, Emily Blunt, Matt Damon",
+			"title": "Oppenheimer",
+			"writer": "Christopher Nolan, Kai Bird, Martin Sherwin"
+		},
+		{
+			"director": "Greta Gerwig",
+			"releaseDate": "2023-07-21",
+			"stars": "Margot Robbie, Ryan Gosling, Issa Rae",
+			"title": "Barbie",
+			"writer": "Greta Gerwig, Noah Baumbach"
+		}
+	],
+	"objectDefinitionName": "Movie"
+}

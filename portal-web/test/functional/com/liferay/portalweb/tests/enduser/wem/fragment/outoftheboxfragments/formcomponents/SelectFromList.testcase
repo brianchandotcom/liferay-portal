@@ -224,16 +224,6 @@ definition {
 					relationshipType = "oneToMany");
 			}
 
-			task ("Select title field on Account object") {
-				ObjectAdmin.openObjectAdmin();
-
-				ObjectPortlet.selectCustomObject(label = "Account");
-
-				CreateObject.selectTitleField(fieldLabel = "Name");
-
-				CreateObject.saveObject();
-			}
-
 			task ("Add four accounts") {
 				for (var accountName : list "Assets,Equity,Expenses,Free") {
 					JSONAccountEntry.addAccountEntry(

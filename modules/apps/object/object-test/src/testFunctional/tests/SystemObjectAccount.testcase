@@ -625,14 +625,6 @@ definition {
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject153527");
 
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectSystemObject(label = "Account");
-
-		CreateObject.selectTitleField(fieldLabel = "Name");
-
-		CreateObject.saveObject();
-
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject153527");
 
 		LexiconEntry.gotoAdd();
@@ -666,10 +658,6 @@ definition {
 			ObjectAdmin.openObjectAdmin();
 
 			ObjectPortlet.selectSystemObject(label = "Account");
-
-			CreateObject.selectTitleField(fieldLabel = "Name");
-
-			CreateObject.saveObject();
 
 			ObjectAdmin.gotoRelationshipsTab();
 

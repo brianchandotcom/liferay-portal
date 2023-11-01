@@ -46,16 +46,6 @@ definition {
 			userLastName = "userln",
 			userScreenName = "usersn");
 
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "User");
-
-		CreateObject.selectTitleField(fieldLabel = "First Name");
-
-		CreateObject.saveObject();
-
-		Navigator.openURL();
-
 		ObjectAdmin.addObjectRelationshipViaAPI(
 			objectName_1 = "User",
 			objectName_2 = "CustomObject288",
@@ -112,16 +102,6 @@ definition {
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "User");
-
-		CreateObject.selectTitleField(fieldLabel = "First Name");
-
-		CreateObject.saveObject();
-
-		Navigator.openURL();
 
 		ObjectAdmin.addObjectRelationshipViaAPI(
 			objectName_1 = "User",
@@ -589,16 +569,6 @@ definition {
 			PortletEntry.save();
 		}
 
-		task ("Define First Name as a title field on the native object") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "User");
-
-			CreateObject.selectTitleField(fieldLabel = "First Name");
-
-			CreateObject.saveObject();
-		}
-
 		task ("Add 2 entries by API to relate to user entries") {
 			for (var entryName : list "A,B") {
 				ObjectAdmin.addObjectSingleFieldEntryViaAPI(
@@ -713,14 +683,6 @@ definition {
 				userFirstName = "userfn",
 				userLastName = "userln",
 				userScreenName = "usersn");
-
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "User");
-
-			CreateObject.selectTitleField(fieldLabel = "First Name");
-
-			CreateObject.saveObject();
 		}
 
 		task ("Add a relationship between a Custom Object and Native Object") {
@@ -838,16 +800,6 @@ definition {
 				tabName = "Relationship Tab");
 
 			PortletEntry.save();
-		}
-
-		task ("Define First Name as a title field on the native object") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "User");
-
-			CreateObject.selectTitleField(fieldLabel = "First Name");
-
-			CreateObject.saveObject();
 		}
 
 		task ("Add 2 entries by API to relate to user entries") {
@@ -1865,16 +1817,6 @@ definition {
 			}
 		}
 
-		task ("Define First Name as a title field on the native object") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "User");
-
-			CreateObject.selectTitleField(fieldLabel = "First Name");
-
-			CreateObject.saveObject();
-		}
-
 		task ("Relates custom object entries to user object entries") {
 			Navigator.openURL();
 
@@ -1944,16 +1886,6 @@ definition {
 				value = "Entry A");
 		}
 
-		task ("Define First Name as a title field on the native object") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "User");
-
-			CreateObject.selectTitleField(fieldLabel = "First Name");
-
-			CreateObject.saveObject();
-		}
-
 		task ("Add layout with relationship tab") {
 			ObjectAdmin.addObjectLayoutViaAPI(
 				layoutName = "Custom Layout",
@@ -2019,16 +1951,6 @@ definition {
 			userFirstName = "userfn",
 			userLastName = "userln",
 			userScreenName = "usersn");
-
-		ObjectAdmin.openObjectAdmin();
-
-		ObjectPortlet.selectCustomObject(label = "User");
-
-		CreateObject.selectTitleField(fieldLabel = "First Name");
-
-		CreateObject.saveObject();
-
-		Navigator.openURL();
 
 		ObjectAdmin.addObjectRelationshipViaAPI(
 			objectName_1 = "User",

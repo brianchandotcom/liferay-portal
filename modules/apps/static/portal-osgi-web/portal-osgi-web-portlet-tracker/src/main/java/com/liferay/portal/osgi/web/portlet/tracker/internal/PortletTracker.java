@@ -85,9 +85,7 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
 import java.util.function.Supplier;
 
@@ -1365,47 +1363,10 @@ public class PortletTracker
 			return;
 		}
 
-		List<Company> companies = _companyLocalService.getCompanies();
-
-		if (_parallel) {
-			for (Company company : companies) {
-				_portletLocalService.deployRemotePortlet(
-					new long[] {company.getCompanyId()}, portletModel,
-					ArrayUtil.toStringArray(categoryNames), false, false);
-			}
-		}
-		else {
-			List<Future<Void>> futures = new ArrayList<>();
-
-			ExecutorService executorService =
-				SystemExecutorServiceUtil.getExecutorService();
-
-			for (Company company : companies) {
-				futures.add(
-					executorService.submit(
-						() -> {
-							_portletLocalService.deployRemotePortlet(
-								new long[] {company.getCompanyId()},
-								portletModel,
-								ArrayUtil.toStringArray(categoryNames), false,
-								false);
-
-							return null;
-						}));
-			}
-
-			for (Future<Void> future : futures) {
-				try {
-					future.get();
-				}
-				catch (Exception exception) {
-					if (exception instanceof ExecutionException) {
-						throw new PortalException(exception.getCause());
-					}
-
-					throw new PortalException(exception);
-				}
-			}
+		for (Company company : _companyLocalService.getCompanies()) {
+			_portletLocalService.deployRemotePortlet(
+				new long[] {company.getCompanyId()}, portletModel,
+				ArrayUtil.toStringArray(categoryNames), false, false);
 		}
 
 		_portletLocalService.clearCache();

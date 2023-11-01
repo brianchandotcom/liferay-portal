@@ -266,11 +266,10 @@ definition {
 
 			Form.gotoAdvancedTab();
 
-			Click(locator1 = "ObjectAdmin#DROPDOWN_DEFAULT_VALUE");
-
-			Click(
-				key_dropdownItem = "Picklist Item Test 2",
-				locator1 = "ObjectAdmin#SELECT_DROPDOWN_ITEM_DEFAULT_VALUE");
+			ObjectAdmin.selectDropdownItem(
+				currentOption = "Picklist Item Test 1",
+				labelName = "Input as Value",
+				optionName = "Picklist Item Test 2");
 
 			PortletEntry.save();
 		}
@@ -1019,11 +1018,15 @@ definition {
 				locator1 = "ObjectField#LABEL_INPUT",
 				value1 = "Lista de itens");
 
-			ObjectField.selectType(fieldType = "Lista de seleção");
+			ObjectAdmin.selectDropdownItem(
+				currentOption = "Select an option",
+				labelName = "Tipo",
+				optionName = "Lista de seleção");
 
-			ObjectField.selectPicklist(
-				dropdownLabel = "Lista de seleção",
-				picklistName = "Teste na lista");
+			ObjectAdmin.selectDropdownItem(
+				currentOption = "Escolha uma Opção",
+				labelName = "Lista de seleção",
+				optionName = "Teste na lista");
 
 			Button.click(button = "Salvar");
 		}

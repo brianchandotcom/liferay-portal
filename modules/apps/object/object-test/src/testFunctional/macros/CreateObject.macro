@@ -296,12 +296,11 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro selectTitleField(fieldLabel = null) {
-		Click(locator1 = "CreateObject#TITLE_FIELD");
-
-		Click(
-			key_menuItem = ${fieldLabel},
-			locator1 = "MenuItem#ANY_MENU_ITEM");
+	macro selectTitleField(currentOption = null,fieldLabel = null) {
+		ObjectAdmin.selectDropdownItem(
+			currentOption = ${currentOption},
+			labelName = "Entry Title Field",
+			optionName = ${fieldLabel});
 	}
 
 	@summary = "Default summary"

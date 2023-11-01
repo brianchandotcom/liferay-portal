@@ -721,11 +721,10 @@ definition {
 			locator1 = "ObjectAdmin#LABEL_OBJECT_RELATIONSHIP",
 			value1 = "Custom Relationship");
 
-		Click(locator1 = "ObjectAdmin#RELATIONSHIPS_TYPE_FORM");
-
-		Click(
-			key_type = "One to Many",
-			locator1 = "ObjectAdmin#SELECT_RELATIONSHIPS_TYPE_OPTION");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Select an option",
+			labelName = "Type",
+			optionName = ${type});
 
 		Click(locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE");
 
@@ -3814,7 +3813,10 @@ definition {
 
 		ObjectAdmin.goToFieldsDetails(label = "Text");
 
-		ObjectField.selectType(fieldType = "Date");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Text",
+			labelName = "Type",
+			optionName = "Date");
 
 		ObjectField.save();
 
@@ -6425,7 +6427,10 @@ definition {
 
 		ObjectAdmin.goToFieldsDetails(label = "Custom Field");
 
-		ObjectField.selectType(fieldType = "Text");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Integer",
+			labelName = "Type",
+			optionName = "Text");
 
 		AssertElementPresent(
 			key_radioOption = "Keyword",
@@ -6460,7 +6465,10 @@ definition {
 
 		ObjectAdmin.goToFieldsDetails(label = "Custom Field");
 
-		ObjectField.selectType(fieldType = "Integer");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Text",
+			labelName = "Type",
+			optionName = "Integer");
 
 		ObjectAdmin.assertKeywordAndTextNotPresent();
 	}

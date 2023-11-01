@@ -117,11 +117,10 @@ definition {
 		}
 
 		if (isSet(recipientType)) {
-			Click(locator1 = "ObjectAction#SELECT_OPTION_TYPE");
-
-			Click(
-				key_recipientType = ${recipientType},
-				locator1 = "ObjectNotifications#RECIPIENT_TYPE");
+			ObjectAdmin.selectDropdownItem(
+				currentOption = "Definition of Terms",
+				labelName = "Recipients",
+				optionName = ${recipientType});
 
 			if (${recipientType} == "User") {
 				Type(

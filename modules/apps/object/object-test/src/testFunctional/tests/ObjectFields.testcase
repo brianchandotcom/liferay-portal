@@ -1123,13 +1123,10 @@ definition {
 				key_dropdownItem = "RelationshipCommerce",
 				locator1 = "ObjectAdmin#SELECT_DROPDOWN_ITEM_DEFAULT_VALUE");
 
-			Click(
-				key_filterLabel = "Function",
-				locator1 = "ObjectCustomViews#SELECT_FILTER_GENERIC");
-
-			Click(
-				key_fieldType = "Min",
-				locator1 = "ObjectField#TYPE_OPTION");
+			ObjectAdmin.selectDropdownItem(
+				currentOption = "Max",
+				labelName = "Function",
+				optionName = "Min");
 
 			Click(locator1 = "ObjectField#LABEL_FIELD");
 

@@ -1608,11 +1608,10 @@ definition {
 
 			LexiconEntry.gotoAdd();
 
-			Click(locator1 = "ObjectAdmin#RELATIONSHIPS_TYPE_FORM");
-
-			Click(
-				key_type = "One to Many",
-				locator1 = "ObjectAdmin#SELECT_RELATIONSHIPS_TYPE_OPTION");
+			ObjectAdmin.selectDropdownItem(
+				currentOption = "Select an option",
+				labelName = "Type",
+				optionName = "One to Many");
 
 			Click(locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE");
 
@@ -2308,11 +2307,10 @@ definition {
 
 			LexiconEntry.gotoAdd();
 
-			Click(locator1 = "ObjectAdmin#RELATIONSHIPS_TYPE_FORM");
-
-			Click(
-				key_type = "Many to Many",
-				locator1 = "ObjectAdmin#SELECT_RELATIONSHIPS_TYPE_OPTION");
+			ObjectAdmin.selectDropdownItem(
+				currentOption = "Select an option",
+				labelName = "Type",
+				optionName = "Many to Many");
 
 			Click(locator1 = "ObjectCustomViews#SELECT_AUTO_COMPLETE");
 

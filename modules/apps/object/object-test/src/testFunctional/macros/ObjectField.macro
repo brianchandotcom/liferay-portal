@@ -61,13 +61,10 @@ definition {
 	macro editFormulaField(newContent = null, formulaScript = null, newTypeFormula = null) {
 		ObjectField.typeLabel(content = ${newContent});
 
-		Click(
-			key_filterLabel = "Output",
-			locator1 = "ObjectCustomViews#SELECT_FILTER_GENERIC");
-
-		Click(
-			key_dropdownItem = ${newTypeFormula},
-			locator1 = "ObjectField#SELECT_FORMULA_FIELD_OPTION");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Decimal",
+			labelName = "Filter Type",
+			optionName = ${newTypeFormula});
 
 		Type(
 			key_text = "Formula Builder",
@@ -84,33 +81,18 @@ definition {
 
 	@summary = "Default summary"
 	macro selectOptionOnRequestFiles(option = null) {
-		Click(locator1 = "ObjectField#REQUEST_FILES_INPUT");
-
-		Click(
-			key_fieldType = ${option},
-			locator1 = "ObjectField#TYPE_OPTION");
-	}
-
-	@summary = "Default summary"
-	macro selectPicklist(picklistName = null) {
-		if (!(isSet(dropdownLabel))) {
-			var dropdownLabel = "Picklist";
-		}
-
-		Click(
-			dropdownLabel = ${dropdownLabel},
-			locator1 = "ObjectField#ANY_DROPDOWN_LABEL");
-
-		MenuItem.click(menuItem = ${picklistName});
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Select an option",
+			labelName = "Request Files",
+			optionName = ${option});
 	}
 
 	@summary = "Default summary"
 	macro selectType(fieldType = null) {
-		Click(locator1 = "ObjectField#TYPE_FIELD");
-
-		Click(
-			key_fieldType = ${fieldType},
-			locator1 = "ObjectField#TYPE_OPTION");
+		ObjectAdmin.selectDropdownItem(
+			currentOption = "Select an option",
+			labelName = "Type",
+			optionName = ${fieldType});
 	}
 
 	@summary = "Default summary"

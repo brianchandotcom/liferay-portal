@@ -5,13 +5,17 @@
 
 package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
+import com.liferay.info.item.InfoItemClassDetails;
+import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.admin.web.internal.handler.LayoutPageTemplateEntryExceptionRequestHandlerUtil;
+import com.liferay.layout.page.template.exception.RequiredLayoutPageTemplateEntryException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.LockedLayoutException;
-import com.liferay.layout.page.template.exception.RequiredLayoutPageTemplateEntryException;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -19,9 +23,11 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portlet.url.builder.RenderURLBuilder;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
@@ -48,13 +54,15 @@ public class UpdateDisplayPageEntryContentTypeMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		LayoutPageTemplateEntry layoutPageTemplateEntry = null;
+
 		Layout draftLayout = null;
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		try {
-			LayoutPageTemplateEntry layoutPageTemplateEntry =
+			layoutPageTemplateEntry =
 				_layoutPageTemplateEntryService.getLayoutPageTemplateEntry(
 					ParamUtil.getLong(
 						actionRequest, "layoutPageTemplateEntryId"));
@@ -81,7 +89,19 @@ public class UpdateDisplayPageEntryContentTypeMVCActionCommand
 
 				JSONPortletResponseUtil.writeJSON(
 					actionRequest, actionResponse,
-					JSONUtil.put("error", JSONUtil.put("hasUsages", true)));
+					JSONUtil.put(
+						"error",
+						JSONUtil.put(
+							"assetType",
+							_getTypeLabel(layoutPageTemplateEntry, themeDisplay)
+						).put(
+							"hasUsages", true
+						).put(
+							"viewUsagesURL",
+							_getViewUsagesURL(
+								actionRequest, actionResponse,
+								layoutPageTemplateEntry)
+						)));
 
 				return;
 			}
@@ -106,6 +126,58 @@ public class UpdateDisplayPageEntryContentTypeMVCActionCommand
 		}
 	}
 
+	private String _getTypeLabel(
+		LayoutPageTemplateEntry layoutPageTemplateEntry,
+		ThemeDisplay themeDisplay) {
+
+		if (layoutPageTemplateEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		InfoItemDetailsProvider<?> infoItemDetailsProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemDetailsProvider.class,
+				layoutPageTemplateEntry.getClassName());
+
+		if (infoItemDetailsProvider == null) {
+			return StringPool.BLANK;
+		}
+
+		InfoItemClassDetails infoItemClassDetails =
+			infoItemDetailsProvider.getInfoItemClassDetails();
+
+		return infoItemClassDetails.getLabel(themeDisplay.getLocale());
+	}
+
+	private String _getViewUsagesURL(
+		ActionRequest actionRequest, ActionResponse actionResponse,
+		LayoutPageTemplateEntry layoutPageTemplateEntry) {
+
+		return RenderURLBuilder.createRenderURL(
+			_portal.getLiferayPortletResponse(actionResponse)
+		).setMVCRenderCommandName(
+			"/layout_page_template_admin/view_asset_display_page_usages"
+		).setRedirect(
+			ParamUtil.getString(actionRequest, "redirect")
+		).setParameter(
+			"classNameId",
+			String.valueOf(layoutPageTemplateEntry.getClassNameId())
+		).setParameter(
+			"classTypeId",
+			String.valueOf(layoutPageTemplateEntry.getClassTypeId())
+		).setParameter(
+			"layoutPageTemplateEntryId",
+			String.valueOf(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId())
+		).setParameter(
+			"defaultTemplate",
+			String.valueOf(layoutPageTemplateEntry.isDefaultTemplate())
+		).buildString();
+	}
+
+	@Reference
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
 	@Reference
 	private LayoutLocalService _layoutLocalService;
 
@@ -114,5 +186,8 @@ public class UpdateDisplayPageEntryContentTypeMVCActionCommand
 
 	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
+
+	@Reference
+	private Portal _portal;
 
 }

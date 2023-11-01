@@ -16,6 +16,7 @@ import {useNavigate} from 'react-router-dom';
 
 import {OrderStatus} from '../../enums/OrderStatus';
 import {orderType} from '../../enums/orderType';
+import i18n from '../../i18n';
 import {PurchasedAppProps} from '../../pages/PurchasedAppsDashboard/PurchasedAppsDashboardOutlet';
 import {showAppImage} from '../../utils/util';
 
@@ -143,7 +144,7 @@ export function PurchasedAppsDashboardTableRow({
 				<DropDown
 					trigger={
 						<ClayButton displayType="secondary">
-							Manage
+							{i18n.translate('manage')}
 							<ClayIcon symbol="caret-bottom" />
 						</ClayButton>
 					}
@@ -161,11 +162,13 @@ export function PurchasedAppsDashboardTableRow({
 									}
 									title={
 										orderStatusIsNotCompleted
-											? 'The order must be completed before licensing this app.'
+											? i18n.translate(
+													'the-order-must-be-completed-before-licensing-this-app.'
+											  )
 											: undefined
 									}
 								>
-									Create License Key
+									{i18n.translate('create-license-key')}
 								</DropDown.Item>
 							</ClayTooltipProvider>
 						)}
@@ -175,7 +178,7 @@ export function PurchasedAppsDashboardTableRow({
 									'https://console.marketplacedemo.liferay.sh/projects';
 							}}
 						>
-							Access Console
+							{i18n.translate('access-console')}
 						</DropDown.Item>
 						{orderTypeExternalReferenceCode === orderType.DXP && (
 							<ClayTooltipProvider>
@@ -187,11 +190,13 @@ export function PurchasedAppsDashboardTableRow({
 									}}
 									title={
 										orderStatusIsNotCompleted
-											? 'This order must be completed before downloading this app.'
+											? i18n.translate(
+													'this-order-must-be-completed-before-downloading-this-app.'
+											  )
 											: undefined
 									}
 								>
-									Download App
+									{i18n.translate('download-app')}
 								</DropDown.Item>
 							</ClayTooltipProvider>
 						)}

@@ -9,7 +9,8 @@ import ClayNavigationBar from '@clayui/navigation-bar';
 import {useState} from 'react';
 import {Outlet, useNavigate, useParams} from 'react-router-dom';
 
-import {AppTabType} from './enums/AppTabType';
+import i18n from '../../../i18n';
+import {AppTabEnum} from './enums/AppTabEnum';
 
 const AppOutlet = () => {
 	const navigate = useNavigate();
@@ -26,27 +27,27 @@ const AppOutlet = () => {
 				onClick={() => navigate('/')}
 			>
 				<ClayIcon className="mr-2" symbol="order-arrow-left" />
-				Back to My Apps
+				{i18n.translate('back-to-my-apps')}
 			</ClayButton>
 			<ClayNavigationBar className="mb-4" triggerLabel={active}>
-				<ClayNavigationBar.Item active={active === AppTabType.DETAILS}>
+				<ClayNavigationBar.Item active={active === AppTabEnum.DETAILS}>
 					<ClayButton
 						onClick={() => {
 							navigate(`/app/${productId}`);
-							setActive(AppTabType.DETAILS);
+							setActive(AppTabEnum.DETAILS);
 						}}
 					>
-						Details
+						{i18n.translate('details')}
 					</ClayButton>
 				</ClayNavigationBar.Item>
-				<ClayNavigationBar.Item active={active === AppTabType.LICENSES}>
+				<ClayNavigationBar.Item active={active === AppTabEnum.LICENSES}>
 					<ClayButton
 						onClick={() => {
 							navigate(`licenses`);
-							setActive(AppTabType.LICENSES);
+							setActive(AppTabEnum.LICENSES);
 						}}
 					>
-						Licenses
+						{i18n.translate('licenses')}
 					</ClayButton>
 				</ClayNavigationBar.Item>
 			</ClayNavigationBar>

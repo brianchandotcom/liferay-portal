@@ -185,31 +185,8 @@ public class ObjectFolderItemLocalServiceTest {
 	@Test
 	public void testDeleteObjectFolderItem() throws Exception {
 
-		// ObjectFolderItem is not deleted when object definition is unlinked
-
-		_objectFolderItemLocalService.deleteObjectFolderItem(
-			_objectDefinition2.getObjectDefinitionId(),
-			_objectFolderB.getObjectFolderId());
-
-		Assert.assertNotNull(
-			_objectFolderItemLocalService.getObjectFolderItem(
-				_objectDefinition2.getObjectDefinitionId(),
-				_objectFolderB.getObjectFolderId()));
-
-		// ObjectFolderItem is not deleted when related object definition is
-		// unlinked
-
-		_objectFolderItemLocalService.deleteObjectFolderItem(
-			_objectDefinition1.getObjectDefinitionId(),
-			_objectFolderB.getObjectFolderId());
-
-		Assert.assertNotNull(
-			_objectFolderItemLocalService.getObjectFolderItem(
-				_objectDefinition1.getObjectDefinitionId(),
-				_objectFolderB.getObjectFolderId()));
-
-		// ObjectFolderItem is deleted when is linked and related object
-		// definition is linked
+		// Object folder item is deleted when this and its related object
+		// definitions are linked to that object folder
 
 		ObjectFolderItem objectFolderItem =
 			_objectFolderItemLocalService.addObjectFolderItem(
@@ -222,6 +199,30 @@ public class ObjectFolderItemLocalServiceTest {
 		Assert.assertNull(
 			_objectFolderItemLocalService.fetchObjectFolderItem(
 				objectFolderItem.getObjectFolderItemId()));
+
+		// Object folder item is not deleted when its object definition is not
+		// linked to that object folder
+
+		_objectFolderItemLocalService.deleteObjectFolderItem(
+			_objectDefinition2.getObjectDefinitionId(),
+			_objectFolderB.getObjectFolderId());
+
+		Assert.assertNotNull(
+			_objectFolderItemLocalService.getObjectFolderItem(
+				_objectDefinition2.getObjectDefinitionId(),
+				_objectFolderB.getObjectFolderId()));
+
+		// Object folder item is not deleted when its related object definitions
+		// are not linked to that object folder
+
+		_objectFolderItemLocalService.deleteObjectFolderItem(
+			_objectDefinition1.getObjectDefinitionId(),
+			_objectFolderB.getObjectFolderId());
+
+		Assert.assertNotNull(
+			_objectFolderItemLocalService.getObjectFolderItem(
+				_objectDefinition1.getObjectDefinitionId(),
+				_objectFolderB.getObjectFolderId()));
 	}
 
 	@Test

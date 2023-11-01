@@ -1,0 +1,13 @@
+liferay-sample-site-initializer:
+    name: Liferay Sample Site Initializer
+    oAuthApplicationHeadlessServer: liferay-sample-site-initializer-oauth-application-headless-server
+    siteExternalReferenceCode: liferaySample
+    siteName: Liferay Sample
+    type: siteInitializer
+liferay-sample-site-initializer-oauth-application-headless-server:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Liferay Sample OAuth Application Headless Server
+    scopes:
+        - Liferay.Headless.Site.everything
+    type: oAuthApplicationHeadlessServer

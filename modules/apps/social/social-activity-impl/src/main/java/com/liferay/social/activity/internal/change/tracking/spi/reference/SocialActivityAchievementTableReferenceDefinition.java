@@ -8,9 +8,9 @@ package com.liferay.social.activity.internal.change.tracking.spi.reference;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserTable;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.social.kernel.model.SocialActivityAchievement;
 import com.liferay.social.kernel.model.SocialActivityAchievementTable;
 import com.liferay.social.kernel.model.SocialActivityCounterTable;
 import com.liferay.social.kernel.service.persistence.SocialActivityAchievementPersistence;
@@ -32,12 +32,7 @@ public class SocialActivityAchievementTableReferenceDefinition
 
 		childTableReferenceInfoBuilder.classNameReference(
 			SocialActivityAchievementTable.INSTANCE.userId,
-			SocialActivityCounterTable.INSTANCE.classPK,
-			SocialActivityAchievement.class
-		).singleColumnReference(
-			SocialActivityAchievementTable.INSTANCE.userId,
-			SocialActivityCounterTable.INSTANCE.classPK
-		);
+			SocialActivityCounterTable.INSTANCE.classPK, User.class);
 	}
 
 	@Override

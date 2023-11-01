@@ -1586,6 +1586,18 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro selectDropdownItem(optionName = null,currentOption = null,labelName = null) {
+		Click(
+			key_currentOption = ${currentOption},
+			key_labelName = ${labelName},
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
+
+		Click(
+			key_optionName = ${optionName},
+			locator1 = "ObjectAdmin#CLAY_GENERIC_DROPDOWN_ITEM");
+	}
+
+	@summary = "Default summary"
 	macro selectKebabMenuOption(kebabOption = null) {
 		WaitForElementPresent(locator1 = "ObjectAdmin#KEBAB_MENU");
 

@@ -640,6 +640,21 @@
 		<td>//div[contains(@class,'card-body')]//button[contains(text(), '${key_optionDefaulValue}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>CLAY_GENERIC_BUTTON</td>
+		<td>//div[contains(@class,'form-group') and contains(label,'${key_labelName}')]//..//div[contains(button,'${key_currentOption}') or contains(span,'${key_currentOption}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>CLAY_GENERIC_DROPDOWN_ITEM</td>
+		<td>//button[contains(@class,'dropdown-item') and contains(@role,'option') and contains(.,'${key_optionName}') or contains(@role,'menuitem') and contains(.,'${key_optionName}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>CLAY_GENERIC_SELECT_OPTION</td>
+		<td>//div[contains(@class,'card-body')]//button[contains(text(), '${key_currentOption}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

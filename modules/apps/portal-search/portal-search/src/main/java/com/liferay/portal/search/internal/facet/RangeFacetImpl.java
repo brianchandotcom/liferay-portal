@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.internal.facet;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -64,25 +63,20 @@ public class RangeFacetImpl extends RangeFacet implements Facet {
 
 	@Override
 	protected BooleanClause<Filter> doGetFacetFilterBooleanClause() {
-		if (ArrayUtil.isEmpty(_selections)) {
+		if (ArrayUtil.isEmpty(_selections) || isStatic()) {
 			return null;
 		}
 
 		BooleanFilter booleanFilter = new BooleanFilter();
 
 		for (String selection : _selections) {
-			String start = StringPool.BLANK;
-			String end = StringPool.BLANK;
+			String[] rangeParts = RangeParserUtil.parserRange(selection);
 
-			if (!isStatic() && Validator.isNotNull(selection)) {
-				String[] range = RangeParserUtil.parserRange(selection);
+			String from = rangeParts[0];
+			String to = rangeParts[1];
 
-				start = range[0];
-				end = range[1];
-			}
-
-			if (Validator.isNull(start) && Validator.isNull(end)) {
-				return null;
+			if (Validator.isNull(from) && Validator.isNull(to)) {
+				continue;
 			}
 
 			RangeFilterBuilder rangeFilterBuilder =
@@ -90,16 +84,10 @@ public class RangeFacetImpl extends RangeFacet implements Facet {
 
 			rangeFilterBuilder.setFieldName(getFieldName());
 
-			if (Validator.isNotNull(start)) {
-				rangeFilterBuilder.setFrom(start);
-			}
-
+			rangeFilterBuilder.setFrom(from);
 			rangeFilterBuilder.setIncludeLower(true);
-			rangeFilterBuilder.setIncludeUpper(true);
-
-			if (Validator.isNotNull(end)) {
-				rangeFilterBuilder.setTo(end);
-			}
+			rangeFilterBuilder.setIncludeUpper(false);
+			rangeFilterBuilder.setTo(to);
 
 			booleanFilter.add(
 				rangeFilterBuilder.build(), BooleanClauseOccur.SHOULD);

@@ -55,6 +55,10 @@ public class FacetBucketUtilTest {
 
 		Assert.assertTrue(
 			FacetBucketUtil.isFieldInBucket(field, "[001 TO 999]", facet));
+		Assert.assertTrue(
+			FacetBucketUtil.isFieldInBucket(field, "[007 TO 999]", facet));
+		Assert.assertFalse(
+			FacetBucketUtil.isFieldInBucket(field, "[001 TO 007]", facet));
 		Assert.assertFalse(
 			FacetBucketUtil.isFieldInBucket(field, "undefined", facet));
 	}

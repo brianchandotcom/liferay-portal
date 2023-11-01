@@ -20,7 +20,7 @@ const CreatedProjectCard: React.FC<CreatedProjectCardProps> = ({product}) => (
 		<div className="align-items-center d-flex flex-column justify-content-center">
 			<div className="mb-6">
 				<img
-					alt=""
+					alt="project icon"
 					className="gate-card-image"
 					src={createdProjectIcon}
 				/>

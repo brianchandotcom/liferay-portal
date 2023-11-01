@@ -10,6 +10,8 @@ definition {
 			menuItem = "Invite Users",
 			publicationName = "Publication Name");
 
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
 		Click(
 			key_title = "Viewers can view. Viewers cannot edit, publish, or invite other users.",
 			locator1 = "Button#ANY_TITLE");

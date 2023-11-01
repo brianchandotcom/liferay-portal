@@ -113,9 +113,15 @@ public class CIForwardProcessor {
 
 						_pullRequest.close();
 
+						StringBuilder sb = new StringBuilder();
+
+						sb.append("Original Pull Request URL: ");
+						sb.append(_pullRequest.getURL());
+						sb.append("\nNew Pull Request URL: ");
+						sb.append(pullRequestURL);
+
 						NotificationUtil.sendSlackNotification(
-							"Pull Request URL: " + _pullRequest.getURL(),
-							"#ci-notifications",
+							sb.toString(), "#ci-notifications",
 							"Pull Request Successfully Forwarded.");
 
 						return pullRequestURL;

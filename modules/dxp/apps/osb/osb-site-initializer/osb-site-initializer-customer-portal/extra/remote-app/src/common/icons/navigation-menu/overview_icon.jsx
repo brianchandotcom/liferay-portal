@@ -14,7 +14,7 @@ const OverviewIcon = (props) => (
 	>
 		<mask
 			height="16"
-			id="mask0_248_6327"
+			id="mask0_56_633"
 			maskUnits="userSpaceOnUse"
 			style={{maskType: 'alpha'}}
 			width="16"
@@ -29,8 +29,8 @@ const OverviewIcon = (props) => (
 			/>
 		</mask>
 
-		<g mask="url(#mask0_248_6327)">
-			<rect fill="#282934" height="16" width="16" />
+		<g mask="url(#mask0_56_633)">
+			<rect fill="#004AD7" height="16" id="Color Fill" width="16" />
 		</g>
 	</svg>
 );

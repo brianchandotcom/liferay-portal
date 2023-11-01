@@ -247,6 +247,8 @@ definition {
 			menuItem = "Invite Users",
 			publicationName = "Test Publication");
 
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
 		Click(
 			key_title = "Viewers can view. Viewers cannot edit, publish, or invite other users.",
 			locator1 = "Button#ANY_TITLE");
@@ -271,7 +273,11 @@ definition {
 			key_publicationRole = "Editor",
 			locator1 = "Publications#PUBLICATION_ROLE_BUTTON_BODY");
 
-		Click(
+		SelectFrame(value1 = "relative=top");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Click.javaScriptClick(
 			key_title = "Editors can view and edit. Editors cannot publish or invite other users.",
 			locator1 = "Publications#PUBLICATION_ROLE_BUTTON_BODY_TITLE");
 

@@ -1297,7 +1297,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-196044. View improvement in page audit when adding a Button fragment."
+	@description = "This is a test for LPS-196044. View improvement in page audit when adding a Button fragment. Check the accessibility in page audit improvement when adding a Button fragment."
 	@priority = 3
 	test ViewImprovementWhenAddingAButtonFragment {
 		property custom.properties = "feature.flag.LPS-187284=true${line.separator}feature.flag.LPS-187285=true";
@@ -1329,15 +1329,21 @@ definition {
 		}
 
 		task ("Then there's improvement in page audit and fragment admin") {
-			AssertCssValue(
-				locator1 = "PageAudit#PAGE_AUDIT_NAME",
-				locator2 = "height",
-				value1 = "21px");
+			task ("View improvement") {
+				AssertCssValue(
+					locator1 = "PageAudit#PAGE_AUDIT_NAME",
+					locator2 = "height",
+					value1 = "21px");
 
-			AssertCssValue(
-				locator1 = "PageAudit#PAGE_AUDIT_TIME",
-				locator2 = "height",
-				value1 = "21px");
+				AssertCssValue(
+					locator1 = "PageAudit#PAGE_AUDIT_TIME",
+					locator2 = "height",
+					value1 = "21px");
+			}
+
+			task ("View no accessibility issue found") {
+				AssertAccessible();
+			}
 
 			task ("Go to Fragment Admin > Basic Components") {
 				FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-name");
@@ -1356,7 +1362,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-196044. View improvement in page audit when adding an Image fragment."
+	@description = "This is a test for LPS-196044. View improvement in page audit when adding an Image fragment. Check the accessibility in page audit improvement when adding an Image fragment."
 	@priority = 3
 	test ViewImprovementWhenAddingAnImageFragment {
 		property custom.properties = "feature.flag.LPS-187284=true${line.separator}feature.flag.LPS-187285=true";
@@ -1435,6 +1441,12 @@ definition {
 					value1 = "8px");
 			}
 
+			// Failed for "Certain ARIA roles must contain particular children", comment out until LPS-193447 implemented
+
+			//task ("View no accessibility issue found") {
+			//	AssertAccessible();
+			//}
+
 			task ("Click back and click into the button card") {
 				Click(
 					key_text = "angle-left",
@@ -1457,6 +1469,12 @@ definition {
 					locator2 = "padding-top",
 					value1 = "8px");
 			}
+
+			// Failed for "Certain ARIA roles must contain particular children", comment out until LPS-193447 implemented
+
+			//task ("View no accessibility issue found") {
+			//	AssertAccessible();
+			//}
 
 			task ("Go to content page edit mode") {
 				ContentPagesNavigator.openEditContentPage(

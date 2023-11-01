@@ -9,9 +9,9 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.scim.charon.integration.internal.ScimUser;
 import com.liferay.scim.charon.integration.internal.ScimUserManager;
 import com.liferay.scim.charon.integration.internal.util.ModelConverterUtil;
-import com.liferay.scim.user.manager.ScimUser;
 
 import java.util.Map;
 

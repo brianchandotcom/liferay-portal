@@ -245,8 +245,8 @@ definition {
 				cartItemPriceValue = "20.00",
 				cartItemQuantity = 1,
 				cartItemSku = "BLUE",
-				optionName = "Color",
-				index = 2);
+				index = 2,
+				optionName = "Color");
 		}
 
 		task ("And can view the order items with filled option values in the pending order page") {

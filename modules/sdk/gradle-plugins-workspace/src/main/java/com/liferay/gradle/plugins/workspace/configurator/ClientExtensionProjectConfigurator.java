@@ -57,7 +57,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.gradle.api.Action;
-import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -147,15 +146,13 @@ public class ClientExtensionProjectConfigurator
 			GradleUtil.addTaskProvider(
 				project, BUILD_SITE_INITIALIZER_ZIP_TASK_NAME, Zip.class);
 
-		TaskProvider<DefaultTask> validateClientExtensionIdsTaskProvider =
+		TaskProvider<Task> validateClientExtensionIdsTaskProvider =
 			GradleUtil.addTaskProvider(
-				project, VALIDATE_CLIENT_EXTENSION_IDS_TASK_NAME,
-				DefaultTask.class);
+				project, VALIDATE_CLIENT_EXTENSION_IDS_TASK_NAME, Task.class);
 
-		TaskProvider<DefaultTask> validateClientExtensionTaskProvider =
+		TaskProvider<Task> validateClientExtensionTaskProvider =
 			GradleUtil.addTaskProvider(
-				project, VALIDATE_CLIENT_EXTENSIONS_TASK_NAME,
-				DefaultTask.class);
+				project, VALIDATE_CLIENT_EXTENSIONS_TASK_NAME, Task.class);
 
 		_baseConfigureClientExtensionProject(
 			project, assembleClientExtensionTaskProvider,
@@ -458,8 +455,8 @@ public class ClientExtensionProjectConfigurator
 		TaskProvider<Zip> buildSiteInitializerZipTaskProvider,
 		TaskProvider<CreateClientExtensionConfigTask>
 			createClientExtensionConfigTaskProvider,
-		TaskProvider<DefaultTask> validateClientExtensionIdsTaskProvider,
-		TaskProvider<DefaultTask> validateClientExtensionTaskProvider,
+		TaskProvider<Task> validateClientExtensionIdsTaskProvider,
+		TaskProvider<Task> validateClientExtensionTaskProvider,
 		WorkspaceExtension workspaceExtension) {
 
 		if (isDefaultRepositoryEnabled()) {
@@ -652,8 +649,8 @@ public class ClientExtensionProjectConfigurator
 		TaskProvider<Zip> buildSiteInitializerZipTaskProvider,
 		TaskProvider<CreateClientExtensionConfigTask>
 			createClientExtensionConfigTaskProvider,
-		TaskProvider<DefaultTask> validateClientExtensionIdsTaskProvider,
-		TaskProvider<DefaultTask> validateClientExtensionTaskProvider) {
+		TaskProvider<Task> validateClientExtensionIdsTaskProvider,
+		TaskProvider<Task> validateClientExtensionTaskProvider) {
 
 		File clientExtensionYamlFile = project.file(_CLIENT_EXTENSION_YAML);
 

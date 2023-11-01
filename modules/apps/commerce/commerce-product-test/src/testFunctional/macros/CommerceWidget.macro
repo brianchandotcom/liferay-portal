@@ -485,7 +485,8 @@ definition {
 		SelectFrameTop();
 	}
 
-	macro updateProductPublisherConfigurationInDPT {
+	@summary = "Default summary"
+	macro updateProductPublisherConfigurationInDPT(renderSelection = null, itemsPerPage = null, dataSourceValue = null, filterEntries = null, filterType = null, portletName = null, productSelection = null) {
 		Click.javaScriptClick(
 			key_portletName = ${portletName},
 			locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");

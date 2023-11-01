@@ -159,12 +159,14 @@ definition {
 				value1 = "Custom Objects1");
 
 			AssertElementPresent(
-				locator1 = "CreateObject#TITLE_FIELD",
-				value1 = "Custom Field Text");
+				key_currentOption = "Custom Field Text",
+				key_labelName = "Entry Title Field",
+				locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 
 			AssertTextEquals(
-				locator1 = "ObjectAdmin#SELECT_OBJECT_SCOPE",
-				value1 = "Site");
+				key_currentOption = "Site",
+				key_labelName = "Scope",
+				locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 
 			AssertTextEquals(
 				locator1 = "CreateObject#PANEL_LINK",

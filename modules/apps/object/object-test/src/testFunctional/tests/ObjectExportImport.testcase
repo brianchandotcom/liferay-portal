@@ -595,8 +595,9 @@ definition {
 		ObjectPortlet.selectCustomObject(label = "Imported Object With Scope");
 
 		AssertTextEquals(
-			locator1 = "ObjectAdmin#SELECT_OBJECT_SCOPE",
-			value1 = "Company");
+			key_currentOption = "Company",
+			key_labelName = "Scope",
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 
 		AssertTextEquals(
 			locator1 = "CreateObject#PANEL_LINK",

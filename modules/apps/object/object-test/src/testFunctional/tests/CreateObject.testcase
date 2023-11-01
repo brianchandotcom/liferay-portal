@@ -385,8 +385,9 @@ definition {
 		CreateObject.saveObject();
 
 		AssertElementPresent(
-			locator1 = "CreateObject#TITLE_FIELD",
-			value1 = "Custom Field");
+			key_currentOption = "Custom Field",
+			key_labelName = "Entry Title Field",
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 	}
 
 	@description = "LPS-135390 - Verify it is possible to add an Object with the Add Object Definition permission"
@@ -3780,8 +3781,9 @@ definition {
 		ObjectAdmin.goToFieldsDetails(label = "Text");
 
 		AssertElementPresent(
-			locator1 = "ObjectField#SEARCHABLE_LANGUAGE_SELECT",
-			selected = "English (United States)");
+			key_currentOption = "English (United States)",
+			key_labelName = "Language",
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Type of a Field before the Object is published"
@@ -3815,8 +3817,9 @@ definition {
 		ObjectAdmin.goToFieldsDetails(label = "Text");
 
 		AssertElementPresent(
-			locator1 = "ObjectField#TYPE_FIELD",
-			value1 = "Date");
+			key_currentOption = "Date",
+			key_labelName = "Type",
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Object label after it is published"
@@ -4126,12 +4129,14 @@ definition {
 			value1 = "Objects Edit 101");
 
 		AssertElementPresent(
-			locator1 = "CreateObject#TITLE_FIELD",
-			value1 = "Custom Field");
+			key_currentOption = "Custom Field",
+			key_labelName = "Entry Title Field",
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 
-		AssertTextEquals(
-			locator1 = "ObjectAdmin#SELECT_OBJECT_SCOPE",
-			value1 = "Company");
+		AssertElementPresent(
+			key_currentOption = "Company",
+			key_labelName = "Scope",
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 
 		AssertTextEquals(
 			locator1 = "CreateObject#PANEL_LINK",
@@ -6493,8 +6498,9 @@ definition {
 		ObjectAdmin.clickFieldsSearchableSectionRadioOption(radioOption = "Text");
 
 		AssertElementPresent(
-			locator1 = "ObjectField#SEARCHABLE_LANGUAGE_SELECT",
-			selected = "English (United States)");
+			key_currentOption = "English (United States)",
+			key_labelName = "Language",
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 	}
 
 	@description = "LPS-137741 - Verify that Objects created on a Virtual Instance are not displayed on the Object Admin of the Main Instance and vice versa"

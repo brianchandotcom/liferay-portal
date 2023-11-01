@@ -578,8 +578,9 @@ definition {
 			ObjectAdmin.goToFieldsDetails(label = ${label});
 
 			AssertElementPresent(
-				locator1 = "ObjectField#TYPE_FIELD",
-				value1 = "Text");
+				key_currentOption = "Text",
+				key_labelName = "Type",
+				locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 
 			AssertChecked.assertCheckedNotVisible(locator1 = "ObjectField#MANDATORY_TOGGLE");
 
@@ -785,8 +786,9 @@ definition {
 		ObjectPortlet.selectSystemObject(label = "Account");
 
 		AssertElementPresent(
-			locator1 = "CreateObject#TITLE_FIELD",
-			value1 = "Type");
+			key_currentOption = "Type",
+			key_labelName = "Entry Title Field",
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 	}
 
 	@description = "LPS-151765 - Verify if the Widget option is disable on System Object Account"

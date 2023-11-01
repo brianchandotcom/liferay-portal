@@ -2300,8 +2300,9 @@ definition {
 		ObjectPortlet.selectCustomObject(label = "User");
 
 		AssertElementPresent(
-			locator1 = "CreateObject#TITLE_FIELD",
-			value1 = "First Name");
+			key_currentOption = "First Name",
+			key_labelName = "Entry Title Field",
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 	}
 
 	@description = "LPS-143021 - Verify it is possible to view and add entries on an Object after creating a Relationship One to Many for it"

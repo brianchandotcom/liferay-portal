@@ -345,8 +345,9 @@ definition {
 			value1 = ${subject});
 
 		AssertElementPresent(
-			key_recipientType = ${recipientType},
-			locator1 = "ObjectNotifications#RECIPIENT_TYPE");
+			key_currentOption = ${recipientType},
+			key_labelName = "Recipients",
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 
 		if (isSet(externalReferenceCode)) {
 			AssertElementPresent(

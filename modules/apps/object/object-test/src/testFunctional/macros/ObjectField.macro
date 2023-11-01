@@ -28,8 +28,8 @@ definition {
 		Click(locator1 = "ObjectField#REQUEST_FILES_INPUT");
 
 		AssertElementPresent(
-			key_fieldType = ${option},
-			locator1 = "ObjectField#TYPE_OPTION");
+			key_optionName = ${option},
+			locator1 = "ObjectAdmin#CLAY_GENERIC_DROPDOWN_ITEM");
 
 		AssertTextEquals(
 			key_type = ${option},

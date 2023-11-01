@@ -14,21 +14,14 @@ import com.liferay.document.library.kernel.util.DLProcessorThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.xml.Element;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -217,35 +210,11 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 		_dlProcessorServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, DLProcessor.class, "type");
-
-		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
-
-		for (String dlProcessorClassName : _DL_FILE_ENTRY_PROCESSORS) {
-			DLProcessor dlProcessor = (DLProcessor)InstanceFactory.newInstance(
-				classLoader, dlProcessorClassName);
-
-			dlProcessor.afterPropertiesSet();
-
-			register(dlProcessor);
-
-			_dlProcessors.add(dlProcessor);
-		}
 	}
 
 	@Deactivate
 	protected void deactivate() throws Exception {
 		_dlProcessorServiceTrackerMap.close();
-
-		UnsafeConsumer.accept(
-			_dlProcessors,
-			dlProcessor -> {
-				unregister(dlProcessor);
-
-				dlProcessor.destroy();
-			},
-			Exception.class);
-
-		_dlProcessors.clear();
 	}
 
 	private FileVersion _getLatestFileVersion(
@@ -270,9 +239,6 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 		}
 	}
 
-	private static final String[] _DL_FILE_ENTRY_PROCESSORS =
-		PropsUtil.getArray(PropsKeys.DL_FILE_ENTRY_PROCESSORS);
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLProcessorRegistryImpl.class);
 
@@ -281,8 +247,6 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 	@Reference
 	private DLFileEntryConfigurationProvider _dlFileEntryConfigurationProvider;
 
-	private final List<DLProcessor> _dlProcessors = new ArrayList<>(
-		_DL_FILE_ENTRY_PROCESSORS.length);
 	private ServiceTrackerMap<String, DLProcessor>
 		_dlProcessorServiceTrackerMap;
 	private final Map<DLProcessor, ServiceRegistration<?>>

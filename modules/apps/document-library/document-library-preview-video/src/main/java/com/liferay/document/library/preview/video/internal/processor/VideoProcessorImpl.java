@@ -8,6 +8,7 @@ package com.liferay.document.library.preview.video.internal.processor;
 import com.liferay.document.library.kernel.background.task.DLBackgroundTaskExecutorNames;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
+import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.VideoConverter;
 import com.liferay.document.library.kernel.util.VideoProcessor;
@@ -15,7 +16,7 @@ import com.liferay.document.library.preview.processor.DLPreviewableProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.image.ImageToolUtil;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskContextMapConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -28,12 +29,11 @@ import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.repository.event.FileVersionPreviewEventListener;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.xml.Element;
@@ -52,12 +52,21 @@ import java.util.concurrent.CancellationException;
 
 import org.apache.commons.lang.time.StopWatch;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Juan González
  * @author Sergio González
  * @author Mika Koivisto
  * @author Ivica Cardic
  */
+@Component(
+	property = "type=" + DLProcessorConstants.VIDEO_PROCESSOR,
+	service = DLProcessor.class
+)
 public class VideoProcessorImpl
 	extends DLPreviewableProcessor implements VideoProcessor {
 
@@ -94,13 +103,13 @@ public class VideoProcessorImpl
 
 	@Override
 	public void generatePreviews() {
-		CompanyLocalServiceUtil.forEachCompanyId(
+		_companyLocalService.forEachCompanyId(
 			companyId -> {
 				try {
 					String jobName = "generateVideoPreviews-".concat(
 						PortalUUIDUtil.generate());
 
-					BackgroundTaskManagerUtil.addBackgroundTask(
+					_backgroundTaskManager.addBackgroundTask(
 						UserConstants.USER_ID_DEFAULT, CompanyConstants.SYSTEM,
 						jobName,
 						DLBackgroundTaskExecutorNames.
@@ -216,6 +225,16 @@ public class VideoProcessorImpl
 		super.trigger(sourceFileVersion, destinationFileVersion);
 
 		_queueGeneration(sourceFileVersion, destinationFileVersion);
+	}
+
+	@Activate
+	protected void activate() {
+		afterPropertiesSet();
+	}
+
+	@Deactivate
+	protected void deactivate() throws Exception {
+		destroy();
 	}
 
 	@Override
@@ -581,17 +600,20 @@ public class VideoProcessorImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		VideoProcessorImpl.class);
 
-	private static volatile FileVersionPreviewEventListener
-		_fileVersionPreviewEventListener =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				FileVersionPreviewEventListener.class, VideoProcessorImpl.class,
-				"_fileVersionPreviewEventListener", false, false);
-	private static volatile VideoConverter _videoConverter =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			VideoConverter.class, VideoProcessorImpl.class, "_videoConverter",
-			false);
+	@Reference
+	private BackgroundTaskManager _backgroundTaskManager;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	private final List<Long> _fileVersionIds = new Vector<>();
+
+	@Reference
+	private FileVersionPreviewEventListener _fileVersionPreviewEventListener;
+
+	@Reference
+	private VideoConverter _videoConverter;
+
 	private final Set<String> _videoMimeTypes = SetUtil.fromArray(
 		PropsValues.DL_FILE_ENTRY_PREVIEW_VIDEO_MIME_TYPES);
 

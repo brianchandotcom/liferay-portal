@@ -1388,7 +1388,7 @@ definition {
 					fragmentName = "Image",
 					id = "image-square",
 					imageFileName = "More than 500k size image",
-					uploadFileName = "More_than_500k_size_image.jpg");
+					uploadFileName = "high_resolution_photo.jpg");
 			}
 
 			task ("Publish the page") {

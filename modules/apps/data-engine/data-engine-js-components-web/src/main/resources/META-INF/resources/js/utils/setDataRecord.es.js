@@ -48,7 +48,8 @@ export default function setDataRecord(
 
 		if (
 			!edited &&
-			Liferay.ThemeDisplay.getDefaultLanguageId() === languageId
+			Liferay.ThemeDisplay.getDefaultLanguageId() === languageId &&
+			(value === '' || !value.length || value === false)
 		) {
 			delete localizedValue[languageId];
 		}

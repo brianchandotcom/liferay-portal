@@ -1,0 +1,57 @@
+{
+	"object-fields": [
+		{
+			"DBType": "Date",
+			"businessType": "Date",
+			"externalReferenceCode": "607600b8-b7fa-443e-9186-2b7675f4a0ec",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Release Date"
+			},
+			"name": "releaseDate",
+			"required": false,
+			"type": "Date"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "aec535ad-812e-41cf-8147-21a85cde7c13",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Director"
+			},
+			"name": "director",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "63612ce2-182d-4023-a7cf-e144a1a9a9f2",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Writer"
+			},
+			"name": "writer",
+			"required": false,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "ef9e8410-2c46-464d-a6b4-2f49a516391b",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Stars"
+			},
+			"name": "stars",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:Movie$]"
+}

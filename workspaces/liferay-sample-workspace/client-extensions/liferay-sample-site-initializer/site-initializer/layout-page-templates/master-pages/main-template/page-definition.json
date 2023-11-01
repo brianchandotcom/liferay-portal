@@ -1,0 +1,504 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"borderWidth": "0",
+						"maxWidth": "1440px",
+						"paddingBottom": "2",
+						"paddingLeft": "80px",
+						"paddingRight": "80px",
+						"paddingTop": "2",
+						"shadow": "boxShadowSm",
+						"textAlign": ""
+					},
+					"fragmentViewports": [
+						{
+							"fragmentViewportStyle": {
+								"marginLeft": "0",
+								"marginRight": "0",
+								"paddingLeft": "24px",
+								"paddingRight": "24px"
+							},
+							"id": "landscapeMobile"
+						},
+						{
+							"fragmentViewportStyle": {
+								"marginLeft": "0",
+								"marginRight": "0",
+								"paddingLeft": "24px",
+								"paddingRight": "24px"
+							},
+							"id": "portraitMobile"
+						},
+						{
+							"fragmentViewportStyle": {
+								"marginLeft": "0",
+								"marginRight": "0",
+								"paddingLeft": "40px",
+								"paddingRight": "40px"
+							},
+							"id": "tablet"
+						}
+					],
+					"indexed": true,
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"opacity": 100,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fixed"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"borderWidth": "0",
+								"textAlign": ""
+							},
+							"fragmentViewports": [
+								{
+									"fragmentViewportStyle": {
+										"overflow": ""
+									},
+									"id": "portraitMobile"
+								}
+							],
+							"indexed": true,
+							"layout": {
+								"align": "Center",
+								"borderWidth": 0,
+								"contentDisplay": "FlexRow",
+								"justify": "SpaceBetween",
+								"marginBottom": 0,
+								"marginLeft": 0,
+								"marginRight": 0,
+								"marginTop": 0,
+								"opacity": 100,
+								"paddingBottom": 0,
+								"paddingLeft": 0,
+								"paddingRight": 0,
+								"paddingTop": 0,
+								"widthType": "Fluid"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentLink": {
+										"href": {
+											"mapping": {
+												"itemReference": {
+													"className": "com.liferay.portal.kernel.model.Layout",
+													"fields": [
+														{
+															"fieldName": "friendlyURL",
+															"fieldValue": "/home"
+														},
+														{
+															"fieldName": "privatePage",
+															"fieldValue": "false"
+														},
+														{
+															"fieldName": "siteKey",
+															"fieldValue": "[$GROUP_KEY$]"
+														}
+													]
+												}
+											}
+										}
+									},
+									"fragmentStyle": {
+										"borderWidth": "0",
+										"marginRight": "2",
+										"textAlign": ""
+									},
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"marginRight": "0",
+												"width": ""
+											},
+											"id": "portraitMobile"
+										}
+									],
+									"indexed": true,
+									"layout": {
+										"align": "Start",
+										"borderWidth": 0,
+										"contentDisplay": "FlexRow",
+										"marginBottom": 0,
+										"marginLeft": 0,
+										"marginRight": 0,
+										"marginTop": 0,
+										"opacity": 100,
+										"paddingBottom": 0,
+										"paddingLeft": 0,
+										"paddingRight": 0,
+										"paddingTop": 0,
+										"widthType": "Fluid"
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-image"
+											},
+											"fragmentConfig": {
+												"imageSize": "w-0"
+											},
+											"fragmentFields": [
+												{
+													"id": "image-square",
+													"value": {
+														"fragmentImage": {
+															"url": {
+																"mapping": {
+																	"fieldKey": "FileEntry_previewImage",
+																	"itemReference": {
+																		"className": "com.liferay.portal.kernel.repository.model.FileEntry",
+																		"classPK": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/logo.svg#]"
+																	}
+																}
+															}
+														},
+														"fragmentLink": {
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"borderRadius": "",
+												"marginRight": "1"
+											},
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"marginRight": "9px"
+													},
+													"id": "portraitMobile"
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-heading"
+											},
+											"fragmentConfig": {
+												"headingLevel": "h4"
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"ar_SA": "Site Initializer Sample",
+																"ca_ES": "Site Initializer Sample",
+																"de_DE": "Site Initializer Sample",
+																"en_US": "Site Initializer Sample",
+																"es_ES": "Site Initializer Sample",
+																"fi_FI": "Site Initializer Sample",
+																"fr_FR": "Site Initializer Sample",
+																"hu_HU": "Site Initializer Sample",
+																"ja_JP": "Site Initializer Sample",
+																"nl_NL": "Site Initializer Sample",
+																"pt_BR": "Site Initializer Sample",
+																"sv_SE": "Site Initializer Sample",
+																"zh_CN": "Site Initializer Sample"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"borderColor": "",
+												"borderWidth": ""
+											},
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"width": ""
+													},
+													"id": "portraitMobile"
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							},
+							{
+								"definition": {
+									"fragmentLink": {
+										"href": {
+											"value_i18n": {
+												"en_US": ""
+											}
+										},
+										"target": "Self"
+									},
+									"fragmentStyle": {
+										"borderWidth": "0",
+										"textAlign": ""
+									},
+									"fragmentViewports": [
+										{
+											"fragmentViewportStyle": {
+												"marginLeft": "0"
+											},
+											"id": "portraitMobile"
+										}
+									],
+									"indexed": true,
+									"layout": {
+										"align": "Center",
+										"borderWidth": 0,
+										"contentDisplay": "FlexRow",
+										"justify": "SpaceBetween",
+										"marginBottom": 0,
+										"marginLeft": 0,
+										"marginRight": 0,
+										"marginTop": 0,
+										"opacity": 100,
+										"paddingBottom": 0,
+										"paddingLeft": 0,
+										"paddingRight": 0,
+										"paddingTop": 0,
+										"widthType": "Fluid"
+									}
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentRenderer"
+											},
+											"fragmentConfig": {
+												"displayStyle": "horizontal",
+												"hoveredItemColor": "colorBrandPrimaryLighten4",
+												"selectedItemColor": "colorBrandPrimaryDarken5",
+												"source": {
+													"parentSiteNavigationMenuItemId": "0",
+													"privateLayout": "false",
+													"siteNavigationMenuName": "Primary",
+													"title": "Primary",
+													"type": "class com.liferay.site.navigation.item.selector.SiteNavigationMenuItemSelectorReturnType"
+												},
+												"sublevels": "-1"
+											},
+											"fragmentFields": [
+											],
+											"fragmentStyle": {
+												"marginRight": "5"
+											},
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"hidden": true
+													},
+													"id": "tablet"
+												}
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-dropdown"
+											},
+											"fragmentConfig": {
+												"buttonSize": "sm",
+												"buttonType": "outline-primary",
+												"displayOnHover": false,
+												"keepOpen": true,
+												"panelType": "regular"
+											},
+											"fragmentFields": [
+												{
+													"id": "dropdown-text",
+													"value": {
+														"fragmentLink": {
+														},
+														"text": {
+															"value_i18n": {
+																"en_US": "Menu"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"borderRadius": "",
+												"hidden": true,
+												"shadow": "",
+												"textAlign": ""
+											},
+											"fragmentViewports": [
+												{
+													"fragmentViewportStyle": {
+														"hidden": false,
+														"overflow": ""
+													},
+													"id": "tablet"
+												}
+											],
+											"indexed": true
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentDropZoneId": "1"
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "com.liferay.fragment.renderer.menu.display.internal.MenuDisplayFragmentRenderer"
+															},
+															"fragmentConfig": {
+																"displayStyle": "stacked",
+																"hoveredItemColor": "colorBrandPrimaryLighten4",
+																"selectedItemColor": "colorBrandPrimaryDarken5",
+																"source": {
+																	"parentSiteNavigationMenuItemId": "0",
+																	"privateLayout": "false",
+																	"siteNavigationMenuName": "Primary",
+																	"title": "Primary",
+																	"type": "class com.liferay.site.navigation.item.selector.SiteNavigationMenuItemSelectorReturnType"
+																},
+																"sublevels": "-1"
+															},
+															"fragmentFields": [
+															],
+															"fragmentStyle": {
+																"overflow": "visible"
+															},
+															"fragmentViewports": [
+																{
+																	"fragmentViewportStyle": {
+																		"maxWidth": ""
+																	},
+																	"id": "tablet"
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "FragmentDropZone"
+											}
+										],
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"fragmentStyle": {
+						"borderWidth": "0",
+						"maxWidth": "1440px",
+						"paddingLeft": "80px",
+						"paddingRight": "80px",
+						"textAlign": ""
+					},
+					"fragmentViewports": [
+						{
+							"fragmentViewportStyle": {
+								"marginLeft": "0",
+								"marginRight": "0",
+								"paddingLeft": "24px",
+								"paddingRight": "24px"
+							},
+							"id": "landscapeMobile"
+						},
+						{
+							"fragmentViewportStyle": {
+								"marginLeft": "0",
+								"marginRight": "0",
+								"paddingLeft": "24px",
+								"paddingRight": "24px",
+								"paddingTop": "0"
+							},
+							"id": "portraitMobile"
+						},
+						{
+							"fragmentViewportStyle": {
+								"marginLeft": "0",
+								"marginRight": "0",
+								"paddingLeft": "40px",
+								"paddingRight": "40px"
+							},
+							"id": "tablet"
+						}
+					],
+					"indexed": true,
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"opacity": 100,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fixed"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentSettings": {
+								"unallowedFragments": [
+								]
+							}
+						},
+						"type": "DropZone"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"themeName": "Dialect",
+		"themeSettings": {
+			"lfr-theme:regular:show-footer": "false",
+			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:show-header-search": "false",
+			"lfr-theme:regular:wrap-widget-page-content": "false"
+		}
+	},
+	"version": 1.1
+}

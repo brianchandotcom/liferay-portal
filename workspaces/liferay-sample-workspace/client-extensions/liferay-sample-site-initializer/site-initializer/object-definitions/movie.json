@@ -1,0 +1,28 @@
+{
+	"externalReferenceCode": "68d80338-0472-4152-96bb-bfcbbc6712ec",
+	"label": {
+		"en_US": "Movie"
+	},
+	"name": "Movie",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"externalReferenceCode": "8feb56f7-4efe-4107-bf87-886e880ca3c8",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Title"
+			},
+			"name": "title",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"panelCategoryKey": "control_panel.object",
+	"pluralLabel": {
+		"en_US": "Movies"
+	},
+	"portlet": true,
+	"scope": "company"
+}

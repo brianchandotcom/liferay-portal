@@ -1,0 +1,159 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"borderWidth": "0",
+						"marginTop": "5"
+					},
+					"indexed": true,
+					"layout": {
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"formConfig": {
+								"formReference": {
+									"className": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Movie$]"
+								},
+								"formSuccessSubmissionResult": {
+									"message": {
+										"value_i18n": {
+											"en_US": "Thank you. The new movie was successfully received."
+										}
+									}
+								}
+							},
+							"indexed": true,
+							"layout": {
+								"widthType": "Fluid"
+							}
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "INPUTS-text-input"
+									},
+									"fragmentConfig": {
+										"inputFieldId": "ObjectField_director",
+										"placeholder": "",
+										"showCharactersCount": false
+									},
+									"fragmentFields": [
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "INPUTS-date-input"
+									},
+									"fragmentConfig": {
+										"inputFieldId": "ObjectField_releaseDate"
+									},
+									"fragmentFields": [
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "INPUTS-text-input"
+									},
+									"fragmentConfig": {
+										"inputFieldId": "ObjectField_stars",
+										"placeholder": "",
+										"showCharactersCount": false
+									},
+									"fragmentFields": [
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "INPUTS-text-input"
+									},
+									"fragmentConfig": {
+										"inputFieldId": "ObjectField_title",
+										"placeholder": "",
+										"showCharactersCount": false
+									},
+									"fragmentFields": [
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "INPUTS-text-input"
+									},
+									"fragmentConfig": {
+										"inputFieldId": "ObjectField_writer",
+										"placeholder": "",
+										"showCharactersCount": false
+									},
+									"fragmentFields": [
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "INPUTS-submit-button"
+									},
+									"fragmentConfig": {
+										"buttonSize": "nm",
+										"buttonType": "primary"
+									},
+									"fragmentFields": [
+										{
+											"id": "submit-button-text",
+											"value": {
+												"fragmentLink": {
+												},
+												"text": {
+													"value_i18n": {
+														"en_US": "Submit New Movie"
+													}
+												}
+											}
+										}
+									],
+									"fragmentStyle": {
+										"marginTop": "4"
+									},
+									"indexed": true
+								},
+								"type": "Fragment"
+							}
+						],
+						"type": "Form"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "main-template"
+		}
+	},
+	"version": 1.1
+}

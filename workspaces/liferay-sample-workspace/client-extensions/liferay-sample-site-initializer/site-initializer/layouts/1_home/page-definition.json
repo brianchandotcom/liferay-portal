@@ -1,0 +1,85 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragmentStyle": {
+						"borderWidth": "0",
+						"marginTop": "5"
+					},
+					"indexed": true,
+					"layout": {
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"collectionConfig": {
+								"collectionReference": {
+									"className": "com.liferay.object.web.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider_[$COMPANY_ID$]_C_Movie"
+								},
+								"collectionType": "CollectionProvider"
+							},
+							"collectionViewports": [
+								{
+									"collectionViewportDefinition": {
+										"numberOfColumns": 1
+									},
+									"id": "landscapeMobile"
+								},
+								{
+									"collectionViewportDefinition": {
+									},
+									"id": "portraitMobile"
+								},
+								{
+									"collectionViewportDefinition": {
+									},
+									"id": "tablet"
+								}
+							],
+							"displayAllItems": false,
+							"displayAllPages": true,
+							"emptyCollectionConfig": {
+								"displayMessage": true,
+								"message_i18n": {
+									"en_US": "No Results Found"
+								}
+							},
+							"layout": {
+								"flexWrap": "WrapReverse"
+							},
+							"listItemStyle": "",
+							"listStyle": "com.liferay.object.web.internal.info.list.renderer.ObjectEntryTableInfoListRenderer_[$COMPANY_ID$]_C_Movie",
+							"numberOfColumns": 1,
+							"numberOfItems": 5,
+							"numberOfItemsPerPage": 20,
+							"numberOfPages": 5,
+							"paginationType": "Numeric",
+							"showAllItems": false
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"collectionItemConfig": {
+									}
+								},
+								"type": "CollectionItem"
+							}
+						],
+						"type": "Collection"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "main-template"
+		}
+	},
+	"version": 1.1
+}

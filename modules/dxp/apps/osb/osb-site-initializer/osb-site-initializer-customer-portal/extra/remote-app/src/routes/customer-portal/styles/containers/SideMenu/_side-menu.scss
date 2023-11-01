@@ -29,6 +29,10 @@
 			color: var(--color-action-primary-hover) !important;
 		}
 
+		&:hover rect {
+			fill: var(--color-action-primary-active);
+		}
+
 		&:focus {
 			box-shadow: none;
 			outline: none;
@@ -40,7 +44,7 @@
 		}
 
 		&.cp-product-activation-active {
-			svg {
+			.lexicon-icon-angle-right-small {
 				transform: rotate(90deg);
 				transition: transform 0.3s;
 			}

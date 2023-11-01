@@ -6,12 +6,6 @@
 import classNames from 'classnames';
 import {useEffect, useMemo, useRef, useState} from 'react';
 import {useAppPropertiesContext} from '~/common/contexts/AppPropertiesContext';
-import {
-	ExperienceCloudIcon,
-	OverviewIcon,
-	ProductActivationIcon,
-	TeamMembersIcon,
-} from '~/common/icons';
 import i18n from '../../../../common/I18n';
 import {Button} from '../../../../common/components';
 import getKebabCase from '../../../../common/utils/getKebabCase';
@@ -110,11 +104,7 @@ const SideMenu = () => {
 		<div className="bg-neutral-1 cp-side-menu ml-4 pl-4 pt-4">
 			<ul className="list-unstyled mr-2">
 				<div className="d-flex">
-					<div className="align-items-center d-flex mr-2">
-						<OverviewIcon />
-					</div>
-
-					<MenuItem className="ml-5" to="">
+					<MenuItem iconKey="overview" to="">
 						{i18n.translate(getKebabCase(MENU_TYPES.overview))}
 					</MenuItem>
 				</div>
@@ -122,11 +112,8 @@ const SideMenu = () => {
 				{featureFlags.includes('LPS-153478') &&
 					hasLiferayExperienceCloud && (
 						<div className="d-flex">
-							<div className="align-items-center d-flex mr-2">
-								<ExperienceCloudIcon />
-							</div>
-
 							<MenuItem
+								iconKey="experienceCloud"
 								to={getKebabCase(
 									PRODUCT_TYPES.liferayExperienceCloud
 								)}
@@ -138,10 +125,6 @@ const SideMenu = () => {
 
 				<li>
 					<div className="d-flex">
-						<div className="align-items-center d-flex mr-2">
-							<ProductActivationIcon />
-						</div>
-
 						<Button
 							appendIcon={
 								!!activationSubscriptionGroups.length &&
@@ -152,13 +135,13 @@ const SideMenu = () => {
 								'align-items-center btn-borderless d-flex px-2 py-2 rounded w-100',
 								{
 									'cp-product-activation-active': isOpenedProductsMenu,
-									'cp-products-list-active': hasSomeMenuItemActive,
 									'text-neutral-4':
 										activationSubscriptionGroups.length < 1,
 									'text-neutral-10': !!activationSubscriptionGroups.length,
 								}
 							)}
 							disabled={activationSubscriptionGroups.length < 1}
+							iconKey="productActivation"
 							onClick={() =>
 								setIsOpenedProductsMenu(
 									(previousIsOpenedProductsMenu) =>
@@ -186,11 +169,10 @@ const SideMenu = () => {
 				</li>
 
 				<div className="d-flex">
-					<div className="align-items-center d-flex mr-2">
-						<TeamMembersIcon />
-					</div>
-
-					<MenuItem to={getKebabCase(MENU_TYPES.teamMembers)}>
+					<MenuItem
+						iconKey="teamMembers"
+						to={getKebabCase(MENU_TYPES.teamMembers)}
+					>
 						{i18n.translate(getKebabCase(MENU_TYPES.teamMembers))}
 					</MenuItem>
 				</div>

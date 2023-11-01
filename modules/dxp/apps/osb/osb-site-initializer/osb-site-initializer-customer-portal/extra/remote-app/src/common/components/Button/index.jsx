@@ -6,13 +6,15 @@
 import {Button as ClayButton} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import {forwardRef} from 'react';
+import {forwardRef, useMemo} from 'react';
+import {navigationIcons} from '~/routes/customer-portal/containers/SideMenu/utils/navigationIcons';
 
 const ButtonBase = (
 	{
 		appendIcon,
 		appendIconClassName,
 		children,
+		iconKey,
 		isImagePrependIcon,
 		isLoading,
 		prependIcon,
@@ -21,6 +23,18 @@ const ButtonBase = (
 	},
 	ref
 ) => {
+	const Icon = useMemo(() => {
+		try {
+			if (iconKey) {
+				const [activeIcon] = navigationIcons[iconKey];
+
+				return activeIcon;
+			}
+		} catch (error) {
+			console.error('Error:', error);
+		}
+	}, [iconKey]);
+
 	return (
 		<ClayButton
 			aria-label={
@@ -29,6 +43,8 @@ const ButtonBase = (
 			ref={ref}
 			{...props}
 		>
+			{iconKey && <Icon className="mr-2" />}
+
 			{prependIcon && (
 				<span
 					className={classNames(

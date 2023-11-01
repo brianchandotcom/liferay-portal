@@ -47,23 +47,6 @@ definition {
 		}
 	}
 
-	tearDown {
-		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
-
-		if (${testLiferayVirtualInstance} == "true") {
-			PortalInstances.tearDownCP();
-		}
-		else {
-			JSONAccountEntryAPI._deleteAllAccountEntries();
-
-			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-
-			ObjectAdmin.deleteAllCustomObjectsViaAPI();
-
-			Picklist.deletePicklistViaAPI(picklistName = "Ticket Type");
-		}
-	}
-
 	@description = "This is a test for LPS-151159. The page designer map the Select from List fragment to objects fields on content pages."
 	@priority = 5
 	test MapPicklistFieldOnContentPage {

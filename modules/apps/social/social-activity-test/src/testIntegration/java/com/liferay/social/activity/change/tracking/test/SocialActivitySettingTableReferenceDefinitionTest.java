@@ -7,15 +7,17 @@ package com.liferay.social.activity.change.tracking.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.test.util.BaseTableReferenceDefinitionTestCase;
+import com.liferay.counter.kernel.service.CounterLocalService;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.social.kernel.model.SocialActivitySetting;
 import com.liferay.social.kernel.service.SocialActivitySettingLocalService;
-
-import java.util.List;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -37,15 +39,27 @@ public class SocialActivitySettingTableReferenceDefinitionTest
 
 	@Override
 	protected CTModel<?> addCTModel() throws Exception {
-		_socialActivitySettingLocalService.updateActivitySetting(
-			group.getGroupId(), group.getClassName(), true);
+		SocialActivitySetting socialActivitySetting =
+			_socialActivitySettingLocalService.createSocialActivitySetting(
+				_counterLocalService.increment(
+					SocialActivitySetting.class.getName()));
 
-		List<SocialActivitySetting> socialActivitySettings =
-			_socialActivitySettingLocalService.getActivitySettings(
-				group.getGroupId());
+		socialActivitySetting.setCompanyId(group.getCompanyId());
+		socialActivitySetting.setClassNameId(
+			_classNameLocalService.getClassNameId(Group.class));
+		socialActivitySetting.setGroupId(group.getGroupId());
+		socialActivitySetting.setName(RandomTestUtil.randomString());
+		socialActivitySetting.setValue(Boolean.TRUE.toString());
 
-		return socialActivitySettings.get(0);
+		return _socialActivitySettingLocalService.addSocialActivitySetting(
+			socialActivitySetting);
 	}
+
+	@Inject
+	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
+	private CounterLocalService _counterLocalService;
 
 	@Inject
 	private SocialActivitySettingLocalService

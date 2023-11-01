@@ -1,0 +1,13 @@
+liferay-dotcom-site-initializer:
+    name: Liferay Dotcom Site Initializer
+    oAuthApplicationHeadlessServer: liferay-dotcom-site-initializer-oauth-application-headless-server
+    siteExternalReferenceCode: liferayDotcom
+    siteName: Liferay Dotcom
+    type: siteInitializer
+liferay-dotcom-site-initializer-oauth-application-headless-server:
+    .serviceAddress: localhost:8080
+    .serviceScheme: http
+    name: Liferay Dotcom OAuth Application Headless Server
+    scopes:
+        - Liferay.Headless.Site.everything
+    type: oAuthApplicationHeadlessServer

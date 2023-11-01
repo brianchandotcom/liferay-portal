@@ -167,6 +167,18 @@ public class CIForwardProcessor {
 			catch (Exception exception) {
 				exception.printStackTrace();
 
+				StringBuilder sb = new StringBuilder();
+
+				sb.append("Unknown exception\n");
+				sb.append("Pull Request URL: ");
+				sb.append(_pullRequest.getURL());
+				sb.append("\nConsole log URL: ");
+				sb.append(_consoleLogURL);
+
+				NotificationUtil.sendSlackNotification(
+					sb.toString(), "#ci-notifications", ":liferay-ci:",
+					"Unable to forward pull request", "Liferay CI");
+
 				_pullRequest.addComment(_getFailureCommentBody());
 			}
 		}

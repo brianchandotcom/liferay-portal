@@ -118,11 +118,6 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testUpgradeJavaCommerceShippingOptionCheck() throws Exception {
-		test("upgrade/UpgradeJavaCommerceShippingOptionCheck.testjava");
-	}
-
-	@Test
 	public void testUpgradeJavaCookieKeysCheck() throws Exception {
 		test("upgrade/UpgradeJavaCookieKeysCheck.testjava");
 	}

@@ -711,24 +711,21 @@ public class ClientExtensionProjectConfigurator
 			});
 
 		validateClientExtensionIdsTaskProvider.configure(
-			validateClientExtensionIdsTask -> {
-				validateClientExtensionIdsTask.setDescription(
+			task -> {
+				task.setDescription(
 					"Validates that this project's client extension IDs are " +
 						"unique among all projects.");
-				validateClientExtensionIdsTask.setGroup(
-					LifecycleBasePlugin.VERIFICATION_GROUP);
+				task.setGroup(LifecycleBasePlugin.VERIFICATION_GROUP);
 
-				TaskInputs taskInputs =
-					validateClientExtensionIdsTask.getInputs();
+				TaskInputs taskInputs = task.getInputs();
 
 				taskInputs.file(clientExtensionYamlFile);
 
-				TaskOutputs taskOutputs =
-					validateClientExtensionIdsTask.getOutputs();
+				TaskOutputs taskOutputs = task.getOutputs();
 
 				taskOutputs.upToDateWhen(task1 -> true);
 
-				validateClientExtensionIdsTask.doFirst(
+				task.doFirst(
 					new Action<Task>() {
 
 						@Override

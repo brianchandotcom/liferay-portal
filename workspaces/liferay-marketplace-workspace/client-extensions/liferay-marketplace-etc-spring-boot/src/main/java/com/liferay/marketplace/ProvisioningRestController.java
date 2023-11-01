@@ -96,7 +96,7 @@ public class ProvisioningRestController extends BaseRestController {
 					"message",
 					StringBundler.concat(
 						"One of the fields: description|hostname|ipAddress",
-						"macAddress|orderId|skuId|productPurchaseKey|type",
+						"macAddress|orderId|skuId|productPurchasedKey|type",
 						"is missing.")
 				).toString(),
 				HttpStatus.BAD_REQUEST);
@@ -140,7 +140,8 @@ public class ProvisioningRestController extends BaseRestController {
 				"Unable to set SKU Version" + exception.getMessage());
 		}
 
-		AppLicenseKey.LicenseType licenseType = null;
+		AppLicenseKey.LicenseType licenseType =
+			AppLicenseKey.LicenseType.PRODUCTION;
 
 		if (type.equals("standard") || type.equals("trial")) {
 			licenseType = AppLicenseKey.LicenseType.PRODUCTION;

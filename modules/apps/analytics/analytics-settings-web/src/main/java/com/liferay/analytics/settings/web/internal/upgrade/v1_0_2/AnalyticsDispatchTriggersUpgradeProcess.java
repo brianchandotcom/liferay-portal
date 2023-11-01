@@ -1,0 +1,107 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.analytics.settings.web.internal.upgrade.v1_0_2;
+
+import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
+import com.liferay.analytics.settings.security.constants.AnalyticsSecurityConstants;
+import com.liferay.dispatch.executor.DispatchTaskClusterMode;
+import com.liferay.dispatch.executor.DispatchTaskStatus;
+import com.liferay.dispatch.model.DispatchTrigger;
+import com.liferay.dispatch.service.DispatchLogLocalService;
+import com.liferay.dispatch.service.DispatchTriggerLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+
+import java.time.LocalDateTime;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Dictionary;
+
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
+
+/**
+ * @author Rachael Koestartyo
+ */
+public class AnalyticsDispatchTriggersUpgradeProcess extends UpgradeProcess {
+
+	public AnalyticsDispatchTriggersUpgradeProcess(
+		ConfigurationAdmin configurationAdmin,
+		DispatchLogLocalService dispatchLogLocalService,
+		DispatchTriggerLocalService dispatchTriggerLocalService,
+		UserLocalService userLocalService) {
+
+		_configurationAdmin = configurationAdmin;
+		_dispatchLogLocalService = dispatchLogLocalService;
+		_dispatchTriggerLocalService = dispatchTriggerLocalService;
+		_userLocalService = userLocalService;
+	}
+
+	@Override
+	protected void doUpgrade() throws Exception {
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			"(service.pid=" + AnalyticsConfiguration.class.getName() + "*)");
+
+		if (ArrayUtil.isEmpty(configurations)) {
+			return;
+		}
+
+		for (Configuration configuration : configurations) {
+			Dictionary<String, Object> properties =
+				configuration.getProperties();
+
+			if (properties == null) {
+				continue;
+			}
+
+			long companyId = GetterUtil.getLong(properties.get("companyId"));
+
+			DispatchTrigger dispatchTrigger =
+				_dispatchTriggerLocalService.fetchDispatchTrigger(
+					companyId, "export-analytics-dxp-entities");
+
+			if (dispatchTrigger != null) {
+				continue;
+			}
+
+			long userId = _userLocalService.getUserIdByScreenName(
+				companyId,
+				AnalyticsSecurityConstants.SCREEN_NAME_ANALYTICS_ADMIN);
+
+			dispatchTrigger = _dispatchTriggerLocalService.addDispatchTrigger(
+				null, userId, "export-analytics-dxp-entities", null,
+				"export-analytics-dxp-entities", false);
+
+			LocalDateTime localDateTime = LocalDateTime.now();
+
+			_dispatchTriggerLocalService.updateDispatchTrigger(
+				dispatchTrigger.getDispatchTriggerId(), true, "0 0 * * * ?",
+				DispatchTaskClusterMode.NOT_APPLICABLE, 0, 0, 0, 0, 0, true,
+				false, localDateTime.getMonthValue() - 1,
+				localDateTime.getDayOfMonth(), localDateTime.getYear(),
+				localDateTime.getHour(), localDateTime.getMinute(), "UTC");
+
+			Calendar calendar = Calendar.getInstance();
+
+			calendar.setTime(new Date());
+			calendar.add(Calendar.HOUR, -2);
+
+			_dispatchLogLocalService.addDispatchLog(
+				userId, dispatchTrigger.getDispatchTriggerId(),
+				calendar.getTime(), null, null, null,
+				DispatchTaskStatus.SUCCESSFUL);
+		}
+	}
+
+	private final ConfigurationAdmin _configurationAdmin;
+	private final DispatchLogLocalService _dispatchLogLocalService;
+	private final DispatchTriggerLocalService _dispatchTriggerLocalService;
+	private final UserLocalService _userLocalService;
+
+}

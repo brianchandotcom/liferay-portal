@@ -146,7 +146,7 @@ public class DateRangeFactoryUtil {
 			});
 	}
 
-	public static void validateRange(String ranges)
+	public static void validateRanges(String ranges)
 		throws JSONException, ParseException {
 
 		JSONArray rangesJSONArray = JSONFactoryUtil.createJSONArray(ranges);

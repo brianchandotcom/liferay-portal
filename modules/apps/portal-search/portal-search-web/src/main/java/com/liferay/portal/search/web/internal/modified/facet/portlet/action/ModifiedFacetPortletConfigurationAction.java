@@ -80,7 +80,7 @@ public class ModifiedFacetPortletConfigurationAction
 		String ranges = unicodeProperties.getProperty("ranges");
 
 		try {
-			DateRangeFactoryUtil.validateRange(ranges);
+			DateRangeFactoryUtil.validateRanges(ranges);
 		}
 		catch (JSONException | ParseException exception) {
 			SessionErrors.add(actionRequest, "unparsableDate");

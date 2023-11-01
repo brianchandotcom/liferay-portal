@@ -472,7 +472,8 @@ public class ObjectActionLocalServiceTest {
 			Assert.assertEquals(
 				"2023-06-01 06:42:08.0", MapUtil.getString(values, "time"));
 
-			// Assert functionality of system actions
+			// Execute standalone system action to update the current object
+			// entry
 
 			objectEntry = _objectEntryLocalService.updateObjectEntry(
 				TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),

@@ -147,10 +147,11 @@ class OAuth2Client {
 		// to perform OAuth2 token authentication instead
 		// eslint-disable-next-line @liferay/portal/no-global-fetch
 		return await fetch(resource, {
+			...options,
 			headers: {
+				...options?.headers,
 				Authorization: `Bearer ${tokenData.access_token}`,
 			},
-			...options,
 		});
 	}
 

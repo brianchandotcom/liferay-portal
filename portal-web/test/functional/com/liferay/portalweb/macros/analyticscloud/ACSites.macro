@@ -72,8 +72,8 @@ definition {
 		}
 	}
 
-	@summary = "Default summary"
-	macro viewPageMetric(metricName = null,metricValue = null,pageName = null) {
+	@summary = "View metrics found on the pages list"
+	macro viewPageMetricFromPagesList(metricName = null,metricValue = null,pageName = null) {
 		var key_metricValue = ${metricValue};
 		var key_pageName = ${pageName};
 

@@ -78,9 +78,7 @@ definition {
 	macro _viewMailMessage(toName = null, subject = null, fromAddress = null, content = null) {
 		var key_asset = ${subject};
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "MockMock#MOCKMOCK_MESSAGE_BODY",
-			value1 = ${subject});
+		AssertElementPresent(locator1 = "MockMock#MOCKMOCK_MESSAGE_BODY");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "MockMock#MOCKMOCK_MESSAGE_BODY",

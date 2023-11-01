@@ -42,7 +42,9 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 
 			String from = jsonObject.getString("from");
 
-			if (from.contains(StringPool.OPEN_PARENTHESIS)) {
+			if (from.contains(StringPool.OPEN_PARENTHESIS) &&
+				!from.matches(_CONSTRUCTOR_REGEX)) {
+
 				expectedMessages.add(_getMessage(jsonObject));
 			}
 		}
@@ -356,7 +358,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 			return newContent;
 		}
 
-		if ((fileName.endsWith(".java") &&
+		if ((fileName.endsWith(".java") && !from.matches(_CONSTRUCTOR_REGEX) &&
 			 !hasParameterTypes(
 				 javaMethodContent, javaMethodContent,
 				 ArrayUtil.toStringArray(parameterNames),
@@ -373,7 +375,9 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		String newMethodCall = to.substring(
 			0, to.indexOf(CharPool.OPEN_PARENTHESIS) + 1);
 
-		if (!newMethodCall.contains(StringPool.PERIOD)) {
+		if (!newMethodCall.contains(StringPool.PERIOD) &&
+			!Character.isUpperCase(newMethodCall.charAt(0))) {
+
 			newMethodCall = StringBundler.concat(
 				getVariableName(methodCall), CharPool.PERIOD, newMethodCall);
 		}
@@ -422,6 +426,8 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 
 		return false;
 	}
+
+	private static final String _CONSTRUCTOR_REGEX = "(:?[A-Z][a-z]+)+\\(.*\\)";
 
 	private static boolean _testMode;
 

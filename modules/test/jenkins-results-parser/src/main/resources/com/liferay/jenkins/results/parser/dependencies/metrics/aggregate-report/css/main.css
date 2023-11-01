@@ -1,0 +1,12 @@
+.col-1 {
+	left: 1px;
+	max-width: 198px;
+	min-width: 198px;
+	position: sticky;
+	width: 198px;
+}
+
+.col-2 {
+	left: 220px;
+	position: sticky;
+}

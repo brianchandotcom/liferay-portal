@@ -1,0 +1,134 @@
+* {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+table {
+	border-collapse: separate;
+	border-spacing: 0;
+	font-size: 14px;
+	margin: 0;
+	white-space: nowrap;
+	width: 100%;
+}
+
+table thead th {
+	background: #c0c0c0;
+	position: sticky;
+	top: 0;
+	z-index: 2;
+}
+
+td, th {
+	outline: 0.5px solid #d3d3d3;
+}
+
+td.col-1 {
+	z-index: 2;
+}
+
+td.col-1, td.col-2 {
+	background: #f2f2f2;
+}
+
+td.col-2 {
+	z-index: 1;
+}
+
+th.col-1, th.col-2 {
+	z-index: 3;
+}
+
+.accordion {
+	background-color: #eee;
+	border: none;
+	color: #444;
+	cursor: pointer;
+	outline: none;
+	padding: 10px;
+	text-align: left;
+	transition: 0.4s;
+	width: 100%;
+}
+
+.accordion h3:after {
+	color: #777;
+	content: '\02795';
+	float: right;
+	font-size: 10px;
+	margin-left: 5px;
+	top: 50%;
+}
+
+.active, .accordion:hover {
+	background-color: #ccc;
+}
+
+.active h3:after {
+	content: "\2796";
+}
+
+.fa-search {
+	color: #aaa;
+	display: block;
+	height: 38px;
+	line-height: 38px;
+	position: absolute;
+	text-align: center;
+	width: 38px;
+	z-index: 2;
+}
+
+.panel {
+	background-color: white;
+	display: none;
+	overflow: hidden;
+	padding: 0 18px;
+}
+
+.table-wrapper{
+    max-height: 600px;
+    max-width: 100vw;
+    overflow: auto;
+    border: 1px solid #d3d3d3;
+    overflow: scroll;
+}
+
+.truncate > div {
+	display: inline-block;
+	position: relative;
+	width: 100%;
+}
+
+.truncate > div > span {
+	display: inline-block;
+	left: 0;
+	overflow: hidden;
+	position: absolute;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 100%;
+}
+
+.truncate > div > span:hover {
+	background-color: #d3d3d3;
+	width: initial;
+	z-index: 4;
+}
+
+.truncate > div:before {
+	content: '&nbsp;';
+	visibility: hidden;
+}
+
+#descriptions {
+	font-size: 12px;
+}
+
+#search {
+	border: 1px solid #d3d3d3;
+	font-size: 14px;
+	margin-bottom: 12px;
+	padding: 12px 12px 12px 40px;
+	position:relative;
+	width: 100%;
+}

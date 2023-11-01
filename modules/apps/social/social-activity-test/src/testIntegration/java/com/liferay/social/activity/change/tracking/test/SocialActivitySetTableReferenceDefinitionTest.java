@@ -18,7 +18,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.social.activity.service.test.util.SocialActivityTestUtil;
 import com.liferay.social.kernel.model.SocialActivity;
-import com.liferay.social.kernel.service.SocialActivityLocalServiceUtil;
+import com.liferay.social.kernel.service.SocialActivityLocalService;
 import com.liferay.social.kernel.service.SocialActivitySetLocalService;
 
 import java.util.List;
@@ -55,7 +55,7 @@ public class SocialActivitySetTableReferenceDefinitionTest
 		SocialActivityTestUtil.addActivity(user, group, assetEntry, 1);
 
 		List<SocialActivity> activities =
-			SocialActivityLocalServiceUtil.getGroupActivities(
+			_socialActivityLocalService.getGroupActivities(
 				group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		_socialActivity = activities.get(0);
@@ -68,6 +68,9 @@ public class SocialActivitySetTableReferenceDefinitionTest
 	}
 
 	private SocialActivity _socialActivity;
+
+	@Inject
+	private SocialActivityLocalService _socialActivityLocalService;
 
 	@Inject
 	private SocialActivitySetLocalService _socialActivitySetLocalService;

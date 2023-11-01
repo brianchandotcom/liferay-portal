@@ -116,11 +116,6 @@ definition {
 				title_row = "Dependency FF Test",
 				toggle_state = "Disabled");
 
-			ScrollWebElementIntoView(
-				locator1 = "FeatureFlag#TOGGLE_ROW",
-				title_row = "Dependency FF Test",
-				toggle_state = "Disabled");
-
 			Check.checkToggleSwitch(
 				locator1 = "FeatureFlag#TOGGLE_ROW",
 				title_row = "Dependency FF Test",
@@ -159,11 +154,6 @@ definition {
 					locator1 = "FeatureFlag#TOGGLE_ROW",
 					title_row = "Terms and Conditions pages",
 					toggle_state = "Enabled");
-
-				ScrollWebElementIntoView(
-					locator1 = "FeatureFlag#TOGGLE_ROW",
-					title_row = "Dependency FF Test",
-					toggle_state = "Disabled");
 			}
 
 			Check.checkToggleSwitch(

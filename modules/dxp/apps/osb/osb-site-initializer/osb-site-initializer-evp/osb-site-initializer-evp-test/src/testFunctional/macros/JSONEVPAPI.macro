@@ -48,6 +48,8 @@ definition {
 
 		var organizationId = JSONCurlUtil.post(${curl}, "$.id");
 
+		static var staticOrganizationId = ${organizationId};
+
 		echo(${organizationId});
 
 		return ${organizationId};

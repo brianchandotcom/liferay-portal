@@ -107,6 +107,15 @@ public class UpgradeCatchAllCheck {
 	}
 
 	public void method(
+		long userId, long groupId, boolean mountPoint, long parentFolderId,
+		String name, String description, ServiceContext serviceContext) {
+
+		DLFolderServiceUtil.addFolder(123, groupId, mountPoint, parentFolderId, name, description, serviceContext);
+		DLFolderServiceUtil.addFolder(userId, groupId, mountPoint, parentFolderId, name, description, serviceContext);
+		_dlFolderService.addFolder(userId, groupId, mountPoint, parentFolderId, name, description, serviceContext);
+	}
+
+	public void method(
 		long cpDefinitionId, long cProductId, double priority, String type,
 		ServiceContext serviceContext) {
 
@@ -122,10 +131,7 @@ public class UpgradeCatchAllCheck {
 
 		DLFolderLocalServiceUtil.addFolder(123, groupId, repositoryId, mountPoint, parentFolderId, name, description, hidden, serviceContext);
 		DLFolderLocalServiceUtil.addFolder(userId, groupId, repositoryId, mountPoint, parentFolderId, name, description, hidden, serviceContext);
-		DLFolderServiceUtil.addFolder(123, repositoryId, mountPoint, parentFolderId, name, description, serviceContext);
-		DLFolderServiceUtil.addFolder(groupId, repositoryId, mountPoint, parentFolderId, name, description, serviceContext);
 		_dlFolderLocalService.addFolder(userId, groupId, repositoryId, mountPoint, parentFolderId, name, description, hidden, serviceContext);
-		_dlFolderService.addFolder(groupId, repositoryId, mountPoint, parentFolderId, name, description, serviceContext);
 	}
 
 	public void method(

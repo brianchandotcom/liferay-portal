@@ -69,38 +69,11 @@ public class ProvisioningRestController extends BaseRestController {
 
 		_initResourceBuilders();
 
-		String description;
-		String hostname;
-		String ipAddress;
-		String macAddress;
-		String orderId;
-		String productPurchaseKey;
-		String type;
-		long skuId;
-
 		JSONObject jsonObject = new JSONObject(json);
 
-		try {
-			description = jsonObject.getString("description");
-			hostname = jsonObject.getString("hostname");
-			ipAddress = jsonObject.getString("ipAddress");
-			macAddress = jsonObject.getString("macAddress");
-			orderId = jsonObject.getString("orderId");
-			skuId = jsonObject.getLong("skuId");
-			productPurchaseKey = jsonObject.getString("productPurchaseKey");
-			type = jsonObject.getString("type");
-		}
-		catch (Exception exception) {
-			return new ResponseEntity<>(
-				new JSONObject(
-				).put(
-					"message", exception.getMessage()
-				).toString(),
-				HttpStatus.BAD_REQUEST);
-		}
-
 		ProductPurchase productPurchase =
-			_productPurchaseResource.getProductPurchase(productPurchaseKey);
+			_productPurchaseResource.getProductPurchase(
+				jsonObject.getString("productPurchaseKey"));
 
 		String version = "1.0.0";
 
@@ -116,7 +89,7 @@ public class ProvisioningRestController extends BaseRestController {
 				liferayURL.getProtocol()
 			).build();
 
-			Sku sku = skuResource.getSku(skuId);
+			Sku sku = skuResource.getSku(jsonObject.getLong("skuId"));
 
 			CustomField[] customFields = sku.getCustomFields();
 
@@ -140,6 +113,8 @@ public class ProvisioningRestController extends BaseRestController {
 		AppLicenseKey.LicenseType licenseType =
 			AppLicenseKey.LicenseType.PRODUCTION;
 
+		String type = jsonObject.getString("type");
+
 		if (type.equals("standard") || type.equals("trial")) {
 			licenseType = AppLicenseKey.LicenseType.PRODUCTION;
 		}
@@ -147,9 +122,9 @@ public class ProvisioningRestController extends BaseRestController {
 			licenseType = AppLicenseKey.LicenseType.DEVELOPER;
 		}
 
-		AppLicenseKey appLicenseKey = new AppLicenseKey();
 		String userName = jwt.getClaim("username");
 		String userUUID = jwt.getClaim("sub");
+
 		Date productPurchaseStartDate = productPurchase.getStartDate();
 		Date productPurchaseEndDate = productPurchase.getEndDate();
 
@@ -169,15 +144,15 @@ public class ProvisioningRestController extends BaseRestController {
 				).toInstant());
 		}
 
+		AppLicenseKey appLicenseKey = AppLicenseKey.toDTO(
+			jsonObject.getJSONObject(
+				"licenseEntry"
+			).toString());
+
 		appLicenseKey.setActive(true);
 		appLicenseKey.setCreateDate(new Date());
-		appLicenseKey.setDescription(description);
 		appLicenseKey.setExpirationDate(productPurchaseEndDate);
-		appLicenseKey.setHostName(hostname);
-		appLicenseKey.setIpAddresses(ipAddress);
 		appLicenseKey.setLicenseType(licenseType);
-		appLicenseKey.setMacAddresses(macAddress);
-		appLicenseKey.setOrderId(orderId);
 		appLicenseKey.setOwner(userName);
 		appLicenseKey.setProductId(productPurchase.getProductKey());
 		appLicenseKey.setProductName(

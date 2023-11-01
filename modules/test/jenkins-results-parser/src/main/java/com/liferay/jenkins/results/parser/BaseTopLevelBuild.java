@@ -62,38 +62,6 @@ import org.json.JSONObject;
 public abstract class BaseTopLevelBuild
 	extends BaseParentBuild implements TopLevelBuild {
 
-	public static String getReleaseRepositoryName() {
-		String portalReleaseVersion = System.getenv(
-			"TEST_PORTAL_RELEASE_VERSION");
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(portalReleaseVersion)) {
-			String patcherPortalVersion = System.getenv(
-				"PATCHER_BUILD_PATCHER_PORTAL_VERSION");
-
-			if (!JenkinsResultsParserUtil.isNullOrEmpty(patcherPortalVersion) &&
-				PortalRelease.isQuarterlyRelease(patcherPortalVersion)) {
-
-				return "liferay-portal-ee";
-			}
-		}
-
-		String portalBranchName = System.getenv("TEST_PORTAL_BRANCH_NAME");
-
-		if (PortalRelease.isQuarterlyRelease(portalReleaseVersion) ||
-			!portalBranchName.equals("master")) {
-
-			return "liferay-portal-ee";
-		}
-
-		return "liferay-portal";
-	}
-
-	public static boolean isReleaseBuild() {
-		String jobName = System.getenv("JOB_NAME");
-
-		return jobName.contains("release");
-	}
-
 	@Override
 	public void addTimelineData(TimelineData timelineData) {
 		timelineData.addTimelineData(this);
@@ -737,8 +705,7 @@ public abstract class BaseTopLevelBuild
 		}
 	}
 
-	public static class WorkspaceBranchInformation
-		implements BranchInformation {
+	public class WorkspaceBranchInformation implements BranchInformation {
 
 		@Override
 		public String getCachedRemoteGitRefName() {
@@ -829,10 +796,9 @@ public abstract class BaseTopLevelBuild
 			_workspaceGitRepository = workspaceGitRepository;
 		}
 
-		private static final Pattern _pattern = Pattern.compile(
+		private final Pattern _pattern = Pattern.compile(
 			"https://github.com/(?<username>[^/]+)/[^/]/pull/" +
 				"(?<pullNumber>\\d+)");
-
 		private final WorkspaceGitRepository _workspaceGitRepository;
 
 	}
@@ -1764,6 +1730,14 @@ public abstract class BaseTopLevelBuild
 			preElement);
 	}
 
+	protected String getReleaseRepositoryName() {
+		if (!Objects.equals(getBranchName(), "master")) {
+			return "liferay-portal-ee";
+		}
+
+		return "liferay-portal";
+	}
+
 	protected Element getResourceFileContentAsElement(
 		String tagName, Element parentElement, String resourceName) {
 
@@ -1999,6 +1973,10 @@ public abstract class BaseTopLevelBuild
 			return true;
 		}
 
+		return false;
+	}
+
+	protected boolean isReleaseBuild() {
 		return false;
 	}
 

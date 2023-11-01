@@ -146,16 +146,16 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 				from.substring(0, from.indexOf(CharPool.OPEN_PARENTHESIS)) +
 					"\\b\\(";
 		}
+		else {
+			regex = regex + "[,;> (]";
+		}
 
 		if (regex.contains(StringPool.PERIOD)) {
-			regex = StringUtil.replace(regex, CharPool.PERIOD, "\\.\\s*");
+			return Pattern.compile(
+				StringUtil.replace(regex, CharPool.PERIOD, "\\.\\s*"));
 		}
 
 		if (Character.isUpperCase(from.charAt(0))) {
-			if (!regex.contains(StringPool.OPEN_PARENTHESIS)) {
-				regex = regex + "[,;> (]";
-			}
-
 			String[] classNames = JSONUtil.toStringArray(
 				jsonObject.getJSONArray("classNames"));
 

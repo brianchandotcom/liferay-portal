@@ -34,10 +34,6 @@
 	<bean class="com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyFactoryUtil" id="com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyFactoryUtil">
 		<property name="siteMembershipPolicyFactory" ref="com.liferay.portal.kernel.security.membershippolicy.SiteMembershipPolicyFactory" />
 	</bean>
-	<bean class="com.liferay.portal.security.membershippolicy.UserGroupMembershipPolicyFactoryImpl" id="com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyFactory" />
-	<bean class="com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyFactoryUtil" id="com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyFactoryUtil">
-		<property name="userGroupMembershipPolicyFactory" ref="com.liferay.portal.kernel.security.membershippolicy.UserGroupMembershipPolicyFactory" />
-	</bean>
 	<bean class="com.liferay.portal.security.permission.PermissionCheckerFactoryImpl" id="com.liferay.portal.kernel.security.permission.PermissionCheckerFactory" />
 	<bean class="com.liferay.portal.security.permission.ResourceActionsImpl" id="com.liferay.portal.kernel.security.permission.ResourceActions" />
 	<bean class="com.liferay.portal.kernel.security.permission.ResourceActionsUtil" id="com.liferay.portal.kernel.security.permission.ResourceActionsUtil">

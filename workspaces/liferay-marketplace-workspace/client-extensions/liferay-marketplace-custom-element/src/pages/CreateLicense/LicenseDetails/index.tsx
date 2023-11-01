@@ -46,7 +46,7 @@ const LicenseDetails = ({inputProps}: InputPropsLicense) => (
 			className="custom-input"
 			helpMessage="Input one Host name per instance"
 			label="Host Name"
-			name="hostName"
+			name="hostname"
 			placeholder="Enter Host Name"
 		/>
 
@@ -57,7 +57,7 @@ const LicenseDetails = ({inputProps}: InputPropsLicense) => (
 			component="textarea"
 			helpMessage="Add one IP addresses per line. IPv6 addresses are not supported."
 			label="IP Addresses"
-			name="IP"
+			name="ipAddress"
 			placeholder={`1.1.1.1` + '\n' + `2.2.2.2`}
 		/>
 
@@ -68,7 +68,7 @@ const LicenseDetails = ({inputProps}: InputPropsLicense) => (
 			component="textarea"
 			helpMessage="Add one MAC addresses per line"
 			label="Mac Addresses"
-			name="macAddresses"
+			name="macAddress"
 			placeholder={`XX-XX-XX-XX-XX-XX` + '\n' + `XX-XX-XX-XX-XX-XX`}
 		/>
 	</div>

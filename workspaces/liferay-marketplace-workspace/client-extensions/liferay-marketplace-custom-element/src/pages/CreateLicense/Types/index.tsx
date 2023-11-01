@@ -9,17 +9,16 @@ export enum StepCreateLicense {
 }
 
 export type CreateLicenseForm = {
-	IP: string;
 	description: string;
-	hostName: string;
+	hostname: string;
+	ipAddress: string;
 	licenseKeyData: any;
-	macAddresses: string;
+	macAddress: string;
 	subscription: any;
 };
 
 export type StepsInformationProps = {
 	backStep: string;
-	component: JSX.Element;
 	nextStep: string;
 	stepTitle: string;
 	title: string;

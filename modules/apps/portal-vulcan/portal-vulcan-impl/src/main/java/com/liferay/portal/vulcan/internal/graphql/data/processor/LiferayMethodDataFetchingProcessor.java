@@ -210,7 +210,8 @@ public class LiferayMethodDataFetchingProcessor {
 					}
 
 					argument = MultipartBody.of(
-						binaryFiles, __ -> _objectMapper, values);
+						binaryFiles, __ -> ObjectMapperHolder._objectMapper,
+						values);
 				}
 			}
 
@@ -219,7 +220,9 @@ public class LiferayMethodDataFetchingProcessor {
 			if ((argument instanceof Map) &&
 				!parameterClass.isAssignableFrom(Map.class)) {
 
-				argument = _objectMapper.convertValue(
+				ObjectMapper objectMapper = ObjectMapperHolder._objectMapper;
+
+				argument = objectMapper.convertValue(
 					argument, parameter.getType());
 
 				ValidationUtil.validate(argument);
@@ -660,8 +663,6 @@ public class LiferayMethodDataFetchingProcessor {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayMethodDataFetchingProcessor.class);
 
-	private static final ObjectMapper _objectMapper = new ObjectMapper();
-
 	private BundleContext _bundleContext;
 
 	@Reference
@@ -705,6 +706,12 @@ public class LiferayMethodDataFetchingProcessor {
 	@Reference
 	private VulcanBatchEngineImportTaskResourceFactory
 		_vulcanBatchEngineImportTaskResourceFactory;
+
+	private static class ObjectMapperHolder {
+
+		private static final ObjectMapper _objectMapper = new ObjectMapper();
+
+	}
 
 	private class GraphQLContributorServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer

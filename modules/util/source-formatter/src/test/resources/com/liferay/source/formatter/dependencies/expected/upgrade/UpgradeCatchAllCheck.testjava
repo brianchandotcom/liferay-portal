@@ -310,7 +310,7 @@ public class UpgradeCatchAllCheck {
 		_commercePriceEntryLocalService.addCommercePriceEntry(externalReferenceCode, cProductId, cpInstanceUuid, commercePriceListId, price, false, promoPrice, null, serviceContext);
 	}
 
-	public void method(ThemeDisplay themeDisplay){
+	public void method(ThemeDisplay themeDisplay) {
 		DLUtil.getGroupIds(null);
 		PortalUtil.getCurrentAndAncestorSiteGroupIds(themeDisplay.getScopeGroupId());
 	}

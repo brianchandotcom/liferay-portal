@@ -52,10 +52,9 @@ definition {
 	macro viewOutOfDatePublications() {
 		PublicationsNavigator.openPublicationsAdmin();
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
 		AssertTextEquals(
-			locator1 = "Publications#LIST_OUT_OF_DATE_STATUS",
+			key_publicationName = "Publication 2 Name",
+			locator1 = "Publications#OUT_OF_DATE_STATUS",
 			value1 = "Out of Date");
 
 		PublicationsNavigator.gotoReviewChanges(
@@ -72,9 +71,7 @@ definition {
 
 		PublicationsNavigator.openPublicationsHistory();
 
-		AssertVisible(
-			key_publicationName = "Publication 1 Name",
-			locator1 = "Publications#REVERT_DISABLED");
+		AssertVisible(locator1 = "Publications#REVIEW_CHANGES_BUTTON");
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Configuration",
@@ -94,9 +91,9 @@ definition {
 
 		AssertConsoleTextPresent(value1 = "Completed upgrade process com.liferay.data.cleanup.internal.upgrade.OutdatedPublishedCTCollectionUpgradeProcess");
 
-		AssertTextEquals(
-			locator1 = "Message#EMPTY_INFO_TAGLIB_TITLE",
-			value1 = "No publication has been published yet.");
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#EMPTY_STATE_TEXT",
+			value1 = "Sorry, no results were found.");
 	}
 
 	@summary = "Default summary"

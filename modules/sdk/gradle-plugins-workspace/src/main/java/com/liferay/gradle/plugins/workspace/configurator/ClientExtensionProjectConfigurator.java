@@ -635,9 +635,9 @@ public class ClientExtensionProjectConfigurator
 				taskProvider.configure(
 					task -> {
 						if (_isActiveProfile(project, profileName)) {
-							TaskInputs inputs = task.getInputs();
+							TaskInputs taskInputs = task.getInputs();
 
-							inputs.file(file);
+							taskInputs.file(file);
 						}
 					});
 			}
@@ -664,9 +664,10 @@ public class ClientExtensionProjectConfigurator
 					VALIDATE_CLIENT_EXTENSION_IDS_TASK_NAME,
 					VALIDATE_CLIENT_EXTENSIONS_TASK_NAME);
 
-				TaskInputs inputs = createClientExtensionConfigTask.getInputs();
+				TaskInputs taskInputs =
+					createClientExtensionConfigTask.getInputs();
 
-				inputs.file(clientExtensionYamlFile);
+				taskInputs.file(clientExtensionYamlFile);
 
 				createClientExtensionConfigTask.addClientExtensionProperties(
 					_getClientExtensionProperties());
@@ -677,9 +678,9 @@ public class ClientExtensionProjectConfigurator
 
 		assembleClientExtensionTaskProvider.configure(
 			copy -> {
-				TaskInputs inputs = copy.getInputs();
+				TaskInputs taskInputs = copy.getInputs();
 
-				inputs.file(clientExtensionYamlFile);
+				taskInputs.file(clientExtensionYamlFile);
 
 				copy.into(clientExtensionBuildDir);
 			});
@@ -720,9 +721,10 @@ public class ClientExtensionProjectConfigurator
 				validateClientExtensionIdsTask.setGroup(
 					LifecycleBasePlugin.VERIFICATION_GROUP);
 
-				TaskInputs inputs = validateClientExtensionIdsTask.getInputs();
+				TaskInputs taskInputs =
+					validateClientExtensionIdsTask.getInputs();
 
-				inputs.file(clientExtensionYamlFile);
+				taskInputs.file(clientExtensionYamlFile);
 
 				TaskOutputs outputs =
 					validateClientExtensionIdsTask.getOutputs();
@@ -780,9 +782,9 @@ public class ClientExtensionProjectConfigurator
 
 		validateClientExtensionTaskProvider.configure(
 			task -> {
-				TaskInputs inputs = task.getInputs();
+				TaskInputs taskInputs = task.getInputs();
 
-				inputs.file(clientExtensionYamlFile);
+				taskInputs.file(clientExtensionYamlFile);
 
 				TaskOutputs outputs = task.getOutputs();
 

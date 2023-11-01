@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.net.URL;
 
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -294,12 +295,26 @@ public class KoroneikiRestController extends BaseRestController {
 				}
 			}
 
+			String endDate = null;
+			Date startDate = productPurchase.getStartDate();
+
+			if (productPurchase.getPerpetual()) {
+				startDate = order.getCreateDate();
+			}
+			else {
+				endDate = ZonedDateTime.ofInstant(
+					productPurchase.getEndDate(
+					).toInstant(),
+					ZoneOffset.UTC
+				).format(
+					DateTimeFormatter.ISO_INSTANT
+				);
+			}
+
 			jsonArray.put(
 				new JSONObject(
 				).put(
-					"endDate",
-					productPurchase.getPerpetual() ? null :
-						productPurchase.getEndDate()
+					"endDate", endDate
 				).put(
 					"name", name
 				).put(
@@ -312,8 +327,11 @@ public class KoroneikiRestController extends BaseRestController {
 					"skuId", orderItem.getSkuId()
 				).put(
 					"startDate",
-					productPurchase.getPerpetual() ? order.getCreateDate() :
-						productPurchase.getStartDate()
+					ZonedDateTime.ofInstant(
+						startDate.toInstant(), ZoneOffset.UTC
+					).format(
+						DateTimeFormatter.ISO_INSTANT
+					)
 				).put(
 					"perpetual", productPurchase.getPerpetual()
 				));

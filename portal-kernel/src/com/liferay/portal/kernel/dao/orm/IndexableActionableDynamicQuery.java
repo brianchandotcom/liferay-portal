@@ -64,10 +64,6 @@ public class IndexableActionableDynamicQuery
 		}
 	}
 
-	public void setIndexWriterHelper(IndexWriterHelper indexWriterHelper) {
-		_indexWriterHelper = indexWriterHelper;
-	}
-
 	@Override
 	public void setParallel(boolean parallel) {
 		if (isParallel() == parallel) {
@@ -83,7 +79,7 @@ public class IndexableActionableDynamicQuery
 
 	@Override
 	protected void actionsCompleted() throws PortalException {
-		_indexWriterHelper.commit(getCompanyId());
+		_indexWriterHelperProxy.commit(getCompanyId());
 	}
 
 	@Override
@@ -103,7 +99,7 @@ public class IndexableActionableDynamicQuery
 			return;
 		}
 
-		_indexWriterHelper.updateDocuments(
+		_indexWriterHelperProxy.updateDocuments(
 			getCompanyId(), new ArrayList<>(_documents), false);
 
 		_count += _documents.size();
@@ -158,7 +154,6 @@ public class IndexableActionableDynamicQuery
 
 	private long _count;
 	private Collection<Document> _documents = new ArrayList<>();
-	private IndexWriterHelper _indexWriterHelper = _indexWriterHelperProxy;
 	private long _total;
 
 }

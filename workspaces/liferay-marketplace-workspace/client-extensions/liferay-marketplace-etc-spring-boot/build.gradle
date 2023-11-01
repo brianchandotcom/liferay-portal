@@ -34,7 +34,7 @@ dependencies {
 	implementation group: "com.liferay.commerce", name: "com.liferay.headless.commerce.admin.catalog.client", version: "4.0.46"
 	implementation group: "com.liferay.commerce", name: "com.liferay.headless.commerce.admin.order.client", version: "4.0.32"
 	implementation group: "com.liferay.osb.koroneiki", name: "com.liferay.osb.koroneiki.client", version: "1.1.0"
-	implementation group: "com.liferay.osb.provisioning", name: "com.liferay.osb.provisioning.marketplace.client", version: "1.0.0"
+	implementation group: "com.liferay.osb.provisioning", name: "com.liferay.osb.provisioning.marketplace.rest.client", version: "1.0.0"
 	implementation group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "latest.release"
 	implementation group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
 	implementation group: "org.json", name: "json", version: "20231013"
@@ -64,5 +64,4 @@ repositories {
 	maven {
 		url "https://repository-cdn.liferay.com/nexus/content/groups/public"
 	}
-
 }

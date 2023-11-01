@@ -16,6 +16,10 @@ import {siteURL} from '../../../common/components/dashboard/utils/siteURL';
 import {Liferay} from '../../../common/services/liferay';
 
 import './index.css';
+import {ObjectActionName} from '../../../common/enums/objectActionName';
+import {PermissionActionType} from '../../../common/enums/permissionActionType';
+import {PRMPageRoute} from '../../../common/enums/prmPageRoute';
+import usePermissionActions from '../../../common/hooks/usePermissionActions';
 import {retry} from '../../../common/utils/retry';
 
 const DealsChart = () => {
@@ -24,6 +28,7 @@ const DealsChart = () => {
 	const [approvedLeads, setApprovedLeads] = useState([]);
 
 	const [loading, setLoading] = useState(false);
+	const actions = usePermissionActions(ObjectActionName.DEAL_REGISTRATION);
 
 	const getLeads = async () => {
 		setLoading(true);
@@ -177,19 +182,22 @@ const DealsChart = () => {
 					>
 						View All
 					</ClayButton>
-					<ClayButton
-						className="btn btn-primary ml-4"
-						displayType="primary"
-						onClick={() =>
-							Liferay.Util.navigate(
-								`${siteURL}/sales/deal-registrations/new`
-							)
-						}
-						size="sm"
-						type="button"
-					>
-						Register New Deal
-					</ClayButton>
+
+					{actions?.includes(PermissionActionType.CREATE) && (
+						<ClayButton
+							className="btn btn-primary ml-4"
+							displayType="primary"
+							onClick={() =>
+								Liferay.Util.navigate(
+									`${siteURL}/${PRMPageRoute.CREATE_DEAL_REGISTRATION}`
+								)
+							}
+							size="sm"
+							type="button"
+						>
+							Register New Deal
+						</ClayButton>
+					)}
 				</div>
 			}
 			title="Deal Registrations"

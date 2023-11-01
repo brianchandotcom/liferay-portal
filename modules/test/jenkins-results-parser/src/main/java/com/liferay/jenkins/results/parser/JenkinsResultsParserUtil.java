@@ -4656,6 +4656,22 @@ public class JenkinsResultsParserUtil {
 				Integer retryPeriodOverride = null;
 
 				if (exceptionMessage.matches(
+						".*HTTP response code\\: 422 .*") &&
+					(urlConnection != null)) {
+
+					StringBuilder sb = new StringBuilder();
+
+					sb.append("HTTP response code 422 detected\n");
+
+					if (!isNullOrEmpty(postContent)) {
+						sb.append("Post content:\n");
+						sb.append(postContent);
+					}
+
+					System.out.println(sb.toString());
+				}
+
+				if (exceptionMessage.matches(
 						".*HTTP response code\\: 403 .*") &&
 					(urlConnection != null)) {
 

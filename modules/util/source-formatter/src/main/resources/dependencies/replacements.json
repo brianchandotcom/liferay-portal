@@ -83,6 +83,11 @@
 		"to": "fetchCountryByA2"
 	},
 	{
+		"from": "CommerceShippingOption(String, String, BigDecimal)",
+		"issueKey": "LPS-187666",
+		"to": "CommerceShippingOption(param#2#, \"\", param#0#, param#0#, 0)"
+	},
+	{
 		"classNames": [
 			"FDSTableSchemaBuilder"
 		],

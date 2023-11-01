@@ -14,12 +14,6 @@ public class UserGroupMembershipPolicyFactoryUtil {
 		return _userGroupMembershipPolicyFactory.getUserGroupMembershipPolicy();
 	}
 
-	public static UserGroupMembershipPolicyFactory
-		getUserGroupMembershipPolicyFactory() {
-
-		return _userGroupMembershipPolicyFactory;
-	}
-
 	public void setUserGroupMembershipPolicyFactory(
 		UserGroupMembershipPolicyFactory userGroupMembershipPolicyFactory) {
 

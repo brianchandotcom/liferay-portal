@@ -98,7 +98,7 @@ public class DisplayPageActionDropdownItemsProvider {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
 						() -> hasUpdatePermission,
-						_getEditDisplayPageActionUnsafeConsumer()
+						_getEditDisplayPageActionUnsafeConsumer(usagesCount)
 					).build());
 				dropdownGroupItem.setSeparator(true);
 			}
@@ -403,7 +403,7 @@ public class DisplayPageActionDropdownItemsProvider {
 	}
 
 	private UnsafeConsumer<DropdownItem, Exception>
-		_getEditDisplayPageActionUnsafeConsumer() {
+		_getEditDisplayPageActionUnsafeConsumer(int usagesCount) {
 
 		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
@@ -414,11 +414,15 @@ public class DisplayPageActionDropdownItemsProvider {
 				"p_l_back_url_title", portletDisplay.getPortletDisplayName(),
 				"p_l_mode", Constants.EDIT);
 
-			if (!_existsMappedContentType) {
+			if (!_existsMappedContentType && (usagesCount > 0)) {
+				dropdownItem.setDisabled(true);
+			}
+			else if (!_existsMappedContentType) {
 				dropdownItem.putData("action", "changeContentType");
 				dropdownItem.putData(
 					"changeContentTypeURL",
 					_getChangeContentTypeURL(editDisplayPageURL));
+				dropdownItem.putData("hasUsages", Boolean.FALSE.toString());
 			}
 			else {
 				dropdownItem.setHref(editDisplayPageURL);

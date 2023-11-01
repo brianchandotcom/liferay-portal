@@ -93,10 +93,10 @@ public class RangeFacetProcessor
 		AbstractRangeBuilder abstractRangeBuilder, String key,
 		String rangeString) {
 
-		String[] range = RangeParserUtil.parserRange(rangeString);
+		String[] rangeParts = RangeParserUtil.parserRange(rangeString);
 
 		abstractRangeBuilder.addRange(
-			new RangeAggregator.Range(key, range[0], range[1]));
+			new RangeAggregator.Range(key, rangeParts[0], rangeParts[1]));
 	}
 
 }

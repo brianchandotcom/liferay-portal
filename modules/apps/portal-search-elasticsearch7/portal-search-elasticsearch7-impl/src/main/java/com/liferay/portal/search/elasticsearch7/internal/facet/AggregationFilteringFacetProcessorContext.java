@@ -155,7 +155,7 @@ public class AggregationFilteringFacetProcessorContext
 	}
 
 	private static QueryBuilder _rangeQuery(
-		String fieldName, String format, String[] ranges) {
+		String fieldName, String format, String[] rangeParts) {
 
 		RangeQueryBuilder rangeQueryBuilder = QueryBuilders.rangeQuery(
 			fieldName);
@@ -164,8 +164,10 @@ public class AggregationFilteringFacetProcessorContext
 			rangeQueryBuilder.format(format);
 		}
 
-		rangeQueryBuilder.gte(ranges[0]);
-		rangeQueryBuilder.lte(ranges[1]);
+		rangeQueryBuilder.from(rangeParts[0]);
+		rangeQueryBuilder.includeLower(true);
+		rangeQueryBuilder.includeUpper(false);
+		rangeQueryBuilder.to(rangeParts[1]);
 
 		return rangeQueryBuilder;
 	}

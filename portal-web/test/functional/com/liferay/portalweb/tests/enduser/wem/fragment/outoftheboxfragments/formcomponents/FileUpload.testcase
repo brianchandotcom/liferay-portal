@@ -450,7 +450,7 @@ definition {
 
 				ObjectAdmin.addObjectFieldViaUI(
 					enableShowFiles = "true",
-					fieldAttachment = "Upload Directly from the User's Computer",
+					fieldAttachment = "Upload Directly from the User",
 					fieldLabel = "Custom Attachment From Computer",
 					fieldType = "Attachment");
 			}

@@ -133,7 +133,7 @@ definition {
 		ObjectAdmin.goToFieldsTab();
 
 		ObjectAdmin.addObjectFieldViaUI(
-			fieldAttachment = "Upload Directly from the User's Computer",
+			fieldAttachment = "Upload Directly from the User",
 			fieldLabel = "Custom Attachment",
 			fieldType = "Attachment");
 

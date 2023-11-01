@@ -219,7 +219,6 @@ export default function EditObjectDetails({
 					onSubmit={onSubmit}
 					portletNamespace={portletNamespace}
 					screenNavigationCategoryKey="details"
-					setValues={setValues}
 					system={values.system as boolean}
 				/>
 			</div>

@@ -7,7 +7,6 @@ package com.liferay.evp;
 
 import java.net.URI;
 
-import java.util.Objects;
 import java.util.function.Function;
 
 import org.json.JSONObject;
@@ -56,28 +55,24 @@ public abstract class BaseRestController {
 		).build();
 	}
 
-	protected JSONObject put(Object bodyValue, Jwt jwt, String path) {
-		return new JSONObject(
-			Objects.requireNonNull(
-				WebClient.create(
-					lxcDXPServerProtocol + "://" + lxcDXPMainDomain
-				).put(
-				).uri(
-					uriBuilder -> uriBuilder.path(
-						path
-					).build()
-				).accept(
-					MediaType.APPLICATION_JSON
-				).contentType(
-					MediaType.APPLICATION_JSON
-				).header(
-					"Authorization", "Bearer " + jwt.getTokenValue()
-				).bodyValue(
-					bodyValue.toString()
-				).retrieve(
-				).bodyToMono(
-					Void.class
-				).subscribe()));
+	protected void put(
+		Object bodyValue, Jwt jwt, Function<UriBuilder, URI> uriFunction) {
+		getWebClient(
+		).put(
+		).uri(
+			uriBuilder -> uriFunction.apply(uriBuilder)
+		).accept(
+			MediaType.APPLICATION_JSON
+		).contentType(
+			MediaType.APPLICATION_JSON
+		).header(
+			HttpHeaders.AUTHORIZATION, "Bearer " + jwt.getTokenValue()
+		).bodyValue(
+			bodyValue.toString()
+		).retrieve(
+		).bodyToMono(
+			Void.class
+		).block();
 	}
 
 	@Value("${com.liferay.lxc.dxp.mainDomain}")

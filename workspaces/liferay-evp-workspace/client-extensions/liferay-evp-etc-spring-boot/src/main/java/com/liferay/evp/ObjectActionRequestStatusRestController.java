@@ -68,8 +68,10 @@ public class ObjectActionRequestStatusRestController
 
 			put(
 				new JSONObject(map), jwt,
-				"/o/c/evprequests/" +
-					objectEntryDTOEVPRequestJSONObject.getLong("id"));
+				uriBuilder -> uriBuilder.path(
+					"/o/c/evprequests/" +
+						objectEntryDTOEVPRequestJSONObject.getLong("id")
+				).build());
 		}
 
 		return new ResponseEntity<>(json, HttpStatus.OK);

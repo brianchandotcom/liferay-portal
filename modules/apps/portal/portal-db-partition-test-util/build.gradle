@@ -6,6 +6,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly group: "org.springframework", name: "spring-beans", version: "5.2.24.RELEASE"
 	compileOnly group: "org.springframework", name: "spring-jdbc", version: "5.2.24.RELEASE"
+	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-string")
 }

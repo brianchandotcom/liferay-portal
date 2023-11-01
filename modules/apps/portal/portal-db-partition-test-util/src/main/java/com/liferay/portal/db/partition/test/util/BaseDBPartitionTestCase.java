@@ -5,6 +5,7 @@
 
 package com.liferay.portal.db.partition.test.util;
 
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.db.partition.DBPartition;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.module.util.BundleUtil;
@@ -30,7 +32,6 @@ import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Props;
@@ -343,39 +344,24 @@ public abstract class BaseDBPartitionTestCase {
 		}
 	}
 
-	protected static void removeDBPartitions(boolean migrate) throws Exception {
-		removeDBPartitions(COMPANY_IDS, migrate);
+	protected static void migrateDBPartitions() throws Exception {
+		migrateDBPartitions(COMPANY_IDS);
 	}
 
-	protected static void removeDBPartitions(long[] companyIds, boolean migrate)
+	protected static void migrateDBPartitions(long[] companyIds)
 		throws Exception {
 
-		CurrentConnection defaultCurrentConnection =
-			CurrentConnectionUtil.getCurrentConnection();
+		_executeOnDBPartitions(companyIds, DBPartitionUtil::migrateDBPartition);
+	}
 
-		try {
-			CurrentConnection currentConnection = dataSource -> connection;
+	protected static void removeDBPartitions() throws Exception {
+		removeDBPartitions(COMPANY_IDS);
+	}
 
-			ReflectionTestUtil.setFieldValue(
-				CurrentConnectionUtil.class, "_currentConnection",
-				currentConnection);
+	protected static void removeDBPartitions(long[] companyIds)
+		throws Exception {
 
-			ReflectionTestUtil.setFieldValue(
-				DBPartitionUtil.class, "_DATABASE_PARTITION_MIGRATE_ENABLED",
-				migrate);
-
-			for (long companyId : companyIds) {
-				DBPartitionUtil.removeDBPartition(companyId);
-			}
-		}
-		finally {
-			ReflectionTestUtil.setFieldValue(
-				CurrentConnectionUtil.class, "_currentConnection",
-				defaultCurrentConnection);
-			ReflectionTestUtil.setFieldValue(
-				DBPartitionUtil.class, "_DATABASE_PARTITION_MIGRATE_ENABLED",
-				_DATABASE_PARTITION_MIGRATE_ENABLED);
-		}
+		_executeOnDBPartitions(companyIds, DBPartitionUtil::removeDBPartition);
 	}
 
 	protected void createAndPopulateControlTable(String tableName)
@@ -439,6 +425,32 @@ public abstract class BaseDBPartitionTestCase {
 		}
 	}
 
+	private static void _executeOnDBPartitions(
+			long[] companyIds,
+			UnsafeFunction<Long, Boolean, PortalException> unsafeFunction)
+		throws Exception {
+
+		CurrentConnection defaultCurrentConnection =
+			CurrentConnectionUtil.getCurrentConnection();
+
+		try {
+			CurrentConnection currentConnection = dataSource -> connection;
+
+			ReflectionTestUtil.setFieldValue(
+				CurrentConnectionUtil.class, "_currentConnection",
+				currentConnection);
+
+			for (long companyId : companyIds) {
+				unsafeFunction.apply(companyId);
+			}
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				CurrentConnectionUtil.class, "_currentConnection",
+				defaultCurrentConnection);
+		}
+	}
+
 	private static void _restartComponent(
 			String bundleSymbolicName, String component)
 		throws Exception {
@@ -493,10 +505,6 @@ public abstract class BaseDBPartitionTestCase {
 
 		};
 	}
-
-	private static final boolean _DATABASE_PARTITION_MIGRATE_ENABLED =
-		GetterUtil.getBoolean(
-			PropsUtil.get("database.partition.migrate.enabled"));
 
 	private static final String _DATABASE_PARTITION_SCHEMA_NAME_PREFIX =
 		"lpartitiontest_";

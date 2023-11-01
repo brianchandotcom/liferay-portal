@@ -1,7 +1,7 @@
 @component-name = "portal-feature-flag"
 definition {
 
-	property custom.properties = "feature.flag.LPS-162766=false${line.separator}feature.flag.LPS-162766.dependencies=LPS-162765${line.separator}feature.flag.LPS-162766.description=Create your own terms and conditions pages${line.separator}feature.flag.LPS-162766.title=Terms and Conditions pages${line.separator}feature.flag.LPS-162766.type=release";
+	property custom.properties = "feature.flag.LPS-162765=false${line.separator}feature.flag.LPS-162765.dependencies=LPS-162766${line.separator}feature.flag.LPS-162765.description=Dependency FF Test Description${line.separator}feature.flag.LPS-162765.title=Dependency FF Test${line.separator}feature.flag.LPS-162765.type=release${line.separator}feature.flag.LPS-162766=false${line.separator}feature.flag.LPS-162766.description=Create your own terms and conditions pages${line.separator}feature.flag.LPS-162766.title=Terms and Conditions pages${line.separator}feature.flag.LPS-162766.type=release";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.component.names = "Feature Flag";

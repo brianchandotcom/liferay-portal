@@ -16,11 +16,15 @@ export default function getRevenueChartColumns(
 	const growthRevenueData = [
 		...growthRevenueResponseNewProjectData.items,
 		...growthRevenueResponseNewBusinessData.items,
+		...renewalRevenueData.items,
 	];
 
 	const totalGrowthRevenue = growthRevenueData?.reduce(
 		(accumulator: number, currentValue: any) => {
-			return accumulator + currentValue.growthArr;
+			return (
+				(Number(accumulator) || 0) +
+				(Number(currentValue.growthArr) || 0)
+			);
 		},
 		0
 	);
@@ -29,7 +33,10 @@ export default function getRevenueChartColumns(
 
 	const totalRenewalRevenue = renewalRevenueData?.items?.reduce(
 		(accumulator: number, currentValue: any) => {
-			return accumulator + currentValue.renewalArr;
+			return (
+				(Number(accumulator) || 0) +
+				(Number(currentValue.renewalArr) || 0)
+			);
 		},
 		0
 	);
@@ -38,7 +45,10 @@ export default function getRevenueChartColumns(
 
 	const totalRevenueAmount = growthRevenueData?.reduce(
 		(accumulator: number, currentValue: any) => {
-			return accumulator + currentValue.subscriptionArr;
+			return (
+				(Number(accumulator) || 0) +
+				(Number(currentValue.subscriptionArr) || 0)
+			);
 		},
 		0
 	);

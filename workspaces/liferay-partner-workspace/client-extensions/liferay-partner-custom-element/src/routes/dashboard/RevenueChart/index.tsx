@@ -51,7 +51,7 @@ export default function () {
 
 		const renewalRevenueResponse = await retry<Response>(() =>
 			fetch(
-				"/o/c/opportunitysfs?&pageSize=200&sort=closeDate:desc&filter=type ne 'New Business' and type ne 'New Project Existing Business' and stage ne 'Rejected' and stage ne 'Rolled into another opportunity' and stage ne 'Disqualified' and stage ne 'Closed Lost'",
+				"/o/c/opportunitysfs?&pageSize=200&sort=closeDate:desc&filter=type eq 'Existing Business' and stage eq 'Closed Won'",
 				{
 					headers: {
 						'accept': 'application/json',

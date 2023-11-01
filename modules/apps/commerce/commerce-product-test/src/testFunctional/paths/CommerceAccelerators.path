@@ -615,6 +615,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MINI_CART_ITEM_NAME_SKU</td>
+	<td>//h6[@class='item-name' and contains(.,'${key_cartItemName}')]/..//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINI_CART_ITEM_NAME_SKU_INDEX</td>
+	<td>//div[contains(@class,'mini-cart-item align-items-start')][${key_index}]//h6[@class='item-name' and contains(.,'${key_cartItemName}')]/..//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MINI_CART_ITEM_QUANTITY</td>
 	<td>//p[@class='item-sku' and contains(.,'${key_cartItemSku}')]/../../../../div[contains(@class,'mini-cart-item-quantity')]//input</td>
 	<td></td>

@@ -3516,7 +3516,10 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		Click(locator1 = "ObjectField#TYPE_FIELD");
+		Click(
+			key_currentOption = "Select an option",
+			key_labelName = "Type",
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 
 		AssertElementPresent(
 			key_fieldType = "Attachment",
@@ -3851,7 +3854,10 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		Click(locator1 = "ObjectField#TYPE_FIELD");
+		Click(
+			key_currentOption = "Select an option",
+			key_labelName = "Type",
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 
 		ObjectAdmin.viewDescriptionForEachFieldType();
 	}

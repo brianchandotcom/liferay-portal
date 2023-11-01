@@ -24,8 +24,11 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro assertOptionAndDescriptionOnRequestFiles(description = null, option = null) {
-		Click(locator1 = "ObjectField#REQUEST_FILES_INPUT");
+	macro assertOptionAndDescriptionOnRequestFiles(description = null,option = null) {
+		Click(
+			key_currentOption = "Select an option",
+			key_labelName = "Request Files",
+			locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON");
 
 		AssertElementPresent(
 			key_optionName = ${option},

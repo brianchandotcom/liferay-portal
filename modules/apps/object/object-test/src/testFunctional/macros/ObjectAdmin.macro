@@ -1164,26 +1164,32 @@ definition {
 			locator1 = "ObjectAction#TAB_GENERIC");
 
 		if (isSet(whenAction)) {
-			Click(locator1 = "ObjectAction#SELECT_TRIGGER");
+			Click(
+				key_currentOption = "Choose a Trigger",
+				locator1 = "ObjectAdmin#CLAY_GENERIC_SELECT_OPTION");
 
 			Click(
-				key_type = ${whenAction},
-				locator1 = "ObjectAdmin#SELECT_RELATIONSHIPS_TYPE_OPTION");
+				key_optionName = ${whenAction},
+				locator1 = "ObjectAdmin#CLAY_GENERIC_DROPDOWN_ITEM");
 		}
 
 		if (isSet(thenAction)) {
-			Click(locator1 = "ObjectAction#SELECT_ACTION_TYPE");
+			Click(
+				key_currentOption = "Choose an Action",
+				locator1 = "ObjectAdmin#CLAY_GENERIC_SELECT_OPTION");
 
 			Click(
-				key_type = ${thenAction},
-				locator1 = "ObjectAdmin#SELECT_RELATIONSHIPS_TYPE_OPTION");
+				key_optionName = ${thenAction},
+				locator1 = "ObjectAdmin#CLAY_GENERIC_DROPDOWN_ITEM");
 
 			if (${thenAction} == "Add an Object Entry") {
-				Click(locator1 = "ObjectAdmin#CHOOSE_AN_OBJECT");
+				Click(
+					key_currentOption = "Choose an Object",
+					locator1 = "ObjectAdmin#CLAY_GENERIC_SELECT_OPTION");
 
-				ClickNoError.clickNoMouseOver(
-					key_objectLabel = ${objectLabel},
-					locator1 = "ObjectAdmin#CHOOSE_OBJECT_LABEL");
+				Click(
+					key_optionName = ${objectLabel},
+					locator1 = "ObjectAdmin#CLAY_GENERIC_DROPDOWN_ITEM");
 
 				if (isSet(fieldName)) {
 					Click(locator1 = "Button#PLUS");

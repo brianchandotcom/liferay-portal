@@ -25,6 +25,8 @@ export function getDTOFromMDFClaim(
 		r_mdfReqToMDFClms_c_mdfRequestId:
 			mdfClaim.r_mdfReqToMDFClms_c_mdfRequestId,
 		reimbursementInvoice: mdfClaim.reimbursementInvoice?.documentId,
+		submitDate: mdfClaim.submitDate,
+		submitted: mdfClaim.submitted,
 		totalClaimAmount: mdfClaim.totalClaimAmount,
 		totalMDFRequestedAmount: mdfClaim.totalMDFRequestedAmount,
 	};

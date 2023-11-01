@@ -223,7 +223,7 @@ const MDFRequestForm = () => {
 
 	if (!hasPermissionShowForm) {
 		return (
-			<PRMForm name="" title="MDF Claim">
+			<PRMForm name="" title="MDF Request">
 				<div className="d-flex justify-content-center mt-4">
 					<ClayAlert
 						className="m-0 w-100"

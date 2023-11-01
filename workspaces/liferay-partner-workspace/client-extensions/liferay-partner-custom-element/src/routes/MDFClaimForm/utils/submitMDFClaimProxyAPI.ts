@@ -34,9 +34,11 @@ export default async function submitMDFClaimProxyAPI(
 	let dtoMDFClaimResponse: mdfClaimDTO | undefined = undefined;
 
 	if (dtoMDFClaimSFResponse.externalReferenceCode) {
-		if (mdfClaim.id) {
+		if (!mdfClaim.submitted) {
 			mdfClaim.submitted = true;
-
+			mdfClaim.submitDate = new Date().toISOString();
+		}
+		if (mdfClaim.id) {
 			dtoMDFClaimResponse = await updateMDFClaim(
 				ResourceName.MDF_CLAIM_DXP,
 				mdfClaim,
@@ -45,9 +47,6 @@ export default async function submitMDFClaimProxyAPI(
 			);
 		}
 		else {
-			mdfClaim.submitted = true;
-			mdfClaim.submitDate = new Date().toISOString();
-
 			dtoMDFClaimResponse = await createMDFClaim(
 				ResourceName.MDF_CLAIM_DXP,
 				mdfClaim,

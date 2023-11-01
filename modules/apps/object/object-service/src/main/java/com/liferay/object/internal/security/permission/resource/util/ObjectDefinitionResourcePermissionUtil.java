@@ -181,23 +181,24 @@ public class ObjectDefinitionResourcePermissionUtil {
 					objectAction.getName(), "</action-key>");
 			}
 
-			if (StringUtil.equals(
-					objectActionPermissionKeys, StringPool.BLANK)) {
-
-				continue;
-			}
+			String portletId = objectDefinition.getPortletId();
 
 			ObjectDefinition rootDescendantNodeObjectDefinition =
 				objectDefinitionPersistence.findByPrimaryKey(
 					node.getObjectDefinitionId());
 
+			if (StringUtil.equals(
+					objectActionPermissionKeys, StringPool.BLANK)) {
+
+				portletId = rootDescendantNodeObjectDefinition.getPortletId();
+			}
+
 			modelResources = StringBundler.concat(
 				modelResources, "<model-resource><model-name>",
 				rootDescendantNodeObjectDefinition.getClassName(),
-				"</model-name><portlet-ref><portlet-name>",
-				objectDefinition.getPortletId(), "</portlet-name>",
-				"</portlet-ref><weight>", weight++, "</weight><permissions>",
-				"<supports>", objectActionPermissionKeys,
+				"</model-name><portlet-ref><portlet-name>", portletId,
+				"</portlet-name></portlet-ref><weight>", weight++,
+				"</weight><permissions><supports>", objectActionPermissionKeys,
 				"</supports><site-member-defaults>",
 				"</site-member-defaults><guest-defaults>",
 				"</guest-defaults><guest-unsupported>",

@@ -270,7 +270,7 @@ definition {
 			key_name = "Filter",
 			locator1 = "PublicationsChanges#SORT_BUTTON");
 
-		Click(locator1 = "Publications#STATUS_BUTTON");
+		Click(locator1 = "Publications#FILTER_STATUS_BUTTON");
 
 		if (${Exclude} == "true") {
 			Check.checkToggleSwitch(locator1 = "Publications#EXCLUDE_TOGGLE_SWITCH");
@@ -279,7 +279,7 @@ definition {
 		for (var statusType : list ${statusList}) {
 			Check.checkNotVisible(
 				key_statusType = ${statusType},
-				locator1 = "Publications#PUBLICATION_STATUS");
+				locator1 = "Publications#FILTER_PUBLICATION_STATUS");
 		}
 
 		Click(locator1 = "Publications#ADD_FILTER_BUTTON");
@@ -577,11 +577,9 @@ definition {
 
 	@summary = "Default summary"
 	macro viewInvitedUser(userInvite = null, publicationRole = null) {
-		WaitForElementPresent(
-			key_title = "Invite Users",
-			locator1 = "IFrame#MODAL_ANY");
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		WaitForElementPresent(
+		AssertElementPresent(
 			key_publicationRole = ${publicationRole},
 			key_userInvite = ${userInvite},
 			locator1 = "Publications#INVITED_USER");

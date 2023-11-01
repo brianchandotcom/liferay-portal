@@ -76,6 +76,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FILTER_STATUS_BUTTON</td>
+	<td>//button[contains(.,'Status') and contains(@class,'dropdown-item')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_PUBLICATION_STATUS</td>
+	<td>//input[@class='custom-control-input' and contains(@aria-label, '${key_statusType}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>KEYWORD_TEXTFIELD</td>
 	<td>//*[@class='form-control-inset']</td>
 	<td></td>
@@ -83,11 +93,6 @@
 <tr>
 	<td>INVITED_USER</td>
 	<td>//td[contains(.,'${key_userInvite}')]//following-sibling::td//button[contains(.,'${key_publicationRole}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LIST_OUT_OF_DATE_STATUS</td>
-	<td>//a[contains(.,'${key_publicationName}')]//span/span[contains(.,'Out of Date')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -103,6 +108,11 @@
 <tr>
 	<td>NEEDS_MANUAL_RESOLUTION_TABLE</td>
 	<td>//div[contains(@class,'publications-conflicts-container')]//span[contains(.,'Needs Manual Resolution')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OUT_OF_DATE_STATUS</td>
+	<td>//div[contains(.,'${key_publicationName}')]//following-sibling::div//strong[contains(.,'Out of Date')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -173,11 +183,6 @@
 <tr>
 	<td>PUBLICATION_CONFLICT_BUTTON</td>
 	<td>//div[contains(@title,'New changes to this content has been published to production.')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PUBLICATION_STATUS</td>
-	<td>//input[@class='custom-control-input' and contains(@aria-label, '${key_statusType}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -268,11 +273,6 @@
 <tr>
 	<td>SELECT_PUBLICATION_NAME</td>
 	<td>//p[contains(.,'${key_publicationName}') and contains(@class, 'list-group-title')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>STATUS_BUTTON</td>
-	<td>//button[contains(.,'Status') and contains(@class,'dropdown-item')]</td>
 	<td></td>
 </tr>
 <tr>

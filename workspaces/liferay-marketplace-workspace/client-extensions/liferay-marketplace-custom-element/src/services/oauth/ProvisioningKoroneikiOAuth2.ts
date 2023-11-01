@@ -16,11 +16,13 @@ export type SubscriptionsType = {
 };
 
 type LicenseTypePayload = {
-	description: string;
-	hostname: string;
-	ipAddress: string;
-	macAddress: string;
-	orderId: string;
+	licenseEntry: {
+		description: string;
+		hostName: string;
+		ipAddresses: string;
+		macAddresses: string;
+		orderId: string;
+	};
 	productPurchaseKey: string;
 	skuId: number;
 	type: string;
@@ -63,6 +65,12 @@ class ProvisioningKoroneikiOAuth2 extends OAuth2Client {
 		);
 
 		return response.json();
+	}
+
+	async getOrderLicenseKeys(orderId: string) {
+		return this.oAuth2Client.fetch(
+			`/provisioning/order-license-keys/${orderId}`
+		);
 	}
 
 	async createLicenseKey(payload: LicenseTypePayload): Promise<LicenseKey> {

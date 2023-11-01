@@ -64,7 +64,7 @@ public class KoroneikiRestController extends BaseRestController {
 			@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
 		throws Exception {
 
-		_initResource(jwt);
+		_initResourceBuilders(jwt);
 
 		JSONObject jsonObject = new JSONObject(json);
 
@@ -230,7 +230,7 @@ public class KoroneikiRestController extends BaseRestController {
 			@PathVariable("orderId") String orderId)
 		throws Exception {
 
-		_initResource(jwt);
+		_initResourceBuilders(jwt);
 
 		JSONArray jsonArray = new JSONArray();
 
@@ -411,7 +411,7 @@ public class KoroneikiRestController extends BaseRestController {
 		return null;
 	}
 
-	private void _initResource(Jwt jwt) throws Exception {
+	private void _initResourceBuilders(Jwt jwt) throws Exception {
 		URL url = new URL(_koroneikiAuthURL);
 
 		URL liferayURL = new URL(

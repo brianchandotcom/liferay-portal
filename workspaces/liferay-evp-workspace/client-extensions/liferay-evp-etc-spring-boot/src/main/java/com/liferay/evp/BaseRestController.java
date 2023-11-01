@@ -57,6 +57,7 @@ public abstract class BaseRestController {
 
 	protected void put(
 		Object bodyValue, Jwt jwt, Function<UriBuilder, URI> uriFunction) {
+
 		getWebClient(
 		).put(
 		).uri(

@@ -5,12 +5,12 @@
 
 package com.liferay.evp;
 
+import com.liferay.petra.string.StringBundler;
+
 import java.util.Objects;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import com.liferay.petra.string.StringBundler;
-
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,14 +39,15 @@ public class ObjectActionOrganizationStatusRestController
 			evpOrganizationJSONObject.getJSONObject(
 				"objectEntryDTOEVPOrganization");
 
-		JSONObject responseJSONObject = get(	
+		JSONObject responseJSONObject = get(
 			jwt,
 			uriBuilder -> uriBuilder.path(
 				"/o/c/evprequests"
 			).queryParam(
-				"filter",StringBundler.concat(
-				"r_organization_c_evpOrganizationId eq '"+
-				objectEntryDTOEVPOrganizationJSONObject.getLong("id"),"'")
+				"filter",
+				StringBundler.concat(
+					"r_organization_c_evpOrganizationId eq '",
+					objectEntryDTOEVPOrganizationJSONObject.getLong("id"), "'")
 			).build());
 
 		if (responseJSONObject.getInt("totalCount") == 0) {

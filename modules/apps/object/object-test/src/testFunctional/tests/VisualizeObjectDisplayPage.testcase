@@ -735,7 +735,9 @@ definition {
 
 		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
 
-		CreateObject.selectTitleField(fieldLabel = "Field");
+		CreateObject.selectTitleField(
+			currentOption = "ID",
+			fieldLabel = "Field");
 
 		CreateObject.saveObject();
 

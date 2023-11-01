@@ -148,7 +148,9 @@ definition {
 
 				ObjectPortlet.selectCustomObject(label = "Menu List");
 
-				CreateObject.selectTitleField(fieldLabel = "Lunch");
+				CreateObject.selectTitleField(
+					currentOption = "ID",
+					fieldLabel = "Lunch");
 
 				CreateObject.saveObject();
 			}

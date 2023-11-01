@@ -12,6 +12,8 @@ import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductPurchaseResource;
 import com.liferay.osb.provisioning.marketplace.rest.client.dto.v1_0.AppLicenseKey;
 import com.liferay.osb.provisioning.marketplace.rest.client.http.HttpInvoker;
+import com.liferay.osb.provisioning.marketplace.rest.client.pagination.Page;
+import com.liferay.osb.provisioning.marketplace.rest.client.pagination.Pagination;
 import com.liferay.osb.provisioning.marketplace.rest.client.resource.v1_0.AppLicenseKeyResource;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -50,6 +52,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -241,6 +244,23 @@ public class ProvisioningRestController extends BaseRestController {
 		_initResource();
 
 		return _appLicenseKeyResource.getAppLicenseKey(Long.valueOf(id));
+	}
+
+	@GetMapping("order-license-keys/{orderId}")
+	public Page<AppLicenseKey> getOrderLicenseKeys(
+			@PathVariable("orderId") String orderId,
+			@RequestParam(defaultValue = "1", required = false) String page,
+			@RequestParam(defaultValue = "20", required = false) String
+				pageSize)
+		throws Exception {
+
+		_initResource();
+
+		return _appLicenseKeyResource.getAppLicenseKeysPage(
+			"", "orderId eq '" + orderId + "'",
+			Pagination.of(
+				GetterUtil.getInteger(page), GetterUtil.getInteger(pageSize)),
+			"");
 	}
 
 	private String _getOAuthAuthorization() throws Exception {

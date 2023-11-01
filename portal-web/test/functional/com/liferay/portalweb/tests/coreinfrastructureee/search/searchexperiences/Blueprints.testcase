@@ -4104,6 +4104,48 @@ definition {
 	}
 
 	@priority = 3
+	test ViewCustomElementJSONTitleAndDescriptionChanges {
+		task ("Create a new element and edit the title and description in the JSON editor") {
+			Blueprints.openBlueprintsAdmin();
+
+			Blueprints.createElement(title = "Test Element Title");
+
+			Blueprints.gotoElement(element = "Test Element Title");
+
+			var customJson = '''
+{
+	"description_i18n": {
+		"en_US": "Edited Description"
+	},
+	"elementDefinition": {
+		"category": "custom",
+		"configuration": {},
+		"icon": "custom-field"
+	},
+	"title_i18n": {
+		"en_US": "Edited Title"
+	},
+	"type": 0
+}
+			''';
+
+			Type.typeCodeMirrorEditorNoError(
+				locator1 = "Blueprints#CODE_MIRROR_EDITOR",
+				value1 = ${customJson});
+		}
+
+		task ("Assert that the element title and description headers automatically update with the JSON change") {
+			AssertTextEquals(
+				locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_HEADER_TITLE",
+				value1 = "Edited Title");
+
+			AssertTextEquals(
+				locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_HEADER_DESCRIPTION",
+				value1 = "Edited Description");
+		}
+	}
+
+	@priority = 3
 	test ViewCustomElementLocalizedPredefinedVariables {
 		Blueprints.openBlueprintsAdmin();
 

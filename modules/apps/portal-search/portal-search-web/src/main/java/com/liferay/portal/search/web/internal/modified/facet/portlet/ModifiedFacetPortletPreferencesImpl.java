@@ -41,7 +41,7 @@ public class ModifiedFacetPortletPreferencesImpl
 	public String getOrder() {
 		return getString(
 			ModifiedFacetPortletPreferences.PREFERENCE_KEY_ORDER,
-			"OrderHitsDesc");
+			"rangesConfiguration");
 	}
 
 	@Override

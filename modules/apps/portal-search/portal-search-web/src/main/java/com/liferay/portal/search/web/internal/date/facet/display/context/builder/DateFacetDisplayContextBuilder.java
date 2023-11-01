@@ -254,7 +254,7 @@ public class DateFacetDisplayContextBuilder implements Serializable {
 			bucketDisplayContexts.add(_buildBucketDisplayContext(label));
 		}
 
-		if (!_order.equals("OrderHitsDesc")) {
+		if (!_order.equals("rangesConfiguration")) {
 			bucketDisplayContexts.sort(
 				BucketDisplayContextComparatorFactoryUtil.
 					getBucketDisplayContextComparator(_order));

@@ -60,7 +60,8 @@ public class DateFacetPortletPreferencesImpl
 	@Override
 	public String getOrder() {
 		return getString(
-			DateFacetPortletPreferences.PREFERENCE_KEY_ORDER, "OrderHitsDesc");
+			DateFacetPortletPreferences.PREFERENCE_KEY_ORDER,
+			"rangesConfiguration");
 	}
 
 	@Override

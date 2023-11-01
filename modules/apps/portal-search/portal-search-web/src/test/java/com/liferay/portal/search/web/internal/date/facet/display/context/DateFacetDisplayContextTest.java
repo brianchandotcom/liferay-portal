@@ -338,7 +338,7 @@ public class DateFacetDisplayContextTest
 	}
 
 	protected DateFacetDisplayContextBuilder createDisplayContextBuilder() {
-		return createDisplayContextBuilder("OrderHitsDesc");
+		return createDisplayContextBuilder("rangesConfiguration");
 	}
 
 	protected DateFacetDisplayContextBuilder createDisplayContextBuilder(

@@ -322,7 +322,7 @@ public class ModifiedFacetDisplayContextBuilderTest
 	}
 
 	protected ModifiedFacetDisplayContextBuilder createDisplayContextBuilder() {
-		return createDisplayContextBuilder("OrderHitsDesc");
+		return createDisplayContextBuilder("rangesConfiguration");
 	}
 
 	protected ModifiedFacetDisplayContextBuilder createDisplayContextBuilder(

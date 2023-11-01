@@ -14,7 +14,7 @@ const TeamMembersIcon = (props) => (
 	>
 		<mask
 			height="17"
-			id="mask0_248_6430"
+			id="mask0_56_4330"
 			maskUnits="userSpaceOnUse"
 			style={{maskType: 'alpha'}}
 			width="16"
@@ -29,8 +29,8 @@ const TeamMembersIcon = (props) => (
 			/>
 		</mask>
 
-		<g mask="url(#mask0_248_6430)">
-			<rect fill="#282934" height="16" width="16" />
+		<g mask="url(#mask0_56_4330)">
+			<rect fill="#004AD7" height="16" width="16" />
 		</g>
 	</svg>
 );

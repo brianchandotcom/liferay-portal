@@ -1800,4 +1800,24 @@ definition {
 			locator1 = "ObjectAdmin#VIEW_SELECTED_TAB_ON_OBJECT");
 	}
 
+	@summary = "Default summary"
+	macro addAOBJFieldWithTranslation(newLanguage = null, fieldLabel = null, fieldType = null, key_placeHolder = null, key_newLabel = null,) {
+		ObjectAdmin.addObjectFieldViaUI(
+			fieldLabel = ${fieldLabel},
+			fieldType = ${fieldType});
+
+		ObjectAdmin.goToFieldsDetails(label = ${fieldLabel});
+
+		ObjectAdmin.chooseAnyLanguage(
+			newLanguage = ${newLanguage},
+			symbolName = "");
+
+		Type(
+			key_placeHolder = ${key_placeHolder},
+			locator1 = "TextInput#ANY_PLACEHOLDER",
+			value1 = ${key_newLabel});
+
+		Button.clickSave();
+	}
+
 }

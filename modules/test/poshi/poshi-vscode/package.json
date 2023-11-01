@@ -151,7 +151,7 @@
 		"compile": "npm run esbuild-base -- --sourcemap",
 		"esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/extension.js --external:vscode --external:@vscode/ripgrep --format=cjs --platform=node",
 		"esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
-		"format": "prettier --write 'src/**/*.ts'",
+		"format": "prettier --write 'package.json' 'scripts/*.mjs' 'src/**/*.ts'",
 		"generate-license": "node scripts/generate_license.mjs",
 		"lint": "eslint src --ext ts",
 		"lint:fix": "eslint src --ext ts --fix",

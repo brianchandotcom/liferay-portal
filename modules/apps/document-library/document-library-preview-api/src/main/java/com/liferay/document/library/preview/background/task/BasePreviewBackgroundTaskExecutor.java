@@ -6,6 +6,7 @@
 package com.liferay.document.library.preview.background.task;
 
 import com.liferay.document.library.configuration.DLFileEntryConfigurationProvider;
+import com.liferay.document.library.constants.DLFileEntryConfigurationConstants;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
@@ -86,12 +87,19 @@ public abstract class BasePreviewBackgroundTaskExecutor
 
 				dynamicQuery.add(mimeTypeProperty.in(getMimeTypes()));
 
-				Property sizeProperty = PropertyFactoryUtil.forName("size");
+				long previewableProcessorMaxSize =
+					dlFileEntryConfigurationProvider.
+						getCompanyPreviewableProcessorMaxSize(companyId);
 
-				dynamicQuery.add(
-					sizeProperty.le(
-						dlFileEntryConfigurationProvider.
-							getCompanyPreviewableProcessorMaxSize(companyId)));
+				if (previewableProcessorMaxSize !=
+						DLFileEntryConfigurationConstants.
+							PREVIEWABLE_PROCESSOR_MAX_SIZE_UNLIMITED) {
+
+					Property sizeProperty = PropertyFactoryUtil.forName("size");
+
+					dynamicQuery.add(
+						sizeProperty.le(previewableProcessorMaxSize));
+				}
 			});
 		actionableDynamicQuery.setPerformActionMethod(
 			(DLFileEntry dlFileEntry) -> {

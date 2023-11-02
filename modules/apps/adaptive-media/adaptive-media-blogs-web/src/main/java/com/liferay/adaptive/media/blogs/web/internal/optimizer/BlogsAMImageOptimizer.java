@@ -14,6 +14,7 @@ import com.liferay.adaptive.media.image.optimizer.AMImageOptimizer;
 import com.liferay.adaptive.media.processor.AMProcessor;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.document.library.configuration.DLFileEntryConfigurationProvider;
+import com.liferay.document.library.constants.DLFileEntryConfigurationConstants;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageSender;
@@ -108,12 +109,19 @@ public class BlogsAMImageOptimizer implements AMImageOptimizer {
 					mimeTypeProperty.in(
 						_amImageMimeTypeProvider.getSupportedMimeTypes()));
 
-				Property sizeProperty = PropertyFactoryUtil.forName("size");
+				long previewableProcessorMaxSize =
+					_dlFileEntryConfigurationProvider.
+						getCompanyPreviewableProcessorMaxSize(companyId);
 
-				dynamicQuery.add(
-					sizeProperty.le(
-						_dlFileEntryConfigurationProvider.
-							getCompanyPreviewableProcessorMaxSize(companyId)));
+				if (previewableProcessorMaxSize !=
+						DLFileEntryConfigurationConstants.
+							PREVIEWABLE_PROCESSOR_MAX_SIZE_UNLIMITED) {
+
+					Property sizeProperty = PropertyFactoryUtil.forName("size");
+
+					dynamicQuery.add(
+						sizeProperty.le(previewableProcessorMaxSize));
+				}
 			});
 		actionableDynamicQuery.setPerformActionMethod(
 			(DLFileEntry dlFileEntry) -> {

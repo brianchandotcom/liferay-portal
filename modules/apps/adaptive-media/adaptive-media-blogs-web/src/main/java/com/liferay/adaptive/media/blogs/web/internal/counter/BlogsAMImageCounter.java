@@ -10,6 +10,7 @@ import com.liferay.adaptive.media.image.mime.type.AMImageMimeTypeProvider;
 import com.liferay.adaptive.media.image.validator.AMImageValidator;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.document.library.configuration.DLFileEntryConfigurationProvider;
+import com.liferay.document.library.constants.DLFileEntryConfigurationConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -52,12 +53,18 @@ public class BlogsAMImageCounter implements AMImageCounter {
 					_amImageMimeTypeProvider.getSupportedMimeTypes(),
 					_amImageValidator::isProcessingSupported)));
 
-		Property sizeProperty = PropertyFactoryUtil.forName("size");
+		long previewableProcessorMaxSize =
+			_dlFileEntryConfigurationProvider.
+				getCompanyPreviewableProcessorMaxSize(companyId);
 
-		dynamicQuery.add(
-			sizeProperty.le(
-				_dlFileEntryConfigurationProvider.
-					getCompanyPreviewableProcessorMaxSize(companyId)));
+		if (previewableProcessorMaxSize !=
+				DLFileEntryConfigurationConstants.
+					PREVIEWABLE_PROCESSOR_MAX_SIZE_UNLIMITED) {
+
+			Property sizeProperty = PropertyFactoryUtil.forName("size");
+
+			dynamicQuery.add(sizeProperty.le(previewableProcessorMaxSize));
+		}
 
 		return (int)_dlFileEntryLocalService.dynamicQueryCount(dynamicQuery);
 	}

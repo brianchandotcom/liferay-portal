@@ -12,6 +12,7 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
+import com.liferay.info.collection.provider.BetaInfoCollectionProvider;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.ConfigurableInfoCollectionProvider;
 import com.liferay.info.collection.provider.FilteredInfoCollectionProvider;
@@ -57,7 +58,8 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = InfoCollectionProvider.class)
 public class UserContentRecommendationInfoItemCollectionProvider
-	implements ConfigurableInfoCollectionProvider<AssetEntry>,
+	implements BetaInfoCollectionProvider<AssetEntry>,
+			   ConfigurableInfoCollectionProvider<AssetEntry>,
 			   FilteredInfoCollectionProvider<AssetEntry> {
 
 	@Override

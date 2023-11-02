@@ -77,8 +77,6 @@ definition {
 	@description = "This is a test for LPS-186155. View content in experience under Simulation panel in content page."
 	@priority = 4
 	test PreviewContentOnContentPageByExperience {
-		property custom.properties = "feature.flag.LPS-186558=true";
-
 		task ("Given a site administrator has a content page with experience based on new segment") {
 			JSONSegmentsentry.addSegment(
 				fieldName = "Email Address",
@@ -146,8 +144,6 @@ definition {
 	@description = "This is a test for LPS-128810 and LPS-186155. View collection items on content page when select segment."
 	@priority = 4
 	test PreviewContentOnContentPageBySegment {
-		property custom.properties = "feature.flag.LPS-186558=true";
-
 		task ("Add a segment with a Regular Role field") {
 			var roleId = JSONPermissionSetter.setRoleId(roleTitle = "Owner");
 
@@ -295,7 +291,6 @@ definition {
 	@priority = 4
 	test PreviewContentOnWidgetPageBySegment {
 		property asset.publisher.selection.style = "asset-list";
-		property custom.properties = "feature.flag.LPS-186558=true";
 
 		task ("Given a site administrator displays manual collection with variation on a widget page") {
 			var roleId = JSONPermissionSetter.setRoleId(roleTitle = "Owner");
@@ -388,8 +383,6 @@ definition {
 	@description = "This is a test for LPS-186155. Preview the custom size on Simulation panel."
 	@priority = 3
 	test PreviewCustomSize {
-		property custom.properties = "feature.flag.LPS-186558=true";
-
 		task ("When the site administrator applies custom size on simulation panel") {
 			MobileDevice.previewPG(
 				applyCustomSize = "true",
@@ -431,8 +424,6 @@ definition {
 	@description = "This is a test for LPS-186155. View no experience selector in the header when simulation is opened and view info for no available experiences and available segments in content page."
 	@priority = 3
 	test ViewEmptyMessage {
-		property custom.properties = "feature.flag.LPS-186558=true";
-
 		task ("Given a site administrator has a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = ${randomSiteName},
@@ -501,8 +492,6 @@ definition {
 	@description = "This is a test for LPS-187159. View info alert message under Simulation panel in content page."
 	@priority = 4
 	test ViewInfoMessageWhenPreviewContentPage {
-		property custom.properties = "feature.flag.LPS-186558=true";
-
 		task ("Given a site administrator has a content page with experience based on new segment") {
 			JSONSegmentsentry.addSegment(
 				fieldName = "Email Address",
@@ -571,8 +560,6 @@ definition {
 	@description = "This is a test for LPS-187159. View info alert message under Simulation panel in widget page."
 	@priority = 4
 	test ViewInfoMessageWhenPreviewWidgetPage {
-		property custom.properties = "feature.flag.LPS-186558=true";
-
 		task ("Given a site administrator has a widget page") {
 			JSONSegmentsentry.addSegment(
 				fieldName = "Email Address",

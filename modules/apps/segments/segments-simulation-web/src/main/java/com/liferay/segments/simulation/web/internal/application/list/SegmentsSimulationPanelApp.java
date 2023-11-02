@@ -8,7 +8,6 @@ package com.liferay.segments.simulation.web.internal.application.list;
 import com.liferay.application.list.BaseJSPPanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
@@ -54,11 +53,7 @@ public class SegmentsSimulationPanelApp extends BaseJSPPanelApp {
 
 	@Override
 	public String getLabel(Locale locale) {
-		if (FeatureFlagManagerUtil.isEnabled("LPS-186558")) {
-			return _language.get(locale, "page-content");
-		}
-
-		return _language.get(locale, "segments");
+		return _language.get(locale, "page-content");
 	}
 
 	@Override

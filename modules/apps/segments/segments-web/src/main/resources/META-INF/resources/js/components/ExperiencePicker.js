@@ -13,15 +13,13 @@ export default function ExperiencePicker({
 	const [showSelector, setShowSelector] = useState(true);
 
 	useEffect(() => {
-		if (Liferay.FeatureFlags['LPS-186558']) {
-			Liferay.on('SimulationMenu:closeSimulationPanel', () =>
-				setShowSelector(true)
-			);
+		Liferay.on('SimulationMenu:closeSimulationPanel', () =>
+			setShowSelector(true)
+		);
 
-			Liferay.on('SimulationMenu:openSimulationPanel', () =>
-				setShowSelector(false)
-			);
-		}
+		Liferay.on('SimulationMenu:openSimulationPanel', () =>
+			setShowSelector(false)
+		);
 
 		if (Liferay.FeatureFlags['LPS-187284']) {
 			Liferay.on('PageAuditMenu:closePageAuditPanel', () =>

@@ -80,6 +80,11 @@ public class EditPayPalCommercePaymentIntegrationConfigurationMVCActionCommand
 			modifiableSettings.setValue("clientSecret", clientSecret);
 		}
 
+		String merchantId = ParamUtil.getString(
+			actionRequest, "settings--merchantId--");
+
+		modifiableSettings.setValue("merchantId", merchantId);
+
 		String mode = ParamUtil.getString(actionRequest, "settings--mode--");
 
 		modifiableSettings.setValue("mode", mode);

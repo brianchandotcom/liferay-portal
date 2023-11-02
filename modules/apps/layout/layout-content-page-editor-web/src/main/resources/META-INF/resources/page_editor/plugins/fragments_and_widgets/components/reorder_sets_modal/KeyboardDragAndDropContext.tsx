@@ -19,10 +19,7 @@ import React, {
 	useState,
 } from 'react';
 
-// @ts-ignore
-
-import {v4 as uuidv4} from 'uuid';
-
+import ScreenReaderAnnouncer from '../../../../common/components/ScreenReaderAnnouncer';
 import {
 	DRAG_OVER_POSITIONS,
 	DRAG_OVER_POSITIONS_LABELS,
@@ -75,31 +72,18 @@ export function KeyboardDragAndDropContextProvider({
 	const itemListElementRef = useRef<HTMLDivElement | null>(null);
 	const [sourceItem, setSourceItem] = useState<Item | null>(null);
 	const [targetItem, setTargetItem] = useState<Item | null>(null);
-	const [textMap, setTextMap] = useState<Record<string, string>>({});
 
 	const itemListRef = useRef(itemList);
 	itemListRef.current = itemList;
 
-	const sendMessage = useCallback((message: string) => {
-		const messageId = uuidv4();
+	const screenReaderAnnouncerRef = useRef<any>();
 
-		setTextMap((previousTextMap) => {
-			const nextTextMap = {...previousTextMap};
+	const sendMessage = useCallback((message) => {
+		const ref = screenReaderAnnouncerRef;
 
-			nextTextMap[messageId] = message;
-
-			return nextTextMap;
-		});
-
-		setTimeout(() => {
-			setTextMap((previousTextMap) => {
-				const nextTextMap = {...previousTextMap};
-
-				delete nextTextMap[messageId];
-
-				return nextTextMap;
-			});
-		}, 10000);
+		if (ref.current) {
+			ref.current?.sendMessage(message);
+		}
 	}, []);
 
 	const contextValue: Context = {
@@ -181,11 +165,10 @@ export function KeyboardDragAndDropContextProvider({
 
 	return (
 		<KeyboardDragAndDropContext.Provider value={contextValue}>
-			<span aria-live="assertive" className="sr-only">
-				{Object.entries(textMap).map(([messageId, message]) => (
-					<p key={messageId}>{message}</p>
-				))}
-			</span>
+			<ScreenReaderAnnouncer
+				aria-live="assertive"
+				ref={screenReaderAnnouncerRef}
+			/>
 
 			<div
 				aria-orientation="vertical"

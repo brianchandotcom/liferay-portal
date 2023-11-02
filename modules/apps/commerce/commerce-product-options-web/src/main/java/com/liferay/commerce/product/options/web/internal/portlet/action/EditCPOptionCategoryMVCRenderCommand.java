@@ -15,14 +15,18 @@ import com.liferay.commerce.product.options.web.internal.portlet.action.helper.A
 import com.liferay.commerce.product.service.CPOptionCategoryService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -57,6 +61,7 @@ public class EditCPOptionCategoryMVCRenderCommand implements MVCRenderCommand {
 				cpOptionCategoryDisplayContext);
 
 			setCPOptionCategoryRequestAttribute(renderRequest);
+			_populatePortletDisplay(renderRequest);
 		}
 		catch (Exception exception) {
 			if (exception instanceof NoSuchCPOptionCategoryException ||
@@ -89,6 +94,25 @@ public class EditCPOptionCategoryMVCRenderCommand implements MVCRenderCommand {
 
 		renderRequest.setAttribute(
 			CPWebKeys.CP_OPTION_CATEGORY, cpOptionCategory);
+	}
+
+	private void _populatePortletDisplay(RenderRequest renderRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		portletDisplay.setShowBackIcon(true);
+		portletDisplay.setURLBack(
+			PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					renderRequest, CPPortletKeys.CP_SPECIFICATION_OPTIONS,
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/cp_specification_options/view_cp_option_categories"
+			).setParameter(
+				"toolbarItem", "specification-groups"
+			).buildString());
 	}
 
 	@Reference

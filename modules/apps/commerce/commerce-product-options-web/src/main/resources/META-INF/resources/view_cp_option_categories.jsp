@@ -73,6 +73,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "specifications"));
 									currentURL
 								).setParameter(
 									"cpOptionCategoryId", cpOptionCategory.getCPOptionCategoryId()
+								).setParameter(
+									"toolbarItem", "specification-groups"
 								).buildPortletURL();
 								%>
 

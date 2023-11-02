@@ -31,6 +31,7 @@ else {
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcRenderCommandName" value="/cp_specification_options/edit_cp_specification_option" />
 			<portlet:param name="cpSpecificationOptionId" value="<%= String.valueOf(cpSpecificationOption.getCPSpecificationOptionId()) %>" />
+			<portlet:param name="toolbarItem" value="specification-labels" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon

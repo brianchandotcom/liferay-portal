@@ -31,6 +31,7 @@ else {
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcRenderCommandName" value="/cp_specification_options/edit_cp_option_category" />
 			<portlet:param name="cpOptionCategoryId" value="<%= String.valueOf(cpOptionCategory.getCPOptionCategoryId()) %>" />
+			<portlet:param name="toolbarItem" value="specification-groups" />
 		</portlet:renderURL>
 
 		<liferay-ui:icon

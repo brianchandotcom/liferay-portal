@@ -49,7 +49,7 @@ definition {
 
 			AssertElementPresent(
 				key_value = "Company",
-				locator1 = "APIBuilder#ENDPOINT_DROPDOWN");
+				locator1 = "APIBuilder#DROPDOWN_TOGGLE");
 
 			AssertTextEquals(
 				key_fieldLabel = "Path",
@@ -84,7 +84,7 @@ definition {
 
 			AssertElementPresent(
 				key_value = "Site",
-				locator1 = "APIBuilder#ENDPOINT_DROPDOWN");
+				locator1 = "APIBuilder#DROPDOWN_TOGGLE");
 
 			AssertTextEquals(
 				key_fieldLabel = "Path",
@@ -112,7 +112,7 @@ definition {
 
 			Click(
 				key_value = "Select Scope",
-				locator1 = "APIBuilder#ENDPOINT_DROPDOWN");
+				locator1 = "APIBuilder#DROPDOWN_TOGGLE");
 		}
 
 		task ("Then scope option is present for both site and company") {

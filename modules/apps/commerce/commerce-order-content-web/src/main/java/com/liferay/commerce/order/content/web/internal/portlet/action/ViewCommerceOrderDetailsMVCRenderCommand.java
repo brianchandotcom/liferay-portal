@@ -11,13 +11,18 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.content.web.internal.display.context.CommerceOrderContentDisplayContext;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -43,6 +48,8 @@ public class ViewCommerceOrderDetailsMVCRenderCommand
 		throws PortletException {
 
 		try {
+			_populatePortletDisplay(renderRequest);
+
 			CommerceOrderContentDisplayContext
 				commerceOrderContentDisplayContext =
 					(CommerceOrderContentDisplayContext)
@@ -75,6 +82,22 @@ public class ViewCommerceOrderDetailsMVCRenderCommand
 
 			throw new PortletException(exception);
 		}
+	}
+
+	private void _populatePortletDisplay(RenderRequest renderRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		portletDisplay.setShowBackIcon(true);
+		portletDisplay.setURLBack(
+			PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					themeDisplay.getRequest(),
+					CommercePortletKeys.COMMERCE_ORDER_CONTENT,
+					themeDisplay.getPlid(), PortletRequest.RENDER_PHASE)
+			).buildString());
 	}
 
 	@Reference

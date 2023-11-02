@@ -47,13 +47,6 @@ List<CommerceAddress> shippingAddresses = commerceOrderContentDisplayContext.get
 List<CommerceAddress> billingAddresses = commerceOrderContentDisplayContext.getBillingCommerceAddresses(accountEntry.getAccountEntryId());
 
 List<String> errorMessages = (List<String>)request.getAttribute(CommerceWebKeys.COMMERCE_ORDER_ERROR_MESSAGES);
-
-String backURL = ParamUtil.getString(request, "backURL", null);
-
-if (backURL != null) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(backURL);
-}
 %>
 
 <c:if test="<%= (errorMessages != null) && !errorMessages.isEmpty() %>">

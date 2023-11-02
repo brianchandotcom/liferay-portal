@@ -9,6 +9,14 @@
 
 <%
 CommerceOrderNote commerceOrderNote = commerceOrderContentDisplayContext.getCommerceOrderNote();
+
+PortletURL backURL = PortletURLBuilder.createRenderURL(
+	renderResponse
+).setMVCRenderCommandName(
+	"/commerce_open_order_content/edit_commerce_order_notes"
+).setParameter(
+	"commerceOrderId", commerceOrderNote.getCommerceOrderId()
+).buildPortletURL();
 %>
 
 <portlet:actionURL name="/commerce_open_order_content/edit_commerce_order_note" var="editCommerceOrderNoteActionURL">
@@ -19,7 +27,7 @@ CommerceOrderNote commerceOrderNote = commerceOrderContentDisplayContext.getComm
 	<div class="autofit-float autofit-row header-title-bar">
 		<div class="autofit-col autofit-col-expand">
 			<liferay-ui:header
-				backURL="<%= redirect %>"
+				backURL="<%= String.valueOf(backURL) %>"
 				title="edit-note"
 			/>
 		</div>
@@ -28,7 +36,7 @@ CommerceOrderNote commerceOrderNote = commerceOrderContentDisplayContext.getComm
 
 <aui:form action="<%= editCommerceOrderNoteActionURL %>" cssClass="order-notes-form" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveCommerceOrderNote();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="commerceOrderNoteId" type="hidden" value="<%= String.valueOf(commerceOrderNote.getCommerceOrderNoteId()) %>" />
 
 	<div class="lfr-form-content">
@@ -52,7 +60,7 @@ CommerceOrderNote commerceOrderNote = commerceOrderContentDisplayContext.getComm
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" primary="<%= true %>" type="submit" />
 
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= String.valueOf(backURL) %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

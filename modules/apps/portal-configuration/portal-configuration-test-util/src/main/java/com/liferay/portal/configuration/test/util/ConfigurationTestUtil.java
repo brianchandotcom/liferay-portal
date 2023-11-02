@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Dictionary;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 
@@ -97,7 +98,7 @@ public class ConfigurationTestUtil {
 		unsafeRunnable.run();
 
 		try {
-			countDownLatch.await();
+			countDownLatch.await(1, TimeUnit.MINUTES);
 		}
 		finally {
 			serviceRegistration.unregister();
@@ -137,7 +138,7 @@ public class ConfigurationTestUtil {
 		unsafeRunnable.run();
 
 		try {
-			countDownLatch.await();
+			countDownLatch.await(1, TimeUnit.MINUTES);
 		}
 		finally {
 			serviceRegistration.unregister();
@@ -261,7 +262,7 @@ public class ConfigurationTestUtil {
 
 		ManagedService managedService = properties -> {
 			try {
-				eventCountDownLatch.await();
+				eventCountDownLatch.await(1, TimeUnit.MINUTES);
 			}
 			catch (InterruptedException interruptedException) {
 				ReflectionUtil.throwException(interruptedException);
@@ -294,7 +295,7 @@ public class ConfigurationTestUtil {
 
 			markerConfiguration.delete();
 
-			updateCountDownLatch.await();
+			updateCountDownLatch.await(1, TimeUnit.MINUTES);
 		}
 		finally {
 			configurationListenerServiceRegistration.unregister();

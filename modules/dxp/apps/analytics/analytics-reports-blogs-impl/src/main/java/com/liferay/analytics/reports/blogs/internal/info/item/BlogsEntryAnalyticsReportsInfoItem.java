@@ -19,7 +19,6 @@ import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.Portal;
 
 import java.util.Date;
 import java.util.List;
@@ -140,9 +139,6 @@ public class BlogsEntryAnalyticsReportsInfoItem
 	@Reference
 	private LayoutDisplayPageProviderRegistry
 		_layoutDisplayPageProviderRegistry;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private UserLocalService _userLocalService;

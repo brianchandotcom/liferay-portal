@@ -1,13 +1,12 @@
 import {fromJS} from 'immutable';
-import {LocalStorageMechanism, Storage} from 'metal-storage';
-
-const storage = new Storage(new LocalStorageMechanism());
 
 export function loadState() {
 	try {
 		return fromJS({
-			maintenanceSeen: JSON.parse(atob(storage.get('maintenanceSeen'))),
-			sidebar: JSON.parse(atob(storage.get('sidebar')))
+			maintenanceSeen: JSON.parse(
+				atob(localStorage.getItem('maintenanceSeen'))
+			),
+			sidebar: JSON.parse(atob(localStorage.getItem('sidebar')))
 		});
 	} catch (err) {
 		return undefined;
@@ -16,11 +15,14 @@ export function loadState() {
 
 export function saveState(state) {
 	try {
-		storage.set(
+		localStorage.setItem(
 			'maintenanceSeen',
 			btoa(JSON.stringify(state.get('maintenanceSeen')))
 		);
 
-		storage.set('sidebar', btoa(JSON.stringify(state.get('sidebar'))));
+		localStorage.setItem(
+			'sidebar',
+			btoa(JSON.stringify(state.get('sidebar')))
+		);
 	} catch (err) {}
 }

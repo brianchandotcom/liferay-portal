@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -31,8 +32,11 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.scim.rest.internal.provider.ScimClientBearerTokenProvider;
 import com.liferay.scim.rest.internal.util.ScimClientUtil;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+
+import javax.ws.rs.core.Application;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -42,6 +46,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Olivér Kecskeméty
@@ -173,6 +178,9 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ScimClientOAuth2ApplicationConfigurationFactory.class);
 
+	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	private Collection<Application> _applications;
+
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
@@ -181,6 +189,9 @@ public class ScimClientOAuth2ApplicationConfigurationFactory {
 
 	@Reference
 	private LocalOAuthClient _localOAuthClient;
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	private volatile OAuth2Application _oAuth2Application;
 

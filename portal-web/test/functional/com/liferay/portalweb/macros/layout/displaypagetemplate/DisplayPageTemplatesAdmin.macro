@@ -64,6 +64,8 @@ definition {
 		LexiconCard.clickCardTitleLink(card = ${displayPageName});
 
 		PageEditor.assertFragmentSidebarLoaded();
+
+		WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
 	}
 
 	@summary = "Default summary"

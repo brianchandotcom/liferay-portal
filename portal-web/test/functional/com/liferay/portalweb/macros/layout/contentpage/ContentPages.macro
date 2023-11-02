@@ -379,6 +379,8 @@ return	Array.from(getWebElement("(//*[contains(@class,'lfr-layout-structure-item
 		Click(locator1 = "Icon#EDIT_PENCIL");
 
 		PageEditor.assertFragmentSidebarLoaded();
+
+		WaitForVisible(locator1 = "Sidebar#PANEL_OPEN");
 	}
 
 	@summary = "Default summary"

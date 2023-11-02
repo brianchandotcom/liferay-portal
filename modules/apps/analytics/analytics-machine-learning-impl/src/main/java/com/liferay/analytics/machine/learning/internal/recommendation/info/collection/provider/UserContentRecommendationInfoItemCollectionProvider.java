@@ -10,7 +10,10 @@ import com.liferay.analytics.machine.learning.content.UserContentRecommendationM
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.info.collection.provider.CollectionQuery;
+import com.liferay.info.collection.provider.FilteredInfoCollectionProvider;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
+import com.liferay.info.filter.CategoriesInfoFilter;
+import com.liferay.info.filter.InfoFilter;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -21,6 +24,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.Collections;
@@ -35,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = InfoCollectionProvider.class)
 public class UserContentRecommendationInfoItemCollectionProvider
-	implements InfoCollectionProvider<AssetEntry> {
+	implements FilteredInfoCollectionProvider<AssetEntry> {
 
 	@Override
 	public InfoPage<AssetEntry> getCollectionInfoPage(
@@ -43,13 +47,25 @@ public class UserContentRecommendationInfoItemCollectionProvider
 
 		Pagination pagination = collectionQuery.getPagination();
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
 		try {
+			long[] categoryIds = null;
+
+			CategoriesInfoFilter categoriesInfoFilter =
+				collectionQuery.getInfoFilter(CategoriesInfoFilter.class);
+
+			if (categoriesInfoFilter != null) {
+				categoryIds = ArrayUtil.append(
+					categoriesInfoFilter.getCategoryIds());
+
+				categoryIds = ArrayUtil.unique(categoryIds);
+			}
+
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
 			List<UserContentRecommendation> userContentRecommendations =
 				_userContentRecommendationManager.getUserContentRecommendations(
-					null, serviceContext.getCompanyId(),
+					categoryIds, serviceContext.getCompanyId(),
 					serviceContext.getUserId());
 
 			if (userContentRecommendations.isEmpty()) {
@@ -80,6 +96,11 @@ public class UserContentRecommendationInfoItemCollectionProvider
 	public String getLabel(Locale locale) {
 		return _language.get(
 			locale, "user's-personalized-content-recommendations");
+	}
+
+	@Override
+	public List<InfoFilter> getSupportedInfoFilters() {
+		return Collections.singletonList(new CategoriesInfoFilter());
 	}
 
 	@Override

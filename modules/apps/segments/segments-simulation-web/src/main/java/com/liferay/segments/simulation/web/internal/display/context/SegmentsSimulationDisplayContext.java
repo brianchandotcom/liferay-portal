@@ -68,24 +68,24 @@ public class SegmentsSimulationDisplayContext {
 
 	public Map<String, Object> getData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
-			"deactivateSimulationURL", getDeactivateSimulationURL()
+			"deactivateSimulationURL", _getDeactivateSimulationURL()
 		).put(
-			"namespace", getPortletNamespace()
+			"namespace", _getPortletNamespace()
 		).put(
-			"segmentationEnabled", isSegmentationEnabled()
+			"segmentationEnabled", _isSegmentationEnabled()
 		).put(
 			"segmentsCompanyConfigurationURL",
-			getSegmentsCompanyConfigurationURL()
+			_getSegmentsCompanyConfigurationURL()
 		).put(
 			"segmentsEntries", _getSegmentsEntriesJSONArray()
 		).put(
 			"segmentsExperiences", _getSegmentsExperiencesJSONArray()
 		).put(
-			"simulateSegmentsEntriesURL", getSimulateSegmentsEntriesURL()
+			"simulateSegmentsEntriesURL", _getSimulateSegmentsEntriesURL()
 		).build();
 	}
 
-	public String getDeactivateSimulationURL() {
+	private String _getDeactivateSimulationURL() {
 		return PortletURLBuilder.createActionURL(
 			_liferayPortletResponse, SegmentsPortletKeys.SEGMENTS_SIMULATION
 		).setActionName(
@@ -93,12 +93,12 @@ public class SegmentsSimulationDisplayContext {
 		).buildString();
 	}
 
-	public String getPortletNamespace() {
+	private String _getPortletNamespace() {
 		return PortalUtil.getPortletNamespace(
 			SegmentsPortletKeys.SEGMENTS_SIMULATION);
 	}
 
-	public String getSegmentsCompanyConfigurationURL() {
+	private String _getSegmentsCompanyConfigurationURL() {
 		try {
 			return _segmentsConfigurationProvider.getCompanyConfigurationURL(
 				_httpServletRequest);
@@ -110,7 +110,7 @@ public class SegmentsSimulationDisplayContext {
 		return StringPool.BLANK;
 	}
 
-	public List<SegmentsEntry> getSegmentsEntries() {
+	private List<SegmentsEntry> _getSegmentsEntries() {
 		if (_segmentsEntries != null) {
 			return _segmentsEntries;
 		}
@@ -119,26 +119,6 @@ public class SegmentsSimulationDisplayContext {
 			_getStagingAwareGroupId(), true);
 
 		return _segmentsEntries;
-	}
-
-	public String getSimulateSegmentsEntriesURL() {
-		return PortletURLBuilder.createActionURL(
-			_liferayPortletResponse, SegmentsPortletKeys.SEGMENTS_SIMULATION
-		).setActionName(
-			"/segments_simulation/simulate_segments_entries"
-		).buildString();
-	}
-
-	public boolean isSegmentationEnabled() {
-		try {
-			return _segmentsConfigurationProvider.isSegmentationEnabled(
-				_themeDisplay.getCompanyId());
-		}
-		catch (ConfigurationException configurationException) {
-			_log.error(configurationException);
-		}
-
-		return false;
 	}
 
 	private JSONArray _getSegmentsEntriesJSONArray() {
@@ -155,7 +135,7 @@ public class SegmentsSimulationDisplayContext {
 					_themeDisplay.getLocale())
 			));
 
-		for (SegmentsEntry segmentsEntry : getSegmentsEntries()) {
+		for (SegmentsEntry segmentsEntry : _getSegmentsEntries()) {
 			_segmentsEntriesJSONArray.put(
 				JSONUtil.put(
 					"id", segmentsEntry.getSegmentsEntryId()
@@ -216,6 +196,14 @@ public class SegmentsSimulationDisplayContext {
 		return _segmentsExperiencesJSONArray;
 	}
 
+	private String _getSimulateSegmentsEntriesURL() {
+		return PortletURLBuilder.createActionURL(
+			_liferayPortletResponse, SegmentsPortletKeys.SEGMENTS_SIMULATION
+		).setActionName(
+			"/segments_simulation/simulate_segments_entries"
+		).buildString();
+	}
+
 	private long _getStagingAwareGroupId() {
 		if (_groupId != null) {
 			return _groupId;
@@ -248,6 +236,18 @@ public class SegmentsSimulationDisplayContext {
 
 				return false;
 			}
+		}
+
+		return false;
+	}
+
+	private boolean _isSegmentationEnabled() {
+		try {
+			return _segmentsConfigurationProvider.isSegmentationEnabled(
+				_themeDisplay.getCompanyId());
+		}
+		catch (ConfigurationException configurationException) {
+			_log.error(configurationException);
 		}
 
 		return false;

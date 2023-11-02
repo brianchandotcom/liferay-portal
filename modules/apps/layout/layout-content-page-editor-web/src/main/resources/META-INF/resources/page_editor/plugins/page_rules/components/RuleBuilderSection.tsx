@@ -131,6 +131,19 @@ export function RuleBuilderConditionSection({
 	setConditionType,
 	setConditions,
 }: RuleBuilderConditionProps) {
+	const onDeleteCondition = (condition: Condition, index: number) => {
+		if (conditions.length === 1) {
+			setConditions([{id: condition.id} as Condition]);
+		}
+		else {
+			setConditions((previousConditions) =>
+				previousConditions.filter(
+					(_condition, currentIndex) => currentIndex !== index
+				)
+			);
+		}
+	};
+
 	return (
 		<ClayPanel
 			className="page-editor__rule-builder-section"
@@ -197,21 +210,9 @@ export function RuleBuilderConditionSection({
 								return newConditions;
 							})
 						}
-						onDeleteCondition={() => {
-							if (conditions.length === 1) {
-								setConditions([
-									{id: condition.id} as Condition,
-								]);
-							}
-							else {
-								setConditions((previousConditions) =>
-									previousConditions.filter(
-										(_condition, currentIndex) =>
-											currentIndex !== index
-									)
-								);
-							}
-						}}
+						onDeleteCondition={() =>
+							onDeleteCondition(condition, index)
+						}
 						showDeleteButton={
 							conditions.length > 1 || !!condition.type
 						}

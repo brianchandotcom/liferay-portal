@@ -4,7 +4,7 @@
  */
 
 import {sub} from 'frontend-js-web';
-import React from 'react';
+import React, {ComponentProps} from 'react';
 
 import RuleBuilderItem from './RuleBuilderItem';
 import RuleSelect from './RuleSelect';
@@ -22,6 +22,7 @@ interface ActionProps {
 	onActionChange: (action: Action) => void;
 	onDeleteAction: () => void;
 	showDeleteButton: boolean;
+	wrapperRef?: ComponentProps<typeof RuleBuilderItem>['wrapperRef'];
 }
 
 const TYPE_ITEMS = [
@@ -49,12 +50,14 @@ export default function Action({
 	onActionChange,
 	onDeleteAction,
 	showDeleteButton,
+	wrapperRef,
 }: ActionProps) {
 	return (
 		<RuleBuilderItem
 			onDeleteButtonClick={onDeleteAction}
 			showDeleteButton={showDeleteButton}
 			type="action"
+			wrapperRef={wrapperRef}
 		>
 			<RuleSelect
 				aria-label={sub(

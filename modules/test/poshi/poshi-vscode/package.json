@@ -143,7 +143,6 @@
 	"main": "./out/extension.js",
 	"name": "poshi-language-support",
 	"publisher": "LiferayInc",
-	"readme": "./README.md",
 	"repository": {
 		"directory": "modules/test/poshi/poshi-vscode",
 		"type": "git",

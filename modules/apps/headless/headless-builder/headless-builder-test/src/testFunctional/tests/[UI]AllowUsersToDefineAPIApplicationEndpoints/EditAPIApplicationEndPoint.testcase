@@ -1,0 +1,281 @@
+@component-name = "portal-headless"
+definition {
+
+	property custom.properties = "feature.flag.LPS-178642=true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Object";
+	property testray.main.component.name = "Headless Builder";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		ApplicationAPI.deleteAllAPIApplication();
+
+		JSONObject.deleteAllCustomObjects();
+
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@priority = 4
+	test CannotModifyMethodOfCretaedEndpoint {
+		property portal.acceptance = "true";
+
+		task ("Given API Application with endpoint created") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				endpointName = "testendpoint",
+				endpointPath = "/testendpoint",
+				relatedEndpoint = "true",
+				status = "published",
+				title = "My-app");
+		}
+
+		task ("When when going to Edit endpoint") {
+			APIBuilderUI.goToEditRelatedEntryInEditApplication(
+				entity = "Endpoints",
+				name = "testendpoint",
+				tabEntity = "Info",
+				title = "My-app");
+		}
+
+		task ("Then method cannot be modified") {
+			AssertTextEquals(
+				locator1 = "Button#DISABLED_BUTTON",
+				value1 = "GET");
+		}
+	}
+
+	@priority = 4
+	test CanRelateEndpointWithSchema {
+		property portal.acceptance = "true";
+
+		task ("Given API Application with endpoint created") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				endpointName = "testendpoint",
+				endpointPath = "/testendpoint",
+				relatedEndpoint = "true",
+				status = "published",
+				title = "My-app");
+		}
+
+		task ("And Given API Schema in API Application") {
+			SchemaAPI.createAPISchema(
+				externalReferenceCode = "My-app",
+				mainObjectDefinitionERC = "L_API_APPLICATION",
+				name = "testSchema");
+		}
+
+		task ("When editing the Endpoint") {
+			APIBuilderUI.addAndPublishEndpointConfiguration(
+				entity = "Endpoints",
+				name = "testendpoint",
+				schemaName = "testSchema",
+				title = "My-app");
+		}
+
+		task ("Then I can set API Schema in Response Body Schema") {
+			AssertElementPresent(
+				key_optionName = "testSchema",
+				locator1 = "ObjectAdmin#LAYOUT_ADD_FIELD_OPTION");
+		}
+	}
+
+	@priority = 4
+	test CanRelateSchemaOfRelatedObjectsWithEndpoint {
+		property portal.acceptance = "true";
+
+		task ("Given Student, University objects of scope 'Company' created with text field 'name'") {
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "student",
+				en_US_plural_label = "students",
+				name = "Student",
+				objectDefinitionExternalReferenceCode = "student",
+				requiredStringFieldName = "name",
+				requiredStringFieldNameExternalReferenceCode = "studentName");
+
+			ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "university",
+				en_US_plural_label = "universities",
+				name = "University",
+				objectDefinitionExternalReferenceCode = "university",
+				requiredStringFieldName = "name",
+				requiredStringFieldNameExternalReferenceCode = "universityName");
+		}
+
+		task ("And Given universityStudents one-to-many relationship created") {
+			ObjectDefinitionAPI.createRelationshipWithObjectDefinitionNames(
+				childObjectName = "Student",
+				deletionType = "cascade",
+				name = "universityStudents",
+				parentObjectName = "University",
+				type = "oneToMany");
+		}
+
+		task ("And Given university entry related to student entry") {
+			ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "universities",
+				name = "Oxford");
+
+			ObjectDefinitionAPI.createObjectEntryWithName(
+				en_US_plural_label = "students",
+				name = "Pearl");
+
+			ObjectDefinitionAPI.relateObjectEntriesByName(
+				child_plural_label = "students",
+				childEntryName = "Pearl",
+				parent_plural_label = "universities",
+				parentEntryName = "Oxford",
+				relationshipName = "universityStudents");
+		}
+
+		task ("And Given API Application with endpoint of scope 'Company' created") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				endpointName = "testendpoint",
+				endpointPath = "/testendpoint",
+				relatedEndpoint = "true",
+				status = "published",
+				title = "My-app");
+		}
+
+		task ("And Given Schema with properties: 'name' of university, 'name' of Student, ERC of university, ERC of student") {
+			SchemaAPI.createAPISchema(
+				externalReferenceCode = "My-app",
+				mainObjectDefinitionERC = "university",
+				name = "testSchema");
+
+			APIBuilderUI.addAndPublishSchemaProperties(
+				entity = "Schemas",
+				fieldName = "name",
+				name = "testSchema",
+				propertyName = "universityName",
+				relatedFieldName = "name",
+				relatedObjectName = "student",
+				relatedPropertyName = "studentName",
+				title = "My-app");
+		}
+
+		task ("And Given Schema related to the endpoint") {
+			APIBuilderUI.addAndPublishEndpointConfiguration(
+				entity = "Endpoints",
+				name = "testendpoint",
+				schemaName = "testSchema",
+				title = "My-app");
+		}
+
+		task ("When executing the endpoint") {
+			APIExplorer.navigateToOpenAPI(customObjectPlural = "my-app");
+
+			APIExplorer.executeAPIMethod(
+				method = "getTestendpointPage",
+				service = "testSchema");
+		}
+
+		task ("Then all fields are correctly returned") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "OpenAPI#RESPONSE_BODY",
+				method = "getTestendpointPage",
+				value1 = "\"items\": [     {       \"universityName\": \"Oxford\",       \"studentName\": [         \"Pearl\"       ]     }   ]");
+		}
+	}
+
+	@priority = 4
+	test CanRelateSchemaWithManyEndpoints {
+		property portal.acceptance = "true";
+
+		task ("Given API Application with two endpoints created") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				status = "published",
+				title = "My-app");
+
+			EndpointAPI.createNAPIEndpoints(
+				externalReferenceCode = "My-app",
+				name = "testendpoint",
+				numberOfEndpoints = 2,
+				path = "/testendpoint");
+		}
+
+		task ("And Given one API Schema in API Application") {
+			SchemaAPI.createAPISchema(
+				externalReferenceCode = "My-app",
+				mainObjectDefinitionERC = "L_API_APPLICATION",
+				name = "testSchema");
+		}
+
+		task ("And Given modifying endpoint1 with API Schema") {
+			APIBuilderUI.addAndPublishEndpointConfiguration(
+				entity = "Endpoints",
+				name = "testendpoint1",
+				schemaName = "testSchema",
+				title = "My-app");
+		}
+
+		task ("When modifying endpoint2 wit the same API Schema") {
+			APIBuilderUI.addAndPublishEndpointConfiguration(
+				entity = "Endpoints",
+				name = "testendpoint2",
+				schemaName = "testSchema",
+				title = "My-app");
+		}
+
+		task ("Then both endpoints work with the same schema") {
+			var response = EndpointAPI.getAPIEndpoints();
+
+			var actualValue = JSONPathUtil.getProperty(
+				property = "$.items..r_responseAPISchemaToAPIEndpoints_c_apiSchemaERC",
+				response = ${response});
+
+			TestUtils.assertEquals(
+				actual = ${actualValue},
+				expected = "testSchema,testSchema");
+		}
+	}
+
+	@priority = 4
+	test CanUpdateEndpoint {
+		property portal.acceptance = "true";
+
+		task ("Given API Application with endpoint created") {
+			ApplicationAPI.createAPIApplication(
+				baseURL = "my-app",
+				endpointName = "testendpoint",
+				endpointPath = "/testendpoint",
+				relatedEndpoint = "true",
+				status = "published",
+				title = "My-app");
+		}
+
+		task ("When editing Path and Description of an endpoint") {
+			APIBuilderUI.addAndPublishEndpointInfo(
+				description = "This is an updated endpoint",
+				endpointPath = "updatedendpoint",
+				entity = "Endpoints",
+				name = "testendpoint",
+				title = "My-app");
+		}
+
+		task ("Then the endpoint values are updated") {
+			AssertTextEquals(
+				key_value = "endpoint",
+				locator1 = "APIBuilder#DESCRIPTION",
+				value1 = "This is an updated endpoint");
+
+			AssertTextEquals(
+				key_placeHolder = "Enter Path",
+				locator1 = "TextInput#ANY_PLACEHOLDER",
+				value1 = "updatedendpoint");
+		}
+	}
+
+}

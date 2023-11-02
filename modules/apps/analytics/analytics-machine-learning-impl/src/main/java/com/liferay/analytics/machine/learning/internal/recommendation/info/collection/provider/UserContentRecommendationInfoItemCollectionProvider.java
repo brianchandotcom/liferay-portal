@@ -6,6 +6,7 @@
 package com.liferay.analytics.machine.learning.internal.recommendation.info.collection.provider;
 
 import com.liferay.analytics.machine.learning.content.UserContentRecommendationManager;
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
@@ -137,7 +138,24 @@ public class UserContentRecommendationInfoItemCollectionProvider
 
 	@Override
 	public boolean isAvailable() {
-		return _featureFlagManager.isEnabled("LRAC-14771");
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		try {
+			if (_featureFlagManager.isEnabled("LRAC-14771") &&
+				_analyticsSettingsManager.isAnalyticsEnabled(
+					serviceContext.getCompanyId())) {
+
+				return true;
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return false;
 	}
 
 	private long[] _getClassNameIds(CollectionQuery collectionQuery) {
@@ -219,6 +237,9 @@ public class UserContentRecommendationInfoItemCollectionProvider
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserContentRecommendationInfoItemCollectionProvider.class);
+
+	@Reference
+	private AnalyticsSettingsManager _analyticsSettingsManager;
 
 	@Reference
 	private AssetEntryLocalService _assetEntryLocalService;

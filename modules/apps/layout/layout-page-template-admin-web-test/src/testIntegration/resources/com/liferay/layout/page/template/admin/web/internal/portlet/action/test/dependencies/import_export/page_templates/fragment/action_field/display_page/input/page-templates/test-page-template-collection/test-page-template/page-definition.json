@@ -1,0 +1,48 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "test-action-fragment",
+						"siteKey": "£{SITE_KEY}"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+						{
+							"id": "action",
+							"value": {
+								"action": {
+									"mapping": {
+										"fieldKey": "£{ACTION_NAME}",
+										"itemReference": {
+											"className": "£{CLASS_NAME}",
+											"classPK": "${CLASS_PK}"
+										}
+									}
+								},
+								"onSuccess": {
+									"type": "DisplayPage",
+									"value": {
+										"mapping": {
+											"fieldKey": "LayoutPageTemplateEntry_dpt1"
+										}
+									}
+								}
+							}
+						}
+					],
+					"indexed": true
+				},
+				"type": "Fragment"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"themeName": "Classic"
+	},
+	"version": 1.1
+}

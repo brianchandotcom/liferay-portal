@@ -13,13 +13,7 @@ COREntryDisplayContext corEntryDisplayContext = (COREntryDisplayContext)request.
 COREntry corEntry = corEntryDisplayContext.getCOREntry();
 
 portletDisplay.setShowBackIcon(true);
-
-if (Validator.isNull(redirect)) {
-	portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
-}
-else {
-	portletDisplay.setURLBack(redirect);
-}
+portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 %>
 
 <liferay-portlet:renderURL var="editCOREntryExternalReferenceCodeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

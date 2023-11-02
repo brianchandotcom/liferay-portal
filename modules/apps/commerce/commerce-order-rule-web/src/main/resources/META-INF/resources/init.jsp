@@ -50,7 +50,3 @@ page import="com.liferay.taglib.servlet.PipingServletResponseFactory" %>
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
-
-<%
-String redirect = ParamUtil.getString(request, "redirect");
-%>

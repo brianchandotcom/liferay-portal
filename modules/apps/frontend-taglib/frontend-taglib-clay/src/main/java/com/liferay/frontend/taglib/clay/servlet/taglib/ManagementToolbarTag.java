@@ -1298,17 +1298,17 @@ public class ManagementToolbarTag extends BaseContainerTag {
 			jspWriter.write("\"><div class=\"tbar-section\"><span class=\"");
 			jspWriter.write("component-text text-truncate-inline\"><span");
 			jspWriter.write(" class=\"text-truncate\">");
+
+			String searchValueTag =
+				"<strong>\"" + HtmlUtil.escape(searchValue) + "\"</strong>";
+
 			jspWriter.write(
 				LanguageUtil.format(
 					resourceBundle,
-					(getItemsTotal() == 1) ? "x-result-for" : "x-results-for",
-					new Object[] {getItemsTotal()}));
-
-			if (searchValue != null) {
-				jspWriter.write("<strong> \"");
-				jspWriter.write(HtmlUtil.escape(searchValue));
-				jspWriter.write("\"</strong>");
-			}
+					_getResultsText(
+						searchValue, getItemsTotal(),
+						ListUtil.isNotEmpty(filterLabelItems)),
+					new Object[] {getItemsTotal(), searchValueTag}));
 
 			jspWriter.write("</span></span></div></li>");
 
@@ -1400,6 +1400,40 @@ public class ManagementToolbarTag extends BaseContainerTag {
 		}
 
 		return searchData;
+	}
+
+	private String _getResultsText(
+		String searchValue, int itemsTotal, boolean hasFilters) {
+
+		if (Validator.isNull(searchValue)) {
+			if (FeatureFlagManagerUtil.isEnabled("LPS-198573") && hasFilters) {
+				if (itemsTotal == 1) {
+					return "x-result-with-filters";
+				}
+
+				return "x-results-with-filters";
+			}
+
+			if (itemsTotal == 1) {
+				return "x-result";
+			}
+
+			return "x-results";
+		}
+
+		if (FeatureFlagManagerUtil.isEnabled("LPS-198573") && hasFilters) {
+			if (itemsTotal == 1) {
+				return "x-result-for-x-with-filters";
+			}
+
+			return "x-results-for-x-with-filters";
+		}
+
+		if (itemsTotal == 1) {
+			return "x-result-for-x";
+		}
+
+		return "x-results-for-x";
 	}
 
 	private String _namespace(String namespace, String prop) {

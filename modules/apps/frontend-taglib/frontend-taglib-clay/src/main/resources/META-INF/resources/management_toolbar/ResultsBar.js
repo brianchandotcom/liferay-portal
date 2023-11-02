@@ -10,6 +10,39 @@ import {ManagementToolbar} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
 import React, {useEffect, useRef} from 'react';
 
+function getResultText(searchValue, itemTotal, filterTotal) {
+	if (searchValue) {
+		if (itemTotal === 1) {
+			if (Liferay.FeatureFlags['LPS-198573'] && filterTotal) {
+				return Liferay.Language.get('x-result-for-x-with-filters');
+			}
+
+			return Liferay.Language.get('x-result-for-x');
+		}
+		else {
+			if (Liferay.FeatureFlags['LPS-198573'] && filterTotal) {
+				return Liferay.Language.get('x-results-for-x-with-filters');
+			}
+
+			return Liferay.Language.get('x-results-for-x');
+		}
+	}
+
+	if (itemTotal === 1) {
+		if (Liferay.FeatureFlags['LPS-198573'] && filterTotal) {
+			return Liferay.Language.get('x-result-with-filters');
+		}
+
+		return Liferay.Language.get('x-result');
+	}
+
+	if (Liferay.FeatureFlags['LPS-198573'] && filterTotal) {
+		return Liferay.Language.get('x-results-with-filters');
+	}
+
+	return Liferay.Language.get('x-results');
+}
+
 const ResultsBar = ({
 	clearResultsURL,
 	filterLabelItems,
@@ -42,32 +75,31 @@ const ResultsBar = ({
 				>
 					<span
 						aria-label={sub(
-							itemsTotal === 1
-								? Liferay.Language.get('x-result-for-x')
-								: Liferay.Language.get('x-results-for-x'),
-							[
+							getResultText(
 								itemsTotal,
-								filterLabelItems
-									?.map((item) => item.label)
-									.join(', '),
-							]
+								filterLabelItems?.length || 0
+							),
+							itemsTotal,
+							`"${searchValue}"`
 						)}
 						className="component-text text-truncate-inline"
 						ref={resultsBarRef}
 						tabIndex={-1}
 					>
-						<span className="text-truncate">
-							{sub(
-								itemsTotal === 1
-									? Liferay.Language.get('x-result-for')
-									: Liferay.Language.get('x-results-for'),
-								itemsTotal
-							)}
-
-							{searchValue && (
-								<strong>{` "${searchValue}"`}</strong>
-							)}
-						</span>
+						<span
+							className="text-truncate"
+							dangerouslySetInnerHTML={{
+								__html: sub(
+									getResultText(
+										searchValue,
+										itemsTotal,
+										filterLabelItems?.length || 0
+									),
+									itemsTotal,
+									`<strong>"${searchValue}"</strong>`
+								),
+							}}
+						></span>
 					</span>
 				</ManagementToolbar.ResultsBarItem>
 

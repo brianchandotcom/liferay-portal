@@ -264,7 +264,7 @@ public class IndexActionsDisplayContextBuilder {
 		if (!ArrayUtil.contains(companyIds, CompanyConstants.SYSTEM)) {
 			jsonArray.put(
 				JSONUtil.put(
-					"id", CompanyConstants.SYSTEM
+					"id", String.valueOf(CompanyConstants.SYSTEM)
 				).put(
 					"name", _language.get(_httpServletRequest, "system")
 				));
@@ -276,7 +276,7 @@ public class IndexActionsDisplayContextBuilder {
 
 				jsonArray.put(
 					JSONUtil.put(
-						"id", companyId
+						"id", String.valueOf(companyId)
 					).put(
 						"name", company.getWebId()
 					));

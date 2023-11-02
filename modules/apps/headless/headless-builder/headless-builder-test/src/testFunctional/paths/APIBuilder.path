@@ -67,7 +67,7 @@
 </tr>
 <tr>
 	<td>DESCRIPTION</td>
-	<td>//textarea[(@placeholder='Add a short description that describes this API.')]</td>
+	<td>//textarea[(@placeholder='Add a short description that describes this ${key_value}.')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -86,6 +86,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DROPDOWN_TOGGLE</td>
+	<td>//button[@aria-controls='selectDropdown' and contains(.,'${key_value}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DROPDOWN_MENU</td>
 	<td>//div[contains(@class,'table-list-title') and contains(.,'${key_title}')]/../..//button[contains(.,'Action')]</td>
 	<td></td>
@@ -93,16 +98,6 @@
 <tr>
 	<td>EDIT_BUTTON</td>
 	<td>//div[@class='dropdown-menu show']//button[contains(text(),'Edit')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENDPOINT_DROPDOWN</td>
-	<td>//button[@aria-controls='selectDropdown' and contains(.,'${key_value}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ENTER_NAME</td>
-	<td>//input[(@placeholder='Enter name.')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -133,6 +128,11 @@
 <tr>
 	<td>ODATA_TEXTAREA</td>
 	<td>//textarea[@placeholder='Add a ${fieldName} using OData.']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROPERTY_CONTAINER</td>
+	<td>//button[(@class='property-container btn btn-unstyled') and contains(.,'${key_text}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -183,6 +183,11 @@
 <tr>
 	<td>URL_PROMPT_MESSAGE_IN_CREATE_APPLICATION_DIALOG</td>
 	<td>//span[contains(text(),'The URL can be modified.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_RELATED_OBJECTS</td>
+	<td>//button[(@class='view-related-objects btn btn-secondary') and contains(.,'View Related Objects')]</td>
 	<td></td>
 </tr>
 <tr>

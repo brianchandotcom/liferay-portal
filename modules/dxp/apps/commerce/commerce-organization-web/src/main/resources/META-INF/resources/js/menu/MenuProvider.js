@@ -19,6 +19,7 @@ const CONTENT = {
 export default function MenuProvider({
 	alignElementRef,
 	data: propData,
+	namespace,
 	parentData,
 }) {
 	const [active, setActive] = useState(false);
@@ -56,6 +57,7 @@ export default function MenuProvider({
 				<MenuContent
 					closeMenu={closeMenu}
 					data={data}
+					namespace={namespace}
 					parentData={parentData}
 				/>
 			)}

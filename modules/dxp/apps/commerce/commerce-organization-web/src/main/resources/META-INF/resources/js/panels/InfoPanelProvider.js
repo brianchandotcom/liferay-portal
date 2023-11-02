@@ -8,27 +8,54 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useState} from 'react';
 
-function InfoPanelProvider(props) {
-	const {children, onClose, onOpen} = props;
+import {
+	INFO_PANEL_MODE_MAP,
+	INFO_PANEL_OPEN_EVENT,
+	MODEL_TYPE_MAP,
+} from '../utils/constants';
+import GenericInfoPanel from './GenericInfoPanel';
+
+function InfoPanelProvider({namespace, selectLogoURL, spritemap}) {
 	const [active, setActive] = useState(false);
+	const [panelData, setPanelData] = useState({});
 
-	const setInfoPanelActive = useCallback(
-		(open) => {
-			setActive(open);
+	const setInfoPanelActive = useCallback((active) => {
+		if (!active) {
+			setPanelData({});
+		}
 
-			if (!open && onClose) {
-				onClose();
+		setActive(active);
+	}, []);
+
+	const updatePanelView = useCallback(
+		({data, mode, type}) => {
+			if (mode === INFO_PANEL_MODE_MAP.click) {
+				if (!active || type !== MODEL_TYPE_MAP.account) {
+					return;
+				}
+				mode = INFO_PANEL_MODE_MAP.view;
 			}
-			if (open && onOpen) {
-				onOpen();
-			}
+
+			setPanelData({
+				data,
+				mode,
+				type,
+			});
+			setInfoPanelActive(true);
 		},
-		[onClose, onOpen]
+		[active, setInfoPanelActive]
 	);
 
 	useEffect(() => {
-		setInfoPanelActive(props.active);
-	}, [props.active, setInfoPanelActive]);
+		Liferay.on(`${namespace}${INFO_PANEL_OPEN_EVENT}`, updatePanelView);
+
+		return () => {
+			Liferay.detach(
+				`${namespace}${INFO_PANEL_OPEN_EVENT}`,
+				updatePanelView
+			);
+		};
+	}, [namespace, updatePanelView]);
 
 	return (
 		<div
@@ -53,24 +80,29 @@ function InfoPanelProvider(props) {
 					symbol="times"
 				/>
 
-				<div className="info-panel-content">{children}</div>
+				<div className="d-flex flex-column info-panel-content">
+					{panelData.data && (
+						<GenericInfoPanel
+							closePanelViewHandler={() => {
+								setInfoPanelActive(false);
+							}}
+							namespace={namespace}
+							{...panelData}
+							selectLogoURL={selectLogoURL}
+							spritemap={spritemap}
+							updatePanelViewHandler={updatePanelView}
+						/>
+					)}
+				</div>
 			</div>
 		</div>
 	);
 }
 
-InfoPanelProvider.defaultProps = {
-	active: false,
-	mode: 'view',
-};
-
 InfoPanelProvider.propTypes = {
-	active: PropTypes.bool,
-	data: PropTypes.object.isRequired,
-	mode: PropTypes.oneOf(['edit', 'view']),
-	onClose: PropTypes.func,
-	onOpen: PropTypes.func,
-	type: PropTypes.oneOf(['account', 'organization', 'user']).isRequired,
+	namespace: PropTypes.string.isRequired,
+	selectLogoURL: PropTypes.string.isRequired,
+	spritemap: PropTypes.string.isRequired,
 };
 
 export default InfoPanelProvider;

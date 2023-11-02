@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -15,10 +15,18 @@ import ManagementBar from './ManagementBar/ManagementBar';
 import {getOrganization, getOrganizations} from './data/organizations';
 import MenuProvider from './menu/MenuProvider';
 import ModalProvider from './modals/ModalProvider';
+import InfoPanelProvider from './panels/InfoPanelProvider';
 import {VIEWS} from './utils/constants';
 
 import '../style/main.scss';
-function OrganizationChart({pageSize, rootOrganizationId, spritemap}) {
+
+function OrganizationChart({
+	namespace,
+	pageSize,
+	rootOrganizationId,
+	selectLogoURL,
+	spritemap,
+}) {
 	const [currentView, setCurrentView] = useState(VIEWS[0]);
 	const [expanded, setExpanded] = useState(false);
 	const [menuData, setMenuData] = useState(null);
@@ -65,6 +73,7 @@ function OrganizationChart({pageSize, rootOrganizationId, spritemap}) {
 						setModalActive(true);
 					},
 				},
+				namespace,
 				{
 					close: () => {
 						clickedMenuButtonRef.current = null;
@@ -82,7 +91,7 @@ function OrganizationChart({pageSize, rootOrganizationId, spritemap}) {
 		}
 
 		return () => chartInstanceRef.current?.cleanUp();
-	}, [pageSize, rootData, spritemap]);
+	}, [namespace, pageSize, rootData, spritemap]);
 
 	return (
 		<ChartContext.Provider
@@ -101,6 +110,14 @@ function OrganizationChart({pageSize, rootOrganizationId, spritemap}) {
 				}}
 			/>
 
+			{Liferay.FeatureFlags['COMMERCE-12192'] && (
+				<InfoPanelProvider
+					namespace={namespace}
+					selectLogoURL={selectLogoURL}
+					spritemap={spritemap}
+				/>
+			)}
+
 			<div className={classnames('org-chart-container', {expanded})}>
 				{searchData && !!searchData.length ? (
 					<div className="org-chart-result-helper">
@@ -117,6 +134,7 @@ function OrganizationChart({pageSize, rootOrganizationId, spritemap}) {
 
 				<div className="zoom-controls">
 					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get('full-screen')}
 						displayType="secondary"
 						onClick={() => setExpanded(!expanded)}
 						size="sm"
@@ -125,6 +143,7 @@ function OrganizationChart({pageSize, rootOrganizationId, spritemap}) {
 
 					<ClayButton.Group className="ml-3">
 						<ClayButtonWithIcon
+							aria-label={Liferay.Language.get('zoom-out')}
 							displayType="secondary"
 							ref={zoomOutRef}
 							size="sm"
@@ -132,6 +151,7 @@ function OrganizationChart({pageSize, rootOrganizationId, spritemap}) {
 						/>
 
 						<ClayButtonWithIcon
+							aria-label={Liferay.Language.get('zoom-in')}
 							displayType="secondary"
 							ref={zoomInRef}
 							size="sm"
@@ -144,6 +164,7 @@ function OrganizationChart({pageSize, rootOrganizationId, spritemap}) {
 			<MenuProvider
 				alignElementRef={clickedMenuButtonRef}
 				data={menuData}
+				namespace={namespace}
 				parentData={menuParentData}
 			/>
 
@@ -163,8 +184,10 @@ OrganizationChart.defaultProps = {
 };
 
 OrganizationChart.propTypes = {
+	namespace: PropTypes.string,
 	pageSize: PropTypes.number,
-	rootOrganizationId: PropTypes.number,
+	rootOrganizationId: PropTypes.string,
+	selectLogoURL: PropTypes.string.isRequired,
 	spritemap: PropTypes.string.isRequired,
 };
 

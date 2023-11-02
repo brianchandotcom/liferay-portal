@@ -16,6 +16,9 @@ import {
 	ACTION_KEYS,
 	COUNTER_KEYS_MAP,
 	DY,
+	INFO_PANEL_MODE_MAP,
+	INFO_PANEL_OPEN_EVENT,
+	MODEL_TYPE_MAP,
 	RECT_SIZES,
 	TRANSITIONS_DISABLED,
 	TRANSITION_TIME,
@@ -48,6 +51,7 @@ class D3OrganizationChart {
 		refs,
 		spritemap,
 		modalActions,
+		namespace,
 		nodeMenuActions,
 		setSearchDataCountHandler
 	) {
@@ -66,6 +70,7 @@ class D3OrganizationChart {
 		this._highlightHandler = new HighlightHandler();
 		this._modalActions = modalActions;
 		this._multiSelectHandler = new MultiSelectHandler();
+		this._namespace = namespace;
 		this._nodeMenuActions = nodeMenuActions;
 		this._selectedNodes = new Map();
 		this._setSearchDataCountHandler = setSearchDataCountHandler;
@@ -306,7 +311,7 @@ class D3OrganizationChart {
 			return;
 		}
 
-		if (d.data.type === 'user') {
+		if (d.data.type === MODEL_TYPE_MAP.user) {
 			return this._recenterViewport(d);
 		}
 
@@ -329,7 +334,9 @@ class D3OrganizationChart {
 
 		if (!d.data.fetched) {
 			const getData =
-				d.data.type === 'organization' ? getOrganization : getAccount;
+				d.data.type === MODEL_TYPE_MAP.organization
+					? getOrganization
+					: getAccount;
 
 			return getData(d.data.id)
 				.then((rawData) => formatItem(rawData, d.data.type))
@@ -411,11 +418,17 @@ class D3OrganizationChart {
 
 		this._clearDiscoveredNodes(this._discoveredNodes, this._nodesGroup);
 
-		if (d.data.type === 'user') {
+		if (d.data.type === MODEL_TYPE_MAP.user) {
 			this._createTransition();
 
 			return this._recenterViewport(d);
 		}
+
+		Liferay.fire(`${this._namespace}${INFO_PANEL_OPEN_EVENT}`, {
+			data: d.data,
+			mode: INFO_PANEL_MODE_MAP.click,
+			type: d.data.type,
+		});
 
 		if (!hasPermission(d.data, ACTION_KEYS[d.data.type].MOVE)) {
 			return this._handleNodeClick(d3.event, d);
@@ -721,9 +734,9 @@ class D3OrganizationChart {
 		}
 
 		const getData =
-			type === 'organization'
+			type === MODEL_TYPE_MAP.organization
 				? getOrganization
-				: type === 'account'
+				: type === MODEL_TYPE_MAP.account
 				? getAccount
 				: getUser;
 
@@ -732,7 +745,7 @@ class D3OrganizationChart {
 			.then((data) => {
 				data = JSON.parse(JSON.stringify(data));
 
-				if (type === 'organization') {
+				if (type === MODEL_TYPE_MAP.organization) {
 					const parentIds = [data.parentOrganization?.id] || [];
 
 					return Promise.all(
@@ -742,14 +755,14 @@ class D3OrganizationChart {
 									id,
 									data,
 									parentId,
-									'organization'
+									MODEL_TYPE_MAP.organization
 								);
 							}
 						})
 					);
 				}
 
-				if (type === 'account') {
+				if (type === MODEL_TYPE_MAP.account) {
 					const parentIds = data.organizationIds || [];
 
 					return Promise.all(
@@ -759,24 +772,30 @@ class D3OrganizationChart {
 									id,
 									data,
 									parentId,
-									'organization'
+									MODEL_TYPE_MAP.organization
 								);
 							}
 						})
 					);
 				}
 
-				if (type === 'user') {
+				if (type === MODEL_TYPE_MAP.user) {
 					const organizations = data.organizationBriefs || [];
 					const accounts = data.accountBriefs || [];
 
 					const parents = organizations
 						.map((organization) => {
-							return {id: organization.id, type: 'organization'};
+							return {
+								id: organization.id,
+								type: MODEL_TYPE_MAP.organization,
+							};
 						})
 						.concat(
 							accounts.map((account) => {
-								return {id: account.id, type: 'account'};
+								return {
+									id: account.id,
+									type: MODEL_TYPE_MAP.account,
+								};
 							})
 						);
 
@@ -797,54 +816,52 @@ class D3OrganizationChart {
 	}
 
 	_getParentNodeById(id, data, parentId, type) {
-		return this._getNodeById(parentId, type, type === 'account').then(
-			(parentNodes) => {
-				parentNodes = parentNodes.filter(Boolean);
+		return this._getNodeById(
+			parentId,
+			type,
+			type === MODEL_TYPE_MAP.account
+		).then((parentNodes) => {
+			parentNodes = parentNodes.filter(Boolean);
 
-				if (!parentNodes) {
-					return;
+			if (!parentNodes) {
+				return;
+			}
+
+			let currentNode;
+
+			parentNodes.forEach((parentNode) => {
+				showChildren(parentNode);
+
+				const node = (parentNode.children || []).find(
+					(child) => String(child.data.id) === String(id)
+				);
+
+				if (parentNode.children && parentNode.children.length && node) {
+					currentNode = node;
+					this._storeDataTreeInfo(parentNode.children);
 				}
-
-				let currentNode;
-
-				parentNodes.forEach((parentNode) => {
-					showChildren(parentNode);
-
-					const node = (parentNode.children || []).find(
+				else {
+					const {children} =
+						insertChildrenIntoNode([data], parentNode) || {};
+					currentNode = children.find(
 						(child) => String(child.data.id) === String(id)
 					);
+					this._storeDataTreeInfo(children);
+				}
 
-					if (
-						parentNode.children &&
-						parentNode.children.length &&
-						node
-					) {
-						currentNode = node;
-						this._storeDataTreeInfo(parentNode.children);
-					}
-					else {
-						const {children} =
-							insertChildrenIntoNode([data], parentNode) || {};
-						currentNode = children.find(
-							(child) => String(child.data.id) === String(id)
-						);
-						this._storeDataTreeInfo(children);
+				if (currentNode) {
+					if (!currentNode.children && !currentNode._children) {
+						insertChildrenIntoNode(data.children, currentNode);
 					}
 
-					if (currentNode) {
-						if (!currentNode.children && !currentNode._children) {
-							insertChildrenIntoNode(data.children, currentNode);
-						}
+					currentNode.data.fetched = true;
+				}
 
-						currentNode.data.fetched = true;
-					}
+				parentNode.data.fetched = true;
+			});
 
-					parentNode.data.fetched = true;
-				});
-
-				return currentNode;
-			}
-		);
+			return currentNode;
+		});
 	}
 
 	_expandParentNode(node) {

@@ -344,8 +344,11 @@ $btn-size: 28px;
 
 	&.info-panel {
 		.sidebar > .sidenav-close {
-			float: right;
 			margin: 16px 16px 0 8px;
+			position: absolute;
+			right: 0;
+			top: 0;
+			z-index: 10;
 
 			& > svg {
 				font-size: 20px;
@@ -354,6 +357,31 @@ $btn-size: 28px;
 			& + .info-panel-content .sidebar-header > .autofit-row {
 				width: auto;
 			}
+		}
+	}
+
+	.sidebar-header {
+		margin-right: 64px;
+		padding-right: 0;
+	}
+
+	.info-panel-content {
+		bottom: 0;
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+
+		.logo-selector-default-img,
+		img {
+			max-height: 100px;
+			max-width: 100px;
+		}
+
+		.logo-selector-default-img {
+			background: $gray-200;
+			fill: $gray-600;
+			padding: 20px;
 		}
 	}
 }

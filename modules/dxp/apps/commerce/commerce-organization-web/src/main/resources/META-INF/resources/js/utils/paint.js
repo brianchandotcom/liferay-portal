@@ -8,6 +8,7 @@ import {event as d3event, linkHorizontal, select as d3select} from 'd3';
 import {
 	ACTION_KEYS,
 	COUNTER_KEYS_MAP,
+	MODEL_TYPE_MAP,
 	NODE_BUTTON_WIDTH,
 	NODE_PADDING,
 	RECT_SIZES,
@@ -88,8 +89,8 @@ export function fillAddButtons(nodeEnter, spritemap, openModal) {
 		.append('g')
 		.attr('class', 'open-actions-wrapper')
 		.on('mousedown', (node) => {
-			if (node.parent.data.type === 'account') {
-				openModal(node.parent.data, 'user');
+			if (node.parent.data.type === MODEL_TYPE_MAP.account) {
+				openModal(node.parent.data, MODEL_TYPE_MAP.user);
 			}
 			else {
 				actionsWrapper.node().classList.toggle('menu-open');
@@ -99,9 +100,24 @@ export function fillAddButtons(nodeEnter, spritemap, openModal) {
 	appendCircle(openActionsWrapper, 36, 'action-circle');
 	appendIcon(openActionsWrapper, `${spritemap}#plus`, 18, 'action-icon');
 
-	createAddActionButton(actionsWrapper, 'account', openModal, spritemap);
-	createAddActionButton(actionsWrapper, 'organization', openModal, spritemap);
-	createAddActionButton(actionsWrapper, 'user', openModal, spritemap);
+	createAddActionButton(
+		actionsWrapper,
+		MODEL_TYPE_MAP.account,
+		openModal,
+		spritemap
+	);
+	createAddActionButton(
+		actionsWrapper,
+		MODEL_TYPE_MAP.organization,
+		openModal,
+		spritemap
+	);
+	createAddActionButton(
+		actionsWrapper,
+		MODEL_TYPE_MAP.user,
+		openModal,
+		spritemap
+	);
 }
 
 export function printDescription(d, element, spritemap) {
@@ -109,7 +125,7 @@ export function printDescription(d, element, spritemap) {
 		.append('g')
 		.attr('class', 'node-description');
 
-	if (d.data.type === 'user') {
+	if (d.data.type === MODEL_TYPE_MAP.user) {
 		descritionWrapper
 			.append('text')
 			.attr('class', 'node-description-content')
@@ -119,9 +135,13 @@ export function printDescription(d, element, spritemap) {
 	}
 
 	const entities =
-		d.data.type === 'organization'
-			? ['organization', 'account', 'user']
-			: ['user'];
+		d.data.type === MODEL_TYPE_MAP.organization
+			? [
+					MODEL_TYPE_MAP.organization,
+					MODEL_TYPE_MAP.account,
+					MODEL_TYPE_MAP.user,
+			  ]
+			: [MODEL_TYPE_MAP.user];
 
 	entities.reduce((x, nodeType) => {
 		const entityWrapper = descritionWrapper
@@ -143,7 +163,10 @@ export function printDescription(d, element, spritemap) {
 			.attr('y', 10)
 			.text(d.data[COUNTER_KEYS_MAP[nodeType]]);
 
-		if (nodeType !== 'organization' && d.data.type !== 'account') {
+		if (
+			nodeType !== MODEL_TYPE_MAP.organization &&
+			d.data.type !== MODEL_TYPE_MAP.account
+		) {
 			entityWrapper
 				.append('line')
 				.attr('class', 'entity-divider')
@@ -206,8 +229,10 @@ export function fillEntityNode(nodeEnter, spritemap, openMenu) {
 		}
 
 		return hasPermissions(chartItem.data, [
-			ACTION_KEYS[chartItem.data.type].REMOVE,
 			ACTION_KEYS[chartItem.data.type].DELETE,
+			ACTION_KEYS[chartItem.data.type].REMOVE,
+			ACTION_KEYS[chartItem.data.type].UPDATE,
+			ACTION_KEYS[chartItem.data.type].VIEW,
 		]);
 	});
 

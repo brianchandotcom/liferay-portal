@@ -17,9 +17,6 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.saved.content.web.internal.display.context.MySavedContentDisplayContext" %>
 
-<%@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %>
-
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />

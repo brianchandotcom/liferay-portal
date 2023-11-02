@@ -8,6 +8,7 @@ package com.liferay.saved.content.web.internal.display.context;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -53,36 +54,17 @@ public class MySavedContentDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
-	public String getAssetTitle(String className, long classPK) {
-		try {
-			AssetRendererFactory<?> assetRendererFactory =
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassName(className);
+	public String getAssetTitle(String className, long classPK)
+		throws PortalException {
 
-			if (assetRendererFactory == null) {
-				return null;
-			}
+		AssetRenderer<?> assetRenderer = _getAssetRenderer(className, classPK);
 
-			AssetRenderer<?> assetRenderer =
-				assetRendererFactory.getAssetRenderer(classPK);
-
-			if (assetRenderer == null) {
-				return null;
-			}
-
-			return HtmlUtil.escape(
-				assetRenderer.getTitle(_themeDisplay.getLocale()));
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to get asset renderer with class primary key " +
-						classPK,
-					portalException);
-			}
-
+		if (assetRenderer == null) {
 			return null;
 		}
+
+		return HtmlUtil.escape(
+			assetRenderer.getTitle(_themeDisplay.getLocale()));
 	}
 
 	public String getRemoveSavedContentURL(String className, long classPK) {
@@ -116,8 +98,8 @@ public class MySavedContentDisplayContext {
 
 		searchContainer.setResultsAndTotal(
 			() -> SavedContentEntryServiceUtil.getGroupUserSavedContentEntries(
-				_themeDisplay.getScopeGroupId(),
-				searchContainer.getStart(), searchContainer.getEnd()),
+				_themeDisplay.getScopeGroupId(), searchContainer.getStart(),
+				searchContainer.getEnd()),
 			SavedContentEntryServiceUtil.getGroupUserSavedContentEntriesCount(
 				_themeDisplay.getScopeGroupId()));
 
@@ -126,8 +108,20 @@ public class MySavedContentDisplayContext {
 		return _searchContainer;
 	}
 
-	public String getURL(String className, long classPK) {
-		String url = null;
+	public String getURL(String className, long classPK) throws Exception {
+		AssetRenderer<?> assetRenderer = _getAssetRenderer(className, classPK);
+
+		if (assetRenderer == null) {
+			return null;
+		}
+
+		return assetRenderer.getURLViewInContext(
+			_liferayPortletRequest, _liferayPortletResponse,
+			_themeDisplay.getURLCurrent());
+	}
+
+	private AssetRenderer<?> _getAssetRenderer(String className, long classPK)
+		throws PortalException {
 
 		try {
 			AssetRendererFactory<?> assetRendererFactory =
@@ -145,22 +139,22 @@ public class MySavedContentDisplayContext {
 				return null;
 			}
 
-			url = assetRenderer.getURLViewInContext(
-				_liferayPortletRequest, _liferayPortletResponse,
-				_themeDisplay.getURLCurrent());
+			return assetRenderer;
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to get asset renderer with class primary key " +
-						classPK,
+					StringBundler.concat(
+						"Unable to get asset renderer for class ", className,
+						" with primary key ", classPK),
 					exception);
 			}
 
-			return url;
+			throw new PortalException(
+				StringBundler.concat(
+					"Unable to get asset renderer for class ", className,
+					" with primary key ", classPK));
 		}
-
-		return url;
 	}
 
 	private PortletURL _getPortletURL() {

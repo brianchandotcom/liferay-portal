@@ -5,16 +5,22 @@
 
 package com.liferay.object.rest.internal.manager.v1_0;
 
+import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.entry.util.ObjectEntryDTOConverterUtil;
 import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.exception.NoSuchObjectEntryException;
+import com.liferay.object.field.attachment.AttachmentValidator;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
+import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -22,6 +28,7 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.relationship.util.ObjectRelationshipUtil;
+import com.liferay.object.rest.dto.v1_0.FileEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.filter.factory.FilterFactory;
@@ -60,6 +67,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -67,13 +75,18 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.MimeTypes;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.filter.expression.Expression;
@@ -94,8 +107,11 @@ import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.ActionUtil;
+import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.io.Serializable;
 
 import java.text.ParseException;
@@ -135,15 +151,17 @@ public class DefaultObjectEntryManagerImpl
 
 		validateReadOnlyObjectFields(null, objectDefinition, objectEntry);
 
+		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
+			objectEntry, dtoConverterContext.getUserId());
+
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryService.addObjectEntry(
 				getGroupId(objectDefinition, scopeKey),
 				objectDefinition.getObjectDefinitionId(),
 				_toObjectValues(
-					dtoConverterContext.getUserId(), objectDefinition,
-					objectEntry, dtoConverterContext.getLocale()),
-				ServiceContextUtil.createServiceContext(
-					objectEntry, dtoConverterContext.getUserId()));
+					objectDefinition, objectEntry, scopeKey, serviceContext,
+					dtoConverterContext.getLocale()),
+				serviceContext);
 
 		return _toObjectEntry(
 			dtoConverterContext, objectDefinition,
@@ -774,13 +792,16 @@ public class DefaultObjectEntryManagerImpl
 			serviceBuilderObjectEntry.getExternalReferenceCode(),
 			objectDefinition, objectEntry);
 
+		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
+			objectEntry, dtoConverterContext.getUserId());
+
 		serviceBuilderObjectEntry = _objectEntryService.updateObjectEntry(
 			objectEntryId,
 			_toObjectValues(
-				dtoConverterContext.getUserId(), objectDefinition, objectEntry,
-				dtoConverterContext.getLocale()),
-			ServiceContextUtil.createServiceContext(
-				objectEntry, dtoConverterContext.getUserId()));
+				objectDefinition, objectEntry,
+				String.valueOf(serviceBuilderObjectEntry.getGroupId()),
+				serviceContext, dtoConverterContext.getLocale()),
+			serviceContext);
 
 		return _toObjectEntry(
 			dtoConverterContext, objectDefinition,
@@ -800,8 +821,6 @@ public class DefaultObjectEntryManagerImpl
 		validateReadOnlyObjectFields(
 			externalReferenceCode, objectDefinition, objectEntry);
 
-		long groupId = getGroupId(objectDefinition, scopeKey);
-
 		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
 			objectEntry, dtoConverterContext.getUserId());
 
@@ -809,11 +828,11 @@ public class DefaultObjectEntryManagerImpl
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryService.addOrUpdateObjectEntry(
-				externalReferenceCode, groupId,
+				externalReferenceCode, getGroupId(objectDefinition, scopeKey),
 				objectDefinition.getObjectDefinitionId(),
 				_toObjectValues(
-					dtoConverterContext.getUserId(), objectDefinition,
-					objectEntry, dtoConverterContext.getLocale()),
+					objectDefinition, objectEntry, scopeKey, serviceContext,
+					dtoConverterContext.getLocale()),
 				serviceContext);
 
 		return _toObjectEntry(
@@ -1373,6 +1392,97 @@ public class DefaultObjectEntryManagerImpl
 		return false;
 	}
 
+	private void _preProcessAttachment(
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			ObjectField objectField, String scopeKey,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		Object propertyValue = objectEntry.getPropertyValue(
+			objectField.getName());
+
+		if (propertyValue == null) {
+			return;
+		}
+
+		FileEntry fileEntry = ObjectMapperUtil.readValue(
+			FileEntry.class, propertyValue);
+
+		if ((fileEntry == null) || (fileEntry.getFileBase64() == null)) {
+			return;
+		}
+
+		if (fileEntry.getId() != null) {
+			throw new IllegalArgumentException(
+				"Expected either 'id' or 'fileBase64' fields, but found both");
+		}
+
+		String fileSource = ObjectFieldSettingUtil.getValue(
+			ObjectFieldSettingConstants.NAME_FILE_SOURCE, objectField);
+
+		if (!StringUtil.equals(
+				fileSource, ObjectFieldSettingConstants.VALUE_USER_COMPUTER)) {
+
+			throw new UnsupportedOperationException(
+				"File source " + fileSource + " is not supported");
+		}
+
+		if (GetterUtil.getBoolean(
+				ObjectFieldSettingUtil.getValue(
+					ObjectFieldSettingConstants.
+						NAME_SHOW_FILES_IN_DOCS_AND_MEDIA,
+					objectField))) {
+
+			throw new UnsupportedOperationException(
+				"Object field setting " +
+					ObjectFieldSettingConstants.
+						NAME_SHOW_FILES_IN_DOCS_AND_MEDIA +
+							" is not supported");
+		}
+
+		_attachmentValidator.validateFileName(fileEntry.getName());
+
+		_attachmentValidator.validateFileExtension(
+			fileEntry.getName(), objectField.getObjectFieldId());
+
+		byte[] content = Base64.decode(fileEntry.getFileBase64());
+
+		User user = _userLocalService.getUser(serviceContext.getUserId());
+
+		_attachmentValidator.validateFileSize(
+			fileEntry.getName(), content.length, objectField.getObjectFieldId(),
+			!user.isGuestUser());
+
+		long groupId = getGroupId(objectDefinition, scopeKey, true);
+
+		DLFolder dlFolder = _attachmentValidator.getDLFolder(
+			objectField.getObjectFieldId(), objectField.getCompanyId(), groupId,
+			serviceContext, serviceContext.getUserId());
+
+		try (InputStream inputStream = new ByteArrayInputStream(content)) {
+			com.liferay.portal.kernel.repository.model.FileEntry
+				serviceBuilderFileEntry = _dlAppLocalService.addFileEntry(
+					null, serviceContext.getUserId(),
+					dlFolder.getRepositoryId(), dlFolder.getFolderId(),
+					DLUtil.getUniqueFileName(
+						groupId, dlFolder.getFolderId(), fileEntry.getName(),
+						true),
+					_mimeTypes.getContentType(inputStream, fileEntry.getName()),
+					DLUtil.getUniqueTitle(
+						groupId, dlFolder.getFolderId(),
+						FileUtil.stripExtension(fileEntry.getName())),
+					StringPool.BLANK, null, null, inputStream, content.length,
+					null, null, serviceContext);
+
+			fileEntry.setFileBase64((String)null);
+			fileEntry.setId(serviceBuilderFileEntry.getFileEntryId());
+
+			Map<String, Object> properties = objectEntry.getProperties();
+
+			properties.put(objectField.getName(), fileEntry.toString());
+		}
+	}
+
 	private void _processVulcanAggregation(
 		Aggregations aggregations, Queries queries,
 		SearchRequestBuilder searchRequestBuilder,
@@ -1575,8 +1685,8 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	private Map<String, Serializable> _toObjectValues(
-			long userId, ObjectDefinition objectDefinition,
-			ObjectEntry objectEntry, Locale locale)
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			String scopeKey, ServiceContext serviceContext, Locale locale)
 		throws Exception {
 
 		Map<String, Serializable> values = new HashMap<>();
@@ -1585,10 +1695,19 @@ public class DefaultObjectEntryManagerImpl
 				objectFieldLocalService.getObjectFields(
 					objectDefinition.getObjectDefinitionId())) {
 
+			if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+				_preProcessAttachment(
+					objectDefinition, objectEntry, objectField, scopeKey,
+					serviceContext);
+			}
+
 			Object value = ObjectEntryValuesUtil.getValue(
 				_objectDefinitionLocalService, objectEntryLocalService,
-				objectField, _objectFieldBusinessTypeRegistry, userId,
-				objectEntry.getProperties());
+				objectField, _objectFieldBusinessTypeRegistry,
+				serviceContext.getUserId(), objectEntry.getProperties());
 
 			if (Objects.equals(
 					objectField.getName(), "externalReferenceCode") &&
@@ -1603,9 +1722,8 @@ public class DefaultObjectEntryManagerImpl
 			}
 
 			if (objectField.isLocalized()) {
-				Map<String, Object> properties = objectEntry.getProperties();
-
-				value = properties.get(objectField.getI18nObjectFieldName());
+				value = objectEntry.getPropertyValue(
+					objectField.getI18nObjectFieldName());
 
 				if (value == null) {
 					continue;
@@ -1647,6 +1765,15 @@ public class DefaultObjectEntryManagerImpl
 	private Aggregations _aggregations;
 
 	@Reference
+	private AttachmentValidator _attachmentValidator;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference(
@@ -1656,6 +1783,9 @@ public class DefaultObjectEntryManagerImpl
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private MimeTypes _mimeTypes;
 
 	@Reference
 	private ObjectActionEngine _objectActionEngine;

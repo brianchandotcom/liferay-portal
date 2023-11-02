@@ -89,10 +89,6 @@
 		top: 0;
 	}
 
-	&-overlay {
-		top: #{$frame-size};
-	}
-
 	&-wrapper {
 		box-shadow: -10px $frame-size 20px -10px rgba(0, 0, 0, 0.3);
 	}

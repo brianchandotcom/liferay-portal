@@ -39,6 +39,7 @@ import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectEntryStatusException;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.exception.ObjectRelationshipDeletionTypeException;
+import com.liferay.object.field.attachment.AttachmentValidator;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
@@ -4197,15 +4198,9 @@ public class ObjectEntryLocalServiceImpl
 			String fileExtension, long objectFieldId, String objectFieldName)
 		throws PortalException {
 
-		ObjectFieldSetting objectFieldSetting =
-			_objectFieldSettingPersistence.fetchByOFI_N(
-				objectFieldId, "acceptedFileExtensions");
-
-		String acceptedFileExtensions = objectFieldSetting.getValue();
-
 		if (!ArrayUtil.contains(
-				acceptedFileExtensions.split("\\s*,\\s*"), fileExtension,
-				true)) {
+				_attachmentValidator.getAcceptedFileExtensions(objectFieldId),
+				fileExtension, true)) {
 
 			throw new ObjectEntryValuesException.InvalidFileExtension(
 				fileExtension, objectFieldName);
@@ -4217,24 +4212,10 @@ public class ObjectEntryLocalServiceImpl
 			String objectFieldName)
 		throws PortalException {
 
-		ObjectFieldSetting objectFieldSetting =
-			_objectFieldSettingPersistence.fetchByOFI_N(
-				objectFieldId, "maximumFileSize");
+		long maximumFileSize = _attachmentValidator.getMaximumFileSize(
+			objectFieldId, !guestUser);
 
-		long maximumFileSize = GetterUtil.getLong(
-			objectFieldSetting.getValue());
-
-		if (guestUser &&
-			(_objectConfiguration.maximumFileSizeForGuestUsers() <
-				maximumFileSize)) {
-
-			maximumFileSize =
-				_objectConfiguration.maximumFileSizeForGuestUsers();
-		}
-
-		if ((maximumFileSize > 0) &&
-			(fileSize > (maximumFileSize * 1024 * 1024))) {
-
+		if ((maximumFileSize > 0) && (fileSize > maximumFileSize)) {
 			throw new ObjectEntryValuesException.ExceedsMaxFileSize(
 				maximumFileSize, objectFieldName);
 		}
@@ -4824,6 +4805,9 @@ public class ObjectEntryLocalServiceImpl
 
 	@Reference
 	private AssetLinkLocalService _assetLinkLocalService;
+
+	@Reference
+	private AttachmentValidator _attachmentValidator;
 
 	@Reference
 	private CurrentConnection _currentConnection;

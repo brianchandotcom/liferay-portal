@@ -187,7 +187,7 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 
 			InfoFieldValue<Object> infoFieldValue =
 				infoItemFieldValuesProvider.getInfoFieldValue(
-					infoItem, jsonObject.getString("displayPage"));
+					infoItem, jsonObject.getString("displayPageUniqueFieldId"));
 
 			if (infoFieldValue == null) {
 				return;

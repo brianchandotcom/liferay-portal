@@ -189,7 +189,7 @@ function InteractionSelector({
 
 	const interactionConfig = itemConfig[field];
 
-	const {displayPage, interaction, page, reload, text, url} =
+	const {displayPageUniqueFieldId, interaction, page, reload, text, url} =
 		interactionConfig || {};
 
 	const languageId = useSelector(selectLanguageId);
@@ -280,11 +280,11 @@ function InteractionSelector({
 					mappingIds={mappingIds}
 					onConfigChange={(layout) => {
 						onConfigChange(
-							INTERACTION_DISPLAY_PAGE,
+							'displayPageUniqueFieldId',
 							layout.displayPage
 						);
 					}}
-					selectedValue={displayPage}
+					selectedValue={displayPageUniqueFieldId}
 				/>
 			)}
 

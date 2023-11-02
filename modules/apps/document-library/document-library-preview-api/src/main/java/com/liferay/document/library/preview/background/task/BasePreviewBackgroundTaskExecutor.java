@@ -14,9 +14,6 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.display.BackgroundTaskDisplay;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -28,6 +25,7 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import java.io.Serializable;
 
 import java.util.Map;
+import java.util.function.Consumer;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -72,53 +70,17 @@ public abstract class BasePreviewBackgroundTaskExecutor
 		throws Exception;
 
 	protected void generatePreviews(long companyId) throws PortalException {
-		ActionableDynamicQuery actionableDynamicQuery =
-			dlFileEntryLocalService.getActionableDynamicQuery();
+		long previewableProcessorMaxSize =
+			dlFileEntryConfigurationProvider.
+				getCompanyPreviewableProcessorMaxSize(companyId);
 
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				Property companyIdProperty = PropertyFactoryUtil.forName(
-					"companyId");
+		if (previewableProcessorMaxSize == 0) {
+			return;
+		}
 
-				dynamicQuery.add(companyIdProperty.eq(companyId));
-
-				Property mimeTypeProperty = PropertyFactoryUtil.forName(
-					"mimeType");
-
-				dynamicQuery.add(mimeTypeProperty.in(getMimeTypes()));
-
-				long previewableProcessorMaxSize =
-					dlFileEntryConfigurationProvider.
-						getCompanyPreviewableProcessorMaxSize(companyId);
-
-				if (previewableProcessorMaxSize !=
-						DLFileEntryConfigurationConstants.
-							PREVIEWABLE_PROCESSOR_MAX_SIZE_UNLIMITED) {
-
-					Property sizeProperty = PropertyFactoryUtil.forName("size");
-
-					dynamicQuery.add(
-						sizeProperty.le(previewableProcessorMaxSize));
-				}
-			});
-		actionableDynamicQuery.setPerformActionMethod(
-			(DLFileEntry dlFileEntry) -> {
-				FileEntry fileEntry = new LiferayFileEntry(dlFileEntry);
-
-				try {
-					generatePreview(fileEntry.getLatestFileVersion());
-				}
-				catch (Exception exception) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to process file entry " +
-								fileEntry.getFileEntryId(),
-							exception);
-					}
-				}
-			});
-
-		actionableDynamicQuery.performActions();
+		dlFileEntryLocalService.forEachFileEntry(
+			companyId, 0, _getProcessDlFileEntryConsumer(),
+			previewableProcessorMaxSize, getMimeTypes());
 	}
 
 	protected abstract String[] getMimeTypes();
@@ -128,6 +90,43 @@ public abstract class BasePreviewBackgroundTaskExecutor
 
 	@Reference
 	protected DLFileEntryLocalService dlFileEntryLocalService;
+
+	private Consumer<DLFileEntry> _getProcessDlFileEntryConsumer() {
+		Map<Long, Long> groupPreviewableProcessorMaxSizeMap =
+			dlFileEntryConfigurationProvider.
+				getGroupPreviewableProcessorMaxSizeMap();
+
+		return dlFileEntry -> {
+			Long previewableProcessorMaxSize =
+				groupPreviewableProcessorMaxSizeMap.get(
+					dlFileEntry.getGroupId());
+
+			if ((previewableProcessorMaxSize == null) ||
+				(previewableProcessorMaxSize ==
+					DLFileEntryConfigurationConstants.
+						PREVIEWABLE_PROCESSOR_MAX_SIZE_UNLIMITED) ||
+				(dlFileEntry.getSize() <= previewableProcessorMaxSize)) {
+
+				_processDlFileEntry(dlFileEntry);
+			}
+		};
+	}
+
+	private void _processDlFileEntry(DLFileEntry dlFileEntry) {
+		FileEntry fileEntry = new LiferayFileEntry(dlFileEntry);
+
+		try {
+			generatePreview(fileEntry.getLatestFileVersion());
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to process file entry " +
+						fileEntry.getFileEntryId(),
+					exception);
+			}
+		}
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BasePreviewBackgroundTaskExecutor.class);

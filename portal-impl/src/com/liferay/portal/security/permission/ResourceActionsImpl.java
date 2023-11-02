@@ -666,9 +666,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	}
 
 	private void _checkResourceActions(List<String> actionIds, String name) {
-		if (StartupHelperUtil.isDBNew() &&
-			!StartupHelperUtil.isStartupFinished()) {
-
+		if (StartupHelperUtil.isDBNew()) {
 			resourceActionLocalService.checkResourceActions(name, actionIds);
 		}
 		else {

@@ -30,6 +30,9 @@ public interface PayPalGroupServiceConfiguration {
 	)
 	public String clientSecret();
 
+	@Meta.AD(name = "merchant-id", required = false)
+	public String merchantId();
+
 	@Meta.AD(name = "mode", required = false)
 	public String mode();
 

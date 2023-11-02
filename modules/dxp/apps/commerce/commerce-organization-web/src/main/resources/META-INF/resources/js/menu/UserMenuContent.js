@@ -13,7 +13,7 @@ import {
 	removeUserFromAccount,
 	removeUserFromOrganization,
 } from '../data/users';
-import {ACTION_KEYS} from '../utils/constants';
+import {ACTION_KEYS, MODEL_TYPE_MAP} from '../utils/constants';
 import {hasPermission} from '../utils/index';
 
 export default function AccountMenuContent({closeMenu, data, parentData}) {
@@ -44,7 +44,7 @@ export default function AccountMenuContent({closeMenu, data, parentData}) {
 			onConfirm: (isConfirmed) => {
 				if (isConfirmed) {
 					const removeUser =
-						parentData.type === 'organization'
+						parentData.type === MODEL_TYPE_MAP.organization
 							? removeUserFromOrganization
 							: removeUserFromAccount;
 

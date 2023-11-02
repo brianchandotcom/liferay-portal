@@ -14,6 +14,7 @@ import React, {useContext, useState} from 'react';
 
 import ChartContext from '../ChartContext';
 import {createOrganizations} from '../data/organizations';
+import {MODEL_TYPE_MAP} from '../utils/constants';
 
 export default function AddOrganizationModal({
 	closeModal,
@@ -82,7 +83,7 @@ export default function AddOrganizationModal({
 
 					chartInstanceRef.current.addNodes(
 						newOrganizationsDetails,
-						'organization',
+						MODEL_TYPE_MAP.organization,
 						parentData
 					);
 

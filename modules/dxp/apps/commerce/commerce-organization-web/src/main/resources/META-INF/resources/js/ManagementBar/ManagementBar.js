@@ -12,6 +12,7 @@ import PropTypes from 'prop-types';
 import React, {useContext, useRef} from 'react';
 
 import ChartContext from '../ChartContext';
+import {MODEL_TYPE_MAP} from '../utils/constants';
 
 function ManagementBar({onSearchSelected}) {
 	const {chartInstanceRef} = useContext(ChartContext);
@@ -67,15 +68,15 @@ function ManagementBar({onSearchSelected}) {
 								searchSelectedItemRef.current = selectedItem;
 
 								if ('accountBriefs' in selectedItem) {
-									type = 'user';
+									type = MODEL_TYPE_MAP.user;
 								}
 								else if (
 									'numberOfOrganizations' in selectedItem
 								) {
-									type = 'organization';
+									type = MODEL_TYPE_MAP.organization;
 								}
 								else if ('parentAccountId' in selectedItem) {
-									type = 'account';
+									type = MODEL_TYPE_MAP.account;
 								}
 
 								onSearchSelected(

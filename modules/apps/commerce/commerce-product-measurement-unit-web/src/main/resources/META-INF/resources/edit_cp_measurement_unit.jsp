@@ -24,15 +24,6 @@ if (primaryCPMeasurementUnit == null) {
 }
 
 boolean primary = BeanParamUtil.getBoolean(cpMeasurementUnit, request, "primary", defaultPrimary);
-
-portletDisplay.setShowBackIcon(true);
-
-if (Validator.isNull(redirect)) {
-	portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
-}
-else {
-	portletDisplay.setURLBack(redirect);
-}
 %>
 
 <portlet:actionURL name="/cp_measurement_unit/edit_cp_measurement_unit" var="editCPMeasurementUnitActionURL" />
@@ -78,7 +69,7 @@ else {
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />
 
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= portletDisplay.getURLBack() %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

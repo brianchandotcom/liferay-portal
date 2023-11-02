@@ -7,12 +7,20 @@ package com.liferay.commerce.product.measurement.unit.web.internal.portlet.actio
 
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -31,7 +39,43 @@ public class EditCPMeasurementUnitMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		_populatePortletDisplay(renderRequest);
+
 		return "/edit_cp_measurement_unit.jsp";
 	}
+
+	private void _populatePortletDisplay(RenderRequest renderRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		portletDisplay.setShowBackIcon(true);
+		portletDisplay.setURLBack(
+			PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					renderRequest, CPPortletKeys.CP_MEASUREMENT_UNIT,
+					PortletRequest.RENDER_PHASE)
+			).setParameter(
+				"toolbarItem",
+				() -> {
+					int type = ParamUtil.getInteger(renderRequest, "type");
+
+					if (type == 1) {
+						return "view-all-weight-product-measurement-units";
+					}
+					else if (type == 2) {
+						return "view-all-unit-product-measurement-units";
+					}
+
+					return "view-all-dimension-product-measurement-units";
+				}
+			).setParameter(
+				"type", ParamUtil.getInteger(renderRequest, "type")
+			).buildString());
+	}
+
+	@Reference
+	private Portal _portal;
 
 }

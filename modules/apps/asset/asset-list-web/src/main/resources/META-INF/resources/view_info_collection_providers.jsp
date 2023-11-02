@@ -40,6 +40,13 @@ InfoCollectionProviderDisplayContext infoCollectionProviderDisplayContext = (Inf
 			>
 				<div class="list-group-title">
 					<%= HtmlUtil.escape(infoCollectionProviderDisplayContext.getTitle(infoCollectionProvider)) %>
+
+					<c:if test="<%= infoCollectionProvider instanceof BetaInfoCollectionProvider %>">
+						<clay:label
+							displayType="info"
+							label='<%= LanguageUtil.get(request, "beta") %>'
+						/>
+					</c:if>
 				</div>
 
 				<div class="list-group-subtext">

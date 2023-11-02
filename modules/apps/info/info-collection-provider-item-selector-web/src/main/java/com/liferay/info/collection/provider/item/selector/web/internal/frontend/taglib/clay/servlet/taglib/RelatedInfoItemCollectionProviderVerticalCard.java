@@ -6,10 +6,16 @@
 package com.liferay.info.collection.provider.item.selector.web.internal.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.BaseVerticalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
+import com.liferay.info.collection.provider.BetaInfoCollectionProvider;
 import com.liferay.info.collection.provider.FilteredInfoCollectionProvider;
 import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+
+import java.util.List;
 
 import javax.portlet.RenderRequest;
 
@@ -43,6 +49,23 @@ public class RelatedInfoItemCollectionProviderVerticalCard
 	@Override
 	public String getInputValue() {
 		return null;
+	}
+
+	@Override
+	public List<LabelItem> getLabels() {
+		if (_relatedInfoItemCollectionProvider instanceof
+				BetaInfoCollectionProvider) {
+
+			return LabelItemListBuilder.add(
+				labelItem -> {
+					labelItem.setDisplayType("info");
+					labelItem.setLabel(
+						LanguageUtil.get(themeDisplay.getLocale(), "beta"));
+				}
+			).build();
+		}
+
+		return super.getLabels();
 	}
 
 	@Override

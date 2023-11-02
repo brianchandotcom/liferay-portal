@@ -6,6 +6,9 @@
 package com.liferay.info.collection.provider.item.selector.web.internal.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.BaseVerticalCard;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
+import com.liferay.info.collection.provider.BetaInfoCollectionProvider;
 import com.liferay.info.collection.provider.FilteredInfoCollectionProvider;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
@@ -14,8 +17,11 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.util.List;
 
 import javax.portlet.RenderRequest;
 
@@ -48,6 +54,21 @@ public class InfoCollectionProviderVerticalCard extends BaseVerticalCard {
 	@Override
 	public String getInputValue() {
 		return null;
+	}
+
+	@Override
+	public List<LabelItem> getLabels() {
+		if (_infoCollectionProvider instanceof BetaInfoCollectionProvider) {
+			return LabelItemListBuilder.add(
+				labelItem -> {
+					labelItem.setDisplayType("info");
+					labelItem.setLabel(
+						LanguageUtil.get(themeDisplay.getLocale(), "beta"));
+				}
+			).build();
+		}
+
+		return super.getLabels();
 	}
 
 	@Override

@@ -16,7 +16,7 @@ LayoutType selLayoutType = selLayout.getLayoutType();
 
 String friendlyURLBase = StringPool.BLANK;
 
-if (!group.isLayoutPrototype() && selLayoutType.isURLFriendliable() && !layoutsAdminDisplayContext.isDraft() && (!selLayout.isSystem() || (selLayout.isTypeAssetDisplay() && FeatureFlagManagerUtil.isEnabled("LPS-195205")))) {
+if (!group.isLayoutPrototype() && selLayoutType.isURLFriendliable() && !layoutsAdminDisplayContext.isDraft() && (!selLayout.isSystem() || selLayout.isTypeAssetDisplay())) {
 	friendlyURLBase = layoutsAdminDisplayContext.getFriendlyURLBase();
 }
 %>
@@ -31,7 +31,7 @@ if (!group.isLayoutPrototype() && selLayoutType.isURLFriendliable() && !layoutsA
 <liferay-friendly-url:input
 	className="<%= Layout.class.getName() %>"
 	classPK="<%= selLayout.getPlid() %>"
-	helpMessage='<%= (selLayout.isTypeAssetDisplay() && FeatureFlagManagerUtil.isEnabled("LPS-195205")) ? LanguageUtil.get(request, "this-friendly-url-is-used-only-when-the-display-page-template-is-not-marked-as-default-or-is-specifically-selected") : StringPool.BLANK %>'
+	helpMessage='<%= selLayout.isTypeAssetDisplay() ? LanguageUtil.get(request, "this-friendly-url-is-used-only-when-the-display-page-template-is-not-marked-as-default-or-is-specifically-selected") : StringPool.BLANK %>'
 	inputAddon="<%= friendlyURLBase %>"
 	name="friendlyURL"
 />

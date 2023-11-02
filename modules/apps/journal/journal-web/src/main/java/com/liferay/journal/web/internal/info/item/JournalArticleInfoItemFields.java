@@ -10,7 +10,6 @@ import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.HTMLInfoFieldType;
 import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
-import com.liferay.info.field.type.URLInfoFieldType;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.journal.model.JournalArticle;
 
@@ -65,15 +64,6 @@ public class JournalArticleInfoItemFields {
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
 				JournalArticleInfoItemFields.class, "display-date")
-		).build();
-	public static final InfoField<URLInfoFieldType> displayPageURLInfoField =
-		BuilderHolder._builder.infoFieldType(
-			URLInfoFieldType.INSTANCE
-		).name(
-			"displayPageURL"
-		).labelInfoLocalizedValue(
-			InfoLocalizedValue.localize(
-				"com.liferay.asset.info.display.impl", "display-page-url")
 		).build();
 	public static final InfoField<DateInfoFieldType> expirationDateInfoField =
 		BuilderHolder._builder.infoFieldType(

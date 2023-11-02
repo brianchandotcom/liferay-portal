@@ -25,15 +25,6 @@ public class AssetCategoryInfoItemFields {
 			InfoLocalizedValue.localize(
 				AssetCategoryInfoItemFields.class, "description")
 		).build();
-	public static final InfoField<TextInfoFieldType> displayPageURLInfoField =
-		BuilderHolder._builder.infoFieldType(
-			TextInfoFieldType.INSTANCE
-		).name(
-			"displayPageURL"
-		).labelInfoLocalizedValue(
-			InfoLocalizedValue.localize(
-				AssetCategoryInfoItemFields.class, "display-page-url")
-		).build();
 	public static final InfoField<TextInfoFieldType> nameInfoField =
 		BuilderHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE

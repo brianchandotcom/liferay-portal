@@ -17,7 +17,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -71,10 +70,6 @@ public class CustomAssetDisplayPageFriendlyURLResolver
 			LayoutDisplayPageProvider<?> layoutDisplayPageProvider,
 			long groupId, String friendlyURL, Map<String, String[]> params) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
-			return null;
-		}
-
 		String[] parts = _getPathParts(friendlyURL);
 
 		if (parts.length < 3) {
@@ -103,10 +98,6 @@ public class CustomAssetDisplayPageFriendlyURLResolver
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider,
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider) {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
-			return null;
-		}
-
 		String[] parts = _getPathParts(friendlyURL);
 
 		if (parts.length < 3) {
@@ -120,10 +111,6 @@ public class CustomAssetDisplayPageFriendlyURLResolver
 	@Override
 	protected LayoutDisplayPageProvider<?> getLayoutDisplayPageProvider(
 		String friendlyURL) {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
-			return null;
-		}
 
 		String[] parts = _getPathParts(friendlyURL);
 

@@ -5,7 +5,6 @@
 
 package com.liferay.document.library.web.internal.info.item.provider;
 
-import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.info.item.provider.AssetEntryInfoItemFieldSetProvider;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
@@ -32,7 +31,6 @@ import com.liferay.info.type.WebImage;
 import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -175,17 +173,6 @@ public class FileEntryInfoItemFieldValuesProvider
 		return Collections.emptyList();
 	}
 
-	private String _getDisplayPageURL(
-			FileEntry fileEntry, ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-			new InfoItemReference(
-				FileEntry.class.getName(),
-				new ClassPKInfoItemIdentifier(fileEntry.getFileEntryId())),
-			themeDisplay);
-	}
-
 	private List<InfoFieldValue<Object>> _getExpandoInfoFieldValues(
 			FileEntry fileEntry)
 		throws PortalException {
@@ -326,15 +313,6 @@ public class FileEntryInfoItemFieldValuesProvider
 					FileEntryInfoItemFields.previewImageInfoField,
 					imagePreviewURLWebImage));
 
-			if ((themeDisplay != null) &&
-				!FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
-
-				fileEntryFieldValues.add(
-					new InfoFieldValue<>(
-						FileEntryInfoItemFields.displayPageURLInfoField,
-						_getDisplayPageURL(fileEntry, themeDisplay)));
-			}
-
 			return fileEntryFieldValues;
 		}
 		catch (Exception exception) {
@@ -362,10 +340,6 @@ public class FileEntryInfoItemFieldValuesProvider
 
 		return null;
 	}
-
-	@Reference
-	private AssetDisplayPageFriendlyURLProvider
-		_assetDisplayPageFriendlyURLProvider;
 
 	@Reference
 	private AssetEntryInfoItemFieldSetProvider

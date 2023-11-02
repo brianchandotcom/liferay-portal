@@ -11,7 +11,6 @@ import com.liferay.info.field.type.BooleanInfoFieldType;
 import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.NumberInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
-import com.liferay.info.field.type.URLInfoFieldType;
 import com.liferay.info.localized.InfoLocalizedValue;
 
 /**
@@ -228,15 +227,6 @@ public class CPDefinitionInfoItemFields {
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
 				CPDefinitionInfoItemFields.class, "display-date")
-		).build();
-	public static final InfoField<URLInfoFieldType> displayPageUrlInfoField =
-		BuilderHolder._builder.infoFieldType(
-			URLInfoFieldType.INSTANCE
-		).name(
-			"displayPageURL"
-		).labelInfoLocalizedValue(
-			InfoLocalizedValue.localize(
-				"com.liferay.asset.info.display.impl", "display-page-url")
 		).build();
 	public static final InfoField<BooleanInfoFieldType> draftInfoField =
 		BuilderHolder._builder.infoFieldType(

@@ -47,7 +47,6 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -244,14 +243,6 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		return infoFieldValues;
 	}
 
-	private String _getDisplayPageURL(
-			ObjectEntry objectEntry, ThemeDisplay themeDisplay)
-		throws Exception {
-
-		return _assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-			_getInfoItemReference(objectEntry), themeDisplay);
-	}
-
 	private List<InfoFieldValue<Object>> _getInfoFieldValues(
 		ObjectEntry objectEntry) {
 
@@ -307,15 +298,6 @@ public class ObjectEntryInfoItemFieldValuesProvider
 				_getWebImage(objectEntry.getUserId())));
 
 		ThemeDisplay themeDisplay = _getThemeDisplay();
-
-		if ((themeDisplay != null) &&
-			!FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
-
-			objectEntryFieldValues.add(
-				new InfoFieldValue<>(
-					ObjectEntryInfoItemFields.displayPageURLInfoField,
-					_getDisplayPageURL(objectEntry, themeDisplay)));
-		}
 
 		if (themeDisplay != null) {
 			objectEntryFieldValues.addAll(
@@ -390,11 +372,6 @@ public class ObjectEntryInfoItemFieldValuesProvider
 			new InfoFieldValue<>(
 				ObjectEntryInfoItemFields.publishDateInfoField,
 				objectEntry.getDateModified()));
-
-		objectEntryFieldValues.add(
-			new InfoFieldValue<>(
-				ObjectEntryInfoItemFields.displayPageURLInfoField,
-				_getDisplayPageURL(serviceBuilderObjectEntry, themeDisplay)));
 		objectEntryFieldValues.addAll(
 			_getObjectFieldsInfoFieldValues(
 				objectEntry,

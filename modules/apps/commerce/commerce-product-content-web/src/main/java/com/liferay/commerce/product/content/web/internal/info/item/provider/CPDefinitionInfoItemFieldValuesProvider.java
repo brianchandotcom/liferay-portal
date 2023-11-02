@@ -36,7 +36,6 @@ import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFi
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -281,15 +280,6 @@ public class CPDefinitionInfoItemFieldValuesProvider
 				new InfoFieldValue<>(
 					CPDefinitionInfoItemFields.displayDateInfoField,
 					cpDefinition.getDisplayDate()));
-
-			if (themeDisplay != null) {
-				cpDefinitionInfoFieldValues.add(
-					new InfoFieldValue<>(
-						CPDefinitionInfoItemFields.displayPageUrlInfoField,
-						_cpDefinitionHelper.getFriendlyURL(
-							cpDefinition.getCPDefinitionId(), themeDisplay)));
-			}
-
 			cpDefinitionInfoFieldValues.add(
 				new InfoFieldValue<>(
 					CPDefinitionInfoItemFields.draftInfoField,
@@ -335,9 +325,7 @@ public class CPDefinitionInfoItemFieldValuesProvider
 					CPDefinitionInfoItemFields.incompleteInfoField,
 					cpDefinition.isIncomplete()));
 
-			if ((themeDisplay != null) &&
-				!FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
-
+			if (themeDisplay != null) {
 				cpDefinitionInfoFieldValues.add(
 					new InfoFieldValue<>(
 						CPDefinitionInfoItemFields.inventoryInfoField,

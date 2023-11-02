@@ -9,7 +9,6 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
-import com.liferay.info.field.type.URLInfoFieldType;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.object.model.ObjectEntry;
 
@@ -35,15 +34,6 @@ public class ObjectEntryInfoItemFields {
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
 				ObjectEntryInfoItemFields.class, "create-date")
-		).build();
-	public static final InfoField<URLInfoFieldType> displayPageURLInfoField =
-		BuilderHolder._builder.infoFieldType(
-			URLInfoFieldType.INSTANCE
-		).name(
-			"displayPageURL"
-		).labelInfoLocalizedValue(
-			InfoLocalizedValue.localize(
-				"com.liferay.asset.info.display.impl", "display-page-url")
 		).build();
 	public static final InfoField<TextInfoFieldType>
 		externalReferenceCodeInfoField = BuilderHolder._builder.infoFieldType(

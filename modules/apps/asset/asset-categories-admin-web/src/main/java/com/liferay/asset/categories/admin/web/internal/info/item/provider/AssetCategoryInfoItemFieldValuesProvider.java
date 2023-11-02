@@ -6,7 +6,6 @@
 package com.liferay.asset.categories.admin.web.internal.info.item.provider;
 
 import com.liferay.asset.categories.admin.web.internal.info.item.AssetCategoryInfoItemFields;
-import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
@@ -16,18 +15,12 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
-import com.liferay.layout.display.page.LayoutDisplayPageProvider;
-import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
 import java.util.ArrayList;
@@ -133,50 +126,7 @@ public class AssetCategoryInfoItemFieldValuesProvider
 					).build()));
 		}
 
-		ThemeDisplay themeDisplay = _getThemeDisplay();
-
-		if ((themeDisplay != null) &&
-			!FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
-
-			assetCategoryInfoFieldValues.add(
-				new InfoFieldValue<>(
-					AssetCategoryInfoItemFields.displayPageURLInfoField,
-					_getDisplayPageURL(assetCategory, themeDisplay)));
-		}
-
 		return assetCategoryInfoFieldValues;
-	}
-
-	private String _getDisplayPageURL(
-		AssetCategory assetCategory, ThemeDisplay themeDisplay) {
-
-		LayoutDisplayPageProvider layoutDisplayPageProvider =
-			_layoutDisplayPageProviderRegistry.
-				getLayoutDisplayPageProviderByClassName(
-					AssetCategory.class.getName());
-
-		if (!AssetDisplayPageUtil.hasAssetDisplayPage(
-				assetCategory.getGroupId(),
-				_portal.getClassNameId(AssetCategory.class.getName()),
-				assetCategory.getCategoryId(), 0) ||
-			(layoutDisplayPageProvider == null)) {
-
-			return StringPool.BLANK;
-		}
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(themeDisplay.getPathContext());
-		sb.append(themeDisplay.getPathFriendlyURLPublic());
-
-		Group group = themeDisplay.getScopeGroup();
-
-		sb.append(group.getFriendlyURL());
-
-		sb.append(layoutDisplayPageProvider.getURLSeparator());
-		sb.append(assetCategory.getCategoryId());
-
-		return sb.toString();
 	}
 
 	private ThemeDisplay _getThemeDisplay() {
@@ -200,13 +150,6 @@ public class AssetCategoryInfoItemFieldValuesProvider
 	@Reference
 	private InfoItemFieldReaderFieldSetProvider
 		_infoItemFieldReaderFieldSetProvider;
-
-	@Reference
-	private LayoutDisplayPageProviderRegistry
-		_layoutDisplayPageProviderRegistry;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private TemplateInfoItemFieldSetProvider _templateInfoItemFieldSetProvider;

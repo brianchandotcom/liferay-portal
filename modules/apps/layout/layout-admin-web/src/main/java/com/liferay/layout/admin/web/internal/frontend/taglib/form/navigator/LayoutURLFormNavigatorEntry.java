@@ -7,7 +7,6 @@ package com.liferay.layout.admin.web.internal.frontend.taglib.form.navigator;
 
 import com.liferay.frontend.taglib.form.navigator.FormNavigatorEntry;
 import com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorConstants;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.User;
@@ -43,9 +42,7 @@ public class LayoutURLFormNavigatorEntry extends BaseLayoutFormNavigatorEntry {
 
 	@Override
 	public boolean isVisible(User user, Layout layout) {
-		if (layout.isTypeAssetDisplay() &&
-			_featureFlagManager.isEnabled("LPS-195205")) {
-
+		if (layout.isTypeAssetDisplay()) {
 			return true;
 		}
 
@@ -70,9 +67,6 @@ public class LayoutURLFormNavigatorEntry extends BaseLayoutFormNavigatorEntry {
 	protected String getJspPath() {
 		return "/layout/url.jsp";
 	}
-
-	@Reference
-	private FeatureFlagManager _featureFlagManager;
 
 	@Reference(target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)")
 	private ServletContext _servletContext;

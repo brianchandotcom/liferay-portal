@@ -15,7 +15,6 @@ import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.localized.bundle.ModelResourceLocalizedValue;
 import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
 import org.osgi.service.component.annotations.Component;
@@ -47,20 +46,9 @@ public class AssetCategoryInfoItemFormProvider
 			_templateInfoItemFieldSetProvider.getInfoFieldSet(
 				AssetCategory.class.getName())
 		).infoFieldSetEntry(
-			unsafeConsumer -> {
-				if (!FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
-					unsafeConsumer.accept(_getDisplayPageInfoFieldSet());
-				}
-			}
-		).infoFieldSetEntry(
-			unsafeConsumer -> {
-				if (FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
-					unsafeConsumer.accept(
-						_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
-							AssetCategory.class.getName(), StringPool.BLANK,
-							AssetCategory.class.getSimpleName(), groupId));
-				}
-			}
+			_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
+				AssetCategory.class.getName(), StringPool.BLANK,
+				AssetCategory.class.getSimpleName(), groupId)
 		).infoFieldSetEntry(
 			_infoItemFieldReaderFieldSetProvider.getInfoFieldSet(
 				AssetCategory.class.getName())
@@ -83,17 +71,6 @@ public class AssetCategoryInfoItemFormProvider
 			InfoLocalizedValue.localize(getClass(), "basic-information")
 		).name(
 			"basic-information"
-		).build();
-	}
-
-	private InfoFieldSet _getDisplayPageInfoFieldSet() {
-		return InfoFieldSet.builder(
-		).infoFieldSetEntry(
-			AssetCategoryInfoItemFields.displayPageURLInfoField
-		).labelInfoLocalizedValue(
-			InfoLocalizedValue.localize(getClass(), "display-page")
-		).name(
-			"display-page"
 		).build();
 	}
 

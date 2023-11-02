@@ -21,7 +21,7 @@ if (Validator.isNull(backURL)) {
 Layout selLayout = layoutsSEODisplayContext.getSelLayout();
 
 UnicodeProperties layoutTypeSettingsUnicodeProperties = selLayout.getTypeSettingsProperties();
-boolean nondefaultAssetDisplayPage = selLayout.isTypeAssetDisplay() && !layoutsSEODisplayContext.isDefaultAssetDisplayPage() && FeatureFlagManagerUtil.isEnabled("LPS-195205");
+boolean nondefaultAssetDisplayPage = selLayout.isTypeAssetDisplay() && !layoutsSEODisplayContext.isDefaultAssetDisplayPage();
 %>
 
 <liferay-util:html-top>

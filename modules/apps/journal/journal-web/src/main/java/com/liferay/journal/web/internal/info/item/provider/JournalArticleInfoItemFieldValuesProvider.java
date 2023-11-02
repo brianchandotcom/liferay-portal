@@ -5,7 +5,6 @@
 
 package com.liferay.journal.web.internal.info.item.provider;
 
-import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.asset.info.item.provider.AssetEntryInfoItemFieldSetProvider;
 import com.liferay.dynamic.data.mapping.info.item.provider.DDMFormValuesInfoFieldValuesProvider;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -18,7 +17,6 @@ import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.HTMLInfoFieldType;
-import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
@@ -27,20 +25,16 @@ import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.type.WebImage;
-import com.liferay.journal.constants.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.JournalContent;
-import com.liferay.journal.util.JournalHelper;
 import com.liferay.journal.web.internal.info.item.JournalArticleInfoItemFields;
 import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -213,33 +207,6 @@ public class JournalArticleInfoItemFieldValuesProvider
 		return new ArrayList<>();
 	}
 
-	private String _getDisplayPageURL(
-			JournalArticle journalArticle, ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		String friendlyURL =
-			_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
-				new InfoItemReference(
-					JournalArticle.class.getName(),
-					new ClassPKInfoItemIdentifier(
-						journalArticle.getResourcePrimKey())),
-				themeDisplay);
-
-		if (Validator.isNotNull(friendlyURL)) {
-			return friendlyURL;
-		}
-
-		Layout layout = journalArticle.getLayout();
-
-		if (layout == null) {
-			return StringPool.BLANK;
-		}
-
-		return _journalHelper.createURLPattern(
-			journalArticle, themeDisplay.getLocale(), layout.isPrivateLayout(),
-			JournalArticleConstants.CANONICAL_URL_SEPARATOR, themeDisplay);
-	}
-
 	private String _getInfoItemFormVariationKey(JournalArticle journalArticle) {
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();
 
@@ -359,15 +326,6 @@ public class JournalArticleInfoItemFieldValuesProvider
 					JournalArticleInfoItemFields.publishDateInfoField,
 					journalArticle.getDisplayDate()));
 
-			if ((themeDisplay != null) &&
-				!FeatureFlagManagerUtil.isEnabled("LPS-195205")) {
-
-				journalArticleFieldValues.add(
-					new InfoFieldValue<>(
-						JournalArticleInfoItemFields.displayPageURLInfoField,
-						_getDisplayPageURL(journalArticle, themeDisplay)));
-			}
-
 			return journalArticleFieldValues;
 		}
 		catch (PortalException portalException) {
@@ -481,10 +439,6 @@ public class JournalArticleInfoItemFieldValuesProvider
 		JournalArticleInfoItemFieldValuesProvider.class);
 
 	@Reference
-	private AssetDisplayPageFriendlyURLProvider
-		_assetDisplayPageFriendlyURLProvider;
-
-	@Reference
 	private AssetEntryInfoItemFieldSetProvider
 		_assetEntryInfoItemFieldSetProvider;
 
@@ -518,9 +472,6 @@ public class JournalArticleInfoItemFieldValuesProvider
 
 	@Reference
 	private JournalContent _journalContent;
-
-	@Reference
-	private JournalHelper _journalHelper;
 
 	@Reference
 	private TemplateInfoItemFieldSetProvider _templateInfoItemFieldSetProvider;

@@ -417,7 +417,7 @@ public abstract class BaseDBPartitionTestCase {
 			SystemBundleUtil.getBundleContext(), bundleSymbolicName);
 
 		for (String component : components) {
-			Promise<?> promise = _serviceComponentRuntime.enableComponent(
+			Promise<?> promise = _serviceComponentRuntime.disableComponent(
 				_serviceComponentRuntime.getComponentDescriptionDTO(
 					bundle, component));
 

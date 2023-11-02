@@ -51,7 +51,7 @@ const FrontendDataSet = ({
 	apiURL,
 	appURL,
 	bulkActions,
-	creationMenu,
+	creationMenu: initialCreationMenu,
 	currentURL,
 	customDataRenderers,
 	customRenderers,
@@ -90,7 +90,7 @@ const FrontendDataSet = ({
 }) => {
 	const wrapperRef = useRef(null);
 	const [componentLoading, setComponentLoading] = useState(false);
-	const [creationMenuItems, setCreationMenuItems] = useState(null);
+	const [creationMenu, setCreationMenu] = useState(initialCreationMenu);
 	const [dataLoading, setDataLoading] = useState(!!apiURL);
 	const [dataSetSupportModalId] = useState(`support-modal-${getRandomId()}`);
 	const [dataSetSupportSidePanelId] = useState(
@@ -226,21 +226,6 @@ const FrontendDataSet = ({
 	]);
 
 	const isMounted = useIsMounted();
-
-	function updateDataSetActions(actions) {
-		const filteredCreationMenu = {};
-
-		if (creationMenu && actions) {
-			if (creationMenu.primaryItems) {
-				filteredCreationMenu.primaryItems = filterCreationActions({
-					creationActions: creationMenu.primaryItems,
-					globalCollectionActions: actions
-				});
-			}
-		}
-
-		setCreationMenuItems(() => filteredCreationMenu);
-	}
 
 	function updateDataSetItems(dataSetData) {
 		setItems(dataSetData.items);
@@ -418,7 +403,19 @@ const FrontendDataSet = ({
 					handleApiError({data, statusCode});
 				}
 				else {
-					updateDataSetActions(data.actions);
+					setCreationMenu((currentCreationMenu) => {
+						const filteredCreationMenu = {};
+
+						filteredCreationMenu.primaryItems = filterCreationActions(
+							{
+								customActions:
+									currentCreationMenu?.primaryItems,
+								globalCollectionActions: data?.actions,
+							}
+						);
+
+						return filteredCreationMenu;
+					});
 
 					updateDataSetItems(data);
 				}
@@ -462,7 +459,7 @@ const FrontendDataSet = ({
 		<div className="management-bar-wrapper">
 			<ManagementBar
 				bulkActions={bulkActions}
-				creationMenu={creationMenuItems}
+				creationMenu={creationMenu}
 				fluid={style === 'fluid'}
 				selectAllItems={() =>
 					selectItems(items.map((item) => item[selectedItemsKey]))
@@ -517,7 +514,7 @@ const FrontendDataSet = ({
 						}
 					>
 						{creationMenu && (
-							<CreationMenu {...creationMenuItems} inEmptyState />
+							<CreationMenu {...creationMenu} inEmptyState />
 						)}
 					</ClayEmptyState>
 				)}

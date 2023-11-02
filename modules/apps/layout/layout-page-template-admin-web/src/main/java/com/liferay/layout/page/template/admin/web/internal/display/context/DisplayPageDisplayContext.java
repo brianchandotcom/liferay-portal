@@ -104,8 +104,7 @@ public class DisplayPageDisplayContext {
 			return true;
 		}
 
-		if ((layoutPageTemplateEntry.getClassTypeId() == 0) ||
-			!ArrayUtil.contains(
+		if (!ArrayUtil.contains(
 				classTypeIds, layoutPageTemplateEntry.getClassTypeId())) {
 
 			return false;

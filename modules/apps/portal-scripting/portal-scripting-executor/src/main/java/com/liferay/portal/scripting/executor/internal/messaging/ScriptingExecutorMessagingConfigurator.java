@@ -8,7 +8,6 @@ package com.liferay.portal.scripting.executor.internal.messaging;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
-import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.scripting.Scripting;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -67,9 +66,6 @@ public class ScriptingExecutorMessagingConfigurator {
 
 	@Reference
 	private DestinationFactory _destinationFactory;
-
-	@Reference
-	private MessageBus _messageBus;
 
 	@Reference
 	private Scripting _scripting;

@@ -110,7 +110,6 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 			_fieldConfigBuilderFactory, _highlightBuilderFactory);
 
 		QueryConverter queryConverter = new QueryConverter(_queries);
-
 		ScriptConverter scriptConverter = new ScriptConverter(_scripts);
 
 		SortConverter sortConverter = new SortConverter(

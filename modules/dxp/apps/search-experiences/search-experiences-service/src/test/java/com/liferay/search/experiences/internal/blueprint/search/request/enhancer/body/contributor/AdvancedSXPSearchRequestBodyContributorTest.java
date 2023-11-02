@@ -51,27 +51,14 @@ public class AdvancedSXPSearchRequestBodyContributorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_collapseBuilderFactory = new CollapseBuilderFactoryImpl();
-
-		_innerHitBuilderFactory = new InnerHitBuilderFactoryImpl();
-
-		_sortConverter = new SortConverter(
-			new GeoBuildersImpl(), new QueryConverter(new QueriesImpl()),
-			new ScriptConverter(new ScriptsImpl()), new SortsImpl());
-
 		_advancedSXPSearchRequestBodyContributor =
 			new AdvancedSXPSearchRequestBodyContributor(
 				_collapseBuilderFactory, _innerHitBuilderFactory,
 				_sortConverter);
-
-		_searchRequestBuilderFactory = new SearchRequestBuilderFactoryImpl();
 	}
 
 	@Test
 	public void testCollapse() {
-		SearchRequestBuilder searchRequestBuilder =
-			_searchRequestBuilderFactory.builder();
-
 		Configuration configuration = new Configuration();
 
 		AdvancedConfiguration advancedConfiguration =
@@ -84,6 +71,9 @@ public class AdvancedSXPSearchRequestBodyContributorTest {
 		advancedConfiguration.setCollapse(collapse);
 
 		configuration.setAdvancedConfiguration(advancedConfiguration);
+
+		SearchRequestBuilder searchRequestBuilder =
+			_searchRequestBuilderFactory.builder();
 
 		_advancedSXPSearchRequestBodyContributor.contribute(
 			configuration, searchRequestBuilder, null);
@@ -128,9 +118,14 @@ public class AdvancedSXPSearchRequestBodyContributorTest {
 
 	private AdvancedSXPSearchRequestBodyContributor
 		_advancedSXPSearchRequestBodyContributor;
-	private CollapseBuilderFactory _collapseBuilderFactory;
-	private InnerHitBuilderFactory _innerHitBuilderFactory;
-	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
-	private SortConverter _sortConverter;
+	private final CollapseBuilderFactory _collapseBuilderFactory =
+		new CollapseBuilderFactoryImpl();
+	private final InnerHitBuilderFactory _innerHitBuilderFactory =
+		new InnerHitBuilderFactoryImpl();
+	private final SearchRequestBuilderFactory _searchRequestBuilderFactory =
+		new SearchRequestBuilderFactoryImpl();
+	private final SortConverter _sortConverter = new SortConverter(
+		new GeoBuildersImpl(), new QueryConverter(new QueriesImpl()),
+		new ScriptConverter(new ScriptsImpl()), new SortsImpl());
 
 }

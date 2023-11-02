@@ -32,44 +32,47 @@ MySavedContentDisplayContext mySavedContentDisplayContext = new MySavedContentDi
 			modelVar="savedContentEntry"
 		>
 			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand table-cell-minw-200"
+				cssClass="table-cell-expand-small table-title"
 				name="title"
 				value="<%= mySavedContentDisplayContext.getAssetTitle(savedContentEntry.getClassName(), savedContentEntry.getClassPK()) %>"
 			/>
 
-			<div class="autofit-row">
-				<div class="autofit-col autofit-col-expand pl-1">
-					<div class="table-title">
-					</div>
-				</div>
-			</div>
-
 			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand"
 				name="description"
 				value="<%= ResourceActionsUtil.getModelResource(locale, savedContentEntry.getClassName()) %>"
 			/>
 
-			<liferay-ui:search-container-column-icon
-				href="<%= mySavedContentDisplayContext.getURL(savedContentEntry.getClassName(), savedContentEntry.getClassPK()) %>"
-				icon="shortcut"
-				name="icon"
-			/>
-
 			<liferay-ui:search-container-column-text
-				href="<%= mySavedContentDisplayContext.getURL(savedContentEntry.getClassName(), savedContentEntry.getClassPK()) %>"
-				name="url"
-				value="url"
-			/>
+				cssClass="table-cell-expand-smallest"
+			>
+				<div class="btn-group">
+					<div class="btn-group-item">
+						<clay:link
+							borderless="<%= true %>"
+							displayType="secondary"
+							href="<%= mySavedContentDisplayContext.getURL(savedContentEntry.getClassName(), savedContentEntry.getClassPK()) %>"
+							icon="shortcut"
+							monospaced="<%= true %>"
+							small="<%= true %>"
+							target="_blank"
+							type="button"
+						/>
+					</div>
 
-			<liferay-ui:search-container-column-icon
-				icon="trash"
-			/>
-
-			<liferay-ui:search-container-column-text
-				href="<%= mySavedContentDisplayContext.getRemoveSavedContentURL(savedContentEntry.getClassName(), savedContentEntry.getClassPK()) %>"
-				name="trash"
-				value="trash"
-			/>
+					<div class="btn-group-item">
+						<clay:link
+							borderless="<%= true %>"
+							displayType="secondary"
+							href="<%= mySavedContentDisplayContext.getRemoveSavedContentURL(savedContentEntry.getClassName(), savedContentEntry.getClassPK()) %>"
+							icon="trash"
+							monospaced="<%= true %>"
+							small="<%= true %>"
+							type="button"
+						/>
+					</div>
+				</div>
+			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.scim.charon.integration.internal.resource;
+package com.liferay.scim.rest.internal.resource.v1_0;
 
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
@@ -12,11 +12,11 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.scim.charon.integration.internal.ScimUserManager;
-import com.liferay.scim.charon.integration.internal.constants.ScimConstants;
-import com.liferay.scim.charon.integration.internal.user.manager.UserManagerImpl;
 import com.liferay.scim.rest.dto.v1_0.QueryAttributes;
 import com.liferay.scim.rest.dto.v1_0.User;
+import com.liferay.scim.rest.internal.ScimUserManager;
+import com.liferay.scim.rest.internal.constants.ScimConstants;
+import com.liferay.scim.rest.internal.manager.UserManagerImpl;
 import com.liferay.scim.rest.resource.handler.UserResourceHandler;
 
 import java.io.File;
@@ -43,12 +43,10 @@ import org.wso2.charon3.core.protocol.endpoints.UserResourceManager;
 @Component(service = UserResourceHandler.class)
 public class UserResourceHandlerImpl implements UserResourceHandler {
 
-	@Override
 	public Response deleteV2User(String id) {
 		return _buildResponse(_userResourceManager.delete(id, _userManager));
 	}
 
-	@Override
 	public Response getV2User(Integer count, Integer startIndex) {
 		return _buildResponse(
 			_userResourceManager.listWithGET(
@@ -56,20 +54,17 @@ public class UserResourceHandlerImpl implements UserResourceHandler {
 				null));
 	}
 
-	@Override
 	public Response getV2UserById(String id) {
 		return _buildResponse(
 			_userResourceManager.get(id, _userManager, null, null));
 	}
 
-	@Override
 	public Response postV2User(User user) {
 		return _buildResponse(
 			_userResourceManager.create(
 				user.toString(), _userManager, null, null));
 	}
 
-	@Override
 	public Response postV2UserSearch(QueryAttributes queryAttributes)
 		throws Exception {
 
@@ -78,7 +73,6 @@ public class UserResourceHandlerImpl implements UserResourceHandler {
 				queryAttributes.toString(), _userManager));
 	}
 
-	@Override
 	public Response putV2User(String id, User user) {
 		return _buildResponse(
 			_userResourceManager.updateWithPUT(

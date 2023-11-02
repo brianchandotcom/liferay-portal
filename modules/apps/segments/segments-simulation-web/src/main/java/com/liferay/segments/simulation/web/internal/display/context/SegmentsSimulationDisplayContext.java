@@ -5,7 +5,6 @@
 
 package com.liferay.segments.simulation.web.internal.display.context;
 
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -45,14 +44,12 @@ import javax.servlet.http.HttpServletRequest;
 public class SegmentsSimulationDisplayContext {
 
 	public SegmentsSimulationDisplayContext(
-		HttpServletRequest httpServletRequest, ItemSelector itemSelector,
-		Language language,
+		HttpServletRequest httpServletRequest, Language language,
 		SegmentsConfigurationProvider segmentsConfigurationProvider,
 		SegmentsEntryLocalService segmentsEntryLocalService,
 		SegmentsExperienceLocalService segmentsExperienceLocalService) {
 
 		_httpServletRequest = httpServletRequest;
-		_itemSelector = itemSelector;
 		_language = language;
 		_segmentsConfigurationProvider = segmentsConfigurationProvider;
 		_segmentsEntryLocalService = segmentsEntryLocalService;
@@ -144,19 +141,7 @@ public class SegmentsSimulationDisplayContext {
 		return false;
 	}
 
-	public boolean isShowEmptyMessage() {
-		if (_showEmptyMessage != null) {
-			return _showEmptyMessage;
-		}
-
-		List<SegmentsEntry> segmentsEntries = getSegmentsEntries();
-
-		_showEmptyMessage = segmentsEntries.isEmpty();
-
-		return _showEmptyMessage;
-	}
-
-	private JSONArray _getSegmentsEntriesJSONArray() throws Exception {
+	private JSONArray _getSegmentsEntriesJSONArray() {
 		if (_segmentsEntriesJSONArray != null) {
 			return _segmentsEntriesJSONArray;
 		}
@@ -273,7 +258,6 @@ public class SegmentsSimulationDisplayContext {
 
 	private Long _groupId;
 	private final HttpServletRequest _httpServletRequest;
-	private final ItemSelector _itemSelector;
 	private final Language _language;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private final SegmentsConfigurationProvider _segmentsConfigurationProvider;
@@ -283,7 +267,6 @@ public class SegmentsSimulationDisplayContext {
 	private final SegmentsExperienceLocalService
 		_segmentsExperienceLocalService;
 	private JSONArray _segmentsExperiencesJSONArray;
-	private Boolean _showEmptyMessage;
 	private final ThemeDisplay _themeDisplay;
 
 }

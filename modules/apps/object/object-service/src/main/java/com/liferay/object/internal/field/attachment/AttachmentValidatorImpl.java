@@ -8,6 +8,7 @@ package com.liferay.object.internal.field.attachment;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.object.configuration.ObjectConfiguration;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.field.attachment.AttachmentValidator;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
@@ -38,7 +39,8 @@ public class AttachmentValidatorImpl implements AttachmentValidator {
 	public String[] getAcceptedFileExtensions(long objectFieldId) {
 		ObjectFieldSetting objectFieldSetting =
 			_objectFieldSettingLocalService.fetchObjectFieldSetting(
-				objectFieldId, "acceptedFileExtensions");
+				objectFieldId,
+				ObjectFieldSettingConstants.NAME_ACCEPTED_FILE_EXTENSIONS);
 
 		String value = objectFieldSetting.getValue();
 
@@ -49,7 +51,7 @@ public class AttachmentValidatorImpl implements AttachmentValidator {
 	public long getMaximumFileSize(long objectFieldId, boolean signedIn) {
 		ObjectFieldSetting objectFieldSetting =
 			_objectFieldSettingLocalService.fetchObjectFieldSetting(
-				objectFieldId, "maximumFileSize");
+				objectFieldId, ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE);
 
 		long maximumFileSize = GetterUtil.getLong(
 			objectFieldSetting.getValue());

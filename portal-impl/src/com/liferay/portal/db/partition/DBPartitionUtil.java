@@ -141,11 +141,18 @@ public class DBPartitionUtil {
 			return;
 		}
 
-		for (long companyId : _getCompanyIds()) {
-			try (SafeCloseable safeCloseable = CompanyThreadLocal.lock(
-					companyId)) {
+		List<Long> companyIds = _getCompanyIds();
 
-				unsafeConsumer.accept(companyId);
+		if (companyIds.isEmpty()) {
+			unsafeConsumer.accept(null);
+		}
+		else {
+			for (long companyId : _getCompanyIds()) {
+				try (SafeCloseable safeCloseable = CompanyThreadLocal.lock(
+						companyId)) {
+
+					unsafeConsumer.accept(companyId);
+				}
 			}
 		}
 	}
@@ -327,30 +334,37 @@ public class DBPartitionUtil {
 		ThrowableCollector throwableCollector = new ThrowableCollector();
 
 		try {
-			for (long companyId : _getCompanyIds()) {
-				if (companyId == _defaultCompanyId) {
-					try (SafeCloseable safeCloseable = CompanyThreadLocal.lock(
-							companyId)) {
+			List<Long> companyIds = _getCompanyIds();
 
-						unsafeConsumer.accept(companyId);
+			if (companyIds.isEmpty()) {
+				unsafeConsumer.accept(null);
+			}
+			else {
+				for (long companyId : companyIds) {
+					if (companyId == _defaultCompanyId) {
+						try (SafeCloseable safeCloseable =
+								CompanyThreadLocal.lock(companyId)) {
+
+							unsafeConsumer.accept(companyId);
+						}
 					}
-				}
-				else {
-					Future<Void> future = executorService.submit(
-						() -> {
-							try (SafeCloseable safeCloseable =
-									CompanyThreadLocal.lock(companyId)) {
+					else {
+						Future<Void> future = executorService.submit(
+							() -> {
+								try (SafeCloseable safeCloseable =
+										CompanyThreadLocal.lock(companyId)) {
 
-								unsafeConsumer.accept(companyId);
-							}
-							catch (Exception exception) {
-								throwableCollector.collect(exception);
-							}
+									unsafeConsumer.accept(companyId);
+								}
+								catch (Exception exception) {
+									throwableCollector.collect(exception);
+								}
 
-							return null;
-						});
+								return null;
+							});
 
-					futures.add(future);
+						futures.add(future);
+					}
 				}
 			}
 		}

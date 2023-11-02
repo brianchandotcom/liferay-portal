@@ -12,7 +12,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.partition.DBPartitionUtil;
-import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.ResourceActionsException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -666,19 +665,13 @@ public class ResourceActionsImpl implements ResourceActions {
 	}
 
 	private void _checkResourceActions(List<String> actionIds, String name) {
-		if (StartupHelperUtil.isDBNew()) {
-			resourceActionLocalService.checkResourceActions(name, actionIds);
+		try {
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> resourceActionLocalService.checkResourceActions(
+					name, actionIds));
 		}
-		else {
-			try {
-				DBPartitionUtil.forEachCompanyId(
-					companyId ->
-						resourceActionLocalService.checkResourceActions(
-							name, actionIds));
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 	}
 

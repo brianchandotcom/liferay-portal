@@ -66,7 +66,7 @@ export function RuleBuilderActionSection({
 			displayType="secondary"
 			showCollapseIcon
 		>
-			<ClayPanel.Body>
+			<ClayPanel.Body role="menu">
 				{actions.map((action, index) => (
 					<ActionComponent
 						action={action}
@@ -183,7 +183,7 @@ export function RuleBuilderConditionSection({
 			displayType="secondary"
 			showCollapseIcon
 		>
-			<ClayPanel.Body>
+			<ClayPanel.Body role="menu">
 				{conditions.map((condition, index, conditions) => (
 					<ConditionComponent
 						condition={condition}

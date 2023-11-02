@@ -167,7 +167,7 @@
 		"vscode:prepublish": "npm run esbuild-base -- --minify && npm run generate-license",
 		"watch": "tsc -watch -p ./"
 	},
-	"version": "0.3.7",
+	"version": "0.3.8",
 	"vsce": {
 		"baseImagesUrl": "https://github.com/liferay/liferay-portal/raw/HEAD/modules/test/poshi/poshi-vscode"
 	}

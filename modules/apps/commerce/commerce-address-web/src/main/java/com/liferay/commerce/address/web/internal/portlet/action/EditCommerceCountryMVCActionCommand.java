@@ -164,10 +164,6 @@ public class EditCommerceCountryMVCActionCommand extends BaseMVCActionCommand {
 				"/commerce_country/edit_commerce_country");
 			portletURL.setParameter(
 				"countryId", String.valueOf(country.getCountryId()));
-
-			String backURL = ParamUtil.getString(actionRequest, "backURL");
-
-			portletURL.setParameter("backURL", backURL);
 		}
 
 		return portletURL.toString();

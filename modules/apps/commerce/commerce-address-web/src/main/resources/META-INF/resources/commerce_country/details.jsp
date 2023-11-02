@@ -20,7 +20,6 @@ CommerceRegionsStarter commerceRegionsStarter = commerceCountriesDisplayContext.
 <aui:form action="<%= editCommerceCountryActionURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveCommerceCountry();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (country == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="backURL" type="hidden" value="<%= redirect %>" />
 	<aui:input name="countryId" type="hidden" value="<%= String.valueOf(countryId) %>" />
 
 	<liferay-ui:error exception="<%= CountryA2Exception.class %>" message="please-enter-a-valid-two-letter-iso-code" />
@@ -69,7 +68,7 @@ CommerceRegionsStarter commerceRegionsStarter = commerceCountriesDisplayContext.
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />
 
-		<aui:button cssClass="btn-lg" href="<%= backURL %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= portletDisplay.getURLBack() %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

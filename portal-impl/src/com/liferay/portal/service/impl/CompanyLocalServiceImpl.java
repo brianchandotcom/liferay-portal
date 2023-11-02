@@ -404,6 +404,32 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		return company;
 	}
 
+	public Company doExportPartitionCompany(long companyId)
+		throws PortalException {
+
+		if (!DBPartition.isPartitionEnabled()) {
+			throw new IllegalArgumentException("DB partition must be enabled");
+		}
+
+		Company company = companyPersistence.findByPrimaryKey(companyId);
+
+		_clearCompanyCache(companyId, true);
+		_clearVirtualHostCache(companyId);
+
+		TransactionCommitCallbackUtil.registerCallback(
+			() -> {
+				PortalInstances.removeCompany(company.getCompanyId());
+
+				unregisterCompany(company);
+
+				return null;
+			});
+
+		DBPartitionUtil.migrateDBPartition(companyId);
+
+		return company;
+	}
+
 	/**
 	 * Returns the company with the primary key.
 	 *

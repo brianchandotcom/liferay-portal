@@ -343,7 +343,7 @@ const ActionForm = ({
 			Array<{label: string; value: string}>
 		>(availableIconSymbols);
 		const [query, setQuery] = useState('');
-		
+
 		const onSearch = (query: string) => {
 			setQuery(query);
 
@@ -473,66 +473,50 @@ const ActionForm = ({
 										/>
 									</ClayInput.GroupItem>
 
-									{actionData.iconSymbol === '' ? (
+									<ClayButtonWithIcon
+										aria-label={Liferay.Language.get(
+											actionData.iconSymbol !== ''
+												? 'change-icon'
+												: 'add-icon'
+										)}
+										className="ml-2"
+										displayType="secondary"
+										id={iconFormElementId}
+										onClick={() =>
+											openModal({
+												bodyComponent: ModalBody,
+												containerProps: {
+													className:
+														'dsm-actions-icon-selection-modal',
+												},
+												size: 'lg',
+												title: Liferay.Language.get(
+													'select-an-icon'
+												),
+											})
+										}
+										symbol={
+											actionData.iconSymbol !== ''
+												? 'change'
+												: 'plus'
+										}
+									/>
+
+									{actionData.iconSymbol !== '' && (
 										<ClayButtonWithIcon
 											aria-label={Liferay.Language.get(
-												'add-icon'
+												'remove-icon'
 											)}
 											className="ml-2"
 											displayType="secondary"
-											id={iconFormElementId}
 											onClick={() =>
-												openModal({
-													bodyComponent: ModalBody,
-													containerProps: {
-														className: 'dsm-actions-icon-selection-modal',
-													},
-													size: 'lg',
-													title: Liferay.Language.get(
-														'select-an-icon'
-													),
+												setActionData({
+													...actionData,
+													iconSymbol: '',
 												})
 											}
-											symbol="plus"
+											symbol="trash"
 										/>
-									) : (
-										<>
-											<ClayButtonWithIcon
-												aria-label={Liferay.Language.get(
-													'change-icon'
-												)}
-												className="ml-2"
-												displayType="secondary"
-												onClick={() =>
-													openModal({
-														bodyComponent: ModalBody,
-														containerProps: {
-															className:
-																'dsm-actions-icon-selection-modal',
-														},
-														size: 'lg',
-														title: Liferay.Language.get(
-															'select-an-icon'
-														),
-													})
-												}
-												symbol="change"
-											/>
-											<ClayButtonWithIcon
-												aria-label={Liferay.Language.get(
-													'remove-icon'
-												)}
-												className="ml-2"
-												displayType="secondary"
-												onClick={() =>
-													setActionData({
-														...actionData,
-														iconSymbol: '',
-													})
-												}
-												symbol="trash"
-											/>
-										</>
 									)}
 								</ClayInput.Group>
 							</ClayForm.Group>

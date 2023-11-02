@@ -243,11 +243,7 @@ definition {
 
 		PublicationsTemplate.viewPublicationTemplate(templateName = "Template Name");
 
-		Publications.createNewPublicationWithTemplate(
-			gotoPublicationsAdmin = "true",
-			publicationDescription = "Publications Description test",
-			publicationName = "Publication Name test",
-			templateName = "Template Name");
+		PublicationsNavigator.openPublicationsAdmin();
 
 		PublicationsNavigator.gotoPublicationEllipsisItem(
 			menuItem = "Invite Users",
@@ -260,6 +256,14 @@ definition {
 		Publications.viewInvitedUser(
 			publicationRole = "Viewer",
 			userInvite = "userea2@liferay.com");
+
+		PublicationsNavigator.openPublicationsAdmin();
+
+		Publications.createNewPublicationWithTemplate(
+			gotoPublicationsAdmin = "true",
+			publicationDescription = "Publications Description test",
+			publicationName = "Publication Name test",
+			templateName = "Template Name");
 	}
 
 }

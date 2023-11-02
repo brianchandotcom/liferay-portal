@@ -394,8 +394,6 @@ public class MainServlet extends HttpServlet {
 
 		servletContext.setAttribute(WebKeys.STARTUP_FINISHED, Boolean.TRUE);
 
-		StartupHelperUtil.setStartupFinished(true);
-
 		_registerPortalInitialized();
 
 		_checkBuildDate();

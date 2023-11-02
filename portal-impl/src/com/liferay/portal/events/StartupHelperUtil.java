@@ -82,10 +82,6 @@ public class StartupHelperUtil {
 			StartupHelperUtil::_isDBWarmed);
 	}
 
-	public static boolean isStartupFinished() {
-		return _startupFinished;
-	}
-
 	public static boolean isUpgrading() {
 		return _upgrading;
 	}
@@ -112,10 +108,6 @@ public class StartupHelperUtil {
 
 			_dbNew = dbNew;
 		}
-	}
-
-	public static void setStartupFinished(boolean startupFinished) {
-		_startupFinished = startupFinished;
 	}
 
 	public static void setUpgrading(boolean upgrading) {
@@ -255,7 +247,6 @@ public class StartupHelperUtil {
 	private static volatile boolean _dbNew;
 	private static final DCLSingleton<Boolean> _dbWarmedSCLSingleton =
 		new DCLSingleton<>();
-	private static boolean _startupFinished;
 	private static volatile boolean _upgrading;
 
 }

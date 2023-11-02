@@ -1,11 +1,3 @@
-<%--
-/**
- * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
- * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
- */
---%>
-
-<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -35,6 +27,16 @@ MySavedContentDisplayContext mySavedContentDisplayContext = new MySavedContentDi
 				cssClass="table-cell-expand table-cell-minw-200"
 				name="title"
 				value="<%= mySavedContentDisplayContext.getAssetTitle(savedContentEntry.getClassName(), savedContentEntry.getClassPK()) %>"
+			/>
+
+			<liferay-ui:search-container-column-icon
+				icon="trash"
+			/>
+
+			<liferay-ui:search-container-column-text
+				href="<%= mySavedContentDisplayContext.getRemoveSavedContentURL(savedContentEntry.getClassName(), savedContentEntry.getClassPK()) %>"
+				name="trash"
+				value="trash"
 			/>
 		</liferay-ui:search-container-row>
 

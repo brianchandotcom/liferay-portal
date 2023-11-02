@@ -1,8 +1,8 @@
 definition {
 
 	@summary = "Default summary"
-	macro addAndPublishFiltersAndSortingInEndpointConfiguration(name = null,entity = null,fieldName = null,title = null,unpublish = null) {
-		Variables.assertDefined(parameterList = "${name},${entity},${fieldName},${title},${editValue}");
+	macro addAndPublishEndpointConfiguration(fieldName = null, name = null, editValue = null, title = null, schemaName = null, entity = null) {
+		Variables.assertDefined(parameterList = "${name},${entity},${title}");
 
 		APIBuilderUI.goToEditRelatedEntryInEditApplication(
 			entity = ${entity},
@@ -10,10 +10,116 @@ definition {
 			tabEntity = "Configuration",
 			title = ${title});
 
-		Type(
-			fieldName = ${fieldName},
-			locator1 = "APIBuilder#ODATA_TEXTAREA",
-			value1 = ${editValue});
+		if (isSet(schemaName)) {
+			Click(
+				key_value = "Select a Schema",
+				locator1 = "APIBuilder#DROPDOWN_TOGGLE");
+
+			Click(
+				key_optionName = ${schemaName},
+				locator1 = "ObjectAdmin#LAYOUT_ADD_FIELD_OPTION");
+		}
+
+		if (isSet(fieldName)) {
+			Type(
+				fieldName = ${fieldName},
+				locator1 = "APIBuilder#ODATA_TEXTAREA",
+				value1 = ${editValue});
+		}
+
+		Click(locator1 = "APIBuilder#PUBLISH_BUTTON");
+
+		Alert.viewSuccessMessage();
+	}
+
+	@summary = "Default summary"
+	macro addAndPublishEndpointInfo(endpointPath = null, name = null, description = null, title = null, entity = null) {
+		Variables.assertDefined(parameterList = "${name},${entity},${title}");
+
+		APIBuilderUI.goToEditRelatedEntryInEditApplication(
+			entity = ${entity},
+			name = ${name},
+			tabEntity = "Info",
+			title = ${title});
+
+		if (isSet(description)) {
+			Type(
+				key_value = "endpoint",
+				locator1 = "APIBuilder#DESCRIPTION",
+				value1 = ${description});
+		}
+
+		if (isSet(endpointPath)) {
+			Type(
+				key_placeHolder = "Enter Path",
+				locator1 = "TextInput#ANY_PLACEHOLDER",
+				value1 = ${endpointPath});
+		}
+
+		Click(locator1 = "APIBuilder#PUBLISH_BUTTON");
+
+		Alert.viewSuccessMessage();
+	}
+
+	@summary = "Default summary"
+	macro addAndPublishSchemaProperties(relatedPlaceHolderName = null, fieldName = null, relatedPropertyName = null, relatedFieldName = null, propertyName = null, placeHolderName = null, name = null, relatedObjectName = null, title = null, entity = null) {
+		Variables.assertDefined(parameterList = "${name},${entity},${title}");
+
+		APIBuilderUI.goToEditRelatedEntryInEditApplication(
+			entity = ${entity},
+			name = ${name},
+			tabEntity = "Properties",
+			title = ${title});
+
+		Click(
+			key_text = ${fieldName},
+			locator1 = "APIBuilder#PROPERTY_CONTAINER");
+
+		if (isSet(propertyName)) {
+			MouseOver(
+				key_commentValue = ${fieldName},
+				locator1 = "PublicationsChanges#COMMENT_VALUE");
+
+			Click(
+				key_text = "pencil",
+				locator1 = "Icon#ANY");
+
+			Type(
+				key_placeHolder = "Enter name",
+				locator1 = "TextInput#ANY_PLACEHOLDER",
+				value1 = ${propertyName});
+
+			Click(locator1 = "Button#UPDATE");
+		}
+
+		if (IsElementPresent(locator1 = "APIBuilder#VIEW_RELATED_OBJECTS")) {
+			Click(locator1 = "APIBuilder#VIEW_RELATED_OBJECTS");
+
+			Click(
+				key_componentName = ${relatedObjectName},
+				locator1 = "Panel#PANEL_TITLE");
+
+			Click(
+				key_text = ${relatedFieldName},
+				locator1 = "APIBuilder#PROPERTY_CONTAINER");
+
+			if (isSet(relatedPropertyName)) {
+				MouseOver(
+					key_commentValue = ${relatedFieldName},
+					locator1 = "PublicationsChanges#COMMENT_VALUE");
+
+				Click(
+					key_text = "pencil",
+					locator1 = "Icon#ANY");
+
+				Type(
+					key_placeHolder = "Enter name",
+					locator1 = "TextInput#ANY_PLACEHOLDER",
+					value1 = ${relatedPropertyName});
+
+				Click(locator1 = "Button#UPDATE");
+			}
+		}
 
 		Click(locator1 = "APIBuilder#PUBLISH_BUTTON");
 
@@ -84,6 +190,7 @@ definition {
 
 		if (isSet(description)) {
 			Type(
+				key_value = "API",
 				locator1 = "APIBuilder#DESCRIPTION",
 				value1 = ${description});
 		}
@@ -106,7 +213,7 @@ definition {
 		if (isSet(scope)) {
 			Click(
 				key_value = "Select Scope",
-				locator1 = "APIBuilder#ENDPOINT_DROPDOWN");
+				locator1 = "APIBuilder#DROPDOWN_TOGGLE");
 
 			Click(
 				key_optionName = ${scope},
@@ -272,8 +379,10 @@ definition {
 			title = ${title});
 
 		Click(
-			locator1 = "Button#BUTTON_WITH_VALUE",
-			value = "/${name}/");
+			key_title = ${name},
+			locator1 = "APIBuilder#DROPDOWN_MENU");
+
+		Click(locator1 = "APIBuilder#EDIT_BUTTON");
 
 		Click(
 			locator1 = "Button#BUTTON_WITH_VALUE",

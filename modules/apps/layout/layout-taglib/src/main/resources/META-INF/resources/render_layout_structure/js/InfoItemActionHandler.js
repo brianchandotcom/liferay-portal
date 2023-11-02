@@ -8,6 +8,7 @@ import {navigate, objectToFormData, openToast} from 'frontend-js-web';
 const INTERACTION_NOTIFICATION = 'notification';
 const INTERACTION_PAGE = 'page';
 const INTERACTION_URL = 'url';
+const INTERACTION_DISPLAY_PAGE = 'displayPage';
 
 const TOAST_DATA = {
 	error: {
@@ -159,7 +160,11 @@ function handleResult(interaction, reload, text, toastData, url) {
 			openResultToast(toastData, text);
 		}
 	}
-	else if ([INTERACTION_PAGE, INTERACTION_URL].includes(interaction)) {
+	else if (
+		[INTERACTION_PAGE, INTERACTION_URL, INTERACTION_DISPLAY_PAGE].includes(
+			interaction
+		)
+	) {
 		navigate(url);
 	}
 	else if (reload) {

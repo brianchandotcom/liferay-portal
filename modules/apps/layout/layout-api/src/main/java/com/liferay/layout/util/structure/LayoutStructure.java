@@ -113,17 +113,24 @@ public class LayoutStructure {
 				layoutStructureJSONObject.getJSONArray("pageRules");
 
 			if (!JSONUtil.isEmpty(layoutStructureRulesJSONArray)) {
-				for (int i = 0; i < layoutStructureRulesJSONArray.length();
-					 i++) {
+				try {
+					layoutStructureRules = JSONUtil.toList(
+						layoutStructureJSONObject.getJSONArray("pageRules"),
+						jsonObject -> {
+							LayoutStructureRule layoutStructureRule =
+								LayoutStructureRule.of(jsonObject);
 
-					LayoutStructureRule layoutStructureRule =
-						LayoutStructureRule.of(
-							layoutStructureRulesJSONArray.getJSONObject(i));
+							layoutStructureRulesMap.put(
+								layoutStructureRule.getId(),
+								layoutStructureRule);
 
-					layoutStructureRules.add(layoutStructureRule);
-
-					layoutStructureRulesMap.put(
-						layoutStructureRule.getId(), layoutStructureRule);
+							return layoutStructureRule;
+						});
+				}
+				catch (Exception exception) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(exception);
+					}
 				}
 			}
 

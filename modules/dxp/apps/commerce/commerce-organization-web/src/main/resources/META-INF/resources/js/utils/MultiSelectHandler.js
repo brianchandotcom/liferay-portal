@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ACTION_KEYS} from './constants';
+import {ACTION_KEYS, MODEL_TYPE_MAP} from './constants';
 import {hasPermission} from './index';
 
 export default class MultiSelectHandler {
@@ -34,7 +34,7 @@ export default class MultiSelectHandler {
 		items.each((d, index, nodeList) => {
 			if (
 				!unselectableItemIds.has(d.data.chartNodeId) &&
-				d.data.type !== 'user' &&
+				d.data.type !== MODEL_TYPE_MAP.user &&
 				d.data.type !== 'add' &&
 				hasPermission(d.data, ACTION_KEYS[d.data.type].MOVE)
 			) {

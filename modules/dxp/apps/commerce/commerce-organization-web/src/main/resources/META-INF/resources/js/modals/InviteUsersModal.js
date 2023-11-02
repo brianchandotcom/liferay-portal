@@ -19,6 +19,7 @@ import {
 	getAccountRoles,
 	getOrganizationRoles,
 } from '../data/users';
+import {MODEL_TYPE_MAP} from '../utils/constants';
 
 export default function InviteUserModal({closeModal, observer, parentData}) {
 	const [emailsQuery, setEmailsQuery] = useState('');
@@ -32,7 +33,7 @@ export default function InviteUserModal({closeModal, observer, parentData}) {
 	useEffect(() => {
 		if (parentData) {
 			const getRoles =
-				parentData.type === 'organization'
+				parentData.type === MODEL_TYPE_MAP.organization
 					? getOrganizationRoles()
 					: getAccountRoles(parentData.id);
 
@@ -50,7 +51,7 @@ export default function InviteUserModal({closeModal, observer, parentData}) {
 		}
 
 		const inviteUser =
-			parentData.type === 'organization'
+			parentData.type === MODEL_TYPE_MAP.organization
 				? addUserEmailsToOrganization
 				: addUserEmailsToAccount;
 
@@ -73,7 +74,11 @@ export default function InviteUserModal({closeModal, observer, parentData}) {
 					type: 'success',
 				});
 
-				chartInstanceRef.current.addNodes(users, 'user', parentData);
+				chartInstanceRef.current.addNodes(
+					users,
+					MODEL_TYPE_MAP.user,
+					parentData
+				);
 
 				chartInstanceRef.current.updateNodeContent({
 					...parentData,

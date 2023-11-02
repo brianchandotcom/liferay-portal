@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {DRAGGING_THRESHOLD, ZOOM_EXTENT} from './constants';
+import {DRAGGING_THRESHOLD, MODEL_TYPE_MAP, ZOOM_EXTENT} from './constants';
 
 export function hasPositionChanged(start, end) {
 	if (!end) {
@@ -90,7 +90,13 @@ export default class DndHandler {
 				this._chartItems = nodesGroup.selectAll('.chart-item');
 
 				this._chartItems.each((d) => {
-					if (['user', 'account', 'add'].includes(d.data.type)) {
+					if (
+						[
+							MODEL_TYPE_MAP.user,
+							MODEL_TYPE_MAP.account,
+							'add',
+						].includes(d.data.type)
+					) {
 						targetsNotAllowed.set(d.data.chartNodeId, d);
 					}
 

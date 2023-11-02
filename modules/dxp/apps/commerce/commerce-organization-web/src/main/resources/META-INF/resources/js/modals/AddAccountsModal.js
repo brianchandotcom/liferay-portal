@@ -14,6 +14,7 @@ import React, {useContext, useMemo, useState} from 'react';
 
 import ChartContext from '../ChartContext';
 import {createAccount, updateAccount} from '../data/accounts';
+import {MODEL_TYPE_MAP} from '../utils/constants';
 
 function showNotFoundError(name) {
 	openToast({
@@ -85,7 +86,7 @@ export default function AddOrganizationModal({
 
 					chartInstanceRef.current.addNodes(
 						[accountData],
-						'account',
+						MODEL_TYPE_MAP.account,
 						parentData
 					);
 
@@ -157,7 +158,7 @@ export default function AddOrganizationModal({
 
 					chartInstanceRef.current.addNodes(
 						nodeChildren,
-						'account',
+						MODEL_TYPE_MAP.account,
 						parentData
 					);
 

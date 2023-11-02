@@ -490,11 +490,22 @@ public class JournalManagementToolbarDisplayContext
 
 	@Override
 	public String getSortingOrder() {
-		if (Objects.equals(getOrderByCol(), "relevance")) {
+		if (Objects.equals(getOrderByCol(), "relevance") ||
+			_journalDisplayContext.isNavigationRecent()) {
+
 			return null;
 		}
 
 		return super.getSortingOrder();
+	}
+
+	@Override
+	public String getSortingURL() {
+		if (_journalDisplayContext.isNavigationRecent()) {
+			return null;
+		}
+
+		return super.getSortingURL();
 	}
 
 	@Override
@@ -628,6 +639,10 @@ public class JournalManagementToolbarDisplayContext
 
 	@Override
 	protected String[] getOrderByKeys() {
+		if (_journalDisplayContext.isNavigationRecent()) {
+			return null;
+		}
+
 		return _journalDisplayContext.getOrderColumns();
 	}
 

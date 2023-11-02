@@ -136,6 +136,11 @@ export function RuleBuilderConditionSection({
 			setConditions([{id: condition.id} as Condition]);
 		}
 		else {
+			const nextCondition =
+				conditions[index - 1] || conditions[index + 1];
+
+			conditionRefMap.get(nextCondition.id)?.focus();
+
 			setConditions((previousConditions) =>
 				previousConditions.filter(
 					(_condition, currentIndex) => currentIndex !== index

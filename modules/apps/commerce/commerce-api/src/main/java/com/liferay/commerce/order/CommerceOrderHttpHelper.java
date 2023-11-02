@@ -28,6 +28,10 @@ public interface CommerceOrderHttpHelper {
 			ActionRequest actionRequest, long commerceOrderId)
 		throws PortalException;
 
+	public CommerceOrder fetchCommerceOrderByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException;
+
 	public PortletURL getCommerceCartPortletURL(
 			HttpServletRequest httpServletRequest)
 		throws PortalException;

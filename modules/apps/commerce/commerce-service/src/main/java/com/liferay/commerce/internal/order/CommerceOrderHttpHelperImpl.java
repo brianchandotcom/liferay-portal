@@ -154,6 +154,15 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 	}
 
 	@Override
+	public CommerceOrder fetchCommerceOrderByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException {
+
+		return _commerceOrderLocalService.fetchCommerceOrderByUuidAndGroupId(
+			uuid, groupId);
+	}
+
+	@Override
 	public PortletURL getCommerceCartPortletURL(
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
@@ -405,6 +414,22 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		CommerceOrder commerceOrder =
 			(CommerceOrder)httpServletRequest.getAttribute(
 				CommerceCheckoutWebKeys.COMMERCE_ORDER);
+
+		if (commerceOrder == null) {
+			HttpServletRequest originalHttpServletRequest =
+				_portal.getOriginalServletRequest(httpServletRequest);
+
+			HttpSession httpSession = originalHttpServletRequest.getSession();
+
+			long groupId = commerceContext.getCommerceChannelGroupId();
+
+			String uuid = (String)httpSession.getAttribute(
+				CommerceOrder.class.getName() + StringPool.POUND + groupId);
+
+			commerceOrder =
+				_commerceOrderLocalService.fetchCommerceOrderByUuidAndGroupId(
+					uuid, groupId);
+		}
 
 		if (commerceOrder == null) {
 			commerceOrder = _getCurrentCommerceOrder(

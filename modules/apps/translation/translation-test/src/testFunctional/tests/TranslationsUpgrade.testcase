@@ -18,6 +18,8 @@ definition {
 		AssertLocation.assertPartialLocation(value1 = "${portalURL}/web/guest");
 
 		SearchAdministration.executeReindex();
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
 	@priority = 4

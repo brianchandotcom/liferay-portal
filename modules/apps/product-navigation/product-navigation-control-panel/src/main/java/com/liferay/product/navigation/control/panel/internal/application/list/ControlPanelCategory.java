@@ -6,7 +6,6 @@
 package com.liferay.product.navigation.control.panel.internal.application.list;
 
 import com.liferay.application.list.BasePanelCategory;
-import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -58,8 +57,5 @@ public class ControlPanelCategory extends BasePanelCategory {
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private PanelAppRegistry _panelAppRegistry;
 
 }

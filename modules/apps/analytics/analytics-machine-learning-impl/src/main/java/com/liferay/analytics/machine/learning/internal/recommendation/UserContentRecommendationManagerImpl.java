@@ -84,6 +84,54 @@ public class UserContentRecommendationManagerImpl
 			long[] assetCategoryIds, long companyId, long userId)
 		throws PortalException {
 
+		SearchSearchRequest searchSearchRequest = _getSearchSearchRequest(
+			assetCategoryIds, companyId, userId);
+
+		return _getUserContentRecommendations(searchSearchRequest);
+	}
+
+	private Date _getDate(String dateString) {
+		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd'T'HH:mm:ss.SSSX");
+
+		try {
+			return dateFormat.parse(dateString);
+		}
+		catch (ParseException parseException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(parseException);
+			}
+		}
+
+		return null;
+	}
+
+	private List<Document> _getDocuments(Hits hits) {
+		List<Document> documents = new ArrayList<>(hits.toList());
+
+		Map<String, Hits> groupedHits = hits.getGroupedHits();
+
+		for (Map.Entry<String, Hits> entry : groupedHits.entrySet()) {
+			documents.addAll(_getDocuments(entry.getValue()));
+		}
+
+		return documents;
+	}
+
+	private long _getHash(Object... values) {
+		StringBundler sb = new StringBundler(values.length);
+
+		for (Object value : values) {
+			sb.append(value);
+		}
+
+		return HashUtil.hash(values.length, sb.toString());
+	}
+
+	private SearchSearchRequest _getSearchSearchRequest(
+			long[] assetCategoryIds, long companyId, long userId)
+		throws PortalException {
+
 		SearchSearchRequest searchSearchRequest = new SearchSearchRequest();
 
 		searchSearchRequest.setIndexNames(
@@ -125,45 +173,7 @@ public class UserContentRecommendationManagerImpl
 
 		searchSearchRequest.setStats(Collections.emptyMap());
 
-		return _getUserContentRecommendations(searchSearchRequest);
-	}
-
-	private Date _getDate(String dateString) {
-		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss.SSSX");
-
-		try {
-			return dateFormat.parse(dateString);
-		}
-		catch (ParseException parseException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(parseException);
-			}
-		}
-
-		return null;
-	}
-
-	private List<Document> _getDocuments(Hits hits) {
-		List<Document> documents = new ArrayList<>(hits.toList());
-
-		Map<String, Hits> groupedHits = hits.getGroupedHits();
-
-		for (Map.Entry<String, Hits> entry : groupedHits.entrySet()) {
-			documents.addAll(_getDocuments(entry.getValue()));
-		}
-
-		return documents;
-	}
-
-	private long _getHash(Object... values) {
-		StringBundler sb = new StringBundler(values.length);
-
-		for (Object value : values) {
-			sb.append(value);
-		}
-
-		return HashUtil.hash(values.length, sb.toString());
+		return searchSearchRequest;
 	}
 
 	private List<UserContentRecommendation> _getUserContentRecommendations(

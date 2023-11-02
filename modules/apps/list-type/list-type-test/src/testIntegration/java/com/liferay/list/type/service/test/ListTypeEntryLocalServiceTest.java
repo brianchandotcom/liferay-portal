@@ -86,8 +86,7 @@ public class ListTypeEntryLocalServiceTest {
 		String externalReferenceCode =
 			_listTypeEntry.getExternalReferenceCode();
 
-		Assert.assertEquals(
-			_listTypeEntry.getUuid(), externalReferenceCode);
+		Assert.assertEquals(_listTypeEntry.getUuid(), externalReferenceCode);
 
 		AssertUtils.assertFailure(
 			DuplicateListTypeEntryException.class, "Duplicate key able",

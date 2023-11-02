@@ -7,10 +7,13 @@ package com.liferay.portal.db.partition.internal.configuration.persistence.liste
 
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.db.partition.internal.configuration.DBPartitionVirtualInstanceExtractionConfiguration;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 
 import java.util.Dictionary;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mariano Álvaro Sáiz
@@ -30,12 +33,21 @@ public class DBPartitionVirtualInstanceExtractionConfigurationModelListener
 	}
 
 	@Override
-	public void doOnAfterSave(Dictionary<String, Object> properties) {
+	public void doOnAfterSave(Dictionary<String, Object> properties)
+		throws Exception {
+
+		Company company = _companyLocalService.getCompanyByWebId(
+			(String)properties.get("webId"));
+
+		_companyLocalService.doExportPartitionCompany(company.getCompanyId());
 	}
 
 	@Override
 	public Class<?> getConfigurationClass() {
 		return DBPartitionVirtualInstanceExtractionConfiguration.class;
 	}
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 }

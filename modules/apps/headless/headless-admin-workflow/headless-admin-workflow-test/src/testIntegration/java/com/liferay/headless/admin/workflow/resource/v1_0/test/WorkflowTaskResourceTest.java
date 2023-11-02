@@ -153,21 +153,21 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 			workflowTaskResource.
 				getWorkflowInstanceWorkflowTasksAssignedToUserPage(
 					workflowInstanceId, null, null,
-					Pagination.of(1, totalCount + 2));
+					Pagination.of(1, totalCount));
 
 		List<WorkflowTask> workflowTasks1 =
 			(List<WorkflowTask>)page1.getItems();
 
 		Assert.assertEquals(
-			workflowTasks1.toString(), totalCount + 2, workflowTasks1.size());
+			workflowTasks1.toString(), totalCount, workflowTasks1.size());
 
 		Page<WorkflowTask> page2 =
 			workflowTaskResource.
 				getWorkflowInstanceWorkflowTasksAssignedToUserPage(
 					workflowInstanceId, null, null,
-					Pagination.of(2, totalCount + 2));
+					Pagination.of(2, totalCount - 1));
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		Assert.assertEquals(totalCount, page2.getTotalCount());
 
 		List<WorkflowTask> workflowTasks2 =
 			(List<WorkflowTask>)page2.getItems();
@@ -251,19 +251,19 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 
 		Page<WorkflowTask> page1 =
 			workflowTaskResource.getWorkflowInstanceWorkflowTasksPage(
-				workflowInstanceId, null, Pagination.of(1, totalCount + 2));
+				workflowInstanceId, null, Pagination.of(1, totalCount));
 
 		List<WorkflowTask> workflowTasks1 =
 			(List<WorkflowTask>)page1.getItems();
 
 		Assert.assertEquals(
-			workflowTasks1.toString(), totalCount + 2, workflowTasks1.size());
+			workflowTasks1.toString(), totalCount, workflowTasks1.size());
 
 		Page<WorkflowTask> page2 =
 			workflowTaskResource.getWorkflowInstanceWorkflowTasksPage(
-				workflowInstanceId, null, Pagination.of(2, totalCount + 2));
+				workflowInstanceId, null, Pagination.of(2, totalCount - 1));
 
-		Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+		Assert.assertEquals(totalCount, page2.getTotalCount());
 
 		List<WorkflowTask> workflowTasks2 =
 			(List<WorkflowTask>)page2.getItems();

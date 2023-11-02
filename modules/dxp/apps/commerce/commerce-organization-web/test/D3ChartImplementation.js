@@ -232,6 +232,7 @@ describe('D3OrganizationChart implementation', () => {
 					};
 				},
 			},
+			'namespace',
 			{
 				close: () => {
 					lastActionPerformed = {

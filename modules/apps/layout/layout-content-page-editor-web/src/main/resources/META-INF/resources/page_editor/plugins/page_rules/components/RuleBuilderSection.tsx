@@ -7,7 +7,7 @@ import ClayButton from '@clayui/button';
 import {Option, Picker} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import ClayPanel from '@clayui/panel';
-import React, {Dispatch, SetStateAction} from 'react';
+import React, {Dispatch, SetStateAction, useMemo} from 'react';
 
 // @ts-ignore
 
@@ -131,6 +131,8 @@ export function RuleBuilderConditionSection({
 	setConditionType,
 	setConditions,
 }: RuleBuilderConditionProps) {
+	const conditionRefMap = useMemo(() => new Map(), []);
+
 	const onDeleteCondition = (condition: Condition, index: number) => {
 		if (conditions.length === 1) {
 			setConditions([{id: condition.id} as Condition]);
@@ -147,6 +149,13 @@ export function RuleBuilderConditionSection({
 				)
 			);
 		}
+	};
+
+	const setConditionRef = (
+		condition: Condition,
+		element: HTMLDivElement | null
+	) => {
+		conditionRefMap.set(condition.id, element);
 	};
 
 	return (
@@ -220,6 +229,9 @@ export function RuleBuilderConditionSection({
 						}
 						showDeleteButton={
 							conditions.length > 1 || !!condition.type
+						}
+						wrapperRef={(element) =>
+							setConditionRef(condition, element)
 						}
 					/>
 				))}

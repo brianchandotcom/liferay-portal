@@ -6,6 +6,7 @@
 package com.liferay.site.admin.web.internal.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -84,6 +85,11 @@ public class SelectSiteInitializerVerticalCard implements VerticalCard {
 	@Override
 	public String getIcon() {
 		return "site-template";
+	}
+
+	@Override
+	public String getImageAlt() {
+		return StringPool.BLANK;
 	}
 
 	@Override

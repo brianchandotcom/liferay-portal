@@ -1348,6 +1348,40 @@ definition {
 	}
 
 	@summary = "Default summary"
+	macro createUser(lng = null, userEmailAddress = null, userFirstName = null, userJobTitle = null, userComment = null, userTag = null, userLastName = null, userScreenName = null, userMiddleName = null, userGender = null, lat = null, userBirthday = null,) {
+		LexiconEntry.gotoAdd();
+
+		User._editUserInformation(
+			userBirthday = ${userBirthday},
+			userComment = ${userComment},
+			userEmailAddress = ${userEmailAddress},
+			userFirstName = ${userFirstName},
+			userGender = ${userGender},
+			userJobTitle = ${userJobTitle},
+			userLastName = ${userLastName},
+			userMiddleName = ${userMiddleName},
+			userScreenName = ${userScreenName},
+			userTag = ${userTag});
+
+		if (isSet(lat) && isSet(lng)) {
+			Geolocation.setMarkerPosition(
+				lat = ${lat},
+				lng = ${lng});
+		}
+
+		var browserType = PropsUtil.get("browser.type");
+
+		if (${browserType} == "safari") {
+			Button.clickSave();
+		}
+		else {
+			AssertClick(
+				locator1 = "Button#SUBMIT",
+				value1 = "Save");
+		}
+	}
+
+	@summary = "Default summary"
 	macro deactivateCP(deactivateType = null, userFirstName = null, userFirstNameList = null) {
 		if (${deactivateType} == "Actions") {
 			User.singleDeactivateCP(userFirstName = ${userFirstName});

@@ -1,8 +1,10 @@
 @component-name = "portal-publications"
 definition {
 
+	property custom.properties = "feature.flag.LPS-162765=false";
 	property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
 	property osgi.module.configurations = "enabled=B\"true\"";
+	property osgi.modules.includes = "dynamic-data-lists";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Publications";

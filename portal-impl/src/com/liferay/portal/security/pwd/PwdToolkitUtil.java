@@ -21,10 +21,6 @@ public class PwdToolkitUtil {
 		return _toolkit.generate(passwordPolicy);
 	}
 
-	public static Toolkit getToolkit() {
-		return _toolkit;
-	}
-
 	public static void validate(
 			long companyId, long userId, String password1, String password2,
 			PasswordPolicy passwordPolicy)

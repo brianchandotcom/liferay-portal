@@ -18,7 +18,7 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 	protected void doUpgrade() throws Exception {
 		runSQL(
 			StringBundler.concat(
-				"update LayoutPageTemplateStructureRel set data_ =",
+				"update LayoutPageTemplateStructureRel set data_ = ",
 				"REPLACE(data_, '", _OLD_CLASS_NAME, "' , '", _NEW_CLASS_NAME,
 				"') where data_ is not null and data_ != ''"));
 	}

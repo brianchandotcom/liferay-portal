@@ -4,7 +4,7 @@
  */
 
 import {sub} from 'frontend-js-web';
-import React, {FC} from 'react';
+import React, {ComponentProps, FC} from 'react';
 
 import {config} from '../../../app/config/index';
 import RulesService from '../../../app/services/RulesService';
@@ -25,6 +25,7 @@ interface ConditionProps {
 	onConditionChange: (condition: Condition) => void;
 	onDeleteCondition: () => void;
 	showDeleteButton: boolean;
+	wrapperRef?: ComponentProps<typeof RuleBuilderItem>['wrapperRef'];
 }
 
 const TYPE_VALUES = {
@@ -76,6 +77,7 @@ export default function Condition({
 	onConditionChange,
 	onDeleteCondition,
 	showDeleteButton,
+	wrapperRef,
 }: ConditionProps) {
 	const ValueSelectorComponent: FC<SelectorProps> | null = condition.condition
 		? VALUE_SELECTOR_COMPONENTS[condition.condition]
@@ -86,6 +88,7 @@ export default function Condition({
 			onDeleteButtonClick={onDeleteCondition}
 			showDeleteButton={showDeleteButton}
 			type="condition"
+			wrapperRef={wrapperRef}
 		>
 			<RuleSelect
 				aria-label={Liferay.Language.get(

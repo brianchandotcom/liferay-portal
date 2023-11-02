@@ -38,6 +38,8 @@ PayPalGroupServiceConfiguration payPalGroupServiceConfiguration = (PayPalGroupSe
 
 			<aui:input id="paypal-client-secret" label="client-secret" name="settings--clientSecret--" type="password" value="<%= clientSecret %>" />
 
+			<aui:input id="paypal-merchant-id" label="merchant-id" name="settings--merchantId--" value="<%= payPalGroupServiceConfiguration.merchantId() %>" />
+
 			<aui:select id="paypal-settings-mode" label="mode" name="settings--mode--">
 
 				<%

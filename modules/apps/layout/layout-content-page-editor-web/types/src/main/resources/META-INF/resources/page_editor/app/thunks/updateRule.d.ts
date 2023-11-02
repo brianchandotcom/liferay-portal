@@ -5,17 +5,20 @@
 
 import {Action} from '../../plugins/page_rules/components/Action';
 import {Condition} from '../../plugins/page_rules/components/Condition';
+import {ConditionType} from '../../plugins/page_rules/components/RuleBuilderSection';
 import {State} from '../../types/State';
 import updateNetwork from '../actions/updateNetwork';
 import updateRuleAction from '../actions/updateRule';
 declare type Props = {
 	actions: Action[];
+	conditionType: ConditionType;
 	conditions: Condition[];
 	name: string;
 	ruleId: string;
 };
 export default function updateRule({
 	actions,
+	conditionType,
 	conditions,
 	name,
 	ruleId,

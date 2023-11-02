@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-/// <reference types="react" />
-
+import {ComponentProps} from 'react';
+import RuleBuilderItem from './RuleBuilderItem';
 export interface Action {
 	action?: 'fragment';
 	id: string;
@@ -20,6 +20,7 @@ interface ActionProps {
 	onActionChange: (action: Action) => void;
 	onDeleteAction: () => void;
 	showDeleteButton: boolean;
+	wrapperRef?: ComponentProps<typeof RuleBuilderItem>['wrapperRef'];
 }
 export default function Action({
 	action,
@@ -27,5 +28,6 @@ export default function Action({
 	onActionChange,
 	onDeleteAction,
 	showDeleteButton,
+	wrapperRef,
 }: ActionProps): JSX.Element;
 export {};

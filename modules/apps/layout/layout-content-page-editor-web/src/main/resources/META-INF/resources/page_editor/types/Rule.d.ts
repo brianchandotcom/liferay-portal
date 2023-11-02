@@ -5,9 +5,11 @@
 
 import {Action} from '../plugins/page_rules/components/Action';
 import {Condition} from '../plugins/page_rules/components/Condition';
+import {ConditionType} from '../plugins/page_rules/components/RuleBuilderSection';
 
 export type Rule = {
 	actions: Action[];
+	conditionType: ConditionType;
 	conditions: Condition[];
 	id: string;
 	name: string;

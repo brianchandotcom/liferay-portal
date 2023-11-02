@@ -5,6 +5,7 @@
 
 import {Action} from '../../plugins/page_rules/components/Action';
 import {Condition} from '../../plugins/page_rules/components/Condition';
+import {ConditionType} from '../../plugins/page_rules/components/RuleBuilderSection';
 import {LayoutData} from '../../types/layout_data/LayoutData';
 import updateNetwork from '../actions/updateNetwork';
 
@@ -72,6 +73,7 @@ declare function getUsers(): Promise<
  */
 declare type UpdateRuleProps = {
 	actions: Action[];
+	conditionType: ConditionType;
 	conditions: Condition[];
 	name: string;
 	onNetworkStatus: (action: ReturnType<typeof updateNetwork>) => void;
@@ -80,6 +82,7 @@ declare type UpdateRuleProps = {
 };
 declare function updateRule({
 	actions,
+	conditionType,
 	conditions,
 	name,
 	onNetworkStatus,

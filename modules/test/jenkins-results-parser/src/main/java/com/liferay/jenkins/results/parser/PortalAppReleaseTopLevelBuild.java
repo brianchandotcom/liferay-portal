@@ -113,6 +113,11 @@ public class PortalAppReleaseTopLevelBuild
 		return workspace;
 	}
 
+	@Override
+	protected boolean isReleaseBuild() {
+		return true;
+	}
+
 	private String _getPortalGitHubURL() {
 		String portalBranchName = getParameterValue("TEST_PORTAL_RELEASE_TAG");
 		String portalBranchUsername = getParameterValue(

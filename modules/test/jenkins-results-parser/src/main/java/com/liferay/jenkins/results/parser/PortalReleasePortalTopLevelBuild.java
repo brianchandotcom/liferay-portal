@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -178,6 +179,25 @@ public class PortalReleasePortalTopLevelBuild
 		return workspace;
 	}
 
+	@Override
+	protected String getReleaseRepositoryName() {
+		String portalReleaseVersion = getParameterValue(
+			"TEST_PORTAL_RELEASE_VERSION");
+
+		if (PortalRelease.isQuarterlyRelease(portalReleaseVersion) ||
+			!Objects.equals(getBranchName(), "master")) {
+
+			return "liferay-portal-ee";
+		}
+
+		return "liferay-portal";
+	}
+
+	@Override
+	protected boolean isReleaseBuild() {
+		return true;
+	}
+
 	private String _getPortalGitCommit() {
 		return getParameterValue("TEST_PORTAL_RELEASE_GIT_ID");
 	}
@@ -191,28 +211,16 @@ public class PortalReleasePortalTopLevelBuild
 		if (JenkinsResultsParserUtil.isNullOrEmpty(portalBranchName) ||
 			JenkinsResultsParserUtil.isNullOrEmpty(portalBranchUsername)) {
 
-			return null;
+			portalBranchName = getBranchName();
+			portalBranchUsername = "liferay";
 		}
-
-		String branchName = getBranchName();
 
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("https://github.com/");
 		sb.append(portalBranchUsername);
-		sb.append("/liferay-portal");
-
-		String portalReleaseVersion = getParameterValue(
-			"TEST_PORTAL_RELEASE_VERSION");
-
-		PortalRelease portalRelease = getPortalRelease();
-
-		if (portalRelease.isQuarterlyRelease(portalReleaseVersion) ||
-			!branchName.equals("master")) {
-
-			sb.append("-ee");
-		}
-
+		sb.append("/");
+		sb.append(getReleaseRepositoryName());
 		sb.append("/tree/");
 		sb.append(portalBranchName);
 

@@ -251,18 +251,8 @@ public abstract class BaseWorkspace implements Workspace {
 		);
 
 		try {
-			String workspaceDirNames = null;
-
-			if (PortalRelease.isQuarterlyRelease(upstreamBranchName)) {
-				workspaceDirNames = JenkinsResultsParserUtil.removeDuplicates(
-					",",
-					JenkinsResultsParserUtil.getProperty(
-						JenkinsResultsParserUtil.getBuildProperties(),
-						"workspace.repository.dir.names", "liferay-portal-ee",
-						"master", jobName));
-			}
-			else {
-				workspaceDirNames = JenkinsResultsParserUtil.removeDuplicates(
+			String workspaceDirNames =
+				JenkinsResultsParserUtil.removeDuplicates(
 					",",
 					JenkinsResultsParserUtil.getProperty(
 						JenkinsResultsParserUtil.getBuildProperties(),
@@ -270,7 +260,6 @@ public abstract class BaseWorkspace implements Workspace {
 						_primaryWorkspaceGitRepository.getName(),
 						_primaryWorkspaceGitRepository.getUpstreamBranchName(),
 						jobName));
-			}
 
 			jsonObject.put("workspace_repository_dir_names", workspaceDirNames);
 		}

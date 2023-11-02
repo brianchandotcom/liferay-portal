@@ -27,7 +27,6 @@ import com.liferay.portal.search.web.internal.BaseFacetDisplayContextTestCase;
 import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
 import com.liferay.portal.search.web.internal.modified.facet.configuration.ModifiedFacetPortletInstanceConfiguration;
 import com.liferay.portal.search.web.internal.modified.facet.display.context.builder.ModifiedFacetDisplayContextBuilder;
-import com.liferay.portal.search.web.internal.util.DateRangeFactoryUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.List;
@@ -105,8 +104,7 @@ public class ModifiedFacetDisplayContextBuilderTest
 		String from = "2018-01-01";
 		String to = "2018-01-31";
 
-		TermCollector termCollector = _mockTermCollector(
-			DateRangeFactoryUtil.getRangeString(from, to, TimeZoneUtil.GMT));
+		TermCollector termCollector = _mockTermCollector("custom-range");
 
 		int frequency = RandomTestUtil.randomInt();
 
@@ -283,14 +281,11 @@ public class ModifiedFacetDisplayContextBuilderTest
 		testOrderBy(
 			new int[] {1, 3, 3, 4},
 			new String[] {
-				"past-24-hours", "past-month", "past-week", "past-hour"
+				"past-month", "past-hour", "past-week", "past-24-hours"
 			},
 			new int[] {4, 3, 3, 1}, "count:asc",
 			new String[] {
-				"[20180515225959 TO 20180515235959]",
-				"[20180508235959 TO 20180508235959]",
-				"[20180508235959 TO 20180415235959]",
-				"[20180508235959 TO 20180514235959]"
+				"past-24-hours", "past-hour", "past-week", "past-month"
 			});
 	}
 
@@ -298,16 +293,13 @@ public class ModifiedFacetDisplayContextBuilderTest
 	@Test
 	public void testOrderByTermFrequencyDescending() throws Exception {
 		testOrderBy(
-			new int[] {3, 3, 2, 1},
+			new int[] {4, 3, 3, 1},
 			new String[] {
-				"past-24-hours", "past-month", "past-week", "past-hour"
+				"past-24-hours", "past-hour", "past-week", "past-month"
 			},
-			new int[] {1, 2, 3, 3}, "count:desc",
+			new int[] {4, 3, 3, 1}, "count:desc",
 			new String[] {
-				"[20180515225959 TO 20180515235959]",
-				"[20180508235959 TO 20180508235959]",
-				"[20180508235959 TO 20180415235959]",
-				"[20180508235959 TO 20180514235959]"
+				"past-24-hours", "past-hour", "past-week", "past-month"
 			});
 	}
 
@@ -375,9 +367,6 @@ public class ModifiedFacetDisplayContextBuilderTest
 			"past-week=[20180508235959 TO 20180508235959]",
 			"past-month=[20180508235959 TO 20180415235959]",
 			"past-24-hours=[20180508235959 TO 20180514235959]");
-
-		modifiedFacetDisplayContextBuilder.setFromParameterValue("2018-01-01");
-		modifiedFacetDisplayContextBuilder.setToParameterValue("2018-01-31");
 
 		ModifiedFacetDisplayContext modifiedFacetDisplayContext =
 			modifiedFacetDisplayContextBuilder.build();

@@ -3,15 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.scim.charon.integration.internal.user.manager;
+package com.liferay.scim.rest.internal.manager;
 
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.scim.charon.integration.internal.ScimUser;
-import com.liferay.scim.charon.integration.internal.ScimUserManager;
-import com.liferay.scim.charon.integration.internal.util.ModelConverterUtil;
+import com.liferay.scim.rest.internal.ScimUser;
+import com.liferay.scim.rest.internal.ScimUserManager;
+import com.liferay.scim.rest.internal.util.ModelConverterUtil;
 
 import java.util.Map;
 

@@ -24,6 +24,7 @@ interface IOAuth2ClientOptions {
 
 interface IOAuth2ClientTokenResponse {
 	access_token: string;
+	expires_after_ms: number;
 	expires_in: number;
 	refresh_token: string;
 	scope: string;
@@ -184,9 +185,7 @@ class OAuth2Client {
 			if (cachedTokenData !== null && cachedTokenData !== undefined) {
 				const cachedToken = JSON.parse(
 					cachedTokenData
-				) as IOAuth2ClientTokenResponse & {
-					expires_after_ms: number;
-				};
+				) as IOAuth2ClientTokenResponse;
 
 				if (new Date().getTime() < cachedToken.expires_after_ms) {
 					resolve(cachedToken);

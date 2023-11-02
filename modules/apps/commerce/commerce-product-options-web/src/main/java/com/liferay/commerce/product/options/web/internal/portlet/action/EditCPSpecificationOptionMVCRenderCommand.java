@@ -12,11 +12,17 @@ import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPSpecificationOptionService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -43,6 +49,7 @@ public class EditCPSpecificationOptionMVCRenderCommand
 
 		try {
 			_setCPSpecificationOptionRequestAttribute(renderRequest);
+			_populatePortletDisplay(renderRequest);
 		}
 		catch (Exception exception) {
 			if (exception instanceof NoSuchCPSpecificationOptionException ||
@@ -57,6 +64,23 @@ public class EditCPSpecificationOptionMVCRenderCommand
 		}
 
 		return "/edit_cp_specification_option.jsp";
+	}
+
+	private void _populatePortletDisplay(RenderRequest renderRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		portletDisplay.setShowBackIcon(true);
+		portletDisplay.setURLBack(
+			PortletURLBuilder.create(
+				_portal.getControlPanelPortletURL(
+					renderRequest, CPPortletKeys.CP_SPECIFICATION_OPTIONS,
+					PortletRequest.RENDER_PHASE)
+			).setParameter(
+				"toolbarItem", "specification-labels"
+			).buildString());
 	}
 
 	private void _setCPSpecificationOptionRequestAttribute(
@@ -80,5 +104,8 @@ public class EditCPSpecificationOptionMVCRenderCommand
 
 	@Reference
 	private CPSpecificationOptionService _cpSpecificationOptionService;
+
+	@Reference
+	private Portal _portal;
 
 }

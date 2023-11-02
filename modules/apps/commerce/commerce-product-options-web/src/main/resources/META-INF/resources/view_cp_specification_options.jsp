@@ -73,6 +73,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "specifications"));
 									currentURL
 								).setParameter(
 									"cpSpecificationOptionId", cpSpecificationOption.getCPSpecificationOptionId()
+								).setParameter(
+									"toolbarItem", "specification-labels"
 								).buildPortletURL();
 								%>
 

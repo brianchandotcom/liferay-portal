@@ -45,8 +45,6 @@ CPMeasurementUnitsDisplayContext cpMeasurementUnitsDisplayContext = (CPMeasureme
 								renderResponse
 							).setMVCRenderCommandName(
 								"/cp_measurement_unit/edit_cp_measurement_unit"
-							).setRedirect(
-								currentURL
 							).setParameter(
 								"cpMeasurementUnitId", cpMeasurementUnit.getCPMeasurementUnitId()
 							).setParameter(

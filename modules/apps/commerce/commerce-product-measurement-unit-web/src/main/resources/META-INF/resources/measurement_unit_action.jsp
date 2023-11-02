@@ -25,7 +25,6 @@ CPMeasurementUnit cpMeasurementUnit = (CPMeasurementUnit)row.getObject();
 	<c:if test="<%= cpMeasurementUnitsDisplayContext.hasManageCPMeasurementUnitsPermission() %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcRenderCommandName" value="/cp_measurement_unit/edit_cp_measurement_unit" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="cpMeasurementUnitId" value="<%= String.valueOf(cpMeasurementUnit.getCPMeasurementUnitId()) %>" />
 			<portlet:param name="type" value="<%= String.valueOf(cpMeasurementUnit.getType()) %>" />
 		</portlet:renderURL>

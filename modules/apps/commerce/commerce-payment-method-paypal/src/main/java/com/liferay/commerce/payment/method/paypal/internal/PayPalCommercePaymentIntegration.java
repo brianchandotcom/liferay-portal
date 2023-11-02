@@ -58,6 +58,7 @@ import com.paypal.orders.Order;
 import com.paypal.orders.OrderRequest;
 import com.paypal.orders.OrdersAuthorizeRequest;
 import com.paypal.orders.OrdersCreateRequest;
+import com.paypal.orders.Payee;
 import com.paypal.orders.PaymentCollection;
 import com.paypal.orders.PurchaseUnit;
 import com.paypal.orders.PurchaseUnitRequest;
@@ -118,6 +119,10 @@ public class PayPalCommercePaymentIntegration
 					"return=representation"
 				);
 
+			ordersAuthorizeRequest.header(
+				PayPalCommercePaymentMethodConstants.
+					PAYPAL_PARTNER_ATTRIBUTION_ID,
+				"Liferay_SP_PPCP_API");
 			ordersAuthorizeRequest.requestBody(new OrderRequest());
 
 			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(
@@ -278,6 +283,14 @@ public class PayPalCommercePaymentIntegration
 					commercePaymentEntry.getTransactionCode());
 
 			authorizationsCaptureRequest.requestBody(new OrderRequest());
+
+			authorizationsCaptureRequest.payPalRequestId(
+				String.valueOf(
+					commercePaymentEntry.getCommercePaymentEntryId()));
+			authorizationsCaptureRequest.header(
+				PayPalCommercePaymentMethodConstants.
+					PAYPAL_PARTNER_ATTRIBUTION_ID,
+				"Liferay_SP_PPCP_API");
 
 			PayPalHttpClient payPalHttpClient = _getPayPalHttpClient(
 				commercePaymentEntry);
@@ -443,24 +456,6 @@ public class PayPalCommercePaymentIntegration
 		try {
 			OrderRequest orderRequest = new OrderRequest();
 
-			orderRequest.checkoutPaymentIntent(
-				PayPalCommercePaymentMethodConstants.INTENT_AUTHORIZE);
-
-			if (StringUtils.equals(
-					commercePaymentEntry.getClassName(),
-					CommerceOrder.class.getName())) {
-
-				orderRequest.purchaseUnits(
-					_buildCommerceOrderRequestBody(
-						_commerceOrderLocalService.getCommerceOrder(
-							commercePaymentEntry.getClassPK()),
-						LocaleUtil.fromLanguageId(
-							commercePaymentEntry.getLanguageId())));
-			}
-			else {
-				_buildGenericRequestBody(commercePaymentEntry);
-			}
-
 			ApplicationContext applicationContext = new ApplicationContext(
 			).cancelUrl(
 				_getCancelUrl(
@@ -471,12 +466,28 @@ public class PayPalCommercePaymentIntegration
 					httpServletRequest, commercePaymentEntry,
 					commercePaymentEntry.getCallbackURL())
 			).shippingPreference(
-				"SET_PROVIDED_ADDRESS"
+				PayPalCommercePaymentMethodConstants.
+					SHIPPING_PREFERENCE_PROVIDED
 			).userAction(
-				"PAY_NOW"
+				PayPalCommercePaymentMethodConstants.USER_ACTION_PAY_NOW
 			);
 
 			orderRequest.applicationContext(applicationContext);
+
+			orderRequest.checkoutPaymentIntent(
+				PayPalCommercePaymentMethodConstants.INTENT_AUTHORIZE);
+
+			if (StringUtils.equals(
+					commercePaymentEntry.getClassName(),
+					CommerceOrder.class.getName())) {
+
+				orderRequest.purchaseUnits(
+					_buildCommerceOrderRequestBody(commercePaymentEntry));
+			}
+			else {
+				orderRequest.purchaseUnits(
+					_buildGenericRequestBody(commercePaymentEntry));
+			}
 
 			OrdersCreateRequest ordersCreateRequest = new OrdersCreateRequest(
 			).prefer(
@@ -563,8 +574,12 @@ public class PayPalCommercePaymentIntegration
 	}
 
 	private List<PurchaseUnitRequest> _buildCommerceOrderRequestBody(
-			CommerceOrder commerceOrder, Locale locale)
+			CommercePaymentEntry commercePaymentEntry)
 		throws PortalException {
+
+		CommerceOrder commerceOrder =
+			_commerceOrderLocalService.getCommerceOrder(
+				commercePaymentEntry.getClassPK());
 
 		List<PurchaseUnitRequest> purchaseUnitRequests = new ArrayList<>();
 
@@ -644,6 +659,9 @@ public class PayPalCommercePaymentIntegration
 			purchaseUnitRequest.shippingDetail(shippingDetail);
 		}
 
+		Locale locale = LocaleUtil.fromLanguageId(
+			commercePaymentEntry.getLanguageId());
+
 		List<Item> items = new ArrayList<>();
 
 		for (CommerceOrderItem commerceOrderItem :
@@ -675,7 +693,21 @@ public class PayPalCommercePaymentIntegration
 			items.add(item);
 		}
 
+		purchaseUnitRequest.description(
+			"Payment: " + commercePaymentEntry.getCommercePaymentEntryId());
 		purchaseUnitRequest.items(items);
+
+		PayPalGroupServiceConfiguration payPalGroupServiceConfiguration =
+			_getPayPalGroupServiceConfiguration(commerceOrder.getGroupId());
+
+		Payee payee = new Payee();
+
+		payee.merchantId(payPalGroupServiceConfiguration.merchantId());
+
+		purchaseUnitRequest.payee(payee);
+
+		purchaseUnitRequest.referenceId(
+			String.valueOf(commercePaymentEntry.getCommercePaymentEntryId()));
 
 		purchaseUnitRequests.add(purchaseUnitRequest);
 
@@ -703,8 +735,20 @@ public class PayPalCommercePaymentIntegration
 		PurchaseUnitRequest purchaseUnitRequest = new PurchaseUnitRequest();
 
 		purchaseUnitRequest.amountWithBreakdown(amountWithBreakdown);
+		purchaseUnitRequest.description(
+			"Payment: " + commercePaymentEntry.getCommercePaymentEntryId());
+
+		PayPalGroupServiceConfiguration payPalGroupServiceConfiguration =
+			_getPayPalGroupServiceConfiguration(commercePaymentEntry);
+
+		Payee payee = new Payee();
+
+		payee.merchantId(payPalGroupServiceConfiguration.merchantId());
+
+		purchaseUnitRequest.payee(payee);
+
 		purchaseUnitRequest.referenceId(
-			String.valueOf(commercePaymentEntry.getPrimaryKey()));
+			String.valueOf(commercePaymentEntry.getCommercePaymentEntryId()));
 
 		purchaseUnitRequests.add(purchaseUnitRequest);
 
@@ -812,6 +856,18 @@ public class PayPalCommercePaymentIntegration
 	}
 
 	private PayPalGroupServiceConfiguration _getPayPalGroupServiceConfiguration(
+			CommercePaymentEntry commercePaymentEntry)
+		throws PortalException {
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannel(
+				commercePaymentEntry.getCommerceChannelId());
+
+		return _getPayPalGroupServiceConfiguration(
+			commerceChannel.getGroupId());
+	}
+
+	private PayPalGroupServiceConfiguration _getPayPalGroupServiceConfiguration(
 			long groupId)
 		throws PortalException {
 
@@ -827,12 +883,8 @@ public class PayPalCommercePaymentIntegration
 			CommercePaymentEntry commercePaymentEntry)
 		throws PortalException {
 
-		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.getCommerceChannel(
-				commercePaymentEntry.getCommerceChannelId());
-
 		PayPalGroupServiceConfiguration payPalGroupServiceConfiguration =
-			_getPayPalGroupServiceConfiguration(commerceChannel.getGroupId());
+			_getPayPalGroupServiceConfiguration(commercePaymentEntry);
 
 		PayPalEnvironment payPalEnvironment = new PayPalEnvironment.Sandbox(
 			payPalGroupServiceConfiguration.clientId(),

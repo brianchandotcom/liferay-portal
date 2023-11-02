@@ -81,13 +81,26 @@ public class UserContentRecommendationManagerImpl
 
 	@Override
 	public List<UserContentRecommendation> getUserContentRecommendations(
-			long[] assetCategoryIds, long companyId, long userId)
+			long[] assetCategoryIds, long companyId, long userId, int start,
+			int end)
 		throws PortalException {
 
 		SearchSearchRequest searchSearchRequest = _getSearchSearchRequest(
 			assetCategoryIds, companyId, userId);
 
+		searchSearchRequest.setSize(end - start);
+		searchSearchRequest.setStart(start);
+
 		return _getUserContentRecommendations(searchSearchRequest);
+	}
+
+	@Override
+	public long getUserContentRecommendationsCount(
+			long[] assetCategoryIds, long companyId, long userId)
+		throws PortalException {
+
+		return _getUserContentRecommendationsCount(
+			_getSearchSearchRequest(assetCategoryIds, companyId, userId));
 	}
 
 	private Date _getDate(String dateString) {
@@ -185,6 +198,15 @@ public class UserContentRecommendationManagerImpl
 		return TransformUtil.transform(
 			_getDocuments(searchSearchResponse.getHits()),
 			this::_toUserContentRecommendation);
+	}
+
+	private long _getUserContentRecommendationsCount(
+		SearchSearchRequest searchSearchRequest) {
+
+		SearchSearchResponse searchSearchResponse =
+			_searchEngineAdapter.execute(searchSearchRequest);
+
+		return searchSearchResponse.getCount();
 	}
 
 	private Document _toDocument(

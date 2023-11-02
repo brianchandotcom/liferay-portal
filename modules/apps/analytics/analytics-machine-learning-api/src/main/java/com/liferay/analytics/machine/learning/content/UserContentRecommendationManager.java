@@ -19,6 +19,11 @@ public interface UserContentRecommendationManager {
 		throws PortalException;
 
 	public List<UserContentRecommendation> getUserContentRecommendations(
+			long[] assetCategoryIds, long companyId, long userId, int start,
+			int end)
+		throws PortalException;
+
+	public long getUserContentRecommendationsCount(
 			long[] assetCategoryIds, long companyId, long userId)
 		throws PortalException;
 

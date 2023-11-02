@@ -65,7 +65,7 @@ public abstract class BaseClassicModifiedFacetTestCase
 				for (TermCollector termCollector : termCollectors) {
 					String term = termCollector.getTerm();
 
-					Assert.assertTrue(term.contains("00 TO 20"));
+					Assert.assertTrue(term.contains(" TO *"));
 				}
 			});
 	}
@@ -93,7 +93,11 @@ public abstract class BaseClassicModifiedFacetTestCase
 	protected JSONObject createRangeArrayElement(String range) {
 		JSONObject jsonObject = jsonFactory.createJSONObject();
 
-		jsonObject.put("range", range);
+		jsonObject.put(
+			"label", range
+		).put(
+			"range", range
+		);
 
 		return jsonObject;
 	}

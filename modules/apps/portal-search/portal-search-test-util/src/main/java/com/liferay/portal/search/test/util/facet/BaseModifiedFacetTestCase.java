@@ -44,8 +44,7 @@ public abstract class BaseModifiedFacetTestCase extends BaseFacetTestCase {
 				helper.search();
 
 				helper.assertFrequencies(
-					facet,
-					Arrays.asList("[20170101000000 TO 20170105000000]=2"));
+					facet, Arrays.asList("custom-range=2"));
 			});
 	}
 
@@ -61,8 +60,7 @@ public abstract class BaseModifiedFacetTestCase extends BaseFacetTestCase {
 		String customRange = "[11110101010101 TO 22220202020202]";
 
 		List<String> expectedRanges = Arrays.asList(
-			"[11110101010101 TO 19990101010101]=0",
-			"[11110101010101 TO 22220202020202]=1",
+			"[11110101010101 TO 19990101010101]=0", "custom-range=1",
 			"[19990202020202 TO 22220202020202]=1");
 
 		assertSearchFacet(
@@ -109,16 +107,20 @@ public abstract class BaseModifiedFacetTestCase extends BaseFacetTestCase {
 		JSONArray jsonArray = jsonFactory.createJSONArray();
 
 		for (String range : ranges) {
-			jsonArray.put(createRangeArrayElement(range));
+			jsonArray.put(createRangeArrayElement(range, range));
 		}
 
 		return jsonArray;
 	}
 
-	protected JSONObject createRangeArrayElement(String range) {
+	protected JSONObject createRangeArrayElement(String label, String range) {
 		JSONObject jsonObject = jsonFactory.createJSONObject();
 
-		jsonObject.put("range", range);
+		jsonObject.put(
+			"label", label
+		).put(
+			"range", range
+		);
 
 		return jsonObject;
 	}
@@ -160,9 +162,19 @@ public abstract class BaseModifiedFacetTestCase extends BaseFacetTestCase {
 	}
 
 	protected void setCustomRange(Facet facet, String customRange) {
-		SearchContext searchContext = facet.getSearchContext();
+		FacetConfiguration facetConfiguration = facet.getFacetConfiguration();
 
-		searchContext.setAttribute(facet.getFieldId(), customRange);
+		JSONObject jsonObject = facetConfiguration.getData();
+
+		JSONArray jsonArray = jsonObject.getJSONArray("ranges");
+
+		if (jsonArray == null) {
+			jsonArray = jsonFactory.createJSONArray();
+		}
+
+		jsonArray.put(createRangeArrayElement("custom-range", customRange));
+
+		jsonObject.put("ranges", jsonArray);
 	}
 
 }

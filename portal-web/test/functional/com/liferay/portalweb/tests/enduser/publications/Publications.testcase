@@ -2336,7 +2336,7 @@ definition {
 
 		PublicationsNavigator.openPublicationsHistory();
 
-		Publications.viewPublicationOrderInHistory(publicationList = "Publication Name 7,Publication Name 6,Publication Name 5,Publication Name 4,Publication Name 3,Publication Name 2,Publication Name 1");
+		Publications.viewPublicationOrderInHistory(publicationList = "Publication Name 1,Publication Name 2,Publication Name 3,Publication Name 4,Publication Name 5,Publication Name 6,Publication Name 7");
 
 		Pagination.viewResults(results = "Showing 1 to 7 of 7 entries.");
 
@@ -2344,13 +2344,13 @@ definition {
 
 		Pagination.viewResults(results = "Showing 1 to 4 of 7 entries.");
 
-		Publications.viewPublicationOrderInHistory(publicationList = "Publication Name 7,Publication Name 6,Publication Name 5,Publication Name 4");
+		Publications.viewPublicationOrderInHistory(publicationList = "Publication Name 1,Publication Name 2,Publication Name 3,Publication Name 4");
 
 		Click(locator1 = "Pagination#NEXT_LINK");
 
 		Pagination.viewResults(results = "Showing 5 to 7 of 7 entries.");
 
-		Publications.viewPublicationOrderInHistory(publicationList = "Publication Name 3,Publication Name 2,Publication Name 1");
+		Publications.viewPublicationOrderInHistory(publicationList = "Publication Name 5,Publication Name 6,Publication Name 7");
 	}
 
 }

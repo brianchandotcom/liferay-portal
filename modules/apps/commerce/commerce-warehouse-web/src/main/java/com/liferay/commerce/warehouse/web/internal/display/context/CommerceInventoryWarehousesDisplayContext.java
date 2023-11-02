@@ -238,8 +238,6 @@ public class CommerceInventoryWarehousesDisplayContext {
 				).setMVCRenderCommandName(
 					"/commerce_inventory_warehouse" +
 						"/edit_commerce_inventory_warehouse"
-				).setRedirect(
-					cpRequestHelper.getCurrentURL()
 				).setParameter(
 					"commerceInventoryWarehouseId", "{id}"
 				).setParameter(

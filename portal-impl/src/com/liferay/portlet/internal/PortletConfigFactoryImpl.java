@@ -8,8 +8,8 @@ package com.liferay.portlet.internal;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.PortletConfigFactory;
-import com.liferay.portal.kernel.portlet.PortletContextFactory;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portlet.PortletContextFactoryUtil;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -43,7 +43,7 @@ public class PortletConfigFactoryImpl implements PortletConfigFactory {
 		if ((portletConfig == null) ||
 			!_isSamePortletDeployedStatus(portlet, portletConfig)) {
 
-			PortletContext portletContext = _portletContextFactory.create(
+			PortletContext portletContext = PortletContextFactoryUtil.create(
 				portlet, servletContext);
 
 			portletConfig = new PortletConfigImpl(portlet, portletContext);
@@ -75,12 +75,6 @@ public class PortletConfigFactoryImpl implements PortletConfigFactory {
 		}
 
 		return portletConfigs.get(portletId);
-	}
-
-	public void setPortletContextFactory(
-		PortletContextFactory portletContextFactory) {
-
-		_portletContextFactory = portletContextFactory;
 	}
 
 	@Override
@@ -123,6 +117,5 @@ public class PortletConfigFactoryImpl implements PortletConfigFactory {
 
 	private final Map<String, Map<String, PortletConfig>> _pool =
 		new ConcurrentHashMap<>();
-	private PortletContextFactory _portletContextFactory;
 
 }

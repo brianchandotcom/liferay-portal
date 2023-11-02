@@ -8,10 +8,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
-String backURL = ParamUtil.getString(request, "backURL", redirect);
-
 CommerceCurrenciesDisplayContext commerceCurrenciesDisplayContext = (CommerceCurrenciesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CommerceCurrency commerceCurrency = commerceCurrenciesDisplayContext.getCommerceCurrency();
@@ -20,18 +16,12 @@ CommerceCurrency primaryCommerceCurrency = commerceCurrenciesDisplayContext.getP
 String roundingMode = BeanParamUtil.getString(commerceCurrency, request, "roundingMode", commerceCurrenciesDisplayContext.getDefaultRoundingMode());
 
 boolean primary = BeanParamUtil.getBoolean(commerceCurrency, request, "primary");
-
-if (Validator.isNotNull(backURL)) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(backURL);
-}
 %>
 
 <portlet:actionURL name="/commerce_currency/edit_commerce_currency" var="editCommerceCurrencyActionURL" />
 
 <aui:form action="<%= editCommerceCurrencyActionURL %>" cssClass="container mt-4" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveCommerceCurrency();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceCurrency == null) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="commerceCurrencyId" type="hidden" value="<%= (commerceCurrency == null) ? 0 : commerceCurrency.getCommerceCurrencyId() %>" />
 
 	<div class="lfr-form-content">
@@ -97,7 +87,7 @@ if (Validator.isNotNull(backURL)) {
 
 				<aui:button-row>
 					<aui:button cssClass="btn-lg" type="submit" />
-					<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+					<aui:button cssClass="btn-lg" href="<%= portletDisplay.getURLBack() %>" type="cancel" />
 				</aui:button-row>
 			</div>
 		</div>

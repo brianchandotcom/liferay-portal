@@ -98,7 +98,7 @@ function handleResultListClick(event) {
 	}
 
 	if (selectedOptionElement) {
-		setFocusedOption(selectedOptionElement);
+		setFocusedOption(selectedOptionElement, {scrollToElement: false});
 		setSelectedOption(selectedOptionElement);
 	}
 }
@@ -183,7 +183,10 @@ function handleInputChange() {
 			if (optionListElement.firstElementChild) {
 				chooseOptionElement.classList.remove('d-none');
 				noResultsElement.classList.add('d-none');
-				setFocusedOption(optionListElement.firstElementChild);
+
+				setFocusedOption(optionListElement.firstElementChild, {
+					scrollToElement: false,
+				});
 			}
 			else {
 				chooseOptionElement.classList.add('d-none');
@@ -295,7 +298,10 @@ function handleWindowResizeOrScroll() {
 	}
 }
 
-function setFocusedOption(optionElement) {
+function setFocusedOption(
+	optionElement,
+	{scrollToElement = true} = {scrollToElement: true}
+) {
 	const currentFocusedOption = document.getElementById(
 		optionListElement.getAttribute('aria-activedescendant')
 	);
@@ -311,7 +317,10 @@ function setFocusedOption(optionElement) {
 		);
 
 		optionElement.setAttribute('aria-selected', 'true');
-		optionElement.scrollIntoView({block: 'center'});
+
+		if (scrollToElement) {
+			optionElement.scrollIntoView({block: 'nearest'});
+		}
 	}
 	else {
 		optionListElement.removeAttribute('aria-activedescendant');
@@ -334,7 +343,7 @@ function createOptionElement(option) {
 		optionElement.id
 	) {
 		optionElement.setAttribute('aria-selected', 'true');
-		optionElement.scrollIntoView({block: 'center'});
+		optionElement.scrollIntoView({block: 'nearest'});
 	}
 
 	if (valueInputElement.value === option.value) {

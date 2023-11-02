@@ -17,15 +17,15 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +54,8 @@ public class AddObjectFieldCompositeKeyCandidatesMVCResourceCommand
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
+		List<String> objectFieldLabels = new ArrayList<>();
+
 		long objectDefinitionId = ParamUtil.getLong(
 			resourceRequest, "objectDefinitionId");
 
@@ -61,9 +63,8 @@ public class AddObjectFieldCompositeKeyCandidatesMVCResourceCommand
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				objectDefinitionId);
 
-		User user = _userLocalService.getUser(objectDefinition.getUserId());
-
-		List<String> objectFieldLabels = new ArrayList<>();
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		for (Long objectFieldId :
 				ParamUtil.getLongValues(resourceRequest, "objectFieldsIds")) {
@@ -85,7 +86,8 @@ public class AddObjectFieldCompositeKeyCandidatesMVCResourceCommand
 					continue;
 				}
 
-				objectFieldLabels.add(objectField.getLabel(user.getLocale()));
+				objectFieldLabels.add(
+					objectField.getLabel(themeDisplay.getLocale()));
 			}
 			catch (PortalException portalException) {
 				SessionErrors.add(resourceRequest, portalException.getClass());
@@ -143,8 +145,5 @@ public class AddObjectFieldCompositeKeyCandidatesMVCResourceCommand
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

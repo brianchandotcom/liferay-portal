@@ -31,8 +31,7 @@ public class APISortRelevantObjectEntryModelListener
 	public void onBeforeCreate(ObjectEntry objectEntry)
 		throws ModelListenerException {
 
-		_validationHelper.validateAPIEndpointRelationship(
-			"API sort", objectEntry, "apiEndpointToAPISorts");
+		_validate(objectEntry);
 	}
 
 	@Override
@@ -40,6 +39,10 @@ public class APISortRelevantObjectEntryModelListener
 			ObjectEntry originalObjectEntry, ObjectEntry objectEntry)
 		throws ModelListenerException {
 
+		_validate(objectEntry);
+	}
+
+	private void _validate(ObjectEntry objectEntry) {
 		_validationHelper.validateAPIEndpointRelationship(
 			"API sort", objectEntry, "apiEndpointToAPISorts");
 	}

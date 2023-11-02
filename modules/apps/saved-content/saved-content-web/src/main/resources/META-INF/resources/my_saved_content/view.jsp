@@ -19,3 +19,27 @@ if (Validator.isNotNull(backURL)) {
 
 MySavedContentDisplayContext mySavedContentDisplayContext = new MySavedContentDisplayContext(liferayPortletRequest, liferayPortletResponse);
 %>
+
+<clay:container-fluid>
+	<liferay-ui:search-container
+		emptyResultsMessage="no-saved-content-were-found"
+		searchContainer="<%= mySavedContentDisplayContext.getSearchContainer() %>"
+	>
+		<liferay-ui:search-container-row
+			className="com.liferay.saved.content.model.SavedContentEntry"
+			escapedModel="<%= true %>"
+			keyProperty="savedContentEntryId"
+			modelVar="savedContentEntry"
+		>
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand table-cell-minw-200"
+				name="title"
+				value="<%= mySavedContentDisplayContext.getAssetTitle(savedContentEntry.getClassName(), savedContentEntry.getClassPK()) %>"
+			/>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator
+			markupView="lexicon"
+		/>
+	</liferay-ui:search-container>
+</clay:container-fluid>

@@ -10,16 +10,24 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.saved.content.constants.MySavedContentPortletKeys;
+import com.liferay.saved.content.model.SavedContentEntry;
+import com.liferay.saved.content.service.SavedContentEntryServiceUtil;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,11 +53,88 @@ public class MySavedContentDisplayContext {
 			WebKeys.THEME_DISPLAY);
 	}
 
+	public String getAssetTitle(String className, long classPK) {
+		try {
+			AssetRendererFactory<?> assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassName(className);
+
+			if (assetRendererFactory == null) {
+				return null;
+			}
+
+			AssetRenderer<?> assetRenderer =
+				assetRendererFactory.getAssetRenderer(classPK);
+
+			if (assetRenderer == null) {
+				return null;
+			}
+
+			return HtmlUtil.escape(
+				assetRenderer.getTitle(_themeDisplay.getLocale()));
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get asset renderer with class primary key " +
+						classPK,
+					portalException);
+			}
+
+			return null;
+		}
+	}
+
+	public SearchContainer<SavedContentEntry> getSearchContainer()
+		throws PortalException {
+
+		if (_searchContainer != null) {
+			return _searchContainer;
+		}
+
+		SearchContainer<SavedContentEntry> searchContainer =
+			new SearchContainer(
+				_liferayPortletRequest, null, null, "curEntry",
+				SearchContainer.DEFAULT_DELTA, _getPortletURL(), null,
+				"no-saved-content-were-found");
+
+		searchContainer.setResultsAndTotal(
+			() -> SavedContentEntryServiceUtil.getGroupUserSavedContentEntries(
+				_themeDisplay.getScopeGroupId(),
+				searchContainer.getStart(), searchContainer.getEnd()),
+			SavedContentEntryServiceUtil.getGroupUserSavedContentEntriesCount(
+				_themeDisplay.getScopeGroupId()));
+
+		_searchContainer = searchContainer;
+
+		return _searchContainer;
+	}
+
+	private PortletURL _getPortletURL() {
+		if (_portletURL != null) {
+			return _portletURL;
+		}
+
+		_portletURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCRenderCommandName(
+			"/saved_content/view_my_saved_content"
+		).setRedirect(
+			ParamUtil.getString(_httpServletRequest, "redirect")
+		).buildPortletURL();
+
+		return _portletURL;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MySavedContentDisplayContext.class);
 
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private PortletURL _portletURL;
 	private final RenderResponse _renderResponse;
+	private SearchContainer<SavedContentEntry> _searchContainer;
 	private final ThemeDisplay _themeDisplay;
 
 }

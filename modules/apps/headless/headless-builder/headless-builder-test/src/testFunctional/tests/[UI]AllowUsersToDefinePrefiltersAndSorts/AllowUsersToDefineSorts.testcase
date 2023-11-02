@@ -80,7 +80,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And Given setting the Sorting to 'age:asc'") {
-			APIBuilderUI.addAndPublishFiltersAndSortingInEndpointConfiguration(
+			APIBuilderUI.addAndPublishEndpointConfiguration(
 				editValue = "age:asc",
 				entity = "Endpoints",
 				fieldName = "sort",
@@ -111,7 +111,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And Given setting the Sorting to 'age:desc'") {
-			APIBuilderUI.addAndPublishFiltersAndSortingInEndpointConfiguration(
+			APIBuilderUI.addAndPublishEndpointConfiguration(
 				editValue = "age:desc",
 				entity = "Endpoints",
 				fieldName = "sort",
@@ -132,7 +132,7 @@ definition {
 		}
 
 		task ("When I empty the Sorting box in endpoint configuration") {
-			APIBuilderUI.addAndPublishFiltersAndSortingInEndpointConfiguration(
+			APIBuilderUI.addAndPublishEndpointConfiguration(
 				editValue = "",
 				entity = "Endpoints",
 				fieldName = "sort",
@@ -158,7 +158,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("And Given setting the Sorting to 'age:asc'") {
-			APIBuilderUI.addAndPublishFiltersAndSortingInEndpointConfiguration(
+			APIBuilderUI.addAndPublishEndpointConfiguration(
 				editValue = "age:asc",
 				entity = "Endpoints",
 				fieldName = "sort",
@@ -179,7 +179,7 @@ definition {
 		}
 
 		task ("When I empty the Sorting") {
-			APIBuilderUI.addAndPublishFiltersAndSortingInEndpointConfiguration(
+			APIBuilderUI.addAndPublishEndpointConfiguration(
 				editValue = "",
 				entity = "Endpoints",
 				fieldName = "sort",
@@ -229,7 +229,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When setting the Sorting to 'dateCreated:asc'") {
-			APIBuilderUI.addAndPublishFiltersAndSortingInEndpointConfiguration(
+			APIBuilderUI.addAndPublishEndpointConfiguration(
 				editValue = "dateCreated:asc",
 				entity = "Endpoints",
 				fieldName = "sort",
@@ -255,7 +255,7 @@ definition {
 		property portal.acceptance = "true";
 
 		task ("When setting the Sorting to 'age:asc'") {
-			APIBuilderUI.addAndPublishFiltersAndSortingInEndpointConfiguration(
+			APIBuilderUI.addAndPublishEndpointConfiguration(
 				editValue = "age:asc",
 				entity = "Endpoints",
 				fieldName = "sort",

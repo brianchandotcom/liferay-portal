@@ -654,12 +654,15 @@ public class ObjectEntryDTOConverter
 					_dLFileEntryLocalService.fetchDLFileEntry(fileEntryId);
 
 				if (dlFileEntry != null) {
-					fileEntry.setFileBase64(
-						(String)NestedFieldsSupplier.supply(
-							objectFieldName + ".fileBase64",
-							fieldName -> Base64.encode(
-								_file.getBytes(
-									dlFileEntry.getContentStream()))));
+					if (FeatureFlagManagerUtil.isEnabled("LPS-174455")) {
+						fileEntry.setFileBase64(
+							(String)NestedFieldsSupplier.supply(
+								objectFieldName + ".fileBase64",
+								fieldName -> Base64.encode(
+									_file.getBytes(
+										dlFileEntry.getContentStream()))));
+					}
+
 					fileEntry.setId(dlFileEntry.getFileEntryId());
 					fileEntry.setLink(
 						LinkUtil.toLink(

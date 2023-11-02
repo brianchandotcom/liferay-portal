@@ -3764,6 +3764,7 @@ public class ObjectEntryResourceTest {
 		Assert.assertEquals("PUT", actionJSONObject.getString("method"));
 	}
 
+	@FeatureFlags("LPS-174455")
 	@Test
 	public void testGetObjectEntryWithAttachmentField() throws Exception {
 		String content = RandomTestUtil.randomString();

@@ -44,6 +44,7 @@
 	"anyone-with-an-email-address-at-the-provided-domains-can-request-access-to-your-workspace-if-multiple-separate-domains-by-commas": "Anyone with an email address at the provided domains can request access to your workspace. If multiple, separate domains by commas.",
 	"apply": "Apply",
 	"are-you-sure-you-want-to-remove-this-team-member-from-the-project": "Are you sure you want to remove this team member from the project?",
+	"attachments": "Attachments",
 	"australia": "Australia",
 	"available": "available",
 	"available-x-of-x": "available: {0} of {1}",

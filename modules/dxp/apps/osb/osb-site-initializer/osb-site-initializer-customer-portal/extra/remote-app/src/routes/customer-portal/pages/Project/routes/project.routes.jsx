@@ -18,6 +18,7 @@ import {getWebContents} from '../../../utils/getWebContents';
 import Commerce from '../ActivationKeys/Commerce';
 import EnterpriseSearch from '../ActivationKeys/EnterpriseSearch';
 import AnalyticsCloud from '../AnalyticsCloud';
+import Attachments from '../Attachments';
 import DXP from '../DXP';
 import DXPCloud from '../DXPCloud';
 import LiferayExperienceCloud from '../LiferayExperienceCloud';
@@ -206,6 +207,8 @@ const ProjectRoutes = () => {
 							<Route element={<EnterpriseSearch />} index />
 						</Route>
 					</Route>
+
+					<Route element={<Attachments />} path="attachments" />
 
 					<Route element={<TeamMembers />} path="team-members" />
 

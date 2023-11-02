@@ -71,6 +71,8 @@ dependencies {
 			Matcher matcher = testBaseDirName =~ /.*liferay-qa-portal-legacy-ee.*\/(?<portalVersion>\d+(\.\d+)*).*/
 
 			if (matcher.find()) {
+				poshiRunner group: "com.liferay", name: "com.liferay.poshi.runner", version: "1.0.471"
+
 				String portalVersion = matcher.group("portalVersion")
 
 				if (portalVersion.startsWith("6.1")) {

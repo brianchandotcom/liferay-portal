@@ -39,26 +39,20 @@ int selectedMonthlyMode = monthlyCPSubscriptionTypeDisplayContext.getSelectedMon
 
 		<aui:script>
 			function changeMonthlyCPSubscriptionTypeSettingsMode() {
-				var A = AUI();
+				const monthDayInputContainer = document.getElementById(
+					'<portlet:namespace />monthly--monthDayInputContainer'
+				);
 
 				if (
-					A.one('#<portlet:namespace />monthly--monthlyMode').val() ==
+					document.getElementById('<portlet:namespace />monthly--monthlyMode')
+						.value ===
 					'<%= CPSubscriptionTypeConstants.MODE_EXACT_DAY_OF_MONTH %>'
 				) {
-					A.one(
-						'#<portlet:namespace />monthly--monthDayInputContainer'
-					).removeClass('hide');
+					monthDayInputContainer.classList.remove('hide');
 				}
 				else {
-					if (
-						!A.one(
-							'#<portlet:namespace />monthly--monthDayInputContainer'
-						).hasClass('hide')
-					) {
-						A.one(
-							'#<portlet:namespace />monthly--monthDayInputContainer'
-						).addClass('hide');
-					}
+					if (!monthDayInputContainer.classList.contains('hide'))
+						monthDayInputContainer.classList.add('hide');
 				}
 			}
 		</aui:script>
@@ -88,26 +82,20 @@ int selectedMonthlyMode = monthlyCPSubscriptionTypeDisplayContext.getSelectedMon
 
 		<aui:script>
 			function changeMonthlyDeliveryCPSubscriptionTypeSettingsMode() {
-				var A = AUI();
+				const deliveryMonthDayInputContainer = document.getElementById(
+					'<portlet:namespace />monthly--deliveryMonthDayInputContainer'
+				);
 
 				if (
-					A.one('#<portlet:namespace />monthly--deliveryMonthlyMode').val() ==
-					'<%= CPSubscriptionTypeConstants.MODE_EXACT_DAY_OF_MONTH %>'
+					document.getElementById(
+						'<portlet:namespace />monthly--deliveryMonthlyMode'
+					).value === '<%= CPSubscriptionTypeConstants.MODE_EXACT_DAY_OF_MONTH %>'
 				) {
-					A.one(
-						'#<portlet:namespace />monthly--deliveryMonthDayInputContainer'
-					).removeClass('hide');
+					deliveryMonthDayInputContainer.classList.remove('hide');
 				}
 				else {
-					if (
-						!A.one(
-							'#<portlet:namespace />monthly--deliveryMonthDayInputContainer'
-						).hasClass('hide')
-					) {
-						A.one(
-							'#<portlet:namespace />monthly--deliveryMonthDayInputContainer'
-						).addClass('hide');
-					}
+					if (!deliveryMonthDayInputContainer.classList.contains('hide'))
+						deliveryMonthDayInputContainer.classList.add('hide');
 				}
 			}
 		</aui:script>

@@ -54,26 +54,20 @@ int selectedYearlyMode = yearlyCPSubscriptionTypeDisplayContext.getSelectedYearl
 
 		<aui:script>
 			function changeYearlyCPSubscriptionTypeSettingsMode() {
-				var A = AUI();
+				const exactDayOfYearInputContainer = document.getElementById(
+					'<portlet:namespace />yearly--exactDayOfYearInputContainer'
+				);
 
 				if (
-					A.one('#<portlet:namespace />yearly--yearlyMode').val() ==
+					document.getElementById('<portlet:namespace />yearly--yearlyMode')
+						.value ===
 					'<%= CPSubscriptionTypeConstants.MODE_EXACT_DAY_OF_YEAR %>'
 				) {
-					A.one(
-						'#<portlet:namespace />yearly--exactDayOfYearInputContainer'
-					).removeClass('hide');
+					exactDayOfYearInputContainer.classList.remove('hide');
 				}
 				else {
-					if (
-						!A.one(
-							'#<portlet:namespace />yearly--exactDayOfYearInputContainer'
-						).hasClass('hide')
-					) {
-						A.one(
-							'#<portlet:namespace />yearly--exactDayOfYearInputContainer'
-						).addClass('hide');
-					}
+					if (!exactDayOfYearInputContainer.classList.contains('hide'))
+						exactDayOfYearInputContainer.classList.add('hide');
 				}
 			}
 		</aui:script>
@@ -117,26 +111,20 @@ int selectedYearlyMode = yearlyCPSubscriptionTypeDisplayContext.getSelectedYearl
 
 		<aui:script>
 			function changeYearlyDeliveryCPSubscriptionTypeSettingsMode() {
-				var A = AUI();
+				const deliveryExactDayOfYearInputContainer = document.getElementById(
+					'<portlet:namespace />yearly--deliveryExactDayOfYearInputContainer'
+				);
 
 				if (
-					A.one('#<portlet:namespace />yearly--deliveryYearlyMode').val() ==
-					'<%= CPSubscriptionTypeConstants.MODE_EXACT_DAY_OF_YEAR %>'
+					document.getElementById(
+						'<portlet:namespace />yearly--deliveryYearlyMode'
+					).value === '<%= CPSubscriptionTypeConstants.MODE_EXACT_DAY_OF_YEAR %>'
 				) {
-					A.one(
-						'#<portlet:namespace />yearly--deliveryExactDayOfYearInputContainer'
-					).removeClass('hide');
+					deliveryExactDayOfYearInputContainer.classList.remove('hide');
 				}
 				else {
-					if (
-						!A.one(
-							'#<portlet:namespace />yearly--deliveryExactDayOfYearInputContainer'
-						).hasClass('hide')
-					) {
-						A.one(
-							'#<portlet:namespace />yearly--deliveryExactDayOfYearInputContainer'
-						).addClass('hide');
-					}
+					if (!deliveryExactDayOfYearInputContainer.classList.contains('hide'))
+						deliveryExactDayOfYearInputContainer.classList.add('hide');
 				}
 			}
 		</aui:script>

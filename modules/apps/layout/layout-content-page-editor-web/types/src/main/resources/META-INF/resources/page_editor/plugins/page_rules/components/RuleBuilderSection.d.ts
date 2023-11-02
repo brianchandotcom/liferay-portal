@@ -4,12 +4,10 @@
  */
 
 import {Dispatch, SetStateAction} from 'react';
-import {FragmentEntryLink} from '../../../app/actions/addFragmentEntryLinks';
 import {Action} from './Action';
 import {Condition} from './Condition';
 declare type RuleBuilderActionProps = {
 	actions: Action[];
-	fragmentEntryLinks: FragmentEntryLink[];
 	layoutDataItems: {
 		label: string;
 		value: string;
@@ -21,7 +19,7 @@ export declare function RuleBuilderActionSection({
 	layoutDataItems,
 	setActions,
 }: RuleBuilderActionProps): JSX.Element;
-declare type ConditionType = 'all' | 'any';
+export declare type ConditionType = 'all' | 'any';
 declare type RuleBuilderConditionProps = {
 	conditionType: ConditionType;
 	conditions: Condition[];

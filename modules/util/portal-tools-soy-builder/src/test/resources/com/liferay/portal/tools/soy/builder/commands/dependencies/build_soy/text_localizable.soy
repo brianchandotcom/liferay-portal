@@ -81,14 +81,14 @@
 {template .available_locales autoescape="deprecated-contextual"}
 	<div class="palette-container">
 		<ul class="palette-items-container">
-			{foreach $localeMetadata in $availableLocalesMetadata}
+			{for $localeMetadata in $availableLocalesMetadata}
 				{call ddm.flag data="all"}
 					{param icon: $localeMetadata.icon /}
 					{param index: index($localeMetadata) /}
 					{param label: $localeMetadata.label /}
 					{param languageId: $localeMetadata.languageId /}
 				{/call}
-			{/foreach}
+			{/for}
 		</ul>
 	</div>
 {/template}

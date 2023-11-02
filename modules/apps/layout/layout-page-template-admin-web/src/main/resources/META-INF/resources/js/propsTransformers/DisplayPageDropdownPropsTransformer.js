@@ -18,7 +18,13 @@ import {MODAL_TYPES} from '../constants/modalTypes';
 
 const ACTIONS = {
 	changeContentType(
-		{assetType, changeContentTypeURL, mappingTypes, viewUsagesURL},
+		{
+			assetType,
+			changeContentTypeURL,
+			hasMissingType,
+			mappingTypes,
+			viewUsagesURL,
+		},
 		namespace
 	) {
 		if (viewUsagesURL) {
@@ -26,11 +32,19 @@ const ACTIONS = {
 		}
 		else {
 			openContentTypeModal({
+				description: hasMissingType
+					? Liferay.Language.get(
+							'this-display-page-template-does-not-have-any-content-type-assigned-you-must-select-one-to-edit-it'
+					  )
+					: '',
+				disableWarning: Boolean(hasMissingType),
 				formSubmitURL: changeContentTypeURL,
 				mappingTypes,
 				namespace,
 				spritemap: getSpritemap(),
-				title: Liferay.Language.get('change-content-type'),
+				title: hasMissingType
+					? Liferay.Language.get('select-content-type')
+					: Liferay.Language.get('change-content-type'),
 				type: MODAL_TYPES.edit,
 				warningMessage: Liferay.Language.get(
 					'changing-the-content-type-may-cause-some-elements-of-the-display-page-template-to-lose-their-previous-mapping'

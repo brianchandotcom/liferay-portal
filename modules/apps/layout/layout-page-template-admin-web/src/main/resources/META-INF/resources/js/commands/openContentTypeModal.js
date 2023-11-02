@@ -24,6 +24,8 @@ let container;
  * @param {string} param.title
  */
 export default function openContentTypeModal({
+	description,
+	disableWarning,
 	displayPageName,
 	formSubmitURL,
 	mappingTypes,
@@ -45,6 +47,8 @@ export default function openContentTypeModal({
 	ReactDOM.render(
 		<ClayIconSpriteContext.Provider value={spritemap}>
 			<ContentTypeModal
+				description={description}
+				disableWarning={disableWarning}
 				displayPageName={displayPageName}
 				formSubmitURL={formSubmitURL}
 				mappingTypes={mappingTypes}

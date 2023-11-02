@@ -16,6 +16,8 @@ import {ValidationError} from '../types/ValidationError';
 import ContentTypeModalForm from './ContentTypeModalForm';
 
 interface Props {
+	description?: string;
+	disableWarning?: boolean;
 	displayPageName: string;
 	formSubmitURL: string;
 	mappingTypes: MappingType[];
@@ -27,6 +29,8 @@ interface Props {
 }
 
 export default function ContentTypeModal({
+	description,
+	disableWarning = false,
 	displayPageName,
 	formSubmitURL,
 	mappingTypes,
@@ -155,7 +159,7 @@ export default function ContentTypeModal({
 		<ClayModal observer={observer}>
 			<ClayModal.Header>{title}</ClayModal.Header>
 
-			{warningMessage && warningVisible ? (
+			{warningMessage && warningVisible && !disableWarning ? (
 				<ClayAlert
 					displayType="warning"
 					onClose={() => setWarningVisible(false)}
@@ -178,6 +182,10 @@ export default function ContentTypeModal({
 			) : null}
 
 			<ClayModal.Body>
+				{description ? (
+					<p className="text-secondary">{description}</p>
+				) : null}
+
 				<ContentTypeModalForm
 					displayPageName={displayPageName}
 					error={error}

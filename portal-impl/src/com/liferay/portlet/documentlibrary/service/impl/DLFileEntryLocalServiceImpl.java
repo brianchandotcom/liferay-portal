@@ -64,7 +64,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -166,6 +168,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -1073,6 +1076,89 @@ public class DLFileEntryLocalServiceImpl
 		long groupId, long folderId, String name) {
 
 		return dlFileEntryPersistence.fetchByG_F_N(groupId, folderId, name);
+	}
+
+	@Override
+	public void forEachFileEntry(
+			long companyId, Consumer<DLFileEntry> consumer, long maximumSize,
+			String[] mimeTypes)
+		throws PortalException {
+
+		_performDynamicQueryActions(
+			consumer,
+			dynamicQuery -> {
+				Property companyIdProperty = PropertyFactoryUtil.forName(
+					"companyId");
+				Property fileEntryIdProperty = PropertyFactoryUtil.forName(
+					"fileEntryId");
+				Property groupIdProperty = PropertyFactoryUtil.forName(
+					"groupId");
+				Property mimeTypeProperty = PropertyFactoryUtil.forName(
+					"mimeType");
+				Property repositoryIdProperty = PropertyFactoryUtil.forName(
+					"repositoryId");
+				Property statusProperty = PropertyFactoryUtil.forName("status");
+
+				dynamicQuery.add(companyIdProperty.eq(companyId));
+				dynamicQuery.add(
+					groupIdProperty.eqProperty(repositoryIdProperty));
+				dynamicQuery.add(mimeTypeProperty.in(mimeTypes));
+
+				if (maximumSize >= 0) {
+					Property sizeProperty = PropertyFactoryUtil.forName("size");
+
+					dynamicQuery.add(sizeProperty.le(maximumSize));
+				}
+
+				DynamicQuery dlFileVersionDynamicQuery =
+					_dlFileVersionLocalService.dynamicQuery();
+
+				dlFileVersionDynamicQuery.setProjection(
+					ProjectionFactoryUtil.distinct(
+						ProjectionFactoryUtil.property("fileEntryId")));
+
+				dlFileVersionDynamicQuery.add(companyIdProperty.eq(companyId));
+				dlFileVersionDynamicQuery.add(
+					groupIdProperty.eqProperty(repositoryIdProperty));
+				dlFileVersionDynamicQuery.add(mimeTypeProperty.in(mimeTypes));
+				dlFileVersionDynamicQuery.add(
+					statusProperty.eq(WorkflowConstants.STATUS_IN_TRASH));
+
+				dynamicQuery.add(
+					fileEntryIdProperty.notIn(dlFileVersionDynamicQuery));
+			});
+	}
+
+	@Override
+	public void forEachFileEntry(
+			long companyId, long classNameId, Consumer<DLFileEntry> consumer,
+			long maximumSize, String[] mimeTypes)
+		throws PortalException {
+
+		_performDynamicQueryActions(
+			consumer,
+			dynamicQuery -> {
+				Property companyIdProperty = PropertyFactoryUtil.forName(
+					"companyId");
+				Property mimeTypeProperty = PropertyFactoryUtil.forName(
+					"mimeType");
+
+				dynamicQuery.add(companyIdProperty.eq(companyId));
+				dynamicQuery.add(mimeTypeProperty.in(mimeTypes));
+
+				if (classNameId > 0) {
+					Property classNameIdProperty = PropertyFactoryUtil.forName(
+						"classNameId");
+
+					dynamicQuery.add(classNameIdProperty.eq(classNameId));
+				}
+
+				if (maximumSize >= 0) {
+					Property sizeProperty = PropertyFactoryUtil.forName("size");
+
+					dynamicQuery.add(sizeProperty.le(maximumSize));
+				}
+			});
 	}
 
 	@Override
@@ -3319,6 +3405,21 @@ public class DLFileEntryLocalServiceImpl
 		// Latest file version
 
 		_removeFileVersion(dlFileEntry, latestDLFileVersion);
+	}
+
+	private void _performDynamicQueryActions(
+			Consumer<DLFileEntry> actionMethod,
+			Consumer<DynamicQuery> criteriaMethod)
+		throws PortalException {
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(criteriaMethod::accept);
+		actionableDynamicQuery.setPerformActionMethod(
+			(DLFileEntry dlFileEntry) -> actionMethod.accept(dlFileEntry));
+
+		actionableDynamicQuery.performActions();
 	}
 
 	private void _registerPWCDeletionCallback(

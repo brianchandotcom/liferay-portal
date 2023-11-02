@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.security.pwd;
+package com.liferay.user.associated.data.web.internal.security.pwd;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -13,8 +13,9 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.security.SecureRandom;
 import com.liferay.portal.kernel.security.pwd.BasicToolkit;
-import com.liferay.portal.kernel.service.PasswordTrackerLocalServiceUtil;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.security.pwd.Toolkit;
+import com.liferay.portal.kernel.service.PasswordTrackerLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.Validator;
@@ -25,10 +26,14 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Random;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Scott Lee
  * @author Mika Koivisto
  */
+@Component(service = Toolkit.class)
 public class PasswordPolicyToolkit extends BasicToolkit {
 
 	public PasswordPolicyToolkit() {
@@ -164,7 +169,7 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 			return;
 		}
 
-		User user = UserLocalServiceUtil.getUserById(userId);
+		User user = _userLocalService.getUserById(userId);
 
 		Date passwordModifiedDate = user.getPasswordModifiedDate();
 
@@ -184,15 +189,13 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 			}
 		}
 
-		if (PasswordTrackerLocalServiceUtil.isSameAsCurrentPassword(
+		if (_passwordTrackerLocalService.isSameAsCurrentPassword(
 				userId, password1)) {
 
 			throw new UserPasswordException.MustNotBeEqualToCurrent(userId);
 		}
 
-		if (!PasswordTrackerLocalServiceUtil.isValidPassword(
-				userId, password1)) {
-
+		if (!_passwordTrackerLocalService.isValidPassword(userId, password1)) {
 			throw new UserPasswordException.MustNotBeRecentlyUsed(userId);
 		}
 	}
@@ -311,6 +314,13 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 	private final char[] _generatorNumbersCharsetArray;
 	private final char[] _generatorSymbolsCharsetArray;
 	private final char[] _generatorUpperCaseCharsetArray;
+
+	@Reference
+	private PasswordTrackerLocalService _passwordTrackerLocalService;
+
+	@Reference
+	private UserLocalService _userLocalService;
+
 	private final char[] _validatorAlphanumericCharsetArray;
 	private final char[] _validatorLowerCaseCharsetArray;
 	private final char[] _validatorNumbersCharsetArray;

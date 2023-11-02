@@ -4,13 +4,14 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import React, {KeyboardEventHandler, ReactNode} from 'react';
+import React, {KeyboardEventHandler, ReactNode, Ref} from 'react';
 
 interface RuleBuilderItemProps {
 	children: ReactNode;
 	onDeleteButtonClick: () => void;
 	showDeleteButton: boolean;
 	type: 'action' | 'condition';
+	wrapperRef?: Ref<HTMLDivElement>;
 }
 
 export default function RuleBuilderItem({
@@ -18,6 +19,7 @@ export default function RuleBuilderItem({
 	onDeleteButtonClick,
 	showDeleteButton,
 	type,
+	wrapperRef,
 }: RuleBuilderItemProps) {
 	const onKeyDown: KeyboardEventHandler = (event) => {
 		if (event.target !== event.currentTarget) {
@@ -63,9 +65,9 @@ export default function RuleBuilderItem({
 		<div
 			className={`p-2 mb-3 d-flex align-items-center justify-content-between page-editor__rule-builder-item page-editor__rule-builder-item--${type}`}
 			onKeyDown={onKeyDown}
+			ref={wrapperRef}
 			role="menuitem"
 			tabIndex={0}
-
 		>
 			<div className="c-gap-2 d-flex flex-grow-1">{children}</div>
 

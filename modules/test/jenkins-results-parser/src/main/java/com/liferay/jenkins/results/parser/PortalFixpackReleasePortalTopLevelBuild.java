@@ -122,6 +122,16 @@ public class PortalFixpackReleasePortalTopLevelBuild
 		return workspace;
 	}
 
+	@Override
+	protected String getReleaseRepositoryName() {
+		return "liferay-portal-ee";
+	}
+
+	@Override
+	protected boolean isReleaseBuild() {
+		return true;
+	}
+
 	private String _getPortalGitHubURL() {
 		String portalBranchName = getParameterValue(
 			"TEST_PORTAL_USER_BRANCH_NAME");

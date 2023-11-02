@@ -311,25 +311,27 @@ public class PortalHotfixReleasePortalTopLevelBuild
 		return workspace;
 	}
 
+	@Override
+	protected String getReleaseRepositoryName() {
+		return "liferay-portal-ee";
+	}
+
+	@Override
+	protected boolean isReleaseBuild() {
+		return true;
+	}
+
 	private String _getPortalGitHubURL() {
 		String portalBranchName = getParameterValue(
 			"TEST_PORTAL_USER_BRANCH_NAME");
 		String portalBranchUsername = getParameterValue(
 			"TEST_PORTAL_USER_NAME");
 
-		String branchName = getBranchName();
-
-		String portalRepositoryName = "liferay-portal";
-
-		if (!branchName.equals("master")) {
-			portalRepositoryName = "liferay-portal-ee";
-		}
-
-		String patcherPortalVersion = getParameterValue(
-			"PATCHER_BUILD_PATCHER_PORTAL_VERSION");
-
 		if (JenkinsResultsParserUtil.isNullOrEmpty(portalBranchName) ||
 			JenkinsResultsParserUtil.isNullOrEmpty(portalBranchUsername)) {
+
+			String patcherPortalVersion = getParameterValue(
+				"PATCHER_BUILD_PATCHER_PORTAL_VERSION");
 
 			if (JenkinsResultsParserUtil.isNullOrEmpty(patcherPortalVersion)) {
 				return null;
@@ -361,15 +363,6 @@ public class PortalHotfixReleasePortalTopLevelBuild
 
 			portalBranchUsername = "liferay";
 			portalBranchName = sb.toString();
-			portalRepositoryName = "liferay-portal-ee";
-		}
-
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalBranchName) &&
-			!JenkinsResultsParserUtil.isNullOrEmpty(portalBranchUsername) &&
-			(PortalRelease.isQuarterlyRelease(patcherPortalVersion) ||
-			 patcherPortalVersion.matches(_PATCHER_PORTAL_VERSION_74_REGEX))) {
-
-			portalRepositoryName = "liferay-portal-ee";
 		}
 
 		StringBuilder sb = new StringBuilder();
@@ -377,16 +370,12 @@ public class PortalHotfixReleasePortalTopLevelBuild
 		sb.append("https://github.com/");
 		sb.append(portalBranchUsername);
 		sb.append("/");
-		sb.append(portalRepositoryName);
+		sb.append(getReleaseRepositoryName());
 		sb.append("/tree/");
 		sb.append(portalBranchName);
 
 		return sb.toString();
 	}
-
-	private static final String _PATCHER_PORTAL_VERSION_74_REGEX =
-		"(?<majorVersion>7)\\.(?<minorVersion>4)\\." +
-			"(?<fixVersion>\\d{2})(?<updateVersion>-(ep|u)\\d+)?";
 
 	private static final MultiPattern _hotfixZipURLPattern = new MultiPattern(
 		"https?://.*(?<majorVersion>\\d)(?<minorVersion>\\d)" +

@@ -11,17 +11,6 @@
 CommerceChannelDisplayContext commerceChannelDisplayContext = (CommerceChannelDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CommerceChannel commerceChannel = commerceChannelDisplayContext.getCommerceChannel();
-
-String thumbnailURL = PortalUtil.getPortalURL(request) + PortalUtil.getPathContext() + "/o/commerce-channel-web/images/channel-default-icon.svg";
-
-portletDisplay.setShowBackIcon(true);
-
-if (Validator.isNull(redirect)) {
-	portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
-}
-else {
-	portletDisplay.setURLBack(redirect);
-}
 %>
 
 <liferay-portlet:renderURL var="editCommerceChannelExternalReferenceCodeURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
@@ -36,7 +25,7 @@ else {
 	externalReferenceCode="<%= commerceChannel.getExternalReferenceCode() %>"
 	externalReferenceCodeEditUrl="<%= editCommerceChannelExternalReferenceCodeURL %>"
 	model="<%= CommerceChannel.class %>"
-	thumbnailUrl="<%= thumbnailURL %>"
+	thumbnailUrl='<%= PortalUtil.getPortalURL(request) + PortalUtil.getPathContext() + "/o/commerce-channel-web/images/channel-default-icon.svg" %>'
 	title="<%= commerceChannel.getName() %>"
 />
 

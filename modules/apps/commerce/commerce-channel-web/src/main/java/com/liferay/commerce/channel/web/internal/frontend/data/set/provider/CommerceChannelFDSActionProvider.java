@@ -57,19 +57,16 @@ public class CommerceChannelFDSActionProvider implements FDSActionProvider {
 				PermissionThreadLocal.getPermissionChecker(),
 				channel.getChannelId(), ActionKeys.UPDATE),
 			dropdownItem -> {
-				PortletURL portletURL = _portal.getControlPanelPortletURL(
-					httpServletRequest, CPPortletKeys.COMMERCE_CHANNELS,
-					PortletRequest.RENDER_PHASE);
-
-				portletURL.setParameter("backURL", portletURL.toString());
-				portletURL.setParameter(
-					"commerceChannelId",
-					String.valueOf(channel.getChannelId()));
-				portletURL.setParameter(
-					"mvcRenderCommandName",
-					"/commerce_channels/edit_commerce_channel");
-
-				dropdownItem.setHref(portletURL.toString());
+				dropdownItem.setHref(
+					PortletURLBuilder.create(
+						_portal.getControlPanelPortletURL(
+							httpServletRequest, CPPortletKeys.COMMERCE_CHANNELS,
+							PortletRequest.RENDER_PHASE)
+					).setMVCRenderCommandName(
+						"/commerce_channels/edit_commerce_channel"
+					).setParameter(
+						"commerceChannelId", channel.getChannelId()
+					).buildString());
 
 				dropdownItem.setLabel(
 					_language.get(httpServletRequest, "edit"));

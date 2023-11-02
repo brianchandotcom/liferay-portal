@@ -1,0 +1,773 @@
+@component-name = "portal-publications"
+definition {
+
+	property osgi.module.configuration.file.names = "com.liferay.change.tracking.configuration.CTSettingsConfiguration.config";
+	property osgi.module.configurations = "enabled=B\"true\"";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Publications";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
+
+		if (${testLiferayVirtualInstance} == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			Publications.disablePublications();
+		}
+	}
+
+	@priority = 4
+	test PublishPublicationWithDeletedListAndRecord {
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLDataDefinition.addCP(
+			ddlDataDefinitionDescription = "Data Definition Description",
+			ddlDataDefinitionName = "Data Definition");
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DDLDataDefinition.save();
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLList.addCP(
+			ddlListDescription = "List Description",
+			ddlListName = "List Name");
+
+		DDLDataDefinition.selectCP(ddlDataDefinitionName = "Data Definition");
+
+		DDLDataDefinition.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLRecord.addCP(
+			ddlDataDefinitionName = "Data Definition",
+			ddlListName = "List Name");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "Text Field",
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		PortletEntry.publish();
+
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+
+		var changeTitle = JSONDDL.getRecordId(
+			ddlListName = "List Name",
+			groupName = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLRecord.deleteCP(
+			ddlListName = "List Name",
+			ddlRecordFieldData = "Text Field");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLList.deleteCP(ddlListName = "List Name");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLDataDefinition.deleteCP(ddlDataDefinitionName = "Data Definition");
+
+		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication Name");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Dynamic Data Mapping Structure",
+			changeSite = "Site Name",
+			changeTitle = "Data Definition",
+			changeType = "Deleted",
+			changeUser = "Test Test");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Asset",
+			changeSite = "Site Name",
+			changeTitle = "New Data Definition for List: List Name",
+			changeType = "Deleted",
+			changeUser = "Test Test",
+			showAllItems = "true");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Dynamic Data Lists Record",
+			changeSite = "Site Name",
+			changeTitle = ${changeTitle},
+			changeType = "Deleted",
+			changeUser = "Test Test");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Dynamic Data Lists Record Set",
+			changeSite = "Site Name",
+			changeTitle = "List Name",
+			changeType = "Deleted",
+			changeUser = "Test Test");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Dynamic Data Mapping Structure",
+			changeSite = "Site Name",
+			changeTitle = "Data Definition",
+			changeType = "Deleted",
+			changeUser = "Test Test");
+
+		Publications.publishPublication(publicationName = "Publication Name");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
+
+		LexiconEntry.viewNoEntry(rowEntry = "List Name");
+	}
+
+	@ignore = "true"
+	@priority = 3
+	test PublishPublicationWithDisplayTemplate {
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLDataDefinition.addCP(
+			ddlDataDefinitionDescription = "Data Definition Description",
+			ddlDataDefinitionName = "Data Definition");
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DDLDataDefinition.save();
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLList.addCP(
+			ddlListDescription = "List Description",
+			ddlListName = "List Name");
+
+		DDLDataDefinition.selectCP(ddlDataDefinitionName = "Data Definition");
+
+		DDLDataDefinition.save();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Dynamic Data Lists Display Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Dynamic Data Lists Display Page",
+			widgetName = "Dynamic Data Lists Display");
+
+		Navigator.gotoSitePage(
+			pageName = "Dynamic Data Lists Display Page",
+			siteName = "Site Name");
+
+		DDLList.selectViaDDLDisplayPG(ddlListName = "List Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Dynamic Data Lists Display Page",
+			siteName = "Site Name");
+
+		DDLRecord.addViaDDLDisplayPG(ddlDataDefinitionName = "Data Definition");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "Text Field",
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		PortletEntry.publish();
+
+		Navigator.gotoSitePage(
+			pageName = "Dynamic Data Lists Display Page",
+			siteName = "Site Name");
+
+		DDLTemplate.addDisplayTemplateTemplateViaDDLDisplayPG(
+			ddlDisplayTemplateLanguage = "FreeMarker (.ftl)",
+			ddlDisplayTemplateName = "Display Template Name",
+			ddlDisplayTemplateScript = "Text");
+
+		Navigator.gotoSitePage(
+			pageName = "Dynamic Data Lists Display Page",
+			siteName = "Site Name");
+
+		DDLList.selectViaDDLDisplayPG(ddlListName = "List Name");
+
+		DDLTemplate.selectDisplayTemplateViaDDLDisplayPG(ddlDisplayTemplateName = "Display Template Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Dynamic Data Lists Display Page",
+			siteName = "Site Name");
+
+		AssertTextPresent(
+			locator1 = "//div[@class='portlet-body']",
+			value1 = "Text");
+
+		PublicationsNavigator.gotoReviewChanges();
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Dynamic Data Mapping Template",
+			changeSite = "Site Name",
+			changeTitle = "Display Template Name",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		Publications.publishPublication(publicationName = "Publication Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Dynamic Data Lists Display Page",
+			siteName = "Site Name");
+
+		AssertTextPresent(
+			locator1 = "//div[@class='portlet-body']",
+			value1 = "Text");
+	}
+
+	@priority = 4
+	test PublishPublicationWithEditedListAndRecord {
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLDataDefinition.addCP(
+			ddlDataDefinitionDescription = "Data Definition Description",
+			ddlDataDefinitionName = "Data Definition");
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DDLDataDefinition.save();
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLList.addCP(
+			ddlListDescription = "List Description",
+			ddlListName = "List Name");
+
+		DDLDataDefinition.selectCP(ddlDataDefinitionName = "Data Definition");
+
+		DDLDataDefinition.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLRecord.addCP(
+			ddlDataDefinitionName = "Data Definition",
+			ddlListName = "List Name");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "Record Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		PortletEntry.publish();
+
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLDataDefinition.viewCP(
+			ddlDataDefinitionName = "Data Definition",
+			fieldFieldLabel = "Text");
+
+		DynamicDataMapping.addField(
+			field = "Date",
+			fieldFieldLabel = "Date",
+			fieldName = "Date");
+
+		DDLDataDefinition.save();
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLRecord.editCP(
+			ddlDataDefinitionName = "Data Definition",
+			ddlListName = "List Name",
+			ddlRecordFieldData = "Record Text");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "Record Text Edited",
+			fieldName = "Text");
+
+		DDLRecord.populateFieldDate(
+			ddlRecordFieldData = "03/30/2021",
+			fieldFieldLabel = "Date",
+			fieldName = "Date");
+
+		PortletEntry.publish();
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLList.editCP(
+			ddlListDescriptionEdit = "List Description Edit",
+			ddlListName = "List Name",
+			ddlListNameEdit = "List Name Edit");
+
+		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication Name");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Dynamic Data Mapping Structure",
+			changeSite = "Site Name",
+			changeTitle = "Data Definition",
+			changeType = "Modified",
+			changeUser = "Test Test");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Dynamic Data Lists Record Set",
+			changeSite = "Site Name",
+			changeTitle = "List Name Edit",
+			changeType = "Modified",
+			changeUser = "Test Test");
+
+		var changeTitle = JSONDDL.getRecordId(
+			ddlListName = "List Name Edit",
+			groupName = "Site Name");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Dynamic Data Lists Record",
+			changeSite = "Site Name",
+			changeTitle = ${changeTitle},
+			changeType = "Modified",
+			changeUser = "Test Test");
+
+		PublicationsNavigator.gotoViewChangeDetails(
+			changeCategory = "Dynamic Data Lists Record",
+			changeTitle = ${changeTitle});
+
+		PublicationsChangeDetails.viewDDLRecordChangeDetails(
+			changeType = "Modified",
+			diffAddedValue = "Edit",
+			fieldName = "Text",
+			fieldValueInProduction = "Record Text",
+			fieldValueInPublication = "Record Text Edited",
+			publicationName = "Publication Name");
+
+		PublicationsChangeDetails.viewDDLRecordChangeDetails(
+			changeType = "Modified",
+			diffAddedValue = "3/30/21",
+			fieldName = "Date",
+			fieldValueInPublication = "3/30/21",
+			publicationName = "Publication Name");
+
+		Publications.publishPublication(publicationName = "Publication Name");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLNavigator.gotoListRecords(ddlListName = "List Name Edit");
+
+		DDLRecord.viewFieldCP(
+			ddlRecordFieldData = "Record Text Edited",
+			field = "Text",
+			fieldFieldLabel = "Text");
+	}
+
+	@priority = 3
+	test PublishPublicationWithFormTemplate {
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLDataDefinition.addCP(
+			ddlDataDefinitionDescription = "Data Definition Description",
+			ddlDataDefinitionName = "Data Definition");
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DDLDataDefinition.save();
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLList.addCP(
+			ddlListDescription = "List Description",
+			ddlListName = "List Name");
+
+		DDLDataDefinition.selectCP(ddlDataDefinitionName = "Data Definition");
+
+		DDLDataDefinition.save();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Dynamic Data Lists Display Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Dynamic Data Lists Display Page",
+			widgetName = "Dynamic Data Lists Display");
+
+		Navigator.gotoSitePage(
+			pageName = "Dynamic Data Lists Display Page",
+			siteName = "Site Name");
+
+		DDLList.selectViaDDLDisplayPG(ddlListName = "List Name");
+
+		DDLRecord.addViaDDLDisplayPG(ddlDataDefinitionName = "Data Definition");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "Text Field",
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		PortletEntry.publish();
+
+		Navigator.gotoSitePage(
+			pageName = "Dynamic Data Lists Display Page",
+			siteName = "Site Name");
+
+		DDLTemplate.addFormTemplateViaDDLDisplayPG(ddlFormTemplateName = "Form Template Name");
+
+		DynamicDataMapping.addFieldFormTemplateSpecific(field = "Separator");
+
+		DDLTemplate.saveFormTemplateViaDDLDisplayPG();
+
+		Navigator.gotoSitePage(
+			pageName = "Dynamic Data Lists Display Page",
+			siteName = "Site Name");
+
+		DDLList.selectViaDDLDisplayPG(ddlListName = "List Name");
+
+		DDLTemplate.selectFormTemplateViaDDLDisplayPG(ddlFormTemplateName = "Form Template Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Dynamic Data Lists Display Page",
+			siteName = "Site Name");
+
+		DDLRecord.addViaDDLDisplayPG(ddlDataDefinitionName = "Data Definition");
+
+		DDLRecord.viewFieldFormTemplateSpecific(field = "Separator");
+
+		PublicationsNavigator.gotoReviewChanges();
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Dynamic Data Mapping Template",
+			changeSite = "Site Name",
+			changeTitle = "Form Template Name",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		Publications.publishPublication(publicationName = "Publication Name");
+
+		Navigator.gotoSitePage(
+			pageName = "Dynamic Data Lists Display Page",
+			siteName = "Site Name");
+
+		DDLRecord.addViaDDLDisplayPG(ddlDataDefinitionName = "Data Definition");
+
+		DDLRecord.viewFieldFormTemplateSpecific(field = "Separator");
+	}
+
+	@priority = 4
+	test PublishPublicationWithNewListAndRecord {
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		DDLList.openDynamicDataListsAdmin(siteURLKey = "site-name");
+
+		DDLDataDefinition.addCP(
+			ddlDataDefinitionDescription = "Data Definition Description",
+			ddlDataDefinitionName = "Data Definition");
+
+		DynamicDataMapping.addField(
+			field = "Documents and Media",
+			fieldFieldLabel = "Documents and Media",
+			fieldName = "DocumentsAndMedia");
+
+		DDLDataDefinition.save();
+
+		DDLList.openDynamicDataListsAdmin(siteURLKey = "site-name");
+
+		DDLList.addCP(
+			ddlListDescription = "List Description",
+			ddlListName = "List Name");
+
+		DDLDataDefinition.selectCP(ddlDataDefinitionName = "Data Definition");
+
+		DDLDataDefinition.save();
+
+		DDLList.openDynamicDataListsAdmin(siteURLKey = "site-name");
+
+		DDLRecord.addCP(
+			ddlDataDefinitionName = "Data Definition",
+			ddlListName = "List Name");
+
+		DDLRecord.populateFieldDocumentsAndMediaChooseFromDocumentLibrary(
+			document = "Document_1.png",
+			fieldFieldLabel = "Documents and Media",
+			fieldName = "DocumentsAndMedia");
+
+		PortletEntry.publish();
+
+		PublicationsNavigator.gotoReviewChanges(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Dynamic Data Mapping Structure",
+			changeSite = "Site Name",
+			changeTitle = "Data Definition",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Asset",
+			changeOrder = 6,
+			changeSite = "Site Name",
+			changeTitle = "New Data Definition for List: List Name",
+			changeType = "Added",
+			changeUser = "Test Test",
+			showAllItems = "true");
+
+		var changeTitle = JSONDDL.getRecordId(
+			ddlListName = "List Name",
+			groupName = "Site Name");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Dynamic Data Lists Record",
+			changeSite = "Site Name",
+			changeTitle = ${changeTitle},
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Dynamic Data Lists Record Set",
+			changeSite = "Site Name",
+			changeTitle = "List Name",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Dynamic Data Mapping Structure",
+			changeSite = "Site Name",
+			changeTitle = "Data Definition",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		Publications.publishPublication(publicationName = "Publication Name");
+
+		DDLList.openDynamicDataListsAdmin(siteURLKey = "site-name");
+
+		DDLNavigator.gotoListRecords(ddlListName = "List Name");
+
+		DDLRecord.viewFirstFieldCP(
+			ddlRecordFieldData = "Document_1.png",
+			field = "Documents and Media",
+			fieldFieldLabel = "Documents and Media");
+	}
+
+	@priority = 4
+	test ResolveConflictingPublicationsByDiscarding {
+		HeadlessSite.addSite(siteName = "Site Name");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLDataDefinition.addCP(
+			ddlDataDefinitionDescription = "Data Definition Description",
+			ddlDataDefinitionName = "Data Definition");
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		DDLDataDefinition.save();
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLList.addCP(
+			ddlListDescription = "List Description",
+			ddlListName = "List Name");
+
+		DDLDataDefinition.selectCP(ddlDataDefinitionName = "Data Definition");
+
+		DDLDataDefinition.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLRecord.addCP(
+			ddlDataDefinitionName = "Data Definition",
+			ddlListName = "List Name");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "Record Text",
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		PortletEntry.publish();
+
+		JSONPublications.addPublication(publicationName = "Publication Name 1");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name 1");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLRecord.editCP(
+			ddlListName = "List Name",
+			ddlRecordFieldData = "Record Text");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "Record Text 1 Edited",
+			fieldName = "Text");
+
+		PortletEntry.publish();
+
+		JSONPublications.addPublication(publicationName = "Publication Name 2");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name 2");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLRecord.editCP(
+			ddlListName = "List Name",
+			ddlRecordFieldData = "Record Text");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "Record Text 2 Edited",
+			fieldName = "Text");
+
+		PortletEntry.publish();
+
+		Publications.publishPublication(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name 2");
+
+		PublicationsNavigator.gotoPublish(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name 1");
+
+		var changeTitle = JSONDDL.getRecordId(
+			ddlListName = "List Name",
+			groupName = "Site Name");
+
+		PublicationsChanges.discardChanges(
+			changeCategory = "Dynamic Data Lists Record",
+			changeTitle = ${changeTitle},
+			conflictingChanges = "true",
+			entryTitle = "Dynamic Data Lists Record");
+
+		Publications.publishPublication(publicationName = "Publication Name 1");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLNavigator.gotoListRecords(ddlListName = "List Name");
+
+		DDLRecord.viewFieldCP(
+			ddlRecordFieldData = "Record Text 2 Edited",
+			field = "Text",
+			fieldFieldLabel = "Text");
+	}
+
+}

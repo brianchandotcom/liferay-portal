@@ -4,7 +4,7 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import React, {ReactNode} from 'react';
+import React, {KeyboardEventHandler, ReactNode} from 'react';
 
 interface RuleBuilderItemProps {
 	children: ReactNode;
@@ -19,9 +19,53 @@ export default function RuleBuilderItem({
 	showDeleteButton,
 	type,
 }: RuleBuilderItemProps) {
+	const onKeyDown: KeyboardEventHandler = (event) => {
+		if (event.target !== event.currentTarget) {
+			return;
+		}
+
+		const items = Array.from<HTMLElement>(
+			document.querySelectorAll(
+				`.page-editor__rule-builder-item--${type}`
+			)
+		);
+
+		if (event.key === 'ArrowDown') {
+			event.preventDefault();
+
+			const index = items.indexOf(event.target as HTMLElement);
+
+			let nextIndex = index + 1;
+
+			if (index === items.length - 1) {
+				nextIndex = 0;
+			}
+
+			items[nextIndex]?.focus();
+		}
+
+		if (event.key === 'ArrowUp') {
+			event.preventDefault();
+
+			const index = items.indexOf(event.target as HTMLElement);
+
+			let nextIndex = index - 1;
+
+			if (index === 0) {
+				nextIndex = items.length - 1;
+			}
+
+			items[nextIndex]?.focus();
+		}
+	};
+
 	return (
 		<div
 			className={`p-2 mb-3 d-flex align-items-center justify-content-between page-editor__rule-builder-item page-editor__rule-builder-item--${type}`}
+			onKeyDown={onKeyDown}
+			role="menuitem"
+			tabIndex={0}
+
 		>
 			<div className="c-gap-2 d-flex flex-grow-1">{children}</div>
 

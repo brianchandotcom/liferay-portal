@@ -6,6 +6,11 @@ html#{$cadmin-selector} .cadmin {
 		border-radius: 0.25rem;
 		height: 50px;
 
+		&:focus-visible {
+			box-shadow: 0 0 0 2px $cadmin-white, 0 0 0 4px $cadmin-primary-l0;
+			outline: 0;
+		}
+
 		.page-editor__rule-builder-delete-button {
 			opacity: 0;
 		}

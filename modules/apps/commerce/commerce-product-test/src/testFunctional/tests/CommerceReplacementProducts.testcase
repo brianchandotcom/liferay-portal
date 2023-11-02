@@ -184,6 +184,109 @@ definition {
 		}
 	}
 
+	@description = "COMMERCE-12579. As a buyer, I can view the discontinued SKU shown in the product's detail replacement tab"
+	@priority = 3
+	test CanReplacementSkusShownInProductDetails {
+		property portal.acceptance = "false";
+
+		task ("Given 5 products are set as Discontinued with a same replacement product ABS Sensor") {
+			for (var entryList : list "Brake Fluid:MIN93016A,Brake Fluid:MIN93016B,Brake Fluid:MIN93016C,Wear Sensors:MIN93027,Calipers:MIN93021") {
+				var productName = StringUtil.extractFirst(${entryList}, ":");
+				var sku = StringUtil.extractLast(${entryList}, ":");
+
+				CommerceProducts.openProductsAdmin();
+
+				CommerceProducts.searchAndGoToProductEntry(entryProductName = ${productName});
+
+				CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+				CommerceNavigator.gotoEntry(entryName = ${sku});
+
+				SelectFrame(locator1 = "IFrame#IFRAME");
+
+				CommerceProducts.discontinueSKU();
+
+				CommerceProducts.setReplacementSKU(replacementSKU = "MIN93015");
+			}
+		}
+
+		task ("When the buyer navigates to ABS Sensor's detail page") {
+			User.logoutPG();
+
+			CommerceLogin.miniumLogin(
+				password = "test",
+				urlAppend = "web/minium",
+				userEmailAddress = "buyer@liferay.com");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/abs-sensor");
+		}
+
+		task ("Then assert that the Replacements button shown") {
+			AssertElementPresent(
+				key_text = "Replacements",
+				locator1 = "Button#ANY");
+		}
+
+		task ("And can view the correct replaced products and pagination results in the Replacements details") {
+			AssertClick(
+				key_text = "Replacements",
+				locator1 = "Button#ANY",
+				value1 = "Replacements");
+
+			AssertTextEquals(
+				locator1 = "CP2ActivationKeys#PAGINATION_BUTTON",
+				value1 = "10 Items");
+
+			Pagination.viewResults(results = "Showing 1 to 5 of 5 entries.");
+
+			for (var sku : list "MIN93016A,MIN93016B,MIN93016C,MIN93027,MIN93021") {
+				LexiconEntry.viewEntryName(rowEntry = ${sku});
+			}
+		}
+
+		task ("When the pagination is changed to 4") {
+			Pagination.changePagination(itemsPerPage = "4 Items");
+		}
+
+		task ("Then the five products are divided into two pages to display with pagination results") {
+			Pagination.viewResults(results = "Showing 1 to 4 of 5 entries.");
+
+			for (var sku : list "MIN93016A,MIN93016B,MIN93016C,MIN93027") {
+				LexiconEntry.viewEntryName(rowEntry = ${sku});
+			}
+
+			Click(locator1 = "Pagination#NEXT_LINK");
+
+			Pagination.viewResults(results = "Showing 5 to 5 of 5 entries.");
+
+			AssertElementPresent(
+				key_entryName = "MIN93021",
+				locator1 = "CommerceNavigation#ENTRY_NAME");
+		}
+
+		task ("When a product Wear Sensors is searched on the page") {
+			CommerceNavigator.searchEntry(entryName = "MIN93027");
+		}
+
+		task ("Then the pagination results are changed accordingly only for the searched product") {
+			AssertElementPresent(
+				key_entryName = "MIN93027",
+				locator1 = "CommerceNavigation#ENTRY_NAME");
+
+			AssertTextEquals(
+				locator1 = "CP2ActivationKeys#PAGINATION_BUTTON",
+				value1 = "4 Items");
+
+			Pagination.viewResults(results = "Showing 1 to 1 of 1 entries.");
+
+			AssertElementPresent(locator1 = "Pagination#FIRST_LINK");
+
+			AssertElementNotPresent(
+				key_pageNumber = 2,
+				locator1 = "Pagination#ANY_PAGE");
+		}
+	}
+
 	@description = "COMMERCE-12548. As a buyer, I want to be able to see a SKU/UOM replace a discounted SKU"
 	@priority = 5
 	test CanSkuWithUOMReplaceDiscontinuedSku {

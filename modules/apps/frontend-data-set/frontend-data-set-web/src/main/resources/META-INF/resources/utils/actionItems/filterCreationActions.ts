@@ -13,25 +13,15 @@ const filterCreationActions = ({
 	globalCollectionActions: any;
 }): Array<ICreationActionItem> | null => {
 	return customActions
-		? customActions.reduce(
-				(
-					customActions: Array<ICreationActionItem>,
-					action: ICreationActionItem
-				) => {
-					if (action.data?.permissionKey) {
-						if (
-							globalCollectionActions[action.data.permissionKey]
-						) {
-							return [...customActions, action];
-						}
-
-						return customActions;
-					}
-
-					return [...customActions, action];
-				},
-				[]
-		  )
+		? customActions.filter((action: ICreationActionItem) => {
+				if (
+					!action.data?.permissionKey ||
+					(action.data?.permissionKey &&
+						globalCollectionActions[action.data.permissionKey])
+				) {
+					return action;
+				}
+		  })
 		: null;
 };
 

@@ -9,10 +9,20 @@ import React, {useContext} from 'react';
 
 import ChartContext from '../ChartContext';
 import {deleteAccount, updateAccount} from '../data/accounts';
-import {ACTION_KEYS} from '../utils/constants';
+import {
+	ACTION_KEYS,
+	INFO_PANEL_MODE_MAP,
+	INFO_PANEL_OPEN_EVENT,
+	MODEL_TYPE_MAP,
+} from '../utils/constants';
 import {hasPermission} from '../utils/index';
 
-export default function AccountMenuContent({closeMenu, data, parentData}) {
+export default function AccountMenuContent({
+	closeMenu,
+	data,
+	namespace,
+	parentData,
+}) {
 	const {chartInstanceRef} = useContext(ChartContext);
 
 	function handleDelete() {
@@ -28,6 +38,16 @@ export default function AccountMenuContent({closeMenu, data, parentData}) {
 				}
 			},
 		});
+	}
+
+	function handleEdit() {
+		Liferay.fire(`${namespace}${INFO_PANEL_OPEN_EVENT}`, {
+			data,
+			mode: INFO_PANEL_MODE_MAP.edit,
+			type: MODEL_TYPE_MAP.account,
+		});
+
+		closeMenu();
 	}
 
 	function handleRemove() {
@@ -53,7 +73,25 @@ export default function AccountMenuContent({closeMenu, data, parentData}) {
 		});
 	}
 
+	function handleView() {
+		Liferay.fire(`${namespace}${INFO_PANEL_OPEN_EVENT}`, {
+			data,
+			mode: INFO_PANEL_MODE_MAP.view,
+			type: MODEL_TYPE_MAP.account,
+		});
+
+		closeMenu();
+	}
+
 	const actions = [];
+
+	if (Liferay.FeatureFlags['COMMERCE-12192']) {
+		actions.push(
+			<ClayDropDown.Item key="view" onClick={handleView}>
+				{Liferay.Language.get('view')}
+			</ClayDropDown.Item>
+		);
+	}
 
 	if (hasPermission(data, ACTION_KEYS.account.REMOVE)) {
 		actions.push(
@@ -67,6 +105,17 @@ export default function AccountMenuContent({closeMenu, data, parentData}) {
 		actions.push(
 			<ClayDropDown.Item key="delete" onClick={handleDelete}>
 				{Liferay.Language.get('delete')}
+			</ClayDropDown.Item>
+		);
+	}
+
+	if (
+		Liferay.FeatureFlags['COMMERCE-12192'] &&
+		hasPermission(data, ACTION_KEYS.account.UPDATE)
+	) {
+		actions.push(
+			<ClayDropDown.Item key="edit" onClick={handleEdit}>
+				{Liferay.Language.get('edit')}
 			</ClayDropDown.Item>
 		);
 	}

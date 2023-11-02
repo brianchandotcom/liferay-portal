@@ -30,7 +30,7 @@ import org.json.JSONObject;
 public class BuildHistoryReport {
 
 	public static BuildHistoryReport newAggregateReport(
-		File outputDir, String startDateString, long durationDays) {
+		long durationDays, File outputDir, String startDateString) {
 
 		BuildHistoryReport buildHistoryReport = new BuildHistoryReport(
 			outputDir);
@@ -47,7 +47,7 @@ public class BuildHistoryReport {
 		long duration = TimeUnit.DAYS.toMillis(durationDays);
 
 		Collection<BuildHistory> buildHistories =
-			BuildHistoryProcessor.newAggregateJobHistories(startTime, duration);
+			BuildHistoryProcessor.newAggregateJobHistories(duration, startTime);
 
 		buildHistoryReport.addFile(
 			"js/table-data.js",
@@ -55,13 +55,13 @@ public class BuildHistoryReport {
 
 		buildHistoryReport.addFile(
 			"js/timeline-data.js",
-			_getTimelineDataJSFileContent(buildHistories, startTime, duration));
+			_getTimelineDataJSFileContent(buildHistories, duration, startTime));
 
 		return buildHistoryReport;
 	}
 
 	public static BuildHistoryReport newTestSuiteReport(
-		File outputDir, String startDateString, long durationDays) {
+		long durationDays, File outputDir, String startDateString) {
 
 		BuildHistoryReport buildHistoryReport = new BuildHistoryReport(
 			outputDir);
@@ -79,7 +79,7 @@ public class BuildHistoryReport {
 
 		Collection<BuildHistory> buildHistories =
 			BuildHistoryProcessor.newTestSuiteJobHistories(
-				startTime, duration, _portalMasterPullRequestJobNamePattern);
+				duration, _portalMasterPullRequestJobNamePattern, startTime);
 
 		buildHistoryReport.addFile(
 			"js/table-data.js",
@@ -154,7 +154,7 @@ public class BuildHistoryReport {
 
 		BuildHistory totalBuildHistory =
 			BuildHistoryProcessor.mergeBuildHistories(
-				"[Total]", buildHistories);
+				buildHistories, "[Total]");
 
 		buildHistories.add(totalBuildHistory);
 
@@ -178,8 +178,8 @@ public class BuildHistoryReport {
 	}
 
 	private static String _getTimelineDataJSFileContent(
-		Collection<BuildHistory> buildHistories, long startTime,
-		long duration) {
+		Collection<BuildHistory> buildHistories, long duration,
+		long startTime) {
 
 		JSONObject jsonObject = new JSONObject();
 
@@ -192,7 +192,7 @@ public class BuildHistoryReport {
 		jsonObject.put(
 			"jobTimelines", jsonArray
 		).put(
-			"time", BuildHistory.Timeline.getTimeJSONArray(startTime, duration)
+			"time", BuildHistory.Timeline.getTimeJSONArray(duration, startTime)
 		);
 
 		return "var timelineData = " + jsonObject.toString();

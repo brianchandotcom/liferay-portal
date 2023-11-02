@@ -32,43 +32,43 @@ import org.json.JSONArray;
 public class BuildHistoryProcessor {
 
 	public static BuildHistory mergeBuildHistories(
-		String name, BuildHistory... buildHistories) {
+		Collection<BuildHistory> buildHistories, String name) {
 
-		return _mergeBuildHistories(name, Arrays.asList(buildHistories));
+		return _mergeBuildHistories(new ArrayList<>(buildHistories), name);
 	}
 
 	public static BuildHistory mergeBuildHistories(
-		String name, Collection<BuildHistory> buildHistories) {
+		String name, BuildHistory... buildHistories) {
 
-		return _mergeBuildHistories(name, new ArrayList<>(buildHistories));
+		return _mergeBuildHistories(Arrays.asList(buildHistories), name);
 	}
 
 	public static Collection<BuildHistory> newAggregateJobHistories(
-		long startTime, long duration) {
+		long duration, long startTime) {
 
 		Set<BuildJSONObject> buildJSONObjects =
-			_getFilteredBuildDataJSONObjects(startTime, duration);
+			_getFilteredBuildDataJSONObjects(duration, startTime);
 
 		return _getGroupedBuildHistories(
-			buildJSONObjects, new GroupByCategory(), startTime, duration);
+			buildJSONObjects, duration, new GroupByCategory(), startTime);
 	}
 
 	public static Collection<BuildHistory> newDefaultJobHistories(
-		long startTime, long duration) {
+		long duration, long startTime) {
 
 		Set<BuildJSONObject> buildJSONObjects =
-			_getFilteredBuildDataJSONObjects(startTime, duration);
+			_getFilteredBuildDataJSONObjects(duration, startTime);
 
 		return _getGroupedBuildHistories(
-			buildJSONObjects, new GroupByJobName(), startTime, duration);
+			buildJSONObjects, duration, new GroupByJobName(), startTime);
 	}
 
 	public static Collection<BuildHistory> newTestSuiteJobHistories(
-		long startTime, long duration, Pattern jobNamePattern) {
+		long duration, Pattern jobNamePattern, long startTime) {
 
 		Set<BuildJSONObject> buildJSONObjects =
 			_getFilteredBuildDataJSONObjects(
-				startTime, duration, jobNamePattern);
+				duration, jobNamePattern, startTime);
 
 		Set<BuildJSONObject> downstreamBuildJSONObjects = new HashSet<>();
 		Set<BuildJSONObject> topLevelBuildJSONObjects = new HashSet<>();
@@ -87,8 +87,8 @@ public class BuildHistoryProcessor {
 
 		Map<String, BuildHistory> groupedBuildHistoriesMap =
 			_getGroupedBuildHistoriesMap(
-				topLevelBuildJSONObjects, groupByTopLevelTestSuite, startTime,
-				duration);
+				topLevelBuildJSONObjects, duration, groupByTopLevelTestSuite,
+				startTime);
 
 		Map<String, Set<BuildJSONObject>> groupedBuildDataJSONObjectsMap =
 			_getGroupedBuildDataJSONObjectsMap(
@@ -101,7 +101,7 @@ public class BuildHistoryProcessor {
 
 			if (!groupedBuildHistoriesMap.containsKey(key)) {
 				BuildHistory buildHistory = new BuildHistory(
-					key, startTime, duration);
+					duration, key, startTime);
 
 				groupedBuildHistoriesMap.put(key, buildHistory);
 			}
@@ -116,13 +116,13 @@ public class BuildHistoryProcessor {
 	}
 
 	private static Set<BuildJSONObject> _getFilteredBuildDataJSONObjects(
-		long startTime, long duration) {
+		long duration, long startTime) {
 
-		return _getFilteredBuildDataJSONObjects(startTime, duration, null);
+		return _getFilteredBuildDataJSONObjects(duration, null, startTime);
 	}
 
 	private static Set<BuildJSONObject> _getFilteredBuildDataJSONObjects(
-		long startTime, long duration, Pattern jobNamePattern) {
+		long duration, Pattern jobNamePattern, long startTime) {
 
 		Set<BuildJSONObject> buildJSONObjects = new HashSet<>();
 
@@ -182,21 +182,19 @@ public class BuildHistoryProcessor {
 	}
 
 	private static Collection<BuildHistory> _getGroupedBuildHistories(
-		Collection<BuildJSONObject> buildJSONObjects,
-		Function<BuildJSONObject, String> groupingFunction, long startTime,
-		long duration) {
+		Collection<BuildJSONObject> buildJSONObjects, long duration,
+		Function<BuildJSONObject, String> groupingFunction, long startTime) {
 
 		Map<String, BuildHistory> groupedBuildHistories =
 			_getGroupedBuildHistoriesMap(
-				buildJSONObjects, groupingFunction, startTime, duration);
+				buildJSONObjects, duration, groupingFunction, startTime);
 
 		return _getSortedBuildHistories(groupedBuildHistories.values());
 	}
 
 	private static Map<String, BuildHistory> _getGroupedBuildHistoriesMap(
-		Collection<BuildJSONObject> buildJSONObjects,
-		Function<BuildJSONObject, String> groupingFunction, long startTime,
-		long duration) {
+		Collection<BuildJSONObject> buildJSONObjects, long duration,
+		Function<BuildJSONObject, String> groupingFunction, long startTime) {
 
 		Map<String, BuildHistory> groupedBuildHistories = new HashMap<>();
 
@@ -208,7 +206,7 @@ public class BuildHistoryProcessor {
 				groupedBuildDataJSONObjectsMap.entrySet()) {
 
 			BuildHistory buildHistory = new BuildHistory(
-				entry.getKey(), startTime, duration);
+				duration, entry.getKey(), startTime);
 
 			buildHistory.addBuildDataJSONObjects(entry.getValue());
 
@@ -289,7 +287,7 @@ public class BuildHistoryProcessor {
 	}
 
 	private static BuildHistory _mergeBuildHistories(
-		String name, List<BuildHistory> buildHistories) {
+		List<BuildHistory> buildHistories, String name) {
 
 		Set<BuildJSONObject> buildJSONObjects = new HashSet<>();
 		long duration = 0;
@@ -309,7 +307,7 @@ public class BuildHistoryProcessor {
 			topLevelBuildURLs.addAll(buildHistory.getTopLevelBuildURLs());
 		}
 
-		BuildHistory buildHistory = new BuildHistory(name, startTime, duration);
+		BuildHistory buildHistory = new BuildHistory(duration, name, startTime);
 
 		buildHistory.addBuildDataJSONObjects(buildJSONObjects);
 

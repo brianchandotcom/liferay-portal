@@ -403,8 +403,6 @@ renderResponse.setTitle(dlEditFolderDisplayContext.getHeaderTitle());
 	searchContainer.get('contentBox').delegate(
 		'click',
 		(event) => {
-			var A = AUI();
-
 			var link = event.currentTarget;
 
 			var tr = link.ancestor('tr');

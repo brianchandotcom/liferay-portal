@@ -15,12 +15,7 @@ CommerceShipmentItem commerceShipmentItem = commerceShipmentItemDisplayContext.g
 CommerceOrderItem commerceOrderItem = commerceShipmentItemDisplayContext.getCommerceOrderItem();
 
 portletDisplay.setShowBackIcon(true);
-
-if (Validator.isNull(redirect)) {
-	redirect = currentURL;
-}
-
-portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 %>
 
 <portlet:actionURL name="/commerce_shipment/edit_commerce_shipment_item" var="editCommerceShipmentItemActionURL" />

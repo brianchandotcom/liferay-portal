@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.Portal;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 
@@ -107,25 +106,18 @@ public class CommerceOrderShipmentFDSActionProvider
 	private String _getShipmentEditURL(
 		long commerceShipmentId, HttpServletRequest httpServletRequest) {
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			httpServletRequest, CommercePortletKeys.COMMERCE_SHIPMENT,
-			PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter("backURL", portletURL.toString());
-		portletURL.setParameter(
-			"mvcRenderCommandName",
-			"/commerce_shipment/edit_commerce_shipment");
-
-		String redirect = ParamUtil.getString(
-			httpServletRequest, "currentUrl",
-			_portal.getCurrentURL(httpServletRequest));
-
-		portletURL.setParameter("redirect", redirect);
-
-		portletURL.setParameter(
-			"commerceShipmentId", String.valueOf(commerceShipmentId));
-
-		return portletURL.toString();
+		return PortletURLBuilder.create(
+			_portal.getControlPanelPortletURL(
+				httpServletRequest, CommercePortletKeys.COMMERCE_SHIPMENT,
+				ActionRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/commerce_shipment/edit_commerce_shipment"
+		).setParameter(
+			"commerceOrderId",
+			ParamUtil.getLong(httpServletRequest, "commerceOrderId")
+		).setParameter(
+			"commerceShipmentId", commerceShipmentId
+		).buildString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

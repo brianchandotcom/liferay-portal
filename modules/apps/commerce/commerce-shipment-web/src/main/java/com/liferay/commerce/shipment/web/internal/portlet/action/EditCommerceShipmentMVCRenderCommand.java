@@ -17,13 +17,18 @@ import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipment.web.internal.display.context.CommerceShipmentDisplayContext;
 import com.liferay.commerce.shipment.web.internal.portlet.action.helper.ActionHelper;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.CountryService;
 import com.liferay.portal.kernel.service.RegionService;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -59,7 +64,44 @@ public class EditCommerceShipmentMVCRenderCommand implements MVCRenderCommand {
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceShipmentDisplayContext);
 
+		_populatePortletDisplay(renderRequest);
+
 		return "/edit_commerce_shipment.jsp";
+	}
+
+	private void _populatePortletDisplay(RenderRequest renderRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		portletDisplay.setShowBackIcon(true);
+
+		long commerceOrderId = ParamUtil.getLong(
+			renderRequest, "commerceOrderId");
+
+		if (commerceOrderId > 0) {
+			portletDisplay.setURLBack(
+				PortletURLBuilder.create(
+					_portal.getControlPanelPortletURL(
+						renderRequest, CommercePortletKeys.COMMERCE_ORDER,
+						PortletRequest.RENDER_PHASE)
+				).setMVCRenderCommandName(
+					"/commerce_order/edit_commerce_order"
+				).setParameter(
+					"commerceOrderId", commerceOrderId
+				).setParameter(
+					"screenNavigationCategoryKey", "shipments"
+				).buildString());
+		}
+		else {
+			portletDisplay.setURLBack(
+				PortletURLBuilder.create(
+					_portal.getControlPanelPortletURL(
+						renderRequest, CommercePortletKeys.COMMERCE_SHIPMENT,
+						PortletRequest.RENDER_PHASE)
+				).buildString());
+		}
 	}
 
 	@Reference

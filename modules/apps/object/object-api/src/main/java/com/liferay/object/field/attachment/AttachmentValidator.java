@@ -6,6 +6,7 @@
 package com.liferay.object.field.attachment;
 
 import com.liferay.document.library.kernel.exception.FileExtensionException;
+import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -25,6 +26,8 @@ public interface AttachmentValidator {
 
 	public void validateFileExtension(String fileName, long objectFieldId)
 		throws FileExtensionException;
+
+	public void validateFileName(String fileName) throws FileNameException;
 
 	public void validateFileSize(
 			String fileName, long fileSize, long objectFieldId,

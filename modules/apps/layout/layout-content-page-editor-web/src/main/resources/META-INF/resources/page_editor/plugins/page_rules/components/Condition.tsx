@@ -4,7 +4,7 @@
  */
 
 import {sub} from 'frontend-js-web';
-import React, {ComponentProps, FC} from 'react';
+import React, {ComponentProps, FC, useContext} from 'react';
 
 import {config} from '../../../app/config/index';
 import RulesService from '../../../app/services/RulesService';
@@ -12,6 +12,7 @@ import {CACHE_KEYS} from '../../../app/utils/cache';
 import useCache from '../../../app/utils/useCache';
 import RuleBuilderItem from './RuleBuilderItem';
 import RuleSelect from './RuleSelect';
+import {ScreenReaderAnnouncerContext} from './ScreenReaderContext';
 
 export interface Condition {
 	condition?: 'user' | 'role' | 'segment';
@@ -79,6 +80,8 @@ export default function Condition({
 	showDeleteButton,
 	wrapperRef,
 }: ConditionProps) {
+	const {sendMessage} = useContext(ScreenReaderAnnouncerContext);
+
 	const ValueSelectorComponent: FC<SelectorProps> | null = condition.condition
 		? VALUE_SELECTOR_COMPONENTS[condition.condition]
 		: null;
@@ -121,12 +124,16 @@ export default function Condition({
 
 			{ValueSelectorComponent ? (
 				<ValueSelectorComponent
-					onValueChanged={(value) =>
+					onValueChanged={(value) => {
 						onConditionChange({
 							...condition,
 							value,
-						})
-					}
+						});
+
+						sendMessage(
+							Liferay.Language.get('condition-completed')
+						);
+					}}
 					value={condition.value}
 				/>
 			) : null}

@@ -4,10 +4,11 @@
  */
 
 import {sub} from 'frontend-js-web';
-import React, {ComponentProps} from 'react';
+import React, {ComponentProps, useContext} from 'react';
 
 import RuleBuilderItem from './RuleBuilderItem';
 import RuleSelect from './RuleSelect';
+import {ScreenReaderAnnouncerContext} from './ScreenReaderContext';
 
 export interface Action {
 	action?: 'fragment';
@@ -52,6 +53,8 @@ export default function Action({
 	showDeleteButton,
 	wrapperRef,
 }: ActionProps) {
+	const {sendMessage} = useContext(ScreenReaderAnnouncerContext);
+
 	return (
 		<RuleBuilderItem
 			onDeleteButtonClick={onDeleteAction}
@@ -95,6 +98,8 @@ export default function Action({
 							...action,
 							itemId,
 						});
+
+						sendMessage(Liferay.Language.get('action-completed'));
 					}}
 				/>
 			) : null}

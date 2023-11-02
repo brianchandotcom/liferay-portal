@@ -21,6 +21,7 @@ import {
 	RuleBuilderActionSection,
 	RuleBuilderConditionSection,
 } from './RuleBuilderSection';
+import ScreenReaderAnnouncerContext from './ScreenReaderContext';
 
 export default function RulesModal({editingRule, onCloseModal}) {
 	const {observer, onClose} = useModal({onClose: () => onCloseModal()});
@@ -161,25 +162,30 @@ export default function RulesModal({editingRule, onCloseModal}) {
 					)}
 				</p>
 
-				<div
-					aria-label={Liferay.Language.get('conditions')}
-					role="group"
-				>
-					<RuleBuilderConditionSection
-						conditionType={conditionType}
-						conditions={conditions}
-						setConditionType={setConditionType}
-						setConditions={setConditions}
-					/>
-				</div>
+				<ScreenReaderAnnouncerContext>
+					<div
+						aria-label={Liferay.Language.get('conditions')}
+						role="group"
+					>
+						<RuleBuilderConditionSection
+							conditionType={conditionType}
+							conditions={conditions}
+							setConditionType={setConditionType}
+							setConditions={setConditions}
+						/>
+					</div>
 
-				<div aria-label={Liferay.Language.get('actions')} role="group">
-					<RuleBuilderActionSection
-						actions={actions}
-						layoutDataItems={layoutDataItems}
-						setActions={setActions}
-					/>
-				</div>
+					<div
+						aria-label={Liferay.Language.get('actions')}
+						role="group"
+					>
+						<RuleBuilderActionSection
+							actions={actions}
+							layoutDataItems={layoutDataItems}
+							setActions={setActions}
+						/>
+					</div>
+				</ScreenReaderAnnouncerContext>
 			</ClayModal.Body>
 
 			<ClayModal.Footer

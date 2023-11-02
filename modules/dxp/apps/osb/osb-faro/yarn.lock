@@ -9757,13 +9757,6 @@ metal-promise@^2.0.0:
   dependencies:
     metal "^2.0.0"
 
-metal-storage@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/metal-storage/-/metal-storage-1.1.0.tgz#b1ba2ccc30084c0b125e95913555f4a2d8a4c30e"
-  integrity sha1-sboszDAITAsSXpWRNVX0otikww4=
-  dependencies:
-    metal "^2.0.0"
-
 metal-structs@^1.0.0, metal-structs@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/metal-structs/-/metal-structs-1.0.1.tgz#548272f718ee9d729e3079b74a3f1254143db75b"
@@ -14630,6 +14623,11 @@ utils-merge@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
   integrity sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=
+
+uuid@9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-9.0.0.tgz#592f550650024a38ceb0c562f2f6aa435761efb5"
+  integrity sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==
 
 uuid@^3.1.0:
   version "3.2.1"

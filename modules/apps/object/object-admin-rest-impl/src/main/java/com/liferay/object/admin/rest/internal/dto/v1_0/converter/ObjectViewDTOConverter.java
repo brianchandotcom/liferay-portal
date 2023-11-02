@@ -14,7 +14,6 @@ import com.liferay.object.field.filter.parser.ObjectFieldFilterContributor;
 import com.liferay.object.field.filter.parser.ObjectFieldFilterContributorRegistry;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -176,8 +175,5 @@ public class ObjectViewDTOConverter
 	@Reference
 	private ObjectFieldFilterContributorRegistry
 		_objectFieldFilterContributorRegistry;
-
-	@Reference
-	private ObjectFieldLocalService _objectFieldLocalService;
 
 }

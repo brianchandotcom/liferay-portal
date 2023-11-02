@@ -62,6 +62,9 @@ public class PayPalCommercePaymentMethodConstants {
 
 	public static final String PAYMENT_STATE_FAILED = "failed";
 
+	public static final String PAYPAL_PARTNER_ATTRIBUTION_ID =
+		"PayPal-Partner-Attribution-Id";
+
 	public static final String PLAN_FIXED = "FIXED";
 
 	public static final String PLAN_INFINITE = "INFINITE";
@@ -75,6 +78,9 @@ public class PayPalCommercePaymentMethodConstants {
 		REQUEST_DETAILS_FULL, REQUEST_DETAILS_MINIMAL
 	};
 
+	public static final String SHIPPING_PREFERENCE_PROVIDED =
+		"SET_PROVIDED_ADDRESS";
+
 	public static final String STATE = "state";
 
 	public static final String SUSPENDED = "Suspended";
@@ -82,6 +88,8 @@ public class PayPalCommercePaymentMethodConstants {
 	public static final String USER_ACTION = "useraction";
 
 	public static final String USER_ACTION_COMMIT = "commit";
+
+	public static final String USER_ACTION_PAY_NOW = "PAY_NOW";
 
 	public static final String WEEK = "week";
 

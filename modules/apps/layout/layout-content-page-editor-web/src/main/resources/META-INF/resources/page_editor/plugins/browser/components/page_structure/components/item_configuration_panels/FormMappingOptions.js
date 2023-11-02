@@ -26,10 +26,7 @@ export default function FormMappingOptions({
 			: config.formTypes),
 	];
 
-	if (
-		Liferay.FeatureFlags['LPS-183727'] &&
-		config.layoutType === LAYOUT_TYPES.display
-	) {
+	if (config.layoutType === LAYOUT_TYPES.display) {
 		formTypes = formTypes.map((formType) => {
 			if (formType.value === config.selectedMappingTypes.type.id) {
 				return {

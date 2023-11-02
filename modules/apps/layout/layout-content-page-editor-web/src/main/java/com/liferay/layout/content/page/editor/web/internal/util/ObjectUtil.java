@@ -10,12 +10,7 @@ import com.liferay.info.permission.provider.InfoPermissionProvider;
 import com.liferay.layout.content.page.editor.web.internal.constants.ContentPageEditorConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.HashMap;
@@ -47,12 +42,6 @@ public class ObjectUtil {
 	public static Boolean hideInputFragments(
 		long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
 		PermissionChecker permissionChecker) {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-183727") &&
-			_isLayoutTypeAssetDisplay()) {
-
-			return true;
-		}
 
 		List<ObjectDefinition> objectDefinitions =
 			ObjectDefinitionLocalServiceUtil.getObjectDefinitions(
@@ -86,29 +75,6 @@ public class ObjectUtil {
 		if ((infoPermissionProvider == null) ||
 			infoPermissionProvider.hasViewPermission(permissionChecker)) {
 
-			return true;
-		}
-
-		return false;
-	}
-
-	private static boolean _isLayoutTypeAssetDisplay() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if (serviceContext == null) {
-			return false;
-		}
-
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-		if (themeDisplay == null) {
-			return false;
-		}
-
-		Layout layout = themeDisplay.getLayout();
-
-		if ((layout != null) && layout.isTypeAssetDisplay()) {
 			return true;
 		}
 

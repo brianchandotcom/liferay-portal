@@ -247,7 +247,7 @@ public class EditInfoItemStrutsActionTest {
 			WorkflowConstants.STATUS_APPROVED, null, null);
 	}
 
-	@FeatureFlags({"LPS-183727", "LPS-195205"})
+	@FeatureFlags("LPS-195205")
 	@Test
 	public void testAddInfoItemWithDisplayPageSuccessMessage()
 		throws Exception {
@@ -281,7 +281,7 @@ public class EditInfoItemStrutsActionTest {
 			null, null);
 	}
 
-	@FeatureFlags({"LPS-183727", "LPS-187754", "LPS-181663", "LPS-195205"})
+	@FeatureFlags({"LPS-187754", "LPS-181663", "LPS-195205"})
 	@Test
 	public void testAddInfoItemWithDraftStatus() throws Exception {
 		_testAddInfoItem(
@@ -305,7 +305,6 @@ public class EditInfoItemStrutsActionTest {
 			"http://localhost:8080/home");
 	}
 
-	@FeatureFlags("LPS-183727")
 	@Test
 	public void testUpdateInfoItem() throws Exception {
 		MockHttpServletResponse mockHttpServletResponse =
@@ -417,7 +416,6 @@ public class EditInfoItemStrutsActionTest {
 			"<p>SUBTITLE</p>", String.valueOf(values.get("myRichText")));
 	}
 
-	@FeatureFlags("LPS-183727")
 	@Test
 	public void testUpdateInfoItemWithCheckboxNames() throws Exception {
 		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
@@ -506,7 +504,6 @@ public class EditInfoItemStrutsActionTest {
 			Boolean.FALSE.toString(), String.valueOf(values.get("myBoolean")));
 	}
 
-	@FeatureFlags("LPS-183727")
 	@Test
 	public void testUpdateInfoItemWithEmptyValues() throws Exception {
 		MockHttpServletResponse mockHttpServletResponse =

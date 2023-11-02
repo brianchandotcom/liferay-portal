@@ -39,7 +39,7 @@ public class DateRangeFactoryUtilTest {
 	@Test(expected = ParseException.class)
 	public void testDateFormatShouldBeyyyyMMddHHmmss() throws Exception {
 		DateRangeFactoryUtil.validateRanges(
-			"[{\"label\":\"past-hour\", \"range\":\"20190908 TO *\"}]");
+			"[{\"label\":\"past-hour\", \"range\":\"[20190908 TO *]\"}]");
 	}
 
 	@Test(expected = ParseException.class)
@@ -48,7 +48,7 @@ public class DateRangeFactoryUtilTest {
 			"[{\"label\":\"past-hour\", \"range\":\"[past-test TO *]\"}]");
 	}
 
-	@Test(expected = ParseException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void testInvalidRangeWithoutBrackets() throws Exception {
 		DateRangeFactoryUtil.validateRanges(
 			"[{\"label\":\"past-hour\", \"range\":\"past-hour TO *\"}]");

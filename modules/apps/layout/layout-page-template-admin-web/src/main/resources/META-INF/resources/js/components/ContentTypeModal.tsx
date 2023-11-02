@@ -9,6 +9,7 @@ import ClayModal, {useModal} from '@clayui/modal';
 import {fetch, navigate, openModal} from 'frontend-js-web';
 import React, {useCallback, useRef, useState} from 'react';
 
+import openInUseModal from '../commands/openInUseModal';
 import {ModalType} from '../constants/modalTypes';
 import {MappingType} from '../types/MappingTypes';
 import {ValidationError} from '../types/ValidationError';
@@ -95,7 +96,16 @@ export default function ContentTypeModal({
 			})
 				.then((response) => response.json())
 				.then(({error, redirectURL}) => {
-					if (error?.isLocked) {
+					if (error?.hasUsages) {
+						onClose();
+
+						openInUseModal({
+							assetType: error.assetType,
+							status: 'warning',
+							viewUsagesURL: error.viewUsagesURL,
+						});
+					}
+					else if (error?.isLocked) {
 						onClose();
 
 						openModal({

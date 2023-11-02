@@ -146,7 +146,8 @@ definition {
 
 		task ("Then I can see details info of the created schema") {
 			AssertTextEquals(
-				locator1 = "APIBuilder#ENTER_NAME",
+				key_placeHolder = "Enter name",
+				locator1 = "TextInput#ANY_PLACEHOLDER",
 				value1 = "testSchema");
 
 			AssertTextEquals(

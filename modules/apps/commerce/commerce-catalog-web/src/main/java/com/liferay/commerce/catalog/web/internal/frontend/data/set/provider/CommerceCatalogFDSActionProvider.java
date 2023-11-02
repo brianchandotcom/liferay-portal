@@ -118,23 +118,15 @@ public class CommerceCatalogFDSActionProvider implements FDSActionProvider {
 	private PortletURL _getCatalogEditURL(
 		long catalogId, HttpServletRequest httpServletRequest) {
 
-		PortletURL portletURL = PortletURLBuilder.create(
+		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
 				httpServletRequest, CPPortletKeys.COMMERCE_CATALOGS,
 				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
 			"/commerce_catalogs/edit_commerce_catalog"
+		).setParameter(
+			"commerceCatalogId", catalogId
 		).buildPortletURL();
-
-		String redirect = ParamUtil.getString(
-			httpServletRequest, "currentUrl",
-			_portal.getCurrentURL(httpServletRequest));
-
-		portletURL.setParameter("redirect", redirect);
-
-		portletURL.setParameter("commerceCatalogId", String.valueOf(catalogId));
-
-		return portletURL;
 	}
 
 	private PortletURL _getManageCatalogPermissionsURL(

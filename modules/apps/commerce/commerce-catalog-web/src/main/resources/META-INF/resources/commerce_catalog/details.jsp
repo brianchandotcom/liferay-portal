@@ -26,7 +26,7 @@ boolean viewOnly = !commerceCatalogDisplayContext.hasModelResourcePermission(com
 
 <aui:form action="<%= editCommerceCatalogActionURL %>" cssClass="mt-4" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceCatalog == null) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= backURL %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="baseCommercePriceListId" type="hidden" value="<%= commerceCatalogDisplayContext.getBaseCommercePriceListId(CommercePriceListConstants.TYPE_PRICE_LIST) %>" />
 	<aui:input name="basePromotionCommercePriceListId" type="hidden" value="<%= commerceCatalogDisplayContext.getBaseCommercePriceListId(CommercePriceListConstants.TYPE_PROMOTION) %>" />
 	<aui:input name="commerceCatalogId" type="hidden" value="<%= (commerceCatalog == null) ? 0 : commerceCatalog.getCommerceCatalogId() %>" />

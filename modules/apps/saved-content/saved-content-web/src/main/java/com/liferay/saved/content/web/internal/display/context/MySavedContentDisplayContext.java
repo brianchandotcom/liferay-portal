@@ -126,6 +126,43 @@ public class MySavedContentDisplayContext {
 		return _searchContainer;
 	}
 
+	public String getURL(String className, long classPK) {
+		String url = null;
+
+		try {
+			AssetRendererFactory<?> assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassName(className);
+
+			if (assetRendererFactory == null) {
+				return null;
+			}
+
+			AssetRenderer<?> assetRenderer =
+				assetRendererFactory.getAssetRenderer(classPK);
+
+			if (assetRenderer == null) {
+				return null;
+			}
+
+			url = assetRenderer.getURLViewInContext(
+				_liferayPortletRequest, _liferayPortletResponse,
+				_themeDisplay.getURLCurrent());
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to get asset renderer with class primary key " +
+						classPK,
+					exception);
+			}
+
+			return url;
+		}
+
+		return url;
+	}
+
 	private PortletURL _getPortletURL() {
 		if (_portletURL != null) {
 			return _portletURL;

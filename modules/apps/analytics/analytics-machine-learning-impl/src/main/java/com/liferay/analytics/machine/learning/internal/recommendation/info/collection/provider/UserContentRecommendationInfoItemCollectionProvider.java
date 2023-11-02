@@ -5,7 +5,6 @@
 
 package com.liferay.analytics.machine.learning.internal.recommendation.info.collection.provider;
 
-import com.liferay.analytics.machine.learning.content.UserContentRecommendation;
 import com.liferay.analytics.machine.learning.content.UserContentRecommendationManager;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
@@ -25,7 +24,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -63,12 +61,13 @@ public class UserContentRecommendationInfoItemCollectionProvider
 			ServiceContext serviceContext =
 				ServiceContextThreadLocal.getServiceContext();
 
-			List<UserContentRecommendation> userContentRecommendations =
-				_userContentRecommendationManager.getUserContentRecommendations(
-					categoryIds, serviceContext.getCompanyId(),
-					serviceContext.getUserId());
+			long count =
+				_userContentRecommendationManager.
+					getUserContentRecommendationsCount(
+						categoryIds, serviceContext.getCompanyId(),
+						serviceContext.getUserId());
 
-			if (userContentRecommendations.isEmpty()) {
+			if (count <= 0) {
 				return InfoPage.of(
 					Collections.emptyList(), collectionQuery.getPagination(),
 					0);
@@ -76,14 +75,15 @@ public class UserContentRecommendationInfoItemCollectionProvider
 
 			return InfoPage.of(
 				TransformUtil.transform(
-					ListUtil.subList(
-						userContentRecommendations, pagination.getStart(),
-						pagination.getEnd()),
+					_userContentRecommendationManager.
+						getUserContentRecommendations(
+							categoryIds, serviceContext.getCompanyId(),
+							serviceContext.getUserId(), pagination.getStart(),
+							pagination.getEnd()),
 					userContentRecommendation ->
 						_assetEntryLocalService.fetchEntry(
 							userContentRecommendation.getEntryClassPK())),
-				collectionQuery.getPagination(),
-				userContentRecommendations.size());
+				collectionQuery.getPagination(), (int)count);
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);

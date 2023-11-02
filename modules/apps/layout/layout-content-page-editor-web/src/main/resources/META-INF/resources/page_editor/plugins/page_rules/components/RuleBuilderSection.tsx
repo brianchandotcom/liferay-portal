@@ -42,6 +42,32 @@ export function RuleBuilderActionSection({
 	layoutDataItems,
 	setActions,
 }: RuleBuilderActionProps) {
+	const actionsRefMap = useMemo(() => new Map(), []);
+
+	const onDeleteAction = (action: Action, index: number) => {
+		if (actions.length === 1) {
+			setActions([{id: action.id} as Action]);
+		}
+		else {
+			const nextCondition = actions[index - 1] || actions[index + 1];
+
+			actionsRefMap.get(nextCondition.id)?.focus();
+
+			setActions((previousActions) =>
+				previousActions.filter(
+					(_action, currentIndex) => currentIndex !== index
+				)
+			);
+		}
+	};
+
+	const setActionRef = (
+		condition: Action,
+		element: HTMLDivElement | null
+	) => {
+		actionsRefMap.set(condition.id, element);
+	};
+
 	return (
 		<ClayPanel
 			className="page-editor__rule-builder-section"
@@ -82,19 +108,10 @@ export function RuleBuilderActionSection({
 							})
 						}
 						onDeleteAction={() => {
-							if (actions.length === 1) {
-								setActions([{id: action.id} as Action]);
-							}
-							else {
-								setActions((previousActions) =>
-									previousActions.filter(
-										(_action, currentIndex) =>
-											currentIndex !== index
-									)
-								);
-							}
+							onDeleteAction(action, index);
 						}}
 						showDeleteButton={actions.length > 1 || !!action.type}
+						wrapperRef={(element) => setActionRef(action, element)}
 					/>
 				))}
 

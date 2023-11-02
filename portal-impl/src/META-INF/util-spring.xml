@@ -86,22 +86,6 @@
 	<bean class="com.liferay.portal.template.ClassLoaderResourceParser" id="com.liferay.portal.template.ClassLoaderResourceParser" />
 	<bean class="com.liferay.portal.template.ThemeResourceParser" id="com.liferay.portal.template.ThemeResourceParser" />
 	<bean class="com.liferay.portal.util.PortalImpl" id="com.liferay.portal.util.Portal" />
-
-	<!--
-	The classes in com.liferay.portal.verify.model.* are loaded dynamically by
-	VerifyAuditedModel#doVerify and VerifyResourcePermissions#doVerify
-	-->
-
-	<bean class="com.liferay.portal.verify.model.GroupVerifiableResourcedModel" />
-	<bean class="com.liferay.portal.verify.model.LayoutBranchVerifiableResourcedModel" />
-	<bean class="com.liferay.portal.verify.model.LayoutFriendlyURLVerifiableAuditedModel" />
-	<bean class="com.liferay.portal.verify.model.LayoutPrototypeVerifiableModel" />
-	<bean class="com.liferay.portal.verify.model.LayoutSetPrototypeVerifiableModel" />
-	<bean class="com.liferay.portal.verify.model.LayoutVerifiableAuditedModel" />
-	<bean class="com.liferay.portal.verify.model.OrganizationVerifiableModel" />
-	<bean class="com.liferay.portal.verify.model.RepositoryEntryVerifiableAuditedModel" />
-	<bean class="com.liferay.portal.verify.model.RoleVerifiableModel" />
-	<bean class="com.liferay.portal.verify.model.UserGroupVerifiableModel" />
 	<bean class="com.liferay.portlet.RestrictPortletContainerWrapper" factory-method="createRestrictPortletContainerWrapper" id="com.liferay.portlet.RestrictPortletContainerWrapper">
 		<constructor-arg name="portletContainer" ref="com.liferay.portlet.SecurityPortletContainerWrapper" />
 	</bean>

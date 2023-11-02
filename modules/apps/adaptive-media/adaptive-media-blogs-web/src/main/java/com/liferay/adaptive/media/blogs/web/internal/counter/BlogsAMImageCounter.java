@@ -6,17 +6,15 @@
 package com.liferay.adaptive.media.blogs.web.internal.counter;
 
 import com.liferay.adaptive.media.image.counter.AMImageCounter;
-import com.liferay.adaptive.media.image.mime.type.AMImageMimeTypeProvider;
-import com.liferay.adaptive.media.image.validator.AMImageValidator;
+import com.liferay.adaptive.media.image.counter.BaseAMImageCounter;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.document.library.configuration.DLFileEntryConfigurationProvider;
-import com.liferay.document.library.constants.DLFileEntryConfigurationConstants;
+import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.util.ArrayUtil;
+
+import java.util.function.Consumer;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -27,53 +25,21 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = "adaptive.media.key=blogs", service = AMImageCounter.class
 )
-public class BlogsAMImageCounter implements AMImageCounter {
+public class BlogsAMImageCounter extends BaseAMImageCounter {
 
 	@Override
-	public int countExpectedAMImageEntries(long companyId) {
-		DynamicQuery dynamicQuery = _dlFileEntryLocalService.dynamicQuery();
+	protected void forEachFileEntry(
+			long companyId, Consumer<DLFileEntry> consumer)
+		throws PortalException {
 
-		Property companyIdProperty = PropertyFactoryUtil.forName("companyId");
-
-		dynamicQuery.add(companyIdProperty.eq(companyId));
-
-		Property classNameIdProperty = PropertyFactoryUtil.forName(
-			"classNameId");
-
-		dynamicQuery.add(
-			classNameIdProperty.eq(
-				_classNameLocalService.getClassNameId(
-					BlogsEntry.class.getName())));
-
-		Property mimeTypeProperty = PropertyFactoryUtil.forName("mimeType");
-
-		dynamicQuery.add(
-			mimeTypeProperty.in(
-				ArrayUtil.filter(
-					_amImageMimeTypeProvider.getSupportedMimeTypes(),
-					_amImageValidator::isProcessingSupported)));
-
-		long previewableProcessorMaxSize =
+		_dlFileEntryLocalService.forEachFileEntry(
+			companyId,
+			_classNameLocalService.getClassNameId(BlogsEntry.class.getName()),
+			consumer,
 			_dlFileEntryConfigurationProvider.
-				getCompanyPreviewableProcessorMaxSize(companyId);
-
-		if (previewableProcessorMaxSize !=
-				DLFileEntryConfigurationConstants.
-					PREVIEWABLE_PROCESSOR_MAX_SIZE_UNLIMITED) {
-
-			Property sizeProperty = PropertyFactoryUtil.forName("size");
-
-			dynamicQuery.add(sizeProperty.le(previewableProcessorMaxSize));
-		}
-
-		return (int)_dlFileEntryLocalService.dynamicQueryCount(dynamicQuery);
+				getCompanyPreviewableProcessorMaxSize(companyId),
+			getMimeTypes());
 	}
-
-	@Reference
-	private AMImageMimeTypeProvider _amImageMimeTypeProvider;
-
-	@Reference
-	private AMImageValidator _amImageValidator;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
